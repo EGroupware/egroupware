@@ -81,7 +81,7 @@
 
 			if($_POST['save'] || $_POST['apply'])
 			{
-				/* Don't use a switch here, we need to check some permissions durring the ifs */
+				/* Don't use a switch here, we need to check some permissions during the ifs */
 				if($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 				{
 					$error = $this->bo->process_array($GLOBALS['egw']->preferences->user,$user,$this->bo->session_data['notifies'],$GLOBALS['type'],$this->prefix);
@@ -166,7 +166,7 @@
 							$valarray['size'],
 							$valarray['maxsize'],
 							$valarray['type'],
-							$valarray['run_lang'] // This needs to go away since xml-rpc should get correct lang
+							$valarray['run_lang']	// if run_lang is set and false $valarray['help'] is run through lang()
 						);
 						break;
 					case 'password':
@@ -176,7 +176,7 @@
 							$valarray['help'],
 							$valarray['size'],
 							$valarray['maxsize'],
-							$valarray['run_lang'] // This needs to go away since xml-rpc should get correct lang from bo
+							$valarray['run_lang']
 						);
 						break;
 					case 'text':
@@ -203,7 +203,9 @@
 						$this->create_check_box(
 							$valarray['label'],
 							$valarray['name'],
-							$valarray['help']
+							$valarray['help'],
+							$valarray['default'],
+							$valarray['run_lang']
 						);
 						break;
 					case 'notify':
@@ -215,7 +217,8 @@
 							$valarray['help'],
 							$valarray['default'],
 							$valarray['values'],
-							$valarray['subst_help']
+							$valarray['subst_help'],
+							$valarray['run_lang']
 						);
 						break;
 				}
@@ -226,7 +229,6 @@
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
-			// TODO - what is the purpose of this?
 			if(count($this->notifies))	// there have been notifies in the hook, we need to save in the session
 			{
 				$this->bo->save_session($_GET['appname'],$GLOBALS['type'],$this->show_help,$this->prefix,$this->notifies);
@@ -363,7 +365,7 @@
 
 				if($this->show_help)
 				{
-					$this->t->set_var('help_value',$run_lang ? lang($help) : $help);
+					$this->t->set_var('help_value',is_null($run_lang) || $run_lang ? lang($help) : $help);
 
 					return True;
 				}
@@ -465,12 +467,15 @@
 		/**
 		* creates text-area or inputfield with subtitution-variables
 		*
-		* @param $label untranslated label
-		* @param $name name of the pref
-		* @param $rows, $cols of the textarea or input-box ($rows==1)
-		* @param $help untranslated help-text
-		* @param $default default-value
-		* @param $vars2 array with extra substitution-variables of the form key => help-text
+		* @param string $label untranslated label
+		* @param string $name name of the pref
+		* @param int $rows of the textarea or input-box ($rows==1)
+		* @param int $cols of the textarea or input-box ($rows==1)
+		* @param string $help='' untranslated help-text, run through lang if $run_lang != false
+		* @param string $default='' default-value
+		* @param array $vars2='' array with extra substitution-variables of the form key => help-text
+		* @param boolean $subst_help=true show help about substitues
+		* @param boolean $run_lang=true should $help help be run through lang()
 		*/
 		function create_notify($label,$name,$rows,$cols,$help='',$default='',$vars2='',$subst_help=True,$run_lang=True)
 		{
