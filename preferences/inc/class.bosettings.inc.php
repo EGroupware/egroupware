@@ -166,9 +166,9 @@
 					}
 					$prefs[$var] = get_magic_quotes_gpc() ? stripslashes($value) : $value;
 
-					if($this->session_data['notifies'][$var])	// need to translate the key-words back
+					if($notifies[$var])	// need to translate the key-words back
 					{
-						$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$this->session_data['notifies'][$var],True);
+						$prefs[$var] = $GLOBALS['egw']->preferences->lang_notify($prefs[$var],$notifies[$var],True);
 					}
 				}
 				else

@@ -131,7 +131,7 @@
 			$this->bo->_read($this->check_app(),$this->prefix,$GLOBALS['type']);
 			//echo "prefs=<pre>"; print_r($this->bo->prefs); echo "</pre>\n";
 
-			$notifies = array();
+			$this->notifies = array();
 			if(!$this->bo->call_hook($_GET['appname']))
 			{
 				$this->t->set_block('preferences','form','formhandle');	// skip the form
@@ -217,7 +217,6 @@
 							$valarray['values'],
 							$valarray['subst_help']
 						);
-						@$notifies[$valarray['name']] = $valarray;
 						break;
 				}
 			}
@@ -228,10 +227,10 @@
 			echo parse_navbar();
 
 			// TODO - what is the purpose of this?
-			if(count($notifies))	// there have been notifies in the hook, we need to save in the session
+			if(count($this->notifies))	// there have been notifies in the hook, we need to save in the session
 			{
-				$this->bo->save_session($_GET['appname'],$GLOBALS['type'],$this->show_help,$this->prefix,$notifies);
-				//_debug_array($notifies);
+				$this->bo->save_session($_GET['appname'],$GLOBALS['type'],$this->show_help,$this->prefix,$this->notifies);
+				//echo "notifies="; _debug_array($this->notifies);
 			}
 			if($this->is_admin())
 			{
@@ -342,9 +341,9 @@
 			{
 				$def_text = !$GLOBALS['egw']->preferences->user[$_appname][$name] ? $GLOBALS['egw']->preferences->data[$_appname][$name] : $GLOBALS['egw']->preferences->default[$_appname][$name];
 
-				if(isset($notifies[$name]))	// translate the substitution names
+				if(isset($this->notifies[$name]))	// translate the substitution names
 				{
-					$def_text = $GLOBALS['egw']->preferences->lang_notify($def_text,$notifies[$name]);
+					$def_text = $GLOBALS['egw']->preferences->lang_notify($def_text,$this->notifies[$name]);
 				}
 				$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$def_text.'</font></i>' : '';
 			}
@@ -482,7 +481,7 @@
 			}
 			$this->bo->prefs[$name] = $GLOBALS['egw']->preferences->lang_notify($this->bo->prefs[$name],$vars);
 
-			$notifies[$name] = $vars;	// this gets saved in the app_session for re-translation
+			$this->notifies[$name] = $vars;	// this gets saved in the app_session for re-translation
 
 			$help = $help && ($run_lang || is_null($run_lang)) ? lang($help) : $help;
 			if($subst_help || is_null($subst_help))
@@ -524,9 +523,9 @@
 			{
 				$def_text = !$GLOBALS['egw']->preferences->user[$_appname][$name] ? $GLOBALS['egw']->preferences->data[$_appname][$name] : $GLOBALS['egw']->preferences->default[$_appname][$name];
 
-				if(isset($notifies[$name]))	// translate the substitution names
+				if(isset($this->notifies[$name]))	// translate the substitution names
 				{
-					$def_text = $GLOBALS['egw']->preferences->lang_notify($def_text,$notifies[$name]);
+					$def_text = $GLOBALS['egw']->preferences->lang_notify($def_text,$this->notifies[$name]);
 				}
 				$def_text = $def_text != '' ? '<br><i><font size="-1"><b>'.lang('default').'</b>:<br>'.nl2br($def_text).'</font></i>' : '';
 			}
