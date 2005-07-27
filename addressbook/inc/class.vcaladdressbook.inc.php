@@ -1,18 +1,18 @@
 <?php
-        /**************************************************************************\
-        * eGroupWare - iCalendar Parser                                            *
-        * http://www.egroupware.org                                                *
-        * Written by Lars Kneschke <lkneschke@egroupware.org>                      *
-        * --------------------------------------------                             *
-        *  This program is free software; you can redistribute it and/or modify it *
-        *  under the terms of the GNU General Public License as published by the   *
-        *  Free Software Foundation; either version 2 of the License.              *
-        \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - iCalendar Parser                                            *
+	* http://www.egroupware.org                                                *
+	* Written by Lars Kneschke <lkneschke@egroupware.org>                      *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License.              *
+	\**************************************************************************/
+	
+	/* $Id$ */
 
-        /* $Id$ */
-
-	require_once PHPGW_SERVER_ROOT.'/addressbook/inc/class.boaddressbook.inc.php';
-	require_once PHPGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
+	require_once EGW_SERVER_ROOT.'/addressbook/inc/class.boaddressbook.inc.php';
+	require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 
 	class vcaladdressbook extends boaddressbook
 	{
@@ -51,12 +51,10 @@
 				'URL;WORK'	=> array('url'),
 			);
 
-			require_once(PHPGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
+			require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
 			$vCard = Horde_iCalendar::newComponent('vcard', $container);
 			
-			$botranslation	= CreateObject('phpgwapi.translation');
-
 			if (!$vCard->parsevCalendar($_vcard,'VCARD')) 
 			{
 				return False;
@@ -145,7 +143,6 @@
 			#_debug_array($contact);
 			
 			#return true;
-			                                                        
 
 			/* _debug_array($contact);exit; */
 			$contact['fn']  = trim($contact['n_given'].' '.$contact['n_family']);
@@ -160,6 +157,8 @@
 			if(!$contact['tel_isdn'])	$contact['tel_isdn'] = '';
 			if(!$contact['tel_video'])	$contact['tel_video'] = '';
 			
+			$GLOBALS['egw']->translation->convert($contact,'utf-8');
+
 			if($_abID > 0)
 			{
 				// update entry
@@ -174,18 +173,17 @@
 		}
 
 		/**
-		* @return string containing the vcard
+		* return a vcard
+		*
 		* @param int	$_id		the id of the contact
 		* @param int	$_vcardProfile	profile id for mapping from vcard values to egw addressbook
-		* @desc return a vcard
+		* @return string containing the vcard
 		*/
 		function getVCard($_id, $_vcardProfile)
 		{
-			require_once(PHPGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
+			require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
-			$vCard = new Horde_iCalendar_vcard;
-			
-			$botranslation	= CreateObject('phpgwapi.translation');
+			$vCard =& new Horde_iCalendar_vcard;
 			
 			#if ($this->xmlrpc && !isset($data['fields']))
 			#{
@@ -266,7 +264,7 @@
 			
 			#_debug_array($fields);			
 
-			if($this->check_perms($_id,PHPGW_ACL_READ))
+			if($this->check_perms($_id,EGW_ACL_READ))
 			{
 				//$data = array('id' => $_id, 'fields' => $fields);
 				$entry = $this->so->read_entry($_id,$fields);
@@ -276,8 +274,7 @@
 					$entry = $this->data2xmlrpc($entry);
 				}
 				#_debug_array($entry);
-				$sysCharSet	= $GLOBALS['phpgw']->translation->charset();
-				
+				$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
 				foreach($vcardFields[$_vcardProfile] as $vcardField => $databaseFields)
 				{
@@ -310,7 +307,7 @@
 							break;
 					}
 
-					$value = $botranslation->convert($value,$sysCharSet,'utf-8');
+					$value = $GLOBALS['egw']->translation->convert($value,$sysCharSet,'utf-8');
 
 					// don't add the entry if it contains only ';'
 					if(strlen(str_replace(';','',$value)) != 0)
