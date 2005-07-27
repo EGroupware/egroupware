@@ -59,11 +59,11 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			if (!$GLOBALS['phpgw_info']['user']['apps']['resources'])
+			if (!$GLOBALS['egw_info']['user']['apps']['resources'])
 			{
 				$cell = $tmpl->empty_cell();
 				$cell['label'] = 'no resources';
-				break;
+				return false;
 			}
 			$tpl =& new etemplate('resources.resource_selectbox');
 			// keep the editor away from the generated tmpls
