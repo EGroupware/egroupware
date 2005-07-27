@@ -45,7 +45,9 @@ class xajaxResponse
 	// Constructor
 	function xajaxResponse()
 	{
-		$this->xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+		$this->charset = is_object($GLOBALS['egw']->translation) ? $GLOBALS['egw']->translation->charset() : 'UTF-8';
+		//error_log("xajaxResponse: charset=$this->charset");
+		$this->xml = "<?xml version=\"1.0\" encoding=\"$this->charset\"?>";
 		$this->xml .= "<xajax>";
 	}
 	
@@ -439,7 +441,7 @@ class xajax
 			$sResponse = call_user_func_array($sFunctionName, $aArgs);
 		}
 		
-		header("Content-type: text/xml; charset=utf-8");
+		header("Content-type: text/xml; charset=$this->charset");
 		print $sResponse;
 		
 		exit();
