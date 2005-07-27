@@ -20,6 +20,8 @@
 		var $db;
 		var $common;
 		var $accounts;
+		
+		function invalidate_session_cache() { }
 	}
 
 	class setup
