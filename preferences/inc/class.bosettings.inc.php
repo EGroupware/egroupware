@@ -21,14 +21,14 @@
 		var $debug = False;
 
 		var $public_functions = array(
-			'_read' => True,
+			'read' => True,
 			'process_array' => True
 		);
 
 		var $xml_functions  = array();
 		var $xmlrpc_methods = array();
 		var $soap_functions = array(
-			'_read' => array(
+			'read' => array(
 				'in'  => array('int','int','struct','string','int'),
 				'out' => array('array')
 			),
@@ -103,7 +103,7 @@
 			return True;
 		}
 
-		function _read($app,$prefix,$type='user')
+		function read($app,$prefix,$type='user')
 		{
 			switch($type)	// set up some class vars to be used when processing the hooks
 			{
@@ -228,7 +228,7 @@
 				case 'xmlrpc':
 					$xml_functions = array(
 						'read' => array(
-							'function'  => '_read',
+							'function'  => 'read',
 							'signature' => array(array(xmlrpcStruct,xmlrpcString,xmlrpcString,xmlrpcString)),
 							'docstring' => lang('Read prefs for the specified application.')
 						),

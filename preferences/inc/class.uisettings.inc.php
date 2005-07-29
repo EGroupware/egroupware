@@ -128,7 +128,7 @@
 			$this->t->set_var('row_on', $GLOBALS['egw_info']['theme']['row_on']);
 			$this->t->set_var('row_off',$GLOBALS['egw_info']['theme']['row_off']);
 
-			$this->bo->_read($this->check_app(),$this->prefix,$GLOBALS['type']);
+			$this->bo->read($this->check_app(),$this->prefix,$GLOBALS['type']);
 			//echo "prefs=<pre>"; print_r($this->bo->prefs); echo "</pre>\n";
 
 			$this->notifies = array();
