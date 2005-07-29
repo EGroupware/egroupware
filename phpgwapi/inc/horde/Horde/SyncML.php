@@ -427,6 +427,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 
     var $_actionCommands = false;
 
+    var $_clientSentFinal = false;
+
     function startElement($uri, $element, $attrs)
     {
         parent::startElement($uri, $element, $attrs);
@@ -536,6 +538,13 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
               }
               Horde::logMessage('SyncML: summary:' . $s, __FILE__, __LINE__, PEAR_LOG_INFO);
               // session can be closed here!
+              #session_unset();
+              #session_destroy();
+            }
+
+            if (!$this->_actionCommands && $state->getSyncStatus() == SERVER_SYNC_FINNISHED && $this->_clientSentFinal) {
+              Horde::logMessage('SyncML: destroying sync session '.session_id(), __FILE__, __LINE__, PEAR_LOG_INFO);
+              // session can be closed here!
               session_unset();
               session_destroy();
             }
@@ -582,6 +591,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             		{
             			$state->setSyncStatus(CLIENT_SYNC_FINNISHED);
             		}
+            		$this->_clientSentFinal = true;
             		Horde::logMessage('SyncML: Sync _syncTag = '. $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_INFO);
             		break;
             	default:

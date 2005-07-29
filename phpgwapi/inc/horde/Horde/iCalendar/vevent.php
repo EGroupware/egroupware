@@ -31,7 +31,7 @@ class Horde_iCalendar_vevent extends Horde_iCalendar {
         // Default values.
         $requiredAttributes = array();
         $requiredAttributes['DTSTAMP'] = time();
-        $requiredAttributes['ORGANIZER'] = 'Unknown Organizer';
+        #$requiredAttributes['ORGANIZER'] = 'Unknown Organizer';
         $requiredAttributes['UID'] = $this->_exportDateTime(time()) . '@' . $_SERVER['SERVER_NAME'];
 
         $method = !empty($this->_container) ?
