@@ -138,7 +138,7 @@
 				$this->t->set_var('formhandle','');
 
 				$this->t->set_var('messages',lang('Error: There was a problem finding the preference file for %1 in %2',
-					$GLOBALS['egw_info']['navbar'][$_GET['appname']]['title'],
+					$GLOBALS['egw_info']['apps'][$_GET['appname']]['title'],
 					EGW_SERVER_ROOT . SEP . $_GET['appname'] . SEP . 'inc' . SEP . 'hook_settings.inc.php'
 				));
 			}
@@ -351,7 +351,7 @@
 			}
 			$this->t->set_var('row_value',"<input name=\"${GLOBALS[type]}[$name]\"value=\"".
 			@htmlspecialchars($default,ENT_COMPAT,$charSet)."\"$options>$def_text");
-			$this->t->set_var('row_name',lang($label));
+			$this->t->set_var('row_name',$run_lang !== -1 ? lang($label) : $label);
 			$GLOBALS['egw']->nextmatchs->template_alternate_row_color($this->t);
 
 			$this->t->fp('rows',$this->process_help($help,$run_lang) ? 'help_row' : 'row',True);
@@ -458,7 +458,7 @@
 				$def_text = $def_text != '' ? ' <i><font size="-1">'.lang('default').':&nbsp;'.$values[$def_text].'</font></i>' : '';
 			}
 			$this->t->set_var('row_value',"<select name=\"${GLOBALS[type]}[$name]\">$s</select>$def_text");
-			$this->t->set_var('row_name',lang($label));
+			$this->t->set_var('row_name',$run_lang !== -1 ? lang($label) : $label);
 			$GLOBALS['egw']->nextmatchs->template_alternate_row_color($this->t);
 
 			$this->t->fp('rows',$this->process_help($help,$run_lang) ? 'help_row' : 'row',True);
