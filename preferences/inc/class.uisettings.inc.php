@@ -37,7 +37,21 @@
 			{
 				$GLOBALS['egw']->redirect_link('/preferences/index.php');
 			}
-
+			if (substr($_SERVER['PHP_SELF'],-15) == 'preferences.php')
+			{
+				$pref_link = '/preferences/preferences.php';
+				$link_params = array(
+					'appname'    => $_GET['appname'],
+				);
+			}
+			else
+			{
+				$pref_link = '/index.php';
+				$link_params = array(
+					'menuaction' => 'preferences.uisettings.index',
+					'appname'    => $_GET['appname'],
+				);
+			}
 			$user    = get_var('user',Array('POST'));
 			$forced  = get_var('forced',Array('POST'));
 			$default = get_var('default',Array('POST'));
@@ -118,11 +132,11 @@
 			// changes for the admin itself, should have immediate feedback ==> redirect
 			if(!$error && ($_POST['save'] || $_POST['apply']) && $GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences')
 			{
-				$GLOBALS['egw']->redirect_link('/index.php','menuaction=preferences.uisettings.index&appname=' . $_GET['appname']);
+				$GLOBALS['egw']->redirect_link($pref_link,$link_params);
 			}
 
 			$this->t->set_var('messages',$error);
-			$this->t->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=' . $_GET['appname']));
+			$this->t->set_var('action_url',$GLOBALS['egw']->link($pref_link,$link_params));
 			$this->t->set_var('th_bg',  $GLOBALS['egw_info']['theme']['th_bg']);
 			$this->t->set_var('th_text',$GLOBALS['egw_info']['theme']['th_text']);
 			$this->t->set_var('row_on', $GLOBALS['egw_info']['theme']['row_on']);
@@ -238,15 +252,15 @@
 			{
 				$tabs[] = array(
 					'label' => lang('Your preferences'),
-					'link'  => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=' . $_GET['appname'] . "&type=user")
+					'link'  => $GLOBALS['egw']->link($pref_link,$link_params+array('type'=>'user')),
 				);
 				$tabs[] = array(
 					'label' => lang('Default preferences'),
-					'link'  => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=' . $_GET['appname'] . "&type=default")
+					'link'  => $GLOBALS['egw']->link($pref_link,$link_params+array('type'=>'default')),
 				);
 				$tabs[] = array(
 					'label' => lang('Forced preferences'),
-					'link'  => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=' . $_GET['appname'] . "&type=forced")
+					'link'  => $GLOBALS['egw']->link($pref_link,$link_params+array('type'=>'forced')),
 				);
 
 				switch($GLOBALS['type'])
