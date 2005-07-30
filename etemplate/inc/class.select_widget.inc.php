@@ -226,20 +226,15 @@
 					{
 						$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
 					}
-					$cats = $GLOBALS['phpgw']->categories->return_sorted_array(0,False,'','','',!$type);
-
-					while (list(,$cat) = @each($cats))
+					foreach((array)$GLOBALS['phpgw']->categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 					{
-						for ($j=0,$s=''; $j < $cat['level']; $j++)
-						{
-							$s .= '&nbsp;';
-						}
-						$s .= $GLOBALS['phpgw']->strip_html($cat['name']);
+						$s = str_repeat('&nbsp;',$cat['level']) . $GLOBALS['egw']->strip_html($cat['name']);
+
 						if ($cat['app_name'] == 'phpgw')
 						{
 							$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
 						}
-						if ($cat['owner'] == '-1')
+						elseif ($cat['owner'] == '-1')
 						{
 							$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($cat['app_name']) . '&gt;';
 						}
