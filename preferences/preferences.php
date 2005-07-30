@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* phpGroupWare - Preferences                                               *
-	* http://www.phpgroupware.org                                              *
+	* eGroupWare - Preferences                                                 *
+	* http://www.egroupware.org                                                *
 	* Written by RalfBecker@outdoor-training.de to emulate the old preferences *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -20,93 +20,110 @@
 		'enable_nextmatchs_class' => True,
 	);
 	include('../header.inc.php');
-	
+
 	function create_section($title)
 	{
 		$GLOBALS['settings'][] = array(
-			'admin'  => true,	// admin is controlled by the old-format hook_settings file itself
-			'xmlrpc' => true,	// make everything availible via xmlrpc
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'title'  => $title,
 			'type'   => 'section',
 		);
 	}
-	
+
 	function create_input_box($label,$name,$help='',$default='',$size='',$maxsize='',$type='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => true,	// admin is controlled by the old-format hook_settings file itself
-			'xmlrpc' => true,	// make everything availible via xmlrpc
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'input',
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
-			if (isset($$var)) $GLOBALS['settings'][$name][$var] = $$var;
+			if(isset($$var))
+			{
+				$GLOBALS['settings'][$name][$var] = $$var;
+			}
 		}
 	}
-	
+
 	function create_password_box($label,$name,$help='',$size='',$maxsize='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => true,	// admin is controlled by the old-format hook_settings file itself
-			'xmlrpc' => true,	// make everything availible via xmlrpc
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'password',
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
-			if (isset($$var)) $GLOBALS['settings'][$name][$var] = $$var;
+			if(isset($$var))
+			{
+				$GLOBALS['settings'][$name][$var] = $$var;
+			}
 		}
 	}
 
 	function create_text_area($label,$name,$rows,$cols,$help='',$default='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => true,	// admin is controlled by the old-format hook_settings file itself
-			'xmlrpc' => true,	// make everything availible via xmlrpc
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'text',
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
-			if (isset($$var)) $GLOBALS['settings'][$name][$var] = $$var;
+			if(isset($$var))
+			{
+				$GLOBALS['settings'][$name][$var] = $$var;
+			}
 		}
 	}
-	
+
 	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => true,	// admin is controlled by the old-format hook_settings file itself
-			'xmlrpc' => true,	// make everything availible via xmlrpc
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'select',
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
-			if (isset($$var)) $GLOBALS['settings'][$name][$var] = $$var;
+			if(isset($$var))
+			{
+				$GLOBALS['settings'][$name][$var] = $$var;
+			}
 		}
 	}
 
 	function create_check_box($label,$name,$help='',$default='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => true,	// admin is controlled by the old-format hook_settings file itself
-			'xmlrpc' => true,	// make everything availible via xmlrpc
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'check',
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
-			if (isset($$var)) $GLOBALS['settings'][$name][$var] = $$var;
+			if(isset($$var))
+			{
+				$GLOBALS['settings'][$name][$var] = $$var;
+			}
 		}
 	}
-	
+
 	function create_notify($label,$name,$rows,$cols,$help='',$default='',$values='',$subst_help=True,$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => true,	// admin is controlled by the old-format hook_settings file itself
-			'xmlrpc' => true,	// make everything availible via xmlrpc
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'notify',
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
-			if (isset($$var)) $GLOBALS['settings'][$name][$var] = $$var;
+			if(isset($$var))
+			{
+				$GLOBALS['settings'][$name][$var] = $$var;
+			}
 		}
 	}
 	ExecMethod('preferences.uisettings.index');
-	
