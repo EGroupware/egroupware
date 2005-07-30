@@ -103,7 +103,7 @@
 			return True;
 		}
 
-		function read($app,$prefix,$type='user')
+		function read($app,$prefix='',$type='user')
 		{
 			switch($type)	// set up some class vars to be used when processing the hooks
 			{
@@ -129,6 +129,15 @@
 			{
 				echo 'Preferences array:' . "\n";
 				_debug_array($this->prefs);
+			}
+			/* Ensure that a struct will be returned via xml-rpc (this might change) */
+			if($this->xmlrpc)
+			{
+				return $this->prefs;
+			}
+			else
+			{
+				return False;
 			}
 		}
 
@@ -196,7 +205,7 @@
 
 			$GLOBALS['egw']->preferences->save_repository(True,$type);
 
-			return False;
+			return $this->prefs;
 		}
 
 		function check_app()
