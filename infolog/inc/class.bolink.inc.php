@@ -59,14 +59,6 @@
 				),
 				'view_id' => 'project_id'
 			),
-			'calendar' => array(
-				'query' => 'calendar_query',
-				'title' => 'calendar_title',
-				'view' => array (
-					'menuaction' => 'calendar.uicalendar.view'
-				),
-				'view_id' => 'cal_id'
-			), 
 			'infolog' => array(
 				'query' => 'infolog.boinfolog.link_query',
 				'title' => 'infolog.boinfolog.link_title',
@@ -548,7 +540,23 @@
 			}
 			return $view;
 		}
-		
+
+		/**
+		 * Check if $app uses a popup for $action
+		 *
+		 * @param string $app app-name
+		 * @param string $action='view' name of the action, atm. 'view' or 'add'
+		 * @return boolean/string false if no popup is used or $app is not registered, otherwise string with the prefered popup size (eg. '640x400)
+		 */
+		function is_popup($app,$action='view')
+		{
+			if (!($reg = $this->app_register[$app]) || !$reg[$action.'_popup'])
+			{
+				return false;
+			}
+			return $reg[$action.'_popup'];
+		}	
+
 		function get_file($link='')
 		{
 			if (is_array($link))
@@ -570,8 +578,7 @@
 			}
 			$browser =& CreateObject('phpgwapi.browser');
 
-			$local = $this->attached_local($app,$id,$filename,
-				get_var('REMOTE_ADDR',Array('SERVER')),$browser->is_windows());
+			$local = $this->attached_local($app,$id,$filename,$_SERVER['REMOTE_ADDR'],$browser->is_windows());
 
 			if ($local)
 			{
