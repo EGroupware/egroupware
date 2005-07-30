@@ -817,10 +817,10 @@
 			}
 			switch ($type)
 			{
-				case 'label':		//  size: [[b]old][[i]talic][,link][,activate_links][,label_for]
+				case 'label':		//  size: [[b]old][[i]talic][,link][,activate_links][,label_for][,link_popup_size]
 					if (is_array($value))
 						break;
-					list($style,$extra_link,$activate_links,$label_for) = explode(',',$cell_options);
+					list($style,$extra_link,$activate_links,$label_for,$extra_link_popup) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br($this->html->htmlspecialchars($value));
 					if ($activate_links) $value = $this->html->activate_links($value);
@@ -1434,7 +1434,12 @@
 						' onmouseout="self.status=\'\'; return true;"' : '';
 
 					if ($extra_link_target) $options .= ' target="'.$extra_link_target.'"';
-
+					
+					if ($extra_link_popup)
+					{
+						list($w,$h) = explode('x',$extra_link_popup);
+						$options .= ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+					}
 					return $this->html->a_href($html,$extra_link,'',$options);
 				}
 			}

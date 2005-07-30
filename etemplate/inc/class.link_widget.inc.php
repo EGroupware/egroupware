@@ -103,9 +103,15 @@
 				{
 					foreach ($value as $link)
 					{
+						$options = '';
+						if (($popup = $this->link->is_popup($link['app'],'view')))
+						{
+							list($w,$h) = explode('x',$popup);
+							$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+						}
 						$str .= ($str !== '' ? ', ' : '') . $tmpl->html->a_href(
 							$tmpl->html->htmlspecialchars($this->link->title($link['app'],$link['id'])),
-							$this->link->view($link['app'],$link['id'],$link));
+							'/index.php',$this->link->view($link['app'],$link['id'],$link),$options);
 					}
 				}
 				$cell['type'] = 'html';
@@ -201,6 +207,7 @@
 					if (!is_array($link['id']))
 					{
 						$value[$row]['view']  = $this->link->view($link['app'],$link['id'],$link);
+						$value[$row]['popup'] = $this->link->is_popup($link['app'],'view');
 					}
 				}
 				break;
