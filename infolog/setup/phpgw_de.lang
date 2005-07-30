@@ -228,7 +228,7 @@ status	infolog	de	Status
 status ...	infolog	de	Status ...
 sub	infolog	de	Unter-<br>einträge
 subject	infolog	de	Titel
-task	infolog	de	Auftrag
+task	infolog	de	Aufgabe
 test import (show importable records <u>only</u> in browser)	infolog	de	Test Import (zeige importierbare Datensätze <u>nur</u> im Browser)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 10 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	de	der Name wird intern benutzt (<= 20 Zeichen), wenn er geändert wird, werden existierende Daten unzugänglich
@@ -238,7 +238,7 @@ til when should the todo or phonecall be finished	infolog	de	bis wann soll der A
 times	infolog	de	Zeiten
 to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
 today	infolog	de	Heute
-todo	infolog	de	Auftrag
+todo	infolog	de	Aufgabe
 translation	infolog	de	Translation
 typ	infolog	de	Typ
 typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
