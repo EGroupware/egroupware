@@ -259,7 +259,7 @@
 		{
 			if (!$id)
 			{
-				$id = $this->appsession_id;
+				$id = $this->appsession_id();
 			}
 			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
 
