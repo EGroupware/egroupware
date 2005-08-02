@@ -684,6 +684,8 @@
 		{
 			if (is_array($new))
 			{
+				if (!is_array($old)) $old = (array) $old;
+
 				foreach($new as $k => $v)
 				{
 					if (!is_array($v) || !isset($old[$k]))
