@@ -263,7 +263,7 @@
 		Escaped Characters are: '*', '(', ')', ' ', '\', NUL
 		It's actually a PHP-Bug, that we have to escape space.
 		For all other Characters, refer to RFC2254.
-		@param $string string to be escaped
+		@param $string either a string to be escaped, or an array of values to be escaped
 		*/
 		function ldap_addslashes($string='')
 		{

@@ -199,7 +199,7 @@
 			{
 				foreach($stock_fieldnames as $name => $value)
 				{
-					$return_fields[0][$name] = utf8_decode($ldap_fields[0][$value][0]);
+					$return_fields[0][$name] = $GLOBALS['phpgw']->translation->convert(($ldap_fields[0][$value][0]),'utf-8');
 				}
 			}
 
@@ -271,7 +271,7 @@
 			{
 				foreach($stock_fieldnames as $name => $value)
 				{
-					$return_fields[0][$name] = utf8_decode($ldap_fields[0][$value][0]);
+					$return_fields[0][$name] = $GLOBALS['phpgw']->translation->convert(($ldap_fields[0][$value][0]),'utf-8');
 				}
 			}
 
@@ -415,7 +415,7 @@
 				if(is_array($query))
 				{
 					// must be fixed somehow Milosch????
-					$myfilter = $this->makefilter($filterfields,$query,'',$DEBUG);
+					$myfilter = $this->makefilter($filterfields,$GLOBALS['phpgw']->common->ldap_addslashes($query),'',$DEBUG);
 				}
 				else
 				{
@@ -428,13 +428,14 @@
 						'org_name'	=> 'o',
 						'org_unit'	=> 'ou'
 					);
-					$myfilter = $this->makefilter($filterfields,$search_filter,$query,$DEBUG);
+					$myfilter = $this->makefilter($filterfields,$search_filter,$GLOBALS['phpgw']->common->ldap_addslashes($query),$DEBUG);
 				}
 			}
 			else
 			{
 				$myfilter = $this->makefilter($filterfields,'','',$DEBUG);
 			}
+			$myfilter = $GLOBALS['phpgw']->translation->convert($myfilter,$GLOBALS['phpgw']->translation->system_charset,'utf-8');
 
 			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], $myfilter);
 
@@ -498,7 +499,7 @@
 					{
 						foreach($stock_fieldnames as $f_name => $f_value)
 						{
-							$return_fields[$j][$f_name] = utf8_decode($ldap_fields[$i][$f_value][0]);
+							$return_fields[$j][$f_name] = $GLOBALS['phpgw']->translation->convert(($ldap_fields[$i][$f_value][0]),'utf-8');
 						}
 					}
 					$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
@@ -525,7 +526,9 @@
 			}
 
 			$first = $last = "*";
-			if(strstr($query,"*"))
+			// this can only be the case, if $query is a character-query.
+			// normal queries don't allow wildcards and escape them
+			if(strstr($query,"*") && !strstr($query,"\*"))
 			{
 				if(substr($query,-1) == "*")
 				{
@@ -697,7 +700,7 @@
 				{
 					if($stock_fields[$name] != '')
 					{
-						$ldap_fields[$value] = utf8_encode($stock_fields[$name]);
+						$ldap_fields[$value] = $GLOBALS['phpgw']->translation->convert($stock_fields[$name],$GLOBALS['phpgw']->translation->system_charset,'utf-8');
 					}
 				}
 			}
@@ -945,12 +948,12 @@
 						if($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
 						{
 							//echo "<br>".$fname." => ".$fvalue." was there";
-							$err = ldap_modify($this->ldap,$dn,array($fvalue => utf8_encode($stock_fields[$fname])));
+							$err = ldap_modify($this->ldap,$dn,array($fvalue => $GLOBALS['phpgw']->translation->convert($stock_fields[$fname],$GLOBALS['phpgw']->translation->system_charset,'utf-8')));
 						}
 						elseif(!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
 						{
 							//echo "<br>".$fname." not there - '".$fvalue."'";
-							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => utf8_encode($stock_fields[$fname])));
+							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $GLOBALS['phpgw']->translation->convert($stock_fields[$fname],$GLOBALS['phpgw']->translation->system_charset,'utf-8')));
 						}
 						elseif($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
 						{
