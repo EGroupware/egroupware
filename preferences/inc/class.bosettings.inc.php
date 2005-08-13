@@ -35,6 +35,10 @@
 			'process_array' => array(
 				'in'  => array('int','struct'),
 				'out' => array('array')
+			),
+			'list_methods' => array(
+				'in' => array('string'),
+				'out' => array('struct')
 			)
 		);
 
@@ -245,6 +249,11 @@
 							'function'  => 'process_array',
 							'signature' => array(array(xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcStruct,xmlrpcString,xmlrpcString)),
 							'docstring' => lang('Write prefs for the specified application.')
+						),
+						'list_methods' => array(
+							'function'  => 'list_methods',
+							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
+							'docstring' => lang('Read this list of methods.')
 						)
 					);
 					return $xml_functions;
