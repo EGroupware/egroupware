@@ -69,7 +69,7 @@
 			{
 				$fp = fopen($this->log,'a+');
 				fwrite($fp,"\n\n" . date('Y-m-d H:i:s') . " authorized="
-					. ($this->authed ? $GLOBALS['phpgw_info']['user']['account_lid'] : 'False')
+					. ($this->authed ? $GLOBALS['egw_info']['user']['account_lid'] : 'False')
 					. ", method='$this->last_method'\n");
 				fwrite($fp,"==== GOT ============================\n" . $GLOBALS['HTTP_RAW_POST_DATA']
 					. "\n==== RETURNED =======================\n");
@@ -149,11 +149,9 @@
 
 		function parseRequest($data='')
 		{
-			global $HTTP_RAW_POST_DATA;
-	
 			if($data == '')
 			{
-				$data = $HTTP_RAW_POST_DATA;
+				$data = $GLOBALS['HTTP_RAW_POST_DATA'];
 			}
 //			return $this->echoInput($data);
 
@@ -204,7 +202,7 @@
 						case 'server':
 						case 'phpgwapi':
 							/* Server role functions only - api access */
-							if($GLOBALS['phpgw']->acl->get_role() >= PHPGW_ACL_SERVER)
+							if($GLOBALS['egw']->acl->get_role() >= EGW_ACL_SERVER)
 							{
 								$dmap = ExecMethod(sprintf('%s.%s.%s','phpgwapi',$class,'list_methods'),'xmlrpc');
 							}
@@ -216,7 +214,7 @@
 							break;
 						default:
 							/* User-level application access */
-							if($GLOBALS['phpgw']->acl->check('run',PHPGW_ACL_READ,$app))
+							if($GLOBALS['egw']->acl->check('run',EGW_ACL_READ,$app))
 							{
 								$dmap = ExecMethod(sprintf('',$app,$class,'list_methods'),'xmlrpc');
 							}
@@ -292,14 +290,12 @@
 
 		function echoInput()
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			// a debugging routine: just echos back the input
 			// packet as a string value
 
 			/* TODO */
 //			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '" . $HTTP_RAW_POST_DATA,'string'));
-			return $HTTP_RAW_POST_DATA;
+			return $GLOBALS['HTTP_RAW_POST_DATA'];
 		}
 
 		function xmlrpc_custom_error($error_number, $error_string, $filename, $line, $vars)

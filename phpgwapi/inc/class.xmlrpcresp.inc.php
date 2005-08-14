@@ -20,77 +20,78 @@
 
 	class xmlrpcresp
 	{
-		var $xv = array();
-		var $fn;
-		var $fs = '';
-		var $hdrs;
+		var $val = 0;
+		var $errno = 0;
+		var $errstr = '';
+		var $hdrs = array();
 
-		function xmlrpcresp($val='', $fcode=0, $fstr='')
+		/// @todo add check that $val is of correct type???
+		function xmlrpcresp($val, $fcode = 0, $fstr = '')
 		{
-			if ($fcode!=0)
+			if($fcode != 0)
 			{
-				$this->xv = 0;
-				$this->fn = $fcode;
-				$this->fs = htmlspecialchars($fstr);
+				// error
+				$this->errno = $fcode;
+				$this->errstr = $fstr;
+				//$this->errstr = htmlspecialchars($fstr); // XXX: encoding probably shouldn't be done here; fix later.
+			}
+			elseif(!is_object($val) || (get_class($val) != 'xmlrpcval' && !is_subclass_of($val, 'xmlrpcval')))
+			{
+				// programmer error
+				// TODO
+				error_log("Invalid type '" . gettype($val) . "' (value: $val) passed to xmlrpcresp. Defaulting to empty value.");
+				$this->val =& new xmlrpcval();
 			}
 			else
 			{
-				if($val)
-				{
-					$this->xv = $val;
-				}
-				$this->fn = 0;
+				// success
+				$this->val = $val;
 			}
 		}
 
 		function faultCode()
 		{
-			if (isset($this->fn)) 
-			{
-				return $this->fn;
-			}
-			else
-			{
-				return 0;
-			}
+			return $this->errno;
 		}
 
 		function faultString()
 		{
-			return $this->fs;
+			return $this->errstr;
 		}
 
 		function value()
 		{
-			return $this->xv;
+			return $this->val;
 		}
 
 		function serialize()
 		{
-			$rs='<methodResponse>'."\n";
-			if (isset($this->fn) && !empty($this->fn))
+			$result = "<methodResponse>\n";
+			if($this->errno)
 			{
-				$rs .= '<fault>
-  <value>
-    <struct>
-      <member>
-        <name>faultCode</name>
-        <value><int>' . $this->fn . '</int></value>
-      </member>
-      <member>
-        <name>faultString</name>
-        <value><string>' . $this->fs . '</string></value>
-      </member>
-    </struct>
-  </value>
+				// G. Giunta 2005/2/13: let non-ASCII response messages be tolerated by clients
+				$result .= '<fault>
+<value>
+<struct>
+<member>
+<name>faultCode</name>
+<value><int>' . $this->errno . '</int></value>
+</member>
+<member>
+<name>faultString</name>
+<value><string>' . xmlrpc_encode_entitites($this->errstr) . '</string></value>
+</member>
+</struct>
+</value>
 </fault>';
 			}
 			else
 			{
-				$rs .= '<params>'."\n".'<param>'."\n".@$this->xv->serialize().'</param>'."\n".'</params>';
+				$result .= "<params>\n<param>\n" .
+					$this->val->serialize() .
+					"</param>\n</params>";
 			}
-			$rs.="\n".'</methodResponse>';
-			return $rs;
+			$result .= "\n</methodResponse>";
+			return $result;
 		}
 	}
-?>

@@ -31,6 +31,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
+  /* $Id$ */
+
 	class xmlrpc_client
 	{
 		var $path;
@@ -144,10 +146,10 @@
 				$credentials = 'Authorization: Basic ' . base64_encode($username . ':' . $password) . "\r\n";
 			}
 
-			$op = 'POST ' . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 1.0\r\n"
+			$op = 'POST ' . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 2.0\r\n"
 				. 'Host: '. $this->server . "\r\n"
-				. 'X-PHPGW-Server: '  . $this->server . ' ' . "\r\n"
-				. 'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. 'X-EGW-Server: '  . $this->server . ' ' . "\r\n"
+				. 'X-EGW-Version: ' . $GLOBALS['egw_info']['server']['versions']['phpgwapi'] . "\r\n"
 				. $credentials
 				. "Content-Type: text/xml\r\nContent-Length: "
 				. strlen($msg->payload) . "\r\n\r\n"
@@ -208,8 +210,8 @@
 			curl_setopt($curl, CURLOPT_HEADER, 1);
 			// return the header too
 			curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-				'X-PHPGW-Server: '  . $this->server,
-				'X-PHPGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
+				'X-EGW-Server: '  . $this->server,
+				'X-EGW-Version: ' . $GLOBALS['egw_info']['server']['versions']['phpgwapi'],
 				'Content-Type: text/xml'
 			));
 			if ($timeout)
