@@ -22,7 +22,7 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
-	
+
  	/* $Id$ */
 
 	/**
@@ -206,46 +206,6 @@
 			}
 		}
 
-		/**
-		* Introspection for XML-RPC/SOAP
-		* Diabled - why??
-		*
-		* @param string $_type tpye of introspection being sought
-		* @return array available methods and args
-		*/
-		function DONTlist_methods($_type)
-		{
-			if (is_array($_type))
-			{
-				$_type = $_type['type'];
-			}
-
-			switch($_type)
-			{
-				case 'xmlrpc':
-					$xml_functions = array(
-						'list_methods' => array(
-							'function'  => 'list_methods',
-							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
-							'docstring' => lang('Read this list of methods.')
-						),
-						'update_dla' => array(
-							'function'  => 'update_dla',
-							'signature' => array(array(xmlrpcBoolean)),
-							'docstring' => lang('Returns an array of todo items')
-						)
-					);
-					return $xml_functions;
-					break;
-				case 'soap':
-					return $this->soap_functions;
-					break;
-				default:
-					return array();
-					break;
-			}
-		}
-
 		function split_login_domain($both,&$login,&$domain)
 		{
 			$parts = explode('@',$both);
@@ -309,6 +269,20 @@
 
 			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
 
+			/* This is to ensure that we authenticate to the correct domain (might not be default) */
+			if($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
+			{
+				$GLOBALS['egw']->ADOdb = null;
+				$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
+				// reset the db
+				$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$this->account_domain]['db_host'];
+				$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$this->account_domain]['db_port'];
+				$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$this->account_domain]['db_name'];
+				$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$this->account_domain]['db_user'];
+				$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$this->account_domain]['db_pass'];
+				$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->account_domain]['db_type'];
+				$GLOBALS['egw']->setup('',False);
+			}
 			$GLOBALS['egw_info']['user']['kp3'] = $this->kp3;
 
 			$this->update_dla();
@@ -325,8 +299,11 @@
 			$this->iv  = $GLOBALS['egw_info']['server']['mcrypt_iv'];
 			$GLOBALS['egw']->crypto->init(array($this->key,$this->iv));
 
-			if ($fill_egw_info_and_repositories) $this->read_repositories(@$GLOBALS['egw_info']['server']['cache_phpgw_info']);
-			
+			if ($fill_egw_info_and_repositories)
+			{
+				$this->read_repositories(@$GLOBALS['egw_info']['server']['cache_phpgw_info']);
+			}
+
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
 				if(is_object($GLOBALS['egw']->log))
@@ -345,7 +322,7 @@
 			{
 				$GLOBALS['egw_info']['user']  = $this->user;
 				$GLOBALS['egw_info']['hooks'] = $this->hooks;
-	
+
 				$GLOBALS['egw_info']['user']['session_ip'] = $session['session_ip'];
 				$GLOBALS['egw_info']['user']['passwd']     = base64_decode($this->appsession('password','phpgwapi'));
 			}
@@ -500,9 +477,24 @@
 			}
 			$now = time();
 
+			/* This is to ensure that we authenticate to the correct domain (might not be default) */
+			if($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
+			{
+				$GLOBALS['egw']->ADOdb = null;
+				$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
+				// reset the db
+				$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$this->account_domain]['db_host'];
+				$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$this->account_domain]['db_port'];
+				$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$this->account_domain]['db_name'];
+				$GLOBALS['egw_info']['server']['db_user'] = $GLOBALS['egw_domain'][$this->account_domain]['db_user'];
+				$GLOBALS['egw_info']['server']['db_pass'] = $GLOBALS['egw_domain'][$this->account_domain]['db_pass'];
+				$GLOBALS['egw_info']['server']['db_type'] = $GLOBALS['egw_domain'][$this->account_domain]['db_type'];
+				$GLOBALS['egw']->setup('',False);
+			}
+
 			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			$user_ip = $this->getuser_ip();
-				
+
 			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid);
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
@@ -642,7 +634,7 @@
 		{
 			$blocked = False;
 			$block_time = time() - $GLOBALS['egw_info']['server']['block_time'] * 60;
-			
+
 			$ip = $this->db->db_addslashes($ip);
 			$this->db->query("SELECT count(*) FROM phpgw_access_log WHERE account_id=0 AND ip='$ip' AND li > $block_time",__LINE__,__FILE__);
 			$this->db->next_record();
@@ -667,7 +659,7 @@
 				$from    = 'eGroupWare@'.$GLOBALS['egw_info']['server']['mail_suffix'];
 				$subject = lang("eGroupWare: login blocked for user '%1', IP %2",$login,$ip);
 				$body    = lang("Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4",$false_id,$login,$false_ip,$ip);
-				
+
 				if(!is_object($GLOBALS['egw']->send))
 				{
 					$GLOBALS['egw']->send = CreateObject('phpgwapi.send');
@@ -704,7 +696,7 @@
 			$this->session_flags = $session['session_flags'];
 
 			list($this->account_lid,$this->account_domain) = explode('@', $session['session_lid']);
-			
+
 			if ($this->account_domain == '')
 			{
 				$this->account_domain = $GLOBALS['egw_info']['server']['default_domain'];
@@ -1057,7 +1049,7 @@
 			{
 				$this->history_id = md5($this->login . time());
 				$history = $this->appsession($location = 'history', $appname = 'phpgwapi');
-				
+
 				if(count($history) >= $GLOBALS['egw_info']['server']['max_history'])
 				{
 					array_shift($history);
@@ -1066,7 +1058,7 @@
 			}
 			return $this->history_id;
 		}
-		
+
 		/**
 		* Detects if the page has already been called before - good for forms
 		*
@@ -1318,7 +1310,7 @@
 		*/
 		function list_sessions($start,$order,$sort,$all_no_sort = False)
 		{}
-		
+
 		/**
 		* Get the number of normal / non-anonymous sessions
 		* 
