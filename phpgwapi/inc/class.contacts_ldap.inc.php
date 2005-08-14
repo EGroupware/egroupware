@@ -209,7 +209,10 @@
 				$one_type = $return_fields[0]['adr_one_type'];
 				foreach($this->adr_types as $name => $val)
 				{
-					eval("if(strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
+					if(strstr($one_type,$name))
+					{
+						$return_fields[0]['one_'.$name] = 'on';
+					}
 				}
 			}
 			if($return_fields[0]['adr_two_type'])
@@ -217,7 +220,10 @@
 				$two_type = $return_fields[0]['adr_two_type'];
 				foreach($this->adr_types as $name => $val)
 				{
-					eval("if(strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
+					if (strstr($two_type,$name))
+					{
+						$return_fields[0]['two_'.$name] = 'on';
+					}
 				}
 			}
 
@@ -281,7 +287,10 @@
 				$one_type = $return_fields[0]['adr_one_type'];
 				foreach($this->adr_types as $name => $val)
 				{
-					eval("if(strstr(\$one_type,\$name)) { \$return_fields[0][\"one_\$name\"] = \"on\"; }");
+					if(strstr($one_type,$name))
+					{
+						$return_fields[0]['one_'.$name] = 'on';
+					}
 				}
 			}
 			if($return_fields[0]['adr_two_type'])
@@ -289,7 +298,10 @@
 				$two_type = $return_fields[0]['adr_two_type'];
 				foreach($this->adr_types as $name => $val)
 				{
-					eval("if(strstr(\$two_type,\$name)) { \$return_fields[0][\"two_\$name\"] = \"on\"; }");
+					if (strstr($two_type,$name))
+					{
+						$return_fields[0]['two_'.$name] = 'on';
+					}
 				}
 			}
 

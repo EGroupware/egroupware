@@ -213,7 +213,10 @@
 				$one_type = $this->db->f('adr_one_type');
 				foreach($this->adr_types as $name => $val)
 				{
-					if (strstr($one_type,$name)) $return_fields[0]['one_'.$name] = 'on';
+					if (strstr($one_type,$name))
+					{
+						$return_fields[0]['one_'.$name] = 'on';
+					}
 				}
 			}
 			if ($this->db->f('adr_two_type'))
@@ -221,7 +224,10 @@
 				$two_type = $this->db->f('adr_two_type');
 				foreach($this->adr_types as $name => $val)
 				{
-					if (strstr($two_type,$name)) $return_fields[0]['two_'.$name] = 'on';
+					if (strstr($two_type,$name))
+					{
+						$return_fields[0]['two_'.$name] = 'on';
+					}
 				}
 			}
 
