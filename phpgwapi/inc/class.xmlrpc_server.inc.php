@@ -1,8 +1,9 @@
 <?php
   /**************************************************************************\
-  * eGroupWare API - XML-RPC Server using builtin php functions              *
-  * This file written by Miles Lott <milos@groupwhere.org>                   *
-  * Copyright (C) 2003 Miles Lott                                            *
+  * eGroupWare API - XML-RPC Server                                          *
+  * ------------------------------------------------------------------------ *
+  * This library is part of the eGroupWare API                               *
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -65,27 +66,27 @@
 				return False;
 			}
 
-			foreach(array('year','month','mday','hour','min','sec') as $n => $name)
-			{
-				$date[$name] = (int)$arr[$n];
+				foreach(array('year','month','mday','hour','min','sec') as $n => $name)
+				{
+					$date[$name] = (int)$arr[$n];
+				}
+				return $timestamp ? mktime($date['hour'],$date['min'],$date['sec'],
+					$date['month'],$date['mday'],$date['year']) : $date;
 			}
-			return $timestamp ? mktime($date['hour'],$date['min'],$date['sec'],
-				$date['month'],$date['mday'],$date['year']) : $date;
-		}
 
 		// translate cat-ids to array with id-name pairs
 		function cats2xmlrpc($cats)
 		{
-			if (!is_object($GLOBALS['phpgw']->categories))
+			if (!is_object($GLOBALS['egw']->categories))
 			{
-				$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+				$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
 			}
 			$xcats = array();
 			foreach($cats as $cat)
 			{
 				if ($cat)
 				{
-					$xcats[$cat] = stripslashes($GLOBALS['phpgw']->categories->id2name($cat));
+					$xcats[$cat] = stripslashes($GLOBALS['egw']->categories->id2name($cat));
 				}
 			}
 			return $xcats;
@@ -98,29 +99,29 @@
 			{
 				$xcats = array();
 			}
-			elseif (!is_object($GLOBALS['phpgw']->categories))
+			elseif (!is_object($GLOBALS['egw']->categories))
 			{
-				$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+				$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
 			}
 			$cats = array();
 			foreach($xcats as $cat => $name)
 			{
-				if ($id = $GLOBALS['phpgw']->categories->name2id($name))
+				if ($id = $GLOBALS['egw']->categories->name2id($name))
 				{
 					// existing cat-name use the id
 					$cat = $id;
 				}
-				elseif (!($org_name = stripslashes($GLOBALS['phpgw']->categories->id2name($cat))) || $org_name == '--')
+				elseif (!($org_name = stripslashes($GLOBALS['egw']->categories->id2name($cat))) || $org_name == '--')
 				{
 					// new cat
-					$cat = $GLOBALS['phpgw']->categories->add(array('name' => $name,'parent' => 0));
+					$cat = $GLOBALS['egw']->categories->add(array('name' => $name,'parent' => 0));
 				}
 				elseif ($org_name != $name)
 				{
 					// cat-name edited
-					list($cat_vals) =$GLOBALS['phpgw']->categories->return_single($cat);
+					list($cat_vals) =$GLOBALS['egw']->categories->return_single($cat);
 					$cat_vals['name'] = $name;
-					$GLOBALS['phpgw']->categories->edit($cat_vals);
+					$GLOBALS['egw']->categories->edit($cat_vals);
 				}
 				$cats[] = (int)$cat;
 			}
@@ -130,18 +131,24 @@
 		// get list (array with id-name pairs) of all cats of $app
 		function categories($complete = False,$app = '')
 		{
-			if (is_array($complete)) $complete = @$complete[0];
-			if (!$app) list($app) = explode('.',$this->last_method);
+			if (is_array($complete))
+			{
+				$complete = @$complete[0];
+			}
+			if (!$app)
+			{
+				list($app) = explode('.',$this->last_method);
+			}
 
-			if (!is_object($GLOBALS['phpgw']->categories))
+			if (!is_object($GLOBALS['egw']->categories))
 			{
-				$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+				$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
 			}
-			if ($GLOBALS['phpgw']->categories->app_name != $app)
+			if ($GLOBALS['egw']->categories->app_name != $app)
 			{
-				$GLOBALS['phpgw']->categories->categories('',$app);
+				$GLOBALS['egw']->categories->categories('',$app);
 			}
-			$cats_arr = $GLOBALS['phpgw']->categories->return_sorted_array(0,False,'','','',True);
+			$cats_arr = $GLOBALS['egw']->categories->return_sorted_array(0,False,'','','',True);
 			$cats = array();
 			if (is_array($cats_arr))
 			{
@@ -157,13 +164,14 @@
 			return $cats;
 		}
 
-		function setSimpleDate($enable=True) {
+		function setSimpleDate($enable=True)
+		{
 			$this->simpledate = $enable;
 		}
 	}
 
-	if(empty($GLOBALS['phpgw_info']['server']['xmlrpc_type']))
+	if(empty($GLOBALS['egw_info']['server']['xmlrpc_type']))
 	{
-		$GLOBALS['phpgw_info']['server']['xmlrpc_type'] = 'php';
+		$GLOBALS['egw_info']['server']['xmlrpc_type'] = 'php';
 	}
-	include_once(PHPGW_API_INC.SEP.'class.xmlrpc_server_' . $GLOBALS['phpgw_info']['server']['xmlrpc_type'] . '.inc.php');
+	include_once(EGW_API_INC.SEP.'class.xmlrpc_server_' . $GLOBALS['egw_info']['server']['xmlrpc_type'] . '.inc.php');

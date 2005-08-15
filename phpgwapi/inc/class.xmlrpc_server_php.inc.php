@@ -31,7 +31,11 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
 // OF THE POSSIBILITY OF SUCH DAMAGE.
 
-	/* $Id$ */
+  /*
+   * Incorporated for egroupware by Miles Lott <milos@groupwhere.org>         
+   */
+
+  /* $Id$ */
 
 	/* BEGIN server class */
 	class xmlrpc_server extends xmlrpc_server_shared
@@ -42,13 +46,11 @@
 		var $resp_struct = array();
 		var $debug = False;
 		var $method_requested;
-		var $log = false; //'/tmp/xmlrpc.log';
+		var $log = '/tmp/xmlrpc.log';
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
-			global $HTTP_RAW_POST_DATA;
-
-			// dispMap is a despatch array of methods
+			// dispMap is a dispatch array of methods
 			// mapped to function names and signatures
 			// if a method
 			// doesn't appear in the map then an unknown
@@ -77,8 +79,6 @@
 
 		function service($r=False)
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			if (!$r)	// do we have a response, or we need to parse the request
 			{
 				$r = $this->parseRequest();
@@ -94,17 +94,17 @@
 			{
 				$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
 				Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
-				echo $GLOBALS['phpgw']->translation->convert($payload,$GLOBALS['phpgw']->translation->charset(),'utf-8');
+				echo $GLOBALS['egw']->translation->convert($payload,$GLOBALS['egw']->translation->charset(),'utf-8');
 			}
 
 			if ($this->log)
 			{
 				$fp = fopen($this->log,'a+');
-				fwrite($fp,"\n\n".date('Y-m-d H:i:s')." authorized=".
-					($this->authed?$GLOBALS['phpgw_info']['user']['account_lid']:'False').
-					", method='$this->last_method'\n");
-				fwrite($fp,"==== GOT ============================\n".$HTTP_RAW_POST_DATA.
-					"\n==== RETURNED =======================\n");
+				fwrite($fp,"\n\n".date('Y-m-d H:i:s') . " authorized="
+					. ($this->authed?$GLOBALS['egw_info']['user']['account_lid']:'False')
+					. ", method='$this->last_method'\n");
+				fwrite($fp,"==== GOT ============================\n" . $GLOBALS['HTTP_RAW_POST_DATA']
+					. "\n==== RETURNED =======================\n");
 				fputs($fp,$payload);
 				fclose($fp);
 			}
@@ -117,7 +117,6 @@
 				fputs($fp,$payload);
 				fclose($fp);
 			}
-
 		}
 
 		/*
@@ -237,8 +236,8 @@
 			}
 			$_type = (is_integer($_res) ? 'int' : gettype($_res));
 
-			if ($_type == 'string' && (ereg('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res)
-			                           || ereg('^[0-9]{4}[0-9]{2}[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res) ) )
+			if ($_type == 'string' && (ereg('^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res) ||
+				ereg('^[0-9]{4}[0-9]{2}[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$',$_res)))
 			{
 				$_type = 'dateTime.iso8601';
 			}
@@ -252,21 +251,20 @@
 
 		function parseRequest($data='')
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			$r = False;
 
 			if ($data == '')
 			{
-				$data = $HTTP_RAW_POST_DATA;
+				$data = $GLOBALS['HTTP_RAW_POST_DATA'];
 			}
 			$parser = xml_parser_create($GLOBALS['xmlrpc_defencoding']);
 
 			$GLOBALS['_xh'][$parser] = array();
-			$GLOBALS['_xh'][$parser]['st']     = '';
-			$GLOBALS['_xh'][$parser]['cm']     = 0;
 			$GLOBALS['_xh'][$parser]['isf']    = 0;
+			$GLOBALS['_xh'][$parser]['isf_reason'] = '';
 			$GLOBALS['_xh'][$parser]['params'] = array();
+			$GLOBALS['_xh'][$parser]['stack']=array();
+			$GLOBALS['_xh'][$parser]['valuestack'] = array();
 			$GLOBALS['_xh'][$parser]['method'] = '';
 
 			// decompose incoming XML into request structure
@@ -285,6 +283,16 @@
 				);
 				xml_parser_free($parser);
 			}
+			elseif ($GLOBALS['_xh'][$parser]['isf'])
+			{
+				xml_parser_free($parser);
+				$r = CreateObject(
+					'phpgwapi.xmlrpcresp',
+					0,
+					$GLOBALS['xmlrpcerr']['invalid_request'],
+					$GLOBALS['xmlrpcstr']['invalid_request'] . ' ' . $GLOBALS['_xh'][$parser]['isf_reason']
+				);
+			}
 			else
 			{
 				xml_parser_free($parser);
@@ -294,24 +302,15 @@
 				for($i=0; $i<sizeof($GLOBALS['_xh'][$parser]['params']); $i++)
 				{
 					// print "<!-- " . $GLOBALS['_xh'][$parser]['params'][$i]. "-->\n");
-					$plist .= "$i - " . $GLOBALS['_xh'][$parser]['params'][$i]. " \n";
-					$code = '$m->addParam(' . $GLOBALS['_xh'][$parser]['params'][$i] . ');';
-					$code = str_replace(',,',",'',",$code);
-					$allok = 0;
-					@eval($code . '; $allok = 1;');
-					if(!$allok)
-					{
-						break;
-					}
+					$m->addParam($GLOBALS['_xh'][$parser]['params'][$i]);
 				}
-				// uncomment this to really see what the server's getting!
-				// xmlrpc_debugmsg($plist);
+
 				// now to deal with the method
 				$methName  = $GLOBALS['_xh'][$parser]['method'];
 				$_methName = $GLOBALS['_xh'][$parser]['method'];
 				$this->last_method = $methName;
 
-				if (ereg("^system\.", $methName))
+				if(ereg("^system\.", $methName))
 				{
 					$dmap = $GLOBALS['_xmlrpcs_dmap'];
 					$sysCall=1;
@@ -322,7 +321,7 @@
 					$sysCall=0;
 				}
 
-				if (!isset($dmap[$methName]['function']))
+				if(!isset($dmap[$methName]['function']))
 				{
 					if($sysCall && $this->authed)
 					{
@@ -333,7 +332,7 @@
 						);
 						return $r;
 					}
-					if ($this->authed)
+					if($this->authed)
 					{
 						/* phpgw mod - fetch the (bo) class methods to create the dmap */
 						// This part is to update session action to match
@@ -345,12 +344,12 @@
 						$service  = $tmp[1];
 						$class    = $tmp[0];
 
-						if (ereg('^service',$method))
+						if(ereg('^service',$method))
 						{
 							$t = 'phpgwapi.' . $class . '.exec';
 							$dmap = ExecMethod($t,array($service,'list_methods','xmlrpc'));
 						}
-						elseif($GLOBALS['phpgw']->acl->check('run',1,$class))
+						elseif($GLOBALS['egw']->acl->check('run',1,$class))
 						{
 							/* This only happens if they have app access.  If not, we will
 							 * return a fault below.
@@ -378,55 +377,46 @@
 					// dispatch if exists
 					if (isset($dmap[$methName]['signature']))
 					{
-						$sr = $this->verifySignature($m, $dmap[$methName]['signature'] );
+						list($sr, $errstr) = $this->verifySignature($m, $dmap[$methName]['signature']);
+						if(!$sr)
+						{
+							// Didn't match.
+
+							return CreateObject(
+								'phpgwapi.xmlrpcresp',
+								0,
+								$GLOBALS['xmlrpcerr']['incorrect_params'],
+								$GLOBALS['xmlrpcstr']['incorrect_params'] . ": ${errstr}"
+							);
+						}
 					}
-					if ( (!isset($dmap[$methName]['signature'])) || $sr[0])
+					if((!isset($dmap[$methName]['signature'])) || $sr)
 					{
 						// if no signature or correct signature
-						if ($sysCall)
+						if($sysCall)
 						{
-							$code = '$r=' . $dmap[$methName]['function'] . '($this, $m);';
-							$code = str_replace(',,',",'',",$code);
-							$allok = 0;
-							@eval($code . '; $allok = 1;');
-							if(!$allok)
-							{
-								return CreateObject('phpgwapi.xmlrpcresp','', $GLOBALS['xmlrpcerr']['invalid_return'], $GLOBALS['xmlrpcstr']['invalid_return']);							
-							}
+							$r = call_user_func($dmap[$methName]['function'], $this, $m);
 						}
 						else
 						{
-							if (function_exists($dmap[$methName]['function']))
+							if(function_exists($dmap[$methName]['function']))
 							{
-								$code = '$r =' . $dmap[$methName]['function'] . '($m);';
-								$code = str_replace(',,',",'',",$code);
-								$allok = 0;
-								@eval($code . '; $allok = 1;');
-								if(!$allok)
-								{
-									return CreateObject('phpgwapi.xmlrpcresp','', $GLOBALS['xmlrpcerr']['invalid_return'], $GLOBALS['xmlrpcstr']['invalid_return']);							
-								}
+								$r = call_user_func($dmap[$methName]['function'],$m);
 							}
 							else
 							{
 								/* phpgw mod - finally, execute the function call and return the values */
 								$params = $GLOBALS['_xh'][$parser]['params'][0];
-								$code = '$p = '  . $params . ';';
 								if(count($params) != 0)
 								{
-									$allok = 0;
-									@eval($code . '; $allok = 1;');
-									if(!$allok)
-									{
-										return CreateObject('phpgwapi.xmlrpcresp','', $GLOBALS['xmlrpcerr']['invalid_return'], $GLOBALS['xmlrpcstr']['invalid_return']);							
-									}
+									$p = $params;
 									$params = $p->getval();
 								}
 
 								// _debug_array($params);
 								$this->reqtoarray($params);
 								// decode from utf-8 to our charset
-								$this->req_array = $GLOBALS['phpgw']->translation->convert($this->req_array,'utf-8');
+								$this->req_array = $GLOBALS['egw']->translation->convert($this->req_array,'utf-8');
 								//_debug_array($this->req_array);
 								if (ereg('^service',$method))
 								{
@@ -478,22 +468,22 @@
 					}
 				}
 			}
+			unset($GLOBALS['_xh'][$parser]);
 			return $r;
 		}
 
 		function echoInput()
 		{
-			global $HTTP_RAW_POST_DATA;
-
 			// a debugging routine: just echos back the input
 			// packet as a string value
 
-			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '" . $HTTP_RAW_POST_DATA,'string'));
+			$r = CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',"'Aha said I: '"
+				. $GLOBALS['HTTP_RAW_POST_DATA'],'string'));
 			//echo $r->serialize();
 
 			$fp = fopen('/tmp/xmlrpc_debug.in','w');
 			fputs($fp,$r->serialize);
-			fputs($fp,$HTTP_RAW_POST_DATA);
+			fputs($fp,$GLOBALS['HTTP_RAW_POST_DATA']);
 			fclose($fp);
 		}
 
