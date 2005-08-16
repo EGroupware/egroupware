@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	class bochangepassword
+	class bopassword
 	{
 		var $public_functions = array(
 			'changepass' => True

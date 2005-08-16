@@ -18,9 +18,10 @@
 			'change' => True
 		);
 
-		function uichangepassword()
+		function uipassword()
 		{
 			$this->bo = CreateObject('preferences.bopassword');
+
 		}
 
 		function change()
@@ -31,7 +32,7 @@
 
 			if(!$GLOBALS['egw']->acl->check('changepassword', 1) || $_POST['cancel'])
 			{
-				$GLOBALS['egw']->redirect_link('/preferences/index.php');
+			   $GLOBALS['egw']->redirect_link('/preferences/index.php');
 				$GLOBALS['egw']->common->phpgw_exit();
 			}
 
@@ -43,7 +44,7 @@
 			$GLOBALS['egw']->template->set_var('lang_enter_old_password',lang('Enter your old password'));
 			$GLOBALS['egw']->template->set_var('lang_change',lang('Change'));
 			$GLOBALS['egw']->template->set_var('lang_cancel',lang('Cancel'));
-			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=preferences.uichangepassword.change'));
+			$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=preferences.uipassword.change'));
 
 			if($GLOBALS['egw_info']['server']['auth_type'] != 'ldap')
 			{
