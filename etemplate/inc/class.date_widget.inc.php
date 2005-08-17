@@ -397,7 +397,7 @@
 			elseif (!$readonly || $value)
 			{
 				$cell['no_lang'] = 2;
-				$cell['label'] .= ($cell['label'] ? ' ' : '') . '%s '.($input_format == 'h' ? lang('hours') : lang('days'));
+				$cell['label'] .= ($cell['label'] ? ' ' : '') . '%s '.($unit == 'h' ? lang('hours') : lang('days'));
 			}
 			return True;	// extra Label is ok
 		}
