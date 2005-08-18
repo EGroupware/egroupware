@@ -170,8 +170,8 @@
 		}
 	}
 
-	if(empty($GLOBALS['egw_info']['server']['xmlrpc_type']))
+	if(empty($GLOBALS['phpgw_info']['server']['xmlrpc_type']))
 	{
-		$GLOBALS['egw_info']['server']['xmlrpc_type'] = 'php';
+		$GLOBALS['phpgw_info']['server']['xmlrpc_type'] = 'php';
 	}
-	include_once(PHPGW_API_INC.SEP.'class.xmlrpc_server_' . $GLOBALS['egw_info']['server']['xmlrpc_type'] . '.inc.php');
+	include_once(PHPGW_API_INC.SEP.'class.xmlrpc_server_' . $GLOBALS['phpgw_info']['server']['xmlrpc_type'] . '.inc.php');

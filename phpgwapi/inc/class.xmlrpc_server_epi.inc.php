@@ -69,7 +69,7 @@
 			{
 				$fp = fopen($this->log,'a+');
 				fwrite($fp,"\n\n" . date('Y-m-d H:i:s') . " authorized="
-					. ($this->authed ? $GLOBALS['egw_info']['user']['account_lid'] : 'False')
+					. ($this->authed ? $GLOBALS['phpgw_info']['user']['account_lid'] : 'False')
 					. ", method='$this->last_method'\n");
 				fwrite($fp,"==== GOT ============================\n" . $GLOBALS['HTTP_RAW_POST_DATA']
 					. "\n==== RETURNED =======================\n");

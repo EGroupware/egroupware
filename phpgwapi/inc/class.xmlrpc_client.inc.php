@@ -149,7 +149,7 @@
 			$op = 'POST ' . $this->path . " HTTP/1.0\r\nUser-Agent: PHP XMLRPC 2.0\r\n"
 				. 'Host: '. $this->server . "\r\n"
 				. 'X-EGW-Server: '  . $this->server . ' ' . "\r\n"
-				. 'X-EGW-Version: ' . $GLOBALS['egw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. 'X-EGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
 				. $credentials
 				. "Content-Type: text/xml\r\nContent-Length: "
 				. strlen($msg->payload) . "\r\n\r\n"
@@ -211,7 +211,7 @@
 			// return the header too
 			curl_setopt($curl, CURLOPT_HTTPHEADER, array(
 				'X-EGW-Server: '  . $this->server,
-				'X-EGW-Version: ' . $GLOBALS['egw_info']['server']['versions']['phpgwapi'],
+				'X-EGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],
 				'Content-Type: text/xml'
 			));
 			if ($timeout)

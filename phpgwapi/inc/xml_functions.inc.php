@@ -893,7 +893,7 @@
 	$GLOBALS['_xmlrpcs_phpgw_api_version_doc'] = 'Returns the eGroupWare API version';
 	function _xmlrpcs_phpgw_api_version($server,$m)
 	{
-		$version = $GLOBALS['egw_info']['server']['versions']['phpgwapi'];
+		$version = $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'];
 
 		return CreateObject('phpgwapi.xmlrpcresp',CreateObject('phpgwapi.xmlrpcval',$version,'string'));
 	}
