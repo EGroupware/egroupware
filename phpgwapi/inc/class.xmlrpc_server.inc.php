@@ -174,4 +174,4 @@
 	{
 		$GLOBALS['egw_info']['server']['xmlrpc_type'] = 'php';
 	}
-	include_once(EGW_API_INC.SEP.'class.xmlrpc_server_' . $GLOBALS['egw_info']['server']['xmlrpc_type'] . '.inc.php');
+	include_once(PHPGW_API_INC.SEP.'class.xmlrpc_server_' . $GLOBALS['egw_info']['server']['xmlrpc_type'] . '.inc.php');

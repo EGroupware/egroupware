@@ -202,7 +202,7 @@
 						case 'server':
 						case 'phpgwapi':
 							/* Server role functions only - api access */
-							if($GLOBALS['egw']->acl->get_role() >= EGW_ACL_SERVER)
+							if($GLOBALS['egw']->acl->get_role() >= PHPGW_ACL_SERVER)
 							{
 								$dmap = ExecMethod(sprintf('%s.%s.%s','phpgwapi',$class,'list_methods'),'xmlrpc');
 							}
@@ -214,7 +214,7 @@
 							break;
 						default:
 							/* User-level application access */
-							if($GLOBALS['egw']->acl->check('run',EGW_ACL_READ,$app))
+							if($GLOBALS['egw']->acl->check('run',PHPGW_ACL_READ,$app))
 							{
 								$dmap = ExecMethod(sprintf('',$app,$class,'list_methods'),'xmlrpc');
 							}
