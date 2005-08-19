@@ -169,7 +169,7 @@
 		Header('Content-type: text/xml');
 		Header('Content-length: ' . strlen($payload));
 		print $payload;
-		$GLOBALS['egw']->common->phpgw_exit(False);
+		$GLOBALS['phpgw']->common->phpgw_exit(False);
 	}
 
 	// used to store state during parsing
@@ -833,7 +833,7 @@
 
 		if($server_name)
 		{
-			list($sessionid,$kp3) = $GLOBALS['egw']->session->create_server($username.'@'.$server_name,$password,"text");
+			list($sessionid,$kp3) = $GLOBALS['phpgw']->session->create_server($username.'@'.$server_name,$password,"text");
 		}
 		else
 		{
@@ -847,9 +847,9 @@
 			}
 			$GLOBALS['login'] = $user;
 
-			$sessionid = $GLOBALS['egw']->session->create($user,$password,"text");
-			$kp3 = $GLOBALS['egw']->session->kp3;
-			$domain = $GLOBALS['egw']->session->account_domain;
+			$sessionid = $GLOBALS['phpgw']->session->create($user,$password,"text");
+			$kp3 = $GLOBALS['phpgw']->session->kp3;
+			$domain = $GLOBALS['phpgw']->session->account_domain;
 		}
 
 		if($sessionid && $kp3)
@@ -875,7 +875,7 @@
 		$sessionid = $data['sessionid']->scalarval();
 		$kp3       = $data['kp3']->scalarval();
 
-		$later = $GLOBALS['egw']->session->destroy($sessionid,$kp3);
+		$later = $GLOBALS['phpgw']->session->destroy($sessionid,$kp3);
 
 		if ($later)
 		{
@@ -904,15 +904,15 @@
 	function _xmlrpcs_listApps($server,$m)
 	{
 		$m->getParam(0);
-		$GLOBALS['egw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
-		if($GLOBALS['egw']->db->num_rows())
+		$GLOBALS['phpgw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+		if($GLOBALS['phpgw']->db->num_rows())
 		{
-			while($GLOBALS['egw']->db->next_record())
+			while($GLOBALS['phpgw']->db->next_record())
 			{
-				$name   = $GLOBALS['egw']->db->f('app_name');
-				$title  = $GLOBALS['egw']->db->f('app_title');
-				$status = $GLOBALS['egw']->db->f('app_enabled');
-				$version= $GLOBALS['egw']->db->f('app_version');
+				$name   = $GLOBALS['phpgw']->db->f('app_name');
+				$title  = $GLOBALS['phpgw']->db->f('app_title');
+				$status = $GLOBALS['phpgw']->db->f('app_enabled');
+				$version= $GLOBALS['phpgw']->db->f('app_version');
 				$apps[$name] = CreateObject('phpgwapi.xmlrpcval',
 					array(
 						'title'  => CreateObject('phpgwapi.xmlrpcval',$title,'string'),

@@ -94,7 +94,7 @@
 			{
 				$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
 				Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
-				echo $GLOBALS['egw']->translation->convert($payload,$GLOBALS['egw']->translation->charset(),'utf-8');
+				echo $GLOBALS['phpgw']->translation->convert($payload,$GLOBALS['phpgw']->translation->charset(),'utf-8');
 			}
 
 			if ($this->log)
@@ -349,7 +349,7 @@
 							$t = 'phpgwapi.' . $class . '.exec';
 							$dmap = ExecMethod($t,array($service,'list_methods','xmlrpc'));
 						}
-						elseif($GLOBALS['egw']->acl->check('run',1,$class))
+						elseif($GLOBALS['phpgw']->acl->check('run',1,$class))
 						{
 							/* This only happens if they have app access.  If not, we will
 							 * return a fault below.
@@ -416,7 +416,7 @@
 								// _debug_array($params);
 								$this->reqtoarray($params);
 								// decode from utf-8 to our charset
-								$this->req_array = $GLOBALS['egw']->translation->convert($this->req_array,'utf-8');
+								$this->req_array = $GLOBALS['phpgw']->translation->convert($this->req_array,'utf-8');
 								//_debug_array($this->req_array);
 								if (ereg('^service',$method))
 								{
