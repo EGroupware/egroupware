@@ -318,7 +318,7 @@
 		function create_password_box($label_name,$preference_name,$help='',$size='',$max_size='',$run_lang=True)
 		{
 			$_appname = $this->check_app();
-			if(is_forced_value($_appname,$preference_name))
+			if($this->is_forced_value($_appname,$preference_name))
 			{
 				return True;
 			}
