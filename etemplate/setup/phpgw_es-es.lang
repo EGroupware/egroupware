@@ -80,6 +80,7 @@ cut	etemplate	es-es	Cortar
 date+time	etemplate	es-es	Fecha + hora
 datum	etemplate	es-es	Fecha
 day	etemplate	es-es	Día
+days	etemplate	es-es	días
 db ensures that every row has a unique value in that column	etemplate	es-es	La base de datos se asegura de que cada fila tiene un valor único en esa columna
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	es-es	Opciones de índice específicas de la base de datos (separadas por comas), por ej. mysql(FULLTEXT) o mysql(100) para la longitud indexada de una columna
 db-tools	etemplate	es-es	Herramientas de la base de datos
@@ -110,6 +111,7 @@ documentation	etemplate	es-es	Documentación
 drop a table - this can not be undone	etemplate	es-es	Borrar una tabla - NO se puede deshacer
 drop table	etemplate	es-es	Borrar tabla
 dump4setup	etemplate	es-es	Volcar para instalación
+duration	etemplate	es-es	Duración
 edit	etemplate	es-es	Editar
 edit embeded css styles or of the applications app.css file	etemplate	es-es	editar estilos CSS incrustados o el fichero app.css de las aplicaciones
 edit the etemplate spez. above	etemplate	es-es	editar las especificaciones de la plantilla indicada arriba
@@ -170,6 +172,7 @@ height, disabled	etemplate	es-es	Altura, desactivada
 help	etemplate	es-es	Ayuda
 horizontal rule	etemplate	es-es	Regla horizontal
 hour	etemplate	es-es	Hora
+hours	etemplate	es-es	horas
 html	etemplate	es-es	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	es-es	Si el campo está desactivado, la celda de la tabla estará vacía, para borrar temporalmente un campo o celda.
 image	etemplate	es-es	Imagen
@@ -219,7 +222,8 @@ new search	etemplate	es-es	Nueva búsqueda
 new table created	etemplate	es-es	Se ha creado una tabla nueva
 newer version '%1' exists !!!	etemplate	es-es	¡Existe una versión '%1' más reciente!
 nextmatch	etemplate	es-es	Siguiente coincidencia
-nextmatch filterheader	etemplate	es-es	Cabecera de filtro de siguiente coincidencia
+nextmatch accountfilter	etemplate	es-es	Filtro para la siguiente coincidencia de cuenta
+nextmatch filterheader	etemplate	es-es	Filtro para la siguiente coincidencia de cabeceras
 nextmatch sortheader	etemplate	es-es	Cabecera de orden de siguiente coincidencia
 no column to swap with !!!	etemplate	es-es	¡No hay columna con la que intercambiar!
 no file	etemplate	es-es	sin fichero
@@ -243,6 +247,7 @@ paste	etemplate	es-es	Pegar
 path	etemplate	es-es	Ruta
 please enter table-name first !!!	etemplate	es-es	Por favor, introduzca el nombre de la tabla primero
 pm	etemplate	es-es	pm
+popup	etemplate	es-es	Ventama emergente
 precision	etemplate	es-es	Precisión
 primary key	etemplate	es-es	Clave primaria
 primary key for the table, gets automaticaly indexed	etemplate	es-es	Clave primaria para la tabla, se indexa automáticamente
@@ -251,6 +256,7 @@ read	etemplate	es-es	Leído
 read a list of entries.	etemplate	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	etemplate	es-es	Leer una sola entrada pasando el id y la lista de campos
 read etemplate from database (for the keys above)	etemplate	es-es	leer plantilla de la base de datos (para las claves de arriba)
+readonly	etemplate	es-es	sólo lectura
 remove row (can not be undone!!!)	etemplate	es-es	eliminar fila (¡NO se puede deshacer!)
 remove this link (not the entry itself)	etemplate	es-es	Borrar este enlace (no la entrada en sí)
 returns savely, without deleting	etemplate	es-es	vuelve de forma segura, SIN borrar
@@ -288,6 +294,7 @@ select priority	etemplate	es-es	Seleccionar prioridad
 select state	etemplate	es-es	Seleccionar estado
 select the indexed columns in their desired order	etemplate	es-es	Seleccionar las columnas indexadas en su orden deseado
 select this etemplate to delete it	etemplate	es-es	Seleccionar esta plantilla para borrarla
+select which accounts to show	etemplate	es-es	seleccionar las cuentas a mostrar
 select which values to show	etemplate	es-es	Seleccionar qué valores mostrar
 select year	etemplate	es-es	Seleccionar vista
 selectbox	etemplate	es-es	Cuadro de selección
@@ -299,7 +306,7 @@ showing	etemplate	es-es	mostrando
 shows / allows you to enter values into the etemplate for testing	etemplate	es-es	muestra / permite introducir valores en la plantilla para probar
 shows/displays etemplate for testing, does not save it before	etemplate	es-es	muestra la plantilla para pruebas. NO lo guarda antes
 spacing	etemplate	es-es	Espaciado
-span, class	etemplate	es-es	Abarcar, clase
+span, class	etemplate	es-es	span, clase
 stack	etemplate	es-es	Pila
 start a new search, cancel this link	etemplate	es-es	comienza una nueva búsqueda, cancela este enlace
 start new search for the above pattern	etemplate	es-es	comenzar una nueva búsqueda para el patrón de arriba
@@ -360,3 +367,5 @@ xml-file to import	etemplate	es-es	fichero xml a importar
 xslt template	etemplate	es-es	Plantilla XSLT
 year	etemplate	es-es	Año
 1	etemplate	es-es	1
+2	etemplate	es-es	2
+3	etemplate	es-es	3
