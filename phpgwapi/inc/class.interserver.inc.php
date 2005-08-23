@@ -81,13 +81,13 @@
 
 		function interserver($serverid='')
 		{
-			$url = eregi_replace('https*://[^/]*/','',$GLOBALS['phpgw_info']['server']['webserver_url']);
+			$url = eregi_replace('https*://[^/]*/','',$GLOBALS['egw_info']['server']['webserver_url']);
 			$this->urlparts = array(
 				'xmlrpc' => $url.'/xmlrpc.php',
 				'soap'   => $url.'/soap.php'
 			);
 
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['egw']->db);
 			if($serverid)
 			{
 				$this->serverid = (int)$serverid;
@@ -169,11 +169,11 @@
 			}
 			else
 			{
-				while(list($key,$val) = @each($args))
+				foreach($args as $key => $val)
 				{
 					if(@is_array($val))
 					{
-						while(list($x,$y) = each($val))
+						foreach($val as $x => $y)
 						{
 							$tmp[$x] = CreateObject('phpgwapi.xmlrpcval',$y, 'string');
 						}
@@ -221,11 +221,11 @@
 			}
 			else
 			{
-				while(list($key,$val) = @each($args))
+				foreach($args as $key => $val)
 				{
 					if(@is_array($val))
 					{
-						while(list($x,$y) = each($val))
+						foreach($val as $x => $y)
 						{
 							$tmp[$x] = CreateObject('phpgwapi.xmlrpcval',$y, 'string');
 						}
@@ -274,11 +274,11 @@
 			}
 			else
 			{
-				while(list($key,$val) = @each($args))
+				foreach($args as $key => $val)
 				{
 					if(@is_array($val))
 					{
-						while(list($x,$y) = each($val))
+						foreach($val as $x => $y)
 						{
 							$tmp[] = CreateObject('phpgwapi.soapval',$x,'string',$y);
 						}
@@ -320,11 +320,11 @@
 			}
 			elseif(@is_array($args))
 			{
-				while(list($key,$val) = @each($args))
+				foreach($args as $key => $val)
 				{
 					if(@is_array($val))
 					{
-						while(list($x,$y) = each($val))
+						foreach($val as $x => $y)
 						{
 							$tmp[] = CreateObject('phpgwapi.soapval',$x,'string',$y);
 						}
@@ -368,8 +368,7 @@
 			if(@is_array($_req))
 			{
 				$ele = array();
-				@reset($_req);
-				while(list($key,$val) = @each($_req))
+				foreach($_req as $key => $val)
 				{
 					$ele[$key] = $this->build_request($val,True,$key);
 				}
@@ -543,7 +542,7 @@
 
 			$x = '';
 			$slist = $this->get_list('','','','','',$x);
-			while (list($key,$val) = each($slist))
+			foreach($slist as $key => $val)
 			{
 				$foundservers = True;
 				$select .= '<option value="' . $val['server_id'] . '"';
@@ -642,8 +641,8 @@
 			$this->db->query($sql,__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
-				if ($username == $GLOBALS['phpgw_info']['server']['site_username'] &&
-					$password == $GLOBALS['phpgw_info']['server']['site_password'] &&
+				if ($username == $GLOBALS['egw_info']['server']['site_username'] &&
+					$password == $GLOBALS['egw_info']['server']['site_password'] &&
 					$this->db->f('trust_rel') >= 1)
 				{
 					$this->authed = True;
