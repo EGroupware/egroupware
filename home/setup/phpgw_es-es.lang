@@ -1,0 +1,4 @@
+no max. number	home	es-es	Sin número máximo
+only if thumnails exits	home	es-es	Sólo si existe la miniatura
+preview thumbs or images in form	home	es-es	Vista previa de miniaturas o imágenes en el formulario
+when you choose 'never', only links to the images are displayed; when you choose 'only if thumnails exists' previews are  shown if an thumbnail of the image exists; if you choose 'yes' all images are shown	home	es-es	Si elige 'Nunca', sólo se muestran los enlaces a las imágenes. Si elige 'sólo si existe la miniatura' la vista previa se muestra si existe la miniatura de la imagen. Si elige 'Sí', se muestran todas las imágenes.
