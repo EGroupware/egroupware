@@ -1,6 +1,7 @@
 %1 email addresses inserted	common	zh	已插入%1个EMail地址
-%1 is not executable by the webserver !!!	common	zt	網頁伺服器無法執行 %1 ！
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zt	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
+%1 is not executable by the webserver !!!	common	zh	WEB服务器无法执行 %1 ！
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
+?%1 email addresses inserted	common	zh	已插入 %1 个EMail地址
 (shift-)click or drag to change value	jscalendar	zh	(Shift-)Click or drag to change value
 - click on any of the time parts to increase it	jscalendar	zh	- Click on any of the time parts to increase it
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	zh	- Hold mouse button on any of the above buttons for faster selection.
@@ -8,10 +9,16 @@
 - or shift-click to decrease it	jscalendar	zh	- or Shift-click to decrease it
 - use the %1, %2 buttons to select month	jscalendar	zh	- Use the %1, %2 buttons to select month
 - use the %1, %2 buttons to select year	jscalendar	zh	- Use the %1, %2 buttons to select year
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	zh	\n 整理 HTML 源代码中，请稍后...
+_delete row	htmlarea-ContextMenu	zh	_刪除列
+_image properties...	htmlarea-ContextMenu	zh	_图片属性...
+_modify link...	htmlarea-ContextMenu	zh	_修改链接...
+_remove link...	htmlarea-ContextMenu	zh	_删除链接...
+_table properties...	htmlarea-ContextMenu	zh	_表格属性...
 00 (disable)	admin	zh	00 (disable)
+3 number of chars for day-shortcut	jscalendar	zh	日期的简写
+3 number of chars for month-shortcut	jscalendar	zh	月份的简写
 13 (ntp)	admin	zh	13 (ntp)
-3 number of chars for day-shortcut	jscalendar	zt	日期的三個字元簡寫
-3 number of chars for month-shortcut	jscalendar	zt	月份的三個字元簡寫
 80 (http)	admin	zh	80 (http)
 about	common	zh	关于
 about %1	common	zh	关于%1
@@ -30,13 +37,16 @@ add	common	zh	添加
 add %1 category for	common	zh	添加类别为
 add category	common	zh	添加类别
 add sub	common	zh	添加子类别
-addressbook	common	zh	通讯录
 admin	common	zh	系统管理
 administration	common	zh	系统管理
 afghanistan	common	zh	阿富汗
 albania	common	zh	阿尔巴尼亚
 algeria	common	zh	阿尔及利亚
 all	common	zh	全部
+align	htmlarea-TableOperations	zh	对齐
+all fields	common	zh	所有字段
+all four sides	htmlarea-TableOperations	zh	所有四边
+alternate style-sheet:	common	zh	替代的样式表：
 alphabet	common	zh	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 american samoa	common	zh	东萨摩亚
 andorra	common	zh	安道尔共和国
@@ -60,13 +70,16 @@ automatically hide the sidebox menus?	common	zh	是否自动隐藏左侧的菜�
 autosave default category	common	zh	自动保存为默认类别
 azerbaijan	common	zh	阿塞拜疆
 back	common	zh	返回
-back to user login	common	zh	Back to user login
-background color	htmlarea	zh	Background Color
+back to user login	common	zh	返回登陆界面
+background color	htmlarea	zh	背景颜色
+background	htmlarea-TableOperations	zh	背景
+background color:	common	zh	背景颜色：
 bad login or password	common	zh	登录名或密码错误
 bahamas	common	zh	巴哈马群岛
 bahrain	common	zh	巴林群岛
 bangladesh	common	zh	孟加拉国
 barbados	common	zh	巴巴多斯岛
+baseline	htmlarea-TableOperations	zh	基准线
 bcc	common	zh	暗送
 belarus	common	zh	白俄罗斯
 belgium	common	zh	比利时
@@ -87,56 +100,71 @@ bulgaria	common	zh	保加利亚
 bulleted list	htmlarea	zh	Bulleted List
 burkina faso	common	zh	布基纳法索
 burundi	common	zh	布隆迪
-calendar	common	zh	日程表
+border	htmlarea-TableOperations	zh	框线
+borders	htmlarea-TableOperations	zh	框线
+bottom	htmlarea-TableOperations	zh	底部
+c_ell properties...	htmlarea-ContextMenu	zh	欄位設定...
 cambodia	common	zh	柬埔寨
 cameroon	common	zh	喀麦隆
 canada	common	zh	加拿大
 cancel	common	zh	取消
 cape verde	common	zh	佛得角
+caption	htmlarea-TableOperations	zh	标题
 categories	common	zh	类别
 categories for	common	zh	编辑类别. 当前用户
 category	common	zh	类别
 category %1 has been added !	common	zh	类别%1已添加!
 category %1 has been updated !	common	zh	类别%1已更新!
 cayman islands	common	zh	开曼群岛
+cell properties	htmlarea-TableOperations	zh	栏位属性
+center	htmlarea-TableOperations	zh	居中
 cc	common	zh	抄送
 central african republic	common	zh	中非共和国
 chad	common	zh	乍得湖
 change	common	zh	更改
 charset	common	zh	utf-8
-check installation	common	zh	Check installation
+char	htmlarea-TableOperations	zh	字符
+chec_k link...	htmlarea-ContextMenu	zh	检查链接...
+check now	common	zh	立即检查
+check installation	common	zh	检查安装
 chile	common	zh	智利
 china	common	zh	中国
 choose the category	common	zh	选择类别
 choose the parent category	common	zh	选择父类别
+choose list style type (for ordered lists)	htmlarea-ListType	zh	選擇清單樣式類型(排序的清單)
 christmas island	common	zh	圣诞岛
 clear	common	zh	清除
 clear form	common	zh	清除表单
-click	common	zh	Click
-click or mouse over to show menus	common	zh	Click or Mouse Over to show menus
-click or mouse over to show menus?	common	zh	Click or Mouse Over to show menus?
+click	common	zh	点击后显示
+click or mouse over to show menus	common	zh	常用菜单栏显示方式
+click or mouse over to show menus?	common	zh	当左侧常用菜单栏设为自动隐藏时, 使用该选项可以设定其显示方式. 可选项为点击后显示或鼠标移至上方时显示.
 close	common	zh	关闭
 cocos (keeling) islands	common	zh	科科斯(基灵)群岛
 colombia	common	zh	哥伦比亚
 comoros	common	zh	科摩罗
 company	common	zh	公司
-config password	common	zt	設定管理員密碼
-config username	common	zt	設定管理員帳號
 congo	common	zh	刚果
 congo, the democratic republic of the	common	zh	刚果民主共和国
 cook islands	common	zh	库克群岛
+collapsed borders	htmlarea-TableOperations	zh	展开的线框
+color	htmlarea-TableOperations	zh	颜色
+config password	common	zh	设置管理员密码
+config username	common	zh	设置管理员账号
 copy	common	zh	复制
 copy selection	htmlarea	zh	Copy selection
 costa rica	common	zh	哥斯达黎加
 cote d ivoire	common	zh	科特迪瓦
 create	common	zh	创建
 created by	common	zh	创建者
+create a link	htmlarea-ContextMenu	zh	建立一个链接
 croatia	common	zh	克罗地亚
 cuba	common	zh	古巴
 currency	common	zh	货币符号
 current	common	zh	当前
 current style	htmlarea	zh	Current style
 current users	common	zh	当前用户
+current url is	htmlarea-ContextMenu	zh	目前网址是
+cut	htmlarea-ContextMenu	zh	减下
 cut selection	htmlarea	zh	Cut selection
 cyprus	common	zh	塞浦路斯
 czech republic	common	zh	捷克斯洛伐克共和国
@@ -148,20 +176,31 @@ december	common	zh	十二月
 decrease indent	htmlarea	zh	Decrease Indent
 default category	common	zh	默认显示类别
 delete	common	zh	删除
+de_lete column	htmlarea-ContextMenu	zh	删除行
+decimal numbers	htmlarea-ListType	zh	十进制数字
+delete cell	htmlarea-TableOperations	zh	删除格
+delete column	htmlarea-TableOperations	zh	刪除行
+delete row	htmlarea-TableOperations	zh	刪除列
+delete the current column	htmlarea-ContextMenu	zh	刪除当前行
+delete the current row	htmlarea-ContextMenu	zh	刪除当前列
 denmark	common	zh	丹麦
 description	common	zh	说明
 detail	common	zh	详细信息
 details	common	zh	详细信息
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
-disable internet explorer png-image-bugfix	common	zh	Disable Internet Explorer png-image-bugfix
-disable slider effects	common	zh	Disable slider effects
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
+dictionary	htmlarea-SpellChecker	zh	字典
+disable internet explorer png-image-bugfix	common	zh	禁用针对Internet Explorer浏览器的PNG图片修正脚本.
+disable slider effects	common	zh	禁用常用菜单栏的滑动效果
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh	当左侧常用菜单栏设为自动隐藏时, 使用该选项可以设定其显示是否具有滑动效果.  建议Opera和Konqueror的用户选择"是".
 disabled	common	zh	已禁用
-display %s first	jscalendar	zt	先顯示 %s
-display monday first	jscalendar	zt	星期一在首
+display %s first	jscalendar	zh	从 %s 开始
+display monday first	common	zh	从星期一开始
 display sunday first	common	zh	从星期日开始
 djibouti	common	zh	吉布提
 do you also want to delete all subcategories ?	common	zh	确定也要删除所有的子类别吗?
+doctype:	common	zh	文件类型：
+document properties	common	zh	文件属性
+document title:	common	zh	文件标题：
 domain	common	zh	域
 domain name for mail-address, eg. "%1"	common	zh	EMail地址的域名，例如:"%1"
 domestic	common	zh	国内
@@ -174,12 +213,13 @@ east timor	common	zh	东帝汶
 ecuador	common	zh	厄瓜多尔
 edit	common	zh	编辑
 edit %1 category for	common	zh	编辑类别%1为
-edit categories	common	zh	编辑类别
-edit category	common	zh	编辑类别
+edit categories	common	zh	类别编辑	
+edit category	common	zh	类别编辑
 egroupware api version %1	common	zh	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	zh	eGroupWare:用户'%1', IP地址%2已被禁止登录
 egypt	common	zh	埃及
 el salvador	common	zh	萨尔瓦多
+element...	htmlarea-ContextMenu	zh	元件...
 email	common	zh	电子邮件
 email-address of the user, eg. "%1"	common	zh	用户的EMail地址，例如:"%1"
 enabled	common	zh	已启用
@@ -197,23 +237,28 @@ error deleting %1 %2 directory	common	zh	删除目录%1 %2时出错
 error renaming %1 %2 directory	common	zh	重命名目录%1 %2时出错
 estonia	common	zh	爱沙尼亚
 ethiopia	common	zh	埃塞俄比亚
+exact	common	zh	解开
 falkland islands (malvinas)	common	zh	福克兰群岛(马尔维纳斯)
 faroe islands	common	zh	法罗群岛
 fax number	common	zh	传真号码
 february	common	zh	二月
+fg color	htmlarea-TableOperations	zh	前端颜色
 fields	common	zh	字段
 fiji	common	zh	斐济
 files	common	zh	文件
 filter	common	zh	范围
 finland	common	zh	芬兰
+finished list of mispelled words	htmlarea-SpellChecker	zh	完成列出拼错的字
 first name	common	zh	名
 first name of the user, eg. "%1"	common	zh	用户的名字，例如:"%1"
 first page	common	zh	第一页
 firstname	common	zh	名
+float	htmlarea-TableOperations	zh	浮点数
 fixme!	common	zh	FIXME!
 font color	htmlarea	zh	Font Color
 force selectbox	common	zh	必选框
-france	common	zh	FRANCE
+frames	htmlarea-TableOperations	zh	框架
+france	common	zh	法国
 french guiana	common	zh	法属圭亚那地区
 french polynesia	common	zh	法属玻利尼西亚
 french southern territories	common	zh	法国南部地区
@@ -251,12 +296,13 @@ guinea	common	zh	几内亚
 guinea-bissau	common	zh	几内亚比绍首都
 guyana	common	zh	圭亚那
 haiti	common	zh	HAITI
-header admin login	common	zt	頁首管理員登入
-header password	common	zt	密碼
-header username	common	zt	帳號
 heard island and mcdonald islands	common	zh	赫德与麦克唐纳群岛
+header admin login	common	zh	HEADER 管理员登陆
+header password	common	zh	密码
+header username	common	zh	账号
 help	common	zh	显示提示信息
-help using editor	htmlarea	zh	Help using editor
+help using editor	htmlarea	zh	使用帮助
+height	htmlarea-TableOperations	zh	高度
 high	common	zh	高
 highest	common	zh	最高
 holy see (vatican city state)	common	zh	罗马教廷(梵蒂冈)
@@ -266,15 +312,40 @@ honduras	common	zh	洪都拉斯
 hong kong	common	zh	香港
 horizontal rule	htmlarea	zh	Horizontal Rule
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	zh	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
+how did you get here? (please report!)	htmlarea-ContextMenu	zh	您从那里连接到这里(请报告)？
 hungary	common	zh	匈牙利
+how many columns would you like to merge?	htmlarea-TableOperations	zh	您想要合并多少个行？
+how many rows would you like to merge?	htmlarea-TableOperations	zh	您想要合并多少个列？
+html tidy	htmlarea-HtmlTidy	zh	HTML整理
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	zh	HTMLArea无法删除这一列的最后一个单元格
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	zh	HTMLArea无法删除这个表格的最后一行
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	zh	HTMLArea无法删除这个表格的最后一列
+i will open it in a new page.	htmlarea-SpellChecker	zh	在新窗口中打开
+i_nsert row before	htmlarea-ContextMenu	zh	在插入列之前
 iceland	common	zh	冰岛
+ignore	htmlarea-SpellChecker	zh	忽略
+ignore all	htmlarea-SpellChecker	zh	全部忽略
+image url	htmlarea-TableOperations	zh	图片网址
+in_sert row after	htmlarea-ContextMenu	zh	在插入列之后
 increase indent	htmlarea	zh	Increase Indent
 india	common	zh	印度
 indonesia	common	zh	印度尼西亚
+insert _column before	htmlarea-ContextMenu	zh	在插入欄位之前
+insert a new column after the current one	htmlarea-ContextMenu	zh	在这一行之后新加一个
+insert a new column before the current one	htmlarea-ContextMenu	zh	在这一行之前新加一个
+insert a new row after the current one	htmlarea-ContextMenu	zh	在这一列之后新增一个
+insert a new row before the current one	htmlarea-ContextMenu	zh	在这一列之前新增一个
+insert c_olumn after	htmlarea-ContextMenu	zh	在插入这个行之后
+insert cell after	htmlarea-TableOperations	zh	单元格插在后面
+insert cell before	htmlarea-TableOperations	zh	单元格插在前面
+insert column after	htmlarea-TableOperations	zh	行插在后面
+insert column before	htmlarea-TableOperations	zh	行插在前面
+insert row after	htmlarea-TableOperations	zh	列插在后面
+insert row before	htmlarea-TableOperations	zh	列插在前面
 insert all %1 addresses of the %2 contacts in %3	common	zh	将%2个联系人的全部%1个地址插入%3
-insert image	htmlarea	zh	Insert Image
-insert table	htmlarea	zh	Insert Table
-insert web link	htmlarea	zh	Insert Web Link
+insert image	htmlarea	zh	插入图片
+insert table	htmlarea	zh	插入表格
+insert web link	htmlarea	zh	插入WEB链接
 international	common	zh	国际
 invalid ip address	common	zh	IP地址无效
 invalid password	common	zh	密码无效
@@ -291,12 +362,13 @@ january	common	zh	一月
 japan	common	zh	日本
 jordan	common	zh	约旦
 july	common	zh	七月
-jun	common	zt	六月
+jun	common	zh	六月
 june	common	zh	六月
-justify center	htmlarea	zh	Justify Center
-justify full	htmlarea	zh	Justify Full
-justify left	htmlarea	zh	Justify Left
-justify right	htmlarea	zh	Justify Right
+justify center	htmlarea	zh	中间对齐
+justify full	htmlarea	zh	完全对齐
+justify	htmlarea-TableOperations	zh	分散对齐
+justify left	htmlarea	zh	左边对齐
+justify right	htmlarea	zh	右边对齐
 kazakstan	common	zh	哈萨克斯坦
 kenya	common	zh	肯尼亚
 keywords	common	zh	关键字
@@ -312,19 +384,27 @@ last name of the user, eg. "%1"	common	zh	用户的姓氏，例如:"%1"
 last page	common	zh	尾页
 lastname	common	zh	姓
 latvia	common	zh	拉脱维亚
+layout	htmlarea-TableOperations	zh	版面
+ldap-mgr	common	zh	LDAP管理员
 lebanon	common	zh	黎巴嫩
+left	htmlarea-TableOperations	zh	左
 lesotho	common	zh	莱索托
 liberia	common	zh	利比里亚
 libyan arab jamahiriya	common	zh	利比亚
 license	about	zh	许可证
 liechtenstein	common	zh	列支敦士登
+link points to:	htmlarea-ContextMenu	zh	链结点：
 list	common	zh	列表
+list members	common	zh	列出会员
 lithuania	common	zh	立陶宛
 local	common	zh	本地
 login	common	zh	登录
 loginid	common	zh	登录名
 logout	common	zh	注销
 low	common	zh	低
+lower greek letters	htmlarea-ListType	zh	小写希腊字母
+lower latin letters	htmlarea-ListType	zh	小写拉丁字母
+lower roman numbers	htmlarea-ListType	zh	小写罗马字母
 lowest	common	zh	最低
 luxembourg	common	zh	卢森堡
 macau	common	zh	澳门
@@ -334,13 +414,16 @@ mail domain, eg. "%1"	common	zh	邮件域，例如:"%1"
 main category	common	zh	主类别
 main screen	common	zh	首页
 maintainer	about	zh	维护人员
+make lin_k...	htmlarea-ContextMenu	zh	建立链接...
 malawi	common	zh	马拉维
 malaysia	common	zh	马来西亚
 maldives	common	zh	马尔代夫
 mali	common	zh	马里
 malta	common	zh	马耳他
+manual	common	zh	使用指南
 march	common	zh	三月
 marshall islands	common	zh	马歇尔群岛
+margin	htmlarea-TableOperations	zh	边缘
 martinique	common	zh	马提尼克岛
 mauritania	common	zh	毛里塔尼亚
 mauritius	common	zh	毛里求斯
@@ -349,9 +432,12 @@ may	common	zh	五月
 mayotte	common	zh	马约特岛
 medium	common	zh	中间
 menu	common	zh	菜单
+merge cells	htmlarea-TableOperations	zh	合并
 message	common	zh	内容
 mexico	common	zh	墨西哥
 micronesia, federated states of	common	zh	密克罗尼西亚联邦
+middle	htmlarea-TableOperations	zh	中间
+modify url	htmlarea-ContextMenu	zh	修改网址
 moldova, republic of	common	zh	摩尔多瓦共和国
 monaco	common	zh	摩纳哥
 monday	common	zh	星期一
@@ -385,6 +471,9 @@ no	common	zh	否
 no entries found, try again ...	common	zh	条目找不到，请重试
 no history for this record	common	zh	该记录无历史记录
 no subject	common	zh	无主题
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	zh	通过选择的字典查询不到拼错的字
+no rules	htmlarea-TableOperations	zh	沒有规则
+no sides	htmlarea-TableOperations	zh	沒有边
 none	common	zh	无
 norfolk island	common	zh	诺福克岛
 normal	common	zh	普通
@@ -400,16 +489,20 @@ ok	common	zh	确定
 old value	common	zh	旧值
 oman	common	zh	阿曼
 on *nix systems please type: %1	common	zh	若使用UNIX类系统，请输入: %1
-on mouse over	common	zh	On Mouse Over
+on mouse over	common	zh	鼠标移至上方时显示
 only private	common	zh	仅私人
 only yours	common	zh	个人通讯录
 open notify window	common	zh	打开提示窗口
 open popup window	common	zh	打开弹出式窗口
+opens this link in a new window	htmlarea-ContextMenu	zh	在新窗口中开启新链接
 ordered list	htmlarea	zh	Ordered List
 original	common	zh	原来的
+original word	htmlarea-SpellChecker	zh	原本的字
 other	common	zh	其他
 overview	common	zh	概览
 owner	common	zh	所有者
+padding	htmlarea-TableOperations	zh	间隔
+page	common	zh	页
 page was generated in %1 seconds	common	zh	本页面生成耗时: %1秒
 pakistan	common	zh	巴基斯坦
 palau	common	zh	帕劳
@@ -419,6 +512,7 @@ papua new guinea	common	zh	巴布亚新几内亚
 paraguay	common	zh	巴拉圭
 parcel	common	zh	包裹
 parent category	common	zh	父类别
+paste	htmlarea-ContextMenu	zh	粘贴
 password	common	zh	密码
 password could not be changed	common	zh	无法更改密码
 password has been updated	common	zh	密码已更新
@@ -430,27 +524,38 @@ pattern for search in calendar	common	zh	在日历中查找的模式
 pattern for search in projects	common	zh	在项目中查找的模式
 permissions to the files/users directory	common	zh	文件/用户目录的权限
 personal	common	zh	个人
+percent	htmlarea-TableOperations	zh	百分比
 peru	common	zh	秘鲁
 philippines	common	zh	菲律宾
 phone number	common	zh	电话号码
-egroupware: login blocked for user '%1', ip %2	common	zt	eGroupWare：'%1'帳號鎖定了, IP %2
+phpgroupware: login blocked for user '%1', ip %2	common	zh	phpGroupWare：'%1'用户被锁定, IP %2
 pitcairn	common	zh	皮特凯恩
+pixels	htmlarea-TableOperations	zh	像素
 please %1 by hand	common	zh	请手动%1
 please enter a name	common	zh	请输入名称!
 please run setup to become current	common	zh	请运行安装程序以成为当前
 please select	common	zh	请选择
+please click into some cell	htmlarea-TableOperations	zh	请选择一些单元格
+please confirm that you want to open this link	htmlarea-SpellChecker	zh	确定要开启这个链接？
+please confirm that you want to remove this element:	htmlarea-ContextMenu	zh	确定要删除这个元件
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	zh	请定要删除这个元件
 please set your global preferences	common	zh	请设置全局个性化配置!
 please set your preferences for this application	common	zh	请为该应用程序设置个性化配置!
 please wait...	common	zh	请稍候...
+please wait.  calling spell checker.	htmlarea-SpellChecker	zh	检查中，请等待
+please wait: changing dictionary to	htmlarea-SpellChecker	zh	切换字典中，请等待
+pliz weit ;-)	htmlarea-SpellChecker	zh	请等待
 poland	common	zh	波兰
 portugal	common	zh	葡萄牙
 postal	common	zh	邮政
-powered by egroupware version %1	common	zh	以<a href="http://www.egroupware.org">eGroupWare</a>%1版本为基础设计
+powered by phpgroupware version %1	common	zh	以<a href="http://www.phpgroupware.org">phpGroupWare</a>%1版本为基础设计
+powered by egroupware version %1	common	zh	以<a href="http://www.egroupware.org">eGroupWare</a> 版本为基础设计
 preferences	common	zh	个性化配置
-preferences for the idots template set	common	zh	Preferences for the idots template set
+preferences for the idots template set	common	zh	Idots 模板的个性化设置
 prev. month (hold for menu)	common	zh	上个月(hold for menu)
 prev. year (hold for menu)	common	zh	去年(hold for menu)
 previous page	common	zh	前一页
+primary style-sheet:	common	zh	主要样式表：
 print	common	zh	打印
 priority	common	zh	优先级
 private	common	zh	私有条目
@@ -460,15 +565,30 @@ puerto rico	common	zh	波多黎各
 qatar	common	zh	卡塔尔
 read	common	zh	读取
 read this list of methods.	common	zh	读取方法列表.
-redoes your last action	htmlarea	zh	Redoes your last action
+re-check	htmlarea-SpellChecker	zh	重新检查
+redoes your last action	htmlarea	zh	重复最后一次操作
 reject	common	zh	拒绝
+remove selected accounts	common	zh	删除选取的账号
+remove the	htmlarea-ContextMenu	zh	删除
+remove this node from the document	htmlarea-ContextMenu	zh	从文件中删除这个节点
 rename	common	zh	重命名
+replace	htmlarea-SpellChecker	zh	取代
+replace all	htmlarea-SpellChecker	zh	全部取代
+replace with	htmlarea-SpellChecker	zh	取代于
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	zh	返回系统所有帐户的列表，注意：该列表可能很长
 returns an array of todo items	common	zh	返回一排待处理列表
 returns struct of users application access	common	zh	返回用户访问应用程序的结构
 reunion	common	zh	留尼旺
+revert	htmlarea-SpellChecker	zh	反转
+right	htmlarea-TableOperations	zh	右
 romania	common	zh	罗马尼亚
+ro_w properties...	htmlarea-ContextMenu	zh	列属性...
+row properties	htmlarea-TableOperations	zh	列属性
 russian federation	common	zh	俄罗斯联邦
+rules	htmlarea-TableOperations	zh	规则
+rules will appear between all rows and columns	htmlarea-TableOperations	zh	规则在所有行与列中显示
+rules will appear between columns only	htmlarea-TableOperations	zh	规则只在所有行中显示
+rules will appear between rows only	htmlarea-TableOperations	zh	规则只在所有列中显示
 rwanda	common	zh	卢旺达
 saint helena	common	zh	圣赫勒拿岛
 saint kitts and nevis	common	zh	圣基茨和尼维斯
@@ -482,6 +602,9 @@ saturday	common	zh	星期六
 saudi arabia	common	zh	沙特阿拉伯
 save	common	zh	保存
 search	common	zh	查找
+search %1 '%2'	common	zh	查找 %1 '%2'
+search or select accounts	common	zh	查找和选择账号
+selection	common	zh	选择
 section	common	zh	更改范围
 select	common	zh	选择
 select all %1 %2 for %3	common	zh	Select all %1 %2 for %3
@@ -499,36 +622,51 @@ server %1 has been added	common	zh	服务器%1已添加
 server name	common	zh	服务器名
 session has been killed	common	zh	会话已中止
 setup	common	zh	安装程序
-setup main menu	common	zh	Setup Main Menu
-setup/config admin login	common	zt	安裝/設定管理員登入
+setup main menu	common	zh	安装主菜单
+setup/config admin login	common	zh	安裝/配置管理員登陆
 seychelles	common	zh	塞舌尔
+show the image properties dialog	htmlarea-ContextMenu	zh	显示图片属性对话框
+show the table cell properties dialog	htmlarea-ContextMenu	zh	显示表格单元格属性对话框
+show the table properties dialog	htmlarea-ContextMenu	zh	显示表格属性对话框
+show the table row properties dialog	htmlarea-ContextMenu	zh	显示表格列属性对话框
 show all	common	zh	全部显示
 show all categorys	common	zh	显示所有类别
 show menu	common	zh	显示菜单
-show page generation time	common	zh	Show page generation time
-show page generation time on the bottom of the page?	common	zh	Show page generation time on the bottom of the page?
+show page generation time	common	zh	显示页面生成耗时
+show page generation time on the bottom of the page?	common	zh	是否在页面底部显示该页面生成所耗时间?
 show_more_apps	common	zh	show_more_apps
 showing %1	common	zh	共有%1项
-showing %1 - %2 of %3	common	zh	共有%3项，正显示中的第%1～%2项
+showing %1 - %2 of %3	common	zh	共有%3项  下面显示第%1项到第%2项
 sierra leone	common	zh	塞拉利昂
 singapore	common	zh	新加坡
 slovakia	common	zh	斯洛伐克
 slovenia	common	zh	斯洛文尼亚
 solomon islands	common	zh	所罗门群岛
 somalia	common	zh	索马里
-sorry, your login has expired	login	zh	抱歉，您本次登录已终止
+sorry, your login has expired	login	zh	抱歉，您本次登录已终止, 请重新登录.
 south africa	common	zh	南非
 south georgia and the south sandwich islands	common	zh	南乔治亚和南桑德韦奇群岛
 spain	common	zh	西班牙
+spacing	htmlarea-TableOperations	zh	空间
+spacing and padding	htmlarea-TableOperations	zh	空间与间隔
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	zh	语法检查完毕，没有发现任何错误，正在关闭...
+spell-check	htmlarea-SpellChecker	zh	语法检查
+split cell	htmlarea-TableOperations	zh	分割单元格
+split column	htmlarea-TableOperations	zh	分割行
+split row	htmlarea-TableOperations	zh	分割列
 sri lanka	common	zh	斯里兰卡
 start date	common	zh	起始日期
 start time	common	zh	起始时间
+start with	common	zh	起始于
 status	common	zh	状态
 strikethrough	htmlarea	zh	Strikethrough
+style [css]	htmlarea-TableOperations	zh	样式[CSS]
 subject	common	zh	主题
 submit	common	zh	提交
 subscript	htmlarea	zh	Subscript
 substitutions and their meanings:	common	zh	取代物及其含义:
+suggestions	htmlarea-SpellChecker	zh	建议
+summary	htmlarea-TableOperations	zh	摘要
 sudan	common	zh	苏丹
 sunday	common	zh	星期日
 superscript	htmlarea	zh	Superscript
@@ -538,17 +676,28 @@ swaziland	common	zh	斯威士兰
 sweden	common	zh	瑞典
 switzerland	common	zh	瑞士
 syrian arab republic	common	zh	叙利亚阿拉伯共和国
+table properties	htmlarea-TableOperations	zh	表格属性
 taiwan	common	zh	台湾省/中国台北
 tajikistan	common	zh	塔吉克斯坦
 tanzania, united republic of	common	zh	坦桑尼亚联合共和国
+text align	htmlarea-TableOperations	zh	文字对齐
+text color:	common	zh	文字颜色：
 thailand	common	zh	泰国
 the api is current	common	zh	API当前在用
 the api requires an upgrade	common	zh	API需要升级
+the bottom side only	htmlarea-TableOperations	zh	只在下方显示
+the left-hand side only	htmlarea-TableOperations	zh	只在左方显示
+the right and left sides only	htmlarea-TableOperations	zh	只在左右方显示
+the right-hand side only	htmlarea-TableOperations	zh	只在右方显示
+the top and bottom sides only	htmlarea-TableOperations	zh	只在上下方显示
+the top side only	htmlarea-TableOperations	zh	只在上方显示
 the following applications require upgrades	common	zh	以下应用程序需要升级
 the mail server returned	common	zh	退回邮件
 this application is current	common	zh	该应用程序当前在用
 this application requires an upgrade	common	zh	该应用程序需要升级
 this name has been used already	common	zh	该名称已被占用!
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	zh	此操作会删除所有不同并且关闭语法检查，请确认。
+This PHP has no IMAP support compiled in!!	common	zh	当前使用的PHP版本不支持IMAP!!
 thursday	common	zh	星期四
 time	common	zh	时间
 time selection:	jscalendar	zh	Time selection:
@@ -566,6 +715,7 @@ togo	common	zh	多哥
 tokelau	common	zh	托克劳群岛
 tonga	common	zh	汤加
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh	登录失败次数过多:用户"%2"%1次，IP地址"%4"%3次
+top	htmlarea-TableOperations	zh	顶部
 total	common	zh	总计
 trinidad and tobago	common	zh	特立尼达和多巴哥
 tuesday	common	zh	星期二
@@ -583,7 +733,12 @@ united kingdom	common	zh	英国
 united states	common	zh	美国
 united states minor outlying islands	common	zh	美属群岛
 unknown	common	zh	未知
+unlink the current element	htmlarea-ContextMenu	zh	删除当前元件
+unset color	htmlarea-TableOperations	zh	重设颜色
 update	common	zh	更新
+upload image	htmlarea-UploadImage	zh	上传图片
+upper latin letters	htmlarea-ListType	zh	大写拉丁字母
+upper roman numbers	htmlarea-ListType	zh	大写罗马字母
 url	common	zh	网址
 uruguay	common	zh	乌拉圭
 use button to search for	common	zh	使用按钮查找
@@ -600,6 +755,7 @@ uzbekistan	common	zh	乌兹别克斯坦
 vanuatu	common	zh	瓦努阿图
 venezuela	common	zh	委内瑞拉
 version	common	zh	版本
+vertical align	htmlarea-TableOperations	zh	垂直对齐
 viet nam	common	zh	越南
 view	common	zh	查看
 virgin islands, british	common	zh	英属维京群岛
@@ -609,6 +765,7 @@ wednesday	common	zh	星期三
 welcome	common	zh	欢迎
 western sahara	common	zh	西撒哈拉
 which groups	common	zh	哪一个组
+width	htmlarea-TableOperations	zh	宽度
 wk	common	zh	星期
 work email	common	zh	工作EMail地址
 written by:	common	zh	作者:
@@ -617,6 +774,7 @@ yemen	common	zh	也门
 yes	common	zh	是
 you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	zh	You are in TEXT MODE.  Use the [<>] button to switch back to WYSIWIG.
 you are required to change your password during your first login	common	zh	首次登录，您必须更改密码
+you are running a newer version of phpgroupware than your database is setup for	common	zh	您所使用的phpGroupWare软件版本比数据库新.
 you have been successfully logged out	login	zh	注销成功
 you have not entered a title	common	zh	必须输入标题
 you have not entered a valid date	common	zh	输入的日期无效
@@ -625,7 +783,7 @@ you have not entered participants	common	zh	必须输入参与者
 you have selected an invalid date	common	zh	选定的日期无效!
 you have selected an invalid main category	common	zh	选定的主类别无效!
 you have successfully logged out	common	zh	注销成功
-you need to add the webserver user '%1' to the group '%2'.	common	zt	您必須將網站伺服器使用者 '%1' 新增到群組 '%2'
+you need to add the webserver user '%1' to the group '%2'.	common	zh	您必须将WEB服务器的使用者 '%1' 添加到用户组 '%2'
 your message could <b>not</b> be sent!<br>	common	zh	邮件<b>无法</b>发送!<br>
 your message has been sent	common	zh	邮件已发送
 your search returned %1 matchs	common	zh	查找结果：%1个符合条件的记录
@@ -635,4 +793,7 @@ your settings have been updated	common	zh	您的配置已更新
 yugoslavia	common	zh	南斯拉夫
 zambia	common	zh	赞比亚
 zimbabwe	common	zh	津巴布韦
-﻿%1 email addresses inserted	common	zt	已匯入 %1 筆電子郵件位址
+My Categories	common	zh	类别编辑
+Icon	common	zh	图标
+icon	common	zh	图标
+Color	common	zh	颜色
