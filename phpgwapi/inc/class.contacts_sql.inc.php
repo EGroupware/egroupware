@@ -22,10 +22,10 @@
 	* along with this library; if not, write to the Free Software Foundation,  *
 	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
 	\**************************************************************************/
-	
+
 	/**
-	* This class provides a contact database scheme. 
-	* It attempts to be based on the vcard 2.1 standard, with mods as needed 
+	* This class provides a contact database scheme.
+	* It attempts to be based on the vcard 2.1 standard, with mods as needed
 	* to make for more reasonable sql storage.
 	* Note that changes here must also work in the LDAP version.
 	* Syntax: CreateObject('phpgwapi.contacts');
@@ -35,10 +35,10 @@
 	* @class contacts_
 	* @abstract Contact Management System
 	* @author jengo/Milosch
-	* @version $Revision$    
+	* @version $Revision$
 	* @license LGPL
 	*/
-	
+
 	/* $Id$ */
 
 	class contacts_
@@ -147,15 +147,14 @@
 
 		function contacts_($useacl=True)
 		{
-//			$this->db = $GLOBALS['phpgw']->db;
-			copyobj($GLOBALS['phpgw']->db,$this->db);
+			$this->db = clone($GLOBALS['egw']->db);
 			$this->db->set_app('phpgwapi');
 
 			if($useacl)
 			{
-				$this->grants = $GLOBALS['phpgw']->acl->get_grants('addressbook');
+				$this->grants = $GLOBALS['egw']->acl->get_grants('addressbook');
 			}
-			$this->account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+			$this->account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 			/* Used to flag an address as being:
 			   domestic AND/OR international(default)
@@ -301,11 +300,11 @@
 							if (!(int)$value) continue;	// nothing to filter
 
 							//$filterlist[] = "(" . $name . " LIKE '%," . (int)$value . ",%' OR " . $name."='".(int)$value."')";
-							if (!is_object($GLOBALS['phpgw']->categories))
+							if (!is_object($GLOBALS['egw']->categories))
 							{
-								$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+								$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
 							}
-							$cats = $GLOBALS['phpgw']->categories->return_all_children((int)$value);
+							$cats = $GLOBALS['egw']->categories->return_all_children((int)$value);
 							$cat_filter = "(cat_id IN ('".implode("','",$cats)."')";
 							foreach($cats as $cat)
 							{
@@ -602,7 +601,7 @@
 
 			//this is added here so it is never tainted
 			$this->stock_contact_fields['last_mod'] = 'last_mod';
-			$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
+			$stock_fields['last_mod'] = $GLOBALS['egw']->datetime->gmtnow;
 
 			$data = array(
 				'owner'		=> $owner,
@@ -685,7 +684,7 @@
 
 			if (count($stock_fields))
 			{
-				$stock_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
+				$stock_fields['last_mod'] = $GLOBALS['egw']->datetime->gmtnow;
 				$this->db->update($this->std_table,$stock_fields,array('id'=>$id),__LINE__,__FILE__);
 			}
 			if (is_array($extra_fields))

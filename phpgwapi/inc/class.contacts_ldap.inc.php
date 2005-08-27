@@ -144,14 +144,14 @@
 
 		function contacts_()
 		{
-			$this->db = $GLOBALS['phpgw']->db;
-			$this->ldap = $GLOBALS['phpgw']->common->ldapConnect(
-				$GLOBALS['phpgw_info']['server']['ldap_contact_host'],
-				$GLOBALS['phpgw_info']['server']['ldap_contact_dn'],
-				$GLOBALS['phpgw_info']['server']['ldap_contact_pw']
+			$this->db = clone($GLOBALS['egw']->db);
+			$this->ldap = $GLOBALS['egw']->common->ldapConnect(
+				$GLOBALS['egw_info']['server']['ldap_contact_host'],
+				$GLOBALS['egw_info']['server']['ldap_contact_dn'],
+				$GLOBALS['egw_info']['server']['ldap_contact_pw']
 			);
-			$this->account_id = $GLOBALS['phpgw_info']['user']['account_id'];
-			$this->grants     = $GLOBALS['phpgw']->acl->get_grants('addressbook');
+			$this->account_id = $GLOBALS['egw_info']['user']['account_id'];
+			$this->grants     = $GLOBALS['egw']->acl->get_grants('addressbook');
 
 			/* Used to flag an address as being:
 			   domestic OR  international(default)
@@ -185,7 +185,7 @@
 				}
 			}
 
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
+			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$return_fields[0]['id']     = $ldap_fields[0]['uidnumber'][0];
@@ -199,7 +199,7 @@
 			{
 				foreach($stock_fieldnames as $name => $value)
 				{
-					$return_fields[0][$name] = $GLOBALS['phpgw']->translation->convert(($ldap_fields[0][$value][0]),'utf-8');
+					$return_fields[0][$name] = $GLOBALS['egw']->translation->convert(($ldap_fields[0][$value][0]),'utf-8');
 				}
 			}
 
@@ -262,7 +262,7 @@
 				$id = 1;
 			}
 
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
+			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$return_fields[0]['id']     = $ldap_fields[0]['uidnumber'][0];
@@ -277,7 +277,7 @@
 			{
 				foreach($stock_fieldnames as $name => $value)
 				{
-					$return_fields[0][$name] = $GLOBALS['phpgw']->translation->convert(($ldap_fields[0][$value][0]),'utf-8');
+					$return_fields[0][$name] = $GLOBALS['egw']->translation->convert(($ldap_fields[0][$value][0]),'utf-8');
 				}
 			}
 
@@ -427,7 +427,7 @@
 				if(is_array($query))
 				{
 					// must be fixed somehow Milosch????
-					$myfilter = $this->makefilter($filterfields,$GLOBALS['phpgw']->common->ldap_addslashes($query),'',$DEBUG);
+					$myfilter = $this->makefilter($filterfields,$GLOBALS['egw']->common->ldap_addslashes($query),'',$DEBUG);
 				}
 				else
 				{
@@ -440,16 +440,16 @@
 						'org_name'	=> 'o',
 						'org_unit'	=> 'ou'
 					);
-					$myfilter = $this->makefilter($filterfields,$search_filter,$GLOBALS['phpgw']->common->ldap_addslashes($query),$DEBUG);
+					$myfilter = $this->makefilter($filterfields,$search_filter,$GLOBALS['egw']->common->ldap_addslashes($query),$DEBUG);
 				}
 			}
 			else
 			{
 				$myfilter = $this->makefilter($filterfields,'','',$DEBUG);
 			}
-			$myfilter = $GLOBALS['phpgw']->translation->convert($myfilter,$GLOBALS['phpgw']->translation->system_charset,'utf-8');
+			$myfilter = $GLOBALS['egw']->translation->convert($myfilter,$GLOBALS['egw']->translation->system_charset,'utf-8');
 
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], $myfilter);
+			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], $myfilter);
 
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 			/* _debug_array($ldap_fields);exit; */
@@ -511,7 +511,7 @@
 					{
 						foreach($stock_fieldnames as $f_name => $f_value)
 						{
-							$return_fields[$j][$f_name] = $GLOBALS['phpgw']->translation->convert(($ldap_fields[$i][$f_value][0]),'utf-8');
+							$return_fields[$j][$f_name] = $GLOBALS['egw']->translation->convert(($ldap_fields[$i][$f_value][0]),'utf-8');
 						}
 					}
 					$this->db->query("SELECT contact_name,contact_value FROM $this->ext_table WHERE contact_id='"
@@ -609,11 +609,11 @@
 					/* exact value (filtering based on tid, etc...) */
 					if($name == 'phpgwcontactcatid')
 					{
-						if (!is_object($GLOBALS['phpgw']->categories))
+						if (!is_object($GLOBALS['egw']->categories))
 						{
-							$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+							$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
 						}
-						$cats = $GLOBALS['phpgw']->categories->return_all_children((int)$value);
+						$cats = $GLOBALS['egw']->categories->return_all_children((int)$value);
 
 						$aquery .= '(|';
 						foreach($cats as $cat)
@@ -658,7 +658,7 @@
 				echo '<br>AND query:  "' . $aquery . '"';
 				echo '<br>OR query:   "' . $oquery . '"';
 				echo '<br>Full query: "' . $fquery . '"';
-				echo '<br>Will search in "' . $GLOBALS['phpgw_info']['server']['ldap_contact_context'] . '"';
+				echo '<br>Will search in "' . $GLOBALS['egw_info']['server']['ldap_contact_context'] . '"';
 			}
 
 //			echo $fquery;
@@ -680,7 +680,7 @@
 				$fields['tid'] = 'n';
 			}
 
-			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['egw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
@@ -688,16 +688,16 @@
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
 			$free = 0;
-			$this->nextid = $GLOBALS['phpgw']->common->last_id('contacts');
+			$this->nextid = $GLOBALS['egw']->common->last_id('contacts');
 			/* Loop until we find a free id */
 			while(!$free)
 			{
 				$ldap_fields = '';
-				$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$this->nextid);
+				$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], 'uidnumber='.$this->nextid);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 				if($ldap_fields[0]['dn'][0])
 				{
-					$this->nextid = $GLOBALS['phpgw']->common->next_id('contacts');
+					$this->nextid = $GLOBALS['egw']->common->next_id('contacts');
 				}
 				else
 				{
@@ -712,7 +712,7 @@
 				{
 					if($stock_fields[$name] != '')
 					{
-						$ldap_fields[$value] = $GLOBALS['phpgw']->translation->convert($stock_fields[$name],$GLOBALS['phpgw']->translation->system_charset,'utf-8');
+						$ldap_fields[$value] = $GLOBALS['egw']->translation->convert($stock_fields[$name],$GLOBALS['egw']->translation->system_charset,'utf-8');
 					}
 				}
 			}
@@ -720,7 +720,7 @@
 			$time = gettimeofday();
 			$ldap_fields['uid'] = time().$time['usec'].':'.$ldap_fields['givenname'];
 
-			$dn = 'uid=' . $ldap_fields['uid'].',' . $GLOBALS['phpgw_info']['server']['ldap_contact_context'];
+			$dn = 'uid=' . $ldap_fields['uid'].',' . $GLOBALS['egw_info']['server']['ldap_contact_context'];
 			$ldap_fields['phpgwcontacttypeid']    = $fields['tid'];
 			$ldap_fields['phpgwcontactowner']     = $owner;
 			if(!isset($fields['access']))
@@ -734,7 +734,7 @@
 			$ldap_fields['objectclass'][0] = 'organizationalPerson';
 			$ldap_fields['objectclass'][1] = 'inetOrgPerson';
 			$ldap_fields['objectclass'][2] = 'phpgwContact';
-			//$ldap_fields['last_mod'] = $GLOBALS['phpgw']->datetime->gmtnow;
+			//$ldap_fields['last_mod'] = $GLOBALS['egw']->datetime->gmtnow;
 
 			$err = $this->validate($ldap_fields);
 			if(@is_array($err) && @isset($err[0]))
@@ -847,13 +847,13 @@
 			}
 			$nonfields = $this->non_contact_fields;
 
-			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['egw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
 
 			/* First make sure that id number exists */
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
+			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], 'uidnumber=' . (int)$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			if($ldap_fields[0]['dn'])
@@ -960,12 +960,12 @@
 						if($ldap_fields[0][$fvalue] && $stock_fields[$fname] && $ldap_fields[0][$fvalue][0] != $stock_fields[$fname] )
 						{
 							//echo "<br>".$fname." => ".$fvalue." was there";
-							$err = ldap_modify($this->ldap,$dn,array($fvalue => $GLOBALS['phpgw']->translation->convert($stock_fields[$fname],$GLOBALS['phpgw']->translation->system_charset,'utf-8')));
+							$err = ldap_modify($this->ldap,$dn,array($fvalue => $GLOBALS['egw']->translation->convert($stock_fields[$fname],$GLOBALS['egw']->translation->system_charset,'utf-8')));
 						}
 						elseif(!$ldap_fields[0][$fvalue] && $stock_fields[$fname])
 						{
 							//echo "<br>".$fname." not there - '".$fvalue."'";
-							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $GLOBALS['phpgw']->translation->convert($stock_fields[$fname],$GLOBALS['phpgw']->translation->system_charset,'utf-8')));
+							$err = ldap_mod_add($this->ldap,$dn,array($fvalue => $GLOBALS['egw']->translation->convert($stock_fields[$fname],$GLOBALS['egw']->translation->system_charset,'utf-8')));
 						}
 						elseif($ldap_fields[0][$fvalue] && !$stock_fields[$fname])
 						{
@@ -981,7 +981,7 @@
 					}
 				}
 
-				//something here to update the last_mod from $GLOBALS['phpgw']->datetime->gmtnow
+				//something here to update the last_mod from $GLOBALS['egw']->datetime->gmtnow
 
 				foreach($extra_fields as $x_name => $x_value)
 				{
@@ -1018,7 +1018,7 @@
 				return False;
 			}
 
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'phpgwcontactowner='.$old_owner);
+			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], 'phpgwcontactowner='.$old_owner);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$entry = '';
@@ -1034,12 +1034,12 @@
 		/* This is where the real work of delete() is done, shared class file contains calling function */
 		function delete_($id)
 		{
-			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['egw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
 
-			$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
+			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], 'uidnumber='.$id);
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			if($ldap_fields[0]['dn'])
@@ -1058,14 +1058,14 @@
 		// This is for the admin script deleteaccount.php
 		function delete_all($owner=0)
 		{
-			if(!$GLOBALS['phpgw_info']['server']['ldap_contact_context'])
+			if(!$GLOBALS['egw_info']['server']['ldap_contact_context'])
 			{
 				return False;
 			}
 
 			if($owner)
 			{
-				$sri = ldap_search($this->ldap, $GLOBALS['phpgw_info']['server']['ldap_contact_context'], 'phpgwcontactowner='.$owner);
+				$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], 'phpgwcontactowner='.$owner);
 				$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 				$entry = '';
