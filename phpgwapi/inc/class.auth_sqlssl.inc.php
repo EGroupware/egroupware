@@ -4,9 +4,9 @@
 	* This file written by Andreas 'Count' Kotes <count@flatline.de>           *
 	* Authentication based on SQL table and X.509 certificates                 *
 	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* -------------------------------------------------------------------------*
+	* ------------------------------------------------------------------------ *
 	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org/api                                            * 
+	* http://www.egroupware.org/api                                            *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -30,7 +30,7 @@
 
 		function auth_()
 		{
-			copyobj($GLOBALS['phpgw']->db,$this->db);
+			$this->db = clone($GLOBALS['egw']->db);
 		}
 
 		function authenticate($username, $passwd)
@@ -59,7 +59,7 @@
 				$this->db->next_record();
 			}
 
-			if($GLOBALS['phpgw_info']['server']['case_sensitive_username'] == true)
+			if($GLOBALS['egw_info']['server']['case_sensitive_username'] == true)
 			{
 				if($db->f('account_lid') != $username)
 				{
@@ -80,28 +80,28 @@
 		{
 			if(!$account_id)
 			{
-				$account_id = $GLOBALS['phpgw_info']['user']['account_id'];
+				$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			}
 
 			$encrypted_passwd = md5($new_passwd);
 
-			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_pwd='" . md5($new_passwd) . "',"
-				. "account_lastpwd_change='" . time() . "' WHERE account_id='" . $account_id . "'",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->query("UPDATE phpgw_accounts SET account_pwd='" . md5($new_passwd) . "',"
+				. "account_lastpwd_change='" . time() . "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
 
-			$GLOBALS['phpgw']->session->appsession('password','phpgwapi',$new_passwd);
+			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
 
 			return $encrypted_passwd;
 		}
 
 		function update_lastlogin($account_id, $ip)
 		{
-			$GLOBALS['phpgw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id='$account_id'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->next_record();
-			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
+			$GLOBALS['egw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
+			$GLOBALS['egw']->db->next_record();
+			$this->previous_login = $GLOBALS['egw']->db->f('account_lastlogin');
 
-			$GLOBALS['phpgw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
+			$GLOBALS['egw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
-				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
+				. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
 		}
 	}
 ?>

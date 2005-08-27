@@ -1,7 +1,7 @@
 <?php
   /**************************************************************************\
   * eGroupWare API - Auth from PAM                                           *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
   * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
@@ -43,10 +43,10 @@
 		function update_lastlogin($account_id, $ip)
 		{
 			$account_id = get_account_id($account_id);
-	
-			$GLOBALS['phpgw']->db->query('update phpgw_accounts set account_lastloginfrom='
-			        . $GLOBALS['phpgw']->db->quote($ip).', account_lastlogin=' . time()
-			        . ' where account_id='.(int)$account_id,__LINE__,__FILE__);
+
+			$GLOBALS['egw']->db->query('UPDATE phpgw_accounts SET account_lastloginfrom='
+				. $GLOBALS['egw']->db->quote($ip).', account_lastlogin=' . time()
+				. ' WHERE account_id='.(int)$account_id,__LINE__,__FILE__);
 		}
 	}
 ?>

@@ -6,9 +6,9 @@
 	* Authentication based on LDAP Server                                      *
 	* Copyright (C) 2000, 2001 Joseph Engo                                     *
 	* Copyright (C) 2002, 2003 Lars Kneschke                                   *
-	* -------------------------------------------------------------------------*
+	* ------------------------------------------------------------------------ *
 	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org/api                                            * 
+	* http://www.egroupware.org/api                                            *
 	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
@@ -24,7 +24,7 @@
 	\**************************************************************************/
 
 	/* $Id$ */
-  
+
 	class auth_
 	{
 		var $previous_login = -1;
@@ -49,7 +49,7 @@
 			ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 
 			/* Login with the LDAP Admin. User to find the User DN.  */
-			if(!@ldap_bind($ldap,$username.'@'.$GLOBALS['egw_info']['server']['ads_domain'],$passwd)) 
+			if(!@ldap_bind($ldap,$username.'@'.$GLOBALS['egw_info']['server']['ads_domain'],$passwd))
 			{
 				//echo "<p>Cant bind with '$username@".$GLOBALS['egw_info']['server']['ads_domain']."' with PW '$passwd' !!!</p>\n";
 				return False;
@@ -65,7 +65,7 @@
 				$base_dn[] = 'DC='.$dc;
 			}
 			$base_dn = implode(',',$base_dn);
-			
+
 			//echo "<p>Trying ldap_search(,$base_dn,$filter,".print_r($attributes,true)."</p>\n";
 			$sri = ldap_search($ldap, $base_dn, $filter, $attributes);
 			$allValues = ldap_get_entries($ldap, $sri);
@@ -80,7 +80,7 @@
 						return false;
 					}
 				}
-				
+
 				$account = CreateObject('phpgwapi.accounts',$username,'u');
 				if ($account->account_id)
 				{
@@ -106,7 +106,7 @@
 			return False;
 		}
 
-		function change_password($old_passwd, $new_passwd, $_account_id='') 
+		function change_password($old_passwd, $new_passwd, $_account_id='')
 		{
 			return false;		// Cant change passwd in ADS
 		}

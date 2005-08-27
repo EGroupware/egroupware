@@ -5,9 +5,9 @@
   * and Joseph Engo <jengo@phpgroupware.org>                                 *
   * Authentication based on HTTP auth                                        *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -48,13 +48,13 @@
 		// Since there account data will still be stored in SQL, this should be safe to do. (jengo)
 		function update_lastlogin($account_id, $ip)
 		{
-			$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->next_record();
-			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
+			$GLOBALS['egw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
+			$GLOBALS['egw']->db->next_record();
+			$this->previous_login = $GLOBALS['egw']->db->f('account_lastlogin');
 
-			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['egw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
-				. "' where account_id='$account_id'",__LINE__,__FILE__);
+				. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
 		}
 	}
 ?>

@@ -26,7 +26,7 @@
 	{
 		$GLOBALS['egw_info']['server']['auth_type'] = 'sql';
 	}
-	include(PHPGW_API_INC.'/class.auth_'.$GLOBALS['egw_info']['server']['auth_type'].'.inc.php');
+	include(EGW_API_INC.'/class.auth_'.$GLOBALS['egw_info']['server']['auth_type'].'.inc.php');
 
 	class auth extends auth_
 	{
@@ -50,7 +50,7 @@
 
 			if(!$this->seeded && phpversion() < '4.2.0')
 			{
-			    list($usec, $sec) = explode(' ', microtime());
+				list($usec, $sec) = explode(' ', microtime());
 				mt_srand((float)$sec + ((float)$usec * 100000));
 				$this->seeded = True;
 			}
@@ -354,8 +354,6 @@
 				return True;
 			}
 			return False;
-
 		}
-
 	}
 ?>

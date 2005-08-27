@@ -135,8 +135,8 @@
 				$account_id = $GLOBALS['egw_info']['user']['account_id'];
 			}
 					
-			$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = '" . (int)$account_id
-				. "' AND " // . " account_type='u' AND "
+			$this->db->query("SELECT account_pwd FROM phpgw_accounts WHERE account_id = " . (int)$account_id
+				. " AND " // . " account_type='u' AND "
 				. " account_status ='A'",__LINE__,__FILE__);
 			$this->db->next_record();
 			if(!$this->db->f('account_pwd')) return false;
@@ -144,7 +144,10 @@
 			/* Check the old_passwd to make sure this is legal */
 			if(!$admin)
 			{
-				if(!$this->compare_password($old_passwd,$this->db->f('account_pwd'),$this->type,strtolower($username))) return false;
+				if(!$this->compare_password($old_passwd,$this->db->f('account_pwd'),$this->type,strtolower($username)))
+				{
+					return false;
+				}
 			}
 
 			/* old password ok, or admin called the function from the admin application (no old passwd available).*/
@@ -155,7 +158,7 @@
 		function _update_passwd($encrypted_passwd,$new_passwd,$account_id,$admin=False,$file='')
 		{
 			/* This should only be called from this file */
-			if($file != PHPGW_API_INC . SEP . 'class.auth_sql.inc.php')
+			if($file != EGW_API_INC . SEP . 'class.auth_sql.inc.php')
 			{
 				return False;
 			}
@@ -181,7 +184,7 @@
 		{
 			$GLOBALS['egw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
-				. "' WHERE account_id='$account_id'",__LINE__,__FILE__);
+				. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
 		}
 	}
 ?>

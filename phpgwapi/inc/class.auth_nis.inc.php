@@ -1,10 +1,10 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare API - Auth from NIS	                                   *
+	* eGroupWare API - Auth from NIS                                           *
 	* Authentication based on NIS maps                                         *
 	* by Dylan Adams <dadams@jhu.edu>                                          *
 	* Copyright (C) 2001 Dylan Adams                                           *
-	* -------------------------------------------------------------------------*
+	* ------------------------------------------------------------------------ *
 	* This library is part of the eGroupWare API                               *
 	* http://www.egroupware.org/api                                            *  
 	* ------------------------------------------------------------------------ *
@@ -28,31 +28,31 @@
 		function authenticate($username, $passwd)
 		{
 			$domain = yp_get_default_domain();
-			if( !empty($GLOBALS['phpgw_info']['server']['nis_domain']) )
+			if(!empty($GLOBALS['egw_info']['server']['nis_domain']))
 			{
-				$domain = $GLOBALS['phpgw_info']['server']['nis_domain'];
+				$domain = $GLOBALS['egw_info']['server']['nis_domain'];
 			}
 
 			$map = "passwd.byname";
-			if( !empty($GLOBALS['phpgw_info']['server']['nis_map']) )
+			if(!empty($GLOBALS['egw_info']['server']['nis_map']))
 			{
-				$map = $GLOBALS['phpgw_info']['server']['nis_map'];
+				$map = $GLOBALS['egw_info']['server']['nis_map'];
 			}
 			$entry = yp_match( $domain, $map, $username );
 
-            /*
-             * we assume that the map is structured in the usual
-             * unix passwd flavor
-             */
-			$entry_array = explode( ':', $entry );
+			/*
+			 * we assume that the map is structured in the usual
+			 * unix passwd flavor
+			 */
+			$entry_array = explode(':', $entry);
 			$stored_passwd = $entry_array[1];
 
-			$encrypted_passwd = crypt( $passwd, $stored_passwd );
+			$encrypted_passwd = crypt($passwd, $stored_passwd);
 
-			return( $encrypted_passwd == $stored_passwd );
+			return($encrypted_passwd == $stored_passwd);
 		}
 
-		function change_password($old_passwd, $new_passwd, $account_id = '')
+		function change_password($old_passwd, $new_passwd, $account_id='')
 		{
 			// can't change passwords unless server runs as root (bad idea)
 			return( False );
@@ -62,7 +62,7 @@
 		{
 			$account_id = get_account_id($account_id);
 
-			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['egw']->db->query("update phpgw_accounts set account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
 				. "' where account_id='$account_id'",__LINE__,__FILE__);
 		}

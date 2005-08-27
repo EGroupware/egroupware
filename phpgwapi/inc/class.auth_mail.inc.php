@@ -4,9 +4,9 @@
   * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
   * Authentication based on mail server                                      *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -31,49 +31,49 @@
 		{
 			error_reporting(error_reporting() - 2);
 
-			if ($GLOBALS['phpgw_info']['server']['mail_login_type'] == 'vmailmgr')
+			if ($GLOBALS['egw_info']['server']['mail_login_type'] == 'vmailmgr')
 			{
-				$username = $username . '@' . $GLOBALS['phpgw_info']['server']['mail_suffix'];
+				$username = $username . '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
 			}
-			if ($GLOBALS['phpgw_info']['server']['mail_server_type']=='imap')
+			if ($GLOBALS['egw_info']['server']['mail_server_type']=='imap')
 			{
-				$GLOBALS['phpgw_info']['server']['mail_port'] = '143';
+				$GLOBALS['egw_info']['server']['mail_port'] = '143';
 			}
-			elseif ($GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3')
+			elseif ($GLOBALS['egw_info']['server']['mail_server_type']=='pop3')
 			{
-				$GLOBALS['phpgw_info']['server']['mail_port'] = '110';
+				$GLOBALS['egw_info']['server']['mail_port'] = '110';
 			}
- 			elseif ($GLOBALS['phpgw_info']['server']['mail_server_type']=='imaps')
- 			{
- 				$GLOBALS['phpgw_info']['server']['mail_port'] = '993';
- 			}
- 			elseif ($GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3s')
- 			{
- 				$GLOBALS['phpgw_info']['server']['mail_port'] = '995';
- 			}
+			elseif ($GLOBALS['egw_info']['server']['mail_server_type']=='imaps')
+			{
+				$GLOBALS['egw_info']['server']['mail_port'] = '993';
+			}
+			elseif ($GLOBALS['egw_info']['server']['mail_server_type']=='pop3s')
+			{
+				$GLOBALS['egw_info']['server']['mail_port'] = '995';
+			}
 
-			if( $GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3')
+			if( $GLOBALS['egw_info']['server']['mail_server_type']=='pop3')
 			{
-				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server'].'/pop3'
-					.':'.$GLOBALS['phpgw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
+				$mailauth = imap_open('{'.$GLOBALS['egw_info']['server']['mail_server'].'/pop3'
+					.':'.$GLOBALS['egw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
 			}
- 			elseif ( $GLOBALS['phpgw_info']['server']['mail_server_type']=='imaps' )
- 			{
- 				// IMAPS support:
- 				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server']."/ssl/novalidate-cert"
-                                         .':993}INBOX', $username , $passwd);
- 			}
- 			elseif ( $GLOBALS['phpgw_info']['server']['mail_server_type']=='pop3s' )
- 			{
- 				// POP3S support:
- 				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server']."/ssl/novalidate-cert"
-                                         .':995}INBOX', $username , $passwd);
+			elseif ( $GLOBALS['egw_info']['server']['mail_server_type']=='imaps' )
+			{
+				// IMAPS support:
+				$mailauth = imap_open('{'.$GLOBALS['egw_info']['server']['mail_server']."/ssl/novalidate-cert"
+					.':993}INBOX', $username , $passwd);
+			}
+			elseif ( $GLOBALS['egw_info']['server']['mail_server_type']=='pop3s' )
+			{
+				// POP3S support:
+				$mailauth = imap_open('{'.$GLOBALS['egw_info']['server']['mail_server']."/ssl/novalidate-cert"
+					.':995}INBOX', $username , $passwd);
 			}
 			else
 			{
 				/* assume imap */
-				$mailauth = imap_open('{'.$GLOBALS['phpgw_info']['server']['mail_server']
-					.':'.$GLOBALS['phpgw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
+				$mailauth = imap_open('{'.$GLOBALS['egw_info']['server']['mail_server']
+					.':'.$GLOBALS['egw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
 			}
 
 			error_reporting(error_reporting() + 2);
@@ -96,13 +96,13 @@
 		// Since there account data will still be stored in SQL, this should be safe to do. (jengo)
 		function update_lastlogin($account_id, $ip)
 		{
-			$GLOBALS['phpgw']->db->query("select account_lastlogin from phpgw_accounts where account_id='$account_id'",__LINE__,__FILE__);
-			$GLOBALS['phpgw']->db->next_record();
-			$this->previous_login = $GLOBALS['phpgw']->db->f('account_lastlogin');
+			$GLOBALS['egw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
+			$GLOBALS['egw']->db->next_record();
+			$this->previous_login = $GLOBALS['egw']->db->f('account_lastlogin');
 
-			$GLOBALS['phpgw']->db->query("update phpgw_accounts set account_lastloginfrom='"
+			$GLOBALS['egw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
 				. "$ip', account_lastlogin='" . time()
-				. "' where account_id='$account_id'",__LINE__,__FILE__);
+				. "' WHERE account_id=" . (int)$account_id,__LINE__,__FILE__);
 		}
 	}
 ?>
