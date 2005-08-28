@@ -520,6 +520,106 @@ function showMessage(msg, type)
 	}
 }
 
+// works only correctly in Mozilla/FF and Konqueror
+function egw_openWindowCentered(_url, _windowName, _width, _height)
+{
+	windowWidth = egw_getWindowOuterWidth();
+	windowHeight = egw_getWindowOuterHeight();
+
+	positionLeft = (windowWidth/2)-(_width/2)+egw_getWindowLeft();
+	positionTop  = (windowHeight/2)-(_height/2)+egw_getWindowTop();
+
+	windowID = window.open(_url, _windowName, "width=" + _width + ",height=" + _height + 
+		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
+		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=no");
+	
+	return windowID;
+}
+
+// return the left position of the window
+function egw_getWindowLeft()
+{
+	if(is_mozilla)
+	{
+		return window.screenX;
+	}
+	else
+	{
+		return window.screenLeft;
+	}
+}
+
+// return the left position of the window
+function egw_getWindowTop()
+{
+	if(is_mozilla)
+	{
+		return window.screenY;
+	}
+	else
+	{
+		//alert(window.screenTop);
+		return window.screenTop-90;
+	}
+}
+
+// get the outerWidth of the browser window. For IE we simply return the innerWidth
+function egw_getWindowInnerWidth()
+{
+	if (is_mozilla)
+	{
+		return window.innerWidth;
+	}
+	else
+	{
+		// works only after the body has parsed
+		//return document.body.offsetWidth;
+		return document.body.clientWidth;
+		//return document.documentElement.clientWidth;
+	}
+}
+
+// get the outerHeight of the browser window. For IE we simply return the innerHeight
+function egw_getWindowInnerHeight()
+{
+	if (is_mozilla)
+	{
+		return window.innerHeight;
+	}
+	else
+	{
+		// works only after the body has parsed
+		//return document.body.offsetHeight;
+		//return document.body.clientHeight;
+		return document.documentElement.clientHeight;
+	}
+}
+
+// get the outerWidth of the browser window. For IE we simply return the innerWidth
+function egw_getWindowOuterWidth()
+{
+	if (is_mozilla)
+	{
+		return window.outerWidth;
+	}
+	else
+	{
+		return egw_getWindowInnerWidth();
+	}
+}
+
+// get the outerHeight of the browser window. For IE we simply return the innerHeight
+function egw_getWindowOuterHeight()
+{
+	if (is_mozilla)
+	{
+		return window.outerHeight;
+	}
+	else
+	{
+		return egw_getWindowInnerHeight();
+	}
+}
 
 /***********************************************\
 *      HTML ELEMENTS AUXILIAR FUNCTIONS         *
