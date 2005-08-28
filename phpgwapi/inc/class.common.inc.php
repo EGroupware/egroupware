@@ -1314,6 +1314,14 @@
 		function get_java_script()
 		{
 			$java_script = '';
+			
+			if(!@is_object($GLOBALS['egw']->js))
+			{
+				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+			}
+			
+			// always include javascript helper functions
+			$GLOBALS['egw']->js->validate_file('jsapi','jsapi');
 
 			//viniciuscb: in Concisus this condition is inexistent, and in all
 			//pages the javascript globals are inserted. Today, because
@@ -1324,11 +1332,6 @@
 			{
 				if (!$GLOBALS['egw_info']['flags']['nojsapi'])
 				{
-					if(!@is_object($GLOBALS['egw']->js))
-					{
-						$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-					}
-		
 					$GLOBALS['egw']->js->validate_jsapi();
 				}
 				
