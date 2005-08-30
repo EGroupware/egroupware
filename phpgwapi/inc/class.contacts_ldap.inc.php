@@ -1022,12 +1022,12 @@
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
 
 			$entry = '';
-			foreach($ldap_fields as $nul => $entry)
+			for($i=0; $i<$ldap_fields['count']; $i++)
 			{
-				$err = ldap_modify($this->ldap,$entry['dn'],array('phpgwcontactowner' => $new_owner));
+				$err = ldap_modify($this->ldap,$ldap_fields[$i]['dn'],array('phpgwcontactowner' => $new_owner));
 			}
 
-			$this->db->query("UPDATE $this->ext_table SET contact_owner='$new_owner' WHERE contact_owner=$owner",__LINE__,__FILE__);
+			$this->db->query("UPDATE $this->ext_table SET contact_owner='$new_owner' WHERE contact_owner=$old_owner",__LINE__,__FILE__);
 			return;
 		}
 
