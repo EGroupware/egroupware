@@ -44,7 +44,7 @@
 		define('PHPGW_INCLUDE_ROOT','..');
 	}
 
-	include(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
+	require(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
 
 	define('SEP',filesystem_separator());
 
