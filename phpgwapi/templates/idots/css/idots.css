@@ -92,7 +92,8 @@ input,button,select
 	border: solid 1px #bbbbbb;
 }
 
-input[type=submit],input[type=button],input[type=reset],button
+input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+
 {
 /*	color:white;*/
 	background-color:#c5c5c5;
@@ -106,7 +107,7 @@ input[type=submit],input[type=button],input[type=reset],button
 	cursor:  hand;
 }
 
-input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover
+input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
 {
 	background-color:#94bfd4;
 	border:  outset 1px #b9d5e3;
@@ -114,16 +115,43 @@ input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button
 	color:  #004e7d;
 }
 
-input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active
+input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+
 {
 	border:  inset 1px #bbbbbb;
 }
 
+input.egwbutton
+{
+   background-color:#c5c5c5;
+   border:  outset 1px #dcdad5;
+   background-color:#b9d5e3;
+   border:  outset 1px #b9d5e3;
+   margin:  1px;
+   padding: 1px;
+   cursor:  pointer; 
+   color:  #004e7d;
+   cursor:  hand;
+}
+
+input.egwbutton:hover
+{
+   background-color:#94bfd4;
+   border:  outset 1px #b9d5e3;
+   color:  #006699;
+   color:  #004e7d;
+
+}
+input.egwbutton:active
+{
+   border:  inset 1px #bbbbbb;
+}
+
 input[type=image]
 {
-	cursor: pointer; 
-	cursor: hand;
-	border: 0;
+   cursor: pointer; 
+   cursor: hand;
+   border: 0;
 }
 
 .divLoginbox,.divSidebox 
@@ -136,7 +164,7 @@ input[type=image]
 
 .divSidebox 
 {
-	width: 147px; 
+	width: 177px; 
 }
 
 .divSideboxHeader,.divLoginboxHeader 
