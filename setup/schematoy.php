@@ -123,7 +123,7 @@
 			$terror[$appname]['version'] = $version[$appname];
 			$terror[$appname]['status'] = 'U';
 
-			$appdir  = PHPGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
+			$appdir  = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
 			// Drop newest tables
 			$terror[$appname]['tables'] = $GLOBALS['setup_info'][$appname]['tables'];
@@ -170,14 +170,14 @@
 		$GLOBALS['setup_tpl']->pparse('out','footer');
 		exit;
 	}
-	$detail = get_var('detail',Array('POST'));
+	$detail = get_var('detail',Array('GET','POST'));
 	if($detail)
 	{
 		@ksort($GLOBALS['setup_info'][$detail]);
 		@reset($GLOBALS['setup_info'][$detail]);
 		$GLOBALS['setup_tpl']->set_var('description',lang('App details') . ':');
 		$GLOBALS['setup_tpl']->pparse('out','header');
-		
+
 		while (list($key,$val) = each($GLOBALS['setup_info'][$detail]))
 		{
 			if ($i) { $i = 0; }
@@ -225,9 +225,9 @@
 		while (list ($key, $value) = each ($GLOBALS['setup_info']))
 		{
 			unset($test);
-			if (file_exists(PHPGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php'))
+			if (file_exists(EGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php'))
 			{
-				include(PHPGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php');
+				include(EGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php');
 			}
 
 			if (is_array($test))
