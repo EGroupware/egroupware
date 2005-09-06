@@ -714,7 +714,7 @@ WHERE c2.relname=\'%s\' or c2.relname=lower(\'%s\')';
 			
 			if (!empty($this->_connectionID)) {
 				$this->_errorMsg = @pg_last_error($this->_connectionID);
-			} else $this->_errorMsg = @pg_last_error();
+			} else $this->_errorMsg = DB_ERROR_CONNECT_FAILED;
 		} else {
 			if (empty($this->_connectionID)) $this->_errorMsg = @pg_errormessage();
 			else $this->_errorMsg = @pg_errormessage($this->_connectionID);
