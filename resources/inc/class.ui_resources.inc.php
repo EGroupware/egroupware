@@ -341,10 +341,15 @@ class ui_resources
 			openerid='resources_selectbox';
 			id='exec[nm][rows][selectbox]';
 		
-			function addOption(label,value)
+			function addOption(label,value,button_id,useable)
 			{
+				quantity = document.getElementById(button_id+'[default_qty]').value;
+				if(quantity>useable) {
+					alert('".lang('You chose more resources than available')."');
+					return false;
+				}
+				label = label+'['+quantity+'/'+useable+']';
 				openerSelectBox = opener.document.getElementById(openerid);
-
 				if (openerSelectBox) {
 					select = '';
 					for(i=0; i < openerSelectBox.length; i++) {
@@ -355,7 +360,7 @@ class ui_resources
 						}
 					}
 					select += (select ? ',' : '')+value;
-					opener.selectbox_add_option(openerid,label,value,0);
+					opener.selectbox_add_option(openerid,label,value+':'+quantity,0);
 				}
 				selectBox = document.getElementById(id);
 				if (selectBox) {

@@ -68,8 +68,17 @@ class bo_resources
 		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
 		$nr = $this->so->total;
 		
-		// We don't need the readonly checkes if we only show bookable resources
-		if($query['show_bookable']) return $nr; 
+		// we are called to serve bookable resources (e.g. calendar-dialog)
+		if($query['show_bookable'])
+		{
+			// This is somehow ugly, i know...
+			foreach($rows as $num => $resource)
+			{
+				$rows[$num]['default_qty'] = 1;
+			}
+			// we don't need all the following testing
+			return $nr;
+		}
 		
 		foreach((array)$rows as $num => $resource)
 		{
@@ -240,7 +249,7 @@ class bo_resources
 	
 	/**
 	 * returns info about resource for calender
-	 * @author Cornelius Weiﬂ <egw@von-und-zu-weiss.de>
+	 * @author Cornelius Weiss<egw@von-und-zu-weiss.de>
 	 * @param int/array $res_id single id or array $num => $res_id
 	 * @return array 
 	 */
