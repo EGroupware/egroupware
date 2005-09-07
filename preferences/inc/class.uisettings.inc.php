@@ -95,6 +95,10 @@
 
 			if($_POST['save'] || $_POST['apply'])
 			{
+				if ($this->bo->session_data['notifies'])	// notifies NEED the translation for the application loaded
+				{
+					$GLOBALS['egw']->translation->add_app($_GET['appname']);
+				}
 				/* Don't use a switch here, we need to check some permissions during the ifs */
 				if($GLOBALS['type'] == 'user' || !($GLOBALS['type']))
 				{
