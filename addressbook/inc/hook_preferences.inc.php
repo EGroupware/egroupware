@@ -12,14 +12,15 @@
 
   /* $Id$ */
 {
-// Only Modify the $file and $title variables.....
+	// Only Modify the $file and $title variables.....
 	$title = $appname;
-	$file = Array(
-		'Preferences'   => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'),
-		'Grant Access'  => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-		'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app='.$appname . '&cats_level=True&global_cats=True')
-	);
-//Do not modify below this line
+	$file = array();
+	$file['Preferences']		= $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences');
+	if(!$GLOBALS['egw_info']['server']['deny_user_grants_access'])
+		$file['Grant Access']	= $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname);
+	$file['Edit Categories']	= $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app='.$appname . '&cats_level=True&global_cats=True');
+
+	//Do not modify below this line
 	display_section($appname,$title,$file);
 }
 ?>

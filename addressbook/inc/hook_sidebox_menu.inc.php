@@ -35,11 +35,12 @@
 	if($GLOBALS['egw_info']['user']['apps']['preferences'])
 	{
 		$menu_title = lang('Preferences');
-		$file = Array(
-			'Addressbook preferences'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences'),
-			'Grant Access'=>$GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=addressbook'),
-			'Edit Categories' =>$GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True')
-		);
+		$file 				 = array();
+		$file['Addressbook preferences'] = $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.preferences');
+		if(!$GLOBALS['egw_info']['server']['deny_user_grants_access'])
+			$file['Grant Access']	 = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=addressbook');
+		$file['Edit Categories'] 	 = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=addressbook&cats_level=True&global_cats=True');
+
 		display_sidebox($appname,$menu_title,$file);
 	}
 
