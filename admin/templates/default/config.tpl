@@ -210,6 +210,26 @@
     </td>
    </tr>
 
+   <tr class="row_off">
+    <td>{lang_Enable_the_xmlrpc_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
+    <td>
+      <select name="newsettings[xmlrpc_enabled]">
+         <option value="">{lang_No}</option>
+         <option value="True"{selected_xmlrpc_enabled_True}>{lang_Yes}</option>
+       </select>
+    </td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Enable_the_soap_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
+    <td>
+      <select name="newsettings[soap_enabled]">
+         <option value="">{lang_No}</option>
+         <option value="True"{selected_soap_enabled_True}>{lang_Yes}</option>
+       </select>
+    </td>
+   </tr>
+
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Mail_settings}</b></td>
    </tr>

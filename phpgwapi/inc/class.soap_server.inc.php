@@ -29,7 +29,7 @@
 		function service($data)
 		{
 			// $response is a soap_msg object
-			$response = $this->parseRequest($data);
+			$response = get_class($data) == 'soapmsg' ? $date : $this->parseRequest($data);
 			$this->debug("parsed request and got an object of this class '".get_class($response)."'");
 			$this->debug("server sending...");
 			// pass along the debug string

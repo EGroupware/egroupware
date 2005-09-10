@@ -25,6 +25,13 @@
 	/* _debug_array($GLOBALS['server']);exit; */
 	/* include(EGW_API_INC . '/soaplib.soapinterop.php'); */
 
+	if (!$GLOBALS['egw_info']['server']['soap_enabled'])
+	{
+		$GLOBALS['server']->make_fault(9999,'soap service is not enabled in the eGroupWare system configuration');
+		$GLOBALS['server']->service($GLOBALS['server']->fault());
+		exit;
+	}
+
 	/* Note: this command only available under Apache */
 	$headers = getallheaders();
 
