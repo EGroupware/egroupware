@@ -1,6 +1,7 @@
 %1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
 %1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
 %1 not found or not executable !!!	admin	en	%1 not found or not executable !!!
+(default no, leave it off if you dont use it)	admin	en	(default No, leave it off if you dont use it)
 (stored password will not be shown here)	admin	en	(Stored password will not be shown here)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	en	(To install new applications use<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
 accesslog and bruteforce defense	admin	en	AccessLog and BruteForce defense
@@ -153,6 +154,8 @@ edit user account	admin	en	Edit user account
 email account active	admin	en	email account active
 email address	admin	en	email address
 enable debug-messages	admin	en	Enable debug-messages
+enable the soap service	admin	en	Enable the soap service
+enable the xmlrpc service	admin	en	Enable the xmlrpc service
 enabled - hidden from navbar	admin	en	Enabled - Hidden from navbar
 enabled - popup window	admin	en	Enabled - Popup Window
 enter a description for the category	admin	en	enter a description for the category
@@ -390,7 +393,6 @@ view this user	admin	en	view this user
 view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like egroupware to cache the egw info array ?	admin	en	Would you like eGroupWare to cache the egw info array ?
-would you like egroupware to cache the phpgw info array ?	admin	en	Would you like eGroupWare to cache the phpgw info array ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	en	Would you like eGroupWare to check for a new version<br>when admins login ?
 would you like egroupware to check for new application versions when admins login ?	admin	en	Would you like eGroupWare to check for new application versions when admins login ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automatically load new langfiles (at login-time) ?
