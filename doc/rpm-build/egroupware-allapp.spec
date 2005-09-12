@@ -1,6 +1,6 @@
 %define packagename eGroupWare-all-apps
 %define egwdirname egroupware
-%define version 1.0.0.008
+%define version 1.0.0.009
 %define packaging 2
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -31,7 +31,7 @@ eGroupWare is a web-based groupware suite written in PHP. This package provides:
 egroupware core, addressbook, backup, bookmarks, calendar, comic, developer tools, 
 docs, email, emailadmin, etemplate, felamimail, filemanager, forum, ftp, fudforum, 
 headlines, infolog, jinn, messenger news admin, phpldapadmin, phpbrain (knowledgebase), 
-phpsysinfo, polls, projects (advanced project management), registration, sitemgr, 
+phpsysinfo, polls, projects (project management), registration, sitemgr, 
 stocks, tts (trouble ticket system), wiki
 
 It also provides an API for developing additional applications. See the egroupware
@@ -133,6 +133,11 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/wiki
 
 %changelog
+* Mon Sep 12 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.009-2
+- further xmlrpc security fixes (already included in the tgz from mid Aug)
+- xmlrpc and soap subsystem is not deactivated by default, it can be enabled
+  via Admin >> site configuration if needed
+
 * Fri Jul 16 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.0.0.008-2
 - Fixed projects problem (editing of project not working, dates are allways 
   set to ~ 1970-01-01) introduced by security fix between 007 and 008
