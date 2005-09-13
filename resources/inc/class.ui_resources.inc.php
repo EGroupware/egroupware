@@ -344,6 +344,7 @@ class ui_resources
 			function addOption(label,value,button_id,useable)
 			{
 				quantity = document.getElementById(button_id+'[default_qty]').value;
+				value = value+':'+quantity;
 				if(quantity>useable) {
 					alert('".lang('You chose more resources than available')."');
 					return false;
@@ -360,13 +361,16 @@ class ui_resources
 						}
 					}
 					select += (select ? ',' : '')+value;
-					opener.selectbox_add_option(openerid,label,value+':'+quantity,0);
+					opener.selectbox_add_option(openerid,label,value,0);
 				}
 				selectBox = document.getElementById(id);
 				if (selectBox) {
+					var resource_value = value.split(':');
 					for (i=0; i < selectBox.length; i++) {
-						if (selectBox.options[i].value == value) {
-							selectBox.options[i].selected = true;
+						var selectvalue = selectBox.options[i].value.split(':');
+						if (selectvalue[0] == resource_value[0]) {
+							selectBox.options[i] = null; 
+							selectBox.options[selectBox.length] = new Option(label,value,false,true);	
 							break;
 						}
 					}
@@ -408,6 +412,7 @@ class ui_resources
 			
 			function oneLineSubmit()
 			{
+			/*
 				openerSelectBox = opener.document.getElementById(openerid);
 		
 				if (openerSelectBox) {
@@ -427,6 +432,7 @@ class ui_resources
 						}	
 					}
 				}
+			*/
 				window.close();
 			}</script>";
 
