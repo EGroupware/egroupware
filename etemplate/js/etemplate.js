@@ -81,9 +81,12 @@ function selectbox_add_option(id,label,value,do_onchange)
 {
 	selectBox = document.getElementById(id);
 	/*alert('selectbox_add_option('+id+','+label+','+value+') '+selectBox);*/
+	var search_val = value.split(':');
 	for (i=0; i < selectBox.length; i++) {
-		if (selectBox.options[i].value == value) {
-			selectBox.options[i].selected = true;
+		var selectvalue = selectBox.options[i].value.split(':');
+		if (selectvalue[0] == search_val[0]) {
+			selectBox.options[i] = null;
+			selectBox.options[selectBox.length] = new Option(label,value,false,true);
 			break;
 		}
 	}
