@@ -1,29 +1,24 @@
 <?php
-	/**************************************************************************\
-	* -------------------------------------------------------------------------*
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
+  /**************************************************************************\
+  * eGroupWare - Filemanager                                                 *
+  * http://www.egroupware.org                                                *
+  * ------------------------------------------------------------------------ *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
 
-	/* $Id$ */
+  /* $Id$ */
 
 	class uifilemanager
 	{
 		var $public_functions = array(
-			'index'	=> True,
-			'help'	=> True,
+			'index' => True,
+			'help'  => True,
 			'view'  => True,
 			'history' => True,
-			'edit' => True,
+			'edit'  => True,
 			'download'=>True
 		);
 
@@ -88,13 +83,13 @@
 		function uifilemanager()
 		{
 			//			error_reporting(8);
-			$GLOBALS['phpgw']->browser = CreateObject('phpgwapi.browser');
+			$GLOBALS['egw']->browser = CreateObject('phpgwapi.browser');
 
 			$this->now = date('Y-m-d');
 
 			$this->bo = CreateObject('filemanager.bofilemanager');
 
-			$this->t = $GLOBALS['phpgw']->template;
+			$this->t = $GLOBALS['egw']->template;
 
 			// here local vars are created from the HTTP vars
 			@reset($GLOBALS['HTTP_POST_VARS']);
@@ -163,57 +158,54 @@
 			// get appl. and user prefs
 			$pref = CreateObject('phpgwapi.preferences', $this->bo->userinfo['username']);
 			$pref->read_repository();
-			//			$GLOBALS['phpgw']->hooks->single('add_def_pref', $GLOBALS['appname']);
+			//			$GLOBALS['egw']->hooks->single('add_def_pref', $GLOBALS['appname']);
 			$pref->save_repository(True);
 			$pref_array = $pref->read_repository();
 			$this->prefs = $pref_array[$this->bo->appname]; //FIXME check appname var in _debug_array
 
 			//always show name
 
-			$this->prefs[name] =1;
-
+			$this->prefs['name'] = 1;
 
 			if($this->prefs['viewinnewwin'])
 			{
 				$this->target = '_blank';
 			}
 
-
 			/*
 				Check for essential directories
 				admin must be able to disable these tests
 			*/
-			
-			// check if basedir exist 
+
+			// check if basedir exist
 			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
-			if($test[mime_type]!='Directory')
+			if($test['mime_type'] != 'Directory')
 			{
 				die('Base directory does not exist, Ask adminstrator to check the global configuration.');
 			}
 
 			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
-			if($test[mime_type]!='Directory')
+			if($test['mime_type'] != 'Directory')
 			{
-
 				$this->bo->vfs->override_acl = 1;
 
 				$this->bo->vfs->mkdir(array(
 					'string' => $this->bo->fakebase,
 					'relatives' => array(RELATIVE_NONE)
 				));
-				
+
 				$this->bo->vfs->override_acl = 0;
 
 				//test one more time
 				$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 
-				if($test[mime_type]!='Directory')
+				if($test['mime_type']!='Directory')
 				{
 					die('Fake Base directory does not exist and could not be created, please ask the administrator to check the global configuration.');
 				}
 				else
 				{
-					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
+					$this->messages[]= $GLOBALS['egw']->common->error_list(array(
 						lang('Fake Base Dir did not exist, eGroupWare created a new one.')
 					));
 				}
@@ -221,7 +213,7 @@
 
 //			die($this->bo->homedir);
 			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
-			if($test[mime_type]!='Directory')
+			if($test['mime_type'] != 'Directory')
 			{
 				$this->bo->vfs->override_acl = 1;
 
@@ -229,26 +221,24 @@
 					'string' => $this->bo->homedir,
 					'relatives' => array(RELATIVE_NONE)
 				));
-				
+
 				$this->bo->vfs->override_acl = 0;
 
 				//test one more time
 				$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 
-				if($test[mime_type]!='Directory')
+				if($test['mime_type'] != 'Directory')
 				{
 					die('Your Home Dir does not exist and could not be created, please ask the adminstrator to check the global configuration.');
 				}
 				else
 				{
-					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
+					$this->messages[]= $GLOBALS['egw']->common->error_list(array(
 						lang('Your Home Dir did not exist, eGroupWare created a new one.')
 					));
 					// FIXME we just created a fresh home dir so we know there nothing in it so we have to remove all existing content
 				}
 			}
-			
-			
 		}
 
 		function index()
@@ -262,7 +252,7 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw_info']['flags'] = array
+				$GLOBALS['egw_info']['flags'] = array
 				(
 					'currentapp'	=> 'filemanager',
 					'noheader'	=> $noheader,
@@ -272,10 +262,8 @@
 					'enable_browser_class'	=> True
 				);
 
-				$GLOBALS['phpgw']->common->phpgw_header();
-
+				$GLOBALS['egw']->common->phpgw_header();
 			}
-
 
 			# Page to process users
 			# Code is fairly hackish at the beginning, but it gets better
@@ -302,7 +290,7 @@
 
 				if(!$this->path || $this->bo->vfs->pwd(array('full' => False)) == '')
 				{
-					$this->path = $this->bo->homedir; 
+					$this->path = $this->bo->homedir;
 				}
 			}
 
@@ -311,7 +299,7 @@
 
 			$pwd = $this->bo->vfs->pwd();
 
-			if(!$this->cwd = substr($this->path, strlen($this->bo->homedir) + 1))  
+			if(!$this->cwd = substr($this->path, strlen($this->bo->homedir) + 1))
 			{
 				$this->cwd = '/';
 			}
@@ -340,13 +328,13 @@
 			# Get their readable groups to be used throughout the script
 			$groups = array();
 
-			$groups = $GLOBALS['phpgw']->accounts->get_list('groups');
+			$groups = $GLOBALS['egw']->accounts->get_list('groups');
 
 			$this->readable_groups = array();
 
 			while(list($num, $account) = each($groups))
 			{
-				if($this->bo->vfs->acl_check(array('owner_id' => $account['account_id'],	'operation' => PHPGW_ACL_READ)))
+				if($this->bo->vfs->acl_check(array('owner_id' => $account['account_id'],'operation' => EGW_ACL_READ)))
 				{
 					$this->readable_groups[$account['account_lid']] = Array('account_id' => $account['account_id'], 'account_name' => $account['account_lid']);
 				}
@@ -356,7 +344,7 @@
 
 			while(list($num, $group_array) = each($this->readable_groups))
 			{
-				$group_id = $GLOBALS['phpgw']->accounts->name2id($group_array['account_name']);
+				$group_id = $GLOBALS['egw']->accounts->name2id($group_array['account_name']);
 
 				$applications = CreateObject('phpgwapi.applications', $group_id);
 				$this->groups_applications[$group_array['account_name']] = $applications->read_account_specific();
@@ -365,34 +353,31 @@
 			# We determine if they're in their home directory or a group's directory,
 			# and set the VFS working_id appropriately
 			if((preg_match('+^'.$this->bo->fakebase.'\/(.*)(\/|$)+U', $this->path, $matches)) && $matches[1] != $this->bo->userinfo['account_lid']) //FIXME matches not defined
-
 			{
-				$this->bo->vfs->working_id = $GLOBALS['phpgw']->accounts->name2id($matches[1]);//FIXME matches not defined
-
+				$this->bo->vfs->working_id = $GLOBALS['egw']->accounts->name2id($matches[1]);//FIXME matches not defined
 			}
 			else
 			{
 				$this->bo->vfs->working_id = $this->bo->userinfo['username'];
 			}
 
-
 			# FIXME # comment waht happens here
-			if($this->path != $this->bo->homedir && $this->path != $this->bo->fakebase && $this->path != '/' && !$this->bo->vfs->acl_check(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE),'operation' => PHPGW_ACL_READ)))
+			if($this->path != $this->bo->homedir && $this->path != $this->bo->fakebase && $this->path != '/' && !$this->bo->vfs->acl_check(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE),'operation' => EGW_ACL_READ)))
 			{
-				$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('You do not have access to %1', $this->path)));
+				$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('You do not have access to %1', $this->path)));
 				$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->homedir, lang('Go to your home directory'));
 
-				$GLOBALS['phpgw']->common->phpgw_footer();
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->phpgw_footer();
+				$GLOBALS['egw']->common->phpgw_exit();
 			}
 
 			$this->bo->userinfo['working_id'] = $this->bo->vfs->working_id;
-			$this->bo->userinfo['working_lid'] = $GLOBALS['phpgw']->accounts->id2name($this->bo->userinfo['working_id']);
+			$this->bo->userinfo['working_lid'] = $GLOBALS['egw']->accounts->id2name($this->bo->userinfo['working_id']);
 
 			# If their home directory doesn't exist, we try to create it
 			# Same for group directories
 
-			
+
 		// Moved to constructor
 		/*
 			if(($this->path == $this->homedir)	&& !$this->bo->vfs->file_exists($pim_tmp_arr))
@@ -406,7 +391,7 @@
 				{
 					$p = $this->bo->vfs->path_parts($pim_tmp_arr);
 
-					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
+					$this->messages[]= $GLOBALS['egw']->common->error_list(array(
 						lang('Could not create directory %1',
 						$this->bo->homedir . ' (' . $p->real_full_path . ')'
 					)));
@@ -424,11 +409,11 @@
 					'relatives' => array(RELATIVE_NONE)
 				)))
 				{
-					$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Directory %1 does not exist', $this->path)));
+					$this->messages[] = $GLOBALS['egw']->common->error_list(array(lang('Directory %1 does not exist', $this->path)));
 					$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->bo->homedir, lang('Go to your home directory'));
 
-					$GLOBALS['phpgw']->common->phpgw_footer();
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['egw']->common->phpgw_footer();
+					$GLOBALS['egw']->common->phpgw_exit();
 				}
 			}
 
@@ -446,7 +431,7 @@
 			if($this->bo->vfs->acl_check(array(
 				'string' => $this->path,
 				'relatives' => array(RELATIVE_NONE),
-				'operation' => PHPGW_ACL_ADD
+				'operation' => EGW_ACL_ADD
 			)))
 			{
 				$this->can_add = True;
@@ -541,10 +526,10 @@
 				}
 				$columns++;
 
-				$vars[toolbar0]=$this->toolbar('location');
-				$vars[toolbar1]=$this->toolbar('list_nav');
+				$vars['toolbar0'] = $this->toolbar('location');
+				$vars['toolbar1'] = $this->toolbar('list_nav');
 
-				if(count($this->messages)>0) 
+				if(count($this->messages)>0)
 				{
 					foreach($this->messages as $msg)
 					{
@@ -552,7 +537,7 @@
 					}
 				}
 
-				$vars[messages]=$messages;
+				$vars['messages'] = $messages;
 
 				$this->t->set_var($vars);
 				$this->t->pparse('out','filemanager_header');
@@ -578,18 +563,17 @@
 					}
 
 					$this->t->set_var('row_tr_color','#dedede');
-					
+
 					//kan dit weg?
 					$this->t->parse('rows','row');
-					
+
 					$this->t->pparse('out','row');
 				}
 				else
 				{
 					$lang_nofiles=lang('No files in this directory.');
 				}
-				$vars[lang_no_files]=$lang_nofiles;
-
+				$vars['lang_no_files'] = $lang_nofiles;
 
 				if($this->prefs['dotdot'] && $this->prefs['name'] && $this->path != '/')
 				{
@@ -597,7 +581,7 @@
 
 					$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->lesspath);
 
-					$col_data='<a href="'.$link.'"><img src="'.$GLOBALS['phpgw']->common->image('filemanager','mime16up').' "alt="'.lang('Folder Up').'" /></a>';
+					$col_data='<a href="'.$link.'"><img src="'.$GLOBALS['egw']->common->image('filemanager','mime16up').' "alt="'.lang('Folder Up').'" /></a>';
 					$col_data.='&nbsp;<a href="'.$link.'">..</a>';
 
 					$this->t->set_var('col_data',$col_data);
@@ -763,7 +747,7 @@
 					# Owner name
 					if($this->prefs['owner'])
 					{
-						$this->t->set_var('col_data',$GLOBALS['phpgw']->accounts->id2name($files['owner_id']));
+						$this->t->set_var('col_data',$GLOBALS['egw']->accounts->id2name($files['owner_id']));
 						$this->t->parse('columns','column',True);
 					}
 
@@ -773,7 +757,7 @@
 						$this->html_table_col_begin();
 						if($files['createdby_id'])
 						{
-							$col_data=$GLOBALS['phpgw']->accounts->id2name($files['createdby_id']);
+							$col_data=$GLOBALS['egw']->accounts->id2name($files['createdby_id']);
 						}
 						else $col_data='';
 
@@ -786,7 +770,7 @@
 					{
 						if($files['modifiedby_id'])
 						{
-							$col_data=$GLOBALS['phpgw']->accounts->id2name($files['modifiedby_id']);
+							$col_data=$GLOBALS['egw']->accounts->id2name($files['modifiedby_id']);
 						}
 						else $col_data='';
 						$this->t->set_var('col_data',$col_data);
@@ -852,16 +836,16 @@
 			}
 
 			// The file and directory information
-			$vars[lang_files_in_this_dir]=lang('Files in this directory');
-			$vars[files_in_this_dir]=$this->numoffiles;
+			$vars['lang_files_in_this_dir'] = lang('Files in this directory');
+			$vars['files_in_this_dir'] = $this->numoffiles;
 
-			$vars[lang_used_space]=lang('Used space');
-			$vars[used_space]=$this->bo->borkb($usedspace, NULL, 1);
+			$vars['lang_used_space'] = lang('Used space');
+			$vars['used_space'] = $this->bo->borkb($usedspace, NULL, 1);
 
 			if($this->path == $this->bo->homedir || $this->path == $this->bo->fakebase)
 			{
-				$vars[lang_unused_space]=lang('Unused space');
-				$vars[unused_space]=$this->bo->borkb($this->bo->userinfo['hdspace'] - $usedspace, NULL, 1);
+				$vars['lang_unused_space'] = lang('Unused space');
+				$vars['unused_space'] = $this->bo->borkb($this->bo->userinfo['hdspace'] - $usedspace, NULL, 1);
 
 				$tmp_arr=array(
 					'string'	=> $this->path,
@@ -870,15 +854,15 @@
 
 				$ls_array = $this->bo->vfs->ls($tmp_arr);
 
-				$vars[lang_total_files]=lang('Total Files');
-				$vars[total_files]=	count($ls_array);
+				$vars['lang_total_files'] = lang('Total Files');
+				$vars['total_files'] = count($ls_array);
 			}
 
 			$this->t->set_var($vars);
 			$this->t->pparse('out','filemanager_footer');
 
-			$GLOBALS['phpgw']->common->phpgw_footer();
-			$GLOBALS['phpgw']->common->phpgw_exit();
+			$GLOBALS['egw']->common->phpgw_footer();
+			$GLOBALS['egw']->common->phpgw_exit();
 		}
 
 		function readFilesInfo()
@@ -915,7 +899,6 @@
 						continue;
 					}
 
-
 					if(!$this->bo->vfs->file_exists(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE))))
 					{
 						$this->bo->vfs->override_acl = 1;
@@ -925,8 +908,7 @@
 						));
 
 						// FIXME we just created a fresh group dir so we know there nothing in it so we have to remove all existing content
-						
-						
+
 						$this->bo->vfs->override_acl = 0;
 
 						$this->bo->vfs->set_attributes(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'attributes' => array('owner_id' => $group_array['account_id'],'createdby_id' => $group_array['account_id'])));
@@ -982,9 +964,9 @@
 					<table cellspacing="1" cellpadding="0" border="0">
 					<tr>
 					';
-					$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
+					$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 					$toolbar.='
-					<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+					<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
 					// go up icon when we're not at the top, dont allow to go outside /home = fakebase
 					if($this->path != '/' && $this->path != $this->bo->fakebase)
@@ -1017,9 +999,9 @@
 					if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
 					{
 
-						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
-						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
-						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
+						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
 						//						$toolbar.=$this->inputImage('download','download',lang('Download'));
 						// upload button
@@ -1036,9 +1018,9 @@
 					// submit buttons for
 					if($this->path != '/' && $this->path != $this->bo->fakebase)
 					{
-						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
+						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 						$toolbar.='
-						<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+						<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
 						if(!$this->rename_x && !$this->edit_comments_x)
 						{
@@ -1060,7 +1042,7 @@
 						{
 							$toolbar.=$this->inputImage('edit_comments','edit_comments',lang('Edit comments'));
 						}
-						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 					}
 
 					//	$toolbar.='</tr></table>';
@@ -1069,8 +1051,8 @@
 						// copy and move buttons
 						if($this->path != '/' && $this->path != $this->bo->fakebase)
 						{
-							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
-							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
+							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
 							$dirs_options=$this->all_other_directories_options();
 							$toolbar3.='<td><select name="todir">'.$dirs_options.'</select></td>';
@@ -1078,15 +1060,15 @@
 							$toolbar3.=$this->inputImage('copy_to','copy_to',lang('Copy to'));
 							$toolbar3.=$this->inputImage('move_to','move_to',lang('Move to'));
 
-							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
 						}
 
 						// create dir and file button
 						if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
 						{
-							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
-							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['phpgw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
+							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
+							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
 							$toolbar3.='<td><input type=text size="15" name="newfile_or_dir" value="" /></td>';
 							$toolbar3.=$this->inputImage('newdir','createdir',lang('Create Folder'));
@@ -1123,7 +1105,7 @@
 				{
 					if($badchar = $this->bo->bad_chars($_FILES['upload_file']['name'][$i], True, True))
 					{
-						$this->messages[]= $GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
+						$this->messages[]= $GLOBALS['egw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
 
 						continue;
 					}
@@ -1142,7 +1124,7 @@
 					{
 						if($fileinfo['mime_type'] == 'Directory')
 						{
-							$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Cannot replace %1 because it is a directory', $fileinfo['name'])));
+							$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('Cannot replace %1 because it is a directory', $fileinfo['name'])));
 							continue;
 						}
 					}
@@ -1177,7 +1159,6 @@
 						}
 						else
 						{
-
 							$this->bo->vfs->cp(array(
 								'from'=> $_FILES['upload_file']['tmp_name'][$i],
 								'to'=> $_FILES['upload_file']['name'][$i],
@@ -1228,7 +1209,7 @@
 			{
 				if($badchar = $this->bo->bad_chars($this->comment_files[$file], False, True))
 				{
-					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array($file . $this->bo->html_encode(': ' . lang('Comments cannot contain "%1"', $badchar), 1)));
+					$this->messages[]=$GLOBALS['egw']->common->error_list(array($file . $this->bo->html_encode(': ' . lang('Comments cannot contain "%1"', $badchar), 1)));
 					continue;
 				}
 
@@ -1254,20 +1235,20 @@
 			{
 				if($badchar = $this->bo->bad_chars($to, True, True))
 				{
-					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
+					$this->messages[]=$GLOBALS['egw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
 					continue;
 				}
 
 				if(ereg("/", $to) || ereg("\\\\", $to))
 				{
-					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang("File names cannot contain \\ or /")));
+					$this->messages[]=$GLOBALS['egw']->common->error_list(array(lang("File names cannot contain \\ or /")));
 				}
 				elseif(!$this->bo->vfs->mv(array(
 					'from'	=> $from,
 					'to'	=> $to
 				)))
 				{
-					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Could not rename %1 to %2', $this->disppath.'/'.$from, $this->disppath.'/'.$to)));
+					$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('Could not rename %1 to %2', $this->disppath.'/'.$from, $this->disppath.'/'.$to)));
 				}
 				else
 				{
@@ -1283,7 +1264,7 @@
 		{
 			if(!$this->todir)
 			{
-				$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not move file because no destination directory is given ', $this->disppath.'/'.$file)));
+				$this->messages[] = $GLOBALS['egw']->common->error_list(array(lang('Could not move file because no destination directory is given ', $this->disppath.'/'.$file)));
 
 			}
 			else
@@ -1302,7 +1283,7 @@
 					}
 					else
 					{
-						$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not move %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
+						$this->messages[] = $GLOBALS['egw']->common->error_list(array(lang('Could not move %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
 					}
 				}
 			}
@@ -1321,7 +1302,7 @@
 		{
 			if(!$this->todir)
 			{
-				$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(lang('Could not copy file because no destination directory is given ', $this->disppath.'/'.$file)));
+				$this->messages[] = $GLOBALS['egw']->common->error_list(array(lang('Could not copy file because no destination directory is given ', $this->disppath.'/'.$file)));
 
 			}
 			else
@@ -1339,7 +1320,7 @@
 					}
 					else
 					{
-						$this->message .= $GLOBALS['phpgw']->common->error_list(array(lang('Could not copy %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
+						$this->message .= $GLOBALS['egw']->common->error_list(array(lang('Could not copy %1 to %2', $this->disppath.'/'.$file, $this->todir.'/'.$file)));
 					}
 				}
 			}
@@ -1358,13 +1339,13 @@
 			{
 				if($this->bo->badchar = $this->bo->bad_chars($this->newfile_or_dir, True, True))
 				{
-					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array($this->bo->html_encode(lang('Directory names cannot contain "%1"', $badchar), 1)));
+					$this->messages[]= $GLOBALS['egw']->common->error_list(array($this->bo->html_encode(lang('Directory names cannot contain "%1"', $badchar), 1)));
 				}
 
 				/* TODO is this right or should it be a single $ ? */
 				if($$this->newfile_or_dir[strlen($this->newfile_or_dir)-1] == ' ' || $this->newfile_or_dir[0] == ' ')
 				{
-					$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Cannot create directory because it begins or ends in a space')));
+					$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('Cannot create directory because it begins or ends in a space')));
 				}
 
 				$ls_array = $this->bo->vfs->ls(array(
@@ -1380,14 +1361,14 @@
 				{
 					if($fileinfo['mime_type'] != 'Directory')
 					{
-						$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(
+						$this->messages[]= $GLOBALS['egw']->common->error_list(array(
 							lang('%1 already exists as a file',
 							$fileinfo['name'])
 						));
 					}
 					else
 					{
-						$this->messages[]= $GLOBALS['phpgw']->common->error_list(array(lang('Directory %1 already exists', $fileinfo['name'])));
+						$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('Directory %1 already exists', $fileinfo['name'])));
 					}
 				}
 				else
@@ -1398,7 +1379,7 @@
 					}
 					else
 					{
-						$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('Could not create %1', $this->disppath.'/'.$this->newfile_or_dir)));
+						$this->messages[]=$GLOBALS['egw']->common->error_list(array(lang('Could not create %1', $this->disppath.'/'.$this->newfile_or_dir)));
 					}
 				}
 
@@ -1419,14 +1400,14 @@
 					}
 					else
 					{
-						$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('Could not delete %1', $this->disppath.'/'.$filename)));
+						$this->messages[]=$GLOBALS['egw']->common->error_list(array(lang('Could not delete %1', $this->disppath.'/'.$filename)));
 					}
 				}
 			}
 			else
 			{
 				// make this a javascript func for quicker respons
-				$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('Please select a file to delete.')));
+				$this->messages[]=$GLOBALS['egw']->common->error_list(array(lang('Please select a file to delete.')));
 			}
 			$this->readFilesInfo();
 			$this->filelisting();
@@ -1445,7 +1426,7 @@
 			<b>eGroupware debug:</b><br>
 			real getabsolutepath: " . $this->bo->vfs->getabsolutepath(array('target' => False, 'mask' => False, 'fake' => False)) . "<br>
 			fake getabsolutepath: " . $this->bo->vfs->getabsolutepath(array('target' => False)) . "<br>
-			appsession: " . $GLOBALS['phpgw']->session->appsession('vfs','') . "<br>
+			appsession: " . $GLOBALS['egw']->session->appsession('vfs','') . "<br>
 			pwd: " . $this->bo->vfs->pwd() . "<br>";
 
 			echo '<p></p>';
@@ -1471,11 +1452,11 @@
 			# Show file upload boxes. Note the last argument to html().  Repeats $this->show_upload_boxes times
 			if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
 			{
-				$vars[form_action]=$GLOBALS[phpgw]->link('/index.php','menuaction=filemanager.uifilemanager.index');
-				$vars[path]=$this->path;
-				$vars[lang_file]=lang('File');
-				$vars[lang_comment]=lang('Comment');
-				$vars[num_upload_boxes]=$this->show_upload_boxes;
+				$vars['form_action']=$GLOBALS['egw']->link('/index.php','menuaction=filemanager.uifilemanager.index');
+				$vars['path']=$this->path;
+				$vars['lang_file']=lang('File');
+				$vars['lang_comment']=lang('Comment');
+				$vars['num_upload_boxes']=$this->show_upload_boxes;
 				$this->t->set_var($vars);
 				$this->t->pparse('out','upload_header');
 
@@ -1486,8 +1467,8 @@
 					$this->t->pparse('out','row');
 				}
 
-				$vars[lang_upload]=lang('Upload files');
-				$vars[change_upload_boxes].=lang('Show') . '&nbsp;';
+				$vars['lang_upload']=lang('Upload files');
+				$vars['change_upload_boxes'].=lang('Show') . '&nbsp;';
 				$links.= $this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','show_upload_boxes=5', '5');
 				$links.='&nbsp;';
 				$links.= $this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','show_upload_boxes=10', '10');
@@ -1497,7 +1478,7 @@
 				$links.= $this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','show_upload_boxes=50', '50');
 				$links.='&nbsp;';
 				$links.= lang('upload fields');
-				$vars[change_upload_boxes].=$links;
+				$vars['change_upload_boxes'].=$links;
 				$this->t->set_var($vars);
 				$this->t->pparse('out','upload_footer');
 			}
@@ -1511,7 +1492,7 @@
 			{
 				if($badchar = $this->bo->bad_chars($this->createfile_var, True, True))
 				{
-					$this->messages[] = $GLOBALS['phpgw']->common->error_list(array(
+					$this->messages[] = $GLOBALS['egw']->common->error_list(array(
 						lang('File names cannot contain "%1"',$badchar),
 						1)
 					);
@@ -1524,7 +1505,7 @@
 					'relatives'	=> array(RELATIVE_ALL)
 				)))
 				{
-					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('File %1 already exists. Please edit it or delete it first.', $this->createfile_var)));
+					$this->messages[]=$GLOBALS['egw']->common->error_list(array(lang('File %1 already exists. Please edit it or delete it first.', $this->createfile_var)));
 					$this->fileListing();
 				}
 
@@ -1541,7 +1522,7 @@
 				}
 				else
 				{
-					$this->messages[]=$GLOBALS['phpgw']->common->error_list(array(lang('File %1 could not be created.', $this->createfile_var)));
+					$this->messages[]=$GLOBALS['egw']->common->error_list(array(lang('File %1 could not be created.', $this->createfile_var)));
 					$this->fileListing();
 				}
 			}
@@ -1555,7 +1536,7 @@
 			$this->t->set_file(array('filemanager_edit' => 'edit_file.tpl'));
 			$this->t->set_block('filemanager_edit','row','row');
 
-			$vars[preview_content]='';
+			$vars['preview_content'] = '';
 			if($this->edit_file)
 			{
 				$this->edit_file_content = stripslashes($this->edit_file_content);
@@ -1565,9 +1546,9 @@
 			{
 				$content = $this->edit_file_content;
 
-				$vars[lang_preview_of]=lang('Preview of %1', $this->path.'/'.$edit_file);
+				$vars['lang_preview_of'] = lang('Preview of %1', $this->path.'/'.$edit_file);
 
-				$vars[preview_content]=nl2br($content);
+				$vars['preview_content'] = nl2br($content);
 			}
 			elseif($this->edit_save_x || $this->edit_save_done_x)
 			{
@@ -1618,23 +1599,26 @@
 						$content = $this->bo->vfs->read(array('string' => $this->fileman[$j]));
 					}
 
-					$vars[form_action]= $GLOBALS['phpgw']->link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->path);
-					$vars[edit_file]=$this->fileman[$j];
+					$vars['form_action'] = $GLOBALS['egw']->link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->path);
+					$vars['edit_file'] = $this->fileman[$j];
 
 					# We need to include all of the fileman entries for each file's form,
 					# so we loop through again
 					for($i = 0; $i != $this->numoffiles; $i++)
 					{
-						if($this->fileman[$i]) $value='value="'.$this->fileman[$i].'"';
-						$vars[filemans_hidden]='<input type="hidden" name="fileman['.$i.']" '.$value.' />';
+						if($this->fileman[$i])
+						{
+							$value='value="'.$this->fileman[$i].'"';
+						}
+						$vars['filemans_hidden'] = '<input type="hidden" name="fileman['.$i.']" '.$value.' />';
 					}
 
-					$vars[file_content]=$content;
+					$vars['file_content'] = $content;
 
-					$vars[buttonPreview]=$this->inputImage('edit_preview','edit_preview',lang('Preview %1', $this->bo->html_encode($this->fileman[$j], 1)));
-					$vars[buttonSave]=$this->inputImage('edit_save','save',lang('Save %1', $this->bo->html_encode($this->fileman[$j], 1)));
-					$vars[buttonDone]=$this->inputImage('edit_save_done','ok',lang('Save %1, and go back to file listing ', $this->bo->html_encode($this->fileman[$j], 1)));
-					$vars[buttonCancel]=$this->inputImage('edit_cancel','cancel',lang('Cancel editing %1 without saving', $this->bo->html_encode($this->fileman[$j], 1)));
+					$vars['buttonPreview'] = $this->inputImage('edit_preview','edit_preview',lang('Preview %1', $this->bo->html_encode($this->fileman[$j], 1)));
+					$vars['buttonSave'] = $this->inputImage('edit_save','save',lang('Save %1', $this->bo->html_encode($this->fileman[$j], 1)));
+					$vars['buttonDone'] = $this->inputImage('edit_save_done','ok',lang('Save %1, and go back to file listing ', $this->bo->html_encode($this->fileman[$j], 1)));
+					$vars['buttonCancel'] = $this->inputImage('edit_cancel','cancel',lang('Cancel editing %1 without saving', $this->bo->html_encode($this->fileman[$j], 1)));
 					$this->t->set_var($vars);
 					$this->t->parse('rows','row');
 					$this->t->pparse('out','row');
@@ -1680,7 +1664,7 @@
 						$this->bo->html_text($journal_entry['version'] . '&nbsp;&nbsp;&nbsp;' );
 						$this->html_table_col_end();
 						$this->html_table_col_begin();
-						$this->bo->html_text($GLOBALS['phpgw']->accounts->id2name($journal_entry['owner_id']) . '&nbsp;&nbsp;&nbsp;');
+						$this->bo->html_text($GLOBALS['egw']->accounts->id2name($journal_entry['owner_id']) . '&nbsp;&nbsp;&nbsp;');
 						$this->html_table_col_end();
 						$this->html_table_col_begin();
 						$this->bo->html_text($journal_entry['comment']);
@@ -1688,8 +1672,8 @@
 					}
 
 					$this->html_table_end();
-					$GLOBALS['phpgw']->common->phpgw_footer();
-					$GLOBALS['phpgw']->common->phpgw_exit();
+					$GLOBALS['egw']->common->phpgw_footer();
+					$GLOBALS['egw']->common->phpgw_exit();
 				}
 				else
 				{
@@ -1717,24 +1701,29 @@
 				{
 					$mime_type = 'text/plain';
 				}
+				else
+				{
+					list($_first,$_ext) = split("\.",$this->file);
+					$mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
+				}
 				$viewable = array('','text/plain','text/csv','text/html','text/text');
 
 				if(in_array($mime_type,$viewable) && !$_GET['download'])
 				{
-	   				
-				    header('Content-type: ' . $mime_type);
+					header('Content-type: ' . $mime_type);
 					header('Content-disposition: filename="' . $this->file . '"');//FIXME
 					Header("Pragma: public");
 				}
 				else
 				{
-					$GLOBALS['phpgw']->browser->content_header($this->file,$mime_type);//FIXME
+
+					$GLOBALS['egw']->browser->content_header($this->file,$mime_type);//FIXME
 				}
 				echo $this->bo->vfs->read(array(
 					'string'	=> $this->path.'/'.$this->file,//FIXME
 					'relatives'	=> array(RELATIVE_NONE)
 				));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->phpgw_exit();
 			}
 		}
 
@@ -1750,7 +1739,7 @@
 				$download_browser = CreateObject('phpgwapi.browser');
 				$download_browser->content_header($this->fileman[$i]);
 				echo $this->bo->vfs->read(array('string' => $this->fileman[$i]));
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->phpgw_exit();
 			}
 		}
 
@@ -1830,12 +1819,18 @@
 		/* seek icon for mimetype else return an unknown icon */
 		function mime_icon($mime_type, $size=16)
 		{
-			if(!$mime_type) $mime_type='unknown';
+			if(!$mime_type)
+			{
+				$mime_type='unknown';
+			}
 
 			$mime_type=	str_replace	('/','_',$mime_type);
 
-			$img=$GLOBALS['phpgw']->common->image('filemanager','mime'.$size.'_'.strtolower($mime_type));
-			if(!$img) $img=$GLOBALS['phpgw']->common->image('filemanager','mime'.$size.'_unknown');
+			$img=$GLOBALS['egw']->common->image('filemanager','mime'.$size.'_'.strtolower($mime_type));
+			if(!$img)
+			{
+				$img = $GLOBALS['egw']->common->image('filemanager','mime'.$size.'_unknown');
+			}
 
 			$icon='<img src="'.$img.' "alt="'.lang($mime_type).'" />';
 			return $icon;
@@ -1843,7 +1838,7 @@
 
 		function buttonImage($link,$img='',$help='')
 		{
-			$image=$GLOBALS['phpgw']->common->image('filemanager','button_'.strtolower($img));
+			$image=$GLOBALS['egw']->common->image('filemanager','button_'.strtolower($img));
 
 			if($img)
 			{
@@ -1855,7 +1850,7 @@
 
 		function inputImage($name,$img='',$help='')
 		{
-			$image=$GLOBALS['phpgw']->common->image('filemanager','button_'.strtolower($img));
+			$image=$GLOBALS['egw']->common->image('filemanager','button_'.strtolower($img));
 
 			if($img)
 			{
@@ -1919,7 +1914,7 @@
 			$href = $this->bo->string_encode($href, 1);
 			$all_args = $args.'&'.$this->bo->string_encode($extra_args, 1);
 
-			$address = $GLOBALS['phpgw']->link($href, $all_args);
+			$address = $GLOBALS['egw']->link($href, $all_args);
 
 			return $address;
 		}
@@ -1956,8 +1951,8 @@
 
 				/* $phpgw->link requires that the extra vars be passed separately */
 				//				$link_parts = explode("?", $href);
-				$address = $GLOBALS['phpgw']->link($href, $all_args);
-				//				$address = $GLOBALS['phpgw']->link($href);
+				$address = $GLOBALS['egw']->link($href, $all_args);
+				//				$address = $GLOBALS['egw']->link($href);
 			}
 			else
 			{

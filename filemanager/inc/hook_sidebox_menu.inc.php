@@ -1,6 +1,6 @@
 <?php
   /**************************************************************************\
-  * eGroupWare - Calendar's Sidebox-Menu for idots-template                  *
+  * eGroupWare - Filemanager Sidebox-Menu for idots-template                 *
   * http://www.egroupware.org                                                *
   * Written by Pim Snel <pim@lingewoud.nl>                                   *
   * --------------------------------------------                             *

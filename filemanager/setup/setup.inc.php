@@ -18,21 +18,19 @@
 	$setup_info['filemanager']['enable']  = 1;
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['filemanager']['hooks'] = array
-	(
+	$setup_info['filemanager']['hooks'] = array(
 		'add_def_pref',
 		'admin',
 		'deleteaccount',
 		'settings',
 		'sidebox_menu',
 		'personalizer',
-		'preferences',
+		'preferences'
 	);
 
 	/* Dependencies for this app to work */
-	$setup_info['filemanager']['depends'][] = array
-	(
-		 'appname' => 'phpgwapi',
-		 'versions' => array('0.9.14','0.9.16','1.0.0','1.0.1')
+	$setup_info['filemanager']['depends'][] = array(
+		'appname' => 'phpgwapi',
+		'versions' => array('0.9.14','0.9.16','1.0.0','1.0.1')
 	);
 ?>
