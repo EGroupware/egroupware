@@ -68,15 +68,26 @@
 			$tpl =& new etemplate('resources.resource_selectbox');
 			// keep the editor away from the generated tmpls
 			$tpl->no_onclick = true;			
-
-			if ($value)
+			
+			if (is_array($value))
 			{
-				foreach(ExecMethod('resources.bo_resources.get_calendar_info',$value) as $data)
+				foreach($value as $id)
 				{
-					$sel_options[$data['res_id']] = $data['name'];
+					list($res_id,$quantity) = explode(':',$id);
+					$data = ExecMethod('resources.bo_resources.get_calendar_info',$res_id);
+					$sel_options[$data[0]['res_id'].($quantity > 1 ? (':'.$quantity) : '')] = 
+						$data[0]['name'].' ['.($quantity > 1 ? $quantity : 1).'/'.$data[0]['useable'].']';
 				}
 				$tpl->set_cell_attribute('resources','sel_options',$sel_options);
 			}
+			elseif ($value);
+			{
+// 				list($res_id,$quantity) = explode(':',$value);
+// 				$data = ExecMethod('resources.bo_resources.get_calendar_info',$res_id);
+// 				$sel_options = $data[0]['name'].' ['.($quantity > 1 ? $quantity : 1).'/'.$data[0]['useable'].']';
+// 				$tpl->set_cell_attribute('resources','sel_options',$sel_options);
+			}
+			
 			$tpl->set_cell_attribute('resources','size',(int)$cell['size'].'+');
 			$tpl->set_cell_attribute('resources','label',$cell['label']);
 			$tpl->set_cell_attribute('resources','id','resources_selectbox');
