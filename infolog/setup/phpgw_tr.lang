@@ -1,0 +1,252 @@
+%1 records imported	tr	%1 kayýt alýndý
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	tr	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+- subprojects from	tr	- Subprojects from
+0%	tr	0%
+10%	tr	10%
+20%	tr	20%
+30%	tr	30%
+40%	tr	40%
+50%	tr	50%
+60%	tr	60%
+70%	tr	70%
+80%	tr	80%
+90%	tr	90%
+<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients	tr	<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients
+a short subject for the entry	tr	giriþ için kýsa konu
+abort without deleting	tr	Silmeden çýk
+accept	tr	kabul
+action	tr	Eylem
+add	tr	Ekle
+add a file	tr	Dosya ekle
+add a new entry	tr	Yeni giriþ ekle
+add a new note	tr	Yeni not ekle
+add a new phonecall	tr	Yeni görüþme ekle
+add a new sub-task, -note, -call to this entry	tr	Bu giriþe yeni alt-görev, -not, -görüþme ekle
+add a new todo	tr	Yeni Görev
+add file	tr	Yeni dosya
+add sub	tr	Alt Ekle
+add:	tr	Ekle:
+all	tr	Hepsi
+all links and attachments	tr	tüm baðlantý ve ekler
+allows to set the status of an entry, eg. set a todo to done if it	tr	s finished (values depend on entry-typ)
+applies the changes	tr	deðiþiklikleri uygula
+are you shure you want to delete this entry ?	tr	Bu giriþi silmek istediðinizden eminmisiniz ?
+are you sure you want to delete this entry	tr	Bu giriþi silmek istediðinizden eminmisiniz
+attach a file	tr	Bir dosya ekle
+attach file	tr	Dosya ekle
+back to main list	tr	Ana listeye dön
+back to projectlist	tr	Proje listesine dön
+billed	tr	faturalandý
+both	tr	herikisi
+call	tr	görüþme
+cancel	tr	Vazgeç
+categories	tr	Kategoriler
+category	tr	Kategori
+change the status of an entry, eg. close it	tr	Change the status of an entry, eg. close it
+charset of file	tr	Dosya karakter seti
+check to set startday	tr	Baþlama günü koymak için kontrol et
+click here to create the link	tr	Baðlantý kurmak için burayý týklayýnýz
+click here to start the search	tr	Aramayý baþlatmak için burayý týklayýnýz
+close	tr	Kapat
+comment	tr	Yorum
+configuration	tr	Yapýlandýrma
+confirm	tr	Onay
+contact	tr	Kiþi
+create new links	tr	Yeni baðlantýlar kur
+creates a new field	tr	yeni saha yarat
+creates a new status with the given values	tr	verilen deðerlerle yeni bir durum oluþtur
+creates a new typ with the given name	tr	verilen isimle yeni bir tip oluþtur
+csv-fieldname	tr	CSV-Fieldname
+csv-filename	tr	CSV-Filename
+custom	tr	Kullanýcý Tanýmlý
+custom contact-address, leave empty to use information from most recent link	tr	Custom contact-address, leave empty to use information from most recent link
+custom contact-information, leave emtpy to use information from most recent link	tr	Custom contact-information, leave emtpy to use information from most recent link
+custom fields	tr	Kullanýcý Tanýmlý Sahalar
+custom regarding	tr	Kullanýcý tanýmýna baðlý
+custom status for typ	tr	Tip için kullanýcý tanýmlý durum
+customfields	tr	KullanýcýtanýmlýSahalar
+datecreated	tr	Y.Tarihi
+dates, status, access	tr	Tarihler, Durum, Eriþim
+days	tr	günler
+default filter for infolog	tr	AkýlDefteri için geçerli Filtre
+default status for a new log entry	tr	yeni giriþ için geçerli durum
+delegation	tr	Aktarma
+delete	tr	Sil
+delete all subs (if not subs will be subs of this enties parent or have no parent)	tr	Delete all subs (if not subs will be subs of this enties parent or have no parent)
+delete one record by passing its id.	tr	Delete one record by passing its id.
+delete the entry	tr	Giriþi sil
+delete this entry	tr	Bu giriþi sil
+deletes the selected typ	tr	Seçili tipi sil
+deletes this field	tr	Bu sahayý sil
+deletes this status	tr	Bu durumu sil
+description	tr	Açýklama
+description can not exceed 8000 characters in length	tr	Description can not exceed 8000 characters in length
+determines the order the fields are displayed	tr	determines the order the fields are displayed
+disables a status without deleting it	tr	disables a status without deleting it
+do you want a confirmation of the responsible on: accepting, finishing the task or both	tr	do you want a confirmation of the responsible on: accepting, finishing the task or both
+done	tr	tamam
+download	tr	Ýndir
+duration	tr	Süre
+each value is a line like <id>[=<label>]	tr	each value is a line like <id>[=<label>]
+edit	tr	Düzelt
+edit or create categories for ingolog	tr	AkýlDefteri için kategori oluþtur veya dizelt
+edit status	tr	Durumu Düzelt
+edit the entry	tr	Giriþi düzelt
+edit this entry	tr	Bu giriþi düzelt
+empty for all	tr	hepsi için boþ
+enddate	tr	Bit.Tarihi
+enddate can not be before startdate	tr	Bitiþ tarihi baþlama tarihinden önce olamaz
+enter a custom contact, leave empty if linked entry should be used	tr	enter a custom contact, leave empty if linked entry should be used
+enter a custom phone/email, leave empty if linked entry should be used	tr	enter a custom phone/email, leave empty if linked entry should be used
+enter a textual description of the log-entry	tr	defter giriþinin metin açýklamasýný giriniz
+enter the query pattern	tr	Sorgulama þablonu gir
+entry and all files	tr	Giriþi ve tüm dosyalarý
+existing links	tr	Varolan baðlantýlarý
+fax	tr	Faks
+fieldseparator	tr	SahaAyracý
+finish	tr	bitiþ
+for which types should this field be used	tr	bu saha hangi tipler için kullanýlsýn
+from	tr	Kimden
+high	tr	yüksek
+id	tr	Kimlik
+import	tr	Veri Al
+import next set	tr	Sonraki seti al
+infolog - delete	tr	AkýlDefteri - Sil
+infolog - edit	tr	AkýlDefteri - Düzelt
+infolog - import csv-file	tr	AkýlDefteri - CSV-Dosya Al
+infolog - new	tr	AkýlDefteri - Yeni
+infolog - new subproject	tr	AkýlDefteri - Yeni AltProje
+infolog - subprojects from	tr	AkýlDefteri - Altprojeleri
+infolog list	tr	AkýlDefteri Liste
+infolog-fieldname	tr	Akýl Defteri - Sahaadý
+invalid filename	tr	Geçersiz DosyaAdý
+label<br>helptext	tr	Baþlýk<br>Yardým
+last changed	tr	Son deðiþim
+last modified	tr	Son düzeltme
+leave without saveing the entry	tr	giriþi kaydetmeden çýk
+leaves without saveing	tr	kaydetmeden çýk
+length<br>rows	tr	Satýrlarýn<br>Boyu
+link	tr	Baðla
+links	tr	Baðlantýlar
+links of this entry	tr	Bu giriþin baðlantýlarý
+list all categories	tr	Tüm kategorileri listele
+list no subs/childs	tr	Alt/Baðýmlýlarý listeleme
+longer textual description	tr	daha uzun açýklama
+low	tr	alçak
+max length of the input [, length of the inputfield (optional)]	tr	max length of the input [, length of the inputfield (optional)]
+max number of entries to display on the main screen	tr	Max number of entries to display on the main screen
+name must not be empty !!!	tr	Ad boþ olamaz !!!
+name of new type to create	tr	oluþturulacak yeni tipin adý
+new name	tr	yeni ad
+new search	tr	Yeni arama
+no - cancel	tr	Hayýr - Vazgeç
+no entries found, try again ...	tr	hiç giriþ bulunamadý, tekrar deneyiniz ...
+no filter	tr	Filtre yok
+no links or attachments	tr	baðlantý veya ek yok
+none	tr	Hayýr
+normal	tr	normal
+not	tr	deðil
+not assigned	tr	belirlenmemiþ
+note	tr	Not
+number of records to read (%1)	tr	Okunacak kayýt sayýsý (%1)
+number of row for a multiline inputfield or line of a multi-select-box	tr	çok satýrlý seçim kutusu veya sahalar için satýr sayýsý
+offer	tr	bildirim
+ongoing	tr	sürüyor
+only the attachments	tr	sadece ekler
+only the links	tr	sadece baðlantýlar
+only up to this number of entries are displayed on the main screen.	tr	Ana penecerede gösterilecek en fazla giriþ sayýsý.
+open	tr	aç
+optional note to the link	tr	Baðlantý için isteðe baðlý not
+order	tr	Sýra
+overdue	tr	gecikme
+own	tr	own
+own open	tr	Sizinkiler
+own overdue	tr	Gecikmeleriniz
+own upcoming	tr	Yakýndakilerin
+path on (web-)serverside<br>eg. /var/samba/share	tr	path on (web-)serverside<br>eg. /var/samba/Share
+path to user and group files has to be outside of the webservers document-root!!!	tr	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
+pattern for search in addressbook	tr	AdresDefteri içinde arama þablonu
+pattern for search in projects	tr	Projeler içinde arama þablonu
+phone	tr	Görüþme
+phone/email	tr	Tel/ePosta
+phonecall	tr	Görüþme
+priority	tr	Öncelik
+private	tr	Özel
+project	tr	Proje
+re:	tr	Re:
+read one record by passing its id.	tr	Kimliði atlayarak bir kayýt oku.
+reg. expr. for local ip	tr	s<br>eg. ^192\\.168\\.1\\.
+remark	tr	Düþünceler
+remove this link (not the entry itself)	tr	Baðlantýyý kaldýr(giriþin kendisini deðil)
+responsible	tr	Sorumlu
+responsible user, priority, ...	tr	sorumlu kullanýcý, öncelik, ...
+returns a list / search for records.	tr	Kayýtlar için liste / arama getir.
+save	tr	Kaydet
+saves the changes made and leaves	tr	Kaydet ve çýk
+saves this entry	tr	Bu giriþi kaydet
+search	tr	Ara
+search for:	tr	Arama:
+select	tr	Seç
+select a category for this entry	tr	bu giriþ için kategori seçiniz
+select a priority for this task	tr	bu görev için öncelik seçiniz
+select a responsible user: a person you want to delegate this task	tr	sorumlu kullanýcýyý seçiniz: bu görevi aktarmak istediðiniz kiþi
+select a typ to edit it	tr	s status-values or delete it
+select an app to search in	tr	Ýçinde arama yapmak istediðiniz uygulamayý seçiniz
+select an entry to link with	tr	Baðlantýlý yapmak istediðiniz giriþi seçiniz
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	tr	Should InfoLog display your open entries - not finised tasks, phone calls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	tr	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	tr	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter InfoLog).
+should infolog use full names (surname and familyname) or just the loginnames.	tr	Should InfoLog use full names (surname and familyname) or just the loginnames.
+should this entry only be visible to you and people you grant privat access via the acl	tr	should this entry only be visible to you and people you grant privat access via the ACL
+show full usernames	tr	Tüm kullanýcý adlarýný göster
+show in the infolog list	tr	AkýlDefteri Listesinden göster
+show list of upcoming entries	tr	yakýndaki giriþlerin listesini göster
+show open entries: tasks/calls/notes on main screen	tr	Show open entries: Tasks/Calls/Notes on main screen
+small view	tr	küçük görünüm
+start a new search, cancel this link	tr	Bu baðlantýyý iptal et, yeni arama baþlat
+startdate	tr	Baþ.Tarihi
+startdate enddate	tr	Baþ.Tarihi Bit.Tarihi
+startrecord	tr	Kaydýbaþlat
+status	tr	Durum
+status ...	tr	Durum ...
+sub	tr	Alt
+subject	tr	Konu
+task	tr	Görev
+test import (show importable records <u>only</u> in browser)	tr	Test Import (show importable records <u>only</u> in browser)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	tr	the name used internaly (<= 10 chars), changeing it makes existing data unavailible
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	tr	the name used internaly (<= 20 chars), changeing it makes existing data unavailible
+the text displayed to the user	tr	kullanýcýya gösterilecek metin
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	tr	This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.
+til when should the todo or phonecall be finished	tr	til when should the ToDo or Phone call be finished
+to many might exceed your execution-time-limit	tr	to many might exceed your execution-time-limit
+today	tr	Bugün
+todo	tr	Görev
+translation	tr	Tercüme
+typ	tr	Tip
+typ 	tr	%1
+type	tr	Tip
+type ...	tr	Tip ...
+type of the log-entry: note, phonecall or todo	tr	Giriþ tipi: Not, Görüþme veya Görev
+unlink	tr	Baðlantýyý Kes
+upcoming	tr	yakýnda
+urgency	tr	aciliyet
+urgent	tr	acil
+use button to search for address	tr	Adreslerde arama için Butona basýnýz
+use button to search for project	tr	Projelerde arama için Butona basýnýz
+valid path on clientside<br>eg. \\\\server\\share or e:\\	tr	valid path on clientside<br>eg. \\\\Server\\Share or e:\\
+values for selectbox	tr	Seçim kutusu için deðerler
+view all subs of this entry	tr	Bu giriþin tüm alt-maddelerini gör
+view other subs	tr	diðer alt-maddeler
+view parent	tr	Ana maddeyi gör
+view subs	tr	Alt-maddeleri gör
+view the parent of this entry and all his subs	tr	Bu giriþin bütün ana ve alt-madddelerini gör
+view this linked entry in its application	tr	bu baðlantý giriþlerini ve ilgilerini gör
+when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	tr	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
+will-call	tr	aranacak
+write (add or update) a record by passing its fields.	tr	Saharýný atlayarak bir kayýt yazýnýz (ekleyin veya güncelleyin).
+yes - delete	tr	Evet - Sil
+you can	tr	t delete one of the stock types !!!
+you have entered an invalid ending date	tr	Yanlýþ bitiþ tarihi girdiniz
+you have entered an invalid starting date	tr	Yanlýþ baþlama tarihi girdiniz
+you have to enter a name, to create a new typ!!!	tr	Yeni tip oluþturmak için bir ad girmelisiniz!!!
+you must enter a subject or a description	tr	Konu veya açýklama girmelisiniz
