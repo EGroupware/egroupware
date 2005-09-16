@@ -1,0 +1,314 @@
+%1 %2 in %3	tr	%1 %2 in %3
+%1 matches found	tr	%1 uygun bulundu
+%1 records imported	tr	%1 kayýt alýndý
+%1 records read (not yet imported, you may go back and uncheck test import)	tr	%1 kayýt okundu (henüz alýnmadý, geri gidip Test týkýný kaldýrýn)
+(for weekly)	tr	(haftalýk)
+(i/v)cal	tr	(i/v)Cal
+1 match found	tr	1 uygun bulundu
+a	tr	a
+accept	tr	Kabul
+accepted	tr	Kabul edildi
+action that caused the notify: added, canceled, accepted, rejected, ...	tr	Uyarý oluþturan eylemler Ekleme, Ýptal etme, Kabul etme, Redetme, ...
+add a single entry by passing the fields.	tr	Sahalarý atlayýp tek bir giriþ ekle.
+add alarm	tr	Alarm Ekle
+add contact	tr	Kiþi Ekle
+add or update a single entry by passing the fields.	tr	Sahalarý atlayýp tek bir giriþ ekle veya güncelle.
+added	tr	Eklendi
+address book	tr	Adres Defteri
+alarm	tr	Alarm
+alarm for %1 at %2 in %3	tr	Uyarý: Saat %2 de %1  Yer:%3
+alarm management	tr	Alarm Yönetimi
+alarm-management	tr	Alarm-Yönetimi
+alarms	tr	Alarmlar
+all day	tr	Bütün Gün
+are you sure you want to delete this country ?	tr	Bu ülkeyi silmek istediðinizden eminmisiniz ?
+are you sure you want to delete this holiday ?	tr	Bu tatili silmek istediðinizden eminmisiniz ?
+are you sure\\nyou want to\\ndelete these alarms?	tr	Are you sure\\nyou want to\\ndelete these alarms?
+are you sure\\nyou want to\\ndelete this entry ?	tr	Are you sure\\nyou want to\\ndelete this entry ?
+are you sure\\nyou want to\\ndelete this entry ?\\n\\nthis will delete\\nthis entry for all users.	tr	Are you sure\\nyou want to\\ndelete this entry ?\\n\\nThis will delete\\nthis entry for all users.
+are you sure\\nyou want to\\ndelete this single occurence ?\\n\\nthis will delete\\nthis entry for all users.	tr	Are you sure\\nyou want to\\ndelete this single occurence ?\\n\\nThis will delete\\nthis entry for all users.
+before the event	tr	önce uyarýlacak kiþi:
+brief description	tr	Kýsa Açýklama
+business	tr	Ýþ
+calendar - [iv]cal importer	tr	Takvim - [iv]Cal Veri Aktarýcý
+calendar - add	tr	Takvim - Ekle
+calendar - edit	tr	Takvim - Düzelt
+calendar event	tr	Takvim Olay
+calendar preferences	tr	Takvim tercihleri
+calendar-fieldname	tr	Takvim-Sahaadý
+canceled	tr	Vazgeçildi
+change all events for $params[	tr	old_owner
+change status	tr	Durumu deðiþtir
+charset of file	tr	Dosya karakter seti
+click %1here%2 to return to the calendar.	tr	Takvime dönüþ için %1burayý%2 týklayýnýz.
+configuration	tr	Yapýlandýrma
+countries	tr	Ülkeler
+country	tr	Ülke
+created by	tr	Oluþturan
+csv-fieldname	tr	CSV-Fieldname
+csv-filename	tr	CSV-Filename
+custom fields	tr	Kullanýcý Tanýmlý Sahalar
+daily	tr	Günlük
+daily matrix view	tr	Günlük Cetvel
+days	tr	gün
+days repeated	tr	tekrar eden günler
+dayview	tr	Gün Görünümü
+default appointment length (in minutes)	tr	default appointment length (in minutes)
+default calendar filter	tr	Geçerli takvim filtresi
+default calendar view	tr	Geçerli takvim görünümü
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	tr	Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.
+defines the size in minutes of the lines in the day view.	tr	Defines the size in minutes of the lines in the day view.
+delete a single entry by passing the id.	tr	Kimliði atlayýp tek bir giriþi sil.
+delete an entire users calendar.	tr	Tüm takvim kullanýcýlarýný sil.
+delete selected contacts	tr	Seçilen kiþileri sil
+delete series	tr	Serileri Sil
+delete single	tr	Bir tanesini Sil
+deleted	tr	Silindi
+description	tr	Açýklama
+disable	tr	Disable
+disabled	tr	disabled
+display interval in day view	tr	Aralýðý Gün Görünümünde Göster
+display mini calendars when printing	tr	Yazdýrýrken küçük takvimi göster
+display status of events	tr	Olay durumlarýný görüntüle
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	tr	Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. al	tr	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any app	tr	Do you want to receive a regulary summary of your appointsments via email?<br>The summary is sent to your standard email-address on the morning of that day or on Monday for weekly summarys.<br>It is only sent when you have any appointments on that day or week.
+download	tr	Karþýdan Ýndir
+duration	tr	Süre
+edit series	tr	Serileri Düzelt
+edit single	tr	Bir tanesini Düzelt
+email notification	tr	ePosta Uyarýsý
+email notification for %1	tr	%1 için ePosta Uyarýsý
+empty for all	tr	hepsi için boþ
+enable	tr	Enable
+enabled	tr	enabled
+end date/time	tr	Bit. Tarihi/Saati
+enddate	tr	Bit.Tarihi
+ends	tr	Bitiþler
+enter output filename: ( .vcs appended )	tr	Enter Output Filename: ( .vcs appended )
+event details follow	tr	Olay ayrýntýlarý:
+exceptions	tr	Ýstisnalar
+export	tr	Veri Gönder
+export a list of entries in ical format.	tr	Export a list of entries in iCal format.
+extended	tr	Geniþletilmiþ
+extended updates always include the complete event-details. ical	tr	s can be imported by certain other calendar-applications.
+external participants	tr	Harici Katýlýmcýlar
+failed sending message to 	tr	%1
+fieldseparator	tr	SahaAyracý
+firstname of person to notify	tr	Uyarýlacak kiþinin Adý
+format of event updates	tr	Format of event updates
+fr	tr	C
+free/busy	tr	Serbest/Meþgul
+freebusy: unknow user 	tr	%1
+frequency	tr	Frekans
+fri	tr	Cum
+full description	tr	Tam Açýklama
+fullname of person to notify	tr	Uyarýlacak kiþinin AdýSoyadý
+generate printer-friendly version	tr	Yazýcýya uygun sürüm oluþtur
+global categories	tr	Global Kategoriler
+global public and group public	tr	Global Genel ve genel grup
+global public only	tr	Sadece Global Genel
+go!	tr	Git!
+group planner	tr	Grup Planlamasý
+group public only	tr	Yalnýz Genel Grup
+here is your requested alarm.	tr	Uyarý konusu aþaðýdadýr.
+high priority	tr	yüksek öncelikli
+holiday	tr	Tatil
+holiday management	tr	Tatil Yönetimi
+holiday-management	tr	Tatil-Yönetimi
+holidays	tr	Tatiller
+hours	tr	saat
+i participate	tr	Katýlýyorum
+ical / rfc2445	tr	iCal / rfc2445
+if checked holidays falling on a weekend, are taken on the monday after.	tr	If checked holidays falling on a weekend, are taken on the monday after.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	tr	If you dont set a password here, the information is availible to everyone, who knows the URL!!!
+ignore conflict	tr	Çakýþmayý Gözardý Et
+import	tr	Veri Al
+interval	tr	Aralýk
+intervals in day view	tr	Gün Görünümü Aralýklarý
+intervals per day in planner view	tr	Plancý Görünümünde günlük Aralýklar
+invalid entry id.	tr	Yanlýþ giriþ kimliði.
+last	tr	sonuncu
+lastname of person to notify	tr	Uyarýlacak kiþinin Soyadý
+length shown<br>(emtpy for full length)	tr	Gösterilen boy<br>(tam boy için boþ)
+length<br>(<= 255)	tr	Boy<br>(<= 255)
+link	tr	Baðlantý
+link to view the event	tr	Olayý görüntülemek için baðlantý
+list all categories.	tr	Tüm Kategoriler Listesi.
+load [iv]cal	tr	Yükle [iv]Cal
+location	tr	Yer
+make freebusy information availible to not loged in persons?	tr	Make freebusy information availible to not loged in persons?
+matrixview	tr	Liste Görünümü
+minutes	tr	dakika
+mo	tr	P
+modified	tr	Deðiþtirlme
+modify list of external participants	tr	Harici katýlýmcý listesini düzenle
+mon	tr	Pts
+month	tr	Ay
+monthly	tr	Aylýk
+monthly (by date)	tr	Aylýk (aya göre)
+monthly (by day)	tr	Aylýk (güne göre)
+monthview	tr	Ay Görünümü
+new entry	tr	Yeni Giriþ
+new name must not exist and not be empty!!!	tr	Yeni ad olmamalý ve boþ olmamalý!!!
+no matches found	tr	uygunlar bulunamadý
+no response	tr	Cevap Yok
+notification messages for added events	tr	Eklenen olaylar için uyarý mesajlarý
+notification messages for canceled events	tr	Ýptal edilen olaylar için uyarý mesajlarý
+notification messages for modified events	tr	Deðiþtirilen olaylar için uyarý mesajlarý
+notification messages for your alarms	tr	Alarmlarýnýz için uyarý mesajlarý
+notification messages for your responses	tr	Cevaplarýnýz için uyarý mesajlarý
+number of intervals per day in planner view	tr	Planlama görünümünde günlük aralýk sayýsý
+number of months	tr	Ay sayýsý
+number of records to read (%1)	tr	Okunacak kayýt sayýsý (%1)
+observance rule	tr	Yerine getirme kuralý
+occurence	tr	Meydana gelme
+old startdate	tr	Eski BaþlamaTarihi
+olddate	tr	EskiTarih
+on %1 %2 %3 your meeting request for %4	tr	%1 %2 %3 de %4 için toplantý isteðiniz
+on all changes	tr	tüm deðiþimler için
+on all modification, but responses	tr	tüm deðiþimler için, fakat cevaplar
+on any time change too	tr	her zaman deðiþecek
+on invitation / cancelation only	tr	sadece davet / iptali için
+on participant responses too	tr	katýlýmcý cevabý için de
+on time change of more than 4 hours too	tr	4 saatten fazla ertlemeler dahil
+open todo	tr	s:
+order	tr	Sýra
+overlap holiday	tr	tatile geliyor
+participant	tr	Katýlýmcý
+participants	tr	Katýlýmcýlar
+participates	tr	Katýlacakmý
+password for not loged in users to your freebusy information?	tr	Password for not loged in users to your freebusy information?
+people holiday	tr	people holiday
+permission denied	tr	Ýzin yok
+planner	tr	Plancý
+planner by category	tr	Kategoriye göre Planlama
+planner by user	tr	Kullanýcýya göre Planlama
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	tr	Please confirm, accept, reject or examine changes in the corresponding entry in your calendar
+please enter a filename !!!	tr	lütfen dosya adý giriniz !!!
+preselected group for entering the planner	tr	Preselected group for entering the planner
+print calendars in black & white	tr	Print calendars in black & white
+print the mini calendars	tr	Print the mini calendars
+printer friendly	tr	Yazýcýya Uygun
+privat	tr	Privat
+private and global public	tr	Özel ve Global Genel
+private and group public	tr	Özel ve Genel Grup
+private only	tr	Private Only
+re-edit event	tr	Re-Edit Event
+read a list of entries.	tr	Read a list of entries.
+read a single entry by passing the id and fieldlist.	tr	Read a single entry by passing the id and fieldlist.
+read this list of methods.	tr	Read this list of methods.
+receive email updates	tr	Receive email updates
+receive extra information in event mails	tr	Receive extra information in event mails
+receive summary of appointments	tr	Receive summary of appointments
+recurring event	tr	recurring event
+refresh	tr	Tazele
+reinstate	tr	Reinstate
+rejected	tr	Reddedildi
+repeat day	tr	Günü Tekrarla
+repeat end date	tr	Bitiþ Tarihini Tekrarla
+repeat type	tr	Tekrarlama Tipi
+repeating event information	tr	Olay Bilgisini Tekrarlanýyor
+repetition	tr	Tekrarlama
+repetitiondetails (or empty)	tr	Repetitiondetails (or empty)
+reset	tr	Reset
+rule	tr	Kural
+sa	tr	Ct
+sat	tr	Cts
+scheduling conflict	tr	Scheduling Conflict
+search results	tr	Search Results
+selected contacts (%1)	tr	Selected contacts (%1)
+send/receive updates via email	tr	Send/Receive updates via EMail
+set a year only for one-time / non-regular holidays.	tr	Set a Year only for one-time / non-regular holidays.
+set new events to private	tr	Set new events to private
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	tr	Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!
+should new events created as private by default ?	tr	Should new events created as private by default ?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include th	tr	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.
+should the mini calendars by printed / displayed in the printer friendly views ?	tr	Should the mini calendars by printed / displayed in the printer friendly views ?
+should the printer friendly view be in black & white or in color (as in normal view)?	tr	Should the printer friendly view be in black & white or in color (as in normal view)?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	tr	Should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?
+show day view on main screen	tr	show day view on main screen
+show default view on main screen	tr	Show default view on main screen
+show high priority events on main screen	tr	Show high priority events on main screen
+show invitations you rejected	tr	Show invitations you rejected
+show list of upcoming events	tr	Show list of upcoming events
+single event	tr	single event
+sorry, the owner has just deleted this event	tr	Sorry, the owner has just deleted this event
+sorry, this event does not exist	tr	Sorry, this event does not exist
+sorry, this event does not have exceptions defined	tr	Sorry, this event does not have exceptions defined
+sort by	tr	Sort by
+specifies the the number of intervals shown in the planner view.	tr	Specifies the the number of intervals shown in the planner view.
+start date/time	tr	Baþ. Tarihi/Saati
+start- and enddates	tr	Baþ. ve Bit. Tarihleri
+startdate	tr	Baþ.Tarihi
+startrecord	tr	Startrecord
+su	tr	Pa
+submit to repository	tr	Submit to Repository
+sun	tr	Paz
+tentative	tr	Tentative
+test import (show importable records <u>only</u> in browser)	tr	Test Import (show importable records <u>only</u> in browser)
+text	tr	Text
+th	tr	P
+the following conflicts with the suggested time:<ul>%1</ul>	tr	The following conflicts with the suggested time:<ul>%1</ul>
+the user %1 is not participating in this event!	tr	The user %1 is not participating in this event!
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	tr	There was an error trying to connect to your news server.<br>Please contact your admin to check the news servername, username or password.
+this day is shown as first day in the week or month view.	tr	This day is shown as first day in the week or month view.
+this defines the end of your dayview. events after this time, are shown below the dayview.	tr	This defines the end of your day view. Events after this time are shown below the day view.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	tr	This defines the start of your day view. Events before this time are shown above the day view.<br>This time is also used as a default start time for new events.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	tr	This group that is preselected when you enter the planner. You can change it in the planner anytime you want.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	tr	This is mostly caused by a not or wrongly configured SMTP server. Notify your administrator.
+this message is sent for canceled or deleted events.	tr	This message is sent for canceled or deleted events.
+this message is sent for modified or moved events.	tr	This message is sent for modified or moved events.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the	tr	This message is sent to every participant of events you own, who has requested notifcations about new events.<br>You can use certain variables which get substituted with the data of the event. The first line is the subject of the email.
+this message is sent when you accept, tentative accept or reject an event.	tr	This message is sent when you accept, tentatively accept, or reject an event.
+this message is sent when you set an alarm for a certain event. include all information you might need.	tr	This message is sent when you set an Alarm for a certain event.  Include all information you might need.
+this month	tr	Bu Ay
+this week	tr	Bu Hafta
+this year	tr	Bu Yýl
+thu	tr	Per
+title	tr	Baþlýk
+title of the event	tr	Olay Baþlýðý
+title-row	tr	Baþlýk-satýrý
+to many might exceed your execution-time-limit	tr	to many might exceed your execution-time-limit
+to-firstname	tr	Adýna
+to-fullname	tr	AdýSoyadýna
+to-lastname	tr	Soyadýna
+today	tr	Bugün
+translation	tr	Tercüme
+tu	tr	S
+tue	tr	Sal
+update a single entry by passing the fields.	tr	Update a single entry by passing the fields.
+updated	tr	Güncellendi
+use end date	tr	Bit.Tarihini Kullan
+view this entry	tr	Bu giriþi Göster
+we	tr	Ç
+wed	tr	Çar
+week	tr	Hafta
+weekday starts on	tr	Hafta baþý
+weekly	tr	Haftalýk
+weekview	tr	Hafta Görünümü
+when creating new events default set to private	tr	When creating new events default set to private
+which events do you want to see when you enter the calendar.	tr	Which events do you want to see when you enter the calendar.
+which of calendar view do you want to see, when you start calendar ?	tr	Which of calendar view do you want to see when you start calendar ?
+work day ends on	tr	Work day ends on
+work day starts on	tr	Work day starts on
+workdayends	tr	workdayends
+yearly	tr	Yýllýk
+yearview	tr	Yýl Görünümü
+you can either set a year or a occurence, not both !!!	tr	You can either set a Year or a Occurence, not both !!!
+you can only set a year or a occurence !!!	tr	You can only set a year or a occurence !!!
+you do not have permission to add alarms to this event !!!	tr	You do not have permission to add alarms to this event !!!
+you do not have permission to delete this alarm !!!	tr	You do not have permission to delete this alarm !!!
+you do not have permission to enable/disable this alarm !!!	tr	You do not have permission to enable/disable this alarm !!!
+you do not have permission to read this record!	tr	You do not have permission to read this record!
+you have a meeting scheduled for %1	tr	You have a meeting scheduled for %1
+you have not entered a title	tr	You have not entered a title
+you have not entered a valid date	tr	You have not entered a valid date
+you have not entered a valid time of day	tr	You have not entered a valid time of day
+you have not entered participants	tr	You have not entered participants
+you must enter one or more search keywords	tr	You must enter one or more search keywords
+you must select a [iv]cal. (*.[iv]cs)	tr	You must select a [iv]Cal. (*.[iv]cs)
+you need to set either a day or a occurence !!!	tr	You need to set either a day or a occurence !!!
+your meeting scheduled for %1 has been canceled	tr	Your meeting scheduled for %1 has been canceled
+your meeting that had been scheduled for %1 has been rescheduled to %2	tr	Your meeting that had been scheduled for %1 has been rescheduled to %2
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	tr	Your suggested time of <B> %1 - %2 </B> conflicts with the following existing calendar entries:
