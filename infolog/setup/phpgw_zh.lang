@@ -95,7 +95,7 @@ download	infolog	zh	下载
 duration	infolog	zh	持续时间
 each value is a line like <id>[=<label>]	infolog	zh	请设定选择框的选项, 格式: <选项名>=<显示名>, 每行代表一个选项.
 edit	infolog	zh	编辑
-edit or create categories for ingolog	infolog	zh	编辑或创建任务管理的类别
+edit or create categories for ingolog	infolog	zh	编辑或创建记事薄的类别
 edit status	infolog	zh	Edit Status
 edit the entry	infolog	zh	编辑该事项
 edit this entry	infolog	zh	编辑该事项
@@ -121,18 +121,18 @@ high	infolog	zh	高
 id	infolog	zh	代号
 import	infolog	zh	导入
 import next set	infolog	zh	导入下一配置
-info log	common	zh	任务管理	
-infolog	common	zh	任务管理	
+info log	common	zh	记事薄	
+infolog	common	zh	记事薄	
 infolog index	infolog	zh	索引
-infolog - delete	infolog	zh	任务管理-删除
-infolog - edit	infolog	zh	任务管理-编辑
-infolog - import csv-file	infolog	zh	任务管理 - 从CSV文件导入
-infolog - new	infolog	zh	任务管理-新建
-infolog - new subproject	infolog	zh	任务管理 - 新建子项目
-infolog - subprojects from	infolog	zh	任务管理 - 子项目来自
+infolog - delete	infolog	zh	记事薄-删除
+infolog - edit	infolog	zh	记事薄-编辑
+infolog - import csv-file	infolog	zh	记事薄 - 从CSV文件导入
+infolog - new	infolog	zh	记事薄-新建
+infolog - new subproject	infolog	zh	记事薄 - 新建子项目
+infolog - subprojects from	infolog	zh	记事薄 - 子项目来自
 infolog list	infolog	zh	浏览事项
-infolog preferences	common	zh	任务管理个性化配置
-infolog-fieldname	infolog	zh	任务管理 - 字段名
+infolog preferences	common	zh	记事薄个性化配置
+infolog-fieldname	infolog	zh	记事薄 - 字段名
 invalid filename	infolog	zh	文件名无效
 label	infolog	zh	显示名
 label<br>helptext	infolog	zh	标签<br>提示信息
@@ -218,7 +218,7 @@ select an entry to link with	infolog	zh	选定要链接的条目
 should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	zh	待决事项指未完成的事项. 该选项仅当未设定首页应用程序时有效.
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zh	浏览事项时是否显示子事项? 无论该选项如何设定, 用户总可以经由父事项来查看子事项.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	zh	浏览事项时是否显示各事项的关联条目和关联文件?
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh	在任务管理中显示姓名还是登录名.
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh	在记事薄中显示姓名还是登录名.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	zh	是否仅所有者本人及其授权的用户可以访问该事项?
 show full usernames	infolog	zh	显示完整的用户名
 show in the infolog list	infolog	zh	浏览事项时是否显示关联?
@@ -241,7 +241,7 @@ the name used internaly (<= 10 chars), changeing it makes existing data unavaili
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	zh	供系统使用的内部名称(最多20个字符), 更改该名称可能导致已有事项无效
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	zh	供系统使用的内部名称(最多32个字符), 更改该名称可能导致已有事项无效
 the text displayed to the user	infolog	zh	字段的显示名
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	zh	浏览任务管理中的事项时, 默认查看哪些条目? 
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	zh	浏览记事薄中的事项时, 默认查看哪些条目? 
 til when should the todo or phonecall be finished	infolog	zh	事项的中止日期, 仅对任务和函电有效.
 to many might exceed your execution-time-limit	infolog	zh	to many might exceed your execution-time-limit
 today	infolog	zh	按日查看
