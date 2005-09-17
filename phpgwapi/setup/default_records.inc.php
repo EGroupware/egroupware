@@ -27,6 +27,7 @@
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('bn','Bengali / Bangla')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('bo','Tibetan')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('br','Breton')");
+	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('ca','Catalan')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('co','Corsican')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('cs','Czech')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('cy','Welsh')");
@@ -37,7 +38,6 @@
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('en','English / US')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('eo','Esperanto')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('es-es','Spanish / Spain')");
-	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('es-ca','Catalan')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('et','Estonian')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('eu','Basque')");
 	$oProc->query("INSERT INTO phpgw_languages (lang_id, lang_name) VALUES ('fa','Persian')");

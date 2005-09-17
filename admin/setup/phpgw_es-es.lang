@@ -1,6 +1,7 @@
 %1 - %2 of %3 user accounts	admin	es-es	%1 - %2 de %3 cuentas de usuarios
 %1 - %2 of %3 user groups	admin	es-es	%1 - %2 de %3 grupos de usuarios
 %1 not found or not executable !!!	admin	es-es	No se encontró %1 o no es un ejecutable
+(default no, leave it off if you dont use it)	admin	es-es	(por defecto, No, desactivar si no se usa)
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, utilice <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones])
 (to install new applications use<br><a href="setup/"?sessionid=69211c0c32aa5581c5d69abdbcac4d64 target="setup">setup</a> [manage applications] !!!)	admin	es-es	P
@@ -168,6 +169,8 @@ edit work catagory table	admin	es-es	Editar Tabla de Categorias de Trabajos
 email account active	admin	es-es	cuenta de correo activa
 email address	admin	es-es	dirección de correo electrónico
 enable debug-messages	admin	es-es	Activar mensajes de depuración
+enable the soap service	admin	es-es	Activar el servicio soap
+enable the xmlrpc service	admin	es-es	Activar el servicio xmlrpc
 enabled	admin	es-es	Habilitado
 enabled - hidden from navbar	admin	es-es	Habilitado - Esconder de la barra de navegación
 enabled - popup window	admin	es-es	Habilitado - Ventana emergente

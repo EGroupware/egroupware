@@ -1614,7 +1614,7 @@
 		),'available');
 
 		// correcting the id for Catalan
-		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET lang_id='es-ca' WHERE lang_id='ca'");
+//		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_languages SET lang_id='es-ca' WHERE lang_id='ca'");
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.0.001';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
