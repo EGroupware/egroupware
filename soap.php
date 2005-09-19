@@ -32,7 +32,22 @@
 		exit;
 	}
 
-	/* Note: this command only available under Apache */
+	/* Note: this command only available natively in Apache (Netscape/iPlanet/SunONE in php >= 4.3.3) */
+	if(!function_exists('getallheaders'))
+	{
+		function getallheaders()
+		{
+			settype($headers,'array');
+			foreach($_SERVER as $h => $v)
+			{
+				if(ereg('HTTP_(.+)',$h,$hp))
+				{
+					$headers[$hp[1]] = $v;
+				}
+			}
+			return $headers;
+		}
+	}
 	$headers = getallheaders();
 
 	if(ereg('Basic',$headers['Authorization']))

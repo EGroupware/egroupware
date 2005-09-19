@@ -30,15 +30,31 @@
 
 	/* uncomment here if you want to show all of the testing functions for compatibility */
 	//include(EGW_API_INC . '/xmlrpc.interop.php');
-	
+
 	if (!$GLOBALS['egw_info']['server']['xmlrpc_enabled'])
 	{
 		$server->xmlrpc_error(9999,'xmlrpc service is not enabled in the eGroupWare system configuration');
 		exit;
 	}
 
-	/* Note: this command only available under Apache */
+	/* Note: this command only available natively in Apache (Netscape/iPlanet/SunONE in php >= 4.3.3) */
+	if(!function_exists('getallheaders'))
+	{
+		function getallheaders()
+		{
+			settype($headers,'array');
+			foreach($_SERVER as $h => $v)
+			{
+				if(ereg('HTTP_(.+)',$h,$hp))
+				{
+					$headers[$hp[1]] = $v;
+				}
+			}
+			return $headers;
+		}
+	}
 	$headers = getallheaders();
+
 	//print_r($headers);
 	$isodate = $headers['isoDate'] ? $headers['isoDate'] : $headers['isodate'];
 	$isodate = ($isodate == 'simple') ? True : False;
