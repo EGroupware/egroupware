@@ -271,14 +271,30 @@
 		}
 
 		$checks = array();
-		if (isset($args['is_readable'])) $checks[] = (!$args['is_readable']?'not ':'').lang('readable by the webserver');
-		if (isset($args['is_writable'])) $checks[] = (!$args['is_writable']?'not ':'').lang('writable by the webserver');
-		if (isset($args['is_world_readable'])) $checks[] = (!$args['is_world_readable']?lang('not').' ':'').lang('world readable');
-		if (isset($args['is_world_writable'])) $checks[] = (!$args['is_world_writable']?lang('not').' ':'').lang('world writable');
+		if (isset($args['is_readable']))
+		{
+		  $checks[] = lang('readable by the webserver');
+		  $check_not = (!$args['is_readable']?'not ':'');
+		}
+		if (isset($args['is_writable']))
+		{
+		  $checks[] = lang('writable by the webserver');
+		  $check_not = (!$args['is_writable']?'not ':'');
+		}
+		if (isset($args['is_world_readable']))
+		{
+		  $checks[] = lang('world readable');
+		  $check_not = (!$args['is_world_readable']?lang('not').' ':'');
+		}
+		if (isset($args['is_world_writable']))
+		{
+		  $checks[] = lang('world writable');
+		  $check_not = (!$args['is_world_writable']?lang('not').' ':'');
+		}
 		$checks = implode(', ',$checks);
 
 		$icon = $passed_icon;
-		$msg = lang('Checking file-permissions of %1 for %2: %3',$rel_name,$checks,$perms)."<br />\n";
+		$msg = lang('Checking file-permissions of %1 for %2 %3: %4',$rel_name,$check_not,$checks,$perms)."<br />\n";
 
 		if (!file_exists($name))
 		{

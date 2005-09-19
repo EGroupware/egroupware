@@ -83,7 +83,7 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	en	Check installation
 check ip address of all sessions	setup	en	check ip address of all sessions
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
-checking file-permissions of %1 for %2: %3	setup	en	Checking file-permissions of %1 for %2: %3
+checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file-permissions of %1 for %2 %3: %4
 checking for gd support...	setup	en	Checking for GD support...
 checking php.ini	setup	en	Checking php.ini
 checking the egroupware installation	setup	en	Checking the eGroupWare Installation
