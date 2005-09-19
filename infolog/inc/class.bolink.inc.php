@@ -362,7 +362,7 @@
 			}
 			if (!is_array($id))
 			{
-				if (!$app2 && !$id2)
+				if (!$link_id && !$app2 && !$id2)
 				{
 					$this->delete_attached($app,$id);	// deleting all attachments
 				}
