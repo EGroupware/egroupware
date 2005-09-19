@@ -274,22 +274,22 @@
 		if (isset($args['is_readable']))
 		{
 		  $checks[] = lang('readable by the webserver');
-		  $check_not = (!$args['is_readable']?'not ':'');
+		  $check_not = (!$args['is_readable']?lang('not'):'');
 		}
 		if (isset($args['is_writable']))
 		{
 		  $checks[] = lang('writable by the webserver');
-		  $check_not = (!$args['is_writable']?'not ':'');
+		  $check_not = (!$args['is_writable']?lang('not'):'');
 		}
 		if (isset($args['is_world_readable']))
 		{
 		  $checks[] = lang('world readable');
-		  $check_not = (!$args['is_world_readable']?lang('not').' ':'');
+		  $check_not = (!$args['is_world_readable']?lang('not'):'');
 		}
 		if (isset($args['is_world_writable']))
 		{
 		  $checks[] = lang('world writable');
-		  $check_not = (!$args['is_world_writable']?lang('not').' ':'');
+		  $check_not = (!$args['is_world_writable']?lang('not'):'');
 		}
 		$checks = implode(', ',$checks);
 
