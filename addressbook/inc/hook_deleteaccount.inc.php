@@ -12,14 +12,17 @@
 
 	/* $Id$ */
 
-	$contacts = CreateObject('phpgwapi.contacts');
+	if((int)$GLOBALS['hook_values']['account_id'] > 0)
+	{
+		$contacts = CreateObject('phpgwapi.contacts');
 
-	if((int)$_POST['new_owner'] == 0)
-	{
-		$contacts->delete_all((int)$_POST['account_id']);
-	}
-	else
-	{
-		$contacts->change_owner((int)$_POST['account_id'],(int)$_POST['new_owner']);
+		if((int)$_POST['new_owner'] == 0)
+		{
+			$contacts->delete_all((int)$GLOBALS['hook_values']['account_id']);
+		}
+		else
+		{
+			$contacts->change_owner((int)$GLOBALS['hook_values']['account_id'],(int)$_POST['new_owner']);
+		}
 	}
 ?>

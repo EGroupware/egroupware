@@ -12,12 +12,12 @@
 
 	/* $Id$ */
 
-	if($_POST['account_id'])
+	if((int)$GLOBALS['hook_values']['account_id'] > 0)
 	{
-		$GLOBALS['phpgw']->accounts->delete($_POST['account_id']);
+		$GLOBALS['phpgw']->accounts->delete((int)$GLOBALS['hook_values']['account_id']);
 		$GLOBALS['phpgw']->db->lock(Array('phpgw_acl'));
-		$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_acl WHERE acl_location='" . $_POST['account_id']
-			. "' OR acl_account=".$_POST['account_id'],__LINE__,__FILE__);
+		$GLOBALS['phpgw']->db->query("DELETE FROM phpgw_acl WHERE acl_location='" . (int)$GLOBALS['hook_values']['account_id']
+			. "' OR acl_account=".(int)$GLOBALS['hook_values']['account_id'],__LINE__,__FILE__);
 		$GLOBALS['phpgw']->db->unlock();
 	}
 ?>

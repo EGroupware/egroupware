@@ -13,9 +13,12 @@
   /* $Id$ */
 
 	// Delete all records for a user
-	$table_locks = Array('phpgw_preferences');
-
-	$GLOBALS['egw']->db->lock($table_locks);
-	$GLOBALS['egw']->db->query('DELETE FROM phpgw_preferences WHERE preference_owner='.(int)$_POST['account_id'],__LINE__,__FILE__);
-	$GLOBALS['egw']->db->unlock();
+	if((int)$GLOBALS['hook_values']['account_id'] > 0)
+	{
+		$table_locks = Array('phpgw_preferences');
+		
+		$GLOBALS['egw']->db->lock($table_locks);
+		$GLOBALS['egw']->db->query('DELETE FROM phpgw_preferences WHERE preference_owner='.(int)$GLOBALS['hook_values']['account_id'],__LINE__,__FILE__);
+		$GLOBALS['egw']->db->unlock();
+	}
 ?>
