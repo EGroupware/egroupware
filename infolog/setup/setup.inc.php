@@ -39,7 +39,7 @@
 		(<i>need to be configured in the admin-section</i>).
 		It is planed to include emails and faxes into InfoLog in the future.</p>';
 	$setup_info['infolog']['note'] =
-		'<p>Their is a <b>CSV import filter</b> (in the admin-section) to import existing data.
+		'<p>There is a <b>CSV import filter</b> (in the admin-section) to import existing data.
 		It allows to interactivly assign fields, customize the values with regular
 		expressions and direct calls to php-functions (e.g. to link the phone calls 
 		(again) to the addressbook entrys).</p>
