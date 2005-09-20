@@ -46,7 +46,7 @@
 		var $resp_struct = array();
 		var $debug = False;
 		var $method_requested;
-		var $log = '/tmp/xmlrpc.log';
+		var $log = False; //'/tmp/xmlrpc.log';
 
 		function xmlrpc_server($dispMap='', $serviceNow=0)
 		{
