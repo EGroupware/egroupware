@@ -24,6 +24,7 @@
 #
 # Script changed 2004 May 21 Reiner Jung
 # Script changed 2005 Apr 15 by Ralf Becker and Wim Bonis
+# 2005 Sep 20 Ralf Becker: disabled fedora 2 build
 
 BRANCH=Version-1_0_0-branch
 
@@ -173,24 +174,21 @@ echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
 
 ##############################################################################################################
-#                                                                                                            # 
+#                                                                                                            #
 # Here start the build process for the Fedora packages                                                       #
 #                                                                                                            #
-############################################################################################################## 
+##############################################################################################################
 
 
-cd $ANONCVSDIRFEDORA
-tar czvf $SRCDIR/$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.tar.gz egroupware   >> $LOGFILEFEDORA 2>&1
-                                                                                                                             
-                                                                                                                             
-echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA"                       >> $LOGFILEFEDORA 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-cd $SPECDIR
-rpmbuild -ba --sign $SPECFILEFEDORA                                                     >> $LOGFILEFEDORA 2>&1
-echo "End Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"        >> $LOGFILEFEDORA 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-                                                                                                                             
+#cd $ANONCVSDIRFEDORA
+#tar czvf $SRCDIR/$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.tar.gz egroupware   >> $LOGFILEFEDORA 2>&1
 
+#echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA"                       >> $LOGFILEFEDORA 2>&1
+#echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+#cd $SPECDIR
+#rpmbuild -ba --sign $SPECFILEFEDORA                                                     >> $LOGFILEFEDORA 2>&1
+#echo "End Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"        >> $LOGFILEFEDORA 2>&1
+#echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
 
 ##############################################################################################################
 #                                                                                                            #
@@ -204,14 +202,14 @@ echo "---------------------------------------"                                  
 #date                                                                                    >> $LOGFILEFEBIT 2>&1
 #
 #cd $ANONCVSDIRFEDORA
-#                                                                                                                            
+# 
 #echo "build bitrock Linux package" 							>> $LOGFILEFEBIT 2>&1
 #/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml linux
 #echo "build bitrock Windows package" 							>> $LOGFILEFEBIT 2>&1
 #/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml windows
 
 #rm -rf egroupware
-echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
+#echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1
+#echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
 
 
