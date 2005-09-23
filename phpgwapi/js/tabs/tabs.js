@@ -199,10 +199,12 @@ function Tabs(nrTabs,activeCSSclass,inactiveCSSclass,HTMLtabID,HTMLtabcontentID,
   function init()
    {
     var tab = 0;
-    var regexp = new RegExp('(^|&)' + this.tabPageKey + '=[0-9]{1,2}');
+    // this line is not working in IE 6
+    //var regexp = new RegExp('(^|&)' + this.tabPageKey + '=[0-9]{1,2}');
+    var regexp = new RegExp(this.tabPageKey + '=[0-9]{1,2}');
     var urlparams = window.location.search;
     var urlparamstart = urlparams.search(regexp);
-   
+
     // getting the active tab from the tabPageKey (url/get-var) if set
     if (this.tabPageKey && urlparamstart > -1)
      {
