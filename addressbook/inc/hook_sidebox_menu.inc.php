@@ -23,7 +23,7 @@
 	display_sidebox can be called as much as you like
  */
 
-	$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
+	$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'];
 	$file = Array(
 		'Add'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
 		'_NewLine_', // give a newline
