@@ -134,10 +134,11 @@ class ADODB2_postgres extends ADODB_DataDict {
 			if (($not_null = preg_match('/NOT NULL/i',$v))) {
 				$v = preg_replace('/NOT NULL/i','',$v);
 			}
-			if (preg_match('/^([^ ]+) .*(DEFAULT [^ ]+)/',$v,$matches)) {
+			if (preg_match('/^([^ ]+) .*DEFAULT ([^ ]+)/',$v,$matches)) {
 				list(,$colname,$default) = $matches;
-				$sql[] = $alter . str_replace($default,'',$v);
-				$sql[] = 'ALTER TABLE '.$tabname.' ALTER COLUMN '.$colname.' SET ' . $default;
+				$sql[] = $alter . str_replace('DEFAULT '.$default,'',$v);
+				$sql[] = 'UPDATE '.$tabname.' SET '.$colname.'='.$default;
+				$sql[] = 'ALTER TABLE '.$tabname.' ALTER COLUMN '.$colname.' SET DEFAULT ' . $default;
 			} else {				
 				$sql[] = $alter . $v;
 			}
@@ -214,7 +215,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 				// we need to explicit convert varchar to a number to be able to do an AlterColumn of a char column to a nummeric one
 				if (preg_match('/'.$fld->name.' (I|I2|I4|I8|N|F)/i',$tableflds,$matches) && 
 					in_array($fld->type,array('varchar','char','text','bytea'))) {
-					$copyflds[] = "to_number($fld->name,'S99D99')";
+					$copyflds[] = "to_number($fld->name,'S9999999999999D99')";
 				} else {
 					$copyflds[] = $fld->name;
 				}
