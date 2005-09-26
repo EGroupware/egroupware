@@ -1,6 +1,6 @@
 <?php
 /*
-V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.  
+V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.  
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -52,6 +52,7 @@ class ADODB_ibase extends ADOConnection {
 	var $hasAffectedRows = false;
 	var $poorAffectedRows = true;
 	var $blobEncodeType = 'C';
+	var $role = false;
 	
 	function ADODB_ibase() 
 	{
@@ -65,7 +66,11 @@ class ADODB_ibase extends ADOConnection {
 		if (!function_exists('ibase_pconnect')) return null;
 		if ($argDatabasename) $argHostname .= ':'.$argDatabasename;
 		$fn = ($persist) ? 'ibase_pconnect':'ibase_connect';
-		$this->_connectionID = $fn($argHostname,$argUsername,$argPassword,
+		if ($this->role)
+			$this->_connectionID = $fn($argHostname,$argUsername,$argPassword,
+					$this->charSet,$this->buffers,$this->dialect,$this->role);
+		else	
+			$this->_connectionID = $fn($argHostname,$argUsername,$argPassword,
 					$this->charSet,$this->buffers,$this->dialect);
 		
 		if ($this->dialect != 1) { // http://www.ibphoenix.com/ibp_60_del_id_ds.html
@@ -186,7 +191,7 @@ class ADODB_ibase extends ADOConnection {
 	{
         // save old fetch mode
         global $ADODB_FETCH_MODE;
-        
+        $false = false;
         $save = $ADODB_FETCH_MODE;
         $ADODB_FETCH_MODE = ADODB_FETCH_NUM;
         if ($this->fetchMode !== FALSE) {
@@ -207,7 +212,7 @@ class ADODB_ibase extends ADOConnection {
 	            $this->SetFetchMode($savem);
 	        }
 	        $ADODB_FETCH_MODE = $save;
-            return FALSE;
+            return $false;
         }
         
         $indexes = array ();
@@ -475,61 +480,61 @@ class ADODB_ibase extends ADOConnection {
 	{
 	global $ADODB_FETCH_MODE;
 		
-		if ($this->metaColumnsSQL) {
-		
-			$save = $ADODB_FETCH_MODE;
-			$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
-		
-			$rs = $this->Execute(sprintf($this->metaColumnsSQL,strtoupper($table)));
-		
-			$ADODB_FETCH_MODE = $save;
-			if ($rs === false) return false;
-
-			$retarr = array();
-			//OPN STUFF start
-			$dialect3 = ($this->dialect==3 ? true : false);
-			//OPN STUFF end
-			while (!$rs->EOF) { //print_r($rs->fields);
-				$fld = new ADOFieldObject();
-				$fld->name = trim($rs->fields[0]);
-				//OPN STUFF start
-				$this->_ConvertFieldType($fld, $rs->fields[7], $rs->fields[3], $rs->fields[4], $rs->fields[5], $rs->fields[6], $dialect3);
-				if (isset($rs->fields[1]) && $rs->fields[1]) {
-					$fld->not_null = true;
-				}				
-				if (isset($rs->fields[2])) {
-					
-					$fld->has_default = true;
-					$d = substr($rs->fields[2],strlen('default '));
-					switch ($fld->type)
-					{
-					case 'smallint':
-					case 'integer': $fld->default_value = (int) $d; break;
-					case 'char': 
-					case 'blob':
-					case 'text':
-					case 'varchar': $fld->default_value = (string) substr($d,1,strlen($d)-2); break;
-					case 'double':
-					case 'float': $fld->default_value = (float) $d; break;
-					default: $fld->default_value = $d; break;
-					}
-			//	case 35:$tt = 'TIMESTAMP'; break;
-				}
-				if ((isset($rs->fields[5])) && ($fld->type == 'blob')) {
-					$fld->sub_type = $rs->fields[5];
-				} else {
-					$fld->sub_type = null;
-				}
-				//OPN STUFF end
-				if ($ADODB_FETCH_MODE == ADODB_FETCH_NUM) $retarr[] = $fld;	
-				else $retarr[strtoupper($fld->name)] = $fld;
-				
-				$rs->MoveNext();
-			}
-			$rs->Close();
-			return $retarr;	
+		$save = $ADODB_FETCH_MODE;
+		$ADODB_FETCH_MODE = ADODB_FETCH_NUM;
+	
+		$rs = $this->Execute(sprintf($this->metaColumnsSQL,strtoupper($table)));
+	
+		$ADODB_FETCH_MODE = $save;
+		$false = false;
+		if ($rs === false) {
+			return $false;
 		}
-		return false;
+		
+		$retarr = array();
+		//OPN STUFF start
+		$dialect3 = ($this->dialect==3 ? true : false);
+		//OPN STUFF end
+		while (!$rs->EOF) { //print_r($rs->fields);
+			$fld = new ADOFieldObject();
+			$fld->name = trim($rs->fields[0]);
+			//OPN STUFF start
+			$this->_ConvertFieldType($fld, $rs->fields[7], $rs->fields[3], $rs->fields[4], $rs->fields[5], $rs->fields[6], $dialect3);
+			if (isset($rs->fields[1]) && $rs->fields[1]) {
+				$fld->not_null = true;
+			}				
+			if (isset($rs->fields[2])) {
+				
+				$fld->has_default = true;
+				$d = substr($rs->fields[2],strlen('default '));
+				switch ($fld->type)
+				{
+				case 'smallint':
+				case 'integer': $fld->default_value = (int) $d; break;
+				case 'char': 
+				case 'blob':
+				case 'text':
+				case 'varchar': $fld->default_value = (string) substr($d,1,strlen($d)-2); break;
+				case 'double':
+				case 'float': $fld->default_value = (float) $d; break;
+				default: $fld->default_value = $d; break;
+				}
+		//	case 35:$tt = 'TIMESTAMP'; break;
+			}
+			if ((isset($rs->fields[5])) && ($fld->type == 'blob')) {
+				$fld->sub_type = $rs->fields[5];
+			} else {
+				$fld->sub_type = null;
+			}
+			//OPN STUFF end
+			if ($ADODB_FETCH_MODE == ADODB_FETCH_NUM) $retarr[] = $fld;	
+			else $retarr[strtoupper($fld->name)] = $fld;
+			
+			$rs->MoveNext();
+		}
+		$rs->Close();
+		if ( empty($retarr)) return $false;
+		else return $retarr;	
 	}
 	
 	function BlobEncode( $blob ) 

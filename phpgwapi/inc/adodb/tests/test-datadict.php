@@ -1,7 +1,7 @@
 <?php
 /*
 
-  V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -13,7 +13,7 @@
 error_reporting(E_ALL);
 include_once('../adodb.inc.php');
 
-foreach(array('sybase','mysqlt','access','oci8','postgres','odbc_mssql','odbc','sybase','firebird','informix','db2') as $dbType) {
+foreach(array('sapdb','sybase','mysqlt','access','oci8','postgres','odbc_mssql','odbc','db2','firebird','informix') as $dbType) {
 	echo "<h3>$dbType</h3><p>";
 	$db = NewADOConnection($dbType);
 	$dict = NewDataDictionary($db);
@@ -60,36 +60,50 @@ TS            T      DEFTIMESTAMP";
 	$dict->SetSchema('KUTU');
 	
 	$sqli = ($dict->CreateTableSQL('testtable',$flds, $opts));
-	$sqla =& array_merge($sqla,$sqli);
+	$sqla = array_merge($sqla,$sqli);
 	
 	$sqli = $dict->CreateIndexSQL('idx','testtable','firstname,lastname',array('BITMAP','FULLTEXT','CLUSTERED','HASH'));
-	$sqla =& array_merge($sqla,$sqli);
+	$sqla = array_merge($sqla,$sqli);
 	$sqli = $dict->CreateIndexSQL('idx2','testtable','price,lastname');//,array('BITMAP','FULLTEXT','CLUSTERED'));
-	$sqla =& array_merge($sqla,$sqli);
+	$sqla = array_merge($sqla,$sqli);
 	
 	$addflds = array(array('height', 'F'),array('weight','F'));
 	$sqli = $dict->AddColumnSQL('testtable',$addflds);
-	$sqla =& array_merge($sqla,$sqli);
+	$sqla = array_merge($sqla,$sqli);
 	$addflds = array(array('height', 'F','NOTNULL'),array('weight','F','NOTNULL'));
 	$sqli = $dict->AlterColumnSQL('testtable',$addflds);
-	$sqla =& array_merge($sqla,$sqli);
+	$sqla = array_merge($sqla,$sqli);
 	
 	
 	printsqla($dbType,$sqla);
 	
 	if (file_exists('d:\inetpub\wwwroot\php\phplens\adodb\adodb.inc.php'))
-	if ($dbType == 'mysql') {
+	if ($dbType == 'mysqlt') {
 		$db->Connect('localhost', "root", "", "test");
 		$dict->SetSchema('');
 		$sqla2 = $dict->ChangeTableSQL('adoxyz',$flds);
 		if ($sqla2) printsqla($dbType,$sqla2);
 	}
-		if ($dbType == 'postgres') {
-		$db->Connect('localhost', "tester", "test", "test");
+	if ($dbType == 'postgres') {
+		if (@$db->Connect('localhost', "tester", "test", "test"));
 		$dict->SetSchema('');
 		$sqla2 = $dict->ChangeTableSQL('adoxyz',$flds);
 		if ($sqla2) printsqla($dbType,$sqla2);
 	}
+	
+	if ($dbType == 'odbc_mssql') {
+		$dsn = $dsn = "PROVIDER=MSDASQL;Driver={SQL Server};Server=localhost;Database=northwind;";
+		if (@$db->Connect($dsn, "sa", "natsoft", "test"));
+		$dict->SetSchema('');
+		$sqla2 = $dict->ChangeTableSQL('adoxyz',$flds);
+		if ($sqla2) printsqla($dbType,$sqla2);
+	}
+	
+	
+	
+	adodb_pr($dict->databaseType);
+	printsqla($dbType, $dict->DropColumnSQL('table',array('my col','`col2_with_Quotes`','A_col3','col3(10)')));
+	printsqla($dbType, $dict->ChangeTableSQL('adoxyz','LASTNAME varchar(32)'));
 	
 }
 
@@ -223,6 +237,7 @@ ALTER TABLE KUTU.testtable  ALTER COLUMN weight           REAL NOT NULL;
 
 --------------------------------------------------------------------------------
 */
+
 
 echo "<h1>Test XML Schema</h1>";
 $ff = file('xmlschema.xml');

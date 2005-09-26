@@ -82,7 +82,6 @@ class Auth_Container_ADOdb extends Auth_Container
         } else {
         	// Extract db_type from dsn string.
             $this->options['dsn'] = $dsn;
-            $this->_parseDsn( $dsn );
         }
     }
 
@@ -100,20 +99,10 @@ class Auth_Container_ADOdb extends Auth_Container
     {
         if (is_string($dsn) || is_array($dsn)) {
         	if(!$this->db) {
-	        	$this->db = &ADONewConnection($this->options['db_type']);
-	    		
+	        	$this->db = &ADONewConnection($dsn);
 	    		if( $err = ADODB_Pear_error() ) {
 	   	    		return PEAR::raiseError($err);
 	    		}
-        	}
-        	
-        	$dbconnected = $this->db->Connect( 
-        		$this->options['db_host'],
-        		$this->options['db_user'],
-        		$this->options['db_pass'],
-        		$this->options['db_name'] );
-        	if( !$dbconnected ) {
-        		PEAR::raiseError('Unable to connect to database' );
         	}
         	
         } else {
@@ -410,23 +399,11 @@ class Auth_Container_ADOdb extends Auth_Container
     }
 
     // }}}
-
-	function _parseDsn( $dsn ) 
-	{
-		if( is_string( $dsn )) {
-			preg_match( '/^(\w*):\/\/(\w*)(:(\w*))?@(\w*)\/(\w*)$/', $dsn, $match );
-			
-			$this->options['db_type'] = $match[1];
-			$this->options['db_user'] = $match[2];
-			$this->options['db_pass'] = $match[3];
-			$this->options['db_host'] = $match[5];
-			$this->options['db_name'] = $match[6];
-		}	
-	}
 }
 
 function showDbg( $string ) {
-	print "<P>$string</P>";
+	print "
+-- $string</P>";
 }
 function dump( $var, $str, $vardump = false ) {
 	print "<H4>$str</H4><pre>";

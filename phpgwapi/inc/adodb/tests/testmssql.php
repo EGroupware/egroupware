@@ -1,7 +1,7 @@
 <?php
 
 /** 
- * @version V4.50 6 July 2004 (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+ * @version V4.50 6 July 2004 (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
  * Released under both BSD license and Lesser GPL library license. 
  * Whenever there is any discrepancy between the two licenses, 
  * the BSD license will take precedence. 
@@ -25,7 +25,7 @@ include('../tohtml.inc.php');
 
 
 $conn = &ADONewConnection("mssql");  // create a connection
-$conn->Connect('localhost','sa','natsoft','northwind') or die('Fail');
+$conn->Connect('127.0.0.1','adodb','natsoft','northwind') or die('Fail');
 
 $conn->debug =1;
 $query = 'select * from products';

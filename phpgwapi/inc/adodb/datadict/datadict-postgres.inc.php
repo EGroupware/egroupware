@@ -1,7 +1,7 @@
 <?php
 
 /**
-  V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -101,7 +101,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 		case 'D': return 'DATE';
 		case 'T': return 'TIMESTAMP';
 		
-		case 'L': return 'SMALLINT';
+		case 'L': return 'BOOLEAN';
 		case 'I': return 'INTEGER';
 		case 'I1': return 'SMALLINT';
 		case 'I2': return 'INT2';
@@ -134,11 +134,10 @@ class ADODB2_postgres extends ADODB_DataDict {
 			if (($not_null = preg_match('/NOT NULL/i',$v))) {
 				$v = preg_replace('/NOT NULL/i','',$v);
 			}
-			if (preg_match('/^([^ ]+) .*DEFAULT ([^ ]+)/',$v,$matches)) {
+			if (preg_match('/^([^ ]+) .*(DEFAULT [^ ]+)/',$v,$matches)) {
 				list(,$colname,$default) = $matches;
-				$sql[] = $alter . str_replace('DEFAULT '.$default,'',$v);
-				$sql[] = 'UPDATE '.$tabname.' SET '.$colname.'='.$default;
-				$sql[] = 'ALTER TABLE '.$tabname.' ALTER COLUMN '.$colname.' SET DEFAULT ' . $default;
+				$sql[] = $alter . str_replace($default,'',$v);
+				$sql[] = 'ALTER TABLE '.$tabname.' ALTER COLUMN '.$colname.' SET ' . $default;
 			} else {				
 				$sql[] = $alter . $v;
 			}
@@ -183,11 +182,11 @@ class ADODB2_postgres extends ADODB_DataDict {
 	 */
 	function DropColumnSQL($tabname, $flds, $tableflds='',$tableoptions='')
 	{
-		$has_drop_column = 7.3 <= (float) $this->serverInfo['version'];
+		$has_drop_column = 7.3 <= (float) @$this->serverInfo['version'];
 		if (!$has_drop_column && !$tableflds) {
 			if ($this->debug) ADOConnection::outp("DropColumnSQL needs complete table-definiton for PostgreSQL < 7.3");
-			return array();
-		}
+		return array();
+	}
 		if ($has_drop_column) {
 			return ADODB_DataDict::DropColumnSQL($tabname, $flds);
 		}
@@ -215,7 +214,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 				// we need to explicit convert varchar to a number to be able to do an AlterColumn of a char column to a nummeric one
 				if (preg_match('/'.$fld->name.' (I|I2|I4|I8|N|F)/i',$tableflds,$matches) && 
 					in_array($fld->type,array('varchar','char','text','bytea'))) {
-					$copyflds[] = "to_number($fld->name,'S9999999999999D99')";
+					$copyflds[] = "to_number($fld->name,'S99D99')";
 				} else {
 					$copyflds[] = $fld->name;
 				}
@@ -227,7 +226,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 				}
 			}
 		}
-		$copyflds = implode(',',$copyflds);
+		$copyflds = implode(', ',$copyflds);
 		
 		$tempname = $tabname.'_tmp';
 		$aSql[] = 'BEGIN';		// we use a transaction, to make sure not to loose the content of the table
@@ -261,7 +260,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 		
 		return $sql;
 	}
-		
+
 	// return string must begin with space
 	function _CreateSuffix($fname, &$ftype, $fnotnull,$fdefault,$fautoinc,$fconstraint)
 	{

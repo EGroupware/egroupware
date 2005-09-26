@@ -1,6 +1,6 @@
 <?php
 /* 
-V4.52 10 Aug 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+V4.65 22 July 2005  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence. 
@@ -172,7 +172,7 @@ class ADODB_ado extends ADOConnection {
 	function &MetaColumns($table)
 	{
 		$table = strtoupper($table);
-		$arr= array();
+		$arr = array();
 		$dbc = $this->_connectionID;
 		
 		$adors=@$dbc->OpenSchema(4);//tables
@@ -196,8 +196,8 @@ class ADODB_ado extends ADOConnection {
 			}
 			$adors->Close();
 		}
-		
-		return $arr;
+		$false = false;
+		return empty($arr) ? $false : $arr;
 	}
 	
 
@@ -208,6 +208,7 @@ class ADODB_ado extends ADOConnection {
 	{
 		
 		$dbc = $this->_connectionID;
+		$false = false;
 		
 	//	return rs	
 		if ($inputarr) {
@@ -230,21 +231,19 @@ class ADODB_ado extends ADOConnection {
 			$p = false;
 			$rs = $oCmd->Execute();
 			$e = $dbc->Errors;
-			if ($dbc->Errors->Count > 0) return false;
+			if ($dbc->Errors->Count > 0) return $false;
 			return $rs;
 		}
 		
 		$rs = @$dbc->Execute($sql,$this->_affectedRows, $this->_execute_option);
-		/*
-			$rs =  new COM('ADODB.Recordset');
-			if ($rs) {
-				$rs->Open ($sql, $dbc, $this->_cursor_type,$this->_lock_type, $this->_execute_option);							
-			}
-		*/
-		if ($dbc->Errors->Count > 0) return false;
-		if (! $rs) return false;
+
+		if ($dbc->Errors->Count > 0) return $false;
+		if (! $rs) return $false;
 		
-		if ($rs->State == 0) return true; // 0 = adStateClosed means no records returned
+		if ($rs->State == 0) {
+			$true = true;
+			return $true; // 0 = adStateClosed means no records returned
+		}
 		return $rs;
 	}
 
@@ -335,7 +334,7 @@ class ADORecordSet_ado extends ADORecordSet {
 
 
 	// returns the field object
-	function FetchField($fieldOffset = -1) {
+	function &FetchField($fieldOffset = -1) {
 		$off=$fieldOffset+1; // offsets begin at 1
 		
 		$o= new ADOFieldObject();
@@ -345,8 +344,7 @@ class ADORecordSet_ado extends ADORecordSet {
 		$t = $f->Type;
 		$o->type = $this->MetaType($t);
 		$o->max_length = $f->DefinedSize;
-		$o->ado_type = $t;
-		
+		$o->ado_type = $t;	
 
 		//print "off=$off name=$o->name type=$o->type len=$o->max_length<br>";
 		return $o;

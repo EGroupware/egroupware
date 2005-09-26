@@ -1,7 +1,7 @@
 <?php
 
 /**
-  V4.50 6 July 2004  (c) 2000-2004 John Lim (jlim@natsoft.com.my). All rights reserved.
+  V4.50 6 July 2004  (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
   Released under both BSD license and Lesser GPL library license. 
   Whenever there is any discrepancy between the two licenses, 
   the BSD license will take precedence.
@@ -96,7 +96,7 @@ class ADODB2_sapdb extends ADODB_DataDict {
 		$tabname = $this->TableName ($tabname);
 		$sql = array();
 		list($lines,$pkey) = $this->_GenFields($flds);
-		return array( 'ALTER TABLE ' . $tabname . ' ADD (' . implode(',',$lines) . ')' );
+		return array( 'ALTER TABLE ' . $tabname . ' ADD (' . implode(', ',$lines) . ')' );
 	}
 	
 	function AlterColumnSQL($tabname, $flds)
@@ -104,7 +104,7 @@ class ADODB2_sapdb extends ADODB_DataDict {
 		$tabname = $this->TableName ($tabname);
 		$sql = array();
 		list($lines,$pkey) = $this->_GenFields($flds);
-		return array( 'ALTER TABLE ' . $tabname . ' MODIFY (' . implode(',',$lines) . ')' );
+		return array( 'ALTER TABLE ' . $tabname . ' MODIFY (' . implode(', ',$lines) . ')' );
 	}
 
 	function DropColumnSQL($tabname, $flds)
@@ -114,7 +114,7 @@ class ADODB2_sapdb extends ADODB_DataDict {
 		foreach($flds as $k => $v) {
 			$flds[$k] = $this->NameQuote($v);
 		}
-		return array( 'ALTER TABLE ' . $tabname . ' DROP (' . implode(',',$flds) . ')' );
+		return array( 'ALTER TABLE ' . $tabname . ' DROP (' . implode(', ',$flds) . ')' );
 	}	
 }
 
