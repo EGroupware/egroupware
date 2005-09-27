@@ -38,7 +38,7 @@
 
 			$this->so =& CreateObject('resources.so_acl');
 			$this->permissions = $this->so->get_permissions($GLOBALS['egw_info']['user']['account_id'],true);
-			$this->egw_cats =& createobject('phpgwapi.categories');
+			$this->egw_cats = createobject('phpgwapi.categories','','resources');
 			$this->accounts = $GLOBALS['egw']->accounts->get_list();
 			$this->debug = False;
 			

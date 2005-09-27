@@ -114,6 +114,10 @@ class resources_hooks
 			'type' => 'r',// one char type-identifiy for this resources
 			'icon' => 'calicon',//icon 
 			'participants_header' => lang('resources'), // header of participants from this type
+			'cal_sidebox' => array(
+				'menu_title' => lang('Select resources'),
+				'file' => 'resources.ui_resources.get_calendar_sidebox'
+			)
 		);
 	}
 }

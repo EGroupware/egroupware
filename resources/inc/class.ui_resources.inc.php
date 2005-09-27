@@ -33,6 +33,7 @@ class ui_resources
 // 		print_r($GLOBALS['egw_info']); die();
 		$this->tmpl	=& CreateObject('etemplate.etemplate','resources.show');
 		$this->bo	=& CreateObject('resources.bo_resources');
+		$this->html	=& $GLOBALS['egw']->html;
 // 		$this->calui	= CreateObject('resources.ui_calviews');
 		
 		if(!@is_object($GLOBALS['egw']->js))
@@ -458,6 +459,48 @@ class ui_resources
 		$no_button = array();
 		$this->tmpl->read('resources.resource_select');
 		$this->tmpl->exec('resources.ui_resources.select',$content,$sel_options,$no_button,$preserv,2);
+	}
+	
+	/**
+	 * get_calendar_sidebox
+	 * get data für calendar sidebox
+	 *
+	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
+	 * @return array with: label=>link or array with text
+	 */
+	function get_calendar_sidebox($view_menuaction, $date='')
+	{
+		$selectbox_content = array(lang('Select resources'));
+		$selectbox_content[0] = lang('Select resources');
+		$cats = $this->bo->acl->get_cats(EGW_ACL_READ);
+		
+		// this gets the resource-ids of the cats and implodes them to the array-key of the selectbox,
+		// so it is possible to select all resources of a category
+		foreach($cats as $cat_id => $cat_name) 
+		{
+			$resources = $this->bo->so->search(array('cat_id' => $cat_id),'res_id');
+			foreach($resources as $res) $key .= ($key == "")?'r'.$res['res_id']:',r'.$res['res_id'];
+			$selectbox_content[$key] = $cat_name;
+		}
+		$selectbox = $this->html->select(
+			'owner',
+			'uical_select_resource',
+			$selectbox_content,
+			$no_lang=true,
+			$options='style="width: 165px;" name="res_id" onchange="load_cal(\''.
+				$GLOBALS['egw']->link('/index.php',array(
+					'menuaction' => $view_menuaction,
+					'date' => $date,
+				)).'\',\'uical_select_resource\');" id="uical_select_resource"',
+			$multiple=0
+		);
+		return array(
+			array(
+				'text' => $selectbox,
+				'no_lang' => True,
+				'link' => False
+			)
+		);
 	}
 }
 
