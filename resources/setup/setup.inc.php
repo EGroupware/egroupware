@@ -14,7 +14,7 @@
 	/* $Id$*/
 	
 	$setup_info['resources']['name']	= 'resources';
-	$setup_info['resources']['title']	= 'resources';
+	$setup_info['resources']['title']	= 'Resources';
 	$setup_info['resources']['version']	= '0.0.1.020';
 	$setup_info['resources']['app_order']	= 1;
 	$setup_info['resources']['tables']	= array('egw_resources');
@@ -22,8 +22,8 @@
 
 	$setup_info['resources']['author']	= 'Cornelius Weiss'; 
 	$setup_info['resources']['license']	= 'GPL'; 
-	$setup_info['resources']['description'] = 'Resource management system';
-	$setup_info['resources']['note']	= 'This includes resource booking';
+	$setup_info['resources']['description'] = 'A resource management and booking system, which integrates into eGroupWare\'s calendar.';
+	$setup_info['resources']['note']	= '';
 	$setup_info['resources']['maintainer']	= array( 
 		'name' => 'Cornelius Weiss', 
 		'email' => 'egw@von-und-zu-weiss.de' 
