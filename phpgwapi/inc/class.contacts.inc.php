@@ -232,95 +232,39 @@
 			return ($a[1]<$b[1])?1:-1;
 		}
 
-		/*
-		comesafter ($s1, $s2)
-		Returns 1 if $s1 comes after $s2 alphabetically, 0 if not.
-		*/
-		function comesafter ($s1, $s2)
-		{
-			/*
-			We don't want to overstep the bounds of one of the strings and segfault,
-			so let's see which one is shorter.
-			*/
-			$order = 1;
-
-			if((strlen($s1) == 0))
-			{
-				return 0;
-			}
-
-			if((strlen($s2) == 0))
-			{
-				return 1;
-			}
-
-			if(strlen ($s1) > strlen ($s2))
-			{
-				$temp = $s1;
-				$s1 = $s2;
-				$s2 = $temp;
-				$order = 0;
-			}
-
-			for ($index = 0; $index < strlen ($s1); $index++)
-			{
-				/* $s1 comes after $s2 */
-				if (strtolower($s1[$index]) > strtolower($s2[$index])) { return ($order); }
-
-				/* $s1 comes before $s2 */
-				if (strtolower($s1[$index]) < strtolower($s2[$index])) { return (1 - $order); }
-			}
-				/* Special case in which $s1 is a substring of $s2 */
-
-			return ($order);
-		}
-
-		/*
-		* asortbyindex ($sortarray, $index)
+		/**
+		* To be used in usort()
 		*
-		* Sort a multi-dimensional array by a second-degree index. For instance, the 0th index
-		* of the Ith member of both the group and user arrays is a string identifier. In the
-		* case of a user array this is the username; with the group array it is the group name.
-		* asortby
+		* compares two 2-dimensional arrays a and b.
+		* The first dimension holds the key, the array is sorted by.
+		* The second dimension holds the data, that's actually string-compared.
+		*
+		* @author Carsten Wolff <wolffc@egroupware.org>
+		* @param array $fields The fields, the array is to be sorted by. Use of multiple keys is for subsorting.
+		* @param string $order ASC | DESC ascending or descending order
+		* @param array $a one item
+		* @param array $b the other item
+		* @return integer -1 | 0 | 1 equals: a is smaller | the same | larger than b.
 		*/
-		function asortbyindex ($sortarray, $index)
+		function _cmp($fields, $order, $a, $b)
 		{
-			$lastindex = count($sortarray) - 2;
-			for ($subindex = 0; $subindex < $lastindex; $subindex++)
+			foreach ($fields as $field)
 			{
-				$lastiteration = $lastindex - $subindex;
-				for ($iteration = 0; $iteration < $lastiteration; $iteration++)
+				$result = strcasecmp($a[$field][0], $b[$field][0]);
+				if ($result == 0)
 				{
-					$nextchar = 0;
-					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration + 1][$index]))
-					{
-						$temp = $sortarray[$iteration];
-						$sortarray[$iteration] = $sortarray[$iteration + 1];
-						$sortarray[$iteration + 1] = $temp;
-					}
+					continue;
+				}
+				if ($order == "DESC")
+				{
+					return -$result;
+				}
+				else
+				{
+					return $result;
 				}
 			}
-			return ($sortarray);
-		}
-
-		function arsortbyindex ($sortarray, $index)
-		{
-			$lastindex = count($sortarray) - 1;
-			for ($subindex = $lastindex; $subindex > 0; $subindex--)
-			{
-				$lastiteration = $lastindex - $subindex;
-				for ($iteration = $lastiteration; $iteration > 0; $iteration--)
-				{
-					$nextchar = 0;
-					if ($this->comesafter($sortarray[$iteration][$index], $sortarray[$iteration - 1][$index]))
-					{
-						$temp = $sortarray[$iteration];
-						$sortarray[$iteration] = $sortarray[$iteration - 1];
-						$sortarray[$iteration - 1] = $temp;
-					}
-				}
-			}
-			return ($sortarray);
+			return 0;
 		}
 
 		function formatted_address($id, $business = True, $afont = '', $asize = '2')

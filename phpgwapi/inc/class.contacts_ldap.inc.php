@@ -458,16 +458,23 @@
 			/* echo '<br>total="'.$this->total_records.'"'; */
 			if($DEBUG) { echo '<br>Query returned "'.$this->total_records.'" records.'; }
 
-			/* Use shared sorting routines, based on sort and order */
+			/* Use usort to sort the complete result, since ldap_search can not do that */
 			@set_time_limit(0); /* Try not to die, this can take some time on slow machines... */
-			if($sort == 'ASC')
-			{
-				$ldap_fields = $this->asortbyindex($ldap_fields, $this->stock_contact_fields[$order]);
+			if (empty($order)) {
+				$order_array = 'array("'
+				             . $this->stock_contact_fields['n_family'] . '", "'
+				             . $this->stock_contact_fields['n_given'] . '", "'
+				             . $this->stock_contact_fields['email'] . '")';
+			} else {
+				$order_array = "array('"
+				             . $this->stock_contact_fields[$order] . "','"
+				             . $this->stock_contact_fields['n_family'] . "', '"
+				             . $this->stock_contact_fields['n_given'] . "', '"
+				             . $this->stock_contact_fields['email'] . "')";
 			}
-			else
-			{
-				$ldap_fields = $this->arsortbyindex($ldap_fields, $this->stock_contact_fields[$order]);
-			}
+			# a little bit of functional programming
+			$function = 'return contacts::_cmp(' . $order_array . ",'" . $sort . "'," . '$a, $b);';
+			usort($ldap_fields, create_function('$a, $b', $function));
 
 			/*
 			This logic allows you to limit rows, or not.
