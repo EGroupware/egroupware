@@ -24,10 +24,10 @@ all categories	calendar	es-es	Todas las categorías
 all day	calendar	es-es	Todo el día
 are you sure you want to delete this country ?	calendar	es-es	¿Seguro que quiere borrar este país?
 are you sure you want to delete this holiday ?	calendar	es-es	¿Seguro que desea borrar esta fiesta?
-are you sure\nyou want to\ndelete these alarms?	calendar	es-es	¿Está seguronde querernborrar estas alarmas?
-are you sure\nyou want to\ndelete this entry ?	calendar	es-es	¿Está seguronde querernborrar esta entrada?
-are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	es-es	¿Está seguronde querernborrar esta entrada?nnEsto borraránla entrada para todos los usuarios.
-are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	es-es	¿Está seguronde querernborrar esta ocurrencia?nnEsto borraránla entrada para todos los usuarios.
+are you sure\nyou want to\ndelete these alarms?	calendar	es-es	¿Está seguro\nde querer\nborrar estas alarmas?
+are you sure\nyou want to\ndelete this entry ?	calendar	es-es	¿Está seguro\nde querer\nborrar esta entrada?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	es-es	¿Está seguro\nde querer\nborrar esta entrada?\n\nEsto borrará\nla entrada para todos los usuarios.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	es-es	¿Está seguronde querer\nborrar esta ocurrencia?\n\nEsto borrará\nla entrada para todos los usuarios.
 before the event	calendar	es-es	antes del evento
 brief description	calendar	es-es	Descripción breve
 business	calendar	es-es	Negocios
