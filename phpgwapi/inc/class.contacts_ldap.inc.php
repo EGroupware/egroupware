@@ -433,12 +433,12 @@
 				{
 					// don't search about any fields any more
 					$search_filter = array(
-						'fn'		=> 'cn',
-						'n_given'	=> 'givenname',
-						'n_family'	=> 'sn',
-						'email'		=> 'mail',
-						'org_name'	=> 'o',
-						'org_unit'	=> 'ou'
+						'fn'       => 'cn',
+						'n_given'  => 'givenname',
+						'n_family' => 'sn',
+						'email'    => 'mail',
+						'org_name' => 'o',
+						'org_unit' => 'ou'
 					);
 					$myfilter = $this->makefilter($filterfields,$search_filter,$GLOBALS['egw']->common->ldap_addslashes($query),$DEBUG);
 				}
@@ -460,17 +460,20 @@
 
 			/* Use usort to sort the complete result, since ldap_search can not do that */
 			@set_time_limit(0); /* Try not to die, this can take some time on slow machines... */
-			if (empty($order)) {
+			if(empty($order))
+			{
 				$order_array = 'array("'
-				             . $this->stock_contact_fields['n_family'] . '", "'
-				             . $this->stock_contact_fields['n_given'] . '", "'
-				             . $this->stock_contact_fields['email'] . '")';
-			} else {
+					. $this->stock_contact_fields['n_family'] . '", "'
+					. $this->stock_contact_fields['n_given'] . '", "'
+					. $this->stock_contact_fields['email'] . '")';
+			}
+			else
+			{
 				$order_array = "array('"
-				             . $this->stock_contact_fields[$order] . "','"
-				             . $this->stock_contact_fields['n_family'] . "', '"
-				             . $this->stock_contact_fields['n_given'] . "', '"
-				             . $this->stock_contact_fields['email'] . "')";
+					. $this->stock_contact_fields[$order] . "','"
+					. $this->stock_contact_fields['n_family'] . "', '"
+					. $this->stock_contact_fields['n_given'] . "', '"
+					. $this->stock_contact_fields['email'] . "')";
 			}
 			# a little bit of functional programming
 			$function = 'return contacts::_cmp(' . $order_array . ",'" . $sort . "'," . '$a, $b);';
