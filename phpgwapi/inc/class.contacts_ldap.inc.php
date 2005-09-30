@@ -475,7 +475,9 @@
 					. $this->stock_contact_fields['n_given'] . "', '"
 					. $this->stock_contact_fields['email'] . "')";
 			}
-			# a little bit of functional programming
+			# remove the "count" field from the array, because usort screws up associative arrays
+			unset($ldap_fields['count']);
+			# sort the array
 			$function = 'return contacts::_cmp(' . $order_array . ",'" . $sort . "'," . '$a, $b);';
 			usort($ldap_fields, create_function('$a, $b', $function));
 
