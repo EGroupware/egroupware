@@ -478,9 +478,14 @@ class ui_resources
 		// so it is possible to select all resources of a category
 		foreach($cats as $cat_id => $cat_name) 
 		{
-			$resources = $this->bo->so->search(array('cat_id' => $cat_id),'res_id');
-			foreach($resources as $res) $key .= ($key == "")?'r'.$res['res_id']:',r'.$res['res_id'];
-			$selectbox_content[$key] = $cat_name;
+			if (($resources = $this->bo->so->search(array('cat_id' => $cat_id),'res_id')))
+			{
+				foreach($resources as $res)
+				{
+					$key .= ($key == "")?'r'.$res['res_id']:',r'.$res['res_id'];
+				}
+				$selectbox_content[$key] = $cat_name;
+			}
 		}
 		$selectbox = $this->html->select(
 			'owner',
