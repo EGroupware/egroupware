@@ -85,7 +85,7 @@ class ADODB_mysqli extends ADOConnection {
 			mysqli_options($this->_connectionID,$arr[0],$arr[1]);
 		}
 
-		if (!empty($this->port)) $argHostname .= ":".$this->port;
+		if (strstr($argHostname,':')) list($argHostname,$this->port) = explode(':',$argHostname);
 		$ok = mysqli_real_connect($this->_connectionID,
  				    $argHostname,
  				    $argUsername,
@@ -94,7 +94,7 @@ class ADODB_mysqli extends ADOConnection {
 					$this->port,
 					$this->socket,
 					$this->clientFlags);
- 	     
+
 		if ($ok) {
 	 		if ($argDatabasename)  return $this->SelectDB($argDatabasename);
  			return true;
