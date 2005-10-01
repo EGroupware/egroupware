@@ -1,7 +1,5 @@
 %1 does not exist !!!	setup	fr	%1 n'existe pas !!!
-%1 is %2%3	setup	fr	%1 est %2%3
 %1 is %2%3 !!!	setup	fr	%1 est %2%3 !!!
-(account deletion in sql only)	setup	fr	(Effacement de compte dans SQL seulement)
 (searching accounts and changing passwords)	setup	fr	(recherche des comptes et modification des mots de passe)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fr	*** Ne mettez pas à jour votre base de donnée via l'installateur, si la mise à jour venez a être pertubé par l'option « max_execution_time », vous laisserez votre base de donnée dans un état irrécupérable (vos données seront perdues)
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fr	*** Vous devez faire ce changement manuellement dans votre configuration PHP (php.ini, généralement stocké dans /etc sous Linux) pour utiliser eGroupWare convenablement.
@@ -14,7 +12,6 @@ actions	setup	fr	Actions
 add a domain	setup	fr	Ajouter un domaine
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-crées à ce groupe ('Default' sera tenté si ceci est vide.)
 additional settings	setup	fr	Réglages additionnels
-admin	setup	fr	Administration
 admin first name	setup	fr	Prénom de l'administrateur
 admin last name	setup	fr	Nom de l'adminstrateur
 admin password	setup	fr	Mot de passe du compte administrateur
@@ -53,7 +50,6 @@ auto-created user accounts expire	setup	fr	Les comptes d'utilisateur auto-crées 
 available version	setup	fr	Version disponible
 back to the previous screen	setup	fr	Retour à l'écran précédent
 back to user login	setup	fr	Revenir à la maison
-but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>	setup	fr	Mais nous vous <u>recommendons fortement de sauvegarder</u> vos tables pour le cas où le script endommagerait vos données.<br /><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong>
 because an application it depends upon was upgraded	setup	fr	parce-qu'une application de laquelle il dépend a été mise à jour
 because it depends upon	setup	fr	Parce-que ça dépend de
 because it is not a user application, or access is controlled via acl	setup	fr	Parce-que ce n'est pas une application utilisateur, ou l'accès est contrôlé par ACL
@@ -63,7 +59,7 @@ because of a failed upgrade or install	setup	fr	A cause d'une mise à jour ou d'u
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	fr	A cause d'une mise à jour défectueuse, ou la base de données est plus récente que celle de la version installée de cette app
 because the enable flag for this app is set to 0, or is undefined	setup	fr	Parce-que le drapeau activer de cette app est sur 0, ou est indéfini
 bottom	setup	fr	Bas
-calendar	setup	fr	Calendrier
+but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fr	Mais nous vous <u>recommendons fortement de sauvegarder</u> vos tables pour le cas où le script endommagerait vos données.<br /><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong>
 cancel	setup	fr	Abandon
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	fr	Ne peut pas créer le fichier header.inc.php à cause de restrictions sur les permissions sur le fichier.<br /> A la place vous pouvez %1 le fichier.
 change system-charset	setup	fr	Changement du jeu de caractère
@@ -73,11 +69,9 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	fr	Vérification de l'installation
 check ip address of all sessions	setup	fr	Vérifier l'adresse IP de toutes les sessions
 checking extension %1 is loaded or loadable	setup	fr	Vérification du support « %1 » dans PHP
-checking file-permissions of %1 for %2: %3	setup	fr	Vérification des permissions de fichiers de %1 pour %2 : %3
 checking for gd support...	setup	fr	Vérification du support GD ...
 checking php.ini	setup	fr	Vérification de la configuration de PHP (php.ini)
 checking the egroupware installation	setup	fr	Vérification du l'installation eGroupWare
-click <a href="index.php">here</a> to return to setup.	setup	fr	Cliquez <a href="index.php">ici</a> pour retourner au setup.
 click here	setup	fr	Cliquez ici
 click here to re-run the installation tests	setup	fr	Cliquez ici pour rédemarrer la procédure de vérification
 completed	setup	fr	Complété
@@ -149,11 +143,9 @@ enable mcrypt	setup	fr	Activer MCrypt
 enter some random text for app session encryption	setup	fr	Entrez du texte au hasard pour le cryptage des sessions applicatives
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	fr	Entrez du texte au hasard pour le <br />cryptage app_session (nécessite mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br />Exemples: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br />Exemples: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br />Exemples: /files, E:\FILES
-enter the full path for users and group files.<br />examples: /files, e:files	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br />Exemples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fr	Entrez le nom de la machine sur laquelle ce serveur s'exécute
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de eGroupWare.<br />Exemple: http://www.domain.com/egroupware &nbsp; ou &nbsp; /egroupware<br /><b>Pas de / (slash ou division) à la fin</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fr	Entrez l'emplacement de l'URL de eGroupWare.<br />Exemple: http://www.domain.com/egroupware   ou   /egroupware<br /><b>Pas de / (slash ou division) à la fin</b>
 enter the site password for peer servers	setup	fr	Entrez le mot de passe du site pour les serveurs pairs
 enter the site username for peer servers	setup	fr	Entrez le nom d'utilisateur du site pour les serveurs pairs
 enter the title for your site	setup	fr	Entrez le titre pour votre site
@@ -164,7 +156,6 @@ enter your http proxy server port	setup	fr	Entrez le port de votre serveur proxy
 enter your http proxy server username	setup	fr	Entrez le nom d'utilisateur pour le proxy HTTP
 error in admin-creation !!!	setup	fr	Erreur lors de la création admin !!!
 error in group-creation !!!	setup	fr	Erreur lors de la création groupe !!!
-etemplate	setup	fr	ETemplate
 export egroupware accounts from sql to ldap	setup	fr	Exporter les comptes eGroupWare de SQL vers LDAP
 export has been completed!  you will need to set the user passwords manually.	setup	fr	L'export a été complété!  Vous allez devoir régler les mots de passe des utilisateurs manuellement.
 export sql users to ldap	setup	fr	Exporter les utilisateurs SQL vers LDAP
@@ -202,10 +193,8 @@ import accounts from ldap to the egroupware accounts table (for a new install us
 import has been completed!	setup	fr	L'import a été complété!
 import ldap users/groups	setup	fr	Importer les utilisateurs/groupes LDAP
 importing old settings into the new format....	setup	fr	J'importe les vieux réglages dans le nouveau format....
-in	setup	fr	dans
 include root (this should be the same as server root unless you know what you are doing)	setup	fr	Racine d'inclusion (ceci devrait être la même chose de racine du serveur à moins que vous ne sachiez ce que vous faîtes)
 include_path need to contain "." - the current directory	setup	fr	« include_path » a besoin de contenir "." - le répertoire courant
-infolog	setup	fr	InfoLog
 insanity	setup	fr	Grave erreur
 install	setup	fr	Installer
 install all	setup	fr	Installer tout
@@ -234,9 +223,7 @@ ldap modify	setup	fr	Modification LDAP
 ldap root password	setup	fr	Mot de passe root LDAP
 ldap rootdn	setup	fr	Rootdn LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fr	Filtre de recherche LDAP pour les comptes, par défaut: "(uid=%user)", %domain=domaineEGW
-limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	fr	Limiter l'accès à setup aux adresses ou plages d'adresses suivants (p.e. 10.1.1,127.0.0.1)
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	fr	Limiter l'acces au setup à ces adresses, réseaux ou machines (p.ex. 127.0.0.1,10.1.1,myhost.dnydns.org)
-line	setup	fr	Ligne
 login to mysql -	setup	fr	Connexion à mysql -
 logout	setup	fr	Se déconnecter
 makesure	setup	fr	Assurez-vous que votre base de données est créé et que les permissions sur les comptes sont positionnées
@@ -255,23 +242,16 @@ minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 5
 modifications have been completed!	setup	fr	Les modifications ont été complétées!
 modify	setup	fr	Modifier
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	fr	Modifier un compte LDAP existant pour stocker et utiliser avec eGroupWare (pour une nouvelle installation utilisant les comptes LDAP)
-module	setup	fr	module
 multi-language support setup	setup	fr	Setup pour le support multilingue
-mysqlinstr	setup	fr	Instructions pour créer la base de données dans MySQL:<br />Se connecter à mysql -<br /><i>[user@server user]# mysql -u root -p</i><br />Créer la base de données vide et attribuer les permissions utilisateurs -<br /><i>mysql> create database egroupware;</i><br /><i>mysql> grant all on egroupware.* to egroupware@localhost identified by 'password';</i>
 name of database	setup	fr	Nom de la base de données
 name of db user egroupware uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont eGroupWare se sert pour se connecter
 never	setup	fr	jamais
 new	setup	fr	Nouveau
-news_admin	setup	fr	News Admin
 no	setup	fr	Non
+no %1 support found. disabling	setup	fr	Pas de support pour %1 trouvé. Je le désactive
 no accounts existing	setup	fr	Aucun compte n'existe
 no algorithms available	setup	fr	pas d'algorithme disponible
-no microsoft sql server support found. disabling	setup	fr	Pas de support pour Microsoft SQL Server trouvé. Je le désactive
 no modes available	setup	fr	pas de modes disponibles
-no mysql support found. disabling	setup	fr	Pas de support pour MySQL trouvé. Je le désactive
-no oracle-db support found. disabling	setup	fr	Pas de support pour Oracle-DB trouvé. Je le désactive
-no postgres-db support found. disabling	setup	fr	Pas de support pour Postgres-DB trouvé. Je le désactive
-no postgresql support found. disabling	setup	fr	Pas de support pour PostgresSQL trouvé. Je le désactive
 no xml support found. disabling	setup	fr	Pas de support pour XML trouvé. Je le désactive
 not	setup	fr	n'a pas
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fr	Pas tous les algorithmes et modes fonctionnent avec eGroupWare. Si vous rencontrez des problèmes, essayez de le désactiver.
@@ -297,8 +277,6 @@ passwords did not match, please re-enter	setup	fr	Les mots de passe ne correspon
 path information	setup	fr	Information de chemin
 path to user and group files has to be outside of the webservers document-root!!!	setup	fr	Le chemin vers les fichiers utilisateur et groupe DOIT ETRE EN DEHORS du répertoire racine des serveurs web!!!
 persistent connections	setup	fr	Connexions persistantes
-pgsqlinstr	setup	fr	Instructions pour créer la base de données dans PostgreSQL:<br />Démarrer le postmaster<br /><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br />Créer la base de données vide-<br /><i>[user@server user]# createdb egroupware</i>
-phpldapadmin	setup	fr	PHPLdapAdmin
 please check for sql scripts within the application's directory	setup	fr	SVP vérifiez la présence de scripts SQL dans le répertoire setup de l'application
 please check read/write permissions on directories, or back up and use another option.	setup	fr	SVP vérifiez les permissions de lecture/écriture sur les répertoires, ou faîtes une sauvegarde et utilisez une autre option.
 please configure egroupware for your environment	setup	fr	SVP configurez eGroupWare pour votre environnement
@@ -308,7 +286,6 @@ please install	setup	fr	SVP installez
 please login	setup	fr	SVP connectez-vous
 please login to egroupware and run the admin application for additional site configuration	setup	fr	SVP connectez-vous à egroupware et exécutez l'application admin pour les possibilités supplémentaires de configuration du site
 please make the following change in your php.ini	setup	fr	SVP modifiez comme suit votre fichier php.ini
-please select your language	S'il-vous-plait	fr	fr
 please wait...	setup	fr	Patientez SVP...
 possible reasons	setup	fr	Raisons possibles
 possible solutions	setup	fr	Solutions possibles
@@ -317,7 +294,6 @@ potential problem	setup	fr	Problème potentiel
 preferences	setup	fr	Préférences
 problem resolution	setup	fr	Résolution du problème
 process	setup	fr	Procéder
-projects	setup	fr	Gestionnaire de projets
 re-check my database	setup	fr	Re-vérifier ma base de données
 re-check my installation	setup	fr	Re-vérifier mon installation
 re-enter password	setup	fr	Ré-entrer mon mot de passe
@@ -335,7 +311,6 @@ requires upgrade	setup	fr	Nécessite une mise à jour
 resolve	setup	fr	Résoudre
 return to setup	setup	fr	Revenir à la page de l'installateur
 run installation tests	setup	fr	Démarrage de la procédure de vérification...
-safe_mode is turned on, which is generaly a good thing as it makes your install more secure	setup	fr	«Safe Mode» est activé, ceci est une bonne chose pour la sécurité de votre système.
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	fr	l'option 'safe_mode' (mode sécurisé) est actif, ceci est en général une bonne chose et rend votre installation plus sécurisée.
 sample configuration not found. using built in defaults	setup	fr	Configuration exemple non trouvée. J'utilise les valeurs par défaut définies en interne
 save	setup	fr	Enregistrer
@@ -364,7 +339,7 @@ selectbox	setup	fr	Boîte de sélection
 server root	setup	fr	Racine serveur
 sessions type	setup	fr	Type de Sessions
 set	setup	fr	fixer
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fr	Mettez ceci sur "ancien" pour les versions &lt; 2.4, sinon la version exacte de mcrypt que vous utilisez.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fr	Mettez ceci sur "ancien" pour les versions < 2.4, sinon la version exacte de mcrypt que vous utilisez.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractère en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.
 settings	setup	fr	Réglages
 setup	setup	fr	Installation
@@ -405,16 +380,13 @@ this has to be outside the webservers document-root!!!	setup	fr	Ceci doit figure
 this might take a while, please wait ...	setup	fr	Cela peu prendre un certain temps, veuillez patienter ...
 this program will convert your database to a new system-charset.	setup	fr	Ce programme va convertir les informations de votre base de données vers le nouveau jeu de caractère.
 this program will help you upgrade or install different languages for egroupware	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans eGroupWare
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et les groupes des tables d'utilisateurs d'eGroupWare vers votre arborescence LDAP
 this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et groupes des tables de comptes de eGroupWare vers votre arbre LDAP
 this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	fr	Cette section va vous aider à importer les utilisateurs et groupes de votre arborescence LDAP vers les tables de comptes d'eGroupWare
 this section will help you setup your ldap accounts for use with egroupware	setup	fr	Cette section va vous aider à configurer vos comptes LDAP pour les utiliser dans eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br />Note: la valeur par défaut a été générée au hasard.
 this stage is completed<br />	setup	fr	Cette étape est complétée<br />
-this will create 1 admin account and 3 demo accounts<br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br /><b>!!!this will delete all existing accounts!!!</b><br />	setup	fr	Ceci va créer 1 compte admin et 3 comptes demo<br />Les utilisateurs/mots de passe sont: demo/guest, demo2/guest et demo3/guest.<br /><b>!!!CECI VA SUPPRIMER TOUS LES COMPTES EXISTANTS!!!</b><br />
 to a version it does not know about	setup	fr	vers une version qu'il ne connaît pas
 to setup 1 admin account and 3 demo accounts.	setup	fr	pour créer 1 compte administrateur et 3 comptes demo.
-to setup 1 admin account and 3 demo accounts.<br /><b>this will delete all existing accounts</b>	setup	fr	Pour créer 1 compte admin et 3 comptes demo.<br /><b>ceci va supprimer tous les comptes existants</b>
 top	setup	fr	top
 translations added	setup	fr	Traductions Ajoutées
 translations removed	setup	fr	Traductions Enlevées
@@ -455,17 +427,10 @@ write config	setup	fr	Ecrire la configuration
 yes	setup	fr	Oui
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de eGroupWare.<br />Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br /> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br />puis mettre à jour depuis cette version jusqu'à la version actuelle.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fr	Vous semblez utiliser une ancienne version de PHP<br />Il est recommandé de faire une mise à jour.<br />Les anciennes versions de PHP pourraient ne pas fonctionner correctement, ou pas du tout, avec eGroupWare.<br /><br />SVP faites une mise à jour à la dernière version %1
-you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version 4.1.0	setup	fr	Vous semblez utiliser une version ancienne de PHP <br />Il est recommandé que vous mettiez votre système à jour vers une version plus récente. <br />Les anciennes version de PHP pourraient ne pas faire fonctionner correctement eGroupWare, voire pas du tout. <br /><br />SVP, mettez votre système à jour vers au moins la version 4.1.0
 you appear to be running version %1 of egroupware	setup	fr	Vous semblez utiliser la version %1 d'eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	fr	Vous semblez utiliser une version de PHP plus ancienne que 4.1.0. eGroupWare nécessite maintenant 4.1.0 ou plus récent
-you appear to be using php3. disabling php4 sessions support	setup	fr	Vous semblez utiliser PHP3. Je désactive le support de sessions PHP4
-you appear to be using php4. enabling php4 sessions support	setup	fr	Vous semblez utiliser PHP4. J'active le support de sessions PHP4
-you appear to have microsoft sql server support enabled	setup	fr	Votre support Microsoft SQL Server semble activé
-you appear to have mysql support enabled	setup	fr	Votre support MySQL semble activé
-you appear to have oracle support enabled	setup	fr	Votre support Oracle semble activé
-you appear to have oracle v8 (oci) support enabled	setup	fr	Votre support Oracle V8 (OCI) semble activé
-you appear to have postgres-db support enabled	setup	fr	Vous semblez avoir le support de Postgres-DB activé
-you appear to have postgresql support enabled	setup	fr	Votre support PostgreSQL semble activé
+you appear to have %1 support.	setup	fr	Votre support %1 semble activé
+you appear to have php session support. enabling php sessions.	setup	fr	Votre support sessions PHP semble activé. J'active le support de sessions PHP
 you appear to have xml support enabled	setup	fr	Votre support XML semble activé
 you are ready for this stage, but this stage is not yet written.<br />	setup	fr	Vous êtes prêt pour cette étape, mais ceci n'est pas encore écrit.<br />
 you didn't enter a config password for domain %1	setup	fr	Vous n'avez pas entré de mot de passe de configuration pour le domaine %1
@@ -491,5 +456,4 @@ your header.inc.php needs upgrading.	setup	fr	Votre fichier header.inc.php a bes
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	fr	Votre fichier header.inc.php a besoin d'une mise à jour.<br /><blink><b class="msg">ATTENTION!</b></blink><br /><b>FAITES DES SAUVEGARDES!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	fr	Votre installation de PHP n'a pas de support GD approprié. <br/>Vous avez besoin de la bibliothèque gd supérieure ou égale à la version 1.8 pour voir les diagrammes de Gantt dans les Projets.
 your tables are current	setup	fr	Vos tables sont à jour
-your tables may be altered and you may lose data	setup	fr	Vos tables pourraient être altérées et vous pourriez perdre des données.
 your tables will be dropped and you will lose data	setup	fr	Vos tables seront supprimées et vous allez perdre des données !!

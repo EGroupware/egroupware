@@ -42,7 +42,6 @@ are you sure you want to delete your existing tables and data?	setup	de	Sind Sie
 are you sure?	setup	de	SIND SIE SICHER?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen, die Datendank zu erstellen und die Benutzerrechte zuzuordnen
 at your request, this script is going to attempt to install a previous backup	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun eine vorherige Datensicherung installieren.
-at your request, this script is going to attempt to install all the applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen, alle Applikationen f&uuml;r Sie zu installieren
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	de	Auf Ihre Anforderung hin wird dieses Skript nun versuchen die Kern-Tabellen und die Anwendungen Admin und Einstellungen für Sie installieren.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	de	Auf Ihre Anforderung hin wird dieses Skript versuchen, Ihre Anwendungen auf die gegenwärtige Version zu aktualisieren
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	de	Auf Ihre Anforderung hin wird dieses Skript versuchen, Ihre Tabellen auf das neue Format zu aktualisieren
@@ -84,7 +83,7 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	de	Installation überprüfen
 check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüfen
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
-checking file-permissions of %1 for %2: %3	setup	de	Überprüfe die Datei-Zugriffsrechte von %1 auf %2: %3
+checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
 checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
@@ -167,9 +166,7 @@ enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br />(benötigt mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
-enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
-enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
 enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br />Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br />Beispiel: http://www.domain.com/egroupware   or   /egroupware<br /><b>keinen nachfolgenden Slash /</b>
@@ -197,7 +194,6 @@ go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
-header password	setup	de	Passwor Headerverwaltung
 header admin login	setup	de	Login Headerverwaltung
 header password	setup	de	Passwort der Headerverwaltung
 header username	setup	de	Benutzername der Headerverwaltung
@@ -286,9 +282,9 @@ never	setup	de	niemals
 new	setup	de	Neu
 next run	setup	de	nächste Ausführung
 no	setup	de	Nein
+no %1 support found. disabling	setup	de	Keine Unterstützung für %1 gefunden. Abgeschaltet
 no accounts existing	setup	de	Keine Benutzerkonten gefunden
 no algorithms available	setup	de	Kein Algorithmus verfügbar
-no %1 support found. disabling	setup	de	Keine Unterstützung für %1 gefunden. Abgeschaltet
 no modes available	setup	de	kein Modus verfügbar
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
 not	setup	de	nicht
@@ -386,7 +382,7 @@ selectbox	setup	de	Auswahlfeld
 server root	setup	de	Server-Root
 sessions type	setup	de	Session-Typ
 set	setup	de	gesetzt
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen Sie dies auf "old" für Versionen &lt; 2.4, ansonsten auf die exakte MCrypt Version die Sie benutzen.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	de	Setzen Sie dies auf "old" für Versionen < 2.4, ansonsten auf die exakte MCrypt Version die Sie benutzen.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	de	Den Systemzeichensatz auf UTF-8 (unicode) zu setzten, erlaubt die Koexistenz von Daten in Sprachen mit verschiedenen Zeichensätzen.
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
@@ -424,7 +420,6 @@ the mbstring extension is needed to fully support unicode (utf-8) or other multi
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
-there was a problem tring to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem bei dem Versuch, eine Verbindung mit Ihrem LDAP-Server aufzubauen. <br />Bitte &uuml;berpr&uuml;fen Sie die Konfiguration Ihres LDAP-Servers.
 there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss au&szlig;erhalb des Wurzelverzeichnisses (document root) des Webservers sein!!!
@@ -486,8 +481,8 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br />Es ist notwendig auf eine neue Version zu aktualisieren.<br />Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br /><br />Biite aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of egroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	de	Sie scheinen php in einer Version vor 4.1.0 zu verwenden. eGroupWare benötigt nun Version 4.1.0 oder höher.
-you appear to have php session support. enabling php sessions.	setup	de	Sie scheinen PHP Session Unterstützung zu haben. PHP Sessions eingeschaltet.
 you appear to have %1 support.	setup	de	Sie scheinen %1 Unterstützung zu haben.
+you appear to have php session support. enabling php sessions.	setup	de	Sie scheinen PHP Session Unterstützung zu haben. PHP Sessions eingeschaltet.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
 you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br />
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben
