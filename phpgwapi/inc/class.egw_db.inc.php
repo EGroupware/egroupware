@@ -237,7 +237,10 @@
 						$type ='sapdb';	// name in ADOdb
 						$php_extension = 'odbc';
 						break;
-
+						
+					case 'mysqli':
+						$this->Type = 'mysql';
+						// fall through
 					default:
 						if ($this->Port) $Host .= ':'.$this->Port;
 						break;
@@ -319,6 +322,7 @@
 			switch($adodb_driver)
 			{
 				case 'mysql':
+				case 'mysqli':
 					$this->capabilities['sub_queries'] = $db_version >= 4.1;
 					break;
 					
