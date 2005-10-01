@@ -436,8 +436,11 @@
 		
 		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_infolog','egw_infolog');
 		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_infolog_extra','egw_infolog_extra');
-		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_links','egw_links');
-
+		// only rename links table, if it has not been moved into the API and therefor been already renamed by the API update
+		if ($GLOBALS['phpgw_setup']->oProc->GetTableDefinition('phpgw_links'))
+		{
+			$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_links','egw_links');
+		}
 		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.1.001';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}

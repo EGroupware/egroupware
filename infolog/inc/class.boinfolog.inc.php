@@ -14,7 +14,7 @@
 	/* $Id$ */
 	
 	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.soinfolog.inc.php');
-	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.bolink.inc.php');
+	include_once(EGW_API_INC.'/class.bolink.inc.php');
 
 	/**
 	 * This class is the BO-layer of InfoLog, it also handles xmlrpc requests

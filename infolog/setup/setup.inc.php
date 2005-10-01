@@ -14,7 +14,7 @@
 	$setup_info['infolog']['name']      = 'infolog';
 	$setup_info['infolog']['version']   = '1.0.1.001';
 	$setup_info['infolog']['app_order'] = 5;
-	$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra','egw_links');
+	$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 	$setup_info['infolog']['enable']    = 1;
 
 	$setup_info['infolog']['author'] = 
@@ -63,11 +63,11 @@
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.14','0.9.15','0.9.16','1.0.0','1.0.1')
+		 'versions' => Array('1.0.1')
 	);
 	$setup_info['infolog']['depends'][] = array(
 		 'appname' => 'etemplate',
-		 'versions' => Array('0.9.15','0.9.16','1.0.0')
+		 'versions' => Array('1.0.0','1.0.1')
 	);
 
 

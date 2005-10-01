@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'phpgwapi';
-	$setup_info['phpgwapi']['version']   = '1.0.1.011';
+	$setup_info['phpgwapi']['version']   = '1.0.1.012';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -53,6 +53,7 @@
 	$setup_info['phpgwapi']['tables'][]  = 'egw_contentmap';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_syncmldevinfo';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_syncmlsummary';
+	$setup_info['phpgwapi']['tables'][]  = 'egw_links';
 
 
 

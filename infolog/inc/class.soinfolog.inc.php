@@ -13,7 +13,7 @@
 
 	/* $Id$ */
 
-	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.solink.inc.php');
+	include_once(EGW_API_INC.'/class.solink.inc.php');
 
 	/**
 	 * storage object / db-layer for InfoLog

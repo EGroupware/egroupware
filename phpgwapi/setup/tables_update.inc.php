@@ -543,4 +543,40 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.011';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '1.0.1.011';
+	function phpgwapi_upgrade1_0_1_011()
+	{
+		// moving the egw_links table into the API
+		if ($GLOBALS['phpgw_setup']->oProc->GetTableDefinition('phpgw_links'))
+		{
+			// table exists with old name ==> rename it to new one
+			$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_links','egw_links');
+		}
+		elseif (!$GLOBALS['phpgw_setup']->oProc->GetTableDefinition('egw_links'))
+		{
+			// table does not exist at all (infolog not installed) ==> create it
+			$GLOBALS['phpgw_setup']->oProc->CreateTable('egw_links',array(
+				'fd' => array(
+					'link_id' => array('type' => 'auto','nullable' => False),
+					'link_app1' => array('type' => 'varchar','precision' => '25','nullable' => False),
+					'link_id1' => array('type' => 'varchar','precision' => '50','nullable' => False),
+					'link_app2' => array('type' => 'varchar','precision' => '25','nullable' => False),
+					'link_id2' => array('type' => 'varchar','precision' => '50','nullable' => False),
+					'link_remark' => array('type' => 'varchar','precision' => '50'),
+					'link_lastmod' => array('type' => 'int','precision' => '4','nullable' => False),
+					'link_owner' => array('type' => 'int','precision' => '4','nullable' => False)
+				),
+				'pk' => array('link_id'),
+				'fk' => array(),
+				'ix' => array(array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod')),
+				'uc' => array()
+			));
+		}
+		// move the link-configuration to the api
+		$GLOBALS['phpgw_setup']->oProc->query('UPDATE '.$GLOBALS['phpgw_setup']->config_table." SET config_app='phpgwapi' WHERE config_app='infolog' AND config_name IN ('link_pathes','send_file_ips')",__LINE__,__FILE__);
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.012';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

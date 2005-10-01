@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare - InfoLog Links                                               *
+	* eGroupWare - eGroupWare Interapplication Links                           *
 	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
@@ -13,9 +13,7 @@
 	/* $Id$ */
 
 	/**
-	 * generalized linking between entries of eGroupware apps - BO layer
-	 *
-	 * This class is the SO-layer of the links
+	 * generalized linking between entries of eGroupware apps - SO layer
 	 *
 	 * Links have two ends each pointing to an entry, each entry is a double:
 	 * 	 - app   app-name or directory-name of an egw application, eg. 'infolog'
@@ -23,7 +21,7 @@
 	 *
 	 * All vars passed to this class get correct escaped to prevent query insertion.
 	 *
-	 * @package infolog
+	 * @package API
 	 * @subpackage link
 	 * @author RalfBecker-At-outdoor-training.de
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -41,7 +39,7 @@
 		function solink( )
 		{
 			$this->db     = clone($GLOBALS['egw']->db);
-			$this->db->set_app('infolog');
+			$this->db->set_app('phpgwapi');
 			$this->user   = $GLOBALS['egw_info']['user']['account_id'];
 		}
 
