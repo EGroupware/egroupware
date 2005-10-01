@@ -27,7 +27,7 @@ class bo_resources
 		$this->acl =& CreateObject('resources.bo_acl');
 		$this->cats = $this->acl->egw_cats;
 		$this->vfs =& CreateObject('phpgwapi.vfs');
-		$this->link =& CreateObject('infolog.bolink');
+		$this->link =& CreateObject('phpgwapi.bolink');
 		$this->conf =& CreateObject('phpgwapi.config');
 		$this->conf->read_repository();
 		
