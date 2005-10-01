@@ -65,6 +65,7 @@
 	$db_fullnames = array(
 		'pgsql'  => 'PostgreSQL',
 		'mysql'  => 'MySQL',
+		'mysqli' => 'MySQLi (php5)',
 		'mssql'  => 'MS SQL Server',
 		'odbc_mssql'  => 'MS SQL Server via ODBC',
 		'oracle' => 'Oracle',
@@ -75,6 +76,7 @@
 	$default_db_ports = array(
 		'pgsql'  => 5432,
 		'mysql'  => 3306,
+		'mysqli' => 3306,
 		'mssql'  => 1433,
 		'odbc_mssql'  => '',
 		'oracle' => 1521,
@@ -272,56 +274,29 @@
 			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr>'."\n".'<tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
-			if(check_load_extension('mysql') || function_exists('mysql_connect'))
+			foreach(array(
+				// short => array(extension,func_to_check,supported_db(s))
+				'mysql'  => array('mysql','mysql_connect','mysql'),
+				'mysqli' => array('mysql','mysql_iconnect','mysqli'),
+				'pgsql'  => array('pgsql','pg_connect','pgsql'),
+				'mssql'  => array('mssql','mssql_connect','mssql'),
+				'odbc'   => array('odbc',false,'sapdb','odbc_mssql','odbc_oracle'),
+				'oracle' => array('oci8',false,'oracle'),
+			) as $db => $data)
 			{
-				$detected .= lang('You appear to have MySQL support enabled') . '<br />' . "\n";
-				$supported_db[] = 'mysql';
+				$ext = array_shift($data);
+				$func_to_check = array_shift($data);
+				$name = isset($db_fullnames[$db]) ? $db_fullnames[$db] : strtoupper($db);
+				if (check_load_extension($ext) || $func_to_check && function_exists($func_to_check))
+				{
+					$detected .= lang('You appear to have %1 support.',$name) . "<br />\n";
+					$supported_db = array_merge($supported_db,$data);
+				}
+				else
+				{
+					$detected .= lang('No %1 support found. Disabling',$name) . "<br />\n";
+				}
 			}
-			else
-			{
-				$detected .= lang('No MySQL support found. Disabling') . '<br />' . "\n";
-			}
-			if(check_load_extension('pgsql') || function_exists('pg_connect'))
-			{
-				$detected .= lang('You appear to have PostgreSQL support enabled') . '<br />' . "\n";
-				$supported_db[]  = 'pgsql';
-			}
-			else
-			{
-				$detected .= lang('No PostgreSQL support found. Disabling') . '<br />' . "\n";
-			}
-			if(check_load_extension('mssql') || function_exists('mssql_connect'))
-			{
-				$detected .= lang('You appear to have Microsoft SQL Server support enabled') . '<br />' . "\n";
-				$supported_db[] = 'mssql';
-			}
-			else
-			{
-				$detected .= lang('No Microsoft SQL Server support found. Disabling') . '<br />' . "\n";
-			}
-			if(check_load_extension('odbc'))
-			{
-				$detected .= lang('You appear to have ODBC support enabled') . '<br />' . "\n";
-				// databases supported by the ODBC driver
-				$supported_db[] = 'sapdb';
-				$supported_db[] = 'odbc_mssql';
-				$supported_db[] = 'odbc_oracle';
-			}
-			else
-			{
-				$detected .= lang('No ODBC support found. Disabling') . '<br />' . "\n";
-			}
-
-			if(check_load_extension('oci8'))
-			{
-				$detected .= lang('You appear to have Oracle V8 (OCI) support enabled') . '<br />' . "\n";
-				$supported_db[] = 'oracle';
-			}
-			else
-			{
-				$detected .= lang('No Oracle-DB support found. Disabling') . '<br />' . "\n";
-			}
-
 			if(!count($supported_db))
 			{
 				$detected .= '<b><p align="center" class="msg">'
@@ -345,7 +320,7 @@
 			}
 			if (check_load_extension('session'))
 			{
-				$detected .= lang('You appear to have PHP4 session support. Enabling PHP4 sessions.') . '<br />' . "\n";
+				$detected .= lang('You appear to have PHP session support. Enabling PHP sessions.') . '<br />' . "\n";
 				$supported_sessions_type[] = 'php4';	// makeing php4 sessions the default
 			}
 			$supported_sessions_type[] = 'db';

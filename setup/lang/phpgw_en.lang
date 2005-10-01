@@ -284,12 +284,8 @@ next run	setup	en	next run
 no	setup	en	No
 no accounts existing	setup	en	No accounts existing
 no algorithms available	setup	en	no algorithms available
-no microsoft sql server support found. disabling	setup	en	No Microsoft SQL Server support found. Disabling
+no %1 support found. disabling	setup	en	No %1 support found. Disabling
 no modes available	setup	en	no modes available
-no mysql support found. disabling	setup	en	No MySQL support found. Disabling
-no odbc support found. disabling	setup	en	No ODBC support found. Disabling
-no oracle-db support found. disabling	setup	en	No Oracle-DB support found. Disabling
-no postgresql support found. disabling	setup	en	No PostgreSQL support found. Disabling
 no xml support found. disabling	setup	en	No XML support found. Disabling
 not	setup	en	not
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	en	Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.
@@ -485,14 +481,8 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version %1
 you appear to be running version %1 of egroupware	setup	en	You appear to be running version %1 of eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	en	You appear to be using PHP earlier than 4.1.0. eGroupWare now requires 4.1.0 or later
-you appear to be using php3. disabling php4 sessions support	setup	en	You appear to be using PHP3. Disabling PHP4 sessions support
-you appear to be using php4. enabling php4 sessions support	setup	en	You appear to be using PHP4. Enabling PHP4 sessions support
-you appear to have microsoft sql server support enabled	setup	en	You appear to have Microsoft SQL Server support enabled
-you appear to have mysql support enabled	setup	en	You appear to have MySQL support enabled
-you appear to have odbc support enabled	setup	en	You appear to have ODBC support enabled
-you appear to have oracle support enabled	setup	en	You appear to have Oracle support enabled
-you appear to have oracle v8 (oci) support enabled	setup	en	You appear to have Oracle V8 (OCI) support enabled
-you appear to have postgresql support enabled	setup	en	You appear to have PostgreSQL support enabled
+you appear to have %1 support.	setup	en	You appear to have %1 support.
+you appear to have php session support. enabling php sessions.	setup	en	You appear to have PHP session support. Enabling PHP sessions.
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br />	setup	en	You are ready for this stage, but this stage is not yet written.<br />
 you didn't enter a config password for domain %1	setup	en	You didn't enter a config password for domain %1

@@ -288,12 +288,8 @@ next run	setup	de	nächste Ausführung
 no	setup	de	Nein
 no accounts existing	setup	de	Keine Benutzerkonten gefunden
 no algorithms available	setup	de	Kein Algorithmus verfügbar
-no microsoft sql server support found. disabling	setup	de	Keine Unterstützung für Microsoft SQL Server gefunden. Abgeschaltet
+no %1 support found. disabling	setup	de	Keine Unterstützung für %1 gefunden. Abgeschaltet
 no modes available	setup	de	kein Modus verfügbar
-no mysql support found. disabling	setup	de	Keine Unterstützung für MySQL gefunden. Abgeschaltet
-no odbc support found. disabling	setup	de	Keine ODBC Unterstützung gefunden. Abgeschaltet
-no oracle-db support found. disabling	setup	de	Keine Unterstützung für Oracle gefunden. Abgeschaltet
-no postgresql support found. disabling	setup	de	Keine Unterstützung für PostgreSQL gefunden. Abgeschaltet
 no xml support found. disabling	setup	de	Keine Unterstützung für XML gefunden. Abgeschaltet
 not	setup	de	nicht
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	de	Nicht alle MCrypt-Algorithmen und -Modi funktionieren mit eGroupWare. Wenn Sie Probleme feststellen, versuchen Sie es abzuschalten.
@@ -490,14 +486,8 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br />Es ist notwendig auf eine neue Version zu aktualisieren.<br />Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br /><br />Biite aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of egroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	de	Sie scheinen php in einer Version vor 4.1.0 zu verwenden. eGroupWare benötigt nun Version 4.1.0 oder höher.
-you appear to be using php3. disabling php4 sessions support	setup	de	Sie scheinen PHP3 zu verwenden. Schalte PHP4 Session Unterstützung ab.
-you appear to be using php4. enabling php4 sessions support	setup	de	Sie scheinen PHP4 zu verwenden. Schalte PHP4 Session Unterstützung ein.
-you appear to have microsoft sql server support enabled	setup	de	Sie scheinen Microsoft SQL Server Unterstützung zu haben.
-you appear to have mysql support enabled	setup	de	Sie scheinen MySQL Unterstützung zu haben.
-you appear to have odbc support enabled	setup	de	Sie scheinen ODBC Unterstützung zu haben.
-you appear to have oracle support enabled	setup	de	Sie scheinen Oracle Unterstützung zu haben.
-you appear to have oracle v8 (oci) support enabled	setup	de	Sie scheinen Oracle V8 (OCI) Unterstützung zu haben.
-you appear to have postgresql support enabled	setup	de	Sie scheinen PostgreSQL Unterstützung zu haben.
+you appear to have php session support. enabling php sessions.	setup	de	Sie scheinen PHP Session Unterstützung zu haben. PHP Sessions eingeschaltet.
+you appear to have %1 support.	setup	de	Sie scheinen %1 Unterstützung zu haben.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
 you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br />
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben
@@ -511,7 +501,7 @@ you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen 
 you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu Ihrer header.inc.php hinzufügen.
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende Schema in Ihren LDAP-Server laden - siehe <a href="../phpgwapi/doc/ldap/README?sessionid=f69c6befb6636a1a9501e45ff0176385" target="_blank">phpgwapi/doc/ldap/README</a>
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende Schema in Ihren LDAP-Server laden - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell
