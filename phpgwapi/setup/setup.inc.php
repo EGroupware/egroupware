@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'phpgwapi';
-	$setup_info['phpgwapi']['version']   = '1.0.1.010';
+	$setup_info['phpgwapi']['version']   = '1.0.1.011';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -42,18 +42,18 @@
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_history_log';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_async';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_api_content_history';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_mimetypes';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_files';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_customfields';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_quota';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_shares';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_versioning';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_customfields_data';
+	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_prefixes';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_contentmap';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_syncmldevinfo';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_syncmlsummary';
 
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_mimetypes';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_quota';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_files';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_shares';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_versioning';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_customfields';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_customfields_data';
-	$setup_info['phpgwapi']['tables'][] = 'phpgw_vfs2_prefixes';
 
 
 	/* Basic information about this app */
@@ -64,6 +64,8 @@
 	$setup_info['notifywindow']['app_order'] = 1;
 	$setup_info['notifywindow']['tables']    = '';
 	$setup_info['notifywindow']['hooks'][]   = 'home';
+
+
 
 
 

@@ -519,4 +519,28 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.010';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+
+	$test[] = '1.0.1.010';
+	function phpgwapi_upgrade1_0_1_010()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_sessions','session_ip',array(
+			'type' => 'varchar',
+			'precision' => '40'
+		));
+
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_access_log','ip',array(
+			'type' => 'varchar',
+			'precision' => '40',
+			'nullable' => False
+		));
+
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_access_log','loginid',array(
+			'type' => 'varchar',
+			'precision' => '128'
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.011';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

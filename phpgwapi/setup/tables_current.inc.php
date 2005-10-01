@@ -87,7 +87,7 @@
 			'fd' => array(
 				'session_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
 				'session_lid' => array('type' => 'varchar','precision' => '128'),
-				'session_ip' => array('type' => 'varchar','precision' => '32'),
+				'session_ip' => array('type' => 'varchar','precision' => '40'),
 				'session_logintime' => array('type' => 'int','precision' => '4'),
 				'session_dla' => array('type' => 'int','precision' => '4'),
 				'session_action' => array('type' => 'varchar','precision' => '255'),
@@ -115,10 +115,10 @@
 		'phpgw_access_log' => array(
 			'fd' => array(
 				'sessionid' => array('type' => 'char','precision' => '32','nullable' => False),
-				'loginid' => array('type' => 'varchar','precision' => '30','nullable' => False),
-				'ip' => array('type' => 'varchar','precision' => '30','nullable' => False),
+				'loginid' => array('type' => 'varchar','precision' => '64','nullable' => False),
+				'ip' => array('type' => 'varchar','precision' => '40','nullable' => False),
 				'li' => array('type' => 'int','precision' => '4','nullable' => False),
-				'lo' => array('type' => 'int','precision' => '4','nullable' => True,'default' => '0'),
+				'lo' => array('type' => 'int','precision' => '4','default' => '0'),
 				'account_id' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0')
 			),
 			'pk' => array(),
@@ -385,62 +385,57 @@
 			'ix' => array('sync_added','sync_modified','sync_deleted','sync_guid','sync_changedby',array('sync_appname','sync_contentid')),
 			'uc' => array()
 		),
-		/*********************************************************************\
-		 *	                       VFS version 2                             *
-		\*********************************************************************/
 		'phpgw_vfs2_mimetypes' => array(
 			'fd' => array(
 				'mime_id' => array('type' => 'auto','nullable' => False),
-				'extension' => array('type' => 'varchar', 'precision' => 10, 'nullable' => false),
-				'mime' => array('type' => 'varchar', 'precision' => 50, 'nullable' => false),
-				'mime_magic' => array('type' => 'varchar', 'precision' => 255, 'nullable' => true),
-				'friendly' => array('type' => 'varchar', 'precision' => 50, 'nullable' => false),
+				'extension' => array('type' => 'varchar','precision' => '10','nullable' => False),
+				'mime' => array('type' => 'varchar','precision' => '50','nullable' => False),
+				'mime_magic' => array('type' => 'varchar','precision' => '255','nullable' => True),
+				'friendly' => array('type' => 'varchar','precision' => '50','nullable' => False),
 				'image' => array('type' => 'blob'),
-				'proper_id' => array('type' => 'varchar', 'precision' => 4)
+				'proper_id' => array('type' => 'varchar','precision' => '4')
 			),
 			'pk' => array('mime_id'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
 		),
-
 		'phpgw_vfs2_files' => array(
 			'fd' => array(
 				'file_id' => array('type' => 'auto','nullable' => False),
-				'mime_id' => array('type' => 'int','precision' => 4),
-				'owner_id' => array('type' => 'int','precision' => 4,'nullable' => False),
-				'createdby_id' => array('type' => 'int','precision' => 4),
-				'modifiedby_id' => array('type' => 'int','precision' => 4),
-				'created' => array('type' => 'timestamp','default' => '1970-01-01 00:00:00', 'nullable' => False),
-				'modified' => array('type' => 'timestamp', 'nullable' => true),
-				'size' => array('type' => 'int','precision' => 8),
-				'deleteable' => array('type' => 'char','precision' => 1,'default' => 'Y'),
-				'comment' => array('type' => 'varchar','precision' => 255),
-				'app' => array('type' => 'varchar','precision' => 25),
-				'directory' => array('type' => 'varchar','precision' => 255),
-				'name' => array('type' => 'varchar','precision' => 128,'nullable' => False),
-				'link_directory' => array('type' => 'varchar','precision' => 255),
-				'link_name' => array('type' => 'varchar','precision' => 128),
-				'version' => array('type' => 'varchar','precision' => 30,'nullable' => False,'default' => '0.0.0.0'),
+				'mime_id' => array('type' => 'int','precision' => '4'),
+				'owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'createdby_id' => array('type' => 'int','precision' => '4'),
+				'modifiedby_id' => array('type' => 'int','precision' => '4'),
+				'created' => array('type' => 'timestamp','default' => '1970-01-01 00:00:00','nullable' => False),
+				'modified' => array('type' => 'timestamp','nullable' => True),
+				'size' => array('type' => 'int','precision' => '8'),
+				'deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
+				'comment' => array('type' => 'varchar','precision' => '255'),
+				'app' => array('type' => 'varchar','precision' => '25'),
+				'directory' => array('type' => 'varchar','precision' => '255'),
+				'name' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'link_directory' => array('type' => 'varchar','precision' => '255'),
+				'link_name' => array('type' => 'varchar','precision' => '128'),
+				'version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
 				'content' => array('type' => 'longtext'),
-				'is_backup' => array('type' => 'varchar', 'precision' => 1, 'nullable' => False, 'default' => 'N'),
-				'shared' => array('type' => 'varchar', 'precision' => 1, 'nullable' => False,'default' => 'N'),
-				'proper_id' => array('type' => 'varchar', 'precision' => 45)
+				'is_backup' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'N'),
+				'shared' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'N'),
+				'proper_id' => array('type' => 'varchar','precision' => '45')
 			),
 			'pk' => array('file_id'),
-			'fk' => array('mime_id' => array ('phpgw_vfs2_mimetypes' => 'mime_id')),
+			'fk' => array('mime_id' => array('phpgw_vfs2_mimetypes' => 'mime_id')),
 			'ix' => array(array('directory','name')),
 			'uc' => array()
 		),
-
 		'phpgw_vfs2_customfields' => array(
 			'fd' => array(
 				'customfield_id' => array('type' => 'auto','nullable' => False),
-				'customfield_name' => array('type' => 'varchar','precision' => 60,'nullable' => False),
-				'customfield_description' => array('type' => 'varchar','precision' => 255,'nullable'=> True),
-				'customfield_type' => array('type' => 'varchar','precision' => 20, 'nullable' => false),
-				'customfield_precision' => array('type' => 'int', 'precision' => 4, 'nullable' => true),
-				'customfield_active' => array('type' => 'varchar','precision' => 1,'nullable' => False,'default' => 'N')
+				'customfield_name' => array('type' => 'varchar','precision' => '60','nullable' => False),
+				'customfield_description' => array('type' => 'varchar','precision' => '255','nullable' => True),
+				'customfield_type' => array('type' => 'varchar','precision' => '20','nullable' => False),
+				'customfield_precision' => array('type' => 'int','precision' => '4','nullable' => True),
+				'customfield_active' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'N')
 			),
 			'pk' => array('customfield_id'),
 			'fk' => array(),
@@ -449,8 +444,8 @@
 		),
 		'phpgw_vfs2_quota' => array(
 			'fd' => array(
-				'account_id' => array('type' => 'int','precision' => 4,'nullable' => false),
-				'quota' => array('type' => 'int','precision' => 4,'nullable' => false)
+				'account_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'quota' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('account_id'),
 			'fk' => array('account_id' => array('phpgw_accounts' => 'account_id')),
@@ -459,28 +454,28 @@
 		),
 		'phpgw_vfs2_shares' => array(
 			'fd' => array(
-				'account_id' => array('type' => 'int','precision' => 4,'nullable' => false),
-				'file_id' => array('type' => 'int','precision' => 4,'nullable' => false),
-				'acl_rights' => array('type' => 'int','precision' => 4,'nullable' => false)
+				'account_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'file_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'acl_rights' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('account_id','file_id'),
-			'fk' => array('account_id' => array('phpgw_accounts' => 'account_id'), 'file_id' => array('phpgw_vfs2_files' => 'file_id')),
+			'fk' => array('account_id' => array('phpgw_accounts' => 'account_id'),'file_id' => array('phpgw_vfs2_files' => 'file_id')),
 			'ix' => array(),
 			'uc' => array()
 		),
 		'phpgw_vfs2_versioning' => array(
 			'fd' => array(
-				'version_id' => array('type' => 'auto', 'nullable' => false),
-				'file_id' => array('type' => 'int','precision' => 4,'nullable' => false),
-				'operation' => array('type' => 'int','precision' => 4, 'nullable' => False),
-				'modifiedby_id' => array('type' => 'int','precision' => 4,'nullable' => false),
-				'modified' => array('type' => 'timestamp', 'nullable' => False ),
-				'version' => array('type' => 'varchar', 'precision' => 30, 'nullable' => False ),
-				'comment' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
-				'backup_file_id' => array('type' => 'int','precision' => 4, 'nullable' => True),
-				'backup_content' => array('type' => 'longtext', 'nullable' => True),
-				'src' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True),
-				'dest' => array('type' => 'varchar', 'precision' => 255, 'nullable' => True)
+				'version_id' => array('type' => 'auto','nullable' => False),
+				'file_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'operation' => array('type' => 'int','precision' => '4','nullable' => False),
+				'modifiedby_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'modified' => array('type' => 'timestamp','nullable' => False),
+				'version' => array('type' => 'varchar','precision' => '30','nullable' => False),
+				'comment' => array('type' => 'varchar','precision' => '255','nullable' => True),
+				'backup_file_id' => array('type' => 'int','precision' => '4','nullable' => True),
+				'backup_content' => array('type' => 'longtext','nullable' => True),
+				'src' => array('type' => 'varchar','precision' => '255','nullable' => True),
+				'dest' => array('type' => 'varchar','precision' => '255','nullable' => True)
 			),
 			'pk' => array('version_id'),
 			'fk' => array('file_id' => array('phpgw_vfs2_files' => 'file_id')),
@@ -489,9 +484,9 @@
 		),
 		'phpgw_vfs2_customfields_data' => array(
 			'fd' => array(
-				'file_id' => array('type' => 'int','precision' => 4,'nullable' => false),
-				'customfield_id' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
-				'data' => array('type' => 'longtext', 'nullable' => True)
+				'file_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'customfield_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'data' => array('type' => 'longtext','nullable' => True)
 			),
 			'pk' => array('file_id','customfield_id'),
 			'fk' => array('file_id' => array('phpgw_vfs2_files' => 'file_id'),'customfield_id' => array('phpgw_vfs2_customfields' => 'customfield_id')),
@@ -500,11 +495,11 @@
 		),
 		'phpgw_vfs2_prefixes' => array(
 			'fd' => array(
-				'prefix_id' => array('type' => 'auto','nullable' => false),
-				'prefix' => array('type' => 'varchar', 'precision' => 8, 'nullable' => false),
-				'owner_id' => array('type' => 'int', 'precision' => 4, 'nullable' => false),
-				'prefix_description' => array('type' => 'varchar', 'precision' => 30, 'nullable' => True),
-				'prefix_type' => array('type' => 'varchar', 'precision' => 1, 'nullable' => false, 'default' => 'p')
+				'prefix_id' => array('type' => 'auto','nullable' => False),
+				'prefix' => array('type' => 'varchar','precision' => '8','nullable' => False),
+				'owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'prefix_description' => array('type' => 'varchar','precision' => '30','nullable' => True),
+				'prefix_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'p')
 			),
 			'pk' => array('prefix_id'),
 			'fk' => array(),
@@ -513,11 +508,11 @@
 		),
 		'egw_contentmap' => array(
 			'fd' => array(
-				'map_id'	=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
-				'map_guid'	=> array('type' => 'varchar', 'precision' => '200', 'nullable' => False),
-				'map_locuid'	=> array('type' => 'varchar', 'precision' => '200', 'nullable' => False),
-				'map_timestamp'	=> array('type' => 'timestamp', 'nullable' => False),
-				'map_expired'	=> array('type' => 'bool', 'nullable' => False),
+				'map_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'map_guid' => array('type' => 'varchar','precision' => '200','nullable' => False),
+				'map_locuid' => array('type' => 'varchar','precision' => '200','nullable' => False),
+				'map_timestamp' => array('type' => 'timestamp','nullable' => False),
+				'map_expired' => array('type' => 'bool','nullable' => False)
 			),
 			'pk' => array(array('map_id','map_guid','map_locuid')),
 			'fk' => array(),
@@ -526,17 +521,17 @@
 		),
 		'egw_syncmldevinfo' => array(
 			'fd' => array(
-				'dev_id'		=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
-				'dev_dtdversion'	=> array('type' => 'varchar', 'precision' => '10', 'nullable' => False),
-				'dev_numberofchanges'	=> array('type' => 'bool', 'nullable' => False),
-				'dev_largeobjs'		=> array('type' => 'bool', 'nullable' => False),
-				'dev_swversion'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
-				'dev_oem'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
-				'dev_model'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
-				'dev_manufacturer'	=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
-				'dev_devicetype'	=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
-				'dev_deviceid'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
-				'dev_datastore'		=> array('type' => 'text', 'nullable' => False),
+				'dev_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'dev_dtdversion' => array('type' => 'varchar','precision' => '10','nullable' => False),
+				'dev_numberofchanges' => array('type' => 'bool','nullable' => False),
+				'dev_largeobjs' => array('type' => 'bool','nullable' => False),
+				'dev_swversion' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'dev_oem' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'dev_model' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'dev_manufacturer' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'dev_devicetype' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'dev_deviceid' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'dev_datastore' => array('type' => 'text','nullable' => False)
 			),
 			'pk' => array('dev_id'),
 			'fk' => array(),
@@ -545,15 +540,14 @@
 		),
 		'egw_syncmlsummary' => array(
 			'fd' => array(
-				'dev_id'		=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
-				'sync_path'		=> array('type' => 'varchar', 'precision' => '100', 'nullable' => False),
-				'sync_serverts'		=> array('type' => 'varchar', 'precision' => '20', 'nullable' => False),
-				'sync_clientts'		=> array('type' => 'varchar', 'precision' => '20', 'nullable' => False),
+				'dev_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'sync_path' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'sync_serverts' => array('type' => 'varchar','precision' => '20','nullable' => False),
+				'sync_clientts' => array('type' => 'varchar','precision' => '20','nullable' => False)
 			),
 			'pk' => array(array('dev_id','sync_path')),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
-		),
-		/*********************************************************************/
+		)
 	);
