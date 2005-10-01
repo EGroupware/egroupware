@@ -3791,6 +3791,7 @@
 		case 'access': if ($perf) $drivername = ''; break;
 		case 'db2'   : break;
 		case 'sapdb' : break;
+		case 'mysqli': $drivername = 'mysql'; break;
 		default:
 			$drivername = 'generic';
 			break;
