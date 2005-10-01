@@ -522,7 +522,7 @@
 					case 'calendar':
 					default:	// to allow other apps to participate
 						$content['info_link_id'] = $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
-//						$content['blur_title']   = $this->link->title($action,$action_id);
+						$content['blur_title']   = $this->link->title($action,$action_id);
 
 					case '':
 						if ($info_id)
@@ -539,15 +539,13 @@
 						$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 						break;
 				}
-				$content['link_to']['primary'] = (int)$content['info_link_id'];
+				// we allways need to set a non-empty/-zero primary, to make the radiobutton appear
+				$content['link_to']['primary'] = $content['info_link_id'] ? $content['info_link_id'] : '#';
+
 				if (!isset($this->bo->enums['type'][$content['info_type']]))
 				{
 					$content['info_type'] = 'note';
 				}
-			}
-			if ($action && $action != 'new' && $action != 'sp')
-			{
-				$content['blur_title']   = $this->link->title($action,$action_id);
 			}
 			$readonlys['delete'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE);
 
