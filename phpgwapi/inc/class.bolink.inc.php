@@ -555,7 +555,7 @@
 			if (is_array($link))
 			{
 				return array(
-					'menuaction' => 'phpgapi.bolink.get_file',
+					'menuaction' => 'phpgwapi.bolink.get_file',
 					'app' => $link['app2'],
 					'id'  => $link['id2'],
 					'filename' => $link['id']
