@@ -319,9 +319,10 @@ class ui_resources
 				);
 		$sel_options = array();
 		$no_button = array(
-			'btn_buyable' => !$content['buyable'],
-			'btn_bookable' => !$content['bookable'],
-			'btn_edit' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_EDIT)
+			'btn_buy' => !$content['buyable'],
+			'btn_book' => !$content['bookable'],
+			'btn_edit' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_EDIT),
+			'btn_delete' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE)
 			);
 		$preserv = $content;
 		$this->tmpl->read('resources.showdetails');
@@ -487,16 +488,15 @@ class ui_resources
 				$selectbox_content[$key] = $cat_name;
 			}
 		}
+		$link_array = array('menuaction' => $view_menuaction);
+		if($date != '') $link_array['date'] = $date;
 		$selectbox = $this->html->select(
 			'owner',
 			'uical_select_resource',
 			$selectbox_content,
 			$no_lang=true,
-			$options='style="width: 165px;" name="res_id" onchange="load_cal(\''.
-				$GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => $view_menuaction,
-					'date' => $date,
-				)).'\',\'uical_select_resource\');" id="uical_select_resource"',
+			$options='style="width: 165px;" onchange="load_cal(\''.
+				$GLOBALS['egw']->link('/index.php',$link_array).'\',\'uical_select_resource\');" id="uical_select_resource"',
 			$multiple=0
 		);
 		return array(

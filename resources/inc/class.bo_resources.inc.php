@@ -441,7 +441,6 @@ class bo_resources
 		{
 			$src = $this->so->get_value('picture_src',$res_id);
 		}
-		
 		switch($src)
 		{
 			case 'own_src':

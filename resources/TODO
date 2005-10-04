@@ -9,10 +9,7 @@ TODO:
 	add show-calender button
 	
 - edit/add
-	bug: loose html and picture on tab-switch (eTemplate bug --> Ralf)
-	bug: inputvalidation on selectbox --> eTemplate --> Ralf
 	bug: accessories aren't moved to cat of master if it changes
-	add pictureupload for htmlarea
 
 - admin section
 	add configure picture size	
