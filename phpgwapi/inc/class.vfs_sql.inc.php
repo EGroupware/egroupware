@@ -712,7 +712,8 @@
 			$user_id = $GLOBALS['egw_info']['user']['account_id'];
 			//echo "user=$user_id, ";
 			/* They always have access to their own files */
-			if ($owner_id == $user_id)
+			/* Files with owner_id = 0 are created by apps, and need at least to be readable */
+			if ($owner_id == $user_id || ($owner_id == 0 && $data['operation'] == EGW_ACL_READ))
 			{
 				return True;
 			}
