@@ -321,7 +321,7 @@ class html
 				' id="'.$base_name.'['.$val.']'.'" '.($title ? 'title="'.$this->htmlspecialchars($title).'" ':'')).
 				$this->htmlspecialchars($label),$base_name.'['.$val.']')."<br />\n";
 		}
-		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+0.5*$max_len).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
+		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.55)).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
 		
 		return $this->div($html,$options,'',$style);
 	}
