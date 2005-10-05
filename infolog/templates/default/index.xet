@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="0.9.15.003">
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.0.1.001">
 		<grid>
 			<columns>
 				<column width="5%"/>
@@ -53,9 +53,7 @@
 						<menulist>
 							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
 						</menulist>
-						<menulist>
-							<menupopup type="select-account" id="${row}[info_responsible]" readonly="true"/>
-						</menulist>
+						<listbox type="select-account" id="${row}[info_responsible]" readonly="true" rows="5"/>
 					</vbox>
 					<vbox orient="0,0">
 						<date-time id="${row}[info_datemodified]" readonly="true"/>
@@ -71,7 +69,7 @@
 					<hbox>
 						<button image="edit.gif" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry"/>
 						<button image="delete.gif" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry"/>
-						<button image="addfile.gif" label="Add file" id="file[$row_cont[info_id]]" disabled="true" statustext="Attach a file"/>
+						<button image="done.gif" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
 					</hbox>
 				</row>
 			</rows>
@@ -89,7 +87,7 @@
 
 		</styles>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.0.1.001">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.0.1.002">
 		<grid>
 			<columns>
 				<column width="2%"/>
@@ -153,9 +151,7 @@
 						<menulist>
 							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
 						</menulist>
-						<menulist>
-							<menupopup type="select-account" id="${row}[info_responsible]" readonly="true"/>
-						</menulist>
+						<listbox type="select-account" id="${row}[info_responsible]" readonly="true" rows="5"/>
 					</vbox>
 					<vbox orient="0,0">
 						<date-time id="${row}[info_datemodified]" readonly="true"/>
@@ -171,7 +167,7 @@
 					<hbox>
 						<button image="edit.gif" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry"/>
 						<button image="delete.gif" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry"/>
-						<button image="addfile.gif" label="Add file" id="file[$row_cont[info_id]]" disabled="true" statustext="Attach a file"/>
+						<button image="done.gif" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
 					</hbox>
 				</row>
 			</rows>

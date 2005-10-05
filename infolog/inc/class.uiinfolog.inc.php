@@ -29,6 +29,7 @@
 			'index'       => True,
 			'edit'        => True,
 			'delete'      => True,
+			'close'       => True,
 			'admin'       => True,
 			'hook_view'   => True,
 			'writeLangFile' => True
@@ -53,7 +54,8 @@
 					'parent'    => 'parent.gif',    'parent_alt'    => 'View other Subs',
 					'edit'      => 'edit.gif',      'edit_alt'      => 'Edit',
 					'addfile'   => 'addfile.gif',   'addfile_alt'   => 'Add a file',
-					'delete'    => 'delete.gif',    'delete_alt'    => 'Delete' ),
+					'delete'    => 'delete.gif',    'delete_alt'    => 'Delete',
+					'close'     => 'done.gif',      'close_alt'     => 'Close' ),
 				'status' => array(
 					'billed'    => 'billed.gif',    'billed_alt'    => 'billed',
 					'done'      => 'done.gif',      'done_alt'      => 'done',
@@ -78,7 +80,7 @@
 				'open-overdue'     =>	'overdue',
 				'upcoming'         =>	'upcoming'
 			);
-         
+
 			$this->messages = array(
 				'edit'    => 'InfoLog - Edit',
 				'add'     => 'InfoLog - New',
@@ -113,7 +115,8 @@
 			$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 			
 			$readonlys["edit[$id]"] = !$this->bo->check_access($id,EGW_ACL_EDIT);
-			$readonlys["edit_status[$id]"] = !($this->bo->check_access($id,EGW_ACL_EDIT) || $info['info_responsible'] == $this->user);
+			$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = !($this->bo->check_access($id,EGW_ACL_EDIT) || 
+				in_array($this->user, $info['info_responsible'])));
 			$readonlys["delete[$id]"] = !$this->bo->check_access($id,EGW_ACL_DELETE);
 			$readonlys["sp[$id]"] = !$this->bo->check_access($id,EGW_ACL_ADD);
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
@@ -253,6 +256,8 @@
 							return $this->edit($do_id,$action,$action_id,'',$referer);
 						case 'delete':
 							return $this->delete($do_id,$referer);
+						case 'close':
+							return $this->close($do_id,$referer);
 						case 'sp':
 							return $this->edit(0,'sp',$do_id,'',$referer);
 						case 'view':
@@ -314,9 +319,24 @@
 			),$readonlys,$persist,$return_html ? -1 : 0);
 		}
 
+		function close($values=0,$referer='')
+		{
+			$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
+			$referer = is_array($values) ? $values['referer'] : $referer;
+			
+			if ($info_id)
+			{
+				$this->bo->write(array(
+					'info_id'     => $info_id,
+					'info_status' => 'done',
+				));
+			}
+			return $referer ? $this->tmpl->location($referer) : $this->index();
+		}
+
 		function delete($values=0,$referer='')
 		{
-			$info_id = is_array($values) ? $values['info_id'] : $values;
+			$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 			$referer = is_array($values) ? $values['referer'] : $referer;
 
 			if (is_array($values) || $info_id <= 0)
@@ -374,7 +394,7 @@
 						if (!($edit_acl = $this->bo->check_access($info_id,EGW_ACL_EDIT)))
 						{
 							$old = $this->bo->read($info_id);
-							$status_only = $old['info_responsible'] == $this->user;
+							$status_only = in_array($this->user, $old['info_responsible']);
 						}
 					}
 					if ($content['save'] && (!$info_id || $edit_acl || $status_only))
@@ -479,7 +499,7 @@
 				{
 					if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT))
 					{
-						if ($content['info_responsible'] == $this->user)
+						if (in_array($this->user, $content['info_responsible']))
 						{
 							$content['status_only'] = True;
 							foreach($content as $name => $value)
@@ -530,7 +550,7 @@
 							break;	// normal edit
 						}
 					case 'new':		// new entry
-						$content['info_startdate'] = $today;
+						$content['info_startdate'] = (int) $_GET['startdate'] ? (int) $_GET['startdate'] : $today;
 						$content['info_priority'] = 1; // normal
 						if ($type != '')
 						{

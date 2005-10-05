@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" border="0">
+		<grid width="100%" height="260" border="0">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -18,8 +18,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.links" template="" lang="" group="0" version="0.9.15.003">
-		<grid width="100%">
+	<template id="infolog.edit.links" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="260" overflow="auto">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -40,8 +40,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.0.0.001">
-		<grid width="100%">
+	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="260">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -59,11 +59,9 @@
 				<row class="th">
 					<description span="all" value="Delegation"/>
 				</row>
-				<row class="row">
+				<row class="row" valign="top">
 					<description value="Responsible" options=",,,info_responsible"/>
-					<menulist>
-						<menupopup type="select-account" options="Owner" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
-					</menulist>
+					<listbox type="select-account" rows="5" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
 				</row>
 				<row class="row" disabled="1">
 					<description value="Confirm" options=",,,info_confirm"/>
@@ -78,15 +76,15 @@
 					<description options=",,,info_planned_time" value="planned time"/>
 					<date-duration id="info_planned_time"/>
 				</row>
-				<row class="row" valign="top" height="120">
+				<row class="row" valign="top" height="50">
 					<description options=",,,info_used_time" value="used time"/>
 					<date-duration id="info_used_time"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.0.001">
-		<grid width="100%" height="100%" spacing="0" padding="0">
+	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="260" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -97,7 +95,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.0.1.001">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.0.1.002">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -120,7 +118,7 @@
 				</row>
 				<row class="row">
 					<description value="Contact" options=",,,info_from"/>
-					<textbox size="40" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link"/>
+					<textbox size="40" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title"/>
 					<description value="Phone/Email" options=",,,info_addr"/>
 					<textbox size="40" maxlength="64" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
 				</row>

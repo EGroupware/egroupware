@@ -444,4 +444,19 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.1.001';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
+
+
+	$test[] = '1.0.1.001';
+	function infolog_upgrade1_0_1_001()
+	{
+		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_infolog','info_responsible',array(
+			'type' => 'varchar',
+			'precision' => '255',
+			'nullable' => False,
+			'default' => '0'
+		));
+
+		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.1.002';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
 ?>

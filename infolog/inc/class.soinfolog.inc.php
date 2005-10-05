@@ -81,7 +81,8 @@
 				// ACL only on public entrys || $owner granted _PRIVATE
 				(!!($this->grants[$owner] & $required_rights) ||
 				// implicite read-rights for responsible user !!!
-				$info['info_responsible'] == $this->user && $required_rights == EGW_ACL_READ) &&
+				in_array($this->user, $info['info_responsible']) && $required_rights == EGW_ACL_READ) &&
+				//$info['info_responsible'] == $this->user && $required_rights == EGW_ACL_READ) &&
 				($info['info_access'] == 'public' ||
 				!!($this->grants[$owner] & EGW_ACL_PRIVATE));
 
@@ -129,15 +130,15 @@
 			
 			if ($filter == 'my')
 			{
-				$filtermethod .= ' AND info_responsible=0';
+				$filtermethod .= " AND info_responsible='0'";
 			}
 			// implicit read-rights for responsible user
-			$filtermethod .= " OR (info_responsible=$this->user AND info_access='public')";
+			$filtermethod .= " OR (".$this->db->concat("','",'info_responsible',"'%'")." LIKE '%,$this->user,%' AND info_access='public')";
 
 			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'own')
 			{
-				$filtermethod .= " OR (info_responsible=$this->user".
+				$filtermethod .= " OR (".$this->db->concat("','",'info_responsible',"'%'")." LIKE '%,$this->user,%'".
 					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
 						" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
 				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
@@ -157,9 +158,10 @@
 
 			if ($filter == 'user' && $f_user > 0)
 			{
-				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR info_responsible=$f_user) AND $filtermethod)";
+				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR ".$this->db->concat("','",'info_responsible',"'%'")." LIKE '%,$f_user,%') AND $filtermethod)";
 			}
 			//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
+
 			return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
 		}
 	
@@ -237,6 +239,7 @@
 			$this->data = array(
 				'info_owner'    => $this->user,
 				'info_priority' => 1,
+				'info_responsible' => array(),
 			);
 		}
 
@@ -258,6 +261,10 @@
 			{
 				$this->init( );
 				return False;
+			}
+			if (!is_array($this->data['info_responsible']))
+			{
+				$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
 			}
 			if ($info_id != $this->data['info_id'])      // data yet read in
 			{
@@ -341,8 +348,13 @@
 		 */
 		function write($values)  // did _not_ ensure ACL
 		{
+			//echo "soinfolog::write()values="; _debug_array($values);
 			$info_id = (int) $values['info_id'];
 
+			if (isset($values['info_responsible']))
+			{
+				$values['info_responsible'] = count($values['info_responsible']) ? implode(',',$values['info_responsible']) : '0';
+			}
 			$table_def = $this->db->get_table_definitions('infolog',$this->info_table);
 			$to_write = array();
 			foreach($values as $key => $val)
@@ -352,14 +364,14 @@
 					$to_write[$key] = $this->data[$key] = $val;   // update internal data
 				}
 			}
-			if (!isset($to_write['info_id_parent'])) $to_write['info_id_parent'] = 0;	// must not be null
-
 			if (($this->data['info_id'] = $info_id))
 			{
 				$this->db->update($this->info_table,$to_write,array('info_id'=>$info_id),__LINE__,__FILE__);
 			}
 			else
 			{
+				if (!isset($to_write['info_id_parent'])) $to_write['info_id_parent'] = 0;	// must not be null
+
 				$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
 				$this->data['info_id']=$this->db->get_last_insert_id($this->info_table,'info_id');
 			}
@@ -466,15 +478,22 @@
 
 			if (is_array($query['col_filter']))
 			{
-				if (!$this->table_defs) $this->table_defs = $this->db->get_table_definitions('infolog',$this->info_table);
 				foreach($query['col_filter'] as $col => $data)
 				{
 					if (substr($col,0,5) != 'info_') $col = 'info_'.$col;
-					$data = $this->db->quote($data,$this->table_defs['fd'][$col]['type']);
 					if (!empty($data) && eregi('^[a-z_0-9]+$',$col))
 					{
-						$filtermethod .= $col != 'info_responsible' ? " AND $col=$data" :
-							" AND (info_responsible=$data OR info_responsible=0 AND info_owner=$data)";
+						if ($col == 'info_responsible')
+						{
+							$data = (int) $data;
+							if (!$data) continue;
+							$filtermethod .= " AND (".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$data,%' OR info_responsible='0' AND info_owner=$data)";
+						}
+						else
+						{
+							if (!$this->table_defs) $this->table_defs = $this->db->get_table_definitions('infolog',$this->info_table);
+							$filtermethod .= ' AND '.$col.'='.$this->db->quote($data,$this->table_defs['fd'][$col]['type']);
+						}	
 					}
 				}
 			}
@@ -541,7 +560,9 @@
 				$this->db->limit_query($sql="SELECT $distinct $this->info_table.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
 				//echo "<p>sql='$sql'</p>\n";
 				while (($info =& $this->db->row(true)))
-				{
+				{			
+					$info['info_responsible'] = $info['info_responsible'] ? explode(',',$info['info_responsible']) : array();
+
 					$ids[$info['info_id']] =& $info;
 				}
 			}

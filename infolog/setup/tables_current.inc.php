@@ -21,7 +21,7 @@
 				'info_subject' => array('type' => 'varchar','precision' => '255'),
 				'info_des' => array('type' => 'text'),
 				'info_owner' => array('type' => 'int','precision' => '4','nullable' => False),
-				'info_responsible' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'info_responsible' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '0'),
 				'info_access' => array('type' => 'varchar','precision' => '10','default' => 'public'),
 				'info_cat' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'info_datemodified' => array('type' => 'int','precision' => '8','nullable' => False),

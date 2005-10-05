@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['infolog']['name']      = 'infolog';
-	$setup_info['infolog']['version']   = '1.0.1.001';
+	$setup_info['infolog']['version']   = '1.0.1.002';
 	$setup_info['infolog']['app_order'] = 5;
 	$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 	$setup_info['infolog']['enable']    = 1;
@@ -69,6 +69,7 @@
 		 'appname' => 'etemplate',
 		 'versions' => Array('1.0.0','1.0.1')
 	);
+
 
 
 

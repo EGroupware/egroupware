@@ -189,7 +189,6 @@ project	infolog	de	Projekt
 re:	infolog	de	Re:
 read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id lesen.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
-reject	infolog	de	Absage
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
 responsible	infolog	de	Verantwortlich
@@ -209,6 +208,7 @@ select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen
 select an entry to link with	infolog	de	einen Eintrag zum Verküpfen auswählen
 select to filter by owner	infolog	de	Besiter zum Filtern auswählen
 select to filter by responsible	infolog	de	Verantwortlichen zum Filtern auswählen
+sets the status of this entry to done	infolog	de	Setzt den Status dieses Eintrags auf erledigt
 should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	de	Soll InfoLog die offenen Einträge - nicht beendete Aufgaben, Anrufe oder Notizen - auf der Startsteite anzeigen. Funktioniert nur, wenn Sie keine (einzelne) Anwendung für die Startseite ausgewählt haben (in Ihren Einstellungen).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.

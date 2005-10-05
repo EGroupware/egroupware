@@ -140,6 +140,7 @@
 				{
 					$this->customfields = $this->config->config_data['customfields'];
 				}
+				$this->user = $GLOBALS['egw_info']['user']['account_id'];
 			}
 			/**
 			 * @var int $tz_offset_s offset in secconds between user and server-time,
@@ -189,7 +190,13 @@
 		 */
 		function check_access( $info_id,$required_rights )
 		{
-			return $this->so->check_access( $info_id,$required_rights );
+			static $cache = array();
+			
+			if (isset($cache[$info_id][$required_rights]))
+			{
+				return $cache[$info_id][$required_rights];
+			}
+			return $cache[$info_id][$required_rights] = $this->so->check_access( $info_id,$required_rights );
 		}
 
 		/**
@@ -352,6 +359,7 @@
 		*/
 		function write($values,$check_defaults=True,$touch_modified=True)
 		{
+			//echo "boinfolog::write()values="; _debug_array($values);
 			// allow to (un)set check_defaults and touch_modified via values, eg. via xmlrpc
 			foreach(array('check_defaults','touch_modified') as $var)
 			{
@@ -369,9 +377,19 @@
 					unset($values[$key]);
 				}
 			}
-			$status_only = $values['info_id'] && $values['info_responsible'] == $this->user && 
-				!$this->check_access($values['info_id'],EGW_ACL_EDIT);	// responsible has implicit right to change status
-
+			if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
+			{
+				if (!isset($values['info_responsible']))
+				{
+					if (!($values_read = $this->read($values['info_id']))) return false;
+					$responsible =& $values_read['info_responsible'];
+				}
+				else
+				{
+					$responsible =& $values['info_responsible'];
+				}
+				$status_only = in_array($this->user, $responsible);	// responsible has implicit right to change status
+			}
 			if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
 			    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
 			{
@@ -407,7 +425,7 @@
 				{
 					$values['info_enddate'] = $this->user_time_now;	// set enddate to today if status == done
 				}
-				if ($values['info_responsible'] && $values['info_status'] == 'offer')
+				if (count($values['info_responsible']) && $values['info_status'] == 'offer')
 				{
 					$values['info_status'] = 'ongoing';   // have to match if not finished
 				}
