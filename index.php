@@ -110,8 +110,8 @@
 			'enable_nextmatchs_class' => True,
 			'currentapp' => 'eGroupWare'
 		);
-		$GLOBALS['egw']->common->phpgw_header();
-		$GLOBALS['egw']->common->phpgw_footer();
+		$GLOBALS['egw']->common->egw_header();
+		$GLOBALS['egw']->common->egw_footer();
 
 	}
 	else
@@ -121,7 +121,7 @@
 			$app = 'phpgwapi';
 		}
 
-		$GLOBALS[$class] = CreateObject(sprintf('%s.%s',$app,$class));
+		$GLOBALS[$class] =& CreateObject($app.'.'.$class);
 		if((is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions[$method]) && ! $invalid_data)
 		{
 			execmethod($_GET['menuaction']);
@@ -168,7 +168,7 @@
 
 		if(!isset($GLOBALS['egw_info']['nofooter']))
 		{
-			$GLOBALS['egw']->common->phpgw_footer();
+			$GLOBALS['egw']->common->egw_footer();
 		}
 	}
 ?>
