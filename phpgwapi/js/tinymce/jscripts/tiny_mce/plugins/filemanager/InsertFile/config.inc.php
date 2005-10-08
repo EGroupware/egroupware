@@ -4,7 +4,6 @@
 	* http://www.eGroupWare.org                                                *
 	* Authors Al Rashid <alrashid@klokan.sk>                                   *
 	*     and Xiang Wei ZHUO <wei@zhuo.org>                                    *
-	* Version.......:    1.1                                                   *
 	* Modified for eGW by Cornelius Weiss <egw@von-und-zu-weiss.de>            *
 	* --------------------------------------------                             *
 	* This program is free software; you can redistribute it and/or modify it  *

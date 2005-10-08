@@ -1,23 +1,19 @@
 <?php 
-   /**************************************************************************\
-   * eGroupWare - UploadImage-plugin for htmlArea                             *
-   * http://www.eGroupWare.org                                                *
-   * Written and (c) by Xiang Wei ZHUO <wei@zhuo.org>                         *
-   * Modified for eGW by and (c) by Pim Snel <pim@lingewoud.nl>               *
-   * --------------------------------------------                             *
-   * This program is free software; you can redistribute it and/or modify it  *
-   * under the terms of the GNU General Public License as published by the    *
-   * Free Software Foundation; version 2 of the License.                      *
-   * --------------------------------------------                             *
-   * Title.........:	Thumbnail generator, with cache.                      *
-   * Version.......:	1.01                                                  *
-   * Author........:	Xiang Wei ZHUO <wei@zhuo.org>                         *
-   * Notes.........:	Configuration in config.inc.php                       *
-   *                                                                          *
-   * Functions                                                                *
-   * - if the thumbnail does not exists or the source file is newer, create a *
-   * new thumbnail.                                                           *
-   \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Insert File Dialog, File Manager -plugin for tinymce        *
+	* http://www.eGroupWare.org                                                *
+	* Authors Al Rashid <alrashid@klokan.sk>                                   *
+	*     and Xiang Wei ZHUO <wei@zhuo.org>                                    *
+	* Modified for eGW by Cornelius Weiss <egw@von-und-zu-weiss.de>            *
+	* --------------------------------------------                             *
+	* This program is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU General Public License as published by the    *
+	* Free Software Foundation; version 2 of the License.                      *
+	*                                                                          *
+	* Functions                                                                *
+	* - if the thumbnail does not exists or the source file is newer, create a *
+	* new thumbnail.                                                           *
+	\**************************************************************************/
 
    /* $id */
 

@@ -1,5 +1,16 @@
-<?php
-
+<?php	
+	/**************************************************************************\
+	* eGroupWare - Insert File Dialog, File Manager -plugin for tinymce        *
+	* http://www.eGroupWare.org                                                *
+	* Authors Al Rashid <alrashid@klokan.sk>                                   *
+	*     and Xiang Wei ZHUO <wei@zhuo.org>                                    *
+	* Modified for eGW by Cornelius Weiss <egw@von-und-zu-weiss.de>            *
+	* --------------------------------------------                             *
+	* This program is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU General Public License as published by the    *
+	* Free Software Foundation; version 2 of the License.                      *
+	\**************************************************************************/
+	
 class view_text {
 
 	function folder_item($params)

@@ -1,13 +1,16 @@
 <?php
-/***********************************************************************
-** Title.........:    Insert File Dialog, File Manager
-** Version.......:    1.1
-** Authors.......:    Al Rashid <alrashid@klokan.sk>
-**                    Xiang Wei ZHUO <wei@zhuo.org>
-** Filename......:    insert_file.php
-** URL...........:    http://alrashid.klokan.sk/insFile/
-** Last changed..:    23 July 2004
-***********************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Insert File Dialog, File Manager -plugin for tinymce        *
+	* http://www.eGroupWare.org                                                *
+	* Authors Al Rashid <alrashid@klokan.sk>                                   *
+	*     and Xiang Wei ZHUO <wei@zhuo.org>                                    *
+	* Modified for eGW by Cornelius Weiss <egw@von-und-zu-weiss.de>            *
+	* --------------------------------------------                             *
+	* This program is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU General Public License as published by the    *
+	* Free Software Foundation; version 2 of the License.                      *
+	\**************************************************************************/
+	
 require('config.inc.php');
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -22,8 +25,7 @@ require('config.inc.php');
 	echo '<meta http-equiv="Content-Type" content="text/html; charset='.$MY_CHARSET.'" />'."\n";
 	echo '<meta name="author" content="AlRashid, www: http://alrashid.klokan.sk; mailto:alrashid@klokan.sk" />'."\n";
 ?>
-<script type="text/javascript" src="js/popup.js"></script>
-<script type="text/javascript" src="js/dialog.js"></script>
+
 <script language="javascript" src="../../../tiny_mce_popup.js"></script>
 <style type="text/css">
 	body { padding: 5px; }
@@ -255,7 +257,7 @@ function renameFile() {
 	for (var i=0; i<fileItemsLength; i++) {
 		var strId = fileItems[i].getAttribute("id").toString();
 		var trId = parseInt(strId.substring(1, strId.length));
-		var        newname = getNewFileName(fileManager.fileJSArray[trId][1]);
+		var newname = getNewFileName(fileManager.fileJSArray[trId][1]);
 		if (!newname) continue;
 		if (newname == fileManager.fileJSArray[trId][1]) continue;
 			var i_field = fileManager.document.createElement('INPUT');
@@ -274,25 +276,6 @@ function renameFile() {
 	postForm2.submit();
 	}
 
-function moveFile() {
-	var folderItems = fileManager.sta.getSelectedItems();
-	var folderItemsLength = folderItems.length;
-	var fileItems = fileManager.stb.getSelectedItems();
-	var fileItemsLength = fileItems.length;
-	var postForm2 = fileManager.document.getElementById('form2');
-	if ((folderItemsLength == 0) && (fileItemsLength == 0)) return false;
-	if (!confirm('<?php echo $MY_MESSAGES['renamewarning']; ?>')) return false;
-	var postForm2 = fileManager.document.getElementById('form2');
-	Dialog("move.php", function(param) {
-		if (!param) // user must have pressed Cancel
-			return false;
-		else {
-			postForm2.elements["newpath"].value=param['newpath'];
-			moveFiles();
-		}
-	}, null);
-}
-
 function changeview(view){
 	if(view.length > 1){
 		var postForm2 = fileManager.document.getElementById('form2');
@@ -300,35 +283,6 @@ function changeview(view){
 		postForm2.submit();
 	}
 	
-}
-
-function moveFiles() {
-	var folderItems = fileManager.sta.getSelectedItems();
-	var folderItemsLength = folderItems.length;
-	var fileItems = fileManager.stb.getSelectedItems();
-	var fileItemsLength = fileItems.length;
-	var postForm2 = fileManager.document.getElementById('form2');
-	for (var i=0; i<folderItemsLength; i++) {
-		var strId = folderItems[i].getAttribute("id").toString();
-		var trId = parseInt(strId.substring(1, strId.length));
-			var i_field = fileManager.document.createElement('INPUT');
-		i_field.type = 'hidden';
-		i_field.name = 'folders[' + i.toString() + ']';
-			i_field.value = fileManager.folderJSArray[trId][1];
-		postForm2.appendChild(i_field);
-	}
-	for (var i=0; i<fileItemsLength; i++) {
-		var strId = fileItems[i].getAttribute("id").toString();
-		var trId = parseInt(strId.substring(1, strId.length));
-		var i_field = fileManager.document.createElement('INPUT');
-		i_field.type = 'hidden';
-		i_field.name = 'files[' + i.toString() + ']';
-			i_field.value = fileManager.fileJSArray[trId][1];
-		postForm2.appendChild(i_field);
-	}
-	changeLoadingStatus('load');
-	postForm2.elements["action"].value="move";
-	postForm2.submit();
 }
 
 function openFile() {
@@ -638,10 +592,7 @@ function showAction(action)
                                                         echo '<a href="#" onClick="javascript:deleteFile();"><img src="img/remove.png" width="18" height="18" border="0" title="'.$MY_MESSAGES['delete'].'" /></a>';
                                                 }
                                                 if ($MY_ALLOW_RENAME) {
-                                                        echo '<a href="#" onClick="javascript:renameFile();"><img src="img/revert.png" width="18" height="18" border="0" title="'.$MY_MESSAGES['rename'].'" /></a>';
-                                                }
-                                                if ($MY_ALLOW_MOVE) {
-                                                        echo '<a href="#" onClick="javascript:moveFile();"><img src="img/move.png" width="18" height="18" border="0" title="'.$MY_MESSAGES['move'].'" /></a>';
+                                                        echo '<a href="#" onClick="javascript:renameFile();"><img src="img/revert.png" width="18" height="18" border="0" title="'.$MY_MESSAGES['move'].'" /></a>';
                                                 }
                                                 echo '<a href="#" onClick="javascript:openFile();"><img src="img/thumbnail.png"  width="18" height="18" border="0" title="'.$MY_MESSAGES['openfile'].'" /></a>';
                                                 echo '|';

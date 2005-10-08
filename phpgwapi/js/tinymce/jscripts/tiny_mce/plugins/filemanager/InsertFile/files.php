@@ -1,13 +1,16 @@
 <?php
-/***********************************************************************
-** Title.........:    Insert File Dialog, File Manager
-** Version.......:    1.1
-** Authors.......:    Al Rashid <alrashid@klokan.sk>
-**                    Xiang Wei ZHUO <wei@zhuo.org>
-** URL...........:    http://alrashid.klokan.sk/insFile/
-** Filename......:    files.php
-** Last changed..:    23 July 2004
-***********************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Insert File Dialog, File Manager -plugin for tinymce        *
+	* http://www.eGroupWare.org                                                *
+	* Authors Al Rashid <alrashid@klokan.sk>                                   *
+	*     and Xiang Wei ZHUO <wei@zhuo.org>                                    *
+	* Modified for eGW by Cornelius Weiss <egw@von-und-zu-weiss.de>            *
+	* --------------------------------------------                             *
+	* This program is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU General Public License as published by the    *
+	* Free Software Foundation; version 2 of the License.                      *
+	\**************************************************************************/
+
 require('config.inc.php');
 require('functions.php');
 require('view_text.php');
@@ -301,18 +304,6 @@ function draw_no_dir() {
         color:                HighlightText;
 }
 
-
-/*
-table {
-        border-collapse:        collapse;
-        border:                                1px solid ThreeDShadow;
-        border:                                1px solid;
-        border-color:                ThreeDShadow ThreeDHighLight
-                                                ThreeDHighLight ThreeDShadow;
-
-        background:                        Window;
-}
-*/
 td {
         font:                                icon;
         padding:                        2px 5px;
