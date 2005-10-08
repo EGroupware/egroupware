@@ -224,9 +224,15 @@ class bo_resources
 	 */
 	function delete($res_id)
 	{
-		$this->remove_picture($res_id);
- 		$this->link->unlink(0,'resources',$res_id);
-		return $this->so->delete(array('res_id'=>$res_id)) ? false : lang('Something went wrong by deleting resource');
+		if ($this->so->delete(array('res_id'=>$res_id)))
+		{
+			$this->remove_picture($res_id);
+	 		$this->link->unlink(0,'resources',$res_id);
+	 		// delete the resource from the calendar
+	 		ExecMethod('calendar.socal.change_delete_user','r'.$res_id);
+	 		return false;
+		}
+		return lang('Something went wrong by deleting resource');
 	}
 	
 	/**
@@ -255,7 +261,7 @@ class bo_resources
 	 */
 	function get_calendar_info($res_id)
 	{
-		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true)."</p>\n";
+		//echo "<p>bo_resources::get_calendar_info(".print_r($res_id,true).")</p>\n";
 		if(!is_array($res_id) && $res_id < 1) return;
 
 		$data = $this->so->search(array('res_id' => $res_id),'res_id,cat_id,name,useable');
