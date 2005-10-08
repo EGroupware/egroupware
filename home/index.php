@@ -262,14 +262,16 @@ foreach($sorted_apps as $appname)
 			$GLOBALS['tpl']->pfp('out','begin_row');
 			$tropen=1;
 		}
-		$tdwidth = ($thisd==2)?'50':'100';
-		$colspan = ($thisd==2)?'1':'2';
+		$var['tdwidth'] = ($thisd==2)?'50':'100';
+		$var['colspan'] = ($thisd==2)?'1':'2';
 		
-		$result = $GLOBALS['phpgw']->hooks->single('home',$appname);
-		$var['colspan'] = $colspan;
-		$var['tdwidth'] = $tdwidth;
-		$var['result'] = $result;
-		
+		ob_start();
+		$var['content'] = $GLOBALS['phpgw']->hooks->single('home',$appname);
+		if (!$var['content'] || $var['content'] == 1)	// content has been echoed and not returned
+		{
+			$var['content'] = ob_get_contents();
+			ob_end_clean();
+		}
 		$GLOBALS['tpl']->set_var($var);
 				
 		$GLOBALS['tpl']->pfp('out','cell');
