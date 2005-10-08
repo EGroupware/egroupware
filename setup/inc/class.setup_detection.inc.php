@@ -188,7 +188,10 @@
 							/* Only set this if it has not already failed to upgrade - Milosch */
 							if($setup_info[$key]['status'] != 'F')//&& $setup_info[$key]['status'] != 'C')
 							{
-								if($setup_info[$key]['status'] == 'C')
+								/* Added check for status U - uninstalled apps carry this flag (upgrade from nothing == install).
+								 * This should fix apps showing post-install dep failure when they are not yet installed.
+								 */
+								if($setup_info[$key]['status'] == 'C' || $setup_info[$key]['status'] == 'U')
 								{
 									$setup_info[$key]['status'] = 'D';
 								}
