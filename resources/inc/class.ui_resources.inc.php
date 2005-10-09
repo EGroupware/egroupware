@@ -52,10 +52,11 @@ class ui_resources
 	 */
 	function index($content='')
 	{
-// 		_debug_array($content);
 		if (is_array($content))
 		{
 			$sessiondata = $content['nm'];
+			unset($sessiondata['rows']);
+			$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
 			
 			if (isset($content['back']))
 			{
@@ -64,31 +65,29 @@ class ui_resources
 				return $this->index();
 			}
 			if (isset($content['btn_delete_selected']))
-			{	
-				foreach($content['nm']['rows']['checkbox'] as $res_id)
+			{
+				foreach($content['nm']['rows'] as $row)
 				{
-					$msg .= '<p>'. $this->bo->delete($res_id). '</p><br>';
+					if($res_id = $row['checkbox'][0])
+					{
+						$msg .= '<p>'. $this->bo->delete($res_id). '</p><br>';
+					}
 				}
 				return $this->index($msg);
 			}
 			
-			if (isset($content['nm']['rows']))
+			foreach($content['nm']['rows'] as $row)
 			{
-				unset($sessiondata['rows']);
-				$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
-				
-				unset($content['nm']['rows']['checkbox']);
-				switch (key($content['nm']['rows']))
+				if(isset($row['delete']))
 				{
-					case 'delete':
-						list($id) = each($content['nm']['rows']['delete']);
-						return $this->index($this->bo->delete($id));
-					case 'view_acc':
-						list($id) = each($content['nm']['rows']['view_acc']);
- 						$sessiondata['view_accs_of'] = $id;
-						$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
-						return $this->index();
-					case 'buyable':
+					$res_id = array_search('pressed',$row['delete']);
+					return $this->index($this->bo->delete($res_id));
+				}
+				if(isset($row['view_acc']))
+				{
+					$sessiondata['view_accs_of'] = array_search('pressed',$row['view_acc']);
+					$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$sessiondata);
+					return $this->index();
 				}
 			}
 		}
@@ -175,7 +174,7 @@ class ui_resources
 	 * @param $content   Content from the eTemplate Exec call or id on inital call
 	 */
 	function edit($content=0,$accessory_of = -1)
-	{
+	{	
 		if (is_array($content))
 		{
 			if(isset($content['save']) || isset($content['delete']))
@@ -243,7 +242,7 @@ class ui_resources
 			$sel_options['cat_id'] = array($catofmaster => $sel_options['cat_id'][$catofmaster]);
 		}
 		
-		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug
+// 		$content['general|page|pictures|links'] = 'resources.edit_tabs.page';  //debug
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
@@ -283,6 +282,27 @@ class ui_resources
 	 */
 	function show($res_id=0)
 	{
+		if (is_array($content = $res_id))
+		{
+			if(isset($content['btn_delete']))
+			{
+				$content['msg'] = $this->bo->delete($content['res_id']);
+				if($content['msg'])
+				{
+					return $this->show($content);
+				}
+				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
+					array('menuaction' => 'resources.ui_resources.index'))."';";
+				$js .= 'window.close();';
+				echo "<html><body><script>$js</script></body></html>\n";
+				$GLOBALS['egw']->common->egw_exit();
+			}
+			if(isset($content['btn_edit']))
+			{
+				return $this->edit($content['res_id']);
+			}
+			
+		}
 		if (isset($_GET['res_id'])) $res_id = $_GET['res_id'];
 
 		$content = array('res_id' => $res_id);
@@ -329,7 +349,7 @@ class ui_resources
 		$this->tmpl->exec('resources.ui_resources.show',$content,$sel_options,$no_button,$preserv,2);
 		
 	}
-
+	
 	/**
 	 * select resources
 	 *
