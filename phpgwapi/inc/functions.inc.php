@@ -107,7 +107,7 @@
 	}
 	else	// on "normal" pageview
 	{
-		$GLOBALS['egw_info']['user']['domain'] = $_REQUEST['domain'];
+		$GLOBALS['egw_info']['user']['domain'] = get_var('domain',array('GET','COOKIE'),false);
 	}
 
 	if (@isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]))

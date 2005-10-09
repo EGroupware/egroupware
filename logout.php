@@ -64,5 +64,5 @@
 		$GLOBALS['egw']->session->phpgw_setcookie(EGW_PHPSESSID);
 	}
 
-	$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1');
+	$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain']);
 ?>

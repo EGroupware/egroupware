@@ -384,7 +384,7 @@
 	if(!$GLOBALS['egw_info']['server']['show_domain_selectbox'])
 	{
 		/* trick to make domain section disapear */
-		$tmpl->set_var('domain_selection','');
+		$tmpl->set_var('domain_selection','<input type="hidden" name="logindomain" value="'.htmlspecialchars($GLOBALS['egw_info']['user']['domain']).'" />');
 	}
 
 	foreach($_GET as $name => $value)
