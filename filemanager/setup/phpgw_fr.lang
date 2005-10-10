@@ -62,7 +62,7 @@ go to your home directory	filemanager	fr	Aller dans votre répertoire "home" (mai
 go to:	filemanager	fr	Aller à:
 go up	filemanager	fr	Remonter
 home	filemanager	fr	Maison
-location	filemanager	fr	Location
+location	filemanager	fr	Emplacement
 locked	filemanager	fr	Verouillé
 mime type	filemanager	fr	Type MIME
 modified	filemanager	fr	Modifié
