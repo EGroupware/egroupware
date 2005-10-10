@@ -885,7 +885,13 @@
 					if (!$styles) $styles = 'width: 100%; min-width: 500px; height: 300px;';	// default HTMLarea style in html-class
 					if (!$readonly)
 					{
-						$html .= $this->html->htmlarea($form_name,$value,$styles,'',$plugins,'',true);
+// 						$html .= $this->html->htmlarea($form_name,$value,$styles,'',$plugins,'',true);
+						$init = 'theme : "advanced",
+							theme_advanced_toolbar_location : "top",
+							plugins : "fullscreen",
+							theme_advanced_buttons3_add : "fullscreen"';
+						$html .= $this->html->tinymce($form_name,$value,$styles,$init);
+						
 						$GLOBALS['phpgw_info']['etemplate']['to_process'][$form_name] =  array(
 							'type'      => $cell['type'],
 							'needed'    => $cell['needed'],
