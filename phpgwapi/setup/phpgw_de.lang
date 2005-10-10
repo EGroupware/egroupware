@@ -227,7 +227,7 @@ enabled	common	de	Verfügbar
 end date	common	de	Enddatum
 end time	common	de	Endzeit
 enlarge editor	htmlarea	de	Editor vergrößern
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre eGroupWare erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware &nbsp; or &nbsp; /egroupware<br><b> KEINEN Slash "/" am ende</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	Bitte geben Sie die URL ein über welche Ihre eGroupWare erreichbar sein wird.<br>Beispiel: http://www.domain.de/egroupware   or   /egroupware<br><b> KEINEN Slash "/" am ende</b>
 entry has been deleted sucessfully	common	de	Eintrag wurde erfolgreich gelöscht
 entry updated sucessfully	common	de	Eintrag wurde erfolgreich aktualisiert
 equatorial guinea	common	de	EQUATORIAL GUINEA
@@ -610,7 +610,7 @@ select date	common	de	Datum auswählen
 select group	common	de	Gruppe auswählen
 select home email address	common	de	private Email-Adresse auswählen
 select multiple accounts	common	de	mehrere Benutzer auswählen
-select one	common	de	Einen auswählen
+select one	common	de	Eine(n) auswählen
 select user	common	de	Benutzer auswählen
 select work email address	common	de	geschäftl. Email-Addresse auswählen
 selection	common	de	Auswahl
@@ -791,3 +791,183 @@ your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
 yugoslavia	common	de	JUGOSLAVIEN
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
+only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	de	Bitte laden Sie eine Datei mit einer Dateiendung hoch, z. B. "bild.jpg".
+loading files	tinymce	de	Lade Dateien...
+uploading...	tinymce	de	Lade hoch...
+file not found.	tinymce	de	Datei nicht gefunden.
+unlink failed.	tinymce	de	L&ouml;schen fehlgeschlagen.
+rmdir failed.	tinymce	de	Verzeichnis l&ouml;schen fehlgeschlagen.
+folder not found.	tinymce	de	Verzeichnis nicht gefunden.
+no permission to create folder.	tinymce	de	Keine ausreichende Berechtigung zum Erstellen eines Verzeichnisses.
+path not found.	tinymce	de	Pfad nicht gefunden.
+folder name missing.	tinymce	de	Verzeichnisname fehlt.
+folder with specified new name already exists. folder was not renamed/moved.	tinymce	de	Verzeichnis existiert bereits.
+mkdir failed.	tinymce	de	Verzeichnis erstellen fehlgeschlagen.
+no permission to upload.	tinymce	de	Keine ausreichende Berechtigung zum Hochladen von Dateien.
+files with this extension are not allowed.	tinymce	de	Dateien mit dieser Dateiendung sind nicht erlaubt.
+file exceeds the size limit	tinymce	de	Datei &uuml;berschreitet die zul&auml;ssige Kapazit&auml;t.
+file was not uploaded.	tinymce	de	Datei wurde nicht hochgeladen.
+no files...	tinymce	de	Keine Dateien...
+configuration problem 	tinymce	de	Konfigurationsproblem 
+refresh	tinymce	de	Aktualisieren
+folder	tinymce	de	Verzeichnis
+name	tinymce	de	Name
+size	tinymce	de	Gr&ouml;&szlig;e
+date modified	tinymce	de	Ge&auml;ndert am
+url	tinymce	de	Pfad
+comment	tinymce	de	Kommentar
+caption	tinymce	de	Text
+upload	tinymce	de	Hochladen
+insert file	tinymce	de	Datei einf&uuml;gen
+file manager	tinymce	de	Datei Manager
+directory	tinymce	de	Verzeichnis
+you must enter the url	tinymce	de	Bitte geben Sie eine URL ein.
+please enter the caption text	tinymce	de	Bitte geben Sie einen Text f&uuml;r die Datei ein.
+new folder	tinymce	de	Name des Verzeichnisses:
+cancel	tinymce	de	Abbrechen
+bold	tinymce	de	Fett
+italic	tinymce	de	Kursiv
+underline	tinymce	de	Unterstrichen
+striketrough	tinymce	de	Durchgestrichen
+align left	tinymce	de	Linksb&uuml;ndig
+align center	tinymce	de	Zentriert
+align right	tinymce	de	Rechtsb&uuml;ndig
+align full	tinymce	de	Blocksatz
+unordered list	tinymce	de	Aufz&auml;hlungszeichen
+ordered list	tinymce	de	Nummerierung
+outdent	tinymce	de	Einzug verkleinern
+indent	tinymce	de	Einzug vergr&ouml;ssern
+undo	tinymce	de	R&uuml;ckg&auml;ngig
+redo	tinymce	de	Wiederholen
+insert/edit link	tinymce	de	Link einf&uuml;gen/bearbeiten
+unlink	tinymce	de	Link entfernen
+insert/edit image	tinymce	de	Bild einf&uuml;gen/bearbeiten
+cleanup messy code	tinymce	de	unsauberen Code aufr&auml;umen
+a editor instance must be focused before using this command.	tinymce	de	Eine Bearbeitungsinstanz muss f&uuml;r diesen Befehl hervorgehoben.
+do you want to use the wysiwyg mode for this textarea?	tinymce	de	Wollen Sie den WYSIWYG Modus f&uuml;r dieses Textfeld benutzen?
+insert/edit link	tinymce	de	Link einf&uuml;gen/bearbeiten
+insert	tinymce	de	Einf&uuml;gen
+update	tinymce	de	Aktualisieren
+cancel	tinymce	de	Abbrechen
+link url	tinymce	de	Link URL
+target	tinymce	de	Ziel
+open link in the same window	tinymce	de	Link in gleichen Fester &ouml;ffnen
+open link in a new window	tinymce	de	Link in neuen Fenster &ouml;ffnen
+insert/edit image	tinymce	de	Bild einf&uuml;gen/bearbeiten
+image url	tinymce	de	Bild URL
+image description	tinymce	de	Bild Beschreibung
+help	tinymce	de	Hilfe
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	de	Kopieren/Ausschneiten/Einf&uuml;gen ist mit Mozilla und Firefox nicht verf&uuml;gbar.\nWollen Sie mehr Informationen dar&uuml;ber erhalten?
+bold	tinymce	de	Fett
+italic	tinymce	de	Kursiv
+underline	tinymce	de	Unterstrichen
+striketrough	tinymce	de	Durchgestrichen
+align left	tinymce	de	Linksb&uuml;ndig
+align center	tinymce	de	Zentriert
+align right	tinymce	de	Rechtsb&uuml;ndig
+align full	tinymce	de	Blocksatz
+unordered list	tinymce	de	Aufz&auml;hlungszeichen
+ordered list	tinymce	de	Nummerierung
+outdent	tinymce	de	Einzug verkleinern
+indent	tinymce	de	Einzug vergr&ouml;ssern
+undo	tinymce	de	R&uuml;ckg&auml;ngig
+redo	tinymce	de	Wiederholen
+insert/edit link	tinymce	de	Link einf&uuml;gen/bearbeiten
+unlink	tinymce	de	Link entfernen
+insert/edit image	tinymce	de	Bild einf&uuml;gen/bearbeiten
+cleanup messy code	tinymce	de	unsauberen Code aufr&auml;umen
+a editor instance must be focused before using this command.	tinymce	de	Eine Bearbeitungsinstanz muss f&uuml;r diesen Befehl hervorgehoben.
+do you want to use the wysiwyg mode for this textarea?	tinymce	de	Wollen Sie den WYSIWYG Modus f&uuml;r dieses Textfeld benutzen?
+insert/edit link	tinymce	de	Link einf&uuml;gen/bearbeiten
+insert	tinymce	de	Einf&uuml;gen
+update	tinymce	de	Aktualisieren
+cancel	tinymce	de	Abbrechen
+link url	tinymce	de	Link URL
+target	tinymce	de	Ziel
+open link in the same window	tinymce	de	Link in gleichen Fester &ouml;ffnen
+open link in a new window	tinymce	de	Link in neuen Fenster &ouml;ffnen
+insert/edit image	tinymce	de	Bild einf&uuml;gen/bearbeiten
+image url	tinymce	de	Bild URL
+image description	tinymce	de	Bild Beschreibung
+help	tinymce	de	Hilfe
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	de	Kopieren/Ausschneiten/Einf&uuml;gen ist mit Mozilla und Firefox nicht verf&uuml;gbar.\nWollen Sie mehr Informationen dar&uuml;ber erhalten?
+no shadow	tinymce	de	Keinen Schatten
+image title	tinymce	de	Titel des Bildes
+for mouse over	tinymce	de	f&uuml;r Maus dar&uuml;ber
+for mouse out	tinymce	de	f&uuml;r Maus ausserhalb
+open in this window / frame	tinymce	de	Im selben Frame &ouml;ffnen
+open in parent window / frame	tinymce	de	Im dar&uuml;ber liegenden Frame &ouml;ffnen
+js-popup	tinymce	de	JS-Popup
+popup url	tinymce	de	Popup URL
+show statusbar	tinymce	de	Statusbar anzeigen
+show toolbars	tinymce	de	Toolbars anzeigen
+show menubar	tinymce	de	Menu anzeigen
+make window resizable	tinymce	de	Gr&ouml;&szlig;e &auml;nderbar
+please insert a name for the target or choose another option.	tinymce	de	Bitte geben Sie einen Namen f&uuml;r das Ziel an oder w&auml;hlen Sie eine andere Option.
+insert emotion	tinymce	de	Emotion einf&uuml;gen
+emotions	tinymce	de	Emotion
+flash-file (.swf)	tinymce	de	Flash-Datei
+size	tinymce	de	Gr&ouml;&szlig;e
+flash files	tinymce	de	Flash Dateien
+flash properties	tinymce	de	Flash properties
+run spell checking	tinymce	de	Rechtschreibpr&uuml;fung
+insert date	tinymce	de	Datum einf&uuml;gen
+insert time	tinymce	de	Zeit einf&uuml;gen
+preview	tinymce	de	Vorschau
+print	tinymce	de	Drucken
+save	tinymce	de	Speichern
+find	tinymce	de	Suchen
+find again	tinymce	de	Erneut suchen
+find/replace	tinymce	de	Suchen/Ersetzen
+the search has been compleated. the search string could not be found.	tinymce	de	Die Suche wurde abgeschlossen. Das Suchwort wurde nicht gefunden.
+find	tinymce	de	Suchen
+find/replace	tinymce	de	Suchen/Ersetzen
+all occurrences of the search string was replaced.	tinymce	de	Die Suche wurde abgeschlossen. Alle Vorkommen wurden ersetzt.
+find what	tinymce	de	Suchen nach
+replace with	tinymce	de	Ersetzem durch
+direction	tinymce	de	Suchrichtung
+up	tinymce	de	R&uuml;ckw&auml;rts
+down	tinymce	de	Vorw&auml;rts
+match case	tinymce	de	Gro&szlig;-/Kleinschreibung beachten
+find&nbsp;next	tinymce	de	Weiter suchen
+replace	tinymce	de	Ersetzen
+replace&nbsp;all	tinymce	de	Alle ersetzen
+cancel	tinymce	de	Abbrechen
+inserts a new table	tinymce	de	Neue Tabelle einf&uuml;gen / Tabelle bearbeiten
+insert row before	tinymce	de	Zeile davor einf&uuml;gen
+insert row after	tinymce	de	Zeile danach einf&uuml;gen
+delete row	tinymce	de	Zeile l&ouml;schen
+insert column before	tinymce	de	Spalte davor einf&uuml;gen
+insert column after	tinymce	de	 Spalte danach einf&uuml;gen
+remove col	tinymce	de	Spalte l&ouml;schen
+insert/modify table	tinymce	de	Tabelle Einf&uuml;gen/Bearbeiten
+width	tinymce	de	Breite
+height	tinymce	de	H&ouml;he
+columns	tinymce	de	Spalten
+rows	tinymce	de	Zeilen
+cellspacing	tinymce	de	Au&szlig;enabstand
+cellpadding	tinymce	de	Innenabstand
+border	tinymce	de	Rahmen
+alignment	tinymce	de	Ausrichten
+default	tinymce	de	Normal
+left	tinymce	de	Links
+right	tinymce	de	Rechts
+center	tinymce	de	Zentriert
+class	tinymce	de	Klasse
+table row properties	tinymce	de	Zeileneigenschaften
+table cell properties	tinymce	de	Zelleneigenschaften
+table row properties	tinymce	de	Reiheneigenschaften
+table cell properties	tinymce	de	Zelleneigenschaften
+vertical alignment	tinymce	de	Vertikale Ausrichtung
+top	tinymce	de	Oben
+bottom	tinymce	de	Unten
+table properties	tinymce	de	Tabelleneigenschaften
+border color	tinymce	de	Rahmenfarbe
+bg color	tinymce	de	Hintergrundfarbe
+merge table cells	tinymce	de	Merge table cells
+split table cells	tinymce	de	Split table cells
+merge table cells	tinymce	de	Merge table cells
+cut table row	tinymce	de	Cut table row
+copy table row	tinymce	de	Copy table row
+paste table row before	tinymce	de	Paste table row before
+paste table row after	tinymce	de	Paste table row after

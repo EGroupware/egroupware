@@ -783,3 +783,222 @@ your settings have been updated	common	en	Your settings have been Updated
 yugoslavia	common	en	YUGOSLAVIA
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
+only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	en	Only files with extensions are permited, e.g. "imagefile.jpg".
+loading files	tinymce	en	Loading files
+uploading...	tinymce	en	Uploading...
+no permission to delete file.	tinymce	en	No permission to delete file.
+file not found.	tinymce	en	File not found.
+unlink failed.	tinymce	en	Unlink failed.
+rmdir failed.	tinymce	en	Rmdir failed.
+folder not found.	tinymce	en	Folder not found.
+no permission to create folder.	tinymce	en	No permission to create folder.
+path not found.	tinymce	en	Path not found.
+folder name missing.	tinymce	en	Folder name missing.
+folder with specified new name already exists. folder was not renamed/moved.	tinymce	en	Folder with specified new name already exists. Folder was not renamed/moved.
+mkdir failed.	tinymce	en	Mkdir failed.
+no permission to upload.	tinymce	en	No permission to upload.
+files with this extension are not allowed.	tinymce	en	Files with this extension are not allowed.
+file exceeds the size limit	tinymce	en	File exceeds the size limit
+file was not uploaded.	tinymce	en	File was not uploaded.
+no files...	tinymce	en	No files...
+configuration problem 	tinymce	en	Configuration problem 
+delete	tinymce	en	Delete
+folder(s)	tinymce	en	folder(s)
+file(s)	tinymce	en	file(s)
+refresh	tinymce	en	Refresh
+folder	tinymce	en	Folder
+name	tinymce	en	Name
+size	tinymce	en	Size
+date modified	tinymce	en	Date Modified
+url	tinymce	en	URL
+comment	tinymce	en	Comment
+caption	tinymce	en	Caption
+upload	tinymce	en	Upload
+insert file	tinymce	en	Insert File
+file manager	tinymce	en	File manager
+directory	tinymce	en	Directory
+you must enter the url	tinymce	en	You must enter the URL
+please enter the caption text	tinymce	en	Please enter the caption text
+new folder	tinymce	en	New folder
+new folder name missing!	tinymce	en	New folder name missing!
+new folder name:	tinymce	en	New folder name:
+warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	en	Warning!\n Renaming or moving folders and files will break existing links in your documents. Continue?
+new file name:	tinymce	en	New file name:
+no permission to rename files and folders.	tinymce	en	No permission to rename files and folders.
+new file name missing!	tinymce	en	New file name missing!
+file with specified new name already exists. file was not renamed/moved.	tinymce	en	File with specified new name already exists. File was not renamed/moved.
+file already exists. file was not uploaded.	tinymce	en	File already exists. File was not uploaded.
+cancel	tinymce	en	Cancel
+ok	tinymce	en	OK
+open file in new window	tinymce	en	Open file in new window
+up	tinymce	en	Up
+rename	tinymce	en	Rename
+rename failed	tinymce	en	Rename failed
+move	tinymce	en	Move
+no permission to move files and folders.	tinymce	en	No permission to move files and folders.
+choose directory to move selected folders and files to.	tinymce	en	Choose directory to move selected folders and files to.
+use ctrl and/or shift to select multiple items.	tinymce	en	Use Ctrl and/or Shift to select multiple items.
+file:	tinymce	en	File:
+bold	tinymce	en	Bold
+italic	tinymce	en	Italic
+underline	tinymce	en	Underline
+striketrough	tinymce	en	Striketrough
+align left	tinymce	en	Align left
+align center	tinymce	en	Align center
+align right	tinymce	en	Align right
+align full	tinymce	en	Align full
+unordered list	tinymce	en	Unordered list
+ordered list	tinymce	en	Ordered list
+outdent	tinymce	en	Outdent
+indent	tinymce	en	Indent
+undo	tinymce	en	Undo
+redo	tinymce	en	Redo
+insert/edit link	tinymce	en	Insert/edit link
+unlink	tinymce	en	Unlink
+insert/edit image	tinymce	en	Insert/edit image
+cleanup messy code	tinymce	en	Cleanup messy code
+a editor instance must be focused before using this command.	tinymce	en	A editor instance must be focused before using this command.
+do you want to use the wysiwyg mode for this textarea?	tinymce	en	Do you want to use the WYSIWYG mode for this textarea?
+insert/edit link	tinymce	en	Insert/edit link
+insert	tinymce	en	Insert
+update	tinymce	en	Update
+cancel	tinymce	en	Cancel
+link url	tinymce	en	Link URL
+target	tinymce	en	Target
+open link in the same window	tinymce	en	Open link in the same window
+open link in a new window	tinymce	en	Open link in a new window
+insert/edit image	tinymce	en	Insert/edit image
+image url	tinymce	en	Image URL
+image description	tinymce	en	Image description
+help	tinymce	en	Help
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	en	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	en	Bold
+italic	tinymce	en	Italic
+underline	tinymce	en	Underline
+striketrough	tinymce	en	Striketrough
+align left	tinymce	en	Align left
+align center	tinymce	en	Align center
+align right	tinymce	en	Align right
+align full	tinymce	en	Align full
+unordered list	tinymce	en	Unordered list
+ordered list	tinymce	en	Ordered list
+outdent	tinymce	en	Outdent
+indent	tinymce	en	Indent
+undo	tinymce	en	Undo
+redo	tinymce	en	Redo
+insert/edit link	tinymce	en	Insert/edit link
+unlink	tinymce	en	Unlink
+insert/edit image	tinymce	en	Insert/edit image
+cleanup messy code	tinymce	en	Cleanup messy code
+a editor instance must be focused before using this command.	tinymce	en	A editor instance must be focused before using this command.
+do you want to use the wysiwyg mode for this textarea?	tinymce	en	Do you want to use the WYSIWYG mode for this textarea?
+insert/edit link	tinymce	en	Insert/edit link
+insert	tinymce	en	Insert
+update	tinymce	en	Update
+cancel	tinymce	en	Cancel
+link url	tinymce	en	Link URL
+target	tinymce	en	Target
+open link in the same window	tinymce	en	Open link in the same window
+open link in a new window	tinymce	en	Open link in a new window
+insert/edit image	tinymce	en	Insert/edit image
+image url	tinymce	en	Image URL
+image description	tinymce	en	Image description
+help	tinymce	en	Help
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	en	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+this is just a template popup	tinymce	en	This is just a template popup
+this is just a template button	tinymce	en	This is just a template button
+no shadow	tinymce	en	No shadow
+image title	tinymce	en	Image title
+for mouse over	tinymce	en	for mouse over
+for mouse out	tinymce	en	for mouse out
+open in this window / frame	tinymce	en	Open in this window / frame
+open in parent window / frame	tinymce	en	Open in parent window / frame
+open in top frame (replaces all frames)	tinymce	en	Open in top frame (replaces all frames)
+open in new window	tinymce	en	Open in new window
+open in the window	tinymce	en	Open in the window
+js-popup	tinymce	en	JS-Popup
+popup url	tinymce	en	Popup URL
+window name	tinymce	en	Window name
+show scrollbars	tinymce	en	Show scrollbars
+show statusbar	tinymce	en	Show statusbar
+show toolbars	tinymce	en	Show toolbars
+show menubar	tinymce	en	Show menubar
+show locationbar	tinymce	en	Show locationbar
+make window resizable	tinymce	en	Make window resizable
+size	tinymce	en	Size
+position (x/y)	tinymce	en	Position (X/Y)
+please insert a name for the target or choose another option.	tinymce	en	Please insert a name for the target or choose another option.
+direction right to left	tinymce	en	Direction right to left
+insert emotion	tinymce	en	Insert emotion
+emotions	tinymce	en	Emotions
+flash-file (.swf)	tinymce	en	Flash-File (.swf)
+size	tinymce	en	Size
+flash files	tinymce	en	Flash files
+flash properties	tinymce	en	Flash properties
+run spell checking	tinymce	en	Run spell checking
+insert date	tinymce	en	Insert date
+insert time	tinymce	en	Insert time
+paste as plain text	tinymce	en	Paste as Plain Text
+use ctrl+v on your keyboard to paste the text into the window.	tinymce	en	Use CTRL+V on your keyboard to paste the text into the window.
+keep linebreaks	tinymce	en	Keep linebreaks
+paste from word	tinymce	en	Paste from Word
+use ctrl+v on your keyboard to paste the text into the window.	tinymce	en	Use CTRL+V on your keyboard to paste the text into the window.
+select all	tinymce	en	Select All
+preview	tinymce	en	Preview
+print	tinymce	en	Print
+save	tinymce	en	Save
+find	tinymce	en	Find
+find again	tinymce	en	Find again
+find/replace	tinymce	en	Find/Replace
+the search has been compleated. the search string could not be found.	tinymce	en	The search has been compleated. The search string could not be found.
+find	tinymce	en	Find
+find/replace	tinymce	en	Find/Replace
+all occurrences of the search string was replaced.	tinymce	en	All occurrences of the search string was replaced.
+find what	tinymce	en	Find what
+replace with	tinymce	en	Replace with
+direction	tinymce	en	Direction
+up	tinymce	en	Up
+down	tinymce	en	Down
+match case	tinymce	en	Match case
+find&nbsp;next	tinymce	en	Find&nbsp;next
+replace	tinymce	en	Replace
+replace&nbsp;all	tinymce	en	Replace&nbsp;all
+cancel	tinymce	en	Cancel
+inserts a new table	tinymce	en	Inserts a new table
+insert row before	tinymce	en	Insert row before
+insert row after	tinymce	en	Insert row after
+delete row	tinymce	en	Delete row
+insert column before	tinymce	en	Insert column before
+insert column after	tinymce	en	Insert column after
+remove col	tinymce	en	Remove col
+insert/modify table	tinymce	en	Insert/Modify table
+width	tinymce	en	Width
+height	tinymce	en	Height
+columns	tinymce	en	Columns
+rows	tinymce	en	Rows
+cellspacing	tinymce	en	Cellspacing
+cellpadding	tinymce	en	Cellpadding
+border	tinymce	en	Border
+alignment	tinymce	en	Alignment
+default	tinymce	en	Default
+left	tinymce	en	Left
+right	tinymce	en	Right
+center	tinymce	en	Center
+class	tinymce	en	Class
+table row properties	tinymce	en	Table row properties
+table cell properties	tinymce	en	Table cell properties
+table row properties	tinymce	en	Table row properties
+table cell properties	tinymce	en	Table cell properties
+vertical alignment	tinymce	en	Vertical alignment
+top	tinymce	en	Top
+bottom	tinymce	en	Bottom
+table properties	tinymce	en	Table properties
+border color	tinymce	en	Border color
+bg color	tinymce	en	Bg color
+merge table cells	tinymce	en	Merge table cells
+split table cells	tinymce	en	Split table cells
+merge table cells	tinymce	en	Merge table cells
+cut table row	tinymce	en	Cut table row
+copy table row	tinymce	en	Copy table row
+paste table row before	tinymce	en	Paste table row before
+paste table row after	tinymce	en	Paste table row after
