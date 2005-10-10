@@ -626,3 +626,155 @@ your settings have been updated	common	pl	Twoje ustawienia zosta�y uaktualnione
 yugoslavia	common	pl	JUGOS�AWIA
 zambia	common	pl	ZAMBIA
 zimbabwe	common	pl	ZIMBABWE
+bold	tinymce	pl	Pogrubienie
+italic	tinymce	pl	Kursywa
+underline	tinymce	pl	Podkreślenie
+striketrough	tinymce	pl	Przekreślenie
+align left	tinymce	pl	Otaczanie z lewej
+align center	tinymce	pl	Wyśrodkowanie
+align right	tinymce	pl	Otaczanie z prawej
+align full	tinymce	pl	Justowanie
+unordered list	tinymce	pl	Lista nie numerowana
+ordered list	tinymce	pl	Lista numerowana
+outdent	tinymce	pl	Zmniejsz wcięcie
+indent	tinymce	pl	Zwiększ wcięcie
+undo	tinymce	pl	Cofnij
+redo	tinymce	pl	Ponów
+insert/edit link	tinymce	pl	Wstaw/Edytuj link
+unlink	tinymce	pl	Skasuj link
+insert/edit image	tinymce	pl	Wstaw/Edytuj obrazek
+cleanup messy code	tinymce	pl	Wyczyść niepotrzebny kod
+a editor instance must be focused before using this command.	tinymce	pl	Musisz zaznaczyć cokolwiek przed użyciem tej komendy.
+do you want to use the wysiwyg mode for this textarea?	tinymce	pl	Czy chcesz użyć edytora WYSIWIG dla tego pola ?
+insert/edit link	tinymce	pl	Wstaw/Edytuj Link
+insert	tinymce	pl	Wstaw
+update	tinymce	pl	Zmień
+cancel	tinymce	pl	Wyjdź
+link url	tinymce	pl	Adres URL
+target	tinymce	pl	Cel
+open link in the same window	tinymce	pl	Otwórz w tym samym oknie
+open link in a new window	tinymce	pl	Otwórz w nowym oknie
+insert/edit image	tinymce	pl	Wstaw/Edytuj obrazek
+image url	tinymce	pl	Adres URL obrazka
+image description	tinymce	pl	Opis obrazka
+help	tinymce	pl	Pomoc
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	pl	Kopiowanie/Wycinanie/Wklejanie nie jest obsługiwane w przeglądarkach Mozilla and Firefox.\nPotrzebujesz więcej informacji na ten temat?
+bold	tinymce	pl	Pogrubienie
+italic	tinymce	pl	Kursywa
+underline	tinymce	pl	Podkreślenie
+striketrough	tinymce	pl	Przekreślenie
+align left	tinymce	pl	Otaczanie z lewej
+align center	tinymce	pl	Wyśrodkowanie
+align right	tinymce	pl	Otaczanie z prawej
+align full	tinymce	pl	Justowanie
+unordered list	tinymce	pl	Lista nie numerowana
+ordered list	tinymce	pl	Lista numerowana
+outdent	tinymce	pl	Zmniejsz wcięcie
+indent	tinymce	pl	Zwiększ wcięcie
+undo	tinymce	pl	Cofnij
+redo	tinymce	pl	Ponów
+insert/edit link	tinymce	pl	Wstaw/Edytuj link
+unlink	tinymce	pl	Skasuj link
+insert/edit image	tinymce	pl	Wstaw/Edytuj obrazek
+cleanup messy code	tinymce	pl	Wyczyść niepotrzebny kod
+a editor instance must be focused before using this command.	tinymce	pl	Musisz zaznaczyć cokolwiek przed użyciem tej komendy.
+do you want to use the wysiwyg mode for this textarea?	tinymce	pl	Czy chcesz użyć edytora WYSIWIG dla tego pola ?
+insert/edit link	tinymce	pl	Wstaw/Edytuj Link
+insert	tinymce	pl	Wstaw
+update	tinymce	pl	Zmień
+cancel	tinymce	pl	Wyjdź
+link url	tinymce	pl	Adres URL
+target	tinymce	pl	Cel
+open link in the same window	tinymce	pl	Otwórz w tym samym oknie
+open link in a new window	tinymce	pl	Otwórz w nowym oknie
+insert/edit image	tinymce	pl	Wstaw/Edytuj obrazek
+image url	tinymce	pl	Adres URL obrazka
+image description	tinymce	pl	Opis obrazka
+help	tinymce	pl	Pomoc
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	pl	Kopiowanie/Wycinanie/Wklejanie nie jest obsługiwane w przeglądarkach Mozilla and Firefox.\nPotrzebujesz więcej informacji na ten temat?
+no shadow	tinymce	pl	Brak cienia
+image title	tinymce	pl	Tytuł obrazka
+for mouse over	tinymce	pl	po najechaniu myszy
+for mouse out	tinymce	pl	po odjechaniu myszy
+open in this window / frame	tinymce	pl	Otwórz w tym samym oknie
+open in parent window / frame	tinymce	pl	Open in parent window / frame
+open in top frame (replaces all frames)	tinymce	pl	Open in top frame (replaces all frames)
+open in new window	tinymce	pl	Otwórz w nowym oknie
+open in the window	tinymce	pl	Open in the window
+js-popup	tinymce	pl	JS-Popup
+popup url	tinymce	pl	Popup URL
+window name	tinymce	pl	Window name
+show scrollbars	tinymce	pl	Show scrollbars
+show statusbar	tinymce	pl	Show statusbar
+show toolbars	tinymce	pl	Show toolbars
+show menubar	tinymce	pl	Show menubar
+show locationbar	tinymce	pl	Show locationbar
+make window resizable	tinymce	pl	Make window resizable
+size	tinymce	pl	Size
+position (x/y)	tinymce	pl	Position (X/Y)
+please insert a name for the target or choose another option.	tinymce	pl	Please insert a name for the target or choose another option.
+insert emotion	tinymce	pl	Wstaw emtoiconę
+emotions	tinymce	pl	Emtoicony
+flash-file (.swf)	tinymce	pl	Plik Flash (.swf)
+size	tinymce	pl	Rozmiar
+flash files	tinymce	pl	Pliki Flash
+flash properties	tinymce	pl	Właściwości animacji Flash
+run spell checking	tinymce	pl	Uruchom sprawdzanie pisowni
+insert date	tinymce	pl	Wstaw aktualną datę
+insert time	tinymce	pl	Wstaw aktualny czas
+preview	tinymce	pl	Podgląd
+print	tinymce	pl	Drukuj
+save	tinymce	pl	Zachowaj
+find	tinymce	pl	Znajdź
+find again	tinymce	pl	Znajdź ponownie
+find/replace	tinymce	pl	Znajdź/Zastąp
+the search has been compleated. the search string could not be found.	tinymce	pl	Ukończono wyszukiwanie. Poszukiwana fraza nie została odnaleziona.
+find	tinymce	pl	Znajdź
+find/replace	tinymce	pl	Znajdź/Zastąp
+all occurrences of the search string was replaced.	tinymce	pl	Wszystkie wystąpienia poszukiwanej frazy zostały zastąpione. 
+find what	tinymce	pl	Znajdź
+replace with	tinymce	pl	Zastąp
+direction	tinymce	pl	Kierunek
+up	tinymce	pl	Do góry
+down	tinymce	pl	Do dołu
+match case	tinymce	pl	Wielkość liter
+find&nbsp;next	tinymce	pl	Znajdź&nbsp;następny
+replace	tinymce	pl	Zastąp
+replace&nbsp;all	tinymce	pl	Zastąp&nbsp;wszystkie
+cancel	tinymce	pl	Wyjdź
+inserts a new table	tinymce	pl	Wstaw nowa tabele
+insert row before	tinymce	pl	Wstaw wiersz przed
+insert row after	tinymce	pl	Wstaw wiersz po
+delete row	tinymce	pl	Skasuj wiersz
+insert column before	tinymce	pl	Wstaw kolumne przed
+insert column after	tinymce	pl	Wstaw kolumne po
+remove col	tinymce	pl	Skasuj kolumne
+insert/modify table	tinymce	pl	Wstaw/Modyfikuj tabele
+width	tinymce	pl	Szerokosc
+height	tinymce	pl	Wysokosc
+columns	tinymce	pl	Kolumny
+rows	tinymce	pl	Wiersze
+cellspacing	tinymce	pl	Cellspacing
+cellpadding	tinymce	pl	Cellpadding
+border	tinymce	pl	Ramka
+alignment	tinymce	pl	Wyrównanie
+default	tinymce	pl	Domyslny
+left	tinymce	pl	Do lewej
+right	tinymce	pl	Do prawej
+center	tinymce	pl	Wycentrowanie
+class	tinymce	pl	Klasa
+table row properties	tinymce	pl	Wlasciwosci wiersza
+table cell properties	tinymce	pl	Wlasciwosci komórki
+table row properties	tinymce	pl	Wlasciwosci wiersza
+table cell properties	tinymce	pl	Wlasciwosci komórki
+vertical alignment	tinymce	pl	Wyrównanie pionowe
+top	tinymce	pl	do góry
+bottom	tinymce	pl	do dolu
+table properties	tinymce	pl	Wlasciwosci tabeli
+merge table cells	tinymce	pl	Merge table cells
+split table cells	tinymce	pl	Split table cells
+merge table cells	tinymce	pl	Merge table cells
+cut table row	tinymce	pl	Cut table row
+copy table row	tinymce	pl	Copy table row
+paste table row before	tinymce	pl	Paste table row before
+paste table row after	tinymce	pl	Paste table row after

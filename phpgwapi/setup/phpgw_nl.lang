@@ -720,3 +720,140 @@ your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
 yugoslavia	common	nl	JOEGOSLAVIË
 zambia	common	nl	ZAMBIA
 zimbabwe	common	nl	ZIMBABWE
+only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	nl	Het te upload bestand moet een extensie (iets achter de punt) hebben, bijv. "imagefile.jpg".
+loading files	tinymce	nl	Bestanden worden geladen
+uploading...	tinymce	nl	Uploaden...
+file not found.	tinymce	nl	Bestand niet gevonden.
+unlink failed.	tinymce	nl	Verwijderen niet gelukt.
+rmdir failed.	tinymce	nl	Verwijderen van de map is niet gelukt.
+folder not found.	tinymce	nl	map niet gevonden.
+no permission to create folder.	tinymce	nl	Je hebt niet de rechten om een folder te maken.
+path not found.	tinymce	nl	map niet gevonden.
+folder name missing.	tinymce	nl	map naam ontbreekt.
+folder with specified new name already exists. folder was not renamed/moved.	tinymce	nl	map bestaat al.
+mkdir failed.	tinymce	nl	Het maken van de map is niet gelukt.
+no permission to upload.	tinymce	nl	Je hebt niet de rechten om te uploaden.
+files with this extension are not allowed.	tinymce	nl	Bestanden met deze extensie zijn niet toegestaan.
+file exceeds the size limit	tinymce	nl	Bestand is groter dan de maximale bestands grootte.
+file was not uploaded.	tinymce	nl	Bestand is niet geupload.
+no files...	tinymce	nl	Geen bestanden...
+configuration problem 	tinymce	nl	Configuratie probleem 
+refresh	tinymce	nl	Vernieuw
+folder	tinymce	nl	Map
+name	tinymce	nl	Naam
+size	tinymce	nl	Grootte
+date modified	tinymce	nl	Datum gewijzigd
+url	tinymce	nl	URL
+comment	tinymce	nl	Commentaar
+caption	tinymce	nl	Titel
+upload	tinymce	nl	Upload
+insert file	tinymce	nl	Voeg bestand toe
+file manager	tinymce	nl	Bestands beheer
+directory	tinymce	nl	map
+you must enter the url	tinymce	nl	Je moet een URL invoeren
+please enter the caption text	tinymce	nl	Type aub een Titel tekst
+new folder	tinymce	nl	New folder name:
+bold	tinymce	nl	Vet
+italic	tinymce	nl	Schuin
+underline	tinymce	nl	Onderstrepen
+striketrough	tinymce	nl	Doorhalen
+align left	tinymce	nl	Links uitlijnen
+align center	tinymce	nl	Centreren
+align right	tinymce	nl	Rechts uitlijnen
+align full	tinymce	nl	Volledig uitlijnen
+unordered list	tinymce	nl	Ongeordende lijst
+ordered list	tinymce	nl	Geordende lijst
+outdent	tinymce	nl	Uitspringen
+indent	tinymce	nl	Inspringen
+undo	tinymce	nl	Ongedaan maken
+redo	tinymce	nl	Opnieuw uitvoeren
+insert/edit link	tinymce	nl	Link invoegen
+unlink	tinymce	nl	Link verwijderen
+insert/edit image	tinymce	nl	Afbeelding invoegen
+cleanup messy code	tinymce	nl	Slordige code verbeteren
+a editor instance must be focused before using this command.	tinymce	nl	Verplaats de focus naar de editor voor het uitvoeren van dit commado.
+do you want to use the wysiwyg mode for this textarea?	tinymce	nl	Wilt u de WYSIWYG mode voor deze textarea gebruiken?
+insert/edit link	tinymce	nl	Link invoegen/bewerken
+insert	tinymce	nl	Invoegen
+update	tinymce	nl	Bewerken
+cancel	tinymce	nl	Afbreken
+link url	tinymce	nl	URL link
+target	tinymce	nl	Bestemming
+open link in the same window	tinymce	nl	Open link in hetzelfde venster
+open link in a new window	tinymce	nl	Open link in een nieuw venster
+insert/edit image	tinymce	nl	Afbeelding invoegen/bewerken
+image url	tinymce	nl	Afbeelding
+image description	tinymce	nl	Beschrijving
+help	tinymce	nl	Help
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	nl	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	nl	Vet
+italic	tinymce	nl	Schuin
+underline	tinymce	nl	Onderstrepen
+striketrough	tinymce	nl	Doorhalen
+align left	tinymce	nl	Links uitlijnen
+align center	tinymce	nl	Centreren
+align right	tinymce	nl	Rechts uitlijnen
+align full	tinymce	nl	Volledig uitlijnen
+unordered list	tinymce	nl	Ongeordende lijst
+ordered list	tinymce	nl	Geordende lijst
+outdent	tinymce	nl	Uitspringen
+indent	tinymce	nl	Inspringen
+undo	tinymce	nl	Ongedaan maken
+redo	tinymce	nl	Opnieuw uitvoeren
+insert/edit link	tinymce	nl	Link invoegen
+unlink	tinymce	nl	Link verwijderen
+insert/edit image	tinymce	nl	Afbeelding invoegen
+cleanup messy code	tinymce	nl	Slordige code verbeteren
+a editor instance must be focused before using this command.	tinymce	nl	Verplaats de focus naar de editor voor het uitvoeren van dit commado.
+do you want to use the wysiwyg mode for this textarea?	tinymce	nl	Wilt u de WYSIWYG mode voor deze textarea gebruiken?
+insert/edit link	tinymce	nl	Link invoegen/bewerken
+insert	tinymce	nl	Invoegen
+update	tinymce	nl	Bewerken
+cancel	tinymce	nl	Afbreken
+link url	tinymce	nl	URL link
+target	tinymce	nl	Bestemming
+open link in the same window	tinymce	nl	Open link in hetzelfde venster
+open link in a new window	tinymce	nl	Open link in een nieuw venster
+insert/edit image	tinymce	nl	Afbeelding invoegen/bewerken
+image url	tinymce	nl	Afbeelding
+image description	tinymce	nl	Beschrijving
+help	tinymce	nl	Help
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	nl	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+inserts a new table	tinymce	nl	Voeg een nieuwe tabel in
+insert row before	tinymce	nl	Voeg rij in voor ...
+insert row after	tinymce	nl	Voeg rij in na ...
+delete row	tinymce	nl	Verwijder rij
+insert column before	tinymce	nl	Voeg kolom in voor ...
+insert column after	tinymce	nl	Voeg kolom in na ...
+remove col	tinymce	nl	Verwijder kolom
+insert/modify table	tinymce	nl	Invoegen/Bewerken tabel
+width	tinymce	nl	Breedte
+height	tinymce	nl	Hoogte
+columns	tinymce	nl	Kolommen
+rows	tinymce	nl	Rijen
+cellspacing	tinymce	nl	Celafstand
+cellpadding	tinymce	nl	Celvulling
+border	tinymce	nl	Omranding
+alignment	tinymce	nl	Positionering
+default	tinymce	nl	Standaard
+left	tinymce	nl	Links
+right	tinymce	nl	Rechts
+center	tinymce	nl	Midden
+class	tinymce	nl	CSS-Stijl
+table row properties	tinymce	nl	Table row properties
+table cell properties	tinymce	nl	Table cell properties
+table row properties	tinymce	nl	Table row properties
+table cell properties	tinymce	nl	Table cell properties
+vertical alignment	tinymce	nl	Vertical alignment
+top	tinymce	nl	Top
+bottom	tinymce	nl	Bottom
+table properties	tinymce	nl	Table properties
+border color	tinymce	nl	Border color
+bg color	tinymce	nl	Bg color
+merge table cells	tinymce	nl	Merge table cells
+split table cells	tinymce	nl	Split table cells
+merge table cells	tinymce	nl	Merge table cells
+cut table row	tinymce	nl	Cut table row
+copy table row	tinymce	nl	Copy table row
+paste table row before	tinymce	nl	Paste table row before
+paste table row after	tinymce	nl	Paste table row after

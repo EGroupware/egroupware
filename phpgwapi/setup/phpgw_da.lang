@@ -725,3 +725,107 @@ your settings have been updated	common	da	Dine indstillinger er opdateret
 yugoslavia	common	da	Jugoslavien
 zambia	common	da	Zambia
 zimbabwe	common	da	Zimbabwe
+bold	tinymce	da	Fed
+italic	tinymce	da	Kursiv
+underline	tinymce	da	Understreg
+striketrough	tinymce	da	Gennemstreg
+align left	tinymce	da	Venstrestil
+align center	tinymce	da	Centrer
+align right	tinymce	da	H&#248;jrestil
+align full	tinymce	da	Lige margin
+unordered list	tinymce	da	Bulletliste
+ordered list	tinymce	da	Nummerliste
+outdent	tinymce	da	Ryk til venstre
+indent	tinymce	da	Ryk til h&#248;jre
+undo	tinymce	da	Fortryd
+redo	tinymce	da	G&#248;r igen
+insert/edit link	tinymce	da	Inds&#230;t link
+unlink	tinymce	da	Fjern link
+insert/edit image	tinymce	da	Inds&#230;t billede
+cleanup messy code	tinymce	da	Ryd op i koden
+a editor instance must be focused before using this command.	tinymce	da	Der skal s&#230;ttes fokus p&#229; sessionen, f&#248;r man kan bruge denne kommando
+do you want to use the wysiwyg mode for this textarea?	tinymce	da	Vil du bruge WYSIWYG mode til dette textomr&#229;de?
+insert/edit link	tinymce	da	Inds&#230;t eller rediger link
+insert	tinymce	da	Inds&#230;t
+update	tinymce	da	Opdater
+cancel	tinymce	da	Fortryd
+link url	tinymce	da	Linkadresse
+target	tinymce	da	Target
+open link in the same window	tinymce	da	Luk linket op i samme vindue
+open link in a new window	tinymce	da	Luk linket op i et nyt vindue
+insert/edit image	tinymce	da	Inds&#230;t / rediger billede
+image url	tinymce	da	Billedets adresse
+image description	tinymce	da	Alternativ tekst
+help	tinymce	da	Hj&#230;lp
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	da	Fed
+italic	tinymce	da	Kursiv
+underline	tinymce	da	Understreg
+striketrough	tinymce	da	Gennemstreg
+align left	tinymce	da	Venstrestil
+align center	tinymce	da	Centrer
+align right	tinymce	da	H&#248;jrestil
+align full	tinymce	da	Lige margin
+unordered list	tinymce	da	Bulletliste
+ordered list	tinymce	da	Nummerliste
+outdent	tinymce	da	Ryk til venstre
+indent	tinymce	da	Ryk til h&#248;jre
+undo	tinymce	da	Fortryd
+redo	tinymce	da	G&#248;r igen
+insert/edit link	tinymce	da	Inds&#230;t link
+unlink	tinymce	da	Fjern link
+insert/edit image	tinymce	da	Inds&#230;t billede
+cleanup messy code	tinymce	da	Ryd op i koden
+a editor instance must be focused before using this command.	tinymce	da	Der skal s&#230;ttes fokus p&#229; sessionen, f&#248;r man kan bruge denne kommando
+do you want to use the wysiwyg mode for this textarea?	tinymce	da	Vil du bruge WYSIWYG mode til dette textomr&#229;de?
+insert/edit link	tinymce	da	Inds&#230;t eller rediger link
+insert	tinymce	da	Inds&#230;t
+update	tinymce	da	Opdater
+cancel	tinymce	da	Fortryd
+link url	tinymce	da	Linkadresse
+target	tinymce	da	Target
+open link in the same window	tinymce	da	Luk linket op i samme vindue
+open link in a new window	tinymce	da	Luk linket op i et nyt vindue
+insert/edit image	tinymce	da	Inds&#230;t / rediger billede
+image url	tinymce	da	Billedets adresse
+image description	tinymce	da	Alternativ tekst
+help	tinymce	da	Hj&#230;lp
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+inserts a new table	tinymce	da	Inds&#230;tter en ny tabel
+insert row before	tinymce	da	Inds&#230;t r&#230;kke foran
+insert row after	tinymce	da	Inds&#230;t r&#230;kke efter
+delete row	tinymce	da	Slet r&#230;kke
+insert column before	tinymce	da	Inds&#230;t kolonne foran
+insert column after	tinymce	da	Indslt kolonne efter
+remove col	tinymce	da	Fjern kolonne
+insert/modify table	tinymce	da	Inds&#230;t/rediger tabel
+width	tinymce	da	Bredde
+height	tinymce	da	H&#248;jde
+columns	tinymce	da	Kolonner
+rows	tinymce	da	R&#230;kker
+cellspacing	tinymce	da	Afstand mellem celler
+cellpadding	tinymce	da	Cellemargen
+border	tinymce	da	Kant
+alignment	tinymce	da	Justering
+default	tinymce	da	Standard
+left	tinymce	da	Venstre
+right	tinymce	da	H&#248;jre
+center	tinymce	da	Midt i
+class	tinymce	da	Klasse
+table row properties	tinymce	da	Table row properties
+table cell properties	tinymce	da	Table cell properties
+table row properties	tinymce	da	Table row properties
+table cell properties	tinymce	da	Table cell properties
+vertical alignment	tinymce	da	Vertical alignment
+top	tinymce	da	Top
+bottom	tinymce	da	Bottom
+table properties	tinymce	da	Table properties
+border color	tinymce	da	Border color
+bg color	tinymce	da	Bg color
+merge table cells	tinymce	da	Merge table cells
+split table cells	tinymce	da	Split table cells
+merge table cells	tinymce	da	Merge table cells
+cut table row	tinymce	da	Cut table row
+copy table row	tinymce	da	Copy table row
+paste table row before	tinymce	da	Paste table row before
+paste table row after	tinymce	da	Paste table row after

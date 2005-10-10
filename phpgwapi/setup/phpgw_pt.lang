@@ -430,3 +430,108 @@ your settings have been updated	common	pt	Suas preferências foram atualizadas
 yugoslavia	common	pt	YUGOSLAVIA
 zambia	common	pt	ZAMBIA
 zimbabwe	common	pt	ZIMBABWE
+bold	tinymce	pt	Negrito
+italic	tinymce	pt	Itálico
+underline	tinymce	pt	Sublinhar
+striketrough	tinymce	pt	Riscado
+align left	tinymce	pt	Alinhar á esquerda
+align center	tinymce	pt	Alinhar ao centro
+align right	tinymce	pt	Alinhar á direita
+align full	tinymce	pt	Justificado
+unordered list	tinymce	pt	Lista não ordenada
+ordered list	tinymce	pt	Lista ordenada
+outdent	tinymce	pt	Retirar indentação
+indent	tinymce	pt	Indentar
+undo	tinymce	pt	Desfazer
+redo	tinymce	pt	Refazer
+insert/edit link	tinymce	pt	Inserir Hiperligação
+unlink	tinymce	pt	Remover hiperligação
+insert/edit image	tinymce	pt	Inserir Referência a imagem externa
+cleanup messy code	tinymce	pt	Limpeza de código
+a editor instance must be focused before using this command.	tinymce	pt	Uma instância do editor deverá estar seleccionada antes de utilizar este comando.
+do you want to use the wysiwyg mode for this textarea?	tinymce	pt	Deseja utilizar o modo visual de edição para ezta área de texto?
+insert/edit link	tinymce	pt	Inserir/editar hiperligação
+insert	tinymce	pt	Inserir
+update	tinymce	pt	Actualizar
+cancel	tinymce	pt	Cancelar
+link url	tinymce	pt	URL de hiperligação
+target	tinymce	pt	Destino
+open link in the same window	tinymce	pt	Abrir endereço na mesma janela
+open link in a new window	tinymce	pt	Abrir endereço numa nova janela
+insert/edit image	tinymce	pt	Inserir/editar imagem
+image url	tinymce	pt	Endereço da imagem
+image description	tinymce	pt	Descrição alt.
+help	tinymce	pt	Ajuda
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	pt	Copiar/Cortar/Colar não está disponível em Mozilla and Firefox.\nPretende obter mais informação acerca desta questão?
+bold	tinymce	pt	Negrito
+italic	tinymce	pt	Itálico
+underline	tinymce	pt	Sublinhar
+striketrough	tinymce	pt	Riscado
+align left	tinymce	pt	Alinhar á esquerda
+align center	tinymce	pt	Alinhar ao centro
+align right	tinymce	pt	Alinhar á direita
+align full	tinymce	pt	Justificado
+unordered list	tinymce	pt	Lista não ordenada
+ordered list	tinymce	pt	Lista ordenada
+outdent	tinymce	pt	Retirar indentação
+indent	tinymce	pt	Indentar
+undo	tinymce	pt	Desfazer
+redo	tinymce	pt	Refazer
+insert/edit link	tinymce	pt	Inserir Hiperligação
+unlink	tinymce	pt	Remover hiperligação
+insert/edit image	tinymce	pt	Inserir Referência a imagem externa
+cleanup messy code	tinymce	pt	Limpeza de código
+a editor instance must be focused before using this command.	tinymce	pt	Uma instância do editor deverá estar seleccionada antes de utilizar este comando.
+do you want to use the wysiwyg mode for this textarea?	tinymce	pt	Deseja utilizar o modo visual de edição para ezta área de texto?
+insert/edit link	tinymce	pt	Inserir/editar hiperligação
+insert	tinymce	pt	Inserir
+update	tinymce	pt	Actualizar
+cancel	tinymce	pt	Cancelar
+link url	tinymce	pt	URL de hiperligação
+target	tinymce	pt	Destino
+open link in the same window	tinymce	pt	Abrir endereço na mesma janela
+open link in a new window	tinymce	pt	Abrir endereço numa nova janela
+insert/edit image	tinymce	pt	Inserir/editar imagem
+image url	tinymce	pt	Endereço da imagem
+image description	tinymce	pt	Descrição alt.
+help	tinymce	pt	Ajuda
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	pt	Copiar/Cortar/Colar não está disponível em Mozilla and Firefox.\nPretende obter mais informação acerca desta questão?
+preview	tinymce	pt	Pré-visualização
+inserts a new table	tinymce	pt	Insere uma nova tabela
+insert row before	tinymce	pt	Inserir linha antes
+insert row after	tinymce	pt	Inserir linha depois
+delete row	tinymce	pt	Eliminar linha
+insert column before	tinymce	pt	Inserir coluna antes
+insert column after	tinymce	pt	Inserir coluna depois
+remove col	tinymce	pt	Remover coluna
+insert/modify table	tinymce	pt	Inserir/Modificar tabela
+width	tinymce	pt	Largura
+height	tinymce	pt	Altura
+columns	tinymce	pt	Colunas
+rows	tinymce	pt	Linhas
+cellspacing	tinymce	pt	Espaça<br/>mento
+cellpadding	tinymce	pt	Margem interior
+border	tinymce	pt	Borda
+alignment	tinymce	pt	Alinhamento
+default	tinymce	pt	Por omissão
+left	tinymce	pt	Esquerda
+right	tinymce	pt	Direita
+center	tinymce	pt	Centrado
+class	tinymce	pt	Classe de CSS
+table row properties	tinymce	pt	Table row properties
+table cell properties	tinymce	pt	Table cell properties
+table row properties	tinymce	pt	Table row properties
+table cell properties	tinymce	pt	Table cell properties
+vertical alignment	tinymce	pt	Vertical alignment
+top	tinymce	pt	Top
+bottom	tinymce	pt	Bottom
+table properties	tinymce	pt	Table properties
+border color	tinymce	pt	Border color
+bg color	tinymce	pt	Bg color
+merge table cells	tinymce	pt	Merge table cells
+split table cells	tinymce	pt	Split table cells
+merge table cells	tinymce	pt	Merge table cells
+cut table row	tinymce	pt	Cut table row
+copy table row	tinymce	pt	Copy table row
+paste table row before	tinymce	pt	Paste table row before
+paste table row after	tinymce	pt	Paste table row after

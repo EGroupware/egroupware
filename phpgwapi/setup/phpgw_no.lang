@@ -709,3 +709,105 @@ your settings have been updated	common	no	Dine innstillinger har blitt oppdatert
 yugoslavia	common	no	JUGOSLAVIA
 zambia	common	no	ZAMBIA
 zimbabwe	common	no	ZIMBABWE
+bold	tinymce	no	Uthevet
+italic	tinymce	no	Kursiv
+underline	tinymce	no	Understreket
+striketrough	tinymce	no	Gjennomstreket
+align left	tinymce	no	Vensterestille
+align center	tinymce	no	Sentrere
+align right	tinymce	no	Høyerestille
+align full	tinymce	no	Fyll
+unordered list	tinymce	no	Punktliste
+ordered list	tinymce	no	Nummerliste
+outdent	tinymce	no	Undrag
+indent	tinymce	no	Indrag
+undo	tinymce	no	Angre
+redo	tinymce	no	Gjør om
+insert/edit link	tinymce	no	Opprett/endre lenke
+unlink	tinymce	no	Fjern lenke
+insert/edit image	tinymce	no	Sett inn/endre bilde
+cleanup messy code	tinymce	no	Rens grisete kode
+a editor instance must be focused before using this command.	tinymce	no	Editoren må være i fokus før du benytter denne kommando.
+do you want to use the wysiwyg mode for this textarea?	tinymce	no	Vil du benytte WYSIWYG editoren for dette tekstfelt?
+insert/edit link	tinymce	no	Opprett/endre lenke
+insert	tinymce	no	Opprett
+update	tinymce	no	Opprett
+cancel	tinymce	no	Avbryt
+link url	tinymce	no	Lenkens URL
+target	tinymce	no	Vindu
+open link in the same window	tinymce	no	Åpne i samme vindu
+open link in a new window	tinymce	no	Åpne i nytt vindu
+insert/edit image	tinymce	no	Opprett/endre bilde
+image url	tinymce	no	Bildets URL
+image description	tinymce	no	Bildets beskrivelse
+help	tinymce	no	Hjelp
+bold	tinymce	no	Uthevet
+italic	tinymce	no	Kursiv
+underline	tinymce	no	Understreket
+striketrough	tinymce	no	Gjennomstreket
+align left	tinymce	no	Vensterestille
+align center	tinymce	no	Sentrere
+align right	tinymce	no	Høyerestille
+align full	tinymce	no	Fyll
+unordered list	tinymce	no	Punktliste
+ordered list	tinymce	no	Nummerliste
+outdent	tinymce	no	Undrag
+indent	tinymce	no	Indrag
+undo	tinymce	no	Angre
+redo	tinymce	no	Gjør om
+insert/edit link	tinymce	no	Opprett/endre lenke
+unlink	tinymce	no	Fjern lenke
+insert/edit image	tinymce	no	Sett inn/endre bilde
+cleanup messy code	tinymce	no	Rens grisete kode
+a editor instance must be focused before using this command.	tinymce	no	Editoren må være i fokus før du benytter denne kommando.
+do you want to use the wysiwyg mode for this textarea?	tinymce	no	Vil du benytte WYSIWYG editoren for dette tekstfelt?
+insert/edit link	tinymce	no	Opprett/endre lenke
+insert	tinymce	no	Opprett
+update	tinymce	no	Opprett
+cancel	tinymce	no	Avbryt
+link url	tinymce	no	Lenkens URL
+target	tinymce	no	Vindu
+open link in the same window	tinymce	no	Åpne i samme vindu
+open link in a new window	tinymce	no	Åpne i nytt vindu
+insert/edit image	tinymce	no	Opprett/endre bilde
+image url	tinymce	no	Bildets URL
+image description	tinymce	no	Bildets beskrivelse
+help	tinymce	no	Hjelp
+inserts a new table	tinymce	no	Opprett/endre tabell
+insert row before	tinymce	no	Opprett rad før
+insert row after	tinymce	no	Opprett rad etter
+delete row	tinymce	no	Fjern rad
+insert column before	tinymce	no	Opprett kolonne før
+insert column after	tinymce	no	Opprett kolonne etter
+remove col	tinymce	no	Fjern kolonne
+insert/modify table	tinymce	no	Opprett/endre tabell
+width	tinymce	no	Bredde
+height	tinymce	no	Høyde
+columns	tinymce	no	Kolonner
+rows	tinymce	no	Rader
+cellspacing	tinymce	no	Celle-mellomrom
+cellpadding	tinymce	no	Celle-padding
+border	tinymce	no	Rammebredde
+alignment	tinymce	no	Justering
+default	tinymce	no	Ingen
+left	tinymce	no	Venstre
+right	tinymce	no	Høyre
+center	tinymce	no	Midten
+class	tinymce	no	Stil
+table row properties	tinymce	no	Table row properties
+table cell properties	tinymce	no	Table cell properties
+table row properties	tinymce	no	Table row properties
+table cell properties	tinymce	no	Table cell properties
+vertical alignment	tinymce	no	Vertical alignment
+top	tinymce	no	Top
+bottom	tinymce	no	Bottom
+table properties	tinymce	no	Table properties
+border color	tinymce	no	Border color
+bg color	tinymce	no	Bg color
+merge table cells	tinymce	no	Merge table cells
+split table cells	tinymce	no	Split table cells
+merge table cells	tinymce	no	Merge table cells
+cut table row	tinymce	no	Cut table row
+copy table row	tinymce	no	Copy table row
+paste table row before	tinymce	no	Paste table row before
+paste table row after	tinymce	no	Paste table row after

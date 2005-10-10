@@ -709,3 +709,138 @@ your settings have been updated	common	cs	Va¹e nastavení bylo upraveno
 yugoslavia	common	cs	Jugoslávie
 zambia	common	cs	Zambie
 zimbabwe	common	cs	Zimbabwe
+bold	tinymce	cs	Tuènì
+italic	tinymce	cs	Kurzíva
+underline	tinymce	cs	Podtržení
+striketrough	tinymce	cs	Pøeškrtnutí
+align left	tinymce	cs	Zarovnání vlevo
+align center	tinymce	cs	Zarovnání na støed
+align right	tinymce	cs	Zarovnání vpravo
+align full	tinymce	cs	Zarovnání do bloku
+unordered list	tinymce	cs	Seznam s odrážkami
+ordered list	tinymce	cs	Èíslovaný seznam
+outdent	tinymce	cs	Snížit odsazení
+indent	tinymce	cs	Zvýšit odsazení
+undo	tinymce	cs	Zpìt
+redo	tinymce	cs	Znovu
+insert/edit link	tinymce	cs	Vložit odkaz
+unlink	tinymce	cs	Zrušit odkaz
+insert/edit image	tinymce	cs	Vložit obrázek
+cleanup messy code	tinymce	cs	Vyèistit kód
+a editor instance must be focused before using this command.	tinymce	cs	Pøed použitím tohoto pøíkazu musí být kurzor v oknì editoru.
+do you want to use the wysiwyg mode for this textarea?	tinymce	cs	Chcete použít WYSIWYG editaci pro tento text?
+insert/edit link	tinymce	cs	Vložit/upravit odkaz
+insert	tinymce	cs	Vložit
+update	tinymce	cs	Zmìnit
+cancel	tinymce	cs	Zrušit
+link url	tinymce	cs	URL odkazu
+target	tinymce	cs	Cíl
+open link in the same window	tinymce	cs	Otevøít odkaz ve stejném oknì
+open link in a new window	tinymce	cs	Otevøít odkaz v novém oknì
+insert/edit image	tinymce	cs	Vložit/upravit obrázek
+image url	tinymce	cs	URL obrázku
+image description	tinymce	cs	Popis obrázku
+help	tinymce	cs	Nápovìda
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	cs	Copy/Cut/Paste není použitelné v Mozille a Firefoxu.\nChcete více informací o tomto problému?
+bold	tinymce	cs	Tuènì
+italic	tinymce	cs	Kurzíva
+underline	tinymce	cs	Podtržení
+striketrough	tinymce	cs	Pøeškrtnutí
+align left	tinymce	cs	Zarovnání vlevo
+align center	tinymce	cs	Zarovnání na støed
+align right	tinymce	cs	Zarovnání vpravo
+align full	tinymce	cs	Zarovnání do bloku
+unordered list	tinymce	cs	Seznam s odrážkami
+ordered list	tinymce	cs	Èíslovaný seznam
+outdent	tinymce	cs	Snížit odsazení
+indent	tinymce	cs	Zvýšit odsazení
+undo	tinymce	cs	Zpìt
+redo	tinymce	cs	Znovu
+insert/edit link	tinymce	cs	Vložit odkaz
+unlink	tinymce	cs	Zrušit odkaz
+insert/edit image	tinymce	cs	Vložit obrázek
+cleanup messy code	tinymce	cs	Vyèistit kód
+a editor instance must be focused before using this command.	tinymce	cs	Pøed použitím tohoto pøíkazu musí být kurzor v oknì editoru.
+do you want to use the wysiwyg mode for this textarea?	tinymce	cs	Chcete použít WYSIWYG editaci pro tento text?
+insert/edit link	tinymce	cs	Vložit/upravit odkaz
+insert	tinymce	cs	Vložit
+update	tinymce	cs	Zmìnit
+cancel	tinymce	cs	Zrušit
+link url	tinymce	cs	URL odkazu
+target	tinymce	cs	Cíl
+open link in the same window	tinymce	cs	Otevøít odkaz ve stejném oknì
+open link in a new window	tinymce	cs	Otevøít odkaz v novém oknì
+insert/edit image	tinymce	cs	Vložit/upravit obrázek
+image url	tinymce	cs	URL obrázku
+image description	tinymce	cs	Popis obrázku
+help	tinymce	cs	Nápovìda
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	cs	Copy/Cut/Paste není použitelné v Mozille a Firefoxu.\nChcete více informací o tomto problému?
+no shadow	tinymce	cs	Nestínovat
+image title	tinymce	cs	Název obrázku
+for mouse over	tinymce	cs	pøi najetí myši
+for mouse out	tinymce	cs	pøi odjetí myši
+open in this window / frame	tinymce	cs	Otevøít ve stejném oknì/rámu
+open in parent window / frame	tinymce	cs	Otevøít v rodièovském oknì/rámu
+open in top frame (replaces all frames)	tinymce	cs	Otevøít v nejvyšším rámu (pøepíše všechny rámy)
+open in new window	tinymce	cs	Otevøít v novém oknì
+open in the window	tinymce	cs	Otevøít v oknì
+js-popup	tinymce	cs	JS-Popup
+popup url	tinymce	cs	Popup URL
+window name	tinymce	cs	Název okna
+show scrollbars	tinymce	cs	Ukázat posuvníky
+show statusbar	tinymce	cs	Ukázat stavový øádek
+show toolbars	tinymce	cs	Ukázat ovl. lištu
+show menubar	tinymce	cs	Ukázat menu
+show locationbar	tinymce	cs	Ukázat lištu umístìní
+make window resizable	tinymce	cs	Promìnná velikost okna
+size	tinymce	cs	Velikost
+position (x/y)	tinymce	cs	Umístìní (X/Y)
+please insert a name for the target or choose another option.	tinymce	cs	Vložte název cíle nebo vyberte jinou volbu.
+insert emotion	tinymce	cs	Vložit emotikon
+emotions	tinymce	cs	Emotikony
+flash-file (.swf)	tinymce	cs	Flash soubor (.swf)
+size	tinymce	cs	Velikost
+flash properties	tinymce	cs	Flash properties
+run spell checking	tinymce	cs	Spustit kontrolu pravopisu
+insert date	tinymce	cs	Vložit datum
+insert time	tinymce	cs	Vložit èas
+preview	tinymce	cs	Náhled
+save	tinymce	cs	Uložit
+inserts a new table	tinymce	cs	Vložit novou tabulku
+insert row before	tinymce	cs	Vložit øádek pøed
+insert row after	tinymce	cs	Vložit øádek po
+delete row	tinymce	cs	Smazat øádek
+insert column before	tinymce	cs	Vložit sloupec pøed
+insert column after	tinymce	cs	Vložit sloupec po
+remove col	tinymce	cs	Odstranit sloupec
+insert/modify table	tinymce	cs	Vložit/upravit tabulku
+width	tinymce	cs	Šíøka
+height	tinymce	cs	Výška
+columns	tinymce	cs	Sloupce
+rows	tinymce	cs	Øádky
+cellspacing	tinymce	cs	Vnìjší okraj bunìk
+cellpadding	tinymce	cs	Vnitøní okraj bunìk
+border	tinymce	cs	Rámeèek
+alignment	tinymce	cs	Zarovnání
+default	tinymce	cs	Výchozí
+left	tinymce	cs	Vlevo
+right	tinymce	cs	Vpravo
+center	tinymce	cs	Na støed
+class	tinymce	cs	Class
+table row properties	tinymce	cs	Table row properties
+table cell properties	tinymce	cs	Table cell properties
+table row properties	tinymce	cs	Table row properties
+table cell properties	tinymce	cs	Table cell properties
+vertical alignment	tinymce	cs	Vertical alignment
+top	tinymce	cs	Top
+bottom	tinymce	cs	Bottom
+table properties	tinymce	cs	Table properties
+border color	tinymce	cs	Border color
+bg color	tinymce	cs	Bg color
+merge table cells	tinymce	cs	Merge table cells
+split table cells	tinymce	cs	Split table cells
+merge table cells	tinymce	cs	Merge table cells
+cut table row	tinymce	cs	Cut table row
+copy table row	tinymce	cs	Copy table row
+paste table row before	tinymce	cs	Paste table row before
+paste table row after	tinymce	cs	Paste table row after

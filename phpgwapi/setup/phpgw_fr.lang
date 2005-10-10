@@ -784,3 +784,141 @@ your settings have been updated	common	fr	Vos préférences ont été mises à jour
 yugoslavia	common	fr	YOUGOSLAVIE
 zambia	common	fr	ZAMBIE
 zimbabwe	common	fr	ZIMBABWE
+bold	tinymce	fr	Gras
+italic	tinymce	fr	Italique
+underline	tinymce	fr	Soulign&eacute;
+striketrough	tinymce	fr	Barré
+align left	tinymce	fr	Aligner &agrave; gauche
+align center	tinymce	fr	Aligner au centre
+align right	tinymce	fr	Aligner &agrave; droite
+align full	tinymce	fr	Justifier
+unordered list	tinymce	fr	Liste désordonn&eacute;e (puces)
+ordered list	tinymce	fr	Liste ordonn&eacute;e (num&eacute;ros)
+outdent	tinymce	fr	Diminuer le retrait
+indent	tinymce	fr	Augmenter le retrait
+undo	tinymce	fr	D&eacute;faire
+redo	tinymce	fr	Refaire
+insert/edit link	tinymce	fr	Ins&eacute;rer/éditer le lien
+unlink	tinymce	fr	Enlever le lien
+insert/edit image	tinymce	fr	Ins&eacute;rer/éditer une image
+cleanup messy code	tinymce	fr	Nettoyer le code
+do you want to use the wysiwyg mode for this textarea?	tinymce	fr	Voulez-vous utiliser le mode WYSIWYG pour cette zone de texte (textarea) ?
+insert/edit link	tinymce	fr	Insertion/&eacute;dition lien
+insert	tinymce	fr	Insertion
+update	tinymce	fr	Insertion
+cancel	tinymce	fr	Annuler
+link url	tinymce	fr	Lien URL
+target	tinymce	fr	Cible
+open link in the same window	tinymce	fr	Ouvrir le lien dans la même fen&ecirc;tre
+open link in a new window	tinymce	fr	Ouvrir le lien dans une nouvelle fen&ecirc;tre
+help	tinymce	fr	Aide
+bold	tinymce	fr	Gras
+italic	tinymce	fr	Italique
+underline	tinymce	fr	Soulign&eacute;
+striketrough	tinymce	fr	Barré
+align left	tinymce	fr	Aligner &agrave; gauche
+align center	tinymce	fr	Aligner au centre
+align right	tinymce	fr	Aligner &agrave; droite
+align full	tinymce	fr	Justifier
+unordered list	tinymce	fr	Liste désordonn&eacute;e (puces)
+ordered list	tinymce	fr	Liste ordonn&eacute;e (num&eacute;ros)
+outdent	tinymce	fr	Diminuer le retrait
+indent	tinymce	fr	Augmenter le retrait
+undo	tinymce	fr	D&eacute;faire
+redo	tinymce	fr	Refaire
+insert/edit link	tinymce	fr	Ins&eacute;rer/éditer le lien
+unlink	tinymce	fr	Enlever le lien
+insert/edit image	tinymce	fr	Ins&eacute;rer/éditer une image
+cleanup messy code	tinymce	fr	Nettoyer le code
+do you want to use the wysiwyg mode for this textarea?	tinymce	fr	Voulez-vous utiliser le mode WYSIWYG pour cette zone de texte (textarea) ?
+insert/edit link	tinymce	fr	Insertion/&eacute;dition lien
+insert	tinymce	fr	Insertion
+update	tinymce	fr	Insertion
+cancel	tinymce	fr	Annuler
+link url	tinymce	fr	Lien URL
+target	tinymce	fr	Cible
+open link in the same window	tinymce	fr	Ouvrir le lien dans la même fen&ecirc;tre
+open link in a new window	tinymce	fr	Ouvrir le lien dans une nouvelle fen&ecirc;tre
+help	tinymce	fr	Aide
+no shadow	tinymce	fr	Sans ombre
+for mouse over	tinymce	fr	Pour la souris au dessus
+for mouse out	tinymce	fr	Pour la souris en dehors
+open in this window / frame	tinymce	fr	Ouvre dans la fen&#281;tre / Cadre(frame)
+open in parent window / frame	tinymce	fr	Ouvre dans fen&#281;tre parente / Cadres(frame)
+open in top frame (replaces all frames)	tinymce	fr	Ouvre dans le Top frame (remplace toutes les cadres(frames))
+open in new window	tinymce	fr	Ouvre dans la fen&#281;tre
+open in the window	tinymce	fr	Ouvre dans la fen&#281;tre
+js-popup	tinymce	fr	JS-Popup
+popup url	tinymce	fr	URL de la Popup
+window name	tinymce	fr	Nom de la fen&#281;tre
+show scrollbars	tinymce	fr	Montrer la barre de d&eacute;filement 
+show menubar	tinymce	fr	Montrer la barre du menu
+make window resizable	tinymce	fr	Fabriquer une fen&#281;tre redimensionnable
+size	tinymce	fr	Taille
+position (x/y)	tinymce	fr	Position (X/Y)
+please insert a name for the target or choose another option.	tinymce	fr	Veuillez ins&eacute;rer un nom pour la cible ou choisissez une autre option.
+insert emotion	tinymce	fr	Ins&egrave;rer un &eacute;moticon
+emotions	tinymce	fr	&Eacute;moticons
+flash-file (.swf)	tinymce	fr	Fichier-Flash (.swf)
+size	tinymce	fr	Taille
+flash files	tinymce	fr	Fichiers Flash
+flash properties	tinymce	fr	Flash properties
+insert date	tinymce	fr	Ins&egrave;rer la date
+preview	tinymce	fr	Pr&eacute;visualisation
+print	tinymce	fr	Imprimer
+save	tinymce	fr	Sauver
+find	tinymce	fr	Trouver
+find again	tinymce	fr	Trouver encore
+find/replace	tinymce	fr	Trouver/Remplacer
+the search has been compleated. the search string could not be found.	tinymce	fr	Votre recherche a &eacute;t&eacute; compl&eacute;&eacute;. La recherche de la chaine pourra ne pas aboutir.
+find	tinymce	fr	Trouver
+find/replace	tinymce	fr	Trouver/Remplacer
+all occurrences of the search string was replaced.	tinymce	fr	Toutes les occurences de la chaine ont &eacute;t&eacute; remplc&eacute;es.
+find what	tinymce	fr	Trouver le mot
+replace with	tinymce	fr	Remplacer avec
+direction	tinymce	fr	Direction
+up	tinymce	fr	Haut
+down	tinymce	fr	Base
+match case	tinymce	fr	Respecter la casse
+find&nbsp;next	tinymce	fr	Trouver le prochain
+replace	tinymce	fr	Remplacer
+replace&nbsp;all	tinymce	fr	Remplacer tout
+cancel	tinymce	fr	Annuler
+inserts a new table	tinymce	fr	Ins&eacute;rer un nouveau tableau
+insert row before	tinymce	fr	Ins&eacute;rer une ligne avant
+insert row after	tinymce	fr	Ins&eacute;rer une ligne apr&eacute;s
+delete row	tinymce	fr	Supprimer la ligne
+insert column before	tinymce	fr	Ins&eacute;rer une colonne avant
+insert column after	tinymce	fr	Ins&eacute;rer une colonne apr&eacute;s
+remove col	tinymce	fr	Supprimer la colonne
+insert/modify table	tinymce	fr	Ins&eacute;rer/Modifier le tableau
+width	tinymce	fr	Largeur
+height	tinymce	fr	Hauteur
+columns	tinymce	fr	Colonnes
+rows	tinymce	fr	Lignes
+cellspacing	tinymce	fr	Cellspacing
+cellpadding	tinymce	fr	Cellpadding
+border	tinymce	fr	Bordure
+alignment	tinymce	fr	Alignement
+default	tinymce	fr	D&eacute;faut
+left	tinymce	fr	Gauche
+right	tinymce	fr	Droit
+center	tinymce	fr	Milieu
+class	tinymce	fr	Classe CSS
+table row properties	tinymce	fr	Propri&eacute;t&eacute;s de la rang&eacute;e
+table cell properties	tinymce	fr	Propri&eacute;t&eacute;s de la cellule
+table row properties	tinymce	fr	Propri&eacute;t&eacute;s de la rang&eacute;e
+table cell properties	tinymce	fr	Propri&eacute;t&eacute;s de la cellule
+vertical alignment	tinymce	fr	Alignement Vertical
+top	tinymce	fr	Haut
+bottom	tinymce	fr	Bas
+table properties	tinymce	fr	Table properties
+border color	tinymce	fr	Border color
+bg color	tinymce	fr	Bg color
+merge table cells	tinymce	fr	Merge table cells
+split table cells	tinymce	fr	Split table cells
+merge table cells	tinymce	fr	Merge table cells
+cut table row	tinymce	fr	Cut table row
+copy table row	tinymce	fr	Copy table row
+paste table row before	tinymce	fr	Paste table row before
+paste table row after	tinymce	fr	Paste table row after

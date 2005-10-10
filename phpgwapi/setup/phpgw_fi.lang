@@ -788,3 +788,106 @@ yugoslavia	common	fi	JUGOSLAVIA
 zambia	common	fi	ZAMBIA
 zimbabwe	common	fi	ZIMBABWE
 
+bold	tinymce	fi	Lihavoi
+italic	tinymce	fi	Kursivoi
+underline	tinymce	fi	Alleviivaa
+striketrough	tinymce	fi	Yliviivaa
+align left	tinymce	fi	Vasen tasaus
+align center	tinymce	fi	Keskitys
+align right	tinymce	fi	Oikea tasaus
+align full	tinymce	fi	Pakotettu tasaus
+unordered list	tinymce	fi	Numeroimaton lista
+ordered list	tinymce	fi	Numeroitu lista
+outdent	tinymce	fi	Poista sisennyt
+indent	tinymce	fi	Sisennys
+undo	tinymce	fi	Peruuta
+redo	tinymce	fi	Suorita uudelleen
+insert/edit link	tinymce	fi	Lis‰‰ linkki
+unlink	tinymce	fi	Poista linkki
+insert/edit image	tinymce	fi	Lis‰‰ kuva
+cleanup messy code	tinymce	fi	Siisti koodi
+a editor instance must be focused before using this command.	tinymce	fi	Teksink‰sittelyalueella t‰ytyy olla fokus ennen t‰m‰n komennon suorittamista.
+do you want to use the wysiwyg mode for this textarea?	tinymce	fi	Haluatko k‰ytt‰‰ WYSIWYG moodia t‰h‰n tekstialueeseen?
+insert/edit link	tinymce	fi	Lis‰‰/muokkaa linkki‰
+insert	tinymce	fi	Lis‰‰
+update	tinymce	fi	Lis‰‰
+cancel	tinymce	fi	Peruuta
+link url	tinymce	fi	Linkin URL
+target	tinymce	fi	Kohde
+open link in the same window	tinymce	fi	Avaa linkki samassa ikkunassa
+open link in a new window	tinymce	fi	Avaa linkki uudessa ikkunassa
+insert/edit image	tinymce	fi	Lis‰‰/muokkaa kuvaa
+image url	tinymce	fi	Kuvan URL
+image description	tinymce	fi	Kuvan selite
+help	tinymce	fi	Apua
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fi	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	fi	Lihavoi
+italic	tinymce	fi	Kursivoi
+underline	tinymce	fi	Alleviivaa
+striketrough	tinymce	fi	Yliviivaa
+align left	tinymce	fi	Vasen tasaus
+align center	tinymce	fi	Keskitys
+align right	tinymce	fi	Oikea tasaus
+align full	tinymce	fi	Pakotettu tasaus
+unordered list	tinymce	fi	Numeroimaton lista
+ordered list	tinymce	fi	Numeroitu lista
+outdent	tinymce	fi	Poista sisennyt
+indent	tinymce	fi	Sisennys
+undo	tinymce	fi	Peruuta
+redo	tinymce	fi	Suorita uudelleen
+insert/edit link	tinymce	fi	Lis‰‰ linkki
+unlink	tinymce	fi	Poista linkki
+insert/edit image	tinymce	fi	Lis‰‰ kuva
+cleanup messy code	tinymce	fi	Siisti koodi
+a editor instance must be focused before using this command.	tinymce	fi	Teksink‰sittelyalueella t‰ytyy olla fokus ennen t‰m‰n komennon suorittamista.
+do you want to use the wysiwyg mode for this textarea?	tinymce	fi	Haluatko k‰ytt‰‰ WYSIWYG moodia t‰h‰n tekstialueeseen?
+insert/edit link	tinymce	fi	Lis‰‰/muokkaa linkki‰
+insert	tinymce	fi	Lis‰‰
+update	tinymce	fi	Lis‰‰
+cancel	tinymce	fi	Peruuta
+link url	tinymce	fi	Linkin URL
+target	tinymce	fi	Kohde
+open link in the same window	tinymce	fi	Avaa linkki samassa ikkunassa
+open link in a new window	tinymce	fi	Avaa linkki uudessa ikkunassa
+insert/edit image	tinymce	fi	Lis‰‰/muokkaa kuvaa
+image url	tinymce	fi	Kuvan URL
+image description	tinymce	fi	Kuvan selite
+help	tinymce	fi	Apua
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fi	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+inserts a new table	tinymce	fi	Lis‰‰ uusi taulu
+insert row before	tinymce	fi	Lis‰‰ rivi edelle
+insert row after	tinymce	fi	Lis‰‰ rivi j‰lkeen
+delete row	tinymce	fi	Posita rivi
+insert column before	tinymce	fi	Lis‰‰ sarake edelle
+insert column after	tinymce	fi	Lis‰‰ sarake j‰lkeen
+remove col	tinymce	fi	Poista sarake
+insert/modify table	tinymce	fi	Lis‰‰/muokkaa taulua
+width	tinymce	fi	Leveys
+height	tinymce	fi	Korkeus
+columns	tinymce	fi	Sarakkeet
+rows	tinymce	fi	Rivit
+cellspacing	tinymce	fi	Solujen v‰li
+cellpadding	tinymce	fi	Solun reunan ja sis‰llˆn v‰li
+border	tinymce	fi	Reuna
+alignment	tinymce	fi	Asettelu
+default	tinymce	fi	Oletus
+left	tinymce	fi	Vasen
+right	tinymce	fi	Oikea
+center	tinymce	fi	Keskelle
+table row properties	tinymce	fi	Table row properties
+table cell properties	tinymce	fi	Table cell properties
+table row properties	tinymce	fi	Table row properties
+table cell properties	tinymce	fi	Table cell properties
+vertical alignment	tinymce	fi	Vertical alignment
+top	tinymce	fi	Top
+bottom	tinymce	fi	Bottom
+table properties	tinymce	fi	Table properties
+border color	tinymce	fi	Border color
+bg color	tinymce	fi	Bg color
+merge table cells	tinymce	fi	Merge table cells
+split table cells	tinymce	fi	Split table cells
+merge table cells	tinymce	fi	Merge table cells
+cut table row	tinymce	fi	Cut table row
+copy table row	tinymce	fi	Copy table row
+paste table row before	tinymce	fi	Paste table row before
+paste table row after	tinymce	fi	Paste table row after

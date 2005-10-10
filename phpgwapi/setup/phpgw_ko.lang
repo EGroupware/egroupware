@@ -115,3 +115,130 @@ sorry, your login has expired	login	ko	사용자ID를 더 이상 사용하실수 없습니다.
 use cookies	login	ko	쿠키사용
 username	login	ko	사용자ID
 you have been successfully logged out	login	ko	로그아웃 되었습니다.
+bold	tinymce	ko	진하게
+italic	tinymce	ko	기울임
+underline	tinymce	ko	밑줄
+striketrough	tinymce	ko	가로줄
+align left	tinymce	ko	왼쪽 정렬
+align center	tinymce	ko	가운데 정렬
+align right	tinymce	ko	오른쪽 정렬
+align full	tinymce	ko	양쪽 정렬
+unordered list	tinymce	ko	목차 매기기
+ordered list	tinymce	ko	번호 매기기
+outdent	tinymce	ko	내어쓰기
+indent	tinymce	ko	들여쓰기
+undo	tinymce	ko	실행취소
+redo	tinymce	ko	재실행
+insert/edit link	tinymce	ko	링크 넣기/고치기
+unlink	tinymce	ko	링크 해제
+insert/edit image	tinymce	ko	그림 넣기/고치기
+cleanup messy code	tinymce	ko	코드를 깔끔하게
+a editor instance must be focused before using this command.	tinymce	ko	이 명령을 실행하기 전에 반드시 에디터 내의 어딘가에 커서가 있어야 합니다.
+do you want to use the wysiwyg mode for this textarea?	tinymce	ko	이 텍스트 박스에서 HTML 에디터를 사용하길 원하십니까?
+insert/edit link	tinymce	ko	링크 넣기/고치기
+insert	tinymce	ko	삽입
+update	tinymce	ko	삽입
+cancel	tinymce	ko	취소
+link url	tinymce	ko	URL 링크
+target	tinymce	ko	타겟
+open link in the same window	tinymce	ko	같은 창에서 링크 열기
+open link in a new window	tinymce	ko	새 창에서 링크 열기
+insert/edit image	tinymce	ko	그림 넣기/고치기
+image url	tinymce	ko	그림 URL
+image description	tinymce	ko	그림 설명
+help	tinymce	ko	도움말
+bold	tinymce	ko	진하게
+italic	tinymce	ko	기울임
+underline	tinymce	ko	밑줄
+striketrough	tinymce	ko	가로줄
+align left	tinymce	ko	왼쪽 정렬
+align center	tinymce	ko	가운데 정렬
+align right	tinymce	ko	오른쪽 정렬
+align full	tinymce	ko	양쪽 정렬
+unordered list	tinymce	ko	목차 매기기
+ordered list	tinymce	ko	번호 매기기
+outdent	tinymce	ko	내어쓰기
+indent	tinymce	ko	들여쓰기
+undo	tinymce	ko	실행취소
+redo	tinymce	ko	재실행
+insert/edit link	tinymce	ko	링크 넣기/고치기
+unlink	tinymce	ko	링크 해제
+insert/edit image	tinymce	ko	그림 넣기/고치기
+cleanup messy code	tinymce	ko	코드를 깔끔하게
+a editor instance must be focused before using this command.	tinymce	ko	이 명령을 실행하기 전에 반드시 에디터 내의 어딘가에 커서가 있어야 합니다.
+do you want to use the wysiwyg mode for this textarea?	tinymce	ko	이 텍스트 박스에서 HTML 에디터를 사용하길 원하십니까?
+insert/edit link	tinymce	ko	링크 넣기/고치기
+insert	tinymce	ko	삽입
+update	tinymce	ko	삽입
+cancel	tinymce	ko	취소
+link url	tinymce	ko	URL 링크
+target	tinymce	ko	타겟
+open link in the same window	tinymce	ko	같은 창에서 링크 열기
+open link in a new window	tinymce	ko	새 창에서 링크 열기
+insert/edit image	tinymce	ko	그림 넣기/고치기
+image url	tinymce	ko	그림 URL
+image description	tinymce	ko	그림 설명
+help	tinymce	ko	도움말
+image title	tinymce	ko	그림 제목
+for mouse over	tinymce	ko	마우스를 올렸을 때
+for mouse out	tinymce	ko	마우스를 내렸을 때
+open in this window / frame	tinymce	ko	같은 창에서 링크/프레임 열기
+open in parent window / frame	tinymce	ko	부모 창에서 링크/프레임 열기
+open in top frame (replaces all frames)	tinymce	ko	TOP 프레임에서 열기 (모든 프레임을 대체)
+open in new window	tinymce	ko	새 창에서 열기
+open in the window	tinymce	ko	새 창에서 열기
+js-popup	tinymce	ko	JS-Popup
+popup url	tinymce	ko	팝업 URL
+window name	tinymce	ko	창 이름
+show scrollbars	tinymce	ko	스크롤바를 보여줌
+show statusbar	tinymce	ko	상태창을 보여줌
+show toolbars	tinymce	ko	툴바를 보여줌
+show menubar	tinymce	ko	메뉴바를 보여줌
+show locationbar	tinymce	ko	위치 표시줄을 보여줌
+make window resizable	tinymce	ko	크기 조절 가능한 윈도우 생성
+size	tinymce	ko	크기
+position (x/y)	tinymce	ko	위치 (X/Y)
+insert emotion	tinymce	ko	이모티콘 넣기
+emotions	tinymce	ko	이모티콘
+run spell checking	tinymce	ko	맞춤법 검사 실행
+insert date	tinymce	ko	날짜 넣기
+insert time	tinymce	ko	시간 넣기
+preview	tinymce	ko	미리보기
+inserts a new table	tinymce	ko	표 넣기
+insert row before	tinymce	ko	앞에 행 넣기
+insert row after	tinymce	ko	뒤에 행 넣기
+delete row	tinymce	ko	행 지우기
+insert column before	tinymce	ko	앞에 열 넣기
+insert column after	tinymce	ko	뒤에 열 넣기
+remove col	tinymce	ko	열 지우기
+insert/modify table	tinymce	ko	표 넣기/고치기
+width	tinymce	ko	너비
+height	tinymce	ko	높이
+columns	tinymce	ko	행
+rows	tinymce	ko	열
+cellspacing	tinymce	ko	셀 간격
+cellpadding	tinymce	ko	셀 여백
+border	tinymce	ko	테두리
+alignment	tinymce	ko	정렬
+default	tinymce	ko	기본값
+left	tinymce	ko	왼쪽
+right	tinymce	ko	오른쪽
+center	tinymce	ko	가운데
+class	tinymce	ko	클래스
+table row properties	tinymce	ko	Table row properties
+table cell properties	tinymce	ko	Table cell properties
+table row properties	tinymce	ko	Table row properties
+table cell properties	tinymce	ko	Table cell properties
+vertical alignment	tinymce	ko	Vertical alignment
+top	tinymce	ko	Top
+bottom	tinymce	ko	Bottom
+table properties	tinymce	ko	Table properties
+border color	tinymce	ko	Border color
+bg color	tinymce	ko	Bg color
+merge table cells	tinymce	ko	Merge table cells
+split table cells	tinymce	ko	Split table cells
+merge table cells	tinymce	ko	Merge table cells
+cut table row	tinymce	ko	Cut table row
+copy table row	tinymce	ko	Copy table row
+paste table row before	tinymce	ko	Paste table row before
+paste table row after	tinymce	ko	Paste table row after

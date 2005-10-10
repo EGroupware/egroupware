@@ -728,3 +728,113 @@ your settings have been updated	common	el	Οι ρυθμίσεις σας έχουν ενημερωθεί
 yugoslavia	common	el	ΓΙΟΥΓΚΟΣΛΑΒΙΑ
 zambia	common	el	ΖΑΜΠΙΑ
 zimbabwe	common	el	ΖΙΜΠΑΜΠΟΥΕ
+bold	tinymce	el	Έντονη γραφή
+italic	tinymce	el	Πλάγια γραφή
+underline	tinymce	el	Υπογράμμιση
+striketrough	tinymce	el	Διακριτή διαγραφή
+align left	tinymce	el	Στοίχιση αριστερά
+align center	tinymce	el	Στοίχιση στο κέντρο
+align right	tinymce	el	Στοίχιση δεξιά
+align full	tinymce	el	Πλήρης στοίχιση
+unordered list	tinymce	el	Κουκκίδες
+ordered list	tinymce	el	Αρίθμηση
+outdent	tinymce	el	Μείωση εσοχής
+indent	tinymce	el	Αύξηση εσοχής
+undo	tinymce	el	Αναίρεση
+redo	tinymce	el	Ακύρωση αναίρεσης
+insert/edit link	tinymce	el	Δημιουργία/Διόρθωση υπερ-σύνδεσης
+unlink	tinymce	el	Διαγραφή υπερ-σύνδεσης
+insert/edit image	tinymce	el	Εισαγωγή/Διόρθωση εικόνας
+cleanup messy code	tinymce	el	Καθάρισμα κώδικα
+a editor instance must be focused before using this command.	tinymce	el	Πρέπει να υπάρχει ενεργός κάποιος επεξεργαστής κειμένου πριν να χρησιμοποιήσετε αυτή την εντολή.
+do you want to use the wysiwyg mode for this textarea?	tinymce	el	Θέλετε να χρησιμοποιήσετε την κατάσταση WYSIWYG για το συγκεκριμένο πλαίσιο κειμένου;
+insert/edit link	tinymce	el	Δημιουργία/Διόρθωση υπερ-σύνδεσης
+insert	tinymce	el	Εισαγωγή
+update	tinymce	el	Εισαγωγή
+cancel	tinymce	el	Ακύρωση
+link url	tinymce	el	Διεύθυνση
+target	tinymce	el	Στόχος
+open link in the same window	tinymce	el	’νοιγμα της διεύθυνσης στο ίδιο παράθυρο
+open link in a new window	tinymce	el	’νοιγμα της διεύθυνσης σε νέο παράθυρο
+insert/edit image	tinymce	el	Εισαγωγή/Διόρθωση εικόνας
+image url	tinymce	el	Διεύθυνση
+image description	tinymce	el	Περιγραφή
+help	tinymce	el	Βοήθεια
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	el	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	el	Έντονη γραφή
+italic	tinymce	el	Πλάγια γραφή
+underline	tinymce	el	Υπογράμμιση
+striketrough	tinymce	el	Διακριτή διαγραφή
+align left	tinymce	el	Στοίχιση αριστερά
+align center	tinymce	el	Στοίχιση στο κέντρο
+align right	tinymce	el	Στοίχιση δεξιά
+align full	tinymce	el	Πλήρης στοίχιση
+unordered list	tinymce	el	Κουκκίδες
+ordered list	tinymce	el	Αρίθμηση
+outdent	tinymce	el	Μείωση εσοχής
+indent	tinymce	el	Αύξηση εσοχής
+undo	tinymce	el	Αναίρεση
+redo	tinymce	el	Ακύρωση αναίρεσης
+insert/edit link	tinymce	el	Δημιουργία/Διόρθωση υπερ-σύνδεσης
+unlink	tinymce	el	Διαγραφή υπερ-σύνδεσης
+insert/edit image	tinymce	el	Εισαγωγή/Διόρθωση εικόνας
+cleanup messy code	tinymce	el	Καθάρισμα κώδικα
+a editor instance must be focused before using this command.	tinymce	el	Πρέπει να υπάρχει ενεργός κάποιος επεξεργαστής κειμένου πριν να χρησιμοποιήσετε αυτή την εντολή.
+do you want to use the wysiwyg mode for this textarea?	tinymce	el	Θέλετε να χρησιμοποιήσετε την κατάσταση WYSIWYG για το συγκεκριμένο πλαίσιο κειμένου;
+insert/edit link	tinymce	el	Δημιουργία/Διόρθωση υπερ-σύνδεσης
+insert	tinymce	el	Εισαγωγή
+update	tinymce	el	Εισαγωγή
+cancel	tinymce	el	Ακύρωση
+link url	tinymce	el	Διεύθυνση
+target	tinymce	el	Στόχος
+open link in the same window	tinymce	el	’νοιγμα της διεύθυνσης στο ίδιο παράθυρο
+open link in a new window	tinymce	el	’νοιγμα της διεύθυνσης σε νέο παράθυρο
+insert/edit image	tinymce	el	Εισαγωγή/Διόρθωση εικόνας
+image url	tinymce	el	Διεύθυνση
+image description	tinymce	el	Περιγραφή
+help	tinymce	el	Βοήθεια
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	el	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+insert emotion	tinymce	el	Εισαγωγή ενός εικονιδίου emoticon
+emotions	tinymce	el	Εικονίδια emoticons
+run spell checking	tinymce	el	Ορθογραφικός έλεγχος
+insert date	tinymce	el	Εισαγωγή ημερομηνίας
+insert time	tinymce	el	Εισαγωγή ώρας
+preview	tinymce	el	Προεπισκόπηση ιστοσελίδας
+inserts a new table	tinymce	el	Εισαγωγή πίνακα
+insert row before	tinymce	el	Εισαγωγή γραμμής επάνω
+insert row after	tinymce	el	Εισαγωγή γραμμής κάτω
+delete row	tinymce	el	Διαγραφή γραμμής
+insert column before	tinymce	el	Εισαγωγή στήλης αριστερά
+insert column after	tinymce	el	Εισαγωγή στήλης δεξιά
+remove col	tinymce	el	Διαγραφή στήλης
+insert/modify table	tinymce	el	Εισαγωγή/Διόρθωση πίνακα
+width	tinymce	el	Πλάτος
+height	tinymce	el	Ύψος
+columns	tinymce	el	Στήλες
+rows	tinymce	el	Γραμμές
+cellspacing	tinymce	el	Διάστιχο
+cellpadding	tinymce	el	Γέμισμα
+border	tinymce	el	Περίγραμμα
+alignment	tinymce	el	Στοίχιση
+default	tinymce	el	Προκαθ.
+left	tinymce	el	Αριστερά
+right	tinymce	el	Δεξιά
+center	tinymce	el	Στο κέντρο
+class	tinymce	el	Κλάση
+table row properties	tinymce	el	Table row properties
+table cell properties	tinymce	el	Table cell properties
+table row properties	tinymce	el	Table row properties
+table cell properties	tinymce	el	Table cell properties
+vertical alignment	tinymce	el	Vertical alignment
+top	tinymce	el	Top
+bottom	tinymce	el	Bottom
+table properties	tinymce	el	Table properties
+border color	tinymce	el	Border color
+bg color	tinymce	el	Bg color
+merge table cells	tinymce	el	Merge table cells
+split table cells	tinymce	el	Split table cells
+merge table cells	tinymce	el	Merge table cells
+cut table row	tinymce	el	Cut table row
+copy table row	tinymce	el	Copy table row
+paste table row before	tinymce	el	Paste table row before
+paste table row after	tinymce	el	Paste table row after

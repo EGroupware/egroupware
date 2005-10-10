@@ -1,0 +1,133 @@
+about	common	ar	ÕË‰
+add	common	ar	«÷«·…
+admin	common	ar	«œ«—Á
+administration	common	ar	«œ«—Á
+all	common	ar	«‰ÃÂÍŸ
+all fields	common	ar	ÃÂÍŸ «‰Õ‚Ë‰
+apply	common	ar	 ◊»Í‚
+april	common	ar	ÊÍ”«Ê
+cancel	common	ar	≈‰⁄«¡
+category	common	ar	·∆…
+charset	common	ar	iso-8859-6
+close	common	ar	«⁄‰‚
+color	htmlarea-TableOperations	ar	‰ËÊ
+copy	common	ar	Ê”Œ
+create	common	ar	Œ‰‚
+date	common	ar	«‰ «—ÍŒ
+delete	common	ar	Õ–·
+edit	common	ar	 Õ—Í—
+february	common	ar	‘»«◊
+friday	common	ar	ÃÂŸ…
+ignore	htmlarea-SpellChecker	ar	 Ã«Á‰
+ignore all	htmlarea-SpellChecker	ar	 Ã«Á‰ «‰ÃÂÍŸ
+iraq	common	ar	«‰Ÿ—«‚
+jordan	common	ar	«‰«—œÊ
+march	common	ar	«–«—
+palestinian territory, occupied	common	ar	«‰ÂÊ«◊‚ «‰·‰”◊ÍÊÍ… «‰ÂÕ ‰…
+save	common	ar	Õ·ÿ
+search	common	ar	»ÕÀ
+subject	common	ar	«‰ÂË÷ËŸ
+bold	tinymce	ar	&#1594;&#1575;&#1605;&#1602;
+italic	tinymce	ar	&#1605;&#1575;&#1574;&#1604;
+underline	tinymce	ar	&#1578;&#1587;&#1591;&#1610;&#1585;
+striketrough	tinymce	ar	&#1610;&#1578;&#1608;&#1587;&#1591;&#1607; &#1582;&#1591;
+align left	tinymce	ar	&#1605;&#1581;&#1575;&#1584;&#1575;&#1577; &#1573;&#1604;&#1609; &#1575;&#1604;&#1610;&#1587;&#1575;&#1585;
+align center	tinymce	ar	&#1578;&#1608;&#1587;&#1610;&#1591;
+align right	tinymce	ar	&#1605;&#1581;&#1575;&#1584;&#1575;&#1577; &#1573;&#1604;&#1609; &#1575;&#1604;&#1610;&#1605;&#1610;&#1606;
+align full	tinymce	ar	&#1590;&#1576;&#1591;
+unordered list	tinymce	ar	&#1578;&#1593;&#1583;&#1575;&#1583; &#1606;&#1602;&#1591;&#1610;
+ordered list	tinymce	ar	&#1578;&#1593;&#1583;&#1575;&#1583; &#1585;&#1602;&#1605;&#1610;
+outdent	tinymce	ar	&#1573;&#1606;&#1602;&#1575;&#1589; &#1575;&#1604;&#1605;&#1587;&#1575;&#1601;&#1577; &#1575;&#1604;&#1576;&#1575;&#1583;&#1574;&#1577;
+indent	tinymce	ar	&#1586;&#1610;&#1575;&#1583;&#1577; &#1575;&#1604;&#1605;&#1587;&#1575;&#1601;&#1577; &#1575;&#1604;&#1576;&#1575;&#1583;&#1574;&#1577;
+undo	tinymce	ar	&#1578;&#1585;&#1575;&#1580;&#1593;
+redo	tinymce	ar	&#1573;&#1593;&#1575;&#1583;&#1577;
+insert/edit link	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1585;&#1575;&#1576;&#1591;
+unlink	tinymce	ar	&#1573;&#1586;&#1575;&#1604;&#1577; &#1585;&#1575;&#1576;&#1591;
+insert/edit image	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1589;&#1608;&#1585;&#1577;
+cleanup messy code	tinymce	ar	Cleanup messy code
+a editor instance must be focused before using this command.	tinymce	ar	A editor instance must be focused before using this command.
+do you want to use the wysiwyg mode for this textarea?	tinymce	ar	Do you want to use the WYSIWYG mode for this textarea?
+insert/edit link	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1585;&#1575;&#1576;&#1591;
+insert	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;
+update	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;
+cancel	tinymce	ar	&#1571;&#1604;&#1594;&#1610;
+link url	tinymce	ar	&#1585;&#1575;&#1576;&#1591; URL
+target	tinymce	ar	&#1575;&#1604;&#1607;&#1583;&#1601;
+open link in the same window	tinymce	ar	&#1606;&#1601;&#1587; &#1575;&#1604;&#1573;&#1591;&#1575;&#1585;
+open link in a new window	tinymce	ar	&#1573;&#1591;&#1575;&#1585; &#1580;&#1583;&#1610;&#1583; (_blank)
+insert/edit image	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1589;&#1608;&#1585;&#1577;
+image url	tinymce	ar	&#1589;&#1608;&#1585;&#1577; URL
+image description	tinymce	ar	&#1575;&#1604;&#1608;&#1589;&#1601;
+help	tinymce	ar	&#1575;&#1604;&#1605;&#1587;&#1575;&#1593;&#1583;&#1577;
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ar	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	ar	&#1594;&#1575;&#1605;&#1602;
+italic	tinymce	ar	&#1605;&#1575;&#1574;&#1604;
+underline	tinymce	ar	&#1578;&#1587;&#1591;&#1610;&#1585;
+striketrough	tinymce	ar	&#1610;&#1578;&#1608;&#1587;&#1591;&#1607; &#1582;&#1591;
+align left	tinymce	ar	&#1605;&#1581;&#1575;&#1584;&#1575;&#1577; &#1573;&#1604;&#1609; &#1575;&#1604;&#1610;&#1587;&#1575;&#1585;
+align center	tinymce	ar	&#1578;&#1608;&#1587;&#1610;&#1591;
+align right	tinymce	ar	&#1605;&#1581;&#1575;&#1584;&#1575;&#1577; &#1573;&#1604;&#1609; &#1575;&#1604;&#1610;&#1605;&#1610;&#1606;
+align full	tinymce	ar	&#1590;&#1576;&#1591;
+unordered list	tinymce	ar	&#1578;&#1593;&#1583;&#1575;&#1583; &#1606;&#1602;&#1591;&#1610;
+ordered list	tinymce	ar	&#1578;&#1593;&#1583;&#1575;&#1583; &#1585;&#1602;&#1605;&#1610;
+outdent	tinymce	ar	&#1573;&#1606;&#1602;&#1575;&#1589; &#1575;&#1604;&#1605;&#1587;&#1575;&#1601;&#1577; &#1575;&#1604;&#1576;&#1575;&#1583;&#1574;&#1577;
+indent	tinymce	ar	&#1586;&#1610;&#1575;&#1583;&#1577; &#1575;&#1604;&#1605;&#1587;&#1575;&#1601;&#1577; &#1575;&#1604;&#1576;&#1575;&#1583;&#1574;&#1577;
+undo	tinymce	ar	&#1578;&#1585;&#1575;&#1580;&#1593;
+redo	tinymce	ar	&#1573;&#1593;&#1575;&#1583;&#1577;
+insert/edit link	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1585;&#1575;&#1576;&#1591;
+unlink	tinymce	ar	&#1573;&#1586;&#1575;&#1604;&#1577; &#1585;&#1575;&#1576;&#1591;
+insert/edit image	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1589;&#1608;&#1585;&#1577;
+cleanup messy code	tinymce	ar	Cleanup messy code
+a editor instance must be focused before using this command.	tinymce	ar	A editor instance must be focused before using this command.
+do you want to use the wysiwyg mode for this textarea?	tinymce	ar	Do you want to use the WYSIWYG mode for this textarea?
+insert/edit link	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1585;&#1575;&#1576;&#1591;
+insert	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;
+update	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;
+cancel	tinymce	ar	&#1571;&#1604;&#1594;&#1610;
+link url	tinymce	ar	&#1585;&#1575;&#1576;&#1591; URL
+target	tinymce	ar	&#1575;&#1604;&#1607;&#1583;&#1601;
+open link in the same window	tinymce	ar	&#1606;&#1601;&#1587; &#1575;&#1604;&#1573;&#1591;&#1575;&#1585;
+open link in a new window	tinymce	ar	&#1573;&#1591;&#1575;&#1585; &#1580;&#1583;&#1610;&#1583; (_blank)
+insert/edit image	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1589;&#1608;&#1585;&#1577;
+image url	tinymce	ar	&#1589;&#1608;&#1585;&#1577; URL
+image description	tinymce	ar	&#1575;&#1604;&#1608;&#1589;&#1601;
+help	tinymce	ar	&#1575;&#1604;&#1605;&#1587;&#1575;&#1593;&#1583;&#1577;
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ar	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+inserts a new table	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1580;&#1583;&#1608;&#1604;
+insert row before	tinymce	ar	Insert row before
+insert row after	tinymce	ar	Insert row after
+delete row	tinymce	ar	&#1581;&#1584;&#1601; &#1589;&#1601;&#1608;&#1601;
+insert column before	tinymce	ar	Insert column before
+insert column after	tinymce	ar	Insert column after
+remove col	tinymce	ar	&#1581;&#1584;&#1601; &#1571;&#1593;&#1605;&#1583;&#1577;
+insert/modify table	tinymce	ar	&#1573;&#1583;&#1585;&#1575;&#1580;/&#1578;&#1581;&#1585;&#1610;&#1585; &#1580;&#1583;&#1608;&#1604;
+width	tinymce	ar	&#1575;&#1604;&#1593;&#1585;&#1590;
+height	tinymce	ar	&#1575;&#1604;&#1575;&#1585;&#1578;&#1601;&#1575;&#1593;
+columns	tinymce	ar	&#1571;&#1593;&#1605;&#1583;&#1577;
+rows	tinymce	ar	&#1589;&#1601;&#1608;&#1601;
+cellspacing	tinymce	ar	&#1578;&#1576;&#1575;&#1593;&#1583; &#1575;&#1604;&#1582;&#1604;&#1575;&#1610;&#1575;
+cellpadding	tinymce	ar	&#1575;&#1604;&#1605;&#1587;&#1575;&#1601;&#1577; &#1575;&#1604;&#1576;&#1575;&#1583;&#1574;&#1577;
+border	tinymce	ar	&#1587;&#1605;&#1603; &#1575;&#1604;&#1581;&#1583;&#1608;&#1583;
+alignment	tinymce	ar	&#1575;&#1604;&#1605;&#1581;&#1575;&#1584;&#1575;&#1577;
+default	tinymce	ar	Default
+left	tinymce	ar	&#1610;&#1587;&#1575;&#1585;
+right	tinymce	ar	&#1610;&#1605;&#1610;&#1606;
+center	tinymce	ar	&#1608;&#1587;&#1591;
+class	tinymce	ar	Class
+table row properties	tinymce	ar	Table row properties
+table cell properties	tinymce	ar	Table cell properties
+table row properties	tinymce	ar	Table row properties
+table cell properties	tinymce	ar	Table cell properties
+vertical alignment	tinymce	ar	Vertical alignment
+top	tinymce	ar	Top
+bottom	tinymce	ar	Bottom
+table properties	tinymce	ar	Table properties
+border color	tinymce	ar	Border color
+bg color	tinymce	ar	Bg color
+merge table cells	tinymce	ar	Merge table cells
+split table cells	tinymce	ar	Split table cells
+merge table cells	tinymce	ar	Merge table cells
+cut table row	tinymce	ar	Cut table row
+copy table row	tinymce	ar	Copy table row
+paste table row before	tinymce	ar	Paste table row before
+paste table row after	tinymce	ar	Paste table row after

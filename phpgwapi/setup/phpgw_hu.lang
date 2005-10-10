@@ -144,3 +144,107 @@ use cookies	login	hu	használ sütit
 username	login	hu	Felhasználó
 you have been successfully logged out	login	hu	Sikeresen kijelentkezett a rendszerbõl
 your session could not be verified.	login	hu	A hozzáférése nem ellenõrizhetõ.
+bold	tinymce	hu	F&#233;lk&#246;v&#233;r
+italic	tinymce	hu	D&#245;lt
+underline	tinymce	hu	Al&#225;h&#250;zott
+striketrough	tinymce	hu	&#193;th&#250;zott
+align left	tinymce	hu	Balra igaz&#237;t&#225;s
+align center	tinymce	hu	K&#246;z&#233;pre igaz&#237;t&#225;s
+align right	tinymce	hu	Jobbra igaz&#237;t&#225;s
+align full	tinymce	hu	Sorkiz&#225;rt
+unordered list	tinymce	hu	Felsorol&#225;s
+ordered list	tinymce	hu	Sz&#225;mozott lista
+outdent	tinymce	hu	Beh&#250;z&#225;s balra
+indent	tinymce	hu	Beh&#250;z&#225;s jobbra
+undo	tinymce	hu	Visszavon&#225;s
+redo	tinymce	hu	Ism&#233;tl&#233;s
+insert/edit link	tinymce	hu	Link felv&#233;tele
+unlink	tinymce	hu	Link t&#246;rl&#233;se
+insert/edit image	tinymce	hu	K&#233;p beilleszt&#233;se
+cleanup messy code	tinymce	hu	K&#243;d tiszt&#237;t&#225;sa
+a editor instance must be focused before using this command.	tinymce	hu	Miel\u00F5tt haszn\u00E1lja ezt a funkci\u00F3t, ki kell jel\u00F6lnie a szerkeszteni k\u00EDv\u00E1nt ter\u00FCletet.
+do you want to use the wysiwyg mode for this textarea?	tinymce	hu	K\u00EDv\u00E1nja a WYSIWYG m\u00F3dot erre a sz\u00F6vegter\u00FCletre alkalmazni??
+insert/edit link	tinymce	hu	Link beilleszt&#233;se/szerkeszt&#233;se
+insert	tinymce	hu	Beilleszt&#233;s
+update	tinymce	hu	Beilleszt&#233;s
+cancel	tinymce	hu	M&#233;gsem
+link url	tinymce	hu	Link URL
+target	tinymce	hu	C&#233;l
+open link in the same window	tinymce	hu	Link megnyit&#225;sa azonos ablakban
+open link in a new window	tinymce	hu	Link megnyit&#225;sa &#250;j ablakban
+insert/edit image	tinymce	hu	K&#233;p beilleszt&#233;se/szerkeszt&#233;se
+image url	tinymce	hu	K&#233;p URL
+image description	tinymce	hu	K&#233;ple&#237;r&#225;s
+help	tinymce	hu	Seg&#237;t&#233;g
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	hu	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	hu	F&#233;lk&#246;v&#233;r
+italic	tinymce	hu	D&#245;lt
+underline	tinymce	hu	Al&#225;h&#250;zott
+striketrough	tinymce	hu	&#193;th&#250;zott
+align left	tinymce	hu	Balra igaz&#237;t&#225;s
+align center	tinymce	hu	K&#246;z&#233;pre igaz&#237;t&#225;s
+align right	tinymce	hu	Jobbra igaz&#237;t&#225;s
+align full	tinymce	hu	Sorkiz&#225;rt
+unordered list	tinymce	hu	Felsorol&#225;s
+ordered list	tinymce	hu	Sz&#225;mozott lista
+outdent	tinymce	hu	Beh&#250;z&#225;s balra
+indent	tinymce	hu	Beh&#250;z&#225;s jobbra
+undo	tinymce	hu	Visszavon&#225;s
+redo	tinymce	hu	Ism&#233;tl&#233;s
+insert/edit link	tinymce	hu	Link felv&#233;tele
+unlink	tinymce	hu	Link t&#246;rl&#233;se
+insert/edit image	tinymce	hu	K&#233;p beilleszt&#233;se
+cleanup messy code	tinymce	hu	K&#243;d tiszt&#237;t&#225;sa
+a editor instance must be focused before using this command.	tinymce	hu	Miel\u00F5tt haszn\u00E1lja ezt a funkci\u00F3t, ki kell jel\u00F6lnie a szerkeszteni k\u00EDv\u00E1nt ter\u00FCletet.
+do you want to use the wysiwyg mode for this textarea?	tinymce	hu	K\u00EDv\u00E1nja a WYSIWYG m\u00F3dot erre a sz\u00F6vegter\u00FCletre alkalmazni??
+insert/edit link	tinymce	hu	Link beilleszt&#233;se/szerkeszt&#233;se
+insert	tinymce	hu	Beilleszt&#233;s
+update	tinymce	hu	Beilleszt&#233;s
+cancel	tinymce	hu	M&#233;gsem
+link url	tinymce	hu	Link URL
+target	tinymce	hu	C&#233;l
+open link in the same window	tinymce	hu	Link megnyit&#225;sa azonos ablakban
+open link in a new window	tinymce	hu	Link megnyit&#225;sa &#250;j ablakban
+insert/edit image	tinymce	hu	K&#233;p beilleszt&#233;se/szerkeszt&#233;se
+image url	tinymce	hu	K&#233;p URL
+image description	tinymce	hu	K&#233;ple&#237;r&#225;s
+help	tinymce	hu	Seg&#237;t&#233;g
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	hu	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+inserts a new table	tinymce	hu	&#218;j t&#225;bl&#225;zat beilleszt&#233;se
+insert row before	tinymce	hu	Sor beilleszt&#233;se el&#233;
+insert row after	tinymce	hu	Sor beilleszt&#233;se ut&#225;na
+delete row	tinymce	hu	Sor t&#246;rl&#233;se
+insert column before	tinymce	hu	Oszlop beillszt&#233;se el&#233;
+insert column after	tinymce	hu	Oszlop beilleszt&#233;se ut&#225;na
+remove col	tinymce	hu	Oszlop elt&#225;vol&#237;t&#225;sa
+insert/modify table	tinymce	hu	T&#225;bla beilleszt&#233;se/m&#243;dos&#237;t&#225;sa
+width	tinymce	hu	Sz&#233;less&#233;g
+height	tinymce	hu	Magass&#225;g
+columns	tinymce	hu	Oszlopok
+rows	tinymce	hu	Sorok
+cellspacing	tinymce	hu	Cellspacing
+cellpadding	tinymce	hu	Cellpadding
+border	tinymce	hu	Keret
+alignment	tinymce	hu	Igaz&#237;t&#225;s
+default	tinymce	hu	Alap&#233;rtelmezett
+left	tinymce	hu	Balra
+right	tinymce	hu	Jobbra
+center	tinymce	hu	K&#246;z&#233;pre
+class	tinymce	hu	Class
+table row properties	tinymce	hu	Table row properties
+table cell properties	tinymce	hu	Table cell properties
+table row properties	tinymce	hu	Table row properties
+table cell properties	tinymce	hu	Table cell properties
+vertical alignment	tinymce	hu	Vertical alignment
+top	tinymce	hu	Top
+bottom	tinymce	hu	Bottom
+table properties	tinymce	hu	Table properties
+border color	tinymce	hu	Border color
+bg color	tinymce	hu	Bg color
+merge table cells	tinymce	hu	Merge table cells
+split table cells	tinymce	hu	Split table cells
+merge table cells	tinymce	hu	Merge table cells
+cut table row	tinymce	hu	Cut table row
+copy table row	tinymce	hu	Copy table row
+paste table row before	tinymce	hu	Paste table row before
+paste table row after	tinymce	hu	Paste table row after

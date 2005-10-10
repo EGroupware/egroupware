@@ -1,0 +1,152 @@
+bold	tinymce	fa	ضخيم
+italic	tinymce	fa	کجکي
+underline	tinymce	fa	زير خط دار
+striketrough	tinymce	fa	خط خورده
+align left	tinymce	fa	چپ چين
+align center	tinymce	fa	وسط چين
+align right	tinymce	fa	راست چين
+align full	tinymce	fa	کشيده چين
+unordered list	tinymce	fa	ليست
+ordered list	tinymce	fa	ليست عددي
+outdent	tinymce	fa	کاهش زبانه
+indent	tinymce	fa	افزايش زبانه
+undo	tinymce	fa	برگردونک
+redo	tinymce	fa	سرگردونک
+insert/edit link	tinymce	fa	درج و ويرايش لينک
+unlink	tinymce	fa	حذف لينک
+insert/edit image	tinymce	fa	درج و ويرايش عکس
+cleanup messy code	tinymce	fa	پاکسازي کد
+a editor instance must be focused before using this command.	tinymce	fa	A editor instance must be focused before using this command.
+do you want to use the wysiwyg mode for this textarea?	tinymce	fa	Do you want to use the WYSIWYG mode for this textarea?
+insert/edit link	tinymce	fa	درج و ويرايش لينک
+insert	tinymce	fa	  تاييد  
+update	tinymce	fa	  تاييد  
+cancel	tinymce	fa	 انصراف 
+link url	tinymce	fa	URL لينک
+target	tinymce	fa	مقصد
+open link in the same window	tinymce	fa	لينک را در همان صفحه باز کن
+open link in a new window	tinymce	fa	لينک را در صفحه جديد باز کن
+insert/edit image	tinymce	fa	درج و ويرايش عکس
+image url	tinymce	fa	URL عکس
+image description	tinymce	fa	توضيح
+help	tinymce	fa	راهنما
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fa	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	fa	ضخيم
+italic	tinymce	fa	کجکي
+underline	tinymce	fa	زير خط دار
+striketrough	tinymce	fa	خط خورده
+align left	tinymce	fa	چپ چين
+align center	tinymce	fa	وسط چين
+align right	tinymce	fa	راست چين
+align full	tinymce	fa	کشيده چين
+unordered list	tinymce	fa	ليست
+ordered list	tinymce	fa	ليست عددي
+outdent	tinymce	fa	کاهش زبانه
+indent	tinymce	fa	افزايش زبانه
+undo	tinymce	fa	برگردونک
+redo	tinymce	fa	سرگردونک
+insert/edit link	tinymce	fa	درج و ويرايش لينک
+unlink	tinymce	fa	حذف لينک
+insert/edit image	tinymce	fa	درج و ويرايش عکس
+cleanup messy code	tinymce	fa	پاکسازي کد
+a editor instance must be focused before using this command.	tinymce	fa	A editor instance must be focused before using this command.
+do you want to use the wysiwyg mode for this textarea?	tinymce	fa	Do you want to use the WYSIWYG mode for this textarea?
+insert/edit link	tinymce	fa	درج و ويرايش لينک
+insert	tinymce	fa	  تاييد  
+update	tinymce	fa	  تاييد  
+cancel	tinymce	fa	 انصراف 
+link url	tinymce	fa	URL لينک
+target	tinymce	fa	مقصد
+open link in the same window	tinymce	fa	لينک را در همان صفحه باز کن
+open link in a new window	tinymce	fa	لينک را در صفحه جديد باز کن
+insert/edit image	tinymce	fa	درج و ويرايش عکس
+image url	tinymce	fa	URL عکس
+image description	tinymce	fa	توضيح
+help	tinymce	fa	راهنما
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fa	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+no shadow	tinymce	fa	بدون سایه
+image title	tinymce	fa	عنوان عکس
+for mouse over	tinymce	fa	عکس جایگزین هنگام ورود نشانگر ماوس
+for mouse out	tinymce	fa	عکس جایگزین هنگام خروج نشانگر ماوس
+open in this window / frame	tinymce	fa	در همین صفحه / فریم باز کن
+open in parent window / frame	tinymce	fa	در صفحه / فریم اصلی باز کن
+open in top frame (replaces all frames)	tinymce	fa	در فریم اصلی باز کن (همه فریمها نادیده گرفته میشود)
+open in new window	tinymce	fa	در صفحه جدید باز کن
+open in the window	tinymce	fa	در پنجره باز کن
+js-popup	tinymce	fa	JS-Popup
+popup url	tinymce	fa	URL پنجره
+window name	tinymce	fa	نام پنجره
+show scrollbars	tinymce	fa	نمایش scrollbars
+show statusbar	tinymce	fa	نمایش statusbar
+show toolbars	tinymce	fa	نمایش toolbars
+show menubar	tinymce	fa	نمایش menubar
+show locationbar	tinymce	fa	نمایش locationbar
+make window resizable	tinymce	fa	قابل تغییر اندازه باشد
+size	tinymce	fa	اندازه
+position (x/y)	tinymce	fa	موقعیت (X/Y)
+please insert a name for the target or choose another option.	tinymce	fa	لطفا یک نام برای مقصد انتخاب کنید در غیر این صورت گزینه دیگری را انتخاب نمایید.
+insert emotion	tinymce	fa	افزودن شکلک
+emotions	tinymce	fa	شکلکها
+flash-file (.swf)	tinymce	fa	???? ??? (.swf)
+size	tinymce	fa	?????
+flash properties	tinymce	fa	Flash properties
+insert date	tinymce	fa	افزودن تاریخ
+insert time	tinymce	fa	افزودن زمان
+preview	tinymce	fa	پیش نمایش
+print	tinymce	fa	چاپ
+save	tinymce	fa	ضبط
+find	tinymce	fa	جستجو
+find again	tinymce	fa	جستجوي مجدد
+find/replace	tinymce	fa	جستجو/جايگزيني
+the search has been compleated. the search string could not be found.	tinymce	fa	جستجو پايان يافت. هيچ موردي يافت نشد.
+find	tinymce	fa	جستجو
+find/replace	tinymce	fa	جستجو/جايگزيني
+all occurrences of the search string was replaced.	tinymce	fa	همه موارد جايگزين گرديد.
+find what	tinymce	fa	جستجو به دنبال
+replace with	tinymce	fa	جايگزيني با
+direction	tinymce	fa	جهت جستجو
+up	tinymce	fa	به سمت بالا
+down	tinymce	fa	به سمت پايين
+match case	tinymce	fa	تطبيق حروف کوچک و بزرگ
+find&nbsp;next	tinymce	fa	مورد-بعدي
+replace	tinymce	fa	جايگزين-کن
+replace&nbsp;all	tinymce	fa	جايگزيني-همه
+cancel	tinymce	fa	بيخيال
+inserts a new table	tinymce	fa	??? ???? ????
+insert row before	tinymce	fa	??? ??? ???? ??? ?? ??? ????
+insert row after	tinymce	fa	??? ??? ???? ?? ?? ??? ????
+delete row	tinymce	fa	??? ???
+insert column before	tinymce	fa	??? ???? ???? ??? ?? ???? ????
+insert column after	tinymce	fa	??? ???? ???? ?? ?? ???? ????
+remove col	tinymce	fa	??? ????
+insert/modify table	tinymce	fa	??? ? ?????? ????
+width	tinymce	fa	???
+height	tinymce	fa	??????
+columns	tinymce	fa	????? ??????
+rows	tinymce	fa	????? ?????
+cellspacing	tinymce	fa	????? ?? ???? ????
+cellpadding	tinymce	fa	????? ??? ?? ?????? ????
+border	tinymce	fa	?????
+alignment	tinymce	fa	??? ???? ????
+default	tinymce	fa	??? ???
+left	tinymce	fa	??
+right	tinymce	fa	????
+center	tinymce	fa	???
+class	tinymce	fa	????
+table row properties	tinymce	fa	Table row properties
+table cell properties	tinymce	fa	Table cell properties
+table row properties	tinymce	fa	Table row properties
+table cell properties	tinymce	fa	Table cell properties
+vertical alignment	tinymce	fa	Vertical alignment
+top	tinymce	fa	Top
+bottom	tinymce	fa	Bottom
+table properties	tinymce	fa	Table properties
+border color	tinymce	fa	Border color
+bg color	tinymce	fa	Bg color
+merge table cells	tinymce	fa	Merge table cells
+split table cells	tinymce	fa	Split table cells
+merge table cells	tinymce	fa	Merge table cells
+cut table row	tinymce	fa	Cut table row
+copy table row	tinymce	fa	Copy table row
+paste table row before	tinymce	fa	Paste table row before
+paste table row after	tinymce	fa	Paste table row after

@@ -220,3 +220,107 @@ use cookies	login	ja	Cookie ¤ò»ÈÍÑ
 username	login	ja	¥æ¡¼¥¶Ì¾
 you have been successfully logged out	login	ja	¥í¥°¥¢¥¦¥È¤·¤Þ¤·¤¿¡£
 your session could not be verified.	login	ja	Your session could not be verified.
+bold	tinymce	ja	$BB@;z(B
+italic	tinymce	ja	$B<PBN(B
+underline	tinymce	ja	$B2<@~(B
+striketrough	tinymce	ja	$BKu>C@~(B
+align left	tinymce	ja	$B:85M$a(B
+align center	tinymce	ja	$BCf1{9g$o$;(B
+align right	tinymce	ja	$B1&5M$a(B
+align full	tinymce	ja	$B9TB7$((B
+unordered list	tinymce	ja	$B2U>r=q(B
+ordered list	tinymce	ja	$BHV9fIU$-2U>r=q(B
+outdent	tinymce	ja	$B;z>e$2(B
+indent	tinymce	ja	$B;z2<$2(B
+undo	tinymce	ja	$B$d$j$J$*$7(B
+redo	tinymce	ja	$B:F<B9T(B
+insert/edit link	tinymce	ja	$B%j%s%/$NA^F~(B/$BJT=8(B
+unlink	tinymce	ja	$B%j%s%/$N:o=|(B
+insert/edit image	tinymce	ja	$B2hA|$NA^F~(B/$BJT=8(B
+cleanup messy code	tinymce	ja	$B%3!<%I@0M}(B
+a editor instance must be focused before using this command.	tinymce	ja	$B$3$N%3%^%s%I$r;H$&A0$K%(%G%#%?>e$N$I$3$+$rA*Br$9$kI,MW$,$"$j$^$9!#(B
+do you want to use the wysiwyg mode for this textarea?	tinymce	ja	WYSIWYG$B%b!<%I$G$3$N%F%-%9%H%(%j%"$rJT=8$7$^$9$+!)(B
+insert/edit link	tinymce	ja	$B%j%s%/$NA^F~(B/$BJT=8(B
+insert	tinymce	ja	$BA^F~(B
+update	tinymce	ja	$BA^F~(B
+cancel	tinymce	ja	$B<h$j>C$7(B
+link url	tinymce	ja	$B%j%s%/@h(BURL
+target	tinymce	ja	$B%?!<%2%C%H(B
+open link in the same window	tinymce	ja	$BF1$8Ak$G%j%s%/$r3+$/(B
+open link in a new window	tinymce	ja	$B?7$7$$Ak$G%j%s%/$r3+$/(B
+insert/edit image	tinymce	ja	$B2hA|$NA^F~(B/$BJT=8(B
+image url	tinymce	ja	$B2hA|$N(BURL
+image description	tinymce	ja	$B2hA|$N@bL@(B
+help	tinymce	ja	$B%X%k%W(B
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ja	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	ja	$BB@;z(B
+italic	tinymce	ja	$B<PBN(B
+underline	tinymce	ja	$B2<@~(B
+striketrough	tinymce	ja	$BKu>C@~(B
+align left	tinymce	ja	$B:85M$a(B
+align center	tinymce	ja	$BCf1{9g$o$;(B
+align right	tinymce	ja	$B1&5M$a(B
+align full	tinymce	ja	$B9TB7$((B
+unordered list	tinymce	ja	$B2U>r=q(B
+ordered list	tinymce	ja	$BHV9fIU$-2U>r=q(B
+outdent	tinymce	ja	$B;z>e$2(B
+indent	tinymce	ja	$B;z2<$2(B
+undo	tinymce	ja	$B$d$j$J$*$7(B
+redo	tinymce	ja	$B:F<B9T(B
+insert/edit link	tinymce	ja	$B%j%s%/$NA^F~(B/$BJT=8(B
+unlink	tinymce	ja	$B%j%s%/$N:o=|(B
+insert/edit image	tinymce	ja	$B2hA|$NA^F~(B/$BJT=8(B
+cleanup messy code	tinymce	ja	$B%3!<%I@0M}(B
+a editor instance must be focused before using this command.	tinymce	ja	$B$3$N%3%^%s%I$r;H$&A0$K%(%G%#%?>e$N$I$3$+$rA*Br$9$kI,MW$,$"$j$^$9!#(B
+do you want to use the wysiwyg mode for this textarea?	tinymce	ja	WYSIWYG$B%b!<%I$G$3$N%F%-%9%H%(%j%"$rJT=8$7$^$9$+!)(B
+insert/edit link	tinymce	ja	$B%j%s%/$NA^F~(B/$BJT=8(B
+insert	tinymce	ja	$BA^F~(B
+update	tinymce	ja	$BA^F~(B
+cancel	tinymce	ja	$B<h$j>C$7(B
+link url	tinymce	ja	$B%j%s%/@h(BURL
+target	tinymce	ja	$B%?!<%2%C%H(B
+open link in the same window	tinymce	ja	$BF1$8Ak$G%j%s%/$r3+$/(B
+open link in a new window	tinymce	ja	$B?7$7$$Ak$G%j%s%/$r3+$/(B
+insert/edit image	tinymce	ja	$B2hA|$NA^F~(B/$BJT=8(B
+image url	tinymce	ja	$B2hA|$N(BURL
+image description	tinymce	ja	$B2hA|$N@bL@(B
+help	tinymce	ja	$B%X%k%W(B
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ja	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+inserts a new table	tinymce	ja	$B%F!<%V%k(B
+insert row before	tinymce	ja	$B9TA^F~(B($BA0(B)
+insert row after	tinymce	ja	$B9TA^F~(B($B8e(B)
+delete row	tinymce	ja	$B9T:o=|(B
+insert column before	tinymce	ja	$BNsA^F~(B($BA0(B)
+insert column after	tinymce	ja	$BNsA^F~(B($B8e(B)
+remove col	tinymce	ja	$BNs:o=|(B
+insert/modify table	tinymce	ja	$B%F!<%V%k$NA^F~(B/$BJT=8(B
+columns	tinymce	ja	$BNs?t(B
+rows	tinymce	ja	$B9T?t(B
+cellspacing	tinymce	ja	$B%;%kM>Gr(B
+cellpadding	tinymce	ja	$B%;%k5M$a(B
+alignment	tinymce	ja	$B0LCVD4@0(B
+default	tinymce	ja	$B0EL[(B
+left	tinymce	ja	$B:85M$a(B
+right	tinymce	ja	$B1&5M$a(B
+center	tinymce	ja	$BCf1{4s$;(B
+width	tinymce	ja	$BI}(B
+height	tinymce	ja	$B9b$5(B
+border	tinymce	ja	$B6-3&@~(B
+class	tinymce	ja	$B%/%i%9(B
+table row properties	tinymce	ja	Table row properties
+table cell properties	tinymce	ja	Table cell properties
+table row properties	tinymce	ja	Table row properties
+table cell properties	tinymce	ja	Table cell properties
+vertical alignment	tinymce	ja	Vertical alignment
+top	tinymce	ja	Top
+bottom	tinymce	ja	Bottom
+table properties	tinymce	ja	Table properties
+border color	tinymce	ja	Border color
+bg color	tinymce	ja	Bg color
+merge table cells	tinymce	ja	Merge table cells
+split table cells	tinymce	ja	Split table cells
+merge table cells	tinymce	ja	Merge table cells
+cut table row	tinymce	ja	Cut table row
+copy table row	tinymce	ja	Copy table row
+paste table row before	tinymce	ja	Paste table row before
+paste table row after	tinymce	ja	Paste table row after

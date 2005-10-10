@@ -797,3 +797,157 @@ My Categories	common	zh	绫诲埆缂栬緫
 Icon	common	zh	鍥炬爣
 icon	common	zh	鍥炬爣
 Color	common	zh	棰滆壊
+bold	tinymce	zh_cn	粗体
+italic	tinymce	zh_cn	斜体
+underline	tinymce	zh_cn	下划线
+striketrough	tinymce	zh_cn	删除线
+align left	tinymce	zh_cn	左对齐
+align center	tinymce	zh_cn	居中对齐
+align right	tinymce	zh_cn	右对齐
+align full	tinymce	zh_cn	两端对齐
+unordered list	tinymce	zh_cn	无序列表
+ordered list	tinymce	zh_cn	有序列表
+outdent	tinymce	zh_cn	减少缩进
+indent	tinymce	zh_cn	增加缩进
+undo	tinymce	zh_cn	撤消
+redo	tinymce	zh_cn	重做
+insert/edit link	tinymce	zh_cn	插入/编辑 链接
+unlink	tinymce	zh_cn	删除链接
+insert/edit image	tinymce	zh_cn	插入/编辑 图像
+cleanup messy code	tinymce	zh_cn	清除冗余代码
+a editor instance must be focused before using this command.	tinymce	zh_cn	在使用此命令前某个编辑器必须先获得焦点！
+do you want to use the wysiwyg mode for this textarea?	tinymce	zh_cn	你想在此TextArea上使用所见即所得编辑器么？
+insert/edit link	tinymce	zh_cn	插入/编辑 链接
+insert	tinymce	zh_cn	插入
+update	tinymce	zh_cn	更新
+cancel	tinymce	zh_cn	取消
+link url	tinymce	zh_cn	链接地址
+target	tinymce	zh_cn	目标
+open link in the same window	tinymce	zh_cn	在同一窗口中打开链接
+open link in a new window	tinymce	zh_cn	在新窗口中打开链接
+insert/edit image	tinymce	zh_cn	插入/编辑 图像
+image url	tinymce	zh_cn	图像地址
+image description	tinymce	zh_cn	图像描述
+help	tinymce	zh_cn	帮助
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	zh_cn	剪切/复制/粘贴功能在Mozilla和Firefox上尚不可用。\n你想了解关于这个问题的更多信息吗？
+bold	tinymce	zh_cn	粗体
+italic	tinymce	zh_cn	斜体
+underline	tinymce	zh_cn	下划线
+striketrough	tinymce	zh_cn	删除线
+align left	tinymce	zh_cn	左对齐
+align center	tinymce	zh_cn	居中对齐
+align right	tinymce	zh_cn	右对齐
+align full	tinymce	zh_cn	两端对齐
+unordered list	tinymce	zh_cn	无序列表
+ordered list	tinymce	zh_cn	有序列表
+outdent	tinymce	zh_cn	减少缩进
+indent	tinymce	zh_cn	增加缩进
+undo	tinymce	zh_cn	撤消
+redo	tinymce	zh_cn	重做
+insert/edit link	tinymce	zh_cn	插入/编辑 链接
+unlink	tinymce	zh_cn	删除链接
+insert/edit image	tinymce	zh_cn	插入/编辑 图像
+cleanup messy code	tinymce	zh_cn	清除冗余代码
+a editor instance must be focused before using this command.	tinymce	zh_cn	在使用此命令前某个编辑器必须先获得焦点！
+do you want to use the wysiwyg mode for this textarea?	tinymce	zh_cn	你想在此TextArea上使用所见即所得编辑器么？
+insert/edit link	tinymce	zh_cn	插入/编辑 链接
+insert	tinymce	zh_cn	插入
+update	tinymce	zh_cn	更新
+cancel	tinymce	zh_cn	取消
+link url	tinymce	zh_cn	链接地址
+target	tinymce	zh_cn	目标
+open link in the same window	tinymce	zh_cn	在同一窗口中打开链接
+open link in a new window	tinymce	zh_cn	在新窗口中打开链接
+insert/edit image	tinymce	zh_cn	插入/编辑 图像
+image url	tinymce	zh_cn	图像地址
+image description	tinymce	zh_cn	图像描述
+help	tinymce	zh_cn	帮助
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	zh_cn	剪切/复制/粘贴功能在Mozilla和Firefox上尚不可用。\n你想了解关于这个问题的更多信息吗？
+no shadow	tinymce	zh_cn	无阴影
+image title	tinymce	zh_cn	图片标题
+for mouse over	tinymce	zh_cn	鼠标移上时
+for mouse out	tinymce	zh_cn	鼠标移开时
+open in this window / frame	tinymce	zh_cn	在本窗口/框架中打开
+open in parent window / frame	tinymce	zh_cn	在父窗口/框架中打开
+open in top frame (replaces all frames)	tinymce	zh_cn	在根框架中打开（替换所有框架）
+open in new window	tinymce	zh_cn	在新窗口中打开
+open in the window	tinymce	zh_cn	在此窗口中打开
+js-popup	tinymce	zh_cn	JS-Popup
+popup url	tinymce	zh_cn	弹出窗口地址
+window name	tinymce	zh_cn	窗口名称
+show scrollbars	tinymce	zh_cn	显示滚动条
+show statusbar	tinymce	zh_cn	显示状态栏
+show toolbars	tinymce	zh_cn	显示工具栏
+show menubar	tinymce	zh_cn	显示菜单栏
+show locationbar	tinymce	zh_cn	显示地址栏
+make window resizable	tinymce	zh_cn	可重定义窗口大小
+size	tinymce	zh_cn	尺寸
+position (x/y)	tinymce	zh_cn	位置(X/Y)
+please insert a name for the target or choose another option.	tinymce	zh_cn	请插入目标名称或者选择另外的选项。
+insert emotion	tinymce	zh_cn	插入表情
+emotions	tinymce	zh_cn	表情
+flash-file (.swf)	tinymce	zh_cn	Flash文件(.swf)
+size	tinymce	zh_cn	尺寸
+flash files	tinymce	zh_cn	Flash files
+flash properties	tinymce	zh_cn	Flash properties
+run spell checking	tinymce	zh_cn	运行拼写检查
+insert date	tinymce	zh_cn	插入当前日期
+insert time	tinymce	zh_cn	插入当前时间
+preview	tinymce	zh_cn	预览
+print	tinymce	zh_cn	打印
+save	tinymce	zh_cn	保存
+find	tinymce	zh_cn	查找
+find again	tinymce	zh_cn	再次查找
+find/replace	tinymce	zh_cn	查找/替换
+the search has been compleated. the search string could not be found.	tinymce	zh_cn	搜索完毕，没有找到要查找的字符串。
+find	tinymce	zh_cn	查找
+find/replace	tinymce	zh_cn	查找/替换
+all occurrences of the search string was replaced.	tinymce	zh_cn	所有出现的字符串已替换完毕。
+find what	tinymce	zh_cn	查找
+replace with	tinymce	zh_cn	替换为
+direction	tinymce	zh_cn	方向
+up	tinymce	zh_cn	向上
+down	tinymce	zh_cn	向下
+match case	tinymce	zh_cn	匹配大小写
+find&nbsp;next	tinymce	zh_cn	查找下一个
+replace	tinymce	zh_cn	替换
+replace&nbsp;all	tinymce	zh_cn	全部替换
+cancel	tinymce	zh_cn	取消
+inserts a new table	tinymce	zh_cn	插入新表格
+insert row before	tinymce	zh_cn	在前面插入行
+insert row after	tinymce	zh_cn	在后面插入行
+delete row	tinymce	zh_cn	删除行
+insert column before	tinymce	zh_cn	在前面插入列
+insert column after	tinymce	zh_cn	在后面插入列
+remove col	tinymce	zh_cn	删除列
+insert/modify table	tinymce	zh_cn	插入/修改 表格
+width	tinymce	zh_cn	宽度
+height	tinymce	zh_cn	高度
+columns	tinymce	zh_cn	列数
+rows	tinymce	zh_cn	行数
+cellspacing	tinymce	zh_cn	间距
+cellpadding	tinymce	zh_cn	填充
+border	tinymce	zh_cn	边框
+alignment	tinymce	zh_cn	对齐方式
+default	tinymce	zh_cn	默认
+left	tinymce	zh_cn	左对齐
+right	tinymce	zh_cn	右对齐
+center	tinymce	zh_cn	居中对齐
+class	tinymce	zh_cn	类
+table row properties	tinymce	zh_cn	表格行属性
+table cell properties	tinymce	zh_cn	单元格属性
+table row properties	tinymce	zh_cn	表格行属性
+table cell properties	tinymce	zh_cn	单元格属性
+vertical alignment	tinymce	zh_cn	垂直对齐
+top	tinymce	zh_cn	顶端
+bottom	tinymce	zh_cn	底部
+table properties	tinymce	zh_cn	Table properties
+border color	tinymce	zh_cn	Border color
+bg color	tinymce	zh_cn	Bg color
+merge table cells	tinymce	zh_cn	Merge table cells
+split table cells	tinymce	zh_cn	Split table cells
+merge table cells	tinymce	zh_cn	Merge table cells
+cut table row	tinymce	zh_cn	Cut table row
+copy table row	tinymce	zh_cn	Copy table row
+paste table row before	tinymce	zh_cn	Paste table row before
+paste table row after	tinymce	zh_cn	Paste table row after

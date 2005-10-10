@@ -622,3 +622,69 @@ your settings have been updated	common	ru	чБЫЙ ХУФБОПЧЛЙ ПВОПЧМЕОЩ
 yugoslavia	common	ru	YUGOSLAVIA
 zambia	common	ru	ZAMBIA
 zimbabwe	common	ru	ZIMBABWE
+bold	tinymce	ru	Полужирный
+italic	tinymce	ru	Курсив
+underline	tinymce	ru	Подчеркивание
+striketrough	tinymce	ru	Перечеркивание
+align left	tinymce	ru	Вырвнивание влево
+align center	tinymce	ru	Вырвнивание по центру
+align right	tinymce	ru	Вырвнивание вправо
+align full	tinymce	ru	Вырвнивание равномерно
+unordered list	tinymce	ru	Маркированный список
+ordered list	tinymce	ru	Нумерованный список
+outdent	tinymce	ru	Уменьшить отступ
+indent	tinymce	ru	Увеличить отспут
+undo	tinymce	ru	Отменить
+redo	tinymce	ru	Вернуть
+insert/edit link	tinymce	ru	Вставить/изменить ссылку
+unlink	tinymce	ru	Убрать ссылку
+insert/edit image	tinymce	ru	Вставить/изменить изображение
+cleanup messy code	tinymce	ru	Вычистить грязный код
+a editor instance must be focused before using this command.	tinymce	ru	Вы должны находится в поле редактора перед использованием данной команды.
+do you want to use the wysiwyg mode for this textarea?	tinymce	ru	Хотите ли Вы воспользоваться WYSIWYG редактором для этого поля ввода?
+insert/edit link	tinymce	ru	Вставить/изменить ссылку
+insert	tinymce	ru	Вставить
+update	tinymce	ru	Вставить
+cancel	tinymce	ru	Отменить
+link url	tinymce	ru	Адрес
+target	tinymce	ru	Открыть в...:
+open link in the same window	tinymce	ru	том же окне
+open link in a new window	tinymce	ru	новом окне
+insert/edit image	tinymce	ru	Вставить/изменить изображение
+image url	tinymce	ru	Адрес
+image description	tinymce	ru	Описание
+help	tinymce	ru	Помощь
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ru	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	ru	Полужирный
+italic	tinymce	ru	Курсив
+underline	tinymce	ru	Подчеркивание
+striketrough	tinymce	ru	Перечеркивание
+align left	tinymce	ru	Вырвнивание влево
+align center	tinymce	ru	Вырвнивание по центру
+align right	tinymce	ru	Вырвнивание вправо
+align full	tinymce	ru	Вырвнивание равномерно
+unordered list	tinymce	ru	Маркированный список
+ordered list	tinymce	ru	Нумерованный список
+outdent	tinymce	ru	Уменьшить отступ
+indent	tinymce	ru	Увеличить отспут
+undo	tinymce	ru	Отменить
+redo	tinymce	ru	Вернуть
+insert/edit link	tinymce	ru	Вставить/изменить ссылку
+unlink	tinymce	ru	Убрать ссылку
+insert/edit image	tinymce	ru	Вставить/изменить изображение
+cleanup messy code	tinymce	ru	Вычистить грязный код
+a editor instance must be focused before using this command.	tinymce	ru	Вы должны находится в поле редактора перед использованием данной команды.
+do you want to use the wysiwyg mode for this textarea?	tinymce	ru	Хотите ли Вы воспользоваться WYSIWYG редактором для этого поля ввода?
+insert/edit link	tinymce	ru	Вставить/изменить ссылку
+insert	tinymce	ru	Вставить
+update	tinymce	ru	Вставить
+cancel	tinymce	ru	Отменить
+link url	tinymce	ru	Адрес
+target	tinymce	ru	Открыть в...:
+open link in the same window	tinymce	ru	том же окне
+open link in a new window	tinymce	ru	новом окне
+insert/edit image	tinymce	ru	Вставить/изменить изображение
+image url	tinymce	ru	Адрес
+image description	tinymce	ru	Описание
+help	tinymce	ru	Помощь
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ru	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?

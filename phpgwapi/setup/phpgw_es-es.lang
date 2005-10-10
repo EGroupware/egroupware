@@ -815,3 +815,107 @@ your settings have been updated	common	es-es	Sus preferencias fueron actualizada
 yugoslavia	common	es-es	YUGOSLAVIA
 zambia	common	es-es	ZAMBIA
 zimbabwe	common	es-es	ZIMBABWE
+bold	tinymce	es	Negrita
+italic	tinymce	es	Cursiva
+underline	tinymce	es	Subrayado
+striketrough	tinymce	es	Tachado
+align left	tinymce	es	Alinear a la izquierda
+align center	tinymce	es	Alinear al centro
+align right	tinymce	es	Alinear a la derecha
+align full	tinymce	es	Alinear justificado
+unordered list	tinymce	es	Lista sin ordenar
+ordered list	tinymce	es	Lista ordenada
+outdent	tinymce	es	Disminuye sangria
+indent	tinymce	es	Aumentar sangria
+undo	tinymce	es	Deshacer
+redo	tinymce	es	Rehacer
+insert/edit link	tinymce	es	Insertar enlace
+unlink	tinymce	es	Quitar enlace
+insert/edit image	tinymce	es	Insertar imagen
+cleanup messy code	tinymce	es	Limpiar codigo
+a editor instance must be focused before using this command.	tinymce	es	Una instanacia del editor debe ser enfocada antes de usar este comando.
+do you want to use the wysiwyg mode for this textarea?	tinymce	es	Quieres usar el modo WYSIWYG para esta area de texto?
+insert/edit link	tinymce	es	Insertar/editar enlace
+insert	tinymce	es	Insertar
+update	tinymce	es	Insertar
+cancel	tinymce	es	Cancelar
+link url	tinymce	es	Direccion del enlace
+target	tinymce	es	Destino
+open link in the same window	tinymce	es	Abrir enlace en la misma ventana
+open link in a new window	tinymce	es	Abrir enlace en una ventana nueva
+insert/edit image	tinymce	es	Insertar/editar imagen
+image url	tinymce	es	URL de la imagen
+image description	tinymce	es	Descripcion de la imagen
+help	tinymce	es	Ayuda
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	es	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	es	Negrita
+italic	tinymce	es	Cursiva
+underline	tinymce	es	Subrayado
+striketrough	tinymce	es	Tachado
+align left	tinymce	es	Alinear a la izquierda
+align center	tinymce	es	Alinear al centro
+align right	tinymce	es	Alinear a la derecha
+align full	tinymce	es	Alinear justificado
+unordered list	tinymce	es	Lista sin ordenar
+ordered list	tinymce	es	Lista ordenada
+outdent	tinymce	es	Disminuye sangria
+indent	tinymce	es	Aumentar sangria
+undo	tinymce	es	Deshacer
+redo	tinymce	es	Rehacer
+insert/edit link	tinymce	es	Insertar enlace
+unlink	tinymce	es	Quitar enlace
+insert/edit image	tinymce	es	Insertar imagen
+cleanup messy code	tinymce	es	Limpiar codigo
+a editor instance must be focused before using this command.	tinymce	es	Una instanacia del editor debe ser enfocada antes de usar este comando.
+do you want to use the wysiwyg mode for this textarea?	tinymce	es	Quieres usar el modo WYSIWYG para esta area de texto?
+insert/edit link	tinymce	es	Insertar/editar enlace
+insert	tinymce	es	Insertar
+update	tinymce	es	Insertar
+cancel	tinymce	es	Cancelar
+link url	tinymce	es	Direccion del enlace
+target	tinymce	es	Destino
+open link in the same window	tinymce	es	Abrir enlace en la misma ventana
+open link in a new window	tinymce	es	Abrir enlace en una ventana nueva
+insert/edit image	tinymce	es	Insertar/editar imagen
+image url	tinymce	es	URL de la imagen
+image description	tinymce	es	Descripcion de la imagen
+help	tinymce	es	Ayuda
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	es	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+inserts a new table	tinymce	es	Insertar una tabla nueva
+insert row before	tinymce	es	Insertar una fila antes
+insert row after	tinymce	es	Insertar una fila despues
+delete row	tinymce	es	Eliminar una fila
+insert column before	tinymce	es	Insertar una columna before
+insert column after	tinymce	es	Insertar columna after
+remove col	tinymce	es	Eliminar una columna
+insert/modify table	tinymce	es	Insertar/Modificar tabla
+width	tinymce	es	Anchura
+height	tinymce	es	Altura
+columns	tinymce	es	Columnas
+rows	tinymce	es	Filas
+cellspacing	tinymce	es	Espacio entre celdas
+cellpadding	tinymce	es	Desplazamiento entre celdas
+border	tinymce	es	Borde
+alignment	tinymce	es	Alineamiento
+default	tinymce	es	Por defecto
+left	tinymce	es	Izquierda
+right	tinymce	es	Derecha
+center	tinymce	es	Centro
+class	tinymce	es	Class
+table row properties	tinymce	es	Table row properties
+table cell properties	tinymce	es	Table cell properties
+table row properties	tinymce	es	Table row properties
+table cell properties	tinymce	es	Table cell properties
+vertical alignment	tinymce	es	Vertical alignment
+top	tinymce	es	Top
+bottom	tinymce	es	Bottom
+table properties	tinymce	es	Table properties
+border color	tinymce	es	Border color
+bg color	tinymce	es	Bg color
+merge table cells	tinymce	es	Merge table cells
+split table cells	tinymce	es	Split table cells
+merge table cells	tinymce	es	Merge table cells
+cut table row	tinymce	es	Cut table row
+copy table row	tinymce	es	Copy table row
+paste table row before	tinymce	es	Paste table row before
+paste table row after	tinymce	es	Paste table row after

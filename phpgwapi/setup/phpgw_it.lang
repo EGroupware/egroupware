@@ -737,3 +737,109 @@ your settings have been updated	common	it	Le tue impostazioni sono state aggiorn
 yugoslavia	common	it	YUGOSLAVIA
 zambia	common	it	ZAMBIA
 zimbabwe	common	it	ZIMBABWE
+bold	tinymce	it	Grassetto
+italic	tinymce	it	Corsivo
+underline	tinymce	it	Sottolineato
+striketrough	tinymce	it	Barrato
+align left	tinymce	it	Allinea a sinistra
+align center	tinymce	it	Allinea centrato
+align right	tinymce	it	Allinea a destra
+align full	tinymce	it	Giustifica
+unordered list	tinymce	it	Lista non ordinata
+ordered list	tinymce	it	Lista ordinata
+outdent	tinymce	it	Rientra
+indent	tinymce	it	Indenta
+undo	tinymce	it	Annulla
+redo	tinymce	it	Ripeti
+insert/edit link	tinymce	it	Inserisci link
+unlink	tinymce	it	Elimina link
+insert/edit image	tinymce	it	Inserisci immagine
+cleanup messy code	tinymce	it	Pulisci il  codice
+do you want to use the wysiwyg mode for this textarea?	tinymce	it	Vuoi usare la modalit\u00E0 WYSIWYG per questa textarea?
+insert/edit link	tinymce	it	Inserisci/modifica link
+insert	tinymce	it	Inserisci
+update	tinymce	it	Inserisci
+cancel	tinymce	it	Cancella
+link url	tinymce	it	Link URL
+target	tinymce	it	Target
+open link in the same window	tinymce	it	Apri il link nella stessa finestra
+open link in a new window	tinymce	it	Apri il link in una nuova finestra
+insert/edit image	tinymce	it	Inserisci/modifica immagine
+image url	tinymce	it	URL immagine
+help	tinymce	it	Guida
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	it	Grassetto
+italic	tinymce	it	Corsivo
+underline	tinymce	it	Sottolineato
+striketrough	tinymce	it	Barrato
+align left	tinymce	it	Allinea a sinistra
+align center	tinymce	it	Allinea centrato
+align right	tinymce	it	Allinea a destra
+align full	tinymce	it	Giustifica
+unordered list	tinymce	it	Lista non ordinata
+ordered list	tinymce	it	Lista ordinata
+outdent	tinymce	it	Rientra
+indent	tinymce	it	Indenta
+undo	tinymce	it	Annulla
+redo	tinymce	it	Ripeti
+insert/edit link	tinymce	it	Inserisci link
+unlink	tinymce	it	Elimina link
+insert/edit image	tinymce	it	Inserisci immagine
+cleanup messy code	tinymce	it	Pulisci il  codice
+do you want to use the wysiwyg mode for this textarea?	tinymce	it	Vuoi usare la modalit\u00E0 WYSIWYG per questa textarea?
+insert/edit link	tinymce	it	Inserisci/modifica link
+insert	tinymce	it	Inserisci
+update	tinymce	it	Inserisci
+cancel	tinymce	it	Cancella
+link url	tinymce	it	Link URL
+target	tinymce	it	Target
+open link in the same window	tinymce	it	Apri il link nella stessa finestra
+open link in a new window	tinymce	it	Apri il link in una nuova finestra
+insert/edit image	tinymce	it	Inserisci/modifica immagine
+image url	tinymce	it	URL immagine
+help	tinymce	it	Guida
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+insert emotion	tinymce	it	Inserisci una emoticon
+emotions	tinymce	it	Emoticon
+run spell checking	tinymce	it	Avvia il controllo ortografico
+insert date	tinymce	it	Inserisci data
+insert time	tinymce	it	Inserisci ora
+preview	tinymce	it	Anteprima
+inserts a new table	tinymce	it	Inserisci una nuova tabella
+insert row before	tinymce	it	Inserisci una riga prima
+insert row after	tinymce	it	Inserisci una riga dopo
+delete row	tinymce	it	Cancella riga
+insert column before	tinymce	it	Inserisci colonna prima
+insert column after	tinymce	it	Inserisci colonna dopo
+remove col	tinymce	it	Rimuovi colonna
+insert/modify table	tinymce	it	Inserisci/modifica tabella
+width	tinymce	it	Larghezza
+height	tinymce	it	Altezza
+columns	tinymce	it	Colonne
+rows	tinymce	it	Righe
+cellspacing	tinymce	it	Cellspacing
+cellpadding	tinymce	it	Cellpadding
+border	tinymce	it	Bordo
+alignment	tinymce	it	Allineamento
+default	tinymce	it	Default
+left	tinymce	it	Sinistra
+right	tinymce	it	Destra
+center	tinymce	it	Centro
+class	tinymce	it	Classe
+table row properties	tinymce	it	Table row properties
+table cell properties	tinymce	it	Table cell properties
+table row properties	tinymce	it	Table row properties
+table cell properties	tinymce	it	Table cell properties
+vertical alignment	tinymce	it	Vertical alignment
+top	tinymce	it	Top
+bottom	tinymce	it	Bottom
+table properties	tinymce	it	Table properties
+border color	tinymce	it	Border color
+bg color	tinymce	it	Bg color
+merge table cells	tinymce	it	Merge table cells
+split table cells	tinymce	it	Split table cells
+merge table cells	tinymce	it	Merge table cells
+cut table row	tinymce	it	Cut table row
+copy table row	tinymce	it	Copy table row
+paste table row before	tinymce	it	Paste table row before
+paste table row after	tinymce	it	Paste table row after

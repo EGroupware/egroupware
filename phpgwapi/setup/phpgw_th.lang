@@ -630,3 +630,67 @@ your settings have been updated	common	th
 yugoslavia	common	th	
 zambia	common	th	
 zimbabwe	common	th	
+bold	tinymce	th	ตัวหนา
+italic	tinymce	th	ตัว้เอียง
+underline	tinymce	th	ขีดเส้นใต้
+striketrough	tinymce	th	ขีดคล่อม
+align left	tinymce	th	ชิดขอบซ้าย
+align center	tinymce	th	กึ่งกลาง
+align right	tinymce	th	ชิดขอบขวา
+align full	tinymce	th	จัดชิดขอบ
+unordered list	tinymce	th	สัญลักษณ์แสดงหัวข้อย่อย
+ordered list	tinymce	th	ลำดับเลข
+outdent	tinymce	th	ลดการเยื้อง
+indent	tinymce	th	เพิ่มการเยื้อง
+undo	tinymce	th	เลิกทำ
+redo	tinymce	th	ทำใหม่
+insert/edit link	tinymce	th	เพิ่มลิงค์
+unlink	tinymce	th	ลบลิงค์
+insert/edit image	tinymce	th	ใส่รูป
+cleanup messy code	tinymce	th	ทำความสะอาดข้อความ
+a editor instance must be focused before using this command.	tinymce	th	ต้องเลือกกล่องข้อความก่อนที่จะใช้คำสั่งนี้
+do you want to use the wysiwyg mode for this textarea?	tinymce	th	คุณต้องการที่จะใช้ WYSIWYG mode สำหรับกล่องข้อความนี้หรือไม่?
+insert/edit link	tinymce	th	เพิ่ม/แก้ไข ลิงค์
+insert	tinymce	th	เพิ่ม
+cancel	tinymce	th	ยกเลิก
+link url	tinymce	th	Link URL
+target	tinymce	th	เปิดลิงค์ใน
+open link in the same window	tinymce	th	หน้าต่างเดียวกัน
+open link in a new window	tinymce	th	หน้าต่างใหม่
+insert/edit image	tinymce	th	เพิ่ม/แก้ไข รูป
+image url	tinymce	th	URL ของรูป
+image description	tinymce	th	คำอธิบายรูป
+help	tinymce	th	ช่วยเหลือ
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	th	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+bold	tinymce	th	ตัวหนา
+italic	tinymce	th	ตัว้เอียง
+underline	tinymce	th	ขีดเส้นใต้
+striketrough	tinymce	th	ขีดคล่อม
+align left	tinymce	th	ชิดขอบซ้าย
+align center	tinymce	th	กึ่งกลาง
+align right	tinymce	th	ชิดขอบขวา
+align full	tinymce	th	จัดชิดขอบ
+unordered list	tinymce	th	สัญลักษณ์แสดงหัวข้อย่อย
+ordered list	tinymce	th	ลำดับเลข
+outdent	tinymce	th	ลดการเยื้อง
+indent	tinymce	th	เพิ่มการเยื้อง
+undo	tinymce	th	เลิกทำ
+redo	tinymce	th	ทำใหม่
+insert/edit link	tinymce	th	เพิ่มลิงค์
+unlink	tinymce	th	ลบลิงค์
+insert/edit image	tinymce	th	ใส่รูป
+cleanup messy code	tinymce	th	ทำความสะอาดข้อความ
+a editor instance must be focused before using this command.	tinymce	th	ต้องเลือกกล่องข้อความก่อนที่จะใช้คำสั่งนี้
+do you want to use the wysiwyg mode for this textarea?	tinymce	th	คุณต้องการที่จะใช้ WYSIWYG mode สำหรับกล่องข้อความนี้หรือไม่?
+insert/edit link	tinymce	th	เพิ่ม/แก้ไข ลิงค์
+insert	tinymce	th	เพิ่ม
+cancel	tinymce	th	ยกเลิก
+link url	tinymce	th	Link URL
+target	tinymce	th	เปิดลิงค์ใน
+open link in the same window	tinymce	th	หน้าต่างเดียวกัน
+open link in a new window	tinymce	th	หน้าต่างใหม่
+insert/edit image	tinymce	th	เพิ่ม/แก้ไข รูป
+image url	tinymce	th	URL ของรูป
+image description	tinymce	th	คำอธิบายรูป
+help	tinymce	th	ช่วยเหลือ
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	th	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
