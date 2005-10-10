@@ -128,12 +128,12 @@ function onOK() {
 				}
 				if((MM_findObj("f_action")).value == "f_action_inline"){
 					if(param['f_ext'] == 'jpg' || param['f_ext'] == 'jpeg' || param['f_ext'] == 'gif' || param['f_ext'] == 'png'){
-						output = output + '<img src="' + '/' + param['f_url'] + '"';
+						output = output + '<img src="' + param['f_url'] + '"';
 					}
 					else
 					{
 						var inlineobj = true;
-						output = output + '<object src="' + '/' + param['f_url'] + '"';
+						output = output + '<object src="' + param['f_url'] + '"';
 					}
 					if(param['f_alt'] > 0) output = output + 'alt="' + param['f_alt'] + '"';
 					if(param['f_align'] > 0) output = output + 'align="' + param['f_align'] + '"';

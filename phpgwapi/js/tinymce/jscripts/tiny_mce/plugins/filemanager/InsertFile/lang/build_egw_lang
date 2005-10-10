@@ -1,0 +1,17 @@
+#!/usr/bin/php -qC
+<?php
+
+$en_msg = array();
+foreach(array('en','de','nl') as $lang)
+{
+	$MY_MESSAGES = array();
+	include("lang-$lang.php");
+	$f = fopen("phpgw_$lang.lang",'w');
+	foreach($MY_MESSAGES as $key => $msg)
+	{
+		if ($lang == 'en') $en_msg[$key] = strtolower($msg);
+		if ($key && isset($en_msg[$key])) fwrite($f,$en_msg[$key]."\ttinymce\t$lang\t$msg\n");	
+	}
+	fclose($f);
+}
+

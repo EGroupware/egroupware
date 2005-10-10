@@ -19,13 +19,13 @@
 	*	2.	supply an array in the session with like this example shows:
 	*			$UploadImage = array(
 	*				'app' => 'news_admin',
-	*				'upload_dir' => $GLOBALS['phpgw_info']['user']['preferences']['news_admin']['uploaddir'],
-	*				'admin_method' => $GLOBALS['phpgw']->link('/index.php', 'menuaction=app.file.method');; 
-	*			$GLOBALS['phpgw']->session->appsession('UploadImage','phpgwapi',$UploadImage);
+	*				'upload_dir' => $GLOBALS['egw_info']['user']['preferences']['news_admin']['uploaddir'],
+	*				'admin_method' => $GLOBALS['egw']->link('/index.php', 'menuaction=app.file.method');; 
+	*			$GLOBALS['egw']->session->appsession('UploadImage','phpgwapi',$UploadImage);
 	*		
 	**/
 	
-	$phpgw_flags = Array(
+	$GLOBALS['egw_info']['flags'] = Array(
 		'currentapp'	=>	'home',
 		'noheader'	=>	True,
 		'nonavbar'	=>	True,
@@ -33,10 +33,8 @@
 		'noappfooter'	=>	True,
 		'nofooter'	=>	True
 	);
-	
-	$GLOBALS['phpgw_info']['flags'] = $phpgw_flags;
-	
-	if(!is_object($GLOBALS['egw']))
+
+	if(!isset($GLOBALS['egw']) || !is_object($GLOBALS['egw']))
 	{
 		if(@include('../../../../../../../../header.inc.php'))
 		{
@@ -48,21 +46,28 @@
 		}
 	}
 	
-	$sessdata = $GLOBALS['phpgw']->session->appsession('UploadImage','phpgwapi');
+	$sessdata = $GLOBALS['egw']->session->appsession('UploadImage','phpgwapi');
 	if(is_writeable($sessdata['upload_dir']))
 	{
 		$MY_DOCUMENT_ROOT = $BASE_DIR = $sessdata['upload_dir'];
-		$MY_BASE_URL = $MY_URL_TO_OPEN_FILE = str_replace($GLOBALS['_SERVER']['DOCUMENT_ROOT'],'',$sessdata['upload_dir']);
-		$BASE_URL = '/'.$MY_BASE_URL;
+		if (isset($sessdata['base_url']) && !empty($sessdata['base_url']))
+		{
+			$MY_BASE_URL = $sessdata['base_url'];
+		}
+		else
+		{
+			$MY_BASE_URL = preg_replace('/^'.preg_quote($_SERVER['DOCUMENT_ROOT'],'/').'/','',$sessdata['upload_dir']);
+			if (empty($MY_BASE_URL)) $MY_BASE_URL = '/';
+		}
+		$BASE_URL = $MY_URL_TO_OPEN_FILE = $MY_BASE_URL;
 	}
 	else
 	{
-		echo '<p><b>Error</b></p>';
-		echo '<p>Upload directory does not exist, or is not writeable by webserver</p>';
+		echo '<p><b>'.lang('Error').'</b></p>';
+		echo '<p>'.lang('Upload directory does not exist, or is not writeable by webserver').'</p>';
 		echo $GLOBALS['egw_info']['user']['apps']['admin'] ? 
-			'<a href="'. $sessdata['admin_method']. '">Choose an other directory</a><br>
-			or make "'. $sessdata['upload_dir']. '" writeable by webserver' : 
-			'Notify your Administrator to correct this Situation';
+			lang('%1Choose an other directory%2<br />or make %3 writeable by webserver','<a href="'.$sessdata['admin_method'].'">','</a>',$sessdata['upload_dir']) : 
+			lang('Notify your Administrator to correct this Situation');
 		die();
 	}
 	
@@ -72,7 +77,7 @@ $MY_ALLOW_CREATE     = true;
 /* $MY_ALLOW_DELETE  Boolean (false or true) whether deleting files and folders is allowed or not. */
 $MY_ALLOW_DELETE     = true;
 /* $MY_ALLOW_RENAME  Boolean (false or true) whether renaming files and folders is allowed or not. */
-$MY_ALLOW_RENAME     = ture;
+$MY_ALLOW_RENAME     = true;
 /* $MY_ALLOW_MOVE    Boolean (false or true) whether moving files and folders is allowed or not. */
 $MY_ALLOW_MOVE       = true;
 /* $MY_ALLOW_UPLOAD  Boolean (false or true) whether uploading files is allowed or not. */
@@ -107,7 +112,7 @@ $MY_MAX_FILE_SIZE                 = 2*1024*1024;
  Interface language. See the lang directory for translation files.
  NOTE: You should set appropriately MY_CHARSET and $MY_DATETIME_FORMAT variables
 */
-$MY_LANG                = 'en';
+$MY_LANG                = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];//'en';
 
 /*
  $MY_CHARSET
@@ -120,13 +125,14 @@ $MY_LANG                = 'en';
  and Mozilla (encoded according to RFC 1738).
  This should be fixed in next versions. Any help is VERY appreciated.
 */
-$MY_CHARSET             = 'iso-8859-1';
+$MY_CHARSET             = $GLOBALS['egw']->translation->charset();//'iso-8859-1';
 
 /*
  MY_DATETIME_FORMAT
  Datetime format for displaying file modification time in Insert File Dialog and in inserted link, see MY_LINK_FORMAT
 */
-$MY_DATETIME_FORMAT                = "d.m.Y H:i";
+$MY_DATETIME_FORMAT     = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
+	($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i'); //"d.m.Y H:i";
 
 /*
  MY_LINK_FORMAT
@@ -181,7 +187,9 @@ function parse_icon($ext) {
 
 // DO NOT EDIT BELOW
 $MY_NAME = 'insertfiledialog';
-$lang_file = 'lang/lang-'.$MY_LANG.'.php';
+//$lang_file = 'lang/lang-'.$MY_LANG.'.php';
+// using the eGW translation system
+$lang_file = 'lang/lang.php';
 if (is_file($lang_file)) require($lang_file);
 else require('lang/lang-en.php');
 $MY_PATH = '/';

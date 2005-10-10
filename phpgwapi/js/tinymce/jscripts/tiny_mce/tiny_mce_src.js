@@ -4,7 +4,7 @@
  * $Date$
  *
  * @author Moxiecode
- * @copyright Copyright © 2004, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2004, Moxiecode Systems AB, All rights reserved.
  */
 
 function TinyMCE() {
@@ -205,7 +205,8 @@ TinyMCE.prototype.init = function(settings) {
 	}
 
 	this.loadScript(tinyMCE.baseURL + '/themes/' + this.settings['theme'] + '/editor_template' + tinyMCE.srcMode + '.js');
-	this.loadScript(tinyMCE.baseURL + '/langs/' + this.settings['language'] +  '.js');
+	//this.loadScript(tinyMCE.baseURL + '/langs/' + this.settings['language'] +  '.js');
+	this.loadScript(tinyMCE.baseURL + '/langs/lang.php?lang=' + this.settings['language']);
 	this.loadCSS(this.settings['editor_css']);
 
 	// Add theme plugins
@@ -2684,7 +2685,7 @@ TinyMCE.prototype.importPluginLanguagePack = function(name, valid_languages) {
 			lang = tinyMCE.settings['language'];
 	}
 
-	tinyMCE.loadScript(tinyMCE.baseURL + '/plugins/' + name + '/langs/' + lang +  '.js');
+//	tinyMCE.loadScript(tinyMCE.baseURL + '/plugins/' + name + '/langs/' + lang +  '.js');
 };
 
 /**
