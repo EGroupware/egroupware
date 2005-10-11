@@ -651,6 +651,9 @@ htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
 	   <script language="javascript" type="text/javascript">
 		  tinyMCE.init({
 			 mode : "exact",
+ 			 language: "'.$GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
+			 plugin_insertdate_dateFormat : "'.str_replace(array('Y','m','M','d'),array('%Y','%m','%b','%d'),$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).'",
+			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').'",		 
 			 elements : "'.$name.'",
 			 '.$init_options.'
 		  });
