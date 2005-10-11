@@ -104,7 +104,7 @@ class bo_resources
 			}
 			$readonlys["view_acc[$resource[res_id]]"] = true;
 			$links = $this->link->get_links('resources',$resource['res_id']);
-			if(count($links) != 0)
+			if(count($links) != 0 && $accessory_of == -1)
 			{
 				foreach ($links as $link_num => $link)
 				{
@@ -404,7 +404,7 @@ class bo_resources
 		imagedestroy($src_img);
 			
 		$this->vfs->override_acl = 1;
-		$this->vfs->mv(array(
+		$this->vfs->cp(array(
 			'from' => $tmp_dir.$resouce_id.'.jpg',
 			'to'   => $this->pictures_dir.$resouce_id.'.jpg',
 			'relatives' => array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT)
@@ -417,7 +417,7 @@ class bo_resources
 				'comment' => 'picture of resource no.'.$resouce_id,
 				'app' => $GLOBALS['egw_info']['flags']['currentapp']
 		)));
-		$this->vfs->mv(array(
+		$this->vfs->cp(array(
 			'from' => $tmp_dir.$resouce_id.'.thumb.jpg',
 			'to'   => $this->thumbs_dir.$resouce_id.'.jpg',
 			'relatives' => array(RELATIVE_NONE|VFS_REAL,RELATIVE_ROOT)
