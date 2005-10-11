@@ -543,9 +543,15 @@
 		/*!
 		@function create_tabs
 		@abstract create tabs
-		@param $tabs ?
-		@param $selected ?
+		@param array $tabs an array repersenting the tabs you wish to display, each element
+						   in the array is an array of 3 elements, 'label' which is the 
+						   text displaed on the tab (you should pass translated string, 
+						   create_tabs will not do <code>lang()</code> for you), 'link' 
+						   which is the uri, 'target', the frame name or '_blank' to show 
+						   page in a new browser window.
+		@param mixed $selected the tab whos key is $selected will be displayed as current tab
 		@param $fontsize optional
+		@return string return html that displays the tabs
 		*/
 		function create_tabs($tabs, $selected, $fontsize = '')
 		{
