@@ -1,22 +1,12 @@
 <?php
-/***********************************************************************
-** Title.........:  Image Transformation Interface
-** Version.......:  1.0
-** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
-** Filename......:  Transform.php
-** Last changed..:  30 Aug 2003 
-** Notes.........:  Orginal is from PEAR
-                    
-                    Added a few extra,
-                        - create unique filename in a particular directory,
-                          used for temp image files.
-                        - added cropping to GD, NetPBM, ImageMagick
-**/
-
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
 // | Copyright (c) 1997-2002 The PHP Group                                |
+// +----------------------------------------------------------------------+
+// | This  software is  available under the two different licenses        |
+// | mentioned below.  To use this software you must chose, and qualify,  | 
+// |for one of those.                                                     |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -25,6 +15,10 @@
 // | If you did not receive a copy of the PHP license and are unable to   |
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
+// +----------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or modify |
+// | it under the terms of the GNU Lesser General Public License as       |
+// | published by the Free Software Foundation; version 2 of the License. |
 // +----------------------------------------------------------------------+
 // | Authors: Peter Bowyer <peter@mapledesign.co.uk>                      |
 // |          Alan Knowles <alan@akbkhome.com>                            |

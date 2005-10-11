@@ -50,9 +50,9 @@
 	if(is_writeable($sessdata['upload_dir']))
 	{
 		$MY_DOCUMENT_ROOT = $BASE_DIR = $sessdata['upload_dir'];
-		if (isset($sessdata['base_url']) && !empty($sessdata['base_url']))
+		if (isset($sessdata['upload_url']) && !empty($sessdata['upload_url']))
 		{
-			$MY_BASE_URL = $sessdata['base_url'];
+			$MY_BASE_URL = $sessdata['upload_url'];
 		}
 		else
 		{

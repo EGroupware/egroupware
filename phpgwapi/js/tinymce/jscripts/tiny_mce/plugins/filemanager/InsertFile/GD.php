@@ -1,16 +1,12 @@
 <?php
-/***********************************************************************
-** Title.........:  GD Driver
-** Version.......:  1.0
-** Author........:  Xiang Wei ZHUO <wei@zhuo.org>
-** Filename......:  GD.php
-** Last changed..:  30 Aug 2003 
-** Notes.........:  Orginal is from PEAR
-**/
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
 // +----------------------------------------------------------------------+
 // | Copyright (c) 1997-2002 The PHP Group                                |
+// +----------------------------------------------------------------------+
+// | This  software is  available under the two different licenses        |
+// | mentioned below.  To use this software you must chose, and qualify,  | 
+// |for one of those.                                                     |
 // +----------------------------------------------------------------------+
 // | This source file is subject to version 2.02 of the PHP license,      |
 // | that is bundled with this package in the file LICENSE, and is        |
@@ -20,27 +16,20 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
+// | This program is free software; you can redistribute it and/or modify |
+// | it under the terms of the GNU Lesser General Public License as       |
+// | published by the Free Software Foundation; version 2 of the License. |
+// +----------------------------------------------------------------------+
 // | Authors: Peter Bowyer <peter@mapledesign.co.uk>                      |
 // |          Alan Knowles <alan@akbkhome.com>                            |
-// +----------------------------------------------------------------------+
-//
-//    Usage :
-//    $img    = new Image_Transform_GD();
-//    $angle  = -78;
-//    $img->load('magick.png');
-//
-//    if($img->rotate($angle,array('autoresize'=>true,'color_mask'=>array(255,0,0)))){
-//        $img->addText(array('text'=>"Rotation $angle",'x'=>0,'y'=>100,'font'=>'/usr/share/fonts/default/TrueType/cogb____.ttf'));
-//        $img->display();
-//    } else {
-//        echo "Error";
-//    }
-//
-//
-// $Id$
+// |          Vincent Oostindie <vincent@sunlight.tmfweb.nl>              |
+// +----------------------------------------------------------------------+//
 //
 // Image Transformation interface using the GD library
 //
+//
+// $Id$
+
 
 require_once "Transform.php";
 
