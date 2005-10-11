@@ -380,6 +380,8 @@ indent	tinymce	en	Indent
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
 insert	tinymce	en	Insert
+insert / edit flash movie	tinymce	en	Insert / edit Flash Movie
+insert / edit horizontale rule	tinymce	en	Insert / edit Horizontale Rule
 insert _column before	htmlarea-ContextMenu	en	Insert _Column Before
 insert a new column after the current one	htmlarea-ContextMenu	en	Insert a new column after the current one
 insert a new column before the current one	htmlarea-ContextMenu	en	Insert a new column before the current one
@@ -395,6 +397,7 @@ insert date	tinymce	en	Insert date
 insert emotion	tinymce	en	Insert emotion
 insert file	tinymce	en	Insert File
 insert image	htmlarea	en	Insert Image
+insert link to file	tinymce	en	Insert link to file
 insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
 insert table	htmlarea	en	Insert Table
@@ -826,6 +829,7 @@ to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to 
 today	common	en	Today
 todays date, eg. "%1"	common	en	todays date, eg. "%1"
 toggle first day of week	jscalendar	en	Toggle first day of week
+toggle fullscreen mode	tinymce	en	Toggle fullscreen mode
 toggle html source	htmlarea	en	Toggle HTML Source
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU

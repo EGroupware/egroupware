@@ -19,7 +19,7 @@ _image properties...	htmlarea-ContextMenu	de	_Bild Einstellungen...
 _modify link...	htmlarea-ContextMenu	de	_Link Ändern...
 _remove link...	htmlarea-ContextMenu	de	Link entfernen...
 _table properties...	htmlarea-ContextMenu	de	_Tabellen Einstellungen...
-a editor instance must be focused before using this command.	tinymce	de	Eine Bearbeitungsinstanz muss f&uuml;r diesen Befehl hervorgehoben.
+a editor instance must be focused before using this command.	tinymce	de	Eine Bearbeitungsinstanz muss für diesen Befehl hervorgehoben.
 about	common	de	Über
 about %1	common	de	Über %1
 about the calendar	jscalendar	de	Über den Kalender
@@ -46,8 +46,8 @@ algeria	common	de	ALGERIEN
 align	htmlarea-TableOperations	de	Ausrichten
 align center	tinymce	de	Zentriert
 align full	tinymce	de	Blocksatz
-align left	tinymce	de	Linksb&uuml;ndig
-align right	tinymce	de	Rechtsb&uuml;ndig
+align left	tinymce	de	Linksbündig
+align right	tinymce	de	Rechtsbündig
 alignment	tinymce	de	Ausrichten
 all	common	de	alle
 all fields	common	de	alle Felder
@@ -129,7 +129,7 @@ cayman islands	common	de	KAIMAN INSELN
 cc	common	de	Kopie
 cell properties	htmlarea-TableOperations	de	Zellen
 cellpadding	tinymce	de	Innenabstand
-cellspacing	tinymce	de	Au&szlig;enabstand
+cellspacing	tinymce	de	Außenabstand
 center	tinymce	de	Zentriert
 central african republic	common	de	ZENTRAL AFRIKANISCHE REPUBLIK
 chad	common	de	TSCHAD
@@ -147,7 +147,7 @@ choose the category	common	de	Kategorie auswählen
 choose the parent category	common	de	Wählen der übergeordneten Kategorie
 christmas island	common	de	WEIHNACHTS INSEL
 class	tinymce	de	Klasse
-cleanup messy code	tinymce	de	unsauberen Code aufr&auml;umen
+cleanup messy code	tinymce	de	unsauberen Code aufräumen
 clear	common	de	Zurücksetzen
 clear form	common	de	Eingaben löschen
 click	common	de	Klicken
@@ -169,7 +169,7 @@ cook islands	common	de	COOK INSELN
 copy	common	de	Kopieren
 copy selection	htmlarea	de	Den markierten Text kopieren
 copy table row	tinymce	de	Copy table row
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	de	Kopieren/Ausschneiten/Einf&uuml;gen ist mit Mozilla und Firefox nicht verf&uuml;gbar.\nWollen Sie mehr Informationen dar&uuml;ber erhalten?
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	de	Kopieren/Ausschneiten/Einfügen ist mit Mozilla und Firefox nicht verfügbar.\nWollen Sie mehr Informationen darüber erhalten?
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 create	common	de	Erstellen
@@ -189,7 +189,7 @@ cyprus	common	de	ZYPERN
 czech republic	common	de	TSCHECHISCHE REPUBLIK
 date	common	de	Datum
 date due	common	de	fällig am
-date modified	tinymce	de	Ge&auml;ndert am
+date modified	tinymce	de	Geändert am
 date selection:	jscalendar	de	Datum auswählen:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	de	Datum-Zeit Port.<br>Wenn sie Port 13 benützen, bitte die Regeln der Firewall entsprechend anpassen bevor sie die Seite speichern.<br>(Port: 13 / Host: 129.6.15.28)
 de_lete column	htmlarea-ContextMenu	de	Spalte löschen
@@ -201,7 +201,7 @@ default category	common	de	Standard-Kategorie
 delete	common	de	Löschen
 delete cell	htmlarea-TableOperations	de	Zelle löschen
 delete column	htmlarea-TableOperations	de	Spalte löschen
-delete row	common	de	Zeile l&ouml;schen
+delete row	common	de	Zeile löschen
 delete the current column	htmlarea-ContextMenu	de	Spalte löschen
 delete the current row	htmlarea-ContextMenu	de	Zeile löschen
 denmark	common	de	DÄNEMARK
@@ -220,7 +220,7 @@ disabled	common	de	Deaktiviert
 display %s first	jscalendar	de	%s zuerst anzeigen
 djibouti	common	de	DJIBOUTI
 do you also want to delete all subcategories ?	common	de	Sollen alle Unterkategorien gelöscht werden ?
-do you want to use the wysiwyg mode for this textarea?	tinymce	de	Wollen Sie den WYSIWYG Modus f&uuml;r dieses Textfeld benutzen?
+do you want to use the wysiwyg mode for this textarea?	tinymce	de	Wollen Sie den WYSIWYG Modus für dieses Textfeld benutzen?
 doctype:	common	de	DOCTYPE:
 document properties	common	de	Dokument Eigentschaften
 document title:	common	de	Title des Dokuments:
@@ -230,7 +230,7 @@ domestic	common	de	Inland
 dominica	common	de	DOMINICA
 dominican republic	common	de	DOMÄNIKANISCHE REPUBLIK
 done	common	de	Fertig
-down	tinymce	de	Vorw&auml;rts
+down	tinymce	de	Vorwärts
 drag to move	jscalendar	de	Ziehen um zu Bewegen
 e-mail	common	de	E-Mail
 east timor	common	de	OST TIMOR
@@ -303,8 +303,8 @@ folder not found.	tinymce	de	Verzeichnis nicht gefunden.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	de	Verzeichnis existiert bereits.
 folder(s)	tinymce	de	Ordner
 font color	htmlarea	de	Schrift Farbe
-for mouse out	tinymce	de	f&uuml;r Maus ausserhalb
-for mouse over	tinymce	de	f&uuml;r Maus dar&uuml;ber
+for mouse out	tinymce	de	für Maus ausserhalb
+for mouse over	tinymce	de	für Maus darüber
 force selectbox	common	de	Auswahlfeld erzwingen
 frames	htmlarea-TableOperations	de	Rahmen
 france	common	de	FRANKREICH
@@ -346,7 +346,7 @@ guinea-bissau	common	de	GUINEA-BISSAU
 guyana	common	de	GUYANA
 haiti	common	de	HAITI
 heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
-height	common	de	H&ouml;he
+height	common	de	Höhe
 help	tinymce	de	Hilfe
 help using editor	htmlarea	de	Hilfe zum benutzen des Editors
 high	common	de	Hoch
@@ -376,10 +376,12 @@ image title	tinymce	de	Titel des Bildes
 image url	common	de	Bild URL
 in_sert row after	htmlarea-ContextMenu	de	Zeile einfügen n_ach Position
 increase indent	htmlarea	de	Einzug erhöhen
-indent	tinymce	de	Einzug vergr&ouml;ssern
+indent	tinymce	de	Einzug vergrössern
 india	common	de	INDIEN
 indonesia	common	de	INDONESIEN
-insert	tinymce	de	Einf&uuml;gen
+insert	tinymce	de	Einfügen
+insert / edit flash movie	tinymce	de	Flash Film einfügen / bearbeiten
+insert / edit horizontale rule	tinymce	de	Horizontale Line einfüben / bearbeiten
 insert _column before	htmlarea-ContextMenu	de	Spalte einfügen vo_r Position
 insert a new column after the current one	htmlarea-ContextMenu	de	Spalte einfügen nach der aktuellen Position
 insert a new column before the current one	htmlarea-ContextMenu	de	Spalte einfügen vor der aktuellen Position
@@ -389,21 +391,22 @@ insert all %1 addresses of the %2 contacts in %3	common	de	Alle %1 Adressen der 
 insert c_olumn after	htmlarea-ContextMenu	de	Spalte einfügen na_ch Position
 insert cell after	htmlarea-TableOperations	de	Zelle einfügen nach
 insert cell before	htmlarea-TableOperations	de	Zelle einfügen bevor
-insert column after	common	de	Spalte danach einf&uuml;gen
-insert column before	common	de	Spalte davor einf&uuml;gen
-insert date	tinymce	de	Datum einf&uuml;gen
-insert emotion	tinymce	de	Emotion einf&uuml;gen
-insert file	tinymce	de	Datei einf&uuml;gen
+insert column after	common	de	Spalte danach einfügen
+insert column before	common	de	Spalte davor einfügen
+insert date	tinymce	de	Datum einfügen
+insert emotion	tinymce	de	Emotion einfügen
+insert file	tinymce	de	Datei einfügen
 insert image	htmlarea	de	Bild einfügen
-insert row after	common	de	Zeile danach einf&uuml;gen
-insert row before	common	de	Zeile davor einf&uuml;gen
+insert link to file	tinymce	de	Datei einfügen
+insert row after	common	de	Zeile danach einfügen
+insert row before	common	de	Zeile davor einfügen
 insert table	htmlarea	de	Tabelle einfügen
-insert time	tinymce	de	Zeit einf&uuml;gen
+insert time	tinymce	de	Zeit einfügen
 insert web link	htmlarea	de	Web Link hinzufügen
-insert/edit image	tinymce	de	Bild einf&uuml;gen/bearbeiten
-insert/edit link	tinymce	de	Link einf&uuml;gen/bearbeiten
-insert/modify table	tinymce	de	Tabelle Einf&uuml;gen/Bearbeiten
-inserts a new table	tinymce	de	Neue Tabelle einf&uuml;gen / Tabelle bearbeiten
+insert/edit image	tinymce	de	Bild einfügen/bearbeiten
+insert/edit link	tinymce	de	Link einfügen/bearbeiten
+insert/modify table	tinymce	de	Tabelle Einfügen/Bearbeiten
+inserts a new table	tinymce	de	Neue Tabelle einfügen / Tabelle bearbeiten
 international	common	de	International
 invalid ip address	common	de	Ungültige IP Adresse
 invalid password	common	de	Ungültiges Passwort
@@ -476,7 +479,7 @@ main category	common	de	Hauptkategorie
 main screen	common	de	Startseite
 maintainer	common	de	Maintainer
 make lin_k...	htmlarea-ContextMenu	de	Lin_k erstellen...
-make window resizable	tinymce	de	Gr&ouml;&szlig;e &auml;nderbar
+make window resizable	tinymce	de	Größe änderbar
 malawi	common	de	MALAWI
 malaysia	common	de	MALAYSIA
 maldives	common	de	MALDIVEN
@@ -486,7 +489,7 @@ march	common	de	März
 margin	htmlarea-TableOperations	de	Rand
 marshall islands	common	de	MARSHALL ISLANDS
 martinique	common	de	MARTINIQUE
-match case	tinymce	de	Gro&szlig;-/Kleinschreibung beachten
+match case	tinymce	de	Groß-/Kleinschreibung beachten
 mauritania	common	de	MAURITANIEN
 mauritius	common	de	MAURITIUS
 max number of icons in navbar	common	de	Maximale Anzahl der Icons in der Menüleiste
@@ -572,12 +575,12 @@ only private	common	de	nur private
 only yours	common	de	nur eigene
 open file in new window	tinymce	de	Datei in neuem Fenster öffnen
 open in new window	tinymce	de	In neuem Fenster öffnen
-open in parent window / frame	tinymce	de	Im dar&uuml;ber liegenden Frame &ouml;ffnen
+open in parent window / frame	tinymce	de	Im darüber liegenden Frame öffnen
 open in the window	tinymce	de	In Fester öffnen
-open in this window / frame	tinymce	de	Im selben Frame &ouml;ffnen
+open in this window / frame	tinymce	de	Im selben Frame öffnen
 open in top frame (replaces all frames)	tinymce	de	Im obersten Frame öffnen (ersetzt alle Frames)
-open link in a new window	tinymce	de	Link in neuen Fenster &ouml;ffnen
-open link in the same window	tinymce	de	Link in gleichen Fester &ouml;ffnen
+open link in a new window	tinymce	de	Link in neuen Fenster öffnen
+open link in the same window	tinymce	de	Link in gleichen Fester öffnen
 open notify window	common	de	Benachrichtigungsfenster öffnen
 open popup window	common	de	Popup Fenster öffnen
 opens this link in a new window	htmlarea-ContextMenu	de	Diesen Link in neuem Fenster öffnen
@@ -625,8 +628,8 @@ please confirm that you want to open this link	htmlarea-SpellChecker	de	Wollen S
 please confirm that you want to remove this element:	htmlarea-ContextMenu	de	Wollen sie dieses Element wirklich entfernen ?
 please confirm that you want to unlink this element.	htmlarea-ContextMenu	de	Wollen sie diesen Link wirklich entfernen ?
 please enter a name	common	de	Bitte geben Sie einen Namen ein !
-please enter the caption text	tinymce	de	Bitte geben Sie einen Text f&uuml;r die Datei ein.
-please insert a name for the target or choose another option.	tinymce	de	Bitte geben Sie einen Namen f&uuml;r das Ziel an oder w&auml;hlen Sie eine andere Option.
+please enter the caption text	tinymce	de	Bitte geben Sie einen Text für die Datei ein.
+please insert a name for the target or choose another option.	tinymce	de	Bitte geben Sie einen Namen für das Ziel an oder wählen Sie eine andere Option.
 please run setup to become current	common	de	Bitte rufen Sie Setup auf um zu aktualisieren
 please select	common	de	Bitte wählen
 please set your global preferences	common	de	Bitte editieren Sie Ihre globalen Einstellungen !
@@ -662,7 +665,7 @@ redo	tinymce	de	Wiederholen
 redoes your last action	htmlarea	de	Letzte Aktion wiederholen
 refresh	tinymce	de	Aktualisieren
 reject	common	de	Zurückweisen
-remove col	tinymce	de	Spalte l&ouml;schen
+remove col	tinymce	de	Spalte löschen
 remove selected accounts	common	de	Ausgewähle Benutzer entfernen
 remove the	htmlarea-ContextMenu	de	Entfernen des
 remove this node from the document	htmlarea-ContextMenu	de	Dieses Element aus dem Dokument entfernen
@@ -678,7 +681,7 @@ returns struct of users application access	common	de	Liefert Strucktur mit Benut
 reunion	common	de	REUNION
 revert	htmlarea-SpellChecker	de	Rückgängig
 right	common	de	Rechts
-rmdir failed.	tinymce	de	Verzeichnis l&ouml;schen fehlgeschlagen.
+rmdir failed.	tinymce	de	Verzeichnis löschen fehlgeschlagen.
 ro_w properties...	htmlarea-ContextMenu	de	Ze_ilen Einstellungen...
 romania	common	de	RUMÄNIEN
 row properties	htmlarea-TableOperations	de	Reihen
@@ -687,7 +690,7 @@ rules	htmlarea-TableOperations	de	Balken
 rules will appear between all rows and columns	htmlarea-TableOperations	de	Balken zwischen Reihen und Spalten
 rules will appear between columns only	htmlarea-TableOperations	de	Balken zwischen Spalten
 rules will appear between rows only	htmlarea-TableOperations	de	Balken zwischen Reihen
-run spell checking	tinymce	de	Rechtschreibpr&uuml;fung
+run spell checking	tinymce	de	Rechtschreibprüfung
 russian federation	common	de	RUSSISCHE FÖDERATION
 rwanda	common	de	RWANDA
 saint helena	common	de	SANKT HELENA
@@ -746,7 +749,7 @@ showing %1	common	de	%1 Einträge
 showing %1 - %2 of %3	common	de	%1 - %2 von %3 Einträgen
 sierra leone	common	de	SIERRA LEONE
 singapore	common	de	SINGAPUR
-size	tinymce	de	Gr&ouml;&szlig;e
+size	tinymce	de	Größe
 slovakia	common	de	SLOVAKEI
 slovenia	common	de	SLOVENIEN
 solomon islands	common	de	SOLOMON INSELN
@@ -825,6 +828,7 @@ to go back to the msg list, click <a href= %1 >here</a>	common	de	Um zur Liste d
 today	common	de	Heute
 todays date, eg. "%1"	common	de	heutiges Datum, zB. "%1"
 toggle first day of week	jscalendar	de	ersten Tag der Woche wechseln
+toggle fullscreen mode	tinymce	de	Vollbilddarstellung umschalten
 toggle html source	htmlarea	de	Wechseln zur HTML source Ansicht
 togo	common	de	TOGO
 tokelau	common	de	TOKELAU
@@ -842,7 +846,7 @@ tuvalu	common	de	TUVALU
 uganda	common	de	UGANDA
 ukraine	common	de	UKRAINE
 underline	common	de	Unterstrichen
-undo	tinymce	de	R&uuml;ckg&auml;ngig
+undo	tinymce	de	Rückgängig
 undoes your last action	htmlarea	de	Die letzte Aktion rückgängig machen
 united arab emirates	common	de	VEREINIGTEN ARABISCHEN EMIRATE
 united kingdom	common	de	GROSSBRITANIEN
@@ -850,11 +854,11 @@ united states	common	de	VEREINIGTE STAATEN VON AMERIKA
 united states minor outlying islands	common	de	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	de	Unbekannt
 unlink	tinymce	de	Link entfernen
-unlink failed.	tinymce	de	L&ouml;schen fehlgeschlagen.
+unlink failed.	tinymce	de	Löschen fehlgeschlagen.
 unlink the current element	htmlarea-ContextMenu	de	Link auf Element entfernen
-unordered list	tinymce	de	Aufz&auml;hlungszeichen
+unordered list	tinymce	de	Aufzählungszeichen
 unset color	htmlarea-TableOperations	de	Farbe
-up	tinymce	de	R&uuml;ckw&auml;rts
+up	tinymce	de	Rückwärts
 update	tinymce	de	Aktualisieren
 upload	tinymce	de	Hochladen
 upload image	htmlarea-UploadImage	de	Bild hochladen
