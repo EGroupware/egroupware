@@ -77,7 +77,7 @@ class resources_hooks
 				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
-					'global_cats'=> True)),
+					'global_cats'=> true)),
 				'Configure Access Permissions' => $GLOBALS['egw']->link('/index.php',
 					'menuaction=resources.ui_acl.acllist')
 // 				'Custom fields, typ and status' => $GLOBALS['egw']->link('/index.php',array(
