@@ -1154,7 +1154,7 @@
 					{
 						$GLOBALS['egw_info']['navbar'][$app]['target'] = ' target="'.$app.'" onClick="'."if (this != '') { window.open(this+'".
 							(strstr($GLOBALS['egw_info']['navbar'][$app]['url'],'?') || 
-							ini_get('session.use_trans_sid') && $GLOBALS['egw_info']['server']['sessions_type'] == 'php4' ?'&':'?').
+							ini_get('session.use_trans_sid') && substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4' ?'&':'?').
 							"referer='+encodeURI(location),this.target,'width=800,height=600,scrollbars=yes,resizable=yes'); return false; } else { return true; }".'"';
 					}
 
