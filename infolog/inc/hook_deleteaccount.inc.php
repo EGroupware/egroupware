@@ -15,8 +15,7 @@
 	{
 		$info =& CreateObject('infolog.soinfolog');
 
-		$info->change_delete_owner((int)$GLOBALS['hook_values']['account_id']),
-		intval($_POST['new_owner']));
+		$info->change_delete_owner((int)$GLOBALS['hook_values']['account_id'],(int)$_POST['new_owner']);
 
 		unset($info);
 	}
