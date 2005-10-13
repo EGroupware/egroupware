@@ -263,7 +263,7 @@
 			}
 			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
 
-			if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4' && !$this->garbage_collection_done)
+			if (substr($GLOBALS['phpgw_info']['server']['sessions_type'],0,4) == 'php4' && !$this->garbage_collection_done)
 			{
 				return $this->php4_session_garbage_collection();
 			}
@@ -281,7 +281,7 @@
 			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
 			//echo "boetemplate::get_appsession('$id')"; _debug_array($data);
 
-			if ($GLOBALS['phpgw_info']['server']['sessions_type'] == 'php4')
+			if (substr($GLOBALS['phpgw_info']['server']['sessions_type'],0,4) == 'php4')
 			{
 				$this->php4_session_garbage_collection($id);
 			}
