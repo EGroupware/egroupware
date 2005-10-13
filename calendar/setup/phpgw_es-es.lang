@@ -218,7 +218,7 @@ planner by user	calendar	es-es	Planificador por usuario
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	es-es	Por favor, confirme, acepte, rechace o examine los cambios en la entrada correspondiente en su calendario
 please enter a filename !!!	calendar	es-es	Por favor, introduzca un nombre de fichero
 preselected group for entering the planner	calendar	es-es	Grupo preseleccionado para entrar en el planificador
-previous day	calendar	es-es	dia anterior
+previous day	calendar	es-es	día anterior
 print calendars in black & white	calendar	es-es	Imprimir calendario en blanco y negro
 print the mini calendars	calendar	es-es	Imprimir minicalendarios
 printer friendly	calendar	es-es	Versión para impresión
@@ -291,7 +291,7 @@ tentative	calendar	es-es	Provisional
 test import (show importable records <u>only</u> in browser)	calendar	es-es	Probar Importar (mostrar <u>solamente</u> registros importables en el navegador)
 text	calendar	es-es	Texto
 th	calendar	es-es	J
-the following conflicts with the suggested time:<ul>%1</ul>	calendar	es-es	Los siguientes está en conflicto con la hora sugerida:<ul>%1</ul>
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	es-es	Lo siguiente está en conflicto con la hora sugerida:<ul>%1</ul>
 the user %1 is not participating in this event!	calendar	es-es	El usuario %1 no participa en este evento
 there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	es-es	Ocurrió un error intentando conectar al servidor de noticias.<br>Por favor, póngase en contacto con su administrador para comprobar el nombre del servidor de noticias, usuario y contraseña.
 this day is shown as first day in the week or month view.	calendar	es-es	Este día se mostrará como el primer día en las vistas de semana o de mes.
@@ -302,7 +302,7 @@ this is mostly caused by a not or wrongly configured smtp server. notify your ad
 this message is sent for canceled or deleted events.	calendar	es-es	Este mensaje se envía cuando un evento se borra o se cancela.
 this message is sent for modified or moved events.	calendar	es-es	Este mensaje se envía al modificar o mover eventos.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	es-es	Este mensaje se envía a cada participante de los eventos de los que usted es el dueño, quien ha solicitado notificaciones sobre nuevos eventos.<br>Puede usar ciertas variables a las que sustituyen los datos del evento. La primera línea es el asunto del correo electrónico.
-this message is sent when you accept, tentative accept or reject an event.	calendar	es-es	Este mensaje se envía cuando acepta, acepta la tentativa o rechaza un evento.
+this message is sent when you accept, tentative accept or reject an event.	calendar	es-es	Este mensaje se envía cuando acepta, acepta temporalmente o rechaza un evento.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	es-es	Este mensaje se envía cuando pone una alarma para un evento concreto. Incluya toda la información necesaria.
 this month	calendar	es-es	Este mes
 this week	calendar	es-es	Esta semana
@@ -312,7 +312,7 @@ thu	calendar	es-es	Jue
 til	calendar	es-es	hasta
 timeframe	calendar	es-es	Margen de tiempo
 timeframe to search	calendar	es-es	Margen de tiempo para buscar
-title	calendar	es-es	TITULO
+title	calendar	es-es	Título
 title of the event	calendar	es-es	Título del evento
 title-row	calendar	es-es	Fila del título
 to many might exceed your execution-time-limit	calendar	es-es	límite de ejecución
@@ -356,8 +356,8 @@ you do not have permission to add alarms to this event !!!	calendar	es-es	¡No ti
 you do not have permission to delete this alarm !!!	calendar	es-es	¡No tiene permiso para eliminar esta alarma!
 you do not have permission to enable/disable this alarm !!!	calendar	es-es	¡No tiene permiso para activar/desactivar esta alarma!
 you do not have permission to read this record!	calendar	es-es	¡No tiene permiso para leer este registro!
-you have %1 high priority events on your calendar today.	common	es-es	Ud. tiene %1 eventos de alta prioridad es su calendario para hoy.
-you have 1 high priority event on your calendar today.	common	es-es	Ud. tiene 1 evento de alta prioridad es su calendario para hoy.
+you have %1 high priority events on your calendar today.	common	es-es	Ud. tiene %1 eventos de alta prioridad en su calendario para hoy.
+you have 1 high priority event on your calendar today.	common	es-es	Ud. tiene 1 evento de alta prioridad en su calendario para hoy.
 you have a meeting scheduled for %1	calendar	es-es	Ud. tiene una reunión programada para %1
 you have not entered a title	calendar	es-es	No ha introducido un título
 you have not entered a valid date	calendar	es-es	Ha introducido una fecha incorrecta
@@ -365,9 +365,9 @@ you have not entered a valid time of day	calendar	es-es	Ha introducido una hora 
 you have not entered a\nbrief description	calendar	es-es	Ud. no ha ingresado una\nBrief descripción
 you have not entered a\nvalid time of day.	calendar	es-es	Ud. no ha ingresado una\nvalid hora valida.
 you have not entered participants	calendar	es-es	No ha introducido participantes
-you must enter one or more search keywords	calendar	es-es	Ud. debe entrar una o mas claves de busqueda
+you must enter one or more search keywords	calendar	es-es	Ud. debe introducir una o más claves de búsqueda
 you must select a [iv]cal. (*.[iv]cs)	calendar	es-es	Debe seleccionar un [iv]Cal. (*.[iv]cs)
 you need to set either a day or a occurence !!!	calendar	es-es	Debe indicar un día o una ocurrencia
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-es	Su reunión programada para %1 ha sido reprogramada para %2
-your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	es-es	Sus horas sugeridas de <B> %1 - %2 </B> están en conflicto con las siguientes entradas es el calendario:
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	es-es	Sus horas sugeridas de <B> %1 - %2 </B> están en conflicto con las siguientes entradas en el calendario:

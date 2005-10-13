@@ -3,17 +3,20 @@
 12 hour	preferences	es-es	12 horas
 24 hour	preferences	es-es	24 horas
 a template defines the layout of egroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el formato de eGroupWare y contiene iconos para cada aplicación.
+a template defines the layout of phpgroupware and it contains icons for each application.	preferences	es-es	Una plantilla define el diseño de eGroupWare y contiene iconos para cada aplicación.
 a theme defines the colors and fonts used by the template.	preferences	es-es	Un tema define los colores y los tipos de letra usados en la plantilla
-acl grants have been updated	preferences	es-es	Los permisos de la ACL se han actualizado
+acl grants have been updated	preferences	es-es	Los permisos de la LCA se han actualizado
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en eGW le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la página, demasiado pocas pueden ser malo.
+any listing in phpgw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	es-es	Cualquier listado en eGroupWare le mostrará este número de entradas o líneas por página.<br>Demasiadas ralentizan la visualización, y demasiado pocas proporciona poca visión.
 are you sure you want to delete this category ?	preferences	es-es	¿Seguro que desea borrar esta categoría?
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	es-es	Cambiar la contraseña de un usuario pasando las contraseñas anterior y nueva. Devuelve TRUE si es correcto, FALSE si hay fallos.
 change your password	preferences	es-es	Cambiar su contraseña
 change your profile	preferences	es-es	Cambiar su perfil
 change your settings	preferences	es-es	Cambiar su configuración
 click to select a color	preferences	es-es	Pulse para seleccionar un color
 color	preferences	es-es	Color
 country	preferences	es-es	País
-date format	preferences	es-es	Formato fecha
+date format	preferences	es-es	Formato de la fecha
 default	preferences	es-es	predeterminado
 default application	preferences	es-es	Aplicación predeterminada
 default preferences	preferences	es-es	Preferencias predeterminadas
@@ -30,26 +33,29 @@ help off	preferences	es-es	Desactivar ayuda
 hours	preferences	es-es	horas
 how do you like to display accounts	preferences	es-es	¿Cómo desea ver las cuentas?
 how do you like to select accounts	preferences	es-es	¿Cómo desea seleccionar las cuentas?
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-es	Cuántas horas va por delante o por detrás de la zona horaria del servidor.<br>Si está en la misma zona horaria, seleccione 0 horas, si no, seleccione su fecha y hora local.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	es-es	Cuántas horas va por delante o por detrás de la zona horaria del servidor.<br>Si está en la misma zona horaria, seleccione 0 horas; si no, seleccione su fecha y hora local.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	es-es	Número de iconos a mostrar en la barra de navegación en la parte superior de la página. Los iconos adicionales van en un menú desplegable, en la parte derecha de la barra de navegación.
 how should egroupware display dates for you.	preferences	es-es	Forma de mostrar las fechas
+how should phpgroupware display dates for you.	preferences	es-es	Cómo debe mostrar eGroupWare las fechas
 icon	preferences	es-es	Icono
 icons and text	preferences	es-es	Iconos y texto
 icons only	preferences	es-es	Sólo iconos
-in which country are you. this is used to set certain defaults for you.	preferences	es-es	Páis en el que se encuentra. Se utiliza para configurar ciertos detalles.
+in which country are you. this is used to set certain defaults for you.	preferences	es-es	País en el que se encuentra. Se utiliza para configurar ciertos detalles.
 interface/template selection	preferences	es-es	Selección de interfaz/plantilla
 language	preferences	es-es	Idioma
 max matches per page	preferences	es-es	Número máximo de coincidencias por página
 max number of icons in navbar	preferences	es-es	Número máximo de iconos en la barra de navegación
 no default	preferences	es-es	Sin valor predeterminado
 note: this feature does *not* change your email password. this will	preferences	es-es	nota: esta característica NO cambia la contraseña de su correo electrónico.
-note: this feature does *not* change your email password. this will need to be done manually.	preferences	es-es	Nota: Esta opción no cambia la contraseña de su correo electrónico. Esto deberá hacerse manualmente.
+note: this feature does *not* change your email password. this will need to be done manually.	preferences	es-es	Nota: Esta opción *no* cambia la contraseña de su correo electrónico. Esto deberá hacerse manualmente.
 please, select a new theme	preferences	es-es	Por favor, seleccione un nuevo tema
 popup with search	preferences	es-es	Ventana emergente con búsqueda
-re-enter your password	preferences	es-es	Re-Ingrese su contraseña
+re-enter your password	preferences	es-es	Confirme su contraseña
+read prefs for the specified application.	preferences	es-es	Leer las preferencias para la aplicación especificada
 select different theme	preferences	es-es	Seleccione un tema diferente
 select one	preferences	es-es	Seleccione uno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes en eGroupWare.<br>Algunos idiomas puede que no tengan todos los mensajes, en cuyo caso verá el mensaje en inglés.
+select the language of texts and messages within phpgroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	es-es	Seleccione el idioma de los textos y los mensajes dentro de eGroupWare.<br>Algunos idiomas pueden no contener todos los mensajes, en cuyo caso verá un mensaje en inglés.
 selectbox	preferences	es-es	Cuadro de selección
 selectbox with primary group and search	preferences	es-es	Cuadro de selección con grupo principal y búsqueda
 set this to your convenience. for security reasons, you might not want to show your loginname in public.	preferences	es-es	Ponga esto a su gusto. Por razones de seguridad, puede no querer mostrar su usuario en público.
@@ -63,6 +69,7 @@ show text on navigation icons	preferences	es-es	Mostrar descripción sobre los ic
 show_more_apps	common	es-es	Mostrar más aplicaciones
 text only	preferences	es-es	Sólo texto
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se mostará al iniciar la sesión en eGroupWare o pulsar en el icono de la página de inicio.<br>También puede tener más de una aplicación en la página de inicio, si no elige una aplicación específica aquí, configurándolo en las preferencias de cada aplicación.
+the default application will be started when you enter phpgroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	es-es	La aplicación predeterminada se iniciará cuando entre en eGroupWare o pulse en el icono de la página de inicio.<br>También puede tener más de una aplicación mostrándose en la página de inicio, si no elige una aplicación específica aquí (tiene que configurarse en las preferencias de cada aplicación).
 the old password is not correct	preferences	es-es	La contraseña anterior no es correcta
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	es-es	La caja de selección muestra todos los usuarios disponibles (puede ser muy lento en grandes instalaciones con muchos usuarios). La ventana emergente puede buscar usuarios por nombre o grupo.
 the two passwords are not the same	preferences	es-es	Las dos contraseñas son distintas
@@ -73,6 +80,8 @@ use default	preferences	es-es	Usar predeterminado
 users choice	preferences	es-es	Elegido por el usuario
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	es-es	Si se indica Sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra de aplicaciones principal.
 which currency symbol or name should be used in egroupware.	preferences	es-es	Símbolo de moneda o nombre que debe usar eGroupWare
+which currency symbol or name should be used in phpgroupware.	preferences	es-es	El símbolo de moneda que se usa en eGroupWare.
+write prefs for the specified application.	preferences	es-es	Escribir preferencias para la aplicación especificada
 you can show the applications as icons only, icons with app-name or both.	preferences	es-es	Puede ver las aplicaciones como iconos sólo, iconos con el nombre, o ambos.
 you do not have permission to set acl's in this mode!	preferences	es-es	Usted no tiene permisos para poner ACLs en este modo
 you must enter a password	preferences	es-es	Debe introducir una contraseña

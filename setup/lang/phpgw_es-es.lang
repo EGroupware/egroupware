@@ -88,8 +88,8 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking extension %1 is loaded or loadable	setup	es-es	Comprobando si se puede cargar o está cargada la extensión %1
-checking file-permissions of %1 for %2: %3	setup	es-es	Comprobando si %1 tiene permiso de %2: %3
 checking file-permissions of %1 for %2 %3: %4	setup	es-es	Comprobando si %1 %2 tiene permiso de %3: %4
+checking file-permissions of %1 for %2: %3	setup	es-es	Comprobando si %1 tiene permiso de %2: %3
 checking for gd support...	setup	es-es	Comprobando el soporte GD...
 checking php.ini	setup	es-es	Comprobando php.ini
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
