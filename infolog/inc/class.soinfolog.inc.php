@@ -133,12 +133,12 @@
 				$filtermethod .= " AND info_responsible='0'";
 			}
 			// implicit read-rights for responsible user
-			$filtermethod .= " OR (".$this->db->concat("'%,'",'info_responsible',"',%'")." LIKE '%,$this->user,%' AND info_access='public')";
+			$filtermethod .= " OR (".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$this->user,%' AND info_access='public')";
 
 			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'own')
 			{
-				$filtermethod .= " OR (".$this->db->concat("'%,'",'info_responsible',"',%'")." LIKE '%,$this->user,%'".
+				$filtermethod .= " OR (".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$this->user,%'".
 					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
 						" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
 				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
@@ -158,7 +158,7 @@
 
 			if ($filter == 'user' && $f_user > 0)
 			{
-				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR ".$this->db->concat("'%,'",'info_responsible',"',%'")." LIKE '%,$f_user,%') AND $filtermethod)";
+				$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR ".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$f_user,%') AND $filtermethod)";
 			}
 			//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
 
@@ -487,7 +487,7 @@
 						{
 							$data = (int) $data;
 							if (!$data) continue;
-							$filtermethod .= " AND (".$this->db->concat("'%,'",'info_responsible',"',%'")." LIKE '%,$data,%' OR info_responsible='0' AND info_owner=$data)";
+							$filtermethod .= " AND (".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$data,%' OR info_responsible='0' AND info_owner=$data)";
 						}
 						else
 						{
