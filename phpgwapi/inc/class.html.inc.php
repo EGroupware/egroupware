@@ -438,34 +438,7 @@ class html
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
-		$init_options = 'theme : "advanced",theme_advanced_toolbar_location : "top"';
-		$tab3a = 'theme_advanced_buttons3_add : "separator,fullscreen';
-		$plugs = 'plugins : "paste,fullscreen,advimage,advlink';
-		$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]';
-		foreach(explode(',',$plugins) as $plugin)
-		{
-			switch($plugin)
-			{
-				case 'TableOperations' :
-					$plugs .= ',table';
-					$tab3a .= ',tablecontrols';
-					break;
-				case 'ContextMenu' :
-					$plugs .= ',contextmenu';
-					break;
-				default:
-				//	echo $plugin .'<br>';
-			}
-		}
-		
-		if($base_href='')
-		{
-			$init_options .= ',document_base_url : "'. $base_href. '", relative_urls : true';
-		}
-		
-		$init_options .= ','. $tab3a. '",'. $plugs. '",'. $eve. '"';
-		
-		return  $this->tinymce($name,$content,$style,$init_options);
+		return  $this->tinymce($name,$content,$style,$plugins,$base_href);
 	}
 
 	/**
@@ -497,42 +470,76 @@ class html
 	* @param string $content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
 	* @param string $style='' initial css for the style attribute 
 	* @param string $init_options='', see http://tinymce.moxiecode.com/ for all init options. mode and elements are allready set.
+	*                                 to make things more easy, you also can just provide a comma seperated list here with the options you need.
+	*                                 Supportet are: 'TableOperations','ContextMenu','ColorChooser'
 	* @return string the necessary html for the textarea
 	* @todo make wrapper for backwards compatibility with htmlarea
 	* @todo enable all features from htmlarea
 	*/
-	function tinymce($name,$content='',$style='',$init_options='')
+	function tinymce($name,$content='',$style='',$init_options='',$base_href='')
 	{
-	   if (!$style) 
-	   {
-		  $style = 'width:100%; min-width:500px; height:300px;';
-	   }
-
-	   /* do stuff once */
-	   $this->init_tinymce();
-
-	   if (!$this->htmlarea_availible())
-	   {
-		  return $this->textarea($name,$content,'style="'.$style.'"');
-	   }
-
-	   /* do again and again */
-	   return '
-	   <script language="javascript" type="text/javascript">
-		  tinyMCE.init({
+		if (!$style) 
+		{
+			$style = 'width:100%; min-width:500px; height:300px;';
+		}
+		if (!$this->htmlarea_availible())
+		{
+			return $this->textarea($name,$content,'style="'.$style.'"');
+		}
+		
+		/* do stuff once */
+		$this->init_tinymce();
+		
+		if(strpos($init_options,':') === false)
+		{
+			$init = 'theme : "advanced",theme_advanced_toolbar_location : "top"';
+			$tab3a = 'theme_advanced_buttons3_add : "separator,fullscreen';
+			$plugs = 'plugins : "paste,fullscreen,advimage,advlink';
+			$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]';
+			if($init_options)
+			{
+				foreach(explode(',',$init_options) as $plugin)
+				{
+					switch($plugin)
+					{
+						case 'TableOperations' :
+							$plugs .= ',table';
+							$tab3a .= ',separator,tablecontrols';
+							break;
+						case 'ContextMenu' :
+							$plugs .= ',contextmenu';
+							break;
+						case 'ColorChooser' :
+							$tab3a .= ',separator,forecolor,backcolor';
+						default:
+						//	echo $plugin .'<br>';
+					}
+				}
+			}
+			if($base_href)
+			{
+				$init .= ',document_base_url : "'. $base_href. '", relative_urls : true';
+			}
+		
+			$init_options = $init. ','. $tab3a. '",'. $plugs. '",'. $eve. '"';
+		}
+		
+		/* do again and again */
+		return '<script language="javascript" type="text/javascript">
+			tinyMCE.init({
 			 mode : "exact",
  			 language: "'.$GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
 			 plugin_insertdate_dateFormat : "'.str_replace(array('Y','m','M','d'),array('%Y','%m','%b','%d'),$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).'",
 			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').'",		 
 			 elements : "'.$name.'",
 			 '.$init_options.'
-		  });
-	   </script>
-
-	   <textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">
-		  '.$this->htmlspecialchars($content).'	
-	   </textarea>
-	   ';
+			});
+			</script>
+			
+			<textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">
+				'.$this->htmlspecialchars($content).'	
+			</textarea>
+			';
 	}	
 	
 	/**
