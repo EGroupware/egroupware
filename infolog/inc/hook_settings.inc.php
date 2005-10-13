@@ -85,11 +85,18 @@
 			'label'  => 'Show in the InfoLog list',
 			'name'   => 'show_links',
 			'values' => $show_links,
-			'help'   => 'Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when u enter Inf
-			oLog).',
+			'help'   => 'Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).',
 			'xmlrpc' => True,
 			'admin'  => False
-		)
+		),
+		'never_hide' => array(
+			'type'   => 'check',
+			'label'  => 'Never hide search and filters',
+			'name'   => 'never_hide',
+			'help'   => 'If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
 	);
 
 	unset($show_entries);
