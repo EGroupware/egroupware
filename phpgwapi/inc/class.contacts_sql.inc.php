@@ -725,7 +725,7 @@
 				return False;
 			}
 			$this->db->update($this->std_table,array('owner'=>$new_owner),array('owner'=>$old_owner),__LINE__,__FILE__);
-			$this->db->update($this->ext_table,array('contact_owner'=>$new_owner),array('owner'=>$old_owner),__LINE__,__FILE__);
+			$this->db->update($this->ext_table,array('contact_owner'=>$new_owner),array('contact_owner'=>$old_owner),__LINE__,__FILE__);
 		}
 
 		/* This is where the real work of delete() is done, shared class file contains calling function */
