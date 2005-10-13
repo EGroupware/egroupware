@@ -1,0 +1,783 @@
+%1 email addresses inserted	common	vi	Có %1 &#273;&#7883;a ch&#7881; email &#273;&#432;&#7907;c thêm vào
+%1 is not executable by the webserver !!!	common	vi	%1 không th&#7875; th&#7921;c thi b&#7903;i máy ch&#7911; web !!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	vi	%1eGroupWare%2 là b&#7897; ph&#7847;n m&#7873;m nhóm d&#7841;ng Web h&#7895; tr&#7907; &#273;a ng&#432;&#7901;i dùng vi&#7871;t b&#7857;ng %3PHP%4.
+(shift-)click or drag to change value	jscalendar	vi	(Shift-)Click ho&#7863;c kéo và rê chu&#7897;t &#273;&#7875; thay &#273;&#7893;i giá tr&#7883;
+- click on any of the time parts to increase it	jscalendar	vi	- Click vào b&#7845;t k&#7923; ph&#7847;n th&#7901;i gian nào &#273;&#7875; t&#259;ng nó
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	vi	- Gi&#7919; phím trái chu&#7897;t trên b&#7845;t k&#7923; nút &#7845;n nào phía trên &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or click and drag for faster selection.	jscalendar	vi	- ho&#7863;c click và kéo - rê chu&#7897;t &#273;&#7875; l&#7921;a ch&#7885;n nhanh h&#417;n.
+- or shift-click to decrease it	jscalendar	vi	- ho&#7863;c Shift-Click chu&#7897;t &#273;&#7875; gi&#7843;m nó
+- use the %1, %2 buttons to select month	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n tháng
+- use the %1, %2 buttons to select year	jscalendar	vi	- Dùng các nút &#7845;n %1, %2 &#273;&#7875; ch&#7885;n n&#259;m
+00 (disable)	admin	vi	00 (t&#7855;t)
+13 (ntp)	admin	vi	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t ngày
+3 number of chars for month-shortcut	jscalendar	vi	3 ký t&#7921; &#273;&#7875; vi&#7871;t t&#7855;t tháng
+80 (http)	admin	vi	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	vi	\n &#272;ang d&#7885;n d&#7865;p mã ngu&#7891;n HTML, vui lòng &#273;&#7907;i...
+_delete row	htmlarea-ContextMenu	vi	_Xóa Dòng
+_image properties...	htmlarea-ContextMenu	vi	_Thu&#7897;c tính hình &#7843;nh...
+_modify link...	htmlarea-ContextMenu	vi	_Hi&#7879;u ch&#7881;nh liên k&#7871;t...
+_remove link...	htmlarea-ContextMenu	vi	_Xóa liên k&#7871;t...
+_table properties...	htmlarea-ContextMenu	vi	_Thu&#7897;c tính b&#7843;ng...
+about	common	vi	Gi&#7899;i thi&#7879;u
+about %1	common	vi	Gi&#7899;i thi&#7879;u %1
+about the calendar	jscalendar	vi	Gi&#7899;i thi&#7879;u v&#7873; L&#7883;ch
+about this editor	htmlarea	vi	Gi&#7899;i thi&#7879;u v&#7873; b&#7897; so&#7841;n th&#7843;o này
+access	common	vi	Truy c&#7853;p
+access not permitted	common	vi	Truy c&#7853;p không &#273;&#432;&#7907;c phép
+account has been created	common	vi	Tài kho&#7843;n &#273;ã &#273;&#432;&#7907;c t&#7841;o
+account has been deleted	common	vi	Tài kho&#7843;n &#273;ã b&#7883; xóa
+account has been updated	common	vi	Tài kho&#7843;n &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+account is expired	common	vi	Tài kho&#7843;n h&#7871;t h&#7841;n
+acl	common	vi	Danh sách phân quy&#7873;n truy c&#7853;p
+action	common	vi	Hành &#273;&#7897;ng
+active	common	vi	Tích c&#7921;c
+add	common	vi	Thêm m&#7899;i
+add %1 category for	common	vi	Thêm m&#7899;i %1 nhóm cho
+add category	common	vi	Thêm m&#7899;i nhóm
+add sub	common	vi	Thêm nhóm con
+addressbook	common	vi	S&#7893; &#273;&#7883;a ch&#7881;
+admin	common	vi	Ng&#432;&#7901;i qu&#7843;n tr&#7883;
+administration	common	vi	Qu&#7843;n tr&#7883; h&#7879; th&#7889;ng
+afghanistan	common	vi	AFGHANISTAN
+albania	common	vi	ALBANIA
+algeria	common	vi	ALGERIA
+align	htmlarea-TableOperations	vi	Canh l&#7873;
+all	common	vi	T&#7845;t c&#7843;
+all fields	common	vi	t&#7845;t c&#7843; các tr&#432;&#7901;ng
+all four sides	htmlarea-TableOperations	vi	C&#7843; b&#7889;n c&#7841;nh
+alphabet	common	vi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	vi	Style-sheet thay th&#7871;:
+american samoa	common	vi	AMERICAN SAMOA
+andorra	common	vi	ANDORRA
+angola	common	vi	ANGOLA
+anguilla	common	vi	ANGUILLA
+antarctica	common	vi	ANTARCTICA
+antigua and barbuda	common	vi	ANTIGUA AND BARBUDA
+apply	common	vi	Áp d&#7909;ng
+april	common	vi	Tháng T&#432;
+are you sure you want to delete these entries ?	common	vi	B&#7841;n có ch&#7855;c ch&#7855;n r&#7857;ng mình mu&#7889;n xóa các m&#7909;c này không ?
+are you sure you want to delete this entry ?	common	vi	B&#7841;n có ch&#7855;c ch&#7855;n r&#7857;ng mình mu&#7889;n xóa m&#7909;c này không ?
+argentina	common	vi	ARGENTINA
+armenia	common	vi	ARMENIA
+aruba	common	vi	ARUBA
+august	common	vi	Tháng Tám
+australia	common	vi	AUSTRALIA
+austria	common	vi	AUSTRIA
+author	common	vi	Tác gi&#7843;
+autohide sidebox menus	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bên ph&#7843;i
+automatically hide the sidebox menus?	common	vi	T&#7921; &#273;&#7897;ng t&#7855;t menu bên ph&#7843;i
+autosave default category	common	vi	T&#7921; &#273;&#7897;ng l&#432;u nhóm m&#7863;c &#273;&#7883;nh
+azerbaijan	common	vi	AZERBAIJAN
+back	common	vi	Quay tr&#7903; l&#7841;i
+back to user login	common	vi	Quay v&#7873; trang &#273;&#259;ng nh&#7853;p
+background	htmlarea-TableOperations	vi	N&#7873;n
+background color	htmlarea	vi	Màu n&#7873;n
+background color:	common	vi	Màu n&#7873;n:
+bad login or password	common	vi	Sai tên &#273;&#259;ng nh&#7853;p ho&#7863;c m&#7853;t kh&#7849;u
+bahamas	common	vi	BAHAMAS
+bahrain	common	vi	BAHRAIN
+bangladesh	common	vi	BANGLADESH
+barbados	common	vi	BARBADOS
+baseline	htmlarea-TableOperations	vi	Ranh gi&#7899;i
+bcc	common	vi	G&#7917;i kín
+belarus	common	vi	BELARUS
+belgium	common	vi	BELGIUM
+belize	common	vi	BELIZE
+benin	common	vi	BENIN
+bermuda	common	vi	BERMUDA
+bhutan	common	vi	BHUTAN
+blocked, too many attempts	common	vi	B&#7883; khóa, &#273;&#259;ng nh&#7853;p sai quá nhi&#7873;u l&#7847;n
+bold	htmlarea	vi	&#272;&#7853;m
+bolivia	common	vi	BOLIVIA
+border	htmlarea-TableOperations	vi	&#272;&#432;&#7901;ng vi&#7873;n
+borders	htmlarea-TableOperations	vi	Các &#273;&#432;&#7901;ng vi&#7873;n
+bosnia and herzegovina	common	vi	BOSNIA AND HERZEGOVINA
+botswana	common	vi	BOTSWANA
+bottom	htmlarea-TableOperations	vi	&#272;áy
+bouvet island	common	vi	BOUVET ISLAND
+brazil	common	vi	BRAZIL
+british indian ocean territory	common	vi	BRITISH INDIAN OCEAN TERRITORY
+brunei darussalam	common	vi	BRUNEI DARUSSALAM
+bulgaria	common	vi	BULGARIA
+bulleted list	htmlarea	vi	Bulleted List
+burkina faso	common	vi	BURKINA FASO
+burundi	common	vi	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	vi	Các thu&#7897;c tính ô (C_ell)...
+calendar	common	vi	L&#7883;ch
+cambodia	common	vi	CAMBODIA
+cameroon	common	vi	CAMEROON
+canada	common	vi	CANADA
+cancel	common	vi	H&#7911;y b&#7887;
+cape verde	common	vi	CAPE VERDE
+caption	htmlarea-TableOperations	vi	Tiêu &#273;&#7873;
+categories	common	vi	Các nhóm
+categories for	common	vi	Phân nhóm cho
+category	common	vi	Nhóm
+category %1 has been added !	common	vi	Nhóm %1 &#273;ã &#273;&#432;&#7907;c thêm m&#7899;i !
+category %1 has been updated !	common	vi	Nhóm %1 &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t !
+cayman islands	common	vi	CAYMAN ISLANDS
+cc	common	vi	&#272;&#7891;ng kính g&#7917;i
+cell properties	htmlarea-TableOperations	vi	Các thu&#7897;c tính Cell
+center	htmlarea-TableOperations	vi	Gi&#7919;a
+central african republic	common	vi	CENTRAL AFRICAN REPUBLIC
+chad	common	vi	CHAD
+change	common	vi	Thay &#273;&#7893;i
+char	htmlarea-TableOperations	vi	Ký t&#7921;
+charset	common	vi	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	vi	Ki&#7875;m tra liên _k&#7871;t...
+check installation	common	vi	Ki&#7875;m tra cài &#273;&#7863;t
+check now	common	vi	Ki&#7875;m tra ngay
+chile	common	vi	CHILE
+china	common	vi	CHINA
+choose list style type (for ordered lists)	htmlarea-ListType	vi	Ch&#7885;n ki&#7875;u th&#7875; hi&#7879;n danh sách (cho danh sách có th&#7913; t&#7921;)
+choose the category	common	vi	Ch&#7885;n nhóm
+choose the parent category	common	vi	Ch&#7885;n nhóm cha
+christmas island	common	vi	CHRISTMAS ISLAND
+clear	common	vi	Xóa
+clear form	common	vi	Xóa bi&#7875;u m&#7851;u
+click	common	vi	Click
+click or mouse over to show menus	common	vi	Click ho&#7863;c kéo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu
+click or mouse over to show menus?	common	vi	Click ho&#7863;c kéo chu&#7897;t qua &#273;&#7875; hi&#7875;n th&#7883; menu ?
+close	common	vi	&#272;óng
+cocos (keeling) islands	common	vi	COCOS (KEELING) ISLANDS
+collapsed borders	htmlarea-TableOperations	vi	Các &#273;&#432;&#7901;ng vi&#7873;n thu g&#7885;n
+colombia	common	vi	COLOMBIA
+color	htmlarea-TableOperations	vi	Màu
+comoros	common	vi	COMOROS
+company	common	vi	Công ty
+congo	common	vi	CONGO
+congo, the democratic republic of the	common	vi	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+cook islands	common	vi	COOK ISLANDS
+copy	common	vi	Sao chép
+copy selection	htmlarea	vi	L&#7921;a ch&#7885;n sao chép
+costa rica	common	vi	COSTA RICA
+cote d ivoire	common	vi	COTE D IVOIRE
+create	common	vi	T&#7841;o
+create a link	htmlarea-ContextMenu	vi	T&#7841;o m&#7897;t liên k&#7871;t
+created by	common	vi	T&#7841;o b&#7903;i
+croatia	common	vi	CROATIA
+cuba	common	vi	CUBA
+currency	common	vi	Lo&#7841;i ti&#7873;n
+current	common	vi	Hi&#7879;n hành
+current style	htmlarea	vi	Ki&#7875;u hi&#7879;n hành
+current url is	htmlarea-ContextMenu	vi	URL hi&#7879;n hành là
+current users	common	vi	Các ng&#432;&#7901;i s&#7917; d&#7909;ng hi&#7879;n hành
+cut	htmlarea-ContextMenu	vi	C&#7855;t
+cut selection	htmlarea	vi	L&#7921;a ch&#7885;n c&#7855;t
+cyprus	common	vi	CYPRUS
+czech republic	common	vi	CZECH REPUBLIC
+date	common	vi	Ngày
+date due	common	vi	Ngày &#273;&#7871;n h&#7841;n
+date selection:	jscalendar	vi	L&#7921;a ch&#7885;n ngày:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	vi	C&#7893;ng Datetime.<br>N&#7871;u dùng c&#7893;ng 13, vui lòng thi&#7871;t l&#7853;p các ch&#7871; &#273;&#7897; t&#432;&#7901;ng l&#7917;a tr&#432;&#7899;c khi g&#7917;i trang này.<br>(C&#7893;ng: 13 / &#272;&#7883;a ch&#7881; c&#7893;ng: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	vi	Xóa c&#7897;t (De_lete)
+december	common	vi	Tháng M&#432;&#7901;i Hai
+decimal numbers	htmlarea-ListType	vi	Các s&#7889; th&#7853;p phân
+decrease indent	htmlarea	vi	Gi&#7843;m canh l&#7873;
+default category	common	vi	Nhóm m&#7863;c &#273;&#7883;nh
+delete	common	vi	Xóa
+delete cell	htmlarea-TableOperations	vi	Xóa ô (cell)
+delete column	htmlarea-TableOperations	vi	Xóa c&#7897;t
+delete row	htmlarea-TableOperations	vi	Xóa dòng
+delete the current column	htmlarea-ContextMenu	vi	Xóa c&#7897;t hi&#7879;n t&#7841;i
+delete the current row	htmlarea-ContextMenu	vi	Xóa dòng hi&#7879;n t&#7841;i
+denmark	common	vi	DENMARK
+description	common	vi	Di&#7877;n gi&#7843;i
+detail	common	vi	Chi ti&#7871;t
+details	common	vi	Các kho&#7843;n chi ti&#7871;t
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	vi	T&#7855;t vi&#7879;c th&#7921;c thi các &#273;o&#7841;n script s&#7917;a l&#7895;i c&#7911;a trình duy&#7879;t Internet Explorer 5.5 và các phiên b&#7843;n cao h&#417;n &#273;&#7875; hi&#7875;n th&#7883; &#273;&#432;&#7907;c các &#7843;nh d&#7841;ng PNG ?
+dictionary	htmlarea-SpellChecker	vi	T&#7915; &#273;i&#7875;n
+disable internet explorer png-image-bugfix	common	vi	T&#7855;t ch&#7913;c n&#259;ng s&#7917;a l&#7895;i &#7843;nh png c&#7911;a Internet Explorer
+disable slider effects	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	vi	T&#7855;t hi&#7879;u &#7913;ng tr&#432;&#7907;t &#273;&#7897;ng khi hi&#7875;n th&#7883; ho&#7863;c t&#7855;t các menu trong trang? Các ng&#432;&#7901;i s&#7917; d&#7909;ng trình duy&#7879;t Opera và Konqueror h&#7847;u nh&#432; c&#7847;n làm nh&#432; v&#7847;y.
+disabled	common	vi	&#272;ã t&#7855;t
+display %s first	jscalendar	vi	Hi&#7875;n th&#7883; %s &#273;&#7847;u tiên
+djibouti	common	vi	DJIBOUTI
+do you also want to delete all subcategories ?	common	vi	B&#7841;n c&#361;ng mu&#7889;n xóa luôn các nhóm con ph&#7843;i không ?
+doctype:	common	vi	DOCTYPE:
+document properties	common	vi	Thu&#7897;c tính document
+document title:	common	vi	Tiêu &#273;&#7873; document:
+domain	common	vi	Domain
+domain name for mail-address, eg. "%1"	common	vi	tên domain dùng cho &#273;&#7883;a ch&#7881; email, ví d&#7909;: "%1"
+domestic	common	vi	Vùng
+dominica	common	vi	DOMINICA
+dominican republic	common	vi	DOMINICAN REPUBLIC
+done	common	vi	&#272;ã xong
+drag to move	jscalendar	vi	Kéo và rê chu&#7897;t &#273;&#7875; di chuy&#7875;n
+e-mail	common	vi	E-Mail
+east timor	common	vi	EAST TIMOR
+ecuador	common	vi	ECUADOR
+edit	common	vi	Hi&#7879;u ch&#7881;nh
+edit %1 category for	common	vi	Hi&#7879;u ch&#7881;nh %1 nhóm cho
+edit categories	common	vi	Hi&#7879;u ch&#7881;nh các nhóm
+edit category	common	vi	Hi&#7879;u ch&#7881;nh nhóm
+egroupware api version %1	common	vi	eGroupWare API phiên b&#7843;n %1
+egroupware: login blocked for user '%1', ip %2	common	vi	eGroupWare: &#273;&#259;ng nh&#7853;p b&#7883; khóa &#273;&#7889;i v&#7899;i ng&#432;&#7901;i s&#7917; d&#7909;ng '%1', có &#273;&#7883;a ch&#7881; IP %2
+egypt	common	vi	EGYPT
+el salvador	common	vi	EL SALVADOR
+element...	htmlarea-ContextMenu	vi	Ph&#7847;n t&#7917;...
+email	common	vi	E-Mail
+email-address of the user, eg. "%1"	common	vi	&#273;&#7883;a ch&#7881; email c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, ví d&#7909;: "%1"
+enabled	common	vi	&#272;&#432;&#7907;c b&#7853;t
+end date	common	vi	Ngày k&#7871;t thúc
+end time	common	vi	Gi&#7901; k&#7871;t thúc
+enlarge editor	htmlarea	vi	Phóng l&#7899;n b&#7897; so&#7841;n th&#7843;o
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	vi	Nh&#7853;p vào URL c&#7911;a eGroupWare.<br>Ví d&#7909;: http://www.domain.com/egroupware   ho&#7863;c   /egroupware<br><b>Không có d&#7845;u slash &#7903; phía sau</b>
+entry has been deleted sucessfully	common	vi	&#272;ã xóa xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
+entry updated sucessfully	common	vi	C&#7853;p nh&#7853;t xong m&#7909;c &#273;&#432;&#7907;c ch&#7885;n
+equatorial guinea	common	vi	EQUATORIAL GUINEA
+eritrea	common	vi	ERITREA
+error	common	vi	L&#7895;i
+error creating %1 %2 directory	common	vi	L&#7895;i t&#7841;o %1 %2 th&#432; m&#7909;c
+error deleting %1 %2 directory	common	vi	L&#7895;i xóa %1 %2 th&#432; m&#7909;c
+error renaming %1 %2 directory	common	vi	L&#7895;i &#273;&#7893;i tên %1 %2 th&#432; m&#7909;c
+estonia	common	vi	ESTONIA
+ethiopia	common	vi	ETHIOPIA
+exact	common	vi	chính xác
+falkland islands (malvinas)	common	vi	FALKLAND ISLANDS (MALVINAS)
+faroe islands	common	vi	FAROE ISLANDS
+fax number	common	vi	s&#7889; fax
+february	common	vi	Tháng Hai
+fg color	htmlarea-TableOperations	vi	Màu ch&#7919;
+fields	common	vi	Các tr&#432;&#7901;ng
+fiji	common	vi	FIJI
+files	common	vi	Các t&#7853;p tin
+filter	common	vi	B&#7897; l&#7885;c
+finished list of mispelled words	htmlarea-SpellChecker	vi	Hoàn t&#7845;t vi&#7879;c li&#7879;t kê các t&#7915; sai chính t&#7843;
+finland	common	vi	FINLAND
+first name	common	vi	Tên
+first name of the user, eg. "%1"	common	vi	tên c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, ví d&#7909;: "%1"
+first page	common	vi	Trang &#273;&#7847;u tiên
+firstname	common	vi	Tên
+fixme!	common	vi	S&#7917;a tôi!
+float	htmlarea-TableOperations	vi	N&#7893;i
+font color	htmlarea	vi	Màu phông
+force selectbox	common	vi	Ô ch&#7885;n b&#7855;t bu&#7897;c
+frames	htmlarea-TableOperations	vi	Các khung
+france	common	vi	FRANCE
+french guiana	common	vi	FRENCH GUIANA
+french polynesia	common	vi	FRENCH POLYNESIA
+french southern territories	common	vi	FRENCH SOUTHERN TERRITORIES
+friday	common	vi	Th&#7913; sáu
+ftp	common	vi	FTP
+fullname	common	vi	Tên &#273;&#7847;y &#273;&#7911;
+gabon	common	vi	GABON
+gambia	common	vi	GAMBIA
+general menu	common	vi	Menu chung
+georgia	common	vi	GEORGIA
+germany	common	vi	GERMANY
+ghana	common	vi	GHANA
+gibraltar	common	vi	GIBRALTAR
+global	common	vi	Chung
+global public	common	vi	Môi tr&#432;&#7901;ng chung
+go today	jscalendar	vi	Vào m&#7909;c Hôm nay
+grant access	common	vi	Phân quy&#7873;n truy c&#7853;p
+greece	common	vi	GREECE
+greenland	common	vi	GREENLAND
+grenada	common	vi	GRENADA
+group	common	vi	Nhóm
+group access	common	vi	Truy c&#7853;p Nhóm
+group has been added	common	vi	Nhóm &#273;ã &#273;&#432;&#7907;c thêm vào
+group has been deleted	common	vi	Nhóm &#273;ã b&#7883; xóa
+group has been updated	common	vi	Nhóm &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+group name	common	vi	tên nhóm
+group public	common	vi	Môi tr&#432;&#7901;ng Nhóm
+groups	common	vi	Các nhóm
+groups with permission for %1	common	vi	Các nhóm có quy&#7873;n là %1
+groups without permission for %1	common	vi	Các nhóm không có quy&#7873;n là %1
+guadeloupe	common	vi	GUADELOUPE
+guam	common	vi	GUAM
+guatemala	common	vi	GUATEMALA
+guinea	common	vi	GUINEA
+guinea-bissau	common	vi	GUINEA-BISSAU
+guyana	common	vi	GUYANA
+haiti	common	vi	HAITI
+heard island and mcdonald islands	common	vi	HEARD ISLAND AND MCDONALD ISLANDS
+height	htmlarea-TableOperations	vi	Chi&#7873;u cao
+help	common	vi	Tr&#7907; giúp
+help using editor	htmlarea	vi	Tr&#7907; giúp s&#7917; d&#7909;ng b&#7897; so&#7841;n th&#7843;o
+high	common	vi	Cao
+highest	common	vi	Cao nh&#7845;t
+holy see (vatican city state)	common	vi	HOLY SEE (VATICAN CITY STATE)
+home	common	vi	Trang ch&#7911;
+home email	common	vi	email riêng
+honduras	common	vi	HONDURAS
+hong kong	common	vi	HONG KONG
+horizontal rule	htmlarea	vi	Ng&#259;n dòng
+how did you get here? (please report!)	htmlarea-ContextMenu	vi	Làm cách nào b&#7841;n vào &#273;&#432;&#7907;c &#273;ây? (Vui lòng báo l&#7841;i!)
+how many columns would you like to merge?	htmlarea-TableOperations	vi	Có bao nhiêu c&#7897;t b&#7841;n mu&#7889;n g&#7897;p l&#7841;i ?
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	vi	Nên có bao nhiêu bi&#7875;u t&#432;&#7907;ng hi&#7875;n th&#7883; &#7903; menu ngang (&#273;&#7847;u trang). Các bi&#7875;u t&#432;&#7907;ng n&#7857;m sau không &#273;&#7911; ch&#7895; hi&#7875;n th&#7883; trên menu ngang s&#7869; &#273;&#432;&#7907;c d&#7891;n xu&#7889;ng menu d&#7885;c n&#7857;m bên ph&#7843;i. Menu này có th&#7875; &#273;&#432;&#7907;c kích ho&#7841;t b&#7857;ng bi&#7875;u t&#432;&#7907;ng n&#7857;m &#7903; c&#7841;nh ph&#7843;i c&#7911;a menu ngang.
+how many rows would you like to merge?	htmlarea-TableOperations	vi	Có bao nhiêu dòng b&#7841;n mu&#7889;n g&#7897;p l&#7841;i
+html tidy	htmlarea-HtmlTidy	vi	HTML &#273;ã s&#7855;p x&#7871;p g&#7885;n
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	vi	HTMLArea t&#7915; ch&#7889;i xóa ô sau cùng trong dòng.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	vi	HTMLArea t&#7915; ch&#7889;i xóa c&#7897;t sau cùng trong b&#7843;ng.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	vi	HTMLArea t&#7915; ch&#7889;i xóa dòng sau cùng trong b&#7843;ng
+hungary	common	vi	HUNGARY
+i will open it in a new page.	htmlarea-SpellChecker	vi	Tôi s&#7869; m&#7903; nó trong m&#7897;t trang m&#7899;i
+i_nsert row before	htmlarea-ContextMenu	vi	Chè_n dòng phía trên
+iceland	common	vi	ICELAND
+ignore	htmlarea-SpellChecker	vi	B&#7887; qua
+ignore all	htmlarea-SpellChecker	vi	B&#7887; qua h&#7871;t
+image url	htmlarea-TableOperations	vi	URL c&#7911;a &#7843;nh
+in_sert row after	htmlarea-ContextMenu	vi	Chèn dòng phía d&#432;&#7899;i (In_sert)
+increase indent	htmlarea	vi	T&#259;ng canh l&#7873;
+india	common	vi	INDIA
+indonesia	common	vi	INDONESIA
+insert _column before	htmlarea-ContextMenu	vi	Chèn _c&#7897;t phía tr&#432;&#7899;c
+insert a new column after the current one	htmlarea-ContextMenu	vi	Chèn m&#7897;t c&#7897;t m&#7899;i phía sau c&#7897;t hi&#7879;n hành
+insert a new column before the current one	htmlarea-ContextMenu	vi	Chèn m&#7897;t c&#7897;t m&#7899;i phía tr&#432;&#7899;c c&#7897;t hi&#7879;n hành
+insert a new row after the current one	htmlarea-ContextMenu	vi	Chèn m&#7897;t dòng m&#7899;i phía d&#432;&#7899;i dòng hi&#7879;n hành
+insert a new row before the current one	htmlarea-ContextMenu	vi	Chèn m&#7897;t dòng m&#7899;i phía trên dòng hi&#7879;n hành
+insert all %1 addresses of the %2 contacts in %3	common	vi	Chèn t&#7845;t c&#7843; %1 các &#273;&#7883;a ch&#7881; c&#7911;a %2 các thông tin liên h&#7879; trong %3
+insert c_olumn after	htmlarea-ContextMenu	vi	Chèn c&#7897;t phía sau (_column)
+insert cell after	htmlarea-TableOperations	vi	Chèn ô phía sau
+insert cell before	htmlarea-TableOperations	vi	Chèn ô phía tr&#432;&#7899;c
+insert column after	htmlarea-TableOperations	vi	Chèn c&#7897;t phía sau
+insert column before	htmlarea-TableOperations	vi	Chèn c&#7897;t phía tr&#432;&#7899;c
+insert image	htmlarea	vi	Nhúng &#7843;nh
+insert row after	htmlarea-TableOperations	vi	Chèn dòng phía d&#432;&#7899;i
+insert row before	htmlarea-TableOperations	vi	Chèn dòng phía trên
+insert table	htmlarea	vi	Nhúng b&#7843;ng
+insert web link	htmlarea	vi	Nhúng liên k&#7871;t Web
+international	common	vi	Qu&#7889;c t&#7871;
+invalid ip address	common	vi	&#272;&#7883;a ch&#7881; IP không h&#7907;p l&#7879;
+invalid password	common	vi	M&#7853;t kh&#7849;u không h&#7907;p l&#7879;
+iran, islamic republic of	common	vi	IRAN, ISLAMIC REPUBLIC OF
+iraq	common	vi	IRAQ
+ireland	common	vi	IRELAND
+israel	common	vi	ISRAEL
+it has been more then %1 days since you changed your password	common	vi	&#272;ã h&#417;n %1 ngày t&#7915; khi b&#7841;n &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n
+it is recommended that you run setup to upgrade your tables to the current version	common	vi	B&#7841;n nên ch&#7841;y setup &#273;&#7875; nâng c&#7845;p các b&#7843;ng c&#7911;a b&#7841;n lên phiên b&#7843;n hi&#7879;n hành.
+italic	common	vi	Nghiêng
+italy	common	vi	ITALY
+jamaica	common	vi	JAMAICA
+january	common	vi	Tháng Giêng
+japan	common	vi	JAPAN
+jordan	common	vi	JORDAN
+july	common	vi	Tháng B&#7843;y
+jun	common	vi	Tháng Sáu
+june	common	vi	Tháng Sáu
+justify	htmlarea-TableOperations	vi	Canh &#273;&#7873;u
+justify center	common	vi	Canh gi&#7919;a &#273;&#7873;u
+justify full	common	vi	Canh &#273;&#7873;u toàn b&#7897;
+justify left	common	vi	Canh trái &#273;&#7873;u
+justify right	common	vi	Canh ph&#7843;i &#273;&#7873;u
+kazakstan	common	vi	KAZAKSTAN
+kenya	common	vi	KENYA
+keywords	common	vi	Các t&#7915; khóa
+kiribati	common	vi	KIRIBATI
+korea, democratic peoples republic of	common	vi	KOREA, DEMOCRATIC PEOPLES REPUBLIC OF
+korea, republic of	common	vi	KOREA, REPUBLIC OF
+kuwait	common	vi	KUWAIT
+kyrgyzstan	common	vi	KYRGYZSTAN
+language	common	vi	Ngôn ng&#7919;
+lao peoples democratic republic	common	vi	LAO PEOPLES DEMOCRATIC REPUBLIC
+last name	common	vi	H&#7885;
+last name of the user, eg. "%1"	common	vi	h&#7885; c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng,ví d&#7909;: "%1"
+last page	common	vi	Trang cu&#7889;i
+lastname	common	vi	H&#7885;
+latvia	common	vi	LATVIA
+layout	htmlarea-TableOperations	vi	B&#7889; c&#7909;c
+lebanon	common	vi	LEBANON
+left	htmlarea-TableOperations	vi	Trái
+lesotho	common	vi	LESOTHO
+liberia	common	vi	LIBERIA
+libyan arab jamahiriya	common	vi	LIBYAN ARAB JAMAHIRIYA
+license	common	vi	C&#7845;p phép
+liechtenstein	common	vi	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	vi	Các &#273;i&#7875;m liê k&#7871;t t&#7899;i:
+list	common	vi	Danh sách
+list members	common	vi	Li&#7879;t kê các thành viên
+lithuania	common	vi	LITHUANIA
+local	common	vi	C&#7909;c b&#7897;
+login	common	vi	&#272;&#259;ng nh&#7853;p
+loginid	common	vi	Tên &#273;&#259;ng nh&#7853;p
+logout	common	vi	Thoát
+low	common	vi	Th&#7845;p
+lower greek letters	htmlarea-ListType	vi	Các ký t&#432; Hy Lap th&#432;&#7901;ng
+lower latin letters	htmlarea-ListType	vi	Các ký t&#7921; La-tinh th&#432;&#7901;ng
+lower roman numbers	htmlarea-ListType	vi	Các s&#7889; La-mã th&#432;&#7901;ng
+lowest	common	vi	Th&#7845;p nh&#7845;t
+luxembourg	common	vi	LUXEMBOURG
+macau	common	vi	MACAU
+macedonia, the former yugoslav republic of	common	vi	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+madagascar	common	vi	MADAGASCAR
+mail domain, eg. "%1"	common	vi	mail domain, eg. "%1"
+main category	common	vi	Nhóm chính
+main screen	common	vi	Màn hình chính
+maintainer	common	vi	Ng&#432;&#7901;i duy trì
+make lin_k...	htmlarea-ContextMenu	vi	T&#7841;o liên _k&#7871;t ...
+malawi	common	vi	MALAWI
+malaysia	common	vi	MALAYSIA
+maldives	common	vi	MALDIVES
+mali	common	vi	MALI
+malta	common	vi	MALTA
+march	common	vi	Tháng Ba
+margin	htmlarea-TableOperations	vi	L&#7873;
+marshall islands	common	vi	MARSHALL ISLANDS
+martinique	common	vi	MARTINIQUE
+mauritania	common	vi	MAURITANIA
+mauritius	common	vi	MAURITIUS
+max number of icons in navbar	common	vi	S&#7889; l&#432;&#7907;ng nhi&#7873;u nh&#7845;t các bi&#7875;u t&#432;&#7907;ng trên menu ngang
+may	common	vi	Tháng N&#259;m
+mayotte	common	vi	MAYOTTE
+medium	common	vi	Trung bình
+menu	common	vi	Menu
+merge cells	htmlarea-TableOperations	vi	Tr&#7897;n các ô (cell)
+message	common	vi	Tin nh&#7855;n
+mexico	common	vi	MEXICO
+micronesia, federated states of	common	vi	MICRONESIA, FEDERATED STATES OF
+middle	htmlarea-TableOperations	vi	Gi&#7919;a
+modify url	htmlarea-ContextMenu	vi	Hi&#7879;u ch&#7881;nh URL
+moldova, republic of	common	vi	MOLDOVA, REPUBLIC OF
+monaco	common	vi	MONACO
+monday	common	vi	Th&#7913; Hai
+mongolia	common	vi	MONGOLIA
+montserrat	common	vi	MONTSERRAT
+morocco	common	vi	MOROCCO
+mozambique	common	vi	MOZAMBIQUE
+myanmar	common	vi	MYANMAR
+name	common	vi	Tên
+name of the user, eg. "%1"	common	vi	tên c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng, ví d&#7909;: "%1"
+namibia	common	vi	NAMIBIA
+nauru	common	vi	NAURU
+nepal	common	vi	NEPAL
+netherlands	common	vi	NETHERLANDS
+netherlands antilles	common	vi	NETHERLANDS ANTILLES
+never	common	vi	Không bao gi&#7901;
+new caledonia	common	vi	NEW CALEDONIA
+new entry added sucessfully	common	vi	M&#7909;c m&#7899;i &#273;ã &#273;&#432;&#7907;c thêm vào
+new main category	common	vi	Nhóm chính m&#7899;i
+new value	common	vi	Giá tr&#7883; m&#7899;i
+new zealand	common	vi	NEW ZEALAND
+next	common	vi	K&#7871; ti&#7871;p
+next month (hold for menu)	jscalendar	vi	Tháng k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
+next page	common	vi	Trang k&#7871; ti&#7871;p
+next year (hold for menu)	jscalendar	vi	N&#259;m k&#7871; ti&#7871;p (&#273;&#432;a ra menu)
+nicaragua	common	vi	NICARAGUA
+niger	common	vi	NIGER
+nigeria	common	vi	NIGERIA
+niue	common	vi	NIUE
+no	common	vi	Không
+no entries found, try again ...	common	vi	không có m&#7909;c nào &#273;&#432;&#7907;c tìm th&#7845;y, th&#7917; l&#7841;i l&#7847;n n&#7919;a ...
+no history for this record	common	vi	Không có nh&#7853;t ký c&#7911;a m&#7849;u tin này
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	vi	Không có t&#7915; nào sai chính t&#7843; &#273;&#7889;i chi&#7871;u theo t&#7915; &#273;i&#7875;n &#273;&#432;&#7907;c ch&#7885;n.
+no rules	htmlarea-TableOperations	vi	Không có ng&#259;n dòng nào
+no sides	htmlarea-TableOperations	vi	Không có c&#7841;nh nào
+no subject	common	vi	Không có ch&#7911; &#273;&#7873;
+none	common	vi	Không
+norfolk island	common	vi	NORFOLK ISLAND
+normal	common	vi	Bình th&#432;&#7901;ng
+northern mariana islands	common	vi	NORTHERN MARIANA ISLANDS
+norway	common	vi	NORWAY
+not assigned	common	vi	ch&#432;a gán
+note	common	vi	Ghi chú
+notes	common	vi	Các ghi chú
+notify window	common	vi	C&#7917;a s&#7893; thông báo
+november	common	vi	Tháng M&#432;&#7901;i M&#7897;t
+october	common	vi	Tháng M&#432;&#7901;i
+ok	common	vi	OK
+old value	common	vi	Giá tr&#7883; c&#361;
+oman	common	vi	OMAN
+on *nix systems please type: %1	common	vi	Trên các h&#7879; th&#7889;ng *nix vui lòng gõ vào: %1
+on mouse over	common	vi	Khi rê chu&#7897;t qua
+only private	common	vi	ch&#7881; dành cho cá nhân
+only yours	common	vi	ch&#7881; dành cho b&#7841;n
+open notify window	common	vi	M&#7903; c&#7917;a s&#7893; thông báo
+open popup window	common	vi	M&#7903; c&#7917;a s&#7893; pop-up
+opens this link in a new window	htmlarea-ContextMenu	vi	M&#7903; liên k&#7871;t này trong m&#7897;t c&#7917;a s&#7893; m&#7899;i
+ordered list	htmlarea	vi	Danh sách có s&#7855;p x&#7871;p
+original	common	vi	Nguyên g&#7889;c
+original word	htmlarea-SpellChecker	vi	T&#7915; nguyên g&#7889;c
+other	common	vi	Khác
+overview	common	vi	Khái quát
+owner	common	vi	Ng&#432;&#7901;i ch&#7911; trì
+padding	htmlarea-TableOperations	vi	&#272;&#7879;m
+page	common	vi	Trang
+page was generated in %1 seconds	common	vi	Trang &#273;&#432;&#7907;c sinh ra m&#7845;t %1 giây
+pakistan	common	vi	PAKISTAN
+palau	common	vi	PALAU
+palestinian territory, occupied	common	vi	PALESTINIAN TERRITORY, OCCUPIED
+panama	common	vi	PANAMA
+papua new guinea	common	vi	PAPUA NEW GUINEA
+paraguay	common	vi	PARAGUAY
+parcel	common	vi	B&#432;u ki&#7879;n
+parent category	common	vi	Nhóm cha
+password	common	vi	M&#7853;t kh&#7849;u
+password could not be changed	common	vi	M&#7853;t kh&#7849;u không th&#7875; thay &#273;&#7893;i
+password has been updated	common	vi	M&#7853;t kh&#7849;u &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+paste	htmlarea-ContextMenu	vi	Dán
+paste from clipboard	htmlarea	vi	Dán t&#7915; vùng &#273;&#7879;m
+path	htmlarea	vi	&#272;&#432;&#7901;ng d&#7851;n
+path to user and group files has to be outside of the webservers document-root!!!	common	vi	&#272;&#432;&#7901;ng d&#7851;n &#273;&#7871;n các t&#7853;p tin ng&#432;&#7901;i s&#7917; d&#7909;ng và nhóm PH&#7842;I N&#7856;M NGOÀI th&#432; m&#7909;c g&#7889;c c&#7911;a máy ch&#7911; Web.
+pattern for search in addressbook	common	vi	M&#7851;u dùng cho Tìm ki&#7871;n trong S&#7893; &#273;&#7883;a ch&#7881;
+pattern for search in calendar	common	vi	M&#7851;u dùng cho Tìm ki&#7871;m trong L&#7883;ch
+pattern for search in projects	common	vi	M&#7851;u dùng cho Tìm ki&#7871;m trong Qu&#7843;n lý D&#7921; án
+percent	htmlarea-TableOperations	vi	ph&#7847;n tr&#259;m
+permissions to the files/users directory	common	vi	các quy&#7873;n truy c&#7853;p &#273;&#7871;n các t&#7853;p tin/ th&#432; m&#7909;c c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
+personal	common	vi	Cá nhân
+peru	common	vi	PERU
+philippines	common	vi	PHILIPPINES
+phone number	common	vi	s&#7889; &#273;i&#7879;n tho&#7841;i
+pitcairn	common	vi	PITCAIRN
+pixels	htmlarea-TableOperations	vi	&#273;i&#7875;m &#7843;nh
+please %1 by hand	common	vi	Vui lòng %1 b&#7857;ng tay
+please click into some cell	htmlarea-TableOperations	vi	Vui lòng click vào trong ô nào &#273;ó
+please confirm that you want to open this link	htmlarea-SpellChecker	vi	Vui lòng xác nh&#7853;n r&#7857;ng b&#7841;n mu&#7889;n m&#7903; liên k&#7871;t này
+please confirm that you want to remove this element:	htmlarea-ContextMenu	vi	Vui lòng xác nh&#7853;n r&#7857;ng b&#7841;n mu&#7889;n xóa ph&#7847;n t&#7917; này:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	vi	Vui lòng xác nh&#7853;n r&#7857;ng b&#7841;n mu&#7889;n hu&#7927; liên k&#7871;t ph&#7847;n t&#7917; này.
+please enter a name	common	vi	Vui lòng &#273;i&#7873;n tên !
+please run setup to become current	common	vi	Vui lòng ch&#7841;y setup &#273;&#7875; tr&#7903; thành hi&#7879;n hành
+please select	common	vi	Vui lòng ch&#7885;n
+please set your global preferences	common	vi	Vui lòng thi&#7871;t l&#7853;p các tùy ch&#7885;n chung c&#7911;a b&#7841;n !
+please set your preferences for this application	common	vi	Vui lòng thi&#7871;t l&#7853;p các tùy ch&#7885;n c&#7911;a b&#7841;n cho &#7913;ng d&#7909;ng này !
+please wait.  calling spell checker.	htmlarea-SpellChecker	vi	Vui lòng &#273;&#7907;i trong ch&#7889;c lát. &#272;ang g&#7885;i b&#7897; ki&#7875;m tra chính t&#7843;.
+please wait...	common	vi	Vui lòng &#273;&#7907;i trong ch&#7889;c lát ...
+please wait: changing dictionary to	htmlarea-SpellChecker	vi	Vui lòng &#273;&#7907;i: &#273;ang &#273;&#7893;i t&#7915; &#273;i&#7875;n sang
+pliz weit ;-)	htmlarea-SpellChecker	vi	vui lòng &#273;&#7907;i ;-)
+poland	common	vi	POLAND
+portugal	common	vi	PORTUGAL
+postal	common	vi	&#272;&#432;&#7901;ng b&#432;u &#273;i&#7879;n
+powered by phpgroupware version %1	common	vi	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
+preferences	common	vi	Các tùy ch&#7885;n
+preferences for the idots template set	common	vi	Các tùy ch&#7885;n cho b&#7897; idots template
+prev. month (hold for menu)	jscalendar	vi	Tháng tr&#432;&#7899;c (&#273;&#432;a ra menu)
+prev. year (hold for menu)	jscalendar	vi	N&#259;m tr&#432;&#7899;c (&#273;&#432;a ra menu)
+previous page	common	vi	Trang tr&#432;&#7899;c
+primary style-sheet:	common	vi	Style-sheet chính:
+print	common	vi	In
+priority	common	vi	&#431;u tiên
+private	common	vi	Cá nhân
+project	common	vi	D&#7921; án
+public	common	vi	chung
+puerto rico	common	vi	PUERTO RICO
+qatar	common	vi	QATAR
+re-check	htmlarea-SpellChecker	vi	Ki&#7875;m tra l&#7841;i
+read	common	vi	&#272;&#7885;c
+read this list of methods.	common	vi	Li&#7879;t kê các ph&#432;&#417;ng th&#7913;c
+redoes your last action	htmlarea	vi	Th&#7921;c hi&#7879;n l&#7841;i tác v&#7909; sau cùng c&#7911;a b&#7841;n
+reject	common	vi	T&#7915; ch&#7889;i
+remove selected accounts	common	vi	xóa các tài kho&#7843;n &#273;ã ch&#7885;n
+remove the	htmlarea-ContextMenu	vi	Xóa
+remove this node from the document	htmlarea-ContextMenu	vi	Xóa nút này kh&#7887;i tài li&#7879;u
+rename	common	vi	&#272;&#7893;i tên
+replace	htmlarea-SpellChecker	vi	Thay th&#7871;
+replace all	htmlarea-SpellChecker	vi	Thay th&#7871; t&#7845;t c&#7843;
+replace with	htmlarea-SpellChecker	vi	Thay th&#7871; b&#7857;ng
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	vi	Tr&#7843; v&#7873; m&#7897;t danh sách &#273;&#7847;y &#273;&#7911; các tài kho&#7843;n trong h&#7879; th&#7889;ng. C&#7843;nh báo: K&#7871;t qu&#7843; tr&#7843; v&#7873; có th&#7875; r&#7845;t l&#7899;n
+returns an array of todo items	common	vi	Tr&#7843; v&#7873; m&#7897;t m&#7843;ng các công vi&#7879;c c&#7847;n làm
+returns struct of users application access	common	vi	Tr&#7843; v&#7873; k&#7871;t c&#7845;u truy c&#7853;p &#7913;ng d&#7909;ng c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
+reunion	common	vi	LIÊN K&#7870;T L&#7840;I
+revert	htmlarea-SpellChecker	vi	Làm ng&#432;&#7907;c l&#7841;i
+right	htmlarea-TableOperations	vi	Ph&#7843;i
+ro_w properties...	htmlarea-ContextMenu	vi	Thu&#7897;c tính dòng (ro_w)
+romania	common	vi	ROMANIA
+row properties	htmlarea-TableOperations	vi	Thu&#7897;c tính dòng
+rules	htmlarea-TableOperations	vi	Các ng&#259;n dòng
+rules will appear between all rows and columns	htmlarea-TableOperations	vi	Các ng&#259;n dòng s&#7869; xu&#7845;t hi&#7879;n gi&#7919;a t&#7845;t c&#7843; các dòng và các c&#7897;t
+rules will appear between columns only	htmlarea-TableOperations	vi	Các ng&#259;n dòng s&#7869; ch&#7881; xu&#7845;t hi&#7879;n gi&#7919;a các c&#7897;t
+rules will appear between rows only	htmlarea-TableOperations	vi	Các ng&#259;n dòng s&#7869; ch&#7881; xu&#7845;t hi&#7879;n gi&#7919;a các dòng
+russian federation	common	vi	RUSSIAN FEDERATION
+rwanda	common	vi	RWANDA
+saint helena	common	vi	SAINT HELENA
+saint kitts and nevis	common	vi	SAINT KITTS AND NEVIS
+saint lucia	common	vi	SAINT LUCIA
+saint pierre and miquelon	common	vi	SAINT PIERRE AND MIQUELON
+saint vincent and the grenadines	common	vi	SAINT VINCENT AND THE GRENADINES
+samoa	common	vi	SAMOA
+san marino	common	vi	SAN MARINO
+sao tome and principe	common	vi	SAO TOME AND PRINCIPE
+saturday	common	vi	Th&#7913; B&#7843;y
+saudi arabia	common	vi	SAUDI ARABIA
+save	common	vi	L&#432;u
+search	common	vi	Tìm ki&#7871;m
+search %1 '%2'	common	vi	Tìm ki&#7871;m %1 '%2'
+search or select accounts	common	vi	Tìm ki&#7871;m ho&#7863;c ch&#7885;n các tài kho&#7843;n
+section	common	vi	Phân vùng
+select	common	vi	Ch&#7885;n
+select all %1 %2 for %3	common	vi	Ch&#7885;n t&#7845;t c&#7843; %1 %2 cho %3
+select category	common	vi	Ch&#7885;n Nhóm
+select date	common	vi	Ch&#7885;n ngày
+select group	common	vi	Ch&#7885;n nhóm
+select home email address	common	vi	Ch&#7885;n &#273;&#7883;a ch&#7881; email riêng
+select one	common	vi	Ch&#7885;n m&#7897;t
+select user	common	vi	Ch&#7885;n ng&#432;&#7901;i s&#7917; d&#7909;ng
+select work email address	common	vi	Ch&#7885;n &#273;&#7883;a ch&#7881; email t&#7841;i C&#417; quan
+selection	common	vi	S&#7921; l&#7921;a ch&#7885;n
+send	common	vi	G&#7917;i
+senegal	common	vi	SENEGAL
+september	common	vi	Tháng Chín
+server %1 has been added	common	vi	Máy ch&#7911; %1 &#273;ã &#273;&#432;&#7907;c thêm vào
+server name	common	vi	Tên máy ch&#7911;
+session has been killed	common	vi	Phiên làm vi&#7879;c (session) &#273;ã b&#7883; h&#7911;y
+setup	common	vi	Cài &#273;&#7863;t
+setup main menu	common	vi	Menu chính c&#7911;a cài &#273;&#7863;t
+seychelles	common	vi	SEYCHELLES
+show all	common	vi	hi&#7879;n t&#7845;t c&#7843;
+show all categorys	common	vi	Hi&#7879;n t&#7845;t c&#7843; các nhóm
+show menu	common	vi	hi&#7879;n menu
+show page generation time	common	vi	Hi&#7879;n th&#7901;i gian sinh trang
+show page generation time on the bottom of the page?	common	vi	Hi&#7879;n th&#7901;i gian sinh trang &#7903; cu&#7889;i trang
+show the image properties dialog	htmlarea-ContextMenu	vi	Hi&#7879;n h&#7897;p tho&#7841;i thu&#7897;c tính c&#7911;a &#7843;nh
+show the table cell properties dialog	htmlarea-ContextMenu	vi	Hi&#7879;n h&#7897;p tho&#7841;i thu&#7897;c tính ô c&#7911;a b&#7843;ng
+show the table properties dialog	htmlarea-ContextMenu	vi	Hi&#7879;n h&#7897;p tho&#7841;i thu&#7897;c tính c&#7911;a b&#7843;ng
+show the table row properties dialog	htmlarea-ContextMenu	vi	Hi&#7879;n h&#7897;p tho&#7841;i thu&#7897;c tính dòng c&#7911;a b&#7843;ng
+show_more_apps	common	vi	hi&#7879;n_thêm_các &#7913;ng d&#7909;ng
+showing %1	common	vi	&#273;ang hi&#7879;n %1
+showing %1 - %2 of %3	common	vi	&#273;ang hi&#7879;n %1 - %2 of %3
+sierra leone	common	vi	SIERRA LEONE
+singapore	common	vi	SINGAPORE
+slovakia	common	vi	SLOVAKIA
+slovenia	common	vi	SLOVENIA
+solomon islands	common	vi	SOLOMON ISLANDS
+somalia	common	vi	SOMALIA
+sorry, your login has expired	login	vi	R&#7845;t ti&#7871;c, tên &#273;&#259;ng nh&#7853;p c&#7911;a b&#7841;n &#273;ã h&#7871;t h&#7841;n
+south africa	common	vi	SOUTH AFRICA
+south georgia and the south sandwich islands	common	vi	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+spacing	htmlarea-TableOperations	vi	Cách kho&#7843;ng
+spacing and padding	htmlarea-TableOperations	vi	Cách kho&#7843;ng và &#273;&#7879;m
+spain	common	vi	SPAIN
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	vi	Ki&#7875;m tra chính t&#7843; xong, không tìm th&#7845;y l&#7895;i chính t&#7843; nào. &#272;ang &#273;óng ...
+spell-check	htmlarea-SpellChecker	vi	Ki&#7875;m tra chính t&#7843;
+split cell	htmlarea-TableOperations	vi	Tách ô (cell)
+split column	htmlarea-TableOperations	vi	Tách c&#7897;t
+split row	htmlarea-TableOperations	vi	Tách dòng
+sri lanka	common	vi	SRI LANKA
+start date	common	vi	Ngày b&#7855;t &#273;&#7847;u
+start time	common	vi	Gi&#7901; b&#7855;t &#273;&#7847;u
+start with	common	vi	b&#7855;t &#273;&#7847;u b&#7857;ng
+status	common	vi	Tr&#7841;ng thái
+strikethrough	htmlarea	vi	G&#7841;ch &#273;è lên
+style [css]	htmlarea-TableOperations	vi	Ki&#7875;u [CSS]
+subject	common	vi	Ch&#7911; &#273;&#7873;
+submit	common	vi	G&#7917;i lên
+subscript	htmlarea	vi	Ch&#7881; s&#7889; d&#432;&#7899;i dòng
+substitutions and their meanings:	common	vi	Các thay th&#7871; và ý ngh&#297;a c&#7911;a chúng:
+sudan	common	vi	SUDAN
+suggestions	htmlarea-SpellChecker	vi	Các &#273;&#7873; xu&#7845;t
+summary	htmlarea-TableOperations	vi	B&#7843;n tóm t&#7855;t
+sunday	common	vi	Ch&#7911; nh&#7853;t
+superscript	htmlarea	vi	Ch&#7919; s&#7889; trên
+suriname	common	vi	SURINAME
+svalbard and jan mayen	common	vi	SVALBARD AND JAN MAYEN
+swaziland	common	vi	SWAZILAND
+sweden	common	vi	SWEDEN
+switzerland	common	vi	SWITZERLAND
+syrian arab republic	common	vi	SYRIAN ARAB REPUBLIC
+table properties	htmlarea-TableOperations	vi	Các thu&#7897;c tính b&#7843;ng
+taiwan	common	vi	TAIWAN/TAIPEI
+tajikistan	common	vi	TAJIKISTAN
+tanzania, united republic of	common	vi	TANZANIA, UNITED REPUBLIC OF
+text align	htmlarea-TableOperations	vi	Dàn trang v&#259;n b&#7843;n
+text color:	common	vi	Màu ch&#7919; v&#259;n b&#7843;n:
+thailand	common	vi	THAILAND
+the api is current	common	vi	Phiên b&#7843;n API hi&#7879;n hành
+the api requires an upgrade	common	vi	API c&#7847;n nâng c&#7845;p
+the bottom side only	htmlarea-TableOperations	vi	Ch&#7881; c&#7841;nh d&#432;&#7899;i
+the following applications require upgrades	common	vi	Các &#7913;ng d&#7909;ng sau c&#7847;n &#273;&#432;&#7907;c nâng c&#7845;p
+the left-hand side only	htmlarea-TableOperations	vi	Ch&#7881; c&#7841;nh trái
+the mail server returned	common	vi	Máy ch&#7911; Mail tr&#7843; v&#7873;
+the right and left sides only	htmlarea-TableOperations	vi	Ch&#7881; c&#7841;nh trái và ph&#7843;i
+the right-hand side only	htmlarea-TableOperations	vi	Ch&#7881; c&#7841;nh ph&#7843;i
+the top and bottom sides only	htmlarea-TableOperations	vi	Ch&#7881; c&#7841;nh trên và d&#432;&#7899;i
+the top side only	htmlarea-TableOperations	vi	Ch&#7881; c&#7841;nh trên
+this application is current	common	vi	Phiên b&#7843;n &#7913;ng d&#7909;ng hi&#7879;n hành
+this application requires an upgrade	common	vi	&#7912;ng d&#7909;ng này c&#7847;n &#273;&#432;&#7907;c nâng c&#7845;p
+this name has been used already	common	vi	Tên này &#273;ã &#273;&#432;&#7907;c s&#7917; d&#7909;ng !
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	vi	&#272;i&#7873;u này s&#7869; h&#7911;y b&#7887; các thay &#273;&#7893;i và thoát b&#7897; ki&#7875;m tra chính t&#7843;. Vui lòng xác nh&#7853;n.
+thursday	common	vi	Th&#7913; N&#259;m
+time	common	vi	Gi&#7901;
+time selection:	jscalendar	vi	Ch&#7885;n gi&#7901;
+time zone	common	vi	Múi gi&#7901;
+time zone offset	common	vi	&#272;&#7897; l&#7879;ch múi gi&#7901;
+title	common	vi	Tiêu &#273;&#7873;
+to	common	vi	&#272;&#7871;n
+to correct this error for the future you will need to properly set the	common	vi	&#272;&#7875; kh&#7855;c ph&#7909;c l&#7895;i này cho v&#7873; sau b&#7841;n s&#7869; c&#7847;n ph&#7843;i thi&#7871;t l&#7853;p &#273;úng
+to go back to the msg list, click <a href= %1 >here</a>	common	vi	&#272;&#7875; quay l&#7841;i danh sách tin nh&#7855;n, click <a href="%1">vào &#273;ây</a>
+today	common	vi	Hôm nay
+todays date, eg. "%1"	common	vi	ngày hôm nay, ví d&#7909;: "%1"
+toggle first day of week	jscalendar	vi	Chuy&#7875;n qua ngày &#273;&#7847;u tu&#7847;n
+toggle html source	htmlarea	vi	Chuy&#7875;n qua mã HTML
+togo	common	vi	TOGO
+tokelau	common	vi	TOKELAU
+tonga	common	vi	TONGA
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	vi	Quá nhi&#7873;u l&#7847;n &#273;&#259;ng nh&#7853;p không thành công: %1 c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng '%2', %3 c&#7911;a &#273;&#7883;a ch&#7881; IP %4
+top	htmlarea-TableOperations	vi	&#272;&#7847;u trang
+total	common	vi	T&#7893;ng c&#7897;ng
+trinidad and tobago	common	vi	TRINIDAD AND TOBAGO
+tuesday	common	vi	Th&#7913; Ba
+tunisia	common	vi	TUNISIA
+turkey	common	vi	TURKEY
+turkmenistan	common	vi	TURKMENISTAN
+turks and caicos islands	common	vi	TURKS AND CAICOS ISLANDS
+tuvalu	common	vi	TUVALU
+uganda	common	vi	UGANDA
+ukraine	common	vi	UKRAINE
+underline	htmlarea	vi	G&#7841;ch d&#432;&#7899;i
+undoes your last action	htmlarea	vi	H&#7911;y tác v&#7909; sau cùng c&#7911;a b&#7841;n
+united arab emirates	common	vi	UNITED ARAB EMIRATES
+united kingdom	common	vi	UNITED KINGDOM
+united states	common	vi	UNITED STATES
+united states minor outlying islands	common	vi	UNITED STATES MINOR OUTLYING ISLANDS
+unknown	common	vi	Ch&#432;a bi&#7871;t
+unlink the current element	htmlarea-ContextMenu	vi	H&#7911;y liên k&#7871;t ph&#7847;n t&#7917; hi&#7879;n t&#7841;i
+unset color	htmlarea-TableOperations	vi	H&#7911;y thi&#7871;t l&#7853;p màu
+update	common	vi	C&#7853;p nh&#7853;t
+upload image	htmlarea-UploadImage	vi	Upload &#7843;nh
+upper latin letters	htmlarea-ListType	vi	Ký t&#7921; La-tinh vi&#7871;t hoa
+upper roman numbers	htmlarea-ListType	vi	S&#7889; La mã vi&#7871;t hoa
+url	common	vi	URL
+uruguay	common	vi	URUGUAY
+use button to search for	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m
+use button to search for address	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m &#273;&#7883;a ch&#7881;
+use button to search for calendarevent	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m s&#7921; ki&#7879;n trên L&#7883;ch
+use button to search for project	common	vi	dùng nút &#7845;n &#273;&#7875; tìm ki&#7871;m d&#7921; án
+user	common	vi	Ng&#432;&#7901;i s&#7917; d&#7909;ng
+user accounts	common	vi	các tài kho&#7843;n ng&#432;&#7901;i s&#7917; d&#7909;ng
+user groups	common	vi	các nhóm ng&#432;&#7901;i s&#7917; d&#7909;ng
+username	common	vi	Tên ng&#432;&#7901;i s&#7917; d&#7909;ng
+users	common	vi	ng&#432;&#7901;i s&#7917; d&#7909;ng
+users choice	common	vi	S&#7921; l&#7921;a ch&#7885;n c&#7911;a ng&#432;&#7901;i s&#7917; d&#7909;ng
+uzbekistan	common	vi	UZBEKISTAN
+vanuatu	common	vi	VANUATU
+venezuela	common	vi	VENEZUELA
+version	common	vi	Phiên b&#7843;n
+vertical align	htmlarea-TableOperations	vi	Dàn trang theo chi&#7873;u d&#7885;c
+viet nam	common	vi	VIET NAM
+view	common	vi	Xem
+virgin islands, british	common	vi	VIRGIN ISLANDS, BRITISH
+virgin islands, u.s.	common	vi	VIRGIN ISLANDS, U.S.
+wallis and futuna	common	vi	WALLIS AND FUTUNA
+wednesday	common	vi	Th&#7913; T&#432;
+welcome	common	vi	Chào m&#7915;ng
+western sahara	common	vi	WESTERN SAHARA
+which groups	common	vi	Các nhóm nào
+width	htmlarea-TableOperations	vi	B&#7873; r&#7897;ng
+wk	jscalendar	vi	wk
+work email	common	vi	email t&#7841;i C&#417; quan
+written by:	common	vi	&#272;&#432;&#7907;c vi&#7871;t b&#7903;i
+year	common	vi	N&#259;m
+yemen	common	vi	YEMEN
+yes	common	vi	Vâng
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	vi	B&#7841;n &#273;ang &#7903; ch&#7871; &#273;&#7897; v&#259;n b&#7843;n. Dùng nút [<>] &#273;&#7875; b&#7853;t qua ch&#7871; &#273;&#7897; WYSIWIG
+you are required to change your password during your first login	common	vi	B&#7841;n c&#7847;n thay &#273;&#7893;i m&#7853;t kh&#7849;u c&#7911;a b&#7841;n trong l&#7847;n &#273;&#259;ng nh&#7853;p &#273;&#7847;u tiên
+you are running a newer version of phpgroupware than your database is setup for	common	vi	B&#7841;n &#273;ang s&#7917; d&#7909;ng phiên b&#7843;n phpGroupware m&#7899;i h&#417;n cái mà c&#417; s&#7903; d&#7919; li&#7879;u b&#7841;n &#273;ã cài &#273;&#7863;t c&#7847;n.
+you have been successfully logged out	login	vi	B&#7841;n &#273;ã &#273;&#432;&#7907;c thoát ra ngoài h&#7879; th&#7889;ng thành công
+you have not entered a title	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n tiêu &#273;&#7873;
+you have not entered a valid date	common	vi	B&#7841;n &#273;i&#7873;n sai ngày
+you have not entered a valid time of day	common	vi	B&#7841;n &#273;i&#7873;n sai gi&#7901; trong ngày
+you have not entered participants	common	vi	B&#7841;n ch&#432;a &#273;i&#7873;n các thành viên
+you have selected an invalid date	common	vi	B&#7841;n &#273;ã ch&#7885;n m&#7897;t ngày không h&#7907;p l&#7879; !
+you have selected an invalid main category	common	vi	B&#7841;n &#273;ã ch&#7885;n nhóm chính không h&#7907;p l&#7879; !
+you have successfully logged out	common	vi	B&#7841;n &#273;ã thoát ra ngoài h&#7879; th&#7889;ng
+you need to add the webserver user '%1' to the group '%2'.	common	vi	B&#7841;n c&#7847;n thêm tên &#273;&#259;ng nh&#7853;p máy ch&#7911; Web '%1' vào trong nhóm '%2'.
+your message could <b>not</b> be sent!<br>	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n <b>không th&#7875;</b> &#273;&#432;&#7907;c g&#7917;i &#273;i!<br>
+your message has been sent	common	vi	Tin nh&#7855;n c&#7911;a b&#7841;n &#273;ã &#273;&#432;&#7907;c g&#7917;i &#273;i
+your search returned %1 matchs	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b&#7841;n tìm th&#7845;y %1 k&#7871;t qu&#7843;
+your search returned 1 match	common	vi	tác v&#7909; tìm ki&#7871;m c&#7911;a b&#7841;n tìm th&#7845;y 1 k&#7871;t qu&#7843;
+your session could not be verified.	login	vi	Phiên làm vi&#7879;c c&#7911;a b&#7841;n không th&#7875; xác minh &#273;&#432;&#7907;c
+your settings have been updated	common	vi	Các thi&#7871;t l&#7853;p c&#7911;a b&#7841;n &#273;ã &#273;&#432;&#7907;c c&#7853;p nh&#7853;t
+yugoslavia	common	vi	YUGOSLAVIA
+zambia	common	vi	ZAMBIA
+zimbabwe	common	vi	ZIMBABWE
