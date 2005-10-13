@@ -133,7 +133,7 @@
 		),
 		'session' => array(
 			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The session extension is needed to use php4 session (db-sessions work without).') . "</div>"
+			'warning' => '<div class="setup_info">' . lang('The session extension is needed to use php sessions (db-sessions work without).') . "</div>"
 		),	
 		'.' => array(
 			'func' => 'permission_check',

@@ -26,6 +26,9 @@ all applications	setup	de	Alle Anwendungen
 all core tables and the admin and preferences applications	setup	de	Sie alle Kern-Tabellen und die Anwendungen Admin und Einstellungen
 all languages (incl. not listed ones)	setup	de	alle Sprachen (einschl. nicht aufgeführte)
 all users	setup	de	Alle Benutzer
+allow authentication via cookie	setup	de	Erlaube Benutzerauthentifizierung über ein Cookie
+allow password migration	setup	de	Erlaube Password Migration
+allowed migration types (comma-separated)	setup	de	Erlauber Migrationstypen (Komma separiert)
 analysis	setup	de	Analyse
 and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
 app details	setup	de	Details der Anwendung
@@ -87,7 +90,7 @@ checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsr
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
 checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
-click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.	setup	de	<a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">Hier klicken</a> um zum Setup zurück zu kommen.
+click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zu Setup zurück zu kehren.
 click here	setup	de	Hier klicken
 click here to re-run the installation tests	setup	de	zum Wiederholen der Installationstests hier klicken
 completed	setup	de	Abgeschlossen
@@ -122,6 +125,7 @@ current system-charset is %1, click %2here%3 to change it.	setup	de	Aktueller Sy
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
+datebase	setup	de	Datenbank
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br />Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br />(Port 13/Host: 129.6.15.28)
 day	setup	de	Tag
 day of week<br />(0-6, 0=sunday)	setup	de	Wochentag<br />(0-6, 0=Sonntag)
@@ -312,6 +316,8 @@ passwords did not match, please re-enter	setup	de	Passworte stimmten nicht übere
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 persistent connections	setup	de	Permanente Verbindungen
+php plus restore	setup	de	PHP plus Wiederherstellen
+php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	de	PHP plus Wiederherstellen gibt bei weitem die beste Performanze. Es speichert die eGW Umgebung komplett in der Session.
 please check for sql scripts within the application's directory	setup	de	Bitte suchen Sie ein SQL Skript im Verzeichnis der Anwendung
 please check read/write permissions on directories, or back up and use another option.	setup	de	Bitte überprüfen Sie die Lese/Schreib-Rechte der Verzeichnisse oder gehen Sie zurück und benutzen eine andere Option.
 please configure egroupware for your environment	setup	de	Bitte konfigurieren Sie eGroupWare für Ihre Umgebung
@@ -418,6 +424,7 @@ the following applications need to be upgraded:	setup	de	Die folgenden Anwendung
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	de	Die imap Erweiterung (php extension) wird von den beiden Email Applikationen benötigt (auch wenn Sie das POP3-Protokoll verwenden).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
+the session extension is needed to use php sessions (db-sessions work without).	setup	de	Die session Erweiterung (php extension) ist notwendig für PHP Sessions (Datenbank Sessions arbeiten ohne diese).
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
 there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />
@@ -441,6 +448,7 @@ translations upgraded	setup	de	Übersetzungen aktualisiert
 true	setup	de	Ja
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	de	Versuchen Sie Ihr PHP so zu konfigurieren, dass es eine der oben genannten Datenbanken unterstützt, oder installieren Sie eGroupWare von Hand.
 two weeks	setup	de	zwei Wochen
+unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	de	Leider haben einige PHP/Apache Packete Probleme damit (Der Apache stirbt und Sie können sich nicht mehr einlogen).
 uninstall	setup	de	deinstaliert
 uninstall all applications	setup	de	Alle Anwendungen deinstallieren
 uninstalled	setup	de	nicht installiert
@@ -465,7 +473,7 @@ we can proceed	setup	de	Wir können fortfahren
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur eGroupWare Installation
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	de	Welches Session-Management wollen Sie verwenden (PHP4 Session-Management hat eine bessere Performance)?
+what type of sessions management do you want to use (php session management may perform better)?	setup	de	Welches Session-Management wollen Sie verwenden (PHP Session-Management hat eine bessere Performanz)?
 which database type do you want to use with egroupware?	setup	de	Welchen Datenbanktyp wollen Sie mit eGroupWare verwenden?
 world readable	setup	de	lesbar von jedem (world readable)
 world writable	setup	de	schreibbar von jedem (world writeable)
@@ -496,7 +504,7 @@ you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen 
 you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu Ihrer header.inc.php hinzufügen.
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das entsprechende Schema in Ihren LDAP-Server laden - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das notwendige phpgwAccounts Schema auf Ihrem LDAP Server installieren - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>.
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell

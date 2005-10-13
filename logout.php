@@ -59,7 +59,7 @@
 	$GLOBALS['egw']->session->phpgw_setcookie('sessionid');
 	$GLOBALS['egw']->session->phpgw_setcookie('kp3');
 	$GLOBALS['egw']->session->phpgw_setcookie('domain');
-	if($GLOBALS['egw_info']['server']['sessions_type'] == 'php4')
+	if(substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4')
 	{
 		$GLOBALS['egw']->session->phpgw_setcookie(EGW_PHPSESSID);
 	}

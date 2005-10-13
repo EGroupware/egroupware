@@ -45,10 +45,8 @@
 		echo '!!! PLEASE CORRECT THIS SITUATION !!!</b></p>';
 	}
 
-	//define('NO_RESTORE',true);	// uncomment to see the difference ;-)
-
 	// check if we can restore the eGW enviroment from the php-session
-	if (!defined('NO_RESTORE') && $GLOBALS['egw_info']['server']['sessions_type'] == 'php4' && $_REQUEST['sessionid'] &&	
+	if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUEST['sessionid'] &&	
 	$GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 	{
 		session_name('sessionid');
@@ -143,7 +141,7 @@
 	}
 
 	// saving the the egw_info array and the egw-object in the session
-	if (!defined('NO_RESTORE') && $GLOBALS['egw_info']['server']['sessions_type'] == 'php4' && $GLOBALS['egw_info']['flags']['currentapp'] != 'login')
+	if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 	{
 		$_SESSION['egw_info_cache'] = $GLOBALS['egw_info'];
 		unset($_SESSION['egw_info_cache']['flags']);	// dont save the flags, they change on each request

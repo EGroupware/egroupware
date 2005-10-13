@@ -1326,7 +1326,7 @@
 		$GLOBALS['egw_info']['server']['sessions_type'] = 'php4';	// the more performant default
 	}
 	// for php4 sessions, check if the extension is loaded, try loading it and fallback to db sessions if not
-	if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4' && !extension_loaded('session'))
+	if (substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4' && !extension_loaded('session'))
 	{
 		// some constanst for pre php4.3
 		if (!defined('PHP_SHLIB_SUFFIX'))
@@ -1339,7 +1339,7 @@
 		}
 		if (!function_exists('dl') || !@dl(PHP_SHLIB_PREFIX.'session'.'.'.PHP_SHLIB_SUFFIX))
 		{
-			$GLOBALS['egw_info']['server']['sessions_type'] = 'db';	// fallback if we have no php4 sessions support
+			$GLOBALS['egw_info']['server']['sessions_type'] = 'db';	// fallback if we have no php sessions support
 		}
 	}
-	include_once(EGW_API_INC.'/class.sessions_'.$GLOBALS['egw_info']['server']['sessions_type'].'.inc.php');
+	include_once(EGW_API_INC.'/class.sessions_'.substr($GLOBALS['egw_info']['server']['sessions_type'],0,4).'.inc.php');

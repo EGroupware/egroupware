@@ -321,9 +321,10 @@
 			if (check_load_extension('session'))
 			{
 				$detected .= lang('You appear to have PHP session support. Enabling PHP sessions.') . '<br />' . "\n";
-				$supported_sessions_type[] = 'php4';	// makeing php4 sessions the default
+				$supported_sessions_type['php4'] = 'PHP';			// makeing php sessions the default
+				$supported_sessions_type['php4-restore'] = lang('PHP plus restore');	// php-sessions with restore of egw_info array and egw object from the session
 			}
-			$supported_sessions_type[] = 'db';
+			$supported_sessions_type['db'] = lang('Datebase');
 
 			@reset($default_db_ports);
 			$js_default_db_ports = 'var default_db_ports = new Array();'."\n";
@@ -494,7 +495,7 @@
 
 				/* These are a few of the advanced settings */
 				$GLOBALS['egw_info']['server']['db_persistent'] = True;
-				$GLOBALS['egw_info']['server']['mcrypt_enabled'] = check_load_extension('mcrypt');
+				$GLOBALS['egw_info']['server']['mcrypt_enabled'] = false;	// default off, as there are too many problems with buggy mcrypt implementations (was check_load_extension('mcrypt');)
 				$GLOBALS['egw_info']['server']['versions']['mcrypt'] = '';
 
 				srand((double)microtime()*1000000);
@@ -550,9 +551,9 @@
 
 			$selected = '';
 			$session_options = '';
-			while(list($k,$v) = each($supported_sessions_type))
+			foreach($supported_sessions_type as $k => $v)
 			{
-				if($v == @$GLOBALS['egw_info']['server']['sessions_type'])
+				if($k == @$GLOBALS['egw_info']['server']['sessions_type'])
 				{
 					$selected = ' selected="selected" ';
 				}
@@ -560,7 +561,7 @@
 				{
 					$selected = '';
 				}
-				$session_options .= '<option ' . $selected . 'value="' . $v . '">' . $v . "</option>\n";
+				$session_options .= '<option ' . $selected . 'value="' . $k . '">' . $v . "</option>\n";
 			}
 			$setup_tpl->set_var('session_options',$session_options);
 
@@ -645,7 +646,9 @@
 			$setup_tpl->set_var('lang_persist',lang('Persistent connections'));
 			$setup_tpl->set_var('lang_persistdescr',lang('Do you want persistent connections (higher performance, but consumes more resources)'));
 			$setup_tpl->set_var('lang_sesstype',lang('Sessions Type'));
-			$setup_tpl->set_var('lang_sesstypedescr',lang('What type of sessions management do you want to use (PHP4 session management may perform better)?'));
+			$setup_tpl->set_var('lang_sesstypedescr',lang('What type of sessions management do you want to use (PHP session management may perform better)?').
+				' '.lang('PHP plus restore gives by far the best performance, as it stores the eGW enviroment completly in the session.').
+				' '.lang('Unfortunally some PHP/Apache packages have problems with it (Apache dies and you cant login anymore).'));
 			$setup_tpl->set_var('lang_enablemcrypt',lang('Enable MCrypt'));
 			$setup_tpl->set_var('lang_mcrypt_warning',lang('Not all mcrypt algorithms and modes work with eGroupWare. If you experience problems try switching it off.'));
 			$setup_tpl->set_var('lang_mcryptversion',lang('MCrypt version'));

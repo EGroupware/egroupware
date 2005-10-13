@@ -119,7 +119,7 @@
 				$GLOBALS['egw']->session->phpgw_setcookie('domain');
 
 				//fix for bug php4 expired sessions bug
-				if($GLOBALS['egw_info']['server']['sessions_type'] == 'php4')
+				if(substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4')
 				{
 					$GLOBALS['egw']->session->phpgw_setcookie(EGW_PHPSESSID);
 				}

@@ -26,6 +26,9 @@ all applications	setup	en	all applications
 all core tables and the admin and preferences applications	setup	en	all core tables and the admin and preferences applications
 all languages (incl. not listed ones)	setup	en	all languages (incl. not listed ones)
 all users	setup	en	All Users
+allow authentication via cookie	setup	en	Allow authentication via cookie
+allow password migration	setup	en	Allow password migration
+allowed migration types (comma-separated)	setup	en	Allowed migration types (comma-separated)
 analysis	setup	en	Analysis
 and reload your webserver, so the above changes take effect !!!	setup	en	AND reload your webserver, so the above changes take effect !!!
 app details	setup	en	App details
@@ -87,7 +90,7 @@ checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file-permissions
 checking for gd support...	setup	en	Checking for GD support...
 checking php.ini	setup	en	Checking php.ini
 checking the egroupware installation	setup	en	Checking the eGroupWare Installation
-click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.	setup	en	Click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.
+click <a href="index.php">here</a> to return to setup.	setup	en	click <a href="index.php">here</a> to return to setup.
 click here	setup	en	Click Here
 click here to re-run the installation tests	setup	en	Click here to re-run the installation tests
 completed	setup	en	Completed
@@ -122,6 +125,7 @@ current system-charset is %1, click %2here%3 to change it.	setup	en	Current syst
 current version	setup	en	Current Version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br />
 database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
+datebase	setup	en	Datebase
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	en	Datetime port.<br />If using port 13, please set firewall rules appropriately before submitting this page.<br />(Port: 13 / Host: 129.6.15.28)
 day	setup	en	day
 day of week<br />(0-6, 0=sunday)	setup	en	day of week<br />(0-6, 0=sunday)
@@ -282,9 +286,9 @@ never	setup	en	never
 new	setup	en	New
 next run	setup	en	next run
 no	setup	en	No
+no %1 support found. disabling	setup	en	No %1 support found. Disabling
 no accounts existing	setup	en	No accounts existing
 no algorithms available	setup	en	no algorithms available
-no %1 support found. disabling	setup	en	No %1 support found. Disabling
 no modes available	setup	en	no modes available
 no xml support found. disabling	setup	en	No XML support found. Disabling
 not	setup	en	not
@@ -312,6 +316,8 @@ passwords did not match, please re-enter	setup	en	Passwords did not match, pleas
 path information	setup	en	Path information
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 persistent connections	setup	en	Persistent connections
+php plus restore	setup	en	PHP plus restore
+php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	en	PHP plus restore gives by far the best performance, as it stores the eGW enviroment completly in the session.
 please check for sql scripts within the application's directory	setup	en	Please check for sql scripts within the application's directory
 please check read/write permissions on directories, or back up and use another option.	setup	en	Please check read/write permissions on directories, or back up and use another option.
 please configure egroupware for your environment	setup	en	Please configure eGroupWare for your environment
@@ -418,6 +424,7 @@ the following applications need to be upgraded:	setup	en	The following applicati
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	en	The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.
+the session extension is needed to use php sessions (db-sessions work without).	setup	en	The session extension is needed to use php sessions (db-sessions work without).
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
 there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server. <br />
@@ -441,6 +448,7 @@ translations upgraded	setup	en	Translations Upgraded
 true	setup	en	True
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	en	Try to configure your php to support one of the above mentioned DBMS, or install eGroupWare by hand.
 two weeks	setup	en	two weeks
+unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	en	Unfortunally some PHP/Apache packages have problems with it (Apache dies and you cant login anymore).
 uninstall	setup	en	uninstall
 uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	uninstalled
@@ -465,7 +473,7 @@ we can proceed	setup	en	We can proceed
 we will automatically update your tables/records to %1	setup	en	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	en	We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.
 welcome to the egroupware installation	setup	en	Welcome to the eGroupWare Installation
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	en	What type of sessions management do you want to use (PHP4 session management may perform better)?
+what type of sessions management do you want to use (php session management may perform better)?	setup	en	What type of sessions management do you want to use (PHP session management may perform better)?
 which database type do you want to use with egroupware?	setup	en	Which database type do you want to use with eGroupWare?
 world readable	setup	en	world readable
 world writable	setup	en	world writable
@@ -496,7 +504,7 @@ you must enter a username for the admin	setup	en	You must enter a username for t
 you need to add some domains to your header.inc.php.	setup	en	You need to add some domains to your header.inc.php.
 you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	en	You will need to load the proper schema into your ldap server - see <a href="../phpgwapi/doc/ldap/README?sessionid=f69c6befb6636a1a9501e45ff0176385" target="_blank">phpgwapi/doc/ldap/README</a>
+you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	en	You will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/README
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
 your applications are current	setup	en	Your applications are current
