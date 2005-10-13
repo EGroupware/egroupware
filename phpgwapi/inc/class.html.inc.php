@@ -432,172 +432,42 @@ class html
 	}
 	
 	/**
+	 * compability function for former used htmlarea. Please use function tinymce now!
+	 *
 	 * creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
-	 *
-	 * Please note: it need to be called before the call to phpgw_header() !!!
-	 *
-	 * @param string $name name and id of the input-field
-	 * @param string $content='' of the htmlarea (will be run through htmlspecialchars !!!), default ''
-	 * @param string $style='' inline styles, eg. dimension of textarea element
-	 * @param string $base_href='' set a base href to get relative image-pathes working
-	 * @param string $plugins='' plugins to load seperated by comma's, eg 'TableOperations,ContextMenu'
-	 * (htmlarea breaks when a plugin calls a nonexisiting lang file)
-	 * @param string $custom_toolbar='' when given this toolbar lay-out replaces the default lay-out.
-	 * @param boolean $custom_toolbar=false when set, width and height are specifiyed in the HTMLarea config (needed if in a not shown tab)
-	 * @return string the necessary html for the textarea
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
-		// check if htmlarea is availible for the browser and use a textarea if not
-		if (!$this->htmlarea_availible())
+		$init_options = 'theme : "advanced",theme_advanced_toolbar_location : "top"';
+		$tab3a = 'theme_advanced_buttons3_add : "separator,fullscreen';
+		$plugs = 'plugins : "paste,fullscreen,advimage,advlink';
+		$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]';
+		foreach(explode(',',$plugins) as $plugin)
 		{
-			return $this->textarea($name,$content,'style="'.$style.'"');
-		}
-		
-		$id = str_replace(array('[',']'),array('_',''),$name);	// no brakets in the id allowed by js
-		
-		if($custom_toolbar)
-		{
-			$custom_toolbar='htmlareaConfig_'.$id.'.toolbar = '.$custom_toolbar;
-		}
-		
-		if (!$style) 
-		{
-			$style = 'width:100%; min-width:500px; height:300px;';
-		}
-		
-		if (!$plugins)
-		{
-			$plugins = 'ContextMenu,TableOperations,SpellChecker';
-		}
-		
-		if (!is_object($GLOBALS['phpgw']->js))
-		{
-			$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
-		}
-		
-		/* do stuff once */
-		if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'htmlarea'))
-		{
-			$GLOBALS['phpgw']->js->validate_file('htmlarea','htmlarea');
-			$GLOBALS['phpgw']->js->validate_file('htmlarea','dialog');
-			$lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-			if ($lang == 'en')	// other lang-files are utf-8 only and incomplete (crashes htmlarea as of 3.0beta)
+			switch($plugin)
 			{
-				$GLOBALS['phpgw']->js->validate_file('htmlarea',"lang/$lang");
-			}
-			else
-			{
-				$GLOBALS['phpgw_info']['flags']['java_script'] .=
-					'<script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',
-					$GLOBALS['phpgw']->link('/phpgwapi/inc/htmlarea-lang.php',array('lang'=>$lang))).'"></script>'."\n";
-			}
-		
-			$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .=
-				'<style type="text/css">@import url(' . $this->phpgwapi_js_url . '/htmlarea/htmlarea.css);</style>
-<script type="text/javascript">
-_editor_url = "'."$this->phpgwapi_js_url/htmlarea/".'";
-//	var htmlareaConfig = new HTMLArea.Config();
-//  htmlareaConfig.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';
-</script>\n";
-		
-			// set a base href to get relative image-pathes working
-			if ($base_href && $this->user_agent != 'msie')	// HTMLarea does not work in IE with base href set !!!
-			{
-				$GLOBALS['phpgw_info']['flags']['java_script_thirst'] .= '<base href="'.
-					($base_href[0] != '/' && substr($base_href,0,4) != 'http' ? $GLOBALS['phpgw_info']['server']['webserver_url'].'/' : '').
-					$base_href.'" />'."\n";
-			}
-			
-			if (!empty($plugins)) 
-			{
-				foreach(explode(',',$plugins) as $plg_name)
-				{
-					$plg_name = trim($plg_name);
-					$plg_dir = PHPGW_SERVER_ROOT.'/phpgwapi/js/htmlarea/plugins/'.$plg_name;
-					if (!@is_dir($plg_dir) || !@file_exists($plg_lang_script="$plg_dir/lang/lang.php") && !@file_exists($plg_lang_file="$plg_dir/lang/$lang.js"))
-					{
-						//echo "$plg_dir or $plg_lang_file not found !!!";
-						continue;	// else htmlarea fails with js errors
-					}
-					$script_name = strtolower(preg_replace('/([A-Z][a-z]+)([A-Z][a-z]+)/','\\1-\\2',$plg_name));
-					$GLOBALS['phpgw']->js->validate_file('htmlarea',"plugins/$plg_name/$script_name");
-					if ($lang == 'en' || !@file_exists($plg_lang_script))	// other lang-files are utf-8 only and incomplete (crashes htmlarea as of 3.0beta)
-					{
-						$GLOBALS['phpgw']->js->validate_file('htmlarea',"plugins/$plg_name/lang/$lang");
-					}
-					else
-					{
-						$GLOBALS['phpgw_info']['flags']['java_script'] .=
-							'<script type="text/javascript" src="'.ereg_replace('[?&]*click_history=[0-9a-f]*','',
-							$GLOBALS['phpgw']->link("/phpgwapi/js/htmlarea/plugins/$plg_name/lang/lang.php",array('lang'=>$lang))).'"></script>'."\n";
-					}
-				}
-			}		
-		}
-		
-		/* do stuff for every htmlarea in the page */
-		
-		if (!empty($plugins)) 
-		{
-			foreach(explode(',',$plugins) as $plg_name)
-			{
-				//$load_plugin_string .= 'HTMLArea.loadPlugin("'.$plg_name.'");'."\n";
-				$register_plugin_string .= 'ret_editor = editor.registerPlugin("'.$plg_name.'");'."\n";
-				//			   $register_plugin_string .= 'editor.registerPlugin("'.$plg_name.'");'."\n";
+				case 'TableOperations' :
+					$plugs .= ',table';
+					$tab3a .= ',tablecontrols';
+					break;
+				case 'ContextMenu' :
+					$plugs .= ',contextmenu';
+					break;
+				default:
+				//	echo $plugin .'<br>';
 			}
 		}
 		
-		// FIXME strange bug when plugins are registered fullscreen editor don't work anymore
-		$GLOBALS['phpgw_info']['flags']['java_script'] .=
-			'<script type="text/javascript">
+		if($base_href='')
+		{
+			$init_options .= ',document_base_url : "'. $base_href. '", relative_urls : true';
+		}
 		
-// Replacement for the replace-helperfunction to make it possible to include plugins.
-HTMLArea.replace_'.$id.' = function(id, config)
-{
-	var ta = HTMLArea.getElementById("textarea", id);
-	
-	if(ta)
-	{
-		editor = new HTMLArea(ta, config);
-		'.$register_plugin_string.'
-		ret_editor = editor.generate();
-		return ret_editor;
+		$init_options .= ','. $tab3a. '",'. $plugs. '",'. $eve. '"';
+		
+		return  $this->tinymce($name,$content,$style,$init_options);
 	}
-	else
-	{
-		return null;
-	}
-};
 
-'.$load_plugin_string.'
-
-var htmlareaConfig_'.$id.' = new HTMLArea.Config();'."\n";
-		
-		// need to set width and height in the config, as it cant be determined by the values of the textarea
-		// eg. because HTMLarea is in a not displayed tab. For values other then px, we use a default.
-		if ($set_width_height_in_config)
-		{
-			$width_px = preg_match('/width: *([0-9]+px)/i',str_replace('min-width','',$style),$matches) ? $matches[1] : '800px';
-			$height_px = preg_match('/height: *([0-9]+px)/i',str_replace('min-height','',$style),$matches) ? $matches[1] : '300px';
-
-			$GLOBALS['phpgw_info']['flags']['java_script'] .= 'htmlareaConfig_'.$id.".width='$width_px';\n".
-				'htmlareaConfig_'.$id.".height='$height_px';\n"; 
-		}		
-		$GLOBALS['phpgw_info']['flags']['java_script'] .= $custom_toolbar.'
-
-htmlareaConfig_'.$id.'.editorURL = '."'$this->phpgwapi_js_url/htmlarea/';";
-		
-		$GLOBALS['phpgw_info']['flags']['java_script'] .="</script>\n";
-		
-		
-		$GLOBALS['phpgw']->js->set_onload("HTMLArea.replace_$id('$id',htmlareaConfig_$id);");
-		
-		if (!empty($style)) $style = " style=\"$style\"";
-		
-		return "<textarea name=\"$name\" id=\"$id\"$style>".$this->htmlspecialchars($content)."</textarea>\n";
-	}
-	
 	/**
 	* init the tinymce js-widget by adding the js file in the head of the page
 	*
