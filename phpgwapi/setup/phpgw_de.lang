@@ -859,8 +859,8 @@ unlink the current element	htmlarea-ContextMenu	de	Link auf Element entfernen
 unordered list	tinymce	de	Aufzählungszeichen
 unset color	htmlarea-TableOperations	de	Farbe
 up	tinymce	de	Rückwärts
-update	tinymce	de	Aktualisieren
-upload	tinymce	de	Hochladen
+update	common	de	Aktualisieren
+upload	common	de	Hochladen
 upload image	htmlarea-UploadImage	de	Bild hochladen
 uploading...	tinymce	de	Lade hoch...
 upper latin letters	htmlarea-ListType	de	Große lateinische Buchstaben

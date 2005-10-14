@@ -860,8 +860,8 @@ unlink the current element	htmlarea-ContextMenu	en	Unlink the current element
 unordered list	tinymce	en	Unordered list
 unset color	htmlarea-TableOperations	en	Unset color
 up	tinymce	en	Up
-update	tinymce	en	Update
-upload	tinymce	en	Upload
+update	common	en	Update
+upload	common	en	Upload
 upload image	htmlarea-UploadImage	en	Upload Image
 uploading...	tinymce	en	Uploading...
 upper latin letters	htmlarea-ListType	en	Upper latin letters
