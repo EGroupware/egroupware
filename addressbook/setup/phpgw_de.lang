@@ -1,7 +1,7 @@
 %1 records imported	addressbook	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import auschalten)
 (e.g. 1969)	addressbook	de	(z.B. 1966)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp &lt;none&gt; konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verfügbar für Administratoren!!!
 actions	addressbook	de	Befehle
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
@@ -69,7 +69,6 @@ fax number	common	de	Telefaxnummer
 field %1 has been added !	addressbook	de	Feld %1 wurde hinzugefügt !
 field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
 field name	addressbook	de	Feldname
-fields	addressbook	de	Felder
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
 full name	addressbook	de	vollständiger Name
@@ -89,8 +88,10 @@ import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
 import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Adressbuch
 import file	addressbook	de	Datei importieren
+import from	addressbook	de	Importieren von
 import from ldif, csv, or vcard	addressbook	de	Import von LDIF, CSV oder VCard
 import from outlook	addressbook	de	Aus Outlook importieren
+import multiple vcard	addressbook	de	Import mehrere VCards
 import next set	addressbook	de	Nächsten Satz importieren
 import_instructions	addressbook	de	In Netscape, öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Formaz exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im VCard-Format exportiert.
 international	addressbook	de	International
@@ -102,39 +103,35 @@ ldap root dn for contacts	admin	de	LDAP-rootdn für Kontakte
 ldap root pw for contacts	admin	de	LDAP-Passwort für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
+load vcard	addressbook	de	VCard laden
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobiltelefon
 modem phone	addressbook	de	Modem
+multiple vcard	addressbook	de	Mehrere VCards
 no vcard	addressbook	de	Keine VCard
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
-on	addressbook	de	an
-other	addressbook	de	Andere
 other number	addressbook	de	andere Nr.
 other phone	addressbook	de	anderes Telefon
 pager	common	de	Pager
 parcel	addressbook	de	Lieferadresse
-personal	addressbook	de	Persönlich
 phone number	common	de	Telefonnummer
 phone numbers	common	de	Telefonnummern
 please enter a name for that field !	addressbook	de	Bitte geben sie einen Namen für das Feld an!
-please select	addressbook	de	Bitte auswählen
 postal	common	de	Postanschrift
 pref	addressbook	de	präf
 prefix	addressbook	de	Präfix
 public key	addressbook	de	öffentlicher Schlüssel
 read a list of entries.	addressbook	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen einzelnen Eintrag über seine ID und Feldliste.
-read this list of methods.	addressbook	de	Liest diese Liste der Methoden.
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
 retrieve contacts	admin	de	Kontakte laden
-select	addressbook	de	Auswählen
 select all	addressbook	de	Alles auswählen
-select the type of conversion	addressbook	de	
-select the type of conversion:	addressbook	de	
+select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
+select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store	admin	de	Auswählen wo Sie speichern wollen
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 startrecord	addressbook	de	Startdatensatz
@@ -159,8 +156,7 @@ video phone	addressbook	de	Bildtelefon
 voice phone	addressbook	de	Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 work phone	addressbook	de	Tel dienstl.
-you appear to be running	addressbook	de	Sie benutzen gerade einen
 you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswählen (*.vcf)
 you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
 zip code	common	de	PLZ
-zip_note	addressbook	de	
+zip_note	addressbook	de	<p><b>Notiz:</b>Die Datei kann ein zip Archiv sein, bestehend aus .csv, .vcf oder .ldif Dateien. Sie dürfen die Dateitypen pro Import nicht mischen!
