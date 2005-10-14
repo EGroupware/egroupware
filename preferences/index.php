@@ -12,14 +12,15 @@
 
 	/* $Id$ */
 
-	$egw_info = array();
-	$GLOBALS['egw_info']['flags'] = array(
-		'currentapp' => 'preferences',
-		'disable_Template_class' => True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'preferences',
+			'disable_Template_class' => True,
+		),
 	);
 	include('../header.inc.php');
 
-	$pref_tpl = CreateObject('phpgwapi.Template',EGW_APP_TPL);
+	$pref_tpl =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 	$templates = Array(
 		'pref' => 'index.tpl'
 	);
@@ -44,13 +45,13 @@
 			$GLOBALS['egw']->session->appsession('session_data','preferences',$session_data);
 		}
 
-		if (! $GLOBALS['HTTP_GET_VARS']['type'])
+		if (! $_GET['type'])
 		{
 			$type = $session_data['type'];
 		}
 		else
 		{
-			$type = $GLOBALS['HTTP_GET_VARS']['type'];
+			$type = $_GET['type'];
 			$session_data = array('type' => $type);
 			$GLOBALS['egw']->session->appsession('session_data','preferences',$session_data);
 		}
@@ -137,5 +138,5 @@
 
 	$GLOBALS['egw']->hooks->process('preferences',array('preferences'));
 	$pref_tpl->pfp('out','list');
-	$GLOBALS['egw']->common->phpgw_footer();
+	$GLOBALS['egw']->common->egw_footer();
 ?>

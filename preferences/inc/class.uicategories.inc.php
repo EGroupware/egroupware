@@ -37,8 +37,8 @@
 		{
 			$cats_app			= get_var('cats_app',array('GET','POST'));
 
-			$this->bo			= CreateObject('preferences.bocategories',$cats_app);
-			$this->nextmatchs	= CreateObject('phpgwapi.nextmatchs');
+			$this->bo			=& CreateObject('preferences.bocategories',$cats_app);
+			$this->nextmatchs	=& CreateObject('phpgwapi.nextmatchs');
 			$this->account		= $GLOBALS['egw_info']['user']['account_id'];
 			$this->user			= $GLOBALS['egw_info']['user']['fullname'];
 
@@ -127,7 +127,7 @@
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$cats_app]['title'].
 				'&nbsp;'.lang('categories for').':&nbsp;'.$this->user;
-			$GLOBALS['egw']->common->phpgw_header();
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
 			$GLOBALS['egw']->template->set_file(array(
@@ -417,7 +417,7 @@
 
 			if (!is_object($GLOBALS['egw']->html))
 			{
-				$GLOBALS['egw']->html = CreateObject('phpgwapi.html');
+				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 			}
 			$GLOBALS['egw']->template->set_var('color',$GLOBALS['egw']->html->inputColor('cat_data[color]',$cat['data']['color'],lang('Click to select a color')));
 
@@ -469,7 +469,7 @@
 
 			$GLOBALS['egw_info']['flags']['app_header'] = lang($cat_id ? 'Edit %1 category for' : 'Add %1 category for',
 				$GLOBALS['egw_info']['apps'][$cats_app]['title']).':&nbsp;'.$this->user;
-			$GLOBALS['egw']->common->phpgw_header();
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
 			$GLOBALS['egw']->template->set_var('edithandle','');
@@ -518,7 +518,7 @@
 				$GLOBALS['egw']->template->set_file(array('category_delete' => 'delete.tpl'));
 
 				$GLOBALS['egw_info']['flags']['app_header'] = lang('Delete Categories');
-				$GLOBALS['egw']->common->phpgw_header();
+				$GLOBALS['egw']->common->egw_header();
 				echo parse_navbar();
 
 				$GLOBALS['egw']->template->set_var('deleteheader',lang('Are you sure you want to delete this category ?'));

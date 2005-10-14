@@ -91,7 +91,7 @@
 			else
 			{
 				/* Here we include the settings hook file for the current template, if it exists.
-				   This is not handled by the hooks class and is only valid if not using xml-rpc.
+					 This is not handled by the hooks class and is only valid if not using xml-rpc.
 				 */
 				$tmpl_settings = EGW_TEMPLATE_DIR . '/hook_settings.inc.php';
 				if($this->appname == 'preferences' && file_exists($tmpl_settings))
@@ -228,9 +228,9 @@
 		function list_methods($_type='xmlrpc')
 		{
 			/*
-			  This handles introspection or discovery by the logged in client,
-			  in which case the input might be an array.  The server always calls
-			  this function to fill the server dispatch map using a string.
+				This handles introspection or discovery by the logged in client,
+				in which case the input might be an array.  The server always calls
+				this function to fill the server dispatch map using a string.
 			*/
 			if(is_array($_type))
 			{

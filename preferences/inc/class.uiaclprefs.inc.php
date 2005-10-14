@@ -20,11 +20,11 @@
 
 		function uiaclprefs()
 		{
-			$GLOBALS['egw']->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$GLOBALS['egw']->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
 
 			if (!is_object($GLOBALS['egw']->html))
 			{
-				$GLOBALS['egw']->html = CreateObject('phpgwapi.html');
+				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 			}
 		}
 
@@ -63,10 +63,10 @@
 			if (($GLOBALS['egw_info']['server']['deny_user_grants_access'] || $owner != $GLOBALS['egw_info']['user']['account_id'])
 				&& !isset($GLOBALS['egw_info']['user']['apps']['admin']) || $acl_app_not_passed)
 			{
-				$GLOBALS['egw']->common->phpgw_header();
+				$GLOBALS['egw']->common->egw_header();
 				echo parse_navbar();
 				echo '<center><b>' . lang('Access not permitted') . '</b></center>';
-				$GLOBALS['egw']->common->phpgw_footer();
+				$GLOBALS['egw']->common->egw_footer();
 				return;
 			}
 
@@ -79,7 +79,7 @@
 			{
 				$no_privat_grants = $owner != $GLOBALS['egw_info']['user']['account_id'];
 			}
-			$this->acl = CreateObject('phpgwapi.acl',(int)$owner);
+			$this->acl =& CreateObject('phpgwapi.acl',(int)$owner);
 			$this->acl->read_repository();
 
 			if ($_POST['submit'])
@@ -140,10 +140,10 @@
 				$this->acl->save_repository();
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('%1 - Preferences',$GLOBALS['egw_info']['apps'][$acl_app]['title']).' - '.lang('acl').': '.$owner_name;
-			$GLOBALS['egw']->common->phpgw_header();
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
-			$this->template = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($acl_app));
+			$this->template =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($acl_app));
 			$templates = Array (
 				'preferences' => 'preference_acl.tpl',
 				'row_colspan' => 'preference_colspan.tpl',

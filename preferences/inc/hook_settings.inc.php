@@ -67,7 +67,7 @@
 		'24' => lang('24 hour')
 	);
 
-	$sbox = createobject('phpgwapi.sbox');
+	$sbox =& CreateObject('phpgwapi.sbox');
 	$langs = $GLOBALS['egw']->translation->get_installed_langs();
 
 	$user_apps = array();

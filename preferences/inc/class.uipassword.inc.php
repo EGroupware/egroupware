@@ -20,7 +20,7 @@
 
 		function uipassword()
 		{
-			$this->bo = CreateObject('preferences.bopassword');
+			$this->bo =& CreateObject('preferences.bopassword');
 
 		}
 
@@ -32,8 +32,8 @@
 
 			if(!$GLOBALS['egw']->acl->check('changepassword', 1) || $_POST['cancel'])
 			{
-			   $GLOBALS['egw']->redirect_link('/preferences/index.php');
-				$GLOBALS['egw']->common->phpgw_exit();
+				 $GLOBALS['egw']->redirect_link('/preferences/index.php');
+				$GLOBALS['egw']->common->egw_exit();
 			}
 
 			$GLOBALS['egw']->template->set_file(array(
@@ -73,22 +73,22 @@
 
 				if(is_array($errors))
 				{
-					$GLOBALS['egw']->common->phpgw_header();
+					$GLOBALS['egw']->common->egw_header();
 					echo parse_navbar();
 					$GLOBALS['egw']->template->set_var('messages',$GLOBALS['egw']->common->error_list($errors));
 					$GLOBALS['egw']->template->pfp('out','form');
-					$GLOBALS['egw']->common->phpgw_exit(True);
+					$GLOBALS['egw']->common->egw_exit(True);
 				}
 
 				$passwd_changed = $this->bo->changepass($o_passwd, $n_passwd);
 				if(!$passwd_changed)
 				{
 					$errors[] = lang('Failed to change password.  Please contact your administrator.');
-					$GLOBALS['egw']->common->phpgw_header();
+					$GLOBALS['egw']->common->egw_header();
 					echo parse_navbar();
 					$GLOBALS['egw']->template->set_var('messages',$GLOBALS['egw']->common->error_list($errors));
 					$GLOBALS['egw']->template->pfp('out','form');
-					$GLOBALS['egw']->common->phpgw_exit(True);
+					$GLOBALS['egw']->common->egw_exit(True);
 				}
 				else
 				{
@@ -108,11 +108,11 @@
 			else
 			{
 				$GLOBALS['egw_info']['flags']['app_header'] = lang('Change your password');
-				$GLOBALS['egw']->common->phpgw_header();
+				$GLOBALS['egw']->common->egw_header();
 				echo parse_navbar();
 
 				$GLOBALS['egw']->template->pfp('out','form');
-				$GLOBALS['egw']->common->phpgw_footer();
+				$GLOBALS['egw']->common->egw_footer();
 			}
 		}
 	}
