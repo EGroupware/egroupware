@@ -80,10 +80,9 @@ if ($do_replace)
 $modernize = array(
 	// saves an unnecessary copy
 	'= CreateObject'           => '=& CreateObject',
-	'= CreateObject'           => '=& CreateObject',
 	'= new'                    => '=& new',
 	// php5 cloning of the DB object
-	'= $GLOBALS[\'egw\']->db;' => '= clone($GLOBALS[\'egw\']->db);',
+	'= $GLOBALS[\'phpgw\']->db;' => '= clone($GLOBALS[\'egw\']->db);',
 	'= $this->db;'             => '= clone($this->db);',
 	// remove windows lineends (CR)
 	"\r"                       => '',
@@ -108,7 +107,7 @@ if (!$no_phpgw)
 		'$phpgw_info['             => '$GLOBALS[\'egw_info\'][',
 		'$GLOBALS[\'phpgw\']'      => '$GLOBALS[\'egw\']',
 		'$GLOBALS["phpgw"]'        => '$GLOBALS[\'egw\']',
-		'$phpgw['                  => '$GLOBALS[\'egw\'][',
+		'$phpgw->'                 => '$GLOBALS[\'egw\']->',
 		'common->phpgw_header'     => 'common->egw_header',
 		'common->phpgw_footer'     => 'common->egw_footer',
 		'common->phpgw_exit'       => 'common->egw_exit',
