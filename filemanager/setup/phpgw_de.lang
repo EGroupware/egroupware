@@ -11,10 +11,12 @@ copied %1 to %2	filemanager	de	%1 nach %2 kopiert
 copy to	filemanager	de	Kopieren nach
 copy to:	filemanager	de	Kopieren nach:
 could not copy %1 to %2	filemanager	de	Konnte %1 nicht nach %2 kopieren
+could not copy file because no destination directory is given	filemanager	de	Konnte Datei nicht kopieren, da kein Zielverzeichnis angegeben wurde
 could not create %1	filemanager	de	Konnte %1 nicht anlegen
 could not create directory %1	filemanager	de	Konnte Verzeichnis %1 nicht anlegen
 could not delete %1	filemanager	de	Konnte %1 nicht löschen
 could not move %1 to %2	filemanager	de	Konnte %1 nicht nach %2 verschieben
+could not move file because no destination directory is given	filemanager	de	Konnte Datei nicht verschieben, da kein Zielverzeichnis angegeben wurde
 could not rename %1 to %2	filemanager	de	Konnte %1 nicht nach %2 umbenennen
 could not save %1	filemanager	de	Konnte %1 nicht speichern
 create file	filemanager	de	Neue Datei
@@ -39,6 +41,7 @@ edit comments	filemanager	de	Kommentare bearbeiten
 error running command	filemanager	de	Fehler beim Ausführen des Kommandos
 execute	filemanager	de	Ausführen
 failed to create directory	filemanager	de	Verzeichnis konnte nicht erstellt werden
+fake base dir did not exist, egroupware created a new one.	filemanager	de	Dateimanager Wurzelverzeichnis existierte nicht, eGroupWare hat es jetzt angelegt.
 file	filemanager	de	Datei
 file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte zuerst bearbeiten oder löschen.
 file %1 could not be created.	filemanager	de	Datei %1 konnte nicht erstellt werden.
@@ -49,7 +52,6 @@ filemanager	common	de	Dateiverwaltung
 filemanager preferences	filemanager	de	Dateiverwaltungs-Einstellungen
 files	filemanager	de	Dateien
 files in this directory	filemanager	de	Dateien in diesem Verzeichnis
-files is this directory	filemanager	de	Dateien in diesem Verzeichnis
 folder	filemanager	de	Verzeichnisse
 folder up	filemanager	de	Ein Verzeichnis nach oben
 go home	filemanager	de	Zum Heimverzeichnis wechseln
@@ -73,7 +75,6 @@ operation	filemanager	de	Operation
 other settings	filemanager	de	Weitere Einstellungen
 owner	filemanager	de	Eigentümer
 please select a file to delete.	filemanager	de	Bitte wählen Sie die Datei aus welche Sie löschen möchten
-preferences old	preferences	de	Alte Einstellungen
 preview %1	filemanager	de	Vorschau %1
 preview of %1	filemanager	de	Vorschau von %1
 quick jump to	filemanager	de	Sprung zu
@@ -93,7 +94,7 @@ show command line (experimental. dangerous.)	filemanager	de	Kommando anzeigen (E
 show help	filemanager	de	Hilfe anzeigen
 size	filemanager	de	Größe
 sort by:	filemanager	de	Sortieren nach:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	de	
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	de	Der neue Dateimanager, jetzt NUR ZUM TESTEN, bitte Fehlermeldungen senden
 total files	filemanager	de	Anzahl Dateien
 unknown mime-type defaults to text/plain when viewing	filemanager	de	Zum Anzeigen von unbekannte MIME-Typen text/plain verwenden
 unused space	filemanager	de	Unbenutzer Speicherplatz
@@ -103,7 +104,7 @@ updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
 upload	filemanager	de	Hochladen
 upload fields	filemanager	de	Felder zum Hochladen
 upload files	filemanager	de	Dateien hochladen
-use new experimental filemanager?	filemanager	de	
+use new experimental filemanager?	filemanager	de	Neuen experimentellen Dateimanager benutzen?
 used space	filemanager	de	Benutzter Speicherplatz
 users	filemanager	de	Benutzer
 version	filemanager	de	Version
@@ -111,3 +112,4 @@ view documents in new window	filemanager	de	Dokumente in neuem Fenster anzeigen
 view documents on server (if available)	filemanager	de	Dokument auf Server anzeigen (falls verfügbar)
 who	filemanager	de	Wer
 you do not have access to %1	filemanager	de	Sie haben keinen Zugang zu %1
+your home dir did not exist, egroupware created a new one.	filemanager	de	Ihre Benutzerverzeichnis existierte nicht, eGroupWare hat es jetzt angelegt.
