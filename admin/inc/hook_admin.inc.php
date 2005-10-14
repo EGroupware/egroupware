@@ -11,75 +11,75 @@
 
 	/* $Id$ */
 
-	if (! $GLOBALS['phpgw']->acl->check('site_config_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 	{
-		$file['Site Configuration']         = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
+		$file['Site Configuration']         = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=admin');
 	}
 
 /* disabled it, til it does something useful
-	if (! $GLOBALS['phpgw']->acl->check('peer_server_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('peer_server_access',1,'admin'))
 	{
-		$file['Peer Servers']               = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiserver.list_servers');
+		$file['Peer Servers']               = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiserver.list_servers');
 	}
 */
-	if (! $GLOBALS['phpgw']->acl->check('account_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('account_access',1,'admin'))
 	{
-		$file['User Accounts']              = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
+		$file['User Accounts']              = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('group_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('group_access',1,'admin'))
 	{
-		$file['User Groups']                = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_groups');
+		$file['User Groups']                = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('applications_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('applications_access',1,'admin'))
 	{
-		$file['Applications']               = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.get_list');
+		$file['Applications']               = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiapplications.get_list');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('global_categories_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('global_categories_access',1,'admin'))
 	{
-		$file['Global Categories']          = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicategories.index');
+		$file['Global Categories']          = $GLOBALS['egw']->link('/index.php','menuaction=admin.uicategories.index');
 	}
 
-	if (!$GLOBALS['phpgw']->acl->check('mainscreen_message_access',1,'admin') || !$GLOBALS['phpgw']->acl->check('mainscreen_message_access',2,'admin'))
+	if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin') || !$GLOBALS['egw']->acl->check('mainscreen_message_access',2,'admin'))
 	{
-		$file['Change Main Screen Message'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uimainscreen.index');
+		$file['Change Main Screen Message'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('current_sessions_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))
 	{
-		$file['View Sessions'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
+		$file['View Sessions'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions');
 	}
 	
-	if (! $GLOBALS['phpgw']->acl->check('access_log_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
 	{
-		$file['View Access Log'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
+		$file['View Access Log'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccess_history.list_history');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('error_log_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('error_log_access',1,'admin'))
 	{
-		$file['View Error Log']  = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log');
+		$file['View Error Log']  = $GLOBALS['egw']->link('/index.php','menuaction=admin.uilog.list_log');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('applications_access',16,'admin'))
+	if (! $GLOBALS['egw']->acl->check('applications_access',16,'admin'))
 	{
-		$file['Find and Register all Application Hooks'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiapplications.register_all_hooks');
+		$file['Find and Register all Application Hooks'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiapplications.register_all_hooks');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('asyncservice_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('asyncservice_access',1,'admin'))
 	{
-		$file['Asynchronous timed services'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiasyncservice.index');
+		$file['Asynchronous timed services'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiasyncservice.index');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('db_backup_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('db_backup_access',1,'admin'))
 	{
-		$file['DB backup and restore'] = $GLOBALS['phpgw']->link('/index.php','menuaction=admin.admin_db_backup.index');
+		$file['DB backup and restore'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.admin_db_backup.index');
 	}
 
-	if (! $GLOBALS['phpgw']->acl->check('info_access',1,'admin'))
+	if (! $GLOBALS['egw']->acl->check('info_access',1,'admin'))
 	{
-		$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['phpgw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['phpgw']->link('/admin/phpinfo.php');
+		$file['phpInfo']         = "javascript:openwindow('" . $GLOBALS['egw']->link('/admin/phpinfo.php') . "')"; //$GLOBALS['egw']->link('/admin/phpinfo.php');
 	}
  
 	/* Do not modify below this line */

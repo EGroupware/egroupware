@@ -15,8 +15,8 @@
 	{
 		function soldap_mgr()
 		{
-			$this->db		= $GLOBALS['phpgw']->db;
-			include(PHPGW_INCLUDE_ROOT.'/emailadmin/setup/tables_current.inc.php');
+			$this->db		= clone($GLOBALS['egw']->db);
+			include(EGW_INCLUDE_ROOT.'/emailadmin/setup/tables_current.inc.php');
 			$this->tables = &$phpgw_baseline;
 			unset($phpgw_baseline);
 			$this->table = &$this->tables['phpgw_emailadmin'];
@@ -27,10 +27,10 @@
 		{
 			global $phpgw, $phpgw_info;
 
-			$ldap = $phpgw->common->ldapConnect();
+			$ldap = $GLOBALS['egw']->common->ldapConnect();
 			$filter = "(&(uidnumber=$_accountID))";
 			
-			$sri = @ldap_search($ldap,$phpgw_info['server']['ldap_context'],$filter);
+			$sri = @ldap_search($ldap,$GLOBALS['egw_info']['server']['ldap_context'],$filter);
 			if ($sri)
 			{
 				$allValues = ldap_get_entries($ldap, $sri);
@@ -57,7 +57,7 @@
 		function saveUserData($_accountID, $_accountData)
 		{
 			
-			$ldap = $GLOBALS['phpgw']->common->ldapConnect();
+			$ldap = $GLOBALS['egw']->common->ldapConnect();
 			// need to be fixed
 			if(is_numeric($_accountID))
 			{
@@ -68,7 +68,7 @@
 				$filter = "uid=$_accountID";
 			}
 
-			$sri = @ldap_search($ldap,$GLOBALS['phpgw_info']['server']['ldap_context'],$filter);
+			$sri = @ldap_search($ldap,$GLOBALS['egw_info']['server']['ldap_context'],$filter);
 			if ($sri)
 			{
 				$allValues 		= ldap_get_entries($ldap, $sri);
@@ -158,7 +158,7 @@
 						
 			// also update the account_email field in phpgw_accounts
 			// when using sql account storage
-			if($GLOBALS['phpgw_info']['server']['account_repository'] == 'sql')
+			if($GLOBALS['egw_info']['server']['account_repository'] == 'sql')
 			{
 				$this->db->update('phpgw_accounts',array(
 						'account_email'	=> $_accountData["mail"]

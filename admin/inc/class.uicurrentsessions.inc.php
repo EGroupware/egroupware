@@ -23,34 +23,34 @@
 
 		function uicurrentsessions()
 		{
-			if ($GLOBALS['phpgw']->acl->check('current_sessions_access',1,'admin'))
+			if ($GLOBALS['egw']->acl->check('current_sessions_access',1,'admin'))
 			{
-				$GLOBALS['phpgw']->redirect_link('/index.php');
+				$GLOBALS['egw']->redirect_link('/index.php');
 			}
-			$this->template   = createobject('phpgwapi.Template',PHPGW_APP_TPL);
-			$this->bo         = createobject('admin.bocurrentsessions');
-			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
+			$this->template   =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+			$this->bo         =& CreateObject('admin.bocurrentsessions');
+			$this->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
 		}
 
 		function header()
 		{
-			if(!@is_object($GLOBALS['phpgw']->js))
+			if(!@is_object($GLOBALS['egw']->js))
 			{
-				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 			}
-			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 		}
 
 		function store_location($info)
 		{
-			$GLOBALS['phpgw']->session->appsession('currentsessions_session_data','admin',$info);
+			$GLOBALS['egw']->session->appsession('currentsessions_session_data','admin',$info);
 		}
 
 		function list_sessions()
 		{
-			$info = $GLOBALS['phpgw']->session->appsession('currentsessions_session_data','admin');
+			$info = $GLOBALS['egw']->session->appsession('currentsessions_session_data','admin');
 			if (! is_array($info))
 			{
 				$info = array(
@@ -81,23 +81,23 @@
 				$this->store_location($info);
 			}
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('List of current users');
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('List of current users');
 			$this->header();
 
 			$this->template->set_file('current','currentusers.tpl');
 			$this->template->set_block('current','list','list');
 			$this->template->set_block('current','row','row');
 
-			$can_view_action = !$GLOBALS['phpgw']->acl->check('current_sessions_access',2,'admin');
-			$can_view_ip     = !$GLOBALS['phpgw']->acl->check('current_sessions_access',4,'admin');
-			$can_kill        = !$GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin');
+			$can_view_action = !$GLOBALS['egw']->acl->check('current_sessions_access',2,'admin');
+			$can_view_ip     = !$GLOBALS['egw']->acl->check('current_sessions_access',4,'admin');
+			$can_kill        = !$GLOBALS['egw']->acl->check('current_sessions_access',8,'admin');
 
 			$total = $this->bo->total();
 
-			$this->template->set_var('bg_color',$GLOBALS['phpgw_info']['theme']['bg_color']);
+			$this->template->set_var('bg_color',$GLOBALS['egw_info']['theme']['bg_color']);
 			$this->template->set_var('left_next_matchs',$this->nextmatchs->left('/admin/currentusers.php',$info['start'],$total));
 			$this->template->set_var('right_next_matchs',$this->nextmatchs->right('/admin/currentusers.php',$info['start'],$total));
-			$this->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
+			$this->template->set_var('th_bg',$GLOBALS['egw_info']['theme']['th_bg']);
 
 			$this->template->set_var('sort_loginid',$this->nextmatchs->show_sort_order($info['sort'],'session_lid',$info['order'],
 				'/admin/currentusers.php',lang('LoginID')));
@@ -126,16 +126,16 @@
 
 				if ($value['session_action'] && $can_view_action)
 				{
-					$this->template->set_var('row_action',$GLOBALS['phpgw']->strip_html($value['session_action']));
+					$this->template->set_var('row_action',$GLOBALS['egw']->strip_html($value['session_action']));
 				}
 				else
 				{
 					$this->template->set_var('row_action','&nbsp;');
 				}
 
-				if ($value['session_id'] != $GLOBALS['phpgw_info']['user']['sessionid'] && $can_kill)
+				if ($value['session_id'] != $GLOBALS['egw_info']['user']['sessionid'] && $can_kill)
 				{
-					$this->template->set_var('row_kill','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.kill&ksession='
+					$this->template->set_var('row_kill','<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.kill&ksession='
 						. $value['session_id'] . '&kill=true') . '">' . lang('Kill').'</a>');
 				}
 				else
@@ -151,17 +151,17 @@
 
 		function kill()
 		{
-			if ($GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
+			if ($GLOBALS['egw']->acl->check('current_sessions_access',8,'admin'))
 			{
-				$GLOBALS['phpgw']->redirect_link('/index.php');
+				$GLOBALS['egw']->redirect_link('/index.php');
 			}
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Kill session');
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('Kill session');
 			$this->header();
 			$this->template->set_file('form','kill_session.tpl');
 
 			$this->template->set_var('lang_message',lang('Are you sure you want to kill this session ?'));
-			$this->template->set_var('link_no','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' . lang('No') . '</a>');
-			$this->template->set_var('link_yes','<a href="' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.bocurrentsessions.kill&ksession=' . $_GET['ksession']) . '">' . lang('Yes') . '</a>');
+			$this->template->set_var('link_no','<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' . lang('No') . '</a>');
+			$this->template->set_var('link_yes','<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=admin.bocurrentsessions.kill&ksession=' . $_GET['ksession']) . '">' . lang('Yes') . '</a>');
 
 			$this->template->pfp('out','form');
 		}

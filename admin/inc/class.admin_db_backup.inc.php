@@ -22,14 +22,14 @@
  
  		function admin_db_backup()
  		{
-  		}
+			}
  		
  		/**
  		 * Method for sheduled backups, called via asynservice
  		 */
  		function do_backup()
  		{
-			$this->db_backup = CreateObject('phpgwapi.db_backup');
+			$this->db_backup =& CreateObject('phpgwapi.db_backup');
 
 	 		if ($f = $this->db_backup->fopen_backup())
 	 		{
@@ -43,12 +43,12 @@
  		 */
  		function index()
  		{
-	 		$tpl_root = PHPGW_SERVER_ROOT.'/setup/templates/default';
-			$self = $GLOBALS['phpgw']->link('/index.php',array('menuaction'=>'admin.admin_db_backup.index'));
-			$GLOBALS['phpgw']->translation->add_app('setup');
+	 		$tpl_root = EGW_SERVER_ROOT.'/setup/templates/default';
+			$self = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'admin.admin_db_backup.index'));
+			$GLOBALS['egw']->translation->add_app('setup');
 			
-			include PHPGW_SERVER_ROOT.'/setup/db_backup.php';
+			include EGW_SERVER_ROOT.'/setup/db_backup.php';
 
-			$GLOBALS['phpgw']->common->phpgw_footer();
+			$GLOBALS['egw']->common->egw_footer();
  		}
  	}

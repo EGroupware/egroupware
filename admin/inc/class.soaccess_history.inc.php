@@ -17,7 +17,7 @@
 
 		function soaccess_history()
 		{
-			$this->db       = $GLOBALS['phpgw']->db;
+			$this->db       = clone($GLOBALS['egw']->db);
 		}
 
 		function test_account_id($account_id)

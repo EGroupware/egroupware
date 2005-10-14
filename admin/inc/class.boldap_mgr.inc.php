@@ -35,7 +35,7 @@
 
 		function boldap_mgr($_profileID=-1)
 		{
-			$this->soldapmgr = CreateObject('admin.soldap_mgr');
+			$this->soldapmgr =& CreateObject('admin.soldap_mgr');
 			
 			$this->SMTPServerType = array(
 				'1' 	=> array(
@@ -186,7 +186,7 @@
 #			if(!is_object($this->imapClass))
 #			{
 #				$profileData		= $this->getProfile($_profileID);
-#				$this->imapClass	= CreateObject('emailadmin.cyrusimap',$profileData);
+#				$this->imapClass	=& CreateObject('emailadmin.cyrusimap',$profileData);
 #			}
 #			
 #			return $this->imapClass;
@@ -246,7 +246,7 @@
 #			if(!is_object($this->smtpClass))
 #			{
 #				$profileData		= $this->getProfile($_profileID);
-#				$this->smtpClass	= CreateObject('emailadmin.postfixldap',$profileData);
+#				$this->smtpClass	=& CreateObject('emailadmin.postfixldap',$profileData);
 #			}
 #			
 #			return $this->smtpClass;
@@ -279,10 +279,10 @@
 
 		function restoreSessionData()
 		{
-			global $phpgw;
+			
 		
-			$this->sessionData = $phpgw->session->appsession('session_data');
-			$this->userSessionData = $phpgw->session->appsession('user_session_data');
+			$this->sessionData = $GLOBALS['egw']->session->appsession('session_data');
+			$this->userSessionData = $GLOBALS['egw']->session->appsession('user_session_data');
 			
 			#while(list($key, $value) = each($this->userSessionData))
 			#{
@@ -309,10 +309,10 @@
 		
 		function saveSessionData()
 		{
-			global $phpgw;
 			
-			$phpgw->session->appsession('session_data','',$this->sessionData);
-			$phpgw->session->appsession('user_session_data','',$this->userSessionData);
+			
+			$GLOBALS['egw']->session->appsession('session_data','',$this->sessionData);
+			$GLOBALS['egw']->session->appsession('user_session_data','',$this->userSessionData);
 		}
 
 
@@ -371,12 +371,12 @@
 					$this->soldapmgr->saveUserData(
 						$_accountID, 
 						$this->userSessionData[$_accountID]);
-					$bofelamimail = CreateObject('felamimail.bofelamimail');
+					$bofelamimail =& CreateObject('felamimail.bofelamimail');
 					$bofelamimail->openConnection('','',true);
-					$bofelamimail->imapSetQuota($GLOBALS['phpgw']->accounts->id2name($_accountID),
-								    $this->userSessionData[$_accountID]['quotaLimit']);
+					$bofelamimail->imapSetQuota($GLOBALS['egw']->accounts->id2name($_accountID),
+										$this->userSessionData[$_accountID]['quotaLimit']);
 					$bofelamimail->closeConnection();
-					$GLOBALS['phpgw']->accounts->cache_invalidate($_accountID);
+					$GLOBALS['egw']->accounts->cache_invalidate($_accountID);
 					
 					
 					break;

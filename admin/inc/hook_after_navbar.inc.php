@@ -15,23 +15,23 @@
 
 /* Check currentapp and API upgrade status */
 
-if($GLOBALS['phpgw_info']['flags']['currentapp'] != 'home' &&
-	$GLOBALS['phpgw_info']['flags']['currentapp'] != 'welcome' &&
-	(isset($GLOBALS['phpgw_info']['server']['checkappversions']) &&
-	$GLOBALS['phpgw_info']['server']['checkappversions']))
+if($GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
+	$GLOBALS['egw_info']['flags']['currentapp'] != 'welcome' &&
+	(isset($GLOBALS['egw_info']['server']['checkappversions']) &&
+	$GLOBALS['egw_info']['server']['checkappversions']))
 {
-	if((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-		$GLOBALS['phpgw_info']['user']['apps']['admin']) ||
-		$GLOBALS['phpgw_info']['server']['checkappversions'] == 'All')
+	if((isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
+		$GLOBALS['egw_info']['user']['apps']['admin']) ||
+		$GLOBALS['egw_info']['server']['checkappversions'] == 'All')
 	{
 		$_returnhtml = array();
-		$app_name = $GLOBALS['phpgw_info']['flags']['currentapp'];
-		$GLOBALS['phpgw']->db->query("SELECT app_name,app_version FROM phpgw_applications WHERE app_name='$app_name' OR app_name='phpgwapi'",__LINE__,__FILE__);
-		while($GLOBALS['phpgw']->db->next_record())
+		$app_name = $GLOBALS['egw_info']['flags']['currentapp'];
+		$GLOBALS['egw']->db->query("SELECT app_name,app_version FROM phpgw_applications WHERE app_name='$app_name' OR app_name='phpgwapi'",__LINE__,__FILE__);
+		while($GLOBALS['egw']->db->next_record())
 		{
-			$_db_version  = $GLOBALS['phpgw']->db->f('app_version');
-			$app_name     = $GLOBALS['phpgw']->db->f('app_name');
-			$_versionfile = $GLOBALS['phpgw']->common->get_app_dir($app_name) . '/setup/setup.inc.php';
+			$_db_version  = $GLOBALS['egw']->db->f('app_version');
+			$app_name     = $GLOBALS['egw']->db->f('app_name');
+			$_versionfile = $GLOBALS['egw']->common->get_app_dir($app_name) . '/setup/setup.inc.php';
 			if(file_exists($_versionfile))
 			{
 				include($_versionfile);

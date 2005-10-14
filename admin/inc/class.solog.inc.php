@@ -29,7 +29,7 @@
 
 		function solog()
 		{
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['egw']->db);
 		}
 
 		function get_error_cols()

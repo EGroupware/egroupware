@@ -27,7 +27,7 @@
 				$userData['account_email'] = $userData['email'];
 			}
 			
-			$GLOBALS['phpgw']->db->lock(
+			$GLOBALS['egw']->db->lock(
 				Array(
 					'phpgw_accounts',
 					'phpgw_nextid',
@@ -40,11 +40,11 @@
 				)
 			);
 
-			$GLOBALS['phpgw']->accounts->create($userData);
+			$GLOBALS['egw']->accounts->create($userData);
 
-			$userData['account_id'] = $GLOBALS['phpgw']->accounts->name2id($userData['account_lid']);
+			$userData['account_id'] = $GLOBALS['egw']->accounts->name2id($userData['account_lid']);
 			
-			$apps = CreateObject('phpgwapi.applications',$userData['account_id']);
+			$apps =& CreateObject('phpgwapi.applications',$userData['account_id']);
 			$apps->read_installed_apps();
 			// Read Group Apps
 			if ($userData['account_groups'])
@@ -89,7 +89,7 @@
 
 			if ($userData['changepassword'])
 			{
-				$GLOBALS['phpgw']->acl->add_repository('preferences','changepassword',$userData['account_id'],1);
+				$GLOBALS['egw']->acl->add_repository('preferences','changepassword',$userData['account_id'],1);
 			}
 			// Assign user to groups
 			if ($userData['account_groups'])
@@ -97,14 +97,14 @@
 				$c_acct_groups = count($userData['account_groups']);
 				for ($i=0;$i<$c_acct_groups;$i++)
 				{
-					$GLOBALS['phpgw']->acl->add_repository('phpgw_group',$userData['account_groups'][$i],$userData['account_id'],1);
+					$GLOBALS['egw']->acl->add_repository('phpgw_group',$userData['account_groups'][$i],$userData['account_id'],1);
 				}
 			}
 
 			$apps->account_apps = array(array());
 			$apps_after = array(array());
 
-			$GLOBALS['phpgw']->db->unlock();
+			$GLOBALS['egw']->db->unlock();
 
 			return $userData['account_id'];
 		}

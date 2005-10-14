@@ -21,8 +21,8 @@
 
 		function boaclmanager()
 		{
-			//$this->so = createobject('admin.soaclmanager');
-			$this->ui = createobject('admin.uiaclmanager');
+			//$this->so =& CreateObject('admin.soaclmanager');
+			$this->ui =& CreateObject('admin.uiaclmanager');
 		}
 
 		function submit()
@@ -41,7 +41,7 @@
 				$total_rights += $rights;
 			}
 
-			$GLOBALS['phpgw']->acl->add_repository($GLOBALS['acl_app'], $location, $GLOBALS['account_id'], $total_rights);
+			$GLOBALS['egw']->acl->add_repository($GLOBALS['acl_app'], $location, $GLOBALS['account_id'], $total_rights);
 
 			$this->ui->list_apps();
 		}

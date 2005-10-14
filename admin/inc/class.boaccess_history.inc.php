@@ -15,7 +15,7 @@
 	{
 		function boaccess_history()
 		{
-			$this->so       = createobject('admin.soaccess_history');
+			$this->so       =& CreateObject('admin.soaccess_history');
 		}
 
 		function list_history($account_id,$start,$order,$sort)
@@ -42,12 +42,12 @@
 
 				if ($record['li'])
 				{
-					$record['li'] = $GLOBALS['phpgw']->common->show_date($record['li']);
+					$record['li'] = $GLOBALS['egw']->common->show_date($record['li']);
 				}
 
 				if ($record['lo'])
 				{
-					$record['lo'] = $GLOBALS['phpgw']->common->show_date($record['lo']);
+					$record['lo'] = $GLOBALS['egw']->common->show_date($record['lo']);
 				}
 				else
 				{

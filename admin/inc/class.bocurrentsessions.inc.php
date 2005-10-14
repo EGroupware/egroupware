@@ -22,12 +22,12 @@
 
 		function total()
 		{
-			return $GLOBALS['phpgw']->session->total();
+			return $GLOBALS['egw']->session->total();
 		}
 
 		function list_sessions($start,$order,$sort)
 		{
-			$values = $GLOBALS['phpgw']->session->list_sessions($start,$sort,$order);
+			$values = $GLOBALS['egw']->session->list_sessions($start,$sort,$order);
 
 			while (list(,$value) = @each($values))
 			{
@@ -48,7 +48,7 @@
 					'session_id'        => $value['session_id'],
 					'session_lid'       => $session_lid,
 					'session_ip'        => $value['session_ip'],
-					'session_logintime' => $GLOBALS['phpgw']->common->show_date($value['session_logintime']),
+					'session_logintime' => $GLOBALS['egw']->common->show_date($value['session_logintime']),
 					'session_action'    => $value['session_action'],
 					'session_dla'       => $value['session_dla'],
 					'session_idle'      => str_pad($hours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($mins, 2, '0', STR_PAD_LEFT) . ':' . str_pad($secs, 2, '0', STR_PAD_LEFT)
@@ -61,11 +61,11 @@
 		{
 			if ($_GET['ksession'] &&
 				($GLOBALS['sessionid'] != $_GET['ksession']) &&
-				! $GLOBALS['phpgw']->acl->check('current_sessions_access',8,'admin'))
+				! $GLOBALS['egw']->acl->check('current_sessions_access',8,'admin'))
 			{
-				$GLOBALS['phpgw']->session->destroy($_GET['ksession'],0);
+				$GLOBALS['egw']->session->destroy($_GET['ksession'],0);
 			}
-			$this->ui = createobject('admin.uicurrentsessions');
+			$this->ui =& CreateObject('admin.uicurrentsessions');
 			$this->ui->list_sessions();
 		}
 	}

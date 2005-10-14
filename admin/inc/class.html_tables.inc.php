@@ -30,20 +30,20 @@
 				else
 				{
 					#$html .= '<form method="post" action="'
-					#	 . $GLOBALS['phpgw']->link('/index.php')
+					#	 . $GLOBALS['egw']->link('/index.php')
 					#	 . '">' . "\n";
-					$bo = CreateObject('admin.bolog',True);
+					$bo =& CreateObject('admin.bolog',True);
 					if(!isset($start))
 					{
 						$start = 0;
 					}
-					$num_rows = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+					$num_rows = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 					$stop = $start + $num_rows;
 					if($stop > count($rows))
 					{
 						$stop = count($rows);
 					}
-					$nextmatchs = CreateObject('phpgwapi.nextmatchs');
+					$nextmatchs =& CreateObject('phpgwapi.nextmatchs');
 					$total_records = $bo->get_no_errors();
 					$left = $nextmatchs->left('/index.php',$start,$total_records,'menuaction=admin.uilog.list_log');
 					$right = $nextmatchs->right('/index.php',$start,$total_records,'menuaction=admin.uilog.list_log');
@@ -52,7 +52,7 @@
 					$html .= '<table width="98%"><tr>';
 					$html .= $left;
 					$html .= '<td align="right"> ' . $hits . ' </td>';
-					$html .= '<td align="left"> <a href=' . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log&editable=true') .'> ' . lang('Edit Table format') . '</a></td>';
+					$html .= '<td align="left"> <a href=' . $GLOBALS['egw']->link('/index.php','menuaction=admin.uilog.list_log&editable=true') .'> ' . lang('Edit Table format') . '</a></td>';
 					$html .= $right;
 					$html .= '</tr></table>';
 				}
@@ -251,7 +251,7 @@
 
 			$html = '';
 			$html .= '<form method="post" action="'
-				 . $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uilog.list_log&editable=true')
+				 . $GLOBALS['egw']->link('/index.php','menuaction=admin.uilog.list_log&editable=true')
 				 . '">' . "\n";
 
 			$params = $head['_table_parms'];

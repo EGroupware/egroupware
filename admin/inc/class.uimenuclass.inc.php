@@ -1,15 +1,15 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Administration                                              *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Administration                                              *
+	* http://www.egroupware.org                                                *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
  
-  /* $Id$ */
+	/* $Id$ */
 
 	class uimenuclass
 	{
@@ -18,14 +18,14 @@
 		
 		function uimenuclass()
 		{
-			$this->t = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('admin'));
+			$this->t =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('admin'));
 
 			$this->t->set_file(array('menurow' => 'menurow.tpl'));
 			$this->t->set_block('menurow','menu_links','menu_links');
 			$this->t->set_block('menurow','link_row','link_row');
 
-			$this->rowColor[0] = $GLOBALS['phpgw_info']['theme']['row_on'];
-			$this->rowColor[1] = $GLOBALS['phpgw_info']['theme']['row_off'];
+			$this->rowColor[0] = $GLOBALS['egw_info']['theme']['row_on'];
+			$this->rowColor[1] = $GLOBALS['egw_info']['theme']['row_off'];
 		}
 
 		function section_item($pref_link='',$pref_text='', $class)
@@ -52,11 +52,11 @@
 			{
 				if (!empty($value['extradata']))
 				{
-					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')) . '&' . $value['extradata']);
+					$link = $GLOBALS['egw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')) . '&' . $value['extradata']);
 				}
 				else
 				{
-					$link = $GLOBALS['phpgw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')));
+					$link = $GLOBALS['egw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')));
 				}
 				$this->section_item($link,lang($value['description']),($i%2) ? "row_on": "row_off");
 				$i++;
@@ -70,7 +70,7 @@
 			{
 				$destination = 'groups';
 			}
-			$this->t->set_var('link_done',$GLOBALS['phpgw']->link('/index.php','menuaction=admin.uiaccounts.list_'.$destination));
+			$this->t->set_var('link_done',$GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_'.$destination));
 			$this->t->set_var('lang_done',lang('Back'));
 
 			$this->t->set_var('row_on',$this->rowColor[0]);
@@ -115,7 +115,7 @@
 					break;
 			}
 
-			$GLOBALS['phpgw']->hooks->process($_hookname);
+			$GLOBALS['egw']->hooks->process($_hookname);
 			if (count($GLOBALS['menuData']) >= 1) 
 			{
 				$result = $this->display_section($GLOBALS['menuData']);

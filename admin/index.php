@@ -14,11 +14,14 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info'] = array();
-	$GLOBALS['phpgw_info']['flags']['currentapp'] = 'admin';
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'admin',
+		),
+	);
 	include('../header.inc.php');
 
-	$GLOBALS['admin_tpl'] = CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
+	$GLOBALS['admin_tpl'] =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
 	$GLOBALS['admin_tpl']->set_file(
 		Array(
 			'admin' => 'index.tpl'
@@ -36,8 +39,8 @@
 	// This func called by the includes to dump a row header
 	function section_start($appname='',$icon='')
 	{
-		$GLOBALS['admin_tpl']->set_var('link_backcolor',$GLOBALS['phpgw_info']['theme']['row_off']);
-		$GLOBALS['admin_tpl']->set_var('app_name',$GLOBALS['phpgw_info']['apps'][$appname]['title']);
+		$GLOBALS['admin_tpl']->set_var('link_backcolor',$GLOBALS['egw_info']['theme']['row_off']);
+		$GLOBALS['admin_tpl']->set_var('app_name',$GLOBALS['egw_info']['apps'][$appname]['title']);
 		$GLOBALS['admin_tpl']->set_var('a_name',$appname);
 		$GLOBALS['admin_tpl']->set_var('app_icon',$icon);
 		if ($icon)
@@ -71,7 +74,7 @@
 		if(is_array($file))
 		{
 			section_start($appname,
-				$GLOBALS['phpgw']->common->image(
+				$GLOBALS['egw']->common->image(
 					$appname,
 					Array(
 						'navbar',
@@ -84,7 +87,7 @@
 			while(list($text,$url) = each($file))
 			{
 				// If user doesn't have application configuration access, then don't show the configuration links
-				if (strpos($url, 'admin.uiconfig') === False || !$GLOBALS['phpgw']->acl->check('site_config_access',1,'admin'))
+				if (strpos($url, 'admin.uiconfig') === False || !$GLOBALS['egw']->acl->check('site_config_access',1,'admin'))
 				{
 					section_item($url,lang($text));
 				}
@@ -93,8 +96,8 @@
 		}
 	}
 
-	$GLOBALS['phpgw']->hooks->process('admin');
+	$GLOBALS['egw']->hooks->process('admin');
 	$GLOBALS['admin_tpl']->pparse('out','list');
 
-	$GLOBALS['phpgw']->common->phpgw_footer();
+	$GLOBALS['egw']->common->egw_footer();
 ?>

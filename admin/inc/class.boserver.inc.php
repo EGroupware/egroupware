@@ -1,16 +1,16 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Admin                                                       *
-  * http://www.egroupware.org                                                *
-  * Written by Miles Lott <milosch@phpwhere.org>                             *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Admin                                                       *
+	* http://www.egroupware.org                                                *
+	* Written by Miles Lott <milosch@phpwhere.org>                             *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	class boserver
 	{
@@ -38,7 +38,7 @@
 
 		function boserver($session=False)
 		{
-			$this->so = CreateObject('admin.soserver');
+			$this->so =& CreateObject('admin.soserver');
 
 			if($session)
 			{
@@ -72,13 +72,13 @@
 			if ($this->use_session)
 			{
 				if($this->debug) { echo '<br>Save:'; _debug_array($data); }
-				$GLOBALS['phpgw']->session->appsession('session_data','admin_servers',$data);
+				$GLOBALS['egw']->session->appsession('session_data','admin_servers',$data);
 			}
 		}
 
 		function read_sessiondata()
 		{
-			$data = $GLOBALS['phpgw']->session->appsession('session_data','admin_servers');
+			$data = $GLOBALS['egw']->session->appsession('session_data','admin_servers');
 			if($this->debug) { echo '<br>Read:'; _debug_array($data); }
 
 			$this->start  = $data['start'];

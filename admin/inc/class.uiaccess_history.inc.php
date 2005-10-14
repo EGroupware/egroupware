@@ -20,14 +20,14 @@
 
 		function uiaccess_history()
 		{
-			if ($GLOBALS['phpgw']->acl->check('access_log_access',1,'admin'))
+			if ($GLOBALS['egw']->acl->check('access_log_access',1,'admin'))
 			{
-				$GLOBALS['phpgw']->redirect_link('/index.php');
+				$GLOBALS['egw']->redirect_link('/index.php');
 			}
 			
-			$this->bo         = createobject('admin.boaccess_history');
-			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
-			$this->template   = $GLOBALS['phpgw']->template;
+			$this->bo         =& CreateObject('admin.boaccess_history');
+			$this->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
+			$this->template   = $GLOBALS['egw']->template;
 			$this->template->set_file(
 				Array(
 					'accesslog' => 'accesslog.tpl'
@@ -45,19 +45,19 @@
 			$sort = get_var('sort',array('POST'),0);
 			$order = get_var('order',array('POST'),0);
 			
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Admin').' - '.lang('View access log');
-			if(!@is_object($GLOBALS['phpgw']->js))
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Admin').' - '.lang('View access log');
+			if(!@is_object($GLOBALS['egw']->js))
 			{
-				$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 			}
-			$GLOBALS['phpgw']->js->validate_file('jscode','openwindow','admin');
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
 			$total_records = $this->bo->total($account_id);
 
 			$var = Array(
-				'th_bg'       => $GLOBALS['phpgw_info']['theme']['th_bg'],
+				'th_bg'       => $GLOBALS['egw_info']['theme']['th_bg'],
 				'nextmatchs_left'  => $this->nextmatchs->left('/index.php',$start,$total_records,'&menuaction=admin.uiaccess_history.list_history&account_id=' . $account_id),
 				'nextmatchs_right' => $this->nextmatchs->right('/index.php',$start,$total_records,'&menuaction=admin.uiaccess_history.list_history&account_id=' . $account_id),
 				'showing'          => $this->nextmatchs->show_hits($total_records,$start),
@@ -70,13 +70,13 @@
 
 			if ($account_id)
 			{
-				$var['link_return_to_view_account'] = '<a href="' . $GLOBALS['phpgw']->link('/index.php',
+				$var['link_return_to_view_account'] = '<a href="' . $GLOBALS['egw']->link('/index.php',
 					Array(
 						'menuaction' => 'admin.uiaccounts.view',
 						'account_id' => $account_id
 					)
 				) . '">' . lang('Return to view account') . '</a>';
-				$var['lang_last_x_logins'] = lang('Last %1 logins for %2',$total_records,$GLOBALS['phpgw']->common->grab_owner_name($account_id));
+				$var['lang_last_x_logins'] = lang('Last %1 logins for %2',$total_records,$GLOBALS['egw']->common->grab_owner_name($account_id));
 			}
 			else
 			{
@@ -120,7 +120,7 @@
 			}
 
 			$var = Array(
-				'bg_color'     => $GLOBALS['phpgw_info']['themes']['bg_color'],
+				'bg_color'     => $GLOBALS['egw_info']['themes']['bg_color'],
 				'footer_total' => lang('Total records') . ': ' . $total_records
 			);
 			if ($account_id)
@@ -133,7 +133,7 @@
 			}
 
 			// create the menu on the left, if needed
-			$menuClass = CreateObject('admin.uimenuclass');
+			$menuClass =& CreateObject('admin.uimenuclass');
 			$var['rows'] = $menuClass->createHTMLCode('view_account');
 
 			$this->template->set_var($var);

@@ -11,16 +11,16 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
+	$GLOBALS['egw_info']['flags'] = array(
 		'noheader'   => True,
 		'nonavbar'   => True,
 		'currentapp' => 'admin'
 	);
 	include('../header.inc.php');
 
-	if ($GLOBALS['phpgw']->acl->check('info_access',1,'admin'))
+	if ($GLOBALS['egw']->acl->check('info_access',1,'admin'))
 	{
-		$GLOBALS['phpgw']->redirect_link('/index.php');
+		$GLOBALS['egw']->redirect_link('/index.php');
 	}
 
 // Throw a little notice out if PHPaccelerator is enabled.
@@ -31,5 +31,5 @@
 	}
 
 	phpinfo();
-//	$phpgw->common->phpgw_footer();
+//	$GLOBALS['egw']->common->egw_footer();
 ?>

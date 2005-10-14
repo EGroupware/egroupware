@@ -1,15 +1,15 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - administration                                              *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - administration                                              *
+	* http://www.egroupware.org                                                *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	class soapplications
 	{
@@ -17,7 +17,7 @@
 
 		function soapplications()
 		{
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['egw']->db);
 		}
 
 		function read($app_name)
@@ -28,7 +28,7 @@
 			$this->db->next_record();
 			$app_info = array(
 				$this->db->f('app_name'),
-				$GLOBALS['phpgw_info']['apps'][$this->db->f('app_name')]['title'],
+				$GLOBALS['egw_info']['apps'][$this->db->f('app_name')]['title'],
 				$this->db->f('app_enabled'),
 				$this->db->f('app_name'),
 				$this->db->f('app_order')
@@ -44,7 +44,7 @@
 				while ($this->db->next_record())
 				{
 					$app = $this->db->f('app_name');
-					$title = @$GLOBALS['phpgw_info']['apps'][$app]['title'];
+					$title = @$GLOBALS['egw_info']['apps'][$app]['title'];
 					if (empty($title))
 					{
 						$title = lang($app) == $app.'*' ? $app : lang($app);
@@ -62,7 +62,7 @@
 		function add($data)
 		{
 			/* Yes, the sequence should work, but after a mass import in setup (new install)
-			  it does not work on pg
+				it does not work on pg
 			*/
 			$sql = 'SELECT MAX(app_id) from phpgw_applications';
 			$this->db->query($sql,__LINE__,__FILE__);

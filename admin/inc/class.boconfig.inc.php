@@ -28,9 +28,9 @@
 		function list_methods($_type='xmlrpc')
 		{
 			/*
-			  This handles introspection or discovery by the logged in client,
-			  in which case the input might be an array.  The server always calls
-			  this function to fill the server dispatch map using a string.
+				This handles introspection or discovery by the logged in client,
+				in which case the input might be an array.  The server always calls
+				this function to fill the server dispatch map using a string.
 			*/
 			if (is_array($_type))
 			{
@@ -83,7 +83,7 @@
 				return $errors;
 			}
 
-			$conf = CreateObject('phpgwapi.config', $data['appname']);
+			$conf =& CreateObject('phpgwapi.config', $data['appname']);
 
 			$conf->read_repository();
 			reset($newsettings);

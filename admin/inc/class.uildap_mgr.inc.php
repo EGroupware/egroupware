@@ -22,22 +22,22 @@
 
 		function uildap_mgr()
 		{
-			$this->t			= CreateObject('phpgwapi.Template',PHPGW_APP_TPL);
-			$this->boldapmgr		= CreateObject('admin.boldap_mgr');
+			$this->t			=& CreateObject('phpgwapi.Template',EGW_APP_TPL);
+			$this->boldapmgr		=& CreateObject('admin.boldap_mgr');
 		}
 	
 		function display_app_header()
 		{
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 			
 		}
 
 		function editUserData($_useCache='0')
 		{
-			global $phpgw, $phpgw_info, $HTTP_GET_VARS;
+			global $phpgw, $phpgw_info, $_GET;
 			
-			$accountID = $HTTP_GET_VARS['account_id'];			
+			$accountID = $_GET['account_id'];			
 			$GLOBALS['account_id'] = $accountID;
 
 			$this->display_app_header();
@@ -47,9 +47,9 @@
 			$this->t->set_file(array("editUserData" => "account_form_ldapdata.tpl"));
 			$this->t->set_block('editUserData','form','form');
 			$this->t->set_block('editUserData','link_row','link_row');
-			$this->t->set_var("th_bg",$phpgw_info["theme"]["th_bg"]);
-			$this->t->set_var("tr_color1",$phpgw_info["theme"]["row_on"]);
-			$this->t->set_var("tr_color2",$phpgw_info["theme"]["row_off"]);
+			$this->t->set_var("th_bg",$GLOBALS['egw_info']["theme"]["th_bg"]);
+			$this->t->set_var("tr_color1",$GLOBALS['egw_info']["theme"]["row_on"]);
+			$this->t->set_var("tr_color2",$GLOBALS['egw_info']["theme"]["row_off"]);
 			
 			$this->t->set_var("lang_email_config",lang("edit email settings"));
 			$this->t->set_var("lang_emailAddress",lang("email address"));
@@ -61,8 +61,8 @@
 			$this->t->set_var("lang_deliver_extern",lang("deliver extern"));
 			$this->t->set_var("lang_edit_email_settings",lang("edit email settings"));
 			$this->t->set_var("lang_ready",lang("Done"));
-			$this->t->set_var("link_back",$phpgw->link('/admin/accounts.php'));
-			$this->t->set_var("info_icon",PHPGW_IMAGES_DIR.'/info.gif');
+			$this->t->set_var("link_back",$GLOBALS['egw']->link('/admin/accounts.php'));
+			$this->t->set_var("info_icon",EGW_IMAGES_DIR.'/info.gif');
 			
 						
 			$linkData = array
@@ -70,7 +70,7 @@
 				'menuaction'	=> 'admin.uildap_mgr.saveUserData',
 				'account_id'	=> $accountID
 			);
-			$this->t->set_var("form_action", $phpgw->link('/index.php',$linkData));
+			$this->t->set_var("form_action", $GLOBALS['egw']->link('/index.php',$linkData));
 			
 			// only when we show a existing user
 			if($userData = $this->boldapmgr->getUserData($accountID, $_useCache))
@@ -125,7 +125,7 @@
 			}
 		
 			// create the menu on the left, if needed		
-			$menuClass = CreateObject('admin.uimenuclass');
+			$menuClass =& CreateObject('admin.uimenuclass');
 			$this->t->set_var('rows',$menuClass->createHTMLCode('edit_user'));
 
 			$this->t->pparse("out","form");
@@ -134,24 +134,24 @@
 		
 		function saveUserData()
 		{
-			global $HTTP_POST_VARS, $HTTP_GET_VARS;
+			global $_POST, $_GET;
 			
-			if($HTTP_POST_VARS["accountStatus"] == "on")
+			if($_POST["accountStatus"] == "on")
 			{
 				$accountStatus = "active";
 			}
-			if($HTTP_POST_VARS["forwardOnly"] == "on")
+			if($_POST["forwardOnly"] == "on")
 			{
 				$deliveryMode = "forwardOnly";
 			}
 
 			$formData = array
 			(
-				'mail'							=> $HTTP_POST_VARS["mail"],
-				'mailAlternateAddress'			=> $HTTP_POST_VARS["mailAlternateAddress"],
-				'mailForwardingAddress'			=> $HTTP_POST_VARS["mailForwardingAddress"],
-				'add_mailAlternateAddress'		=> $HTTP_POST_VARS["mailAlternateAddressInput"],
-				'remove_mailAlternateAddress'	=> $HTTP_POST_VARS["mailAlternateAddress"],
+				'mail'							=> $_POST["mail"],
+				'mailAlternateAddress'			=> $_POST["mailAlternateAddress"],
+				'mailForwardingAddress'			=> $_POST["mailForwardingAddress"],
+				'add_mailAlternateAddress'		=> $_POST["mailAlternateAddressInput"],
+				'remove_mailAlternateAddress'	=> $_POST["mailAlternateAddress"],
 				'accountStatus'					=> $accountStatus,
 				'deliveryMode'					=> $deliveryMode
 			);
@@ -159,11 +159,11 @@
 			//echo "<br><br>DebugArray in uiuserdata";
 			// echo _debug_array($formData);
 			
-			if($HTTP_POST_VARS["add_mailAlternateAddress"]) $bo_action='add_mailAlternateAddress';
-			if($HTTP_POST_VARS["remove_mailAlternateAddress"]) $bo_action='remove_mailAlternateAddress';
-			if($HTTP_POST_VARS["save"]) $bo_action='save';
+			if($_POST["add_mailAlternateAddress"]) $bo_action='add_mailAlternateAddress';
+			if($_POST["remove_mailAlternateAddress"]) $bo_action='remove_mailAlternateAddress';
+			if($_POST["save"]) $bo_action='save';
 
-			if (!$HTTP_POST_VARS["mail"]== "")	//attribute 'mail'is not allowed to be empty
+			if (!$_POST["mail"]== "")	//attribute 'mail'is not allowed to be empty
 			{
 // error generator necessary!!
 				$this->boldapmgr->saveUserData($_GET['account_id'], $formData, $bo_action);
@@ -182,9 +182,9 @@
 		
 		function translate()
 		{
-			global $phpgw_info;			
+						
 
-			$this->t->set_var('th_bg',$phpgw_info['theme']['th_bg']);
+			$this->t->set_var('th_bg',$GLOBALS['egw_info']['theme']['th_bg']);
 
 			$this->t->set_var('lang_add',lang('add'));
 			$this->t->set_var('lang_done',lang('Done'));

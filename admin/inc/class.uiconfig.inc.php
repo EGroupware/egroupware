@@ -1,16 +1,16 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Admin config                                                *
-  * Written by Miles Lott <milosch@phpwhere.org>                             *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Admin config                                                *
+	* Written by Miles Lott <milosch@phpwhere.org>                             *
+	* http://www.egroupware.org                                                *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	class uiconfig
 	{
@@ -63,14 +63,14 @@
 					$config_appname = $appname;
 					break;
 			}
-			$t = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($appname));
+			$t =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($appname));
 			$t->set_unknowns('keep');
 			$t->set_file(array('config' => 'config.tpl'));
 			$t->set_block('config','header','header');
 			$t->set_block('config','body','body');
 			$t->set_block('config','footer','footer');
 
-			$c = CreateObject('phpgwapi.config',$config_appname);
+			$c =& CreateObject('phpgwapi.config',$config_appname);
 			$c->read_repository();
 
 			if ($c->config_data)
@@ -153,13 +153,13 @@
 
 			if(!@is_object($GLOBALS['egw']->js))
 			{
-				$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
+				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
 
 			// set currentapp to our calling app, to show the right sidebox-menu
 			$GLOBALS['egw_info']['flags']['currentapp'] = $show_app;
-			$GLOBALS['egw']->common->phpgw_header();
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
 			$t->set_var('title',lang('Site Configuration'));
