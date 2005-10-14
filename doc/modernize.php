@@ -101,10 +101,14 @@ if (!$no_phpgw)
 	$modernize += array(
 		// phpGW --> eGW
 // done now separate as it is case sensitve		'PHPGW_'	               => 'EGW_',
+		'global $phpgw_info;'      => '',
+		'global $phpgw;'           => '',
 		'$GLOBALS[\'phpgw_info\']' => '$GLOBALS[\'egw_info\']',
 		'$GLOBALS["phpgw_info"]'   => '$GLOBALS[\'egw_info\']',
+		'$phpgw_info['             => '$GLOBALS[\'egw_info\'][',
 		'$GLOBALS[\'phpgw\']'      => '$GLOBALS[\'egw\']',
 		'$GLOBALS["phpgw"]'        => '$GLOBALS[\'egw\']',
+		'$phpgw['                  => '$GLOBALS[\'egw\'][',
 		'common->phpgw_header'     => 'common->egw_header',
 		'common->phpgw_footer'     => 'common->egw_footer',
 		'common->phpgw_exit'       => 'common->egw_exit',
