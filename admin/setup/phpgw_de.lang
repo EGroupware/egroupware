@@ -1,8 +1,8 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar!!!
+(default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benützt)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
-(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account active	admin	de	Konto aktiv
@@ -110,6 +110,7 @@ delete the group	admin	de	Gruppe löschen
 delete this category	admin	de	Kategorie löschen
 delete this group	admin	de	Gruppe löschen
 delete this user	admin	de	Benutzer löschen
+deliver extern	admin	de	Extern ausliefern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
 deny access to applications	admin	de	Zugriff auf Anwendungen verbieten
@@ -153,6 +154,8 @@ edit user account	admin	de	Benutzerkonto bearbeiten
 email account active	admin	de	Emailkonto aktiv
 email address	admin	de	Email-Adresse
 enable debug-messages	admin	de	Debug-Meldungen einschalten
+enable the soap service	admin	de	soap Service einschalten
+enable the xmlrpc service	admin	de	xmlrpc Service einschalten
 enabled - hidden from navbar	admin	de	Verfügbar, aber nicht in der Navigationsleiste
 enabled - popup window	admin	de	Verfügbar, Popup-Fenster
 enter a description for the category	admin	de	Geben Sie eine Beschreibung für diese Kategorie ein
@@ -160,11 +163,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	de
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Titel der Installation
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
-enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur eGroupWare-Installation.<br>Beispiel: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>keinen nachfolgenden Slash /</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur eGroupWare-Installation.<br>Beispiel: http://www.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen, geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf nochmal
 enter the site password for peer servers	admin	de	Site-Passwort für Peer-Server
 enter the site username for peer servers	admin	de	Site-Benutzername für Peer-Server
@@ -190,6 +191,9 @@ find and register all application hooks	admin	de	Suchen und registrieren der "Ho
 for the times above	admin	de	für die darüber angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
 force selectbox	admin	de	Auswahl erzwingen
+forward also to	admin	de	Zusätzlich weiterleiten an
+forward email's to	admin	de	Email's weiterleiten an
+forward only	admin	de	Nur weiterleiten
 global categories	common	de	Globale Kategorien
 group ?	admin	de	Gruppe ?
 group has been added	common	de	Gruppe wurde hinzugefügt
@@ -218,7 +222,6 @@ ip	admin	de	IP
 jobs	admin	de	Jobs
 kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
-language	admin	de	Sprache
 last %1 logins	admin	de	Letze %1 Logins
 last %1 logins for %2	admin	de	Letze %1 Logins für %2
 last login	admin	de	Letzter Login
@@ -232,6 +235,7 @@ ldap groups context	admin	de	LDAP-Kontext für Gruppen
 ldap host	admin	de	LDAP-Host
 ldap root password	admin	de	LDAP-Root-Passwort
 ldap rootdn	admin	de	LDAP rootdn
+leave empty for no quota	admin	de	Leer lassen für keine Quota
 leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
 leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
 list config settings	admin	de	Konfigurationseinstellungen auflisten
@@ -255,7 +259,6 @@ minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer ID (z.B
 minute	admin	de	Minute
 mode	admin	de	Modus
 month	admin	de	Monat
-never	admin	de	Nie
 new group name	admin	de	Neuer Gruppenname
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
 next run	admin	de	nächste Ausführung
@@ -287,6 +290,7 @@ please select	admin	de	Bitte auswählen
 postfix with ldap	admin	de	Postfix mit LDAP
 preferences	admin	de	Einstellungen
 primary group	admin	de	primäre Gruppe
+qmaildotmode	admin	de	qmaildotmode
 qouta size in mbyte	admin	de	Quotagröße in MByte
 quota settings	admin	de	Quota-Einstellungen
 re-enter password	admin	de	Passwort wiederholen
@@ -305,7 +309,6 @@ search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
 search peer servers	admin	de	Serververbund durchsuchen
-section	admin	de	Abschnitt
 security	admin	de	Sicherheit
 select group managers	admin	de	Gruppenmanager auswählen
 select permissions this group will have	admin	de	Wählen Sie die Zugriffsrechte für diese Gruppe.
@@ -397,7 +400,6 @@ would you like to show each application's upgrade status ?	admin	de	Soll der Upg
 xml-rpc	admin	de	XML-RPC
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
-you must add at least 1 permission to this account	admin	de	Sie müssen diesem Konto mindestens eine Berechtigung zuteilen
 you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
 you must enter a lastname	admin	de	Sie müssen einen Nachname angeben
 you must enter a loginid	admin	de	Sie müssen einen Benutzername angeben
@@ -406,6 +408,3 @@ you must enter an application name.	admin	de	Sie müssen der Anwendung einen Name
 you must enter an application title.	admin	de	Sie müssen der Anwendung einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Dateityp auswählen
 you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können!
-enable the xmlrpc service	admin	de	xmlrpc Service einschalten
-(default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benützt)
-enable the soap service	admin	de	soap Service einschalten
