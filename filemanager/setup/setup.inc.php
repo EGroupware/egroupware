@@ -19,12 +19,9 @@
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['filemanager']['hooks'] = array(
-		'add_def_pref',
-		'admin',
 		'deleteaccount',
 		'settings',
 		'sidebox_menu',
-		'personalizer',
 		'preferences'
 	);
 

@@ -1,15 +1,15 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Filemanager                                                 *
-  * http://www.egroupware.org                                                *
-  * ------------------------------------------------------------------------ *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Filemanager                                                 *
+	* http://www.egroupware.org                                                *
+	* ------------------------------------------------------------------------ *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	class uifilemanager
 	{
@@ -83,25 +83,25 @@
 		function uifilemanager()
 		{
 			//			error_reporting(8);
-			$GLOBALS['egw']->browser = CreateObject('phpgwapi.browser');
+			$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
 
 			$this->now = date('Y-m-d');
 
-			$this->bo = CreateObject('filemanager.bofilemanager');
+			$this->bo =& CreateObject('filemanager.bofilemanager');
 
 			$this->t = $GLOBALS['egw']->template;
 
 			// here local vars are created from the HTTP vars
-			@reset($GLOBALS['HTTP_POST_VARS']);
-			while(list($name,) = @each($GLOBALS['HTTP_POST_VARS']))
+			@reset($_POST);
+			while(list($name,) = @each($_POST))
 			{
-				$this->$name = $GLOBALS['HTTP_POST_VARS'][$name];
+				$this->$name = $_POST[$name];
 			}
 
-			@reset($GLOBALS['HTTP_GET_VARS']);
-			while(list($name,) = @each($GLOBALS['HTTP_GET_VARS']))
+			@reset($_GET);
+			while(list($name,) = @each($_GET))
 			{
-				$$name = $GLOBALS['HTTP_GET_VARS'][$name];
+				$$name = $_GET[$name];
 			}
 
 			$to_decode = array
@@ -156,7 +156,7 @@
 			}
 
 			// get appl. and user prefs
-			$pref = CreateObject('phpgwapi.preferences', $this->bo->userinfo['username']);
+			$pref =& CreateObject('phpgwapi.preferences', $this->bo->userinfo['username']);
 			$pref->read_repository();
 			//			$GLOBALS['egw']->hooks->single('add_def_pref', $GLOBALS['appname']);
 			$pref->save_repository(True);
@@ -262,7 +262,7 @@
 					'enable_browser_class'	=> True
 				);
 
-				$GLOBALS['egw']->common->phpgw_header();
+				$GLOBALS['egw']->common->egw_header();
 			}
 
 			# Page to process users
@@ -346,7 +346,7 @@
 			{
 				$group_id = $GLOBALS['egw']->accounts->name2id($group_array['account_name']);
 
-				$applications = CreateObject('phpgwapi.applications', $group_id);
+				$applications =& CreateObject('phpgwapi.applications', $group_id);
 				$this->groups_applications[$group_array['account_name']] = $applications->read_account_specific();
 			}
 
@@ -367,8 +367,8 @@
 				$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('You do not have access to %1', $this->path)));
 				$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->homedir, lang('Go to your home directory'));
 
-				$GLOBALS['egw']->common->phpgw_footer();
-				$GLOBALS['egw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->egw_footer();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 
 			$this->bo->userinfo['working_id'] = $this->bo->vfs->working_id;
@@ -412,8 +412,8 @@
 					$this->messages[] = $GLOBALS['egw']->common->error_list(array(lang('Directory %1 does not exist', $this->path)));
 					$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->bo->homedir, lang('Go to your home directory'));
 
-					$GLOBALS['egw']->common->phpgw_footer();
-					$GLOBALS['egw']->common->phpgw_exit();
+					$GLOBALS['egw']->common->egw_footer();
+					$GLOBALS['egw']->common->egw_exit();
 				}
 			}
 
@@ -861,8 +861,8 @@
 			$this->t->set_var($vars);
 			$this->t->pparse('out','filemanager_footer');
 
-			$GLOBALS['egw']->common->phpgw_footer();
-			$GLOBALS['egw']->common->phpgw_exit();
+			$GLOBALS['egw']->common->egw_footer();
+			$GLOBALS['egw']->common->egw_exit();
 		}
 
 		function readFilesInfo()
@@ -1672,8 +1672,8 @@
 					}
 
 					$this->html_table_end();
-					$GLOBALS['egw']->common->phpgw_footer();
-					$GLOBALS['egw']->common->phpgw_exit();
+					$GLOBALS['egw']->common->egw_footer();
+					$GLOBALS['egw']->common->egw_exit();
 				}
 				else
 				{
@@ -1723,7 +1723,7 @@
 					'string'	=> $this->path.'/'.$this->file,//FIXME
 					'relatives'	=> array(RELATIVE_NONE)
 				));
-				$GLOBALS['egw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 		}
 
@@ -1736,10 +1736,10 @@
 					continue;
 				}
 
-				$download_browser = CreateObject('phpgwapi.browser');
+				$download_browser =& CreateObject('phpgwapi.browser');
 				$download_browser->content_header($this->fileman[$i]);
 				echo $this->bo->vfs->read(array('string' => $this->fileman[$i]));
-				$GLOBALS['egw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 		}
 
@@ -1949,7 +1949,7 @@
 					$href = SEP . $href;
 				}
 
-				/* $phpgw->link requires that the extra vars be passed separately */
+				/* $GLOBALS['egw']->link requires that the extra vars be passed separately */
 				//				$link_parts = explode("?", $href);
 				$address = $GLOBALS['egw']->link($href, $all_args);
 				//				$address = $GLOBALS['egw']->link($href);
