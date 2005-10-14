@@ -42,16 +42,16 @@ class updates {
 	function showUpdates() {
 		$updates = array();
 		
-		if ((isset($GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-		$GLOBALS['phpgw_info']['user']['apps']['admin']) &&
-		(isset($GLOBALS['phpgw_info']['server']['checkfornewversion']) &&
-		$GLOBALS['phpgw_info']['server']['checkfornewversion']))
+		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
+		$GLOBALS['egw_info']['user']['apps']['admin']) &&
+		(isset($GLOBALS['egw_info']['server']['checkfornewversion']) &&
+		$GLOBALS['egw_info']['server']['checkfornewversion']))
 		{
 			
-			$GLOBALS['phpgw']->network = CreateObject('phpgwapi.network');
+			$GLOBALS['egw']->network =& CreateObject('phpgwapi.network');
 			
-			$GLOBALS['phpgw']->network->set_addcrlf(False);
-			$lines = $GLOBALS['phpgw']->network->gethttpsocketfile('http://www.egroupware.org/currentversion');
+			$GLOBALS['egw']->network->set_addcrlf(False);
+			$lines = $GLOBALS['egw']->network->gethttpsocketfile('http://www.egroupware.org/currentversion');
 			for($i=0; $i<count($lines); $i++)
 			{
 				if(strstr($lines[$i],'currentversion'))
@@ -60,28 +60,28 @@ class updates {
 				}
 			}
 			
-			if($GLOBALS['phpgw']->common->cmp_version_long($GLOBALS['phpgw_info']['server']['versions']['phpgwapi'],$line_found[1]))
+			if($GLOBALS['egw']->common->cmp_version_long($GLOBALS['egw_info']['server']['versions']['phpgwapi'],$line_found[1]))
 			{
 				$updates['egroupware'] = '<p>There is a new version of eGroupWare available. <a href="'
 					. 'http://www.egroupware.org">http://www.egroupware.org</a></p>';
 			}
 
 			$_found = False;
-			$GLOBALS['phpgw']->db->query("select app_name,app_version from phpgw_applications",__LINE__,__FILE__);
-			while($GLOBALS['phpgw']->db->next_record())
+			$GLOBALS['egw']->db->query("select app_name,app_version from phpgw_applications",__LINE__,__FILE__);
+			while($GLOBALS['egw']->db->next_record())
 			{
-				$_db_version  = $GLOBALS['phpgw']->db->f('app_version');
-				$_app_name    = $GLOBALS['phpgw']->db->f('app_name');
-				$_app_dir = $GLOBALS['phpgw']->common->get_app_dir($_app_name);
+				$_db_version  = $GLOBALS['egw']->db->f('app_version');
+				$_app_name    = $GLOBALS['egw']->db->f('app_name');
+				$_app_dir = $GLOBALS['egw']->common->get_app_dir($_app_name);
 				$_versionfile = $_app_dir . '/setup/setup.inc.php';
 				if($_app_dir && file_exists($_versionfile))
 				{
 					include($_versionfile);
 					$_file_version = $setup_info[$_app_name]['version'];
-					$_app_title    = $GLOBALS['phpgw_info']['apps'][$_app_name]['title'];
+					$_app_title    = $GLOBALS['egw_info']['apps'][$_app_name]['title'];
 					unset($setup_info);
 
-					if($GLOBALS['phpgw']->common->cmp_version_long($_db_version,$_file_version))
+					if($GLOBALS['egw']->common->cmp_version_long($_db_version,$_file_version))
 					{
 						$_found = True;
 						$_app_string .= '<br>' . $_app_title;

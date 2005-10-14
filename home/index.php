@@ -12,41 +12,29 @@
 *  option) any later version.                                              *
 \**************************************************************************/
 
-
-
-/*
-** Checking the security before anything is displayed
-*/
-$GLOBALS['sessionid'] = @$_GET['sessionid'] ? $_GET['sessionid'] : @$_COOKIE['sessionid'];
-if (!isset($GLOBALS['sessionid']) || !$GLOBALS['sessionid'])
-{
-	Header('Location: ../login.php');
-	exit;
-}
-
+/* $Id$ */
 
 /*
 ** Initializing the home application
 */
-$GLOBALS['phpgw_info']['flags'] = array(
-	'noheader'                => False,
-	'nonavbar'                => False,
-	'currentapp'              => 'home',
-	'enable_network_class'    => False,
-	'enable_contacts_class'   => False,
-	'enable_nextmatchs_class' => False
+$GLOBALS['egw_info'] = array(
+	'flags' => array(
+		'noheader'                => False,
+		'nonavbar'                => False,
+		'currentapp'              => 'home',
+		'enable_network_class'    => False,
+		'enable_contacts_class'   => False,
+		'enable_nextmatchs_class' => False,
+	),
 );
 
 include('../header.inc.php');
-
-$GLOBALS['phpgw_info']['flags']['app_header']=lang('home');
-
 
 /*
 ** Initializing the template
 */
 
-$GLOBALS['tpl'] = CreateObject('phpgwapi.Template',$GLOBALS['phpgw']->common->get_tpl_dir('home'));
+$GLOBALS['tpl'] =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('home'));
 $GLOBALS['tpl']->set_unknowns('remove');
 
 $GLOBALS['tpl']->set_file(
@@ -67,16 +55,16 @@ $GLOBALS['tpl']->set_block('home','cell','cell');
 
 // Commented by alpeb: The following prevented anonymous users to get a home page. Perhaps it was done with anonymous users such as the ones
 // used by  wiki and sitemgr in mind. However, if you mark a normal user as anonymous just to avoid being shown in sessions and access log (like you would for an admin that doesn't want to be noticed), the user won't be able to login anymore. That's why I commented the code.
-/*if ($GLOBALS['phpgw']->session->session_flags == 'A')
+/*if ($GLOBALS['egw']->session->session_flags == 'A')
 {
 	if ($_SERVER['HTTP_REFERER'] && strstr($_SERVER['HTTP_REFERER'],'home.php') === False)
 	{
-		$GLOBALS['phpgw']->redirect($_SERVER['HTTP_REFERER']);
+		$GLOBALS['egw']->redirect($_SERVER['HTTP_REFERER']);
 	}
 	else
 	{
 		// redirect to the login-page, better then giving an empty page
-		$GLOBALS['phpgw']->redirect('login.php');
+		$GLOBALS['egw']->redirect('login.php');
 	}
 	exit;
 }*/
@@ -85,15 +73,15 @@ $GLOBALS['tpl']->set_block('home','cell','cell');
 /*
 ** Show the updates
 */	
-$GLOBALS['phpgw']->hooks->single('showUpdates','home');
+$GLOBALS['egw']->hooks->single('showUpdates','home');
 
 	
 /*
 ** Display the notification window
 */
-if (isset($GLOBALS['phpgw_info']['user']['apps']['notifywindow']) && $GLOBALS['phpgw_info']['user']['apps']['notifywindow'])
+if (isset($GLOBALS['egw_info']['user']['apps']['notifywindow']) && $GLOBALS['egw_info']['user']['apps']['notifywindow'])
 {
-	$var['link'] = $GLOBALS['phpgw']->link('/notify.php');
+	$var['link'] = $GLOBALS['egw']->link('/notify.php');
 	$var['notifywindow'] = lang('Open notify window');
 	$GLOBALS['tpl']->set_var($var);
 	$GLOBALS['tpl']->pfp('out','notify_window');
@@ -101,31 +89,31 @@ if (isset($GLOBALS['phpgw_info']['user']['apps']['notifywindow']) && $GLOBALS['p
 	
 
 /* This initializes the users portal_order preference if it does not exist. */
-if(!is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']) && $GLOBALS['phpgw_info']['apps'])
+if(!is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']) && $GLOBALS['egw_info']['apps'])
 {
-	$GLOBALS['phpgw']->preferences->delete('portal_order');
-	@reset($GLOBALS['phpgw_info']['apps']);
+	$GLOBALS['egw']->preferences->delete('portal_order');
+	@reset($GLOBALS['egw_info']['apps']);
 	$order = 0;
-	while (list(,$p) = each($GLOBALS['phpgw_info']['apps']))
+	while (list(,$p) = each($GLOBALS['egw_info']['apps']))
 	{
-		if($GLOBALS['phpgw_info']['user']['apps'][$p['name']])
+		if($GLOBALS['egw_info']['user']['apps'][$p['name']])
 		{
-			$GLOBALS['phpgw']->preferences->add('portal_order',$order++,$p['id']);
+			$GLOBALS['egw']->preferences->add('portal_order',$order++,$p['id']);
 		}
 	}
-	$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();
+	$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->save_repository();
 }
 
-if(is_array($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+if(is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']))
 {
 	$app_check = Array();
-	@ksort($GLOBALS['phpgw_info']['user']['preferences']['portal_order']);
-	while(list($order,$app) = each($GLOBALS['phpgw_info']['user']['preferences']['portal_order']))
+	@ksort($GLOBALS['egw_info']['user']['preferences']['portal_order']);
+	while(list($order,$app) = each($GLOBALS['egw_info']['user']['preferences']['portal_order']))
 	{
 		if(!isset($app_check[(int)$app]) || !$app_check[(int)$app])
 		{
 			$app_check[(int)$app] = True;
-			$sorted_apps[] = $GLOBALS['phpgw']->applications->id2name((int)$app);
+			$sorted_apps[] = $GLOBALS['egw']->applications->id2name((int)$app);
 		}
 	}
 }
@@ -140,12 +128,11 @@ else
 }
 
 // Now add the rest of the user's apps, to make sure we pick up any additions to the home display
-@reset($GLOBALS['phpgw_info']['user']['apps']);
-while(list(,$p) = each($GLOBALS['phpgw_info']['user']['apps']))
+foreach($GLOBALS['egw_info']['user']['apps'] as $app)
 {
-	$sorted_apps[] = $p['name'];
+	$sorted_apps[] = $app['name'];
 }
-//$GLOBALS['phpgw']->hooks->process('home',$sorted_apps);
+//$GLOBALS['egw']->hooks->process('home',$sorted_apps);
 
 
 /*
@@ -175,13 +162,13 @@ function migrate_pref($appname,$var_old,$var_new,$type='user')
 	$result = false;
 	foreach($types as $_type)
 	{
-		if(isset($GLOBALS['phpgw']->preferences->$_type[$appname][$var_old]))
+		if(isset($GLOBALS['egw']->preferences->$_type[$appname][$var_old]))
 		{
-			$GLOBALS['phpgw']->preferences->$_type[$appname][$var_new] =
-				$GLOBALS['phpgw']->preferences->$_type[$appname][$var_old];
+			$GLOBALS['egw']->preferences->$_type[$appname][$var_new] =
+				$GLOBALS['egw']->preferences->$_type[$appname][$var_old];
 			$result = true;
-			$GLOBALS['phpgw_info']['user']['preferences'] =
-				$GLOBALS['phpgw']->preferences->save_repository(false,$_type);
+			$GLOBALS['egw_info']['user']['preferences'] =
+				$GLOBALS['egw']->preferences->save_repository(false,$_type);
 		}
 	}
 	return $result;
@@ -191,7 +178,7 @@ $portal_oldvarnames = array('mainscreen_showevents', 'homeShowEvents','homeShowL
 $migrate_oldvarnames = false;
 if($migrate_oldvarnames)
 {
-	$_apps = $GLOBALS['phpgw_info']['user']['apps'];
+	$_apps = $GLOBALS['egw_info']['user']['apps'];
 	@reset($_apps);
 	foreach($_apps as $_appname)
 	{
@@ -219,7 +206,6 @@ $tdopen=0;
 $lastd = 0;
 $numcols = 2;
 $curcol = 1;
-@reset($sorted_apps);
 foreach($sorted_apps as $appname)
 {
 	if((int)$done[$appname] == 1 || empty($appname))
@@ -231,15 +217,15 @@ foreach($sorted_apps as $appname)
 	$thisd = 0;
 	foreach($varnames as $varcheck)
 	{
-		//echo "$appname:$varcheck=".$GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]."<br>";
-		if($GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck]=='True')
+		//echo "$appname:$varcheck=".$GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck]."<br>";
+		if($GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck]=='True')
 		{
 			$thisd = 1;
 			break;
 		}
 		else 
 		{
-			$_thisd = (int)$GLOBALS['phpgw_info']['user']['preferences'][$appname][$varcheck];
+			$_thisd = (int)$GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck];
 			if($_thisd>0)
 			{
 				//echo "Found $appname=$_thisd through $varcheck<br>";
@@ -266,7 +252,7 @@ foreach($sorted_apps as $appname)
 		$var['colspan'] = ($thisd==2)?'1':'2';
 		
 		ob_start();
-		$var['content'] = $GLOBALS['phpgw']->hooks->single('home',$appname);
+		$var['content'] = $GLOBALS['egw']->hooks->single('home',$appname);
 		if (!$var['content'] || $var['content'] == 1)	// content has been echoed and not returned
 		{
 			$var['content'] = ob_get_contents();
@@ -299,21 +285,21 @@ $GLOBALS['tpl']->pfp('out','end_table');
 //_debug_array($neworder);
 if(count($neworder)>0)//$GLOBALS['portal_order'])
 {
-	$GLOBALS['phpgw']->preferences->delete('portal_order');
+	$GLOBALS['egw']->preferences->delete('portal_order');
 	@reset($neworder);
 	while(list($app_order,$app_name) = each($neworder))
 	{
-		$app_id = $GLOBALS['phpgw']->applications->name2id($app_name);
+		$app_id = $GLOBALS['egw']->applications->name2id($app_name);
 		//echo "neworder: $app_order=$app_id:$app_name<br>";
-		$GLOBALS['phpgw']->preferences->add('portal_order',$app_order,$app_id);
+		$GLOBALS['egw']->preferences->add('portal_order',$app_order,$app_id);
 	}
-	$GLOBALS['phpgw_info']['user']['preferences'] = $GLOBALS['phpgw']->preferences->save_repository();
+	$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->save_repository();
 }
-//_debug_array($GLOBALS['phpgw_info']['user']['preferences']);
+//_debug_array($GLOBALS['egw_info']['user']['preferences']);
 
-//$phpgw->common->debug_phpgw_info();
-//$phpgw->common->debug_list_core_functions(); 
-$GLOBALS['phpgw']->common->phpgw_footer(); 
+//$GLOBALS['egw']->common->debug_phpgw_info();
+//$GLOBALS['egw']->common->debug_list_core_functions(); 
+$GLOBALS['egw']->common->egw_footer(); 
 ?>
 
 

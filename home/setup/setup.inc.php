@@ -19,16 +19,13 @@
 
 	$setup_info['home']['author'] = 'Edo van Bruggen';
 	$setup_info['home']['license']  = 'GPL';
-	$setup_info['home']['description'] = 'Displays home';
+	$setup_info['home']['description'] = 'Displays eGroupWare\' homepage';
 	$setup_info['home']['maintainer'] = array(
 		'name' => 'eGroupWare Developers',
 		'email' => 'egroupware-developers@lists.sourceforge.net'
 	);
 
 	/* The hooks this app includes, needed for hooks registration */
-	$setup_info['home']['hooks'][] = 'home';
-	$setup_info['home']['hooks'][] = 'sidebox_menu';
-	
 	$setup_info['home']['hooks']['hasUpdates'] = 'home.updates.hasUpdates';
 	$setup_info['home']['hooks']['showUpdates'] = 'home.updates.showUpdates';
 
