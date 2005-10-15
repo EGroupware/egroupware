@@ -293,20 +293,19 @@
 			return False;
 		}
 
-                /**
-                * check if username and password is valid
-                *
-                * this function compares the supplied and stored username and password
+        /**
+        * check if username and password is valid
+        *
+        * this function compares the supplied and stored username and password
 		* as any of the passwords can be clear text or md5 we convert them to md5 
 		* internal and compare always the md5 hashs
-                *
-                * @param string $user the user supplied username
-                * @param string $pw the user supplied password
-                * @param string $conf_user the configured username
-                * @param string $conf_pw the configured password
-                * @returns bool
-                */
-
+        *
+        * @param string $user the user supplied username
+        * @param string $pw the user supplied password
+        * @param string $conf_user the configured username
+        * @param string $conf_pw the configured password
+        * @returns bool
+        */
 		function check_auth($user,$pw,$conf_user,$conf_pw)
 		{
 			#echo "<p>setup::check_auth('$user','$pw','$conf_user','$conf_pw')</p>\n";exit;
@@ -945,6 +944,38 @@
 			$this->add_acl('preferences','changepassword',$accountid,(int)$changepw);
 
 			return $accountid;
+		}
+		
+		/**
+		 * Check if accounts other then the automatically installed anonymous account exist
+		 *
+		 * We check via the account object, to deal with different account-storages
+		 *
+		 * @return boolean
+		 */
+		function accounts_exist()
+		{
+			$this->setup_account_object();
+
+			$accounts = $GLOBALS['egw']->accounts->search(array(
+				'type'   => 'accounts',
+				'start'  => 0,
+				'offset' => 2,	// we only need to check 2 accounts, if we just check for not anonymous
+			));
+			
+			if (!$accounts || !is_array($accounts) || !count($accounts))
+			{
+				return false;
+			}
+			foreach($accounts as $account)
+			{
+				if ($account['account_lid'] != 'anonymous')
+				{
+					// we might add further checks, eg. if the account really has admin rights here
+					return true;
+				}
+			}
+			return false;
 		}
 
 		/**

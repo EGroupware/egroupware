@@ -512,9 +512,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 	{
 		case 10:
 			// check if there is already a user account (not the anonymous account of sitemgr or a group)
-			// Note: this does not check the availiblitly of accounts via other auth-methods then sql !!!
-			$GLOBALS['egw_setup']->db->query("SELECT count(*) FROM phpgw_accounts WHERE account_type='u' AND account_lid!='anonymous'",__LINE__,__FILE__);
-			$no_accounts = !$GLOBALS['egw_setup']->db->next_record() || !$GLOBALS['egw_setup']->db->f(0);
+			$no_accounts = !$GLOBALS['egw_setup']->accounts_exist();
 			$setup_tpl->set_var('admin_status_img',$no_accounts ? $incomplete : $completed);
 			$setup_tpl->set_var('admin_status_alt',$no_accounts ? lang('not completed') : lang('completed'));
 			$setup_tpl->set_var('admin_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
