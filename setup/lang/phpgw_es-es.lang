@@ -1,6 +1,5 @@
 %1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
 %1 is %2%3 !!!	setup	es-es	¡¡%1 %2 es %3!!
-(account deletion in sql only)	setup	es-es	(borrado de cuentas sólo en SQL)
 (searching accounts and changing passwords)	setup	es-es	(buscando cuentas y cambiando contraseñas)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	es-es	*** NO actualice su base de datos mediante esta instalación, ya que la actualización podría interrumpirse por el tiempo máximo de ejecución permitido, lo que deja su base de datos en un estado irrecuperable ¡¡(se pierden los datos)!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	es-es	*** Tiene que hacer los cambios manualmente en su php.ini (normalmente en /etc en linux) para que eGW funcione completamente ***
@@ -46,7 +45,6 @@ are you sure you want to delete your existing tables and data?	setup	es-es	¿Segu
 are you sure?	setup	es-es	¿ESTA SEGURO?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	es-es	Por petición suya, este guión intentará crear la base de datos y asignar permisos al usuario de la base de datos para ella
 at your request, this script is going to attempt to install a previous backup	setup	es-es	Por haberlo solicitado, este script va a intentar instalar una copia de seguridad anterior
-at your request, this script is going to attempt to install all the applications for you	setup	es-es	Por petición suya, este guión intentará instalar todas las aplicaciones por usted
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	es-es	A petición suya, este script va a intentar instalar las tablas principales y las aplicaciones de preferencias y administración.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	es-es	Por petición suya, este guión intentará actualizar sus antigüas apliaciones a las versiones actuales
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	es-es	A petición suya, este guión intentará actualizar sus viejas tablas al nuevo formato
@@ -89,12 +87,10 @@ check installation	setup	es-es	Comprobar instalación
 check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de todas las sesiones
 checking extension %1 is loaded or loadable	setup	es-es	Comprobando si se puede cargar o está cargada la extensión %1
 checking file-permissions of %1 for %2 %3: %4	setup	es-es	Comprobando si %1 %2 tiene permiso de %3: %4
-checking file-permissions of %1 for %2: %3	setup	es-es	Comprobando si %1 tiene permiso de %2: %3
 checking for gd support...	setup	es-es	Comprobando el soporte GD...
 checking php.ini	setup	es-es	Comprobando php.ini
 checking the egroupware installation	setup	es-es	Comprobando la instalación de eGroupWare
 click <a href="index.php">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php">aquí</a> para volver a la instalación.
-click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.	setup	es-es	Pulse <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">aquí</a> para volver a la instalación.
 click here	setup	es-es	Pulse aquí
 click here to re-run the installation tests	setup	es-es	Pulse aquí para volver a ejecutar las pruebas de instalación
 completed	setup	es-es	Completado
@@ -129,6 +125,7 @@ current system-charset is %1, click %2here%3 to change it.	setup	es-es	El juego 
 current version	setup	es-es	Version Actual
 currently installed languages: %1 <br />	setup	es-es	Idiomas actualmente instalados: %1 <br />
 database successfully converted from '%1' to '%2'	setup	es-es	La base de datos se convirtió correctamen de '%1' a '%2'
+datebase	setup	es-es	Base de datos
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	es-es	Puerto de hora.<br />Si usa el puerto 13, por favor, configure las reglas del cortafuegos adecuadamente antes de enviar esta página.
 day	setup	es-es	día
 day of week<br />(0-6, 0=sunday)	setup	es-es	día de la semana<br />(0-6, 0=domingo)
@@ -261,7 +258,6 @@ ldap modify	setup	es-es	Modificar LDAP
 ldap root password	setup	es-es	Contraseña del administrador LDAP
 ldap rootdn	setup	es-es	rootdn LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	es-es	Filtro de búsqueda LDAP para las cuentas. Predeterminado: "(uid=%user)", %domain=eGW-domain
-limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.0.1)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones o redes (p. ej. 10.1.1,127.0.0.1)
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	es-es	Limitar el acceso a la instalación a las siguientes direcciones, redes o máquinas (p. ej. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	es-es	Iniciar sesión en mysql -
 logout	setup	es-es	Cerrar sesión
@@ -290,15 +286,10 @@ never	setup	es-es	nunca
 new	setup	es-es	Nueva
 next run	setup	es-es	siguiente ejecución
 no	setup	es-es	No
+no %1 support found. disabling	setup	es-es	No se encontró soporte para %1. Deshabilitando
 no accounts existing	setup	es-es	No existen cuentas
 no algorithms available	setup	es-es	no hay algortimos disponibles
-no microsoft sql server support found. disabling	setup	es-es	No se encontró soporte para Microsoft SQL Server. Desactivando.
 no modes available	setup	es-es	No hay modos disponibles
-no mysql support found. disabling	setup	es-es	No se encontró soporte para MySQL Desactivando.
-no odbc support found. disabling	setup	es-es	No se encontró soporte ODBC. Desactivando
-no oracle-db support found. disabling	setup	es-es	No se encontró soporte para Oracle. Desactivando.
-no postgres-db support found. disabling	setup	es-es	No se encontró soporte para PostgreSQL. Desactivando.
-no postgresql support found. disabling	setup	es-es	No se encontró soporte para PostgreSQL. Desactivando.
 no xml support found. disabling	setup	es-es	No se encontró soporte para XML. Desactivando.
 not	setup	es-es	no
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	es-es	No todos los algoritmos y modos de mcrypt funcionan con eGroupWare. Si tiene problemas, intente desactivarlo.
@@ -325,13 +316,13 @@ passwords did not match, please re-enter	setup	es-es	Las contreñas no coinciden,
 path information	setup	es-es	Información de la ruta
 path to user and group files has to be outside of the webservers document-root!!!	setup	es-es	¡¡La ruta a los ficheros de usuarios y grupos HA DE ESTAR FUERA de la raíz del servidor web!!
 persistent connections	setup	es-es	Conexiones persistentes
+php plus restore	setup	es-es	PHP plus restore
+php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	es-es	PHP plus restore proporciona de lejos el mejor rendimiento, ya que almacena el entorno de eGW completamente en la sesión.
 please check for sql scripts within the application's directory	setup	es-es	Por favor, compruebe los scripts sql en el directorio de la aplicación
 please check read/write permissions on directories, or back up and use another option.	setup	es-es	Por favor, compruebe los permisos de lectura y escritura en los directorios, o vuelva y use otra opción
 please configure egroupware for your environment	setup	es-es	Por favor, configure eGroupWare para su entorno
 please consult the %1.	setup	es-es	Por favor, consulte el %1
 please fix the above errors (%1) and warnings(%2)	setup	es-es	Por favor, corrija los errores de arriba (%1) y avisos (%2)
-please fix the above errors (%1) and warnings(%2) and	setup	es-es	Por favor, corrija los errores (%1) y advertencias (%2) de arriba y
-please fix the above errors (%1) and warnings(%2) and %3continue to the header admin%4	setup	es-es	Por favor, corrija los errores (%1) y advertencias (%2) de encima y %3continúe con el Administrador de encabezados%4
 please install	setup	es-es	Por favor, instale
 please login	setup	es-es	Por favor, inicie la sesión
 please login to egroupware and run the admin application for additional site configuration	setup	es-es	Por favor, inicie la sesión en eGroupWare y ejecute la aplicación de administración para conifguración adicional del sitio
@@ -417,7 +408,6 @@ step %1 - configuration	setup	es-es	Paso %1 - Configuración
 step %1 - db backup and restore	setup	es-es	Paso %1 - Copia de seguridad y restauración de la base de datos
 step %1 - language management	setup	es-es	Paso %1 - Administración de idiomas
 step %1 - simple application management	setup	es-es	Paso %1 - Administración simple de aplicaciones
-submit	setup	es-es	Enviar
 succesfully uploaded file %1	setup	es-es	se subió correctamente el fichero %1
 table change messages	setup	es-es	Mensajes de cambios en las tablas
 tables dropped	setup	es-es	tablas eliminadas
@@ -434,11 +424,9 @@ the following applications need to be upgraded:	setup	es-es	Las siguientes aplic
 the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	es-es	La extensión imap es necesaria por las dos aplicaciones de correo, incluso si usa pop3.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
-the session extension is needed to use php4 session (db-sessions work without).	setup	es-es	Se necesita la extensión de la sesión para usar la sesión php4 (las extensiones por base de datos no lo necesitan).
+the session extension is needed to use php sessions (db-sessions work without).	setup	es-es	La extensión de sesión es necesaria para usar sesiones php (sesiones db funcionan sin ella).
 the table definition was correct, and the tables were installed	setup	es-es	La definición de la tabla era correcta, y se instalaron las tablas
-the table definition was correct, and the tables were installed.	setup	es-es	La definición de las tablas fué correcta, y las tablas fueron instaladas
 the tables	setup	es-es	las tablas
-there was a problem tring to connect to your ldap server. <br />please check your ldap server configuration	setup	es-es	Hubo un problema intentando conectar con su servidor LDAP.<br />Por favor comprueve la configuración de su servidor LDAP
 there was a problem trying to connect to your ldap server. <br />	setup	es-es	Hubo un problema intentando conectar al servidor LDAP.<br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	es-es	Hubo un problema intentando conecar al servidor LDAP.<br />Por favor, compruebe la configuración del servidor LDAP
 this has to be outside the webservers document-root!!!	setup	es-es	¡Tiene que estar fuera de la raíz de documentos del servidor web!
@@ -451,10 +439,8 @@ this section will help you import users and groups from your ldap tree into egro
 this section will help you setup your ldap accounts for use with egroupware	setup	es-es	Esta sección le ayudará a configurar sus cuentas LDAP para usar con eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	es-es	Debe ser una cadena de unos 30 caracteres.<br />Nota: la predeterminada se ha generado aleatoriamente.
 this stage is completed<br />	setup	es-es	Esta fase está completada<br />
-this will create 1 admin account and 3 demo accounts<br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.<br /><b>!!!this will delete all existing accounts!!!</b><br />	setup	es-es	Esto creará 1 cuenta de administrador y 3 cuentas de demostración<br />Los nombres de usuario y contraseñas son: demo/guest, demo2/guest and demo3/guest.<br /><b>¡¡¡ESTO ELIMINARÁ TODAS LAS CUENTAS EXISTENTES!!!</b><br />
 to a version it does not know about	setup	es-es	a una versión que no conoce
 to setup 1 admin account and 3 demo accounts.	setup	es-es	Para configurar una cuenta de administrador y 3 de invitado
-to setup 1 admin account and 3 demo accounts.<br /><b>this will delete all existing accounts</b>	setup	es-es	para configurar 1 cuenta de administrador y 3 cuentas de demonstración.<br /><b>Esto eliminará todas las cuentas existentes</b>
 top	setup	es-es	parte superior
 translations added	setup	es-es	Traducciones añadidas
 translations removed	setup	es-es	Traducciones eliminadas
@@ -462,6 +448,7 @@ translations upgraded	setup	es-es	Traducciones actualizadas
 true	setup	es-es	Verdadero
 try to configure your php to support one of the above mentioned dbms, or install egroupware by hand.	setup	es-es	Intente configurar php para soportar uno de los mencionados SGBD, o instale eGroupWare a mano.
 two weeks	setup	es-es	dos semanas
+unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	es-es	Desafortunadamente, algunos paquetes de PHP/Apache tienen problemas con esto (Apache muere y ya no se puede iniciar la sesión).
 uninstall	setup	es-es	desinstalar
 uninstall all applications	setup	es-es	Desinstalar todas las apliaciones
 uninstalled	setup	es-es	desinstalado
@@ -486,7 +473,7 @@ we can proceed	setup	es-es	Podemos proceder
 we will automatically update your tables/records to %1	setup	es-es	Actualizaremos automáticamente sus tablas/registros a %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	es-es	Ahora se ejecutarán una serie de pruebas, que pueden durar unos pocos minutos. Pulse el enlace de debajo para proceder.
 welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación de eGroupWare
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	es-es	¿Qué tipo de gestión de sesiones prefiere? (PHP4 puede dar mejor rendimiento)
+what type of sessions management do you want to use (php session management may perform better)?	setup	es-es	¿Qué tipo de gestión de sesiones desea usar? (la gestión de sesiones PHP puede tener mejor rendimiento)
 which database type do you want to use with egroupware?	setup	es-es	¿Qué tipo de base de datos quiere usar con eGroupWare?
 world readable	setup	es-es	lectura para todo el mundo
 world writable	setup	es-es	escritura para todo el mundo
@@ -502,16 +489,8 @@ you appear to be running a pre-beta version of egroupware.<br />these versions a
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	es-es	Parece que está ejecutando una versión antigua de PHP<br />Se recomienda que actualice a una nueva versión.<br />Las versiones antiguas de PHP puede que no funcionen correctamente o ni siquiera funcionen en eGroupWare.<br /><br />Por favor, actualice al menos a la versión %1
 you appear to be running version %1 of egroupware	setup	es-es	Parece que está ejecutando la versión %1 de eGroupWare
 you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	es-es	Parece que está usando una versión de PHP anterior a la 4.1.0. Necesita tener 4.1.0 o superior.
-you appear to be using php3. disabling php4 sessions support	setup	es-es	Parece que está usando PHP3. Desactivando el soporte de sesiones PHP
-you appear to be using php4. enabling php4 sessions support	setup	es-es	Parece que está usando PHP4. Activando el soporte de sesiones PHP4.
-you appear to have microsoft sql server support enabled	setup	es-es	Parece que tiene activado el soporte Microsoft SQL Server.
-you appear to have mysql support enabled	setup	es-es	Parece que tiene activado el soporte MySQL
-you appear to have odbc support enabled	setup	es-es	Parece que tiene activado el soporte ODBC
-you appear to have oracle support enabled	setup	es-es	Parece que tiene activado el soporte Oracle
-you appear to have oracle v8 (oci) support enabled	setup	es-es	Parece que tiene activado el soporte Oracle V8 (OCI)
-you appear to have php4 session support. enabling php4 sessions.	setup	es-es	Parece que tiene soporte para sesiones PHP4. Activando sesiones PHP4.
-you appear to have postgres-db support enabled	setup	es-es	Parece que tiene activado el soporte Postgre-DB
-you appear to have postgresql support enabled	setup	es-es	Parece que tiene activado el soporte PostgreSQL
+you appear to have %1 support.	setup	es-es	Parece que tiene soporte para %1.
+you appear to have php session support. enabling php sessions.	setup	es-es	Parece que tiene soporte para sesiones PHP. Activando sesiones PHP.
 you appear to have xml support enabled	setup	es-es	Parece que tiene activado el soporte XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	es-es	Está listo para esta fase, pero esta fase aún no está escrita.<br />
 you didn't enter a config password for domain %1	setup	es-es	No introdujo una contraseña de configuración para el dominio %1
@@ -539,6 +518,5 @@ your header.inc.php needs upgrading.	setup	es-es	Su header.inc.php necesita actu
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	es-es	Su header.inc.php necesita actualización.<br /><blink><b class="msg">¡ATENCION!</b></blink><br /><b>¡HAGA COPIAS DE SEGURIDAD!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	es-es	Su instalación de PHP no tiene el soporte apropiado de GD. Necesita la versión 1.8 de la librería gd o superior para ver diagamas de Gantt en los proyectos.
 your tables are current	setup	es-es	Sus tablas están actualizadas
-your tables may be altered and you may lose data	setup	es-es	Sus tablas pueden ser alteradas y usted puede perder información
 your tables will be dropped and you will lose data	setup	es-es	¡¡Sus tablas serán eliminadas y usted perderá la información que hubiese en ellas!!
 your temporary directory '%1' %2	setup	es-es	Su directorio temporal '%1' %2
