@@ -40,7 +40,7 @@ class so_sql
 	 */
 	var $non_db_cols = array();
 	/**
-	 * @var int $debug turns on debug-messages
+	 * @var int $debug=0 4 turns on the so_sql debug-messages
 	 */
 	var $debug = 0;
 	/**
@@ -103,7 +103,7 @@ class so_sql
 		}
 		$this->init();
 
-		if ($this->debug)
+		if ((int) $this->debug >= 4)
 		{
 			echo "<p>so_sql('$app','$table')</p>\n";
 			_debug_array($this);
@@ -155,7 +155,7 @@ class so_sql
 	 */
 	function data_merge($new)
 	{
-		if ($this->debug) echo "<p>so_sql::data_merge(".print_r($new,true).")</p>\n";
+		if ((int) $this->debug >= 4) echo "<p>so_sql::data_merge(".print_r($new,true).")</p>\n";
 
 		if (!is_array($new) || !count($new))
 		{
@@ -175,7 +175,7 @@ class so_sql
 				$this->data[$col] = $new[$col];
 			}
 		}
-		if ($this->debug) _debug_array($this->data);
+		if ((int) $this->debug >= 4) _debug_array($this->data);
 	}
 
 	/**
@@ -282,7 +282,7 @@ class so_sql
 			{
 				unset($this->data[$this->db_key_cols[$this->autoinc_id]]);
 			}
-			if ($this->debug) echo "nothing found !!!</p>\n";
+			if ((int) $this->debug >= 4) echo "nothing found !!!</p>\n";
 
 			$this->db2data();
 
@@ -303,7 +303,7 @@ class so_sql
 		}
 		$this->db2data();
 
-		if ($this->debug)
+		if ((int) $this->debug >= 4)
 		{
 			echo "data =\n"; _debug_array($this->data);
 		}
@@ -322,7 +322,7 @@ class so_sql
 
 		$this->data2db();
 
-		if ($this->debug) { echo "so_sql::save(".print_r($keys,true).") autoinc_id='$this->autoinc_id', data="; _debug_array($this->data); }
+		if ((int) $this->debug >= 4) { echo "so_sql::save(".print_r($keys,true).") autoinc_id='$this->autoinc_id', data="; _debug_array($this->data); }
 
 		if ($this->autoinc_id && !$this->data[$this->db_key_cols[$this->autoinc_id]])	// insert
 		{
@@ -426,7 +426,7 @@ class so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		if ($this->debug) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
+		if ((int) $this->debug >= 4) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
 		if (!is_array($criteria))
 		{
@@ -531,7 +531,7 @@ class so_sql
 		{
 			$this->total = $this->db->Link_ID->GetOne('SELECT FOUND_ROWS()');
 		}
-		if ($this->debug)
+		if ((int) $this->debug >= 4)
 		{
 			echo "<p>so_sql::search(,only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty,$op,start='$start',".print_r($filter,true).") query=".print_r($query,true).", total='$this->total'</p>\n";
 			echo "<br>criteria = "; _debug_array($criteria);
@@ -591,7 +591,7 @@ class so_sql
 	 */
 	function get_rows($query,&$rows,&$readonlys,$join='',$need_full_no_count=false)
 	{
-		if ($this->debug)
+		if ((int) $this->debug >= 4)
 		{
 			echo "<p>so_sql::get_rows(".print_r($query,true).",,)</p>\n";
 		}
@@ -630,7 +630,7 @@ class so_sql
 				{
 					if ($data[$key_col] != $other[$key_col])
 					{
-						if ($this->debug)
+						if ((int) $this->debug >= 4)
 						{
 							echo "<p>not_unique in '$col' as for '$key_col': '${data[$key_col]}' != '${other[$key_col]}'</p>\n";
 						}
