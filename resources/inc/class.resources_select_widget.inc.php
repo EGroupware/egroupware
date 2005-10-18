@@ -59,6 +59,16 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			if ($cell['readonly'] && !is_array($value))
+			{
+				// no acl check here cause names are allways viewable
+				list($res_id,$quantity) = explode(':',$value);
+				$data = ExecMethod('resources.bo_resources.get_calendar_info',$res_id);
+				$cell['type'] = 'label';
+				$value = $data[0]['name']. ($data[0]['useable'] > 1 ? ' ['. ($quantity > 1 ? $quantity : 1). '/'. $data[0]['useable']. ']' : '');
+				return true;
+			}
+			
 			if (!$GLOBALS['egw_info']['user']['apps']['resources'])
 			{
 				$cell = $tmpl->empty_cell();
@@ -69,9 +79,9 @@
 			// keep the editor away from the generated tmpls
 			$tpl->no_onclick = true;			
 			
-			if (is_array($value))
+			if ($value)
 			{
-				foreach($value as $id)
+				foreach((array)$value as $id)
 				{
 					list($res_id,$quantity) = explode(':',$id);
 					$data = ExecMethod('resources.bo_resources.get_calendar_info',$res_id);
@@ -79,13 +89,6 @@
 						$data[0]['name'].' ['.($quantity > 1 ? $quantity : 1).'/'.$data[0]['useable'].']';
 				}
 				$tpl->set_cell_attribute('resources','sel_options',$sel_options);
-			}
-			elseif ($value);
-			{
-// 				list($res_id,$quantity) = explode(':',$value);
-// 				$data = ExecMethod('resources.bo_resources.get_calendar_info',$res_id);
-// 				$sel_options = $data[0]['name'].' ['.($quantity > 1 ? $quantity : 1).'/'.$data[0]['useable'].']';
-// 				$tpl->set_cell_attribute('resources','sel_options',$sel_options);
 			}
 			
 			$tpl->set_cell_attribute('resources','size',(int)$cell['size'].'+');

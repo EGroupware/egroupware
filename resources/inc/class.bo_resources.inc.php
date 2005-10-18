@@ -97,6 +97,7 @@ class bo_resources
 			if (!$resource['bookable'] /* && calender-acl viewable */)
 			{
 				$readonlys["bookable[$resource[res_id]]"] = true;
+				$readonlys["calendar[$resource[res_id]]"] = true;
 			}
 			if (!$resource['buyable'])
 			{
