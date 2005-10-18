@@ -99,20 +99,42 @@ function selectbox_add_option(id,label,value,do_onchange)
 /* toggles all checkboxes named name in form form, to be used as custom javascript in onclick of a button/image */
 function toggle_all(form,name)
 {
-	/* alert('toggle_all('+form+','+name+',elements[name].length='+form.elements[name].length+')'); */
 	var all_set = true;
-
-	for (var i = 0; i < form.elements[name].length; i++)
+	
+	/* this is for use with a sub-grid. To use it pass "true" as third parameter */
+	if(toggle_all.arguments.length > 2 && toggle_all.arguments[2] == true)
 	{
-		if (!form.elements[name][i].checked)
+		el = form.getElementsByTagName("input");
+		for (var i = 0; i < el.length; i++)
 		{
-			all_set = false;
-			break;
+			if(el[i].name.substr(el[i].name.length-12,el[i].name.length) == '[checkbox][]' && el[i].checked)
+			{
+					all_set = false;
+					break;
+			}
+		}
+		for (var i = 0; i < el.length; i++)
+		{
+			if(el[i].name.substr(el[i].name.length-12,el[i].name.length) == '[checkbox][]')
+			{
+				el[i].checked = all_set;
+			}
 		}
 	}
-	for (var i = 0; i < form.elements[name].length; i++)
+	else
 	{
-		form.elements[name][i].checked = !all_set;
+		for (var i = 0; i < form.elements[name].length; i++)
+		{
+			if (!form.elements[name][i].checked)
+			{
+				all_set = false;
+				break;
+			}
+		}
+		for (var i = 0; i < form.elements[name].length; i++)
+		{
+			form.elements[name][i].checked = !all_set;
+		}
 	}
 }
 
