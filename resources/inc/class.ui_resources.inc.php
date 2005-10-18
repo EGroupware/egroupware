@@ -127,16 +127,17 @@ class ui_resources
 			function js_btn_book_selected(form)
 			{
 				resources = '';
-				for (f=0; f < form.elements.length; f++)
+				
+				el = form.getElementsByTagName(\"input\");
+				for (var i = 0; i < el.length; i++)
 				{
-					element = form.elements[f];
-					if(element.name == 'exec[nm][rows][checkbox][]' && element.checked)
+					if(el[i].name.substr(el[i].name.length-12,el[i].name.length) == '[checkbox][]' && el[i].checked)
 					{
 						if(resources.length > 0)
 						{
 							resources += ',';
 						}
-						resources += 'r' + element.value;
+						resources += 'r' + el[i].value;
 					}
 				}
 				if(resources.length == 0)
@@ -499,7 +500,7 @@ class ui_resources
 		// so it is possible to select all resources of a category
 		foreach($cats as $cat_id => $cat_name) 
 		{
-			if (($resources = $this->bo->so->search(array('cat_id' => $cat_id),'res_id')))
+			if (($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id')))
 			{
 				foreach($resources as $res)
 				{
