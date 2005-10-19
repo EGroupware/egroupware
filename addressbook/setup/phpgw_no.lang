@@ -1,12 +1,12 @@
 %1 records imported	addressbook	no	%1 rekker importert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	no	%1 rekker lest (ikke importert enda, du kan gå %2tilbake%3 og fjerne haken på Test Import.
 (e.g. 1969)	addressbook	no	(eks. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	no	<b>Ingen oversettingstype &lt;none&gt; ble funnet.</b>Vennligst velg oversettingstype fra listen.
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	no	<b>Ingen oversettingstype <none> ble funnet.</b>Vennligst velg oversettingstype fra listen.
 @-eval() is only availible to admins!!!	addressbook	no	@-eval() er kun tilgjengelig for admins!!!
 actions	addressbook	no	Funksjoner
 add a single entry by passing the fields.	addressbook	no	Legg til ett enkelt innslag ved å fylle inn feltene.
 add custom field	addressbook	no	Legg til egendefinert felt
-address book	common	no	Addresse Liste
+address book	common	no	Addresseliste
 address book - vcard in	addressbook	no	Adresseliste - VCard inn
 address book - view	addressbook	no	Adresseliste - vis
 address line 2	addressbook	no	Adresse Linje 2
@@ -56,7 +56,6 @@ department	common	no	Avdeling
 domestic	addressbook	no	Innenlands
 download	addressbook	no	Last ned
 download export file (uncheck to debug output in browser)	addressbook	no	Last ned eksport fil (fjern hake for å se feilsøkingsinformasjon i webleser)
-e-mail	addressbook	no	E-Post
 edit custom field	addressbook	no	Endre egendefinert felt
 edit custom fields	admin	no	Endre egendefinerte felter
 empty for all	addressbook	no	tom for alle
@@ -72,8 +71,8 @@ field %1 has been updated !	addressbook	no	Felt %1 ble oppdatert!
 field name	addressbook	no	Felt Navn
 fields to show in address list	addressbook	no	Felt som skal vises i adresseliste
 fieldseparator	addressbook	no	Feltskiller
-first name	addressbook	no	Fornavn
 full name	addressbook	no	Fullt Navn
+geo	addressbook	no	GEO
 global categories	addressbook	no	Globale Kategorier
 grant addressbook access	common	no	Gi adressebok tilgang
 home address type	addressbook	no	Adresse type, Hjemme
@@ -89,35 +88,40 @@ import	addressbook	no	Importer
 import contacts	addressbook	no	Importer Kontakter
 import csv-file into addressbook	addressbook	no	Importer CSV-fil i Adresselisten
 import file	addressbook	no	Importer Fil
+import from	addressbook	no	Importer fra
 import from ldif, csv, or vcard	addressbook	no	Importer fra LDIF, CSV eller VCard
 import from outlook	addressbook	no	Importer fra Outlook
+import multiple vcard	addressbook	no	Importer flere VCard
 import next set	addressbook	no	Importer neste sett
 import_instructions	addressbook	no	I Netscape, åpne adresselisten og velg <b>Eksporter</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være i LDIF format. I Outlook velger du Kontakter mappen, så <b>Import og eksport...</b> fra <b>Fil</b> menyen, og eksporterer kontaktene til en kommaseparert (CSV) fil.<p>For Palm Desktop 4.0 og høyere, gå til adresseliste og velg <b>Eksport</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være på VCard format.
 international	addressbook	no	Internasjonal
 isdn phone	addressbook	no	ISDN Telefon
 label	addressbook	no	Etikett
-last name	addressbook	no	Etternavn
 ldap context for contacts	admin	no	LDAP område for kontakter
 ldap host for contacts	admin	no	LDAP tjener for kontakter
 ldap root dn for contacts	admin	no	LDAP root dn for kontakter
 ldap root pw for contacts	admin	no	LDAP root passord for kontakter
 ldif	addressbook	no	LDIF
 line 2	addressbook	no	Linje 2
+load vcard	addressbook	no	Last VCard
 mark records as private	addressbook	no	Merk rekkene som private
 message phone	addressbook	no	Meldings Telefon?
 middle name	addressbook	no	Mellomnavn
 mobile	addressbook	no	Mobil
 mobile phone	addressbook	no	Mobiltelefon
 modem phone	addressbook	no	Modem Telefon
+multiple vcard	addressbook	no	Flere VCard
 no vcard	addressbook	no	Ingen VCard
-notes	addressbook	no	Annet
 number of records to read (%1)	addressbook	no	Antall rekker som leses (%1)
 other number	addressbook	no	Annet Nummer
 other phone	addressbook	no	Annen Telefon
 pager	common	no	Personsøker
+parcel	addressbook	no	Pakken
 phone number	common	no	Telefon Nummer
 phone numbers	common	no	Telefon Numre
 please enter a name for that field !	addressbook	no	Vennligst skriv inn feltnavn !
+postal	common	no	Post
+pref	addressbook	no	Pref.
 prefix	addressbook	no	Forstavelse
 public key	addressbook	no	Offentlig Nøkkel
 read a list of entries.	addressbook	no	Lese liste
@@ -137,40 +141,10 @@ successfully imported %1 records into your addressbook.	addressbook	no	Vellykket
 suffix	addressbook	no	Endelse
 test import (show importable records <u>only</u> in browser)	addressbook	no	Test Import (vis <u>kun</u> importerbare rekker i webleser)
 that field name has been used already !	addressbook	no	Feltnavnet er allerede i bruk !
-this person\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
-this person\\\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\\\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
-this person\\\\\\\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\\\\\\\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
-this person\\\\\\\\\\\\\\\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\\\\\\\\\\\\\\\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s first name was not in the address book.	addressbook	no	Personens fornavn ble ikke funnet i adresselisten.
-this person\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s last name was not in the address book.	addressbook	no	Personens etternavn ble ikke funnet i adresselisten
+this person's first name was not in the address book.	addressbook	no	Personens fornavn var ikke i adresseboken
+this person's last name was not in the address book.	addressbook	no	Personens etternavn var ikke i adresseboken
 today is %1's birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\'s birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\\\'s birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\\\\\\\'s birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\\\\\\\\\\\\\\\'s birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday!	common	no	I dag har %1 fødselsdag!
-today is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday!	common	no	I dag har %1 fødselsdag!
 tomorrow is %1's birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\'s birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\\\'s birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\\\\\\\'s birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\\\\\\\\\\\\\\\'s birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday.	common	no	I morgen er det %1's fødselsdag.
-tomorrow is %1\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s birthday.	common	no	I morgen er det %1's fødselsdag.
 translation	addressbook	no	Oversetting
 update a single entry by passing the fields.	addressbook	no	Oppdater ett enkelt innslag ved å legge inn felter.
 use country list	addressbook	no	Bruk Land Liste
