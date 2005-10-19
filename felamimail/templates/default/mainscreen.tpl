@@ -183,7 +183,7 @@ doLoad();
 				<TR valign="middle" bgcolor="{th_bg}">
 					<td width="12px" align="left" valign="center">
 						<a href="{url_compose_empty}">
-						<img src="{write_mail}" border="0" name="{lang_compose}" alt="title="{lang_compose}" title="{lang_compose}" width="16">
+						<img src="{write_mail}" border="0" name="{lang_compose}" alt="{lang_compose}" title="{lang_compose}" width="16">
 						</a>
                                         </td>
                                         <TD WIDTH="4px" ALIGN="MIDDLE" valign="center">|</td>				
