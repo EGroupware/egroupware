@@ -1,152 +1,457 @@
-bold	tinymce	fa	ضخيم
-italic	tinymce	fa	کجکي
-underline	tinymce	fa	زير خط دار
-striketrough	tinymce	fa	خط خورده
-align left	tinymce	fa	چپ چين
-align center	tinymce	fa	وسط چين
-align right	tinymce	fa	راست چين
-align full	tinymce	fa	کشيده چين
-unordered list	tinymce	fa	ليست
-ordered list	tinymce	fa	ليست عددي
-outdent	tinymce	fa	کاهش زبانه
-indent	tinymce	fa	افزايش زبانه
-undo	tinymce	fa	برگردونک
-redo	tinymce	fa	سرگردونک
-insert/edit link	tinymce	fa	درج و ويرايش لينک
-unlink	tinymce	fa	حذف لينک
-insert/edit image	tinymce	fa	درج و ويرايش عکس
-cleanup messy code	tinymce	fa	پاکسازي کد
-a editor instance must be focused before using this command.	tinymce	fa	A editor instance must be focused before using this command.
-do you want to use the wysiwyg mode for this textarea?	tinymce	fa	Do you want to use the WYSIWYG mode for this textarea?
-insert/edit link	tinymce	fa	درج و ويرايش لينک
-insert	tinymce	fa	  تاييد  
-update	tinymce	fa	  تاييد  
-cancel	tinymce	fa	 انصراف 
-link url	tinymce	fa	URL لينک
-target	tinymce	fa	مقصد
-open link in the same window	tinymce	fa	لينک را در همان صفحه باز کن
-open link in a new window	tinymce	fa	لينک را در صفحه جديد باز کن
-insert/edit image	tinymce	fa	درج و ويرايش عکس
-image url	tinymce	fa	URL عکس
-image description	tinymce	fa	توضيح
-help	tinymce	fa	راهنما
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fa	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-bold	tinymce	fa	ضخيم
-italic	tinymce	fa	کجکي
-underline	tinymce	fa	زير خط دار
-striketrough	tinymce	fa	خط خورده
-align left	tinymce	fa	چپ چين
-align center	tinymce	fa	وسط چين
-align right	tinymce	fa	راست چين
-align full	tinymce	fa	کشيده چين
-unordered list	tinymce	fa	ليست
-ordered list	tinymce	fa	ليست عددي
-outdent	tinymce	fa	کاهش زبانه
-indent	tinymce	fa	افزايش زبانه
-undo	tinymce	fa	برگردونک
-redo	tinymce	fa	سرگردونک
-insert/edit link	tinymce	fa	درج و ويرايش لينک
-unlink	tinymce	fa	حذف لينک
-insert/edit image	tinymce	fa	درج و ويرايش عکس
-cleanup messy code	tinymce	fa	پاکسازي کد
-a editor instance must be focused before using this command.	tinymce	fa	A editor instance must be focused before using this command.
-do you want to use the wysiwyg mode for this textarea?	tinymce	fa	Do you want to use the WYSIWYG mode for this textarea?
-insert/edit link	tinymce	fa	درج و ويرايش لينک
-insert	tinymce	fa	  تاييد  
-update	tinymce	fa	  تاييد  
-cancel	tinymce	fa	 انصراف 
-link url	tinymce	fa	URL لينک
-target	tinymce	fa	مقصد
-open link in the same window	tinymce	fa	لينک را در همان صفحه باز کن
-open link in a new window	tinymce	fa	لينک را در صفحه جديد باز کن
-insert/edit image	tinymce	fa	درج و ويرايش عکس
-image url	tinymce	fa	URL عکس
-image description	tinymce	fa	توضيح
-help	tinymce	fa	راهنما
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fa	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-no shadow	tinymce	fa	بدون سایه
-image title	tinymce	fa	عنوان عکس
-for mouse over	tinymce	fa	عکس جایگزین هنگام ورود نشانگر ماوس
-for mouse out	tinymce	fa	عکس جایگزین هنگام خروج نشانگر ماوس
-open in this window / frame	tinymce	fa	در همین صفحه / فریم باز کن
-open in parent window / frame	tinymce	fa	در صفحه / فریم اصلی باز کن
-open in top frame (replaces all frames)	tinymce	fa	در فریم اصلی باز کن (همه فریمها نادیده گرفته میشود)
-open in new window	tinymce	fa	در صفحه جدید باز کن
-open in the window	tinymce	fa	در پنجره باز کن
-js-popup	tinymce	fa	JS-Popup
-popup url	tinymce	fa	URL پنجره
-window name	tinymce	fa	نام پنجره
-show scrollbars	tinymce	fa	نمایش scrollbars
-show statusbar	tinymce	fa	نمایش statusbar
-show toolbars	tinymce	fa	نمایش toolbars
-show menubar	tinymce	fa	نمایش menubar
-show locationbar	tinymce	fa	نمایش locationbar
-make window resizable	tinymce	fa	قابل تغییر اندازه باشد
-size	tinymce	fa	اندازه
-position (x/y)	tinymce	fa	موقعیت (X/Y)
-please insert a name for the target or choose another option.	tinymce	fa	لطفا یک نام برای مقصد انتخاب کنید در غیر این صورت گزینه دیگری را انتخاب نمایید.
-insert emotion	tinymce	fa	افزودن شکلک
-emotions	tinymce	fa	شکلکها
-flash-file (.swf)	tinymce	fa	???? ??? (.swf)
-size	tinymce	fa	?????
-flash properties	tinymce	fa	Flash properties
-insert date	tinymce	fa	افزودن تاریخ
-insert time	tinymce	fa	افزودن زمان
-preview	tinymce	fa	پیش نمایش
-print	tinymce	fa	چاپ
-save	tinymce	fa	ضبط
-find	tinymce	fa	جستجو
-find again	tinymce	fa	جستجوي مجدد
-find/replace	tinymce	fa	جستجو/جايگزيني
-the search has been compleated. the search string could not be found.	tinymce	fa	جستجو پايان يافت. هيچ موردي يافت نشد.
-find	tinymce	fa	جستجو
-find/replace	tinymce	fa	جستجو/جايگزيني
-all occurrences of the search string was replaced.	tinymce	fa	همه موارد جايگزين گرديد.
-find what	tinymce	fa	جستجو به دنبال
-replace with	tinymce	fa	جايگزيني با
-direction	tinymce	fa	جهت جستجو
-up	tinymce	fa	به سمت بالا
-down	tinymce	fa	به سمت پايين
-match case	tinymce	fa	تطبيق حروف کوچک و بزرگ
-find&nbsp;next	tinymce	fa	مورد-بعدي
-replace	tinymce	fa	جايگزين-کن
-replace&nbsp;all	tinymce	fa	جايگزيني-همه
-cancel	tinymce	fa	بيخيال
-inserts a new table	tinymce	fa	??? ???? ????
-insert row before	tinymce	fa	??? ??? ???? ??? ?? ??? ????
-insert row after	tinymce	fa	??? ??? ???? ?? ?? ??? ????
-delete row	tinymce	fa	??? ???
-insert column before	tinymce	fa	??? ???? ???? ??? ?? ???? ????
-insert column after	tinymce	fa	??? ???? ???? ?? ?? ???? ????
-remove col	tinymce	fa	??? ????
-insert/modify table	tinymce	fa	??? ? ?????? ????
-width	tinymce	fa	???
-height	tinymce	fa	??????
-columns	tinymce	fa	????? ??????
-rows	tinymce	fa	????? ?????
-cellspacing	tinymce	fa	????? ?? ???? ????
-cellpadding	tinymce	fa	????? ??? ?? ?????? ????
-border	tinymce	fa	?????
-alignment	tinymce	fa	??? ???? ????
-default	tinymce	fa	??? ???
-left	tinymce	fa	??
-right	tinymce	fa	????
-center	tinymce	fa	???
-class	tinymce	fa	????
-table row properties	tinymce	fa	Table row properties
-table cell properties	tinymce	fa	Table cell properties
-table row properties	tinymce	fa	Table row properties
-table cell properties	tinymce	fa	Table cell properties
-vertical alignment	tinymce	fa	Vertical alignment
-top	tinymce	fa	Top
-bottom	tinymce	fa	Bottom
-table properties	tinymce	fa	Table properties
-border color	tinymce	fa	Border color
-bg color	tinymce	fa	Bg color
-merge table cells	tinymce	fa	Merge table cells
-split table cells	tinymce	fa	Split table cells
-merge table cells	tinymce	fa	Merge table cells
-cut table row	tinymce	fa	Cut table row
-copy table row	tinymce	fa	Copy table row
-paste table row before	tinymce	fa	Paste table row before
-paste table row after	tinymce	fa	Paste table row after
+%1 email addresses inserted	common	fa	%1 آدرس پست الکترونیکی وارد شده
+%1 is not executable by the webserver !!!	common	fa	%1 قابل اجرا توسط وب سرور نمی باشد !!!
+%1 messages have been deleted	email	fa	1%&#1662;&#1610;&#1575;&#1605;&#1607;&#1575; &#1581;&#1584;&#1601; &#1588;&#1583;&#1607; &#1575;&#1587;&#1578;
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fa	%1eGroupWare%2 یک محیط کارمشترک مبتنی بر وب و چند کاربره است که در %3PHP%4نوشته شده است.
+(required)	email	fa	&#1605;&#1608;&#1585;&#1583; &#1606;&#1610;&#1575;&#1586;
+1 message has been deleted	email	fa	1&#1662;&#1610;&#1575;&#1605; &#1581;&#1584;&#1601; &#1588;&#1583;&#1607; &#1575;&#1587;&#1578;
+1 message has been moved to	email	fa	1&#1662;&#1610;&#1575;&#1605; &#1575;&#1606;&#1578;&#1602;&#1575;&#1604; &#1610;&#1575;&#1601;&#1578;&#1607; &#1575;&#1587;&#1578; &#1576;&#1607;
+<b>*apply*</b> this filter	email	fa	&#1575;&#1580;&#1585;&#1575;&#1740; &#1575;&#1610;&#1606; &#1601;&#1610;&#1604;&#1578;&#1585;
+<b>apply all</b> filters	email	fa	&#1575;&#1580;&#1585;&#1575;&#1740; &#1578;&#1605;&#1575;&#1605; &#1601;&#1610;&#1604;&#1578;&#1585;&#1607;&#1575;
+about	common	fa	درباره
+about %1	common	fa	درباره %1
+about the calendar	jscalendar	fa	درباره تقویم
+about this editor	htmlarea	fa	درباره این ویرایشگر
+access	common	fa	دست یابی
+access not permitted	common	fa	اجازه دستیابی وجود ندارد
+account	email	fa	&#1581;&#1587;&#1575;&#1576;
+account has been created	common	fa	حساب ايجاد شده است
+account has been deleted	common	fa	حساب حذف شده است
+account has been updated	common	fa	حساب ويرايش شده است
+account is expired	common	fa	حساب منقضی شده است
+account name	email	fa	&#1606;&#1575;&#1605; &#1581;&#1587;&#1575;&#1576;
+account user name	email	fa	&#1606;&#1575;&#1605; &#1575;&#1587;&#1578;&#1601;&#1575;&#1583;&#1607; &#1705;&#1606;&#1606;&#1583;&#1607; &#1581;&#1587;&#1575;&#1576;
+accounts	common	fa	&#1581;&#1587;&#1575;&#1576;&#1607;&#1575;
+accounts:	email	fa	&#1581;&#1587;&#1575;&#1576;&#1607;&#1575;
+action	common	fa	عمل
+active	common	fa	فعال
+add	common	fa	اضافه
+add %1 category for	common	fa	%1 دسته اضافه کن برای
+add category	common	fa	اضافه کردن دسته
+add new category to city requirements	common	fa	اضافه کردن دسته جدید به نیازمندیهای شهری
+add to address book	email	fa	&#1575;&#1590;&#1575;&#1601;&#1607; &#1705;&#1585;&#1583;&#1606; &#1576;&#1607; &#1583;&#1601;&#1578;&#1585;&#1670;&#1607; &#1570;&#1583;&#1585;&#1587;
+add to addressbook	email	fa	&#1575;&#1590;&#1575;&#1601;&#1607; &#1705;&#1585;&#1583;&#1606; &#1576;&#1607; &#1583;&#1601;&#1578;&#1585;&#1670;&#1607; &#1570;&#1583;&#1585;&#1587;
+address book	email	fa	&#1583;&#1601;&#1578;&#1585;&#1670;&#1607; &#1570;&#1583;&#1585;&#1587;
+addressbook	common	fa	دفترچه آدرس
+admin	common	fa	مسوول
+administration	common	fa	اداره
+afghanistan	common	fa	افغانستان
+after	email	fa	&#1576;&#1593;&#1583; &#1575;&#1586;
+albania	common	fa	آلبانی
+algeria	common	fa	الجزاير
+all	common	fa	همه
+all fields	common	fa	همه فیلدها
+all messages	email	fa	&#1607;&#1605;&#1607; &#1662;&#1610;&#1575;&#1605;&#1607;&#1575;
+and	email	fa	&#1608;
+and stop filtering	email	fa	&#1605;&#1578;&#1608;&#1602;&#1601; &#1588;&#1583;&#1606; &#1601;&#1610;&#1604;&#1578;&#1585; &#1705;&#1585;&#1583;&#1606;
+andorra	common	fa	آندورا
+angola	common	fa	آنگولا
+answered	email	fa	&#1580;&#1608;&#1575;&#1576; &#1583;&#1575;&#1583;&#1607; &#1588;&#1583;&#1607;
+apply	common	fa	اجرا
+apply filters report:	email	fa	&#1575;&#1580;&#1585;&#1575;&#1740; &#1711;&#1586;&#1575;&#1585;&#1588; &#1601;&#1610;&#1604;&#1578;&#1585;&#1607;&#1575;
+apr	email	fa	&#1570;&#1608;&#1585;&#1610;&#1604;
+april	common	fa	آوريل
+aqua fusion	email	fa	&#1578;&#1585;&#1705;&#1610;&#1576; &#1570;&#1576;
+are you sure you want to delete these entries ?	common	fa	آيا شما مطمئن هستيد که می خواهيد اين وروديها را حذف کنيد
+are you sure you want to delete this entry ?	common	fa	آيا شما مطمئن هستيد که می خواهيد اين ورودی را حذف کنيد
+argentina	common	fa	آرژانتين
+armenia	common	fa	ارمنستان
+arrival date	email	fa	&#1578;&#1575;&#1585;&#1610;&#1582; &#1583;&#1585;&#1610;&#1575;&#1601;&#1578;
+as	email	fa	&#1576;&#1607; &#1593;&#1606;&#1608;&#1575;&#1606;
+attach file	email	fa	&#1662;&#1610;&#1608;&#1587;&#1578; &#1601;&#1575;&#1610;&#1604;
+attach signature	email	fa	&#1575;&#1605;&#1590;&#1575;&#1569; &#1662;&#1610;&#1608;&#1587;&#1578;
+attachment	email	fa	&#1590;&#1605;&#1610;&#1605;&#1607;
+aug	email	fa	&#1570;&#1711;&#1608;&#1587;&#1578;
+august	common	fa	آگوست
+australia	common	fa	استراليا
+austria	common	fa	اتريش
+author	common	fa	ناشر
+azerbaijan	common	fa	آذربايجان
+back	common	fa	بازگشت
+back to user login	common	fa	بازگشت به ورودی کاربر
+background color	htmlarea	fa	رنگ پس زمینه
+bad login or password	common	fa	نام کاربری یا رمزعبور اشتباه
+bahrain	common	fa	بحرين
+bangladesh	common	fa	بنگلادش
+bcc	common	fa	رونوشت مخفی
+bcc address	email	fa	&#1570;&#1583;&#1585;&#1587; &#1585;&#1608;&#1606;&#1608;&#1588;&#1578; &#1605;&#1582;&#1601;&#1740;
+before	email	fa	&#1602;&#1576;&#1604; &#1575;&#1586;
+big	email	fa	&#1576;&#1586;&#1585;&#1711;
+bigger	email	fa	&#1576;&#1586;&#1585;&#1711;&#1578;&#1585;
+biggest	email	fa	&#1576;&#1586;&#1585;&#1711;&#1578;&#1585;&#1610;&#1606;
+blocked, too many attempts	common	fa	بلاک شده، تلاش زياد
+body	email	fa	&#1576;&#1583;&#1606;&#1607;
+bold	htmlarea	fa	درشت
+bosnia and herzegovina	common	fa	بوسنی و هرز گوين
+both	email	fa	&#1607;&#1585;&#1583;&#1608;
+brazil	common	fa	برزيل
+bulgaria	common	fa	بلغارستان
+button type	email	fa	&#1606;&#1608;&#1593; &#1583;&#1705;&#1605;&#1607;
+cache server data whenever possible	email	fa	&#1662;&#1606;&#1607;&#1575;&#1606; &#1705;&#1585;&#1583;&#1606; &#1583;&#1575;&#1583;&#1607; &#1587;&#1585;&#1608;&#1610;&#1587; &#1583;&#1607;&#1606;&#1583;&#1607; &#1607;&#1585; &#1586;&#1605;&#1575;&#1606; &#1705;&#1607; &#1605;&#1605;&#1705;&#1606; &#1576;&#1575;&#1588;&#1583;
+calendar	common	fa	تقویم
+cameroon	common	fa	کامرون
+canada	common	fa	کانادا
+cancel	common	fa	لغو
+categories	common	fa	دسته ها
+categories for	common	fa	دسته ها برای
+category	common	fa	دسته
+category %1 has been added !	common	fa	دسته 1% اضافه شده است
+category %1 has been updated !	common	fa	دسته 1% به روز رسانی شده است
+cc	common	fa	رونوشت
+cc address	email	fa	&#1570;&#1583;&#1585;&#1587; &#1585;&#1608;&#1606;&#1608;&#1588;&#1578;
+central african republic	common	fa	جمهوری آفريقای مرکزی
+change	common	fa	تغییر
+change font size in your e-mail pages	email	fa	&#1578;&#1594;&#1610;&#1610;&#1585; &#1575;&#1606;&#1583;&#1575;&#1586;&#1607; &#1581;&#1585;&#1608;&#1601; &#1583;&#1585; &#1589;&#1601;&#1581;&#1575;&#1578; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740; &#1588;&#1605;&#1575;
+charset	common	fa	UTF-8
+check flags for type of mails	email	fa	&#1576;&#1585;&#1585;&#1587;&#1740; &#1606;&#1588;&#1575;&#1606;&#1607; &#1607;&#1575; &#1576;&#1585;&#1575;&#1740; &#1606;&#1608;&#1593; &#1606;&#1575;&#1605;&#1607; &#1607;&#1575;
+check installation	common	fa	بررسی نصب
+chile	common	fa	شيلی
+china	common	fa	چين
+choose for rename	email	fa	&#1575;&#1606;&#1578;&#1582;&#1575;&#1576; &#1576;&#1585;&#1575;&#1740; &#1606;&#1575;&#1605;&#1711;&#1584;&#1575;&#1585;&#1740; &#1583;&#1608;&#1576;&#1575;&#1585;&#1607;
+choose the category	common	fa	دسته را انتخاب کنيد
+choose the parent category	common	fa	دسته والد را انتخاب کنيد
+choose to rename	email	fa	&#1575;&#1606;&#1578;&#1582;&#1575;&#1576; &#1576;&#1585;&#1575;&#1740; &#1606;&#1575;&#1605;&#1711;&#1584;&#1575;&#1585;&#1740; &#1583;&#1608;&#1576;&#1575;&#1585;&#1607;
+city requirements	common	fa	نیازمندیهای شهری
+cityrequirement	common	fa	نیازمندیهای شهری
+clear	common	fa	پاک کردن
+clear cache	email	fa	&#1662;&#1575;&#1705; &#1705;&#1585;&#1583;&#1606; &#1581;&#1575;&#1601;&#1592;&#1607; &#1662;&#1606;&#1607;&#1575;&#1606;&#1740;
+clear form	common	fa	پاک کردن فرم
+click	common	fa	کلیک
+click here for more info in a new window	email	fa	&#1576;&#1585;&#1575;&#1740; &#1575;&#1591;&#1604;&#1575;&#1593;&#1575;&#1578; &#1576;&#1610;&#1588;&#1578;&#1585; &#1583;&#1585; &#1610;&#1705; &#1662;&#1606;&#1580;&#1585;&#1607; &#1580;&#1583;&#1610;&#1583; &#1575;&#1610;&#1606;&#1580;&#1575; &#1585;&#1575; &#1705;&#1604;&#1610;&#1705; &#1705;&#1606;&#1610;&#1583;
+click here to continue	email	fa	&#1576;&#1585;&#1575;&#1740; &#1575;&#1583;&#1575;&#1605;&#1607;  &#1575;&#1610;&#1606;&#1580;&#1575; &#1585;&#1575; &#1705;&#1604;&#1610;&#1705; &#1705;&#1606;&#1610;&#1583;
+click here to edit the settings for this email account.	email	fa	&#1576;&#1585;&#1575;&#1740; &#1575;&#1589;&#1604;&#1575;&#1581; &#1605;&#1588;&#1582;&#1589;&#1575;&#1578; &#1581;&#1587;&#1575;&#1576; &#1575;&#1610;&#1606; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;  &#1575;&#1610;&#1606;&#1580;&#1575; &#1585;&#1575; &#1705;&#1604;&#1610;&#1705; &#1705;&#1606;&#1610;&#1583;
+click here to return to your home page.	email	fa	&#1576;&#1585;&#1575;&#1740; &#1576;&#1575;&#1586;&#1711;&#1588;&#1578; &#1576;&#1607; &#1589;&#1601;&#1581;&#1607; &#1582;&#1575;&#1606;&#1711;&#1740; &#1582;&#1608;&#1583; &#1575;&#1610;&#1606;&#1580;&#1575; &#1585;&#1575; &#1705;&#1604;&#1610;&#1705; &#1705;&#1606;&#1610;&#1583;
+close	common	fa	بستن
+colombia	common	fa	کلمبيا
+comments	common	fa	توضیحات
+company	common	fa	شرکت
+compose	common	fa	&#1575;&#1610;&#1580;&#1575;&#1583; &#1705;&#1585;&#1583;&#1606;
+compose message	email	fa	&#1575;&#1610;&#1580;&#1575;&#1583; &#1705;&#1585;&#1583;&#1606; &#1662;&#1610;&#1575;&#1605;
+compose new	common	fa	&#1575;&#1610;&#1580;&#1575;&#1583; &#1705;&#1585;&#1583;&#1606; &#1580;&#1583;&#1610;&#1583;
+congo	common	fa	کنگو
+congo, the democratic republic of the	common	fa	کنگو، جمهوری دموکراتيک
+contains	email	fa	&#1605;&#1581;&#1578;&#1608;&#1610;&#1575;&#1578;
+copy	common	fa	نسخه برداری
+copy selection	htmlarea	fa	نسخه برداری انتخاب شده
+costa rica	common	fa	کاستاريکا
+could not open this mailbox	email	fa	&#1575;&#1610;&#1606; &#1580;&#1593;&#1576;&#1607; &#1606;&#1575;&#1605;&#1607; &#1585;&#1575; &#1606;&#1605;&#1610; &#1578;&#1608;&#1575;&#1606; &#1576;&#1575;&#1586; &#1705;&#1585;&#1583;
+create	common	fa	ایجاد
+create (expert)	email	fa	&#1575;&#1610;&#1580;&#1575;&#1583;_ &#1705;&#1575;&#1585;&#1588;&#1606;&#1575;&#1587;
+create a folder	email	fa	&#1575;&#1610;&#1580;&#1575;&#1583; &#1610;&#1705; &#1662;&#1608;&#1588;&#1607;
+created by	common	fa	ایجاد شده توسط
+cuba	common	fa	کوبا
+currency	common	fa	پول رایج
+current	common	fa	جاری
+current attachments (%1)	email	fa	&#1590;&#1605;&#1610;&#1605;&#1607; &#1607;&#1575;&#1740; &#1601;&#1593;&#1604;&#1740;
+current style	htmlarea	fa	سبک جاری
+current users	common	fa	کاربران جاری
+custom e-mail preferences	email	fa	&#1575;&#1608;&#1604;&#1608;&#1610;&#1578;&#1607;&#1575;&#1740; &#1606;&#1575;&#1605;&#1607; &#1607;&#1575;&#1740; &#1587;&#1601;&#1575;&#1585;&#1588;&#1740;
+custom e-mail settings	email	fa	&#1605;&#1588;&#1582;&#1589;&#1575;&#1578; &#1606;&#1575;&#1605;&#1607; &#1607;&#1575;&#1740; &#1587;&#1601;&#1575;&#1585;&#1588;&#1740;
+cut selection	htmlarea	fa	بريدن انتخاب
+date	common	fa	تاریخ
+date selection:	jscalendar	fa	انتخاب تاریخ:
+debugging page	email	fa	&#1589;&#1601;&#1581;&#1607; &#1582;&#1591;&#1575; &#1711;&#1610;&#1585;&#1740;
+dec	email	fa	&#1583;&#1587;&#1575;&#1605;&#1576;&#1585;
+december	common	fa	دسامبر
+default category	common	fa	دسته پيش فرض
+default sorting order	email	fa	&#1578;&#1585;&#1578;&#1610;&#1576; &#1605;&#1585;&#1578;&#1576; &#1587;&#1575;&#1586;&#1740; &#1662;&#1610;&#1588; &#1601;&#1585;&#1590;
+default:	common	fa	&#1662;&#1610;&#1588; &#1601;&#1585;&#1590;
+delete	common	fa	حذف
+delete (expert)	email	fa	&#1581;&#1584;&#1601;_ &#1705;&#1575;&#1585;&#1588;&#1606;&#1575;&#1587;
+delete a folder	email	fa	&#1581;&#1584;&#1601; &#1610;&#1705; &#1662;&#1608;&#1588;&#1607;
+delete account	common	fa	&#1581;&#1584;&#1601; &#1581;&#1587;&#1575;&#1576;
+deleted	email	fa	&#1581;&#1584;&#1601; &#1588;&#1583;&#1607;
+deleted messages (trash) folder	email	fa	&#1662;&#1608;&#1588;&#1607; &#1662;&#1610;&#1575;&#1605;&#1607;&#1575;&#1740; &#1662;&#1575;&#1705; &#1588;&#1583;&#1607;_&#1570;&#1588;&#1594;&#1575;&#1604;
+deleted messages folder name	email	fa	&#1606;&#1575;&#1605; &#1662;&#1608;&#1588;&#1607; &#1662;&#1610;&#1575;&#1605;&#1607;&#1575;&#1740; &#1662;&#1575;&#1705; &#1588;&#1583;&#1607;
+deleted messages go to trash	email	fa	&#1662;&#1610;&#1575;&#1605;&#1607;&#1575;&#1740; &#1662;&#1575;&#1705; &#1588;&#1583;&#1607; &#1575;&#1740; &#1705;&#1607; &#1576;&#1607; &#1570;&#1588;&#1594;&#1575;&#1604; &#1605;&#1740; &#1585;&#1608;&#1606;&#1583;
+deleted messages saved to folder:	email	fa	&#1662;&#1610;&#1575;&#1605;&#1607;&#1575;&#1740; &#1662;&#1575;&#1705; &#1588;&#1583;&#1607;&#1548;&#1584;&#1582;&#1610;&#1585;&#1607; &#1588;&#1583;&#1607; &#1576;&#1607; &#1662;&#1608;&#1588;&#1607;
+denmark	common	fa	دانمارک
+description	common	fa	توصيف
+detail	common	fa	شرح
+details	common	fa	شرحها
+disabled	common	fa	غیر فعال شده
+discard	email	fa	&#1583;&#1608;&#1585; &#1575;&#1606;&#1583;&#1575;&#1582;&#1578;&#1607; &#1588;&#1583;&#1607;
+display %s first	jscalendar	fa	نمايش S% ابتدا
+do you also want to delete all subcategories ?	common	fa	آيا شما همچنين می خواهيد همه زير دسته ها را حذف کنيد
+does not contain	email	fa	&#1588;&#1575;&#1605;&#1604; &#1606;&#1610;&#1587;&#1578;
+domain	common	fa	دامنه
+domestic	common	fa	خانگی
+done	common	fa	انجام شد
+draft	email	fa	&#1662;&#1610;&#1588; &#1606;&#1608;&#1610;&#1587;
+e-mail	common	fa	پست الکترونیکی
+e-mail filters	common	fa	&#1601;&#1610;&#1604;&#1578;&#1585;&#1607;&#1575;&#1740; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+e-mail folders	common	fa	&#1662;&#1608;&#1588;&#1607; &#1607;&#1575;&#1740; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+e-mail inbox filters list	email	fa	&#1604;&#1610;&#1587;&#1578; &#1601;&#1610;&#1604;&#1578;&#1585;&#1607;&#1575;&#1740; &#1583;&#1585;&#1608;&#1606; &#1580;&#1593;&#1576;&#1607; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+e-mail preferences	common	fa	&#1575;&#1608;&#1604;&#1608;&#1610;&#1578;&#1607;&#1575;&#1740; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+edit	common	fa	ویراستن
+edit %1 category for	common	fa	ويراستن 1% دسته برای
+edit categories	common	fa	ويراستن دسته ها
+edit category	common	fa	ويراستن دسته
+edit filters	email	fa	&#1575;&#1589;&#1604;&#1575;&#1581; &#1601;&#1610;&#1604;&#1578;&#1585;&#1607;&#1575;
+egypt	common	fa	مصر
+el salvador	common	fa	السالوادر
+email	common	fa	پست الکترونیک
+email account name	email	fa	&#1606;&#1575;&#1605; &#1581;&#1587;&#1575;&#1576; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email address	email	fa	&#1570;&#1583;&#1585;&#1587; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email date	email	fa	&#1578;&#1575;&#1585;&#1610;&#1582; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email filters	email	fa	&#1601;&#1610;&#1604;&#1578;&#1585;&#1607;&#1575;&#1740; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email password	email	fa	&#1585;&#1605;&#1586; &#1593;&#1576;&#1608;&#1585; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email preferences	email	fa	&#1575;&#1608;&#1604;&#1608;&#1610;&#1578;&#1607;&#1575;&#1740; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email signature	email	fa	&#1575;&#1605;&#1590;&#1575;&#1569;&#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email type	common	fa	&#1606;&#1608;&#1593; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+email-address of the user, eg. "%1"	common	fa	آدرس پست الکترونيکی کاربر، به عنوان مثال1%
+enable this email account	common	fa	&#1601;&#1593;&#1575;&#1604; &#1705;&#1585;&#1583;&#1606; &#1575;&#1610;&#1606; &#1581;&#1587;&#1575;&#1576; &#1662;&#1587;&#1578; &#1575;&#1604;&#1705;&#1578;&#1585;&#1608;&#1606;&#1610;&#1705;&#1740;
+enabled	common	fa	فعال شده
+end date	common	fa	تاریخ پایان
+end time	common	fa	زمان پایان
+entry has been deleted sucessfully	common	fa	وارده با موفقيت حذف شده است
+entry updated sucessfully	common	fa	وارده با موفقيت به روز رسانی شده است
+error	common	fa	خطا
+error creating %1 %2 directory	common	fa	خطای ايجاد 1%2% پوشه
+error deleting %1 %2 directory	common	fa	خطای حذف 1%2% پوشه
+error renaming %1 %2 directory	common	fa	خطای دوباره نامگذاری 1%2% پوشه
+exact	common	fa	دقیقا
+expiration date	common	fa	تاریخ انقضا
+fax number	common	fa	شماره نمابر
+february	common	fa	فوريه
+file	email	fa	&#8205;&#1662;&#1585;&#1608;&#1606;&#1583;&#1607;
+file attachment	email	fa	&#8205;&#1662;&#1585;&#1608;&#1606;&#1583;&#1607; &#1662;&#8205;&#1740;&#1608;&#1587;&#1578;
+file into	email	fa	&#8205;&#1662;&#1585;&#1608;&#1606;&#1583;&#1607; &#1576;&#1607;
+files	common	fa	پرونده ها
+filter	common	fa	صافی
+filter [number] and name	email	fa	&#1589;&#1575;&#1601;&#1740; &#1588;&#1605;&#1575;&#1585;&#1607; &#1608; &#1606;&#1575;&#1605;
+filters	email	fa	&#1589;&#1575;&#1601;&#1740; &#1607;&#1575;
+filters list	email	fa	&#1604;&#1740;&#1587;&#1578; &#1589;&#1575;&#1601;&#1740; &#1607;&#1575;
+first name	common	fa	نام
+first name of the user, eg. "%1"	common	fa	نام کوچک کاربر، به عنوان مثال"1%"
+first page	common	fa	صفحه اول
+firstname	common	fa	نام کوچک
+flag as important	email	fa	&#1606;&#1588;&#1575;&#1606;&#1607; &#1575;&#1607;&#1605;&#1740;&#1578;
+flagged	email	fa	&#1606;&#1588;&#1575;&#1606; &#1588;&#1583;&#1607;
+folder	common	fa	&#1662;&#1608;&#1588;&#1607;
+folder name	email	fa	&#1606;&#1575;&#1605; &#1662;&#1608;&#1588;&#1607;
+folder size	email	fa	&#1580;&#1581;&#1605; &#1662;&#1608;&#1588;&#1607;
+folders	email	fa	&#1662;&#1608;&#1588;&#1607; &#1607;&#1575;
+font color	htmlarea	fa	رنگ قلم
+forward	email	fa	&#1575;&#1585;&#1587;&#1575;&#1604; &#1705;&#1585;&#1583;&#1606;
+france	common	fa	فرانسه
+friday	common	fa	جمعه
+from	email	fa	&#1575;&#1586;
+from address	email	fa	&#1575;&#1586; &#1570;&#1583;&#1585;&#1587;
+ftp	common	fa	پروتکل انتقال پرونده (FTP)
+fullname	common	fa	نام کامل
+general menu	common	fa	فهرست عمومی
+germany	common	fa	آلمان
+get size	email	fa	&#1581;&#1580;&#1605;
+global	common	fa	عمومی
+global public	common	fa	عمومی
+go	email	fa	&#1576;&#1585;&#1608;
+go back	email	fa	&#1576;&#1575;&#1586;&#1711;&#1588;&#1578;
+go back to	email	fa	&#1576;&#1585;&#1608; &#1740;&#1607; &#1593;&#1602;&#1576;
+go today	jscalendar	fa	برو به امروز
+greece	common	fa	يونان
+group	common	fa	گروه
+group access	common	fa	دستيابی گروه
+group has been added	common	fa	گروه اضافه شده است
+group has been deleted	common	fa	گروه حذف شده است
+group has been updated	common	fa	گروه به روز رسانی شده است
+group name	common	fa	نام گروه
+groups	common	fa	گروهها
+groups with permission for %1	common	fa	گروهها با اجازه برای
+groups without permission for %1	common	fa	گروهها بدون اجازه برای
+header field	email	fa	&#1587;&#1585;&#1570;&#1740;&#1606;&#1583;
+help	common	fa	کمک
+hidden	email	fa	&#1605;&#1582;&#1601;&#1740;
+hide help	email	fa	&#1605;&#1582;&#1601;&#1740; &#1705;&#1585;&#1583;&#1606; &#1705;&#1605;&#1705;
+high	common	fa	بالا
+highest	common	fa	بالاترین
+home	common	fa	خانه
+home email	common	fa	پست الکترونيکی خانه
+honduras	common	fa	هندوراس
+hong kong	common	fa	هنگ کنگ
+horizontal rule	htmlarea	fa	قانون افقی
+iceland	common	fa	ايسلند
+icon size	email	fa	&#1575;&#1606;&#1583;&#1575;&#1586;&#1607; &#1588;&#1705;&#1604;&#1705;
+image	email	fa	&#1578;&#1589;&#1608;&#1740;&#1585;
+important	email	fa	&#1605;&#1607;&#1605;
+inbox	email	fa	&#1589;&#1606;&#1583;&#1608;&#1602; &#1583;&#1585;&#1740;&#1575;&#1601;&#1578;&#1740;
+india	common	fa	هند
+indonesia	common	fa	اندونزی
+insert image	htmlarea	fa	درج تصوير
+insert table	htmlarea	fa	درج جدول
+insert web link	htmlarea	fa	درج پيوست وب
+international	common	fa	بين المللی
+invalid ip address	common	fa	آدرسIP  نا معتبر
+invalid password	common	fa	رمز عبور نامعتبر
+iran, islamic republic of	common	fa	جمهوری اسلامی ایران
+iraq	common	fa	عراق
+ireland	common	fa	ايرلند
+israel	common	fa	اسرائيل
+keep	email	fa	&#1606;&#1711;&#1607; &#1583;&#1575;&#1585;
+last name	common	fa	نام خانوادگی
+last page	common	fa	صفحه آخر
+lastname	common	fa	اسم بزرگ
+link	common	fa	پیوند
+list	common	fa	فهرست
+list members	common	fa	فهرست اعضا
+login	common	fa	ورود به سیستم
+loginid	common	fa	کلمه کاربری
+logout	common	fa	خروج از سیستم
+low	common	fa	کم
+lowest	common	fa	کمترین
+manage accounts	email	fa	&#1605;&#1583;&#1740;&#1585;&#1740;&#1578; &#1581;&#1587;&#1575;&#1576;&#1607;&#1575;
+manage folders	email	fa	&#1605;&#1583;&#1740;&#1585;&#1740;&#1578; &#1662;&#1608;&#1588;&#1607; &#1607;&#1575;
+menu	common	fa	(فهرست)
+message	common	fa	پیغام
+messages	email	fa	&#1662;&#1740;&#1594;&#1575;&#1605; &#1607;&#1575;
+messages found in folder	email	fa	&#1662;&#1740;&#1594;&#1575;&#1605;&#1607;&#1575;&#1740; &#1575;&#1740;&#1606; &#1662;&#1608;&#1588;&#1607;
+messages have been moved to	email	fa	&#1662;&#1740;&#1594;&#1575;&#1605;&#1607;&#1575; &#1580;&#1575;&#1576;&#1580;&#1575; &#1588;&#1583; &#1576;&#1607;
+monday	common	fa	دوشنبه
+more actions	email	fa	&#1575;&#1593;&#1605;&#1575;&#1604; &#1583;&#1740;&#1711;&#1585;
+more choices	email	fa	&#1575;&#1606;&#1578;&#1582;&#1575;&#1576;&#1607;&#1575;&#1740; &#1583;&#1740;&#1711;&#1585;
+move down	email	fa	&#8205;&#1662;&#1575;&#1740;&#1740;&#1606; &#1576;&#1576;&#1585;
+move up	email	fa	&#1576;&#1575;&#1604;&#1575; &#1576;&#1576;&#1585;
+name	common	fa	نام
+never	common	fa	هرگز
+new	email	fa	&#1580;&#1583;&#1740;&#1583;
+new account	email	fa	&#1581;&#1587;&#1575;&#1576; &#1580;&#1583;&#1740;&#1583;
+new filter	email	fa	&#1589;&#1575;&#1601;&#1740; &#1580;&#1583;&#1740;&#1583;
+new message	email	fa	&#1662;&#1740;&#1594;&#1575;&#1605; &#1580;&#1583;&#1740;&#1583;
+new messages	email	fa	&#1662;&#1740;&#1594;&#1575;&#1605; &#1607;&#1575;&#1740; &#1580;&#1583;&#1740;&#1583;
+newest	common	fa	&#1580;&#1583;&#1740;&#1583;&#1578;&#1585;&#1740;&#1606;
+next	common	fa	بعدی
+next message	email	fa	&#8205;&#1662;&#1740;&#1594;&#1575;&#1605; &#1576;&#1593;&#1583;&#1740;
+next page	common	fa	صفحه بعدی
+no change	email	fa	&#1576;&#1583;&#1608;&#1606; &#1578;&#1594;&#1740;&#1740;&#1585;
+none	common	fa	هیچکدام
+normal	common	fa	معمولی
+note	common	fa	یادداشت
+number	common	fa	شماره
+ok	common	fa	قبول
+old	email	fa	&#1602;&#1583;&#1740;&#1605;
+oldest	common	fa	&#1602;&#1583;&#1740;&#1605;&#1740;&#1578;&#1585;&#1740;&#1606;
+on	email	fa	&#1585;&#1608;&#1740;
+or	common	fa	&#1740;&#1575;
+organization	email	fa	&#1605;&#1608;&#1587;&#1587;&#1607;
+original	common	fa	اصلی
+owner	common	fa	مالک
+page	common	fa	صفحه
+password	common	fa	رمزعبور
+path	htmlarea	fa	مسیر
+phone	email	fa	&#1578;&#1604;&#1601;&#1606;
+phone number	common	fa	شماره تلفن
+preferences	common	fa	پیش فرض ها
+previous	email	fa	&#1602;&#1576;&#1604;&#1740;
+previous page	common	fa	صفحه قبلی
+print	common	fa	چاپ
+printable	email	fa	&#1670;&#1575;&#1662;&#1740;
+priority	common	fa	اولویت
+private	common	fa	خصوصی
+project	common	fa	پروژه
+public	common	fa	عمومی
+read	common	fa	خواندن
+read mail	email	fa	&#1582;&#1608;&#1575;&#1606;&#1583;&#1606; &#1662;&#1740;&#1594;&#1575;&#1605;
+received headers	email	fa	&#1587;&#1585;&#1570;&#1740;&#1606;&#1583; &#1583;&#1585;&#1740;&#1575;&#1601;&#1578;&#1740;
+recent	email	fa	&#1575;&#1582;&#1740;&#1585;
+recipient	email	fa	&#1711;&#1740;&#1585;&#1606;&#1583;&#1607;
+redirect	email	fa	&#1578;&#1594;&#1740;&#1740;&#1585; &#1605;&#1587;&#1740;&#1585;
+reject	common	fa	رد کردن
+rename	common	fa	تغییر نام
+rename (expert)	email	fa	&#1578;&#1594;&#1740;&#1740;&#1585; &#1606;&#1575;&#1605;
+rename a folder	email	fa	&#1578;&#1594;&#1740;&#1740;&#1585; &#1606;&#1575;&#1605; &#1662;&#1608;&#1588;&#1607;
+reply	email	fa	&#1580;&#1608;&#1575;&#1576;
+reply all	email	fa	&#1580;&#1608;&#1575;&#1576; &#1576;&#1607; &#1607;&#1605;&#1607;
+replyto	email	fa	&#1580;&#1608;&#1575;&#1576; &#1576;&#1607;
+required	email	fa	&#1606;&#1740;&#1575;&#1586; &#1583;&#1575;&#1585;&#1583;
+result	email	fa	&#1606;&#1578;&#1740;&#1580;&#1607;
+root	common	fa	ریشه
+saturday	common	fa	شنبه
+save	common	fa	ضبط کردن
+search	common	fa	گشتن
+search this folder	email	fa	&#1580;&#1587;&#1578;&#1580;&#1608;&#1740; &#1575;&#1740;&#1606; &#1662;&#1608;&#1588;&#1607;
+section	common	fa	بخش
+seen	email	fa	&#1583;&#1740;&#1583;&#1607; &#1588;&#1583;&#1607;
+select	common	fa	انتخاب
+select category	common	fa	انتخاب دسته
+select one	common	fa	یکی را انتخاب کن
+select super category	common	fa	انتخاب گروه
+select user	common	fa	انتخاب کاربر
+selection	common	fa	انتخاب
+send	common	fa	فرستادن
+sender	email	fa	&#1601;&#1585;&#1587;&#1578;&#1606;&#1583;&#1607;
+sent	common	fa	&#1601;&#1585;&#1587;&#1578;&#1575;&#1583;&#1607; &#1588;&#1583;&#1607;
+sent folder	email	fa	&#1662;&#1608;&#1588;&#1607; &#1575;&#1585;&#1587;&#1575;&#1604; &#1588;&#1583;&#1607; &#1607;&#1575;
+server name	common	fa	نام میزبان
+settings	common	fa	&#1578;&#1606;&#1592;&#1740;&#1605; &#1607;&#1575;
+setup	common	fa	نصب
+short names	email	fa	&#1575;&#1587;&#1575;&#1605;&#1740; &#1705;&#1608;&#1578;&#1575;&#1607;
+show all	common	fa	همه را نشان بده
+show help	email	fa	&#1606;&#1605;&#1575;&#1740;&#1588; &#1705;&#1605;&#1705;
+show menu	common	fa	فهرست را نشان بده
+show message	email	fa	&#1606;&#1605;&#1575;&#1740;&#1588; &#1662;&#1740;&#1594;&#1575;&#1605;
+show page generation time	common	fa	زمان تولید صفحه را نشان بده
+show short names	email	fa	&#1606;&#1605;&#1575;&#1740;&#1588; &#1575;&#1587;&#1575;&#1605;&#1740; &#1705;&#1608;&#1670;&#1705;
+showing %1	common	fa	درحال نشان دادن %1
+simple	email	fa	&#1587;&#1575;&#1583;&#1607;
+size	email	fa	&#1575;&#1606;&#1583;&#1575;&#1586;&#1607;
+size larger than	email	fa	&#1575;&#1606;&#1583;&#1575;&#1586;&#1607; &#1576;&#1586;&#1585;&#1711;&#1578;&#1585; &#1575;&#1586;
+size smaller than	email	fa	&#1575;&#1606;&#1583;&#1575;&#1586;&#1607; &#1705;&#1608;&#1670;&#1705; &#1578;&#1585; &#1575;&#1586;
+small	email	fa	&#1705;&#1608;&#1670;&#1705;
+small view	email	fa	&#1606;&#1605;&#1575;&#1740; &#1705;&#1608;&#1670;&#1705;
+smaller	email	fa	&#1705;&#1608;&#1670;&#1705; &#1578;&#1585;
+smallest	email	fa	&#1705;&#1608;&#1670;&#1705;&#1578;&#1585;&#1740;&#1606;
+somebody	email	fa	&#1705;&#1587;&#1740;
+sort by	email	fa	&#1605;&#1585;&#1578;&#1576; &#1588;&#1583;&#1607; &#1576;&#1585;
+spell check	email	fa	&#1576;&#1585;&#1585;&#1587;&#1740; &#1575;&#1605;&#1604;&#1575;
+start time	common	fa	زمان شروع
+status	common	fa	وضعیت
+subject	common	fa	موضوع
+submit	common	fa	فرستادن
+sunday	common	fa	یکشنبه
+switch accounts	email	fa	&#1578;&#1594;&#1740;&#1740;&#1585; &#1581;&#1587;&#1575;&#1576;
+test all filters	email	fa	&#1575;&#1605;&#1578;&#1581;&#1575;&#1606; &#1578;&#1605;&#1575; &#1589;&#1575;&#1601;&#1740; &#1607;&#1575;
+text	email	fa	&#1605;&#1578;&#1606;
+then check the	email	fa	&#1587;&#1662;&#1587; &#1670;&#1705; &#1588;&#1608;&#1583;
+then do this	email	fa	&#1587;&#1662;&#1587; &#1575;&#1740;&#1606; &#1705;&#1575;&#1585; &#1585;&#1575; &#1576;&#1705;&#1606;
+this folder is empty	email	fa	&#1575;&#1740;&#1606; &#1662;&#1608;&#1588;&#1607; &#1582;&#1575;&#1604;&#1740;&#1587;&#1578;
+thursday	common	fa	پنجشنبه
+time	common	fa	زمان
+time zone	common	fa	منطقه زمانی
+title	common	fa	عنوان
+to	common	fa	به
+to address	email	fa	&#1740;&#1607; &#1570;&#1583;&#1585;&#1587;
+today	common	fa	امروز
+total	common	fa	جمع
+total messages	email	fa	&#1705;&#1604; &#1662;&#1740;&#1594;&#1575;&#1605;&#1607;&#1575;
+trash	email	fa	&#1587;&#1591;&#1604; &#1570;&#1588;&#1594;&#1575;&#1604;
+trash folder	email	fa	&#8205;&#1662;&#1608;&#1588;&#1607; &#1587;&#1591;&#1604; &#1570;&#1588;&#1594;&#1575;&#1604;
+unanswered	email	fa	&#1580;&#1608;&#1575;&#1576; &#1606;&#1583;&#1575;&#1583;&#1607;
+undeleted	email	fa	&#1581;&#1584;&#1601; &#1606;&#1588;&#1583;&#1607;
+unflagged	email	fa	&#1606;&#1588;&#1575;&#1606; &#1606;&#1588;&#1583;&#1607;
+unseen	email	fa	&#1585;&#1608;&#1740;&#1578; &#1606;&#1588;&#1583;&#1607;
+user	common	fa	کاربر
+user groups	common	fa	گروههای کاربری
+username	common	fa	نام کاربری
+users	common	fa	کاربرها
+users choice	common	fa	پسند کاربرها
+uzbekistan	common	fa	ازبکستان
+venezuela	common	fa	ونزوئلا
+version	common	fa	نسخه
+viet nam	common	fa	ویتنام
+view	common	fa	نما
+view as html	email	fa	&#1576;&#1588;&#1705;&#1604; HTML
+view formatted	email	fa	&#1606;&#1605;&#1575;&#1740;&#1588; &#1570;&#1585;&#1575;&#1740;&#1607; &#1588;&#1583;&#1607;
+view headers	email	fa	&#1606;&#1605;&#1575;&#1740;&#1588; &#1587;&#1585;&#1570;&#1740;&#1606;&#1583;
+wednesday	common	fa	چهارشنبه
+welcome	common	fa	خوش آمدید
+written by:	common	fa	نوشته شده توسط:
+wrote	email	fa	&#1606;&#1608;&#1588;&#1578;&#1607; &#1588;&#1583;&#1607;
+year	common	fa	سال
+yemen	common	fa	یمن
+yes	common	fa	بله
+you have %1 new messages!	common	fa	&#1588;&#1605;&#1575; &#1642;&#1777; &#1662;&#1740;&#1594;&#1575;&#1605;&#1607;&#1575;&#1740; &#1580;&#1583;&#1740;&#1583; &#1583;&#1575;&#1585;&#1740;&#1583;
+you have 1 new message!	common	fa	&#1588;&#1605;&#1575; &#1642;&#1777; &#1662;&#1740;&#1594;&#1575;&#1605; &#1580;&#1583;&#1740;&#1583; &#1583;&#1575;&#1585;&#1740;&#1583;
+you have messages!	common	fa	&#1588;&#1605;&#1575; &#1662;&#1740;&#1594;&#1575;&#1605; &#1580;&#1583;&#1740;&#1583; &#1583;&#1575;&#1585;&#1740;&#1583;
+you have no new messages	common	fa	&#1588;&#1605;&#1575; &#1662;&#1740;&#1594;&#1575;&#1605; &#1580;&#1583;&#1740;&#1583; &#1606;&#1583;&#1575;&#1585;&#1740;&#1583;
+you must click	email	fa	&#1588;&#1605;&#1575; &#1576;&#1575;&#1740;&#1583; &#1705;&#1604;&#1740;&#1705; &#1705;&#1606;&#1740;&#1583;
+your full name	common	fa	&#1606;&#1575;&#1605; &#1705;&#1575;&#1605;&#1604; &#1588;&#1605;&#1575;
+your message has been sent	common	fa	‍پیغام شما ارسال شد

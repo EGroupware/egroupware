@@ -298,8 +298,8 @@ server url	admin	no	Tjener URL
 server username	admin	no	Tjener brukernavn
 set preference values.	admin	no	Sett referanseverdier
 should the login page include a language selectbox (useful for demo-sites) ?	admin	no	Skal login siden inneholde valg av språk (fint for demo-site)?
-site	admin	no	Site
-site configuration	common	no	Konfigurasjon av web
+site	admin	no	Nettsted
+site configuration	common	no	Konfigurasjon av nettsted
 that loginid has already been taken	admin	no	Den loginID er opptatt
 the login and password can not be the same	admin	no	Loging og passord kan ikke være det samme
 the two passwords are not the same	admin	no	Passordene er ikke de sammme
