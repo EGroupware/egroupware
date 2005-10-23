@@ -1,7 +1,7 @@
 %1 records imported	addressbook	it	%1 record importati
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibiletornare %2indietro%3  e deselezionare Test Importazione)
-(e.g. 1969)	addressbook	it	(e.s. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione &lt;nessuno&gt; non è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	it	%1 record letti (non ancora importati, è possibile tornare %2indietro%3 e deselezionare Test Importazione)
+(e.g. 1969)	addressbook	it	(es. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	it	<b>Il tipo di conversione <nessuno> non è stato trovato.</b> Per favore scegliere un tipo di conversione dalla lista
 @-eval() is only availible to admins!!!	addressbook	it	@-eval() è disponibile solo agli amministratori!!!
 actions	addressbook	it	Azioni
 add a single entry by passing the fields.	addressbook	it	Aggiungi un solo elemento passando i campi.
@@ -17,7 +17,7 @@ addressbook preferences	addressbook	it	Preferenze della Rubrica
 addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
 addvcard	addressbook	it	Aggiungi Vcard
 alt. csv import	addressbook	it	Importazione CSV Alternativa
-are you sure you want to delete this field?	addressbook	it	Sei sicuro di voler eliminare questo campo?
+are you sure you want to delete this field?	addressbook	it	Vuoi davvero eliminare questo campo?
 bbs phone	addressbook	it	Telefono BBS
 birthday	common	it	Data di nascita
 birthdays	common	it	Compleanni
@@ -45,13 +45,13 @@ contact application	admin	it	Applicativo Contatti
 contact settings	admin	it	Impostazioni Contatto
 copied by %1, from record #%2.	addressbook	it	Copiato %1, dal record #%2.
 country	common	it	Nazione
-csv-fieldname	addressbook	it	CSV Nome del Campo
-csv-filename	addressbook	it	CSV Nome del File
+csv-fieldname	addressbook	it	CSV-Nome del Campo
+csv-filename	addressbook	it	CSV-Nome del File
 custom	addressbook	it	Personalizzato
 custom fields	addressbook	it	Campi Personalizzati
-debug output in browser	addressbook	it	
+debug output in browser	addressbook	it	Visualizza nel browser
 default filter	addressbook	it	Filtro predefinito
-delete a single entry by passing the id.	addressbook	it	
+delete a single entry by passing the id.	addressbook	it	Cancella un singola voce passando l'ID.
 department	common	it	Divisione
 domestic	addressbook	it	Interno
 download	addressbook	it	Download
@@ -88,8 +88,10 @@ import	addressbook	it	Importa
 import contacts	addressbook	it	Importa Contatti
 import csv-file into addressbook	addressbook	it	Importa file CSV nella Rubrica
 import file	addressbook	it	Importa File
+import from	addressbook	it	Importa da
 import from ldif, csv, or vcard	addressbook	it	Importa da LDIF, CSV, or VCard
 import from outlook	addressbook	it	Importa da Outlook
+import multiple vcard	addressbook	it	Importa Molteplici VCard
 import next set	addressbook	it	Import il prossimo set
 import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato LDIF.<p>O, in Outlook, seleziona la cartella Contatti , seleziona <b>Importa ed esporta...</b> dal menu <b>File</b> ed esporta i contatti nel formato testo separato da virgola (CSV).  <p>O, in Palm Desktop 4.0 o superiore, apri l'agenda e seleziona <b>Esporta</b> dal menu <b>File</b>.  Il file verrà esportato in formato VCard.
 international	addressbook	it	Internazionale
@@ -101,34 +103,40 @@ ldap root dn for contacts	admin	it	root dn LDAP per i contatti
 ldap root pw for contacts	admin	it	password di root LDAP per i contatti
 ldif	addressbook	it	LDIF
 line 2	addressbook	it	Linea 2
+list all categories	addressbook	it	Elenca tutte le categorie
+list all customfields	addressbook	it	Elenca tutti i campi personalizzati
+load vcard	addressbook	it	Carica VCard
 mark records as private	addressbook	it	Marca i record come privati
 message phone	addressbook	it	Telefono per Messaggi
 middle name	addressbook	it	Secondo Nome
 mobile	addressbook	it	Mobile
 mobile phone	addressbook	it	Telefono Mobile
 modem phone	addressbook	it	Telefono Modem
+multiple vcard	addressbook	it	Molteplici VCard
 no vcard	addressbook	it	Nessuna VCard
-number of records to read (<=200)	addressbook	it	Numero di record da leggere (<200)
+number of records to read (%1)	addressbook	it	Numero di record da leggere (%1)
 other number	addressbook	it	Altro Numero
 other phone	addressbook	it	Altro Telefono
-pager	common	it	Teledrin
+pager	common	it	Cercapersone
 parcel	addressbook	it	Parcel
 phone number	common	it	Numero di Telefono
 phone numbers	common	it	Numeri di telefono
 please enter a name for that field !	addressbook	it	Per favore inserire un nome per qesto campo
-postal	common	it	Postal
+postal	common	it	Postale
 pref	addressbook	it	pref
 prefix	addressbook	it	Prefisso
 public key	addressbook	it	Chiave Pubblica
-read a list of entries.	addressbook	it	Leggi una lista di inserimenti
-read a single entry by passing the id and fieldlist.	addressbook	it	
+read a list / search for entries.	addressbook	it	Leggi un elenco / cerca delle voci.
+read a list of entries.	addressbook	it	Leggi un elenco di voci
+read a single entry by passing the id and fieldlist.	addressbook	it	Leggi una singola voce passando l'ID e elenco campi.
 record access	addressbook	it	Accesso alla scheda
 record owner	addressbook	it	Proprietario della scheda
-retrieve contacts	admin	it	recupera i contatti
+retrieve contacts	admin	it	recupera contatti
 select all	addressbook	it	Seleziona tutto
 select the type of conversion	addressbook	it	Seleziona il tipo di conversione
 select the type of conversion:	addressbook	it	Seleziona il tipo di conversione:
 select where you want to store	admin	it	Seleziona dove vuoi memorizzare
+show	addressbook	it	Mostra
 show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
 startrecord	addressbook	it	Record Iniziale
 state	common	it	Provincia
@@ -143,7 +151,7 @@ to many might exceed your execution-time-limit	addressbook	it	troppi potrebbero 
 today is %1's birthday!	common	it	Oggi è il compleanno di %1!
 tomorrow is %1's birthday.	common	it	Domani è il compleanno di %1.
 translation	addressbook	it	Traduzione
-update a single entry by passing the fields.	addressbook	it	
+update a single entry by passing the fields.	addressbook	it	Aggiorna una singola voce passando i campi.
 use country list	addressbook	it	Usa la lista delle nazioni
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
@@ -152,6 +160,7 @@ video phone	addressbook	it	Videotelefono
 voice phone	addressbook	it	Telefono Vocale
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 work phone	addressbook	it	Telefono Ufficio
+write (update or add) a single entry by passing the fields.	addressbook	it	Scrivi (aggiorna o aggiungi) una singola voce passando i campi.
 you must select a vcard. (*.vcf)	addressbook	it	Bisogna selezionare una vcard (*.vcf)
 you must select at least 1 column to display	addressbook	it	Bisogna selezionare almeno una colonna da visualizzare
 zip code	common	it	CAP

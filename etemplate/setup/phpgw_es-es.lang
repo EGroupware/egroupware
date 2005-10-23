@@ -39,14 +39,13 @@ border-line-thickness for the table-tag	etemplate	es-es	Grosor de la línea del b
 bottom	etemplate	es-es	Parte inferior
 box	etemplate	es-es	Caja
 box...	etemplate	es-es	Caja...
-calendar	etemplate	es-es	Calendario
 can not have special sql-value null	etemplate	es-es	no puede tener el valor especial de SQL NULL
 cancel	etemplate	es-es	Cancelar
 cant delete a single widget from a grid !!!	etemplate	es-es	¡No se puede borrar un único control de una rejilla!
 cant delete the only column of a grid !!!	etemplate	es-es	¡No se puede borrar la única columna de una rejilla!
 cant delete the only row in a grid !!!	etemplate	es-es	¡No se puede borrar la única fila de una rejilla!
 category	etemplate	es-es	Categoría
-cellpadding for the table-tag	etemplate	es-es	Distancia de la etiquete de la tabla la celda
+cellpadding for the table-tag	etemplate	es-es	Distancia de la etiqueta de la tabla la celda
 cells	etemplate	es-es	Celdas
 cellspacing for the table-tag	etemplate	es-es	Espaciado en la celda para la etiqueta de la tabla
 center	etemplate	es-es	Centrar
@@ -73,7 +72,7 @@ creates an english ('en') langfile from label and helptexts (for application in 
 css class for the table-tag	etemplate	es-es	clase CSS para la etiqueta de la tabla
 css properties	etemplate	es-es	Propiedades CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	es-es	Nombre de la Clase CSS para esta fila. Predefinidos: 'nmh' (NextMatch header), 'nmr' (Alternating NM row), 'nmr0'+'nmr1' filas NM
-css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	es-es	El nombre de la clase CSS para esta fila, preestablecido: 'th' = cabecer, 'row' = fila alternando filas 'row_off' y 'row_on'.
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	es-es	El nombre de la clase CSS para esta fila, preestablecido: 'th' = cabecera, 'row' = fila alternando filas 'row_off' y 'row_on'.
 css-styles	etemplate	es-es	Estilos CSS
 custom	etemplate	es-es	personalizado
 cut	etemplate	es-es	Cortar
@@ -86,7 +85,6 @@ db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for th
 db-tools	etemplate	es-es	Herramientas de la base de datos
 deck	etemplate	es-es	Cubierta (interna)
 default	etemplate	es-es	Predeterminado
-delete	etemplate	es-es	Borrar
 delete a single entry by passing the id.	etemplate	es-es	Borrar una entrada simple pasando el id.
 delete all selected etemplates, without further inquiry	etemplate	es-es	Borrar TODAS las plantillas seleccionadas, SIN preguntar
 delete and cut save the template!	etemplate	es-es	¡borrar y cortar guardan la plantilla!
@@ -101,12 +99,11 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	es-es	Borra la plantilla especificada arriba
 deletes this column	etemplate	es-es	Borra esta columna
 deletes this index	etemplate	es-es	Borra este índice
-developer_tools	etemplate	es-es	herrameintas de desarrollo
 discard changes	etemplate	es-es	Descartar cambios
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	es-es	Se muestra delante de la entrada o la entrada se inserta para un '%s' en la etiqueta (la del botón de enviar o el nombre del fichero de la imagen)
 displayed in statusline of browser if input-field gets focus	etemplate	es-es	Se muestra en la línea de estado del navegador cuando el cuadro de texto tiene el foco
-displayed in the top line of the groupbox (legend)	etemplate	es-es	mostrada en la línea superior del recuadro de grupo (leyendo)
-do you want to save the changes you made in table %s?	etemplate	es-es	¿Desea guardar los cambis que ha realizado en la tabla %s?
+displayed in the top line of the groupbox (legend)	etemplate	es-es	mostrada en la línea superior del recuadro de grupo (leyenda)
+do you want to save the changes you made in table %s?	etemplate	es-es	¿Desea guardar los cambios que ha realizado en la tabla %s?
 documentation	etemplate	es-es	Documentación
 drop a table - this can not be undone	etemplate	es-es	Borrar una tabla - NO se puede deshacer
 drop table	etemplate	es-es	Borrar tabla
@@ -131,10 +128,8 @@ enter the new version number here (has to be > old_version)	etemplate	es-es	Intr
 entry saved	etemplate	es-es	Entrada guardada
 error: template not found !!!	etemplate	es-es	Error: no se encontró la plantilla
 error: webserver is not allowed to write into '%1' !!!	etemplate	es-es	Error: ¡El servidor no puede escribir en '%1'!
-error: while saveing !!!	etemplate	es-es	Error: se produjo un error mientras se guardaba
 error: while saving !!!	etemplate	es-es	¡¡Error al guardar!!
-error: writeing !!!	etemplate	es-es	Error: se produjo un error mientras se escribía
-error: writing file (no write-permission for the webserver) !!!	etemplate	es-es	Error: el servidor web no tiene permiso de escritura para el fichero
+error: writing file (no write-permission for the webserver) !!!	etemplate	es-es	Error: el servidor web no tiene permiso de escritura
 etemplate	common	es-es	Plantilla
 etemplate '%1' imported, use save to put it in the database	etemplate	es-es	Plantilla '%1' importada. Use Guardar para ponerla en la base de datos
 etemplate '%1' written to '%2'	etemplate	es-es	La plantilla '%1' se ha guardado en '%2'
@@ -152,13 +147,13 @@ file contains more than one etemplate, last one is shown !!!	etemplate	es-es	El 
 file writen	etemplate	es-es	Fichero guardado
 fileupload	etemplate	es-es	Subir fichero
 first	etemplate	es-es	Primero
-floating point	etemplate	es-es	Punto flotante
+floating point	etemplate	es-es	Coma flotante
 foreign key	etemplate	es-es	Clave ajena
 formatted text (html)	etemplate	es-es	Texto con formato (HTML)
 go to the first entry	etemplate	es-es	Ir a la primera entrada
 go to the last entry	etemplate	es-es	Ir a la última entrada
-go to the next page of entries	etemplate	es-es	Ir a la página siguiente de las entradas
-go to the previous page of entries	etemplate	es-es	Ir a la página anterior de las entradas
+go to the next page of entries	etemplate	es-es	Ir a la página siguiente de entradas
+go to the previous page of entries	etemplate	es-es	Ir a la página anterior de entradas
 grid	etemplate	es-es	Rejilla
 grid column attributes	etemplate	es-es	Atributos de la columna de la rejilla
 grid row attributes	etemplate	es-es	Atributos de la fila de la rejilla
@@ -166,11 +161,11 @@ groupbox	etemplate	es-es	Recuadro de grupo
 hbox	etemplate	es-es	Cuadro horizontal
 height	etemplate	es-es	Altura
 height of row (in % or pixel)	etemplate	es-es	altura de la fila (en % o pixels)
-height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	es-es	Altura de la fila (in % o píxeles), desactivar fila: [!= no]<valor>[=<check]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos está vacío.
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	es-es	Altura de la fila (en % o píxeles), desactivar fila: [!= no]<valor>[=<check>]. Ejemplo: '!@data' desactiva la fila si el contenido de los datos está vacío.
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Altura de la tabla en % o píxeles para la etiqueta de la tabla y, opcionalmente, div.
 height, disabled	etemplate	es-es	Altura, desactivada
 help	etemplate	es-es	Ayuda
-horizontal rule	etemplate	es-es	Regla horizontal
+horizontal rule	etemplate	es-es	Línea horizontal
 hour	etemplate	es-es	Hora
 hours	etemplate	es-es	horas
 html	etemplate	es-es	Html
@@ -197,7 +192,7 @@ insert new row in front of first line	etemplate	es-es	Insertar una nueva fila de
 integer	etemplate	es-es	Entero
 key	etemplate	es-es	Clave
 label	etemplate	es-es	Etiqueta
-label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	es-es	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] BotónRadio:valor Regla Hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
+label:[bold][italic] text:[len][,max] numbers:[min][,[max][,len]] t.area:[rows][,cols] radiob.:value h.rule:[width] templ.:[indexincontent] select:[multiselect] date:[values: eg. 'y-m-d']	etemplate	es-es	Etiqueta:[bold][italic] Texto:[len][,max] Números:[min][,[max][,len]] Área de texto:[rows][,cols] BotónRadio:valor Línea hor.:[width] Plantilla:[IndexInContent] Selec.:[multiselect] Fecha:[valores: ej. 'A-m-d']
 lang	etemplate	es-es	Idioma
 language-short (eg. 'en' for english) for language-dependent template ('' reads your pref. languages or the default, us 'default' to read the default template '')	etemplate	es-es	Abreviatura del idioma (ej. 'en' para inglés) para plantillas que dependen del idioma ('' lee las preferencias del idioma o el predeterminado. Use 'default' para la plantilla predeterminada.
 last	etemplate	es-es	Última
@@ -205,7 +200,7 @@ left	etemplate	es-es	Izquierda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	es-es	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
 link	etemplate	es-es	Enlace
 linklist	etemplate	es-es	Lista de enlaces
-linkstring	etemplate	es-es	Cadena de enlaces
+linkstring	etemplate	es-es	Cadena de enlace
 linkto	etemplate	es-es	Enlace a
 load this template into the editor	etemplate	es-es	cargar esta plantilla en el editor
 middle	etemplate	es-es	Medio
@@ -213,7 +208,7 @@ minute	etemplate	es-es	Minuto
 month	etemplate	es-es	Mes
 multicolumn indices	etemplate	es-es	Indices multicolumna
 name	etemplate	es-es	Nombre
-name of other table where column is a key from	etemplate	es-es	nombre de la otra tabla donde la columna es una clave de
+name of other table where column is a key from	etemplate	es-es	nombre de la otra tabla donde la columna es una clave
 name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	es-es	nombre del conjunto de plantillas (p. ej. verdiak): " = predeterminada (leerá la plantila de preferencias. Use 'default' para leer la plantilla predeterminada ")
 name of table to add	etemplate	es-es	Nombre de la tabla a añadir
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	es-es	Nombre de la plantilla. Debe estar en el formato aplicación.función[,subplantilla]
@@ -227,9 +222,9 @@ nextmatch filterheader	etemplate	es-es	Filtro para la siguiente coincidencia de 
 nextmatch sortheader	etemplate	es-es	Cabecera de orden de siguiente coincidencia
 no column to swap with !!!	etemplate	es-es	¡No hay columna con la que intercambiar!
 no file	etemplate	es-es	sin fichero
-no filename given or selected via browse...	etemplate	es-es	no se indicó un nombre de fichero ni se selección mediante Examinar...
+no filename given or selected via browse...	etemplate	es-es	no se indicó un nombre de fichero ni se seleccióno mediante Examinar...
 no row to swap with !!!	etemplate	es-es	¡No hay fila con la que intercambiar!
-not null	etemplate	es-es	NO NULO
+not null	etemplate	es-es	NOT NULL
 nothing	etemplate	es-es	nada
 nothing found - try again !!!	etemplate	es-es	No se encontró nada. Inténtelo de nuevo.
 nothing in clipboard to paste !!!	etemplate	es-es	¡¡No hay nada en el portapapeles para pegar!!
@@ -237,7 +232,8 @@ nothing matched search criteria !!!	etemplate	es-es	No se encontró nada con ese 
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	es-es	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	es-es	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
 of	etemplate	es-es	de
-only an other version found !!!	etemplate	es-es	sólo se encontró otra versión!
+onclick	etemplate	es-es	onClick
+only an other version found !!!	etemplate	es-es	sólo se encontró otra versión
 optional note about the link	etemplate	es-es	nota opcional sobre el enlace
 options	etemplate	es-es	Opciones
 overflow	etemplate	es-es	Desbordamiento
@@ -262,29 +258,28 @@ remove this link (not the entry itself)	etemplate	es-es	Borrar este enlace (no l
 returns savely, without deleting	etemplate	es-es	vuelve de forma segura, SIN borrar
 right	etemplate	es-es	Derecha
 row...	etemplate	es-es	Fila...
-save	etemplate	es-es	Guardar
 save the changes made and close the window	etemplate	es-es	Guardar los cambios realizados y cerrar la ventana
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	es-es	guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
 saves changes to tables_current.inc.php	etemplate	es-es	guarda los cambios a tables_current.inc.php
 saves the template with given version number and closes the window	etemplate	es-es	Guarda la plantilla con el número de versión indicado y cierra la ventana
 scale	etemplate	es-es	Escala
-scale for float	etemplate	es-es	scala para flotante
+scale for float	etemplate	es-es	escala para flotante
 search	etemplate	es-es	Buscar
-select a category	etemplate	es-es	seleccione una categoría
-select a primary contact, to show in the list	etemplate	es-es	Seleccione un contacto primario, para mostrar en la lista
+select a category	etemplate	es-es	seleccionar una categoría
+select a primary contact, to show in the list	etemplate	es-es	Seleccionar un contacto primario, para mostrar en la lista
 select access	etemplate	es-es	Seleccionar acceso
 select account	etemplate	es-es	Seleccionar cuenta
 select an app first !!!	etemplate	es-es	Seleccione una aplicación primero
-select an app to search in	etemplate	es-es	Seleccione una aplicación para buscar dentro
-select an application	etemplate	es-es	Seleccione una aplicación
-select an application, (*) = uninstalled	etemplate	es-es	Seleccione una aplicación. (*) = sin instalar
-select an entry to link with	etemplate	es-es	Seleccione una entrada para enlazar
+select an app to search in	etemplate	es-es	Seleccionar una aplicación en la que buscar
+select an application	etemplate	es-es	Seleccionar una aplicación
+select an application, (*) = uninstalled	etemplate	es-es	Seleccionar una aplicación. (*) = sin instalar
+select an entry to link with	etemplate	es-es	Seleccionar una entrada para enlazar
 select an table of the application	etemplate	es-es	Seleccione una tabla de la aplicación
-select application	etemplate	es-es	Seleccione aplicación
-select category	etemplate	es-es	Seleccione categoría
-select country	etemplate	es-es	Seleccione país
-select day	etemplate	es-es	Seleccione día
-select day of week	etemplate	es-es	seleccione día de la semana
+select application	etemplate	es-es	Seleccionar aplicación
+select category	etemplate	es-es	Seleccionar categoría
+select country	etemplate	es-es	Seleccionar país
+select day	etemplate	es-es	Seleccionar día
+select day of week	etemplate	es-es	seleccionar día de la semana
 select if content of field should not be translated (label gets always translated)	etemplate	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
 select month	etemplate	es-es	Seleccionar mes
 select number	etemplate	es-es	Seleccionar número
@@ -296,7 +291,7 @@ select the indexed columns in their desired order	etemplate	es-es	Seleccionar la
 select this etemplate to delete it	etemplate	es-es	Seleccionar esta plantilla para borrarla
 select which accounts to show	etemplate	es-es	seleccionar las cuentas a mostrar
 select which values to show	etemplate	es-es	Seleccionar qué valores mostrar
-select year	etemplate	es-es	Seleccionar vista
+select year	etemplate	es-es	Seleccionar año
 selectbox	etemplate	es-es	Cuadro de selección
 sets today as date	etemplate	es-es	pone hoy como fecha
 show	etemplate	es-es	Mostrar
@@ -306,9 +301,10 @@ showing	etemplate	es-es	mostrando
 shows / allows you to enter values into the etemplate for testing	etemplate	es-es	muestra / permite introducir valores en la plantilla para probar
 shows/displays etemplate for testing, does not save it before	etemplate	es-es	muestra la plantilla para pruebas. NO lo guarda antes
 spacing	etemplate	es-es	Espaciado
+span	etemplate	es-es	Span
 span, class	etemplate	es-es	span, clase
 stack	etemplate	es-es	Pila
-start a new search, cancel this link	etemplate	es-es	comienza una nueva búsqueda, cancela este enlace
+start a new search, cancel this link	etemplate	es-es	comienzar una nueva búsqueda, cancelar este enlace
 start new search for the above pattern	etemplate	es-es	comenzar una nueva búsqueda para el patrón de arriba
 submitbutton	etemplate	es-es	Botón de enviar
 swap	etemplate	es-es	intercambiar
@@ -317,7 +313,7 @@ swap with next column	etemplate	es-es	intercambiar con la siguiente columna
 swap with next row	etemplate	es-es	intercambiar con la fila siguiente
 switch to a parent widget	etemplate	es-es	cambiar a un control superior
 switch to an other widgets of that container	etemplate	es-es	cambiar a otros controles de ese contenedor
-table unchanged, no write necessary !!!	etemplate	es-es	Tabla no modificada, no es necesario guardarla
+table unchanged, no write necessary !!!	etemplate	es-es	La tabla no se ha modificado, no es necesario guardarla
 tablename	etemplate	es-es	Nombre de la tabla
 tabs	etemplate	es-es	Pestañas
 template	etemplate	es-es	Plantilla
@@ -335,12 +331,13 @@ today	etemplate	es-es	Hoy
 top	etemplate	es-es	Superior
 type	etemplate	es-es	Tipo
 type of the column	etemplate	es-es	tipo de la columna
-type of the field (select label if field should be empty)	etemplate	es-es	tipo del campo (seleccione la etiqueta si el campo tiene que estar vacío)
+type of the field (select label if field should be empty)	etemplate	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vacío)
 unique	etemplate	es-es	Único
 unlink	etemplate	es-es	Desvincular
 update a single entry by passing the fields.	etemplate	es-es	Actualizar una única entrada pasando los campos
 update from version '%s' to	etemplate	es-es	Actualizar de la versión '%s' a
 upload	etemplate	es-es	Subir a un servidor
+valign	etemplate	es-es	Alineación vertical
 value	etemplate	es-es	Valor
 value has to be at least '%1' !!!	etemplate	es-es	¡¡¡El valor tiene que ser al menos '%1'!!!
 value has to be at maximum '%1' !!!	etemplate	es-es	¡¡¡El valor tiene que ser como máximo '%1'!!!
@@ -354,7 +351,7 @@ weekend	etemplate	es-es	fin de semana
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	es-es	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
 widget copied into clipboard	etemplate	es-es	control copiado en el portapapeles
 width	etemplate	es-es	Ancho
-width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	es-es	ancho de la columna (in % o píxeles), desactivar columna: [!= no]<valor>[=comprobar] ej: '!@data' desactiva la columna si el contenido de los datos está vacío
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	es-es	ancho de la columna (en % o píxeles), desactivar columna: [!= no]<valor>[=<comprobar>] ej: '!@data' desactiva la columna si el contenido de los datos está vacío
 width of column (in % or pixel)	etemplate	es-es	ancho de la columna (en % o pixel)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Ancho de la tabla en % o píxeles para la etiqueta y, opcionalmente, elemento div
 width, disabled	etemplate	es-es	Ancho, desactivado
@@ -366,6 +363,3 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	es-es	fichero xml a importar
 xslt template	etemplate	es-es	Plantilla XSLT
 year	etemplate	es-es	Año
-1	etemplate	es-es	1
-2	etemplate	es-es	2
-3	etemplate	es-es	3

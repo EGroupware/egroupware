@@ -43,7 +43,7 @@ location of resource	resources	no	Lokasjon av ressurser
 name of resource	resources	no	Navn på ressurs
 no description available	resources	no	ingen beskrivelse tilgjengelig
 notify your administrator to correct this situation	resources	no	Gjør din EDB-ansvarlige beskjed om å korrigere denne situasjonen
-picture	resources	no	Bildle
+picture	resources	no	Bilde
 picture source	resources	no	Bildekilde
 picture type is not supported, sorry!	resources	no	Bildetype supporteres ikke, dessverre !
 pictures or resource	resources	no	Bilder av ressurs
@@ -55,8 +55,8 @@ quantity:	resources	no	Antall :
 read calender permissions	resources	no	Les kalendertillatelser
 read permissions	resources	no	Lesetillatelser
 related links	resources	no	Relaterte lenker
-resources	resources	no	ressurser
-resources list	resources	no	liste over ressurser
+resources	resources	no	Ressurser
+resources list	resources	no	Liste over ressurser
 responsible:	resources	no	Ansvarlig :
 saves entry and exits	resources	no	Lagre endringene og fortsette
 select a category	resources	no	Velg en kategori
