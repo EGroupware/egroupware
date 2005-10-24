@@ -521,7 +521,7 @@ function showMessage(msg, type)
 }
 
 // works only correctly in Mozilla/FF and Konqueror
-function egw_openWindowCentered(_url, _windowName, _width, _height)
+function egw_openWindowCentered2(_url, _windowName, _width, _height, _status)
 {
 	windowWidth = egw_getWindowOuterWidth();
 	windowHeight = egw_getWindowOuterHeight();
@@ -531,9 +531,13 @@ function egw_openWindowCentered(_url, _windowName, _width, _height)
 
 	windowID = window.open(_url, _windowName, "width=" + _width + ",height=" + _height + 
 		",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
-		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status=no");
+		",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 	
 	return windowID;
+}
+function egw_openWindowCentered(_url, _windowName, _width, _height, _status)
+{
+	return egw_openWindowCentered2(_url, _windowName, _width, _height, 'no');
 }
 
 // return the left position of the window
