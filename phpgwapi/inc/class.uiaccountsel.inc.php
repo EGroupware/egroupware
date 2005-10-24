@@ -22,7 +22,7 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	include_once(PHPGW_API_INC . '/class.accounts.inc.php');
+	include_once(EGW_API_INC . '/class.accounts.inc.php');
 
 	/**
 	 * User Interface for account and/or group selection
@@ -38,13 +38,13 @@
 		{
 			$this->accounts($account_id,$account_type);			// call constructor of extended class
 
-			$this->account_selection = $GLOBALS['phpgw_info']['user']['preferences']['common']['account_selection'];
+			$this->account_selection = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'];
 
-			if (!is_object($GLOBALS['phpgw']->html))
+			if (!is_object($GLOBALS['egw']->html))
 			{
-				$GLOBALS['phpgw']->html = CreateObject('phpgwapi.html');
+				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 			}
-			$this->html = $GLOBALS['phpgw']->html;
+			$this->html = $GLOBALS['egw']->html;
 		}
 
 		/**
@@ -106,7 +106,7 @@
 					break;
 				case 'primary_group':
 					$select = count($selected) && !isset($selected[0]) ? array_keys($selected) : $selected;
-					$members = $this->member($GLOBALS['phpgw']->accounts->data['account_primary_group']);
+					$members = $this->member($GLOBALS['egw']->accounts->data['account_primary_group']);
 					if (is_array($members))
 					{
 						foreach($members as $member)
@@ -122,7 +122,7 @@
 				default:
 					if (!is_array($select))
 					{
-						$select = $GLOBALS['phpgw']->accounts->search(array(
+						$select = $GLOBALS['egw']->accounts->search(array(
 							'type' => $use,
 							'app' => $app,
 						));
@@ -141,17 +141,17 @@
 				}
 				if (in_array($id,$selected))	// show already selected accounts first
 				{
-					$already_selected[$id] = $GLOBALS['phpgw']->common->grab_owner_name($id);
+					$already_selected[$id] = $GLOBALS['egw']->common->grab_owner_name($id);
 				}
 				elseif ($this->get_type($id) == 'u')
 				{
-					$users[$id] = !is_array($val) ? $GLOBALS['phpgw']->common->grab_owner_name($id) :
-						$GLOBALS['phpgw']->common->display_fullname(
+					$users[$id] = !is_array($val) ? $GLOBALS['egw']->common->grab_owner_name($id) :
+						$GLOBALS['egw']->common->display_fullname(
 							$val['account_lid'],$val['account_firstname'],$val['account_lastname']);
 				}
 				else
 				{
-					$groups[$id] = $GLOBALS['phpgw']->common->grab_owner_name($id);
+					$groups[$id] = $GLOBALS['egw']->common->grab_owner_name($id);
 				}
 			}
 			// sort users and groups alphabeticaly and put the groups behind the users
@@ -171,7 +171,7 @@
 				$selected = array_keys($selected);
 			}
 			// add necessary popup trigers
-			$link = $GLOBALS['phpgw']->link('/index.php',array(
+			$link = $GLOBALS['egw']->link('/index.php',array(
 				'menuaction' => 'phpgwapi.uiaccountsel.popup',
 				'app' => $app,
 				'use' => $use,
@@ -179,7 +179,7 @@
 				'multiple' => $lines,	// single selection (multiple=0), closes after the first selection
 			));
 			$popup_options = 'width=600,height=400,toolbar=no,scrollbars=yes,resizable=yes';
-			$app = $GLOBALS['phpgw_info']['flags']['currentapp'];
+			$app = $GLOBALS['egw_info']['flags']['currentapp'];
 			if ($lines <= 1 && $use != 'groups' && $use != 'owngroups')
 			{
 				if (!$lines)
@@ -218,9 +218,9 @@
 
 			if ($lines > 0 && ($this->account_selection == 'popup' || $this->account_selection == 'primary_group'))
 			{
-				// $html .= '<a href="'.$link.'" target="uiaccountsel" onclick="'."window.open(this,this.target,'$popup_options'); return false;".'">'.
-				$html .= '<a href="#" target="uiaccountsel" onclick="'."window.open('".$link."','uiaccountsel','$popup_options'); return false;".'">'.				
-					$this->html->image('phpgwapi','users',$lines > 1 ? lang('search or select accounts') : lang('search or select multiple accounts')).'</a>';
+				$html .= $this->html->submit_button('search','Search',"window.open('$link','uiaccountsel','$popup_options'); return false;",false,
+					' title="'.$this->html->htmlspecialchars($lines > 1 ? lang('search or select accounts') : lang('search or select multiple accounts')).'"',
+					'users','phpgwapi');
 				$need_js_popup = True;
 			}
 			if ($lines == 1 && $this->account_selection == 'selectbox')
@@ -228,7 +228,7 @@
 				$html .= '<a href="#" onclick="'."if (selectBox = document.getElementById('$element_id')) { selectBox.size=3; selectBox.multiple=true; } return false;".'">'.
 					$this->html->image('phpgwapi','users',lang('select multiple accounts')).'</a>';
 			}
-			if($need_js_popup && !$GLOBALS['phpgw_info']['flags']['uiaccountsel']['addOption_installed'])
+			if($need_js_popup && !$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'])
 			{
 				$html .= '<script language="JavaScript">
 	function addOption(id,label,value,do_onchange)
@@ -250,12 +250,12 @@
 			}
 		}
 		if (i >= selectBox.length) {
-			selectBox.options[selectBox.length] = new Option(label,value,false,true);
+			selectBox.options[selectBox.length] =& new Option(label,value,false,true);
 		}
 		if (selectBox.onchange && do_onchange) selectBox.onchange();
 	}
 </script>';
-				$GLOBALS['phpgw_info']['flags']['uiaccountsel']['addOption_installed'] = True;
+				$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'] = True;
 			}
 			return $html;
 		}
@@ -266,7 +266,7 @@
 
 			$app = get_var('app',array('POST','GET'));
 			$use = get_var('use',array('POST','GET'));
-			$group_id = get_var('group_id',array('POST','GET'),$GLOBALS['phpgw']->accounts->data['account_primary_group']);
+			$group_id = get_var('group_id',array('POST','GET'),$GLOBALS['egw']->accounts->data['account_primary_group']);
 			$element_id = get_var('element_id',array('POST','GET'));
 			$multiple = get_var('multiple',array('POST','GET'));
 
@@ -279,62 +279,62 @@
 
 			//echo "<p>uiaccountsel::popup(): app='$app', use='$use', multiple='$multiple', group_id='$group_id', element_id='$element_id', start='$start', order='$order', sort='$sort'</p>\n";
 
-			$this->nextmatchs = CreateObject('phpgwapi.nextmatchs');
+			$this->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
 
-			$GLOBALS['phpgw']->template->set_root($GLOBALS['phpgw']->common->get_tpl_dir('phpgwapi'));
+			$GLOBALS['egw']->template->set_root($GLOBALS['egw']->common->get_tpl_dir('phpgwapi'));
 
-			$GLOBALS['phpgw']->template->set_file(array('accounts_list_t' => 'uiaccountsel.tpl'));
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','letter_search','letter_search_cells');
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','group_cal','cal');
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','group_other','other');
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','group_all','all');
+			$GLOBALS['egw']->template->set_file(array('accounts_list_t' => 'uiaccountsel.tpl'));
+			$GLOBALS['egw']->template->set_block('accounts_list_t','letter_search','letter_search_cells');
+			$GLOBALS['egw']->template->set_block('accounts_list_t','group_cal','cal');
+			$GLOBALS['egw']->template->set_block('accounts_list_t','group_other','other');
+			$GLOBALS['egw']->template->set_block('accounts_list_t','group_all','all');
 
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','bla_intro','ibla');
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','other_intro','iother');
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','all_intro','iall');
+			$GLOBALS['egw']->template->set_block('accounts_list_t','bla_intro','ibla');
+			$GLOBALS['egw']->template->set_block('accounts_list_t','other_intro','iother');
+			$GLOBALS['egw']->template->set_block('accounts_list_t','all_intro','iall');
 
-			$GLOBALS['phpgw']->template->set_block('accounts_list_t','accounts_list','list');
+			$GLOBALS['egw']->template->set_block('accounts_list_t','accounts_list','list');
 
-			$GLOBALS['phpgw']->template->set_var('font',$GLOBALS['phpgw_info']['theme']['font']);
-			$GLOBALS['phpgw']->template->set_var('lang_search',lang('search'));
-			$GLOBALS['phpgw']->template->set_var('lang_groups',lang('user groups'));
-			$GLOBALS['phpgw']->template->set_var('lang_accounts',lang('user accounts'));
+			$GLOBALS['egw']->template->set_var('font',$GLOBALS['egw_info']['theme']['font']);
+			$GLOBALS['egw']->template->set_var('lang_search',lang('search'));
+			$GLOBALS['egw']->template->set_var('lang_groups',lang('user groups'));
+			$GLOBALS['egw']->template->set_var('lang_accounts',lang('user accounts'));
 
-			$GLOBALS['phpgw']->template->set_var('img',$GLOBALS['phpgw']->common->image('phpgwapi','select'));
-			$GLOBALS['phpgw']->template->set_var('lang_select_user',lang('Select user'));
-			$GLOBALS['phpgw']->template->set_var('lang_select_group',lang('Select group'));
+			$GLOBALS['egw']->template->set_var('img',$GLOBALS['egw']->common->image('phpgwapi','select'));
+			$GLOBALS['egw']->template->set_var('lang_select_user',lang('Select user'));
+			$GLOBALS['egw']->template->set_var('lang_select_group',lang('Select group'));
 
 			if ($app)	// split the groups in the ones with run-rights and without
 			{
 				if ($use == 'both')		// groups with run-rights too, eg. calendar
 				{
-					$GLOBALS['phpgw']->template->fp('ibla','bla_intro',True);
+					$GLOBALS['egw']->template->fp('ibla','bla_intro',True);
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
+					$GLOBALS['egw']->template->fp('iother','other_intro',True);
 				}
-				$GLOBALS['phpgw']->template->fp('iall','all_intro',True);
+				$GLOBALS['egw']->template->fp('iall','all_intro',True);
 			}
 			else	// use all groups and account, eg. admin
 			{
-				$GLOBALS['phpgw']->template->set_var('lang_perm',lang('group name'));
-				$GLOBALS['phpgw']->template->fp('iother','other_intro',True);
+				$GLOBALS['egw']->template->set_var('lang_perm',lang('group name'));
+				$GLOBALS['egw']->template->fp('iother','other_intro',True);
 			}
 
 			if ($multiple >= 1)
 			{
-				if (!is_object($GLOBALS['phpgw']->js))
+				if (!is_object($GLOBALS['egw']->js))
 				{
-					$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+					$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 				}
-				$GLOBALS['phpgw']->js->set_onload("copyOptions('$element_id');");
+				$GLOBALS['egw']->js->set_onload("copyOptions('$element_id');");
 			}
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('search or select accounts');
-			$GLOBALS['phpgw']->common->phpgw_header();
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('search or select accounts');
+			$GLOBALS['egw']->common->egw_header();
 
-			$GLOBALS['phpgw']->template->set_var('lang_perm',lang('Groups with permission for %1',lang($app)));
-			$GLOBALS['phpgw']->template->set_var('lang_nonperm',lang('Groups without permission for %1',lang($app)));
+			$GLOBALS['egw']->template->set_var('lang_perm',lang('Groups with permission for %1',lang($app)));
+			$GLOBALS['egw']->template->set_var('lang_nonperm',lang('Groups without permission for %1',lang($app)));
 
 			$link_data = array
 			(
@@ -349,18 +349,18 @@
 			);
 
 // -------------- list header variable template-declaration ------------------------
-			$GLOBALS['phpgw']->template->set_var('sort_lid',$this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data));
-			$GLOBALS['phpgw']->template->set_var('sort_firstname',$this->nextmatchs->show_sort_order($sort,'account_firstname',$order,'/index.php',lang('Firstname'),$link_data));
-			$GLOBALS['phpgw']->template->set_var('sort_lastname',$this->nextmatchs->show_sort_order($sort,'account_lastname',$order,'/index.php',lang('Lastname'),$link_data));
+			$GLOBALS['egw']->template->set_var('sort_lid',$this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data));
+			$GLOBALS['egw']->template->set_var('sort_firstname',$this->nextmatchs->show_sort_order($sort,'account_firstname',$order,'/index.php',lang('Firstname'),$link_data));
+			$GLOBALS['egw']->template->set_var('sort_lastname',$this->nextmatchs->show_sort_order($sort,'account_lastname',$order,'/index.php',lang('Lastname'),$link_data));
 
 // ------------------------- end header declaration --------------------------------
 
 			$link_data['sort'] = $sort;
 			$link_data['order'] = $order;
 
-			$GLOBALS['phpgw']->template->set_var('lang_list_members',lang('List members'));
-			$GLOBALS['phpgw']->template->set_var('lang_firstname',lang('firstname'));
-			$GLOBALS['phpgw']->template->set_var('lang_lastname',lang('lastname'));
+			$GLOBALS['egw']->template->set_var('lang_list_members',lang('List members'));
+			$GLOBALS['egw']->template->set_var('lang_firstname',lang('firstname'));
+			$GLOBALS['egw']->template->set_var('lang_lastname',lang('lastname'));
 
 			if ($app)
 			{
@@ -373,31 +373,31 @@
 			{
 				$link_data['group_id'] = $group['account_id'];
 
-				$GLOBALS['phpgw']->template->set_var('onclick',"addOption('$element_id','".
-					$GLOBALS['phpgw']->common->grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
+				$GLOBALS['egw']->template->set_var('onclick',"addOption('$element_id','".
+					$GLOBALS['egw']->common->grab_owner_name($group['account_id'])."','$group[account_id]',".(int)($multiple==1).")".
 					(!$multiple ? '; window.close()' : ''));
 
 				if (!$app || in_array($group['account_id'],$app_groups))
 				{
-					$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
-					$GLOBALS['phpgw']->template->set_var('link_user_group',$GLOBALS['phpgw']->link('/index.php',$link_data));
-					$GLOBALS['phpgw']->template->set_var('name_user_group',$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']));
+					$GLOBALS['egw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
+					$GLOBALS['egw']->template->set_var('link_user_group',$GLOBALS['egw']->link('/index.php',$link_data));
+					$GLOBALS['egw']->template->set_var('name_user_group',$GLOBALS['egw']->common->grab_owner_name($group['account_id']));
 
 					if($use == 'both')	// allow selection of groups
 					{
-						$GLOBALS['phpgw']->template->fp('cal','group_cal',True);
+						$GLOBALS['egw']->template->fp('cal','group_cal',True);
 					}
 					else
 					{
-						$GLOBALS['phpgw']->template->fp('other','group_other',True);
+						$GLOBALS['egw']->template->fp('other','group_other',True);
 					}
 				}
 				else
 				{
-					$GLOBALS['phpgw']->template->set_var('link_all_group',$GLOBALS['phpgw']->link('/index.php',$link_data));
-					$GLOBALS['phpgw']->template->set_var('name_all_group',$GLOBALS['phpgw']->common->grab_owner_name($group['account_id']));
-					$GLOBALS['phpgw']->template->set_var('accountid',$group['account_id']);
-					$GLOBALS['phpgw']->template->fp('all','group_all',True);
+					$GLOBALS['egw']->template->set_var('link_all_group',$GLOBALS['egw']->link('/index.php',$link_data));
+					$GLOBALS['egw']->template->set_var('name_all_group',$GLOBALS['egw']->common->grab_owner_name($group['account_id']));
+					$GLOBALS['egw']->template->set_var('accountid',$group['account_id']);
+					$GLOBALS['egw']->template->fp('all','group_all',True);
 				}
 			}
 			$link_data['group_id'] = $group_id;		// reset it
@@ -413,41 +413,41 @@
 				'query_type' => $query_type,
 			));
 
-			$GLOBALS['phpgw']->template->set_var(array(
+			$GLOBALS['egw']->template->set_var(array(
 				'left'  => $this->nextmatchs->left('/index.php',$start,$this->total,$link_data+array('query'=>$query)),
 				'right' => $this->nextmatchs->right('/index.php',$start,$this->total,$link_data+array('query'=>$query)),
-				'lang_showing' => ($group_id ? $GLOBALS['phpgw']->common->grab_owner_name($group_id).': ' : '').
+				'lang_showing' => ($group_id ? $GLOBALS['egw']->common->grab_owner_name($group_id).': ' : '').
 					($query ? lang("Search %1 '%2'",lang($this->query_types[$query_type]),$query).': ' : '')
 					.$this->nextmatchs->show_hits($this->total,$start),
 			));
 
 // -------------------------- end nextmatch ------------------------------------
 
-			$GLOBALS['phpgw']->template->set_var('search_action',$GLOBALS['phpgw']->link('/index.php',$link_data));
-			$GLOBALS['phpgw']->template->set_var('prev_query', $query);
-			$GLOBALS['phpgw']->template->set_var('search_list',$this->nextmatchs->search(array('query' => $query, 'search_obj' => 1)));
-			$GLOBALS['phpgw']->template->set_var('lang_firstname', lang("firstname"));
-			$GLOBALS['phpgw']->template->set_var('lang_lastname', lang("lastname"));
+			$GLOBALS['egw']->template->set_var('search_action',$GLOBALS['egw']->link('/index.php',$link_data));
+			$GLOBALS['egw']->template->set_var('prev_query', $query);
+			$GLOBALS['egw']->template->set_var('search_list',$this->nextmatchs->search(array('query' => $query, 'search_obj' => 1)));
+			$GLOBALS['egw']->template->set_var('lang_firstname', lang("firstname"));
+			$GLOBALS['egw']->template->set_var('lang_lastname', lang("lastname"));
 
 			foreach($users as $user)
 			{
-				$GLOBALS['phpgw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
+				$GLOBALS['egw']->template->set_var('tr_color',$this->nextmatchs->alternate_row_color($tr_color,True));
 
 // ---------------- template declaration for list records --------------------------
 
-				$GLOBALS['phpgw']->template->set_var(array(
+				$GLOBALS['egw']->template->set_var(array(
 					'lid'		=> $user['account_lid'],
 					'firstname'	=> $user['account_firstname'] ? $user['account_firstname'] : '&nbsp;',
 					'lastname'	=> $user['account_lastname'] ? $user['account_lastname'] : '&nbsp;',
 					'onclick'	=> "addOption('$element_id','".
-						$GLOBALS['phpgw']->common->grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
+						$GLOBALS['egw']->common->grab_owner_name($user['account_id'])."','$user[account_id]',".(int)($multiple==1).")".
 						(!$multiple ? '; window.close()' : ''),
 				));
-				$GLOBALS['phpgw']->template->fp('list','accounts_list',True);
+				$GLOBALS['egw']->template->fp('list','accounts_list',True);
 			}
 
-			$GLOBALS['phpgw']->template->set_var('accountsel_icon',$this->html->image('phpgwapi','users-big'));
-			$GLOBALS['phpgw']->template->set_var('query_type',is_array($this->query_types) ? $this->html->select('query_type',$query_type,$this->query_types) : '');
+			$GLOBALS['egw']->template->set_var('accountsel_icon',$this->html->image('phpgwapi','users-big'));
+			$GLOBALS['egw']->template->set_var('query_type',is_array($this->query_types) ? $this->html->select('query_type',$query_type,$this->query_types) : '');
 
 			$link_data['query_type'] = 'start';
 			$letters = lang('alphabet');
@@ -455,23 +455,23 @@
 			foreach($letters as $letter)
 			{
 				$link_data['query'] = $letter;
-				$GLOBALS['phpgw']->template->set_var(array(
+				$GLOBALS['egw']->template->set_var(array(
 					'letter' => $letter,
-					'link'   => $GLOBALS['phpgw']->link('/index.php',$link_data),
+					'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
 					'class'  => $query == $letter && $query_type == 'start' ? 'letter_box_active' : 'letter_box',
 				));
-				$GLOBALS['phpgw']->template->fp('letter_search_cells','letter_search',True);
+				$GLOBALS['egw']->template->fp('letter_search_cells','letter_search',True);
 			}
 			unset($link_data['query']);
 			unset($link_data['query_type']);
-			$GLOBALS['phpgw']->template->set_var(array(
+			$GLOBALS['egw']->template->set_var(array(
 				'letter' => lang('all'),
-				'link'   => $GLOBALS['phpgw']->link('/index.php',$link_data),
+				'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
 				'class'  => $query_type != 'start' || !in_array($query,$letters) ? 'letter_box_active' : 'letter_box',
 			));
-			$GLOBALS['phpgw']->template->fp('letter_search_cells','letter_search',True);
+			$GLOBALS['egw']->template->fp('letter_search_cells','letter_search',True);
 
-			$GLOBALS['phpgw']->template->set_var(array(
+			$GLOBALS['egw']->template->set_var(array(
 				'lang_selection' => lang('selection'),
 				'lang_close' => lang('close'),
 				'close_action' => 'window.close();',
@@ -479,7 +479,7 @@
 			
 			if ($multiple >= 1)
 			{
-				$GLOBALS['phpgw']->template->set_var(array(
+				$GLOBALS['egw']->template->set_var(array(
 					'lang_close' => lang('submit'),
 					'lang_multiple' => lang('multiple'),
 					'close_action' => "oneLineSubmit('$element_id');",
@@ -489,14 +489,14 @@
 
 			if ($multiple)
 			{
-				$GLOBALS['phpgw']->template->set_var(array(
+				$GLOBALS['egw']->template->set_var(array(
 					'selection' => $this->html->select('selected',False,array(),True,' id="uiaccountsel_popup_selection" style="width: 100%;"',13),
 					'remove' => $this->html->submit_button('remove','remove',
 						"removeSelectedOptions('$element_id'); return false;",True,' title="'.lang('Remove selected accounts').'"','delete'),
 				));
 			}
-			$GLOBALS['phpgw']->template->pfp('out','accounts_list_t',True);
+			$GLOBALS['egw']->template->pfp('out','accounts_list_t',True);
 
-			$GLOBALS['phpgw']->common->phpgw_footer();
+			$GLOBALS['egw']->common->egw_footer();
 		}
 	}
