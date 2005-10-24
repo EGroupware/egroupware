@@ -250,7 +250,7 @@
 			}
 		}
 		if (i >= selectBox.length) {
-			selectBox.options[selectBox.length] =& new Option(label,value,false,true);
+			selectBox.options[selectBox.length] = new Option(label,value,false,true);
 		}
 		if (selectBox.onchange && do_onchange) selectBox.onchange();
 	}
