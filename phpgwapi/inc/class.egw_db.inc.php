@@ -238,6 +238,11 @@
 						$php_extension = 'odbc';
 						break;
 						
+					case 'mysqlt':
+						$php_extension = 'mysql'; 
+						if ($this->Port) $Host .= ':'.$this->Port;
+						break;
+						
 					case 'mysqli':
 						$this->Type = 'mysql';
 						// fall through
