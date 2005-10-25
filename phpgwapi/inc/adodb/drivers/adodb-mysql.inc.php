@@ -472,11 +472,22 @@ class ADODB_mysql extends ADOConnection {
 		$offsetStr =($offset>=0) ? "$offset," : '';
 		// jason judge, see http://phplens.com/lens/lensforum/msgs.php?id=9220
 		if ($nrows < 0) $nrows = '18446744073709551615'; 
-		
+
+		//if the sql ends by a 'for update' it should be AFTER the LIMIT
+		$FORUPDATE = '';
+		//with PHP5 we could have used stripos and str_ireplace
+		if ( (strtoupper(substr($sql,-10))) == 'FOR UPDATE') {
+			$sql = substr($sql,0,(strlen($sql)-10));
+			$FORUPDATE = 'for update';
+		} elseif ( (strtoupper(substr($sql,-11))) == 'FOR UPDATE;') {
+			$sql = substr($sql,0,(strlen($sql)-11));
+			$FORUPDATE = 'for update';
+		}
+
 		if ($secs)
-			$rs =& $this->CacheExecute($secs,$sql." LIMIT $offsetStr$nrows",$inputarr);
+			$rs =& $this->CacheExecute($secs,$sql." LIMIT $offsetStr$nrows $FORUPDATE",$inputarr);
 		else
-			$rs =& $this->Execute($sql." LIMIT $offsetStr$nrows",$inputarr);
+			$rs =& $this->Execute($sql." LIMIT $offsetStr$nrows $FORUPDATE",$inputarr);
 		return $rs;
 	}
 	
