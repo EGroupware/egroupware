@@ -1,0 +1,113 @@
+%1 already exists as a file	filemanager	lv	%1 jau pastāv kā fails
+application	filemanager	lv	Aplikācija
+back to file manager	filemanager	lv	Atpakaļ uz datņu pārvaldnieku
+cancel editing %1 without saving	filemanager	lv	Pārtraukt rediģēt %1 un nesaglabāt izmaiņas
+cannot create directory because it begins or ends in a space	filemanager	lv	Nevar izveidot mapi jo tās nosaukums sākas vai beidzas ar atstarpi
+cannot replace %1 because it is a directory	filemanager	lv	Nevar aizvietot %1 jo tā ir mape
+command sucessfully run	filemanager	lv	Komanda tika veiksmīgi izpildīta
+comment	filemanager	lv	Komentārs
+comments cannot contain "%1"	filemanager	lv	Komentāros nederīkst būt  "%1"
+copied %1 to %2	filemanager	lv	Pārkopēja %1 uz %2
+copy to	filemanager	lv	Kopēt Uz:
+copy to:	filemanager	lv	Kopēt uz
+could not copy %1 to %2	filemanager	lv	Neizdevās pārkopēt %1 uz %2
+could not copy file because no destination directory is given	filemanager	lv	Neizdevās pārkopēt datni, jo nav norādīta direktorija
+could not create %1	filemanager	lv	Neizdevās izveidot %1
+could not create directory %1	filemanager	lv	Neizdevās izveidot direktoriju %1
+could not delete %1	filemanager	lv	Neizdevās izdzēst %1
+could not move %1 to %2	filemanager	lv	Neizdevās pārvietot %1 uz %2
+could not move file because no destination directory is given	filemanager	lv	Neizdevās pārvietot datni, jo nav norādīta direktorija
+could not rename %1 to %2	filemanager	lv	Neizdevās pārsaukt %1 par %2
+could not save %1	filemanager	lv	Neizdevās saglabāt %1
+create file	filemanager	lv	Izveidot datni
+create folder	filemanager	lv	Izveidot direktoriju
+created	filemanager	lv	Izveidots
+created %1	filemanager	lv	Izveidots %1
+created %1,%2	filemanager	lv	Izveidots %1,%2
+created by	filemanager	lv	Izveidoja
+created directory %1	filemanager	lv	Izveidota direktorija %1
+date	filemanager	lv	Datums
+default number of upload fields to show	filemanager	lv	Augšuplādes lauku skaits pēc noklusējuma
+delete	filemanager	lv	Dzēst
+deleted %1	filemanager	lv	Izdzēsa %1
+directory	filemanager	lv	Direktorija
+directory %1 already exists	filemanager	lv	Direktorija %1 jau pastāv
+directory %1 does not exist	filemanager	lv	Direktorija %1 nepastāv
+directory names cannot contain "%1"	filemanager	lv	Direktoriju nosaukumā nedrīkst būt "%1"
+display attributes	filemanager	lv	Rādīt atribūtus
+download	filemanager	lv	Lejupielādēt
+edit	filemanager	lv	Rediģēt
+edit comments	filemanager	lv	Rediģēt komentārus
+error running command	filemanager	lv	Kļuda izpildot komandu
+execute	filemanager	lv	Izpildīt
+failed to create directory	filemanager	lv	nevarēja izveidot direktoriju
+fake base dir did not exist, egroupware created a new one.	filemanager	lv	Viltus pamatdirektorija nepastāvēja, egroupware izveidoja jaunu.
+file	filemanager	lv	Datne
+file %1 already exists. please edit it or delete it first.	filemanager	lv	Datne %1 jau pastāv. Lūdzu vispirms pārveido tās nosaukumu vai izdzēs to.
+file %1 could not be created.	filemanager	lv	Datne %1 netika izveidota.
+file name	filemanager	lv	Datnes nosaukums
+file names cannot contain  or /	filemanager	lv	Datnes nosaukumā nedrīkst būt \ vai /
+file names cannot contain "%1"	filemanager	lv	Datnes nosaukumā nedrīkst būt "%1"
+filemanager	common	lv	Datņu pārvaldnieks
+filemanager preferences	filemanager	lv	Datņu pārvaldnieka uzstādījumi
+files	filemanager	lv	Datnes
+files in this directory	filemanager	lv	Datnes šajā direktorijā
+folder	filemanager	lv	Mape
+folder up	filemanager	lv	Mapi uz augšu
+go home	filemanager	lv	iet uz Mājām
+go to	filemanager	lv	Iet Uz
+go to %1	filemanager	lv	Iet uz %1
+go to your home directory	filemanager	lv	Iet uz mājas direktoriju
+go to:	filemanager	lv	Iet uz:
+go up	filemanager	lv	pārvietoties uz augšu
+home	filemanager	lv	Māja
+location	filemanager	lv	Atrašanās vieta
+locked	filemanager	lv	Aizslēgts
+mime type	filemanager	lv	MIME tips
+modified	filemanager	lv	Pārveidots
+modified by	filemanager	lv	Pārveidoja
+move to	filemanager	lv	Pārvietot Uz:
+move to:	filemanager	lv	Pārvietot uz
+moved %1 to %2	filemanager	lv	Pārvietoja %1 uz %2
+no files in this directory.	filemanager	lv	Šajā direktorijā datņu nav.
+no version history for this file/directory	filemanager	lv	Nav vēstures par šo datni vai direktoriju
+operation	filemanager	lv	Operācija
+other settings	filemanager	lv	Citi uzstādījumi
+owner	filemanager	lv	Īpašnieks
+please select a file to delete.	filemanager	lv	Lūdzu norādi failu, kuru izdzēst
+preview %1	filemanager	lv	Priekšskatīt %1
+preview of %1	filemanager	lv	%1 priekšskatījums
+quick jump to	filemanager	lv	Ātri pārlekt uz
+reload	filemanager	lv	pārlādēt
+rename	filemanager	lv	Pārsaukt
+renamed %1 to %2	filemanager	lv	%1 pārsaukts par %2
+replaced %1	filemanager	lv	Aizvietots
+save %1	filemanager	lv	Saglabāt %1
+save %1, and go back to file listing	filemanager	lv	Saglabā %1 un atgriezies datņu apskatē
+save all	filemanager	lv	Saglabāt visus
+save changes	filemanager	lv	Saglabāt izmaiņas
+saved %1	filemanager	lv	Saglabāts %1
+show	filemanager	lv	Parādīt
+show ..	filemanager	lv	Parādīt ..
+show .files	filemanager	lv	Parādīt .datnes
+show command line (experimental. dangerous.)	filemanager	lv	Rādīt komandas rindu (EXPERIMENTALI, BĪSTAMI)
+show help	filemanager	lv	Rādīt palīdzību
+size	filemanager	lv	Izmērs
+sort by:	filemanager	lv	Kārtot pēc:
+total files	filemanager	lv	Datnes kopā
+unused space	filemanager	lv	Brīva vieta
+up	filemanager	lv	Uz augšu
+update	filemanager	lv	Atjaunināt
+updated comment for %1	filemanager	lv	Atjaunināts komentārs %1
+upload	filemanager	lv	Augšupielādēt
+upload fields	filemanager	lv	augšupielādēt laukus
+upload files	filemanager	lv	Augšupielādēt datnes
+use new experimental filemanager?	filemanager	lv	Lietot jaunu eksperimentālu datņu pārvaldnieku?
+used space	filemanager	lv	Izmantotais apjoms
+users	filemanager	lv	Lietotāji
+version	filemanager	lv	Versija
+view documents in new window	filemanager	lv	Rādīt dokumentus jaunā logā
+view documents on server (if available)	filemanager	lv	Apskatīt dokumentus uz servera (ja pieejami)
+who	filemanager	lv	Kurš
+you do not have access to %1	filemanager	lv	Tev nav pieeja %1
+your home dir did not exist, egroupware created a new one.	filemanager	lv	Tava Mājas direktorija neeksistēja, eGroupWare izveidoja jaunu!

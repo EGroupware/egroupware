@@ -62,7 +62,7 @@ show_more_apps	common	no	Vis flere programmer
 text only	preferences	no	Kun tekst
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	no	Standard programmet startes når du starter eGroupWare eller klikker på hjemmeside ikonet.<b>Du kan ellers vise flere programmer på hjemmesiden så lenge du ikke velger spesifikt program her (må konfigureres i preferansene til det enkelte program).
 the old password is not correct	preferences	no	Det gamle passordet er ikke korrekt
-the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	no	Valgboksen viser alle tilgjengelige brukere (kan være veldig treg på store installasjoner med mange brukere). I sprett-opp vinduet kan du søker etter brukere vha. navn eller gruppe.
+the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	no	Valgboksen viser alle tilgjengelige brukere (kan være veldig treg på store installasjoner med mange brukere). I pop-up vinduet kan du søke etter brukere vha. navn eller gruppe.
 the two passwords are not the same	preferences	no	Passordene stemmer ikke overens
 theme (colors/fonts) selection	preferences	no	Mal (farger/skrifttype) valg
 this server is located in the %1 timezone	preferences	no	Tjeneren står i %1 tidssonen

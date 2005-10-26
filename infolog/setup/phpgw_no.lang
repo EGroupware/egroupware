@@ -29,13 +29,6 @@ add:	infolog	no	Legg til:
 all	infolog	no	Alle
 all links and attachments	infolog	no	alle lenker og vedlegg
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks sette Gjøremål til Ferdig (verdiene avhenger av innslagstype)
-allows to set the status of an entry, eg. set a todo to done if it\'s finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks fullføre et gjøremål hvis ferdig (verdiene avhenger av innslagstype)
-allows to set the status of an entry, eg. set a todo to done if it\\\'s finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks fullføre et gjøremål hvis ferdig (verdiene avhenger av innslagstype)
-allows to set the status of an entry, eg. set a todo to done if it\\\\\\\'s finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks fullføre et gjøremål hvis ferdig (verdiene avhenger av innslagstype)
-allows to set the status of an entry, eg. set a todo to done if it\\\\\\\\\\\\\\\'s finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks fullføre et gjøremål hvis ferdig (verdiene avhenger av innslagstype)
-allows to set the status of an entry, eg. set a todo to done if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks fullføre et gjøremål hvis ferdig (verdiene avhenger av innslagstype)
-allows to set the status of an entry, eg. set a todo to done if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks fullføre et gjøremål hvis ferdig (verdiene avhenger av innslagstype)
-allows to set the status of an entry, eg. set a todo to done if it\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'s finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks fullføre et gjøremål hvis ferdig (verdiene avhenger av innslagstype)
 applies the changes	infolog	no	fullfører endringene
 are you shure you want to delete this entry ?	infolog	no	Er du sikker på at du vil slette dette innslaget?
 are you sure you want to delete this entry	infolog	no	Er du sikker på at du vil slette dette innslaget?
@@ -118,6 +111,7 @@ for which types should this field be used	infolog	no	hvilke typer skal feltet br
 from	infolog	no	Fra
 high	infolog	no	høy
 id	infolog	no	Id
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	no	Dersom ikke satt, linjen med søk og filter er skjult dersom færre antall enn "maks antall pr. side" (som definert i globale preferanser).
 import	infolog	no	Import
 import next set	infolog	no	importer neste sett
 info log	common	no	Infologg
@@ -147,11 +141,17 @@ longer textual description	infolog	no	lenger ordrett beskrivelse
 low	infolog	no	lav
 max length of the input [, length of the inputfield (optional)]	infolog	no	maks. lengde på innslag [,feltlengde (valgfri)]
 max number of entries to display on the main screen	infolog	no	Maks. antall innslag som vises på hovedskjerm
+my	infolog	no	mine
+my open	infolog	no	mine åpne
+my overdue	infolog	no	mine forsinkede
+my upcoming	infolog	no	mine planlagte
 name must not be empty !!!	infolog	no	Navn kan ikke være tomt !!!
 name of new type to create	infolog	no	navn på ny type som lages
+never hide search and filters	infolog	no	Skjul aldri søk og filtere
 new name	infolog	no	nytt navn
 new search	infolog	no	Nytt søk
 no - cancel	infolog	no	Nei - Avbryt
+no describtion, links or attachments	infolog	no	ingen beskrivelse, lenker eller tillagte dokumenter
 no entries found, try again ...	infolog	no	ingen innslag funnet, prøv igjen ...
 no filter	infolog	no	ufiltrert
 no links or attachments	infolog	no	ingen lenker eller vedlegg
@@ -182,20 +182,17 @@ pattern for search in projects	infolog	no	mønster for søk i Prosjekter
 phone	infolog	no	Telefonoppkall
 phone/email	infolog	no	Telefon/Epost
 phonecall	infolog	no	Telefonoppkall
+planned time	infolog	no	Planlagt tid
 priority	infolog	no	Prioritet
 private	infolog	no	Privat
 project	infolog	no	Prosjekt
 re:	infolog	no	Ang:
 read one record by passing its id.	infolog	no	Les en rekke ved å oppgi rekke-ID.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	no	reg. ekspr. for lokale IP-adresser<b>f.eks^192\.168\.1\.
-reg. expr. for local ip\'s<br>eg. ^192\\.168\\.1\\.	infolog	no	reg. expr. for lokale IP adresser<br>f.eks ^192\.168\.1\.
-reg. expr. for local ip\\\'s<br>eg. ^192\\\\.168\\\\.1\\\\.	infolog	no	reg. expr. for lokale IP adresser<br>f.eks ^192\.168\.1\.
-reg. expr. for local ip\\\\\\\'s<br>eg. ^192\\\\\\\\.168\\\\\\\\.1\\\\\\\\.	infolog	no	reg. expr. for lokale IP adresser<br>f.eks ^192\.168\.1\.
-reg. expr. for local ip\\\\\\\\\\\\\\\'s<br>eg. ^192\\\\\\\\\\\\\\\\.168\\\\\\\\\\\\\\\\.1\\\\\\\\\\\\\\\\.	infolog	no	reg. expr. for lokale IP adresser<br>f.eks ^192\.168\.1\.
 remark	infolog	no	Merknad
 remove this link (not the entry itself)	infolog	no	Slett denne lenken (ikke selve innslaget)
 responsible	infolog	no	Ansvarlig
-responsible user, priority, ...	infolog	no	ansvarlig bruker, prioritet, ...
+responsible user, priority, times	infolog	no	ansvarlig bruker, prioritet, ant.ganger
 returns a list / search for records.	infolog	no	Viser en liste / søk etter rekker.
 save	infolog	no	Lagre
 saves the changes made and leaves	infolog	no	lagrer endringene og lukker
@@ -207,15 +204,14 @@ select a category for this entry	infolog	no	velg en kategori for innslaget
 select a priority for this task	infolog	no	velg prioritet for denne oppgaven
 select a responsible user: a person you want to delegate this task	infolog	no	velg en ansvarlig bruker: personen du vil tildele oppgaven
 select a typ to edit it's status-values or delete it	infolog	no	velg en type for å endre status verdi eller slette
-select a typ to edit it\'s status-values or delete it	infolog	no	velg en type for å endre status verdier eller slette den
-select a typ to edit it\\\'s status-values or delete it	infolog	no	velg en type for å endre status verdier eller slette den
-select a typ to edit it\\\\\\\'s status-values or delete it	infolog	no	velg en type for å endre status verdier eller slette den
-select a typ to edit it\\\\\\\\\\\\\\\'s status-values or delete it	infolog	no	velg en type for å endre status verdier eller slette den
 select an app to search in	infolog	no	Velg applikasjon det skal søkes i
 select an entry to link with	infolog	no	Velg innslag som skal lenkes med
+select to filter by owner	infolog	no	Velg å filtrere for eier
+select to filter by responsible	infolog	no	Velg å filtrere for ansvarlig
+sets the status of this entry to done	infolog	no	Setter status til utført for denne.
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	no	Skal InfoLogg vise dine åpne saker - åpne oppgaver, telefonoppkall eller notater - på hovedskjermen. Virker kun dersom du ikke har valgt applikasjon for hovedskjerm (i dine preferanser).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	no	Skal InfoLogg vise under-oppgaver, -oppkall eller -notater som normalvisning eller ikke. Du kan alltids nå underoppgavene via hovedoppgavene.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	no	Skal InfoLogg vise lenker til andre applikasjoner og/eller vedlegg i InfoLogg listen (normal visning når du starter InfoLogg).
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	no	Skal InfoLogg viser lenkene til andre programmer og/eller filtilknytningene i InfoLogglisten (Normal visning når du starter InfoLogg)
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	no	Skal InfoLogg vise fulle navn (fornavn og etternavn) eller kun påloggingsnavn.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	no	skal dette innslaget vises kun til deg selv og personer du gir access vha. tilgangslister (ACL)
 show full usernames	infolog	no	Vise fulle brukernavn
@@ -233,19 +229,18 @@ sub	infolog	no	Under
 subject	infolog	no	Emne
 task	infolog	no	Gjøremål
 test import (show importable records <u>only</u> in browser)	infolog	no	Test Import (vis importerbare rekker, <u>kun</u> i webleser)
-the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	no	navnet brukt internt (<=32 karakterer), endring av verdien gjør eksisterende data utilgjengelig.
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	no	navnet benyttet intertnt(<= 10 kar.), endring gjør eksisterende data utilgjengelige.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	no	navnet benyttet intertnt(<= 20 kar.), endring gjør eksisterende data utilgjengelige.
 the text displayed to the user	infolog	no	teksten som vises til bruker
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	no	Dette er filteret InfoLogg bruker når du starter applikasjonen. Et filter begrenser antall innslag som vises på skjermen. Det finnes filter som viser kun lukkede, åpne eller fremtidige innslag for deg selv eller alle brukere.
 til when should the todo or phonecall be finished	infolog	no	innen hvilket tidspunkt skal gjøremål eller telefonoppkall være avsluttet
+times	infolog	no	Ant. ganger
 to many might exceed your execution-time-limit	infolog	no	for mange kan overgå din uførelse-tids-begrensning
 today	infolog	no	Idag
 todo	infolog	no	Gjøremål
 translation	infolog	no	Oversetting
 typ	infolog	no	Type
 typ '%1' already exists !!!	infolog	no	Typen '%1' eksisterer allerede !!!
-typ \'%1\' already exists !!!	infolog	no	Typen '%1' eksisterer allerede !!!
-typ \\\'%1\\\' already exists !!!	infolog	no	Typen '%1' eksisterer allerede !!!
-typ \\\\\\\'%1\\\\\\\' already exists !!!	infolog	no	Typen '%1' eksisterer allerede !!!
 type	infolog	no	Type
 type ...	infolog	no	Type ...
 type of the log-entry: note, phonecall or todo	infolog	no	Innslagets type: Notat, telefon eller gjøremål
@@ -255,8 +250,7 @@ urgency	infolog	no	nødvendighet
 urgent	infolog	no	haster
 use button to search for address	infolog	no	bruk knappen for å søke etter adresse
 use button to search for project	infolog	no	bruk knappen for å søke etter prosjekt
-valid path on clientside<br>eg. \\\\\\\\server\\\\share or e:\\\\	infolog	no	gyldig sti på klienten<br>f.eks \\tjener\share eller e:\
-valid path on clientside<br>eg. \\\\server\\share or e:\\	infolog	no	gyldig sti på klienten<br>f.eks \\tjener\share eller e:\
+used time	infolog	no	brukt tid
 valid path on clientside<br>eg. \\server\share or e:\	infolog	no	gyldig sti på klienten<br>f.eks \\tjener\share eller e:\
 values for selectbox	infolog	no	Verdier for valgboksene
 view all subs of this entry	infolog	no	Viser alle subs for dette innslaget
@@ -270,9 +264,8 @@ will-call	infolog	no	ringer
 write (add or update) a record by passing its fields.	infolog	no	Skriv (legg til eller oppdater) en rekke ved å skrive inn felter
 yes - delete	infolog	no	Ja - Slett
 you can't delete one of the stock types !!!	infolog	no	Du kan ikke slette en av aksjetypene !!!
-you can\'t delete one of the stock types !!!	infolog	no	Du kan ikke slette en aksjetype !!!
-you can\\\'t delete one of the stock types !!!	infolog	no	Du kan ikke slette en aksjetype !!!
 you have entered an invalid ending date	infolog	no	Du har skrevet inn en ugyldig sluttdato
 you have entered an invalid starting date	infolog	no	Du har skrevet inn en ugyldig startdato
 you have to enter a name, to create a new typ!!!	infolog	no	Du må skrive inn et navn for å lage en ny type!!!
 you must enter a subject or a description	infolog	no	Du må skrive inn emne eller beskrivelse
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	no	Din database er ikke oppdatert /%1 vs.%2,), vennligst kjør %3setup%4 for å oppdatere databasen.

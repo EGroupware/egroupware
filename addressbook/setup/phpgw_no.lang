@@ -143,6 +143,7 @@ test import (show importable records <u>only</u> in browser)	addressbook	no	Test
 that field name has been used already !	addressbook	no	Feltnavnet er allerede i bruk !
 this person's first name was not in the address book.	addressbook	no	Personens fornavn var ikke i adresseboken
 this person's last name was not in the address book.	addressbook	no	Personens etternavn var ikke i adresseboken
+to many might exceed your execution-time-limit	addressbook	no	for mange vil muligens overskride din eksekverings-tidsgrense
 today is %1's birthday!	common	no	I dag har %1 fødselsdag!
 tomorrow is %1's birthday.	common	no	I morgen er det %1's fødselsdag.
 translation	addressbook	no	Oversetting

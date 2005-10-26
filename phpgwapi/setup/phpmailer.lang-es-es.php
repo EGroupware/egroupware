@@ -11,7 +11,7 @@ $PHPMAILER_LANG["provide_address"] = 'Debe proporcionar al menos ' .
 $PHPMAILER_LANG["mailer_not_supported"] = ' mailer no está soportado.';
 $PHPMAILER_LANG["execute"] = 'No se pudo ejecutar: ';
 $PHPMAILER_LANG["instantiate"] = 'No se pudo crear la instancia de la función de correo.';
-$PHPMAILER_LANG["authenticate"] = 'Error SMTP: no se pudo indentificar ante el servidor.';
+$PHPMAILER_LANG["authenticate"] = 'Error SMTP: no se pudo identificar en el servidor.';
 $PHPMAILER_LANG["from_failed"] = 'La siguiente dirección De falló: ';
 $PHPMAILER_LANG["recipients_failed"] = 'Error SMTP: Los siguientes ' .
                                        'destinatarios fallaron: ';

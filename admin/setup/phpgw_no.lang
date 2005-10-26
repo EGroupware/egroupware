@@ -245,6 +245,7 @@ maximum account id (e.g. 65535 or 1000000)	admin	no	Maksimal kontoID (f.eks. 655
 message has been updated	admin	no	meldingen er oppdatert
 method	admin	no	Metode
 minute	admin	no	Minutt
+mode	admin	no	Modus
 month	admin	no	Måned
 new group name	admin	no	Nytt gruppe navn
 new password [ leave blank for no change ]	admin	no	Nytt passord [ Ingenting hvis ingen forandring ]
@@ -254,9 +255,12 @@ no alternate email address	admin	no	ingen alternativ e-mailadresse
 no jobs in the database !!!	admin	no	Ingen jobber i databasen
 no login history exists for this user	admin	no	Ingen login historikk for denne brukeren
 no matches found	admin	no	Ingen treff funnet
+no modes available	admin	no	Ingen modus tilgjengelig
 no permission to add groups	admin	no	ikke tilgang til å legge til grupper
 no permission to add users	admin	no	ikke tilgang til å legge til brukere
 no permission to create groups	admin	no	ikke tilgang til å opprette grupper
+note: ssl available only if php is compiled with curl support	admin	no	Note: SSL tilgjengelig bare dersom PHP er kompilert med curl-support.
+passthrough	admin	no	passer gjennom
 password for smtp-authentication	admin	no	Passord for SMTP-autentisering
 path information	admin	no	Sti informasjon
 peer server list	admin	no	Peer tjenerliste
@@ -280,6 +284,7 @@ remove all users from this group ?	admin	no	Fjerne alle brukere fra denne gruppe
 return to admin mainscreen	admin	no	returner til admin hovedside
 return to view account	admin	no	Returner for å se konto
 route all mails to	admin	no	Send alle mail til
+run asynchronous services	admin	no	Kjør asonkrone serviser
 save the category	admin	no	lagre kategorien
 save the category and return back to the list	admin	no	lagre kategorien og returner til listen
 search accounts	admin	no	Søk kontoer
@@ -289,6 +294,7 @@ search peer servers	admin	no	Søk peer servere
 security	admin	no	Sikkerhet
 select group managers	admin	no	Velg gruppeleder
 select permissions this group will have	admin	no	Velg tillatelser for denne gruppen
+select users for inclusion	admin	no	Velg brukere som skal inkluderes
 selectbox	admin	no	Valgboks
 server %1 has been updated	admin	no	Server %1 ble oppdatert
 server list	admin	no	Server liste
@@ -298,12 +304,27 @@ server url	admin	no	Tjener URL
 server username	admin	no	Tjener brukernavn
 set preference values.	admin	no	Sett referanseverdier
 should the login page include a language selectbox (useful for demo-sites) ?	admin	no	Skal login siden inneholde valg av språk (fint for demo-site)?
+show 'powered by' logo on	admin	no	Vis 'powered by' logo på
+show access log	admin	no	Vis aksesslogg
+show error log	admin	no	Vis feillogg
+show phpinfo()	admin	no	Vis phpinfo()
 site	admin	no	Nettsted
 site configuration	common	no	Konfigurasjon av nettsted
+soap	admin	no	SOAP
+sorry, that group name has already been taken.	admin	no	Desverre, det gruppenavnet er allerede i bruk
+sort the entries	admin	no	Sorter forekomstene
+ssl	admin	no	ssl
+standard	admin	no	standard
+standard imap server	admin	no	Standard IMAP tjener
+standard pop3 server	admin	no	Standard POP3 tjener
+standard smtp-server	admin	no	Standard SMTP tjener
+start testjob!	admin	no	Start testjobb!
+template selection	admin	no	Valg av mal
 that loginid has already been taken	admin	no	Den loginID er opptatt
 the login and password can not be the same	admin	no	Loging og passord kan ikke være det samme
 the two passwords are not the same	admin	no	Passordene er ikke de sammme
 total records	admin	no	Total historie
+use theme	admin	no	Bruk tema
 user accounts	admin	no	Brukerkontoer
 user data	admin	no	Brukerdata
 user groups	admin	no	Brukergrupper
@@ -316,4 +337,12 @@ view error log	admin	no	Vis feillogg
 view sessions	admin	no	Vis sessions
 view this user	admin	no	Vis denne bruker
 view user account	admin	no	Vis brukerkonto
+xml-rpc	admin	no	XML-RPC
+you must enter a group name.	admin	no	Du må registrere et gruppenavn
+you must enter a lastname	admin	no	Du må registrere et etternavn
+you must enter a loginid	admin	no	Du må registrere et påloggingsident
+you must enter an application name and title.	admin	no	Du må registrere programnavn og tittel
+you must enter an application name.	admin	no	Du må registrere et programnavn
+you must enter an application title.	admin	no	Du må registrere et programtittel
 you must select a file type	admin	no	Du må velge en filtype
+you will need to remove the subcategories before you can delete this category	admin	no	Du må først fjerne underkategorier før du kan slette denne kategorien!

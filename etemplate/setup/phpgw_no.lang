@@ -1,0 +1,164 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	no	%1 (%2 nye) meldinger skrevet for program '%3' og språk '%4'
+%1 etemplates deleted	etemplate	no	%1 eMaler slettet
+%1 etemplates found	etemplate	no	%1 eMaler funnet
+%1 matches on search criteria	etemplate	no	%1 treff for søkekriteria
+%1 new etemplates imported for application '%2'	etemplate	no	%1 nye eMaler importert for program '%2'
+add a new column (after the existing ones)	etemplate	no	Legg til en ny kolonne (etter den eksisterende)
+add a new multi-column index	etemplate	no	Legg til en ny multikolonne indeks
+add column	etemplate	no	Legg til kolonne
+add index	etemplate	no	Legg til innholdsfortegnelse
+add table	etemplate	no	Legg til tabell
+align	etemplate	no	Juster
+all days	etemplate	no	alle dager
+am	etemplate	no	er
+application	etemplate	no	Program
+attach	etemplate	no	Tilknytt
+attach file	etemplate	no	Tilknytt fil
+baseline	etemplate	no	Grunnlinje
+border	etemplate	no	Rammebredde
+bottom	etemplate	no	Bunn
+box	etemplate	no	Boks
+box...	etemplate	no	Boks..
+cancel	etemplate	no	Kanseller
+category	etemplate	no	Kategori
+cells	etemplate	no	Celler
+center	etemplate	no	Sentrer
+check if field has to be filled by user	etemplate	no	kryss av om feltet skal fylles ut av bruker
+checkbox	etemplate	no	Sjekkboks
+class	etemplate	no	Klasse
+click here to attach the file	etemplate	no	Klikk her for å legge til filen
+click here to create the link	etemplate	no	Klikk her for å lage lenke
+click here to start the search	etemplate	no	Klikk her for å starte søket
+click here to upload the file	etemplate	no	Klikk her for å laste opp filen
+click to order after that criteria	etemplate	no	klikk for å sortere etter disse kriteria
+clickable path	etemplate	no	klikkbar sti
+closes the window without saving the changes	etemplate	no	lukker vinduet uten å lagre endringene
+column...	etemplate	no	Kolonne..
+columnname	etemplate	no	Kolonnenavn
+comment	etemplate	no	Kommentar
+confirm	etemplate	no	Bekreft
+create a new table for the application	etemplate	no	Lag en ny tabell for programmet
+css properties	etemplate	no	CSS Egenskaper
+css-styles	etemplate	no	CSS Stiler
+custom	etemplate	no	Egendefinert
+cut	etemplate	no	Klipp ut
+date+time	etemplate	no	Dato+Tid
+datum	etemplate	no	Dato
+day	etemplate	no	Dag
+days	etemplate	no	dager
+db-tools	etemplate	no	DB-Verktøy
+default	etemplate	no	Standard
+delete a single entry by passing the id.	etemplate	no	Slette en enkel oppføring ved å skrive inn id.
+delete column	etemplate	no	Slett kolonne
+delete index	etemplate	no	Slett indeks
+delete this column	etemplate	no	slett denne kolonnen
+delete this etemplate	etemplate	no	slett denne eMalen
+delete this row	etemplate	no	slett denne raden
+delete whole column (can not be undone!!!)	etemplate	no	slett hele kolonnen (dette kan IKKE angres!)
+deletes this column	etemplate	no	Slett denne kolonnen
+deletes this index	etemplate	no	Slett denne indeksen
+discard changes	etemplate	no	opphev endringer
+documentation	etemplate	no	Dokumentasjon
+duration	etemplate	no	Varighet
+edit	etemplate	no	Rediger
+edit...	etemplate	no	Rediger...
+editable templates - db-tools	etemplate	no	Editerbare Maler - DB-Verktøy
+editable templates - delete template	etemplate	no	Editerbare Maler - Slett mal
+editable templates - editor	etemplate	no	Editerbare Maler - Tekstbehandler
+editable templates - search	etemplate	no	Editerbare Maler - Søk
+editable templates - show template	etemplate	no	Editerbare Maler - Vis mal
+etemplate	common	no	eMal
+etemplate editor	etemplate	no	eMal tekstbehandler
+etemplate reference	etemplate	no	eMal referanse
+export xml	etemplate	no	Eksporter XML
+field must not be empty !!!	etemplate	no	Feltet kan ikke være tomt!
+file	etemplate	no	Fil
+file writen	etemplate	no	Fil skrevet
+fileupload	etemplate	no	Fil lastet opp
+first	etemplate	no	Første
+foreign key	etemplate	no	Fremmed nøkkel
+formatted text (html)	etemplate	no	Formatert tekst (HTML)
+groupbox	etemplate	no	Gruppeboks
+height	etemplate	no	Høyde
+help	etemplate	no	Hjelp
+horizontal rule	etemplate	no	Horisontal regel
+hour	etemplate	no	Time
+hours	etemplate	no	timer
+html	etemplate	no	Html
+image	etemplate	no	Bilde
+import	etemplate	no	Importer
+import xml	etemplate	no	Importer XML
+indexed	etemplate	no	Indeksert
+integer	etemplate	no	Heltall
+key	etemplate	no	Nøkkel
+lang	etemplate	no	Språk
+last	etemplate	no	Siste
+left	etemplate	no	Venstre
+link	etemplate	no	Lenke
+middle	etemplate	no	Midten
+minute	etemplate	no	Minutt
+month	etemplate	no	Måned
+name	etemplate	no	Navn
+new search	etemplate	no	Nytt søk
+new table created	etemplate	no	Ny tabell opprettet
+newer version '%1' exists !!!	etemplate	no	nyere versjon '%1' eksisterer!
+nextmatch	etemplate	no	Neste treff
+no file	etemplate	no	ingen fil
+not null	etemplate	no	Ikke NULL
+nothing	etemplate	no	ingenting
+of	etemplate	no	av
+onclick	etemplate	no	vedKlikk
+options	etemplate	no	Alternativer
+padding	etemplate	no	Luft
+parent is a '%1' !!!	etemplate	no	overordnet er en '%1'!
+paste	etemplate	no	Lim inn
+path	etemplate	no	Sti
+pm	etemplate	no	PM
+popup	etemplate	no	Popup
+primary key	etemplate	no	Hovednøkkel
+radiobutton	etemplate	no	Radioknapp
+read	etemplate	no	Lese
+read a list of entries.	etemplate	no	Les en liste av oppføringer.
+readonly	etemplate	no	Bare lese
+right	etemplate	no	Høyre
+row...	etemplate	no	Rad...
+scale	etemplate	no	Skaler
+search	etemplate	no	Søk
+select a category	etemplate	no	Velg en kategori
+select application	etemplate	no	Velg program
+select category	etemplate	no	Velg kategori
+select country	etemplate	no	Velg land
+select day	etemplate	no	Velg dag
+select day of week	etemplate	no	Velg ukedag
+select month	etemplate	no	Velg måned
+select number	etemplate	no	Velg nummer
+select one ...	etemplate	no	Velg en...
+select percentage	etemplate	no	Velg prosentsats
+select priority	etemplate	no	Velg prioritet
+select state	etemplate	no	Velg status
+select year	etemplate	no	Velg år
+selectbox	etemplate	no	Valgboks
+sets today as date	etemplate	no	sett dagen i dag som dato
+show	etemplate	no	Vis
+show (no save)	etemplate	no	Vis (uten lagring)
+show values	etemplate	no	Vis verdier
+showing	etemplate	no	viser
+start a new search, cancel this link	etemplate	no	start nytt søk, annuller denne lenken
+template	etemplate	no	Mal
+template deleted	etemplate	no	Mal slettet
+template saved	etemplate	no	Mal lagret
+text	etemplate	no	Tekst
+textarea	etemplate	no	Tekstområde
+time	etemplate	no	Tid
+today	etemplate	no	Idag
+top	etemplate	no	Topp
+type	etemplate	no	Type
+unlink	etemplate	no	Fjern lenke
+upload	etemplate	no	Last opp
+value	etemplate	no	Verdi
+version	etemplate	no	Versjon
+weekend	etemplate	no	Helg
+width	etemplate	no	Bredde
+working days	etemplate	no	arbeidsdager
+xslt template	etemplate	no	XSLT Mal
+year	etemplate	no	År
