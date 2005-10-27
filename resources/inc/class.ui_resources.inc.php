@@ -165,7 +165,7 @@ class ui_resources
 		$preserv = $content;
 		$GLOBALS['egw']->session->appsession('session_data','resources_index_nm',$content['nm']);
 		$this->tmpl->read('resources.show');
-		$this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
+		return $this->tmpl->exec('resources.ui_resources.index',$content,$sel_options,$no_button,$preserv);
 	}
 
 	/**
@@ -247,7 +247,7 @@ class ui_resources
 		$no_button = array(); // TODO: show delete button only if allowed to delete resource
 		$preserv = $content;
 		$this->tmpl->read('resources.edit');
-		$this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv,2);
+		return $this->tmpl->exec('resources.ui_resources.edit',$content,$sel_options,$no_button,$preserv,2);
 		
 	}
 	
@@ -342,12 +342,13 @@ class ui_resources
 		$no_button = array(
 			'btn_buy' => !$content['buyable'],
 			'btn_book' => !$content['bookable'],
+			'btn_calendar' => !$content['bookable'],
 			'btn_edit' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_EDIT),
 			'btn_delete' => !$this->bo->acl->is_permitted($content['cat_id'],EGW_ACL_DELETE)
 			);
 		$preserv = $content;
 		$this->tmpl->read('resources.showdetails');
-		$this->tmpl->exec('resources.ui_resources.show',$content,$sel_options,$no_button,$preserv,2);
+		return $this->tmpl->exec('resources.ui_resources.show',$content,$sel_options,$no_button,$preserv,2);
 		
 	}
 	
@@ -480,7 +481,7 @@ class ui_resources
 		$sel_options = array();
 		$no_button = array();
 		$this->tmpl->read('resources.resource_select');
-		$this->tmpl->exec('resources.ui_resources.select',$content,$sel_options,$no_button,$preserv,2);
+		return $this->tmpl->exec('resources.ui_resources.select',$content,$sel_options,$no_button,$preserv,2);
 	}
 	
 	/**
@@ -502,6 +503,7 @@ class ui_resources
 		{
 			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id'))
 			{
+				$key = "";
 				foreach($resources as $res)
 				{
 					$key .= ($key == "")?'r'.$res['res_id']:',r'.$res['res_id'];
