@@ -79,22 +79,17 @@
 			$key = substr($key, 0, mcrypt_enc_get_key_size($GLOBALS['td']));
 
 			mcrypt_generic_init($GLOBALS['td'], $key, $iv);
-			$p_t = trim(mdecrypt_generic($GLOBALS['td'], $c_t)); //trim to remove padding
+			$p_t = mdecrypt_generic($GLOBALS['td'], $c_t);
 
 			/* Clean up */
-			mcrypt_generic_end($GLOBALS['td']);
+			mcrypt_generic_deinit($GLOBALS['td']);
 			mcrypt_module_close($GLOBALS['td']);
-		}
-		@mcrypt_module_close($GLOBALS['td']);
-
-		if(strncmp($p_t, $plain_text, strlen($plain_text)) == 0)
-		{
-			return True;
 		}
 		else
 		{
-			return False;
+			@mcrypt_module_close($GLOBALS['td']);
 		}
+		return rtrim($p_t) === $plain_text;
 	}
 
 	/* run a self-test through every listed cipher and mode - from robert at peakepro dot com (php.net manual) */
