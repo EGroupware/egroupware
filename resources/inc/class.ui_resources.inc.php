@@ -500,7 +500,7 @@ class ui_resources
 		// so it is possible to select all resources of a category
 		foreach($cats as $cat_id => $cat_name) 
 		{
-			if (($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id')))
+			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id'))
 			{
 				foreach($resources as $res)
 				{
@@ -513,7 +513,7 @@ class ui_resources
 		if($date != '') $link_array['date'] = $date;
 		$selectbox = $this->html->select(
 			'owner',
-			'uical_select_resource',
+			$_GET['owner'],
 			$selectbox_content,
 			$no_lang=true,
 			$options='style="width: 165px;" onchange="load_cal(\''.
