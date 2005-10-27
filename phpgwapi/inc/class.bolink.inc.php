@@ -144,9 +144,10 @@
 		 * @param string $remark='' Remark to be saved with the link (defaults to '')
 		 * @param int $owner=0 Owner of the link (defaults to user)
 		 * @param int $lastmod=0 timestamp of last modification (defaults to now=time())
+		 * @param int $no_notify=0 &1 dont notify $app1, &2 dont notify $app2
 		 * @return int/boolean False (for db or param-error) or on success link_id (Please not the return-value of $id1)
 		 */
-		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0 )
+		function link( $app1,&$id1,$app2,$id2='',$remark='',$owner=0,$lastmod=0,$no_notify=0 )
 		{
 			if ($this->debug)
 			{
@@ -198,8 +199,8 @@
 							$link['remark'],$link['owner'],$link['lastmod']);
 						
 						// notify both sides
-						$this->notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
-						$this->notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
+						if (!($no_notify&2)) $this->notify('link',$link['app'],$link['id'],$app1,$id1,$link_id);
+						if (!($no_notify&1)) $this->notify('link',$app1,$id1,$link['app'],$link['id'],$link_id);
 					}
 				}
 				return $link_id;
@@ -214,8 +215,8 @@
 			}
 			$link_id = solink::link($app1,$id1,$app2,$id2,$remark,$owner);
 
-			$this->notify('link',$app2,$id2,$app1,$id1,$link_id);
-			$this->notify('link',$app1,$id1,$app2,$id2,$link_id);
+			if (!($no_notify&2)) $this->notify('link',$app2,$id2,$app1,$id1,$link_id);
+			if (!($no_notify&1)) $this->notify('link',$app1,$id1,$app2,$id2,$link_id);
 			
 			return $link_id;
 		}
