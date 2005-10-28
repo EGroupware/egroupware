@@ -14,18 +14,7 @@
 	/* $Id$ */
 
 	/**
-	 * This widget handles customfields completely
-	 *
-	 * It generates a template based on definitioins in phpgw_config table 
-	 *
-	 * You have to provide the main id in $value
-	 *
-	 * The customfield table name is assumed as appname_custom.
-	 * If you use a differnt name you have to provide it in option (1)
-	 *
-	 * The customfields table must have the following structure: main_id | main_owner | custom_owner | custrom_field | custom_value
-	 * If you use different column names you have to provide them in option (2) 
-	 * 
+	 * This widget generates a template for customfields based on definitioins in phpgw_config table
 	 *
 	 * @package eTemplate
 	 * @author RalfBecker-At-outdoor-training.de
@@ -36,7 +25,6 @@
 	{
 		var $public_functions = array(
 			'pre_process' => True,
-/*			'post_process' => True*/
 		);
 		var $human_name = 'custom fields';
 		
@@ -58,10 +46,6 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-// 			list($table,$cols) = explode(',',$cell['size']);
-// 			list($main_id,$main_owner,$custom_owner,$custom_field,$custom_value) = explode('|',$cols);
-// 			echo $custom_value;
-// 			
 			// infolog compability
 			if ($this->appname == 'infolog')
 			{
@@ -124,19 +108,16 @@
 						$input = &$tpl->new_cell($n,'checkbox','',$this->prefix.$name);
 						break;
 					case 'radio' :
-						$input = &$tpl->new_cell($n,'groupbox','','',array(
-							'size'        => count($field['values']),
-						));
+						$input = &$tpl->new_cell($n,'groupbox','','','');
 						$m = 0;
 						foreach ($field['values'] as $key => $val)
 						{
-							$input[++$m] = &$tpl->new_cell($m,'radio',$val,'',array(
-								'size'        => $key,
-							));
-							$tpl->set_row_attributes($m,0,$row_class);
+							$radio = $tpl->empty_cell('radio',$this->prefix.$name);
+							$radio['label'] = $val;
+							$radio['size'] = $key;
+							$tpl->add_child($input,$radio);
+							unset($radio);
 						}
-/*						_debug_array($input);*/
-						// to be continued ...
 						break;
 					case 'text' :
 					case 'textarea' :
