@@ -216,6 +216,7 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	de	Wenn Sie ADS (Active Directory) Authentifizierung benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
+if using mail authentication	setup	de	Wenn Sie Mail Authentifizierung verwenden
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
@@ -261,6 +262,9 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	de	mysql aufrufen -
 logout	setup	de	Abmelden
+mail domain (for virtual mail manager)	setup	de	Mail Domain (für Virtual Mail Manager)
+mail server login type	setup	de	Mail Server Login Typ
+mail server protocol	setup	de	Mail Server Protokol
 makesure	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
 manage applications	setup	de	Anwendungen verwalten
 manage languages	setup	de	Sprachen verwalten
@@ -328,6 +332,7 @@ please login	setup	de	Bitte einloggen
 please login to egroupware and run the admin application for additional site configuration	setup	de	Bitte in eGroupWare einloggen und für weitere Konfigurationseinstellungen die Administrationsanwendung aufrufen
 please make the following change in your php.ini	setup	de	Bitte nehmen Sie die folgenden Änderungen an Ihrer php.ini Datei vor
 please wait...	setup	de	Bitte warten ...
+pop/imap mail server hostname or ip address	setup	de	POP/IMAP Mail Server Hostname oder IP Adresse
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
 post-install dependency failure	setup	de	Abhängigkeitsfehler nach der Installation
@@ -400,6 +405,7 @@ show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 size	setup	de	Größe
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
+standard (login-name identical to egroupware user-name)	setup	de	Standard (Loginname identisch zu eGroupWare Benutzername)
 start the postmaster	setup	de	Starten Sie den postmaster
 status	setup	de	Status
 step %1 - admin account	setup	de	Schrit %1 - Administrator-Konto
@@ -468,6 +474,7 @@ utf-8 (unicode)	setup	de	utf-8 (Unicode)
 version	setup	de	Version
 version mismatch	setup	de	Versionen passen nicht zueinander
 view	setup	de	Anzeigen
+virtual mail manager (login-name includes domain)	setup	de	Virtual Mail Manager (Loginname enthalten Domain)
 warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren

@@ -358,7 +358,43 @@
      <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
    </tr>
 
-  <tr class="row_off">
+   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr class="th">
+    <td colspan="2"><b>{lang_If_using_Mail_authentication}:</b></td>
+   </tr>
+   <tr class="row_on"">
+    <td>{lang_POP/IMAP_mail_server_hostname_or_IP_address}:</td>
+    <td><input name="newsettings[mail_server]" value="{value_mail_server}"></td>
+   </tr>
+   <tr class="row_off"">
+    <td>{lang_Mail_server_protocol}:</td>
+    <td>
+     <select name="newsettings[mail_server_type]">
+      <option value="imap" {selected_mail_server_type_imap}>IMAP</option>
+      <option value="pop3" {selected_mail_server_type_pop3}>POP-3</option>
+      <option value="imaps" {selected_mail_server_type_imaps}>IMAPS</option>
+      <option value="pop3s" {selected_mail_server_type_pop3s}>POP-3S</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_on"">
+    <td>{lang_Mail_server_login_type}:</td>
+    <td>
+     <select name="newsettings[mail_login_type]">
+      <option value="standard" {selected_mail_login_type_standard}>{lang_standard (login-name_identical_to_eGroupWare_user-name)}</option>
+      <option value="vmailmgr" {selected_mail_login_type_vmailmgr}>{lang_Virtual_mail_manager_(login-name_includes_domain)}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_off"">
+    <td>{lang_Mail_domain_(for_Virtual_mail_manager)}:</td>
+    <td><input name="newsettings[mail_suffix]" value="{value_mail_suffix}"></td>
+   </tr>
+
+   <tr class="row_off">
     <td colspan="2">&nbsp;</td>
    </tr>
 
