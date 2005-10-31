@@ -208,7 +208,7 @@
 				$parent->children[] = &$cell;
 				return;
 			}
-			switch(get_type($parent) == 'Array' ? $parent['type'] : 'etemplate')
+			switch($parent['type'])
 			{
 				case 'vbox':
 				case 'hbox':
