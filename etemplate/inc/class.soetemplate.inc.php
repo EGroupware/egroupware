@@ -132,14 +132,20 @@
 		 * @static
 		 * @param string $type type of the widget
 		 * @param string $name name of widget
+		 * @param array $attributes=null array with further attributes
 		 * @return array the cell
 		 */
-		function empty_cell($type='label',$name='')
+		function empty_cell($type='label',$name='',$attributes=null)
 		{
-			return array(
+			$cell = array(
 				'type' => $type,
 				'name' => $name,
 			);
+			if ($attributes && is_array($attributes))
+			{
+				return array_merge($attributes,$cell);
+			}
+			return $cell;
 		}
 
 		/**
@@ -197,7 +203,12 @@
 		 */
 		function add_child(&$parent,&$cell)
 		{
-			switch($parent['type'])
+			if (is_object($parent))	// parent is the template itself
+			{
+				$parent->children[] = &$cell;
+				return;
+			}
+			switch(get_type($parent) == 'Array' ? $parent['type'] : 'etemplate')
 			{
 				case 'vbox':
 				case 'hbox':
@@ -231,10 +242,6 @@
 						}
 						if ($col > $cols) $cols = $col;
 					}
-					break;
-					
-				default:	// parent is the template itself
-					$parent[] = &$cell;
 					break;
 			}
 		}
