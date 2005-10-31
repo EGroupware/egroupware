@@ -1,5 +1,8 @@
 %1 - %2 of %3 user accounts	admin	nl	%1 - %2 van %3 gebruikersaccounts
+%1 - %2 of %3 user groups	admin	nl	%1 - %2 van %3 gebruikersgroepen
+%1 acl records of not (longer) existing accounts deleted.	admin	nl	%1 ACL records van niet (meer) bestaande accounts verwijderd.
 %1 not found or not executable !!!	admin	nl	%1 niet gevonden of niet uitvoerbaar!
+(default no, leave it off if you dont use it)	admin	nl	(standaard Nee, laat dit uit als je het niet gebruikt)
 (stored password will not be shown here)	admin	nl	(Opgeslagen wachtwoord word hier niet weergegeven)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	nl	(Gebruik <a href="setup/" target="setup">Setup</a>[Beheer toepassingen] om nieuwe toepassingen te installeren.)
 accesslog and bruteforce defense	admin	nl	Toegangslogboek en 'Brute Force' bescherming
@@ -13,6 +16,7 @@ account preferences	admin	nl	Voorkeuren account
 acl manager	admin	nl	ACL-beheerder
 acl rights	common	nl	ACL-rechten
 action	admin	nl	Actie
+activate wysiwyg-editor	admin	nl	WYSIWYG-editor inschakelen
 active	admin	nl	actief
 add a category	admin	nl	Een categorie toevoegen
 add a group	admin	nl	Een goep toevoegen
@@ -47,6 +51,7 @@ application name	admin	nl	Toepassingsnaam
 application title	admin	nl	Toepassingstitel
 applications	admin	nl	Toepassingen
 applications list	admin	nl	Toepassingenlijst
+apply	admin	nl	toepassen
 are you sure you want to delete the application %1 ?	admin	nl	Weet u zeker dat de toepassing %1 wilt verwijderen?
 are you sure you want to delete this account ?	admin	nl	Weet u zeker dat u deze gebruiker wilt verwijderen?
 are you sure you want to delete this application ?	admin	nl	Weet u zeker dat u deze toepassing wilt verwijderen?
@@ -76,12 +81,14 @@ change config settings	admin	nl	Bewerk configuratieinstellingen
 change main screen message	admin	nl	Bericht op start- of loginpagina wijzigen
 check ip address of all sessions	admin	nl	Controleer IP-adressen van alle sessies
 check items to <b>%1</b> to %2 for %3	admin	nl	Controleer items van <b>%1</b> tot %2 van %3
+click to select a color	admin	nl	Klik om een kleur te kiezen
+color	admin	nl	Kleur
 country selection	admin	nl	Landenselectie
 create group	admin	nl	Groep aanmaken
 crontab only (recomended)	admin	nl	Alleen crontab (aanbevolen)
 data	admin	nl	Data
 day	admin	nl	Dag
-day of week<br>(0-6, 0=sun)	admin	nl	Dag van de week <br/>(0-6, 0=Zondag)
+day of week<br>(0-6, 0=sun)	admin	nl	Dag van de week <br />(0-6, 0=Zondag)
 default	admin	nl	Standaard
 default file system space per user	admin	nl	Standaard bestandssysteemruimte per gebruiker
 default file system space per user/group ?	admin	nl	Standaard bestandssysteemruimte per gebruiker/groep
@@ -113,6 +120,7 @@ deny access to user accounts	admin	nl	Toegang tot gebruikersaccounts weigeren
 deny all users access to grant other users access to their entries ?	admin	nl	Ontneem alle gebruikers de mogelijkheid elkaar toegang te geven tot hun gegevens
 description can not exceed 255 characters in length !	admin	nl	Beschrijving mag niet de 255 tekens overschreiden in lengte!
 disable "auto completion" of the login form	admin	nl	"Automatisch afmaken" uischakelen in het loginformulier
+disable wysiwyg-editor	admin	nl	WYSIWYG-editor uitschakelen
 disabled	admin	nl	Uitgeschakeld
 disabled (not recomended)	admin	nl	uitgeschakeld (niet aanbevolen)
 display	admin	nl	Weergave
@@ -125,6 +133,7 @@ edit application	admin	nl	Toepassing bewerken
 edit global category	admin	nl	Globale catergorie bewerken
 edit global category for %1	admin	nl	Globale catergorie bewerken voor %1
 edit group	admin	nl	Groep bewerken
+edit group acl's	admin	nl	groepsrechten bewerken
 edit login screen message	admin	nl	Bericht op loginpagina bewerken
 edit main screen message	admin	nl	Bericht startpagina bewerken
 edit peer server	admin	nl	Peer-server bewerken
@@ -135,28 +144,35 @@ edit this user	admin	nl	deze gebruiker bewerken
 edit user	admin	nl	gebruiker bewerken
 edit user account	admin	nl	Gebruikersaccount bewerken
 enable debug-messages	admin	nl	Debugberichten activeren
+enable the soap service	admin	nl	De SOAP service inschakelen
+enable the xmlrpc service	admin	nl	De XML-RPC service inschakelen
 enabled	admin	nl	Ingeschakeld
 enabled - hidden from navbar	admin	nl	Ingeschakeld - niet zichtbaar op de navigatiebalk
+enabled - popup window	admin	nl	Ingeschakeld - Popup Window
 enter a description for the category	admin	nl	voer een beschrijving in voor de categorie
-enter some random text for app_session <br>encryption (requires mcrypt)	admin	nl	Voer wat willekeurige tekst in voor 'app_session' encryptie (dit vereist mcrypt)
+enter some random text for app_session <br>encryption (requires mcrypt)	admin	nl	Voer wat willekeurige tekst in voor 'app_session' <br />encryptie (dit vereist mcrypt)
 enter the background color for the login page	admin	nl	CVoer de achtergrondkleur in voor de loginpagina
 enter the background color for the site title	admin	nl	CVoer de achtergrondkleur in voor de sitetitel
 enter the file name of your logo	admin	nl	Voer het bestandsnaam in van uw logo
-enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	nl	Voer het volledige pad in voor tijdelijke bestanden.<br/>Bijv.: /tmp of C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	nl	Voer het volledige pad in voor tijdelijke bestanden.<br />Bijv.: /tmp of C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	nl	Voer het volledige pad in voor tijdelijke bestanden.<br/>Bijv.: /tmp of C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br/>Bijv.: /files of D:\FILES
+enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br />Bijv.: /files of D:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br/>Bijv.: /files of D:\FILES
 enter the hostname of the machine on which this server is running	admin	nl	Voer de hostnaam van de machine in waar deze server op draait
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van eGroupWare's URL.<br/>Bijv.: http://www.domein.com/egroupware &nbsp; or &nbsp; /egroupware<br/><b>Gebruik geen afsluiten slash</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van eGroupWare's URL.<br />Bijv.: http://www.domein.com/egroupware of /egroupware<br /><b>Gebruik geen afsluitend slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	nl	Voer de zoekstring in. Laat dit veld leeg om alles weer te geven en druk opnieuw op de VERZENDKNOP
 enter the site password for peer servers	admin	nl	Voer het sitewachtwoord in voor peer-servers
 enter the site username for peer servers	admin	nl	Voer het sitegebruikersnaam in voor peer-servers
 enter the title for your site	admin	nl	Voer de titel in van uw site
 enter the title of your logo	admin	nl	Voer de titel in van uw logo
+enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	nl	Vul de URL of bestandsnaam van uw logo in (in phpgwapi/templates/default/images)
 enter the url where your logo should link to	admin	nl	Voer de URL in waar uw logo naar moet doorverwijzen
 enter your default ftp server	admin	nl	Voer uw standaard FTP-server in
+enter your default mail domain ( from: user@domain )	admin	nl	Geef uw huidige mail domein (Van: gebruiker@domein)
 enter your http proxy server	admin	nl	Voer uw HTTP-proxy-servernaam of -adres in
 enter your http proxy server port	admin	nl	Voer uw HTTP-proxy-serverpoort in
+enter your smtp server hostname or ip address	admin	nl	Uw SMTP server host of IP
+enter your smtp server port	admin	nl	Uw SMTP port
 error canceling timer, maybe there's none set !!!	admin	nl	Fout bij het annuleren van de timer, misschien is er geen timer ingesteld!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	nl	Fout bij het zetten van de timer. verkeerde syntax of misschien draait er al een timer!
 error: %1 not found or other error !!!	admin	nl	Fout: %1 niet gevonden of een ander fout!
@@ -179,13 +195,14 @@ group name	admin	nl	Groepsnaam
 hide php information	admin	nl	Verberg PHP-informatie
 home directory	admin	nl	Home directory
 host information	admin	nl	Hostinformatie
-hour<br>(0-23)	admin	nl	Uur<br/> (0-23)
+hour<br>(0-23)	admin	nl	Uur<br /> (0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	nl	Hoeveel dagen moeten record worden bewaard in het toegangslogboek voordat zo worden verwijderd (standaard 90 dagen)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	nl	Hoeveel minuten moet een account of IP-adres worden geblokkeerd (standaard 30 minuten)?
+icon	admin	nl	Pictogram
 idle	admin	nl	inactief
 if no acl records for user or any group the user is a member of	admin	nl	Als er geen ACL-records if groepen zijn voor de gebruiker is de gebruiker lid van
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	nl	Als u LDAP gebruikt, wilt u dan homedirectory en loginshell attributen beheren?
-inbound	admin	nl	
+inbound	admin	nl	inkomend
 install crontab	admin	nl	Installeer crontab
 installed applications	common	nl	Geïnstalleerde toepassingen
 installed crontab	admin	nl	Geïnstalleerde crontab
@@ -218,6 +235,7 @@ login screen	admin	nl	Loginpagina
 login shell	admin	nl	Loginshell
 login time	admin	nl	Logintijd
 loginid	admin	nl	LoginID
+mail settings	admin	nl	Mail instellingen
 main screen message	admin	nl	Boodschap op startpagina
 manager	admin	nl	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	nl	Max. account id (bijv. 65535 of 100000)
@@ -240,13 +258,15 @@ no permission to add groups	admin	nl	geen permissie om groepen toe te voegen
 no permission to add users	admin	nl	geen permissie om gebruikers toe te voegen
 no permission to create groups	admin	nl	geen permissie om gebruikers toe te voegen
 note: ssl available only if php is compiled with curl support	admin	nl	Let op: SSL is alleen beschikbaar als PHP is gecompileerd met curl ondersteuning.
-outbound	admin	nl	
+outbound	admin	nl	uitgaand
 passthrough	admin	nl	doorgeven
+password for smtp-authentication	admin	nl	Wachtwoord voor SMTP-authenticatie
 path information	admin	nl	Padinformatie
 peer server list	admin	nl	Peer-serverlijst
 peer servers	admin	nl	Peer-servers
 percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
 percent this user has logged out	admin	nl	Percentage dat deze gebruiker uitgelogd heeft
+permission denied	admin	nl	Toegang geweigerd
 permissions	admin	nl	Rechten
 permissions this group has	admin	nl	Rechten van deze groep
 phpinfo	admin	nl	PHP informatie
@@ -286,6 +306,7 @@ server type(mode)	admin	nl	Servertype(modus)
 server url	admin	nl	Server-URL
 server username	admin	nl	Servergebruikersnaam
 set preference values.	admin	nl	Stel waarden van voorkeuren in
+should the login page include a language selectbox (useful for demo-sites) ?	admin	nl	Moet de login pagina een taalkeuze box bevatten (handig voor demo sites) ?
 show 'powered by' logo on	admin	nl	''Powered by'-logo weergeven op
 show access log	admin	nl	Toegangslogboek weergeven
 show current action	admin	nl	Huidige actie weergeven
@@ -310,16 +331,18 @@ template selection	admin	nl	Templateselectie
 text entry	admin	nl	Tekstinvoer
 that application name already exists.	admin	nl	Die toepassingsnaam bestaat reeds.
 that application order must be a number.	admin	nl	De invoer van de toepassingsvolgorde moet numeriek zijn.
-that loginid has already been taken	admin	nl	Die loginnaami is reeds in gebruik!
+that loginid has already been taken	admin	nl	Die loginnaam is reeds in gebruik!
 that name has been used already	admin	nl	Die naam is reeds in Gebruik!
 that server name has been used already !	admin	nl	Die servernaam is reeds in gebruik!
 the api is current	admin	nl	De API is actueel.
 the api requires an upgrade	admin	nl	De API vereist een upgrade.
+the groups must include the primary group	admin	nl	De groepen moeten de primaire groep bevatten
 the login and password can not be the same	admin	nl	De loginnaam en het wachtwoord mogen niet gelijk zijn
 the loginid can not be more then 8 characters	admin	nl	De loginnaam mag de 8 tekens in lengte niet overschreiden.
 the testjob sends you a mail everytime it is called.	admin	nl	De testtaak verzend elke als het wordt uitgevoerd een email.
 the two passwords are not the same	admin	nl	De twee wachtwoorden komen niet overeen.
 the users bellow are still members of group %1	admin	nl	de gebruikers hieronder zijn nog steeds lid van groep %1.
+there already is a group with this name. userid's can not have the same name as a groupid	admin	nl	Er bestaat reeds een groep met deze naam. GebruikersID's mogen niet dezelfde naam als een groepID hebben.
 they must be removed before you can continue	admin	nl	Ze moeten worden verwijderd voor u verder kunt gaan.
 this application is current	admin	nl	Deze toepassing is actueel.
 this application requires an upgrade	admin	nl	Deze toepassing vereist een upgrade.
@@ -333,11 +356,13 @@ total records	admin	nl	Aantal records
 trust level	admin	nl	Vertrouwensniveau
 trust relationship	admin	nl	Vertrouwensrelatie
 under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	nl	Onder Windows kunt u momenteel alleen de Fallbackvalmodus gebruiken. Fallback betekend dat taken alleen gecontroleerd worden na elk paginaverzoek.
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	nl	Onder Windows moet u de asynservice %1handmatig%2 installeren of gebruiken van de fallback methode. De fallback methode houdt in dat de taak alleen wordt uitgevoerd na iedere pagina raadpleging !!!
 use cookies to pass sessionid	admin	nl	Gebruik cookies om sessie-ID door te geven
 use pure html compliant code (not fully working yet)	admin	nl	Gebruik pure HTML compatible code (werk momenteel niet volledig)
 use theme	admin	nl	Gebruik thema
 user accounts	admin	nl	Gebruikersaccounts
 user data	admin	nl	Gebruikersgegevens
+user for smtp-authentication (leave it empty if no auth required)	admin	nl	Gebruikersnaam voor SMTP-authenticatie (leeglaten indien geen auth vereist is)
 user groups	admin	nl	Gebruikersgroepen
 user profiles	admin	nl	Gebruikersprofielen
 userdata	admin	nl	gebruikersgegevens
@@ -350,10 +375,9 @@ view sessions	admin	nl	Sessies weergeven
 view this user	admin	nl	Deze gebruiker weergeven
 view user account	admin	nl	Gebruikersaccount weergeven
 who would you like to transfer all records owned by the deleted user to?	admin	nl	Wilt u tevens ALLE records in eigendom van de verwijderde gebruikers
-would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u dat eGroupWare controleerd op <br> een nieuwe versie als de admin aanmeld?
-would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u dat eGroupWare controleerd op <br> nieuwe applicaties als de admin aanmeld?
 would you like egroupware to cache the egw info array ?	admin	nl	Wilt u eGroupWare de egwinfo-array laten cachen ? (EXTREEM GEVAARLIJK!)
-would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie wanneer beheerders inloggen?
+would you like egroupware to cache the phpgw info array ?	admin	nl	Wilt u eGroupWare de phpgw info array laten cachen ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie<br />wanneer beheerders inloggen?
 would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor nieuwe toepassingensversies wanneer beheerders inloggen?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wilt u automatisch (bij inloggen) nieuwe taalbestanden laden?
 would you like to show each application's upgrade status ?	admin	nl	Wilt u bij de elke toepassing de upgradestatus weergeven?
@@ -370,7 +394,3 @@ you must enter an application name.	admin	nl	U moet een toepassingsnaam invoeren
 you must enter an application title.	admin	nl	U moet een toepassingstitel invoeren.
 you must select a file type	admin	nl	U moet een bestandstype invoeren
 you will need to remove the subcategories before you can delete this category	admin	nl	U moet eerst de subcategorieën verwijderen voor dat u deze bovenliggende categorie kunt verwijderen!
-enter your default mail domain ( from: user@domain )	admin	nl	Geef uw huidige mail domein (Van: gebruiker@domein)
-enter your smtp server hostname or ip address	admin	nl	Uw SMTP server host of IP
-enter your smtp server port	admin	nl	Uw SMTP port
-mail settings	admin	nl	Mail instellingen

@@ -42,6 +42,7 @@ call	infolog	nl	bellen
 cancel	infolog	nl	Annuleren
 categories	infolog	nl	Categorieën
 category	infolog	nl	Categorie
+change the status of an entry, eg. close it	infolog	nl	Wijzig de status van een item, bijvoorbeeld afsluiten
 charset of file	infolog	nl	Karakterset van bestand
 check to set startday	infolog	nl	Markeer om startdag aan te geven
 click here to create the link	infolog	nl	klik hier om een link aan te maken
@@ -65,6 +66,7 @@ custom fields	infolog	nl	Aangepast velden
 custom fields, typ and status	common	nl	Aangepaste velden, type en status
 custom regarding	infolog	nl	Aangepast m.b.t.
 custom status for typ	infolog	nl	Aangepaste status voor type
+customfields	infolog	nl	Aanpaste velden
 datecreated	infolog	nl	datum aangemaakt
 dates, status, access	infolog	nl	Data, Status, Toegang
 days	infolog	nl	dagen
@@ -72,6 +74,8 @@ default filter for infolog	infolog	nl	Standaard filter voor InfoLog
 default status for a new log entry	infolog	nl	Standaard status voor een nieuwe infolog
 delegation	infolog	nl	Delegatie
 delete	infolog	nl	Verwijderen
+delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	nl	Verwijder alle onderliggende (als je dit niet doet worden de onderliggende één niveau naar boven verplaatst)
+delete one record by passing its id.	infolog	nl	Verwijder één record door het id mee te geven.
 delete the entry	infolog	nl	Infolog verwijderen
 delete this entry	infolog	nl	dit infolog verwijderen
 deletes the selected typ	infolog	nl	verwijderd het geselecteerde type
@@ -88,6 +92,7 @@ duration	infolog	nl	Duur
 each value is a line like <id>[=<label>]	infolog	nl	elke waarde is een regel zoals <id>[=<label>]
 edit	infolog	nl	Wijzigen
 edit or create categories for ingolog	infolog	nl	Categorieën voor InfoLog aanmaken of wijzigen
+edit status	infolog	nl	Wijzig status
 edit the entry	infolog	nl	Wijzig de infolog
 edit this entry	infolog	nl	Wijzig dit infolog
 empty for all	infolog	nl	leeg voor alle
@@ -116,6 +121,7 @@ infolog - import csv-file	infolog	nl	InfoLog - Importeer CSV-bestand
 infolog - new	infolog	nl	InfoLog - Nieuw
 infolog - new subproject	infolog	nl	InfoLog - Nieuw subproject
 infolog - subprojects from	infolog	nl	InfoLog - Subprojecten van
+infolog list	infolog	nl	InfoLog lijst
 infolog preferences	common	nl	InfoLog voorkeuren
 infolog-fieldname	infolog	nl	InfoLog-veldnaam
 invalid filename	infolog	nl	Ongeldige bestandsnaam
@@ -128,10 +134,12 @@ length<br>rows	infolog	nl	Lengte<br/>Regels
 link	infolog	nl	Link
 links	infolog	nl	Links
 links of this entry	infolog	nl	Links van deze infolog
+list all categories	infolog	nl	Toon alle categorieën
 list no subs/childs	infolog	nl	Sub's niet weergeven
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
 max length of the input [, length of the inputfield (optional)]	infolog	nl	maximale lengte van de invoer [lengte van het invoerveld (optioneel)]
+max number of entries to display on the main screen	infolog	nl	Maximum aantal items dat op het hoofdscherm getoond mag worden
 name must not be empty !!!	infolog	nl	Naam mag niet leeg zijn !!!
 name of new type to create	infolog	nl	Naam van het nieuw te creëren type
 new name	infolog	nl	nieuwe naam
@@ -151,6 +159,7 @@ offer	infolog	nl	offerte
 ongoing	infolog	nl	lopende
 only the attachments	infolog	nl	alleen de bijlagen
 only the links	infolog	nl	alleen de links
+only up to this number of entries are displayed on the main screen.	infolog	nl	Tot en met dit aantal items wordt op het hoofdscherm getoond.
 open	infolog	nl	open
 optional note to the link	infolog	nl	optionele notitie bij de link
 order	infolog	nl	Order
@@ -172,11 +181,13 @@ priority	infolog	nl	Prioriteit
 private	infolog	nl	Privé
 project	infolog	nl	Project
 re:	infolog	nl	Re:
+read one record by passing its id.	infolog	nl	Lees één record door het id mee te geven.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	nl	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	nl	aandachtspunt
 remove this link (not the entry itself)	infolog	nl	Verwijder deze link (niet het record zeld)
 responsible	infolog	nl	Verantwoordelijk
 responsible user, priority, ...	infolog	nl	verantwoordelijk gebruiker, prioriteit, ..
+returns a list / search for records.	infolog	nl	Toont een lijst / zoek records
 save	infolog	nl	Opslaan
 saves the changes made and leaves	infolog	nl	Slaat wijzigingen op en verlaat het scherm
 saves this entry	infolog	nl	Slaat deze infolog op
@@ -189,23 +200,28 @@ select a responsible user: a person you want to delegate this task	infolog	nl	Se
 select a typ to edit it's status-values or delete it	infolog	nl	Selecteer een type waarvan uw de statuswaarden wilt wijzigen of om te verwijderen
 select an app to search in	infolog	nl	Selecteer een applicatie om in te zoeken
 select an entry to link with	infolog	nl	Selecteer een infolog om mee te linken
-should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	nl	Moet een InfoLog open logs weergeven - niet afgehandelde taken, telefoongesprekken of notities - op het hoofdscherm? Deze instellingen werkt alleen als u geen standaard applicatie heeft geselecteerd voor het hoofdscherm (zie voorkeuren)
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	nl	Moet een InfoLog open logs weergeven - niet afgehandelde taken, telefoongesprekken of notities - op het hoofdscherm? Deze instellingen werkt alleen als u geen standaard applicatie heeft geselecteerd voor het hoofdscherm (zie voorkeuren)
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	nl	Moet InfoLog subtaken, -telefoongesprekken of -notities standaard weergeven, ja of nee. U kunt altijd sub's weergeven via de bovenliggende infolog ?
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	nl	Moet InfoLog de links weergeven naar andere applicaties en/of de bestandsbijlagens in de InfoLoglijst (Standaard weergave, wanneer u InfoLog opent) ?
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	nl	Moet InfoLog volledige namen (voor- en achternaam) gebruiken of alleen gebruikersnamen?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	nl	Moet deze infolog alleen zochtbaar zijn voor u en de personen die toegang hebben tot uw persoonlijke informatie d.m.v. het ingestelde toegangsbeheer
 show full usernames	infolog	nl	Volledige gebruikersnamen weergeven
 show in the infolog list	infolog	nl	In de InfoLoglijst weergeven
+show list of upcoming entries	infolog	nl	toon lijst van toekomstige items
 show open entries: tasks/calls/notes on main screen	infolog	nl	Open infologs op hoofdscherm weergeven: Taken/Telefoongesprekken/Notities
+small view	infolog	nl	kleine weergave
 start a new search, cancel this link	infolog	nl	Start een nieuwe zoekopdracht, deze link annuleren
 startdate	infolog	nl	Startdatum
 startdate enddate	infolog	nl	Startdatum Einddatum
 startrecord	infolog	nl	Startregel
 status	infolog	nl	Status
+status ...	infolog	nl	Status ...
 sub	infolog	nl	Onderliggende
 subject	infolog	nl	Onderwerp
 task	infolog	nl	taak
 test import (show importable records <u>only</u> in browser)	infolog	nl	Test Import (te importeren record weergeven in uw browser)
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	nl	de naam die intern gebruikt wordt (<= 10 tekens), als je dit wijzigt worden de huidige gegevens onbereikbaar
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	nl	de naam die intern gebruikt wordt (<= 20 tekens), als je dit wijzigt worden de huidige gegevens onbereikbaar
 the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	nl	De naam voor intern gebruik (tot 20 karakters). Als u deze wijzigd zal bestaande data ontoegankelijk worden
 the text displayed to the user	infolog	nl	De tekst die wordt weergegeven aan de gebruiker
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	nl	Dit is het filter dat InfoLog standaard gebruikt wanneer u InfoLog opent. Filters geven een selectie weer van het totale aantal infologs. Er zijn filters voor AFGEWERKTE, OPENSTAANDE of TOEKOMSTIGE infologs voor U of ALLE gebruikers.
@@ -217,6 +233,7 @@ translation	infolog	nl	Vertaling
 typ	infolog	nl	Type
 typ '%1' already exists !!!	infolog	nl	Type '%1' bestaat al !!!
 type	infolog	nl	Type
+type ...	infolog	nl	Type ...
 type of the log-entry: note, phonecall or todo	infolog	nl	Infologtype: Taak, Telefoongesprek of Notitie
 unlink	infolog	nl	Maak link ongedaan
 upcoming	infolog	nl	aankomende
@@ -234,6 +251,7 @@ view the parent of this entry and all his subs	infolog	nl	Van deze infolog de bo
 view this linked entry in its application	infolog	nl	Gelinkt record in bijbehorende applicatie bekijken
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	nl	Wanneer moet de Taak of het Telefoongesprek worden gestart? If zal vanaf die datum worden weergeven in het filter OPEN of EIGEN OPENSTAANDE
 will-call	infolog	nl	zal bellen
+write (add or update) a record by passing its fields.	infolog	nl	Schrijf (toevoegen of bijwerken) een record door de velden mee te geven.
 yes - delete	infolog	nl	Ja - Verwijderen
 you can't delete one of the stock types !!!	infolog	nl	U kunt de standaard types niet verwijderen
 you have entered an invalid ending date	infolog	nl	U heeft een ongeldige einddatum ingevoerd

@@ -1,7 +1,7 @@
 %1 records imported	addressbook	nl	%1 adressen geïmporteerd
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	nl	%1 adressen gelezen (nog niet geïmporteerd, U kunt %2terug%3 gaan en "Test Import" uitzetten)
 (e.g. 1969)	addressbook	nl	(bijv. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	nl	<b>Geen conversietype &lt;none&g; gevonden </b> Selecteer a.u.b. een conversietype uit de lijst.
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	nl	<b>Geen conversietype <none&g; gevonden </b> Selecteer a.u.b. een conversietype uit de lijst.
 @-eval() is only availible to admins!!!	addressbook	nl	@-eval() is alleen beschikbaar voor beheerders
 actions	addressbook	nl	Acties
 add a single entry by passing the fields.	addressbook	nl	Een enkele invoeren door de velden te geven
@@ -43,7 +43,7 @@ configuration	common	nl	Instellingen
 contact	common	nl	Contact
 contact application	admin	nl	Contact applicatie
 contact settings	admin	nl	Contactinstellingen
-copied by %1, from record #%2.	addressbook	nl	Gekopiëerd door %1, van record #%2.
+copied by %1, from record #%2.	addressbook	nl	Gekopieerd door %1, van record #%2.
 country	common	nl	Land
 csv-fieldname	addressbook	nl	CSV-Veldnaam
 csv-filename	addressbook	nl	CSV-Bestandsnaam
@@ -90,10 +90,12 @@ import	addressbook	nl	Importeren
 import contacts	addressbook	nl	Contacten Importeren
 import csv-file into addressbook	addressbook	nl	CSV-bestand importeren naar adresboek
 import file	addressbook	nl	Bestand importeren
+import from	addressbook	nl	Importeren uit
 import from ldif, csv, or vcard	addressbook	nl	Importeren vanuit LDIF, CSV or VCard
 import from outlook	addressbook	nl	Importeren vuit Outlook
+import multiple vcard	addressbook	nl	Importeer Meervoudige VCard
 import next set	addressbook	nl	Importeren volgende serie
-import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geëxporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geëxporteerd in het VCard formaat.
+import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geexporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geëxporteerd in het VCard formaat.
 international	addressbook	nl	Internationaal
 isdn phone	addressbook	nl	ISDN
 label	addressbook	nl	Label
@@ -104,12 +106,16 @@ ldap root dn for contacts	admin	nl	LDAP-root dn voor contacten
 ldap root pw for contacts	admin	nl	LDAP-root pw voor contacten
 ldif	addressbook	nl	LDIF
 line 2	addressbook	nl	Regel 2
+list all categories	addressbook	nl	Toon alle categoriën
+list all customfields	addressbook	nl	Toon alle maatwerkvelden
+load vcard	addressbook	nl	Laad VCard
 mark records as private	addressbook	nl	Markeer records als privé
 message phone	addressbook	nl	Bericht Telefoon
 middle name	addressbook	nl	Tweede naam
 mobile	addressbook	nl	Mobiel
 mobile phone	addressbook	nl	Mobiel telefoon
 modem phone	addressbook	nl	Modem telefoon
+multiple vcard	addressbook	nl	Meervoudige VCard
 no vcard	addressbook	nl	Geen VCard
 notes	addressbook	nl	Opmerkingen
 number of records to read (%1)	addressbook	nl	Aantal adressen om te importen (%1)
@@ -124,6 +130,7 @@ postal	common	nl	Postadres
 pref	addressbook	nl	voorkeur
 prefix	addressbook	nl	Voorvoegsel
 public key	addressbook	nl	Public Key
+read a list / search for entries.	addressbook	nl	Lees een lijst / zoek naar records.
 read a list of entries.	addressbook	nl	Lees een lijst met records
 read a single entry by passing the id and fieldlist.	addressbook	nl	Lees een record door een ID. in te voeren en een veldenlijst
 record access	addressbook	nl	Toegang adres
@@ -139,7 +146,7 @@ show birthday reminders on main screen	addressbook	nl	Verjaardagsherinneringen w
 startrecord	addressbook	nl	Startrecord
 state	common	nl	Provincie / Staat / District
 street	common	nl	Straatnaam
-successfully imported %1 records into your addressbook.	addressbook	nl	Met succes %1 reocrd geïmporteerd naar uw adresboek
+successfully imported %1 records into your addressbook.	addressbook	nl	Met succes %1 record geïmporteerd naar uw adresboek
 suffix	addressbook	nl	Achtervoegsel
 test import (show importable records <u>only</u> in browser)	addressbook	nl	Test Import (te importeren adressen ALLEEN WEERGEVEN in uw browser)
 that field name has been used already !	addressbook	nl	Het veldnaam is al in  gebruik !
@@ -159,6 +166,7 @@ video phone	addressbook	nl	Beeld telefoon
 voice phone	addressbook	nl	Telefoon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	nl	WAARSCHUWING!! Alleen LDAP gebruiken als het adresboek niet wordt gebruikt om de accounts op te slaan!
 work phone	addressbook	nl	Telefoon werk
+write (update or add) a single entry by passing the fields.	addressbook	nl	Schrijf (bewerken of nieuw) een enkel record door de velden door te geven.
 you must select a vcard. (*.vcf)	addressbook	nl	U moet een VCard selecteren (*.vcf)
 you must select at least 1 column to display	addressbook	nl	U moet een op z'n minst 1 kolom selecteren om weer te geven
 zip code	common	nl	Postcode
