@@ -24,15 +24,15 @@
 		$infolog =& CreateObject('infolog.uiinfolog');
 		$infolog->called_by = 'home';
 
-		switch($showevents)
+		/*switch($showevents)
 		{
-			case 1:
+			case 1:*/
 				$html = $infolog->index(array('nm' => array('filter' => 'own-open-today')),'','',0,False,True);
-				break;
+				/*break;
 			case 2:
 				$html = ExecMethod('calendar.uicalendar.get_todos', array('', false));
 				break;
-		}
+		}*/
 		$title = lang('InfoLog').' - '.lang($infolog->filters['own-open-today']);
 		$xslt = $infolog->tmpl->xslt;
 		unset($infolog);
@@ -48,15 +48,9 @@
 				'outerborderwidth' => '0',
 				'header_background_image' => $GLOBALS['egw']->common->image('phpgwapi/templates/default','bg_filler')
 			));
-			foreach(array(
-				'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
-				'down'     => Array('url' => '/set_box.php', 'app' => $app_id),
-				'close'    => Array('url' => '/set_box.php', 'app' => $app_id),
-				'question' => Array('url' => '/set_box.php', 'app' => $app_id),
-				'edit'     => Array('url' => '/set_box.php', 'app' => $app_id)
-			) as $key => $value)
+			foreach(array('up','down','close','question','edit') as $key)
 			{
-				$portalbox->set_controls($key,$value);
+				$portalbox->set_controls($key,Array('url' => '/set_box.php', 'app' => $app_id));
 			}
 			$portalbox->data = $data;
 
