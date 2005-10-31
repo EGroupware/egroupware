@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	it	%1 - %2 di %3 account utenti
 %1 - %2 of %3 user groups	admin	it	%1 - %2 di %3 gruppi utenti
+%1 acl records of not (longer) existing accounts deleted.	admin	it	%1 record ACL di account non (più) esistenti cancellati.
 %1 not found or not executable !!!	admin	it	%1 non trovato o non eseguibile !!!
 (default no, leave it off if you dont use it)	admin	it	(predefinito No, lascialo così se non lo usi)
 (stored password will not be shown here)	admin	it	(La password memorizzata non verrà mostrata qui)
@@ -280,6 +281,7 @@ peer server list	admin	it	Lista Peer server
 peer servers	admin	it	Peer servers
 percent of users that logged out	admin	it	Percentuale di utenti che sono usciti dal sistema in maniera corretta
 percent this user has logged out	admin	it	Percentuale di logout di quest'utente
+permission denied	admin	it	Permesso negato
 permissions	admin	it	Permessi
 permissions this group has	admin	it	Permessi che questo gruppo ha
 phpinfo	admin	it	phpinfo
@@ -393,6 +395,7 @@ view this user	admin	it	visualizza questo utente
 view user account	admin	it	Visualizza account utente
 who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
 would you like egroupware to cache the egw info array ?	admin	it	Vuoi che eGroupWare utilizzi la cache per l'array egw info?
+would you like egroupware to cache the phpgw info array ?	admin	it	Vuoi che eGroupWare ricordi l'array phpgw info ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che eGroupWare controlli se c'è una nuova versione<br>quando un amministratore effettua il login ?
 would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che eGroupWare controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuoi caricare automaticamente i nuovi file di traduzione (al momento del login) ?
