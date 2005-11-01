@@ -711,6 +711,44 @@
 		return $obj;
 	}
 
+	/**
+	* Execute a function with multiple arguments
+	* We take object $GLOBALS[classname] from class if exists
+	*
+	* @param string app.class.method method to execute
+	* @example ExecObject('etemplates.so_sql.search',$criteria,$key_only,...);
+	*/
+	function &ExecMethod2($acm)
+	{
+		list($app,$class,$method) = explode('.',$acm);
+		if (!is_object($obj =& $GLOBALS[$class]))
+		{
+			$newobj = 1;
+			$obj =& CreateObject($acm);
+		}
+		
+		if (!method_exists($obj,$method))
+		{
+			echo "<p><b>".function_backtrace()."</b>: no methode '$method' in class '$class'</p>\n";
+			return False;
+		}
+		
+		$args = func_get_args();
+		unset($args[0]);
+		$code = '$return = $obj->'.$method.'(';
+		foreach	($args as $n => $arg)
+		{
+			if ($n)
+			{
+				$code .= ($n > 1 ? ',' : '') . '$args[' . $n . ']';
+			}
+		}		
+		
+		eval($code.');');
+		if($newobj) unset($obj);
+		return $return;
+	}
+
 	/*!
 	 @function ExecMethod
 	 @abstract Execute a function, and load a class and include the class file if not done so already.
