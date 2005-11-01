@@ -447,9 +447,15 @@ class so_sql
 					{
 						$db_col = $col;
 					}
-					if ($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?'))
+					if ($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') || $criteria[$col]{0} == '!')
 					{
-						$query[] = $db_col.' LIKE '.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard);
+						$cmp_op = ' LIKE ';
+						if ($criteria[$col]{0} == '!')
+						{
+							$cmp_op = ' NOT LIKE ';
+							$criteria[$col] = substr($criteria[$col],1);
+						}
+						$query[] = $db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard);
 					}
 					elseif (strstr($db_col,'.'))	// we have a table-name specified
 					{
