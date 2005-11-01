@@ -165,7 +165,7 @@
 			
 			$smtpClass	= $this->SMTPServerType[$profileData['smtpType']]['classname'];
 
-			return empty($smtpClass) ? False : ExecMethod("emailadmin.$smtpClass.getAccountEmailAddress",$_accountName,3,$profileData);
+			return empty($smtpClass) ? False : ExecMethod("emailadmin.$smtpClass.getAccountEmailAddress",$_accountName);
 		}
 		
 		function getFieldNames($_serverTypeID, $_class)
@@ -213,7 +213,7 @@
 		{
 			if (!empty($this->imapClass))
 			{
-				return ExecMethod("emailadmin.".$this->imapClass.".getMailboxString",$_folderName,3,$this->profileData);
+				return ExecMethod("emailadmin.".$this->imapClass.".getMailboxString",$_folderName);
 			}
 			else
 			{
@@ -387,12 +387,12 @@
 		{
 			if (!empty($this->imapClass))
 			{
-				ExecMethod("emailadmin.".$this->imapClass.".updateAccount",$_hookValues,3,$this->profileData);
+				ExecMethod("emailadmin.".$this->imapClass.".updateAccount",$_hookValues);
 			}
 
 			if (!empty($this->smtpClass))
 			{
-				ExecMethod("emailadmin.".$this->smtpClass.".updateAccount",$_hookValues,3,$this->profileData);
+				ExecMethod("emailadmin.".$this->smtpClass.".updateAccount",$_hookValues);
 			}
 		}
 		
