@@ -88,6 +88,7 @@ check ip address of all sessions	setup	en	check ip address of all sessions
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file-permissions of %1 for %2 %3: %4
 checking for gd support...	setup	en	Checking for GD support...
+checking pear%1 is installed	setup	en	Checking PEAR%1 is installed
 checking php.ini	setup	en	Checking php.ini
 checking the egroupware installation	setup	en	Checking the eGroupWare Installation
 click <a href="index.php">here</a> to return to setup.	setup	en	click <a href="index.php">here</a> to return to setup.
@@ -190,6 +191,7 @@ export sql users to ldap	setup	en	Export SQL users to LDAP
 false	setup	en	False
 file	setup	en	FILE
 file type, size, version, etc.	setup	en	file type, size, version, etc.
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	en	File uploads are switched off: You can NOT use any of the filemanagers, nor can you attach files in several applications!
 filename	setup	en	filename
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
 force selectbox	setup	en	Force Selectbox
@@ -319,6 +321,8 @@ password of db user	setup	en	Password of db user
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
 path information	setup	en	Path information
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
+pear is needed by syncml or the ical import+export of calendar.	setup	en	PEAR is needed by SyncML or the iCal import+export of calendar.
+pear::log is needed by syncml.	setup	en	PEAR::Log is needed by SyncML.
 persistent connections	setup	en	Persistent connections
 php plus restore	setup	en	PHP plus restore
 php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	en	PHP plus restore gives by far the best performance, as it stores the eGW enviroment completly in the session.

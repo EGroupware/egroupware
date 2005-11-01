@@ -89,12 +89,17 @@
 			'error' => lang('max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures'),
 			'safe_mode' => 'max_execution_time = 30'
 		),
+		'file_uploads' => array(
+			'func' => 'php_ini_check',
+			'value' => 1,
+			'verbose_value' => 'On',
+			'error' => lang('File uploads are switched off: You can NOT use any of the filemanagers, nor can you attach files in several applications!'),
+		),
 		'include_path' => array(
 			'func' => 'php_ini_check',
 			'value' => '.',
 			'check' => 'contain',
 			'error' => lang('include_path need to contain "." - the current directory'),
-			'save_mode' => 'max_execution_time = 30'
 		),
 		'mysql' => array(
 			'func' => 'extension_check',
@@ -135,6 +140,17 @@
 			'func' => 'extension_check',
 			'warning' => '<div class="setup_info">' . lang('The session extension is needed to use php sessions (db-sessions work without).') . "</div>"
 		),	
+		'' => array(
+			'func' => 'pear_check',
+			'warning' => '<div class="setup_info">' . lang('PEAR is needed by SyncML or the iCal import+export of calendar.') . "</div>"
+		),	
+		'Log' => array(
+			'func' => 'pear_check',
+			'warning' => '<div class="setup_info">' . lang('PEAR::Log is needed by SyncML.') . "</div>"
+		),	
+		'gd' => array(
+			'func' => 'gd_check',
+		),
 		'.' => array(
 			'func' => 'permission_check',
 			'is_world_writable' => False,
@@ -145,18 +161,11 @@
 			'is_world_readable' => False,
 			'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 		),
-		'phpgwapi/images' => array(
-			'func' => 'permission_check',
-			'is_writable' => True
-		),
 		'fudforum' => array(
 			'func' => 'permission_check',
 			'is_writable' => True,
 			'only_if_exists' => True
 		),
-		'gd' => array(
-			'func' => 'gd_check'
-		)
 	);
 
 	// some constants for pre php4.3
@@ -167,6 +176,40 @@
 	if (!defined('PHP_SHLIB_PREFIX'))
 	{
 		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+	}
+
+	function pear_check($package,$args)
+	{
+		global $passed_icon, $warning_icon;
+		static $pear_available = null;
+		
+		if (is_null($pear_available))
+		{
+			$pear_available = include('PEAR.php');
+
+			if (!class_exists('PEAR')) $pear_available = false;
+		
+			echo '<div>'.($pear_available ? $passed_icon : $warning_icon).' <span'.($pear_available ? '' : ' class="setup_warning"').'>'.
+				lang('Checking PEAR%1 is installed','').': '.($pear_available ? lang('True') : lang('False'))."</span></div>\n";
+		}
+		if ($pear_available && $package)
+		{
+			$available = include($package.'.php');
+
+			if (!class_exists($package)) $available = false;
+			
+			echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
+				lang('Checking PEAR%1 is installed','::'.$package).': '.($available ? lang('True') : lang('False'))."</span></div>\n";
+		}
+		$available = $pear_available && (!$package || $available);
+		
+		if (!$available)
+		{
+			echo $args['warning'];
+		}
+		echo "\n";
+
+		return $available;
 	}
 
 	function extension_check($name,$args)
@@ -445,6 +488,7 @@
 	function gd_check()
 	{
 		global $passed_icon, $warning_icon;
+
 		$available = (function_exists('imagecopyresampled')  || function_exists('imagecopyresized'));
 		
 		echo "<div>".($available ? $passed_icon : $warning_icon).' <span'.($available?'':' class="setup_warning"').'>'.lang('Checking for GD support...').': '.($available ? lang('True') : lang('False'))."</span></div>\n";
@@ -452,9 +496,8 @@
 		if (!$available)
 		{
 			echo lang('Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.')."\n";
-			return false;
 		}
-		return true;
+		return $available;
 	}
 	
 	if ($run_by_webserver)

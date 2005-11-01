@@ -88,6 +88,7 @@ check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüf
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
+checking pear%1 is installed	setup	de	Überprüfe ob PEAR%1 installiert ist
 checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zu Setup zurück zu kehren.
@@ -190,6 +191,7 @@ export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
 false	setup	de	Falsch
 file	setup	de	DATEI
 file type, size, version, etc.	setup	de	Dateityp, Größe, Version usw.
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	de	Dateiuploads sind ausgeschaltet. Sie können keinen der Dateimanager verwenden, noch können Sie in verschiedenen Anwendungen Dateien anhängen!
 filename	setup	de	Dateiname
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	de	Für eine Neuinstallation, wählen Sie importieren.  Um existierende SQL-Accounts zu LDAP zu konvertieren, w&auml;hlen Sie exportieren.
 force selectbox	setup	de	Auswahl erzwingen
@@ -319,6 +321,8 @@ password of db user	setup	de	Passwort des Datenbank Benutzers
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht überein, bitte nocheinmal eingeben
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
+pear is needed by syncml or the ical import+export of calendar.	setup	de	PEAR wird von SyncML oder dem iCal Import+Export des Kalenders benötigt.
+pear::log is needed by syncml.	setup	de	PEAR wird von SyncML benötigt.
 persistent connections	setup	de	Permanente Verbindungen
 php plus restore	setup	de	PHP plus Wiederherstellen
 php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	de	PHP plus Wiederherstellen gibt bei weitem die beste Performanze. Es speichert die eGW Umgebung komplett in der Session.
