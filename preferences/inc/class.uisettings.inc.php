@@ -214,7 +214,8 @@
 							$valarray['name'],
 							$valarray['values'],
 							$valarray['help'],
-							$valarray['default']
+							$valarray['default'],
+							$valarray['run_lang']
 						);
 						break;
 					case 'check':
