@@ -458,7 +458,7 @@
 			//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset, \$query_type=$query_type<br>";
 			$query = strtolower($query);
 
-			if($_type == 'accounts' || $_type == 'both')
+			if($_type != 'groups')
 			{
 				$filter = "(&(uidnumber=*)(phpgwaccounttype=u)";
 				if (!empty($query) && $query != '*')
@@ -511,7 +511,7 @@
 					}
 				}
 			}
-			if ($_type == 'groups' || $_type == 'both')
+			if ($_type != 'accounts')
 			{
 				if(empty($query) || $query == '*')
 				{
