@@ -42,6 +42,8 @@
 			//merge old config_name in phpgw_config table
 			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
 			$this->customfields = $config[$config_name];
+			$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
+
 		}
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
@@ -85,6 +87,7 @@
 				switch ($field['type'])
 				{
 					case 'select' :
+						if($this->advanced_search) $field['values'][''] = lang('doesn\'t matter');
 						foreach($field['values'] as $key => $val)
 						{
 							if (substr($val = lang($val),-1) != '*')
