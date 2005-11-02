@@ -166,6 +166,7 @@
 					}
 					$value = array_merge($extension_data,$value);
 					$value['options-app'] = $this->link->app_list();
+					asort($value['options-app']);	// sort them alphabetic
 
 					if ($value['button'] == 'search') $value['msg'] = lang('Nothing found - try again !!!');
 
