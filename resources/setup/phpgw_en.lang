@@ -55,7 +55,7 @@ quantity:	resources	en	Quantity:
 read calender permissions	resources	en	Read Calender permissions
 read permissions	resources	en	Read permissions
 related links	resources	en	Related links
-resources	resources	en	resources
+resources	common	en	resources
 resources list	resources	en	resources list
 responsible:	resources	en	Responsible:
 saves entry and exits	resources	en	Saves entry and exits

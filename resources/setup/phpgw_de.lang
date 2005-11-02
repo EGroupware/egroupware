@@ -54,7 +54,7 @@ quantity:	resources	de	Stückzahl:
 read calender permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 related links	resources	de	Siehe auch
-resources	resources	de	Resourcen
+resources	common	de	Resourcen
 resources list	resources	de	Resourcen Liste
 responsible:	resources	de	Verantwortlich:
 saves entry and exits	resources	de	Speichern und Schließen
