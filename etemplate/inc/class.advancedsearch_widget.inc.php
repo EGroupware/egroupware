@@ -65,16 +65,23 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			$value = is_array($extension_data) ? $extension_data : $value;
+			
 			$tpl =& new etemplate;
 			$tpl->init('*** generated advanced search widget','','',0,'',0,0);	// make an empty template
-			$tpl->add_child($tpl,$search_header = $tpl->empty_cell('label','Advanced search',array(
+			$tpl->add_child($tpl,$search_header = $tpl->empty_cell('label',$cell['label'],array(
 				'no_lang' => 0,
 				'label' => 'Advanced search',
-				'row' => array( 0 => array('#' => '800px')),
+				'span' =>',heading1',
 			)));
-
-					
-			if (isset($extension_data['result']))
+			if($value['msg'])
+			{
+				$tpl->add_child($tpl,$msg = $tpl->empty_cell('label','msg',array(
+					'no_lang' => true,
+				)));
+			}
+			
+			if (isset($value['result_nm']))
 			{
 				$GLOBALS['egw']->session->appsession('result','etemplate',$extension_data['result']);
 				$tpl->add_child($tpl, $result_nm = $tpl->empty_cell('nextmatch','result_nm',array(
@@ -84,13 +91,13 @@
 				$result_rows_tpl =& new etemplate;
 				$result_rows_tpl->init('*** generated rows template for advanced search results','','',0,'',0,0);
 				$grid =& $result_rows_tpl->children[0];
-				
 				foreach((array)$extension_data['colums_to_present'] as $field => $label)
 				{
 					if($label == '') continue;
 					$result_rows_tpl->add_child($grid,$result_nm_header = $result_rows_tpl->empty_cell('nextmatch-sortheader',$field,array(
 						'label' => $label,
 						'no_lang' => true,
+						'span' => ',nmh',
 					)));
 					unset($result_nm_header);
 				}
@@ -106,31 +113,46 @@
 					unset($result_nm_rows);
 				}
 				
-				$value['result_nm'] = array(
-					'no_filter' => true,
-					'no_filter2' => true,
-					'no_cat' => true,
-					'template' => $result_rows_tpl,
-					'get_rows' => 'etemplate.advancedsearch_widget.get_rows',
-				);
+				$value['result_nm'] = array_merge(
+					$value['result_nm'],
+					array(
+						'no_filter' => true,
+						'no_filter2' => true,
+						'no_cat' => true,
+						'no_search' => true,
+						'get_rows' => 'etemplate.advancedsearch_widget.get_rows',
+						'search_method' => $value['search_method'],
+						'colums_to_present' => $value['colums_to_present'],
+						'template' => $result_rows_tpl,
+					));
 				
-				$tpl->add_child($tpl, $result_button = $tpl->empty_cell('button','button[action]',array(
-					'label' => 'dump',
-					'no_lang' => true,
-				)));
-				
-				//unset($extension_data['result']);
+				$tpl->add_child($tpl, $action_buttons = $tpl->empty_cell('hbox','action_buttons'));
+				foreach ($value['actions'] as $action => $options)
+				{
+					$tpl->add_child($action_buttons, $result_button = $tpl->empty_cell($options['type'],'action['.$action.']',$options['options']));
+					unset($result_button);
+				}	
 			}
 			else
 			{
+				$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 				$extension_data = $value;
+
 				$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$value['input_template']));
-				$tpl->add_child($tpl, $search_button = $tpl->empty_cell('button','button[search]',array(
+				$tpl->add_child($tpl, $button_box = $tpl->empty_cell('hbox','button_box'));
+				$tpl->add_child($button_box, $op_select = $tpl->empty_cell('select','opt_select',array(
+					'sel_options' => array(
+						'OR' => 'OR',
+						'AND' => 'AND'
+					),
+					'label' => 'Operator',
+					'no_lang' => true,
+				)));
+				$tpl->add_child($button_box, $search_button = $tpl->empty_cell('button','button[search]',array(
 					'label' => 'Search',
 				)));
-				
 			}
-			
+;
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';
 			$cell['name'] = $tpl->name;
@@ -145,6 +167,7 @@
 			}
 			return True;
 		}
+		
 		/**
 		 * postprocessing method, called after the submission of the form
 		 *
@@ -162,31 +185,38 @@
 		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			foreach($value as $haystack => $needle)
+			//echo 'advancedsearch_widget::post_process->value'; _debug_array($value);
+			//echo 'advancedsearch_widget::post_process->extension_data'; _debug_array($extension_data);
+			if(!isset($extension_data['result_nm']['search_values']))
 			{
-				if($needle == '') unset($value[$haystack]);
+				foreach($value as $haystack => $needle)
+				{
+					if($needle == '') unset($value[$haystack]);
+				}
+				$extension_data['result_nm']['search_values'] = $value;
 			}
-// 			_debug_array($value); 
-			if($value['button']['search'])
+			elseif(isset($value['action']))
 			{
-				$extension_data['result'] = ExecMethod($extension_data['search_method'],array(
-					0 => $value, // citeria
-					1 => implode(',',array_flip($extension_data['colums_to_present'])), // only_keys
-					2 => '', // order_by
-					3 => '', // extra_cols
-					4 => '', // wildcard
-					5 => '', // empty
-					6 => 'OR', // operaror
-					'multivalue' => true,
-				));
+				$result = $GLOBALS['egw']->session->appsession('advanced_search_result','etemplate');
+				_debug_array($result);
+				$extension_data['msg'] = ExecMethod2($extension_data['actions'][key($value['action'])]['method'],$result);
+			}
+			else
+			{
+				$extension_data['result_nm'] = array_merge($extension_data['result_nm'],$value['result_nm']);
 			}
 		}
 		
 		function get_rows($query,&$rows,&$readonlys)
 		{
-			$rows = $GLOBALS['egw']->session->appsession('result','etemplate');
-// 			_debug_array($data);
-			return count($rows);
+			$order_by = $query['order'] ? $query['order'].' '.$query['sort'] : '';
+			$only_keys = implode(',',array_flip($query['colums_to_present']));
+			$rows = ExecMethod2($query['search_method'],$query['search_values'],$only_keys,
+				$order_by,'','','',$query['search_values']['opt_select'],$query['start']);
+			$result = ExecMethod2($query['search_method'],$query['search_values'],$only_keys,'','','','',$query['search_values']['opt_select'],false,'','',false);
+			// We store the result in session so actions can fetch them here:
+			$GLOBALS['egw']->session->appsession('advanced_search_result','etemplate',$result);
+			return count($result);
 
 		}
 	}
