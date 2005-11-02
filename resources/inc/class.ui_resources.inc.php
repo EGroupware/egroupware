@@ -494,8 +494,8 @@ class ui_resources
 	function get_calendar_sidebox($view_menuaction, $date='')
 	{
 		$selectbox_content = array(lang('Select resources'));
-		$selectbox_content[0] = lang('Select resources');
 		$cats = $this->bo->acl->get_cats(EGW_ACL_READ);
+		if (!$cats) return array();
 		
 		// this gets the resource-ids of the cats and implodes them to the array-key of the selectbox,
 		// so it is possible to select all resources of a category
