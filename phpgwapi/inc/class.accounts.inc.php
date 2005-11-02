@@ -774,6 +774,9 @@
 				return $account_name[$account_id] !== False;
 			}
 			$Ok = accounts_::get_account_name($accountid,$lid,$fname,$lname);
+			
+			if (empty($fname)) $fname = $lid;
+			if (empty($lname)) $lname = $this->get_type($accountid) == 'g' ? lang('Group') : lang('user');
 
 			$account_name[$account_id] = array(
 				'lid' => $lid,

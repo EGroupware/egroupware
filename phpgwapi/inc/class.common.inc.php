@@ -481,11 +481,12 @@
 		/**
 		 * return the fullname of a user
 		 *
-		 * @param $lid account loginid
-		 * @param $firstname firstname
-		 * @param $lastname lastname
+		 * @param $lid='' account loginid
+		 * @param $firstname='' firstname
+		 * @param $lastname='' lastname
+		 * @param $accountid=0 id, to check if it's a user or group, otherwise the lid will be used
 		 */
-		function display_fullname($lid = '', $firstname = '', $lastname = '')
+		function display_fullname($lid = '', $firstname = '', $lastname = '',$accountid=0)
 		{
 			if (! $lid && ! $firstname && ! $lastname)
 			{
@@ -494,6 +495,12 @@
 				$lastname  = $GLOBALS['egw_info']['user']['lastname'];
 			}
 
+			if (empty($firstname)) $firstname = $lid;
+			if (empty($lastname))
+			{
+				$lastname  = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g' ?
+					lang('Group') : lang('User');
+			}
 			$display = $GLOBALS['egw_info']['user']['preferences']['common']['account_display'];
 
 			if ($firstname && $lastname)
@@ -539,7 +546,8 @@
 		function grab_owner_name($accountid = '')
 		{
 			$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
-			return $this->display_fullname($lid,$fname,$lname);
+
+			return $this->display_fullname($lid,$fname,$lname,$accountid);
 		}
 
 		/**
