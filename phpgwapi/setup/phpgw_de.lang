@@ -55,6 +55,7 @@ all four sides	htmlarea-TableOperations	de	Alle 4 Seiten
 all occurrences of the search string was replaced.	tinymce	de	Die Suche wurde abgeschlossen. Alle Vorkommen wurden ersetzt.
 alphabet	common	de	a,ä,b,c,d,e,f,g,h,i,j,k,l,m,n,o,ö,p,q,r,s,t,u,ü,v,w,x,y,z
 alternate style-sheet:	common	de	Alternatives Stylesheet
+alternative image	tinymce	de	Alternatives Bild
 american samoa	common	de	AMERICANISCH SAMOA
 andorra	common	de	ANDORRA
 angola	common	de	ANGOLA
@@ -160,6 +161,7 @@ colombia	common	de	KOLUMBIEN
 color	htmlarea-TableOperations	de	Farbe
 columns	tinymce	de	Spalten
 comment	tinymce	de	Kommentar
+common perferences	common	de	Allgemeine Einstellungen
 comoros	common	de	KOMOREN
 company	common	de	Unternehmen
 configuration problem	tinymce	de	Konfigurationsproblem
@@ -347,7 +349,7 @@ guyana	common	de	GUYANA
 haiti	common	de	HAITI
 heard island and mcdonald islands	common	de	HEARD UND MCDONALD INSELN
 height	common	de	Höhe
-help	tinymce	de	Hilfe
+help	common	de	Hilfe
 help using editor	htmlarea	de	Hilfe zum benutzen des Editors
 high	common	de	Hoch
 highest	common	de	Höchste
@@ -620,6 +622,7 @@ personal	common	de	persönlich
 peru	common	de	PERU
 philippines	common	de	PHILIPPINEN
 phone number	common	de	Telefonnummer
+phpgwapi	common	de	eGroupWare API
 pitcairn	common	de	PITCAIRN
 pixels	htmlarea-TableOperations	de	pixels
 please %1 by hand	common	de	Bitte %1 per Hand

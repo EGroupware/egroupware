@@ -55,6 +55,7 @@ all four sides	htmlarea-TableOperations	en	All four sides
 all occurrences of the search string was replaced.	tinymce	en	All occurrences of the search string was replaced.
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
+alternative image	tinymce	en	Alternative image
 american samoa	common	en	AMERICAN SAMOA
 andorra	common	en	ANDORRA
 angola	common	en	ANGOLA
@@ -160,6 +161,7 @@ colombia	common	en	COLOMBIA
 color	htmlarea-TableOperations	en	Color
 columns	tinymce	en	Columns
 comment	tinymce	en	Comment
+common perferences	common	en	Common perferences
 comoros	common	en	COMOROS
 company	common	en	Company
 configuration problem	tinymce	en	Configuration problem
@@ -347,7 +349,7 @@ guyana	common	en	GUYANA
 haiti	common	en	HAITI
 heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	en	Height
-help	tinymce	en	Help
+help	common	en	Help
 help using editor	htmlarea	en	Help using editor
 high	common	en	High
 highest	common	en	Highest
@@ -621,6 +623,7 @@ personal	common	en	Personal
 peru	common	en	PERU
 philippines	common	en	PHILIPPINES
 phone number	common	en	phone number
+phpgwapi	common	en	eGroupWare API
 pitcairn	common	en	PITCAIRN
 pixels	htmlarea-TableOperations	en	pixels
 please %1 by hand	common	en	Please %1 by hand
