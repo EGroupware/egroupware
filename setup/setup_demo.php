@@ -91,9 +91,10 @@
 		if($_POST['delete_all'])
 		{
 			/* Now, clear out existing tables */
-			$GLOBALS['egw_setup']->db->query('DELETE FROM phpgw_accounts');
-			$GLOBALS['egw_setup']->db->query('DELETE FROM phpgw_preferences');
-			$GLOBALS['egw_setup']->db->query('DELETE FROM phpgw_acl');
+			foreach(array($GLOBALS['egw_setup']->accounts_table,$GLOBALS['egw_setup']->prefs_table,$GLOBALS['egw_setup']->acl_table) as $table)
+			{
+				$GLOBALS['egw_setup']->db->delete($table,'1=1');
+			}
 		}
 		/* Create the demo groups */
 		$defaultgroupid = (int)$GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
@@ -112,7 +113,7 @@
 
 		// give admin access to all apps, to save us some support requests
 		$all_apps = array();
-		$GLOBALS['egw_setup']->db->query('SELECT app_name FROM phpgw_applications WHERE app_enabled<3');
+		$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled < 3',__LINE__,__FILE__);
 		while ($GLOBALS['egw_setup']->db->next_record())
 		{
 			$all_apps[] = $GLOBALS['egw_setup']->db->f('app_name');

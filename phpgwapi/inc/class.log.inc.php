@@ -27,6 +27,8 @@
 			'clearstack',
 			'astable'
 		);
+		var $log_table = 'egw_log';
+		var $msg_table = 'egw_log_msg';
 
 		function message($etext,$p0='',$p1='',$p2='',$p3='',$p4='',$p5='',$p6='',$p7='',$p8='',$p9='')
 		{
@@ -82,11 +84,11 @@
 
 		function commit()
 		{
-			$db = $GLOBALS['phpgw']->db;
-			$db->query("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
-				."('". $GLOBALS['phpgw']->db->to_timestamp(time())
-				."','".$GLOBALS['phpgw']->session->account_id
-				."','".$GLOBALS['phpgw_info']['flags']['currentapp']."'"
+			$db = clone($GLOBALS['egw']->db);
+			$db->query("insert into $this->log_table (log_date, log_user, log_app, log_severity) values "
+				."('". $GLOBALS['egw']->db->to_timestamp(time())
+				."','".$GLOBALS['egw']->session->account_id
+				."','".$GLOBALS['egw_info']['flags']['currentapp']."'"
 				.",'".$this->severity()."'"
 				.")"
 				,__LINE__,__FILE__);
@@ -95,11 +97,11 @@
 			for ($i = 0; $i < count($errorstack); $i++)
 			{
 				$err = $errorstack[$i];
-				$db->query("insert into phpgw_log_msg "
+				$db->query("insert into $this->msg_table "
 					. "(log_msg_seq_no, log_msg_date, "
 					. "log_msg_severity, log_msg_code, log_msg_msg, log_msg_parms) values "
 					. "(" . $i
-					. ", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp)
+					. ", '" . $GLOBALS['egw']->db->to_timestamp($err->timestamp)
 					. "', '". $err->severity . "'"
 					. ", '". $err->code      . "'"
 					. ", '". $err->msg       . "'"
@@ -162,8 +164,8 @@
 
 				$html .= "\t<tr bgcolor=".'"'.$color.'"'.">\n";
 				$html .= "\t\t<td align=center>".$i."</td>\n";
-				$html .= "\t\t<td>".$GLOBALS['phpgw']->common->show_date($err->timestamp)."</td>\n";
-				$html .= "\t\t<td>".$GLOBALS['phpgw_info']['flags']['currentapp']."&nbsp </td>\n";
+				$html .= "\t\t<td>".$GLOBALS['egw']->common->show_date($err->timestamp)."</td>\n";
+				$html .= "\t\t<td>".$GLOBALS['egw_info']['flags']['currentapp']."&nbsp </td>\n";
 				$html .= "\t\t<td align=center>".$err->severity."</td>\n";
 				$html .= "\t\t<td>".$err->code."</td>\n";
 				$html .= "\t\t<td>".$err->langmsg()."</td>\n";

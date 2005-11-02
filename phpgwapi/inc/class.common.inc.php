@@ -1,31 +1,31 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - Commononly used functions                               *
-  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-  * and Joseph Engo <jengo@phpgroupware.org>                                 *
-  * and Mark Peters <skeeter@phpgroupware.org>                               *
-  * and Lars Kneschke <lkneschke@linux-at-work.de>                           *
-  * Functions commonly used by eGroupWare developers                         *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * Copyright (C) 2003 Lars Kneschke                                         *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org                                                *
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - Commononly used functions                               *
+	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	* and Joseph Engo <jengo@phpgroupware.org>                                 *
+	* and Mark Peters <skeeter@phpgroupware.org>                               *
+	* and Lars Kneschke <lkneschke@linux-at-work.de>                           *
+	* Functions commonly used by eGroupWare developers                         *
+	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
+	* Copyright (C) 2003 Lars Kneschke                                         *
+	* -------------------------------------------------------------------------*
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org                                                *
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	$d1 = strtolower(@substr(EGW_API_INC,0,3));
 	$d2 = strtolower(@substr(EGW_SERVER_ROOT,0,3));
@@ -37,22 +37,22 @@
 	}
 	unset($d1);unset($d2);unset($d3);
 
-	/*!
-	@class common
-	@abstract common class that contains commonly used functions
-	*/
+	/**
+	 * common class that contains commonly used functions
+	 *
+	 */
 	class common
 	{
 		var $debug_info; // An array with debugging info from the API
 		var $found_files;
 
-		/*!
-		@function cmp_version
-		@abstract Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
-		@discussion This function checks for major version only.
-		@param $str1
-		@param $str2
-		*/
+		/**
+		 * Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
+		 *
+		 * This function checks for major version only.
+		 * @param $str1
+		 * @param $str2
+		 */
 		function cmp_version($str1,$str2,$debug=False)
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)",$str1,$regs);
@@ -77,13 +77,13 @@
 			}
 		}
 
-		/*!
-		@function cmp_version_long
-		@abstract Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
-		@discussion This function checks all fields. cmp_version() checks release version only.
-		@param $str1
-		@param $str2
-		*/
+		/**
+		 * Compares two Version strings and return 1 if str2 is newest (bigger version number) than str1
+		 *
+		 * This function checks all fields. cmp_version() checks release version only.
+		 * @param $str1
+		 * @param $str2
+		 */
 		function cmp_version_long($str1,$str2,$debug=False)
 		{
 			ereg("([0-9]+)\.([0-9]+)\.([0-9]+)[a-zA-Z]*([0-9]*)\.([0-9]*)",$str1,$regs);
@@ -114,12 +114,12 @@
 		}
 
 		// Convert an array into the format needed for the access column.
-		/*!
-		@function array_to_string
-		@abstract Convert an array into the format needed for the access column
-		@param $access
-		@param $array
-		*/
+		/**
+		 * Convert an array into the format needed for the access column
+		 *
+		 * @param $access
+		 * @param $array
+		 */
 		function array_to_string($access,$array)
 		{
 			$this->debug_info[] = 'array_to_string() is a depreciated function - use ACL instead';
@@ -175,12 +175,12 @@
 		}
 
 		// This is used for searching the access fields
-		/*!
-		@function sql_search
-		@abstract this function is used for searching the access fields
-		@param $table
-		@param $owner
-		*/
+		/**
+		 * this function is used for searching the access fields
+		 *
+		 * @param $table
+		 * @param $owner
+		 */
 		function sql_search($table,$owner=0)
 		{
 			$this->debug_info[] = 'sql_search() is a deprecated function - use ACL instead';
@@ -201,11 +201,11 @@
 		}
 
 		// return a array of installed languages
-		/*!
-		@function getInstalledLanguages
-		@abstract return an array of installed languages
-		@result $installedLanguages; an array containing the installed languages
-		*/
+		/**
+		 * return an array of installed languages
+		 *
+		 * @return $installedLanguages; an array containing the installed languages
+		 */
 		function getInstalledLanguages()
 		{
 			$GLOBALS['egw']->db->query('SELECT DISTINCT lang FROM phpgw_lang');
@@ -220,12 +220,12 @@
 		// return the preferred language of the users
 		// it's using HTTP_ACCEPT_LANGUAGE (send from the users browser)
 		// and ...(to find out which languages are installed)
-		/*!
-		@function getPreferredLanguage
-		@abstract return the preferred langugae of the users
-		@discussion it uses HTTP_ACCEPT_LANGUAGE (from the users browser) <br>
-		and .... to find out which languages are installed
-		*/
+		/**
+		 * return the preferred langugae of the users
+		 *
+		 * it uses HTTP_ACCEPT_LANGUAGE (from the users browser) <br>
+		 * and .... to find out which languages are installed
+		 */
 		function getPreferredLanguage()
 		{
 			// create a array of languages the user is accepting
@@ -257,27 +257,27 @@
 			return $retValue;
 		}
 
-		/*!
-		@function ldap_addslashes
-		@abstract escapes a string for use in searchfilters meant for ldap_search.
-		Escaped Characters are: '*', '(', ')', ' ', '\', NUL
-		It's actually a PHP-Bug, that we have to escape space.
-		For all other Characters, refer to RFC2254.
-		@param $string either a string to be escaped, or an array of values to be escaped
-		*/
+		/**
+		 * escapes a string for use in searchfilters meant for ldap_search.
+		 *
+		 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
+		 * It's actually a PHP-Bug, that we have to escape space.
+		 * For all other Characters, refer to RFC2254.
+		 * @param $string either a string to be escaped, or an array of values to be escaped
+		 */
 		function ldap_addslashes($string='')
 		{
 			return str_replace(array('\\','*','(',')','\0',' '),array('\\\\','\*','\(','\)','\\0','\20'),$string);
 		}
 
 		// connect to the ldap server and return a handle
-		/*!
-		@function ldapConnect
-		@abstract connect to the ldap server and return a handle
-		@param $host ldap host
-		@param $dn ldap_root_dn
-		@param $passwd ldap_root_pw
-		*/
+		/**
+		 * connect to the ldap server and return a handle
+		 *
+		 * @param $host ldap host
+		 * @param $dn ldap_root_dn
+		 * @param $passwd ldap_root_pw
+		 */
 		function ldapConnect($host='', $dn='', $passwd='')
 		{
 			if(!function_exists('ldap_connect'))
@@ -319,6 +319,7 @@
 				}
 
 				printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
+				echo function_backtrace(1);
 				return False;
 			}
 
@@ -340,19 +341,20 @@
 				}
 
 				printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
+				echo function_backtrace(1);
 				return False;
 			}
 
 			return $ds;
 		}
 
-		/*!
-		@function egw_exit
-		@abstract function to stop running an app
-		@discussion used to stop running an app in the middle of execution <br>
-		There may need to be some cleanup before hand
-		@param $call_footer boolean value to if true then call footer else exit
-		*/
+		/**
+		 * function to stop running an app
+		 *
+		 * used to stop running an app in the middle of execution <br>
+		 * There may need to be some cleanup before hand
+		 * @param $call_footer boolean value to if true then call footer else exit
+		 */
 		function egw_exit($call_footer = False)
 		{
 			if (!defined('EGW_EXIT'))
@@ -393,11 +395,11 @@
 			}
 		}
 
-		/*!
-		@function randomstring
-		@abstract return a random string of size $size
-		@param $size int-size of random string to return
-		*/
+		/**
+		 * return a random string of size $size
+		 *
+		 * @param $size int-size of random string to return
+		 */
 		function randomstring($size)
 		{
 			$s = '';
@@ -422,11 +424,11 @@
 			return filesystem_separator();
 		}
 
-		/*!
-		@function error_list
-		@abstract This is used for reporting errors in a nice format.
-		@param $error - array of errors
-		*/
+		/**
+		 * This is used for reporting errors in a nice format.
+		 *
+		 * @param $error - array of errors
+		 */
 		function error_list($errors,$text='Error')
 		{
 			if (! is_array($errors))
@@ -443,14 +445,14 @@
 			return $html_error . '</table>';
 		}
 
-		/*!
-		@function check_owner
-		@abstract none yet
-		@param $record ?
-		@param $link ?
-		@param $label ?
-		@param $extravars
-		*/
+		/**
+		 * none yet
+		 *
+		 * @param $record ?
+		 * @param $link ?
+		 * @param $label ?
+		 * @param $extravars
+		 */
 		// This is a depreciated function - use ACL instead (jengo)
 		function check_owner($record,$link,$label,$extravars = '')
 		{
@@ -476,13 +478,13 @@
 			*/
 		}
 
-		/*!
-		@function display_fullname
-		@abstract return the fullname of a user
-		@param $lid account loginid
-		@param $firstname firstname
-		@param $lastname lastname
-		*/
+		/**
+		 * return the fullname of a user
+		 *
+		 * @param $lid account loginid
+		 * @param $firstname firstname
+		 * @param $lastname lastname
+		 */
 		function display_fullname($lid = '', $firstname = '', $lastname = '')
 		{
 			if (! $lid && ! $firstname && ! $lastname)
@@ -529,30 +531,30 @@
 			return $name;
 		}
 
-		/*!
-		@function grab_owner_name
-		@abstract grab the owner name
-		@param $id account id
-		*/
+		/**
+		 * grab the owner name
+		 *
+		 * @param $id account id
+		 */
 		function grab_owner_name($accountid = '')
 		{
 			$GLOBALS['egw']->accounts->get_account_name($accountid,$lid,$fname,$lname);
 			return $this->display_fullname($lid,$fname,$lname);
 		}
 
-		/*!
-		@function create_tabs
-		@abstract create tabs
-		@param array $tabs an array repersenting the tabs you wish to display, each element
-						   in the array is an array of 3 elements, 'label' which is the 
-						   text displaed on the tab (you should pass translated string, 
-						   create_tabs will not do <code>lang()</code> for you), 'link' 
-						   which is the uri, 'target', the frame name or '_blank' to show 
-						   page in a new browser window.
-		@param mixed $selected the tab whos key is $selected will be displayed as current tab
-		@param $fontsize optional
-		@return string return html that displays the tabs
-		*/
+		/**
+		 * create tabs
+		 *
+		 * @param array $tabs an array repersenting the tabs you wish to display, each element
+		 * 		 * 		 * 	 in the array is an array of 3 elements, 'label' which is the 
+		 * 		 * 		 * 	 text displaed on the tab (you should pass translated string, 
+		 * 		 * 		 * 	 create_tabs will not do <code>lang()</code> for you), 'link' 
+		 * 		 * 		 * 	 which is the uri, 'target', the frame name or '_blank' to show 
+		 * 		 * 		 * 	 page in a new browser window.
+		 * @param mixed $selected the tab whos key is $selected will be displayed as current tab
+		 * @param $fontsize optional
+		 * @return string return html that displays the tabs
+		 */
 		function create_tabs($tabs, $selected, $fontsize = '')
 		{
 			$output_text = '<table border="0" cellspacing="0" cellpadding="0"><tr>';
@@ -638,12 +640,12 @@
 			return $output_text;
 		}
 
-		/*!
-		@function get_app_dir
-		@abstract get directory of application
-		@discussion $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		@param $appname name of application
-		*/
+		/**
+		 * get directory of application
+		 *
+		 * $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
+		 * @param $appname name of application
+		 */
 		function get_app_dir($appname = '')
 		{
 			if ($appname == '')
@@ -672,12 +674,12 @@
 			}
 		}
 
-		/*!
-		@function get_inc_dir
-		@abstract get inc (include dir) of application
-		@discussion $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		@param $appname name of application
-		*/
+		/**
+		 * get inc (include dir) of application
+		 *
+		 * $appname can either be passed or derived from $GLOBALS['egw_info']['flags']['currentapp'];
+		 * @param $appname name of application
+		 */
 		function get_inc_dir($appname = '')
 		{
 			if (! $appname)
@@ -706,12 +708,12 @@
 			}
 		}
 
-		/*!
-		@function list_themes
-		@abstract list themes available
-		@note themes can either be css file like in HEAD (if the template has a css-dir and has css-files in is) \
-			or ordinary .14 themes-files
-		*/
+		/**
+		 * list themes available
+		 *
+		 * themes can either be css file like in HEAD (if the template has a css-dir and has css-files in is) \
+		 * 	or ordinary .14 themes-files
+		 */
 		function list_themes()
 		{
 			$tpl_dir = $this->get_tpl_dir('phpgwapi');
@@ -752,7 +754,7 @@
 			$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
 			while ($entry=$d->read())
 			{
-			   if ($entry != '..' && is_file(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/setup/setup.inc.php')
+				 if ($entry != '..' && is_file(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/setup/setup.inc.php')
 				 )
 				{
 					$list[$entry]['name'] = $entry;
@@ -776,11 +778,11 @@
 			return $list;
 		}
 
-		/*!
-		@function get_tpl_dir
-		@abstract get template dir of an application
-		@param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		*/
+		/**
+		 * get template dir of an application
+		 *
+		 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+		 */
 		function get_tpl_dir($appname = '')
 		{
 			if (! $appname)
@@ -832,12 +834,12 @@
 			}
 		}
 
-		/*!
-		@function is_image_dir
-		@abstract checks if image_dir exists and has more than just a navbar-icon
-		@note this is just a workaround for idots, better to use find_image, which has a fallback \
-			on a per image basis to the default dir
-		*/
+		/**
+		 * checks if image_dir exists and has more than just a navbar-icon
+		 *
+		 * this is just a workaround for idots, better to use find_image, which has a fallback \
+		 * 	on a per image basis to the default dir
+		 */
 		function is_image_dir($dir)
 		{
 			if (!@is_dir($dir))
@@ -858,11 +860,11 @@
 			return False;
 		}
 
-		/*!
-		@function get_image_dir
-		@abstract get image dir of an application
-		@param $appname application name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		*/
+		/**
+		 * get image dir of an application
+		 *
+		 * @param $appname application name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+		 */
 		function get_image_dir($appname = '')
 		{
 			if ($appname == '')
@@ -897,11 +899,11 @@
 			}
 		}
 
-		/*!
-		@function get_image_path
-		@abstract get image path of an application
-		@param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-		*/
+		/**
+		 * get image path of an application
+		 *
+		 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+		 */
 		function get_image_path($appname = '')
 		{
 			if ($appname == '')
@@ -1109,11 +1111,11 @@
 			}
 		}
 
-		/*!
-		@function navbar
-		@abstract none yet
-		@discussion *someone wanna add some detail here*
-		*/
+		/**
+		 * none yet
+		 *
+		 * *someone wanna add some detail here*
+		 */
 		function navbar()
 		{
 			
@@ -1205,10 +1207,10 @@
 			$GLOBALS['egw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi',Array('logout','nonav'),'-over');
 		}
 
-		/*!
-		@function app_header
-		@abstract load header.inc.php for an application
-		*/
+		/**
+		 * load header.inc.php for an application
+		 *
+		 */
 		function app_header()
 		{
 			if (file_exists(EGW_APP_INC . '/header.inc.php'))
@@ -1217,10 +1219,10 @@
 			}
 		}
 
-		/*!
-		@function egw_header
-		@abstract load the phpgw header
-		*/
+		/**
+		 * load the phpgw header
+		 *
+		 */
 		function egw_header()
 		{
 			// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
@@ -1261,7 +1263,7 @@
 		*/
 		function get_css()
 		{
-			$tpl = createObject('phpgwapi.Template', $this->get_tpl_dir('phpgwapi'));
+			$tpl =& CreateObject('phpgwapi.Template', $this->get_tpl_dir('phpgwapi'));
 			$tpl->set_file('css', 'css.tpl');
 			$tpl->set_var($GLOBALS['egw_info']['theme']);
 			$app_css = '';
@@ -1350,7 +1352,7 @@
 			if ($GLOBALS['egw_info']['flags']['include_xajax'])
 			{
 				require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
-				$xajax = new xajax($GLOBALS['egw']->link('/xajax.php'));
+				$xajax =& new xajax($GLOBALS['egw']->link('/xajax.php'));
 				$xajax->registerFunction("doXMLHTTP");
 
 				$java_script .= $xajax->getJavascript();
@@ -1408,47 +1410,48 @@
 			return @pack('H' . $len, $data);
 		}
 
-		/*!
-		@function encrypt
-		@abstract encrypt data passed to the function
-		@param $data data (string?) to be encrypted
-		*/
+		/**
+		 * encrypt data passed to the function
+		 *
+		 * @param $data data (string?) to be encrypted
+		 */
 		function encrypt($data)
 		{
 			return $GLOBALS['egw']->crypto->encrypt($data);
 		}
 
-		/*!
-		@function decrypt
-		@abstract decrypt $data
-		@param $data data to be decrypted
-		*/
+		/**
+		 * decrypt $data
+		 *
+		 * @param $data data to be decrypted
+		 */
 		function decrypt($data)
 		{
 			return $GLOBALS['egw']->crypto->decrypt($data);
 		}
 
-		/*!
-		@function encrypt_password
-		@abstract legacy wrapper for newer auth class function, encrypt_password
-		@abstract uses the encryption type set in setup and calls the appropriate encryption functions
-		@param $password password to encrypt
-		*/
+		/**
+		 * legacy wrapper for newer auth class function, encrypt_password
+		 *
+		 * uses the encryption type set in setup and calls the appropriate encryption functions
+		 *
+		 * @param $password password to encrypt
+		 */
 		function encrypt_password($password,$sql=False)
 		{
 			if(!@is_object($GLOBALS['egw']->auth))
 			{
-				$GLOBALS['egw']->auth = CreateObject('phpgwapi.auth');
+				$GLOBALS['egw']->auth =& CreateObject('phpgwapi.auth');
 			}
 			return $GLOBALS['egw']->auth->encrypt_password($password,$sql);
 		}
 
-		/*!
-		@function find_portal_order
-		@abstract find the current position of the app is the users portal_order preference
-		@param $app application id to find current position - required
-		@discussion No discussion
-		*/
+		/**
+		 * find the current position of the app is the users portal_order preference
+		 *
+		 * @param $app application id to find current position - required
+		 * No discussion
+		 */
 		function find_portal_order($app)
 		{
 			if(!is_array($GLOBALS['egw_info']['user']['preferences']['portal_order']))
@@ -1468,20 +1471,20 @@
 			return -1;
 		}
 
-		/*!
-		@function hook
-		@abstract temp wrapper to new hooks class
-		*/
+		/**
+		 * temp wrapper to new hooks class
+		 *
+		 */
 		function hook($location, $appname = '', $no_permission_check = False)
 		{
 			echo '$'."GLOBALS['phpgw']common->hook()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->process()".'. For now this will act as a wrapper<br>';
 			return $GLOBALS['egw']->hooks->process($location, $order, $no_permission_check);
 		}
 
-		/*!
-		@function hook_single
-		@abstract temp wrapper to new hooks class
-		*/
+		/**
+		 * temp wrapper to new hooks class
+		 *
+		 */
 		// Note: $no_permission_check should *ONLY* be used when it *HAS* to be. (jengo)
 		function hook_single($location, $appname = '', $no_permission_check = False)
 		{
@@ -1489,10 +1492,10 @@
 			return $GLOBALS['egw']->hooks->single($location, $order, $no_permission_check);
 		}
 
-		/*!
-		@function hook_count
-		@abstract temp wrapper to new hooks class
-		*/
+		/**
+		 * temp wrapper to new hooks class
+		 *
+		 */
 		function hook_count($location)
 		{
 			echo '$'."GLOBALS['phpgw']common->hook_count()".' has been replaced. Please change to the new $'."GLOBALS['phpgw']hooks->count()".'. For now this will act as a wrapper<br>';
@@ -1502,23 +1505,23 @@
 		/* Wrapper to the session->appsession() */
 		function appsession($data = '##NOTHING##')
 		{
-			$this->debug_info[] = '$phpgw->common->appsession() is a depreciated function'
-				. ' - use $phpgw->session->appsession() instead';
+			$this->debug_info[] = "\$GLOBALS['egw']->common->appsession() is a depreciated function"
+				. " - use \$GLOBALS['egw']->session->appsession() instead";
 
 			return $GLOBALS['egw']->session->appsession('default','',$data);
 		}
 
-		/*!
-		@function show_date
-		@abstract show current date
-		@param $t time - optional can be pulled from user preferences
-		@param $format - optional can be pulled from user prefernces
-		*/
+		/**
+		 * show current date
+		 *
+		 * @param $t time - optional can be pulled from user preferences
+		 * @param $format - optional can be pulled from user prefernces
+		 */
 		function show_date($t = '', $format = '')
 		{
 			if(!is_object($GLOBALS['egw']->datetime))
 			{
-				$GLOBALS['egw']->datetime = createobject('phpgwapi.datetime');
+				$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
 			}
 
 			if (!$t)
@@ -1544,14 +1547,13 @@
 			return adodb_date($format,$t);
 		}
 
-		/*!
-		@function dateformatorder
-		@abstract
-		@param $yearstr year - string
-		@param $monthstr month - string
-		@param $day day - string
-		@param $add_seperator boolean defaults to false
-		*/
+		/**
+		 * @abstract
+		 * @param $yearstr year - string
+		 * @param $monthstr month - string
+		 * @param $day day - string
+		 * @param $add_seperator boolean defaults to false
+		 */
 		function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
 		{
 			$dateformat = strtolower($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
@@ -1572,13 +1574,13 @@
 			}
 		}
 
-		/*!
-		@function formattime
-		@abstract format the time takes settings from user preferences
-		@param $hour hour
-		@param $min minutes
-		@param $sec defaults to ''
-		*/
+		/**
+		 * format the time takes settings from user preferences
+		 *
+		 * @param $hour hour
+		 * @param $min minutes
+		 * @param $sec defaults to ''
+		 */
 		function formattime($hour,$min,$sec='')
 		{
 			$h12 = $hour;
@@ -1618,11 +1620,11 @@
 		}
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
-		/*!
-		@function get_email_passwd_ex
-		@abstract uses code in /email class msg to obtain the appropriate password for email
-		@param  (none - it will abtain the info it needs on its own)
-		*/
+		/**
+		 * uses code in /email class msg to obtain the appropriate password for email
+		 *
+		 * @param  (none - it will abtain the info it needs on its own)
+		 */
 		/*
 		function get_email_passwd_ex()
 		{
@@ -1633,7 +1635,7 @@
 			}
 			else
 			{
-				$GLOBALS['egw']->msg = CreateObject('email.mail_msg');
+				$GLOBALS['egw']->msg =& CreateObject('email.mail_msg');
 				$do_free_me = True;
 			}
 			// use the Msg class to obtain the appropriate password
@@ -1656,13 +1658,13 @@
 		*/
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
-		/*!
-		@function create_emailpreferences
-		@abstract create email preferences
-		@discussion This is not the best place for it, but it needs to be shared between Aeromail and SM
-		@param $prefs
-		@param $account_id -optional defaults to : phpgw_info['user']['account_id']
-		*/
+		/**
+		 * create email preferences
+		 *
+		 * This is not the best place for it, but it needs to be shared between Aeromail and SM
+		 * @param $prefs
+		 * @param $account_id -optional defaults to : phpgw_info['user']['account_id']
+		 */
 		function create_emailpreferences($prefs='',$accountid='')
 		{
 			return $GLOBALS['egw']->preferences->create_email_preferences($accountid);
@@ -1673,7 +1675,7 @@
 			}
 			else
 			{
-				$GLOBALS['egw']->msg = CreateObject('email.mail_msg');
+				$GLOBALS['egw']->msg =& CreateObject('email.mail_msg');
 				$do_free_me = True;
 			}
 
@@ -1772,11 +1774,11 @@
 		*/
 
 		// This will be moved into the applications area.
-		/*!
-		@function check_code
-		@abstract ?
-		@discussion This will be moved into the applications area
-		*/
+		/**
+		 * ?
+		 *
+		 * This will be moved into the applications area
+		 */
 		function check_code($code)
 		{
 			$s = '<br>';
@@ -1863,13 +1865,13 @@
 			}
 			return $s;
 		}
-		/*!
-		@function phpgw_error
-		@abstract process error message
-		@param $error error
-		@param $line line
-		@param $file file
-		*/
+		/**
+		 * process error message
+		 *
+		 * @param $error error
+		 * @param $line line
+		 * @param $file file
+		 */
 		function phpgw_error($error,$line = '', $file = '')
 		{
 			echo '<p><b>eGroupWare internal error:</b><p>'.$error;
@@ -1885,11 +1887,11 @@
 			exit;
 		}
 
-		/*!
-		@function create_phpcode_from_array
-		@abstract create phpcode from array
-		@param $array - array
-		*/
+		/**
+		 * create phpcode from array
+		 *
+		 * @param $array - array
+		 */
 		function create_phpcode_from_array($array)
 		{
 			while (list($key, $val) = each($array))
@@ -1934,11 +1936,11 @@
 		}
 
 		// This will return the full phpgw_info array, used for debugging
-		/*!
-		@function debug_list_array_contents
-		@abstract return the full phpgw_info array for debugging
-		@param array - array
-		*/
+		/**
+		 * return the full phpgw_info array for debugging
+		 *
+		 * @param array - array
+		 */
 		function debug_list_array_contents($array)
 		{
 			while (list($key, $val) = each($array))
@@ -1978,10 +1980,10 @@
 		}
 
 		// This will return a list of functions in the API
-		/*!
-		@function debug_list_core_functions
-		@abstract return a list of functionsin the API
-		*/
+		/**
+		 * return a list of functionsin the API
+		 *
+		 */
 		function debug_list_core_functions()
 		{
 			echo '<br><b>core functions</b><br>';
@@ -1992,10 +1994,10 @@
 		}
 
 		// This will return a value for the next id an app/class may need to insert values into ldap.
-		/*!
-		@function next_id
-		@abstract return the next higher value for an integer, and increment it in the db.
-		*/
+		/**
+		 * return the next higher value for an integer, and increment it in the db.
+		 *
+		 */
 		function next_id($appname,$min=0,$max=0)
 		{
 			if (!$appname)
@@ -2034,10 +2036,10 @@
 
 		// This will return a value for the last id entered, which an app may need to check
 		// values for ldap.
-		/*!
-		@function last_id
-		@abstract return the current id in the next_id table for a particular app/class.
-		*/
+		/**
+		 * return the current id in the next_id table for a particular app/class.
+		 *
+		 */
 		function last_id($appname,$min=0,$max=0)
 		{
 			if (!$appname)

@@ -81,7 +81,7 @@
 					}
 				}
 
-				$account = CreateObject('phpgwapi.accounts',$username,'u');
+				$account =& CreateObject('phpgwapi.accounts',$username,'u');
 				if ($account->account_id)
 				{
 					return true;
@@ -109,15 +109,6 @@
 		function change_password($old_passwd, $new_passwd, $_account_id='')
 		{
 			return false;		// Cant change passwd in ADS
-		}
-
-		function update_lastlogin($_account_id, $ip)
-		{
-			$account =& CreateObject('phpgwapi.accounts',$_account_id,'u');
-			$account->read_repository();
-			$account->data['lastlogin']     = time();
-			$account->data['lastloginfrom'] = $ip;
-			$account->save_repository();
 		}
 	}
 ?>

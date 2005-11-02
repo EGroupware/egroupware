@@ -42,10 +42,8 @@ class updates {
 	function showUpdates() {
 		$updates = array();
 		
-		if ((isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
-		$GLOBALS['egw_info']['user']['apps']['admin']) &&
-		(isset($GLOBALS['egw_info']['server']['checkfornewversion']) &&
-		$GLOBALS['egw_info']['server']['checkfornewversion']))
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']) && $GLOBALS['egw_info']['user']['apps']['admin'] &&
+			isset($GLOBALS['egw_info']['server']['checkfornewversion']) && $GLOBALS['egw_info']['server']['checkfornewversion'])
 		{
 			
 			$GLOBALS['egw']->network =& CreateObject('phpgwapi.network');
@@ -62,16 +60,14 @@ class updates {
 			
 			if($GLOBALS['egw']->common->cmp_version_long($GLOBALS['egw_info']['server']['versions']['phpgwapi'],$line_found[1]))
 			{
-				$updates['egroupware'] = '<p>There is a new version of eGroupWare available. <a href="'
-					. 'http://www.egroupware.org">http://www.egroupware.org</a></p>';
+				$updates['egroupware'] = '<p>'.lang('There is a new version of eGroupWare available').
+					' <a href="http://www.egroupware.org">www.egroupware.org</a></p>';
 			}
 
 			$_found = False;
-			$GLOBALS['egw']->db->query("select app_name,app_version from phpgw_applications",__LINE__,__FILE__);
-			while($GLOBALS['egw']->db->next_record())
+			foreach($GLOBALS['egw_info']['apps'] as $_app_name => $data)
 			{
-				$_db_version  = $GLOBALS['egw']->db->f('app_version');
-				$_app_name    = $GLOBALS['egw']->db->f('app_name');
+				$_db_version  = $data['version'];
 				$_app_dir = $GLOBALS['egw']->common->get_app_dir($_app_name);
 				$_versionfile = $_app_dir . '/setup/setup.inc.php';
 				if($_app_dir && file_exists($_versionfile))
@@ -102,7 +98,4 @@ class updates {
 		}
 		return $updates;	
 	} 
-	
 }
-
-?>

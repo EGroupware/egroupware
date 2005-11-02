@@ -53,7 +53,7 @@
 			}
 			else
 			{
-				$GLOBALS['phpgw']->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
+				$GLOBALS['phpgw']->db->query("SELECT config_value FROM egw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
 				if($GLOBALS['phpgw']->db->next_record())
 				{
 					$this->system_charset = $GLOBALS['phpgw']->db->f(0);

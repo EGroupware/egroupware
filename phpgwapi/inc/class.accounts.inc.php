@@ -40,10 +40,10 @@
 	include_once(EGW_API_INC . '/class.accounts_' . $GLOBALS['egw_info']['server']['account_repository'] . '.inc.php');
 
 	/*
-	  Dont know where to put this (seek3r)
-	  This is where it belongs (jengo)
-	  This is where it ended up (milosch)
-	  Moved again at least temporarily since sql and ldap use it.
+		Dont know where to put this (seek3r)
+		This is where it belongs (jengo)
+		This is where it ended up (milosch)
+		Moved again at least temporarily since sql and ldap use it.
 	*/
 	$GLOBALS['egw_info']['server']['global_denied_users'] = array(
 		'root'     => True, 'bin'      => True, 'daemon'   => True,

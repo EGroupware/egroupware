@@ -156,11 +156,11 @@
 			#print "<br>DN: $accountDN<br>";
 			ldap_mod_replace ($ldap, $accountDN, $newData);
 						
-			// also update the account_email field in phpgw_accounts
+			// also update the account_email field in egw_accounts
 			// when using sql account storage
 			if($GLOBALS['egw_info']['server']['account_repository'] == 'sql')
 			{
-				$this->db->update('phpgw_accounts',array(
+				$this->db->update('egw_accounts',array(
 						'account_email'	=> $_accountData["mail"]
 					),
 					array(

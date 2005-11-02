@@ -51,7 +51,9 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
-	$GLOBALS['egw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%' OR config_name='account_repository'",__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array(
+		"config_name LIKE 'ldap%' OR config_name='account_repository'",
+	),__LINE__,__FILE__);
 	while($GLOBALS['egw_setup']->db->next_record())
 	{
 		$config[$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
@@ -111,7 +113,7 @@
 		$group_info = array();
 	}
 
-	$GLOBALS['egw_setup']->db->query("SELECT app_name FROM phpgw_applications WHERE app_enabled!='0' AND app_enabled!='3' ORDER BY app_name",__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled != 0 AND app_enabled != 3',__LINE__,__FILE__);
 	while($GLOBALS['egw_setup']->db->next_record())
 	{
 		$apps[$GLOBALS['egw_setup']->db->f('app_name')] = lang($GLOBALS['egw_setup']->db->f('app_name'));

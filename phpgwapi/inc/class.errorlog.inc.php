@@ -27,6 +27,8 @@
 			'clearstack',
 			'astable'
 		);
+		var $log_table = 'egw_log';
+		var $msg_table = 'egw_log_msg';
 
 		function message($parms)
 		{
@@ -104,19 +106,19 @@
 
 		function commit()
 		{
-			$db = $GLOBALS['phpgw']->db;
-//			$db->lock('phpgw_log');
-			$db->query("insert into phpgw_log (log_date, log_user, log_app, log_severity) values "
-				."('". $GLOBALS['phpgw']->db->to_timestamp(time())
-				."','".(int)$GLOBALS['phpgw']->session->account_id
-				."','".$GLOBALS['phpgw_info']['flags']['currentapp']."'"
+			$db = clone($GLOBALS['egw']->db);
+//			$db->lock($this->log_table);
+			$db->query("insert into $this->log_table (log_date, log_user, log_app, log_severity) values "
+				."('". $GLOBALS['egw']->db->to_timestamp(time())
+				."','".(int)$GLOBALS['egw']->session->account_id
+				."','".$GLOBALS['egw_info']['flags']['currentapp']."'"
 				.",'".$this->severity()."'"
 				.")"
 				,__LINE__,__FILE__
 			);
 
-			$log_id = $db->get_last_insert_id('phpgw_log','log_id');
-//			$db->query('select max(log_id) as lid from phpgw_log');
+			$log_id = $db->get_last_insert_id($this->log_table,'log_id');
+//			$db->query('select max(log_id) as lid from $this->log_table');
 //			$db->next_record();
 //			$log_id = $db->f('lid');
 //			$db->unlock();
@@ -125,12 +127,12 @@
 			for ($i = 0; $i < count($errorstack); $i++)
 			{
 				$err = $errorstack[$i];
-				$db->query("insert into phpgw_log_msg "
+				$db->query("insert into $this->msg_table "
 					."(Log_msg_log_id, log_msg_seq_no, log_msg_date, log_msg_severity, "
 					."log_msg_code, log_msg_msg, log_msg_parms, log_msg_file, log_msg_line) values "
 					."(" . $log_id
 					."," . $i
-					.", '" . $GLOBALS['phpgw']->db->to_timestamp($err->timestamp)
+					.", '" . $GLOBALS['egw']->db->to_timestamp($err->timestamp)
 					."', '". $err->severity . "'"
 					.", '". $err->code . "'"
 					.", '". $db->db_addslashes($err->msg) . "'"
@@ -194,7 +196,7 @@
 
 				$html .= "\t<tr bgcolor=".'"'.$color.'"'.">\n";
 				$html .= "\t\t<td align=center>".$i."</td>\n";
-				$html .= "\t\t<td>".$GLOBALS['phpgw']->common->show_date($err->timestamp)."</td>\n";
+				$html .= "\t\t<td>".$GLOBALS['egw']->common->show_date($err->timestamp)."</td>\n";
 				$html .= "\t\t<td>".$err->app."&nbsp </td>\n";
 				$html .= "\t\t<td align=center>".$err->severity."</td>\n";
 				$html .= "\t\t<td>".$err->code."</td>\n";

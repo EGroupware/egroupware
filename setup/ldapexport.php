@@ -51,12 +51,14 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
-	$GLOBALS['egw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_name LIKE 'ldap%'",__LINE__,__FILE__);
+	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array(
+		"config_name LIKE 'ldap%'",
+	),__LINE__,__FILE__);
 	while ($GLOBALS['egw_setup']->db->next_record())
 	{
 		$config[$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
 	}
-	$phpgw_info['server']['ldap_host']		= $config['ldap_host'];
+	$phpgw_info['server']['ldap_host']			= $config['ldap_host'];
 	$phpgw_info['server']['ldap_context']		= $config['ldap_context'];
 	$phpgw_info['server']['ldap_group_context']	= $config['ldap_group_context'];
 	$phpgw_info['server']['ldap_root_dn']		= $config['ldap_root_dn'];
@@ -69,7 +71,7 @@
 	$phpgw_info['server']['account_repository'] = 'ldap';
 
 	$egw->accounts     = CreateObject('phpgwapi.accounts');
-	$acct                = $egw->accounts;
+	$acct              = $egw->accounts;
 
 	// First, see if we can connect to the LDAP server, if not send `em back to config.php with an
 	// error message.
@@ -86,7 +88,7 @@
 		exit;
 	}
 
-	$sql = "SELECT * FROM phpgw_accounts WHERE account_type='u'";
+	$sql = "SELECT * FROM ".$GLOBALS['egw_setup']->accounts_table." WHERE account_type='u'";
 	$GLOBALS['egw_setup']->db->query($sql,__LINE__,__FILE__);
 	while($GLOBALS['egw_setup']->db->next_record())
 	{
@@ -100,7 +102,7 @@
 		$account_info[$i]['account_primary_group']   = $GLOBALS['egw_setup']->db->f('account_primary_group');
 	}
 	
-	$sql = "SELECT * FROM phpgw_accounts WHERE account_type='g'";
+	$sql = "SELECT * FROM ".$GLOBALS['egw_setup']->accounts_table." WHERE account_type='g'";
 	$GLOBALS['egw_setup']->db->query($sql,__LINE__,__FILE__);
 	while($GLOBALS['egw_setup']->db->next_record())
 	{

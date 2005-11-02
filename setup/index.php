@@ -440,7 +440,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			$setup_tpl->set_var('ldap_table_data','&nbsp;');
 			break;
 		case 10:
-			$GLOBALS['egw_setup']->db->query("SELECT config_name,config_value FROM phpgw_config WHERE config_app='phpgwapi'");
+			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array('config_app' => 'phpgwapi'),__LINE__,__FILE__);
 			while($GLOBALS['egw_setup']->db->next_record())
 			{
 				$config[$GLOBALS['egw_setup']->db->f(0)] = $GLOBALS['egw_setup']->db->f(1);
@@ -451,7 +451,12 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 				$config['backup_dir'] = $config['files_dir'].'/db_backup';
 				if (!is_dir($config['backup_dir']) && mkdir($config['backup_dir']))
 				{
-					$GLOBALS['egw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('phpgwapi','backup_dir',".$GLOBALS['egw_setup']->db->quote($config['backup_dir']).')',__LINE__,__FILE__);
+					$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+						'config_value' => $config['backup_dir'],
+					),array(
+						'config_app'  => 'phpgwapi',
+						'config_name' => 'backup_dir',
+					),__LINE__,__FILE__);
 				}
 			}
 			$config_msg = '';

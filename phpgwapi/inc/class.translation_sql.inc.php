@@ -60,7 +60,7 @@
 			$this->db->set_app('phpgwapi');
 			$this->lang_table = 'phpgw_lang';
 			$this->languages_table = 'phpgw_languages';
-			$this->config_table = 'phpgw_config';
+			$this->config_table = 'egw_config';
 
 			if (!isset($GLOBALS['egw_setup']))
 			{

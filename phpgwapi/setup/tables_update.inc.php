@@ -43,12 +43,12 @@
 	$test[] = '1.0.0.004';
 	function phpgwapi_upgrade1_0_0_004()
 	{
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','id','async_id');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','next','async_next');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','times','async_times');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','method','async_method');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','data','async_data');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_async','account_id','async_account_id');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_async','id','async_id');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_async','next','async_next');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_async','times','async_times');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_async','method','async_method');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_async','data','async_data');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_async','account_id','async_account_id');
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.001';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -93,12 +93,12 @@
 	function phpgwapi_upgrade1_0_1_001()
 	{
 		// removing the ACL entries of deleted accounts
-		$GLOBALS['phpgw_setup']->setup_account_object();
+		$GLOBALS['egw_setup']->setup_account_object();
 		if (($all_accounts = $GLOBALS['phpgw']->accounts->search(array('type'=>'both'))))
 		{
 			$all_accounts = array_keys($all_accounts);
-			$GLOBALS['phpgw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_account NOT IN (".implode(',',$all_accounts).")",__LINE__,__FILE__);
-			$GLOBALS['phpgw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$all_accounts)."')",__LINE__,__FILE__);
+			$GLOBALS['egw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_account NOT IN (".implode(',',$all_accounts).")",__LINE__,__FILE__);
+			$GLOBALS['egw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$all_accounts)."')",__LINE__,__FILE__);
 		}
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.002';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -108,26 +108,26 @@
 	$test[] = '1.0.1.002';
 	function phpgwapi_upgrade1_0_1_002()
 	{
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','file_id','vfs_file_id');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','owner_id','vfs_owner_id');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','createdby_id','vfs_createdby_id');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','modifiedby_id','vfs_modifiedby_id');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','created','vfs_created');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','modified','vfs_modified');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','size','vfs_size');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','mime_type','vfs_mime_type');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','deleteable','vfs_deleteable');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','comment','vfs_comment');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','app','vfs_app');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','directory','vfs_directory');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','name','vfs_name');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','link_directory','vfs_link_directory');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','link_name','vfs_link_name');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','version','vfs_version');
-		$GLOBALS['phpgw_setup']->oProc->RenameColumn('phpgw_vfs','content','vfs_content');
-		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_vfs','egw_vfs');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','file_id','vfs_file_id');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','owner_id','vfs_owner_id');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','createdby_id','vfs_createdby_id');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','modifiedby_id','vfs_modifiedby_id');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','created','vfs_created');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','modified','vfs_modified');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','size','vfs_size');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','mime_type','vfs_mime_type');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','deleteable','vfs_deleteable');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','comment','vfs_comment');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','app','vfs_app');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','directory','vfs_directory');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','name','vfs_name');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','link_directory','vfs_link_directory');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','link_name','vfs_link_name');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','version','vfs_version');
+		$GLOBALS['egw_setup']->oProc->RenameColumn('phpgw_vfs','content','vfs_content');
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_vfs','egw_vfs');
 
-		$GLOBALS['phpgw_setup']->oProc->RefreshTable('egw_vfs',array(
+		$GLOBALS['egw_setup']->oProc->RefreshTable('egw_vfs',array(
 			'fd' => array(
 				'vfs_file_id' => array('type' => 'auto','nullable' => False),
 				'vfs_owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
@@ -160,7 +160,7 @@
 	$test[] = '1.0.1.003';
 	function phpgwapi_upgrade1_0_1_003()
 	{
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'egw_api_content_history', array(
 				'fd' => array(
 					'sync_appname'	=>  array('type' => 'varchar','precision' => '60','nullable' => False),
@@ -186,13 +186,13 @@
 	$test[] = '1.0.1.004';
 	function phpgwapi_upgrade1_0_1_004()
 	{
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_api_content_history','sync_added',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_api_content_history','sync_added',array(
 			'type' => 'timestamp'
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_api_content_history','sync_modified',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_api_content_history','sync_modified',array(
 			'type' => 'timestamp'
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('egw_api_content_history','sync_deleted',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_api_content_history','sync_deleted',array(
 			'type' => 'timestamp'
 		));
 
@@ -207,7 +207,7 @@
 		 *	                       VFS version 2                             *
 		\*********************************************************************/
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_mimetypes', array(
 				'fd' => array(
 					'mime_id' => array('type' => 'auto','nullable' => False),
@@ -225,7 +225,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_files' , array(
 				'fd' => array(
 					'file_id' => array('type' => 'auto','nullable' => False),
@@ -254,7 +254,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_customfields' , array(
 				'fd' => array(
 					'customfield_id' => array('type' => 'auto','nullable' => False),
@@ -271,7 +271,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_quota' , array(
 				'fd' => array(
 					'account_id' => array('type' => 'int','precision' => 4,'nullable' => false),
@@ -284,7 +284,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_shares' , array(
 				'fd' => array(
 					'account_id' => array('type' => 'int','precision' => 4,'nullable' => false),
@@ -298,7 +298,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_versioning' , array(
 				'fd' => array(
 					'version_id' => array('type' => 'auto', 'nullable' => false),
@@ -320,7 +320,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_customfields_data' , array(
 				'fd' => array(
 					'file_id' => array('type' => 'int','precision' => 4,'nullable' => false),
@@ -334,7 +334,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'phpgw_vfs2_prefixes' , array(
 				'fd' => array(
 					'prefix_id' => array('type' => 'auto','nullable' => false),
@@ -360,7 +360,7 @@
 		
 		include PHPGW_INCLUDE_ROOT.'/phpgwapi/setup/default_records_mime.inc.php';
 
-		$GLOBALS['phpgw_setup']->oProc->query("INSERT INTO phpgw_vfs2_files (mime_id,owner_id,createdby_id,size,directory,name)
+		$GLOBALS['egw_setup']->oProc->query("INSERT INTO phpgw_vfs2_files (mime_id,owner_id,createdby_id,size,directory,name)
 					   SELECT mime_id,0,0,4096,'/','' FROM phpgw_vfs2_mimetypes WHERE mime='Directory'");
 
 		if ($GLOBALS['DEBUG'])
@@ -377,7 +377,7 @@
 	$test[] = '1.0.1.006';
 	function phpgwapi_upgrade1_0_1_006()
 	{
-		$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_async','egw_async');
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_async','egw_async');
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.007';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -387,23 +387,23 @@
 	function phpgwapi_upgrade1_0_1_007()
 	{
 		//Creating cached values for modified and modifiedby_id
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs2_files', 'modifiedby_id', array('type' => 'int','precision' => 4));
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_vfs2_files', 'modified', array('type' => 'timestamp', 'nullable' => true));
+		$GLOBALS['egw_setup']->oProc->AddColumn('phpgw_vfs2_files', 'modifiedby_id', array('type' => 'int','precision' => 4));
+		$GLOBALS['egw_setup']->oProc->AddColumn('phpgw_vfs2_files', 'modified', array('type' => 'timestamp', 'nullable' => true));
 
 		//Updating existing values
 		$sql = "SELECT max(modified) as mod, file_id, modifiedby_id from phpgw_vfs2_versioning group by file_id";
 
-		$GLOBALS['phpgw_setup']->oProc->m_odb->query($sql,__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->oProc->m_odb->query($sql,__LINE__,__FILE__);
 
 		$files_to_change = array();
-		while ($GLOBALS['phpgw_setup']->oProc->m_odb->next_record())
+		while ($GLOBALS['egw_setup']->oProc->m_odb->next_record())
 		{
-			$files_to_change[] = $GLOBALS['phpgw_setup']->oProc->m_odb->Record;
+			$files_to_change[] = $GLOBALS['egw_setup']->oProc->m_odb->Record;
 		}
 
 		foreach ($files_to_change as $key => $val)
 		{
-			$GLOBALS['phpgw_setup']->oProc->m_odb->update('phpgw_vfs2_files',
+			$GLOBALS['egw_setup']->oProc->m_odb->update('phpgw_vfs2_files',
 				array(
 					'modified' => $val['mod'],
 					'modifiedby_id' => $val['modifiedby_id']
@@ -419,7 +419,7 @@
 	$test[] = '1.0.1.008';
 	function phpgwapi_upgrade1_0_1_008()
 	{
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'egw_contentmap', array(
 				'fd' => array(
 					'map_id'	=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
@@ -435,7 +435,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'egw_syncmldevinfo', array(
 				'fd' => array(
 					'dev_id'		=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
@@ -457,7 +457,7 @@
 			)
 		);
 
-		$GLOBALS['phpgw_setup']->oProc->CreateTable(
+		$GLOBALS['egw_setup']->oProc->CreateTable(
 			'egw_syncmlsummary', array(
 				'fd' => array(
 					'dev_id'		=> array('type' => 'varchar', 'precision' => '255', 'nullable' => False),
@@ -485,7 +485,7 @@
 			include(EGW_SERVER_ROOT . '/home/setup/setup.inc.php');
 			$home_version = $setup_info['home']['version'];
 			
-			$GLOBALS['phpgw_setup']->db->insert('phpgw_applications',array(
+			$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->applications_table,array(
 				'app_enabled' => $setup_info['home']['enable'],
 				'app_order'   => $setup_info['home']['app_order'],
 				'app_version' => $setup_info['home']['version'],
@@ -495,19 +495,19 @@
 			),__LINE__,__FILE__);
 			
 			// give all users and groups with preferences rights, rights for the home app.
-			$GLOBALS['phpgw_setup']->db->select('phpgw_acl','acl_account',array(
+			$GLOBALS['egw_setup']->db->select('phpgw_acl','acl_account',array(
 				'acl_appname'  => 'preferences',
 				'acl_location' => 'run',
 				'acl_rights'   => 1,
 			),__LINE__,__FILE__);
 			$accounts_with_preference_rights = array();
-			while (($row = $GLOBALS['phpgw_setup']->db->row(true)))
+			while (($row = $GLOBALS['egw_setup']->db->row(true)))
 			{
 				$accounts_with_preference_rights[] = $row['acl_account'];
 			}
 			foreach($accounts_with_preference_rights as $account)
 			{
-				$GLOBALS['phpgw_setup']->db->insert('phpgw_acl',array(
+				$GLOBALS['egw_setup']->db->insert('phpgw_acl',array(
 					'acl_rights'   => 1,
 				),array(
 					'acl_appname'  => 'home',
@@ -524,18 +524,18 @@
 	$test[] = '1.0.1.010';
 	function phpgwapi_upgrade1_0_1_010()
 	{
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_sessions','session_ip',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_sessions','session_ip',array(
 			'type' => 'varchar',
 			'precision' => '40'
 		));
 
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_access_log','ip',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_access_log','ip',array(
 			'type' => 'varchar',
 			'precision' => '40',
 			'nullable' => False
 		));
 
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_access_log','loginid',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_access_log','loginid',array(
 			'type' => 'varchar',
 			'precision' => '128'
 		));
@@ -548,15 +548,15 @@
 	function phpgwapi_upgrade1_0_1_011()
 	{
 		// moving the egw_links table into the API
-		if ($GLOBALS['phpgw_setup']->oProc->GetTableDefinition('phpgw_links'))
+		if ($GLOBALS['egw_setup']->oProc->GetTableDefinition('phpgw_links'))
 		{
 			// table exists with old name ==> rename it to new one
-			$GLOBALS['phpgw_setup']->oProc->RenameTable('phpgw_links','egw_links');
+			$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_links','egw_links');
 		}
-		elseif (!$GLOBALS['phpgw_setup']->oProc->GetTableDefinition('egw_links'))
+		elseif (!$GLOBALS['egw_setup']->oProc->GetTableDefinition('egw_links'))
 		{
 			// table does not exist at all (infolog not installed) ==> create it
-			$GLOBALS['phpgw_setup']->oProc->CreateTable('egw_links',array(
+			$GLOBALS['egw_setup']->oProc->CreateTable('egw_links',array(
 				'fd' => array(
 					'link_id' => array('type' => 'auto','nullable' => False),
 					'link_app1' => array('type' => 'varchar','precision' => '25','nullable' => False),
@@ -574,9 +574,34 @@
 			));
 		}
 		// move the link-configuration to the api
-		$GLOBALS['phpgw_setup']->oProc->query('UPDATE '.$GLOBALS['phpgw_setup']->config_table." SET config_app='phpgwapi' WHERE config_app='infolog' AND config_name IN ('link_pathes','send_file_ips')",__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->oProc->query('UPDATE '.$GLOBALS['egw_setup']->config_table." SET config_app='phpgwapi' WHERE config_app='infolog' AND config_name IN ('link_pathes','send_file_ips')",__LINE__,__FILE__);
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.012';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
-?>
+
+	$test[] = '1.0.1.012';
+	function phpgwapi_upgrade1_0_1_012()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_accounts','egw_accounts');
+		$GLOBALS['egw_setup']->accounts_table = 'egw_accounts';
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_acl','egw_acl');
+		$GLOBALS['egw_setup']->acl_table = 'egw_acl';
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_log','egw_log');
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_log_msg','egw_log_msg');
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.013';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+	$test[] = '1.0.1.013';
+	function phpgwapi_upgrade1_0_1_013()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_config','egw_config');
+		$GLOBALS['egw_setup']->config_table = 'egw_config';
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_applications','egw_applications');
+		$GLOBALS['egw_setup']->applications_table = 'egw_applications';
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.014';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}

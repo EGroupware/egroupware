@@ -57,14 +57,4 @@
 			// can't change passwords unless server runs as root (bad idea)
 			return( False );
 		}
-
-		function update_lastlogin($account_id, $ip)
-		{
-			$account_id = get_account_id($account_id);
-
-			$GLOBALS['egw']->db->query("update phpgw_accounts set account_lastloginfrom='"
-				. "$ip', account_lastlogin='" . time()
-				. "' where account_id='$account_id'",__LINE__,__FILE__);
-		}
 	}
-?>

@@ -13,7 +13,7 @@
 	// $Source$
 
 	$phpgw_baseline = array(
-		'phpgw_config' => array(
+		'egw_config' => array(
 			'fd' => array(
 				'config_app' => array('type' => 'varchar','precision' => '50','nullable' => False),
 				'config_name' => array('type' => 'varchar','precision' => '255','nullable' => False),
@@ -24,7 +24,7 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_applications' => array(
+		'egw_applications' => array(
 			'fd' => array(
 				'app_id' => array('type' => 'auto','precision' => '4','nullable' => False),
 				'app_name' => array('type' => 'varchar','precision' => '25','nullable' => False),
@@ -38,7 +38,7 @@
 			'ix' => array(array('app_enabled','app_order')),
 			'uc' => array('app_name')
 		),
-		'phpgw_acl' => array(
+		'egw_acl' => array(
 			'fd' => array(
 				'acl_appname' => array('type' => 'varchar','precision' => '50','nullable' => False),
 				'acl_location' => array('type' => 'varchar','precision' => '255','nullable' => False),
@@ -50,7 +50,7 @@
 			'ix' => array('acl_account',array('acl_location','acl_account'),array('acl_appname','acl_account')),
 			'uc' => array()
 		),
-		'phpgw_accounts' => array(
+		'egw_accounts' => array(
 			'fd' => array(
 				'account_id' => array('type' => 'auto','nullable' => False),
 				'account_lid' => array('type' => 'varchar','precision' => '25','nullable' => False),
@@ -262,7 +262,7 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_log' => array(
+		'egw_log' => array(
 			'fd' => array(
 				'log_id' => array('type' => 'auto','precision' => '4','nullable' => False),
 				'log_date' => array('type' => 'timestamp','nullable' => False),
@@ -275,7 +275,7 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_log_msg' => array(
+		'egw_log_msg' => array(
 			'fd' => array(
 				'log_msg_log_id' => array('type' => 'int','precision' => '4','nullable' => False),
 				'log_msg_seq_no' => array('type' => 'int','precision' => '4','nullable' => False),
@@ -448,7 +448,7 @@
 				'quota' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('account_id'),
-			'fk' => array('account_id' => array('phpgw_accounts' => 'account_id')),
+			'fk' => array('account_id' => array('egw_accounts' => 'account_id')),
 			'ix' => array(),
 			'uc' => array()
 		),
@@ -459,7 +459,7 @@
 				'acl_rights' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('account_id','file_id'),
-			'fk' => array('account_id' => array('phpgw_accounts' => 'account_id'),'file_id' => array('phpgw_vfs2_files' => 'file_id')),
+			'fk' => array('account_id' => array('egw_accounts' => 'account_id'),'file_id' => array('phpgw_vfs2_files' => 'file_id')),
 			'ix' => array(),
 			'uc' => array()
 		),

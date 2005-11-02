@@ -1,27 +1,27 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - Accounts manager for the contacts class                 *
-  * This file written by Miles Lott <milosch@groupwhere.org>                 *
-  * View and manipulate account records using the contacts class             *
-  * Copyright (C) 2000, 2001 Miles Lott                                      *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - Accounts manager for the contacts class                 *
+	* This file written by Miles Lott <milosch@groupwhere.org>                 *
+	* View and manipulate account records using the contacts class             *
+	* Copyright (C) 2000, 2001 Miles Lott                                      *
+	* -------------------------------------------------------------------------*
+	* This library is part of the eGroupWare API                               *
+	* http://www.egroupware.org/api                                            * 
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 
 	/*
@@ -291,47 +291,55 @@
 				$expiredate = time() + ( ( 60 * 60 ) * (30 * 24) );
 			}
 
+			$default_group_id  = $this->name2id($GLOBALS['egw_info']['server']['default_group_lid']);
+			if (!$default_group_id)
+			{
+				$default_group_id = (int) $this->name2id('Default');
+			}
+			$primary_group = $GLOBALS['auto_create_acct']['primary_group'] &&
+				$this->get_type((int)$GLOBALS['auto_create_acct']['primary_group']) == 'g' ?
+				(int) $GLOBALS['auto_create_acct']['primary_group'] : $default_group_id;
+
 			$acct_info = array(
 				'account_lid'       => $accountname,
 				'account_type'      => 'u',
 				'account_passwd'    => $passwd,
-				'account_firstname' => '',
-				'account_lastname'  => '',
+				'account_firstname' => $GLOBALS['auto_create_acct']['firstname'] ? $GLOBALS['auto_create_acct']['firstname'] : 'New',
+				'account_lastname'  => $GLOBALS['auto_create_acct']['lastname'] ? $GLOBALS['auto_create_acct']['lastname'] : 'User',
 				'account_status'    => $account_status,
-				'account_expires'   => mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate))
+				'account_expires'   => mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate)),
+				'account_primary_group' => $primary_group,
 			);
+			if (isset($GLOBALS['auto_create_acct']['email']) == True && $GLOBALS['auto_create_acct']['email'] != '')
+			{
+				$acct_info['account_email'] = $GLOBALS['auto_create_acct']['email'];
+			}
+			elseif(isset($GLOBALS['egw_info']['server']['mail_suffix']) == True && $GLOBALS['egw_info']['server']['mail_suffix'] != '')
+			{
+				$acct_info['account_email'] = $accountname . '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
+			}
+
 			$this->create($acct_info);
 			$accountid = $this->name2id($accountname);
 
-			$this->db->transaction_begin();
-			if (!$default_prefs)
+			if ($accountid)
 			{
-				$default_prefs = 'a:5:{s:6:"common";a:10:{s:9:"maxmatchs";s:2:"15";s:12:"template_set";s:8:"verdilak";s:5:"theme";s:6:"purple";s:13:"navbar_format";s:5:"icons";s:9:"tz_offset";N;s:10:"dateformat";s:5:"m/d/Y";s:10:"timeformat";s:2:"12";s:4:"lang";s:2:"en";s:11:"default_app";N;s:8:"currency";s:1:"$";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}:s:8:"calendar";a:4:{s:13:"workdaystarts";s:1:"7";s:11:"workdayends";s:2:"15";s:13:"weekdaystarts";s:6:"Monday";s:15:"defaultcalendar";s:9:"month.php";}}';
-//				$defaultprefs = 'a:5:{s:6:"common";a:1:{s:0:"";s:2:"en";}s:11:"addressbook";a:1:{s:0:"";s:4:"True";}s:8:"calendar";a:1:{s:0:"";s:13:"workdaystarts";}i:15;a:1:{s:0:"";s:11:"workdayends";}s:6:"Monday";a:1:{s:0:"";s:13:"weekdaystarts";}}';
-				$this->db->query("insert into phpgw_preferences (preference_owner, preference_value) values ('".$accountid."', '$default_prefs')",__LINE__,__FILE__);
-			}
-
-			if (!$default_acls)
-			{
-				$apps = Array(
-					'addressbook',
-					'calendar',
-					'email',
-					'notes',
-					'todo',
-					'phpwebhosting',
-					'manual'
-				);
-
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)values('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
-				$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', '1', ".$accountid.", 1)",__LINE__,__FILE__);
-				@reset($apps);
-				while(list($key,$app) = each($apps))
+				/* If we have a primary_group, add it as "regular" eGW group (via ACL) too. */
+				if ($primary_group)
 				{
-					$this->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES ('".$app."', 'run', ".$accountid.", 1)",__LINE__,__FILE__);
+					$GLOBALS['egw']->acl->add_repository('phpgw_group', $primary_group,$accountid,1);
 				}
+				// call hook to notify other apps about the new account
+				$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
+				$GLOBALS['hook_values']['account_id']	= $accountid;
+				$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
+				$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
+				$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_firstname'];
+				$GLOBALS['hook_values']['account_lastname'] =  $acct_info['account_lastname'];
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'addaccount'
+				),False,True);  /* called for every app now, not only enabled ones */
 			}
-			$this->db->transaction_commit();
 			return $accountid;
 		}
 	}

@@ -38,7 +38,7 @@ else
 	if (($all_accounts = $GLOBALS['egw']->accounts->search(array('type'=>'both'))))
 	{
 		$all_accounts = array_keys($all_accounts);
-		$GLOBALS['egw']->db->query("DELETE FROM phpgw_acl WHERE acl_account NOT IN (".implode(',',$all_accounts).") OR acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$all_accounts)."')",__LINE__,__FILE__);
+		$GLOBALS['egw']->db->query("DELETE FROM egw_acl WHERE acl_account NOT IN (".implode(',',$all_accounts).") OR acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$all_accounts)."')",__LINE__,__FILE__);
 		$deleted = $GLOBALS['egw']->db->affected_rows();
 	}
 	echo '<p align="center">'.lang('%1 ACL records of not (longer) existing accounts deleted.',$deleted)."</p>\n";

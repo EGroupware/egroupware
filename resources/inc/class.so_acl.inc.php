@@ -14,64 +14,18 @@
 
 	class so_acl
 	{
-		var $db;
-
-		function so_acl()
-		{
-			$this->db = clone($GLOBALS['egw']->db);
-			$this->db->set_app('resources');
-		}
-
 		function get_rights($location)
 		{
-			$result = array();
-			$sql = "SELECT acl_account, acl_rights from phpgw_acl WHERE acl_appname = 'resources' AND acl_location = '$location'";
-			$this->db->query($sql,__LINE__,__FILE__);
-			while($this->db->next_record())
-			{
-				$result[$this->db->f('acl_account')] = $this->db->f('acl_rights');
-			}
-			return $result;
+			return $GLOBALS['egw']->acl->get_all_rights($location,'news_admin');
 		}
 
 		function remove_location($location)
 		{
-			$sql = "delete from phpgw_acl where acl_appname='resources' and acl_location='$location'";
-			$this->db->query($sql,__LINE__,__FILE__);
+			$GLOBALS['egw']->acl->delete_repository('news_admin',$location,false);
 		}
 
-		/**
-		 * gets permissions for resources of user 
-		 *
-		 * This function is needed, cause eGW api dosn't provide a usefull function for that topic!
-		 * Using api-functions for that, would resault bad performace :-(
-		 * autor of news_admin ?
-		 * 
-		 * @param int $user user_id we want to get perms for
-		 * @param bool $inc_groups get rights due to groupmembership of user
-		 * 
-		 */
 		function get_permissions($user, $inc_groups)
 		{
-			$groups = $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $user);
-			$result = array();
-			$sql  = 'SELECT acl_location, acl_rights FROM phpgw_acl ';
-			$sql .= "WHERE acl_appname = 'resources' ";
-			if($inc_groups)
-			{
-				$sql .= 'AND acl_account IN('. (int)$user;
-				$sql .= ($groups ? ',' . implode(',', $groups) : '');
-				$sql .= ')';
-			}
-			else
-			{
-				$sql .= 'AND acl_account ='. (int)$user;
-			}
-			$this->db->query($sql,__LINE__,__FILE__);
-			while ($this->db->next_record())
-			{
-				$result[$this->db->f('acl_location')] |= $this->db->f('acl_rights');
-			}
-			return $result;
+			return $GLOBALS['egw']->acl->get_all_location_rights($user,'sitemgr',$inc_groups);
 		}
 	}

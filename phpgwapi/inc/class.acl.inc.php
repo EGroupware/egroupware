@@ -59,7 +59,7 @@
 		/**
 		 * @var string $table_name name of the acl_table
 		 */
-		var $table_name = 'phpgw_acl';
+		var $table_name = 'egw_acl';
 
 		/**
 		 * ACL constructor for setting account id
@@ -317,7 +317,8 @@
 		 * get specific rights for this->account_id for an app location
 		 *
 		 * @param string $location app location
-		 * @param string $appname optional defaults to currentapp
+		 * @param string $appname='' optional defaults to currentapp
+		 * @param int $account_id=0 optional defaults to $this->account_id
 		 * @return int $rights
 		 */
 		function get_specific_rights($location, $appname = '')
@@ -426,6 +427,84 @@
 			$this->db->delete($this->table_name,$where,__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
+		}
+		
+		/**
+		 * Get rights for a given account, location and application
+		 *
+		 * @param int $account_id
+		 * @param string $location
+		 * @param string $appname='' defaults to current app
+		 * @return int/boolean rights or false if none exist
+		 */
+		function get_specific_rights_for_account($account_id,$location,$appname='')
+		{
+			if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
+
+			$this->db->select($this->table_name,'acl_rights',array(
+				'acl_location' => $location,
+				'acl_account'  => $account_id,
+				'acl_appname'  => $appname,
+			),__LINE__,__FILE__);
+	
+			return $this->db->next_record() ? $this->db->f('acl_rights') : false;
+		}
+		
+		/**
+		 * Get all rights for a given location and application
+		 *
+		 * @param string $location
+		 * @param string $appname='' defaults to current app
+		 * @return array with account => rights pairs
+		 */
+		function get_all_rights($location,$appname='')
+		{
+			if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
+
+			$this->db->select($this->table_name,'acl_account,acl_rights',array(
+				'acl_location' => $location,
+				'acl_appname'  => $appname,
+			),__LINE__,__FILE__);
+	
+			$rights = array();
+			while($this->db->next_record())
+			{
+				$rights[$this->db->f('acl_account')] = $this->db->f('acl_rights');
+			}
+			return $rights;
+		}
+
+		/**
+		 * Get the rights for all locations
+		 *
+		 * @param int $account_id
+		 * @param string $appname='' defaults to current app
+		 * @param boolean $use_memberships=true
+		 * @return array with location => rights pairs
+		 */
+		function get_all_location_rights($account_id,$appname='',$use_memberships=true)
+		{
+			if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
+
+			$acounts = array($account_id);
+			if ($use_memberships)
+			{
+				foreach((array)$GLOBALS['egw']->accounts->membership($account_id) as $group)
+				{
+					$accounts[] = $group['account_id'];
+				}
+			}
+			$this->db->select($this->table_name,'acl_location,acl_rights',array(
+				'acl_account' => $accounts,
+				'acl_appname' => $appname,
+			),__LINE__,__FILE__);
+	
+			$rights = array();
+			while($this->db->next_record())
+			{
+				$rights[$this->db->f('acl_location')] |= $this->db->f('acl_rights');
+			}
+			return $rights;
 		}
 
 		/**

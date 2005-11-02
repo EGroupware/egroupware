@@ -29,6 +29,13 @@
 	{
 		var $previous_login = -1;
 
+		/**
+		 * authentication against LDAP
+		 *
+		 * @param string $username username of account to authenticate
+		 * @param string $passwd corresponding password
+		 * @return boolean true if successful authenticated, false otherwise
+		 */
 		function authenticate($username, $passwd)
 		{
 			if (ereg('[()|&=*,<>!~]',$username))
@@ -91,7 +98,7 @@
 				{
 					if ($GLOBALS['egw_info']['server']['account_repository'] != 'ldap')
 					{
-						$account = CreateObject('phpgwapi.accounts',$username,'u');
+						$account =& CreateObject('phpgwapi.accounts',$username,'u');
 						if (!$account->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
 						{
 							// create a global array with all availible info about that account
@@ -119,15 +126,23 @@
 			return False;
 		}
 
-		function change_password($old_passwd, $new_passwd, $_account_id='')
+		/**
+		 * changes password in LDAP
+		 *
+		 * @param string $old_passwd must be cleartext or empty to not to be checked
+		 * @param string $new_passwd must be cleartext
+		 * @param int $account_id account id of user whose passwd should be changed
+		 * @return boolean true if password successful changed, false otherwise
+		 */
+		function change_password($old_passwd, $new_passwd, $account_id=0)
 		{
-			if ('' == $_account_id)
+			if (!$_account_id)
 			{
 				$username = $GLOBALS['egw_info']['user']['account_lid'];
 			}
 			else
 			{
-				$username = $GLOBALS['egw']->accounts->id2name($_account_id);
+				$username = $GLOBALS['egw']->accounts->id2name($account_id);
 			}
 			$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 			$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
@@ -139,41 +154,14 @@
 			$entry['userpassword'] = $this->encrypt_password($new_passwd);
 			$dn = $allValues[0]['dn'];
 
-			if (!@ldap_modify($ds, $dn, $entry))
+			if ($old_passwd && $GLOBALS['egw']->auth->encrypt_password($old_passwd) != $allValues[0]['userpassword'] || !@ldap_modify($ds, $dn, $entry))
 			{
 				return false;
 			}
-			$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
-
+			if($old_passwd)	// if old password given (not called by admin) update the password in the session
+			{
+				$GLOBALS['egw']->session->appsession('password','phpgwapi',$new_passwd);
+			}
 			return $entry['userpassword'];
 		}
-
-		function update_lastlogin($_account_id, $ip)
-		{
-			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
-			{
-				$entry['phpgwaccountlastlogin']     = time();
-				$entry['phpgwaccountlastloginfrom'] = $ip;
-
-				$ds = $GLOBALS['egw']->common->ldapConnect();
-				$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
-				$allValues = ldap_get_entries($ds, $sri);
-
-				$dn = $allValues[0]['dn'];
-				$this->previous_login = $allValues[0]['phpgwaccountlastlogin'][0];
-
-				@ldap_modify($ds, $dn, $entry);
-			}
-			else
-			{
-				$GLOBALS['egw']->db->query("SELECT account_lastlogin FROM phpgw_accounts WHERE account_id=" . (int)$_account_id,__LINE__,__FILE__);
-				$GLOBALS['egw']->db->next_record();
-				$this->previous_login = $GLOBALS['egw']->db->f('account_lastlogin');
-
-				$GLOBALS['egw']->db->query("UPDATE phpgw_accounts SET account_lastloginfrom='"
-					. "$ip', account_lastlogin='" . time()
-					. "' WHERE account_id=" . (int)$_account_id,__LINE__,__FILE__);
-			}
-		}
 	}
-?>

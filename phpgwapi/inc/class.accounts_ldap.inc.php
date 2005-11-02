@@ -282,7 +282,7 @@
 				ldap_add($this->ds, $newDN, $newData);
 			}
 			/* Normal behavior for save_repository
-			   update Account */
+				 update Account */
 			else
 			{
 				// add the list group members
@@ -1007,15 +1007,10 @@
 			{
 				if($primary_group)
 				{
-					$this->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) VALUES('phpgw_group', "
-						. $primary_group . ", " . $accountid . ", 1)",__LINE__,__FILE__);
+					$GLOBALS['egw']->acl->add_repository('phpgw_group', $primary_group,$accountid,1);
 				}
 
-				/* FIXME - we are assuming the auth method is capable of password changing
-				 * $this->db->query("INSERT INTO phpgw_acl (acl_appname, acl_location, acl_account, acl_rights)VALUES('preferences', 'changepassword', ".$accountid.", 1)",__LINE__,__FILE__);
-				 */
-
-				/* if we have an mail address set it in the uesrs' email preference */
+				/* if we have an mail address set it in the users' email preference */
 				if (isset($GLOBALS['auto_create_acct']['email']) && $GLOBALS['auto_create_acct']['email'] != '')
 				{
 					$GLOBALS['egw']->acl->acl($accountid);        /* needed als preferences::save_repository calls acl */
@@ -1037,7 +1032,7 @@
 				/* commit the new account transaction */
 				$this->db->transaction_commit();
 
-				/* does anyone know what the heck this is required for? */
+				// call hook to notify interested apps about the new account
 				$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
 				$GLOBALS['hook_values']['account_id']	= $accountid;
 				$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
@@ -1100,5 +1095,26 @@
 			$allValues = ldap_get_entries($this->ds, $sri);
 
 			return $allValues[0]['dn'];
+		}
+
+		/**
+		 * Update the last login timestamps and the IP
+		 *
+		 * @param int $account_id
+		 * @param string $ip
+		 * @return int lastlogin time
+		 */
+		function update_lastlogin($_account_id, $ip)
+		{
+			$entry['phpgwaccountlastlogin']     = time();
+			$entry['phpgwaccountlastloginfrom'] = $ip;
+
+			$sri = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_context'], 'uidnumber=' . (int)$_account_id);
+			$allValues = ldap_get_entries($ds, $sri);
+
+			$dn = $allValues[0]['dn'];
+			@ldap_modify($ds, $dn, $entry);
+				
+			return $allValues[0]['phpgwaccountlastlogin'][0];
 		}
 	}

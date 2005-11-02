@@ -904,7 +904,7 @@
 	function _xmlrpcs_listApps($server,$m)
 	{
 		$m->getParam(0);
-		$GLOBALS['egw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+		$GLOBALS['egw']->db->query("SELECT * FROM egw_applications WHERE app_enabled<3",__LINE__,__FILE__);
 		if($GLOBALS['egw']->db->num_rows())
 		{
 			while($GLOBALS['egw']->db->next_record())

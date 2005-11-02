@@ -580,7 +580,7 @@
 				$this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
 			}
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['egw']->auth->previous_login);
-			$GLOBALS['egw']->auth->update_lastlogin($this->account_id,$user_ip);
+			$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
 			$GLOBALS['egw']->db->transaction_commit();
 
 			//if (!$this->sessionid) echo "<p>session::create(login='$login') = '$this->sessionid': lid='$this->account_lid', domain='$this->account_domain'</p>\n";
@@ -873,7 +873,7 @@
 			$this->log_access($this->sessionid,$login,$user_ip,$this->account_id);
 
 			$this->appsession('account_previous_login','phpgwapi',$GLOBALS['egw']->auth->previous_login);
-			$GLOBALS['egw']->auth->update_lastlogin($this->account_id,$user_ip);
+			$GLOBALS['egw']->accounts->update_lastlogin($this->account_id,$user_ip);
 			$GLOBALS['egw']->db->transaction_commit();
 
 			return array($this->sessionid,$this->kp3);

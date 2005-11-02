@@ -131,7 +131,7 @@
 	/*
 	function system_listApps()
 	{
-		$GLOBALS['phpgw']->db->query("SELECT * FROM phpgw_applications WHERE app_enabled<3",__LINE__,__FILE__);
+		$GLOBALS['phpgw']->db->query("SELECT * FROM egw_applications WHERE app_enabled<3",__LINE__,__FILE__);
 		$apps = array();
 		if($GLOBALS['phpgw']->db->num_rows())
 		{

@@ -231,12 +231,14 @@
 				}
 			}
 
-			foreach($GLOBALS['current_config'] as $setting => $value)
+			foreach($GLOBALS['current_config'] as $name => $value)
 			{
-				$setting = $GLOBALS['egw_setup']->db->db_addslashes($setting);
-				$value   = $GLOBALS['egw_setup']->db->db_addslashes($value);
-				@$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='$setting'",__LINE__,__FILE__);
-				$GLOBALS['egw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name, config_value) VALUES ('phpgwapi','$setting','$value')");
+				$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+					'config_value' => $value,
+				),array(
+					'config_app' => 'phpgwapi',
+					'config_name' => $name,
+				),__FILE__,__LINE__);
 			}
 		}
 

@@ -26,9 +26,7 @@
 	/* $Id$ */
 
 	/**
-	 *  @class_start accounts
-	  * Class for handling user and group accounts
-	  *
+	 * Class for handling user and group accounts
 	 */
 	class accounts_
 	{
@@ -40,7 +38,7 @@
 		function accounts_()
 		{
 			$this->db = clone($GLOBALS['egw']->db);
-			$this->table = 'phpgw_accounts';
+			$this->table = 'egw_accounts';
 			$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
 		}
 
@@ -224,8 +222,7 @@
 				);
 			}
 			$this->db->query("SELECT count(*) FROM $this->table $whereclause");
-			$this->db->next_record();
-			$this->total = $this->db->f(0);
+			$this->total = $this->db->next_record() ? $this->db->f(0) : 0;
 
 			return $accounts;
 		}
@@ -392,11 +389,10 @@
 				/* If we have a primary_group, add it as "regular" eGW group (via ACL) too. */
 				if ($primary_group)
 				{
-					$this->db->query("insert into phpgw_acl (acl_appname, acl_location, acl_account, acl_rights) values('phpgw_group', "
-						. $primary_group . ', ' . $accountid . ', 1)',__LINE__,__FILE__);
+					$GLOBALS['egw']->acl->add_repository('phpgw_group', $primary_group,$accountid,1);
 				}
 
-				/* if we have an mail address set it in the uesrs' email preference */
+				/* if we have an mail address set it in the users' email preference */
 				if (isset($GLOBALS['auto_create_acct']['email']) && $GLOBALS['auto_create_acct']['email'] != '')
 				{
 					$GLOBALS['egw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
@@ -418,7 +414,7 @@
 				/* commit the new account transaction */
 				$this->db->transaction_commit();
 
-				/* does anyone know what the heck this is required for? */
+				// call hook to notify interested apps about the new account
 				$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
 				$GLOBALS['hook_values']['account_id']	= $accountid;
 				$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
@@ -456,7 +452,26 @@
 
 			return True;
 		}
+		
+		/**
+		 * Update the last login timestamps and the IP
+		 *
+		 * @param int $account_id
+		 * @param string $ip
+		 * @return int lastlogin time
+		 */
+		function update_lastlogin($account_id, $ip)
+		{
+			$this->db->select($this->table,'account_lastlogin',array('account_id'=>$account_id),__LINE__,__FILE__);
+			$previous_login = $this->db->next_record() ? $this->db->f('account_lastlogin') : false;
+
+			$this->db->update($this->table,array(
+				'account_lastloginfrom' => $ip,
+				'account_lastlogin'     => time(),
+			),array(
+				'account_id' => $account_id,
+			),__LINE__,__FILE__);
+			
+			return $previous_login;
+		}
 	}
-	/**
-	 *  @class_end accounts
-	 */

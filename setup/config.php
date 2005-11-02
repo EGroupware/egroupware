@@ -49,15 +49,6 @@
 	/* Check api version, use correct table */
 	$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions();
 
-	if($GLOBALS['egw_setup']->alessthanb($setup_info['phpgwapi']['currentver'], '0.9.10pre7'))
-	{
-		$configtbl = 'config';
-	}
-	else
-	{
-		$configtbl = 'phpgw_config';
-	}
-
 	$newsettings = $_POST['newsettings'];
 
 	if(@get_var('submit',Array('POST')) && @$newsettings)
@@ -83,11 +74,7 @@
 		print_debug('TZ_OFFSET',$newsettings['tz_offset']);
 
 		$GLOBALS['egw_setup']->db->transaction_begin();
-		/* This is only temp: */
-		$GLOBALS['egw_setup']->db->query("DELETE FROM $configtbl WHERE config_name='useframes'");
-		$GLOBALS['egw_setup']->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) values ('phpgwapi','useframes','never')");
-
-		while(list($setting,$value) = @each($newsettings))
+		foreach($newsettings as $setting => $value)
 		{
 			if($GLOBALS['egw_info']['server']['found_validation_hook'] && @function_exists($setting))
 			{
@@ -99,55 +86,32 @@
 					/* Bail out, stop writing config data */
 					break;
 				}
-				else
-				{
-					/* echo '<br />Updating: ' . $setting . '=' . $value; */
-					/* Don't erase passwords, since we also do not print them below */
-					if($value || (!stristr($setting,'passwd') && !stristr($setting,'password') && !stristr($setting,'root_pw')))
-					{
-						@$GLOBALS['egw_setup']->db->query("DELETE FROM $configtbl WHERE config_name='" . $setting . "'");
-					}
-					if($value)
-					{
-						$GLOBALS['egw_setup']->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) VALUES ('phpgwapi','" . $GLOBALS['egw_setup']->db->db_addslashes($setting)
-						. "','" . $GLOBALS['egw_setup']->db->db_addslashes($value) . "')");
-					}
-				}
 			}
-			else
+			/* Don't erase passwords, since we also do not print them below */
+			if(empty($value) && !(stristr($setting,'passwd') || stristr($setting,'password') || stristr($setting,'root_pw')))
 			{
-				if($value || (!stristr($setting,'passwd') && !stristr($setting,'password') && !stristr($setting,'root_pw')))
-				{
-					@$GLOBALS['egw_setup']->db->query("DELETE FROM $configtbl WHERE config_name='" . $setting . "'");
-				}
-				if($value)
-				{
-					$GLOBALS['egw_setup']->db->query("INSERT INTO $configtbl (config_app,config_name, config_value) VALUES ('phpgwapi','" . $GLOBALS['egw_setup']->db->db_addslashes($setting)
-					. "','" . $GLOBALS['egw_setup']->db->db_addslashes($value) . "')");
-				}
+				$GLOBALS['egw_setup']->db->delete($GLOBALS['egw_setup']->config_table,array(
+					'config_name' => $setting,
+					'config_app'  => 'phpgwapi',
+				),__LINE__,__FILE__);
+			}
+			elseif($value)
+			{
+				$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+					'config_value' => $value,
+				),array(
+					'config_name' => $setting,
+					'config_app'  => 'phpgwapi',
+				),__LINE__,__FILE__);
 			}
 		}
 		if(!$GLOBALS['error'])
 		{
 			$GLOBALS['egw_setup']->db->transaction_commit();
 
-			/* Add cleaning of app_sessions per skeeter, but with a check for the table being there, just in case */
-			$tablenames = $GLOBALS['egw_setup']->db->table_names();
-			while(list($key,$val) = @each($tablenames))
-			{
-				$tables[] = $val['table_name'];
-			}
-			if(in_array('phpgw_app_sessions',$tables))
-			{
-				$GLOBALS['egw_setup']->db->lock(array('phpgw_app_sessions'));
-				@$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'",__LINE__,__FILE__);
-				@$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_app_sessions WHERE app = 'phpgwapi' and location = 'phpgw_info_cache'",__LINE__,__FILE__);
-				$GLOBALS['egw_setup']->db->unlock();
-			}
-
 			if($newsettings['auth_type'] == 'ldap')
 			{
-				Header('Location: '.$newsettings['webserver_url'].'/setup/ldap.php');
+				Header('Location: ldap.php');
 				exit;
 			}
 			else
@@ -160,8 +124,8 @@
 
 	$GLOBALS['egw_setup']->html->show_header(lang('Configuration'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 
-	@$GLOBALS['egw_setup']->db->query("SELECT * FROM $configtbl");
-	while(@$GLOBALS['egw_setup']->db->next_record())
+	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINES__,__FILES__);
+	while($GLOBALS['egw_setup']->db->next_record())
 	{
 		$GLOBALS['current_config'][$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
 	}
@@ -177,8 +141,8 @@
 		var $db;
 	}
 	$GLOBALS['egw'] = new phpgw;
-	$GLOBALS['egw']->common = CreateObject('phpgwapi.common');
-	$GLOBALS['egw']->db     = $GLOBALS['egw_setup']->db;
+	$GLOBALS['egw']->common =& CreateObject('phpgwapi.common');
+	$GLOBALS['egw']->db     =& $GLOBALS['egw_setup']->db;
 
 	$t = CreateObject('setup.Template',$GLOBALS['egw']->common->get_tpl_dir('setup'));
 

@@ -16,7 +16,7 @@
 	{
 		$file['Change your Password'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uipassword.change');
 	}
-	$file['change your settings'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=preferences');
+	$file['common preferences'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=preferences');
 
 	display_section('preferences',$file);
 ?>

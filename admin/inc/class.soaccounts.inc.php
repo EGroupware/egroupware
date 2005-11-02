@@ -27,19 +27,6 @@
 				$userData['account_email'] = $userData['email'];
 			}
 			
-			$GLOBALS['egw']->db->lock(
-				Array(
-					'phpgw_accounts',
-					'phpgw_nextid',
-					'phpgw_preferences',
-					'phpgw_sessions',
-					'phpgw_acl',
-					'phpgw_applications',
-					'phpgw_app_sessions',
-					'phpgw_hooks'
-				)
-			);
-
 			$GLOBALS['egw']->accounts->create($userData);
 
 			$userData['account_id'] = $GLOBALS['egw']->accounts->name2id($userData['account_lid']);
@@ -103,8 +90,6 @@
 
 			$apps->account_apps = array(array());
 			$apps_after = array(array());
-
-			$GLOBALS['egw']->db->unlock();
 
 			return $userData['account_id'];
 		}

@@ -27,8 +27,15 @@
 	class setup
 	{
 		var $db;
-		var $config_table = 'phpgw_config';
-		var $applications_table = 'phpgw_applications';
+		var $config_table       = 'egw_config';
+		var $applications_table = 'egw_applications';
+		var $acl_table          = 'egw_acl';
+		var $accounts_table     = 'egw_accounts';
+		var $prefs_table        = 'phpgw_preferences';
+		var $lang_table         = 'phpgw_lang';
+		var $languages_table    = 'phpgw_languages';
+		var $hooks_table        = 'phpgw_hooks';
+		var $cats_table         = 'phpgw_categories';
 		var $oProc;
 
 		var $detection = '';
@@ -49,10 +56,6 @@
 			/* The setup application needs these */
 			$this->html = $html ? CreateObject('setup.setup_html') : '';
 			$this->translation = $translation ? CreateObject('setup.setup_translation') : '';
-
-//			$this->tbl_apps    = $this->get_apps_table_name();
-//			$this->tbl_config  = $this->get_config_table_name();
-			$this->tbl_hooks   = $this->get_hooks_table_name();
 		}
 
 		/**
@@ -85,8 +88,13 @@
 			{
 				$this->db->Halt_On_Error = 'no';	// table might not be created at that stage
 				
+				$this->set_table_names();		// sets/checks config- and applications-table-name
+
 				// Set the DB's client charset if a system-charset is set
-				$this->db->query("select config_value from phpgw_config WHERE config_app='phpgwapi' and config_name='system_charset'",__LINE__,__FILE__);
+				$this->db->select($this->config_table,'config_value',array(
+					'config_app'  => 'phpgwapi',
+					'config_name' => 'system_charset',
+				),__LINE__,__FILE__);
 				if ($this->db->next_record() && $this->db->f(0))
 				{
 					$this->db->Link_ID->SetCharSet($this->db->f(0));
@@ -425,15 +433,6 @@
 				$enable = $setup_info[$appname]['enable'];
 			}
 			$enable = (int)$enable;
-
-			/*
-			Use old applications table if the currentver is less than 0.9.10pre8,
-			but not if the currentver = '', which probably means new install.
-			*/
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
-			{
-				$this->applications_table = 'applications';
-			}
 
 			if($GLOBALS['DEBUG'])
 			{
@@ -861,17 +860,6 @@
 			}
 		}
 
-		function get_hooks_table_name()
-		{
-			if(@$this->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'],'0.9.8pre5') &&
-			   @$GLOBALS['setup_info']['phpgwapi']['currentver'] != '')
-			{
-				/* No phpgw_hooks table yet. */
-				return False;
-			}
-			return 'phpgw_hooks';
-		}
-
 		function setup_account_object()
 		{
 			if (!is_object($GLOBALS['egw']->accounts))
@@ -881,7 +869,7 @@
 					$this->loaddb();
 				}
 				/* Load up some configured values */
-				$this->db->query("SELECT config_name,config_value FROM phpgw_config "
+				$this->db->query("SELECT config_name,config_value FROM $this->config_table "
 					. "WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%'",__LINE__,__FILE__);
 				while($this->db->next_record())
 				{
@@ -1005,12 +993,54 @@
 			}
 			foreach($apps as $app)
 			{
-				$this->db->query("DELETE FROM phpgw_acl WHERE acl_appname='$app' AND acl_location='$location' AND acl_account=$account");
+				$this->db->query("DELETE FROM $this->acl_table WHERE acl_appname='$app' AND acl_location='$location' AND acl_account=$account");
 				if ($rights)
 				{
-					$this->db->query("INSERT INTO phpgw_acl(acl_appname,acl_location,acl_account,acl_rights) VALUES('$app','$location',$account,$rights)");
+					$this->db->query("INSERT INTO $this->acl_table (acl_appname,acl_location,acl_account,acl_rights) VALUES('$app','$location',$account,$rights)");
 				}
 			}
 		}
+		
+		/**
+		 * checks if one of the given tables exist, returns the first match
+		 *
+		 * @param array $tables array with possible table-names
+		 * @return string/boolean tablename or false
+		 */
+		function table_exist($tables)
+		{
+			static $table_names;
+			
+			if (!$table_names) $table_names = $this->db->table_names();
+			
+			if (!$table_names) return false;
+			
+			foreach($table_names as $data)	
+			{
+				if (($key = array_search($data['table_name'],$tables)) !== false)
+				{
+					return $tables[$key];
+				}
+			}
+			return false;
+		}
+		
+		/**
+		 * Checks and set the names of the tables, which get accessed before an update: eg. config- and applications-table
+		 *
+		 * Other tables can always use the most up to date name
+		 */
+		function set_table_names()
+		{
+			foreach(array(
+				'config_table'       => array('egw_config','phpgw_config','config'),
+				'applications_table' => array('egw_applications','phpgw_applications','applications'),
+				'lang_table'         => array('egw_lang','phpgw_lang','lang'),
+				'languages_table'    => array('egw_languages','phpgw_languages','languages'),
+			) as $name => $tables)
+			{
+				$this->$name = $this->table_exist($tables);
+				//echo "<p>setup::set_table_names: $name = '{$this->$name}'</p>\n";
+			}
+		}
 	}
-?>

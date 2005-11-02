@@ -40,7 +40,7 @@
 		 * @var egw_db-object $db instance of the db-object
 		 */
 		var $db;
-		var $config_table = 'phpgw_config';
+		var $config_table = 'egw_config';
 
 		/**
 		 * Constructor: Instantiates the sub-classes

@@ -1,24 +1,24 @@
 <?php 
-  /**************************************************************************\
-  * eGroupWare API - Password auth and crypt functions                       *
-  * This file written by Miles Lott <milos@groupwhere.org>                   *
-  * Copyright (C) 2004 Miles Lott                                            *
-  *  Many functions based on code from Frank Thomas <frank@thomas-alfeld.de> *
-  *    which can be seen at http://www.thomas-alfeld.de/frank/               *
-  *  Other functions from class.common.inc.php originally from phpGroupWare  *
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare API - Password auth and crypt functions                       *
+	* This file written by Miles Lott <milos@groupwhere.org>                   *
+	* Copyright (C) 2004 Miles Lott                                            *
+	*  Many functions based on code from Frank Thomas <frank@thomas-alfeld.de> *
+	*    which can be seen at http://www.thomas-alfeld.de/frank/               *
+	*  Other functions from class.common.inc.php originally from phpGroupWare  *
+	* ------------------------------------------------------------------------ *
+	* This library is free software; you can redistribute it and/or modify it  *
+	* under the terms of the GNU Lesser General Public License as published by *
+	* the Free Software Foundation; either version 2.1 of the License,         *
+	* or any later version.                                                    *
+	* This library is distributed in the hope that it will be useful, but      *
+	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
+	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
+	* See the GNU Lesser General Public License for more details.              *
+	* You should have received a copy of the GNU Lesser General Public License *
+	* along with this library; if not, write to the Free Software Foundation,  *
+	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
+	\**************************************************************************/
 
 	/* $Id$ */
 
@@ -33,11 +33,11 @@
 		var $seeded = False;
 		var $error  = '';
 
-		/*!
-		@function randomstring
-		@abstract return a random string of size $size
-		@param $size int-size of random string to return
-		*/
+		/**
+		 * return a random string of size $size
+		 *
+		 * @param $size int-size of random string to return
+		 */
 		function randomstring($size)
 		{
 			$s = '';
@@ -62,12 +62,13 @@
 			return $s;
 		}
 
-		/*!
-		@function encrypt_password
-		@abstract encrypt password
-		@abstract uses the encryption type set in setup and calls the appropriate encryption functions
-		@param $password password to encrypt
-		*/
+		/**
+		 * encrypt password
+		 *
+		 * uses the encryption type set in setup and calls the appropriate encryption functions
+		 *
+		 * @param $password password to encrypt
+		 */
 		function encrypt_password($password,$sql=False)
 		{
 			if($sql)
@@ -77,15 +78,16 @@
 			return $this->encrypt_ldap($password);
 		}
 
-		/*!
-		@function compare_password
-		@abstract compagres an encrypted password
-		@abstract encryption type set in setup and calls the appropriate encryption functions
-		@param $cleartext cleartext password
-		@param $encrypted encrypted password
-		@param $type type of encryption
-		@param $username used as optional key of encryption for md5_hmac
-		*/
+		/**
+		 * compagres an encrypted password
+		 *
+		 * encryption type set in setup and calls the appropriate encryption functions
+		 *
+		 * @param $cleartext cleartext password
+		 * @param $encrypted encrypted password
+		 * @param $type type of encryption
+		 * @param $username used as optional key of encryption for md5_hmac
+		 */
 		function compare_password($cleartext,$encrypted,$type,$username='')
 		{
 			switch($type)
@@ -109,15 +111,16 @@
 			}
 		}
 
-		/*!
-		@function encrypt_ldap
-		@abstract encrypt password for ldap
-		@abstract uses the encryption type set in setup and calls the appropriate encryption functions
-		@param $password password to encrypt
-		*/
+		/**
+		 * encrypt password for ldap
+		 *
+		 * uses the encryption type set in setup and calls the appropriate encryption functions
+		 *
+		 * @param $password password to encrypt
+		 */
 		function encrypt_ldap($password)
 		{
-			$type = strtolower($GLOBALS['phpgw_info']['server']['ldap_encryption_type']);
+			$type = strtolower($GLOBALS['egw_info']['server']['ldap_encryption_type']);
 			$salt = '';
 			switch($type)
 			{
@@ -163,12 +166,12 @@
 			return $e_password;
 		}
 
-		/* Create a password for storage in the phpgw_accounts table */
+		/* Create a password for storage in the accounts table */
 		function encrypt_sql($password)
 		{
 			/* Grab configured type, or default to md5() (old method) */
-			$type = @$GLOBALS['phpgw_info']['server']['sql_encryption_type']
-				? strtolower($GLOBALS['phpgw_info']['server']['sql_encryption_type'])
+			$type = @$GLOBALS['egw_info']['server']['sql_encryption_type']
+				? strtolower($GLOBALS['egw_info']['server']['sql_encryption_type'])
 				: 'md5';
 			switch($type)
 			{

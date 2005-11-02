@@ -42,20 +42,15 @@
 		{
 			$tname = Array();
 			$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
-			$tables = $GLOBALS['egw_setup']->db->table_names();
-			foreach($tables as $key => $val)
-			{
-				$tname[] = $val['table_name'];
-			}
-			$newapps = in_array('phpgw_applications',$tname);
-			$oldapps = in_array('applications',$tname);
+			
+			$GLOBALS['egw_setup']->set_table_names();
 
-			if((count($tables) > 0) && (is_array($tables)) && ($newapps || $oldapps))
+			if($GLOBALS['egw_setup']->applications_table)
 			{
 				/* one of these tables exists. checking for post/pre beta version */
-				if($newapps)
+				if($GLOBALS['egw_setup']->applications_table != 'applications')
 				{
-					$GLOBALS['egw_setup']->db->query('SELECT * FROM phpgw_applications',__LINE__,__FILE__);
+					$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'*',false,__LINE__,__FILE__);
 					while(@$GLOBALS['egw_setup']->db->next_record())
 					{
 						$setup_info[$GLOBALS['egw_setup']->db->f('app_name')]['currentver'] = $GLOBALS['egw_setup']->db->f('app_version');
@@ -80,7 +75,7 @@
 					}
 					$setup_info['phpgwapi']['version'] = $tmp; /* restore the file version */
 				}
-				elseif($oldapps)
+				else
 				{
 					$GLOBALS['egw_setup']->db->query('select * from applications');
 					while(@$GLOBALS['egw_setup']->db->next_record())
@@ -267,6 +262,8 @@
 				$GLOBALS['egw_setup']->db->connect();
 				error_reporting($old);
 			}
+			$GLOBALS['egw_setup']->set_table_names();
+
 			if (!$GLOBALS['egw_setup']->db->Link_ID)
 			{
 				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
@@ -276,7 +273,7 @@
 			{
 				$setup_info = $this->get_db_versions($setup_info);
 			}
-//			_debug_array($setup_info);
+			//_debug_array($setup_info);
 			if (isset($setup_info['phpgwapi']['currentver']))
 			{
 				if(@$setup_info['phpgwapi']['currentver'] == @$setup_info['phpgwapi']['version'])
@@ -293,10 +290,10 @@
 			else
 			{
 				/* no tables, so checking if we can create them */
-				$GLOBALS['egw_setup']->db->query('CREATE TABLE phpgw_testrights ( testfield varchar(5) NOT NULL )');
+				$GLOBALS['egw_setup']->db->query('CREATE TABLE egw_testrights ( testfield varchar(5) NOT NULL )');
 				if(!$GLOBALS['egw_setup']->db->Errno)
 				{
-					$GLOBALS['egw_setup']->db->query('DROP TABLE phpgw_testrights');
+					$GLOBALS['egw_setup']->db->query('DROP TABLE egw_testrights');
 					$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (Install Applications)';
 					return 3;
 				}
@@ -316,19 +313,7 @@
 				return '';
 			}
 
-			/* Since 0.9.10pre6 config table is named as phpgw_config */
-			$ver = explode('.',@$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
-			$config_table = $ver[0] > 0 || (int)$ver[2] > 10 ? 'phpgw_config' : 'config';
-
-			if(ereg("([0-9]+)(pre)([0-9]+)",$ver[2],$regs))
-			{
-				if(($regs[1] == '10') && ($regs[3] >= '6'))
-				{
-					$config_table = 'phpgw_config';
-				}
-			}
-
-			@$GLOBALS['egw_setup']->db->query("select config_value from $config_table where config_name='freshinstall'");
+			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_value',array('config_name'=>'freshinstall'),__LINE__,__FILE__);
 			$configured = $GLOBALS['egw_setup']->db->next_record() ? $GLOBALS['egw_setup']->db->f('config_value') : False;
 			if($configed)
 			{
@@ -353,18 +338,7 @@
 			{
 				$GLOBALS['setup_info'] = $GLOBALS['egw_setup']->detection->get_db_versions($GLOBALS['setup_info']);
 			}
-			if($GLOBALS['egw_setup']->alessthanb($GLOBALS['setup_info']['phpgwapi']['currentver'], '0.9.14.501') ||
-			   ereg('0\.9\.15\.00[01]{1,1}',$GLOBALS['setup_info']['phpgwapi']['currentver']))
-			{
-				$langtbl  = 'lang';
-				$languagestbl = 'languages';
-			}
-			else
-			{
-				$langtbl  = 'phpgw_lang';
-				$languagestbl = 'phpgw_languages';
-			}
-			$GLOBALS['egw_setup']->db->query($q = "SELECT DISTINCT lang FROM $langtbl",__LINE__,__FILE__);
+			$GLOBALS['egw_setup']->db->query($q = "SELECT DISTINCT lang FROM {$GLOBALS['egw_setup']->lang_table}",__LINE__,__FILE__);
 			if($GLOBALS['egw_setup']->db->num_rows() == 0)
 			{
 				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 3 (No languages installed)';
@@ -378,7 +352,7 @@
 				}
 				foreach($GLOBALS['egw_info']['setup']['installed_langs'] as $key => $value)
 				{
-					$sql = "SELECT lang_name FROM $languagestbl WHERE lang_id = '".$value."'";
+					$sql = "SELECT lang_name FROM {$GLOBALS['egw_setup']->languages_table} WHERE lang_id = '".$value."'";
 					$GLOBALS['egw_setup']->db->query($sql);
 					if ($GLOBALS['egw_setup']->db->next_record())
 					{

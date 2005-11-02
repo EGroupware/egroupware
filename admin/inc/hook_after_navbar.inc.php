@@ -26,7 +26,7 @@ if($GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
 	{
 		$_returnhtml = array();
 		$app_name = $GLOBALS['egw_info']['flags']['currentapp'];
-		$GLOBALS['egw']->db->query("SELECT app_name,app_version FROM phpgw_applications WHERE app_name='$app_name' OR app_name='phpgwapi'",__LINE__,__FILE__);
+		$GLOBALS['egw']->db->query("SELECT app_name,app_version FROM egw_applications WHERE app_name='$app_name' OR app_name='phpgwapi'",__LINE__,__FILE__);
 		while($GLOBALS['egw']->db->next_record())
 		{
 			$_db_version  = $GLOBALS['egw']->db->f('app_version');

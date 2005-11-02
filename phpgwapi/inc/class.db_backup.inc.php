@@ -39,9 +39,9 @@
 		 */
 		function db_backup()
 		{
-			if (is_object($GLOBALS['phpgw_setup']->oProc))	// schema_proc already instanciated, use it
+			if (is_object($GLOBALS['egw_setup']->oProc))	// schema_proc already instanciated, use it
 			{
-				$this->schema_proc = $GLOBALS['phpgw_setup']->oProc;
+				$this->schema_proc = $GLOBALS['egw_setup']->oProc;
 			}
 			else
 			{
@@ -50,25 +50,24 @@
 
 			$this->db = $this->schema_proc->m_odb;
 			$this->adodb = &$GLOBALS['egw']->ADOdb;
-			if (is_object($GLOBALS['phpgw_setup']))		// called from setup
+			if (is_object($GLOBALS['egw_setup']))		// called from setup
 			{
-				$tables = $this->adodb->MetaTables('TABLES');
-				if (in_array('phpgw_config',$tables))
+				if ($GLOBALS['egw_setup']->config_table)
 				{
-					$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='backup_dir'",__LINE__,__FILE__);
+					$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_dir'",__LINE__,__FILE__);
 					$this->db->next_record();
 					if (!($this->backup_dir = $this->db->f(0)))
 					{
-						$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='files_dir'",__LINE__,__FILE__);
+						$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='files_dir'",__LINE__,__FILE__);
 						$this->db->next_record();
 						$this->backup_dir = $this->db->f(0).'/db_backup';
 					}					
-					$this->db->query("SELECT config_value FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
+					$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
 					$this->db->next_record();
 					$this->charset = $this->db->f(0);
 					if (!$this->charset)
 					{
-						$this->db->query("SELECT content FROM phpgw_lang WHERE message_id='charset' AND app_name='common' AND lang!='en'",__LINE__,__FILE__);
+						$this->db->query("SELECT content FROM {$GLOBALS['egw_setup']->lang_table} WHERE message_id='charset' AND app_name='common' AND lang!='en'",__LINE__,__FILE__);
 						$this->db->next_record();
 						$this->charset = $this->db->f(0);
 					}

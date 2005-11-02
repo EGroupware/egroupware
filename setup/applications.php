@@ -160,7 +160,7 @@
 
 				// delete all application categories and ACL
 				$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_categories WHERE cat_appname='$appname'",__LINE__,__FILE__);
-				$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_acl WHERE acl_appname='$appname'",__LINE__,__FILE__);
+				$GLOBALS['egw_setup']->db->query("DELETE FROM {$GLOBALS['egw_setup']->acl_table} WHERE acl_appname='$appname'",__LINE__,__FILE__);
 			}
 		}
 

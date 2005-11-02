@@ -85,14 +85,6 @@
 			
 			$account_id = (int)$_POST['account_id'];
 
-			$GLOBALS['egw']->db->lock(
-				Array(
-					'phpgw_accounts',
-					'phpgw_app_sessions',
-					'phpgw_acl'
-				)
-			);
-				
 			$old_group_list = $GLOBALS['egw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
 
 			@reset($old_group_list);
@@ -114,8 +106,6 @@
 			}
 
 			$GLOBALS['egw']->accounts->delete($account_id);
-
-			$GLOBALS['egw']->db->unlock();
 
 			Header('Location: '.$GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
 			$GLOBALS['egw']->common->egw_exit();
@@ -141,18 +131,11 @@
 				
 				$singleHookValues = $GLOBALS['hook_values']+array('location' => 'deleteaccount');
 
-				$db = clone($GLOBALS['egw']->db);
-				$db->query('SELECT app_name,app_order FROM phpgw_applications WHERE app_enabled!=0 ORDER BY app_order',__LINE__,__FILE__);
-				if($db->num_rows())
+				foreach($GLOBALS['egw_info']['apps'] as $appname => $data)
 				{
-					while($db->next_record())
+					if($appname != 'admin' && $appname != 'preferences')
 					{
-						$appname = $db->f('app_name');
-
-						if($appname <> 'admin' || $appname <> 'preferences')
-						{
-							$GLOBALS['egw']->hooks->single($singleHookValues, $appname);
-						}
+						$GLOBALS['egw']->hooks->single($singleHookValues,$appname);
 					}
 				}
 
@@ -212,19 +195,6 @@
 			);
 
 			$this->validate_group($group_info);
-
-			$GLOBALS['egw']->db->lock(
-				Array(
-					'phpgw_accounts',
-					'phpgw_nextid',
-					'phpgw_preferences',
-					'phpgw_sessions',
-					'phpgw_acl',
-					'phpgw_applications',
-					'phpgw_app_sessions',
-					'phpgw_hooks'
-				)
-			);
 
 			$group =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$group->acct_type = 'g';
@@ -291,8 +261,6 @@
 				{
 					$cd = 37;
 				}
-	
-				$GLOBALS['egw']->db->unlock();
 			}
 			ExecMethod('admin.uiaccounts.list_groups');
 			
@@ -430,20 +398,6 @@
 
 			$this->validate_group($group_info);
 
-			// Lock tables
-			$GLOBALS['egw']->db->lock(
-				Array(
-					'phpgw_accounts',
-					'phpgw_preferences',
-					'phpgw_config',
-					'phpgw_applications',
-					'phpgw_hooks',
-					'phpgw_sessions',
-					'phpgw_acl',
-					'phpgw_app_sessions'
-				)
-			);
-
 			$group =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$old_group_info = $group->read_repository();
 
@@ -546,8 +500,6 @@
 			// This is down here so we are sure to catch the acl changes
 			// for LDAP to update the memberuid attribute
 			$group->save_repository();
-
-			$GLOBALS['egw']->db->unlock();
 
 			ExecMethod('admin.uiaccounts.list_groups');
 			return False;

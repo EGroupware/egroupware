@@ -28,6 +28,7 @@
 		var $appname;
 		var $config_data;	// actual config-data
 		var $read_data;		// config-data as read from db
+		var $table = 'egw_config';
 
 		function config($appname = '')
 		{
@@ -44,7 +45,6 @@
 				$this->db = clone($GLOBALS['egw_setup']->db);
 			}
 			$this->db->set_app('phpgwapi');
-			$this->table = 'phpgw_config';
 			$this->appname = $appname;
 		}
 
@@ -75,13 +75,12 @@
 
 		/**
 		 * updates the whole repository for $this->appname, you have to call read_repository() before (!)
-		 *
 		 */
 		function save_repository()
 		{
 			if (is_array($this->config_data))
 			{
-				$this->db->lock(array('phpgw_config'));
+				$this->db->lock(array($this->table));
 				foreach($this->config_data as $name => $value)
 				{
 					$this->save_value($name,$value);
@@ -137,7 +136,7 @@
 		 */
 		function delete_repository()
 		{
-			$this->db->delete("delete from phpgw_config where config_app='" . $this->appname . "'",__LINE__,__FILE__);
+			$this->db->delete($this->table,array('config_app' => $this->appname),__LINE__,__FILE__);
 		}
 
 		/**
@@ -149,6 +148,7 @@
 		{
 			unset($this->config_data[$variable_name]);
 		}
+
 		/**
 		 * sets a single value in the repositry, you need to call save_repository after
 		 *
@@ -160,4 +160,3 @@
 			$this->config_data[$variable_name] = $variable_data;
 		}
 	}
-?>

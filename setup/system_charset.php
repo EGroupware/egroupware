@@ -144,8 +144,12 @@
 				}
 			}
 		}
-		@$GLOBALS['egw_setup']->db->query("DELETE FROM phpgw_config WHERE config_app='phpgwapi' AND config_name='system_charset'",__LINE__,__FILE__);
-		$GLOBALS['egw_setup']->db->query("INSERT INTO phpgw_config (config_app,config_name,config_value) VALUES ('phpgwapi','system_charset','$to')",__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+			'config_value' => $to,
+		),array(
+			'config_app'   => 'phpgwapi',
+			'config_name'  => 'systemcharset',
+		),__LINE__,__FILE__);
 	}
 
 	$setup_tpl->set_var('stage_title',$stage_title);
