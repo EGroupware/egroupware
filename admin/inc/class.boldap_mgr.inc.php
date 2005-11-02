@@ -1,9 +1,9 @@
 <?php
 	/***************************************************************************\
-	* EGroupWare - LDAPManager		                                            *
+	* EGroupWare - LDAPManager                                                  *
 	* http://www.egroupware.org                                                 *
-	* Written by : Andreas Krause (ak703@users.sourceforge.net					*
-	* based on EmailAdmin by Lars Kneschke [lkneschke@egroupware.org]        	*
+	* Written by : Andreas Krause (ak703@users.sourceforge.net                  *
+	* based on EmailAdmin by Lars Kneschke [lkneschke@egroupware.org]           *
 	* -------------------------------------------------                         *
 	* This program is free software; you can redistribute it and/or modify it   *
 	* under the terms of the GNU General Public License as published by the     *
@@ -11,6 +11,7 @@
 	* option) any later version.                                                *
 	\***************************************************************************/
 
+	/* $Id$ */
 
 	class boldap_mgr
 	{
@@ -165,7 +166,7 @@
 			
 			$smtpClass	= $this->SMTPServerType[$profileData['smtpType']]['classname'];
 
-			return empty($smtpClass) ? False : ExecMethod("emailadmin.$smtpClass.getAccountEmailAddress",$_accountName);
+			return empty($smtpClass) ? False : ExecMethod("emailadmin.$smtpClass.getAccountEmailAddress",$_accountName,3,$profileData);
 		}
 		
 		function getFieldNames($_serverTypeID, $_class)
@@ -213,7 +214,7 @@
 		{
 			if (!empty($this->imapClass))
 			{
-				return ExecMethod("emailadmin.".$this->imapClass.".getMailboxString",$_folderName);
+				return ExecMethod("emailadmin.".$this->imapClass.".getMailboxString",$_folderName,3,$this->profileData);
 			}
 			else
 			{
@@ -387,12 +388,12 @@
 		{
 			if (!empty($this->imapClass))
 			{
-				ExecMethod("emailadmin.".$this->imapClass.".updateAccount",$_hookValues);
+				ExecMethod("emailadmin.".$this->imapClass.".updateAccount",$_hookValues,3,$this->profileData);
 			}
 
 			if (!empty($this->smtpClass))
 			{
-				ExecMethod("emailadmin.".$this->smtpClass.".updateAccount",$_hookValues);
+				ExecMethod("emailadmin.".$this->smtpClass.".updateAccount",$_hookValues,3,$this->profileData);
 			}
 		}
 		
