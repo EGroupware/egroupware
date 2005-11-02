@@ -311,10 +311,11 @@
 		/**
 		 * pre-processing of the duration extension
 		 *
-		 * Options contain $data_format,$input_format,$hours_per_day
+		 * Options contain $data_format,$input_format,$hours_per_day,$empty_not_0
 		 *  - data_format: d = days, h = hours, default minutes
 		 *	- input_format: d = days, h = hours, default hours+days (selectbox), optional % = allow to enter a percent value (no conversation)
 		 *	- hours_per_day: default 8 (workday)
+		 *  - should the widget differ between 0 and empty, which get then returned as NULL
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
@@ -326,8 +327,9 @@
 		 */
 		function pre_process_duration($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			//echo "<p>pre_process_duration($name,$value,...) cell[size]='$cell[size]'</p>\n";
 			$readonly = $readonlys || $cell['readonly'];
-			list($data_format,$input_format,$hours_per_day) = explode(',',$cell['size']);
+			list($data_format,$input_format,$hours_per_day,$empty_not_0) = explode(',',$cell['size']);
 			if (!$hours_per_day) $hours_per_day = 8; // workday is 8 hours
 			if (($percent_allowed = strstr($input_format,'%') !== false))
 			{
@@ -342,15 +344,19 @@
 				'input_format'  => $input_format,
 				'hours_per_day' => $hours_per_day,
 				'percent_allowed'=> $percent_allowed,
+				'empty_not_0'   => $empty_not_0,
 			);
-			switch($data_format)
+			if ($value)
 			{
-				case 'd':
-					$value *= $hours_per_day;
-					// fall-through
-				case 'h': case 'H':
-					$value *= 60;
-					break;
+				switch($data_format)
+				{
+					case 'd':
+						$value *= $hours_per_day;
+						// fall-through
+					case 'h': case 'H':
+						$value *= 60;
+						break;
+				}
 			}			
 			$cell['type'] = 'text';
 			$cell['size'] = '4,,/^-?[0-9]*[,.]?[0-9]*'.($percent_allowed ? '%?' : '').'$/';
@@ -361,7 +367,8 @@
 			{
 				$unit = 'd';
 			}
-			$value = !$value ? '' : round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3);
+			$value = $empty_not_0 && (string) $value === '' || !$empty_not_0 && !$value ? '' : 
+				round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3);
 
 			if (!$readonly && $input_format == 'dh') // selectbox to switch between hours and days
 			{
@@ -445,7 +452,12 @@
 				}
 				if ($extension_data['percent_allowed'] && substr($value,-1) == '%')
 				{
-					return $value;
+					return true;
+				}
+				if ($value === '' && $extension_data['empty_not_0'])	// we differ between 0 and empty, which get returned as null
+				{
+					$value = null;
+					return true;
 				}
 				$value = (int) round(str_replace(',','.',$value) * 60 * ($unit == 'd' ? $extension_data['hours_per_day'] : 1)); 
 
