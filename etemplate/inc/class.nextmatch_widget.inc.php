@@ -239,8 +239,9 @@
 				$nextmatch =& new etemplate('etemplate.nextmatch_widget');
 				// keep the editor away from the generated tmpls
 				$nextmatch->no_onclick = true;			
-
-				foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2') as $val_name => $cell_name)
+				
+				if(isset($value['no_search'])) $value['no_start_search'] = $value['no_search'];
+				foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2', 'no_search' => 'search', 'no_start_search' => 'start_search' ) as $val_name => $cell_name)
 				{
 					if (isset($value[$val_name])) $nextmatch->disable_cells($cell_name,$value[$val_name]);
 				}
