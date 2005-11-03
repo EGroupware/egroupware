@@ -72,7 +72,7 @@
 				'lang_read' => lang('Read permissions'),
 				'lang_write' => lang('Write permissions'),
 				'lang_implies_read' => lang('implies read permission'),
-				'lang_calread' => lang('Read Calender permissions'),
+				'lang_calread' => lang('Read Calendar permissions'),
 				'lang_calbook' => lang('Direct booking permissions'),
 				'lang_implies_book' => lang('implies booking permission'),
 				'lang_cat_admin' => lang('Categories admin')

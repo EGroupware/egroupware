@@ -210,8 +210,20 @@ class bo_resources
 			$this->link->link('resources',$resource['res_id'],$resource['link_to']['to_id']);
 		}
 		if($resource['accessory_of'] != -1)
-		{	echo $resource['res_id'].', '.$resource['accessory_of'];
+		{
 			$this->link->link('resources',$resource['res_id'],'resources',$resource['accessory_of']);
+		}
+		
+		if(!empty($resource['res_id']) && $this->so->get_value("cat_id",$resource['res_id']) != $resource['cat_id'] && $resource['accessory_of'] == -1)
+		{
+			$accessories = $this->get_acc_list($resource['res_id']);
+			foreach($accessories as $accessory => $name)
+			{
+				$acc = $this->so->read($accessory);
+				$acc['cat_id'] = $resource['cat_id'];
+				$this->so->data = $acc;
+				$this->so->save();
+			}
 		}
 		
 		return $this->so->save($resource) ? false : lang('Something went wrong by saving resource');

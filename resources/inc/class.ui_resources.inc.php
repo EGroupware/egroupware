@@ -159,7 +159,7 @@ class ui_resources
 			$no_button['back'] = false;
 			$no_button['add'] = true;
 			$no_button['add_sub'] = false;
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('resources') . ' - ' . lang('accessories of ') . $master['name'] .
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('resources') . ' - ' . lang('accessories of '). ' '. $master['name'] .
 				($master['short_description'] ? ' [' . $master['short_description'] . ']' : '');
 		}
 		$preserv = $content;
@@ -230,12 +230,12 @@ class ui_resources
 		$content['resource_picture'] = $this->bo->get_picture($content['res_id'],$content['picture_src'],$size=true);
 		$content['quantity'] = $content['quantity'] ? $content['quantity'] : 1;
 		$content['useable'] = $content['useable'] ? $content['useable'] : 1;
-		$content['accessory_of'] = $accessory_of;
+		$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
 		
 		$sel_options['gen_src_list'] = $this->bo->get_genpicturelist();
 		$sel_options['cat_id'] =  $this->bo->acl->get_cats(EGW_ACL_ADD);
-		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
-		
+		$sel_options['cat_id'] = count($sel_options['cat_id']) == 1 ? $sel_options['cat_id'] : 
+			$content['cat_id'] ? $sel_options['cat_id'] : array('' => lang('select one')) + $sel_options['cat_id'];
 		if($accessory_of > 0 || $content['accessory_of'] > 0)
 		{
 			$content['accessory_of'] = $content['accessory_of'] ? $content['accessory_of'] : $accessory_of;
