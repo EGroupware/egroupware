@@ -24,8 +24,17 @@
  */
 
 	$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'];
+	
 	$file = Array(
-		'Add'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
+		array(
+			'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'addressbook.uicontacts.edit')).
+				'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=800,height=600,scrollbars=yes,status=yes\'); 
+				return false;">'.lang('Add').'</a>',
+			'no_lang' => true,
+			'link' => false
+		),
+// 		'Add'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
+		'Advances search'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.search'),
 		'_NewLine_', // give a newline
 		'import contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.import'),
 		'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export')
@@ -49,7 +58,7 @@
 		$menu_title = lang('Administration');
 		$file = Array(
 			'Configuration'=>$GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=addressbook'),
-			'Custom Fields'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.index'),
+			'Custom Fields'=>$GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname=addressbook'),
 			'Global Categories' =>$GLOBALS['egw']->link('/index.php','menuaction=admin.uicategories.index&appname=addressbook')
 		);
 		display_sidebox($appname,$menu_title,$file);

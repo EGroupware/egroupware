@@ -512,6 +512,7 @@
 			$GLOBALS['egw']->template->set_var('action_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.delete'));
 			$GLOBALS['egw']->template->set_var('lang_add',lang('Add'));
 			$GLOBALS['egw']->template->set_var('add_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'));
+			$GLOBALS['egw']->template->set_var('add_onclick','window.open(\''.$GLOBALS['egw']->link('/index.php?menuaction=addressbook.uicontacts.edit').'\',\'\',\'dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\');return false;');
 			$GLOBALS['egw']->template->set_var('lang_addvcard',lang('AddVCard'));
 			$GLOBALS['egw']->template->set_var('vcard_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uivcard.in'));
 			$GLOBALS['egw']->template->set_var('lang_import',lang('Import Contacts'));
@@ -613,7 +614,9 @@
 						))
 						. '"><img src="'
 						. $GLOBALS['egw']->common->image('addressbook','edit')
-						. '" border="0" title="' . lang('Edit') . '"></a> ';
+						. '" border="0" title="' . lang('Edit') . 
+						'" onClick="window.open(\''.$GLOBALS['egw']->link('/index.php?menuaction=addressbook.uicontacts.edit') . '&contact_id='.$entries[$i]['id'].
+						'\',\'\',\'dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\');return false;"></a>';
 				}
 
 				if($this->bo->check_perms($entries[$i],PHPGW_ACL_DELETE))

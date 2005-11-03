@@ -29,9 +29,13 @@
 			$fields = array();
 
 			$this->so->read_repository();
-
-			while(list($name,$descr) = @each($this->so->config_data['custom_fields']))
+			$config_name = isset($this->so->config_data['customfields']) ? 'customfields' : 'custom_fields';
+			while(list($name,$descr) = @each($this->so->config_data[$config_name]))
 			{
+				if(is_array($descr))
+				{
+					$descr = $descr['label'];
+				}
 				/*
 				if($start < $i)
 				{

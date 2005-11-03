@@ -16,6 +16,7 @@ addressbook	common	en	Addressbook
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
+advances search	addressbook	en	Advances search
 alt. csv import	addressbook	en	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 bbs phone	addressbook	en	BBS Phone
@@ -42,6 +43,7 @@ company name	common	en	Company Name
 configuration	common	en	Configuration
 contact	common	en	Contact
 contact application	admin	en	Contact application
+contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 country	common	en	Country
@@ -53,13 +55,17 @@ debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 department	common	en	Department
+do you really want to delte this contacts?	addressbook	en	Do you really want to delte this contacts?
+doesn't matter	addressbook	en	doesn't matter
 domestic	addressbook	en	Domestic
 download	addressbook	en	Download
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
+edit phonenumbers -	addressbook	en	Edit Phonenumbers -
 empty for all	addressbook	en	empty for all
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
+export	addressbook	en	export
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
@@ -89,20 +95,23 @@ import contacts	addressbook	en	Import Contacts
 import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
 import file	addressbook	en	Import File
 import from	addressbook	en	Import from
-import multiple vcard	addressbook	en	Import Multiple VCard
 import from ldif, csv, or vcard	addressbook	en	Import from LDIF, CSV, or VCard
 import from outlook	addressbook	en	Import from Outlook
+import multiple vcard	addressbook	en	Import Multiple VCard
 import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
 international	addressbook	en	International
 isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
+last modified	addressbook	en	last modified
 ldap context for contacts	admin	en	LDAP context for contacts
 ldap host for contacts	admin	en	LDAP host for contacts
 ldap root dn for contacts	admin	en	LDAP root dn for contacts
 ldap root pw for contacts	admin	en	LDAP root pw for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
+list all categories	addressbook	en	List all categories
+list all customfields	addressbook	en	List all customfields
 load vcard	addressbook	en	Load VCard
 mark records as private	addressbook	en	Mark records as private
 message phone	addressbook	en	Message Phone
@@ -110,9 +119,12 @@ middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
+more phonenumbers	addressbook	en	more phonenumbers
 multiple vcard	addressbook	en	Multiple VCard
 no vcard	addressbook	en	No VCard
+number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
+organisation	addressbook	en	organisation
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
 pager	common	en	Pager
@@ -124,6 +136,7 @@ postal	common	en	Postal
 pref	addressbook	en	pref
 prefix	addressbook	en	Prefix
 public key	addressbook	en	Public Key
+read a list / search for entries.	addressbook	en	Read a list / search for entries.
 read a list of entries.	addressbook	en	Read a list of entries.
 read a single entry by passing the id and fieldlist.	addressbook	en	Read a single entry by passing the id and fieldlist.
 record access	addressbook	en	Record Access
@@ -133,12 +146,18 @@ select all	addressbook	en	Select all
 select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store	admin	en	Select where you want to store
+show	addressbook	en	Show
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
+something went wrong by deleting %1	addressbook	en	Something went wrong by deleting %1
+something went wrong by deleting this contact	addressbook	en	Something went wrong by deleting this contact
+something went wrong by reading this contact	addressbook	en	something went wrong by reading this contact
+something went wrong by saving this contact. errorcode %1	addressbook	en	Something went wrong by saving this contact. Errorcode %1
 startrecord	addressbook	en	Startrecord
 state	common	en	State
 street	common	en	Street
 successfully imported %1 records into your addressbook.	addressbook	en	Successfully imported %1 record(s) into your addressbook.
 suffix	addressbook	en	Suffix
+tel home	addressbook	en	tel home
 test import (show importable records <u>only</u> in browser)	addressbook	en	Test Import (show importable records <u>only</u> in browser)
 that field name has been used already !	addressbook	en	That field name has been used already !
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
@@ -156,6 +175,11 @@ video phone	addressbook	en	Video Phone
 voice phone	addressbook	en	Voice Phone
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 work phone	addressbook	en	Work Phone
+write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
+you are not permitted to delete contact %1	addressbook	en	You are not permitted to delete contact %1
+you are not permittet to delete this contact	addressbook	en	You are not permittet to delete this contact
+you are not permittet to edit this contact	addressbook	en	You are not permittet to edit this contact
+you are not permittet to view this contact	addressbook	en	you are not permittet to view this contact
 you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
 zip code	common	en	ZIP Code

@@ -17,7 +17,7 @@
 	$title = $appname;
 	$file = Array(
 		'Site Configuration' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiconfig.index&appname=' . $appname),
-		'Edit custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uifields.index'),
+		'Edit custom fields' => $GLOBALS['egw']->link('/index.php','menuaction=admin.customfields.edit&appname='. $appname),
 		'Global Categories' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uicategories.index&appname=addressbook')
 	);
 	//Do not modify below this line

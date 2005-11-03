@@ -1,0 +1,488 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.edit.personal" template="" lang="" group="0" version="">
+		<grid height="320">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<image src="personal"/>
+					<description value="prefix"/>
+					<textbox id="prefix" size="40"/>
+					<description/>
+					<description value="time zone"/>
+					<menulist>
+						<menupopup 1="label" 2="label" id="tz" no_lang="1"/>
+					</menulist>
+				</row>
+				<row>
+					<description/>
+					<description value="first name"/>
+					<textbox id="n_given" size="40"/>
+					<image src="kaddressbook"/>
+					<description value="home phone"/>
+					<textbox id="tel_home" size="30"/>
+				</row>
+				<row>
+					<description/>
+					<description value=" middle name"/>
+					<textbox id="n_middle" size="40"/>
+					<description/>
+					<description value="business phone"/>
+					<textbox id="tel_work" size="30"/>
+				</row>
+				<row>
+					<description/>
+					<description value="last name"/>
+					<textbox id="n_family" size="40"/>
+					<description/>
+					<description value="mobile phone"/>
+					<textbox id="tel_cell" size="30"/>
+				</row>
+				<row>
+					<description/>
+					<description value="suffix"/>
+					<textbox id="n_suffix" size="40"/>
+					<description/>
+					<description/>
+					<button label="more phonenumbers" onclick="showphones(this.form); return false;"/>
+				</row>
+				<row>
+					<description/>
+					<description/>
+					<description/>
+					<image src="email"/>
+					<description value="home email"/>
+					<textbox id="email_home" size="30"/>
+				</row>
+				<row>
+					<description/>
+					<description value=" birthday"/>
+					<date 1="label" id="bday"/>
+					<description/>
+					<description value="business email"/>
+					<textbox id="business email" size="30"/>
+				</row>
+				<row>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row valign="top">
+					<image src="folder"/>
+					<description value="category"/>
+					<listbox type="select-cat" id="cat_id" rows="3"/>
+					<image src="package_network"/>
+					<description value="url"/>
+					<textbox id="url" size="30"/>
+				</row>
+				<row>
+					<image src="password"/>
+					<description value="private"/>
+					<checkbox id="private"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row height="100%">
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="">
+		<grid height="320">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<image src="gear"/>
+					<description value="title"/>
+					<textbox size="40" id="title"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="department"/>
+					<textbox id="org_unit" size="40"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row>
+					<image src="gohome"/>
+					<description value="company name"/>
+					<textbox size="40" id="org_name"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="business street"/>
+					<textbox size="40" id="adr_one_street"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="address line 2"/>
+					<textbox size="40" id="address2"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="address line 3"/>
+					<textbox size="40" id="address3"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="business city"/>
+					<textbox size="40" id="adr_one_locality"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="business zip code"/>
+					<textbox size="40" id="adr_one_postalcode"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="business state"/>
+					<textbox size="40" id="adr_one_region"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description value="business country"/>
+					<textbox size="40" id="adr_one_countryname"/>
+					<description/>
+				</row>
+				<row height="100%">
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.edit.home" template="" lang="" group="0" version="">
+		<grid height="320">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<image src="gohome"/>
+					<description value="home street"/>
+					<textbox size="40" id="adr_two_street"/>
+				</row>
+				<row>
+					<description/>
+					<description value="home city"/>
+					<textbox size="40" id="adr_two_locality"/>
+				</row>
+				<row>
+					<description/>
+					<description value="home zip code"/>
+					<textbox size="40" id="adr_two_postalcode"/>
+				</row>
+				<row>
+					<description/>
+					<description value="home state"/>
+					<textbox size="40" id="adr_two_locality"/>
+				</row>
+				<row>
+					<description/>
+					<description value="home country"/>
+					<textbox size="40" id="adr_two_countryname"/>
+				</row>
+				<row valign="baseline" height="100%">
+					<description/>
+					<description/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.edit.details" template="" lang="" group="0" version="">
+		<grid height="320">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<description/>
+					<description value="notes"/>
+					<textbox multiline="true" rows="4" cols="80" id="note"/>
+				</row>
+				<row valign="top">
+					<description/>
+					<description value=" label"/>
+					<textbox multiline="true" rows="4" cols="80" id="label"/>
+				</row>
+				<row valign="top">
+					<description/>
+					<description value="public key"/>
+					<textbox multiline="true" rows="4" cols="80" id="pubkey"/>
+				</row>
+				<row height="100%">
+					<description/>
+					<description/>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.edit.custom" template="" lang="" group="0" version="">
+		<grid height="320">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<customfields/>
+				</row>
+				<row height="100%">
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.editphones" template="" lang="" group="0" version="">
+		<grid class="editphones">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<hbox span="all" class="windowheader">
+						<hbox align="center">
+							<description value="Edit Phonenumbers - " align="right"/>
+							<description no_lang="1" id="fn"/>
+						</hbox>
+					</hbox>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row>
+					<description span="all" class="redItalic" id="msg"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row class="th">
+					<description/>
+					<description value="Description"/>
+					<description value="Number"/>
+					<description value="pref"/>
+				</row>
+				<row>
+					<description/>
+					<description value="home phone"/>
+					<textbox size="30" id="tel_home2"/>
+					<radio options="tel_home" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="business phone"/>
+					<textbox size="30" id="tel_work2"/>
+					<radio options="tel_work" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="mobile phone"/>
+					<textbox size="30" id="tel_cell2"/>
+					<radio options="tel_cell" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="fax"/>
+					<textbox size="30" id="tel_fax"/>
+					<radio options="tel_fax" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="car phone"/>
+					<textbox size="30" id="tel_car"/>
+					<radio options="tel_car" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="video phone"/>
+					<textbox size="30" id="tel_video"/>
+					<radio options="tel_video" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="pager"/>
+					<textbox size="30" id="tel_pager"/>
+					<radio options="tel_pager" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="voice phone"/>
+					<textbox size="30" id="tel_voice"/>
+					<radio options="tel_voice" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="message phone"/>
+					<textbox size="30" id="tel_msg"/>
+					<radio options="tel_msg" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="bbs phone"/>
+					<textbox size="30" id="tel_bbs"/>
+					<radio options="tel_bbs" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="modem phone"/>
+					<textbox size="30" id="tel_modem"/>
+					<radio options="tel_modem" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="isdn phone"/>
+					<textbox size="30" id="tel_isdn"/>
+					<radio options="tel_isdn" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value=" Other Phone"/>
+					<textbox size="30" id="ophone"/>
+					<radio options="ophone" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<hbox span="3">
+						<button label="Ok" onclick="hidephones(this.form); return false;"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.editphones{ 
+position: fixed;
+top: 50px;
+left: 240px;
+display:none;
+border: 1px solid #000000;
+background-color: #ffffff; 
+}
+
+.windowheader{
+background-image:url(http://solomon/egroupware/phpgwapi/templates/idots/images/appbox-header-background.png);
+background-repeat:repeat-x;
+height: 20px;
+border-spacing: 0px;
+border-collapse:collapse;
+border-bottom: #9c9c9c 1px solid; 
+}
+		</styles>
+	</template>
+	<template id="addressbook.edit" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column width="750"/>
+			</columns>
+			<rows>
+				<row>
+					<description span="all" class="redItalic" id="msg" no_lang="1"/>
+				</row>
+				<row>
+					<textbox id="fn" readonly="true" span="all"/>
+				</row>
+				<row valign="top" height="350">
+					<tabbox span="all">
+						<tabs>
+							<tab label="personal" statustext=""/>
+							<tab label="organisation" statustext=""/>
+							<tab label="home" statustext=""/>
+							<tab label="details" statustext=""/>
+							<tab label="custom" statustext=""/>
+						</tabs>
+						<tabpanels>
+							<template id="addressbook.edit.personal"/>
+							<template id="addressbook.edit.organisation"/>
+							<template id="addressbook.edit.home"/>
+							<template id="addressbook.edit.details"/>
+							<template id="addressbook.edit.custom"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row disabled="!@id">
+					<hbox>
+						<hbox>
+							<description value="owner"/>
+							<menulist>
+								<menupopup type="select-account" id="owner" readonly="true"/>
+							</menulist>
+						</hbox>
+						<hbox align="right">
+							<description value="last modified"/>
+							<date-time id="last_mod" readonly="true"/>
+						</hbox>
+					</hbox>
+				</row>
+				<row disabled="@hidebuttons">
+					<hbox>
+						<hbox>
+							<button label="Edit" id="button[edit]"/>
+							<button label="Copy" id="button[copy]"/>
+							<button label="Save" id="button[save]"/>
+							<button label="Apply" id="button[apply]"/>
+							<button label="Cancel" id="button[cancel]" onclick="self.close(); return false;"/>
+						</hbox>
+						<button label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" align="right"/>
+					</hbox>
+				</row>
+				<row>
+					<template id="addressbook.editphones"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.redItalic { color: red; font-style: italic; }
+		</styles>
+	</template>
+</overlay>

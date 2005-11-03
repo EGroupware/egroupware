@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="addressbook.search" template="" lang="" group="0" version="">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<advancedsearch id="advs"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -75,7 +75,7 @@ function check_all(which)
  </table>
  <table border="0" cellspacing="0" cellpadding="2">
 	 <tr class="th">
-     <form action="{add_url}" method="post"><td><input type="submit" name="Add" value="{lang_add}" /></td></form>
+     <form action="{add_url}" method="post"><td><input type="submit" name="Add" value="{lang_add}" onclick="{add_onclick}"/></td></form>
      <form action="{vcard_url}"  method="post"><td><input type="submit" name="AddVcard" value="{lang_addvcard}" /></td></form>
      <form action="{import_url}" method="post"><td><input type="submit" name="Import" value="{lang_import}" /></td></form>
 </tr>

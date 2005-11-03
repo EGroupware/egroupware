@@ -16,6 +16,7 @@ addressbook	common	de	Adressbuch
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
+advances search	addressbook	de	Erweiterte Suche
 alt. csv import	addressbook	de	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass Sie dieses Feld löschen wollen?
 bbs phone	addressbook	de	BBS
@@ -42,6 +43,7 @@ company name	common	de	Firmenname
 configuration	common	de	Konfiguration
 contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
+contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 country	common	de	Land
@@ -53,13 +55,17 @@ debug output in browser	addressbook	de	Debugausgaben in Browser
 default filter	addressbook	de	Standardfilter
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 department	common	de	Abteilung
+do you really want to delte this contacts?	addressbook	de	Wollen sie diesen Kontakt wirklich löschen?
+doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
+edit phonenumbers -	addressbook	de	Telefonnummern bearbeiten
 empty for all	addressbook	de	leer für alle
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
+export	addressbook	de	Export
 export contacts	addressbook	de	Kontakte exportieren
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
@@ -97,12 +103,15 @@ import_instructions	addressbook	de	In Netscape, öffnen Sie das Adressbuch und wä
 international	addressbook	de	International
 isdn phone	addressbook	de	ISDN-Tel.
 label	addressbook	de	Adressetikett
+last modified	addressbook	de	Letzte Änderung
 ldap context for contacts	admin	de	LDAP-Kontext für Kontakte
 ldap host for contacts	admin	de	LDAP-Host für Kontakte
 ldap root dn for contacts	admin	de	LDAP-rootdn für Kontakte
 ldap root pw for contacts	admin	de	LDAP-Passwort für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
+list all categories	addressbook	de	Liste alle Kategorien
+list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
 load vcard	addressbook	de	VCard laden
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 message phone	addressbook	de	Anrufbeantworter
@@ -110,9 +119,12 @@ middle name	addressbook	de	Zweiter Vorname
 mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobiltelefon
 modem phone	addressbook	de	Modem
+more phonenumbers	addressbook	de	Weitere Telefonnummern
 multiple vcard	addressbook	de	Mehrere VCards
 no vcard	addressbook	de	Keine VCard
+number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
+organisation	addressbook	de	Organisation
 other number	addressbook	de	andere Nr.
 other phone	addressbook	de	anderes Telefon
 pager	common	de	Pager
@@ -124,6 +136,7 @@ postal	common	de	Postanschrift
 pref	addressbook	de	präf
 prefix	addressbook	de	Präfix
 public key	addressbook	de	öffentlicher Schlüssel
+read a list / search for entries.	addressbook	de	Lese die Liste / Suche nach Einträgen
 read a list of entries.	addressbook	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen einzelnen Eintrag über seine ID und Feldliste.
 record access	addressbook	de	Zugriffsrechte
@@ -133,12 +146,18 @@ select all	addressbook	de	Alles auswählen
 select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
 select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store	admin	de	Auswählen wo Sie speichern wollen
+show	addressbook	de	Anzeigen
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
+something went wrong by deleting %1	addressbook	de	Beim Löschen von %1 trat ein Fehler auf
+something went wrong by deleting this contact	addressbook	de	Beim Löschen dieses Kontaktes trat ein Fehler auf
+something went wrong by reading this contact	addressbook	de	Bein Laden des Kontaktes trat ein Fehler auf
+something went wrong by saving this contact. errorcode %1	addressbook	de	Beim Speichern dieses Kontaktes trat ein Fehler auf. Errocode %1
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
+tel home	addressbook	de	Telefon privat
 test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datensätze <u>nur</u> im Browser an)
 that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt!
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
@@ -156,6 +175,10 @@ video phone	addressbook	de	Bildtelefon
 voice phone	addressbook	de	Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 work phone	addressbook	de	Tel dienstl.
+you are not permitted to delete contact %1	addressbook	de	Sie haben nicht die Berechtigungen um den Kontakt %1 zu löschen
+you are not permittet to delete this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu löschen
+you are not permittet to edit this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu bearbeiten
+you are not permittet to view this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu betrachen
 you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswählen (*.vcf)
 you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
 zip code	common	de	PLZ
