@@ -336,28 +336,24 @@
 			if($filter)
 			{
 				if($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
-				$filterarray = split(',',$filter);
-				if($filterarray[1])
+				
+				foreach(explode(',',$filter) as $f)
 				{
-					$i=0;
-					for($i=0;$i<count($filterarray);$i++)
+					list($name,$value) = explode('=',$f,2);
+					
+					if ($this->stock_contact_fields[$name])
 					{
-						list($name,$value) = split("=",$filterarray[$i]);
-						if($name)
-						{
-							if($DEBUG) { echo '<br>DEBUG - Filter strings: #'.$this->non_contact_fields[$name].'# => #'.$value.'#'; }
-							$filterfields[$this->non_contact_fields[$name]] = $value;
-						}
+						$filterfields[$this->stock_contact_fields[$name]] = $value;
 					}
-				}
-				else
-				{
-					list($name,$value) = split('=',$filter);
-					if($DEBUG)
+					elseif ($this->non_contact_fields[$name])
 					{
-						echo '<br>DEBUG - Filter strings: #'.$this->non_contact_fields[$name].'# => #'.$value.'#';
+						$filterfields[$this->non_contact_fields[$name]] = $value;
 					}
-					$filterfields = array($this->non_contact_fields[$name] => $value);
+					else
+
+					{
+						if ($DEBUG) echo "<p>contacts_ldap::read(filter=$filter): Cant filter for '$name', allowed only: ".implode(', ',array_keys($this->non_contact_fields))."</p>\n";
+					}
 				}
 			}
 			else
@@ -544,6 +540,8 @@
 		/* Used by read() above to build the ldap filter string */
 		function makefilter($qarray,$extra='',$query='', $DEBUG=False)
 		{
+			if($DEBUG) echo "<p>contacts_ldap::makefilter(".print_r($qarray,true).",'$extra','$query')</p>\n";
+
 			if(!@is_array($qarray))
 			{
 				return $qarray;
@@ -623,7 +621,7 @@
 					{
 						if (!is_object($GLOBALS['egw']->categories))
 						{
-							$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
+							$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
 						}
 						$cats = $GLOBALS['egw']->categories->return_all_children((int)$value);
 
@@ -633,6 +631,10 @@
 							$aquery .= '(' . $name . '=*,' . $cat . ',*)(' . $name . '=' . $cat . ')';
 						}
 						$aquery .= ')';
+					}
+					elseif ($value == "!''")	// query for not empty
+					{
+						$aquery .= '(' . $name . '=*)';
 					}
 					else
 					{
@@ -670,10 +672,9 @@
 				echo '<br>AND query:  "' . $aquery . '"';
 				echo '<br>OR query:   "' . $oquery . '"';
 				echo '<br>Full query: "' . $fquery . '"';
-				echo '<br>Will search in "' . $GLOBALS['egw_info']['server']['ldap_contact_context'] . '"';
+				echo '<br>Will search in "' . $GLOBALS['egw_info']['server']['ldap_contact_context'] . '"'; 
 			}
 
-//			echo $fquery;
 			return $fquery;
 		}
 
