@@ -36,9 +36,8 @@
 			define('EGW_ACL_DIRECT_BOOKING',128);
 			define('EGW_ACL_CALREAD',256);
 
-			$this->so =& CreateObject('resources.so_acl');
-			$this->permissions = $this->so->get_permissions($GLOBALS['egw_info']['user']['account_id'],true);
-			$this->egw_cats = createobject('phpgwapi.categories','','resources');
+			$this->permissions = $GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw_info']['user']['account_id'],'resources',true);
+			$this->egw_cats =& CreateObject('phpgwapi.categories','','resources');
 			$this->accounts = $GLOBALS['egw']->accounts->get_list();
 			$this->debug = False;
 			
@@ -66,7 +65,7 @@
 		/**
 		 * get list of cats where current user has given rights
 		 *
-		 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+		 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 		 * @param int $perm_type one of EGW_ACL_READ, EGW_ACL_ADD, EGW_ACL_EDIT, EGW_ACL_DELETE, EGW_ACL_DIRECT_BOOKING
 		 * @return array cat_id => cat_name
 		 * TODO mark subcats and so on!
@@ -101,20 +100,19 @@
 		/**
 		 * gets name of category 
 		 *
-		 * @author Lukas Wei� <wnz.gh05t@users.sourceforge.net>
+		 * @author Lukas Weiss <wnz.gh05t@users.sourceforge.net>
 		 * @param int $cat_id
 		 * @return mixed name of category
 		 */
 		function get_cat_name($cat_id)
 		{
-				$cat = $this->egw_cats->return_single($cat_id);
-				return $cat[0]['name'];
+			return $this->egw_cats->id2name($cat_id);
 		}
 		
 		/**
 		 * gets userid of admin for given category
 		 *
-		 * @author Cornelius Wei� <egw@von-und-zu-weiss.de>
+		 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 		 * @param int $cat_id
 		 * @return int userid of cat admin
 		 */
@@ -153,7 +151,7 @@
 		 */
 		function get_rights($cat_id)
 		{
-			return $this->so->get_rights('L'.$cat_id);
+			return $GLOBALS['egw']->acl->get_all_rights('L'.$cat_id,'resources');
 		}
 
 
@@ -191,9 +189,7 @@
 			$calbookcat = $calbook ? $calbook : array();
 			$admincat = $admin ? $admin : array();
 
-			$this->so->remove_location('L' . $cat_id);
-// 			reset($this->accounts);
-// 			while (list($null,$account) = each($this->accounts))
+			$GLOBALS['egw']->acl->delete_repository('resources','L' . $cat_id,false);
 
 			foreach($this->accounts as $num => $account)
 			{
