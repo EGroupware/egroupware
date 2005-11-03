@@ -42,6 +42,7 @@ location	resources	en	Location
 location of resource	resources	en	Location of resource
 name of resource	resources	en	Name of resource
 no description available	resources	en	no description available
+no resources selected	resources	en	No resources selected
 notify your administrator to correct this situation	resources	en	Notify your administrator to correct this situation
 picture	resources	en	Picture
 picture source	resources	en	picture source
@@ -52,6 +53,7 @@ prizeing information for booking or buying	resources	en	Prizeing information for
 quantity	resources	en	Quantity
 quantity of resource	resources	en	Quantity of resource
 quantity:	resources	en	Quantity:
+read calendar permissions	resources	en	Read Calendar permissions
 read calender permissions	resources	en	Read Calender permissions
 read permissions	resources	en	Read permissions
 related links	resources	en	Related links
@@ -61,12 +63,14 @@ responsible:	resources	en	Responsible:
 saves entry and exits	resources	en	Saves entry and exits
 select a category	resources	en	Select a category
 select resource	resources	en	select resource
+select resources	resources	en	Select resources
 short description	resources	en	Short description
 short description of resource	resources	en	Short description of resource
 something went wrong by deleting resource	resources	en	Something went wrong by deleting resource
 something went wrong by saving resource	resources	en	Something went wrong by saving resource
 storage inforation	resources	en	Storage Inforation
 the calendar of this resource	resources	en	The Calendar of this resource
+this module displays the resources app	resources	en	This module displays the resources app
 use general resources icon	resources	en	Use general resources icon
 use own picture	resources	en	Use own picture
 use the category's icon	resources	en	Use the category's icon
@@ -80,3 +84,4 @@ which category does this resource belong to?	resources	en	Which category does th
 write permissions	resources	en	Write permissions
 you are not permitted to edit this reource!	resources	en	You are not permitted to edit this reource!
 you are not permitted to get information about this resource!	resources	en	You are not permitted to get information about this resource!
+you chose more resources than available	resources	en	You chose more resources than available

@@ -4,25 +4,9 @@ TODO:
 
 - list 
 	select all button --> add actions for selected: move to other cat,...
-	popup on picture --> show
-	add show-calender button
 	
-- edit/add
-	bug: accessories aren't moved to cat of master if it changes
-
-- admin section
-	add configure picture size	
-	configure if buyable should be used
-
-- calendar views
-	do we need own views?
-
-- show
-	show accessories and links 
-	change button layout
-
 Long Term todo's:
 ---------------------------
 advanced search dialog, accessable via sideboxmenu
-add prize functionality
+add buy and prize functionality
 add location functionality
