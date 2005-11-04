@@ -32,8 +32,8 @@
 		var $acl_table          = 'egw_acl';
 		var $accounts_table     = 'egw_accounts';
 		var $prefs_table        = 'phpgw_preferences';
-		var $lang_table         = 'phpgw_lang';
-		var $languages_table    = 'phpgw_languages';
+		var $lang_table         = 'egw_lang';
+		var $languages_table    = 'egw_languages';
 		var $hooks_table        = 'phpgw_hooks';
 		var $cats_table         = 'phpgw_categories';
 		var $oProc;
@@ -97,7 +97,21 @@
 				),__LINE__,__FILE__);
 				if ($this->db->next_record() && $this->db->f(0))
 				{
-					$this->db->Link_ID->SetCharSet($this->db->f(0));
+					$this->system_charset = $this->db->f(0);
+					$this->db_charset_was = $this->db->Link_ID->GetCharSet();	// needed for the update
+
+					// we can NOT set the DB charset for mysql, if the api version < 1.0.1.019, as it would mess up the DB content!!!
+					if (substr($this->db->Type,0,5) == 'mysql')	// we need to check the api version
+					{
+						$this->db->select($this->applications_table,'app_version',array(
+							'app_name'  => 'phpgwapi',
+						),__LINE__,__FILE__);
+						$api_version = $this->db->next_record() ? $this->db->f(0) : false;
+					}
+					if (!$api_version || !$this->alessthanb($api_version,'1.0.1.019'))
+					{
+						$this->db->Link_ID->SetCharSet($this->system_charset);
+					}
 				}	
 				$this->db->Halt_On_Error = 'yes';	// setting the default again
 			}
@@ -395,9 +409,13 @@
 
 		/**
 		 * Clear system/user level cache so as to have it rebuilt with the next access
+		 *
+		 * AFAIK this code is not used anymore -- RalfBecker 2005/11/04
 		 */
 		function clear_session_cache()
 		{
+			return;		// AFAIK this code is not used anymore -- RalfBecker 2005/11/04
+
 			$tables = Array();
 			$tablenames = $this->db->table_names();
 			foreach($tablenames as $key => $val)
@@ -485,11 +503,6 @@
 				return False;
 			}
 
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
-			{
-				$this->applications_table = 'applications';
-			}
-
 			if(@$GLOBALS['DEBUG'])
 			{
 				echo '<br>app_registered(): checking ' . $appname . ', table: ' . $this->applications_table;
@@ -497,8 +510,7 @@
 			}
 
 			$this->db->select($this->applications_table,'COUNT(*)',array('app_name' => $appname),__LINE__,__FILE__);
-			$this->db->next_record();
-			if($this->db->f(0))
+			if($this->db->next_record() && $this->db->f(0))
 			{
 				if(@$GLOBALS['DEBUG'])
 				{
@@ -526,11 +538,6 @@
 			if(!$appname)
 			{
 				return False;
-			}
-
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
-			{
-				$this->applications_table = 'applications';
 			}
 
 			if($GLOBALS['DEBUG'])
@@ -574,11 +581,6 @@
 				return False;
 			}
 
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
-			{
-				$this->applications_table = 'applications';
-			}
-
 			if($tableschanged == True)
 			{
 				$GLOBALS['egw_info']['setup']['tableschanged'] = True;
@@ -604,11 +606,6 @@
 				return False;
 			}
 			$setup_info = $GLOBALS['setup_info'];
-
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.10pre8') && ($setup_info['phpgwapi']['currentver'] != ''))
-			{
-				$this->applications_table = 'applications';
-			}
 
 			//echo 'DELETING application: ' . $appname;
 			$this->db->delete($this->applications_table,array('app_name'=>$appname),__LINE__,__FILE__);
@@ -981,7 +978,6 @@
 				$this->setup_account_object();
 				$account = $GLOBALS['egw']->accounts->name2id($account);
 			}
-			$rights = (int)$rights;
 			if(!is_object($this->db))
 			{
 				$this->loaddb();
@@ -993,10 +989,21 @@
 			}
 			foreach($apps as $app)
 			{
-				$this->db->query("DELETE FROM $this->acl_table WHERE acl_appname='$app' AND acl_location='$location' AND acl_account=$account");
-				if ($rights)
+				$this->db->delete($this->acl_table,array(
+					'acl_appname'  => $app,
+					'acl_location' => $location,
+					'acl_account'  => $account,
+				),__LINE__,__FILE__);
+
+				if ((int) $rights)
 				{
-					$this->db->query("INSERT INTO $this->acl_table (acl_appname,acl_location,acl_account,acl_rights) VALUES('$app','$location',$account,$rights)");
+					$this->db->insert($this->acl_table,array(
+						'acl_rights' => $rights
+					),array(
+						'acl_appname'  => $app,
+						'acl_location' => $location,
+						'acl_account'  => $account,
+					),__LINE__,__FILE__);
 				}
 			}
 		}
@@ -1039,7 +1046,12 @@
 				'languages_table'    => array('egw_languages','phpgw_languages','languages'),
 			) as $name => $tables)
 			{
-				$this->$name = $this->table_exist($tables);
+				$table = $this->table_exist($tables);
+
+				if ($table && $table != $this->$name)	// only overwrite the default name, if we realy got one (important for new installs)
+				{
+					$this->$name = $table;
+				}
 				//echo "<p>setup::set_table_names: $name = '{$this->$name}'</p>\n";
 			}
 		}

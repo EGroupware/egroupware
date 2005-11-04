@@ -138,7 +138,7 @@
 			'fk' => array(),
 			'uc' => array()
 		),
-		'phpgw_languages' => array(
+		'egw_languages' => array(
 			'fd' => array(
 				'lang_id' => array('type' => 'varchar','precision' => '5','nullable' => False),
 				'lang_name' => array('type' => 'varchar','precision' => '50','nullable' => False)
@@ -148,11 +148,11 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_lang' => array(
+		'egw_lang' => array(
 			'fd' => array(
 				'lang' => array('type' => 'varchar','precision' => '5','nullable' => False,'default' => ''),
-				'app_name' => array('type' => 'varchar','precision' => '100','nullable' => False,'default' => 'common'),
-				'message_id' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => ''),
+				'app_name' => array('type' => 'varchar','precision' => '32','nullable' => False,'default' => 'common'),
+				'message_id' => array('type' => 'varchar','precision' => '128','nullable' => False,'default' => ''),
 				'content' => array('type' => 'text')
 			),
 			'pk' => array('lang','app_name','message_id'),
@@ -328,7 +328,7 @@
 				'vfs_comment' => array('type' => 'varchar','precision' => '255'),
 				'vfs_app' => array('type' => 'varchar','precision' => '25'),
 				'vfs_directory' => array('type' => 'varchar','precision' => '255'),
-				'vfs_name' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'vfs_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
 				'vfs_link_directory' => array('type' => 'varchar','precision' => '255'),
 				'vfs_link_name' => array('type' => 'varchar','precision' => '128'),
 				'vfs_version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
@@ -336,7 +336,7 @@
 			),
 			'pk' => array('vfs_file_id'),
 			'fk' => array(),
-			'ix' => array(array('vfs_directory','vfs_name','vfs_mime_type')),
+			'ix' => array(array('vfs_directory','vfs_name')),
 			'uc' => array()
 		),
 		'phpgw_history_log' => array(
@@ -407,14 +407,14 @@
 				'owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
 				'createdby_id' => array('type' => 'int','precision' => '4'),
 				'modifiedby_id' => array('type' => 'int','precision' => '4'),
-				'created' => array('type' => 'timestamp','default' => '1970-01-01 00:00:00','nullable' => False),
-				'modified' => array('type' => 'timestamp','nullable' => True),
+				'created' => array('type' => 'timestamp','nullable' => False,'default' => '1970-01-01 00:00:00'),
+				'modified' => array('type' => 'timestamp'),
 				'size' => array('type' => 'int','precision' => '8'),
 				'deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
 				'comment' => array('type' => 'varchar','precision' => '255'),
 				'app' => array('type' => 'varchar','precision' => '25'),
 				'directory' => array('type' => 'varchar','precision' => '255'),
-				'name' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'name' => array('type' => 'varchar','precision' => '64','nullable' => False),
 				'link_directory' => array('type' => 'varchar','precision' => '255'),
 				'link_name' => array('type' => 'varchar','precision' => '128'),
 				'version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
@@ -424,7 +424,7 @@
 				'proper_id' => array('type' => 'varchar','precision' => '45')
 			),
 			'pk' => array('file_id'),
-			'fk' => array('mime_id' => array('phpgw_vfs2_mimetypes' => 'mime_id')),
+			'fk' => array(),
 			'ix' => array(array('directory','name')),
 			'uc' => array()
 		),
@@ -508,15 +508,15 @@
 		),
 		'egw_contentmap' => array(
 			'fd' => array(
-				'map_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
-				'map_guid' => array('type' => 'varchar','precision' => '200','nullable' => False),
-				'map_locuid' => array('type' => 'varchar','precision' => '200','nullable' => False),
+				'map_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'map_guid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'map_locuid' => array('type' => 'int','precision' => '8','nullable' => False),
 				'map_timestamp' => array('type' => 'timestamp','nullable' => False),
 				'map_expired' => array('type' => 'bool','nullable' => False)
 			),
-			'pk' => array(array('map_id','map_guid','map_locuid')),
+			'pk' => array('map_id','map_guid','map_locuid'),
 			'fk' => array(),
-			'ix' => array(array('map_id','map_locuid'),'map_expired'),
+			'ix' => array('map_expired',array('map_id','map_locuid')),
 			'uc' => array()
 		),
 		'egw_syncmldevinfo' => array(
@@ -565,5 +565,5 @@
 			'fk' => array(),
 			'ix' => array(array('link_app1','link_id1','link_lastmod'),array('link_app2','link_id2','link_lastmod')),
 			'uc' => array()
-		),
+		)
 	);

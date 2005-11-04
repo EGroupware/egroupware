@@ -20,7 +20,8 @@
 	/**
 	 * eGW's ADOdb based schema-processor
 	 *
-	 * @class schema_proc
+	 * @package phpgwapi
+	 * @subpackage db
 	 * @author RalfBecker-AT-outdoor-training.de and others
 	 * @license GPL
 	 */
@@ -36,6 +37,8 @@
 		);
 		var $sType;	// type of the database, set by the the constructor
 		var $max_varchar_length = 255;	// maximum length of a varchar column, everything above get converted to text
+		
+		var $system_charset;
 
 		/**
 		 * Constructor of schema-processor
@@ -65,6 +68,14 @@
 					$this->max_varchar_length = 8000;
 					break;
 			}
+			if (is_object($GLOBALS['egw_setup']))
+			{
+				$this->system_charset =& $GLOBALS['egw_setup']->system_charset;
+			}
+			elseif (isset($GLOBALS['egw_info']['server']['system_charset']))
+			{
+				$this->system_charset = $GLOBALS['egw_info']['server']['system_charset'];
+			}
 		}
 		
 		/**
@@ -80,8 +91,14 @@
 			{
 				$this->debug_message('schema_proc::CreateTable(%1,%2)',False,$sTableName, $aTableDef);
 			}
+			// for mysql 4.0+ we set the charset for the table
+			if ($this->system_charset && substr($this->sType,0,5) == 'mysql' && 
+				(float) $this->m_odb->ServerInfo['version'] >= 4.0 && $this->m_odb->Link_ID->charset2mysql[$this->system_charset])
+			{
+				$set_table_charset = array($this->sType => 'CHARACTER SET '.$this->m_odb->Link_ID->charset2mysql[$this->system_charset]);
+			}
 			// creating the table
-			$aSql = $this->dict->CreateTableSQL($sTableName,$ado_cols = $this->_egw2adodb_columndef($aTableDef));
+			$aSql = $this->dict->CreateTableSQL($sTableName,$ado_cols = $this->_egw2adodb_columndef($aTableDef),$set_table_charset);
 			if (!($retVal = $this->ExecuteSQLArray($aSql,2,'CreateTableSQL(%1,%2) sql=%3',False,$sTableName,$ado_cols,$aSql)))
 			{
 				return $retVal;
@@ -570,7 +587,7 @@
 		 * Creates all tables for one application
 		 *
 		 * @param array $aTables array of eGW table-definitions
-		 * @param boolean $bOutputHTML should we give diagnostics, default False
+		 * @param boolean $bOutputHTML=false should we give diagnostics, default False
 		 * @return boolean True on success, False if an (fatal) error occured
 		 */
 		function ExecuteScripts($aTables, $bOutputHTML=False)
@@ -661,12 +678,12 @@
 		*	if the row exists db::update is called else a new row with $date merged with $where gets inserted (data has precedence)
 		* @param int $line line-number to pass to query
 		* @param string $file file-name to pass to query
-		* @param string $app string with name of app, this need to be set in setup anyway!!!
+		* @param string $app=false string with name of app, this need to be set in setup anyway!!!
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function insert($table,$data,$where,$line,$file,$app)
+		function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false)
 		{
-			return $this->m_odb->insert($table,$data,$where,$line,$file,$app);
+			return $this->m_odb->insert($table,$data,$where,$line,$file,$app,$use_prepared_statement);
 		}		
 			
 		/**

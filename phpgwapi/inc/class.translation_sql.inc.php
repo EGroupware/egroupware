@@ -25,10 +25,10 @@
 	/* $Id$ */
 
 	// define the maximal length of a message_id, all message_ids have to be unique
-	// in this length, our column is varchar 255, but addslashes might add some length
+	// in this length, our column is varchar 128
 	if (!defined('MAX_MESSAGE_ID_LENGTH'))
 	{
-		define('MAX_MESSAGE_ID_LENGTH',230);
+		define('MAX_MESSAGE_ID_LENGTH',128);
 	}
 	// some constanst for pre php4.3
 	if (!defined('PHP_SHLIB_SUFFIX'))
@@ -46,6 +46,9 @@
 		var $loaded_apps = array();
 		var $line_rejected = array();
 		var $lang_array = array();
+		var $lang_table = 'egw_lang';
+		var $languages_table = 'egw_languages';
+		var $config_table = 'egw_config';
 
 		/**
 		 * Constructor, sets up a copy of the db-object, gets the system-charset and tries to load the mbstring extension
@@ -58,9 +61,6 @@
 			}
 			$this->db = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 			$this->db->set_app('phpgwapi');
-			$this->lang_table = 'phpgw_lang';
-			$this->languages_table = 'phpgw_languages';
-			$this->config_table = 'egw_config';
 
 			if (!isset($GLOBALS['egw_setup']))
 			{
@@ -272,7 +272,7 @@
 		{
 			if (!is_array($this->langs))
 			{
-				$this->db->query("SELECT DISTINCT l.lang,lx.lang_name FROM phpgw_lang l,phpgw_languages lx WHERE l.lang = lx.lang_id",__LINE__,__FILE__);
+				$this->db->query("SELECT DISTINCT l.lang,lx.lang_name FROM $this->lang_table l,$this->languages_table lx WHERE l.lang = lx.lang_id",__LINE__,__FILE__);
 				if (!$this->db->num_rows())
 				{
 					return False;
@@ -300,7 +300,7 @@
 			{
 				$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 
-				$this->db->query("SELECT $distinct l.lang,lx.lang_name,l.content AS charset FROM phpgw_lang l,phpgw_languages lx WHERE l.lang = lx.lang_id AND l.message_id='charset'",__LINE__,__FILE__);
+				$this->db->query("SELECT $distinct l.lang,lx.lang_name,l.content AS charset FROM $this->lang_table l,$this->languages_table lx WHERE l.lang = lx.lang_id AND l.message_id='charset'",__LINE__,__FILE__);
 				if (!$this->db->num_rows())
 				{
 					return False;
@@ -451,7 +451,7 @@
 				$addlang = False;
 				if ($upgrademethod == 'addonlynew')
 				{
-					//echo "<br>Test: addonlynew - select count(*) from phpgw_lang where lang='".$lang."'";
+					//echo "<br>Test: addonlynew - select count(*) from egw_lang where lang='".$lang."'";
 					$this->db->select($this->lang_table,'COUNT(*)',array(
 						'lang' => $lang,
 					),__LINE__,__FILE__);
@@ -475,7 +475,7 @@
 					$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
 					$raw = array();
 					$apps = $only_app ? array($only_app) : array_keys($setup_info);
-					// Visit each app/setup dir, look for a phpgw_lang file
+					// Visit each app/setup dir, look for a egw_lang file
 					foreach($apps as $app)
 					{
 						$appfile = EGW_SERVER_ROOT . SEP . $app . SEP . 'setup' . SEP . 'phpgw_' . strtolower($lang) . '.lang';
@@ -562,7 +562,7 @@
 							{
 								if($message_id && $content)
 								{
-									// echo "<br>adding - insert into phpgw_lang values ('$message_id','$app_name','$lang','$content')";
+									// echo "<br>adding - insert into egw_lang values ('$message_id','$app_name','$lang','$content')";
 									$result = $this->db->insert($this->lang_table,array(
 										'message_id'	=> $message_id,
 										'app_name'		=> $app_name,
@@ -572,7 +572,7 @@
 
 									if ((int)$result <= 0)
 									{
-										echo "<br>Error inserting record: phpgw_lang values ('$message_id','$app_name','$lang','$content')";
+										echo "<br>Error inserting record: egw_lang values ('$message_id','$app_name','$lang','$content')";
 									}
 								}
 							}

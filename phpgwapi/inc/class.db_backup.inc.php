@@ -13,10 +13,13 @@
 	
 	/* $Id$ */
 
+	define('BACKSLASH_TOKEN','##!!**bAcKsLaSh**!!##');	// used in cvs_split
+
 	/**
 	 * DB independent backup and restore of eGW's DB
 	 *
-	 * @class db_backup
+	 * @package phpgwapi
+	 * @subpackage db
 	 * @author RalfBecker-AT-outdoor-training.de
 	 * @license GPL
 	 */
@@ -28,11 +31,10 @@
 		var $exclude_tables = array(	/** exclude from backup */
 			'phpgw_sessions','phpgw_app_sessions',	// eGW's session-tables
 			'phpgw_anglemail',	// email's cache
-			'phpgw_felamimail_cache','phpgw_felamimail_folderstatus',	// felamimail's cache
+			'egw_felamimail_cache','egw_felamimail_folderstatus','phpgw_felamimail_cache','phpgw_felamimail_folderstatus',	// felamimail's cache
 		);
 		var $system_tables = false;	/** regular expression to identify system-tables => ignored for schema+backup */
 		var $egw_tables = false;	/** regurar expression to identify eGW tables => if set only they are used */
-		var $backslash_token = '##!!**bAcKsLaSh**!!##';	// used in cvs_split
 
 		/**
 		 * Constructor
@@ -52,7 +54,7 @@
 			$this->adodb = &$GLOBALS['egw']->ADOdb;
 			if (is_object($GLOBALS['egw_setup']))		// called from setup
 			{
-				if ($GLOBALS['egw_setup']->config_table)
+				if ($GLOBALS['egw_setup']->config_table && $GLOBALS['egw_setup']->table_exist(array($GLOBALS['egw_setup']->config_table)))
 				{
 					$this->db->query("SELECT config_value FROM {$GLOBALS['egw_setup']->config_table} WHERE config_app='phpgwapi' AND config_name='backup_dir'",__LINE__,__FILE__);
 					$this->db->next_record();
@@ -71,17 +73,21 @@
 						$this->db->next_record();
 						$this->charset = $this->db->f(0);
 					}
+					$this->db->select($GLOBALS['egw_setup']->applications_table,'app_version',array('app_name'=>'phpgwapi'),__LINE__,__FILE__);
+					$this->api_version = $this->db->next_record() ? $this->db->f(0) : false;
 				}
 				if (!$this->charset) $this->charset = 'iso-8859-1';
 			}
 			else	// called from eGW
 			{
 				$this->schema_proc = CreateObject('phpgwapi.schema_proc');
-				if (!($this->backup_dir = $GLOBALS['phpgw_info']['server']['backup_dir']))
+				if (!($this->backup_dir = $GLOBALS['egw_info']['server']['backup_dir']))
 				{
-					$this->backup_dir = $GLOBALS['phpgw_info']['server']['files_dir'].'/db_backup';
+					$this->backup_dir = $GLOBALS['egw_info']['server']['files_dir'].'/db_backup';
 				}
 				$this->charset = $GLOBALS['egw']->translation->charset();
+				
+				$this->api_version = $GLOBALS['egw_info']['apps']['phpgwapi']['version'];
 			}
 			if (!is_dir($this->backup_dir) && is_writable(dirname($this->backup_dir)))
 			{
@@ -162,13 +168,23 @@
 
 				if (empty($line)) continue;
 				
+				if (substr($line,0,9) == 'version: ')
+				{
+					$api_version = trim(substr($line,9));
+					continue;
+				}
 				if (substr($line,0,9) == 'charset: ')
 				{
-					$charset = substr($line,9);
+					$charset = trim(substr($line,9));
 					// needed if mbstring.func_overload > 0, else eg. substr does not work with non ascii chars
 					@ini_set('mbstring.internal_encoding',$charset);
-					// set the DB's client encoding
-					$this->db->Link_ID->SetCharSet($charset);
+					// set the DB's client encoding (for mysql only if api_version >= 1.0.1.019)
+					if (substr($this->db->Type,0,5) != 'mysql' || !is_object($GLOBALS['egw_setup']) || 
+						$api_version && !$GLOBALS['egw_setup']->alessthanb($api_version,'1.0.1.019'))
+					{
+						$this->db->Link_ID->SetCharSet($charset);
+						$this->schema_proc->system_charset = $charset;	// so schema_proc uses it for the creation of the tables
+					}
 					continue;
 				}
 				if (substr($line,0,8) == 'schema: ')
@@ -181,7 +197,7 @@
 						$this->schema_proc->CreateTable($table_name,$schema);
 					}
 					// make the schemas availible for the db-class
-					$GLOBALS['phpgw_info']['apps']['all-apps']['table_defs'] = &$this->schemas;
+					$GLOBALS['egw_info']['apps']['all-apps']['table_defs'] = &$this->schemas;
 					continue;
 				}
 				if (substr($line,0,7) == 'table: ')
@@ -244,21 +260,12 @@
 
 				if ($field[0] == '"')
 				{
-					if (substr($field,-1) !== '"' || $field === '"')
+					if (substr($field,-1) !== '"' || $field === '"' || !preg_match('/[^\\\\]+(\\\\\\\\)*"$/',$field))
 					{
 						$str_pending = $field;
 						continue;
 					}
-					// count the number of backslashes before the finishing double-quote
-					// it's not escaped if the number is even (incl. zero)
-					for($anz_bslash = 0, $i = strlen($field)-2; $i >= 0 && $field[$i] == '\\'; --$i,++$anz_bslash);
-
-					if ($anz_bslash & 1)	// ending double quote is escaped and does not end the string
-					{
-						$str_pending = $field;
-						continue;
-					}
-					$arr[$key] = str_replace($this->backslash_token,'\\',str_replace(array('\\\\','\\n','\\r','\\"'),array($this->backslash_token,"\n","\r",'"'),substr($field,1,-1)));
+					$arr[$key] = str_replace(BACKSLASH_TOKEN,'\\',str_replace(array('\\\\','\\n','\\r','\\"'),array(BACKSLASH_TOKEN,"\n","\r",'"'),substr($field,1,-1)));
 				}
 				else
 				{
@@ -304,9 +311,11 @@
 		{
 			@set_time_limit(0);
 
-			fwrite($f,"eGroupWare backup from ".date('Y-m-d H:i:s')."\n");
+			fwrite($f,"eGroupWare backup from ".date('Y-m-d H:i:s')."\n\n");
 
-			fwrite($f,"\ncharset: $this->charset\n\n");
+			fwrite($f,"version: $this->api_version\n\n");
+			
+			fwrite($f,"charset: $this->charset\n\n");
 
 			$this->schema_backup($f);	// add the schema in a human readable form too
 			
@@ -445,3 +454,9 @@
 			return $def;
 		}
 	}
+/*	
+$line = '"de","ranking","use \\"yes\\", or \\"no, prefession\\"","benützen Sie \\"yes\\" oder \\"no, Beruf\\""';
+
+echo "<p>line='$line'</p>\n";
+echo "<pre>".print_r(db_backup::csv_split($line),true)."</pre>\n";
+*/

@@ -605,3 +605,171 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.014';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+	$test[] = '1.0.1.014';
+	function phpgwapi_upgrade1_0_1_014()
+	{
+		// index was to big for mysql with charset utf8 (max 1000byte = 333 utf8 chars)
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_lang','app_name',array(
+			'type' => 'varchar',
+			'precision' => '32',
+			'nullable' => False,
+			'default' => 'common'
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_lang','message_id',array(
+			'type' => 'varchar',
+			'precision' => '128',
+			'nullable' => False,
+			'default' => ''
+		));
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_lang','egw_lang');
+		$GLOBALS['egw_setup']->lang_table = 'egw_lang';
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_languages','egw_languages');
+		$GLOBALS['egw_setup']->languages_table = 'egw_languages';
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.015';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '1.0.1.015';
+	function phpgwapi_upgrade1_0_1_015()
+	{
+		// index was to big for mysql with charset utf8 (max 1000byte = 333 utf8 chars)
+		/* done by RefreshTable() anyway
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_contentmap','map_id',array(
+			'type' => 'varchar',
+			'precision' => '128',
+			'nullable' => False
+		));*/
+		/* done by RefreshTable() anyway
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_contentmap','map_guid',array(
+			'type' => 'varchar',
+			'precision' => '128',
+			'nullable' => False
+		));*/
+		/* done by RefreshTable() anyway
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_contentmap','map_locuid',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False
+		));*/
+		$GLOBALS['egw_setup']->oProc->RefreshTable('egw_contentmap',array(
+			'fd' => array(
+				'map_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'map_guid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'map_locuid' => array('type' => 'int','precision' => '8','nullable' => False),
+				'map_timestamp' => array('type' => 'timestamp','nullable' => False),
+				'map_expired' => array('type' => 'bool','nullable' => False)
+			),
+			'pk' => array('map_id','map_guid','map_locuid'),
+			'fk' => array(),
+			'ix' => array('map_expired',array('map_id','map_locuid')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.016';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '1.0.1.016';
+	function phpgwapi_upgrade1_0_1_016()
+	{
+		// index was to big for mysql with charset utf8 (max 1000byte = 333 utf8 chars)
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_vfs2_files','name',array(
+			'type' => 'varchar',
+			'precision' => '64',
+			'nullable' => False
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.017';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '1.0.1.017';
+	function phpgwapi_upgrade1_0_1_017()
+	{
+		// index was to big for mysql with charset utf8 (max 1000byte = 333 utf8 chars)
+		/* done by RefreshTable() anyway
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_vfs','vfs_name',array(
+			'type' => 'varchar',
+			'precision' => '64',
+			'nullable' => False
+		));*/
+		$GLOBALS['egw_setup']->oProc->RefreshTable('egw_vfs',array(
+			'fd' => array(
+				'vfs_file_id' => array('type' => 'auto','nullable' => False),
+				'vfs_owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'vfs_createdby_id' => array('type' => 'int','precision' => '4'),
+				'vfs_modifiedby_id' => array('type' => 'int','precision' => '4'),
+				'vfs_created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
+				'vfs_modified' => array('type' => 'date'),
+				'vfs_size' => array('type' => 'int','precision' => '4'),
+				'vfs_mime_type' => array('type' => 'varchar','precision' => '64'),
+				'vfs_deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
+				'vfs_comment' => array('type' => 'varchar','precision' => '255'),
+				'vfs_app' => array('type' => 'varchar','precision' => '25'),
+				'vfs_directory' => array('type' => 'varchar','precision' => '255'),
+				'vfs_name' => array('type' => 'varchar','precision' => '64','nullable' => False),
+				'vfs_link_directory' => array('type' => 'varchar','precision' => '255'),
+				'vfs_link_name' => array('type' => 'varchar','precision' => '128'),
+				'vfs_version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
+				'vfs_content' => array('type' => 'text')
+			),
+			'pk' => array('vfs_file_id'),
+			'fk' => array(),
+			'ix' => array(array('vfs_directory','vfs_name')),
+			'uc' => array()
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.018';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+
+
+	$test[] = '1.0.1.018';
+	function phpgwapi_upgrade1_0_1_018()
+	{
+		// This update fixes charset in mysql4+ tables, if the default client charset does not match the eGW system-charset.
+		// It is necessary as update, as we now set the system_charset as client charset, which causes the existing input to be returned wrong.
+		
+		
+		// We have to shorten the felamimail columns first, as this update would fail, because it's run before the felamimail update
+		// (shortening them twice, does no harm) !!!
+		if ($GLOBALS['egw_setup']->table_exist(array('phpgw_felamimail_cache')))
+		{
+			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_cache','fmail_accountname',array(
+				'type' => 'varchar',
+				'precision' => '128',
+				'nullable' => False
+			));
+			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_cache','fmail_foldername',array(
+				'type' => 'varchar',
+				'precision' => '128',
+				'nullable' => False
+			));
+			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_folderstatus','fmail_accountname',array(
+				'type' => 'varchar',
+				'precision' => '128',
+				'nullable' => False
+			));
+			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_folderstatus','fmail_foldername',array(
+				'type' => 'varchar',
+				'precision' => '128',
+				'nullable' => False
+			));
+		}
+		if (substr($GLOBALS['egw_setup']->db->Type,0,5) == 'mysql' && $GLOBALS['egw_setup']->system_charset && $GLOBALS['egw_setup']->db_charset_was &&
+			$GLOBALS['egw_setup']->system_charset != $GLOBALS['egw_setup']->db_charset_was)
+		{
+			include(EGW_SERVER_ROOT.'/setup/fix_mysql_charset.php');
+
+			// now the DB is fixed we can set the charset
+			$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($GLOBALS['egw_setup']->system_charset);
+		}
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.019';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
+?>

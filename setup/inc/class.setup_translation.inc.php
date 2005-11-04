@@ -25,7 +25,7 @@
 
 	if (!defined('MAX_MESSAGE_ID_LENGTH'))
 	{
-		define('MAX_MESSAGE_ID_LENGTH',230);
+		define('MAX_MESSAGE_ID_LENGTH',128);
 	}
 
 	class setup_translation

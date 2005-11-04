@@ -324,6 +324,7 @@
 						// Set the DB's client charset if a system-charset is set
 						if ($_REQUEST['system_charset'])
 						{
+							$GLOBALS['egw_setup']->system_charset = $_REQUEST['system_charset'];
 							$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
 						}
 						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True,$_REQUEST['system_charset']);
@@ -334,7 +335,7 @@
 					// create a backup, before upgrading the tables
 					if ($_POST['backup'])
 					{
-						$db_backup = CreateObject('phpgwapi.db_backup');
+						$db_backup =& CreateObject('phpgwapi.db_backup');
 						if (is_resource($f = $db_backup->fopen_backup()))
 						{
 							echo '<p align="center">'.lang('backup started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
@@ -384,7 +385,7 @@
 	
 function check_dir($dir,&$msg,$check_in_docroot=false)
 {
-	if (!@is_dir($dir))
+	if (!@is_dir($dir) && !(@is_writeable(dirname($dir)) && @mkdir($dir,0700,true)))
 	{
 		$msg = lang('does not exist');
 		return false;
@@ -445,6 +446,11 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			{
 				$config[$GLOBALS['egw_setup']->db->f(0)] = $GLOBALS['egw_setup']->db->f(1);
 			}
+			$config_msg = '';
+			if (!check_dir($config['temp_dir'],$error_msg))
+			{
+				$config_msg = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
+			}
 			// set and create the default backup_dir
 			if (@is_writeable($config['files_dir']) && !isset($config['backup_dir']) && $config['file_store_contents'] == 'filesystem')
 			{
@@ -458,11 +464,6 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 						'config_name' => 'backup_dir',
 					),__LINE__,__FILE__);
 				}
-			}
-			$config_msg = '';
-			if (!check_dir($config['temp_dir'],$error_msg))
-			{
-				$config_msg = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
 			}
 			if (!check_dir($config['files_dir'],$error_msg,true))
 			{

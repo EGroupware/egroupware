@@ -51,12 +51,13 @@
 		/**
 		 * the mother of all multipass upgrade parental loop functions
 		 *
-		 * @param $setup_info	array of application info from setup.inc.php files
-		 * @param $type		optional, defaults to new(install), could also be 'upgrade'
-		 * @param $DEBUG		optional, print debugging info
-		 * @param $force_en	optional, install english language files
+		 * @param array $setup_info	array of application info from setup.inc.php files
+		 * @param string $type='new' defaults to new(install), could also be 'upgrade'
+		 * @param boolean $DEBUG=false print debugging info
+		 * @param boolean $force_en=false install english language files
+		 * @param string $system_charset=null charset to use	
 		 */
-		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False,$system_charset=false)
+		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False,$system_charset=null)
 		{
 			if(!$method)
 			{
@@ -294,8 +295,8 @@
 		/**
 		 * process current table setup in each application/setup dir
 		 *
-		 * @param $appinfo	array of application info from setup.inc.php files, etc.
-		 * This duplicates the old newtables behavior, using schema_proc
+		 * @param array $setup_info	array of application info from setup.inc.php files, etc.
+		 * @param boolean $DEBUG=false
 		 */
 		function current($setup_info,$DEBUG=False)
 		{
@@ -626,23 +627,7 @@
 				return False;
 			}
 
-			$ret = $GLOBALS['egw_setup']->oProc->GenerateScripts($tables,$DEBUG);
-			if($ret)
-			{
-				$oret = $GLOBALS['egw_setup']->oProc->ExecuteScripts($tables,$DEBUG);
-				if($oret)
-				{
-					return True;
-				}
-				else
-				{
-					return False;
-				}
-			}
-			else
-			{
-				return False;
-			}
+			return $GLOBALS['egw_setup']->oProc->ExecuteScripts($tables,$DEBUG);
 		}
 
 		/**

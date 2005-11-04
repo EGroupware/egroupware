@@ -164,6 +164,20 @@
 			register_shutdown_function(array($this->common, 'egw_final'));
 
 			$this->db->connect();	// we need to re-connect
+			// Set the DB's client charset if a system-charset is set
+			$this->db->select($this->config_table,'config_value',array(
+				'config_app'  => 'phpgwapi',
+				'config_name' => 'system_charset',
+			),__LINE__,__FILE__);
+			if ($this->db->next_record() && $this->db->f(0))
+			{
+				$this->db->Link_ID->SetCharSet($this->db->f(0));
+			}
+			
+			if ($GLOBALS['egw_info']['system']['system_charset'])
+			{
+				$this->db->Link_ID->SetCharSet($GLOBALS['egw_info']['system']['system_charset']);
+			}
 			foreach(array('translation','hooks','auth','accounts','acl','session','preferences','applications','contenthistory','contacts') as $class)
 			{
 				if (is_object($this->$class->db))

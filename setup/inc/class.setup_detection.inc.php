@@ -45,7 +45,7 @@
 			
 			$GLOBALS['egw_setup']->set_table_names();
 
-			if($GLOBALS['egw_setup']->applications_table)
+			if($GLOBALS['egw_setup']->table_exist(array($GLOBALS['egw_setup']->applications_table)))
 			{
 				/* one of these tables exists. checking for post/pre beta version */
 				if($GLOBALS['egw_setup']->applications_table != 'applications')
