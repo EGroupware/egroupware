@@ -551,15 +551,14 @@
 			$this->total = count($accounts);
 
 			// return only the wanted accounts
-
 			if (is_array($sortedAccounts))
 			{
 				reset($sortedAccounts);
-				if(is_int($start) && is_int($offset))
+				if(is_numeric($start) && is_numeric($offset))
 				{
 					return array_slice($sortedAccounts, $start, $offset);
 				}
-				elseif(is_int($start))
+				elseif(is_numeric($start))
 				{
 					return array_slice($sortedAccounts, $start, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
 				}
