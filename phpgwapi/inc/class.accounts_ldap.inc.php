@@ -458,7 +458,7 @@
 			//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset, \$query_type=$query_type<br>";
 			$query = strtolower($query);
 
-			if($_type == 'accounts' || $_type == 'both')
+			if($_type != 'groups')
 			{
 				$filter = "(&(uidnumber=*)(phpgwaccounttype=u)";
 				if (!empty($query) && $query != '*')
@@ -511,7 +511,7 @@
 					}
 				}
 			}
-			if ($_type == 'groups' || $_type == 'both')
+			if ($_type != 'accounts')
 			{
 				if(empty($query) || $query == '*')
 				{
@@ -551,15 +551,14 @@
 			$this->total = count($accounts);
 
 			// return only the wanted accounts
-
 			if (is_array($sortedAccounts))
 			{
 				reset($sortedAccounts);
-				if(is_int($start) && is_int($offset))
+				if(is_numeric($start) && is_numeric($offset))
 				{
 					return array_slice($sortedAccounts, $start, $offset);
 				}
-				elseif(is_int($start))
+				elseif(is_numeric($start))
 				{
 					return array_slice($sortedAccounts, $start, $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs']);
 				}
