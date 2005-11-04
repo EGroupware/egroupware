@@ -56,7 +56,7 @@
 				$this->customfields = $value;
 			}
 			
-			if(empty($this->customfields))
+			if(!is_array($this->customfields))
 			{
 				$cell['type'] = 'label';
 				return True;
