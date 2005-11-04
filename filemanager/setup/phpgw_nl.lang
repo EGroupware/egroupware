@@ -1,8 +1,9 @@
 %1 already exists as a file	filemanager	nl	%1 bestaat reeds als een bestand.
 application	filemanager	nl	Toepassing
 back to file manager	filemanager	nl	Terug naar de Filemanager
+cancel editing %1 without saving	filemanager	nl	Annuleer het bewerken van %1 zonder te bewaren
 cannot create directory because it begins or ends in a space	filemanager	nl	Can de directory niet aanmaken omdat deze begint of eindigt met een spatie
-cannot replace %1 because it is a directory	filemanager	nl	Kan %1 niet vevangen omdat het een directory is.
+cannot replace %1 because it is a directory	filemanager	nl	Kan %1 niet vervangen omdat het een directory is.
 command sucessfully run	filemanager	nl	Commando met succes uitgevoerd.
 comment	filemanager	nl	Opmerking
 comments cannot contain "%1"	filemanager	nl	Opmerkingen kunnen geen "%1" bevatten.
@@ -10,20 +11,23 @@ copied %1 to %2	filemanager	nl	%1 gekopieerd naar %2.
 copy to	filemanager	nl	Kopiëren naar
 copy to:	filemanager	nl	Kopiëren naar:
 could not copy %1 to %2	filemanager	nl	Kon %1 niet naar %2 kopiëren.
+could not copy file because no destination directory is given	filemanager	nl	Kon het bestand niet kopiëren omdat geen doel directory is opgegeven
 could not create %1	filemanager	nl	Kon %1 niet aanmaken.
 could not create directory %1	filemanager	nl	Kon directory %1 niet aanmaken.
 could not delete %1	filemanager	nl	Kon %1 niet verwijderen.
 could not move %1 to %2	filemanager	nl	Kon %1 niet verplaatsen naar %2.
-could not rename %1 to %2	filemanager	nl	Kon %1 niet hernoemen naar %2.
+could not move file because no destination directory is given	filemanager	nl	Kon het bestand niet verplaatsen omdat geen doel directory is opgegeven
+could not rename %1 to %2	filemanager	nl	Kon %1 niet hernoemen in %2.
 could not save %1	filemanager	nl	Kon %1 niet opslaan.
 create file	filemanager	nl	Bestand aanmaken
 create folder	filemanager	nl	Directory aanmaken
 created	filemanager	nl	Aangemaakt
 created %1	filemanager	nl	%1 aangemaakt.
+created %1,%2	filemanager	nl	%1,%2 aangemaakt
 created by	filemanager	nl	Aangemaakt door
 created directory %1	filemanager	nl	Directory %1 aangemaakt.
 date	filemanager	nl	Datum
-default number of upload fields to show	filemanager	nl	Standaard aantal uploadvelden in beeld
+default number of upload fields to show	filemanager	nl	Standaard aantal te tonen uploadvelden
 delete	filemanager	nl	Verwijderen
 deleted %1	filemanager	nl	%1 verwijderd
 directory	filemanager	nl	Directory
@@ -37,11 +41,11 @@ edit comments	filemanager	nl	Opmerkingen bewerken
 error running command	filemanager	nl	Fout bij het uitvoeren van commando
 execute	filemanager	nl	Uitvoeren
 failed to create directory	filemanager	nl	Het aanmaken van de directory is niet gelukt.
+fake base dir did not exist, egroupware created a new one.	filemanager	nl	Fake Base Dir bestond niet, eGroupWare heeft een nieuwe aangemaakt.
 file	filemanager	nl	Bestand
 file %1 already exists. please edit it or delete it first.	filemanager	nl	Bestand %1 bestaat reeds.
 file %1 could not be created.	filemanager	nl	Bestand %1 kon niet worden aangemaakt.
 file name	filemanager	nl	Bestandsnaam
-file names cannot contain  or /	filemanager	nl	Bestanden kunnen geen "\" of "/" bevatten.
 file names cannot contain "%1"	filemanager	nl	Bestanden kunnen geen "%1" bevatten.
 file names cannot contain \ or /	filemanager	nl	Bestanden kunnen geen "\" of "/" bevatten.
 filemanager	common	nl	Filemanager
@@ -49,12 +53,15 @@ filemanager preferences	filemanager	nl	Filemanager voorkeuren
 files	filemanager	nl	Bestanden
 files in this directory	filemanager	nl	Bestanden in deze folder
 folder	filemanager	nl	Directory
+folder up	filemanager	nl	Folder omhoog
+go home	filemanager	nl	ga naar begin
 go to	filemanager	nl	Ga naar
 go to %1	filemanager	nl	Ga naar %1
 go to your home directory	filemanager	nl	Ga naar uw homedirectory
 go to:	filemanager	nl	Ga naar:
 go up	filemanager	nl	omhoog
 home	filemanager	nl	Home
+location	filemanager	nl	Locatie
 locked	filemanager	nl	Gesloten
 mime type	filemanager	nl	MIME-type
 modified	filemanager	nl	Gewijzigd
@@ -67,6 +74,7 @@ no version history for this file/directory	filemanager	nl	Geen versiegeschiedeni
 operation	filemanager	nl	Actie
 other settings	filemanager	nl	Overige instellingen
 owner	filemanager	nl	Eigenaar
+please select a file to delete.	filemanager	nl	Kies s.v.p. een bestand om te verwijderen.
 preview %1	filemanager	nl	Preview %1
 preview of %1	filemanager	nl	Preview van %1
 quick jump to	filemanager	nl	Snel naar
@@ -75,7 +83,9 @@ rename	filemanager	nl	Hernoemen
 renamed %1 to %2	filemanager	nl	%1 hernoemd naar %2
 replaced %1	filemanager	nl	%1 vervangen
 save %1	filemanager	nl	%1 opslaan
+save %1, and go back to file listing	filemanager	nl	Bewaar %1 en ga terug naar de bestandenlijst
 save all	filemanager	nl	Alles opslaan
+save changes	filemanager	nl	Bewaar wijzigingen
 saved %1	filemanager	nl	%1 opgeslagen
 show	filemanager	nl	Weergeven
 show ..	filemanager	nl	.. weergeven
@@ -84,6 +94,7 @@ show command line (experimental. dangerous.)	filemanager	nl	Commandoinvoer weerg
 show help	filemanager	nl	Help weergeven
 size	filemanager	nl	Grootte
 sort by:	filemanager	nl	Sorteren op:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	nl	De toekomstige bestandsbeheerder, nu ALLEEN VOOR TEST DOELEINDEN, s.v.p. bugmeldingen insturen
 total files	filemanager	nl	Totaal aantal bestanden
 unknown mime-type defaults to text/plain when viewing	filemanager	nl	Onbekend MIME-type standaard als text/plain weergeven
 unused space	filemanager	nl	Ongebruikte schijfruimte
@@ -93,6 +104,7 @@ updated comment for %1	filemanager	nl	Opmerking voor %1 bijgewerkt
 upload	filemanager	nl	Upload
 upload fields	filemanager	nl	uploadvelden
 upload files	filemanager	nl	Bestanden uploaden
+use new experimental filemanager?	filemanager	nl	Gebruik de nieuwe experimentele bestandsbeheerder?
 used space	filemanager	nl	Gebruikte schijfruimte
 users	filemanager	nl	Gebruikers
 version	filemanager	nl	Versie
@@ -100,3 +112,4 @@ view documents in new window	filemanager	nl	Documenten in een nieuw venster weer
 view documents on server (if available)	filemanager	nl	Documenten op server weergeven (als dit mogelijk is)
 who	filemanager	nl	Wie
 you do not have access to %1	filemanager	nl	U heeft geen toedang tot %1
+your home dir did not exist, egroupware created a new one.	filemanager	nl	Uw home directory bestond niet, eGroupWare heeft een nieuwe aangemaakt.
