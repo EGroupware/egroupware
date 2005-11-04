@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.edit.personal" template="" lang="" group="0" version="">
-		<grid height="320">
+		<grid class="editphones">
 			<columns>
 				<column/>
 				<column/>
@@ -81,18 +81,15 @@
 				<row valign="top">
 					<image src="folder"/>
 					<description value="category"/>
-					<listbox type="select-cat" id="cat_id" rows="3"/>
-					<image src="package_network"/>
-					<description value="url"/>
-					<textbox id="url" size="30"/>
+					<listbox type="select-cat" id="cat_id" rows="3" span="4"/>
 				</row>
 				<row>
 					<image src="password"/>
 					<description value="private"/>
 					<checkbox id="private"/>
-					<description/>
-					<description/>
-					<description/>
+					<image src="package_network"/>
+					<description value="url"/>
+					<textbox id="url" size="30"/>
 				</row>
 				<row height="100%">
 					<description/>
@@ -277,7 +274,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.editphones" template="" lang="" group="0" version="">
-		<grid class="editphones">
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
