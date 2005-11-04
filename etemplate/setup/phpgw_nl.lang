@@ -9,54 +9,113 @@
 %s notranslation	etemplate	nl	%s GeenVertaling
 %s onchange	etemplate	nl	%s bijWijzigen
 %s readonly	etemplate	nl	%s alleen lezen
+'%1' has an invalid format !!!	etemplate	nl	'%1' heeft een ongeldig formaat !!!
+'%1' is not a valid date !!!	etemplate	nl	'%1' is geen geldige datum !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	nl	'%1' is geen geldig drijvende komma getal !!!
+'%1' is not a valid integer !!!	etemplate	nl	'%1' is geen geldig geheel getal !!!
+a pattern to be searched for	etemplate	nl	een patroon waarnaar gezocht moet worden
 add a new column (after the existing ones)	etemplate	nl	Voeg een nieuwe kolom toe (achter de bestaande kolommen)
 add a new multi-column index	etemplate	nl	Een nieuwe multi-column index toevoegen
 add column	etemplate	nl	Kolom toevoegen
 add index	etemplate	nl	Index toevoegen
 add table	etemplate	nl	Tabel toevoegen
 align	etemplate	nl	Uitlijnen
+alignment of label and input-field in table-cell	etemplate	nl	uitlijning van label en inputveld in tabelcel
+alignment of the v/hbox containing table-cell	etemplate	nl	Uitlijning van de V/Hbox die de tabelcel bevat
+all days	etemplate	nl	alle dagen
+all operations save the template!	etemplate	nl	alle bewerkingen slaan de template op!
 am	etemplate	nl	am
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	nl	een geindexeerde kolom versnelt zoekopdrachten op dit kolom (kost wel ruimte op de schijf !!!)
 application	etemplate	nl	Applicatie
+application name needed to write a langfile or dump the etemplates !!!	etemplate	nl	Applicatie naam is nodig om een taalbestand te schrijven of de eTemplates te kunnen dumpen !!!
+applies the changes made	etemplate	nl	de gemaakte wijzigingen doorvoeren
+applies the changes to the given version of the template	etemplate	nl	de gemaakte wijzigingen doorvoeren op de opgegeven versie van de template
 attach	etemplate	nl	Bijsluiten
 attach file	etemplate	nl	Bestand bijsluiten
+baseline	etemplate	nl	Baseline
+blurtext	etemplate	nl	blurText
 border	etemplate	nl	Rand
 border-line-thickness for the table-tag	etemplate	nl	Randlijndikte voor de table-tag
+bottom	etemplate	nl	Onderzijde
+box	etemplate	nl	Box
+box...	etemplate	nl	Box...
+can not have special sql-value null	etemplate	nl	kan geen speciaal SQL-waarde NULL bevatten
 cancel	etemplate	nl	Annuleren
+cant delete the only column of a grid !!!	etemplate	nl	kan de enige kolom van een grid niet verwijderen !!!
+cant delete the only row in a grid !!!	etemplate	nl	kan de enige rij in een grid niet verwijderen !!!
 category	etemplate	nl	Categorie
+cellpadding for the table-tag	etemplate	nl	Cellpadding voor de table-tag
 cells	etemplate	nl	Cellen
+cellspacing for the table-tag	etemplate	nl	Cellspacing voor de table-tag
 center	etemplate	nl	Centreren
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	nl	aanvinken indien content alleen getoond moet worden maar niet niet gewijzigd (de content wordt dan niet teruggezonden!)
 check if field has to be filled by user	etemplate	nl	vink aan als dit veld door de gebruiker moet worden ingevuld
+checkbox	etemplate	nl	Vinkveld
+class	etemplate	nl	Klasse
+class, valign	etemplate	nl	klasse, Valign
 click here to attach the file	etemplate	nl	klik hier om een bestand bij te sluiten
 click here to create the link	etemplate	nl	klik hier om een link te maken
 click here to start the search	etemplate	nl	klik hier om een zoekactie te starten
 click here to upload the file	etemplate	nl	klik hier om een bestand te uploaden
+click to order after that criteria	etemplate	nl	klik om te sorteren op dat criterium
+column...	etemplate	nl	Kolom...
 columnname	etemplate	nl	Kolomnaam
 comment	etemplate	nl	Commentaar
+confirm	etemplate	nl	bevestigen
+confirmation message or custom javascript (returning true or false)	etemplate	nl	bevestigingsbericht of aangepast javascript (geeft true of false terug)
+confirmation necesary or custom java-script	etemplate	nl	bevestiging nodig of aangepast javascript
 create a new table for the application	etemplate	nl	Maak een nieuwe tabel voor de applicatie
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
+css class for the table-tag	etemplate	nl	CSS klasse voor de table-tag
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	nl	CSS-klasse naam voor deze rij, keuzemogelijkheden: 'nmh' = volgende overeenkomende kop, 'nmr' = afwisselend bij iedere volgende rij, 'nmr0'+'nmr1' volgende rijen
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	nl	CSS-klasse naam voor deze rij, voorkeuze: 'th' = kopregel, 'row' afwisselende rij, 'row_off' + 'row_on' rijen
+css-styles	etemplate	nl	CSS-stijlen
+custom	etemplate	nl	aangepast
+cut	etemplate	nl	Knippen
 date+time	etemplate	nl	Datum+Tijd
 datum	etemplate	nl	Datum
 day	etemplate	nl	Dag
+days	etemplate	nl	dagen
 db ensures that every row has a unique value in that column	etemplate	nl	Database zorgt ervoor dat elk record een unieke waarde heeft in deze kolom
 db-tools	etemplate	nl	DB-Tools
 default	etemplate	nl	Standaard
-delete	etemplate	nl	Verwijderen
+delete a single entry by passing the id.	etemplate	nl	Verwijder een enkele invoer door het id mee te geven.
+delete all selected etemplates, without further inquiry	etemplate	nl	verwijder ALLE geselecteerde eTemplates, ZONDER verdere vragen te stellen
 delete column	etemplate	nl	Kolom verwijderen
 delete index	etemplate	nl	Index verwijderen
+delete the spezified etemplate	etemplate	nl	Verwijder de gespecificeerde eTemplate
+delete this column	etemplate	nl	deze kolom verwijderen
 delete this etemplate	etemplate	nl	deze eTemplate verwijderen
+delete this row	etemplate	nl	deze rij verwijderen
 delete whole column (can not be undone!!!)	etemplate	nl	complete kolom verwijderen (dit kan  NIET ongedaan gemaakt worden!!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	nl	verwijdert de hierboven gespecificeerde eTemplate uit de database, kan NIET ongedaan gemaakt worden
+deletes the etemplate spez. above	etemplate	nl	verwijdert de hierboven gespecificeerde eTemplate
 deletes this column	etemplate	nl	Verwijderd deze kolom
 deletes this index	etemplate	nl	Verwijderd deze index
 discard changes	etemplate	nl	ondankt wijzigingen
+displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	nl	getoond voor invoer of invoer wordt ingevoegd voor een '%s' in het label (label van de verzendknop of afbeeldingsbestandsnaam)
+displayed in statusline of browser if input-field gets focus	etemplate	nl	weergegeven in de statusbalk van de browser indien het invoerveld de focus heeft
+displayed in the top line of the groupbox (legend)	etemplate	nl	weergegeven in de bovenste regel van het groepskader (legenda)
+do you want to save the changes you made in table %s?	etemplate	nl	Wilt u de wijzigingen die in tabel %s gemaakt hebt bewaren?
 documentation	etemplate	nl	Documentatie
 drop a table - this can not be undone	etemplate	nl	Tabel verwijderen - dit kan niet ongedaan gemaakt worden
 drop table	etemplate	nl	Tabel verwijderen
+dump4setup	etemplate	nl	Dump4Setup
+duration	etemplate	nl	Duur
 edit	etemplate	nl	Wijzigen
+edit embeded css styles or of the applications app.css file	etemplate	nl	bewerk ingebedde CSS stijlen of het app.ccs bestand van de toepassing
+edit the etemplate spez. above	etemplate	nl	bewerk de hierboven gespecificeerde eTemplate
+edit...	etemplate	nl	Bewerken...
+editable templates - db-tools	etemplate	nl	Bewerkbare Templates - DB-hulpmiddelen
+editable templates - delete template	etemplate	nl	Bewerkbare Templates - Template verwijderen
+editable templates - editor	etemplate	nl	Bewerkbare Templates - Bewerker
+editable templates - search	etemplate	nl	Bewerkbare Templates - Zoeken
+editable templates - show template	etemplate	nl	Bewerkbare Templates - Template tonen
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	nl	ingebedde CSS stijlen, bijvoorbeeld '.red { background: red; }' (let op de '.' voor de klassenaam) of '@import url(...)' (klassenamen zijn globaal voor de hele pagina!)
 enter a search pattern	etemplate	nl	Geef een zoekpatroon
 entry saved	etemplate	nl	Record opgelagen
 error: template not found !!!	etemplate	nl	Fout: Template niet gevonden !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	nl	Fout: webserver heeft geen toestemming om de schrijven in '%1' !!!
-error: while saveing !!!	etemplate	nl	Fou: tijdens opslaan !!!
-error: writeing !!!	etemplate	nl	Fout tijdens schrijven !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	nl	Fout bij het schrijven (geen schrijfrechten voor de webserver) !!!
 etemplate	common	nl	eTemplate
 etemplate '%1' imported, use save to put it in the database	etemplate	nl	eTemplate '%1' geïmporteerd, gebruik Opslaan om het in de database te zetten.
@@ -105,7 +164,6 @@ precision	etemplate	nl	Precisie
 read	etemplate	nl	Lezen
 remove row (can not be undone!!!)	etemplate	nl	Rij verwijderen (kan NIET ongedaan gemaakt worden)
 right	etemplate	nl	Rechts
-save	etemplate	nl	Opslaan
 search	etemplate	nl	Zoeken
 select a category	etemplate	nl	Selecteer een categorie
 select an app first !!!	etemplate	nl	Eerst een applicatie selecteren

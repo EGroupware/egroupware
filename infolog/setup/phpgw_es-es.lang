@@ -1,6 +1,5 @@
 %1 records imported	infolog	es-es	%1 registros importados
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	es-es	%1 registros leídos (aún sin importar, puede %2volver%3 y desmarcar Probar Importar)
-%1 records read (not yet imported, you may go back and uncheck test import)	infolog	es-es	%1 registros leidos (aun no importados, puede %2volver%3 y desmarcar Testear Importacion)
 - subprojects from	infolog	es-es	- Subproyecto de
 0%	infolog	es-es	0%
 10%	infolog	es-es	10%
@@ -39,7 +38,6 @@ back to main list	infolog	es-es	Volver a lista principal
 back to projectlist	infolog	es-es	Volver a la Lista de Proyectos
 billed	infolog	es-es	facturado
 both	infolog	es-es	ambos
-calendar	infolog	es-es	Calendario
 call	infolog	es-es	llamar
 cancel	infolog	es-es	Cancelar
 categories	infolog	es-es	Categorías
@@ -113,6 +111,7 @@ for which types should this field be used	infolog	es-es	para qué tipos se usa es
 from	infolog	es-es	De
 high	infolog	es-es	alta
 id	infolog	es-es	id
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no está puesta, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
 import	infolog	es-es	Importar
 import next set	infolog	es-es	importar juego siguiente
 info log	common	es-es	Registro
@@ -142,11 +141,17 @@ longer textual description	infolog	es-es	descripción larga de la entrada
 low	infolog	es-es	baja
 max length of the input [, length of the inputfield (optional)]	infolog	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 max number of entries to display on the main screen	infolog	es-es	Número máximo de entradas visibles en la pantalla principal
+my	infolog	es-es	mis
+my open	infolog	es-es	mis abiertos
+my overdue	infolog	es-es	mis sobrepasados
+my upcoming	infolog	es-es	mis entrantes
 name must not be empty !!!	infolog	es-es	¡El nombre no puede quedar vacío!
 name of new type to create	infolog	es-es	Nombre del nuevo tipo para crear
+never hide search and filters	infolog	es-es	No ocultar búsquedas y filtros
 new name	infolog	es-es	nuevo nombre
 new search	infolog	es-es	Nueva búsqueda
 no - cancel	infolog	es-es	No - Cancelar
+no describtion, links or attachments	infolog	es-es	no hay descripción, enlaces o adjuntos
 no entries found, try again ...	infolog	es-es	no se encontraron registros, inténtelo de nuevo ...
 no filter	infolog	es-es	sin filtro
 no links or attachments	infolog	es-es	sin enlaces o adjuntos
@@ -156,7 +161,6 @@ not	infolog	es-es	no
 not assigned	infolog	es-es	sin asignar
 note	infolog	es-es	Nota
 number of records to read (%1)	infolog	es-es	Número de registros a leer (%1)
-number of records to read (<=200)	infolog	es-es	Numero de registros a leer (<=200)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	es-es	Número de fila para un cuadro de texto multilínea o lista despleglabe multiselección
 offer	infolog	es-es	ofrecer
 ongoing	infolog	es-es	actuales
@@ -171,8 +175,6 @@ own	infolog	es-es	propio
 own open	infolog	es-es	propio abierto
 own overdue	infolog	es-es	propio vencido
 own upcoming	infolog	es-es	propio en camino
-owner	infolog	es-es	Dueño
-owner responsible	infolog	es-es	Responsable
 path on (web-)serverside<br>eg. /var/samba/share	infolog	es-es	Ruta en el servidor ej. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	es-es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la estructura del servidor web!!
 pattern for search in addressbook	infolog	es-es	expresión a buscar en la Libreta de direcciones
@@ -180,17 +182,17 @@ pattern for search in projects	infolog	es-es	expresión a buscar en Proyectos
 phone	infolog	es-es	Llamada telefónica
 phone/email	infolog	es-es	Teléfono o correo electrónico
 phonecall	infolog	es-es	Llamada telefónica
+planned time	infolog	es-es	hora planificada
 priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
 re:	infolog	es-es	Re:
 read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
-reject	infolog	es-es	rechazar
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
 responsible	infolog	es-es	Responsable
-responsible user, priority, ...	infolog	es-es	usuario responsable, prioridad, ...
+responsible user, priority, times	infolog	es-es	usuario responsable, prioridad, horas
 returns a list / search for records.	infolog	es-es	Devuelve una lista o busca registros
 save	infolog	es-es	Guardar
 saves the changes made and leaves	infolog	es-es	guardar los cambios realizados y salir
@@ -204,16 +206,15 @@ select a responsible user: a person you want to delegate this task	infolog	es-es
 select a typ to edit it's status-values or delete it	infolog	es-es	seleccionar un tipo para editar sus valores de estado o eliminarlo
 select an app to search in	infolog	es-es	Seleccionar una aplicación en la que buscar
 select an entry to link with	infolog	es-es	Seleccionar una entrada a la que apunte un enlace
+select to filter by owner	infolog	es-es	seleccionar para filtrar por propietario
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	es-es	¿Mostrar en el Registro las entradas abiertas en la pantalla principal (tareas sin finalizar, llamadas telefónicas o notas)? Funciona sólo si no ha seleccionado en las preferencias una aplicación para la pantalla principal
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	es-es	¿Mostrar las Subtareas (subllamadas o subnotas) en la vista normal? Puede ver siempre estos subtipos a través de su tipo superior.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	es-es	¿Mostrar los enlaces a otras aplicaciones y/o ficheros adjuntos en la lista del Registro (la vista normal cuando se entra al Registro)?
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	es-es	¿Usar nombres completos (apellido y nombre de la familia), o sólo los nombres internos de la aplicación?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	es-es	¿Poner esta entrada visible sólo para usted y la gente que indique?
 show full usernames	infolog	es-es	Mostrar nombres de usuario completos
 show in the infolog list	infolog	es-es	Mostrar la lista del Registro
 show list of upcoming entries	infolog	es-es	Mostrar la lista de entradas por llegar
 show open entries: tasks/calls/notes on main screen	infolog	es-es	Mostrar las entradas abiertas: Tareas, llamadas o notas en la pantalla principal
-show open events: tasks/calls/notes on main screen	infolog	es-es	Mostrar eventos abiertos: Tareas/Llamados/Notas en la Pantalla Principal
 small view	infolog	es-es	vista reducida
 start a new search, cancel this link	infolog	es-es	iniciar nueva búsqueda, cancelar este enlace
 startdate	infolog	es-es	Fecha de inicio
@@ -225,10 +226,8 @@ sub	infolog	es-es	Sub
 subject	infolog	es-es	Asunto
 task	infolog	es-es	Tareas pendientes
 test import (show importable records <u>only</u> in browser)	infolog	es-es	Probar Importar (mostrar registros importables <u>sólo</u> en el navegador)
-the maximum number of entries to display on the main screen.	infolog	es-es	El número máximo de entradas a mostrar en la pantalla principal
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	es-es	el nombre usado internamente (menos de 10 caracteres), cambiándolo hace que los datos existentes no estén disponibles.
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	es-es	el nombre usado internamente (menos de 20 caracteres), cambiándolo hace que los datos existentes no estén disponibles.
-the name used internaly (<= 32 chars), changeing it makes existing data unavailible	infolog	es-es	El nombre usado internamente (hasta 32 caracteres). Cambiarlo hace que los datos dejen de estar disponibles.
 the text displayed to the user	infolog	es-es	el texto que se muestra al usuario
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	es-es	Este es el filtro que el Registro usa cuando usted entra a la aplicación. Los filtros limitan las entradas que se ven en la vista actual. Hay filtros para mostrar sólo las terminadas, todavía abiertas o entradas futuras suyas o de todos los usuarios.
 til when should the todo or phonecall be finished	infolog	es-es	¿Hasta cuándo puede la tarea o llamada telefónica estar sin terminar?

@@ -56,7 +56,6 @@ department	common	nl	Afdeling
 domestic	addressbook	nl	Huisadres
 download	addressbook	nl	Download
 download export file (uncheck to debug output in browser)	addressbook	nl	Download export bestand (uitzetten om in verkenner te tonen)
-e-mail	addressbook	nl	E-mail
 edit custom field	addressbook	nl	Aangepast veld wijzigen
 edit custom fields	admin	nl	Aangepaste velden wijzigen
 empty for all	addressbook	nl	leeg voor alle
@@ -72,7 +71,6 @@ field %1 has been updated !	addressbook	nl	Veld 1% bijgewerkt !
 field name	addressbook	nl	Veldnaam
 fields to show in address list	addressbook	nl	Velden die zichtbaar zijn in adreslijst
 fieldseparator	addressbook	nl	Scheidingssymbool velden
-first name	addressbook	nl	Voornaam
 full name	addressbook	nl	Volledige naam
 geo	addressbook	nl	GEO
 global categories	addressbook	nl	Globale categoriën
@@ -99,7 +97,6 @@ import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecte
 international	addressbook	nl	Internationaal
 isdn phone	addressbook	nl	ISDN
 label	addressbook	nl	Label
-last name	addressbook	nl	Achternaam
 ldap context for contacts	admin	nl	LDAP-context voor contacten
 ldap host for contacts	admin	nl	LDAP-host voor contacten
 ldap root dn for contacts	admin	nl	LDAP-root dn voor contacten
@@ -117,7 +114,6 @@ mobile phone	addressbook	nl	Mobiel telefoon
 modem phone	addressbook	nl	Modem telefoon
 multiple vcard	addressbook	nl	Meervoudige VCard
 no vcard	addressbook	nl	Geen VCard
-notes	addressbook	nl	Opmerkingen
 number of records to read (%1)	addressbook	nl	Aantal adressen om te importen (%1)
 other number	addressbook	nl	Ander nummer
 other phone	addressbook	nl	Andere telefoon
@@ -136,7 +132,6 @@ read a single entry by passing the id and fieldlist.	addressbook	nl	Lees een rec
 record access	addressbook	nl	Toegang adres
 record owner	addressbook	nl	Eigenaar adres
 retrieve contacts	admin	nl	Contacten ontvangen
-rl	addressbook	nl	URL
 select all	addressbook	nl	Alles selecteren
 select the type of conversion	addressbook	nl	Kies type conversie
 select the type of conversion:	addressbook	nl	Kies type conversie:
@@ -152,7 +147,6 @@ test import (show importable records <u>only</u> in browser)	addressbook	nl	Test
 that field name has been used already !	addressbook	nl	Het veldnaam is al in  gebruik !
 this person's first name was not in the address book.	addressbook	nl	De voornaam van deze persoon staat niet het adresboek.
 this person's last name was not in the address book.	addressbook	nl	De achternaam van deze persoon staat niet het adresboek.
-title	addressbook	nl	Titel
 to many might exceed your execution-time-limit	addressbook	nl	Te veel kan mogelijk uw uitvoertijd van dit programme overschrijden
 today is %1's birthday!	common	nl	Vandaag is %1 jarig !
 tomorrow is %1's birthday.	common	nl	Morgen is %1 jarig

@@ -179,6 +179,7 @@ error canceling timer, maybe there's none set !!!	admin	no	En feil oppstod ved k
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	no	En feil oppstod ved tidsinnstilling, feil syntaks eller kanskje en allerede kjører !!!
 error: %1 not found or other error !!!	admin	no	Feil: Fant ikke %1, eller annen feil
 expires	admin	no	Går ut
+explanation of ldapman	admin	no	Denne modulen er så langt testet med POSTFIX, LDAP, Courier.IMAP og trenger skjemaene CORE og QMAIL (OID7914).  Flere detaljer om bruk og konfigurasjon av system finner du i README.ldapman som er plassert i dok.mappen på Admin.
 fallback (after each pageview)	admin	no	tilbakefall (etter hver sidevisning)
 file space	admin	no	Filstørrelse
 file space must be an integer	admin	no	Filstørrelse på være en integer
@@ -205,7 +206,9 @@ how many days should entries stay in the access log, before they get deleted (de
 how many minutes should an account or ip be blocked (default 30) ?	admin	no	Hvor mange minutter skal en konto eller IP være sperret(standard 30)?
 icon	admin	no	Ikon
 idle	admin	no	idle
+if no acl records for user or any group the user is a member of	admin	no	Dersom ingen ACL post for bruker eller noen gruppe bruker medlem av
 in mbyte	admin	no	i MByte
+install crontab	admin	no	Installer crontab
 installed applications	common	no	Installerte program
 installed crontab	admin	no	Installert crontab
 interface	admin	no	Brukergrensesnitt
@@ -219,6 +222,7 @@ last login	admin	no	siste login
 last login from	admin	no	siste login fra
 last time read	admin	no	Lest siste gang
 ldap accounts context	admin	no	LDAP konto kontekst
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	no	LDAP Prefiks for standard hjemmekatalog (f.eks /home for /home/username)
 ldap default shell (e.g. /bin/bash)	admin	no	LDAP Standard skall (f.eks.  /bin/bash)
 ldap encryption type	admin	no	LDAP krypteringstype
 ldap groups context	admin	no	LDAP gruppe kontekst
@@ -244,6 +248,7 @@ manager	admin	no	Manager
 maximum account id (e.g. 65535 or 1000000)	admin	no	Maksimal kontoID (f.eks. 65535 eller 100000)
 message has been updated	admin	no	meldingen er oppdatert
 method	admin	no	Metode
+minimum account id (e.g. 500 or 100, etc.)	admin	no	Minimum kontoident (f.eks. 100, 500 osv.)
 minute	admin	no	Minutt
 mode	admin	no	Modus
 month	admin	no	Måned
@@ -277,7 +282,12 @@ please select	admin	no	Vennligst velg
 postfix with ldap	admin	no	Postfix med LDAP
 preferences	admin	no	Preferanser
 primary group	admin	no	primærgruppe
+qmaildotmode	admin	no	qmaildotmodus
+qouta size in mbyte	admin	no	Grense Str. i Mbyte
+quota settings	admin	no	Grenseinstillinger
 re-enter password	admin	no	Skriv inn passord igjen
+read this list of methods.	admin	no	Les denne listen av metoder.
+register application hooks	admin	no	Registrer program hooks
 remove	admin	no	fjern
 remove all users from this group	admin	no	Fjern alle brukere fra denne gruppen
 remove all users from this group ?	admin	no	Fjerne alle brukere fra denne gruppen?
@@ -294,7 +304,11 @@ search peer servers	admin	no	Søk peer servere
 security	admin	no	Sikkerhet
 select group managers	admin	no	Velg gruppeleder
 select permissions this group will have	admin	no	Velg tillatelser for denne gruppen
+select the parent category. if this is a main category select no category	admin	no	Velg overordnet kategori.  Dersom dette er hovedkategori velg NO CATEGORY
 select users for inclusion	admin	no	Velg brukere som skal inkluderes
+select where you want to store/retrieve filesystem information	admin	no	Velg hvor du ønsker å lagre / hente informasjon om filsystemet.
+select where you want to store/retrieve user accounts	admin	no	Velg hvor du ønsker å lagre / hente brukerkonti.
+select which location this app should appear on the navbar, lowest (left) to highest (right)	admin	no	Velg hvilken plass dette prorgrammet skal ha på navigeringslinje, lavest til høyest (fra venstre)
 selectbox	admin	no	Valgboks
 server %1 has been updated	admin	no	Server %1 ble oppdatert
 server list	admin	no	Server liste
@@ -306,12 +320,16 @@ set preference values.	admin	no	Sett referanseverdier
 should the login page include a language selectbox (useful for demo-sites) ?	admin	no	Skal login siden inneholde valg av språk (fint for demo-site)?
 show 'powered by' logo on	admin	no	Vis 'powered by' logo på
 show access log	admin	no	Vis aksesslogg
+show current action	admin	no	Vis gjeldende aksjon
 show error log	admin	no	Vis feillogg
 show phpinfo()	admin	no	Vis phpinfo()
+show session ip address	admin	no	Vis IP adresse for session
 site	admin	no	Nettsted
 site configuration	common	no	Konfigurasjon av nettsted
 soap	admin	no	SOAP
 sorry, that group name has already been taken.	admin	no	Desverre, det gruppenavnet er allerede i bruk
+sorry, the above users are still a member of the group %1	admin	no	Beklager, ovenstående bruker er fortsatt medlem av gruppe %1
+sorry, the follow users are still a member of the group %1	admin	no	Beklager, følgende brukere er fortsatt medlemmer av gruppe %1
 sort the entries	admin	no	Sorter forekomstene
 ssl	admin	no	ssl
 standard	admin	no	standard
@@ -319,14 +337,41 @@ standard imap server	admin	no	Standard IMAP tjener
 standard pop3 server	admin	no	Standard POP3 tjener
 standard smtp-server	admin	no	Standard SMTP tjener
 start testjob!	admin	no	Start testjobb!
+submit changes	admin	no	Bekreft endringene
+submit the search string	admin	no	Bekreft søkestrengen
 template selection	admin	no	Valg av mal
+text entry	admin	no	Tekstfelt
+that application name already exists.	admin	no	Programnavnet er allerede i bruk
+that application order must be a number.	admin	no	Programrekkefølgen må være et nummer
 that loginid has already been taken	admin	no	Den loginID er opptatt
+that name has been used already	admin	no	Det navnet er allerede benyttet
+that server name has been used already !	admin	no	Det tjenernavnet er allerede benyttet!
+the api is current	admin	no	API er gjeldende
+the api requires an upgrade	admin	no	API trenger en oppgradering
+the groups must include the primary group	admin	no	Gruppen må inkludere primærgruppen
 the login and password can not be the same	admin	no	Loging og passord kan ikke være det samme
+the loginid can not be more then 8 characters	admin	no	Brukernavn kan ikke være mer enn 8 karakterer
+the testjob sends you a mail everytime it is called.	admin	no	Testjobben sender deg en mail hver gang den kalles.
 the two passwords are not the same	admin	no	Passordene er ikke de sammme
+the users bellow are still members of group %1	admin	no	Brukerne nedenfor er fortsatt medlemmer av gruppe %1
+there already is a group with this name. userid's can not have the same name as a groupid	admin	no	Det er allerede en gruppe med dette navnet.  Brukerident kan ikke ha samme navn som en gruppeident.
+they must be removed before you can continue	admin	no	Disse må fjernes før du kan fortsette
+this application is current	admin	no	Programmet er gjeldende
+this application requires an upgrade	admin	no	Dette programmet trenger en oppdatering
+this category is currently being used by applications as a parent category	admin	no	Denne kategorien benyttes nå av programmer som en overordnet kategori.
+timeout for application session data in seconds (default 86400 = 1 day)	admin	no	Utløpstid for program session data i sekunder (standrad 86400 = 1 dag)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	no	Utløpstid for sessions i sekunder (standard 14400 = 4 timer)
+times	admin	no	Ant. ganger
+top	admin	no	Topp
 total records	admin	no	Total historie
+trust level	admin	no	Trust nivå
+trust relationship	admin	no	Trust relasjoner
+use cookies to pass sessionid	admin	no	Anvend cookies for å lagre sessionid
+use pure html compliant code (not fully working yet)	admin	no	Bruke ren HTML standard kode (ennå ikke helt funksjonelt)
 use theme	admin	no	Bruk tema
 user accounts	admin	no	Brukerkontoer
 user data	admin	no	Brukerdata
+user for smtp-authentication (leave it empty if no auth required)	admin	no	Brukes for SMTP autentisering (la det stå tomt dersom aut. ikke er nødvendig)
 user groups	admin	no	Brukergrupper
 userdata	admin	no	Brukerdata
 users choice	admin	no	Brukers valg
@@ -337,7 +382,15 @@ view error log	admin	no	Vis feillogg
 view sessions	admin	no	Vis sessions
 view this user	admin	no	Vis denne bruker
 view user account	admin	no	Vis brukerkonto
+who would you like to transfer all records owned by the deleted user to?	admin	no	Til hvem ønsker du å overføre alle poster tilhørende den slettede bruker?
+would you like egroupware to cache the egw info array ?	admin	no	Ønsker du at eGroupWare skal mellomlagre egw infostreng ?
+would you like egroupware to check for a new version<br>when admins login ?	admin	no	Ønsker du at eGroupWare skal kontrollere for en ny versjon<br>når admin logges på?
+would you like egroupware to check for new application versions when admins login ?	admin	no	Ønsker du at eGroupWare skal kontrollere for nye program når admin logger inn?
+would you like to automaticaly load new langfiles (at login-time) ?	admin	no	Ønsker du automatisk å laste inn nye språkfiler (ved pålogging)?
+would you like to show each application's upgrade status ?	admin	no	Ønsker du å se hvert programs oppdateringsstatus?
 xml-rpc	admin	no	XML-RPC
+you have entered an invalid expiration date	admin	no	Du har registrert en ugyldig utløpsdato?
+you must add at least 1 permission or group to this account	admin	no	Du må legge til minst 1 tillatelse eller gruppe for denne kontoen.
 you must enter a group name.	admin	no	Du må registrere et gruppenavn
 you must enter a lastname	admin	no	Du må registrere et etternavn
 you must enter a loginid	admin	no	Du må registrere et påloggingsident
