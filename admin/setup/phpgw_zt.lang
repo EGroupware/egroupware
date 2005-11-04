@@ -291,7 +291,7 @@ postfix with ldap	admin	zt	使用LDAP與 Postfix
 preferences	admin	zt	喜好設定
 primary group	admin	zt	主要群組
 qmaildotmode	admin	zt	qmaildotmode
-qouta size in mbyte	admin	zt	配額(MB)
+quota size in mbyte	admin	zt	配額(MB)
 quota settings	admin	zt	配額設定
 re-enter password	admin	zt	再次輸入密碼
 read this list of methods.	admin	zt	讀取這個方法的列表

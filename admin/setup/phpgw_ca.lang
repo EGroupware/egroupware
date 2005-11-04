@@ -292,7 +292,7 @@ postfix with ldap	admin	ca	Postfix amb LDAP
 preferences	admin	ca	Preferències
 primary group	admin	ca	grup principal
 qmaildotmode	admin	ca	mode qmaildot
-qouta size in mbyte	admin	ca	mida de la cita en MByte
+quota size in mbyte	admin	ca	mida de la cita en MByte
 quota settings	admin	ca	preferències de la cita
 re-enter password	admin	ca	Torneu a entrar la contrasenya
 read this list of methods.	admin	ca	Llegir aquesta llista de mètodes

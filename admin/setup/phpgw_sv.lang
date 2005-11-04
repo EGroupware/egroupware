@@ -293,7 +293,7 @@ postfix with ldap	admin	sv	Postfix med LDAP
 preferences	admin	sv	Preferenser
 primary group	admin	sv	primärgrupp
 qmaildotmode	admin	sv	qmaildotmode
-qouta size in mbyte	admin	sv	Kvotstorlek i MegaByte
+quota size in mbyte	admin	sv	Kvotstorlek i MegaByte
 quota settings	admin	sv	Kvotinställningar
 re-enter password	admin	sv	Skriv in lösenord igen
 read this list of methods.	admin	sv	Läst denna lista över metoder

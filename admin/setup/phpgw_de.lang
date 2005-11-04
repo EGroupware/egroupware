@@ -291,7 +291,7 @@ postfix with ldap	admin	de	Postfix mit LDAP
 preferences	admin	de	Einstellungen
 primary group	admin	de	primäre Gruppe
 qmaildotmode	admin	de	qmaildotmode
-qouta size in mbyte	admin	de	Quotagröße in MByte
+quota size in mbyte	admin	de	Quotagröße in MByte
 quota settings	admin	de	Quota-Einstellungen
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen

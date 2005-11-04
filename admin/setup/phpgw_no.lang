@@ -283,7 +283,7 @@ postfix with ldap	admin	no	Postfix med LDAP
 preferences	admin	no	Preferanser
 primary group	admin	no	primærgruppe
 qmaildotmode	admin	no	qmaildotmodus
-qouta size in mbyte	admin	no	Grense Str. i Mbyte
+quota size in mbyte	admin	no	Grense Str. i Mbyte
 quota settings	admin	no	Grenseinstillinger
 re-enter password	admin	no	Skriv inn passord igjen
 read this list of methods.	admin	no	Les denne listen av metoder.

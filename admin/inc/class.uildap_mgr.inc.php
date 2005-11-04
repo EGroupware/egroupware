@@ -194,7 +194,7 @@
 			$this->t->set_var('lang_qmaildotmode',lang('qmaildotmode'));
 			$this->t->set_var('lang_default',lang('default'));
 			$this->t->set_var('lang_quota_settings',lang('quota settings'));
-			$this->t->set_var('lang_qoutainmbyte',lang('qouta size in MByte'));
+			$this->t->set_var('lang_quotainmbyte',lang('quota size in MByte'));
 			$this->t->set_var('lang_inmbyte',lang('in MByte'));
 			$this->t->set_var('lang_0forunlimited',lang('leave empty for no quota'));
 			$this->t->set_var('lang_forward_only',lang('forward only'));

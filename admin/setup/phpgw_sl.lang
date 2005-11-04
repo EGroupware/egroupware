@@ -293,7 +293,7 @@ postfix with ldap	admin	sl	Pripona za LDAP
 preferences	admin	sl	Nastavitve
 primary group	admin	sl	osnovna skupina
 qmaildotmode	admin	sl	qmaildot način
-qouta size in mbyte	admin	sl	velikost kvote v megabajtih
+quota size in mbyte	admin	sl	velikost kvote v megabajtih
 quota settings	admin	sl	nastavitvev kvote
 re-enter password	admin	sl	Ponovite geslo
 read this list of methods.	admin	sl	Preberite ta seznam metod

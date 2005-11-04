@@ -293,7 +293,7 @@ postfix with ldap	admin	it	Postfix con LDAP
 preferences	admin	it	Preferenze
 primary group	admin	it	Gruppo principale
 qmaildotmode	admin	it	qmaildotmode
-qouta size in mbyte	admin	it	dimensione quota in MByte
+quota size in mbyte	admin	it	dimensione quota in MByte
 quota settings	admin	it	impostazioni quota
 re-enter password	admin	it	Reinserisci la password
 read this list of methods.	admin	it	Leggi questa lista dei metodi

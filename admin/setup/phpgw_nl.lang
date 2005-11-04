@@ -291,7 +291,7 @@ postfix with ldap	admin	nl	Postfix met LDAP
 preferences	admin	nl	Voorkeuren
 primary group	admin	nl	Primaire groep
 qmaildotmode	admin	nl	qmaildotmode
-qouta size in mbyte	admin	nl	quota grootte in MByte
+quota size in mbyte	admin	nl	quota grootte in MByte
 quota settings	admin	nl	quota instellingen
 re-enter password	admin	nl	Wachtwoord opnieuw invoeren
 read this list of methods.	admin	nl	Lees deze lijst met methodes.
