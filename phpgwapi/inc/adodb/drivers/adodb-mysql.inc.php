@@ -577,8 +577,57 @@ class ADODB_mysql extends ADOConnection {
          }
          return  $foreign_keys;
      }
+     
+    /**
+     * @var array $charset2mysql translate www charsets to mysql ones
+     */
+	var $charset2mysql = array(
+		'utf-8'        => 'utf8',
+		'iso-8859-1'   => 'latin1',
+		'iso-8859-2'   => 'latin2',
+		'windows-1251' => 'cp1251',
+		'koi8-r'       => 'koi8r',	// 4.0: koi8_ru
+		'euc-kr'       => 'euckr',	// 4.0: euc_kr
+		'euc-jp'       => 'ujis',	// 4.0: -
+		'iso-8859-7'   => 'greek',	// 4.0: -
+	);
+
+	/**
+	 * gets the client encoding from the connection
+	 *
+	 * @return string/boolean charset or false
+	 */
+ 	function GetCharSet()
+	{
+		$this->charSet = $this->GetOne('SELECT @@character_set_connection');
+		if ($this->charSet) {
+			$mysql2charset = array_flip($this->charset2mysql);
+			if (isset($mysql2charset[$this->charSet])) {
+				$this->charSet = $mysql2charset[$this->charSet];
+			}
+		}
+		return $this->charSet ? $this->charSet : false;
+	}
 	
+	/**
+	 * sets the client encoding from the connection
+	 *
+	 * @param string $charset_name
+	 * @return boolean true on success, false otherwise
+	 */
+	function SetCharSet($charset_name)
+	{
+		$this->GetCharSet();
+		if ($this->charSet !== $charset_name) {
+			$ok = mysql_query('SET NAMES '.$this->qstr(isset($this->charset2mysql[$charset_name]) ? 
+				$this->charset2mysql[$charset_name] : $charset_name));
+			if ($ok && $this->GetCharSet() == $charset_name || $this->charset2mysql[$this->charSet] == $charset_name) {
+				return true;
+			} else return false;
+		} else return true;
+	}
 }
+
 	
 /*--------------------------------------------------------------------------------------
 	 Class Name: Recordset
