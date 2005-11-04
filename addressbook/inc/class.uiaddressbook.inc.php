@@ -1154,7 +1154,8 @@
 				}
 
 				$GLOBALS['egw']->template->set_var('edit_button',$this->html_1button_form('edit','Edit',
-					$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.edit&ab_id=' .$ab_id)));
+					$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.edit&ab_id=' .$ab_id),'window.open(\''.$GLOBALS['egw']->link('/index.php?menuaction=addressbook.uicontacts.edit') . '&contact_id='.$ab_id.
+						'\',\'\',\'dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\');return false;'));
 			}
 			$GLOBALS['egw']->template->set_var('copy_button',$this->html_1button_form('submit','copy',
 				$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.copy&ab_id=' . $fields[0]['id'])));
@@ -1182,10 +1183,10 @@
 			));
 		}
 
-		function html_1button_form($name,$lang,$link)
+		function html_1button_form($name,$lang,$link,$onclick='')
 		{
 			$html  = '<form method="POST" action="' . $link . '">' . "\n";
-			$html .= '<input type="submit" name="' . $name .'" value="' . lang($lang) . '">' . "\n";
+			$html .= '<input type="submit" name="' . $name .'" value="' . lang($lang) . '" onclick="'. $onclick.'">' . "\n";
 			$html .= '</form>' . "\n";
 			return $html;
 		}
