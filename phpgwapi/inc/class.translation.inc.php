@@ -307,7 +307,7 @@
 			}
 			$this->db->select($this->languages_table,'lang_name',array('lang_id' => $lang),__LINE__,__FILE__);
 			
-			return $GLOBALS['egw']->db->next_record() ? $GLOBALS['egw']->db->f('lang_name') : false;
+			return $this->db->next_record() ? $this->db->f('lang_name') : false;
 		}
 
 		/**
