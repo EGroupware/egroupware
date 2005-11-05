@@ -140,7 +140,7 @@ if (substr($db->Type,0,5) == 'mysql' && $GLOBALS['egw_setup']->system_charset &&
 		{
 			$alter_table = "ALTER TABLE $table\n".implode(",\n",$alter_table);
 			
-			/*if ($running_standalone)*/ echo '<p>'.nl2br($alter_table)."</p>\n";
+			if ($running_standalone || $_REQUEST['debug']) echo '<p>'.nl2br($alter_table)."</p>\n";
 			if (!$db->query($alter_table,__LINE__,__FILE__))
 			{
 				echo "<p>SQL Error: ".nl2br($alter_table)."</p>\n";
@@ -156,7 +156,7 @@ if (substr($db->Type,0,5) == 'mysql' && $GLOBALS['egw_setup']->system_charset &&
 			{
 				$alter_table_back = "ALTER TABLE $table\n".implode(",\n",$alter_table_back);
 				
-				/*if ($running_standalone)*/ echo '<p>'.nl2br($alter_table_back)."</p>\n";
+				if ($running_standalone || $_REQUEST['debug']) echo '<p>'.nl2br($alter_table_back)."</p>\n";
 				if (!$db->query($alter_table_back,__LINE__,__FILE__))
 				{
 					echo "<p><b>SQL Error</b>: ".nl2br($alter_table_back)."</p>\n";
