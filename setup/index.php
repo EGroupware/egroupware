@@ -570,7 +570,7 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 				'submit',lang('Manage Languages'),
 				'');
 			// show system-charset and offer conversation
-			include_once(EGW_API_INC.'/class.translation_sql.inc.php');
+			include_once(EGW_API_INC.'/class.translation.inc.php');
 			$translation = new translation;
 			$btn_manage_lang .= lang('Current system-charset is %1, click %2here%3 to change it.',
 				$translation->system_charset ? "'$translation->system_charset'" : lang('not set'),
