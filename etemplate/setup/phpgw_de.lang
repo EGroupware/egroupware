@@ -19,6 +19,7 @@ add a new multi-column index	etemplate	de	Fügt einen mehrspaltigen Index hinzu
 add column	etemplate	de	Spalte zufügen
 add index	etemplate	de	Index zufügen
 add table	etemplate	de	Tabelle zufügen
+advanced search	etemplate	de	Erweiterte Suche
 align	etemplate	de	Ausrichtung
 alignment of label and input-field in table-cell	etemplate	de	Ausrichtung der Beschriftung und des Eingabefeldes in der Tabellenzelle
 alignment of the v/hbox containing table-cell	etemplate	de	Ausrichtung der die V/HBox enthaltenden Tabellenzelle
@@ -74,7 +75,7 @@ css properties	etemplate	de	CSS Attribute
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-styles	etemplate	de	CSS Stile
-custom	etemplate	de	speziell
+custom	etemplate	de	Benutzerdefiniert
 cut	etemplate	de	Ausschneiden
 date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
@@ -105,6 +106,7 @@ displayed in statusline of browser if input-field gets focus	etemplate	de	wird i
 displayed in the top line of the groupbox (legend)	etemplate	de	wird oben in der Umrandung der Gruppierung angezeigt (Legende)
 do you want to save the changes you made in table %s?	etemplate	de	Wollen Sie die Änderungen in der Tabelle '%s' speichern?
 documentation	etemplate	de	Dokumentation
+doesn't matter	etemplate	de	egal
 drop a table - this can not be undone	etemplate	de	Tabelle löschen (drop) - NICHT rückgänig zu machen
 drop table	etemplate	de	Tabelle löschen
 dump4setup	etemplate	de	Dump4Setup
