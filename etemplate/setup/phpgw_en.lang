@@ -14,11 +14,14 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	en	'%1' is not a valid floatingpoint number !!!
 '%1' is not a valid integer !!!	etemplate	en	'%1' is not a valid integer !!!
 a pattern to be searched for	etemplate	en	a pattern to be searched for
+accesskey	etemplate	en	Accesskey
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	en	Accesskeys can also be specified with an & in the label (eg. &Name)
 add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
 add a new multi-column index	etemplate	en	Add a new multi-column index
 add column	etemplate	en	Add Column
 add index	etemplate	en	Add Index
 add table	etemplate	en	Add Table
+advanced search	etemplate	en	Advanced search
 align	etemplate	en	Align
 alignment of label and input-field in table-cell	etemplate	en	alignment of label and input-field in table-cell
 alignment of the v/hbox containing table-cell	etemplate	en	Alignment of the V/HBox containing table-cell
@@ -75,6 +78,7 @@ css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternati
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	en	CSS-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
 css-styles	etemplate	en	CSS-styles
 custom	etemplate	en	custom
+custom fields	etemplate	en	custom fields
 cut	etemplate	en	Cut
 date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
@@ -236,6 +240,7 @@ onclick	etemplate	en	onClick
 only an other version found !!!	etemplate	en	only an other Version found !!!
 optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
+order to navigating by tab key through the form	etemplate	en	Order to navigating by tab key through the form
 overflow	etemplate	en	Overflow
 padding	etemplate	en	Padding
 parent is a '%1' !!!	etemplate	en	parent is a '%1' !!!
@@ -313,6 +318,7 @@ swap with next column	etemplate	en	swap with next column
 swap with next row	etemplate	en	swap with next row
 switch to a parent widget	etemplate	en	switch to a parent widget
 switch to an other widgets of that container	etemplate	en	switch to an other widgets of that container
+tabindex	etemplate	en	Tabindex
 table unchanged, no write necessary !!!	etemplate	en	Table unchanged, no write necessary !!!
 tablename	etemplate	en	TableName
 tabs	etemplate	en	Tabs

@@ -19,11 +19,11 @@
 	 *
 	 * etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
 	 *
-	 * $tmpl = CreateObject('etemplate.etemplate','app.template.name');
+	 * $tmpl =& CreateObject('etemplate.etemplate','app.template.name');
 	 * $tmpl->exec('app.class.callback',$content_to_show);
 	 * This creates a form from the eTemplate 'app.template.name' and takes care that
-	 * the method / public function 'callback' in (bo)class 'class' of 'app' gets called
-	 * if the user submitts the form. Vor the complete param's see the description of exec.
+	 * the method / public function 'callback' in class 'class' of 'app' gets called
+	 * if the user submitts the form. For the complete param's see the description of exec.
 	 *
 	 * @package etemplate
 	 * @subpackage api
@@ -712,10 +712,14 @@
 
 			$value = $this->get_array($content,$name);
 
+			$options = '';
 			if ($readonly = $cell['readonly'] || @$readonlys[$name] && !is_array($readonlys[$name]) || $readonlys['__ALL__'])
 			{
-				$options .= ' readonly="1"';
+				$options .= ' readonly="readonly"';
 			}
+			if ((int) $cell['tabindex']) $options .= ' tabindex="'.(int)$cell['tabindex'].'"';
+			if ($cell['accesskey']) $options .= ' accesskey="'.$this->html->htmlspecialchars($cell['accesskey']).'"';
+
 			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && !strstr($cell['size'],','))
 			{
 				if ($this->rows == 1) {
@@ -918,7 +922,7 @@
 					}
 					else
 					{
-						if ($value) $options .= ' checked="1"';
+						if ($value) $options .= ' checked="checked"';
 
 						if (($multiple = substr($cell['name'],-2) == '[]'))
 						{
@@ -946,7 +950,7 @@
 
 					if ($value == $set_val)
 					{
-						$options .= ' checked="1"';
+						$options .= ' checked="checked"';
 					}
 					// add the set_val to the id to make it unique
 					$options = str_replace('id="'.$form_name,'id="'.$form_name."[$set_val]",$options);

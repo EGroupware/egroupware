@@ -14,6 +14,8 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	de	'%1' ist keine gültige Kommazahl !!!
 '%1' is not a valid integer !!!	etemplate	de	'%1' ist keine gültige Ganzzahl !!!
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
+accesskey	etemplate	de	Tastaturkürzel
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	de	Ein Tastaturkürzel kann auch über ein & in der Beschriftung angegeben werden
 add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
 add a new multi-column index	etemplate	de	Fügt einen mehrspaltigen Index hinzu
 add column	etemplate	de	Spalte zufügen
@@ -76,6 +78,7 @@ css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternati
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	de	Name der CSS class dieser Zeile, vorbelegt sind: 'th' = Kopfzeile, 'row' = zeilenweise wechselnde Farbe bzw. 'row_on', 'row_off'
 css-styles	etemplate	de	CSS Stile
 custom	etemplate	de	Benutzerdefiniert
+custom fields	etemplate	de	Benutzerdefinierte Felder
 cut	etemplate	de	Ausschneiden
 date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
@@ -238,6 +241,7 @@ onclick	etemplate	de	onClick
 only an other version found !!!	etemplate	de	nur eine andere Version gefunden !!!
 optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
 options	etemplate	de	Optionen
+order to navigating by tab key through the form	etemplate	de	Reihenfolger bei der Navigation mit der Tabulator Taste durch das Formular
 overflow	etemplate	de	Überbreite
 padding	etemplate	de	Innenabstand
 parent is a '%1' !!!	etemplate	de	Elternelement is ein '%1' !!!
@@ -315,6 +319,7 @@ swap with next column	etemplate	de	tauscht Spalte mit der nächsten
 swap with next row	etemplate	de	tauscht Zeile mit der nächsten
 switch to a parent widget	etemplate	de	wechselt zum Elternelement
 switch to an other widgets of that container	etemplate	de	wechselt zu einem anderen Element dieses Containers
+tabindex	etemplate	de	Tab-Reihenfolge
 table unchanged, no write necessary !!!	etemplate	de	Tabelle nicht geändert, kein schreiben notwendig !!!
 tablename	etemplate	de	Tabellenname
 tabs	etemplate	de	Karteikarten

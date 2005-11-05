@@ -231,6 +231,9 @@
 			for ($i=0,$n= substr($type,-4) == 'only' ? 3 : 0; $n < ($type == 'date' ? 3 : 5); ++$n,++$i)
 			{
 				$dcell = $tpl->empty_cell();
+				if ($cell['tabindex']) $dcell['tabindex'] = $cell['tabindex'];
+				if (!$i && $cell['accesskey']) $dcell['accesskey'] = $cell['accesskey'];
+				
 				// test if we can use jsCalendar
 				if ($n == 0 && $this->jscal && $tmpl->java_script())
 				{
@@ -258,6 +261,7 @@
 				if ($n == 2 && ($options & 2))	// Today button
 				{
 					$dcell = $tpl->empty_cell();
+					if ($cell['tabindex']) $dcell['tabindex'] = $cell['tabindex'];
 					$dcell['name'] = 'today';
 					$dcell['label'] = 'Today';
 					$dcell['help'] = 'sets today as date';
@@ -386,6 +390,7 @@
 					'h' => 'hours',
 					'd' => 'days',
 				);
+				if ($cell['tabindex']) $selbox['tabindex'] = $cell['tabindex'];
 				
 				$tpl->data[0] = array();
 				$tpl->data[1] =array(
