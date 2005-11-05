@@ -29,3 +29,25 @@ gernal resource	resources	it	risorsa generale
 how many of the resources are useable?	resources	it	Quante risorse sono utilizzabili?
 how many of them are useable?	resources	it	Quante di loro sono utilizzabili?
 how many of this resource are usable	resources	it	Quante di questa risorse sono utilizzabili
+how many of this resource exists	resources	it	Quante di queste risorse esistono
+implies booking permission	resources	it	implica permesso di prenotazione
+implies read permission	resources	it	implica permesso di lettura
+informations about the location of resource	resources	it	Informazioni sulla localizzazione della risorsa
+is resource bookable?	resources	it	La risorsa è prenotabile?
+is resource buyable?	resources	it	La risorsa è acquistabile?
+is this resource bookable?	resources	it	Questa risorsa è prenotabile?
+is this resource buyable?	resources	it	Questa risorsa è acquistabile?
+links	resources	it	Collegamenti
+location	resources	it	Localizzazione
+location of resource	resources	it	Localizzazione della risorsa
+name of resource	resources	it	Nome della risorsa
+no description available	resources	it	nessuna descrizione disponibile
+no resources selected	resources	it	Nessuna risorsa selezionata
+notify your administrator to correct this situation	resources	it	Avverti il tuo amministratore di correggere questa situazione
+picture	resources	it	Immagine
+picture source	resources	it	sorgente immagine
+picture type is not supported, sorry!	resources	it	Tipo immagine non supportato, spiacente!
+pictures or resource	resources	it	Immagini della risorsa
+planer	resources	it	pianificatore
+quantity	resources	it	Quantità
+quantity:	resources	it	Quantità:
