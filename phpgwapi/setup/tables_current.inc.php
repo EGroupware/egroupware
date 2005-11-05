@@ -170,7 +170,7 @@
 			'ix' => array(),
 			'uc' => array('appname')
 		),
-		'phpgw_categories' => array(
+		'egw_categories' => array(
 			'fd' => array(
 				'cat_id' => array('type' => 'auto','precision' => '4','nullable' => False),
 				'cat_main' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),

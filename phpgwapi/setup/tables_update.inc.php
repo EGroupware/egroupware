@@ -790,4 +790,15 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.019';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+
+	$test[] = '1.0.1.019';
+	function phpgwapi_upgrade1_0_1_019()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_categories','egw_categories');
+		$GLOBALS['egw_setup']->cats_table = 'egw_categories';
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.020';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

@@ -35,7 +35,7 @@
 		var $lang_table         = 'egw_lang';
 		var $languages_table    = 'egw_languages';
 		var $hooks_table        = 'phpgw_hooks';
-		var $cats_table         = 'phpgw_categories';
+		var $cats_table         = 'egw_categories';
 		var $oProc;
 
 		var $detection = '';
