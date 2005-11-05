@@ -726,6 +726,19 @@
 		}
 
 		/**
+		 * returns a reference to a widget in the widget's children tree spezified it's name
+		 *
+		 * It returns the first match!
+		 *
+		 * @param string $name name of the widget
+		 * @return array referenz to the widget spezified or null, if it's not found
+		 */
+		function &get_widget_by_name($name)
+		{
+			return $this->widget_tree_walk('get_widget_by_name_helper',$name);
+		}
+
+		/**
 		 * generated a file-name from an eTemplates, name, template(-set) and lang
 		 *
 		 * @param string/array $name name of template or array('name'=>$name,'template'=>$template,'lang'=>$lang)
@@ -928,6 +941,11 @@
 				$widget[$extra[2]] = $extra[3];
 				++$extra[0];
 			}
+		}
+		
+		function &get_widget_by_name_helper(&$widget,$extra)
+		{
+			if ($widget['name'] == $extra) return $widget;
 		}
 		
 		function &get_widget_by_path_helper(&$widget,$extra,$path)
