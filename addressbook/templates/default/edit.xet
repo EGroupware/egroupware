@@ -68,7 +68,7 @@
 					<date 1="label" id="bday"/>
 					<description/>
 					<description value="business email"/>
-					<textbox id="business email" size="30"/>
+					<textbox id="email" size="30"/>
 				</row>
 				<row>
 					<description/>
