@@ -490,6 +490,7 @@
 				'app_order'   => $setup_info['home']['app_order'],
 				'app_version' => $setup_info['home']['version'],
 				'app_tables'  => '',
+				'app_version' => $home_version,
 			),array(
 				'app_name' => 'home',
 			),__LINE__,__FILE__);
@@ -610,6 +611,23 @@
 	function phpgwapi_upgrade1_0_1_014()
 	{
 		// index was to big for mysql with charset utf8 (max 1000byte = 333 utf8 chars)
+		// before we can shorten the message_id, we have to make sure there are no identical message_id > 128 chars
+		$to_delete = array();
+		$GLOBALS['egw_setup']->db->select('phpgw_lang','app_name,lang,message_id','LENGTH(message_id) > 128',__LINE__,__FILE__,
+			false,'ORDER BY app_name,lang,message_id');
+		while(($row = $GLOBALS['egw_setup']->db->row(true)))
+		{
+			if ($last_row && $last_row['app_name'] == $row['app_name'] && $last_row['lang'] == $row['lang'] && 
+				substr($last_row['message_id'],0,128) == substr($row['message_id'],0,128))
+			{
+				$to_delete[] = $row;
+			}
+			$last_row = $row;
+		}
+		foreach ($to_delete as $row)
+		{
+			$GLOBALS['egw_setup']->db->delete('phpgw_lang',$row,__LINE__,__FILE__);
+		}
 		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_lang','app_name',array(
 			'type' => 'varchar',
 			'precision' => '32',
