@@ -299,7 +299,7 @@
 		 * @param string $lang
 		 * @return string/false language or false if not found
 		 */
-		function lang2languages($lang)
+		function lang2language($lang)
 		{
 			if (isset($this->langs[$lang]))	// no need to query the DB
 			{
