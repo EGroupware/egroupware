@@ -15,7 +15,7 @@
 				<row>
 					<image src="personal"/>
 					<description value="prefix"/>
-					<textbox id="prefix" size="40"/>
+					<textbox id="prefix" size="40" tabindex="1"/>
 					<description/>
 					<description value="time zone"/>
 					<menulist>
@@ -25,34 +25,34 @@
 				<row>
 					<description/>
 					<description value="first name"/>
-					<textbox id="n_given" size="40"/>
+					<textbox id="n_given" size="40" tabindex="2"/>
 					<image src="kaddressbook"/>
 					<description value="home phone"/>
-					<textbox id="tel_home" size="30"/>
+					<textbox id="tel_home" size="30" tabindex="6"/>
 				</row>
 				<row>
 					<description/>
 					<description value=" middle name"/>
-					<textbox id="n_middle" size="40"/>
+					<textbox id="n_middle" size="40" tabindex="3"/>
 					<description/>
 					<description value="business phone"/>
-					<textbox id="tel_work" size="30"/>
+					<textbox id="tel_work" size="30" tabindex="7"/>
 				</row>
 				<row>
 					<description/>
 					<description value="last name"/>
-					<textbox id="n_family" size="40"/>
+					<textbox id="n_family" size="40" tabindex="4"/>
 					<description/>
 					<description value="mobile phone"/>
-					<textbox id="tel_cell" size="30"/>
+					<textbox id="tel_cell" size="30" tabindex="8"/>
 				</row>
 				<row>
 					<description/>
 					<description value="suffix"/>
-					<textbox id="n_suffix" size="40"/>
+					<textbox id="n_suffix" size="40" tabindex="5"/>
 					<description/>
 					<description/>
-					<button label="more phonenumbers" onclick="showphones(this.form); return false;"/>
+					<button label="more phonenumbers" onclick="showphones(this.form); return false;" tabindex="9" accesskey="m"/>
 				</row>
 				<row>
 					<description/>
@@ -60,7 +60,7 @@
 					<description/>
 					<image src="email"/>
 					<description value="home email"/>
-					<textbox id="email_home" size="30"/>
+					<textbox id="email_home" size="30" tabindex="10"/>
 				</row>
 				<row>
 					<description/>
@@ -68,7 +68,7 @@
 					<date 1="label" id="bday"/>
 					<description/>
 					<description value="business email"/>
-					<textbox id="email" size="30"/>
+					<textbox id="email" size="30" tabindex="11"/>
 				</row>
 				<row>
 					<description/>
@@ -81,15 +81,15 @@
 				<row valign="top">
 					<image src="folder"/>
 					<description value="category"/>
-					<listbox type="select-cat" id="cat_id" rows="3" span="4"/>
+					<listbox type="select-cat" id="cat_id" rows="3" span="4" tabindex="13"/>
 				</row>
 				<row>
 					<image src="password"/>
 					<description value="private"/>
-					<checkbox id="private"/>
+					<checkbox id="private" tabindex="14"/>
 					<image src="package_network"/>
 					<description value="url"/>
-					<textbox id="url" size="30"/>
+					<textbox id="url" size="30" tabindex="12"/>
 				</row>
 				<row height="100%">
 					<description/>
@@ -464,13 +464,13 @@ border-bottom: #9c9c9c 1px solid;
 				<row disabled="@hidebuttons">
 					<hbox>
 						<hbox>
-							<button label="Edit" id="button[edit]"/>
+							<button label="Edit" id="button[edit]" tabindex="15"/>
 							<button label="Copy" id="button[copy]"/>
-							<button label="Save" id="button[save]"/>
-							<button label="Apply" id="button[apply]"/>
-							<button label="Cancel" id="button[cancel]" onclick="self.close(); return false;"/>
+							<button label="Save" id="button[save]" tabindex="16" accesskey="s"/>
+							<button label="Apply" id="button[apply]" tabindex="17"/>
+							<button label="Cancel" id="button[cancel]" onclick="self.close(); return false;" tabindex="18"/>
 						</hbox>
-						<button label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" align="right"/>
+						<button label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" align="right" tabindex="20"/>
 					</hbox>
 				</row>
 				<row>
