@@ -87,8 +87,18 @@
 			if(!$this->db->next_record())
 			{
 				$setup_dir = str_replace($_SERVER['PHP_SELF'],'index.php','setup/');
-				echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
-					.'eGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
+
+				// we check for the old table too, to not scare updating users ;-)
+				$this->db->select('phpgw_config','COUNT(config_name)',false,__LINE__,__FILE__);
+				if ($this->db->next_record())
+				{
+					echo '<center><b>Fatal Error:</b> You need to <a href="' . $setup_dir . '">update eGroupWare</a> before you can continue using it.</center>';
+				}
+				else
+				{
+					echo '<center><b>Fatal Error:</b> It appears that you have not created the database tables for '
+						.'eGroupWare.  Click <a href="' . $setup_dir . '">here</a> to run setup.</center>';
+				}
 				exit;
 			}
 			$this->db->Halt_On_Error = 'yes';
