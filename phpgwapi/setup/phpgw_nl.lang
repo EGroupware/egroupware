@@ -1,22 +1,28 @@
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
-(shift-)click or drag to change value	common	nl	(Shift-)Klik of slepen om waarde te wijzigen
-- click on any of the time parts to increase it	common	nl	
-- hold mouse button on any of the above buttons for faster selection.	common	nl	
-- or click and drag for faster selection.	common	nl	
-- or shift-click to decrease it	common	nl	
-- use the %1, %2 buttons to select month	common	nl	
-- use the %1, %2 buttons to select year	common	nl	
-00 (disable)	admin	nl	
-13 (ntp)	admin	nl	
-80 (http)	admin	nl	
-Dutch	common	nl	Nederlands
-_delete row	htmlarea-ContextMenu	nl	Rij _verwijderen
-_image properties...	htmlarea-ContextMenu	nl	Eigenschappen afbeelding...
-_modify link...	htmlarea-ContextMenu	nl	Hyperlin_k aanpassen...
-_remove link...	htmlarea-ContextMenu	nl	Ve_rwijder hyperlink...
+%1 is not executable by the webserver !!!	common	nl	%1 kan niet door de webserver uitgevoerd worden !!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerd groupware suite, geschreven in %3PHP%4.
+(shift-)click or drag to change value	jscalendar	nl	(Shift-)Klik of slepen om waarde te wijzigen
+- click on any of the time parts to increase it	jscalendar	nl	- Klik op een willekeurig tijd onderdeel om het te verhogen
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	nl	- Hou de muisknop op een van de knoppen hierboven voor een snellere selectie.
+- or click and drag for faster selection.	jscalendar	nl	- of klik en sleep voor snellere selectie
+- or shift-click to decrease it	jscalendar	nl	- of Shift-klik om het te verlagen
+- use the %1, %2 buttons to select month	jscalendar	nl	- Gebruik de %1, %2 knoppen om de maand te kiezen
+- use the %1, %2 buttons to select year	jscalendar	nl	- Gebruik de %1, %2 knoppen om het jaar te kiezen
+00 (disable)	admin	nl	00 (uitschakelen)
+13 (ntp)	admin	nl	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	nl	3 letters voor verkorte dagaanduiding
+3 number of chars for month-shortcut	jscalendar	nl	3 letters voor verkorte maandaanduiding
+80 (http)	admin	nl	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	nl	\n Bezig met opruimen van de HTML broncode, even geduld ...
+_delete row	htmlarea-ContextMenu	nl	_Rij verwijderen
+_image properties...	htmlarea-ContextMenu	nl	_Afbeeldingseigenschappen...
+_modify link...	htmlarea-ContextMenu	nl	_Hyperlink aanpassen...
+_remove link...	htmlarea-ContextMenu	nl	Hyperlink _Verwijderen...
 _table properties...	htmlarea-ContextMenu	nl	_Tabeleigenschappen...
+about	common	nl	Over
 about %1	common	nl	Over %1
-about the calendar	common	nl	Over de agenda
+about the calendar	jscalendar	nl	Over de agenda
+about this editor	htmlarea	nl	Over deze tekstbewerker
 access	common	nl	Toegang
 access not permitted	common	nl	Toegang geweigerd
 access type	common	nl	Toegangstype
@@ -40,8 +46,10 @@ albania	common	nl	ALBANIË
 algeria	common	nl	ALGERIJË
 align	htmlarea-TableOperations	nl	Uitlijning
 all	common	nl	Alles
+all fields	common	nl	alle velden
 all four sides	htmlarea-TableOperations	nl	Alle 4 zijden
-alternate style-sheet:	htmlarea-FullPage	nl	Alternatieve style-sheet:
+alphabet	common	nl	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	nl	Alternatieve style-sheet:
 american samoa	common	nl	AMERIKAANS SAMOA
 andorra	common	nl	ANDORRA
 angola	common	nl	ANGOLA
@@ -61,12 +69,14 @@ austria	common	nl	OOSTENRIJK
 author	common	nl	Auteur
 autohide sidebox menus	common	nl	Automatisch Sideboxmenus verbergen
 automacally hide the sidebox menus?	common	nl	Automatisch Sideboxmenus verbergen?
+automatically hide the sidebox menus?	common	nl	Automatisch de menu's in de zijlijn verbergen?
 autosave default category	common	nl	Automatisch standaard categorie opslaan
 azerbaijan	common	nl	AZERBEIDSJAN
 back	common	nl	Terug
 back to user login	common	nl	Terug naar gebruikers loginscherm
 background	htmlarea-TableOperations	nl	Achtergrond
-background color:	htmlarea-FullPage	nl	Achtergrondkleur:
+background color	htmlarea	nl	Achtergrondkleur
+background color:	common	nl	Achtergrondkleur:
 bad login or password	common	nl	Onjuist gebruikersnaam of wachtwoord
 bahamas	common	nl	BAHAMAS
 bahrain	common	nl	BAHREIN
@@ -81,6 +91,7 @@ benin	common	nl	BENIN
 bermuda	common	nl	BERMUDA
 bhutan	common	nl	BHUTAN
 blocked, too many attempts	common	nl	Geblokkeerd, te veel pogingen
+bold	htmlarea	nl	Vet
 bolivia	common	nl	BOLIVIA
 border	htmlarea-TableOperations	nl	Rand
 borders	htmlarea-TableOperations	nl	Randen
@@ -92,6 +103,7 @@ brazil	common	nl	BRAZILIË
 british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	nl	BRUNEI DARUSSALAM
 bulgaria	common	nl	BULGARIË
+bulleted list	htmlarea	nl	Lijst met opsommingstekens
 burkina faso	common	nl	BURKINA FASO
 burundi	common	nl	BURUNDI
 c_ell properties...	htmlarea-ContextMenu	nl	C_eleigenschappen...
@@ -118,8 +130,10 @@ char	htmlarea-TableOperations	nl	Karakter
 charset	common	nl	iso-8859-1
 chec_k link...	htmlarea-ContextMenu	nl	Controleer hyperlin_k...
 check installation	common	nl	Controleer installatie
+check now	common	nl	Nu controleren
 chile	common	nl	CHILI
 china	common	nl	CHINA
+choose list style type (for ordered lists)	htmlarea-ListType	nl	Kies lijst stijl (voor genummerde lijst)
 choose the category	common	nl	Kies de categorie
 choose the parent category	common	nl	Kies bovenliggende categorie
 christmas island	common	nl	CHRISTMASEILAND
@@ -140,6 +154,7 @@ congo	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 congo, the democratic republic of the	common	nl	DEMOCRATISCHE REPUBLIEK CONGO
 cook islands	common	nl	COOKEILANDEN
 copy	common	nl	Kopiëren
+copy selection	htmlarea	nl	Selectie kopiëren
 costa rica	common	nl	COSTA RICA
 cote d ivoire	common	nl	IVOORKUST
 create	common	nl	Maken
@@ -149,18 +164,22 @@ croatia	common	nl	KROATIË
 cuba	common	nl	CUBA
 currency	common	nl	Munteenheid
 current	common	nl	Huidig
+current style	htmlarea	nl	Huidige stijl
 current url is	htmlarea-ContextMenu	nl	Huidig URL is
 current users	common	nl	huidig aantal gebruikers
 cut	htmlarea-ContextMenu	nl	Knippen
+cut selection	htmlarea	nl	Selectie knippen
 cyprus	common	nl	CYPRUS
 czech republic	common	nl	TSJECHIË
 date	common	nl	Datum
 date due	common	nl	Einddatum
 date hired	common	nl	Datum in dienst
-date selection:	common	nl	Datumselectie
-datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	
+date selection:	jscalendar	nl	Datumselectie
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	nl	Datetime poort<br />Indien poort 13 gebruikt wordt, pas dan s.v.p. de firewall regels eerst aan voordat u deze pagina verzendt.<br />(Port: 13 / Host: 129.6.15.28)
 de_lete column	htmlarea-ContextMenu	nl	Kolom verwijderen
 december	common	nl	December
+decimal numbers	htmlarea-ListType	nl	Decimale getallen
+decrease indent	htmlarea	nl	Inpringing verkleinen
 default category	common	nl	Standaard Categorie
 delete	common	nl	Verwijderen
 delete cell	htmlarea-TableOperations	nl	Cel verwijderen
@@ -173,24 +192,27 @@ description	common	nl	Beschrijving
 detail	common	nl	Detail
 details	common	nl	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	nl	Het bugfixscript uitschakelen dat dient om transparante PNG-afbeeldingen juist weer te geven in Internet Explorer 5.5 en hoger?
+dictionary	htmlarea-SpellChecker	nl	Woordenlijst
 disable internet explorer png-image-bugfix	common	nl	Internet Explorer png-image-bugfix  uitschakelen?
 disable slider effects	common	nl	Bewegende schuifeffecten uitschakelen
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	nl	Schakel de bewegende schuifeffecten uit wanneer een langzame computer gebruikt of problemen met de uitklapmenus ondervind.
 disabled	common	nl	Uitgeschakeld
+display %s first	jscalendar	nl	%s eerst tonen
 display monday first	common	nl	Begin de week maandag
 display sunday first	common	nl	Begin de week zondag
 djibouti	common	nl	DJIBOUTI
 do you also want to delete all subcategories ?	common	nl	Wilt u ook alle subcategorieën wissen
-doctype:	htmlarea-FullPage	nl	DOCTYPE:
-document properties	htmlarea-FullPage	nl	Documenteigenschappen 
-document title:	htmlarea-FullPage	nl	Documenttitel:
+doctype:	common	nl	DOCTYPE:
+document properties	common	nl	Documenteigenschappen
+document title:	common	nl	Documenttitel:
 domain	common	nl	Domein
 domain name for mail-address, eg. "%1"	common	nl	domeinnaam voor emailadres, bijv. "%1"
 domestic	common	nl	thuis
 dominica	common	nl	DOMINICA
 dominican republic	common	nl	DOMINICAANSE REPUBLIEK
 done	common	nl	Gereed
-drag to move	common	nl	Sleep om te verplaatsen
+drag to move	jscalendar	nl	Sleep om te verplaatsen
+dutch	common	nl	Nederlands
 e-mail	common	nl	Email
 east timor	common	nl	OOST TIMOR
 ecuador	common	nl	ECUADOR
@@ -198,6 +220,7 @@ edit	common	nl	Bewerken
 edit %1 category for	common	nl	Bewerk %1 categorie voor
 edit categories	common	nl	Categorieën bewerken
 edit category	common	nl	Bewerk categorie
+egroupware api version %1	common	nl	eGroupWare API versie %1
 egroupware: login blocked for user '%1', ip %2	common	nl	eGroupWare: login geblokkeerd voor gebruiker '%1', IP %2
 egypt	common	nl	EGYPTE
 el salvador	common	nl	EL SALVADOR
@@ -207,6 +230,8 @@ email-address of the user, eg. "%1"	common	nl	emailadres van de gebruiker, bijv.
 enabled	common	nl	Geactiveerd
 end date	common	nl	Einddatum
 end time	common	nl	Eindtijd
+enlarge editor	htmlarea	nl	Tekstbewerker vergroten
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Vul de lokatie van de eGroupWare URL in.<br />Voorbeeld: http://www.domeinnaam.nl/egroupware of /egroupware.<br /><b>Geen afsluitende slash toevoegen</b>
 entry has been deleted sucessfully	common	nl	Item succesvol verwijderd
 entry updated sucessfully	common	nl	Item succesvol bijgewerkt
 equatorial guinea	common	nl	EQUATORIAAL GUINEA
@@ -217,6 +242,7 @@ error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2
 error renaming %1 %2 directory	common	nl	Error tijdens het hernoemen van %1 %2 directory
 estonia	common	nl	ESTONIA
 ethiopia	common	nl	ETHIOPIË
+exact	common	nl	exact
 exit	common	nl	Einde
 falkland islands (malvinas)	common	nl	FALKLAND EILANDEN
 faroe islands	common	nl	LAND EILANDEN
@@ -227,6 +253,7 @@ fields	common	nl	Velden
 fiji	common	nl	FIJI
 files	common	nl	Bestanden
 filter	common	nl	Filter
+finished list of mispelled words	htmlarea-SpellChecker	nl	Lijst met verkeerd gespelde woorden is gereed
 finland	common	nl	FINLAND
 first name	common	nl	Voornaam
 first name of the user, eg. "%1"	common	nl	Voornaam van de gebruiker, bijv. "%1"
@@ -234,6 +261,7 @@ first page	common	nl	Eerste pagina
 firstname	common	nl	Voornaam
 fixme!	common	nl	FIXME!
 float	htmlarea-TableOperations	nl	Zwevend
+font color	htmlarea	nl	Letterkleur
 force selectbox	common	nl	Forceer Selectbox
 frames	htmlarea-TableOperations	nl	Frames
 france	common	nl	FRANKRIJK
@@ -252,7 +280,7 @@ ghana	common	nl	GHANA
 gibraltar	common	nl	GIBRALTAR
 global	common	nl	Globale
 global public	common	nl	Toegang Openbaar
-go today	common	nl	Ga naar vandaag
+go today	jscalendar	nl	Ga naar vandaag
 grant access	common	nl	Geef toegang
 greece	common	nl	GRIEKENLAND
 greenland	common	nl	GROENLAND
@@ -277,6 +305,7 @@ haiti	common	nl	HAITI
 heard island and mcdonald islands	common	nl	HEARD EILAND EN MCDONALD EILANDEN
 height	htmlarea-TableOperations	nl	Hoogte
 help	common	nl	Help
+help using editor	htmlarea	nl	Hulp bij gebruik van tekstbewerker
 high	common	nl	Hoog
 highest	common	nl	Hoogste
 holy see (vatican city state)	common	nl	VATICAANSTAD
@@ -284,18 +313,24 @@ home	common	nl	Start
 home email	common	nl	email thuis
 honduras	common	nl	HONDURAS
 hong kong	common	nl	HONG KONG
+horizontal rule	htmlarea	nl	Horizontale lijn
 how did you get here? (please report!)	htmlarea-ContextMenu	nl	Hoe kwam je hier? (A.U.B. doorgeven!)
 how many columns would you like to merge?	htmlarea-TableOperations	nl	Hoeveel kolommen wilt u samenvoegen?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	nl	Hoe veel programma-iconen moeten worden weergegeven in de navigatiebalk. Extra iconen worden weergegeven in een uitklapmenu.
 how many rows would you like to merge?	htmlarea-TableOperations	nl	Hoeveel rijen wilt u samenvoegen?
+html tidy	htmlarea-HtmlTidy	nl	HTML Tidy
 htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	nl	HTMLArea kan de laatste cel in deze tabel niet verwijderen.
 htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	nl	HTMLArea kan de laatste kolom in deze tabel niet verwijderen.
 htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	nl	HTMLArea kan de laatste rij in deze tabel niet verwijderen.
 hungary	common	nl	HONGARIJË
+i will open it in a new page.	htmlarea-SpellChecker	nl	I zal het in een nieuw venster openen
 i_nsert row before	htmlarea-ContextMenu	nl	Rij invoegen boven
 iceland	common	nl	IJSLAND
+ignore	htmlarea-SpellChecker	nl	Negeren
+ignore all	htmlarea-SpellChecker	nl	Alles negeren
 image url	htmlarea-TableOperations	nl	Afbeelding URL
 in_sert row after	htmlarea-ContextMenu	nl	Rij invoegen onder
+increase indent	htmlarea	nl	Inspringing vergroten
 india	common	nl	INDIA
 indonesia	common	nl	INDONESIË
 insert _column before	htmlarea-ContextMenu	nl	Kolom invoegen voor
@@ -309,8 +344,11 @@ insert cell after	htmlarea-TableOperations	nl	Voeg cel toe achter
 insert cell before	htmlarea-TableOperations	nl	Voeg cel toe voor
 insert column after	htmlarea-TableOperations	nl	Kolom invoegen achter
 insert column before	htmlarea-TableOperations	nl	Kolom invoegen voor
+insert image	htmlarea	nl	Afbeelding invoegen
 insert row after	htmlarea-TableOperations	nl	Rij invoegen onder
 insert row before	htmlarea-TableOperations	nl	Rij invoegen boven
+insert table	htmlarea	nl	Tabel invoegen
+insert web link	htmlarea	nl	Weblink invoegen
 international	common	nl	Internationaal
 invalid ip address	common	nl	Ongeldig IP-adres
 invalid password	common	nl	Ongeldig wachtwoord
@@ -320,18 +358,20 @@ ireland	common	nl	IERLAND
 israel	common	nl	ISRAËL
 it has been more then %1 days since you changed your password	common	nl	Er zijn meer dan %1 dagen verstreken sinds u uw wachtwoord hebt gewijzigd.
 it is recommended that you run setup to upgrade your tables to the current version	common	nl	Het is aanbevolen dat u setup uitvoerd om uw tabellen bij te werken naar een actuele versie
+italic	common	nl	Cursief
 italy	common	nl	ITALIË
 jamaica	common	nl	JAMAICA
 january	common	nl	Januari
 japan	common	nl	JAPAN
 jordan	common	nl	JORDANIË
 july	common	nl	Juli
+jun	common	nl	Jun
 june	common	nl	Juni
 justify	htmlarea-TableOperations	nl	Uitvullen
-justify center	htmlarea-ContextMenu	nl	Centreren
-justify full	htmlarea-ContextMenu	nl	Uitvullen
-justify left	htmlarea-ContextMenu	nl	Links uitlijnen
-justify right	htmlarea-ContextMenu	nl	Rechts uitlijnen
+justify center	common	nl	Centreren
+justify full	common	nl	Uitvullen
+justify left	common	nl	Links uitlijnen
+justify right	common	nl	Rechts uitlijnen
 kazakstan	common	nl	KAZACHSTAN
 kenya	common	nl	KENIA
 keywords	common	nl	Trefwoorden
@@ -353,10 +393,11 @@ left	htmlarea-TableOperations	nl	Links
 lesotho	common	nl	LESOTHO
 liberia	common	nl	LIBERIE
 libyan arab jamahiriya	common	nl	LIBIË
-license	phpgwapi	nl	Licentie
+license	common	nl	Licentie
 liechtenstein	common	nl	LIECHTENSTEIN
 link points to:	htmlarea-ContextMenu	nl	Hyperlink verwijst naar:
 list	common	nl	Lijst
+list members	common	nl	Lijst van leden
 lithuania	common	nl	LITOUWEN
 local	common	nl	Lokaal
 location	common	nl	Locatie
@@ -364,6 +405,9 @@ login	common	nl	Aanmelden
 loginid	common	nl	Loginnaam
 logout	common	nl	Afmelden
 low	common	nl	Laag
+lower greek letters	htmlarea-ListType	nl	Onderkast griekse lettertekens
+lower latin letters	htmlarea-ListType	nl	Onderkast latijnse lettertekens
+lower roman numbers	htmlarea-ListType	nl	Onderkast romeinse cijfers
 lowest	common	nl	Laagste
 luxembourg	common	nl	LUXEMBURG
 macau	common	nl	MACAU
@@ -372,7 +416,7 @@ madagascar	common	nl	MADAGASKAR
 mail domain, eg. "%1"	common	nl	emai domein, bijv. "%1"
 main category	common	nl	Hoofdcategorie
 main screen	common	nl	Hoofdscherm
-maintainer	phpgwapi	nl	Beheerder
+maintainer	common	nl	Beheerder
 make lin_k...	htmlarea-ContextMenu	nl	Maak hyperlin_k...
 malawi	common	nl	MALAWI
 malaysia	common	nl	MALEISIË
@@ -420,9 +464,9 @@ new phrase has been added	common	nl	Nieuwe zin is toegevoegd
 new value	common	nl	Nieuwe waarde
 new zealand	common	nl	NIEUW ZEELAND
 next	common	nl	Volgende
-next month (hold for menu)	common	nl	Volgende maand (vasthouden voor menu)
+next month (hold for menu)	jscalendar	nl	Volgende maand (vasthouden voor menu)
 next page	common	nl	volgende pagina
-next year (hold for menu)	common	nl	Volgend jaar (vasthouden voor menu)
+next year (hold for menu)	jscalendar	nl	Volgend jaar (vasthouden voor menu)
 nicaragua	common	nl	NICARAGUA
 niger	common	nl	NIGER
 nigeria	common	nl	NIGERIA
@@ -430,6 +474,7 @@ niue	common	nl	NIUE
 no	common	nl	Nee
 no entries found, try again ...	common	nl	Geen items gevonden, probeer het nogmaals ...
 no history for this record	common	nl	Geen geschiedenis voor dit item
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	nl	Geen verkeerd gespelde woorden gevonden in de gekozen woordenlijst.
 no rules	htmlarea-TableOperations	nl	Geen regels
 no sides	htmlarea-TableOperations	nl	Geen zijlijnen
 no subject	common	nl	Geen onderwerp
@@ -455,11 +500,14 @@ only yours	common	nl	alleen eigen weergeven
 open notify window	common	nl	Attentievenster openen
 open popup window	common	nl	Popupvenster openen
 opens this link in a new window	htmlarea-ContextMenu	nl	Opend deze hyperlink in een nieuw venster
+ordered list	htmlarea	nl	Genummerde lijst
 original	common	nl	Origineel
+original word	htmlarea-SpellChecker	nl	Originele woord
 other	common	nl	Andere
 overview	common	nl	Overzicht
 owner	common	nl	Eigenaar
 padding	htmlarea-TableOperations	nl	Celmarge
+page	common	nl	Pagina
 page was generated in %1 seconds	common	nl	Deze pagina werd gegenereerd in %1 seconden.
 pager	common	nl	Buzzer
 pakistan	common	nl	PAKISTAN
@@ -474,6 +522,8 @@ password	common	nl	Wachtwoord
 password could not be changed	common	nl	Wachtwoord kon niet worden gewijzigd
 password has been updated	common	nl	Wachtwoord is gewijzigd
 paste	htmlarea-ContextMenu	nl	Plakken
+paste from clipboard	htmlarea	nl	Plakken uit klembord
+path	htmlarea	nl	Pad
 path to user and group files has to be outside of the webservers document-root!!!	common	nl	Pad naar gebruikers- en groepsbestanden. Dit MOET BUITEN het pad liggen van de documentendirectorie van de webserver !!!
 pattern for search in addressbook	common	nl	Patroon voor zoekopdracht in Adressenboek
 pattern for search in calendar	common	nl	Patroon voor zoekopdracht in Agenda
@@ -489,6 +539,7 @@ pitcairn	common	nl	PITCAIRN (EILAND)
 pixels	htmlarea-TableOperations	nl	pixels
 please %1 by hand	common	nl	Gelieve %1 handmatig uit te voeren
 please click into some cell	htmlarea-TableOperations	nl	Klik in een cel a.u.b.
+please confirm that you want to open this link	htmlarea-SpellChecker	nl	Bevestig s.v.p. dat je deze link wilt openen
 please confirm that you want to remove this element:	htmlarea-ContextMenu	nl	Is het werkelijk de bedoeling dit element te verwijderen:
 please confirm that you want to unlink this element.	htmlarea-ContextMenu	nl	Is het werkelijk de bedoeling dit element te unlinken.
 please enter a name	common	nl	Voer a.u.b. een naam in !
@@ -496,16 +547,20 @@ please run setup to become current	common	nl	Voer a.u.b. de setup uit om een act
 please select	common	nl	Selecteer a.u.b.
 please set your global preferences	common	nl	Stel a.u.b. uw persoonlijke voorkeuren in !
 please set your preferences for this application	common	nl	Stel a.u.b. uw voorkeuren in voor deze toepassing !
-please wait...	common	nl	Geduld a.u.b.
+please wait.  calling spell checker.	htmlarea-SpellChecker	nl	Even geduld. De spellingchecker wordt gestart.
+please wait...	common	nl	Even geduld a.u.b.
+please wait: changing dictionary to	htmlarea-SpellChecker	nl	Even geduld: directory wordt gewijzigd in
+pliz weit ;-)	htmlarea-SpellChecker	nl	effe wache ;-)
 poland	common	nl	POLEN
 portugal	common	nl	PORTUGAL
 postal	common	nl	Post
-powered by egroupware version %1	common	nl	Deze site werkt met <a href=http://www.egroupware.org>eGroupWare</a> version %1
+powered by phpgroupware version %1	common	nl	Deze site werkt met <a href=http://www.egroupware.org>eGroupWare</a> version %1
 preferences	common	nl	Voorkeuren
-prev. month (hold for menu)	common	nl	Vorige maand (vasthouden voor menu)
-prev. year (hold for menu)	common	nl	Vorig jaar (vasthouden voor menu)
+preferences for the idots template set	common	nl	Voorkeuren voor de idots template set
+prev. month (hold for menu)	jscalendar	nl	Vorige maand (vasthouden voor menu)
+prev. year (hold for menu)	jscalendar	nl	Vorig jaar (vasthouden voor menu)
 previous page	common	nl	Vorige pagina
-primary style-sheet:	htmlarea-FullPage	nl	Primaire style-sheet:
+primary style-sheet:	common	nl	Primaire style-sheet:
 print	common	nl	Afdrukken
 priority	common	nl	Prioriteit
 private	common	nl	Privé
@@ -513,16 +568,23 @@ project	common	nl	Project
 public	common	nl	publiek
 puerto rico	common	nl	PUERTO RICO
 qatar	common	nl	QATAR
+re-check	htmlarea-SpellChecker	nl	Check opnieuw
 read	common	nl	Lezen
 read this list of methods.	common	nl	Lees deze lijst met methodes.
+redoes your last action	htmlarea	nl	Herhaalt jouw laatste bewerking
 reject	common	nl	Afwijzen
+remove selected accounts	common	nl	verwijder geselecteerde accounts
 remove the	htmlarea-ContextMenu	nl	Verwijder het
 remove this node from the document	htmlarea-ContextMenu	nl	Verwijder dit punt van het document
 rename	common	nl	Hernoemen
+replace	htmlarea-SpellChecker	nl	Vervangen
+replace all	htmlarea-SpellChecker	nl	Alles vervangen
+replace with	htmlarea-SpellChecker	nl	Vervangen met
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
 returns an array of todo items	common	nl	Geef een array met todo items
 returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
 reunion	common	nl	RÉUNION (EILAND)
+revert	htmlarea-SpellChecker	nl	Terugdraaien
 right	htmlarea-TableOperations	nl	Rechts
 ro_w properties...	htmlarea-ContextMenu	nl	Rijeigenscha_ppen...
 romania	common	nl	ROMANIË
@@ -545,6 +607,8 @@ saturday	common	nl	Zaterdag
 saudi arabia	common	nl	SAUDI ARABIË
 save	common	nl	Opslaan
 search	common	nl	Zoeken
+search %1 '%2'	common	nl	Zoek %1 '%2'
+search or select accounts	common	nl	Zoek of selecteer accounts
 section	common	nl	Sectie
 select	common	nl	Selecteren
 select all %1 %2 for %3	common	nl	Selecteer alle %1 %2  voor %3
@@ -555,6 +619,7 @@ select home email address	common	nl	Selecteer emailadres thuis
 select one	common	nl	Selecteer een
 select user	common	nl	Selecteer gebruiker
 select work email address	common	nl	Selecteer emailadres werk
+selection	common	nl	Selectie
 send	common	nl	Verzend
 senegal	common	nl	SENEGAL
 september	common	nl	September
@@ -566,6 +631,7 @@ setup main menu	common	nl	Setup hoofdmenu
 seychelles	common	nl	SEYCHELLEN
 show all	common	nl	laat alles zien
 show all categorys	common	nl	Alle categorieën weergegeven
+show menu	common	nl	toon menu
 show page generation time	common	nl	Generatietijd van de pagina's weergeven?
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
 show the image properties dialog	htmlarea-ContextMenu	nl	Laat het afbeeldingseigenschappen dialog zien
@@ -588,20 +654,27 @@ south georgia and the south sandwich islands	common	nl	ZUID-GEORGIA EN DE ZUIDEL
 spacing	htmlarea-TableOperations	nl	marge
 spacing and padding	htmlarea-TableOperations	nl	Celmarge en afstand tussen cellen
 spain	common	nl	SPANJE
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	nl	Spellingcontrole voltooid, geen verkeerd gespelde woorden gevonden. Wordt nu afgesloten...
+spell-check	htmlarea-SpellChecker	nl	Spellingcontrole
 split cell	htmlarea-TableOperations	nl	Cel splitsen
 split column	htmlarea-TableOperations	nl	Kolom splitsen
 split row	htmlarea-TableOperations	nl	Rij splitsen
 sri lanka	common	nl	SRI LANKA
 start date	common	nl	Startdatum
 start time	common	nl	Starttijd
+start with	common	nl	starten met
 status	common	nl	Status
+strikethrough	htmlarea	nl	Doorhalen
 style [css]	htmlarea-TableOperations	nl	CSS Style
 subject	common	nl	Onderwerp
 submit	common	nl	Verzenden
+subscript	htmlarea	nl	Subscript
 substitutions and their meanings:	common	nl	Substituties en hun betekenissen:
 sudan	common	nl	SUDAN
+suggestions	htmlarea-SpellChecker	nl	Suggesties
 summary	htmlarea-TableOperations	nl	Overzicht
 sunday	common	nl	Zondag
+superscript	htmlarea	nl	Superscript
 suriname	common	nl	SURINAME
 svalbard and jan mayen	common	nl	SVALBARD EN JAN MAYEN (EILANDEN)
 swaziland	common	nl	SWAZILAND
@@ -613,7 +686,7 @@ taiwan	common	nl	TAIWAN/TAIPEI
 tajikistan	common	nl	TADZJIKISTAN
 tanzania, united republic of	common	nl	TANZANIA
 text align	htmlarea-TableOperations	nl	Text uitlijning
-text color:	htmlarea-FullPage	nl	Tekstkleur:
+text color:	common	nl	Tekstkleur:
 thailand	common	nl	THAILAND
 the api is current	common	nl	De API is actueel
 the api requires an upgrade	common	nl	De API vereist een upgrade
@@ -628,9 +701,10 @@ the top side only	htmlarea-TableOperations	nl	Enkel aan de bovenkant
 this application is current	common	nl	Deze toepassing is actueel
 this application requires an upgrade	common	nl	Deze toepassing vereist een upgrade
 this name has been used already	common	nl	Deze naam is reeds in gebruik !
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	nl	Dit annuleert de wijzigingen en beeindigt de spellingcontrole. S.v.p. bevestigen.
 thursday	common	nl	Donderdag
 time	common	nl	Tijd
-time selection:	common	nl	Tijdselectie:
+time selection:	jscalendar	nl	Tijdselectie:
 time tracking	common	nl	Tijdregistratie
 time zone	common	nl	Tijdzone
 time zone offset	common	nl	Tijdzoneverschil
@@ -640,7 +714,8 @@ to correct this error for the future you will need to properly set the	common	nl
 to go back to the msg list, click <a href= %1 >here</a>	common	nl	Klik <a href="%1">hier</a> om terug te gaan in de berichtenlijst.
 today	common	nl	Vandaag
 todays date, eg. "%1"	common	nl	datum vandaag, bijv. "%1"
-toggle first day of week	common	nl	(de)activeer eerste dag van de week
+toggle first day of week	jscalendar	nl	(de)activeer eerste dag van de week
+toggle html source	htmlarea	nl	Wissel met HTML code
 togo	common	nl	TOGO
 tokelau	common	nl	TOKELAU
 tonga	common	nl	TONGA
@@ -656,6 +731,8 @@ turks and caicos islands	common	nl	TURKS EN CAICOSEILANDEN
 tuvalu	common	nl	TUVALU
 uganda	common	nl	UGANDA
 ukraine	common	nl	OEKRAÏNE
+underline	htmlarea	nl	Understrepen
+undoes your last action	htmlarea	nl	Maakt uw laatste bewerking ongedaan
 united arab emirates	common	nl	VERENIGDE ARABISCHE EMIRATEN
 united kingdom	common	nl	VERENIGD KONINKRIJK
 united states	common	nl	VERENIGDE STATES
@@ -665,6 +742,9 @@ unlink the current element	htmlarea-ContextMenu	nl	Unlink het huidige element
 unset color	htmlarea-TableOperations	nl	Wis kleur
 update	common	nl	Bijwerken
 updated	common	nl	Bijgewerkt
+upload image	htmlarea-UploadImage	nl	Afbeelding verzenden
+upper latin letters	htmlarea-ListType	nl	Bovenkast latijnse lettertekens
+upper roman numbers	htmlarea-ListType	nl	Bovenkast romeinse lettertekens
 url	common	nl	URL
 uruguay	common	nl	URUGUAY
 use button to search for	common	nl	Gebruik knop om te zoeken naar
@@ -694,13 +774,15 @@ welcome	common	nl	Welkom
 western sahara	common	nl	WESTELIJK SAHARA
 which groups	common	nl	welke groepen
 width	htmlarea-TableOperations	nl	Breedte
-wk	common	nl	wk
+wk	jscalendar	nl	wk
 work email	common	nl	email werk
 written by:	common	nl	Geschreven door:
 year	common	nl	Jaar
 yemen	common	nl	JEMEN
 yes	common	nl	Ja
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	nl	U bent in TEKST MODUS. Gebruik de [<>] knop om terug te gaan naar WYSIWIG.
 you are required to change your password during your first login	common	nl	U moet nadat u voor het eerst bent ingelogd uw wachtwoord wijzigen.
+you are running a newer version of phpgroupware than your database is setup for	common	nl	De versie van eGroupWare is recenter dan de versie van de geïnstalleerde database
 you have %1 new messages!	common	nl	U hebt %1 nieuwe berichten!
 you have 1 new message!	common	nl	U hebt 1 nieuw bericht!
 you have been successfully logged out	login	nl	U bent succesvol afgemeld
@@ -711,7 +793,8 @@ you have not entered participants	common	nl	U heeft geen deelnemers opgegeven !
 you have selected an invalid date	common	nl	U heeft een ongeldige datum geselecteerd !
 you have selected an invalid main category	common	nl	U heeft een ongeldige hoofdcategorie geselecteerd !
 you have successfully logged out	common	nl	U bent succesvol afgemeld
-your message could <b>not</b> be sent!<br>	common	nl	U bericht kon niet worden verzonden !
+you need to add the webserver user '%1' to the group '%2'.	common	nl	Je moet de webserver user '%1' aan groep '%2' toevoegen.
+your message could <b>not</b> be sent!<br>	common	nl	Uw bericht kon niet worden verzonden !
 your message has been sent	common	nl	Uw bericht is verzonden
 your search returned %1 matchs	common	nl	Uw zoekopdracht leverde %1 items op
 your search returned 1 match	common	nl	Uw zoekopdracht leverde 1 item op
@@ -720,140 +803,3 @@ your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
 yugoslavia	common	nl	JOEGOSLAVIË
 zambia	common	nl	ZAMBIA
 zimbabwe	common	nl	ZIMBABWE
-only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	nl	Het te upload bestand moet een extensie (iets achter de punt) hebben, bijv. "imagefile.jpg".
-loading files	tinymce	nl	Bestanden worden geladen
-uploading...	tinymce	nl	Uploaden...
-file not found.	tinymce	nl	Bestand niet gevonden.
-unlink failed.	tinymce	nl	Verwijderen niet gelukt.
-rmdir failed.	tinymce	nl	Verwijderen van de map is niet gelukt.
-folder not found.	tinymce	nl	map niet gevonden.
-no permission to create folder.	tinymce	nl	Je hebt niet de rechten om een folder te maken.
-path not found.	tinymce	nl	map niet gevonden.
-folder name missing.	tinymce	nl	map naam ontbreekt.
-folder with specified new name already exists. folder was not renamed/moved.	tinymce	nl	map bestaat al.
-mkdir failed.	tinymce	nl	Het maken van de map is niet gelukt.
-no permission to upload.	tinymce	nl	Je hebt niet de rechten om te uploaden.
-files with this extension are not allowed.	tinymce	nl	Bestanden met deze extensie zijn niet toegestaan.
-file exceeds the size limit	tinymce	nl	Bestand is groter dan de maximale bestands grootte.
-file was not uploaded.	tinymce	nl	Bestand is niet geupload.
-no files...	tinymce	nl	Geen bestanden...
-configuration problem 	tinymce	nl	Configuratie probleem 
-refresh	tinymce	nl	Vernieuw
-folder	tinymce	nl	Map
-name	tinymce	nl	Naam
-size	tinymce	nl	Grootte
-date modified	tinymce	nl	Datum gewijzigd
-url	tinymce	nl	URL
-comment	tinymce	nl	Commentaar
-caption	tinymce	nl	Titel
-upload	tinymce	nl	Upload
-insert file	tinymce	nl	Voeg bestand toe
-file manager	tinymce	nl	Bestands beheer
-directory	tinymce	nl	map
-you must enter the url	tinymce	nl	Je moet een URL invoeren
-please enter the caption text	tinymce	nl	Type aub een Titel tekst
-new folder	tinymce	nl	New folder name:
-bold	tinymce	nl	Vet
-italic	tinymce	nl	Schuin
-underline	tinymce	nl	Onderstrepen
-striketrough	tinymce	nl	Doorhalen
-align left	tinymce	nl	Links uitlijnen
-align center	tinymce	nl	Centreren
-align right	tinymce	nl	Rechts uitlijnen
-align full	tinymce	nl	Volledig uitlijnen
-unordered list	tinymce	nl	Ongeordende lijst
-ordered list	tinymce	nl	Geordende lijst
-outdent	tinymce	nl	Uitspringen
-indent	tinymce	nl	Inspringen
-undo	tinymce	nl	Ongedaan maken
-redo	tinymce	nl	Opnieuw uitvoeren
-insert/edit link	tinymce	nl	Link invoegen
-unlink	tinymce	nl	Link verwijderen
-insert/edit image	tinymce	nl	Afbeelding invoegen
-cleanup messy code	tinymce	nl	Slordige code verbeteren
-a editor instance must be focused before using this command.	tinymce	nl	Verplaats de focus naar de editor voor het uitvoeren van dit commado.
-do you want to use the wysiwyg mode for this textarea?	tinymce	nl	Wilt u de WYSIWYG mode voor deze textarea gebruiken?
-insert/edit link	tinymce	nl	Link invoegen/bewerken
-insert	tinymce	nl	Invoegen
-update	tinymce	nl	Bewerken
-cancel	tinymce	nl	Afbreken
-link url	tinymce	nl	URL link
-target	tinymce	nl	Bestemming
-open link in the same window	tinymce	nl	Open link in hetzelfde venster
-open link in a new window	tinymce	nl	Open link in een nieuw venster
-insert/edit image	tinymce	nl	Afbeelding invoegen/bewerken
-image url	tinymce	nl	Afbeelding
-image description	tinymce	nl	Beschrijving
-help	tinymce	nl	Help
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	nl	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-bold	tinymce	nl	Vet
-italic	tinymce	nl	Schuin
-underline	tinymce	nl	Onderstrepen
-striketrough	tinymce	nl	Doorhalen
-align left	tinymce	nl	Links uitlijnen
-align center	tinymce	nl	Centreren
-align right	tinymce	nl	Rechts uitlijnen
-align full	tinymce	nl	Volledig uitlijnen
-unordered list	tinymce	nl	Ongeordende lijst
-ordered list	tinymce	nl	Geordende lijst
-outdent	tinymce	nl	Uitspringen
-indent	tinymce	nl	Inspringen
-undo	tinymce	nl	Ongedaan maken
-redo	tinymce	nl	Opnieuw uitvoeren
-insert/edit link	tinymce	nl	Link invoegen
-unlink	tinymce	nl	Link verwijderen
-insert/edit image	tinymce	nl	Afbeelding invoegen
-cleanup messy code	tinymce	nl	Slordige code verbeteren
-a editor instance must be focused before using this command.	tinymce	nl	Verplaats de focus naar de editor voor het uitvoeren van dit commado.
-do you want to use the wysiwyg mode for this textarea?	tinymce	nl	Wilt u de WYSIWYG mode voor deze textarea gebruiken?
-insert/edit link	tinymce	nl	Link invoegen/bewerken
-insert	tinymce	nl	Invoegen
-update	tinymce	nl	Bewerken
-cancel	tinymce	nl	Afbreken
-link url	tinymce	nl	URL link
-target	tinymce	nl	Bestemming
-open link in the same window	tinymce	nl	Open link in hetzelfde venster
-open link in a new window	tinymce	nl	Open link in een nieuw venster
-insert/edit image	tinymce	nl	Afbeelding invoegen/bewerken
-image url	tinymce	nl	Afbeelding
-image description	tinymce	nl	Beschrijving
-help	tinymce	nl	Help
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	nl	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-inserts a new table	tinymce	nl	Voeg een nieuwe tabel in
-insert row before	tinymce	nl	Voeg rij in voor ...
-insert row after	tinymce	nl	Voeg rij in na ...
-delete row	tinymce	nl	Verwijder rij
-insert column before	tinymce	nl	Voeg kolom in voor ...
-insert column after	tinymce	nl	Voeg kolom in na ...
-remove col	tinymce	nl	Verwijder kolom
-insert/modify table	tinymce	nl	Invoegen/Bewerken tabel
-width	tinymce	nl	Breedte
-height	tinymce	nl	Hoogte
-columns	tinymce	nl	Kolommen
-rows	tinymce	nl	Rijen
-cellspacing	tinymce	nl	Celafstand
-cellpadding	tinymce	nl	Celvulling
-border	tinymce	nl	Omranding
-alignment	tinymce	nl	Positionering
-default	tinymce	nl	Standaard
-left	tinymce	nl	Links
-right	tinymce	nl	Rechts
-center	tinymce	nl	Midden
-class	tinymce	nl	CSS-Stijl
-table row properties	tinymce	nl	Table row properties
-table cell properties	tinymce	nl	Table cell properties
-table row properties	tinymce	nl	Table row properties
-table cell properties	tinymce	nl	Table cell properties
-vertical alignment	tinymce	nl	Vertical alignment
-top	tinymce	nl	Top
-bottom	tinymce	nl	Bottom
-table properties	tinymce	nl	Table properties
-border color	tinymce	nl	Border color
-bg color	tinymce	nl	Bg color
-merge table cells	tinymce	nl	Merge table cells
-split table cells	tinymce	nl	Split table cells
-merge table cells	tinymce	nl	Merge table cells
-cut table row	tinymce	nl	Cut table row
-copy table row	tinymce	nl	Copy table row
-paste table row before	tinymce	nl	Paste table row before
-paste table row after	tinymce	nl	Paste table row after

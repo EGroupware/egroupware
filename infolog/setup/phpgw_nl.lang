@@ -227,7 +227,7 @@ status	infolog	nl	Status
 status ...	infolog	nl	Status ...
 sub	infolog	nl	Onderliggende
 subject	infolog	nl	Onderwerp
-task	infolog	nl	taak
+task	infolog	nl	Taak
 test import (show importable records <u>only</u> in browser)	infolog	nl	Test Import (te importeren record weergeven in uw browser)
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	nl	de naam die intern gebruikt wordt (<= 10 tekens), als je dit wijzigt worden de huidige gegevens onbereikbaar
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	nl	de naam die intern gebruikt wordt (<= 20 tekens), als je dit wijzigt worden de huidige gegevens onbereikbaar
