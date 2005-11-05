@@ -148,7 +148,7 @@ foreach(array(
 	'xh' => 'Xhosa',
 	'yo' => 'Yoruba',
 	'zh' => 'Chinese(simplified)',
-	'zt' => 'Chinese(Taiwan)',
+	'zh-tw' => 'Chinese(Taiwan)',
 	'zu' => 'Zulu',
 ) as $id => $name)
 {
