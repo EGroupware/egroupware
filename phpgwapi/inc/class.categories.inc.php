@@ -197,7 +197,7 @@
 				. $parent_filter . $querymethod . $filter;
 
 			$this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__);
-			$this->total_records = $this->db->next_recored() ? $this->db->f(0) : 0;
+			$this->total_records = $this->db->next_record() ? $this->db->f(0) : 0;
 			
 			if (!$this->total_records) return false;
 			
