@@ -317,7 +317,7 @@
 		 * We use a shared cache together with id2name
 		 *
 		 * @param int $id id of category
-		 * @return array with one array of cat-data
+		 * @return array/boolean array with one array of cat-data or false if cat not found
 		 */
 		function return_single($id = '')
 		{
@@ -331,7 +331,7 @@
 				}
 				$this->cache_id2cat_data[$id] = $cat;
 			}
-			return $this->cache_id2cat_data[$id] ? array($cat) : false;
+			return $this->cache_id2cat_data[$id] ? array($this->cache_id2cat_data[$id]) : false;
 		}
 
 		/**
