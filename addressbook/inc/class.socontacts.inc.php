@@ -57,20 +57,23 @@ class socontacts
 	{
 		if($GLOBALS['egw_info']['server']['contact_repository'] == 'sql' || !isset($GLOBALS['egw_info']['server']['contact_repository']))
 		{
-			$this->somain = CreateObject('etemplate.so_sql');
-			$this->somain->so_sql('phpgwapi','phpgw_addressbook');
+			$this->somain =& CreateObject('etemplate.so_sql','phpgwapi','phpgw_addressbook');
 		}
 		else
 		{
-			$this->somain = CreateObject('addressbook.so_'.$GLOBALS['egw_info']['server']['contact_repository']);
+			$this->somain =& CreateObject('addressbook.so_'.$GLOBALS['egw_info']['server']['contact_repository']);
 		}
 		$this->somain->contacts_id = 'id';
-		$this->soextra = CreateObject('etemplate.so_sql');
+		$this->soextra =& CreateObject('etemplate.so_sql');
 		$this->soextra->so_sql('phpgwapi',$this->extra_table);
 			
 		$custom =& CreateObject('admin.customfields',$contact_app);
 		$this->customfields = $custom->get_customfields();
-
+		if ($this->customfields && !is_array($this->customfields))
+		{
+			$this->customfields = unserialize($this->customfields);
+		}
+		if (!$this->customfields) $this->customfields = array();
 	}
 	
 	/**
@@ -103,7 +106,7 @@ class socontacts
 		$error_nr = $this->somain->save();
 		$contact['id'] = $this->somain->data['id'];
 		if($error_nr) return $error_nr_main;
-		
+
 		// save customfields
 		foreach ($this->customfields as $field => $options)
 		{
