@@ -195,17 +195,23 @@
 				}
 				$extension_data['result_nm']['search_values'] = $value;
 			}
-			elseif(isset($value['action']))
-			{
-				$result = $GLOBALS['egw']->session->appsession('advanced_search_result','etemplate');
-				_debug_array($result);
-				$extension_data['msg'] = ExecMethod2($extension_data['actions'][key($value['action'])]['method'],$result);
-			}
 			else
 			{
 				$extension_data['result_nm'] = array_merge($extension_data['result_nm'],$value['result_nm']);
 			}
-		}
+			
+			if(isset($value['action']))
+			{
+				// Also inputfileds etc. could be in actions
+				foreach($value['action'] as $action => $label)
+				{
+					if($extension_data['actions'][$action]['type'] == 'button')
+					{
+						$result = $GLOBALS['egw']->session->appsession('advanced_search_result','etemplate');
+						$extension_data['msg'] = ExecMethod2($extension_data['actions'][key($value['action'])]['method'],$result);
+					}
+				}
+			}		}
 		
 		function get_rows($query,&$rows,&$readonlys)
 		{
