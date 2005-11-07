@@ -43,26 +43,30 @@ if (!isset($GLOBALS['egw_setup']) || !is_object($GLOBALS['egw_setup']))
 	$GLOBALS['egw_setup']->html->show_header('',False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 	echo '<h3>'.'Fix mysql DB to match the eGroupWare system_charset'."</h3>\n";
 	$running_standalone = true;
-	
-	echo "<p>DB-Type='{$GLOBALS['egw_setup']->db->Type}', eGroupWare system_charset='{$GLOBALS['egw_setup']->system_charset}', DB charset was '{$GLOBALS['egw_setup']->db_charset_was}'</p>\n";
 }
 $db =& $GLOBALS['egw_setup']->db;
 $charset2mysql =& $GLOBALS['egw_setup']->db->Link_ID->charset2mysql;
 $mysql2charset = array_flip($charset2mysql);
 
+$ServerInfo = $db->Link_ID->ServerInfo();
+$db_version = (float) $ServerInfo['version'];
+
+if ($running_standalone || $_REQUEST['debug']) echo "<p>DB-Type='<b>{$GLOBALS['egw_setup']->db->Type}</b>', DB-Version=<b>$db_version</b> ($ServerInfo[description]), eGroupWare system_charset='<b>{$GLOBALS['egw_setup']->system_charset}</b>', DB-connection charset was '<b>{$GLOBALS['egw_setup']->db_charset_was}</b>'</p>\n";
+
 $mysql_system_charset = isset($charset2mysql[$GLOBALS['egw_setup']->system_charset]) ? 
 	$charset2mysql[$GLOBALS['egw_setup']->system_charset] : $GLOBALS['egw_setup']->system_charset;
-	
-if (substr($db->Type,0,5) == 'mysql' && $GLOBALS['egw_setup']->system_charset && $GLOBALS['egw_setup']->db_charset_was &&
+
+if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setup']->system_charset && $GLOBALS['egw_setup']->db_charset_was &&
 	$GLOBALS['egw_setup']->system_charset != $GLOBALS['egw_setup']->db_charset_was)
 {
+	$tables_modified = 'no';
+
 	$tables = array();
 	$db->query("SHOW TABLE STATUS",__LINE__,__FILE__);
 	while (($row = $db->row(true)))
 	{
 		$tables[$row['Name']] = $row['Collation'];
 	}
-	$tables_modified = 0;
 	foreach($tables as $table => $collation)
 	{
 		$columns = array();
@@ -168,10 +172,19 @@ if (substr($db->Type,0,5) == 'mysql' && $GLOBALS['egw_setup']->system_charset &&
 			++$tables_modified;
 		}
 	}
+	// change the default charset of the DB
+	$db->query("SHOW CREATE DATABASE `$db->Database`",__LINE__,__FILE__);
+	$create_db = $db->next_record() ? $db->f(1) : '';
+	if (preg_match('/CHARACTER SET ([a-z1-9_-]+) /i',$create_db,$matches) && $matches[1] != $mysql_system_charset)
+	{
+		$alter_db = "ALTER DATABASE `$db->Database` DEFAULT CHARACTER SET $mysql_system_charset";
+		if ($running_standalone || $_REQUEST['debug']) echo '<p>'.$alter_db."</p>\n";
+		$db->query($alter_db,__LINE__,__FILE__);
+	}
 }
-if ($running_standalone)
+if ($running_standalone || $_REQUEST['debug'])
 {
 	echo "<p>$tables_modified tables changed to our system_charset {$GLOBALS['egw_setup']->system_charset}($mysql_system_charset)</p>\n";
 
-	$GLOBALS['egw_setup']->html->show_footer();
+	if ($running_standalone) $GLOBALS['egw_setup']->html->show_footer();
 }
