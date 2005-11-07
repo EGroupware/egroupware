@@ -578,7 +578,7 @@ class ADODB_mysql extends ADOConnection {
          return  $foreign_keys;
      }
      
-    /**
+	/**
      * @var array $charset2mysql translate www charsets to mysql ones
      */
 	var $charset2mysql = array(
@@ -594,6 +594,8 @@ class ADODB_mysql extends ADOConnection {
 
 	/**
 	 * gets the client encoding from the connection
+	 *
+	 * mysqli_client_encoding only returns the default charset, not the one currently used!
 	 *
 	 * @return string/boolean charset or false
 	 */
@@ -617,14 +619,12 @@ class ADODB_mysql extends ADOConnection {
 	 */
 	function SetCharSet($charset_name)
 	{
-		$this->GetCharSet();
-		if ($this->charSet !== $charset_name) {
-			$ok = mysql_query('SET NAMES '.$this->qstr(isset($this->charset2mysql[$charset_name]) ? 
-				$this->charset2mysql[$charset_name] : $charset_name));
-			if ($ok && $this->GetCharSet() == $charset_name || $this->charset2mysql[$this->charSet] == $charset_name) {
-				return true;
-			} else return false;
-		} else return true;
+		$mysql_charset = isset($this->charset2mysql[$charset_name]) ? $this->charset2mysql[$charset_name] : $charset_name;
+		if (!mysql_query('SET NAMES '.$this->qstr($mysql_charset),$this->_connectionID)) return false;
+		if ($this->GetCharSet()) {
+			return $this->charSet == $charset_name || $this->charset2mysql[$this->charSet] == $charset_name;
+		}
+		return false;
 	}
 }
 
