@@ -8,7 +8,7 @@ administrator	resources	es-es	Administrador
 all categories	resources	es-es	todas las categorías
 book this resource	resources	es-es	Reservar este recurso
 bookable	resources	es-es	Reservable
-buy this resource	resources	es-es	Comprar este recurso
+buy this resource	resources	es-es	Adquirir este recurso
 buyable	resources	es-es	Adquirible
 categories admin	resources	es-es	Administrador de categorías
 check all	resources	es-es	Marcar todo
@@ -42,6 +42,7 @@ location	resources	es-es	Ubicación
 location of resource	resources	es-es	Ubicación del recurso
 name of resource	resources	es-es	Nombre del recurso
 no description available	resources	es-es	no hay descripción disponible
+no resources selected	resources	es-es	No se seleccionaron recursos
 notify your administrator to correct this situation	resources	es-es	Notifíquelo a su administrador para corregir esta situación
 picture	resources	es-es	Imagen
 picture source	resources	es-es	origen de la imagen
@@ -52,21 +53,24 @@ prizeing information for booking or buying	resources	es-es	Poniendo precio a la 
 quantity	resources	es-es	Cantidad
 quantity of resource	resources	es-es	Cantidad del recurso
 quantity:	resources	es-es	Cantidad:
+read calendar permissions	resources	es-es	Leer permisos del calendario
 read calender permissions	resources	es-es	Leer permisos del calendario
 read permissions	resources	es-es	Permiso de lectura
 related links	resources	es-es	Enlaces relacionados
-resources	resources	es-es	recursos
+resources	common	es-es	recursos
 resources list	resources	es-es	lista de recursos
 responsible:	resources	es-es	Responsable:
 saves entry and exits	resources	es-es	Guarda la entra y sale
 select a category	resources	es-es	Seleccionar una categoría
 select resource	resources	es-es	seleccionar recurso
+select resources	resources	es-es	Seleccionar recursos
 short description	resources	es-es	Descripción corta
 short description of resource	resources	es-es	Descripción corta del recurso
 something went wrong by deleting resource	resources	es-es	Ocurrió algo extraño al borrar el recurso
 something went wrong by saving resource	resources	es-es	Ocurrió algo extraño al guardar el recurso
 storage inforation	resources	es-es	Información de almacenamiento
 the calendar of this resource	resources	es-es	El calendario de este recurso
+this module displays the resources app	resources	es-es	Este módulo muestra la aplicación de recursos
 use general resources icon	resources	es-es	Usar icono de recursos generales
 use own picture	resources	es-es	Usar imagen propia
 use the category's icon	resources	es-es	Usar el icono de la categoría
@@ -80,3 +84,4 @@ which category does this resource belong to?	resources	es-es	¿A qué categoría pe
 write permissions	resources	es-es	Permiso de escritura
 you are not permitted to edit this reource!	resources	es-es	¡No le está permitido editar este recurso!
 you are not permitted to get information about this resource!	resources	es-es	¡No le está permitido obtener información sobre este recurso!
+you chose more resources than available	resources	es-es	Ha elegido más recursos de los disponibles

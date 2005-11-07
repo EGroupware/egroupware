@@ -14,11 +14,14 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	es-es	¡¡¡'%1' no es un número válido de coma flotante!!!
 '%1' is not a valid integer !!!	etemplate	es-es	¡¡¡'%1' no es un entero válido!!!
 a pattern to be searched for	etemplate	es-es	un patrón de búsqueda
+accesskey	etemplate	es-es	Tecla rápida
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	es-es	Las teclas rápidas se pueden especificar también poniendo & en la etiqueta (p. ej. &Nombre)
 add a new column (after the existing ones)	etemplate	es-es	Añadir una columna nueva (detrás de las existentes)
 add a new multi-column index	etemplate	es-es	Añadir un nuevo índice multicolumna
 add column	etemplate	es-es	Añadir columna
 add index	etemplate	es-es	Añadir índice
 add table	etemplate	es-es	Añadir tabla
+advanced search	etemplate	es-es	Búsqueda avanzada
 align	etemplate	es-es	Alinear
 alignment of label and input-field in table-cell	etemplate	es-es	posición de la etiqueta y campo de entrada en la celda de la tabla
 alignment of the v/hbox containing table-cell	etemplate	es-es	Posición del recuadro horizontal o vertical que contiene la celda de la tabla
@@ -75,6 +78,7 @@ css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternati
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	es-es	El nombre de la clase CSS para esta fila, preestablecido: 'th' = cabecera, 'row' = fila alternando filas 'row_off' y 'row_on'.
 css-styles	etemplate	es-es	Estilos CSS
 custom	etemplate	es-es	personalizado
+custom fields	etemplate	es-es	campos personalizados
 cut	etemplate	es-es	Cortar
 date+time	etemplate	es-es	Fecha + hora
 datum	etemplate	es-es	Fecha
@@ -105,6 +109,7 @@ displayed in statusline of browser if input-field gets focus	etemplate	es-es	Se 
 displayed in the top line of the groupbox (legend)	etemplate	es-es	mostrada en la línea superior del recuadro de grupo (leyenda)
 do you want to save the changes you made in table %s?	etemplate	es-es	¿Desea guardar los cambios que ha realizado en la tabla %s?
 documentation	etemplate	es-es	Documentación
+doesn't matter	etemplate	es-es	no importa
 drop a table - this can not be undone	etemplate	es-es	Borrar una tabla - NO se puede deshacer
 drop table	etemplate	es-es	Borrar tabla
 dump4setup	etemplate	es-es	Volcar para instalación
@@ -236,6 +241,7 @@ onclick	etemplate	es-es	onClick
 only an other version found !!!	etemplate	es-es	sólo se encontró otra versión
 optional note about the link	etemplate	es-es	nota opcional sobre el enlace
 options	etemplate	es-es	Opciones
+order to navigating by tab key through the form	etemplate	es-es	Orden al ir navegando pulsando el tabulador en el formulario
 overflow	etemplate	es-es	Desbordamiento
 padding	etemplate	es-es	Distancia del texto a la celda
 parent is a '%1' !!!	etemplate	es-es	superior es un '%1'
@@ -313,6 +319,7 @@ swap with next column	etemplate	es-es	intercambiar con la siguiente columna
 swap with next row	etemplate	es-es	intercambiar con la fila siguiente
 switch to a parent widget	etemplate	es-es	cambiar a un control superior
 switch to an other widgets of that container	etemplate	es-es	cambiar a otros controles de ese contenedor
+tabindex	etemplate	es-es	Índice de tabulación
 table unchanged, no write necessary !!!	etemplate	es-es	La tabla no se ha modificado, no es necesario guardarla
 tablename	etemplate	es-es	Nombre de la tabla
 tabs	etemplate	es-es	Pestañas
@@ -363,3 +370,6 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	es-es	fichero xml a importar
 xslt template	etemplate	es-es	Plantilla XSLT
 year	etemplate	es-es	Año
+1	etemplate	es-es	1
+2	etemplate	es-es	2
+3	etemplate	es-es	3

@@ -207,8 +207,11 @@ select a typ to edit it's status-values or delete it	infolog	es-es	seleccionar u
 select an app to search in	infolog	es-es	Seleccionar una aplicación en la que buscar
 select an entry to link with	infolog	es-es	Seleccionar una entrada a la que apunte un enlace
 select to filter by owner	infolog	es-es	seleccionar para filtrar por propietario
+select to filter by responsible	infolog	es-es	seleccionar para filtrar por responsable
+sets the status of this entry to done	infolog	es-es	Establecer el estado de esta entrada a realizado
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	es-es	¿Mostrar en el Registro las entradas abiertas en la pantalla principal (tareas sin finalizar, llamadas telefónicas o notas)? Funciona sólo si no ha seleccionado en las preferencias una aplicación para la pantalla principal
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	es-es	¿Mostrar las Subtareas (subllamadas o subnotas) en la vista normal? Puede ver siempre estos subtipos a través de su tipo superior.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	es-es	¿Deben mostrarse los enlaces a otras aplicaciones y/o los ficheros adjuntos en la lista del registro (la vista normal al entrar en el registro)?
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	es-es	¿Usar nombres completos (apellido y nombre de la familia), o sólo los nombres internos de la aplicación?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	es-es	¿Poner esta entrada visible sólo para usted y la gente que indique?
 show full usernames	infolog	es-es	Mostrar nombres de usuario completos
@@ -231,6 +234,7 @@ the name used internaly (<= 20 chars), changeing it makes existing data unavaili
 the text displayed to the user	infolog	es-es	el texto que se muestra al usuario
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	es-es	Este es el filtro que el Registro usa cuando usted entra a la aplicación. Los filtros limitan las entradas que se ven en la vista actual. Hay filtros para mostrar sólo las terminadas, todavía abiertas o entradas futuras suyas o de todos los usuarios.
 til when should the todo or phonecall be finished	infolog	es-es	¿Hasta cuándo puede la tarea o llamada telefónica estar sin terminar?
+times	infolog	es-es	Veces
 to many might exceed your execution-time-limit	infolog	es-es	¿Cuánto puede exceder el límite de ejecución?
 today	infolog	es-es	Hoy
 todo	infolog	es-es	Tareas pendientes
@@ -246,6 +250,7 @@ urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 use button to search for address	infolog	es-es	usar el botón para buscar por la dirección
 use button to search for project	infolog	es-es	usar el botón para buscar por el proyecto
+used time	infolog	es-es	tiempo utilizado
 valid path on clientside<br>eg. \\server\share or e:\	infolog	es-es	Ruta válida en el cliente<br>por ej. \\servidor\recurso o e:\
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
@@ -263,3 +268,4 @@ you have entered an invalid ending date	infolog	es-es	Ha introducido una fecha d
 you have entered an invalid starting date	infolog	es-es	Ha introducido una fecha de inicio que no es válida
 you have to enter a name, to create a new typ!!!	infolog	es-es	¡Debe introducir un nombre para crear un tipo nuevo!
 you must enter a subject or a description	infolog	es-es	Debe introducir un asunto o descripción
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	es-es	Su base de datos NO está actualizada (%1 vs. %2). Por favor, vaya a %3setup%4 para actualizarla.

@@ -1,21 +1,22 @@
-%1 records imported	addressbook	es-es	%1 registros importados
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	es-es	%1 registros leidos (no importados todavía, puede volver %2atrás%3 y deseleccionar Test de Importación)
+%1 records imported	addressbook	es-es	Se han importado %1 registros
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	es-es	Se han leído %1 registros (no importados todavía, puede volver %2atrás%3 y desmarcar la prueba de importación)
 (e.g. 1969)	addressbook	es-es	(p. ej. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	es-es	<b>No se encontró el tipo de conversion.</b>  Seleccione uno de la lista
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	es-es	<b>No se encontró el tipo de conversion <none>.</b> Por favor, seleccione un tipo de conversión de la lista
 @-eval() is only availible to admins!!!	addressbook	es-es	¡@-eval está disponible sólo para los administradores!
 actions	addressbook	es-es	Acciones
 add a single entry by passing the fields.	addressbook	es-es	Añadir una entrada simple pasando los campos
 add custom field	addressbook	es-es	Añadir campo personalizado
 address book	common	es-es	Libreta de direcciones
-address book - vcard in	addressbook	es-es	Libreta de direcciones - Entrada de tarjeta de visita
+address book - vcard in	addressbook	es-es	Libreta de direcciones - entrada de tarjeta de visita
 address book - view	addressbook	es-es	Libreta de direcciones - ver
-address line 2	addressbook	es-es	Dirección línea 2
-address line 3	addressbook	es-es	Dirección línea 3
+address line 2	addressbook	es-es	Línea 2 de la dirección
+address line 3	addressbook	es-es	Línea 2 de la dirección
 address type	addressbook	es-es	Tipo de dirección
 addressbook	common	es-es	Libreta de direcciones
 addressbook preferences	addressbook	es-es	Preferencias de la libreta de direcciones
 addressbook-fieldname	addressbook	es-es	Campo - Libreta de direcciones
 addvcard	addressbook	es-es	Añadir tarjeta de visita
+advances search	addressbook	es-es	Búsqueda avanzada
 alt. csv import	addressbook	es-es	Importar CSV (avanzado)
 are you sure you want to delete this field?	addressbook	es-es	¿Está seguro de que desea borrar este campo?
 bbs phone	addressbook	es-es	Teléfono BBS
@@ -37,11 +38,12 @@ car phone	addressbook	es-es	Telfono del coche
 cell phone	addressbook	es-es	Teléfono móvil
 charset of file	addressbook	es-es	Juego de caracteres del fichero
 city	common	es-es	Ciudad
-company	common	es-es	Compañía
+company	common	es-es	Empresa
 company name	common	es-es	Nombre de la empresa
 configuration	common	es-es	Configuración
 contact	common	es-es	Contacto
 contact application	admin	es-es	Aplicación del contacto
+contact saved	addressbook	es-es	Se ha guardado la entrada
 contact settings	admin	es-es	Configuración de los contactos
 copied by %1, from record #%2.	addressbook	es-es	Copiado por %1, del registro %2
 country	common	es-es	País
@@ -53,14 +55,17 @@ debug output in browser	addressbook	es-es	Depurar salida en el navegador
 default filter	addressbook	es-es	Filtro predeterminado
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
 department	common	es-es	Departmento
+do you really want to delte this contacts?	addressbook	es-es	¿Realmente desea borrar este contacto?
+doesn't matter	addressbook	es-es	no importa
 domestic	addressbook	es-es	Doméstico
 download	addressbook	es-es	Descargar
 download export file (uncheck to debug output in browser)	addressbook	es-es	Descargar fichero exportado (desmarcar para depurar la salida en el navegador)
-e-mail	addressbook	es-es	E-Mail
 edit custom field	addressbook	es-es	Editar campo personalizado
 edit custom fields	admin	es-es	Editar campos personalizados
+edit phonenumbers -	addressbook	es-es	Editar números de teléfono -
 empty for all	addressbook	es-es	vacío para todo
-enter the path to the exported file here	addressbook	es-es	Introduzca la ruta a los ficheros exportados aquí
+enter the path to the exported file here	addressbook	es-es	Introduzca aquí la ruta a los ficheros exportados
+export	addressbook	es-es	exportar
 export contacts	addressbook	es-es	Exportar contactos
 export file name	addressbook	es-es	Nombre del fichero a exportar
 export from addressbook	addressbook	es-es	Exportar de la libreta de direcciones
@@ -72,7 +77,6 @@ field %1 has been updated !	addressbook	es-es	¡El campo %1 ha sido actualizado!
 field name	addressbook	es-es	Nombre del campo
 fields to show in address list	addressbook	es-es	Campos a mostrar en la lista de direcciones
 fieldseparator	addressbook	es-es	Separador de campos
-first name	addressbook	es-es	Nombre
 full name	addressbook	es-es	Nombre completo
 geo	addressbook	es-es	GEO
 global categories	addressbook	es-es	Categorías globales
@@ -92,17 +96,16 @@ import csv-file into addressbook	addressbook	es-es	Importar archivo CSV en la Li
 import file	addressbook	es-es	Importar fichero
 import from	addressbook	es-es	Importar desde
 import from ldif, csv, or vcard	addressbook	es-es	Importar desde LDIF, CSV o VCard
-import from netscape	addressbook	es-es	Importar desde Netscape
 import from outlook	addressbook	es-es	Importar desde Outlook
 import multiple vcard	addressbook	es-es	Importar múltiples VCards
 import next set	addressbook	es-es	Importar siguiente registro
-import_instructions	addressbook	es-es	Si usa Mozilla o Netscape, abra la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato LDIF.<p>O, en Outlook, seleccione su carpeta de contactos, luego, en el menú<b>Fichero</b>, <b>Importar y Exportar</b> para guardarlos en un fichero separado por comas (CSV).<p>O, en Palm Desktop 4.0 o superior, visite la libreta de direcciones y selecciones <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato VCard.
+import_instructions	addressbook	es-es	Si usa Mozilla o Netscape, abra la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato LDIF.<p>O, en Outlook, seleccione su carpeta de contactos, luego, en el menú<b>Fichero</b>, <b>Importar y Exportar</b> para guardarlos en un fichero separado por comas (CSV).<p>O, en Palm Desktop 4.0 o superior, visite la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato VCard.
 international	addressbook	es-es	Internacional
-isdn phone	addressbook	es-es	Telefono ISDN
+isdn phone	addressbook	es-es	Telefono RDSI
 label	addressbook	es-es	Etiqueta
-last name	addressbook	es-es	Apellido
+last modified	addressbook	es-es	última modificación
 ldap context for contacts	admin	es-es	Contexto LDAP para contactos
-ldap host for contacts	admin	es-es	Host LDAP para contacts
+ldap host for contacts	admin	es-es	Servidor LDAP para contacts
 ldap root dn for contacts	admin	es-es	Raiz LDAP dn para contactos
 ldap root pw for contacts	admin	es-es	Raiz LDAP pw para contactos
 ldif	addressbook	es-es	LDIF
@@ -113,22 +116,22 @@ load vcard	addressbook	es-es	Cargar VCard
 mark records as private	addressbook	es-es	Marcar registros como privados
 message phone	addressbook	es-es	Teléfono de mensajes
 middle name	addressbook	es-es	Segundo nombre
-mobile	addressbook	es-es	Tel.móvil
+mobile	addressbook	es-es	Móvil
 mobile phone	addressbook	es-es	Teléfono móvil
 modem phone	addressbook	es-es	Teléfono módem
+more phonenumbers	addressbook	es-es	más números de teléfono
 multiple vcard	addressbook	es-es	VCard múltiple
 no vcard	addressbook	es-es	Sin VCard
+number	addressbook	es-es	Número
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
-number of records to read (<=200)	addressbook	es-es	Registros a leer (menos de 200)
+organisation	addressbook	es-es	organización
 other number	addressbook	es-es	Otro número
 other phone	addressbook	es-es	Otro teléfono
-owner	addressbook	es-es	Due&ntilde;o
 pager	common	es-es	Buscapersonas
 parcel	addressbook	es-es	Paquete
 phone number	common	es-es	Número de teléfono
 phone numbers	common	es-es	Números de teléfono
 please enter a name for that field !	addressbook	es-es	Por favor, introduzca un nombre para ese campo
-please set your preferences for this app	addressbook	es-es	Por favor, revise las preferencias de esta aplicacion
 postal	common	es-es	Postal
 pref	addressbook	es-es	pref
 prefix	addressbook	es-es	Prefijo
@@ -137,28 +140,31 @@ read a list / search for entries.	addressbook	es-es	Leer una lista / buscar entr
 read a list of entries.	addressbook	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	addressbook	es-es	Leer una sola entrada pasando el identificador y la lista de campos
 record access	addressbook	es-es	Acceso al registro
-record owner	addressbook	es-es	Dueño del registro
-records read (not yet imported, you may go back and uncheck test import)	addressbook	es-es	registros leidos (aun no importados, usted puede volver y desmarcar Testear)
+record owner	addressbook	es-es	Propietario del registro
 retrieve contacts	admin	es-es	Recuperar contactos
 select all	addressbook	es-es	Seleccionar todo
 select the type of conversion	addressbook	es-es	Seleccione el tipo de conversión
 select the type of conversion:	addressbook	es-es	Seleccione el tipo de conversión
 select where you want to store	admin	es-es	Seleccione dónde desea almacenar
 show	addressbook	es-es	Mostrar
-show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumplea&ntilde;os en la pantalla principal
+show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumpleaños en la pantalla principal
+something went wrong by deleting %1	addressbook	es-es	Ocurrió un error mientras se borraba %1
+something went wrong by deleting this contact	addressbook	es-es	Ocurrió un error mientras se borraba este contacto
+something went wrong by reading this contact	addressbook	es-es	Ocurrió un error mientras se leía este contacto
+something went wrong by saving this contact. errorcode %1	addressbook	es-es	Ocurrió un error mientras se guardaba este contacto. Código de error: %1
 startrecord	addressbook	es-es	Registro inicial
 state	common	es-es	Provincia
 street	common	es-es	Calle
 successfully imported %1 records into your addressbook.	addressbook	es-es	Se han importado correctamnte %1 registros en la libreta de direcciones.
 suffix	addressbook	es-es	Sufijo
+tel home	addressbook	es-es	teléfono particular
 test import (show importable records <u>only</u> in browser)	addressbook	es-es	Test de Importación - (mostrar los registros que se pueden importar <b>sólo</b> en el navegador)
 that field name has been used already !	addressbook	es-es	El nombre del campo ya ha sido usado
 this person's first name was not in the address book.	addressbook	es-es	El primer nombre de esta persona no estaba en la libreta de direcciones.
 this person's last name was not in the address book.	addressbook	es-es	El apellido de esta persona no está en la libreta de direcciones.
-title	addressbook	es-es	Titulo
 to many might exceed your execution-time-limit	addressbook	es-es	a cuánto puede exceder el tiempo límite de ejecución
-today is %1's birthday!	common	es-es	¡Hoy es el cumplea&ntilde;os de %1!
-tomorrow is %1's birthday.	common	es-es	¡Ma&ntilde;ana es el cumplea&ntilde;os de %1!
+today is %1's birthday!	common	es-es	¡Hoy es el cumpleaños de %1!
+tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
 translation	addressbook	es-es	Traducción
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una sola entrada pasando los campos
 use country list	addressbook	es-es	Utilizar lista de países
@@ -170,6 +176,10 @@ voice phone	addressbook	es-es	Teléfono de voz
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! LDAP es valido sólo si no esta usando contactos para almacenar las cuentas!
 work phone	addressbook	es-es	Teléfono del trabajo
 write (update or add) a single entry by passing the fields.	addressbook	es-es	Escribir (acatualizar o añadir) una sola entrada pasando los campos.
+you are not permitted to delete contact %1	addressbook	es-es	No tiene permiso para borrar el contacto %1
+you are not permittet to delete this contact	addressbook	es-es	No tiene permiso para borrar este contacto
+you are not permittet to edit this contact	addressbook	es-es	No tiene permiso para editar este contacto
+you are not permittet to view this contact	addressbook	es-es	No tiene permiso para ver este contacto
 you must select a vcard. (*.vcf)	addressbook	es-es	Debe seleccionar una tarjeta (*.vcf)
 you must select at least 1 column to display	addressbook	es-es	Debe seleccionar al menos una columna para mostrar
 zip code	common	es-es	Código postal
