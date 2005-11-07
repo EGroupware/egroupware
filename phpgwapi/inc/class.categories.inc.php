@@ -442,7 +442,7 @@
 		 */
 		function formated_list($format,$type='',$selected = '',$globals = False,$site_link = 'site')
 		{
-			return $this->formated_list($format,$type,$selected,$globals,$site_link);
+			return $this->formatted_list($format,$type,$selected,$globals,$site_link);
 		}
 
 		/**
