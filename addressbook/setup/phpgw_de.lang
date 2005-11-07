@@ -55,7 +55,6 @@ debug output in browser	addressbook	de	Debugausgaben in Browser
 default filter	addressbook	de	Standardfilter
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 department	common	de	Abteilung
-do you really want to delte this contacts?	addressbook	de	Wollen sie diesen Kontakt wirklich löschen?
 doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen
@@ -174,6 +173,7 @@ vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachname
 video phone	addressbook	de	Bildtelefon
 voice phone	addressbook	de	Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
+warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 work phone	addressbook	de	Tel dienstl.
 you are not permitted to delete contact %1	addressbook	de	Sie haben nicht die Berechtigungen um den Kontakt %1 zu löschen
 you are not permittet to delete this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu löschen

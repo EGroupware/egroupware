@@ -169,7 +169,7 @@ class socontacts
 	 */
 	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
- 		// echo 'socontacts::search->criteria:'; _debug_array($criteria);
+ 		 //echo 'socontacts::search->criteria:'; _debug_array($criteria);
 		// We just want to deal with generalized vars, to simpyfie porting of this code to so_sql later...
 		$this->main_id = $this->somain->contacts_id;
 		
@@ -182,7 +182,7 @@ class socontacts
 				{
 					$extra_crit_key = substr($crit_key,1);
 					$criteria_extra[$extra_crit_key][$this->extra_key] = $extra_crit_key;
-					$criteria_extra[$extra_crit_key][$this->extra_value] = $extra_crit_val;
+					$criteria_extra[$extra_crit_key][$this->extra_value] = $crit_val;
 				}
 				unset($criteria[$crit_key]);
 			}
@@ -239,7 +239,7 @@ class socontacts
 					$expr .= ',$resultextra['.$i.']';
 				}
 				eval('$merge = array_merge_recursive('.$expr.');');
-				$resultextra = array_unique($merge[$this->extra_id]);
+				$resultextra = array_unique((array)$merge[$this->extra_id]);
 			}
 		}
 // 		_debug_array($resultextra);

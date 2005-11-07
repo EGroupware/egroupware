@@ -140,33 +140,31 @@ class uicontacts extends bocontacts
 			'n_given' => lang('first name'),
 			'n_family' => lang('last name'),
 			'email_home' => lang('home email'),
-			'email_work' => lang('work email'),
+			'email' => lang('work email'),
 			'tel_home' => lang('tel home'),
 		);
-		
-		$content['advs']['actions'] = array(
-// 			'email' => array(
-// 				'type' => 'button',
-// 				'options' => array(
-// 					'label' => lang('email'),
-// 					'no_lang' => true,
-// 				)),
-			'delete' => array(
+
+/*		$content['advs']['actions']['email'] = array(
+				'type' => 'button',
+				'options' => array(
+					'label' => lang('email'),
+					'no_lang' => true,
+		));
+		$content['advs']['actions']['export'] = array(
+				'type' => 'button',
+				'options' => array(
+					'label' => lang('export'),
+					'no_lang' => true,
+		));*/
+		$content['advs']['actions']['delete'] = array(
 				'type' => 'button',
 				'method' => 'addressbook.bocontacts.delete',
 				'options' => array(
 					'label'  => lang('delete'),
 					'no_lang' => true,
-					'onclick' => 'if(!confirm(\''. lang('Do you really want to delte this contacts?'). '\')) return false;',
-				)),
-// 			'export' => array(
-// 				'type' => 'button',
-// 				'options' => array(
-// 					'label' => lang('export'),
-// 					'no_lang' => true,
-// 				)),
-		);
-
+					'onclick' => 'if(!confirm(\''. lang('WARNING: All contacts found will be deleted!'). '\')) return false;',
+		));
+		
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
 		

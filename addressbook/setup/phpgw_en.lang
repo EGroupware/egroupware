@@ -55,7 +55,6 @@ debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 department	common	en	Department
-do you really want to delte this contacts?	addressbook	en	Do you really want to delte this contacts?
 doesn't matter	addressbook	en	doesn't matter
 domestic	addressbook	en	Domestic
 download	addressbook	en	Download
@@ -174,6 +173,7 @@ vcards require a last name entry.	addressbook	en	Vcards require a last name entr
 video phone	addressbook	en	Video Phone
 voice phone	addressbook	en	Voice Phone
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
+warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 work phone	addressbook	en	Work Phone
 write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
 you are not permitted to delete contact %1	addressbook	en	You are not permitted to delete contact %1
