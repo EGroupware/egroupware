@@ -219,7 +219,7 @@ if using ads (active directory) authentication	setup	es-es	Si se usa identificac
 if using ldap	setup	es-es	Si usa LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	es-es	Si usa LDAP ¿desea administrar los atributos del directorio personal y línea de comandos?
 if using mail authentication	setup	es-es	Si se usa la identificación Mail
-if you did not receive any errors, your applications have been	setup	es-es	Si no ha recibido ningún eror, sus aplicaciones han sido
+if you did not receive any errors, your applications have been	setup	es-es	Si no ha recibido ningún error, sus aplicaciones han sido
 if you did not receive any errors, your tables have been	setup	es-es	Si no ha recibido ningún error, sus tablas han sido
 if you running this the first time, don't forget to manualy %1 !!!	setup	es-es	¡¡Si está ejecutando la aplicación por primera vez, no olvide %1 manualmente!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	es-es	Si solamente usa idiomas del mismo juego de caracteres (por ejemplo, los occidentales), entonces no necesita un juego de caracteres para el sistema
