@@ -44,6 +44,14 @@
 			{
 				$GLOBALS['egw']->translation->add_app($acl_app);
 			}
+			// make acl called via sidebox menu of an app, to behave like a part of that app
+			$referer = $_POST['referer'];
+			if (!$referer)
+			{
+				list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
+				if (!$referer) $referer = '/preferences/index.php';
+			}
+			//echo '<p align="right">'."referer='$referer'</p>\n";
 
 			$GLOBALS['egw_info']['flags']['currentapp'] = $acl_app;
 
@@ -70,19 +78,16 @@
 				return;
 			}
 
-			$owner_name = $GLOBALS['egw']->accounts->id2name($owner);		// get owner name for title
-			if($no_privat_grants = $GLOBALS['egw']->accounts->get_type($owner) == 'g')
+			$owner_name = $GLOBALS['egw']->common->grab_owner_name($owner);
+			if($no_privat_grants = $GLOBALS['egw']->accounts->get_type($owner) != 'g')
 			{
-				$owner_name = lang('Group').' ('.$owner_name.')';
-			}
-			else	// admin setting acl-rights is handled as group-rights => no private grants !!
-			{
+				// admin setting acl-rights is handled as with group-rights => no private grants !!
 				$no_privat_grants = $owner != $GLOBALS['egw_info']['user']['account_id'];
 			}
 			$this->acl =& CreateObject('phpgwapi.acl',(int)$owner);
 			$this->acl->read_repository();
 
-			if ($_POST['submit'])
+			if ($_POST['save'] || $_POST['apply'])
 			{
 				$processed = $_POST['processed'];
 				$to_remove = unserialize(urldecode($processed));
@@ -139,13 +144,17 @@
 				}
 				$this->acl->save_repository();
 			}
+			if ($_POST['save'] || $_POST['cancel'])
+			{
+				$GLOBALS['egw']->redirect_link($referer);
+			}
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('%1 - Preferences',$GLOBALS['egw_info']['apps'][$acl_app]['title']).' - '.lang('acl').': '.$owner_name;
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
 			$this->template =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir($acl_app));
 			$templates = Array (
-				'preferences' => 'preference_acl.tpl',
+				'preferences' => '../../../preferences/templates/default/acl.tpl',
 				'row_colspan' => 'preference_colspan.tpl',
 				'acl_row'     => 'preference_acl_row.tpl'
 			);
@@ -162,13 +171,16 @@
 				'query'		=> $query,
 				'owner'		=> $owner,
 				'acl_app'	=> $acl_app,
+				'referer'   => $referer,
 			);
 			$var = Array(
 				'errors'      => '',
 				'title'       => '<br>',
 				'action_url'  => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=' . $acl_app),
 				'bg_color'    => $GLOBALS['egw_info']['theme']['th_bg'],
-				'submit_lang' => lang('Save'),
+				'lang_save'   => lang('Save'),
+				'lang_apply'  => lang('Apply'),
+				'lang_cancel' => lang('Cancel'),
 				'common_hidden_vars_form' => $GLOBALS['egw']->html->input_hidden($common_hidden_vars)
 			);
 			$this->template->set_var($var);
@@ -194,7 +206,7 @@
 			));
 			$totalentries = $GLOBALS['egw']->accounts->total;
 
-			$memberships = (array) $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $owner);
+			$memberships = (array) $GLOBALS['egw']->accounts->membership($owner);
 
 			$header_type = '';
 			$processed = Array();
@@ -226,6 +238,7 @@
 				'menuaction'	=> 'preferences.uiaclprefs.index',
 				'acl_app'		=> $acl_app,
 				'owner'			=> $owner,
+				'referer'       => $referer,
 			);
 
 			$var = Array(
