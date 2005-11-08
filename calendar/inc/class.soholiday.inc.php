@@ -13,6 +13,14 @@
 
 	/* $Id$ */
 
+	/**
+	 * Storage layer for calendar holidays
+	 *
+	 * @package calendar
+	 * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+	 * @author Mark Peters <skeeter@phpgroupware.org>
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 */
 	class soholiday
 	{
 		var $debug = False;
@@ -20,9 +28,9 @@
 
 		function soholiday()
 		{
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['egw']->db);
 			$this->db->set_app('calendar');
-			$this->table = 'phpgw_cal_holidays';
+			$this->table = 'egw_cal_holidays';
 		}
 
 		/* Begin Holiday functions */
@@ -72,7 +80,7 @@
 				$holidays[] = Array(
 					'index'			=> $this->db->f('hol_id'),
 					'locale'		=> $this->db->f('hol_locale'),
-					'name'			=> $GLOBALS['phpgw']->strip_html($this->db->f('hol_name')),
+					'name'			=> $GLOBALS['egw']->strip_html($this->db->f('hol_name')),
 					'day'			=> (int)$this->db->f('hol_mday'),
 					'month'			=> (int)$this->db->f('hol_month_num'),
 					'occurence'		=> (int)$this->db->f('hol_occurence'),
@@ -116,7 +124,6 @@
 			}
 			$this->db->select($this->table,'*',array('hol_id'=>$id),__LINE__,__FILE__);
 			$this->store_to_array($holidays);
-			@reset($holidays);
 			return $holidays[0];
 		}
 
@@ -127,7 +134,7 @@
 
 		function delete_locale($locale)
 		{
-			$this->db->delete($this->table,array('hol_local' => $locale),__LINE__,__FILE__);
+			$this->db->delete($this->table,array('hol_locale' => $locale),__LINE__,__FILE__);
 		}
 		
 		/* Private functions */
@@ -196,4 +203,3 @@
 			return $retval;
 		}
 	}
-?>

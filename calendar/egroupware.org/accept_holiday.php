@@ -17,17 +17,50 @@
 		Header('Location: '.$send_back_to);
 	}
 
+	function _holiday_cmp($a,$b)
+	{
+		if (($year_diff = ($a['occurence'] <= 0 ? 0 : $a['occurence']) - ($b['occurence'] <= 0 ? 0 : $b['occurence'])))
+		{
+			return $year_diff;
+		}
+		return $a['month'] - $b['month'] ? $a['month'] - $b['month'] : $a['day'] - $b['day'];
+	}
+
 	$send_back_to = str_replace('&locale='.$_POST['locale'],'',$send_back_to);
 	$file = './holidays.'.$_POST['locale'].'.csv';
-	if(!file_exists($file))
+	if(!file_exists($file) || filesize($file) < 300)	// treat very small files as not existent
 	{
 		if (count($_POST['name']))
 		{
-			$c_holidays = count($_POST['name']);
 			$fp = fopen($file,'w');
-			for($i=0;$i<$c_holidays;$i++)
+			if ($_POST['charset']) fwrite($fp,"charset\t".$_POST['charset']."\n");
+
+			$holidays = array();
+			foreach($_POST['name'] as $i => $name)
 			{
-				fwrite($fp,$_POST['locale']."\t".$_POST['name'][$i]."\t".$_POST['day'][$i]."\t".$_POST['month'][$i]."\t".$_POST['occurence'][$i]."\t".$_POST['dow'][$i]."\t".$_POST['observance'][$i]."\n");
+				$holidays[] = array(
+					'locale' => $_POST['locale'],
+					'name'   => str_replace('\\','',$name),
+					'day'    => $_POST['day'][$i],
+					'month'  => $_POST['month'][$i],
+					'occurence' => $_POST['occurence'][$i],
+					'dow'    => $_POST['dow'][$i],
+					'observance_rule' => $_POST['observance'][$i],
+				);
+			}
+			// sort holidays by year / occurence:
+			usort($holidays,'_holiday_cmp');
+			
+			$last_year = -1;
+			foreach($holidays as $holiday)
+			{
+				$year = $holiday['occurence'] <= 0 ? 0 : $holiday['occurence'];
+				if ($year != $last_year)
+				{
+					fwrite($fp,"\n".($year ? $year : 'regular (year=0)').":\n");
+					$last_year = $year;
+				}
+				fwrite($fp,"$holiday[locale]\t$holiday[name]\t$holiday[day]\t$holiday[month]\t$holiday[occurence]\t$holiday[dow]\t$holiday[observance_rule]\n");
 			}
 			fclose($fp);
 		}

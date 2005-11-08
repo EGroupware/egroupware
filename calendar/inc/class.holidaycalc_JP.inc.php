@@ -1,18 +1,24 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - holidaycalc_JP                                              *
-  * http://www.egroupware.org                                              *
-  * Based on Yoshihiro Kamimura <your@itheart.com>                           *
-  *          http://www.itheart.com                                          *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - holidaycalc_JP                                              *
+	* http://www.egroupware.org                                              *
+	* Based on Yoshihiro Kamimura <your@itheart.com>                           *
+	*          http://www.itheart.com                                          *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
+	/**
+	 * Calculations for calendar JP holidays
+	 *
+	 * @package calendar
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 */
 	class holidaycalc
 	{
 		function calculate_date($holiday, &$holidays, $year, &$i)
@@ -23,7 +29,7 @@
 
 			if ($holiday['day'] == 0 && $holiday['dow'] != 0 && $holiday['occurence'] != 0)
 			{
-				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year, $holiday['month'], 1);
+				$dow = $GLOBALS['egw']->datetime->day_of_week($year, $holiday['month'], 1);
 				$dayshift = (($holiday['dow'] + 7) - $dow) % 7;
 				$day = ($holiday['occurence'] - 1) * 7 + $dayshift + 1;
 
@@ -97,7 +103,7 @@
 
 			if ($year >= 1985 && $holiday['month'] == $cached_month && $day == $cached_day + 2 && $cached_observance_rule == True && $holiday['observance_rule'] == True)
 			{
-				$pdow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day-1);
+				$pdow = $GLOBALS['egw']->datetime->day_of_week($year,$holiday['month'],$day-1);
 				if ($pdow != 0)
 				{
 					$addcnt = count($holidays) + 1;
@@ -129,7 +135,7 @@
 			}
 			elseif ($holiday['observance_rule'] == True)
 			{
-				$dow = $GLOBALS['phpgw']->datetime->day_of_week($year,$holiday['month'],$day);
+				$dow = $GLOBALS['egw']->datetime->day_of_week($year,$holiday['month'],$day);
 				// This now calulates Observed holidays and creates a new entry for them.
 				if($dow == 0)
 				{

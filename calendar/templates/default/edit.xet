@@ -2,43 +2,49 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="calendar.edit.general" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%">
+		<grid width="100%" height="200">
 			<columns>
 				<column width="95"/>
+				<column width="35%"/>
 				<column/>
 			</columns>
 			<rows>
 				<row class="row">
-					<description options=",,,start" value="Start Date/Time"/>
-					<date-time id="start"/>
+					<description options=",,,start" value="Start"/>
+					<date-time id="start" needed="1"/>
+					<checkbox id="whole_day" label="whole day" statustext="Event will occupy the whole day" options=",, ,disable"/>
 				</row>
 				<row class="row">
-					<description options=",,,end" value="End Date/Time"/>
-					<date-time id="end"/>
+					<description options=",,,end" value="End"/>
+					<date-time id="end" needed="1"/>
+					<button label="Freetime search" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.freetimesearch')+values2url(this.form,'start,end,participants,recur_type,whole_day'),'ft_search','dependent=yes,width=700,height=500,scrollbars=yes,status=yes'); return false;"/>
 				</row>
 				<row class="row">
 					<description options=",,,location" value="Location"/>
-					<textbox size="80" maxlength="255" id="location"/>
+					<textbox size="80" maxlength="255" id="location" span="all"/>
 				</row>
-				<row class="row" valign="top">
+				<row class="row" valign="top" height="60">
 					<description options=",,,category" value="Category"/>
-					<listbox type="select-cat" rows="3" id="category"/>
+					<listbox type="select-cat" rows="3" id="category" span="all"/>
 				</row>
 				<row class="row">
 					<description options=",,,priority" value="Priority"/>
-					<menulist>
-						<menupopup type="select-priority" id="priority"/>
-					</menulist>
+					<hbox span="all" orient=",0,0">
+						<menulist>
+							<menupopup type="select-priority" id="priority"/>
+						</menulist>
+						<checkbox label="non blocking" statustext="A non blocking event will not conflict with other events" id="non_blocking" options=",, ,disable"/>
+					</hbox>
 				</row>
 				<row class="row">
 					<description options=",,,public" value="Private"/>
-					<checkbox options="0,1" id="public"/>
+					<checkbox options="0,1" id="public" span="all"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%">
+		<grid width="100%" height="200">
 			<columns>
 				<column width="95"/>
 				<column/>
@@ -51,88 +57,215 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="resources.resource_selectbox" template="" lang="" group="0" version="">
-		<grid>
-			<columns>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="bottom">
-					<listbox rows="14+" id="selectbox"/>
-					<button onclick="window.open(egw::link('/index.php','menuaction=resources.ui_resources.select'),'','dependent=yes,width=600,height=450,scrollbars=yes,status=yes'); return false;" id="button" label="Add resources" image="navbar" needed="1"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%">
+	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.0.1.002">
+		<grid width="100%" height="200" class="row_on" overflow="auto">
 			<columns>
 				<column width="95"/>
 				<column/>
 				<column/>
+				<column/>
 			</columns>
 			<rows>
-				<row class="row" valign="top">
+				<row class="row" valign="top" disabled="@view">
 					<description options=",,,participants" value="Participants"/>
-					<listbox type="select-account" rows="14" id="participants"/>
-					<template content="resources" id="resources.resource_selectbox"/>
+					<listbox type="select-account" rows="14" id="participants[accounts]"/>
+					<description value="Resources" align="right"/>
+					<resources_select options="14" id="participants[resources]"/>
+				</row>
+				<row valign="top" disabled="!@view">
+					<description value="Participants"/>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<menulist>
+									<menupopup type="select-account" id="${row}" readonly="true"/>
+								</menulist>
+								<menulist>
+									<menupopup id="accounts_status[$row_cont]" onchange="1" statustext="Accept or reject an invitation" no_lang="1"/>
+								</menulist>
+							</row>
+						</rows>
+					</grid>
+					<description value="Resources" align="right"/>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="!@resources_status">
+								<resources_select id="${row}" readonly="true" no_lang="1"/>
+								<menulist>
+									<menupopup id="resources_status[$row_cont]" onchange="1" statustext="Accept or reject an invitation" no_lang="1"/>
+								</menulist>
+							</row>
+						</rows>
+					</grid>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="">
-		<grid>
+	<template id="calendar.edit.recurrence" template="" lang="" group="0" version="1.0.1.002">
+		<grid width="100%" height="200">
+			<columns>
+				<column width="95"/>
+				<column/>
+				<column/>
+				<column width="50%"/>
+			</columns>
+			<rows>
+				<row class="th" height="12">
+					<description span="all" value="Repeating Event Information"/>
+				</row>
+				<row class="row" height="12">
+					<description options=",,,recur_type" value="Repeat type"/>
+					<menulist>
+						<menupopup id="recur_type"/>
+					</menulist>
+					<description options=",,,recur_interval" value="Interval"/>
+					<menulist>
+						<menupopup type="select-number" id="recur_interval" statustext="repeating interval, eg. 2 to repeat every second week" options="None,2,10"/>
+					</menulist>
+				</row>
+				<row class="row" height="12">
+					<description options=",,,recur_enddate" value="End date"/>
+					<date id="recur_enddate" statustext="repeat the event until which date (empty means unlimited)" span="all"/>
+				</row>
+				<row class="row" valign="top">
+					<description options=",,,recur_data" value="Repeat days"/>
+					<listbox type="select-dow" rows="6" options="1" id="recur_data" statustext="Days of the week for a weekly repeated event"/>
+					<description value="Exceptions"/>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<date-time id="$row" readonly="true"/>
+								<button label="Delete" image="delete" id="delete_exception[$row_cont]" statustext="Delete this exception" onclick="return confirm('Delete this exception');"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.edit.custom" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="200" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<description/>
+				<row valign="top">
+					<customfields id="customfields"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.links" template="" lang="" group="0" version="">
-		<grid>
+	<template id="calendar.edit.links" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="200" overflow="auto">
 			<columns>
+				<column width="95"/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<description/>
+				<row class="th" disabled="@view">
+					<description span="all" value="Create new links"/>
+				</row>
+				<row class="row" disabled="@view">
+					<link-to span="all" id="link_to"/>
+				</row>
+				<row class="th">
+					<description span="all" value="Existing links"/>
+				</row>
+				<row class="row_off" valign="top">
+					<link-list span="all" id="link_to"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.custom" template="" lang="" group="0" version="">
-		<grid>
+	<template id="calendar.edit.alarms" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="200" overflow="auto">
 			<columns>
+				<column width="95"/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<description/>
+				<row class="row" height="20" disabled="@no_add_alarm">
+					<description value="before the event"/>
+					<hbox>
+						<menulist>
+							<menupopup type="select-number" options=",0,7" id="new_alarm[days]"/>
+						</menulist>
+						<description options=",,,new_alarm[days]" value="days"/>
+						<menulist>
+							<menupopup type="select-number" id="new_alarm[hours]" options=",0,23"/>
+						</menulist>
+						<description options=",,,new_alarm[hours]" value="hours"/>
+						<menulist>
+							<menupopup type="select-number" id="new_alarm[mins]" options=",0,55,5"/>
+						</menulist>
+						<description options=",,,new_alarm[mins]" value="Minutes"/>
+						<menulist>
+							<menupopup id="new_alarm[owner]" no_lang="1" label="for" statustext="Select who should get the alarm"/>
+						</menulist>
+						<button id="button[add_alarm]" label="Add alarm"/>
+					</hbox>
+				</row>
+				<row valign="top" disabled="!@alarm">
+					<description value="Alarms"/>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row class="th">
+								<description value="Time"/>
+								<description value="before the event"/>
+								<description value="All participants"/>
+								<description value="Owner"/>
+								<description value="Action"/>
+							</row>
+							<row class="row">
+								<date-time id="${row}[time]" readonly="true"/>
+								<description id="${row}[offset]" no_lang="1"/>
+								<checkbox align="center" id="${row}[all]" readonly="true"/>
+								<menulist>
+									<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+								</menulist>
+								<button image="delete" label="Delete" align="center" id="delete_alarm[$row_cont[id]]" statustext="Delete this alarm" onclick="return confirm('Delete this alarm');"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.0.1.001">
+	<template id="calendar.edit" template="" lang="" group="0" version="1.0.1.002">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
-				<column/>
+				<column width="300"/>
 				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" id="msg"/>
+					<description span="all" class="redItalic" id="msg" no_lang="1" align="center"/>
 					<description/>
 					<description/>
 				</row>
 				<row class="th">
 					<description value="Title"/>
-					<textbox size="80" maxlength="255" id="title" span="all"/>
+					<textbox size="80" maxlength="255" id="title" span="all" needed="1"/>
 				</row>
 				<row>
 					<tabbox span="all">
@@ -141,16 +274,18 @@
 							<tab label="Description" statustext="Full description"/>
 							<tab label="Participants" statustext="Participants, Resources, ..."/>
 							<tab label="Recurrence" statustext="Repeating Event Information"/>
-							<tab label="Links" statustext="Links"/>
 							<tab label="Custom" statustext="Custom fields"/>
+							<tab label="Links" statustext="Links, Attachments"/>
+							<tab label="Alarms" statustext="Alarm management"/>
 						</tabs>
 						<tabpanels>
 							<template id="calendar.edit.general"/>
 							<template id="calendar.edit.description"/>
 							<template id="calendar.edit.participants"/>
 							<template id="calendar.edit.recurrence"/>
-							<template id="calendar.edit.links"/>
 							<template id="calendar.edit.custom"/>
+							<template id="calendar.edit.links"/>
+							<template id="calendar.edit.alarms"/>
 						</tabpanels>
 					</tabbox>
 				</row>
@@ -168,12 +303,19 @@
 				</row>
 				<row>
 					<hbox span="2">
-						<button id="edit" label="Edit" statustext="Edit this event"/>
-						<button label="Save" id="save" statustext="saves the changes made"/>
-						<button id="apply" label="Apply" statustext="apply the changes"/>
-						<button id="cancel" label="Cancel" onclick="window.close();"/>
+						<button id="button[edit_series]" label="Edit series" statustext="Edit this series of recuring events"/>
+						<button id="button[edit]" label="Edit" statustext="Edit this event"/>
+						<button id="button[copy]" label="Copy" statustext="Copy this event"/>
+						<button id="button[vcal]" label="Export" statustext="Download this event as iCal"/>
+						<button label="Save" id="button[save]" statustext="saves the changes made"/>
+						<button id="button[apply]" label="Apply" statustext="apply the changes"/>
+						<button id="button[cancel]" label="Cancel" onclick="window.close();" statustext="Close the window"/>
+						<checkbox id="custom_mail" label="mail all participants" statustext="compose a mail to all participants after the event is saved"/>
 					</hbox>
-					<button label="Delete" align="right" id="delete"/>
+					<hbox align="right">
+						<button id="button[delete_series]" label="Delete series" statustext="Delete this series of recuring events" onclick="return confirm('Delete this series of recuring events');"/>
+						<button label="Delete" id="button[delete]" statustext="Delete this event" onclick="return confirm('Delete this event');"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>

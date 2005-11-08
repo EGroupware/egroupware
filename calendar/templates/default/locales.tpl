@@ -1,5 +1,6 @@
 <!-- BEGIN list -->
-<p>
+<p class="row_on" style="text-align: center; border: 1px dotted black; padding: 10px;">{help_msg}</p>
+
  <table border="0" width="45%" align="center">
   <tr>
    <td align="left">{left_next_matchs}</td>
@@ -7,6 +8,7 @@
    <td align="right">{right_next_matchs}</td>
   </tr>
  </table>
+ <p align="center">{total}</p>
 
  <table border="0" width="70%" align="center">
   <tr bgcolor="{th_bg}">

@@ -1,8 +1,8 @@
 <?php
 /**************************************************************************\
-* eGroupWare - Calendar's "new" BO-layer (buisness-object)                 *
+* eGroupWare - Calendar's buisness-object - access only                    *
 * http://www.egroupware.org                                                *
-* Written and (c) 2004 by Ralf Becker <RalfBecker@outdoor-training.de>     *
+* Written and (c) 2004/5 by Ralf Becker <RalfBecker@outdoor-training.de>   *
 * --------------------------------------------                             *
 *  This program is free software; you can redistribute it and/or modify it *
 *  under the terms of the GNU General Public License as published by the   *
@@ -12,35 +12,7 @@
 
 /* $Id$ */
 
-/**
- * Class to access and manipulate all calendar data
- *
- * At the moment this class partialy uses the "old" socalendar class.
- * As the calendar rewrite proceeds, these references will be removed.
- *
- * Note: All new code should only access this class and not bocalendar!!!
- *
- * If you need a function not already available in bocal, please ask RalfBecker@outdoor-training.de
- *
- * The new UI, BO and SO classes have a strikt definition, in which time-zone they operate:
- *  UI only operates in user-time, so there have to be no conversation at all !!!
- *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
- *  SO operates only in server-time (please note, this is not the case with the socalendar*-classes used atm.)
- *
- * As this BO class deals with dates/times of several types and timezone, each variable should have a postfix
- * appended, telling with type it is: _s = seconds, _su = secs in user-time, _ss = secs in server-time, _h = hours
- * The dates returned by this class are always arrays with the following keys (subset of the array used by datetime):
- * year, month, day (not mday!), hour, minute (not min!), second (not sec!), raw (timestamp) and full (Ymd-string)
- *
- * All new BO code (should be true for eGW in general) NEVER use any $_REQUEST ($_POST or $_GET) vars itself.
- * Nor does it store the state of any UI-elements (eg. cat-id selectbox). All this is the task of the UI class !!!
- *
- * All permanent debug messages of the calendar-code should done via the debug-message method of the class !!!
- *
- * @package calendar
- * @author RalfBecker@outdoor-training.de
- * @license GPL
- */
+require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.socal.inc.php');
 
 if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_message methode
 {
@@ -50,6 +22,30 @@ if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_mes
 define('HOUR_s',60*60);
 define('DAY_s',24*HOUR_s);
 define('WEEK_s',7*DAY_s);
+
+/**
+ * Class to access all calendar data
+ *
+ * For updating calendar data look at the bocalupdate class, which extends this class.
+ *
+ * The new UI, BO and SO classes have a strikt definition, in which time-zone they operate:
+ *  UI only operates in user-time, so there have to be no conversation at all !!!
+ *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
+ *  SO operates only in server-time
+ *
+ * As this BO class deals with dates/times of several types and timezone, each variable should have a postfix
+ * appended, telling with type it is: _s = seconds, _su = secs in user-time, _ss = secs in server-time, _h = hours
+ *
+ * All new BO code (should be true for eGW in general) NEVER use any $_REQUEST ($_POST or $_GET) vars itself.
+ * Nor does it store the state of any UI-elements (eg. cat-id selectbox). All this is the task of the UI class(es) !!!
+ *
+ * All permanent debug messages of the calendar-code should done via the debug-message method of this class !!!
+ *
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2004/5 by RalfBecker-At-outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ */
 
 class bocal
 {
@@ -103,6 +99,44 @@ class bocal
 		'T' => 'Tentative',
 		'U' => 'No Response',
 	);
+	/**
+	 * @var array recur_types translates MCAL recur-types to verbose labels
+	 */
+	var $recur_types = Array(
+		MCAL_RECUR_NONE         => 'None',
+		MCAL_RECUR_DAILY        => 'Daily',
+		MCAL_RECUR_WEEKLY       => 'Weekly',
+		MCAL_RECUR_MONTHLY_WDAY => 'Monthly (by day)',
+		MCAL_RECUR_MONTHLY_MDAY => 'Monthly (by date)',
+		MCAL_RECUR_YEARLY       => 'Yearly'
+	);
+	/**
+	 * @var array recur_days translates MCAL recur-days to verbose labels
+	 */
+	var $recur_days = array(
+		MCAL_M_MONDAY    => 'Monday',
+		MCAL_M_TUESDAY   => 'Tuesday',
+		MCAL_M_WEDNESDAY => 'Wednesday',
+		MCAL_M_THURSDAY  => 'Thursday',
+		MCAL_M_FRIDAY    => 'Friday',
+		MCAL_M_SATURDAY  => 'Saturday',
+		MCAL_M_SUNDAY    => 'Sunday',
+	);
+	var $so,$datetime;
+	/**
+	 * @var array $resources registered scheduling resources of the calendar (gets chached in the session for performance reasons)
+	 */
+	var $resources;
+	/**
+	 * @internal 
+	 * @var array $cached_event here we do some caching to read single events only once
+	 */
+	var $cached_event = array();
+	var $cached_event_date_format = false;
+	/**
+	 * @var array $cached_holidays holidays plus birthdays (gets cached in the session for performance reasons)
+	 */
+	var $cached_holidays;
 
 	/**
 	 * Constructor
@@ -112,46 +146,56 @@ class bocal
 		if ($this->debug > 0) $this->debug_message('bocal::bocal() started',True,$param);
 
 		foreach(array(
-			'old_so'    => 'calendar.socalendar',
 			'so'    	=> 'calendar.socal',
 			'datetime'  => 'phpgwapi.datetime',
 		) as $my => $app_class)
 		{
 			list(,$class) = explode('.',$app_class);
 
-			if (!is_object($GLOBALS['phpgw']->$class))
+			if (!is_object($GLOBALS['egw']->$class))
 			{
 				//echo "<p>calling CreateObject($app_class)</p>\n".str_repeat(' ',4096);
-				$GLOBALS['phpgw']->$class = CreateObject($app_class);
+				$GLOBALS['egw']->$class = CreateObject($app_class);
 			}
-			$this->$my = &$GLOBALS['phpgw']->$class;
+			$this->$my = &$GLOBALS['egw']->$class;
 		}
-		$this->common_prefs = $GLOBALS['phpgw_info']['user']['preferences']['common'];
-		$this->cal_prefs = $GLOBALS['phpgw_info']['user']['preferences']['calendar'];
+		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
+		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
+		$this->check_set_default_prefs();
 
 		$this->tz_offset_s = $this->datetime->tz_offset;
 
 		$this->now_su = time() + $this->tz_offset_s;
 
-		$this->user = $GLOBALS['phpgw_info']['user']['account_id'];
+		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
-		$this->grants = $GLOBALS['phpgw']->acl->get_grants('calendar');
+		$this->grants = $GLOBALS['egw']->acl->get_grants('calendar');
 
 		foreach($this->verbose_status as $status => $text)
 		{
 			$this->verbose_status[$status] = lang($text);
 		}
+		if (!is_array($this->resources = $GLOBALS['egw']->session->appsession('resources','calendar')))
+		{
+			$this->resources = array();
+			foreach($GLOBALS['egw']->hooks->process('calendar_resources') as $app => $data)
+			{
+				if ($data && $data['type'])
+				{
+					$this->resources[$data['type']] = $data + array('app' => $app);
+				}
+			}
+			$GLOBALS['egw']->session->appsession('resources','calendar',$this->resources);
+		}	
+		//echo "registered resources="; _debug_array($this->resources);
+
+		$config =& CreateObject('phpgwapi.config','calendar');
+		$this->config =& $config->read_repository();
+		unset($config);
 	}
 
 	/**
 	 * Searches / lists calendar entries, including repeating ones
-	 *
-	 * As said earlier the new bo-class operates to the outside only in user-time and to the so-class only in server-time.
-	 * The existing old_so-class (socalendar*) still has a mixed approach, values are mostly (!) returned in user-time
-	 * and arguments are sometimes (!) expected in server-time ;-)
-	 * We need to kope with that, til the so-class gets re-written !!!
-	 * The arguments to the list_*events* functions are in user-time (they take only year,month,day) and they return id's.
-	 * The events, fetched with there id's via old_so::read_entry are also in user-time.
 	 *
 	 * @param params array with the following keys
 	 *	start date startdate of the search/list, defaults to today
@@ -165,124 +209,94 @@ class bocal
 	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
 	 *		(events spanning multiple days are returned each day again (!)) otherwise it returns one array with
 	 *		the events (default), not honored in a search ==> always returns an array of events !
+	 *	date_format string date-formats: 'ts'=timestamp (default), 'array'=array, or string with format for date
+	 *  offset boolean/int false (default) to return all entries or integer offset to return only a limited result
+	 *  enum_recuring boolean if true or not set (default) or daywise is set, each recurence of a recuring events is returned,
+	 *		otherwise the original recuring event (with the first start- + enddate) is returned
+	 *  num_rows int number of entries to return, default or if 0, max_entries from the prefs
+	 *  order column-names plus optional DESC|ASC separted by comma
+	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
+	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
 	 */
-	function search($params)
+	function &search($params)
 	{
 		$params_in = $params;
 
 		if (!isset($params['users']) || !$params['users'])
 		{
-			$params['users'] = $this->user;
+			// for a search use all account you have read grants from
+			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;
 		}
 		if (!is_array($params['users']))
 		{
-			$params['users'] = array((int) $params['users']);
+			$params['users'] = array($params['users']);
 		}
 		// only query calendars of users, we have READ-grants from
 		$users = array();
 		foreach($params['users'] as $user)
 		{
-			if ($this->check_perms(PHPGW_ACL_READ,0,$user))
+			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$user))
 			{
 				$users[] = $user;
+				
+				// for groups we have to include the members
+				if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
+				{
+					$members = $GLOBALS['egw']->accounts->member($user);
+					if (is_array($members))
+					{
+						foreach($members as $member)
+						{
+							// use only members which gave the user a read-grant
+							if (!in_array($member['account_id'],$users) && 
+								($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$member['account_id'])))
+							{
+								$users[] = $member['account_id'];
+							}
+						}
+					}
+				}
 			}
 		}
-		$start = $this->date2ts($params['start']);
-		$end   = isset($params['end']) ? $this->date2ts($params['end']) : $start + DAY_s-1;
+		// if we have no grants from the given user(s), we directly return no events / an empty array, 
+		// as calling the so-layer without users would give the events of all users (!)
+		if (!count($users))
+		{
+			return array();
+		}
+		if (isset($params['start'])) $start = $this->date2ts($params['start']);
+
+		if (isset($params['end']))
+		{
+			$end = $this->date2ts($params['end']);
+			$this->check_move_horizont($end);
+		}
 		$daywise = !isset($params['daywise']) ? False : !!$params['daywise'];
+		$enum_recuring = $daywise || !isset($params['enum_recuring']) || !!$params['enum_recuring'];
 		$cat_id = isset($params['cat_id']) ? $params['cat_id'] : 0;
 		$filter = isset($params['filter']) ? $params['filter'] : 'all';
+		$offset = isset($params['offset']) && $params['offset'] !== false ? (int) $params['offset'] : false;
+		$show_rejected = isset($params['show_rejected']) ? $params['show_rejected'] : $this->cal_prefs['show_rejected'] || $params['query'];
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
 		{
-			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6',True,
-				$params,$start,$end,$daywise,$cat_id,$filter);
+			$this->debug_message('bocal::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, show_rejected=%11)',
+				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
 		}
-		// some of the params need to be set as class vars in the old so-class
-		$this->old_so->cat_id = $cat_id;
-		$this->old_so->filter = $filter;
-
-		if (!isset($params['query']) || empty($params['query']))
+		// date2ts(,true) converts to server time, db2data converts again to user-time
+		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
+			$users,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$show_rejected);
+		$this->total = $this->so->total;
+		$this->db2data($events,isset($params['date_format']) ? $params['date_format'] : 'ts');
+		
+		foreach($events as $id => $event)
 		{
-			$start = $this->date2array($start);
-			$end   = $this->date2array($end);
-
-			$event_ids = $this->old_so->list_events($start['year'],$start['month'],$start['day'],
-				$end['year'],$end['month'],$end['day'],$users);
-
-			if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
+			if (!$this->check_perms(EGW_ACL_READ,$event))
 			{
-				$this->debug_message('socalendar::list_events(start=%1,end=%2,users=%3)=%4',False,
-					$start,$end,$users,$event_ids);
-			}
-			$rep_event_ids = $this->old_so->list_repeated_events($start['year'],$start['month'],$start['day'],
-				$end['year'],$end['month'],$end['day'],$users);
-			if ($this->debug > 1) $this->debug_message('socalendar::list_repeated_events(start=%1,end=%2,users=%3)=%4',False,$start,$end,$users,$rep_event_ids);
-		}
-		else
-		{
-			$daywise = False;
-			$event_ids = $this->old_so->list_events_keyword($params['query'],$users);
-
-			if ($this->debug && ($this->debug > 1 || $this->debug == 'search'))
-			{
-				$this->debug_message('socalendar::list_events_keyword(query=%1,users=%2)=%3',False,
-					$params['query'],$users,$event_ids);
-			}
-			$rep_event_ids = array();	// not used in search
-		}
-		// To build the list of events from returned id's, we need go through the $event_ids, read each event
-		// and put it in the cached_events for each day it's running, if it's NO repeating event.
-		// Then we need to go through $rep_event_ids, fetch the event and add each event with ALL it's occurences
-		// within the reported timespan, if there is no recur-exception-event already in the list of events.
-		// If daywise is True each event need to be added in the array of each day it's running.
-		// Please note: as we use the old SO class, all returned dates are already in user-time !!!
-
-		$events = $recur_exceptions = Array();
-		$events_sorted = True;
-
-		if(count($event_ids) || count($rep_event_ids))
-		{
-			$db_events = (array) $this->read($event_ids+$rep_event_ids,true);
-			
-			foreach($db_events as $id => $event)
-			{
-				if ($event['recur_type']) continue;	// done in 2. step, we need the exceptions first
-
-				// recur-exceptions have a reference to the original event
-				// we remember they are their for a certain date and id, to not insert their regular recurrence
-				if ($event['reference'])
-				{
-					for($ts = $event['start']['raw']; $ts < $event['end']['raw']; $ts += DAY_s)
-					{
-						$recur_exceptions[$event['reference']][(int)$this->date2string((int)$ts)] = True;
-					}
-					$recur_exceptions[$event['reference']][$event['end']['full']] = True;
-				}
-				$events[] = &$db_events[$id];
-				unset($db_events[$id]);
-			}
-			foreach($db_events as $id => $event)
-			{
-				$this->insert_all_repetitions($event,$start,$end,$events,$recur_exceptions[$id]);
-				$events_sorted = False;
-			}
-			unset($db_events);
-
-			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
-			{
-				$this->debug_message('socalendar::search processed event_ids=%1, events=%2',False,$event_ids+$rep_event_ids,$events);
+				$this->clear_private_infos($events[$id],$users);
 			}
 		}
-		if (!$events_sorted)
-		{
-			// sort the events by start-date
-			usort($events,create_function('$e1,$e2',"return \$e1['start']['raw']-\$e2['start']['raw'];"));
-			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
-			{
-				$this->debug_message('socalendar::search usort(events)=%1',False,$events);
-			}
-		}
+
 		if ($daywise)
 		{
 			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
@@ -290,26 +304,49 @@ class bocal
 				$this->debug_message('socalendar::search daywise sorting from %1 to %2 of %3',False,$start,$end,$events);
 			}
 			// create empty entries for each day in the reported time
-			for($ts = $start['raw']; $ts <= $end['raw']; $ts += DAY_s)
+			for($ts = $start; $ts <= $end; $ts += DAY_s)
 			{
 				$daysEvents[$this->date2string($ts)] = array();
 			}
-			foreach($events as $event)
+			foreach($events as $k => $event)
 			{
-				$e_start = max($event['start']['raw'],$start['raw']);
+				$e_start = max($this->date2ts($event['start']),$start);
 				// $event['end']['raw']-1 to allow events to end on a full hour/day without the need to enter it as minute=59
-				$e_end   = min($event['end']['raw']-1,$end['raw']);
+				$e_end   = min($this->date2ts($event['end'])-1,$end);
 
 				// add event to each day in the reported time
 				for($ts = $e_start; $ts <= $e_end; $ts += DAY_s)
 				{
-					$daysEvents[$this->date2string($ts)][] = $event;
+					$daysEvents[$ymd = $this->date2string($ts)][] =& $events[$k];
 				}
+				if ($ymd != ($last = $this->date2string($e_end)))
+				{
+					$daysEvents[$last][] =& $events[$k];
+				}					
 			}
-			$events = $daysEvents;
+			$events =& $daysEvents;
 			if ($this->debug && ($this->debug > 2 || $this->debug == 'search'))
 			{
 				$this->debug_message('socalendar::search daywise events=%1',False,$events);
+			}
+		}
+		elseif(!$enum_recuring)
+		{
+			$recur_ids = array();
+			foreach($events as $k => $event)
+			{
+				if ($event['recur_type'] != MCAL_RECUR_NONE)
+				{
+					if (!in_array($event['id'],$recur_ids))
+					{
+						$recur_ids[] = $event['id'];
+					}
+					unset($events[$k]);
+				}
+			}
+			if (count($recur_ids))
+			{
+				$events = array_merge($this->read($recur_ids),$events);
 			}
 		}
 		if ($this->debug && ($this->debug > 0 || $this->debug == 'search'))
@@ -318,45 +355,208 @@ class bocal
 		}
 		return $events;
 	}
+	
+	/**
+	 * Clears all non-private info from a privat event
+	 *
+	 * That function only returns the infos allowed to be viewed by people without EGW_ACL_PRIVATE grants
+	 *
+	 * @param array &$event
+	 * @param array $allowed_participants ids of the allowed participants, eg. the ones the search is over or eg. the owner of the calendar
+	 */
+	function clear_private_infos(&$event,$allowed_participants = array())
+	{
+		$event = array(
+			'id'    => $event['id'],
+			'start' => $event['start'],
+			'end'   => $event['end'],
+			'title' => lang('private'),
+			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
+			'public'=> 0,
+		);
+	}
+	
+	/**
+	 * check and evtl. move the horizont (maximum date for unlimited recuring events) to a new date
+	 *
+	 * @internal automaticaly called by search
+	 * @param mixed $new_horizont time to set the horizont to (user-time)
+	 */
+	function check_move_horizont($new_horizont)
+	{
+		if ((int) $this->debug >= 2 || $this->debug == 'check_move_horizont')
+		{
+			$this->debug_message('bocal::check_move_horizont(%1) horizont=%2',true,$new_horizont,$this->config['horizont']);
+		}
+		$new_horizont = $this->date2ts($new_horizont,true);	// now we are in server-time, where this function operates
+
+		if ($new_horizont <= $this->config['horizont'])	// no move necessary
+		{
+			if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,$this->config['horizont']);
+			return;
+		}
+		if ($new_horizont < time()+31*DAY_s)
+		{
+			$new_horizont = time()+31*DAY_s;
+		}
+		$old_horizont = $this->config['horizont'];
+		$this->config['horizont'] = $new_horizont;
+
+		// create further recurances for all recuring and not yet (at the old horizont) ended events
+		if (($recuring = $this->so->unfinished_recuring($old_horizont)))
+		{
+			foreach($this->read(array_keys($recuring)) as $cal_id => $event)
+			{
+				if ($this->debug == 'check_move_horizont')
+				{
+					$this->debug_message('bocal::check_move_horizont(%1): calling set_recurrences(%2,%3)',true,$new_horizont,$event,$old_horizont);
+				}
+				// insert everything behind max(cal_start), which can be less then $old_horizont because of bugs in the past
+				$this->set_recurrences($event,$recuring[$cal_id]+1+$this->tz_offset_s);	// set_recurences operates in user-time!
+			}
+		}
+		// update the horizont
+		$config =& CreateObject('phpgwapi.config','calendar');
+		$config->save_value('horizont',$this->config['horizont'],'calendar');
+		
+		if ($this->debug == 'check_move_horizont') $this->debug_message('bocal::check_move_horizont(%1) new horizont=%2, exiting',true,$new_horizont,$this->config['horizont']);
+	}
+
+	/**
+	 * set all recurances for an event til the defined horizont $this->config['horizont']
+	 *
+	 * @param array $event
+	 * @param mixed $start=0 minimum start-time for new recurances or !$start = since the start of the event
+	 */
+	function set_recurrences($event,$start=0)
+	{
+		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
+		{
+			$this->debug_message('bocal::set_recurrences(%1,%2)',true,$event,$start);
+		}
+		if (!$start) $start = $event['start'];
+		
+		$events = array();
+		$this->insert_all_repetitions($event,$start,$this->date2ts($this->config['horizont'],true),$events,null);
+
+		foreach($events as $event)
+		{
+			$this->so->recurrence($event['id'],$this->date2ts($event['start'],true),$this->date2ts($event['end'],true),$event['participants']);
+		}
+	}
+	
+	/**
+	 * convert data read from the db, eg. convert server to user-time
+	 *
+	 * @param array &$events array of event-arrays (reference)
+	 * @param $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
+	 */
+	function db2data(&$events,$date_format='ts')
+	{
+		if (!is_array($events)) echo "<p>bocal::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
+		foreach($events as $id => $event)
+		{
+			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
+			foreach(array('start','end','modified','recur_enddate') as $ts)
+			{
+				if (empty($event[$ts])) continue;
+
+				$events[$id][$ts] = $this->date2usertime($event[$ts],$date_format);
+			}
+			// same with the recur exceptions
+			if (isset($event['recur_exception']) && is_array($event['recur_exception']))
+			{
+				foreach($event['recur_exception'] as $n => $date)
+				{
+					$events[$id]['recur_exception'][$n] = $this->date2usertime($date,$date_format);
+				}
+			}
+			// same with the alarms
+			if (isset($event['alarm']) && is_array($event['alarm']))
+			{
+				foreach($event['alarm'] as $n => $alarm)
+				{
+					$events[$id]['alarm'][$n]['time'] = $this->date2usertime($alarm['time'],$date_format);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * convert a date from server to user-time
+	 *
+	 * @param int $date timestamp in server-time
+	 * @param $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
+	 */
+	function date2usertime($ts,$date_format='ts')
+	{
+		if (empty($ts)) return $ts;
+		
+		switch ($date_format)
+		{
+			case 'ts':
+				return $ts + $this->tz_offset_s;
+
+			case 'server':
+				return $ts;
+
+			case 'array':
+				return $this->date2array((int) $ts,true);
+
+			case 'string':
+				return $this->date2string($ts,true);
+		}
+		return $this->date2string($ts,true,$date_format);
+	}
 
 	/**
 	 * Reads a calendar-entry
 	 *
-	 * @param $ids array/int id(s) of the entry
-	 * @param $ignore_acl boolean should we ignore the acl, default False for a single id, true for multiple id's
+	 * @param int/array/string $ids id or array of id's of the entries to read, or string with a single uid
+	 * @param mixed $date=null date to specify a single event of a series
+	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
+	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
 	 * @return boolean/array event or array of id => event pairs or False if the acl-check went wrong
 	 */
-	function read($ids,$ignore_acl=False)
+	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
-		$event = False;
+		if ($date) $date = $this->date2ts($date);
 
-		if($ignore_acl || is_array($ids) || $this->check_perms(PHPGW_ACL_READ,$ids))
+		$return = false;
+		if ($ignore_acl || is_array($ids) || $this->check_perms(EGW_ACL_READ,$ids,0,$date_format))
 		{
-			// some minimal cacheing to re-use the event already read in check_perms
-			static $event = array();
-
-			if (is_array($ids) || !isset($event['id']) || $event['id'] != $ids)
+			if (is_array($ids) || !isset($this->cached_event['id']) || $this->cached_event['id'] != $ids || 
+				$this->cached_event_date_format != $date_format ||
+				!is_null($date) && $this->cached_event['start'] < $date && $this->cached_event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$events = $this->so->read($ids);
-
-				foreach($events as $id => $event)
+				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
+				
+				if ($events)
 				{
-					// we run all dates through date2array, to get the new keys (day,minute,second,full,raw)
-					foreach(array('starttime' => 'start','endtime' => 'end','modified' => 'modtime','recur_enddate' => 'recur_enddate') as $ts => $date)
+					$this->db2data($events,$date_format);
+	
+					if (is_array($ids))
 					{
-						unset($events[$id][$ts]);
-						// we convert here from the server-time timestamps to an array in user-time!
-						$events[$id][$date] = $event[$ts] ? $this->date2array((int) $event[$ts],true) : false;
+						$return =& $events;
+					}
+					else
+					{
+						$this->cached_event = array_shift($events);
+						$this->cached_event_date_format = $date_format;
+						$return =& $this->cached_event;
 					}
 				}
-				if (!is_array($ids)) $event = $events[$ids];
+			}
+			else
+			{
+				$return =& $this->cached_event;
 			}
 		}
 		if ($this->debug && ($this->debug > 1 || $this->debug == 'read'))
 		{
-			$this->debug_message('bocal::read(%1,%2)=%3',True,$ids,$ignore_acl,is_array($ids) ? $events : $event);
+			$this->debug_message('bocal::read(%1,%2,%3,%4)=%5',True,$ids,$date,$ignore_acl,$date_format,$return);
 		}
-		return is_array($ids) ? $events : $event;
+		return $return;
 	}
 
 	/**
@@ -373,23 +573,33 @@ class bocal
 	 *	of the used recur-type and add all events in one simple for-loop. Daylightsaving changes need to be taken into Account.
 	 *
 	 * @param $event array repeating event whos repetions should be inserted
-	 * @param $start array start-date
-	 * @param $end array end-date
+	 * @param $start mixed start-date
+	 * @param $end mixed end-date
 	 * @param $events array where the repetions get inserted
 	 * @param $recur_exceptions array with date (in Ymd) as key (and True as values)
 	 */
 	function insert_all_repetitions($event,$start,$end,&$events,$recur_exceptions)
 	{
+		if ((int) $this->debug >= 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions')
+		{
+			$this->debug_message('bocal::insert_all_repitions(%1,%2,%3,&$event,%4)',true,$event,$start,$end,$recur_exceptions);
+		}
 		$start_in = $start; $end_in = $end;
+		
+		$start = $this->date2ts($start);
+		$end   = $this->date2ts($end);
+		$event_start_ts = $this->date2ts($event['start']);
+		$event_end_ts   = $this->date2ts($event['end']);
 
-		if ($this->debug && ($this->debug > 3 || $this->debug == 'insert_all_repetions'))
+		if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
 		{
 			$this->debug_message('bocal::insert_all_repetions(%1,start=%2,end=%3,,%4) starting...',True,$event,$start_in,$end_in,$recur_exceptions);
 		}
 		$id = $event['id'];
+		$event_start_arr = $this->date2array($event['start']);
 		// to be able to calculate the repetitions as difference to the start-date, 
 		// both need to be calculated without daylight saving: mktime(,,,,,,0)
-		$event_start_daybegin_ts = mktime(0,0,0,$event['start']['month'],$event['start']['day'],$event['start']['year'],0);
+		$event_start_daybegin_ts = adodb_mktime(0,0,0,$event_start_arr['month'],$event_start_arr['day'],$event_start_arr['year'],0);
 
 		if($event['recur_enddate'])
 		{
@@ -397,16 +607,16 @@ class bocal
 		}
 		else
 		{
-			$recur_end_ymd = $this->date2string(mktime(0,0,0,1,1,5+date('Y')));	// go max. 5 years from now
+			$recur_end_ymd = $this->date2string(adodb_mktime(0,0,0,1,1,5+adodb_date('Y')));	// go max. 5 years from now
 		}
 
 		// We only need to compute the intersection between our reported time-span and the live-time of the event
 		// To catch all multiday repeated events (eg. second days), we need to start the length of the even earlier
 		// then our original report-starttime
-		$event_length = $event['end']['raw']-$event['start']['raw'];
-		$start_ts = max($event['start']['raw'],$start['raw']-$event_length);
+		$event_length = $event_end_ts - $event_start_ts;
+		$start_ts = max($event_start_ts,$start-$event_length);
 		// we need to add 26*60*60-1 to the recur_enddate as its hour+minute are 0
-		$end_ts   = $event['recur_enddate'] ? min($event['recur_enddate']['raw']+DAY_s-1,$end['raw']) : $end['raw'];
+		$end_ts   = $event['recur_enddate'] ? min($this->date2ts($event['recur_enddate'])+DAY_s-1,$end) : $end;
 
 		for($ts = $start_ts; $ts < $end_ts; $ts += DAY_s)
 		{
@@ -416,12 +626,12 @@ class bocal
 			
 			if (!$have_exception)	// no execption by an edited event => check the deleted ones
 			{
-				foreach($event['recur_exception'] as $exception_ts)
+				foreach((array)$event['recur_exception'] as $exception_ts)
 				{
 					$have_exception = $search_date_ymd == (int)$this->date2string($exception_ts);
 				}
 			}
-			if ($this->debug && ($this->debug > 3 || $this->debug == 'insert_all_repetions'))
+			if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
 			{
 				$this->debug_message('bocal::insert_all_repetions(...,%1) checking recur_exceptions[%2] and event[recur_exceptions]=%3 ==> %4',False,
 					$recur_exceptions,$search_date_ymd,$event['recur_exception'],$have_exception);
@@ -430,15 +640,15 @@ class bocal
 			{
 				continue;	// we already have an exception for that date
 			}
-			$search_date_year = date('Y',$ts);
-			$search_date_month = date('m',$ts);
-			$search_date_day = date('d',$ts);
-			$search_date_dow = date('w',$ts);
+			$search_date_year = adodb_date('Y',$ts);
+			$search_date_month = adodb_date('m',$ts);
+			$search_date_day = adodb_date('d',$ts);
+			$search_date_dow = adodb_date('w',$ts);
 			// to be able to calculate the repetitions as difference to the start-date, 
 			// both need to be calculated without daylight saving: mktime(,,,,,,0)
-			$search_beg_day = mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year,0);
+			$search_beg_day = adodb_mktime(0,0,0,$search_date_month,$search_date_day,$search_date_year,0);
 
-			if ($search_date_ymd == $event['start']['full'])	// first occurence
+			if ($search_date_ymd == $event_start_arr['full'])	// first occurence
 			{
 				$this->add_adjusted_event($events,$event,$search_date_ymd);
 				continue;
@@ -452,7 +662,7 @@ class bocal
 					{
 						echo '<!-- check_repeating_events - MCAL_RECUR_DAILY - '.$id.' -->'."\n";
 					}
-					if ($freq == 1 && $event['recur_enddate']['month'] != 0 && $event['recur_enddate']['day'] != 0 && $event['recur_enddate']['year'] != 0 && $search_date_ymd <= $recur_end_ymd)
+					if ($freq == 1 && $event['recur_enddate'] && $search_date_ymd <= $recur_end_ymd)
 					{
 						$this->add_adjusted_event($events,$event,$search_date_ymd);
 					}
@@ -501,40 +711,40 @@ class bocal
 					}
 					break;
 				case MCAL_RECUR_MONTHLY_WDAY:
-					if ((($search_date_year - $event['start']['year']) * 12 + $search_date_month - $event['start']['month']) % $freq)
+					if ((($search_date_year - $event_start_arr['year']) * 12 + $search_date_month - $event_start_arr['month']) % $freq)
 					{
 						continue;
 					}
 
-					if (($GLOBALS['phpgw']->datetime->day_of_week($event['start']['year'],$event['start']['month'],$event['start']['day']) == $GLOBALS['phpgw']->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
-						(ceil($event['start']['day']/7) == ceil($search_date_day/7)))
+					if (($GLOBALS['egw']->datetime->day_of_week($event_start_arr['year'],$event_start_arr['month'],$event_start_arr['day']) == $GLOBALS['egw']->datetime->day_of_week($search_date_year,$search_date_month,$search_date_day)) &&
+						(ceil($event_start_arr['day']/7) == ceil($search_date_day/7)))
 					{
 						$this->add_adjusted_event($events,$event,$search_date_ymd);
 					}
 					break;
 				case MCAL_RECUR_MONTHLY_MDAY:
-					if ((($search_date_year - $event['start']['year']) * 12 + $search_date_month - $event['start']['month']) % $freq)
+					if ((($search_date_year - $event_start_arr['year']) * 12 + $search_date_month - $event_start_arr['month']) % $freq)
 					{
 						continue;
 					}
-					if ($search_date_day == $event['start']['day'])
+					if ($search_date_day == $event_start_arr['day'])
 					{
 						$this->add_adjusted_event($events,$event,$search_date_ymd);
 					}
 					break;
 				case MCAL_RECUR_YEARLY:
-					if (($search_date_year - $event['start']['year']) % $freq)
+					if (($search_date_year - $event_start_arr['year']) % $freq)
 					{
 						continue;
 					}
-					if (date('dm',$ts) == date('dm',$event_start_daybegin_ts))
+					if (adodb_date('dm',$ts) == adodb_date('dm',$event_start_daybegin_ts))
 					{
 						$this->add_adjusted_event($events,$event,$search_date_ymd);
 					}
 					break;
 			} // switch(recur-type)
 		} // for($date = ...)
-		if ($this->debug && ($this->debug > 2 || $this->debug == 'insert_all_repetions'))
+		if ($this->debug && ((int) $this->debug > 2 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
 		{
 			$this->debug_message('bocal::insert_all_repetions(%1,start=%2,end=%3,events,exections=%4) events=%5',True,$event,$start_in,$end_in,$recur_exceptions,$events);
 		}
@@ -551,18 +761,16 @@ class bocal
 	{
 		$event_in = $event;
 		// calculate the new start- and end-time
-		$length_s = $event['end']['raw'] - $event['start']['raw'];
+		$length_s = $this->date2ts($event['end']) - $this->date2ts($event['start']);
+		$event_start_arr = $this->date2array($event['start']);
 
 		$date_arr = $this->date2array((string) $date_ymd);
-		$date_arr['hour'] = $event['start']['hour'];
-		$date_arr['minute'] = $event['start']['minute'];
-		$date_arr['second'] = $event['start']['second'];
+		$date_arr['hour'] = $event_start_arr['hour'];
+		$date_arr['minute'] = $event_start_arr['minute'];
+		$date_arr['second'] = $event_start_arr['second'];
 		unset($date_arr['raw']);	// else date2ts would use it
-		$date_arr['raw'] = $this->date2ts($date_arr);
-		$date_arr['full'] = (int) $date_ymd;
-
-		$event['start'] = $date_arr;
-		$event['end'] = $this->date2array($date_arr['raw']+$length_s);
+		$event['start'] = $this->date2ts($date_arr);
+		$event['end'] = $event['start'] + $length_s;
 
 		$events[] = $event;
 
@@ -580,13 +788,21 @@ class bocal
 	 * Note: Participating in an event is considered as haveing read-access on that event,
 	 *	even if you have no general read-grant from that user.
 	 *
-	 * @param $needed int necessary ACL right: PHPGW_ACL_{READ|EDIT|DELETE}
-	 * @param $event mixed event as array or the event-id or 0 for a general check
-	 * @param $other int uid to check (if event==0) or 0 to check against $this->user
+	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
+	 * @param mixed $event event as array or the event-id or 0 for a general check
+	 * @param int $other uid to check (if event==0) or 0 to check against $this->user
+	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'array'=array, 'string'=iso8601 string for xmlrpc
+	 * @return boolean true permission granted or false for permission denied
 	 */
-	function check_perms($needed,$event=0,$other=0)
+	function check_perms($needed,$event=0,$other=0,$date_format='ts')
 	{
 		$event_in = $event;
+		if ($other && !is_numeric($other))
+		{
+			$resource = ExecMethod($this->resources[$other{0}]['info'],substr($other,1));
+
+			return $needed & $resource[0]['rights'];
+		}
 		if (is_int($event) && $event == 0)
 		{
 			$owner = $other > 0 ? $other : $this->user;
@@ -595,7 +811,7 @@ class bocal
 		{
 			if (!is_array($event))
 			{
-				$event = $this->read((int) $event,True);	// = no ACL check !!!
+				$event = $this->read($event,null,True,$date_format);	// = no ACL check !!!
 			}
 			if (!is_array($event))
 			{
@@ -608,10 +824,10 @@ class bocal
 			$owner = $event['owner'];
 			$private = !$event['public'];
 		}
-		$user = $GLOBALS['phpgw_info']['user']['account_id'];
+		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$grants = $this->grants[$owner];
-
-		if (is_array($event) && $needed == PHPGW_ACL_READ)
+		
+		if (is_array($event) && $needed == EGW_ACL_READ)
 		{
 			// Check if the $user is one of the participants or has a read-grant from one of them
 			// in that case he has an implicite READ grant for that event
@@ -621,25 +837,31 @@ class bocal
 				if ($uid == $user) 
 				{
 					// if we are a participant, we have an implicite READ and PRIVAT grant
-					$grants |= PHPGW_ACL_READ | PHPGW_ACL_PRIVATE;
+					$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
 					break;
 				}
-				elseif ($this->grants[$uid] & PHPGW_ACL_READ)
+				elseif ($this->grants[$uid] & EGW_ACL_READ)
 				{
 					// if we have a READ grant from a participant, we dont give an implicit privat grant too
-					$grants |= PHPGW_ACL_READ;
+					$grants |= EGW_ACL_READ;
 					// we cant break here, as we might be a participant too, and would miss the privat grant 
+				}
+				elseif (!is_numeric($uid))
+				{
+					// if we have a resource as participant
+					$resource = ExecMethod($this->resources[$uid{0}]['info'],substr($uid,1));
+					$grants = $resource[0]['rights'];
 				}	
 			}
 		}
 
-		if ($GLOBALS['phpgw']->accounts->get_type($owner) == 'g' && $needed == PHPGW_ACL_ADD)
+		if ($GLOBALS['egw']->accounts->get_type($owner) == 'g' && $needed == EGW_ACL_ADD)
 		{
 			$access = False;	// a group can't be the owner of an event
 		}
 		else
 		{
-			$access = $user == $owner || $grants & $needed && (!$private || $grants & PHPGW_ACL_PRIVATE);
+			$access = $user == $owner || $grants & $needed && (!$private || $grants & EGW_ACL_PRIVATE);
 		}
 		if ($this->debug && ($this->debug > 2 || $this->debug == 'check_perms'))
 		{
@@ -652,7 +874,7 @@ class bocal
 	 * Converts several date-types to a timestamp and optionaly converts user- to server-time
 	 *
 	 * @param $date mixed date to convert, should be one of the following types
-	 *	string (!) in form YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss
+	 *	string (!) in form YYYYMMDD or iso8601 YYYY-MM-DDThh:mm:ss or YYYYMMDDThhmmss
 	 *	int already a timestamp
 	 *	array with keys 'second', 'minute', 'hour', 'day' or 'mday' (depricated !), 'month' and 'year'
 	 * @param $user2server_time boolean conversation between user- and server-time default False == Off
@@ -670,41 +892,32 @@ class bocal
 					$date = (int) $date;	// this is already as timestamp
 					break;
 				}
-				if ($date[10] == 'T')
-				{
-					$date = array(
-						'year'   => (int) substr($date,0,4),
-						'month'  => (int) substr($date,5,2),
-						'day'    => (int) substr($date,8,2),
-						'hour'   => (int) substr($date,11,2),
-						'minute' => (int) substr($date,14,2),
-						'second' => (int) substr($date,17,2),
-					);
-				}
-				else
-				{
-					$date = array(
-						'year'  => (int) substr($date,0,4),
-						'month' => (int) substr($date,4,2),
-						'day'   => (int) substr($date,6,2),
-					);
-				}
+				// ToDo: evaluate evtl. added timezone
+
+				// removing all non-nummerical chars, gives YYYYMMDDhhmmss, independent of the iso8601 format
+				$date = str_replace(array('-',':','T','Z',' '),'',$date);
+				$date = array(
+					'year'   => (int) substr($date,0,4),
+					'month'  => (int) substr($date,4,2),
+					'day'    => (int) substr($date,6,2),
+					'hour'   => (int) substr($date,8,2),
+					'minute' => (int) substr($date,10,2),
+					'second' => (int) substr($date,12,2),
+				);
 				// fall-through
-			case 'array':	// day or mday, month and year keys
+			case 'array':	// day, month and year keys
 				if (isset($date['raw']) && $date['raw'])	// we already have a timestamp
 				{
 					$date = $date['raw'];
 					break;
 				}
-				foreach(array('mday'=>'day','min'=>'minute','sec'=>'second') as $old => $new)
+				if (!isset($date['year']) && isset($date['full']))
 				{
-					if (!isset($date[$new]) && isset($date[$old]))	// support the old format too
-					{
-						$date[$new] = $date[$old];
-						unset($date[$old]);
-					}
+					$date['year']  = (int) substr($date['full'],0,4);
+					$date['month'] = (int) substr($date['full'],4,2);
+					$date['day']   = (int) substr($date['full'],6,2);
 				}
-				$date = mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],(int)$date['day'],(int)$date['year']);
+				$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],(int)$date['day'],(int)$date['year']);
 				break;
 			case 'integer':		// already a timestamp
 				break;
@@ -747,7 +960,7 @@ class bocal
 			$arr = array();
 			foreach(array('second'=>'s','minute'=>'i','hour'=>'H','day'=>'d','month'=>'m','year'=>'Y','full'=>'Ymd') as $key => $frmt)
 			{
-				$arr[$key] = (int) date($frmt,$date);
+				$arr[$key] = (int) adodb_date($frmt,$date);
 			}
 			$arr['raw'] = $date;
 		}
@@ -761,34 +974,62 @@ class bocal
 	/**
 	 * Converts a date as timestamp or array to a date-string and optionaly converts server- to user-time
 	 *
-	 * @param $date mixed integer timestamp or array with ('year','month',..,'second') to convert
-	 * @param $server2user_time boolean conversation between user- and server-time default False == Off
-	 * @param $iso8601 boolean return a iso8601 date (YYYY-MM-DDThh:ii:ss), default False == Off
-	 * @return YYYYMMDD or iso8601 date as string
+	 * @param mixed $date integer timestamp or array with ('year','month',..,'second') to convert
+	 * @param boolean $server2user_time conversation between user- and server-time default False == Off, not used if $format ends with \Z
+	 * @param string $format='Ymd' format of the date to return, eg. 'Y-m-d\TH:i:sO' (2005-11-01T15:30:00+0100)
+	 * @return string date formatted according to $format
 	 */
-	function date2string($date,$server2user=False,$iso8601=False)
+	function date2string($date,$server2user=False,$format='Ymd')
 	{
 		$date_in = $date;
 
-		if (is_array($date) && isset($date['full']) && !$server2user && !$iso8601)
+		if (!$format) $format = 'Ymd';
+
+		if (is_array($date) && isset($date['full']) && !$server2user && $format == 'Ymd')
 		{
 			$date = $date['full'];
 		}
 		else
 		{
 			$date = $this->date2ts($date,False);
-
-			if ($server2user)
+			
+			// if timezone is requested, we dont need to convert to user-time
+			if (($tz_used = substr($format,-1)) == 'O' || $tz_used == 'Z') $server2user = false;
+			
+			if ($server2user && substr($format,-1) )
 			{
 				$date += $this->tz_offset_s;
 			}
-			$date = date(($iso8601 ? 'Y-m-d\TH:i:s' : 'Ymd'),$date);
+			if (substr($format,-2) == '\\Z')	// GMT aka. Zulu time
+			{
+				$date = adodb_gmdate($format,$date);
+			}
+			else
+			{
+				$date = adodb_date($format,$date);
+			}
 		}
 		if ($this->debug && ($this->debug > 3 || $this->debug == 'date2string'))
 		{
-			$this->debug_message('bocal::date2string(%1,server2user=%2,iso8601=%3)=%4)',False,$date_in,$server2user,$iso8601,$date);
+			$this->debug_message('bocal::date2string(%1,server2user=%2,format=%3)=%4)',False,$date_in,$server2user,$format,$date);
 		}
 		return $date;
+	}
+
+	/**
+	 * Formats a date given as timestamp or array
+	 *
+	 * @param mixed $date integer timestamp or array with ('year','month',..,'second') to convert
+	 * @param string $format='' default common_prefs[dateformat], common_prefs[timeformat]
+	 * @return string the formated date (incl. time)
+	 */
+	function format_date($date,$format='')
+	{
+		if (!$format)
+		{
+			$format = $this->common_prefs['dateformat'].', '.($this->common_prefs['timeformat'] != '12' ? 'H:i' : 'h:i a');
+		}
+		return adodb_date($format,$this->date2ts($date,False));
 	}
 
 	/**
@@ -813,12 +1054,12 @@ class bocal
 	function debug_message($msg,$backtrace=True)
 	{
 		static $acl2string = array(
-			0                 => 'ACL-UNKNOWN',
-			PHPGW_ACL_READ    => 'ACL_READ',
-			PHPGW_ACL_WRITE   => 'ACL_WRITE',
-			PHPGW_ACL_ADD     => 'ACL_ADD',
-			PHPGW_ACL_DELETE  => 'ACL_DELETE',
-			PHPGW_ACL_PRIVATE => 'ACL_PRIVATE',
+			0               => 'ACL-UNKNOWN',
+			EGW_ACL_READ    => 'ACL_READ',
+			EGW_ACL_WRITE   => 'ACL_WRITE',
+			EGW_ACL_ADD     => 'ACL_ADD',
+			EGW_ACL_DELETE  => 'ACL_DELETE',
+			EGW_ACL_PRIVATE => 'ACL_PRIVATE',
 		);
 		for($i = 2; $i < func_num_args(); ++$i)
 		{
@@ -853,7 +1094,7 @@ class bocal
 						$param = $param ? 'True' : 'False';
 						break;
 					case 'integer':
-						if ($param >= mktime(0,0,0,1,1,2000)) $param = date('Y-m-d H:i:s',$param)." ($param)";
+						if ($param >= mktime(0,0,0,1,1,2000)) $param = adodb_date('Y-m-d H:i:s',$param)." ($param)";
 						break;
 				}
 			}
@@ -863,13 +1104,14 @@ class bocal
 	}
 
 	/**
-	 * Formats one or two dates (range) as long date (full monthname)
+	 * Formats one or two dates (range) as long date (full monthname), optionaly with a time
 	 *
-	 * @param $first mixed first date
-	 * @param $last mixed last date if != 0 (default)
+	 * @param mixed $first first date
+	 * @param mixed $last last date if != 0 (default)
+	 * @param boolean $display_time should a time be displayed too
 	 * @return string with formated date
 	 */
-	function long_date($first,$last=0)
+	function long_date($first,$last=0,$display_time=false)
 	{
 		$first = $this->date2array($first);
 		if ($last)
@@ -877,6 +1119,7 @@ class bocal
 			$last = $this->date2array($last);
 		}
 		$datefmt = $this->common_prefs['dateformat'];
+		$timefmt = $this->common_prefs['timeformat'] == 12 ? 'h:i a' : 'H:i';
 
 		$month_before_day = strtolower($datefmt[0]) == 'm' ||
 			strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
@@ -897,6 +1140,10 @@ class bocal
 						{
 							$range .= ($datefmt[0] != 'd' ? ', ' : ' ') . $first['year'];
 						}
+						if ($display_time)
+						{
+							$range .= ' '.adodb_date($timefmt,$first['raw']);
+						}
 						if (!$last)
 						{
 							return $range;
@@ -915,6 +1162,10 @@ class bocal
 					}
 					else
 					{
+						if ($display_time)
+						{
+							$range .= ' '.adodb_date($timefmt,$first['raw']);
+						}
 						$range .= ' - ';
 					}
 					$range .= ' ' . $last['day'] . ($datefmt[1] == '.' ? '.' : '');
@@ -928,21 +1179,61 @@ class bocal
 					break;
 			}
 		}
+		if ($display_time && $last)
+		{
+			$range .= ' '.adodb_date($timefmt,$last['raw']);
+		}
 		return $range;
+	}
+
+	/**
+	* Converts a participant into a (readable) user- or resource-name
+	*
+	* @param $id string/int id of user or resource
+	* @return string with name
+	*/
+	function participant_name($id,$use_type=false)
+	{
+		static $id2lid = array();
+		
+		if (!isset($id2lid[$id]))
+		{
+			if (!is_numeric($id) || $use_type && $use_type != 'u')
+			{
+				$type = $use_type ? $use_type : $id[0];
+				$res_id = $use_type ? $id : (int) substr($id,1);
+
+				if (isset($this->resources[$type]) && isset($this->resources[$type]['info']))
+				{
+					list($data) = ExecMethod($this->resources[$type]['info'],$res_id);
+					//echo "$type$res_id: "; _debug_array($data);
+					$id2lid[$id] = $data['name'];
+				}
+				else
+				{
+					$id2lid[$id] = "resource($id)";
+				}
+			}
+			else
+			{
+				$id2lid[$id] = $GLOBALS['egw']->common->grab_owner_name($id);
+			}
+		}
+		return $id2lid[$id];
 	}
 
 	/**
 	* Converts participants array of an event into array of (readable) participant-names with status
 	*
-	* @param $parts array participants array of an event
+	* @param $event array of an event
 	* @param $long_status boolean should the long/verbose status or only the one letter shortcut be used
 	* @return array with id / names with status pairs
 	*/
-	function participants($parts,$long_status=False)
+	function participants($event,$long_status=False,$use_type=false)
 	{
-		static $id2lid = array();
-
-		foreach($parts as $id => $status)
+ 		//_debug_array($event);
+ 		$names = array();
+		foreach($event['participants'] as $id => $status)
 		{
 			$status = $this->verbose_status[$status];
 
@@ -950,11 +1241,7 @@ class bocal
 			{
 				$status = $status[0];
 			}
-			if (!isset($id2lid[$id]))
-			{
-				$id2lid[$id] = $GLOBALS['phpgw']->common->grab_owner_name($id);
-			}
-			$names[$id] = $id2lid[$id]." ($status)";
+			$names[$id] = $this->participant_name($id).' ('.$status.')';
 		}
 		return $names;
 	}
@@ -971,10 +1258,9 @@ class bocal
 		static $id2cat = array();
 		$cats = array();
 		$color = 0;
-		if (!isset($this->cat))
+		if (!is_object($this->cats))
 		{
-			$this->cat = $GLOBALS['phpgw']->categories;
-			$this->cat->categories($this->owner,'calendar');
+			$this->cats =& CreateObject('phpgwapi.categories','','calendar');
 		}
 		foreach(explode(',',$category) as $cat_id)
 		{
@@ -982,7 +1268,7 @@ class bocal
 
 			if (!isset($id2cat[$cat_id]))
 			{
-				list($id2cat[$cat_id]) = $this->cat->return_single($cat_id);
+				list($id2cat[$cat_id]) = $this->cats->return_single($cat_id);
 				$id2cat[$cat_id]['data'] = unserialize($id2cat[$cat_id]['data']);
 			}
 			$cat = $id2cat[$cat_id];
@@ -999,8 +1285,8 @@ class bocal
 	/* This is called only by list_cals().  It was moved here to remove fatal error in php5 beta4 */
 	function _list_cals_add($id,&$users,&$groups)
 	{
-		$name = $GLOBALS['phpgw']->common->grab_owner_name($id);
-		if (($type = $GLOBALS['phpgw']->accounts->get_type($id)) == 'g')
+		$name = $GLOBALS['egw']->common->grab_owner_name($id);
+		if (($type = $GLOBALS['egw']->accounts->get_type($id)) == 'g')
 		{
 			$arr = &$groups;
 		}
@@ -1026,13 +1312,13 @@ class bocal
 		{
 			$this->_list_cals_add($id,$users,$groups);
 		}
-		if ($memberships = $GLOBALS['phpgw']->accounts->membership($GLOBALS['phpgw_info']['user']['account_id']))
+		if ($memberships = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']))
 		{
 			foreach($memberships as $group_info)
 			{
 				$this->_list_cals_add($group_info['account_id'],$users,$groups);
 
-				if ($account_perms = $GLOBALS['phpgw']->acl->get_ids_for_location($group_info['account_id'],PHPGW_ACL_READ,'calendar'))
+				if ($account_perms = $GLOBALS['egw']->acl->get_ids_for_location($group_info['account_id'],EGW_ACL_READ,'calendar'))
 				{
 					foreach($account_perms as $id)
 					{
@@ -1050,28 +1336,201 @@ class bocal
 	/**
 	 * Read the holidays for a given $year
 	 *
-	 * @param $year integer defaults to 0
+	 * The holidays get cached in the session (performance), so changes in holidays or birthdays do NOT affect a current session!!!
+	 *
+	 * @param integer $year=0 year, defaults to 0 = current year
 	 * @return array indexed with Ymd of array of holidays. A holiday is an array with the following fields:
-	 *	index: numerica unique id
+	 *	index: numerical unique id
 	 *	locale: string, 2-char short for the nation
 	 *	name: string
 	 *	day: numerical day in month
 	 *	month: numerical month
-	 *	occurence:
+	 *	occurence: numerical year or 0 for every year
 	 *	dow: day of week, 0=sunday, .., 6= saturday
 	 *	observande_rule: boolean
 	 */
 	function read_holidays($year=0)
 	{
+		if (!$year) $year = (int) date('Y',$this->now_su);
+
+		if (!$this->cached_holidays)	// try reading the holidays from the session
+		{
+			$this->cached_holidays = $GLOBALS['egw']->session->appsession('holidays','calendar');
+		}
 		if (!isset($this->cached_holidays[$year]))
 		{
 			if (!is_object($this->holidays))
 			{
-				$this->holidays = CreateObject('calendar.boholiday');
+				$this->holidays =& CreateObject('calendar.boholiday');
 			}
 			$this->holidays->prepare_read_holidays($year);
 			$this->cached_holidays[$year] = $this->holidays->read_holiday();
+			
+			// search for birthdays
+			$contacts =& CreateObject('phpgwapi.contacts');
+			$bdays =& $contacts->read(0,0,array('id','n_family','n_given','n_prefix','n_middle','bday'),'',"bday=!'',n_family=!''",'ASC','bday');
+			if ($bdays)
+			{
+				// sort by month and day only
+				usort($bdays,create_function('$a,$b','return (int) $a[\'bday\'] == (int) $b[\'bday\'] ? strcmp($a[\'bday\'],$b[\'bday\']) : (int) $a[\'bday\'] - (int) $b[\'bday\'];'));
+				foreach($bdays as $pers)
+				{
+					list($m,$d,$y) = explode('/',$pers['bday']);
+					if ($y > $year) continue; 	// not yet born
+					$this->cached_holidays[$year][sprintf('%04d%02d%02d',$year,$m,$d)][] = array(
+						'day'       => $d,
+						'month'     => $m,
+						'occurence' => 0,
+						'name'      => lang('Birthday').' '.($pers['n_given'] ? $pers['n_given'] : $pers['n_prefix']).' '.$pers['n_middle'].' '.
+							$pers['n_family'].($y ? ' ('.$y.')' : ''),
+						'birthyear' => $y,	// this can be used to identify birthdays from holidays
+					);
+				}
+			}
+			// store holidays and birthdays in the session		
+			$this->cached_holidays = $GLOBALS['egw']->session->appsession('holidays','calendar',$this->cached_holidays);
+		}
+		if ((int) $this->debug >= 2 || $this->debug == 'read_holidays')
+		{
+			$this->debug_message('bocal::read_holidays(%1)=%2',true,$year,$this->cached_holidays[$year]);
 		}
 		return $this->cached_holidays[$year];
+	}
+	
+	/**
+	 * get title for an event identified by $event
+	 * 
+	 * Is called as hook to participate in the linking
+	 *
+	 * @param int/array $entry int cal_id or array with event
+	 * @param string the title
+	 */
+	function link_title($event)
+	{
+		if (!is_array($event) && (int) $event > 0)
+		{
+			$event = $this->read($event);
+		}
+		if (!is_array($event))
+		{
+			return False;
+		}
+		return $this->format_date($event['start']) . ': ' . $event['title'];
+	}
+
+	/**
+	 * query calendar for events matching $pattern
+	 *
+	 * Is called as hook to participate in the linking
+	 *
+	 * @param string $pattern pattern to search
+	 * @return array with pm_id - title pairs of the matching entries
+	 */
+	function link_query($pattern)
+	{
+		$result = array();
+		foreach((array) $this->search(array('query' => $pattern)) as $event)
+		{
+			$result[$event['id']] = $this->link_title($event);
+		}
+		return $result;
+	}
+	
+	/**
+	 * Hook called by link-class to include projectmanager in the appregistry of the linkage
+	 *
+	 * @param array/string $location location and other parameters (not used)
+	 * @return array with method-names
+	 */
+	function search_link($location)
+	{
+		return array(
+			'query' => 'calendar.bocal.link_query',
+			'title' => 'calendar.bocal.link_title',
+			'view'  => array(
+				'menuaction' => 'calendar.uiforms.view',
+				'no_popup'   => 1,
+			),
+			'view_id' => 'cal_id',
+//			'view_popup' => '750x400',
+			'add' => array(
+				'menuaction' => 'calendar.uiforms.edit',
+				'no_popup'   => 1,
+			),
+			'add_app'    => 'link_app',
+			'add_id'     => 'link_id',	
+//			'add_popup' => '750x400',
+		);
+	}
+
+	/**
+	 * sets the default prefs, if they are not already set (on a per pref. basis)
+	 *
+	 * It sets a flag in the app-session-data to be called only once per session
+	 */
+	function check_set_default_prefs()
+	{
+		if (($set = $GLOBALS['egw']->session->appsession('default_prefs_set','calendar')))
+		{
+			return;
+		}
+		$GLOBALS['egw']->session->appsession('default_prefs_set','calendar','set');
+
+		$default_prefs =& $GLOBALS['egw']->preferences->default['calendar'];
+
+		$subject = lang('Calendar Event') . ' - $$action$$: $$startdate$$ $$title$$'."\n";
+		$defaults = array(
+			'defaultcalendar' => 'week',
+			'mainscreen_showevents' => '0',
+			'summary'         => 'no',
+			'receive_updates' => 'no',
+			'update_format'   => 'extended',
+			'notifyAdded'     => $subject . lang ('You have a meeting scheduled for %1','$$startdate$$'),
+			'notifyCanceled'  => $subject . lang ('Your meeting scheduled for %1 has been canceled','$$startdate$$'),
+			'notifyModified'  => $subject . lang ('Your meeting that had been scheduled for %1 has been rescheduled to %2','$$olddate$$','$$startdate$$'),
+			'notifyDisinvited'=> $subject . lang ('You have been disinvited from the meeting at %1','$$startdate$$'),
+			'notifyResponse'  => $subject . lang ('On %1 %2 %3 your meeting request for %4','$$date$$','$$fullname$$','$$action$$','$$startdate$$'),
+			'notifyAlarm'     => lang('Alarm for %1 at %2 in %3','$$title$$','$$startdate$$','$$location$$')."\n".lang ('Here is your requested alarm.'),
+			'show_rejected'   => '0',
+			'display_status'  => '1',
+			'weekdaystarts'   => 'Monday',
+			'workdaystarts'   => '9',
+			'workdayends'     => '17',
+			'interval'        => '30',
+			'defaultlength'   => '60',
+			'planner_start_with_group' => $GLOBALS['egw']->accounts->name2id('Default'),
+			'defaultfilter'   => 'all',
+			'default_private' => '0',
+		);
+		foreach($defaults as $var => $default)
+		{
+			if (!isset($default_prefs[$var]) || $default_prefs[$var] == '')
+			{
+				$GLOBALS['egw']->preferences->add('calendar',$var,$default,'default');
+				$this->cal_prefs[$var] = $default;
+				$need_save = True;
+			}
+		}
+		if ($need_save)
+		{
+			$GLOBALS['egw']->preferences->save_repository(False,'default');
+		}
+	}
+}
+
+if (!function_exists('array_intersect_key'))	// php5.1 function
+{
+	function array_intersect_key($array1,$array2)
+	{
+		$intersection = $keys = array();
+		foreach(func_get_args() as $arr)
+		{
+			$keys[] = array_keys($arr);
+		}
+		foreach(call_user_func_array('array_intersect',$keys) as $key)
+		{
+			$intersection[$key] = $array1[$key];
+		}
+		return $intersection;
 	}
 }

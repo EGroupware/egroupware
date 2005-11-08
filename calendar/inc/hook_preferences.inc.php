@@ -1,8 +1,7 @@
 <?php
   /**************************************************************************\
-  * eGroupWare                                                               *
+  * eGroupWare - Calendar                                                              *
   * http://www.egroupware.org                                                *
-  * Written by Joseph Engo <jengo@phpgroupware.org>                          *
   * --------------------------------------------                             *
   *  This program is free software; you can redistribute it and/or modify it *
   *  under the terms of the GNU General Public License as published by the   *
@@ -16,9 +15,9 @@
 	$file = array(
 		'Preferences'     => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=' . $appname),
 		'Grant Access'    => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
-		'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app='.$appname.'&cats_level=True&global_cats=True')
+		'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app='.$appname.'&cats_level=True&global_cats=True'),
+		'Import CSV-File' => $GLOBALS['egw']->link('/calendar/csv_import.php'),
 	);
 //Do not modify below this line
 	display_section($appname,$title,$file);
 }
-?>

@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.list.rows" template="" lang="" group="0" version="1.0.1.002">
+		<grid width="100%">
+			<columns>
+				<column/>
+				<column width="40%"/>
+				<column/>
+				<column/>
+				<column width="10%"/>
+			</columns>
+			<rows>
+				<row class="th">
+					<vbox>
+						<nextmatch-sortheader label="Start" id="cal_start"/>
+						<nextmatch-sortheader id="cal_end" label="End"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Title" id="cal_title"/>
+						<nextmatch-sortheader label="Description" id="cal_description"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader id="cal_owner" label="Owner" readonly="true"/>
+						<nextmatch-sortheader id="cal_location" label="Location"/>
+					</vbox>
+					<nextmatch-accountfilter options="All participants" id="participant"/>
+					<description value="Actions"/>
+				</row>
+				<row class="row" valign="top">
+					<vbox id="start">
+						<date-time id="${row}[start]" readonly="true"/>
+						<date-time id="${row}[end]" readonly="true"/>
+					</vbox>
+					<vbox>
+						<description id="${row}[title]" readonly="true" no_lang="1" options="b"/>
+						<description id="${row}[description]" no_lang="1"/>
+					</vbox>
+					<vbox>
+						<menulist>
+							<menupopup type="select-account" id="${row}[owner]" readonly="true"/>
+						</menulist>
+						<description id="${row}[location]" no_lang="1"/>
+					</vbox>
+					<description id="${row}[parts]" readonly="true" no_lang="1"/>
+					<hbox>
+						<button image="view" label="view" id="view[$row_cont[id]]" statustext="View this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.view&amp;cal_id=$row_cont[id]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
+						<button image="edit" label="Edit" id="edit[$row_cont[id]]" statustext="Edit this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;cal_id=$row_cont[id]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
+						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this event" onclick="return confirm('Delete this event');"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="calendar.list" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description class="redItalic" align="center" id="msg" no_lang="1"/>
+				</row>
+				<row>
+					<nextmatch options="calendar.list.rows" id="nm"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

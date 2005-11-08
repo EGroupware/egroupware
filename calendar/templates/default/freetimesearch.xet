@@ -36,7 +36,7 @@
 			<rows>
 				<row>
 					<description class="size120b" value="Freetime Search"/>
-					<description class="ired" no_lang="1" id="msg"/>
+					<description class="redItalic" no_lang="1" id="msg"/>
 				</row>
 				<row>
 					<description value="Startdate / -time"/>
@@ -48,8 +48,7 @@
 						<menulist>
 							<menupopup no_lang="1" id="duration" statustext="Duration of the meeting"/>
 						</menulist>
-						<description value="or Enddate / -time"/>
-						<date-time id="end" statustext="Enddate / -time of the meeting, eg. for more then one day"/>
+						<date-time id="end" statustext="Enddate / -time of the meeting, eg. for more then one day" class="end_hide"/>
 					</hbox>
 				</row>
 				<row>
@@ -78,7 +77,8 @@
 		</grid>
 		<styles>
 			.size120b { text-size: 120%; font-weight: bold; }
-.ired { color: red; font-style: italic; }
+.redItalic { color: red; font-style: italic; }
+.end_hide { visibility: hidden; }
 		</styles>
 	</template>
 </overlay>

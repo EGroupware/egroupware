@@ -15,25 +15,20 @@
 
 	/* $Id$ */
 
-	// jscalendar is needed by the new navigation-menu AND it need to be loaded befor the header !!!
-	if (!is_object($GLOBALS['egw']->jscalendar))
-	{
-		$GLOBALS['egw']->jscalendar = CreateObject('phpgwapi.jscalendar');
-	}
-	ExecMethod('calendar.bocalendar.check_set_default_prefs');
+	ExecMethod('calendar.bocal.check_set_default_prefs');
 
 	$default = array(
-		'day'          => lang('Daily'),
-		'week'         => lang('Weekly'),
-		'month'        => lang('Monthly'),
-		'year'         => lang('Yearly'),
+		'day'          => lang('Dayview'),
+		'week'         => lang('Weekview'),
+		'month'        => lang('Monthview'),
 		'planner_cat'  => lang('Planner by category'),
 		'planner_user' => lang('Planner by user'),
+		'listview'     => lang('Listview'),
 	);
 	/* Select list with number of day by week */
 	$week_view = array(
-		'5'	=> lang('Weekview without weekend'),
-		'7' => lang('Weekview including weekend'),
+		'5' => lang('Weekview without weekend'),
+		'7' => lang('Weekview with weekend'),
 	);
 	/* Selection of list for home page is different from default calendar,
 	   since the decision for the front page is different for the decision
@@ -83,6 +78,7 @@
 		'repetition'  => lang('Repetitiondetails (or empty)'),
 		'action'      => lang('Action that caused the notify: Added, Canceled, Accepted, Rejected, ...'),
 		'link'        => lang('Link to view the event'),
+		'disinvited'  => lang('Participants disinvited from an event'),
 	);
 	$weekdaystarts = array(
 		'Monday'   => lang('Monday'),
@@ -113,12 +109,6 @@
 			$options[$group['account_id']] = $GLOBALS['egw']->common->grab_owner_name($group['account_id']);
 		}
 	}
-	$planner_intervals = array(
-		1	=> '1',
-		2	=> '2',
-		3	=> '3',
-		4	=> '4',
-	);
 	$defaultfilter = array(
 		'all'     => lang('all'),
 		'private' => lang('private only'),
@@ -213,6 +203,19 @@
 			'rows'   => 5,
 			'cols'   => 50,
 			'help'   => 'This message is sent for modified or moved events.',
+			'default' => '',
+			'values' => $event_details,
+			'subst_help' => False,
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'notifyDisinvited' => array(
+			'type'   => 'notify',
+			'label'  => 'Notification messages for disinvited participants ',
+			'name'   => 'notifyDisinvited',
+			'rows'   => 5,
+			'cols'   => 50,
+			'help'   => 'This message is sent to disinvited participants.',
 			'default' => '',
 			'values' => $event_details,
 			'subst_help' => False,
@@ -314,15 +317,6 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
-		'planner_intervals_per_day' => array(
-			'type'   => 'select',
-			'label'  => 'Intervals per day in planner view',
-			'name'   => 'planner_intervals_per_day',
-			'values' => $planner_intervals,
-			'help'   => 'Specifies the the number of intervals shown in the planner view.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
 		'defaultfilter' => array(
 			'type'   => 'select',
 			'label'  => 'Default calendar filter',
@@ -340,24 +334,6 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
-/* not used at the moment
-		'display_minicals' => array(
-			'type'  => 'check',
-			'label' => 'Print the mini calendars',
-			'name'  => 'display_minicals',
-			'help'  => 'Should the mini calendars by printed / displayed in the printer friendly views ?',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'print_black_white' => array(
-			'type'  => 'check',
-			'label' => 'Print calendars in black & white',
-			'name'  => 'print_black_white',
-			'help'  => 'Should the printer friendly view be in black & white or in color (as in normal view)?',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-*/
 		'freebusy' => array(
 			'type'  => 'check',
 			'label' => 'Make freebusy information available to not loged in persons?',

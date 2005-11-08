@@ -12,5 +12,15 @@
 	/* $Id$ */
 
 	// enable auto-loading of holidays from localhost by default
-	$oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','auto_load_holidays','True')");
-	$oProc->query("INSERT INTO phpgw_config (config_app, config_name, config_value) VALUES ('phpgwapi','holidays_url_path','localhost')");
+	foreach(array(
+		'auto_load_holidays' => 'True',
+		'holidays_url_path'  => 'localhost',
+	) as $name => $value)
+	{
+		$oProc->insert($GLOBALS['egw_setup']->config_table,array(
+			'config_value' => $value,
+		),array(
+			'config_app' => 'phpgwapi',
+			'config_name' => $name,
+		),__FILE__,__LINE__);
+	}

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="calendar.export" template="" lang="" group="0" version="1.0.1.001">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description span="all"/>
+				</row>
+				<row>
+					<description options=",,,start" value="Start"/>
+					<date id="start" statustext="Startdate of the export"/>
+				</row>
+				<row>
+					<description options=",,,end" value="End"/>
+					<date id="end" statustext="Enddate of the export"/>
+				</row>
+				<row>
+					<description options=",,,file" value="Filename"/>
+					<textbox id="file" statustext="Filename of the download"/>
+				</row>
+				<row disabled="1">
+					<description options=",,,version" value="Version"/>
+					<menulist>
+						<menupopup id="version"/>
+					</menulist>
+				</row>
+				<row>
+					<description/>
+					<button label="Download" id="download"/>
+				</row>
+				<row>
+					<description span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

@@ -5,32 +5,49 @@
 (for weekly)	calendar	it	(per settimana)
 (i/v)cal	calendar	it	(i/v)Cal
 1 match found	calendar	it	Trovata 1 occorrenza
-a	calendar	it	A
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	it	<b>Attenzione</b>: l'agenda usa le festività della tua nazione, che è impostata a %1. Puoi cambiarla in %2.<br />Le festività sono %3 automaticamente installate da %4. Puoi cambiarle  in %5.
+a	calendar	it	a
+a non blocking event will not conflict with other events	calendar	it	Un evento non bloccante non sarà in conflitto con altri eventi
 accept	calendar	it	Accetta
+accept or reject an invitation	calendar	it	Accetta o o rifiuta un invito
 accepted	calendar	it	Accettato
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	it	Azione che ha causato la notifica: Aggiunto, Cancellato, Accettato, Rifiutato, ...
+actions	calendar	it	Azioni
 add a single entry by passing the fields.	calendar	it	Aggiungi una singola voce compilando i campi
 add alarm	calendar	it	Aggiungi Allarme
 add contact	calendar	it	Aggiungi un Contatto
 add or update a single entry by passing the fields.	calendar	it	Aggiungi o aggiorna una singola voce compilando i campi.
 added	calendar	it	Aggiunto
 address book	calendar	it	Rubrica
-alarm	calendar	it	allarme
+after current date	calendar	it	Dopo la data attuale
+alarm	calendar	it	Sveglia
+alarm added	calendar	it	Sveglia aggiunta
+alarm deleted	calendar	it	Sveglia cancellata
 alarm for %1 at %2 in %3	calendar	it	Allarme per %1 a %2 in %3
 alarm management	calendar	it	Gestione Allarmi
 alarm-management	calendar	it	Gestione-Allarmi
 alarms	calendar	it	Allarmi
 all categories	calendar	it	Tutte le categorie
 all day	calendar	it	Tutto il giorno
+all events	calendar	it	Tutti gli eventi
+all participants	calendar	it	Tutti i partecipanti
+allows to edit the event again	calendar	it	Permette di modificare ancora l'evento
+apply the changes	calendar	it	apllica le modifiche
 are you sure you want to delete this country ?	calendar	it	Confermi la cancellazione di questa Nazione ?
 are you sure you want to delete this holiday ?	calendar	it	Sei sicuro di voler cancellare questa festività ?
 are you sure\nyou want to\ndelete these alarms?	calendar	it	Sei sicuro\ndi voler\ncancellare questo allarme ?
 are you sure\nyou want to\ndelete this entry ?	calendar	it	Sei sicuro\ndi voler\ncancellare questa voce ?
 are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	it	Sei sicuro di\nvoler cancellare\nquesta voce?\n\nQuesto comporterà la cancellazione\nper tutti gli utenti.
 are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	it	Confermi la cancellazione di questa singola voce?\n\nQuesto comporterà la cancellazione\nper tutti gli utenti
+back half a month	calendar	it	indietro metà mese
+back one month	calendar	it	indietro un mese
+before current date	calendar	it	Prima della data attuale
 before the event	calendar	it	prima dell'evento
+birthday	calendar	it	Compleanno
 brief description	calendar	it	Descrizione breve
 business	calendar	it	Business
+busy	calendar	it	occupato
+by	calendar	it	da
 calendar	common	it	Agenda
 calendar - [iv]cal importer	calendar	it	Agenda - Importazione [iv]Cal
 calendar - add	calendar	it	Agenda - Aggiungi
@@ -40,15 +57,22 @@ calendar holiday management	admin	it	Gestione Festività Agenda
 calendar preferences	calendar	it	Preferenze Agenda
 calendar settings	admin	it	Impostazioni Agenda
 calendar-fieldname	calendar	it	Campi-Agenda
+can't add alarms in the past !!!	calendar	it	Non si può aggiungere sveglie nel passato !!!
 canceled	calendar	it	Cancellato
 change all events for $params['old_owner'] to $params['new_owner'].	calendar	it	Modifica tutti gli eventi per $params['old_owner'] a $params['new_owner'].
 change status	calendar	it	Cambia Stato
 charset of file	calendar	it	Charset del file
 click %1here%2 to return to the calendar.	calendar	it	Per ritornare all'agenda premi %1qui%2.
+close the window	calendar	it	Chiudi la finestra
+compose a mail to all participants after the event is saved	calendar	it	componi una email per tutti i partecipanti dopo che l'evento è stato salvato
 configuration	calendar	it	Configurazione
+copy of:	calendar	it	Copia di:
+copy this event	calendar	it	Copia questo evento
 countries	calendar	it	Nazioni
 country	calendar	it	Nazione
+create new links	calendar	it	Crea nuovi collegamenti
 created by	calendar	it	Creato da
+csv	calendar	it	CSV
 csv-fieldname	calendar	it	Campi-CSV
 csv-filename	calendar	it	Nomefile-CSV
 custom fields	calendar	it	Personalizza i Campi
@@ -56,6 +80,7 @@ custom fields and sorting	common	it	Personalizzazione e Ordinamento dei Campi
 daily	calendar	it	Giornaliero
 daily matrix view	calendar	it	Vista Matrice Giornaliera
 days	calendar	it	giorni
+days of the week for a weekly repeated event	calendar	it	Giorni della settimana per un evento con ricorrenza settimanale
 days repeated	calendar	it	giorni ripetuti
 dayview	calendar	it	Vista Giornaliera
 default appointment length (in minutes)	calendar	it	lunghezza predefinita degli appuntamenti (in minuti)
@@ -70,11 +95,16 @@ delete selected contacts	calendar	it	Cancella il contatto selezionato
 delete selected participants	calendar	it	Cancella i partecipanti selezionati
 delete series	calendar	it	Cancella serie
 delete single	calendar	it	Cancellazione singola
+delete this alarm	calendar	it	Cancella questa sveglia
+delete this event	calendar	it	Cancella questo evento
+delete this exception	calendar	it	Cancella questa eccezione
+delete this series of recuring events	calendar	it	Cancella questa serie di eventi ricorrenti
 deleted	calendar	it	Eliminato
 description	calendar	it	Descrizione
 determining window width ...	calendar	it	Determinazione larghezza finestra ...
 disable	calendar	it	Disabilita
 disabled	calendar	it	disabilitato
+disinvited	calendar	it	Disinvitato
 display interval in day view	calendar	it	Visualizza intervallo nella Vista Giornaliera
 display mini calendars when printing	calendar	it	Visualizza mini calendari quando stampi
 display status of events	calendar	it	Visualizza lo stato per gli Eventi
@@ -85,22 +115,34 @@ do you want to be notified about new or changed appointments? you be notified ab
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	it	Vuoi ricevere regolarmente il resoconto dei tuoi appuntamenti via e-mail?<br>Il resoconto sarà mandato al tuo indirizzo e-mail standard ogni mattina o ogni Lunedì per il resoconto settimanale.<br>Sarà mandato solo se avrai un appuntamento per quel giorno o per quella settimana.
 do you wish to autoload calendar holidays files dynamically?	admin	it	Vuoi caricare automaticamente nell'agenda i file con l'elenco delle festività?
 download	calendar	it	Download
+download this event as ical	calendar	it	Scarica questo evento come iCal
 duration	calendar	it	Durata
 duration of the meeting	calendar	it	Durata della riunione
 edit series	calendar	it	Modifica Serie
 edit single	calendar	it	Modifica Singolo
+edit this event	calendar	it	Modifica questo evento
+edit this series of recuring events	calendar	it	Modifica questa serie di eventi ricorrenti
 email notification	calendar	it	Notifica via e-mail
 email notification for %1	calendar	it	Notifica via e-mail %1
 empty for all	calendar	it	vuoto per tutti
 enable	calendar	it	Abilita
 enabled	calendar	it	abilitato
+end	calendar	it	Fine
 end date/time	calendar	it	Data/Ora finale
 enddate	calendar	it	Data-finale
 enddate / -time of the meeting, eg. for more then one day	calendar	it	Data/ora finale della riunione, es: per più di un giorno
+enddate of the export	calendar	it	Data finale dell'esportazione
 ends	calendar	it	finisce
 enter output filename: ( .vcs appended )	calendar	it	Inserisci il nome del file di destinazione
+error adding the alarm	calendar	it	Errore aggiungendo la sveglia
+error: saving the event !!!	calendar	it	Errore: durante il salvataggio dell'evento !!!
+event copied - the copy can now be edited	calendar	it	Evento copiato - la copia può ora essere modificata
+event deleted	calendar	it	Evento cancellato
 event details follow	calendar	it	Dettagli dell'evento
+event saved	calendar	it	Evento salvato
+event will occupy the whole day	calendar	it	L'evento occuperà l'intera giornata
 exceptions	calendar	it	Eccezioni
+existing links	calendar	it	Collegamenti esistenti
 export	calendar	it	Esporta
 export a list of entries in ical format.	calendar	it	Esporta una lista delle voci in formato iCal
 extended	calendar	it	Esteso
@@ -108,9 +150,15 @@ extended updates always include the complete event-details. ical's can be import
 external participants	calendar	it	Partecipanti Esterni
 failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	it	Invio messaggio a '%1' #%2 soggetto='%3', mittente='%4' fallito!!!
 fieldseparator	calendar	it	Separatore
+filename	calendar	it	Nome file
+filename of the download	calendar	it	Nome file del download
 find free timeslots where the marked participants are availible for the given timespan	calendar	it	Trova spazi liberi in cui i partecipanti selezionati sono disponibili per il periodo stabilito
+find free timeslots where the selected participants are availible for the given timespan	calendar	it	Trova spazi di tempo libero in cui tutti i partecipanti sono disponibili per il periodo stabilito
 firstname of person to notify	calendar	it	Nome della persona da avvisare
+for	calendar	it	per
 format of event updates	calendar	it	Formato degli aggiornamenti degli eventi
+forward half a month	calendar	it	avanti metà mese
+forward one month	calendar	it	avanti un mese
 fr	calendar	it	V
 free/busy	calendar	it	Libero/Occupato
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	it	libero/occupato: Utente '%1' sconosciuto, password errata o non disponibile agli utenti non loggati !!!
@@ -119,6 +167,7 @@ frequency	calendar	it	Frequenza
 fri	calendar	it	Ven
 full description	calendar	it	Descrizione completa
 fullname of person to notify	calendar	it	Nome completo della persona da avvisare
+general	calendar	it	Generale
 generate printer-friendly version	calendar	it	Genera versione stampabile
 global categories	calendar	it	Categorie Globali
 global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
@@ -136,16 +185,18 @@ holidays	calendar	it	Festività
 hours	calendar	it	ore
 how far to search (from startdate)	calendar	it	quanto lontano cercare (dalla data iniziale)
 i participate	calendar	it	Io Partecipo
+ical	calendar	it	iCal
 ical / rfc2445	calendar	it	iCal / rfc2445
+ical export	calendar	it	Esportazione iCal
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	it	Se selezionato la festività che ricorre nel weekend sarà spostata al lunedì successivo.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	it	Se non stabilisci una password qui, l'informazione sarà disponibile a chiunque conosca l'URL!!!
-if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	it	Se non imposti una password, le infomrazioni saranno disponibili a tutti coloro che conoscono l'URL!!!
 ignore conflict	calendar	it	Ignora Conflitto
 import	calendar	it	Importa
 import csv-file	common	it	Importa File-CSV
 interval	calendar	it	Intervallo
 intervals in day view	calendar	it	Intervallo nella Vista giornaliera
 intervals per day in planner view	calendar	it	Intervallo giornaliero nel pianificatore
+invalid email-address "%1" for user %2	calendar	it	Indirizzo email "%1" non valido per utente %2
 invalid entry id.	calendar	it	ID della voce non valido
 last	calendar	it	ultimo
 lastname of person to notify	calendar	it	Cognome della persona da avvisare
@@ -153,12 +204,16 @@ length shown<br>(emtpy for full length)	calendar	it	Lunghezza visiva<br>(vuoto p
 length<br>(<= 255)	calendar	it	Lunghezza<br>(<= 255)
 link	calendar	it	Link
 link to view the event	calendar	it	Link per visualizzare l'evento
+links	calendar	it	Collegamenti
+links, attachments	calendar	it	Collegamenti, Allegati
 list all categories.	calendar	it	Lista tutte le categorie.
+listview	calendar	it	Vista elenco
 load [iv]cal	calendar	it	Carica [iv]Cal
 location	calendar	it	Località
 location to autoload from	admin	it	Indirizzo da cui caricare automaticamente
+location, start- and endtimes, ...	calendar	it	Luogo, Inizio e Fine, ...
+mail all participants	calendar	it	Invia email a tutti i partecipanti
 make freebusy information available to not loged in persons?	calendar	it	Rendere disponibili le informazioni libero/occupato alle persone non loggate?
-make freebusy information availible to not loged in persons?	calendar	it	Rendi le informazioni di disponibilità alle persone non loggate?
 matrixview	calendar	it	Vista a Matrice
 minutes	calendar	it	minutes
 mo	calendar	it	L
@@ -175,11 +230,14 @@ new entry	calendar	it	Nuova Voce
 new name must not exist and not be empty!!!	calendar	it	I nuovi nomi devono esistere e non essere vuoti!!!
 new search with the above parameters	calendar	it	nuova ricerca con i parametri indicati sopra
 next day	calendar	it	giorno seguente
+no events found	calendar	it	Nessun evento trovato
 no filter	calendar	it	Nessun Filtro
 no matches found	calendar	it	Nessuna corrispondenza
 no response	calendar	it	Nessuna Risposta
+non blocking	calendar	it	non bloccante
 notification messages for added events	calendar	it	Messaggi di notifica per gli eventi aggiunti
 notification messages for canceled events	calendar	it	Messaggi di notifica per gli eventi cancellati
+notification messages for disinvited participants	calendar	it	Messaggi di notifica per i partecipanti disinvitati
 notification messages for modified events	calendar	it	Messaggi di notifica per gli eventi modificati
 notification messages for your alarms	calendar	it	Messaggi di notifica per i tuoi allarmi
 notification messages for your responses	calendar	it	Messaggi di notifica per le tue risposte
@@ -200,22 +258,26 @@ on time change of more than 4 hours too	calendar	it	anche sul cambio ora maggior
 one month	calendar	it	un mese
 one week	calendar	it	una settimana
 one year	calendar	it	un anno
+only the initial date of that recuring event is checked!	calendar	it	Solo la data iniziale di quel evento ricorrente è selezionata!
 open todo's:	calendar	it	ToDo Aperti:
-or enddate / -time	calendar	it	o data/ora finale
 order	calendar	it	Ordine
 overlap holiday	calendar	it	sovrapposizione di una festività
 participant	calendar	it	Partecipante
 participants	calendar	it	Partecipanti
-participates	calendar	it	partecipa
+participants disinvited from an event	calendar	it	Partecipanti disinvitati da un evento
+participants, resources, ...	calendar	it	Partecipanti, Risorse, ...
+participates	calendar	it	Partecipa
 password for not loged in users to your freebusy information?	calendar	it	Password per gli utenti non loggati sulle tue informazioni di disponibilità?
-people holiday	calendar	it	festività personale
+people holiday	calendar	it	festività personali
 permission denied	calendar	it	Permesso negato
 planner	calendar	it	Pianificatore
 planner by category	calendar	it	Pianificatore per categorie
 planner by user	calendar	it	Pianificatore per utente
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	it	Per favore conferma, accetta, rifiuta o esamina i cambiamenti della voce corrispondente nel tuo calendario
 please enter a filename !!!	calendar	it	Prego inserire un nome File !!!
+please note: you can configure the field assignments after you uploaded the file.	calendar	it	Attenzione: Puoi configurare il campo assegnazioni DOPO che hai caricato il file.
 preselected group for entering the planner	calendar	it	Gruppo predefinito per aggiunte al pianificatore
+previous	calendar	it	precedente
 previous day	calendar	it	giorno prededente
 print calendars in black & white	calendar	it	Stampa agende in bianco e nero
 print the mini calendars	calendar	it	Stampa la mini agenda
@@ -231,24 +293,33 @@ read this list of methods.	calendar	it	Leggi questa lista di metodi
 receive email updates	calendar	it	Ricevi aggiornamenti via e-mail
 receive extra information in event mails	calendar	it	Ricevi informazioni extra nell'e-mail dell'evento
 receive summary of appointments	calendar	it	Ricevi il resoconto degli appuntamenti
+recurrence	calendar	it	Ricorrenza
 recurring event	calendar	it	evento ricorrente
 refresh	calendar	it	Aggiorna
 reinstate	calendar	it	reinstanziare
 rejected	calendar	it	Rifiutato
 repeat day	calendar	it	Giorno ripetizione
+repeat days	calendar	it	Giorni di ripetizione
 repeat end date	calendar	it	Data ultima ripetizione
+repeat the event until which date (empty means unlimited)	calendar	it	ripeti l'evento fino a che data (vuoto significa illimitato)
 repeat type	calendar	it	Tipo di ripetizione
 repeating event information	calendar	it	Informazioni sugli eventi ricorrenti
+repeating interval, eg. 2 to repeat every second week	calendar	it	intervallo di ripetizione, es. 2 per ripetere ogni seconda settimana
 repetition	calendar	it	Ripetizione
 repetitiondetails (or empty)	calendar	it	Dettagli Ripetizione (o vuoto)
 reset	calendar	it	Reset
+resources	calendar	it	Risorse
 rule	calendar	it	Regola
 sa	calendar	it	Sa
 sat	calendar	it	Sab
+saves the changes made	calendar	it	salva le modifiche fatte
+saves the event ignoring the conflict	calendar	it	Salva l'evento ignorando il conflitto
 scheduling conflict	calendar	it	Conflitto di orario
 search results	calendar	it	Risultati Ricerca
 select a %1	calendar	it	Seleziona %1
 select a time	calendar	it	seleziona un'ora
+select resources	calendar	it	Seleziona risorse
+select who should get the alarm	calendar	it	Seleziona chi dovrà avere la sveglia
 selected contacts (%1)	calendar	it	Contatti selezionati (%1)
 send updates via email	common	it	Invia aggiornamenti via e-mail
 send/receive updates via email	calendar	it	Invia/Ricevi aggiornamenti via e-mail
@@ -276,12 +347,15 @@ sorry, this event does not exist	calendar	it	Spiacente, questo evento non esiste
 sorry, this event does not have exceptions defined	calendar	it	Spiacente, questo evento non ha eccezioni definite
 sort by	calendar	it	Ordina per
 specifies the the number of intervals shown in the planner view.	calendar	it	Specifica il numero di intervalli nel pianificatore
+start	calendar	it	Inizio
 start date/time	calendar	it	Data/Ora Inizio
 start- and enddates	calendar	it	Data Iniziale e Finale
 startdate	calendar	it	Data Inizio
 startdate / -time	calendar	it	Data/ora iniziale
 startdate and -time of the search	calendar	it	Data/ora iniziale della ricerca
+startdate of the export	calendar	it	Data iniziale dell'esportazione
 startrecord	calendar	it	Primo Record
+status changed	calendar	it	Stato modificato
 su	calendar	it	Do
 submit to repository	calendar	it	Invia all'archivio
 sun	calendar	it	Dom
@@ -299,6 +373,7 @@ this group that is preselected when you enter the planner. you can change it in 
 this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	it	Questo è causato da un impostazione sbagliata del server SMTP. Avvisa l'Amministratore.
 this message is sent for canceled or deleted events.	calendar	it	Questo messaggio è inviato per gli eventi annullati o cancellati.
 this message is sent for modified or moved events.	calendar	it	Questo messaggio è inviato. per gli eventi modficiati o spostati.
+this message is sent to disinvited participants.	calendar	it	Questo messaggio viene inviato ai partecipanti disinvitati.
 this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	it	Questo messaggio è inviato ad ogni partecipante, che ha richiesto la notifica, all'evento da te creato.<br>Puoi usare certe variabili che sostituiranno dati dell'evento. La prima linea è l'oggetto dell'e-mail.
 this message is sent when you accept, tentative accept or reject an event.	calendar	it	Questo messaggio è inviato quando accetti, provi ad accettare, o rifiuti un evento.
 this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	it	Questo messaggio è inviato quando imposti un Allarme per certi eventi.  Include tutte le informazioni di cui hai bisogno.
@@ -321,13 +396,11 @@ today	calendar	it	Oggi
 translation	calendar	it	Traduzione
 tu	calendar	it	M
 tue	calendar	it	Mar
-two dayview	calendar	it	vista due giorni
-two weeks	calendar	it	due settimane
 update a single entry by passing the fields.	calendar	it	Aggiornamento di una singola voce compilando i campi
 updated	calendar	it	Modificato
 use end date	calendar	it	Usa data di termine
 use the selected time and close the popup	calendar	it	utilizza l'ora selezionata e chiudi popup
-view this entry	calendar	it	Visualizza questa voce
+view this event	calendar	it	Visualizza questo evento
 we	calendar	it	M
 wed	calendar	it	Mer
 week	calendar	it	Settimana
@@ -336,11 +409,12 @@ weekdays	calendar	it	Giorni settimanali
 weekdays to use in search	calendar	it	Giorni settimanali da usare per la ricerca
 weekly	calendar	it	Settimanale
 weekview	calendar	it	Vista Settimanale
-weekview including weekend	calendar	it	Vista settimanale con weekend
+weekview with weekend	calendar	it	Vista settimanale con weekend
 weekview without weekend	calendar	it	Vista settimanale senza weekend
 when creating new events default set to private	calendar	it	Quando vengono creati nuovi eventi settali automaticamente come privati
 which events do you want to see when you enter the calendar.	calendar	it	Quali eventi vuoi vedere quando entri nell'agenda.
 which of calendar view do you want to see, when you start calendar ?	calendar	it	Quale vista dell'agenda vuoi vedere quanto apri l'agenda?
+whole day	calendar	it	giornata intera
 wk	calendar	it	Sett
 work day ends on	calendar	it	La giornata lavorativa termina alle
 work day starts on	calendar	it	La giornata lavorativa inizia alle
@@ -356,6 +430,7 @@ you do not have permission to read this record!	calendar	it	Non hai l'autorizzaz
 you have %1 high priority events on your calendar today.	common	it	Oggi hai %1 eventi ad alta priorità nella tua agenda.
 you have 1 high priority event on your calendar today.	common	it	Oggi hai 1 evento a priorità alta nella tua agenda.
 you have a meeting scheduled for %1	calendar	it	Hai un meeting fissato alle %1
+you have been disinvited from the meeting at %1	calendar	it	Sei stato disinvitato dal meeting alle
 you have not entered a title	calendar	it	Non hai inserito alcun titolo
 you have not entered a valid date	calendar	it	Non hai inserito una data valida
 you have not entered a valid time of day	calendar	it	Non hai inserito un orario valido
