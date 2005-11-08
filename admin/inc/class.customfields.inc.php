@@ -291,6 +291,6 @@
 			//merge old config_name in phpgw_config table
 			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
 			
-			return $config[$config_name];
+			return is_array($config[$config_name]) ? $config[$config_name] : array();
 		}
 	}
