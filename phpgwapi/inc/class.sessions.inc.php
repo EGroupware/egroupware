@@ -1147,7 +1147,7 @@
 			if (!is_array($extravars) && $extravars != '')
 			{
 				$new_extravars = Array();
-				foreach(explode('&',str_replace('&amp;','&',$extravars)) as $expr)
+				foreach(explode('&',$extravars) as $expr)
 				{
 					list($var,$val) = explode('=', $expr,2);
 					$new_extravars[$var] = $val;
@@ -1172,7 +1172,7 @@
 				{
 					$query[] = $key.'='.urlencode($value);
 				}
-				$url .= '?' . implode('&amp;',$query);
+				$url .= '?' . implode('&',$query);
 			}
 			//echo " = '$url'</p>\n";
 			return $url;
