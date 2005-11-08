@@ -40,7 +40,7 @@
 			{
 				$this->bo->session_data['referer'] = $referer;
 			}
-echo '<p align="right">'."referer='{$this->bo->session_data['referer']}'</p>\n";
+			//echo '<p align="right">'."referer='{$this->bo->session_data['referer']}'</p>\n";
 			if (substr($this->bo->session_data['referer'],0,strlen('/preferences')) != '/preferences')
 			{
 				$GLOBALS['egw_info']['flags']['currentapp'] = $_GET['appname'];
