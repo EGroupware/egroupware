@@ -52,19 +52,18 @@
 
 		function save_sessiondata($data, $cats_app)
 		{
-			$colum = $cats_app . '_cats';
-			$GLOBALS['egw']->session->appsession('session_data',$column,$data);
+			$GLOBALS['egw']->session->appsession($cats_app . '_cats','preferences',$data);
 		}
 
 		function read_sessiondata($cats_app)
 		{
-			$colum = $cats_app . '_cats';
-			$data = $GLOBALS['egw']->session->appsession('session_data',$column);
+			$data = $GLOBALS['egw']->session->appsession($cats_app . '_cats','preferences');
 
 			$this->start  = $data['start'];
 			$this->query  = $data['query'];
 			$this->sort   = $data['sort'];
 			$this->order  = $data['order'];
+			$this->referer = $data['referer'];
 		}
 
 		function get_list($global_cats)

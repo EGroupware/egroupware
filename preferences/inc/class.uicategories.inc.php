@@ -23,6 +23,7 @@
 		var $sort;
 		var $order;
 		var $cat_id;
+		var $referer;
 
 		var $cats_app;
 
@@ -46,6 +47,8 @@
 			$this->query = $this->bo->query;
 			$this->sort  = $this->bo->sort;
 			$this->order = $this->bo->order;
+			$this->referer = $this->bo->referer;
+			echo '<p align="right">'."referer='$this->referer'</p>\n";
 
 			$dir = dir(EGW_SERVER_ROOT.'/phpgwapi/images');
 			while($file = $dir->read())
@@ -67,7 +70,8 @@
 				'start' => $this->start,
 				'query' => $this->query,
 				'sort'  => $this->sort,
-				'order' => $this->order
+				'order' => $this->order,
+				'referer' => $this->referer,
 			);
 			$this->bo->save_sessiondata($data,$cats_app);
 		}
@@ -108,6 +112,19 @@
 			$global_cats = get_var('global_cats',array('GET','POST'));
 			$cats_level  = get_var('cats_level',array('GET','POST'));
 
+			// make categories called via sidebox menu of an app, to behave like a part of that app
+			list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
+			if (!$referer) $referer = '/preferences/index.php';
+			if (!strstr($referer,'menuaction=preferences.uicategories'))
+			{
+				$this->referer = $referer;
+				echo '<p align="right">'."referer='$this->referer'</p>\n";
+			}
+			if ($this->referer != '/preferences/index.php')
+			{
+				$GLOBALS['egw_info']['flags']['currentapp'] = $cats_app;
+			}
+
 			$link_data = array
 			(
 				'menuaction'  => 'preferences.uicategories.index',
@@ -140,7 +157,7 @@
 			$GLOBALS['egw']->template->set_var('title_categories',lang('categories for'));
 			$GLOBALS['egw']->template->set_var('lang_app',lang($cats_app));
 			$GLOBALS['egw']->template->set_var('actionurl',$GLOBALS['egw']->link('/index.php',$link_data));
-			$GLOBALS['egw']->template->set_var('doneurl',$GLOBALS['egw']->link('/preferences/index.php'));
+			$GLOBALS['egw']->template->set_var('doneurl',$GLOBALS['egw']->link($this->referer));
 
 			if(!$this->start)
 			{
