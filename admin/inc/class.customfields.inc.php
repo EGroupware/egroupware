@@ -12,29 +12,38 @@
 	/* $Id$ */
 
 	/**
-	* class custiomfields
-	* manages customfield definitions in phpgw_config table
+	* Custiomfields class -  manages customfield definitions in egw_config table
 	*
-	* the repository name (config_name) will be 'customfields'.
+	* The repository name (config_name) is 'customfields'.
+	*
+	* @license GPL
+	* @author Ralf Becker <ralfbecker-AT-outdoor-training.de>
+	* @author Cornelius Weiss <nelius-AT-von-und-zu-weiss.de>
+	* @package admin
 	*/
 	class customfields
 	{
 	
 		/**
-		* @var $appname string appname of app which want to add / edit its customfields
+		* @var string $appname string appname of app which want to add / edit its customfields
 		*/
-		var $appname = false;
+		var $appname;
 		
 		/**
-		* @var $types array with allowd types of customfields
+		* @var array $types array with allowd types of customfields
 		*/
-		var $types = array();
+		var $types = array(
+			'text'     => 'Text',
+			'label'    => 'Label',
+			'select'   => 'Selectbox',
+			'radio'    => 'Radiobutton',
+			'checkbox' => 'Checkbox',
+		);
 		
 		/**
 		* @var $types2 array with userdefiened types e.g. type of infolog
 		*/
 		var $types2 = array();
-		
 		
 		var $public_functions = array
 		(
@@ -43,32 +52,27 @@
 
 		function customfields($appname='')
 		{
-			$this->types = array(
-				'text' => lang('textfield'),
-				'label' => lang('label'),
-				'select' => lang('selectbox'),
-				'radio' => lang('radiobox'),
-				'checkbox' => lang('checkbox'),
-			);
-			$this->appname = $_GET['appname'] ? $_GET['appname'] : $appname;
+			$this->appname = $appname ? $appname : $_GET['appname'];
 			$this->tmpl =& CreateObject('etemplate.etemplate');
 			$this->config =& CreateObject('phpgwapi.config',$this->appname);
+			
+			$GLOBALS['egw']->translation->add_app('infolog');	// til we move the translations
 		}
 
 		/**
-		 * @author ralfbecker
 		 * Edit/Create Custom fields with type
 		 *
-		 * @param $content Content from the eTemplate Exec
+		 * @author Ralf Becker <ralfbecker-AT-outdoor-training.de>
+		 * @param array $content Content from the eTemplate Exec
 		 */
-		function edit($content = 0)
+		function edit($content = null)
 		{
-			$this->appname = $this->appname ? $this->appname : $content['appname'];
-			$this->config =& CreateObject('phpgwapi.config',$this->appname);
-			$this->fields = $this->get_customfields();
-
 			if (is_array($content))
 			{
+				// setting our app again
+				$this->config->config($this->appname = $content['appname']);
+				$this->fields = $this->get_customfields();
+
 				//echo '<pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
 				if($content['fields']['delete'] || $content['fields']['create'])
 				{
@@ -99,19 +103,23 @@
 								break;
 							}
 						case 'cancel':
-							$GLOBALS['egw']->redirect_link('/admin/');
+							$GLOBALS['egw']->redirect_link($content['referer'] ? $content['referer'] : '/admin/index.php');
 							exit;
 					}
 				}
+				$referer = $content['referer'];
 			}
 			else
 			{
+				$this->fields = $this->get_customfields();
+
 				list($type) = each($this->types);
 				$content = array(
 					'type' => $type,
 				);
+				list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
 			}
-			$GLOBALS['egw_info']['flags']['app_header'] = lang($this->appname).' - '.lang('Custom fields');
+			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 
 			$readonlys = array();
 
@@ -152,6 +160,7 @@
 			),$readonlys,array(
 				'fields' => $preserv_fields,
 				'appname' => $this->appname,
+				'referer' => $referer,
 			));
 		}
 
@@ -167,19 +176,16 @@
 					unset($this->fields[$old_name]);
 					continue;
 				}
-				if (empty($name) && !empty($old_name))	// empty name not allowed
-				{
-					$content['error_msg'] = lang('Name must not be empty !!!');
-				}
 				if (isset($field['old_name']))
 				{
+					if (empty($name))	// empty name not allowed
+					{
+						$content['error_msg'] = lang('Name must not be empty !!!');
+						$name = $old_name;
+					}
 					if (!empty($name) && $old_name != $name)	// renamed
 					{
 						unset($this->fields[$old_name]);
-					}
-					elseif (empty($name))
-					{
-						$name = $old_name;
 					}
 				}
 				elseif (empty($name))		// new item and empty ==> ignore it
@@ -242,6 +248,9 @@
 			$this->save_repository();
 		}
 
+		/**
+		* create a new custom field
+		*/
 		function create(&$content)
 		{
 			$new_name = trim($content['fields'][count($content['fields'])-1]['name']);
@@ -257,7 +266,6 @@
 				if(!$this->fields[$new_name]['label']) $this->fields[$new_name]['label'] = $this->fields[$new_name]['name'];
 				$this->save_repository();
 			}
-			return;
 		}
 
 		/**
@@ -275,7 +283,7 @@
 		* get customfields of using application
 		*
 		* @author Cornelius Weiss
-		* @retrun array with customfields
+		* @return array with customfields
 		*/
 		function get_customfields()
 		{
