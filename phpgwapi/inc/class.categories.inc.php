@@ -242,7 +242,7 @@
 
 			if (!$sort) $sort = 'ASC';
 
-			if (!empty($order) && preg_match('/^[a-zA-Z_, ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/')))
+			if (!empty($order) && preg_match('/^[a-zA-Z_, ]+$/',$order) && (empty($sort) || preg_match('/^(ASC|DESC|asc|desc)$/',$sort)))
 			{
 				$ordermethod = 'ORDER BY '.$order.' '.$sort;
 			}
