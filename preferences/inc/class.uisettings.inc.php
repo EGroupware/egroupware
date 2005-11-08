@@ -33,9 +33,21 @@
 
 		function index()
 		{
+			// make preferences called via sidebox menu of an app, to behave like a part of that app
+			list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
+			if (!$referer) $referer = '/preferences/index.php';
+			if (!preg_match('/(preferences.php|menuaction=preferences.uisettings.index)+/i',$referer))
+			{
+				$this->bo->session_data['referer'] = $referer;
+			}
+echo '<p align="right">'."referer='{$this->bo->session_data['referer']}'</p>\n";
+			if (substr($this->bo->session_data['referer'],0,strlen('/preferences')) != '/preferences')
+			{
+				$GLOBALS['egw_info']['flags']['currentapp'] = $_GET['appname'];
+			}
 			if($_POST['cancel'])
 			{
-				$GLOBALS['egw']->redirect_link('/preferences/index.php');
+				$GLOBALS['egw']->redirect_link($this->bo->session_data['referer']);
 			}
 			if (substr($_SERVER['PHP_SELF'],-15) == 'preferences.php')
 			{
@@ -117,7 +129,7 @@
 
 				if(!$this->is_admin() || $error)
 				{
-					$GLOBALS['egw']->redirect_link('/preferences/index.php');
+					$GLOBALS['egw']->redirect_link($this->bo->session_data['referer']);
 				}
 
 				if($GLOBALS['type'] == 'user' && $_GET['appname'] == 'preferences' && $user['show_help'] != '')
@@ -126,7 +138,7 @@
 				}
 				if($_POST['save'])
 				{
-					$GLOBALS['egw']->redirect_link('/preferences/index.php');
+					$GLOBALS['egw']->redirect_link($this->bo->session_data['referer']);
 				}
 			}
 

@@ -50,7 +50,7 @@
 			$this->appname = $appname;
 		}
 
-		function save_session($appname,$type,$show_help,$prefix,$notifies='')
+		function save_session($appname,$type,$show_help,$prefix,$notifies='',$referer='')
 		{
 			$GLOBALS['egw']->session->appsession('session_data','preferences',array(
 				'type'      => $type,	// save our state in the app-session
@@ -58,6 +58,7 @@
 				'prefix'    => $prefix,
 				'appname'   => $appname,		// we use this to reset prefix on appname-change
 				'notifies'  => $notifies,
+				'referer'   => $referer ? $referer : $this->session_data['referer'],
 			));
 		}
 
