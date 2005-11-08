@@ -14,12 +14,13 @@
 	/* $Id$ */
 
 	/**
-	 * This widget generates a template for customfields based on definitioins in phpgw_config table
+	 * This widget generates a template for customfields based on definitions in epgw_config table
 	 *
 	 * @package eTemplate
+	 * @subpackage extensions
 	 * @author RalfBecker-At-outdoor-training.de
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
-	 * @copyright GPL - GNU General Public License
+	 * @license GPL - GNU General Public License
 	 */
 	class customfields_widget
 	{
@@ -39,7 +40,7 @@
 			$this->config =& CreateObject('phpgwapi.config',$this->appname);
 			$this->config->appname = $this->appname;
 			$config = $this->config->read_repository();
-			//merge old config_name in phpgw_config table
+			//merge old config_name in egw_config table
 			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
 			$this->customfields = $config[$config_name];
 			$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
@@ -48,6 +49,8 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			$readonly = $cell['readonly'] || $readonlys[$name];
+
 			// infolog compability
 			if ($this->appname == 'infolog')
 			{
@@ -65,7 +68,7 @@
 			$tpl =& new etemplate;
 			$tpl->init('*** generated custom fields','','',0,'',0,0);	// make an empty template
 			
-			//echo '<pre style="text-aling: left;">'; print_r($value); echo "</pre>\n";
+			//echo '<pre style="text-align: left;">'; print_r($value); echo "</pre>\n";
 			foreach($this->customfields as $name => $field)
 			{
 				if (!empty($field['typ']) && $field['typ'] != $typ)
@@ -126,7 +129,7 @@
 					case 'textarea' :
 					default :
 						$field['len'] = $field['len'] ? $field['len'] : 20;
-						if($field['rows'] < 1)
+						if($field['rows'] <= 1)
 						{
 							list($max,$shown) = explode(',',$field['len']);
 							$input = &$tpl->new_cell($n,'text','',$this->prefix.$name,array(
@@ -136,18 +139,19 @@
 						else
 						{
 							$input = &$tpl->new_cell($n,'textarea','',$this->prefix.$name,array(
-								'size' => $field['rows'].($field['len'] > 0 ? ','.intval($field['len']) : '')
+								'size' => $field['rows'].($field['len'] > 0 ? ','.(int)$field['len'] : '')
 						));
 						}
 						break;
 				}
+				if ($readonly) $input['readonly'] = true;
 				
 				if (!empty($field['help']) && $row_class != 'th')
 				{
 					$input['help'] = $field['help'];
 					$input['no_lang'] = substr(lang($help),-1) == '*' ? 2 : 0;
 				}
-				$tpl->set_row_attributes($n,0,$row_class);
+				$tpl->set_row_attributes($n,0,$row_class,'top');
 			}
 			// create an empty line which (should) take all the remaining height
 			$tpl->new_cell(++$n,'label','','',array(
