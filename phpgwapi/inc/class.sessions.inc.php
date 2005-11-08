@@ -1147,62 +1147,32 @@
 			if (!is_array($extravars) && $extravars != '')
 			{
 				$new_extravars = Array();
-
-				$a = explode('&', $extravars);
-				$i = 0;
-				while ($i < count($a))
+				foreach(explode('&',str_replace('&amp;','&',$extravars)) as $expr)
 				{
-					$b = split('=', $a[$i],2);
-					// Check if this value doesn't already exist in new_extravars
-					if(array_key_exists($b[0], $new_extravars))
-					{
-						// print "Debug::Error !!! " . $b[0] . " ($i) already exists<br>";
-						if( eregi("\[\]", $b[0]) )
-						{
-							$b[0] = eregi_replace("\[\]", "[$i]", $b[0]);
-						}
-					}
-
-					$new_extravars[$b[0]] = $b[1];
-					$i++;
+					list($var,$val) = explode('=', $expr,2);
+					$new_extravars[$var] = $val;
 				}
-				$extravars = $new_extravars;
+				$extravars =& $new_extravars;
 				unset($new_extravars);
 			}
 
-			/* if using frames we make sure there is a framepart */
-			if(@defined('PHPGW_USE_FRAMES') && PHPGW_USE_FRAMES)
-			{
-				if (!isset($extravars['framepart']))
-				{
-					$extravars['framepart']='body';
-				}
-			}
-
 			/* add session params if not using cookies */
-			if (@!$GLOBALS['egw_info']['server']['usecookies'])
+			if (!$GLOBALS['egw_info']['server']['usecookies'])
 			{
 				$extravars['sessionid'] = $this->sessionid;
 				$extravars['kp3'] = $this->kp3;
 				$extravars['domain'] = $this->account_domain;
 			}
 
-			//used for repost prevention
-//			$extravars['click_history'] = $this->generate_click_history();
-
 			/* if we end up with any extravars then we generate the url friendly string */
-			if (is_array($extravars))
+			if (is_array($extravars) && count($extravars))
 			{
-				$new_extravars = '';
+				$query = array();
 				foreach($extravars as $key => $value)
 				{
-					if (!empty($new_extravars))
-					{
-						$new_extravars .= '&';
-					}
-					$new_extravars .= $key.'='.urlencode($value);
+					$query[] = $key.'='.urlencode($value);
 				}
-				$url .= '?' . $new_extravars;
+				$url .= '?' . implode('&amp;',$query);
 			}
 			//echo " = '$url'</p>\n";
 			return $url;
