@@ -61,7 +61,7 @@
 			while ($this->db->next_record())
 			{
 				$test = @unserialize($this->db->f('config_value'));
-				if($test)
+				if(is_array($test))
 				{
 					$this->config_data[$this->db->f('config_name')] = $test;
 				}
