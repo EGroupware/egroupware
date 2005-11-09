@@ -206,7 +206,7 @@
 			}
 			elseif ($own_referer !== '')
 			{
-				$own_referer = ereg_replace('^.*'.$GLOBALS['egw_info']['server']['webserver_url'],'',$_SERVER['HTTP_REFERER']);
+				$own_referer = $GLOBALS['egw']->common->get_referer();
 			}
 			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]') values=\n"; _debug_array($values);
 			if (!is_array($values))
@@ -450,9 +450,7 @@
 				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
-				$referer   = $referer !== '' ? $referer :
-					ereg_replace('^.*'.$GLOBALS['egw_info']['server']['webserver_url'],'',
-					get_var('HTTP_REFERER',Array('SERVER')));
+				$referer   = $referer !== '' ? $referer : $GLOBALS['egw']->common->get_referer();
 				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 				$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
