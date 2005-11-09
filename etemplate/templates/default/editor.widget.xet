@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.editor.widget.generic" template="" lang="" group="0" version="1.0.1.001">
+	<template id="etemplate.editor.widget.generic" template="" lang="" group="0" version="1.0.1.002">
 		<grid>
 			<columns>
 				<column/>
@@ -41,23 +41,31 @@
 						<checkbox label="%s onChange" align="center" id="onchange" statustext="enable JavaScript onChange submit"/>
 					</hbox>
 				</row>
+				<row class="row" disabled="@type=label">
+					<description options=",,,blur" value="blurText"/>
+					<textbox id="blur" statustext="this text gets displayed if the input-field is empty and has no focus (blur)"/>
+					<hbox span="4">
+						<int label="Tabindex" span="2" id="tabindex" statustext="Order to navigating by tab key through the form"/>
+						<textbox size="1" maxlength="1" id="accesskey" statustext="Accesskeys can also be specified with an &amp; in the label (eg. &amp;Name)" label="Accesskey"/>
+					</hbox>
+				</row>
 				<row class="row">
 					<description options=",,,help" value="Help"/>
-					<textbox size="45" span="3" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
-					<description options=",,,blur" value="blurText" align="center"/>
-					<textbox size="10" id="blur" statustext="this text gets displayed if the input-field is empty and has no focus (blur)"/>
+					<textbox size="73" span="all" id="help" statustext="displayed in statusline of browser if input-field gets focus"/>
 				</row>
 				<row class="row" disabled="!@type=button">
 					<description options="onclick" value="onClick"/>
-					<menulist>
-						<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
-					</menulist>
-					<textbox size="45" span="all" id="onclick" statustext="confirmation message or custom javascript (returning true or false)"/>
+					<hbox span="all">
+						<menulist>
+							<menupopup id="onclick_type" statustext="confirmation necesary or custom java-script"/>
+						</menulist>
+						<textbox size="58" span="all" id="onclick" statustext="confirmation message or custom javascript (returning true or false)"/>
+					</hbox>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.editor.widget" template="" lang="" group="0" version="1.0.1.005">
+	<template id="etemplate.editor.widget" template="" lang="" group="0" version="1.0.1.006">
 		<grid>
 			<columns>
 				<column/>
@@ -101,7 +109,7 @@
 					</hbox>
 				</row>
 				<row>
-					<template content="cell" span="all" id="etemplate.editor.widget.generic" obj="etemplate.editor.widget.generic"/>
+					<template content="cell" span="all" id="etemplate.editor.widget.generic"/>
 				</row>
 				<row disabled="!@grid_row">
 					<groupbox span="all" orient="horizontal">
