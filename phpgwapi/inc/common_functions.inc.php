@@ -28,18 +28,12 @@
 	 * Direct functions which are not part of the API classes                    *
 	 * because they are required to be available at the lowest level.            *
 	 \***************************************************************************/
-	/*!
-	 @collection_start direct functions
-	 @abstract Direct functions which are not part of the API classes because they are required to be available at the lowest level.
-	*/
 
-	/*!
-	 @function print_debug_subarray
-	 @abstract Not to be used directly. Should only be used by print_debug()
-	*/
+	/**
+	 * @internal Not to be used directly. Should only be used by print_debug()
+	 */
 	function print_debug_subarray($array)
 	{
-//		while(list($key, $value) = each($array))
 		foreach($array as $key => $value)
 		{
 			if (is_array($value))
@@ -54,17 +48,15 @@
 		return $vartypes;
 	}
 
-	/*!
-	 @function print_debug
-	 @abstract print debug data only when debugging mode is turned on.
-	 @author seek3r
-	 @discussion This function is used to debugging data. 
-	 @syntax print_debug('message', $somevar);
-	 @example print_debug('this is some debugging data',$somevar);
-	*/
+	/**
+	  * print debug data only when debugging mode is turned on.
+	  *
+	  * @author seek3r
+	  * This function is used to debugging data. 
+	  * print_debug('this is some debugging data',$somevar);
+	 */
 	function print_debug($message,$var = 'messageonly',$part = 'app', $level = 3)
 	{
-//		if (($part == 'app' && EXP_DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
 		if (($part == 'app' && DEBUG_APP == True) || ($part == 'api' && DEBUG_API == True))
 		{
 			if (!defined('DEBUG_OUTPUT'))
@@ -107,7 +99,7 @@
 					/*
 					if (!!(DEBUG_OUTPUT & 32))
 					{
-						$obj_debug = new COM('Some_COM_App.Class','localhost');
+						$obj_debug =& new COM('Some_COM_App.Class','localhost');
 						if (is_object($obj_debug))
 						{
 							$DebugMessage_return = $obj_debug->DebugMessage($output);
@@ -157,13 +149,12 @@
 		}
 	}
 
-	/*!
-	 @function safe_args
-	 @abstract Allows for array and direct function params as well as sanatization.
-	 @author seek3r
-	 @discussion This function is used to validate param data as well as offer flexible function usage.
-	 @syntax safe_args($expected_args, $recieved_args,__LINE__,__FILE__);
-	 @example 
+	/**
+	  * Allows for array and direct function params as well as sanatization.
+	  *
+	  * @author seek3r
+	  * This function is used to validate param data as well as offer flexible function usage.
+	  * 
 		function somefunc()
 		{
 			$expected_args[0] = Array('name'=>'fname','default'=>'joe', 'type'=>'string');
@@ -195,7 +186,7 @@
 		This would result in - Full name: jack hick brown<br>
 		Its using the default value for the second param.
 		Of course if you have the second param as a required field it will fail to work.
-	*/
+	 */
 	function safe_args($expected, $recieved, $line='??', $file='??')
 	{
 		/* This array will contain all the required fields */
@@ -277,19 +268,13 @@
 		return $args;
 	}
 
-	/*!
-	 @function sanitize
-	 @abstract Validate data.
-	 @author seek3r
-	 @discussion This function is used to validate input data. 
-	 @syntax sanitize('type', 'match string');
-	 @example sanitize('number',$somestring);
-	*/
-
-	/*
-	$GLOBALS['egw_info']['server']['sanitize_types']['number'] = Array('type' => 'preg_match', 'string' => '/^[0-9]+$/i');
-	*/
-
+	/**
+	  * Validate data.
+	  *
+	  * @author seek3r
+	  * This function is used to validate input data. 
+	  * sanitize('number',$somestring);
+	 */
 	function sanitize($string,$type)
 	{
 		switch ($type)
@@ -645,17 +630,16 @@
 		return $result;
 	}
 
-	/*!
-	 @function get_var
-	 @abstract retrieve a value from either a POST, GET, COOKIE, SERVER or from a class variable.
-	 @author skeeter
-	 @discussion This function is used to retrieve a value from a user defined order of methods. 
-	 @syntax get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
-	 @example $this->id = get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
-	 @param $variable name
-	 @param $method ordered array of methods to search for supplied variable
-	 @param $default_value (optional)
-	*/
+	/**
+	 * retrieve a value from either a POST, GET, COOKIE, SERVER or from a class variable.
+	 *
+	 * @author skeeter
+	 * This function is used to retrieve a value from a user defined order of methods. 
+	 * $this->id = get_var('id',array('HTTP_POST_VARS'||'POST','HTTP_GET_VARS'||'GET','HTTP_COOKIE_VARS'||'COOKIE','GLOBAL','DEFAULT'));
+	 * @param $variable name
+	 * @param $method ordered array of methods to search for supplied variable
+	 * @param $default_value (optional)
+	 */
 	function get_var($variable,$method='any',$default_value='')
 	{
 		if(!@is_array($method))
@@ -665,18 +649,17 @@
 		return reg_var($variable,$method,'any',$default_value,False);
 	}
 
-	/*!
-	 @function CreateObject
-	 @abstract Load a class and include the class file if not done so already.
-	 @author mdean
-	 @author milosch
-	 @author (thanks to jengo and ralf)
-	 @discussion This function is used to create an instance of a class, and if the class file has not been included it will do so. 
-	 @syntax CreateObject('app.class', 'constructor_params');
-	 @example $phpgw->acl = CreateObject('phpgwapi.acl');
-	 @param $classname name of class
-	 @param $p1,$p2,... class parameters (all optional)
-	*/
+	/**
+	 * Load a class and include the class file if not done so already.
+	 *
+	 * This function is used to create an instance of a class, and if the class file has not been included it will do so. 
+	 * $GLOBALS['egw']->acl =& CreateObject('phpgwapi.acl');
+	 *
+	 * @author RalfBecker@outdoor-training.de
+	 * @param $classname name of class
+	 * @param $p1,$p2,... class parameters (all optional)
+	 * @return object reference to an object
+	 */
 	function &CreateObject($class)
 	{
 		list($appname,$classname) = explode('.',$class);
@@ -712,12 +695,13 @@
 	}
 
 	/**
-	* Execute a function with multiple arguments
-	* We take object $GLOBALS[classname] from class if exists
-	*
-	* @param string app.class.method method to execute
-	* @example ExecObject('etemplates.so_sql.search',$criteria,$key_only,...);
-	*/
+	 * Execute a function with multiple arguments
+	 * We take object $GLOBALS[classname] from class if exists
+	 *
+	 * @param string app.class.method method to execute
+	 * @example ExecObject('etemplates.so_sql.search',$criteria,$key_only,...);
+	 * @return mixed reference to returnvalue of the method
+	 */
 	function &ExecMethod2($acm)
 	{
 		list($app,$class,$method) = explode('.',$acm);
@@ -735,7 +719,7 @@
 		
 		$args = func_get_args();
 		unset($args[0]);
-		$code = '$return = $obj->'.$method.'(';
+		$code = '$return =& $obj->'.$method.'(';
 		foreach	($args as $n => $arg)
 		{
 			if ($n)
@@ -749,18 +733,18 @@
 		return $return;
 	}
 
-	/*!
-	 @function ExecMethod
-	 @abstract Execute a function, and load a class and include the class file if not done so already.
-	 @author seek3r
-	 @discussion This function is used to create an instance of a class, and if the class file has not been included it will do so.
-	 @syntax ExecObject('app.class', 'constructor_params');
-	 @param $method to execute
-	 @param $functionparams function param should be an array
-	 @param $loglevel developers choice of logging level
-	 @param $classparams params to be sent to the contructor
-	 @example ExecObject('phpgwapi.acl.read');
-	*/
+	/**
+	 * Execute a function, and load a class and include the class file if not done so already.
+	 *
+	 * This function is used to create an instance of a class, and if the class file has not been included it will do so.
+	 *
+	 * @author seek3r
+	 * @param $method to execute
+	 * @param $functionparams function param should be an array
+	 * @param $loglevel developers choice of logging level
+	 * @param $classparams params to be sent to the contructor
+	 * @return mixed returnvalue of method
+	 */
 	function ExecMethod($method, $functionparams = '_UNDEF_', $loglevel = 3, $classparams = '_UNDEF_')
 	{
 		/* Need to make sure this is working against a single dimensional object */
@@ -772,11 +756,11 @@
 			{
 				if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
 				{
-					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
+					$GLOBALS[$classname] =& CreateObject($appname.'.'.$classname, $classparams);
 				}
 				else
 				{
-					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
+					$GLOBALS[$classname] =& CreateObject($appname.'.'.$classname);
 				}
 			}
 
@@ -831,16 +815,16 @@
 				{
 					if (is_string($classparams))
 					{
-						eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", "'.$classparams.'");');
+						eval($parentobject.'->'.$classname.' =& CreateObject("'.$appname.'.'.$classname.'", "'.$classparams.'");');
 					}
 					else
 					{
-						eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
+						eval($parentobject.'->'.$classname.' =& CreateObject("'.$appname.'.'.$classname.'", '.$classparams.');');
 					}
 				}
 				else
 				{
-					eval($parentobject.'->'.$classname.' = CreateObject("'.$appname.'.'.$classname.'");');
+					eval($parentobject.'->'.$classname.' =& CreateObject("'.$appname.'.'.$classname.'");');
 				}
 			}
 
@@ -861,16 +845,16 @@
 		}
 	}
 
-	/*!
-	 @function copyobj
-	 @abstract duplicates the result of copying an object under php3/4 even when using php5
-	 @author milosch
-	 @discussion This is critical when looping on db object output and updating or inserting to the database using a copy of the db object.  This was first added to GroupWhere
-	 @syntax copyobj($source_object,$target_object);
-	 @example copyobj($GLOBALS['egw']->db,$mydb);
-	 @param $a   - Source Object
-	 @param $b   - Target Object (copy)
-	*/
+	/**
+	  * duplicates the result of copying an object under php3/4 even when using php5
+	  *
+	  * This is critical when looping on db object output and updating or inserting to the database using a copy of the db object.  This was first added to GroupWhere
+	  * 
+	  * @deprecated use $copy = clone($obj);
+	  * @author milosch
+	  * @param $a   - Source Object
+	  * @param $b   - Target Object (copy)
+	 */
 	function copyobj($a,&$b)
 	{
 		if(floor(phpversion()) > 4)
@@ -884,16 +868,16 @@
 		return;
 	}
 
-	/*!
-	 @function get_account_id
-	 @abstract Return a properly formatted account_id.
-	 @author skeeter
-	 @discussion This function will return a properly formatted account_id. This can take either a name or an account_id as paramters. If a name is provided it will return the associated id.
-	 @syntax get_account_id($accountid);
-	 @example $account_id = get_account_id($accountid);
-	 @param $account_id either a name or an id
-	 @param $default_id either a name or an id
-	*/
+	/**
+	 * Return a properly formatted account_id.
+	 *
+	 * @author skeeter
+	 * This function will return a properly formatted account_id. This can take either a name or an account_id as paramters. If a name is provided it will return the associated id.
+	 * $account_id = get_account_id($accountid);
+	 * @param int/string $account_id either a name or an id
+	 * @param int/string $default_id either a name or an id
+	 * @return int account_id
+	 */
 	function get_account_id($account_id = '',$default_id = '')
 	{
 		if (gettype($account_id) == 'integer')
@@ -925,11 +909,13 @@
 		}
 	}
 
-	/*!
-	 @function filesystem_separator
-	 @abstract sets the file system seperator depending on OS
-	 @result file system separator
-	*/
+	/**
+	 * sets the file system seperator depending on OS
+	 *
+	 * This is completely unnecessary, as you can use forward slashes in php under every OS -- RalfBecker 2005/11/09
+	 *
+	 * @return file system separator
+	 */
 	function filesystem_separator()
 	{
 		if(PHP_OS == 'Windows' || PHP_OS == 'OS/2' || PHP_OS == 'WINNT')
@@ -942,6 +928,13 @@
 		}
 	}
 
+	/**
+	 * print an array or object as pre-formatted html
+	 *
+	 * @param mixed $array
+	 * @param boolean $print=true print or return the content
+	 * @return string if !$print
+	 */
 	function _debug_array($array,$print=True)
 	{
 		$four = False;
@@ -971,13 +964,13 @@
 		}
 	}
 
-	/*
-	@function alessthanb
-	@abstract phpgw version checking, is param 1 < param 2 in phpgw versionspeak?
-	@param	$a	phpgw version number to check if less than $b
-	@param	$b	phpgw version number to check $a against
-	#return	True if $a < $b
-	*/
+	/**
+	 * eGW version checking, is eGW version in $a < $b
+	 *
+	 * @param string $a	egw version number to check if less than $b
+	 * @param string $b egw version number to check $a against
+	 * @return boolean True if $a < $b
+	 */
 	function alessthanb($a,$b,$DEBUG=False)
 	{
 		$num = array('1st','2nd','3rd','4th');
@@ -1059,13 +1052,13 @@
 		}
 	}
 
-	/*!
-	@function amorethanb
-	@abstract phpgw version checking, is param 1 > param 2 in phpgw versionspeak?
-	@param	$a	phpgw version number to check if more than $b
-	@param	$b	phpgw version number to check $a against
-	#return	True if $a < $b
-	*/
+	/**
+	 * eGW version checking, is eGW version in $a > $b
+	 *
+	 * @param string $a eGW version number to check if more than $b
+	 * @param string $b eGW version number to check check $a against
+	 * @return boolean True if $a > $b
+	 */
 	function amorethanb($a,$b,$DEBUG=False)
 	{
 		$num = array('1st','2nd','3rd','4th');
@@ -1139,14 +1132,14 @@
 		}
 	}
 	
-	/*!
-	 @function prepend_tables_prefix
-	 @abstract prepend a prefix to an array of table names
-	 @author Adam Hull (aka fixe) - No copyright claim
-	 @param	$prefix	the string to be prepended
-	 @param	$tables	and array of tables to have the prefix prepended to
-	 @return array of table names with the prefix prepended
-	*/
+	/**
+	 * prepend a prefix to an array of table names
+	 *
+	 * @author Adam Hull (aka fixe) - No copyright claim
+	 * @param	$prefix	the string to be prepended
+	 * @param	$tables	and array of tables to have the prefix prepended to
+	 * @return array of table names with the prefix prepended
+	 */
 	function prepend_tables_prefix($prefix,$tables)
 	{
 		foreach($tables as $key => $value)
@@ -1156,12 +1149,13 @@
 		return $tables;
 	}
 
-	/*!
-	 @function function_backtrace
-	 @abstract backtrace of the calling functions for php4.3+ else menuaction/scriptname
-	 @author ralfbecker
-	 @return function-names separated by slashes (beginning with the calling function not this one)
-	*/
+	/**
+	 * backtrace of the calling functions for php4.3+ else menuaction/scriptname
+	 *
+	 * @author RalfBecker-AT-outdoor-training.de
+	 * @param int $remove=0 number of levels to remove
+	 * @return string function-names separated by slashes (beginning with the calling function not this one)
+	 */
 	function function_backtrace($remove=0)
 	{
 		if (function_exists('debug_backtrace'))
@@ -1184,6 +1178,13 @@
 		return $_GET['menuaction'] ? $_GET['menuaction'] : str_replace(EGW_SERVER_ROOT,'',$_SERVER['SCRIPT_FILENAME']);
 	}
 
+	/**
+	 * check $_REQUEST data for XSS, vars containing script tags are moved to $GLOBALS['egw_unset_vars']
+	 *
+	 * @internal 
+	 * @param array &$var reference of array to check
+	 * @param string $name='' name of the array
+	 */
 	function _check_script_tag(&$var,$name='')
 	{
 		if (is_array($var))
@@ -1244,12 +1245,16 @@
 		');
 	}
 
-	/**
-	 * function to handle multilanguage support
-	 */
 	if (!function_exists('lang'))	// setup declares an own version
 	{
-		function lang($key,$vars='')
+		/**
+		 * function to handle multilanguage support
+		 *
+		 * @param string $key message in englich with %1, %2, ... placeholders
+		 * @param string $vars=null multiple values to replace the placeholders
+		 * @return string translated message with placeholders replaced
+		 */
+		function lang($key,$vars=null)
 		{
 			if(!is_array($m1))
 			{
