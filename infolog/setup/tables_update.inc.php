@@ -459,4 +459,12 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '1.0.1.002';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
+
+
+	$test[] = '1.0.1.002';
+	function infolog_upgrade1_0_1_002()
+	{
+		$GLOBALS['setup_info']['infolog']['currentver'] = '1.2';
+		return $GLOBALS['setup_info']['infolog']['currentver'];
+	}
 ?>
