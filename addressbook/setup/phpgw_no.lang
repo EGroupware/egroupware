@@ -6,16 +6,17 @@
 actions	addressbook	no	Funksjoner
 add a single entry by passing the fields.	addressbook	no	Legg til ett enkelt innslag ved å fylle inn feltene.
 add custom field	addressbook	no	Legg til egendefinert felt
-address book	common	no	Addresseliste
-address book - vcard in	addressbook	no	Adresseliste - VCard inn
-address book - view	addressbook	no	Adresseliste - vis
+address book	common	no	Addressebok
+address book - vcard in	addressbook	no	Adressebok - VCard inn
+address book - view	addressbook	no	Adressebok - vis
 address line 2	addressbook	no	Adresse Linje 2
 address line 3	addressbook	no	Adresse Linke 3
-address type	addressbook	no	Adresse type
-addressbook	common	no	Addresseliste
-addressbook preferences	addressbook	no	Adresseliste preferanser
-addressbook-fieldname	addressbook	no	Adresseliste-Feltnavn
+address type	addressbook	no	Adressetype
+addressbook	common	no	Addressebok
+addressbook preferences	addressbook	no	Adressebok preferanser
+addressbook-fieldname	addressbook	no	Adressebok-Feltnavn
 addvcard	addressbook	no	Legg til VCard
+advances search	addressbook	no	Avansert søk
 alt. csv import	addressbook	no	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	no	Er du sikker du vil slette dette feltet?
 bbs phone	addressbook	no	BBS Telefon
@@ -42,6 +43,7 @@ company name	common	no	Firmanavn
 configuration	common	no	Konfigurasjon
 contact	common	no	Kontakt
 contact application	admin	no	Kontakt program
+contact saved	addressbook	no	Kontakt lagret
 contact settings	admin	no	Kontakt Innstillinger
 copied by %1, from record #%2.	addressbook	no	Kopiert av %1, fra rekke #%2.
 country	common	no	Land
@@ -53,13 +55,16 @@ debug output in browser	addressbook	no	Feilsøkingsmeldinger i webleser
 default filter	addressbook	no	Standard Filter
 delete a single entry by passing the id.	addressbook	no	Oppgi id for å slette ett enkelt innslag.
 department	common	no	Avdeling
+doesn't matter	addressbook	no	Spiller ingen rolle
 domestic	addressbook	no	Innenlands
 download	addressbook	no	Last ned
 download export file (uncheck to debug output in browser)	addressbook	no	Last ned eksport fil (fjern hake for å se feilsøkingsinformasjon i webleser)
 edit custom field	addressbook	no	Endre egendefinert felt
 edit custom fields	admin	no	Endre egendefinerte felter
+edit phonenumbers -	addressbook	no	Endre telefonnummere
 empty for all	addressbook	no	tom for alle
 enter the path to the exported file here	addressbook	no	Skriv inn sti til den eksporterte filen her
+export	addressbook	no	Eksporter
 export contacts	addressbook	no	Eksporter Kontakter
 export file name	addressbook	no	Eksport filnavn
 export from addressbook	addressbook	no	Eksport fra Adresseliste
@@ -97,12 +102,15 @@ import_instructions	addressbook	no	I Netscape, åpne adresselisten og velg <b>Eks
 international	addressbook	no	Internasjonal
 isdn phone	addressbook	no	ISDN Telefon
 label	addressbook	no	Etikett
+last modified	addressbook	no	Sist endret
 ldap context for contacts	admin	no	LDAP område for kontakter
 ldap host for contacts	admin	no	LDAP tjener for kontakter
 ldap root dn for contacts	admin	no	LDAP root dn for kontakter
 ldap root pw for contacts	admin	no	LDAP root passord for kontakter
 ldif	addressbook	no	LDIF
 line 2	addressbook	no	Linje 2
+list all categories	addressbook	no	Liste alle kategorier
+list all customfields	addressbook	no	Liste alle egendefinerte felt
 load vcard	addressbook	no	Last VCard
 mark records as private	addressbook	no	Merk rekkene som private
 message phone	addressbook	no	Meldings Telefon?
@@ -110,9 +118,12 @@ middle name	addressbook	no	Mellomnavn
 mobile	addressbook	no	Mobil
 mobile phone	addressbook	no	Mobiltelefon
 modem phone	addressbook	no	Modem Telefon
+more phonenumbers	addressbook	no	Flere telefonnummere
 multiple vcard	addressbook	no	Flere VCard
 no vcard	addressbook	no	Ingen VCard
+number	addressbook	no	Nummer
 number of records to read (%1)	addressbook	no	Antall rekker som leses (%1)
+organisation	addressbook	no	Organisasjon
 other number	addressbook	no	Annet Nummer
 other phone	addressbook	no	Annen Telefon
 pager	common	no	Personsøker
@@ -124,6 +135,7 @@ postal	common	no	Post
 pref	addressbook	no	Pref.
 prefix	addressbook	no	Forstavelse
 public key	addressbook	no	Offentlig Nøkkel
+read a list / search for entries.	addressbook	no	Les en liste / søk etter forekomster
 read a list of entries.	addressbook	no	Lese liste
 read a single entry by passing the id and fieldlist.	addressbook	no	Les ett enkelt innslag ved å gi id og feltliste.
 record access	addressbook	no	Rekketilgang
@@ -133,12 +145,18 @@ select all	addressbook	no	Velg alle
 select the type of conversion	addressbook	no	Velg konverteringstype
 select the type of conversion:	addressbook	no	Velg konverterings type:
 select where you want to store	admin	no	Velg området du vil lagre
+show	addressbook	no	Vis
 show birthday reminders on main screen	addressbook	no	Vis fødselsdags-påminnelse på hovedskjerm
+something went wrong by deleting %1	addressbook	no	Noe gikk galt ved sletting av %1
+something went wrong by deleting this contact	addressbook	no	Noe gikk galt ved sletting av denne kontakten
+something went wrong by reading this contact	addressbook	no	Noe gikk galt ved lesing av denne kontakten
+something went wrong by saving this contact. errorcode %1	addressbook	no	Noe gikk galt ved sletting av denne kontakten.  Feilkode %1
 startrecord	addressbook	no	Startrekke
 state	common	no	Fylke
 street	common	no	Gate
 successfully imported %1 records into your addressbook.	addressbook	no	Vellykket import av %1 rekker til adresseboken.
 suffix	addressbook	no	Endelse
+tel home	addressbook	no	Tlf. hjemme
 test import (show importable records <u>only</u> in browser)	addressbook	no	Test Import (vis <u>kun</u> importerbare rekker i webleser)
 that field name has been used already !	addressbook	no	Feltnavnet er allerede i bruk !
 this person's first name was not in the address book.	addressbook	no	Personens fornavn var ikke i adresseboken
@@ -155,7 +173,12 @@ vcards require a last name entry.	addressbook	no	VCard kever etternavn.
 video phone	addressbook	no	Video Telefon
 voice phone	addressbook	no	Vanlig Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	no	ADVARSEL!! LDAP er kun aktuellt dersom du IKKE bruker kontakter til konto lagring!
+warning: all contacts found will be deleted!	addressbook	no	Advarsel: Alle kontakter funnet vil bli slettet!
 work phone	addressbook	no	Arbeids telefon
+you are not permitted to delete contact %1	addressbook	no	Du har ikke tillatelse til å slette kontakt %1
+you are not permittet to delete this contact	addressbook	no	Du har ikke tillatelse til å slette denne kontakten
+you are not permittet to edit this contact	addressbook	no	Du har ikke tillatelse til å endre denne kontakten
+you are not permittet to view this contact	addressbook	no	Du har ikke tillatelse til å vise denne kontakten
 you must select a vcard. (*.vcf)	addressbook	no	Du må velge et vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	no	Du må velge minst en kolonne for visning
 zip code	common	no	Postnummer

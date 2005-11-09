@@ -11,16 +11,16 @@ bookable	resources	no	Mulig å bestille
 buy this resource	resources	no	Kjøp denne ressursen
 buyable	resources	no	Mulig å kjøpe
 categories admin	resources	no	Admin. av kategorier
-check all	resources	no	Skjekk akk
-choose categories admin	resources	no	velg admin. for kategoriene
-clear selection	resources	no	opphev valgene
+check all	resources	no	Kontroller alle
+choose categories admin	resources	no	Velg admin. for kategoriene
+clear selection	resources	no	Opphev valgene
 configure access permissions	resources	no	Konfigurer aksesstillatelser
 create new accessory for this resource	resources	no	Opprette nytt tilbehør til denne ressursen
 create new links	resources	no	Opprette nye lenker
 delete this entry	resources	no	Slett denne registreringen
 description (short)	resources	no	Beskrivelse (kort)
 direct booking permissions	resources	no	Deleger bestillingsrettigheter
-don't use vfs (this will need a symlink --> see readme)	resources	no	Ikek bruke vfs (dette trenger en symlink-->Se LESMEG
+don't use vfs (this will need a symlink --> see readme)	resources	no	Ikke bruke vfs (dette trenger en symlink-->Se LESMEG
 edit this entry	resources	no	Endre denne registreringen
 existing links	resources	no	Eksisterende lenker
 general	resources	no	Generell
@@ -42,6 +42,7 @@ location	resources	no	Lokasjon
 location of resource	resources	no	Lokasjon av ressurser
 name of resource	resources	no	Navn på ressurs
 no description available	resources	no	ingen beskrivelse tilgjengelig
+no resources selected	resources	no	Ingen ressurser valgt
 notify your administrator to correct this situation	resources	no	Gjør din EDB-ansvarlige beskjed om å korrigere denne situasjonen
 picture	resources	no	Bilde
 picture source	resources	no	Bildekilde
@@ -52,21 +53,24 @@ prizeing information for booking or buying	resources	no	Prisinformasjon for best
 quantity	resources	no	Antall
 quantity of resource	resources	no	Antall av  ressurs
 quantity:	resources	no	Antall :
-read calender permissions	resources	no	Les kalendertillatelser
+read calendar permissions	resources	no	Kalendertillatelser for visning
+read calender permissions	resources	no	Kalendertillatelser for visning
 read permissions	resources	no	Lesetillatelser
 related links	resources	no	Relaterte lenker
-resources	resources	no	Ressurser
+resources	common	no	Ressurser
 resources list	resources	no	Liste over ressurser
 responsible:	resources	no	Ansvarlig :
 saves entry and exits	resources	no	Lagre endringene og fortsette
 select a category	resources	no	Velg en kategori
 select resource	resources	no	velg en ressurs
+select resources	resources	no	Velg ressurser
 short description	resources	no	Kort beskrivelse
 short description of resource	resources	no	Kort beskivelse av ressursen
 something went wrong by deleting resource	resources	no	Noe gikk galt ved sletting av ressyrsen
 something went wrong by saving resource	resources	no	Noe gikk galt ved lagring av ressursen
 storage inforation	resources	no	Lagringsinformasjon
 the calendar of this resource	resources	no	Kalender for denne ressursen
+this module displays the resources app	resources	no	Denne modulen viser ressursprogrammet
 use general resources icon	resources	no	Bruk generelt ikon for ressursen
 use own picture	resources	no	Bruk eget bilde
 use the category's icon	resources	no	Bruk kategoriens ikon
@@ -80,3 +84,4 @@ which category does this resource belong to?	resources	no	Hvilken kategori hører
 write permissions	resources	no	Skrivetillatelser
 you are not permitted to edit this reource!	resources	no	Du har ikke lov til endre denne ressursen !
 you are not permitted to get information about this resource!	resources	no	Du har ikke tillatelse til å få informasjon om denne ressursen
+you chose more resources than available	resources	no	Du valgte flere ressurser enn tilgjengelige

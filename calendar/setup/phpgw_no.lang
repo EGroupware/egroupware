@@ -43,6 +43,7 @@ back half a month	calendar	no	Tilbake en halv mnd.
 back one month	calendar	no	Tilbake en mnd.
 before current date	calendar	no	For inneværende dato
 before the event	calendar	no	før hendelsen
+birthday	calendar	no	Fødselsdag
 brief description	calendar	no	Kort beskrivelse
 business	calendar	no	Arbeid
 busy	calendar	no	Opptatt
@@ -71,6 +72,7 @@ countries	calendar	no	Land
 country	calendar	no	Land
 create new links	calendar	no	Opprett ny lenke
 created by	calendar	no	Opprettet av
+csv	calendar	no	CSV
 csv-fieldname	calendar	no	CSV-Feltnavn
 csv-filename	calendar	no	CSV-Filnavn
 custom fields	calendar	no	Egendefinerte felt
@@ -185,6 +187,7 @@ how far to search (from startdate)	calendar	no	Hvor langt skal det søkes (fra st
 i participate	calendar	no	Jeg deltar
 ical	calendar	no	iCal
 ical / rfc2445	calendar	no	iCal / rfc2445
+ical export	calendar	no	iCal eksport
 if checked holidays falling on a weekend, are taken on the monday after.	calendar	no	Hvis merket ferie faller på en helg, blir den tatt mandagen etter.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	no	Dersom du ikke setter et passord her vil informasjonen være tilgjengelig for alle som kjenner nettadressen !
 ignore conflict	calendar	no	Ignorer konflikt
@@ -227,6 +230,7 @@ new entry	calendar	no	Ny Oppføring
 new name must not exist and not be empty!!!	calendar	no	Nytt navn må ikke eksistere og ikke være tomt!!!
 new search with the above parameters	calendar	no	Nytt søk med ovenstårende parametre
 next day	calendar	no	neste dag
+no events found	calendar	no	Ingen hendelser funnet
 no filter	calendar	no	uten filter
 no matches found	calendar	no	Ingen treff funnet
 no response	calendar	no	Ingen Respons
@@ -271,6 +275,7 @@ planner by category	calendar	no	Planlegger for kategorier
 planner by user	calendar	no	Planlegger for bruker
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	no	Vennligst bekreft, godta, avslå eller etterse endringer i den korresponderende oppføringen i din kalender
 please enter a filename !!!	calendar	no	Vennligst angi et filnavn !!!
+please note: you can configure the field assignments after you uploaded the file.	calendar	no	Vennligst noter: Du kan konfigurere felttillegene etter at du har lastet opp filen.
 preselected group for entering the planner	calendar	no	Forhåndsvelg gruppe når du starter planlegger
 previous	calendar	no	Foregående
 previous day	calendar	no	Foregående dag

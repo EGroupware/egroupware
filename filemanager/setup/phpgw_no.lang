@@ -41,6 +41,7 @@ edit comments	filemanager	no	Rediger kommentarer
 error running command	filemanager	no	Feil ved utføring av kommando
 execute	filemanager	no	Utfør
 failed to create directory	filemanager	no	feilet ved opprettelse av mappe
+fake base dir did not exist, egroupware created a new one.	filemanager	no	Fake basekatalog eksisterte ikke.  EgroupWare opprettet en ny.
 file	filemanager	no	Fil
 file %1 already exists. please edit it or delete it first.	filemanager	no	Filen %1 finnes allerede. Vennligst rediger eller slett den først
 file %1 could not be created.	filemanager	no	Filen %1 kunne ikke opprettes
@@ -93,6 +94,7 @@ show command line (experimental. dangerous.)	filemanager	no	Vis kommandolinje (E
 show help	filemanager	no	Vis hjelp
 size	filemanager	no	Størrelse
 sort by:	filemanager	no	Sorter etter:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	no	Den fremtidige filbehandleren, nå bare for uttesting.  Vennligts innrapporter feil!
 total files	filemanager	no	Totalt antall filer
 unknown mime-type defaults to text/plain when viewing	filemanager	no	Ukjent MIME-type blir text/plain ved visning
 unused space	filemanager	no	Ubrukt område

@@ -19,6 +19,7 @@ add a new multi-column index	etemplate	no	Legg til en ny multikolonne indeks
 add column	etemplate	no	Legg til kolonne
 add index	etemplate	no	Legg til innholdsfortegnelse
 add table	etemplate	no	Legg til tabell
+advanced search	etemplate	no	Avansert søk
 align	etemplate	no	Juster
 all days	etemplate	no	alle dager
 all operations save the template!	etemplate	no	alle operasjoner lagrer malen!
@@ -60,6 +61,7 @@ create a new table for the application	etemplate	no	Lag en ny tabell for program
 css properties	etemplate	no	CSS Egenskaper
 css-styles	etemplate	no	CSS Stiler
 custom	etemplate	no	Egendefinert
+custom fields	etemplate	no	Egendefinerte felt
 cut	etemplate	no	Klipp ut
 date+time	etemplate	no	Dato+Tid
 datum	etemplate	no	Dato
