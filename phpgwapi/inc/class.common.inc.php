@@ -2098,10 +2098,7 @@
 			$parts = explode($GLOBALS['egw_info']['server']['webserver_url'],$referer);
 			
 			$referer = array_pop($parts);
-			if (count($parts) > 1)	// eg. URL contains http://egroupware.domain.com/egroupware/... and webserver_url='/egroupware'
-			{
-				$referer = array_pop($parts) . $GLOBALS['egw_info']['server']['webserver_url'] . $referer;
-			}
+
 			if (empty($referer)) $referer = $default;
 			
 			return $referer;
