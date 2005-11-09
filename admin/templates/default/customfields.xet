@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="admin.customfields.fields" template="" lang="" group="0" version="">
+	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.2">
 		<grid>
 			<columns>
 				<column/>
@@ -17,8 +17,8 @@
 				<row class="th">
 					<description value="Name" statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible"/>
 					<description value="Label"/>
-					<description value="Typ"/>
-					<description value="Type" statustext="Type of customfield"/>
+					<description value="Subtype"/>
+					<description value="Type"/>
 					<description value="Options" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]"/>
 					<description value="Length&lt;br&gt;Rows"/>
 					<description value="Order"/>
@@ -34,9 +34,9 @@
 						<menupopup options="All" id="${row}[type2]"/>
 					</menulist>
 					<menulist>
-						<menupopup id="{$row}[type]" no_lang="1"/>
+						<menupopup id="{$row}[type]" statustext="Type of customfield"/>
 					</menulist>
-					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]"/>
+					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like id[=label]"/>
 					<vbox>
 						<textbox size="5" id="${row}[len]" statustext="max length of the input [, length of the inputfield (optional)]"/>
 						<int options="0,10,2" id="${row}[rows]" statustext="number of row for a multiline inputfield or line of a multi-select-box" blur="1"/>
@@ -50,7 +50,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.customfields" template="" lang="" group="0" version="">
+	<template id="admin.customfields" template="" lang="" group="0" version="1.2">
 		<grid>
 			<columns>
 				<column/>
@@ -62,15 +62,12 @@
 			</columns>
 			<rows>
 				<row>
-					<description span="all" class="redItalic" id="error_msg"/>
+					<description span="all" class="redItalic" id="error_msg" align="center" no_lang="1"/>
 					<description/>
 					<description/>
 					<description/>
 					<description/>
 					<description no_lang="1"/>
-				</row>
-				<row class="header">
-					<description span="all" value="Custom fields"/>
 				</row>
 				<row>
 					<template content="fields" span="all" id="admin.customfields.fields"/>
@@ -85,8 +82,7 @@
 			</rows>
 		</grid>
 		<styles>
-			.header { font-weight: bold; font-size: 120%; }
-.error_msg { color: red; font-style: italics; }
+			.redItalic { color: red; font-style: italics; }
 		</styles>
 	</template>
 </overlay>
