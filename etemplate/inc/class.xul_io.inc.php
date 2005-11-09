@@ -14,9 +14,9 @@
 
 	if (!function_exists('var2xml'))
 	{
-		if (file_exists(PHPGW_API_INC.'class.xmltool.inc.php'))
+		if (file_exists(EGW_API_INC.'class.xmltool.inc.php'))
 		{
-			include_once(PHPGW_API_INC.'class.xmltool.inc.php');
+			include_once(EGW_API_INC.'class.xmltool.inc.php');
 		}
 		else
 		{
@@ -169,16 +169,16 @@
 			$widgetattr2xul = isset($this->widget2xul[$type]) ? $this->widget2xul[$type] : array();
 			$type = isset($widgetattr2xul['.name']) ? $widgetattr2xul['.name'] : $type;
 			list($type,$child,$child2) = explode(',',$type);
-			$widget = new xmlnode($type);
+			$widget =& new xmlnode($type);
 			$attr_widget = &$widget;
 			if ($child)
 			{
-				$child = new xmlnode($child);
+				$child =& new xmlnode($child);
 				if ($type != 'tabbox') $attr_widget = &$child;
 			}
 			if ($child2)
 			{
-				$child2 = new xmlnode($child2);
+				$child2 =& new xmlnode($child2);
 			}
 			if (isset($widgetattr2xul['.set']))	// set default-attr for type
 			{
@@ -193,7 +193,7 @@
 			{
 			case 'nextmatch':
 				list($tpl) = explode(',',$cell['size']);
-				$embeded = new etemplate($tpl,$this->load_via);
+				$embeded =& new etemplate($tpl,$this->load_via);
 				if ($embeded_too)
 				{
 					$this->add_etempl($embeded,$embeded_too);
@@ -207,17 +207,17 @@
 				$names  = explode('|',$cell['name']);   unset($cell['name']);
 				for ($n = 0; $n < count($labels); ++$n)
 				{
-					$tab = new xmlnode('tab');
+					$tab =& new xmlnode('tab');
 					$tab->set_attribute('label',$labels[$n]);
 					$tab->set_attribute('statustext',$helps[$n]);
 					$child->add_node($tab);
 
-					$embeded = new etemplate($names[$n],$this->load_via);
+					$embeded =& new etemplate($names[$n],$this->load_via);
 					if ($embeded_too)
 					{
 						$this->add_etempl($embeded,$embeded_too);
 					}
-					$template = new xmlnode('template');
+					$template =& new xmlnode('template');
 					$template->set_attribute('id',$embeded->name);
 					$child2->add_node($template);
 					unset($embeded);
@@ -240,7 +240,7 @@
 			case 'groupbox':
 				if ($cell['label'])
 				{
-					$caption = new xmlnode('caption');
+					$caption =& new xmlnode('caption');
 					$caption->set_attribute('label',$cell['label']);
 					$widget->add_node($caption);
 					unset($cell['label']);
@@ -263,7 +263,7 @@
 			case 'template':
 				if ($cell['name'][0] != '@' && $embeded_too)
 				{
-					$templ = new etemplate();
+					$templ =& new etemplate();
 					if ($templ->read(boetemplate::expand_name($cell['name'],0,0),'default','default',0,'',$this->load_via))
 					{
 						$this->add_etempl($templ,$embeded_too);
@@ -313,17 +313,17 @@
 		 */
 		function add_grid(&$parent,$grid,&$embeded_too)
 		{
-			$xul_grid = new xmlnode('grid');
+			$xul_grid =& new xmlnode('grid');
 			$this->set_attributes($xul_grid,'width,height,border,class,spacing,padding,overflow',$grid['size']);
 
-			$xul_columns = new xmlnode('columns');
-			$xul_rows = new xmlnode('rows');
+			$xul_columns =& new xmlnode('columns');
+			$xul_rows =& new xmlnode('rows');
 
 			reset($grid['data']);
 			list(,$opts) = each ($grid['data']); // read over options-row
 			while (list($r,$row) = each ($grid['data']))
 			{
-				$xul_row = new xmlnode('row');
+				$xul_row =& new xmlnode('row');
 				$this->set_attributes($xul_row,'class,valign',$opts["c$r"]);
 				$this->set_attributes($xul_row,'height,disabled',$opts["h$r"]);
 
@@ -332,7 +332,7 @@
 				{
 					if ($r == '1')	// write columns only once in the first row
 					{
-						$xul_column = new xmlnode('column');
+						$xul_column =& new xmlnode('column');
 						$this->set_attributes($xul_column,'width,disabled',$opts[$c]);
 						$xul_columns->add_node($xul_column);
 					}
@@ -373,7 +373,7 @@
 			}
 			$embeded_too[$etempl->name] = True;
 			
-			$template = new xmlnode('template');
+			$template =& new xmlnode('template');
 			$template->set_attribute('id',$etempl->name);
 			$template->set_attribute('template',$etempl->template);
 			$template->set_attribute('lang',$etempl->lang);
@@ -386,7 +386,7 @@
 			}
 			if ($etempl->style != '')
 			{
-				$styles = new xmlnode('styles');
+				$styles =& new xmlnode('styles');
 				$styles->set_value($etempl->style);
 				$template->add_node($styles);
 			}
@@ -405,10 +405,10 @@
 			{
 				echo "<p>etempl->data = "; _debug_array($etempl->data);
 			}
-			$doc = new xmldoc();
+			$doc =& new xmldoc();
 			$doc->add_comment('$'.'Id$');
 
-			$this->xul_overlay = new xmlnode('overlay');	// global for all add_etempl calls
+			$this->xul_overlay =& new xmlnode('overlay');	// global for all add_etempl calls
 			$this->load_via = $etempl->as_array();
 
 			$embeded_too = True;
@@ -446,7 +446,7 @@
 			if (!$ok || !is_array($vals))
 			{
 				$err = 'Error Line '.xml_get_current_line_number($parser).', Column '.xml_get_current_column_number($parser).
-				       ': '.xml_error_string(xml_get_error_code($parser));
+							 ': '.xml_error_string(xml_get_error_code($parser));
 			}
 			xml_parser_free($parser);
 
@@ -506,8 +506,8 @@
 									$etempl->fix_old_template_format(); 	// set the depricated compat vars
 									// save tmpl to the cache, as the file may contain more then one tmpl
 									$cname = ($etempl->template == '' ? 'default' : $etempl->template).'/'.$etempl->name.
-									         ($etempl->lang == '' ? '' : '.'.$etempl->lang);
-									$GLOBALS['phpgw_info']['etemplate']['cache'][$cname] = $etempl->as_array(1);
+													 ($etempl->lang == '' ? '' : '.'.$etempl->lang);
+									$GLOBALS['egw_info']['etemplate']['cache'][$cname] = $etempl->as_array(1);
 									if ($this->debug)
 									{
 										$etempl->echo_tmpl();
@@ -572,7 +572,7 @@
 						{
 							break;
 						}
-						$nul = null; soetemplate::add_child($parent,$nul);	// null = new row
+						$nul = null; soetemplate::add_child($parent,$nul);	// null =& new row
 						$parent['data'][0]['c'.$parent['rows']] = $attr['class'] . ($attr['valign'] ? ','.$attr['valign'] : '');
 						$parent['data'][0]['h'.$parent['rows']] = $attr['height'] .
 							($attr['disabled'] ? ','.$attr['disabled'] : '');

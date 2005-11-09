@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.soetemplate.inc.php');
+	include_once(EGW_INCLUDE_ROOT . '/etemplate/inc/class.soetemplate.inc.php');
 
 	/**
 	 * Business Object for eTemplates, extending the Storage Object
@@ -79,7 +79,7 @@
 			{
 				$this->init($name);
 			}
-			$this->garbage_collection_done =& $GLOBALS['phpgw_info']['etemplate']['garbage_collection_done'];
+			$this->garbage_collection_done =& $GLOBALS['egw_info']['etemplate']['garbage_collection_done'];
 		}
 
 		/**
@@ -238,7 +238,7 @@
 		{
 			list($msec,$sec) = explode(' ',microtime());
 			$time = 100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
-			$id = $GLOBALS['phpgw_info']['flags']['currentapp'] .':'. $time;
+			$id = $GLOBALS['egw_info']['flags']['currentapp'] .':'. $time;
 			//echo "<p>microtime()=".microtime().", sec=$sec, msec=$msec, id=$id</p>\n";
 			return $id;
 		}
@@ -261,9 +261,9 @@
 			{
 				$id = $this->appsession_id();
 			}
-			$GLOBALS['phpgw']->session->appsession($id,'etemplate',$data);
+			$GLOBALS['egw']->session->appsession($id,'etemplate',$data);
 
-			if (substr($GLOBALS['phpgw_info']['server']['sessions_type'],0,4) == 'php4' && !$this->garbage_collection_done)
+			if (substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4' && !$this->garbage_collection_done)
 			{
 				return $this->php4_session_garbage_collection();
 			}
@@ -278,10 +278,10 @@
 		 */
 		function get_appsession($id)
 		{
-			$data = $GLOBALS['phpgw']->session->appsession($id,'etemplate');
+			$data = $GLOBALS['egw']->session->appsession($id,'etemplate');
 			//echo "boetemplate::get_appsession('$id')"; _debug_array($data);
 
-			if (substr($GLOBALS['phpgw_info']['server']['sessions_type'],0,4) == 'php4')
+			if (substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4')
 			{
 				$this->php4_session_garbage_collection($id);
 			}
@@ -461,29 +461,29 @@
 			list($class,$app) = explode('.',$type);
 			$class .= '_widget';
 
-			if (!$app) $app = $GLOBALS['phpgw_info']['flags']['current_app'];
+			if (!$app) $app = $GLOBALS['egw_info']['flags']['current_app'];
 
-			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
+			if (!file_exists(EGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
 				list($app) = explode('_',$type);
 			}
-			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
+			if (!file_exists(EGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
 				list($app) = explode('.',$this->name);
 			}
-			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
+			if (!file_exists(EGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
 				$app = 'etemplate';
 			}
-			if (!file_exists(PHPGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
+			if (!file_exists(EGW_SERVER_ROOT."/$app/inc/class.$class.inc.php"))
 			{
 				//echo "<p>boetemplate::loadExtension($type) extension not found</p>\n";
-				return $GLOBALS['phpgw_info']['etemplate']['extension'][$type] = False;
+				return $GLOBALS['egw_info']['etemplate']['extension'][$type] = False;
 			}
-			$GLOBALS['phpgw_info']['etemplate']['extension'][$type] =& CreateObject($app.'.'.$class,$ui='html');
+			$GLOBALS['egw_info']['etemplate']['extension'][$type] =& CreateObject($app.'.'.$class,$ui='html');
 
 			//echo "<p>boetemplate::loadExtension($type) extension found in App. $app</p>\n";
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->human_name;
+			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->human_name;
 		}
 
 		/**
@@ -496,8 +496,8 @@
 		 */
 		function haveExtension($type,$function='')
 		{
-			return ($GLOBALS['phpgw_info']['etemplate']['extension'][$type] || $this->loadExtension($type,$ui)) &&
-			        ($function == '' || $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->public_functions[$function]);
+			return ($GLOBALS['egw_info']['etemplate']['extension'][$type] || $this->loadExtension($type,$ui)) &&
+							($function == '' || $GLOBALS['egw_info']['etemplate']['extension'][$type]->public_functions[$function]);
 		}
 
 		/**
@@ -516,8 +516,8 @@
 			{
 				return False;
 			}
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,
-				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],$this);
+			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->pre_process($name,$value,$cell,$readonlys,
+				$GLOBALS['egw_info']['etemplate']['extension_data'][$name],$this);
 		}
 
 		/**
@@ -535,9 +535,9 @@
 			{
 				return True;
 			}
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->post_process($name,$value,
-				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],
-				$GLOBALS['phpgw_info']['etemplate']['loop'],$this,$value_in);
+			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->post_process($name,$value,
+				$GLOBALS['egw_info']['etemplate']['extension_data'][$name],
+				$GLOBALS['egw_info']['etemplate']['loop'],$this,$value_in);
 		}
 
 		/**
@@ -556,8 +556,8 @@
 			{
 				return False;
 			}
-			return $GLOBALS['phpgw_info']['etemplate']['extension'][$type]->render($cell,$name,$value,$readonly,
-				$GLOBALS['phpgw_info']['etemplate']['extension_data'][$name],$this);
+			return $GLOBALS['egw_info']['etemplate']['extension'][$type]->render($cell,$name,$value,$readonly,
+				$GLOBALS['egw_info']['etemplate']['extension_data'][$name],$this);
 		}
 
 		/**
@@ -776,7 +776,7 @@
 		function store_in_cache()
 		{
 			//echo "<p>store_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-			$GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
+			$GLOBALS['egw_info']['etemplate']['cache'][$this->cache_name()] = $this->as_array(1);
 		}
 
 		/**
@@ -785,7 +785,7 @@
 		function delete_in_cache()
 		{
 			//echo "<p>delete_in_cache('$this->name','$this->template','$this->lang','$this->version')</p>\n";
-			unset($GLOBALS['phpgw_info']['etemplate']['cache'][$this->cache_name()]);
+			unset($GLOBALS['egw_info']['etemplate']['cache'][$this->cache_name()]);
 		}
 
 		/*
@@ -806,8 +806,8 @@
 				$version = $name['version'];
 				$name    = $name['name'];
 			}
-			if (!isset($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]) ||
-			    !empty($version) && $GLOBALS['phpgw_info']['etemplate']['cache'][$cname]['version'] != $version)
+			if (!isset($GLOBALS['egw_info']['etemplate']['cache'][$cname]) ||
+					!empty($version) && $GLOBALS['egw_info']['etemplate']['cache'][$cname]['version'] != $version)
 			{
 				//echo " NOT found in cache</p>\n";
 				return False;
@@ -833,7 +833,7 @@
 			//if (is_array($name)) $version = $name['version']; echo "<p>read_from_cache(,,,version='$version'): ";
 			if ($cname = $this->in_cache($name,$template,$lang,$group))
 			{
-				$this->init($GLOBALS['phpgw_info']['etemplate']['cache'][$cname]);
+				$this->init($GLOBALS['egw_info']['etemplate']['cache'][$cname]);
 
 				return True;
 			}
@@ -868,7 +868,7 @@
 			}
 			$parent = is_array($load_via) ? $load_via['name'] : $load_via;
 
-         	if (strstr($pname,'.') === False && !empty($parent))
+				 	if (strstr($pname,'.') === False && !empty($parent))
 			{
 				$pname = $parent . '.' . $pname;
 			}
@@ -877,7 +877,7 @@
 				if (!soetemplate::read($name,$template,$lang,$group,$version))
 				{
 					if ($load_via && (is_string($load_via) ||
-					    !isset($load_via['tpls_in_file']) || $load_via['tpls_in_file'] > 1))
+							!isset($load_via['tpls_in_file']) || $load_via['tpls_in_file'] > 1))
 					{
 						soetemplate::read($load_via);
 						return $this->read_from_cache($name,$template,$lang,$group,$version);

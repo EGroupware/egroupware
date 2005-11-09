@@ -65,14 +65,14 @@
 		{
 			if ($ui == 'html')
 			{
-				if (!is_object($GLOBALS['phpgw']->jscalendar))
+				if (!is_object($GLOBALS['egw']->jscalendar))
 				{
-					$GLOBALS['phpgw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
+					$GLOBALS['egw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
 				}
-				$this->jscal =& $GLOBALS['phpgw']->jscalendar;
+				$this->jscal =& $GLOBALS['egw']->jscalendar;
 			}
-			$this->timeformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat'];
-			$this->dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
+			$this->timeformat = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'];
+			$this->dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 		}
 
 		/**
@@ -447,7 +447,7 @@
 				}
 				elseif (!preg_match('/^-?[0-9]*[,.]?[0-9]*'.($extension_data['percent_allowed'] ? '%?' : '').'$/',$value_in))
 				{
-					$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] = lang("'%1' is not a valid floatingpoint number !!!",$value_in);
+					$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = lang("'%1' is not a valid floatingpoint number !!!",$value_in);
 					return false;
 				}
 				else
@@ -528,8 +528,8 @@
 				// checking the date is a correct one
 				if (!checkdate($value['m'],$value['d'],$value['Y']))
 				{
-					$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] .= lang("'%1' is not a valid date !!!",
-						$GLOBALS['phpgw']->common->dateformatorder($value['Y'],$value['m'],$value['d'],true));
+					$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] .= lang("'%1' is not a valid date !!!",
+						$GLOBALS['egw']->common->dateformatorder($value['Y'],$value['m'],$value['d'],true));
 				}
 				$data_format = $extension_data['data_format'];
 				if (empty($data_format))

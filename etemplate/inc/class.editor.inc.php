@@ -94,7 +94,7 @@
 		{
 			$this->etemplate =& CreateObject('etemplate.etemplate');
 
-			$this->extensions = $GLOBALS['phpgw']->session->appsession('extensions','etemplate');
+			$this->extensions = $GLOBALS['egw']->session->appsession('extensions','etemplate');
 		}
 
 		function export_xml(&$xml,&$xml_label)
@@ -110,10 +110,10 @@
 			}
 			$xml = $this->etemplate->xul_io->export($this->etemplate);
 
-			$dir = PHPGW_SERVER_ROOT . "/$app/templates/$template";
+			$dir = EGW_SERVER_ROOT . "/$app/templates/$template";
 			if (($create_it = !is_dir($dir)))
 			{
-				$dir = PHPGW_SERVER_ROOT . "/$app/templates";
+				$dir = EGW_SERVER_ROOT . "/$app/templates";
 			}
 			if (!is_writeable($dir))
 			{
@@ -262,8 +262,8 @@
 			{
 				$content[$row] = $param;
 			}
-			$list_result = new etemplate('etemplate.editor.list_result');
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Search');
+			$list_result =& new etemplate('etemplate.editor.list_result');
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Search');
 			$list_result->exec('etemplate.editor.list_result',$content,'','',array(
 				'result' => $result,
 			),'');
@@ -374,7 +374,7 @@
 			list($app) = explode('.',$this->etemplate->name);
 			if ($app && $app != 'etemplate')
 			{
-				$GLOBALS['phpgw']->translation->add_app($app);	// load translations for app
+				$GLOBALS['egw']->translation->add_app($app);	// load translations for app
 
 				if (($extensions = $this->scan_for_extensions($app)))
 				{
@@ -393,7 +393,7 @@
 			}
 			elseif ($content['dump'])
 			{
-				if (empty($app) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$app))
+				if (empty($app) || !@is_dir(EGW_SERVER_ROOT.'/'.$app))
 				{
 					$msg .= lang('Application name needed to write a langfile or dump the eTemplates !!!');
 				}
@@ -404,7 +404,7 @@
 			}
 			elseif ($content['langfile'])
 			{
-				if (empty($app) || !@is_dir(PHPGW_SERVER_ROOT.'/'.$app))
+				if (empty($app) || !@is_dir(EGW_SERVER_ROOT.'/'.$app))
 				{
 					$msg = lang('Application name needed to write a langfile or dump the eTemplates !!!');
 				}
@@ -471,16 +471,16 @@
 				<script language="javascript">
 					function edit_widget(path)
 					{
-						var url = "'.$GLOBALS['phpgw']->link('/index.php',$this->etemplate->as_array(-1)+array(
+						var url = "'.$GLOBALS['egw']->link('/index.php',$this->etemplate->as_array(-1)+array(
 							'menuaction' => 'etemplate.editor.widget',
 						)).'";
 						url = url.replace(/index.php\\?/,"index.php?path="+path+"&");
 						window.open(url,"etemplate_editor_widget","dependent=yes,width=600,height=450,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes");
 					}
 				</script>';
-				if ($app != 'etemplate' && file_exists(PHPGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
+				if ($app != 'etemplate' && file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
 				{
-					$new_content['onclick'] .= $editor->html->style('@import url('.$GLOBALS['phpgw_info']['server']['webserver_url'].'/'.$app.'/templates/default/app.css);');
+					$new_content['onclick'] .= $editor->html->style('@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/'.$app.'/templates/default/app.css);');
 				}
 				$editor->data[$editor->rows]['A']['obj'] = &$this->etemplate;
 				$vals = $content['vals'];
@@ -495,7 +495,7 @@
 			$preserv['olds'] = $vals;
 			$preserv['old_keys'] = $this->etemplate->as_array(-1);	// in case we do a save as
 
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Show Template');
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Show Template');
 			$editor->exec('etemplate.editor.edit',$new_content,array(),'',$preserv,0,'/^cont/');
 		}
 
@@ -696,21 +696,21 @@
 			{
 				case 'paste':
 				case 'swap':
-					$clipboard = $GLOBALS['phpgw']->session->appsession('clipboard','etemplate');
+					$clipboard = $GLOBALS['egw']->session->appsession('clipboard','etemplate');
 					if (!is_array($clipboard))
 					{
 						return lang('nothing in clipboard to paste !!!');
 					}
 					if ($action == 'swap')
 					{
-						$GLOBALS['phpgw']->session->appsession('clipboard','etemplate',$content['cell']);
+						$GLOBALS['egw']->session->appsession('clipboard','etemplate',$content['cell']);
 					}
 					$content['cell'] = $clipboard;
 					break;
 
 				case 'copy':
 				case 'cut':
-					$GLOBALS['phpgw']->session->appsession('clipboard','etemplate',$content['cell']);
+					$GLOBALS['egw']->session->appsession('clipboard','etemplate',$content['cell']);
 					if ($action != 'cut')
 					{
 						return lang('widget copied into clipboard');
@@ -1198,7 +1198,7 @@
 						{
 							$content['opener']['version'] = $content['version'];
 						}
-						$js = "opener.location.href='".$GLOBALS['phpgw']->link('/index.php',array(
+						$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',array(
 								'menuaction' => 'etemplate.editor.edit',
 							)+$content['opener'])."';";
 						if ($action == 'apply' || $action == 'apply-no-merge') break;
@@ -1206,7 +1206,7 @@
 					case 'cancel':
 						$js .= 'window.close();';
 						echo "<html><body><script>$js</script></body></html>\n";
-						$GLOBALS['phpgw']->common->phpgw_exit();
+						$GLOBALS['egw']->common->egw_exit();
 						break;
 				}				
 				if ($js)
@@ -1280,8 +1280,8 @@
 			);
 			unset($preserv['cell']['options']);	// otherwise we never know if content is returned via options array or size
 			
-			$GLOBALS['phpgw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
+			$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Editable Templates - Editor');
 			$editor->exec('etemplate.editor.widget',$content,array(
 					'type'       => array_merge($this->etemplate->types,$this->extensions),
 					'align'      => &$this->aligns,
@@ -1324,7 +1324,7 @@
 			{
 				if ($content['from'])
 				{
-					$path = PHPGW_SERVER_ROOT.'/'.$content['from'];
+					$path = EGW_SERVER_ROOT.'/'.$content['from'];
 					if (is_writable(dirname($path)) && file_exists($path))
 					{
 						rename($path,str_replace('.css','.old.css',$path));
@@ -1349,7 +1349,7 @@
 					$ok = $this->etemplate->save();
 					$msg = $ok ? lang('Template saved') : lang('Error: while saving !!!');
 				}
-				$js = "opener.location.href='".$GLOBALS['phpgw']->link('/index.php',array(
+				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',array(
 						'menuaction' => 'etemplate.editor.edit',
 					)+$this->etemplate->as_array(-1))."';";
 			}
@@ -1357,7 +1357,7 @@
 			{
 				$js .= 'window.close();';
 				echo "<html><body><script>$js</script></body></html>\n";
-				$GLOBALS['phpgw']->common->phpgw_exit();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 			$content = array(
 				'from' => $content['from'],
@@ -1368,7 +1368,7 @@
 
 			if ($content['from'])
 			{
-				$path = PHPGW_SERVER_ROOT.'/'.$content['from'];
+				$path = EGW_SERVER_ROOT.'/'.$content['from'];
 				$content['styles'] = file_exists($path) && is_readable($path) ? implode('',file($path)) : '';
 				if (!is_writable(dirname($path)) && (!file_exists($path) || !is_writable($path)))
 				{ 
@@ -1383,10 +1383,10 @@
 			$keys = $this->etemplate->as_array(-1); unset($keys['group']);
 			$sources[''] = lang('eTemplate').': '.implode(':',$keys);
 			list($app) = explode('.',$this->etemplate->name);
-			$app_templates = @opendir(PHPGW_SERVER_ROOT.'/'.$app.'/templates');
+			$app_templates = @opendir(EGW_SERVER_ROOT.'/'.$app.'/templates');
 			while (($template = @readdir($app_templates)) !== false)
 			{
-				$dir = PHPGW_SERVER_ROOT.'/'.$app.'/templates/'.$template;
+				$dir = EGW_SERVER_ROOT.'/'.$app.'/templates/'.$template;
 				if ($template[0] == '.' || $template == 'CVS' || !is_dir($dir.'/images')) continue;	// not a template-dir
 				$exists = file_exists($dir.'/app.css');
 				$writable = is_writable($dir) || $exists && is_writable($dir.'/app.css');
@@ -1394,8 +1394,8 @@
 				$rel_path = $app.'/templates/'.$template.'/app.css';
 				$sources[$rel_path] = lang('file').': '.$rel_path.($exists && !$writable ? ' ('.lang('readonly').')' : '');
 			}
-			$GLOBALS['phpgw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
-			$GLOBALS['phpgw_info']['flags']['app_header'] = lang('etemplate').' - '.lang('CSS-styles');
+			$GLOBALS['egw_info']['flags']['java_script'] = "<script>window.focus();</script>\n";
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('etemplate').' - '.lang('CSS-styles');
 			$tmpl->exec('etemplate.editor.styles',$content,array('from'=>$sources),'',$keys,2);
 		}
 
@@ -1415,7 +1415,7 @@
 			if (isset($this->extensions['**loaded**'][$app])) return '';	// already loaded
 			
 			$labels = array();
-			$dir = @opendir(PHPGW_SERVER_ROOT.'/'.$app.'/inc');
+			$dir = @opendir(EGW_SERVER_ROOT.'/'.$app.'/inc');
 			while ($dir && ($file = readdir($dir)))
 			{
 				if (ereg('class\\.([a-zA-Z0-9_]*)_widget.inc.php',$file,$regs) &&
@@ -1435,10 +1435,10 @@
 				}
 			}
 			// store the information in the session, our constructor loads it from there
-			$GLOBALS['phpgw']->session->appsession('extensions','etemplate',$this->extensions);
-			$apps_loaded = $GLOBALS['phpgw']->session->appsession('apps_loaded','etemplate');
+			$GLOBALS['egw']->session->appsession('extensions','etemplate',$this->extensions);
+			$apps_loaded = $GLOBALS['egw']->session->appsession('apps_loaded','etemplate');
 			$apps_loaded[$app] = true;
-			$GLOBALS['phpgw']->session->appsession('apps_loaded','etemplate',$apps_loaded);
+			$GLOBALS['egw']->session->appsession('apps_loaded','etemplate',$apps_loaded);
 			//_debug_array($this->extensions); _debug_array($apps_loaded);
 			
 			return implode(', ',$labels);

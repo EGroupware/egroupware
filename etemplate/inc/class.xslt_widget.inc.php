@@ -12,14 +12,14 @@
 
 	/* $Id$ */
 
-	/*!
-	@class xslt_widget
-	@author ralfbecker
-	@abstract widget that generates its html-output via a xslt file with its in $options and the content as xml
-	@discussion The following data is placed in the xml: value,name,label(translated),statustext(translated),readonly
-	@discussion and all widget-attributes as descript in the referenz, using there xml-names.
-	@discussion This widget is generating html, so it does not work (without an extra implementation) in an other UI
-	*/
+	/**
+	 * @author ralfbecker
+	 * widget that generates its html-output via a xslt file with its in $options and the content as xml
+	 *
+	 * The following data is placed in the xml: value,name,label(translated),statustext(translated),readonly
+	 * and all widget-attributes as descript in the referenz, using there xml-names.
+	 * This widget is generating html, so it does not work (without an extra implementation) in an other UI
+	 */
 	class xslt_widget
 	{
 		var $public_functions = array(
@@ -31,7 +31,7 @@
 
 		function xslt_widget($ui='')
 		{
-			$this->xslttemplates = CreateObject('phpgwapi.xslttemplates',PHPGW_INCLUDE_ROOT);
+			$this->xslttemplates =& CreateObject('phpgwapi.xslttemplates',EGW_INCLUDE_ROOT);
 
 			switch($ui)
 			{
@@ -64,9 +64,9 @@
 		function render_html($cell,$form_name,$value,$readonly,&$tmpl)
 		{
 			list($app,$file) = split('\\.',$cell['size'],2);
-			$pref_templ = $GLOBALS['phpgw_info']['server']['template_set'];
+			$pref_templ = $GLOBALS['egw_info']['server']['template_set'];
 			$path = "$app/templates/$pref_templ/$file";
-			if (!file_exists(PHPGW_SERVER_ROOT.'/'.$path.'.xsl'))
+			if (!file_exists(EGW_SERVER_ROOT.'/'.$path.'.xsl'))
 			{
 				$path = "$app/templates/default/$file";
 			}

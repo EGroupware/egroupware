@@ -1,15 +1,15 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Translation Editor                                          *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+	/**************************************************************************\
+	* eGroupWare - Translation Editor                                          *
+	* http://www.egroupware.org                                                *
+	* --------------------------------------------                             *
+	*  This program is free software; you can redistribute it and/or modify it *
+	*  under the terms of the GNU General Public License as published by the   *
+	*  Free Software Foundation; either version 2 of the License, or (at your  *
+	*  option) any later version.                                              *
+	\**************************************************************************/
 
-  /* $Id$ */
+	/* $Id$ */
 
 	class solangfile
 	{
@@ -36,6 +36,7 @@
 			'config.tpl' => 'config',
 			'hook_admin.inc.php' => 'file_admin',
 			'hook_preferences.inc.php' => 'file_preferences',
+			'hook_settings.inc.php' => 'file',
 			'hook_sidebox_menu.inc.php' => 'file',
 			'hook_acl_manager.inc.php' => 'acl_manager'
 		);
@@ -46,7 +47,7 @@
 
 		function solangfile()
 		{
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = $GLOBALS['egw']->db;
 		}
 
 		function fetch_keys($app,$arr)
@@ -98,26 +99,13 @@
 					$app = 'common';
 					break;
 			}
-			if (!function_exists('display_sidebox'))
-			{
-				function display_sidebox($appname,$menu_title,$file)	// hook_sidebox_menu
-				{
-					unset($file['_NewLine_']);
-					$GLOBALS['file'] += $file;
-				}
-				function display_section($appname,$file,$file2='')		// hook_preferences, hook_admin
-				{
-					if (is_array($file2))
-					{
-						$file = $file2;
-					}
-					$GLOBALS['file'] += $file;
-				}
-			}
-			$GLOBALS['file'] = array();
+			$GLOBALS['file'] = $GLOBALS['settings'] = array();
 			unset($GLOBALS['acl_manager']);
+
+			ob_start();		// suppress all output
 			include($fname);
-			
+			ob_end_clean();
+
 			if (isset($GLOBALS['acl_manager']))	// hook_acl_manager
 			{
 				foreach($GLOBALS['acl_manager'] as $app => $data)
@@ -147,6 +135,16 @@
 				foreach ($GLOBALS['file'] as $lang => $link)
 				{
 					$this->plist[$lang] = $app;
+				}
+			}
+			foreach($GLOBALS['settings'] as $data)
+			{
+				foreach(array('label','help') as $key)
+				{
+					if (isset($data[$key]) && !empty($data[$key]))
+					{
+						$this->plist[$data[$key]] = $app;
+					}
 				}
 			}
 		}
@@ -188,7 +186,7 @@
 							for($i = 1; $i <= $args[0]; ++$i)
 							{
 								$next = 1;
-								if (!$rest || strpos($rest,$del,1) === False)
+								if (!$rest || empty($del) || strpos($rest,$del,1) === False)
 								{
 									$rest .= trim($lines[++$n]);
 								}
@@ -236,7 +234,7 @@
 		{
 			$cur_lang=$this->load_app($app,$userlang);
 			define('SEP',filesystem_separator());
-			$fd = PHPGW_SERVER_ROOT . SEP . $app . SEP;
+			$fd = EGW_SERVER_ROOT . SEP . $app . SEP;
 			$this->plist = array();
 			$this->parse_php_app($app == 'phpgwapi' ? 'common' : $app,$fd);
 
@@ -244,46 +242,56 @@
 			return($this->plist);
 		}
 
-		/*!
-		@function load_app
-		@abstract loads all app phrases into langarray
-		@param $lang user lang variable (defaults to en)
-		*/
+		/**
+		 * loads all app phrases into langarray
+		 *
+		 * @param $lang user lang variable (defaults to en)
+		 */
 		function load_app($app,$userlang='en',$target=True)
 		{
 			define('SEP',filesystem_separator());
 
 			$langarray = array();
-			$fd = PHPGW_SERVER_ROOT . SEP . $app . SEP . ($app == 'setup' ? 'lang' : 'setup');
+			$fd = EGW_SERVER_ROOT . SEP . $app . SEP . ($app == 'setup' ? 'lang' : 'setup');
 			$fn = $fd . SEP . 'phpgw_' . $userlang . '.lang';
 			if (@is_writeable($fn) || is_writeable($fd))
 			{
 				$wr = True;
 			}
+			if (!$target) $this->src_apps = array();
 
-			$from = $GLOBALS['phpgw']->translation->charset($userlang);
-			$to = $GLOBALS['phpgw']->translation->system_charset;
+			$from = $GLOBALS['egw']->translation->charset($userlang);
+			$to = $GLOBALS['egw']->translation->charset();
 			//echo "<p>solangfile::load_app('$app','$userlang') converting from charset('$userlang')='$from' to '$to'</p>\n";
 
 			if (file_exists($fn))
 			{
 				if ($fp = @fopen($fn,'rb'))
 				{
-				   while ($data = fgets($fp,8000))
-				   {
-						list($message_id,$app_name,$null,$content) = explode("\t",$data);
+					 while ($data = fgets($fp,8000))
+					 {
+						list($message_id,$app_name,,$content) = explode("\t",$data);
 						if(!$message_id)
 						{
 							continue;
 						}
-						//echo '<br>load_app(): adding phrase: $this->langarray["'.$message_id.'"]=' . trim($content);
+						if (empty($app_name))
+						{
+							$app_name = $app;	// fix missing app_name
+						}
+						//echo '<br>load_app(): adding phrase: $this->langarray["'.$message_id.'"]=' . trim($content)."' for $app_name";
 						$_mess_id = strtolower(trim($message_id));
 						$langarray[$_mess_id]['message_id'] = $_mess_id;
-						$langarray[$_mess_id]['app_name']   = trim($app_name);
+						$app_name   = trim($app_name);
+						$langarray[$_mess_id]['app_name']   = $app_name;
+						if (!$target)
+						{
+							$this->src_apps[$app_name] = $app_name;
+						}
 						$langarray[$_mess_id]['content']    =
-							$GLOBALS['phpgw']->translation->convert(trim($content),$from,$to);
-				   }
-				   fclose($fp);
+							$GLOBALS['egw']->translation->convert(trim($content),$from,$to);
+					 }
+					 fclose($fp);
 				}
 			}
 			else
@@ -301,42 +309,21 @@
 			// stuff class array listing apps that are included already
 			$this->loaded_apps[$userlang]['filename']  = $fn;
 			$this->loaded_apps[$userlang]['writeable'] = $wr;
+
+			if (!$target) ksort($this->src_apps);
+
 			if($this->debug) { _debug_array($langarray); }
 			@ksort($langarray);
 			return $langarray;
 		}
 
-		function list_langs()
-		{
-			$this->db->query("SELECT DISTINCT lang FROM phpgw_lang");
-			while($this->db->next_record())
-			{
-				$lang = $this->db->f('lang');
-				$installed[] = $lang;
-			}
-			$installed = "('".implode("','",$installed)."')"; 
-			
-			// this shows first the installed, then the available and then the rest
-			$this->db->query("SELECT lang_id,lang_name,lang_id IN $installed as installed FROM phpgw_languages ORDER BY installed DESC,available DESC,lang_name");
-			$i = 0;
-			while ($this->db->next_record())
-			{
-				$languages[$i]['lang_id']   = $this->db->f('lang_id');
-				$languages[$i]['lang_name'] = $this->db->f('lang_name');
-				$i++;
-			}
-			@reset($languages);
-			if($this->debug) { _debug_array($languages); }
-			return $languages;
-		}
-
 		function write_file($app_name,$langarray,$userlang,$which='target')
 		{
-			$to = $GLOBALS['phpgw']->translation->charset($userlang);
-			$from = $GLOBALS['phpgw']->translation->system_charset;
+			$to = $GLOBALS['egw']->translation->charset($userlang);
+			$from = $GLOBALS['egw']->translation->charset();
 			//echo "<p>solangfile::write_file('$app_name',,'$userlang') converting from '$from' to charset('$userlang')='$to'</p>\n";
 
-			$fn = PHPGW_SERVER_ROOT . SEP . $app_name . SEP . ($app_name == 'setup' ? 'lang' : 'setup') . SEP . 'phpgw_' . $userlang . '.lang';
+			$fn = EGW_SERVER_ROOT . SEP . $app_name . SEP . ($app_name == 'setup' ? 'lang' : 'setup') . SEP . 'phpgw_' . $userlang . '.lang';
 			if (file_exists($fn))
 			{
 				$backup = $fn . '.old';
@@ -346,9 +333,13 @@
 			$fp = fopen($fn,'wb');
 			while(list($mess_id,$data) = @each($langarray))
 			{
-				$data['content'] = $GLOBALS['phpgw']->translation->convert(trim($data['content']),$from,$to);
+				$data['content'] = $GLOBALS['egw']->translation->convert(trim($data['content']),$from,$to);
 
-				fwrite($fp,$mess_id . "\t" . $data['app_name'] . "\t" . $userlang . "\t" . $data['content'] . "\n");
+				// dont write empty content
+				if (!empty($data['content']))
+				{
+					fwrite($fp,$mess_id . "\t" . $data['app_name'] . "\t" . $userlang . "\t" . $data['content'] . "\n");
+				}
 			}
 			fclose($fp);
 
@@ -369,9 +360,47 @@
 			{
 				$userlangs = array($userslangs => $userlangs);
 			}
-			$GLOBALS['phpgw']->translation->install_langs($userlangs,'addmissing',$app_name);
+			$GLOBALS['egw']->translation->install_langs($userlangs,'addmissing',$app_name);
 
 			return lang('done');
+		}
+	}
+
+	/*
+	 * Helper functions for searching new phrases in sidebox, preferences or admin menus
+	 */
+	if (!function_exists('display_sidebox') && $_GET['menuaction'] == 'developer_tools.uilangfile.missingphrase')
+	{
+		function display_sidebox($appname,$menu_title,$file)	// hook_sidebox_menu
+		{
+			if (!is_array($file)) return;
+
+			unset($file['_NewLine_']);
+			if (is_array($GLOBALS['file']))
+			{
+				$GLOBALS['file'] = $file;
+			}
+			else
+			{
+				$GLOBALS['file'] += $file;
+			}
+		}
+		function display_section($appname,$file,$file2='')		// hook_preferences, hook_admin
+		{
+			if (is_array($file2))
+			{
+				$file = $file2;
+			}
+			if (!is_array($file)) return;
+
+			if (is_array($GLOBALS['file']))
+			{
+				$GLOBALS['file'] = $file;
+			}
+			else
+			{
+				$GLOBALS['file'] += $file;
+			}
 		}
 	}
 ?>

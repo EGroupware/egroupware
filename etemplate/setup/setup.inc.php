@@ -13,9 +13,9 @@
 	/* $Id$ */
 
 	$setup_info['etemplate']['name']      = 'etemplate';
-	$setup_info['etemplate']['version']   = '1.0.0';
+	$setup_info['etemplate']['version']   = '1.2';
 	$setup_info['etemplate']['app_order'] = 60;	// just behind the developers-tools
-	$setup_info['etemplate']['tables']    = array('phpgw_etemplate');
+	$setup_info['etemplate']['tables']    = array('egw_etemplate');
 	$setup_info['etemplate']['enable']    = 1;
 
 	$setup_info['etemplate']['author'] = 
@@ -39,6 +39,6 @@
 	/* Dependencies for this app to work */
 	$setup_info['etemplate']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('0.9.14','0.9.15','0.9.16','1.0.0','1.0.1')
+		 'versions' => Array('1.0.0','1.0.1','1.2')
 	);
 ?>

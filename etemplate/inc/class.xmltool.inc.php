@@ -15,7 +15,7 @@
 
 	function var2xml($name, $data)
 	{
-		$doc = new xmltool('root','','');
+		$doc =& new xmltool('root','','');
 		return $doc->import_var($name,$data,True,True);
 	}
 
@@ -170,7 +170,7 @@
 		function import_var($name, $value,$is_root=False,$export_xml=False)
 		{
 			echo "<p>import_var: this->indentstring='$this->indentstring'</p>\n";
-			$node = new xmltool('node',$name,$this->indentstring);
+			$node =& new xmltool('node',$name,$this->indentstring);
 			switch (gettype($value))
 			{
 				case 'string':
@@ -223,12 +223,12 @@
 							case 'integer':
 							case 'double':
 							case 'NULL':
-								$subnode = new xmltool('node', $nextkey,$this->indentstring);
+								$subnode =& new xmltool('node', $nextkey,$this->indentstring);
 								$subnode->set_value($val);
 								$node->add_node($subnode);							
 								break;
 							case 'boolean':
-								$subnode = new xmltool('node', $nextkey,$this->indentstring);
+								$subnode =& new xmltool('node', $nextkey,$this->indentstring);
 								if($val == True)
 								{
 									$subnode->set_value('1');
@@ -254,7 +254,7 @@
 								}
 								break;
 							case 'object':
-								$subnode = new xmltool('node', $nextkey,$this->indentstring);
+								$subnode =& new xmltool('node', $nextkey,$this->indentstring);
 								$subnode->set_value('PHP_SERIALIZED_OBJECT&:'.serialize($val));
 								$node->add_node($subnode);							
 								break;
@@ -393,7 +393,7 @@
 				{
 					case 'cdata':
 					case 'complete':
-						$node = new xmltool('node',$data[$i]['tag'],$this->indentstring);
+						$node =& new xmltool('node',$data[$i]['tag'],$this->indentstring);
 						if(is_array($data[$i]['attributes']) && count($data[$i]['attributes']) > 0)
 						{
 							while(list($k,$v)=each($data[$i]['attributes']))
@@ -405,7 +405,7 @@
 						$parent_node->add_node($node);
 						break;
 					case 'open':
-						$node = new xmltool('node',$data[$i]['tag'],$this->indentstring);
+						$node =& new xmltool('node',$data[$i]['tag'],$this->indentstring);
 						if(is_array($data[$i]['attributes']) && count($data[$i]['attributes']) > 0)
 						{
 							while(list($k,$v)=each($data[$i]['attributes']))
@@ -431,7 +431,7 @@
 			xml_parse_into_struct($parser, $xmldata, $vals, $index);
 			xml_parser_free($parser);
 			unset($index);	
-			$node = new xmltool('node',$vals[0]['tag'],$this->indentstring);
+			$node =& new xmltool('node',$vals[0]['tag'],$this->indentstring);
 			if(isset($vals[0]['attributes']))
 			{
 				while(list($key,$value) = each($vals[0]['attributes']))

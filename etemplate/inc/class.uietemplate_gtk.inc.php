@@ -12,21 +12,21 @@
 
 	/* $Id$ */
 
-	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.boetemplate.inc.php');
+	include_once(EGW_INCLUDE_ROOT . '/etemplate/inc/class.boetemplate.inc.php');
 
-	/*!
-	@class etemplate
-	@author ralfbecker
-	@abstract creates dialogs / HTML-forms from eTemplate descriptions
-	@discussion etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
-	@example $tmpl = CreateObject('etemplate.etemplate','app.template.name');
-	@example $tmpl->exec('app.class.callback',$content_to_show);
-	@example This creates a form from the eTemplate 'app.template.name' and takes care that
-	@example the method / public function 'callback' in (bo)class 'class' of 'app' gets called
-	@example if the user submitts the form. Vor the complete param's see the description of exec.
-	@param $debug enables debug messages: 0=no, 1=calls to show and process_show, 2=content of process_show
-	@param                                3=calls to show_cell OR template- or cell-type name
-	*/
+	/**
+	 * @author ralfbecker
+	 * creates dialogs / HTML-forms from eTemplate descriptions
+	 *
+	 * etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
+	 * $tmpl =& CreateObject('etemplate.etemplate','app.template.name');
+	 * $tmpl->exec('app.class.callback',$content_to_show);
+	 * This creates a form from the eTemplate 'app.template.name' and takes care that
+	 * the method / public function 'callback' in (bo)class 'class' of 'app' gets called
+	 * if the user submitts the form. Vor the complete param's see the description of exec.
+	 * @param $debug enables debug messages: 0=no, 1=calls to show and process_show, 2=content of process_show
+	 * @param                                3=calls to show_cell OR template- or cell-type name
+	 */
 	class etemplate extends boetemplate
 	{
 		var $debug;//='etemplate.editor.edit'; // 1=calls to show and process_show, 2=content after process_show,
@@ -41,11 +41,11 @@
 		);
 		var $font_width=8;
 
-		/*!
-		@function etemplate
-		@abstract constructor of etemplate class, reads an eTemplate if $name is given
-		@param as soetemplate.read
-		*/
+		/**
+		 * constructor of etemplate class, reads an eTemplate if $name is given
+		 *
+		 * @param as soetemplate.read
+		 */
 		function etemplate($name='',$template='default',$lang='default',$group=0,$version='',$rows=2,$cols=2)
 		{
 			$this->public_functions += array(
@@ -61,25 +61,25 @@
 			return True;
 		}
 
-		/*!
-		@function exec
-		@abstract Generats a Dialog from an eTemplate - abstract the UI-layer
-		@discussion This is the only function an application should use, all other are INTERNAL and
-		@discussion do NOT abstract the UI-layer, because they return HTML.
-		@discussion Generates a webpage with a form from the template and puts process_exec in the
-		@discussion form as submit-url to call process_show for the template before it
-		@discussion ExecuteMethod's the given $methode of the caller.
-		@param $methode Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
-		@param $content Array with content to fill the input-fields of template, eg. the text-field
-		@param          with name 'name' gets its content from $content['name']
-		@param $sel_options Array or arrays with the options for each select-field, keys are the
-		@param              field-names, eg. array('name' => array(1 => 'one',2 => 'two')) set the
-		@param              options for field 'name'. ($content['options-name'] is possible too !!!)
-		@param $readonlys Array with field-names as keys for fields with should be readonly
-		@param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
-		@param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $HTTP_POST_VARS['id'] for the $method-call
-		@result nothing
-		*/
+		/**
+		 * Generats a Dialog from an eTemplate - abstract the UI-layer
+		 *
+		 * This is the only function an application should use, all other are INTERNAL and
+		 * do NOT abstract the UI-layer, because they return HTML.
+		 * Generates a webpage with a form from the template and puts process_exec in the
+		 * form as submit-url to call process_show for the template before it
+		 * ExecuteMethod's the given $methode of the caller.
+		 * @param $methode Methode (e.g. 'etemplate.editor.edit') to be called if form is submitted
+		 * @param $content Array with content to fill the input-fields of template, eg. the text-field
+		 * @param          with name 'name' gets its content from $content['name']
+		 * @param $sel_options Array or arrays with the options for each select-field, keys are the
+		 * @param              field-names, eg. array('name' => array(1 => 'one',2 => 'two')) set the
+		 * @param              options for field 'name'. ($content['options-name'] is possible too !!!)
+		 * @param $readonlys Array with field-names as keys for fields with should be readonly
+		 * @param            (eg. to implement ACL grants on field-level or to remove buttons not applicable)
+		 * @param $preserv Array with vars which should be transported to the $method-call (eg. an id) array('id' => $id) sets $_POST['id'] for the $method-call
+		 * @return nothing
+		 */
 		function exec($method,$content,$sel_options='',$readonlys='',$preserv='')
 		{
 			if (!$sel_options)
@@ -109,19 +109,19 @@
 			* Create a new top-level window and connect the signals to the appropriate
 			* functions if the window not already exists.
 			*/
-			if (!$GLOBALS['phpgw_info']['etemplate']['window'])
+			if (!$GLOBALS['egw_info']['etemplate']['window'])
 			{
 				$window = &new GtkWindow();
 				$window->connect('destroy',array('etemplate','destroy'));
 				$window->connect('delete-event',array('etemplate','delete_event'));
-				$window->set_title('eGroupWareGTK: '.$GLOBALS['phpgw_info']['server']['site_title']);
+				$window->set_title('eGroupWareGTK: '.$GLOBALS['egw_info']['server']['site_title']);
 				$window->set_default_size(1024,600);
 
-				$GLOBALS['phpgw_info']['etemplate']['window'] = &$window;
+				$GLOBALS['egw_info']['etemplate']['window'] = &$window;
 			}
 			else
 			{
-				$window = &$GLOBALS['phpgw_info']['etemplate']['window'];
+				$window = &$GLOBALS['egw_info']['etemplate']['window'];
 			}
 			$this->result = array('test' => 'test');
 			$table = &$this->show($this->result,$content,$sel_options,$readonlys);
@@ -147,16 +147,16 @@
 			unset($this->widgets);
 
 			// set application name so that lang, etc. works
-			list($GLOBALS['phpgw_info']['flags']['currentapp']) = explode('.',$method);
+			list($GLOBALS['egw_info']['flags']['currentapp']) = explode('.',$method);
 
 			ExecMethod($method,array_merge($this->result,$preserv));
 		}
 
-		/*!
-		@function process_show
-		@abstract this is only an empty function for the GTK ui
-		@result the adjusted content (in the simplest case that would be $content)
-		*/
+		/**
+		 * this is only an empty function for the GTK ui
+		 *
+		 * @return the adjusted content (in the simplest case that would be $content)
+		 */
 		function process_show(&$content,$readonlys='')
 		{
 		}
@@ -176,8 +176,8 @@
 		function destroy()
 		{
 			Gtk::main_quit();
-			$GLOBALS['phpgw']->session->destroy($GLOBALS['phpgw_info']['user']['sessionid'],$GLOBALS['phpgw_info']['user']['kp3']);
-			$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+			$GLOBALS['egw']->session->destroy($GLOBALS['egw_info']['user']['sessionid'],$GLOBALS['egw_info']['user']['kp3']);
+			$GLOBALS['egw_info']['flags']['nodisplay'] = True;
 			exit;
 		}
 
@@ -249,23 +249,23 @@
 			}
 		}
 
-		/*!
-		@function show
-		@abstract creates HTML from an eTemplate
-		@discussion This is done by calling show_cell for each cell in the form. show_cell itself
-		@discussion calls show recursivly for each included eTemplate.
-		@discussion You can use it in the UI-layer of an app, just make shure to call process_show !!!
-		@discussion This is intended as internal function and should NOT be called by new app's direct,
-		@discussion as it deals with HTML and is so UI-dependent, use exec instead.
-		@param $content array with content for the cells, keys are the names given in the cells/form elements
-		@param $sel_options array with options for the selectboxes, keys are the name of the selectbox
-		@param $readonlys array with names of cells/form-elements to be not allowed to change
-		@param            This is to facilitate complex ACL's which denies access on field-level !!!
-		@param $cname basename of names for form-elements, means index in $HTTP_POST_VARS
-		@param        eg. $cname='cont', element-name = 'name' returned content in $HTTP_POST_VARS['cont']['name']
-		@param $show_xxx row,col name/index for name expansion
-		@result the generated HTML
-		*/
+		/**
+		 * creates HTML from an eTemplate
+		 *
+		 * This is done by calling show_cell for each cell in the form. show_cell itself
+		 * calls show recursivly for each included eTemplate.
+		 * You can use it in the UI-layer of an app, just make shure to call process_show !!!
+		 * This is intended as internal function and should NOT be called by new app's direct,
+		 * as it deals with HTML and is so UI-dependent, use exec instead.
+		 * @param $content array with content for the cells, keys are the names given in the cells/form elements
+		 * @param $sel_options array with options for the selectboxes, keys are the name of the selectbox
+		 * @param $readonlys array with names of cells/form-elements to be not allowed to change
+		 * @param            This is to facilitate complex ACL's which denies access on field-level !!!
+		 * @param $cname basename of names for form-elements, means index in $_POST
+		 * @param        eg. $cname='cont', element-name = 'name' returned content in $_POST['cont']['name']
+		 * @param $show_xxx row,col name/index for name expansion
+		 * @return the generated HTML
+		 */
 		function show(&$result,$content,$sel_options='',$readonlys='',$cname='',$show_c=0,$show_row=0)
 		{
 			if (!$sel_options)
@@ -409,10 +409,10 @@
 //				$rows[".$row"] .= $this->html->formatOptions($cl,'CLASS');
 //				$rows[".$row"] .= $this->html->formatOptions($class,',VALIGN');
 			}
-			if (!$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name])
+			if (!$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name])
 			{
 //				$style = $this->html->style($this->style);
-				$GLOBALS['phpgw_info']['etemplate']['styles_included'][$this->name] = True;
+				$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name] = True;
 			}
 			return $table;
 		}
@@ -428,14 +428,14 @@
 										$event->area->x, $event->area->y);
 		}
 
-		/*!
-		@function show_cell
-		@abstract generates HTML for 1 input-field / cell
-		@discussion calls show to generate included eTemplates. Again only an INTERMAL function.
-		@param $cell array with data of the cell: name, type, ...
-		@param for rest see show
-		@result the generated HTML
-		*/
+		/**
+		 * generates HTML for 1 input-field / cell
+		 *
+		 * calls show to generate included eTemplates. Again only an INTERMAL function.
+		 * @param $cell array with data of the cell: name, type, ...
+		 * @param for rest see show
+		 * @return the generated HTML
+		 */
 		function show_cell($cell,$content,$sel_options,$readonlys,$cname,$show_c,$show_row,&$span,&$result)
 		{
 			if ($this->debug >= 3 || $this->debug == $cell['type'])
@@ -562,7 +562,7 @@
 					}
 					if ($readonly)
 					{
-						$html .= $GLOBALS['phpgw']->common->dateformatorder($value[0],$value[1],$value[2]);
+						$html .= $GLOBALS['egw']->common->dateformatorder($value[0],$value[1],$value[2]);
 					}
 					else
 					{
@@ -703,13 +703,13 @@
 					$html .= $this->sbox->getAccount($form_name.'[]',$value,2,$type,0+$cell['size'],$options);
 					break;
 */				case 'image':
-					if (!($path = $GLOBALS['phpgw']->common->image(substr($this->name,0,strpos($this->name,'.')),$cell['label'])))
+					if (!($path = $GLOBALS['egw']->common->image(substr($this->name,0,strpos($this->name,'.')),$cell['label'])))
 						$path = $cell['label'];		// name may already contain absolut path
-					if (!isset($GLOBALS['phpgw_info']['etemplate']['pixbufs'][$path]))
+					if (!isset($GLOBALS['egw_info']['etemplate']['pixbufs'][$path]))
 					{
-						$GLOBALS['phpgw_info']['etemplate']['pixbufs'][$path] = GdkPixbuf::new_from_file('../..'.$path);
+						$GLOBALS['egw_info']['etemplate']['pixbufs'][$path] = GdkPixbuf::new_from_file('../..'.$path);
 					}
-					$pixbuf = &$GLOBALS['phpgw_info']['etemplate']['pixbufs'][$path];
+					$pixbuf = &$GLOBALS['egw_info']['etemplate']['pixbufs'][$path];
 					if ($pixbuf)
 					{
 						$widget = &new GtkDrawingArea();

@@ -124,7 +124,7 @@
 			{
 				$value = array(
 					'to_id' => $value,
-					'to_app' => $GLOBALS['phpgw_info']['flags']['currentapp']
+					'to_app' => $GLOBALS['egw_info']['flags']['currentapp']
 				);
 			}
 			if ($this->debug)
@@ -307,7 +307,7 @@
 
 				case 'upload':		// need to rename file, as php deletes it otherwise
 					if (is_array($value['file']) && !empty($value['file']['tmp_name']) &&
-					    $value['file']['tmp_name'] != 'none')
+							$value['file']['tmp_name'] != 'none')
 					{
 						move_uploaded_file($value['file']['tmp_name'],$value['file']['tmp_name'].'+');
 						$value['file']['tmp_name'] .= '+';

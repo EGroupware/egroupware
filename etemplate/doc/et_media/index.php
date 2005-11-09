@@ -12,13 +12,13 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'currentapp'	=> 'et_media',
-		'noheader'	=> True,
-		'nonavbar'	=> True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp'	=> 'et_media',
+			'noheader'	=> True,
+			'nonavbar'	=> True,
+		),
 	);
 	include('../header.inc.php');
 
-	header('Location: '.$GLOBALS['phpgw']->link('/index.php','menuaction=et_media.et_media.edit'));
-	$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
-	exit;
+	$GLOBALS['egw']->redirect_link('/index.php','menuaction=et_media.et_media.edit');

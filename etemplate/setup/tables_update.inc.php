@@ -14,20 +14,20 @@
 	$test[] = '0.9.13.001';
 	function etemplate_upgrade0_9_13_001()
 	{
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_data',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_data',array(
 			'type' => 'text',
 			'nullable' => True
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_size',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_size',array(
 			'type' => 'char',
 			'precision' => '128',
 			'nullable' => True
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_style',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_style',array(
 			'type' => 'text',
 			'nullable' => True
 		));
-		$GLOBALS['phpgw_setup']->oProc->AddColumn('phpgw_etemplate','et_modified',array(
+		$GLOBALS['egw_setup']->oProc->AddColumn('phpgw_etemplate','et_modified',array(
 			'type' => 'int',
 			'precision' => '4',
 			'default' => '0',
@@ -42,30 +42,30 @@
 	$test[] = '0.9.15.001';
 	function etemplate_upgrade0_9_15_001()
 	{
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_name',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_name',array(
 			'type' => 'varchar',
 			'precision' => '80',
 			'nullable' => False
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_template',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_template',array(
 			'type' => 'varchar',
 			'precision' => '20',
 			'nullable' => False,
 			'default' => ''
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_lang',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_lang',array(
 			'type' => 'varchar',
 			'precision' => '5',
 			'nullable' => False,
 			'default' => ''
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_version',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_version',array(
 			'type' => 'varchar',
 			'precision' => '20',
 			'nullable' => False,
 			'default' => ''
 		));
-		$GLOBALS['phpgw_setup']->oProc->AlterColumn('phpgw_etemplate','et_size',array(
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_etemplate','et_size',array(
 			'type' => 'varchar',
 			'precision' => '128',
 			'nullable' => True
@@ -80,6 +80,16 @@
 	function etemplate_upgrade0_9_15_002()
 	{
 		$GLOBALS['setup_info']['etemplate']['currentver'] = '1.0.0';
+		return $GLOBALS['setup_info']['etemplate']['currentver'];
+	}
+	
+
+	$test[] = '1.0.0';
+	function etemplate_upgrade1_0_0()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_etemplate','egw_etemplate');
+
+		$GLOBALS['setup_info']['etemplate']['currentver'] = '1.2';
 		return $GLOBALS['setup_info']['etemplate']['currentver'];
 	}
 ?>

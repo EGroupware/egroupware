@@ -14,10 +14,12 @@
 
 	list($app) = explode('.',$_GET['menuaction']);
 
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'currentapp'	=> $app,
-		'noheader'		=> True,
-		'nonavbar'		=> True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp'	=> $app,
+			'noheader'		=> True,
+			'nonavbar'		=> True,
+		),
 	);
 	include('../header.inc.php');
 

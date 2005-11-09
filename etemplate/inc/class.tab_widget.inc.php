@@ -68,7 +68,7 @@
 
 			if (!$cell['onchange'])	// onchange allows to use the old behavior (submit for each new tab)
 			{
-				$dom_enabled = isset($GLOBALS['phpgw_info']['etemplate']['dom_enabled']) ? $GLOBALS['phpgw_info']['etemplate']['dom_enabled'] : true;
+				$dom_enabled = isset($GLOBALS['egw_info']['etemplate']['dom_enabled']) ? $GLOBALS['egw_info']['etemplate']['dom_enabled'] : true;
 			}
 			$labels = explode('|',$cell['label']);
 			$helps = explode('|',$cell['help']);
@@ -89,7 +89,7 @@
 			}
 			$all_names = implode('|',$names);
 
-			$tab_widget = new etemplate('etemplate.tab_widget');
+			$tab_widget =& new etemplate('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
 	
 			if ($value && !strstr($value,'.'))
@@ -153,7 +153,7 @@
 				foreach($names as $n => $name)
 				{
 					$bcell = $tab_widget->empty_cell('template',$name);
-					$bcell['obj'] = new etemplate($name,$tmpl->as_array());
+					$bcell['obj'] =& new etemplate($name,$tmpl->as_array());
 					$tab_widget->set_cell_attribute('body',$n+1,$bcell);
 				}
 				$tab_widget->set_cell_attribute('body','type','deck');
@@ -163,7 +163,7 @@
 			}
 			else
 			{
-				$stab = new etemplate($selected_tab,$tmpl->as_array());
+				$stab =& new etemplate($selected_tab,$tmpl->as_array());
 				$tab_widget->set_cell_attribute('body','type','template');
 				$tab_widget->set_cell_attribute('body','size','');	// the deck has a '1' there
 				$tab_widget->set_cell_attribute('body','obj',$stab);

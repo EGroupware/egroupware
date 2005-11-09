@@ -197,7 +197,7 @@
 				case 'select-country':
 					if (!$this->countrys)
 					{
-						$country = CreateObject('phpgwapi.country');
+						$country =& CreateObject('phpgwapi.country');
 						$this->countrys = &$country->country_array;
 						unset($country);
 						unset($this->countrys['  ']);
@@ -222,11 +222,11 @@
 					break;
 
 				case 'select-cat':	// !$type == globals cats too
-					if (!is_object($GLOBALS['phpgw']->categories))
+					if (!is_object($GLOBALS['egw']->categories))
 					{
-						$GLOBALS['phpgw']->categories = CreateObject('phpgwapi.categories');
+						$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
 					}
-					foreach((array)$GLOBALS['phpgw']->categories->return_sorted_array(0,False,'','','',!$type) as $cat)
+					foreach((array)$GLOBALS['egw']->categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 					{
 						$s = str_repeat('&nbsp;',$cat['level']) . $GLOBALS['egw']->strip_html($cat['name']);
 
@@ -264,24 +264,24 @@
 					}
 					if ($this->ui == 'html' && $type != 'groups')	// use eGW's new account-selection (html only)
 					{
-						if (!is_object($GLOBALS['phpgw']->uiaccountsel))
+						if (!is_object($GLOBALS['egw']->uiaccountsel))
 						{
-							$GLOBALS['phpgw']->uiaccountsel =& CreateObject('phpgwapi.uiaccountsel');
+							$GLOBALS['egw']->uiaccountsel =& CreateObject('phpgwapi.uiaccountsel');
 						}
 						$help = (int)$cell['no_lang'] < 2 ? lang($cell['help']) : $cell['help'];
 						$onFocus = "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
 						$onBlur  = "self.status=''; return true;";
-						$value = $GLOBALS['phpgw']->uiaccountsel->selection($name,'eT_accountsel_'.str_replace(array('[','][',']'),array('_','_',''),$name),
+						$value = $GLOBALS['egw']->uiaccountsel->selection($name,'eT_accountsel_'.str_replace(array('[','][',']'),array('_','_',''),$name),
 							$value,$type,$rows > 0 ? $rows : 0,False,' onfocus="'.$onFocus.'" onblur="'.$onBlur.'"',
 							$cell['onchange'] == '1' ? 'this.form.submit();' : $cell['onchange'],
 							!empty($rows) && 0+$rows <= 0 ? lang($rows < 0 ? 'all' : $rows) : False);
 						$cell['type'] = 'html';
 						$cell['size'] = '';	// is interpreted as link otherwise
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'select';
+						$GLOBALS['egw_info']['etemplate']['to_process'][$name] = 'select';
 						break;
 					}
 					$cell['no_lang'] = True;
-					$accs = $GLOBALS['phpgw']->accounts->get_list(empty($type) ? 'accounts' : $type); // default is accounts
+					$accs = $GLOBALS['egw']->accounts->get_list(empty($type) ? 'accounts' : $type); // default is accounts
 					foreach($accs as $acc)
 					{
 						if ($acc['account_type'] == 'u')
@@ -334,7 +334,7 @@
 						define('MCAL_M_WEEKEND',65);
 						define('MCAL_M_ALLDAYS',127);
 					}
-					$weekstart = $GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts'];
+					$weekstart = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'];
 					$cell['sel_options'] = array();
 					if ($rows >= 2 && !$type) 
 					{
@@ -382,7 +382,7 @@
 					}
 					if (!$readonly)
 					{
-						$GLOBALS['phpgw_info']['etemplate']['to_process'][$name] = 'ext-select-dow';
+						$GLOBALS['egw_info']['etemplate']['to_process'][$name] = 'ext-select-dow';
 					}
 					break;
 
@@ -414,20 +414,20 @@
 					
 				case 'select-app':	// type2: ''=users enabled apps, 'installed', 'all' = not installed ones too
 					$apps = array();
-					foreach ($GLOBALS['phpgw_info']['apps'] as $app => $data)
+					foreach ($GLOBALS['egw_info']['apps'] as $app => $data)
 					{
-						if (!$type2 || $GLOBALS['phpgw_info']['user']['apps'][$app])
+						if (!$type2 || $GLOBALS['egw_info']['user']['apps'][$app])
 						{
 							$apps[$app] = $data['title'] ? $data['title'] : lang($app);
 						}
 					}
 					if ($type2 == 'all')
 					{
-						$dir = opendir(PHPGW_SERVER_ROOT);
+						$dir = opendir(EGW_SERVER_ROOT);
 						while ($file = readdir($dir))
 						{
-							if (@is_dir(PHPGW_SERVER_ROOT."/$file/setup") && $file[0] != '.' &&
-							    !isset($apps[$app = basename($file)]))
+							if (@is_dir(EGW_SERVER_ROOT."/$file/setup") && $file[0] != '.' &&
+									!isset($apps[$app = basename($file)]))
 							{
 								$apps[$app] = $app . ' (*)';
 							}
@@ -465,7 +465,7 @@
 
 			if (!is_array($acc))
 			{
-				$data = $GLOBALS['phpgw']->accounts->get_account_data($id);
+				$data = $GLOBALS['egw']->accounts->get_account_data($id);
 				foreach(array('type','lid','firstname','lastname') as $name)
 				{
 					$acc['account_'.$name] = $data[$id][$name];
@@ -490,7 +490,7 @@
 					$info .= $acc['account_lid'];
 					break;
 				default:			// use the phpgw default
-					$info = $GLOBALS['phpgw']->common->display_fullname($acc['account_lid'],
+					$info = $GLOBALS['egw']->common->display_fullname($acc['account_lid'],
 						$acc['account_firstname'],$acc['account_lastname']);
 					break;
 			}

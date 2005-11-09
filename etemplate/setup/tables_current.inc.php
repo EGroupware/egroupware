@@ -13,7 +13,7 @@
   /* $Id$ */
 
 	$phpgw_baseline = array(
-		'phpgw_etemplate' => array(
+		'egw_etemplate' => array(
 			'fd' => array(
 				'et_name' => array('type' => 'varchar','precision' => '80','nullable' => False),
 				'et_template' => array('type' => 'varchar','precision' => '20','nullable' => False,'default' => ''),

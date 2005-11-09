@@ -46,7 +46,7 @@
 		var $children;	// array with children
 		var $data;		// depricated: first grid of the children
 		var $size;		// depricated: witdh,height,border of first grid
-		var $db,$table_name = 'phpgw_etemplate'; // name of table
+		var $db,$table_name = 'egw_etemplate'; // name of table
 		var $db_key_cols = array(
 			'et_name' => 'name',
 			'et_template' => 'template',
@@ -90,7 +90,7 @@
 		 */
 		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
-			$this->db = clone($GLOBALS['phpgw']->db);
+			$this->db = clone($GLOBALS['egw']->db);
 			$this->db->set_app('etemplate');
 			$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
@@ -364,8 +364,8 @@
 			{
 				echo "<p>soetemplate::read('$this->name','$this->template','$this->lang',$this->group,'$this->version')</p>\n";
 			}
-			if (($GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'files' ||
-			     $GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'xslt') && $this->readfile())
+			if (($GLOBALS['egw_info']['server']['eTemplate-source'] == 'files' ||
+					 $GLOBALS['egw_info']['server']['eTemplate-source'] == 'xslt') && $this->readfile())
 			{
 				return True;
 			}
@@ -373,8 +373,8 @@
 			{
 				$this->test_import($this->name);	// import updates in setup-dir
 			}
-			$pref_lang = $GLOBALS['phpgw_info']['user']['preferences']['common']['lang'];
-			$pref_templ = $GLOBALS['phpgw_info']['server']['template_set'];
+			$pref_lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
+			$pref_templ = $GLOBALS['egw_info']['server']['template_set'];
 
 			$where = array(
 				'et_name' => $this->name,
@@ -436,12 +436,12 @@
 			{
 				$lang = '.' . $this->lang;
 			}
-			$first_try = $ext = $GLOBALS['phpgw_info']['server']['eTemplate-source'] == 'xslt' ? '.xsl' : '.xet';
+			$first_try = $ext = $GLOBALS['egw_info']['server']['eTemplate-source'] == 'xslt' ? '.xsl' : '.xet';
 
-			while ((!$lang || !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/$template/$name$lang$ext") &&
-			                  !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/default/$name$lang$ext")) &&
-			       !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/$template/$name$ext") &&
-			       !@file_exists($file = PHPGW_SERVER_ROOT . "/$app/templates/default/$name$ext"))
+			while ((!$lang || !@file_exists($file = EGW_SERVER_ROOT . "/$app/templates/$template/$name$lang$ext") &&
+												!@file_exists($file = EGW_SERVER_ROOT . "/$app/templates/default/$name$lang$ext")) &&
+						 !@file_exists($file = EGW_SERVER_ROOT . "/$app/templates/$template/$name$ext") &&
+						 !@file_exists($file = EGW_SERVER_ROOT . "/$app/templates/default/$name$ext"))
 			{
 				if ($ext == $first_try)
 				{
@@ -482,7 +482,7 @@
 			{
 				if (!is_object($this->xul_io))
 				{
-					$this->xul_io = CreateObject('etemplate.xul_io');
+					$this->xul_io =& CreateObject('etemplate.xul_io');
 				}
 				$loaded = $this->xul_io->import($this,$xml);
 
@@ -668,13 +668,17 @@
 			}
 			foreach($arr as $key => $val)
 			{
-				if (is_array($val))
+				if ($remove_objs && $key === 'obj')	// it can be an array too
+				{
+					unset($arr[$key]);
+				}
+				elseif (is_array($val))
 				{
 					$arr[$key] = $this->compress_array($val,$remove_objs);
 				}
 				elseif (!$remove_objs && $key == 'obj' && is_object($val) && method_exists($val,'as_array') &&
 					// this test prevents an infinit recursion of templates calling itself, atm. etemplate.editor.new
-					$GLOBALS['phpgw_info']['etemplate']['as_array'][$this->name]++ < 2)
+					$GLOBALS['egw_info']['etemplate']['as_array'][$this->name]++ < 2)
 				{
 					$arr['obj'] = $val->as_array(2);
 				}
@@ -808,7 +812,7 @@
 				$this->modified = time();
 			}
 			if (is_null($this->group) && !is_int($this->group)) $this->group = 0;
-			
+
 			$this->db->insert($this->table_name,$this->as_array(3,true),$this->as_array(-1,true),__LINE__,__FILE__);
 
 			$rows = $this->db->affected_rows();
@@ -846,7 +850,7 @@
 
 			$this->db->query("SELECT * FROM $this->table_name WHERE et_name LIKE '$app%'");
 
-			$dir = PHPGW_SERVER_ROOT . "/$app/setup";
+			$dir = EGW_SERVER_ROOT . "/$app/setup";
 			if (!is_writeable($dir))
 			{
 				return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
@@ -914,7 +918,7 @@
 
 			$tpls = $this->search($app);
 
-			$tpl = new soetemplate;	// to not alter our own data
+			$tpl =& new soetemplate;	// to not alter our own data
 			
 			while (list(,$keys) = each($tpls))
 			{
@@ -947,13 +951,13 @@
 			}
 			list($app) = explode('.',$app);
 
-			if (!file_exists(PHPGW_SERVER_ROOT.'/developer_tools/inc/class.solangfile.inc.php'))
+			if (!file_exists(EGW_SERVER_ROOT.'/developer_tools/inc/class.solangfile.inc.php'))
 			{
-				$solangfile = CreateObject('etemplate.solangfile');
+				$solangfile =& CreateObject('etemplate.solangfile');
 			}
 			else
 			{
-				$solangfile = CreateObject('developer_tools.solangfile');
+				$solangfile =& CreateObject('developer_tools.solangfile');
 			}
 			$langarr = $solangfile->load_app($app,$lang);
 			if (!is_array($langarr))
@@ -991,7 +995,7 @@
 			}
 			ksort($langarr);
 
-			$dir = PHPGW_SERVER_ROOT . "/$app/setup";
+			$dir = EGW_SERVER_ROOT . "/$app/setup";
 			if (!is_writeable($dir))
 			{
 				return lang("Error: webserver is not allowed to write into '%1' !!!",$dir);
@@ -1022,8 +1026,8 @@
 		{
 			$templ_version=0;
 
-			include($path = PHPGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
-			$templ = new etemplate($app);
+			include($path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php");
+			$templ =& new etemplate($app);
 
 			foreach($templ_data as $data)
 			{
@@ -1055,17 +1059,17 @@
 		{
 			list($app) = explode('.',$app);
 
-			if (!$app || $GLOBALS['phpgw_info']['etemplate']['import_tested'][$app])
+			if (!$app || $GLOBALS['egw_info']['etemplate']['import_tested'][$app])
 			{
 				return '';	// ensure test is done only once per call and app
 			}
-			$GLOBALS['phpgw_info']['etemplate']['import_tested'][$app] = True;	// need to be done before new ...
+			$GLOBALS['egw_info']['etemplate']['import_tested'][$app] = True;	// need to be done before new ...
 
-			$path = PHPGW_SERVER_ROOT."/$app/setup/etemplates.inc.php";
+			$path = EGW_SERVER_ROOT."/$app/setup/etemplates.inc.php";
 
 			if ($time = @filemtime($path))
 			{
-				$templ = new soetemplate(".$app",'','##');
+				$templ =& new soetemplate(".$app",'','##');
 				if ($templ->lang != '##' || $templ->modified < $time) // need to import
 				{
 					$ret = $this->import_dump($app);
@@ -1226,7 +1230,7 @@
 				case 'template':
 					if (!isset($widget['obj']) && $widget['name'][0] != '@')
 					{
-						$widget['obj'] = new etemplate;
+						$widget['obj'] =& new etemplate;
 						if (!$widget['obj']->read($widget['name'])) $widget['obj'] = false;
 					}
 					if (!is_object($widget['obj'])) break;	// cant descent into template

@@ -12,8 +12,7 @@
 
 	/* $Id$ */
 
-	include_once(PHPGW_INCLUDE_ROOT . '/etemplate/inc/class.so_sql.inc.php');
-	$GLOBALS['phpgw_info']['flags']['included_classes']['so_sql'] = True; // for 0.9.14
+	include_once(EGW_INCLUDE_ROOT . '/etemplate/inc/class.so_sql.inc.php');
 
 	class et_media extends so_sql
 	{
@@ -27,7 +26,7 @@
 
 		function et_media()
 		{
-			$this->tmpl = CreateObject('etemplate.etemplate','et_media.edit');
+			$this->tmpl =& CreateObject('etemplate.etemplate','et_media.edit');
 
 			$this->so_sql('et_media','phpgw_et_media');	// sets up our storage layer using the table 'phpgw_et_media'
 			$this->empty_on_write = "''";	// that means if a column is empty how to write in the db, the default is NULL
@@ -129,12 +128,12 @@
 			$this->tmpl->exec('et_media.et_media.edit',$content);
 		}
 
-		/*!
-		@function writeLangFile
-		@abstract writes langfile with all templates and types here
-		@discussion can be called via [write Langfile] in the eTemplate editor or
-		@discussion http://domain/egroupware/index.php?et_media.et_media.writeLangFile
-		*/
+		/**
+		 * writes langfile with all templates and types here
+		 *
+		 * can be called via [write Langfile] in the eTemplate editor or
+		 * http://domain/egroupware/index.php?et_media.et_media.writeLangFile
+		 */
 		function writeLangFile()
 		{
 			return $this->tmpl->writeLangFile('et_media','en',$this->types);

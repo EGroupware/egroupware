@@ -104,7 +104,7 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
+			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'];
 			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): value = "; _debug_array($value);
 			//echo "<p>nextmatch_widget.pre_process(name='$name',type='$cell[type]'): nm_global = "; _debug_array($nm_global);
 
@@ -179,7 +179,7 @@
 			}
 			if (!is_object($obj) || !method_exists($obj,$method))
 			{
-				$GLOBALS['phpgw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
+				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
 			}
 			else
 			{
@@ -214,7 +214,7 @@
 			{
 				$value['template']->data[0]['h'.$value['template']->rows] .= ',1';	// disable the last data row
 			}
-			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+			$max   = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			if (!$value['never_hide'] && $total <= $max && $options && $value['search'] == '' &&
 				 ($value['no_cat'] || !$value['cat_id']) &&
 				 ($value['no_filter'] || !$value['filter'] || $value['filter'] == 'none') &&
@@ -222,7 +222,7 @@
 			{											// disable whole nextmatch line if no scrolling necessary
 				if ($value['header_left'] || $value['header_right'])
 				{
-					$nextmatch = new etemplate('etemplate.nextmatch_widget.header_only');
+					$nextmatch =& new etemplate('etemplate.nextmatch_widget.header_only');
 					$cell['size'] = $cell['name'];
 					$cell['obj'] = &$nextmatch;
 					$cell['name'] = $nextmatch->name;
@@ -299,7 +299,7 @@
 		 */
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
-			$nm_global = &$GLOBALS['phpgw_info']['etemplate']['nextmatch'];
+			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'];
 			//echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in='$value_in',order='$nm_global[order]'): value = "; _debug_array($value);
 			switch($extension_data['type'])
 			{
@@ -322,7 +322,7 @@
 			}
 			$old_value = $extension_data;
 
-			$max   = $GLOBALS['phpgw_info']['user']['preferences']['common']['maxmatchs'];
+			$max   = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 
 			if (is_array($value['bottom']))			// we have a second bottom-bar
@@ -347,9 +347,9 @@
 				unset($value['bottom']);
 			}
 			if ($value['start_search'] || $value['search'] != $old_value['search'] ||
-			    isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
-			    isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
-			    isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
+					isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
+					isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
+					isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
 			{
 				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
 				//echo "new filter --> loop</p>";

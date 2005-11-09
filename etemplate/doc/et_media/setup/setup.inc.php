@@ -14,9 +14,9 @@
 
 	$setup_info['et_media']['name']      = 'et_media';
 	$setup_info['et_media']['title']     = 'eT-Media';
-	$setup_info['et_media']['version']   = '1.0.0';
+	$setup_info['et_media']['version']   = '1.2';
 	$setup_info['et_media']['app_order'] = 100;     // at the end
-	$setup_info['et_media']['tables']    = array('phpgw_et_media');
+	$setup_info['et_media']['tables']    = array('egw_et_media');
 	$setup_info['et_media']['enable']    = 1;
 	$setup_info['et_media']['author'] = 
  	$setup_info['et_media']['maintainer'] = array(
@@ -34,9 +34,9 @@
 	/* Dependencies for this app to work */
 	$setup_info['et_media']['depends'][] = array(
 				'appname' => 'phpgwapi',
-				'versions' => Array('0.9.13','0.9.14','0.9.15','1.0.0','1.0.1')
+				'versions' => Array('1.0.0','1.0.1','1.2')
 	);
-	$setup_info['et_media']['depends'][] = array(   // this is only necessary as long the etemplate-class is not in the api
+	$setup_info['et_media']['depends'][] = array(
 				'appname' => 'etemplate',
-				'versions' => Array('0.9.13','0.9.14','0.9.15','1.0.0')
+				'versions' => Array('1.0.0','1.0.1','1.2')
 	);

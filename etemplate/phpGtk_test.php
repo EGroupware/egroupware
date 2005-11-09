@@ -28,18 +28,18 @@ if ($argv[1] == '' || $argv[2] == '')
 	echo "Usage: $argv[0] <login> <passwd>\n";
 	exit;
 }
-$GLOBALS['phpgw_info']['flags'] = array(
+$GLOBALS['egw_info']['flags'] = array(
 	'currentapp'             => 'login',
 	'noheader'               => True,
 	'nonavbar'               => True
 );
 include('../header.inc.php');
 
-$GLOBALS['phpgw']->session->create($argv[1],$argv[2],'text') || die("Can't create session !!!\n");
+$GLOBALS['egw']->session->create($argv[1],$argv[2],'text') || die("Can't create session !!!\n");
 
-$GLOBALS['phpgw_info']['flags']['currentapp'] = 'etemplate';
+$GLOBALS['egw_info']['flags']['currentapp'] = 'etemplate';
 
 ExecMethod('etemplate.db_tools.edit');
 
-$GLOBALS['phpgw_info']['flags']['nodisplay'] = True;
+$GLOBALS['egw_info']['flags']['nodisplay'] = True;
 exit;

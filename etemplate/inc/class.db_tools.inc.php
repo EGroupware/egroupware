@@ -45,6 +45,7 @@
 			'longtext'	=> 'longtext',
 			'text'		=> 'text',
 			'timestamp'	=> 'timestamp',
+			'bool'      => 'boolean',
 //			'abstime'   => 'abstime (mysql:timestamp)',
 		);
 		var $setup_header = '<?php
@@ -67,15 +68,15 @@
 		 */
 		function db_tools()
 		{
-			$this->editor = CreateObject('etemplate.etemplate','etemplate.db-tools.edit');
+			$this->editor =& CreateObject('etemplate.etemplate','etemplate.db-tools.edit');
 			$this->data = array();
 
-			if (!is_array($GLOBALS['phpgw_info']['apps']) || !count($GLOBALS['phpgw_info']['apps']))
+			if (!is_array($GLOBALS['egw_info']['apps']) || !count($GLOBALS['egw_info']['apps']))
 			{
 				ExecMethod('phpgwapi.applications.read_installed_apps');
 			}
-			$GLOBALS['phpgw_info']['flags']['app_header'] =
-				$GLOBALS['phpgw_info']['apps']['etemplate']['title'].' - '.lang('DB-Tools');
+			$GLOBALS['egw_info']['flags']['app_header'] =
+				$GLOBALS['egw_info']['apps']['etemplate']['title'].' - '.lang('DB-Tools');
 		}
 
 		/**
@@ -170,14 +171,14 @@
 				}
 				else // import
 				{
-					$oProc = CreateObject('phpgwapi.schema_proc',$GLOBALS['phpgw_info']['server']['db_type']);
+					$oProc =& CreateObject('phpgwapi.schema_proc',$GLOBALS['egw_info']['server']['db_type']);
 					if (method_exists($oProc,'GetTableDefinition'))
 					{
 						$this->data[$this->table = $content['new_table_name']] = $oProc->GetTableDefinition($content['new_table_name']);
 					}
 					else	// to support eGW 1.0
 					{
-						$oProc->m_odb = $GLOBALS['phpgw']->db;
+						$oProc->m_odb = clone($GLOBALS['egw']->db);
 						$oProc->m_oTranslator->_GetColumns($oProc,$content['new_table_name'],$nul);
 	
 						while (list($key,$tbldata) = each ($oProc->m_oTranslator->sCol))
@@ -321,9 +322,9 @@
 			$new_version[$minor] = sprintf('%03d',1+$new_version[$minor]);
 			$content['new_version'] = implode('.',$new_version);
 
-			$tmpl = new etemplate('etemplate.db-tools.ask_save');
+			$tmpl =& new etemplate('etemplate.db-tools.ask_save');
 
-			if (!file_exists(PHPGW_SERVER_ROOT."/$posted_app/setup/tables_current.inc.php"))
+			if (!file_exists(EGW_SERVER_ROOT."/$posted_app/setup/tables_current.inc.php"))
 			{
 				$tmpl->disable_cells('version');
 				$tmpl->disable_cells('new_version');
@@ -448,7 +449,7 @@
 				$col = $content["Row$n"];
 
 				while ((list($old_name,$old_col) = @each($old_cols)) &&
-				       $this->changes[$posted_table][$old_name] == '**deleted**') ;
+							 $this->changes[$posted_table][$old_name] == '**deleted**') ;
 
 				if (($name = $col['name']) != '')		// ignoring lines without column-name
 				{
@@ -560,7 +561,7 @@
 		 */
 		function read($app,&$phpgw_baseline)
 		{
-			$file = PHPGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
+			$file = EGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
 
 			$phpgw_baseline = array();
 
@@ -647,7 +648,7 @@
 		 */
 		function write($app,$phpgw_baseline)
 		{
-			$file = PHPGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
+			$file = EGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
 
 			if (file_exists($file) && ($f = fopen($file,'r')))
 			{
@@ -659,9 +660,9 @@
 				$header = substr($header,0,strpos($header,'$phpgw_baseline'));
 				fclose($f);
 
-				if (is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
+				if (is_writable(EGW_SERVER_ROOT."/$app/setup"))
 				{
-					$old_file = PHPGW_SERVER_ROOT . "/$app/setup/tables_current.old.inc.php";
+					$old_file = EGW_SERVER_ROOT . "/$app/setup/tables_current.old.inc.php";
 					if (file_exists($old_file))
 					{
 						unlink($old_file);
@@ -677,7 +678,7 @@
 			{
 				$header = $this->setup_header . "\n\n";
 			}
-			if (!is_writeable(PHPGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
+			if (!is_writeable(EGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
 			{
 				return False;
 			}
@@ -702,7 +703,7 @@
 		{
 			//echo "<p>etemplate.db_tools.setup_version('$app','$new','$tables')</p>\n";
 
-			$file = PHPGW_SERVER_ROOT."/$app/setup/setup.inc.php";
+			$file = EGW_SERVER_ROOT."/$app/setup/setup.inc.php";
 			if (file_exists($file))
 			{
 				include($file);
@@ -712,7 +713,7 @@
 				return False;
 			}
 			if (($new == '' || $setup_info[$app]['version'] == $new) &&	
-			    (!$tables || $setup_info[$app]['tables'] && "'".implode("','",$setup_info[$app]['tables'])."'" == $tables))
+					(!$tables || $setup_info[$app]['tables'] && "'".implode("','",$setup_info[$app]['tables'])."'" == $tables))
 			{
 				return $setup_info[$app]['version'];	// no change requested or not necessary 
 			}
@@ -727,9 +728,9 @@
 			$fcontent = fread($f,filesize($file));
 			fclose ($f);
 
-			if (is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
+			if (is_writable(EGW_SERVER_ROOT."/$app/setup"))
 			{
-				$old_file = PHPGW_SERVER_ROOT . "/$app/setup/setup.old.inc.php";
+				$old_file = EGW_SERVER_ROOT . "/$app/setup/setup.old.inc.php";
 				if (file_exists($old_file))
 				{
 					unlink($old_file);
@@ -787,7 +788,7 @@
 					$fnew .= "\t\$setup_info['$app']['tables'] = array($tables);\n";
 				}
 			}
-			if (!is_writeable(PHPGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
+			if (!is_writeable(EGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
 			{
 				return False;
 			}
@@ -808,13 +809,13 @@
 		function update($app,$current,$version)
 		{
 			//echo "<p>etemplate.db_tools.update('$app',...,'$version')</p>\n";
-			if (!is_writable(PHPGW_SERVER_ROOT."/$app/setup"))
+			if (!is_writable(EGW_SERVER_ROOT."/$app/setup"))
 			{
 				return False;
 			}
-			$file_baseline = PHPGW_SERVER_ROOT."/$app/setup/tables_baseline.inc.php";
-			$file_current  = PHPGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
-			$file_update   = PHPGW_SERVER_ROOT."/$app/setup/tables_update.inc.php";
+			$file_baseline = EGW_SERVER_ROOT."/$app/setup/tables_baseline.inc.php";
+			$file_current  = EGW_SERVER_ROOT."/$app/setup/tables_current.inc.php";
+			$file_update   = EGW_SERVER_ROOT."/$app/setup/tables_update.inc.php";
 
 			if (!file_exists($file_baseline) && !copy($file_current,$file_baseline))
 			{
@@ -830,7 +831,7 @@
 				$update = fread($f,filesize($file_update));
 				$update = str_replace('?>','',$update);
 				fclose($f);
-				$old_file = PHPGW_SERVER_ROOT . "/$app/setup/tables_update.old.inc.php";
+				$old_file = EGW_SERVER_ROOT . "/$app/setup/tables_update.old.inc.php";
 				if (file_exists($old_file))
 				{
 					unlink($old_file);

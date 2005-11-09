@@ -12,11 +12,13 @@
 
 	/* $Id$ */
 
-	$GLOBALS['phpgw_info']['flags'] = array(
-		'currentapp'	=> 'etemplate',
-		'noheader'		=> True,
-		'nonavbar'		=> True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp'	=> 'etemplate',
+			'noheader'		=> True,
+			'nonavbar'		=> True,
+		),
 	);
 	include('../header.inc.php');
 
-	$GLOBALS['phpgw']->redirect_link('/index.php','menuaction=etemplate.editor.edit');
+	$GLOBALS['egw']->redirect_link('/index.php','menuaction=etemplate.editor.edit');
