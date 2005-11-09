@@ -19,6 +19,9 @@
 	*	'input_template'	=> app.template
 	*	'search_method'		=> app.class.method in so_sql style
 	*	'colums_to_present'	=> array with field_name => label
+	*	'actions'		=> array with actions for resultset in etemplates style
+	*				   can also contain a field 'method' which gets executed with resultset as first param
+	*	'row_actions'		=> array with actions for each row
 	*
 	*/
 	class advancedsearch_widget
@@ -65,25 +68,26 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$value = is_array($extension_data) ? $extension_data : $value;
+			$extension_data = is_array($extension_data) ? $extension_data :
+				(is_array($GLOBALS['egw']->session->appsession('advanced_search_query',$GLOBALS['egw_info']['flags']['currentapp'])) ? 
+				$GLOBALS['egw']->session->appsession('advanced_search_query',$GLOBALS['egw_info']['flags']['currentapp']) : $value);
 			
 			$tpl =& new etemplate;
 			$tpl->init('*** generated advanced search widget','','',0,'',0,0);	// make an empty template
-			$tpl->add_child($tpl,$search_header = $tpl->empty_cell('label',$cell['label'],array(
-				'no_lang' => 0,
-				'label' => 'Advanced search',
-				'span' =>',heading1',
-			)));
-			if($value['msg'])
+
+			if($extension_data['msg'])
 			{
 				$tpl->add_child($tpl,$msg = $tpl->empty_cell('label','msg',array(
 					'no_lang' => true,
 				)));
 			}
 			
-			if (isset($value['result_nm']))
+			if (isset($extension_data['result_nm']))
 			{
-				$GLOBALS['egw']->session->appsession('result','etemplate',$extension_data['result']);
+				$tpl->add_child($tpl,$new_search_button = $tpl->empty_cell('button','button[new_search]',array(
+					'no_lang' => true,
+					'label' => lang('New search'),
+				)));
 				$tpl->add_child($tpl, $result_nm = $tpl->empty_cell('nextmatch','result_nm',array(
 // 					'width' => '800px',
 				)));
@@ -101,6 +105,15 @@
 					)));
 					unset($result_nm_header);
 				}
+				if(!empty($extension_data['row_actions']))
+				{
+					$result_rows_tpl->add_child($grid,$result_nm_header = $result_rows_tpl->empty_cell('label','action',array(
+						'label' => 'Action',
+						'no_lang' => true,
+						'span' => ',nmh',
+					)));
+					unset($result_nm_header);
+				}
 				$result_rows_tpl->add_child($grid,$rows);
 				foreach((array)$extension_data['colums_to_present'] as $field => $label)
 				{
@@ -109,25 +122,32 @@
 						'no_lang' => true,
 						'readonly' => true,
 					)));
-					
 					unset($result_nm_rows);
 				}
-				
+				if(!empty($extension_data['row_actions']))
+				{
+					$result_rows_tpl->add_child($grid,$row_actions = $result_rows_tpl->empty_cell('hbox','row_action'));
+					foreach($extension_data['row_actions'] as $action => $options)
+					{
+						$result_rows_tpl->add_child($row_actions, $row_action = $result_rows_tpl->empty_cell($options['type'],$action.'[$row_cont[id]]',$options['options']));
+						unset($row_action);
+					}
+				}
 				$value['result_nm'] = array_merge(
-					$value['result_nm'],
+					$extension_data['result_nm'],
 					array(
 						'no_filter' => true,
 						'no_filter2' => true,
 						'no_cat' => true,
 						'no_search' => true,
 						'get_rows' => 'etemplate.advancedsearch_widget.get_rows',
-						'search_method' => $value['search_method'],
-						'colums_to_present' => $value['colums_to_present'],
+						'search_method' => $extension_data['search_method'],
+						'colums_to_present' => $extension_data['colums_to_present'],
 						'template' => $result_rows_tpl,
 					));
-				
+
 				$tpl->add_child($tpl, $action_buttons = $tpl->empty_cell('hbox','action_buttons'));
-				foreach ($value['actions'] as $action => $options)
+				foreach ($extension_data['actions'] as $action => $options)
 				{
 					$tpl->add_child($action_buttons, $result_button = $tpl->empty_cell($options['type'],'action['.$action.']',$options['options']));
 					unset($result_button);
@@ -136,9 +156,8 @@
 			else
 			{
 				$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
-				$extension_data = $value;
 
-				$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$value['input_template']));
+				$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$extension_data['input_template']));
 				$tpl->add_child($tpl, $button_box = $tpl->empty_cell('hbox','button_box'));
 				$tpl->add_child($button_box, $op_select = $tpl->empty_cell('select','opt_select',array(
 					'sel_options' => array(
@@ -152,7 +171,7 @@
 					'label' => 'Search',
 				)));
 			}
-;
+
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';
 			$cell['name'] = $tpl->name;
@@ -160,11 +179,7 @@
 				
 			// keep the editor away from the generated tmpls
 			$tpl->no_onclick = true;
-
-			if ($this->debug)
-			{
-				echo "<p>end: $type"."[$name]::pre_process: value ="; _debug_array($value);
-			}
+//_debug_array($tpl);
 			return True;
 		}
 		
@@ -200,6 +215,9 @@
 				$extension_data['result_nm'] = array_merge($extension_data['result_nm'],$value['result_nm']);
 			}
 			
+			//we store extension_data in session to save it over a new request
+			$GLOBALS['egw']->session->appsession('advanced_search_query',$GLOBALS['egw_info']['flags']['currentapp'],$extension_data);
+			
 			if(isset($value['action']))
 			{
 				// Also inputfileds etc. could be in actions
@@ -207,11 +225,30 @@
 				{
 					if($extension_data['actions'][$action]['type'] == 'button')
 					{
-						$result = $GLOBALS['egw']->session->appsession('advanced_search_result','etemplate');
-						$extension_data['msg'] = ExecMethod2($extension_data['actions'][key($value['action'])]['method'],$result);
+						$result = $GLOBALS['egw']->session->appsession('advanced_search_result',$GLOBALS['egw_info']['flags']['currentapp']);
+						$extension_data['msg'] = ExecMethod2($extension_data['actions'][$action]['method'],$result);
 					}
 				}
-			}		}
+			}
+			if(is_array($value['result_nm']['rows']))
+			{
+				// Also inputfileds etc. could be in actions
+				foreach($value['result_nm']['rows'] as $action => $id)
+				{
+					if($extension_data['row_actions'][$action]['type'] == 'button')
+					{
+						$result = $GLOBALS['egw']->session->appsession('advanced_search_result',$GLOBALS['egw_info']['flags']['currentapp']);
+						$extension_data['msg'] = ExecMethod2($extension_data['row_actions'][$action]['method'],key($id));
+					}
+				}
+			}
+			
+			if(isset($value['button']['new_search']))
+			{
+				$GLOBALS['egw']->session->appsession('advanced_search_query',$GLOBALS['egw_info']['flags']['currentapp'],false);
+				$extension_data = '';
+			}
+		}
 		
 		function get_rows($query,&$rows,&$readonlys)
 		{
@@ -221,7 +258,7 @@
 				$order_by,'','','',$query['search_values']['opt_select'],$query['start']);
 			$result = ExecMethod2($query['search_method'],$query['search_values'],$only_keys,'','','','',$query['search_values']['opt_select'],false,'','',false);
 			// We store the result in session so actions can fetch them here:
-			$GLOBALS['egw']->session->appsession('advanced_search_result','etemplate',$result);
+			$GLOBALS['egw']->session->appsession('advanced_search_result',$GLOBALS['egw_info']['flags']['currentapp'],$result);
 			return count($result);
 
 		}
