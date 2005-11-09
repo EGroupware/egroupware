@@ -198,6 +198,12 @@
 						else
 						{
 							echo '<div id="divMain">'."\n";
+							if ($GLOBALS['egw_info']['user']['apps']['manual'])
+							{
+								$manual =& new etemplate('etemplate.popup.manual');
+								echo $manual->show(array());
+								unset($manual);
+							}
 						}
 					}
 					echo $GLOBALS['phpgw_info']['etemplate']['hook_content'].$html;

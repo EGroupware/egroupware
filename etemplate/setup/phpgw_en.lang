@@ -109,6 +109,7 @@ displayed in statusline of browser if input-field gets focus	etemplate	en	displa
 displayed in the top line of the groupbox (legend)	etemplate	en	displayed in the top line of the groupbox (legend)
 do you want to save the changes you made in table %s?	etemplate	en	Do you want to save the changes you made in table %s?
 documentation	etemplate	en	Documentation
+doesn't matter	etemplate	en	doesn't matter
 drop a table - this can not be undone	etemplate	en	Drop a table - this can NOT be undone
 drop table	etemplate	en	Drop Table
 dump4setup	etemplate	en	Dump4Setup
@@ -238,6 +239,7 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of
 of	etemplate	en	of
 onclick	etemplate	en	onClick
 only an other version found !!!	etemplate	en	only an other Version found !!!
+open the online help.	etemplate	en	Open the online help.
 optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
 order to navigating by tab key through the form	etemplate	en	Order to navigating by tab key through the form
