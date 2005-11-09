@@ -2085,6 +2085,28 @@
 			return (int)$id;
 		}
 		
+		/**
+		 * gets an eGW conformat referer from $_SERVER['HTTP_REFERER'], suitable for direct use in the link function
+		 *
+		 * @param string $default='' default to use if referer is not set by webserver or not determinable
+		 * @return string
+		 */
+		function get_referer($default='')
+		{
+			$referer = $_SERVER['HTTP_REFERER'];
+			
+			$parts = explode($GLOBALS['egw_info']['server']['webserver_url'],$referer);
+			
+			$referer = array_pop($parts);
+			if (count($parts) > 1)	// eg. URL contains http://egroupware.domain.com/egroupware/... and webserver_url='/egroupware'
+			{
+				$referer = array_pop($parts) . $GLOBALS['egw_info']['server']['webserver_url'] . $referer;
+			}
+			if (empty($referer)) $referer = $default;
+			
+			return $referer;
+		}	
+
 		// some depricated functions for the migration
 		function phpgw_exit($call_footer = False)
 		{
