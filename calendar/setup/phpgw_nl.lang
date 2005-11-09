@@ -64,7 +64,6 @@ change status	calendar	nl	Verander status
 charset of file	calendar	nl	Karakterset van bestand
 click %1here%2 to return to the calendar.	calendar	nl	Klik %1hier%2 om terug te keren naar de agenda.
 close the window	calendar	nl	Venster sluiten
-common preferences	calendar	nl	Normale voorkeuren
 compose a mail to all participants after the event is saved	calendar	nl	stel een email aan alle deelnemers op nadat de gebeurtenis is opgeslagen
 configuration	calendar	nl	Configuratie
 copy of:	calendar	nl	Kopie van:
@@ -235,7 +234,6 @@ no filter	calendar	nl	Geen filter
 no matches found	calendar	nl	Geen resultaten gevonden
 no response	calendar	nl	Geen Antwoord
 non blocking	calendar	nl	niet blokkerend
-not	calendar	nl	niet
 notification messages for added events	calendar	nl	Notificatieberichten voor toegevoegde afspraken
 notification messages for canceled events	calendar	nl	Notificatieberichten voor geannuleerde afspraken
 notification messages for disinvited participants	calendar	nl	Notificatieberichten voor deelnemers waarvan de uitnodiging is ingetrokken
@@ -276,6 +274,7 @@ planner by category	calendar	nl	Planner per categorie
 planner by user	calendar	nl	Planner per gebruiker
 please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	nl	Wilt u de afspraak in uw agenda bevestigen, accepteren, weigeren of bijken.
 please enter a filename !!!	calendar	nl	vul s.v.p. een bestandsnaam in!!!
+please note: you can configure the field assignments after you uploaded the file.	calendar	nl	Let op: U kunt het veld toewijzingen instellen NADAT u het bestand het geupload
 preselected group for entering the planner	calendar	nl	Voorgeselecteerde groep bij het openen van de planner
 previous	calendar	nl	vorige
 previous day	calendar	nl	vorige dag
@@ -293,7 +292,7 @@ read this list of methods.	calendar	nl	Lees deze lijst met methodes.
 receive email updates	calendar	nl	Ontvang email updates
 receive extra information in event mails	calendar	nl	Ontvang extra informatie in afspraak berichten
 receive summary of appointments	calendar	nl	Ontvang overzicht van afspraken
-recurrence	calendar	nl	Terugkeren
+recurrence	calendar	nl	Herhalingen
 recurring event	calendar	nl	terugkerende afspraak
 refresh	calendar	nl	Verversen
 reinstate	calendar	nl	Opnieuw in gebruik nemen
@@ -342,7 +341,6 @@ show the calendar of multiple users	calendar	nl	toon de agenda van meerdere pers
 show this month	calendar	nl	toon deze maand
 show this week	calendar	nl	toon deze week
 single event	calendar	nl	enkele afspraak
-site configuration	calendar	nl	site configuratie
 sorry, the owner has just deleted this event	calendar	nl	Sorry, de eigenaar heeft deze afspraak zojuist verwijderd
 sorry, this event does not exist	calendar	nl	Excuses, deze afspraak bestaat niet
 sorry, this event does not have exceptions defined	calendar	nl	Excuses, deze afspraak heeft geen uitzonderingen gedefinieerd.
@@ -397,7 +395,6 @@ today	calendar	nl	Vandaag
 translation	calendar	nl	Vertaling
 tu	calendar	nl	Di
 tue	calendar	nl	Din
-two weeks	calendar	nl	twee weken
 update a single entry by passing the fields.	calendar	nl	Werk een enkele afspraak bij door de afzonderlijke velden in te voeren.
 updated	calendar	nl	Bijgewerkt
 use end date	calendar	nl	Gebruik einddatum
