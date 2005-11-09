@@ -34,7 +34,7 @@
 			'link' => false
 		),
 // 		'Add'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.add'),
-		'Advances search'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.search'),
+		'Advanced search'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.search'),
 		'_NewLine_', // give a newline
 		'import contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.import'),
 		'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export')

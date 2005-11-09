@@ -57,7 +57,7 @@ class bocontacts extends socontacts
 	/**
 	* deletes contact in db
 	*
-	* @param array &contact contact array from etemplate::exec
+	* @param mixed &contact contact array from etemplate::exec or id
 	* @return bool false if all went right
 	*/
 	function delete(&$contact)
@@ -81,11 +81,13 @@ class bocontacts extends socontacts
 			}
 			return $msg;
 		}
-		if(isset($contact['id']) && !$this->check_perms(EGW_ACL_DELETE,$contact['id']))
+		if((isset($contact['id']) && !$this->check_perms(EGW_ACL_DELETE,$contact['id'])) ||
+			(is_numeric($contact) && !$this->check_perms(EGW_ACL_DELETE,$contact)))
 		{
 			$contact['msg'] = lang('You are not permittet to delete this contact');
 			return 1;
 		}
+		if(is_numeric($contact)) $contact = array('id' => $contact);
 		if(parent::delete($contact))
 		{
 			$contact['msg'] = lang('Something went wrong by deleting this contact');

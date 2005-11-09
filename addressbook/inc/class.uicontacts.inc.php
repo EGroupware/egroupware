@@ -57,27 +57,22 @@ class uicontacts extends bocontacts
 			if (isset($content['button']['save']))
 			{
 				$this->save($content);
-				$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
-					array('menuaction' => 'addressbook.uiaddressbook.index'))."';";
-				$js .= 'window.close();';
-				echo "<html><body><script>$js</script></body></html>\n";
+				echo "<html><body><script>var referer = opener.location;opener.location.href = referer;window.close();</script></body></html>\n";
 				$GLOBALS['egw']->common->egw_exit();
 			}
 			elseif (isset($content['button']['apply']))
 			{
 				$content = $this->save($content);
-				$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">opener.location.href='".
-					$GLOBALS['egw']->link('/index.php',array('menuaction' => 'addressbook.uiaddressbook.index'))."';</script>";
+				$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
+					var referer = opener.location;
+					opener.location.href = referer;</script>";
 			}
 			elseif (isset($content['button']['delete']))
 			{
 				if(!$this->delete($content));
 				{
-					$js = "opener.location.href='".$GLOBALS['egw']->link('/index.php',
-						array('menuaction' => 'addressbook.uiaddressbook.index'))."';";
-					$js .= 'window.close();';
-					echo "<html><body><script>$js</script></body></html>\n";
-					$GLOBALS['egw']->common->egw_exit();
+				echo "<html><body><script>var referer = opener.location;opener.location.href = referer;window.close();</script></body></html>\n";
+				$GLOBALS['egw']->common->egw_exit();
 				}
 			}
 		}
@@ -115,6 +110,7 @@ class uicontacts extends bocontacts
 	
 	function search($content='')
 	{
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook'). ' - '. lang('Advanced search');
 		if(!($GLOBALS['egw_info']['server']['contact_repository'] == 'sql' || !isset($GLOBALS['egw_info']['server']['contact_repository'])))
 		{
 			$GLOBALS['egw']->common->phpgw_header();
@@ -143,7 +139,25 @@ class uicontacts extends bocontacts
 			'email' => lang('work email'),
 			'tel_home' => lang('tel home'),
 		);
-
+		
+		$content['advs']['row_actions'] = array(
+			'edit' => array(
+				'type' => 'button',
+				'options' => array(
+					'size' => 'edit',
+					'onclick' => 'window.open(\''.
+					$GLOBALS['egw']->link('/index.php?menuaction=addressbook.uicontacts.edit').
+					'&contact_id=$row_cont[id] \',\'\',\'dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\');
+					return false;',
+				)),
+			'delete' => array(
+				'type' => 'button',
+				'method' => 'addressbook.bocontacts.delete',
+				'options' => array(
+					'size' => 'delete',
+					'onclick' => 'if(!confirm(\''. lang('Do your really want to delete this contact?'). '\')) return false;',
+				)),
+		);
 /*		$content['advs']['actions']['email'] = array(
 				'type' => 'button',
 				'options' => array(

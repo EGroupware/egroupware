@@ -16,7 +16,7 @@ addressbook	common	de	Adressbuch
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
-advances search	addressbook	de	Erweiterte Suche
+advanced search	addressbook	de	Erweiterte Suche
 alt. csv import	addressbook	de	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass Sie dieses Feld löschen wollen?
 bbs phone	addressbook	de	BBS
@@ -55,6 +55,7 @@ debug output in browser	addressbook	de	Debugausgaben in Browser
 default filter	addressbook	de	Standardfilter
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 department	common	de	Abteilung
+do your really want to delete this contact?	addressbook	de	Wollen sie diesen Kontakt wirklich löschen?
 doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen

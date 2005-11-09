@@ -16,7 +16,7 @@ addressbook	common	en	Addressbook
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
-advances search	addressbook	en	Advances search
+advanced search	addressbook	en	Advanced search
 alt. csv import	addressbook	en	Alt. CSV Import
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 bbs phone	addressbook	en	BBS Phone
@@ -55,6 +55,7 @@ debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 department	common	en	Department
+do your really want to delete this contact?	addressbook	en	Do your really want to delete this contact?
 doesn't matter	addressbook	en	doesn't matter
 domestic	addressbook	en	Domestic
 download	addressbook	en	Download
