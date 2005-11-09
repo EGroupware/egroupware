@@ -34,8 +34,7 @@
 		function index()
 		{
 			// make preferences called via sidebox menu of an app, to behave like a part of that app
-			list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
-			if (!$referer) $referer = '/preferences/index.php';
+			$referer = $GLOBALS['egw']->common->get_referer('/preferences/index.php');
 			if (!preg_match('/(preferences.php|menuaction=preferences.uisettings.index)+/i',$referer))
 			{
 				$this->bo->session_data['referer'] = $referer;

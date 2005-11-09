@@ -113,8 +113,7 @@
 			$cats_level  = get_var('cats_level',array('GET','POST'));
 
 			// make categories called via sidebox menu of an app, to behave like a part of that app
-			list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
-			if (!$referer) $referer = '/preferences/index.php';
+			$referer = $GLOBALS['egw']->common->get_referer('/preferences/index.php');
 			if (!strstr($referer,'menuaction=preferences.uicategories'))
 			{
 				$this->referer = $referer;

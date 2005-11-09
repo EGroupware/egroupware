@@ -117,7 +117,7 @@
 				$content = array(
 					'type' => $type,
 				);
-				list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
+				$referer = $GLOBALS['egw']->common->get_referer();
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
 

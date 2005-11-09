@@ -48,8 +48,7 @@
 			$referer = $_POST['referer'];
 			if (!$referer)
 			{
-				list(,$referer) = explode($GLOBALS['egw_info']['server']['webserver_url'],$_SERVER['HTTP_REFERER']);
-				if (!$referer) $referer = '/preferences/index.php';
+				$referer = $GLOBALS['egw']->common->get_referer('/preferences/index.php');
 			}
 			//echo '<p align="right">'."referer='$referer'</p>\n";
 
