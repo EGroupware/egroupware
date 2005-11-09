@@ -1,13 +1,12 @@
 <?php
 	 /**************************************************************************\
-	 * eGroupWare API - phpgwapi loader                                         *
-	 * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
+	 * eGroupWare API - commonly used functions included by eGW AND setup       *
+	 * The file was originaly written by Dan Kuykendall <seek3r@phpgroupware.org> *
 	 * and Joseph Engo <jengo@phpgroupware.org>                                 *
-	 * Has a few functions, but primary role is to load the phpgwapi            *
 	 * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
 	 * -------------------------------------------------------------------------*
 	 * This library is part of the eGroupWare API                               *
-	 * http://www.egroupware.org/api                                            * 
+	 * http://www.egroupware.org                                                *
 	 * ------------------------------------------------------------------------ *
 	 * This library is free software; you can redistribute it and/or modify it  *
 	 * under the terms of the GNU Lesser General Public License as published by *
@@ -49,11 +48,11 @@
 	}
 
 	/**
-	  * print debug data only when debugging mode is turned on.
-	  *
-	  * @author seek3r
-	  * This function is used to debugging data. 
-	  * print_debug('this is some debugging data',$somevar);
+	 * print debug data only when debugging mode is turned on.
+	 *
+	 * @author seek3r
+	 * This function is used to debugging data. 
+	 * print_debug('this is some debugging data',$somevar);
 	 */
 	function print_debug($message,$var = 'messageonly',$part = 'app', $level = 3)
 	{
@@ -269,11 +268,11 @@
 	}
 
 	/**
-	  * Validate data.
-	  *
-	  * @author seek3r
-	  * This function is used to validate input data. 
-	  * sanitize('number',$somestring);
+	 * Validate data.
+	 *
+	 * @author seek3r
+	 * This function is used to validate input data. 
+	 * sanitize('number',$somestring);
 	 */
 	function sanitize($string,$type)
 	{
@@ -754,13 +753,14 @@
 			list($appname,$classname,$functionname) = explode(".", $method);
 			if (!is_object($GLOBALS[$classname]))
 			{
+				// please note: no reference assignment (=&) here, as $GLOBALS is a reference itself!!!
 				if ($classparams != '_UNDEF_' && ($classparams || $classparams != 'True'))
 				{
-					$GLOBALS[$classname] =& CreateObject($appname.'.'.$classname, $classparams);
+					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname, $classparams);
 				}
 				else
 				{
-					$GLOBALS[$classname] =& CreateObject($appname.'.'.$classname);
+					$GLOBALS[$classname] = CreateObject($appname.'.'.$classname);
 				}
 			}
 
