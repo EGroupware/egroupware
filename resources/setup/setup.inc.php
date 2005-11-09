@@ -27,7 +27,7 @@
 	$setup_info['resources']['maintainer']	= array( 
 		'name' => 'Cornelius Weiss', 
 		'email' => 'egw@von-und-zu-weiss.de' 
-		); 
+	); 
 		
 	$setup_info['resources']['hooks']['preferences']	= 'resources.resources_hooks.admin_prefs_sidebox';
 	$setup_info['resources']['hooks']['admin']		= 'resources.resources_hooks.admin_prefs_sidebox';
@@ -39,15 +39,15 @@
 
 	$setup_info['resources']['depends'][]	= array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('1.0.1')
+		 'versions' => Array('1.0.1','1.2')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause eTemplates is not in the api yet
 		 'appname' => 'etemplate',
-		 'versions' => Array('1.0.0','1.0.1')
+		 'versions' => Array('1.0.0','1.0.1','1.2')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause of vfs psuedoprotocol is not fully in the api yet
 		 'appname' => 'filemanager',
-		 'versions' => Array('1.0.0','1.0.1')
+		 'versions' => Array('1.0.0','1.0.1','1.2')
 	);
 
 
