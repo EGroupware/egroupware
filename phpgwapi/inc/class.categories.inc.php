@@ -148,7 +148,7 @@
 				$global_cats = " OR cat_appname='phpgw'";
 			}
 
-			$filter = ' AND ' . $this->filter($type);
+			if (($filter = $this->filter($type))) $filter = ' AND '.$filter;
 
 			if (!$sort) $sort = 'ASC';
 
