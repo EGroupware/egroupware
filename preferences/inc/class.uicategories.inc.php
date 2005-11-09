@@ -48,7 +48,6 @@
 			$this->sort  = $this->bo->sort;
 			$this->order = $this->bo->order;
 			$this->referer = $this->bo->referer;
-			echo '<p align="right">'."referer='$this->referer'</p>\n";
 
 			$dir = dir(EGW_SERVER_ROOT.'/phpgwapi/images');
 			while($file = $dir->read())
@@ -117,7 +116,6 @@
 			if (!strstr($referer,'menuaction=preferences.uicategories'))
 			{
 				$this->referer = $referer;
-				echo '<p align="right">'."referer='$this->referer'</p>\n";
 			}
 			if ($this->referer != '/preferences/index.php')
 			{
