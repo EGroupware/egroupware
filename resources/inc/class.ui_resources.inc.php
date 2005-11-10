@@ -1,25 +1,19 @@
 <?php
-/**************************************************************************\
-* eGroupWare - resources - Resource Management System                      *
-* http://www.egroupware.org                                                *
-* Written by Lukas Weiss <wnz_gh05t@users.sourceforge.net> and             *
-*            Cornelius Weiss <egw@von-und-zu-weiss.de>                     *
-* -----------------------------------------------                          *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - resources
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package resources
+ * @link http://www.egroupware.org
+ * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+ * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
+ * @version $Id$
+ */
 
 /**
  * General userinterface object for resources
  *
  * @package resources
- * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
- * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class ui_resources
 {

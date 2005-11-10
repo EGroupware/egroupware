@@ -1,22 +1,17 @@
 <?php
-/**************************************************************************\
-* eGroupWare - resources                                                   *
-* http://www.egroupware.org                                                *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-* --------------------------------------------                             *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - resources
+ *
+ * @license http://www.gnu.org/licenses/gpl.html GNU General Public License
+ * @package resources
+ * @link http://www.egroupware.org
+ * @version $Id$
+ */
 
 /**
  * ACL business object for resources
  *
  * @package resources
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class bo_acl
 {
@@ -64,7 +59,7 @@ class bo_acl
 				}
 			}
 			$this->save_sessiondata();
-			$this->cats = $this->egw_cats->return_array('all',$this->start,True,$this->query,$this->sort,'cat_name',True);
+			$this->cats = $this->egw_cats->return_sorted_array(0,False);
 		}
 	}
 
@@ -78,7 +73,7 @@ class bo_acl
 	*/
 	function get_cats($perm_type)
 	{
-		$cats = $this->egw_cats->return_sorted_array(0,False,'','','',!$type);
+		$cats = $this->egw_cats->return_sorted_array(0,False);
 		while (list(,$cat) = @each($cats))
 		{
 			if($this->is_permitted($cat['id'],$perm_type))

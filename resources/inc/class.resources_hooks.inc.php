@@ -1,25 +1,19 @@
 <?php
-/**************************************************************************\
-* eGroupWare - resources hooks                                             *
-* http://www.eGroupWare.org                                                *
-* Originally written by Ralf Becker <RalfBecker@outdoor-training.de>       *
-* Changes for resources by Cornelius Wei�<egw@von-und-zu-weiss.de>        *
-*                                                                          *
-* -------------------------------------------------------                  *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - resources
+ * General hook object for resources
+ * It encapsulats all the diffent hook methods
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package resources
+ * @link http://www.egroupware.org
+ * @version $Id$
+ */
 
 /**
  * General hook object for resources
  * It encapsulats all the diffent hook methods
- *
  * @package resources
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class resources_hooks
 {

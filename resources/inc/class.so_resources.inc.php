@@ -1,27 +1,22 @@
 <?php
-/**************************************************************************\
-* eGroupWare - resources - Resource Management System                      *
-* http://www.egroupware.org                                                *
-* Written by Cornelius Weiss <egw@von-und-zu-weiss.de>                     *
-* and Lukas Weiss <wnz_gh05t@users.sourceforge.net>                        *
-* -----------------------------------------------                          *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
+/**
+ * eGroupWare - resources
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package resources
+ * @link http://www.egroupware.org
+ * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+ * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
+ * @version $Id$
+ */
 
-/* $Id$ */
-	
+
 include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 /**
  * General storage object for resources
  *
  * @package resources
- * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
- * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class so_resources extends so_sql
 {

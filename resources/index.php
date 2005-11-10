@@ -1,16 +1,14 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - resources - Resource Management System                      *
-	* http://www.egroupware.org                                                *
-	* Written by Lukas Weiss [ichLukas@gmx.net] and                            *
-	*            Cornelius Weiss <egw@von-und-zu-weiss.de>                     *
-	* -----------------------------------------------                          *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
-	
+	/**
+	 * eGroupWare - resources
+	 * http://www.egroupware.org 
+	 *
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 * @package resources
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
+	 * @version $Id$
+	 */
 	
 	$GLOBALS['egw_info']['flags'] = array(
 		'currentapp'	=> 'resources',
