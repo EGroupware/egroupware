@@ -1449,17 +1449,15 @@ class bocal
 			'title' => 'calendar.bocal.link_title',
 			'view'  => array(
 				'menuaction' => 'calendar.uiforms.view',
-				'no_popup'   => 1,
 			),
-			'view_id' => 'cal_id',
-//			'view_popup' => '750x400',
-			'add' => array(
+			'view_id'    => 'cal_id',
+			'view_popup' => '750x400',
+			'add'        => array(
 				'menuaction' => 'calendar.uiforms.edit',
-				'no_popup'   => 1,
 			),
 			'add_app'    => 'link_app',
 			'add_id'     => 'link_id',	
-//			'add_popup' => '750x400',
+			'add_popup'  => '750x400',
 		);
 	}
 
