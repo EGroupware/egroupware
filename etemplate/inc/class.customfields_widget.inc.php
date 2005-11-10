@@ -98,12 +98,23 @@
 								$field['values'][$key] = $val;
 							}
 						}
-						
-						$input = &$tpl->new_cell($n,'select','',$this->prefix.$name,array(
+						$input = &$tpl->new_cell($n,'hbox');
+						if($this->advanced_search)
+						{
+							$not = &$tpl->add_child($input, $check = &$tpl->empty_cell('checkbox','!'.$this->prefix.$name,array(
+								'label' => 'NOT',
+								'no_lang'     => True
+							)));
+							unset($not);
+							unset($check);
+						}
+						$select = &$tpl->add_child($input, $item = &$tpl->empty_cell('select',$this->prefix.$name,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
 							'no_lang'     => True
-						));
+						)));
+						unset($select);
+						unset($item);
 						break;
 					case 'label' :
 						$label['span'] = 'all';

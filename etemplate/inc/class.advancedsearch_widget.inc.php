@@ -211,6 +211,7 @@
 				foreach($value as $haystack => $needle)
 				{
 					if($needle == '') unset($value[$haystack]);
+					elseif($haystack{0} != '!' && $needle{0} != '!' && $value['!'.$haystack] == 1 ) $value[$haystack] = '!'.$value[$haystack];
 				}
 				$extension_data['result_nm']['search_values'] = $value;
 			}
