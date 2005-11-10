@@ -486,7 +486,7 @@
 		{
 			if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
 
-			$acounts = array($account_id);
+			$accounts = array($account_id);
 			if ($use_memberships)
 			{
 				foreach((array)$GLOBALS['egw']->accounts->membership($account_id) as $group)
