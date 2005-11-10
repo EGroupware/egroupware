@@ -108,6 +108,7 @@ displayed in statusline of browser if input-field gets focus	etemplate	nl	weerge
 displayed in the top line of the groupbox (legend)	etemplate	nl	weergegeven in de bovenste regel van het groepskader (legenda)
 do you want to save the changes you made in table %s?	etemplate	nl	Wilt u de wijzigingen die in tabel %s gemaakt hebt bewaren?
 documentation	etemplate	nl	Documentatie
+doesn't matter	etemplate	nl	maakt niets uit
 drop a table - this can not be undone	etemplate	nl	Tabel verwijderen - dit kan niet ongedaan gemaakt worden
 drop table	etemplate	nl	Tabel verwijderen
 dump4setup	etemplate	nl	Dump4Setup
@@ -237,6 +238,7 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	nl	aantal ri
 of	etemplate	nl	van
 onclick	etemplate	nl	onClick
 only an other version found !!!	etemplate	nl	alleen een andere versie gevonden !!!
+open the online help.	etemplate	nl	De online help openen.
 optional note about the link	etemplate	nl	optionele opmerking over de link
 options	etemplate	nl	Opties
 order to navigating by tab key through the form	etemplate	nl	Volgorde van TAB toets navigatie door het formulier
