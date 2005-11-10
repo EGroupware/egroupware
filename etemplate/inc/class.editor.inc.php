@@ -475,7 +475,7 @@
 							'menuaction' => 'etemplate.editor.widget',
 						)).'";
 						url = url.replace(/index.php\\?/,"index.php?path="+path+"&");
-						window.open(url,"etemplate_editor_widget","dependent=yes,width=600,height=450,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes");
+						window.open(url,"etemplate_editor_widget","dependent=yes,width=640,height=480,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes");
 					}
 				</script>';
 				if ($app != 'etemplate' && file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
