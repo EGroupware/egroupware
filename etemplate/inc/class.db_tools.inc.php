@@ -850,8 +850,7 @@
 			$update .= $this->update_schema($app,$current,$tables);
 
 			$update .= "
-		\$GLOBALS['setup_info']['$app']['currentver'] = '$version';
-		return \$GLOBALS['setup_info']['$app']['currentver'];
+		return \$GLOBALS['setup_info']['$app']['currentver'] = '$version';
 	}
 ?".">\n";
 			if (!($f = fopen($file_update,'w')))
@@ -901,7 +900,7 @@
 			{
 				if (!isset($current[$name]))	// table $name droped
 				{
-					$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->DropTable('$name');\n";
+					$update .= "\t\t\$GLOBALS['egw_setup']->oProc->DropTable('$name');\n";
 				}
 				else
 				{
@@ -919,13 +918,13 @@
 								$this->remove_from_array($new_table_def['fk'],$col);
 								$this->remove_from_array($new_table_def['ix'],$col);
 								$this->remove_from_array($new_table_def['uc'],$col);
-								$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->DropColumn('$name',";
+								$update .= "\t\t\$GLOBALS['egw_setup']->oProc->DropColumn('$name',";
 								$update .= $this->write_array($new_table_def,2).",'$col');\n";
 							}
 							else	// column $col renamed
 							{
 								$new_col = $this->changes[$name][$col];
-								$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->RenameColumn('$name','$col','$new_col');\n";
+								$update .= "\t\t\$GLOBALS['egw_setup']->oProc->RenameColumn('$name','$col','$new_col');\n";
 							}
 						}
 					}
@@ -948,7 +947,7 @@
 				{
 					$tables .= ($tables ? ',' : '') . "'$name'";
 
-					$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->CreateTable('$name',";
+					$update .= "\t\t\$GLOBALS['egw_setup']->oProc->CreateTable('$name',";
 					$update .= $this->write_array($table_def,2).");\n";
 				}
 				else
@@ -967,13 +966,13 @@
 							 serialize($old_norm_fd[$col]) != serialize($new_norm_fd[$col])) // column definition altered
 						{
 							$update .= "\t\t".($do_refresh ? "/* done by RefreshTable() anyway\n\t\t" : '').
-								"\$GLOBALS['phpgw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
+								"\$GLOBALS['egw_setup']->oProc->".($add ? 'Add' : 'Alter')."Column('$name','$col',";
 							$update .= $this->write_array($col_def,2) . ');' . ($do_refresh ? '*/' : '') . "\n";
 						}
 					}
 					if ($do_refresh)
 					{
-						$update .= "\t\t\$GLOBALS['phpgw_setup']->oProc->RefreshTable('$name',";
+						$update .= "\t\t\$GLOBALS['egw_setup']->oProc->RefreshTable('$name',";
 						$update .= $this->write_array($table_def,2).");\n";
 					}
 				}
