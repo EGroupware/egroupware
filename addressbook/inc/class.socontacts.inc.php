@@ -197,14 +197,43 @@ class socontacts
 			$firstrun = true;
 			foreach ((array)$criteria_extra as $extra_crit)
 			{
-				$result = $this->soextra->search($extra_crit,true,'','',$wildcard);
-				if ($op == 'OR' && $result) 
+				if($extra_crit[$this->extra_value]{0} == '!')
+				{
+					if(!isset($all_main_ids)) $all_main_ids = $this->somain->search(array($this->main_id => '*'));
+					$extra_crit[$this->extra_value] = substr($extra_crit[$this->extra_value],1);
+					$not_result = $this->soextra->search($extra_crit,true,'','',$wildcard);
+					if(is_array($not_result))
+					{
+						$expr = '$not_result[0]';
+						for($i=1; $i<count($not_result); $i++)
+						{
+							$expr .= ',$not_result['.$i.']';
+						}
+						eval('$not_result = array_merge_recursive('.$expr.');');
+					}
+					foreach($all_main_ids as $entry)
+					{
+						if(array_search($entry[$this->main_id],(array)$not_result[$this->extra_id]) === false)
+						{
+							$result[] = array(
+								$this->extra_id => $entry[$this->main_id],
+								$this->extra_key => $extra_crit[$this->extra_key],
+							);
+						}
+					}
+				}
+				else
+				{
+					$result = $this->soextra->search($extra_crit,true,'','',$wildcard);
+				}
+
+				if ($op == 'OR' && $result)
 				{
 					$resultextra = array_merge_recursive((array)$result,(array)$resultextra);
 				}
 				elseif ($op == 'AND')
 				{
-					if (!$result) 
+					if (!$result)
 					{
 						return false;
 						//$resultextra = array();
