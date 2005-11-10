@@ -17,9 +17,11 @@ a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden sol
 accesskey	etemplate	de	Tastaturkürzel
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	de	Ein Tastaturkürzel kann auch über ein & in der Beschriftung angegeben werden
 add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
+add a new entry of the selected application	etemplate	de	Einen neuen Eintrag der ausgewählten Anwendung hinzufügen
 add a new multi-column index	etemplate	de	Fügt einen mehrspaltigen Index hinzu
 add column	etemplate	de	Spalte zufügen
 add index	etemplate	de	Index zufügen
+add new	etemplate	de	Neu hinzufügen
 add table	etemplate	de	Tabelle zufügen
 advanced search	etemplate	de	Erweiterte Suche
 align	etemplate	de	Ausrichtung
@@ -97,6 +99,7 @@ delete index	etemplate	de	Index löschen
 delete the spezified etemplate	etemplate	de	löscht das angegebene eTemplate
 delete this column	etemplate	de	diese Spalte löschen
 delete this etemplate	etemplate	de	dieses eTemplate löschen
+delete this file	etemplate	de	Diese Datei löschen
 delete this row	etemplate	de	diese Zeile löschen
 delete whole column (can not be undone!!!)	etemplate	de	ganze Zeile löschen (kann NICHT rückgängig gemacht werden)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	de	löscht das oben spezifiziert eTemplate aus der Datenbank, kann NICHT rückgängig gemacht werden
@@ -204,9 +207,10 @@ last	etemplate	de	Letzte
 left	etemplate	de	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
 link	etemplate	de	Verknüpfung
+linkentry	etemplate	de	VerknüpfungEintrag
 linklist	etemplate	de	VerknüpfungListe
-linkstring	etemplate	de	VerküpfungZeichenkette
-linkto	etemplate	de	VerküpfungZu
+linkstring	etemplate	de	VerknüpfungZeichenkette
+linkto	etemplate	de	VerknüpfungZu
 load this template into the editor	etemplate	de	lädt diese Template zum Bearbeiten
 middle	etemplate	de	Mittig
 minute	etemplate	de	Minute

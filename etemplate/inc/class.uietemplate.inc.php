@@ -17,18 +17,21 @@
 	/**
 	 * creates dialogs / HTML-forms from eTemplate descriptions
 	 *
-	 * etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
-	 *
+	 * Usage example:
+	 *<code>
 	 * $tmpl =& CreateObject('etemplate.etemplate','app.template.name');
 	 * $tmpl->exec('app.class.callback',$content_to_show);
+	 *</code>
 	 * This creates a form from the eTemplate 'app.template.name' and takes care that
 	 * the method / public function 'callback' in class 'class' of 'app' gets called
-	 * if the user submitts the form. For the complete param's see the description of exec.
+	 * if the user submits the form. For the complete param's see the description of exec.
+	 *
+	 * etemplate or uietemplate extends boetemplate, all vars and public functions are inherited
 	 *
 	 * @package etemplate
 	 * @subpackage api
-	 * @author RalfBecker-AT-outdoor-training.de
-	 * @license GPL
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
 	class etemplate extends boetemplate
 	{
@@ -145,6 +148,7 @@
 			}
 			$id = $this->appsession_id();
 
+			$GLOBALS['egw_info']['etemplate']['output_mode'] = $output_mode;	// let extensions "know" they are run eg. in a popup
 			$GLOBALS['egw_info']['etemplate']['loop'] = False;
 			$GLOBALS['egw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['egw_info']['etemplate']['to_process'] = array();
@@ -160,6 +164,7 @@
 					// dont set the width of popups!
 					($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
 					//echo "to_process="; _debug_array($GLOBALS['egw_info']['etemplate']['to_process']); 
+			
 			if ($this->sitemgr)
 			{
 				
@@ -681,7 +686,7 @@
 		}
 
 		/**
-		 * generates HTML for 1 input-field / cell
+		 * generates HTML for one widget (input-field / cell)
 		 *
 		 * calls show to generate included eTemplates. Again only an INTERMAL function.
 		 *
@@ -707,7 +712,7 @@
 			}
 			list($span) = explode(',',$cell['span']);	// evtl. overriten later for type template
 
-			if ($cell['name'][0] == '@' && $cell['type'] != 'template')
+			if ($cell['name']{0} == '@' && $cell['type'] != 'template')
 			{
 				$cell['name'] = $this->get_array($content,$this->expand_name(substr($cell['name'],1),
 					$show_c,$show_row,$content['.c'],$content['.row'],$content));
@@ -742,7 +747,7 @@
 			while ((!$this->types[$cell['type']] || !empty($sub_type)) && $this->haveExtension($type,'pre_process'))
 			{
 				//echo "<p>pre_process($cell[name]/$cell[type])</p>\n";
-				if (strchr($cell['size'],'$') || $cell['size'][0] == '@')
+				if (strchr($cell['size'],'$') || $cell['size']{0} == '@')
 				{
 					$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 				}
@@ -757,27 +762,27 @@
 				list($type,$sub_type) = explode('-',$cell['type']);				
 			}
 			list(,$class) = explode(',',$cell['span']);	// might be set by extension
-			if (strchr($class,'$') || $class[0] == '@')
+			if (strchr($class,'$') || $class{0} == '@')
 			{
 				$class = $this->expand_name($class,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
 			$cell_options = $cell['size'];
-			if (strchr($cell_options,'$') || $cell_options[0] == '@')
+			if (strchr($cell_options,'$') || $cell_options{0} == '@')
 			{
 				$cell_options = $this->expand_name($cell_options,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
 			$label = $cell['label'];
-			if (strchr($label,'$') || $label[0] == '@')
+			if (strchr($label,'$') || $label{0} == '@')
 			{
 				$label = $this->expand_name($label,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
 			$help = $cell['help'];
-			if (strchr($help,'$') || $help[0] == '@')
+			if (strchr($help,'$') || $help{0} == '@')
 			{
 				$no_lang_on_help = true;
 				$help = $this->expand_name($help,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			$blur = $cell['blur'][0] == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
+			$blur = $cell['blur']{0} == '@' ? $this->get_array($content,substr($cell['blur'],1)) :
 				(strlen($cell['blur']) <= 1 ? $cell['blur'] : lang($cell['blur']));
 
 			if ($this->java_script())
@@ -827,10 +832,10 @@
 			}
 			switch ($type)
 			{
-				case 'label':		//  size: [[b]old][[i]talic][,link][,activate_links][,label_for][,link_popup_size]
+				case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size]
 					if (is_array($value))
 						break;
-					list($style,$extra_link,$activate_links,$label_for,$extra_link_popup) = explode(',',$cell_options);
+					list($style,$extra_link,$activate_links,$label_for,$extra_link_target,$extra_link_popup) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br($this->html->htmlspecialchars($value));
 					if ($activate_links) $value = $this->html->activate_links($value);
@@ -846,8 +851,8 @@
 						);
 					}
 					break;
-				case 'html':
-					$extra_link = $cell_options;
+				case 'html':	//  size: [link],[link_target],[link_popup_size]
+					list($extra_link,$extra_link_target,$extra_link_popup) = explode(',',$cell_options);
 					$html .= $value;
 					break;
 				case 'int':		// size: [min][,[max][,len]]
@@ -1068,7 +1073,7 @@
 					}
 					if (!is_object($cell['obj']))
 					{
-						if ($cell['name'][0] == '@')
+						if ($cell['name']{0} == '@')
 						{
 							$cell['obj'] = $this->get_array($content,substr($cell['name'],1));
 							$obj_read = is_object($cell['obj']) ? 'obj from content' : 'obj read, obj-name from content';
@@ -1226,7 +1231,7 @@
 						}
 					}
 					break;
-				case 'image':
+				case 'image':	// size: [link],[link_target],[imagemap],[link_popup]
 					$image = $value != '' ? $value : $name;
 					list($app,$img) = explode('/',$image,2);
 					if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strstr($img,'/'))
@@ -1236,15 +1241,16 @@
 					}
 					if (!$readonly)
 					{
-						list($extra_link,$extra_link_target,$imagemap) = explode(',',$cell['size']);
+						list($extra_link,$extra_link_target,$imagemap,$extra_link_popup) = explode(',',$cell['size']);
 					}
 					$html .= $this->html->image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
 						'border="0"'.($imagemap?' usemap="'.$this->html->htmlspecialchars($imagemap).'"':''));
 					$extra_label = False;
 					break;
-				case 'file':
+				case 'file':	// size: size of the filename field
 					if (!$readonly)
 					{
+						if ((int) $cell_options) $options .= ' size="'.(int)$cell_options.'"';
 						$html .= $this->html->input_hidden($path_name = str_replace($name,$name.'_path',$form_name),'.');
 						$html .= $this->html->input($form_name,'','file',$options);
 						$GLOBALS['egw_info']['etemplate']['form_options'] =
@@ -1432,27 +1438,21 @@
 					$html = '&nbsp;';
 				}
 			}
-			if ($extra_link)
+			if ($extra_link && (($extra_link = $this->expand_name($extra_link,$show_c,$show_row,$content['.c'],$content['.row'],$content))))
 			{
-				$extra_link = $this->expand_name($extra_link,$show_c,$show_row,$content['.c'],$content['.row'],$content);
-				if ($extra_link[0] == '@')
-				{
-					$extra_link = $this->get_array($content,substr($extra_link,1));
-				}
-				if ($extra_link)
-				{
-					$options = $help ? ' onmouseover="self.status=\''.addslashes($this->html->htmlspecialchars($help)).'\'; return true;"' .
-						' onmouseout="self.status=\'\'; return true;"' : '';
+				$options = $help ? ' onmouseover="self.status=\''.addslashes($this->html->htmlspecialchars($help)).'\'; return true;"' .
+					' onmouseout="self.status=\'\'; return true;"' : '';
 
-					if ($extra_link_target) $options .= ' target="'.$extra_link_target.'"';
-					
-					if ($extra_link_popup)
-					{
-						list($w,$h) = explode('x',$extra_link_popup);
-						$options .= ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
-					}
-					return $this->html->a_href($html,$extra_link,'',$options);
+				if ($extra_link_target && (($extra_link_target = $this->expand_name($extra_link_target,$show_c,$show_row,$content['.c'],$content['.row'],$content))))
+				{
+					$options .= ' target="'.addslashes($extra_link_target).'"';
 				}
+				if ($extra_link_popup && (($extra_link_popup = $this->expand_name($extra_link_popup,$show_c,$show_row,$content['.c'],$content['.row'],$content))))
+				{
+					list($w,$h) = explode('x',$extra_link_popup);
+					$options .= ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+				}
+				return $this->html->a_href($html,$extra_link,'',$options);
 			}
 			// if necessary show validation-error behind field
 			if (isset($GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name]))

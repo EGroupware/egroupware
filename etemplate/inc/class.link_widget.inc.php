@@ -1,6 +1,6 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare - eTemplate Extension - InfoLog LinkTo Widget                 *
+	* eGroupWare - eTemplate Extension - Link Widgets / UI for the link class  *
 	* http://www.egroupware.org                                                *
 	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
 	* --------------------------------------------                             *
@@ -15,13 +15,21 @@
 	/**
 	 * eTemplate Extension: several widgets as user-interface for the link-class
 	 *
-	 * 1) link-to:     Widget to create links to an other entries of link-aware apps
+	 * All widgets use the link-registry, to "know" which apps use popups (and what size).
+	 * If run in a popup and the app uses no popups, a target will be set, to open a new full decorated window.
+	 *
+	 * The class contains the following widgets:
+	 * - link: Show a link to one linked entry specified by an array with keys app, id and optional title and help-message
+	 * - link-to: Widget to create links to an other entries of link-aware apps
 	 *	If an id was set, this widgets creats the links without further interaction with the calling code.
 	 *	If the entry does not yet exist, the widget returns an array with the new links in the id. After the
 	 *	entry was successful create, bolink::link($app,$new_id,$arr) has to be called to create the links!
-	 * 2) link-list:   Widget to shows the links to an entry and a Unlink Button for each link
-	 * 3) link-string: comma-separated list of link-titles with a link to its view method, value is like get_links()
+	 * - link-list: Widget to shows the links to an entry in a table with an unlink icon for each link
+	 * - link-string: comma-separated list of link-titles with a link to its view method, value is like get_links() 
+	 *	or array with keys to_app and to_id (widget calls then get_links itself)
+	 * - link-add:    Add a new entry of the select app, which is already linked to a given entry
 	 *
+	 *<code>
 	 * $content[$name] = array(
 	 *   'to_app'       => // I  string appname of the entry to link to
 	 *   'to_id'        => // IO int id of the entry to link to, for new entries 0, returns the array with new links
@@ -29,35 +37,43 @@
 	 *   'no_files'     => // I  boolean suppress attach-files, default no
 	 *   'search_label' => // I  string label to use instead of search
 	 *   'link_label'   => // I  string label for the link button, default 'Link'
-	 *	 
 	 * );
+	 *</code>
+	 *
 	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
 	 *
 	 * @package etemplate
 	 * @subpackage extensions
-	 * @author RalfBecker-AT-outdoor-training.de
-	 * @license GPL
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
 	class link_widget
 	{
 		/** 
-		 * exported methods of this class
-		 * @var array
+		 * @var array exported methods of this class
 		 */
 		var $public_functions = array(
 			'pre_process' => True,
 			'post_process' => True
 		);
 		/**
-		 * availible extensions and there names for the editor
-		 * @var array
+		 * @var array availible extensions and there names for the editor
 		 */
-		var $human_name = array(	// this are the names for the editor
+		var $human_name = array(
+			'link'        => 'Link',
 			'link-to'     => 'LinkTo',
 			'link-list'   => 'LinkList',
-			'link-string' => 'LinkString'
+			'link-string' => 'LinkString',
+			'link-add'    => 'LinkEntry',
 		);
+		/**
+		 * @var boolean $debug switches debug-messages on and off
+		 */
 		var $debug = False;
+		/**
+		 * @var object $link reference to the link class
+		 */
+		var $link;
 
 		/**
 		 * Constructor of the extension
@@ -88,39 +104,16 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			
-			if ($cell['type'] == 'link-to' && ($cell['readonly'] || $readonlys))
+			$type = $cell['type'];
+
+			if (($type == 'link-to' || $type == 'link-add') && ($cell['readonly'] || $readonlys))
 			{
 				//echo "<p>link-to is readonly, cell=".print_r($cell,true).", readonlys=".print_r($readonlys)."</p>\n";
 				// readonly ==> omit the whole widget
 				$cell = $tmpl->empty_cell();
 				return;
 			}
-			if ($cell['type'] == 'link-string')
-			{
-				$str = '';
-				if (is_array($value))
-				{
-					foreach ($value as $link)
-					{
-						$options = '';
-						if (($popup = $this->link->is_popup($link['app'],'view')))
-						{
-							list($w,$h) = explode('x',$popup);
-							$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
-						}
-						$str .= ($str !== '' ? ', ' : '') . $tmpl->html->a_href(
-							$tmpl->html->htmlspecialchars($this->link->title($link['app'],$link['id'])),
-							'/index.php',$this->link->view($link['app'],$link['id'],$link),$options);
-					}
-				}
-				$cell['type'] = 'html';
-				$cell['readonly'] = True;	// is allways readonly
-				$value = $str;
-
-				return True;
-			}
-			if (!is_array($value))
+			if (!is_array($value) && $type != 'link-string' && $type != 'link')
 			{
 				$value = array(
 					'to_id' => $value,
@@ -135,16 +128,94 @@
 			}
 			switch ($type = $cell['type'])
 			{
+			case 'link':
+				if (!$value['app'] || !$value['id'])
+				{
+					$cell = $tmpl->empty_cell();
+					return;			
+				}
+				$view = $this->link->view($value['app'],$value['id']);
+				$link = $view['menuaction']; unset($view['menuaction']);
+				foreach($view as $var => $val)
+				{
+					$link .= '&'.$var.'='.$val;
+				}
+				$target = '';
+				if (!($popup = $this->link->is_popup($value['app'],'view')) &&
+					$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
+				{
+					$target = '_blank';
+				}				
+				$cell['type'] = 'label';
+				if (!$cell['help'])
+				{
+					$cell['help'] = $value['help'] ? $value['help'] : lang('view this linked entry in its application');
+					$cell['no_lang'] = 2;
+				}
+				//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size]
+				$cell['size'] = ','.$link.',,,'.$target.','.$popup;
+				$value = $value['title'] ? $value['title'] : $this->link->title($value['app'],$value['id']);
+				return true;
+
+			case 'link-string':
+				$str = '';
+				if ($values['to_id'] && $values['to_app'])
+				{
+					$values = $this->link->get_links($values['to_app'],$values['to_id']);
+				}
+				if (is_array($value))
+				{
+					foreach ($value as $link)
+					{
+						$options = ' title="'.$tmpl->html->htmlspecialchars(lang('view this linked entry in its application')).'"';
+						if (($popup = $this->link->is_popup($link['app'],'view')))
+						{
+							list($w,$h) = explode('x',$popup);
+							$options = ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+						}
+						elseif ($GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
+						{
+							$options = ' target="_blank"';
+						}
+						$str .= ($str !== '' ? ', ' : '') . $tmpl->html->a_href(
+							$tmpl->html->htmlspecialchars($this->link->title($link['app'],$link['id'])),
+							'/index.php',$this->link->view($link['app'],$link['id'],$link),$options);
+					}
+				}
+				$cell['type'] = 'html';
+				$cell['readonly'] = True;	// is allways readonly
+				$value = $str;
+				return True;
+
+			case 'link-add':
+				$apps = $this->link->app_list($type == 'link-add' ? 'add' : '');
+				if (!$apps)	// cant do an add without apps or already created entry
+				{
+					$cell = $tmpl->empty_cell();
+					return;
+				}
+				asort($apps);	// sort them alphabetic
+				$value['options-app'] = array();
+				foreach($apps as $app => $label)
+				{
+					$link = $GLOBALS['egw']->link('/index.php',$this->link->add($app,$value['to_app'],$value['to_id']));
+					if (($popup = $this->link->is_popup($app,'add')))
+					{
+						list($w,$h) = explode('x',$popup);
+						$action = "window.open('$link','_blank','width=$w,height=$h,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');";
+					}
+					else
+					{
+						$action = "location.href = '$link';";
+					}
+					$value['options-app'][$action] = $label;
+				}
+				$tpl =& new etemplate('etemplate.link_widget.add');
+				break;
+
 			case 'link-to':
 				$value['msg'] = '';
-				if ($value['button'] == 'upload' && !empty($value['file']) && $value['file']['tmp_name'] != 'none')
-				{
-					$value = $extension_data;
-					$value['remark'] = '';
-
-					$tpl =& new etemplate('etemplate.link_widget.attach');
-				}
-				elseif ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
+				if ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
 				{
 					$extension_data['app'] = $value['app'];
 
@@ -160,6 +231,9 @@
 				}
 				else
 				{
+					// error from search or upload
+					$value['msg'] = $value['button'] == 'search' ? lang('Nothing found - try again !!!') : $extension_data['msg'];
+
 					if (!$value['button'])
 					{
 						$extension_data = $value;
@@ -168,13 +242,13 @@
 					$value['options-app'] = $this->link->app_list();
 					asort($value['options-app']);	// sort them alphabetic
 
-					if ($value['button'] == 'search') $value['msg'] = lang('Nothing found - try again !!!');
-
 					$tpl =& new etemplate('etemplate.link_widget.search');
 					if ($value['search_label'])
 					{
 						$tpl->set_cell_attribute('app','label',$value['search_label']);
 					}
+					$tpl->set_cell_attribute('comment','onchange',"set_style_by_class('*','hide_comment','display',this.checked ? 'block' : 'none');");
+					unset($value['comment']);
 				}
 				break;
 
@@ -208,7 +282,21 @@
 					if (!is_array($link['id']))
 					{
 						$value[$row]['view']  = $this->link->view($link['app'],$link['id'],$link);
-						$value[$row]['popup'] = $this->link->is_popup($link['app'],'view');
+						if (!($value[$row]['popup'] = $this->link->is_popup($link['app'],'view')) &&
+							$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
+						{
+							$value[$row]['target'] = '_blank';		// we create a new window as the linked page is no popup
+						}
+					}
+					if ($link['app'] == $this->link->vfs_appname)
+					{
+						$value[$row]['label'] = 'Delete';
+						$value[$row]['help'] = lang('Delete this file');
+					}
+					else
+					{
+						$value[$row]['label'] = 'Unlink';
+						$value[$row]['help'] = lang('Remove this link (not the entry itself)');
 					}
 				}
 				break;
@@ -259,9 +347,13 @@
 				list($unlink) = @each($value['unlink']);
 			}
 			unset($value[$button]);
+			unset($value['msg']);
+			unset($extension_data['msg']);
 
-			$value = array_merge($extension_data,(array) $value);
-
+			if (is_array($extension_data))
+			{
+				$value = is_array($value) ? array_merge($extension_data,$value) : $extension_data;
+			}
 			if ($button && $this->debug)
 			{
 				echo "<p>start: link_widget[$name]::post_process: button='$button', unlink='$unlink', value ="; _debug_array($value);
@@ -287,37 +379,28 @@
 					break;
 
 				case 'attach':
-					if (is_array($value['file']) && $value['to_app'])
+					if (is_array($value['file']) && $value['to_app'] &&
+						!empty($value['file']['tmp_name']) && $value['file']['tmp_name'] != 'none')
 					{
+						if (!$value['to_id'] || is_array($value['to_id']))	// otherwise the webserver deletes the file
+						{
+							move_uploaded_file($value['file']['tmp_name'],$value['file']['tmp_name'].'+');
+							$value['file']['tmp_name'] .= '+';
+						}
 						$link_id = $this->link->link($value['to_app'],$value['to_id'],
 							$this->link->vfs_appname,$value['file'],$value['remark']);
-						if (!is_array($value['to_id']))
-						{
-							unlink($value['file']['tmp_name']);
-						}
+
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
 							$value['primary'] = $link_id;
 						}
 						unset($value['file']);
 					}
-					$extension_data = $value;
-					$loop = True;
-					break;
-
-				case 'upload':		// need to rename file, as php deletes it otherwise
-					if (is_array($value['file']) && !empty($value['file']['tmp_name']) &&
-							$value['file']['tmp_name'] != 'none')
-					{
-						move_uploaded_file($value['file']['tmp_name'],$value['file']['tmp_name'].'+');
-						$value['file']['tmp_name'] .= '+';
-						$extension_data = $value;
-					}
 					else
 					{
-						unset($value['file']);
-						$button = '';
+						$value['msg'] = 'You need to select a file first!';
 					}
+					$extension_data = $value;
 					$loop = True;
 					break;
 

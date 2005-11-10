@@ -17,9 +17,11 @@ a pattern to be searched for	etemplate	en	a pattern to be searched for
 accesskey	etemplate	en	Accesskey
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	en	Accesskeys can also be specified with an & in the label (eg. &Name)
 add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
+add a new entry of the selected application	etemplate	en	Add a new entry of the selected application
 add a new multi-column index	etemplate	en	Add a new multi-column index
 add column	etemplate	en	Add Column
 add index	etemplate	en	Add Index
+add new	etemplate	en	Add new
 add table	etemplate	en	Add Table
 advanced search	etemplate	en	Advanced search
 align	etemplate	en	Align
@@ -97,6 +99,7 @@ delete index	etemplate	en	Delete Index
 delete the spezified etemplate	etemplate	en	Delete the spezified eTemplate
 delete this column	etemplate	en	delete this column
 delete this etemplate	etemplate	en	delete this eTemplate
+delete this file	etemplate	en	Delete this file
 delete this row	etemplate	en	delete this row
 delete whole column (can not be undone!!!)	etemplate	en	delete whole column (can NOT be undone!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	en	deletes the above spez. eTemplate from the database, can NOT be undone
@@ -204,6 +207,7 @@ last	etemplate	en	Last
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 link	etemplate	en	Link
+linkentry	etemplate	en	LinkEntry
 linklist	etemplate	en	LinkList
 linkstring	etemplate	en	LinkString
 linkto	etemplate	en	LinkTo
