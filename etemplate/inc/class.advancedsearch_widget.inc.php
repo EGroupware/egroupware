@@ -28,7 +28,6 @@
 	* @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	* @license GPL - GNU General Public License
 	*/
-	*/
 	class advancedsearch_widget
 	{
 		/** 
