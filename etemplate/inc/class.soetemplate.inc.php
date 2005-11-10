@@ -1270,7 +1270,7 @@
 			}
 			foreach($strings as $str)
 			{
-				if (strlen($str) > 1 && $str[0] != '@')
+				if (strlen($str) > 1 && $str{0} != '@' && $str{0} != '$')
 				{
 					$to_trans[trim(strtolower($str))] = $str;
 				}
