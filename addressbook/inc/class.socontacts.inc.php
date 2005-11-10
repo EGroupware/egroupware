@@ -15,7 +15,7 @@
 /**
  * General storage object of the adressbook
  *
- * @package adressbook
+ * @package addressbook
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @copyright (c) 2005 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -172,13 +172,13 @@ class socontacts
  		 //echo 'socontacts::search->criteria:'; _debug_array($criteria);
 		// We just want to deal with generalized vars, to simpyfie porting of this code to so_sql later...
 		$this->main_id = $this->somain->contacts_id;
-		
+
 		// seperate custom fields from main fields
 		foreach ($criteria as $crit_key => $crit_val)
 		{
 			if(!(isset($this->somain->db_data_cols [$crit_key]) || isset($this->somain->db_key_cols [$crit_key])))
 			{
-				if(strpos($crit_key,'#') !== false)
+				if(strpos($crit_key,'#') !== false && $crit_key{0} != '!' )
 				{
 					$extra_crit_key = substr($crit_key,1);
 					$criteria_extra[$extra_crit_key][$this->extra_key] = $extra_crit_key;
