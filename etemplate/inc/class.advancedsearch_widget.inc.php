@@ -23,6 +23,11 @@
 	*				   can also contain a field 'method' which gets executed with resultset as first param
 	*	'row_actions'		=> array with actions for each row
 	*
+	* @package etemplate
+	* @subpackage extensions
+	* @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+	* @license GPL - GNU General Public License
+	*/
 	*/
 	class advancedsearch_widget
 	{

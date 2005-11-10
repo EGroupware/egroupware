@@ -16,7 +16,7 @@
 	/**
 	 * This widget generates a template for customfields based on definitions in epgw_config table
 	 *
-	 * @package eTemplate
+	 * @package etemplate
 	 * @subpackage extensions
 	 * @author RalfBecker-At-outdoor-training.de
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>

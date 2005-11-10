@@ -21,7 +21,7 @@
  * Of cause can you derife the class and call the constructor with params.
  *
  * @package etemplate
- * @subpackage contrib
+ * @subpackage api
  * @author RalfBecker-AT-outdoor-training.de
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */

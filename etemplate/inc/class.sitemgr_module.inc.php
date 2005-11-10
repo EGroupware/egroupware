@@ -20,7 +20,7 @@
  *	- the app need to avoid redirects or links, as this would leave sitemgr!!!
  *
  * @package etemplate
- * @subpackage extensions
+ * @subpackage api
  * @author RalfBecker-AT-outdoor-training.de
  * @license GPL
  */
