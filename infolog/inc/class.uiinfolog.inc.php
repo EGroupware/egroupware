@@ -116,7 +116,7 @@
 			
 			$readonlys["edit[$id]"] = !$this->bo->check_access($id,EGW_ACL_EDIT);
 			$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = !($this->bo->check_access($id,EGW_ACL_EDIT) || 
-				in_array($this->user, $info['info_responsible'])));
+				in_array($this->user, (array)$info['info_responsible'])));
 			$readonlys["delete[$id]"] = !$this->bo->check_access($id,EGW_ACL_DELETE);
 			$readonlys["sp[$id]"] = !$this->bo->check_access($id,EGW_ACL_ADD);
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
@@ -176,7 +176,6 @@
 			$this->save_sessiondata($query);
 
 			$ids = $this->bo->search($query);
-
 			if (!is_array($ids))
 			{
 				$ids = array( );
@@ -184,7 +183,7 @@
 			$readonlys = $rows = array();
 			foreach($ids as $id => $info)
 			{
-				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id']);
+				$info = $this->get_info($id,$readonlys,$query['action'],$query['action_id']);
 				if ($GLOBALS['egw_info']['user']['preferences']['infolog']['show_links'] == 'no_describtion')
 				{
 					unset($info['info_des']);
