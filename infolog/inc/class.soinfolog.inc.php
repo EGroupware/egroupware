@@ -563,7 +563,7 @@
 				{			
 					$info['info_responsible'] = $info['info_responsible'] ? explode(',',$info['info_responsible']) : array();
 
-					$ids[$info['info_id']] =& $info;
+					$ids[$info['info_id']] = $info;
 				}
 			}
 			else
