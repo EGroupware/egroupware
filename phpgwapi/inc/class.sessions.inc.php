@@ -1040,6 +1040,7 @@
 		/**
 		* Additional tracking of user actions - prevents reposts/use of back button
 		*
+		* @deprecated not used in eGroupWare
 		* @author skwashd
 		* @return string current history id
 		*/
@@ -1062,6 +1063,7 @@
 		/**
 		* Detects if the page has already been called before - good for forms
 		*
+		* @deprecated not used in eGroupWare
 		* @author skwashd
 		* @param bool $diplay_error when implemented will use the generic error handling code
 		* @return True if called previously, else False - call ok
@@ -1091,35 +1093,29 @@
 		/**
 		* Generate a url which supports url or cookies based sessions
 		*
-		* @param string $url a url relative to the egroupware install root
-		* @param array $extravars query string arguements
+		* Please note, the values of the query get url encoded! 
+		*
+		* @param string $url a url relative to the egroupware install root, it can contain a query too
+		* @param array/string $extravars query string arguements as string or array (prefered)
 		* @return string generated url
 		*/
 		function link($url, $extravars = '')
 		{
-			//echo "<p>session::link(url='".print_r($url,True)."',extravars='".print_r($extravars,True)."')";
-			/* first we process the $url to build the full scriptname */
-			$full_scriptname = True;
-
-			$url_firstchar = substr($url ,0,1);
-			if ($url_firstchar == '/' && $GLOBALS['egw_info']['server']['webserver_url'] == '/')
-			{
-				$full_scriptname = False;
-			}
-
-			if ($url_firstchar != '/')
+			//echo "<p>session::link(url='$url',extravars='".print_r($extravars,True)."')";
+			
+			if ($url{0} != '/')
 			{
 				$app = $GLOBALS['egw_info']['flags']['currentapp'];
-				if ($app != 'home' && $app != 'login' && $app != 'logout')
+				if ($app != 'login' && $app != 'logout')
 				{
 					$url = $app.'/'.$url;
 				}
 			}
 
-			if($full_scriptname)
+			// append the url to the webserver url, but avoid more then one slash between the parts of the url
+			if ($url{0} != '/' || $GLOBALS['egw_info']['server']['webserver_url'] != '/')
 			{
-				$webserver_url_count = strlen($GLOBALS['egw_info']['server']['webserver_url'])-1;
-				if(substr($GLOBALS['egw_info']['server']['webserver_url'] ,$webserver_url_count,1) != '/' && $url_firstchar != '/')
+				if($url{0} != '/' && substr($GLOBALS['egw_info']['server']['webserver_url'],-1) != '/')
 				{
 					$url = $GLOBALS['egw_info']['server']['webserver_url'] .'/'. $url;
 				}
@@ -1140,23 +1136,31 @@
 					$url = str_replace ( 'http:', 'https:', $url);
 				}
 			}
-
-			/* Now we process the extravars into a proper url format */
-			/* if its not an array, then we turn it into one */
-			/* We do this to help prevent any duplicates from being sent. */
-			if (!is_array($extravars) && $extravars != '')
+			
+			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
+			list($url,$othervars) = explode('?',$url);
+			if ($extravars && is_array($extravars))
 			{
-				$new_extravars = Array();
+				$vars = $extravars;
+				$extravars = $othervars;
+			}
+			else
+			{
+				$vars = array();
+				if ($othervars) $extravars .= '&'.$othervars;
+			} 
+
+			// parse extravars string into the vars array
+			if ($extravars)
+			{
 				foreach(explode('&',$extravars) as $expr)
 				{
 					list($var,$val) = explode('=', $expr,2);
-					$new_extravars[$var] = $val;
+					$vars[$var] = $val;
 				}
-				$extravars =& $new_extravars;
-				unset($new_extravars);
 			}
 
-			/* add session params if not using cookies */
+			// add session params if not using cookies
 			if (!$GLOBALS['egw_info']['server']['usecookies'])
 			{
 				$extravars['sessionid'] = $this->sessionid;
@@ -1164,11 +1168,11 @@
 				$extravars['domain'] = $this->account_domain;
 			}
 
-			/* if we end up with any extravars then we generate the url friendly string */
-			if (is_array($extravars) && count($extravars))
+			// if there are vars, we add them urlencoded to the url
+			if (count($vars))
 			{
 				$query = array();
-				foreach($extravars as $key => $value)
+				foreach($vars as $key => $value)
 				{
 					$query[] = $key.'='.urlencode($value);
 				}
