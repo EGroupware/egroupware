@@ -183,7 +183,7 @@
 			$readonlys = $rows = array();
 			foreach($ids as $id => $info)
 			{
-				$info = $this->get_info($id,$readonlys,$query['action'],$query['action_id']);
+				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id']);
 				if ($GLOBALS['egw_info']['user']['preferences']['infolog']['show_links'] == 'no_describtion')
 				{
 					unset($info['info_des']);
