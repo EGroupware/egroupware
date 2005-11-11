@@ -1016,8 +1016,8 @@
 					}
 					if ($matches[5] != '450')
 					{
-						$cell_content['onclick'] .= ($matches[3]=='_blank' ? ',':'').
-							($matches[4]=='600' ? ',':'').','.$matches[5];
+						$cell_content['onclick'] .= ($matches[4]=='600' ? ','.($matches[3]=='_blank' ? ',':'') : '').
+							','.$matches[5];
 					}
 					$cell_content['onclick_type'] = 'popup';
 				}
@@ -1061,6 +1061,7 @@
 				}
 				unset($widget['onclick_type']);
 			}
+			//echo "<p>editor::fix_set_onclick(,,widget2content=".(int)$widget2content.") widget="; _debug_array($widget); echo "content="; _debug_array($cell_content);
 		}
 
 		/**
