@@ -394,13 +394,9 @@
 						}
 						$s .= '>'.str_repeat('&nbsp;',$cat['level']);
 						$s .= $GLOBALS['egw']->strip_html($cat['name']);
-						if ($cat['app_name'] == 'phpgw')
+						if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 						{
-							$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
-						}
-						if ($cat['owner'] == '-1')
-						{
-							$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($this->app_name) . '&gt;';
+							$s .= ' &#9830;';
 						}
 						$s .= '</option>' . "\n";
 					}

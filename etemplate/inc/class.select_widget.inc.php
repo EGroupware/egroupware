@@ -230,13 +230,9 @@
 					{
 						$s = str_repeat('&nbsp;',$cat['level']) . $GLOBALS['egw']->strip_html($cat['name']);
 
-						if ($cat['app_name'] == 'phpgw')
+						if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 						{
-							$s .= '&nbsp;&lt;' . lang('Global') . '&gt;';
-						}
-						elseif ($cat['owner'] == '-1')
-						{
-							$s .= '&nbsp;&lt;' . lang('Global') . '&nbsp;' . lang($cat['app_name']) . '&gt;';
+							$s .= ' &#9830;';
 						}
 						if (!$tmpl->xslt)
 						{
