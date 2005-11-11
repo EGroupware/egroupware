@@ -17,7 +17,7 @@ require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
 /**
  * General user interface object of the adressbook
  *
- * @package adressbook
+ * @package addressbook
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @copyright (c) 2005 by Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -27,6 +27,7 @@ class uicontacts extends bocontacts
 	var $public_functions = array(
 		'search'	=> True,
 		'edit'		=> True,
+		'view'		=> True,
 	);
 
 	function uicontacts($contact_app='addressbook')
@@ -50,6 +51,11 @@ class uicontacts extends bocontacts
 
 	}
 	
+	/**
+	*
+	* @param int $_GET['contact_id'] contact_id manly for popup use
+	* @param bool $_GET['makecp'] ture if you want do copy the contact given by $_GET['contact_id']
+	*/
 	function edit($content='')
 	{
 		if (is_array($content))
@@ -80,17 +86,20 @@ class uicontacts extends bocontacts
 		{
 			$content = array();
 			$content_id = $_GET['contact_id'] ? $_GET['contact_id'] : 0;
+			$view = $_GET['view'];// == 1 ? true : false;
+			
 			if ($content_id != 0)
 			{
 				$content = $this->read($content_id);
 			}
+			if($_GET['makecp']) unset($content['id']);
 		}
-		
+
 		//_debug_array($content);
-		$no_button['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
-		$no_button['button[copy]'] = true;
-		$no_button['button[edit]'] = !$view;
-		
+		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
+		$readonlys['button[copy]'] = true;
+		$readonlys['button[edit]'] = true;
+
 		$preserv = array(
 			'id' => $content['id'],
 			'lid' => $content['lid'],
@@ -98,6 +107,7 @@ class uicontacts extends bocontacts
 			'owner' => $content['owner'],
 			'fn' => $content['fn'],
 			'geo' => $content['geo'],
+			'access' => $content['access'],
 		);
 		
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
@@ -105,7 +115,136 @@ class uicontacts extends bocontacts
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
 		
 		$this->tmpl->read('addressbook.edit');
-		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$no_button,$preserv,2);
+		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$preserv, 2);
+	}
+	
+	function view($content='')
+	{
+		if(is_array($content))
+		{
+			if (isset($content['button']['vcard']))
+			{
+				$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uivcard.out&ab_id=' .$content['id']);
+			}
+			elseif (isset($content['button']['cancel']))
+			{
+				$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uiaddressbook.index');
+			}
+			elseif (isset($content['button']['delete']))
+			{
+				if(!$this->delete($content))
+				{
+					$content['msg'] = lang('Something wen\'t wrong by deleting this contact');
+				}
+				else
+				{
+					$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uiaddressbook.index');
+				}
+			}
+	
+		}
+		else
+		{
+			$contact_id = $_GET['contact_id'];
+			if(!$contact_id) return false;
+
+			$content = $this->read($contact_id);
+		}
+		$content['view'] = true;
+		
+		// privat
+		foreach(array(
+			'adr_two_street'      => 'home street',
+			'adr_two_locality'    => 'home city',
+			'adr_two_region'      => 'home state',
+			'adr_two_postalcode'  => 'home zip code',
+			'adr_two_countryname' => 'home country',
+			'adr_two_type'        => 'home address type',
+		 	) as $field => $name)
+		{
+			if($content[$field] == '') continue;
+			$content['personal_entries'][] = array(
+				'field' => $name,
+				'value' => $content[$field],
+			);
+		}
+		// tel numbers
+		foreach(array(
+			'tel_work'            => 'business phone',
+			'tel_home'            => 'home phone',
+			'tel_voice'           => 'voice phone',
+			'tel_msg'             => 'message phone',
+			'tel_fax'             => 'fax',
+			'tel_pager'           => 'pager',
+			'tel_cell'            => 'mobile phone',
+			'tel_bbs'             => 'bbs phone',
+			'tel_modem'           => 'modem phone',
+			'tel_isdn'            => 'isdn phone',
+			'tel_car'             => 'car phone',
+			'tel_video'           => 'video phone',
+			'ophone'              => 'other phone',
+			'tel_prefer'          => 'preferred phone',
+
+			) as $field => $name)
+		{
+			if($content[$field] == '') continue;
+			$content['phone_entries'][] = array(
+				'field' => $name,
+				'value' => $content[$field],
+			);
+		}
+		// organisation
+		foreach(array(
+			'adr_one_street'      => 'business street',
+			'address2'            => 'address line 2',
+			'address3'            => 'address line 3',
+			'adr_one_locality'    => 'business city',
+			'adr_one_region'      => 'business state',
+			'adr_one_postalcode'  => 'business zip code',
+			'adr_one_countryname' => 'business country',
+			'adr_one_type'        => 'business address type',
+			) as $field => $name)
+		{
+			if($content[$field] == '') continue;
+			$content['organisation_entries'][] = array(
+				'field' => $name,
+				'value' => $content[$field],
+			);
+		}
+		// emails
+		foreach(array(
+			'email'               => 'business email',
+			'email_home'          => 'home email',
+			) as $field => $name)
+		{
+			if($content[$field] == '') continue;
+			$content['email_entries'][] = array(
+				'field' => $name,
+				'value' => $content[$field],
+			);
+		}
+		//urls
+		foreach(array(
+			'url'                 => 'url'
+			) as $field => $name)
+		{
+			if($content[$field] == '') continue;
+			$content['url_entries'][] = array(
+				'field' => $name,
+				'value' => $content[$field],
+			);
+		}
+		if($content['tz'] == '') $content['tz'] = 0;
+		
+		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
+		$readonlys['button[private]'] = $content['private'] == 1 ? false :true;
+		$this->tmpl->read('addressbook.view');
+		$this->tmpl->exec('addressbook.uicontacts.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
+		
+		$GLOBALS['egw']->hooks->process(array(
+			'location' => 'addressbook_view',
+			'ab_id'    => $content['id']
+		));
 	}
 	
 	function search($content='')
@@ -183,7 +322,7 @@ class uicontacts extends bocontacts
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
 		
 		$this->tmpl->read('addressbook.search');
-		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$no_button,$preserv);
+		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv);
 	}
 	
 	function js()

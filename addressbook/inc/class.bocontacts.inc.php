@@ -17,7 +17,7 @@ require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.socontacts.inc.php');
 /**
 * General business object of the adressbook
 *
-* @package adressbook
+* @package addressbook
 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 * @copyright (c) 2005 by Cornelius Weiss <egw@von-und-zu-weiss.de>
 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -124,8 +124,7 @@ class bocontacts extends socontacts
 		// last modified
 		$contact['last_mod'] = time();
 		// only owner can set access status
-		$contact['access'] = $contact['owner'] == $this->user ? (!empty($contact['access']) ? $contact['access'] : 'public') : 'public';
-		$contact['private'] = $contact['owner'] == $this->user ? $contact['private'] : 0;
+		$contact['access'] = $contact['owner'] == $this->user ? ($contact['private'] ? 'private': 'public') : $contact['access'];
 		// convert bithdate format
 		$tmp_bday = $contact['bday'];
 		$contact['bday'] = $contact['bday'] ? date('m/d/Y',$contact['bday']) : '';
@@ -135,12 +134,19 @@ class bocontacts extends socontacts
 			($contact['n_middle'] ? ' '.$contact['n_middle'] : '').
 			($contact['n_family'] ? ' '.$contact['n_family'] : '').
 			($contact['n_suffix'] ? ' '.$contact['n_suffix'] : '');
+		// for some bad historical reasons we mainfileds saved in cf :-(((
+		$data['#ophone'] = $data['ophone']; unset($data['ophone']);
+		$data['#address2'] = $data['address2']; unset($data['address2']);
+		$data['#address3'] = $data['address3']; unset($data['address3']);
 		
 		$error_nr = parent::save($contact);
 		
 		//reconvert bday as we are dealing with references
 		$contact['bday'] = $tmp_bday;
-		
+		// for some bad historical reasons we mainfileds saved in cf :-(((
+		$data['ophone'] = $data['#ophone']; unset($data['#ophone']);
+		$data['address2'] = $data['#address2']; unset($data['#address2']);
+		$data['address3'] = $data['#address3']; unset($data['#address3']);
 		$contact['msg'] = $error_nr ?
 			lang('Something went wrong by saving this contact. Errorcode %1',$error_nr) :
 			lang('Contact saved');
@@ -173,8 +179,11 @@ class bocontacts extends socontacts
 		list($m,$d,$y) = explode('/',$data['bday']);
 		$data['bday'] = strpos($data['bday'],'/') ? mktime(0,0,0,$m,$d,$y) : '';
 		// convert access into private for historical reasons
-		$data['private'] = $data['access'] == 'private' ? 1 : $data['private'];
-		$data['access'] = $data['private'] ? 'private' : 'public';
+		$data['private'] = $data['access'] == 'private' ? 1 : 0;
+		// for some bad historical reasons we mainfileds saved in cf :-(((
+		$data['ophone'] = $data['#ophone']; unset($data['#ophone']);
+		$data['address2'] = $data['#address2']; unset($data['#address2']);
+		$data['address3'] = $data['#address3']; unset($data['#address3']);
 		
 		return $data;
 	}

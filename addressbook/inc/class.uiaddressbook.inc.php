@@ -598,8 +598,8 @@
 
 				$actions = '<a href="'
 					. $GLOBALS['egw']->link('/index.php',array(
-						'menuaction' => 'addressbook.uiaddressbook.view',
-						'ab_id'      => $entries[$i]['id']
+						'menuaction' => 'addressbook.uicontacts.view',
+						'contact_id' => $entries[$i]['id'],
 					))
 					. '"><img src="'
 					. $GLOBALS['egw']->common->image('addressbook','view')

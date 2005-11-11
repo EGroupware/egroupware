@@ -19,7 +19,7 @@ require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.contacts.inc.php');
  * This makes it compatible with vars and parameters of so_sql
  * Maybe one day this becomes a generalized ldap storage object :-)
  *
- * @package contacts
+ * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class so_ldap extends contacts
