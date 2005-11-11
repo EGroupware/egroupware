@@ -124,9 +124,11 @@
 		 * @var array $capabilities, defaults will be changed be method set_capabilities($ado_driver,$db_version)
 		 */
 		var $capabilities = array(
-			'sub_queries' => true,		// will be set to false for mysql < 4.1
+			'sub_queries'      => true,	// will be set to false for mysql < 4.1
 			'distinct_on_text' => true,	// is the DB able to use DISTINCT with a text or blob column
-		);
+			'like_on_text'     => true,	// is the DB able to use LIKE with text columns
+			'order_on_text'    => true,	// is the DB able to order by a given text column, boolean or 
+		);								// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
 		
 		var $prepared_sql = array();	// sql is the index
 
@@ -328,16 +330,19 @@
 			{
 				case 'mysql':
 				case 'mysqli':
-					$this->capabilities['sub_queries'] = $db_version >= 4.1;
+					$this->capabilities['sub_queries'] = (float) $db_version >= 4.1;
 					break;
 					
 				case 'mssql':
 					$this->capabilities['distinct_on_text'] = false;
+					$this->capabilities['order_on_text'] = 'CAST (%s AS varchar)';
 					break;
 					
 				case 'maxdb':	// if Lim ever changes it to maxdb ;-)
 				case 'sapdb':
 					$this->capabilities['distinct_on_text'] = false;
+					$this->capabilities['like_on_text'] = (float) $db_version >= 7.6;
+					$this->capabilities['order_on_text'] = false;
 					break;	
 			}
 			//echo "db::set_capabilities('$adodb_driver',$db_version)"; _debug_array($this->capabilities);
