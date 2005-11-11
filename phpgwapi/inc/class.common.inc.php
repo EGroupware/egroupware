@@ -2097,7 +2097,7 @@
 			
 			$parts = explode($GLOBALS['egw_info']['server']['webserver_url'],$referer);
 			
-			$referer = array_pop($parts);
+			$referer = str_replace('/etemplate/process_exec.php','/index.php',array_pop($parts));
 
 			if (empty($referer)) $referer = $default;
 			
