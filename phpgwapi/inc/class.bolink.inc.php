@@ -46,9 +46,10 @@
 				'query' => 'addressbook_query',
 				'title' => 'addressbook_title',
 				'view' => array(
-					'menuaction' => 'addressbook.uiaddressbook.view'
+					'menuaction' => 'addressbook.uicontacts.view'
 				),
-				'view_id' => 'ab_id'
+				'view_id' => 'contact_id',
+				//'view_popup' => '800x600',
 			),
 			'projects' => array(
 				'query' => 'projects_query',
