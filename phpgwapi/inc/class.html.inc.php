@@ -492,7 +492,8 @@ class html
 		
 		if(strpos($init_options,':') === false)
 		{
-			$init = 'theme : "advanced",theme_advanced_toolbar_location : "top"';
+			$init = 'theme : "advanced", theme_advanced_toolbar_location : "top", theme_advanced_toolbar_align : "left"';
+			$tab1a = 'theme_advanced_buttons1_add : "';
 			$tab3a = 'theme_advanced_buttons3_add : "separator,fullscreen';
 			$plugs = 'plugins : "paste,fullscreen,advimage,advlink';
 			$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]';
@@ -511,6 +512,11 @@ class html
 							break;
 						case 'ColorChooser' :
 							$tab3a .= ',separator,forecolor,backcolor';
+							break;
+						case 'FontChooser' :
+							$tab1a .= ',fontselect,fontsizeselect';
+							$init .= ',theme_advanced_disable : "styleselect"';
+							break;
 						default:
 						//	echo $plugin .'<br>';
 					}
@@ -521,7 +527,7 @@ class html
 				$init .= ',document_base_url : "'. $base_href. '", relative_urls : true';
 			}
 		
-			$init_options = $init. ','. $tab3a. '",'. $plugs. '",'. $eve. '"';
+			$init_options = $init. ','. $tab1a. '",'. $tab3a. '",'. $plugs. '",'. $eve. '"';
 		}
 		
 		/* do again and again */
