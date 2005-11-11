@@ -95,13 +95,23 @@ class resources_hooks
 			}
 		}
 	}
+	
 	function search_link($args)
 	{
 		return array(
 			'query' => 'resources.bo_resources.link_query',
 			'title' => 'resources.bo_resources.link_title',
-			'view' => array('menuaction' => 'resources.ui_resources.show'),
-			'view_id' => 'id'
+			'view' => array(
+				'menuaction' => 'resources.ui_resources.show'
+			),
+			'view_id' => 'res_id',
+			'view_popup' => '850x600',
+			'add'        => array(
+				'menuaction' => 'resources.ui_resources.edit',
+			),
+			'add_app'    => 'link_app',
+			'add_id'     => 'link_id',	
+			'add_popup'  => '800x600',
 		);
 	}
 
