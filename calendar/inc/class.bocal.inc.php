@@ -1523,7 +1523,7 @@ if (!function_exists('array_intersect_key'))	// php5.1 function
 		$intersection = $keys = array();
 		foreach(func_get_args() as $arr)
 		{
-			$keys[] = array_keys($arr);
+			$keys[] = array_keys((array)$arr);
 		}
 		foreach(call_user_func_array('array_intersect',$keys) as $key)
 		{

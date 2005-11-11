@@ -357,7 +357,7 @@ class socal
 			$row['alarm'] = array();
 			$row['recur_exception'] = $row['recur_exception'] ? explode(',',$row['recur_exception']) : array();
 
-			$events[$id] =& $row;
+			$events[$id] = $row;
 		}
 		
 		if (count($events))
