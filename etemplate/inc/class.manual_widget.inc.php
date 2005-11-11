@@ -18,7 +18,9 @@
 	 * This widget is an icon which opens the online help system (manual) in a popup.
 	 *
 	 * With the value or the name of the widget, you can specify a certain manual page
-	 * (eg. ManualAddressbook). If both are empty the URL contains the referer
+	 * (eg. ManualAddressbook). Additional params can be past to the manual app with
+	 * $GLOBALS['egw_info']['flags']['params']['manual']. 
+	 * If no page is set after that two mechanisms the URL will contains the referer.
 	 *
 	 * @package etemplate
 	 * @subpackage extensions
@@ -70,12 +72,16 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$link = array('menuaction' => 'manual.uimanual.view');
+			if (is_array($GLOBALS['egw_info']['flags']['params']['manual']))
+			{
+				$link = array_merge($link,$GLOBALS['egw_info']['flags']['params']['manual']);
+			}
 			$page = $cell['name'] ? $cell['name'] : $value;
 			if (!empty($page))
 			{
 				$link['page'] = $page;
 			}
-			else
+			if (!$link['page'])
 			{
 				$link['referer'] = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
 			}
