@@ -203,7 +203,7 @@
 						else
 						{
 							echo '<div id="divMain">'."\n";
-							if ($GLOBALS['egw_info']['user']['apps']['manual'])
+							if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 							{
 								$manual =& new etemplate('etemplate.popup.manual');
 								echo $manual->show(array());
@@ -994,10 +994,11 @@
 						{
 							$onclick = preg_replace("/form::name\\('([^']+)'\\)/",'\''.$this->form_name($cname,$matches[1]).'\'',$onclick);
 						}
-						elseif (preg_match('/^return confirm\(["\']{1}(.*)["\']{1}\);?$/',$cell['onclick'],$matches))
+						elseif (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$cell['onclick'],$matches))
 						{
 							$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
-							$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars($question))."');";
+							$onclick = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.$question.'\')',$onclick);
+							//$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars($question))."');";
 						}
 					}
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
