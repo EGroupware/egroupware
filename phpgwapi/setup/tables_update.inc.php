@@ -801,4 +801,23 @@
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.020';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
 	}
+
+
+	$test[] = '1.0.1.020';
+	function phpgwapi_upgrade1_0_1_020()
+	{
+		// in some old installations the email_type is NOT NULL, contrary to what our tables_current says
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_addressbook','email_type',array(
+			'type' => 'varchar',
+			'precision' => '32',
+			'default' => 'INTERNET'
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_addressbook','email_home_type',array(
+			'type' => 'varchar',
+			'precision' => '32',
+			'default' => 'INTERNET'
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.021';
+	}
 ?>
