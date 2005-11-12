@@ -1437,7 +1437,7 @@ class bocal
 	}
 	
 	/**
-	 * Hook called by link-class to include projectmanager in the appregistry of the linkage
+	 * Hook called by link-class to include calendar in the appregistry of the linkage
 	 *
 	 * @param array/string $location location and other parameters (not used)
 	 * @return array with method-names

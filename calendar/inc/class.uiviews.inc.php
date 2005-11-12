@@ -1237,7 +1237,9 @@ class uiviews extends uical
 					$next['month'] = 1;
 					$next['year']++;
 				}
-				if ($this->bo->date2ts($next) > $start+($days-10)*DAY_s)
+				// dont show next scales, if there are more then 10 days in the next month or there is no next month
+				$days_in_next_month = (int) date('d',$end = $start+$days*DAY_s);
+				if ($days_in_next_month <= 10 || date('m',$end) == date('m',$t))
 				{
 					if ($this->day >= 15) $next = $t_arr;		// we stay in the same month
 					$next['day'] = $this->day;
@@ -1328,6 +1330,8 @@ class uiviews extends uical
 		$content .= $indent.'<div class="plannerScale'.($days > 3 ? 'Day' : '').'">'."\n";
 		for($t = $start,$left = 0,$i = 0; $i < $days; $t += DAY_s,$left += $day_width,++$i)
 		{
+			$this->_day_class_holiday($this->bo->date2string($t),$class,$holidays,$days > 7);
+
 			if ($days <= 3)
 			{
 				$title = '<b>'.lang(date('l',$t)).', '.date('j',$t).'. '.lang(date('F',$t)).'</b>';
@@ -1346,7 +1350,7 @@ class uiviews extends uical
 					'menuaction'   => 'calendar.uiviews.planner',
 					'planner_days' => 1,
 					'date'         => date('Ymd',$t),
-				),false,' title="'.$this->html->htmlspecialchars(lang('Dayview')).'"');
+				),false,$class == 'calHoliday' || $class == 'calBirthday' ? '' : ' title="'.$this->html->htmlspecialchars(lang('Dayview')).'"');
 			}
 			if ($days < 5)
 			{
@@ -1365,7 +1369,6 @@ class uiviews extends uical
 					));
 				}
 			}
-			$this->_day_class_holiday($this->bo->date2string($t),$class,$holidays,$days > 7);
 			$content .= $indent."\t".'<div class="plannerDayScale '.$class.'" style="left: '.$left.'%; width: '.$day_width.'%;"'.
 				($holidays ? ' title="'.$this->html->htmlspecialchars($holidays).'"' : '').'>'.$title."</div>\n";
 		}

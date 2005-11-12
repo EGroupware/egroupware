@@ -254,6 +254,7 @@
 			'name'   => 'show_rejected',
 			'help'   => 'Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!'
 		),
+/* dont think that need to be configurable -- RalfBecker 2005/11/12
 		'display_status' => array(
 			'type'  => 'check',
 			'label' => 'Display status of events',
@@ -262,6 +263,7 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
+*/
 		'weekdaystarts' => array(
 			'type'   => 'select',
 			'label'  => 'weekday starts on',
@@ -317,6 +319,7 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
+/* dont think that default is realy necessary -- RalfBecker 2005/11/12
 		'defaultfilter' => array(
 			'type'   => 'select',
 			'label'  => 'Default calendar filter',
@@ -326,6 +329,7 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
+*/
 		'default_private' => array(
 			'type'  => 'check',
 			'label' => 'Set new events to private',

@@ -84,10 +84,6 @@ class uical
 	 */
 	var $multiple;
 	/**
-	 * @var int $num_month session-state: number of month shown
-	 */
-	var $num_month;
-	/**
 	 * @var string $sortby session-state: filter of planner: 'category' or 'user'
 	 */
 	var $sortby;
@@ -163,7 +159,6 @@ class uical
 	 *	- owner: the owner of the displayed calendar
 	 *	- save_owner: the overriden owner of the planner
 	 *	- filter: the used filter: no filter / all or only privat
-	 *	- num_month: number of month shown in the planner
 	 *	- sortby: category or user of planner
 	 *	- view: the actual view, where dialogs should return to or which they refresh
 	 * @param set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
@@ -187,7 +182,6 @@ class uical
 			'cat_id'     => 0,
 			'filter'     => 'all',
 			'owner'      => $this->user,
-			'num_month'  => 1,
 			'save_owner' => 0,
 			'sortby'     => 'category',
 			'planner_days'=> 0,	// full month
@@ -301,8 +295,7 @@ class uical
 			{
 				$icons[] = $this->html->image('calendar','recur',lang('recurring event'));
 			}
-			$icons[] = $this->html->image('calendar',count($event['participants']) > 1 ? 'users' : 'single',
-				implode(",\n",$this->bo->participants($event)));
+			$icons[] = $this->html->image('calendar',count($event['participants']) > 1 ? 'users' : 'single');
 		}
 		if($event['public'] == 0)
 		{
@@ -423,8 +416,7 @@ class uical
 			'day' => array('icon'=>'today','text'=>'Today','menuaction' => 'calendar.uiviews.day','date' => $this->bo->date2string($this->bo->now_su)),
 			'week' => array('icon'=>'week','text'=>'Weekview','menuaction' => 'calendar.uiviews.week'),
 			'month' => array('icon'=>'month','text'=>'Monthview','menuaction' => 'calendar.uiviews.month'),
-			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.uiviews.planner','sortby' => $this->sortby)+
-				($planner_days_for_view !== false ? array('planner_days' => $planner_days_for_view) : array()),
+			'planner' => array('icon'=>'planner','text'=>'Group planner','menuaction' => 'calendar.uiviews.planner','sortby' => $this->sortby),
 			'list' => array('icon'=>'list','text'=>'Listview','menuaction'=>'calendar.uilist.listview'),
 		) as $view => $data)
 		{

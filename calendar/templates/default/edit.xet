@@ -263,7 +263,7 @@
 					<description/>
 					<description/>
 				</row>
-				<row class="th">
+				<row class="th" height="28">
 					<description value="Title"/>
 					<textbox size="80" maxlength="255" id="title" span="all" needed="1"/>
 				</row>
