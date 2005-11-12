@@ -360,7 +360,10 @@
 				}
 				elseif ($newest_version != '' && $this->etemplate->version != $newest_version)
 				{
-					$msg = lang("newer version '%1' exists !!!",$newest_version);
+					$link = $this->etemplate->as_array(-1);
+					$link['menuaction'] = 'etemplate.editor.edit';
+					$link['version'] = $newest_version;
+					$msg = lang("newer version '%1' exists !!!",$this->etemplate->html->a_href($newest_version,$link));
 				}
 			}
 			if (!is_array($this->extensions))
@@ -1340,6 +1343,10 @@
 						if (!$fp || !fwrite($fp,$content['styles']))
 						{
 							$msg .= lang('Error: while saving !!!');
+						}
+						else
+						{
+							$msg .= lang("File writen",$path);
 						}
 						@fclose($fp);
 					}

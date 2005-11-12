@@ -19,14 +19,14 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="etemplate.editor.new" template="" lang="" group="0" version="1.0.1.003">
+	<template id="etemplate.editor.new" template="" lang="" group="0" version="1.0.1.004">
 		<grid>
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
-					<description span="all" class="redItalic" no_lang="1" id="msg"/>
+					<html span="all" class="redItalic" no_lang="1" id="msg"/>
 				</row>
 				<row disabled="!@xml">
 					<groupbox span="all">
