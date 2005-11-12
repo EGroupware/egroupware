@@ -105,6 +105,7 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$type = $cell['type'];
+			$help = $cell['help'] ? ($value['help'] ? $value['help'] : $cell['help']) : lang('view this linked entry in its application');
 
 			if (($type == 'link-to' || $type == 'link-add') && ($cell['readonly'] || $readonlys))
 			{
@@ -129,31 +130,38 @@
 			switch ($type = $cell['type'])
 			{
 			case 'link':
-				if (!$value['app'] || !$value['id'])
+				$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
+				$cell['no_lang'] = 1;
+				$link = $target = $popup = '';
+				if ($value['app'] && $value['id'])
+				{
+					$view = $this->link->view($value['app'],$value['id']);
+					$link = $view['menuaction']; unset($view['menuaction']);
+					foreach($view as $var => $val)
+					{
+						$link .= '&'.$var.'='.$val;
+					}
+					if (!($popup = $this->link->is_popup($value['app'],'view')) &&
+						$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
+					{
+						$target = '_blank';
+					}
+					if (!$cell['help'])
+					{
+						$cell['help'] = $help;
+						$cell['no_lang'] = 2;
+					}
+				}
+				elseif (!$value['title'])
 				{
 					$cell = $tmpl->empty_cell();
+					$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
 					return;			
 				}
-				$view = $this->link->view($value['app'],$value['id']);
-				$link = $view['menuaction']; unset($view['menuaction']);
-				foreach($view as $var => $val)
-				{
-					$link .= '&'.$var.'='.$val;
-				}
-				$target = '';
-				if (!($popup = $this->link->is_popup($value['app'],'view')) &&
-					$GLOBALS['egw_info']['etemplate']['output_mode'] == 2)	// we are in a popup
-				{
-					$target = '_blank';
-				}				
 				$cell['type'] = 'label';
-				if (!$cell['help'])
-				{
-					$cell['help'] = $value['help'] ? $value['help'] : lang('view this linked entry in its application');
-					$cell['no_lang'] = 2;
-				}
 				//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size]
-				$cell['size'] = ','.$link.',,,'.$target.','.$popup;
+				list($cell['size']) = explode(',',$cell['size']);
+				$cell['size'] .= ','.$link.',,,'.$target.','.$popup;
 				$value = $value['title'] ? $value['title'] : $this->link->title($value['app'],$value['id']);
 				return true;
 
@@ -167,7 +175,8 @@
 				{
 					foreach ($value as $link)
 					{
-						$options = ' title="'.$tmpl->html->htmlspecialchars(lang('view this linked entry in its application')).'"';
+						$options .= " onMouseOver=\"self.status='".addslashes($tmpl->html->htmlspecialchars($help))."'; return true;\"";
+						$options .= " onMouseOut=\"self.status=''; return true;\"";
 						if (($popup = $this->link->is_popup($link['app'],'view')))
 						{
 							list($w,$h) = explode('x',$popup);
@@ -183,7 +192,7 @@
 					}
 				}
 				$cell['type'] = 'html';
-				$cell['readonly'] = True;	// is allways readonly
+				$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
 				$value = $str;
 				return True;
 
@@ -419,6 +428,7 @@
 					break;
 			}
 			$value['button'] = $button;
+
 			if ($this->debug)
 			{
 				echo "<p>end: link_widget[$name]::post_process: value ="; _debug_array($value);
