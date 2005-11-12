@@ -16,7 +16,7 @@ addressbook	common	es-es	Libreta de direcciones
 addressbook preferences	addressbook	es-es	Preferencias de la libreta de direcciones
 addressbook-fieldname	addressbook	es-es	Campo - Libreta de direcciones
 addvcard	addressbook	es-es	Añadir tarjeta de visita
-advances search	addressbook	es-es	Búsqueda avanzada
+advanced search	addressbook	es-es	Búsqueda avanzada
 alt. csv import	addressbook	es-es	Importar CSV (avanzado)
 are you sure you want to delete this field?	addressbook	es-es	¿Está seguro de que desea borrar este campo?
 bbs phone	addressbook	es-es	Teléfono BBS
@@ -55,7 +55,7 @@ debug output in browser	addressbook	es-es	Depurar salida en el navegador
 default filter	addressbook	es-es	Filtro predeterminado
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
 department	common	es-es	Departmento
-do you really want to delte this contacts?	addressbook	es-es	¿Realmente desea borrar este contacto?
+do your really want to delete this contact?	addressbook	es-es	¿Realmente desea borrar este contacto?
 doesn't matter	addressbook	es-es	no importa
 domestic	addressbook	es-es	Doméstico
 download	addressbook	es-es	Descargar
@@ -148,6 +148,7 @@ select the type of conversion:	addressbook	es-es	Seleccione el tipo de conversió
 select where you want to store	admin	es-es	Seleccione dónde desea almacenar
 show	addressbook	es-es	Mostrar
 show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumpleaños en la pantalla principal
+something wen't wrong by deleting this contact	addressbook	es-es	Ocurrió un error mientras se borraba este contacto
 something went wrong by deleting %1	addressbook	es-es	Ocurrió un error mientras se borraba %1
 something went wrong by deleting this contact	addressbook	es-es	Ocurrió un error mientras se borraba este contacto
 something went wrong by reading this contact	addressbook	es-es	Ocurrió un error mientras se leía este contacto
@@ -174,6 +175,7 @@ vcards require a last name entry.	addressbook	es-es	Las tarjetas de visita requi
 video phone	addressbook	es-es	Teléfono de videoconferencia
 voice phone	addressbook	es-es	Teléfono de voz
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! LDAP es valido sólo si no esta usando contactos para almacenar las cuentas!
+warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
 work phone	addressbook	es-es	Teléfono del trabajo
 write (update or add) a single entry by passing the fields.	addressbook	es-es	Escribir (acatualizar o añadir) una sola entrada pasando los campos.
 you are not permitted to delete contact %1	addressbook	es-es	No tiene permiso para borrar el contacto %1

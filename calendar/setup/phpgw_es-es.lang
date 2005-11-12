@@ -50,7 +50,7 @@ create new links	calendar	es-es	Crear enlaces nuevos
 csv	calendar	es-es	CSV
 csv-fieldname	calendar	es-es	CSV - Nombre del campo
 csv-filename	calendar	es-es	CSV- Nombre del fichero
-custom fields	calendar	es-es	Campos personalizados
+custom fields	common	es-es	Campos personalizados
 daily	calendar	es-es	Diario
 days	calendar	es-es	días
 days of the week for a weekly repeated event	calendar	es-es	Días de la semana para un evento de repetición semanal
@@ -230,6 +230,7 @@ set new events to private	calendar	es-es	Poner los eventos nuevos como privados
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	es-es	¿Mostrar las invitaciones rechazadas por usted en el calendario?<br>Puede aceptarlas después (por ejemplo, cuando elimine el conflicto de calendario), si todavía se ven en su calendario.
 should new events created as private by default ?	calendar	es-es	¿Crear nuevos eventos como privados?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	es-es	¿Deben ver las personas que no inicien sesión la información de ocupación? Se puede poner una contraseña extra, distinta a la normal, para proteger esta información. La información de ocupación está en formato iCal y sólo incluye las horas en las que está ocupado. No incluye el nombre del evento, descripción o sitios. La URL para su información de ocupación es %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://egw.omgs.net/calendar/freebusy.php?user=oscar&password=" target="_blank">https://egw.omgs.net/calendar/freebusy.php?user=oscar&password=</a>.*	calendar	es-es	¿Pueden ver las personas anónimas su información de tiempo sin ocupar? Puede poner una contraseña extra, distinta de la normal, para proteger esta información. La información de tiempo sin ocupar está en formato iCal y sólo incluye las horas en que usted se encuentra ocupado. No incluye el nombre del evento, descripción ni ubicaciones. La URL para acceder a su información de tiempo sin ocupar es <a href="https://" target="_blank">https://servidor/calendar/freebusy.php?user=<usuario>&password=</a>
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	es-es	¿Mostrar el estado de cada evento (aceptar, rechazar, etc) entre corchetes detrás del nombre de cada participante?
 show default view on main screen	calendar	es-es	Mostrar la vista predeterminada en la pantalla principal
 show invitations you rejected	calendar	es-es	Mostar invitaciones rechazadas por usted
@@ -273,7 +274,7 @@ updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
 use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana
 view this event	calendar	es-es	Ver este evento
-wed	calendar	es-es	Mié
+wed	calendar	es-es	Mie
 week	calendar	es-es	Semana
 weekday starts on	calendar	es-es	La semana empieza en
 weekdays	calendar	es-es	Días laborales

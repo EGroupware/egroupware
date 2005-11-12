@@ -17,9 +17,11 @@ a pattern to be searched for	etemplate	es-es	un patrón de búsqueda
 accesskey	etemplate	es-es	Tecla rápida
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	es-es	Las teclas rápidas se pueden especificar también poniendo & en la etiqueta (p. ej. &Nombre)
 add a new column (after the existing ones)	etemplate	es-es	Añadir una columna nueva (detrás de las existentes)
+add a new entry of the selected application	etemplate	es-es	Añadir una entrada nueva de la aplicación seleccionada
 add a new multi-column index	etemplate	es-es	Añadir un nuevo índice multicolumna
 add column	etemplate	es-es	Añadir columna
 add index	etemplate	es-es	Añadir índice
+add new	etemplate	es-es	Añadir nueva
 add table	etemplate	es-es	Añadir tabla
 advanced search	etemplate	es-es	Búsqueda avanzada
 align	etemplate	es-es	Alinear
@@ -97,6 +99,7 @@ delete index	etemplate	es-es	Borrar índice
 delete the spezified etemplate	etemplate	es-es	Borrar la plantilla específica
 delete this column	etemplate	es-es	borrar esta columna
 delete this etemplate	etemplate	es-es	Borrar esta plantilla
+delete this file	etemplate	es-es	Borrar este fichero
 delete this row	etemplate	es-es	borrar esta fila
 delete whole column (can not be undone!!!)	etemplate	es-es	Borra la columna completa (NO se puede deshacer)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	es-es	Borra la plantilla especificada de la base de datos. NO se puede deshacer.
@@ -239,6 +242,7 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	es-es	número
 of	etemplate	es-es	de
 onclick	etemplate	es-es	onClick
 only an other version found !!!	etemplate	es-es	sólo se encontró otra versión
+open the online help.	etemplate	es-es	Abrir la ayuda en línea
 optional note about the link	etemplate	es-es	nota opcional sobre el enlace
 options	etemplate	es-es	Opciones
 order to navigating by tab key through the form	etemplate	es-es	Orden al ir navegando pulsando el tabulador en el formulario
