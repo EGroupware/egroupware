@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.edit.description" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="260" border="0">
+		<grid width="100%" height="245" border="0">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -13,13 +13,13 @@
 				</row>
 				<row class="row" valign="top">
 					<description/>
-					<textbox multiline="true" rows="15" cols="80" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry"/>
+					<textbox multiline="true" rows="14" cols="80" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="infolog.edit.links" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="260" overflow="auto">
+		<grid width="100%" height="245" overflow="auto">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -34,14 +34,14 @@
 				<row class="th">
 					<description span="all" value="Existing links"/>
 				</row>
-				<row class="row_off" valign="top" height="164">
+				<row class="row_off" valign="top">
 					<link-list span="all" id="link_to"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
 	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="260">
+		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
 				<column/>
@@ -76,7 +76,7 @@
 					<description options=",,,info_planned_time" value="planned time"/>
 					<date-duration id="info_planned_time"/>
 				</row>
-				<row class="row" valign="top" height="50">
+				<row class="row" valign="top">
 					<description options=",,,info_used_time" value="used time"/>
 					<date-duration id="info_used_time"/>
 				</row>
@@ -84,12 +84,15 @@
 		</grid>
 	</template>
 	<template id="infolog.edit.customfields" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="260" spacing="0" padding="0" overflow="auto">
+		<grid width="100%" height="245" class="row_on" spacing="0" padding="0" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row class="th" height="20">
+					<description value="Custom fields"/>
+				</row>
+				<row height="100%">
 					<customfields id="customfields"/>
 				</row>
 			</rows>
@@ -99,12 +102,18 @@
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
-				<column width="300"/>
-				<column width="100"/>
+				<column width="260"/>
+				<column width="120"/>
 				<column/>
 			</columns>
 			<rows>
-				<row class="th">
+				<row disabled="!@msg">
+					<html span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
+					<description/>
+					<description/>
+					<description/>
+				</row>
+				<row class="th" height="28">
 					<description value="Type" options=",,,info_type"/>
 					<menulist span="all">
 						<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo"/>
@@ -118,9 +127,9 @@
 				</row>
 				<row class="row">
 					<description value="Contact" options=",,,info_from"/>
-					<textbox size="40" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title"/>
-					<description value="Phone/Email" options=",,,info_addr"/>
-					<textbox size="40" maxlength="64" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
+					<textbox size="35" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title"/>
+					<description value="Phone/Email" options=",,,_info_addr"/>
+					<textbox size="35" maxlength="64" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
 				</row>
 				<row class="row">
 					<description value="Subject" options=",,,info_subject"/>
@@ -142,10 +151,10 @@
 						</tabpanels>
 					</tabbox>
 				</row>
-				<row class="th">
+				<row class="th" disabled="1">
 					<description span="all" value="Dates, Status, Access"/>
 				</row>
-				<row class="row">
+				<row class="row_on">
 					<description value="Startdate" options=",,,info_startdate"/>
 					<date-time options=",2" id="info_startdate" statustext="when should the ToDo or Phonecall be started, it shows up from that date in the filter open or own open (startpage)"/>
 					<description value="Enddate" options=",,,info_enddate"/>
@@ -173,16 +182,16 @@
 					</hbox>
 				</row>
 				<row>
-					<button label="Save" id="save" statustext="Saves this entry"/>
-					<button label="Cancel" id="cancel" statustext="leave without saveing the entry"/>
+					<hbox span="2">
+						<button label="Save" id="button[save]" statustext="Saves this entry"/>
+						<button id="button[apply]" label="Apply" statustext="Apply the changes"/>
+						<button label="Cancel" id="button[cancel]" statustext="leave without saveing the entry" onclick="window.close();"/>
+						<html id="js"/>
+					</hbox>
 					<description/>
-					<button label="Delete" align="right" id="delete" statustext="delete this entry"/>
+					<button label="Delete" align="right" id="button[delete]" statustext="delete this entry" onclick="return $cont[info_anz_subs] || confirm('Delete this entry');"/>
 				</row>
 			</rows>
 		</grid>
-		<styles>
-			.headertext { color: black; font-size: 120%; }
-.lpadding5 { padding-left: 5px; };
-		</styles>
 	</template>
 </overlay>

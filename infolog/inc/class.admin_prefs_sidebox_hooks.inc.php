@@ -2,7 +2,7 @@
 	/**************************************************************************\
 	* eGroupWare - InfoLog Admin-, Preferences- and SideboxMenu-Hooks          *
 	* http://www.eGroupWare.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* Written and (c) by Ralf Becker <RalfBecker@outdoor-training.de>          *
 	* -------------------------------------------------------                  *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -16,8 +16,9 @@
  * Class containing admin, preferences and sidebox-menus (used as hooks)
  *
  * @package infolog
- * @author RalfBecker-At-outdoor-training.de
- * @copyright GPL - GNU General Public License
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class admin_prefs_sidebox_hooks
 {

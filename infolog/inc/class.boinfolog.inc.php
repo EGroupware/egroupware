@@ -2,7 +2,7 @@
 	/**************************************************************************\
 	* eGroupWare - InfoLog                                                     *
 	* http://www.egroupware.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* Written and (c) by Ralf Becker <RalfBecker@outdoor-training.de>          *
 	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -14,16 +14,16 @@
 	/* $Id$ */
 	
 	include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.soinfolog.inc.php');
-	include_once(EGW_API_INC.'/class.bolink.inc.php');
 
 	/**
 	 * This class is the BO-layer of InfoLog, it also handles xmlrpc requests
 	 *
 	 * @package infolog
-	 * @author RalfBecker-At-outdoor-training.de
-	 * @copyright GPL - GNU General Public License
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @copyright (c) by Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
-	class boinfolog 			// BO: buiseness objects: internal logic
+	class boinfolog
 	{
 		var $enums;
 		var $so;
@@ -70,7 +70,13 @@
 		 */
 		var $config;
 		
-		function boinfolog( $info_id = 0)
+		/**
+		 * Constructor Infolog BO
+		 *
+		 * @param int $info_id
+		 * @param boolean $instanciate_link=true should the link class be instanciated, used by the link-registry to prevent infinit recursion
+		 */
+		function boinfolog($info_id = 0,$instanciate_link=true)
 		{
 			$this->enums = $this->stock_enums = array(
 				'priority' => array (
@@ -107,7 +113,12 @@
 			));
 
 			$this->so =& new soinfolog();
-			$this->link =& new bolink();
+
+			if (!is_object($GLOBALS['egw']->link) && $instanciate_link)
+			{
+				$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
+			}
+			$this->link =& $GLOBALS['egw']->link;
 
 			$this->config =& CreateObject('phpgwapi.config');
 			$this->config->read_repository();
@@ -184,19 +195,21 @@
 		/**
 		 * check's if user has the requiered rights on entry $info_id
 		 *
-		 * @param int $info_id id of infolog entry to check
+		 * @param int/array $info data or info_id of infolog entry to check
 		 * @param int $required_rights EGW_ACL_{READ|EDIT|ADD|DELETE}
 		 * @return boolean
 		 */
-		function check_access( $info_id,$required_rights )
+		function check_access( $info,$required_rights )
 		{
 			static $cache = array();
+			
+			$info_id = is_array($info) ? $info['info_id'] : $info;
 			
 			if (isset($cache[$info_id][$required_rights]))
 			{
 				return $cache[$info_id][$required_rights];
 			}
-			return $cache[$info_id][$required_rights] = $this->so->check_access( $info_id,$required_rights );
+			return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights );
 		}
 
 		/**
@@ -232,15 +245,18 @@
 				{
 					return False;
 				}
-				$info['info_link_view'] = $this->link->view($link['link_app'.$nr],$link['link_id'.$nr]);
-				$info['info_link_title'] = !empty($info['info_from']) ? $info['info_from'] : $title;
+				$info['info_link'] = array(
+					'app'   => $link['link_app'.$nr],
+					'id'    => $link['link_id'.$nr],
+					'title' => (!empty($info['info_from']) ? $info['info_from'] : $title),
+				);
 
 				//echo " title='$title'</p>\n";
 				return $info['blur_title'] = $title;
 			}
 			else
 			{
-				$info['info_link_title'] = $info['info_from'];
+				$info['info_link'] = array('title' => $info['info_from']);
 				$info['info_link_id'] = 0;	// link might have been deleted
 			}
 			return False;
@@ -352,12 +368,13 @@
 		*
 		* checks and asures ACL
 		*
-		* @param array $values values to write, if contains values for check_defaults and touch_modified, they have precedens over the parameters
+		* @param array &$values values to write, if contains values for check_defaults and touch_modified, 
+		*	they have precedens over the parameters. The 
 		* @param boolean $check_defaults=true check and set certain defaults
 		* @param boolean $touch_modified=true touch the modification data and sets the modiefier's user-id
 		* @return int/boolean info_id on a successfull write or false
 		*/
-		function write($values,$check_defaults=True,$touch_modified=True)
+		function write(&$values,$check_defaults=True,$touch_modified=True)
 		{
 			//echo "boinfolog::write()values="; _debug_array($values);
 			// allow to (un)set check_defaults and touch_modified via values, eg. via xmlrpc
@@ -369,6 +386,7 @@
 					unset($values[$var]);
 				}
 			}
+			// fix old names
 			foreach($values as $key => $val)
 			{
 				if ($key[0] != '#' && substr($key,0,5) != 'info_')
@@ -408,9 +426,12 @@
 				$set_enddate = !$values['info_enddate'] &&	// set enddate of finished job, only if its not already set 
 					($values['info_status'] == 'done' || $values['info_status'] == 'billed');
 
+				$backup_values = $values;	// to return the full values
 				$values = array(
-					'info_id' => $values['info_id'],
+					'info_id'     => $values['info_id'],
 					'info_status' => $values['info_status'],
+					'info_owner'  => $values['info_owner'],
+					'info_datemodified' => $values['info_datemodified'],
 				);
 				if ($set_enddate)
 				{
@@ -444,18 +465,21 @@
 			}
 			if ($touch_modified || !$values['info_datemodified'])
 			{
+				$check_modified = $values['info_datemodified'] ? $values['info_datemodified']-$this->tz_offset_s : false;
 				$values['info_datemodified'] = $this->user_time_now;
 			}
 			if ($touch_modified || !$values['info_modifier'])
 			{
 				$values['info_modifier'] = $this->so->user;
 			}
+			$to_write = $values;
+			if ($status_only) $values = array_merge($backup_values,$values);
 			// convert user- to system-time
 			foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
 			{
-				if ($values[$time]) $values[$time] -= $this->tz_offset_s;
+				if ($to_write[$time]) $to_write[$time] -= $this->tz_offset_s;
 			}
-			if($info_id = $this->so->write($values))
+			if(($info_id = $this->so->write($to_write,$check_modified)))
 			{
 				if (!isset($values['info_type']) || $status_only)
 				{
@@ -477,10 +501,11 @@
 						$info_id, 'add', time()
 					);
 				}
+				$values['info_id'] = $info_id;
+
 				// notify the link-class about the update, as other apps may be subscribt to it
 				$this->link->notify_update('infolog',$info_id,$values);
 			}
-			
 			return $info_id;
 		}
 
@@ -538,12 +563,38 @@
 		}
 
 		/**
+		 * Hook called by link-class to include infolog in the appregistry of the linkage
+		 *
+		 * @param array/string $location location and other parameters (not used)
+		 * @return array with method-names
+		 */
+		function search_link($location)
+		{
+			return array(
+				'query'      => 'infolog.boinfolog.link_query',
+				'title'      => 'infolog.boinfolog.link_title',
+				'view'       => array(
+					'menuaction' => 'infolog.uiinfolog.index',
+					'action' => 'sp'
+				),
+				'view_id'    => 'action_id',
+				'add' => array(
+					'menuaction' => 'infolog.uiinfolog.edit',
+					'type'   => 'task'
+				),
+				'add_app'    => 'action',
+				'add_id'     => 'action_id',
+				'add_popup'  => '750x550',			
+			);
+		}
+
+		/**
 		 * get title for an infolog entry identified by $info
 		 * 
 		 * Is called as hook to participate in the linking
 		 *
 		 * @param int/array $info int info_id or array with infolog entry
-		 * @param string the title
+		 * @return string the title
 		 */
 		function link_title( $info )
 		{

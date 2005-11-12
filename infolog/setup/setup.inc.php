@@ -59,6 +59,7 @@
 	$setup_info['infolog']['hooks']['calendar_include_events'] = 'infolog.boinfolog.cal_to_include';
 	$setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.boinfolog.cal_to_include';
 	$setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
+	$setup_info['infolog']['hooks']['search_link'] = 'infolog.infolog_link_registry.search_link';
 
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(

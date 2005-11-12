@@ -1,8 +1,8 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare - InfoLog: Custom fields, typ and status                      *
+	* eGroupWare - InfoLog: Administration of custom fields, type and status   *
 	* http://www.egroupware.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* Written and (c) by Ralf Becker <RalfBecker@outdoor-training.de>          *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -12,6 +12,14 @@
 
 	/* $Id$ */
 
+	/**
+	 * Administration of custom fields, type and status
+	 *
+	 * @package infolog
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @copyright (c) by Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 */
 	class uicustomfields
 	{
 		var $public_functions = array
@@ -30,12 +38,11 @@
 		}
 
 		/**
-		 * @author ralfbecker
 		 * Edit/Create an InfoLog Custom fields, typ and status
 		 *
-		 * @param $content Content from the eTemplate Exec
+		 * @param array $content Content from the eTemplate Exec
 		 */
-		function edit($content = 0)
+		function edit($content=null)
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Custom fields, typ and status');
 			if (is_array($content))

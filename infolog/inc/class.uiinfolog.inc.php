@@ -1,8 +1,8 @@
 <?php
 	/**************************************************************************\
 	* eGroupWare - InfoLog                                                     *
-	* http://www.egroupware.org                                               *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
+	* http://www.egroupware.org                                                *
+	* Written and copyright by Ralf Becker <RalfBecker@outdoor-training.de>    *
 	* originaly based on todo written by Joseph Engo <jengo@phpgroupware.org>  *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
@@ -19,8 +19,9 @@
 	 * This class is the UI-layer (user interface) of InfoLog
 	 *
 	 * @package infolog
-	 * @author RalfBecker-At-outdoor-training.de
-	 * @copyright GPL - GNU General Public License
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @copyright (c) by Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
 	class uiinfolog
 	{
@@ -68,10 +69,10 @@
 			$this->filters = array(
 				'none'             =>	'no Filter',
 				'done'             =>	'done',
-				'my'               =>	'my',
-				'my-open-today'    =>	'my open',
-				'my-open-overdue'  =>	'my overdue',
-				'my-upcoming'      =>	'my upcoming',
+				'my'               =>	'responsible',
+				'my-open-today'    =>	'responsible open',
+				'my-open-overdue'  =>	'responsible overdue',
+				'my-upcoming'      =>	'responsible upcoming',
 				'own'              =>	'own',
 				'own-open-today'   =>	'own open',
 				'own-open-overdue' =>	'own overdue',
@@ -91,7 +92,7 @@
 			$this->link = &$this->bo->link;
 			
 			$this->tmpl =& CreateObject('etemplate.etemplate');
-			$this->html = &$this->tmpl->html;
+			$this->html =& $this->tmpl->html;
 
 			$this->user = $GLOBALS['egw_info']['user']['account_id'];
 			
@@ -111,14 +112,14 @@
 			{
 				$info['end_class'] = 'overdue';
 			}
-			$info['info_anz_subs'] = $this->bo->anzSubs($id);
+			if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 			$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 			
-			$readonlys["edit[$id]"] = !$this->bo->check_access($id,EGW_ACL_EDIT);
-			$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = !($this->bo->check_access($id,EGW_ACL_EDIT) || 
+			$readonlys["edit[$id]"] = !$this->bo->check_access($info,EGW_ACL_EDIT);
+			$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || 
 				in_array($this->user, (array)$info['info_responsible'])));
-			$readonlys["delete[$id]"] = !$this->bo->check_access($id,EGW_ACL_DELETE);
-			$readonlys["sp[$id]"] = !$this->bo->check_access($id,EGW_ACL_ADD);
+			$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
+			$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 			$readonlys['view[0]'] = True;	// no parent
 
@@ -190,24 +191,49 @@
 				}
 				$rows[] = $info;
 			}
+			if ($query['no_actions']) $rows['no_actions'] = true;
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 
 			return $query['total'];
 		}
 
-		function index($values = 0,$action='',$action_id='',$referer=0,$extra_app_header=False,$return_html=False,$own_referer='')
+		/**
+		 * Shows the infolog list
+		 *
+		 * @param array $values=null etemplate content
+		 * @param string $action='' if set only entries liked to that $action:$action_id are shown
+		 * @param string $action_id='' if set only entries liked to that $action:$action_id are shown
+		 * @param mixed $called_as=0 this is how we got called, for a hook eg. the call-params of that page containing the hook
+		 * @param boolean $extra_app_header=false
+		 * @param boolean $return_html=false
+		 * @param string $own_referer='' this is our own referer
+		 */
+		function index($values = 0,$action='',$action_id='',$called_as=0,$extra_app_header=False,$return_html=False,$own_referer='')
 		{
 			if (is_array($values))
 			{
-				$referer = $values['referer'];
+				$called_as = $values['called_as'];
 				$own_referer = $values['own_referer'];
 			}
-			elseif ($own_referer !== '')
+			elseif ($own_referer === '')
 			{
 				$own_referer = $GLOBALS['egw']->common->get_referer();
+				if (strstr($own_referer,'menuaction=infolog.uiinfolog.edit'))
+				{
+					$own_referer = $GLOBALS['egw']->session->appsession('own_session','infolog');
+				}
+				else
+				{
+					$GLOBALS['egw']->session->appsession('own_session','infolog',$own_referer);
+				}
 			}
-			//echo "<p>uiinfolog::index(action='$action/$action_id',referer='$referer/$values[referer]') values=\n"; _debug_array($values);
+			if (!$action)
+			{
+				$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
+				$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
+			}
+			//echo "<p>uiinfolog::index(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 			if (!is_array($values))
 			{
 				$values = array('nm' => $this->read_sessiondata());
@@ -221,11 +247,9 @@
 					$values['nm']['order'] = 'info_datemodified';
 					$values['nm']['sort'] = 'DESC';
 				}
-			}
-			if ($action == '')
-			{
-				$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
-				$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
+				$values['msg'] = $_GET['msg'];
+				$values['action'] = $action;
+				$values['action_id'] = $action_id;
 			}
 			if ($values['nm']['add'])
 			{
@@ -237,7 +261,7 @@
 				if ($values['add'])
 				{
 					list($type) = each($values['add']);
-					return $this->edit(0,$action,$action_id,$type,$referer);
+					return $this->edit(0,$action,$action_id,$type,$called_as);
 				}
 				elseif ($values['cancel'] && $own_referer)
 				{
@@ -247,18 +271,19 @@
 				{
 					list($do,$do_id) = isset($values['main']) ? each($values['main']) : @each($values['nm']['rows']);
 					list($do_id) = @each($do_id);
-					//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($referer);
+					//echo "<p>infolog::index: do='$do/$do_id', referer="; _debug_array($called_as);
 					switch($do)
 					{
 						case 'edit':
 						case 'edit_status':
-							return $this->edit($do_id,$action,$action_id,'',$referer);
+							return $this->edit($do_id,$action,$action_id,'',$called_as);
 						case 'delete':
-							return $this->delete($do_id,$referer);
+							if (!($values['msg'] = $this->delete($do_id,$called_as,'index'))) return;
+							break;
 						case 'close':
-							return $this->close($do_id,$referer);
+							return $this->close($do_id,$called_as);
 						case 'sp':
-							return $this->edit(0,'sp',$do_id,'',$referer);
+							return $this->edit(0,'sp',$do_id,'',$called_as);
 						case 'view':
 							$value = array();
 							$action = 'sp';
@@ -301,7 +326,7 @@
 				$GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
 			$persist['action'] = $values['nm']['action'] = $action;
 			$persist['action_id'] = $values['nm']['action_id'] = $action_id;
-			$persist['referer'] = $referer;
+			$persist['called_as'] = $called_as;
 			$persist['own_referer'] = $own_referer;
 
 			$all_stati = array();
@@ -325,24 +350,44 @@
 			
 			if ($info_id)
 			{
-				$this->bo->write(array(
+				$values = array(
 					'info_id'     => $info_id,
 					'info_status' => 'done',
-				));
+				);
+				$this->bo->write($values);
 			}
 			return $referer ? $this->tmpl->location($referer) : $this->index();
 		}
 
-		function delete($values=0,$referer='')
+		function delete($values=0,$referer='',$called_by='')
 		{
 			$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ? $values : $_GET['info_id']));
 			$referer = is_array($values) ? $values['referer'] : $referer;
+			
+			if (!is_array($values) && $info_id > 0 && !$this->bo->anzSubs($info_id))	// entries without subs get confirmed by javascript
+			{
+				$values = array('delete' => true);
+			}
+			//echo "<p>uiinfolog::delete(".print_r($values,true).",'$referer','$called_by') info_id=$info_id</p>\n";
 
 			if (is_array($values) || $info_id <= 0)
 			{
-				if ($values['delete'] && $info_id > 0 && $this->bo->check_access($info_id,EGW_ACL_DELETE))
+				if (($values['delete'] || $values['delete_subs']) && $info_id > 0 && $this->bo->check_access($info_id,EGW_ACL_DELETE))
 				{
-					$this->bo->delete($info_id,$values['remove_subs'],$values['info_id_parent']);
+					$deleted = $this->bo->delete($info_id,$values['delete_subs'],$values['info_id_parent']);
+				}
+				if ($called_by)		// direct call from the same request
+				{
+					return $deleted ? lang('InfoLog entry deleted') : '';
+				}
+				if ($values['called_by'] == 'edit')	// we run in the edit popup => give control back to edit
+				{
+					$this->edit(array(
+						'info_id' => $info_id,
+						'button'  => array('deleted' => true),	// not delete!
+						'referer' => $referer,
+						'msg'     => $deleted ? lang('Infolog entry deleted') : '',
+					));
 				}
 				return $referer ? $this->tmpl->location($referer) : $this->index();
 			}
@@ -351,16 +396,27 @@
 
 			$this->tmpl->read('infolog.delete');
 
-			$values['main']['no_actions'] = True;
-			$values['remove_subs'] = $this->bo->anzSubs($info_id) > 0;
+			$values['nm'] = array(
+				'action'         => 'sp',
+				'action_id'      => $info_id,
+				'options-filter' => $this->filters,
+				'get_rows'       => 'infolog.uiinfolog.get_rows',
+				'no_filter2'     => True,
+				'never_hide'     => isset($GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide']) ? 
+					$GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide'] : 
+					$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15,
+			);
+			$values['main']['no_actions'] = $values['nm']['no_actions'] = True;
+
 			$persist['info_id'] = $info_id;
 			$persist['referer'] = $referer;
-			$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];
+			$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];				
+			$persist['called_by'] = $called_by;
 
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
 
-			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist);
+			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
 		}
 
 		/**
@@ -381,14 +437,19 @@
 				$action    = $content['action'];
 				$action_id = $content['action_id'];
 				$referer   = $content['referer'];
+				$no_popup  = $content['no_popup'];
+				$caller    = $content['caller'];
 
 				if (isset($content['link_to']['primary']))
 				{
 					$content['info_link_id'] = $content['link_to']['primary'];
 				}
-				if ($content['save'] || $content['delete'] || $content['cancel'])
+				list($button) = @each($content['button']);
+				unset($content['button']);
+				if ($button)
 				{
-					if ($content['save'] && $info_id)
+					//echo "<p>uiinfolog::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
+					if (($button == 'save' || $button == 'apply') && $info_id)
 					{
 						if (!($edit_acl = $this->bo->check_access($info_id,EGW_ACL_EDIT)))
 						{
@@ -396,50 +457,83 @@
 							$status_only = in_array($this->user, $old['info_responsible']);
 						}
 					}
-					if ($content['save'] && (!$info_id || $edit_acl || $status_only))
+					if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only))
 					{
-						if (strstr($content['info_link_id'],':') !== False)
+						if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 						{
-							$info_link_id = $content['info_link_id'];
-							$content['info_link_id'] = 0;	// as field has to be int
+							$first_link_to = $content['link_to']['to_id'];
+							if (strstr($content['info_link_id'],':') !== False)
+							{
+								$info_link_id = $content['info_link_id'];
+								$content['info_link_id'] = 0;	// as field has to be int
+							}
 						}
-						if ($status_only)
+						if (!($info_id = $this->bo->write($content)))
 						{
-							$content = array(
-								'info_id' => $content['info_id'],
-								'info_status' => $content['info_status']
-							);
+							$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
+								lang('Error: the entry has been updated since you opened it for editing!').'<br />'.
+								lang('Copy your changes to the clipboard, %1reload the entry%2 and merge them.','<a href="'.
+									htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
+										'menuaction' => 'infolog.uiinfolog.edit',
+										'info_id'    => $content['info_id'],
+										'no_popup'   => $no_popup,
+										'referer'    => $referer,
+									))).'">','</a>');
+							$button = '';	// not exiting edit
+							$info_id = $content['info_id'];
 						}
-						$this->bo->write($content);
+						else
+						{
+							$content['msg'] = lang('InfoLog entry saved');
+							$content['js'] = "opener.location.href='".$GLOBALS['egw']->link($referer,array('msg' => $content['msg']))."';";
+						}
+						if ($info_id && $first_link_to)	// writing links for a new entry
+						{
+							$this->link->link('infolog',$info_id,$first_link_to);
 
-						if (!$info_id && is_array($content['link_to']['to_id']))	// writing link for new entry
-						{
-							$content['info_id'] = $this->bo->so->data['info_id'];
-							$this->link->link('infolog',$content['info_id'],$content['link_to']['to_id']);
 							if ($info_link_id)
 							{
 								list($app,$id) = explode(':',$info_link_id);
-								$link = $this->link->get_link('infolog',$content['info_id'],$app,$id);
+								$link = $this->link->get_link('infolog',$info_id,$app,$id);
 								$content['info_link_id'] = $link['link_id'];
 
-								$this->bo->write(array(
+								$to_write = array(
 									'info_id'      => $content['info_id'],
 									'info_link_id' => $content['info_link_id'],
-									'info_from'    => $content['info_from']
-								),False);
+									'info_from'    => $content['info_from'],
+									'info_owner'   => $content['info_owner'],
+								);
+								$this->bo->write($to_write,False);
 							}
 						}
 					}
-					elseif ($content['delete'] && $info_id > 0)
+					elseif ($button == 'delete' && $info_id > 0)
 					{
 						if (!$referer && $action) $referer = array(
 							'menuaction' => 'infolog.uiinfolog.index',
 							'action' => $action,
 							'action_id' => $action_id
 						);
-						return $this->delete($info_id,$referer);	// checks ACL first
+						if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
+
+						$content['js'] = "opener.location.href='".$GLOBALS['egw']->link($referer,array('msg' => $content['msg']))."';";
 					}
-					return $referer ? $this->tmpl->location($referer) : $this->index(0,$action,$action_id);
+					// called again after delete confirmation dialog
+					elseif ($button == 'deleted'  && $content['msg'])
+					{
+						$content['js'] = "opener.location.href='".$GLOBALS['egw']->link($referer,array('msg' => $content['msg']))."';";
+					}
+					if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
+					{
+						if ($no_popup)
+						{
+							$GLOBALS['egw']->redirect_link($referer,array('msg' => $content['msg']));
+						}
+						$content['js'] .= 'window.close();';
+						echo '<html><body onload="'.$content['js'].'"></body></html>';
+						$GLOBALS['egw']->common->egw_exit();
+					}
+					if ($content['js']) $content['js'] = '<script>'.$content['js'].'</script>';
 				}
 			}
 			else
@@ -449,7 +543,10 @@
 				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
-				$referer   = $referer !== '' ? $referer : $GLOBALS['egw']->common->get_referer();
+				$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
+					$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.uiinfolog.index'));
+				$referer = preg_replace('/[&?]{1}msg=[^&]+/','',$referer);	// remove previou/old msg from referer
+				$no_popup  = $_GET['no_popup'];
 				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 				$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
@@ -496,7 +593,7 @@
 				{
 					if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT))
 					{
-						if (in_array($this->user, $content['info_responsible']))
+						if (in_array($this->user, (array)$content['info_responsible']))
 						{
 							$content['status_only'] = True;
 							foreach($content as $name => $value)
@@ -509,9 +606,18 @@
 								$readonlys['#'.$name] = true;
 							}
 						}
-						else
+						else	// Permission denied
 						{
-							return $referer ? $this->tmpl->location($referer) : $this->index(0,$action,$action_id);
+							if ($no_popup)
+							{
+								$GLOBALS['egw']->common->egw_header();
+								parse_navbar();
+								echo '<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n";
+								$GLOBALS['egw']->common->egw_exit();
+							}
+							$js = "alert('".lang('Permission denied')."'); window.close();";
+							echo '<html><body onload="'.$js.'"></body></html>';
+							$GLOBALS['egw']->common->egw_exit();
 						}
 					}
 				}
@@ -549,6 +655,7 @@
 					case 'new':		// new entry
 						$content['info_startdate'] = (int) $_GET['startdate'] ? (int) $_GET['startdate'] : $today;
 						$content['info_priority'] = 1; // normal
+						$content['info_owner'] = $this->user;
 						if ($type != '')
 						{
 							$content['info_type'] = $type;
@@ -564,8 +671,10 @@
 					$content['info_type'] = 'note';
 				}
 			}
-			$readonlys['delete'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE);
-
+			if (!($readonlys['delete'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
+			{
+				$content['info_anz_subs'] = $this->bo->anzSubs($info_id);	// to determine js confirmation of delete or not
+			}
 			$GLOBALS['egw_info']['flags']['app_header'] = lang($this->messages[$info_id ? 'edit' : ($action == 'sp' ? 'add_sub' : 'add')]);
 
 			$this->tmpl->read('infolog.edit');
@@ -576,27 +685,30 @@
 			}
 			else
 			{
-				$this->tmpl->set_cell_attribute('description|links|delegation|customfields','name','description|links|delegation');
+				$readonlys['description|links|delegation|customfields'] = array('customfields' => true);
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 				($content['status_only'] ? lang('Edit Status') : lang('Edit'));
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
-
 			//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 			$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
 				'info_type'     => $this->bo->enums['type'],
 				'info_priority' => $this->bo->enums['priority'],
 				'info_confirm'  => $this->bo->enums['confirm'],
 				'info_status'   => $this->bo->status[$content['info_type']]
-			),$readonlys,array(
-				'info_id'   => $info_id,
-				'info_id_parent' => $content['info_id_parent'],
-				'info_link_id' => $content['info_link_id'],
-				'action'    => $action,
-				'action_id' => $action_id,
-				'referer'   => $referer,
-				'link_to'   => array('to_id' => $content['link_to']['to_id'])	// in case tab gets not viewed
-			));
+			),$readonlys,array(	// preserved values
+				'info_id'       => $info_id,
+				'info_id_parent'=> $content['info_id_parent'],
+				'info_link_id'  => $content['info_link_id'],
+				'info_owner'    => $content['info_owner'],
+				'info_datemodified' => $content['info_datemodified'],
+				'info_modifier' => $content['info_modifier'],
+				'action'        => $action,
+				'action_id'     => $action_id,
+				'referer'       => $referer,
+				'no_popup'      => $no_popup,
+				'link_to'       => array('to_id' => $content['link_to']['to_id'])	// in case tab gets not viewed
+			),$no_popup ? 0 : 2);
 		}
 
 		function menuaction($action = 'get_list',$app='infolog')

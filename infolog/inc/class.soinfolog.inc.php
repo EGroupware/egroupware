@@ -22,8 +22,9 @@
 	 * and for pgSql 7.3 compatibility
 	 *
 	 * @package infolog
-	 * @author RalfBecker-At-outdoor-training.de
-	 * @copyright GPL - GNU General Public License
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @copyright (c) by Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
 	class soinfolog 				// DB-Layer
 	{
@@ -54,24 +55,28 @@
 		/**
 		 * checks if user has the $required_rights to access $info_id (private access is handled too)
 		 *
-		 * @param $info_id Id of InfoLog entry
-		 * @param $required_rights EGW_ACL_xyz anded together
+		 * @param array/int $info data or info_id of InfoLog entry
+		 * @param int $required_rights EGW_ACL_xyz anded together
 		 * @return boolean True if access is granted else False
 		 */
-		function check_access( $info_id,$required_rights )
+		function check_access( $info,$required_rights )
 		{
-			if ($info_id != $this->data['info_id'])      	// already loaded?
+			if (is_array($info))
+			{
+				
+			}
+			elseif ((int) $info != $this->data['info_id'])      	// already loaded?
 			{
 				// dont change our own internal data,
 				// dont use new as it changes $phpgw->db
 				$private_info = $this;                      
-				$info = $private_info->read($info_id);
+				$info = $private_info->read($info);
 			}
 			else
 			{
 				$info = $this->data;
 			}
-			if (!$info || !$info_id)
+			if (!$info)
 			{
 				return False;
 			}
@@ -344,11 +349,12 @@
 		 * writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
 		 *
 		 * @param array $values with the data of the log-entry
-		 * @return int the info_id
+		 * @param int $check_modified=0 old modification date to check before update (include in WHERE)
+		 * @return int/boolean info_id, false on error or 0 if the entry has been updated in the meantime
 		 */
-		function write($values)  // did _not_ ensure ACL
+		function write($values,$check_modified=0)  // did _not_ ensure ACL
 		{
-			//echo "soinfolog::write()values="; _debug_array($values);
+			//echo "soinfolog::write(,$check_modified) values="; _debug_array($values);
 			$info_id = (int) $values['info_id'];
 
 			if (isset($values['info_responsible']))
@@ -366,14 +372,20 @@
 			}
 			if (($this->data['info_id'] = $info_id))
 			{
-				$this->db->update($this->info_table,$to_write,array('info_id'=>$info_id),__LINE__,__FILE__);
+				$where = array('info_id' => $info_id);
+				if ($check_modified) $where['info_datemodified'] = $check_modified;
+				if (!$this->db->update($this->info_table,$to_write,$where,__LINE__,__FILE__))
+				{
+					return false;	// Error
+				}
+				if ($this->db->affected_rows() < 1) return 0;	// someone else updated the modtime or deleted the entry
 			}
 			else
 			{
 				if (!isset($to_write['info_id_parent'])) $to_write['info_id_parent'] = 0;	// must not be null
 
 				$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
-				$this->data['info_id']=$this->db->get_last_insert_id($this->info_table,'info_id');
+				$this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
 			}
 			//echo "<p>soinfolog.write values= "; _debug_array($values);
 
@@ -401,6 +413,8 @@
 		/**
 		 * count the sub-entries of $info_id
 		 *
+		 * This is done now be search too (in key info_anz_subs), if DB can use sub-queries
+		 *
 		 * @param $info_id id of log-entry
 		 * @return int the number of sub-entries
 		 */
@@ -422,6 +436,8 @@
 
 		/**
 		 * searches InfoLog for a certain pattern in $query
+		 *
+		 * If DB can use sub-queries, the number of subs are under the key info_anz_subs.
 		 *
 		 * @param $query[order] column-name to sort after
 		 * @param $query[sort] sort-order DESC or ASC
@@ -450,7 +466,7 @@
 
 				if (count($links))
 				{
-					$link_extra = ($action == 'sp' ? 'OR' : 'AND')." $this->info_table.info_id IN (".implode(',',$links).')';
+					$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
 				}
 			}
 			if (!empty($query['order']) && eregi('^[a-z_0-9, ]+$',$query['order']) && (empty($query['sort']) || eregi('^(DESC|ASC)$',$query['sort'])))
@@ -460,9 +476,11 @@
 				{
 					$val = trim($val);
 					$val = (substr($val,0,5) != 'info_' ? 'info_' : '').$val;
-					if ($val == 'info_des' && $this->db->Type == 'mssql')
+					if ($val == 'info_des' && $this->db->capabilities['order_on_text'] !== true)
 					{
-						$val = "CAST($val AS varchar)";
+						if (!$this->db->capabilities['order_on_text']) continue;
+
+						$val = sprintf($this->db->capabilities['order_on_text'],$val);
 					}
 					$order[] = $val;
 				}
@@ -472,7 +490,7 @@
 			{
 				$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 			}
-			$filtermethod = $this->aclFilter($query['filter']);
+			$acl_filter = $filtermethod = $this->aclFilter($query['filter']);
 			$filtermethod .= $this->statusFilter($query['filter']);
 			$filtermethod .= $this->dateFilter($query['filter']);
 
@@ -509,24 +527,20 @@
 				$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
 				$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 			}
-			$join = '';
+			$join = $distinct = $count_subs = '';
 			if ($query['query']) $query['search'] = $query['query'];	// allow both names
 			if ($query['search'])			  // we search in _from, _subject, _des and _extra_value for $query
 			{
 				$pattern = $this->db->quote('%'.$query['search'].'%');
 
 				$columns = array('info_from','info_subject','info_extra_value');
-				switch($this->db->Type)
-				{
-					case 'sapdb':
-					case 'maxdb':
-						// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
-						break;
-					default:
-						$columns[] = 'info_des';
-				}
+				// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
+				if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
+
 				$sql_query = 'AND ('.implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
-				$join = "LEFT JOIN $this->extra_table ON $this->info_table.info_id=$this->extra_table.info_id";
+				$join = "LEFT JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id";
+				// mssql and others cant use DISTICT if text columns (info_des) are involved
+				$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';
 			}
 			$pid = 'AND info_id_parent='.($action == 'sp' ? $query['action_id'] : 0);
 
@@ -538,26 +552,20 @@
 			$ids = array( );
 			if ($action == '' || $action == 'sp' || count($links))
 			{
-				$sql_query = "FROM $this->info_table $join WHERE ($filtermethod $pid $sql_query) $link_extra";
-				switch($this->db->Type)
-				{
-					// mssql and others cant use DISTICT if text columns (info_des) are involved
-					case 'mssql':
-					case 'sapdb':
-					case 'maxdb':
-						$distinct = '';
-						break;
-					default:
-						$distinct = 'DISTINCT';
-				}
-				$this->db->query($sql="SELECT $distinct $this->info_table.info_id ".$sql_query,__LINE__,__FILE__);
+				$sql_query = "FROM $this->info_table main $join WHERE ($filtermethod $pid $sql_query) $link_extra";
+				
+				$this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__);
 				$query['total'] = $this->db->num_rows();
 
 				if (!$query['start'] || $query['start'] > $query['total'])
 				{
 					$query['start'] = 0;
 				}
-				$this->db->limit_query($sql="SELECT $distinct $this->info_table.* $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
+				if ($this->db->capabilities['sub_queries'])
+				{
+					$count_subs = ",(SELECT count(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
+				}
+				$this->db->limit_query($sql="SELECT $distinct main.* $count_subs $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
 				//echo "<p>sql='$sql'</p>\n";
 				while (($info =& $this->db->row(true)))
 				{			

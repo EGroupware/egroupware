@@ -1,0 +1,13 @@
+/* $Id$ */
+.headertext { color: black; font-size: 120%; }
+.lpadding5 { padding-left: 5px; };
+.redItalic { color: red; font-style: italic; }
+.low,.low_done,.normal,.normal_done,.high,.high_done,.urgent,.urgent_done { font-weight: bold; }
+.low,.low_done { color:#606060; }
+.normal,.normal_done { color:black }
+.high { color:#cc0000; } 
+.high_done { color:#800000; }
+.urgent { color:#ff00ff; } 
+.urgent_done { color:#800080; }
+.overdue { color:#cc0000; font-weight:bold; }
+.private { font-style:italic; }
