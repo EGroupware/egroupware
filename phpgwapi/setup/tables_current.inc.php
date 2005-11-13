@@ -126,7 +126,7 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_hooks' => array(
+		'egw_hooks' => array(
 			'fd' => array(
 				'hook_id' => array('type' => 'auto','nullable' => False),
 				'hook_appname' => array('type' => 'varchar','precision' => '255'),

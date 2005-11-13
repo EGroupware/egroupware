@@ -820,4 +820,15 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.021';
 	}
+
+
+	$test[] = '1.0.1.021';
+	function phpgwapi_upgrade1_0_1_021()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_hooks','egw_hooks');
+		$GLOBALS['egw_setup']->hooks_table = 'egw_hooks';
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.022';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
 ?>

@@ -34,7 +34,7 @@
 		var $prefs_table        = 'phpgw_preferences';
 		var $lang_table         = 'egw_lang';
 		var $languages_table    = 'egw_languages';
-		var $hooks_table        = 'phpgw_hooks';
+		var $hooks_table        = 'egw_hooks';
 		var $cats_table         = 'egw_categories';
 		var $oProc;
 
@@ -626,15 +626,14 @@
 				return False;
 			}
 
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5') && ($setup_info['phpgwapi']['currentver'] != ''))
+			if(!$this->hooks_table)	// No hooks table yet
 			{
-				/* No phpgw_hooks table yet. */
 				return False;
 			}
 
 			if (!is_object($this->hooks))
 			{
-				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db);
+				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db,$this->hooks_table);
 			}
 			$this->hooks->register_hooks($appname,$setup_info[$appname]['hooks']);
 		}
@@ -656,9 +655,8 @@
 		 */
 		function deregister_hooks($appname)
 		{
-			if($this->alessthanb($setup_info['phpgwapi']['currentver'],'0.9.8pre5'))
+			if(!$this->hooks_table)	// No hooks table yet
 			{
-				/* No phpgw_hooks table yet. */
 				return False;
 			}
 
@@ -670,7 +668,7 @@
 			//echo "DELETING hooks for: " . $setup_info[$appname]['name'];
 			if (!is_object($this->hooks))
 			{
-				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db);
+				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db,$this->hooks_table);
 			}
 			$this->hooks->register_hooks($appname);
 		}
@@ -685,7 +683,7 @@
 		{
 			if (!is_object($this->hooks))
 			{
-				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db);
+				$this->hooks =& CreateObject('phpgwapi.hooks',$this->db,$this->hooks_table);
 			}
 			return $this->hooks->single($location,$appname,True,True);
 		}

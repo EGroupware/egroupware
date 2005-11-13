@@ -15,7 +15,7 @@
 	{
 		var $db;
 		var $applications_table = 'egw_applications';
-		var $hooks_table = 'phpgw_hooks';
+		var $hooks_table = 'egw_hooks';
 
 		function soapplications()
 		{
