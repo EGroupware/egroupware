@@ -18,6 +18,7 @@ addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
 advanced search	addressbook	en	Advanced search
 alt. csv import	addressbook	en	Alt. CSV Import
+are you shure you want to delete this contact?	addressbook	en	Are you shure you want to delete this contact?
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 bbs phone	addressbook	en	BBS Phone
 birthday	common	en	Birthday
@@ -47,6 +48,7 @@ contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 country	common	en	Country
+create new links	addressbook	en	Create new links
 csv-fieldname	addressbook	en	CSV-Fieldname
 csv-filename	addressbook	en	CSV-Filename
 custom	addressbook	en	Custom
@@ -60,11 +62,14 @@ doesn't matter	addressbook	en	doesn't matter
 domestic	addressbook	en	Domestic
 download	addressbook	en	Download
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
+download this contact as vcard file	addressbook	en	download this contact as vCard file
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
 edit phonenumbers -	addressbook	en	Edit Phonenumbers -
+email & internet	addressbook	en	Email & Internet
 empty for all	addressbook	en	empty for all
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
+existing links	addressbook	en	Existing links
 export	addressbook	en	export
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
@@ -110,6 +115,7 @@ ldap root dn for contacts	admin	en	LDAP root dn for contacts
 ldap root pw for contacts	admin	en	LDAP root pw for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
+links	addressbook	en	Links
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all customfields
 load vcard	addressbook	en	Load VCard
@@ -119,7 +125,7 @@ middle name	addressbook	en	Middle Name
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
-more phonenumbers	addressbook	en	more phonenumbers
+more ...	addressbook	en	More ...
 multiple vcard	addressbook	en	Multiple VCard
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
@@ -176,7 +182,6 @@ voice phone	addressbook	en	Voice Phone
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 work phone	addressbook	en	Work Phone
-write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
 you are not permitted to delete contact %1	addressbook	en	You are not permitted to delete contact %1
 you are not permittet to delete this contact	addressbook	en	You are not permittet to delete this contact
 you are not permittet to edit this contact	addressbook	en	You are not permittet to edit this contact

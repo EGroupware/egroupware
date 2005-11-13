@@ -1,12 +1,9 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="addressbook.edit.personal" template="" lang="" group="0" version="">
-		<grid class="editphones">
+	<template id="addressbook.edit.personal" template="" lang="" group="0" version="1.0.1.001">
+		<grid height="250">
 			<columns>
-				<column/>
-				<column/>
-				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -15,95 +12,48 @@
 				<row>
 					<image src="personal"/>
 					<description value="prefix"/>
-					<textbox id="prefix" size="40" tabindex="1"/>
-					<description/>
-					<description value="time zone"/>
-					<menulist>
-						<menupopup 1="label" 2="label" id="tz" no_lang="1"/>
-					</menulist>
+					<textbox id="n_prefix" size="40" tabindex="1"/>
 				</row>
 				<row>
 					<description/>
 					<description value="first name"/>
 					<textbox id="n_given" size="40" tabindex="2"/>
-					<image src="kaddressbook"/>
-					<description value="home phone"/>
-					<textbox id="tel_home" size="30" tabindex="6"/>
 				</row>
 				<row>
 					<description/>
-					<description value=" middle name"/>
+					<description value="middle name"/>
 					<textbox id="n_middle" size="40" tabindex="3"/>
-					<description/>
-					<description value="business phone"/>
-					<textbox id="tel_work" size="30" tabindex="7"/>
 				</row>
 				<row>
 					<description/>
 					<description value="last name"/>
 					<textbox id="n_family" size="40" tabindex="4"/>
-					<description/>
-					<description value="mobile phone"/>
-					<textbox id="tel_cell" size="30" tabindex="8"/>
 				</row>
 				<row>
 					<description/>
 					<description value="suffix"/>
 					<textbox id="n_suffix" size="40" tabindex="5"/>
-					<description/>
-					<description/>
-					<button label="more phonenumbers" onclick="showphones(this.form); return false;" tabindex="9" accesskey="m"/>
 				</row>
-				<row>
-					<description/>
-					<description/>
-					<description/>
-					<image src="email"/>
-					<description value="home email"/>
-					<textbox id="email_home" size="30" tabindex="10"/>
-				</row>
-				<row>
-					<description/>
-					<description value=" birthday"/>
-					<date 1="label" id="bday"/>
-					<description/>
-					<description value="business email"/>
-					<textbox id="email" size="30" tabindex="11"/>
-				</row>
-				<row>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
+				<row height="40">
+					<image src="gohome"/>
+					<description value="company name" options=",,,org_name"/>
+					<textbox size="40" id="org_name" tabindex="5"/>
 				</row>
 				<row valign="top">
 					<image src="folder"/>
 					<description value="category"/>
-					<listbox type="select-cat" id="cat_id" rows="3" span="4" tabindex="13"/>
+					<listbox type="select-cat" id="cat_id" rows="3" span="4" tabindex="6"/>
 				</row>
 				<row>
 					<image src="password"/>
-					<description value="private"/>
-					<checkbox id="private" tabindex="14"/>
-					<image src="package_network"/>
-					<description value="url"/>
-					<textbox id="url" size="30" tabindex="12"/>
-				</row>
-				<row height="100%">
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<description value="Private" options=",,,private"/>
+					<checkbox id="private" tabindex="7"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="">
-		<grid height="320">
+	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="1.0.1.001">
+		<grid height="250">
 			<columns>
 				<column/>
 				<column/>
@@ -131,13 +81,7 @@
 				</row>
 				<row>
 					<image src="gohome"/>
-					<description value="company name"/>
-					<textbox size="40" id="org_name"/>
-					<description/>
-				</row>
-				<row>
-					<description/>
-					<description value="business street"/>
+					<description value="street"/>
 					<textbox size="40" id="adr_one_street"/>
 					<description/>
 				</row>
@@ -155,29 +99,29 @@
 				</row>
 				<row>
 					<description/>
-					<description value="business city"/>
+					<description value="city"/>
 					<textbox size="40" id="adr_one_locality"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="business zip code"/>
+					<description value="zip code"/>
 					<textbox size="40" id="adr_one_postalcode"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="business state"/>
+					<description value="state"/>
 					<textbox size="40" id="adr_one_region"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="business country"/>
+					<description value="country"/>
 					<textbox size="40" id="adr_one_countryname"/>
 					<description/>
 				</row>
-				<row height="100%">
+				<row>
 					<description/>
 					<description/>
 					<description/>
@@ -186,8 +130,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.home" template="" lang="" group="0" version="">
-		<grid height="320">
+	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.0.1.001">
+		<grid height="250">
 			<columns>
 				<column/>
 				<column/>
@@ -196,85 +140,93 @@
 			<rows>
 				<row>
 					<image src="gohome"/>
-					<description value="home street"/>
+					<description value="street"/>
 					<textbox size="40" id="adr_two_street"/>
 				</row>
 				<row>
 					<description/>
-					<description value="home city"/>
+					<description value="city"/>
 					<textbox size="40" id="adr_two_locality"/>
 				</row>
 				<row>
 					<description/>
-					<description value="home zip code"/>
+					<description value="zip code"/>
 					<textbox size="40" id="adr_two_postalcode"/>
 				</row>
 				<row>
 					<description/>
-					<description value="home state"/>
+					<description value="state"/>
 					<textbox size="40" id="adr_two_locality"/>
 				</row>
 				<row>
 					<description/>
-					<description value="home country"/>
+					<description value="country"/>
 					<textbox size="40" id="adr_two_countryname"/>
 				</row>
-				<row valign="baseline" height="100%">
+				<row height="30">
 					<description/>
+					<description options=",,,bday" value="Birthday"/>
+					<date 1="label" id="bday"/>
+				</row>
+				<row>
 					<description/>
+					<description options=",,,tz" value="Time zone"/>
+					<menulist>
+						<menupopup id="tz" no_lang="1"/>
+					</menulist>
+				</row>
+				<row>
 					<description/>
+					<description value="Public key"/>
+					<textbox multiline="true" rows="2" cols="45" id="pubkey"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="">
-		<grid height="320">
-			<columns>
-				<column/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row valign="top">
-					<description/>
-					<description value="notes"/>
-					<textbox multiline="true" rows="4" cols="80" id="note"/>
-				</row>
-				<row valign="top">
-					<description/>
-					<description value=" label"/>
-					<textbox multiline="true" rows="4" cols="80" id="label"/>
-				</row>
-				<row valign="top">
-					<description/>
-					<description value="public key"/>
-					<textbox multiline="true" rows="4" cols="80" id="pubkey"/>
-				</row>
-				<row height="100%">
-					<description/>
-					<description/>
-					<description/>
-				</row>
-			</rows>
-		</grid>
-	</template>
-	<template id="addressbook.edit.custom" template="" lang="" group="0" version="">
-		<grid height="320">
+	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row>
-					<customfields/>
+					<description value="Notes"/>
 				</row>
-				<row height="100%">
-					<description/>
+				<row valign="top">
+					<textbox multiline="true" rows="4" cols="56" id="note"/>
+				</row>
+				<row class="th">
+					<description value="Custom fields"/>
+				</row>
+				<row valign="top" height="100%">
+					<customfields id="customfields"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.editphones" template="" lang="" group="0" version="">
-		<grid width="100%">
+	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.0.1.001">
+		<grid width="100%" height="250" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="@view">
+					<description value="Create new links"/>
+				</row>
+				<row>
+					<link-to id="link_to"/>
+				</row>
+				<row class="th">
+					<description value="Existing links"/>
+				</row>
+				<row>
+					<link-list id="link"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.editphones" template="" lang="" group="0" version="1.0.1.001">
+		<grid class="editphones">
 			<columns>
 				<column/>
 				<column/>
@@ -283,12 +235,7 @@
 			</columns>
 			<rows>
 				<row>
-					<hbox span="all" class="windowheader">
-						<hbox align="center">
-							<description value="Edit Phonenumbers - " align="right"/>
-							<description no_lang="1" id="fn"/>
-						</hbox>
-					</hbox>
+					<description value="Edit Phonenumbers - " align="center" span="all" class="windowheader" id="fn" no_lang="1"/>
 					<description/>
 					<description/>
 					<description/>
@@ -307,13 +254,7 @@
 				</row>
 				<row>
 					<description/>
-					<description value="home phone"/>
-					<textbox size="30" id="tel_home2"/>
-					<radio options="tel_home" id="tel_prefer"/>
-				</row>
-				<row>
-					<description/>
-					<description value="business phone"/>
+					<description value="business"/>
 					<textbox size="30" id="tel_work2"/>
 					<radio options="tel_work" id="tel_prefer"/>
 				</row>
@@ -322,6 +263,12 @@
 					<description value="mobile phone"/>
 					<textbox size="30" id="tel_cell2"/>
 					<radio options="tel_cell" id="tel_prefer"/>
+				</row>
+				<row>
+					<description/>
+					<description value="Private"/>
+					<textbox size="30" id="tel_home2"/>
+					<radio options="tel_home" id="tel_prefer"/>
 				</row>
 				<row>
 					<description/>
@@ -385,15 +332,7 @@
 				</row>
 				<row>
 					<description/>
-					<description/>
-					<description/>
-					<description/>
-				</row>
-				<row>
-					<description/>
-					<hbox span="3">
-						<button label="Ok" onclick="hidephones(this.form); return false;"/>
-					</hbox>
+					<button label="Ok" onclick="hidephones(this.form); return false;" span="all" align="center"/>
 				</row>
 			</rows>
 		</grid>
@@ -417,64 +356,133 @@ border-bottom: #9c9c9c 1px solid;
 }
 		</styles>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.0.1.001">
 		<grid>
 			<columns>
-				<column width="750"/>
+				<column width="450"/>
+				<column/>
 			</columns>
 			<rows>
-				<row>
+				<row disabled="!@msg">
 					<description span="all" class="redItalic" id="msg" no_lang="1"/>
+					<description/>
 				</row>
 				<row>
-					<textbox id="fn" readonly="true" span="all"/>
+					<grid>
+						<columns>
+							<column disabled="!@org_name"/>
+							<column disabled="!@org_name"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<textbox id="org_name" readonly="true"/>
+								<description value=":"/>
+								<textbox id="fn" readonly="true" span="all"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
-				<row valign="top" height="350">
-					<tabbox span="all">
+				<row valign="top">
+					<tabbox>
 						<tabs>
-							<tab label="personal" statustext=""/>
-							<tab label="organisation" statustext=""/>
-							<tab label="home" statustext=""/>
-							<tab label="details" statustext=""/>
-							<tab label="custom" statustext=""/>
+							<tab label="Personal" statustext=""/>
+							<tab label="Company" statustext=""/>
+							<tab label="Private" statustext=""/>
+							<tab label="Details" statustext=""/>
+							<tab label="Links" statustext=""/>
 						</tabs>
 						<tabpanels>
 							<template id="addressbook.edit.personal"/>
 							<template id="addressbook.edit.organisation"/>
 							<template id="addressbook.edit.home"/>
 							<template id="addressbook.edit.details"/>
-							<template id="addressbook.edit.custom"/>
+							<template id="addressbook.edit.links"/>
 						</tabpanels>
 					</tabbox>
+					<vbox>
+						<description value="."/>
+						<groupbox>
+							<caption label="Phone Numbers"/>
+							<grid>
+								<columns>
+									<column width="20"/>
+									<column width="120"/>
+									<column/>
+								</columns>
+								<rows>
+									<row height="30">
+										<image src="kaddressbook"/>
+										<description value="business" options=",,,tel_work"/>
+										<textbox id="tel_work" size="30" tabindex="10"/>
+									</row>
+									<row>
+										<description/>
+										<description value="mobile phone" options=",,,tel_cell"/>
+										<textbox id="tel_cell" size="30" tabindex="11"/>
+									</row>
+									<row height="30">
+										<description/>
+										<description value="Private" options=",,,tel_home"/>
+										<textbox id="tel_home" size="30" tabindex="12"/>
+									</row>
+									<row>
+										<description/>
+										<description/>
+										<button label="More ..." onclick="showphones(this.form); return false;" tabindex="13" accesskey="m"/>
+									</row>
+								</rows>
+							</grid>
+						</groupbox>
+						<groupbox>
+							<caption label="Email &amp; Internet"/>
+							<grid>
+								<columns>
+									<column width="20"/>
+									<column width="120"/>
+									<column/>
+								</columns>
+								<rows>
+									<row>
+										<image src="package_network"/>
+										<description value="url" options=",,,url"/>
+										<textbox id="url" size="30" tabindex="15"/>
+									</row>
+									<row>
+										<image src="email_icon"/>
+										<description value="business email" options=",,,email"/>
+										<textbox id="email" size="30" tabindex="16"/>
+									</row>
+									<row>
+										<description/>
+										<description value="home email" options=",,,email_home"/>
+										<textbox id="email_home" size="30" tabindex="17"/>
+									</row>
+								</rows>
+							</grid>
+						</groupbox>
+					</vbox>
 				</row>
 				<row disabled="!@id">
-					<hbox>
-						<hbox>
-							<description value="owner"/>
-							<menulist>
-								<menupopup type="select-account" id="owner" readonly="true"/>
-							</menulist>
-						</hbox>
-						<hbox align="right">
-							<description value="last modified"/>
-							<date-time id="last_mod" readonly="true"/>
-						</hbox>
+					<menulist>
+						<menupopup type="select-account" id="owner" readonly="true" label="Owner"/>
+					</menulist>
+					<hbox align="right">
+						<description value="Last modified"/>
+						<date-time id="last_mod" readonly="true"/>
 					</hbox>
 				</row>
 				<row disabled="@hidebuttons">
 					<hbox>
-						<hbox>
-							<button label="Edit" id="button[edit]" tabindex="15"/>
-							<button label="Copy" id="button[copy]"/>
-							<button label="Save" id="button[save]" tabindex="16" accesskey="s"/>
-							<button label="Apply" id="button[apply]" tabindex="17"/>
-							<button label="Cancel" id="button[cancel]" onclick="self.close(); return false;" tabindex="18"/>
-						</hbox>
-						<button label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" align="right" tabindex="20"/>
+						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
+						<button label="vCard" id="button[vcard]" statustext="download this contact as vCard file"/>
+						<button label="Save" id="button[save]" tabindex="20" accesskey="s"/>
+						<button label="Apply" id="button[apply]" tabindex="21"/>
+						<button label="Cancel" id="button[cancel]" onclick="if($cont[view]0) return true; self.close(); return false;" tabindex="22"/>
+						<template id="addressbook.editphones"/>
 					</hbox>
-				</row>
-				<row>
-					<template id="addressbook.editphones"/>
+					<button label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" align="right" tabindex="25"/>
 				</row>
 			</rows>
 		</grid>

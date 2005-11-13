@@ -18,6 +18,7 @@ addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
 alt. csv import	addressbook	de	Alt. CSV Import
+are you shure you want to delete this contact?	addressbook	de	Diesen Kontakt löschen?
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass Sie dieses Feld löschen wollen?
 bbs phone	addressbook	de	BBS
 birthday	common	de	Geburtstag
@@ -47,6 +48,7 @@ contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 country	common	de	Land
+create new links	addressbook	de	Neue Verknüpfung erstellen
 csv-fieldname	addressbook	de	CSV-Feldname
 csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
@@ -60,11 +62,14 @@ doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
 download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
+download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 edit phonenumbers -	addressbook	de	Telefonnummern bearbeiten
+email & internet	addressbook	de	Email & Internet
 empty for all	addressbook	de	leer für alle
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
+existing links	addressbook	de	Bestehende Verknüpfungen
 export	addressbook	de	Export
 export contacts	addressbook	de	Kontakte exportieren
 export file name	addressbook	de	Dateiname zum Exportieren
@@ -110,6 +115,7 @@ ldap root dn for contacts	admin	de	LDAP-rootdn für Kontakte
 ldap root pw for contacts	admin	de	LDAP-Passwort für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
+links	addressbook	de	Verknüpfungen
 list all categories	addressbook	de	Liste alle Kategorien
 list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
 load vcard	addressbook	de	VCard laden
@@ -119,7 +125,7 @@ middle name	addressbook	de	Zweiter Vorname
 mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobiltelefon
 modem phone	addressbook	de	Modem
-more phonenumbers	addressbook	de	Weitere Telefonnummern
+more ...	addressbook	de	Mehr ...
 multiple vcard	addressbook	de	Mehrere VCards
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
@@ -134,7 +140,7 @@ phone numbers	common	de	Telefonnummern
 please enter a name for that field !	addressbook	de	Bitte geben sie einen Namen für das Feld an!
 postal	common	de	Postanschrift
 pref	addressbook	de	präf
-prefix	addressbook	de	Präfix
+prefix	addressbook	de	Anrede
 public key	addressbook	de	öffentlicher Schlüssel
 read a list / search for entries.	addressbook	de	Lese die Liste / Suche nach Einträgen
 read a list of entries.	addressbook	de	Liest eine Liste von Einträgen.
