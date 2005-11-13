@@ -1,14 +1,11 @@
-%1 email addresses inserted	common	es-es	%1 direcciones de correo insertadas
+%1 email addresses inserted	common	es-es	Se han insertado %1 direcciones de correo
 %1 is not executable by the webserver !!!	common	es-es	%1 no tiene permiso de ejecución para el servidor web
-%1 manual	common	es-es	Manual de %1
-%1 start	common	es-es	Inicio de %1
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	es-es	%1Elija otro directorio%2<br />u otorgue permiso de escritura en el directorio %3 al servidor web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	es-es	%1eGroupWare%2 es una herramienta de trabajo en grupo, multiusuario y basada en web escrita en %3PHP%4
 (shift-)click or drag to change value	jscalendar	es-es	Pulse mayúsculas o arrastre para cambiar el valor
 - click on any of the time parts to increase it	jscalendar	es-es	- Pulse en cualquiera de las partes de la hora para incrementarla
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	es-es	- Mantenga pulsando el botón del ratón en cualquiera de los botones de arriba para una selección más rápida.
 - or click and drag for faster selection.	jscalendar	es-es	- o pulse y arrastre para una selección más rápida.
-- or shift-click to decrease it	jscalendar	es-es	- o pulse con la tecla mayúsculas para decrementarlo
+- or shift-click to decrease it	jscalendar	es-es	- o pulse con la tecla mayúsculas para reducirlo
 - use the %1, %2 buttons to select month	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el mes
 - use the %1, %2 buttons to select year	jscalendar	es-es	- Use los botones %1, %2 para seleccionar el año
 00 (disable)	admin	es-es	00 (desactivar)
@@ -25,7 +22,6 @@ _table properties...	htmlarea-ContextMenu	es-es	Propiedades de la _tabla...
 a editor instance must be focused before using this command.	tinymce	es-es	Una instanacia del editor debe ser enfocada antes de usar este comando.
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
-about egroupware	common	es-es	Acerca de eGroupware
 about the calendar	jscalendar	es-es	Acerca del calendario
 about this editor	htmlarea	es-es	Acerca de este editor
 access	common	es-es	Acceso
@@ -40,7 +36,6 @@ active	common	es-es	Activo
 add	common	es-es	Añadir
 add %1 category for	common	es-es	Añadir %1 categoría para
 add category	common	es-es	Añadir categoría
-add shortcut	common	es-es	Añadir acceso directo
 add sub	common	es-es	Añadir sub
 addressbook	common	es-es	Libreta de direcciones
 admin	common	es-es	Administración
@@ -67,7 +62,6 @@ angola	common	es-es	ANGOLA
 anguilla	common	es-es	ANGUILLA
 antarctica	common	es-es	ANTARCTICA
 antigua and barbuda	common	es-es	ANTIGUA AND BARBUDA
-application	common	es-es	Aplicación
 apply	common	es-es	Aplicar
 april	common	es-es	Abril
 are you sure you want to delete these entries ?	common	es-es	¿Seguro que desea borrar estas entradas?
@@ -79,7 +73,7 @@ august	common	es-es	Agosto
 australia	common	es-es	AUSTRALIA
 austria	common	es-es	AUSTRIA
 author	common	es-es	Autor
-autohide sidebox menus	common	es-es	Ocultar automáticamente los recuadros laterales
+autohide sidebox menus	common	es-es	Ocultar automáticamente los menús laterales
 automatically hide the sidebox menus?	common	es-es	¿Ocultar automáticamente los menús laterales?
 autosave default category	common	es-es	Autograbar Categoria Predeterminada
 azerbaijan	common	es-es	AZERBAIJAN
@@ -88,7 +82,6 @@ back to user login	common	es-es	Volver al inicio de sesión del usuario
 background	htmlarea-TableOperations	es-es	Fondo
 background color	htmlarea	es-es	Color de fondo
 background color:	common	es-es	Color de fondo:
-backupdir '%1' is not writeable by the webserver	common	es-es	El directorio de la copia de seguridad '%1' no tiene permiso de escritura para el servidor web
 bad login or password	common	es-es	Nombre de usuario o contraseña incorrectas
 bahamas	common	es-es	BAHAMAS
 bahrain	common	es-es	BAHRAIN
@@ -105,7 +98,6 @@ bg color	tinymce	es-es	Bg color
 bhutan	common	es-es	BHUTAN
 blocked, too many attempts	common	es-es	Bloqueado, demasiados intentos
 bold	common	es-es	Negrita
-bold.gif	common	es-es	bold.gif
 bolivia	common	es-es	BOLIVIA
 border	common	es-es	Borde
 border color	tinymce	es-es	Border color
@@ -127,8 +119,6 @@ cambodia	common	es-es	CAMBODIA
 cameroon	common	es-es	CAMEROON
 canada	common	es-es	CANADA
 cancel	common	es-es	Cancelar
-cannot replace %1 because it is a directory	common	es-es	No se pued sustituir %1 porque es un directorio
-cant open '%1' for %2	common	es-es	No se puede abrir '%1' para '%2'
 cape verde	common	es-es	CAPE VERDE
 caption	common	es-es	Título
 categories	common	es-es	Categorías
@@ -142,7 +132,6 @@ cell properties	htmlarea-TableOperations	es-es	Propiedades de la celda
 cellpadding	tinymce	es-es	Desplazamiento entre celdas
 cellspacing	tinymce	es-es	Espacio entre celdas
 center	tinymce	es-es	Centro
-centered	common	es-es	centrado
 central african republic	common	es-es	CENTRAL AFRICAN REPUBLIC
 chad	common	es-es	CHAD
 change	common	es-es	Cambiar
@@ -159,34 +148,32 @@ choose the category	common	es-es	Elija la categoría
 choose the parent category	common	es-es	Elija la categoría superior
 christmas island	common	es-es	CHRISTMAS ISLAND
 class	tinymce	es-es	Class
-cleanup messy code	tinymce	es-es	Limpiar codigo
+cleanup messy code	tinymce	es-es	Limpiar código
 clear	common	es-es	Limpiar
 clear form	common	es-es	Limpiar formulario
-click	common	es-es	Pulse
-click or mouse over to show menus	common	es-es	Pulse o mueva el ratón por encima para mostrar menús
-click or mouse over to show menus?	common	es-es	¿Pulsar o mover el ratón por encima para mostrar menús?
+click	common	es-es	Al pulsar
+click or mouse over to show menus	common	es-es	Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima
+click or mouse over to show menus?	common	es-es	¿Mostrar los menús al pulsar sobre ellos o al mover el ratón por encima?
 close	common	es-es	Cerrar
-close sidebox	common	es-es	Cerrar cuadro lateral
 cocos (keeling) islands	common	es-es	COCOS (KEELING) ISLANDS
 collapsed borders	htmlarea-TableOperations	es-es	Bordes colapsados
 colombia	common	es-es	COLOMBIA
 color	htmlarea-TableOperations	es-es	Color
 columns	tinymce	es-es	Columnas
 comment	tinymce	es-es	Comentario
+common preferences	common	es-es	Preferencias comunes
 comoros	common	es-es	COMOROS
 company	common	es-es	Compañía
 configuration problem	tinymce	es-es	Problema de configuración
 congo	common	es-es	CONGO
 congo, the democratic republic of the	common	es-es	CONGO, THE DEMOCRATIC REPUBLIC OF THE
-contacting server...	common	es-es	Conectando con el servidor...
 cook islands	common	es-es	COOK ISLANDS
 copy	common	es-es	Copiar
 copy selection	htmlarea	es-es	Copiar selección
-copy table row	tinymce	es-es	Copy table row
+copy table row	tinymce	es-es	Copiar fila de la tabla
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	es-es	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
 costa rica	common	es-es	COSTA RICA
 cote d ivoire	common	es-es	COTE D IVOIRE
-could not contact server. operation timed out!	common	es-es	No se pudo conectar con el servidor. La operación alcanzó el tiempo de espera
 create	common	es-es	Crear
 create a link	htmlarea-ContextMenu	es-es	Crear un enlace
 created by	common	es-es	Creado por
@@ -199,7 +186,7 @@ current url is	htmlarea-ContextMenu	es-es	La URL actual es
 current users	common	es-es	Usuarios actuales
 cut	htmlarea-ContextMenu	es-es	Cortar
 cut selection	htmlarea	es-es	Cortar selección
-cut table row	tinymce	es-es	Cut table row
+cut table row	tinymce	es-es	Cortar fila de la tabla
 cyprus	common	es-es	CYPRUS
 czech republic	common	es-es	CZECH REPUBLIC
 date	common	es-es	Fecha
@@ -223,10 +210,9 @@ denmark	common	es-es	DENMARK
 description	common	es-es	Descripción
 detail	common	es-es	Detalle
 details	common	es-es	Detalles
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del script que arregla el bug de IE 5.5 y superiores para mostrar transparencias en imágenes PNG?
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	es-es	¿Desactivar la ejecución del script que corrige el bug de IE 5.5 y superiores para mostrar transparencias en imágenes PNG?
 dictionary	htmlarea-SpellChecker	es-es	Diccionario
 direction	tinymce	es-es	Dirección
-direction left to right	common	es-es	Dirección de izquierda a derecha
 direction right to left	tinymce	es-es	Dirección de derecha a izquierda
 directory	tinymce	es-es	Directorio
 disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de IE para ver imágenes PNG
@@ -279,7 +265,6 @@ error renaming %1 %2 directory	common	es-es	Error renombrando el directorio %1 %
 estonia	common	es-es	ESTONIA
 ethiopia	common	es-es	ETHIOPIA
 exact	common	es-es	exacto
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	es-es	No se pudo conectar con el servidor o se obtuvo una respuesta no válida. Póngase en contacto con su administrador en caso de fallo.
 falkland islands (malvinas)	common	es-es	MALVINAS
 faroe islands	common	es-es	FAROE ISLANDS
 fax number	common	es-es	Fax
@@ -315,7 +300,6 @@ flash properties	tinymce	es-es	Propiedades de flash
 flash-file (.swf)	tinymce	es-es	Fichero flash (.swf)
 float	htmlarea-TableOperations	es-es	Flotar
 folder	tinymce	es-es	Carpeta
-folder already exists.	common	es-es	La carpeta ya existe.
 folder name missing.	tinymce	es-es	Falta el nombre de la carpeta.
 folder not found.	tinymce	es-es	No se encontró la carpeta.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	es-es	Ya existe la carpeta con el nuevo nombre especificado. No se renombró la carpeta.
@@ -332,12 +316,12 @@ french southern territories	common	es-es	FRENCH SOUTHERN TERRITORIES
 friday	common	es-es	Viernes
 ftp	common	es-es	FTP
 fullname	common	es-es	Nombre completo
-fullscreen mode	common	es-es	Modo de pantalla completa
 gabon	common	es-es	GABON
 gambia	common	es-es	GAMBIA
 general menu	common	es-es	Menú General
 georgia	common	es-es	GEORGIA
-germany	common	es-es	GERMANY
+german	common	es-es	Alemán
+germany	common	es-es	ALEMANIA
 ghana	common	es-es	GHANA
 gibraltar	common	es-es	GIBRALTAR
 global	common	es-es	Global
@@ -348,12 +332,12 @@ greece	common	es-es	GREECE
 greenland	common	es-es	GREENLAND
 grenada	common	es-es	GRENADA
 group	common	es-es	Grupo
-group access	common	es-es	Acceso Grupal
-group has been added	common	es-es	Grupo agregado
-group has been deleted	common	es-es	Grupo borrado
-group has been updated	common	es-es	Grupo actualizado
+group access	common	es-es	Acceso del grupo
+group has been added	common	es-es	El grupo se ha añadido
+group has been deleted	common	es-es	El gruop se ha borrado
+group has been updated	common	es-es	El grupo ha sido actualizado
 group name	common	es-es	nombre del grupo
-group public	common	es-es	Publico Grupal
+group public	common	es-es	Grupo público
 groups	common	es-es	Grupos
 groups with permission for %1	common	es-es	Grupos con permiso para %1
 groups without permission for %1	common	es-es	Grupos sin permiso para %1
@@ -367,15 +351,15 @@ haiti	common	es-es	HAITI
 heard island and mcdonald islands	common	es-es	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	es-es	Altura
 help	common	es-es	Ayuda
-help using editor	htmlarea	es-es	Ayuda usando el editor
+help using editor	htmlarea	es-es	Ayuda para usar el editor
 high	common	es-es	Alta
 highest	common	es-es	La más alta
 holy see (vatican city state)	common	es-es	HOLY SEE (VATICAN CITY STATE)
 home	common	es-es	Inicio
-home email	common	es-es	correo electrónico privado
+home email	common	es-es	correo electrónico particular
 honduras	common	es-es	HONDURAS
 hong kong	common	es-es	HONG KONG
-horizontal rule	htmlarea	es-es	Regla horizontal
+horizontal rule	htmlarea	es-es	Línea horizontal
 how did you get here? (please report!)	htmlarea-ContextMenu	es-es	¿Cómo ha llegado aquí? (Por favor, indíquelo)
 how many columns would you like to merge?	htmlarea-TableOperations	es-es	¿Cuántas columnas desea combinar?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	es-es	Cuántos iconos se muestran en la barra de navegación (en la parte superior de la página). Los iconos adicionales van en una especie de menú desplegable, que se activa pulsando en el icono que hay en el extremo derecho de la barra.
@@ -388,7 +372,6 @@ hungary	common	es-es	HUNGRÍA
 i will open it in a new page.	htmlarea-SpellChecker	es-es	La abriré en una página nueva
 i_nsert row before	htmlarea-ContextMenu	es-es	I_nsertar fila antes
 iceland	common	es-es	ISLANDIA
-iespell not detected. click ok to go to download page.	common	es-es	No se detectó eSpell. Pulse Aceptar para ir a la página de descarga.
 ignore	htmlarea-SpellChecker	es-es	Ignorar
 ignore all	htmlarea-SpellChecker	es-es	Ignorar todo
 image description	tinymce	es-es	Descripcion de la imagen
@@ -400,8 +383,7 @@ indent	tinymce	es-es	Aumentar sangria
 india	common	es-es	INDIA
 indonesia	common	es-es	INDONESIA
 insert	tinymce	es-es	Insertar
-insert 'return false'	common	es-es	insertar 'return false'
-insert / edit flash movie	tinymce	es-es	Insertar/editar película Flash
+insert / edit flash movie	tinymce	es-es	Insertar / editar película Flash
 insert / edit horizontale rule	tinymce	es-es	Insertar / editar línea horzontal
 insert _column before	htmlarea-ContextMenu	es-es	Insertar _columna antes
 insert a new column after the current one	htmlarea-ContextMenu	es-es	Insertar una nueva columna después de la actual
@@ -429,17 +411,15 @@ insert/edit link	tinymce	es-es	Insertar/editar enlace
 insert/modify table	tinymce	es-es	Insertar/Modificar tabla
 inserts a new table	tinymce	es-es	Insertar una tabla nueva
 international	common	es-es	Internacional
-invalid filename	common	es-es	El nombre de fichero no es válido
-invalid ip address	common	es-es	Dirección IP no válida
+invalid ip address	common	es-es	La dirección IP no es válida
 invalid password	common	es-es	La contraseña no es válida
 iran, islamic republic of	common	es-es	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	es-es	IRAQ
 ireland	common	es-es	IRELAND
 israel	common	es-es	ISRAEL
 it has been more then %1 days since you changed your password	common	es-es	Hace más de %1 días que cambió su contraseña
-it is recommended that you run setup to upgrade your tables to the current version	common	es-es	Se recomienda que ejecute <i>setup</i> para actualizar las tablas a la última versión
+it is recommended that you run setup to upgrade your tables to the current version	common	es-es	Se recomienda que ejecute la instalación para actualizar las tablas a la versión actual
 italic	common	es-es	Cursiva
-italic.gif	common	es-es	italic.gif
 italy	common	es-es	ITALIA
 jamaica	common	es-es	JAMAICA
 january	common	es-es	Enero
@@ -464,10 +444,9 @@ korea, republic of	common	es-es	KOREA, REPUBLIC OF
 kuwait	common	es-es	KUWAIT
 kyrgyzstan	common	es-es	KYRGYZSTAN
 language	common	es-es	Idioma
-language_direction_rtl	common	es-es	idioma rtl
 lao peoples democratic republic	common	es-es	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	es-es	Apellido
-last name of the user, eg. "%1"	common	es-es	Apellido del usuario, ej "%1"
+last name of the user, eg. "%1"	common	es-es	Apellido del usuario, p.ej. "%1"
 last page	common	es-es	Última página
 lastname	common	es-es	Apellido
 latvia	common	es-es	LATVIA
@@ -480,9 +459,8 @@ liberia	common	es-es	LIBERIA
 libyan arab jamahiriya	common	es-es	LIBYAN ARAB JAMAHIRIYA
 license	common	es-es	Licencia
 liechtenstein	common	es-es	LIECHTENSTEIN
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	es-es	Línea %1: '%2'<br><b>los datos csv no coinciden con el número de columnas de la tabla %3 ==> ignorado</b>
 link points to:	htmlarea-ContextMenu	es-es	El enlace apunta a:
-link url	tinymce	es-es	Direccion del enlace
+link url	tinymce	es-es	Dirección del enlace
 list	common	es-es	Lista
 list members	common	es-es	Lista de miembros
 lithuania	common	es-es	LITHUANIA
@@ -496,13 +474,13 @@ lower greek letters	htmlarea-ListType	es-es	Letras griegas minúsculas
 lower latin letters	htmlarea-ListType	es-es	Letras latinas minúsculas
 lower roman numbers	htmlarea-ListType	es-es	Número romanos en minúsculas
 lowest	common	es-es	La más baja
-luxembourg	common	es-es	LUXEMBOURG
+luxembourg	common	es-es	LUXEMBURGO
 macau	common	es-es	MACAU
 macedonia, the former yugoslav republic of	common	es-es	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	es-es	MADAGASCAR
-mail domain, eg. "%1"	common	es-es	dominio de correo, ej. "%1"
-main category	common	es-es	Categoria Principal
-main screen	common	es-es	Pantalla Principal
+mail domain, eg. "%1"	common	es-es	dominio de correo, p.ej. "%1"
+main category	common	es-es	Categoria principal
+main screen	common	es-es	Pantalla principal
 maintainer	common	es-es	Mantenido por
 make lin_k...	htmlarea-ContextMenu	es-es	Crear enlace...
 make window resizable	tinymce	es-es	Hacer la ventana redimensionable
@@ -524,12 +502,11 @@ mayotte	common	es-es	MAYOTTE
 medium	common	es-es	Medio
 menu	common	es-es	Menú
 merge cells	htmlarea-TableOperations	es-es	Combinar celdas
-merge table cells	tinymce	es-es	Merge table cells
+merge table cells	tinymce	es-es	Incluir las celdas de la tabla
 message	common	es-es	Mensaje
 mexico	common	es-es	MEXICO
 micronesia, federated states of	common	es-es	MICRONESIA, FEDERATED STATES OF
 middle	htmlarea-TableOperations	es-es	Medio
-minute	common	es-es	minuto
 mkdir failed.	tinymce	es-es	No se pudo crear el directorio.
 modify url	htmlarea-ContextMenu	es-es	Modificar URL
 moldova, republic of	common	es-es	MOLDOVA, REPUBLIC OF
@@ -540,10 +517,9 @@ montserrat	common	es-es	MONTSERRAT
 morocco	common	es-es	MOROCCO
 move	tinymce	es-es	Mover
 mozambique	common	es-es	MOZAMBIQUE
-multiple	common	es-es	múltiple
 myanmar	common	es-es	MYANMAR
 name	common	es-es	Nombre
-name of the user, eg. "%1"	common	es-es	Nombre del usuario, ej. "%1"
+name of the user, eg. "%1"	common	es-es	Nombre del usuario, p.ej. "%1"
 namibia	common	es-es	NAMIBIA
 nauru	common	es-es	NAURU
 nepal	common	es-es	NEPAL
@@ -551,18 +527,18 @@ netherlands	common	es-es	NETHERLANDS
 netherlands antilles	common	es-es	NETHERLANDS ANTILLES
 never	common	es-es	Nunca
 new caledonia	common	es-es	NEW CALEDONIA
-new entry added sucessfully	common	es-es	Nueva entrada a&ntilde;adida exitosamente
+new entry added sucessfully	common	es-es	La nueva entrada se ha añadido correctamente
 new file name missing!	tinymce	es-es	¡Falta el nombre del nuevo fichero!
 new file name:	tinymce	es-es	Nuevo nombre de fichero:
 new folder	tinymce	es-es	Nueva carpeta
 new folder name missing!	tinymce	es-es	¡Falta el nombre de la nueva carpeta!
 new folder name:	tinymce	es-es	Nombre de la nueva carpeta:
-new main category	common	es-es	Nueva categoria principal
+new main category	common	es-es	Nueva categoría principal
 new value	common	es-es	Nuevo valor
 new zealand	common	es-es	NEW ZEALAND
 next	common	es-es	Siguiente
 next month (hold for menu)	jscalendar	es-es	Mes siguiente (mantener para menú)
-next page	common	es-es	proxima pagina
+next page	common	es-es	Página siguiente
 next year (hold for menu)	jscalendar	es-es	Año siguiente (mantener para menú)
 nicaragua	common	es-es	NICARAGUA
 niger	common	es-es	NIGER
@@ -571,7 +547,7 @@ niue	common	es-es	NIUE
 no	common	es-es	No
 no entries found, try again ...	common	es-es	No se encontraron entradas, inténtelo de nuevo
 no files...	tinymce	es-es	No hay ficheros...
-no history for this record	common	es-es	Sin historial para este registro
+no history for this record	common	es-es	No hay historial para este registro
 no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	es-es	No se encontraron palabras incorrectas en el diccionario seleccionado.
 no permission to create folder.	tinymce	es-es	No tiene permiso para crear la carpeta.
 no permission to delete file.	tinymce	es-es	No tiene permiso para borrar el fichero.
@@ -579,10 +555,9 @@ no permission to move files and folders.	tinymce	es-es	No tiene permiso para mov
 no permission to rename files and folders.	tinymce	es-es	No tiene permiso para renombrar ficheros y carpetas.
 no permission to upload.	tinymce	es-es	No tiene permiso para subir ficheros.
 no rules	htmlarea-TableOperations	es-es	Sin reglas
-no savant2 template directories were found in:	common	es-es	No se encontraron directorios de plantillas Savant2 en:
 no shadow	tinymce	es-es	Sin sombra
 no sides	htmlarea-TableOperations	es-es	Sin lados
-no subject	common	es-es	Sin Asunto
+no subject	common	es-es	Sin asunto
 none	common	es-es	Ninguno
 norfolk island	common	es-es	NORFOLK ISLAND
 normal	common	es-es	Normal
@@ -592,16 +567,15 @@ not assigned	common	es-es	sin asignar
 note	common	es-es	Nota
 notes	common	es-es	Notas
 notify window	common	es-es	Ventana de notificación
-notify your administrator to correct this situation	common	es-es	Notifique la situación a su administrador para corregirla
 november	common	es-es	Noviembre
 october	common	es-es	Octubre
 ok	common	es-es	Aceptar
 old value	common	es-es	Valor anterior
 oman	common	es-es	OMAN
-on *nix systems please type: %1	common	es-es	En sistemas *nix por favor escriba: %1
+on *nix systems please type: %1	common	es-es	En sistemas *nix, por favor, escriba: %1
 on mouse over	common	es-es	Al mover el ratón por encima
-only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	es-es	Sólo se permiten ficheros con extensiones, p. ej., "imagen.jpg".
-only private	common	es-es	privado solamente
+only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	es-es	Sólo se permiten ficheros con extensiones, p. ej. "imagen.jpg".
+only private	common	es-es	sólo los privados
 only yours	common	es-es	sólo los suyos
 open file in new window	tinymce	es-es	Abrir el fichero en una ventana nueva
 open in new window	tinymce	es-es	Abrir en una ventana nueva
@@ -613,15 +587,14 @@ open link in a new window	tinymce	es-es	Abrir enlace en una ventana nueva
 open link in the same window	tinymce	es-es	Abrir enlace en la misma ventana
 open notify window	common	es-es	Abrir ventana de notificación
 open popup window	common	es-es	Abrir ventana emergente
-open sidebox	common	es-es	Abrir caja lateral
 opens this link in a new window	htmlarea-ContextMenu	es-es	Abre este enlace en una ventana nueva
 ordered list	common	es-es	Lista ordenada
 original	common	es-es	Original
 original word	htmlarea-SpellChecker	es-es	Palabra original
 other	common	es-es	Otros
-outdent	tinymce	es-es	Disminuye sangria
+outdent	tinymce	es-es	Disminuir sangría
 overview	common	es-es	Resumen
-owner	common	es-es	Due&ntilde;o
+owner	common	es-es	Propietario
 padding	htmlarea-TableOperations	es-es	Padding
 page	common	es-es	Página
 page was generated in %1 seconds	common	es-es	La página se generó en %1 segundos
@@ -644,10 +617,7 @@ paste table row after	tinymce	es-es	Pegar la fila de la tabla después
 paste table row before	tinymce	es-es	Pegar la fila de la tabla antes
 path	htmlarea	es-es	Ruta
 path not found.	tinymce	es-es	No se encontró la ruta
-path to user and group files has to be outside of the webservers document-root!!!	common	es-es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
-pattern for search in addressbook	common	es-es	Patrón de búsqueda en la Libreta de direcciones
-pattern for search in calendar	common	es-es	Patrón de búsqueda en el Calendario
-pattern for search in projects	common	es-es	Patrón de búsqueda en los proyectos
+path to user and group files has to be outside of the webservers document-root!!!	common	es-es	¡¡La ruta a los ficheros de usuario y grupos DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
 percent	htmlarea-TableOperations	es-es	porcentaje
 permissions to the files/users directory	common	es-es	permisos a los directorios de archivos/usuarios
 personal	common	es-es	Personal
@@ -656,7 +626,7 @@ philippines	common	es-es	FILIPINAS
 phone number	common	es-es	Número de teléfono
 phpgwapi	common	es-es	API de eGroupWare
 pitcairn	common	es-es	PITCAIRN
-pixels	htmlarea-TableOperations	es-es	pixels
+pixels	htmlarea-TableOperations	es-es	pixeles
 please %1 by hand	common	es-es	Por favor %1 manualmente
 please click into some cell	htmlarea-TableOperations	es-es	Por favor, pulse dentro de alguna celda
 please confirm that you want to open this link	htmlarea-SpellChecker	es-es	Por favor, confirme que desea abrir este enlace
@@ -665,7 +635,7 @@ please confirm that you want to unlink this element.	htmlarea-ContextMenu	es-es	
 please enter a name	common	es-es	Por favor, introduzca un nombre
 please enter the caption text	tinymce	es-es	Por favor, introduzca el texto del título
 please insert a name for the target or choose another option.	tinymce	es-es	Por favor, introduzca un nombre para el destino o elija otra opción.
-please run setup to become current	common	es-es	Por favor ejecute el setup para actualizarse
+please run setup to become current	common	es-es	Por favor ejecute la instalación para actualizar
 please select	common	es-es	Por favor, seleccione
 please set your global preferences	common	es-es	Por favor, ponga sus preferencias globales
 please set your preferences for this application	common	es-es	Por favor, elija sus preferencias para esta aplicación
@@ -673,13 +643,12 @@ please wait.  calling spell checker.	htmlarea-SpellChecker	es-es	Por favor, espe
 please wait...	common	es-es	Por favor, espere...
 please wait: changing dictionary to	htmlarea-SpellChecker	es-es	Por favor, espere: cambiando diccionario a
 pliz weit ;-)	htmlarea-SpellChecker	es-es	por favor, espere ;-)
-poland	common	es-es	POLAND
+poland	common	es-es	POLONIA
 popup url	tinymce	es-es	URL de la ventana emergente
 portugal	common	es-es	PORTUGAL
 position (x/y)	tinymce	es-es	Posición (X/Y)
 postal	common	es-es	Postal
-powered by egroupware version %1	common	es-es	Proporcionado por <a href="http://www.egroupware.org">eGroupWare</a> %1
-powered by phpgroupware version %1	common	es-es	Proporcionado por phpGroupware versión %1
+powered by egroupware version %1	common	es-es	Proporcionado por <a href="http://www.egroupware.org">eGroupWare</a> versión %1
 preferences	common	es-es	Preferencias
 preferences for the idots template set	common	es-es	Preferencias para las plantillas de idots
 prev. month (hold for menu)	jscalendar	es-es	Mes anterior (mantener para menú)
@@ -690,7 +659,6 @@ primary style-sheet:	common	es-es	Hoja de estilo principal:
 print	common	es-es	Imprimir
 priority	common	es-es	Prioridad
 private	common	es-es	Privado
-programs	common	es-es	Programas
 project	common	es-es	Proyecto
 public	common	es-es	público
 puerto rico	common	es-es	PUERTO RICO
@@ -698,37 +666,35 @@ qatar	common	es-es	QATAR
 re-check	htmlarea-SpellChecker	es-es	Volver a comprobar
 read	common	es-es	Leer
 read this list of methods.	common	es-es	Leer esta lista de métodos
-reading	common	es-es	leyendo
 redo	tinymce	es-es	Rehacer
 redoes your last action	htmlarea	es-es	Rehace la última acción
 refresh	tinymce	es-es	Refrescar
 reject	common	es-es	Rechazar
 remove col	tinymce	es-es	Eliminar una columna
 remove selected accounts	common	es-es	borrar las cuentas seleccionadas
-remove shortcut	common	es-es	Eliminar acceso directo
 remove the	htmlarea-ContextMenu	es-es	Elimnar el
 remove this node from the document	htmlarea-ContextMenu	es-es	Eliminar este nodo del documento
 rename	common	es-es	Renombrar
 rename failed	tinymce	es-es	No se pudo renombrar
 replace	common	es-es	Sustituir
 replace all	htmlarea-SpellChecker	es-es	Sustituir todo
-replace with	common	es-es	Sustituir con
+replace with	common	es-es	Sustituir por
 replace&nbsp;all	tinymce	es-es	Sustituir todo
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	es-es	Devuelve una lista completa de las cuentas del sistema. Aviso: puede ser bastante largo
 returns an array of todo items	common	es-es	Devuelve un array de elementos pendientes
 returns struct of users application access	common	es-es	Devuelve la estructura del acceso de los usuarios a la aplicación
 reunion	common	es-es	REUNION
-revert	htmlarea-SpellChecker	es-es	Volver
+revert	htmlarea-SpellChecker	es-es	Volver a lo guardado
 right	common	es-es	Derecha
 rmdir failed.	tinymce	es-es	No se pudo borrar el directorio.
 ro_w properties...	htmlarea-ContextMenu	es-es	Propiedades de la fila...
 romania	common	es-es	RUMANIA
 row properties	htmlarea-TableOperations	es-es	Propiedades de la fila
 rows	tinymce	es-es	Filas
-rules	htmlarea-TableOperations	es-es	Filetes
-rules will appear between all rows and columns	htmlarea-TableOperations	es-es	Los filetes aparecen entre todas las filas y columnas
-rules will appear between columns only	htmlarea-TableOperations	es-es	Los filetes aparecen sólo entre columnas
-rules will appear between rows only	htmlarea-TableOperations	es-es	Los filetes aparecen sólo entre filas
+rules	htmlarea-TableOperations	es-es	Líneas
+rules will appear between all rows and columns	htmlarea-TableOperations	es-es	Las líneas aparecen entre todas las filas y columnas
+rules will appear between columns only	htmlarea-TableOperations	es-es	Las líneas aparecen sólo entre columnas
+rules will appear between rows only	htmlarea-TableOperations	es-es	Las líneas aparecen sólo entre filas
 run spell checking	tinymce	es-es	Comprobar ortografía
 russian federation	common	es-es	RUSSIAN FEDERATION
 rwanda	common	es-es	RWANDA
@@ -742,13 +708,11 @@ san marino	common	es-es	SAN MARINO
 sao tome and principe	common	es-es	SAO TOME AND PRINCIPE
 saturday	common	es-es	Sábado
 saudi arabia	common	es-es	SAUDI ARABIA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	es-es	La versión de Savant2 es distinta del wrapper Savant2.<br/>Esta versión: %1 <br/>Versión de Savant: %2
 save	common	es-es	Grabar
 search	common	es-es	Buscar
 search %1 '%2'	common	es-es	Buscar %1 '%2'
 search or select accounts	common	es-es	Buscar o seleccionar cuentas
 search or select multiple accounts	common	es-es	buscar o seleccionar múltiples cuentas
-second	common	es-es	segundo
 section	common	es-es	Sección
 select	common	es-es	Seleccionar
 select all	tinymce	es-es	Seleccionar todo
@@ -766,8 +730,6 @@ send	common	es-es	Enviar
 senegal	common	es-es	SENEGAL
 september	common	es-es	Septiembre
 server %1 has been added	common	es-es	El servidor %1 ha sido añadido
-server answered. processing response...	common	es-es	El servidor respondió. Processando la respuesta...
-server contacted. waiting for response...	common	es-es	Se conectó con el servidor. Esperando la respuesta...
 server name	common	es-es	Nombre del servidor
 session has been killed	common	es-es	La sesión ha sido eliminada
 setup	common	es-es	Instalación
@@ -813,9 +775,7 @@ sri lanka	common	es-es	SRI LANKA
 start date	common	es-es	Fecha de inicio
 start time	common	es-es	Hora de inicio
 start with	common	es-es	empieza por
-starting up...	common	es-es	Iniciando...
 status	common	es-es	Estado
-stretched	common	es-es	estrechar
 strikethrough	htmlarea	es-es	Tachado
 striketrough	tinymce	es-es	Tachado
 style [css]	htmlarea-TableOperations	es-es	Estilo [CSS]
@@ -834,9 +794,9 @@ swaziland	common	es-es	SWAZILAND
 sweden	common	es-es	SUECIA
 switzerland	common	es-es	SUIZA
 syrian arab republic	common	es-es	SYRIAN ARAB REPUBLIC
-table cell properties	tinymce	es-es	Table cell properties
-table properties	common	es-es	Table properties
-table row properties	tinymce	es-es	Table row properties
+table cell properties	tinymce	es-es	Propiedades de la celda de la tabla
+table properties	common	es-es	Propiedades de la tabla
+table row properties	tinymce	es-es	Propiedades de la fila de la tabla
 taiwan	common	es-es	TAIWAN/TAIPEI
 tajikistan	common	es-es	TAJIKISTAN
 tanzania, united republic of	common	es-es	TANZANIA, UNITED REPUBLIC OF
@@ -862,7 +822,6 @@ this is just a template popup	tinymce	es-es	Esto es sólo una ventana emergente d
 this name has been used already	common	es-es	¡Este nombre ya ha sido usado!
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	es-es	Esto descartará los cambios y abandonará el corrector ortográfico. Por favor, confirme.
 thursday	common	es-es	Jueves
-tiled	common	es-es	en mosaico
 time	common	es-es	Hora
 time selection:	jscalendar	es-es	Seleccionar hora:
 time zone	common	es-es	Zona horaria
@@ -872,7 +831,7 @@ to	common	es-es	Para
 to correct this error for the future you will need to properly set the	common	es-es	Para corregir este error para el futuro necesitará configurar adecuadamente el
 to go back to the msg list, click <a href= %1 >here</a>	common	es-es	Psra volver a la lista de mensajes, pulse <a href="%1">aquí</a>
 today	common	es-es	Hoy
-todays date, eg. "%1"	common	es-es	fecha de hoy, ej. "%1"
+todays date, eg. "%1"	common	es-es	fecha de hoy, p.ej. "%1"
 toggle first day of week	jscalendar	es-es	Cambiar el primer día de la semana
 toggle fullscreen mode	tinymce	es-es	Cambiar a modo de pantalla completa
 toggle html source	htmlarea	es-es	Cambiar a vista del código HTML
@@ -889,11 +848,9 @@ turkey	common	es-es	TURKEY
 turkmenistan	common	es-es	TURKMENISTAN
 turks and caicos islands	common	es-es	TURKS AND CAICOS ISLANDS
 tuvalu	common	es-es	TUVALU
-type	common	es-es	Tipo
 uganda	common	es-es	UGANDA
 ukraine	common	es-es	UKRAINE
 underline	common	es-es	Subrayado
-underline.gif	common	es-es	underline.gif
 undo	tinymce	es-es	Deshacer
 undoes your last action	htmlarea	es-es	Deshace la última acción
 united arab emirates	common	es-es	UNITED ARAB EMIRATES
@@ -909,7 +866,6 @@ unset color	htmlarea-TableOperations	es-es	Quitar color
 up	tinymce	es-es	Arriba
 update	common	es-es	Insertar
 upload	common	es-es	Subir a un servidor
-upload directory does not exist, or is not writeable by webserver	common	es-es	El directorio para subir no existe, o no tiene permiso de escritura para el servidor web
 upload image	htmlarea-UploadImage	es-es	Subir imagen
 uploading...	tinymce	es-es	Subiendo...
 upper latin letters	htmlarea-ListType	es-es	Letras latinas mayúsculas
@@ -948,7 +904,6 @@ width	common	es-es	Anchura
 window name	tinymce	es-es	Nombre de la ventana
 wk	jscalendar	es-es	wk
 work email	common	es-es	correo del trabajo
-writing	common	es-es	escribiendo
 written by:	common	es-es	Escrito por:
 year	common	es-es	Año
 yemen	common	es-es	YEMEN
@@ -974,4 +929,3 @@ your settings have been updated	common	es-es	Sus preferencias fueron actualizada
 yugoslavia	common	es-es	YUGOSLAVIA
 zambia	common	es-es	ZAMBIA
 zimbabwe	common	es-es	ZIMBABWE
-zoom	common	es-es	Escala

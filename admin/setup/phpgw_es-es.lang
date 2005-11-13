@@ -86,7 +86,6 @@ change config settings	admin	es-es	Cambiar opciones de configuración
 change main screen message	admin	es-es	Cambiar mensaje de la pantalla principal
 check ip address of all sessions	admin	es-es	Comprobar  la IP de todas las sesiones
 check items to <b>%1</b> to %2 for %3	admin	es-es	Comprobar elementos a <b>%1</b> a %2 para %3
-checkbox	admin	es-es	casilla
 click to select a color	admin	es-es	Pulse para seleccionar un color
 color	admin	es-es	Color
 country selection	admin	es-es	Selección de país
@@ -226,7 +225,6 @@ ip	admin	es-es	IP
 jobs	admin	es-es	Trabajos
 kill	admin	es-es	Matar
 kill session	admin	es-es	Matar sesión
-label	admin	es-es	etiqueta
 last %1 logins	admin	es-es	Ultimos %1 inicios de sesión
 last %1 logins for %2	admin	es-es	Ultimos %1 inicios de sesión de %2
 last login	admin	es-es	Ultimo inicio de sesión
@@ -299,7 +297,6 @@ preferences	admin	es-es	Preferencias
 primary group	admin	es-es	Grupo principal
 quota settings	admin	es-es	configuración de la cuota
 quota size in mbyte	admin	es-es	tamaño de la cuota en MBytes
-radiobox	admin	es-es	botón radio
 re-enter password	admin	es-es	Confirmar contraseña
 read this list of methods.	admin	es-es	Leer esta lista de métodos
 register application hooks	admin	es-es	Registrar "hooks" de la aplicación
@@ -356,7 +353,6 @@ submit changes	admin	es-es	Enviar cambios
 submit the search string	admin	es-es	Enviar la cadena de búsqueda
 template selection	admin	es-es	Selección de plantilla
 text entry	admin	es-es	Entrada de texto
-textfield	admin	es-es	campo de texto
 that application name already exists.	admin	es-es	Ese nombre de aplicación ya existe.
 that application order must be a number.	admin	es-es	El orden de la aplicación debe ser un número.
 that loginid has already been taken	admin	es-es	Ese nombre de usuario ya está siendo utilizado

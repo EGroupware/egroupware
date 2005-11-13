@@ -518,7 +518,7 @@ you should either uninstall and then reinstall it, or attempt manual repairs	set
 you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	es-es	Necesita cargar el esquema apropiado en su servidor ldap. Ver phpgwapi/doc/ldap/README
 you're using an old configuration file format...	setup	es-es	Está usando un fichero de configuración con formato antiguo
 you're using an old header.inc.php version...	setup	es-es	Está usando una versión antigua del header.inc.php
-your applications are current	setup	es-es	Sus apliaciones están actualizadas
+your applications are current	setup	es-es	Sus aplicaciones están actualizadas
 your backup directory '%1' %2	setup	es-es	Su directorio de copias '%1' %2
 your database does not exist	setup	es-es	Su base de datos no existe
 your database is not working!	setup	es-es	¡Su base de datos no está funcionando!
