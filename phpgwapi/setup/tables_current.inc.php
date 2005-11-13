@@ -112,7 +112,7 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_access_log' => array(
+		'egw_access_log' => array(
 			'fd' => array(
 				'sessionid' => array('type' => 'char','precision' => '32','nullable' => False),
 				'loginid' => array('type' => 'varchar','precision' => '64','nullable' => False),

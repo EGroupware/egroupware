@@ -104,6 +104,11 @@
 		* @var object holder for the database object
 		*/
 		var $db;
+		
+		/**
+		 * @var $access_table name of access-log table
+		 */
+		var $access_table = 'egw_access_log';
         
 		/**
 		* @var array publicly available methods
@@ -136,13 +141,14 @@
 		function sessions_($domain_names=null)
 		{
 			$this->db = clone($GLOBALS['egw']->db);
+			$this->db->set_app('phpgwapi');
 			$this->sessionid = get_var('sessionid',array('GET','COOKIE'));
 			$this->kp3       = get_var('kp3',array('GET','COOKIE'));
 
 			$this->phpgw_domains = $domain_names;
 
 			/* Create the crypto object */
-			$GLOBALS['egw']->crypto = CreateObject('phpgwapi.crypto');
+			$GLOBALS['egw']->crypto =& CreateObject('phpgwapi.crypto');
 			if ($GLOBALS['egw_info']['server']['usecookies'])
 			{
 				$this->phpgw_set_cookiedomain();
@@ -600,26 +606,30 @@
 		{
 			$now = time();
 
-			if ($login != '')
+			if ($login)
 			{
 				if (strlen($login) > 30)
 				{
 					$login = substr($login,0,30);
 				}
-				$GLOBALS['egw']->db->query('INSERT INTO phpgw_access_log(sessionid,loginid,ip,li,lo,account_id)'
-					. " VALUES ('" . $sessionid . "','" . $this->db->db_addslashes($login). "','"
-					. $this->db->db_addslashes($user_ip) . "',$now,0," . (int)$account_id .')',__LINE__,__FILE__);
+				$GLOBALS['egw']->db->insert($this->access_table,array(
+					'sessionid' => $sessionid,
+					'loginid'   => $login,
+					'ip'        => $user_ip,
+					'li'        => $now,
+					'lo'        => 0,
+					'account_id'=> $account_id,
+				),__LINE__,__FILE__);
 			}
 			else
 			{
-				$GLOBALS['egw']->db->query("UPDATE phpgw_access_log SET lo=" . $now . " WHERE sessionid='"
-					. $sessionid . "'",__LINE__,__FILE__);
+				$GLOBALS['egw']->db->update($this->access_table,array('lo' => $now),array('sessionid' => $sessionid),__LINE__,__FILE__);
 			}
 			if ($GLOBALS['egw_info']['server']['max_access_log_age'])
 			{
 				$max_age = $now - $GLOBALS['egw_info']['server']['max_access_log_age'] * 24 * 60 * 60;
 
-				$GLOBALS['egw']->db->query("DELETE FROM phpgw_access_log WHERE li < $max_age");
+				$GLOBALS['egw']->db->delete($this->access_table,"li < $max_age",__LINE__,__FILE__);
 			}
 		}
 
@@ -635,16 +645,22 @@
 			$blocked = False;
 			$block_time = time() - $GLOBALS['egw_info']['server']['block_time'] * 60;
 
-			$ip = $this->db->db_addslashes($ip);
-			$this->db->query("SELECT count(*) FROM phpgw_access_log WHERE account_id=0 AND ip='$ip' AND li > $block_time",__LINE__,__FILE__);
+			$this->db->select($this->access_table,'COUNT(*)',array(
+				'account_id = 0',
+				'ip'         => $ip,
+				"li > $block_time",
+			),__LINE__,__FILE__);
 			$this->db->next_record();
 			if (($false_ip = $this->db->f(0)) > $GLOBALS['egw_info']['server']['num_unsuccessful_ip'])
 			{
 				//echo "<p>login_blocked: ip='$ip' ".$this->db->f(0)." trys (".$GLOBALS['egw_info']['server']['num_unsuccessful_ip']." max.) since ".date('Y/m/d H:i',$block_time)."</p>\n";
 				$blocked = True;
 			}
-			$login = $this->db->db_addslashes($login);
-			$this->db->query("SELECT count(*) FROM phpgw_access_log WHERE account_id=0 AND (loginid='$login' OR loginid LIKE '$login@%') AND li > $block_time",__LINE__,__FILE__);
+			$this->db->select($this->access_table,'COUNT(*)',array(
+				'account_id = 0',
+				'(loginid = '.$this->db->quote($login).' OR loginid LIKE '.$this->db->quote($login.'@%').')',
+				"li > $block_time",
+			),__LINE__,__FILE__);
 			$this->db->next_record();
 			if (($false_id = $this->db->f(0)) > $GLOBALS['egw_info']['server']['num_unsuccessful_id'])
 			{

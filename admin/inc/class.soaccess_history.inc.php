@@ -14,35 +14,31 @@
 	class soaccess_history
 	{
 		var $db;
+		var $table = 'egw_access_log';
 
 		function soaccess_history()
 		{
-			$this->db       = clone($GLOBALS['egw']->db);
+			$this->db = clone($GLOBALS['egw']->db);
+			$this->db->set_app('phpgwapi');
 		}
 
 		function test_account_id($account_id)
 		{
 			if ($account_id)
 			{
-				return " where account_id='$account_id'";
+				return array('account_id' => $account_id);
 			}
+			return false;
 		}
 
-		function list_history($account_id,$start,$order,$sort)
+		function &list_history($account_id,$start,$order,$sort)
 		{
 			$where = $this->test_account_id($account_id);
 
-			$this->db->limit_query("select loginid,ip,li,lo,account_id,sessionid from phpgw_access_log $where order by li desc",$start,__LINE__,__FILE__);
-			while ($this->db->next_record())
+			$this->db->select($this->table,'loginid,ip,li,lo,account_id,sessionid',$where,__LINE__,__FILE__,(int) $start,'ORDER BY li DESC');
+			while (($row = $this->db->row(true)))
 			{
-				$records[] = array(
-					'loginid'    => $this->db->f('loginid'),
-					'ip'         => $this->db->f('ip'),
-					'li'         => $this->db->f('li'),
-					'lo'         => $this->db->f('lo'),
-					'account_id' => $this->db->f('account_id'),
-					'sessionid'  => $this->db->f('sessionid')
-				);
+				$records[] = $row;
 			}
 			return $records;
 		}
@@ -51,22 +47,20 @@
 		{
 			$where = $this->test_account_id($account_id);
 
-			$this->db->query("select count(*) from phpgw_access_log $where");
-			$this->db->next_record();
+			$this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__);
 
-			return $this->db->f(0);
+			return $this->db->next_record() ? $this->db->f(0) : 0;
 		}
 
 		function return_logged_out($account_id)
 		{
+			$where = array('lo != 0');
 			if ($account_id)
 			{
-				$where = "and account_id='$account_id'";
+				$where['account_id'] = $account_id;
 			}
-
-			$this->db->query("select count(*) from phpgw_access_log where lo!=0 $where");
-			$this->db->next_record();
-
-			return $this->db->f(0);
+			$this->db->select($this->table,'COUNT(*)',$where,__LINE__,__FILE__);
+			
+			return $this->db->next_record() ? $this->db->f(0) : 0;
 		}
 	}

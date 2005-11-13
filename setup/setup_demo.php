@@ -95,6 +95,8 @@
 			{
 				$GLOBALS['egw_setup']->db->delete($table,'1=1');
 			}
+			/* Clear the access log, since these are all new users anyway */
+			$GLOBALS['egw_setup']->db->query('DELETE FROM egw_access_log');
 		}
 		/* Create the demo groups */
 		$defaultgroupid = (int)$GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
@@ -186,9 +188,6 @@
 		}
 		$GLOBALS['egw_setup']->add_acl('phpgw_group',$admingroupid,$accountid);
 		$GLOBALS['egw_setup']->add_acl('phpgw_group',$defaultgroupid,$accountid);
-
-		/* Clear the access log, since these are all new users anyway */
-		$GLOBALS['egw_setup']->db->query('DELETE FROM phpgw_access_log');
 
 		$GLOBALS['egw_setup']->db->transaction_commit();
 

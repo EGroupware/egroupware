@@ -861,4 +861,13 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.024';
 	}
+
+
+	$test[] = '1.0.1.024';
+	function phpgwapi_upgrade1_0_1_024()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_access_log','egw_access_log');
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.025';
+	}
 ?>
