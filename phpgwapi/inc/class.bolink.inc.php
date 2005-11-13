@@ -172,7 +172,7 @@
 				{
 					if (!is_array($link))	// check for unlink-marker
 					{
-						echo "<b>link='$link' is no array</b><br>\n";
+						//echo "<b>link='$link' is no array</b><br>\n";
 						continue;
 					}
 					if ($link['app'] == $this->vfs_appname)
