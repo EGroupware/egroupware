@@ -113,7 +113,6 @@
 			if($debug) { echo ' - all equal.'; }
 		}
 
-		// Convert an array into the format needed for the access column.
 		/**
 		 * Convert an array into the format needed for the access column
 		 *
@@ -128,7 +127,7 @@
 			{
 				if (count($array))
 				{
-					while ($t = each($array))
+					while (($t = each($array)))
 					{
 						$s .= ',' . $t[1];
 					}
@@ -143,7 +142,7 @@
 		}
 		
 		/**
-		* genrate a unique id, which can be used for syncronisation
+		* generate a unique id, which can be used for syncronisation
 		*
 		* @param string $_appName the appname
 		* @param string $_eventID the id of the content
@@ -446,36 +445,11 @@
 		}
 
 		/**
-		 * none yet
-		 *
-		 * @param $record ?
-		 * @param $link ?
-		 * @param $label ?
-		 * @param $extravars
+		 * @deprecated use ACL instead
 		 */
-		// This is a depreciated function - use ACL instead (jengo)
 		function check_owner($record,$link,$label,$extravars = '')
 		{
 			$this->debug_info[] = 'check_owner() is a depreciated function - use ACL instead';
-			/*
-			$s = '<a href="' . $GLOBALS['egw']->link($link,$extravars) . '"> ' . lang($label) . ' </a>';
-			if (ereg('^[0-9]+$',$record))
-			{
-				if ($record != $GLOBALS['egw_info']['user']['account_id'])
-				{
-					$s = '&nbsp;';
-				}
-			}
-			else
-			{
-				if ($record != $GLOBALS['egw_info']['user']['userid'])
-				{
-					$s = '&nbsp';
-				}
-			}
-
-			return $s;
-			*/
 		}
 
 		/**
@@ -2000,11 +1974,16 @@
 			system("grep -r '^[ \t]*function' *");
 			echo '</pre>';
 		}
+		
+		var $nextid_table = 'egw_nextid';
 
-		// This will return a value for the next id an app/class may need to insert values into ldap.
 		/**
-		 * return the next higher value for an integer, and increment it in the db.
+		 * Return a value for the next id an app/class may need to insert values into LDAP
 		 *
+		 * @param string $appname app-name
+		 * @param int $min=0 if != 0 minimum id
+		 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
+		 * @return int/boolean the next id or false if $max given and exceeded
 		 */
 		function next_id($appname,$min=0,$max=0)
 		{
@@ -2013,40 +1992,29 @@
 				return -1;
 			}
 
-			$GLOBALS['egw']->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
-			while( $GLOBALS['egw']->db->next_record() )
-			{
-				$id = $GLOBALS['egw']->db->f('id');
-			}
+			$GLOBALS['egw']->db->select($this->nextid_table,'id',array('appname' => $appname),__LINE__,__FILE__);
+			$id = $GLOBALS['egw']->db->next_record() ? $GLOBALS['egw']->db->f('id') : 0;
 
-			if (empty($id) || !$id)
-			{
-				$id = 1;
-				$GLOBALS['egw']->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
-			}
-			elseif($id<$min)
-			{
-				$id = $min;
-				$GLOBALS['egw']->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
-			}
-			elseif ($max && ($id > $max))
+			if ($max && $id >= $max)
 			{
 				return False;
 			}
-			else
-			{
-				$id = $id + 1;
-				$GLOBALS['egw']->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
-			}
+			++$id;
+			
+			if($id < $min) $id = $min;
+
+			$GLOBALS['egw']->db->insert($this->nextid_table,array('id' => $id),array('appname' => $appname),__LINE__,__FILE__);
 
 			return (int)$id;
 		}
 
-		// This will return a value for the last id entered, which an app may need to check
-		// values for ldap.
 		/**
-		 * return the current id in the next_id table for a particular app/class.
+		 * Return a value for the last id entered, which an app may need to check values for LDAP
 		 *
+		 * @param string $appname app-name
+		 * @param int $min=0 if != 0 minimum id
+		 * @param int $max=0 if != 0 maximum id allowed, if it would be exceeded we return false
+		 * @return int current id in the next_id table for a particular app/class or -1 for no app and false if $max is exceeded.
 		 */
 		function last_id($appname,$min=0,$max=0)
 		{
@@ -2055,30 +2023,14 @@
 				return -1;
 			}
 
-			$GLOBALS['egw']->db->query("SELECT id FROM phpgw_nextid WHERE appname='".$appname."'",__LINE__,__FILE__);
-			while( $GLOBALS['egw']->db->next_record() )
-			{
-				$id = $GLOBALS['egw']->db->f('id');
-			}
+			$GLOBALS['egw']->db->select($this->nextid_table,'id',array('appname' => $appname),__LINE__,__FILE__);
+			$id = $GLOBALS['egw']->db->next_record() ? $GLOBALS['egw']->db->f('id') : 0;
 
-			if (empty($id) || !$id)
+			if (!$id || $id < $min)
 			{
-				if($min)
-				{
-					$id = $min;
-				}
-				else
-				{
-					$id = 1;
-				}
-				$GLOBALS['egw']->db->query("INSERT INTO phpgw_nextid (appname,id) VALUES ('".$appname."',".$id.")",__LINE__,__FILE__);
+				return $this->next_id($appname,$min,$max);
 			}
-			elseif($id<$min)
-			{
-				$id = $min;
-				$GLOBALS['egw']->db->query("UPDATE phpgw_nextid SET id=".$id." WHERE appname='".$appname."'",__LINE__,__FILE__);
-			}
-			elseif ($max && ($id > $max))
+			if ($max && $id > $max)
 			{
 				return False;
 			}

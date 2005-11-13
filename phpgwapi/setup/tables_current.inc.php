@@ -160,15 +160,15 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_nextid' => array(
+		'egw_nextid' => array(
 			'fd' => array(
 				'id' => array('type' => 'int','precision' => '4','nullable' => True),
 				'appname' => array('type' => 'varchar','precision' => '25','nullable' => False)
 			),
-			'pk' => array(),
+			'pk' => array('appname'),
 			'fk' => array(),
 			'ix' => array(),
-			'uc' => array('appname')
+			'uc' => array()
 		),
 		'egw_categories' => array(
 			'fd' => array(

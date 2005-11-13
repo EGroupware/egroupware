@@ -870,4 +870,13 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.025';
 	}
+
+
+	$test[] = '1.0.1.025';
+	function phpgwapi_upgrade1_0_1_025()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_nextid','egw_nextid');
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.026';
+	}
 ?>
