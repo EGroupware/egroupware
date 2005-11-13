@@ -90,6 +90,7 @@ checking for gd support...	setup	sl	Preverjam GD podporo
 checking php.ini	setup	sl	Preverjam php.ini
 checking the egroupware installation	setup	sl	Preverjam eGroupWare namestitev
 click <a href="index.php">here</a> to return to setup.	setup	sl	Kliknite <a href="index.php">tukaj</a> za vrnitev v namestitev.
+click <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> to return to setup.	setup	sl	Klikni <a href="index.php?sessionid=f69c6befb6636a1a9501e45ff0176385">here</a> za vrnitev v namestitev.
 click here	setup	sl	Kliknite tukaj
 click here to re-run the installation tests	setup	sl	Kliknite tukaj za ponovno preverjanje namestitve
 completed	setup	sl	Dokončano
@@ -154,6 +155,7 @@ do you want persistent connections (higher performance, but consumes more resour
 do you want to manage homedirectory and loginshell attributes?	setup	sl	Ali želite upravljati domači direktorij in lastnosti prijavne lupine
 does not exist	setup	sl	ne obstaja
 domain	setup	sl	Domena
+domain name	setup	sl	Ime domene
 domain select box on login	setup	sl	Izbor domene ob prijavi
 dont touch my data	setup	sl	Ne spreminjaj mojih podatkov
 download	setup	sl	Prenesi
@@ -170,7 +172,7 @@ enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sl	V
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	sl	Vnesite polno pot do uporabniških datotek.<br />Na primer: /files, c:\files
 enter the full path to the backup directory.<br />if empty: files directory	setup	sl	Vpišite pot do arhivske mape.<br />Če je prazno bo uporabljena splošna pot za datoteke
 enter the hostname of the machine on which this server is running	setup	sl	Vnesite ime strežnika, na katerem teče projekt
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sl	Vnesite eGroupWareov URL na vašem računalniku.<br />Na primer: http://www.podjetje.si/egroupware &nbsp; ali &nbsp; /egroupware<br /><b>Naslov naj bo brez zaključne poševnice</b>
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sl	Vnesite eGroupWareov URL na vašem računalniku.<br />Na primer: http://www.podjetje.si/egroupware   ali   /egroupware<br /><b>Naslov naj bo brez zaključne poševnice</b>
 enter the site password for peer servers	setup	sl	Vnesite geslo za vzporedne strežnike.
 enter the site username for peer servers	setup	sl	Vnesite uporabniško ime za vzporedne strežnike
 enter the title for your site	setup	sl	Vnesite naziv vašega spletnega mesta
@@ -195,7 +197,6 @@ go back	setup	sl	Pojdi nazaj
 go to	setup	sl	Pojdi na
 grant access	setup	sl	Dovoli dostop
 has a version mismatch	setup	sl	ima neskladje med različicami
-header password	setup	sl	Geslo glave
 header admin login	setup	sl	Prijava upravljalca glave
 header password	setup	sl	Geslo upravljalca glave
 header username	setup	sl	Uporabniško ime glave
@@ -203,6 +204,7 @@ historylog removed	setup	sl	Odstranjen dnevnik
 hooks deregistered	setup	sl	kljuke odregistrirane
 hooks registered	setup	sl	kljuke registrirane
 host information	setup	sl	Podatki o strežniku
+host/ip domain controler	setup	sl	Strežnik/IP domenski nadzornik
 hostname/ip of database server	setup	sl	Ime/IP podatkovnega strežnika
 hour (0-24)	setup	sl	ura (0-24)
 however, the application is otherwise installed	setup	sl	Vendar je aplikacija nameščena
@@ -210,6 +212,7 @@ however, the application may still work	setup	sl	Vendar aplikacija še vedno del
 if no acl records for user or any group the user is a member of	setup	sl	Če ni ACL zapisov za uporabnika ali katerokoli skupino, katere član je
 if safe_mode is turned on, egw is not able to change certain settings on runtime, nor can we load any not yet loaded module.	setup	sl	Če je vključen način "safe_mode", eGW med delovanjem ne more spremeniti nekaterih nastavitev  niti ne more naložiti novih modulov.
 if the application has no defined tables, selecting upgrade should remedy the problem	setup	sl	Če aplikacija nima definiranih tabel, potem bi nadgrajevanje moralo rešiti težave.
+if using ads (active directory) authentication	setup	sl	Če uporabljate ADS (Aktivni Direktorij ) overovljenje
 if using ldap	setup	sl	Če uporabljate LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	sl	Če uporabljate LDAP, ali želite upravljati domači direktorij in lastnosti prijavne lupine?
 if you did not receive any errors, your applications have been	setup	sl	Če ni prikazana nobena napaka, so bile vaše aplikacije
@@ -388,7 +391,7 @@ selectbox	setup	sl	Izbirni seznam
 server root	setup	sl	Strežniški Root
 sessions type	setup	sl	Tip sej
 set	setup	sl	nastavi
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	sl	Označite "staro" za različice &lt; 2.4, oz. natančno različico mcrypt-a.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	sl	Označite "staro" za različice < 2.4, oz. natančno različico mcrypt-a.
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sl	Nastavitev sistemskega nabora znakov v UTF-8 (Unocode) omogoče hkratno uporabo različnih jezikov in kodnih tabel.
 settings	setup	sl	Nastavitve
 setup	setup	sl	Namestitev
@@ -484,6 +487,7 @@ writable by the webserver	setup	sl	spletni strežnik lahko zapisuje
 write config	setup	sl	Zapiši konfiguracijo
 year	setup	sl	leto
 yes	setup	sl	Da
+yes, with lowercase usernames	setup	sl	Da, z malimi črkami uporabniška imena
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sl	Videti je, da uporabljate pred-beta različico egroupWare.<br /> Te različice niso več podprte in nadgradnja z njih ni mogoča.<br /> Prosimo, da najprej nadgradite na 0.9.10, (zadnja različica, ki podpira pred-beta posodabljanje) <br /> in potem nadgradite na posodobljeno različico.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sl	Videti je, da uporabljate staro različico PHP.<br />Priporočamo, da nadgradite na novo različico.<br />Starejše različice morda ne bodo pravilno izvajale eGroupWare programov, če jih sploh bodo.<br /><br />Prosim, nadgradite vsaj na PHP različico %1.
 you appear to be running version %1 of egroupware	setup	sl	Videti je, da imate eGroupWare različico %1.

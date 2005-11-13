@@ -22,6 +22,7 @@ description can not exceed 255 characters in length !	preferences	sl	Opis ne mor
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sl	Ali imate raje 24 ali 12 urno časovni zapis?
 edit custom fields	preferences	sl	uredi lastna polja
 enter your new password	preferences	sl	Vpišite novo geslo
+enter your old password	preferences	sl	Vpišite staro geslo
 error: there was a problem finding the preference file for %1 in %2	preferences	sl	Napaka: Ne morem najti datoteke z nastavitvami za %1 v %2
 failed to change password.  please contact your administrator.	preferences	sl	Napaka pri menjavi gesla. Prosim obvestite oskrbnika.
 forced preferences	preferences	sl	Vsiljene nastavitve
@@ -61,6 +62,7 @@ show text on navigation icons	preferences	sl	Prikaži besedilo na navigacijski i
 show_more_apps	common	sl	Pokaži več aplikacij
 text only	preferences	sl	Samo besedilo
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sl	Privzeta aplikacija se bo zagnala ob vstopu v EGW ali ob kliku na domačo ikono.<br>Na domači strani je lahko hkrati prikazanih več aplikacij. Prikaz aplikacij določate v nastavitvah aplikacij.
+the old password is not correct	preferences	sl	Staro geslo ni pravilno
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sl	Izbirni seznam prikazuje uporabnike, ki so na voljo (lahko je precej dolg). Z iskalnim oknom lahko iščete uporabnike po imenu ali skupini.
 the two passwords are not the same	preferences	sl	Gesli nista enaki.
 theme (colors/fonts) selection	preferences	sl	Izbira teme (barve/pisave)

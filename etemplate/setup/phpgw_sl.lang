@@ -1,4 +1,5 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sl	%1 (%2 novih) sporočil napisanih za program '%3' in jezik '%4'
+%1 already exists as a file	filemanager	sl	%1 že obstaja kot datoteka.
 %1 etemplates deleted	etemplate	sl	%1 predlog zbrisanih
 %1 etemplates for application '%2' dumped to '%3'	etemplate	sl	%1 ePredlog za program '%2' premaknjenih na '%3'
 %1 etemplates found	etemplate	sl	%1 najdenih ePredlog
@@ -10,6 +11,7 @@
 %s onchange	etemplate	sl	%s ob spremembi
 %s readonly	etemplate	sl	%s samo za branje
 '%1' has an invalid format !!!	etemplate	sl	'%1' ima nepravilen format
+'%1' is not a valid date !!!	etemplate	sl	'%1' ni veljaven datum !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	sl	'%1' ni pravilno decimalno število
 '%1' is not a valid integer !!!	etemplate	sl	'%1' ni pravilno celo število
 a pattern to be searched for	etemplate	sl	iskani vzorec
@@ -22,17 +24,31 @@ align	etemplate	sl	Poravnaj
 alignment of label and input-field in table-cell	etemplate	sl	poravnava napisov in vnosnih polj v tabeli
 alignment of the v/hbox containing table-cell	etemplate	sl	Poravnava V/H okvirjev s tabelarnimi celicami
 all days	etemplate	sl	vsi dnevi
+all operations save the template!	etemplate	sl	vse operacije shranijo predlogo!
 am	etemplate	sl	dop
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sl	Oštevilčen stolpec pospeši poizvedbe (zavzame več prostora na disku!)
 application	etemplate	sl	Program
 application name needed to write a langfile or dump the etemplates !!!	etemplate	sl	Ime programa, ki je potreben za zapis jezikovne datoteke ali skladiščenje ePredlog
+applies the changes made	etemplate	sl	potrdi spremembe
+applies the changes to the given version of the template	etemplate	sl	potrdi spremembe podane verzije predloge
 attach	etemplate	sl	Pripni
 attach file	etemplate	sl	Pripni datoteko
+back to file manager	filemanager	sl	Nazaj v upravljalca datotek
+baseline	etemplate	sl	osnovna vrstica
 blurtext	etemplate	sl	Zamaži tekst
 border	etemplate	sl	Rob
 border-line-thickness for the table-tag	etemplate	sl	Debelina robov
+bottom	etemplate	sl	Noga
+box	etemplate	sl	Okvir
+box...	etemplate	sl	Okvir...
 can not have special sql-value null	etemplate	sl	Posebna SQL vrednost ne more biti NULL
 cancel	etemplate	sl	Prekliči
+cancel editing %1 without saving	filemanager	sl	Prekini urejanje %1 brez shranjevanja
+cannot create directory because it begins or ends in a space	filemanager	sl	Ne morem ustvariti mape, če se njeno ime začne ali konča s presledkom.
+cannot replace %1 because it is a directory	filemanager	sl	Ne morem nadomestiti %1, ker je mapa.
+cant delete a single widget from a grid !!!	etemplate	sl	ne morete izbrisati edinega gradnika iz mreže
+cant delete the only column of a grid !!!	etemplate	sl	ne morete izbrisati edinega stolpca v mreži
+cant delete the only row in a grid !!!	etemplate	sl	ne morete izbrisati edine vrstice v mreži
 category	etemplate	sl	Kategorija
 cellpadding for the table-tag	etemplate	sl	Odmik od roba celice
 cells	etemplate	sl	Celice
@@ -48,42 +64,92 @@ click here to create the link	etemplate	sl	kliknite sem, da boste ustvarili pove
 click here to start the search	etemplate	sl	Kliknite sem, da boste začeli iskanje
 click here to upload the file	etemplate	sl	Kliknite sem, da boste prenesli datoteko
 click to order after that criteria	etemplate	sl	kliknite za soritanje po tem kriteriju
+clickable path	etemplate	sl	pot s povezavo
+closes the window without saving the changes	etemplate	sl	zapre okno brez shranjevanja sprememb
+column...	etemplate	sl	Stolpec...
 columnname	etemplate	sl	Ime stolpca
+command sucessfully run	filemanager	sl	Ukaz je bil uspešno izveden.
 comment	etemplate	sl	Komentar
+comments cannot contain "%1"	filemanager	sl	Komentarji ne smejo vsebovati "%1".
+confirm	etemplate	sl	potrdi
+confirmation message or custom javascript (returning true or false)	etemplate	sl	potrjevanje sporočila ali poljubni javaskript (vrne resnično ali neresnično)
+confirmation necesary or custom java-script	etemplate	sl	potrebna je potrditev ali java-skripta po meri
+copied %1 to %2	filemanager	sl	%1 prekopirano v %2.
+copy to	filemanager	sl	Kopiraj v
+copy to:	filemanager	sl	Kopiraj v:
+could not copy %1 to %2	filemanager	sl	Ne morem kopirati %1 v %2.
+could not copy file because no destination directory is given	filemanager	sl	Ne morem kopirati datoteke, ker ciljna mapa ni podana.
+could not create %1	filemanager	sl	Ne morem ustvariti %1
+could not create directory %1	filemanager	sl	Ne morem ustvariti mape %1
+could not delete %1	filemanager	sl	Ne morem izbrisati %1
+could not move %1 to %2	filemanager	sl	Ne morem prenesti %1 v %2
+could not move file because no destination directory is given	filemanager	sl	Ne morem prenesti datoteke, ker ciljna mapa ni podana.
+could not rename %1 to %2	filemanager	sl	Ne morem preimenovati %1 v %2
+could not save %1	filemanager	sl	Ne morem shraniti %1
 create a new table for the application	etemplate	sl	Naredi novo tabelo za program
+create file	filemanager	sl	Ustvari datoteko
+create folder	filemanager	sl	Ustvari mapo
+created	filemanager	sl	Ustvarjeno
+created %1	filemanager	sl	Ustvarjen %1
+created %1,%2	filemanager	sl	Ustvarjen %1,%2
+created by	filemanager	sl	Ustvaril
+created directory %1	filemanager	sl	Ustvarjena mapa %1
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sl	naredi angleško ('en') jezikovno datoteko iz napisov in besedila za pomoč (za program v polju Ime)
 css class for the table-tag	etemplate	sl	CSS razred za značko table
+css properties	etemplate	sl	CSS lastnosti
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	sl	Ime CSS razreda za to vrstico. Prednastavljeno: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM vrstic
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	sl	CSS-razred ime za to vrsto, predstavlja: 'th' = zaglavje, 'vrsta' = izmenična vrsta, 'row_off'+'row_on' vrste
 css-styles	etemplate	sl	CSS - stili
+custom	etemplate	sl	po meri
+cut	etemplate	sl	Izreži
+date	filemanager	sl	Datum
 date+time	etemplate	sl	Datum+Čas
 datum	etemplate	sl	Datum
 day	etemplate	sl	Dan
+days	etemplate	sl	dnevi
 db ensures that every row has a unique value in that column	etemplate	sl	Podatkovna baza zagotovi, da ima vsaka vrstica svojo vrednost v tem stolpcu
 db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	sl	Možnosti indeksiranja (ločene z vejico), specifične za podatkovno bazo. Npr. mysql(FULLTEXT) oziroma mysql (100) za indeksno dolžino stolpcev
 db-tools	etemplate	sl	Orodja podatkovne baze
 deck	etemplate	sl	Kup (interno)
 default	etemplate	sl	Privzeto
-delete	etemplate	sl	Zbriši
+default number of upload fields to show	filemanager	sl	Privzeto število prikazanih polj za prenos
+delete	filemanager	sl	Briši
 delete a single entry by passing the id.	etemplate	sl	Zbriši en vnos z vnosom idja.
 delete all selected etemplates, without further inquiry	etemplate	sl	zbriši VSE izbrane ePredloge BREZ potrditve
+delete and cut save the template!	etemplate	sl	izbriši in izreži shranjene predloge!
 delete column	etemplate	sl	Zbriši stolpec
 delete index	etemplate	sl	Zbriši kazalo
+delete the spezified etemplate	etemplate	sl	Izbriši določeno predlogo
+delete this column	etemplate	sl	izbriši ta stolpec
 delete this etemplate	etemplate	sl	zbriši to ePredlogo
+delete this row	etemplate	sl	izbriši to vrstico
 delete whole column (can not be undone!!!)	etemplate	sl	zbriši celoten stolpec (tega NI mogoče razveljaviti)
+deleted %1	filemanager	sl	Izbrisano %1
 deletes the above spez. etemplate from the database, can not be undone	etemplate	sl	zbriše zgornjo ePredlogo iz podatkovne baze, brez razveljavitve
 deletes the etemplate spez. above	etemplate	sl	zbriše ePredloge
 deletes this column	etemplate	sl	Zbriše ta stolpec
 deletes this index	etemplate	sl	Zbriše to kazalo
+directory	filemanager	sl	Mapa
+directory %1 already exists	filemanager	sl	Mapa %1 že obstaja
+directory %1 does not exist	filemanager	sl	Mapa %1 ne obstaja
+directory names cannot contain "%1"	filemanager	sl	Imena map ne smejo vsebovati "%1"
 discard changes	etemplate	sl	Razveljavi spremembe
+display attributes	filemanager	sl	Prikaži atribute
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	sl	prikazan pred vnosom ali vstavljen pred izpisom za '%s' oznako (oznaka potrditvenega gumba ali ime datoteke slike)
 displayed in statusline of browser if input-field gets focus	etemplate	sl	prikazano v statusni vrstici brskalnika, če se vnosno polje označi
+displayed in the top line of the groupbox (legend)	etemplate	sl	prikazano v vrhnji liniji okvirja skupine (legenda)
 do you want to save the changes you made in table %s?	etemplate	sl	Ali želite shraniti spremembe v tabeli %s?
 documentation	etemplate	sl	Dokumentacija
+download	filemanager	sl	Prenesi
 drop a table - this can not be undone	etemplate	sl	Spusti tabelo - ni mogoče razveljaviti
 drop table	etemplate	sl	Spusti tabelo
 dump4setup	etemplate	sl	Odlagališče za nastavitve
+duration	etemplate	sl	Trajanje
 edit	etemplate	sl	Uredi
+edit comments	filemanager	sl	Uredi komentarje
+edit embeded css styles or of the applications app.css file	etemplate	sl	uredi vgrajeni CSS stile ali od aplikacije app.css datoteko
 edit the etemplate spez. above	etemplate	sl	Uredi ePredlogo
+edit...	etemplate	sl	Uredi...
 editable templates - db-tools	etemplate	sl	Spremenljive predloge - Orodja podatkovne baze
 editable templates - delete template	etemplate	sl	Spremenljive predloge - Zbriši predlogo
 editable templates - editor	etemplate	sl	Spremenljive predloge - Urejevalnik
@@ -97,10 +163,10 @@ enter filename to upload and attach, use [browse...] to search for it	etemplate	
 enter the new version number here (> old_version), empty for no update-file	etemplate	sl	vnesite novo številko verzije tukaj (> stara_verzija), prazno za ne-obnovo datoteke
 enter the new version number here (has to be > old_version)	etemplate	sl	vnesite novo število verzije tukaj (mora biti > stara_verzija)
 entry saved	etemplate	sl	Vnos shranjen
+error running command	filemanager	sl	Napaka pri izvajanju ukaza
 error: template not found !!!	etemplate	sl	Napaka: ne najdem predloge!
 error: webserver is not allowed to write into '%1' !!!	etemplate	sl	Napaka: spletni strežnik nima pravic za pisanje v '%1' !
-error: while saveing !!!	etemplate	sl	Napaka pri shranjevanju
-error: writeing !!!	etemplate	sl	Napaka pri pisanju
+error: while saving !!!	etemplate	sl	Napaka: med shranjevanjem !!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	sl	Napaka pri zapisovanju datoteke (nimam pravic za pisanje na spletnem strežniku)
 etemplate	common	sl	ePredloga
 etemplate '%1' imported, use save to put it in the database	etemplate	sl	ePredloga '%1' uvožena, uporabite Shrani za vnos v podatkovno bazo
@@ -110,30 +176,58 @@ etemplate reference	etemplate	sl	ePredloga - sklici
 etemplate tutorial	etemplate	sl	ePredloga - priročnik
 exchange this row with the one above	etemplate	sl	zamenjaj to vrstico z gornjo
 exchange this two columns	etemplate	sl	zamenjaj ta dva stolpca
+execute	filemanager	sl	Izvedi
 export the loaded etemplate into a xml-file	etemplate	sl	izvozi naloženo ePredlogo v xml-datoteko
 export xml	etemplate	sl	Izvozi XML
 extensions loaded:	etemplate	sl	Končnice naložene:
+failed to create directory	filemanager	sl	napaka pri ustvarjanju mape
+fake base dir did not exist, egroupware created a new one.	filemanager	sl	Navidezna mapa še ni obstajala, zato je bila ustvarjena nova.
 field must not be empty !!!	etemplate	sl	Polje ne sme biti prazno
 file	etemplate	sl	Datoteka
+file %1 already exists. please edit it or delete it first.	filemanager	sl	Datoteka %1 že obstaja. Prosim, če uredite obstoječo različico, ali pa jo izbrišete.
+file %1 could not be created.	filemanager	sl	Ne morem ustvariti datoteke %1.
 file contains more than one etemplate, last one is shown !!!	etemplate	sl	Datoteka vsebuje več kot eno ePredlogo, prikazana je zadnja.
+file name	filemanager	sl	Ime datoteke
+file names cannot contain  or /	filemanager	sl	Imena datotek ne smejo vsebovati \ ali /
+file names cannot contain "%1"	filemanager	sl	Imena datotek ne smejo vsebovati "%1"
+file names cannot contain \ or /	filemanager	sl	Imena datotek ne smejo vsebovati \ ali /
 file writen	etemplate	sl	Datoteka zapisana
+filemanager	common	sl	Upravljalec datotek
+filemanager preferences	filemanager	sl	Nastavitve Upravljalca datotek
+files	filemanager	sl	Datoteke
+files in this directory	filemanager	sl	Datoteke v mapi
 fileupload	etemplate	sl	Prenos datoteke
 first	etemplate	sl	Prvi
 floating point	etemplate	sl	Decimalna vejica
+folder	filemanager	sl	Mapa
+folder up	filemanager	sl	Nadrejena mapa
 foreign key	etemplate	sl	Tuji ključ
 formatted text (html)	etemplate	sl	Oblikovano besedilo (HTML)
+go home	filemanager	sl	Pojdi domov
+go to	filemanager	sl	Pojdi na
+go to %1	filemanager	sl	Pojdi na %1
 go to the first entry	etemplate	sl	pojdi na prvi vnos
 go to the last entry	etemplate	sl	pojdi na zadnji vnos
 go to the next page of entries	etemplate	sl	pojdi na naslednjo stran vnosov
 go to the previous page of entries	etemplate	sl	pojdi na prejšnjo stran vnosov
+go to your home directory	filemanager	sl	Pojdi na domačo mapo
+go to:	filemanager	sl	Pojdi na:
+go up	filemanager	sl	pojdi navzgor
+grid	etemplate	sl	Mreža
+grid column attributes	etemplate	sl	Lastnosti stolpcev mreže
+grid row attributes	etemplate	sl	Lastnosti vrstic mreže
+groupbox	etemplate	sl	združeni okvir
 hbox	etemplate	sl	horizontalni okvir
-height	etemplate	sl	Širina
+height	etemplate	sl	Višna
+height of row (in % or pixel)	etemplate	sl	Višina vrstice (v % ali pikslih)
 height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	sl	višina vrstice (v % ali pikslih), onemogoči vrstico: [! = ni]<vrednost>[=<označi>] npr.: '!@podatek' onemogoči vrstico če vsebuje "podatek" ali pa je prazna
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	sl	Višina tabele v % ali pikslih za značko "table" in (neobvezno) "značko" div
 height, disabled	etemplate	sl	Širina, izključeno
 help	etemplate	sl	Pomoč
+home	filemanager	sl	Domov
 horizontal rule	etemplate	sl	Vodoravno ravnilo
 hour	etemplate	sl	Ura
+hours	etemplate	sl	ur
 html	etemplate	sl	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sl	če je polje izključeno, je prikazana prazna celica v tabeli, za začasno odstranitev polja/celice
 image	etemplate	sl	Slika
@@ -141,9 +235,16 @@ import	etemplate	sl	Uvoz
 import an etemplate from a xml-file	etemplate	sl	uvozi ePredlogo iz xml-datoteke
 import table-definitions from existing db-table	etemplate	sl	Uvozi definicije tabele iz obstoječe tabele podatkovne baze
 import xml	etemplate	sl	Uvozi XML
+increment version to not overwrite the existing template	etemplate	sl	novejša verzija, ne prepisat trenutne podloge
 index/name of returned content (name of the template, link / method for image)	etemplate	sl	kazalo/ime vrnjene vsebine (ime Predloge, povezava / metoda za sliko)
 indexed	etemplate	sl	V kazalu
 indexoptions	etemplate	sl	Nastavitve kazala
+insert a column before	etemplate	sl	vstavi stolpec spredaj
+insert a column behind	etemplate	sl	vstavi stolpec zadaj
+insert a row above	etemplate	sl	vstavi vrstico nad
+insert a row below	etemplate	sl	vstavi vrstico spodaj
+insert a widget before	etemplate	sl	vstavi gradnik spredaj
+insert a widget behind	etemplate	sl	vstavi gradnik zadaj
 insert new column behind this one	etemplate	sl	vstavi nov stolpec pred tem
 insert new column in front of all	etemplate	sl	vstavi nov stolpec pred vsemi
 insert new row after this one	etemplate	sl	vstavi novo vrstico za to
@@ -162,8 +263,17 @@ linklist	etemplate	sl	Povezava - seznam
 linkstring	etemplate	sl	Povezava - besedilo
 linkto	etemplate	sl	Povezava na
 load this template into the editor	etemplate	sl	naloži to predlogo v urejevalnik
+location	filemanager	sl	Položaj
+locked	filemanager	sl	Zaklenjen
+middle	etemplate	sl	Srednji
+mime type	filemanager	sl	MIME tip
 minute	etemplate	sl	Minuta
+modified	filemanager	sl	Spremenjeno
+modified by	filemanager	sl	Spremenil
 month	etemplate	sl	Mesec
+move to	filemanager	sl	Premakni v
+move to:	filemanager	sl	Premakni v:
+moved %1 to %2	filemanager	sl	%1 je bilo premaknjeno v %2
 multicolumn indices	etemplate	sl	Kazala več stolpcev
 name	etemplate	sl	Ime
 name of other table where column is a key from	etemplate	sl	ime druge tabele, kjer je stolpec ključ iz
@@ -175,38 +285,69 @@ new search	etemplate	sl	Novo iskanje
 new table created	etemplate	sl	Nova tabela ustvarjena
 newer version '%1' exists !!!	etemplate	sl	obstaja novejša različica '%1'
 nextmatch	etemplate	sl	Naslednji zadetek
+nextmatch accountfilter	etemplate	sl	Naslednji zadetek, filter računa
 nextmatch filterheader	etemplate	sl	Naslednji zadetek, filtriraj glavo
 nextmatch sortheader	etemplate	sl	Naslednji zadetek, razvrsti glave
+no column to swap with !!!	etemplate	sl	nobene kolone ni za zamenjati !!!
 no file	etemplate	sl	ni datoteke
 no filename given or selected via browse...	etemplate	sl	nobena datoteka ni bila izbrana prek Poišči...
+no files in this directory.	filemanager	sl	V tej mapi ni datotek
+no row to swap with !!!	etemplate	sl	nobene vrstice ni za zamenjati
+no version history for this file/directory	filemanager	sl	Ni zgodovine različic za to datoteko/mapo.
 not null	etemplate	sl	NOT NULL
+nothing	etemplate	sl	nič
 nothing found - try again !!!	etemplate	sl	Ne najdem ničesar - poskusi znova
+nothing in clipboard to paste !!!	etemplate	sl	ničesar na odložišču za prilepiti
 nothing matched search criteria !!!	etemplate	sl	Nobenih zadetkov za iskan kriterij
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	sl	število stolpcev, ki naj jih polje/celica združi oziroma 'vse' za vse preostale stolpce, CSS ime razreda (za TD značko)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	sl	število vrstic/stolpcev v V/H okvirju, odmik celice, razmik med celicami
 of	etemplate	sl	od
+onclick	etemplate	sl	na Klik
 only an other version found !!!	etemplate	sl	najdena je samo druga različica
+operation	filemanager	sl	Operacija
 optional note about the link	etemplate	sl	morebitni zapiski o povezavi
 options	etemplate	sl	Nastavitve
+other settings	filemanager	sl	Druge nastavitve
 overflow	etemplate	sl	Prenasičenost
+owner	filemanager	sl	Lastnik
 padding	etemplate	sl	Odmik
+parent is a '%1' !!!	etemplate	sl	nadrejeni je '%1' !!!
+paste	etemplate	sl	prilepi
+path	etemplate	sl	pot
 please enter table-name first !!!	etemplate	sl	Najprej vpišite ime tabele
+please select a file to delete.	filemanager	sl	Izberite datoteko za brisanje.
 pm	etemplate	sl	pop
+popup	etemplate	sl	Odpri gor
 precision	etemplate	sl	Natančnost
+preview %1	filemanager	sl	Predogled %1
+preview of %1	filemanager	sl	Predogled %1
 primary key	etemplate	sl	Primarni ključ
 primary key for the table, gets automaticaly indexed	etemplate	sl	Primarni ključ za tabelo, je samodejno indeksiran
+quick jump to	filemanager	sl	Hiter skok v
 radiobutton	etemplate	sl	Radijski gumb
 read	etemplate	sl	Beri
 read a list of entries.	etemplate	sl	Beri seznam vnosov.
 read a single entry by passing the id and fieldlist.	etemplate	sl	Beri posamezni vnos s podano šifro in seznamom polj.
 read etemplate from database (for the keys above)	etemplate	sl	beri ePredlogo iz podatkovne baze (za zgornje ključe)
+readonly	etemplate	sl	samo za branje
+reload	filemanager	sl	osveži
 remove row (can not be undone!!!)	etemplate	sl	odstrani vrstico (ni mogoče razveljaviti)
 remove this link (not the entry itself)	etemplate	sl	Odstrani to povezavo (ne samega vnosa)
+rename	filemanager	sl	Preimenuj
+renamed %1 to %2	filemanager	sl	%1 je bilo preimenovano v %2
+replaced %1	filemanager	sl	Zamenjana %1
 returns savely, without deleting	etemplate	sl	Vrne varno, BREZ brisanja
 right	etemplate	sl	Desno
-save	etemplate	sl	Shrani
+row...	etemplate	sl	Vrstica...
+save %1	filemanager	sl	Shrani %1
+save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na seznam datotek
+save all	filemanager	sl	Shrani vse
+save changes	filemanager	sl	Shrani spremembe
+save the changes made and close the window	etemplate	sl	Shrani spremembe in zapri okno
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	sl	shrani ePredlogo pod gornjimi ključi (ime,...), spremeni jih za Shrani kot
+saved %1	filemanager	sl	Shranjen %1
 saves changes to tables_current.inc.php	etemplate	sl	shrani spremembe v tables_current.inc.php
+saves the template with given version number and closes the window	etemplate	sl	shrani predlogo z dano številko verzije in zapre okno
 scale	etemplate	sl	Stopnja
 scale for float	etemplate	sl	Stopnja za decimalko
 search	etemplate	sl	Išči
@@ -234,22 +375,36 @@ select priority	etemplate	sl	Izberite prioriteto
 select state	etemplate	sl	Izberite državo
 select the indexed columns in their desired order	etemplate	sl	Izberite indeksne stolpce v želenem vrstnem redu
 select this etemplate to delete it	etemplate	sl	označite to ePredlogo za brisanje
+select which accounts to show	etemplate	sl	izberite katere račune naj prikaže
 select which values to show	etemplate	sl	označite vrednosti za prikaz
 select year	etemplate	sl	Izberite leto
 selectbox	etemplate	sl	Izbirno polje
 sets today as date	etemplate	sl	določi današnji datum za trenutni datum
 show	etemplate	sl	Prikaži
 show (no save)	etemplate	sl	Prikaži (ne shrani)
+show ..	filemanager	sl	Prikaži ..
+show .files	filemanager	sl	Prikaži .datoteke
+show command line (experimental. dangerous.)	filemanager	sl	Prikaži ukazno vrstico (POIZKUSNO. NEVARNO.)
+show help	filemanager	sl	Prikaži pomoč
 show values	etemplate	sl	Prikaži vrednosti
 showing	etemplate	sl	prikazujem
 shows / allows you to enter values into the etemplate for testing	etemplate	sl	prikaže / omogoči vnos vrednosti v ePredlogo za testiranje
 shows/displays etemplate for testing, does not save it before	etemplate	sl	prikaže ePredlogo za testiranje, vendar je pred tem ne shrani
+size	filemanager	sl	Velikost
+sort by:	filemanager	sl	Razvrsti po:
 spacing	etemplate	sl	Razmik
+span	etemplate	sl	Razpon
 span, class	etemplate	sl	Razpon, razred
 stack	etemplate	sl	Kopičenje
 start a new search, cancel this link	etemplate	sl	začne novo iskanje, prekliče to povezavo
 start new search for the above pattern	etemplate	sl	začne novo iskanje po zgornjem vzorcu
 submitbutton	etemplate	sl	Potrditveni gumb
+swap	etemplate	sl	zamenjaj
+swap widget with next one	etemplate	sl	zamenjaj gradnik z naslednjim
+swap with next column	etemplate	sl	zamenjaj z naslednjim stolpcem
+swap with next row	etemplate	sl	zamenjaj z naslednjo vrstico
+switch to a parent widget	etemplate	sl	preklopi v nadrejeni gradnik
+switch to an other widgets of that container	etemplate	sl	preklopi na drug gradnik tega vsebovalnika
 table unchanged, no write necessary !!!	etemplate	sl	Tabela je nespremenjena, pisanje ni potrebno.
 tablename	etemplate	sl	Ime tabele
 tabs	etemplate	sl	Zavihki
@@ -258,31 +413,53 @@ template deleted	etemplate	sl	Predloga zbrisana
 template saved	etemplate	sl	Predloga shranjena
 text	etemplate	sl	Besedilo
 textarea	etemplate	sl	Besedilno polje
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	sl	LE ZA TESTIRANJE! Prosimo, sporočite hrošče in pripombe.
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	sl	to besedilo je prikazano, če je vnosno polje prazno in neoznačeno (zamegljeno)
 time	etemplate	sl	Čas
+to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	sl	onemogoči:[!=ni]<vrednost>[=<preveri>]npr:'!@podatek' onemogoči če je vsebina podatka prazna
 to start the db-tools	etemplate	sl	za zagon orodij podatkovne baze
 to start the etemplate editor	etemplate	sl	za zagon urejevalnika ePredloge
 to start the search	etemplate	sl	za začetek iskanja
 today	etemplate	sl	Danes
+top	etemplate	sl	Na vrh
+total files	filemanager	sl	Vseh datotek
 type	etemplate	sl	Vpišite
 type of the column	etemplate	sl	tip stolpca
 type of the field (select label if field should be empty)	etemplate	sl	tip polja (označi napis, če naj bo polje prazno)
 unique	etemplate	sl	Enoličen
+unknown mime-type defaults to text/plain when viewing	filemanager	sl	Neznani MIME tip se pri pregledovanju obravnava kot text/plain
 unlink	etemplate	sl	Odstrani povezavo
+unused space	filemanager	sl	Neuporabljen prostor
+up	filemanager	sl	Navzgor
+update	filemanager	sl	Posodobi
 update a single entry by passing the fields.	etemplate	sl	Posodobi posamezen vnos s pošiljanjem polj
 update from version '%s' to	etemplate	sl	Posodobi z različice '%s' na
+updated comment for %1	filemanager	sl	Komentar za %1 je bil posodobljen
 upload	etemplate	sl	Prenesi
+upload fields	filemanager	sl	polja za prenos
+upload files	filemanager	sl	Prenesi datoteke
+use new experimental filemanager?	filemanager	sl	Uporabljam nov, poskusni Upravljalec datotek?
+used space	filemanager	sl	Uporabljen prostor
+users	filemanager	sl	Uporabniki
+valign	etemplate	sl	v Poravnava
 value	etemplate	sl	Vrednost
 value has to be at least '%1' !!!	etemplate	sl	Vrednost mora biti vsaj '%1' !
 value has to be at maximum '%1' !!!	etemplate	sl	Vrednost je lahko največ '%1' !
 vbox	etemplate	sl	Vertikalni okvir
 version	etemplate	sl	Različica
 version-number, should be in the form: major.minor.revision.number (eg. 0.9.13.001 all numbers filled up with zeros)	etemplate	sl	številka različice, mora biti oblike: večja.manjša.revizija.številka (npr. 0.9.13.001 , vsa števila zapolnjena z ničlami)
+vertical alignment of row	etemplate	sl	navpična postavitev vrste
+view documents in new window	filemanager	sl	Preglej doumente v novem oknu
+view documents on server (if available)	filemanager	sl	Preglej dokument na strežniku (če je mogoče)
+view this etemplate	etemplate	sl	poglej to predlogo
 view this linked entry in its application	etemplate	sl	poglej ta povezan vnos v svojem programu
 weekend	etemplate	sl	vikend
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	sl	kaj se zgodi s prenasičeno vsebino: vidna (privzeto), skrij, vklopi pomikanje, samodejno (se odloči brskalnik)
+who	filemanager	sl	Kdo
+widget copied into clipboard	etemplate	sl	gradnik prekopiran na odložišče
 width	etemplate	sl	Širina
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	sl	širina stolpcev (v % ali pikslih), onemogoči stolpec: [! = ni]<vrednost>[=<označi>] npr.: '!@podatek' onemogoči stolpec če vsebuje "podatek" ali pa je prazna
+width of column (in % or pixel)	etemplate	sl	širina stolpca (v % in pixlih)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	sl	Širina tabele v % ali pikslih za značko "table" in (neobvezno) značko div
 width, disabled	etemplate	sl	Širina, onemogočeno
 working days	etemplate	sl	delovnih dni
@@ -293,5 +470,5 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	sl	xml-datoteka za izvoz
 xslt template	etemplate	sl	XSLT predloga
 year	etemplate	sl	Leto
-1	etemplate	sl	1
-2	etemplate	sl	2
+you do not have access to %1	filemanager	sl	Nimate dostopa do %1
+your home dir did not exist, egroupware created a new one.	filemanager	sl	Vaša domača mapa ni obstajala, zato je bila ustvarjena nova.

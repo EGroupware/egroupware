@@ -112,6 +112,7 @@ for which types should this field be used	infolog	sl	za ketere tipe naj bo to po
 from	infolog	sl	Od
 high	infolog	sl	visoko
 id	infolog	sl	Šifra
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sl	Če ni nastavljen, je vrstica za iskanje in filtriranje skrita za manj vnosov kakor "maksimalno število zadetkov na stran" (kakor je definirano v vaših nastavitvah.
 import	infolog	sl	Uvoz
 import next set	infolog	sl	uvozi naslednji niz
 info log	common	sl	InfoDnevnik
@@ -141,11 +142,17 @@ longer textual description	infolog	sl	daljši opis
 low	infolog	sl	nizko
 max length of the input [, length of the inputfield (optional)]	infolog	sl	največja dolžina vhoda [dolžina vhodnega polja (neobvezno)]
 max number of entries to display on the main screen	infolog	sl	Največje število vnosov, prikazanih na začetnem zaslonu.
+my	infolog	sl	moj
+my open	infolog	sl	moji odprti
+my overdue	infolog	sl	moji pretekli
+my upcoming	infolog	sl	moji prihajajoči
 name must not be empty !!!	infolog	sl	Ime ne sme biti prazno!!!
 name of new type to create	infolog	sl	ime novega tipa, ki ga ustvarjate
+never hide search and filters	infolog	sl	Nikoli skriti iskanja in filtrov
 new name	infolog	sl	novo ime
 new search	infolog	sl	Novo iskanje
 no - cancel	infolog	sl	Ne - Prekini
+no describtion, links or attachments	infolog	sl	ni opisa, povezav ali priponk
 no entries found, try again ...	infolog	sl	nisem našel nobenega zapisa, poskusite znova...
 no filter	infolog	sl	ni filtra
 no links or attachments	infolog	sl	ni povezav ali prilog
@@ -181,6 +188,7 @@ pattern for search in projects	infolog	sl	vzorec za iskanje po Projektih
 phone	infolog	sl	Telefonski klic
 phone/email	infolog	sl	Telefon/E-naslov
 phonecall	infolog	sl	Telefonski klic
+planned time	infolog	sl	planirani čas
 priority	infolog	sl	Prioriteta
 private	infolog	sl	Zasebno
 project	infolog	sl	Projekt
@@ -192,6 +200,7 @@ remark	infolog	sl	Opazka
 remove this link (not the entry itself)	infolog	sl	Odstrani povezavo (ne pa tudi zapisa)
 responsible	infolog	sl	Odgovoren
 responsible user, priority, ...	infolog	sl	odgovoren uporabnik, prioriteta,...
+responsible user, priority, times	infolog	sl	odgovorni uporabnik, prioriteta, časi
 returns a list / search for records.	infolog	sl	Vrne seznam / iskanje zapisov.
 save	infolog	sl	Shrani
 saves the changes made and leaves	infolog	sl	shrani spremembe in zapusti
@@ -205,6 +214,9 @@ select a responsible user: a person you want to delegate this task	infolog	sl	iz
 select a typ to edit it's status-values or delete it	infolog	sl	izberi tip za urejanje vrednosti statusa ali brisanje
 select an app to search in	infolog	sl	Izberite aplikacijo  za iskanje
 select an entry to link with	infolog	sl	Izberite zapis s katerim želite povezati
+select to filter by owner	infolog	sl	izberite za filtriranje po lastniku
+select to filter by responsible	infolog	sl	izberite za filtriranje po odgovornosti
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	sl	Ali naj InfoDnevnik prikaže vaše odprte vnose - nekončana opravila, telefonske klice ali zapiske - na glavni zaslon. Deluje samo če ne izberete aplikacije za glavni zaslon (v vaših nastavitvah)
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	sl	Ali naj InfoDnevnik prikaže vaše odprte zapise - nedokončana opravila, telefonske klice ali opombe - na glavni strani? Deluje samo, če ni izbrana aplikacija, ki naj se prikazuje na glavni strani.
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sl	Ali naj InfoDnevnik prikaže Podopravila - klice ali opombe - v normalnem oknu? Podopravila lahko vedno vidite preko njihovih nadrejenih opravil.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	sl	Ali naj InfoDnevnik prikaže povezave na ostale aplikacije in/ali priloge v seznamu InfoDnevnika (običajen pogled, ko vstopite v InfoDnevnik)?
@@ -232,6 +244,7 @@ the name used internaly (<= 32 chars), changeing it makes existing data unavaili
 the text displayed to the user	infolog	sl	besedilo, ki se prikaže uporabniku
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sl	To je filter, ki ga InfoDnevnik uporablja, ko vstopite v aplikacijo. Filter omejuje število prikazanih zapisov v trenutnem pogledu. Obstajajo filtri, ki prikazujejo samo dokončane, še odprte ali zapise v prihodnosti, vaše ali tuje zapise.
 til when should the todo or phonecall be finished	infolog	sl	do kdaj naj bo opravilo ali telefonski klic opravljen
+times	infolog	sl	Časi
 to many might exceed your execution-time-limit	infolog	sl	preveč lahko preseže čas izvajanja
 today	infolog	sl	Danes
 todo	infolog	sl	Opravila
@@ -247,6 +260,7 @@ urgency	infolog	sl	nujnost
 urgent	infolog	sl	nujno
 use button to search for address	infolog	sl	uporabi gumb za iskanje naslova
 use button to search for project	infolog	sl	uporabi gumb za iskanje projekta
+used time	infolog	sl	porabljen čas
 valid path on clientside<br>eg. \\server\share or e:\	infolog	sl	veljavna pot na strani odjemalca<br>npr. \\Strežnik\Skupno ali e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	sl	veljavna pot na strani odjemalca<br>npr. \\Stre�nik\Skupno ali e:\
 values for selectbox	infolog	sl	Vrednosti za izbirno polje
@@ -265,3 +279,4 @@ you have entered an invalid ending date	infolog	sl	Vnesli ste napačen končni d
 you have entered an invalid starting date	infolog	sl	Vnesli ste napačen začetni datum
 you have to enter a name, to create a new typ!!!	infolog	sl	Vpisati morate ime za imenovanje novega tipa
 you must enter a subject or a description	infolog	sl	Vpisati morate predmet ali opis
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	infolog	sl	Vaša podatkovna baza NI obnovljena (%1 vs. %2), prosimo poženite %3 nastavitev%4 za prenovo vaše podatkovne baze.
