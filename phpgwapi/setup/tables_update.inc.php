@@ -787,8 +787,7 @@
 			// now the DB is fixed we can set the charset
 			$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($GLOBALS['egw_setup']->system_charset);
 		}
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.019';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.019';
 	}
 
 
@@ -798,8 +797,7 @@
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_categories','egw_categories');
 		$GLOBALS['egw_setup']->cats_table = 'egw_categories';
 
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.020';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.020';
 	}
 
 
@@ -828,7 +826,16 @@
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_hooks','egw_hooks');
 		$GLOBALS['egw_setup']->hooks_table = 'egw_hooks';
 
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.022';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.022';
+	}
+
+
+	$test[] = '1.0.1.022';
+	function phpgwapi_upgrade1_0_1_022()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_preferences','egw_preferences');
+		$GLOBALS['egw_setup']->prefs_table = 'egw_preferences';
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.023';
 	}
 ?>

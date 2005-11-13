@@ -28,45 +28,55 @@
 	 * preferences class used for setting application preferences
 	 *
 	 * the prefs are read into 4 arrays: 
-	 * 	 * $data the effective prefs used everywhere in phpgw, they are merged from the other 3 arrays
-	 * 	 * $user the stored user prefs, only used for manipulating and storeing the user prefs
-	 * 	 * $default the default preferences, always used when the user has no own preference set
-	 * 	 * $forced forced preferences set by the admin, they take precedence over user or default prefs
+	 * 	 $data the effective prefs used everywhere in phpgw, they are merged from the other 3 arrays
+	 * 	 $user the stored user prefs, only used for manipulating and storeing the user prefs
+	 * 	 $default the default preferences, always used when the user has no own preference set
+	 * 	 $forced forced preferences set by the admin, they take precedence over user or default prefs
+	 *
+	 * @package api
+	 * @license LGPL
+	 * @author Joseph Engo <jengo@phpgroupware.org>
+	 * @author Mark Peters <skeeter@phpgroupware.org>
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de> merging prefs on runtime, session prefs and reworked the class
 	 */
 	class preferences
 	{
 		/**
-		  * @var account_id 
+		  * @var int $account_id account the class is instanciated for
 		  */
 		var $account_id;
 		/**
-		  * @var account_type 
+		  * @var string $ccount_type u or g
 		  */
 		var $account_type;
 		/**
-		  * @var data effectiv user prefs, used by all apps 
+		  * @var array $data effectiv user prefs, used by all apps 
 		  */
 		var $data = array();
 		/**
-		  * @var user set user prefs for saveing (no defaults/forced prefs merged) 
+		  * @var array $user set user prefs for saveing (no defaults/forced prefs merged) 
 		  */
 		var $user = array();
 		/**
-		  * @var default default prefs 
+		  * @var array $default default prefs 
 		  */
 		var $default = array();
 		/**
-		  * @var forced forced prefs 
+		  * @var array $forced forced prefs 
 		  */
 		var $forced = array();
 		/**
-		  * @var session session / tempory prefs 
+		  * @var array $session session / tempory prefs 
 		  */
 		var $session = array();
 		/**
 		  * @var db 
 		  */
 		var $db;
+		/**
+		 * @var string $table table-name
+		 */
+		var $table = 'egw_preferences';
 
 		var $values,$vars;	// standard notify substitues, will be set by standard_substitues()
 
@@ -85,6 +95,7 @@
 			else
 			{
 				$this->db = clone($GLOBALS['egw_setup']->db);
+				$this->table = $GLOBALS['egw_setup']->prefs_table;
 			}
  			$this->account_id = get_account_id($account_id);
 		}
@@ -96,13 +107,13 @@
 		/**
 		 * parses a notify and replaces the substitutes
 		 *
-		 * @param $msg message to parse / substitute
-		 * @param $values extra vars to replace in addition to $this->values, vars are in an array with \
+		 * @param string $msg message to parse / substitute
+		 * @param array $values=array() extra vars to replace in addition to $this->values, vars are in an array with \
 		 * 	$key => $value pairs, $key does not include the $'s and is the *untranslated* name
-		 * @param $use_standard_values should the standard values are used
-		 * the parsed notify-msg
+		 * @param boolean $use_standard_values=true should the standard values are used
+		 * @return string with parsed notify-msg
 		 */
-		function parse_notify($msg,$values='',$use_standard_values=True)
+		function parse_notify($msg,$values=array(),$use_standard_values=True)
 		{
 			$vals = $values ? $values : array();
 
@@ -121,11 +132,11 @@
 		/**
 		 * replaces the english key's with translated ones, or if $un_lang the opposite
 		 *
-		 * @param $msg message to translate
-		 * @param $values extra vars to replace in addition to $this->values, vars are in an array with \
+		 * @param string $msg message to translate
+		 * @param array $values=array() extra vars to replace in addition to $this->values, vars are in an array with \
 		 * 	$key => $value pairs, $key does not include the $'s and is the *untranslated* name
-		 * @param $un_lang if true translate back
-		 * the result
+		 * @param boolean $un_lang=false if true translate back
+		 * @return string
 		 */
 		function lang_notify($msg,$vals=array(),$un_lang=False)
 		{
@@ -146,7 +157,6 @@
 
 		/**
 		 * define some standard substitues-values and use them on the prefs, if needed
-		 *
 		 */
 		function standard_substitutes()
 		{
@@ -204,7 +214,7 @@
 		/**
 		 * unquote (stripslashes) recursivly the whole array
 		 *
-		 * @param $arr array to unquote (var-param!)
+		 * @param array &$arr array to unquote (var-param!)
 		 */
 		function unquote(&$arr)
 		{
@@ -227,10 +237,12 @@
 		}
 
 		/**
-		 * private - read preferences from the repository
+		 * read preferences from the repository
 		 *
 		 * the function ready all 3 prefs user/default/forced and merges them to the effective ones
-		 * private function should only be called from within this class
+		 *
+		 * @internal private function should only be called from within this class
+		 * @return array with effective prefs ($this->data)
 		 */
 		function read_repository()
 		{
@@ -239,14 +251,13 @@
 			{
 				$this->session = array();
 			}
-			$this->db->query("SELECT * FROM phpgw_preferences"
-				. " WHERE preference_owner IN (-1,-2," . (int)$this->account_id . ')',__LINE__,__FILE__);
+			$this->db->select($this->table,'*','preference_owner IN (-1,-2,'.(int) $this->account_id.')',__LINE__,__FILE__);
 
 			$this->forced = $this->default = $this->user = array();
 			while($this->db->next_record())
 			{
 				// The following replacement is required for PostgreSQL to work
-				$app = str_replace(' ','',$this->db->f('preference_app'));
+				$app = trim($this->db->f('preference_app'));
 				$value = unserialize($this->db->f('preference_value'));
 				$this->unquote($value);
 				if (!is_array($value))
@@ -319,11 +330,9 @@
 		}
 
 		/**
-		 * public - read preferences from repository and stores in an array
+		 * read preferences from repository and stores in an array
 		 *
-		 * Syntax array read(); <>
-		 * Example1: preferences->read();
-		 * @return $data array containing user preferences
+		 * @return array containing the effective user preferences
 		 */
 		function read()
 		{
@@ -338,21 +347,20 @@
 		/**
 		 * add preference to $app_name a particular app
 		 *
-		 * @discussion
-		 * @param $app_name name of the app
-		 * @param $var name of preference to be stored
-		 * @param $value value of the preference
-		 * @param $type of preference to set: forced, default, user
 		 * the effective prefs ($this->data) are updated to reflect the change
-		 * the new effective prefs (even when forced or default prefs are set !)
+		 *
+		 * @param string $app_name name of the app
+		 * @param string $var name of preference to be stored
+		 * @param mixed $value='##undef##' value of the preference, if not given $GLOBALS[$var] is used
+		 * @param $type='user' of preference to set: forced, default, user
+		 * @return array with new effective prefs (even when forced or default prefs are set !)
 		 */
 		function add($app_name,$var,$value = '##undef##',$type='user')
 		{
 			//echo "<p>add('$app_name','$var','$value')</p>\n";
 			if ($value === '##undef##')
 			{
-				global $$var;
-				$value = $$var;
+				$value = $GLOBALS[$var];
 			}
  
 			switch ($type)
@@ -394,12 +402,12 @@
 		/**
 		 * delete preference from $app_name
 		 *
-		 * @discussion
-		 * @param $app_name name of app
-		 * @param $var variable to be deleted
-		 * @param $type of preference to set: forced, default, user
 		 * the effektive prefs ($this->data) are updated to reflect the change
-		 * the new effective prefs (even when forced or default prefs are deleted!)
+		 *
+		 * @param string $app_name name of app
+		 * @param string $var=false variable to be deleted
+		 * @param string $type='user' of preference to set: forced, default, user
+		 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 		 */
 		function delete($app_name, $var = False,$type = 'user')
 		{
@@ -455,19 +463,15 @@
 		/**
 		 * add complex array data preference to $app_name a particular app
 		 *
-		 * Use for sublevels of prefs, such as email app's extra accounts preferences
-		 * @param $app_name name of the app
-		 * @param $var array keys separated by '/', eg. 'ex_accounts/1'
-		 * @param $value value of the preference
-		 * the function works on user and data, to be able to save the pref and to have imediate effect
+		 * @deprecated we can now correctly store arrays in the prefs, AFAIK only used in email
+		 *
+		 * @param string $app_name name of the app
+		 * @param string $var array keys separated by '/', eg. 'ex_accounts/1'
+		 * @param mixed $value='' value of the preference
+		 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 		 */
 		function add_struct($app_name,$var,$value = '')
 		{
-			/* eval is slow and dangerous
-			$code = '$this->data[$app_name]'.$var.' = $value;';
-			print_debug('class.preferences: add_struct: $code: ', $code,'api');
-			eval($code);
-			*/
 			$parts = explode('/',str_replace(array('][','[',']','"',"'"),array('/','','','',''),$var));
 			$data = &$this->data[$app_name];
 			$user = &$this->user[$app_name];
@@ -485,21 +489,14 @@
 		/**
 		 * delete complex array data preference from $app_name
 		 *
-		 * Use for sublevels of prefs, such as email app's extra accounts preferences
+		 * @deprecated we can now correctly store arrays in the prefs, AFAIK only used in email
+		 *
 		 * @param $app_name name of app
 		 * @param $var array keys separated by '/', eg. 'ex_accounts/1'
-		 * the function works on user and data, to be able to save the pref and to have immediate effect
+		 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 		 */
 		function delete_struct($app_name, $var = '')
 		{
-			/* eval is slow and dangerous
-			$code_1 = '$this->data[$app_name]'.$var.' = "";';
-			print_debug('class.preferences: delete_struct: $code_1:', $code_1,'api');
-			eval($code_1);
-			$code_2 = 'unset($this->data[$app_name]'.$var.');' ;
-			print_debug('class.preferences: delete_struct:  $code_2: ', $code_2,'api');
-			eval($code_2);
-			*/
 			$parts = explode('/',str_replace(array('][','[',']','"',"'"),array('/','','','',''),$var));
 			$last = array_pop($parts);
 			$data = &$this->data[$app_name];
@@ -509,7 +506,6 @@
 				$data = &$data[$name];
 				$user = &$user[$name];
 			}
-			unset($data[$last]);
 			unset($user[$last]);
 			print_debug('* $this->data[$app_name] dump:', $this->data[$app_name],'api');
 			reset ($this->data);
@@ -519,7 +515,7 @@
 		/**
 		 * quote (addslashes) recursivly the whole array
 		 *
-		 * @param $arr array to unquote (var-param!)
+		 * @param array &$arr array to quote (var-param!)
 		 */
 		function quote(&$arr)
 		{
@@ -544,9 +540,11 @@
 		/**
 		 * save the the preferences to the repository
 		 *
-		 * @param $update_session_info old param, seems not to be used
-		 * @param $type which prefs to update: user/default/forced 
-		 * the user prefs for saveing are in $this->user not in $this->data, which are the effectiv prefs only
+		 * User prefs for saveing are in $this->user not in $this->data, which are the effectiv prefs only!
+		 *
+		 * @param boolean $update_session_info=false old param, seems not to be used
+		 * @param string $type='user' which prefs to update: user/default/forced 
+		 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 		 */
 		function save_repository($update_session_info = False,$type='user')
 		{
@@ -567,12 +565,10 @@
 			}
 			//echo "<p>preferences::save_repository(,$type): account_id=$account_id, prefs="; print_r($prefs); echo "</p>\n";
 
-			if (! $GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences'))
+			if (!$GLOBALS['egw']->acl->check('session_only_preferences',1,'preferences'))
 			{
 				$this->db->transaction_begin();
-				$this->db->query("DELETE FROM phpgw_preferences WHERE preference_owner='$account_id'",
-					__LINE__,__FILE__
-				);
+				$this->db->delete($this->table,array('preference_owner' => $account_id),__LINE__,__FILE__);
 
 				foreach($prefs as $app => $value)
 				{
@@ -580,13 +576,14 @@
 					{
 						continue;
 					}
-					$this->quote($value);
-					$value = $this->db->db_addslashes(serialize($value));	// this addslashes is for the database
-					$app = $this->db->db_addslashes($app);
+					$this->quote($value);	// this quote-ing is for serialize, not for the db
 
-					$this->db->query($sql = "INSERT INTO phpgw_preferences"
-						. " (preference_owner,preference_app,preference_value)"
-						. " VALUES ($account_id,'$app','$value')",__LINE__,__FILE__);
+					$this->db->insert($this->table,array(
+						'preference_value' => serialize($value),
+					),array(
+						'preference_owner' => $account_id,
+						'preference_app'   => $app,
+					),__LINE__,__FILE__);
 				}
 				$this->db->transaction_commit();
 			}
@@ -603,37 +600,22 @@
 		/**
 		 * insert a copy of the default preferences for use by real account_id
 		 *
-		 * @discussion
-		 * @param $account_id numerical id of account for which to create the prefs
+		 * @deprecated not longer needed, as the defaults are merged in on runtime
+		 *
+		 * @param int $account_id numerical id of account for which to create the prefs
 		 */
 		function create_defaults($account_id)
 		{
-			return; // not longer needed, as the defaults are merged in on runtime
-			$this->db->query("select * from phpgw_preferences where preference_owner='-2'",__LINE__,__FILE__);
-			$this->db->next_record();
-
-			if($this->db->f('preference_value'))
-			{
-				$this->db->query("insert into phpgw_preferences values ('$account_id','"
-					. $this->db->f('preference_value') . "')",__LINE__,__FILE__);
-			}
-
-			if ($GLOBALS['egw_info']['server']['cache_phpgw_info'] && $account_id == $GLOBALS['egw_info']['user']['account_id'])
-			{
-				$GLOBALS['egw']->session->read_repositories(False);
-			}
 		}
 
 		/**
 		 * update the preferences array
 		 *
-		 * 
-		 * @param $data array of preferences
+		 * @param array $data array of preferences
+		 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 		 */
 		function update_data($data)
 		{
-			reset($data);
-			$this->data = Array();
 			$this->data = $data;
 			reset($this->data);
 			return $this->data;
@@ -807,11 +789,13 @@
 		 * returns the custom email-address (if set) or generates a default one
 		 *
 		 * This will generate the appropriate email address used as the "From:" 
-		email address when the user sends email, the localpert * part. The "personal" 
-		part is generated elsewhere.
-		In the absence of a custom ['email']['address'], this function should be used to set it.
-		 * @param $accountid - as determined in and/or passed to "create_email_preferences"
-		 * @access Public now
+		 * email address when the user sends email, the localpert * part. The "personal" 
+		 * part is generated elsewhere.
+		 * In the absence of a custom ['email']['address'], this function should be used to set it.
+		 *
+		 * @access public
+		 * @param int $accountid - as determined in and/or passed to "create_email_preferences"
+		 * @return string with email-address
 		 */
 		function email_address($account_id='')
 		{

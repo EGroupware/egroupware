@@ -149,13 +149,13 @@
 			foreach ($defaultprefs as $app => $prefs)
 			{
 				// only insert them, if they not already exist
-				$GLOBALS['egw_setup']->db->select('phpgw_preferences','*',array(
+				$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->prefs_table,'*',array(
 					'preference_owner' => $accountid,
 					'preference_app'   => $app,
 				),__LINE__,__FILE__);
 				if (!$GLOBALS['egw_setup']->db->next_record())
 				{
-					$GLOBALS['egw_setup']->db->insert('phpgw_preferences',array(
+					$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->prefs_table,array(
 						'preference_value' => serialize($prefs)
 					),array(
 						'preference_owner' => $accountid,

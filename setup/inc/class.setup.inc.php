@@ -31,7 +31,7 @@
 		var $applications_table = 'egw_applications';
 		var $acl_table          = 'egw_acl';
 		var $accounts_table     = 'egw_accounts';
-		var $prefs_table        = 'phpgw_preferences';
+		var $prefs_table        = 'egw_preferences';
 		var $lang_table         = 'egw_lang';
 		var $languages_table    = 'egw_languages';
 		var $hooks_table        = 'egw_hooks';

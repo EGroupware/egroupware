@@ -72,7 +72,7 @@
 			'ix' => array(),
 			'uc' => array('account_lid')
 		),
-		'phpgw_preferences' => array(
+		'egw_preferences' => array(
 			'fd' => array(
 				'preference_owner' => array('type' => 'int','precision' => '4','nullable' => False),
 				'preference_app' => array('type' => 'varchar','precision' => '25','nullable' => False),
