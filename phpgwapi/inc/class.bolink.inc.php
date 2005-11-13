@@ -29,9 +29,9 @@
 	 * 2) Attaching files: they are saved in the vfs and not the link-table (!).
 	 *    Attached files are stored under $vfs_basedir='/infolog' in the vfs!
 	 *
-	 * @package API
+	 * @package api
 	 * @subpackage link
-	 * @author RalfBecker-At-outdoor-training.de
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 */
 	class bolink extends solink
@@ -58,21 +58,6 @@
 					'menuaction' => 'projects.uiprojects.view_project'
 				),
 				'view_id' => 'project_id'
-			),
-			'infolog' => array(
-				'query' => 'infolog.boinfolog.link_query',
-				'title' => 'infolog.boinfolog.link_title',
-				'view' => array(
-					'menuaction' => 'infolog.uiinfolog.index',
-					'action' => 'sp'
-				),
-				'view_id' => 'action_id',
-				'add' => array(
-					'menuaction' => 'infolog.uiinfolog.edit',
-					'type' => 'task'
-				),
-				'add_app'    => 'action',
-				'add_id'     => 'action_id',			
 			),
 /*
 			'email' => array(
