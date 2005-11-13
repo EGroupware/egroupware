@@ -339,7 +339,7 @@
 			'ix' => array(array('vfs_directory','vfs_name')),
 			'uc' => array()
 		),
-		'phpgw_history_log' => array(
+		'egw_history_log' => array(
 			'fd' => array(
 				'history_id' => array('type' => 'auto','precision' => '4','nullable' => False),
 				'history_record_id' => array('type' => 'int','precision' => '4','nullable' => False),

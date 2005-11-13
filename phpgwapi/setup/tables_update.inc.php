@@ -879,4 +879,13 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.026';
 	}
+
+
+	$test[] = '1.0.1.026';
+	function phpgwapi_upgrade1_0_1_026()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_history_log','egw_history_log');
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.027';
+	}
 ?>

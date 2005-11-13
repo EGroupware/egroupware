@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'eGroupWare API';
-	$setup_info['phpgwapi']['version']   = '1.0.1.026';
+	$setup_info['phpgwapi']['version']   = '1.0.1.027';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -39,7 +39,7 @@
 	$setup_info['phpgwapi']['tables'][]  = 'egw_log_msg';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_interserv';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_vfs';
-	$setup_info['phpgwapi']['tables'][]  = 'phpgw_history_log';
+	$setup_info['phpgwapi']['tables'][]  = 'egw_history_log';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_async';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_api_content_history';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_mimetypes';
