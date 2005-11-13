@@ -66,12 +66,31 @@ class uicontacts extends bocontacts
 			switch($button)
 			{
 				case 'save':
-					$this->save($content);
-					echo "<html><body><script>var referer = opener.location;opener.location.href = referer;window.close();</script></body></html>\n";
-					$GLOBALS['egw']->common->egw_exit();
-				
 				case 'apply':
+					$links = false;
+					if (!$content['id'] && is_array($content['link_to']['to_id']))
+					{
+						$links = $content['link_to']['to_id'];
+					}
 					$content = $this->save($content);
+					// writing links for new entry, existing ones are handled by the widget itself
+					if ($links && $content['id'])	
+					{
+						if (!is_object($this->link))
+						{
+							if (!is_object($GLOBALS['egw']->link))
+							{
+								$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
+							}
+							$this->link =& $GLOBALS['egw']->link;
+						}
+						$this->link->link('addressbook',$content['id'],$links);
+					}
+					if ($button == 'save')
+					{
+						echo "<html><body><script>var referer = opener.location;opener.location.href = referer;window.close();</script></body></html>\n";
+						$GLOBALS['egw']->common->egw_exit();
+					}
 					$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
 						var referer = opener.location;
 						opener.location.href = referer;</script>";
@@ -116,6 +135,11 @@ class uicontacts extends bocontacts
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
+		
+		$content['link'] = $content['link_to'] = array(
+			'to_app' => 'addressbook',
+			'to_id'  => (int) $content['id'],
+		);
 		
 		$this->tmpl->read('addressbook.edit');
 		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$preserv, 2);
