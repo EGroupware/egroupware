@@ -21,11 +21,11 @@
 	\**************************************************************************/
 
 	// $Id$
-	// $Source$
 
 	class historylog
 	{
 		var $db;
+		var $table = 'egw_history_log';
 		var $appname;
 		var $template;
 		var $nextmatchs;
@@ -38,22 +38,30 @@
 
 		function historylog($appname='')
 		{
-			if (! $appname)
+			if (!$appname)
 			{
-				$appname = $GLOBALS['phpgw_info']['flags']['currentapp'];
+				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
 
 			$this->appname = $appname;
-			$this->db      = $GLOBALS['phpgw']->db;
+			$this->db      = clone($GLOBALS['egw']->db);
+			$this->db->set_app('phpgwapi');
 		}
 
 		function delete($record_id)
 		{
-			$appname = (int)$record_id ? $this->appname : $record_id;
-			$record_id = (int)$record_id;
-			$this->db->query('DELETE FROM phpgw_history_log WHERE'
-				. ($record_id ? " history_record_id='$record_id' AND" : '')
-				. " history_appname='$appname'",__LINE__,__FILE__);
+			if (is_array($record_id) || is_numeric($record_id))
+			{
+				$where = array(
+					'history_record_id' => $record_id,
+					'history_appname'   => $this->appname,
+				);
+			}
+			else
+			{
+				$where = array('history_appname'   => $record_id);
+			}
+			$this->db->delete($this->table,$where,__LINE__,__FILE__);
 
 			return $this->db->affected_rows();
 		}
@@ -62,12 +70,15 @@
 		{
 			if ($new_value != $old_value)
 			{
-				$this->db->query("insert into phpgw_history_log (history_record_id,"
-					. "history_appname,history_owner,history_status,history_new_value,history_old_value,history_timestamp) "
-					. "values ('".(int)$record_id."','" . $this->appname . "','"
-					. $GLOBALS['phpgw_info']['user']['account_id'] . "','$status','"
-					. addslashes($new_value) . "','" . addslashes($old_value) . "','" . $this->db->to_timestamp(time())
-					. "')",__LINE__,__FILE__);
+				$this->db->insert($this->table,array(
+					'history_record_id' => $record_id,
+					'history_appname'   => $this->appname,
+					'history_owner'     => $GLOBALS['egw_info']['user']['account_id'],
+					'history_status'    => $status,
+					'history_new_value' => $new_value,
+					'history_old_value' => $old_value,
+					'history_timestamp' => time(),
+				),false,__LINE__,__FILE__);
 			}
 		}
 
@@ -75,45 +86,43 @@
 		function return_array($filter_out,$only_show,$_orderby = '',$sort = '', $record_id)
 		{
 			
-			if (! $sort || ! $_orderby)
+			if (!$_orderby || !preg_match('/^[a-z0-9_]+$/i',$_orderby) || !preg_match('/^(asc|desc)?$/i',$sort))
 			{
-				$orderby = 'order by history_timestamp,history_id';
+				$orderby = 'ORDER BY history_timestamp,history_id';
 			}
 			else
 			{
-				$orderby = "order by $_orderby $sort";
+				$orderby = "ORDER BY $_orderby $sort";
 			}
 
-			while (is_array($filter_out) && list(,$_filter) = each($filter_out))
+			$where = array(
+				'history_appname'   => $this->appname,
+				'history_record_id' => $record_id,
+			);
+			if (is_array($filter_out))
 			{
-				$filtered[] = "history_status != '$_filter'";
+				foreach($filter_out as $_filter)
+				{
+					$where[] = 'history_status != '.$this->db->quote($_filter);
+				}
 			}
-
-			if (is_array($filtered))
+			if (is_array($only_show) && count($only_show))
 			{
-				$filter = ' and ' . implode(' and ',$filtered);
+				$to_or = array();
+				foreach($only_show as $_filter)
+				{
+					$to_or[] = 'history_status = '.$this->db->quote($_filter);
+				}
+				$where[] = '('.implode(' OR ',$to_or).')';
 			}
-
-			while (is_array($only_show) && list(,$_filter) = each($only_show))
-			{
-				$_only_show[] = "history_status='$_filter'";
-			}
-
-			if (is_array($_only_show))
-			{
-				$only_show_filter = ' and (' . implode(' or ',$_only_show). ')';
-			}
-
-			$this->db->query("select * from phpgw_history_log where history_appname='"
-				. $this->appname . "' and history_record_id='".(int)$record_id."' $filter $only_show_filter "
-				. "$orderby",__LINE__,__FILE__);
+			
+			$this->db->select($this->table,'*',$where,__LINE__,__FILE__,false,$orderby);
 			while ($this->db->next_record())
 			{
 				$return_values[] = array(
 					'id'         => $this->db->f('history_id'),
 					'record_id'  => $this->db->f('history_record_id'),
-					'owner'      => $GLOBALS['phpgw']->accounts->id2name($this->db->f('history_owner')),
-//					'status'     => lang($this->types[$this->db->f('history_status')]),
+					'owner'      => $GLOBALS['egw']->accounts->id2name($this->db->f('history_owner')),
 					'status'     => str_replace(' ','',$this->db->f('history_status')),
 					'new_value'  => $this->db->f('history_new_value'),
 					'old_value'  => $this->db->f('history_old_value'),
@@ -125,8 +134,8 @@
 
 		function return_html($filter_out,$orderby = '',$sort = '', $record_id)
 		{
-			$this->template   = createobject('phpgwapi.Template',PHPGW_TEMPLATE_DIR);
-			$this->nextmatchs = createobject('phpgwapi.nextmatchs');
+			$this->template   =& CreateObject('phpgwapi.Template',EGW_TEMPLATE_DIR);
+			$this->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
 
 			$this->template->set_file('_history','history_list.tpl');
 
@@ -139,7 +148,7 @@
 			$this->template->set_var('lang_action',lang('Action'));
 			$this->template->set_var('lang_new_value',lang('New Value'));
 
-			$this->template->set_var('th_bg',$GLOBALS['phpgw_info']['theme']['th_bg']);
+			$this->template->set_var('th_bg',$GLOBALS['egw_info']['theme']['th_bg']);
 			$this->template->set_var('sort_date',lang('Date'));
 			$this->template->set_var('sort_owner',lang('User'));
 			$this->template->set_var('sort_status',lang('Status'));
@@ -148,19 +157,19 @@
 
 			$values = $this->return_array($filter_out,array(),$orderby,$sort,$record_id);
 
-			if (! is_array($values))
+			if (!is_array($values))
 			{
-				$this->template->set_var('tr_color',$GLOBALS['phpgw_info']['theme']['row_off']);
+				$this->template->set_var('tr_color',$GLOBALS['egw_info']['theme']['row_off']);
 				$this->template->set_var('lang_no_history',lang('No history for this record'));
 				$this->template->fp('rows','row_no_history');
 				return $this->template->fp('out','list');
 			}
 
-			while (list(,$value) = each($values))
+			foreach($values as $value)
 			{
 				$this->nextmatchs->template_alternate_row_color($this->template);
 
-				$this->template->set_var('row_date',$GLOBALS['phpgw']->common->show_date($value['datetime']));
+				$this->template->set_var('row_date',$GLOBALS['egw']->common->show_date($value['datetime']));
 				$this->template->set_var('row_owner',$value['owner']);
 
 				if ($this->alternate_handlers[$value['status']])
