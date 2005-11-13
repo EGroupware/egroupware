@@ -444,56 +444,23 @@
 			// Set group acl
 			$acl =& CreateObject('phpgwapi.acl',$group_info['account_id']);
 			$old_group_list = $acl->get_ids_for_location($group_info['account_id'],1,'phpgw_group');
-			@reset($old_group_list);
-			while($old_group_list && list($key,$user_id) = each($old_group_list))
+			if (is_array($old_group_list))
 			{
-				$acl->delete_repository('phpgw_group',$group_info['account_id'],$user_id);
-				if(!$group_info['account_user'][$user_id])
+				foreach($old_group_list as $key => $user_id)
 				{
-					// If the user is logged in, it will force a refresh of the session_info
-					$GLOBALS['egw']->db->query("update phpgw_sessions set session_action='' "
-						."where session_lid='" . $GLOBALS['egw']->accounts->id2name($user_id)
-						. '@' . $GLOBALS['egw_info']['user']['domain'] . "'",__LINE__,__FILE__);
-					$GLOBALS['egw']->session->delete_cache($user_id);
+					$acl->delete_repository('phpgw_group',$group_info['account_id'],$user_id);
 				}
 			}
 
-			@reset($group_info['account_user']);
-			while(list($user_id,$dummy) = each($group_info['account_user']))
+			if (is_array($group_info['account_user']))
 			{
-				if(!$dummy)
+				foreach($group_info['account_user'] as $user_id => $dummy)
 				{
-					continue;
-				}
-				$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
-
-				// If the user is logged in, it will force a refresh of the session_info
-				$GLOBALS['egw']->db->query("update phpgw_sessions set session_action='' "
-					."where session_lid='" . $GLOBALS['egw']->accounts->id2name($user_id)
-					. '@' . $GLOBALS['egw_info']['user']['domain'] . "'",__LINE__,__FILE__);
-					
-				$GLOBALS['egw']->session->delete_cache($user_id);
-				
-				// The following sets any default preferences needed for new applications..
-				// This is smart enough to know if previous preferences were selected, use them.
-				$docommit = False;
-				if($new_apps)
-				{
-					$GLOBALS['pref'] =& CreateObject('phpgwapi.preferences',$user_id);
-					$t = $GLOBALS['pref']->read_repository();
-					@reset($new_apps);
-					while(list($app_key,$app_name) = each($new_apps))
+					if(!$dummy)
 					{
-						if (!$t[($app_name=='admin'?'common':$app_name)])
-						{
-							$GLOBALS['egw']->hooks->single('add_def_pref', $app_name);
-							$docommit = True;
-						}
+						continue;
 					}
-				}
-				if ($docommit)
-				{
-					$GLOBALS['pref']->save_repository();
+					$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
 				}
 			}
 

@@ -29,7 +29,7 @@
 		var $schema_proc;	/** schema_proc class */
 		var $schemas = array();		/** array tablename => schema */
 		var $exclude_tables = array(	/** exclude from backup */
-			'phpgw_sessions','phpgw_app_sessions',	// eGW's session-tables
+			'egw_sessions','egw_app_sessions','phpgw_sessions','phpgw_app_sessions',	// eGW's session-tables
 			'phpgw_anglemail',	// email's cache
 			'egw_felamimail_cache','egw_felamimail_folderstatus','phpgw_felamimail_cache','phpgw_felamimail_folderstatus',	// felamimail's cache
 		);

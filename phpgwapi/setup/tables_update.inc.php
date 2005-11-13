@@ -838,4 +838,27 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.023';
 	}
+
+
+	$test[] = '1.0.1.023';
+	function phpgwapi_upgrade1_0_1_023()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_sessions','egw_sessions');
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sessions','session_dla',array(
+			'type' => 'int',
+			'precision' => '8',		// timestamps need to be 64bit since the 32bit overflow in 2003
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_sessions','session_logintime',array(
+			'type' => 'int',
+			'precision' => '8',		// timestamps need to be 64bit since the 32bit overflow in 2003
+		));
+
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_app_sessions','egw_app_sessions');
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_app_sessions','session_dla',array(
+			'type' => 'int',
+			'precision' => '8',		// timestamps need to be 64bit since the 32bit overflow in 2003
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.024';
+	}
 ?>

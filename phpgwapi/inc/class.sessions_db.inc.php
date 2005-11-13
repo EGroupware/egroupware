@@ -36,6 +36,9 @@
 
 	class sessions extends sessions_
 	{
+		var $sessions_table = 'egw_sessions';
+		var $app_sessions_table = 'egw_app_sessions';
+
 		function sessions($domain_names=null)
 		{
 			$this->sessions_($domain_names);
@@ -43,24 +46,25 @@
 		
 		function read_session()
 		{
-			$this->db->query("SELECT * FROM phpgw_sessions WHERE session_id='" . $this->sessionid . "'",__LINE__,__FILE__);
-			$this->db->next_record();
+			$this->db->select($this->sessions_table,'*',array('session_id' => $this->sessionid),__LINE__,__FILE__);
 			
-			return $this->db->Record;
+			return $this->db->row(true);
 		}
 
-		// This will remove stale sessions out of the database
+		/**
+		 * remove stale sessions out of the database
+		 */
 		function clean_sessions()
 		{
-			// If you plan on using the cron apps, please remove the following lines.
-			// I am going to make this a config option durring 0.9.11, instead of an application (jengo)
-
-			$GLOBALS['egw']->db->query("DELETE FROM phpgw_sessions WHERE session_dla <= '" . (time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
-				. "' AND session_flags !='A'",__LINE__,__FILE__);
+			$this->db->delete($this->sessions_table,array(
+				'session_dla <= ' . (time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
+				"session_flags != 'A'",
+			),__LINE__,__FILE__);
 
 			// This is set a little higher, we don't want to kill session data for anonymous sessions.
-			$GLOBALS['egw']->db->query("DELETE FROM phpgw_app_sessions WHERE session_dla <= '" . (time() - $GLOBALS['egw_info']['server']['sessions_timeout'])
-				. "'",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->delete($this->app_sessions_table,array(
+				'session_dla <= ' . (time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
+			),__LINE__,__FILE__);
 		}
 
 		function new_session_id()
@@ -70,15 +74,21 @@
 
 		function register_session($login,$user_ip,$now,$session_flags)
 		{
-			$GLOBALS['egw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='$this->sessionid'",__LINE__,__FILE__);
-
-			$GLOBALS['egw']->db->query("INSERT INTO phpgw_sessions VALUES ('" . $this->sessionid
-				. "','".$login."','" . $user_ip . "','"
-				. $now . "','" . $now . "','" . $_SERVER['PHP_SELF'] . "','" . $session_flags
-				. "')",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->insert($this->sessions_table,array(
+				'session_lid'       => $login,
+				'session_ip'        => $user_ip,
+				'session_logintime' => $now,
+				'session_dla'       => $now,
+				'session_action'    => $_SERVER['PHP_SELF'],
+				'session_flags'     => $session_flags,
+			),array(
+				'session_id'        => $this->sessionid,
+			),__LINE__,__FILE__);
 		}
 
-		// This will update the DateLastActive column, so the login does not expire
+		/**
+		 * update the DateLastActive column, so the login does not expire
+		 */
 		function update_dla()
 		{
 			if (@isset($_GET['menuaction']))
@@ -97,26 +107,33 @@
 				$action = $this->xmlrpc_method_called;
 			}
 
-			$GLOBALS['egw']->db->query("UPDATE phpgw_sessions SET session_dla='" . time() . "', session_action='$action' "
-				. "WHERE session_id='" . $this->sessionid."'",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->update($this->sessions_table,array(
+				'session_dla'    => time(),
+				'session_action' => $action,
+			),array(
+				'session_id'     => $this->sessionid,
+			),__LINE__,__FILE__);
 
-			$GLOBALS['egw']->db->query("UPDATE phpgw_app_sessions SET session_dla='" . time() . "' "
-				. "WHERE sessionid='" . $this->sessionid."'",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->update($this->app_sessions_table,array(
+				'session_dla'    => time(),
+			),array(
+				'sessionid'     => $this->sessionid,
+			),__LINE__,__FILE__);
+
 			return True;
 		}
 
 		function destroy($sessionid, $kp3)
 		{
-			if (! $sessionid && $kp3)
+			if (!$sessionid && $kp3)
 			{
 				return False;
 			}
-
 			$GLOBALS['egw']->db->transaction_begin();
-			$GLOBALS['egw']->db->query("DELETE FROM phpgw_sessions WHERE session_id='"
-				. $sessionid . "'",__LINE__,__FILE__);
-			$GLOBALS['egw']->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid='"
-				. $sessionid . "'",__LINE__,__FILE__);
+
+			$GLOBALS['egw']->db->delete($this->sessions_table,array('session_id' => $sessionid),__LINE__,__FILE__);
+			$GLOBALS['egw']->db->delete($this->app_sessions_table,array('sessionid' => $sessionid),__LINE__,__FILE__);
+
 			$this->log_access($this->sessionid);	// log logout-time
 
 			// Only do the following, if where working with the current user
@@ -133,14 +150,13 @@
 		* Functions for appsession data and session cache                         *
 		\*************************************************************************/
 
+		/**
+		 * delete the old phpgw_info cache
+		 *
+		 * @deprecated not longer used
+		 */
 		function delete_cache($accountid='')
 		{
-			$account_id = get_account_id($accountid,$this->account_id);
-
-			$query = "DELETE FROM phpgw_app_sessions WHERE loginid = '".$account_id."'"
-				." AND app = 'phpgwapi' AND location = 'phpgw_info_cache'";
-
-			$GLOBALS['egw']->db->query($query);
 		}
 
 		function appsession($location = 'default', $appname = '', $data = '##NOTHING##')
@@ -149,7 +165,7 @@
 			{
 				return False;	// this can happen during login or logout
 			}
-			if (! $appname)
+			if (!$appname)
 			{
 				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
@@ -157,87 +173,64 @@
 			/* This allows the user to put '' as the value. */
 			if ($data == '##NOTHING##')
 			{
-				$query = "SELECT content FROM phpgw_app_sessions WHERE"
-					." sessionid='".$this->sessionid."' AND loginid='".$this->account_id."'"
-					." AND app = '".$appname."' AND location='".$location."'";
-	
-				$GLOBALS['egw']->db->query($query,__LINE__,__FILE__);
+				$GLOBALS['egw']->db->select($this->app_sessions_table,'content',array(
+					'sessionid' => $this->sessionid,
+					'loginid'   => $this->account_id,
+					'app'       => $appname,
+					'location'  => $location,
+				),__LINE__,__FILE__);
 				$GLOBALS['egw']->db->next_record();
 
-				// I added these into seperate steps for easier debugging
-				$data = $GLOBALS['egw']->db->f('content');
-				// Changed by Skeeter 2001 Mar 04 0400Z
-				// This was not properly decoding structures saved into session data properly
-//				$data = $GLOBALS['egw']->common->decrypt($data);
-//				return stripslashes($data);
-				// Changed by milosch 2001 Dec 20
-				// do not stripslashes here unless this proves to be a problem.
-				// Changed by milosch 2001 Dec 25
-				/* do not decrypt and return if no data (decrypt returning garbage) */
-				if($data)
+				// do not decrypt and return if no data (decrypt returning garbage)
+				if(($data = $GLOBALS['egw']->db->f('content')))
 				{
-					$data = $GLOBALS['egw']->crypto->decrypt($data);
-//					echo 'appsession returning: '; _debug_array($data);
-					return $data;
+					return $GLOBALS['egw']->crypto->decrypt($data);
 				}
+				return null;
 			}
-			else
-			{
-				$GLOBALS['egw']->db->query("SELECT content FROM phpgw_app_sessions WHERE "
-					. "sessionid = '".$this->sessionid."' AND loginid = '".$this->account_id."'"
-					. " AND app = '".$appname."' AND location = '".$location."'",__LINE__,__FILE__);
+			$GLOBALS['egw']->db->insert($this->app_sessions_table,array(
+				'content'   => $GLOBALS['egw']->crypto->encrypt($data),
+			),array(
+				'sessionid' => $this->sessionid,
+				'loginid'   => $this->account_id,
+				'app'       => $appname,
+				'location'  => $location,
+			),__LINE__,__FILE__);
 
-				$encrypteddata = $GLOBALS['egw']->crypto->encrypt($data);
-				$encrypteddata = $GLOBALS['egw']->db->db_addslashes($encrypteddata);
-
-				if ($GLOBALS['egw']->db->num_rows()==0)
-				{
-					$GLOBALS['egw']->db->query("INSERT INTO phpgw_app_sessions (sessionid,loginid,app,location,content,session_dla) "
-						. "VALUES ('".$this->sessionid."','".$this->account_id."','".$appname
-						. "','".$location."','".$encrypteddata."','" . time() . "')",__LINE__,__FILE__);
-				}
-				else
-				{
-					$GLOBALS['egw']->db->query("UPDATE phpgw_app_sessions SET content='".$encrypteddata."'"
-						. "WHERE sessionid = '".$this->sessionid."'"
-						. "AND loginid = '".$this->account_id."' AND app = '".$appname."'"
-						. "AND location = '".$location."'",__LINE__,__FILE__);
-				}
-				return $data;
-			}
+			return $data;
 		}
 
+		/**
+		 * list all sessions
+		 */
 		function list_sessions($start, $order, $sort, $all_no_sort = False)
 		{
 			$values = array();
 			
-			$ordermethod = 'order by session_dla asc';
-			$this->db->limit_query("select * from phpgw_sessions where session_flags != 'A' order by $sort $order",$start,__LINE__,__FILE__);
-
-			while ($this->db->next_record())
+			$order_by = 'ORDER BY '.$sort.' '.$order;
+			if (!preg_match('/^[a-z_0-9, ]+$/i',$sort) || !preg_match('/^(asc|desc)?$/i',$sort))
 			{
-				$values[] = array(
-					'session_id'        => $this->db->f('session_id'),
-					'session_lid'       => $this->db->f('session_lid'),
-					'session_ip'        => $this->db->f('session_ip'),
-					'session_logintime' => $this->db->f('session_logintime'),
-					'session_action'    => $this->db->f('session_action'),
-					'session_dla'       => $this->db->f('session_dla')
-				);
+				$order_by = 'ORDER BY session_dla asc';
+			}
+			$this->db->select($this->sessions_table,'*',"session_flags != 'A'",__LINE__,__FILE__,(int)$start,$order_by);
+
+			while (($row = $this->db->row(true)))
+			{
+				$values[] = $row;
 			}
 			return $values;
 		}
 		
-		/*!
-		@function total
-		@abstract get number of normal / non-anonymous sessions
-		*/
+		/**
+		 * get number of regular / non-anonymous sessions
+		 *
+		 * @return int
+		 */
 		function total()
 		{
-			$this->db->query("select count(*) from phpgw_sessions where session_flags != 'A'",__LINE__,__FILE__);
-			$this->db->next_record();
+			$this->db->select($this->sessions_table,'COUNT(*)',"session_flags != 'A'",__LINE__,__FILE__);
 
-			return $this->db->f(0);
+			return $this->db->next_record() ? $this->db->f(0) : 0;
 		}
 	}
 ?>

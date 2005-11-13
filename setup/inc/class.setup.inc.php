@@ -410,25 +410,10 @@
 		/**
 		 * Clear system/user level cache so as to have it rebuilt with the next access
 		 *
-		 * AFAIK this code is not used anymore -- RalfBecker 2005/11/04
+		 * @deprecated AFAIK this code is not used anymore -- RalfBecker 2005/11/04
 		 */
 		function clear_session_cache()
 		{
-			return;		// AFAIK this code is not used anymore -- RalfBecker 2005/11/04
-
-			$tables = Array();
-			$tablenames = $this->db->table_names();
-			foreach($tablenames as $key => $val)
-			{
-				$tables[] = $val['table_name'];
-			}
-			if(in_array('phpgw_app_sessions',$tables))
-			{
-				$this->db->lock(array('phpgw_app_sessions'));
-				@$this->db->query("DELETE FROM phpgw_app_sessions WHERE sessionid = '0' and loginid = '0' and app = 'phpgwapi' and location = 'config'",__LINE__,__FILE__);
-				@$this->db->query("DELETE FROM phpgw_app_sessions WHERE app = 'phpgwapi' and location = 'phpgw_info_cache'",__LINE__,__FILE__);
-				$this->db->unlock();
-			}
 		}
 
 		/**

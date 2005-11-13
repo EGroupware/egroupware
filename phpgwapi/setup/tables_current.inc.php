@@ -83,29 +83,29 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_sessions' => array(
+		'egw_sessions' => array(
 			'fd' => array(
 				'session_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
 				'session_lid' => array('type' => 'varchar','precision' => '128'),
 				'session_ip' => array('type' => 'varchar','precision' => '40'),
-				'session_logintime' => array('type' => 'int','precision' => '4'),
-				'session_dla' => array('type' => 'int','precision' => '4'),
+				'session_logintime' => array('type' => 'int','precision' => '8'),
+				'session_dla' => array('type' => 'int','precision' => '8'),
 				'session_action' => array('type' => 'varchar','precision' => '255'),
 				'session_flags' => array('type' => 'char','precision' => '2')
 			),
-			'pk' => array(),
+			'pk' => array('session_id'),
 			'fk' => array(),
 			'ix' => array(array('session_flags','session_dla')),
-			'uc' => array('session_id')
+			'uc' => array()
 		),
-		'phpgw_app_sessions' => array(
+		'egw_app_sessions' => array(
 			'fd' => array(
 				'sessionid' => array('type' => 'varchar','precision' => '128','nullable' => False),
 				'loginid' => array('type' => 'int','precision' => '4','nullable' => False),
 				'app' => array('type' => 'varchar','precision' => '25','nullable' => False),
 				'location' => array('type' => 'varchar','precision' => '128','nullable' => False),
 				'content' => array('type' => 'longtext'),
-				'session_dla' => array('type' => 'int','precision' => '4')
+				'session_dla' => array('type' => 'int','precision' => '8')
 			),
 			'pk' => array('sessionid','loginid','app','location'),
 			'fk' => array(),
