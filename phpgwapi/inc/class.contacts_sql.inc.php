@@ -44,8 +44,8 @@
 	class contacts_
 	{
 		var $db = '';
-		var $std_table='phpgw_addressbook';
-		var $ext_table='phpgw_addressbook_extra';
+		var $std_table='egw_addressbook';
+		var $ext_table='egw_addressbook_extra';
 
 		var $account_id = 0;
 		var $total_records = 0;
@@ -670,7 +670,7 @@
 
 			list($stock_fields,,$extra_fields) = $this->split_stock_and_extras($fields);
 			// access, cat_id and tid can be in $fields now or as extra params
-			foreach(array('access','cat_id','tid') as $extra)
+			foreach(array('access','cat_id','tid','owner') as $extra)
 			{
 				if (!is_null($$extra))
 				{

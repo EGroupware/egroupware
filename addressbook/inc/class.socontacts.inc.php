@@ -31,7 +31,7 @@ class socontacts
 	/**
 	 * @var string $extra_table name of customefields table
 	 */
-	var $extra_table = 'phpgw_addressbook_extra';
+	var $extra_table = 'egw_addressbook_extra';
 	
 	/**
 	* @var string $extra_id
@@ -57,7 +57,7 @@ class socontacts
 	{
 		if($GLOBALS['egw_info']['server']['contact_repository'] == 'sql' || !isset($GLOBALS['egw_info']['server']['contact_repository']))
 		{
-			$this->somain =& CreateObject('etemplate.so_sql','phpgwapi','phpgw_addressbook');
+			$this->somain =& CreateObject('etemplate.so_sql','phpgwapi','egw_addressbook');
 		}
 		else
 		{

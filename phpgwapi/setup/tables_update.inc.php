@@ -897,4 +897,14 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.028';
 	}
+
+
+	$test[] = '1.0.1.028';
+	function phpgwapi_upgrade1_0_1_028()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_addressbook','egw_addressbook');
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_addressbook_extra','egw_addressbook_extra');
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.029';
+	}
 ?>

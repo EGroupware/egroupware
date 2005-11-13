@@ -189,7 +189,7 @@
 			'ix' => array(array('cat_appname','cat_owner','cat_parent','cat_level')),
 			'uc' => array()
 		),
-		'phpgw_addressbook' => array(
+		'egw_addressbook' => array(
 			'fd' => array(
 				'id' => array('type' => 'auto','nullable' => False),
 				'lid' => array('type' => 'varchar','precision' => '32'),
@@ -250,7 +250,7 @@
 			'ix' => array(array('tid','owner','access','n_family','n_given','email'),array('tid','cat_id','owner','access','n_family','n_given','email')),
 			'uc' => array()
 		),
-		'phpgw_addressbook_extra' => array(
+		'egw_addressbook_extra' => array(
 			'fd' => array(
 				'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
 				'contact_owner' => array('type' => 'int','precision' => '8'),

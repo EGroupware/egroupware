@@ -39,7 +39,7 @@
 		var $ldap = '';
 		var $nextid = '';
 		var $std_table = '';
-		var $ext_table = 'phpgw_addressbook_extra';
+		var $ext_table = 'egw_addressbook_extra';
 
 		var $account_id;
 		var $adr_types;
