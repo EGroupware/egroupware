@@ -136,7 +136,7 @@
 		 */
 		function change_password($old_passwd, $new_passwd, $account_id=0)
 		{
-			if (!$_account_id)
+			if (!$account_id)
 			{
 				$username = $GLOBALS['egw_info']['user']['account_lid'];
 			}
@@ -144,6 +144,8 @@
 			{
 				$username = $GLOBALS['egw']->accounts->id2name($account_id);
 			}
+			//echo "<p>auth_ldap::change_password('$old_password','$new_passwd',$account_id) username='$username'</p>\n";
+
 			$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 			$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
 
