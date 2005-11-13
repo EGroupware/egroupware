@@ -42,6 +42,7 @@ location	resources	zh-tw	位置
 location of resource	resources	zh-tw	資源的位置
 name of resource	resources	zh-tw	資源的名稱
 no description available	resources	zh-tw	沒有說明
+no resources selected	resources	zh-tw	沒有選擇資源
 notify your administrator to correct this situation	resources	zh-tw	提醒您的管理者來修正這個狀況
 picture	resources	zh-tw	圖片
 picture source	resources	zh-tw	圖片來源
@@ -52,21 +53,24 @@ prizeing information for booking or buying	resources	zh-tw	預約或購買的價
 quantity	resources	zh-tw	數量
 quantity of resource	resources	zh-tw	資源數量
 quantity:	resources	zh-tw	數量：
+read calendar permissions	resources	zh-tw	讀取行事曆權限
 read calender permissions	resources	zh-tw	讀取行事曆權限
 read permissions	resources	zh-tw	讀取權限
 related links	resources	zh-tw	相關連結
-resources	resources	zh-tw	資源
+resources	common	zh-tw	資源
 resources list	resources	zh-tw	資源清單
 responsible:	resources	zh-tw	負責人：
 saves entry and exits	resources	zh-tw	儲存後離開
 select a category	resources	zh-tw	選擇一個類別
 select resource	resources	zh-tw	選擇資源
+select resources	resources	zh-tw	選擇資源
 short description	resources	zh-tw	簡短說明
 short description of resource	resources	zh-tw	資源的簡短說明
 something went wrong by deleting resource	resources	zh-tw	刪除資源時發生錯誤
 something went wrong by saving resource	resources	zh-tw	儲存資源時發生錯誤
 storage inforation	resources	zh-tw	儲存資訊
 the calendar of this resource	resources	zh-tw	這個資源的行事曆
+this module displays the resources app	resources	zh-tw	這個模組顯示資源應用
 use general resources icon	resources	zh-tw	使用一般資源圖示
 use own picture	resources	zh-tw	使用自訂圖示
 use the category's icon	resources	zh-tw	使用這個類別的圖示
@@ -80,3 +84,4 @@ which category does this resource belong to?	resources	zh-tw	這個資源屬於�
 write permissions	resources	zh-tw	寫入權限
 you are not permitted to edit this reource!	resources	zh-tw	您沒有編輯這個資源的權限！
 you are not permitted to get information about this resource!	resources	zh-tw	您沒有取得關於這個資源資訊的權限！
+you chose more resources than available	resources	zh-tw	您選擇的資源超過現有資源

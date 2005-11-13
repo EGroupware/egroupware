@@ -49,7 +49,7 @@ create new links	calendar	zh-tw	建立新連結
 csv	calendar	zh-tw	CSV
 csv-fieldname	calendar	zh-tw	CSV-欄位名稱
 csv-filename	calendar	zh-tw	CSV-檔案名稱
-custom fields	calendar	zh-tw	自訂欄位
+custom fields	common	zh-tw	自訂欄位
 daily	calendar	zh-tw	每日
 days	calendar	zh-tw	日
 days of the week for a weekly repeated event	calendar	zh-tw	重複事件在每週的哪幾天
@@ -282,6 +282,7 @@ weekview without weekend	calendar	zh-tw	週曆不包含週末
 which events do you want to see when you enter the calendar.	calendar	zh-tw	當您進入行事曆時您希望看到什麼樣的行事曆。
 which of calendar view do you want to see, when you start calendar ?	calendar	zh-tw	當您開始了一個行事曆您希望看到哪個行事曆？
 whole day	calendar	zh-tw	整天
+wk	calendar	zh-tw	週
 work day ends on	calendar	zh-tw	每日結束時間
 work day starts on	calendar	zh-tw	每日開始時間
 yearly	calendar	zh-tw	每年

@@ -14,11 +14,16 @@
 '%1' is not a valid floatingpoint number !!!	etemplate	zh-tw	'%1' 不是正確的浮點數！
 '%1' is not a valid integer !!!	etemplate	zh-tw	'%1' 不是正確的整數！
 a pattern to be searched for	etemplate	zh-tw	搜尋條件
+accesskey	etemplate	zh-tw	存取鍵值
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	zh-tw	存取鍵值也可以在標籤中包含一個 & （例如 &Name）
 add a new column (after the existing ones)	etemplate	zh-tw	新增欄位(在已存在的之後)
+add a new entry of the selected application	etemplate	zh-tw	在選擇的應用程式中新增一筆資料
 add a new multi-column index	etemplate	zh-tw	新增多欄索引
 add column	etemplate	zh-tw	新增欄位
 add index	etemplate	zh-tw	新增索引
+add new	etemplate	zh-tw	新增
 add table	etemplate	zh-tw	新增表格
+advanced search	etemplate	zh-tw	進階搜尋
 align	etemplate	zh-tw	對齊
 alignment of label and input-field in table-cell	etemplate	zh-tw	標題與表格輸入文字對齊方式
 alignment of the v/hbox containing table-cell	etemplate	zh-tw	V/HBox的對齊方式
@@ -75,6 +80,7 @@ css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternati
 css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	zh-tw	資料列的CSS類別名稱，預設為：'th' = 標題列, 'row' = 互換資料, 'row_off'+'row_on' 資料列
 css-styles	etemplate	zh-tw	CSS風格
 custom	etemplate	zh-tw	自訂
+custom fields	etemplate	zh-tw	自訂欄位
 cut	etemplate	zh-tw	剪下
 date+time	etemplate	zh-tw	日期+時間
 datum	etemplate	zh-tw	資料
@@ -93,6 +99,7 @@ delete index	etemplate	zh-tw	刪除索引
 delete the spezified etemplate	etemplate	zh-tw	刪除指定樣板
 delete this column	etemplate	zh-tw	刪除這個欄位
 delete this etemplate	etemplate	zh-tw	刪除這個樣板
+delete this file	etemplate	zh-tw	刪除這個檔案
 delete this row	etemplate	zh-tw	刪除這個資料
 delete whole column (can not be undone!!!)	etemplate	zh-tw	刪除整個欄位(無法復原！)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	zh-tw	從資料庫刪除上面指定的樣板，無法還原
@@ -105,6 +112,7 @@ displayed in statusline of browser if input-field gets focus	etemplate	zh-tw	如
 displayed in the top line of the groupbox (legend)	etemplate	zh-tw	在群組區塊（範例）的最上方顯示
 do you want to save the changes you made in table %s?	etemplate	zh-tw	您是否要儲存在表格 %s 的異動？
 documentation	etemplate	zh-tw	文件
+doesn't matter	etemplate	zh-tw	沒關係
 drop a table - this can not be undone	etemplate	zh-tw	移出一個資料表 - 將無法還原
 drop table	etemplate	zh-tw	移除資料表
 dump4setup	etemplate	zh-tw	匯出安裝所需資料
@@ -199,6 +207,7 @@ last	etemplate	zh-tw	最後
 left	etemplate	zh-tw	左
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	zh-tw	字元長度，精確數字：2,4,8 和浮點數：4,8
 link	etemplate	zh-tw	連結
+linkentry	etemplate	zh-tw	連結資料
 linklist	etemplate	zh-tw	連結清單
 linkstring	etemplate	zh-tw	連結文字
 linkto	etemplate	zh-tw	連結網址
@@ -234,8 +243,10 @@ number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	zh-tw	V/HBox
 of	etemplate	zh-tw	的
 onclick	etemplate	zh-tw	點選時
 only an other version found !!!	etemplate	zh-tw	只有找到一個其他版本！
+open the online help.	etemplate	zh-tw	開啟線上說明
 optional note about the link	etemplate	zh-tw	連結的附註
 options	etemplate	zh-tw	選項
+order to navigating by tab key through the form	etemplate	zh-tw	表單中跳位鍵的順序
 overflow	etemplate	zh-tw	超過
 padding	etemplate	zh-tw	文框距離
 parent is a '%1' !!!	etemplate	zh-tw	上一層是一個 '%1' ！
@@ -313,6 +324,7 @@ swap with next column	etemplate	zh-tw	與下一個欄位切換
 swap with next row	etemplate	zh-tw	與下一個資料列切換
 switch to a parent widget	etemplate	zh-tw	與上一層容器切換
 switch to an other widgets of that container	etemplate	zh-tw	與其他容器切換
+tabindex	etemplate	zh-tw	跳位鍵索引
 table unchanged, no write necessary !!!	etemplate	zh-tw	表單沒有異動，不需要儲存！
 tablename	etemplate	zh-tw	資料表名稱
 tabs	etemplate	zh-tw	跳位

@@ -1,13 +1,13 @@
 %1 email addresses inserted	common	zh-tw	已匯入 %1 筆電子郵件位址
 %1 is not executable by the webserver !!!	common	zh-tw	網頁伺服器無法執行 %1 ！
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh-tw	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
-(shift-)click or drag to change value	jscalendar	zh-tw	(Shift鍵加)點選或拖拉滑鼠游標來改變數值
+(shift-)click or drag to change value	jscalendar	zh-tw	(Shift 鍵加)點選或拖拉滑鼠游標來改變數值
 - click on any of the time parts to increase it	jscalendar	zh-tw	- 點選任意時間區來增加它
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	zh-tw	- 按住滑鼠來快速選取上面的按鈕
 - or click and drag for faster selection.	jscalendar	zh-tw	- 或是用滑鼠拖拉來快速點選
 - or shift-click to decrease it	jscalendar	zh-tw	- 或是用Shift加滑鼠鍵來增加
 - use the %1, %2 buttons to select month	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇月份
-- use the %1, %2 buttons to select year	jscalendar	zh-tw	- 使用案牛 %1,%2來選擇年
+- use the %1, %2 buttons to select year	jscalendar	zh-tw	- 使用按鈕 %1,%2來選擇年
 00 (disable)	admin	zh-tw	00 (關閉)
 13 (ntp)	admin	zh-tw	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	zh-tw	日期的三個字元簡寫
@@ -22,7 +22,7 @@ _table properties...	htmlarea-ContextMenu	zh-tw	_表格屬性...
 a editor instance must be focused before using this command.	tinymce	zh-tw	在使用這個指令前，編輯器中必須先選取資料
 about	common	zh-tw	關於
 about %1	common	zh-tw	關於 %1
-about the calendar	jscalendar	zh-tw	關於這個行事曆
+about the calendar	jscalendar	zh-tw	關於行事曆
 about this editor	htmlarea	zh-tw	關於編輯器
 access	common	zh-tw	存取權限
 access not permitted	common	zh-tw	存取遭拒
@@ -40,7 +40,7 @@ add sub	common	zh-tw	新增子分類
 addressbook	common	zh-tw	通訊錄
 admin	common	zh-tw	系統管理
 administration	common	zh-tw	系統管理
-afghanistan	common	zh-tw	AFGHANISTAN
+afghanistan	common	zh-tw	阿富汗
 albania	common	zh-tw	阿爾巴尼亞
 algeria	common	zh-tw	阿爾吉利亞
 align	htmlarea-TableOperations	zh-tw	對齊
@@ -55,37 +55,38 @@ all four sides	htmlarea-TableOperations	zh-tw	所有四邊
 all occurrences of the search string was replaced.	tinymce	zh-tw	所有搜尋的字串都被取代了。
 alphabet	common	zh-tw	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	zh-tw	替換的樣式表：
+alternative image	tinymce	zh-tw	替換圖片
 american samoa	common	zh-tw	AMERICAN SAMOA
-andorra	common	zh-tw	ANDORRA
-angola	common	zh-tw	ANGOLA
-anguilla	common	zh-tw	ANGUILLA
-antarctica	common	zh-tw	ANTARCTICA
+andorra	common	zh-tw	安道爾
+angola	common	zh-tw	安哥拉
+anguilla	common	zh-tw	安圭拉
+antarctica	common	zh-tw	南極洲
 antigua and barbuda	common	zh-tw	ANTIGUA AND BARBUDA
 apply	common	zh-tw	同意
 april	common	zh-tw	四月
 are you sure you want to delete these entries ?	common	zh-tw	您確定要刪除這些資料？
 are you sure you want to delete this entry ?	common	zh-tw	您確定要刪除此筆資料？
-argentina	common	zh-tw	ARGENTINA
-armenia	common	zh-tw	ARMENIA
-aruba	common	zh-tw	ARUBA
+argentina	common	zh-tw	阿根廷
+armenia	common	zh-tw	阿美尼亞
+aruba	common	zh-tw	阿盧巴
 august	common	zh-tw	八月
 australia	common	zh-tw	澳洲
-austria	common	zh-tw	AUSTRIA
+austria	common	zh-tw	奧地利
 author	common	zh-tw	作者
 autohide sidebox menus	common	zh-tw	自動隱藏其他選單
 automatically hide the sidebox menus?	common	zh-tw	自動隱藏其他選單？
 autosave default category	common	zh-tw	自動儲存預設分類目錄
-azerbaijan	common	zh-tw	AZERBAIJAN
+azerbaijan	common	zh-tw	亞賽拜然
 back	common	zh-tw	上一頁
 back to user login	common	zh-tw	回到首頁
 background	htmlarea-TableOperations	zh-tw	背景
 background color	htmlarea	zh-tw	背景顏色
 background color:	common	zh-tw	背景顏色：
 bad login or password	common	zh-tw	錯誤的使用者代碼或密碼
-bahamas	common	zh-tw	BAHAMAS
-bahrain	common	zh-tw	BAHRAIN
-bangladesh	common	zh-tw	BANGLADESH
-barbados	common	zh-tw	BARBADOS
+bahamas	common	zh-tw	巴哈馬
+bahrain	common	zh-tw	巴林
+bangladesh	common	zh-tw	孟加拉
+barbados	common	zh-tw	巴貝多
 baseline	htmlarea-TableOperations	zh-tw	基線
 bcc	common	zh-tw	密件副本
 belarus	common	zh-tw	BELARUS
@@ -102,19 +103,19 @@ border	common	zh-tw	框線
 border color	tinymce	zh-tw	框線顏色
 borders	htmlarea-TableOperations	zh-tw	框線
 bosnia and herzegovina	common	zh-tw	BOSNIA AND HERZEGOVINA
-botswana	common	zh-tw	BOTSWANA
+botswana	common	zh-tw	波紮那
 bottom	common	zh-tw	底部
 bouvet island	common	zh-tw	BOUVET ISLAND
-brazil	common	zh-tw	BRAZIL
+brazil	common	zh-tw	巴西
 british indian ocean territory	common	zh-tw	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	zh-tw	BRUNEI DARUSSALAM
-bulgaria	common	zh-tw	BULGARIA
+bulgaria	common	zh-tw	保加利亞
 bulleted list	htmlarea	zh-tw	核選清單
 burkina faso	common	zh-tw	BURKINA FASO
 burundi	common	zh-tw	BURUNDI
 c_ell properties...	htmlarea-ContextMenu	zh-tw	欄位設定...
 calendar	common	zh-tw	行事曆
-cambodia	common	zh-tw	CAMBODIA
+cambodia	common	zh-tw	高棉
 cameroon	common	zh-tw	CAMEROON
 canada	common	zh-tw	加拿大
 cancel	common	zh-tw	取消
@@ -139,7 +140,7 @@ charset	common	zh-tw	utf-8
 chec_k link...	htmlarea-ContextMenu	zh-tw	檢查連結...
 check installation	common	zh-tw	檢查系統安裝狀態
 check now	common	zh-tw	立刻檢查
-chile	common	zh-tw	CHILE
+chile	common	zh-tw	智利
 china	common	zh-tw	中國大陸
 choose directory to move selected folders and files to.	tinymce	zh-tw	選擇指定的檔案與資料夾要移動的目的地
 choose list style type (for ordered lists)	htmlarea-ListType	zh-tw	選擇清單樣式類型(排序的清單)
@@ -160,10 +161,11 @@ colombia	common	zh-tw	哥倫比亞
 color	htmlarea-TableOperations	zh-tw	顏色
 columns	tinymce	zh-tw	欄位
 comment	tinymce	zh-tw	備註
+common perferences	common	zh-tw	一般設定
 comoros	common	zh-tw	COMOROS
 company	common	zh-tw	公司
 configuration problem	tinymce	zh-tw	設定問題
-congo	common	zh-tw	CONGO
+congo	common	zh-tw	剛果
 congo, the democratic republic of the	common	zh-tw	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	zh-tw	COOK ISLANDS
 copy	common	zh-tw	複製
@@ -175,7 +177,7 @@ cote d ivoire	common	zh-tw	COTE D IVOIRE
 create	common	zh-tw	建立
 create a link	htmlarea-ContextMenu	zh-tw	建立一個連結
 created by	common	zh-tw	建立者
-croatia	common	zh-tw	CROATIA
+croatia	common	zh-tw	克羅地亞
 cuba	common	zh-tw	古巴
 currency	common	zh-tw	貨幣
 current	common	zh-tw	現在
@@ -185,8 +187,8 @@ current users	common	zh-tw	線上使用者
 cut	htmlarea-ContextMenu	zh-tw	減下
 cut selection	htmlarea	zh-tw	剪下選取的
 cut table row	tinymce	zh-tw	剪下表格列
-cyprus	common	zh-tw	CYPRUS
-czech republic	common	zh-tw	CZECH REPUBLIC
+cyprus	common	zh-tw	賽普勒斯
+czech republic	common	zh-tw	捷克共和國
 date	common	zh-tw	日期
 date due	common	zh-tw	到期日期
 date modified	tinymce	zh-tw	修改日期
@@ -218,7 +220,7 @@ disable slider effects	common	zh-tw	停用切換效果
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh-tw	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
 disabled	common	zh-tw	停用
 display %s first	jscalendar	zh-tw	先顯示 %s
-djibouti	common	zh-tw	DJIBOUTI
+djibouti	common	zh-tw	吉布地
 do you also want to delete all subcategories ?	common	zh-tw	您確定要刪除所有的子分類？
 do you want to use the wysiwyg mode for this textarea?	tinymce	zh-tw	您確定要在這個文字方塊使用所見即所得編輯器？
 doctype:	common	zh-tw	文件類型：
@@ -241,7 +243,7 @@ edit categories	common	zh-tw	編輯分類
 edit category	common	zh-tw	編輯分類
 egroupware api version %1	common	zh-tw	eGroupWare API 版本 %1
 egroupware: login blocked for user '%1', ip %2	common	zh-tw	eGroupWare: 使用者鎖定 '%1', IP %2
-egypt	common	zh-tw	EGYPT
+egypt	common	zh-tw	埃及
 el salvador	common	zh-tw	EL SALVADOR
 element...	htmlarea-ContextMenu	zh-tw	元件...
 email	common	zh-tw	電子郵件
@@ -314,19 +316,19 @@ french southern territories	common	zh-tw	FRENCH SOUTHERN TERRITORIES
 friday	common	zh-tw	星期五
 ftp	common	zh-tw	FTP
 fullname	common	zh-tw	全名
-gabon	common	zh-tw	GABON
-gambia	common	zh-tw	GAMBIA
+gabon	common	zh-tw	加彭
+gambia	common	zh-tw	甘比亞
 general menu	common	zh-tw	一般選單
-georgia	common	zh-tw	GEORGIA
-germany	common	zh-tw	GERMANY
-ghana	common	zh-tw	GHANA
+georgia	common	zh-tw	喬治亞
+germany	common	zh-tw	德國
+ghana	common	zh-tw	迦納
 gibraltar	common	zh-tw	GIBRALTAR
 global	common	zh-tw	全域
 global public	common	zh-tw	全域共用
 go today	jscalendar	zh-tw	回到今天
 grant access	common	zh-tw	存取權限開放
-greece	common	zh-tw	GREECE
-greenland	common	zh-tw	GREENLAND
+greece	common	zh-tw	希臘
+greenland	common	zh-tw	格陵蘭
 grenada	common	zh-tw	GRENADA
 group	common	zh-tw	群組
 group access	common	zh-tw	群組存取
@@ -347,7 +349,7 @@ guyana	common	zh-tw	GUYANA
 haiti	common	zh-tw	HAITI
 heard island and mcdonald islands	common	zh-tw	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	zh-tw	高度
-help	tinymce	zh-tw	協助
+help	common	zh-tw	協助
 help using editor	htmlarea	zh-tw	協助使用編輯器
 high	common	zh-tw	高
 highest	common	zh-tw	最高
@@ -365,7 +367,7 @@ html tidy	htmlarea-HtmlTidy	zh-tw	HTML整理
 htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	zh-tw	HTMLArea無法刪除這一列的最後一個儲存格
 htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	zh-tw	HTMLArea無法刪除這個資料表的最後一個欄位
 htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	zh-tw	HTMLArea無法刪除這個資料表的最後一列
-hungary	common	zh-tw	HUNGARY
+hungary	common	zh-tw	匈牙利
 i will open it in a new page.	htmlarea-SpellChecker	zh-tw	在新視窗開啟
 i_nsert row before	htmlarea-ContextMenu	zh-tw	在插入列之前
 iceland	common	zh-tw	冰島
@@ -418,10 +420,10 @@ it has been more then %1 days since you changed your password	common	zh-tw	距�
 it is recommended that you run setup to upgrade your tables to the current version	common	zh-tw	建議您執行設定程式將資料表升級至目前的版本。
 italic	common	zh-tw	斜體
 italy	common	zh-tw	義大利
-jamaica	common	zh-tw	JAMAICA
+jamaica	common	zh-tw	牙買加
 january	common	zh-tw	一月
 japan	common	zh-tw	日本
-jordan	common	zh-tw	JORDAN
+jordan	common	zh-tw	約旦
 js-popup	tinymce	zh-tw	JS彈出式視窗
 july	common	zh-tw	七月
 jun	common	zh-tw	六月
@@ -621,6 +623,7 @@ personal	common	zh-tw	個人
 peru	common	zh-tw	祕魯
 philippines	common	zh-tw	菲律賓
 phone number	common	zh-tw	電話
+phpgwapi	common	zh-tw	eGroupWare應用介面
 pitcairn	common	zh-tw	PITCAIRN
 pixels	htmlarea-TableOperations	zh-tw	畫素
 please %1 by hand	common	zh-tw	請手動 %1

@@ -1,6 +1,6 @@
 %1 records imported	infolog	zh-tw	%1 筆資料匯入
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	zh-tw	讀取 %1 筆資料(尚未匯入，您可以回到 %2上一頁%3 並且取消匯入測試)
-- subprojects from	infolog	zh-tw	- 附加專案
+- subprojects from	infolog	zh-tw	- 附加專案來自
 0%	infolog	zh-tw	0%
 10%	infolog	zh-tw	10%
 20%	infolog	zh-tw	20%
