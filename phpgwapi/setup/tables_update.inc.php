@@ -888,4 +888,13 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.027';
 	}
+
+
+	$test[] = '1.0.1.027';
+	function phpgwapi_upgrade1_0_1_027()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_interserv','egw_interserv');
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.028';
+	}
 ?>

@@ -294,7 +294,7 @@
 			'ix' => array(),
 			'uc' => array()
 		),
-		'phpgw_interserv' => array(
+		'egw_interserv' => array(
 			'fd' => array(
 				'server_id' => array('type' => 'auto','nullable' => False),
 				'server_name' => array('type' => 'varchar','precision' => '64','nullable' => True),

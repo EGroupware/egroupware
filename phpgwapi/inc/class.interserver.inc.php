@@ -27,7 +27,7 @@
 	{
 		var $db;
 		var $accounts;
-		var $table = 'phpgw_interserv';
+		var $table = 'egw_interserv';
 		var $total = 0;
 		var $result = '';
 
@@ -117,7 +117,7 @@
 			$this->read_repository();
 			if($this->server['trust_level'])
 			{
-				$this->accounts = CreateObject('phpgwapi.accounts');
+				$this->accounts =& CreateObject('phpgwapi.accounts');
 				$this->accounts->server = $this->serverid;
 			}
 			$this->security = $this->server['server_security'];
