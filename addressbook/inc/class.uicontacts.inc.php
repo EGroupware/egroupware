@@ -283,27 +283,32 @@ class uicontacts extends bocontacts
 	{
 		return '<script LANGUAGE="JavaScript">
 		
-		function showphones(form){
+		function showphones(form) 
+		{
 			set_style_by_class("table","editphones","display","inline");
-			copyvalues(form,"tel_home","tel_home2");
-			copyvalues(form,"tel_work","tel_work2");
-			copyvalues(form,"tel_cell","tel_cell2");
-			return;
+			if (form) {
+				copyvalues(form,"tel_home","tel_home2");
+				copyvalues(form,"tel_work","tel_work2");
+				copyvalues(form,"tel_cell","tel_cell2");
+			}
 		}
 		
-		function hidephones(form){
+		function hidephones(form) 
+		{
 			set_style_by_class("table","editphones","display","none");
-			copyvalues(form,"tel_home2","tel_home");
-			copyvalues(form,"tel_work2","tel_work");
-			copyvalues(form,"tel_cell2","tel_cell");
-			return;
+			if (form) {
+				copyvalues(form,"tel_home2","tel_home");
+				copyvalues(form,"tel_work2","tel_work");
+				copyvalues(form,"tel_cell2","tel_cell");
+			}
 		}
 		
 		function copyvalues(form,src,dst){
 			var srcelement = getElement(form,src);  //ById("exec["+src+"]");
 			var dstelement = getElement(form,dst);  //ById("exec["+dst+"]");
-			dstelement.value = srcelement.value;
-			return;
+			if (srcelement && dstelement) {
+				dstelement.value = srcelement.value;
+			}
 		}
 		
 		function getElement(form,pattern){
