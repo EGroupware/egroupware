@@ -543,7 +543,7 @@ class ADODB_mysqli extends ADOConnection {
 	    $this->databaseName = $dbName;
 	    if ($this->_connectionID) {
         	$result = @mysqli_select_db($this->_connectionID, $dbName);
-			if (!$result) {
+			if (!$result && $this->debug) {
 		    	ADOConnection::outp("Select of database " . $dbName . " failed. " . $this->ErrorMsg());
 			}
 			return $result;		
