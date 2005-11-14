@@ -80,9 +80,9 @@ class resources_hooks
 					'appname'    => $appname,
 					'global_cats'=> true)),
 				'Configure Access Permissions' => $GLOBALS['egw']->link('/index.php',
-					'menuaction=resources.ui_acl.acllist')
-// 				'Custom fields, typ and status' => $GLOBALS['egw']->link('/index.php',array(
-// 					'menuaction' => 'infolog.uicustomfields.edit')),
+					'menuaction=resources.ui_acl.acllist'),
+				'Custom Fields'=>$GLOBALS['egw']->link('/index.php',
+					'menuaction=admin.customfields.edit&appname=resources'),
 // 				'CSV-Import'         => $GLOBALS['egw']->link('/infolog/csv_import.php')
 			);
 			if ($location == 'admin')

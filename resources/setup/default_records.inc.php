@@ -12,8 +12,8 @@
 	$resources_table_prefix = 'egw_resources';
 	
 	// Add a general category for resources
-	$oProc->query("INSERT INTO {$GLOBALS['egw_setup']->cats_table} (cat_parent,cat_owner,cat_access,cat_appname,cat_name,cat_description,last_mod) VALUES (0,-1,'public','resources','General resources','This category has been added by setup',".time().")");
-	$cat_id = $oProc->m_odb->get_last_insert_id($GLOBALS['egw_setup']->cats_table,'cat_id');
+	$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->cats_table,array('cat_parent' => 0, 'cat_owner' => -1,'cat_access' => 'public','cat_appname' => 'resources','cat_name' => 'General resources','cat_description' => 'This category has been added by setup','last_mod' => time()),false,__LINE__,__FILE__);
+	$cat_id = $GLOBALS['egw_setup']->db->get_last_insert_id($GLOBALS['egw_setup']->cats_table,'cat_id');
 	
 	// Give default group all rights to this general cat
 	$defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);

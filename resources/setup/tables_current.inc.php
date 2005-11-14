@@ -36,5 +36,17 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'egw_resources_extra' => array(
+			'fd' => array(
+				'extra_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'extra_name' => array('type' => 'varchar','precision' => '40','nullable' => False),
+				'extra_owner' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '-1'),
+				'extra_value' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '')
+			),
+			'pk' => array('extra_id','extra_name','extra_owner'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
 	);

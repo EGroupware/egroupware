@@ -16,6 +16,7 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 /**
  * General storage object for resources
  *
+ * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
  * @package resources
  */
 class so_resources extends so_sql
@@ -23,12 +24,16 @@ class so_resources extends so_sql
 	function so_resources()
 	{
 		$this->so_sql('resources','egw_resources');
+		
+		$custom =& CreateObject('admin.customfields',$contact_app);
+		$this->customfields = $custom->get_customfields();
+		$this->soextra =& CreateObject('etemplate.so_sql');
+		$this->soextra->so_sql('resources','egw_resources_extra');
 	}
 
 	/**
 	 * gets the value of $key from resource of $res_id
 	 *
-	 * Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @param string $key key of value to get
 	 * @param int $res_id resource id
 	 * @return mixed value of key and resource, false if key or id not found.
@@ -42,18 +47,58 @@ class so_resources extends so_sql
 		}
 		return false;
 	}
+	
+	/**
+	 * reads resource including custom fields
+	 *
+	 * @param interger $res_id res_id
+	 * @return array/boolean data if row could be retrived else False
+	 */
+	function read($res_id)
+	{
+		// read main data
+		$resource = parent::read($res_id);
+		
+		// read customfields
+		$keys = array(
+			'extra_id' => $res_id,
+			'extra_owner' => -1,
+		);
+		$customfields = $this->soextra->search($keys,false);
+		foreach ((array)$customfields as $field)
+		{
+			$resource['#'.$field['extra_name']] = $field['extra_value'];
+		}
+		return $resource;
+	}
 
 	/**
-	* saves a resource including binary datas
-	*
-	* Cornelius Weiss <egw@von-und-zu-weiss.de>
-	* @param array $resource key => value 
-	* @return mixed id of resource if all right, false if fale
+	 * saves a resource including extra fields
+	 *
+	 * @param array $resource key => value 
+	 * @return mixed id of resource if all right, false if fale
 	 */
 	function save($resource)
 	{
 		$this->data = $resource;
-		return  parent::save() == 0 ? $this->data['res_id'] : false; 
+		if(parent::save() != 0) return false;
+		$res_id = $this->data['res_id'];
+		
+		// save customfields
+		foreach ($this->customfields as $field => $options)
+		{
+			$value = $resource['#'.$field];
+			$data = array(
+				'extra_id' => $res_id,
+				'extra_name' => $field,
+				'extra_owner' => -1,
+				'extra_value' => $value,
+			);
+			$this->soextra->data = $data;
+			$error_nr = $this->soextra->save();
+			if($error_nr) return false;
+		}
+		return $res_id;
 	}
 	
 }
