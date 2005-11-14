@@ -494,6 +494,7 @@ class html
 		{
 			$init = 'theme : "advanced", theme_advanced_toolbar_location : "top", theme_advanced_toolbar_align : "left"';
 			$tab1a = 'theme_advanced_buttons1_add : "';
+			$tab2a = 'theme_advanced_buttons2_add : "';
 			$tab3a = 'theme_advanced_buttons3_add : "separator,fullscreen';
 			$plugs = 'plugins : "paste,fullscreen,advimage,advlink';
 			$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]';
@@ -517,6 +518,17 @@ class html
 							$tab1a .= ',fontselect,fontsizeselect';
 							$init .= ',theme_advanced_disable : "styleselect"';
 							break;
+						case 'FileManager' :
+							$plugs .= ',filemanager';
+							$tab3a .= ',separator,filemanager';
+							break;
+						case 'SearchReplace' :
+							$plugs .= ',searchreplace';
+							$tab1a .= ',separator,search,replace';
+						case 'InsertDateTime' :
+							$plugs .= ',insertdatetime';
+							$tab2a .= ',separator,insertdate,inserttime';
+							break;
 						default:
 						//	echo $plugin .'<br>';
 					}
@@ -527,7 +539,7 @@ class html
 				$init .= ',document_base_url : "'. $base_href. '", relative_urls : true';
 			}
 		
-			$init_options = $init. ','. $tab1a. '",'. $tab3a. '",'. $plugs. '",'. $eve. '"';
+			$init_options = $init. ','. $tab1a. '",'. $tab2a. '",'. $tab3a. '",'. $plugs. '",'. $eve. '"';
 		}
 		
 		/* do again and again */
@@ -535,8 +547,8 @@ class html
 			tinyMCE.init({
 			 mode : "exact",
  			 language: "'.$GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
-			 plugin_insertdate_dateFormat : "'.str_replace(array('Y','m','M','d'),array('%Y','%m','%b','%d'),$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).'",
-			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').'",		 
+			 plugin_insertdate_dateFormat : "'.str_replace(array('Y','m','M','d'),array('%Y','%m','%b','%d'),$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' ",
+			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').' ",		 
 			 elements : "'.$name.'",
 			 '.$init_options.'
 			});
