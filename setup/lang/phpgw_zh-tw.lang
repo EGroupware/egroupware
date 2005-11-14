@@ -267,7 +267,7 @@ logout	setup	zh-tw	登出
 mail domain (for virtual mail manager)	setup	zh-tw	郵件網域（虛擬郵件管理程式使用）
 mail server login type	setup	zh-tw	郵件伺服器登入類型
 mail server protocol	setup	zh-tw	郵件伺服器協定
-makesure	setup	zh-tw	確認您的資料庫已經安裝完成、使用者帳號權限設定完成
+make sure that your database is created and the account permissions are set	setup	zh-tw	確認您的資料庫已經安裝完成、使用者帳號權限設定完成
 manage applications	setup	zh-tw	管理應用程式
 manage languages	setup	zh-tw	管理語言
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh-tw	max_execution_time(最大可執行時間)被設定為小於30(秒)：eGroupWare有時候需要更多的執行時間，特別是無法預期的錯誤

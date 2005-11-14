@@ -155,7 +155,7 @@ ldap export users	setup	it	esporta utenti LDAP
 ldap import users	setup	it	importa utenti LDAP
 login to mysql -	setup	it	Login a Mysql -
 logout	setup	it	Esci
-makesure	setup	it	Controlla che il tuo database sia stato creato e che i permessi dell'utente siano corretti
+make sure that your database is created and the account permissions are set	setup	it	Controlla che il tuo database sia stato creato e che i permessi dell'utente siano corretti
 manage applications	setup	it	Gestione Applicazioni
 manage languages	setup	it	Gestione Lingue
 mcrypt version	setup	it	Versione MCrypt

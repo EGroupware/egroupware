@@ -228,7 +228,7 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	fi	Rajoita asennukseen pääsy seuraaville verkkoalueille (esim. 127.0.0.1, 10.1.1, oma.toimialue.com)
 login to mysql -	setup	fi	Kirjaudu mysql:ään -
 logout	setup	fi	Kirjaudu ulos
-makesure	setup	fi	Varmista, että tietokanta on luotu ja käyttöoikeudet ovat kunnossa
+make sure that your database is created and the account permissions are set	setup	fi	Varmista, että tietokanta on luotu ja käyttöoikeudet ovat kunnossa
 manage applications	setup	fi	Sovellusten hallinta
 manage languages	setup	fi	Kielten hallinta
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fi	max_execution_time on vähemmän kuin 30 (sekuntia): eGroupWare tarvitsee toisinaan pidempää suoritusaikaa, voit odottaa ongelmia

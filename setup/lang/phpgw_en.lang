@@ -267,7 +267,7 @@ logout	setup	en	Logout
 mail domain (for virtual mail manager)	setup	en	Mail domain (for Virtual mail manager)
 mail server login type	setup	en	Mail server login type
 mail server protocol	setup	en	Mail server protocol
-makesure	setup	en	Make sure that your database is created and the account permissions are set
+make sure that your database is created and the account permissions are set	setup	en	Make sure that your database is created and the account permissions are set
 manage applications	setup	en	Manage Applications
 manage languages	setup	en	Manage Languages
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	en	max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures

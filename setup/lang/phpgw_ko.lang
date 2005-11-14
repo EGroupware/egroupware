@@ -226,7 +226,7 @@ ldap rootdn	setup	ko	LDAP rootdn
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ko	주소나 네트웍, 호스트이름 설정에 접근을 제한함 (예: 127.0.0.1,101.1.1,myhost.dnydns.org)
 login to mysql -	setup	ko	mysql로 접속 -
 logout	setup	ko	접속해제
-makesure	setup	ko	귀하의 데이터베이스는 생성되었고 계정의 권한도 설정되었음을 확인하세요
+make sure that your database is created and the account permissions are set	setup	ko	귀하의 데이터베이스는 생성되었고 계정의 권한도 설정되었음을 확인하세요
 manage applications	setup	ko	응용프로그램 관리
 manage languages	setup	ko	언어 관리
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ko	max_execution_time 이 30초 이하로 설정되어 있습니다: eGroupWare는 가끔 보다 더 긴 실행시간이 걸릴수도 있습니다, 물론 가끔 실패하는 경우는 예외입니다

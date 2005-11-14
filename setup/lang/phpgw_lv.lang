@@ -237,7 +237,7 @@ logout	setup	lv	Iziet
 mail domain (for virtual mail manager)	setup	lv	Pasta domēns (Virtuālajam pasta pārvaldniekam)
 mail server login type	setup	lv	Pasta servera pieteikšanās tips
 mail server protocol	setup	lv	Pasta servera protokols
-makesure	setup	lv	Pārliecinies, ka datubāze ir izveidota un konta atļaujas uzstādītas
+make sure that your database is created and the account permissions are set	setup	lv	Pārliecinies, ka datubāze ir izveidota un konta atļaujas uzstādītas
 manage applications	setup	lv	Pārvaldīt programmatūru
 manage languages	setup	lv	Pārvaldīt valodas
 maximum account id (e.g. 65535 or 1000000)	setup	lv	Maksimālais kontu ID (piem.65535 vai 1000000)

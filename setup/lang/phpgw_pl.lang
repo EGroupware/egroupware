@@ -115,7 +115,7 @@ ldap import users	setup	pl	Import u¿ytkowników LDAP
 ldap root password	setup	pl	Has³o u¿ytkownika root LDAP
 ldap rootdn	setup	pl	LDAP rootdn
 logout	setup	pl	Wyloguj
-makesure	setup	pl	Make sure that your database is created and the account permissions are set
+make sure that your database is created and the account permissions are set	setup	pl	Make sure that your database is created and the account permissions are set
 manage applications	setup	pl	Zarz±dzanie aplikacjami
 manage languages	setup	pl	Zarz±dzanie jêzykami
 maximum account id (e.g. 65535 or 1000000)	setup	pl	Maksymalny ID konta (np. 65535 lub 1000000)

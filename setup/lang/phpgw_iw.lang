@@ -237,7 +237,7 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	iw	(127.0.0.1,10.1.1,myhost.dnydns.org :הגבל גישה להגדרה לרשתות, כתובות או מחשבים הבאים (למשל
 login to mysql -	setup	iw	mysql-כנס ל
 logout	setup	iw	יציאה מהמערכת
-makesure	setup	iw	וודא שבסיס הנתונים נוצר ושהרשאות החשבונות הוגדרו
+make sure that your database is created and the account permissions are set	setup	iw	וודא שבסיס הנתונים נוצר ושהרשאות החשבונות הוגדרו
 manage applications	setup	iw	ניהול יישומים
 manage languages	setup	iw	ניהול שפות
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	iw	:(זמן הרצה מירבי נקבע כפחות מ-30 (שניות

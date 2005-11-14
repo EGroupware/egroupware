@@ -226,7 +226,7 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	fr	Limiter l'acces au setup à ces adresses, réseaux ou machines (p.ex. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	fr	Connexion à mysql -
 logout	setup	fr	Se déconnecter
-makesure	setup	fr	Assurez-vous que votre base de données est créé et que les permissions sur les comptes sont positionnées
+make sure that your database is created and the account permissions are set	setup	fr	Assurez-vous que votre base de données est créé et que les permissions sur les comptes sont positionnées
 manage applications	setup	fr	Gérer les Applications
 manage languages	setup	fr	Gérer les Langues
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	fr	L'option «Max Execution Time» est positionnée en dessous des 30 secondes; <br />Parfois, eGroupware aura besoin de plus de temps.

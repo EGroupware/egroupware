@@ -226,7 +226,7 @@ ldap rootdn	setup	hr	LDAP rootdn
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	hr	Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	hr	Login to mysql -
 logout	setup	hr	Logout
-makesure	setup	hr	Make sure that your database is created and the account permissions are set
+make sure that your database is created and the account permissions are set	setup	hr	Make sure that your database is created and the account permissions are set
 manage applications	setup	hr	Manage Applications
 manage languages	setup	hr	Manage Languages
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	hr	max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures

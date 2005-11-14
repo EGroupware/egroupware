@@ -267,7 +267,7 @@ logout	setup	nl	Uitloggen
 mail domain (for virtual mail manager)	setup	nl	Mail domein (voor Virtual mail manager)
 mail server login type	setup	nl	Mailserver login type
 mail server protocol	setup	nl	Mailserver protocol
-makesure	setup	nl	Overtuig u ervan dat uw database is aangemaakt en dat de account rechten zijn ingesteld
+make sure that your database is created and the account permissions are set	setup	nl	Overtuig u ervan dat uw database is aangemaakt en dat de account rechten zijn ingesteld
 manage applications	setup	nl	Toepassingen beheren
 manage languages	setup	nl	Talen beheren
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	nl	max_execution_time is ingesteld op minder dan 30 (seconden): eGroupWare heeft somes een hogere execution_time, reken er dus op dat er af en toe fouten optreden

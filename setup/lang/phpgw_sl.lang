@@ -261,7 +261,7 @@ limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	sl	Omejitev dostopa do nastavitev z naslovov, omrežij ali gostiteljev (npr. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	sl	Prijava v mysql -
 logout	setup	sl	Odjava
-makesure	setup	sl	Prepričajte se da je podatkovna baza ustvarjena in da so pravice dostopa pravilno urejene.
+make sure that your database is created and the account permissions are set	setup	sl	Prepričajte se da je podatkovna baza ustvarjena in da so pravice dostopa pravilno urejene.
 manage applications	setup	sl	Upravljanje aplikacij
 manage languages	setup	sl	Upravljanje jezikov
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	sl	Najdaljši čas izvajanja (max_execution_time) je nastavljen na manj kot 30 sekund: eGW občasno potrebuje daljši čas izvajanja zato lahko pričajujete občasne napake

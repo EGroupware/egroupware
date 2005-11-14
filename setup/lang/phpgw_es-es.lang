@@ -267,7 +267,7 @@ logout	setup	es-es	Cerrar sesión
 mail domain (for virtual mail manager)	setup	es-es	Dominio de correo (para el gestor de correo virtual)
 mail server login type	setup	es-es	Tipo de sesión en el servidor de correo
 mail server protocol	setup	es-es	Protcolo del servidor de correo
-makesure	setup	es-es	Asegúrese de que su base de datos está creada y que los permisos están configurados
+make sure that your database is created and the account permissions are set	setup	es-es	Asegúrese de que su base de datos está creada y que los permisos están configurados
 manage applications	setup	es-es	Administrar aplicaciones
 manage languages	setup	es-es	Administrar idiomas
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	es-es	max_execution_time está puesto a menos de 30 (segundos): eGroupWare a veces necesita un valor mayor para execution_time, así que puede haber fallos ocasionales.

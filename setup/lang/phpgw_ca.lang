@@ -254,7 +254,7 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	ca	Accés limitat a la instal·lació a les següents adreces, xarxes o màquines (ex. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login to mysql -	setup	ca	Iniciar sessió en mysql -
 logout	setup	ca	Tancar sessió
-makesure	setup	ca	Assegureu-vos de que la vostra base de dades està creada i que els permisos estan configurats
+make sure that your database is created and the account permissions are set	setup	ca	Assegureu-vos de que la vostra base de dades està creada i que els permisos estan configurats
 manage applications	setup	ca	Administrar aplicacions
 manage languages	setup	ca	Administrar idiomes
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	ca	max_execution_time te un valor menor de 30 (segons): eGroupWare a vegades necessita un temps d'execució major. Hi pot haver petades ocasionals

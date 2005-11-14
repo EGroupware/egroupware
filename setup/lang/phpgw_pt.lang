@@ -115,7 +115,7 @@ ldap import users	setup	pt	Importação de usuários LDAP
 LDAP rootdn	setup	pt	Super usuário LDAP
 LDAP root password	setup	pt	Senha do super usuário LDAP
 logout	setup	pt	Desconectar
-makesure	setup	pt	Verifique se sua base de dados está criada e as permissões de acesso estão definidas
+make sure that your database is created and the account permissions are set	setup	pt	Verifique se sua base de dados está criada e as permissões de acesso estão definidas
 manage applications	setup	pt	Configurar aplicações
 manage languages	setup	pt	Configurar idiomas
 Maximum account id (e.g. 65535 or 1000000)	setup	pt	Id máximo para contas (Exemplo: 65535 ou 1000000)

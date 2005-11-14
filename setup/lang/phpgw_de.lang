@@ -267,7 +267,7 @@ logout	setup	de	Abmelden
 mail domain (for virtual mail manager)	setup	de	Mail Domain (für Virtual Mail Manager)
 mail server login type	setup	de	Mail Server Login Typ
 mail server protocol	setup	de	Mail Server Protokol
-makesure	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
+make sure that your database is created and the account permissions are set	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
 manage applications	setup	de	Anwendungen verwalten
 manage languages	setup	de	Sprachen verwalten
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	de	max_execution_time (maximale Ausführungszeit eines Skripts) ist auf weniger als 30 (Sekunden) gesetzt: eGroupWare benötigt teilweise längere Ausführungszeiten. Sie müssen mit gelegentlichen Fehlern rechnen.

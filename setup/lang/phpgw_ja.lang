@@ -108,7 +108,7 @@ ldap import users	setup	ja	LDAP インポートユーザ
 ldap rootdn	setup	ja	LDAP rootdn
 ldap root password	setup	ja	LDAP ルートパスワード
 logout	setup	ja	ログアウト
-makesure	setup	ja	データベースの作成とアカウントに権限を与えます
+make sure that your database is created and the account permissions are set	setup	ja	データベースの作成とアカウントに権限を与えます
 manage applications	setup	ja	アプリケーション設定
 manage languages	setup	ja	言語環境設定
 maximum account id (e.g. 65535 or 1000000)	setup	ja	最大ユーザID &nbsp; (例：65536 や 1000000 など)

@@ -226,7 +226,7 @@ limit access to setup to the following addresses or networks (e.g. 10.1.1,127.0.
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	pt-br	Limitar acesso ao setup aos seguintes endereços IP, redes ou nomes de domínio (ex: 127.0.0.1, 10.1.1, meudominio.nomesite.com.br)
 login to mysql -	setup	pt-br	Conectar no mysql -
 logout	setup	pt-br	Desconectar
-makesure	setup	pt-br	Verifique se sua base de dados está criada e as permissões de acesso estão definidas
+make sure that your database is created and the account permissions are set	setup	pt-br	Verifique se sua base de dados está criada e as permissões de acesso estão definidas
 manage applications	setup	pt-br	Configurar aplicações
 manage languages	setup	pt-br	Configurar idiomas
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execução está setado para menos de 30 segundos. Algumas vezes, o eGroupWare necessita de um limite maior que esse. É possível que ocorram problemas.
