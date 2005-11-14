@@ -209,7 +209,7 @@ class socontacts
 						{
 							$expr .= ',$not_result['.$i.']';
 						}
-						eval('$not_result = array_merge_recursive('.$expr.');');
+						@eval('$not_result = array_merge_recursive('.$expr.');');
 					}
 					foreach($all_main_ids as $entry)
 					{
@@ -244,7 +244,7 @@ class socontacts
 					{
 						$expr .= ',$result['.$i.']';
 					}
-					eval('$merge = array_merge_recursive('.$expr.');');
+					@eval('$merge = array_merge_recursive('.$expr.');');
 					if(!is_array($merge[$this->extra_id]))
 					{
 						$merge[$this->extra_id] = (array)$merge[$this->extra_id];
@@ -267,7 +267,7 @@ class socontacts
 				{
 					$expr .= ',$resultextra['.$i.']';
 				}
-				eval('$merge = array_merge_recursive('.$expr.');');
+				@eval('$merge = array_merge_recursive('.$expr.');');
 				$resultextra = array_unique((array)$merge[$this->extra_id]);
 			}
 		}
@@ -289,7 +289,7 @@ class socontacts
 			{
 				$expr .= ',$result['.$i.']';
 			}
-			eval('$merge = array_merge_recursive('.$expr.');');
+			@eval('$merge = array_merge_recursive('.$expr.');');
 			$result = ($merge[$this->main_id]);
 		}
 // 		_debug_array($result);
