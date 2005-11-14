@@ -452,7 +452,7 @@ class uiforms extends uical
 			echo "<html><body onload=\"$js\"></body></html>\n";
 			$GLOBALS['egw']->common->egw_exit();
 		}
-		return $this->edit($event,$preserv,$msg,$js,$content['link_to']['to_id']);
+		return $this->edit($event,$preserv,$msg,$js,$event['id'] ? $event['id'] : $content['link_to']['to_id']);
 	}
 
 	/**
@@ -477,11 +477,6 @@ class uiforms extends uical
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
 
-		/*$ics = ExecMethod('calendar.boicalendar.export',array(
-			'l_event_id'  => array($event),
-			'method'      => 'request',
-			'chunk_split' => False
-		));*/
 		$boical =& CreateObject('calendar.boical');
 		$ics = $boical->exportVCal(array($event),'request');
 
@@ -491,8 +486,6 @@ class uiforms extends uical
 			fwrite($f,$ics);
 			fclose($f);
 		}
-		$send->AddStringAttachment($ics, 'cal.ics', '8bit', 'text/calendar; method=request');
-
 		$vars = array(
 			'menuaction'      => 'felamimail.uicompose.compose',
 			'preset[to]'      => implode(', ',$to),
