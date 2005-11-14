@@ -10,14 +10,14 @@
 
 	/* $Id$ */
 
-	/*
+	/**
 	 * Database abstraction library
 	 *
-	 * This allows eGroupWare to use multiple database backends via ADOdb 4.20
+	 * This allows eGroupWare to use multiple database backends via ADOdb
 	 *
-	 * @package phpgwapi
+	 * @package api
 	 * @subpackage db
-	 * @author RalfBecker@outdoor-training.de
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
 	 * @license LGPL
 	 */
 
@@ -39,9 +39,14 @@
 	class egw_db
 	{
 		/**
-		* @var string $type database type
+		* @var string $type translated database type: mysqlt+mysqli ==> mysql, same for odbc-types
 		*/
 		var $Type     = '';
+
+		/**
+		* @var string $type database type as defined in the header.inc.php, eg. mysqlt
+		*/
+		var $setupType     = '';
 
 		/**
 		* @var string $Host database host to connect to
@@ -204,7 +209,7 @@
 				{
 					$$name = $this->$name;
 				}
-				$php_extension = $type = $this->Type;
+				$this->setupType = $php_extension = $type = $this->Type;
 
 				switch($this->Type)	// convert to ADO db-type-names
 				{
@@ -241,10 +246,8 @@
 						break;
 						
 					case 'mysqlt':
-						$php_extension = 'mysql'; 
-						if ($this->Port) $Host .= ':'.$this->Port;
-						break;
-						
+						$php_extension = 'mysql';	// you can use $this->setupType to determine if it's mysqlt or mysql
+						// fall through
 					case 'mysqli':
 						$this->Type = 'mysql';
 						// fall through
@@ -281,7 +284,13 @@
 						return 0;	// in case error-reporting = 'no'
 					}
 					$connect = $GLOBALS['egw_info']['server']['db_persistent'] ? 'PConnect' : 'Connect';
-					if (!$this->Link_ID->$connect($Host, $User, $Password, $Database))
+					if (($Ok = $this->Link_ID->$connect($Host, $User, $Password)))
+					{
+						$this->ServerInfo = $this->Link_ID->ServerInfo();
+						$this->set_capabilities($type,$this->ServerInfo['version']);
+						$Ok = $this->Link_ID->SelectDB($Database);
+					}
+					if (!$Ok)
 					{
 						$this->halt("ADOdb::$connect($Host, $User, \$Password, $Database) failed.");
 						return 0;	// in case error-reporting = 'no'
@@ -294,9 +303,6 @@
 						_debug_array($this);
 						echo "\$GLOBALS[egw]->db="; _debug_array($GLOBALS[egw]->db);
 					}
-					$this->ServerInfo = $this->Link_ID->ServerInfo();
-					$this->set_capabilities($type,$this->ServerInfo['version']);
-
 					if ($this->Type == 'mssql')
 					{
 						// this is the format ADOdb expects
@@ -828,7 +834,7 @@
 				echo "<p><b>Session halted.</b></p>";
 				if (is_object($GLOBALS['egw']->common))
 				{
-					$GLOBALS['egw']->common->phpgw_exit(True);
+					$GLOBALS['egw']->common->egw_exit(True);
 				}
 				else	// happens eg. in setup
 				{
@@ -982,22 +988,28 @@
 		*
 		* @param string $adminname name of database administrator user (optional)
 		* @param string $adminpasswd password for the database administrator user (optional)
+		* @param string $charset default charset for the database
 		*/
-		function create_database($adminname = '', $adminpasswd = '')
+		function create_database($adminname = '', $adminpasswd = '', $charset='')
 		{
 			$currentUser = $this->User;
 			$currentPassword = $this->Password;
 			$currentDatabase = $this->Database;
 
 			$extra = array();
+			$set_charset = '';
 			switch ($this->Type)
 			{
 				case 'pgsql':
 					$meta_db = 'template1';
 					break;
 				case 'mysql':
+					if ($charset && isset($this->Link_ID->charset2mysql[$charset]) && (float) $this->ServerInfo['version'] >= 4.1)
+					{
+						$set_charset = ' DEFAULT CHARACTER SET '.$this->Link_ID->charset2mysql[$charset].';';
+					}
 					$meta_db = 'mysql';
-					$extra[] = "grant all on $currentDatabase.* to $currentUser@localhost identified by '$currentPassword'";
+					$extra[] = "GRANT ALL ON $currentDatabase.* TO $currentUser@localhost IDENTIFIED BY '$currentPassword'";
 					break;
 				default:
 					echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->Type'</p>\n";
@@ -1010,7 +1022,7 @@
 				$this->Database = $meta_db;
 			}
 			$this->disconnect();
-			$this->query("CREATE DATABASE $currentDatabase");
+			$this->query('CREATE DATABASE '.$currentDatabase.$set_charset);
 			foreach($extra as $sql)
 			{
 				$this->query($sql);
