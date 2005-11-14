@@ -12,32 +12,32 @@
 				<row>
 					<image src="personal"/>
 					<description value="prefix"/>
-					<textbox id="n_prefix" size="40" tabindex="1"/>
+					<textbox id="n_prefix" size="45" maxlength="64" tabindex="1"/>
 				</row>
 				<row>
 					<description/>
 					<description value="first name"/>
-					<textbox id="n_given" size="40" tabindex="2"/>
+					<textbox id="n_given" size="45" maxlength="64" tabindex="2"/>
 				</row>
 				<row>
 					<description/>
 					<description value="middle name"/>
-					<textbox id="n_middle" size="40" tabindex="3"/>
+					<textbox id="n_middle" size="45" maxlength="64" tabindex="3"/>
 				</row>
 				<row>
 					<description/>
 					<description value="last name"/>
-					<textbox id="n_family" size="40" tabindex="4"/>
+					<textbox id="n_family" size="45" maxlength="64" tabindex="4"/>
 				</row>
 				<row>
 					<description/>
 					<description value="suffix"/>
-					<textbox id="n_suffix" size="40" tabindex="5"/>
+					<textbox id="n_suffix" size="45" maxlength="64" tabindex="5"/>
 				</row>
 				<row height="40">
 					<image src="gohome"/>
 					<description value="company name" options=",,,org_name"/>
-					<textbox size="40" id="org_name" tabindex="5"/>
+					<textbox size="45" maxlength="64" id="org_name" tabindex="5"/>
 				</row>
 				<row valign="top">
 					<image src="folder"/>
@@ -64,13 +64,13 @@
 				<row>
 					<image src="gear"/>
 					<description value="title"/>
-					<textbox size="40" id="title"/>
+					<textbox size="45" maxlength="64" id="title"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
 					<description value="department"/>
-					<textbox id="org_unit" size="40"/>
+					<textbox id="org_unit" size="45" maxlength="64"/>
 					<description/>
 				</row>
 				<row>
@@ -82,43 +82,43 @@
 				<row>
 					<image src="gohome"/>
 					<description value="street"/>
-					<textbox size="40" id="adr_one_street"/>
+					<textbox size="45" maxlength="64" id="adr_one_street"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
 					<description value="address line 2"/>
-					<textbox size="40" id="address2"/>
+					<textbox size="45" maxlength="64" id="address2"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
 					<description value="address line 3"/>
-					<textbox size="40" id="address3"/>
+					<textbox size="45" maxlength="64" id="address3"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
 					<description value="city"/>
-					<textbox size="40" id="adr_one_locality"/>
+					<textbox size="45" maxlength="64" id="adr_one_locality"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
 					<description value="zip code"/>
-					<textbox size="40" id="adr_one_postalcode"/>
+					<textbox size="45" maxlength="64" id="adr_one_postalcode"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
 					<description value="state"/>
-					<textbox size="40" id="adr_one_region"/>
+					<textbox size="45" maxlength="64" id="adr_one_region"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
 					<description value="country"/>
-					<textbox size="40" id="adr_one_countryname"/>
+					<textbox size="45" maxlength="64" id="adr_one_countryname"/>
 					<description/>
 				</row>
 				<row>
@@ -141,27 +141,27 @@
 				<row>
 					<image src="gohome"/>
 					<description value="street"/>
-					<textbox size="40" id="adr_two_street"/>
+					<textbox size="45" maxlength="64" id="adr_two_street"/>
 				</row>
 				<row>
 					<description/>
 					<description value="city"/>
-					<textbox size="40" id="adr_two_locality"/>
+					<textbox size="45" maxlength="64" id="adr_two_locality"/>
 				</row>
 				<row>
 					<description/>
 					<description value="zip code"/>
-					<textbox size="40" id="adr_two_postalcode"/>
+					<textbox size="45" maxlength="64" id="adr_two_postalcode"/>
 				</row>
 				<row>
 					<description/>
 					<description value="state"/>
-					<textbox size="40" id="adr_two_locality"/>
+					<textbox size="45" maxlength="64" id="adr_two_locality"/>
 				</row>
 				<row>
 					<description/>
 					<description value="country"/>
-					<textbox size="40" id="adr_two_countryname"/>
+					<textbox size="45" maxlength="64" id="adr_two_countryname"/>
 				</row>
 				<row height="30">
 					<description/>
@@ -231,130 +231,88 @@
 				<column/>
 				<column/>
 				<column/>
-				<column/>
 			</columns>
 			<rows>
 				<row>
-					<description value="Edit Phonenumbers - " align="center" span="all" class="windowheader" id="fn" no_lang="1"/>
-					<description/>
-					<description/>
-					<description/>
-				</row>
-				<row>
-					<description span="all" class="redItalic" id="msg"/>
-					<description/>
+					<description span="all" class="windowheader" value="Edit Phonenumbers - " no_lang="1" align="center" id="fn"/>
 					<description/>
 					<description/>
 				</row>
 				<row class="th">
-					<description/>
 					<description value="Description"/>
 					<description value="Number"/>
 					<description value="pref"/>
 				</row>
 				<row>
-					<description/>
 					<description value="business"/>
 					<textbox size="30" id="tel_work2"/>
 					<radio options="tel_work" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="mobile phone"/>
 					<textbox size="30" id="tel_cell2"/>
 					<radio options="tel_cell" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="Private"/>
 					<textbox size="30" id="tel_home2"/>
 					<radio options="tel_home" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="fax"/>
 					<textbox size="30" id="tel_fax"/>
 					<radio options="tel_fax" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="car phone"/>
 					<textbox size="30" id="tel_car"/>
 					<radio options="tel_car" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="video phone"/>
 					<textbox size="30" id="tel_video"/>
 					<radio options="tel_video" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="pager"/>
 					<textbox size="30" id="tel_pager"/>
 					<radio options="tel_pager" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="voice phone"/>
 					<textbox size="30" id="tel_voice"/>
 					<radio options="tel_voice" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="message phone"/>
 					<textbox size="30" id="tel_msg"/>
 					<radio options="tel_msg" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="bbs phone"/>
 					<textbox size="30" id="tel_bbs"/>
 					<radio options="tel_bbs" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="modem phone"/>
 					<textbox size="30" id="tel_modem"/>
 					<radio options="tel_modem" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value="isdn phone"/>
 					<textbox size="30" id="tel_isdn"/>
 					<radio options="tel_isdn" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<description value=" Other Phone"/>
 					<textbox size="30" id="ophone"/>
 					<radio options="ophone" id="tel_prefer"/>
 				</row>
 				<row>
-					<description/>
 					<button label="Ok" onclick="hidephones(this.form); return false;" span="all" align="center"/>
 				</row>
 			</rows>
 		</grid>
-		<styles>
-			.editphones{ 
-position: fixed;
-top: 50px;
-left: 240px;
-display:none;
-border: 1px solid #000000;
-background-color: #ffffff; 
-}
-
-.windowheader{
-background-image:url(http://solomon/egroupware/phpgwapi/templates/idots/images/appbox-header-background.png);
-background-repeat:repeat-x;
-height: 20px;
-border-spacing: 0px;
-border-collapse:collapse;
-border-bottom: #9c9c9c 1px solid; 
-}
-		</styles>
 	</template>
 	<template id="addressbook.edit" template="" lang="" group="0" version="1.0.1.001">
 		<grid>
@@ -401,8 +359,7 @@ border-bottom: #9c9c9c 1px solid;
 						</tabpanels>
 					</tabbox>
 					<vbox>
-						<description value="."/>
-						<groupbox>
+						<groupbox class="phoneGroup">
 							<caption label="Phone Numbers"/>
 							<grid>
 								<columns>
@@ -411,20 +368,20 @@ border-bottom: #9c9c9c 1px solid;
 									<column/>
 								</columns>
 								<rows>
-									<row height="30">
+									<row>
 										<image src="kaddressbook"/>
 										<description value="business" options=",,,tel_work"/>
-										<textbox id="tel_work" size="30" tabindex="10"/>
+										<textbox id="tel_work" size="28" maxlength="40" tabindex="10"/>
 									</row>
 									<row>
 										<description/>
 										<description value="mobile phone" options=",,,tel_cell"/>
-										<textbox id="tel_cell" size="30" tabindex="11"/>
+										<textbox id="tel_cell" size="28" maxlength="40" tabindex="11"/>
 									</row>
-									<row height="30">
+									<row>
 										<description/>
 										<description value="Private" options=",,,tel_home"/>
-										<textbox id="tel_home" size="30" tabindex="12"/>
+										<textbox id="tel_home" size="28" maxlength="40" tabindex="12"/>
 									</row>
 									<row>
 										<description/>
@@ -434,7 +391,7 @@ border-bottom: #9c9c9c 1px solid;
 								</rows>
 							</grid>
 						</groupbox>
-						<groupbox>
+						<groupbox class="emailGroup">
 							<caption label="Email &amp; Internet"/>
 							<grid>
 								<columns>
@@ -446,17 +403,17 @@ border-bottom: #9c9c9c 1px solid;
 									<row>
 										<image src="package_network"/>
 										<description value="url" options=",,,url"/>
-										<textbox id="url" size="30" tabindex="15"/>
+										<textbox id="url" size="28" maxlength="128" tabindex="15"/>
 									</row>
 									<row>
 										<image src="email_icon"/>
 										<description value="business email" options=",,,email"/>
-										<textbox id="email" size="30" tabindex="16"/>
+										<textbox id="email" size="28" maxlength="64" tabindex="16"/>
 									</row>
 									<row>
 										<description/>
 										<description value="home email" options=",,,email_home"/>
-										<textbox id="email_home" size="30" tabindex="17"/>
+										<textbox id="email_home" size="28" maxlength="64" tabindex="17"/>
 									</row>
 								</rows>
 							</grid>
@@ -486,8 +443,5 @@ border-bottom: #9c9c9c 1px solid;
 				</row>
 			</rows>
 		</grid>
-		<styles>
-			.redItalic { color: red; font-style: italic; }
-		</styles>
 	</template>
 </overlay>
