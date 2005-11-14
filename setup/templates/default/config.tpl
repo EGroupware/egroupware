@@ -45,18 +45,7 @@
      </select>
     </td>
    </tr>
-<!--
-   <tr class="row_off">
-    <td>{lang_read_translations_from}:</td>
-    <td>
-     <select name="newsettings[translation_system]">
-      <option value="sql"{selected_translation_system_sql}>SQL</option>
-      <option value="file"{selected_translation_system_file}>{lang_file}</option>
-     </select>
-    </td>
-   </tr>
--->
-   <tr class="row_off">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 
@@ -128,6 +117,57 @@
 -->
 
   <tr class="row_off">
+    <td colspan="2">&nbsp;</td>
+   </tr>
+
+   <tr class="th">
+    <td colspan="2"><b>{lang_Standard_mailserver_settings_(used_for_Mail_authentication_too)}:</b></td>
+   </tr>
+   <tr class="row_on"">
+    <td>{lang_POP/IMAP_mail_server_hostname_or_IP_address}:</td>
+    <td><input name="newsettings[mail_server]" value="{value_mail_server}"></td>
+   </tr>
+   <tr class="row_off"">
+    <td>{lang_Mail_server_protocol}:</td>
+    <td>
+     <select name="newsettings[mail_server_type]">
+      <option value="imap" {selected_mail_server_type_imap}>IMAP</option>
+      <option value="pop3" {selected_mail_server_type_pop3}>POP-3</option>
+      <option value="imaps" {selected_mail_server_type_imaps}>IMAPS</option>
+      <option value="pop3s" {selected_mail_server_type_pop3s}>POP-3S</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_on"">
+    <td>{lang_Mail_server_login_type}:</td>
+    <td>
+     <select name="newsettings[mail_login_type]">
+      <option value="standard" {selected_mail_login_type_standard}>{lang_standard (login-name_identical_to_eGroupWare_user-name)}</option>
+      <option value="vmailmgr" {selected_mail_login_type_vmailmgr}>{lang_Virtual_mail_manager_(login-name_includes_domain)}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="row_off"">
+    <td>{lang_Mail_domain_(for_Virtual_mail_manager)}:</td>
+    <td><input name="newsettings[mail_suffix]" value="{value_mail_suffix}"></td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_SMTP_server_hostname_or_IP_address}:</td>
+    <td><input name="newsettings[smtp_server]" value="{value_smtp_server}"></td>
+   </tr>
+   <tr class="row_off">
+    <td>{lang_SMTP_server_port}:</td>
+    <td><input name="newsettings[smtp_port]" value="{value_smtp_port}"></td>
+   </tr>
+   <tr class="row_on">
+    <td>{lang_User_for_SMTP-authentication_(leave_it_empty_if_no_auth_required)}:</td>
+    <td><input name="newsettings[smtp_auth_user]" value="{value_smtp_auth_user}"></td>
+   </tr>
+   <tr class="row_off">
+    <td>{lang_Password_for_SMTP-authentication}:</td>
+    <td><input name="newsettings[smtp_auth_passwd]" value="{value_smtp_auth_passwd}"></td>
+   </tr>
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 
@@ -342,7 +382,7 @@
      </td>
     </tr>
 
-   <tr class="row_off">
+   <tr class="row_on">
     <td colspan="2">&nbsp;</td>
    </tr>
 
@@ -356,42 +396,6 @@
    <tr class="row_on">
      <td>{lang_Domain_name}:</td>
      <td><input name="newsettings[ads_domain]" value="{value_ads_domain}" size="40" /></td>
-   </tr>
-
-   <tr class="row_off">
-    <td colspan="2">&nbsp;</td>
-   </tr>
-
-   <tr class="th">
-    <td colspan="2"><b>{lang_If_using_Mail_authentication}:</b></td>
-   </tr>
-   <tr class="row_on"">
-    <td>{lang_POP/IMAP_mail_server_hostname_or_IP_address}:</td>
-    <td><input name="newsettings[mail_server]" value="{value_mail_server}"></td>
-   </tr>
-   <tr class="row_off"">
-    <td>{lang_Mail_server_protocol}:</td>
-    <td>
-     <select name="newsettings[mail_server_type]">
-      <option value="imap" {selected_mail_server_type_imap}>IMAP</option>
-      <option value="pop3" {selected_mail_server_type_pop3}>POP-3</option>
-      <option value="imaps" {selected_mail_server_type_imaps}>IMAPS</option>
-      <option value="pop3s" {selected_mail_server_type_pop3s}>POP-3S</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_on"">
-    <td>{lang_Mail_server_login_type}:</td>
-    <td>
-     <select name="newsettings[mail_login_type]">
-      <option value="standard" {selected_mail_login_type_standard}>{lang_standard (login-name_identical_to_eGroupWare_user-name)}</option>
-      <option value="vmailmgr" {selected_mail_login_type_vmailmgr}>{lang_Virtual_mail_manager_(login-name_includes_domain)}</option>
-     </select>
-    </td>
-   </tr>
-   <tr class="row_off"">
-    <td>{lang_Mail_domain_(for_Virtual_mail_manager)}:</td>
-    <td><input name="newsettings[mail_suffix]" value="{value_mail_suffix}"></td>
    </tr>
 
    <tr class="row_off">

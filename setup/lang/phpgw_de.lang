@@ -218,7 +218,6 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	de	Wenn Sie ADS (Active Directory) Authentifizierung benutzen
 if using ldap	setup	de	Wenn Sie LDAP verwenden
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	de	Wenn Sie LDAP verwenden, wollen Sie Benutzerverzeichnisse und Komandointerpreter verwalten ?
-if using mail authentication	setup	de	Wenn Sie Mail Authentifizierung verwenden
 if you did not receive any errors, your applications have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Anwendungen
 if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine Fehlermeldungen erhalten, wurden Ihre Tabellen
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
@@ -281,6 +280,7 @@ mcrypt version	setup	de	MCrypt-Version
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	de	memory_limit (maximale Speicher für ein Skript) ist auf weniger als 16M gesetzt: einige eGroupWare Anwendungen benötigen mehr als die empfohlenen 8M. Sie müssen mit gelegentlichen Fehlern rechnen.
 minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer-ID (z.B. 500 oder 100)
 minute	setup	de	Minute
+missing or uncomplete mailserver configuration	setup	de	Fehlende oder nicht komplette Mailserver Konfiguration
 modifications have been completed!	setup	de	Änderung ist abgeschlossen!
 modify	setup	de	Ändern
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	de	Bestehende LDAP-Benutzerkonten für die Benutzung durch eGroupWare anpassen (für eine neue Installation mit LDAP-Konten)
@@ -316,6 +316,7 @@ or %1continue to the header admin%2	setup	de	oder %1mit der Headerverwaltung wei
 or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für WebDAV)
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
 or you can install a previous backup.	setup	de	Oder Sie können eine vorherige Datensicherung installieren.
+password for smtp-authentication	setup	de	Passwort für SMTP Authentifizierung
 password needed for configuration	setup	de	Passwort wird für die Konfiguration benötgt
 password of db user	setup	de	Passwort des Datenbank Benutzers
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht überein, bitte nocheinmal eingeben
@@ -407,9 +408,12 @@ setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 size	setup	de	Größe
+smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse
+smtp server port	setup	de	SMTP Server Port
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
 standard (login-name identical to egroupware user-name)	setup	de	Standard (Loginname identisch zu eGroupWare Benutzername)
+standard mailserver settings (used for mail authentication too)	setup	de	Standard Mailserver Einstellungen (werden auch für die Mail Authentifizierung benutzt)
 start the postmaster	setup	de	Starten Sie den postmaster
 status	setup	de	Status
 step %1 - admin account	setup	de	Schrit %1 - Administrator-Konto
@@ -472,6 +476,7 @@ uploads a backup to the backup-dir, from where you can restore it	setup	de	Läde 
 use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
 user account prefix	setup	de	Präfix für Benutzernamen
+user for smtp-authentication (leave it empty if no auth required)	setup	de	Benutzer für SMTP-Authentifizierung (leer lassen wenn keine notwendig ist)
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
 utf-8 (unicode)	setup	de	utf-8 (Unicode)
@@ -523,6 +528,7 @@ your backup directory '%1' %2	setup	de	Ihr Datensicherungsverzeichnis '%1' %2
 your database does not exist	setup	de	Ihre Datenbank existiert nicht
 your database is not working!	setup	de	Ihre Datenbank funktioniert nicht!
 your database is working, but you dont have any applications installed	setup	de	Ihre Datenbank arbeitet, aber Sie haben keine Anwendungen installiert!
+your egroupware api is current	setup	de	Ihre eGroupWare API ist aktuell
 your files directory '%1' %2	setup	de	Ihr Dateiverzeichnis '%1' %2
 your header admin password is not set. please set it now!	setup	de	Ihr Headerverwaltungspasswort wurde NICHT gesetzt. Bitte setzen Sie es jetzt!
 your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisiert werden.

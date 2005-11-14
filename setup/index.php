@@ -371,7 +371,7 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 10:
-			$setup_tpl->set_var('tablescurrent',lang('Your applications are current'));
+			$setup_tpl->set_var('tablescurrent',lang('Your eGroupWare API is current'));
 			$setup_tpl->set_var('uninstall_all_applications',lang('Uninstall all applications'));
 			$setup_tpl->set_var('insanity',lang('Insanity'));
 			$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));
@@ -388,42 +388,6 @@
 			break;
 	}
 	
-function check_dir($dir,&$msg,$check_in_docroot=false)
-{
-	if (!@is_dir($dir) && !(@is_writeable(dirname($dir)) && @mkdir($dir,0700,true)))
-	{
-		$msg = lang('does not exist');
-		return false;
-	}
-	if (!@is_writeable($dir))
-	{
-		$msg = lang('is not writeable by the webserver');
-		return false;
-	}
-	if ($check_in_docroot)
-	{
-		$docroots = array(EGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
-		$dir = realpath($dir);
-
-		foreach ($docroots as $docroot)
-		{
-			$len = strlen($docroot);
-
-			if ($docroot == substr($dir,0,$len))
-			{
-				$rest = substr($dir,$len);
-
-				if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
-				{
-					$msg = lang('is in the webservers docroot');
-					return false;
-				}
-			}
-		}
-	}
-	return true;
-}
-
 	// Config Section
 	$setup_tpl->set_var('config_step_text',lang('Step %1 - Configuration',2));
 	$GLOBALS['egw_info']['setup']['stage']['config'] = $GLOBALS['egw_setup']->detection->check_config();
@@ -456,6 +420,10 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 			{
 				$config_msg = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
 			}
+			if (!check_dir($config['files_dir'],$error_msg,true))
+			{
+				$config_msg .= ($config_msg?"<br />\n":'').lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
+			}
 			// set and create the default backup_dir
 			if (@is_writeable($config['files_dir']) && !isset($config['backup_dir']) && $config['file_store_contents'] == 'filesystem')
 			{
@@ -470,13 +438,14 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 					),__LINE__,__FILE__);
 				}
 			}
-			if (!check_dir($config['files_dir'],$error_msg,true))
-			{
-				$config_msg .= ($config_msg?"<br />\n":'').lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
-			}
 			if (!check_dir($config['backup_dir'],$error_msg,true))
 			{
-				$config_msg .= ($config_msg?"<br />\n":'').lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
+				$no_backup_dir = lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
+				$config_msg .= ($config_msg?"<br />\n":'').$no_backup_dir;
+			}
+			if (!$config['mail_server'] || !$config['mail_server_type'] || !$config['smtp_server'])
+			{
+				$config_msg .= ($config_msg?"<br />\n":'').lang('Missing or uncomplete mailserver configuration');
 			}
 			if (!$config_msg)
 			{
@@ -621,22 +590,21 @@ function check_dir($dir,&$msg,$check_in_docroot=false)
 	}
 	// Backup and restore section
 	$setup_tpl->set_var('backup_step_text',lang('Step %1 - DB backup and restore',6));
-	switch($GLOBALS['egw_info']['setup']['stage']['db'])
+	if ($GLOBALS['egw_info']['setup']['stage']['db'] == 10 && !$no_backup_dir)
 	{
-		case 10:
-			$setup_tpl->set_var('backup_status_img',$completed);
-			$setup_tpl->set_var('backup_status_alt',lang('completed'));
-			$setup_tpl->set_var('backup_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
-				''/*lang('This stage is completed<br />')*/,
-				'post','db_backup.php',
-				'submit',lang('backup and restore'),
-				''));
-			break;
-		default:
-			$setup_tpl->set_var('backup_status_img',$incomplete);
-			$setup_tpl->set_var('backup_status_alt',lang('not completed'));
-			$setup_tpl->set_var('backup_table_data',lang('Not ready for this stage yet'));
-			break;
+		$setup_tpl->set_var('backup_status_img',$completed);
+		$setup_tpl->set_var('backup_status_alt',lang('completed'));
+		$setup_tpl->set_var('backup_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
+			''/*lang('This stage is completed<br />')*/,
+			'post','db_backup.php',
+			'submit',lang('backup and restore'),
+			''));
+	}
+	else
+	{
+		$setup_tpl->set_var('backup_status_img',$incomplete);
+		$setup_tpl->set_var('backup_status_alt',lang('not completed'));
+		$setup_tpl->set_var('backup_table_data',$no_backup_dir ? $no_backup_dir : lang('Not ready for this stage yet'));
 	}
 	
 	$setup_tpl->pparse('out','T_setup_main');

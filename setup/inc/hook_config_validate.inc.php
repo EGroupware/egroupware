@@ -18,32 +18,49 @@
 	*/
 	$GLOBALS['egw_info']['server']['found_validation_hook'] = True;
 
-	function in_docroot($path='')
+	function mail_server($settings)
 	{
-		$docroots = array(EGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
-
-		foreach($docroots as $docroot)
+		if (!$settings['mail_server'] || !$settings['mail_server_type'] || !$settings['smtp_server'])
 		{
-			$len = strlen($docroot);
-
-			if($docroot == substr($path,0,$len))
-			{
-				$rest = substr($path,$len);
-
-				if(!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
-				{
-					return True;
-				}
-			}
+			$GLOBALS['config_error'] = lang('Missing or uncomplete mailserver configuration');
 		}
-		return False;
+		if (@file_exists('../emailadmin/inc/class.bo.inc.php') && $GLOBALS['egw_setup']->table_exist(array('egw_emailadmin')))
+		{
+			$emailadmin =& CreateObject('emailadmin.bo',-1,false);	// false=no session stuff
+			if (is_object($emailadmin))
+			{
+				$emailadmin->setDefaultProfile($settings);
+			}
+			else { echo "cant instaciate"; exit; }
+		}
+		else { echo "no emailadmin"; exit; }
 	}
 
+	function temp_dir($settings)
+	{
+		if (!check_dir($settings['temp_dir'],$error_msg))
+		{
+			$GLOBALS['config_error'] = lang("Your temporary directory '%1' %2",$settings['temp_dir'],$error_msg);
+		}
+	}
+	
 	function files_dir($settings)
 	{
-		if(in_docroot($settings['files_dir']))
+		if (!check_dir($settings['files_dir'],$error_msg,true))
 		{
-			$GLOBALS['config_error'] = 'Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!';
+			$GLOBALS['config_error'] = lang("Your files directory '%1' %2",$settings['files_dir'],$error_msg);
+		}
+	}
+	
+	function backup_dir(&$settings)
+	{
+		if (@is_writeable($settings['files_dir']) && !$settings['backup_dir'] && $settings['file_store_contents'] == 'filesystem')
+		{
+			$settings['backup_dir'] = $settings['files_dir'].'/db_backup';
+		}
+		if (!check_dir($settings['backup_dir'],$error_msg,true))
+		{
+			$GLOBALS['config_error'] = lang("Your backup directory '%1' %2",$settings['backup_dir'],$error_msg);
 		}
 	}
 
@@ -129,7 +146,7 @@
 			mcrypt_check_sanity();
 			if(!@$GLOBALS['ciphers'][$settings['mcrypt_algo']][$settings['mcrypt_mode']])
 			{
-				$GLOBALS['config_error'] = 'Invalid Mcrypt Algorithm/Mode combination';
+				$GLOBALS['config_error'] = lang('Invalid Mcrypt Algorithm/Mode combination');
 			}
 		}
 	}

@@ -78,14 +78,15 @@
 		{
 			if($GLOBALS['egw_info']['server']['found_validation_hook'] && @function_exists($setting))
 			{
-				call_user_func($setting,$newsettings);
+				$setting($newsettings);
 				if($GLOBALS['config_error'])
 				{
-					$GLOBALS['error'] .= '<br />' . lang($GLOBALS['config_error']) . '&nbsp;';
+					$GLOBALS['error'] .= '<b>'.$GLOBALS['config_error'] ."</b><br />\n";
 					$GLOBALS['config_error'] = '';
 					/* Bail out, stop writing config data */
 					break;
 				}
+				$value = $newsettings[$setting];	// it might be changed by the validation hook
 			}
 			/* Don't erase passwords, since we also do not print them below */
 			if(empty($value) && !(stristr($setting,'passwd') || stristr($setting,'password') || stristr($setting,'root_pw')))
@@ -153,7 +154,7 @@
 	$vars = $t->get_undefined('body');
 	$GLOBALS['egw_setup']->hook('config','setup');
 
-	while(list($null,$value) = each($vars))
+	foreach($vars as $value)
 	{
 		$valarray = explode('_',$value);
 		$type = $valarray[0];
@@ -222,7 +223,7 @@
 					.'please check your LDAP server configuration') . '.');
 		}
 
-		$GLOBALS['egw_setup']->html->show_alert_msg('Error',$GLOBALS['error']);
+		$GLOBALS['egw_setup']->html->show_alert_msg('Error',$GLOBALS['error'].'<p>');
 	}
 
 	$t->pfp('out','body');

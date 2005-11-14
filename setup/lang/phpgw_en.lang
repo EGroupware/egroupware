@@ -218,7 +218,6 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	en	If using ADS (Active Directory) authentication
 if using ldap	setup	en	If using LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	en	If using LDAP, do you want to manage homedirectory and loginshell attributes?
-if using mail authentication	setup	en	If using Mail authentication
 if you did not receive any errors, your applications have been	setup	en	If you did not receive any errors, your applications have been
 if you did not receive any errors, your tables have been	setup	en	If you did not receive any errors, your tables have been
 if you running this the first time, don't forget to manualy %1 !!!	setup	en	If you running this the first time, don't forget to manualy %1 !!!
@@ -281,6 +280,7 @@ mcrypt version	setup	en	MCrypt version
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
 minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
 minute	setup	en	minute
+missing or uncomplete mailserver configuration	setup	en	Missing or uncomplete mailserver configuration
 modifications have been completed!	setup	en	Modifications have been completed!
 modify	setup	en	Modify
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)
@@ -316,6 +316,7 @@ or %1continue to the header admin%2	setup	en	or %1Continue to the Header Admin%2
 or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	en	Or we can attempt to create the database for you:
 or you can install a previous backup.	setup	en	Or you can install a previous backup.
+password for smtp-authentication	setup	en	Password for SMTP-authentication
 password needed for configuration	setup	en	Password needed for configuration
 password of db user	setup	en	Password of db user
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
@@ -407,9 +408,12 @@ setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 size	setup	en	size
+smtp server hostname or ip address	setup	en	SMTP server hostname or IP address
+smtp server port	setup	en	SMTP server port
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
 sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
 standard (login-name identical to egroupware user-name)	setup	en	standard (login-name identical to eGroupWare user-name)
+standard mailserver settings (used for mail authentication too)	setup	en	Standard mailserver settings (used for Mail authentication too)
 start the postmaster	setup	en	Start the postmaster
 status	setup	en	Status
 step %1 - admin account	setup	en	Step %1 - Admin Account
@@ -472,6 +476,7 @@ uploads a backup to the backup-dir, from where you can restore it	setup	en	uploa
 use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
 user account prefix	setup	en	User account prefix
+user for smtp-authentication (leave it empty if no auth required)	setup	en	User for SMTP-authentication (leave it empty if no auth required)
 usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice
 utf-8 (unicode)	setup	en	utf-8 (Unicode)
@@ -523,6 +528,7 @@ your backup directory '%1' %2	setup	en	Your backup directory '%1' %2
 your database does not exist	setup	en	Your database does not exist
 your database is not working!	setup	en	Your Database is not working!
 your database is working, but you dont have any applications installed	setup	en	Your database is working, but you dont have any applications installed
+your egroupware api is current	setup	en	Your eGroupWare API is current
 your files directory '%1' %2	setup	en	Your files directory '%1' %2
 your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
 your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.

@@ -49,6 +49,50 @@
 	define('SEP',filesystem_separator());
 
 	/**
+	 * Checks if a directory exists, is writable by the webserver and optionaly is in the docroot
+	 *
+	 * @param string $dir path
+	 * @param string &$msg error-msg: 'does not exist', 'is not writeable by the webserver' or 'is in the webservers docroot' (run through lang)
+	 * @param boolean $check_in_docroot=false run an optional in docroot check
+	 * @return boolean
+	 */
+	function check_dir($dir,&$msg,$check_in_docroot=false)
+	{
+		if (!@is_dir($dir) && !(@is_writeable(dirname($dir)) && @mkdir($dir,0700,true)))
+		{
+			$msg = lang('does not exist');
+			return false;
+		}
+		if (!@is_writeable($dir))
+		{
+			$msg = lang('is not writeable by the webserver');
+			return false;
+		}
+		if ($check_in_docroot)
+		{
+			$docroots = array(EGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
+			$dir = realpath($dir);
+	
+			foreach ($docroots as $docroot)
+			{
+				$len = strlen($docroot);
+	
+				if ($docroot == substr($dir,0,$len))
+				{
+					$rest = substr($dir,$len);
+	
+					if (!strlen($rest) || $rest[0] == DIRECTORY_SEPARATOR)
+					{
+						$msg = lang('is in the webservers docroot');
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
 	  * function to handle multilanguage support
 	  *
 	 */
