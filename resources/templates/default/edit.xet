@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="resources.edit.general" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit.page" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit.pictures" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit.links" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit.custom" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit_tabs" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column width="700"/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="row_off">
+					<tabbox span="all">
+						<tabs>
+							<tab label="General" statustext="General informations about resource"/>
+							<tab label="Description" statustext="Informations about the location of resource"/>
+							<tab label="Picture" statustext="Prizeing information for booking or buying"/>
+							<tab label="Links" statustext="Web-Page of resource"/>
+							<tab label="Custom" statustext="Pictures or resource"/>
+						</tabs>
+						<tabpanels>
+							<template id="resources.edit.general"/>
+							<template id="resources.edit.page"/>
+							<template id="resources.edit.pictures"/>
+							<template id="resources.edit.links"/>
+							<template id="resources.edit.custom"/>
+						</tabpanels>
+					</tabbox>
+				</row>
+				<row height="100%">
+					<description span="all"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit_buttons" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row>
+					<button label="Save" id="save" statustext="Saves entry and exits"/>
+					<button label="Cancel" onclick="window.close();"/>
+					<button label="Delete" align="right" id="delete" onclick="return confirm('Do you really want do delte this resource?');"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="resources.edit" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column width="700"/>
+			</columns>
+			<rows>
+				<row>
+					<description no_lang="1" id="msg"/>
+				</row>
+				<row>
+					<hbox>
+						<textbox label="Name" id="name" statustext="Name of resource" needed="1"/>
+						<textbox label="Inventory number" id="inventory_number"/>
+						<menulist>
+							<menupopup label="Category" no_lang="1" id="cat_id" needed="1" statustext="Which category does this resource belong to?" align="right"/>
+						</menulist>
+					</hbox>
+				</row>
+				<row>
+					<template id="resources.edit_tabs"/>
+				</row>
+				<row>
+					<template id="resources.edit_buttons"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>

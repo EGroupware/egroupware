@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="resources.showdetails" template="" lang="" group="0" version="">
+		<grid width="750" height="480">
+			<columns>
+				<column width="43%"/>
+				<column width="100%"/>
+			</columns>
+			<rows>
+				<row class="nmh" height="240px">
+					<image src="resource_picture" align="center"/>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<description options="b" value="Name:"/>
+								<description options="b" no_lang="1" id="name"/>
+							</row>
+							<row>
+								<description value="Inventory number:"/>
+								<description no_lang="1" id="inventory_number"/>
+							</row>
+							<row>
+								<description value="Category:"/>
+								<menulist>
+									<menupopup type="select-cat" id="cat_id" readonly="true"/>
+								</menulist>
+							</row>
+							<row>
+								<description value="Responsible: "/>
+								<menulist>
+									<menupopup type="select-account" id="cat_admin" readonly="true"/>
+								</menulist>
+							</row>
+							<row valign="top">
+								<description value="Quantity: "/>
+								<description id="quantity"/>
+							</row>
+							<row>
+								<description value="Useable:"/>
+								<description id="useable"/>
+							</row>
+							<row>
+								<description value="Location:"/>
+								<description no_lang="1" id="location"/>
+							</row>
+							<row>
+								<description value="Storage information:"/>
+								<description id="storage_info"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row>
+					<description/>
+					<description/>
+				</row>
+				<row height="1%">
+					<html span="2" id="description" readonly="true"/>
+				</row>
+				<row>
+					<description/>
+					<description/>
+				</row>
+				<row class="th" disabled="@!link_to">
+					<description span="2" data="" rows="1" cols="4" value="Related links"/>
+				</row>
+				<row class="row_off" valign="top">
+					<link-list span="all" id="link_to" readonly="true"/>
+				</row>
+				<row>
+					<hbox label="Cancel" span="2" 3="label" 4="button">
+						<hbox label="Edit" span="2" id="btn_edit">
+							<button label="Edit" span="2" id="btn_edit" statustext="Buy this article"/>
+							<button label="Cancel" onclick="window.close()"/>
+							<button label="Calendar" span="2" id="btn_calendar" statustext="Show calendar of resource" onclick="opener.location=egw::link('/index.php','menuaction=calendar.uiviews.month&amp;owner=r$cont[res_id]'); return false;"/>
+							<button label="Book" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;participants=r$cont[res_id]'),'','dependent=yes,width=750,height=400,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes');" id="btn_book" statustext="Book this resource"/>
+						</hbox>
+						<hbox align="right">
+							<button label="Delete" onclick="return confirm('Do you really want do delte this resource?');" id="btn_delete"/>
+						</hbox>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
