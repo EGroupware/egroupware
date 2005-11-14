@@ -8,16 +8,15 @@
 		<img src="{img_incomplete}" alt="{notcomplete}" border="0" />
 	</td>
 	<td>
-    	{dbnotexist}<br />
-		{makesure}.<br />
-		<br />
-		{instr}<p>
 		<form action="index.php" method="post">
-			{createdb}<br />
+			<p>{lang_system_charset}<br />{system_charset}</p>
+	    	<p>{dbnotexist}<br />{makesure}.</p>
+			<p>{instr}</p>
+			<p>{createdb}<br />
 		    DB root username: <input type="text" name="db_root" value="root" /><br />
 		    DB root password: <input type="password" name="db_pass" /><br />
 		    <input type="hidden" name="action" value="Create Database" />
-		    <input type="submit" name="label" value="{create_database}" />
+		    <input type="submit" name="label" value="{create_database}" /></p>
 		</form>
 		<form method="post" action="index.php"> <br />
 		<input type="submit" value="Re-Check my database" />
@@ -32,8 +31,8 @@
 		<img src="{img_incomplete}" alt="{notcomplete}" border="0" />
 	</td>
 	<td>
-    	{dbnotexist}<p>
-		{makesure}.
+    	<p>{dbnotexist}<br />
+		{makesure}.</p>
 		<form method="post" action="index.php">
 		<input type="submit" value="Re-Check my database" />
 		</form><br />
@@ -66,9 +65,9 @@
 		<form action="index.php" method="post"  enctype="multipart/form-data">
 		<input type="hidden" name="oldversion" value="new" />
 
-		{dbexists}<br />
+		<p>{dbexists}</p>
         <input type="hidden" name="action" value="Install" />
-		{lang_system_charset} {system_charset}<br />
+		<p>{lang_system_charset}<br />{system_charset}</p>
 		<input type="checkbox" name="debug" value="1" /> {lang_debug}<br />
 		<input type="submit" name="label" value="{install}" /> {coreapps}
 		<hr />
@@ -194,6 +193,7 @@
 		</table>
 
 		<form method="post" action="index.php"> <br />
+		<input type="hidden" name="system_charset" value="{system_charset}" />
 		<input type="submit" value="{re-check_my_installation}" />
 		</form>
 	</td>

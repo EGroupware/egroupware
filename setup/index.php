@@ -177,37 +177,43 @@
 	$setup_tpl->set_var('img_completed',$completed);
 
 	$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management',1));
+	$setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
+	$setup_tpl->set_var('system_charset',$GLOBALS['egw_setup']->translation->get_charsets('system_charset',
+		$_POST['system_charset'] ? $_POST['system_charset'] : lang('charset')));
 
 	switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	{
 		case 1:
-			$setup_tpl->set_var('dbnotexist',lang('Your Database is not working!').':<p>'.$GLOBALS['egw_setup']->db->Error);
-			$setup_tpl->set_var('makesure',lang('makesure'));
+			$setup_tpl->set_var('dbnotexist','<b>'.lang('Your Database is not working!').'</b>: '.$GLOBALS['egw_setup']->db->Error);
+			$setup_tpl->set_var('makesure',lang('Make sure that your database is created and the account permissions are set'));
 			$setup_tpl->set_var('notcomplete',lang('not complete'));
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
-			$setup_tpl->set_var('createdb',lang('Or we can attempt to create the database for you:'));
+			$setup_tpl->set_var('createdb','<b>'.lang('Or we can attempt to create the database for you:').'</b>');
 			$setup_tpl->set_var('create_database',lang('Create database'));
 			$info = $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain];
 			switch ($info['db_type'])
 			{
 				case 'mysql':
+				case 'mysqli':
+				case 'mysqlt':
+					$set_charset = (float) $GLOBALS['egw_setup']->db->ServerInfo['version'] >= 4.1 ? ' DEFAULT CHARSET SET utf8' : '';
 					$setup_tpl->set_var('instr',
-						lang("Instructions for creating the database in %1:",'MySql')
+						'<b>'.lang("Instructions for creating the database in %1:",'MySql').'</b>'
 						. '<br />'.lang('Login to mysql -')
-						. '<br /><i>[user@server user]# mysql -u root -p</i><br />'
+						. '<br /><i>[user@server user]# <b>mysql -u root -p</b></i><br />'
 						. lang('Create the empty database and grant user permissions -')
-						. "<br /><i>mysql> create database $info[db_name];</i>"
-						. "<br /><i>mysql> grant all on " . $info['db_name']
-						. ".* to " . $info['db_user'] . "@localhost identified by '" . $info['db_pass'] . "';</i>");
+						. "<br /><i>mysql> <b>CREATE DATABASE $info[db_name]$set_charset;</b></i>"
+						. "<br /><i>mysql> <b>GRANT ALL ON " . $info['db_name']
+						. ".* TO " . $info['db_user'] . "@localhost IDENTIFIED BY '" . $info['db_pass'] . "';</b></i>");
 					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				case 'pgsql':
 					$setup_tpl->set_var('instr',
-						lang('Instructions for creating the database in %1:','PostgreSQL')
+						'<b>'.lang('Instructions for creating the database in %1:','PostgreSQL').'</b>'
 						. '<br />'.lang('Start the postmaster')
-						. "<br /><i>[user@server user]# postmaster -i -D /home/[username]/[dataDir]</i><br />"
+						. "<br /><i>[user@server user]# <b>postmaster -i -D /home/[username]/[dataDir]</b></i><br />"
 						. lang('Create the empty database -')
-						. "<br /><i>[user@server user]# createdb " . $info['db_name'] . "</i>");
+						. "<br /><i>[user@server user]# <b>createdb " . $info['db_name'] . "</b></i>");
 					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				default:
@@ -224,13 +230,11 @@
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
 			break;
 		case 3:
-			$setup_tpl->set_var('dbexists',lang('Your database is working, but you dont have any applications installed'));
+			$setup_tpl->set_var('dbexists','<b>'.lang('Your database is working, but you dont have any applications installed').'</b>');
 			$setup_tpl->set_var('install',lang('Install'));
 			$setup_tpl->set_var('proceed',lang('We can proceed'));
 			$setup_tpl->set_var('coreapps',lang('all applications'));
 			$setup_tpl->set_var('lang_debug',lang('enable for extra debug-messages'));
-			$setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
-			$setup_tpl->set_var('system_charset',$GLOBALS['egw_setup']->translation->get_charsets('system_charset',lang('charset')));
 			$setup_tpl->set_var('lang_restore',lang('Or you can install a previous backup.'));
 			$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 				'<input type="submit" name="upload" value="'.htmlspecialchars(lang('install backup')).'" title="'.htmlspecialchars(lang("uploads a backup and installs it on your DB")).'" />');
@@ -282,7 +286,7 @@
 			switch ($GLOBALS['egw_info']['setup']['currentver']['phpgwapi'])
 			{
 				case 'dbcreate':
-					$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass']);
+					$GLOBALS['egw_setup']->db->create_database($_POST['db_root'], $_POST['db_pass'], $_POST['system_charset']);
 					break;
 				case 'drop':
 					$setup_info = $GLOBALS['egw_setup']->detection->get_versions($setup_info);
@@ -361,6 +365,7 @@
 			$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
 
 			$setup_tpl->set_var('re-check_my_installation',lang('Re-Check My Installation'));
+			$setup_tpl->set_var('system_charset',$_POST['system_charset']);
 			$setup_tpl->parse('V_db_stage_6_post','B_db_stage_6_post');
 			$db_filled_block = $db_filled_block . $setup_tpl->get_var('V_db_stage_6_post');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
