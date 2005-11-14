@@ -13,7 +13,7 @@
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'Resources';
 	$setup_info['resources']['version']	= '0.0.1.020';
-	$setup_info['resources']['app_order']	= 1;
+	$setup_info['resources']['app_order']	= 5;
 	$setup_info['resources']['tables']	= array('egw_resources');
 	$setup_info['resources']['enable']	= 1;
 
@@ -40,23 +40,9 @@
 	);
 	$setup_info['resources']['depends'][]	= array( // cause eTemplates is not in the api yet
 		 'appname' => 'etemplate',
-		 'versions' => Array('1.0.0','1.0.1','1.2')
+		 'versions' => Array('1.0.1','1.2')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause of vfs psuedoprotocol is not fully in the api yet
 		 'appname' => 'filemanager',
 		 'versions' => Array('1.0.0','1.0.1','1.2')
 	);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
