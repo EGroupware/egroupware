@@ -193,6 +193,7 @@ remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
 responsible	infolog	en	responsible
 responsible open	infolog	en	responsible open
+responsible overdue	infolog	en	responsible overdue
 responsible upcoming	infolog	en	responsible upcoming
 responsible user, priority, times	infolog	en	responsible user, priority, times
 returns a list / search for records.	infolog	en	Returns a list / search for records.
