@@ -186,7 +186,10 @@ class uicontacts extends bocontacts
 			}				
 		}
 		$content['view'] = true;
-		
+		$content['link'] = $content['link_to'] = array(
+			'to_app' => 'addressbook',
+			'to_id'  => $content['id'],
+		);
 		$readonlys['link'] = $readonlys['link_to'] = $readonlys['customfields'] = true;
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = true;
 		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
