@@ -136,7 +136,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 import csv-file	calendar	de	CSV-Datei importieren
-interval	calendar	de	Interval
+interval	calendar	de	Intervall
 intervals in day view	calendar	de	Zeitintervalle in der Tagesansicht
 invalid email-address "%1" for user %2	calendar	de	Ungültige Email-Adresse "%1" für Benutzer %2
 last	calendar	de	letzte
@@ -209,7 +209,7 @@ repeat days	calendar	de	Wiederholungstage
 repeat the event until which date (empty means unlimited)	calendar	de	Bis zu welchen Datum soll der Termin wiederholt werden (leer bedeutet unbegrenzt)
 repeat type	calendar	de	Wiederholungstyp
 repeating event information	calendar	de	Informationen zu sich wiederholenden Ereignissen
-repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsinterval, zB. 2 für jeder zweite Woche
+repeating interval, eg. 2 to repeat every second week	calendar	de	Wiederholungsintervall, zB. 2 für jeder zweite Woche
 repetition	calendar	de	Wiederholung
 repetitiondetails (or empty)	calendar	de	Details der Wiederholung (oder leer)
 reset	calendar	de	Zurücksetzen
