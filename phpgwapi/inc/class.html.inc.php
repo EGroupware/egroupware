@@ -525,6 +525,7 @@ class html
 						case 'SearchReplace' :
 							$plugs .= ',searchreplace';
 							$tab1a .= ',separator,search,replace';
+							break;
 						case 'InsertDateTime' :
 							$plugs .= ',insertdatetime';
 							$tab2a .= ',separator,insertdate,inserttime';
