@@ -86,7 +86,7 @@ class ADODB_mysqli extends ADOConnection {
 		}
 
 		if (strstr($argHostname,':')) list($argHostname,$this->port) = explode(':',$argHostname);
-		$ok = mysqli_real_connect($this->_connectionID,
+		$ok = @mysqli_real_connect($this->_connectionID,
  				    $argHostname,
  				    $argUsername,
  				    $argPassword,
@@ -176,7 +176,7 @@ class ADODB_mysqli extends ADOConnection {
 	function qstr($s, $magic_quotes = false)
 	{
 		if (!$magic_quotes) {
-	    	if (PHP_VERSION >= 5)
+	    	if (PHP_VERSION >= 5 && $this->_connectionID)
 	      		return "'" . mysqli_real_escape_string($this->_connectionID, $s) . "'";   
 	    
 		if ($this->replaceQuote[0] == '\\')
