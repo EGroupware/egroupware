@@ -482,11 +482,9 @@
 	if (@$GLOBALS['egw_info']['server']['login_show_language_selection'])
 	{
 		$select_lang = '<select name="lang" onchange="'."if (this.form.login.value && this.form.passwd.value) this.form.submit(); else location.href=location.href+(location.search?'&':'?')+'lang='+this.value".'">';
-		$langs = $GLOBALS['egw']->translation->get_installed_langs();
-		uasort($langs,'strcasecmp');
-		foreach ($langs as $key => $name)	// if we have a translation use it
+		foreach ($GLOBALS['egw']->translation->get_installed_langs() as $key => $name)	// if we have a translation use it
 		{
-			$select_lang .= "\n\t".'<option value="'.$key.'"'.($key == $GLOBALS['egw_info']['user']['preferences']['common']['lang'] ? ' selected="1"' : '').'>'.$name.'</option>';
+			$select_lang .= "\n\t".'<option value="'.$key.'"'.($key == $GLOBALS['egw_info']['user']['preferences']['common']['lang'] ? ' selected="selected"' : '').'>'.$name.'</option>';
 		}
 		$select_lang .= "\n</select>\n";
 		$tmpl->set_var(array(
