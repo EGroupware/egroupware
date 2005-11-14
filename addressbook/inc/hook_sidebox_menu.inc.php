@@ -28,7 +28,7 @@
 	$file = Array(
 		array(
 			'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array('menuaction' => 'addressbook.uicontacts.edit')).
-				'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=800,height=600,scrollbars=yes,status=yes\'); 
+				'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=850,height=440,scrollbars=yes,status=yes\'); 
 				return false;">'.lang('Add').'</a>',
 			'no_lang' => true,
 			'link' => false
