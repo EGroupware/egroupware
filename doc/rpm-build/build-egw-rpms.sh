@@ -18,16 +18,28 @@
 # to
 # rpmbuild -bb egroupware-rh.spec                    >> $LOGFILE 2>&1
 #  
-# in the sript
+# in the script
 # How to create GPG keys to sign your rpm's you will found in a seperate
 # Document
 #
 # Script changed 2004 May 21 Reiner Jung
+# Script changed 2005 Apr 15 by Ralf Becker and Wim Bonis
+# 2005 Sep 20 Ralf Becker: disabled fedora 2 build
 
-SPECFILE=egroupware.spec
-SPECFILE2=egroupware-allapp.spec
+#BRANCH="-r Version-1_2-branch"
+BRANCH=-A
+
+SPECFILE=egroupware-apps.spec
+SPECFILE2=egroupware.spec
 SPECFILEFEDORA=egroupware-fedora.spec
 
+CONTRIB="backup browser comic email filescenter forum ftp fudforum headlines messenger phpldapadmin phpsysinfo projects registration stocks switchuser tts skel soap xmlrpc"
+
+for p in $CONTRIB
+do
+   EXCLUDE_CONTRIB="$EXCLUDE_CONTRIB --exclude=egroupware/$p"
+   ONLY_CONTRIB="$ONLY_CONTRIB egroupware/$p"
+done
 
 ####
 #
@@ -42,10 +54,13 @@ PACKAGING=`grep "%define packaging" $SPECFILE | cut -f3 -d' '`
 PACKAGINGFEDORA=`grep "Release:" $SPECFILEFEDORA | cut -f2 -d' '`
                                                                                                                              
 HOMEBUILDDIR=`whoami`
-ANONCVSDIR=/build_root/egroupware
-ANONCVSDIRFEDORA=/build_root/fedora
-ANONCVSDIRFEDORABUILD=/build_root/fedora/egroupware
-RHBASE=/home/$HOMEBUILDDIR/redhat
+#which account to use for checkouts and updates, after that the tree is made anonymous anyway, to allow users to update
+CVSACCOUNT=ext:ralfbecker
+#CVSACCOUNT=pserver:anonymous
+ANONCVSDIR=/tmp/build_root/egroupware
+ANONCVSDIRFEDORA=/tmp/build_root/fedora
+ANONCVSDIRFEDORABUILD=/tmp/build_root/fedora/egroupware
+RHBASE=$HOME/rpm
 SRCDIR=$RHBASE/SOURCES
 SPECDIR=$RHBASE/SPECS
 LOGFILE=$SPECDIR/build-$PACKAGENAME-$VERSION-$PACKAGING.log
@@ -57,127 +72,132 @@ MD5SUM=$SRCDIR/md5sum-$PACKAGENAME-$VERSION-$PACKAGING.txt
 MD5SUMFEDORA=$SRCDIR/md5sum-$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.txt
 
 
-echo "Start Build Process of - $PACKAGENAME $VERSION"                           	 > $LOGFILE
+
+mkdir -p $RHBASE/SOURCES $RHBASE/SPECS $RHBASE/BUILD $RHBASE/SRPMS $RHBASE/RPMS $ANONCVSDIR $ANONCVSDIRFEDORA $ANONCVSDIRFEDORABUILD
+
+cp $SPECFILE $SPECFILE2 $SPECFILEFEDORA $RHBASE/SPECS/
+
+echo "Start Build Process of - $PACKAGENAME $VERSION"                      	 > $LOGFILE
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 date                                                        				>> $LOGFILE 2>&1
 cd $ANONCVSDIR
-cvs -z9 update -r Version-1_0_0-branch -dP                                     		>> $LOGFILE 2>&1
-echo ":pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware" > Root.anonymous	
-find . -type d -name CVS -exec cp /build_root/egroupware/Root.anonymous {}/Root \;	>> $LOGFILE 2>&1
+	
+[ "$CVSACCOUNT" = 'pserver:anonymous' ] && cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware login
+
+if [ ! -d egroupware/phpgwapi ]	# new checkout
+then
+	echo "Creatting a new checkout using $CVSACCOUNT"                  	    	>> $LOGFILE 2>&1
+	echo "---------------------------------------"              				>> $LOGFILE 2>&1
+	cvs -z9 -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware co -P $BRANCH egroupware
+	cd egroupware
+	cvs -z9 -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware co -P $BRANCH all
+else										# updating an existing checkout in the build-root
+	echo "Updating existing checkout using $CVSACCOUNT"                  	   	>> $LOGFILE 2>&1
+	echo "---------------------------------------"              				>> $LOGFILE 2>&1
+	[ "$CVSACCOUNT" != 'pserver:anonymous' ] && {	# changing back to the developer account
+		echo ":$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware" > Root.developer
+		find . -name CVS -exec cp Root.developer {}/Root \;
+		rm Root.developer
+	}
+	cd egroupware						# need to step into the eGW dir (no CVS dir otherwise)
+	cvs -z9 update -dP $BRANCH	                                    		>> $LOGFILE 2>&1
+fi
+
+cd $ANONCVSDIR
+
+echo ":pserver:anonymous@cvs.sourceforge.net:/cvsroot/egroupware" > Root.anonymous
+find . -name CVS -exec cp Root.anonymous {}/Root \;							>> $LOGFILE 2>&1
 rm Root.anonymous
-echo "End from CVS update"						     		>> $LOGFILE 2>&1
+
+echo "End from CVS update"						     						>> $LOGFILE 2>&1
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 find . -type d -exec chmod 775 {} \;
 find . -type f -exec chmod 644 {} \;
-echo "Change the direcory rights back"					     		>> $LOGFILE 2>&1
+echo "Change the direcory rights back"					     				>> $LOGFILE 2>&1
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
-clamscan -r $ANONCVSDIR --log=$VIRUSSCAN
+# clamscan -r $ANONCVSDIR --log=$VIRUSSCAN
+# 
+# echo "End from Anti Virus Scan"						     				>> $LOGFILE 2>&1
+# echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
-echo "End from Anti Virus Scan"						     		>> $LOGFILE 2>&1
-echo "---------------------------------------"      				        >> $LOGFILE 2>&1
-
-cd $ANONCVSDIR/..
-tar czvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.gz egroupware  			>> $LOGFILE 2>&1
-tar cjvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.bz2 egroupware 			>> $LOGFILE 2>&1
-zip -r -9 $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip egroupware  	  		>> $LOGFILE 2>&1
-echo "End Build Process of tar.gz, tar.bz, zip"						>> $LOGFILE 2>&1	
+cd $ANONCVSDIR
+tar czvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.gz $EXCLUDE_CONTRIB egroupware  	2>&1 | tee -a $LOGFILE
+tar czvf $SRCDIR/$PACKAGENAME-contrib-$VERSION-$PACKAGING.tar.gz $ONLY_CONTRIB 			>> $LOGFILE 2>&1
+tar cjvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.bz2 $EXCLUDE_CONTRIB egroupware	>> $LOGFILE 2>&1
+tar cjvf $SRCDIR/$PACKAGENAME-contrib-$VERSION-$PACKAGING.tar.bz2 $ONLY_CONTRIB 		>> $LOGFILE 2>&1
+zip -r -9 $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip egroupware -x $ONLY_CONTRIB 	  	>> $LOGFILE 2>&1
+zip -r -9 $SRCDIR/$PACKAGENAME-contrib-$VERSION-$PACKAGING.zip $ONLY_CONTRIB 	  		>> $LOGFILE 2>&1
+echo "End Build Process of tar.gz, tar.bz, zip"						        >> $LOGFILE 2>&1	
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 
 
-echo "Create the md5sum file for tar.gz, tar.bz, zip"	    				>> $LOGFILE 2>&1	
-echo "md5sum from file $PACKAGENAME-$VERSION.tar.gz is:"     				 > $MD5SUM  
-md5sum $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.gz | cut -f1 -d' ' 			>> $MD5SUM  2>&1
-echo "---------------------------------------"         				    	>> $MD5SUM  2>&1
-echo " "						    				>> $MD5SUM  2>&1
-echo "md5sum from file $PACKAGENAME-$VERSION.tar.bz2 is:"   				>> $MD5SUM  2>&1
-md5sum $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.bz2 | cut -f1 -d' '			>> $MD5SUM  2>&1
-echo "---------------------------------------"              				>> $MD5SUM  2>&1
-echo " "						    				>> $MD5SUM  2>&1
-echo "md5sum from file $PACKAGENAME-$VERSION.zip is:"       				>> $MD5SUM  2>&1
-md5sum $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip | cut -f1 -d' '    			>> $MD5SUM  2>&1
+echo "Create the md5sum file for tar.gz, tar.bz, zip"	    				>> $LOGFILE 2>&1
+echo "Build signed source files"			    							>> $LOGFILE 2>&1
+echo "---------------------------------------"              				>> $LOGFILE 2>&1
+
+for f in $VERSION-$PACKAGING.tar.gz contrib-$VERSION-$PACKAGING.tar.gz $VERSION-$PACKAGING.tar.bz2 contrib-$VERSION-$PACKAGING.tar.bz2 $VERSION-$PACKAGING.zip contrib-$VERSION-$PACKAGING.zip
+do
+	echo "md5sum from file $PACKAGENAME-$f is:"     				 		>> $MD5SUM  
+	md5sum $SRCDIR/$PACKAGENAME-$f | cut -f1 -d' ' 							>> $MD5SUM  2>&1
+	echo "---------------------------------------"         			    	>> $MD5SUM  2>&1
+	echo " "						    									>> $MD5SUM  2>&1
+
+	echo "Build signed source files"			    						>> $LOGFILE 2>&1
+	rm -f $SRCDIR/$PACKAGENAME-$f.gpg		 								>> $LOGFILE 2>&1
+	gpg --local-user packager@egroupware.org -s $SRCDIR/$PACKAGENAME-$f 	>> $LOGFILE 2>&1
+done
+echo "------------------------------------------"              				>> $LOGFILE 2>&1
 echo "End Build md5sum of tar.gz, tar.bz, zip"              				>> $LOGFILE 2>&1
-echo "---------------------------------------"              				>> $LOGFILE 2>&1
-echo "sign the md5sum file"								>> $LOGFILE 2>&1
-gpg --clearsign $MD5SUM									>> $LOGFILE 2>&1
-echo "---------------------------------------"              				>> $LOGFILE 2>&1
-
-echo "delete the original md5sum file"							>> $LOGFILE 2>&1
-rm -rf $MD5SUM			  	 						>> $LOGFILE 2>&1
-echo "---------------------------------------"              				>> $LOGFILE 2>&1
-
-
-echo "Build signed source files"			    				>> $LOGFILE 2>&1
-gpg -s $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.gz		    			>> $LOGFILE 2>&1
-gpg -s $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.bz2		    			>> $LOGFILE 2>&1 
-gpg -s $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip		    			>> $LOGFILE 2>&1
 echo "End build of signed of tar.gz, tar.bz, zip"           				>> $LOGFILE 2>&1
+echo "------------------------------------------"              				>> $LOGFILE 2>&1
+
+echo "sign the md5sum file"													>> $LOGFILE 2>&1
+rm -f $MD5SUM.asc															>> $LOGFILE 2>&1
+gpg --local-user packager@egroupware.org --clearsign $MD5SUM				>> $LOGFILE 2>&1
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
 
-
+echo "delete the original md5sum file"										>> $LOGFILE 2>&1
+rm -rf $MD5SUM			  	 												>> $LOGFILE 2>&1
+echo "---------------------------------------"              				>> $LOGFILE 2>&1
 
 cd $SPECDIR
-rpmbuild -ba --sign $SPECFILE			                    			>> $LOGFILE 2>&1
+rpmbuild -ba --sign $SPECFILE                 			2>&1 | tee -a $LOGFILE
 echo "End Build Process of - $PACKAGENAME $VERSION single packages"      		>> $LOGFILE 2>&1
 echo "---------------------------------------"              				>> $LOGFILE 2>&1
-rpmbuild -ba --sign $SPECFILE2			             				>> $LOGFILE 2>&1
-echo "End Build Process of - $PACKAGENAME $VERSION all applications"     		>> $LOGFILE 2>&1
+rpmbuild -ba --sign $SPECFILE2        				2>&1 | tee -a $LOGFILE
+echo "End Build Process of - $PACKAGENAME $VERSION default applications"     		>> $LOGFILE 2>&1
 echo "---------------------------------------"      				        >> $LOGFILE 2>&1
 
 
-echo "Change the CVS dir back from anonymous to CVS user"		     		>> $LOGFILE 2>&1
-echo "---------------------------------------"      				        >> $LOGFILE 2>&1
-cd $ANONCVSDIR
-echo ":ext:reinerj@cvs.sourceforge.net:/cvsroot/egroupware" > Root.reinerj		
-find . -type d -name CVS -exec cp /build_root/egroupware/Root.reinerj {}/Root \;	>> $LOGFILE 2>&1
-rm Root.reinerj
-echo "Change the direcory rights back"					     		>> $LOGFILE 2>&1
-echo "---------------------------------------"      				        >> $LOGFILE 2>&1
-find . -type d -exec chmod 775 {} \;
-find . -type f -exec chmod 644 {} \;
+#echo "Change the CVS dir back from anonymous to CVS user"		     		>> $LOGFILE 2>&1
+#echo "---------------------------------------"      				        >> $LOGFILE 2>&1
+#cd $ANONCVSDIR
+#echo ":ext:ralfbecker@cvs.sourceforge.net:/cvsroot/egroupware" > Root.reinerj		
+#find . -type d -name CVS -exec cp /build_root/egroupware/Root.reinerj {}/Root \;	>> $LOGFILE 2>&1
+#rm Root.reinerj
+#echo "Change the direcory rights back"					     		>> $LOGFILE 2>&1
+#echo "---------------------------------------"      				        >> $LOGFILE 2>&1
+#find . -type d -exec chmod 775 {} \;
+#find . -type f -exec chmod 644 {} \;
 
 
 ##############################################################################################################
-#                                                                                                            # 
+#                                                                                                            #
 # Here start the build process for the Fedora packages                                                       #
 #                                                                                                            #
-############################################################################################################## 
+##############################################################################################################
 
 
-echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"       > $LOGFILEFEDORA
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-date                                                                                    >> $LOGFILEFEDORA 2>&1
-cd $ANONCVSDIRFEDORA
-cvs -z9 -d:ext:reinerj@cvs.sourceforge.net:/cvsroot/egroupware co -r Version-1_0_0-branch egroupware		>> $LOGFILEFEDORA 2>&1
-echo "must wait to finish this job"                                                     >> $LOGFILEFEDORA 2>&1
-cd $ANONCVSDIRFEDORABUILD	                                                        >> $LOGFILEFEDORA 2>&1
-cvs co -r Version-1_0_0-branch all                                                      >> $LOGFILEFEDORA 2>&1
-echo "first files are updated and now we must delete the old ones"  			>> $LOGFILEFEDORA 2>&1
-cvs -z9 update -dP 									>> $LOGFILEFEDORA 2>&1
-find . -type d -name CVS | xargs rm -rf
-find . -type d -exec chmod 775 {} \;
-find . -type f -exec chmod 644 {} \;
+#cd $ANONCVSDIRFEDORA
+#tar czvf $SRCDIR/$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.tar.gz egroupware   >> $LOGFILEFEDORA 2>&1
 
-echo "End from Fedora CVS update"                                                       >> $LOGFILEFEDORA 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-                                                                                                                             
-clamscan -r $ANONCVSDIRFEDORABUILD --log=$VIRUSSCANDEFORA
-                                                                                                                             
-echo "End from Fedora Anti Virus Scan"                                                  >> $LOGFILEFEDORA 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-                                                                                                                             
-cd $ANONCVSDIRFEDORA
-tar czvf $SRCDIR/$PACKAGENAMEFEDORA-$VERSIONFEDORA.$PACKAGINGFEDORA.tar.gz egroupware   >> $LOGFILEFEDORA 2>&1
-                                                                                                                             
-                                                                                                                             
-echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA"                       >> $LOGFILEFEDORA 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-cd $SPECDIR
-rpmbuild -ba --sign $SPECFILEFEDORA                                                     >> $LOGFILEFEDORA 2>&1
-echo "End Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"        >> $LOGFILEFEDORA 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
-                                                                                                                             
-
+#echo "Start Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA"                       >> $LOGFILEFEDORA 2>&1
+#echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
+#cd $SPECDIR
+#rpmbuild -ba --sign $SPECFILEFEDORA                                                     >> $LOGFILEFEDORA 2>&1
+#echo "End Build Process of - $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"        >> $LOGFILEFEDORA 2>&1
+#echo "---------------------------------------"                                          >> $LOGFILEFEDORA 2>&1
 
 ##############################################################################################################
 #                                                                                                            #
@@ -186,19 +206,19 @@ echo "---------------------------------------"                                  
 ##############################################################################################################
 
 
-echo "Start build Bitrock packages"	                                                 > $LOGFILEFEBIT
-echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
-date                                                                                    >> $LOGFILEFEBIT 2>&1
+#echo "Start build Bitrock packages"	                                                 > $LOGFILEFEBIT
+#echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
+#date                                                                                    >> $LOGFILEFEBIT 2>&1
+#
+#cd $ANONCVSDIRFEDORA
+# 
+#echo "build bitrock Linux package" 							>> $LOGFILEFEBIT 2>&1
+#/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml linux
+#echo "build bitrock Windows package" 							>> $LOGFILEFEBIT 2>&1
+#/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml windows
 
-cd $ANONCVSDIRFEDORA
-                                                                                                                            
-echo "build bitrock Linux package" 							>> $LOGFILEFEBIT 2>&1
-/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml linux
-echo "build bitrock Windows package" 							>> $LOGFILEFEBIT 2>&1
-/opt/installbuilder-2.0/bin/builder build /opt/installbuilder-2.0/projects/egroupware.xml windows
-
-rm -rf egroupware
-echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1
-echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
+#rm -rf egroupware
+#echo "Fedora Build Root deleted $PACKAGENAMEFEDORA $VERSIONFEDORA $PACKAGINGFEDORA"     >> $LOGFILEFEBIT 2>&1
+#echo "---------------------------------------"                                          >> $LOGFILEFEBIT 2>&1
 
 
