@@ -148,7 +148,7 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 			if (!$db->query($alter_table,__LINE__,__FILE__))
 			{
 				echo "<p>SQL Error: ".nl2br($alter_table)."</p>\n";
-				echo "<b>{$this->db->Type} Error</b>: {$this->db->Errno} ({$this->db->Error})</p>\n";
+				echo "<b>{$db->Type} Error</b>: {$db->Errno} ({$db->Error})</p>\n";
 				echo "<p>continuing ...</p>\n";
 				continue;
 			}
@@ -164,7 +164,7 @@ if (substr($db->Type,0,5) == 'mysql' && $db_version >= 4.1 && $GLOBALS['egw_setu
 				if (!$db->query($alter_table_back,__LINE__,__FILE__))
 				{
 					echo "<p><b>SQL Error</b>: ".nl2br($alter_table_back)."</p>\n";
-					echo "<b>{$this->db->Type} Error</b>: {$this->db->Errno} ({$this->db->Error})</p>\n";
+					echo "<b>{$db->Type} Error</b>: {$db->Errno} ({$db->Error})</p>\n";
 					echo "<p>continuing ...</p>\n";
 					continue;
 				}
