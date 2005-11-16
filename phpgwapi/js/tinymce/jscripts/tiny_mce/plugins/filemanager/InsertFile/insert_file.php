@@ -93,7 +93,7 @@ function onOK() {
 				if(fileItems != 1) {
 					var strId = fileItems[i].getAttribute("id").toString();
 					var trId = parseInt(strId.substring(1, strId.length));
-					param['f_icon'] = editor_url+plugin_url+fileManager.fileJSArray[trId][0];
+					param['f_icon'] = fileManager.fileJSArray[trId][0];
 					param['f_size'] = fileManager.fileJSArray[trId][2];
 					param['f_date'] = fileManager.fileJSArray[trId][3];
 				}

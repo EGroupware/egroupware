@@ -502,7 +502,7 @@ $view = new $classname;
 				$params['time'] = $time = filemtime($absolutePath);
 				$params['parsed_size'] = $parsed_size = parse_size($size);
 				$params['parsed_time'] = $parsed_time = parse_time($time);
-				$params['parsed_icon'] = $parsed_icon = 'img/ext/'.parse_icon($ext);
+				$params['parsed_icon'] = $parsed_icon = $GLOBALS['egw_info']['server']['webserver_url']. '/phpgwapi/templates/default/images/mime/'. parse_icon($ext);
 				$params['fileNb'] = $fileNb;
 				$files_body .= $view->files_item($params);
 				$fileJSArray .= "['".$parsed_icon."', '".sanitize2($entry)."', '".$parsed_size."', '".$parsed_time."', '".$ext."'],\n";

@@ -47,12 +47,15 @@
 	}
 	
 	$sessdata = $GLOBALS['egw']->session->appsession('UploadImage','phpgwapi');
+	// upload_dir needs a ending slash
+	$sessdata['upload_dir'] = substr($sessdata['upload_dir'],-1) == '/' ? $sessdata['upload_dir'] : $sessdata['upload_dir'] . '/';
 	if(is_writeable($sessdata['upload_dir']))
 	{
 		$MY_DOCUMENT_ROOT = $BASE_DIR = $sessdata['upload_dir'];
 		if (isset($sessdata['upload_url']) && !empty($sessdata['upload_url']))
 		{
-			$MY_BASE_URL = $sessdata['upload_url'];
+			// base url must not have a ending slash
+			$MY_BASE_URL = substr($sessdata['upload_url'],-1) == '/' ? substr($sessdata['upload_url'],0,-1) : $sessdata['upload_url'];
 		}
 		else
 		{
