@@ -6,17 +6,22 @@ add resource	resources	en	add resource
 add resources	resources	en	Add resources
 administrator	resources	en	Administrator
 all categories	resources	en	all categories
+book	resources	en	Book
+book selected resources	resources	en	book selected resources
 book this resource	resources	en	Book this resource
 bookable	resources	en	Bookable
+buy this article	resources	en	Buy this article
 buy this resource	resources	en	Buy this resource
 buyable	resources	en	Buyable
 categories admin	resources	en	Categories admin
+category:	resources	en	Category:
 check all	resources	en	Check all
 choose categories admin	resources	en	choose categories admin
 clear selection	resources	en	clear selection
 configure access permissions	resources	en	Configure Access Permissions
 create new accessory for this resource	resources	en	Create new accessory for this resource
 create new links	resources	en	Create new links
+delete selected resources	resources	en	delete selected resources
 delete this entry	resources	en	Delete this entry
 description (short)	resources	en	Description (short)
 direct booking permissions	resources	en	Direct booking permissions
@@ -32,7 +37,10 @@ how many of this resource are usable	resources	en	How many of this resource are 
 how many of this resource exists	resources	en	How many of this resource exists
 implies booking permission	resources	en	implies booking permission
 implies read permission	resources	en	implies read permission
+information about storage	resources	en	Information about storage
 informations about the location of resource	resources	en	Informations about the location of resource
+inventory number	resources	en	Inventory number
+inventory number:	resources	en	Inventory number:
 is resource bookable?	resources	en	Is resource bookable?
 is resource buyable?	resources	en	Is resource buyable?
 is this resource bookable?	resources	en	Is this resource bookable?
@@ -40,7 +48,9 @@ is this resource buyable?	resources	en	Is this resource buyable?
 links	resources	en	Links
 location	resources	en	Location
 location of resource	resources	en	Location of resource
+location:	resources	en	Location:
 name of resource	resources	en	Name of resource
+name:	resources	en	Name:
 no description available	resources	en	no description available
 no resources selected	resources	en	No resources selected
 notify your administrator to correct this situation	resources	en	Notify your administrator to correct this situation
@@ -54,7 +64,6 @@ quantity	resources	en	Quantity
 quantity of resource	resources	en	Quantity of resource
 quantity:	resources	en	Quantity:
 read calendar permissions	resources	en	Read Calendar permissions
-read calender permissions	resources	en	Read Calender permissions
 read permissions	resources	en	Read permissions
 related links	resources	en	Related links
 resources	common	en	resources
@@ -64,17 +73,22 @@ saves entry and exits	resources	en	Saves entry and exits
 select a category	resources	en	Select a category
 select resource	resources	en	select resource
 select resources	resources	en	Select resources
+select/deselect all	resources	en	select/deselect all
 short description	resources	en	Short description
 short description of resource	resources	en	Short description of resource
+show calendar of resource	resources	en	Show calendar of resource
 something went wrong by deleting resource	resources	en	Something went wrong by deleting resource
 something went wrong by saving resource	resources	en	Something went wrong by saving resource
 storage inforation	resources	en	Storage Inforation
+storage information	resources	en	Storage information
+storage information:	resources	en	Storage information:
 the calendar of this resource	resources	en	The Calendar of this resource
 this module displays the resources app	resources	en	This module displays the resources app
 use general resources icon	resources	en	Use general resources icon
 use own picture	resources	en	Use own picture
 use the category's icon	resources	en	Use the category's icon
 useable	resources	en	useable
+useable:	resources	en	Useable:
 view accessories for this resource	resources	en	View accessories for this resource
 view this entry	resources	en	View this entry
 web-page of resource	resources	en	Web-Page of resource
