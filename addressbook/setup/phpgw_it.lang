@@ -16,7 +16,9 @@ addressbook	common	it	Rubrica
 addressbook preferences	addressbook	it	Preferenze della Rubrica
 addressbook-fieldname	addressbook	it	Rubrica - Nome del Campo
 addvcard	addressbook	it	Aggiungi Vcard
+advanced search	addressbook	it	Ricerca avanzata
 alt. csv import	addressbook	it	Importazione CSV Alternativa
+are you shure you want to delete this contact?	addressbook	it	Vuoi davvero eliminare questo contatto?
 are you sure you want to delete this field?	addressbook	it	Vuoi davvero eliminare questo campo?
 bbs phone	addressbook	it	Telefono BBS
 birthday	common	it	Data di nascita
@@ -42,9 +44,11 @@ company name	common	it	Nome società
 configuration	common	it	Configurazione
 contact	common	it	Contatto
 contact application	admin	it	Applicativo Contatti
+contact saved	addressbook	it	Contatto salvato
 contact settings	admin	it	Impostazioni Contatto
 copied by %1, from record #%2.	addressbook	it	Copiato %1, dal record #%2.
 country	common	it	Nazione
+create new links	addressbook	it	Crea nuovi collegamenti
 csv-fieldname	addressbook	it	CSV-Nome del Campo
 csv-filename	addressbook	it	CSV-Nome del File
 custom	addressbook	it	Personalizzato
@@ -53,13 +57,20 @@ debug output in browser	addressbook	it	Visualizza nel browser
 default filter	addressbook	it	Filtro predefinito
 delete a single entry by passing the id.	addressbook	it	Cancella un singola voce passando l'ID.
 department	common	it	Divisione
+do your really want to delete this contact?	addressbook	it	Vuoi davvero eliminare questo contatto
+doesn't matter	addressbook	it	non importa
 domestic	addressbook	it	Interno
 download	addressbook	it	Download
 download export file (uncheck to debug output in browser)	addressbook	it	Download del file export (Deseleziona per visualizzarlo nel browser)
+download this contact as vcard file	addressbook	it	scarica questo contatto come file vCard
 edit custom field	addressbook	it	Modifica campo personalizzato
 edit custom fields	admin	it	Modifica campi personalizzati
+edit phonenumbers -	addressbook	it	Modifica Numeri telefonici -
+email & internet	addressbook	it	Email e Internet
 empty for all	addressbook	it	per tutti vuoto
 enter the path to the exported file here	addressbook	it	Inserisci qui il path del file esportato
+existing links	addressbook	it	Collegamenti esistenti
+export	addressbook	it	esporta
 export contacts	addressbook	it	Esporta Contatti
 export file name	addressbook	it	Esporta nome file
 export from addressbook	addressbook	it	Esporta dalla Rubrica
@@ -97,12 +108,14 @@ import_instructions	addressbook	it	In Netscape, apri la rubrica e seleziona <b>E
 international	addressbook	it	Internazionale
 isdn phone	addressbook	it	Telefono ISDN
 label	addressbook	it	Etichetta
+last modified	addressbook	it	ultima modifica
 ldap context for contacts	admin	it	Contesto LDAP per i contatti
 ldap host for contacts	admin	it	Server LDAP per i contatti
 ldap root dn for contacts	admin	it	root dn LDAP per i contatti
 ldap root pw for contacts	admin	it	password di root LDAP per i contatti
 ldif	addressbook	it	LDIF
 line 2	addressbook	it	Linea 2
+links	addressbook	it	Collegamenti
 list all categories	addressbook	it	Elenca tutte le categorie
 list all customfields	addressbook	it	Elenca tutti i campi personalizzati
 load vcard	addressbook	it	Carica VCard
@@ -112,9 +125,12 @@ middle name	addressbook	it	Secondo Nome
 mobile	addressbook	it	Mobile
 mobile phone	addressbook	it	Telefono Mobile
 modem phone	addressbook	it	Telefono Modem
+more ...	addressbook	it	Altro ...
 multiple vcard	addressbook	it	Molteplici VCard
 no vcard	addressbook	it	Nessuna VCard
+number	addressbook	it	Numero
 number of records to read (%1)	addressbook	it	Numero di record da leggere (%1)
+organisation	addressbook	it	organizzazione
 other number	addressbook	it	Altro Numero
 other phone	addressbook	it	Altro Telefono
 pager	common	it	Cercapersone
@@ -143,6 +159,7 @@ state	common	it	Provincia
 street	common	it	Via
 successfully imported %1 records into your addressbook.	addressbook	it	Nella tua rubrica sono state importate con successo %1 schede.
 suffix	addressbook	it	Suffisso
+tel home	addressbook	it	tel abitazione
 test import (show importable records <u>only</u> in browser)	addressbook	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
 that field name has been used already !	addressbook	it	Il nome di campo è già stato utilizzato
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
@@ -160,7 +177,6 @@ video phone	addressbook	it	Videotelefono
 voice phone	addressbook	it	Telefono Vocale
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
 work phone	addressbook	it	Telefono Ufficio
-write (update or add) a single entry by passing the fields.	addressbook	it	Scrivi (aggiorna o aggiungi) una singola voce passando i campi.
 you must select a vcard. (*.vcf)	addressbook	it	Bisogna selezionare una vcard (*.vcf)
 you must select at least 1 column to display	addressbook	it	Bisogna selezionare almeno una colonna da visualizzare
 zip code	common	it	CAP
