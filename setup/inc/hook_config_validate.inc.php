@@ -24,16 +24,14 @@
 		{
 			$GLOBALS['config_error'] = lang('Missing or uncomplete mailserver configuration');
 		}
-		if (@file_exists('../emailadmin/inc/class.bo.inc.php') && $GLOBALS['egw_setup']->table_exist(array('egw_emailadmin')))
+		if (@file_exists('../emailadmin/inc/class.bo.inc.php') && $GLOBALS['egw_setup']->table_exist(array('egw_emailadmin')) || true)
 		{
 			$emailadmin =& CreateObject('emailadmin.bo',-1,false);	// false=no session stuff
 			if (is_object($emailadmin))
 			{
 				$emailadmin->setDefaultProfile($settings);
 			}
-			else { echo "cant instaciate"; exit; }
 		}
-		else { echo "no emailadmin"; exit; }
 	}
 
 	function temp_dir($settings)
