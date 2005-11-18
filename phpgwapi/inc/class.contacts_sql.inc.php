@@ -305,13 +305,11 @@
 								$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
 							}
 							$cats = $GLOBALS['egw']->categories->return_all_children((int)$value);
-							$cat_filter = "(cat_id IN ('".implode("','",$cats)."')";
 							foreach($cats as $cat)
 							{
-								$cat_filter .= " OR cat_id LIKE '%,$cat,%'";
+								$cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
 							}
-							$cat_filter .= ')';
-							$filterlist[] = $cat_filter;
+							$filterlist[] = '('.implode(' OR ',$cat_filter).')';
 						}
 						elseif(@is_int($value))
 						{
