@@ -91,6 +91,7 @@ color	admin	it	Colore
 country selection	admin	it	Selezione Nazione
 create group	admin	it	Crea gruppo
 crontab only (recomended)	admin	it	solo crontab (raccomandato)
+custom fields	admin	it	Campi Personalizzati
 cyrus imap server	admin	it	Server IMAP Cyrus
 data	admin	it	Dati
 day	admin	it	Giorno
@@ -260,6 +261,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	it	ID minimo per l'account (es.
 minute	admin	it	Minuti
 mode	admin	it	Modalità
 month	admin	it	Mese
+name must not be empty !!!	admin	it	Il nome non può essere vuoto !!!
 new group name	admin	it	Nome nuovo gruppo
 new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in bianco per non cambiarla ]
 next run	admin	it	Prossima esecuzione
@@ -293,8 +295,8 @@ postfix with ldap	admin	it	Postfix con LDAP
 preferences	admin	it	Preferenze
 primary group	admin	it	Gruppo principale
 qmaildotmode	admin	it	qmaildotmode
-quota size in mbyte	admin	it	dimensione quota in MByte
 quota settings	admin	it	impostazioni quota
+quota size in mbyte	admin	it	dimensione quota in MByte
 re-enter password	admin	it	Reinserisci la password
 read this list of methods.	admin	it	Leggi questa lista dei metodi
 register application hooks	admin	it	Registra gli agganci alle chiamate dell'applicazione
@@ -402,6 +404,7 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuo
 would you like to show each application's upgrade status ?	admin	it	Vuoi che venga mostrato lo stato di aggiornamento di ogni applicazione?
 xml-rpc	admin	it	XML-RPC
 you have entered an invalid expiration date	admin	it	Hai inserito una data di scadenza non valida
+you have to enter a name, to create a new field!!!	admin	it	Devi inserire un nome, per creare un nuovo campo!!!
 you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
 you must enter a group name.	admin	it	Devi inserire un nome di gruppo
 you must enter a lastname	admin	it	Devi inserire un cognome
