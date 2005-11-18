@@ -478,7 +478,7 @@ class uiforms extends uical
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
 
 		$boical =& CreateObject('calendar.boical');
-		$ics = $boical->exportVCal(array($event),'request');
+		$ics = $boical->exportVCal(array($event),'2.0','request');
 
 		$ics_file = tempnam($GLOBALS['egw_info']['server']['temp_dir'],'ics');
 		if(($f = fopen($ics_file,'w')))
@@ -1061,7 +1061,7 @@ class uiforms extends uical
 	{
 		if (is_numeric($cal_id = $content ? $content : $_REQUEST['cal_id']))
 		{
-			if (!($ical =& ExecMethod('calendar.boical.exportVCal',$cal_id)))
+			if (!($ical =& ExecMethod2('calendar.boical.exportVCal',$cal_id,'2.0')))
 			{
 				$msg = lang('Permission denied');
 				
@@ -1091,7 +1091,7 @@ class uiforms extends uical
 			}
 			else
 			{
-				$ical =& ExecMethod('calendar.boical.exportVCal',$events/*,$content['version']*/);
+				$ical =& ExecMethod('calendar.boical.exportVCal',$events,'2.0'/*$content['version']*/);
 				$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
 				$GLOBALS['egw']->browser->content_header($content['file'] ? $content['file'] : 'event.ics','text/calendar',strlen($ical));
 				echo $ical;
