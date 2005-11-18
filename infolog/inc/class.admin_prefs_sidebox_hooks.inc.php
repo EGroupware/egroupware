@@ -33,8 +33,12 @@ class admin_prefs_sidebox_hooks
 			$file = array(
 				'infolog list' => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'infolog.uiinfolog.index' )),
-				'add' => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'infolog.uiinfolog.edit' ))
+				array(
+					'text' => '<a class="textSidebox" href="'.htmlspecialchars($GLOBALS['egw']->link('/index.php',array(
+							'menuaction' => 'infolog.uiinfolog.edit',
+						))).'" target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=550,scrollbars=yes,status=yes\'); return false;">'.lang('Add').'</a>',
+					'no_lang' => true,
+				)
 			);
 			display_sidebox($appname,$GLOBALS['egw_info']['apps']['infolog']['title'].' '.lang('Menu'),$file);
 		}
