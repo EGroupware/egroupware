@@ -85,7 +85,7 @@
 		 * @param string $method='PUBLISH'
 		 * @return string/boolean string with vCal or false on error (eg. no permission to read the event)
 		 */
-		function &exportVCal($events,$method='PUBLISH')
+		function &exportVCal($events,$version='1.0', $method='PUBLISH')
 		{
 			$egwSupportedFields = array(
 				'CLASS'		=> array('dbName' => 'public'),
@@ -109,7 +109,7 @@
 			$vcal = &new Horde_iCalendar;
 			$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
 				strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
-			$vcal->setAttribute('VERSION','2.0');
+			$vcal->setAttribute('VERSION',$version);
 			$vcal->setAttribute('METHOD',$method);
 
 			if (!is_array($events)) $events = array($events);
