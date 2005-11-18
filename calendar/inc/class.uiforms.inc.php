@@ -471,8 +471,8 @@ class uiforms extends uical
 			{
 				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 				 
-				$to[] = $GLOBALS['egw']->common->display_fullname('',$firstname,$lastname).
-					' <'.$GLOBALS['egw']->accounts->id2name($uid,'account_email').'>';
+				$to[] = '"'.$GLOBALS['egw']->common->display_fullname('',$firstname,$lastname).
+					'" <'.$GLOBALS['egw']->accounts->id2name($uid,'account_email').'>';
 			}
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
