@@ -485,7 +485,7 @@
 						else
 						{
 							$content['msg'] = lang('InfoLog entry saved');
-							$content['js'] = "opener.location.href='".$GLOBALS['egw']->link($referer,array('msg' => $content['msg']))."';";
+							$content['js'] = "opener.location.href='".($link=$GLOBALS['egw']->link($referer,array('msg' => $content['msg'])))."';";
 						}
 						if ($info_id && $first_link_to)	// writing links for a new entry
 						{
@@ -543,9 +543,9 @@
 				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
-				$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
+				$ref=$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
 					$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.uiinfolog.index'));
-				$referer = preg_replace('/[&?]{1}msg=[^&]+/','',$referer);	// remove previou/old msg from referer
+				$referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
 				$no_popup  = $_GET['no_popup'];
 				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
