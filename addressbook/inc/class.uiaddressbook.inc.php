@@ -548,8 +548,6 @@
 				$myowner = $entries[$i]['owner'];
 
 				/* each entry column */
-//				@reset($columns_to_display);
-//				while($column = @each($columns_to_display))
 				foreach($columns_to_display as $column => $nul)
 				{
 					$ref = $data='';
@@ -562,32 +560,16 @@
 						{
 							$coldata = 'http://' . $coldata;
 						}
-						$ref='<a href="'.$coldata.'" target="_new">';
+						$ref='<a href="'.$coldata.'" target="_blank">';
 						$data=$coldata.'</a>';
 					}
-					elseif(($column == 'email') || ($column == 'email_home'))
+					elseif(($column == 'email' || $column == 'email_home') && strstr($coldata,'@'))
 					{
-						if($GLOBALS['egw_info']['user']['apps']['email'])
-						{
-							$ref = '<a href="'
-								. $GLOBALS['egw']->link('/email/compose.php','to=' . urlencode($coldata))
-								. '" target="_new">';
-						}
-						elseif($GLOBALS['egw_info']['user']['apps']['felamimail'])
-						{
-							$link_data = array(
-								'menuaction' => 'felamimail.uicompose.compose',
-								'send_to'    => base64_encode($coldata)
-							);
-							$ref = '<a href="'
-								. $GLOBALS['egw']->link('/index.php',$link_data)
-								. '" target="_new">';
-						}
-						else
-						{
-							$ref = '<a href="mailto:' . $coldata . '">';
-						}
-						$data = $coldata . '</a>';
+						$link = $this->email2link($coldata);
+						if (is_array($link)) $link = $GLOBALS['egw']->link('/index.php',$link);
+						
+						$ref = '<a href="'.htmlspecialchars($link).'" target="_blank">';
+						$data = $coldata.'</a>';
 					}
 					else /* But these do not */
 					{
@@ -644,6 +626,33 @@
 			$GLOBALS['egw']->template->pfp('out','addressbook_footer');
 			$this->save_sessiondata();
 			/* $GLOBALS['egw']->common->phpgw_footer(); */
+		}
+
+		/**
+		 * convert email-address in compose link
+		 *
+		 * @param string $email email-addresse
+		 * @return array/string array with get-params or mailto:$email, or '' or no mail addresse
+		 */
+		function email2link($email)
+		{
+			if (!strstr($email,'@')) return '';
+	
+			if($GLOBALS['egw_info']['user']['apps']['felamimail'])
+			{
+				return array(
+					'menuaction' => 'felamimail.uicompose.compose',
+					'send_to'    => base64_encode($email)
+				);
+			}
+			if($GLOBALS['egw_info']['user']['apps']['email'])
+			{
+				return array(
+					'menuaction' => 'email.uicompose.compose',
+					'to' => $email,
+				);
+			}
+			return 'mailto:' . $email;
 		}
 
 		function add_email()

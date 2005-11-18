@@ -196,6 +196,24 @@ class uicontacts extends bocontacts
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
 
 		$this->tmpl->read('addressbook.edit');
+		foreach(array('email','email_home','url') as $name)
+		{
+			if ($content[$name] )
+			{
+				$url = $name == 'url' ? $content[$name] : $this->email2link($content[$name]);
+				if (!is_array($url))
+				{
+					$this->tmpl->set_cell_attribute($name,'size','b,,1');
+				}
+				elseif ($url)
+				{
+					$content[$name.'_link'] = $url;
+					$this->tmpl->set_cell_attribute($name,'size','b,@'.$name.'_link,,,_blank');
+				}
+				$this->tmpl->set_cell_attribute($name,'type','label');
+				$this->tmpl->set_cell_attribute($name,'no_lang',true);
+			}
+		}
 		$this->tmpl->exec('addressbook.uicontacts.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 		
 		$GLOBALS['egw']->hooks->process(array(
@@ -204,6 +222,33 @@ class uicontacts extends bocontacts
 		));
 	}
 	
+	/**
+	 * convert email-address in compose link
+	 *
+	 * @param string $email email-addresse
+	 * @return array/string array with get-params or mailto:$email, or '' or no mail addresse
+	 */
+	function email2link($email)
+	{
+		if (!strstr($email,'@')) return '';
+
+		if($GLOBALS['egw_info']['user']['apps']['felamimail'])
+		{
+			return array(
+				'menuaction' => 'felamimail.uicompose.compose',
+				'send_to'    => base64_encode($email)
+			);
+		}
+		if($GLOBALS['egw_info']['user']['apps']['email'])
+		{
+			return array(
+				'menuaction' => 'email.uicompose.compose',
+				'to' => $email,
+			);
+		}
+		return 'mailto:' . $email;
+	}
+
 	function search($content='')
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook'). ' - '. lang('Advanced search');
