@@ -238,9 +238,11 @@
 }
 .calDayTodos {
 	width: 250px;
-	text-align: center;
 	margin-left: 10px;
 	border: 1px solid silver;
+}
+.calDayTodosHeader {
+	text-align: center;
 }
 
 /******************************************************
