@@ -648,7 +648,6 @@
 			{
 				return False;
 			}
-			//$id = $this->Link_ID->PO_Insert_ID($table,$field);
 			$id = $this->Link_ID->PO_Insert_ID($table,$field);	// simulates Insert_ID with "SELECT MAX($field) FROM $table" if not native availible
 
 			if ($id === False)	// function not supported
@@ -1114,7 +1113,7 @@
 				case 'auto':
 					return (int) $value;	
 				case 'bool':
-					return $value ? 1 : 0;
+					return $value ? 'true' : 'false';
 			}
 			if (!$this->Link_ID && !$this->connect())
 			{
