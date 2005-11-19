@@ -156,6 +156,21 @@ a different OID if a database must be reloaded. */
 	{
 		if (!is_resource($this->_resultid) || get_resource_type($this->_resultid) !== 'pgsql result') return false;
 		$oid = pg_getlastoid($this->_resultid);
+
+		if ($oid === false && $table && $column)	// table might not use oid's, default for 8.1+
+		{
+			// try the standard sequence name first, due to table renames etc. this might not be the correct one
+			if (!($ret = $this->GetOne($sql='SELECT currval('.$this->qstr($table.'_'.$column.'_seq').')'))) {
+				// now we read the sequence name from the database itself, that is a lot slower!
+				$cols = $this->MetaColumns($table);
+				$fld = $cols[strtoupper($column)];
+				if ($fld->primary_key && $fld->has_default && 
+					preg_match("/nextval\('([^']+)'::text\)/",$fld->default_value,$matches)) {
+					$ret = $this->GetOne($sql='SELECT currval('.$this->qstr($matches[1]).')');
+				}
+			}
+			return $ret;
+		}
 		// to really return the id, we need the table and column-name, else we can only return the oid != id
 		return empty($table) || empty($column) ? $oid : $this->GetOne("SELECT $column FROM $table WHERE oid=".(int)$oid);
 	}
