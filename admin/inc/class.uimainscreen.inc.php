@@ -50,11 +50,8 @@
 
 			if ($_POST['submit'])
 			{
-				$GLOBALS['egw']->db->query("DELETE FROM phpgw_lang WHERE message_id='$section" . "_message' AND app_name='"
-					. "$section' AND lang='$select_lang'",__LINE__,__FILE__);
-				$GLOBALS['egw']->db->query("INSERT INTO phpgw_lang (message_id,app_name,lang,content)VALUES ('$section" . "_message','$section','$select_lang','"
-					. $message . "')",__LINE__,__FILE__);
-					$feedback_message = '<center>'.lang('message has been updated').'</center>';
+				$GLOBALS['egw']->translation->write($select_lang,$section,$section.'_message',$message);
+				$feedback_message = '<center>'.lang('message has been updated').'</center>';
 				
 				$section = '';
 			}
@@ -78,10 +75,6 @@
 			{
 				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 			}
-
-			
-
-			
 			if (empty($section))
 			{
 
@@ -99,16 +92,13 @@
 				$GLOBALS['egw']->template->set_var('tr_color',$tr_color);
 
 				$lang_select = '<select name="select_lang">';
-				$GLOBALS['egw']->db->query("SELECT lang,phpgw_languages.lang_name,phpgw_languages.lang_id FROM phpgw_lang,phpgw_languages WHERE "
-					. "phpgw_lang.lang=phpgw_languages.lang_id GROUP BY lang,phpgw_languages.lang_name,"
-					. "phpgw_languages.lang_id ORDER BY lang",__LINE__,__FILE__);
-				while ($GLOBALS['egw']->db->next_record())
+				foreach($GLOBALS['egw']->translation->get_installed_langs() as $lang => $lang_name)
 				{
-					$lang = $GLOBALS['egw']->db->f('lang');
-					$lang_select .= '<option value="' . $lang . '"'.($lang == $select_lang ? ' selected' : '').'>' . 
-						$lang . ' - ' . $GLOBALS['egw']->db->f('lang_name') . "</option>\n";
+					$lang_select .= '<option value="' . $lang . '"'.($lang == $select_lang ? ' selected="selected"' : '').'>' . 
+						$lang . ' - ' . $lang_name . "</option>\n";
 				}
 				$lang_select .= '</select>';
+				
 				$GLOBALS['egw']->template->set_var('label',lang('Language'));
 				$GLOBALS['egw']->template->set_var('value',$lang_select);
 				$GLOBALS['egw']->template->fp('rows','row',True);
@@ -135,11 +125,7 @@
 			}
 			else
 			{
-				 $GLOBALS['egw']->db->query("SELECT content FROM phpgw_lang WHERE lang='$select_lang' AND message_id='$section"
-				. "_message'",__LINE__,__FILE__);
-				$GLOBALS['egw']->db->next_record();
-				
-				$current_message = $GLOBALS['egw']->db->f('content');
+				$current_message = $GLOBALS['egw']->translation->read($select_lang,$section,$section.'_message');
 				
 				if($_POST['htmlarea'])
 				{
