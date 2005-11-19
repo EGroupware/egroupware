@@ -49,6 +49,7 @@
 		var $lang_table = 'egw_lang';
 		var $languages_table = 'egw_languages';
 		var $config_table = 'egw_config';
+		var $db;
 
 		/**
 		 * Constructor, sets up a copy of the db-object, gets the system-charset and tries to load the mbstring extension
@@ -760,5 +761,43 @@
 			}
 
 			$this->install_langs($langs,'addmissing',$appname);
+		}
+		
+		/**
+		 * insert/update one phrase in the lang-table
+		 *
+		 * @param string $lang
+		 * @param string $app_name
+		 * @param string $message_id
+		 * @param string $content
+		 */
+		function write($lang,$app_name,$message_id,$content)
+		{
+			$this->db->insert($this->lang_table,array(
+				'content' => $content,
+			),array(
+				'lang' => $lang,
+				'app_name' => $app_name,
+				'message_id' => $message_id,
+			),__LINE__,__FILE__);
+		}
+
+		/**
+		 * read one phrase from the lang-table
+		 *
+		 * @param string $lang
+		 * @param string $app_name
+		 * @param string $message_id
+		 * @return string/boolean content or false if not found
+		 */
+		function read($lang,$app_name,$message_id)
+		{
+			$this->db->select($this->lang_table,'content',array(
+				'lang' => $lang,
+				'app_name' => $app_name,
+				'message_id' => $message_id,
+			),__LINE__,__FILE__);
+			
+			return $this->db->next_record() ? $this->db->f('content') : false;
 		}
 	}
