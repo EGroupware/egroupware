@@ -31,8 +31,8 @@
 		<img src="{img_incomplete}" alt="{notcomplete}" border="0" />
 	</td>
 	<td>
-    	<p>{dbnotexist}<br />
-		{makesure}.</p>
+    	<p>{dbnotexist}<br />{makesure}.</p>
+		<p>{instr}</p>
 		<form method="post" action="index.php">
 		<input type="submit" value="Re-Check my database" />
 		</form><br />

@@ -190,6 +190,7 @@
 			$setup_tpl->set_var('oncesetup',lang('Once the database is setup correctly'));
 			$setup_tpl->set_var('createdb','<b>'.lang('Or we can attempt to create the database for you:').'</b>');
 			$setup_tpl->set_var('create_database',lang('Create database'));
+			$setup_tpl->set_var('instr','');
 			$info = $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain];
 			switch ($info['db_type'])
 			{
@@ -208,14 +209,21 @@
 					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				case 'pgsql':
+					$ip = $info['db_host'] == 'localhsot' ? '127.0.01' : '&lt;ip-address webserver&gt;';
 					$setup_tpl->set_var('instr',
 						'<b>'.lang('Instructions for creating the database in %1:','PostgreSQL').'</b>'
-						. '<br />'.lang('Start the postmaster')
-						. "<br /><i>[user@server user]# <b>postmaster -i -D /home/[username]/[dataDir]</b></i><br />"
-						. lang('Create the empty database -')
-						. "<br /><i>[user@server user]# <b>createdb " . $info['db_name'] . "</b></i>");
-					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
-					break;
+						. '<br />'.lang('Login as user postgres, eg. by using su as root')
+						. "<br /><i>[root@server /root]# <b>su -l postgres</b></i><br />"
+						. lang('Create the empty database and grant user permissions -')
+						. "<br /><i>[postgres@server /var/lib/pgsql]# <b>createuser --no-adduser --no-createdb -P " . $info['db_user'] . "</b></i>"
+						. "<br /><i>Enter password for new user: <b>" . $info['db_pass'] . "</b></i>"
+						. "<br /><i>[postgres@server /var/lib/pgsql]# <b>createdb --owner " .  $info['db_user'] . ' ' . $info['db_name'] . "</b></i>"
+						. '<br />'.lang('to allow password authentification add the following line to your pg_hba.conf (above all others) AND restart postgres:')
+						. '<br /><i># TYPE DATABASE USER CIDR-ADDRESS METHOD</i>'
+						.($info['db_host'] ? "<br /><i><b>host $info[db_name] $info[db_user] $ip/32 password</b></i>" :
+						                     "<br /><i><b>local $info[db_name] $info[db_user] password</b></i>"));
+					//$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
+					//break;
 				default:
 					$setup_tpl->parse('V_db_stage_1','B_db_stage_1a');
 			}

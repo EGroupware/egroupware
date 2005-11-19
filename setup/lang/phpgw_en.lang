@@ -10,8 +10,8 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	<b>This will create 1 admin account and 3 demo accounts</b><br />The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
-add a domain	setup	en	Add a domain
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
+add new database instance (egw domain)	setup	en	Add new database instance (eGW domain)
 additional settings	setup	en	Additional settings
 admin first name	setup	en	Admin first name
 admin last name	setup	en	Admin last name
@@ -125,6 +125,7 @@ current system-charset	setup	en	Current system-charset
 current system-charset is %1, click %2here%3 to change it.	setup	en	Current system-charset is %1, click %2here%3 to change it.
 current version	setup	en	Current Version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br />
+database instance (egw domain)	setup	en	Database instance (eGW domain)
 database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
 datebase	setup	en	Datebase
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	en	Datetime port.<br />If using port 13, please set firewall rules appropriately before submitting this page.<br />(Port: 13 / Host: 129.6.15.28)
@@ -238,6 +239,7 @@ install language	setup	en	Install Language
 installed	setup	en	installed
 instructions for creating the database in %1:	setup	en	Instructions for creating the database in %1:
 invalid ip address	setup	en	Invalid IP address
+invalid mcrypt algorithm/mode combination	setup	en	Invalid Mcrypt Algorithm/Mode combination
 invalid password	setup	en	Invalid password
 is broken	setup	en	is broken
 is disabled	setup	en	is disabled
@@ -261,6 +263,7 @@ ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=eGW-domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
+login as user postgres, eg. by using su as root	setup	en	Login as user postgres, eg. by using su as root
 login to mysql -	setup	en	Login to mysql -
 logout	setup	en	Logout
 mail domain (for virtual mail manager)	setup	en	Mail domain (for Virtual mail manager)
@@ -305,6 +308,7 @@ not ready for this stage yet	setup	en	Not ready for this stage yet
 not set	setup	en	not set
 note: you will be able to customize this later	setup	en	Note: You will be able to customize this later
 now guessing better values for defaults...	setup	en	Now guessing better values for defaults...
+odbc / maxdb: dsn (data source name) to use	setup	en	ODBC / MaxDB: DSN (data source name) to use
 ok	setup	en	OK
 once the database is setup correctly	setup	en	Once the database is setup correctly
 one month	setup	en	one month
@@ -341,6 +345,7 @@ pop/imap mail server hostname or ip address	setup	en	POP/IMAP mail server hostna
 possible reasons	setup	en	Possible Reasons
 possible solutions	setup	en	Possible Solutions
 post-install dependency failure	setup	en	Post-install Dependency Failure
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	en	Postgres: Leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection
 potential problem	setup	en	Potential Problem
 preferences	setup	en	Preferences
 problem resolution	setup	en	Problem resolution
@@ -454,6 +459,7 @@ this section will help you setup your ldap accounts for use with egroupware	setu
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	en	This should be around 30 bytes in length.<br />Note: The default has been randomly generated.
 this stage is completed<br />	setup	en	This stage is completed<br />
 to a version it does not know about	setup	en	to a version it does not know about
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	en	to allow password authentification add the following line to your pg_hba.conf (above all others) AND restart postgres:
 to setup 1 admin account and 3 demo accounts.	setup	en	to setup 1 admin account and 3 demo accounts.
 top	setup	en	top
 translations added	setup	en	Translations Added

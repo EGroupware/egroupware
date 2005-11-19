@@ -10,8 +10,8 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br />Die Benutzernamen/Passwörter sind: demo/guest, demo2/guest und demo3/guest.
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
-add a domain	setup	de	Eine Domain hinzufügen
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper hinzufügen ("Default" wird versucht wenn nichts angegeben.)
+add new database instance (egw domain)	setup	de	Neue Datenbankinstanz (eGW Domain) hinzufügen
 additional settings	setup	de	Zusätzliche Einstellungen
 admin first name	setup	de	Admin-Vorname
 admin last name	setup	de	Admin-Nachname
@@ -125,6 +125,7 @@ current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1, click %2here%3 to change it.	setup	de	Aktueller Systemzeichensatz ist %1, %2hier%3 klicken um ihn zu ändern.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
+database instance (egw domain)	setup	de	Datenbankinstanz (eGW Domain)
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
 datebase	setup	de	Datenbank
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br />Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br />(Port 13/Host: 129.6.15.28)
@@ -238,6 +239,7 @@ install language	setup	de	Sprachen installieren
 installed	setup	de	installiert
 instructions for creating the database in %1:	setup	de	Anweisungen um eine Datenbank unter %1 anzulegen:
 invalid ip address	setup	de	Ungültige IP Adresse
+invalid mcrypt algorithm/mode combination	setup	de	Ungültige MCrypt Algorithmus/Modus Kombination
 invalid password	setup	de	Ungültiges Passwort
 is broken	setup	de	ist kaputt
 is disabled	setup	de	ist nicht aktiv
@@ -261,6 +263,7 @@ ldap root password	setup	de	LDAP-Root-Passwort
 ldap rootdn	setup	de	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=eGW Domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
+login as user postgres, eg. by using su as root	setup	de	Als Benutzer postgres einlogen, zB. durch benutzen von su als root
 login to mysql -	setup	de	mysql aufrufen -
 logout	setup	de	Abmelden
 mail domain (for virtual mail manager)	setup	de	Mail Domain (für Virtual Mail Manager)
@@ -305,6 +308,7 @@ not ready for this stage yet	setup	de	Noch nicht bereit für diesen Schritt
 not set	setup	de	nicht gesetzt
 note: you will be able to customize this later	setup	de	Notiz: Sie können dies später anpassen
 now guessing better values for defaults...	setup	de	Nun wird versucht bessere Werte für die Vorgaben zu finden ...
+odbc / maxdb: dsn (data source name) to use	setup	de	ODBC / MaxDB: DSN (data source name = Datenquellenname)
 ok	setup	de	OK
 once the database is setup correctly	setup	de	Wenn die Datenbank einmal korrekt eingerichtet ist
 one month	setup	de	ein Monat
@@ -341,6 +345,7 @@ pop/imap mail server hostname or ip address	setup	de	POP/IMAP Mail Server Hostna
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
 post-install dependency failure	setup	de	Abhängigkeitsfehler nach der Installation
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	de	Postgres: Leer lassen für die empfohlenen Unix Domain Sockets anstatt einer tcp/ip Verbindung
 potential problem	setup	de	Potentielles Problem
 preferences	setup	de	Einstellungen
 problem resolution	setup	de	Problem Lösung
@@ -454,6 +459,7 @@ this section will help you setup your ldap accounts for use with egroupware	setu
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br />Hinweis: Die Vorgabe wurde zufällig erzeugt.
 this stage is completed<br />	setup	de	Dieser Schritt ist abgeschlossen<br />
 to a version it does not know about	setup	de	auf eine Version von der nichts bekannt ist
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	de	um Passwort Authentifizierung zu verwenden, folgende Zeile (vor allen anderen) in ihre pg_hba.conf einfügen UND postgres neu starten
 to setup 1 admin account and 3 demo accounts.	setup	de	zum Anlegen von eines Administratorkontos und ggf. 3 Demo-Benutzerkonten.
 top	setup	de	oben
 translations added	setup	de	Übersetzungen hinzugefügt

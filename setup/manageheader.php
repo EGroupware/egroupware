@@ -357,7 +357,7 @@
 				{
 					$detected .= lang('You need to add some domains to your header.inc.php.') . '<br />' . "\n";
 					$GLOBALS['egw_domain']['default'] = array();
-					$setup_tpl->set_var('lang_domain',lang('Domain'));
+					$setup_tpl->set_var('lang_domain',lang('Database instance (eGW domain)'));
 					$setup_tpl->set_var('lang_delete',lang('Delete'));
 					$setup_tpl->set_var('db_domain','default');
 					$setup_tpl->set_var('db_host','localhost');
@@ -384,8 +384,8 @@
 						$detected .= lang('Importing old settings into the new format....') . '<br />' . "\n";
 					}
 					reset($GLOBALS['egw_domain']);
-					$default_domain = each($GLOBALS['egw_domain']);
-					$GLOBALS['egw_info']['server']['default_domain'] = $default_domain[0];
+					list($default_domain) = each($GLOBALS['egw_domain']);
+					$GLOBALS['egw_info']['server']['default_domain'] = $default_domain;
 					unset($default_domain); // we kill this for security reasons
 					$GLOBALS['egw_info']['server']['config_passwd'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['config_passwd'];
 					$GLOBALS['egw_info']['server']['config_user'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]['config_user'];
@@ -395,10 +395,9 @@
 						$GLOBALS['egw_domain'][lang('new')] = array();
 					}
 
-					reset($GLOBALS['egw_domain']);
-					while(list($key,$val) = each($GLOBALS['egw_domain']))
+					foreach($GLOBALS['egw_domain'] as $key => $val)
 					{
-						$setup_tpl->set_var('lang_domain',lang('Domain'));
+						$setup_tpl->set_var('lang_domain',lang('Database instance (eGW domain)'));
 						$setup_tpl->set_var('lang_delete',lang('Delete'));
 						$setup_tpl->set_var('db_domain',$key);
 						$setup_tpl->set_var('db_host',$GLOBALS['egw_domain'][$key]['db_host']);
@@ -623,13 +622,15 @@
 			$setup_tpl->set_var('errors',$errors);
 
 			$setup_tpl->set_var('lang_settings',lang('Settings'));
-			$setup_tpl->set_var('lang_adddomain',lang('Add a domain'));
+			$setup_tpl->set_var('lang_adddomain',lang('Add new database instance (eGW domain)'));
 			$setup_tpl->set_var('lang_serverroot',lang('Server Root'));
 			$setup_tpl->set_var('lang_includeroot',lang('Include Root (this should be the same as Server Root unless you know what you are doing)'));
 			$setup_tpl->set_var('lang_adminuser',lang('Admin user for header manager'));
 			$setup_tpl->set_var('lang_adminpass',lang('Admin password to header manager'));
 			$setup_tpl->set_var('lang_dbhost',lang('DB Host'));
-			$setup_tpl->set_var('lang_dbhostdescr',lang('Hostname/IP of database server'));
+			$setup_tpl->set_var('lang_dbhostdescr',lang('Hostname/IP of database server').'<br />'.
+				lang('Postgres: Leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection').'<br />'.
+				lang('ODBC / MaxDB: DSN (data source name) to use'));
 			$setup_tpl->set_var('lang_dbport',lang('DB Port'));
 			$setup_tpl->set_var('lang_dbportdescr',lang('TCP port number of database server'));
 			$setup_tpl->set_var('lang_dbname',lang('DB Name'));
