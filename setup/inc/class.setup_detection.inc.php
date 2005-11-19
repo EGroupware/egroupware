@@ -264,7 +264,7 @@
 			}
 			$GLOBALS['egw_setup']->set_table_names();
 
-			if (!$GLOBALS['egw_setup']->db->Link_ID)
+			if (!$GLOBALS['egw_setup']->db->Link_ID || !$GLOBALS['egw_setup']->db->Link_ID->_connectionID)
 			{
 				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 1 (Create Database)';
 				return 1;
@@ -364,12 +364,11 @@
 			}
 		}
 
-		/*
-		@function check_app_tables
-		@abstract	Verify that all of an app's tables exist in the db
-		@param $appname
-		@param $any		optional, set to True to see if any of the apps tables are installed
-		*/
+		/**
+		 * Verify that all of an app's tables exist in the db
+		 * @param $appname
+		 * @param $any		optional, set to True to see if any of the apps tables are installed
+		 */
 		function check_app_tables($appname,$any=False)
 		{
 			$none = 0;
@@ -392,7 +391,7 @@
 					{
 						echo '<br>check_app_tables(): Checking: ' . $appname . ',table: ' . $val;
 					}
-					if(!in_array($val,$tables))
+					if(!in_array($val,$tables) && !in_array(strtolower($val),$tables))	// names in tables might be lowercase
 					{
 						if($GLOBALS['DEBUG'])
 						{
