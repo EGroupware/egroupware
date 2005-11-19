@@ -121,7 +121,7 @@
 			$app = 'phpgwapi';
 		}
 
-		$GLOBALS[$class] =& CreateObject($app.'.'.$class);
+		$GLOBALS[$class] = CreateObject($app.'.'.$class);	// dont use =& with $GLOBALS, it does NOT behave as expected
 		if((is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions[$method]) && ! $invalid_data)
 		{
 			execmethod($_GET['menuaction']);
