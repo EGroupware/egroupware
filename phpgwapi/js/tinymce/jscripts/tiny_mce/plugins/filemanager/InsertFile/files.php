@@ -488,7 +488,7 @@ $view = new $classname;
 				$params['parsed_time'] = $parsed_time = parse_time($time);
 				$params['folderNb'] = $folderNb;
 				$folders_body .= $view->folder_item($params);
-				$folderJSArray .= "['images/ext/folder_small.gif', '".sanitize2($entry)."', '".$MY_MESSAGES['folder']."', '".$parsed_time."'],\n";
+				$folderJSArray .= "['". $GLOBALS['egw_info']['server']['webserver_url']. '/phpgwapi/templates/default/images/mime/folder_small.gif'. "', '".sanitize2($entry)."', '".$MY_MESSAGES['folder']."', '".$parsed_time."'],\n";
 				$folderNb++;
 			} else {
 				$entries_cnt++;

@@ -16,7 +16,7 @@ class view_text {
 	function folder_item($params)
 	{
 		return '<tr id="D'.$params['folderNb'].'">
-		<td width="4%"><img src="img/ext/folder_small.gif" width="16" height="16" border="0" alt="'.$params['entry'].'" /></td>
+		<td width="4%"><img src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/phpgwapi/templates/default/images/mime/folder_small.gif'.'" width="16" height="16" border="0" alt="'.$params['entry'].'" /></td>
 		<td width="50%"><div style="height:15px; overflow:hidden;"><a href="javascript:changeDir('.$params['folderNb'].');" title="'.$params['entry'].'">'.$params['entry'].'</a></div></td>
 		<td width="18%" align="right">'.$params['MY_MESSAGES']['folder'].'</td>
 		<td width="25%">'.$params['parsed_time'].'</td>
