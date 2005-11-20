@@ -74,11 +74,6 @@
 		var $Password = '';
 
 		/**
-		* @var bool $auto_stripslashes automatically remove slashes when returning field values - default False
-		*/
-		var $auto_stripslashes = False;
-        
-		/**
 		* @var int $Auto_Free automatically free results - 0 no, 1 yes
 		*/
 		var $Auto_Free     = 0;
@@ -93,11 +88,6 @@
 		*/
 		var $Halt_On_Error = 'yes';
         
-		/**
-		* @var string $Seq_Table table for storing sequences ????
-		*/
-		var $Seq_Table     = 'db_sequence';
-
 		/**
 		* @var array $Record current record
 		*/
@@ -132,6 +122,7 @@
 			'sub_queries'      => true,	// will be set to false for mysql < 4.1
 			'distinct_on_text' => true,	// is the DB able to use DISTINCT with a text or blob column
 			'like_on_text'     => true,	// is the DB able to use LIKE with text columns
+			'name_case'        => 'upper',	// case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
 			'order_on_text'    => true,	// is the DB able to order by a given text column, boolean or 
 		);								// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
 		
@@ -335,10 +326,16 @@
 			switch($adodb_driver)
 			{
 				case 'mysql':
+				case 'mysqlt':
 				case 'mysqli':
 					$this->capabilities['sub_queries'] = (float) $db_version >= 4.1;
+					$this->capabilities['name_case'] = 'preserv';
 					break;
 					
+				case 'postgres':
+					$this->capabilities['name_case'] = 'lower';
+					break;					
+
 				case 'mssql':
 					$this->capabilities['distinct_on_text'] = false;
 					$this->capabilities['order_on_text'] = 'CAST (%s AS varchar)';
@@ -370,6 +367,7 @@
 		/**
 		* Escape strings before sending them to the database
 		*
+		* @deprecated use quote($value,$type='') instead
 		* @param string $str the string to be escaped
 		* @return string escaped sting
 		*/
@@ -415,6 +413,17 @@
 				return False;
 			}
 			return $this->Link_ID->UnixTimeStamp($timestamp);
+		}
+		
+		/**
+		 * convert a rdbms specific boolean value
+		 *
+		 * @param string $val boolean value in db-specfic notation
+		 * @return boolean
+		 */
+		function from_bool($val)
+		{
+			return $val && $val{0} !== 'f';	// everthing other then 0 or f[alse] is returned as true
 		}
 
 		/**
@@ -529,45 +538,24 @@
 			{
 				return False;
 			}
-			switch ($this->Type)
+			if ($this->capabilities['name_case'] == 'upper')	// maxdb, oracle, ...
 			{
-				case 'sapdb':
-				case 'maxdb':
-				case 'oracle':
-					foreach($this->Record as $column => $value)
-					{
-						// add a lowercase version 
-						$this->Record[strtolower($column)] = $value;
-						// add a numeric version
-						$this->Record[] = $value;
-					}
-					if (!function_exists('array_change_key_case'))
-					{
-						define('CASE_LOWER',0);
-						define('CASE_UPPER',1);
-						function array_change_key_case($arr,$mode=CASE_LOWER)
+				switch($fetch_mode)
+				{
+					case ADODB_FETCH_ASSOC:
+						$this->Record = array_change_key_case($this->Record);
+						break;
+					case ADODB_FETCH_NUM:
+						$this->Record = array_values($this->Record);
+						break;
+					default:
+						$this->Record = array_change_key_case($this->Record);
+						if (!isset($this->Record[0]))
 						{
-							foreach($arr as $key => $val)
-							{
-								$changed[$mode == CASE_LOWER ? strtolower($key) : strtoupper($key)] = $val;
-							}
-							return $changed;
-						}
-					}
-					switch($fetch_mode)
-					{
-						case ADODB_FETCH_ASSOC:
-							$this->Record = array_change_key_case($this->Record);
-							break;
-						case ADODB_FETCH_NUM:
-							$this->Record = array_values($this->Record);
-							break;
-						default:
-							$this->Record = array_change_key_case($this->Record);
 							$this->Record += array_values($this->Record);
-							break;
-					}
-					break;
+						}
+						break;
+				}
 			}
 			return True;
 		}
@@ -662,6 +650,7 @@
 		/**
 		* Lock a table
 		*
+		* @deprecated not used anymore as it costs to much performance, use transactions if needed
 		* @param string $table name of table to lock
 		* @param string $mode type of lock required (optional), default write
 		* @return bool True if sucessful, False if fails
@@ -672,13 +661,14 @@
 		/**
 		* Unlock a table
 		*
+		* @deprecated not used anymore as it costs to much performance, use transactions if needed
 		* @return bool True if sucessful, False if fails
 		*/
 		function unlock()
 		{}
 
 		/**
-		* Get the number of rows affected by last update
+		* Get the number of rows affected by last update or delete
 		*
 		* @return int number of rows
 		*/
@@ -712,7 +702,7 @@
 		}
 
 		/**
-		* short hand for @see num_rows()
+		* @deprecated use num_rows()
 		*/
 		function nf()
 		{
@@ -720,7 +710,7 @@
 		}
 
 		/**
-		* short hand for print @see num_rows
+		* @deprecated use print num_rows()
 		*/
 		function np()
 		{
@@ -732,18 +722,16 @@
 		*
 		* @param string/integer $Name name of field or positional index starting from 0
 		* @param bool $strip_slashes string escape chars from field(optional), default false
+		*	depricated param, as correctly quoted values dont need any stripslashes!
 		* @return string the field value
 		*/
 		function f($Name, $strip_slashes = False)
 		{
-			if ($strip_slashes || ($this->auto_stripslashes && ! $strip_slashes))
+			if ($strip_slashes)
 			{
 				return stripslashes($this->Record[$Name]);
 			}
-			else
-			{
-				return $this->Record[$Name];
-			}
+			return $this->Record[$Name];
 		}
 
 		/**
@@ -751,6 +739,7 @@
 		*
 		* @param string $Name name of field to print
 		* @param bool $strip_slashes string escape chars from field(optional), default false
+		*	depricated param, as correctly quoted values dont need any stripslashes!
 		*/
 		function p($Name, $strip_slashes = True)
 		{
@@ -761,7 +750,7 @@
 		* Returns a query-result-row as an associative array (no numerical keys !!!)
 		*
 		* @param bool $do_next_record should next_record() be called or not (default not)
-		* @param string $strip string to strip of the column-name, default ''
+		* @param string $strip='' string to strip of the column-name, default ''
 		* @return array/bool the associative array or False if no (more) result-row is availible
 		*/
 		function row($do_next_record=False,$strip='')
@@ -781,19 +770,6 @@
 				}
 			}
 			return $result;
-		}
-
-		/**
-		* Get the id for the next sequence - not implemented!
-		*
-		* This seems not to be used anywhere in eGroupWhere !!!
-		*
-		* @param string $seq_name name of the sequence
-		* @return int sequence id
-		*/
-		function nextid($seq_name)
-		{
-			echo "<p>db::nextid(sequence='$seq_name') not yet implemented</p>\n";
 		}
 
 		/**
@@ -925,13 +901,9 @@
 			{
 				foreach($tables as $table)
 				{
-					switch ($this->Type)
+					if ($this->capabilities['name_case'] == 'upper')
 					{
-						case 'sapdb':
-						case 'maxdb':
-						case 'oracle':
-							$table = strtolower($table);
-							break;
+						$table = strtolower($table);
 					}
 					$result[] = array(
 						'table_name'      => $table,
@@ -1481,8 +1453,8 @@
 		 * The function has a variable number of arguments, from which the expession gets constructed
 		 * eg. db::expression('my_table','(',array('name'=>"test'ed",'lang'=>'en'),') OR ',array('owner'=>array('',4,10)))
 		 * gives "(name='test\'ed' AND lang='en') OR 'owner' IN (0,4,5,6,10)" if name,lang are strings and owner is an integer
-		 * @param $table string name of the table
-		 * @param $args mixed variable number of arguments of the following types:
+		 * @param string $table name of the table
+		 * @param mixed $args variable number of arguments of the following types:
 		 *	string: get's as is into the result
 		 *	array:	column-name / value pairs: the value gets quoted according to the type of the column and prefixed
 		 *		with column-name=, multiple pairs are AND'ed together, see db::column_data_implode
@@ -1491,7 +1463,7 @@
 		 */
 		function expression($table,$args)
 		{
-			$table_def = $this->get_table_definitions($app,$table);
+			$table_def = $this->get_table_definitions('',$table);
 			$sql = '';
 			$ignore_next = 0;
 			foreach(func_get_args() as $n => $arg)

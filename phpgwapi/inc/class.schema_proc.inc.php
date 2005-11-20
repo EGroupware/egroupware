@@ -27,18 +27,49 @@
 	 */
 	class schema_proc
 	{
+		/**
+		 * @deprecated formerly used translator class, now a reference to ourself
+		 */
 		var $m_oTranslator;
+		/**
+		 * @var egw_db-object $m_odb db-object
+		 */
 		var $m_odb;
-		var $m_bDeltaOnly;
-		var $debug = 0;	// 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
-		var $max_index_length=array(	// if known
+		/**
+		 * @var adodb-object $adodb reference to the global ADOdb object
+		 */
+		var $adodb;
+		/**
+		 * @var datadictionary-object $dict adodb's datadictionary object for the used db-type
+		 */
+		var $dict;
+		/**
+		 * @var $debug=0 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
+		 */
+		var $debug = 0;
+		/**
+		 * @var array $max_index_length db => max. length of indexes pairs (if there is a considerable low limit for a db)
+		 */
+		var $max_index_length=array(
 			'sapdb' => 32,
 			'oracle' => 30,
 		);
-		var $sType;	// type of the database, set by the the constructor
-		var $max_varchar_length = 255;	// maximum length of a varchar column, everything above get converted to text
-		
+		/**
+		 * @var string $sType type of the database, set by the the constructor
+		 */
+		var $sType;
+		/**
+		 *	@var int $max_varchar_length maximum length of a varchar column, everything above get converted to text
+		 */
+		var $max_varchar_length = 255;
+		/**
+		 * @var string $system_charset system-charset if set
+		 */
 		var $system_charset;
+		/**
+		 * @var array $capabilities reference to the array of the db-class
+		 */
+		var $capabilities;
 
 		/**
 		 * Constructor of schema-processor
@@ -49,6 +80,7 @@
 		{
 			$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 			$this->m_odb->connect();
+			$this->capabilities =& $this->m_odb->capabilities;
 
 			$this->sType = $dbms ? $dmbs : $this->m_odb->Type;
 
@@ -929,7 +961,7 @@
 				}
 				if (isset($col_data['default']))
 				{
-					$ado_col .= " DEFAULT '$col_data[default]'";
+					$ado_col .= ' DEFAULT '.$this->m_odb->quote($col_data['default'],$col_data['type']);
 				}
 				if (in_array($col,$aTableDef['pk']))
 				{
@@ -984,17 +1016,7 @@
 			//echo "$sTableName: <pre>".print_r($columns,true)."</pre>";
 			foreach($columns as $column)
 			{
-				switch($this->sType)
-				{
-					case 'sapdb':
-					case 'maxdb':
-					case 'oracle':
-						$name = strtolower($column->name);
-						break;
-					default:
-						$name = $column->name;
-						break;
-				}
+				$name = $this->capabilities['name_case'] == 'upper' ? strtolower($column->name) : $column->name;
 				
 				$type = method_exists($this->dict,'MetaType') ? $this->dict->MetaType($column) : strtoupper($column->type);
 				
@@ -1108,13 +1130,9 @@
 			if (!count($definition['pk']) && method_exists($this->dict,'MetaPrimaryKeys') &&
 				is_array($primary = $this->dict->MetaPrimaryKeys($sTableName)) && count($primary))
 			{
-				switch($this->sType)
+				if($this->capabilities['name_case'] == 'upper')
 				{
-					case 'sapdb':
-					case 'maxdb':
-					case 'oracle':
-						array_walk($primary,create_function('&$s','$s = strtolower($s);'));
-						break;
+					array_walk($primary,create_function('&$s','$s = strtolower($s);'));
 				}
 				$definition['pk'] = $primary;
 			}
@@ -1125,13 +1143,9 @@
 			{
 				foreach($indexes as $index)
 				{
-					switch($this->sType)
+					if($this->capabilities['name_case'] == 'upper')
 					{
-						case 'sapdb':
-						case 'maxdb':
-						case 'oracle':
-							array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
-							break;
+						array_walk($index['columns'],create_function('&$s','$s = strtolower($s);'));
 					}
 					if (count($definition['pk']) && (implode(':',$definition['pk']) == implode(':',$index['columns']) ||
 						$index['unique'] && count(array_intersect($definition['pk'],$index['columns'])) == count($definition['pk'])))
