@@ -535,7 +535,7 @@ function egw_openWindowCentered2(_url, _windowName, _width, _height, _status)
 	
 	return windowID;
 }
-function egw_openWindowCentered(_url, _windowName, _width, _height, _status)
+function egw_openWindowCentered(_url, _windowName, _width, _height)
 {
 	return egw_openWindowCentered2(_url, _windowName, _width, _height, 'no');
 }
