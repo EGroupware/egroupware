@@ -193,6 +193,7 @@ remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
 responsible	infolog	es-es	Responsable
 responsible open	infolog	es-es	responsable abierto
+responsible overdue	infolog	es-es	responsable vencido
 responsible upcoming	infolog	es-es	responsable por llegar
 responsible user, priority, times	infolog	es-es	usuario responsable, prioridad, horas
 returns a list / search for records.	infolog	es-es	Devuelve una lista o busca registros
