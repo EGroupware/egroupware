@@ -423,7 +423,7 @@
 			}
 			$pref = &$this->$type;
 
-			if ($all = (is_string($var) && $var == ''))
+			if (($all = (is_string($var) && $var == '')))
 			{
 				unset($pref[$app_name]);
 				unset($this->data[$app_name]);
@@ -458,6 +458,16 @@
 			}
 			reset ($this->data);
 			return $this->data;
+		}
+		
+		/**
+		 * delete all prefs of a given user
+		 *
+		 * @param int $accountid
+		 */
+		function delete_user($accountid)
+		{
+			$this->delete($this->table,array('preference_owner' => $accountid),__LINE__,__FILE__);
 		}
 
 		/**
@@ -804,7 +814,7 @@
 				return $this->data['email']['address'];
 			}
 			// if email-address is set in the account, return it
-			if ($email = $GLOBALS['egw']->accounts->id2name($account_id,'account_email'))
+			if (($email = $GLOBALS['egw']->accounts->id2name($account_id,'account_email')))
 			{
 				return $email;
 			}
@@ -873,9 +883,6 @@
 				// at location [email][ex_accounts][X][...pref names] => pref values
 				// make this look like "prefs[email] so the code below code below will do its job transparently
 				
-				// store original prefs
-				$orig_prefs = array();
-				$orig_prefs = $prefs;
 				// obtain the desired sub-array of extra account prefs
 				$sub_prefs = array();
 				$sub_prefs['email'] = $prefs['email']['ex_accounts'][$acctnum];

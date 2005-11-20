@@ -12,13 +12,8 @@
 
 	/* $Id$ */
 
-	// Delete all records for a user
+	// Delete all prefs of a user
 	if((int)$GLOBALS['hook_values']['account_id'] > 0)
 	{
-		$table_locks = Array('phpgw_preferences');
-		
-		$GLOBALS['egw']->db->lock($table_locks);
-		$GLOBALS['egw']->db->query('DELETE FROM phpgw_preferences WHERE preference_owner='.(int)$GLOBALS['hook_values']['account_id'],__LINE__,__FILE__);
-		$GLOBALS['egw']->db->unlock();
+		$GLOBALS['egw']->preferences->delete_user($GLOBALS['hook_values']['account_id']);
 	}
-?>
