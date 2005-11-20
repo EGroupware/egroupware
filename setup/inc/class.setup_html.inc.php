@@ -31,17 +31,17 @@
 
 			$deletedomain = get_var('deletedomain',Array('POST'));
 			$domains = get_var('domains',Array('POST'));
-			@reset($domains);
-			while($domains && list($k,$v) = @each($domains))
+
+			foreach($domains as $k => $v)
 			{
-				if(isset($deletedomain[$k]))
+				if(is_array($deletedomain) && isset($deletedomain[$k]))
 				{
 					continue;
 				}
 				$variableName = str_replace('.','_',$k);
 				$dom = get_var('setting_'.$variableName,Array('POST'));
 				$GLOBALS['header_template']->set_var('DB_DOMAIN',$v);
-				while(list($x,$y) = @each($dom))
+				foreach($dom as $x => $y)
 				{
 					if(strtoupper($x) == 'CONFIG_PASS')
 					{
