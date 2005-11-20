@@ -6,17 +6,22 @@ add resource	resources	nl	hulpbron toevoegen
 add resources	resources	nl	Hulpbronnen toevoegen
 administrator	resources	nl	Beheerder
 all categories	resources	nl	alle categorieën
+book	resources	nl	Boeken
+book selected resources	resources	nl	boek de geselecteerde hulpbronnen
 book this resource	resources	nl	Deze hulpbron boeken
 bookable	resources	nl	Te boeken
+buy this article	resources	nl	Koop dit artikel
 buy this resource	resources	nl	Deze hulpbron kopen
 buyable	resources	nl	Te kopen
 categories admin	resources	nl	Categorieën beheer
+category:	resources	nl	Categorie:
 check all	resources	nl	Alles markeren
 choose categories admin	resources	nl	kies categorieën beheer
 clear selection	resources	nl	selectie wissen
 configure access permissions	resources	nl	Toegangsrechten configureren
 create new accessory for this resource	resources	nl	Nieuw toebehoren voor deze hulpbron aanmaken
 create new links	resources	nl	Nieuwe links aanmaken
+delete selected resources	resources	nl	verwijder de geselecteerde hulpbronnen
 delete this entry	resources	nl	Deze entry verwijderen
 description (short)	resources	nl	Beschrijving (kort)
 direct booking permissions	resources	nl	Direct boeken rechten
@@ -32,7 +37,10 @@ how many of this resource are usable	resources	nl	Hoeveel van deze hulpbron is b
 how many of this resource exists	resources	nl	Hoeveel van deze hulpbron bestaat
 implies booking permission	resources	nl	veronderstelt boekingsrechten
 implies read permission	resources	nl	veronderstelt leesrechten
+information about storage	resources	nl	Informatie over de opslag
 informations about the location of resource	resources	nl	Informatie over de locatie van de hulpbron
+inventory number	resources	nl	Inventarisnummer
+inventory number:	resources	nl	Inventarisnummer:
 is resource bookable?	resources	nl	Is hulpbron te boeken?
 is resource buyable?	resources	nl	Is hulpbron te kopen?
 is this resource bookable?	resources	nl	Is deze hulpbron te boeken?
@@ -40,7 +48,9 @@ is this resource buyable?	resources	nl	Is deze hulpbron te kopen?
 links	resources	nl	Links
 location	resources	nl	Locatie
 location of resource	resources	nl	Locatie van de hulpbron
+location:	resources	nl	Locatie
 name of resource	resources	nl	Naam van de hulpbron
+name:	resources	nl	Naam:
 no description available	resources	nl	geen beschrijving beschikbaar
 no resources selected	resources	nl	Geen hulpbronnen geselecteerd
 notify your administrator to correct this situation	resources	nl	Waarschuw uw beheerder dat deze situatie hersteld moet worden
@@ -54,7 +64,6 @@ quantity	resources	nl	Hoeveelheid
 quantity of resource	resources	nl	Hoeveelheid van de hulpbron
 quantity:	resources	nl	Hoeveelheid:
 read calendar permissions	resources	nl	Agenda leesrechten
-read calender permissions	resources	nl	Agenda leesrechten
 read permissions	resources	nl	Leesrechten
 related links	resources	nl	Gerelateerde links
 resources	common	nl	hulpbronnen
@@ -64,17 +73,22 @@ saves entry and exits	resources	nl	Opslaan en sluiten
 select a category	resources	nl	Selecteer een categorie
 select resource	resources	nl	selecteer hulpbron
 select resources	resources	nl	Selecteer hulpbronnen
+select/deselect all	resources	nl	alles (de)selecteren
 short description	resources	nl	Korte beschrijving
 short description of resource	resources	nl	Korte beschrijving van hulpbron
+show calendar of resource	resources	nl	Toon de agenda van de hulpbron
 something went wrong by deleting resource	resources	nl	Er ging iets mis tijdens het verwijderen van de hulpbron
 something went wrong by saving resource	resources	nl	Er ging iets mis tijdens het bewaren van de hulpbron
 storage inforation	resources	nl	Opslaginformatie
+storage information	resources	nl	Opslaginformatie
+storage information:	resources	nl	Opslaginformatie:
 the calendar of this resource	resources	nl	De agenda van deze hulpbron
 this module displays the resources app	resources	nl	Deze module toont de hulpbronnen toepassing
 use general resources icon	resources	nl	Gebruik de algemene hulpbronnen icoon
 use own picture	resources	nl	Gebruik eigen afbeelding
 use the category's icon	resources	nl	Gebruik de categorie icoon
 useable	resources	nl	Bruikbaar
+useable:	resources	nl	Bruikbaar:
 view accessories for this resource	resources	nl	Toebehoren voor deze hulpbron weergeven
 view this entry	resources	nl	Deze entry weergeven
 web-page of resource	resources	nl	Webpagina van hulpbron

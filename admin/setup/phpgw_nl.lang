@@ -284,7 +284,7 @@ peer server list	admin	nl	Peer-serverlijst
 peer servers	admin	nl	Peer-servers
 percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
 percent this user has logged out	admin	nl	Percentage dat deze gebruiker uitgelogd heeft
-permission denied	admin	nl	Rechten geweigerd
+permission denied	admin	nl	Toestemming geweigerd
 permissions	admin	nl	Rechten
 permissions this group has	admin	nl	Rechten van deze groep
 phpinfo	admin	nl	PHP informatie
@@ -405,7 +405,7 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wil
 would you like to show each application's upgrade status ?	admin	nl	Wilt u bij de elke toepassing de upgradestatus weergeven?
 xml-rpc	admin	nl	XML-RPC
 you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
-you have to enter a name, to create a new field!!!	admin	nl	U moet een naam invullen om een nieuw veld te kunnen aanmaken!!!
+you have to enter a name, to create a new field!!!	admin	nl	U moet een naam invullen om een nieuwe veld te kunnen aanmaken!!!
 you must add at least 1 permission or group to this account	admin	nl	U moet op z'n minst 1 permissie of groep toewijzen aan dit account.
 you must enter a group name.	admin	nl	U moet een groepsnaam invoeren.
 you must enter a lastname	admin	nl	U moet een achternaam invoeren.
