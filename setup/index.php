@@ -381,7 +381,6 @@
 		case 10:
 			$setup_tpl->set_var('tablescurrent',lang('Your eGroupWare API is current'));
 			$setup_tpl->set_var('uninstall_all_applications',lang('Uninstall all applications'));
-			$setup_tpl->set_var('insanity',lang('Insanity'));
 			$setup_tpl->set_var('dropwarn',lang('Your tables will be dropped and you will lose data'));
 			$setup_tpl->set_var('deletetables',lang('Uninstall all applications'));
 			$setup_tpl->parse('V_db_stage_10','B_db_stage_10');

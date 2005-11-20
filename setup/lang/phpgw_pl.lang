@@ -96,7 +96,6 @@ if you did not receive any errors, your applications have been	setup	pl
 if you did not receive any errors, your tables have been	setup	pl	
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	pl	
 import ldap users/groups	setup	pl	Import u¿tkowników/grup LDAP
-insanity	setup	pl	Szaleñstwo
 install	setup	pl	Instaluj
 install applications	setup	pl	Instaluj aplikacji
 install language	setup	pl	Instaluj wersje jêzykowe

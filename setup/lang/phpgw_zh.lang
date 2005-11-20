@@ -164,7 +164,6 @@ import has been completed!	setup	zh	导入完成!
 import ldap users/groups	setup	zh	导入 LDAP 用户/组
 importing old settings into the new format....	setup	zh	将原有配置导入到新格式....
 include root (this should be the same as server root unless you know what you are doing)	setup	zh	头文件根目录(此处应设置为服务器根目录，请慎重更改)
-insanity	setup	zh	建议不使用
 install	setup	zh	安装
 install all	setup	zh	完全安装
 install applications	setup	zh	安装应用程序

@@ -230,7 +230,6 @@ import ldap users/groups	setup	zh-tw	匯入 LDAP 使用者／群組
 importing old settings into the new format....	setup	zh-tw	匯入舊的設定值到新的格式中...
 include root (this should be the same as server root unless you know what you are doing)	setup	zh-tw	Include 根目錄(這個一般與伺服器根目錄一樣，除非您清楚這個設定會造成的結果再做適當的修改)
 include_path need to contain "." - the current directory	setup	zh-tw	include_path 必須包含"." - 目前的資料夾
-insanity	setup	zh-tw	建議不使用
 install	setup	zh-tw	安裝
 install all	setup	zh-tw	全部安裝
 install applications	setup	zh-tw	安裝應用程式

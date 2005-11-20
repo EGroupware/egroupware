@@ -197,7 +197,6 @@ import ldap users/groups	setup	fi	Tuo LDAP k‰ytt‰j‰t/ryhm‰t
 importing old settings into the new format....	setup	fi	Tuodaan vanhat asetukset uuteen formaattiin....
 include root (this should be the same as server root unless you know what you are doing)	setup	fi	Include-juuri (T‰m‰n pit‰isi olla sama kuin Server Root)
 include_path need to contain "." - the current directory	setup	fi	include_path-m‰‰rityksess‰ on oltava "." - nykyinen hakemisto
-insanity	setup	fi	Vaarallista
 install	setup	fi	Asenna
 install all	setup	fi	Asenna kaikki
 install applications	setup	fi	Sovellusten asennus

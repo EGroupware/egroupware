@@ -196,7 +196,6 @@ import ldap users/groups	setup	hr	Import LDAP users/groups
 importing old settings into the new format....	setup	hr	Importing old settings into the new format....
 include root (this should be the same as server root unless you know what you are doing)	setup	hr	Include Root (this should be the same as Server Root unless you know what you are doing)
 include_path need to contain "." - the current directory	setup	hr	include_path need to contain "." - the current directory
-insanity	setup	hr	Insanity
 install	setup	hr	Install
 install all	setup	hr	Install All
 install applications	setup	hr	Install Applications

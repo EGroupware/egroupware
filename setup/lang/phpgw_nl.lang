@@ -230,7 +230,6 @@ import ldap users/groups	setup	nl	LDAP gebruikers/groepen importeren
 importing old settings into the new format....	setup	nl	Oude instellingen naar het nieuwe formaat importeren...
 include root (this should be the same as server root unless you know what you are doing)	setup	nl	Root meenemen (dit hoort hetzelfde te zijn als de Server Root tenzij u weet wat u doet)
 include_path need to contain "." - the current directory	setup	nl	include_path moet "." bevatten - de huidige directory
-insanity	setup	nl	Krankzinnigheid
 install	setup	nl	Installeren
 install all	setup	nl	Alles installeren
 install applications	setup	nl	Toepassingen installeren

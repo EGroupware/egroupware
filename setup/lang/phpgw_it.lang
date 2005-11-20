@@ -139,7 +139,6 @@ image type selection order	setup	it	Ordine di selezione del tipo di immagine
 import has been completed!	setup	it	Importazione completata!
 import ldap users/groups	setup	it	Importa utenti/gruppi LDAP
 importing old settings into the new format....	setup	it	Esecuzione importazione vecchie impostazioni nel nuovo formato....
-insanity	setup	it	Follia
 install	setup	it	Installa
 install all	setup	it	Installa tutto
 install applications	setup	it	Installa Applicazioni

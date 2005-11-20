@@ -230,7 +230,6 @@ import ldap users/groups	setup	en	Import LDAP users/groups
 importing old settings into the new format....	setup	en	Importing old settings into the new format....
 include root (this should be the same as server root unless you know what you are doing)	setup	en	Include Root (this should be the same as Server Root unless you know what you are doing)
 include_path need to contain "." - the current directory	setup	en	include_path need to contain "." - the current directory
-insanity	setup	en	Insanity
 install	setup	en	Install
 install all	setup	en	Install All
 install applications	setup	en	Install Applications

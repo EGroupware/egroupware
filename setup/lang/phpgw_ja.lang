@@ -88,7 +88,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you did not receive any errors, your applications have been	setup	ja	エラーは見つかりませんでした。
 if you did not receive any errors, your tables have been	setup	ja	エラーは見つかりませんでした。
 import ldap users/groups	setup	ja	LDAP ユーザ/グループ インポート
-insanity	setup	ja	アンインストール
 install Applications	setup	ja	アプリケーション追加
 install language	setup	ja	言語追加
 install	setup	ja	インストール

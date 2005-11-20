@@ -224,7 +224,6 @@ import ldap users/groups	setup	no	Import av LDAP användare/grupper
 importing old settings into the new format....	setup	no	Importerar gamla inställningar till nytt format
 include root (this should be the same as server root unless you know what you are doing)	setup	no	Inkludera root (detta bör vara samma som Server Root, om du nu inte vet vad du gör)
 include_path need to contain "." - the current directory	setup	no	iclude_path måste innehålla "." (current directory)
-insanity	setup	no	Sykelig
 install	setup	no	Installere
 install all	setup	no	Installer alle
 install applications	setup	no	Installer programmer

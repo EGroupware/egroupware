@@ -210,8 +210,7 @@
 	<td>
 		{tablescurrent}
 		<form method="post" action="index.php">
-		<input type="hidden" name="oldversion" value="new" /> <br />
-		{insanity}: 
+		<input type="hidden" name="oldversion" value="new" />
         <input type="hidden" name="action" value="Uninstall all applications" />
 		<input type="submit" name="label" value="{uninstall_all_applications}" /><br />({dropwarn})
 		</form>

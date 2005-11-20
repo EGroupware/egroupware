@@ -230,7 +230,6 @@ import ldap users/groups	setup	es-es	Importar usuarios/grupos LDAP
 importing old settings into the new format....	setup	es-es	Importar configuración antigua al nuevo formato...
 include root (this should be the same as server root unless you know what you are doing)	setup	es-es	Incluir raíz (debe ser el mismo valor que Server Root a menos que sepa lo que está haciendo)
 include_path need to contain "." - the current directory	setup	es-es	include_path necesita contener ".", el directorio actual
-insanity	setup	es-es	Falta de consistencia
 install	setup	es-es	Instalar
 install all	setup	es-es	Instalar todo
 install applications	setup	es-es	Instalar aplicaciones

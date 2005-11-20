@@ -230,7 +230,6 @@ import ldap users/groups	setup	de	LDAP-Benutzer/-Gruppen importieren
 importing old settings into the new format....	setup	de	Importiere alte Einstellung in das neue Format ...
 include root (this should be the same as server root unless you know what you are doing)	setup	de	Include-Root (sollte das gleiche Verzeichnis wie die Server-Root sein, au&szlig;er Sie wissen was Sie tun)
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
-insanity	setup	de	Irrsinn
 install	setup	de	Installieren
 install all	setup	de	Alle Installieren
 install applications	setup	de	Anwendungen installieren

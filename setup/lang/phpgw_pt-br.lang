@@ -195,7 +195,6 @@ import ldap users/groups	setup	pt-br	Importar usuários/grupos LDAP
 importing old settings into the new format....	setup	pt-br	Importar configurações antigas no novo formato
 include root (this should be the same as server root unless you know what you are doing)	setup	pt-br	Inclua o Root (este deve ser o mesmo Root do servidor, a não ser que você saiba exatamente o que está fazendo)
 include_path need to contain "." - the current directory	setup	pt-br	Inclua o caminho necessário para conter " " - o diretório atual
-insanity	setup	pt-br	Insanidade
 install	setup	pt-br	Instalar
 install all	setup	pt-br	Instalar todos
 install applications	setup	pt-br	Instalar Aplicativos

@@ -196,7 +196,6 @@ import ldap users/groups	setup	ko	LDAP 사용자/그룹을 가져오기
 importing old settings into the new format....	setup	ko	예전 설정들을 새 형태로 가져오는 중입니다...
 include root (this should be the same as server root unless you know what you are doing)	setup	ko	루트포함 (서버의 루트와 같습니다, 지금 하시는 작업을 정확하게 알지 못하신다면 권장하지 않습니다)
 include_path need to contain "." - the current directory	setup	ko	include_path는 "." (현재 디렉토리)를 포함해야 합니다
-insanity	setup	ko	아주위험
 install	setup	ko	설치
 install all	setup	ko	모두 설치
 install applications	setup	ko	응용프로그램 설치

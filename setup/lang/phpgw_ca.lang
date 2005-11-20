@@ -220,7 +220,6 @@ import ldap users/groups	setup	ca	Importar usuaris/grups LDAP
 importing old settings into the new format....	setup	ca	Importar configuració antiga al nou format...
 include root (this should be the same as server root unless you know what you are doing)	setup	ca	Incloure Root (ha d'ésser el mateix que Server Root a menys que sabeu el que esteu fent)
 include_path need to contain "." - the current directory	setup	ca	include_path necessita contenir "." - el directori actual
-insanity	setup	ca	Falta de consistència
 install	setup	ca	Instal·lar
 install all	setup	ca	Instal·lar-ho tot
 install applications	setup	ca	Instal·lar aplicacions

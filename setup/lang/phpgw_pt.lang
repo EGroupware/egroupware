@@ -96,7 +96,6 @@ if you did not receive any errors, your applications have been	setup	pt	Se não f
 if you did not receive any errors, your tables have been	setup	pt	Se não foi exibido nenhum erro, as tabelas foram
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	pt	Importar contas LDAP para a tabela do eGroupWare (para uma nova instalação usando contas no SQL)
 import ldap users/groups	setup	pt	Importar usuários/grupos LDAP
-insanity	setup	pt	Insanidade
 install Applications	setup	pt	Instalar aplicações
 installed	setup	pt	instaladas
 install language	setup	pt	Instalar idioma

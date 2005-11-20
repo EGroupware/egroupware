@@ -195,7 +195,6 @@ import ldap users/groups	setup	fr	Importer les utilisateurs/groupes LDAP
 importing old settings into the new format....	setup	fr	J'importe les vieux réglages dans le nouveau format....
 include root (this should be the same as server root unless you know what you are doing)	setup	fr	Racine d'inclusion (ceci devrait être la même chose de racine du serveur à moins que vous ne sachiez ce que vous faîtes)
 include_path need to contain "." - the current directory	setup	fr	« include_path » a besoin de contenir "." - le répertoire courant
-insanity	setup	fr	Grave erreur
 install	setup	fr	Installer
 install all	setup	fr	Installer tout
 install applications	setup	fr	Installer les applications

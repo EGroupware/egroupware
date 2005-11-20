@@ -207,7 +207,6 @@ import ldap users/groups	setup	iw	LDAP ייבוא משתמשים/קבוצות
 importing old settings into the new format....	setup	iw	...מייבא הגדרות ישנות לפורמאט החדש
 include root (this should be the same as server root unless you know what you are doing)	setup	iw	(לכלול שורש (זה צריך להיות זהה לשורש השרת אלא אם אתה יודע מה אתה עושה
 include_path need to contain "." - the current directory	setup	iw	צריך לכלול את "." - המחיצק הנוכחית include path
-insanity	setup	iw	חוסר שפיעות
 install	setup	iw	התקן
 install all	setup	iw	התקן הכל
 install applications	setup	iw	התקן יישומים

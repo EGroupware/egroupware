@@ -226,7 +226,6 @@ import ldap users/groups	setup	sl	Uvoz LDAP uporabnikov/skupin
 importing old settings into the new format....	setup	sl	Uvažanje starih nastavitev v nov format....
 include root (this should be the same as server root unless you know what you are doing)	setup	sl	Vključi Root (mora biti enako kot strežnikov Root, razen če veste kaj delate)
 include_path need to contain "." - the current directory	setup	sl	pot "include_path" mora vsebovati "." - trenutni direktorij
-insanity	setup	sl	Norost
 install	setup	sl	Namesti
 install all	setup	sl	Namesti vse
 install applications	setup	sl	Namesti aplikacije
