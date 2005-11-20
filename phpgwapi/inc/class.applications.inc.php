@@ -50,7 +50,14 @@
 		 */
 		function applications($account_id = '')
 		{
-			$this->db = clone($GLOBALS['egw']->db);
+			if (is_object($GLOBALS['egw_setup']))
+			{
+				$this->db = clone($GLOBALS['egw_setup']->db);
+			}
+			else
+			{
+				$this->db = clone($GLOBALS['egw']->db);
+			}
 			$this->db->set_app('phpgwapi');
 
 			$this->account_id = get_account_id($account_id);

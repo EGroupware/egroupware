@@ -34,11 +34,18 @@
 		var $account_id;
 		var $data;
 		var $total;
+		var $table = 'egw_accounts';
 
 		function accounts_()
 		{
-			$this->db = clone($GLOBALS['egw']->db);
-			$this->table = 'egw_accounts';
+			if (is_object($GLOBALS['egw_setup']))
+			{
+				$this->db = clone($GLOBALS['egw_setup']->db);
+			}
+			else
+			{
+				$this->db = clone($GLOBALS['egw']->db);
+			}
 			$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
 		}
 

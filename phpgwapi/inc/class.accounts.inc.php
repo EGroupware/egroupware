@@ -374,7 +374,10 @@
 			//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
 			$GLOBALS['egw_info']['accounts']['cache'] = array();
 			
-			$GLOBALS['egw']->invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
+			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
+			}
 		}
 
 		/**
