@@ -6,17 +6,22 @@ add resource	resources	de	Resource hinzufügen
 add resources	resources	de	Resourcen hinzufügen
 administrator	resources	de	Verwalter
 all categories	resources	de	Alle Kategorien
+book	resources	de	Buchen
+book selected resources	resources	de	Ausgewählte Resourcen buchen
 book this resource	resources	de	Resource buchen
 bookable	resources	de	buchbar
+buy this article	resources	de	Diesen Artikel kaufen
 buy this resource	resources	de	Diese Resource kaufen
 buyable	resources	de	käuflich
 categories admin	resources	de	Verwalter der Kategorie
+category:	resources	de	Kategorie
 check all	resources	de	Alle auswählen
 choose categories admin	resources	de	Wählen Sie einen Verwalter für diese Kategorie
 clear selection	resources	de	Auswahl löschen
 configure access permissions	resources	de	Zugangseinstellungen konfigurieren
 create new accessory for this resource	resources	de	Neues Zubehör zu dieser Resource hinzufügen
 create new links	resources	de	Neue Verknüpfung erstellen
+delete selected resources	resources	de	Ausgewählte Resourcen Löschen
 delete this entry	resources	de	Diesen Eintrag löschen
 description (short)	resources	de	Kurzbeschreibung
 direct booking permissions	resources	de	Erlaubnis direkt zu buchen
@@ -32,7 +37,10 @@ how many of this resource are usable	resources	de	Stückzahl der nutzbaren Resour
 how many of this resource exists	resources	de	Stückzahl der existierenden Resourcen
 implies booking permission	resources	de	Impliziert Buchungsberechtigung
 implies read permission	resources	de	Impliziert Leseberechtigung
+information about storage	resources	de	Informationen zur Lagerung
 informations about the location of resource	resources	de	Informationen über den Lagerort der Resource
+inventory number	resources	de	Inventarnummer
+inventory number:	resources	de	Inventarnummer:
 is resource bookable?	resources	de	Ist diese Resource buchbar?
 is resource buyable?	resources	de	Ist diese Resource käuflich?
 is this resource bookable?	resources	de	Ist diese Resource buchbar?
@@ -40,7 +48,9 @@ is this resource buyable?	resources	de	Ist diese Resource käuflich?
 links	resources	de	Verknüpfungen
 location	resources	de	Lagerort
 location of resource	resources	de	Lagerort der Resource
+location:	resources	de	Lagerort:
 name of resource	resources	de	Name der Resource
+name:	resources	de	Name:
 no description available	resources	de	Keine Beschreibung vorhanden
 no resources selected	resources	de	Keine Resource ausgewählt
 notify your administrator to correct this situation	resources	de	Benachrichtigen Sie ihren Administrator um diese Situation zu lösen
@@ -54,7 +64,6 @@ quantity	resources	de	Stückzahl
 quantity of resource	resources	de	Stückzahl der Resource
 quantity:	resources	de	Stückzahl:
 read calendar permissions	resources	de	Kalender-Leseberechtigung
-read calender permissions	resources	de	Kalender-Leseberechtigung
 read permissions	resources	de	Leseberechtigung
 related links	resources	de	Siehe auch
 resources	common	de	Resourcen
@@ -64,17 +73,22 @@ saves entry and exits	resources	de	Speichern und Schließen
 select a category	resources	de	Wählen sie eine Kategorie
 select resource	resources	de	Resuource auswählen
 select resources	resources	de	Resuource auswählen
+select/deselect all	resources	de	Alle Auswählen / Auswahl aufheben
 short description	resources	de	Kurzbeschreibung
 short description of resource	resources	de	Kurzbeschreibung der Resouce
+show calendar of resource	resources	de	Kalender der Resource anzeigen
 something went wrong by deleting resource	resources	de	Beim Löschen der Resource gab es ein Problem
 something went wrong by saving resource	resources	de	Beim Speichern der Resource gab es ein Problem
 storage inforation	resources	de	Infos zur Lagerung
+storage information	resources	de	Informationen zur Lagerung
+storage information:	resources	de	Informationen zur Lagerung:
 the calendar of this resource	resources	de	Kalender der Resource
 this module displays the resources app	resources	de	Dieses Modul zeigt die Resources Anwendung an
 use general resources icon	resources	de	Generelles icon benutzen
 use own picture	resources	de	Eingenes Bild benutzen
 use the category's icon	resources	de	Bild der Kategorie benutzen
 useable	resources	de	Nutzbar
+useable:	resources	de	Nutzbar:
 view accessories for this resource	resources	de	Zeige das Zubehör der Resource an
 view this entry	resources	de	Diesen Eintrag anschauen
 web-page of resource	resources	de	Ausführliche Beschreibung der Resource
