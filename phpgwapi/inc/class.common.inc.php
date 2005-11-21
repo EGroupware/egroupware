@@ -2047,9 +2047,17 @@
 		{
 			$referer = $_SERVER['HTTP_REFERER'];
 			
-			$parts = explode($GLOBALS['egw_info']['server']['webserver_url'],$referer);
-			
-			$referer = str_replace('/etemplate/process_exec.php','/index.php',array_pop($parts));
+			$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
+			if (empty($webserver_url) || $webserver_url == '/')	// fix for eGW installed in the docroot
+			{
+				$referer = preg_replace('/^https?:\/\/[^\/]+/','',$referer);	// removing the domain part
+			}
+			else
+			{
+				$parts = explode($webserver_url,$referer);
+				$referer = array_pop($parts);
+			}
+			$referer = str_replace('/etemplate/process_exec.php','/index.php',$referer);
 
 			if (empty($referer)) $referer = $default;
 			
