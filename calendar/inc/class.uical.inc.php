@@ -563,8 +563,8 @@ class uical
 				'text' => "
 <script type=\"text/javascript\">
 function load_cal(url,id) {
+	var owner='';
 	selectBox = document.getElementById(id);
-	owner='';
 	for(i=0; i < selectBox.length; ++i) {
 		if (selectBox.options[i].selected) {
 			owner += (owner ? ',' : '') + selectBox.options[i].value;
