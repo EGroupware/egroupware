@@ -1085,6 +1085,10 @@
 				case 'auto':
 					return (int) $value;	
 				case 'bool':
+					if ($this->Type == 'mysql' && $this->ServerInfo['version'] < 4.1)
+					{
+						return $value ? 1 : 0;
+					}
 					return $value ? 'true' : 'false';
 			}
 			if (!$this->Link_ID && !$this->connect())
