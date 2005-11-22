@@ -497,7 +497,7 @@ class html
 			$tab2a = 'theme_advanced_buttons2_add : "';
 			$tab3a = 'theme_advanced_buttons3_add : "separator,fullscreen';
 			$plugs = 'plugins : "paste,fullscreen,advimage,advlink';
-			$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name]';
+			$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],font[*]';
 			if($init_options)
 			{
 				foreach(explode(',',$init_options) as $plugin)
