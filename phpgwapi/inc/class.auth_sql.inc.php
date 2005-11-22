@@ -70,7 +70,7 @@
 				{
 					$match = false;
 					// do we have to migrate an old password ?
-					if($GLOBALS['egw_info']['server']['pwd_migration_allowed'] && !emplty($GLOBALS['egw_info']['server']['pwd_migration_types']))
+					if($GLOBALS['egw_info']['server']['pwd_migration_allowed'] && !empty($GLOBALS['egw_info']['server']['pwd_migration_types']))
 					{
 						foreach(explode(',', $GLOBALS['egw_info']['server']['pwd_migration_types']) as $type)
 						{
