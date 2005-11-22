@@ -90,6 +90,7 @@ checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsr
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
 checking pear%1 is installed	setup	de	Überprüfe ob PEAR%1 installiert ist
 checking php.ini	setup	de	Überprüfe die php.ini Datei
+checking required php version %1 (recommended %2)	setup	de	Überprüfe benötigte PHP Version %1 (empfohlen %2)
 checking the egroupware installation	setup	de	Überprüfe die eGroupWare-Installation
 click <a href="index.php">here</a> to return to setup.	setup	de	<a href="index.php">Hier klicken</a> um zu Setup zurück zu kehren.
 click here	setup	de	Hier klicken

@@ -54,6 +54,12 @@
 		}
 	}
 	$checks = array(
+		'phpversion' => array(
+			'func' => 'php_version',
+			'value' => 4.3,
+			'verbose_value' => '4.3+',
+			'recommended' => '5.0',
+		),
 		'safe_mode' => array(
 			'func' => 'php_ini_check',
 			'value' => 0,
@@ -176,6 +182,17 @@
 	if (!defined('PHP_SHLIB_PREFIX'))
 	{
 		define('PHP_SHLIB_PREFIX',PHP_SHLIB_SUFFIX == 'dll' ? 'php_' : '');
+	}
+	
+	function php_version($name,$args)
+	{
+		global $passed_icon, $error_icon;
+
+		$version_ok = (float) phpversion() >= $args['value'];
+
+		echo '<div>'.($version_ok ? $passed_icon : $error_icon).' <span'.($version_ok ? '' : ' class="setup_error"').'>'.
+			lang('Checking required PHP version %1 (recommended %2)',$args['verbose_value'],$args['recommended']).': '.
+			phpversion().' ==> '.($version_ok ? lang('True') : lang('False'))."</span></div>\n";
 	}
 
 	function pear_check($package,$args)

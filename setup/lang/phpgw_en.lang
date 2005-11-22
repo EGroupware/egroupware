@@ -90,6 +90,7 @@ checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file-permissions
 checking for gd support...	setup	en	Checking for GD support...
 checking pear%1 is installed	setup	en	Checking PEAR%1 is installed
 checking php.ini	setup	en	Checking php.ini
+checking required php version %1 (recommended %2)	setup	en	Checking required PHP version %1 (recommended %2)
 checking the egroupware installation	setup	en	Checking the eGroupWare Installation
 click <a href="index.php">here</a> to return to setup.	setup	en	click <a href="index.php">here</a> to return to setup.
 click here	setup	en	Click Here
