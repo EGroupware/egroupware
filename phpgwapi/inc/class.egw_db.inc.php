@@ -1151,7 +1151,8 @@
 			$keys = $values = array();
 			foreach($array as $key => $data)
 			{
-				if (is_int($key) || !$only || $only === True && isset($column_definitions[$key]) || is_array($only) && in_array($key,$only))
+				if (is_int($key) && $only === false || !$only || $only === True && isset($column_definitions[$key]) || 
+					is_array($only) && in_array($key,$only))
 				{
 					$keys[] = $this->name_quote($key);
 					
