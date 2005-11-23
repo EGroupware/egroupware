@@ -88,7 +88,9 @@ enddate of the export	calendar	de	Enddatum des Exports
 ends	calendar	de	endet
 error adding the alarm	calendar	de	Fehler beim Zufügen des Alarms
 error: importing the ical	calendar	de	Fehler: beim Importieren des iCal
+error: no participants selected !!!	calendar	de	Fehler: keine Teilnehmer ausgewählt !!!
 error: saving the event !!!	calendar	de	Fehler: beim Speichern des Termins !!!
+error: starttime has to be before the endtime !!!	calendar	de	Fehler: Startzeit muß vor Endzeit liegen !!!
 event copied - the copy can now be edited	calendar	de	Termin kopiert - die Kopie kann jetzt bearbeitet werden
 event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen

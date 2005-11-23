@@ -265,7 +265,7 @@ class socal
 	 * @param int/array $users user-id or array of user-id's, !$users means all entries regardless of users
 	 * @param int $cat_id=0 mixed category-id or array of cat-id's, default 0 = all
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
-	 * @param string $filter='' string space delimited filter-names, atm. 'all' or 'private'
+	 * @param string $filter='' string space delimited filter-names, NOT used atm.
 	 * @param string $query='' pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 * @param int/bool $offset=False offset for a limited query or False (default)
@@ -707,6 +707,14 @@ ORDER BY cal_user_type, cal_usre_id
 	{
 		//echo "<p>socal::participants($cal_id,".print_r($participants,true).",$change_since)</p>\n";
 
+		// remove group-invitations, they are NOT stored in the db
+		foreach($participants as $uid => $status)
+		{
+			if ($status == 'G')
+			{
+				unset($participants[$uid]);
+			}
+		}
 		$where = array('cal_id' => $cal_id);
 
 		if ((int) $change_since)
@@ -716,14 +724,13 @@ ORDER BY cal_user_type, cal_usre_id
 		if ($change_since !== false)	// existing entries only
 		{
 			// delete not longer set participants
-			$parts = $deleted = array();
+			$deleted = array();
 			$this->db->select($this->user_table,'DISTINCT cal_user_type,cal_user_id,cal_quantity',$where,__LINE__,__FILE__);
 			while (($row = $this->db->row(true)))
 			{
 				$uid = $this->combine_user($row['cal_user_type'],$row['cal_user_id']);
-				if (!isset($participants[$uid]))
+				if (!isset($participants[$uid]))	// delete group-invitations
 				{
-					$parts[] = $uid;
 					$deleted[$row['cal_user_type']][] = $row['cal_user_id'];
 				}
 				elseif($row['cal_quantity'] == (substr($participants[$uid],1) ? substr($participants[$uid],1) : 1))
@@ -801,7 +808,7 @@ ORDER BY cal_user_type, cal_usre_id
 		if (!(int)$cal_id || !(int)$user_id) return false;
 		
 		if (is_numeric($status)) $status = $status_code_short[$status];
-
+		
 		$where = array(
 			'cal_id'		=> $cal_id,
 			'cal_user_type'	=> $user_type ? $user_type : 'u',
@@ -815,8 +822,16 @@ ORDER BY cal_user_type, cal_usre_id
 		{
 			$where[] = '(cal_recur_date=0 OR cal_recur_date >= '.time().')';
 		}
-		$this->db->update($this->user_table,array('cal_status' => $status),$where,__LINE__,__FILE__);
-
+		if ($status == 'G')		// remove group invitations, as we dont store them in the db
+		{
+			$this->db->delete($this->user_table,$where,__LINE__,__FILE__);
+		}
+		else
+		{
+			$this->db->insert($this->user_table,array(
+				'cal_status'     => $status,
+			),$where,__LINE__,__FILE__);
+		}
 		return $this->db->affected_rows();
 	}
 	
@@ -840,6 +855,8 @@ ORDER BY cal_user_type, cal_usre_id
 		
 		foreach($participants as $uid => $status)
 		{
+			if ($status == 'G') continue;	// dont save group-invitations
+
 			$this->split_user($uid,$type,$id);
 			$this->db->insert($this->user_table,array(
 				'cal_status'	 => $status !== true ? $status{0} : 'U',

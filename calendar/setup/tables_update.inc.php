@@ -38,7 +38,6 @@
 		$GLOBALS['egw_setup']->oProc->AlterColumn($table, $field, array('type' => 'int', 'precision' => 4, 'nullable' => false, 'default' => 0));
 	}
 
-
 	$test[] = '0.9.3pre1';
 	function calendar_upgrade0_9_3pre1()
 	{
@@ -47,66 +46,77 @@
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre2';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre2";
 	function calendar_upgrade0_9_3pre2()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre3';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre3";
 	function calendar_upgrade0_9_3pre3()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre4';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre4";
 	function calendar_upgrade0_9_3pre4()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre5';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre5";
 	function calendar_upgrade0_9_3pre5()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre6';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre6";
 	function calendar_upgrade0_9_3pre6()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre7';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre7";
 	function calendar_upgrade0_9_3pre7()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre8';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre8";
 	function calendar_upgrade0_9_3pre8()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre9';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre9";
 	function calendar_upgrade0_9_3pre9()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3pre10';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3pre10";
 	function calendar_upgrade0_9_3pre10()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.3';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.3";
 	function calendar_upgrade0_9_3()
 	{
 		$GLOBALS['setup_info']['calendar']['currentver'] = '0.9.4pre1';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
 	}
+
 	$test[] = "0.9.4pre1";
 	function calendar_upgrade0_9_4pre1()
 	{
@@ -1445,5 +1455,47 @@
 		}
 		$GLOBALS['setup_info']['calendar']['currentver'] = '1.0.1.009';
 		return $GLOBALS['setup_info']['calendar']['currentver'];
+	}
+
+
+	$test[] = '1.0.1.009';
+	function calendar_upgrade1_0_1_009()
+	{
+		$db2 = clone($GLOBALS['egw_setup']->db);
+		$add_groups = array();
+		$GLOBALS['egw_setup']->db->select('egw_cal','DISTINCT egw_cal.cal_id,cal_groups,cal_recur_date',"cal_groups != ''",__LINE__,__FILE__,
+			False,'','calendar',0,',egw_cal_user WHERE egw_cal.cal_id=egw_cal_user.cal_id');
+		while(($row = $GLOBALS['egw_setup']->db->row(true)))
+		{
+			$row['cal_user_type'] = 'u';
+			foreach(explode(',',$row['cal_groups']) as $group)
+			{
+				$row['cal_user_id'] = $group;
+				$db2->insert('egw_cal_user',array('cal_status' => 'U'),$row,__LINE__,__FILE__,'calendar');
+			}
+		}
+		$GLOBALS['egw_setup']->oProc->DropColumn('egw_cal',array(
+			'fd' => array(
+				'cal_id' => array('type' => 'auto','nullable' => False),
+				'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'cal_category' => array('type' => 'varchar','precision' => '30'),
+				'cal_modified' => array('type' => 'int','precision' => '8'),
+				'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
+				'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1'),
+				'cal_title' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '1'),
+				'cal_description' => array('type' => 'text'),
+				'cal_location' => array('type' => 'varchar','precision' => '255'),
+				'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
+				'cal_modifier' => array('type' => 'int','precision' => '4'),
+				'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0')
+			),
+			'pk' => array('cal_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),'cal_groups');
+
+		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.2';
 	}
 ?>

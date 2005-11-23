@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['calendar']['name']    = 'calendar';
-	$setup_info['calendar']['version'] = '1.0.1.009';
+	$setup_info['calendar']['version'] = '1.2';
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 
@@ -52,6 +52,7 @@
 		 'appname' => 'etemplate',
 		 'versions' => Array('1.0.0','1.0.1','1.2')
 	);
+
 
 
 

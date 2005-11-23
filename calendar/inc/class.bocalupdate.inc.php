@@ -386,9 +386,10 @@ class bocalupdate extends bocal
 	 * @param int $msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
 	 * @param array $to_notify numerical user-ids as keys (!) (value is not used)
 	 * @param array $old_event Event before the change
-	 * @param array $new_event Event after the change
+	 * @param array $new_event=null Event after the change
+	 * @param int $user=0 User who started the notify, default current user
 	 */
-	function send_update($msg_type,$to_notify,$old_event,$new_event=False,$user=False)
+	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
 	{
 		if (!is_array($to_notify))
 		{
@@ -490,11 +491,25 @@ class bocalupdate extends bocal
 		}
 		$send = &$GLOBALS['egw']->send;
 
+		// add all group-members to the notification, unless they are already participants
+		foreach($to_notify as $userid => $statusid)
+		{
+			if (is_numeric($userid) && $GLOBALS['egw']->accounts->get_type($userid) == 'g' &&
+				($members = $GLOBALS['egw']->accounts->member($userid)))
+			{
+				foreach($members as $member)
+				{
+					$member = $member['account_id'];
+					if (!isset($to_notify[$member]))
+					{
+						$to_notify[$member] = 'G';	// Group-invitation
+					}
+				}
+			}
+		}
 		foreach($to_notify as $userid => $statusid)
 		{
 			if (!is_numeric($userid)) continue;	// eg. a resource, ToDo notify the responsible of the resource
-
-			$userid = (int)$userid;
 
 			if ($statusid == 'R' || $GLOBALS['egw']->accounts->get_type($userid) == 'g')
 			{
@@ -702,7 +717,7 @@ class bocalupdate extends bocal
 				$this->send_update($status2msg[$status],$event['participants'],$event);
 			}
 		}
-		return Ok;
+		return $Ok;
 	}
 
 	/**

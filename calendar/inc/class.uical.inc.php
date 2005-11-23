@@ -72,7 +72,7 @@ class uical
 	 */
 	var $cat_id;
 	/**
-	 * @var int $filter session-state: selected filter
+	 * @var int $filter session-state: selected filter, NOT used at the moment (was all or private)
 	 */
 	var $filter;
 	/**
@@ -158,7 +158,7 @@ class uical
 	 *	- cat_id: the selected category
 	 *	- owner: the owner of the displayed calendar
 	 *	- save_owner: the overriden owner of the planner
-	 *	- filter: the used filter: no filter / all or only privat
+	 *	- filter: the used filter: no filter / all or only privat, NOT used atm.
 	 *	- sortby: category or user of planner
 	 *	- view: the actual view, where dialogs should return to or which they refresh
 	 * @param set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
@@ -235,43 +235,12 @@ class uical
 			$this->view = $states['view'] = $func;
 		}
 		$this->view_menuaction = $this->view == 'listview' ? 'calendar.uilist.listview' : 'calendar.uiviews.'.$this->view;
-		// deal with group-owners
-		if (substr($this->owner,0,2) == 'g_' || $GLOBALS['egw']->accounts->get_type($this->owner) == 'g')
-		{
-			$this->set_owner_to_group($this->owner);
-			$states['owner'] = $this->owner;
-		}
+
 		$states['multiple'] = $this->multiple = $_GET['multiple'] || count(explode(',',$this->owner)) > 1;
 
 		if ($this->debug > 0 || $this->debug == 'menage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3, is_group=%4, g_owner=%5',True,$set_states,$states_session,$states,$this->is_group,$this->g_owner);
 		// save the states in the session
 		$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
-	}
-
-	/**
-	 * Sets a group as owner (of the events to show)
-	 *
-	 * It set $this->is_group and $this->g_owner - array with user-id's of the group-members who gave read-grants
-	 * @param group-id or 'g_'+group-id
-	 */
-	function set_owner_to_group($owner)
-	{
-		$this->owner = (int) (substr($owner,0,2) == 'g_' ? substr($owner,2) : $owner);
-		$this->is_group = True;
-		$this->g_owner = Array();
-		$members = $GLOBALS['egw']->accounts->member($this->owner);
-		if (is_array($members))
-		{
-			foreach($members as $user)
-			{
-				// use only members which gave the user a read-grant
-				if ($this->bo->check_perms(EGW_ACL_READ,0,$user['account_id']))
-				{
-					$this->g_owner[] = $user['account_id'];
-				}
-			}
-		}
-		if ($this->debug > 2 || $this->debug == 'set_owner_to_group') $this->bo->debug_message('uical::set_owner_to_group(%1): owner=%2, g_owner=%3',True,$owner,$this->owner,$this->g_owner);
 	}
 
 	/**
@@ -295,7 +264,9 @@ class uical
 			{
 				$icons[] = $this->html->image('calendar','recur',lang('recurring event'));
 			}
-			$icons[] = $this->html->image('calendar',count($event['participants']) > 1 ? 'users' : 'single');
+			list($first_part) = each($event['participants']);
+			$icons[] = $this->html->image('calendar',count($event['participants']) > 1 || 
+				$GLOBALS['egw']->accounts->get_type($first_part) == 'g' ? 'users' : 'single');
 		}
 		if($event['public'] == 0)
 		{
@@ -537,13 +508,14 @@ class uical
 			$file[$n]['text'];
 
 		// Filter all or private
+/* 		NOT used at the moment
 		if(is_numeric($this->owner) && $this->bo->check_perms(EGW_ACL_PRIVATE,0,$this->owner))
 		{
 			$file[] = $this->_select_box('Filter','filter',
 				'<option value=" all "'.($this->filter==' all '?' selected="1"':'').'>'.lang('No filter').'</option>'."\n".
 				'<option value=" private "'.($this->filter==' private '?' selected="1"':'').'>'.lang('Private Only').'</option>'."\n");
 		}
-
+*/
 		// Calendarselection: User or Group
 		if(count($this->bo->grants) > 0 && (!isset($GLOBALS['egw_info']['server']['deny_user_grants_access']) ||
 			!$GLOBALS['egw_info']['server']['deny_user_grants_access']))
@@ -576,7 +548,7 @@ function load_cal(url,id) {
 }
 </script>
 ".
-				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',$this->multiple ? 3 : 1,False,
+				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',$this->multiple ? 4 : 1,False,
 					' style="width: '.($this->multiple && $this->common_prefs['account_selection']=='selectbox' ? 185 : 165).'px;"'.
 					' title="'.lang('select a %1',lang('user')).'" onchange="load_cal(\''.
 					$GLOBALS['egw']->link('/index.php',array(

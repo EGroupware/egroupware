@@ -192,6 +192,7 @@ class uiviews extends uical
 		$search_params['daywise'] = false;
 		$search_params['start'] = $this->first;
 		$search_params['end'] = $this->last;
+		$search_params['enum_groups'] = $this->sortby == 'user';
 		$events = $this->bo->search($search_params);
 
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::planner() date=%1: first=%2, last=%3',False,$this->date,$this->bo->date2string($this->first),$this->bo->date2string($this->last));

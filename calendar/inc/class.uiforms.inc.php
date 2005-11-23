@@ -66,9 +66,22 @@ class uiforms extends uical
 	 */ 
 	function &default_add_event()
 	{
+		$extra_participants = $_GET['participants'] ? explode(',',$_GET['participants']) : array();
+
 		$owner = (int) (isset($_GET['owner']) ? $_GET['owner'] : $this->owner);
-		if (!$owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$owner)) $owner = $this->user;
+		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' || 
+			!$this->bo->check_perms(EGW_ACL_ADD,0,$owner))
+		{
+			if ($owner)	// make an owner who is no user or we have no add-rights a participant
+			{
+				$extra_participants[] = $owner;
+			}
+			$owner = $this->user;
+		}
 		//echo "<p>this->owner=$this->owner, _GET[owner]=$_GET[owner], user=$this->user => owner=$owner</p>\n";
+
+		// by default include the owner as participant (the user can remove him)
+		$extra_participants[] = $owner;
 
 		$start = $this->bo->date2ts(array(
 			'full' => isset($_GET['date']) && (int) $_GET['date'] ? (int) $_GET['date'] : $this->date,
@@ -77,28 +90,26 @@ class uiforms extends uical
 		));
 		//echo "<p>_GET[date]=$_GET[date], _GET[hour]=$_GET[hour], _GET[minute]=$_GET[minute], this->date=$this->date ==> start=$start=".date('Y-m-d H:i',$start)."</p>\n";
 		
-		$participant_types = array('u' => array($owner => $owner == $this->user ? 'A' : 'U'));
-		$participants = array($owner => $owner == $this->user ? 'A' : 'U');
-		if ($_GET['participants'])
+		$participant_types['u'] = $participant_types = $participants = array();
+		foreach($extra_participants as $uid)
 		{
-			foreach(explode(',',$_GET['participants']) as $uid)
+			if (isset($participants[$uid])) continue;	// already included
+
+			if (is_numeric($uid))
 			{
-				if (is_numeric($uid))
+				$participants[$uid] = $participant_types['u'][$uid] = $uid == $this->user ? 'A' : 'U';
+			}
+			elseif (is_array($this->bo->resources[$uid{0}]))
+			{
+				$res_data = $this->bo->resources[$uid{0}];
+				list($id,$quantity) = explode(':',substr($uid,1));
+				$participants[$uid] = $participant_types[$uid{0}][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
+					((int) $quantity > 1 ? (int)$quantity : '');
+				// if new_status == 'x', resource is not bookable
+				if(strstr($participant_types[$uid{0}][$id],'x')) 
 				{
-					$participants[$uid] = $participant_types['u'][$uid] = $uid == $this->user ? 'A' : 'U';
-				}
-				elseif (is_array($this->bo->resources[$uid{0}]))
-				{
-					$res_data = $this->bo->resources[$uid{0}];
-					list($id,$quantity) = explode(':',substr($uid,1));
-					$participants[$uid] = $participant_types[$uid{0}][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
-						((int) $quantity > 1 ? (int)$quantity : '');
-					// if new_status == 'x', resource is not bookable
-					if(strstr($participant_types[$uid{0}][$id],'x')) 
-					{
-						unset($participant_types[$uid{0}][$id]);
-						unset($participants[$uid]);
-					}
+					unset($participant_types[$uid{0}][$id]);
+					unset($participants[$uid]);
 				}
 			}
 		}
@@ -209,11 +220,6 @@ class uiforms extends uical
 						// ToDo: move this logic into bocal
 				}
 			}
-			if ($event['start'] > $event['end'])	// end need to be after start, otherwise swap them
-			{
-				$event['start'] = $content['end']; 
-				$event['end'] = $content['start'];
-			}
 			if ($content['whole_day'])
 			{
 				$event['start'] = $this->bo->date2array($event['start']);
@@ -313,6 +319,18 @@ class uiforms extends uical
 			{ 
 				$msg = lang('Permission denied'); 
 				break; 
+			}
+			if ($event['start'] > $event['end'])
+			{
+				$msg = lang('Error: Starttime has to be before the endtime !!!');
+				$button = '';
+				break;
+			}
+			if (!$event['participants'])
+			{
+				$msg = lang('Error: no participants selected !!!');
+				$button = '';
+				break;
 			}
 			if ($content['edit_single'])	// we edited a single event from a series
 			{
@@ -516,6 +534,11 @@ class uiforms extends uical
 	{
 		$etpl =& CreateObject('etemplate.etemplate','calendar.edit');
 		
+		$sel_options = array(
+			'recur_type' => &$this->bo->recur_types,
+			'accounts_status' => $this->bo->verbose_status,
+			'owner'           => array(),
+		);
 		if (!is_array($event))
 		{
 			$preserv = array(
@@ -581,8 +604,29 @@ class uiforms extends uical
 
 			if ($view)
 			{
-				$content['participants'][$name][$name.'_status'] = $participants;
-				foreach($participants as $id => $status)
+				$stati =& $content['participants'][$name][$name.'_status'];
+				$stati = $participants;
+				// enumerate group-invitations, so people can accept/reject them
+				if ($name == 'accounts')
+				{
+					foreach($participants as $id => $status)
+					{
+						if ($GLOBALS['egw']->accounts->get_type($id) == 'g' &&
+							($members = $GLOBALS['egw']->accounts->member($id)))
+						{
+							$sel_options['accounts_status']['G'] = lang('Select one');
+							foreach($members as $member)
+							{
+								if (!isset($stati[$member['account_id']]) && $this->bo->check_perms(EGW_ACL_EDIT,0,$member['account_id']))
+								{
+									$stati[$member['account_id']] = 'G';	// status for invitation via membership in group
+									$content['participants'][$name][] = $member['account_id'];
+								}
+							}
+						}
+					}
+				}
+				foreach($stati as $id => $status)
 				{
 					$readonlys[$name.'_status['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,($type != 'u' ? $type : '').$id);
 				}
@@ -657,11 +701,6 @@ class uiforms extends uical
 		{
 			$readonlys['button[delete_series]'] = !$view || $event['recur_type'] == MCAL_RECUR_NONE;
 		}
-		$sel_options = array(
-			'recur_type' => &$this->bo->recur_types,
-			'accounts_status' => &$this->bo->verbose_status,
-			'owner'           => array(),
-		);
 		if ($event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{
 			$sel_options['owner'][0] = lang('All participants');

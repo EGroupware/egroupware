@@ -88,7 +88,9 @@ enddate of the export	calendar	en	Enddate of the export
 ends	calendar	en	ends
 error adding the alarm	calendar	en	Error adding the alarm
 error: importing the ical	calendar	en	Error: importing the iCal
+error: no participants selected !!!	calendar	en	Error: no participants selected !!!
 error: saving the event !!!	calendar	en	Error: saving the event !!!
+error: starttime has to be before the endtime !!!	calendar	en	Error: Starttime has to be before the endtime !!!
 event copied - the copy can now be edited	calendar	en	Event copied - the copy can now be edited
 event deleted	calendar	en	Event deleted
 event details follow	calendar	en	Event Details follow

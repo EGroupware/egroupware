@@ -195,6 +195,34 @@ class bocal
 	}
 
 	/**
+	 * Add group-members as participants with status 'G'
+	 *
+	 * @param array $event event-array
+	 * @return int number of added participants
+	 */
+	function enum_groups(&$event)
+	{
+		$added = 0;
+		foreach($event['participants'] as $uid => $status)
+		{
+			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'g' &&
+				($members = $GLOBALS['egw']->accounts->member($uid)))
+			{
+				foreach($members as $member)
+				{
+					$member = $member['account_id'];
+					if (!isset($event['participants'][$member]))
+					{
+						$event['participants'][$member] = 'G';
+						++$added;
+					}
+				}
+			}
+		}
+		return $added;
+	}
+
+	/**
 	 * Searches / lists calendar entries, including repeating ones
 	 *
 	 * @param params array with the following keys
@@ -217,6 +245,7 @@ class bocal
 	 *  order column-names plus optional DESC|ASC separted by comma
 	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
+	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
 	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
 	 */
 	function &search($params)
@@ -236,6 +265,8 @@ class bocal
 		$users = array();
 		foreach($params['users'] as $user)
 		{
+			if (in_array($user,$users)) continue;	// already added
+
 			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$user))
 			{
 				$users[] = $user;
@@ -253,6 +284,20 @@ class bocal
 								($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$member['account_id'])))
 							{
 								$users[] = $member['account_id'];
+							}
+						}
+					}
+				}
+				else	// for users we have to include all the memberships, to get the group-events
+				{
+					$memberships = $GLOBALS['egw']->accounts->membership($user);
+					if (is_array($memberships))
+					{
+						foreach($memberships as $group)
+						{
+							if (!in_array($group['account_id'],$users))
+							{
+								$users[] = $group['account_id'];
 							}
 						}
 					}
@@ -291,6 +336,10 @@ class bocal
 		
 		foreach($events as $id => $event)
 		{
+			if ($params['enum_groups'] && $this->enum_groups($event))
+			{
+				$events[$id] = $event;
+			}
 			if (!$this->check_perms(EGW_ACL_READ,$event))
 			{
 				$this->clear_private_infos($events[$id],$users);
@@ -1225,16 +1274,18 @@ class bocal
 	/**
 	* Converts participants array of an event into array of (readable) participant-names with status
 	*
-	* @param $event array of an event
-	* @param $long_status boolean should the long/verbose status or only the one letter shortcut be used
+	* @param array $event event-data
+	* @param boolean $long_status=false should the long/verbose status or only the one letter shortcut be used
 	* @return array with id / names with status pairs
 	*/
-	function participants($event,$long_status=False,$use_type=false)
+	function participants($event,$long_status=False)
 	{
  		//_debug_array($event);
  		$names = array();
 		foreach($event['participants'] as $id => $status)
 		{
+			if ($status == 'G') continue;	// dont show group-invitation
+
 			$status = $this->verbose_status[$status];
 
 			if (!$long_status)

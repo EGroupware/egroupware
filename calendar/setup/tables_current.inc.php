@@ -18,7 +18,6 @@
 				'cal_uid' => array('type' => 'varchar','precision' => '255','nullable' => False),
 				'cal_owner' => array('type' => 'int','precision' => '4','nullable' => False),
 				'cal_category' => array('type' => 'varchar','precision' => '30'),
-				'cal_groups' => array('type' => 'varchar','precision' => '255'),
 				'cal_modified' => array('type' => 'int','precision' => '8'),
 				'cal_priority' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '2'),
 				'cal_public' => array('type' => 'int','precision' => '2','nullable' => False,'default' => '1'),
