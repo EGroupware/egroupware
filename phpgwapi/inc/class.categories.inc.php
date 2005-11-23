@@ -29,7 +29,7 @@
 	 * class to manage categories in eGroupWare
 	 *
 	 * @license LGPL
-	 * @package phpgwapi
+	 * @package api
 	 * @subpackage categories
 	 */
 	class categories
@@ -222,8 +222,6 @@
 		/**
 		 * return a sorted array populated with categories
 		 *
-		 * I'm sure the limited query cant work as expected, maybe it's not use -- RalfBecker 2005/11/05
-		 *
 		 * @param int $start see $limit
 		 * @param boolean $limit if true limited query starting with $start
 		 * @param string $query='' query-pattern
@@ -276,37 +274,52 @@
 
 			$where = '(cat_appname=' . $this->db->quote($this->app_name) . ' AND ' . $grant_cats . $global_cats . ')' . $querymethod;
 
-			$this->db->select($this->table,'COUNT(*)',$where . $parent_select,__LINE__,__FILE__);
-			$this->total_records = $this->db->next_record() ? $this->db->f(0) : 0;
-
-			if (!$this->total_records) return false;
-			
-			$cats = $mains = array();
-			$this->db->select($this->table,'*',$where . $parent_select,__LINE__,__FILE__,$limit ? (int)$start : false,$ordermethod);
+			$parents = $cats = array();
+			$this->db->select($this->table,'*',$where . $parent_select,__LINE__,__FILE__,false,$ordermethod);
 			while (($cat = $this->db->row(true,'cat_')))
 			{
 				$cat['app_name'] = $cat['appname'];
 				$this->cache_id2cat_data[$cat['id']] = $cat;
 				
-				$mains[] = $cat;
-			}
-			foreach ($mains as $cat)
-			{
 				$cats[] = $cat;
-
-				$sub_select = ' AND cat_parent=' . $cat['id'] . ' AND cat_level=' . ($cat['level']+1);
-
-				$this->db->select($this->table,'COUNT(*)',$where . $sub_select,__LINE__,__FILE__);
-				$this->total_records += $this->db->next_record() ? $this->db->f(0) : 0;
-
+				$parents[] = $cat['id'];
+			}
+			while (count($parents))
+			{
+				$sub_select = ' AND cat_parent IN (' . implode(',',$parents) . ')';
+				$parents = $children = array();
 				$this->db->select($this->table,'*',$where . $sub_select,__LINE__,__FILE__,false, $ordermethod);
 				while (($cat = $this->db->row(true,'cat_')))
 				{
 					$cat['app_name'] = $cat['appname'];
 					$this->cache_id2cat_data[$cat['id']] = $cat;
 					
-					$cats[] = $cat;
+					$parents[] = $cat['id'];
+					$children[$cat['parent']][] = $cat;
 				}
+				// sort the cats into the mains
+				if (count($children))
+				{
+					$cats2 = $cats;
+					$cats = array();
+					foreach($cats2 as $cat)
+					{
+						$cats[] = $cat;
+						if (isset($children[$cat['id']]))
+						{
+							foreach($children[$cat['id']] as $child)
+							{
+								$cats[] = $child;
+							}
+						}
+					}
+				}
+			}
+			$this->total_records = count($cats);
+			
+			if ($limit)
+			{
+				return array_slice($cats,(int)$start,$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
 			}
 			return $cats;
 		}
