@@ -66,7 +66,7 @@ function check_all(which)
 
 <!-- BEGIN delete_block -->
   <tr bgcolor="{row_tr_color}"><td colspan="{column_count}">&nbsp;</td>
-   <td align="right"><input type="submit" name="Delete" value="{lang_delete}"></td>
+   <td align="right"><input type="submit" name="Delete" value="{lang_delete}" onclick="return confirm('{lang_sure}');"></td>
   </tr>
 <!-- END delete_block -->
 

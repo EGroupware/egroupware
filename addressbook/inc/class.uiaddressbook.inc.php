@@ -524,6 +524,7 @@
 			$GLOBALS['egw']->template->set_var('export_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export'));
 			$GLOBALS['egw']->template->set_var('lang_delete',lang('Delete'));
 			$GLOBALS['egw']->template->set_var('column_count',count($columns_to_display));
+			$GLOBALS['egw']->template->set_var('lang_sure',lang('Are you sure you want to delete these entries ?'));
 
 			$GLOBALS['egw']->template->set_var('start',$this->start);
 			$GLOBALS['egw']->template->set_var('sort',$this->sort);
@@ -606,7 +607,7 @@
 							'menuaction' => 'addressbook.uiaddressbook.delete',
 							'ab_id'      => $entries[$i]['id']
 						))
-						. '"><img src="'
+						. '" onclick="return confirm(\''.lang('Are you sure you want to delete this entry ?').'\');"><img src="'
 						. $GLOBALS['egw']->common->image('addressbook','delete')
 						. '" border="0" title="'.lang('Delete').'"></a>';
 				}
@@ -854,7 +855,6 @@
 		function delete()
 		{
 			$ab_id = $_POST['entry']['ab_id'] ? $_POST['entry']['ab_id'] : $_POST['ab_id'];
-			$confirm = $_GET['confirm'] ? $_GET['confirm'] :$_POST['confirm'];
 			$select = $_POST['select'];
 			if(@is_array($select))
 			{
@@ -880,7 +880,7 @@
 			{
 				$select[] = $ab_id;
 			}
-			foreach($select as $null => $_id)
+			foreach($select as $_id)
 			{
 				if(!(int)$_id)
 				{
@@ -894,7 +894,7 @@
 					$GLOBALS['egw']->common->phpgw_exit();
 				}
 			}
-
+/* done via javascript confirmation
 			$GLOBALS['egw']->template->set_file(array('delete' => 'delete.tpl'));
 
 			if(!$_POST['yes'])
@@ -919,6 +919,7 @@
 				$GLOBALS['egw']->template->pparse('out','delete');
 			}
 			else
+*/
 			{
 				if(!@is_array($select))
 				{
