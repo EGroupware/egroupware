@@ -28,9 +28,9 @@
 
 		function bocategories()
 		{
-			if ($_GET['appname'])
+			if ($_REQUEST['appname'])
 			{
-				$this->cats =& CreateObject('phpgwapi.categories',-1,$_GET['appname']);
+				$this->cats =& CreateObject('phpgwapi.categories',-1,$_REQUEST['appname']);
 			}
 			else
 			{
