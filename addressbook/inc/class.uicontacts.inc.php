@@ -60,6 +60,14 @@ class uicontacts extends bocontacts
 	*/
 	function edit($content=null)
 	{
+		if (!is_object($this->link))
+		{
+			if (!is_object($GLOBALS['egw']->link))
+			{
+				$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
+			}
+			$this->link =& $GLOBALS['egw']->link;
+		}
 		if (is_array($content))
 		{
 			list($button) = each($content['button']);
@@ -76,14 +84,6 @@ class uicontacts extends bocontacts
 					// writing links for new entry, existing ones are handled by the widget itself
 					if ($links && $content['id'])	
 					{
-						if (!is_object($this->link))
-						{
-							if (!is_object($GLOBALS['egw']->link))
-							{
-								$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
-							}
-							$this->link =& $GLOBALS['egw']->link;
-						}
 						$this->link->link('addressbook',$content['id'],$links);
 					}
 					if ($button == 'save')
@@ -91,6 +91,7 @@ class uicontacts extends bocontacts
 						echo "<html><body><script>var referer = opener.location;opener.location.href = referer;window.close();</script></body></html>\n";
 						$GLOBALS['egw']->common->egw_exit();
 					}
+					$content['link_to']['to_id'] = $content['id'];
 					$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
 						var referer = opener.location;
 						opener.location.href = referer;</script>";
@@ -115,7 +116,19 @@ class uicontacts extends bocontacts
 			{
 				$content = $this->read($contact_id);
 			}
-			if($_GET['makecp']) unset($content['id']);
+			if($content && $_GET['makecp'])	// copy the contact
+			{
+				$content['link_to']['to_id'] = 0;
+				$this->link->link('addressbook',$content['link_to']['to_id'],'addressbook',$content['id'],
+					lang('Copied by %1, from record #%2.',$GLOBALS['egw']->common->display_fullname('',
+					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
+					$content['id']));
+				unset($content['id']);
+			}
+			else
+			{
+				$content['link_to']['to_id'] = (int) $contact_id;
+			}
 		}
 
 		//_debug_array($content);
@@ -136,9 +149,9 @@ class uicontacts extends bocontacts
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
 		
-		$content['link'] = $content['link_to'] = array(
+		$content['link_to'] = array(
 			'to_app' => 'addressbook',
-			'to_id'  => (int) $content['id'],
+			'to_id'  => $content['link_to']['to_id'],
 		);
 		
 		$this->tmpl->read('addressbook.edit');
@@ -186,11 +199,11 @@ class uicontacts extends bocontacts
 			}				
 		}
 		$content['view'] = true;
-		$content['link'] = $content['link_to'] = array(
+		$content['link_to'] = array(
 			'to_app' => 'addressbook',
 			'to_id'  => $content['id'],
 		);
-		$readonlys['link'] = $readonlys['link_to'] = $readonlys['customfields'] = true;
+		$readonlys['link_to'] = $readonlys['customfields'] = true;
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = true;
 		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);

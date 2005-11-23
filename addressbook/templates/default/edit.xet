@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="addressbook.edit.personal" template="" lang="" group="0" version="1.0.1.001">
+	<template id="addressbook.edit.personal" template="" lang="" group="0" version="1.0.1.002">
 		<grid height="250">
 			<columns>
 				<column/>
@@ -12,42 +12,42 @@
 				<row>
 					<image src="personal"/>
 					<description value="prefix"/>
-					<textbox id="n_prefix" size="45" maxlength="64" tabindex="1"/>
+					<textbox id="n_prefix" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
 					<description value="first name"/>
-					<textbox id="n_given" size="45" maxlength="64" tabindex="2"/>
+					<textbox id="n_given" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
 					<description value="middle name"/>
-					<textbox id="n_middle" size="45" maxlength="64" tabindex="3"/>
+					<textbox id="n_middle" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
 					<description value="last name"/>
-					<textbox id="n_family" size="45" maxlength="64" tabindex="4"/>
+					<textbox id="n_family" size="45" maxlength="64"/>
 				</row>
 				<row>
 					<description/>
 					<description value="suffix"/>
-					<textbox id="n_suffix" size="45" maxlength="64" tabindex="5"/>
+					<textbox id="n_suffix" size="45" maxlength="64"/>
 				</row>
 				<row height="40">
 					<image src="gohome"/>
 					<description value="company name" options=",,,org_name"/>
-					<textbox size="45" maxlength="64" id="org_name" tabindex="5"/>
+					<textbox size="45" maxlength="64" id="org_name"/>
 				</row>
 				<row valign="top">
 					<image src="folder"/>
 					<description value="category"/>
-					<listbox type="select-cat" id="cat_id" rows="3" span="4" tabindex="6"/>
+					<listbox type="select-cat" id="cat_id" rows="3" span="4"/>
 				</row>
 				<row>
 					<image src="password"/>
 					<description value="Private" options=",,,private"/>
-					<checkbox id="private" tabindex="7"/>
+					<checkbox id="private"/>
 				</row>
 			</rows>
 		</grid>
@@ -204,7 +204,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.0.1.001">
+	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.0.1.002">
 		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column/>
@@ -220,7 +220,7 @@
 					<description value="Existing links"/>
 				</row>
 				<row>
-					<link-list id="link"/>
+					<link-list id="link_to"/>
 				</row>
 			</rows>
 		</grid>
@@ -314,7 +314,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.0.1.001">
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.0.1.002">
 		<grid>
 			<columns>
 				<column width="450"/>
@@ -371,22 +371,22 @@
 									<row>
 										<image src="kaddressbook"/>
 										<description value="business" options=",,,tel_work"/>
-										<textbox id="tel_work" size="28" maxlength="40" tabindex="10"/>
+										<textbox id="tel_work" size="28" maxlength="40"/>
 									</row>
 									<row>
 										<description/>
 										<description value="mobile phone" options=",,,tel_cell"/>
-										<textbox id="tel_cell" size="28" maxlength="40" tabindex="11"/>
+										<textbox id="tel_cell" size="28" maxlength="40"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Private" options=",,,tel_home"/>
-										<textbox id="tel_home" size="28" maxlength="40" tabindex="12"/>
+										<textbox id="tel_home" size="28" maxlength="40"/>
 									</row>
 									<row>
 										<description/>
 										<description/>
-										<button label="More ..." onclick="showphones(this.form); return false;" tabindex="13" accesskey="m"/>
+										<button label="More ..." onclick="showphones(this.form); return false;" accesskey="m"/>
 									</row>
 								</rows>
 							</grid>
@@ -403,17 +403,17 @@
 									<row>
 										<image src="package_network"/>
 										<description value="url" options=",,,url"/>
-										<textbox id="url" size="28" maxlength="128" tabindex="15"/>
+										<textbox id="url" size="28" maxlength="128"/>
 									</row>
 									<row>
 										<image src="email_icon"/>
 										<description value="business email" options=",,,email"/>
-										<textbox id="email" size="28" maxlength="64" tabindex="16"/>
+										<textbox id="email" size="28" maxlength="64"/>
 									</row>
 									<row>
 										<description/>
 										<description value="home email" options=",,,email_home"/>
-										<textbox id="email_home" size="28" maxlength="64" tabindex="17"/>
+										<textbox id="email_home" size="28" maxlength="64"/>
 									</row>
 								</rows>
 							</grid>
@@ -434,9 +434,9 @@
 						<button label="Edit" id="button[edit]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Copy" id="button[copy]" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$cont[id]&amp;makecp=1'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 						<button label="vCard" id="button[vcard]" statustext="download this contact as vCard file"/>
-						<button label="Save" id="button[save]" tabindex="20" accesskey="s"/>
-						<button label="Apply" id="button[apply]" tabindex="21"/>
-						<button label="Cancel" id="button[cancel]" onclick="if($cont[view]0) return true; self.close(); return false;" tabindex="22"/>
+						<button label="Save" id="button[save]" accesskey="s"/>
+						<button label="Apply" id="button[apply]"/>
+						<button label="Cancel" id="button[cancel]" onclick="if($cont[view]0) return true; self.close(); return false;"/>
 						<template id="addressbook.editphones"/>
 					</hbox>
 					<button label="Delete" id="button[delete]" onclick="return confirm('Are you shure you want to delete this contact?');" align="right" tabindex="25"/>
