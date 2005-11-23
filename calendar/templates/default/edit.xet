@@ -57,7 +57,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.0.1.002">
+	<template id="calendar.edit.participants" template="" lang="" group="0" version="1.0.1.003">
 		<grid width="100%" height="200" class="row_on" overflow="auto">
 			<columns>
 				<column width="95"/>
@@ -68,7 +68,7 @@
 			<rows>
 				<row class="row" valign="top" disabled="@view">
 					<description options=",,,participants" value="Participants"/>
-					<listbox type="select-account" rows="14" id="participants[accounts]"/>
+					<listbox type="select-account" rows="14" options="calendar+" id="participants[accounts]"/>
 					<description value="Resources" align="right"/>
 					<resources_select options="14" id="participants[resources]"/>
 				</row>
@@ -250,7 +250,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="calendar.edit" template="" lang="" group="0" version="1.0.1.002">
+	<template id="calendar.edit" template="" lang="" group="0" version="1.0.1.003">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -303,8 +303,8 @@
 				</row>
 				<row>
 					<hbox span="2">
-						<button id="button[edit_series]" label="Edit series" statustext="Edit this series of recuring events"/>
 						<button id="button[edit]" label="Edit" statustext="Edit this event"/>
+						<button id="button[exception]" label="Exception" statustext="Create an exception at this recuring event"/>
 						<button id="button[copy]" label="Copy" statustext="Copy this event"/>
 						<button id="button[vcal]" label="Export" statustext="Download this event as iCal"/>
 						<button label="Save" id="button[save]" statustext="saves the changes made"/>
@@ -312,10 +312,7 @@
 						<button id="button[cancel]" label="Cancel" onclick="window.close();" statustext="Close the window"/>
 						<checkbox id="custom_mail" label="mail all participants" statustext="compose a mail to all participants after the event is saved"/>
 					</hbox>
-					<hbox align="right">
-						<button id="button[delete_series]" label="Delete series" statustext="Delete this series of recuring events" onclick="return confirm('Delete this series of recuring events');"/>
-						<button label="Delete" id="button[delete]" statustext="Delete this event" onclick="return confirm('Delete this event');"/>
-					</hbox>
+					<button label="Delete" id="button[delete]" statustext="Delete this event" onclick="return confirm('Delete this event');" align="right"/>
 				</row>
 			</rows>
 		</grid>

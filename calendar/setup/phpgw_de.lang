@@ -45,6 +45,7 @@ copy of:	calendar	de	Kopie von:
 copy this event	calendar	de	Kopiert diesen Termin
 countries	calendar	de	Länder
 country	calendar	de	Land
+create an exception at this recuring event	calendar	de	Erzeugt eine Ausnahme an diesem wiederholenden Termin
 create new links	calendar	de	Neue Verknüpfung erstellen
 csv	calendar	de	CSV
 csv-fieldname	calendar	de	CSV-Feldname
@@ -76,6 +77,7 @@ do you wish to autoload calendar holidays files dynamically?	admin	de	Sollen die
 download	calendar	de	Herunterladen
 download this event as ical	calendar	de	Termin als iCal herunterladen
 duration of the meeting	calendar	de	Dauer des Termins
+edit exception	calendar	de	Ausname bearbeiten
 edit series	calendar	de	Serie bearbeiten
 edit this event	calendar	de	Diesen Termin bearbeiten
 edit this series of recuring events	calendar	de	Diese Serie von wiederholenden Terminen bearbeiten
@@ -96,6 +98,7 @@ event deleted	calendar	de	Termin gelöscht
 event details follow	calendar	de	Details zum Termin folgen
 event saved	calendar	de	Termin gespeichert
 event will occupy the whole day	calendar	de	Termin nimmt den ganzen Tag ein
+exception	calendar	de	Ausnahme
 exceptions	calendar	de	Ausnahmen
 existing links	calendar	de	Bestehende Verknüpfungen
 export	calendar	de	Exportieren

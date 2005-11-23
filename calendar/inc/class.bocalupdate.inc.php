@@ -94,7 +94,8 @@ class bocalupdate extends bocal
 		// - new events need start, end and title
 		// - updated events cant set start, end or title to empty
 		if (!$event['id'] && (!$event['start'] || !$event['end'] || !$event['title']) ||
-			$event['id'] && (isset($event['start']) && !$event['start'] || isset($event['end']) && !$event['end'] ||  isset($event['title']) && !$event['title']))
+			$event['id'] && (isset($event['start']) && !$event['start'] || isset($event['end']) && !$event['end'] ||  
+			isset($event['title']) && !$event['title']))
 		{
 			return false;
 		}
@@ -153,6 +154,7 @@ class bocalupdate extends bocal
 			foreach((array) $overlapping_events as $k => $overlap)
 			{
 				if ($overlap['id'] == $event['id'] ||	// that's the event itself
+					$overlap['id'] == $event['reference'] ||	// event is an exception of overlap
 					$overlap['non_blocking'])			// that's a non_blocking event
 				{
 					continue;

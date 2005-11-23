@@ -68,13 +68,13 @@ class uiforms extends uical
 	{
 		$extra_participants = $_GET['participants'] ? explode(',',$_GET['participants']) : array();
 
-		$owner = (int) (isset($_GET['owner']) ? $_GET['owner'] : $this->owner);
+		$owner = isset($_GET['owner']) ? $_GET['owner'] : $this->owner;
 		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' || 
 			!$this->bo->check_perms(EGW_ACL_ADD,0,$owner))
 		{
 			if ($owner)	// make an owner who is no user or we have no add-rights a participant
 			{
-				$extra_participants[] = $owner;
+				$extra_participants += explode(',',$owner);
 			}
 			$owner = $this->user;
 		}
@@ -136,17 +136,7 @@ class uiforms extends uical
 		list($button) = @each($content['button']);
 		unset($content['button']);
 
-		$view = $content['view'] && $button != 'edit' && $button != 'edit_series';
-		// if we edit a single recurrance, we need to remember it for save and need to reset the recur information
-		if ($button == 'edit' && $content['recur_type'] != MCAL_RECUR_NONE)
-		{
-			$content['edit_single'] = $content['start'];
-			$content['recur_type'] = MCAL_RECUR_NONE;
-			foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
-			{
-				unset($content[$name]);
-			}
-		}
+		$view = $content['view'] && $button != 'edit' && $button != 'exception';
 		if ($view && $button == 'vcal')
 		{
 			$msg = $this->export($content['id'],true);
@@ -285,7 +275,16 @@ class uiforms extends uical
 		);
 		switch($button)
 		{
-		case 'edit_series':
+		case 'exception':	// create an exception in a recuring event
+			$preserv['edit_single'] = $content['start'];
+			$event['recur_type'] = MCAL_RECUR_NONE;
+			foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
+			{
+				unset($event[$name]);
+			}
+			break;
+
+		case 'edit':
 			if ($content['recur_type'] != MCAL_RECUR_NONE)
 			{
 				// need to reload start and end of the serie
@@ -343,9 +342,11 @@ class uiforms extends uical
 					// now we need to add the original start as recur-execption to the series
 					$recur_event = $this->bo->read($event['reference']);
 					$recur_event['recur_exception'][] = $content['edit_single'];
+					unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
 					$this->bo->update($recur_event,true);	// no conflict check here
 					unset($recur_event);
 					unset($event['edit_single']);			// if we further edit it, it's just a single event
+					unset($preserv['edit_single']);
 				}
 				else	// conflict or error, we need to reset everything to the state befor we tried to save it
 				{
@@ -391,21 +392,14 @@ class uiforms extends uical
 			break;
 			
 		case 'delete':
-		case 'delete_series':
-			if (!$this->bo->check_perms(EGW_ACL_DELETE,$event)) break;
-			if (!$content['edit_series'] && $button == 'delete' && $event['recur_type'] != MCAL_RECUR_NONE)	// delete a single event from a recuring event
+			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
-				$this->bo->delete($event['id'],$event['start']);
+				$msg = lang('Event deleted');
+				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
+					'menuaction' => $content['referer'],
+					'msg' => $msg,
+				))).'\';';
 			}
-			else
-			{
-				$this->bo->delete($event['id']);
-			}
-			$msg = lang('Event deleted');
-			$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-				'menuaction' => $content['referer'],
-				'msg' => $msg,
-			))).'\';';
 			break;
 			
 		case 'freetime':
@@ -596,7 +590,6 @@ class uiforms extends uical
 			{
 				$name = $this->bo->resources[$type]['app'];
 			}
-// 			_debug_array($participants);
 			foreach($participants as $id => $status)
 			{
 				$content['participants'][$name][] = $id . (substr($status,1) > 1 ? (':'.substr($status,1)) : '');
@@ -677,7 +670,15 @@ class uiforms extends uical
 			unset($readonlys['general|description|participants|recurrence|custom|links|alarms']);
 
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['freetime'] = true;
-			$readonlys['link'] = $readonlys['link_to'] = $readonlys['customfields'] = true;
+			$readonlys['link_to'] = $readonlys['customfields'] = true;
+			
+			if ($event['recur_type'] != MCAL_RECUR_NONE)
+			{
+				$etpl->set_cell_attribute('button[edit]','help','Edit this series of recuring events');	
+				$etpl->set_cell_attribute('button[delete]','help','Delete this series of recuring events');
+				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
+				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
+			}
 		}
 		else
 		{
@@ -693,14 +694,12 @@ class uiforms extends uical
 		{
 			$etpl->disable_cells('custom_mail');
 		}
-		if (!($readonlys['button[edit_series]'] = $readonlys['button[edit]'] = !$view || !$this->bo->check_perms(EGW_ACL_EDIT,$event)))
+		if (!($readonlys['button[exception]'] = $readonlys['button[edit]'] = !$view || !$this->bo->check_perms(EGW_ACL_EDIT,$event)))
 		{
-			$readonlys['button[edit_series]'] = $event['recur_type'] == MCAL_RECUR_NONE;
+			$readonlys['button[exception]'] = $event['recur_type'] == MCAL_RECUR_NONE;
 		}
-		if (!($readonlys['button[delete_series]'] = $readonlys['button[delete]'] = !$event['id'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event)))
-		{
-			$readonlys['button[delete_series]'] = !$view || $event['recur_type'] == MCAL_RECUR_NONE;
-		}
+		$readonlys['button[delete]'] = !$event['id'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
+
 		if ($event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{
 			$sel_options['owner'][0] = lang('All participants');
@@ -729,7 +728,8 @@ class uiforms extends uical
 		//echo "preserv="; _debug_array($preserv);
  		//echo "readonlys="; _debug_array($readonlys);
  		//echo "sel_options="; _debug_array($sel_options);
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . ($event['id'] ? ($view ? lang('View') : lang('Edit')) : lang('Add'));
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . ($event['id'] ? ($view ? lang('View') : 
+			($content['edit_single'] ? lang('Edit exception') : lang('Edit'))) : lang('Add'));
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n$js\n</script>\n";
 		$etpl->exec('calendar.uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
 	}

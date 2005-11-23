@@ -523,9 +523,11 @@ ORDER BY cal_user_type, cal_usre_id
 				// check if the recure-information changed
 				$this->db->select($this->repeats_table,'*',array('cal_id' => $cal_id),__LINE__,__FILE__);
 				$old_recur = $this->db->row(true);
+				$old_exceptions = $old_recur['recur_exception'] ? explode(',',$old_recur['recur_exception']) : array();
+				$exceptions = $event['recur_exception'] ? explode(',',$event['recur_exception']) : array();
 				$set_recurrences = $event['recur_type'] != $old_recur['recur_type'] || $event['recur_data'] != $old_recur['recur_data'] ||
 					$event['recur_interval'] != $old_recur['recur_interval'] || $event['recur_enddate'] != $old_recur['recur_enddate'] ||
-					$event['recur_exeption'] != $old_recur['recur_exeption'];
+					count(array_diff($old_exceptions,$exceptions));	// exception deleted
 			}
 			if($event['recur_type'] != MCAL_RECUR_NONE)
 			{
@@ -620,7 +622,8 @@ ORDER BY cal_user_type, cal_usre_id
 
 		if (!$old_start)
 		{
-			if ($change_since !== false) $this->db->select($this->dates_table,'MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end',array('cal_id'=>$cal_id),__LNE__,__FILE__);
+			if ($change_since !== false) $this->db->select($this->dates_table,'MIN(cal_start) AS cal_start,MIN(cal_end) AS cal_end',
+				array('cal_id'=>$cal_id),__LINE__,__FILE__);
 			// if no recurrence found, create one with the new dates
 			if ($change_since === false || !($row = $this->db->row(true)) || !$row['cal_start'] || !$row['cal_end'])
 			{
