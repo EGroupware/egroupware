@@ -229,6 +229,8 @@ class bocalendar
 		// some defaults for xmlrpc
 		if (!isset($params['date_format'])) $params['date_format'] = $this->xmlrpc_date_format;
 		if (!isset($params['enum_recuring'])) $params['enum_recuring'] = false;
+		// security precausion
+		unset($params['ignore_acl']);
 
 		$events =& $this->cal->search($params);
 		
