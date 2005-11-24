@@ -10,8 +10,8 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	zh-tw	<b>這會產生 1 個管理者帳號以及 3 個測試帳號</b><br />測試帳號的密碼分別是： demo/guest, demo2/guest 與 demo3/guest。
 accounts existing	setup	zh-tw	帳號已經存在
 actions	setup	zh-tw	動作
-add a domain	setup	zh-tw	新增一個網域
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh-tw	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
+add new database instance (egw domain)	setup	zh-tw	新增資料庫實例(eGW 網域)
 additional settings	setup	zh-tw	其他設定
 admin first name	setup	zh-tw	管理者名
 admin last name	setup	zh-tw	管理者姓
@@ -90,6 +90,7 @@ checking file-permissions of %1 for %2 %3: %4	setup	zh-tw	檢查 %1 的檔案權
 checking for gd support...	setup	zh-tw	檢查是否支援GD...
 checking pear%1 is installed	setup	zh-tw	檢查 PEAR%1 安裝狀態
 checking php.ini	setup	zh-tw	檢查php.ini
+checking required php version %1 (recommended %2)	setup	zh-tw	檢查 PHP 版本為 %1 （建議為 %2）
 checking the egroupware installation	setup	zh-tw	檢查eGroupWare安裝狀態
 click <a href="index.php">here</a> to return to setup.	setup	zh-tw	<a href="index.php">按這裡</a>回到程式安裝。
 click here	setup	zh-tw	點選此處
@@ -125,6 +126,7 @@ current system-charset	setup	zh-tw	目前系統字元編碼
 current system-charset is %1, click %2here%3 to change it.	setup	zh-tw	目前系統字元編碼是%1，點選 %2這裡%3 來改變。
 current version	setup	zh-tw	目前的版本
 currently installed languages: %1 <br />	setup	zh-tw	目前已安裝的語言：%1 <br />
+database instance (egw domain)	setup	zh-tw	資料庫實例（eGW網域）
 database successfully converted from '%1' to '%2'	setup	zh-tw	資料庫成功的從 '%1' 轉換成 '%2'
 datebase	setup	zh-tw	資料庫
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	zh-tw	時間服務埠<br />如果使用13埠，請在送出之前確認您已經設置好適當的防火牆規則。<br />(Port: 13 / Host: 129.6.15.28)
@@ -218,7 +220,6 @@ if the application has no defined tables, selecting upgrade should remedy the pr
 if using ads (active directory) authentication	setup	zh-tw	如果使用ADS(Active Directory)認證
 if using ldap	setup	zh-tw	如果使用LDAP
 if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	zh-tw	如果您使用 LDAP，您希望能管理使用者的家目錄及登入環境變數嗎？
-if using mail authentication	setup	zh-tw	如果使用郵件驗證
 if you did not receive any errors, your applications have been	setup	zh-tw	如果您沒有看到任何錯誤訊息，您的應用程式已經
 if you did not receive any errors, your tables have been	setup	zh-tw	如果您沒有看到任何錯誤訊息，您的資料表已經
 if you running this the first time, don't forget to manualy %1 !!!	setup	zh-tw	如果您第一次執行，別忘了手動 %1 !!!
@@ -238,6 +239,7 @@ install language	setup	zh-tw	安裝語言
 installed	setup	zh-tw	安裝
 instructions for creating the database in %1:	setup	zh-tw	在 %1 的安裝資料庫指示：
 invalid ip address	setup	zh-tw	錯誤的IP位址
+invalid mcrypt algorithm/mode combination	setup	zh-tw	錯誤的 Mcrypt 演算法/模式組合
 invalid password	setup	zh-tw	錯誤的密碼
 is broken	setup	zh-tw	損壞
 is disabled	setup	zh-tw	被停用
@@ -261,6 +263,7 @@ ldap root password	setup	zh-tw	LDAP 管理者密碼
 ldap rootdn	setup	zh-tw	LDAP 主要端點﹝rootdn﹞
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	zh-tw	LDAP帳號搜尋規則，預設："(uid=%user)", %domain=eGW-domain
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	zh-tw	限制下面位址、網域或是主機存取安裝設定(例如：127.0.0.1,10.1.1,myhost.dnydns.org)
+login as user postgres, eg. by using su as root	setup	zh-tw	登入為使用者 postgres ，就像是透過 su 來切換成 root
 login to mysql -	setup	zh-tw	登入到MYSQL -
 logout	setup	zh-tw	登出
 mail domain (for virtual mail manager)	setup	zh-tw	郵件網域（虛擬郵件管理程式使用）
@@ -280,6 +283,7 @@ mcrypt version	setup	zh-tw	MCrypt 版本
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh-tw	memory_limit(最大可存取記憶體)設定小於16M：eGroupWare有部份應用程式會使用超過預設值8M的記憶體存取，特別是無法預期的錯誤
 minimum account id (e.g. 500 or 100, etc.)	setup	zh-tw	使用者帳號編碼最小值﹝如：500 或 100﹞
 minute	setup	zh-tw	分
+missing or uncomplete mailserver configuration	setup	zh-tw	缺少或未完成郵件伺服器設定
 modifications have been completed!	setup	zh-tw	修改已經完成！
 modify	setup	zh-tw	修改
 modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	zh-tw	修改一個已經存在的LDAP帳號讓eGroupWare使用(全新安裝且使用LDAP帳號)
@@ -304,6 +308,7 @@ not ready for this stage yet	setup	zh-tw	先前的步驟尚未執行。
 not set	setup	zh-tw	未設定
 note: you will be able to customize this later	setup	zh-tw	備註：稍後您還可以做更動。
 now guessing better values for defaults...	setup	zh-tw	猜一個更好的數值來提供預設設定...
+odbc / maxdb: dsn (data source name) to use	setup	zh-tw	ODBC / MaxDB：要使用的 DSN (資料來源名稱)
 ok	setup	zh-tw	正常
 once the database is setup correctly	setup	zh-tw	資料庫設定正確
 one month	setup	zh-tw	一個月
@@ -315,6 +320,7 @@ or %1continue to the header admin%2	setup	zh-tw	或是%1繼續頁首管理%2
 or http://webdav.domain.com (webdav)	setup	zh-tw	或是http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	zh-tw	或者我們能夠為您嘗試去建立資料庫：
 or you can install a previous backup.	setup	zh-tw	或是您可以安裝上一個備份的版本
+password for smtp-authentication	setup	zh-tw	SMTP驗證的密碼
 password needed for configuration	setup	zh-tw	需要密碼才能夠執行組態設定
 password of db user	setup	zh-tw	資料庫帳號的密碼
 passwords did not match, please re-enter	setup	zh-tw	密碼不符，請重新輸入
@@ -339,6 +345,7 @@ pop/imap mail server hostname or ip address	setup	zh-tw	POP/IMAP郵件伺服器�
 possible reasons	setup	zh-tw	可能的原因
 possible solutions	setup	zh-tw	可能的解決方法
 post-install dependency failure	setup	zh-tw	安裝依存關係錯誤
+postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	zh-tw	Postgres:空白表示使用自訂的 unix 網域介面來取代 tcp/ip 連線
 potential problem	setup	zh-tw	可能的問題
 preferences	setup	zh-tw	喜好設定
 problem resolution	setup	zh-tw	問題處理
@@ -406,9 +413,12 @@ setup the database	setup	zh-tw	安裝資料庫
 setup/config admin login	setup	zh-tw	安裝/設定管理員登入
 show 'powered by' logo on	setup	zh-tw	顯示「powered by」圖示位置
 size	setup	zh-tw	大小
+smtp server hostname or ip address	setup	zh-tw	SMTP伺服器主機名稱或IP位址
+smtp server port	setup	zh-tw	SMTP伺服器連接埠
 some or all of its tables are missing	setup	zh-tw	遺失部份或所有的資料表
 sql encryption type	setup	zh-tw	SQL 密碼加密的方式(預設為md5)
 standard (login-name identical to egroupware user-name)	setup	zh-tw	標準（登入名稱與 eGroupWare 使用者名稱一致）
+standard mailserver settings (used for mail authentication too)	setup	zh-tw	標準郵件伺服器設定（也用在郵件認證）
 start the postmaster	setup	zh-tw	開始postmaster
 status	setup	zh-tw	狀態
 step %1 - admin account	setup	zh-tw	步驟%1 - 管理者帳號
@@ -449,6 +459,7 @@ this section will help you setup your ldap accounts for use with egroupware	setu
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	zh-tw	這個長度必須大約在30位元組左右。<br />注意：預設值已經隨機產生了。
 this stage is completed<br />	setup	zh-tw	這個步驟已經完成<br />
 to a version it does not know about	setup	zh-tw	未知的版本
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	zh-tw	要允許密碼驗證，請新增下面幾行到 pg_hba.conf （在檔案的最上方）並且重新啟動 postgres：
 to setup 1 admin account and 3 demo accounts.	setup	zh-tw	設定一個管理員帳號與三個測試帳號
 top	setup	zh-tw	頂部
 translations added	setup	zh-tw	語系新增了
@@ -471,6 +482,7 @@ uploads a backup to the backup-dir, from where you can restore it	setup	zh-tw	�
 use cookies to pass sessionid	setup	zh-tw	使用 COOKIE 傳遞連線代碼
 use pure html compliant code (not fully working yet)	setup	zh-tw	使用標準 HTML 原始碼（尚未完全支援）
 user account prefix	setup	zh-tw	使用者帳號前置字元
+user for smtp-authentication (leave it empty if no auth required)	setup	zh-tw	SMTP驗證的帳號（如果不需要就保持空白）
 usernames are casesensitive	setup	zh-tw	使用者帳號有大小寫之分
 users choice	setup	zh-tw	使用者的選擇
 utf-8 (unicode)	setup	zh-tw	utf-8 (多國語言編碼)
@@ -522,6 +534,7 @@ your backup directory '%1' %2	setup	zh-tw	您的備份資料夾 '%1' %2
 your database does not exist	setup	zh-tw	找不到您的資料庫系統。
 your database is not working!	setup	zh-tw	您的資料庫無法操作！
 your database is working, but you dont have any applications installed	setup	zh-tw	您的資料庫正常運作中，但沒有安裝任何應用程式。
+your egroupware api is current	setup	zh-tw	您的 eGroupWare 應用介面是最新版本
 your files directory '%1' %2	setup	zh-tw	您的檔案資料夾 '%1' %2
 your header admin password is not set. please set it now!	setup	zh-tw	您沒有設定標頭(header)管理密碼，請現在設定！
 your header.inc.php needs upgrading.	setup	zh-tw	您的header.inc.php需要更新。

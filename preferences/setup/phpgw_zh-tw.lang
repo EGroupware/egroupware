@@ -1,4 +1,4 @@
-%1 - preferences	preferences	zh-tw	%1 - 喜好設定
+%1 - preferences	preferences	zh-tw	%1 - 偏好設定
 %1 hours	preferences	zh-tw	%1 小時
 12 hour	preferences	zh-tw	12 小時制
 24 hour	preferences	zh-tw	24 小時制
@@ -16,7 +16,7 @@ country	preferences	zh-tw	國家
 date format	preferences	zh-tw	日期格式
 default	preferences	zh-tw	預設
 default application	preferences	zh-tw	預設應用程式
-default preferences	preferences	zh-tw	預設喜好設定
+default preferences	preferences	zh-tw	預設偏好設定
 delete categories	preferences	zh-tw	刪除分類
 description can not exceed 255 characters in length !	preferences	zh-tw	說明不能夠超過255個字元
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	zh-tw	您想使用24小時制或是12小時制。
@@ -25,7 +25,7 @@ enter your new password	preferences	zh-tw	輸入您的新密碼
 enter your old password	preferences	zh-tw	輸入您的舊密碼
 error: there was a problem finding the preference file for %1 in %2	preferences	zh-tw	錯誤： 偏好設定在 %2 發生錯誤 %1
 failed to change password.  please contact your administrator.	preferences	zh-tw	密碼變更錯誤，請聯絡管理員
-forced preferences	preferences	zh-tw	強制修改喜好設定
+forced preferences	preferences	zh-tw	強制修改偏好設定
 help off	preferences	zh-tw	關閉求助訊息
 hours	preferences	zh-tw	小時
 how do you like to display accounts	preferences	zh-tw	您喜歡如何顯示帳號？
@@ -75,4 +75,4 @@ you can show the applications as icons only, icons with app-name or both.	prefer
 you do not have permission to set acl's in this mode!	preferences	zh-tw	您沒有權限設定ACL在這個模式
 you must enter a password	preferences	zh-tw	您必須輸入密碼
 your current theme is: %1	preferences	zh-tw	您目前的佈景是： %1
-your preferences	preferences	zh-tw	您的喜好設定
+your preferences	preferences	zh-tw	您的偏好設定

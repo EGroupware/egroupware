@@ -377,7 +377,7 @@ trust relationship	admin	zh-tw	信用關係
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	zh-tw	在 windows 環境需要 %1手動%2 安裝 asyncservice 或是使用回應模式，回應模式指的是在每頁瀏覽完才會被檢查。
 use cookies to pass sessionid	admin	zh-tw	使用 COOKIE 傳遞連線代碼
 use pure html compliant code (not fully working yet)	admin	zh-tw	使用標準 HTML 原始碼（尚未完全支援）
-use theme	admin	zh-tw	使用布景主題
+use theme	admin	zh-tw	使用佈景主題
 user accounts	admin	zh-tw	使用者管理
 user data	admin	zh-tw	使用者資料
 user for smtp-authentication (leave it empty if no auth required)	admin	zh-tw	SMTP認證帳號(如果不需要就不用填入)

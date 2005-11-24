@@ -45,6 +45,7 @@ copy of:	calendar	zh-tw	複製：
 copy this event	calendar	zh-tw	複製這個事件
 countries	calendar	zh-tw	國家
 country	calendar	zh-tw	國家
+create an exception at this recuring event	calendar	zh-tw	在這個循環事件建立例外
 create new links	calendar	zh-tw	建立新連結
 csv	calendar	zh-tw	CSV
 csv-fieldname	calendar	zh-tw	CSV-欄位名稱
@@ -65,7 +66,7 @@ delete series	calendar	zh-tw	刪除連鎖項目
 delete this alarm	calendar	zh-tw	刪除這個警告
 delete this event	calendar	zh-tw	刪除這個事件
 delete this exception	calendar	zh-tw	刪除這個例外
-delete this series of recuring events	calendar	zh-tw	刪除這個系列的事件
+delete this series of recuring events	calendar	zh-tw	刪除這個系列的循環事件
 disinvited	calendar	zh-tw	拒絕邀請
 display status of events	calendar	zh-tw	顯示事件的狀態
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zh-tw	顯示您預設的行事曆瀏覽模式在啟始頁(您登入egroupWare第一個看到或是按下您的首頁按鈕的頁面)
@@ -76,9 +77,10 @@ do you wish to autoload calendar holidays files dynamically?	admin	zh-tw	您希�
 download	calendar	zh-tw	下載
 download this event as ical	calendar	zh-tw	下載這個事件的 iCal 格式檔案
 duration of the meeting	calendar	zh-tw	會議期間
+edit exception	calendar	zh-tw	編輯例外
 edit series	calendar	zh-tw	編輯全系列約會
 edit this event	calendar	zh-tw	編輯這個事件
-edit this series of recuring events	calendar	zh-tw	編輯這個系列的事件
+edit this series of recuring events	calendar	zh-tw	編輯這個系列的循環事件
 empty for all	calendar	zh-tw	全部空白
 end	calendar	zh-tw	結束
 end date/time	calendar	zh-tw	結束日期時間
@@ -88,12 +90,15 @@ enddate of the export	calendar	zh-tw	匯出資料的結束日期
 ends	calendar	zh-tw	結束日期
 error adding the alarm	calendar	zh-tw	新增警告時發生錯誤
 error: importing the ical	calendar	zh-tw	錯誤： 匯入 iCal 資料時
+error: no participants selected !!!	calendar	zh-tw	錯誤：沒有選擇參與者！
 error: saving the event !!!	calendar	zh-tw	錯誤： 儲存事件時！
+error: starttime has to be before the endtime !!!	calendar	zh-tw	錯誤：開始時間必須在結束時間之前！
 event copied - the copy can now be edited	calendar	zh-tw	複製事件完成，現在可以編輯複製後的事件
 event deleted	calendar	zh-tw	事件刪除了
 event details follow	calendar	zh-tw	事件細節
 event saved	calendar	zh-tw	事件儲存了
 event will occupy the whole day	calendar	zh-tw	這是全天事件
+exception	calendar	zh-tw	例外
 exceptions	calendar	zh-tw	例外
 existing links	calendar	zh-tw	已經存在的連結
 export	calendar	zh-tw	匯出
@@ -182,7 +187,7 @@ on time change of more than 4 hours too	calendar	zh-tw	在改變超過四小時�
 one month	calendar	zh-tw	一個月
 one week	calendar	zh-tw	一星期
 one year	calendar	zh-tw	一年
-only the initial date of that recuring event is checked!	calendar	zh-tw	只有選取重複事件的初始日期！
+only the initial date of that recuring event is checked!	calendar	zh-tw	只有選循環事件的初始日期！
 open todo's:	calendar	zh-tw	未完成的待辦事項
 overlap holiday	calendar	zh-tw	重疊的假日
 participants	calendar	zh-tw	與會者
