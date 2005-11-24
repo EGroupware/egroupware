@@ -40,12 +40,12 @@ can't add alarms in the past !!!	calendar	es-es	¡¡No se pueden añadir alarmas en
 canceled	calendar	es-es	Cancelado
 charset of file	calendar	es-es	Juego de caracteres del fichero
 close the window	calendar	es-es	Cerrar la ventana
-common preferences	calendar	es-es	preferencias comunes
 compose a mail to all participants after the event is saved	calendar	es-es	redactar un correo para todos los participantes después de guardar el evento
 copy of:	calendar	es-es	Copia de:
 copy this event	calendar	es-es	Copiar este evento
 countries	calendar	es-es	Paises
 country	calendar	es-es	País
+create an exception at this recuring event	calendar	es-es	Crear una excepción en este evento recurrente
 create new links	calendar	es-es	Crear enlaces nuevos
 csv	calendar	es-es	CSV
 csv-fieldname	calendar	es-es	CSV - Nombre del campo
@@ -77,6 +77,7 @@ do you wish to autoload calendar holidays files dynamically?	admin	es-es	¿Desea 
 download	calendar	es-es	Descargar
 download this event as ical	calendar	es-es	Descargar este evento como iCal
 duration of the meeting	calendar	es-es	Duración de la reunión
+edit exception	calendar	es-es	Editar excepción
 edit series	calendar	es-es	Editar series
 edit this event	calendar	es-es	Editar este evento
 edit this series of recuring events	calendar	es-es	Editar esta serie de eventos recurrentes
@@ -89,12 +90,15 @@ enddate of the export	calendar	es-es	Fecha de fin de la exportación
 ends	calendar	es-es	acaba
 error adding the alarm	calendar	es-es	Error al añadir la alarma
 error: importing the ical	calendar	es-es	Error al importar el fichero iCal
+error: no participants selected !!!	calendar	es-es	Error: ¡No se seleccionó ningún participante!
 error: saving the event !!!	calendar	es-es	Error al guardar el evento
+error: starttime has to be before the endtime !!!	calendar	es-es	Error :¡La hora de inicio tiene que ser anterior a la de final!
 event copied - the copy can now be edited	calendar	es-es	Evento copiado. Ahora se puede editar la copia
 event deleted	calendar	es-es	Evento borrado
 event details follow	calendar	es-es	A continuación, los detalles del evento
 event saved	calendar	es-es	Evento guardado
 event will occupy the whole day	calendar	es-es	El evento ocupará todo el día
+exception	calendar	es-es	Excepción
 exceptions	calendar	es-es	Excepciones
 existing links	calendar	es-es	Enlaces existentes
 export	calendar	es-es	Exportar
@@ -286,6 +290,7 @@ weekview without weekend	calendar	es-es	Vista semanal sin fin de semana
 which events do you want to see when you enter the calendar.	calendar	es-es	¿Qué eventos quiere ver al entrar al calendario?
 which of calendar view do you want to see, when you start calendar ?	calendar	es-es	¿Qué vista del calendario quiere ver cuando entra al calendario?
 whole day	calendar	es-es	todo el día
+wk	calendar	es-es	Semana
 work day ends on	calendar	es-es	Los días laborables acaban en
 work day starts on	calendar	es-es	Los días laborables empiezan en
 yearly	calendar	es-es	Anual
