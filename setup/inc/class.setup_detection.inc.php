@@ -156,20 +156,21 @@
 								$currentver = '0.9.14.508';
 							}
 							$major = $GLOBALS['egw_setup']->get_major($currentver);
-							if ($major == $depsvalue)
+							if ($major == $depsvalue || substr($major,0,strlen($depsvalue)+1) == $depsvalue.'.')
 							{
 								$setup_info['depends'][$depkey]['status'] = True;
 							}
 							else	// check if majors are equal and minors greater or equal
 							{
 								$major_depsvalue = $GLOBALS['egw_setup']->get_major($depsvalue);
-								list(,,,$minor_depsvalue) = explode('.',$depsvalue);
-								list(,,,$minor) = explode('.',$currentver);
+								$minor_depsvalue = array_pop(explode('.',$depsvalue));
+								$minor = array_pop(explode('.',$currentver));
 								if ($major == $major_depsvalue && $minor <= $minor_depsvalue)
 								{
 									$setup_info['depends'][$depkey]['status'] = True;
 								}
 							}
+							//echo "<p>app=$key depends on $depvalue[appname](".implode(',',$depvalue['versions']).") current=$currentver, major=$major, depsvalue=$depsvalue, major_depsvalue=$major_depsvalue, minor_depsvalue=$minor_depsvalue, minor=$minor ==> ".(int)$setup_info['depends'][$depkey]['status']."</p>\n";
 						}
 					}
 					/*
