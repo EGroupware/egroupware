@@ -33,16 +33,14 @@
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td width="180" valign="top" align="left"><img src="./phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="69" alt="spacer" /></td>
+				<td width="180"></td>
 				<td>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td width="100%"><img src="./phpgwapi/templates/idots/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
 						</tr>
 					</table>
-
 				</td>
-				<td width="1" valign="top" align="right"><img src="./phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
 			</tr>
 		</table>
 	</div>

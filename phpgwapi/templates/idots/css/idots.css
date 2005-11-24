@@ -226,10 +226,13 @@ a.textSidebox
 	padding:2px;
 }
 
+body {
+	padding: 0px;
+}
+
 #divMain
 {
 	background-color:white;
-	margin-top: 5px;
 	padding:9px;
 	border:solid 1px #7e7e7e;
 }
@@ -237,17 +240,19 @@ a.textSidebox
 #divLogo
 {
 	position:absolute;
-	left:20px;
-	top:5px;
+	left:30px;
+	top:15px;
 	z-index:51;
 }
 
 #divAppIconBar
 {
-	background-color:white;
-	border-top:solid 1px #9c9c9c;
+	margin-top: 15px;
+	background-color:silver;
+	border:solid 1px #9c9c9c;
 	background-image: url(../images/background-icon-bar.png); 
-	background-repeat: repeat-x
+	background-repeat: repeat-x;
+	height: 45px;
 }
 
 #divAppTextBar
@@ -351,7 +356,7 @@ a.textSidebox
 #divGenTime,#divPoweredBy 
 
 {
-	bottom:14px;
+	bottom:4px;
 	text-align:center;
 	width:99%;
 }

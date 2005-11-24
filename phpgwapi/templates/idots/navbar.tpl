@@ -6,10 +6,10 @@
 
 <div id="divMain">
 	<div id="divAppIconBar">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 7px">
 			<tr>
-				<td width="180" valign="top" align="left"><img src="{img_root}/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
-				<td>
+				<td width="180"></td>
+				<td valign="bottom">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							{app_icons}
@@ -22,8 +22,6 @@
 				</td>
 
 				{app_extra_icons_icon}
-	
-				<td width="1" valign="top" align="right"><img src="{img_root}/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
 			</tr>
 		</table>
 	</div>

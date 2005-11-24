@@ -82,7 +82,7 @@
 					}
 					$tdwidth=round($tdwidth);
 
-					$app_icons .= '<td width="'.$tdwidth.'%" height="66" valign="bottom" align="center" style="text-align:center"><a href="' . $app_data['url'] . '"';
+					$app_icons .= '<td width="'.$tdwidth.'%" align="center" style="text-align:center"><a href="' . $app_data['url'] . '"';
 
 					if(isset($GLOBALS['egw_info']['flags']['navbar_target']) && $GLOBALS['egw_info']['flags']['navbar_target'])
 					{
@@ -184,7 +184,7 @@
 
 				$var['app_extra_icons_div']= $app_extra_icons_div;
 				//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
-				$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+				$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:20px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
 			}
 
 			if($GLOBALS['egw_info']['user']['preferences']['common']['navbar_format']!='icons')
