@@ -58,13 +58,13 @@
 	{
 		$config[$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
 	}
-	$phpgw_info['server']['ldap_host']          = $config['ldap_host'];
-	$phpgw_info['server']['ldap_context']       = $config['ldap_context'];
-	$phpgw_info['server']['ldap_group_context'] = $config['ldap_group_context'];
-	$phpgw_info['server']['ldap_root_dn']       = $config['ldap_root_dn'];
-	$phpgw_info['server']['ldap_root_pw']       = $config['ldap_root_pw'];
-	$phpgw_info['server']['account_repository'] = $config['account_repository'];
-	$phpgw_info['server']['ldap_version3']      = $config['ldap_version3'];
+	$GLOBALS['egw_info']['server']['ldap_host']          = $config['ldap_host'];
+	$GLOBALS['egw_info']['server']['ldap_context']       = $config['ldap_context'];
+	$GLOBALS['egw_info']['server']['ldap_group_context'] = $config['ldap_group_context'];
+	$GLOBALS['egw_info']['server']['ldap_root_dn']       = $config['ldap_root_dn'];
+	$GLOBALS['egw_info']['server']['ldap_root_pw']       = $config['ldap_root_pw'];
+	$GLOBALS['egw_info']['server']['account_repository'] = $config['account_repository'];
+	$GLOBALS['egw_info']['server']['ldap_version3']      = $config['ldap_version3'];
 
 	$GLOBALS['egw']->accounts = CreateObject('phpgwapi.accounts');
 	$acct            = $GLOBALS['egw']->accounts;
@@ -87,13 +87,13 @@
 
 	for($i=0; $i<$info['count']; $i++)
 	{
-		if(!$phpgw_info['server']['global_denied_users'][$info[$i]['uid'][0]])
+		if(!$GLOBALS['egw_info']['server']['global_denied_users'][$info[$i]['uid'][0]])
 		{
 			$account_info[$info[$i]['uidnumber'][0]] = $info[$i];
 		}
 	}
 
-	if($phpgw_info['server']['ldap_group_context'])
+	if($GLOBALS['egw_info']['server']['ldap_group_context'])
 	{
 		$srg = ldap_search($ldap,$config['ldap_group_context'],'(|(cn=*))',array('gidnumber','cn','memberuid'));
 		$info = ldap_get_entries($ldap, $srg);
@@ -101,10 +101,10 @@
 
 		for($i=0; $i<$info['count']; $i++)
 		{
-			if(!$phpgw_info['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
+			if(!$GLOBALS['egw_info']['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
 				!$account_info[$i][$info[$i]['cn'][0]])
 			{
-				$group_info[$info[$i]['gidnumber'][0]] = $info[$i];
+				$group_info[-$info[$i]['gidnumber'][0]] = $info[$i];
 			}
 		}
 	}
@@ -130,11 +130,9 @@
 	if(isset($_POST['submit']))
 	{
 		$acl = CreateObject('phpgwapi.acl');
-		copyobj($GLOBALS['egw_setup']->db,$acl->db);
 		if(isset($_POST['ldapgroups']))
 		{
 			$groups = CreateObject('phpgwapi.accounts');
-			copyobj($GLOBALS['egw_setup']->db,$groups->db);
 			while(list($key,$groupid) = each($_POST['ldapgroups']))
 			{
 				$id_exist = 0;
@@ -232,7 +230,7 @@
 						}
 					}
 					/* Now give this group some rights */
-					$phpgw_info['user']['account_id'] = $thisacctid;
+					$GLOBALS['egw_info']['user']['account_id'] = $thisacctid;
 					$acl->account_id = (int)$thisacctid;
 					$acl->read_repository();
 					@reset($_POST['s_apps']);
@@ -250,7 +248,6 @@
 		if(isset($_POST['users']))
 		{
 			$accounts = CreateObject('phpgwapi.accounts');
-			copyobj($GLOBALS['egw_setup']->db,$accounts->db);
 			while(list($key,$id) = each($_POST['users']))
 			{
 				$id_exist = 0;

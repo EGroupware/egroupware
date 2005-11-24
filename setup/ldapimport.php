@@ -51,7 +51,7 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
-	$phpgw_info['server']['auth_type'] = 'ldap';
+	$GLOBALS['egw_info']['server']['auth_type'] = 'ldap';
 
 	$phpgw->applications = CreateObject('phpgwapi.applications');
 	$applications        = $phpgw->applications;
@@ -63,13 +63,13 @@
 	{
 		$config[$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
 	}
-	$phpgw_info['server']['ldap_host']          = $config['ldap_host'];
-	$phpgw_info['server']['ldap_context']       = $config['ldap_context'];
-	$phpgw_info['server']['ldap_group_context'] = $config['ldap_group_context'];
-	$phpgw_info['server']['ldap_root_dn']       = $config['ldap_root_dn'];
-	$phpgw_info['server']['ldap_root_pw']       = $config['ldap_root_pw'];
-	$phpgw_info['server']['ldap_version3']      = $config['ldap_version3'] == "True" ? True : False;
-	$phpgw_info['server']['account_repository'] = $config['account_repository'];
+	$GLOBALS['egw_info']['server']['ldap_host']          = $config['ldap_host'];
+	$GLOBALS['egw_info']['server']['ldap_context']       = $config['ldap_context'];
+	$GLOBALS['egw_info']['server']['ldap_group_context'] = $config['ldap_group_context'];
+	$GLOBALS['egw_info']['server']['ldap_root_dn']       = $config['ldap_root_dn'];
+	$GLOBALS['egw_info']['server']['ldap_root_pw']       = $config['ldap_root_pw'];
+	$GLOBALS['egw_info']['server']['ldap_version3']      = $config['ldap_version3'] == "True" ? True : False;
+	$GLOBALS['egw_info']['server']['account_repository'] = $config['account_repository'];
 
 	$phpgw->accounts     = CreateObject('phpgwapi.accounts');
 	$acct                = $phpgw->accounts;
@@ -89,46 +89,45 @@
 		exit;
 	}
 
-	$sr = ldap_search($ldap,$config['ldap_context'],'(|(uid=*))',array('sn','givenname','uid','uidnumber'));
+	$sr = ldap_search($ldap,$config['ldap_context'],'(|(uid=*))',array('sn','givenname','uid','uidnumber','email','gidnumber'));
 	$info = ldap_get_entries($ldap, $sr);
-	$tmp = '';
-
+	$account_info = $group_info = array();
+	
 	for($i=0; $i<$info['count']; $i++)
 	{
-		if(!$phpgw_info['server']['global_denied_users'][$info[$i]['uid'][0]])
+		if(!$GLOBALS['egw_info']['server']['global_denied_users'][$info[$i]['uid'][0]])
 		{
-			$tmp = $info[$i]['uidnumber'][0];
-			$account_info[$tmp]['account_id']        = $info[$i]['uidnumber'][0];
-			$account_info[$tmp]['account_lid']       = $info[$i]['uid'][0];
-			$account_info[$tmp]['account_firstname'] = $info[$i]['givenname'][0];
-			$account_info[$tmp]['account_lastname']  = $info[$i]['sn'][0];
-			$account_info[$tmp]['account_passwd']    = $info[$i]['userpassword'][0];
+			$account_info[$info[$i]['uidnumber'][0]] = array(
+				'account_id'        => $info[$i]['uidnumber'][0],
+				'account_lid'       => $info[$i]['uid'][0],
+				'account_firstname' => $info[$i]['givenname'][0],
+				'account_lastname'  => $info[$i]['sn'][0],
+				'account_passwd'    => $info[$i]['userpassword'][0],
+				'account_email'     => $info[$i]['email'][0],
+				'account_primary_group' => -$info[$i]['gidnumber'][0],
+			);
 		}
 	}
 
-	if($phpgw_info['server']['ldap_group_context'])
+	if($GLOBALS['egw_info']['server']['ldap_group_context'])
 	{
 		$srg = ldap_search($ldap,$config['ldap_group_context'],'(|(cn=*))',array('gidnumber','cn','memberuid'));
 		$info = ldap_get_entries($ldap, $srg);
-		$tmp = '';
 
 		for($i=0; $i<$info['count']; $i++)
 		{
-			if(!$phpgw_info['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
+			if(!$GLOBALS['egw_info']['server']['global_denied_groups'][$info[$i]['cn'][0]] &&
 				!$account_info[$i][$info[$i]['cn'][0]])
 			{
-				$tmp = $info[$i]['gidnumber'][0];
-				$group_info[$tmp]['account_id']        = $info[$i]['gidnumber'][0];
-				$group_info[$tmp]['account_lid']       = $info[$i]['cn'][0];
-				$group_info[$tmp]['members']           = $info[$i]['memberuid'];
-				$group_info[$tmp]['account_firstname'] = $info[$i]['cn'][0];
-				$group_info[$tmp]['account_lastname']  = 'Group';
+				$group_info[-$info[$i]['gidnumber'][0]] = array(
+					'account_id'        => -$info[$i]['gidnumber'][0],
+					'account_lid'       => $info[$i]['cn'][0],
+					'members'           => $info[$i]['memberuid'],
+					'account_firstname' => $info[$i]['cn'][0],
+					'account_lastname'  => 'Group'
+				);
 			}
 		}
-	}
-	else
-	{
-		$group_info = array();
 	}
 
 	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled != 0 AND app_enabled != 3',__LINE__,__FILE__);
@@ -166,20 +165,15 @@
 		{
 			if($users)
 			{
-				while(list($key,$id) = each($users))
+				foreach($users as $id) 
 				{
-					$id_exist = 0;
 					$thisacctid    = $account_info[$id]['account_id'];
 					$thisacctlid   = $account_info[$id]['account_lid'];
-					$thisfirstname = $account_info[$id]['account_firstname'];
-					$thislastname  = $account_info[$id]['account_lastname'];
-					$thispasswd    = $account_info[$id]['account_passwd'];
 
 					// Do some checks before we try to import the data.
 					if(!empty($thisacctid) && !empty($thisacctlid))
 					{
-						$accounts = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-						copyobj($GLOBALS['egw_setup']->db,$accounts->db);
+						$accounts =& CreateObject('phpgwapi.accounts',(int)$thisacctid);
 
 						// Check if the account is already there.
 						// If so, we won't try to create it again.
@@ -192,17 +186,11 @@
 						// If not, create it now.
 						if(!$id_exist)
 						{
-							$thisaccount_info = array(
+							$thisacctid = $accounts->create($account_info[$id]+array(
 								'account_type'      => 'u',
-								'account_lid'       => $thisacctlid,
-								'account_passwd'    => 'x',
-							/*	'account_passwd'    => $thispasswd, */
-								'account_firstname' => $thisfirstname,
-								'account_lastname'  => $thislastname,
 								'account_status'    => 'A',
-								'account_expires'   => -1
-							);
-							$thisacctid = $accounts->create($thisaccount_info);
+								'account_expires'   => -1,
+							));
 						}
 						if (!$thisacctid)	// if we have no account_id, we cant continue
 						{
@@ -248,7 +236,7 @@
 
 			if($ldapgroups)
 			{
-				while(list($key,$groupid) = each($ldapgroups))
+				foreach($ldapgroups as $groupid)
 				{
 					$id_exist = 0;
 					$thisacctid    = $group_info[$groupid]['account_id'];
@@ -261,7 +249,6 @@
 					if(!empty($thisacctid) && !empty($thisacctlid))
 					{
 						$groups = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-						copyobj($GLOBALS['egw_setup']->db,$groups->db);
 
 						// Check if the account is already there.
 						// If so, we won't try to create it again.
@@ -275,23 +262,22 @@
 						// If not, create it now.
 						if(!$id_exist)
 						{
-							$thisgroup_info = array(
+							$thisacctid = $groups->create(array(
 								'account_type'      => 'g',
 								'account_lid'       => $thisacctlid,
-								'account_passwd'    => $passwd,
+								'account_passwd'    => 'x',
 								'account_firstname' => $thisfirstname,
 								'account_lastname'  => $thislastname,
 								'account_status'    => 'A',
 								'account_expires'   => -1
-							);
-							$thisacctid = $groups->create($thisgroup_info);
+							));
 						}
 						if (!$thisacctid)	// if we have no account_id, we cant continue
 						{
 							continue;
 						}
 						// Now make them a member of this group in phpgw.
-						while(list($key,$members) = each($thismembers))
+						foreach($thismembers as $key =>$members)
 						{
 							if($key == 'count')
 							{
@@ -316,7 +302,6 @@
 							if($tmpid)
 							{
 								$acl = CreateObject('phpgwapi.acl',$tmpid);
-								copyobj($GLOBALS['egw_setup']->db,$acl->db);
 								$acl->account_id = (int)$tmpid;
 								$acl->read_repository();
 
@@ -345,9 +330,8 @@
 							}
 						}
 						/* Now give this group some rights */
-						$phpgw_info['user']['account_id'] = $thisacctid;
+						$GLOBALS['egw_info']['user']['account_id'] = $thisacctid;
 						$acl = CreateObject('phpgwapi.acl');
-						copyobj($GLOBALS['egw_setup']->db,$acl->db);
 						$acl->account_id = (int)$thisacctid;
 						$acl->read_repository();
 						@reset($s_apps);
@@ -365,7 +349,6 @@
 			{
 				/* Create the 'Default' group */
 				$groups = CreateObject('phpgwapi.accounts',$defaultgroupid);
-				copyobj($GLOBALS['egw_setup']->db,$groups->db);
 
 				// Check if the group account is already there.
 				// If so, set our group_id to that account's id for use below.
@@ -389,12 +372,9 @@
 					'account_status'    => 'A',
 					'account_expires'   => -1
 				);
-				$acct->create($thisgroup_info);
-
-				$defaultgroupid = $acct->name2id('Default');
+				$defaultgroupid = $acct->create($thisgroup_info);
 
 				$acl = CreateObject('phpgwapi.acl',$defaultgroupid);
-				copyobj($GLOBALS['egw_setup']->db,$acl->db);
 				$acl->account_id = (int)$defaultgroupid;
 				$acl->read_repository();
 				@reset($s_apps);

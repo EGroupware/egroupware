@@ -56,19 +56,9 @@
 	),__LINE__,__FILE__);
 	while ($GLOBALS['egw_setup']->db->next_record())
 	{
-		$config[$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
+		$GLOBALS['egw_info']['server'][$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
 	}
-	$phpgw_info['server']['ldap_host']			= $config['ldap_host'];
-	$phpgw_info['server']['ldap_context']		= $config['ldap_context'];
-	$phpgw_info['server']['ldap_group_context']	= $config['ldap_group_context'];
-	$phpgw_info['server']['ldap_root_dn']		= $config['ldap_root_dn'];
-	$phpgw_info['server']['ldap_root_pw']		= $config['ldap_root_pw'];
-	$phpgw_info['server']['ldap_account_home']	= $config['ldap_account_home'];
-	$phpgw_info['server']['ldap_account_shell']	= $config['ldap_account_shell'];
-	$phpgw_info['server']['ldap_extra_attributes']	= $config['ldap_extra_attributes'];
-	$phpgw_info['server']['ldap_version3']		= $config['ldap_version3'];
-
-	$phpgw_info['server']['account_repository'] = 'ldap';
+	$GLOBALS['egw_info']['server']['account_repository'] = 'ldap';
 
 	$egw->accounts     = CreateObject('phpgwapi.accounts');
 	$acct              = $egw->accounts;
@@ -99,7 +89,7 @@
 		$account_info[$i]['account_lastname']  = $GLOBALS['egw_setup']->db->f('account_lastname');
 		$account_info[$i]['account_status']    = $GLOBALS['egw_setup']->db->f('account_status');
 		$account_info[$i]['account_expires']   = $GLOBALS['egw_setup']->db->f('account_expires');
-		$account_info[$i]['account_primary_group']   = $GLOBALS['egw_setup']->db->f('account_primary_group');
+		$account_info[$i]['account_primary_group'] = $GLOBALS['egw_setup']->db->f('account_primary_group');
 	}
 	
 	$sql = "SELECT * FROM ".$GLOBALS['egw_setup']->accounts_table." WHERE account_type='g'";
@@ -145,7 +135,6 @@
 				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
 					$groups = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-					copyobj($GLOBALS['egw_setup']->db,$groups->db);
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
@@ -194,7 +183,6 @@
 				if(!empty($thisacctid) && !empty($thisacctlid))
 				{
 					$accounts = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-					copyobj($GLOBALS['egw_setup']->db,$accounts->db);
 
 					// Check if the account is already there.
 					// If so, we won't try to create it again.
@@ -217,8 +205,8 @@
 							'account_lastname'  => $thislastname,
 							'account_status'    => 'A',
 							'account_expires'   => -1,
-							'homedirectory'     => $config['ldap_account_home'] . '/' . $thisacctlid,
-							'loginshell'        => $config['ldap_account_shell'],
+							'homedirectory'     => $GLOBALS['egw_info']['server']['ldap_account_home'] . '/' . $thisacctlid,
+							'loginshell'        => $GLOBALS['egw_info']['server']['ldap_account_shell'],
 							'account_primary_group' => $thisprimarygroup,
 						);
 						$accounts->create($thisaccount_info);
