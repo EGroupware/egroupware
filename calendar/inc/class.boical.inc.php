@@ -278,8 +278,11 @@
 			return $vcal->exportvCalendar();
 		}
 		
-		function importVCal(&$_vcalData, $cal_id=-1)
+		function importVCal($_vcalData, $cal_id=-1)
 		{
+			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
+			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
+
 			$vcal = &new Horde_iCalendar;
 			if(!$vcal->parsevCalendar($_vcalData))
 			{
@@ -298,7 +301,7 @@
 				if(is_a($component, 'Horde_iCalendar_vevent'))
 				{
 					$supportedFields = $this->supportedFields;
-					$event = array();
+					$event = array('participants' => array());
 					$vcardData = array('recur_type' => 0);
 					
 					// lets see what we can get from the vcard
@@ -327,53 +330,54 @@
 								$vcardData['location']	= $attributes['value'];
 								break;
 							case 'RRULE':
-								$recurence 			= $attributes['value'];
-								switch(substr($recurence,0,1))
+								$recurence = $attributes['value'];
+								$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence{0};
+								// vCard 2.0 values for all types
+								if (preg_match('/UNTIL=([0-9T]+)/',$recurence,$matches))
+								{
+									$vcardData['recur_enddate'] = $vcal->_parseDateTime($matches[1]);
+								}
+								if (preg_match('/INTERVAL=([0-9]+)/',$recurence,$matches))
+								{
+									$vcardData['recur_interval'] = (int) $matches[1];
+								}
+		            			$vcardData['recur_data'] = 0;
+								switch($type)
 								{
 									case 'W':
-										if(preg_match('/W(\d+) (.*) (.*)/',$recurence, $recurenceMatches))
+									case 'WEEKLY':
+										$days = array();
+										if(preg_match('/W(\d+) (.*) (.*)/',$recurence, $recurenceMatches))		// 1.0
 										{
-											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
 											$vcardData['recur_interval'] = $recurenceMatches[1];
-											foreach(explode(' ',trim($recurenceMatches[2])) as $recurenceDay)
-											{
-												switch($recurenceDay)
-												{
-													case 'SU':
-														$vcardData['recur_data'][] = MCAL_M_SUNDAY;
-														break;
-													case 'MO':
-														$vcardData['recur_data'][] = MCAL_M_MONDAY;
-														break;
-													case 'TU':
-														$vcardData['recur_data'][] = MCAL_M_TUESDAY;
-														break;
-													case 'WE':
-														$vcardData['recur_data'][] = MCAL_M_WEDNESDAY;
-														break;
-													case 'TH':
-														$vcardData['recur_data'][] = MCAL_M_THURSDAY;
-														break;
-													case 'FR':
-														$vcardData['recur_data'][] = MCAL_M_FRIDAY;
-														break;
-													case 'SA':
-														$vcardData['recur_data'][] = MCAL_M_SATURDAY;
-														break;
-												}
-											}
+											$days = explode(' ',trim($recurenceMatches[2]));
+										}
+										elseif (preg_match('/BYDAY=([^;: ]+)/',$recurence,$recurenceMatches))	// 2.0
+										{
+		            						$days = exploce(',',$recurenceMatches[1]);
+										}
+										if ($days)
+										{
+											foreach($this->recur_days as $id => $day)
+		            						{
+		            							if (in_array(strtoupper(substr($day,0,2)),$matches))
+		            							{
+		            								$vcardData['recur_data'] |= $id;
+		            							}
+		            						}
+											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
 										}
 										break;
 									
-									case 'D':
-										if(preg_match('/D(\d+) (.*)/',$recurence, $recurenceMatches))
-										{
-											$vcardData['recur_type'] = MCAL_RECUR_DAILY;
-											$vcardData['recur_interval'] = $recurenceMatches[1];
-											$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
-								
-										}
+									case 'D':		// 1.0
+										if(!preg_match('/D(\d+) (.*)/',$recurence, $recurenceMatches)) break;
+										$vcardData['recur_interval'] = $recurenceMatches[1];
+										$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+										// fall-through
+									case 'DAILY':	// 2.0
+										$vcardData['recur_type'] = MCAL_RECUR_DAILY;
 										break;
+
 									case 'M':
 										if(preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches))
 										{
@@ -385,14 +389,18 @@
 											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_WDAY;
 											$vcardData['recur_interval'] = $recurenceMatches[1];
 										}
-										
 										break;
-									case 'Y':
-										if(preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches))
-										{
-											$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
-											$vcardData['recur_interval'] = $recurenceMatches[1];
-										}
+									case 'MONTHLY':
+										$vcardData['recur_type'] = strstr($recurence,'BYDAY') ? 
+											MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
+										break;										
+
+									case 'Y':		// 1.0
+										if(!preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches)) break;
+										$vcardData['recur_interval'] = $recurenceMatches[1];
+										// fall-through
+									case 'YEARLY':	// 2.0
+										$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
 										break;
 								}
 								break;
@@ -432,7 +440,7 @@
 	 								{
 	 									if (!($cat_id = $this->cat->name2id($cat_name)))
 	 									{
-	 										$cat_id = $this->cat->add( array('name' => $cat,'descr' => $cat ));
+	 										$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
 	 									}
  										$vcardData['category'][] = $cat_id;
 	 								}
@@ -440,15 +448,16 @@
 	 							break;	
 	 						case 'ATTENDEE':
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
-	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1])))
+	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
 	 							{
-	 								$event['participants'][$uid] = preg_match('/PARTSTAT=([a-z-]+)/i',$attributes['value'],$matches) ?
-	 									$this->status_ical2egw[strtoupper($matches[1])] : ($uid == $event['owner'] ? 'A' : 'U');
+	 								$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
+	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] : 
+	 									($uid == $event['owner'] ? 'A' : 'U');
 	 							}
 	 							break;
 	 						case 'ORGANIZER':	// will be written direct to the event
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
-	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1])))
+	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
 	 							{
 	 								$event['owner'] = $uid;
 	 							}
@@ -461,7 +470,7 @@
 								break;
 						}
 					}
-					#_debug_array($vcardData);exit;
+					//echo "event=";_debug_array($vcardData);
 					
 					// now that we know what the vard provides, we merge that data with the information we have about the device
 					$event['priority']		= 2;
@@ -469,7 +478,7 @@
 					{
 						$event['id'] = $cal_id;
 					}
-					while($fieldName = array_shift($supportedFields))
+					while(($fieldName = array_shift($supportedFields)))
 					{
 						switch($fieldName)
 						{
@@ -479,7 +488,7 @@
 								{
 									foreach(array('recur_interval','recur_enddate','recur_data','recur_exception') as $r)
 									{
-										if(isset($vcardData[$f]))
+										if(isset($vcardData[$r]))
 										{
 											$event[$r] = $vcardData[$r];
 										}
@@ -509,7 +518,7 @@
 					#{
 					#	error_log("KEY: $key  VALUE: $value");
 					#}
-					//_debug_array($event); exit;
+					//echo "event=";_debug_array($event);
 					
 					if (!($Ok = $this->update($event, TRUE))) break;	// stop with the first error
 				}
@@ -517,7 +526,7 @@
 			return $Ok;
 		}
 
-		function setSupportedFields(&$_productManufacturer='file', &$_productName='')
+		function setSupportedFields($_productManufacturer='file', $_productName='')
 		{
 			$defaultFields = array('public' => 'public', 'description' => 'description', 'end' => 'end',
 				'start' => 'start', 'location' => 'location', 'recur_type' => 'recur_type',
