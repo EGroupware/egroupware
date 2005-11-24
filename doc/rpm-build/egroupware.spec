@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.2RC1
+%define version 1.2RC2
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -131,6 +131,12 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/workflow
 
 %changelog
+* Thu Nov 24 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC2-1
+- calendar now fully supports groups as participatns and xmlrpc is working again
+- group-id's are now negative to improve ldap support
+- modified logo and look for the 1.2 idots template
+- bugfixes in many areas
+
 * Mon Nov 14 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC1-1
 - first release candidate of the upcomming 1.2 release:
 - complete rewrite of the calendar, plus new resource booking system
