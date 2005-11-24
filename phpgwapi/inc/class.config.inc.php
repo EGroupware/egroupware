@@ -94,7 +94,7 @@
 				}
 				$this->db->unlock();
 
-				if ($this->appname == 'phpgwapi')
+				if ($this->appname == 'phpgwapi' && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 				{
 					$GLOBALS['egw']->invalidate_session_cache();	// in case egw_info is cached in the session (phpgwapi is in egw_info[server])
 				}

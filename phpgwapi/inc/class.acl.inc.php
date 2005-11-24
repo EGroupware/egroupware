@@ -243,7 +243,8 @@
 					),false,__LINE__,__FILE__);
 				}
 			}
-			if ($this->account_id == $GLOBALS['egw_info']['user']['account_id'])
+			if ($this->account_id == $GLOBALS['egw_info']['user']['account_id'] && 
+				method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 			{
 				$GLOBALS['egw']->invalidate_session_cache();
 			}
@@ -386,7 +387,8 @@
 				'acl_account'  => $account_id,
 			),__LINE__,__FILE__);
 
-			if ($account_id == $GLOBALS['egw_info']['user']['account_id'])
+			if ($account_id == $GLOBALS['egw_info']['user']['account_id'] &&
+				method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 			{
 				$GLOBALS['egw']->invalidate_session_cache();
 			}
@@ -420,8 +422,10 @@
 					$where['acl_account'] = $cache_accountid[$accountid] = get_account_id($accountid,$this->account_id);
 				}
 			}
-			$GLOBALS['egw']->invalidate_session_cache();
-
+			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();
+			}
 			if ($app == '%' || $app == '%%') unset($where['acl_appname']);
 
 			$this->db->delete($this->table_name,$where,__LINE__,__FILE__);

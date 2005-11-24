@@ -602,8 +602,10 @@
 				$GLOBALS['egw_info']['user']['preferences'] = $this->data;
 				$GLOBALS['egw']->session->save_repositories();
 			}
-			$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
-
+			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
+			}
 			return $this->data;
 		}
 
