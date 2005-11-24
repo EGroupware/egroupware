@@ -270,35 +270,38 @@ class bocal
 			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$user))
 			{
 				$users[] = $user;
-				
-				// for groups we have to include the members
-				if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
+			}
+			elseif ($GLOBALS['egw']->accounts->get_type($user) != 'g')
+			{
+				continue;	// for non-groups (eg. users), we stop here if we have no read-rights
+			}
+			// for groups we have to include the members
+			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
+			{
+				$members = $GLOBALS['egw']->accounts->member($user);
+				if (is_array($members))
 				{
-					$members = $GLOBALS['egw']->accounts->member($user);
-					if (is_array($members))
+					foreach($members as $member)
 					{
-						foreach($members as $member)
+						// use only members which gave the user a read-grant
+						if (!in_array($member['account_id'],$users) && 
+							($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$member['account_id'])))
 						{
-							// use only members which gave the user a read-grant
-							if (!in_array($member['account_id'],$users) && 
-								($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$member['account_id'])))
-							{
-								$users[] = $member['account_id'];
-							}
+							$users[] = $member['account_id'];
 						}
 					}
 				}
-				else	// for users we have to include all the memberships, to get the group-events
+			}
+			else	// for users we have to include all the memberships, to get the group-events
+			{
+				$memberships = $GLOBALS['egw']->accounts->membership($user);
+				if (is_array($memberships))
 				{
-					$memberships = $GLOBALS['egw']->accounts->membership($user);
-					if (is_array($memberships))
+					foreach($memberships as $group)
 					{
-						foreach($memberships as $group)
+						if (!in_array($group['account_id'],$users))
 						{
-							if (!in_array($group['account_id'],$users))
-							{
-								$users[] = $group['account_id'];
-							}
+							$users[] = $group['account_id'];
 						}
 					}
 				}
