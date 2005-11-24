@@ -260,11 +260,6 @@
 			return False;
 		}
 
-		function get_type($account_id)
-		{
-			return $this->id2name($account_id,'account_type');
-		}
-
 		function exists($account_lid)
 		{
 			static $by_id, $by_lid;
@@ -324,7 +319,14 @@
 			}
 			$this->db->insert($this->table,$account_data,False,__LINE__,__FILE__);
 
-			return $this->db->get_last_insert_id($this->table,'account_id');
+			$id = $account_data['account_id'] ? $account_data['account_id'] : $this->db->get_last_insert_id($this->table,'account_id');
+			
+			if ($id > 0)
+			{
+				$this->db->update($this->table,array('account_id' => -$id),array('account_id' => $id),__LINE__,__FILE__);
+				return -$id;
+			}
+			return $id;
 		}
 
 		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
@@ -387,9 +389,7 @@
 
 			$this->db->transaction_begin();
 
-			$this->create($acct_info); /* create the account */
-
-			$accountid = $this->name2id($accountname); /* grab the account id or an error code */
+			$accountid = $this->create($acct_info); /* create the account */
 
 			if ($accountid) /* begin account setup */
 			{

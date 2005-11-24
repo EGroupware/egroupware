@@ -237,7 +237,7 @@
 					}
 					elseif ($param['type'] == 'owngroups')
 					{
-						$group = -1;
+						$group = true;
 						$param['type'] = 'groups';
 					}
 					$start = $param['start'];
@@ -269,7 +269,7 @@
 					}
 					if ($group)
 					{
-						$members = $group > 0 ? $GLOBALS['egw']->acl->get_ids_for_location($group, 1, 'phpgw_group') :
+						$members = is_int($group) ? $GLOBALS['egw']->acl->get_ids_for_location($group, 1, 'phpgw_group') :
 							$GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1,$GLOBALS['egw_info']['user']['account_id']);
 						if (!$members) $members = array();
 						$valid = !$app ? $members : array_intersect($valid,$members);	// use the intersection
@@ -303,7 +303,7 @@
 		/**
 		 * Searches / lists accounts: users and/or groups
 		 *
-		 * @deprecated 
+		 * @deprecated use search
 		 */
 		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
 		{
@@ -487,23 +487,17 @@
 				return $membership_list[$account_id];
 			}
 
-			$security_equals = Array();
-			$security_equals = $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $account_id);
-
-			if ($security_equals == False)
+			if(!($gids = $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $account_id)))
 			{
 				return $membership_list[$account_id] = False;
 			}
 
-			$this->memberships = Array();
-
-			for ($idx=0; $idx<count($security_equals); $idx++)
+			$memberships = Array();
+			foreach($gids as $gid)
 			{
-				$groups = (int)$security_equals[$idx];
-				$this->memberships[] = Array('account_id' => $groups, 'account_name' => $this->id2name($groups));
+				$memberships[] = Array('account_id' => $gid, 'account_name' => $this->id2name($gid));
 			}
-
-			return $membership_list[$account_id] = $this->memberships;
+			return $membership_list[$account_id] = $memberships;
 		}
 
 		/**
@@ -515,25 +509,27 @@
 		 */
 		function member($accountid = '')
 		{
+			$this->setup_cache();
+			$member_list = &$this->cache['member_list'];
+
 			$account_id = get_account_id($accountid);
 
-			$security_equals = Array();
-			$acl =& CreateObject('phpgwapi.acl');
-			$security_equals = $acl->get_ids_for_location($account_id, 1, 'phpgw_group');
-			unset($acl);
-
-			if ($security_equals == False)
+			if (isset($member_list[$account_id]))
 			{
-				return False;
+				return $member_list[$account_id];
 			}
 
-			for ($idx=0; $idx<count($security_equals); $idx++)
+			if (!($uids = $GLOBALS['egw']->acl->get_ids_for_location($account_id, 1, 'phpgw_group')))
 			{
-				$name = $this->id2name((int)$security_equals[$idx]);
-				$this->members[] = Array('account_id' => (int)$security_equals[$idx], 'account_name' => $name);
+				return $member_list[$account_id] = False;
 			}
 
-			return $this->members;
+			$members = array();
+			foreach ($uids as $uid)
+			{
+				$members[] = Array('account_id' => $uid, 'account_name' => $this->id2name($uid));
+			}
+			return $member_list[$account_id] = $members;
 		}
 
 		/**
@@ -620,7 +616,7 @@
 			);
 			foreach($app_users as $id)
 			{
-				$type = $GLOBALS['egw']->accounts->get_type($id);
+				$type = $this->get_type($id);
 				if($type == 'g')
 				{
 					$accounts['groups'][$id] = $id;
@@ -662,7 +658,7 @@
 		/**
 		 * phpgw compatibility function, better use split_accounts
 		 *
-		 * @deprecated 
+		 * @deprecated  use split_accounts
 		 */
 		function return_members($accounts)
 		{
@@ -732,25 +728,9 @@
 		 */
 		function get_type($accountid)
 		{
-			$this->setup_cache();
-			$account_type = &$this->cache['account_type'];
-
 			$account_id = get_account_id($accountid);
-
-			if (isset($this->account_type) && $account_id == $this->account_id)
-			{
-				return $this->account_type;
-			}
-
-			if(@isset($account_type[$account_id]) && @$account_type[$account_id])
-			{
-				return $account_type[$account_id];
-			}
-			elseif($account_id == '')
-			{
-				return False;
-			}
-			return $account_type[$account_id] = accounts_::get_type($account_id);
+			
+			return $account_id > 0 ? 'u' : ($account_id < 0 ? 'g' : false);
 		}
 
 		/**

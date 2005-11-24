@@ -907,4 +907,76 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.029';
 	}
+	
+	
+	$test[] = '1.0.1.029';
+	function phpgwapi_upgrade1_0_1_029()
+	{
+		// convert all positive group id's to negative ones
+		// this allows duplicate id for users and groups in ldap
+		$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_value',array(
+			'config_name' => 'account_repository',
+			'config_app'  => 'phpgwapi',
+		),__LINE__,__FILE__);
+		
+		if($GLOBALS['egw_setup']->db->next_record() && $GLOBALS['egw_setup']->db->f('config_value') == 'ldap')
+		{
+			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->acl_table,'DISTINCT acl_location',array(
+				'acl_appname' => 'phpgw_group',
+				'acl_location > 0',
+			),__LINE__,__FILE__);
+		}
+		else
+		{
+			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->accounts_table,'account_id',array(
+				'account_type' => 'g',
+				'account_id > 0',
+			),__LINE__,__FILE__);
+		}
+		$groupIDs = array();
+		while($GLOBALS['egw_setup']->db->next_record())
+		{
+			$groupIDs[] = $GLOBALS['egw_setup']->db->f(0);
+		}
+		$tables = array();
+		foreach($GLOBALS['egw_setup']->db->table_names() as $data)
+		{
+			$tables[] = $data['table_name'];
+		}
+		foreach(array(
+			array('egw_acl','acl_location'),
+			array('egw_acl','acl_account'),
+			array('egw_accounts','account_id',"account_type='g'"),
+			array('egw_accounts','account_primary_group',"account_type='u'"),
+			array('egw_cal_user','cal_user_id',"cal_user_type='u'"),
+			array('egw_wiki_pages','wiki_readable',true),
+			array('egw_wiki_pages','wiki_writable',true),
+		) as $data)
+		{
+			$where = false;
+			list($table,$col,$where) = $data;
+			
+			if (!in_array($table,$tables)) continue;	// app is not installed
+
+			if ($col == 'acl_location')	// varchar not int!
+			{
+				$set = $col.'='.$GLOBALS['egw_setup']->db->concat("'-'",$col);
+				$in = "$col IN ('".implode("','",$groupIDs)."')";
+			}
+			else
+			{
+				$set = "$col=-$col";
+				$in = "$col IN (".implode(',',$groupIDs).')';				
+			}
+			if ($where === true)
+			{
+				$in = '';
+				$where = '1=1';
+			}
+			$query = "UPDATE $table SET $set WHERE $in".($in && $where ? ' AND ' : '').$where;
+			//echo "<p>$query</p>\n";
+			$GLOBALS['egw_setup']->db->query($query,__LINE__,__FILE__);
+		}
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2';
+	}
 ?>
