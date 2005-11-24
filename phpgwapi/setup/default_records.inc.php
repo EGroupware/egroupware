@@ -152,7 +152,7 @@ foreach(array(
 	'zu' => 'Zulu',
 ) as $id => $name)
 {
-	$oProc->insert($GLOBALS['egw_setup']->languages_table,array('lang_name' => $name),array('lang_id' => $id),__LINE__,__FILLE_);
+	$oProc->insert($GLOBALS['egw_setup']->languages_table,array('lang_name' => $name),array('lang_id' => $id),__LINE__,__FILE__);
 }
 	
 foreach(array(
