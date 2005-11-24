@@ -857,7 +857,7 @@ class bocal
 		}
 		if (is_int($event) && $event == 0)
 		{
-			$owner = $other > 0 ? $other : $this->user;
+			$owner = $other ? $other : $this->user;
 		}
 		else
 		{
