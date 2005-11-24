@@ -59,13 +59,13 @@
 	</head>
 	<body>
 
-<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/idots/images/logo-setup.png" border="0" alt="egroupware" /></a></div>
+<div id="divLogo"><a href="http://www.egroupware.org" target="_blank"><img src="../phpgwapi/templates/idots/images/logo.png" border="0" alt="egroupware" /></a></div>
 
 <div id="divMain">
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 			<tr>
-				<td width="180" valign="top" align="left"><img src="../phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
+				<td width="180"></td>
 				<td>
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
@@ -77,10 +77,10 @@
 					</table>
 
 				</td>
-				<td width="1" valign="top" align="right"><img src="../phpgwapi/templates/idots/images/grey-pixel.png" width="1" height="68" alt="spacer" /></td>
 			</tr>
 		</table>
 	</div>
+	<br />
 <!--	<div id="divstatusbar"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr><td align="left" id="user_info">{user_info}</td><td align="right" id="admin_info">{current_users}</td></tr></table></div>-->
 	<div id="divSubContainer">
 		<table width="100%" cellspacing="0" cellpadding="0">
