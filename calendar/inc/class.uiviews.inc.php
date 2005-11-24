@@ -1351,7 +1351,7 @@ class uiviews extends uical
 					'menuaction'   => 'calendar.uiviews.planner',
 					'planner_days' => 1,
 					'date'         => date('Ymd',$t),
-				),false,$class == 'calHoliday' || $class == 'calBirthday' ? '' : ' title="'.$this->html->htmlspecialchars(lang('Dayview')).'"');
+				),false,strstr($class,'calHoliday') || strstr($class,'calBirthday') ? '' : ' title="'.$this->html->htmlspecialchars(lang('Dayview')).'"');
 			}
 			if ($days < 5)
 			{
