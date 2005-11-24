@@ -72,7 +72,14 @@
 		 */
 		function acl($account_id = '')
 		{
-			$this->db = clone($GLOBALS['egw']->db);
+			if (is_object($GLOBALS['egw_setup']->db))
+			{
+				$this->db = clone($GLOBALS['egw_setup']->db);
+			}
+			else
+			{
+				$this->db = clone($GLOBALS['egw']->db);
+			}
 			$this->db->set_app('phpgwapi');
 
 			if ((int)$this->account_id != (int)$account_id)

@@ -108,7 +108,14 @@
 			// enable the caching in the session onyl for ldap
 			$this->use_session_cache = $GLOBALS['egw_info']['server']['account_repository'] == 'ldap';
 
-			$this->db =& $GLOBALS['egw']->db;
+			if (is_object($GLOBALS['egw_setup']->db))
+			{
+				$this->db = clone($GLOBALS['egw_setup']->db);
+			}
+			else
+			{
+				$this->db = clone($GLOBALS['egw']->db);
+			}
 
 			if($account_id != '')
 			{
