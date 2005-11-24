@@ -9,6 +9,7 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 
+	/* $Id$ */
 
 	/* Basic information about this app */
 	$setup_info['home']['name']      = 'home';
@@ -28,5 +29,4 @@
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['home']['hooks']['hasUpdates'] = 'home.updates.hasUpdates';
 	$setup_info['home']['hooks']['showUpdates'] = 'home.updates.showUpdates';
-
 ?>
