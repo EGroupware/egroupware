@@ -27,7 +27,7 @@
 	$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
 	if(!file_exists($theme_css))
 	{
-		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
+		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/css/jerryr.css';
 	}
 
 	//pngfix defaults to yes
