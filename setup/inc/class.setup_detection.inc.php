@@ -163,8 +163,8 @@
 							else	// check if majors are equal and minors greater or equal
 							{
 								$major_depsvalue = $GLOBALS['egw_setup']->get_major($depsvalue);
-								$minor_depsvalue = array_pop(explode('.',$depsvalue));
-								$minor = array_pop(explode('.',$currentver));
+								$tmp = explode('.',$depsvalue); $minor_depsvalue = array_pop($tmp);
+								$tmp = explode('.',$currentver); $minor = array_pop($tmp);
 								if ($major == $major_depsvalue && $minor <= $minor_depsvalue)
 								{
 									$setup_info['depends'][$depkey]['status'] = True;
