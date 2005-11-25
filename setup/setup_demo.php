@@ -111,7 +111,7 @@
 		}
 
 		/* Group perms for the default group */
-		$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','email','preferences','manual'),'run',$defaultgroupid);
+		$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','preferences','home','manual'),'run',$defaultgroupid);
 
 		// give admin access to all apps, to save us some support requests
 		$all_apps = array();
