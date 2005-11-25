@@ -321,7 +321,7 @@
 
 			$id = $account_data['account_id'] ? $account_data['account_id'] : $this->db->get_last_insert_id($this->table,'account_id');
 			
-			if ($id > 0)
+			if ($account_info['account_type'] == 'g' && $id > 0)	// create negative id for groups
 			{
 				$this->db->update($this->table,array('account_id' => -$id),array('account_id' => $id),__LINE__,__FILE__);
 				return -$id;
