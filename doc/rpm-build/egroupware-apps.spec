@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
 %define version 1.2RC2
-%define packaging 2
+%define packaging 3
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
@@ -595,6 +595,14 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
+* Fri Nov 25 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC2-3
+- fixed not working account creation
+- fixed not working category creation in sitemgr
+
+* Fri Nov 25 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC2-2
+- fixed bug which prefented installation under php4 of RC2.
+- some minor bug-fixes happening this morning
+
 * Thu Nov 24 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC2-1
 - calendar now fully supports groups as participatns and xmlrpc is working again
 - group-id's are now negative to improve ldap support
