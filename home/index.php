@@ -72,6 +72,15 @@
 	$GLOBALS['egw']->hooks->single('showUpdates','home');
 
 	/*
+	** Display the mainscreen message
+	*/
+	$GLOBALS['egw']->translation->add_app('mainscreen');
+	if (lang('mainscreen_message') != 'mainscreen_message*')
+	{
+		echo '<div style="text-align: center;">' . stripslashes(lang('mainscreen_message')) . "</div>\n";
+	}
+
+	/*
 	** Display the notification window
 	*/
 	if (isset($GLOBALS['egw_info']['user']['apps']['notifywindow']) && $GLOBALS['egw_info']['user']['apps']['notifywindow'])
