@@ -6,7 +6,7 @@
 	* and Mark Peters <skeeter@phpgroupware.org>                               *
 	* Commononly used functions by phpGroupWare developers                     *
 	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* -------------------------------------------------------------------------*
+	* ------------------------------------------------------------------------ *
 	* This library is part of the eGroupWare API                               *
 	* http://www.egroupware.org                                                *
 	* ------------------------------------------------------------------------ *
@@ -25,9 +25,9 @@
 
 	/* $Id$ */
 
-	$d1 = strtolower(@substr(PHPGW_API_INC,0,3));
-	$d2 = strtolower(@substr(PHPGW_SERVER_ROOT,0,3));
-	$d3 = strtolower(@substr(PHPGW_APP_INC,0,3));
+	$d1 = strtolower(@substr(EGW_API_INC,0,3));
+	$d2 = strtolower(@substr(EGW_SERVER_ROOT,0,3));
+	$d3 = strtolower(@substr(EGW_APP_INC,0,3));
 	if($d1 == 'htt' || $d1 == 'ftp' || $d2 == 'htt' || $d2 == 'ftp' || $d3 == 'htt' || $d3 == 'ftp')
 	{
 		echo 'Failed attempt to break in via an old Security Hole!<br>'."\n";
@@ -36,7 +36,7 @@
 	unset($d1);
 	unset($d2);
 	unset($d3);
-		
+
 	/*!
 	@class datetime
 	@abstract datetime class that contains common date/time functions
@@ -567,17 +567,17 @@
 
 		function datetime()
 		{
-			$this->tz_offset = 3600 * (int)@$GLOBALS['phpgw_info']['user']['preferences']['common']['tz_offset'];
+			$this->tz_offset = 3600 * (int)@$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 			print_debug('datetime::datetime::gmtnow',$this->gmtnow,'api');
 
 			$error_occured = True;
 			// If we already have a GMT time, no need to do this again.
 			if(!$this->gmtnow)
 			{
-				if(isset($GLOBALS['phpgw_info']['server']['tz_offset']))
+				if(isset($GLOBALS['egw_info']['server']['tz_offset']))
 				{
-					$this->gmtnow = time() - ((int)$GLOBALS['phpgw_info']['server']['tz_offset'] * 3600);
-					print_debug('datetime::datetime::tz_offset',"set via tz_offset=".$GLOBALS['phpgw_info']['server']['tz_offset'].": gmtnow=".date('Y/m/d H:i',$this->gmtnow),'api');
+					$this->gmtnow = time() - ((int)$GLOBALS['egw_info']['server']['tz_offset'] * 3600);
+					print_debug('datetime::datetime::tz_offset',"set via tz_offset=".$GLOBALS['egw_info']['server']['tz_offset'].": gmtnow=".date('Y/m/d H:i',$this->gmtnow),'api');
 				}
 				else
 				{
@@ -591,16 +591,16 @@
 		function getntpoffset()
 		{
 			$error_occured = False;
-			if(!@is_object($GLOBALS['phpgw']->network))
+			if(!@is_object($GLOBALS['egw']->network))
 			{
-				$GLOBALS['phpgw']->network = createobject('phpgwapi.network');
+				$GLOBALS['egw']->network = createobject('phpgwapi.network');
 			}
 			$server_time = time();
 
-			if($GLOBALS['phpgw']->network->open_port('129.6.15.28',13,5))
+			if($GLOBALS['egw']->network->open_port('129.6.15.28',13,5))
 			{
-				$line = $GLOBALS['phpgw']->network->bs_read_port(64);
-				$GLOBALS['phpgw']->network->close_port();
+				$line = $GLOBALS['egw']->network->bs_read_port(64);
+				$GLOBALS['egw']->network->close_port();
 
 				$array = explode(' ',$line);
 				// host: 129.6.15.28
@@ -638,14 +638,14 @@
 		function gethttpoffset()
 		{
 			$error_occured = False;
-			if(!@is_object($GLOBALS['phpgw']->network))
+			if(!@is_object($GLOBALS['egw']->network))
 			{
-				$GLOBALS['phpgw']->network = createobject('phpgwapi.network');
+				$GLOBALS['egw']->network = createobject('phpgwapi.network');
 			}
 			$server_time = time();
 
 			$filename = 'http://132.163.4.213/timezone.cgi?GMT';
-			$file = $GLOBALS['phpgw']->network->gethttpsocketfile($filename);
+			$file = $GLOBALS['egw']->network->gethttpsocketfile($filename);
 			if(!$file)
 			{
 				return $this->getbestguess();
@@ -684,7 +684,7 @@
 			}
 
 			// This may need to be a reference to the different months in native tongue....
-			$month= array(
+			$month = array(
 				'Jan' => 1,
 				'Feb' => 2,
 				'Mar' => 3,
@@ -728,7 +728,7 @@
 		function get_weekday_start($year,$month,$day)
 		{
 			$weekday = $this->day_of_week($year,$month,$day);
-			switch($GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts'])
+			switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
 			{
 				// Saturday is for arabic support
 				case 'Saturday':
@@ -935,7 +935,7 @@
 
 		function time_compare($a_hour,$a_minute,$a_second,$b_hour,$b_minute,$b_second)
 		{
-			// I use the 1970/1/2 to compare the times, as the 1. can get via TZ-offest still 
+			// I use the 1970/1/2 to compare the times, as the 1. can get via TZ-offest still
 			// before 1970/1/1, which is the earliest date allowed on windows
 			$a_time = mktime((int)$a_hour,(int)$a_minute,(int)$a_second,1,2,1970);
 			$b_time = mktime((int)$b_hour,(int)$b_minute,(int)$b_second,1,2,1970);
@@ -963,17 +963,17 @@
 		{
 			$date = Array('raw','day','month','year','full','dow','dm','bd');
 			$date['raw'] = $localtime;
-			$date['year'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'Y');
-			$date['month'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'m');
-			$date['day'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'d');
-			$date['full'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'Ymd');
+			$date['year'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'Y');
+			$date['month'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'m');
+			$date['day'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'d');
+			$date['full'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'Ymd');
 			$date['bd'] = mktime(0,0,0,$date['month'],$date['day'],$date['year']);
-			$date['dm'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'dm');
+			$date['dm'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'dm');
 			$date['dow'] = $this->day_of_week($date['year'],$date['month'],$date['day']);
-			$date['hour'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'H');
-			$date['minute'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'i');
-			$date['second'] = (int)$GLOBALS['phpgw']->common->show_date($date['raw'],'s');
-		
+			$date['hour'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'H');
+			$date['minute'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'i');
+			$date['second'] = (int)$GLOBALS['egw']->common->show_date($date['raw'],'s');
+
 			return $date;
 		}
 

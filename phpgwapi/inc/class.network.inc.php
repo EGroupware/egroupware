@@ -4,9 +4,9 @@
   * This file written by Mark Peters <skeeter@phpgroupware.org>              *
   * Handles opening network socket connections, taking proxy into account    *
   * Copyright (C) 2000, 2001 Mark Peters                                     *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
+  * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
   * This library is free software; you can redistribute it and/or modify it  *
   * under the terms of the GNU Lesser General Public License as published by *
@@ -67,11 +67,11 @@
 			{
 				case 80:
 				case 443:
-					if((isset($GLOBALS['phpgw_info']['server']['httpproxy_server']) && $GLOBALS['phpgw_info']['server']['httpproxy_server']) &&
-						(isset($GLOBALS['phpgw_info']['server']['httpproxy_port']) && $GLOBALS['phpgw_info']['server']['httpproxy_port']))
+					if((isset($GLOBALS['egw_info']['server']['httpproxy_server']) && $GLOBALS['egw_info']['server']['httpproxy_server']) &&
+						(isset($GLOBALS['egw_info']['server']['httpproxy_port']) && $GLOBALS['egw_info']['server']['httpproxy_port']))
 					{
-						$server = $GLOBALS['phpgw_info']['server']['httpproxy_server'];
-						$port   = (int)$GLOBALS['phpgw_info']['server']['httpproxy_port'];
+						$server = $GLOBALS['egw_info']['server']['httpproxy_server'];
+						$port   = (int)$GLOBALS['egw_info']['server']['httpproxy_port'];
 					}
 					break;
 			}
@@ -198,13 +198,13 @@
 				$auth = '';
 			}
 
-			if($GLOBALS['phpgw_info']['server']['httpproxy_server'])
+			if($GLOBALS['egw_info']['server']['httpproxy_server'])
 			{
 				$proxyAuth = '';
-				if(!empty($GLOBALS['phpgw_info']['server']['httpproxy_server_username']))
+				if(!empty($GLOBALS['egw_info']['server']['httpproxy_server_username']))
 				{
-					$proxyUsername = $GLOBALS['phpgw_info']['server']['httpproxy_server_username'];
-					$proxyPassword = $GLOBALS['phpgw_info']['server']['httpproxy_server_password'];
+					$proxyUsername = $GLOBALS['egw_info']['server']['httpproxy_server_username'];
+					$proxyPassword = $GLOBALS['egw_info']['server']['httpproxy_server_password'];
 					$proxyAuth = 'Proxy-Authorization: Basic '.base64_encode("$proxyUsername:$proxyPassword")."\n";
 				}
 				if($this->open_port($server,80, 15))
