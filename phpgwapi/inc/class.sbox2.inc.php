@@ -4,7 +4,7 @@
   * Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
   * Class for creating select boxes for addresse, projects, array items, ... *
   * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
+  * ------------------------------------------------------------------------ *
   * This library is part of the eGroupWare API                               *
   * http://www.egroupware.org/api                                            *
   * ------------------------------------------------------------------------ *
@@ -23,10 +23,10 @@
 
   /* $Id$ */
 
-	if(!isset($GLOBALS['phpgw_info']['flags']['included_classes']['sbox']))
+	if(!isset($GLOBALS['egw_info']['flags']['included_classes']['sbox']))
 	{
-		include(PHPGW_API_INC . '/class.sbox.inc.php');
-		$GLOBALS['phpgw_info']['flags']['included_classes']['sbox'] = True;
+		include(EGW_API_INC . '/class.sbox.inc.php');
+		$GLOBALS['egw_info']['flags']['included_classes']['sbox'] = True;
 	}
 
 	class sbox2 extends sbox
@@ -46,7 +46,7 @@
 		 *           {$name}    content of $id if != 0, or lang('use Button to search for').$lang_name
 		 *           {$name.'_nojs}  searchfield + button if we have no JavaScript, else empty
 		 *
-		 * To use call $template->set_var(getIdSearch( ... ));
+		 * To use call $template->set_var(getIdSearch(...));
 		 * the template should look like {doSearchFkt} <tr><td>{XXX_title}</td><td>{XXX}</td><td>{XXX_nojs}</td></tr>   (XXX is content of $name)
 		 * In the submitted page the vars $query_XXX and $id_XXX are set according to what is selected, see getAddress as Example
 		 */
@@ -100,9 +100,9 @@
 					{
 						$ret[$name] = '<select name="id_'.$name.'">'."\n";
 					}
-					while (list( $id,$text ) = each( $content ))
+					while (list($id,$text) = each($content))
 					{
-						$ret[$name] .= "<option value=\"$id\">" . $GLOBALS['phpgw']->strip_html($text) . "\n";
+						$ret[$name] .= "<option value=\"$id\">" . $GLOBALS['egw']->strip_html($text) . "\n";
 					}
 					$ret[$name] .= '<option value="0">'.lang('none')."\n";
 					$ret[$name] .= '</select>';
@@ -129,7 +129,7 @@
 			return $ret;
 		}
 
-		function event2name( $event )
+		function event2name($event)
 		{
 			if (!is_object($this->bocal))
 			{
@@ -143,11 +143,11 @@
 			{
 				return 'not an event !!!';
 			}
-			$name = $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset);
-			$name .= ' -- ' . $GLOBALS['phpgw']->common->show_date($this->bocal->maketime($event['end']) - $this->bocal->datetime->tz_offset);
+			$name = $GLOBALS['egw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset);
+			$name .= ' -- ' . $GLOBALS['egw']->common->show_date($this->bocal->maketime($event['end']) - $this->bocal->datetime->tz_offset);
 			$name .= ': ' . $event['title'];
 
-			return $GLOBALS['phpgw']->strip_html($name);
+			return $GLOBALS['egw']->strip_html($name);
 		}
 
 		/*
@@ -158,16 +158,16 @@
 		 *					$multipe	present a multiple selectable box instead of one selector-button
 		 * On Submit	$id_XXX		contains the selected event (if != 0)
 		 *					$query_XXX	search pattern if the search button is pressed by the user, or '' if regular submit
-		 * Returns		array with vars to set for the template, set with: $template->set_var( getEvent( ... )); (see getId( ))
+		 * Returns		array with vars to set for the template, set with: $template->set_var(getEvent(...)); (see getId())
 		 *
 		 * Note			As query's for an event are submitted, you have to check $query_XXX if it is a search or a regular submit (!$query_string)
 		 */
-		function getEvent( $name,$id_name,$query_name,$title='',$multiple=False)
+		function getEvent($name,$id_name,$query_name,$title='',$multiple=False)
 		{
 			// echo "<p>getEvent('$name',$id_name,'$query_name','$title')</p>";
 
 			// fallback if calendar is not installed or not enabled for user
-			if (!file_exists(PHPGW_SERVER_ROOT.'/calendar') || !$GLOBALS['phpgw_info']['user']['apps']['calendar']['enabled'])
+			if (!file_exists(EGW_SERVER_ROOT.'/calendar') || !$GLOBALS['egw_info']['user']['apps']['calendar']['enabled'])
 			{
 				return array(
 					$name => "<input type=\"hidden\" name=\"id_$name\" value=\"$id_name\">\n",
@@ -184,18 +184,18 @@
 				if ($query_name)
 				{
 					$event_ids = $this->bocal->search_keywords($query_name);
-					$content = array( );
-					while ($event_ids && list( $key,$id ) = each( $event_ids ))
+					$content = array();
+					while ($event_ids && list($key,$id) = each($event_ids))
 					{
-						$content[$id] = $this->event2name( $id );
+						$content[$id] = $this->event2name($id);
 					}
 				}
 				else
 				{
-					$event = $this->bocal->read_entry( $id_name );
+					$event = $this->bocal->read_entry($id_name);
 					if ($event && is_array($event))
 					{
-						$content = $this->event2name( $event );
+						$content = $this->event2name($event);
 					}
 				}
 			}
@@ -206,7 +206,7 @@
 			return $this->getId($name,$title,lang('Pattern for Search in Calendar'),$id_name,$content,lang('use Button to search for Calendarevent'),$multiple);
 		}
 
-		function addr2name( $addr )
+		function addr2name($addr)
 		{
 			$name = $addr['n_family'];
 			if ($addr['n_given'])
@@ -224,7 +224,7 @@
 			{
 				$name = $addr['org_name'].': '.$name;
 			}
-			return $GLOBALS['phpgw']->strip_html($name);
+			return $GLOBALS['egw']->strip_html($name);
 		}
 
 		/*
@@ -235,11 +235,11 @@
 		 *					$multipe	present a multiple selectable box instead of one selector-button
 		 * On Submit	$id_XXX		contains the selected address (if != 0)
 		 *					$query_XXX	search pattern if the search button is pressed by the user, or '' if regular submit
-		 * Returns		array with vars to set for the template, set with: $template->set_var( getAddress( ... )); (see getId( ))
+		 * Returns		array with vars to set for the template, set with: $template->set_var(getAddress(...)); (see getId())
 		 *
 		 * Note			As query's for an address are submitted, you have to check $query_XXX if it is a search or a regular submit (!$query_string)
 		 */
-		function getAddress( $name,$id_name,$query_name,$title='',$multiple=False)
+		function getAddress($name,$id_name,$query_name,$title='',$multiple=False)
 		{
 			// echo "<p>getAddress('$name',$id_name,'$query_name','$title')</p>";
 			if ($id_name || $query_name)
@@ -248,19 +248,19 @@
 
 				if ($query_name)
 				{
-					$addrs = $contacts->read( 0,0,'',$query_name,'','DESC','org_name,n_family,n_given' );
-					$content = array( );
-					while ($addrs && list( $key,$addr ) = each( $addrs ))
+					$addrs = $contacts->read(0,0,'',$query_name,'','DESC','org_name,n_family,n_given');
+					$content = array();
+					while ($addrs && list($key,$addr) = each($addrs))
 					{
-						$content[$addr['id']] = $this->addr2name( $addr );
+						$content[$addr['id']] = $this->addr2name($addr);
 					}
 				}
 				else
 				{
-					list( $addr ) = $contacts->read_single_entry( $id_name );
+					list($addr) = $contacts->read_single_entry($id_name);
 					if (count($addr))
 					{
-						$content = $this->addr2name( $addr );
+						$content = $this->addr2name($addr);
 					}
 				}
 			}
@@ -305,7 +305,7 @@
 			return $name.' <'.$addr['email'.$home].'>';
 		}
 
-		function getEmail( $name,$id_name,$query_name,$title='')
+		function getEmail($name,$id_name,$query_name,$title='')
 		{
 			// echo "<p>getAddress('$name',$id_name,'$query_name','$title')</p>";
 			if ($id_name || $query_name)
@@ -314,23 +314,23 @@
 
 				if ($query_name)
 				{
-					$addrs = $contacts->read( 0,0,'',$query_name,'','DESC','org_name,n_family,n_given' );
-					$content = array( );
-					while ($addrs && list( $key,$addr ) = each( $addrs ))
+					$addrs = $contacts->read(0,0,'',$query_name,'','DESC','org_name,n_family,n_given');
+					$content = array();
+					while($addrs && list($key,$addr) = each($addrs))
 					{
 						if ($addr['email'])
 						{
-							$content[$addr['id']] = $this->addr2email( $addr );
+							$content[$addr['id']] = $this->addr2email($addr);
 						}
 						if ($addr['email_home'])
 						{
-							$content[$addr['id'].'h'] = $this->addr2email( $addr,'_home' );
+							$content[$addr['id'].'h'] = $this->addr2email($addr,'_home');
 						}
 					}
 				}
 				else
 				{
-					$content = $this->addr2email( $id_name );
+					$content = $this->addr2email($id_name);
 				}
 			}
 			if (!$title)
@@ -348,16 +348,16 @@
 		 *					$query_name have to be called $query_XXX, the search pattern after the submit, has to be passed back to the function
 		 * On Submit	$id_XXX		contains the selected address (if != 0)
 		 *					$query_XXX	search pattern if the search button is pressed by the user, or '' if regular submit
-		 * Returns		array with vars to set for the template, set with: $template->set_var( getProject( ... )); (see getId( ))
+		 * Returns		array with vars to set for the template, set with: $template->set_var(getProject(...)); (see getId())
 		 *
 		 * Note			As query's for an address are submitted, you have to check $query_XXX if it is a search or a regular submit (!$query_string)
 		 */
-		function getProject( $name,$id_name,$query_name,$title='' )
+		function getProject($name,$id_name,$query_name,$title='')
 		{
 			// echo "<p>getProject('$name',$id_name,'$query_name','$title')</p>";
 
 			// fallback if projects is not installed or not enabled for user
-			if (!file_exists(PHPGW_SERVER_ROOT.'/projects') || !$GLOBALS['phpgw_info']['user']['apps']['projects']['enabled'])
+			if (!file_exists(EGW_SERVER_ROOT.'/projects') || !$GLOBALS['egw_info']['user']['apps']['projects']['enabled'])
 			{
 				return array(
 					$name => "<input type=\"hidden\" name=\"id_$name\" value=\"$id_name\">\n",
@@ -374,16 +374,16 @@
 				}
 				if ($query_name)
 				{
-					$projs = $projects->list_projects( 0,0,$query_name,'','','','',0,'mains','' );
+					$projs = $projects->list_projects(0,0,$query_name,'','','','',0,'mains','');
 					$content = array();
-					while ($projs && list( $key,$proj ) = each( $projs ))
+					while ($projs && list($key,$proj) = each($projs))
 					{
 						$content[$proj['project_id']] = $proj['title'];
 					}
 				}
 				else
 				{
-					if ($proj = $projects->read_single_project( $id_name ))
+					if ($proj = $projects->read_single_project($id_name))
 					{
 						$content = $proj['title'];
 						// $customer_id = $proj['customer'];
@@ -402,7 +402,7 @@
 		 * Function:		Allows to show and select one item from an array
 		 *	Parameters:		$name		string with name of the submitted var which holds the key of the selected item form array
 		 *						$key		key(s) of already selected item(s) from $arr, eg. '1' or '1,2' or array with keys
-		 *						$arr		array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
+		 *						$arr		array with items to select, eg. $arr = array ('y' => 'yes','n' => 'no','m' => 'maybe');
 		 *						$no_lang	if !$no_lang send items through lang()
 		 *						$options	additional options (e.g. 'multiple')
 		 * On submit		$XXX		is the key of the selected item (XXX is the content of $name)
@@ -500,7 +500,7 @@
 			if (!is_array($account_data))
 			{
 				$accounts = createobject('phpgwapi.accounts',$id);
-				$accounts->db = $GLOBALS['phpgw']->db;
+				$accounts->db = $GLOBALS['egw']->db;
 				$accounts->read_repository();
 				$account_data = $accounts->data;
 			}
@@ -523,7 +523,7 @@
 		 */
 		function getAccount($name,$id,$longnames=-1,$type='accounts',$multiple=0,$options='')
 		{
-			$accs = $GLOBALS['phpgw']->accounts->get_list($type);
+			$accs = $GLOBALS['egw']->accounts->get_list($type);
 
 			if ($multiple < 0)
 			{
@@ -532,7 +532,7 @@
 			while ($a = current($accs))
 			{
 				$aarr[$a['account_id']] = $longnames == -1 ?
-					$GLOBALS['phpgw']->common->display_fullname($a['account_lid'],$a['account_firstname'],$a['account_lastname']) :
+					$GLOBALS['egw']->common->display_fullname($a['account_lid'],$a['account_firstname'],$a['account_lastname']) :
 					$this->accountInfo($a['account_id'],$a,$longnames,$type=='both');
 
 				next($accs);
@@ -556,7 +556,7 @@
 				$month = date('m',$date);
 				$year = date('Y',$date);
 			}
-			return $GLOBALS['phpgw']->common->dateformatorder(
+			return $GLOBALS['egw']->common->dateformatorder(
 				$this->getYears($n_year,$year),
 				$this->getMonthText($n_month,$month),
 				$this->getDays($n_day,$day)
