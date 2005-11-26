@@ -39,7 +39,7 @@
 
 		function read_list($data)
 		{
-			return ExecMethod($this->svc . '.' . $this->function_map['store_to_cache']['function'],$data);
+			return ExecMethod($this->svc . '.' . $this->function_map['search']['function'],$data);
 		}
 
 		function save($data)
