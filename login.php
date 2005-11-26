@@ -414,15 +414,15 @@
 	{
 		if ($config_reg[register_link]=='True')
 		{
-			$reg_link='&nbsp;<a href="registration/">'.lang('Not a user yet? Register now').'</a><br/>';
+			$reg_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php'). '">'.lang('Not a user yet? Register now').'</a><br/>';
 		}
 		if ($config_reg[lostpassword_link]=='True')
 		{
-			$lostpw_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostpw1">'.lang('Lost password').'</a><br/>';
+			$lostpw_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.boreg.lostpw1'). '">'.lang('Lost password').'</a><br/>';
 		}
 		if ($config_reg[lostid_link]=='True')
 		{
-			$lostid_link='&nbsp;<a href="registration/main.php?menuaction=registration.boreg.lostid1">'.lang('Lost Login Id').'</a><br/>';
+			$lostid_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.boreg.lostid1'). '">'.lang('Lost Login Id').'</a><br/>';
 		}
 
 		/* if at least one option of "registration" is activated display the registration section */
