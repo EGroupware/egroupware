@@ -17,9 +17,9 @@
 	{
 		var $sessionData;
 		var $LDAPData;
-		
+
 		var $SMTPServerType = array();		// holds a list of config options
-		
+
 		var $imapClass;				// holds the imap/pop3 class
 		var $smtpClass;				// holds the smtp class
 
@@ -37,7 +37,7 @@
 		function boldap_mgr($_profileID=-1)
 		{
 			$this->soldapmgr =& CreateObject('admin.soldap_mgr');
-			
+
 			$this->SMTPServerType = array(
 				'1' 	=> array(
 					'fieldNames'	=> array(
@@ -115,16 +115,16 @@
 					'protocol'	=> 'imap',
 					'classname'	=> 'cyrusimap'
 				)
-			); 
-			
+			);
+
 			$this->restoreSessionData();
-			
+
 			if($_profileID >= 0)
 			{
 				$this->profileID	= $_profileID;
-			
+
 				$this->profileData	= $this->getProfile($_profileID);
-			
+
 				$this->imapClass	= $this->IMAPServerType[$this->profileData['imapType']]['classname'];
 				$this->smtpClass	= $this->SMTPServerType[$this->profileData['smtpType']]['classname'];
 			}
@@ -134,20 +134,20 @@
 		{
 			switch($_encoding)
 			{
-				case "q":
+				case 'q':
 					if(!preg_match("/[\x80-\xFF]/",$_string))
 					{
 						// nothing to quote, only 7 bit ascii
 						return $_string;
 					}
-					
+
 					$string = imap_8bit($_string);
 					$stringParts = explode("=\r\n",$string);
 					while(list($key,$value) = each($stringParts))
 					{
-						if(!empty($retString)) $retString .= " ";
-						$value = str_replace(" ","_",$value);
-						// imap_8bit does not convert "?"
+						if(!empty($retString)) $retString .= ' ';
+						$value = str_replace(' ','_',$value);
+						// imap_8bit does not convert '?'
 						// it does not need, but it should
 						$value = str_replace("?","=3F",$value);
 						$retString .= "=?".strtoupper($this->displayCharset)."?Q?".$value."?=";
@@ -163,12 +163,12 @@
 		function getAccountEmailAddress($_accountName, $_profileID)
 		{
 			$profileData	= $this->getProfile($_profileID);
-			
+
 			$smtpClass	= $this->SMTPServerType[$profileData['smtpType']]['classname'];
 
 			return empty($smtpClass) ? False : ExecMethod("emailadmin.$smtpClass.getAccountEmailAddress",$_accountName,3,$profileData);
 		}
-		
+
 		function getFieldNames($_serverTypeID, $_class)
 		{
 			switch($_class)
@@ -181,7 +181,7 @@
 					break;
 			}
 		}
-		
+
 #		function getIMAPClass($_profileID)
 #		{
 #			if(!is_object($this->imapClass))
@@ -189,10 +189,10 @@
 #				$profileData		= $this->getProfile($_profileID);
 #				$this->imapClass	=& CreateObject('emailadmin.cyrusimap',$profileData);
 #			}
-#			
+#
 #			return $this->imapClass;
 #		}
-		
+
 		function getIMAPServerTypes()
 		{
 			foreach($this->IMAPServerType as $key => $value)
@@ -200,21 +200,21 @@
 				$retData[$key]['description']	= $value['description'];
 				$retData[$key]['protocol']	= $value['protocol'];
 			}
-			
+
 			return $retData;
 		}
-		
+
 		function getLDAPStorageData($_serverid)
 		{
 			$storageData = $this->soldapmgr->getLDAPStorageData($_serverid);
 			return $storageData;
 		}
-		
+
 		function getMailboxString($_folderName)
 		{
 			if (!empty($this->imapClass))
 			{
-				return ExecMethod("emailadmin.".$this->imapClass.".getMailboxString",$_folderName,3,$this->profileData);
+				return ExecMethod('emailadmin.'.$this->imapClass.'.getMailboxString',$_folderName,3,$this->profileData);
 			}
 			else
 			{
@@ -232,16 +232,16 @@
 			$fieldNames[] = 'profileID';
 			$fieldNames[] = 'organisationName';
 			$fieldNames[] = 'userDefinedAccounts';
-			
+
 			return $this->soldapmgr->getProfile($_profileID, $fieldNames);
 		}
-		
+
 		function getProfileList($_profileID='')
 		{
 			$profileList = $this->soldapmgr->getProfileList($_profileID);
 			return $profileList;
 		}
-		
+
 #		function getSMTPClass($_profileID)
 #		{
 #			if(!is_object($this->smtpClass))
@@ -249,20 +249,20 @@
 #				$profileData		= $this->getProfile($_profileID);
 #				$this->smtpClass	=& CreateObject('emailadmin.postfixldap',$profileData);
 #			}
-#			
+#
 #			return $this->smtpClass;
 #		}
-		
+
 		function getSMTPServerTypes()
 		{
 			foreach($this->SMTPServerType as $key => $value)
 			{
 				$retData[$key] = $value['description'];
 			}
-			
+
 			return $retData;
 		}
-		
+
 		function getUserData($_accountID, $_usecache)
 		{
 			if ($_usecache)
@@ -280,18 +280,16 @@
 
 		function restoreSessionData()
 		{
-			
-		
 			$this->sessionData = $GLOBALS['egw']->session->appsession('session_data');
 			$this->userSessionData = $GLOBALS['egw']->session->appsession('user_session_data');
-			
+
 			#while(list($key, $value) = each($this->userSessionData))
 			#{
 			#	print "++ $key: $value<br>";
 			#}
 			#print "restored Session<br>";
 		}
-		
+
 		function saveProfile($_globalSettings, $_smtpSettings, $_imapSettings)
 		{
 			if(!isset($_globalSettings['profileID']))
@@ -304,29 +302,17 @@
 			}
 		}
 
-
-
-
-		
 		function saveSessionData()
 		{
-			
-			
 			$GLOBALS['egw']->session->appsession('session_data','',$this->sessionData);
 			$GLOBALS['egw']->session->appsession('user_session_data','',$this->userSessionData);
 		}
 
-
-
-
-
-
-		
 		function saveUserData($_accountID, $_formData, $_boAction)
 		{
-			$this->userSessionData[$_accountID]['mail']				 	= $_formData["mail"];
-			$this->userSessionData[$_accountID]['mailForwardingAddress'] = $_formData["mailForwardingAddress"];
-			$this->userSessionData[$_accountID]['accountStatus'] 		= $_formData["accountStatus"];
+			$this->userSessionData[$_accountID]['mail']				 	= $_formData['mail'];
+			$this->userSessionData[$_accountID]['mailForwardingAddress'] = $_formData['mailForwardingAddress'];
+			$this->userSessionData[$_accountID]['accountStatus'] 		= $_formData['accountStatus'];
 
 			switch ($_boAction)
 			{
@@ -341,17 +327,17 @@
 //ACHTUNG!!
 						$count = 0;
 					}
-					
-					$this->userSessionData[$_accountID]['mailAlternateAddress'][$count] = 
+
+					$this->userSessionData[$_accountID]['mailAlternateAddress'][$count] =
 						$_formData['add_mailAlternateAddress'];
-						
+
 					$this->saveSessionData();
-					
+
 					break;
-					
+
 				case 'remove_mailAlternateAddress':
 					$i=0;
-					
+
 					while(list($key, $value) = @each($this->userSessionData[$_accountID]['mailAlternateAddress']))
 					{
 						#print ".. $key: $value<br>";
@@ -363,23 +349,25 @@
 						}
 					}
 					$this->userSessionData[$_accountID]['mailAlternateAddress'] = $newMailAlternateAddress;
-					
+
 					$this->saveSessionData();
 
 					break;
 
 				case 'save':
 					$this->soldapmgr->saveUserData(
-						$_accountID, 
-						$this->userSessionData[$_accountID]);
+						$_accountID,
+						$this->userSessionData[$_accountID]
+					);
 					$bofelamimail =& CreateObject('felamimail.bofelamimail');
 					$bofelamimail->openConnection('','',true);
-					$bofelamimail->imapSetQuota($GLOBALS['egw']->accounts->id2name($_accountID),
-										$this->userSessionData[$_accountID]['quotaLimit']);
+					$bofelamimail->imapSetQuota(
+						$GLOBALS['egw']->accounts->id2name($_accountID),
+						$this->userSessionData[$_accountID]['quotaLimit']
+					);
 					$bofelamimail->closeConnection();
 					$GLOBALS['egw']->accounts->cache_invalidate($_accountID);
-					
-					
+
 					break;
 			}
 		}
@@ -388,14 +376,13 @@
 		{
 			if (!empty($this->imapClass))
 			{
-				ExecMethod("emailadmin.".$this->imapClass.".updateAccount",$_hookValues,3,$this->profileData);
+				ExecMethod('emailadmin.'.$this->imapClass.'.updateAccount',$_hookValues,3,$this->profileData);
 			}
 
 			if (!empty($this->smtpClass))
 			{
-				ExecMethod("emailadmin.".$this->smtpClass.".updateAccount",$_hookValues,3,$this->profileData);
+				ExecMethod('emailadmin.'.$this->smtpClass.'.updateAccount',$_hookValues,3,$this->profileData);
 			}
 		}
-		
 	}
 ?>
