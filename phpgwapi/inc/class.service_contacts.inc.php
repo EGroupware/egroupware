@@ -26,7 +26,7 @@
 	{
 		function service_contacts()
 		{
-			$this->provider = $GLOBALS['phpgw_info']['contact_service'] ? $GLOBALS['phpgw_info']['contact_service'] : 'addressbook';
+			$this->provider = $GLOBALS['egw_info']['contact_service'] ? $GLOBALS['egw_info']['contact_service'] : 'addressbook';
 			$this->svc = $this->provider . '.bo' . $this->provider;
 			$type = $this->type ? $this->type : 'xmlrpc';
 			$this->function_map = ExecMethod($this->svc . '.list_methods',$type);

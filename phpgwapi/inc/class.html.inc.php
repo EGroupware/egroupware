@@ -1,16 +1,16 @@
 <?php
-/**************************************************************************\
-* eGroupWare - HTML creation class                                         *
-* http://www.eGroupWare.org                                                *
-* Written and (c) by Ralf Becker <RalfBecker@outdoor-training.de>          *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
+  /**************************************************************************\
+  * eGroupWare - HTML creation class                                         *
+  * http://www.eGroupWare.org                                                *
+  * Written and (c) by Ralf Becker <RalfBecker@outdoor-training.de>          *
+  * --------------------------------------------                             *
+  *  This program is free software; you can redistribute it and/or modify it *
+  *  under the terms of the GNU General Public License as published by the   *
+  *  Free Software Foundation; either version 2 of the License, or (at your  *
+  *  option) any later version.                                              *
+  \**************************************************************************/
 
-/* $Id$ */
+  /* $Id$ */
 
 /**
  * generates html with methods representing html-tags or higher widgets
@@ -38,7 +38,7 @@ class html
 	 */
 	var $prefered_img_title;
 	/**
-	 * charset used by the page, as returned by $GLOBALS['phpgw']->translation->charset()
+	 * charset used by the page, as returned by $GLOBALS['egw']->translation->charset()
 	 * @var string
 	 */
 	var $charset;
@@ -53,7 +53,6 @@ class html
 	 */
 	var $wz_tooltip_included = False;
 
-	
 	/**
 	 * Constructor: initialised the class-vars
 	 */
@@ -67,16 +66,16 @@ class html
 		}
 		list(,$this->user_agent,$this->ua_version) = $parts;
 		$this->user_agent = strtolower($this->user_agent);
-		
+
 		$this->netscape4 = $this->user_agent == 'mozilla' && $this->ua_version < 5;
 		$this->prefered_img_title = $this->netscape4 ? 'alt' : 'title';
 		//echo "<p>HTTP_USER_AGENT='$_SERVER[HTTP_USER_AGENT]', UserAgent: '$this->user_agent', Version: '$this->ua_version', img_title: '$this->prefered_img_title'</p>\n";
-		
-		if ($GLOBALS['phpgw']->translation)
+
+		if ($GLOBALS['egw']->translation)
 		{
-			$this->charset = $GLOBALS['phpgw']->translation->charset();
+			$this->charset = $GLOBALS['egw']->translation->charset();
 		}
-		$this->phpgwapi_js_url = $GLOBALS['phpgw_info']['server']['webserver_url'].'/phpgwapi/js';
+		$this->phpgwapi_js_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js';
 	}
 
 	/**
@@ -97,7 +96,7 @@ class html
 			'<a href="#" onclick="'.$onclick.'">'.
 			'<img src="'.$this->phpgwapi_js_url.'/colorpicker/ed_color_bg.gif'.'"'.($title ? ' title="'.$this->htmlspecialchars($title).'"' : '')." /></a>";
 	}
-	
+
 	/**
 	* Handles tooltips via the wz_tooltip class from Walter Zorn
 	*
@@ -115,14 +114,14 @@ class html
 	{
 		if (!$this->wz_tooltip_included)
 		{
-			if (!strstr('wz_tooltip',$GLOBALS['phpgw_info']['flags']['need_footer']))
+			if (!strstr('wz_tooltip',$GLOBALS['egw_info']['flags']['need_footer']))
 			{
-				$GLOBALS['phpgw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$this->phpgwapi_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
+				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$this->phpgwapi_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
 			}
 			$this->wz_tooltip_included = True;
 		}
 		if ($do_lang) $text = lang($text);
-		
+
 		$opt_out = 'this.T_WIDTH = 200;';
 		if (is_array($options))
 		{
@@ -133,10 +132,10 @@ class html
 			}
 		}
 		if ($text === False) return ' onmouseover="'.$opt_out.'return escape(this.innerHTML);"';
-		
+
 		return ' onmouseover="'.$opt_out.'return escape(\''.str_replace(array("\n","\r","'",'"'),array('','',"\\'",'&quot;'),$text).'\')"';
 	}
-	
+
 	/**
 	 * activates URLs in a text, URLs get replaced by html-links
 	 *
@@ -147,34 +146,34 @@ class html
 	{
 		// Exclude everything which is already a link
 		$NotAnchor = '(?<!"|href=|href\s=\s|href=\s|href\s=)';
-		
+
 		// spamsaver emailaddress
 		$result = preg_replace('/'.$NotAnchor.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
 			'<a href="#" onclick="document.location=\'mai\'+\'lto:\\1\'+unescape(\'%40\')+\'\\2.\\3\'; return false;">\\1 AT \\2 DOT \\3</a>',
 			$content);
-		
+
 		//  First match things beginning with http:// (or other protocols)
 		$Protocol = '(http|ftp|https):\/\/';
 		$Domain = '([\w]+.[\w]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
-		
+
 		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3</a>", $result );
-		
+
 		//  Now match things beginning with www.
 		$NotHTTP = '(?<!:\/\/)';
 		$Domain = 'www(.[\w]+)';
 		$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . '/i';
-		
+
 		return preg_replace( $Expr, "<a href=\"http://$0\" target=\"_blank\">$0</a>", $result );
 	}
-	
+
 	/**
 	 * escapes chars with special meaning in html as entities
 	 *
 	 * Allows to use and char in the html-output and prefents XSS attacks.
-	 * Some entities are allowed and get NOT escaped: 
+	 * Some entities are allowed and get NOT escaped:
 	 * - &# some translations (AFAIK the arabic ones) need this
 	 * - &nbsp; &lt; &gt; for convinience
 	 *
@@ -185,13 +184,13 @@ class html
 	{
 		// add @ by lkneschke to supress warning about unknown charset
 		$str = @htmlspecialchars($str,ENT_COMPAT,$this->charset);
-		
+
 		// we need '&#' unchanged, so we translate it back
 		$str = str_replace(array('&amp;#','&amp;nbsp;','&amp;lt;','&amp;gt;'),array('&#','&nbsp;','&lt;','&gt;'),$str);
 
 		return $str;
 	}
-	
+
 	/**
 	 * allows to show and select one item from an array
 	 *
@@ -218,7 +217,7 @@ class html
 			}
 		}
 		$out = "<select name=\"$name\" $options>\n";
-		
+
 		if (!is_array($key))
 		{
 			// explode on ',' only if multiple values expected and the key contains just numbers and commas
@@ -234,7 +233,7 @@ class html
 			else
 			{
 				$out .= '<optgroup label="'.$this->htmlspecialchars($no_lang || $k == '' ? $k : lang($k))."\">\n";
-				
+
 				foreach($data as $k => $label)
 				{
 					$out .= $this->select_option($k,is_array($label)?$label['label']:$label,$key,$no_lang,
@@ -244,10 +243,10 @@ class html
 			}
 		}
 		$out .= "</select>\n";
-		
+
 		return $out;
 	}
-	
+
 	/**
 	 * emulating a multiselectbox using checkboxes
 	 *
@@ -276,7 +275,7 @@ class html
 			$name .= '[]';
 		}
 		$base_name = substr($name,0,-2);
-		
+
 		if (!is_array($key))
 		{
 			// explode on ',' only if multiple values expected and the key contains just numbers and commas
@@ -284,7 +283,7 @@ class html
 		}
 		$html = '';
 		$options_no_id = preg_replace('/id="[^"]+"/i','',$options);
-		
+
 		if ($selected_first)
 		{
 			$selected = $not_selected = array();
@@ -314,18 +313,18 @@ class html
 			}
 			if ($label && !$no_lang) $label = lang($label);
 			if ($title && !$no_lang) $title = lang($title);
-			
+
 			if (strlen($label) > $max_len) $max_len = strlen($label);
-			
+
 			$html .= $this->label($this->checkbox($name,in_array($val,$key),$val,$options_no_id.
 				' id="'.$base_name.'['.$val.']'.'" '.($title ? 'title="'.$this->htmlspecialchars($title).'" ':'')).
 				$this->htmlspecialchars($label),$base_name.'['.$val.']')."<br />\n";
 		}
 		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.50)).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
-		
+
 		return $this->div($html,$options,'',$style);
 	}
-	
+
 	/**
 	 * generates an option-tag for a selectbox
 	 *
@@ -354,7 +353,7 @@ class html
 			($title ? ' title="'.$this->htmlspecialchars($no_lang ? $title : lang($title)).'"' : '') . '>'.
 			$this->htmlspecialchars($no_lang || $label == '' ? $label : lang($label)) . "</option>\n";
 	}
-	
+
 	/**
 	 * generates a div-tag
 	 *
@@ -368,10 +367,10 @@ class html
 	{
 		if ($class) $options .= ' class="'.$class.'"';
 		if ($style) $options .= ' style="'.$style.'"';
-		
+
 		return "<div $options>\n".($content ? "$content</div>\n" : '');
 	}
-	
+
 	/**
 	 * generate one or more hidden input tag(s)
 	 *
@@ -399,12 +398,12 @@ class html
 		}
 		return $html;
 	}
-	
+
 	/**
 	 * generate a textarea tag
 	 *
 	 * @param string $name name attr. of the tag
-	 * @param string $value default 
+	 * @param string $value default
 	 * @param boolean $ignore_empty if true all empty, zero (!) or unset values, plus filer=none
 	 * @param string html
 	 */
@@ -412,7 +411,7 @@ class html
 	{
 		return "<textarea name=\"$name\" $options>".$this->htmlspecialchars($value)."</textarea>\n";
 	}
-	
+
 	/**
 	 * Checks if HTMLarea (or an other richtext editor) is availible for the used browser
 	 *
@@ -430,7 +429,7 @@ class html
 				return False;
 		}
 	}
-	
+
 	/**
 	 * compability function for former used htmlarea. Please use function tinymce now!
 	 *
@@ -450,17 +449,17 @@ class html
 	function init_tinymce()
 	{
 	   /* do stuff once */
-	   if (!is_object($GLOBALS['phpgw']->js))
+	   if (!is_object($GLOBALS['egw']->js))
 	   {
-		  $GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+		  $GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
 	   }
 
-	   if (!strstr($GLOBALS['phpgw_info']['flags']['java_script'],'tinyMCE'))
+	   if (!strstr($GLOBALS['egw_info']['flags']['java_script'],'tinyMCE'))
 	   {
-		  $GLOBALS['phpgw']->js->validate_file('tinymce','jscripts/tiny_mce/tiny_mce');
+		  $GLOBALS['egw']->js->validate_file('tinymce','jscripts/tiny_mce/tiny_mce');
 	   }
 	}
-	
+
 	/**
 	* creates a textarea inputfield for the tinymce js-widget (returns the necessary html and js)
 	*
@@ -468,7 +467,7 @@ class html
 	*
 	* @param string $name name and id of the input-field
 	* @param string $content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
-	* @param string $style='' initial css for the style attribute 
+	* @param string $style='' initial css for the style attribute
 	* @param string $init_options='', see http://tinymce.moxiecode.com/ for all init options. mode and elements are allready set.
 	*                                 to make things more easy, you also can just provide a comma seperated list here with the options you need.
 	*                                 Supportet are: 'TableOperations','ContextMenu','ColorChooser'
@@ -478,7 +477,7 @@ class html
 	*/
 	function tinymce($name,$content='',$style='',$init_options='',$base_href='')
 	{
-		if (!$style) 
+		if (!$style)
 		{
 			$style = 'width:100%; min-width:500px; height:300px;';
 		}
@@ -486,10 +485,10 @@ class html
 		{
 			return $this->textarea($name,$content,'style="'.$style.'"');
 		}
-		
+
 		/* do stuff once */
 		$this->init_tinymce();
-		
+
 		if(strpos($init_options,':') === false)
 		{
 			$init = 'theme : "advanced", theme_advanced_toolbar_location : "top", theme_advanced_toolbar_align : "left"';
@@ -539,28 +538,28 @@ class html
 			{
 				$init .= ',document_base_url : "'. $base_href. '", relative_urls : true';
 			}
-		
+
 			$init_options = $init. ','. $tab1a. '",'. $tab2a. '",'. $tab3a. '",'. $plugs. '",'. $eve. '"';
 		}
-		
+
 		/* do again and again */
 		return '<script language="javascript" type="text/javascript">
 			tinyMCE.init({
 			 mode : "exact",
  			 language: "'.$GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
 			 plugin_insertdate_dateFormat : "'.str_replace(array('Y','m','M','d'),array('%Y','%m','%b','%d'),$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' ",
-			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').' ",		 
+			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').' ",
 			 elements : "'.$name.'",
 			 '.$init_options.'
 			});
 			</script>
-			
+
 			<textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">
-				'.$this->htmlspecialchars($content).'	
+				'.$this->htmlspecialchars($content).'
 			</textarea>
 			';
-	}	
-	
+	}
+
 	/**
 	 * represents html's input tag
 	 *
@@ -577,7 +576,7 @@ class html
 		}
 		return "<input $type name=\"$name\" value=\"".$this->htmlspecialchars($value)."\" $options />\n";
 	}
-	
+
 	/**
 	 * represents html's button (input type submit or image)
 	 *
@@ -600,8 +599,8 @@ class html
 		if ($image != '')
 		{
 			$image = str_replace(array('.gif','.GIF','.png','.PNG'),'',$image);
-		
-			if (!($path = $GLOBALS['phpgw']->common->image($app,$image)))
+
+			if (!($path = $GLOBALS['egw']->common->image($app,$image)))
 			{
 				$path = $image;		// name may already contain absolut path
 			}
@@ -624,7 +623,7 @@ class html
 			$label_u = $label;
 		}
 		if ($onClick) $options .= ' onclick="'.str_replace('"','\\"',$onClick).'"';
-	
+
 		// <button> is not working in all cases if ($this->user_agent == 'mozilla' && $this->ua_version < 5 || $image)
 		{
 			return $this->input($name,$label,$image != '' ? 'image' : 'submit',$options.$image);
@@ -633,7 +632,7 @@ class html
 			($image != '' ? "<img$image $this->prefered_img_title=\"$label\"> " : '').
 			($image == '' || $accesskey ? $label_u : '').'</button>';
 	}
-	
+
 	/**
 	 * creates an absolut link + the query / get-variables
 	 *
@@ -657,9 +656,9 @@ class html
 			parse_str($v,$v);
 			$vars += $v;
 		}
-		return $GLOBALS['phpgw']->link($url,$vars);
+		return $GLOBALS['egw']->link($url,$vars);
 	}
-	
+
 	/**
 	 * represents html checkbox
 	 *
@@ -673,7 +672,7 @@ class html
 	{
 		return '<input type="checkbox" name="'.$name.'" value="'.$this->htmlspecialchars($value).'"' .($checked ? ' checked="1"' : '') . "$options />\n";
 	}
-	
+
 	/**
 	 * represents a html form
 	 *
@@ -691,7 +690,7 @@ class html
 		$url = $url ? $this->link($url,$url_vars) : $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
 		$html = "<form method=\"$method\" ".($name != '' ? "name=\"$name\" " : '')."action=\"$url\" $options>\n";
 		$html .= $this->input_hidden($hidden_vars);
-		
+
 		if ($content)
 		{
 			$html .= $content;
@@ -699,7 +698,7 @@ class html
 		}
 		return $html;
 	}
-	
+
 	/**
 	 * represents a html form with one button
 	 *
@@ -717,7 +716,7 @@ class html
 	{
 		return $this->form($this->submit_button($name,$label),$hidden_vars,$url,$url_vars,$form_name,'',$method);
 	}
-	
+
 	/**
 	 * creates table from array of rows
 	 *
@@ -738,7 +737,7 @@ class html
 	function table($rows,$options = '',$no_table_tr=False)
 	{
 		$html = $no_table_tr ? '' : "<table $options>\n";
-		
+
 		foreach($rows as $key => $row)
 		{
 			if (!is_array($row))
@@ -746,7 +745,7 @@ class html
 				continue;					// parameter
 			}
 			$html .= $no_table_tr && $key == 1 ? '' : "\t<tr ".$rows['.'.$key].">\n";
-			
+
 			foreach($row as $key => $cell)
 			{
 				if ($key[0] == '.')
@@ -771,14 +770,14 @@ class html
 			echo "<p>".function_backtrace()."</p>\n";
 		}
 		$html .= "</table>\n";
-		
+
 		if ($no_table_tr)
 		{
 			$html = substr($html,0,-16);
 		}
 		return $html;
 	}
-	
+
 	/**
 	 * changes a selectbox to submit the form if it gets changed, to be used with the sbox-class
 	 *
@@ -795,7 +794,7 @@ class html
 		}
 		return $html;
 	}
-	
+
 	/**
 	 * html-widget showing progessbar with a view div's (html4 only, textual percentage otherwise)
 	 *
@@ -806,7 +805,7 @@ class html
 	 * @param string $color color, default '#D00000' (dark red)
 	 * @param string $height height, default 5px
 	 * @return string html
-	 */	 
+	 */
 	function progressbar( $percent,$title='',$options='',$width='',$color='',$height='' )
 	{
 		$percent = (int) $percent;
@@ -814,7 +813,7 @@ class html
 		if (!$height)$height= '5px';
 		if (!$color) $color = '#D00000';
 		$title = $title ? $this->htmlspecialchars($title) : $percent.'%';
-		
+
 		if ($this->netscape4)
 		{
 			return $title;
@@ -824,7 +823,7 @@ class html
 			(stristr($options,'onclick="') ? ' cursor: pointer; cursor: hand;' : '').'">'."\n\t".
 			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';"></div>'."\n</div>\n";
 	}
-	
+
 	/**
 	 * representates a html img tag, output a picture
 	 *
@@ -854,7 +853,7 @@ class html
 		}
 		if (is_array($name))	// menuaction and other get-vars
 		{
-			$name = $GLOBALS['phpgw']->link('/index.php',$name);
+			$name = $GLOBALS['egw']->link('/index.php',$name);
 		}
 		if ($name[0] == '/' || substr($name,0,7) == 'http://' || substr($name,0,8) == 'https://')
 		{
@@ -863,16 +862,16 @@ class html
 		else	// no URL, so try searching the image
 		{
 			$name = str_replace(array('.gif','.GIF','.png','.PNG'),'',$name);
-			
-			if (!($url = $GLOBALS['phpgw']->common->image($app,$name)))
+
+			if (!($url = $GLOBALS['egw']->common->image($app,$name)))
 			{
 				$url = $name;		// name may already contain absolut path
 			}
-			if(!$GLOBALS['phpgw_info']['server']['webserver_url'])
+			if(!$GLOBALS['egw_info']['server']['webserver_url'])
 			{
 				$base_path = "./";
 			}
-			if (!@is_readable($base_path . str_replace($GLOBALS['phpgw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$url)))
+			if (!@is_readable($base_path . str_replace($GLOBALS['egw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$url)))
 			{
 				// if the image-name is a percentage, use a progressbar
 				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
@@ -888,7 +887,7 @@ class html
 		}
 		return "<img src=\"$url\" $options />";
 	}
-	
+
 	/**
 	 * representates a html link
 	 *
@@ -912,7 +911,7 @@ class html
 		//echo "<p>html::a_href('".htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".$this->link($url,$vars)."</p>";
 		return '<a href="'.$this->link($url,$vars).'" '.$options.'>'.$content.'</a>';
 	}
-	
+
 	/**
 	 * representates a b tab (bold)
 	 *
@@ -923,7 +922,7 @@ class html
 	{
 		return '<b>'.$content.'</b>';
 	}
-	
+
 	/**
 	 * representates a i tab (bold)
 	 *
@@ -934,7 +933,7 @@ class html
 	{
 		return '<i>'.$content.'</i>';
 	}
-	
+
 	/**
 	 * representates a hr tag (horizontal rule)
 	 *
@@ -948,7 +947,7 @@ class html
 
 		return "<hr $options />\n";
 	}
-	
+
 	/**
 	 * formats option-string for most of the above functions
 	 *
@@ -962,7 +961,7 @@ class html
 	{
 		if (!is_array($options)) $options = explode(',',$options);
 		if (!is_array($names))   $names   = explode(',',$names);
-		
+
 		foreach($options as $n => $val)
 		{
 			if ($val != '' && $names[$n] != '')
@@ -972,7 +971,7 @@ class html
 		}
 		return $html;
 	}
-	
+
 	/**
 	 * returns simple stylesheet (incl. <STYLE> tags) for nextmatch row-colors
 	 *
@@ -983,7 +982,7 @@ class html
 	{
 		return $this->style($this->theme2css());
 	}
-	
+
 	/**
 	 * returns simple stylesheet for nextmatch row-colors
 	 *
@@ -992,11 +991,11 @@ class html
 	 */
 	function theme2css()
 	{
-		return ".th { background: ".$GLOBALS['phpgw_info']['theme']['th_bg']."; }\n".
-			".row_on,.th_bright { background: ".$GLOBALS['phpgw_info']['theme']['row_on']."; }\n".
-			".row_off { background: ".$GLOBALS['phpgw_info']['theme']['row_off']."; }\n";
+		return ".th { background: ".$GLOBALS['egw_info']['theme']['th_bg']."; }\n".
+			".row_on,.th_bright { background: ".$GLOBALS['egw_info']['theme']['row_on']."; }\n".
+			".row_off { background: ".$GLOBALS['egw_info']['theme']['row_off']."; }\n";
 	}
-	
+
 	/**
 	 * html style tag (incl. type)
 	 *
@@ -1007,7 +1006,7 @@ class html
 	{
 		return $styles ? "<style type=\"text/css\">\n<!--\n$styles\n-->\n</style>" : '';
 	}
-	
+
 	/**
 	 * html label tag
 	 *
@@ -1016,7 +1015,7 @@ class html
 	 * @param string $accesskey accesskey, default ''=none
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string the html
-	 */	 
+	 */
 	function label($content,$id='',$accesskey='',$options='')
 	{
 		if ($id != '')
@@ -1029,7 +1028,7 @@ class html
 		}
 		return "<label$id$accesskey $options>$content</label>";
 	}
-	
+
 	/**
 	 * html fieldset, eg. groups a group of radiobuttons
 	 *
@@ -1037,16 +1036,16 @@ class html
 	 * @param string $legend legend / label of the fieldset, default ''=none
 	 * @param string $options attributes for the tag, default ''=none
 	 * @return string the html
-	 */	 
+	 */
 	function fieldset($content,$legend='',$options='')
 	{
 		$html = "<fieldset $options>".($legend ? '<legend>'.$this->htmlspecialchars($legend).'</legend>' : '')."\n";
-		
+
 		if ($content)
 		{
 			$html .= $content;
 			$html .= "\n</fieldset>\n";
 		}
 		return $html;
-	}		
+	}
 }

@@ -28,12 +28,12 @@
 
 		//map of file contents to mime type
 		var $mime_magic_file;
-		
+
 		/**
-		* Wrapper to PHP5 Compatiable Constructor
+		* Wrapper to PHP5 Compatible Constructor
 		*
 		* @author skwashd
-		
+
 		function mime_magic()
 		{
 			$this->__constructor()
@@ -198,14 +198,14 @@
 		*/
 		function analyze_data($data)
 		{
-			if(!is_writeable(@$GLOBALS['phpgw_info']['server']['temp_dir']))
+			if(!is_writeable(@$GLOBALS['egw_info']['server']['temp_dir']))
 			{
 				//nothing we can do but bail out
 				return false;
 			}
 
 			mt_srand(time());
-			$filename = $GLOBALS['phpgw_info']['server']['temp_dir'] . SEP
+			$filename = $GLOBALS['egw_info']['server']['temp_dir'] . SEP
 				. md5( time() + mt_rand() ) . '.tmp';
 
 			$fp = @fopen($filename, 'ab');

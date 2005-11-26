@@ -26,7 +26,7 @@
 	{
 		function service_schedule()
 		{
-			$this->provider = $GLOBALS['phpgw_info']['schedule_service'] ? $GLOBALS['phpgw_info']['schedule_service'] : 'calendar';
+			$this->provider = $GLOBALS['egw_info']['schedule_service'] ? $GLOBALS['egw_info']['schedule_service'] : 'calendar';
 			$this->svc = $this->provider . '.bo' . $this->provider;
 			$type = $this->type ? $this->type : 'xmlrpc';
 			$this->function_map = ExecMethod($this->svc . '.list_methods',$type);

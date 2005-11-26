@@ -140,7 +140,7 @@
 				. " HTTP/1.0\r\n"
 				. 'User-Agent: eGroupware/' . $cliversion . '(PHP) ' . "\r\n"
 				. 'X-EGW-Server: ' . $this->server . "\r\n"
-				. 'X-EGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. 'X-EGW-Version: ' . $GLOBALS['egw_info']['server']['versions']['phpgwapi'] . "\r\n"
 				. 'Host: '.$this->server . "\r\n"
 				. $credentials
 				. "Content-Type: text/xml\r\nContent-Length: " . strlen($soap_data) . "\r\n"
@@ -191,7 +191,7 @@
 				. " HTTP/1.0\r\n"
 				. 'User-Agent: eGroupware/' . $cliversion . '(PHP) ' . "\r\n"
 				. 'X-EGW-Server: ' . $this->server . "\r\n"
-				. 'X-EGW-Version: ' . $GLOBALS['phpgw_info']['server']['versions']['phpgwapi'] . "\r\n"
+				. 'X-EGW-Version: ' . $GLOBALS['egw_info']['server']['versions']['phpgwapi'] . "\r\n"
 				. 'Host: ' . $this->server . "\r\n"
 				. $credentials
 				. "Content-Type: text/xml\r\nContent-Length: " . strlen($soap_data) . "\r\n"

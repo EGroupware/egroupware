@@ -3,7 +3,7 @@
 	* eGroupWare API - SOAP functions                                          *
 	* This file written by dietrich@ganx4.com                                  *
 	* shared functions and vars for use with soap client/server                *
-	* -------------------------------------------------------------------------*
+	* ------------------------------------------------------------------------ *
 	* This library is free software; you can redistribute it and/or modify it  *
 	* under the terms of the GNU Lesser General Public License as published by *
 	* the Free Software Foundation; either version 2.1 of the License,         *
@@ -26,7 +26,7 @@
 	);
 	function hello($serverid)
 	{
-		return CreateObject('soap.soapval','return','string',$GLOBALS['phpgw_info']['server']['site_title']);
+		return CreateObject('soap.soapval','return','string',$GLOBALS['egw_info']['server']['site_title']);
 	}
 
 	$GLOBALS['server']->add_to_map(
