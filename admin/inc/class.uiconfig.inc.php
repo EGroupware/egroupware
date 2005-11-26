@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
 	* eGroupWare - Admin config                                                *
-	* Written by Miles Lott <milosch@phpwhere.org>                             *
+	* Written by Miles Lott <milos@groupwhere.org>                             *
 	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
