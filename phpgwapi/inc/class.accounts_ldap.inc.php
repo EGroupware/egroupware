@@ -891,7 +891,7 @@
 				foreach($account_info['account_groups'] as $key => $value)
 				{
 					// search for the group
-					$filter    = 'gidnumber=' . (int)$value;
+					$filter    = 'gidnumber=' . abs($value);
 					$justThese = array('memberuid');
 					$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
 					if($sri)
