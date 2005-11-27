@@ -5,7 +5,7 @@
 - click on any of the time parts to increase it	jscalendar	it	- Clicca su qualunque parte della data per aumentarla
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Tieni premuto il tasto del mouse su uno dei pulsanti soprastanti per una selezione veloce.
 - or click and drag for faster selection.	jscalendar	it	- o click e drag per una selezione rapida.
-- or shift-click to decrease it	jscalendar	it	- or Shift-click per diminuirlo
+- or shift-click to decrease it	jscalendar	it	- o Shift-click per diminuirlo
 - use the %1, %2 buttons to select month	jscalendar	it	- Usa il bottone %1, %2 per selezionare il mese
 - use the %1, %2 buttons to select year	jscalendar	it	- Usa il bottone %1, %2 per selezionare l'anno
 00 (disable)	admin	it	00 (disabilitato)
@@ -37,6 +37,11 @@ afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
 align	htmlarea-TableOperations	it	Allinea
+align center	tinymce	it	Allinea centrato
+align full	tinymce	it	Giustifica
+align left	tinymce	it	Allinea a sinistra
+align right	tinymce	it	Allinea a destra
+alignment	tinymce	it	Allineamento
 all	common	it	Tutto
 all fields	common	it	tutti i campi
 all four sides	htmlarea-TableOperations	it	Tutti e quattro i lati
@@ -58,9 +63,7 @@ august	common	it	Agosto
 australia	common	it	AUSTRALIA
 austria	common	it	AUSTRIA
 author	common	it	Autore
-autohide sidebox menu's	common	it	Nascondi automaticamente i menu laterali
 autohide sidebox menus	common	it	Nascondi automaticamente i menù laterali
-automatically hide the sidebox menu's?	common	it	Nascondi automaticamente i menu laterali?
 automatically hide the sidebox menus?	common	it	Nascondo automaticamente i menù laterali ?
 autosave default category	common	it	Categoria predefinita per il salvataggio automatico
 azerbaijan	common	it	AZERBAIJAN
@@ -68,6 +71,7 @@ back	common	it	Indietro
 back to user login	common	it	Torna al Login utente
 background	htmlarea-TableOperations	it	Sfondo
 background color	htmlarea	it	Colore di Sfondo
+background color:	common	it	Colore di sfondo:
 bad login or password	common	it	Nome utente o password errati
 bahamas	common	it	BAHAMAS
 bahrain	common	it	BAHRAIN
@@ -80,15 +84,17 @@ belgium	common	it	BELGIO
 belize	common	it	BELIZE
 benin	common	it	BENIN
 bermuda	common	it	BERMUDA
+bg color	tinymce	it	Colore Sfondo
 bhutan	common	it	BHUTAN
 blocked, too many attempts	common	it	Bloccato, troppi tentativi
-bold	htmlarea	it	Grassetto
+bold	common	it	Grassetto
 bolivia	common	it	BOLIVIA
-border	htmlarea-TableOperations	it	Bordo
+border	common	it	Bordo
+border color	tinymce	it	Colore Bordo
 borders	htmlarea-TableOperations	it	Bordi
 bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
 botswana	common	it	BOTSWANA
-bottom	htmlarea-TableOperations	it	Basso
+bottom	common	it	Bottom
 bouvet island	common	it	BOUVET ISLAND
 brazil	common	it	BRASILE
 british indian ocean territory	common	it	TERRITORI BRITANNICI OCEANO INDIANO
@@ -101,9 +107,9 @@ calendar	common	it	Agenda
 cambodia	common	it	CAMBOGIA
 cameroon	common	it	CAMEROON
 canada	common	it	CANADA
-cancel	common	it	Annulla
+cancel	common	it	Cancella
 cape verde	common	it	CAPO VERDE
-caption	htmlarea-TableOperations	it	Titolo
+caption	common	it	Didascalia
 categories	common	it	Categorie
 categories for	common	it	Categorie per
 category	common	it	Categoria
@@ -111,24 +117,27 @@ category %1 has been added !	common	it	La categoria %1 è stata aggiunta!
 category %1 has been updated !	common	it	La categoria %1 è stata aggiornata!
 cayman islands	common	it	ISOLE CAYMAN
 cc	common	it	Cc
-cell properties	htmlarea-TableOperations	it	ProprietÃ  della Cella
-center	htmlarea-TableOperations	it	Centra
+cell properties	htmlarea-TableOperations	it	ProprietÃ  della Cella
+cellpadding	tinymce	it	Cellpadding
+cellspacing	tinymce	it	Cellspacing
+center	tinymce	it	Centro
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
 change	common	it	Cambia
 char	htmlarea-TableOperations	it	Carattere
 charset	common	it	iso-8859-1
 check installation	common	it	Controlla installazione
+check now	common	it	Controlla Adesso
 chile	common	it	CILE
 china	common	it	CINA
 choose the category	common	it	Scegli la categoria
 choose the parent category	common	it	Scegli la categoria superiore
 christmas island	common	it	ISOLA DI NATALE
+class	tinymce	it	Classe
+cleanup messy code	tinymce	it	Pulisci il  codice
 clear	common	it	Pulisci
 clear form	common	it	Svuota il modulo
 click	common	it	Clicca
-click or mouse over to show menu's	common	it	Click o Mouse Over per visualizzare i menu
-click or mouse over to show menu's?	common	it	Click o Mouse Over per visualizzare i menu?
 click or mouse over to show menus	common	it	Clicca o passa sopra con il puntatore per mostrare i menù
 click or mouse over to show menus?	common	it	Clicca o passa sopra con il puntatore per mostrare i menù ?
 close	common	it	Chiudi
@@ -136,61 +145,78 @@ cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
 collapsed borders	htmlarea-TableOperations	it	Bordi chiusi
 colombia	common	it	COLOMBIA
 color	htmlarea-TableOperations	it	Colore
+columns	tinymce	it	Colonne
+comment	tinymce	it	Commento
+common preferences	common	it	Preferenze generiche
 comoros	common	it	COMORE
 company	common	it	Azienda
-config password	common	it	Configura Password
-config username	common	it	Configura Nome Utente
+configuration problem	tinymce	it	Problema di configurazione
 congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
 cook islands	common	it	ISOLE COOK
 copy	common	it	Copia
 copy selection	htmlarea	it	Copia la selezione
+copy table row	tinymce	it	Copy table row
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
 costa rica	common	it	COSTA RICA
 cote d ivoire	common	it	COSTA D'AVORIO
 create	common	it	Crea
+create a link	htmlarea-ContextMenu	it	Crea un link
 created by	common	it	Creato da
 croatia	common	it	CROAZIA
 cuba	common	it	CUBA
 currency	common	it	Valuta
 current	common	it	Attuale
 current style	htmlarea	it	Stile corrente
+current url is	htmlarea-ContextMenu	it	URL attuale è
 current users	common	it	Utenti attivi
+cut	htmlarea-ContextMenu	it	Taglia
 cut selection	htmlarea	it	Taglia la selezione
+cut table row	tinymce	it	Cut table row
 cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
 date	common	it	Data
 date due	common	it	Data richiesta
+date modified	tinymce	it	Data modifica
 date selection:	jscalendar	it	Selezione data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.<br>Se utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	it	Dicembre
+decimal numbers	htmlarea-ListType	it	Numeri decimali
 decrease indent	htmlarea	it	Riduci Rientro
+default	tinymce	it	Default
 default category	common	it	Categoria Predefinita
 delete	common	it	Elimina
 delete cell	htmlarea-TableOperations	it	Cancella cella
 delete column	htmlarea-TableOperations	it	Cancella colonna
-delete row	htmlarea-TableOperations	it	Cancella riga
+delete row	common	it	Cancella riga
+delete the current column	htmlarea-ContextMenu	it	Cancella colonna attuale
+delete the current row	htmlarea-ContextMenu	it	Cancella riga attuale
 denmark	common	it	DANIMARCA
 description	common	it	Descrizione
 detail	common	it	Dettaglio
 details	common	it	Dettagli
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilita lo script per sistemare il bug di Internet Explorer 5.5 and superiore nella visualizzazione delle trasparenze nelle immagini PNG?
 dictionary	htmlarea-SpellChecker	it	Dizionario
+direction	tinymce	it	Direzione
+direction right to left	tinymce	it	Direzione da destra a sinistra
+directory	tinymce	it	Directory
 disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
 disable slider effects	common	it	Disabilita l'effetto effects slider
-disable the animated slider effects when showing or hiding menu's in the page? opera and konqueror users will probably must want this.	common	it	Disabilita l'effetto animato degli slider quando visualizzi o nascondi i menu nella pagina? Gli utenti di Opera e Konqueror dovrebbero farlo.
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menu sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
 disabled	common	it	Disabilitato
 display %s first	jscalendar	it	Mostra prima %1
-display monday first	jscalendar	it	Visualizza prima Lunedì
-display sunday first	jscalendar	it	Visualizza prima Domenica
 djibouti	common	it	DJIBOUTI
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sotto-categorie?
+do you want to use the wysiwyg mode for this textarea?	tinymce	it	Vuoi usare la modalit\u00E0 WYSIWYG per questa textarea?
+document properties	common	it	Proprietà documento
+document title:	common	it	Titolo documento:
 domain	common	it	Dominio
 domain name for mail-address, eg. "%1"	common	it	Nome dominio per l'indirizzo e-mail, es. "%1"
 domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
 done	common	it	Finito
+down	tinymce	it	Giù
 drag to move	jscalendar	it	Trascina per spostare
 e-mail	common	it	E-Mail
 east timor	common	it	TIMOR EST
@@ -203,13 +229,15 @@ egroupware api version %1	common	it	Versione delle API eGroupWare  %1
 egroupware: login blocked for user '%1', ip %2	common	it	eGroupWare: login bloccato per l'utente '%1', IP %2
 egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
+element...	htmlarea-ContextMenu	it	Elemento...
 email	common	it	E-Mail
 email-address of the user, eg. "%1"	common	it	Indirizzo e-mail per l'utente, es. "%1"
+emotions	tinymce	it	Emoticon
 enabled	common	it	Abilitato
 end date	common	it	Data Fine
 end time	common	it	Ora Fine
 enlarge editor	htmlarea	it	Ingrandisci l'Editor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>Senza la barra finale</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	it	Inserisci l'URL di eGroupWare.<br>Esempio: http://www.domain.com/egroupware   or   /egroupware<br><b>Senza la barra finale</b>
 entry has been deleted sucessfully	common	it	La voce è stata cancellata correttamente
 entry updated sucessfully	common	it	La voce è stata aggiornata correttamente
 equatorial guinea	common	it	GUINEA EQUATORIALE
@@ -228,8 +256,15 @@ february	common	it	Febbraio
 fg color	htmlarea-TableOperations	it	Colore Principale
 fields	common	it	Campi
 fiji	common	it	FIJI
+file:	tinymce	it	File:
 files	common	it	File
+files with this extension are not allowed.	tinymce	it	File con questa estensione non sono permessi.
 filter	common	it	Filtro
+find	tinymce	it	Trova
+find again	tinymce	it	Trova ancora
+find what	tinymce	it	Cosa trovare
+find&nbsp;next	tinymce	it	Trova successivo
+find/replace	tinymce	it	Trova/Sostituisci
 finished list of mispelled words	htmlarea-SpellChecker	it	La lista delle parole scritte male Ã¨ terminata
 finland	common	it	FINLANDIA
 first name	common	it	Nome
@@ -237,7 +272,14 @@ first name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
 first page	common	it	Prima pagina
 firstname	common	it	Nome
 fixme!	common	it	CORREGGIMI !
+flash files	tinymce	it	File Flash
+flash properties	tinymce	it	Proprietà Flash
+flash-file (.swf)	tinymce	it	File-Flash (.swf)
 float	htmlarea-TableOperations	it	Fluttuante
+folder	tinymce	it	Cartella
+folder name missing.	tinymce	it	Nome cartella mancante.
+folder not found.	tinymce	it	Cartella non trovata.
+folder(s)	tinymce	it	cartella/e
 font color	htmlarea	it	Colore Carattere
 force selectbox	common	it	Forza Casella di Selezione
 frames	htmlarea-TableOperations	it	Frames
@@ -252,6 +294,7 @@ gabon	common	it	GABON
 gambia	common	it	GAMBIA
 general menu	common	it	Menù Generale
 georgia	common	it	GEORGIA
+german	common	it	Tedesco
 germany	common	it	GERMANIA
 ghana	common	it	GHANA
 gibraltar	common	it	GIBILTERRA
@@ -279,12 +322,9 @@ guinea	common	it	GUINEA
 guinea-bissau	common	it	GUINEA-BISSAU
 guyana	common	it	GUIANA
 haiti	common	it	HAITI
-header admin login	common	it	Login Gestione Header
-header password	common	it	Password Header
-header username	common	it	Nome Utente Header
 heard island and mcdonald islands	common	it	ISOLE HEARD E ISOLE MCDONALD
-height	htmlarea-TableOperations	it	Altezza
-help	common	it	Aiuto
+height	common	it	Altezza
+help	common	it	Guida
 help using editor	htmlarea	it	Aiuto per l'editor
 high	common	it	Alta
 highest	common	it	Più Alta
@@ -294,6 +334,7 @@ home email	common	it	e-mail abitazione
 honduras	common	it	HONDURAS
 hong kong	common	it	HONG KONG
 horizontal rule	htmlarea	it	Linea Orrizzontale
+how did you get here? (please report!)	htmlarea-ContextMenu	it	Come sei arrivato qui? (prego fare rapporto)
 how many columns would you like to merge?	htmlarea-TableOperations	it	Quante colonne vuoi unire?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizionali vanno in un menù pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
 how many rows would you like to merge?	htmlarea-TableOperations	it	Quante righe vuoi unire?
@@ -305,20 +346,33 @@ i will open it in a new page.	htmlarea-SpellChecker	it	Lo aprirÃ² in una nuova p
 iceland	common	it	ISLANDA
 ignore	htmlarea-SpellChecker	it	Ignora
 ignore all	htmlarea-SpellChecker	it	Ignora sempre
-image url	htmlarea-TableOperations	it	URL dell'Immagine
+image description	tinymce	it	Descrizione immagine
+image title	tinymce	it	Titolo immagine
+image url	common	it	URL immagine
 increase indent	htmlarea	it	Aumenta Rientro
+indent	tinymce	it	Indenta
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
+insert	tinymce	it	Inserisci
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert cell after	htmlarea-TableOperations	it	Inserisci cella dopo
 insert cell before	htmlarea-TableOperations	it	Inserisci cella prima
-insert column after	htmlarea-TableOperations	it	Inserisci colonna dopo
-insert column before	htmlarea-TableOperations	it	Inserisci colonna prima
+insert column after	common	it	Inserisci colonna dopo
+insert column before	common	it	Inserisci colonna prima
+insert date	tinymce	it	Inserisci data
+insert emotion	tinymce	it	Inserisci una emoticon
+insert file	tinymce	it	Inserisci File
 insert image	htmlarea	it	Inserisci Immagine
-insert row after	htmlarea-TableOperations	it	Inserisci riga dopo
-insert row before	htmlarea-TableOperations	it	Inserisci riga prima
+insert link to file	tinymce	it	Inserisci link a file
+insert row after	common	it	Inserisci una riga dopo
+insert row before	common	it	Inserisci una riga prima
 insert table	htmlarea	it	Inserisci Tabella
+insert time	tinymce	it	Inserisci ora
 insert web link	htmlarea	it	Inserisci Link Web
+insert/edit image	tinymce	it	Inserisci/modifica immagine
+insert/edit link	tinymce	it	Inserisci/modifica link
+insert/modify table	tinymce	it	Inserisci/modifica tabella
+inserts a new table	tinymce	it	Inserisci una nuova tabella
 international	common	it	Internazionale
 invalid ip address	common	it	Indirizzo IP errato
 invalid password	common	it	Password errata
@@ -334,15 +388,17 @@ jamaica	common	it	GIAMAICA
 january	common	it	Gennaio
 japan	common	it	GIAPPONE
 jordan	common	it	GIORDANIA
+js-popup	tinymce	it	JS-Popup
 july	common	it	Luglio
 jun	common	it	Giu
 june	common	it	Giugno
 justify	htmlarea-TableOperations	it	Justifica
-justify center	htmlarea	it	Centrato
-justify full	htmlarea	it	Giustificato
-justify left	htmlarea	it	Allinea a Sinistra
-justify right	htmlarea	it	Allinea a Destra
+justify center	common	it	Centrato
+justify full	common	it	Giustificato
+justify left	common	it	Allinea a Sinistra
+justify right	common	it	Allinea a Destra
 kazakstan	common	it	KAZAKISTAN
+keep linebreaks	tinymce	it	Mantieni interruzioni di linea
 kenya	common	it	KENIA
 keywords	common	it	Keywords
 kiribati	common	it	KIRIBATI
@@ -359,15 +415,18 @@ lastname	common	it	Cognome
 latvia	common	it	LATVIA
 layout	htmlarea-TableOperations	it	Layout
 lebanon	common	it	LIBANO
-left	htmlarea-TableOperations	it	Sinistra
+left	common	it	Sinistra
 lesotho	common	it	LESOTHO
 liberia	common	it	LIBERIA
 libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
 license	common	it	Licenza
 liechtenstein	common	it	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	it	Link punta a:
+link url	tinymce	it	Link URL
 list	common	it	Lista
 list members	common	it	Elenco membri
 lithuania	common	it	LITUANIA
+loading files	tinymce	it	Caricamento file
 local	common	it	Locale
 login	common	it	Login
 loginid	common	it	LoginID
@@ -382,6 +441,7 @@ mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
 main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
 maintainer	common	it	Manutentore
+make window resizable	tinymce	it	Rendi finestra ridimensionabile
 malawi	common	it	MALAWI
 malaysia	common	it	MALESIA
 maldives	common	it	MALDIVE
@@ -399,6 +459,7 @@ mayotte	common	it	MAYOTTE
 medium	common	it	Medio
 menu	common	it	Menu
 merge cells	htmlarea-TableOperations	it	Unisci celle
+merge table cells	tinymce	it	Merge table cells
 message	common	it	Messaggio
 mexico	common	it	MESSICO
 micronesia, federated states of	common	it	MICRONESIA, STATI FEDERATI DELLA
@@ -409,6 +470,7 @@ monday	common	it	Lunedì
 mongolia	common	it	MONGOLIA
 montserrat	common	it	MONTSERRAT
 morocco	common	it	MAROCCO
+move	tinymce	it	Sposta
 mozambique	common	it	MOZAMBICO
 myanmar	common	it	MYANMAR
 name	common	it	Nome
@@ -421,6 +483,8 @@ netherlands antilles	common	it	ANTILLE OLANDESI
 never	common	it	Mai
 new caledonia	common	it	NUOVA CALEDONIA
 new entry added sucessfully	common	it	Nuova voce aggiunto con successo
+new folder	tinymce	it	Nuova cartella
+new folder name:	tinymce	it	Nome nuova cartella:
 new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
@@ -434,9 +498,12 @@ nigeria	common	it	NIGERIA
 niue	common	it	NIUE
 no	common	it	No
 no entries found, try again ...	common	it	nessuna voce trovata, prova ancora ...
+no files...	tinymce	it	Nessun file...
 no history for this record	common	it	Nessuna history per questo record
 no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	it	Non sono state trovate parole scritte male con il dizionario selezionato.
+no permission to upload.	tinymce	it	Nessun permesso per caricare.
 no rules	htmlarea-TableOperations	it	Nessun righello
+no shadow	tinymce	it	Nessuna ombra
 no sides	htmlarea-TableOperations	it	Nessun lato
 no subject	common	it	Nessun Oggetto
 none	common	it	Nessuno
@@ -457,13 +524,21 @@ on *nix systems please type: %1	common	it	Sui sistemi *nix prego digita: %1
 on mouse over	common	it	Al passaggio del mouse
 only private	common	it	solo privati
 only yours	common	it	solo personali
+open file in new window	tinymce	it	Apri file in nuova finestra
+open in new window	tinymce	it	Apri in nuova finestra
+open in the window	tinymce	it	Apri nella finestra
+open in this window / frame	tinymce	it	Apri in questa finestra / riquadro
+open link in a new window	tinymce	it	Apri il link in una nuova finestra
+open link in the same window	tinymce	it	Apri il link nella stessa finestra
 open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
-ordered list	htmlarea	it	Elenco ordinato
+opens this link in a new window	htmlarea-ContextMenu	it	Apre questo link in una nuova finestra
+ordered list	common	it	Lista ordinata
 original	common	it	Originale
 original word	htmlarea-SpellChecker	it	Parola originale
 other	common	it	Altro
-overview	common	it	Overview
+outdent	tinymce	it	Rientra
+overview	common	it	Panoramica
 owner	common	it	Proprietario
 padding	htmlarea-TableOperations	it	Padding
 page	common	it	Pagina
@@ -479,12 +554,15 @@ parent category	common	it	Categoria superiore
 password	common	it	Password
 password could not be changed	common	it	La password non può essere cambiata
 password has been updated	common	it	La password è stata aggiornata
+paste	htmlarea-ContextMenu	it	Incolla
+paste as plain text	tinymce	it	Incolla come Testo Semplice
 paste from clipboard	htmlarea	it	Incolla dagli appunti
+paste from word	tinymce	it	Incolla da Word
+paste table row after	tinymce	it	Paste table row after
+paste table row before	tinymce	it	Paste table row before
 path	htmlarea	it	Percorso
+path not found.	tinymce	it	Percorso non trovato
 path to user and group files has to be outside of the webservers document-root!!!	common	it	Il percorso per i files degli utenti e dei gruppi DEVE ESSERE ESTERNO alla document-root del webserver!!!
-pattern for search in addressbook	common	it	Pattern per la Ricerca nella Rubrica
-pattern for search in calendar	common	it	Pattern per la Ricerca nell'Agenda
-pattern for search in projects	common	it	Pattern per la Ricerca nei Progetti
 percent	htmlarea-TableOperations	it	percento
 permissions to the files/users directory	common	it	permessi per la directory dei files/utenti
 personal	common	it	Personale
@@ -500,7 +578,6 @@ please enter a name	common	it	Per favore inserisci un nome!
 please run setup to become current	common	it	Per favore esegui setup per aggiornare
 please select	common	it	Per favore Seleziona
 please set your global preferences	common	it	Per favore imposta le preferenze globali !
-please set your preferences for this app	common	it	Per favore imposta le preferenze per questa applicazione
 please set your preferences for this application	common	it	Per favore imposta le tue preferenze per questa applicazione !
 please wait.  calling spell checker.	htmlarea-SpellChecker	it	Attendere.  Sto invocando lo Spell Checker.
 please wait...	common	it	Attendere per Favore...
@@ -514,6 +591,7 @@ preferences	common	it	Preferenze
 preferences for the idots template set	common	it	Preferenze per il template idots
 prev. month (hold for menu)	jscalendar	it	Mese precedente (premi per menu)
 prev. year (hold for menu)	jscalendar	it	Anno precedente (premi per menu)
+preview	tinymce	it	Anteprima
 previous page	common	it	Pagina precedente
 print	common	it	Stampa
 priority	common	it	Priorità
@@ -525,24 +603,30 @@ qatar	common	it	QATAR
 re-check	htmlarea-SpellChecker	it	Ricontrolla
 read	common	it	Leggi
 read this list of methods.	common	it	Leggi questo elenco di metodi.
+redo	tinymce	it	Ripeti
 redoes your last action	htmlarea	it	Ripeti l'ultima azione
+refresh	tinymce	it	Aggiorna
 reject	common	it	Rifiuta
+remove col	tinymce	it	Rimuovi colonna
 remove selected accounts	common	it	rimuovi gli account selezionati
 rename	common	it	Rinomina
-replace	htmlarea-SpellChecker	it	Sostituisci
+replace	common	it	Sostituisci
 replace all	htmlarea-SpellChecker	it	Sostituisci sempre
-replace with	htmlarea-SpellChecker	it	Stostituisci con
+replace with	common	it	Stostituisci con
+replace&nbsp;all	tinymce	it	Sostituisci tutto
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
 returns struct of users application access	common	it	Restituisce la struttura degli accessi alle applicazioni
 reunion	common	it	REUNION
-right	htmlarea-TableOperations	it	Destra
+right	common	it	Destra
 romania	common	it	ROMANIA
-row properties	htmlarea-TableOperations	it	ProprietÃ  della Riga
+row properties	htmlarea-TableOperations	it	ProprietÃ  della Riga
+rows	tinymce	it	Righe
 rules	htmlarea-TableOperations	it	Linee
 rules will appear between all rows and columns	htmlarea-TableOperations	it	Le linee appariranno tra tutte le righe e colonne
 rules will appear between columns only	htmlarea-TableOperations	it	Le linee appariranno solo tra le colonne
 rules will appear between rows only	htmlarea-TableOperations	it	Le linee appariranno solo tra le righe
+run spell checking	tinymce	it	Avvia il controllo ortografico
 russian federation	common	it	FEDERAZIONE RUSSA
 rwanda	common	it	RUANDA
 saint helena	common	it	SANT'ELENA
@@ -559,13 +643,16 @@ save	common	it	Salva
 search	common	it	Cerca
 search %1 '%2'	common	it	Cerca %1 '%2'
 search or select accounts	common	it	Cerca o seleziona account
+search or select multiple accounts	common	it	cerca o seleziona account multipli
 section	common	it	Sezione
 select	common	it	Seleziona
+select all	tinymce	it	Seleziona Tutto
 select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select category	common	it	Selezione categoria
 select date	common	it	Selezione data
 select group	common	it	Selezione gruppo
 select home email address	common	it	Selezione indirizzo e-mail abitazione
+select multiple accounts	common	it	seleziona molteplici account
 select one	common	it	Seleziona uno
 select user	common	it	Selezione utente
 select work email address	common	it	Selezione indirizzio e-mail ufficio
@@ -578,18 +665,20 @@ server name	common	it	Nome Server
 session has been killed	common	it	La sessione è stata terminata
 setup	common	it	Setup
 setup main menu	common	it	Menù Principale Setup
-setup/config admin login	common	it	Login Amministrazione Setup/Configurazione
 seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
 show all categorys	common	it	Visualizza tutte le categorie
 show menu	common	it	visualizza menu
+show menubar	tinymce	it	Mostra barra menù
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina?
+show toolbars	tinymce	it	Mostra barre strumenti
 show_more_apps	common	it	ancora
 showing %1	common	it	visualizzati %1
 showing %1 - %2 of %3	common	it	visualizzo %1 - %2 di %3
 sierra leone	common	it	SIERRA LEONE
 singapore	common	it	SINGAPORE
+size	tinymce	it	Dimensione
 slovakia	common	it	SLOVACCHIA
 slovenia	common	it	SLOVENIA
 solomon islands	common	it	ISOLE DI SOLOMONE
@@ -601,16 +690,18 @@ spacing	htmlarea-TableOperations	it	Spaziatura
 spacing and padding	htmlarea-TableOperations	it	Spaziatura e Padding
 spain	common	it	SPAGNA
 spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	it	Controllo completato, non sono state trovate parole scritte male. Sto chiudendo...
-spell-check	htmlarea-SpellChecker	it	Spell-check
+spell-check	htmlarea-SpellChecker	it	Controllo ortografico
 split cell	htmlarea-TableOperations	it	Dividi cella
 split column	htmlarea-TableOperations	it	Dividi colonna
 split row	htmlarea-TableOperations	it	Dividi riga
+split table cells	tinymce	it	Split table cells
 sri lanka	common	it	SRI LANKA
 start date	common	it	Data Inizio
 start time	common	it	Ora Inizio
 start with	common	it	Inizia con
 status	common	it	Status
 strikethrough	htmlarea	it	Barrato
+striketrough	tinymce	it	Barrato
 style [css]	htmlarea-TableOperations	it	Stile [CSS]
 subject	common	it	Oggetto
 submit	common	it	Invia
@@ -627,11 +718,15 @@ swaziland	common	it	SWAZILAND
 sweden	common	it	SVEZIA
 switzerland	common	it	SVIZZERA
 syrian arab republic	common	it	REPUBBLICA ARABA SIRIANA
-table properties	htmlarea-TableOperations	it	ProprietÃ  della Tabella
+table cell properties	tinymce	it	Table cell properties
+table properties	common	it	Table properties
+table row properties	tinymce	it	Table row properties
 taiwan	common	it	TAIWAN/TAIPEI
 tajikistan	common	it	TAJIKISTAN
 tanzania, united republic of	common	it	TANZANIA, REPUBBLICA UNITA DELLA
-text align	htmlarea-TableOperations	it	Allineamento del Testo
+target	tinymce	it	Target
+text align	htmlarea-TableOperations	it	Allineamento testo
+text color:	common	it	Colore testo
 thailand	common	it	TAILANDIA
 the api is current	common	it	L'API è aggiornata
 the api requires an upgrade	common	it	L'API necessita di un aggiornamento
@@ -646,7 +741,7 @@ the top side only	htmlarea-TableOperations	it	Solo la parte sopra
 this application is current	common	it	Questa applicazione è aggiornata
 this application requires an upgrade	common	it	Questa applicazione richiede un aggiornamento
 this name has been used already	common	it	Questo nome è già stato usato!
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	it	Questo annullerÃ  le modifiche e chiuderÃ  lo Spell Checker. Conferma.
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	it	Questo annullerÃ  le modifiche e chiuderÃ  lo Spell Checker. Conferma.
 thursday	common	it	Giovedì
 time	common	it	Ora
 time selection:	jscalendar	it	Selezione Ora:
@@ -664,7 +759,7 @@ togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	it	Troppi tentativi di login falliti: %1 per l'utente '%2', %3 dall'IP %4
-top	htmlarea-TableOperations	it	Alto
+top	common	it	Top
 total	common	it	Totale
 trinidad and tobago	common	it	TRINIDAD E TOBAGO
 tuesday	common	it	Martedì
@@ -675,15 +770,22 @@ turks and caicos islands	common	it	ISOLE TURKS E CAICOS
 tuvalu	common	it	TUVALU
 uganda	common	it	UGANDA
 ukraine	common	it	UCRAINA
-underline	htmlarea	it	Sottolineato
+underline	common	it	Sottolineato
+undo	tinymce	it	Annulla
 undoes your last action	htmlarea	it	Annulla l'ultima azione
 united arab emirates	common	it	EMIRATI ARABI UNITI
 united kingdom	common	it	REGNO UNITO
 united states	common	it	STATI UNITI
 united states minor outlying islands	common	it	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	it	Sconosciuto
+unlink	tinymce	it	Elimina link
+unordered list	tinymce	it	Lista non ordinata
 unset color	htmlarea-TableOperations	it	Rimuovi colore
+up	tinymce	it	Su
 update	common	it	Aggiorna
+upload	common	it	Carica
+upload image	htmlarea-UploadImage	it	Carica Immagine
+uploading...	tinymce	it	Caricamento...
 url	common	it	URL
 uruguay	common	it	URUGUAY
 use button to search for	common	it	usa il Pulsante per cercare
@@ -701,6 +803,7 @@ vanuatu	common	it	VANUATU
 venezuela	common	it	VENEZUELA
 version	common	it	Versione
 vertical align	htmlarea-TableOperations	it	Allineamento verticale
+vertical alignment	tinymce	it	Vertical alignment
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
@@ -710,16 +813,17 @@ wednesday	common	it	Mercoledì
 welcome	common	it	Benvenuto
 western sahara	common	it	SAHARA OCCIDENTALE
 which groups	common	it	Quali gruppi
-width	htmlarea-TableOperations	it	Larghezza
-wk	jscalendar	it	lavoro
+width	common	it	Larghezza
+window name	tinymce	it	Nome finestra
+wk	jscalendar	it	set
 work email	common	it	e-mail ufficio
 written by:	common	it	Scritto da:
 year	common	it	Anno
 yemen	common	it	YEMEN
 yes	common	it	Sì
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in MODO TESTO.  Usa il pulsante [<>] per tornare al modo WYSIWIG.
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	it	Sei in MODO TESTO.  Usa il pulsante [<>] per tornare al modo WYSIWYG.
 you are required to change your password during your first login	common	it	E' richiesto che tu cambi la tua password durante il primo Login
-you have been successfully logged out	login	it	Il logout è stato effettuato correttamente
+you have been successfully logged out	login	it	L'uscita è stata effettuata correttamente
 you have not entered a title	common	it	Non hai inserito un titolo
 you have not entered a valid date	common	it	Non hai inserito una data valida
 you have not entered a valid time of day	common	it	Non hai inserito un'ora del giorno valida
@@ -727,119 +831,14 @@ you have not entered participants	common	it	Non hai inserito i partecipanti
 you have selected an invalid date	common	it	Hai selezionato una data non valida!
 you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
 you have successfully logged out	common	it	Ti sei disconesso con successo
+you must enter the url	tinymce	it	Devi inserire l'URL
 you need to add the webserver user '%1' to the group '%2'.	common	it	Devi aggiungere l'utente '%1' del webserver al gruppo '%2'.
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
 your message has been sent	common	it	Il tuo messaggio è stato inviato
-your search returned %1 matchs	common	it	la tua ricerca ha resttuito %1 risultati
+your search returned %1 matchs	common	it	la tua ricerca ha restituito %1 risultati
 your search returned 1 match	common	it	la tua ricerca ha restituito 1 risultato
 your session could not be verified.	login	it	La sessione non può essere verificata.
 your settings have been updated	common	it	Le tue impostazioni sono state aggiornate
 yugoslavia	common	it	YUGOSLAVIA
 zambia	common	it	ZAMBIA
 zimbabwe	common	it	ZIMBABWE
-bold	tinymce	it	Grassetto
-italic	tinymce	it	Corsivo
-underline	tinymce	it	Sottolineato
-striketrough	tinymce	it	Barrato
-align left	tinymce	it	Allinea a sinistra
-align center	tinymce	it	Allinea centrato
-align right	tinymce	it	Allinea a destra
-align full	tinymce	it	Giustifica
-unordered list	tinymce	it	Lista non ordinata
-ordered list	tinymce	it	Lista ordinata
-outdent	tinymce	it	Rientra
-indent	tinymce	it	Indenta
-undo	tinymce	it	Annulla
-redo	tinymce	it	Ripeti
-insert/edit link	tinymce	it	Inserisci link
-unlink	tinymce	it	Elimina link
-insert/edit image	tinymce	it	Inserisci immagine
-cleanup messy code	tinymce	it	Pulisci il  codice
-do you want to use the wysiwyg mode for this textarea?	tinymce	it	Vuoi usare la modalit\u00E0 WYSIWYG per questa textarea?
-insert/edit link	tinymce	it	Inserisci/modifica link
-insert	tinymce	it	Inserisci
-update	tinymce	it	Inserisci
-cancel	tinymce	it	Cancella
-link url	tinymce	it	Link URL
-target	tinymce	it	Target
-open link in the same window	tinymce	it	Apri il link nella stessa finestra
-open link in a new window	tinymce	it	Apri il link in una nuova finestra
-insert/edit image	tinymce	it	Inserisci/modifica immagine
-image url	tinymce	it	URL immagine
-help	tinymce	it	Guida
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-bold	tinymce	it	Grassetto
-italic	tinymce	it	Corsivo
-underline	tinymce	it	Sottolineato
-striketrough	tinymce	it	Barrato
-align left	tinymce	it	Allinea a sinistra
-align center	tinymce	it	Allinea centrato
-align right	tinymce	it	Allinea a destra
-align full	tinymce	it	Giustifica
-unordered list	tinymce	it	Lista non ordinata
-ordered list	tinymce	it	Lista ordinata
-outdent	tinymce	it	Rientra
-indent	tinymce	it	Indenta
-undo	tinymce	it	Annulla
-redo	tinymce	it	Ripeti
-insert/edit link	tinymce	it	Inserisci link
-unlink	tinymce	it	Elimina link
-insert/edit image	tinymce	it	Inserisci immagine
-cleanup messy code	tinymce	it	Pulisci il  codice
-do you want to use the wysiwyg mode for this textarea?	tinymce	it	Vuoi usare la modalit\u00E0 WYSIWYG per questa textarea?
-insert/edit link	tinymce	it	Inserisci/modifica link
-insert	tinymce	it	Inserisci
-update	tinymce	it	Inserisci
-cancel	tinymce	it	Cancella
-link url	tinymce	it	Link URL
-target	tinymce	it	Target
-open link in the same window	tinymce	it	Apri il link nella stessa finestra
-open link in a new window	tinymce	it	Apri il link in una nuova finestra
-insert/edit image	tinymce	it	Inserisci/modifica immagine
-image url	tinymce	it	URL immagine
-help	tinymce	it	Guida
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-insert emotion	tinymce	it	Inserisci una emoticon
-emotions	tinymce	it	Emoticon
-run spell checking	tinymce	it	Avvia il controllo ortografico
-insert date	tinymce	it	Inserisci data
-insert time	tinymce	it	Inserisci ora
-preview	tinymce	it	Anteprima
-inserts a new table	tinymce	it	Inserisci una nuova tabella
-insert row before	tinymce	it	Inserisci una riga prima
-insert row after	tinymce	it	Inserisci una riga dopo
-delete row	tinymce	it	Cancella riga
-insert column before	tinymce	it	Inserisci colonna prima
-insert column after	tinymce	it	Inserisci colonna dopo
-remove col	tinymce	it	Rimuovi colonna
-insert/modify table	tinymce	it	Inserisci/modifica tabella
-width	tinymce	it	Larghezza
-height	tinymce	it	Altezza
-columns	tinymce	it	Colonne
-rows	tinymce	it	Righe
-cellspacing	tinymce	it	Cellspacing
-cellpadding	tinymce	it	Cellpadding
-border	tinymce	it	Bordo
-alignment	tinymce	it	Allineamento
-default	tinymce	it	Default
-left	tinymce	it	Sinistra
-right	tinymce	it	Destra
-center	tinymce	it	Centro
-class	tinymce	it	Classe
-table row properties	tinymce	it	Table row properties
-table cell properties	tinymce	it	Table cell properties
-table row properties	tinymce	it	Table row properties
-table cell properties	tinymce	it	Table cell properties
-vertical alignment	tinymce	it	Vertical alignment
-top	tinymce	it	Top
-bottom	tinymce	it	Bottom
-table properties	tinymce	it	Table properties
-border color	tinymce	it	Border color
-bg color	tinymce	it	Bg color
-merge table cells	tinymce	it	Merge table cells
-split table cells	tinymce	it	Split table cells
-merge table cells	tinymce	it	Merge table cells
-cut table row	tinymce	it	Cut table row
-copy table row	tinymce	it	Copy table row
-paste table row before	tinymce	it	Paste table row before
-paste table row after	tinymce	it	Paste table row after
