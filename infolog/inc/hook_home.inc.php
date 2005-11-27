@@ -1,7 +1,7 @@
 <?php
 	/**************************************************************************\
-	* eGroupWare - Info Log administration                                     *
-	* http://www.egroupware.org                                              *
+	* eGroupWare - Info Log on Homepage                                        *
+	* http://www.egroupware.org                                                *
 	* --------------------------------------------                             *
 	*  This program is free software; you can redistribute it and/or modify it *
 	*  under the terms of the GNU General Public License as published by the   *
@@ -10,8 +10,7 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	$showevents = intval($GLOBALS['egw_info']['user']['preferences']['infolog']['homeShowEvents']);
-	if($showevents > 0)
+	if (($showevents = (int) $GLOBALS['egw_info']['user']['preferences']['infolog']['homeShowEvents']) > 0)
 	{
 		$save_app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
@@ -34,37 +33,37 @@
 				break;
 		}*/
 		$title = lang('InfoLog').' - '.lang($infolog->filters['own-open-today']);
-		$xslt = $infolog->tmpl->xslt;
 		unset($infolog);
 
-		if(!$xslt)	// .14/6
+		$portalbox =& CreateObject('phpgwapi.listbox',array(
+			'title'     => $title,
+			'primary'   => $GLOBALS['egw_info']['theme']['navbar_bg'],
+			'secondary' => $GLOBALS['egw_info']['theme']['navbar_bg'],
+			'tertiary'  => $GLOBALS['egw_info']['theme']['navbar_bg'],
+			'width'     => '100%',
+			'outerborderwidth' => '0',
+			'header_background_image' => $GLOBALS['egw']->common->image('phpgwapi/templates/default','bg_filler')
+		));
+		foreach(array('up','down','close','question','edit') as $key)
 		{
-			$portalbox =& CreateObject('phpgwapi.listbox',array(
-				'title'     => $title,
-				'primary'   => $GLOBALS['egw_info']['theme']['navbar_bg'],
-				'secondary' => $GLOBALS['egw_info']['theme']['navbar_bg'],
-				'tertiary'  => $GLOBALS['egw_info']['theme']['navbar_bg'],
-				'width'     => '100%',
-				'outerborderwidth' => '0',
-				'header_background_image' => $GLOBALS['egw']->common->image('phpgwapi/templates/default','bg_filler')
-			));
-			foreach(array('up','down','close','question','edit') as $key)
-			{
-				$portalbox->set_controls($key,Array('url' => '/set_box.php', 'app' => $app_id));
-			}
-			$portalbox->data = $data;
+			$portalbox->set_controls($key,Array('url' => '/set_box.php', 'app' => $app_id));
+		}
+		$portalbox->data = $data;
 
-			echo "\n<!-- BEGIN InfoLog info -->\n".$portalbox->draw($html)."\n<!-- END InfoLog info -->\n";
-			unset($portalbox);
-		}
-		else	// HEAD / XSLT
+		if (!file_exists(EGW_SERVER_ROOT.($css_file ='/infolog/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/app.css')))
 		{
-			$GLOBALS['egw']->portalbox->set_params(array(
-				'app_id' => $app_id,
-				'title'  => $title
-			));
-			$GLOBALS['egw']->portalbox->draw($html);
+			$css_file = '/infolog/templates/default/app.css';
 		}
+		echo '
+<!-- BEGIN InfoLog info -->
+<style type="text/css">
+<!--
+	@import url('.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.');
+-->
+</style>
+'.			$portalbox->draw($html)."\n<!-- END InfoLog info -->\n";
+
+		unset($portalbox);
 		unset($html);
 		$GLOBALS['egw_info']['flags']['currentapp'] = $save_app;
 	}
