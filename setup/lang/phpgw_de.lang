@@ -428,7 +428,7 @@ step %1 - db backup and restore	setup	de	Schritt %1 - DB Datensicherung und Wied
 step %1 - language management	setup	de	Schritt %1 - Verwaltung der Sprachen
 step %1 - simple application management	setup	de	Schritt %1 - Einfache Verwaltung der Anwendungen
 succesfully uploaded file %1	setup	de	Datei %1 erfolgreich hochgeladen
-table change messages	setup	de	Tabellen&auml;nderungsmeldungen
+table change messages	setup	de	Tabellenänderungsmeldungen
 tables dropped	setup	de	Tabellen wurden gelöscht
 tables installed, unless there are errors printed above	setup	de	Tabellen wurden installiert, au&szlig;er oben sind Fehlermelungen zu sehen
 tables upgraded	setup	de	Tabellen wurden aktualisiert

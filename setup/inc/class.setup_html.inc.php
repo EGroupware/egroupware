@@ -114,9 +114,9 @@
 		function show_header($title='',$nologoutbutton=False, $logoutfrom='config', $configdomain='')
 		{
 			// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
-			header('Content-type: text/html; charset='.lang('charset'));
+			header('Content-type: text/html; charset='.$GLOBALS['egw_setup']->system_charset);
 
-			$GLOBALS['setup_tpl']->set_var('charset',lang('charset'));
+			$GLOBALS['setup_tpl']->set_var('charset',$GLOBALS['egw_setup']->system_charset);
 			$style = array(
 				'th_bg'		=> '#486591',
 				'th_text'	=> '#FFFFFF',

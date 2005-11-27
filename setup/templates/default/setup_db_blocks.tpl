@@ -110,7 +110,7 @@
         <input type="hidden" name="action" value="Dont touch my data" />
 		<input type="submit" name="label" value="{configuration}" />
         </form>
-		<form method="post" action="setup_demo.php">
+		<form method="post" action="admin_account.php">
         <input type="hidden" name="action" value="Dont touch my data" />
 		<input type="submit" name="label" value="{admin_account}" />
         </form>

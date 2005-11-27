@@ -29,8 +29,28 @@
 		Header('Location: index.php');
 		exit;
 	}
+	$GLOBALS['egw_setup']->loaddb(true);
 
-	if(!get_var('submit',Array('POST')))
+	$error = '';
+	if ($_POST['submit'])
+	{
+		/* Posted admin data */
+		$passwd   = get_var('passwd',Array('POST'));
+		$passwd2  = get_var('passwd2',Array('POST'));
+		$username = get_var('username',Array('POST'));
+		$fname    = get_var('fname',Array('POST'));
+		$lname    = get_var('lname',Array('POST'));
+	
+		if($passwd != $passwd2 || !$username)
+		{
+			$error = '<p>'.lang('Passwords did not match, please re-enter') . ".</p>\n";
+		}
+		if(!$username)
+		{
+			$error = '<p>'.lang('You must enter a username for the admin') . ".</p>\n";
+		}
+	}
+	if(!$_POST['submit'] || $error)
 	{
 		$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 		$setup_tpl = CreateObject('setup.Template',$tpl_root);
@@ -40,14 +60,20 @@
 			'T_alert_msg'  => 'msg_alert_msg.tpl',
 			'T_login_main' => 'login_main.tpl',
 			'T_login_stage_header' => 'login_stage_header.tpl',
-			'T_setup_demo' => 'setup_demo.tpl'
+			'T_admin_account' => 'admin_account.tpl'
 		));
 		$setup_tpl->set_block('T_login_stage_header','B_multi_domain','V_multi_domain');
 		$setup_tpl->set_block('T_login_stage_header','B_single_domain','V_single_domain');
 
-		$GLOBALS['egw_setup']->html->show_header(lang('Demo Server Setup'));
+		$GLOBALS['egw_setup']->html->show_header(lang('Create admin account'));
 
-		$setup_tpl->set_var('action_url','setup_demo.php');
+		$setup_tpl->set_var(array(
+			'error'    => $error,
+			'username' => $username,
+			'fname'    => $fname,
+			'lname'    => $lname,
+		));
+		$setup_tpl->set_var('action_url','admin_account.php');
 		$setup_tpl->set_var('description',lang('<b>This will create 1 admin account and 3 demo accounts</b><br />The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
 		$setup_tpl->set_var('lang_deleteall',lang('Delete all existing SQL accounts, groups, ACLs and preferences (normally not necessary)?'));
 
@@ -61,42 +87,21 @@
 
 		$setup_tpl->set_var('lang_submit',lang('Save'));
 		$setup_tpl->set_var('lang_cancel',lang('Cancel'));
-		$setup_tpl->pparse('out','T_setup_demo');
+		$setup_tpl->pparse('out','T_admin_account');
 		$GLOBALS['egw_setup']->html->show_footer();
 	}
 	else
 	{
-		/* Posted admin data */
-		$passwd   = get_var('passwd',Array('POST'));
-		$passwd2  = get_var('passwd2',Array('POST'));
-		$username = get_var('username',Array('POST'));
-		$fname    = get_var('fname',Array('POST'));
-		$lname    = get_var('lname',Array('POST'));
-
-		if($passwd != $passwd2)
-		{
-			echo lang('Passwords did not match, please re-enter') . '.';
-			exit;
-		}
-		if(!$username)
-		{
-			echo lang('You must enter a username for the admin') . '.';
-			exit;
-		}
-
-		$GLOBALS['egw_setup']->loaddb();
 		/* Begin transaction for acl, etc */
 		$GLOBALS['egw_setup']->db->transaction_begin();
 
 		if($_POST['delete_all'])
 		{
 			/* Now, clear out existing tables */
-			foreach(array($GLOBALS['egw_setup']->accounts_table,$GLOBALS['egw_setup']->prefs_table,$GLOBALS['egw_setup']->acl_table) as $table)
+			foreach(array($GLOBALS['egw_setup']->accounts_table,$GLOBALS['egw_setup']->prefs_table,$GLOBALS['egw_setup']->acl_table,'egw_access_log') as $table)
 			{
-				$GLOBALS['egw_setup']->db->delete($table,'1=1');
+				$GLOBALS['egw_setup']->db->delete($table,'1=1',__LINE__,__FILE__);
 			}
-			/* Clear the access log, since these are all new users anyway */
-			$GLOBALS['egw_setup']->db->query('DELETE FROM egw_access_log');
 		}
 		/* Create the demo groups */
 		$defaultgroupid = (int)$GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);

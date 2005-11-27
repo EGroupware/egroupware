@@ -69,14 +69,7 @@
 			}
 			else
 			{
-				$this->db->select($this->config_table,'config_value',array(
-					'config_app'=>'phpgwapi',
-					'config_name'=>'system_charset'
-				),__LINE__,__FILE__);
-				if ($this->db->next_record())
-				{
-					$this->system_charset = $this->db->f(0);
-				}
+				$this->system_charset =& $GLOBALS['egw_setup']->system_charset;
 			}
 			// load multi-byte-string-extension if needed, and set its internal encodeing to your system_charset
 			if ($this->system_charset && substr($this->system_charset,0,9) != 'iso-8859-1')

@@ -179,7 +179,7 @@
 	$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management',1));
 	$setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
 	$setup_tpl->set_var('system_charset',$GLOBALS['egw_setup']->translation->get_charsets('system_charset',
-		$_POST['system_charset'] ? $_POST['system_charset'] : lang('charset')));
+		$GLOBALS['egw_setup']->system_charset));
 
 	switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	{
@@ -339,7 +339,7 @@
 							$GLOBALS['egw_setup']->system_charset = $_REQUEST['system_charset'];
 							$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($_REQUEST['system_charset']);
 						}
-						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True,$_REQUEST['system_charset']);
+						$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',$_REQUEST['debug'],True);
 						$GLOBALS['egw_info']['setup']['currentver']['phpgwapi'] = 'oldversion';
 					}
 					break;
@@ -373,7 +373,7 @@
 			$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
 
 			$setup_tpl->set_var('re-check_my_installation',lang('Re-Check My Installation'));
-			$setup_tpl->set_var('system_charset',$_POST['system_charset']);
+			$setup_tpl->set_var('system_charset',$GLOBALS['egw']->system_charset);
 			$setup_tpl->parse('V_db_stage_6_post','B_db_stage_6_post');
 			$db_filled_block = $db_filled_block . $setup_tpl->get_var('V_db_stage_6_post');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
@@ -504,7 +504,7 @@
 			$setup_tpl->set_var('admin_status_alt',$no_accounts ? lang('not completed') : lang('completed'));
 			$setup_tpl->set_var('admin_table_data',$GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				$no_accounts ? lang('No accounts existing') : lang('Accounts existing'),
-				'post','setup_demo.php',
+				'post','admin_account.php',
 				'submit',lang('Create admin account'),
 				''
 			));
@@ -551,10 +551,8 @@
 				'submit',lang('Manage Languages'),
 				'');
 			// show system-charset and offer conversation
-			include_once(EGW_API_INC.'/class.translation.inc.php');
-			$translation = new translation;
 			$btn_manage_lang .= lang('Current system-charset is %1, click %2here%3 to change it.',
-				$translation->system_charset ? "'$translation->system_charset'" : lang('not set'),
+				$GLOBALS['egw_setup']->system_charset ? "'".$GLOBALS['egw_setup']->system_charset."'" : lang('not set'),
 				'<a href="system_charset.php">','</a>');
 			$setup_tpl->set_var('lang_table_data',$btn_manage_lang);
 			break;

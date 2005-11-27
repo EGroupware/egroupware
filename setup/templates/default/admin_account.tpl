@@ -1,4 +1,4 @@
-<!-- BEGIN setup_demo -->
+<!-- BEGIN admin_account -->
 <form method="post" action="{action_url}">
 <table border="0" width="90%" cellspacing="0" cellpadding="2">
   <tr>
@@ -7,6 +7,7 @@
 	<p>
 	<input type="checkbox" name="delete_all" />{lang_deleteall}
 	</p>
+	<font color="red">{error}</font>
     </td>
   </tr>
   <tr>
@@ -17,15 +18,15 @@
 	<table border="0">
           <tr>
             <td>{adminusername}</td>
-            <td><input type="text" name="username" /></td>
+            <td><input type="text" name="username" value="{username}" /></td>
           </tr>
           <tr>
             <td>{adminfirstname}</td>
-            <td><input type="text" name="fname" /></td>
+            <td><input type="text" name="fname" value="{fname}" /></td>
           </tr>
           <tr>
             <td>{adminlastname}</td>
-            <td><input type="text" name="lname" /></td>
+            <td><input type="text" name="lname" value="{lname}" /></td>
           </tr>
           <tr>
             <td>{adminpassword}</td>
@@ -48,4 +49,4 @@
   </tr>
 </table>
 </form>
-<!-- END setup_demo -->
+<!-- END admin_account -->

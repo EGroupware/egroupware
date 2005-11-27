@@ -64,7 +64,7 @@
 	$setup_tpl->set_var('ldapmodify','ldapmodify.php');
 	$setup_tpl->set_var('ldapimport','ldapimport.php');
 	$setup_tpl->set_var('ldapexport','ldapexport.php');
-	$setup_tpl->set_var('ldapdummy','setup_demo.php');
+	$setup_tpl->set_var('ldapdummy','admin_account.php');
 	$setup_tpl->set_var('action_url','index.php');
 	$setup_tpl->set_var('cancel',lang('Cancel'));
 

@@ -49,7 +49,7 @@
 			{
 				$lang = $ConfigLang;
 			}
-
+			
 			$fn = '.' . SEP . 'lang' . SEP . 'phpgw_' . $lang . '.lang';
 			if (!file_exists($fn))
 			{
@@ -65,6 +65,11 @@
 					$this->langarray[strtolower(trim($message_id))] = str_replace("\n",'',$content);
 				}
 				fclose($fp);
+				
+				if (!$GLOBALS['egw_setup']->system_charset)
+				{
+					$GLOBALS['egw_setup']->system_charset = $this->langarray['charset'];
+				}
 			}
 		}
 
@@ -81,6 +86,14 @@
 			if (isset($this->langarray[$key]))
 			{
 				$ret = $this->langarray[$key];
+			}
+			if ($GLOBALS['egw_setup']->system_charset != $this->langarray['charset'])
+			{
+				if (!is_object($this->sql))
+				{
+					$this->setup_translation_sql();
+				}
+				$ret = $this->sql->convert($ret,$this->langarray['charset']);
 			}
 			if (is_array($vars))
 			{

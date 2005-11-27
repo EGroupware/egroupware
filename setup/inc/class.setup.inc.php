@@ -38,10 +38,12 @@
 		var $cats_table         = 'egw_categories';
 		var $oProc;
 
-		var $detection = '';
-		var $process = '';
-		var $lang = '';
-		var $html = '';
+		var $detection;
+		var $process;
+		var $lang;
+		var $html;
+		
+		var $system_charset;
 
 		/* table name vars */
 		var $tbl_apps;
@@ -50,12 +52,17 @@
 
 		function setup($html=False, $translation=False)
 		{
+			// setup us as $GLOBALS['egw_setup'], as this gets used in our sub-objects
+			$GLOBALS['egw_setup'] =& $this;
+
 			$this->detection =& CreateObject('setup.setup_detection');
 			$this->process   =& CreateObject('setup.setup_process');
 
+			if ($_REQUEST['system_charset']) $this->system_charset = $_REQUEST['system_charset'];
+
 			/* The setup application needs these */
-			$this->html = $html ? CreateObject('setup.setup_html') : '';
-			$this->translation = $translation ? CreateObject('setup.setup_translation') : '';
+			if ($html) $this->html =& CreateObject('setup.setup_html');
+			if ($translation) $this->translation =& CreateObject('setup.setup_translation');
 		}
 
 		/**

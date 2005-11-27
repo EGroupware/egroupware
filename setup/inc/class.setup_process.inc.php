@@ -57,7 +57,7 @@
 		 * @param boolean $force_en=false install english language files
 		 * @param string $system_charset=null charset to use	
 		 */
-		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False,$system_charset=null)
+		function pass($setup_info,$method='new',$DEBUG=False,$force_en=False)
 		{
 			if(!$method)
 			{
@@ -118,7 +118,7 @@
 					case 'new':
 						/* Create tables and insert new records for each app in this list */
 						$passing = $this->current($pass,$DEBUG);
-						$this->save_minimal_config($system_charset);
+						$this->save_minimal_config();
 						$passing = $this->default_records($passing,$DEBUG);
 						$do_langs = true;	// just do it once at the end of all passes
 						break;
@@ -191,7 +191,7 @@
 		 * saves a minimal default config, so you get a running install without entering and saveing Step #2 config
 		 *
 		 */
-		function save_minimal_config($system_charset)
+		function save_minimal_config()
 		{
 			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
 			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'];
@@ -202,9 +202,9 @@
 			{
 				$GLOBALS['current_config']['temp_dir'] = '/tmp';
 			}
-			elseif(@is_dir('c:\\temp'))
+			elseif(@is_dir('c:\\windows\\temp'))
 			{
-				$GLOBALS['current_config']['temp_dir'] = 'c:\\temp';
+				$GLOBALS['current_config']['temp_dir'] = 'c:\\windows\\temp';
 			}
 			else
 			{
@@ -223,13 +223,9 @@
 			// RalfBecker: php.net recommend this for security reasons, it should be our default too
 			$GLOBALS['current_config']['usecookies'] = 'True';
 			
-			if ($system_charset)
+			if ($GLOBALS['egw_setup']->system_charset)
 			{
-				$GLOBALS['current_config']['system_charset'] = $system_charset;
-				if (is_object($GLOBALS['egw_setup']->translation->sql))
-				{
-					$GLOBALS['egw_setup']->translation->sql->system_charset = $system_charset;
-				}
+				$GLOBALS['current_config']['system_charset'] = $GLOBALS['egw_setup']->system_charset;
 			}
 
 			foreach($GLOBALS['current_config'] as $name => $value)
