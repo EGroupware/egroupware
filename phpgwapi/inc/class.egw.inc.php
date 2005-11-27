@@ -328,7 +328,7 @@
 				($GLOBALS['egw_info']['flags']['admin_only'] && !$GLOBALS['egw_info']['user']['apps']['admin']))
 				{
 					$this->common->egw_header();
-					if ($GLOBALS['egw_info']['flags']['noheader'])
+					if ($GLOBALS['egw_info']['flags']['nonavbar'])
 					{
 						echo parse_navbar();
 					}
