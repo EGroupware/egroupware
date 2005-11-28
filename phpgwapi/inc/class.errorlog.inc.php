@@ -48,7 +48,7 @@
 		{
 			$parms['ismsg']=0;
 			$save = $this->errorstack;
-			$this->$errorstack = array();
+			$this->errorstack = array();
 			CreateObject('phpgwapi.error',$parms);
 			$this->commit();
 			$this->errorstack = $save;
@@ -58,9 +58,7 @@
 		function iserror($parms)
 		{
 			$ecode = $parms['code'];
-			$errorstack = $this->errorstack;
-			reset($errorstack);
-			while(list(,$err)=each($errorstack))
+			foreach($this->errorstack as $err)
 			{
 				if ($ecode == $err->code)
 				{
@@ -73,9 +71,7 @@
 		function severity()
 		{
 			$max = 'D';
-			$errorstack = $this->errorstack;
-			reset($errorstack);
-			while(list(,$err)=each($errorstack))
+			foreach($this->errorstack as $err)
 			{
 				switch($err->severity)
 				{
