@@ -33,7 +33,7 @@ SPECFILE=egroupware-apps.spec
 SPECFILE2=egroupware.spec
 SPECFILEFEDORA=egroupware-fedora.spec
 
-CONTRIB="backup browser comic email filescenter forum ftp fudforum headlines messenger phpldapadmin phpsysinfo projects registration stocks switchuser tts skel soap xmlrpc"
+CONTRIB="backup browser comic email filescenter forum ftp fudforum headlines messenger phpldapadmin phpsysinfo projects stocks switchuser tts skel soap xmlrpc"
 
 for p in $CONTRIB
 do
@@ -126,7 +126,9 @@ tar czvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.gz $EXCLUDE_CONTRIB egroup
 tar czvf $SRCDIR/$PACKAGENAME-contrib-$VERSION-$PACKAGING.tar.gz $ONLY_CONTRIB 			>> $LOGFILE 2>&1
 tar cjvf $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.tar.bz2 $EXCLUDE_CONTRIB egroupware	>> $LOGFILE 2>&1
 tar cjvf $SRCDIR/$PACKAGENAME-contrib-$VERSION-$PACKAGING.tar.bz2 $ONLY_CONTRIB 		>> $LOGFILE 2>&1
-zip -r -9 $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip egroupware -x $ONLY_CONTRIB 	  	>> $LOGFILE 2>&1
+#zip -r -9 $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip egroupware -x $ONLY_CONTRIB 	>> $LOGFILE 2>&1
+find $ONLY_CONTRIB > /tmp/exclude.list
+zip -r -9 $SRCDIR/$PACKAGENAME-$VERSION-$PACKAGING.zip egroupware -x@/tmp/exclude.list	>> $LOGFILE 2>&1
 zip -r -9 $SRCDIR/$PACKAGENAME-contrib-$VERSION-$PACKAGING.zip $ONLY_CONTRIB 	  		>> $LOGFILE 2>&1
 echo "End Build Process of tar.gz, tar.bz, zip"						        >> $LOGFILE 2>&1	
 echo "---------------------------------------"              				>> $LOGFILE 2>&1

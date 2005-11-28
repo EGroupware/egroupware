@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.2RC2
-%define packaging 3
+%define version 1.2RC3
+%define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
 
@@ -123,6 +123,7 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/phpbrain
 %{prefix}/%{egwdirname}/polls
 %{prefix}/%{egwdirname}/projectmanager
+%{prefix}/%{egwdirname}/registration
 %{prefix}/%{egwdirname}/resources
 %{prefix}/%{egwdirname}/sambaadmin
 %{prefix}/%{egwdirname}/sitemgr
@@ -131,6 +132,11 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/workflow
 
 %changelog
+* Mon Nov 28 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC3-1
+- fixed registration app, is not longer in contrib now
+- fixed egroupware zip, which wrongly included the contrib stuff
+- fixed several other bugs
+
 * Fri Nov 25 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC2-3
 - fixed not working account creation
 - fixed not working category creation in sitemgr
