@@ -34,7 +34,9 @@
 	/* Make sure the header.inc.php is current. */
 	if (!isset($GLOBALS['egw_domain']) || $GLOBALS['egw_info']['server']['versions']['header'] < $GLOBALS['egw_info']['server']['versions']['current_header'])
 	{
-		echo '<center><b>You need to port your settings to the new header.inc.php version by running <a href="setup/manageheader.php">setup/headeradmin</a>.</b></center>';
+		echo '<center><b>You need to update your header.inc.php file to version '.
+		$GLOBALS['egw_info']['server']['versions']['current_header'].
+		' by running <a href="setup/manageheader.php">setup/headeradmin</a>.</b></center>';
 		exit;
 	}
 
@@ -46,38 +48,46 @@
 	}
 
 	// check if we can restore the eGW enviroment from the php-session
-	if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUEST['sessionid'] &&	
-	$GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
+	if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUEST['sessionid'])
 	{
 		session_name('sessionid');
 		session_start();
 
-		if (is_array($_SESSION['egw_info_cache']) && is_array($_SESSION['egw_included_files']) && $_SESSION['egw_object_cache'])
+		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
 		{
-			// marking the context as restored from the session, used by session->verify to not read the date from the db again
-			$GLOBALS['egw_info']['flags']['restored_from_session'] = true;
-
-			// restoring the egw_info-array
-			$flags = $GLOBALS['egw_info']['flags'];
-			$GLOBALS['egw_info'] = $_SESSION['egw_info_cache'];
-			$GLOBALS['egw_info']['flags'] = $flags;
-			unset($flags);
-
-			// including the necessary class-definitions
-			foreach($_SESSION['egw_included_files'] as $file)
+			if (is_array($_SESSION['egw_info_cache']) && is_array($_SESSION['egw_included_files']) && $_SESSION['egw_object_cache'])
 			{
-				//echo "<p>about to include $file</p>\n";
-				include_once($file);
+				// marking the context as restored from the session, used by session->verify to not read the date from the db again
+				$GLOBALS['egw_info']['flags']['restored_from_session'] = true;
+	
+				// restoring the egw_info-array
+				$flags = $GLOBALS['egw_info']['flags'];
+				$GLOBALS['egw_info'] = $_SESSION['egw_info_cache'];
+				$GLOBALS['egw_info']['flags'] = $flags;
+				unset($flags);
+	
+				// including the necessary class-definitions
+				foreach($_SESSION['egw_included_files'] as $file)
+				{
+					//echo "<p>about to include $file</p>\n";
+					include_once($file);
+				}
+				$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
+	
+				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
+	
+				//printf("<p style=\"position: absolute; right: 0px; top: 0px;\">egw-enviroment restored in %d ms</p>\n",1000*(perfgetmicrotime()-$GLOBALS['egw_info']['flags']['page_start_time']));
+	
+				return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
 			}
-			$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
-
-			$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
-
-			//printf("<p style=\"position: absolute; right: 0px; top: 0px;\">egw-enviroment restored in %d ms</p>\n",1000*(perfgetmicrotime()-$GLOBALS['egw_info']['flags']['page_start_time']));
-
-			return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
+			//echo "<p>could not restore egw_info and the egw-object!!!</p>\n";
 		}
-		//echo "<p>could not restore egw_info and the egw-object!!!</p>\n";
+		else	// destroy the session-cache if called by login or logout
+		{
+			unset($_SESSION['egw_info_cache']);
+			unset($_SESSION['egw_included_files']);
+			unset($_SESSION['egw_object_cache']);
+		}
 	}
 	include(EGW_API_INC.'/common_functions.inc.php');
 
@@ -88,7 +98,7 @@
 	\****************************************************************************/
 
 	if (!isset($GLOBALS['egw_info']['server']['default_domain']) ||	// allow to overwrite the default domain
-	!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]))
+		!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]))
 	{
 		reset($GLOBALS['egw_domain']);
 		list($GLOBALS['egw_info']['server']['default_domain']) = each($GLOBALS['egw_domain']);
@@ -107,7 +117,6 @@
 	{
 		$GLOBALS['egw_info']['user']['domain'] = get_var('domain',array('GET','COOKIE'),false);
 	}
-
 	if (@isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]))
 	{
 		$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$GLOBALS['egw_info']['user']['domain']]['db_host'];
