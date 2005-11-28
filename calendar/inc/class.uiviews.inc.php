@@ -937,6 +937,8 @@ class uiviews extends uical
 				'/calendar/inc/gradient.php?color1='.urlencode($bodybgcolor1).'&color2='.urlencode($bodybgcolor2).
 				'&width='.$width.') repeat-y '.$bodybgcolor2,
 			'Small' => $width > $small_trigger_width ? '' : 'Small',	// to use in css class-names
+			// otherwise a click in empty parts of the event, will "click through" and create a new event
+			'ienonsens' => $this->html->user_agent == 'msie' ? '<div style="font-size: 250pt; width: 100%; overflow: hidden">'.str_repeat('&nbsp;',4).'</div>' : '',
 		));
 		foreach(array(
 			'upper_left'=>array('width'=>-$corner_radius,'height'=>$header_height,'border'=>0,'bgcolor'=>$headerbgcolor),

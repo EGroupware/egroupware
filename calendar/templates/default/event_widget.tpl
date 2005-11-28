@@ -8,7 +8,7 @@
 	<tr valign="top" style="height: 100%;">
 		<td class="calEventBody{Small}" style="background: {bodybackground}; border-bottom: {border}px solid {bordercolor}; border-left: {border}px solid {bordercolor}; border-right: {border}px solid {bordercolor};">
 			<p style="margin: 0px;">{body_icons}<br>
-			<span class="calEventTitle">{title}</span></p>
+			<span class="calEventTitle">{title}</span></p>{ienonsens}
 		</td>
 	</tr>
 </table>
