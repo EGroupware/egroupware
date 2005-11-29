@@ -1179,9 +1179,9 @@
 			// add session params if not using cookies
 			if (!$GLOBALS['egw_info']['server']['usecookies'])
 			{
-				$extravars['sessionid'] = $this->sessionid;
-				$extravars['kp3'] = $this->kp3;
-				$extravars['domain'] = $this->account_domain;
+				$vars['sessionid'] = $this->sessionid;
+				$vars['kp3'] = $this->kp3;
+				$vars['domain'] = $this->account_domain;
 			}
 
 			// if there are vars, we add them urlencoded to the url
