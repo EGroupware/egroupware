@@ -961,7 +961,8 @@
 				}
 				if (isset($col_data['default']))
 				{
-					$ado_col .= ' DEFAULT '.$this->m_odb->quote($col_data['default'],$col_data['type']);
+					$ado_col .= (in_array($col_data['type'],array('bool','int','decimal','float','double')) && $col_data['default'] != 'NULL' ? ' NOQUOTE' : '').
+						' DEFAULT '.$this->m_odb->quote($col_data['default'],$col_data['type']);
 				}
 				if (in_array($col,$aTableDef['pk']))
 				{

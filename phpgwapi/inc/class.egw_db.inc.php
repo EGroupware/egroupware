@@ -1085,7 +1085,7 @@
 				case 'auto':
 					return (int) $value;	
 				case 'bool':
-					if ($this->Type == 'mysql' && $this->ServerInfo['version'] < 4.1)
+					if ($this->Type == 'mysql')		// maybe it's not longer necessary with mysql5
 					{
 						return $value ? 1 : 0;
 					}
