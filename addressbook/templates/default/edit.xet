@@ -156,7 +156,7 @@
 				<row>
 					<description/>
 					<description value="state"/>
-					<textbox size="45" maxlength="64" id="adr_two_locality"/>
+					<textbox size="45" maxlength="64" id="adr_two_region"/>
 				</row>
 				<row>
 					<description/>
