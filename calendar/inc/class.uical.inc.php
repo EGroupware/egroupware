@@ -446,7 +446,7 @@ class uical
 			),
 			array(
 				'text' => lang('listview'),
-				'value' => 'menuaction=calendar.uilist.list',
+				'value' => 'menuaction=calendar.uilist.listview',
 				'selected' => $_GET['menuaction'] == 'calendar.uilist.listview',
 			),
 		) as $data)
