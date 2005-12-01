@@ -46,7 +46,7 @@ if($GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
 					}
 					else
 					{
-						$_returnhtml[$app_name] = lang('This application requires an upgrade') . ": \n <br/>" . lang('Please run setup to become current') . '.' . "\n";
+						$_returnhtml[$app_name] = lang('This application requires an upgrade') . ": \n <br />" . lang('Please run setup to become current') . '.' . "\n";
 					}
 				}
 				else
@@ -77,13 +77,8 @@ if($GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
 			unset($_db_version);
 			unset($_versionfile);
 		}
+		echo '<p style="text-align: center;">'.implode('<br />',$_returnhtml)."</p>\n";
 
-		echo '<center>';
-		foreach ($_returnhtml as $_html)
-		{
-			echo '<br/>'.$_html;
-		}
-		echo '<center/>';
 		unset($_returnhtml);
 		unset($_html);
 	}
