@@ -740,10 +740,13 @@ class uiviews extends uical
 				'minute'	=> floor(($this->wd_start + (($counter-$this->extraRows-1)*$this->granularity_m))%60),
 			);
 			if ($owner) $linkData['owner'] = $owner;
-
+			
+			if ($this->html->user_agent != 'msie')	// disable add event for IE, as IE cant manage to get the right div
+			{
+				$onclick = 'onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"';
+			}
 			$html .= $indent."\t".'<div style="height:'. $this->rowHeight .'%; top: '. $counter*$this->rowHeight .
-				'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;">'.
-				'</div>'."\n";
+				'%;" class="calAddEvent" '.$onclick.'></div>'."\n";
 		}
 		// displaying all event columns of the day
 		foreach($eventCols as $n => $eventCol)
@@ -938,7 +941,6 @@ class uiviews extends uical
 				'&width='.$width.') repeat-y '.$bodybgcolor2,
 			'Small' => $width > $small_trigger_width ? '' : 'Small',	// to use in css class-names
 			// otherwise a click in empty parts of the event, will "click through" and create a new event
-			'ienonsens' => $this->html->user_agent == 'msie' ? '<div style="font-size: 250pt; width: 100%; overflow: hidden">'.str_repeat('&nbsp;',4).'</div>' : '',
 		));
 		foreach(array(
 			'upper_left'=>array('width'=>-$corner_radius,'height'=>$header_height,'border'=>0,'bgcolor'=>$headerbgcolor),
