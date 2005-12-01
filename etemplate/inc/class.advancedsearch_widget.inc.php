@@ -171,6 +171,14 @@
 					'label' => 'Operator',
 					'no_lang' => true,
 				)));
+				$tpl->add_child($button_box, $meth_select = $tpl->empty_cell('select','meth_select',array(
+					'sel_options' => array(
+						'%' => lang('contains'),
+						false => lang('exact'),
+					),
+					'no_lang' => true,
+					'default' => '%',
+				)));
 				$tpl->add_child($button_box, $search_button = $tpl->empty_cell('button','button[search]',array(
 					'label' => 'Search',
 				)));
@@ -260,8 +268,9 @@
 			$order_by = $query['order'] ? $query['order'].' '.$query['sort'] : '';
 			$only_keys = implode(',',array_flip($query['colums_to_present']));
 			$rows = ExecMethod2($query['search_method'],$query['search_values'],$only_keys,
-				$order_by,'','','',$query['search_values']['opt_select'],$query['start']);
-			$result = ExecMethod2($query['search_method'],$query['search_values'],$only_keys,'','','','',$query['search_values']['opt_select'],false,'','',false);
+				$order_by,'',$query['search_values']['meth_select'],'',$query['search_values']['opt_select'],$query['start']);
+			$result = ExecMethod2($query['search_method'],$query['search_values'],$only_keys,
+				'','',$query['search_values']['meth_select'],'',$query['search_values']['opt_select'],false,'','',false);
 			// We store the result in session so actions can fetch them here:
 			$GLOBALS['egw']->session->appsession('advanced_search_result',$GLOBALS['egw_info']['flags']['currentapp'],$result);
 			return count($result);

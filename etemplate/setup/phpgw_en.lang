@@ -72,6 +72,7 @@ comment	etemplate	en	Comment
 confirm	etemplate	en	confirm
 confirmation message or custom javascript (returning true or false)	etemplate	en	confirmation message or custom javascript (returning true or false)
 confirmation necesary or custom java-script	etemplate	en	confirmation necesary or custom java-script
+contains	etemplate	en	contains
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	en	CSS class for the table-tag
@@ -244,6 +245,7 @@ of	etemplate	en	of
 onclick	etemplate	en	onClick
 only an other version found !!!	etemplate	en	only an other Version found !!!
 open the online help.	etemplate	en	Open the online help.
+operator	etemplate	en	Operator
 optional note about the link	etemplate	en	optional note about the Link
 options	etemplate	en	Options
 order to navigating by tab key through the form	etemplate	en	Order to navigating by tab key through the form

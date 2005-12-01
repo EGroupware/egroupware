@@ -72,6 +72,7 @@ comment	etemplate	de	Kommentar
 confirm	etemplate	de	bestätigen
 confirmation message or custom javascript (returning true or false)	etemplate	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurücklieferned)
 confirmation necesary or custom java-script	etemplate	de	Bestätigung notwendig oder spezielles Javascript
+contains	etemplate	de	enthalten
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
 css class for the table-tag	etemplate	de	CSS class der Tabelle
@@ -244,6 +245,7 @@ of	etemplate	de	von
 onclick	etemplate	de	onClick
 only an other version found !!!	etemplate	de	nur eine andere Version gefunden !!!
 open the online help.	etemplate	de	Öffnet die online Hilfe.
+operator	etemplate	de	Operator
 optional note about the link	etemplate	de	optionale Notiz zur Verknüpfung
 options	etemplate	de	Optionen
 order to navigating by tab key through the form	etemplate	de	Reihenfolger bei der Navigation mit der Tabulator Taste durch das Formular
