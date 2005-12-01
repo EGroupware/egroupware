@@ -354,7 +354,7 @@
 										}
 										elseif (preg_match('/BYDAY=([^;: ]+)/',$recurence,$recurenceMatches))	// 2.0
 										{
-		            						$days = exploce(',',$recurenceMatches[1]);
+		            						$days = explode(',',$recurenceMatches[1]);
 										}
 										if ($days)
 										{
