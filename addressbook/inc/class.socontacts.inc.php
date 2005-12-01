@@ -327,4 +327,17 @@ class socontacts
 		}
 		return $need_full_no_count ? count($result) : $result;
 	}
+	
+	/**
+	 * gets all contact fields from database
+	 */
+	function get_contact_conlumns()
+	{
+		$fields = $this->somain->db_data_cols;
+		foreach ((array)$this->customfields as $cfield => $coptions)
+		{
+			$fields['#'.$cfield] = '#'.$cfield;
+		}
+		return $fields;
+	}
 }

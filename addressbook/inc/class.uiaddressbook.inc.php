@@ -678,20 +678,14 @@
 				$fields['n_given']  = $names[0];
 				$fields['n_family'] = $names[1];
 			}
-			$fields['n_given']  = $fields['n_given'] ? $fields['n_given'] : ' ';
-			$fields['n_family'] = $fields['n_family'] ? $fields['n_family'] : ' ';
-			$fields['fn']       = $fields['n_given'] . ' '  . $fields['n_family'];
-			$fields['email']    = $add_email;
-			$fields['access']   = 'private';
-			$fields['tid']      = 'n';
-			$referer = urlencode($referer);
 
-			$fields['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-//			_debug_array($fields);exit;
-			$this->bo->add_entry($fields);
-			$ab_id = $this->bo->get_lastid();
-
-			$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $ab_id . '&referer=' . $referer);
+			$GLOBALS['egw']->redirect_link('/index.php', array(
+				'menuaction' => 'addressbook.uicontacts.edit',
+				'presets[n_given]' => $fields['n_given'] ? $fields['n_given'] : ' ',
+				'presets[n_middle]' => $fields['n_middle'] ? $fields['n_middle'] : '',
+				'presets[n_family]' => $fields['n_family'] ? $fields['n_family'] : ' ',
+				'presets[email]' => $add_email,
+			));
 		}
 
 		function copy()

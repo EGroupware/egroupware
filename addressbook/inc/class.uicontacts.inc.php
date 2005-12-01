@@ -110,12 +110,20 @@ class uicontacts extends bocontacts
 		{
 			$content = array();
 			$contact_id = $_GET['contact_id'] ? $_GET['contact_id'] : 0;
-			$view = $_GET['view'];// == 1 ? true : false;
+			$view = $_GET['view'];
 			
 			if ($contact_id)
 			{
 				$content = $this->read($contact_id);
 			}
+			else // look if we have presets for a new contact
+			{
+				foreach($this->get_contact_conlumns() as $field => $data)
+				{
+					if ($_GET['presets'][$field]) $content[$field] = $_GET['presets'][$field];
+				}
+			}
+			
 			if($content && $_GET['makecp'])	// copy the contact
 			{
 				$content['link_to']['to_id'] = 0;
