@@ -179,5 +179,5 @@
 
 	$GLOBALS['egw_info']['server']['app_images'] = 'templates/default/images';
 
-	$GLOBALS['egw_setup'] =& CreateObject('setup.setup',True,True);
+	CreateObject('setup.setup',True,True);	// setup constuctor assigns itself to $GLOBALS['egw_setup'], doing it twice fails on some php4
 	$GLOBALS['phpgw_setup'] =& $GLOBALS['egw_setup'];
