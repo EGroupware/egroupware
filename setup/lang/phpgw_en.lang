@@ -108,6 +108,7 @@ contain	setup	en	contain
 continue	setup	en	Continue
 continue to the header admin	setup	en	Continue to the Header Admin
 convert	setup	en	Convert
+convert backup to charset selected above	setup	en	Convert backup to charset selected above
 could not open header.inc.php for writing!	setup	en	Could not open header.inc.php for writing!
 country selection	setup	en	Country Selection
 create	setup	en	Create
@@ -123,7 +124,7 @@ created	setup	en	created
 created header.inc.php!	setup	en	Created header.inc.php!
 creating tables	setup	en	Creating Tables
 current system-charset	setup	en	Current system-charset
-current system-charset is %1, click %2here%3 to change it.	setup	en	Current system-charset is %1, click %2here%3 to change it.
+current system-charset is %1.	setup	en	Current system-charset is %1.
 current version	setup	en	Current Version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br />
 database instance (egw domain)	setup	en	Database instance (eGW domain)
@@ -460,6 +461,7 @@ this should be around 30 bytes in length.<br />note: the default has been random
 this stage is completed<br />	setup	en	This stage is completed<br />
 to a version it does not know about	setup	en	to a version it does not know about
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	en	to allow password authentification add the following line to your pg_hba.conf (above all others) AND restart postgres:
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	en	To change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.
 to setup 1 admin account and 3 demo accounts.	setup	en	to setup 1 admin account and 3 demo accounts.
 top	setup	en	top
 translations added	setup	en	Translations Added

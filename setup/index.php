@@ -178,8 +178,8 @@
 
 	$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management',1));
 	$setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
-	$setup_tpl->set_var('system_charset',$GLOBALS['egw_setup']->translation->get_charsets('system_charset',
-		$GLOBALS['egw_setup']->system_charset));
+	$setup_tpl->set_var('system_charset',str_replace('&amp;','&',$GLOBALS['egw_setup']->translation->get_charsets('system_charset',
+		$GLOBALS['egw_setup']->system_charset)));
 
 	switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	{
@@ -246,6 +246,9 @@
 			$setup_tpl->set_var('lang_restore',lang('Or you can install a previous backup.'));
 			$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 				'<input type="submit" name="upload" value="'.htmlspecialchars(lang('install backup')).'" title="'.htmlspecialchars(lang("uploads a backup and installs it on your DB")).'" />');
+			$setup_tpl->set_var('convert_checkbox','<input type="checkbox" name="convert_charset" id="convert_checkbox" value="1"/>');
+			$setup_tpl->set_var('lang_convert_charset','<label for="convert_checkbox">'.
+				lang('Convert backup to charset selected above').'</label>');
 			$setup_tpl->parse('V_db_stage_3','B_db_stage_3');
 			$db_filled_block = $setup_tpl->get_var('V_db_stage_3');
 			$setup_tpl->set_var('V_db_filled_block',$db_filled_block);
@@ -317,7 +320,7 @@
 							if (is_resource($f = $db_backup->fopen_backup($_FILES['uploaded']['tmp_name'],true)))
 							{
 								echo '<p align="center">'.lang('restore started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
-								$db_backup->restore($f);
+								$db_backup->restore($f,$_POST['convert_charset']);
 								fclose($f);
 								echo '<p align="center">'.lang('restore finished')."</p>\n";
 								unlink($_FILES['uploaded']['tmp_name']);
@@ -551,9 +554,9 @@
 				'submit',lang('Manage Languages'),
 				'');
 			// show system-charset and offer conversation
-			$btn_manage_lang .= lang('Current system-charset is %1, click %2here%3 to change it.',
-				$GLOBALS['egw_setup']->system_charset ? "'".$GLOBALS['egw_setup']->system_charset."'" : lang('not set'),
-				'<a href="system_charset.php">','</a>');
+			$btn_manage_lang .= lang('Current system-charset is %1.',$GLOBALS['egw_setup']->system_charset ? 
+				"'<b>".$GLOBALS['egw_setup']->system_charset."</b>'" : lang('not set'))."\n";
+			$btn_manage_lang .= lang('To change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.');
 			$setup_tpl->set_var('lang_table_data',$btn_manage_lang);
 			break;
 		default:

@@ -72,7 +72,8 @@
 		<input type="submit" name="label" value="{install}" /> {coreapps}
 		<hr />
 		{lang_restore}<br />
-		{upload}
+		{upload}<br />
+		{convert_checkbox} {lang_convert_charset}
 		</form>
 	</td>
 </tr>

@@ -140,9 +140,10 @@
 		/**
 		 * Backup all data in the form of a (compressed) csv file
 		 *
-		 * @param $f resource file opened with fopen for reading
+		 * @param resource $f file opened with fopen for reading
+		 * @param boolean $convert_to_system_charset=false convert the restored data to the selected system-charset
 		 */ 
-		function restore($f)
+		function restore($f,$convert_to_system_charset=false)
 		{
 			@set_time_limit(0);
 			ini_set('auto_detect_line_endings',true);
@@ -178,12 +179,17 @@
 					$charset = trim(substr($line,9));
 					// needed if mbstring.func_overload > 0, else eg. substr does not work with non ascii chars
 					@ini_set('mbstring.internal_encoding',$charset);
+					
 					// set the DB's client encoding (for mysql only if api_version >= 1.0.1.019)
-					if (substr($this->db->Type,0,5) != 'mysql' || !is_object($GLOBALS['egw_setup']) || 
-						$api_version && !$GLOBALS['egw_setup']->alessthanb($api_version,'1.0.1.019'))
+					if ((!$convert_to_system_charset || $this->db->capabilities['client_encoding']) &&
+						(substr($this->db->Type,0,5) != 'mysql' || !is_object($GLOBALS['egw_setup']) || 
+						$api_version && !$GLOBALS['egw_setup']->alessthanb($api_version,'1.0.1.019')))
 					{
 						$this->db->Link_ID->SetCharSet($charset);
-						$this->schema_proc->system_charset = $charset;	// so schema_proc uses it for the creation of the tables
+						if (!$convert_to_system_charset)
+						{
+							$this->schema_proc->system_charset = $charset;	// so schema_proc uses it for the creation of the tables
+						}
 					}
 					continue;
 				}
@@ -209,12 +215,31 @@
 					if (feof($f)) break;
 					continue;
 				}
+				if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
+				{
+					if ($GLOBALS['egw_setup'])
+					{
+						if (!is_object($GLOBALS['egw_setup']->translation->sql))
+						{
+							$GLOBALS['egw_setup']->translation->setup_translation_sql();
+						}
+						$translation =& $GLOBALS['egw_setup']->translation->sql;
+					}
+					else
+					{
+						$translation =& $GLOBALS['egw']->translation;
+					}
+				}
 				if ($table)	// do we already reached the data part
 				{
 					$data = $this->csv_split($line,$cols);
 
 					if (count($data) == count($cols))
 					{
+						if ($convert_to_system_charset && !$this->db->capabilities['client_encoding'])
+						{
+							$translation->convert($data,$charset);
+						}
 						$this->db->insert($table,$data,False,__LINE__,__FILE__,'all-apps',true);
 					}
 					else 
@@ -235,6 +260,16 @@
 						break;	// max. one per table
 					}
 				}
+			}
+			
+			if ($convert_to_system_charset)	// store the changed charset
+			{
+				$this->db->insert($GLOBALS['egw_setup']->config_table,array(
+					'config_value' => $GLOBALS['egw_setup']->system_charset,
+				),array(
+					'config_app' => 'phpgwapi',
+					'config_name' => 'system_charset',
+				),__LINE__,__FILE__);
 			}
 			$this->db->transaction_commit();
 		}

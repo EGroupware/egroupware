@@ -123,6 +123,7 @@
 			'distinct_on_text' => true,	// is the DB able to use DISTINCT with a text or blob column
 			'like_on_text'     => true,	// is the DB able to use LIKE with text columns
 			'name_case'        => 'upper',	// case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
+			'client_encoding'  => false,	// db uses a changeable clientencoding
 			'order_on_text'    => true,	// is the DB able to order by a given text column, boolean or 
 		);								// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
 		
@@ -330,10 +331,12 @@
 				case 'mysqli':
 					$this->capabilities['sub_queries'] = (float) $db_version >= 4.1;
 					$this->capabilities['name_case'] = 'preserv';
+					$this->capabilities['client_encoding'] = (float) $db_version >= 4.1;
 					break;
 					
 				case 'postgres':
 					$this->capabilities['name_case'] = 'lower';
+					$this->capabilities['client_encoding'] = (float) $db_version >= 7.4;
 					break;					
 
 				case 'mssql':

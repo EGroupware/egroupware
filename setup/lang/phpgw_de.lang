@@ -108,6 +108,7 @@ contain	setup	de	enthält
 continue	setup	de	Weiter
 continue to the header admin	setup	de	Weiter zur Headerverwaltung
 convert	setup	de	Konvertieren
+convert backup to charset selected above	setup	de	Konvertiere Datensicherung zu oben ausgewähltem Zeichensatz
 could not open header.inc.php for writing!	setup	de	Konnte die Datei header.inc.php nicht zum schreiben öffen!
 country selection	setup	de	Länderauswahl
 create	setup	de	erstellen
@@ -123,7 +124,7 @@ created	setup	de	erzeugt
 created header.inc.php!	setup	de	header.inc.php erzeugt!
 creating tables	setup	de	Erstelle Tabellen
 current system-charset	setup	de	Aktueller Systemzeichensatz
-current system-charset is %1, click %2here%3 to change it.	setup	de	Aktueller Systemzeichensatz ist %1, %2hier%3 klicken um ihn zu ändern.
+current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
 database instance (egw domain)	setup	de	Datenbankinstanz (eGW Domain)
@@ -460,6 +461,7 @@ this should be around 30 bytes in length.<br />note: the default has been random
 this stage is completed<br />	setup	de	Dieser Schritt ist abgeschlossen<br />
 to a version it does not know about	setup	de	auf eine Version von der nichts bekannt ist
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	de	um Passwort Authentifizierung zu verwenden, folgende Zeile (vor allen anderen) in ihre pg_hba.conf einfügen UND postgres neu starten
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	de	Zum Ändern des Zeichensatzes: Datenbank sichern, alle Anwendungen deinstallieren und die Datensicherung mit "Konvertiere zum ausgewählten Zeichensatz" abgehakt wieder installieren.
 to setup 1 admin account and 3 demo accounts.	setup	de	zum Anlegen von eines Administratorkontos und ggf. 3 Demo-Benutzerkonten.
 top	setup	de	oben
 translations added	setup	de	Übersetzungen hinzugefügt
