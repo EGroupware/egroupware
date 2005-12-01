@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	zh-tw	第%1 到 %2 /共 %3 個使用者
 %1 - %2 of %3 user groups	admin	zh-tw	第%1 到 %2 /共 %3 個使用者群組
+%1 acl records of not (longer) existing accounts deleted.	admin	zh-tw	刪除了不再使用於帳號的 %1 筆 ACL 資料
 %1 not found or not executable !!!	admin	zh-tw	找不到%1或是無法執行！
 (default no, leave it off if you dont use it)	admin	zh-tw	（預設為否，如果您不希望使用請不要修改）
 (stored password will not be shown here)	admin	zh-tw	(已經儲存的檔案不會在這裡顯示)
@@ -90,6 +91,7 @@ color	admin	zh-tw	顏色
 country selection	admin	zh-tw	選擇國家
 create group	admin	zh-tw	新增群組
 crontab only (recomended)	admin	zh-tw	僅crontab  (建議)
+custom fields	admin	zh-tw	自訂欄位
 cyrus imap server	admin	zh-tw	Cyrus IMAP伺服器
 data	admin	zh-tw	資料
 day	admin	zh-tw	日
@@ -185,6 +187,7 @@ error: %1 not found or other error !!!	admin	zh-tw	錯誤：找不到%1或是其
 expires	admin	zh-tw	過期
 explanation of ldapman	admin	zh-tw	這個模組已經在 POSTFIX,LDAP,Courier-IMAP 測試過且需要核心與 QMAIL (OID7914)概要。更多細節可以參考 ADMIN 資料夾中的 README.ldapman 。
 fallback (after each pageview)	admin	zh-tw	回到主頁(在每次瀏覽頁面後)
+field '%1' already exists !!!	admin	zh-tw	欄位 '%1' 已經存在
 file space	admin	zh-tw	檔案空間
 file space must be an integer	admin	zh-tw	檔案空間必須是整數
 find and register all application hooks	admin	zh-tw	尋找並註冊所有應用程式Hooks
@@ -193,6 +196,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	zh-tw	固定勾選方塊
 forward also to	admin	zh-tw	同時轉寄到
 forward email's to	admin	zh-tw	轉寄信件到
+forward emails to	admin	zh-tw	轉寄信件到
 forward only	admin	zh-tw	轉寄
 global categories	common	zh-tw	全區分類
 group ?	admin	zh-tw	群組？
@@ -259,6 +263,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	zh-tw	使用者帳號編碼最�
 minute	admin	zh-tw	分
 mode	admin	zh-tw	模式
 month	admin	zh-tw	月
+name must not be empty !!!	admin	zh-tw	名稱不能為空白！
 new group name	admin	zh-tw	新的群組名稱
 new password [ leave blank for no change ]	admin	zh-tw	新的密碼（空白時不更動）
 next run	admin	zh-tw	下次執行
@@ -280,6 +285,7 @@ peer server list	admin	zh-tw	伺服器清單
 peer servers	admin	zh-tw	對接伺服器
 percent of users that logged out	admin	zh-tw	使用者登出比例
 percent this user has logged out	admin	zh-tw	這個使用者登出的比例
+permission denied	admin	zh-tw	沒有存取權限
 permissions	admin	zh-tw	權限
 permissions this group has	admin	zh-tw	群組權限
 phpinfo	admin	zh-tw	PHP 資訊
@@ -393,12 +399,14 @@ view this user	admin	zh-tw	查看該使用者
 view user account	admin	zh-tw	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zh-tw	您希望將被移除使用者的資料轉移給誰？
 would you like egroupware to cache the egw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 egw 資訊陣列嗎？
+would you like egroupware to cache the phpgw info array ?	admin	zh-tw	您希望 eGroupWare 快取 phpgw 資訊陣列嗎？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zh-tw	您希望 egroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like egroupware to check for new application versions when admins login ?	admin	zh-tw	您希望egroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh-tw	您想要自動讀取新的語言檔案嗎(登入時)？
 would you like to show each application's upgrade status ?	admin	zh-tw	您希望顯示每一個應用程式升級的資訊嗎？
 xml-rpc	admin	zh-tw	XML-RPC
 you have entered an invalid expiration date	admin	zh-tw	您輸入了一個錯誤的、過期的日期
+you have to enter a name, to create a new field!!!	admin	zh-tw	您必須輸入一個名稱來建立新欄位！
 you must add at least 1 permission or group to this account	admin	zh-tw	您必須至少授權此帳號一項權限或將此帳號歸於一個群組下。
 you must enter a group name.	admin	zh-tw	您必須輸入群組名稱
 you must enter a lastname	admin	zh-tw	您必須輸入使用者姓名
