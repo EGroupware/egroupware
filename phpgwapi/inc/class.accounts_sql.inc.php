@@ -323,6 +323,10 @@
 			
 			if ($account_info['account_type'] == 'g' && $id > 0)	// create negative id for groups
 			{
+				if ($this->db->Type == 'mssql')
+				{
+					$this->db->query("SET identity_update $this->table ON",__LINE__,__FILE__);
+				}
 				$this->db->update($this->table,array('account_id' => -$id),array('account_id' => $id),__LINE__,__FILE__);
 				return -$id;
 			}
