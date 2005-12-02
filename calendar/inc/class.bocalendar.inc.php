@@ -207,7 +207,7 @@ class bocalendar
 		}
 		if (!is_array($event['participants']) || !count($event['participants']))
 		{
-			$event['participants'] = array($GLOBALS['egw_info']['user']['account_id'] = 'A');
+			$event['participants'] = array($GLOBALS['egw_info']['user']['account_id'] => 'A');
 		}
 		if (!($id = $this->cal->update($event,true)))	// true=no conflikt check for now
 		{
