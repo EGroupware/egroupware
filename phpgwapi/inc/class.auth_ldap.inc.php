@@ -156,7 +156,7 @@
 			$entry['userpassword'] = $this->encrypt_password($new_passwd);
 			$dn = $allValues[0]['dn'];
 
-			if ($old_passwd && $GLOBALS['egw']->auth->encrypt_password($old_passwd) != $allValues[0]['userpassword'] || !@ldap_modify($ds, $dn, $entry))
+			if (!@ldap_modify($ds, $dn, $entry))
 			{
 				return false;
 			}
