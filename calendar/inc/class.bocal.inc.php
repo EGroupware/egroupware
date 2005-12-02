@@ -398,7 +398,7 @@ class bocal
 			}
 			if (count($recur_ids))
 			{
-				$events = array_merge($this->read($recur_ids),$events);
+				$events = array_merge($this->read($recur_ids,null,false,$params['date_format']),$events);
 			}
 		}
 		if ($this->debug && ($this->debug > 0 || $this->debug == 'search'))
