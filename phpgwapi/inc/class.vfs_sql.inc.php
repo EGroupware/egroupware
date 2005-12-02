@@ -175,7 +175,7 @@
 				$data = array ('query_type' => VFS_SQL_SELECT);
 			}
 
-			if ($data['query_type'] == VFS_SQL_SELECT || $data['query_type'] == VFS_SQL_DELETE || $data['query_type'] = VFS_SQL_UPDATE)
+			if ($data['query_type'] == VFS_SQL_SELECT || $data['query_type'] == VFS_SQL_DELETE || $data['query_type'] == VFS_SQL_UPDATE)
 			{
 				return "((vfs_mime_type != '".implode("' AND vfs_mime_type != '",$this->meta_types)."') OR vfs_mime_type IS NULL)";
 			}
