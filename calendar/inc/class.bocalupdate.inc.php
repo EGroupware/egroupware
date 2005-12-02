@@ -898,42 +898,9 @@ class bocalupdate extends bocal
 		// Repeated Events
 		if($event['recur_type'] != MCAL_RECUR_NONE)
 		{
-			$str = lang($this->rpt_type[$event['recur_type']]);
-
-			$str_extra = array();
-			if ($event['recur_enddate'])
-			{
-				$str_extra[] = lang('ends').': '.lang($this->format_date($event['recur_enddate'],'l')).', '.$this->long_date($event['recur_enddate']).' ';
-			}
-			// only weekly uses the recur-data (days) !!!
-			if($event['recur_type'] == MCAL_RECUR_WEEKLY)
-			{
-				$repeat_days = array();
-				foreach ($this->recur_days as $mcal_mask => $dayname)
-				{
-					if ($event['recur_data'] & $mcal_mask)
-					{
-						$repeat_days[] = lang($dayname);
-					}
-				}
-				if(count($repeat_days))
-				{
-					$str_extra[] = lang('days repeated').': '.implode(', ',$repeat_days);
-				}
-			}
-			if($event['recur_interval'])
-			{
-				$str_extra[] = lang('Interval').': '.$event['recur_interval'];
-			}
-
-			if(count($str_extra))
-			{
-				$str .= ' ('.implode(', ',$str_extra).')';
-			}
-
 			$var['recur_type'] = Array(
 				'field'	=> lang('Repetition'),
-				'data'	=> $str,
+				'data'	=> $this->recure2string($event),
 			);
 		}
 		return $var;

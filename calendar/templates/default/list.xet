@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.list.rows" template="" lang="" group="0" version="1.0.1.002">
+	<template id="calendar.list.rows" template="" lang="" group="0" version="1.0.1.003">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -35,6 +35,7 @@
 					<vbox>
 						<description id="${row}[title]" readonly="true" no_lang="1" options="b"/>
 						<description id="${row}[description]" no_lang="1"/>
+						<description id="${row}[recure]" no_lang="1"/>
 					</vbox>
 					<vbox>
 						<menulist>
@@ -44,8 +45,8 @@
 					</vbox>
 					<description id="${row}[parts]" readonly="true" no_lang="1"/>
 					<hbox>
-						<button image="view" label="view" id="view[$row_cont[id]]" statustext="View this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.view&amp;cal_id=$row_cont[id]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
-						<button image="edit" label="Edit" id="edit[$row_cont[id]]" statustext="Edit this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;cal_id=$row_cont[id]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
+						<button image="view" label="view" id="view[$row_cont[id]]" statustext="View this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.view&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
+						<button image="edit" label="Edit" id="edit[$row_cont[id]]" statustext="Edit this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
 						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this event" onclick="return confirm('Delete this event');"/>
 					</hbox>
 				</row>

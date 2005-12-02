@@ -194,6 +194,8 @@ class uilist extends uical
 			$readonlys['view['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_READ,$event);
 
 			$event['parts'] = implode(",\n",$this->bo->participants($event));
+			$event['recure'] = $this->bo->recure2string($event);
+			$event['date'] = $this->bo->date2string($event['start']);
 			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
 			$rows[] = $event;
