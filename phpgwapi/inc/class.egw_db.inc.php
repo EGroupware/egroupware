@@ -1317,7 +1317,14 @@
 						}
 						break;
 				}
-				$data = array_merge($where,$data);	// the checked values need to be inserted too, value in data has precedence
+				// the checked values need to be inserted too, value in data has precedence, also cant insert sql strings (numerical id)
+				foreach($where as $column => $value)
+				{
+					if (!is_numeric($column) && !isset($data[$column]))
+					{
+						$data[$column] = $value;
+					}
+				} 
 			}
 			$inputarr = false;
 			if ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB
