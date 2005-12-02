@@ -45,10 +45,10 @@
 		/**
 		 * constructor for categories class
 		 *
-		 * @param int $accountid=0 account id, default to current user
+		 * @param int/string $accountid='' account id or lid, default to current user
 		 * @param string $app_name='' app name defaults to current app
 		 */
-		function categories($accountid=0,$app_name = '')
+		function categories($accountid='',$app_name = '')
 		{
 			if (!$app_name) $app_name = $GLOBALS['egw_info']['flags']['currentapp'];
 
