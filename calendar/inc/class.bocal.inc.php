@@ -265,11 +265,12 @@ class bocal
 		$users = array();
 		foreach($params['users'] as $user)
 		{
-			if (in_array($user,$users)) continue;	// already added
-
 			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$user))
 			{
-				$users[] = $user;
+				if (!in_array($user,$users))	// already added?
+				{
+					$users[] = $user;
+				}
 			}
 			elseif ($GLOBALS['egw']->accounts->get_type($user) != 'g')
 			{
