@@ -781,8 +781,9 @@
 		function data2xmlrpc($data)
 		{
 			$data['rights'] = $this->so->grants[$data['info_owner']];
-
+			
 			// translate timestamps
+			if($data['info_enddate'] == 0) unset($data['info_enddate']);
 			foreach(array('info_startdate','info_enddate','info_datemodified') as $name)
 			{
 				if (isset($data[$name]))
