@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.2RC3
+%define version 1.2RC4
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -595,6 +595,15 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
+* Fri Dez 02 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC4-1
+- Bugfixes in Kalendar: Freetimesearch, disabled not working stuff under IE
+- MyDMS install: boolean columns are now created correct under mysql4+5
+- registration with email approval working again
+- workflow and vfs/filemanager fixed to deal with negative group-ids
+- setup: charset-conversation now via backup, deinstall & reinstall backup
+- xmlrpc: fixes in calendar and infolog
+- fixed several other bugs
+
 * Mon Nov 28 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC3-1
 - fixed registration app, is not longer in contrib now
 - fixed egroupware zip, which wrongly included the contrib stuff
