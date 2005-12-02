@@ -941,7 +941,7 @@
 			{
 				$GLOBALS['egw']->uiaccountsel =& CreateObject('phpgwapi.uiaccountsel');
 			}
-			$p->set_var('accounts',$GLOBALS['egw']->uiaccountsel->selection('account_user[]','admin_uiaccounts_user',$group_info['account_user'],'accounts',min(3+count($group_info['account_user']),10)));
+			$p->set_var('accounts',$GLOBALS['egw']->uiaccountsel->selection('account_user[]','admin_uiaccounts_user',$group_info['account_user'],'accounts',min(3+count($group_info['account_user']),10),false,'style="width: 300px;"'));
 
 			$var = Array(
 				'form_action'       => $GLOBALS['egw']->link('/index.php','menuaction=admin.boaccounts.'.($group_info['account_id']?'edit':'add').'_group'),

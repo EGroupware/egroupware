@@ -10,7 +10,7 @@
        {hidden_vars}
        <tr>
         <td>{lang_group_name}</td>
-        <td><input name="account_name" value="{group_name_value}"></td>
+        <td><input name="account_name" value="{group_name_value}" style="width: 300px;"></td>
        </tr>
 
        <tr>
