@@ -182,6 +182,7 @@ voice phone	addressbook	nl	Telefoon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	nl	WAARSCHUWING!! Alleen LDAP gebruiken als het adresboek niet wordt gebruikt om de accounts op te slaan!
 warning: all contacts found will be deleted!	addressbook	nl	WAARSCHUWING: Alle gevonden contactrecords worden verwijderd!
 work phone	addressbook	nl	Telefoon werk
+write (update or add) a single entry by passing the fields.	addressbook	nl	Schrijf (bijwerken of toevoegen) een record door de velden mee te geven.
 you are not permitted to delete contact %1	addressbook	nl	U bent niet bevoegd om contact %1 te verwijderen
 you are not permittet to delete this contact	addressbook	nl	U bent niet bevoegd om dit contactrecord te verwijderen
 you are not permittet to edit this contact	addressbook	nl	U bent niet bevoegd om dit contactrecord te wijzigen
