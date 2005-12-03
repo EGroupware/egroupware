@@ -17,9 +17,11 @@ a pattern to be searched for	etemplate	nl	een patroon waarnaar gezocht moet word
 accesskey	etemplate	nl	Accesskey
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	nl	Accesskeys kunnen ook gedefinieerd worden door een & in het label te plaatsen (bijvoorbeeld: &Naam)
 add a new column (after the existing ones)	etemplate	nl	Voeg een nieuwe kolom toe (achter de bestaande kolommen)
+add a new entry of the selected application	etemplate	nl	Voeg een nieuw record toe van de geselecteerde toepassing
 add a new multi-column index	etemplate	nl	Een nieuwe multi-column index toevoegen
 add column	etemplate	nl	Kolom toevoegen
 add index	etemplate	nl	Index toevoegen
+add new	etemplate	nl	Nieuwe toevoegen
 add table	etemplate	nl	Tabel toevoegen
 advanced search	etemplate	nl	Geavanceerd zoeken
 align	etemplate	nl	Uitlijnen
@@ -70,6 +72,7 @@ comment	etemplate	nl	Commentaar
 confirm	etemplate	nl	bevestigen
 confirmation message or custom javascript (returning true or false)	etemplate	nl	bevestigingsbericht of aangepast javascript (geeft true of false terug)
 confirmation necesary or custom java-script	etemplate	nl	bevestiging nodig of aangepast javascript
+contains	etemplate	nl	bevat
 create a new table for the application	etemplate	nl	Maak een nieuwe tabel voor de applicatie
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
 css class for the table-tag	etemplate	nl	CSS klasse voor de table-tag
@@ -91,11 +94,13 @@ deck	etemplate	nl	Deck (intern)
 default	etemplate	nl	Standaard
 delete a single entry by passing the id.	etemplate	nl	Verwijder een enkele invoer door het id mee te geven.
 delete all selected etemplates, without further inquiry	etemplate	nl	verwijder ALLE geselecteerde eTemplates, ZONDER verdere vragen te stellen
+delete and cut save the template!	etemplate	nl	verwijderen of knippen zorgen ervoor dat de template wordt opgeslagen!
 delete column	etemplate	nl	Kolom verwijderen
 delete index	etemplate	nl	Index verwijderen
 delete the spezified etemplate	etemplate	nl	Verwijder de gespecificeerde eTemplate
 delete this column	etemplate	nl	deze kolom verwijderen
 delete this etemplate	etemplate	nl	deze eTemplate verwijderen
+delete this file	etemplate	nl	Dit bestand verwijderen
 delete this row	etemplate	nl	deze rij verwijderen
 delete whole column (can not be undone!!!)	etemplate	nl	complete kolom verwijderen (dit kan  NIET ongedaan gemaakt worden!!!)
 deletes the above spez. etemplate from the database, can not be undone	etemplate	nl	verwijdert de hierboven gespecificeerde eTemplate uit de database, kan NIET ongedaan gemaakt worden
@@ -203,6 +208,7 @@ last	etemplate	nl	Laatste
 left	etemplate	nl	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	nl	lengte voor char+varchar, precisie integer 2,4,8 en decimalen 4,8
 link	etemplate	nl	Link
+linkentry	etemplate	nl	Linkitem
 linklist	etemplate	nl	Linklijst
 linkstring	etemplate	nl	LinkString
 linkto	etemplate	nl	LinkNaar
@@ -239,6 +245,7 @@ of	etemplate	nl	van
 onclick	etemplate	nl	onClick
 only an other version found !!!	etemplate	nl	alleen een andere versie gevonden !!!
 open the online help.	etemplate	nl	De online help openen.
+operator	etemplate	nl	Operator
 optional note about the link	etemplate	nl	optionele opmerking over de link
 options	etemplate	nl	Opties
 order to navigating by tab key through the form	etemplate	nl	Volgorde van TAB toets navigatie door het formulier

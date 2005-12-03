@@ -40,17 +40,17 @@ can't add alarms in the past !!!	calendar	nl	Herinneringen kunnen niet in het ve
 canceled	calendar	nl	Geannuleerd
 charset of file	calendar	nl	Karakterset van bestand
 close the window	calendar	nl	Venster sluiten
-common preferences	calendar	nl	Algemene voorkeuren
 compose a mail to all participants after the event is saved	calendar	nl	stel een email aan alle deelnemers op nadat de gebeurtenis is opgeslagen
 copy of:	calendar	nl	Kopie van:
 copy this event	calendar	nl	Kopieer deze gebeurtenis
 countries	calendar	nl	Landen
 country	calendar	nl	Land
+create an exception at this recuring event	calendar	nl	Maak een uitzondering op deze herhalende gebeurtenis
 create new links	calendar	nl	Nieuwe links aanmaken
 csv	calendar	nl	CSV
 csv-fieldname	calendar	nl	CSV-veldnaam
 csv-filename	calendar	nl	CSV-bestandsnaam
-custom fields	calendar	nl	Aangepaste velden
+custom fields	common	nl	Aangepaste velden
 daily	calendar	nl	Dagelijks
 days	calendar	nl	dagen
 days of the week for a weekly repeated event	calendar	nl	Dagen van de week voor een wekelijks herhalende gebeurtenis
@@ -69,7 +69,7 @@ delete this exception	calendar	nl	Deze uitzondering verwijderen
 delete this series of recuring events	calendar	nl	Deze serie herhalende gebeurtenissen verwijderen
 disinvited	calendar	nl	Uitnodiging teruggetrokken
 display status of events	calendar	nl	Status van afspraken weergeven
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	nl	Laat uw standaard agenda weergave zien op de startpagina (De pagina waarmee eGroupWare geopend wordt of die u krijgt als u op klikt op 'start'
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	nl	Laat uw standaard agenda weergave zien op de beginpagina (De pagina waarmee eGroupWare geopend wordt of die u krijgt als u op klikt op 'start'
 do you want a weekview with or without weekend?	calendar	nl	Wil je weekoverzicht met of zonder weekend?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	nl	Wilt u worden geinformeerd over nieuwe of gewijzigde afspraken? U wordt geïnformeerd over wijzigingen die u zelf heeft gemaakt.<br />U kunt de de notificaties beperken to alleen bepaalde wijzigingen. Elk item bevat alle notificaties hierboven weergegeven. "Alle wijzigingen" bevat wijziging va titel, beschrijving, deelnemers, maar niet reacties van deelnemers. Als de eigenaar van een afspraak verzocht heeft om een van de notificaties, zal hij of zij altijd reacties krijgen van de deelnemers zoals acceptaties en afwijzigingen.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	nl	Wilt u per email een periodieke overzichten ontvangen van uw afspraken? </br>Het overzicht wordt verzonden naar uw standaard emailadres op de ochtend dat de afspraak plaatsvind en op maandag voor wekelijkse overzichten. <br /> Er wordt alleen een overzicht verstuurd als er in die afspraken staan geregistreerd.
@@ -77,6 +77,7 @@ do you wish to autoload calendar holidays files dynamically?	admin	nl	Wilt u de 
 download	calendar	nl	Downloaden
 download this event as ical	calendar	nl	Download deze gebeurtenis als iCal
 duration of the meeting	calendar	nl	Duur van de bijeenkomst
+edit exception	calendar	nl	Uitzondering bewerken
 edit series	calendar	nl	Alles bewerken
 edit this event	calendar	nl	Deze gebeurtenis bewerken
 edit this series of recuring events	calendar	nl	De hele reeks herhalende gebeurtenissen bewerken
@@ -89,12 +90,15 @@ enddate of the export	calendar	nl	Einddatum van de export
 ends	calendar	nl	eindigt
 error adding the alarm	calendar	nl	Fout bij instellen van de herinnering
 error: importing the ical	calendar	nl	Fout: importing van de iCal
+error: no participants selected !!!	calendar	nl	Fout: geen deelnemers geselecteerd !!!
 error: saving the event !!!	calendar	nl	Fout: opslaan van de gebeurtenis !!!
+error: starttime has to be before the endtime !!!	calendar	nl	Fout: Begintijd moet voor de eindtijd liggen !!!
 event copied - the copy can now be edited	calendar	nl	Gebeurtenis gekopieerd - de kopie kan nu bewerkt worden
 event deleted	calendar	nl	Gebeurtenis verwijderd
 event details follow	calendar	nl	Afspraak details volgen
 event saved	calendar	nl	Gebeurtenis opgeslagen
 event will occupy the whole day	calendar	nl	Gebeurtenis duurt de hele dag
+exception	calendar	nl	Uitzondering
 exceptions	calendar	nl	Uitzonderingen
 existing links	calendar	nl	Bestaande links
 export	calendar	nl	Exporteren
@@ -125,7 +129,7 @@ holiday	calendar	nl	Vakantie
 holiday management	calendar	nl	Feestdagenbeheer
 holidays	calendar	nl	Vakanties
 hours	calendar	nl	uren
-how far to search (from startdate)	calendar	nl	hoe ver vooruit zoeken (vanaf de startdatum)
+how far to search (from startdate)	calendar	nl	hoe ver vooruit zoeken (vanaf de begindatum)
 ical	calendar	nl	iCal
 ical / rfc2445	calendar	nl	iCal / rfc2445
 ical export	calendar	nl	iCal export
@@ -148,7 +152,7 @@ links, attachments	calendar	nl	Links, bijlagen
 listview	calendar	nl	Lijstweergave
 location	calendar	nl	Plaats
 location to autoload from	admin	nl	Plaats om van te laden
-location, start- and endtimes, ...	calendar	nl	Plaats, start- en eindtijden
+location, start- and endtimes, ...	calendar	nl	Plaats, begin- en eindtijden
 mail all participants	calendar	nl	Stuur een email naar alle deelnemers
 make freebusy information available to not loged in persons?	calendar	nl	Maak vrij/bezet informatie beschikbaar voor nietingelogde personen?
 minutes	calendar	nl	minuten
@@ -164,7 +168,6 @@ no filter	calendar	nl	Geen filter
 no matches found	calendar	nl	Geen resultaten gevonden
 no response	calendar	nl	Geen Antwoord
 non blocking	calendar	nl	niet blokkerend
-not	calendar	nl	niet
 notification messages for added events	calendar	nl	Notificatieberichten voor toegevoegde afspraken
 notification messages for canceled events	calendar	nl	Notificatieberichten voor geannuleerde afspraken
 notification messages for disinvited participants	calendar	nl	Notificatieberichten voor deelnemers waarvan de uitnodiging is ingetrokken
@@ -174,7 +177,7 @@ notification messages for your responses	calendar	nl	Notificatieberichten voor u
 number of records to read (%1)	calendar	nl	Aantal records om te lezen (%1)
 observance rule	calendar	nl	Regel in acht neming
 occurence	calendar	nl	Gebeurtenis
-old startdate	calendar	nl	Oude startdatum
+old startdate	calendar	nl	Oude begindatum
 on %1 %2 %3 your meeting request for %4	calendar	nl	Op %1 %2 %3 uw afspraak aanvraag voor %4
 on all modification, but responses	calendar	nl	bij alle wijzigingen, behalve reacties
 on any time change too	calendar	nl	ook bij iedere wijziging van tijdstip
@@ -184,7 +187,7 @@ on time change of more than 4 hours too	calendar	nl	ook bij tijdswijziging van m
 one month	calendar	nl	één maand
 one week	calendar	nl	één week
 one year	calendar	nl	één jaar
-only the initial date of that recuring event is checked!	calendar	nl	Alleen de startdatum van die terugkerende gebeurtenis is gecontroleerd!
+only the initial date of that recuring event is checked!	calendar	nl	Alleen de begindatum van die terugkerende gebeurtenis is gecontroleerd!
 open todo's:	calendar	nl	Openstaande taken:
 overlap holiday	calendar	nl	vakantie overlapt
 participants	calendar	nl	Deelnemers
@@ -230,7 +233,6 @@ set new events to private	calendar	nl	Zet nieuwe afspraken op privé
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	nl	Moeten uitnodigingen die u heeft afgewezen nog steeds worden weergegeven in uw agenda? <br/> U kunt ze alleen achteraf nog accepteren als ze in uw agenda worden weergegeven! (bijv. wanneer een planningsconflict is verwijderd)
 should new events created as private by default ?	calendar	nl	Moeten nieuwe afspraken standaard als privé worden aangemaakt?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	nl	Moeten niet-ingelogde personen jouw vrij/bezet informatie kunnen bekijken? Je kunt een extra wachtwoord instellen dat afwijkt van je normale wachtwoord, om deze informatie af te beveiligen. De vrij/bezet informatie is in iCal formaat en bevat uitsluitend de tijdstippen waarop je bezet bent. Het bevat niet de naam, omschrijving of locatie van de afspraak. De URL naar jouw vrij/bezet informatie is %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://egw.omgs.net/calendar/freebusy.php?user=arjan&password=" target="_blank">https://egw.omgs.net/calendar/freebusy.php?user=arjan&password=</a>.*	calendar	nl	Moeten niet-ingelogde personen jouw vrij/bezet informatie kunnen bekijken? Je kunt een extra wachtwoord instellen dat afwijkt van je normale wachtwoord, om deze informatie af te beveiligen. De vrij/bezet informatie is in iCal formaat en bevat uitsluitend de tijdstippen waarop je bezet bent. Het bevat niet de naam, omschrijving of locatie van de afspraak. De URL naar jouw vrij/bezet informatie is %1.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	nl	Moet de status van de afspraak-deelnemers (accepteren, afwijzen, ...) worden weergegeven tussen haakjes achter elke de namen van de deelnemers?
 show default view on main screen	calendar	nl	Geeft standaard overzicht weer op beginscherm
 show invitations you rejected	calendar	nl	Uitnodigingen weergeven die zijn afgewezen
@@ -238,12 +240,11 @@ show list of upcoming events	calendar	nl	Lijst weergeven van toekomstige afsprak
 show this month	calendar	nl	toon deze maand
 show this week	calendar	nl	toon deze week
 single event	calendar	nl	enkele afspraak
-site configuration	calendar	nl	site configuratie
-start	calendar	nl	Start
-start date/time	calendar	nl	Startdatum/ -tijd
-startdate / -time	calendar	nl	Startdatum / -tijd
-startdate and -time of the search	calendar	nl	Startdatum en -tijd van de zoekopdracht
-startdate of the export	calendar	nl	Startdatum van de export
+start	calendar	nl	Begin
+start date/time	calendar	nl	Begindatum/ -tijd
+startdate / -time	calendar	nl	Begindatum / -tijd
+startdate and -time of the search	calendar	nl	Begindatum en -tijd van de zoekopdracht
+startdate of the export	calendar	nl	Begindatum van de export
 startrecord	calendar	nl	Startregel
 status changed	calendar	nl	Status gewijzigd
 submit to repository	calendar	nl	Naar repository inzenden
@@ -252,7 +253,7 @@ tentative	calendar	nl	op proef
 test import (show importable records <u>only</u> in browser)	calendar	nl	Test import (te impoteren records alleen in uw browser weergeven)
 this day is shown as first day in the week or month view.	calendar	nl	Deze dag wordt weergegeven als de eerste dag in de week- and maandweergave.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	nl	Dit definieert het einde van uw dagweergave. Afspraken die na deze tijd plaatsvinden worden  onderaan de dagweergave weergegeven.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	nl	Dit definieert het begin van uw dagweergave. Afspraken die voor deze tijd plaatsvinden worden boven de dagweergave weergegeven.<br />Deze tijd wordt ook gebruikt als standaard starttijd voor nieuwe afspraken.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	nl	Dit definieert het begin van uw dagweergave. Afspraken die voor deze tijd plaatsvinden worden boven de dagweergave weergegeven.<br />Deze tijd wordt ook gebruikt als standaard begintijd voor nieuwe afspraken.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	nl	Deze groep is voorgeselecteerd wanneer u de planner opent. U kunt deze selectie in de planner eventueel wijzigen.
 this message is sent for canceled or deleted events.	calendar	nl	Deze notificatie wordt verstuurd voor geannuleerde en verwijderde afspraken.
 this message is sent for modified or moved events.	calendar	nl	Deze notificatie wordt verstuurd voor gewijzigde afspraken.
@@ -286,6 +287,7 @@ weekview without weekend	calendar	nl	weekweergave zonder weekend
 which events do you want to see when you enter the calendar.	calendar	nl	Welke afspraken wilt u zien wanneer u de agenda opent?
 which of calendar view do you want to see, when you start calendar ?	calendar	nl	Welke agendaweergave wilt u zien wanneer u de agenda opent?
 whole day	calendar	nl	hele dag
+wk	calendar	nl	Wk
 work day ends on	calendar	nl	Werkdag eindigt om
 work day starts on	calendar	nl	Werkdag begint om
 yearly	calendar	nl	Jaarlijks

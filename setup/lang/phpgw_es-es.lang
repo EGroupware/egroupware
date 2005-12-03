@@ -108,6 +108,7 @@ contain	setup	es-es	contiene
 continue	setup	es-es	Continuar
 continue to the header admin	setup	es-es	Pasar a administrar encabezados
 convert	setup	es-es	Convertir
+convert backup to charset selected above	setup	es-es	Convertir la copia de seguridad al juego de caracteres seleccionado arriba
 could not open header.inc.php for writing!	setup	es-es	¡No se pudo abrir header.inc.php para escribir!
 country selection	setup	es-es	Seleccionar país
 create	setup	es-es	Crear
@@ -123,7 +124,7 @@ created	setup	es-es	creado
 created header.inc.php!	setup	es-es	¡Se ha creado el fichero header.inc.php!
 creating tables	setup	es-es	Creando tablas
 current system-charset	setup	es-es	Juego de caracteres actual del sistema
-current system-charset is %1, click %2here%3 to change it.	setup	es-es	El juego de caracteres del sistema es actualmente %1. Pulse %2aquí%3 para cambiarlo.
+current system-charset is %1.	setup	es-es	El juego de caracteres actual del sistema es %1.
 current version	setup	es-es	Versión actual
 currently installed languages: %1 <br />	setup	es-es	Idiomas instalados actualmente: %1 <br />
 database instance (egw domain)	setup	es-es	Instancia de la base de datos (dominio eGW)
@@ -460,6 +461,7 @@ this should be around 30 bytes in length.<br />note: the default has been random
 this stage is completed<br />	setup	es-es	Esta fase está completada<br />
 to a version it does not know about	setup	es-es	a una versión que no conoce
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	es-es	para permitir identificación por contraseña, añadir la línea siguiente al fichero pg_hba.conf (encima de las otras) Y reiniciar postgres:
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	es-es	Para cambiar el juego de caracteres: haga una copia de seguridad de la base de datos, desinstale todas las aplicaciones y reinstale la copia de seguridad marcando la opción "convertir la copia de seguridad al juego de caracteres seleccionado".
 to setup 1 admin account and 3 demo accounts.	setup	es-es	Para configurar una cuenta de administrador y 3 de invitado
 top	setup	es-es	parte superior
 translations added	setup	es-es	Traducciones añadidas
