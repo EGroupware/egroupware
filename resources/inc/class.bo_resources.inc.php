@@ -240,6 +240,11 @@ class bo_resources
 	 */
 	function delete($res_id)
 	{
+		if(!$this->acl->is_permitted($this->so->get_value('cat_id',$res_id),EGW_ACL_DELETE))
+		{
+			return lang('You are not permitted to delete this reource!');
+		}
+		
 		if ($this->so->delete(array('res_id'=>$res_id)))
 		{
 			$this->remove_picture($res_id);
