@@ -19,6 +19,7 @@
 				<column width="5%"/>
 				<column/>
 				<column width="8%"/>
+				<column disabled="@no_times"/>
 				<column width="8%"/>
 				<column width="12%"/>
 				<column width="3%" disabled="@no_actions"/>
@@ -37,6 +38,10 @@
 					<vbox>
 						<description value="Startdate"/>
 						<description value="Enddate"/>
+					</vbox>
+					<vbox>
+						<description value="Times"/>
+						<description class="planned" value="planned"/>
 					</vbox>
 					<vbox>
 						<description value="Owner"/>
@@ -61,6 +66,10 @@
 						<date id="${row}[info_startdate]" readonly="true"/>
 						<date class="$row_cont[end_class]" id="${row}[info_enddate]" readonly="true"/>
 					</vbox>
+					<vbox>
+						<date-duration id="${row}[info_used_time]" readonly="true" options=",,,,1"/>
+						<date-duration id="${row}[info_planned_time]" class="planned" readonly="true" options=",,,,1"/>
+					</vbox>
 					<vbox orient="0,0">
 						<menulist>
 							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
@@ -81,7 +90,7 @@
 					<hbox>
 						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
-						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
 					</hbox>
 				</row>
 			</rows>
@@ -93,6 +102,7 @@
 				<column width="2%"/>
 				<column/>
 				<column width="8%"/>
+				<column disabled="@no_times"/>
 				<column width="8%"/>
 				<column width="12%"/>
 				<column width="3%" disabled="@no_actions"/>
@@ -125,6 +135,10 @@
 						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
 					</vbox>
 					<vbox>
+						<nextmatch-sortheader label="Times" id="info_used_time"/>
+						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
+					</vbox>
+					<vbox>
 						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner"/>
 						<nextmatch-accountfilter id="info_responsible" options="Responsible" statustext="Select to filter by responsible"/>
 					</vbox>
@@ -147,6 +161,10 @@
 						<date-time options=",8" id="${row}[info_startdate]" readonly="true"/>
 						<date class="$row_cont[end_class]" id="${row}[info_enddate]" readonly="true"/>
 					</vbox>
+					<vbox>
+						<date-duration id="${row}[info_used_time]" readonly="true" options=",,,,1"/>
+						<date-duration id="${row}[info_planned_time]" class="planned" readonly="true" options=",,,,1"/>
+					</vbox>
 					<vbox orient="0,0">
 						<menulist>
 							<menupopup type="select-account" id="${row}[info_owner]" readonly="true"/>
@@ -167,7 +185,7 @@
 					<hbox>
 						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
-						<button image="done.gif" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry to done"/>
+						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
 					</hbox>
 				</row>
 			</rows>

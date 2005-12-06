@@ -37,6 +37,8 @@
 	 *   'no_files'     => // I  boolean suppress attach-files, default no
 	 *   'search_label' => // I  string label to use instead of search
 	 *   'link_label'   => // I  string label for the link button, default 'Link'
+	 *  // optional only for the link-add widget
+	 *   'extra'        => // I  array with extra parameters, eg. array('cat_id' => 15)
 	 * );
 	 *</code>
 	 *
@@ -207,7 +209,8 @@
 				$value['options-app'] = array();
 				foreach($apps as $app => $label)
 				{
-					$link = $GLOBALS['egw']->link('/index.php',$this->link->add($app,$value['to_app'],$value['to_id']));
+					$link = $GLOBALS['egw']->link('/index.php',$this->link->add($app,$value['to_app'],$value['to_id'])+
+						(is_array($value['extra']) ? $value['extra'] : array()));
 					if (($popup = $this->link->is_popup($app,'add')))
 					{
 						list($w,$h) = explode('x',$popup);

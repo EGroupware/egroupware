@@ -648,7 +648,7 @@
 		function cal_to_include($args)
 		{
 			//echo "<p>cal_to_include("; print_r($args); echo ")</p>\n";
-			$user = intval($args['owner']);
+			$user = (int) $args['owner'];
 			if ($user <= 0 && !checkdate($args['month'],$args['day'],$args['year']))
 			{
 				return False;

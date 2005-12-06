@@ -11,3 +11,4 @@
 .urgent_done { color:#800080; }
 .overdue { color:#cc0000; font-weight:bold; }
 .private { font-style:italic; }
+.planned { font-style:italic; }

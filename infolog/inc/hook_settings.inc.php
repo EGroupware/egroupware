@@ -97,6 +97,14 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
+		'show_times' => array(
+			'type'   => 'check',
+			'label'  => 'Show times',
+			'name'   => 'show_times',
+			'help'   => 'Show a column for used and planned times in the list.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
 	);
 
 	unset($show_entries);

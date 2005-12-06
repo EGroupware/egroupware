@@ -182,6 +182,7 @@ permission denied	infolog	en	Permission denied
 phone	infolog	en	Phone Call
 phone/email	infolog	en	Phone/Email
 phonecall	infolog	en	Phone Call
+planned	infolog	en	planned
 planned time	infolog	en	planned time
 priority	infolog	en	Priority
 private	infolog	en	Private
@@ -211,16 +212,18 @@ select an app to search in	infolog	en	Select an App to search in
 select an entry to link with	infolog	en	Select an entry to link with
 select to filter by owner	infolog	en	select to filter by owner
 select to filter by responsible	infolog	en	select to filter by responsible
-sets the status of this entry to done	infolog	en	Sets the status of this entry to done
+sets the status of this entry and its subs to done	infolog	en	Sets the status of this entry and its subs to done
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
+show a column for used and planned times in the list.	infolog	en	Show a column for used and planned times in the list.
 show full usernames	infolog	en	Show full usernames
 show in the infolog list	infolog	en	Show in the InfoLog list
 show list of upcoming entries	infolog	en	show list of upcoming entries
 show open entries: tasks/calls/notes on main screen	infolog	en	Show open entries: Tasks/Calls/Notes on main screen
+show times	infolog	en	Show times
 small view	infolog	en	small view
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Start Date

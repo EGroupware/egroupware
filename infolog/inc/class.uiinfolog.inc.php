@@ -154,6 +154,8 @@
 				'cat_id' => $values['cat_id'],
 				'order'  => $values['order'],
 				'sort'   => $values['sort'],
+				'action' => $values['action'],
+				'action_id' => $values['action_id'],
 				'col_filter' => $values['col_filter'],
 				'session_for' => $for
 			));
@@ -192,6 +194,7 @@
 				$rows[] = $info;
 			}
 			if ($query['no_actions']) $rows['no_actions'] = true;
+			if ($query['no_times']) $rows['no_times'] = true;
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 
@@ -232,6 +235,13 @@
 			{
 				$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
 				$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
+				if (!$action)
+				{
+					$session = $this->read_sessiondata();
+					$action = $session['action'];
+					$action_id = $session['action_id'];
+					unset($session);
+				}
 			}
 			//echo "<p>uiinfolog::index(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 			if (!is_array($values))
@@ -265,6 +275,10 @@
 				}
 				elseif ($values['cancel'] && $own_referer)
 				{
+					$session = $this->read_sessiondata();
+					unset($session['action']);
+					unset($session['action_id']);
+					$this->save_sessiondata($session);
 					$this->tmpl->location($own_referer);					
 				}
 				else
@@ -281,7 +295,7 @@
 							if (!($values['msg'] = $this->delete($do_id,$called_as,'index'))) return;
 							break;
 						case 'close':
-							return $this->close($do_id,$called_as);
+							return $this->close($do_id,$called_as,$do == 'close_subs');
 						case 'sp':
 							return $this->edit(0,'sp',$do_id,'',$called_as);
 						case 'view':
@@ -324,8 +338,9 @@
 			$values['nm']['bottom_too'] = True;
 			$values['nm']['never_hide'] = isset($GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide']) ? 
 				$GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
-			$persist['action'] = $values['nm']['action'] = $action;
-			$persist['action_id'] = $values['nm']['action_id'] = $action_id;
+			$values['nm']['no_times'] = !$GLOBALS['egw_info']['user']['preferences']['infolog']['show_times'];
+			$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
+			$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
 			$persist['called_as'] = $called_as;
 			$persist['own_referer'] = $own_referer;
 
@@ -355,6 +370,15 @@
 					'info_status' => 'done',
 				);
 				$this->bo->write($values);
+				
+				$query = array('action'=>'sp','action_id'=>$info_id);
+				foreach((array)$this->bo->search($query) as $info)
+				{
+					if ($info['info_id_parent'] == $info_id)	// search also returns linked entries!
+					{
+						$this->close($info['info_id'],$referer);	// we call ourselfs recursive to process subs from subs too
+					}
+				}
 			}
 			return $referer ? $this->tmpl->location($referer) : $this->index();
 		}
@@ -543,6 +567,7 @@
 				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
+				$cat_id    = get_var('cat_id',array('POST','GET'),0);
 				$ref=$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
 					$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.uiinfolog.index'));
 				$referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
@@ -550,6 +575,11 @@
 				//echo "<p>uiinfolog::edit: info_id=$info_id,  action='$action', action_id='$action_id', type='$type', referer='$referer'</p>\n";
 
 				$content = $this->bo->read( $info_id || $action != 'sp' ? $info_id : $action_id );
+				
+				if (is_numeric($_REQUEST['cat_id']))
+				{
+					$content['info_cat'] = (int) $_REQUEST['cat_id'];
+				}
 				$today = mktime(-$this->bo->tz_offset,0,0,date('m'),date('d'),date('Y'));	// time=00:00
 
 				if (intval($content['info_link_id']) > 0 && !$this->link->get_link($content['info_link_id']))

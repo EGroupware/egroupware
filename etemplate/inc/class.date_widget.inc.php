@@ -15,7 +15,7 @@
 	/**
 	 * eTemplate extension to input or display date and/or time values
 	 *
-	 * Contains the following widgets: Date, Date+Time, Time, Hour
+	 * Contains the following widgets: Date, Date+Time, Time, Hour, Duration
 	 *
 	 * Supported attributes: format[,options]
 	 *  format: ''=timestamp, or eg. 'Y-m-d H:i' for 2002-12-31 23:59
@@ -315,11 +315,12 @@
 		/**
 		 * pre-processing of the duration extension
 		 *
-		 * Options contain $data_format,$input_format,$hours_per_day,$empty_not_0
-		 *  - data_format: d = days, h = hours, default minutes
-		 *	- input_format: d = days, h = hours, default hours+days (selectbox), optional % = allow to enter a percent value (no conversation)
-		 *	- hours_per_day: default 8 (workday)
-		 *  - should the widget differ between 0 and empty, which get then returned as NULL
+		 * Options contain $data_format,$input_format,$hours_per_day,$empty_not_0,$short_labels
+		 *  1. data_format: d = days, h = hours, default minutes
+		 *	2. input_format: d = days, h = hours, default hours+days (selectbox), optional % = allow to enter a percent value (no conversation)
+		 *	3. hours_per_day: default 8 (workday)
+		 *  4. should the widget differ between 0 and empty, which get then returned as NULL
+		 *  5. short_labels use d/h instead of day/hour
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
@@ -333,7 +334,7 @@
 		{
 			//echo "<p>pre_process_duration($name,$value,...) cell[size]='$cell[size]'</p>\n";
 			$readonly = $readonlys || $cell['readonly'];
-			list($data_format,$input_format,$hours_per_day,$empty_not_0) = explode(',',$cell['size']);
+			list($data_format,$input_format,$hours_per_day,$empty_not_0,$short_labels) = explode(',',$cell['size']);
 			if (!$hours_per_day) $hours_per_day = 8; // workday is 8 hours
 			if (($percent_allowed = strstr($input_format,'%') !== false))
 			{
@@ -387,8 +388,8 @@
 				
 				$selbox =& $tpl->empty_cell('select',$cell_name.'[unit]');
 				$selbox['sel_options'] = array(
-					'h' => 'hours',
-					'd' => 'days',
+					'h' => $short_labels ? 'h' : 'hours',
+					'd' => $short_labels ? 'd' : 'days',
 				);
 				if ($cell['tabindex']) $selbox['tabindex'] = $cell['tabindex'];
 				
@@ -409,7 +410,8 @@
 			elseif (!$readonly || $value)
 			{
 				$cell['no_lang'] = 2;
-				$cell['label'] .= ($cell['label'] ? ' ' : '') . '%s '.($unit == 'h' ? lang('hours') : lang('days'));
+				$cell['label'] .= ($cell['label'] ? ' ' : '') . '%s '.($unit == 'h' ? ($short_labels ? 'h' : lang('hours')) : 
+					($short_labels ? 'd' : lang('days')));
 			}
 			return True;	// extra Label is ok
 		}
