@@ -72,6 +72,7 @@ comment	etemplate	es-es	Comentario
 confirm	etemplate	es-es	confirmar
 confirmation message or custom javascript (returning true or false)	etemplate	es-es	mensaje de confirmación o javascript personalizado (devolviendo 'true' o 'false')
 confirmation necesary or custom java-script	etemplate	es-es	confirmación necesaria o javascript personalizado
+contains	etemplate	es-es	contiene
 create a new table for the application	etemplate	es-es	Crear una tabla nueva para la aplicación
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	es-es	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
 css class for the table-tag	etemplate	es-es	clase CSS para la etiqueta de la tabla
@@ -207,6 +208,7 @@ last	etemplate	es-es	Última
 left	etemplate	es-es	Izquierda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	es-es	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
 link	etemplate	es-es	Enlace
+linkentry	etemplate	es-es	Entrada de enlace
 linklist	etemplate	es-es	Lista de enlaces
 linkstring	etemplate	es-es	Cadena de enlace
 linkto	etemplate	es-es	Enlace a
@@ -243,6 +245,7 @@ of	etemplate	es-es	de
 onclick	etemplate	es-es	onClick
 only an other version found !!!	etemplate	es-es	sólo se encontró otra versión
 open the online help.	etemplate	es-es	Abrir la ayuda en línea
+operator	etemplate	es-es	Operador
 optional note about the link	etemplate	es-es	nota opcional sobre el enlace
 options	etemplate	es-es	Opciones
 order to navigating by tab key through the form	etemplate	es-es	Orden al ir navegando pulsando el tabulador en el formulario
@@ -374,6 +377,3 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	es-es	fichero xml a importar
 xslt template	etemplate	es-es	Plantilla XSLT
 year	etemplate	es-es	Año
-1	etemplate	es-es	1
-2	etemplate	es-es	2
-3	etemplate	es-es	3

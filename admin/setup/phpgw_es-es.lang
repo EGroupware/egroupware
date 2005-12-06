@@ -196,6 +196,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	es-es	Forzar cuadro de selección
 forward also to	admin	es-es	reenviar también a
 forward email's to	admin	es-es	reenviar correos a
+forward emails to	admin	es-es	reenviar correos a
 forward only	admin	es-es	reenviar solamente
 global categories	common	es-es	Categorías globales
 group ?	admin	es-es	¿Grupo?
