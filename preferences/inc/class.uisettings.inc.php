@@ -125,6 +125,8 @@
 				{
 					$error = $this->bo->process_array($GLOBALS['egw']->preferences->forced, $forced,$this->bo->session_data['notifies'],$GLOBALS['type']);
 				}
+				
+				if (is_array($error)) $error = false;	// process_array returns the prefs-array on success
 
 				if(!$this->is_admin() || $error)
 				{
