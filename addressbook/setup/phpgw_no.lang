@@ -16,8 +16,9 @@ addressbook	common	no	Addressebok
 addressbook preferences	addressbook	no	Adressebok preferanser
 addressbook-fieldname	addressbook	no	Adressebok-Feltnavn
 addvcard	addressbook	no	Legg til VCard
-advances search	addressbook	no	Avansert søk
+advanced search	addressbook	no	Avansert søk
 alt. csv import	addressbook	no	Alt. CSV Import
+are you shure you want to delete this contact?	addressbook	no	Er du sikker på at du ønsker å slette denne kontakten?
 are you sure you want to delete this field?	addressbook	no	Er du sikker du vil slette dette feltet?
 bbs phone	addressbook	no	BBS Telefon
 birthday	common	no	Fødselsdag
@@ -47,6 +48,7 @@ contact saved	addressbook	no	Kontakt lagret
 contact settings	admin	no	Kontakt Innstillinger
 copied by %1, from record #%2.	addressbook	no	Kopiert av %1, fra rekke #%2.
 country	common	no	Land
+create new links	addressbook	no	Opprette nye lenker
 csv-fieldname	addressbook	no	CSV-Feltnavn
 csv-filename	addressbook	no	CSV-FIlnavn
 custom	addressbook	no	Egendefinert
@@ -55,15 +57,19 @@ debug output in browser	addressbook	no	Feilsøkingsmeldinger i webleser
 default filter	addressbook	no	Standard Filter
 delete a single entry by passing the id.	addressbook	no	Oppgi id for å slette ett enkelt innslag.
 department	common	no	Avdeling
+do your really want to delete this contact?	addressbook	no	Ønsker du virkelig å slette denne kontakten?
 doesn't matter	addressbook	no	Spiller ingen rolle
 domestic	addressbook	no	Innenlands
 download	addressbook	no	Last ned
 download export file (uncheck to debug output in browser)	addressbook	no	Last ned eksport fil (fjern hake for å se feilsøkingsinformasjon i webleser)
+download this contact as vcard file	addressbook	no	Last ned kontakten som en vCard-fil
 edit custom field	addressbook	no	Endre egendefinert felt
 edit custom fields	admin	no	Endre egendefinerte felter
 edit phonenumbers -	addressbook	no	Endre telefonnummere
+email & internet	addressbook	no	E-mail og Internett
 empty for all	addressbook	no	tom for alle
 enter the path to the exported file here	addressbook	no	Skriv inn sti til den eksporterte filen her
+existing links	addressbook	no	Eksisterende lenker
 export	addressbook	no	Eksporter
 export contacts	addressbook	no	Eksporter Kontakter
 export file name	addressbook	no	Eksport filnavn
@@ -109,6 +115,7 @@ ldap root dn for contacts	admin	no	LDAP root dn for kontakter
 ldap root pw for contacts	admin	no	LDAP root passord for kontakter
 ldif	addressbook	no	LDIF
 line 2	addressbook	no	Linje 2
+links	addressbook	no	Lenker
 list all categories	addressbook	no	Liste alle kategorier
 list all customfields	addressbook	no	Liste alle egendefinerte felt
 load vcard	addressbook	no	Last VCard
@@ -118,7 +125,7 @@ middle name	addressbook	no	Mellomnavn
 mobile	addressbook	no	Mobil
 mobile phone	addressbook	no	Mobiltelefon
 modem phone	addressbook	no	Modem Telefon
-more phonenumbers	addressbook	no	Flere telefonnummere
+more ...	addressbook	no	Mere...
 multiple vcard	addressbook	no	Flere VCard
 no vcard	addressbook	no	Ingen VCard
 number	addressbook	no	Nummer

@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	nl	%1 - %2 van %3 gebruikersaccounts
 %1 - %2 of %3 user groups	admin	nl	%1 - %2 van %3 gebruikersgroepen
+%1 acl records of not (longer) existing accounts deleted.	admin	nl	%1 ACL records van niet (meer) bestaande accounts zijn verwijderd.
 %1 not found or not executable !!!	admin	nl	%1 niet gevonden of niet uitvoerbaar!
 (default no, leave it off if you dont use it)	admin	nl	(standaard Nee, laat dit uit als je het niet gebruikt)
 (stored password will not be shown here)	admin	nl	(Opgeslagen wachtwoord word hier niet weergegeven)
@@ -90,6 +91,7 @@ color	admin	nl	Kleur
 country selection	admin	nl	Landenselectie
 create group	admin	nl	Groep aanmaken
 crontab only (recomended)	admin	nl	Alleen crontab (aanbevolen)
+custom fields	admin	nl	Aangepaste velden
 cyrus imap server	admin	nl	Cyrus IMAP Server
 data	admin	nl	Data
 day	admin	nl	Dag
@@ -185,6 +187,7 @@ error: %1 not found or other error !!!	admin	nl	Fout: %1 niet gevonden of een an
 expires	admin	nl	Verloopt
 explanation of ldapman	admin	nl	Deze module is getest voor POSTFIX, LDAP, Courier-IMAP en vereist de schema's CORE en QMAIL (OID7914). Meer details over het gebruik en configureren van dit systeem is te vinden in README.ldapman in de doc map van ADMIN.
 fallback (after each pageview)	admin	nl	terugval (na iedere paginaweergave)
+field '%1' already exists !!!	admin	nl	Veld '%1' bestaat al !!!
 file space	admin	nl	Bestandsruimte
 file space must be an integer	admin	nl	Bestandsruimte moet een integer zijn
 find and register all application hooks	admin	nl	Zoek en registreer alle 'Application Hooks'
@@ -193,6 +196,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	nl	Forceer Selectbox
 forward also to	admin	nl	ook doorsturen naar
 forward email's to	admin	nl	stuur emails door naar
+forward emails to	admin	nl	stuur emails door naar
 forward only	admin	nl	alleen doorsturen
 global categories	common	nl	Globale Categorieën
 group ?	admin	nl	groep?
@@ -259,6 +263,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	nl	Min. account id (bijv. 500 o
 minute	admin	nl	Minuut
 mode	admin	nl	Modus
 month	admin	nl	Maand
+name must not be empty !!!	admin	nl	Naam mag niet leeg zijn !!!
 new group name	admin	nl	Nieuwe groepsnaam
 new password [ leave blank for no change ]	admin	nl	Nieuw wachtwoord [Leeg laten om dit niet te wijzigen]
 next run	admin	nl	Volgende uitvoer
@@ -280,6 +285,7 @@ peer server list	admin	nl	Peer-serverlijst
 peer servers	admin	nl	Peer-servers
 percent of users that logged out	admin	nl	Percentage gebruikers dat uitlogt
 percent this user has logged out	admin	nl	Percentage dat deze gebruiker uitgelogd heeft
+permission denied	admin	nl	Rechten geweigerd
 permissions	admin	nl	Rechten
 permissions this group has	admin	nl	Rechten van deze groep
 phpinfo	admin	nl	PHP informatie
@@ -393,12 +399,14 @@ view this user	admin	nl	Deze gebruiker weergeven
 view user account	admin	nl	Gebruikersaccount weergeven
 who would you like to transfer all records owned by the deleted user to?	admin	nl	Wilt u tevens ALLE records in eigendom van de verwijderde gebruikers
 would you like egroupware to cache the egw info array ?	admin	nl	Wilt u eGroupWare de egw info array laten cachen ? (EXTREEM GEVAARLIJK!)
+would you like egroupware to cache the phpgw info array ?	admin	nl	Wilt u eGroupWare de phpgw info array laten cachen ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie<br />wanneer beheerders inloggen?
 would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor nieuwe toepassingensversies wanneer beheerders inloggen?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wilt u automatisch (bij inloggen) nieuwe taalbestanden laden?
 would you like to show each application's upgrade status ?	admin	nl	Wilt u bij de elke toepassing de upgradestatus weergeven?
 xml-rpc	admin	nl	XML-RPC
 you have entered an invalid expiration date	admin	nl	U heeft u een ongeldige verloopdatum ingevoerd.
+you have to enter a name, to create a new field!!!	admin	nl	U moet naam invoeren om een veld te kunnen aanmaken!!!
 you must add at least 1 permission or group to this account	admin	nl	U moet op z'n minst 1 permissie of groep toewijzen aan dit account.
 you must enter a group name.	admin	nl	U moet een groepsnaam invoeren.
 you must enter a lastname	admin	nl	U moet een achternaam invoeren.
