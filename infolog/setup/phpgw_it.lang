@@ -148,7 +148,7 @@ name must not be empty !!!	infolog	it	Il nome deve essere vuoto !!!
 name of new type to create	infolog	it	nome del tipo da creare
 never hide search and filters	infolog	it	Non nascondere mai ricerca e filtri
 new name	infolog	it	nuovo nome
-new search	infolog	it	Nuona ricerca
+new search	infolog	it	Nuova ricerca
 no - cancel	infolog	it	No - Annulla
 no describtion, links or attachments	infolog	it	nessuna descrizione, collegamenti o allegati
 no entries found, try again ...	infolog	it	nessun risulato, prova ancora...
@@ -211,15 +211,18 @@ select an app to search in	infolog	it	Seleziona un'applicazione un cui cercare
 select an entry to link with	infolog	it	Seleziona una voce da linkare con
 select to filter by owner	infolog	it	seleziona per filtrare per proprietario
 select to filter by responsible	infolog	it	seleziona per filtrare per responsabile
-sets the status of this entry to done	infolog	it	Imposta stato di questa voce a completato
+sets the status of this entry and its subs to done	infolog	it	Imposta lo stato di questa voce e delle sue sotto- a fatto
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	it	InfoLog deve visualizzare le voci aperte - i ToDo non finiti, chiamate o note - nella schermata principale. Funziona solo se non hai selezionato una applicazione per la schermata principale (nelle preferenze).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	it	InfoLog deve visualizzare i sub ToDo, -chiamate o note nella vista normale o no. Potrai sempre visualizzare i Subs attraverso i loro padri.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	it	Deve Infolog mostrare i link ad altre apllicazioni e/o gli allegati nella lista Infolog (vista normale quando entri in Infolog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	it	InfoLog deve usare i nomi completi (nome e cognome) o solo il nome utente.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	it	questa voce deve essere visibile solo alle persone a cui garatisci accesso privato attraverso la ACL
+show a column for used and planned times in the list.	infolog	it	Mostra una colonna per i tempi utilizzati e pianificati nella lista.
 show full usernames	infolog	it	Mostra nomi utente completi
 show in the infolog list	infolog	it	Visualizza nella lista di InfoLog
 show list of upcoming entries	infolog	it	visualizza la lista delle voci imminenti
 show open entries: tasks/calls/notes on main screen	infolog	it	Mostra voci aperte: Compiti/Chiamate/Note sulla videata principale
+show times	infolog	it	Mostra tempi
 small view	infolog	it	vista ridotta
 start a new search, cancel this link	infolog	it	inizia una nuova ricerca, annulla questo link
 startdate	infolog	it	Data Inizio
@@ -228,12 +231,15 @@ startrecord	infolog	it	Record Iniziale
 status	infolog	it	Stato
 status ...	infolog	it	Stato ...
 sub	infolog	it	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	it	Le sotto-voci diventano sotto- di voci superiori o voci principali, se non c'è più superiore
 subject	infolog	it	Oggetto
 task	infolog	it	ToDo
 test import (show importable records <u>only</u> in browser)	infolog	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
-the text displayed to the user	infolog	it	il testo visualizzato all'utente
+the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	it	il nome usato internamente (<= 10 caratteri), cambiandolo rende i dati esistenti indisponibili
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	it	il nome usato internamente (<= 20 caratteri), cambiandolo rende i dati esistenti indisponibili
+the text displayed to the user	infolog	it	il testo mostrato all'utente
 this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	it	Questo è il filtro che InfoLog quando entri nell'applicazione. I filtri limitano le voci visualizzate nella voce corrente. Ci sono filtri per visualizzare sono quelli finiti, ancora aperti o futuri sia tuoi che degli altri utenti.
-til when should the todo or phonecall be finished	infolog	it	esegue quando il ToDo o la Chiamata Telefonica è finita
+til when should the todo or phonecall be finished	infolog	it	esegue fino a quando il ToDo o la Chiamata Telefonica è finita
 times	infolog	it	Tempi
 to many might exceed your execution-time-limit	infolog	it	troppi potrebbero superare il limite del tempo di esecuzione
 today	infolog	it	Oggi
@@ -244,8 +250,8 @@ typ '%1' already exists !!!	infolog	it	Il tipo '%1' esiste già !!!
 type	infolog	it	Tipo
 type ...	infolog	it	Tipo ...
 type of the log-entry: note, phonecall or todo	infolog	it	Tipo di log per la voce: Note, Chiamate o ToDo
-unlink	infolog	it	Unlink
-upcoming	infolog	it	imminenti
+unlink	infolog	it	annulla link
+upcoming	infolog	it	imminente
 urgency	infolog	it	Urgenza
 urgent	infolog	it	urgente
 used time	infolog	it	tempo impiegato

@@ -1,6 +1,6 @@
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti
 %1 is not executable by the webserver !!!	common	it	%1 non è eseguibile dal webserver !!!
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite multiutente, web-based scritta in %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	it	%1eGroupWare%2 è una suite di collaborazione multiutente, web-based scritta in %3PHP%4.
 (shift-)click or drag to change value	jscalendar	it	(Shift-)Click o trascina per cambiare valore
 - click on any of the time parts to increase it	jscalendar	it	- Clicca su qualunque parte della data per aumentarla
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Tieni premuto il tasto del mouse su uno dei pulsanti soprastanti per una selezione veloce.
@@ -13,6 +13,13 @@
 3 number of chars for day-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Giorno
 3 number of chars for month-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Mese
 80 (http)	admin	it	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	it	\n Ordinamento sorgente HTML in corso, prego attendere...
+_delete row	htmlarea-ContextMenu	it	_Cancella Riga
+_image properties...	htmlarea-ContextMenu	it	_Proprietà Immagine
+_modify link...	htmlarea-ContextMenu	it	_Modifica Link
+_remove link...	htmlarea-ContextMenu	it	_Rimuovi Link
+_table properties...	htmlarea-ContextMenu	it	_Proprietà Tabella
+a editor instance must be focused before using this command.	tinymce	it	Un'istanza dell'editor deve essere focalizzata prima di utilizzare questo comando.
 about	common	it	Info
 about %1	common	it	Info su %1
 about the calendar	jscalendar	it	Informazioni sull'Agenda
@@ -45,7 +52,10 @@ alignment	tinymce	it	Allineamento
 all	common	it	Tutto
 all fields	common	it	tutti i campi
 all four sides	htmlarea-TableOperations	it	Tutti e quattro i lati
+all occurrences of the search string was replaced.	tinymce	it	Tutte le occorrenze della stringa di ricerca sono state sostituite.
 alphabet	common	it	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	it	Foglio di stile alternativo:
+alternative image	tinymce	it	Immagine alternativa
 american samoa	common	it	SAMOA AMERICANA
 andorra	common	it	ANDORRA
 angola	common	it	ANGOLA
@@ -54,8 +64,8 @@ antarctica	common	it	ANTARTIDE
 antigua and barbuda	common	it	ANTIGUA E BARBUDA
 apply	common	it	Applica
 april	common	it	Aprile
-are you sure you want to delete these entries ?	common	it	Sei sicuro di voler cancellare queste voci ?
-are you sure you want to delete this entry ?	common	it	Sei sicuro di voler cancellare questa voce?
+are you sure you want to delete these entries ?	common	it	Vuoi davvero cancellare queste voci ?
+are you sure you want to delete this entry ?	common	it	Vuoi davvero cancellare questa voce?
 argentina	common	it	ARGENTINA
 armenia	common	it	ARMENIA
 aruba	common	it	ARUBA
@@ -103,6 +113,7 @@ bulgaria	common	it	BULGARIA
 bulleted list	htmlarea	it	Elenco Puntato
 burkina faso	common	it	BURKINA FASO
 burundi	common	it	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	it	_Proprietà Cella...
 calendar	common	it	Agenda
 cambodia	common	it	CAMBOGIA
 cameroon	common	it	CAMEROON
@@ -126,10 +137,13 @@ chad	common	it	CHAD
 change	common	it	Cambia
 char	htmlarea-TableOperations	it	Carattere
 charset	common	it	iso-8859-1
+chec_k link...	htmlarea-ContextMenu	it	_Controlla Link...
 check installation	common	it	Controlla installazione
 check now	common	it	Controlla Adesso
 chile	common	it	CILE
 china	common	it	CINA
+choose directory to move selected folders and files to.	tinymce	it	Scegli la directory in cui spostare le cartelle e i file selezionati.
+choose list style type (for ordered lists)	htmlarea-ListType	it	Scegli il tipo di stile elenco (per elenchi ordinati)
 choose the category	common	it	Scegli la categoria
 choose the parent category	common	it	Scegli la categoria superiore
 christmas island	common	it	ISOLA DI NATALE
@@ -157,7 +171,7 @@ cook islands	common	it	ISOLE COOK
 copy	common	it	Copia
 copy selection	htmlarea	it	Copia la selezione
 copy table row	tinymce	it	Copy table row
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copia/Taglia/Incolla non sono disponibili in Mozilla e Firefox.\nVuoi ulteriori informazioni  al riguardo?
 costa rica	common	it	COSTA RICA
 cote d ivoire	common	it	COSTA D'AVORIO
 create	common	it	Crea
@@ -169,7 +183,7 @@ currency	common	it	Valuta
 current	common	it	Attuale
 current style	htmlarea	it	Stile corrente
 current url is	htmlarea-ContextMenu	it	URL attuale è
-current users	common	it	Utenti attivi
+current users	common	it	Utenti attuali
 cut	htmlarea-ContextMenu	it	Taglia
 cut selection	htmlarea	it	Taglia la selezione
 cut table row	tinymce	it	Cut table row
@@ -180,6 +194,7 @@ date due	common	it	Data richiesta
 date modified	tinymce	it	Data modifica
 date selection:	jscalendar	it	Selezione data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.<br>Se utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	it	_Cancella Colonna
 december	common	it	Dicembre
 decimal numbers	htmlarea-ListType	it	Numeri decimali
 decrease indent	htmlarea	it	Riduci Rientro
@@ -208,6 +223,7 @@ display %s first	jscalendar	it	Mostra prima %1
 djibouti	common	it	DJIBOUTI
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sotto-categorie?
 do you want to use the wysiwyg mode for this textarea?	tinymce	it	Vuoi usare la modalit\u00E0 WYSIWYG per questa textarea?
+doctype:	common	it	TIPO DOCUMENTO:
 document properties	common	it	Proprietà documento
 document title:	common	it	Titolo documento:
 domain	common	it	Dominio
@@ -256,6 +272,13 @@ february	common	it	Febbraio
 fg color	htmlarea-TableOperations	it	Colore Principale
 fields	common	it	Campi
 fiji	common	it	FIJI
+file already exists. file was not uploaded.	tinymce	it	Il file esiste già. Il file non è stato caricato.
+file exceeds the size limit	tinymce	it	Il file eccede le dimensioni limite.
+file manager	tinymce	it	Gestione File
+file not found.	tinymce	it	File non trovato.
+file was not uploaded.	tinymce	it	Il file non è stato caricato.
+file with specified new name already exists. file was not renamed/moved.	tinymce	it	Un file con il nuovo nome specificato esiste già. Il file non è stato rinominato/spostato.
+file(s)	tinymce	it	file
 file:	tinymce	it	File:
 files	common	it	File
 files with this extension are not allowed.	tinymce	it	File con questa estensione non sono permessi.
@@ -281,6 +304,8 @@ folder name missing.	tinymce	it	Nome cartella mancante.
 folder not found.	tinymce	it	Cartella non trovata.
 folder(s)	tinymce	it	cartella/e
 font color	htmlarea	it	Colore Carattere
+for mouse out	tinymce	it	per mouse out
+for mouse over	tinymce	it	per mouse over
 force selectbox	common	it	Forza Casella di Selezione
 frames	htmlarea-TableOperations	it	Frames
 france	common	it	FRANCIA
@@ -338,22 +363,26 @@ how did you get here? (please report!)	htmlarea-ContextMenu	it	Come sei arrivato
 how many columns would you like to merge?	htmlarea-TableOperations	it	Quante colonne vuoi unire?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	it	Quante icone visualizzare nella barra di navigazione (in cima alla pagina). Le icone addizionali vanno in un menù pulldown, richiamabile dall'icona all'estrema destra della barra di navigazione.
 how many rows would you like to merge?	htmlarea-TableOperations	it	Quante righe vuoi unire?
+html tidy	htmlarea-HtmlTidy	it	HTML Ordinato
 htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	it	HTMLArea si rifiuta codardamente di cancellare l'ultima cella nella riga.
 htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	it	HTMLArea si rifiuta codardamente di cancellare l'ultima colonna nella tabella.
 htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	it	HTMLArea si rifiuta codardamente di cancellare l'ultima riga nella tabella.
 hungary	common	it	UNGHERIA
 i will open it in a new page.	htmlarea-SpellChecker	it	Lo aprirÃ² in una nuova pagina.
+i_nsert row before	htmlarea-ContextMenu	it	_Inserisci Riga Prima
 iceland	common	it	ISLANDA
 ignore	htmlarea-SpellChecker	it	Ignora
 ignore all	htmlarea-SpellChecker	it	Ignora sempre
 image description	tinymce	it	Descrizione immagine
 image title	tinymce	it	Titolo immagine
 image url	common	it	URL immagine
+in_sert row after	htmlarea-ContextMenu	it	_Inserisci Riga Dopo
 increase indent	htmlarea	it	Aumenta Rientro
 indent	tinymce	it	Indenta
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
 insert	tinymce	it	Inserisci
+insert / edit flash movie	tinymce	it	Inserisci / modifica Filmato Flash
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert cell after	htmlarea-TableOperations	it	Inserisci cella dopo
 insert cell before	htmlarea-TableOperations	it	Inserisci cella prima
@@ -569,6 +598,7 @@ personal	common	it	Personale
 peru	common	it	PERU
 philippines	common	it	FILIPPINE
 phone number	common	it	numero telefonico
+phpgwapi	common	it	API eGroupWare
 pitcairn	common	it	PITCAIRN
 pixels	htmlarea-TableOperations	it	pixels
 please %1 by hand	common	it	Per favore %1 a mano

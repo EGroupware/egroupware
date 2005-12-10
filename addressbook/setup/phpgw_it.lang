@@ -46,7 +46,7 @@ contact	common	it	Contatto
 contact application	admin	it	Applicativo Contatti
 contact saved	addressbook	it	Contatto salvato
 contact settings	admin	it	Impostazioni Contatto
-copied by %1, from record #%2.	addressbook	it	Copiato %1, dal record #%2.
+copied by %1, from record #%2.	addressbook	it	Copiato %1, dal record n.%2.
 country	common	it	Nazione
 create new links	addressbook	it	Crea nuovi collegamenti
 csv-fieldname	addressbook	it	CSV-Nome del Campo
@@ -56,10 +56,10 @@ custom fields	addressbook	it	Campi Personalizzati
 debug output in browser	addressbook	it	Visualizza nel browser
 default filter	addressbook	it	Filtro predefinito
 delete a single entry by passing the id.	addressbook	it	Cancella un singola voce passando l'ID.
-department	common	it	Divisione
+department	common	it	Dipartimento
 do your really want to delete this contact?	addressbook	it	Vuoi davvero eliminare questo contatto
 doesn't matter	addressbook	it	non importa
-domestic	addressbook	it	Interno
+domestic	addressbook	it	Nazionale
 download	addressbook	it	Download
 download export file (uncheck to debug output in browser)	addressbook	it	Download del file export (Deseleziona per visualizzarlo nel browser)
 download this contact as vcard file	addressbook	it	scarica questo contatto come file vCard
@@ -68,7 +68,7 @@ edit custom fields	admin	it	Modifica campi personalizzati
 edit phonenumbers -	addressbook	it	Modifica Numeri telefonici -
 email & internet	addressbook	it	Email e Internet
 empty for all	addressbook	it	per tutti vuoto
-enter the path to the exported file here	addressbook	it	Inserisci qui il path del file esportato
+enter the path to the exported file here	addressbook	it	Inserisci qui il percorso per il file esportato
 existing links	addressbook	it	Collegamenti esistenti
 export	addressbook	it	esporta
 export contacts	addressbook	it	Esporta Contatti
@@ -154,6 +154,10 @@ select the type of conversion:	addressbook	it	Seleziona il tipo di conversione:
 select where you want to store	admin	it	Seleziona dove vuoi memorizzare
 show	addressbook	it	Mostra
 show birthday reminders on main screen	addressbook	it	Visualizza i promemoria dei compleanni nella schermata principale
+something went wrong by deleting %1	addressbook	it	Qualcosa non ha funzionato cancellando %1
+something went wrong by deleting this contact	addressbook	it	Qualcosa non ha funzionato cancellando questo contatto
+something went wrong by reading this contact	addressbook	it	Qualcosa non ha funzionato leggendo questo contatto
+something went wrong by saving this contact. errorcode %1	addressbook	it	Qualcosa non ha funzionato salvando questo contatto. Codice errore %1
 startrecord	addressbook	it	Record Iniziale
 state	common	it	Provincia
 street	common	it	Via
@@ -163,8 +167,8 @@ tel home	addressbook	it	tel abitazione
 test import (show importable records <u>only</u> in browser)	addressbook	it	Test importazione (mostra <u>solo</u> record importabili nel browser)
 that field name has been used already !	addressbook	it	Il nome di campo è già stato utilizzato
 this person's first name was not in the address book.	addressbook	it	Il nome di questa persona non era nella rubrica.
-this person's last name was not in the address book.	addressbook	it	Il cognome di questa persona non è nella rubrica
-to many might exceed your execution-time-limit	addressbook	it	troppi potrebbero superare il limite del tempo di esecuzione
+this person's last name was not in the address book.	addressbook	it	Il cognome di questa persona non era nella rubrica.
+to many might exceed your execution-time-limit	addressbook	it	troppi potrebbero far superare il tempo-limite-esecuzione
 today is %1's birthday!	common	it	Oggi è il compleanno di %1!
 tomorrow is %1's birthday.	common	it	Domani è il compleanno di %1.
 translation	addressbook	it	Traduzione
@@ -173,11 +177,16 @@ use country list	addressbook	it	Usa la lista delle nazioni
 vcard	common	it	VCard
 vcards require a first name entry.	addressbook	it	Le VCard richiedono un valore per il nome.
 vcards require a last name entry.	addressbook	it	Le Vcards richiedono un valore per il cognome
-video phone	addressbook	it	Videotelefono
+video phone	addressbook	it	Telefono Video
 voice phone	addressbook	it	Telefono Vocale
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	it	ATTENZIONE!! LDAP è utilizzabile solo se NON stai usando i contatti per la memorizzazione dei dati sugli account!
+warning: all contacts found will be deleted!	addressbook	it	ATTENZIONE: Tutti i contatti trovati saranno cancellati!
 work phone	addressbook	it	Telefono Ufficio
-you must select a vcard. (*.vcf)	addressbook	it	Bisogna selezionare una vcard (*.vcf)
-you must select at least 1 column to display	addressbook	it	Bisogna selezionare almeno una colonna da visualizzare
+you are not permitted to delete contact %1	addressbook	it	Non hai il permesso di cancellare il contatto %1
+you are not permittet to delete this contact	addressbook	it	Non hai il permesso di cancellare questo contatto
+you are not permittet to edit this contact	addressbook	it	Non hai il permesso di modificare questo contatto
+you are not permittet to view this contact	addressbook	it	Non hai il permesso di visualizzare questo contatto
+you must select a vcard. (*.vcf)	addressbook	it	Devi selezionare una vcard (*.vcf)
+you must select at least 1 column to display	addressbook	it	Devi selezionare almeno una colonna da visualizzare
 zip code	common	it	CAP
 zip_note	addressbook	it	<p><b>Note:</b> Il file deve essere uno zip contentente file .csv, .vcf, o .ldif.  Tuttavia, non mischiare i tipi di file da importare
