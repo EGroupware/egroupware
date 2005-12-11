@@ -140,7 +140,7 @@
 	/*
 	** Migrate preferences
 	** @param $appname, $var_old, $var_new, $type='user'
-	**  
+	**
 	*/
 	function migrate_pref($appname,$var_old,$var_new,$type='user')
 	{
@@ -153,7 +153,7 @@
 		{
 			$types = $allowedtypes;
 		}
-		elseif(in_array($type,$allowedtypes)) 
+		elseif(in_array($type,$allowedtypes))
 		{
 			$types[] = $type;
 		}
@@ -198,7 +198,7 @@
 
 	/*
 	** Display application hooks
-	**  
+	**
 	*/
 
 	$GLOBALS['tpl']->pfp('out','begin_table');
@@ -224,7 +224,7 @@
 				$thisd = 1;
 				break;
 			}
-			else 
+			else
 			{
 				$_thisd = (int)$GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck];
 				if($_thisd>0)
@@ -269,8 +269,8 @@
 				$tropen = 0;
 				$lastd = 0;
 				$curcol = 1;
-			} 
-			else 
+			}
+			else
 			{
 				$lastd = $thisd;
 			}
@@ -298,8 +298,6 @@
 	//_debug_array($GLOBALS['egw_info']['user']['preferences']);
 
 	//$GLOBALS['egw']->common->debug_phpgw_info();
-	//$GLOBALS['egw']->common->debug_list_core_functions(); 
-	$GLOBALS['egw']->common->egw_footer(); 
+	//$GLOBALS['egw']->common->debug_list_core_functions();
+	$GLOBALS['egw']->common->egw_footer();
 ?>
-
-
