@@ -27,7 +27,17 @@
 			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'title'  => $title,
-			'type'   => 'section',
+			'type'   => 'section'
+		);
+	}
+
+	function create_subsection($title)
+	{
+		$GLOBALS['settings'][] = array(
+			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'xmlrpc' => True,	// make everything availible via xmlrpc
+			'title'  => $title,
+			'type'   => 'subsection'
 		);
 	}
 
@@ -36,7 +46,7 @@
 		$GLOBALS['settings'][$name] = array(
 			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
-			'type'   => 'input',
+			'type'   => 'input'
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
@@ -52,7 +62,7 @@
 		$GLOBALS['settings'][$name] = array(
 			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
-			'type'   => 'password',
+			'type'   => 'password'
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
@@ -68,7 +78,7 @@
 		$GLOBALS['settings'][$name] = array(
 			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
-			'type'   => 'text',
+			'type'   => 'text'
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
@@ -84,7 +94,7 @@
 		$GLOBALS['settings'][$name] = array(
 			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
-			'type'   => 'select',
+			'type'   => 'select'
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
@@ -100,7 +110,7 @@
 		$GLOBALS['settings'][$name] = array(
 			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
-			'type'   => 'check',
+			'type'   => 'check'
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{
@@ -116,7 +126,7 @@
 		$GLOBALS['settings'][$name] = array(
 			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
-			'type'   => 'notify',
+			'type'   => 'notify'
 		);
 		foreach(array('label','name','help','default','size','maxsize','type','run_lang','rows','cols','values','subst_help') as $var)
 		{

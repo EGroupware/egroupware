@@ -188,6 +188,9 @@
 					case 'section':
 						$this->create_section($valarray['title']);
 						break;
+					case 'subsection':
+						$this->create_subsection($valarray['title']);
+						break;
 					case 'input':
 						$this->create_input_box(
 							$valarray['label'],
