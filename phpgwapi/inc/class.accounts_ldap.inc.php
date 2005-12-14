@@ -53,7 +53,8 @@
 				$GLOBALS['egw']->translation =& CreateObject('phpgwapi.translation');
 			}
 			$this->user_context  = $GLOBALS['egw_info']['server']['ldap_context'];
-			$this->group_context = $GLOBALS['egw_info']['server']['ldap_group_context'];
+			$this->group_context = $GLOBALS['egw_info']['server']['ldap_group_context'] ? 
+				$GLOBALS['egw_info']['server']['ldap_group_context'] : $GLOBALS['egw_info']['server']['ldap_context'];
 		}
 
 		function read_repository()
