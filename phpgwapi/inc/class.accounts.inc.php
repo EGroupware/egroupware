@@ -116,6 +116,7 @@
 			{
 				$this->db = clone($GLOBALS['egw']->db);
 			}
+			$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
 
 			if($account_id != '')
 			{
@@ -542,10 +543,10 @@
 		/**
 		 * Using the common functions next_id and last_id, find the next available account_id
 		 *
-		 * NOTE: to my knowledge this is not used any more RalfBecker 2004/06/15
+		 * NOTE: only used for the creation of LDAP accounts
 		 *
-		 * @deprecated 
 		 * @param $string $account_type='u' (optional, default to 'u')
+		 * @return int/boolean interger account_id or false if none is free anymore
 		 */
 		function get_nextid($account_type='u')
 		{
@@ -555,44 +556,26 @@
 			if ($account_type == 'g')
 			{
 				$type = 'groups';
+				$sign = -1;
 			}
 			else
 			{
 				$type = 'accounts';
+				$sign = 1;
 			}
-			$nextid = (int)$GLOBALS['egw']->common->last_id($type,$min,$max);
-
 			/* Loop until we find a free id */
-			$free = 0;
-			while (!$free)
+			do
 			{
-				$account_lid = '';
-				//echo '<br>calling search for id: '.$nextid;
-				if ($this->exists($nextid))
-				{
-					$nextid = (int)$GLOBALS['egw']->common->next_id($type,$min,$max);
-				}
-				else
-				{
-					$account_lid = $this->id2name($nextid);
-					/* echo '<br>calling search for lid: '.$account_lid . '(from account_id=' . $nextid . ')'; */
-					if ($this->exists($account_lid))
-					{
-						$nextid = (int)$GLOBALS['egw']->common->next_id($type,$min,$max);
-					}
-					else
-					{
-						$free = True;
-					}
-				}
-			}
-			if	($GLOBALS['egw_info']['server']['account_max_id'] &&
-				($nextid > $GLOBALS['egw_info']['server']['account_max_id']))
+				$account_id = (int) $GLOBALS['egw']->common->next_id($type,$min,$max);
+			} 
+			while ($account_id && $this->exists($sign * $account_id));	// check need to include the sign!
+
+			if	(!$account_id || $GLOBALS['egw_info']['server']['account_max_id'] &&
+				$account_id > $GLOBALS['egw_info']['server']['account_max_id'])
 			{
 				return False;
 			}
-			/* echo '<br>using'.$nextid;exit; */
-			return $nextid;
+			return $account_id;
 		}
 
 		/**
