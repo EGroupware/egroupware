@@ -26,7 +26,7 @@
 	/* $Id$ */
 
 	/**
-	 * Class for handling user and group accounts
+	 * Class for handling user and group accounts in SQL
 	 */
 	class accounts_
 	{
@@ -38,15 +38,6 @@
 
 		function accounts_()
 		{
-			if (is_object($GLOBALS['egw_setup']))
-			{
-				$this->db = clone($GLOBALS['egw_setup']->db);
-			}
-			else
-			{
-				$this->db = clone($GLOBALS['egw']->db);
-			}
-			$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
 		}
 
 		function list_methods($_type='xmlrpc')
@@ -88,12 +79,10 @@
 		 */
 		function read_repository()
 		{
-			$this->db->select($this->table,'*',array('account_id'=>$this->account_id),__LINE__,__FILE__);
-			$this->db->next_record();
+			$this->db->select($this->table,'*',array('account_id'=>abs($this->account_id)),__LINE__,__FILE__);
 
-			$this->data['userid']            = $this->db->f('account_lid');
-			$this->data['account_id']        = $this->db->f('account_id');
-			$this->data['account_lid']       = $this->db->f('account_lid');
+			$this->data['account_id']        = $this->db->next_record() ? $this->account_id : null;
+			$this->data['account_lid']       = $this->data['userid'] = $this->db->f('account_lid');
 			$this->data['firstname']         = $this->db->f('account_firstname');
 			$this->data['lastname']          = $this->db->f('account_lastname');
 			$this->data['fullname']          = $this->db->f('account_firstname') . ' ' . $this->db->f('account_lastname');
@@ -125,7 +114,7 @@
 				'account_primary_group' => $this->data['account_primary_group'],
 				'account_email'     => $this->data['email'],
 			),array(
-				'account_id'        => $this->account_id
+				'account_id'        => abs($this->account_id)
 			),__LINE__,__FILE__);
 		}
 
@@ -135,7 +124,7 @@
 
 			/* Do this last since we are depending upon this record to get the account_lid above */
 			$this->db->lock(Array($this->table));
-			$this->db->delete($this->table,array('account_id'=>$account_id),__LINE__,__FILE__);
+			$this->db->delete($this->table,array('account_id'=>abs($account_id)),__LINE__,__FILE__);
 			$this->db->unlock();
 		}
 
@@ -216,7 +205,7 @@
 			while ($this->db->next_record())
 			{
 				$accounts[] = Array(
-					'account_id'        => $this->db->f('account_id'),
+					'account_id'        => ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id'),
 					'account_lid'       => $this->db->f('account_lid'),
 					'account_type'      => $this->db->f('account_type'),
 					'account_firstname' => $this->db->f('account_firstname'),
@@ -239,10 +228,10 @@
 		 */
 		function name2id($name,$which='account_lid')
 		{
-			$this->db->select($this->table,'account_id',array($which=>$name),__LINE__,__FILE__);
+			$this->db->select($this->table,'account_id,account_type',array($which=>$name),__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
-				return (int)$this->db->f('account_id');
+				return ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id');
 			}
 			return False;
 		}
@@ -252,7 +241,7 @@
 		 */
 		function id2name($account_id,$which='account_lid')
 		{
-			$this->db->select($this->table,$this->db->name_quote($which),array('account_id'=>$account_id),__LINE__,__FILE__);
+			$this->db->select($this->table,$this->db->name_quote($which),array('account_id'=>abs($account_id)),__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
 				return $this->db->f(0);
@@ -271,7 +260,7 @@
 				{
 					return $by_id[$account_lid];
 				}
-				$where['account_id'] = $account_lid;
+				$where['account_id'] = abs($account_lid);
 			}
 			else
 			{
@@ -315,7 +304,7 @@
 			if (isset($account_info['account_id']) && (int)$account_info['account_id'] && !$this->id2name($account_info['account_id']))
 			{
 				// only use account_id, if it's not already used
-				$account_data['account_id'] = $account_info['account_id'];
+				$account_data['account_id'] = abs($account_info['account_id']);
 			}
 			$this->db->insert($this->table,$account_data,False,__LINE__,__FILE__);
 
@@ -323,12 +312,7 @@
 			
 			if ($account_info['account_type'] == 'g' && $id > 0)	// create negative id for groups
 			{
-				if ($this->db->Type == 'mssql')
-				{
-					$this->db->query("SET identity_update $this->table ON",__LINE__,__FILE__);
-				}
-				$this->db->update($this->table,array('account_id' => -$id),array('account_id' => $id),__LINE__,__FILE__);
-				return -$id;
+				$id = -$id;
 			}
 			return $id;
 		}
@@ -452,7 +436,7 @@
 
 		function get_account_name($accountid,&$lid,&$fname,&$lname)
 		{
-			$this->db->select($this->table,'account_lid,account_firstname,account_lastname',array('account_id'=>$accountid),__LINE__,__FILE__);
+			$this->db->select($this->table,'account_lid,account_firstname,account_lastname',array('account_id'=>abs($accountid)),__LINE__,__FILE__);
 			if (!$this->db->next_record())
 			{
 				return False;
@@ -473,14 +457,14 @@
 		 */
 		function update_lastlogin($account_id, $ip)
 		{
-			$this->db->select($this->table,'account_lastlogin',array('account_id'=>$account_id),__LINE__,__FILE__);
+			$this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__);
 			$previous_login = $this->db->next_record() ? $this->db->f('account_lastlogin') : false;
 
 			$this->db->update($this->table,array(
 				'account_lastloginfrom' => $ip,
 				'account_lastlogin'     => time(),
 			),array(
-				'account_id' => $account_id,
+				'account_id' => abs($account_id),
 			),__LINE__,__FILE__);
 			
 			return $previous_login;

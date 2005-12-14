@@ -912,8 +912,9 @@
 	$test[] = '1.0.1.029';
 	function phpgwapi_upgrade1_0_1_029()
 	{
-		// convert all positive group id's to negative ones
+		// convert all positive group id's to negative ones, since 1.2.002 except the account_id itself
 		// this allows duplicate id for users and groups in ldap
+		// This update include the next 2 updates and goes direct to version 1.2.002!
 		$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_value',array(
 			'config_name' => 'account_repository',
 			'config_app'  => 'phpgwapi',
@@ -946,7 +947,6 @@
 		foreach(array(
 			array('egw_acl','acl_location'),
 			array('egw_acl','acl_account'),
-			array('egw_accounts','account_id',"account_type='g'"),
 			array('egw_accounts','account_primary_group',"account_type='u'"),
 			array('egw_cal_user','cal_user_id',"cal_user_type='u'"),
 			array('egw_wiki_pages','wiki_readable',true),
@@ -979,7 +979,7 @@
 			//echo "<p>$query</p>\n";
 			$GLOBALS['egw_setup']->db->query($query,__LINE__,__FILE__);
 		}
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.001';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.002';
 	}
 	
 	
@@ -1044,4 +1044,17 @@
 			$GLOBALS['egw_setup']->db->query($query,__LINE__,__FILE__);
 		}
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.001';
+	}
+	
+	$test[] = '1.2.001';
+	function phpgwapi_upgrade1_2_001()
+	{
+		// convert groupid's in egw_accounts back to positive, as not all DBMS can deal with neg. id's
+		if ($GLOBALS['egw_setup']->db->Type == 'mssql')
+		{
+			$GLOBALS['egw_setup']->db->query("SET identity_update egw_accounts ON",__LINE__,__FILE__);
+		}
+		$GLOBALS['egw_setup']->db->query("UPDATE egw_accounts SET account_id=-account_id WHERE account_type='g' AND account_id < 0",__LINE__,__FILE__);
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.002';
 	}
