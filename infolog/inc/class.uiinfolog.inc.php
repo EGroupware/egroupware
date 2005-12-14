@@ -36,6 +36,7 @@
 			'writeLangFile' => True
 		);
 		var $icons;
+		var $prefs;
 
 		function uiinfolog( )
 		{
@@ -96,10 +97,12 @@
 
 			$this->user = $GLOBALS['egw_info']['user']['account_id'];
 			
+			$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['infolog'];
+			
 			$GLOBALS['uiinfolog'] =& $this;	// make ourself availible for ExecMethod of get_rows function
 		}
 
-		function get_info($info,&$readonlys,$action='',$action_id='')
+		function get_info($info,&$readonlys,$action='',$action_id='',$show_links=false)
 		{
 			if (!is_array($info))
 			{
@@ -123,7 +126,7 @@
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 			$readonlys['view[0]'] = True;	// no parent
 
-			$show_links = $GLOBALS['egw_info']['user']['preferences']['infolog']['show_links'];
+			if (!$show_links) $show_links = $this->prefs['show_links'];
 
 			if ($show_links != 'none' && $show_links != 'no_describtion' && ($links = $this->link->get_links('infolog',$info['info_id'])))
 			{
@@ -151,6 +154,7 @@
 				'search' => $values['search'],
 				'start'  => $values['start'],
 				'filter' => $values['filter'],
+				'filter2' => $values['filter2'],
 				'cat_id' => $values['cat_id'],
 				'order'  => $values['order'],
 				'sort'   => $values['sort'],
@@ -186,8 +190,9 @@
 			$readonlys = $rows = array();
 			foreach($ids as $id => $info)
 			{
-				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id']);
-				if ($GLOBALS['egw_info']['user']['preferences']['infolog']['show_links'] == 'no_describtion')
+				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2']);
+				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
+					$query['filter2'] == 'no_describtion')
 				{
 					unset($info['info_des']);
 				}
@@ -250,7 +255,7 @@
 				if (isset($_GET['filter']) && $_GET['filter'] != 'default' || !isset($values['nm']['filter']))
 				{
 					$values['nm']['filter'] = $_GET['filter'] && $_GET['filter'] != 'default' ? $_GET['filter'] :
-						$GLOBALS['egw_info']['user']['preferences']['infolog']['defaultFilter'];
+						$this->prefs['defaultFilter'];
 				}
 				if (!isset($values['nm']['order']) || !$values['nm']['order'])
 				{
@@ -329,16 +334,22 @@
 
 			$values['nm']['options-filter'] = $this->filters;
 			$values['nm']['get_rows'] = 'infolog.uiinfolog.get_rows';
-			$values['nm']['no_filter2'] = True;
+			$values['nm']['options-filter2'] = (in_array($this->prefs['show_links'],array('all','no_describtion')) ? array() : array(
+				''               => 'default',
+			)) + array(
+				'no_describtion' => 'no details',
+				'all'            => 'details',
+			);
+			if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['show_links'];
 			$values['nm']['header_right'] = 'infolog.index.header_right';
 			if ($extra_app_header)
 			{
 				$values['nm']['header_left'] = 'infolog.index.header_left';
 			}
 			$values['nm']['bottom_too'] = True;
-			$values['nm']['never_hide'] = isset($GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide']) ? 
-				$GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
-			$values['nm']['no_times'] = !$GLOBALS['egw_info']['user']['preferences']['infolog']['show_times'];
+			$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ? 
+				$this->prefs['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
+			$values['nm']['no_times'] = !$this->prefs['show_times'];
 			$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 			$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
 			$persist['called_as'] = $called_as;
@@ -426,8 +437,8 @@
 				'options-filter' => $this->filters,
 				'get_rows'       => 'infolog.uiinfolog.get_rows',
 				'no_filter2'     => True,
-				'never_hide'     => isset($GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide']) ? 
-					$GLOBALS['egw_info']['user']['preferences']['infolog']['never_hide'] : 
+				'never_hide'     => isset($this->prefs['never_hide']) ? 
+					$this->prefs['never_hide'] : 
 					$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15,
 			);
 			$values['main']['no_actions'] = $values['nm']['no_actions'] = True;
