@@ -940,6 +940,10 @@
 			$this->user                = $GLOBALS['egw']->accounts->read_repository();
 			$this->user['acl']         = $GLOBALS['egw']->acl->read_repository();
 			$this->user['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+			if (is_object($GLOBALS['egw']->datetime))
+			{
+				$GLOBALS['egw']->datetime->datetime();		// to set tz_offset from the now read prefs
+			}
 			$this->user['apps']        = $GLOBALS['egw']->applications->read_repository();
 			//@reset($this->data['user']['apps']);
 
