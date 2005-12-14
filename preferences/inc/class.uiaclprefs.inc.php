@@ -78,7 +78,7 @@
 			}
 
 			$owner_name = $GLOBALS['egw']->common->grab_owner_name($owner);
-			if($no_privat_grants = $GLOBALS['egw']->accounts->get_type($owner) != 'g')
+			if(!($no_privat_grants = $GLOBALS['egw']->accounts->get_type($owner) == 'g'))
 			{
 				// admin setting acl-rights is handled as with group-rights => no private grants !!
 				$no_privat_grants = $owner != $GLOBALS['egw_info']['user']['account_id'];
@@ -205,8 +205,11 @@
 			));
 			$totalentries = $GLOBALS['egw']->accounts->total;
 
-			$memberships = (array) $GLOBALS['egw']->accounts->membership($owner);
-
+			$memberships = array();
+			foreach((array) $GLOBALS['egw']->accounts->membership($owner) as $data)
+			{
+				if ($data) $memberships[] = $data['account_id'];
+			}
 			$header_type = '';
 			$processed = Array();
 			foreach($accounts as $uid => $data)
@@ -255,6 +258,7 @@
 
 		function check_acl($label,$id,$acl,$rights,$right,$disabled=False)
 		{
+			//echo "<p>check_acl($label,$id,$acl,$rights,$right,$disabled)</p>\n";
 			$this->template->set_var($acl,$label.$GLOBALS['egw_info']['flags']['currentapp'].'['.$id.'_'.$right.']');
 			$rights_set = ($rights & $right) ? ' checked="1"' : '';
 			if ($disabled)
@@ -267,6 +271,7 @@
 
 		function display_row($tr_class,$label,$id,$name,$no_privat_grants,$memberships)
 		{
+			//echo "<p>display_row(,$label,$id,$name,$no_privat_grants,".print_r($memberships,true).")</p>\n";
 			$this->template->set_var('row_class',$tr_class);
 			$this->template->set_var('row_color',$GLOBALS['egw_info']['theme'][$tr_class]);
 			$this->template->set_var('user',$name);
@@ -275,10 +280,10 @@
 
 			foreach(array(
 				EGW_ACL_READ		=> 'read',
-				EGW_ACL_ADD		=> 'add',
+				EGW_ACL_ADD			=> 'add',
 				EGW_ACL_EDIT		=> 'edit',
-				EGW_ACL_DELETE	=> 'delete',
-				EGW_ACL_PRIVATE	=> 'private',
+				EGW_ACL_DELETE		=> 'delete',
+				EGW_ACL_PRIVATE		=> 'private',
 				EGW_ACL_CUSTOM_1	=> 'custom_1',
 				EGW_ACL_CUSTOM_2	=> 'custom_2',
 				EGW_ACL_CUSTOM_3	=> 'custom_3',
