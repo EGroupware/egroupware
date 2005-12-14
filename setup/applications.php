@@ -409,7 +409,7 @@
 				switch($value['status'])
 				{
 					case 'C':
-						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+						$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('upgrade','&nbsp;');
 						if (!$GLOBALS['egw_setup']->detection->check_app_tables($value['name']))
 						{
@@ -452,7 +452,7 @@
 							if ($value['tables'] && $GLOBALS['egw_setup']->detection->check_app_tables($value['name'],True))
 							{
 								// Some tables missing
-								$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+								$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 								$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&badinstall=True">' . lang('Potential Problem') . '</a>');
 								$status = lang('Requires reinstall or manual repair') . ' - ' . $value['status'];
 							}
@@ -462,6 +462,9 @@
 								$setup_tpl->set_var('resolution','');
 								$status = lang('Requires upgrade') . ' - ' . $value['status'];
 							}
+							// show not installed apps without icon
+							$setup_tpl->set_var('instimg','spacer.png');
+							$setup_tpl->set_var('instalt','');
 							$setup_tpl->set_var('bg_color','CCFFCC');
 							$setup_tpl->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']" />');
 							$setup_tpl->set_var('upgrade','&nbsp;');
@@ -473,7 +476,7 @@
 							$setup_tpl->set_var('install','&nbsp;');
 							// TODO display some info about breakage if you mess with this app
 							$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']" />');
-							$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+							$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 							$setup_tpl->set_var('resolution','');
 							$status = lang('Requires upgrade') . ' - ' . $value['status'];
 						}
@@ -482,7 +485,7 @@
 						$setup_tpl->set_var('instimg','incomplete.png');
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
 						$setup_tpl->set_var('install','&nbsp;');
-						$setup_tpl->set_var('remove','<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+						$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']" />');
 						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&version=True">' . lang('Possible Solutions') . '</a>');
 						$status = lang('Version Mismatch') . ' - ' . $value['status'];
