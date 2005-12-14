@@ -303,7 +303,7 @@
 			$p->set_block('list','letter_search','letter_search_cells');
 
 			$search_param = array(
-				'type' => (int)$_REQUEST['group_id'] > 0 ? $_REQUEST['group_id'] : 'accounts',
+				'type' => (int)$_REQUEST['group_id'] ? $_REQUEST['group_id'] : 'accounts',
 				'start' => $start,
 				'sort' => $sort,
 				'order' => $order,
