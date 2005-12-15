@@ -28,14 +28,12 @@ add sub	infolog	no	legg til under
 add:	infolog	no	Legg til:
 all	infolog	no	Alle
 all links and attachments	infolog	no	alle lenker og vedlegg
-allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	no	tillater å sette status på et innslag, f.eks sette Gjøremål til Ferdig (verdiene avhenger av innslagstype)
-applies the changes	infolog	no	fullfører endringene
+allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	no	Tillater å sette status på et innslag, f.eks sette Gjøremål til Ferdig (verdiene avhenger av innslagstype)
+apply the changes	infolog	no	Lagre endringene
 are you shure you want to delete this entry ?	infolog	no	Er du sikker på at du vil slette dette innslaget?
-are you sure you want to delete this entry	infolog	no	Er du sikker på at du vil slette dette innslaget?
 attach a file	infolog	no	Vedlegg en fil
 attach file	infolog	no	Vedlegg fil
 back to main list	infolog	no	Tilbake til hovedliste
-back to projectlist	infolog	no	Tilbake til prosjektliste
 billed	infolog	no	fakturert
 both	infolog	no	begge
 call	infolog	no	ring
@@ -52,10 +50,12 @@ comment	infolog	no	Kommentar
 configuration	infolog	no	Konfigurasjon
 confirm	infolog	no	Bekreft
 contact	infolog	no	Kontakt
+copy your changes to the clipboard, %1reload the entry%2 and merge them.	infolog	no	Kopier endringene dine til utklippstavlen, %1oppfrisk forekomsten%2 og sammenstill de
 create new links	infolog	no	Lag ny lenke
 creates a new field	infolog	no	lager nytt felt
 creates a new status with the given values	infolog	no	lager ny status med oppgitte verdier
 creates a new typ with the given name	infolog	no	lager ny type med oppgitt navn
+creation	infolog	no	Opprettet
 csv-fieldname	infolog	no	CSV-Feltnavn
 csv-filename	infolog	no	CSV-Filnavn
 csv-import	common	no	CSV-Import
@@ -74,15 +74,14 @@ default filter for infolog	infolog	no	Standard filter for InfoLogg
 default status for a new log entry	infolog	no	standard status for nye logg-innslag
 delegation	infolog	no	Delegering
 delete	infolog	no	Slett
-delete all subs (if not subs will be subs of this enties parent or have no parent)	infolog	no	Slett alle under (blablabla)
 delete one record by passing its id.	infolog	no	Slett en rekke etter ID
-delete the entry	infolog	no	Slett dette innslaget
-delete this entry	infolog	no	slett dette innslaget
+delete the entry	infolog	no	Slett dette forekomsten
+delete this entry	infolog	no	slett dette forekomsten
+delete this entry and all listed sub-entries	infolog	no	Slette dette forekomsten og alle listede underforekomster
 deletes the selected typ	infolog	no	sletter valgt type
 deletes this field	infolog	no	sletter dette feltet
 deletes this status	infolog	no	sletter denne status
 description	infolog	no	Beskrivelse
-description can not exceed 8000 characters in length	infolog	no	Beskrivelse kan ikke overstige 8000 karakterer i lengde
 determines the order the fields are displayed	infolog	no	avgjør rekkefølge feltene vises i
 disables a status without deleting it	infolog	no	kobler ut status uten å slette
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	no	vil du ha bekreftelse fra ansvarlig ang: akseptering, ferdigstilling eller begge
@@ -103,6 +102,8 @@ enter a custom phone/email, leave empty if linked entry should be used	infolog	n
 enter a textual description of the log-entry	infolog	no	skriv inn ordrett beskrivelse på innslaget
 enter the query pattern	infolog	no	Skriv inn søkemønster
 entry and all files	infolog	no	Innslag og alle filer
+error: saving the entry	infolog	no	Feil: ved lagring av forekomst
+error: the entry has been updated since you opened it for editing!	infolog	no	Feil: Denne forekomsten er endret siden du åpnet den for redigering!
 existing links	infolog	no	Eksisterende lenker
 fax	infolog	no	Telefaks
 fieldseparator	infolog	no	Feltseparator
@@ -122,6 +123,8 @@ infolog - import csv-file	infolog	no	Infologg - Importer CSV-fil
 infolog - new	infolog	no	Infologg - Ny
 infolog - new subproject	infolog	no	Infologg - Nytt underprosjekt
 infolog - subprojects from	infolog	no	Infologg - Underprosjekter fra
+infolog entry deleted	infolog	no	Infologgforekomst slettet
+infolog entry saved	infolog	no	Infologgforekomst lagret
 infolog list	infolog	no	Infologg liste
 infolog preferences	common	no	Infologg preferanser
 infolog-fieldname	infolog	no	Infologg-Feltnavn
@@ -141,10 +144,6 @@ longer textual description	infolog	no	lenger ordrett beskrivelse
 low	infolog	no	lav
 max length of the input [, length of the inputfield (optional)]	infolog	no	maks. lengde på innslag [,feltlengde (valgfri)]
 max number of entries to display on the main screen	infolog	no	Maks. antall innslag som vises på hovedskjerm
-my	infolog	no	mine
-my open	infolog	no	mine åpne
-my overdue	infolog	no	mine forsinkede
-my upcoming	infolog	no	mine planlagte
 name must not be empty !!!	infolog	no	Navn kan ikke være tomt !!!
 name of new type to create	infolog	no	navn på ny type som lages
 never hide search and filters	infolog	no	Skjul aldri søk og filtere
@@ -152,6 +151,7 @@ new name	infolog	no	nytt navn
 new search	infolog	no	Nytt søk
 no - cancel	infolog	no	Nei - Avbryt
 no describtion, links or attachments	infolog	no	ingen beskrivelse, lenker eller tillagte dokumenter
+no details	infolog	no	Ingen detaljer
 no entries found, try again ...	infolog	no	ingen innslag funnet, prøv igjen ...
 no filter	infolog	no	ufiltrert
 no links or attachments	infolog	no	ingen lenker eller vedlegg
@@ -179,9 +179,11 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	no	sti på (web-)tjener<
 path to user and group files has to be outside of the webservers document-root!!!	infolog	no	Sti til bruker og gruppefiler. MÅ VÆRE UTENFOR web tjenerens dokument-rot!!!
 pattern for search in addressbook	infolog	no	mønster for søk i Adresseliste
 pattern for search in projects	infolog	no	mønster for søk i Prosjekter
+permission denied	infolog	no	Adgang nektet
 phone	infolog	no	Telefonoppkall
 phone/email	infolog	no	Telefon/Epost
 phonecall	infolog	no	Telefonoppkall
+planned	infolog	no	Planlagt
 planned time	infolog	no	Planlagt tid
 priority	infolog	no	Prioritet
 private	infolog	no	Privat
@@ -192,6 +194,9 @@ reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	no	reg. ekspr. for lokal
 remark	infolog	no	Merknad
 remove this link (not the entry itself)	infolog	no	Slett denne lenken (ikke selve innslaget)
 responsible	infolog	no	Ansvarlig
+responsible open	infolog	no	Ansvarlig for åpne
+responsible overdue	infolog	no	Ansvarlig for overskredne
+responsible upcoming	infolog	no	Ansvarlig for kommende
 responsible user, priority, times	infolog	no	ansvarlig bruker, prioritet, ant.ganger
 returns a list / search for records.	infolog	no	Viser en liste / søk etter rekker.
 save	infolog	no	Lagre
@@ -208,16 +213,18 @@ select an app to search in	infolog	no	Velg applikasjon det skal søkes i
 select an entry to link with	infolog	no	Velg innslag som skal lenkes med
 select to filter by owner	infolog	no	Velg å filtrere for eier
 select to filter by responsible	infolog	no	Velg å filtrere for ansvarlig
-sets the status of this entry to done	infolog	no	Setter status til utført for denne.
+sets the status of this entry and its subs to done	infolog	no	Sett status på denne forekomsten samt underliggende til utført.
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	no	Skal InfoLogg vise dine åpne saker - åpne oppgaver, telefonoppkall eller notater - på hovedskjermen. Virker kun dersom du ikke har valgt applikasjon for hovedskjerm (i dine preferanser).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	no	Skal InfoLogg vise under-oppgaver, -oppkall eller -notater som normalvisning eller ikke. Du kan alltids nå underoppgavene via hovedoppgavene.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	no	Skal InfoLogg viser lenkene til andre programmer og/eller filtilknytningene i InfoLogglisten (Normal visning når du starter InfoLogg)
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	no	Skal InfoLogg vise fulle navn (fornavn og etternavn) eller kun påloggingsnavn.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	no	skal dette innslaget vises kun til deg selv og personer du gir access vha. tilgangslister (ACL)
+show a column for used and planned times in the list.	infolog	no	Vis en kolonne for brukte og planlagte tider i listen.
 show full usernames	infolog	no	Vise fulle brukernavn
 show in the infolog list	infolog	no	Vise i InfoLogg listen
 show list of upcoming entries	infolog	no	vise liste over kommende innslag
 show open entries: tasks/calls/notes on main screen	infolog	no	Vis åpne innslag: Jobber/Oppkall/Notater på hovedskjerm
+show times	infolog	no	Vis tider
 small view	infolog	no	liten visning
 start a new search, cancel this link	infolog	no	start nytt søk, annuller denne lenken
 startdate	infolog	no	Start Dato
@@ -226,6 +233,7 @@ startrecord	infolog	no	Startrekke
 status	infolog	no	Status
 status ...	infolog	no	Status ...
 sub	infolog	no	Under
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	no	Underforekomster tilordnes overordnet forekomst eller hovedforekomst dersom det ikke er noen overordnet.
 subject	infolog	no	Emne
 task	infolog	no	Gjøremål
 test import (show importable records <u>only</u> in browser)	infolog	no	Test Import (vis importerbare rekker, <u>kun</u> i webleser)
@@ -248,8 +256,6 @@ unlink	infolog	no	Fjern lenke
 upcoming	infolog	no	nært forestående
 urgency	infolog	no	nødvendighet
 urgent	infolog	no	haster
-use button to search for address	infolog	no	bruk knappen for å søke etter adresse
-use button to search for project	infolog	no	bruk knappen for å søke etter prosjekt
 used time	infolog	no	brukt tid
 valid path on clientside<br>eg. \\server\share or e:\	infolog	no	gyldig sti på klienten<br>f.eks \\tjener\share eller e:\
 values for selectbox	infolog	no	Verdier for valgboksene
@@ -263,7 +269,8 @@ when should the todo or phonecall be started, it shows up from that date in the 
 will-call	infolog	no	ringer
 write (add or update) a record by passing its fields.	infolog	no	Skriv (legg til eller oppdater) en rekke ved å skrive inn felter
 yes - delete	infolog	no	Ja - Slett
-you can't delete one of the stock types !!!	infolog	no	Du kan ikke slette en av aksjetypene !!!
+yes - delete including sub-entries	infolog	no	Ja - Slett inklusiv underordnede
+you can't delete one of the stock types !!!	infolog	no	Du kan ikke slette en av lagertypene !!!
 you have entered an invalid ending date	infolog	no	Du har skrevet inn en ugyldig sluttdato
 you have entered an invalid starting date	infolog	no	Du har skrevet inn en ugyldig startdato
 you have to enter a name, to create a new typ!!!	infolog	no	Du må skrive inn et navn for å lage en ny type!!!
