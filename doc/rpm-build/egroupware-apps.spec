@@ -608,7 +608,7 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
-* Thu Dez 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC5-1
+* Thu Dec 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC5-1
 - creation of new groups in LDAP working again
 - no more negative id's in the account-table (auto column) itself, 
   as not all DBMS can deal with it (mapping is done in the class now)
@@ -618,7 +618,7 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 - new instant messenger application chatty in contrib
 - other bugfixes and translation updates
 
-* Fri Dez 02 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC4-1
+* Fri Dec 02 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC4-1
 - Bugfixes in Kalendar: Freetimesearch, disabled not working stuff under IE
 - MyDMS install: boolean columns are now created correct under mysql4+5
 - registration with email approval working again
