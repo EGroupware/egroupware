@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.2RC4
+%define version 1.2RC5
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -10,6 +10,7 @@
 %define browser browser
 %define bookmarks bookmarks
 %define calendar calendar
+%define chatty chatty
 %define comic comic
 %define developer_tools developer_tools
 %define email email
@@ -67,7 +68,7 @@ Packager: eGroupWare <RalfBecker@outdoor-training.de>
 %description
 eGroupWare is a web-based groupware suite written in PHP. 
 The core package provides the admin, etemplate, phpgwapi, preferences
-and setup packages. 
+and setup applications. 
 It also provides an API for developing additional applications. 
 
 %package %{addressbook}
@@ -115,6 +116,14 @@ Requires: eGroupWare = %{version}-%{packaging}
 %description %{calendar}
 Powerful calendar with meeting request system, Alarms, ICal and E-Mail support, 
 and ACL security.
+
+%package %{chatty}
+Summary: Instant messenger for eGroupWare
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging}
+%description %{chatty}
+Instant messenger application using AJAX.
 
 %package %{comic}
 Summary: The eGroupWare %{comic} application
@@ -466,6 +475,10 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{calendar}
 
+%files %{chatty}
+%defattr(0744,root,root)
+%{prefix}/%{egwdirname}/%{chatty}
+
 %files %{comic}
 %defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{comic}
@@ -595,6 +608,16 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
+* Thu Dez 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC5-1
+- creation of new groups in LDAP working again
+- no more negative id's in the account-table (auto column) itself, 
+  as not all DBMS can deal with it (mapping is done in the class now)
+- infolog list shows (optional) the times and can switch details on and off 
+- projectmanager records and shows now the resources and details of the elements
+- wiki is include in the linkage system now
+- new instant messenger application chatty in contrib
+- other bugfixes and translation updates
+
 * Fri Dez 02 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC4-1
 - Bugfixes in Kalendar: Freetimesearch, disabled not working stuff under IE
 - MyDMS install: boolean columns are now created correct under mysql4+5
