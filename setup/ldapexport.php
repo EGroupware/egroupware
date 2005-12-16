@@ -97,7 +97,7 @@
 	while($GLOBALS['egw_setup']->db->next_record())
 	{
 		$i = $GLOBALS['egw_setup']->db->f('account_id');
-		$group_info[$i]['account_id']        = $GLOBALS['egw_setup']->db->f('account_id');
+		$group_info[$i]['account_id']        = -$GLOBALS['egw_setup']->db->f('account_id');
 		$group_info[$i]['account_lid']       = $GLOBALS['egw_setup']->db->f('account_lid');
 		$group_info[$i]['account_firstname'] = $GLOBALS['egw_setup']->db->f('account_firstname');
 		$group_info[$i]['account_lastname']  = $GLOBALS['egw_setup']->db->f('account_lastname');
