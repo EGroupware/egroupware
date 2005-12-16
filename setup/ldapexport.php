@@ -145,10 +145,6 @@
 					}
 					$id_exist = $groups->exists((int)$thisacctid);
 					
-					echo '<br />accountid: ' . $thisacctid;
-					echo '<br />accountlid: ' . $thisacctlid;
-					echo '<br />exists: ' . $id_exist;
-					
 					/* If not, create it now. */
 					if(!$id_exist)
 					{
@@ -195,7 +191,6 @@
 					// If not, create it now.
 					if(!$id_exist)
 					{
-						echo '<br />Adding' . $thisacctid;
 						$thisaccount_info = array(
 							'account_type'      => 'u',
 							'account_id'        => $thisacctid,
