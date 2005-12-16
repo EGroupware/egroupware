@@ -784,6 +784,7 @@
 					$tmpentry['objectclass'][0] = 'top';
 					$tmpentry['objectclass'][1] = 'posixGroup';
 					$tmpentry['objectclass'][2] = 'phpgwAccount';
+					#$tmpentry['objectclass'][3] = 'namedObject';
 				}
 				else
 				{
@@ -815,9 +816,9 @@
 					$entry['objectclass'][0] = 'top';
 					$entry['objectclass'][1] = 'posixGroup';
 					$entry['objectclass'][2] = 'phpgwAccount';
+					#$entry['objectclass'][3] = 'namedObject';
 					$entry['cn']             = $GLOBALS['egw']->translation->convert($account_info['account_lid'],$GLOBALS['egw']->translation->charset(),'utf-8');
 					$entry['gidnumber']      = $account_id;
-					#$entry['userpassword']   = $GLOBALS['egw']->common->encrypt_password($account_info['account_passwd']);
 					$entry['description']    = 'eGW-created group';
 				}
 				else
