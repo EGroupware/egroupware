@@ -33,7 +33,7 @@ SPECFILE=egroupware-apps.spec
 SPECFILE2=egroupware.spec
 SPECFILEFEDORA=egroupware-fedora.spec
 
-CONTRIB="backup browser comic email filescenter forum ftp fudforum headlines messenger phpldapadmin phpsysinfo projects stocks switchuser tts skel soap xmlrpc"
+CONTRIB="backup browser comic chatty email filescenter forum ftp fudforum headlines messenger phpldapadmin phpsysinfo projects stocks switchuser tts skel soap xmlrpc"
 
 for p in $CONTRIB
 do
