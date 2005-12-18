@@ -903,7 +903,7 @@ class bocal
 				{
 					// if we have a resource as participant
 					$resource = ExecMethod($this->resources[$uid{0}]['info'],substr($uid,1));
-					$grants = $resource[0]['rights'];
+					$grants |= $resource[0]['rights'];
 				}	
 			}
 		}
