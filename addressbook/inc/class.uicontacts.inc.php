@@ -303,6 +303,13 @@ class uicontacts extends bocontacts
 		);
 		
 		$content['advs']['row_actions'] = array(
+			'view' => array(
+				'type' => 'button',
+				'options' => array(
+					'size' => 'view',
+					'onclick' => "location.href='".$GLOBALS['egw']->link('/index.php',
+					array('menuaction' => 'addressbook.uicontacts.view',)).'&contact_id=$row_cont[id]\';return false;',
+			)),
 			'edit' => array(
 				'type' => 'button',
 				'options' => array(
