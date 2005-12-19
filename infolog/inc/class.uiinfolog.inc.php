@@ -578,7 +578,6 @@
 				$action_id = $action_id ? $action_id : get_var('action_id',array('POST','GET'));
 				$info_id   = $content   ? $content   : get_var('info_id',  array('POST','GET'));
 				$type      = $type      ? $type      : get_var('type',     array('POST','GET'));
-				$cat_id    = get_var('cat_id',array('POST','GET'),0);
 				$ref=$referer   = $referer !== '' ? $referer : ($_GET['referer'] ? $_GET['referer'] :
 					$GLOBALS['egw']->common->get_referer('/index.php?menuaction=infolog.uiinfolog.index'));
 				$referer = preg_replace('/([&?]{1})msg=[^&]+&?/','\\1',$referer);	// remove previou/old msg from referer
@@ -591,7 +590,8 @@
 				{
 					$content['info_cat'] = (int) $_REQUEST['cat_id'];
 				}
-				$today = mktime(-$this->bo->tz_offset,0,0,date('m'),date('d'),date('Y'));	// time=00:00
+				$now = time() + 3600*$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];	// time() is server-time and we need a user-time
+				$today = mktime(0,0,0,date('m',$now),date('d',$now),date('Y',$now));	// time=00:00
 
 				if (intval($content['info_link_id']) > 0 && !$this->link->get_link($content['info_link_id']))
 				{
@@ -712,7 +712,7 @@
 					$content['info_type'] = 'note';
 				}
 			}
-			if (!($readonlys['delete'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
+			if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
 			{
 				$content['info_anz_subs'] = $this->bo->anzSubs($info_id);	// to determine js confirmation of delete or not
 			}
