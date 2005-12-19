@@ -213,7 +213,7 @@ class bocalendar
 		{
 			$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 		}
-		return $id;
+		return (int) $id;
 	}
 
 	/**
