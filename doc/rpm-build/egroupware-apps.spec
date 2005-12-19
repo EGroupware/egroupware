@@ -41,6 +41,7 @@
 %define stocks stocks
 %define switchuser switchuser
 %define syncml syncml
+%define timesheet timesheet
 %define tts tts
 %define wiki wiki
 %define workflow workflow
@@ -361,6 +362,16 @@ Requires: eGroupWare = %{version}-%{packaging}
 %description %{syncml}
 This is the %{syncml} app for eGroupWare.
 
+%package %{timesheet}
+Summary: The eGroupWare timesheet application
+Group: Web/Database
+AutoReqProv: no
+Requires: eGroupWare = %{version}-%{packaging}
+%description %{timesheet}
+Simple timesheet application, which allow to record and report
+the times and other expenses. It can be uses as well standalone 
+as together with the ProjectManager application.
+
 %package %{tts}
 Summary: The eGroupWare trouble ticket system application
 Group: Web/Database
@@ -594,6 +605,10 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %files %{syncml}
 %defattr(0744,root,root)
 %{prefix}/%{egwdirname}/%{syncml}
+
+%files %{timesheet}
+%defattr(0744,root,root)
+%{prefix}/%{egwdirname}/%{timesheet}
 
 %files %{tts}
 %defattr(0744,root,root)

@@ -33,7 +33,7 @@ This package provides the eGroupWare default applications:
 egroupware core with: admin, api, docs, etemplate, prefereces and setup, 
 addressbook, bookmarks, calendar, translation-tools, emailadmin, felamimail, 
 filemanager, infolog, jinn, manual, mydms, news admin, knowledgebase, polls, 
-projectmanager, resources, sambaadmin, sitemgr, syncml, wiki workflow
+projectmanager, resources, sambaadmin, sitemgr, syncml, timesheet, wiki, workflow
 
 It also provides an API for developing additional applications. 
 
@@ -109,7 +109,6 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/bookmarks
 %{prefix}/%{egwdirname}/browser
 %{prefix}/%{egwdirname}/calendar
-%{prefix}/%{egwdirname}/chatty
 %{prefix}/%{egwdirname}/comic
 %{prefix}/%{egwdirname}/developer_tools
 %{prefix}/%{egwdirname}/emailadmin
@@ -129,6 +128,7 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/sambaadmin
 %{prefix}/%{egwdirname}/sitemgr
 %{prefix}/%{egwdirname}/syncml
+%{prefix}/%{egwdirname}/timesheet
 %{prefix}/%{egwdirname}/wiki
 %{prefix}/%{egwdirname}/workflow
 
