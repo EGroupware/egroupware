@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="timesheet.index.rows" template="" lang="" group="0" version="0.1.001">
+		<grid width="100%">
+			<columns>
+				<column width="15%"/>
+				<column width="50%"/>
+				<column/>
+				<column/>
+				<column/>
+				<column/>
+				<column disabled="@no_owner_col"/>
+				<column/>
+			</columns>
+			<rows>
+				<row class="th">
+					<nextmatch-sortheader label="Date" id="ts_start"/>
+					<vbox no_lang="1">
+						<nextmatch-filterheader options="Project" id="ts_project" no_lang="1"/>
+						<nextmatch-sortheader label="Title" id="ts_title"/>
+					</vbox>
+					<vbox>
+						<nextmatch-sortheader label="Duration" id="ts_duration"/>
+						<date-duration id="duration" options=",h,,,1" readonly="true"/>
+					</vbox>
+					<nextmatch-sortheader label="Quantity" id="ts_quantity"/>
+					<nextmatch-sortheader label="Price" id="ts_unitprice"/>
+					<vbox>
+						<nextmatch-sortheader label="Total" id="ts_total"/>
+						<textbox type="float" id="price" readonly="true"/>
+					</vbox>
+					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1"/>
+					<description value="Actions"/>
+				</row>
+				<row class="row">
+					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
+					<vbox>
+						<link id="${row}[ts_link]" no_lang="1"/>
+						<description id="${row}[ts_title]" no_lang="1" options="b"/>
+						<description id="${row}[ts_description]" no_lang="1"/>
+					</vbox>
+					<date-duration id="${row}[ts_duration]" readonly="true" options=",,,,1"/>
+					<description id="${row}[ts_quantity]" no_lang="1"/>
+					<description no_lang="1" id="${row}[ts_unitprice]"/>
+					<description no_lang="1" id="${row}[ts_total]"/>
+					<menulist>
+						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
+					</menulist>
+					<hbox>
+						<button image="view" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" statustext="View this entry"/>
+						<button image="edit" label="Edit" id="edit[$row_cont[ts_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+						<button image="delete" label="Delete" id="delete[$row_cont[ts_id]]" statustext="Delete this entry" onclick="return confirm('Delete this entry');"/>
+					</hbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="timesheet.index" template="" lang="" group="0" version="0.1.001">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row disabled="!@msg">
+					<description span="all" class="redItalic" no_lang="1" id="msg" align="center"/>
+				</row>
+				<row>
+					<nextmatch id="nm" options="timesheet.index.rows"/>
+				</row>
+				<row>
+					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+</overlay>
