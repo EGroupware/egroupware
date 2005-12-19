@@ -727,7 +727,12 @@
 			}
 			$fcontent = fread($f,filesize($file));
 			fclose ($f);
-
+			
+			$app_pattern = "'$app'";
+			if (preg_match("/define\('([^']+)',$app_pattern\)/",$fcontent,$matches))
+			{
+				$app_pattern = $matches[1];
+			}
 			if (is_writable(EGW_SERVER_ROOT."/$app/setup"))
 			{
 				$old_file = EGW_SERVER_ROOT . "/$app/setup/setup.old.inc.php";
@@ -737,13 +742,13 @@
 				}
 				rename($file,$old_file);
 			}
-			$fnew = preg_replace('/(.*\\$'."setup_info\\['$app'\\]\\['version'\\][ \\t]*=[ \\t]*)'[^']*'(.*)/i","\\1'$new'\\2",$fcontent);
+			$fnew = preg_replace('/(.*\\$'."setup_info\\[$app_pattern\\]\\['version'\\][ \\t]*=[ \\t]*)'[^']*'(.*)/i","\\1'$new'\\2",$fcontent);
 			
 			if ($tables != '')
 			{
 				if (isset($setup_info[$app]['tables']))	// if there is already tables array, update it
 				{
-					$fnew = preg_replace('/(.*\\$'."setup_info\\['$app'\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*/i","\\1$tables",$fwas=$fnew);
+					$fnew = preg_replace('/(.*\\$'."setup_info\\[$app_pattern\\]\\['tables'\\][ \\t]*=[ \\t]*array\()[^)]*/i","\\1$tables",$fwas=$fnew);
 
 					if ($fwas == $fnew)	// nothing changed => tables are in single lines
 					{
@@ -752,7 +757,7 @@
 						$stage = 0;	// 0 = before, 1 = in, 2 = after tables section
 						foreach($fwas as $line)
 						{
-							if (preg_match('/(.*\\$'."setup_info\\['$app'\\]\\['tables'\\]\\[[ \\t]*\\][ \\t]*=[ \\t]*)'/i",$line,$parts))
+							if (preg_match('/(.*\\$'."setup_info\\[$app_pattern\\]\\['tables'\\]\\[[ \\t]*\\][ \\t]*=[ \\t]*)'/i",$line,$parts))
 							{
 								if ($stage == 0)	// first line of tables-section
 								{
@@ -785,7 +790,7 @@
 					{
 						$fnew = str_replace('?>','',$fnew);
 					}
-					$fnew .= "\t\$setup_info['$app']['tables'] = array($tables);\n";
+					$fnew .= "\t\$setup_info[$app_pattern]['tables'] = array($tables);\n";
 				}
 			}
 			if (!is_writeable(EGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
