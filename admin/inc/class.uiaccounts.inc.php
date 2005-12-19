@@ -48,6 +48,7 @@
 			'inv'         => True,
 			'phpbrain'    => True,
 			'projectmanager' => True,
+			'timesheet'   => true,
 		);
 
 		function uiaccounts()
