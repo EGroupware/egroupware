@@ -352,7 +352,7 @@
 		 * set an attribute in a named cell if val is not NULL else return the attribute
 		 *
 		 * @static 
-		 * @param sting $name cell-name
+		 * @param string $name cell-name
 		 * @param string $attr attribute-name
 		 * @param mixed $val if not NULL sets attribute else returns it
 		 * @return mixed number of changed cells or False, if none changed
