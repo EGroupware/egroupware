@@ -39,7 +39,8 @@
 // variable uses forward slashes. If it does not, you'll have to tweak
 // this.
 if (isset($_SERVER['PHP_SELF'])) {
-    $webroot = strstr(dirname(__FILE__), '/' . array_shift(preg_split(';/;', $_SERVER['PHP_SELF'], 2, PREG_SPLIT_NO_EMPTY)));
+    $parts = preg_split(';/;', $_SERVER['PHP_SELF'], 2, PREG_SPLIT_NO_EMPTY);
+    $webroot = strstr(dirname(__FILE__), '/' . array_shift($parts));
     if ($webroot !== false) {
         $webroot = preg_replace(';/config$;', '', $webroot);
     } else {
