@@ -139,12 +139,12 @@ error: template not found !!!	etemplate	es-es	Error: no se encontró la plantilla
 error: webserver is not allowed to write into '%1' !!!	etemplate	es-es	Error: ¡El servidor no puede escribir en '%1'!
 error: while saving !!!	etemplate	es-es	¡¡Error al guardar!!
 error: writing file (no write-permission for the webserver) !!!	etemplate	es-es	Error: el servidor web no tiene permiso de escritura
-etemplate	common	es-es	Plantilla
-etemplate '%1' imported, use save to put it in the database	etemplate	es-es	Plantilla '%1' importada. Use Guardar para ponerla en la base de datos
-etemplate '%1' written to '%2'	etemplate	es-es	La plantilla '%1' se ha guardado en '%2'
-etemplate editor	etemplate	es-es	Editor de plantillas
-etemplate reference	etemplate	es-es	Referencia de plantillas
-etemplate tutorial	etemplate	es-es	Tutorial de plantillas
+etemplate	common	es-es	Plantilla electrónica
+etemplate '%1' imported, use save to put it in the database	etemplate	es-es	Se ha importado la plantilla electrónica '%1'. Use Guardar para ponerla en la base de datos
+etemplate '%1' written to '%2'	etemplate	es-es	La plantilla electrónica '%1' se ha guardado en '%2'
+etemplate editor	etemplate	es-es	Editor de plantillas electrónicas
+etemplate reference	etemplate	es-es	Referencia de plantillas electrónicas
+etemplate tutorial	etemplate	es-es	Tutorial de plantillas electrónicas
 exchange this row with the one above	etemplate	es-es	Intercambiar esta fila con la de encima
 exchange this two columns	etemplate	es-es	Intercambiar estas dos columnas
 export the loaded etemplate into a xml-file	etemplate	es-es	Exportar la plantilla cargada en un fichero xml
@@ -261,7 +261,7 @@ precision	etemplate	es-es	Precisión
 primary key	etemplate	es-es	Clave primaria
 primary key for the table, gets automaticaly indexed	etemplate	es-es	Clave primaria para la tabla, se indexa automáticamente
 radiobutton	etemplate	es-es	Botón tipo radio
-read	etemplate	es-es	Leído
+read	etemplate	es-es	Leer
 read a list of entries.	etemplate	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	etemplate	es-es	Leer una sola entrada pasando el id y la lista de campos
 read etemplate from database (for the keys above)	etemplate	es-es	leer plantilla de la base de datos (para las claves de arriba)
