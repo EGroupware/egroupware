@@ -205,8 +205,6 @@
 				$contact['tel_video'] = '';
 			}
 
-			$GLOBALS['egw']->translation->convert($contact,'utf-8');
-
 			if($_abID > 0)
 			{
 				// update entry
