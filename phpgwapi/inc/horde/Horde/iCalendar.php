@@ -493,7 +493,7 @@ class Horde_iCalendar {
                     $value = quoted_printable_decode($value);
                     // Quoted printable is normally encoded as utf-8.
                     if (isset($params['CHARSET'])) {
-                        $value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET'],'iso-8859-1');
+                        $value = $GLOBALS['egw']->translation->convert($value, $params['CHARSET']);
                     } else {
                         $value = $GLOBALS['egw']->translation->convert($value, 'utf-8');
                     }
