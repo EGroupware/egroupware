@@ -73,6 +73,10 @@ class bocontacts extends socontacts
 					{
 						$msg .= lang('Something went wrong by deleting %1', $single['n_given'].$single['n_family']);
 					}
+					else
+					{
+						$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $single['id'], 'delete', time());
+					}
 				}
 				else
 				{
@@ -93,6 +97,8 @@ class bocontacts extends socontacts
 			$contact['msg'] = lang('Something went wrong by deleting this contact');
 			return 1;
 		}
+		$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'], 'delete', time());
+
 		return;
 	}
 	
@@ -105,6 +111,9 @@ class bocontacts extends socontacts
 	*/
 	function save(&$contact)
 	{
+		// stores if we add or update a entry
+		$isUpdate = true;
+		
 		if($contact['id'] && !$this->check_perms(EGW_ACL_EDIT,$contact['id']))
 		{
 			$contact['msg'] = lang('You are not permittet to edit this contact');
@@ -117,6 +126,8 @@ class bocontacts extends socontacts
 			$contact['owner'] = $this->user;
 			// we create a normal contact
 			$contact['tid'] = 'n';
+			
+			$isUpdate = false;
 		}
 		
 		// convert categories
@@ -140,6 +151,15 @@ class bocontacts extends socontacts
 		$data['#address3'] = $data['address3']; unset($data['address3']);
 		
 		$error_nr = parent::save($contact);
+
+		if(!$error_nr)
+		{
+			if($isUpdate) {
+				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'], 'modify', time());
+			} else {
+				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'], 'add', time());
+			}
+		}
 		
 		//reconvert bday as we are dealing with references
 		$contact['bday'] = $tmp_bday;
