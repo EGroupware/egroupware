@@ -1058,3 +1058,16 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.002';
 	}
+
+	$test[] = '1.2.002';
+	function phpgwapi_upgrade1_2_002()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_contentmap','map_locuid',array(
+			'type' => 'varchar',
+			'precision' => '128',
+			'nullable' => False
+		));
+
+		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.003';
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+	}
