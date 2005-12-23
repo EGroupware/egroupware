@@ -16,11 +16,19 @@ require_once 'Horde/RPC.php';
 
 $GLOBALS['egw_info'] = array();
 $GLOBALS['egw_info']['flags'] = array(
-	'currentapp'            => 'login',
-	'noheader'              => True,
-	'disable_Template_class' => True
+	'currentapp'			=> 'login',
+	'noheader'			=> True,
+	'nonavbar'			=> True,
+	'disable_Template_class'	=> True
 );
 include('./header.inc.php');
+
+// SyncML works currently only with PHP sessions
+if($GLOBALS['egw_info']['server']['sessions_type'] == 'db')
+{
+	error_log('SyncML support is not available with DB sessions. Please switch to PHP4 sessions in header.inc.php.');
+	exit;
+}
 
 
 /* Look at the Content-type of the request, if it is available, to try
