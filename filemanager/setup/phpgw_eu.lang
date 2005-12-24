@@ -1,0 +1,115 @@
+%1 already exists as a file	filemanager	eu	%1 fitxategia gisa existitzen da
+application	filemanager	eu	Aplikazioa
+back to file manager	filemanager	eu	Itzuli fitxategi-kudeatzailera
+cancel editing %1 without saving	filemanager	eu	Kantzelatu %1 en edizioa gorde gabe
+cannot create directory because it begins or ends in a space	filemanager	eu	Direktorioa sortzea ezinezkoa izan da hasieran edo bukaeran zuriune bat duelako
+cannot replace %1 because it is a directory	filemanager	eu	%1 ordezkatzea ezinezkoa da direktorio bat delako
+command sucessfully run	filemanager	eu	Egoki exekutatutako komandoa
+comment	filemanager	eu	Oharra
+comments cannot contain "%1"	filemanager	eu	Oharrak ezin dute "%1" izan
+copied %1 to %2	filemanager	eu	%1 %2 ra kopiatuta
+copy to	filemanager	eu	Kopiatu Hona
+copy to:	filemanager	eu	Kopiatu hona:
+could not copy %1 to %2	filemanager	eu	%1 %2 ra kopiatzea ezinezkoa izan da
+could not copy file because no destination directory is given	filemanager	eu	Fitxategia kopiatzea ezinezkoa izan da helburu-karpeta ez delako adierazi
+could not create %1	filemanager	eu	%1 sortzea ezinezkoa izan da
+could not create directory %1	filemanager	eu	%1 direktorioa sortzea ezinezkoa izan da
+could not delete %1	filemanager	eu	%1 ezabatzea ezinezkoa izan da
+could not move %1 to %2	filemanager	eu	%1 %2 ra mugitzea ezinezkoa izan da
+could not move file because no destination directory is given	filemanager	eu	Fitxategia mugitzea ezinezkoa izan da helburu-karpeta ez delako adierazi
+could not rename %1 to %2	filemanager	eu	%1 %2 ra berrizendatzea ezinezkoa izan da
+could not save %1	filemanager	eu	%1 gordetzea ezinezkoa izan da
+create file	filemanager	eu	Fitxategia sortu
+create folder	filemanager	eu	Karpeta sortu
+created	filemanager	eu	Sortua
+created %1	filemanager	eu	%1 sortua
+created %1,%2	filemanager	eu	%1, %2 sortua
+created by	filemanager	eu	k sortua
+created directory %1	filemanager	eu	Sortua %1 direktorioa
+date	filemanager	eu	Data
+default number of upload fields to show	filemanager	eu	Eremu erakusgarrien kopuru lehenetsia
+delete	filemanager	eu	Ezabatu
+deleted %1	filemanager	eu	%1 ezabatu
+directory	filemanager	eu	Direktorioa
+directory %1 already exists	filemanager	eu	%1 direktorioa existitzen da
+directory %1 does not exist	filemanager	eu	%1 direktorioa ez da existitzen
+directory names cannot contain "%1"	filemanager	eu	Direktorio izenek ezin dute "%1" izan
+display attributes	filemanager	eu	Erakutsi atributuak
+download	filemanager	eu	Behera kargatu
+edit	filemanager	eu	Editatu
+edit comments	filemanager	eu	Oharrak editatu
+error running command	filemanager	eu	Komandoa exekutatzerakoan errorea
+execute	filemanager	eu	Exekutatu
+failed to create directory	filemanager	eu	DIrektorioa sortzerakoan huts egin du
+fake base dir did not exist, egroupware created a new one.	filemanager	eu	Fake Base Dir ez zen existitzen, eta eGroupwarek berri bat sortu du.
+file	filemanager	eu	Fitxategia
+file %1 already exists. please edit it or delete it first.	filemanager	eu	%1 fitxategia existitzen da. Editatu edo ezabatu aurrena arren.
+file %1 could not be created.	filemanager	eu	%1 fitxategia sortzea ezinezkoa izan da.
+file name	filemanager	eu	Fitxategi izena
+file names cannot contain "%1"	filemanager	eu	Fitxategi izenek ezin dute "%1" izan
+file names cannot contain \ or /	filemanager	eu	Fitxategi izenek ezin dute \ edo / izan
+filemanager	common	eu	Fitxategi-kudeatzailea
+filemanager preferences	filemanager	eu	Fitxategi-kudeatzailearen hobespenak
+files	filemanager	eu	Fitxategiak
+files in this directory	filemanager	eu	Direktorio hontako fitxategiak
+folder	filemanager	eu	Karpeta
+folder up	filemanager	eu	Karpeta bat gora
+go home	filemanager	eu	hasierara joan
+go to	filemanager	eu	Joan
+go to %1	filemanager	eu	Joan %1ra
+go to your home directory	filemanager	eu	Hasierako direktoriora joan
+go to:	filemanager	eu	Joan:
+go up	filemanager	eu	joan gora
+home	filemanager	eu	Hasiera
+location	filemanager	eu	Kokapena
+locked	filemanager	eu	Blokeatuta
+mime type	filemanager	eu	MIME mota
+modified	filemanager	eu	Aldatze-data
+modified by	filemanager	eu	Aldatua
+move to	filemanager	eu	Eraman Hona
+move to:	filemanager	eu	Eraman hona:
+moved %1 to %2	filemanager	eu	%1 %2 ra eraman
+no files in this directory.	filemanager	eu	Direktorio honetan ez daude fitxategiak.
+no version history for this file/directory	filemanager	eu	Fitxategi/Direktorio honentzat ez dago bertsio historialik
+operation	filemanager	eu	Operazioa
+other settings	filemanager	eu	Beste aukerak
+owner	filemanager	eu	Jabea
+please select a file to delete.	filemanager	eu	Ezabatzeko fitxategi bat aukeratu arren.
+preview %1	filemanager	eu	%1 bistaratu
+preview of %1	filemanager	eu	%1 en bistaratzea
+quick jump to	filemanager	eu	Jauzi azkarra
+reload	filemanager	eu	Birkargatu
+rename	filemanager	eu	Berrizendatu
+renamed %1 to %2	filemanager	eu	%1 %2 ra berrizendatu
+replaced %1	filemanager	eu	%1 ordezkatua
+save %1	filemanager	eu	%1 gorde
+save %1, and go back to file listing	filemanager	eu	%1 gorde, eta fitxategi-zerrendara itzuli
+save all	filemanager	eu	Gorde dena
+save changes	filemanager	eu	Gorde aldaketak
+saved %1	filemanager	eu	%1 gordea
+show	filemanager	eu	Bistaratu
+show ..	filemanager	eu	Bistaratu ..
+show .files	filemanager	eu	Bistaratu .fitxategiak
+show command line (experimental. dangerous.)	filemanager	eu	Komando lerroa bistaratu (ESPERIMENTALA. ARRISKUTSUA)
+show help	filemanager	eu	Laguntza bistaratu
+size	filemanager	eu	Tamaina
+sort by:	filemanager	eu	Ordenatzeko irizpidea:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	eu	Etorkizuneko fitxategi-kudeatzailea, PROBETARAKO SOILIK, bidali arren erroreak
+total files	filemanager	eu	Fitxategi totalak
+unknown mime-type defaults to text/plain when viewing	filemanager	eu	MIME mota ezezagunak text/plain gisa aurkezten dira
+unused space	filemanager	eu	Leku librea
+up	filemanager	eu	Gora
+update	filemanager	eu	Freskatu
+updated comment for %1	filemanager	eu	%1 rako freskatutako komentarioa
+upload	filemanager	eu	Kargatu
+upload fields	filemanager	eu	kargatu eremuak
+upload files	filemanager	eu	Kargatu fitxategiak
+use new experimental filemanager?	filemanager	eu	Erabili fitxategi-kudeatzaile esperimentala?
+used space	filemanager	eu	Erabilitako lekua
+users	filemanager	eu	Erabiltzaileak
+version	filemanager	eu	Bertsioa
+view documents in new window	filemanager	eu	Ikus dokumentuak lehio berri batean
+view documents on server (if available)	filemanager	eu	Ikus dokumentuak serbitzarian (erabilgarri badago)
+who	filemanager	eu	Nor
+you do not have access to %1	filemanager	eu	%1 ra sartzeko baimenik ez duzu
+your home dir did not exist, egroupware created a new one.	filemanager	eu	Zure Hasierako Direktorioa ez zen existitzen, eta eGroupwarek berri bat sortu du.
