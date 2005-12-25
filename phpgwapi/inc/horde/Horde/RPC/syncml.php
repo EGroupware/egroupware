@@ -69,6 +69,10 @@ class Horde_RPC_syncml extends Horde_RPC {
         // that's not part of the valid response.
         ob_start();
 
+    	if(isset($GLOBALS['config_syncml']['syncml_debug_dir']))
+    	{
+    		$this->_debugDir = $GLOBALS['config_syncml']['syncml_debug_dir'];
+    	}
         // Very useful for debugging. Logs XML packets to
         // $this->_debugDir.
         if (!empty($this->_debugDir) && is_dir($this->_debugDir)) {

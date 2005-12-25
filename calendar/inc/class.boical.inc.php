@@ -160,87 +160,97 @@
 									);
 								}
 								break;
-	            			case 'CLASS':
-	            				$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
-	            				break;
-	            			case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
-	            				if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
-	            				{
+								
+			            			case 'CLASS':
+			            				$attributes['CLASS'] = $event['public'] ? 'PUBLIC' : 'PRIVATE';
+		        	    				break;
+		        	    				
+		            				case 'ORGANIZER':	// according to iCalendar standard, ORGANIZER not used for events in the own calendar
+		            					if (!isset($event['participants'][$event['owner']]) || count($event['participants']) > 1)
+		            					{
 									$mailtoOrganizer = $GLOBALS['egw']->accounts->id2name($event['owner'],'account_email');
 									$attributes['ORGANIZER'] = $mailtoOrganizer ? 'MAILTO:'.$mailtoOrganizer : '';
 									$parameters['ORGANIZER']['CN'] = trim($GLOBALS['egw']->accounts->id2name($event['owner'],'account_firstname').' '.
 										$GLOBALS['egw']->accounts->id2name($event['owner'],'account_lastname'));
-	            				}
+		            					}
 								break;
+								
 							case 'DTEND':
 								if(date('H:i:s',$event['end']) == '23:59:59') $event['end']++;
-	            				$attributes[$icalFieldName]	= $event['end'];
-	            				break;
-	            			case 'RRULE':
-	            				if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
-	            				$rrule = array('FREQ' => $this->recur_egw2ical[$event['recur_type']]);
-	            				switch ($event['recur_type'])
-	            				{
-	            					case MCAL_RECUR_WEEKLY:
-	            						$days = array();
-	            						foreach($this->recur_days as $id => $day)
-	            						{
-	            							if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
-	            						}
-	            						$rrule['BYDAY'] = implode(',',$days);
-	            						break;
-	            					case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
-	            						$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
-	            						break;
-	             					case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
-	             						$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
-	             							strtoupper(substr(date('l',$event['start']),0,2));
-	            						break;
-	            				}
-	             				if ($event['recur_interval'] > 1) $rrule['INTERVAL'] = $event['recur_interval'];
-	            				if ($event['recur_enddate']) $rrule['UNTIL'] = date('Ymd',$event['recur_enddate']);	// only day is set in eGW
-	            				// no idea how to get the Horde parser to produce a standard conformant
-	            				// RRULE:FREQ=... (note the double colon after RRULE, we cant use the $parameter array)
-	            				// so we create one value manual ;-)
-	            				foreach($rrule as $name => $value)
-	            				{
-	             					$attributes['RRULE'][] = $name . '=' . $value;
-	            				}
-	            				$attributes['RRULE'] = implode(';',$attributes['RRULE']);
-	             				break;
-	             			case 'EXDATE':
-	             				if ($event['recur_exception'])
-	             				{
-	             					$days = array();
-	             					foreach($event['recur_exception'] as $day)
-	             					{
-	             						$days[] = date('Ymd',$day);
-	             					}
-	             					$attributes['EXDATE'] = implode(',',$days);
-	             					$parameters['EXDATE']['VALUE'] = 'DATE';
-	             				}
-	           					break;
-	           				case 'PRIORITY':
+		            					$attributes[$icalFieldName]	= $event['end'];
+		            					break;
+		            					
+							case 'RRULE':
+								if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
+								$rrule = array('FREQ' => $this->recur_egw2ical[$event['recur_type']]);
+								switch ($event['recur_type'])
+								{
+	            							case MCAL_RECUR_WEEKLY:
+	            								$days = array();
+	            								foreach($this->recur_days as $id => $day)
+	            								{
+	            									if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
+										}
+		            							$rrule['BYDAY'] = implode(',',$days);
+		            							break;
+		            							
+	        	    						case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+	            								$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
+	            								break;
+	            								
+	             							case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+	             								$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
+		             								strtoupper(substr(date('l',$event['start']),0,2));
+										break;
+								}
+								if ($event['recur_interval'] > 1) $rrule['INTERVAL'] = $event['recur_interval'];
+								if ($event['recur_enddate']) $rrule['UNTIL'] = date('Ymd',$event['recur_enddate']);	// only day is set in eGW
+								// no idea how to get the Horde parser to produce a standard conformant
+								// RRULE:FREQ=... (note the double colon after RRULE, we cant use the $parameter array)
+								// so we create one value manual ;-)
+								foreach($rrule as $name => $value)
+								{
+									$attributes['RRULE'][] = $name . '=' . $value;
+								}
+								$attributes['RRULE'] = implode(';',$attributes['RRULE']);
+								break;
+							
+							case 'EXDATE':
+								if ($event['recur_exception'])
+								{
+									$days = array();
+									foreach($event['recur_exception'] as $day)
+									{
+										$days[] = date('Ymd',$day);
+									}
+									$attributes['EXDATE'] = implode(',',$days);
+									$parameters['EXDATE']['VALUE'] = 'DATE';
+								}
+								break;
+								
+							case 'PRIORITY':
 	 							$attributes['PRIORITY'] = (int) $this->priority_egw2ical[$event['priority']];
 	 							break;
+	 							
 	 						case 'TRANSP':
 								$attributes['TRANSP'] = $event['non_blocking'] ? 'TRANSPARENT' : 'OPAQUE';
 								break;
+								
 							case 'CATEGORIES':
 								if ($event['category'])
 								{
 									$attributes['CATEGORIES'] = implode(',',$this->categories($event['category'],$nul));
 								}
 								break;
-	           				default:
-	           					if ($event[$egwFieldInfo['dbName']])	// dont write empty fields
-	           					{
-	            					$attributes[$icalFieldName]	= $event[$egwFieldInfo['dbName']];
-	           					}
-	            				break;
-	            		}
-	            	}
-	            }
+							default:
+								if ($event[$egwFieldInfo['dbName']])	// dont write empty fields
+								{
+									$attributes[$icalFieldName]	= $event[$egwFieldInfo['dbName']];
+								}
+								break;
+						}
+					}
+				}
 				$modified = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify');
 				$created = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add');
 				if (!$created && !$modified) $created = $event['modified'];
@@ -280,6 +290,7 @@
 		
 		function importVCal($_vcalData, $cal_id=-1)
 		{
+			error_log('CALENDAR('.__LINE__.") $cal_id");
 			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
 			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
 
@@ -341,7 +352,7 @@
 								{
 									$vcardData['recur_interval'] = (int) $matches[1];
 								}
-		            			$vcardData['recur_data'] = 0;
+								$vcardData['recur_data'] = 0;
 								switch($type)
 								{
 									case 'W':
@@ -404,9 +415,9 @@
 										break;
 								}
 								break;
-	             			case 'EXDATE':
-	             				// ToDo: $vcardData['recur_exception'] = ...
-	           					break;
+							case 'EXDATE':
+								// ToDo: $vcardData['recur_exception'] = ...
+								break;
 							case 'SUMMARY':
 								$vcardData['title']		= $attributes['value'];
 								break;
@@ -421,7 +432,7 @@
 	 						case 'TRANSP':
 								$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
 								break;
-	           				case 'PRIORITY':
+							case 'PRIORITY':
 	 							$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
 	 							break;
 	 						case 'CATEGORIES':
@@ -541,7 +552,9 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields + array('participants' => 'participants');
+							# participants disabled until working correctly
+							#$this->supportedFields = $defaultFields + array('participants' => 'participants');
+							$this->supportedFields = $defaultFields;
 							break;
 					}
 					break;

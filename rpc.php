@@ -26,10 +26,14 @@ include('./header.inc.php');
 // SyncML works currently only with PHP sessions
 if($GLOBALS['egw_info']['server']['sessions_type'] == 'db')
 {
-	error_log('SyncML support is not available with DB sessions. Please switch to PHP4 sessions in header.inc.php.');
+	error_log('SyncML support is currently not available with DB sessions. Please switch to PHP4 sessions in header.inc.php.');
 	exit;
 }
 
+$config =& CreateObject('phpgwapi.config','syncml');
+$config->read_repository();
+$GLOBALS['config_syncml'] =& $config->config_data;
+unset($config);
 
 /* Look at the Content-type of the request, if it is available, to try
  * and determine what kind of request this is. */
