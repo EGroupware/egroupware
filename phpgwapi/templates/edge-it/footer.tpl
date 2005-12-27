@@ -10,4 +10,3 @@
 <div id="divPoweredBy"><br/><span>{powered_by}</span></div>	
 </body>
 </html>
-<!-- END footer.tpl -->

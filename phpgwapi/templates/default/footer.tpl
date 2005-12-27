@@ -9,6 +9,4 @@
 </table>
 </body>
 </html>
-
 <!-- END footer -->
-

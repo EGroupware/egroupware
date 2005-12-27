@@ -12,4 +12,3 @@
 {activate_tooltips}
 </body>
 </html>
-<!-- END footer.tpl -->
