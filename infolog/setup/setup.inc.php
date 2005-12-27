@@ -18,7 +18,7 @@
 	$setup_info['infolog']['enable']    = 1;
 
 	$setup_info['infolog']['author'] = 
- 	$setup_info['infolog']['maintainer'] = array(
+	$setup_info['infolog']['maintainer'] = array(
 		'name'  => 'Ralf Becker',
 		'email' => 'ralfbecker@outdoor-training.de'
 	);
@@ -63,17 +63,10 @@
 
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
-		 'appname' => 'phpgwapi',
-		 'versions' => Array('1.0.1','1.2')
+		'appname' => 'phpgwapi',
+		'versions' => Array('1.0.1','1.2')
 	);
 	$setup_info['infolog']['depends'][] = array(
-		 'appname' => 'etemplate',
-		 'versions' => Array('1.0.0','1.0.1','1.2')
+		'appname' => 'etemplate',
+		'versions' => Array('1.0.0','1.0.1','1.2')
 	);
-
-
-
-
-
-
-
