@@ -72,6 +72,7 @@ comment	etemplate	zh-tw	備註
 confirm	etemplate	zh-tw	確認
 confirmation message or custom javascript (returning true or false)	etemplate	zh-tw	確認訊息或是自訂的 javascript （傳回 true 或 false）
 confirmation necesary or custom java-script	etemplate	zh-tw	需要確認或自訂的 javascript
+contains	etemplate	zh-tw	包含
 create a new table for the application	etemplate	zh-tw	為這個應用程式建立一個新的表格
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	zh-tw	從標籤與求助文字建立一個英文('en')的語言檔
 css class for the table-tag	etemplate	zh-tw	表格標間的CSS類別
@@ -244,6 +245,7 @@ of	etemplate	zh-tw	的
 onclick	etemplate	zh-tw	點選時
 only an other version found !!!	etemplate	zh-tw	只有找到一個其他版本！
 open the online help.	etemplate	zh-tw	開啟線上說明
+operator	etemplate	zh-tw	運算元
 optional note about the link	etemplate	zh-tw	連結的附註
 options	etemplate	zh-tw	選項
 order to navigating by tab key through the form	etemplate	zh-tw	表單中跳位鍵的順序

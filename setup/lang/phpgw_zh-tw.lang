@@ -108,6 +108,7 @@ contain	setup	zh-tw	包含
 continue	setup	zh-tw	繼續
 continue to the header admin	setup	zh-tw	繼續頁首管理
 convert	setup	zh-tw	轉換
+convert backup to charset selected above	setup	zh-tw	轉換備份到上面選擇的字元編碼
 could not open header.inc.php for writing!	setup	zh-tw	無法寫入任何資料到header.inc.php！
 country selection	setup	zh-tw	選擇國別
 create	setup	zh-tw	建立
@@ -123,7 +124,7 @@ created	setup	zh-tw	建立日期
 created header.inc.php!	setup	zh-tw	已建立header.inc.php!
 creating tables	setup	zh-tw	正在建立資料表
 current system-charset	setup	zh-tw	目前系統字元編碼
-current system-charset is %1, click %2here%3 to change it.	setup	zh-tw	目前系統字元編碼是%1，點選 %2這裡%3 來改變。
+current system-charset is %1.	setup	zh-tw	目前系統字元編碼是 %1 。
 current version	setup	zh-tw	目前的版本
 currently installed languages: %1 <br />	setup	zh-tw	目前已安裝的語言：%1 <br />
 database instance (egw domain)	setup	zh-tw	資料庫實例（eGW網域）
@@ -460,6 +461,7 @@ this should be around 30 bytes in length.<br />note: the default has been random
 this stage is completed<br />	setup	zh-tw	這個步驟已經完成<br />
 to a version it does not know about	setup	zh-tw	未知的版本
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	zh-tw	要允許密碼驗證，請新增下面幾行到 pg_hba.conf （在檔案的最上方）並且重新啟動 postgres：
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	zh-tw	修改字元編碼：先備份您的資料庫、移除所有應用程式並且重新安裝備份時勾選"轉換備份資料到選擇的字元編碼"項目。
 to setup 1 admin account and 3 demo accounts.	setup	zh-tw	設定一個管理員帳號與三個測試帳號
 top	setup	zh-tw	頂部
 translations added	setup	zh-tw	語系新增了
