@@ -169,7 +169,7 @@ class socontacts
 	 */
 	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
- 		 //echo 'socontacts::search->criteria:'; _debug_array($criteria);
+ 		//echo 'socontacts::search->criteria:'; _debug_array($criteria);
 		// We just want to deal with generalized vars, to simpyfie porting of this code to so_sql later...
 		$this->main_id = $this->somain->contacts_id;
 
@@ -271,7 +271,7 @@ class socontacts
 				$resultextra = array_unique((array)$merge[$this->extra_id]);
 			}
 		}
-// 		_debug_array($resultextra);
+		//echo 'socontacts::search->resultextra:'; _debug_array($resultextra);
 		
 		// search in main fields
 		$result = array();
@@ -282,7 +282,16 @@ class socontacts
 		}
 		if (count($criteria) >= 1)
 		{
-			$result = $this->somain->search($criteria,true,$order_by,$extra_cols,$wildcard,$empty,$op,false,$filter);
+			// We do have to apply wildcard by hand, as the result-ids of extrasearch are included in this search
+			if($wildcard)
+			{
+				foreach ($criteria as $field => $value)
+				{
+					if ($field == $this->main_id) continue;
+					$criteria[$field] = '*'.$value.'*';
+				}
+			}
+			$result = $this->somain->search($criteria,true,$order_by,$extra_cols,false,$empty,$op,false,$filter);
 			if(!is_array($result)) return false;
 			$expr = '$result[0]';
 			for($i=1; $i<count($result); $i++)
@@ -292,7 +301,7 @@ class socontacts
 			@eval('$merge = array_merge_recursive('.$expr.');');
 			$result = ($merge[$this->main_id]);
 		}
-// 		_debug_array($result);
+		//echo 'socontacts::search->result:'; _debug_array($result);
 
 		if(count($result) == 0) return false;
 		if(!is_bool($only_keys_main = $only_keys))
