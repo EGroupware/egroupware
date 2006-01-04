@@ -419,23 +419,24 @@
 		{
 			$account_id = get_account_id($accountid);
 			$account_lid = $this->id2name((int)$account_id);
-
-			$filter = 'gidnumber=' . abs((int)$account_id);
-			$sri = ldap_search($this->ds, $this->group_context, $filter);
+			
+			if ($account_id < 0)
+			{
+				$filter = 'gidnumber=' . abs((int)$account_id);
+				$context = $this->group_context;
+			}
+			else
+			{
+				$filter = 'uid=' . (string)$account_lid;
+				$context = $this->user_context;
+				$wasAccount = True;
+			}
+			
+			$sri = ldap_search($this->ds, $context, $filter);
 			if($sri)
 			{
 				$allValues = ldap_get_entries($this->ds, $sri);
-			}
-
-			if(!$allValues[0]['dn'])
-			{
-				$sri = ldap_search($this->ds, $this->user_context, 'uid=' . (string)$account_lid);
-				if($sri)
-				{
-					$allValues = ldap_get_entries($this->ds, $sri);
-					$accountID = $allValues['0']['uid'][0];
-					$wasAccount = True;
-				}
+				$accountID = $allValues['0']['uid'][0];
 			}
 
 			if ($allValues[0]['dn'])
@@ -620,7 +621,7 @@
 
 		function id2name($account_id,$which='account_lid')
 		{
-			if ($which == 'account_lid' || $which == 'account_type')	// groups only support account_lid and account_type
+			if (($which == 'account_lid' || $which == 'account_type') && $account_id < 0)	// groups only support account_lid and account_type
 			{
 				$allValues = array();
 				$sri = ldap_search($this->ds, $this->group_context, '(&(gidnumber=' . abs((int)$account_id) . ')(phpgwaccounttype=g))');
@@ -684,7 +685,7 @@
 				}
 			}
 
-			$acct_type = $this->get_type($account);
+			$acct_type = $this->get_type($account) ? $this->get_type($account) : $this->account_type;
 
 			if ($acct_type == 'g' && $this->group_context)
 			{
