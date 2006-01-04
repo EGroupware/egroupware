@@ -467,6 +467,11 @@
 			// This is down here so we are sure to catch the acl changes
 			// for LDAP to update the memberuid attribute
 			$group->save_repository();
+			
+			$GLOBALS['hook_values'] = $group_info;
+			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+				'location' => 'editgroup'
+			),False,True);  // called for every app now, not only enabled ones)
 
 			ExecMethod('admin.uiaccounts.list_groups');
 			return False;
