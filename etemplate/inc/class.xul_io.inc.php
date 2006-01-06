@@ -127,7 +127,7 @@
 		 */
 		function set_attributes(&$widget,$attr,$val)
 		{
-			if ($attr != '')
+			if ($attr != '' && !is_numeric($attr))
 			{
 				$attrs = explode(',',$attr);
 
