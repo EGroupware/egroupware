@@ -4,8 +4,8 @@
 (shift-)click or drag to change value	jscalendar	it	(Shift-)Click o trascina per cambiare valore
 - click on any of the time parts to increase it	jscalendar	it	- Clicca su qualunque parte della data per aumentarla
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	it	- Tieni premuto il tasto del mouse su uno dei pulsanti soprastanti per una selezione veloce.
-- or click and drag for faster selection.	jscalendar	it	- o click e drag per una selezione rapida.
-- or shift-click to decrease it	jscalendar	it	- o Shift-click per diminuirlo
+- or click and drag for faster selection.	jscalendar	it	- o clicca e trascina per una selezione rapida.
+- or shift-click to decrease it	jscalendar	it	- o Shift-clicca per diminuirlo
 - use the %1, %2 buttons to select month	jscalendar	it	- Usa il bottone %1, %2 per selezionare il mese
 - use the %1, %2 buttons to select year	jscalendar	it	- Usa il bottone %1, %2 per selezionare l'anno
 00 (disable)	admin	it	00 (disabilitato)
@@ -648,9 +648,10 @@ returns a full list of accounts on the system.  warning: this is return can be q
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
 returns struct of users application access	common	it	Restituisce la struttura degli accessi alle applicazioni
 reunion	common	it	REUNION
+revert	htmlarea-SpellChecker	it	Ripristina
 right	common	it	Destra
 romania	common	it	ROMANIA
-row properties	htmlarea-TableOperations	it	ProprietÃ  della Riga
+row properties	htmlarea-TableOperations	it	Proprietà  della Riga
 rows	tinymce	it	Righe
 rules	htmlarea-TableOperations	it	Linee
 rules will appear between all rows and columns	htmlarea-TableOperations	it	Le linee appariranno tra tutte le righe e colonne
@@ -766,10 +767,13 @@ the left-hand side only	htmlarea-TableOperations	it	Solo la parte sinistra
 the mail server returned	common	it	Il mail server ha risposto
 the right and left sides only	htmlarea-TableOperations	it	Solo destra e sinistra
 the right-hand side only	htmlarea-TableOperations	it	Solo la parte destra
+the search has been compleated. the search string could not be found.	tinymce	it	La ricerca è stata completata. La stringa di ricerca non è stata trovata.
 the top and bottom sides only	htmlarea-TableOperations	it	Solo sopra e sotto
 the top side only	htmlarea-TableOperations	it	Solo la parte sopra
 this application is current	common	it	Questa applicazione è aggiornata
 this application requires an upgrade	common	it	Questa applicazione richiede un aggiornamento
+this is just a template button	tinymce	it	Questo è solo un bottone template
+this is just a template popup	tinymce	it	Questo è solo un popup template
 this name has been used already	common	it	Questo nome è già stato usato!
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	it	Questo annullerÃ  le modifiche e chiuderÃ  lo Spell Checker. Conferma.
 thursday	common	it	Giovedì
@@ -784,6 +788,7 @@ to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare al
 today	common	it	Oggi
 todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
 toggle first day of week	jscalendar	it	Togli il primo giorno della settimana
+toggle fullscreen mode	tinymce	it	Attiva/disattiva modalità schermo inetro
 toggle html source	htmlarea	it	Nascoli il sorgente HTML
 togo	common	it	TOGO
 tokelau	common	it	TOKELAU
@@ -809,6 +814,8 @@ united states	common	it	STATI UNITI
 united states minor outlying islands	common	it	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	it	Sconosciuto
 unlink	tinymce	it	Elimina link
+unlink failed.	tinymce	it	Scollegamento fallito.
+unlink the current element	htmlarea-ContextMenu	it	Scollega elemento corrente
 unordered list	tinymce	it	Lista non ordinata
 unset color	htmlarea-TableOperations	it	Rimuovi colore
 up	tinymce	it	Su
@@ -816,12 +823,16 @@ update	common	it	Aggiorna
 upload	common	it	Carica
 upload image	htmlarea-UploadImage	it	Carica Immagine
 uploading...	tinymce	it	Caricamento...
+upper latin letters	htmlarea-ListType	it	Lettere latine maiuscole
+upper roman numbers	htmlarea-ListType	it	Numeri romani maiuscoli
 url	common	it	URL
 uruguay	common	it	URUGUAY
 use button to search for	common	it	usa il Pulsante per cercare
 use button to search for address	common	it	usa il Pulsante per cercare l'Indirizzo
 use button to search for calendarevent	common	it	usa il Pulsante per cercare un Evento in Agenda
 use button to search for project	common	it	usa il Pulsante per cercare un Progetto
+use ctrl and/or shift to select multiple items.	tinymce	it	Usa Ctrl e/o Shift per selezionare più oggetti.
+use ctrl+v on your keyboard to paste the text into the window.	tinymce	it	Usa CTRL+V sulla tastiera per incollare il testo nella finestra.
 user	common	it	Utente
 user accounts	common	it	account utente
 user groups	common	it	gruppi utente

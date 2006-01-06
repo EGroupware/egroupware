@@ -168,7 +168,6 @@ no filter	calendar	it	Nessun Filtro
 no matches found	calendar	it	Nessuna corrispondenza
 no response	calendar	it	Nessuna Risposta
 non blocking	calendar	it	non bloccante
-not	calendar	it	non
 notification messages for added events	calendar	it	Messaggi di notifica per gli eventi aggiunti
 notification messages for canceled events	calendar	it	Messaggi di notifica per gli eventi cancellati
 notification messages for disinvited participants	calendar	it	Messaggi di notifica per i partecipanti disinvitati
@@ -229,7 +228,7 @@ select a %1	calendar	it	Seleziona %1
 select a time	calendar	it	seleziona un'ora
 select resources	calendar	it	Seleziona risorse
 select who should get the alarm	calendar	it	Seleziona chi dovrà avere la sveglia
-set a year only for one-time / non-regular holidays.	calendar	it	Imposta l'anno se cade una sola volta / festività non regolari.
+set a year only for one-time / non-regular holidays.	calendar	it	Imposta un Anno solo per festività occasionali / non regolari.
 set new events to private	calendar	it	Imposta il nuovo evento come privato
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	it	Gli inviti non accettati compaiono nel tuo calendario?<br>Potrai accettarli più tardi (es. quando l'appuntamento in conflitto sarà rimosso), se li lascierai visibili nell'agenda!
 should new events created as private by default ?	calendar	it	I nuovi eventi sono creati come privati normalmente ?
@@ -241,7 +240,6 @@ show list of upcoming events	calendar	it	Visualizza la lista degli eventi immine
 show this month	calendar	it	mostra questo mese
 show this week	calendar	it	mostra questa settimana
 single event	calendar	it	singolo evento
-site configuration	calendar	it	configurazione sito
 start	calendar	it	Inizio
 start date/time	calendar	it	Data/Ora Inizio
 startdate / -time	calendar	it	Data/ora iniziale
