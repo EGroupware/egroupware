@@ -377,6 +377,7 @@
 					{
 						$link_id = $this->link->link($value['to_app'],$value['to_id'],
 							$value['app'],$value['id'],$value['remark']);
+						$value['remark'] = '';
 
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
@@ -401,6 +402,7 @@
 						}
 						$link_id = $this->link->link($value['to_app'],$value['to_id'],
 							$this->link->vfs_appname,$value['file'],$value['remark']);
+						$value['remark'] = '';
 
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
