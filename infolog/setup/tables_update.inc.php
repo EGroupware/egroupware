@@ -402,7 +402,7 @@
 			'precision' => '2',
 			'default' => '1'
 		));
-		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_infolog SET info_priority=(CASE WHEN info_pri='urgent' THEN 3 WHEN info_pre='high' THEN 2 WHEN info_pri='low' THEN 0 ELSE 1 END)",__LINE__,__FILE__);
+		$GLOBALS['phpgw_setup']->oProc->query("UPDATE phpgw_infolog SET info_priority=(CASE WHEN info_pri='urgent' THEN 3 WHEN info_pri='high' THEN 2 WHEN info_pri='low' THEN 0 ELSE 1 END)",__LINE__,__FILE__);
 
 		$GLOBALS['phpgw_setup']->oProc->DropColumn('phpgw_infolog',array(
 			'fd' => array(

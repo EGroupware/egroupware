@@ -1004,11 +1004,11 @@
 		 * @param array $tables array with possible table-names
 		 * @return string/boolean tablename or false
 		 */
-		function table_exist($tables)
+		function table_exist($tables,$force_refresh=False)
 		{
-			static $table_names;
+			static $table_names = False;
 			
-			if (!$table_names) $table_names = $this->db->table_names();
+			if (!$table_names || $force_refresh) $table_names = $this->db->table_names();
 			
 			if (!$table_names) return false;
 			
@@ -1027,16 +1027,18 @@
 		 *
 		 * Other tables can always use the most up to date name
 		 */
-		function set_table_names()
+		function set_table_names($force_refresh=False)
 		{
 			foreach(array(
 				'config_table'       => array('egw_config','phpgw_config','config'),
 				'applications_table' => array('egw_applications','phpgw_applications','applications'),
+				'accounts_table'     => array('egw_accounts','phpgw_accounts'),
+				'acl_table'          => array('egw_acl','phpgw_acl'),
 				'lang_table'         => array('egw_lang','phpgw_lang','lang'),
 				'languages_table'    => array('egw_languages','phpgw_languages','languages'),
 			) as $name => $tables)
 			{
-				$table = $this->table_exist($tables);
+				$table = $this->table_exist($tables,$force_refresh);
 
 				if ($table && $table != $this->$name)	// only overwrite the default name, if we realy got one (important for new installs)
 				{

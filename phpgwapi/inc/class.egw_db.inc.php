@@ -894,7 +894,8 @@
 		*/
 		function table_names()
 		{
-			if (!$this->Link_ID && !$this->connect())
+			if (!$this->Link_ID) $this->connect();
+			if (!$this->Link_ID)
 			{
 				return False;
 			}
@@ -1284,13 +1285,15 @@
 		* @param int $line line-number to pass to query
 		* @param string $file file-name to pass to query
 		* @param string/boolean $app string with name of app or False to use the current-app
+		* @param bool $use_prepared_statement use a prepared statement
+		* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false)
+		function insert($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
 		{
 			if ($this->Debug) echo "<p>db::insert('$table',".print_r($data,True).",".print_r($where,True).",$line,$file,'$app')</p>\n";
 
-			$table_def = $this->get_table_definitions($app,$table);
+			if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
 
 			$sql_append = '';
 			$cmd = 'INSERT';
@@ -1368,12 +1371,14 @@
 		* @param int $line line-number to pass to query
 		* @param string $file file-name to pass to query
 		* @param string/boolean $app string with name of app or False to use the current-app
+		* @param bool $use_prepared_statement use a prepared statement
+		* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function update($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false)
+		function update($table,$data,$where,$line,$file,$app=False,$use_prepared_statement=false,$table_def=False)
 		{
 			if ($this->Debug) echo "<p>db::update('$table',".print_r($data,true).','.print_r($where,true).",$line,$file,'$app')</p>\n";
-			$table_def = $this->get_table_definitions($app,$table);
+			if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
 			
 			$blobs2update = array();
 			// SapDB/MaxDB cant update LONG columns / blob's: if a blob-column is included in the update we remember it in $blobs2update 
@@ -1451,11 +1456,12 @@
 		* @param int $line line-number to pass to query
 		* @param string $file file-name to pass to query
 		* @param string/boolean $app string with name of app or False to use the current-app
+		* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function delete($table,$where,$line,$file,$app=False)
+		function delete($table,$where,$line,$file,$app=False,$table_def=False)
 		{
-			$table_def = $this->get_table_definitions($app,$table);
+			if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
 			$sql = "DELETE FROM $table WHERE ".
 				$this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 
@@ -1474,11 +1480,12 @@
 		 *	array:	column-name / value pairs: the value gets quoted according to the type of the column and prefixed
 		 *		with column-name=, multiple pairs are AND'ed together, see db::column_data_implode
 		 *	bool: If False or is_null($arg): the next 2 (!) arguments gets ignored
+		 * @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 		 * @return string the expression generated from the arguments
 		 */
-		function expression($table,$args)
+		function expression($table,$args,$table_def=False)
 		{
-			$table_def = $this->get_table_definitions('',$table);
+			if (!$table_def) $table_def = $this->get_table_definitions('',$table);
 			$sql = '';
 			$ignore_next = 0;
 			foreach(func_get_args() as $n => $arg)
@@ -1525,13 +1532,14 @@
 		* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
 		* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 		*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
+		* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 		* @return ADORecordSet or false, if the query fails
 		*/
-		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='')
+		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False)
 		{
 			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app')</p>\n";
 
-			$table_def = $this->get_table_definitions($app,$table);
+			if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
 			if (is_array($cols))
 			{
 				$cols = implode(',',$cols);

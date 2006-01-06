@@ -70,6 +70,10 @@
 		 * @var array $capabilities reference to the array of the db-class
 		 */
 		var $capabilities;
+		/**
+		 * @var int $pgsql_old_seq preserve value of old sequences in PostgreSQL
+		 */
+		var $pgsql_old_seq;
 
 		/**
 		 * Constructor of schema-processor
@@ -115,9 +119,10 @@
 		 *
 		 * @param string $sTableName
 		 * @param array $aTableDef
+		 * @param bool $preserveSequence
 		 * @return int 2: no error, 1: errors, but continued, 0: errors aborted
 		 */
-		function CreateTable($sTableName, $aTableDef)
+		function CreateTable($sTableName, $aTableDef, $preserveSequence=False)
 		{
 			if ($this->debug)
 			{
@@ -191,6 +196,16 @@
 				{
 					return $retVal;
 				}
+			}
+			// preserve last value of an old sequence
+			if ($this->sType == 'pgsql' && $preserveSequence && $this->pgsql_old_seq)
+			{
+				if ($seq = $this->_PostgresHasOldSequence($sTableName))
+				{
+					$this->pgsql_old_seq = $this->pgsql_old_seq + 1;
+					$this->m_odb->query("ALTER SEQUENCE $seq RESTART WITH " . $this->pgsql_old_seq,__LINE__,__FILE__);
+				}
+				$this->pgsql_old_seq = 0;
 			}
 			return $retVal;
 		}
@@ -278,11 +293,11 @@
 			{
 				$table_def = $this->GetTableDefinition($sOldTableName);
 
-				if ($this->_PostgresHasOldSequence($sOldTableName) || count($table_def['pk']) ||
+				if ($this->_PostgresHasOldSequence($sOldTableName,True) || count($table_def['pk']) ||
 					count($table_def['ix']) || count($table_def['uc']))
 				{
 					if ($this->adodb->BeginTrans() &&
-						$this->CreateTable($sNewTableName,$table_def) &&
+						$this->CreateTable($sNewTableName,$table_def,True) &&
 						$this->m_odb->query("INSERT INTO $sNewTableName SELECT * FROM $sOldTableName",__LINE__,__FILE__) &&
 						$this->DropTable($sOldTableName))
 					{
@@ -302,17 +317,24 @@
 		 * Check if we have an old, not automaticaly droped sequence
 		 *
 		 * @param string $sTableName
-		 * @param boolean/string sequence-name or false
+		 * @param bool $preserveValue
+		 * @return boolean/string sequence-name or false
 		 */
-		function _PostgresHasOldSequence($sTableName)
+		function _PostgresHasOldSequence($sTableName,$preserveValue=False)
 		{
 			if ($this->sType != 'pgsql') return false;
 
-			$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName%' AND a.attrelid=c.oid AND d.adnum=a.attnum");
+			$seq = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%seq_$sTableName\'::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
+			$seq2 = $this->adodb->GetOne("SELECT d.adsrc FROM pg_attribute a, pg_class c, pg_attrdef d WHERE c.relname='$sTableName' AND c.oid=d.adrelid AND d.adsrc LIKE '%$sTableName%_seq\'::text)' AND a.attrelid=c.oid AND d.adnum=a.attnum");
 			
 			if ($seq && preg_match('/^nextval\(\'(.*)\'/',$seq,$matches))
 			{
-				
+				if ($preserveValue) $this->pgsql_old_seq = $this->adodb->GetOne("SELECT last_value FROM " . $matches[1]);
+				return $matches[1];
+			}
+			if ($seq2 && preg_match('/^nextval\(\'public\.(.*)\'/',$seq2,$matches))
+			{
+				if ($preserveValue) $this->pgsql_old_seq = $this->adodb->GetOne("SELECT last_value FROM " . $matches[1]);
 				return $matches[1];
 			}
 			return false;
@@ -322,13 +344,19 @@
 		 * Check if we have an old, not automaticaly droped sequence and drop it
 		 *
 		 * @param $sTableName
+		 * @param bool $preserveValue
 		 */
-		function _PostgresTestDropOldSequence($sTableName)
+		function _PostgresTestDropOldSequence($sTableName,$preserveValue=False)
 		{
+			$this->pgsql_old_seq = 0;
 			if ($this->sType == 'pgsql' && ($seq = $this->_PostgresHasOldSequence($sTableName)))
 			{
+				// only drop sequence, if there is no dependency on it
+				if (!$this->adodb->GetOne("SELECT relname FROM pg_class JOIN pg_depend ON pg_class.relfilenode=pg_depend.objid WHERE relname='$seq' AND relkind='S' AND deptype='i'"))
+				{
 				$this->query('DROP SEQUENCE '.$seq,__LINE__,__FILE__);
 			}
+		}
 		}
 
 		/**
@@ -365,6 +393,7 @@
 		function RenameColumn($sTableName, $sOldColumnName, $sNewColumnName, $bCopyData=True)
 		{
 			$table_def = $this->GetTableDefinition($sTableName);
+			$old_def = array();
 			
 			if (isset($table_def['fd'][$sOldColumnName]))
 			{
@@ -374,7 +403,7 @@
 			{
 				foreach($table_def['fd'] as $col => $def)
 				{
-					if (strtolower($col) == strtolower($OldColumnName))
+					if (strtolower($col) == strtolower($sOldColumnName))
 					{
 						$old_def = $def;
 						break;
@@ -1034,6 +1063,7 @@
 					'F'		=> 'float',
 					'N'		=> 'decimal',
 					'R'		=> 'auto',
+					'L'		=> 'bool',
 				);
 				$definition['fd'][$name]['type'] = $ado_type2egw[$type];
 

@@ -93,6 +93,10 @@
 	{
 		// removing the ACL entries of deleted accounts
 		$GLOBALS['egw_setup']->setup_account_object();
+		if ($GLOBALS['phpgw']->accounts->table)
+		{
+			$GLOBALS['phpgw']->accounts->table = $GLOBALS['egw_setup']->accounts_table;
+		}
 		if (($all_accounts = $GLOBALS['phpgw']->accounts->search(array('type'=>'both'))))
 		{
 			$all_accounts = array_keys($all_accounts);
@@ -390,7 +394,7 @@
 		$GLOBALS['egw_setup']->oProc->AddColumn('phpgw_vfs2_files', 'modified', array('type' => 'timestamp', 'nullable' => true));
 
 		//Updating existing values
-		$sql = "SELECT max(modified) as mod, file_id, modifiedby_id from phpgw_vfs2_versioning group by file_id";
+		$sql = "SELECT max(modified) as mod, file_id, min(modifiedby_id) from phpgw_vfs2_versioning group by file_id";
 
 		$GLOBALS['egw_setup']->oProc->m_odb->query($sql,__LINE__,__FILE__);
 
@@ -492,10 +496,10 @@
 				'app_version' => $home_version,
 			),array(
 				'app_name' => 'home',
-			),__LINE__,__FILE__);
+			),__LINE__,__FILE__,False,False,$GLOBALS['egw_setup']->oProc->GetTableDefinition($GLOBALS['egw_setup']->applications_table));
 			
 			// give all users and groups with preferences rights, rights for the home app.
-			$GLOBALS['egw_setup']->db->select('phpgw_acl','acl_account',array(
+			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->acl_table,'acl_account',array(
 				'acl_appname'  => 'preferences',
 				'acl_location' => 'run',
 				'acl_rights'   => 1,
@@ -507,13 +511,13 @@
 			}
 			foreach($accounts_with_preference_rights as $account)
 			{
-				$GLOBALS['egw_setup']->db->insert('phpgw_acl',array(
+				$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->acl_table,array(
 					'acl_rights'   => 1,
 				),array(
 					'acl_appname'  => 'home',
 					'acl_location' => 'run',
 					'acl_account'  => $account,
-				),__LINE__,__FILE__);
+				),__LINE__,__FILE__,False,False,$GLOBALS['egw_setup']->oProc->GetTableDefinition($GLOBALS['egw_setup']->acl_table));
 			}	
 		}
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.010';
@@ -584,9 +588,13 @@
 	function phpgwapi_upgrade1_0_1_012()
 	{
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_accounts','egw_accounts');
-		$GLOBALS['egw_setup']->accounts_table = 'egw_accounts';
+		$GLOBALS['egw_setup']->set_table_names(True);
+		if ($GLOBALS['phpgw']->accounts->table)
+		{
+			$GLOBALS['phpgw']->accounts->table = $GLOBALS['egw_setup']->accounts_table;
+		}
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_acl','egw_acl');
-		$GLOBALS['egw_setup']->acl_table = 'egw_acl';
+		$GLOBALS['egw_setup']->set_table_names(True);
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_log','egw_log');
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_log_msg','egw_log_msg');
 
@@ -598,9 +606,9 @@
 	function phpgwapi_upgrade1_0_1_013()
 	{
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_config','egw_config');
-		$GLOBALS['egw_setup']->config_table = 'egw_config';
+		$GLOBALS['egw_setup']->set_table_names(True);
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_applications','egw_applications');
-		$GLOBALS['egw_setup']->applications_table = 'egw_applications';
+		$GLOBALS['egw_setup']->set_table_names(True);
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.014';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -611,7 +619,9 @@
 	{
 		// index was to big for mysql with charset utf8 (max 1000byte = 333 utf8 chars)
 		// before we can shorten the message_id, we have to make sure there are no identical message_id > 128 chars
+		// and we have to truncate the message_id explicitly, postgresql f.e. will not do it for us, but bail out instead
 		$to_delete = array();
+		$to_truncate = array();
 		$GLOBALS['egw_setup']->db->select('phpgw_lang','app_name,lang,message_id','LENGTH(message_id) > 128',__LINE__,__FILE__,
 			false,'ORDER BY app_name,lang,message_id');
 		while(($row = $GLOBALS['egw_setup']->db->row(true)))
@@ -621,11 +631,21 @@
 			{
 				$to_delete[] = $row;
 			}
+			else
+			{
+				$to_truncate[] = $row;
+			}
 			$last_row = $row;
 		}
 		foreach ($to_delete as $row)
 		{
 			$GLOBALS['egw_setup']->db->delete('phpgw_lang',$row,__LINE__,__FILE__);
+		}
+		foreach ($to_truncate as $row)
+		{
+			$where = $row;
+			$row['message_id'] = substr($row['message_id'],0,128);
+			$GLOBALS['egw_setup']->db->update('phpgw_lang',$row,$where,__LINE__,__FILE__,'phpgwapi');
 		}
 		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_lang','app_name',array(
 			'type' => 'varchar',
@@ -640,9 +660,9 @@
 			'default' => ''
 		));
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_lang','egw_lang');
-		$GLOBALS['egw_setup']->lang_table = 'egw_lang';
+		$GLOBALS['egw_setup']->set_table_names(True);
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_languages','egw_languages');
-		$GLOBALS['egw_setup']->languages_table = 'egw_languages';
+		$GLOBALS['egw_setup']->set_table_names(True);
 
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.015';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
@@ -757,26 +777,28 @@
 		// (shortening them twice, does no harm) !!!
 		if ($GLOBALS['egw_setup']->table_exist(array('phpgw_felamimail_cache')))
 		{
-			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_cache','fmail_accountname',array(
+			$table_def_cache = $GLOBALS['egw_setup']->oProc->GetTableDefinition('phpgw_felamimail_cache');
+			$table_def_folderstatus = $GLOBALS['egw_setup']->oProc->GetTableDefinition('phpgw_felamimail_folderstatus');
+
+			foreach (array('fmail_accountname','accountname','fmail_foldername','foldername') as $column_name)
+			{
+				if (isset($table_def_cache['fd'][$column_name]))
+				{
+					$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_cache',$column_name,array(
 				'type' => 'varchar',
 				'precision' => '128',
 				'nullable' => False
 			));
-			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_cache','fmail_foldername',array(
+				}
+				if (isset($table_def_folderstatus['fd'][$column_name]))
+				{
+					$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_folderstatus',$column_name,array(
 				'type' => 'varchar',
 				'precision' => '128',
 				'nullable' => False
 			));
-			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_folderstatus','fmail_accountname',array(
-				'type' => 'varchar',
-				'precision' => '128',
-				'nullable' => False
-			));
-			$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_felamimail_folderstatus','fmail_foldername',array(
-				'type' => 'varchar',
-				'precision' => '128',
-				'nullable' => False
-			));
+		}
+			}
 		}
 		if (substr($GLOBALS['egw_setup']->db->Type,0,5) == 'mysql' && $GLOBALS['egw_setup']->system_charset && $GLOBALS['egw_setup']->db_charset_was &&
 			$GLOBALS['egw_setup']->system_charset != $GLOBALS['egw_setup']->db_charset_was)

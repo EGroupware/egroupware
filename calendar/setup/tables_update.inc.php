@@ -1166,7 +1166,7 @@
 	function calendar_upgrade1_0_0_005()
 	{
 		// change prefix of all calendar tables to egw_
-		foreach(array('cal','cal_user','cal_repeats','cal_extra','cal_holidays') as $name)
+		foreach(array('cal_user','cal_repeats','cal_extra','cal_holidays','cal') as $name)
 		{
 			$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_'.$name,'egw_'.$name);
 		}
