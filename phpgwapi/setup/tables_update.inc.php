@@ -10,7 +10,6 @@
 	\**************************************************************************/
 
 	// $Id$
-	// $Source$
 
 	/* Include older eGroupWare update support */
 	include('tables_update_0_9_9.inc.php');
@@ -1068,6 +1067,24 @@
 			'nullable' => False
 		));
 
-		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.003';
-		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.003';
 	}
+
+	$test[] = '1.2.003';
+	function phpgwapi_upgrade1_2_003()
+	{
+		// change lenght of dir/name from 255/64 to 233/100, as 64 was definitly to short, 
+		// sum has to be <= 333 (1000/3) because of the mysql index restrictions
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_vfs','vfs_directory',array(
+			'type' => 'varchar',
+			'precision' => '233'
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_vfs','vfs_name',array(
+			'type' => 'varchar',
+			'precision' => '100',
+			'nullable' => False
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.004';
+	}
+?>
