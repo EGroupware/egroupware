@@ -484,7 +484,7 @@
 						'vfs_directory'	=> $p->fake_leading_dirs,
 						'vfs_name'		=> $p->fake_name,
 						'vfs_mime_type'	=> 'journal',
-					),__LINE__,__FILE);
+					),__LINE__,__FILE__);
 			}
 
 			return True;
