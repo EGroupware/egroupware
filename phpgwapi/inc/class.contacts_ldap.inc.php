@@ -336,11 +336,11 @@
 			if($filter)
 			{
 				if($DEBUG) { echo 'DEBUG - Inbound filter is: #'.$filter.'#'; }
-				
+
 				foreach(explode(',',$filter) as $f)
 				{
 					list($name,$value) = explode('=',$f,2);
-					
+
 					if ($this->stock_contact_fields[$name])
 					{
 						$filterfields[$this->stock_contact_fields[$name]] = $value;
@@ -456,21 +456,11 @@
 
 			/* Use usort to sort the complete result, since ldap_search can not do that */
 			@set_time_limit(0); /* Try not to die, this can take some time on slow machines... */
-			if(empty($order))
-			{
-				$order_array = 'array("'
-					. $this->stock_contact_fields['n_family'] . '", "'
-					. $this->stock_contact_fields['n_given'] . '", "'
-					. $this->stock_contact_fields['email'] . '")';
-			}
-			else
-			{
-				$order_array = "array('"
-					. $this->stock_contact_fields[$order] . "','"
-					. $this->stock_contact_fields['n_family'] . "', '"
-					. $this->stock_contact_fields['n_given'] . "', '"
-					. $this->stock_contact_fields['email'] . "')";
-			}
+			$order_array = "array('";
+			if(!empty($order)) $order_array .= $this->stock_contact_fields[$order] . "','";
+			$order_array .= $this->stock_contact_fields['n_family'] . "', '"
+				. $this->stock_contact_fields['n_given'] . "', '"
+				. $this->stock_contact_fields['email'] . "')";
 			# remove the "count" field from the array, because usort screws up associative arrays
 			unset($ldap_fields['count']);
 			# sort the array
@@ -672,7 +662,7 @@
 				echo '<br>AND query:  "' . $aquery . '"';
 				echo '<br>OR query:   "' . $oquery . '"';
 				echo '<br>Full query: "' . $fquery . '"';
-				echo '<br>Will search in "' . $GLOBALS['egw_info']['server']['ldap_contact_context'] . '"'; 
+				echo '<br>Will search in "' . $GLOBALS['egw_info']['server']['ldap_contact_context'] . '"';
 			}
 
 			return $fquery;
