@@ -1,0 +1,16 @@
+/*
+	The styles in this file are used for printing only!
+	
+	Additional UI Elements can be disabled for printing by adding their Id here or adding the noPrint class to them.
+*/
+/* $Id$ */
+
+#divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,.noPrint {
+	display:none;
+}
+
+#divMain {
+	border:none;
+	margin:0px;
+	padding:0px;
+}

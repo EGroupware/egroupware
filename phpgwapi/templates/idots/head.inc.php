@@ -30,6 +30,7 @@
 		$theme_css = '/phpgwapi/templates/idots/css/idots.css';
 	}
 	$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . $theme_css;
+	$print_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/print.css';
 
 	//pngfix defaults to yes
 	if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])
@@ -85,6 +86,7 @@
 		'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
 		'body_tags'     	=> $bodyheader .' '. $GLOBALS['egw']->common->get_body_attribs(),
 		'theme_css'     	=> $theme_css,
+		'print_css'     	=> $print_css,
 		'css'           	=> $GLOBALS['egw']->common->get_css(),
 		'java_script'   	=> $GLOBALS['egw']->common->get_java_script(),
 		'meta_robots'		=> $robots,
