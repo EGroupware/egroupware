@@ -386,15 +386,6 @@
 					unset($values[$var]);
 				}
 			}
-			// fix old names
-			foreach($values as $key => $val)
-			{
-				if ($key[0] != '#' && substr($key,0,5) != 'info_')
-				{
-					$values['info_'.$key] = $val;
-					unset($values[$key]);
-				}
-			}
 			if ($status_only = $values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT))
 			{
 				if (!isset($values['info_responsible']))
