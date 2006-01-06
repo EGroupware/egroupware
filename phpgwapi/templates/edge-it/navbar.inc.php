@@ -116,7 +116,7 @@
 							$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 						}
 
-						$app_extra_icons .= ' >' . $icon . '</a></td>';
+						$app_extra_icons .= $app_data['target'].' >' . $icon . '</a></td>';
 					}
 
 
@@ -137,7 +137,7 @@
 							$app_extra_icons .= ' target="' . $GLOBALS['phpgw_info']['flags']['navbar_target'] . '"';
 						}
 
-						$app_extra_icons .= '>' . $title . '</a></td></tr>';
+						$app_extra_icons .= $app_data['target'].'>' . $title . '</a></td></tr>';
 					}
 
 					unset($icon);
