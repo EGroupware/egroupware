@@ -136,9 +136,6 @@ class bocontacts extends socontacts
 		$contact['last_mod'] = time();
 		// only owner can set access status
 		$contact['access'] = $contact['owner'] == $this->user ? ($contact['private'] ? 'private': 'public') : $contact['access'];
-		// convert bithdate format
-		$tmp_bday = $contact['bday'];
-		$contact['bday'] = $contact['bday'] ? date('m/d/Y',$contact['bday']) : '';
 		// create fullname
 		$contact['fn'] = $contact['prefix'].
 			($contact['n_given'] ? ' '.$contact['n_given'] : '').
@@ -161,8 +158,6 @@ class bocontacts extends socontacts
 			}
 		}
 		
-		//reconvert bday as we are dealing with references
-		$contact['bday'] = $tmp_bday;
 		// for some bad historical reasons we mainfileds saved in cf :-(((
 		$data['ophone'] = $data['#ophone']; unset($data['#ophone']);
 		$data['address2'] = $data['#address2']; unset($data['#address2']);
@@ -194,10 +189,6 @@ class bocontacts extends socontacts
 			return $content['msg'] = lang('you are not permittet to view this contact');
 		}
 		
-		// convert birthday format
-		
-		list($m,$d,$y) = explode('/',$data['bday']);
-		$data['bday'] = strpos($data['bday'],'/') ? mktime(0,0,0,$m,$d,$y) : '';
 		// convert access into private for historical reasons
 		$data['private'] = $data['access'] == 'private' ? 1 : 0;
 		// for some bad historical reasons we mainfileds saved in cf :-(((
@@ -226,11 +217,6 @@ class bocontacts extends socontacts
 	*/
 	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		// convert bday format
-		if(isset($criteria['bday']))
-		{
-			$criteria['bday'] = date('m/d/Y',$criteria['bday']);
-		}
 		$filter = array(
 			'owner' => array_keys($this->grants),
 		);

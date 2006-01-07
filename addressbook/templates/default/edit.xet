@@ -166,7 +166,7 @@
 				<row height="30">
 					<description/>
 					<description options=",,,bday" value="Birthday"/>
-					<date 1="label" id="bday"/>
+					<date 1="label" id="bday" options="m/d/Y"/>
 				</row>
 				<row>
 					<description/>
