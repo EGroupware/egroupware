@@ -99,9 +99,14 @@
 		}
 		if (($all_accounts = $GLOBALS['phpgw']->accounts->search(array('type'=>'both'))))
 		{
-			$all_accounts = array_keys($all_accounts);
-			$GLOBALS['egw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_account NOT IN (".implode(',',$all_accounts).")",__LINE__,__FILE__);
-			$GLOBALS['egw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$all_accounts)."')",__LINE__,__FILE__);
+			foreach($all_accounts as $key => $value)
+			{
+				// the latest version of the egw api(>1.2.001) is returning negative groupids
+				// but in the currently updated version of the acl table, the groupids are yet positive
+				$allaccounts[] = abs($key);
+			}
+			$GLOBALS['egw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_account NOT IN (".implode(',',$allaccounts).")",__LINE__,__FILE__);
+			$GLOBALS['egw_setup']->oProc->query("DELETE FROM phpgw_acl WHERE acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$allaccounts)."')",__LINE__,__FILE__);
 		}
 		$GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.0.1.002';
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'];
