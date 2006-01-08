@@ -642,15 +642,16 @@
 			}
 			$last_row = $row;
 		}
+		$table_def = $GLOBALS['egw_setup']->oProc->GetTableDefinition('phpgw_lang');
 		foreach ($to_delete as $row)
 		{
-			$GLOBALS['egw_setup']->db->delete('phpgw_lang',$row,__LINE__,__FILE__);
+			$GLOBALS['egw_setup']->db->delete('phpgw_lang',$row,__LINE__,__FILE__,False,$table_def);
 		}
 		foreach ($to_truncate as $row)
 		{
 			$where = $row;
 			$row['message_id'] = substr($row['message_id'],0,128);
-			$GLOBALS['egw_setup']->db->update('phpgw_lang',$row,$where,__LINE__,__FILE__,'phpgwapi');
+			$GLOBALS['egw_setup']->db->update('phpgw_lang',$row,$where,__LINE__,__FILE__,'phpgwapi',False,$table_def);
 		}
 		$GLOBALS['egw_setup']->oProc->AlterColumn('phpgw_lang','app_name',array(
 			'type' => 'varchar',
