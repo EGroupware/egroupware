@@ -151,6 +151,7 @@ new name	infolog	nl	nieuwe naam
 new search	infolog	nl	Nieuwe zoekopdracht
 no - cancel	infolog	nl	Nee - Annuleren
 no describtion, links or attachments	infolog	nl	geen beschrijving, links of bijlagen
+no details	infolog	nl	geen details
 no entries found, try again ...	infolog	nl	Geen items gevonden, probeer het nogmaals ...
 no filter	infolog	nl	Geen filter
 no links or attachments	infolog	nl	geen links of bijlagen
@@ -182,6 +183,7 @@ permission denied	infolog	nl	Toestemming geweigerd
 phone	infolog	nl	Telefoongesprek
 phone/email	infolog	nl	Telefoon/Email
 phonecall	infolog	nl	Telefoongesprek
+planned	infolog	nl	gepland
 planned time	infolog	nl	geplande tijd
 priority	infolog	nl	Prioriteit
 private	infolog	nl	Privé
@@ -211,16 +213,18 @@ select an app to search in	infolog	nl	Selecteer een applicatie om in te zoeken
 select an entry to link with	infolog	nl	Selecteer een infolog om mee te linken
 select to filter by owner	infolog	nl	selecteer om te filteren op eigenaar
 select to filter by responsible	infolog	nl	selecteer om te filteren bij verantwoordelijke
-sets the status of this entry to done	infolog	nl	Zet de status van deze entry op voltooid
+sets the status of this entry and its subs to done	infolog	nl	Zet de status van dit item en de onderliggende op gedaan
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	nl	Moet InfoLog uw openstaande items weergeven - niet voltooide taken, telefoongesprekken of notities - op het hoofdscherm. Werkt alleen indien u geen toepassing voor het hoofdscherm hebt geselecteerd (in uw voorkeuren).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	nl	Moet InfoLog subtaken, -telefoongesprekken of -notities standaard weergeven, ja of nee. U kunt altijd sub's weergeven via de bovenliggende infolog ?
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	nl	Moet InfoLog de links naar andere toepassingen en/of bestanden in de InfoLog lijst (normale weergave als u InfoLog start).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	nl	Moet InfoLog volledige namen (voor- en achternaam) gebruiken of alleen gebruikersnamen?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	nl	Moet deze infolog alleen zochtbaar zijn voor u en de personen die toegang hebben tot uw persoonlijke informatie d.m.v. het ingestelde toegangsbeheer
+show a column for used and planned times in the list.	infolog	nl	Toont een kolom voor gebruikte en geplande tijden in de lijst.
 show full usernames	infolog	nl	Volledige gebruikersnamen weergeven
 show in the infolog list	infolog	nl	In de InfoLoglijst weergeven
 show list of upcoming entries	infolog	nl	toon lijst van toekomstige items
 show open entries: tasks/calls/notes on main screen	infolog	nl	Open infologs op hoofdscherm weergeven: Taken/Telefoongesprekken/Notities
+show times	infolog	nl	Toon tijden
 small view	infolog	nl	kleine weergave
 start a new search, cancel this link	infolog	nl	Start een nieuwe zoekopdracht, deze link annuleren
 startdate	infolog	nl	Startdatum
