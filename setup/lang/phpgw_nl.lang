@@ -80,7 +80,7 @@ but we <u>highly recommend backing up</u> your tables in case the script causes 
 cancel	setup	nl	Annuleren
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	nl	Kan de header.inc.php niet aanmaken als gevolg van te beperkte bestandstoegangsrechten.<br />Inplaats hiervan kunt u het bestand %1.
 change system-charset	setup	nl	Verander de systeemkarakterset
-charset	setup	nl	karakterset
+charset	setup	nl	iso-8859-1
 charset to convert to	setup	nl	Karakterset waarnaar geconverteerd moet worden
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	nl	Controle kan alleen worden uitgevoerd indien aangeroepen via een webserver omdat de gebruikers ID /-naam van de webserver onbekend is.
 check installation	setup	nl	Controleer installatie

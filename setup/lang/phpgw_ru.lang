@@ -13,7 +13,7 @@ at your request, this script is going to attempt to upgrade your old application
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ru	По вашему запросу, данный скрипт попытается обновить старые таблицы и перевести их в новый формат
 authentication / accounts	setup	ru	Авторизация / Учетные записи
 change system-charset	setup	ru	Изменить кодировку
-charset	setup	ru	кодировка
+charset	setup	ru	koi8-r
 charset to convert to	setup	ru	Конвертировать в кодировку
 check installation	setup	ru	Проверка установки
 checking php.ini	setup	ru	Проверка php.ini

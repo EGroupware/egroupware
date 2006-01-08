@@ -62,7 +62,7 @@ bottom	setup	ko	하단
 cancel	setup	ko	취소
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	ko	파일 권한이 없기때문에 header.inc.php를 생성할수 없습니다. 대신 %1 파일로 할수 있습니다
 change system-charset	setup	ko	시스템 문자셋 바꾸기
-charset	setup	ko	문자셋
+charset	setup	ko	euc-kr
 charset to convert to	setup	ko	전환할 문자셋
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	ko	웹서버를 통해 호출되지만 그 웹서버가 사용자ID와 이름을 모르는 상태에서 실행된다면 체크하세요
 check installation	setup	ko	설치 확인

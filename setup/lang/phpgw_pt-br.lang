@@ -60,7 +60,7 @@ bottom	setup	pt-br	Inferior
 cancel	setup	pt-br	Cancelar
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	pt-br	Não foi possível criar o header.inc.php devido a restrições no acesso ao arquivo.<br /> Em vez disso você deve %1 o arquivo.
 change system-charset	setup	pt-br	Trocar o Conjunto de Carcteres do Sistema
-charset	setup	pt-br	Conjunto de Carácteres (iso-8859-1)
+charset	setup	pt-br	iso-8859-1
 charset to convert to	setup	pt-br	Conjuto de Caracteres destino
 check installation	setup	pt-br	Verificar a instalação
 check ip address of all sessions	setup	pt-br	Verificar endereço IP de todas sessões

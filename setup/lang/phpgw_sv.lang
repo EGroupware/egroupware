@@ -77,7 +77,7 @@ but we <u>highly recommend backing up</u> your tables in case the script causes 
 cancel	setup	sv	Avbryt
 cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	sv	Kan inte skapa header.inc.php-filen på grund av bristande behörighet.<br />Istället kan du %1 filen.
 change system-charset	setup	sv	Ändra system-teckentabell
-charset	setup	sv	teckentabell
+charset	setup	sv	iso-8859-1
 charset to convert to	setup	sv	Teckentabell att konvertera till
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	sv	Kontrollen kan endast genomföras om den anropas via webserver, eftersom webserverns användarkonto inte är känt.
 check installation	setup	sv	Kontrollera installation

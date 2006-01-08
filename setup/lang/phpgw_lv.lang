@@ -67,7 +67,7 @@ because of a failed upgrade, or the database is newer than the installed version
 bottom	setup	lv	apakšā
 cancel	setup	lv	Atcelt
 change system-charset	setup	lv	Mainīt sistēmas rakstzīmju kopa
-charset	setup	lv	rakstzīmju kopa
+charset	setup	lv	utf-8
 charset to convert to	setup	lv	Rakstīmju kopa pārveidota uz
 check installation	setup	lv	Pārbaudīt installāciju
 check ip address of all sessions	setup	lv	pārbaudīt IP adresi visām sesijām
