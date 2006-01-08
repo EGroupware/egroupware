@@ -1115,4 +1115,21 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.004';
 	}
+
+	$test[] = '1.2.004';
+	function phpgwapi_upgrade1_2_004()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_contentmap','map_guid',array(
+			'type' => 'varchar',
+			'precision' => '100',
+			'nullable' => False
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_contentmap','map_locuid',array(
+			'type' => 'varchar',
+			'precision' => '100',
+			'nullable' => False
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.005';
+	}
 ?>

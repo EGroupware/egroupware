@@ -509,8 +509,8 @@
 		'egw_contentmap' => array(
 			'fd' => array(
 				'map_id' => array('type' => 'varchar','precision' => '128','nullable' => False),
-				'map_guid' => array('type' => 'varchar','precision' => '128','nullable' => False),
-				'map_locuid' => array('type' => 'varchar','precision' => '128','nullable' => False),
+				'map_guid' => array('type' => 'varchar','precision' => '100','nullable' => False),
+				'map_locuid' => array('type' => 'varchar','precision' => '100','nullable' => False),
 				'map_timestamp' => array('type' => 'timestamp','nullable' => False),
 				'map_expired' => array('type' => 'bool','nullable' => False)
 			),
