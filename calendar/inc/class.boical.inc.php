@@ -312,8 +312,10 @@
 				if(is_a($component, 'Horde_iCalendar_vevent'))
 				{
 					$supportedFields = $this->supportedFields;
-					$event = array('participants' => array());
-					$vcardData = array('recur_type' => 0);
+					#$event = array('participants' => array());
+					$event		= array();
+					$alarms		= array();
+					$vcardData	= array('recur_type' => 0);
 					
 					// lets see what we can get from the vcard
 					foreach($component->_attributes as $attributes)
@@ -323,6 +325,16 @@
 
 						switch($attributes['name'])
 						{
+							case 'AALARM':
+							case 'DALARM':
+								if (preg_match('/.*Z$/',$attributes['value'],$matches))
+								{
+									$alarmTime = $vcal->_parseDateTime($attributes['value']);
+									$alarms[$alarmTime] = array(
+										'time' => $alarmTime
+									);
+								}
+								break;
 							case 'CLASS':
 								$vcardData['public']		= (int)(strtolower($attributes['value']) == 'public');
 								break;
@@ -493,6 +505,9 @@
 					{
 						switch($fieldName)
 						{
+							case 'alarms':
+								// not handled here
+								break;
 							case 'recur_type':
 								$event['recur_type'] = $vcardData['recur_type'];
 								if ($event['recur_type'] != MCAL_RECUR_NONE)
@@ -529,9 +544,33 @@
 					#{
 					#	error_log("KEY: $key  VALUE: $value");
 					#}
-					//echo "event=";_debug_array($event);
+					#echo "event=";_debug_array($event);exit;
 					
-					if (!($Ok = $this->update($event, TRUE))) break;	// stop with the first error
+					if (!($Ok = $this->update($event, TRUE))) {
+						break;	// stop with the first error
+					}
+					else
+					{
+						$eventID =& $Ok;
+
+						// handle the alarms
+						if(count($alarms) > 0 || (isset($this->supportedFields['alarms'])  && count($alarms) == 0))
+						{
+							// delete the old alarms
+							$updatedEvent = $this->read($eventID);
+							foreach($updatedEvent['alarm'] as $alarmID => $alarmData)
+							{
+								$this->delete_alarm($alarmID);
+							}
+						}
+						
+						foreach($alarms as $alarm)
+						{
+							$alarm['offset'] = $event['start'] - $alarm['time'];
+							$alarm['owner'] = $GLOBALS['egw_info']['user']['account_id'];
+							$this->save_alarm($eventID, $alarm);
+						}
+					}
 				}
 			}
 			return $Ok;
@@ -570,6 +609,16 @@
 					}
 					break;
 
+				case 'sonyericsson':
+					switch(strtolower($_productName))
+					{
+						case 'd750i':
+						default:
+							$this->supportedFields = $defaultFields + array('alarms' => 'alarms');
+							break;
+					}
+					break;
+					
 				case 'synthesis ag':
 					switch(strtolower($_productName))
 					{
