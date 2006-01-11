@@ -149,7 +149,8 @@
 				{
 					$id1 = array( );
 				}
-				$link_id = $app2 != $this->vfs_appname ? "$app2:$id2" : "$app2:$id2[name]";
+				$link_id = $this->temp_link_id($app2,$id2);
+
 				$id1[$link_id] = array(
 					'app' => $app2,
 					'id'  => $id2,
@@ -205,6 +206,18 @@
 			if (!($no_notify&1)) $this->notify('link',$app1,$id1,$app2,$id2,$link_id);
 			
 			return $link_id;
+		}
+
+		/**
+		 * generate temporary link_id used as array-key
+		 *
+		 * @param string $app app-name
+		 * @param mixed $id
+		 * @return string
+		 */
+		function temp_link_id($app,$id)
+		{
+			return $app.':'.($app != $this->vfs_appname ? $id : $id['name']);
 		}
 
 		/**
@@ -273,6 +286,8 @@
 		{
 			if (is_array($id))
 			{
+				if (!strstr($app_link_id,':')) $app_link_id = $this->temp_link_id($app2,$id2);	// create link_id of temporary link, if not given
+				
 				if (isset($id[$app_link_id]) && is_array($id[$app_link_id]))	// check for unlinked-marker
 				{
 					return $id[$app_link_id];
@@ -353,10 +368,16 @@
 
 				return count($deleted);
 			}
+			if (!$link_id) $link_id = $this->temp_link_id($app2,$id2);	// create link_id of temporary link, if not given
+
 			if (isset($id[$link_id]))
 			{
 				$id[$link_id] = False;	// set the unlink marker
 
+				if ($this->debug)
+				{
+					_debug_array($id);
+				}
 				return True;
 			}
 			return False;
