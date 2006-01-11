@@ -257,7 +257,15 @@
 				if ($created) $attributes['CREATED'] = $created;
 				if (!$modified) $modified = $event['modified'];
 				if ($modified) $attributes['LAST-MODIFIED'] = $modified;
-	
+				
+				foreach($event['alarm'] as $alarmID => $alarmData)
+				{
+					$attributes['DALARM'] = $vcal->_exportDateTime($alarmData['time']);
+					$attributes['AALARM'] = $vcal->_exportDateTime($alarmData['time']);
+					// lets take only the first alarm
+					break;
+				}
+				
 				$attributes['UID'] = $eventGUID;
 	
 				foreach($attributes as $key => $value)
@@ -290,7 +298,6 @@
 		
 		function importVCal($_vcalData, $cal_id=-1)
 		{
-			error_log('CALENDAR('.__LINE__.") $cal_id");
 			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
 			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
 
@@ -581,7 +588,7 @@
 			$defaultFields = array('public' => 'public', 'description' => 'description', 'end' => 'end',
 				'start' => 'start', 'location' => 'location', 'recur_type' => 'recur_type',
 				'recur_interval' => 'recur_interval', 'recur_data' => 'recur_data', 'recur_enddate' => 'recur_enddate',
-				'title' => 'title',	'priority' => 'priority',
+				'title' => 'title',	'priority' => 'priority', 'alarms' => 'alarms', 
 
 			);
 			
@@ -614,7 +621,7 @@
 					{
 						case 'd750i':
 						default:
-							$this->supportedFields = $defaultFields + array('alarms' => 'alarms');
+							$this->supportedFields = $defaultFields;
 							break;
 					}
 					break;
