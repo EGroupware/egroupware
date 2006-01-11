@@ -9,6 +9,7 @@ edit this entry	timesheet	en	Edit this entry
 empty if identical to duration	timesheet	en	empty if identical to duration
 entry deleted	timesheet	en	Entry deleted
 entry saved	timesheet	en	Entry saved
+error deleting the entry!!!	timesheet	en	Error deleting the entry!!!
 error saving the entry!!!	timesheet	en	Error saving the entry!!!
 existing links	timesheet	en	Existing links
 general	timesheet	en	General

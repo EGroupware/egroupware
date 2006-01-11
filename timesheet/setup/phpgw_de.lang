@@ -9,6 +9,7 @@ edit this entry	timesheet	de	diesen Eintrag bearbeiten
 empty if identical to duration	timesheet	de	leer lassen wenn gleich Dauer
 entry deleted	timesheet	de	Eintrag gelöscht
 entry saved	timesheet	de	Eintrag gespeichert
+error deleting the entry!!!	timesheet	de	Fehler beim Löschen des Eintrags!!!
 error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
 existing links	timesheet	de	Bestehende Verknüpfungen
 general	timesheet	de	Allgemein
@@ -23,7 +24,7 @@ price	timesheet	de	Preis
 quantity	timesheet	de	Menge
 save & new	timesheet	de	Speichern & Neu
 saves the changes made	timesheet	de	Speichert die Änderungen
-saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fügt einen neune hinzu
+saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fügt einen neuen hinzu
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Diese Jahr

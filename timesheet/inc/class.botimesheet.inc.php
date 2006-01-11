@@ -69,7 +69,14 @@ class botimesheet extends so_sql
 		'Last year'   => array(-1,0,0,0, 0,0,0,0),
 		'2 years ago' => array(-2,0,0,0, -1,0,0,0),
 		'3 years ago' => array(-3,0,0,0, -2,0,0,0),
-	);	 
+	);
+	/**
+	 * @var object $link reference to the (bo)link class instanciated at $GLOBALS['egw']->link
+	 */
+	var $link;
+	/**
+	 * @var array $grants
+	 */	 
 
 	function botimesheet()
 	{
@@ -296,7 +303,7 @@ class botimesheet extends so_sql
 			$this->data['ts_modifier'] = $GLOBALS['egw_info']['user']['account_id'];
 			$this->data['ts_modified'] = $this->now;
 		}
-		if (!($err = parent::save(null)))
+		if (!($err = parent::save()))
 		{
 			// notify the link-class about the update, as other apps may be subscribt to it
 			$this->link->notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
@@ -313,7 +320,11 @@ class botimesheet extends so_sql
 	 */
 	function delete($keys=null,$ignore_acl=false)
 	{
-		$ts_id = is_null($keys) ? $this->data['ts_id'] : (is_array($keys) ? $keys['ts_id'] : $keys);
+		if (!is_array($keys) && (int) $keys)
+		{
+			$keys = array('ts_id' => (int) $keys);
+		}
+		$ts_id = is_null($keys) ? $this->data['ts_id'] : $keys['ts_id'];
 		
 		if (!$this->check_acl(EGW_ACL_DELETE,$ts_id))
 		{

@@ -52,7 +52,7 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th" disabled="@status_only">
+				<row class="th" disabled="@view">
 					<description span="all" value="Create new links"/>
 				</row>
 				<row class="row" disabled="@status_only">
@@ -67,7 +67,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="0.1.001">
+	<template id="timesheet.edit" template="" lang="" group="0" version="0.2.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -86,11 +86,17 @@
 				</row>
 				<row class="row">
 					<description options=",,,ts_project" value="Project"/>
-					<textbox size="65" maxlength="80" id="ts_project" span="all" blur="@ts_project_blur"/>
+					<vbox span="all">
+						<projectmanager-select options="None" id="pm_id" span="all" statustext="Select a project" onchange="1"/>
+						<textbox id="ts_project" blur="@ts_project_blur" size="65" maxlength="80"/>
+					</vbox>
 				</row>
 				<row class="row">
 					<description options=",,ts_unitprice" value="Unitprice"/>
-					<textbox type="float" id="ts_unitprice" span="all"/>
+					<hbox span="all">
+						<projectmanager-pricelist id="pl_id" options="None" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
+						<textbox type="float" id="ts_unitprice" span="all"/>
+					</hbox>
 				</row>
 				<row>
 					<tabbox span="all">
@@ -130,5 +136,6 @@
 				</row>
 			</rows>
 		</grid>
+		<styles>.width100 { width: 100%; }</styles>
 	</template>
 </overlay>

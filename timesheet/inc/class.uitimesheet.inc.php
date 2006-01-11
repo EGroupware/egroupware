@@ -72,7 +72,7 @@ class uitimesheet extends botimesheet
 		}
 		else
 		{
-			list($button) = each($content['button']);
+			list($button) = @each($content['button']);
 			$view = $content['view'];
 			$referer = $content['referer'];
 			$this->data = $content;
@@ -103,6 +103,19 @@ class uitimesheet extends botimesheet
 					else
 					{
 						$msg = lang('Entry saved');
+						if ((int) $this->data['pm_id'] != (int) $this->data['old_pm_id'])
+						{
+							// update links accordingly
+							if ($this->data['pm_id'])
+							{
+								$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],'projectmanager',$this->data['pm_id']);
+							}
+							if ($this->data['old_pm_id'])
+							{
+								$this->link->unlink2(0,TIMESHEET_APP,$content['link_to']['to_id'],0,'projectmanager',$this->data['old_pm_id']);
+								unset($this->data['old_pm_id']);
+							}
+						}
 						if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 						{
 							$this->link->link(TIMESHEET_APP,$this->data['ts_id'],$content['link_to']['to_id']);
@@ -127,10 +140,18 @@ class uitimesheet extends botimesheet
 				case 'delete':
 					if ($button == 'delete')
 					{
-						$this->delete();
-						$msg = lang('Entry deleted');
-						$js = "opener.location.href=opener.location.href+'&msg=$msg'";
+						if ($this->delete())
+						{
+							$msg = lang('Entry deleted');
+							$js = "opener.location.href=opener.location.href+'&msg=$msg';";
+						}
+						else
+						{
+							$msg = lang('Error deleting the entry!!!');
+							break;	// dont close window
+						}
 					}
+					// fall-through for save
 				case 'cancel':
 					$js .= 'window.close();';
 					echo "<html>\n<body>\n<script>\n$js\n</script>\n</body>\n</html>\n";
@@ -142,23 +163,22 @@ class uitimesheet extends botimesheet
 			'view'    => $view,
 			'referer' => $referer,
 		);
-		$content = $this->data + array(
+		$content = array_merge($this->data,array(
 			'msg'  => $msg,
 			'view' => $view,
 			$tabs  => $content[$tabs],
 			'link_to' => array(
-				'to_id' => $content['link_to']['to_id'] ? $content['link_to']['to_id'] : $this->data['ts_id'],
+				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
 				'to_app' => TIMESHEET_APP,
 			),
 			'js' => "<script>\n$js\n</script>\n",
 			'ts_quantity_blur' => $this->data['ts_duration'] ? $this->data['ts_duration'] / 60.0 : '',
-		);
+		));
 		if (!$this->data['ts_id'] && isset($_GET['link_app']) && isset($_GET['link_id']) &&
 			preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$_GET['link_app'].':'.$_GET['link_id']) &&	// gard against XSS
 			!is_array($content['link_to']['to_id']))
 		{
 			$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],$_GET['link_app'],$_GET['link_id']);
-//			$content['ts_project'] = $this->link->title($_GET['link_app'],$_GET['link_id']);
 			if ($_GET['link_app'] == 'projectmanager')
 			{
 				$links = array($_GET['link_id']);
@@ -168,9 +188,12 @@ class uitimesheet extends botimesheet
 		{
 			$links = $this->link->get_links(TIMESHEET_APP,$this->data['ts_id'],'projectmanager');
 		}
-		if ($links)
+		$preserv['old_pm_id'] = array_shift($links);
+		if (!isset($this->data['pm_id']) && $preserv['old_pm_id']) $content['pm_id'] = $preserv['old_pm_id'];
+
+		if ($content['pm_id'])
 		{
-			$preserv['ts_project_blur'] = $content['ts_project_blur'] = $this->link->title('projectmanager',array_shift($links));
+			$preserv['ts_project_blur'] = $content['ts_project_blur'] = $this->link->title('projectmanager',$content['pm_id']);
 		}
 		$readonlys = array(
 			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
@@ -181,7 +204,7 @@ class uitimesheet extends botimesheet
 		);
 		if ($view)
 		{
-			foreach($this->data as $key => $val)
+			foreach(array_merge(array_keys($this->data),array('pm_id','pl_id','link_to')) as $key)
 			{
 				$readonlys[$key] = true;
 			}
@@ -195,7 +218,12 @@ class uitimesheet extends botimesheet
 			($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
 		
 		$etpl =& new etemplate('timesheet.edit');
-		
+		// supress unknow widget 'projectmanager-*', if projectmanager is not installed or old
+		if (!@file_exists(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.projectmanager_widget.inc.php'))
+		{
+			$etpl->set_cell_attribute('pm_id','disabled',true);
+			$etpl->set_cell_attribute('pl_id','disabled',true);
+		}		
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.edit',$content,array(
 			'ts_owner' => $edit_grants,
 		),$readonlys,$preserv,2);
@@ -285,7 +313,19 @@ class uitimesheet extends botimesheet
 		$etpl =& new etemplate('timesheet.index');
 		
 		if ($_GET['msg']) $msg = $_GET['msg'];
-
+		
+		if ($content['nm']['rows']['delete'])
+		{
+			list($ts_id) = each($content['nm']['rows']['delete']);
+			if ($this->delete($ts_id))
+			{
+				$msg = lang('Entry deleted');
+			}
+			else
+			{
+				$msg = lang('Error deleting the entry!!!');
+			}
+		}
 		$content = array(
 			'nm' => $GLOBALS['egw']->session->appsession('index',TIMESHEET_APP),
 			'msg' => $msg,

@@ -27,8 +27,7 @@
 				'cat_id' => array('type' => 'int','precision' => '4','default' => '0'),
 				'ts_owner' => array('type' => 'int','precision' => '4','nullable' => False),
 				'ts_modified' => array('type' => 'int','precision' => '8','nullable' => False),
-				'ts_modifier' => array('type' => 'int','precision' => '4','nullable' => False),
-				'pl_id' => array('type' => 'int','precision' => '4','default' => '0')
+				'ts_modifier' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('ts_id'),
 			'fk' => array(),

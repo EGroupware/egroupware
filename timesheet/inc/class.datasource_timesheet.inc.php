@@ -32,7 +32,8 @@ class datasource_timesheet extends datasource
 	{
 		$this->datasource(TIMESHEET_APP);
 		
-		$this->valid = PM_REAL_START|PM_REAL_END|PM_USED_TIME|PM_USED_BUDGET|PM_RESOURCES|PM_DETAILS|PM_COMPLETION;
+		$this->valid = PM_REAL_START|PM_REAL_END|PM_USED_TIME|PM_USED_BUDGET|PM_USED_QUANTITY|
+			PM_PRICELIST_ID|PM_UNITPRICE|PM_RESOURCES|PM_DETAILS|PM_COMPLETION;
 	}
 	
 	/**
@@ -46,7 +47,7 @@ class datasource_timesheet extends datasource
 		// we use $GLOBALS['bocal'] as an already running instance is availible there
 		if (!is_object($GLOBALS['botimesheet']))
 		{
-			$GLOBALS['bocal'] =& new botimesheet();
+			$GLOBALS['botimesheet'] =& new botimesheet();
 		}
 		if (!is_array($data_id))
 		{
@@ -64,6 +65,9 @@ class datasource_timesheet extends datasource
 			'pe_real_start'  => $data['ts_start'],
 			'pe_resources'   => array($data['ts_owner']),
 			'pe_details'     => $data['ts_description'] ? nl2br($data['ts_description']) : '',
+			'pl_id'          => $data['pl_id'],
+			'pe_unitprice'   => $data['ts_unitprice'],
+			'pe_used_quantity' => $data['ts_quantity'],
 			'pe_used_budget' => $data['ts_quantity'] * $data['ts_unitprice'],
 			'pe_completion'  => 100,
 		);
