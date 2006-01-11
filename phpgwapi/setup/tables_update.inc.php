@@ -1089,12 +1089,7 @@
 	$test[] = '1.2.002';
 	function phpgwapi_upgrade1_2_002()
 	{
-		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_contentmap','map_locuid',array(
-			'type' => 'varchar',
-			'precision' => '128',
-			'nullable' => False
-		));
-
+		// removed 1.2.002 update as it exceeded the max index of 1000Byte under MySQL, 1.2.004 does the right thing now
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.003';
 	}
 
