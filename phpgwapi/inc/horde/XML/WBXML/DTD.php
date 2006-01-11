@@ -1,11 +1,11 @@
 <?php
 /**
- * $Horde: framework/XML_WBXML/WBXML/DTD.php,v 1.7 2005/01/03 13:09:25 jan Exp $
+ * $Horde: framework/XML_WBXML/WBXML/DTD.php,v 1.8 2006/01/01 21:10:25 jan Exp $
  *
  * From Binary XML Content Format Specification Version 1.3, 25 July 2001
  * found at http://www.wapforum.org
  *
- * Copyright 2003-2005 Anthony Mills <amills@pyramid6.com>
+ * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
  *
  * See the enclosed file COPYING for license information (LGPL).  If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.

@@ -142,23 +142,14 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
 		
 		break;
 	}
-	#Horde::logMessage('SyncML: ending sync to client '.$targets[0], __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	#
 	
 	// no syncs left
 	if($state->getTargets() === FALSE)
 		$state->setSyncStatus(SERVER_SYNC_FINNISHED);
+		Horde::logMessage('SyncML: syncStatus(server_sync_finnished) '. $state->getSyncStatus, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 #############################
 	}	
-#        elseif($state->getSyncStatus() == CLIENT_SYNC_STARTED)
-#        {
-#        	Horde::logMessage('SyncML: client alert '.$state->_currentSourceURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#        	Horde::logMessage('SyncML: client alert '.$state->_currentTargetURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#        	Horde::logMessage('SyncML: client alert '.$state->_currentTargetURIParameters, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#        	$alert = &new Horde_SyncML_Command_Alert(ALERT_NEXT_MESSAGE);
-#        	$alert->setSourceLocURI($state->_currentSourceURI);
-#        	$alert->setTargetLocURI((isset($state->_currentTargetURIParameters) ? $state->_currentTargetURI.'?/'.$state->_currentTargetURIParameters : $state->_currentTargetURI));
-#        	$currentCmdID = $alert->output($currentCmdID, $output);
-#        }
 
 	return $currentCmdID;
     }

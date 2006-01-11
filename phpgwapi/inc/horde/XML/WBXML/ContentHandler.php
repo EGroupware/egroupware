@@ -1,8 +1,8 @@
 <?php
 /**
- * $Horde: framework/XML_WBXML/WBXML/ContentHandler.php,v 1.11 2005/01/20 00:01:19 jan Exp $
+ * $Horde: framework/XML_WBXML/WBXML/ContentHandler.php,v 1.15 2006/01/01 21:10:25 jan Exp $
  *
- * Copyright 2003-2005 Anthony Mills <amills@pyramid6.com>
+ * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
  *
  * See the enclosed file COPYING for license information (LGPL).  If you did
  * not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
@@ -33,7 +33,6 @@ class XML_WBXML_ContentHandler {
     function XML_WBXML_ContentHandler()
     {
         $this->_currentUri = &new XML_WBXML_LifoQueue();
-        $this->_output = '<?xml version="1.0" encoding="UTF-8" ?>';
     }
 
     function raiseError($error)
@@ -67,13 +66,18 @@ class XML_WBXML_ContentHandler {
         return $this->_output;
     }
 
+    function getOutputSize()
+    {
+        return strlen($this->_output);
+    }
+
     function startElement($uri, $element, $attrs)
     {
         $this->_output .= '<' . $element;
 
         $currentUri = $this->_currentUri->top();
 
-        if ((!$currentUri) || ($currentUri != $uri)) {
+        if (((!$currentUri) || ($currentUri != $uri)) && $uri) {
             $this->_output .= ' xmlns="' . $uri . '"';
         }
 
@@ -130,7 +134,7 @@ class XML_WBXML_LifoQueue {
 
     function push($obj)
     {
-        array_push($this->_queue, $obj);
+        $this->_queue[] = $obj;
     }
 
     function pop()

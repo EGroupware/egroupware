@@ -7,22 +7,24 @@
  * - Introspection documentation and method signatures.
  *
  * EXAMPLE:
+ * <code>
  * $response = Horde_RPC::request('xmlrpc',
- *                                '/horde/rpc.php', 'www.example.com', 80,
+ *                                'http://localhost:80/horde/rpc.php'
  *                                'contacts.search',
  *                                array(array('jan'), array('localsql'),
  *                                      array('name', 'email')),
- *                                Auth::getAuth(), Auth::getCredential('password'));
+ *                                array('user' => Auth::getAuth(),
+ *                                      'pass' => Auth::getCredential('password')));
+ * </code>
  *
- * $Horde: framework/RPC/RPC.php,v 1.7 2004/09/08 09:07:25 jan Exp $
+ * $Horde: framework/RPC/RPC.php,v 1.14 2006/01/01 21:10:10 jan Exp $
  *
- * Copyright 2002-2004 Jan Schneider <jan@horde.org>
+ * Copyright 2002-2006 Jan Schneider <jan@horde.org>
  *
  * See the enclosed file COPYING for license information (LGPL). If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
  * @author  Jan Schneider <jan@horde.org>
- * @version $Revision$
  * @since   Horde 3.0
  * @package Horde_RPC
  */
@@ -32,7 +34,7 @@ class Horde_RPC {
      * Whether we need an authorized user or not.
      *
      * @access protected
-     * @var boolean $_authorize.
+     * @var boolean
      */
     var $_authorize = true;
 
@@ -113,9 +115,9 @@ class Horde_RPC {
     /**
      * Sends an RPC request to the server and returns the result.
      *
-     * @param string    The raw request string.
+     * @param string  The raw request string.
      *
-     * @return string   The XML encoded response from the server.
+     * @return string  The XML encoded response from the server.
      */
     function getResponse($request)
     {
@@ -137,14 +139,14 @@ class Horde_RPC {
      *
      * This statically called method is actually the RPC client.
      *
-     * @param string $driver    The protocol driver to use. Currently 'soap' and
-     *                          'xmlrpc' are available.
+     * @param string $driver    The protocol driver to use. Currently 'soap'
+     *                          and 'xmlrpc' are available.
      * @param string $url       The path to the RPC server on the called host.
      * @param string $method    The method to call.
-     * @param array $params     (optional) A hash containing any necessary
-     *                          parameters for the method call.
-     * @param $options  Optional associative array of parameters depending on
-     *                  the selected protocol driver.
+     * @param array $params     A hash containing any necessary parameters for
+     *                          the method call.
+     * @param $options          Associative array of parameters depending on
+     *                          the selected protocol driver.
      *
      * @return mixed            The returned result from the method or a PEAR
      *                          error object on failure.
@@ -177,21 +179,15 @@ class Horde_RPC {
      * Attempts to return a concrete RPC server instance based on
      * $driver.
      *
-     * @access public
+     * @param mixed $driver  The type of concrete RPC subclass to return. If
+     *                       $driver is an array, then we will look in
+     *                       $driver[0]/lib/RPC/ for the subclass
+     *                       implementation named $driver[1].php.
+     * @param array $params  A hash containing any additional configuration or
+     *                       connection parameters a subclass might need.
      *
-     * @param mixed $driver           The type of concrete RPC subclass to
-     *                                return. This is based on the protocol
-     *                                driver ($driver). The code is dynamically
-     *                                included. If $driver is an array, then
-     *                                we will look in $driver[0]/lib/RPC/
-     *                                for the subclass implementation named
-     *                                $driver[1].php.
-     * @param optional array $params  A hash containing any additional
-     *                                configuration or connection parameters
-     *                                a subclass might need.
-     *
-     * @return object Horde_RPC  The newly created concrete Horde_RPC server
-     *                           instance, or a PEAR_Error on an error.
+     * @return Horde_RPC  The newly created concrete Horde_RPC server instance,
+     *                    or a PEAR_Error on an error.
      */
     function &factory($driver, $params = null)
     {
@@ -210,11 +206,13 @@ class Horde_RPC {
         }
         $class = 'Horde_RPC_' . $driver;
         if (class_exists($class)) {
-            return $ret = &new $class($params);
+            $rpc = &new $class($params);
         } else {
             require_once 'PEAR.php';
-            return PEAR::raiseError('Class definition of ' . $class . ' not found.');
+            $rpc = PEAR::raiseError('Class definition of ' . $class . ' not found.');
         }
+
+        return $rpc;
     }
 
     /**
@@ -228,19 +226,12 @@ class Horde_RPC {
      *
      * This method must be invoked as: $var = &Horde_RPC::singleton()
      *
-     * @access public
+     * @param string $driver  The type of concrete RPC subclass to return.
+     * @param array $params   A hash containing any additional configuration or
+     *                        connection parameters a subclass might need.
      *
-     * @param string $driver          The type of concrete RPC subclass to
-     *                                return. This is based on the protocol
-     *                                driver ($driver). The code is dynamically
-     *                                included.
-     * @param optional array $params  A hash containing any additional
-     *                                configuration or connection parameters a
-     *                                subclass might need.
-     *
-     * @return object Horde_RPC   The concrete Horde_RPC server reference, or a
-     *                             PEAR_Error
-     *                      on an error.
+     * @return Horde_RPC  The concrete Horde_RPC server reference, or a
+     *                    PEAR_Error on an error.
      */
     function &singleton($driver, $params = null)
     {

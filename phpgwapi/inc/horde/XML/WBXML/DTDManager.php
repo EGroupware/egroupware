@@ -5,9 +5,9 @@ include_once 'XML/WBXML/DTD/SyncMLMetInf.php';
 include_once 'XML/WBXML/DTD/SyncMLDevInf.php';
 
 /**
- * $Horde: framework/XML_WBXML/WBXML/DTDManager.php,v 1.4 2005/01/03 13:09:25 jan Exp $
+ * $Horde: framework/XML_WBXML/WBXML/DTDManager.php,v 1.7 2006/01/01 21:10:25 jan Exp $
  *
- * Copyright 2003-2005 Anthony Mills <amills@pyramid6.com>
+ * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
  *
  * See the enclosed file COPYING for license information (LGPL).  If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
@@ -24,7 +24,7 @@ class XML_WBXML_DTDManager {
 
     function XML_WBXML_DTDManager()
     {
-        $this->registerDTD('-//SYNCML//DTD SyncML 1.0//EN', 'syncml:syncml', new XML_WBXML_DTD_SyncML(0));
+        $this->registerDTD('-//SYNCML//DTD SyncML 1.0//EN', 'syncml:syncml1.0', new XML_WBXML_DTD_SyncML(0));
         $this->registerDTD('-//SYNCML//DTD SyncML 1.1//EN', 'syncml:syncml1.1', new XML_WBXML_DTD_SyncML(1));
 
         $this->registerDTD('-//SYNCML//DTD MetInf 1.0//EN', 'syncml:metinf', new XML_WBXML_DTD_SyncMLMetInf(0));
@@ -50,7 +50,7 @@ class XML_WBXML_DTDManager {
         $dtd->setDPI($publicIdentifier);
 
         $this->_strDTD[$publicIdentifier] = $dtd;
-        $this->_strDTDURI[$uri] = $dtd;
+        $this->_strDTDURI[strtolower($uri)] = $dtd;
     }
 
 }

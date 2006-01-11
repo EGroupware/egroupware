@@ -477,7 +477,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             if ($element != 'Status' && $element != 'Map' && $element != 'Final') {
                 // We've got to do something! This can't be the last
                 // packet.
-              $this->_actionCommands = true;
+                $this->_actionCommands = true;
+                Horde::logMessage("SyncML: found action commands <$element> " . $this->_actionCommands, __FILE__, __LINE__, PEAR_LOG_INFO);
             }
             
             switch($element)
@@ -490,6 +491,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 #            		break;
             	case 'Sync':
             		$state->setSyncStatus(CLIENT_SYNC_STARTED);
+                	Horde::logMessage('SyncML: syncStatus(client sync started) ' . $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_INFO);
             		break;
             }
             break;
@@ -567,11 +569,13 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             		$this->_output->characters($this->_currentCmdID);
             		$this->_currentCmdID++;
             		$this->_output->endElement($state->getURI(), 'CmdID');
+            		
             		$this->_output->startElement($state->getURI(), 'Meta', $attrs);
-            		$this->_output->startElement($state->getURI(), 'Type', $attrs);
+            		$this->_output->startElement($state->getURIMeta(), 'Type', $attrs);
             		$this->_output->characters('application/vnd.syncml-devinf+xml');
-            		$this->_output->endElement($state->getURI(), 'Type');
+            		$this->_output->endElement($state->getURIMeta(), 'Type');
             		$this->_output->endElement($state->getURI(), 'Meta');
+            		
             		$this->_output->startElement($state->getURI(), 'Item', $attrs);
             		$this->_output->startElement($state->getURI(), 'Target', $attrs);
             		$this->_output->startElement($state->getURI(), 'LocURI', $attrs);
@@ -579,6 +583,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             		$this->_output->endElement($state->getURI(), 'LocURI');
             		$this->_output->endElement($state->getURI(), 'Target');
             		$this->_output->endElement($state->getURI(), 'Item');
+            		
             		$this->_output->endElement($state->getURI(), 'Get');
             	}
             }
@@ -590,6 +595,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             		if($state->getSyncStatus() == CLIENT_SYNC_STARTED)
             		{
             			$state->setSyncStatus(CLIENT_SYNC_FINNISHED);
+	                	Horde::logMessage('SyncML: syncStatus(client sync finnished) ' . $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_INFO);
             		}
             		$this->_clientSentFinal = true;
             		Horde::logMessage('SyncML: Sync _syncTag = '. $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_INFO);

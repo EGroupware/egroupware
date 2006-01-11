@@ -63,12 +63,12 @@ define('CHARSET_UTF_16LE', 'UTF-16LE');
 define('CHARSET_UTF_16', 'UTF-16');
 
 /**
- * Copyright 2003-2005 Anthony Mills <amills@pyramid6.com>
+ * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
  *
  * See the enclosed file COPYING for license information (LGPL).  If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
  *
- * $Horde: framework/XML_WBXML/WBXML.php,v 1.14 2005/01/03 13:09:24 jan Exp $
+ * $Horde: framework/XML_WBXML/WBXML.php,v 1.18 2006/01/01 21:10:25 jan Exp $
  *
  * @package XML_WBXML
  */
@@ -104,35 +104,25 @@ class XML_WBXML {
             $bytes3 = 128 | XML_WBXML::getBits(3, $i);
             $bytes4 = 128 | XML_WBXML::getBits(4, $i);
 
-            $out .= chr($bytes4);
-            $out .= chr($bytes3);
-            $out .= chr($bytes2);
-            $out .= chr($bytes1);
-            $out .= chr($bytes0);
+            $out .= chr($bytes4) . chr($bytes3) . chr($bytes2) . chr($bytes1) . chr($bytes0);
         } elseif ($i > 2097151) {
             $bytes0 = 0 | XML_WBXML::getBits(0, $i);
             $bytes1 = 128 | XML_WBXML::getBits(1, $i);
             $bytes2 = 128 | XML_WBXML::getBits(2, $i);
             $bytes3 = 128 | XML_WBXML::getBits(3, $i);
 
-            $out .= chr($bytes3);
-            $out .= chr($bytes2);
-            $out .= chr($bytes1);
-            $out .= chr($bytes0);
+            $out .= chr($bytes3) . chr($bytes2) . chr($bytes1) . chr($bytes0);
         } elseif ($i > 16383) {
             $bytes0 = 0 | XML_WBXML::getBits(0, $i);
             $bytes1 = 128 | XML_WBXML::getBits(1, $i);
             $bytes2 = 128 | XML_WBXML::getBits(2, $i);
 
-            $out .= chr($bytes2);
-            $out .= chr($bytes1);
-            $out .= chr($bytes0);
+            $out .= chr($bytes2) . chr($bytes1) . chr($bytes0);
         } elseif ($i > 127) {
             $bytes0 = 0 | XML_WBXML::getBits(0, $i);
             $bytes1 = 128 | XML_WBXML::getBits(1, $i);
 
-            $out .= chr($bytes1);
-            $out .= chr($bytes0);
+            $out .= chr($bytes1) . chr($bytes0);
         } else {
             $bytes0 = 0 | XML_WBXML::getBits(0, $i);
 
@@ -166,7 +156,6 @@ class XML_WBXML {
     {
         /**
          * ADD CHAPTER
-         * @var array $_DPIString
          */
         $DPIString = array(2 => DPI_DTD_WML_1_0,
                            3 => DPI_DTD_WTA_1_0,
@@ -184,9 +173,9 @@ class XML_WBXML {
                            // Not all SyncML clients know this, so we
                            // should use the string table.
                            // 0xFD1 => DPI_DTD_SYNCML_1_1,
-                           // 0xFD2 => DPI_DTD_DEVINF_1_1,
+                           4051 => DPI_DTD_SYNCML_1_1,
+                           4052 => DPI_DTD_DEVINF_1_1,
                            );
-
         return isset($DPIString[$i]) ? $DPIString[$i] : null;
     }
 
@@ -194,7 +183,6 @@ class XML_WBXML {
     {
         /**
          * ADD CHAPTER
-         * @var array $_DPIInt
          */
         $DPIInt = array(DPI_DTD_WML_1_0 => 2,
                         DPI_DTD_WTA_1_0 => 3,
@@ -228,7 +216,6 @@ class XML_WBXML {
     {
         /**
          * From http://www.iana.org/assignments/character-sets
-         * @var array $_charsetString
          */
         $charsetString = array(3 => 'US-ASCII',
                                4 => 'ISO-8859-1',
@@ -252,7 +239,6 @@ class XML_WBXML {
     {
         /**
          * From http://www.iana.org/assignments/character-sets
-         * @var array $_charsetInt
          */
         $charsetInt = array('US-ASCII' => 3,
                             'ISO-8859-1' => 4,

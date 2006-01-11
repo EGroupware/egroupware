@@ -143,8 +143,8 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
                 $output->startElement($state->getURI(), 'Item', $attrs);
                 $output->startElement($state->getURI(), 'Data', $attrs);
 
-                // $metainfuri = $state->getURIMeta();
-                $metainfuri = $state->getURI(); // debug by FOU
+                $metainfuri = $state->getURIMeta();
+                // $metainfuri = $state->getURI(); // debug by FOU
 
                 $output->startElement($metainfuri, 'Anchor', $attrs);
 

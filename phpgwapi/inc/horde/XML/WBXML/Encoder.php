@@ -6,9 +6,9 @@ include_once 'XML/WBXML/DTDManager.php';
 include_once 'Horde/String.php';
 
 /**
- * $Horde: framework/XML_WBXML/WBXML/Encoder.php,v 1.27 2005/01/03 13:09:25 jan Exp $
+ * $Horde: framework/XML_WBXML/WBXML/Encoder.php,v 1.39 2006/01/01 21:10:25 jan Exp $
  *
- * Copyright 2003-2005 Anthony Mills <amills@pyramid6.com>
+ * Copyright 2003-2006 Anthony Mills <amills@pyramid6.com>
  *
  * See the enclosed file COPYING for license information (LGPL).  If you
  * did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
@@ -36,105 +36,59 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     var $_currentURI;
 
-    var $_subParser;
+    var $_subParser = null;
     var $_subParserStack = 0;
-
-    /**
-     * These will store the startElement params to see if we should
-     * call startElementImp or startEndElementImp.
-     */
-    var $_storeURI;
-    var $_storeName;
-    var $_storeAttributes;
-
+    
     /**
      * The XML parser.
-     * @var resource $_parser
+     *
+     * @var resource
      */
     var $_parser;
 
     /**
      * The DTD Manager.
-     * @var object XML_WBXML_DTDManager $dtdManager
+     *
+     * @var XML_WBXML_DTDManager
      */
     var $_dtdManager;
-
-    var $_indent = 0;
-
-    /**
-     * Use wbxml2xml from libwbxml.
-     * @var string $_xml2wbxml
-     */
-    var $_xml2wbxml = '/usr/bin/xml2wbxml';
-
-    /**
-     * Arguments to pass to xml2wbxml.
-     * @var string $_xml2wbxml_args
-     */
-    var $_xml2wbxml_args = '-k -n -v 1.2 -o - -';
 
     /**
      * Constructor.
      */
     function XML_WBXML_Encoder()
     {
-        if (empty($this->_xml2wbxml) || !is_executable($this->_xml2wbxml)) {
-            $this->_stringTable = &new XML_WBXML_HashTable();
-            $this->_dtdManager = &new XML_WBXML_DTDManager();
-        }
+        $this->_dtdManager = &new XML_WBXML_DTDManager();
+        $this->_stringTable = &new XML_WBXML_HashTable();
     }
 
     /**
-     * Take the input $xml and turn it into WBXML.
+     * Take the input $xml and turn it into WBXML. This is _not_ the
+     * intended way of using this class. It is derived from
+     * Contenthandler and one should use it as a ContentHandler and
+     * produce the XML-structure with startElement(), endElement(),
+     * and characters().
      */
     function encode($xml)
     {
-        if (!empty($this->_xml2wbxml) && is_executable($this->_xml2wbxml)) {
-            $descriptorspec = array(
-                0 => array('pipe', 'r'),
-                1 => array('pipe', 'w'),
-            );
+        // Create the XML parser and set method references.
+        $this->_parser = xml_parser_create_ns($this->_charset);
+        xml_set_object($this->_parser, $this);
+        xml_parser_set_option($this->_parser, XML_OPTION_CASE_FOLDING, false);
+        xml_set_element_handler($this->_parser, '_startElement', '_endElement');
+        xml_set_character_data_handler($this->_parser, '_characters');
+        xml_set_processing_instruction_handler($this->_parser, '');
+        xml_set_external_entity_ref_handler($this->_parser, '');
 
-            $xml2wbxml = proc_open($this->_xml2wbxml . ' ' . $this->_xml2wbxml_args,
-                                   $descriptorspec, $pipes);
-            if (is_resource($xml2wbxml)) {
-                fwrite($pipes[0], $xml);
-                fclose($pipes[0]);
-
-                // Grab the output of xml2wbxml.
-                $wbxml = '';
-                while (!feof($pipes[1])) {
-                    $wbxml .= fread($pipes[1], 8192);
-                }
-                fclose($pipes[1]);
-
-                $rv = proc_close($xml2wbxml);
-
-                return $wbxml;
-            } else {
-                return PEAR::raiseError('xml2wbxml failed');
-            }
-        } else {
-            // Create the XML parser and set method references.
-            $this->_parser = xml_parser_create_ns($this->_charset);
-            xml_set_object($this->_parser, $this);
-            xml_parser_set_option($this->_parser, XML_OPTION_CASE_FOLDING, false);
-            xml_set_element_handler($this->_parser, '_startElement', '_endElement');
-            xml_set_character_data_handler($this->_parser, '_characters');
-            xml_set_default_handler($this->_parser, 'defaultHandler');
-            xml_set_processing_instruction_handler($this->_parser, '');
-            xml_set_external_entity_ref_handler($this->_parser, '');
-
-            if (!xml_parse($this->_parser, $xml)) {
-                return $this->raiseError(sprintf('XML error: %s at line %d',
-                                                 xml_error_string(xml_get_error_code($this->_parser)),
-                                                 xml_get_current_line_number($this->_parser)));
-            }
-
-            xml_parser_free($this->_parser);
-
-            return $this->_output;
+        if (!xml_parse($this->_parser, $xml)) {
+            return $this->raiseError(sprintf('XML error: %s at line %d',
+                                             xml_error_string(xml_get_error_code($this->_parser)),
+                                             xml_get_current_line_number($this->_parser)));
         }
+
+        xml_parser_free($this->_parser);
+
+        return $this->_output;
     }
 
     /**
@@ -142,6 +96,7 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
      */
     function writeHeader($uri)
     {
+        error_log("getInstanceURI($uri)");
         $this->_dtd = &$this->_dtdManager->getInstanceURI($uri);
 
         $dpiString = $this->_dtd->getDPI();
@@ -256,57 +211,25 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
         return array($uri, $name);
     }
 
-    /**
-     * Has no content, 64.
-     */
-    function startEndElementImp($uri, $name, $attributes)
-    {
-        if (!$this->_hasWrittenHeader) {
-            $this->writeHeader($uri);
-        }
-
-        $this->writeTag($name, $attributes, false, $this->_charset);
-    }
-
-    function startElementImp($uri, $name, $attributes)
-    {
-        if (!$this->_hasWrittenHeader) {
-            $this->writeHeader($uri);
-        }
-
-        if ($this->_currentURI != $uri) {
-            $this->changecodepage($uri);
-
-            $this->_currentURI != $uri;
-        }
-
-        $this->writeTag($name, $attributes, true, $this->_charset);
-    }
-
-    function writeStartElement($isEnd)
-    {
-        if ($this->_storeName != null) {
-            if ($isEnd) {
-                $this->startEndElementImp($this->_storeURI, $this->_storeName, $this->_storeAttributes);
-            } else {
-                $this->startElementImp($this->_storeURI, $this->_storeName, $this->_storeAttributes);
-            }
-
-            $this->_storeURI = null;
-            $this->_storeName = null;
-            $this->_storeAttributes = null;
-        }
-    }
-
     function startElement($uri, $name, $attributes)
     {
+        error_log("startElement::: <$name>");
+#        error_log(" subparser is:: ".$this->_subParser);
         if ($this->_subParser == null) {
-            $this->writeStartElement(false);
-            $this->_storeURI = $uri;
-            $this->_storeName = $name;
-            $this->_storeAttributes = $attributes;
+            if (!$this->_hasWrittenHeader) {
+                $this->writeHeader($uri);
+            }
+            if ($this->_currentURI != $uri) {
+                $this->changecodepage($uri);
+            }
+            if ($this->_subParser == null) {
+                $this->writeTag($name, $attributes, true, $this->_charset);
+            } else {
+                $this->_subParser->startElement($uri,$name, $attributes);
+            }
         } else {
             $this->_subParserStack++;
+            $this->_subParser->startElement($uri,$name,$attributes);
         }
     }
 
@@ -320,8 +243,6 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
     function opaque($bytes)
     {
         if ($this->_subParser == null) {
-            $this->writeStartElement(false);
-
             $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_OPAQUE);
             XML_WBXML::intToMBUInt32($this->_output, count($bytes));
             $this->_output .= $bytes;
@@ -331,12 +252,11 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
     function characters($chars)
     {
         $chars = trim($chars);
+        error_log("characters  ::: ".$chars);
 
         if (strlen($chars)) {
             /* We definitely don't want any whitespace. */
             if ($this->_subParser == null) {
-                $this->writeStartElement(false);
-
                 $i = $this->_stringTable->get($chars);
                 if ($i != null) {
                     $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_STR_T);
@@ -345,6 +265,8 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
                     $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_STR_I);
                     $this->writeString($chars, $this->_charset);
                 }
+            } else {
+                $this->_subParser->characters($chars);
             }
         }
     }
@@ -354,17 +276,15 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
         $this->characters($chars);
     }
 
-    function defaultHandler($parser, $data)
-    {
-    }
-
     function writeTag($name, $attrs, $hasContent, $cs)
     {
+
         if ($attrs != null && !count($attrs)) {
             $attrs = null;
         }
 
         $t = $this->_dtd->toTagInt($name);
+#        error_log("writeTag    ::: -> $name $t");
         if ($t == -1) {
             $i = $this->_stringTable->get($name);
             if ($i == null) {
@@ -394,7 +314,7 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
             }
         }
 
-        if ($attrs != null) {
+        if ($attrs != null && is_array($attrs) && count($attrs) > 0 ) {
             $this->writeAttributes($attrs, $cs);
         }
     }
@@ -435,13 +355,23 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function endElement($uri, $name)
     {
+        error_log("endElement  ::: </$name>");
+#        error_log("  subparser is: ".$this->_subParser);
         if ($this->_subParser == null) {
-            $this->writeStartElement(false);
             $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_END);
+#            error_log("  _output is: ".strlen($this->_output));
         } else {
+            $this->_subParser->endElement($uri, $name);
             $this->_subParserStack--;
+
             if ($this->_subParserStack == 0) {
-                unset($this->_subParser);
+                $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_OPAQUE);
+
+                XML_WBXML::intToMBUInt32($this->_output,
+                                         strlen($this->_subParser->getOutput()));
+                $this->_output .= $this->_subParser->getOutput();
+
+                $this->_subParser = null;
             }
         }
     }
@@ -454,33 +384,37 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function changecodepage($uri)
     {
+#        error_log("changecodepage::: $uri");
+        // @todo: this is a hack!
+        if (!preg_match('/1\.1$/', $uri)) {
+            $uri .= '1.1';
+        }
         $cp = $this->_dtd->toCodePageURI($uri);
-
+#        error_log("--- \$cp:: $cp");
         if (strlen($cp)) {
             $this->_dtd = &$this->_dtdManager->getInstanceURI($uri);
 
             $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_SWITCH_PAGE);
             $this->_output .= chr($cp);
+            $this->_currentURI = $uri;
+
         } else {
-            $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_OPAQUE);
-
-            $this->_subParser = &new XML_WBXML_Encoder($this->_output);
-            $this->startElement($this->_storeURI, $this->_storeName, $this->_storeAttributes);
-
-            $this->_subParserStack = 2;
-
-            $this->_storeURI = null;
-            $this->_storeName = null;
-            $this->_storeAttributes = null;
+            $this->_subParser = &new XML_WBXML_Encoder(true);
+            $this->_subParserStack = 1;
         }
     }
 
     /**
      * Getter for property output.
      */
-    function getOutput($output)
+    function getOutput()
     {
         return $this->_output;
+    }
+
+    function getOutputSize()
+    {
+        return strlen($this->_output);
     }
 
 }

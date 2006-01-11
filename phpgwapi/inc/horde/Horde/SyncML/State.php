@@ -289,6 +289,16 @@ class Horde_SyncML_State {
     {
         return $this->_msgID;
     }
+
+    function setWBXML($wbxml)
+    {
+        $this->_wbxml = $wbxml;
+    }
+
+    function isWBXML()
+    {
+        return !empty($this->_wbxml);
+    }
     
     function &getSyncStatus()
     {
@@ -370,9 +380,11 @@ class Horde_SyncML_State {
         if ($version == 0) {
             $this->_uri = NAME_SPACE_URI_SYNCML;
             $this->_uriMeta = NAME_SPACE_URI_METINF;
+            $this->_uriDevInf = NAME_SPACE_URI_DEVINF;
         } else {
             $this->_uri = NAME_SPACE_URI_SYNCML_1_1;
             $this->_uriMeta = NAME_SPACE_URI_METINF_1_1;
+            $this->_uriDevInf = NAME_SPACE_URI_DEVINF_1_1;
         }
     }
 
@@ -408,7 +420,7 @@ class Horde_SyncML_State {
 		// store sessionID in a variable, because ->verify maybe resets that value
 		$sessionID = session_id();
 		if(!$GLOBALS['phpgw']->session->verify($sessionID, 'staticsyncmlkp3'))
-			Horde::logMessage('SyncML_EGW: egw session('.$sessionID.') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			Horde::logMessage('SyncML_EGW: egw session('.$sessionID. ') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
         return $this->_isAuthorized;
@@ -448,13 +460,27 @@ class Horde_SyncML_State {
 
     function getURI()
     {
-        return $this->_uri;
+        /*
+         * The non WBXML devices (notably P900 and Sync4j seem to get confused
+         * by a <SyncML xmlns="syncml:SYNCML1.1"> element. They require
+         * just <SyncML>. So don't use an ns for non wbxml devices.
+         */
+#        if ($this->isWBXML()) {
+            return $this->_uri;
+#        } else {
+#            return '';
+#        }
     }
-
     function getURIMeta()
     {
         return $this->_uriMeta;
     }
+
+    function getURIDevInf()
+    {
+        return $this->_uriDevInf;
+    }
+
 
     /**
      * Converts a Horde GUID (like

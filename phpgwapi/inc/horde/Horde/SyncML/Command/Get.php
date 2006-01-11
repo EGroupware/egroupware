@@ -4,44 +4,6 @@ include_once 'Horde/SyncML/State.php';
 include_once 'Horde/SyncML/Command.php';
 include_once 'Horde/SyncML/Command/Results.php';
 
-define('DEFAULT_DEFINF_10', '<DevInf xmlns="syncml:devinf"><VerDTD>1.0</VerDTD><Man>The Horde Framework</Man><DevID>4711</DevID><DevTyp>workstation</DevTyp><DataStore><SourceRef>./contacts</SourceRef><Rx-Pref><CTType>text/x-vcard</CTType><VerCT>2.1</VerCT></Rx-Pref><Tx-Pref><CTType>text/x-vcard</CTType><VerCT>2.1</VerCT></Tx-Pref><SyncCap><SyncType>1</SyncType><SyncType>2</SyncType><SyncType>3</SyncType><SyncType>4</SyncType><SyncType>5</SyncType><SyncType>6</SyncType><SyncType>7</SyncType></SyncCap></DataStore><DataStore><SourceRef>./calendar</SourceRef><Rx-Pref><CTType>text/x-vcalendar</CTType><VerCT>2.0</VerCT></Rx-Pref><Rx><CTType>text/x-vcalendar</CTType><VerCT>1.0</VerCT></Rx><Tx-Pref><CTType>text/x-vcalendar</CTType><VerCT>2.0</VerCT></Tx-Pref><Tx><CTType>text/x-vcalendar</CTType><VerCT>1.0</VerCT></Tx><SyncCap><SyncType>1</SyncType><SyncType>2</SyncType><SyncType>3</SyncType><SyncType>4</SyncType><SyncType>5</SyncType><SyncType>6</SyncType><SyncType>7</SyncType></SyncCap></DataStore><CTCap><CTType>text/x-vcalendar</CTType><PropName>BEGIN</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><PropName>DTSTART</PropName><PropName>DTEND</PropName><PropName>DTSTAMP</PropName><PropName>SEQUENCE</PropName><PropName>END</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><PropName>UID</PropName><PropName>SUMMARY</PropName><PropName>VERSION</PropName><ValEnum>1.0</ValEnum><PropName>AALARM</PropName><PropName>CATEGORIES</PropName><PropName>CLASS</PropName><PropName>DALARM</PropName><PropName>EXDATE</PropName><PropName>RESOURCES</PropName><PropName>STATUS</PropName><PropName>ATTACH</PropName><PropName>ATTENDEE</PropName><PropName>DCREATED</PropName><PropName>COMPLETED</PropName><PropName>DESCRIPTION</PropName><PropName>DUE</PropName><PropName>LAST-MODIFIED</PropName><PropName>LOCATION</PropName><PropName>PRIORITY</PropName><PropName>RELATED-TO</PropName><PropName>RRULE</PropName><PropName>TRANSP</PropName><PropName>URL</PropName></CTCap><CTCap><CTType>text/calendar</CTType><PropName>BEGIN</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><ValEnum>VALARM</ValEnum><PropName>DTSTART</PropName><PropName>DTEND</PropName><PropName>DTSTAMP</PropName><PropName>SEQUENCE</PropName><PropName>END</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><ValEnum>VALARM</ValEnum><PropName>UID</PropName><PropName>SUMMARY</PropName><PropName>VERSION</PropName><ValEnum>2.0</ValEnum><PropName>CATEGORIES</PropName><PropName>CLASS</PropName><PropName>DALARM</PropName><PropName>EXDATE</PropName><PropName>RESOURCES</PropName><PropName>STATUS</PropName><PropName>ATTACH</PropName><PropName>ATTENDEE</PropName><PropName>DCREATED</PropName><PropName>COMPLETED</PropName><PropName>DESCRIPTION</PropName><PropName>DUE</PropName><PropName>LAST-MODIFIED</PropName><PropName>LOCATION</PropName><PropName>PRIORITY</PropName><PropName>RELATED-TO</PropName><PropName>TRANSP</PropName><PropName>URL</PropName><PropName>RRULE</PropName><PropName>COMMMENT</PropName><PropName>ACTION</PropName><PropName>TRIGGER</PropName><PropName>DURATION</PropName><PropName>REPEAT</PropName></CTCap><CTCap><CTType>text/x-vcard</CTType><PropName>BEGIN</PropName><ValEnum>VCARD</ValEnum><PropName>END</PropName><ValEnum>VCARD</ValEnum><PropName>VERSION</PropName><ValEnum>2.1</ValEnum><PropName>ENCODING</PropName><PropName>VALUE</PropName><PropName>CHARSET</PropName><PropName>FN</PropName><PropName>N</PropName><PropName>NAME</PropName><PropName>NICKNAME</PropName><PropName>PHOTO</PropName><PropName>BDAY</PropName><PropName>ADR</PropName><PropName>LABEL</PropName><PropName>TEL</PropName><PropName>EMAIL</PropName><PropName>MAILER</PropName><PropName>TZ</PropName><PropName>GEO</PropName><PropName>TITLE</PropName><PropName>ROLE</PropName><PropName>LOGO</PropName><PropName>AGENT</PropName><PropName>ORG</PropName><PropName>CATEGORIES</PropName><PropName>NOTE</PropName><PropName>PRODID</PropName><PropName>REV</PropName><PropName>SORT-STRING</PropName><PropName>SOUND</PropName><PropName>URL</PropName><PropName>UID</PropName><PropName>CLASS</PropName><PropName>KEY</PropName></CTCap></DevInf>');
-define('DEFAULT_DEFINF_11', '<DevInf xmlns="syncml:devinf"><VerDTD>1.1</VerDTD><Man>The Horde Framework</Man><DevID>4711</DevID><DevTyp>workstation</DevTyp><DataStore><SourceRef>./contacts</SourceRef><Rx-Pref><CTType>text/x-vcard</CTType><VerCT>2.1</VerCT></Rx-Pref><Tx-Pref><CTType>text/x-vcard</CTType><VerCT>2.1</VerCT></Tx-Pref><SyncCap><SyncType>1</SyncType><SyncType>2</SyncType><SyncType>3</SyncType><SyncType>4</SyncType><SyncType>5</SyncType><SyncType>6</SyncType><SyncType>7</SyncType></SyncCap></DataStore><DataStore><SourceRef>./calendar</SourceRef><Rx-Pref><CTType>text/x-vcalendar</CTType><VerCT>2.0</VerCT></Rx-Pref><Rx><CTType>text/x-vcalendar</CTType><VerCT>1.0</VerCT></Rx><Tx-Pref><CTType>text/x-vcalendar</CTType><VerCT>2.0</VerCT></Tx-Pref><Tx><CTType>text/x-vcalendar</CTType><VerCT>1.0</VerCT></Tx><SyncCap><SyncType>1</SyncType><SyncType>2</SyncType><SyncType>3</SyncType><SyncType>4</SyncType><SyncType>5</SyncType><SyncType>6</SyncType><SyncType>7</SyncType></SyncCap></DataStore><CTCap><CTType>text/x-vcalendar</CTType><PropName>BEGIN</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><PropName>DTSTART</PropName><PropName>DTEND</PropName><PropName>DTSTAMP</PropName><PropName>SEQUENCE</PropName><PropName>END</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><PropName>UID</PropName><PropName>SUMMARY</PropName><PropName>VERSION</PropName><ValEnum>1.0</ValEnum><PropName>AALARM</PropName><PropName>CATEGORIES</PropName><PropName>CLASS</PropName><PropName>DALARM</PropName><PropName>EXDATE</PropName><PropName>RESOURCES</PropName><PropName>STATUS</PropName><PropName>ATTACH</PropName><PropName>ATTENDEE</PropName><PropName>DCREATED</PropName><PropName>COMPLETED</PropName><PropName>DESCRIPTION</PropName><PropName>DUE</PropName><PropName>LAST-MODIFIED</PropName><PropName>LOCATION</PropName><PropName>PRIORITY</PropName><PropName>RELATED-TO</PropName><PropName>RRULE</PropName><PropName>TRANSP</PropName><PropName>URL</PropName></CTCap><CTCap><CTType>text/calendar</CTType><PropName>BEGIN</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><ValEnum>VALARM</ValEnum><PropName>DTSTART</PropName><PropName>DTEND</PropName><PropName>DTSTAMP</PropName><PropName>SEQUENCE</PropName><PropName>END</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><ValEnum>VALARM</ValEnum><PropName>UID</PropName><PropName>SUMMARY</PropName><PropName>VERSION</PropName><ValEnum>2.0</ValEnum><PropName>CATEGORIES</PropName><PropName>CLASS</PropName><PropName>DALARM</PropName><PropName>EXDATE</PropName><PropName>RESOURCES</PropName><PropName>STATUS</PropName><PropName>ATTACH</PropName><PropName>ATTENDEE</PropName><PropName>DCREATED</PropName><PropName>COMPLETED</PropName><PropName>DESCRIPTION</PropName><PropName>DUE</PropName><PropName>LAST-MODIFIED</PropName><PropName>LOCATION</PropName><PropName>PRIORITY</PropName><PropName>RELATED-TO</PropName><PropName>TRANSP</PropName><PropName>URL</PropName><PropName>RRULE</PropName><PropName>COMMMENT</PropName><PropName>ACTION</PropName><PropName>TRIGGER</PropName><PropName>DURATION</PropName><PropName>REPEAT</PropName></CTCap><CTCap><CTType>text/x-vcard</CTType><PropName>BEGIN</PropName><ValEnum>VCARD</ValEnum><PropName>END</PropName><ValEnum>VCARD</ValEnum><PropName>VERSION</PropName><ValEnum>2.1</ValEnum><PropName>ENCODING</PropName><PropName>VALUE</PropName><PropName>CHARSET</PropName><PropName>FN</PropName><PropName>N</PropName><PropName>NAME</PropName><PropName>NICKNAME</PropName><PropName>PHOTO</PropName><PropName>BDAY</PropName><PropName>ADR</PropName><PropName>LABEL</PropName><PropName>TEL</PropName><PropName>EMAIL</PropName><PropName>MAILER</PropName><PropName>TZ</PropName><PropName>GEO</PropName><PropName>TITLE</PropName><PropName>ROLE</PropName><PropName>LOGO</PropName><PropName>AGENT</PropName><PropName>ORG</PropName><PropName>CATEGORIES</PropName><PropName>NOTE</PropName><PropName>PRODID</PropName><PropName>REV</PropName><PropName>SORT-STRING</PropName><PropName>SOUND</PropName><PropName>URL</PropName><PropName>UID</PropName><PropName>CLASS</PropName><PropName>KEY</PropName></CTCap></DevInf>');
-#define('DEFAULT_DEFINF', '<DevInf xmlns="syncml:devinf"><VerDTD>1.0</VerDTD><Man>The Horde Framework</Man><DevID>4711</DevID>'.
-#'<DevTyp>workstation</DevTyp><DataStore><SourceRef>contacts</SourceRef><Rx-Pref><CTType>text/x-vcard</CTType><VerCT>2.1</VerCT>'.
-#'</Rx-Pref><Tx-Pref><CTType>text/x-vcard</CTType><VerCT>2.1</VerCT></Tx-Pref><SyncCap><SyncType>1</SyncType><SyncType>2</SyncType><SyncType>7</SyncType></SyncCap>'.
-#'</DataStore>'.
-#
-#'<DataStore><SourceRef>calendar</SourceRef><Rx-Pref><CTType>text/x-vcalendar</CTType><VerCT>2.0</VerCT></Rx-Pref><Rx>'.
-#'<CTType>text/x-vcalendar</CTType><VerCT>1.0</VerCT></Rx><Tx-Pref><CTType>text/x-vcalendar</CTType><VerCT>2.0</VerCT></Tx-Pref>'.
-#'<Tx><CTType>text/x-vcalendar</CTType><VerCT>1.0</VerCT></Tx><SyncCap><SyncType>1</SyncType><SyncType>7</SyncType></SyncCap></DataStore>'.
-#
-#'<CTCap><CTType>text/x-vcalendar</CTType><PropName>BEGIN</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum>'.
-#'<ValEnum>VTODO</ValEnum><PropName>DTSTART</PropName><PropName>DTEND</PropName><PropName>DTSTAMP</PropName><PropName>SEQUENCE</PropName>'.
-#'<PropName>END</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><PropName>UID</PropName><PropName>'.
-#'SUMMARY</PropName><PropName>VERSION</PropName><ValEnum>1.0</ValEnum><PropName>AALARM</PropName><PropName>CATEGORIES</PropName><PropName>',
-#'CLASS</PropName><PropName>DALARM</PropName><PropName>EXDATE</PropName><PropName>RESOURCES</PropName><PropName>STATUS</PropName><PropName>',
-#'ATTACH</PropName><PropName>ATTENDEE</PropName><PropName>DCREATED</PropName><PropName>COMPLETED</PropName><PropName>DESCRIPTION</PropName>'.
-#'<PropName>DUE</PropName><PropName>LAST-MODIFIED</PropName><PropName>LOCATION</PropName><PropName>PRIORITY</PropName>'.
-#'<PropName>RELATED-TO</PropName><PropName>RRULE</PropName><PropName>TRANSP</PropName><PropName>URL</PropName></CTCap><CTCap>'.
-#'<CTType>text/calendar</CTType><PropName>BEGIN</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum>'.
-#'<ValEnum>VALARM</ValEnum><PropName>DTSTART</PropName><PropName>DTEND</PropName><PropName>DTSTAMP</PropName><PropName>SEQUENCE</PropName>'.
-#'<PropName>END</PropName><ValEnum>VCALENDAR</ValEnum><ValEnum>VEVENT</ValEnum><ValEnum>VTODO</ValEnum><ValEnum>VALARM</ValEnum>'.
-#'<PropName>UID</PropName><PropName>SUMMARY</PropName><PropName>VERSION</PropName><ValEnum>2.0</ValEnum><PropName>CATEGORIES</PropName>'.
-#'<PropName>CLASS</PropName><PropName>DALARM</PropName><PropName>EXDATE</PropName><PropName>RESOURCES</PropName><PropName>STATUS</PropName>'.
-#'<PropName>ATTACH</PropName><PropName>ATTENDEE</PropName><PropName>DCREATED</PropName><PropName>COMPLETED</PropName><PropName>DESCRIPTION'.
-#'</PropName><PropName>DUE</PropName><PropName>LAST-MODIFIED</PropName><PropName>LOCATION</PropName><PropName>PRIORITY</PropName>'.
-#'<PropName>RELATED-TO</PropName><PropName>TRANSP</PropName><PropName>URL</PropName><PropName>RRULE</PropName><PropName>COMMMENT</PropName>'.
-#'<PropName>ACTION</PropName><PropName>TRIGGER</PropName><PropName>DURATION</PropName><PropName>REPEAT</PropName></CTCap><CTCap>'.
-#
-#'<CTType>text/x-vcard</CTType><PropName>BEGIN</PropName><ValEnum>VCARD</ValEnum><PropName>END</PropName><ValEnum>VCARD</ValEnum><PropName>'.
-#'VERSION</PropName><ValEnum>2.1</ValEnum><PropName>ENCODING</PropName><PropName>VALUE</PropName><PropName>CHARSET</PropName>'.
-#'<PropName>FN</PropName><PropName>N</PropName><PropName>NAME</PropName><PropName>NICKNAME</PropName><PropName>PHOTO</PropName>'.
-#'<PropName>BDAY</PropName><PropName>ADR</PropName><PropName>LABEL</PropName><PropName>TEL</PropName><PropName>EMAIL</PropName>'.
-#'<PropName>MAILER</PropName><PropName>TZ</PropName><PropName>GEO</PropName><PropName>TITLE</PropName><PropName>ROLE</PropName>'.
-#'<PropName>LOGO</PropName><PropName>AGENT</PropName><PropName>ORG</PropName><PropName>CATEGORIES</PropName><PropName>NOTE</PropName>'.
-#'<PropName>PRODID</PropName><PropName>REV</PropName><PropName>SORT-STRING</PropName><PropName>SOUND</PropName><PropName>URL</PropName>'.
-#'<PropName>UID</PropName><PropName>CLASS</PropName><PropName>KEY</PropName></CTCap></DevInf>');
-
 /**
  * The Horde_SyncML_Command_Get class.
  *
@@ -70,32 +32,151 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
         $status->setCmdRef($this->_cmdID);
         $status->setTargetRef($ref);
         $currentCmdID = $status->output($currentCmdID, $output);
-	Horde::logMessage('SyncML: end output ref: '.$ref, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-        // Currently DEVINF seems to be ok only for SyncML 1.0. But
-        // this is used by P800/P900 and these seem to require it:
-        if ($state->isAuthorized() && $state->getVersion() == 0) {
-            $results = &new Horde_SyncML_Command_Results();
-            $results->setCmdRef($this->_cmdID);
-            $results->setType("application/vnd.syncml-devinf+xml");
-            $results->setlocSourceURI($ref);
-            $results->setData(DEFAULT_DEFINF_10);
+        if ($state->isAuthorized()) {
+            $attrs = array();
+            $output->startElement($state->getURI(), 'Results', $attrs);
 
-            $currentCmdID = $results->output($currentCmdID, $output);
-        }
-        elseif($state->isAuthorized() && $state->getVersion() == 1)
-        {
-            $results = &new Horde_SyncML_Command_Results();
-            $results->setCmdRef($this->_cmdID);
-            $results->setType("application/vnd.syncml-devinf+xml");
-            $results->setlocSourceURI($ref);
-            $results->setData(DEFAULT_DEFINF_11);
+            $output->startElement($state->getURI(), 'CmdID', $attrs);
+            $chars = $currentCmdID;
+            $output->characters($chars);
+            $output->endElement($state->getURI(), 'CmdID');
 
-            $currentCmdID = $results->output($currentCmdID, $output);
-            
+            $output->startElement($state->getURI(), 'MsgRef', $attrs);
+            $chars = $state->getMsgID();
+            $output->characters($chars);
+            $output->endElement($state->getURI(), 'MsgRef');
+
+            $output->startElement($state->getURI(), 'CmdRef', $attrs);
+            $chars = $this->_cmdID;
+            $output->characters($chars);
+            $output->endElement($state->getURI(), 'CmdRef');
+
+            $output->startElement($state->getURI(), 'Meta', $attrs);
+            $output->startElement($state->getURIMeta(), 'Type', $attrs);
+            if (is_a($output, 'XML_WBXML_Encoder')) {
+                $output->characters(MIME_SYNCML_DEVICE_INFO_WBXML);
+            } else {
+                $output->characters(MIME_SYNCML_DEVICE_INFO_XML);
+            }
+
+            $output->endElement($state->getURIMeta(), 'Type');
+            $output->endElement($state->getURI(), 'Meta');
+
+            $output->startElement($state->getURI(), 'Item', $attrs);
+            $output->startElement($state->getURI(), 'Source', $attrs);
+            $output->startElement($state->getURI(), 'LocURI', $attrs);
+            $output->characters($ref);
+            $output->endElement($state->getURI(), 'LocURI');
+            $output->endElement($state->getURI(), 'Source');
+
+            $output->startElement($state->getURI(), 'Data', $attrs);
+
+            $output->startElement($state->getURIDevInf() , 'DevInf', $attrs);
+            $output->startElement($state->getURIDevInf() , 'VerDTD', $attrs);
+            $output->characters(($state->getVersion() == 0) ? '1.0' : '1.1');
+            $output->endElement($state->getURIDevInf() , 'VerDTD', $attrs);
+            $output->startElement($state->getURIDevInf() , 'Man', $attrs);
+            $output->characters('www.egroupware.org');
+            $output->endElement($state->getURIDevInf() , 'Man', $attrs);
+            $output->startElement($state->getURIDevInf() , 'DevID', $attrs);
+            $output->characters($_SERVER['HTTP_HOST']);
+            $output->endElement($state->getURIDevInf() , 'DevID', $attrs);
+            $output->startElement($state->getURIDevInf() , 'DevTyp', $attrs);
+            $output->characters('server');
+            $output->endElement($state->getURIDevInf() , 'DevTyp', $attrs);
+            $this->_writeDataStore('notes', 'text/x-vnote', '1.1', $output,
+                                   array('text/plain' => '1.0'));
+            $this->_writeDataStore('contacts', 'text/x-vcard', '2.1', $output);
+            $this->_writeDataStore('tasks', 'text/x-vcalendar', '1.0', $output);
+            $this->_writeDataStore('calendar', 'text/x-vcalendar', '1.0', $output);
+            $output->endElement($state->getURIDevInf() , 'DevInf', $attrs);
+
+            $output->endElement($state->getURI(), 'Data');
+            $output->endElement($state->getURI(), 'Item');
+            $output->endElement($state->getURI(), 'Results');
+
+            $currentCmdID++;
         }
 
         return $currentCmdID;
+    }
+
+    /**
+     * Writes DevInf data for one DataStore.
+     *
+     * @param string $sourceref: data for SourceRef element.
+     * @param string $mimetype: data for &lt;(R|T)x-Pref&gt;&lt;CTType&gt;
+     * @param string $version: data for &lt;(R|T)x-Pref&gt;&lt;VerCT&gt;
+     * @param string &$output contenthandler that will received the output.
+     * @param array $additionaltypes: array of additional types for Tx and Rx;
+     *              format array('text/vcard' => '2.0')
+     */
+    function _writeDataStore($sourceref, $mimetype, $version, &$output,
+                             $additionaltypes = false)
+    {
+        $attrs = array();
+
+        $state = &$_SESSION['SyncML.state'];
+
+        $output->startElement($state->getURIDevInf() , 'DataStore', $attrs);
+        $output->startElement($state->getURIDevInf() , 'SourceRef', $attrs);
+        $output->characters($sourceref);
+        $output->endElement($state->getURIDevInf() , 'SourceRef', $attrs);
+
+        $output->startElement($state->getURIDevInf() , 'Rx-Pref', $attrs);
+        $output->startElement($state->getURIDevInf() , 'CTType', $attrs);
+        $output->characters($mimetype);
+        $output->endElement($state->getURIDevInf() , 'CTType', $attrs);
+        $output->startElement($state->getURIDevInf() , 'VerCT', $attrs);
+        $output->characters($version);
+        $output->endElement($state->getURIDevInf() , 'VerCT', $attrs);
+        $output->endElement($state->getURIDevInf() , 'Rx-Pref', $attrs);
+
+        if (is_array($additionaltypes)) {
+            foreach ($additionaltypes as $ct => $ctver){
+                $output->startElement($state->getURIDevInf() , 'Rx', $attrs);
+                $output->startElement($state->getURIDevInf() , 'CTType', $attrs);
+                $output->characters($ct);
+                $output->endElement($state->getURIDevInf() , 'CTType', $attrs);
+                $output->startElement($state->getURIDevInf() , 'VerCT', $attrs);
+                $output->characters($ctver);
+                $output->endElement($state->getURIDevInf() , 'VerCT', $attrs);
+                $output->endElement($state->getURIDevInf() , 'Rx', $attrs);
+            }
+        }
+
+        $output->startElement($state->getURIDevInf() , 'Tx-Pref', $attrs);
+        $output->startElement($state->getURIDevInf() , 'CTType', $attrs);
+        $output->characters($mimetype);
+        $output->endElement($state->getURIDevInf() , 'CTType', $attrs);
+        $output->startElement($state->getURIDevInf() , 'VerCT', $attrs);
+        $output->characters($version);
+        $output->endElement($state->getURIDevInf() , 'VerCT', $attrs);
+        $output->endElement($state->getURIDevInf() , 'Tx-Pref', $attrs);
+
+        if (is_array($additionaltypes)) {
+            foreach ($additionaltypes as $ct => $ctver){
+                $output->startElement($state->getURIDevInf() , 'Tx', $attrs);
+                $output->startElement($state->getURIDevInf() , 'CTType', $attrs);
+                $output->characters($ct);
+                $output->endElement($state->getURIDevInf() , 'CTType', $attrs);
+                $output->startElement($state->getURIDevInf() , 'VerCT', $attrs);
+                $output->characters($ctver);
+                $output->endElement($state->getURIDevInf() , 'VerCT', $attrs);
+                $output->endElement($state->getURIDevInf() , 'Tx', $attrs);
+            }
+        }
+
+        $output->startElement($state->getURIDevInf() , 'SyncCap', $attrs);
+        $output->startElement($state->getURIDevInf() , 'SyncType', $attrs);
+        $output->characters('1');
+        $output->endElement($state->getURIDevInf() , 'SyncType', $attrs);
+        $output->startElement($state->getURIDevInf() , 'SyncType', $attrs);
+        $output->characters('2');
+        $output->endElement($state->getURIDevInf() , 'SyncType', $attrs);
+        $output->endElement($state->getURIDevInf() , 'SyncCap', $attrs);
+        $output->endElement($state->getURIDevInf() , 'DataStore', $attrs);
     }
 
 }
