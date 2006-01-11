@@ -157,7 +157,7 @@
 			}
 
 			/* This allows the user to put '' as the value. */
-			if ($data == '##NOTHING##')
+			if ($data === '##NOTHING##')
 			{
 				/* do not decrypt and return if no data (decrypt returning garbage) */
 				if($_SESSION[EGW_SESSION_VAR]['app_sessions'][$appname][$location])
