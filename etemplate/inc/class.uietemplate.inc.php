@@ -49,6 +49,14 @@
 		 * @var int $innerWidth inner width of browser window
 		 */
 		var $innerWidth;
+		/**
+		 * @var array $content reference to the content-param of the last call to show, for extensions to use
+		 */
+		var $content;
+		/**
+		 * @var array $sel_options reference to the sel_options-param of the last call to show, for extensions to use
+		 */
+		var $sel_options;
 
 		/**
 		 * constructor of etemplate class, reads an eTemplate if $name is given
@@ -417,7 +425,7 @@
 			{
 				$sel_options = array();
 			}
-			// make it globaly availible for show_cell and show_grid
+			// make it globaly availible for show_cell and show_grid, or extensions
 			$this->sel_options =& $sel_options;
 
 			if (!$readonlys)
@@ -435,6 +443,9 @@
 			{
 				$content = array();	// happens if incl. template has no content
 			}
+			// make the content availible as class-var for extensions
+			$this->content =& $content;
+
 			$html = "\n\n<!-- BEGIN eTemplate $this->name -->\n\n";
 			if (!$GLOBALS['egw_info']['etemplate']['styles_included'][$this->name])
 			{
