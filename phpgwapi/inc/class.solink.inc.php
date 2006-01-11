@@ -265,7 +265,7 @@
 				}
 				elseif ($app != '' && $app2 != '')
 				{
-					$where = $this->db->expression($this->link_table,'((',array(
+					$where = $this->db->expression($this->link_table,'(',array(
 							'link_app1'	=> $app,
 							'link_id1'	=> $id,
 							'link_app2'	=> $app2,
