@@ -151,6 +151,7 @@ new name	infolog	zh-tw	新的名稱
 new search	infolog	zh-tw	新的搜尋
 no - cancel	infolog	zh-tw	否 - 取消
 no describtion, links or attachments	infolog	zh-tw	沒有說明、連結或附加檔案
+no details	infolog	zh-tw	沒有細節
 no entries found, try again ...	infolog	zh-tw	沒有找到任何事件，請重新嘗試...
 no filter	infolog	zh-tw	沒有過濾規則
 no links or attachments	infolog	zh-tw	沒有連結或附加檔案
@@ -182,6 +183,7 @@ permission denied	infolog	zh-tw	拒絕存取
 phone	infolog	zh-tw	聯絡清單
 phone/email	infolog	zh-tw	電話/Email
 phonecall	infolog	zh-tw	聯絡清單
+planned	infolog	zh-tw	已規劃
 planned time	infolog	zh-tw	已規劃時間
 priority	infolog	zh-tw	優先權
 private	infolog	zh-tw	私人的
@@ -211,16 +213,18 @@ select an app to search in	infolog	zh-tw	選擇要搜尋的應用程式
 select an entry to link with	infolog	zh-tw	選擇要連結的事件
 select to filter by owner	infolog	zh-tw	依據擁有者過濾
 select to filter by responsible	infolog	zh-tw	依據負責人過濾
-sets the status of this entry to done	infolog	zh-tw	將這個資料的狀態設定為完成
+sets the status of this entry and its subs to done	infolog	zh-tw	設定這筆資料與附屬項目的狀態為完成
 should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	zh-tw	記事本需要在主要畫面顯示您的開啟事件(未完成工作，聯絡清單或是記事)嗎？這個功能只有在您還沒設定主要畫面的應用程式前才有效。
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zh-tw	記事本需要在一般瀏覽中顯示附屬任務，聯絡清單或是記事嗎？您可以在原始事件中看到附屬的資訊。
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	zh-tw	記事本是否要顯示與其他應用程式的連結與/或附加檔案（通常會在進入記事本時看到）。
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh-tw	記事本使用全名或是登入名稱？
 should this entry only be visible to you and people you grant privat access via the acl	infolog	zh-tw	這個事件只允許您以及您從ACL取得存取權限的人？
+show a column for used and planned times in the list.	infolog	zh-tw	在清單中顯示一個用於已使用與已規劃時間的欄位。
 show full usernames	infolog	zh-tw	顯示完整的使用者姓名
 show in the infolog list	infolog	zh-tw	在記事本清單中顯示
 show list of upcoming entries	infolog	zh-tw	顯示所有即將到來的記錄
 show open entries: tasks/calls/notes on main screen	infolog	zh-tw	在主要畫面中顯示開啟的事件：工作/聯絡清單/記事
+show times	infolog	zh-tw	顯示時間
 small view	infolog	zh-tw	縮小
 start a new search, cancel this link	infolog	zh-tw	開啟一個新的搜尋並且取消這個連結
 startdate	infolog	zh-tw	開始日期
