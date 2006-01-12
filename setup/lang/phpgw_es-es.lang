@@ -472,7 +472,7 @@ try to configure your php to support one of the above mentioned dbms, or install
 two weeks	setup	es-es	dos semanas
 unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	es-es	Desafortunadamente, algunos paquetes de PHP/Apache tienen problemas con esto (Apache muere y ya no se puede iniciar la sesión).
 uninstall	setup	es-es	desinstalar
-uninstall all applications	setup	es-es	Desinstalar todas las apliaciones
+uninstall all applications	setup	es-es	Desinstalar todas las aplicaciones
 uninstalled	setup	es-es	desinstalado
 upgrade	setup	es-es	Actualizar
 upgrade all	setup	es-es	Actualizar todo
