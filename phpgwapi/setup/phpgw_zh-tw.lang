@@ -537,9 +537,9 @@ new main category	common	zh-tw	新的主要分類
 new value	common	zh-tw	新數值
 new zealand	common	zh-tw	紐西蘭
 next	common	zh-tw	下一個
-next month (hold for menu)	jscalendar	zh-tw	下一個月(在選單中)
+next month (hold for menu)	jscalendar	zh-tw	下一個月(按住滑鼠鍵)
 next page	common	zh-tw	下一頁
-next year (hold for menu)	jscalendar	zh-tw	下一年(在選單中)
+next year (hold for menu)	jscalendar	zh-tw	下一年(按住滑鼠鍵)
 nicaragua	common	zh-tw	NICARAGUA
 niger	common	zh-tw	NIGER
 nigeria	common	zh-tw	NIGERIA
@@ -651,8 +651,8 @@ postal	common	zh-tw	郵遞區號
 powered by egroupware version %1	common	zh-tw	系統為 <a href="http://www.egroupware.org">eGroupWare</a> 版本 %1
 preferences	common	zh-tw	喜好設定
 preferences for the idots template set	common	zh-tw	idots樣板的設定
-prev. month (hold for menu)	jscalendar	zh-tw	上一個月(在選單中)
-prev. year (hold for menu)	jscalendar	zh-tw	上一年(在選單中)
+prev. month (hold for menu)	jscalendar	zh-tw	上一個月(按住滑鼠鍵)
+prev. year (hold for menu)	jscalendar	zh-tw	上一年(按住滑鼠鍵)
 preview	tinymce	zh-tw	預覽
 previous page	common	zh-tw	上一頁
 primary style-sheet:	common	zh-tw	主要樣式表：
