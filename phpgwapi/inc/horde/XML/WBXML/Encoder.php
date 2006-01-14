@@ -96,7 +96,6 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
      */
     function writeHeader($uri)
     {
-        error_log("getInstanceURI($uri)");
         $this->_dtd = &$this->_dtdManager->getInstanceURI($uri);
 
         $dpiString = $this->_dtd->getDPI();
@@ -213,8 +212,6 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function startElement($uri, $name, $attributes)
     {
-        error_log("startElement::: <$name>");
-#        error_log(" subparser is:: ".$this->_subParser);
         if ($this->_subParser == null) {
             if (!$this->_hasWrittenHeader) {
                 $this->writeHeader($uri);
@@ -252,7 +249,6 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
     function characters($chars)
     {
         $chars = trim($chars);
-        error_log("characters  ::: ".$chars);
 
         if (strlen($chars)) {
             /* We definitely don't want any whitespace. */
@@ -284,7 +280,6 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
         }
 
         $t = $this->_dtd->toTagInt($name);
-#        error_log("writeTag    ::: -> $name $t");
         if ($t == -1) {
             $i = $this->_stringTable->get($name);
             if ($i == null) {
@@ -355,11 +350,8 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function endElement($uri, $name)
     {
-        error_log("endElement  ::: </$name>");
-#        error_log("  subparser is: ".$this->_subParser);
         if ($this->_subParser == null) {
             $this->_output .= chr(XML_WBXML_GLOBAL_TOKEN_END);
-#            error_log("  _output is: ".strlen($this->_output));
         } else {
             $this->_subParser->endElement($uri, $name);
             $this->_subParserStack--;
@@ -384,13 +376,12 @@ class XML_WBXML_Encoder extends XML_WBXML_ContentHandler {
 
     function changecodepage($uri)
     {
-#        error_log("changecodepage::: $uri");
         // @todo: this is a hack!
-        if (!preg_match('/1\.1$/', $uri)) {
+        // what's the reason for this hack???? Lars
+        if ($uri != 'syncml:devinf' && $uri != 'syncml:metinf' && $uri != 'syncml:syncml1.0' && !preg_match('/1\.1$/', $uri)) {
             $uri .= '1.1';
         }
         $cp = $this->_dtd->toCodePageURI($uri);
-#        error_log("--- \$cp:: $cp");
         if (strlen($cp)) {
             $this->_dtd = &$this->_dtdManager->getInstanceURI($uri);
 

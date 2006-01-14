@@ -312,7 +312,6 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
 
         $uri = $state->getURI();
         $uriMeta = $state->getURIMeta();
-
         $output->startElement($uri, 'SyncHdr', $attrs);
 
         $output->startElement($uri, 'VerDTD', $attrs);

@@ -117,7 +117,7 @@ define('RESPONSE_COMMAND_FAILED', 500);
 // define('RESPONSE_COMMAND_FAILED', 515);
 define('RESPONSE_ATOMIC_ROLL_BACK_FAILED', 516);
 
-define('NAME_SPACE_URI_SYNCML', 'SYNCML:SYNCML1.0');
+define('NAME_SPACE_URI_SYNCML', 'syncml:syncml1.0');
 define('NAME_SPACE_URI_SYNCML_1_1', 'syncml:syncml1.1');
 define('NAME_SPACE_URI_METINF', 'syncml:metinf');
 define('NAME_SPACE_URI_METINF_1_1', 'syncml:metinf1.1');

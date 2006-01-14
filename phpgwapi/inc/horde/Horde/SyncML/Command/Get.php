@@ -85,11 +85,11 @@ class Horde_SyncML_Command_Get extends Horde_SyncML_Command {
             $output->startElement($state->getURIDevInf() , 'DevTyp', $attrs);
             $output->characters('server');
             $output->endElement($state->getURIDevInf() , 'DevTyp', $attrs);
-            $this->_writeDataStore('notes', 'text/x-vnote', '1.1', $output,
+            $this->_writeDataStore('./notes', 'text/x-vnote', '1.1', $output,
                                    array('text/plain' => '1.0'));
-            $this->_writeDataStore('contacts', 'text/x-vcard', '2.1', $output);
-            $this->_writeDataStore('tasks', 'text/x-vcalendar', '1.0', $output);
-            $this->_writeDataStore('calendar', 'text/x-vcalendar', '1.0', $output);
+            $this->_writeDataStore('./contacts', 'text/x-vcard', '2.1', $output);
+            $this->_writeDataStore('./tasks', 'text/x-vcalendar', '1.0', $output);
+            $this->_writeDataStore('./calendar', 'text/x-vcalendar', '1.0', $output);
             $output->endElement($state->getURIDevInf() , 'DevInf', $attrs);
 
             $output->endElement($state->getURI(), 'Data');

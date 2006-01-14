@@ -45,7 +45,8 @@ class XML_WBXML_DTD_SyncMLMetInf extends XML_WBXML_DTD {
         $this->setTag(0x14, "Version"); // 0x01
 
         if ($this->version == 0) {
-            $this->setCodePage(0, '-//SYNCML//DTD SyncML 1.0//EN', 'syncml:SYNCML1.0');
+            #$this->setCodePage(0, '-//SYNCML//DTD SyncML 1.0//EN', 'syncml:SYNCML1.0');
+            $this->setCodePage(0, '-//SYNCML//DTD SyncML 1.0//EN', 'syncml:syncml1.0');
             $this->setCodePage(1, '-//SYNCML//DTD MetInf 1.0//EN', 'syncml:metinf');
             $this->setURI('syncml:metinf');
         } else {

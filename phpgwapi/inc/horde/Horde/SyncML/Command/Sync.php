@@ -97,58 +97,60 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
         $state = $_SESSION['SyncML.state'];
         if($state->getSyncStatus() == CLIENT_SYNC_FINNISHED || $state->getSyncStatus() == SERVER_SYNC_DATA_PENDING)
         {
-##############  
-	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);      
-        $targets = $state->getTargets();
-        Horde::logMessage('SyncML: starting sync to client '.$targets[0], __FILE__, __LINE__, PEAR_LOG_DEBUG);
-        $attrs = array();
+	        $deviceInfo = $state->getClientDeviceInfo();
+		$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);      
+	        $targets = $state->getTargets();
+	        Horde::logMessage('SyncML: starting sync to client '.$targets[0], __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	        $attrs = array();
 
-	foreach($targets as $target)
-	{
-        	$sync = $state->getSync($target);
-        	
-		$output->startElement($state->getURI(), 'Sync', $attrs);
-		$output->startElement($state->getURI(), 'CmdID', $attrs);
-		$output->characters($currentCmdID);
-		$currentCmdID++;
-		$output->endElement($state->getURI(), 'CmdID');
-	
-		$output->startElement($state->getURI(), 'Target', $attrs);
-		$output->startElement($state->getURI(), 'LocURI', $attrs);
-		$chars = $sync->_sourceLocURI;
-		$output->characters($chars);
-		$output->endElement($state->getURI(), 'LocURI');
-		$output->endElement($state->getURI(), 'Target');
-	
-		$output->startElement($state->getURI(), 'Source', $attrs);
-		$output->startElement($state->getURI(), 'LocURI', $attrs);
-		#$chars = $sync->_targetLocURI;
-		$chars = (isset($sync->_targetLocURIParameters) ? $sync->_targetLocURI.'?/'.$sync->_targetLocURIParameters : $sync->_targetLocURI);
-		$output->characters($chars);
-		$output->endElement($state->getURI(), 'LocURI');
-		$output->endElement($state->getURI(), 'Source');
-		
-		if(!$sync->_syncDataLoaded)
+		foreach($targets as $target)
 		{
-			$numberOfItems = $sync->loadData();
-			$output->startElement($state->getURI(), 'NumberOfChanged', $attrs);
-			$output->characters($numberOfItems);
-			$output->endElement($state->getURI(), 'NumberOfChanged');
+	        	$sync = $state->getSync($target);
+        	
+			$output->startElement($state->getURI(), 'Sync', $attrs);
+			$output->startElement($state->getURI(), 'CmdID', $attrs);
+			$output->characters($currentCmdID);
+			$currentCmdID++;
+			$output->endElement($state->getURI(), 'CmdID');
+	
+			$output->startElement($state->getURI(), 'Target', $attrs);
+			$output->startElement($state->getURI(), 'LocURI', $attrs);
+			$chars = $sync->_sourceLocURI;
+			$output->characters($chars);
+			$output->endElement($state->getURI(), 'LocURI');
+			$output->endElement($state->getURI(), 'Target');
+	
+			$output->startElement($state->getURI(), 'Source', $attrs);
+			$output->startElement($state->getURI(), 'LocURI', $attrs);
+			#$chars = $sync->_targetLocURI;
+			$chars = (isset($sync->_targetLocURIParameters) ? $sync->_targetLocURI.'?/'.$sync->_targetLocURIParameters : $sync->_targetLocURI);
+			$output->characters($chars);
+			$output->endElement($state->getURI(), 'LocURI');
+			$output->endElement($state->getURI(), 'Source');
+		
+			if(!$sync->_syncDataLoaded)
+			{
+				$numberOfItems = $sync->loadData();
+				if($deviceInfo['supportNumberOfChanges'])
+				{
+					$output->startElement($state->getURI(), 'NumberOfChanged', $attrs);
+					$output->characters($numberOfItems);
+					$output->endElement($state->getURI(), 'NumberOfChanged');
+				}
+			}
+		
+			$currentCmdID = $sync->endSync($currentCmdID, $output);
+		
+			$output->endElement($state->getURI(), 'Sync');
+			
+			break;
 		}
 	
-		$currentCmdID = $sync->endSync($currentCmdID, $output);
+		// no syncs left
+		if($state->getTargets() === FALSE)
+			$state->setSyncStatus(SERVER_SYNC_FINNISHED);
 	
-		$output->endElement($state->getURI(), 'Sync');
-		
-		break;
-	}
-	#
-	
-	// no syncs left
-	if($state->getTargets() === FALSE)
-		$state->setSyncStatus(SERVER_SYNC_FINNISHED);
 		Horde::logMessage('SyncML: syncStatus(server_sync_finnished) '. $state->getSyncStatus, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-#############################
 	}	
 
 	return $currentCmdID;
