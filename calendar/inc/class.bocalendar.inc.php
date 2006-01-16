@@ -126,28 +126,38 @@ class bocalendar
 	 * Read a single entry
 	 *
 	 * @param int/array $id
-	 * @return array
+	 * @return array with event(s) or XMLRPC error not_existent or no_access
 	 */
 	function read($id)
 	{
 		if ($this->debug) error_log('bocalendar::read('.print_r($id,true).')');
 
-		$events =& $this->cal->read($id,null,false,$this->xmlrpc_date_format);
+		$events =& $this->cal->read($id,null,true,$this->xmlrpc_date_format);	// true = ignore acl!!!
 	
-		if (!$events)	// id not found or permission denied
+		if (!$events)	// only id not found, as ignore_acl=true
 		{
 			// xmlrpc_error does NOT return
-			$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_existent'],$GLOBALS['xmlrpcstr']['not_existent']);
 		}
 		if (is_array($id) && count($id) > 1)
 		{
 			foreach($events as $key => $event)
 			{
+				if (!$this->cal->check_perms(EGW_ACL_READ,$event,0,$this->xmlrpc_date_format))
+				{
+					// xmlrpc_error does NOT return
+					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+				}
 				$events[$key] = $this->xmlrpc_prepare($event);
 			}
 		}
 		else
 		{
+			if (!$this->cal->check_perms(EGW_ACL_READ,$events,0,$this->xmlrpc_date_format))
+			{
+				// xmlrpc_error does NOT return
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
 			$events = $this->xmlrpc_prepare($events);
 		}
 		return $events;
@@ -157,7 +167,7 @@ class bocalendar
 	 * Delete an event
 	 *
 	 * @param array $ids event-id(s)
-	 * @return boolean
+	 * @return boolean true or XMLRPC error not_existent or no_access
 	 */
 	function delete($ids)
 	{
@@ -165,10 +175,19 @@ class bocalendar
 
 		foreach((array) $ids as $id)
 		{
-			if (!$this->cal->delete($id))
+			if (!$event = $this->cal->read($id,null,true))	// id not found, as ignore_acl=true
+			{
+				// xmlrpc_error does NOT return
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_existent'],$GLOBALS['xmlrpcstr']['not_existent']);
+			}
+			if (!$this->cal->check_perms(EGW_ACL_DELETE,$event))
 			{
 				// xmlrpc_error does NOT return
 				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
+			if (!$this->cal->delete($id))
+			{
+				return false;	// other db-problem
 			}
 		}
 		return true;
@@ -200,7 +219,7 @@ class bocalendar
 					unset($event['participants'][$user]);
 					$user = $GLOBALS['egw']->accounts->name2id($data['email'],'account_email');
 				}
-				if (!$user) $continue;
+				if (!$user) continue;
 				
 				$event['participants'][$user] = in_array($data['status'],array('U','A','R','T')) ? $data['status'] : 'U';
 			}
@@ -209,7 +228,7 @@ class bocalendar
 		{
 			$event['participants'] = array($GLOBALS['egw_info']['user']['account_id'] => 'A');
 		}
-		if (!($id = $this->cal->update($event,true)))	// true=no conflikt check for now
+		if (!($id = $this->cal->update($event,true)))	// true=no conflict check for now
 		{
 			$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 		}
@@ -218,6 +237,9 @@ class bocalendar
 
 	/**
 	 * search calendar for events
+	 *
+	 * If daywise is not set or false, an XMLRPC array of events is returned, otherwise an
+	 * XMLRCP struct with date as string (eg. '20060101') and an array of events is returned.
 	 *
 	 * @param array $params following keys are allowed: start, end, user (more see bocal::search)
 	 * @return array with events
@@ -238,7 +260,7 @@ class bocalendar
 		{
 			$events[$key] = $this->xmlrpc_prepare($event);
 		}
-		return $events;
+		return !$params['daywise'] ? array_values($events) : $events;
 	}
 
 	/**
@@ -246,13 +268,14 @@ class bocalendar
 	 *	- participants are send as struct/array with keys: name, email, status
 	 *	- categories are send as array with cat_id - title pairs
 	 *	- public is transformed to access={public|private}
+	 *  - new (1.2) values get unset (eg. participant_types)
 	 *
 	 * @param array &$event
 	 * @return array
 	 */
 	function xmlrpc_prepare(&$event)
 	{
-		$event['rights'] = $this->grants[$event['owner']];
+		$event['rights'] = $this->cal->grants[$event['owner']];
 
 		static $user_cache = array();
 
@@ -281,12 +304,30 @@ class bocalendar
 				}
 			}
 		}
-		$event['category'] = $event['category'] ? $GLOBALS['server']->cats2xmlrpc(explode(',',$event['category'])) : array();
-
-		// using access={public|privat} in all modules via xmlrpc
-		$event['access'] = $event['public'] ? 'public' : 'privat';
-		unset($event['public']);
-
+		if ($event['category'])
+		{
+			$event['category'] = $GLOBALS['server']->cats2xmlrpc(explode(',',$event['category']));
+		}
+		else
+		{
+			unset($event['category']);
+		}
+		// using access={public|private} in all modules via xmlrpc
+		$event['access'] = $event['public'] ? 'public' : 'private';
+		
+		// unset everything not known in version 1.0
+		foreach(array('public','participant_types') as $key)
+		{
+			unset($event[$key]);
+		}
+		// unsetting everything which could result in an typeless <value />
+		foreach($event as $key => $value)
+		{
+			if (is_null($value) || is_array($value) && !$value)
+			{
+				unset($event[$key]);
+			}
+		}
 		return $event;
 	}
 
