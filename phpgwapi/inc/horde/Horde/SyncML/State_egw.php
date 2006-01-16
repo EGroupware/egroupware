@@ -47,7 +47,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
         $deviceID = $this->_locName . $this->_sourceURI;
     	
-    	$db = clone($GLOBALS['phpgw']->db);
+    	$db = clone($GLOBALS['egw']->db);
     	
     	$cols = array
     	(
@@ -105,7 +105,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	
     	Horde::logMessage('SyncML: search GlobalUID for  ' . $mapID .' / '.$locid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	
-    	$db = clone($GLOBALS['phpgw']->db);
+    	$db = clone($GLOBALS['egw']->db);
     	
     	$cols = array('map_guid');
     	
@@ -136,7 +136,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	$mapID = $this->_locName . $this->_sourceURI . $type;
     	
-    	$db = clone($GLOBALS['phpgw']->db);
+    	$db = clone($GLOBALS['egw']->db);
     	
     	$cols = array('map_locuid');
     	
@@ -168,7 +168,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
 	$deviceID = $this->_locName . $this->_sourceURI;    	
 
-    	$db = clone($GLOBALS['phpgw']->db);
+    	$db = clone($GLOBALS['egw']->db);
     	
     	$cols = array('sync_serverts','sync_clientts');
     	
@@ -213,7 +213,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 
 		Horde::logMessage('SyncML: Authenticate ' . $this->_locName . ' - ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
                 
-		if($GLOBALS['sessionid'] = $GLOBALS['phpgw']->session->create($this->_locName,$this->_password,'text','u'))
+		if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text','u'))
 		{
 			$this->_isAuthorized = true;
 			Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
@@ -228,7 +228,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 	{
 		// store sessionID in a variable, because ->verify maybe resets that value
 		$sessionID = session_id();
-		if(!$GLOBALS['phpgw']->session->verify($sessionID, 'staticsyncmlkp3'))
+		if(!$GLOBALS['egw']->session->verify($sessionID, 'staticsyncmlkp3'))
 			Horde::logMessage('SyncML_EGW: egw session('.$sessionID.') not verified ' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	}
 
@@ -244,7 +244,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	$mapID = $this->_locName . $this->_sourceURI . $type;
     	
-    	$db = clone($GLOBALS['phpgw']->db);
+    	$db = clone($GLOBALS['egw']->db);
     	
     	$cols = array('map_guid');
     	
@@ -287,7 +287,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	$guidParts = explode('-',$guid);
     	if(count($guidParts) == 3)
     	{
-    		$guid = $GLOBALS['phpgw']->common->generate_uid($guidParts[0],$guidParts[1]);
+    		$guid = $GLOBALS['egw']->common->generate_uid($guidParts[0],$guidParts[1]);
     	}
     	
     	if($ts == 0)
@@ -297,7 +297,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	
 	Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ".count($guidParts), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-    	$db = clone($GLOBALS['phpgw']->db);
+    	$db = clone($GLOBALS['egw']->db);
     	
     	$mapID = $this->_locName . $this->_sourceURI . $type;
     	
@@ -349,7 +349,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
         	'dev_id'		=> $deviceID,
         );
         
-    	$GLOBALS['phpgw']->db->insert('egw_syncmldevinfo',$data,$where);
+    	$GLOBALS['egw']->db->insert('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__);
     }
 
     /**
@@ -383,7 +383,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
         		'sync_clientts' => $this->_clientAnchorNext[$type]
         	);
         	
-        	$GLOBALS['phpgw']->db->insert('egw_syncmlsummary', $data, $where, __LINE__, __FILE__);
+        	$GLOBALS['egw']->db->insert('egw_syncmlsummary', $data, $where, __LINE__, __FILE__);
         }
     }
 

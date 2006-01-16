@@ -5,6 +5,7 @@ include_once 'Horde/SyncML/Command.php';
 include_once 'Horde/SyncML/Command/Sync/SyncElement.php';
 include_once 'Horde/SyncML/Sync/TwoWaySync.php';
 include_once 'Horde/SyncML/Sync/SlowSync.php';
+include_once 'Horde/SyncML/Sync/OneWayFromServerSync.php';
 
 /**
  * $Horde: framework/SyncML/SyncML/Command/Sync.php,v 1.17 2004/07/03 15:21:14 chuck Exp $

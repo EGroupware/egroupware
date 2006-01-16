@@ -571,7 +571,10 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             		
             		$this->_output->startElement($state->getURI(), 'Meta', $attrs);
             		$this->_output->startElement($state->getURIMeta(), 'Type', $attrs);
-            		$this->_output->characters('application/vnd.syncml-devinf+xml');
+            		if(is_a($this->_output, 'XML_WBXML_Encoder'))
+                          $this->_output->characters('application/vnd.syncml-devinf+wbxml');
+                        else
+                          $this->_output->characters('application/vnd.syncml-devinf+xml');
             		$this->_output->endElement($state->getURIMeta(), 'Type');
             		$this->_output->endElement($state->getURI(), 'Meta');
             		
