@@ -456,7 +456,10 @@
 			}
 			if ($touch_modified || !$values['info_datemodified'])
 			{
-				$check_modified = $values['info_datemodified'] ? $values['info_datemodified']-$this->tz_offset_s : false;
+				// Should only an entry be updated which includes the original modification date?
+				// Used in the web-GUI to check against a modification by an other user while editing the entry.
+				// It's now disabled for xmlrpc, as otherwise the xmlrpc code need to be changed!
+				$check_modified = $values['info_datemodified'] && !$this->xmlrpc ? $values['info_datemodified']-$this->tz_offset_s : false;
 				$values['info_datemodified'] = $this->user_time_now;
 			}
 			if ($touch_modified || !$values['info_modifier'])
@@ -793,6 +796,14 @@
 				{
 					unset($data[$name]);
 					$data[substr($name,5)] = $val;
+				}
+			}
+			// unsetting everything which could result in an typeless <value />
+			foreach($data as $key => $value)
+			{
+				if (is_null($value) || is_array($value) && !$value)
+				{
+					unset($data[$key]);
 				}
 			}
 			return $data;
