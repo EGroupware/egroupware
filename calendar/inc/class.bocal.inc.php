@@ -970,7 +970,8 @@ class bocal
 					$date['month'] = (int) substr($date['full'],4,2);
 					$date['day']   = (int) substr($date['full'],6,2);
 				}
-				$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],(int)$date['day'],(int)$date['year']);
+				$date = adodb_mktime((int)$date['hour'],(int)$date['minute'],(int)$date['second'],(int)$date['month'],
+					(int) (isset($date['day']) ? $date['day'] : $date['mday']),(int)$date['year']);
 				break;
 			case 'integer':		// already a timestamp
 				break;
