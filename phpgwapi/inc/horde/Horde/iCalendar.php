@@ -1109,6 +1109,8 @@ class Horde_iCalendar {
 
     /**
      * Return the folded version of a line.
+	 * JVL rewritten to fold on any ; or: or = if present before column 75
+	 * this is still rfc2445 section 4.1 compliant
      */
     function _foldLine($line)
     {
@@ -1116,14 +1118,20 @@ class Horde_iCalendar {
         if (strlen($line) > 75) {
             $foldedline = '';
             while (!empty($line)) {
-                $maxLine = substr($line, 0, 75);
-                $cutPoint = max(60, max(strrpos($maxLine, ';'), strrpos($maxLine, ':')) + 1);
-
-                $foldedline .= (empty($foldedline)) ?
-                    substr($line, 0, $cutPoint) :
-                    $this->_newline . ' ' . substr($line, 0, $cutPoint);
-
-                $line = (strlen($line) <= $cutPoint) ? '' : substr($line, $cutPoint);
+			  $maxLine = substr($line, 0, 75);
+			  $cutPoint = 1+max(is_numeric($p1 = strrpos($maxLine,';')) ? $p1 : -1,
+								is_numeric($p1 = strrpos($maxLine,':')) ? $p1 : -1,
+								is_numeric($p1 = strrpos($maxLine,'=')) ? $p1 : -1);
+			  if ($cutPoint <  1)  // nothing found, then fold complete maxLine
+				$cutPoint = 75;
+			  // now fold [0..(cutPoint-1)]
+			  $foldedline .= (empty($foldedline))
+				?   substr($line, 0, $cutPoint)
+				:  $this->_newline . ' ' . substr($line, 0, $cutPoint);
+			  
+			  $line = (strlen($line) <= $cutPoint)
+				? ''
+				: substr($line, $cutPoint);
             }
             return $foldedline;
         }
