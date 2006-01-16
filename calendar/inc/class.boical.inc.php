@@ -500,6 +500,15 @@
 								break;
 						}
 					}
+					if(isset($vcardData['recur_enddate']))
+					{
+						// reset recure_enddate to 00:00:00 on the last day
+						$vcardData['recur_enddate'] = mktime(0, 0, 0, 
+							date('m',$vcardData['recur_enddate']),
+							date('d',$vcardData['recur_enddate']),
+							date('Y',$vcardData['recur_enddate'])
+						);
+					}
 					//echo "event=";_debug_array($vcardData);
 					
 					// now that we know what the vard provides, we merge that data with the information we have about the device
