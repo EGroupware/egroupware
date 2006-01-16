@@ -28,27 +28,14 @@
 		* @param int	$_vcardProfile	profile id for mapping from vcard values to egw addressbook
 		* @desc import a vard into addressbook
 		*/
-		function addVCard($_vcard, $_abID, $_vcardProfile)
+		function addVCard($_vcard, $_abID)
 		{
-			$vcardFields[0] = array(
-				'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-								'adr_one_postalcode','adr_one_countryname'),
-				'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-								'adr_two_postalcode','adr_two_countryname'),
-				'BDAY'		=> array('bday'),
-				'CATEGORIES'	=> array('cat_id'),
-				'EMAIL;INTERNET;WORK'		=> array('email'),
-				'EMAIL;INTERNET;HOME'		=> array('email_home'),
-				'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-				'NOTE'		=> array('note'),
-				'ORG'		=> array('org_name','org_uint'),
-				'TEL;CELL;WORK'	=> array('tel_cell'),
-				'TEL;FAX;WORK'	=> array('tel_fax'),
-				'TEL;HOME'	=> array('tel_home'),
-				'TEL;PAGER;WORK'	=> array('tel_pager'),
-				'TEL;WORK'	=> array('tel_work'),
-				'TITLE'		=> array('title'),
-				'URL;WORK'	=> array('url'),
+			if(!is_array($this->supportedFields))
+			{
+				$this->setSupportedFields();
+			}
+
+			$this->supportedFields[0] = array(
 			);
 
 			require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
@@ -99,7 +86,7 @@
 				$rowNames[$rowName] = $key;
 			}
 
-			#_debug_array($rowNames);
+			error_log('rowNames: '.print_r($rowNames,true));
 
 			// now we have all rowNames the vcard provides
 			// we just need to map to the right addressbook fieldnames
@@ -115,9 +102,9 @@
 					case 'TEL;FAX':
 					case 'TEL;CELL':
 					case 'TEL;PAGER':
-						if(!isset($rowNames[$rowName.';WORK']))
+						if(!isset($rowNames[$rowName. ';WORK']))
 						{
-							$finalRowNames[$rowName.';WORK'] = $vcardKey;
+							$finalRowNames[$rowName. ';WORK'] = $vcardKey;
 						}
 						break;
 					case 'EMAIL':
@@ -133,6 +120,31 @@
 							$finalRowNames['EMAIL;INTERNET;HOME'] = $vcardKey;
 						}
 						break;
+
+					case 'CATEGORIESS':
+						#cat_id = 7,8
+						$vcardData['category'] = array();
+						if ($attributes['value'])
+						{
+							if (!is_object($this->cat))
+							{
+								if (!is_object($GLOBALS['egw']->categories))
+								{
+									$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$this->owner,'calendar');
+								}
+								$this->cat =& $GLOBALS['egw']->categories;
+							}
+							foreach(explode(',',$attributes['value']) as $cat_name)
+							{
+								if (!($cat_id = $this->cat->name2id($cat_name)))
+								{
+									$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
+								}
+								$vcardData['category'][] = $cat_id;
+							}
+						}
+						break;	
+
 					case 'VERSION':
 						break;
 					default:
@@ -142,23 +154,56 @@
 			}
 
 			#_debug_array($finalRowNames);
+			error_log('finalRowNames: '.print_r($finalRowNames,true));
+			$contact = array();
 
 			foreach($finalRowNames as $key => $vcardKey)
 			{
-				if(isset($vcardFields[$_vcardProfile][$key]))
+				if(isset($this->supportedFields[$key]))
 				{
-					$fieldNames = $vcardFields[$_vcardProfile][$key];
+					$fieldNames = $this->supportedFields[$key];
 					foreach($fieldNames as $fieldKey => $fieldName)
 					{
 						if(!empty($fieldName))
 						{
-							$contact[$fieldName] = $vcardValues[$vcardKey]['values'][$fieldKey];
+							switch($fieldName)
+							{
+								case 'access':
+									if($vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE')
+									{
+										$contact[$fieldName] = 'private';
+									}
+									else
+									{
+										$contact[$fieldName] = 'public';
+									}
+									break;
+								case 'cat_id':
+									if (!is_object($this->cat))
+									{
+										if (!is_object($GLOBALS['egw']->categories))
+										{
+											$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'addressbook');
+										}
+										$this->cat =& $GLOBALS['egw']->categories;
+									}
+									foreach(explode(',',$vcardValues[$vcardKey]['values'][$fieldKey]) as $cat_name)
+									{
+										if (!($cat_id = $this->cat->name2id($cat_name)))
+										{
+											$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
+										}
+										$contact[$fieldName] = $cat_id;
+									}
+									break;
+								default:
+									$contact[$fieldName] = $vcardValues[$vcardKey]['values'][$fieldKey];
+									break;
+							}
 						}
 					}
 				}
 			}
-
-			#_debug_array($contact);
 
 			#return true;
 
@@ -205,6 +250,7 @@
 				$contact['tel_video'] = '';
 			}
 
+			error_log('contact: '.print_r($contact,true));
 			if($_abID > 0)
 			{
 				// update entry
@@ -225,80 +271,18 @@
 		* @param int	$_vcardProfile	profile id for mapping from vcard values to egw addressbook
 		* @return string containing the vcard
 		*/
-		function getVCard($_id, $_vcardProfile)
+		function getVCard($_id)
 		{
 			require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar/vcard.php');
 
 			$vCard =& new Horde_iCalendar_vcard;
 
-			#if($this->xmlrpc && !isset($data['fields']))
-			#{
-			#	$data['fields'] = array_keys(array_merge($this->so->contacts->non_contact_fields,$this->so->contacts->stock_contact_fields,$this->customfields()));
-			#}
-			#if($data['id'] < 0)
-			#{
-			#	$entry = array($this->user_pseudo_entry(-$data['id']));
-			#	if($this->xmlrpc)
-			#	{
-			#		$entry = $this->data2xmlrpc($entry);
-			#	}
-			#	return $entry;
-			#}
+			if(!is_array($this->supportedFields))
+			{
+				$this->setSupportedFields();
+			}
 
-			$vcardFields[0] = array(
-				'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-								'adr_one_postalcode','adr_one_countryname'),
-				'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-								'adr_two_postalcode','adr_two_countryname'),
-				'BDAY'		=> array('bday'),
-				'CATEGORIES'	=> array('cat_id'),
-				'EMAIL;INTERNET;WORK'		=> array('email'),
-				'EMAIL;INTERNET;HOME'		=> array('email_home'),
-				'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-				'NOTE'		=> array('note'),
-				'ORG'		=> array('org_name','org_uint'),
-				'TEL;CELL;WORK'	=> array('tel_cell'),
-				'TEL;FAX;WORK'	=> array('tel_fax'),
-				'TEL;HOME'	=> array('tel_home'),
-				'TEL;PAGER;WORK'	=> array('tel_pager'),
-				'TEL;WORK'	=> array('tel_work'),
-				'TITLE'		=> array('title'),
-				'URL;WORK'	=> array('url'),
-			);
-
-			$vcardFields[1] = array(
-				'ADR' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-								'adr_one_postalcode','adr_one_countryname'),
-				'CATEGORIES' 	=> array('cat_id'),
-				'EMAIL'		=> array('email'),
-				'N'		=> array('n_family','n_given','','',''),
-				'NOTE'		=> array('note'),
-				'ORG'		=> array('org_name',''),
-				'TEL;CELL'	=> array('tel_cell'),
-				'TEL;FAX'	=> array('tel_fax'),
-				'TEL;HOME'	=> array('tel_home'),
-				'TEL;WORK'	=> array('tel_work'),
-				'TITLE'		=> array('title'),
-			);
-
-			$vcardFields[2] = array(
-				'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
-				'TEL;CELL'	=> array('tel_cell'),
-#				'TEL;FAX'	=> array('tel_fax'),
-#				'TEL;HOME'	=> array('tel_home'),
-#				'TITLE'		=> array('title'),
-#				'ORG'		=> array('org_name',''),
-#				'NOTE'		=> array('note'),
-#				'TEL;PAGER;WORK'	=> array('tel_pager'),
-#				'TEL;WORK'	=> array('tel_work'),
-#				'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
-#								'adr_one_postalcode','adr_one_countryname'),
-#				'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
-#								'adr_two_postalcode','adr_two_countryname'),
-			);
-
-#			$_vcardProfile = 2;
-			foreach($vcardFields[$_vcardProfile] as $databaseFields)
+			foreach($this->supportedFields as $databaseFields)
 			{
 				foreach($databaseFields as $databaseField)
 				{
@@ -323,7 +307,7 @@
 				#_debug_array($entry);
 				$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
-				foreach($vcardFields[$_vcardProfile] as $vcardField => $databaseFields)
+				foreach($this->supportedFields as $vcardField => $databaseFields)
 				{
 					$options = array();
 					$value = '';
@@ -346,6 +330,9 @@
 						case 'CATEGORIES':
 							$catData = ExecMethod('phpgwapi.categories.return_single',$value);
 							$value = $catData[0]['name'];
+							break;
+						case 'CLASS':
+							$value = ($value == 'private' ? 'PRIVATE' : 'PUBLIC');
 							break;
 						case 'BDAY':
 							if(!empty($value))
@@ -374,17 +361,6 @@
 					$vCard->setParameter($vcardField, $options);
 				}
 
-#				$options = array('CHARSET' => 'UTF-8', 'ENCODING' => 'QUOTED-PRINTABLE');
-#				$vCard->setParameter('SUMMARY', $options);
-#				$vCard->setParameter('DESCRIPTION', $options);
-#				$vCard->setParameter('LOCATION', $options);
-#				$vCard->setParameter('ADR', $options);
-#				$vCard->setParameter('ADR;HOME', $options);
-#				$vCard->setParameter('ADR;WORK', $options);
-#				$vCard->setParameter('NOTE', $options);
-#				$vCard->setParameter('N', $options);
-#				$vCard->setParameter('ORG', $options);
-
 				$result = $vCard->exportvCalendar();
 
 				return $result;
@@ -395,5 +371,146 @@
 				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
 			}
 			return False;
+		}
+
+		function setSupportedFields($_productManufacturer='file', $_productName='')
+		{
+			$defaultFields[0] = array(
+				'ADR' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+								'adr_one_postalcode','adr_one_countryname'),
+				'CATEGORIES' 	=> array('cat_id'),
+				'CLASS'		=> array('access'),
+				'EMAIL'		=> array('email'),
+				'N'		=> array('n_family','n_given','','',''),
+				'NOTE'		=> array('note'),
+				'ORG'		=> array('org_name',''),
+				'TEL;CELL'	=> array('tel_cell'),
+				'TEL;FAX'	=> array('tel_fax'),
+				'TEL;HOME'	=> array('tel_home'),
+				'TEL;WORK'	=> array('tel_work'),
+				'TITLE'		=> array('title'),
+			);
+
+			$defaultFields[1] = array(
+				'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+								'adr_one_postalcode','adr_one_countryname'),
+				'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+								'adr_two_postalcode','adr_two_countryname'),
+				'BDAY'		=> array('bday'),
+				'CATEGORIES'	=> array('cat_id'),
+				'EMAIL;INTERNET;WORK' => array('email'),
+				'EMAIL;INTERNET;HOME' => array('email_home'),
+				'N'		=> array('n_family','n_given','n_middle','n_prefix','n_suffix'),
+				'NOTE'		=> array('note'),
+				'ORG'		=> array('org_name','org_unit'),
+				'TEL;CELL;WORK'	=> array('tel_cell'),
+				'TEL;FAX;WORK'	=> array('tel_fax'),
+				'TEL;HOME'	=> array('tel_home'),
+				'TEL;PAGER;WORK' => array('tel_pager'),
+				'TEL;WORK'	=> array('tel_work'),
+				'TITLE'		=> array('title'),
+				'URL;WORK'	=> array('url'),
+			);
+
+			$defaultFields[2] = array(
+				'ADR;HOME' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+								'adr_one_postalcode','adr_one_countryname'),
+				'BDAY'		=> array('bday'),
+				'CATEGORIES' 	=> array('cat_id'),
+				'CLASS'		=> array('access'),
+				'EMAIL'		=> array('email'),
+				'N'		=> array('n_family','n_given','','',''),
+				'NOTE'		=> array('note'),
+				'ORG'		=> array('org_name',''),
+				'TEL;CELL'	=> array('tel_cell'),
+				'TEL;FAX'	=> array('tel_fax'),
+				'TEL;HOME'	=> array('tel_home'),
+				'TEL;WORK'	=> array('tel_work'),
+				'TITLE'		=> array('title'),
+				'URL'		=> array('url'),
+			);
+
+			$defaultFields[3] = array(
+				'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+								'adr_one_postalcode','adr_one_countryname'),
+				'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+								'adr_two_postalcode','adr_two_countryname'),
+				'BDAY'		=> array('bday'),
+				'EMAIL;INTERNET;WORK' => array('email'),
+				'EMAIL;INTERNET;HOME' => array('email_home'),
+				'N'		=> array('n_family','n_given','','',''),
+				'NOTE'		=> array('note'),
+				'ORG'		=> array('org_name','org_unit'),
+				'TEL;CELL;WORK'	=> array('tel_cell'),
+				'TEL;FAX;WORK'	=> array('tel_fax'),
+				'TEL;HOME'	=> array('tel_home'),
+				'TEL;PAGER;WORK' => array('tel_pager'),
+				'TEL;WORK'	=> array('tel_work'),
+				'TITLE'		=> array('title'),
+				'URL;WORK'	=> array('url'),
+			);
+
+			switch(strtolower($_productManufacturer))
+			{
+				case 'nexthaus corporation':
+					switch(strtolower($_productName))
+					{
+						case 'syncje outlook edition':
+						default:
+							$this->supportedFields = $defaultFields[1];
+							break;
+					}
+					break;
+
+				// multisync does not provide anymore information then the manufacturer
+				// we suppose multisync with evolution
+				case 'the multisync project':
+					switch(strtolower($_productName))
+					{
+						default:
+							$this->supportedFields = $defaultFields[0];
+							break;
+					}
+					break;
+
+				case 'siemens':
+					switch(strtolower($_productName))
+					{
+						case 'sx1':
+						default:
+							$this->supportedFields = $defaultFields[3];
+							break;
+					}
+					break;
+					
+				case 'sonyericsson':
+					switch(strtolower($_productName))
+					{
+						case 'd750i':
+						default:
+							$this->supportedFields = $defaultFields[2];
+							break;
+					}
+					break;
+					
+				case 'synthesis ag':
+					switch(strtolower($_productName))
+					{
+						default:
+							$this->supportedFields = $defaultFields[0];
+							break;
+					}
+					break;
+					
+				case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
+					$this->supportedFields = $defaultFields[1];
+					break;
+
+				// the fallback for SyncML
+				default:
+					error_log("Client not found: $_productManufacturer $_productName");
+					$this->supportedFields = $defaultFields[0];
+					break;
+			}
 		}
 	}
