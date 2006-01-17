@@ -102,7 +102,6 @@ class ui_resources
 		$content['nm']['no_filter'] 	= False;
 		$content['nm']['filter_label']	= 'Category';
 		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
-		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
 		$content['nm']['no_filter2']	= true;
 		$content['nm']['filter_no_lang'] = true;
 		$content['nm']['no_cat']	= true;
@@ -115,6 +114,7 @@ class ui_resources
 		{
 			$content['nm'] = $nm_session_data;
 		}
+		$content['nm']['options-filter']= array(''=>lang('all categories'))+(array)$this->bo->acl->get_cats(EGW_ACL_READ);
 		
 		// check if user is permitted to add resources
 		if(!$this->bo->acl->get_cats(EGW_ACL_ADD))

@@ -59,7 +59,7 @@ class bo_acl
 				}
 			}
 			$this->save_sessiondata();
-			$this->cats = $this->egw_cats->return_sorted_array(0,False);
+			$this->cats = $this->egw_cats->return_sorted_array(0,false,'','','',true);
 		}
 	}
 
@@ -73,7 +73,7 @@ class bo_acl
 	*/
 	function get_cats($perm_type)
 	{
-		$cats = $this->egw_cats->return_sorted_array(0,true,'','','',true);
+		$cats = $this->egw_cats->return_sorted_array(0,false,'','','',true);
 		while (list(,$cat) = @each($cats))
 		{
 			if($this->is_permitted($cat['id'],$perm_type))
