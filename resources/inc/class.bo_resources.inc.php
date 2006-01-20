@@ -75,7 +75,7 @@ class bo_resources
 		if($query['show_bookable'])
 		{
 			// This is somehow ugly, i know...
-			foreach($rows as $num => $resource)
+			foreach((array)$rows as $num => $resource)
 			{
 				$rows[$num]['default_qty'] = 1;
 			}
