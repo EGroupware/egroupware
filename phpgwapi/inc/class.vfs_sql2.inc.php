@@ -5,6 +5,7 @@
   *		Jason Wies (Zone) <zone@phpgroupware.org>                            *
   * This class handles file/dir access for eGroupWare                        *
   * Copyright (C) 2001 Jason Wies, (C) 2004 Vinicius Cubas Brand             *
+  *   and (c) 2006 Benjamin Donnachie					     *
   * -------------------------------------------------------------------------*
   * This library is part of the eGroupWare API                               *
   * http://www.egroupware.org/api                                            * 
@@ -38,6 +39,9 @@
 	#  to handle the versioning system. 
 
 	#upd viniciuscb 2005-03-11 Deleted some garbage
+
+	#upd Benjamin Donnachie <benjamin@pythagoras.no-ip.org> 2006-01-09
+	#  Fixed function in_docroot so that it works with asyncservices
 
 	/**
 	 * Class: vfs
@@ -195,7 +199,7 @@
 			{
 				$len = strlen($docroot);
 
-				if ($docroot == substr($path,0,$len))
+				if ($docroot != "" && $docroot == substr($path,0,$len))
 				{
 					$rest = substr($path,$len);
 
