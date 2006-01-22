@@ -799,7 +799,11 @@ class Horde_iCalendar {
                     . $this->_quotedPrintableEncode($value)
                     . $this->_newline;
             } else {
-                $attr_string = "$name$params_str:$value";
+# JVL: prevent : for empty values
+#                $attr_string = "$name$params_str:$value";  
+                $attr_string = "$name$params_str";
+		$attr_string .= (!empty($value)) ? ":$value" : ';';
+
                 $result .= $this->_foldLine($attr_string) . $this->_newline;
             }
         }
@@ -1120,8 +1124,8 @@ class Horde_iCalendar {
             while (!empty($line)) {
 			  $maxLine = substr($line, 0, 75);
 			  $cutPoint = 1+max(is_numeric($p1 = strrpos($maxLine,';')) ? $p1 : -1,
-								is_numeric($p1 = strrpos($maxLine,':')) ? $p1 : -1,
-								is_numeric($p1 = strrpos($maxLine,'=')) ? $p1 : -1);
+					    is_numeric($p1 = strrpos($maxLine,':')) ? $p1 : -1,
+					    is_numeric($p1 = strrpos($maxLine,'=')) ? $p1 : -1);
 			  if ($cutPoint <  1)  // nothing found, then fold complete maxLine
 				$cutPoint = 75;
 			  // now fold [0..(cutPoint-1)]
@@ -1132,6 +1136,12 @@ class Horde_iCalendar {
 			  $line = (strlen($line) <= $cutPoint)
 				? ''
 				: substr($line, $cutPoint);
+	     
+			  if (strlen($line) < 75) {
+				$foldedline .=  $this->_newline . ' ' . $line;
+				$line = '';
+			  }
+
             }
             return $foldedline;
         }

@@ -180,7 +180,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         }
 
         $this->_attributeDTD = $this->_tagDTD;
-print "starting at: ".$this->_strpos."\n";
+
         while (empty($this->_error) && $this->_strpos < strlen($wbxml)) {
             $this->_decode($wbxml);
         }
