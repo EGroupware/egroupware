@@ -1,6 +1,6 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.2RC5
+%define version 1.2RC6
 %define packaging 1
 %define epoch 0
 %define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
@@ -623,6 +623,13 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
+* Sat Jan 22 2006 Lars Kneschke <lars@kneschke.de> 1.2RC6-1
+- fixed calendar bugs
+- fixed async service problems
+- fixed mysql index length
+- implemented WBXML decoder/encoder in php(based in Horde code)
+- added php based nt/lanmanager password creation code
+
 * Thu Dec 15 2005 Ralf Becker <RalfBecker@outdoor-training.de> 1.2RC5-1
 - creation of new groups in LDAP working again
 - no more negative id's in the account-table (auto column) itself, 
