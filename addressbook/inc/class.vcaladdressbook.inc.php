@@ -154,7 +154,6 @@
 			}
 
 			#_debug_array($finalRowNames);
-			error_log('finalRowNames: '.print_r($finalRowNames,true));
 			$contact = array();
 
 			foreach($finalRowNames as $key => $vcardKey)
@@ -250,7 +249,6 @@
 				$contact['tel_video'] = '';
 			}
 
-			error_log('contact: '.print_r($contact,true));
 			if($_abID > 0)
 			{
 				// update entry
