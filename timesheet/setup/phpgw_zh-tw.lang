@@ -9,7 +9,8 @@ edit this entry	timesheet	zh-tw	編輯這筆資料
 empty if identical to duration	timesheet	zh-tw	如果期間相同就保持空白
 entry deleted	timesheet	zh-tw	資料刪除了
 entry saved	timesheet	zh-tw	資料儲存了
-error saving the entry!!!	timesheet	zh-tw	資料儲存時發生錯誤
+error deleting the entry!!!	timesheet	zh-tw	資料刪除時發生錯誤！
+error saving the entry!!!	timesheet	zh-tw	資料儲存時發生錯誤！
 existing links	timesheet	zh-tw	已經存在的連結
 general	timesheet	zh-tw	一般
 last modified	timesheet	zh-tw	最後更新
