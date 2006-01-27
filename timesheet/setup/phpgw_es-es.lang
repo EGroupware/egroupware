@@ -9,6 +9,7 @@ edit this entry	timesheet	es-es	Editar esta entrada
 empty if identical to duration	timesheet	es-es	Vacío si es idéntico a la duración
 entry deleted	timesheet	es-es	Se ha borrado la entrada
 entry saved	timesheet	es-es	Se ha guardado la entrada
+error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
 error saving the entry!!!	timesheet	es-es	¡Se ha producido un error al guardar la entrada!
 existing links	timesheet	es-es	Enlaces existentes
 general	timesheet	es-es	General
