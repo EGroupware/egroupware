@@ -93,7 +93,8 @@
 			else
 			{
 				$payload = "<?xml version=\"1.0\"?>\n" . $this->serializeDebug() . $r->serialize();
-				Header("Content-type: text/xml\r\nContent-length: " . strlen($payload));
+				header("Content-type: text/xml");
+				header("Content-length: " . strlen($payload));
 				echo $GLOBALS['egw']->translation->convert($payload,$GLOBALS['egw']->translation->charset(),'utf-8');
 			}
 
