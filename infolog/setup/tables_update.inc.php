@@ -467,4 +467,21 @@
 		$GLOBALS['setup_info']['infolog']['currentver'] = '1.2';
 		return $GLOBALS['setup_info']['infolog']['currentver'];
 	}
+
+
+	$test[] = '1.2';
+	function infolog_upgrade1_2()
+	{
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','pl_id',array(
+			'type' => 'int',
+			'precision' => '4'
+		));
+
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_price',array(
+			'type' => 'float',
+			'precision' => '8'
+		));
+
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.001';
+	}
 ?>

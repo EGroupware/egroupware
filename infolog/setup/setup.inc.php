@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['infolog']['name']      = 'infolog';
-	$setup_info['infolog']['version']   = '1.2';
+	$setup_info['infolog']['version']   = '1.2.001';
 	$setup_info['infolog']['app_order'] = 5;
 	$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 	$setup_info['infolog']['enable']    = 1;
@@ -60,6 +60,7 @@
 	$setup_info['infolog']['hooks']['calendar_include_todos']  = 'infolog.boinfolog.cal_to_include';
 	$setup_info['infolog']['hooks']['sidebox_menu'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
 	$setup_info['infolog']['hooks']['search_link'] = 'infolog.infolog_link_registry.search_link';
+	$setup_info['infolog']['hooks']['pm_custom_app_icons'] = 'infolog.boinfolog.pm_icons';
 
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
@@ -70,3 +71,5 @@
 		'appname' => 'etemplate',
 		'versions' => Array('1.0.0','1.0.1','1.2')
 	);
+
+

@@ -283,6 +283,22 @@
 		}
 		
 		/**
+		 * Read the status of the given infolog-ids
+		 *
+		 * @param array $ids array with id's
+		 * @return array with id => status pairs
+		 */
+		function get_status($ids)
+		{
+			$this->db->select($this->info_table,'info_id,info_status',array('info_id'=>$ids),__LINE__,__FILE__);
+			while ($this->db->next_record())
+			{
+				$stati[$this->db->f(0)] = $this->db->f(1);
+			}
+			return $stati;
+		}	
+
+		/**
 		 * delete InfoLog entry $info_id AND the links to it
 		 *
 		 * @param int $info_id id of log-entry

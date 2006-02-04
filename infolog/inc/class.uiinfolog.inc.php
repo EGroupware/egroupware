@@ -37,6 +37,14 @@
 		);
 		var $icons;
 		var $prefs;
+		/**
+		 * @var boinfolog-object $bo
+		 */
+		var $bo;
+		/**
+		 * @var bolink-object $link reference to instance of the link-class of bo
+		 */
+		var $link;
 
 		function uiinfolog( )
 		{
@@ -453,7 +461,7 @@
 
 			$this->tmpl->exec('infolog.uiinfolog.delete',$values,'',$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
 		}
-
+		
 		/**
 		 * Edit/Create an InfoLog Entry
 		 *
@@ -465,6 +473,8 @@
 		 */
 		function edit($content = null,$action = '',$action_id=0,$type='',$referer='')
 		{
+			$tabs = 'description|links|delegation|project|customfields';
+
 			if (is_array($content))
 			{
 				//echo "uiinfolog::edit: content="; _debug_array($content);
@@ -496,7 +506,6 @@
 					{
 						if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
 						{
-							$first_link_to = $content['link_to']['to_id'];
 							if (strstr($content['info_link_id'],':') !== False)
 							{
 								$info_link_id = $content['info_link_id'];
@@ -522,14 +531,39 @@
 							$content['msg'] = lang('InfoLog entry saved');
 							$content['js'] = "opener.location.href='".($link=$GLOBALS['egw']->link($referer,array('msg' => $content['msg'])))."';";
 						}
-						if ($info_id && $first_link_to)	// writing links for a new entry
+						if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
 						{
-							$this->link->link('infolog',$info_id,$first_link_to);
-
-							if ($info_link_id)
+							//echo "<p>pm_id changed: $content[old_pm_id] -> $content[pm_id]</p>\n";
+							// update links accordingly, if selected project changed
+							if ($content['pm_id'])
 							{
-								list($app,$id) = explode(':',$info_link_id);
-								$link = $this->link->get_link('infolog',$info_id,$app,$id);
+								//echo "<p>this->link->link('infolog',{$content['link_to']['to_id']},'projectmanager',{$content['pm_id']});</p>";
+								$this->link->link('infolog',$content['link_to']['to_id'],'projectmanager',$content['pm_id']);
+								// making the project the selected link, if no other link selected
+								if (!$info_link_id || $info_link_id == 'projectmanager:'.$content['old_pm_id'])
+								{
+									$info_link_id = 'projectmanager:'.$content['pm_id'];
+								}
+							}
+							if ($content['old_pm_id'])
+							{
+								//echo "<p>this->link->unlink2(0,infolog,{$content['link_to']['to_id']},0,'projectmanager',{$content['old_pm_id']});</p>\n";
+								$this->link->unlink2(0,infolog,$content['link_to']['to_id'],0,'projectmanager',$content['old_pm_id']);
+								$content['old_pm_id'] = $content['pm_id'];
+							}
+						}
+						// writing links for a new entry
+						if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))	
+						{
+							$this->link->link('infolog',$info_id,$content['link_to']['to_id']);
+							$content['link_to']['to_id'] = $info_id;
+						}
+						if (strstr($info_link_id,':') !== false)	// updating info_link_id if necessary
+						{
+							list($app,$id) = explode(':',$info_link_id);
+							$link = $this->link->get_link('infolog',$info_id,$app,$id);
+							if ((int) $content['info_link_id'] != (int) $link['link_id'])
+							{
 								$content['info_link_id'] = $link['link_id'];
 
 								$to_write = array(
@@ -539,6 +573,8 @@
 									'info_owner'   => $content['info_owner'],
 								);
 								$this->bo->write($to_write,False);
+								// we need eg. the new modification date, for further updates
+								$content = array_merge($content,$to_write);
 							}
 						}
 					}
@@ -669,7 +705,7 @@
 				switch ($action)
 				{
 					case 'sp':
-						$links = $this->bo->link->get_links('infolog',$parent['info_id'],'!'.$this->bo->link->vfs_appname);
+						$links = $this->link->get_links('infolog',$parent['info_id'],'!'.$this->link->vfs_appname);
 						foreach($links as $link)
 						{
 							$link_id = $this->link->link('infolog',$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
@@ -681,6 +717,8 @@
 						}
 						break;
 
+					case 'projectmanager':
+						$pm_links = array($action_id);
 					case 'addressbook':
 					case 'projects':
 					case 'calendar':
@@ -691,6 +729,10 @@
 					case '':
 						if ($info_id)
 						{
+							if (!isset($pm_links))
+							{
+								$pm_links = $this->link->get_links('infolog',$info_id,'projectmanager');
+							}
 							break;	// normal edit
 						}
 					case 'new':		// new entry
@@ -704,14 +746,14 @@
 						$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 						break;
 				}
-				// we allways need to set a non-empty/-zero primary, to make the radiobutton appear
-				$content['link_to']['primary'] = $content['info_link_id'] ? $content['info_link_id'] : '#';
-
 				if (!isset($this->bo->enums['type'][$content['info_type']]))
 				{
 					$content['info_type'] = 'note';
 				}
 			}
+			// we allways need to set a non-empty/-zero primary, to make the radiobutton appear
+			$content['link_to']['primary'] = $content['info_link_id'] ? $content['info_link_id'] : '#';
+
 			if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
 			{
 				$content['info_anz_subs'] = $this->bo->anzSubs($info_id);	// to determine js confirmation of delete or not
@@ -726,8 +768,15 @@
 			}
 			else
 			{
-				$readonlys['description|links|delegation|customfields'] = array('customfields' => true);
+				$readonlys[$tabs] = array('customfields' => true);
 			}
+			if (!isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
+			{
+				$readonlys[$tabs]['project'] = true;	// disable the project tab
+			}
+			$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
+			if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
+
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 				($content['status_only'] ? lang('Edit Status') : lang('Edit'));
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
@@ -748,7 +797,14 @@
 				'action_id'     => $action_id,
 				'referer'       => $referer,
 				'no_popup'      => $no_popup,
-				'link_to'       => array('to_id' => $content['link_to']['to_id'])	// in case tab gets not viewed
+				'link_to'       => array('to_id' => $content['link_to']['to_id']),	// in case tab gets not viewed
+				'blur_title'    => $content['blur_title'],
+				'old_pm_id'     => $old_pm_id,
+				// preserv project fields, in case project tab is disabled, but user has rights to edit the entry
+				'pl_id'         => $content['pl_id'],
+				'info_price'    => $content['info_price'],
+				'info_used_time' => $content['info_used_time'],
+				'info_planned_time' => $content['info_planned_time'],
 			),$no_popup ? 0 : 2);
 		}
 
@@ -786,7 +842,7 @@
 
 			if(get_var('save',Array('POST')))
 			{
-				$this->bo->link_pathes = $this->bo->send_file_ips = array();
+				$this->link_pathes = $this->bo->send_file_ips = array();
 
 				$valid = get_var('valid',Array('POST'));
 				$trans = get_var('trans',Array('POST'));
@@ -795,12 +851,12 @@
 				{
 					if($val = stripslashes($val))
 					{
-						$this->bo->link_pathes[$val]   = stripslashes($trans[$key]);
+						$this->link_pathes[$val]   = stripslashes($trans[$key]);
 						$this->bo->send_file_ips[$val] = stripslashes($ip[$key]);
 					}
 				}
 				$this->bo->config->config_data = array(
-					'link_pathes' => $this->bo->link_pathes,
+					'link_pathes' => $this->link_pathes,
 					'send_file_ips' => $this->bo->send_file_ips
 				);
 				$this->bo->config->save_repository(True);
@@ -826,11 +882,11 @@
 
 			if (!is_array($this->bo->send_file_ips))
 			{
-				$this->bo->send_file_ips = $this->bo->link_pathes = array();
+				$this->bo->send_file_ips = $this->link_pathes = array();
 			}
-			$i = 0; @reset($this->bo->link_pathes);
+			$i = 0; @reset($this->link_pathes);
 			do {
-				list($valid,$trans) = @each($this->bo->link_pathes);
+				list($valid,$trans) = @each($this->link_pathes);
 				$GLOBALS['egw']->template->set_var(array(
 					'tr_color'  => $i & 1 ? 'row_off' : 'row_on',
 					'num'       => $i+1,

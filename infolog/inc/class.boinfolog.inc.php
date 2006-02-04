@@ -450,7 +450,7 @@
 			{
 				$values['info_owner'] = $this->so->user;
 			}
-			if ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from']))
+			if ($info_from_set = ($values['info_link_id'] && isset($values['info_from']) && empty($values['info_from'])))
 			{
 				$values['info_from'] = $this->link_id2from($values);
 			}
@@ -500,6 +500,8 @@
 				// notify the link-class about the update, as other apps may be subscribt to it
 				$this->link->notify_update('infolog',$info_id,$values);
 			}
+			if ($info_from_set) $values['info_from'] = '';
+
 			return $info_id;
 		}
 
@@ -851,5 +853,27 @@
 		function categories($complete = False)
 		{
 			return $this->xmlrpc ? $GLOBALS['server']->categories($complete) : False;
+		}
+		
+		/**
+		 * Returm InfoLog (custom) status icons for projectmanager
+		 *
+		 * @param array $args array with id's in $args['infolog']
+		 * @return array with id => icon pairs
+		 */
+		function pm_icons($args)
+		{
+			if (isset($args['infolog']) && count($args['infolog']))
+			{
+				$icons = $this->so->get_status($args['infolog']);
+				foreach((array) $icons as $id => $status)
+				{
+					if ($status && substr($status,-1) != '%')
+					{
+						$icons[$id] = 'infolog/'.$status;
+					}
+				}
+			}
+			return $icons;
 		}
 	}

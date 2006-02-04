@@ -185,9 +185,11 @@ phone/email	infolog	en	Phone/Email
 phonecall	infolog	en	Phone Call
 planned	infolog	en	planned
 planned time	infolog	en	planned time
+price	infolog	en	Price
 priority	infolog	en	Priority
 private	infolog	en	Private
 project	infolog	en	Project
+project settings: price, times	infolog	en	Project settings: price, times
 re:	infolog	en	Re:
 read one record by passing its id.	infolog	en	Read one record by passing its id.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
@@ -197,7 +199,7 @@ responsible	infolog	en	responsible
 responsible open	infolog	en	responsible open
 responsible overdue	infolog	en	responsible overdue
 responsible upcoming	infolog	en	responsible upcoming
-responsible user, priority, times	infolog	en	responsible user, priority, times
+responsible user, priority	infolog	en	responsible user, priority
 returns a list / search for records.	infolog	en	Returns a list / search for records.
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	saves the changes made and leaves
@@ -206,7 +208,9 @@ search	infolog	en	Search
 search for:	infolog	en	Search for:
 select	infolog	en	Select
 select a category for this entry	infolog	en	select a category for this entry
+select a price	infolog	en	Select a price
 select a priority for this task	infolog	en	select a priority for this task
+select a project	infolog	en	Select a project
 select a responsible user: a person you want to delegate this task	infolog	en	select a responsible user: a person you want to delegate this task
 select a typ to edit it's status-values or delete it	infolog	en	select a type to edit it's status-values or delete it
 select an app to search in	infolog	en	Select an App to search in

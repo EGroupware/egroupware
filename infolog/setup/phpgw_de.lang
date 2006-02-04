@@ -185,9 +185,11 @@ phone/email	infolog	de	Telefon/Email
 phonecall	infolog	de	Telefonanruf
 planned	infolog	de	geplant
 planned time	infolog	de	geplante Zeit
+price	infolog	de	Preis
 priority	infolog	de	Priorität
 private	infolog	de	Privat
 project	infolog	de	Projekt
+project settings: price, times	infolog	de	Einstellungen zum Projekt: Preis, Zeiten
 re:	infolog	de	Re:
 read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id lesen.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
@@ -197,7 +199,7 @@ responsible	infolog	de	verantwortlich
 responsible open	infolog	de	verantwortlich offen
 responsible overdue	infolog	de	verantwortlich überfällig
 responsible upcoming	infolog	de	verantwortlich zufünftig
-responsible user, priority, times	infolog	de	Verantwortlicher, Priorität, Zeiten
+responsible user, priority	infolog	de	Verantwortlicher, Priorität
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
@@ -206,7 +208,9 @@ search	infolog	de	Suchen
 search for:	infolog	de	Suchen nach:
 select	infolog	de	Auswählen
 select a category for this entry	infolog	de	eine Kategorie für diesen Eintrag auswählen
+select a price	infolog	de	Preis auswählen
 select a priority for this task	infolog	de	eine Priorität für diesen Eintrag auswählen
+select a project	infolog	de	Projekt auswählen
 select a responsible user: a person you want to delegate this task	infolog	de	Verantwortlichen auswählen: Person(en) der Sie diese Aufgabe delegieren wollen
 select a typ to edit it's status-values or delete it	infolog	de	einen Type auswählen um seine Statuswerte zu ändern oder ihn zu löschen
 select an app to search in	infolog	de	eine Anwendung zum Durchsuchen auswählen

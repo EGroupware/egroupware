@@ -74,6 +74,12 @@ class datasource_infolog extends datasource
 			'pe_used_time'    => $data['info_used_time'],
 			'pe_resources'    => count($data['info_responsible']) ? $data['info_responsible'] : array($data['info_owner']),
 			'pe_details'      => $data['info_des'] ? nl2br($data['info_des']) : '',
+			'pl_id'           => $data['pl_id'],
+			'pe_unitprice'    => $data['info_price'],
+			'pe_planned_quantity' => $data['info_planned_time'] / 60,
+			'pe_planned_budget'   => $data['info_planned_time'] / 60 * $data['info_price'],
+			'pe_used_quantity'    => $data['info_used_time'] / 60,
+			'pe_used_budget'      => $data['info_used_time'] / 60 * $data['info_price'],
 		);
 	}
 	
