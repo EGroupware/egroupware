@@ -25,6 +25,8 @@ quantity	timesheet	de	Menge
 save & new	timesheet	de	Speichern & Neu
 saves the changes made	timesheet	de	Speichert die Änderungen
 saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fügt einen neuen hinzu
+select a price	timesheet	de	Preis auswählen
+select a project	timesheet	de	Projekt auswählen
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Diese Jahr
