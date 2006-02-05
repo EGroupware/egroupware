@@ -25,6 +25,8 @@ quantity	timesheet	es-es	Cantidad
 save & new	timesheet	es-es	Guardar y crear
 saves the changes made	timesheet	es-es	Guardar los cambios realizados
 saves this entry and add a new one	timesheet	es-es	Guarda esta entrada y añade una nueva
+select a price	timesheet	es-es	Seleccionar un precio
+select a project	timesheet	es-es	Seleccionar un proyecto
 this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana
 this year	timesheet	es-es	Este año

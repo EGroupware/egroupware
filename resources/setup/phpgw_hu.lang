@@ -1,0 +1,83 @@
+accessories of	resources	hu	kiegészítõi
+accessories:	resources	hu	Kiegészítõk:
+actions	resources	hu	Mûveletek
+add accessory	resources	hu	Kiegészítõ hozzáadása
+add resource	resources	hu	erõforrás hozzáadása
+add resources	resources	hu	Erõforrások hozzáadása
+administrator	resources	hu	Adminisztrátor
+all categories	resources	hu	összes kategória
+book	resources	hu	Könyv
+buy this article	resources	hu	Cikk megvásárlása
+buy this resource	resources	hu	Erõforrás megvásárlása
+buyable	resources	hu	Megvásárolható
+category:	resources	hu	Kategória
+check all	resources	hu	Összes ellenõrzése
+choose categories admin	resources	hu	kategóriaadminisztrátor kiválasztása
+clear selection	resources	hu	kijelölés eltávolítása
+configure access permissions	resources	hu	Hozzáférési jogosultságok beállítása
+create new accessory for this resource	resources	hu	Új kiegészítõ hozzáadása
+create new links	resources	hu	Új linkek létrehozása
+delete selected resources	resources	hu	kiválasztott erõforrás törlése
+delete this entry	resources	hu	Bejegyzés törlése
+description (short)	resources	hu	Leírás (rövid)
+don't use vfs (this will need a symlink --> see readme)	resources	hu	Ne haszálja a vfs-t (a mûködéshez egy symlink hozzáadása szükséges, lásd. a README-t)
+edit this entry	resources	hu	Bejegyzés szerkesztése
+existing links	resources	hu	Meglévõ linkek
+general	resources	hu	Általános
+general informations about resource	resources	hu	Általános információk az erõforrásról
+gernal resource	resources	hu	általános erõforrás
+how many of them are useable?	resources	hu	Mennyi közülük a használható
+how many of this resource are usable	resources	hu	Mennyi használható ebbõl az erõforrásból
+how many of this resource exists	resources	hu	Mennyi van ebbõl az erõforrásból
+information about storage	resources	hu	Információ a tárolóeszközrõl
+inventory number	resources	hu	Leltári szám
+inventory number:	resources	hu	Leltári szám:
+is resource buyable?	resources	hu	Ez az erõforrás megvásárolható?
+is this resource buyable?	resources	hu	Megvásárolható ez az erõforrás?
+links	resources	hu	Linkek
+location	resources	hu	Hely
+location of resource	resources	hu	Az erõforrás helye
+location:	resources	hu	Hely:
+name of resource	resources	hu	Az erõforrás neve
+name:	resources	hu	Név:
+no description available	resources	hu	nincs elérhetõ leírás
+no resources selected	resources	hu	Nem lett erõforrás kiválasztva
+notify your administrator to correct this situation	resources	hu	Adminisztrátor értesítése a kijavítandó hibáról
+picture	resources	hu	Kép
+picture source	resources	hu	kép forrása
+picture type is not supported, sorry!	resources	hu	A kép típusa nem támogatott!
+pictures or resource	resources	hu	Képek vagy erõforrások
+quantity	resources	hu	Mennyiség
+quantity of resource	resources	hu	Erõforrás mennyisége:
+quantity:	resources	hu	Mennyiség:
+read calendar permissions	resources	hu	Naptár olvasási jogosultságai
+read permissions	resources	hu	Olvasási jogosultságok
+related links	resources	hu	Kapcsolódó linkek
+resources	common	hu	erõforrások
+resources list	resources	hu	erõforrások listája
+responsible:	resources	hu	Felelõs:
+saves entry and exits	resources	hu	Kilépés mentéssel
+select a category	resources	hu	Kategória kiválasztása
+select resource	resources	hu	erõforrás kiválasztása
+select resources	resources	hu	Erõforrások kiválasztása
+select/deselect all	resources	hu	összes kijelölése/visszajelölése
+short description	resources	hu	Rövid leírás
+short description of resource	resources	hu	Az erõforrás rövid leírása
+something went wrong by deleting resource	resources	hu	Hiba történt az erõforrás törlésekor
+something went wrong by saving resource	resources	hu	Hiba történt az erõforrás mentésekor
+storage inforation	resources	hu	Információ az adattárolóról
+storage information	resources	hu	Információ az adattárolóról
+storage information:	resources	hu	Információ az adattárolóról:
+use general resources icon	resources	hu	Használja az általános erõforrások ikonját
+use own picture	resources	hu	Saját kép használata
+use the category's icon	resources	hu	Használja a kategória ikonját
+view accessories for this resource	resources	hu	Az erõforrás kiegészítõi
+view this entry	resources	hu	Bejegyzés megtekintése
+web-page of resource	resources	hu	Az erõforrás weboldala
+web-site for this resource	resources	hu	Az erõforrás webhelye
+where to find this resource?	resources	hu	Hol található ez az erõforrás?
+which category does this resource belong to?	resources	hu	Melyik kategóriába tartozik ez az erõforrás?
+write permissions	resources	hu	Írási jogosultságok
+you are not permitted to edit this reource!	resources	hu	Nincs jogosultság az erõforrás szerkesztéséhez!
+you are not permitted to get information about this resource!	resources	hu	Nincs jogosultság az erõforrás adatainak megtekintéséhez!
+you chose more resources than available	resources	hu	Több erõforrás lett kiválasztva, mint amennyi elérhetõ

@@ -151,6 +151,7 @@ new name	infolog	es-es	nuevo nombre
 new search	infolog	es-es	Nueva búsqueda
 no - cancel	infolog	es-es	No - Cancelar
 no describtion, links or attachments	infolog	es-es	no hay descripción, enlaces o adjuntos
+no details	infolog	es-es	no hay detalles
 no entries found, try again ...	infolog	es-es	no se encontraron registros, inténtelo de nuevo ...
 no filter	infolog	es-es	sin filtro
 no links or attachments	infolog	es-es	sin enlaces o adjuntos
@@ -184,9 +185,11 @@ phone/email	infolog	es-es	Teléfono o correo electrónico
 phonecall	infolog	es-es	Llamada telefónica
 planned	infolog	es-es	prevista
 planned time	infolog	es-es	hora planificada
+price	infolog	es-es	Precio
 priority	infolog	es-es	Prioridad
 private	infolog	es-es	Privado
 project	infolog	es-es	Proyecto
+project settings: price, times	infolog	es-es	Configuración del proyecto: precio, tiempos
 re:	infolog	es-es	Re:
 read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
@@ -196,7 +199,7 @@ responsible	infolog	es-es	Responsable
 responsible open	infolog	es-es	responsable abierto
 responsible overdue	infolog	es-es	responsable vencido
 responsible upcoming	infolog	es-es	responsable por llegar
-responsible user, priority, times	infolog	es-es	usuario responsable, prioridad, horas
+responsible user, priority	infolog	es-es	usuario responsable, prioridad
 returns a list / search for records.	infolog	es-es	Devuelve una lista o busca registros
 save	infolog	es-es	Guardar
 saves the changes made and leaves	infolog	es-es	guardar los cambios realizados y salir
@@ -205,7 +208,9 @@ search	infolog	es-es	Buscar
 search for:	infolog	es-es	Buscar:
 select	infolog	es-es	Seleccionar
 select a category for this entry	infolog	es-es	seleccionar una categoría para esta entrada
+select a price	infolog	es-es	Seleccionar un precio
 select a priority for this task	infolog	es-es	seleccionar una prioridad para esta tarea
+select a project	infolog	es-es	Seleccionar un proyecto
 select a responsible user: a person you want to delegate this task	infolog	es-es	seleccionar un responsable: una persona en la que se quiere delegar la tarea
 select a typ to edit it's status-values or delete it	infolog	es-es	seleccionar un tipo para editar sus valores de estado o eliminarlo
 select an app to search in	infolog	es-es	Seleccionar una aplicación en la que buscar

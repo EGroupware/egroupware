@@ -1,59 +1,226 @@
 account active	admin	hu	Hozzáférés aktív
-active	admin	hu	Aktív
+account has been created	common	hu	Az azonosító létrehozva
+account has been deleted	common	hu	Az azonosító törölve
+account has been updated	common	hu	Az azonosító frissült
+account list	admin	hu	Azonosítók listája
+account permissions	admin	hu	Azonosító jogosultságai
+account preferences	admin	hu	Azonosító beállításai
+action	admin	hu	Mûvelet
+activate wysiwyg-editor	admin	hu	WYSIWYG-szerkesztõ engedélyezése
+add a category	admin	hu	kategória hozzáadása
+add a group	admin	hu	csoport hozzáadása
+add a subcategory	admin	hu	alkategória hozzáadása
+add a user	admin	hu	felhasználó hozzáadása
+add account	admin	hu	Azonosító hozzáadása
+add application	admin	hu	Alkalmazás hozzáadása
+add global category	admin	hu	Általános kategória hozzáadása
+add group	admin	hu	Csoport hozzáadása
 add new account	admin	hu	Hozzáférést hozzáad
 add new application	admin	hu	Alkalmazás hozzáadása
+add sub-category	admin	hu	Alkategória hozzáadása
+admin email	admin	hu	Admin email
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hu	Ezek az adminisztrátori emailcímek (vesszével elválasztva) lesznek értesítve a blokkolt IP-címekrõl és azonosítókról (üresen hagyva nem lesz értesítés)
+admin name	admin	hu	Adminisztrátor neve
+administration	admin	hu	Adminisztráció
+admins	admin	hu	Adminisztrátorok
+advanced options	admin	hu	További beállítások
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az azonosító blokkolt (alapértelmezésben 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 3)?
+aliases	admin	hu	Álnevek
 all records and account information will be lost!	admin	hu	Minden bejegyzés és információ törlésre kerül a hozzáférési joggal kapcsolatban!
+all users	admin	hu	Összes felhasználó
+allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket ehhez az alkalmazáshoz
+alternate email address	admin	hu	alternatív emailcím
 anonymous user	admin	hu	Név nélküli felhasználó
+anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor)
+appearance	admin	hu	Megjelenés
+application	admin	hu	Alkalmazás
 application name	admin	hu	Alkalmazás neve
 application title	admin	hu	Alkalmazás címe
 applications	admin	hu	Alkalmazások
-are you sure you want to delete this account ?	admin	hu	Biztosan törölni akarja ezt a hozzáférési jogot?
-are you sure you want to delete this application ?	admin	hu	Biztosan törölni akarja ezt az alkalmazást?
+applications list	admin	hu	Alkalmazások listája
+are you sure you want to delete the application %1 ?	admin	hu	Valóban törlésre kerüljön ez az alkalmazás: %1 ?
+are you sure you want to delete this account ?	admin	hu	Biztosan törölésre kerüljön ez az azonosító?
+are you sure you want to delete this application ?	admin	hu	Biztosan törölésre kerüljön ez az alkalmazás?
+are you sure you want to delete this category ?	common	hu	Biztosan törölésre kerüljön ez a kategória?
+are you sure you want to delete this global category ?	admin	hu	Biztosan törlésre kerüljön ez az általános kategória?
 are you sure you want to delete this group ?	admin	hu	Biztosan törölni akarja ezt a csoportot?
+are you sure you want to delete this server?	admin	hu	Biztosan törlésre kerüljön ez a szolgáltatás?
 are you sure you want to kill this session ?	admin	hu	Biztosan ki akarja tiltani ezt a hozzáférést?
+authentication / accounts	admin	hu	Azonosítás / Azonosítók
+bi-directional	admin	hu	kétirányú
+can change password	admin	hu	Megváltoztathatja a jelszavát
+categories list	admin	hu	Kategóriák listája
+category list	admin	hu	Kategórialista
+change config settings	admin	hu	Beállítások megváltoztatása
+color	admin	hu	Szín
+country selection	admin	hu	Ország kiválasztása
 create group	admin	hu	Csoport létrehozása
-disabled	admin	hu	Tiltott
+crontab only (recomended)	admin	hu	csak crontab (ajánlott)
+cyrus imap server	admin	hu	Cyrus IMAP-kiszolgáló
+data	admin	hu	Adat
+day	admin	hu	Nap
+day of week<br>(0-6, 0=sun)	admin	hu	A hét napja<br />(0-6, 0=Vasárnap)
+db backup and restore	admin	hu	Adatbázis mentés és helyreállítás
+default	admin	hu	Alapértelmezett
+default file system space per user	admin	hu	Az alapértelmezett fájlrendszerméret felhasználónként
+default file system space per user/group ?	admin	hu	Az alapértelmezett fájlrendszerméret felhasználónként ?
+deinstall crontab	admin	hu	Crontab törlése
+delete account	admin	hu	Azonosító törlése
+delete all records	admin	hu	Összes bejegyzés törlése
+delete application	admin	hu	Alkalmazás törlése
+delete category	admin	hu	Kategória törlése
+delete group	admin	hu	Csoport törlése
+delete the category	admin	hu	kategória törlése
+delete the group	admin	hu	csoport törlése
+delete this category	admin	hu	kategória törlése
+delete this group	admin	hu	csoport törlése
+delete this user	admin	hu	felhasználó törlése
+deny access to access log	admin	hu	A hozzáférési naplóhoz történõ hozzáférés letíltva
+deny access to applications	admin	hu	Az alkalmazásokhoz történõ hozzáférés letíltva
+deny access to error log	admin	hu	A hibanaplóhoz történõ hozzáférés letíltva
+deny access to global categories	admin	hu	Az általános kategóriákhoz történõ hozzáférés letíltva
+deny access to groups	admin	hu	A csoportokhoz történõ hozzáférés letíltva
+deny access to phpinfo	admin	hu	A phpinfo()-hoz történõ hozzáférés letíltva
+deny access to site configuration	admin	hu	A webhely beállításaihoz történõ hozzáférés letíltva
+deny access to user accounts	admin	hu	A felhasználói azonosítókhoz történõ hozzáférés letíltva
+description can not exceed 255 characters in length !	admin	hu	A leírás nem haladhatja meg a 255 karaktert!
+disable "auto completion" of the login form	admin	hu	Az automatikus kiegészítés tiltása a bejelentkezõképernyõn
+disable wysiwyg-editor	admin	hu	WYSIWYG-szerkesztõ kikapcsolása
+disabled (not recomended)	admin	hu	tiltott (nem ajánlott)
 display	admin	hu	Megjelenítés
+do not delete the category and return back to the list	admin	hu	A kategória törlése NÉLKÜL vissza a listázáshoz
+do you also want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes általános alkategória?
+do you want to delete all global subcategories ?	admin	hu	Biztosan törlésre kerüljön az összes alkategória?
+edit account	admin	hu	Azonosító szerkesztése
 edit application	admin	hu	Alkalmazás módosítása
+edit email settings	admin	hu	emailbeállítások szerkesztése
+edit global category	admin	hu	Általános kategória szerkesztése
+edit global category for %1	admin	hu	%1 általános kategória szerkesztése
 edit group	admin	hu	Csoport módosítása
-enabled	admin	hu	Engedélyezett
+edit table format	admin	hu	Táblázatos formátum szerkesztése
+edit this category	admin	hu	kategória szerkesztése
+edit this group	admin	hu	csoport szerkesztése
+edit this user	admin	hu	felhasználó szerkesztése
+edit user	admin	hu	felhasználó szerkesztése
+edit user account	admin	hu	Felhasználói azonosító szerkesztése
+email address	admin	hu	email cím
+enable debug-messages	admin	hu	Hibajelentõ üzenetek engedélyezése
+enable the soap service	admin	hu	SOAP-szolgáltatás engedélyezése
+enable the xmlrpc service	admin	hu	XML-RPC-szolgáltatás engedélyezése
 enabled - hidden from navbar	admin	hu	Engedélyezve - Navbar-ban rejtve
+enabled - popup window	admin	hu	Engedélyezve - felugró ablakok
+enter a description for the category	admin	hu	a kategória leírásának megadása
+enter the background color for the login page	admin	hu	A bejelentkezési oldal háttérszíne
+enter the background color for the site title	admin	hu	A webhely címének háttérszíne
+enter the title for your site	admin	hu	A webhely megnevezése
+enter the title of your logo	admin	hu	A logó címe
+enter your default ftp server	admin	hu	Az alapértelmezett FTP-kiszolgáló
+enter your http proxy server	admin	hu	A HTTP-proxy kiszolgáló
+enter your http proxy server port	admin	hu	A HTTP-proxy kiszolgáló portszáma
+enter your smtp server hostname or ip address	admin	hu	Az SMTP-kiszolgáló hosztneve vagy IP-címe
+enter your smtp server port	admin	hu	Az SMTP-kiszolgáló portszáma
+expires	admin	hu	Lejár
+forward only	admin	hu	csak továbbküldés
+global categories	common	hu	Általános kategóriák
+group has been added	common	hu	A csoport hozzáadása megtörtént
+group has been deleted	common	hu	A csoport törlése megtörtént
+group has been updated	common	hu	A csoport frissítése megtörtént
+group list	admin	hu	Csoportlista
+group manager	admin	hu	Csoportmenedzser
 group name	admin	hu	Csoport neve
+hour<br>(0-23)	admin	hu	Óra<br />(0-23)
+icon	admin	hu	Ikon
 idle	admin	hu	inaktív
+inbound	admin	hu	beérkezõ
+install crontab	admin	hu	Crontab telepítése
 installed applications	common	hu	Telepített alkalmazások
+installed crontab	admin	hu	Telepített crontab
+interface	admin	hu	Felület
 ip	admin	hu	IP
+jobs	admin	hu	Munkák
 kill	admin	hu	Kitiltás
-last time read	admin	hu	Utolsó olvasás idõpontja
 last %1 logins	admin	hu	Utolsó %1 bejelentkezés
+last login	admin	hu	utolsó bejelentkezés
+last login from	admin	hu	utolsó bejelentkezés címe
+last time read	admin	hu	Utolsó olvasás idõpontja
+ldap host	admin	hu	LDAP hoszt
+ldap rootdn	admin	hu	LDAP rootdn
 list of current users	admin	hu	aktuális felhasználók listája
 login time	admin	hu	Belépés ideje
 loginid	admin	hu	LoginID
 manager	admin	hu	Manager
+message has been updated	admin	hu	az üzenet frissítve
+method	admin	hu	Metódus
+minute	admin	hu	Perc
+mode	admin	hu	Mód
+month	admin	hu	Hónap
 new group name	admin	hu	Új csoport neve
 new password [ leave blank for no change ]	admin	hu	Új jelszó [ üresen hagyva nem lesz változás ]
+next run	admin	hu	Következõ futtatás
+no algorithms available	admin	hu	nincsenek elérhetõ algoritmusok
+no alternate email address	admin	hu	nincs alternatív emailcím
+no matches found	admin	hu	Nincs egyezés
+no modes available	admin	hu	nincs elérhetó mód
+no permission to add groups	admin	hu	nincs jogosultság csoportok hozzáadására
+no permission to add users	admin	hu	nincs jogosultság felhasználók hozzáadására
+no permission to create groups	admin	hu	nincs jogosultság csoportok létrehozására
+outbound	admin	hu	kimenõ
+password for smtp-authentication	admin	hu	Jelszó az SMTP-azonosításhoz
+path information	admin	hu	Útvonal-információ
 percent of users that logged out	admin	hu	Rendesen kijelentkezett felhasználók %-ban
 permissions	admin	hu	Jogok
 permissions this group has	admin	hu	A csoport jogosultságai
+phpinfo	admin	hu	PHP információk
+postfix with ldap	admin	hu	Postfix LDAP-vel
+primary group	admin	hu	elsõdleges csoport
+quota settings	admin	hu	kvóta beállításai
+quota size in mbyte	admin	hu	kvóta Mbájtokban
 re-enter password	admin	hu	Jelszó újra
+remove	admin	hu	eltávolítás
 remove all users from this group	admin	hu	Csoport összes felhasználójának törlése
+security	admin	hu	Biztonság
 select permissions this group will have	admin	hu	Válassza ki milyen jogosultságokkal rendelkezzen a csoport
 select users for inclusion	admin	hu	Felhasználók kiválasztása
+show 'powered by' logo on	admin	hu	Powered by logó megjelenítése
+show access log	admin	hu	Hozzáférési napló megjelenítése
+show current action	admin	hu	Jelenlegi mûvelet megjelenítése
+show error log	admin	hu	Hibanapló megjelenítése
+show phpinfo()	admin	hu	phpinfo() megjelenítése
 site	admin	hu	Oldal
-sorry, that group name has already been taking.	admin	hu	Sajnos ez a csoportnév már foglalt.
+site configuration	common	hu	Webhely beállításai
+soap	admin	hu	SOAP
+sorry, that group name has already been taken.	admin	hu	Már létezik csoport ezen a néven
+sorry, the above users are still a member of the group %1	admin	hu	A fenti felhasználók már tagjai az alábbi csoportnak: %1
 sorry, the follow users are still a member of the group %1	admin	hu	A következõ felhasználók már a(z) %1 csoport tagjai
-status	admin	hu	Status
+sort the entries	admin	hu	elemek rendezése
+ssl	admin	hu	ssl
+standard	admin	hu	szabványos
+standard imap server	admin	hu	szabványos IMAP-kiszolgáló
+standard pop3 server	admin	hu	szabványos POP3-kiszolgáló
+standard smtp-server	admin	hu	szabványos SMTP-kiszolgáló
 submit changes	admin	hu	Változások elküldése
+text entry	admin	hu	Szöveges bejegyzés
 that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt
+the api is current	admin	hu	Az API nem igényel frissítést
+the api requires an upgrade	admin	hu	Az API frissítést igényel
 the login and password can not be the same	admin	hu	A felhasználónév és a jelszó nem egyezhet meg
 the two passwords are not the same	admin	hu	A két jelszó nem egyezik
 they must be removed before you can continue	admin	hu	El kell távolítani õket a folytatáshoz
-title	admin	hu	Cím
+this application is current	admin	hu	Az alkalmazás nem igényel frissítést
+this application requires an upgrade	admin	hu	Az alkalmazás frissítést igényel
 total records	admin	hu	Összes rekord
+trust level	admin	hu	Bizalmi szint
+trust relationship	admin	hu	Bizalmi viszony
+use cookies to pass sessionid	admin	hu	Használjon sütiket a viszonyazonosító átadásához
 user accounts	admin	hu	Felhasználói hozzáférések
 user groups	admin	hu	Felhasználói csoportok
 view access log	admin	hu	Elérési napló megtekintése
+view account	admin	hu	Azonosító megtekintése
+view category	admin	hu	Kategória megtekintése
+view error log	admin	hu	Hibanapló megtekintése
 view sessions	admin	hu	Kapcsolatok megtekintése
-you must add at least 1 permission to this account	admin	hu	Legalább egy jogosultságot meg kell adni a belépési joghoz
-you must enter a password	admin	hu	Kötelezõ jelszót megadni
+view this user	admin	hu	felhasználó megtekintése
+xml-rpc	admin	hu	XML-RPC
 you must enter an application name and title.	admin	hu	Kötelezõ megadni az alkalmazás nevét és címét!
 you must select a file type	admin	hu	Kötelezõ fájltípust választani
