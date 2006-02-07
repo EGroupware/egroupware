@@ -12,7 +12,7 @@
 	// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
 	// IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
 	// INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-	// NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
+	// NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
 	// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
 	// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 	// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
@@ -142,7 +142,7 @@
 	$GLOBALS['xmlrpcVersion'] = '2.0';
 
 	// let user errors start at 800
-	$GLOBALS['xmlrpcerruser'] = 800; 
+	$GLOBALS['xmlrpcerruser'] = 800;
 	// let XML parse errors start at 100
 	$GLOBALS['xmlrpcerrxml'] = 100;
 
@@ -243,7 +243,7 @@
 			}
 			else
 			{
-				if ($i == 0) 
+				if ($i == 0)
 				{
 					$op = $top[$i];
 				}
@@ -576,8 +576,8 @@
 		//
 		// "Don't assume a timezone. It should be specified by the server in its
 		// documentation what assumptions it makes about timezones."
-		// 
-		// these routines always assume localtime unless 
+		//
+		// these routines always assume localtime unless
 		// $utc is set to 1, in which case UTC is assumed
 		// and an adjustment for locale is made when encoding
 		if (!$utc)
@@ -586,7 +586,7 @@
 		}
 		else
 		{
-			if(function_exists('gmstrftime')) 
+			if(function_exists('gmstrftime'))
 			{
 				// gmstrftime doesn't exist in some versions
 				// of PHP
@@ -614,7 +614,7 @@
 			{
 				$t=mktime($regs[4], $regs[5], $regs[6], $regs[2], $regs[3], $regs[1]);
 			}
-		} 
+		}
 		return $t;
 	}
 
@@ -641,7 +641,7 @@
 			{
 				$arr[] = phpgw_xmlrpc_decode($xmlrpc_val->arraymem($i));
 			}
-			return $arr; 
+			return $arr;
 		}
 		elseif($kind == 'struct')
 		{
@@ -928,20 +928,18 @@
 	}
 	*/
 
-	/*
 	$GLOBALS['_xmlrpcs_egw_time_sig'] = array(array(xmlrpcString,xmlrpcString));
 	$GLOBALS['_xmlrpcs_egw_time_doc'] = 'Returns system time based on optional format string';
 	function _xmlrpcs_time($server,$m)
 	{
 		$format = $m->getParam(0);
-		$format = $format ? $format : 'Y/m/d H:i';
+		$format = $format ? $format : 'Y/m/d H:i:s';
 
 		return CreateObject(
 			'phpgwapi.xmlrpcresp',
 			CreateObject('phpgwapi.xmlrpcval', date($format,time()), 'string')
 		);
 	}
-	*/
 
 	/* Add the system functions to the server map */
 	$GLOBALS['_xmlrpcs_dmap'] = array(
@@ -974,7 +972,7 @@
 			'function'  => '_xmlrpcs_phpgw_api_version',
 			'signature' => $GLOBALS['_xmlrpcs_phpgw_api_version_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_phpgw_api_version_doc']
-		)
+		),
 		/*
 		'system.listApps' => array(
 			'function'  => '_xmlrpcs_listApps',
@@ -982,13 +980,11 @@
 			'docstring' => $GLOBALS['_xmlrpcs_listApps_doc']
 		),
 		*/
-		/*
 		'system.time'  => array(
 			'function'  => '_xmlrpcs_time',
 			'signature' => $GLOBALS['_xmlrpcs_time_sig'],
 			'docstring' => $GLOBALS['_xmlrpcs_time_doc']
 		)
-		*/
 	);
 
 	$GLOBALS['_xmlrpc_debuginfo'] = '';
