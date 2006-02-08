@@ -174,6 +174,7 @@ class uitimesheet extends botimesheet
 			'js' => "<script>\n$js\n</script>\n",
 			'ts_quantity_blur' => $this->data['ts_duration'] ? $this->data['ts_duration'] / 60.0 : '',
 		));
+		$links = array();
 		if (!$this->data['ts_id'] && isset($_GET['link_app']) && isset($_GET['link_id']) &&
 			preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$_GET['link_app'].':'.$_GET['link_id']) &&	// gard against XSS
 			!is_array($content['link_to']['to_id']))
