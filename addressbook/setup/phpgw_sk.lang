@@ -1,0 +1,199 @@
+%1 records imported	addressbook	sk	Naimportovaných %1 záznamov
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sk	preèítaných %1 záznamov (zatiaµ neimportované, mô¾ete se vrátit %2spä»%3 a odznaèit Test importu)
+%1 records read (not yet imported, you may go back and uncheck test import)	addressbook	sk	%1 záznamù naèteno (prozatím neimportováno)
+(e.g. 1969)	addressbook	sk	(napr. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sk	<b>Nevybrali ste ¾iadny typ prevodu.</b> Prosím, vyberte ho zo zoznamu.
+@-eval() is only availible to admins!!!	addressbook	sk	Iba správci mô¾u pou¾i» @-eval() !!!
+access not permitted	addressbook	sk	pøístup nepovolen
+actions	addressbook	sk	Akcie
+add a single entry by passing the fields.	addressbook	sk	Pridaj záznam preskoèením polo¾iek.
+add custom field	addressbook	sk	Pridaj pou¾ívateµskú polo¾ku
+address book	common	sk	Adresár
+address book - vcard in	addressbook	sk	Adresár - VCard v
+address book - view	addressbook	sk	Adresár - pohµed
+address line 2	addressbook	sk	Adresa riadok 2
+address line 3	addressbook	sk	Adresa riadok 3
+address type	addressbook	sk	Typ adresy
+addressbook	common	sk	Adresár
+addressbook preferences	addressbook	sk	Nastavenia Adresára
+addressbook-fieldname	addressbook	sk	Pole adresára
+addvcard	addressbook	sk	Pridaj vizitku VCard
+all	addressbook	sk	V¹e
+alt. csv import	addressbook	sk	Alternatívny import z CSV
+april	addressbook	sk	duben
+are you sure you want to delete this field?	addressbook	sk	Naozaj mám zmaza» túto polo¾ku?
+august	addressbook	sk	srpen
+bbs phone	addressbook	sk	Èíslo na BBS
+birthday	common	sk	Narodeniny
+birthdays	common	sk	Narodeniny
+blank	addressbook	sk	Prázdne
+business	common	sk	Zamestnanie
+business address type	addressbook	sk	Typ adresy do zamestnania
+business city	addressbook	sk	Mesto
+business country	addressbook	sk	Krajina
+business email	addressbook	sk	E-mail do zamestnania
+business email type	addressbook	sk	Typ e-mailu do zamestnania
+business fax	addressbook	sk	Fax do zamestnania
+business phone	addressbook	sk	Telefón do zamestnania
+business state	addressbook	sk	©tát
+business street	addressbook	sk	Ulica
+business zip code	addressbook	sk	PSÈ
+car phone	addressbook	sk	Telefón do auta
+category	addressbook	sk	Kategorie
+cell phone	addressbook	sk	Mobil
+charset of file	addressbook	sk	Znaková sada súboru
+city	common	sk	Mesto
+company	common	sk	Spoloènos»
+company name	common	sk	Firma
+configuration	common	sk	Nastavenia
+contact	common	sk	Kontakt
+contact application	admin	sk	Kontakty
+contact settings	admin	sk	Nastavenia kontaktov
+copied by %1, from record #%2.	addressbook	sk	Skopíroval %1 od záznamu è.%2
+country	common	sk	Krajina
+created by	addressbook	sk	Vytvoøil
+csv-fieldname	addressbook	sk	Pole v CSV
+csv-filename	addressbook	sk	CSV súbor
+custom	addressbook	sk	Vlastné
+custom fields	addressbook	sk	Vlastné polo¾ky
+debug output in browser	addressbook	sk	Ladiací výstup v prehliadaèi
+december	addressbook	sk	prosinec
+default filter	addressbook	sk	©tandardný filter
+delete	addressbook	sk	Sma¾
+delete a single entry by passing the id.	addressbook	sk	Zma¾ záznam zadaním id.
+department	common	sk	Oddelenie
+domestic	addressbook	sk	Domáci
+download	addressbook	sk	Stiahnutie
+download export file (uncheck to debug output in browser)	addressbook	sk	Ulo¾i» exportovaný súbor (Od¹krtnite ak chcete zobrazi» výsledek v prehliadaèi)
+e-mail	addressbook	sk	E-Mail
+edit	addressbook	sk	Oprav
+edit custom field	addressbook	sk	Oprav vlastnú polo¾ku
+edit custom fields	admin	sk	Oprav vlastné polo¾ky
+empty for all	addressbook	sk	prázdne znamená v¹etko
+enter the path to the exported file here	addressbook	sk	Zadajte cestu k exportovanému súboru
+export contacts	addressbook	sk	Export kontaktov
+export file name	addressbook	sk	Názov súboru exportu
+export from addressbook	addressbook	sk	Export z Adresára
+extra	addressbook	sk	Extra
+fax	addressbook	sk	Fax
+fax number	common	sk	Èíslo faxu
+february	addressbook	sk	únor
+field %1 has been added !	addressbook	sk	Polo¾ka %1 bola pridaná
+field %1 has been updated !	addressbook	sk	Polo¾ka %1 bola aktualizovaná
+field name	addressbook	sk	Názov polo¾ky
+fields	addressbook	sk	Polo¾ky
+fields to show in address list	addressbook	sk	Viditeµné polo¾ky v zozname
+fieldseparator	addressbook	sk	Oddeµovaè polí
+first name	addressbook	sk	Jméno
+full name	addressbook	sk	Celé meno
+geo	addressbook	sk	GEO
+global categories	addressbook	sk	Globálne kategórie
+grant addressbook access	common	sk	Deleguj práva pre pøístup k Adresáru
+home address type	addressbook	sk	Typ adresy domov
+home city	addressbook	sk	Mesto - domov
+home country	addressbook	sk	Krajina - domov
+home email	addressbook	sk	E-mail - domov
+home email type	addressbook	sk	Typ e-mailu domov
+home phone	addressbook	sk	Telefón - domov
+home state	addressbook	sk	©tát - domov
+home street	addressbook	sk	Ulica -domov
+home zip code	addressbook	sk	PSÈ - domov
+import	addressbook	sk	Import
+import contacts	addressbook	sk	Importuj Kontakty
+import csv-file into addressbook	addressbook	sk	Importovat CSV súbor do Adresára
+import file	addressbook	sk	Importuj súbor
+import from	addressbook	sk	Import z
+import from ldif, csv, or vcard	addressbook	sk	Import z LDIF, CSV alebo VCard
+import from outlook	addressbook	sk	Importuj z Outlooku
+import multiple vcard	addressbook	sk	Import viacerých vizitek VCard
+import next set	addressbook	sk	Importova» ïal¹iu sadu
+import_instructions	addressbook	sk	V Netscape otvorte Adresár a vyberte <b>Export<b> v menu <b>Súbor</b>. Exportovaný súbor bude vo formáte LDIF.<p>V Outlooku vyberte Kontakty, zvoµte <b>Import a export...</b> z menu <b>Súbor</b> a exportujte dáta do súboru s hodnotami oddelenými èiarkami.<p>V Palm Desktop 4.0 a vy¹¹om otvorete adresár a zvoµte <b>Export</b> z menu <b>Súbor</b>. Exportované dáta budú vo formáte VCard.
+international	addressbook	sk	Mezinárodný
+isdn phone	addressbook	sk	ISDN èíslo
+january	addressbook	sk	leden
+july	addressbook	sk	èervenec
+june	addressbook	sk	èerven
+label	addressbook	sk	Nálepka
+last name	addressbook	sk	Pøíjmení
+ldap context for contacts	admin	sk	LDAP kontext pre kontakty
+ldap host for contacts	admin	sk	LDAP hostiteµ pre kontakty
+ldap root dn for contacts	admin	sk	LDAP koreòové dn pre kontakty
+ldap root pw for contacts	admin	sk	LDAP koreòové pw pre kontakty
+ldif	addressbook	sk	LDIF
+line 2	addressbook	sk	Riadok 2
+load vcard	addressbook	sk	Nahra» vizitku VCard
+march	addressbook	sk	bøezen
+mark records as private	addressbook	sk	Oznaèi» záznam ako súkromý
+may	addressbook	sk	kvìten
+message phone	addressbook	sk	Telefón pre správy
+middle name	addressbook	sk	Prostredné meno
+mobile	addressbook	sk	Mobil
+mobile phone	addressbook	sk	Mobil
+modem phone	addressbook	sk	Èíslo na modem
+multiple vcard	addressbook	sk	Viacero vizitiek VCard
+name	addressbook	sk	Jméno
+no	addressbook	sk	Ne
+no vcard	addressbook	sk	®iadna vizitka
+none	addressbook	sk	¾ádné
+notes	addressbook	sk	Poznámky
+november	addressbook	sk	listopad
+number of records to read (%1)	addressbook	sk	Poèet záznamov k naèítaniu (%1)
+october	addressbook	sk	øíjen
+ok	addressbook	sk	OK
+other number	addressbook	sk	Telefón - ostatné
+other phone	addressbook	sk	Iný telefón
+pager	common	sk	Pager
+parcel	addressbook	sk	Parcela
+phone number	common	sk	Telefónne èíslo
+phone numbers	common	sk	Telefónne èísla
+please enter a name for that field !	addressbook	sk	Prosím zadajte meno pre túto polo¾ku !
+please select	addressbook	sk	Vyberte prosím
+please set your preferences for this app	addressbook	sk	Upravte si prosím volby pro tuto aplikaci
+please set your preferences for this application	addressbook	sk	Upravte si prosím volby pro tuto aplikaci
+postal	common	sk	Po¹tové
+pref	addressbook	sk	Titul
+prefix	addressbook	sk	Titul
+private	addressbook	sk	Soukromé
+public	addressbook	sk	veøejné
+public key	addressbook	sk	Verejný kµúè
+read a list of entries.	addressbook	sk	Naèítaj zoznam záznamov.
+read a single entry by passing the id and fieldlist.	addressbook	sk	Naèítaj záznam zadaním id a zoznamu polo¾ek.
+read this list of methods.	addressbook	sk	Naèti tento seznam metod.
+record access	addressbook	sk	Prístup k záznamu
+record owner	addressbook	sk	Vlastník záznamu
+retrieve contacts	admin	sk	naèítaj kontakty
+select all	addressbook	sk	Oznaèi» v¹etko
+select the type of conversion	addressbook	sk	Vyberte typ prevodu
+select the type of conversion:	addressbook	sk	Vyberte typ prevodu:
+select where you want to store	admin	sk	Vyberte miesto pre ulo¾enie
+september	addressbook	sk	záøí
+show birthday reminders on main screen	addressbook	sk	Pripomína» narodeniny na hlavnej stránke
+startrecord	addressbook	sk	Prvý záznam
+state	common	sk	©tát
+street	common	sk	Ulice
+submit	addressbook	sk	Ode¹li
+successfully imported %1 records into your addressbook.	addressbook	sk	Do adresára bolo úspe¹ne naimportovaných %1 záznamov.
+suffix	addressbook	sk	Prípona
+test import (show importable records <u>only</u> in browser)	addressbook	sk	Otestova» import (importované záznamy sa zobrazia <u>len</u> v prehliadaèi)
+that field name has been used already !	addressbook	sk	Takýto názov polo¾ky u¾ existuje!
+this person's first name was not in the address book.	addressbook	sk	Takéto meno sa v adresári nenachádza.
+this person's last name was not in the address book.	addressbook	sk	Takéto priezvisko sa v adresári nenachádza.
+to many might exceed your execution-time-limit	addressbook	sk	príli¹ veµa záznamov mô¾e spôsobi» prekroèenie povoleného èasového limitu
+today is %1's birthday!	common	sk	Dnes má narodeniny %1!
+tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
+translation	addressbook	sk	Preklad
+update a single entry by passing the fields.	addressbook	sk	Zmeni» jednotlivý záznam zadaním polo¾iek.
+use country list	addressbook	sk	Pou¾i» zoznam krajín
+vcard	common	sk	Vizitka VCard
+vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.
+vcards require a last name entry.	addressbook	sk	Vizitky potøebujú zadané priezvisko.
+video phone	addressbook	sk	Video telefón
+voice phone	addressbook	sk	Voice telefón
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sk	VAROVANIE!! LDAP sa dá pou¾i» jedine ak NEPOU®ÍVATE kontakty na uchovanie pou¾ívateµských úètov!
+work phone	addressbook	sk	Telefón do zamestnania
+yes	addressbook	sk	Ano
+you appear to be running	addressbook	sk	Pou¾íváte
+you must select a vcard. (*.vcf)	addressbook	sk	Musíte vybra» VCard (*.vcf)
+you must select at least 1 column to display	addressbook	sk	Musíte vybra» aspoò 1 ståpec k zobrazeniu.
+zip code	common	sk	PSÈ
+zip_note	addressbook	sk	<p><b>Poznámka:</b>Súbor mô¾e by» archív formátu zip s kolekciou súborov .csv, .vcf alebo .ldif. V ¾iadnom prípade pri importe nemie¹ajte rôzne typy súborov.

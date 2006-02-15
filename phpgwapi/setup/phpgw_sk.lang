@@ -1,0 +1,654 @@
+%1 email addresses inserted	common	sk	vlo¾ených %1 emailových adries
+%1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spusti»!!!
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sk	%1eGroupWare%2 je viacpou¾ívateµský, webovo orientovaný grupvérový balík napísaný v  %3PHP%4.
+(shift-)click or drag to change value	jscalendar	sk	Ak chcete zmeni» hodnotu, pou¾ite (Shift-)klik alebo potiahnutie
+- click on any of the time parts to increase it	jscalendar	sk	- Ak kliknite na ktorúkoµvek èas» èasu, zvý¹i sa
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	sk	- Podr¾te my¹ítko na ktoromkoµvek z horeuvedených tlaèidiel, ak chcete rýchlej¹í výber
+- or click and drag for faster selection.	jscalendar	sk	- alebo kliknite a potiahnite pre rýchlej¹í výber
+- or shift-click to decrease it	jscalendar	sk	- alebo Shift-klik pre zní¾enie
+- use the %1, %2 buttons to select month	jscalendar	sk	- Pou¾ite %1, %2 tlaèítka pre výber mesiaca
+- use the %1, %2 buttons to select year	jscalendar	sk	- Pou¾ite %1, %2 tlaèítka pre výber roku
+00 (disable)	admin	sk	00 (zablokova»)
+13 (ntp)	admin	sk	13 (ntp)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	sk	\n Zo¹tíhµujem HTML zdrojový kód, prosím èakajte...
+_delete row	htmlarea-ContextMenu	sk	_Zmaza» Riadok
+_image properties...	htmlarea-ContextMenu	sk	_Vlastnosti Obrázka...
+_modify link...	htmlarea-ContextMenu	sk	_Uprav Linku...
+_remove link...	htmlarea-ContextMenu	sk	_Vyma¾ Linku...
+_table properties...	htmlarea-ContextMenu	sk	_Vlastnosti Tabuµky...
+about	common	sk	O
+about %1	common	sk	O %1
+about the calendar	jscalendar	sk	O Kalendári
+about this editor	htmlarea	sk	O tomto editore
+access	common	sk	Prístup
+access not permitted	common	sk	Prístup zakázaný
+access type	common	sk	Druh pøístupu
+account has been created	common	sk	Pou¾ívateµský úèet bol vytvorený
+account has been deleted	common	sk	Pou¾ívateµský úèet bol zmazaný
+account has been updated	common	sk	Pou¾ívateµský úèet bol aktualizovaný
+account is expired	common	sk	Pou¾ívateµský úèet vypr¹al
+acl	common	sk	Práva
+action	common	sk	Akcia
+active	common	sk	Aktívne
+add	common	sk	Prida»
+add %1 category for	common	sk	Prida» %1 kategóriu pre
+add category	common	sk	Prida» kategóriu
+add sub	common	sk	Prida» podkategóriu
+addressbook	common	sk	Adresár
+admin	common	sk	Administrátor
+administration	common	sk	Správa
+afghanistan	common	sk	AFGANISTAN
+albania	common	sk	ALBÁNSKO
+align	htmlarea-TableOperations	sk	Zarovnaj
+all	common	sk	V¹etko
+all fields	common	sk	v¹etky polia
+all four sides	htmlarea-TableOperations	sk	V¹etky ¹tyri strany
+alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+andorra	common	sk	ANDORA
+angola	common	sk	ANGOLA
+apply	common	sk	Pou¾i
+april	common	sk	Apríl
+are you sure you want to delete these entries ?	common	sk	Ste si istí, chcete zmaza» tieto záznamy?
+are you sure you want to delete this entry ?	common	sk	Ste si istí, chcete zmaza» tento záznam?
+argentina	common	sk	ARGENTÍNA
+armenia	common	sk	ARMÉNSKO
+august	common	sk	August
+australia	common	sk	AUSTRÁLIA
+austria	common	sk	RAKÚSKO
+author	common	sk	Autor
+autohide sidebox menus	common	sk	Automaticky skrýva» Sidebox menu
+automatically hide the sidebox menus?	common	sk	Skrýva» Sidebox menu automaticky?
+autosave default category	common	sk	Automaticky uklada» ¹tandardnú kategóriu
+azerbaijan	common	sk	AZERBAJD®ÁN
+back	common	sk	Naspä»
+back to user login	common	sk	Naspä» na prihlásenie pou¾ívateµa
+background	htmlarea-TableOperations	sk	Pozadie
+background color	htmlarea	sk	Farba pozadia
+background color:	common	sk	Farba pozadia:
+bad login or password	common	sk	Chybné meno alebo heslo
+bahamas	common	sk	BAHAMY
+bahrain	common	sk	BAHRAIN
+bangladesh	common	sk	BANGLADÉ©
+baseline	htmlarea-TableOperations	sk	Základný
+bcc	common	sk	Skrytá kópia
+belarus	common	sk	BIELORUSKO
+belgium	common	sk	BELGICKO
+bermuda	common	sk	BERMUDY
+blocked, too many attempts	common	sk	Zablokované, príli¹ veµa pokusov
+bold	htmlarea	sk	Tuèné
+bolivia	common	sk	BOLÍVIA
+border	htmlarea-TableOperations	sk	Okraj
+borders	htmlarea-TableOperations	sk	Okraje
+bosnia and herzegovina	common	sk	BOSNA A HERCEGOVINA
+bottom	htmlarea-TableOperations	sk	Spodný okraj
+brazil	common	sk	BRAZÍLIA
+bulgaria	common	sk	BULHARSKO
+bulleted list	htmlarea	sk	Odrá¾kový zoznam
+calendar	common	sk	Kalendár
+cambodia	common	sk	KAMBOD®A
+canada	common	sk	KANADA
+cancel	common	sk	Zru¹i»
+caption	htmlarea-TableOperations	sk	Zachytenie
+categories	common	sk	Kategórie
+categories for	common	sk	kategórie pre
+category	common	sk	Kategória
+category %1 has been added !	common	sk	Kategória %1 bola pridaná!
+category %1 has been updated !	common	sk	Kategória %1 bola zmenená!
+cayman islands	common	sk	KAJMANSKÉ OSTROVY
+cc	common	sk	Kópia
+cell properties	htmlarea-TableOperations	sk	Nastavenia bunky
+center	htmlarea-TableOperations	sk	Na stred
+central african republic	common	sk	STREDOAFRICKÁ REPUBLIKA
+change	common	sk	Zmeni»
+char	htmlarea-TableOperations	sk	Znak
+charset	common	sk	iso-8859-2
+check installation	common	sk	Skontroluj in¹taláciu
+check now	common	sk	Skontroluj - Teraz
+china	common	sk	ÈÍNA
+choose list style type (for ordered lists)	htmlarea-ListType	sk	Vyberte ¹týl zoznamu (pre zotriedené zoznamy)
+choose the category	common	sk	Vyberte kategóriu
+choose the parent category	common	sk	Vyberte rodièovskú kategóriu
+christmas island	common	sk	VIANOÈNÉ OSTROVY
+clear	common	sk	Zmaza»
+clear form	common	sk	Vyèisti» formulár
+click	common	sk	Klik
+click or mouse over to show menus	common	sk	Kliknite alebo uká¾te my¹ou pre zobrazenie menu
+click or mouse over to show menus?	common	sk	Kliknite alebo uká¾te my¹ou pre zobrazenie menu?
+close	common	sk	Zavrie»
+colombia	common	sk	KOLUMBIA
+color	htmlarea-TableOperations	sk	Farba
+company	common	sk	Spoloènos»
+congo	common	sk	KONGO
+congo, the democratic republic of the	common	sk	KONGO, DEMOKRATICKÁ REPUBLIKA
+copy	common	sk	Kopírova»
+copy selection	htmlarea	sk	Kopírova» výber
+create	common	sk	Vytvori»
+create a link	htmlarea-ContextMenu	sk	Vytvori» linku
+created by	common	sk	Vytvoril
+croatia	common	sk	CHORVÁTSKO
+cuba	common	sk	KUBA
+currency	common	sk	Mena
+current	common	sk	Aktuálne
+current style	htmlarea	sk	Aktuálny ¹týl
+current url is	htmlarea-ContextMenu	sk	Aktuálne URL je
+current users	common	sk	Súèasní pou¾ívatelia
+cut	htmlarea-ContextMenu	sk	Vystrihnú»
+cut selection	htmlarea	sk	Vystrihnú» výber
+cyprus	common	sk	CYPRUS
+czech republic	common	sk	ÈESKÁ REPUBLIKA
+date	common	sk	Dátum
+date due	common	sk	Dátum do
+date selection:	jscalendar	sk	Výber dátumu:
+datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/èas.<br>Ak pou¾ívate port 13,prosím nastavte korektne filtrovacie pravidlá na firewall-e e¹te predtým, ne¾ potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)
+de_lete column	htmlarea-ContextMenu	sk	Zmaza» Ståpec(D)
+december	common	sk	December
+decimal numbers	htmlarea-ListType	sk	Desiatkové èísla
+default category	common	sk	©tandardná kategória
+delete	common	sk	Zmaza»
+delete cell	htmlarea-TableOperations	sk	Zmaza» bunku
+delete column	htmlarea-TableOperations	sk	Zmaza» ståpec
+delete row	htmlarea-TableOperations	sk	Zmaza» riadok
+delete the current column	htmlarea-ContextMenu	sk	Zmaza» aktuálny ståpec
+delete the current row	htmlarea-ContextMenu	sk	Zmaza» aktuálny riadok
+denmark	common	sk	DÁNSKO
+description	common	sk	Popis
+detail	common	sk	Podrobnosti
+details	common	sk	Podrobnosti
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnú» spú¹»anie opravného skriptu pre IE5.5 a vy¹¹í pre zobrazenie priesvitnosti v obrázkoch PNG?
+dictionary	htmlarea-SpellChecker	sk	Zápisník
+disable internet explorer png-image-bugfix	common	sk	Vypnú» opravu pre obrázky PNG v Internet Explorer-i
+disable slider effects	common	sk	Vypnú» efekty posuvníka
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnú» animované efekty posuvníka, keï sa zobrazujú alebo skrývajú menu na stránke? Pou¾ívatelia Opery a Konquerer-a to pravdepodobne musia zvoli».
+disabled	common	sk	Zakázané
+display %s first	jscalendar	sk	Zobrazi» %s najskôr
+do you also want to delete all subcategories ?	common	sk	Chcete smaza» aj v¹etky podkategórie?
+document properties	common	sk	Vlastnosti dokumentu
+document title:	common	sk	Nadpis dokumentu
+domain	common	sk	Doména
+domain name for mail-address, eg. "%1"	common	sk	názov domény pre mailovú adresu, napr. "%1"
+domestic	common	sk	Domáce
+dominican republic	common	sk	DOMINIKÁNSKA REPUBLIKA
+done	common	sk	Hotovo
+drag to move	jscalendar	sk	Potiahni pre presun
+e-mail	common	sk	E-Mail
+east timor	common	sk	VÝCHODNÝ TIMOR
+ecuador	common	sk	EKVÁDOR
+edit	common	sk	Upravi»
+edit %1 category for	common	sk	Uprav %1 kategóriu pre
+edit categories	common	sk	Uprav kategórie
+edit category	common	sk	Uprav kategóriu
+egroupware api version %1	common	sk	eGroupWare API verzia %1
+egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre pou¾ívateµa '%1', IP %2
+egypt	common	sk	EGYPT
+email	common	sk	E-Mail
+email-address of the user, eg. "%1"	common	sk	emailová adresa pou¾ívateµa, napr. "%1"
+enabled	common	sk	Povolené
+end date	common	sk	Koncový dátum
+end time	common	sk	Koncový èas
+enlarge editor	htmlarea	sk	Zväè¹i» editor
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre eGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukonèovacieho lomítka</b>
+entry has been deleted sucessfully	common	sk	Záznam bol úspe¹ne vymazaný
+entry updated sucessfully	common	sk	Záznam bol úspe¹ne upravený
+eritrea	common	sk	ERITREA
+error	common	sk	Chyba
+error creating %1 %2 directory	common	sk	Chyba pri vytváraní adresára %1 %2
+error deleting %1 %2 directory	common	sk	Chyba pri vymazávaní adresára %1 %2
+error renaming %1 %2 directory	common	sk	Chyba pri premenúvaní adresára %1 %2
+estonia	common	sk	ESTÓNSKO
+ethiopia	common	sk	ETIÓPIA
+exact	common	sk	presne
+exit	common	sk	Ukonèit
+falkland islands (malvinas)	common	sk	FALKLANDY
+fax number	common	sk	èíslo faxu
+february	common	sk	Február
+fg color	htmlarea-TableOperations	sk	Farba popredia
+fields	common	sk	Polo¾ky
+fiji	common	sk	FID®I
+files	common	sk	Súbory
+filter	common	sk	Filter
+finished list of mispelled words	htmlarea-SpellChecker	sk	Ukonèený zoznam chybných slov
+finland	common	sk	FÍNSKO
+first name	common	sk	Meno
+first name of the user, eg. "%1"	common	sk	meno pou¾ívateµa, napr. "%1"
+first page	common	sk	Prvá strana
+firstname	common	sk	Priezvisko
+fixme!	common	sk	OPRAV MA!
+font color	htmlarea	sk	Farba písma
+force selectbox	common	sk	Otvor výberové menu
+frames	htmlarea-TableOperations	sk	Rámce
+france	common	sk	FRANCÚZSKO
+french polynesia	common	sk	FRANCÚZSKA POLYNÉZIA
+friday	common	sk	Piatok
+ftp	common	sk	FTP
+fullname	common	sk	Plné meno
+general menu	common	sk	Základné menu
+germany	common	sk	NEMECKO
+global	common	sk	Globálne
+global public	common	sk	Verejný pre v¹etkých
+grant access	common	sk	Povoµ prístup
+greece	common	sk	GRÉCKO
+grenada	common	sk	GRENADA
+group	common	sk	Skupina
+group access	common	sk	Skupinový prístup
+group has been added	common	sk	Skupina bola pridaná
+group has been deleted	common	sk	Skupina bola zmazaná
+group has been updated	common	sk	Skupina bola upravená
+group name	common	sk	názov skupiny
+group public	common	sk	Verejný pre skupiny
+groups	common	sk	Skupiny
+groups with permission for %1	common	sk	Skupiny s prístupom k %1
+groups without permission for %1	common	sk	Skupiny bez prístupu k %1
+guatemala	common	sk	GUATEMALA
+guinea	common	sk	GUINEA
+haiti	common	sk	HAITI
+height	htmlarea-TableOperations	sk	Vý¹ka
+help	common	sk	Pomocník
+high	common	sk	Vysoká
+highest	common	sk	Najvy¹¹ia
+holy see (vatican city state)	common	sk	VATIKÁN
+home	common	sk	Domov
+home email	common	sk	domáci email
+honduras	common	sk	HONDURAS
+hong kong	common	sk	HONG KONG
+how did you get here? (please report!)	htmlarea-ContextMenu	sk	Ako ste sa sem dostali? (Prosím, ohláste to!)
+how many columns would you like to merge?	htmlarea-TableOperations	sk	Koµko ståpcov by ste chceli zlúèi»?
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sk	Koµko ikoniek sa má zobrazi» v navigaènom paneli (vrch stránky). Ostatné ikony budú umiestnené do rozbaµovacieho menu, ktoré bude dostupné na úplne pravom okraji navigaèného panelu.
+how many rows would you like to merge?	htmlarea-TableOperations	sk	Koµko riadkov by ste chceli zlúèi»?
+htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	sk	HTMLArea hanebne odmieta zmaza» poslednú bunku v riadku.
+htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	sk	HTMLArea hanebne odmieta zmaza» posledný ståpec v tabuµke.
+htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	sk	HTMLArea hanebne odmieta zmaza» posledný riadok v tabuµke.
+hungary	common	sk	MAÏARSKO
+i will open it in a new page.	htmlarea-SpellChecker	sk	Otvorím to na novej stránke.
+i_nsert row before	htmlarea-ContextMenu	sk	Vlo¾i»(I) Riadok Pred
+iceland	common	sk	ISLAND
+ignore	htmlarea-SpellChecker	sk	Ignorova»
+ignore all	htmlarea-SpellChecker	sk	Ignorova» v¹etko
+image url	htmlarea-TableOperations	sk	URL obrázka
+in_sert row after	htmlarea-ContextMenu	sk	Vlo¾i» Riadok Za (S)
+india	common	sk	INDIA
+indonesia	common	sk	INDONÉZIA
+insert _column before	htmlarea-ContextMenu	sk	Vlo¾i» Ståpec Pred (C)
+insert a new column after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový ståpec Za aktuálny
+insert a new column before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový ståpec Pred aktuálny
+insert a new row after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový riadok Za aktuálny
+insert a new row before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový riadok Pred aktuálny
+insert all %1 addresses of the %2 contacts in %3	common	sk	Vlo¾i» v¹etkých %1 adries z %2 kontaktov in %3
+insert c_olumn after	htmlarea-ContextMenu	sk	Vlo¾i» ståpeC za
+insert cell after	htmlarea-TableOperations	sk	Vlo¾i» bunku za
+insert cell before	htmlarea-TableOperations	sk	Vlo¾i» bunku pred
+insert column after	htmlarea-TableOperations	sk	Vlo¾i» ståpec za
+insert column before	htmlarea-TableOperations	sk	Vlo¾i» ståpec pred
+insert image	htmlarea	sk	Vlo¾i» obrázok
+insert row after	htmlarea-TableOperations	sk	Vlo¾i» riadok za
+insert row before	htmlarea-TableOperations	sk	Vlo¾i» riadok pred
+insert table	htmlarea	sk	Vlo¾i» Tabuµku
+insert web link	htmlarea	sk	Vlo¾i» Webový Odkaz
+international	common	sk	Mezinárodný
+invalid ip address	common	sk	Chybná IP adresa
+invalid password	common	sk	Chybné heslo
+iran, islamic republic of	common	sk	IRÁN, ISLAMSKÁ REPUBLIKA
+iraq	common	sk	IRAK
+ireland	common	sk	ÍRSKO
+israel	common	sk	IZRAEL
+it has been more then %1 days since you changed your password	common	sk	Va¹e heslo bolo zmenené pred vy¹e %1 dòami
+it is recommended that you run setup to upgrade your tables to the current version	common	sk	Odporúèam spusti» setup pre upgrade databázových tabuliek na súèasnú verziu.
+italic	common	sk	Kurzíva
+italy	common	sk	TALIANSKO
+jamaica	common	sk	JAMAJKA
+january	common	sk	Január
+japan	common	sk	JAPONSKO
+jordan	common	sk	JORDÁNSKO
+july	common	sk	Júl
+jun	common	sk	Jún
+june	common	sk	Jún
+justify	htmlarea-TableOperations	sk	Zarovna»
+justify center	common	sk	Zarovna» na Stred
+justify full	common	sk	Zarovna» do Bloku
+justify left	common	sk	Zarovna» Vµavo
+justify right	common	sk	Zarovna» Vpravo
+kazakstan	common	sk	KAZACHSTAN
+kenya	common	sk	KEÒA
+keywords	common	sk	Kµúèové slová
+korea, democratic peoples republic of	common	sk	KÓREJSKÁ ¥UDOVODEMOKRATICKÁ REPUBLIKA
+korea, republic of	common	sk	KÓREJSKÁ REPUBLIKA
+kuwait	common	sk	KUVAJT
+language	common	sk	Jazyk
+last name	common	sk	Priezvisko
+last name of the user, eg. "%1"	common	sk	priezvisko pou¾ívateµa, napr. "%1"
+last page	common	sk	posledná stránka
+lastname	common	sk	Priezvisko
+lebanon	common	sk	LIBANON
+left	htmlarea-TableOperations	sk	Vµavo
+liberia	common	sk	LIBÉRIA
+license	common	sk	Licencia
+liechtenstein	common	sk	LICHTEN©TAJNSKO
+list	common	sk	Zoznam
+list members	common	sk	Zoznam èlenov
+local	common	sk	Lokálny
+login	common	sk	Prihlásenie
+loginid	common	sk	Prihlasovacie ID
+logout	common	sk	Odhlásenie
+low	common	sk	Nízka
+lower greek letters	htmlarea-ListType	sk	Nízke grécke písmená
+lower latin letters	htmlarea-ListType	sk	Nízke latinské písmená
+lower roman numbers	htmlarea-ListType	sk	Nízke rímske èíslice
+lowest	common	sk	Najni¾¹í
+luxembourg	common	sk	LUXEMBURSKO
+macedonia, the former yugoslav republic of	common	sk	MACEDÓNSKO
+madagascar	common	sk	MADAGASKAR
+mail domain, eg. "%1"	common	sk	mailová doména, napr. "%1"
+main category	common	sk	Hlavná kategória
+main screen	common	sk	Hlavná stránka
+maintainer	common	sk	Správca
+make lin_k...	htmlarea-ContextMenu	sk	Vytvori» lin_ku
+malaysia	common	sk	MALAJZIA
+maldives	common	sk	MALEDIVY
+mali	common	sk	MALI
+malta	common	sk	MALTA
+march	common	sk	Marec
+mauritania	common	sk	MAURETÁNIA
+mauritius	common	sk	MAURÍCIUS
+max number of icons in navbar	common	sk	Maximálny poèet ikoniek v navigaènom paneli
+may	common	sk	Máj
+medium	common	sk	Stredné
+menu	common	sk	Menu
+merge cells	htmlarea-TableOperations	sk	Zlúèi» bunky
+message	common	sk	Správa
+mexico	common	sk	MEXIKO
+middle	htmlarea-TableOperations	sk	Stred
+modify url	htmlarea-ContextMenu	sk	Uprav URL
+moldova, republic of	common	sk	MOLDAVSKÁ REPUBLIKA
+monaco	common	sk	MONAKO
+monday	common	sk	Pondelok
+mongolia	common	sk	MONGOLSKO
+morocco	common	sk	MAROKO
+name	common	sk	Meno
+name of the user, eg. "%1"	common	sk	meno pou¾ívateµa, napr. "%1"
+namibia	common	sk	NAMÍBIA
+nepal	common	sk	NEPÁL
+netherlands	common	sk	HOLANDSKO
+netherlands antilles	common	sk	HOLANDSKÉ ANTILY
+never	common	sk	Nikdy
+new caledonia	common	sk	NOVÁ KALEDÓNIA
+new entry added sucessfully	common	sk	Nový záznam bol úspe¹ne pridaný
+new main category	common	sk	Nová hlavná kategória
+new value	common	sk	Nová hodnota
+new zealand	common	sk	NOVÝ ZÉLAND
+next	common	sk	Ïal¹í
+next month (hold for menu)	jscalendar	sk	Ïal¹í mesiac
+next page	common	sk	ïal¹ia stránka
+next year (hold for menu)	jscalendar	sk	Ïal¹í rok (podr¾te pre menu)
+nicaragua	common	sk	NIKARAGUA
+no	common	sk	Nie
+no entries found, try again ...	common	sk	niè som nena¹iel, skúste znovu...
+no history for this record	common	sk	®iadna história pre tento záznam
+no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	sk	Za pomoci vybraného slovníka sa nena¹li ¾iadne chybné slová.
+no subject	common	sk	Nebol uvedený Predmet
+none	common	sk	®iadne
+normal	common	sk	Normálna
+norway	common	sk	NÓRSKO
+not assigned	common	sk	nepriradené
+note	common	sk	Poznámka
+notes	common	sk	Poznámky
+notify window	common	sk	Upozoròujúce okno
+november	common	sk	November
+october	common	sk	Október
+ok	common	sk	OK
+old value	common	sk	Stará hodnota
+on *nix systems please type: %1	common	sk	Na *NIX systémoch prosím napí¹te: %1
+on mouse over	common	sk	Pri namierení my¹i
+only private	common	sk	iba súkromné
+only yours	common	sk	iba va¹e
+open notify window	common	sk	Otvor pripomínacie okno
+open popup window	common	sk	Otvor vyskakovacie okno
+opens this link in a new window	htmlarea-ContextMenu	sk	Otvorí tento odkaz v novom okne
+ordered list	htmlarea	sk	Zotriedený zoznam
+original	common	sk	Originál
+original word	htmlarea-SpellChecker	sk	Pôvodné slovo
+other	common	sk	Iný
+overview	common	sk	Prehµad
+owner	common	sk	Vlastník
+page	common	sk	Stránka
+page was generated in %1 seconds	common	sk	Stránka bola vygenerovaná za %1 sekúnd
+pakistan	common	sk	PAKISTAN
+panama	common	sk	PANAMA
+papua new guinea	common	sk	PAPUA NOVÁ GUINEA
+parcel	common	sk	Parcela
+parent category	common	sk	Rodièovská kategória
+password	common	sk	Heslo
+password could not be changed	common	sk	Heslo sa nedalo zmeni»
+password has been updated	common	sk	Heslo bolo zmenené
+paste	htmlarea-ContextMenu	sk	Vlo¾i»
+paste from clipboard	htmlarea	sk	Vlo¾i» zo schránky
+path	htmlarea	sk	Cesta
+path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom pou¾ívateµa a skupiny MUSÍ BY« MIMO document-root webservera!!!
+pattern for search in addressbook	common	sk	Výraz pre hµadanie v Adresári
+pattern for search in calendar	common	sk	Výraz pre hµadanie v Kalendári
+pattern for search in projects	common	sk	Výraz pre hµadanie v Projektoch
+percent	htmlarea-TableOperations	sk	percent
+permissions to the files/users directory	common	sk	práva k adresáru pre súbory / pou¾ívateµov
+personal	common	sk	Osobný
+peru	common	sk	PERU
+philippines	common	sk	FILIPÍNY
+phone number	common	sk	telefónne èíslo
+pixels	htmlarea-TableOperations	sk	pixelov
+please %1 by hand	common	sk	Prosím %1 ruène
+please click into some cell	htmlarea-TableOperations	sk	Prosím kliknite na niektorú bunku
+please confirm that you want to open this link	htmlarea-SpellChecker	sk	Prosím potvrïte, ¾e chcete otvori» tento odkaz
+please confirm that you want to remove this element:	htmlarea-ContextMenu	sk	Prosím potvrïte, ¾e chcete odstráni» tento element:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	sk	Prosím potvrïte, ¾e chcete zru¹i» odkaz k tomuto elementu:
+please enter a name	common	sk	Prosím zadajte meno !
+please run setup to become current	common	sk	Prosím spus»te setup pre aktualizáciu
+please select	common	sk	Prosím Vyberte
+please set your global preferences	common	sk	Prosím upravte va¹e globálne nastavenia!
+please set your preferences for this application	common	sk	Prosím upravte va¹e nastavenia pre túto aplikáciu!
+please wait.  calling spell checker.	htmlarea-SpellChecker	sk	Prosím èakajte. Spú¹»am kontrolóra pravopisu.
+please wait...	common	sk	Prosím èakajte...
+please wait: changing dictionary to	htmlarea-SpellChecker	sk	Prosím èakajte: mením adresár na
+poland	common	sk	PO¥SKO
+portugal	common	sk	PORTUGALSKO
+postal	common	sk	Po¹tové
+powered by phpgroupware version %1	common	sk	Aplikácia <a href="http://www.phpgroupware.org">phpGroupWare</a> verzia %1
+preferences	common	sk	Nastavenia
+preferences for the idots template set	common	sk	Urèené nastavenia pre idots ¹ablónu
+prev. month (hold for menu)	jscalendar	sk	Predch. mesiac (podr¾te pre menu)
+prev. year (hold for menu)	jscalendar	sk	Predch. rok (podr¾te pre menu)
+previous page	common	sk	Predchádzajúca stránka
+print	common	sk	Tlaè
+priority	common	sk	Priorita
+private	common	sk	Súkromý
+project	common	sk	Projekt
+public	common	sk	Verejný
+re-check	htmlarea-SpellChecker	sk	Znovu skontroluj
+read	common	sk	Èíta»
+read this list of methods.	common	sk	Èítaj tento zoznam metód.
+redoes your last action	htmlarea	sk	Znovu vykoná va¹u poslednú akciu
+reject	common	sk	Odmietni
+remove selected accounts	common	sk	odstráni» vybrané úèty
+remove the	htmlarea-ContextMenu	sk	Odstráò
+remove this node from the document	htmlarea-ContextMenu	sk	Odstráò tento uzol z dokumentu
+rename	common	sk	Premenova»
+replace	htmlarea-SpellChecker	sk	Nahradi»
+replace all	htmlarea-SpellChecker	sk	Nahradi» v¹etko
+replace with	htmlarea-SpellChecker	sk	Zameni» za
+returns a full list of accounts on the system.  warning: this is return can be quite large	common	sk	Vráti úplný zoznam úètov v systéme. Upozornenie: mô¾e by» pomerne rozsiahly
+returns an array of todo items	common	sk	Vracia pole úloh
+returns struct of users application access	common	sk	Vracia ¹truktúru pou¾ívateµského prístupu k aplikáciám
+revert	htmlarea-SpellChecker	sk	Návrat
+right	htmlarea-TableOperations	sk	Vpravo
+ro_w properties...	htmlarea-ContextMenu	sk	Nastavenia Riadku (W)...
+romania	common	sk	RUMUNSKO
+row properties	htmlarea-TableOperations	sk	Nastavenia Riadku
+russian federation	common	sk	RUSKÁ FEDERÁCIA
+rwanda	common	sk	RWANDA
+saint helena	common	sk	SVÄTÁ HELENA
+saint lucia	common	sk	SVÄTÁ LUCIA
+saturday	common	sk	Sobota
+saudi arabia	common	sk	SAUDSKÁ ARÁBIA
+save	common	sk	Ulo¾i»
+search	common	sk	Hµada»
+search %1 '%2'	common	sk	Hµadaj %1 '%2'
+search or select accounts	common	sk	Hµadaj alebo vyber úèty
+section	common	sk	Sekcia
+select	common	sk	Výber
+select all %1 %2 for %3	common	sk	Vyber v¹etky %1 %2 pre %3
+select category	common	sk	Vyber kategóriu
+select date	common	sk	Vyber dátum
+select group	common	sk	Vyber skupinu
+select home email address	common	sk	Vyber domácu emailovú adresu
+select one	common	sk	Vyber
+select user	common	sk	Vyber pou¾ívateµa
+select work email address	common	sk	Vyber pracovnú emailovú adresu
+selection	common	sk	Výber
+send	common	sk	Po¹li
+september	common	sk	September
+server %1 has been added	common	sk	Server %1 bol pridaný
+server name	common	sk	Meno servera
+session has been killed	common	sk	Sedenie bolo zru¹ené
+setup	common	sk	In¹talácia
+setup main menu	common	sk	Hlavné menu In¹talácie
+show all	common	sk	Ukáza» v¹etko
+show all categorys	common	sk	Ukáza» v¹etky kategórie
+show menu	common	sk	ukáza» menu
+show page generation time	common	sk	Uká¾ èas generovania stránky
+show page generation time on the bottom of the page?	common	sk	Ukáza» èas generovania stránky na jej spodku?
+show the image properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia obrázku
+show the table cell properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia Bunky z tabuµky
+show the table properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia Tabuµky
+show the table row properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia Riadku z tabuµky
+show_more_apps	common	sk	ukáza» viacero aplikácií
+showing %1	common	sk	zobrazené %1
+showing %1 - %2 of %3	common	sk	zobrazené %1 - %2 z %3
+singapore	common	sk	SINGAPUR
+slovakia	common	sk	SLOVENSKO
+slovenia	common	sk	SLOVINSKO
+solomon islands	common	sk	©ALAMÚNOVE OSTROVY
+somalia	common	sk	SOMÁLSKO
+sorry, there was a problem processing your request.	common	sk	Promiòte, nastala chyba pøi zpracování va¹eho po¾adavku.
+sorry, your login has expired	login	sk	Prepáète, platnost vá¹ho prihlásenia u¾ vypr¹ala
+south africa	common	sk	JU®NÁ AFRIKA
+spain	common	sk	©PANIELSKO
+spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	sk	Kontrola pravopisu sa skonèila, nena¹iel som ¾iadne chybné slová. Zatváram..
+spell-check	htmlarea-SpellChecker	sk	Kontrola pravopisu
+split cell	htmlarea-TableOperations	sk	Rozdeli» bunku
+split column	htmlarea-TableOperations	sk	Rozdeli» ståpec
+split row	htmlarea-TableOperations	sk	Rozdeli» riadok
+sri lanka	common	sk	SRÍ LANKA
+start date	common	sk	Poèiatoèný dátum
+start time	common	sk	Poèiatoèný èas
+start with	common	sk	zaèa» s
+status	common	sk	Stav
+strikethrough	htmlarea	sk	Preèiarknú»
+style [css]	htmlarea-TableOperations	sk	©týl [CSS]
+subject	common	sk	Predmet
+submit	common	sk	Potvrdi»
+subscript	htmlarea	sk	Odosla»
+substitutions and their meanings:	common	sk	Substitúcie a ich významy:
+sudan	common	sk	SUDÁN
+suggestions	htmlarea-SpellChecker	sk	Odporúèania
+summary	htmlarea-TableOperations	sk	Zhrnutie
+sunday	common	sk	Nedeµa
+suriname	common	sk	SURINAM
+sweden	common	sk	©VÉDSKO
+switzerland	common	sk	©VAJÈIARSKO
+table properties	htmlarea-TableOperations	sk	Nastavenia tabuµky
+tajikistan	common	sk	TAD®IKISTAN
+text align	htmlarea-TableOperations	sk	Zarovnanie textu
+text color:	common	sk	Farba písma:
+thailand	common	sk	THAJSKO
+the api is current	common	sk	API je aktuálne
+the api requires an upgrade	common	sk	API potrebuje upgrade
+the bottom side only	htmlarea-TableOperations	sk	Iba spodok
+the following applications require upgrades	common	sk	Nasledujúce aplikácie vy¾adujú upgrade
+the left-hand side only	htmlarea-TableOperations	sk	Iba po µavej strane
+the mail server returned	common	sk	Po¹tový server vrátil
+the right and left sides only	htmlarea-TableOperations	sk	Iba po pravej a µavej strane
+the right-hand side only	htmlarea-TableOperations	sk	Iba po pravej strane
+the top and bottom sides only	htmlarea-TableOperations	sk	Iba vrch a spodok
+the top side only	htmlarea-TableOperations	sk	Iba vrch
+this application is current	common	sk	Táto aplikácia je aktuálna
+this application requires an upgrade	common	sk	Táto aplikácia vy¾aduje upgrade
+this name has been used already	common	sk	Toto meno sa u¾ pou¾íva!
+this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	sk	Zmeny sa zahodia a kontrolór pravopisu sa skonèí. Prosím potvrïte.
+thursday	common	sk	©tvrtok
+time	common	sk	Èas
+time selection:	jscalendar	sk	Výber èasu
+time zone	common	sk	Èasová zóna
+time zone offset	common	sk	Rozdiel èasovej zóny
+title	common	sk	Titul
+to	common	sk	Komu
+to correct this error for the future you will need to properly set the	common	sk	= Aby sa chyba neobjavovala v budúcnosti, musíte správne nastavi»
+to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">Naspä» na zoznam správ</a>
+today	common	sk	Dnes
+todays date, eg. "%1"	common	sk	dne¹ný dátum, napr. "%1"
+toggle first day of week	jscalendar	sk	Urèi» prvý deò tý¾dòa
+toggle html source	htmlarea	sk	Urèi» HTML zdroj
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príli¹ veµa neúspe¹ných pokusov o prihlásenie: %1 na pou¾ívateµa '%2', %3 na IP %4
+top	htmlarea-TableOperations	sk	Vrch
+total	common	sk	Spolu
+tuesday	common	sk	Utorok
+tunisia	common	sk	TUNIS
+turkey	common	sk	TURECKO
+turkmenistan	common	sk	TURKMÉNSKO
+uganda	common	sk	UGANDA
+ukraine	common	sk	UKRAJINA
+underline	htmlarea	sk	Podèiarknu»
+undoes your last action	htmlarea	sk	Vráti spä» va¹u poslednú akciu
+united arab emirates	common	sk	SPOJENÉ ARABSKÉ EMIRÁTY
+united states	common	sk	USA
+unknown	common	sk	Neznámy
+unlink the current element	htmlarea-ContextMenu	sk	Odpoji» vybraný element
+unset color	htmlarea-TableOperations	sk	Zru¹i» farbu
+update	common	sk	Aktualizácia
+updated	common	sk	Upraven
+upload image	htmlarea-UploadImage	sk	Nahra» obrázok
+upper latin letters	htmlarea-ListType	sk	Veµké latinské písmená
+upper roman numbers	htmlarea-ListType	sk	Veµké rímske èíslice
+url	common	sk	URL
+use button to search for	common	sk	stlaè Tlaèidlo pre vyhµadanie
+use button to search for address	common	sk	stlaè Tlaèidlo pre vyhµadanie adresy
+use button to search for calendarevent	common	sk	stlaè Tlaèidlo pre vyhµadanie záznamu v Kalendári
+use button to search for project	common	sk	stlaè Tlaèidlo pre vyhµadanie projektu
+use cookies	login	sk	pou¾ívat su¹enky (cookies)
+user	common	sk	Pou¾ívateµ
+user accounts	common	sk	pou¾ívateµské úèty
+user groups	common	sk	pou¾ívateµské skupiny
+username	common	sk	Pou¾ívateµské meno
+users	common	sk	pou¾ívatelia
+users choice	common	sk	Pou¾ívateµská Ponuka
+venezuela	common	sk	VENEZUELA
+version	common	sk	Verzia
+vertical align	htmlarea-TableOperations	sk	Zvislé zarovnanie
+viet nam	common	sk	VIETNAM
+view	common	sk	Zobrazi»
+wednesday	common	sk	Streda
+welcome	common	sk	Vitajte
+which groups	common	sk	Ktoré skupiny
+width	htmlarea-TableOperations	sk	©írka
+work email	common	sk	pracovný email
+written by:	common	sk	Zapísal:
+year	common	sk	Rok
+yemen	common	sk	JEMEN
+yes	common	sk	Áno
+you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	sk	Ste v TEXTOVOM RE®IME. Pou¾ite tlaèítka [<>] ak sa chcete vráti» do WYSIWIG.
+you are required to change your password during your first login	common	sk	Poèas svojho prvého prihlásenia budete musie» zmeni» svoje heslo
+you are running a newer version of phpgroupware than your database is setup for	common	sk	Máte spustenú nov¹iu verziu phpGroupWare, ne¾ je va¹a databáza.
+you have %1 new messages!	common	sk	Máte %1 nových zpráv!
+you have 1 new message!	common	sk	Máte 1 novou zprávu!
+you have been successfully logged out	login	sk	Boli ste úspe¹ne odhlásení.
+you have not entered a title	common	sk	Nezadali ste titul
+you have not entered a valid date	common	sk	Nezadali ste správny dátum
+you have not entered a valid time of day	common	sk	Nezadali ste správny èas
+you have not entered participants	common	sk	Nezadali ste spolupracovníkov
+you have selected an invalid date	common	sk	Vybrali ste chybný dátum!
+you have selected an invalid main category	common	sk	Vybrali ste chybnú hlavnú kategóriu!
+you have successfully logged out	common	sk	Boli ste úspe¹ne odhlásení.
+you need to add the webserver user '%1' to the group '%2'.	common	sk	Potrebujete priradi» webserverového pou¾ívateµa '%1' do skupiny '%2'.
+your message could <b>not</b> be sent!<br>	common	sk	Va¹u správu sa <b>nepodarilo</b> odosla»!<br>
+your message has been sent	common	sk	Va¹a správa bola odoslaná
+your search returned %1 matchs	common	sk	na¹iel som %1 záznamov
+your search returned 1 match	common	sk	na¹iel som 1 záznam
+your session could not be verified.	login	sk	Va¹e sedenie nie je platné.
+your settings have been updated	common	sk	Va¹e nastavenia boli upravené
+yugoslavia	common	sk	JUHOSLÁVIA
+zambia	common	sk	ZAMBIA
