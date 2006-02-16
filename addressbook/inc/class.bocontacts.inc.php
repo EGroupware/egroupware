@@ -143,10 +143,10 @@ class bocontacts extends socontacts
 			($contact['n_family'] ? ' '.$contact['n_family'] : '').
 			($contact['n_suffix'] ? ' '.$contact['n_suffix'] : '');
 		// for some bad historical reasons we mainfileds saved in cf :-(((
-		$data['#ophone'] = $data['ophone']; unset($data['ophone']);
-		$data['#address2'] = $data['address2']; unset($data['address2']);
-		$data['#address3'] = $data['address3']; unset($data['address3']);
-		
+		$contact['#ophone'] = $contact['ophone']; unset($contact['ophone']);
+		$contact['#address2'] = $contact['address2']; unset($contact['address2']);
+		$contact['#address3'] = $contact['address3']; unset($contact['address3']);
+	
 		$error_nr = parent::save($contact);
 
 		if(!$error_nr)
@@ -159,9 +159,10 @@ class bocontacts extends socontacts
 		}
 		
 		// for some bad historical reasons we mainfileds saved in cf :-(((
-		$data['ophone'] = $data['#ophone']; unset($data['#ophone']);
-		$data['address2'] = $data['#address2']; unset($data['#address2']);
-		$data['address3'] = $data['#address3']; unset($data['#address3']);
+		$contact['ophone'] = $contact['#ophone']; unset($contact['#ophone']);
+		$contact['address2'] = $contact['#address2']; unset($contact['#address2']);
+		$contact['address3'] = $contact['#address3']; unset($contact['#address3']);
+		
 		$contact['msg'] = $error_nr ?
 			lang('Something went wrong by saving this contact. Errorcode %1',$error_nr) :
 			lang('Contact saved');

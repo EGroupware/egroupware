@@ -108,7 +108,7 @@ class socontacts
 		if($error_nr) return $error_nr_main;
 
 		// save customfields
-		foreach ($this->customfields as $field => $options)
+		foreach ((array)$this->customfields + array('ophone' => '', 'address2' => '' , 'address3' => '') as $field => $options)
 		{
 			$value = $contact['#'.$field];
 			$data = array(
