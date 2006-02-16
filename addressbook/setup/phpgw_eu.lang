@@ -1,0 +1,162 @@
+%1 records imported	addressbook	eu	%1 erregistro inportatuak
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	eu	%1 erregistro irakurriak (oraindik inportatu gabe, atzera itzuli eta "Inportazio Testa" kontrol laukia hautatu gabe utzi)
+(e.g. 1969)	addressbook	eu	(adib. 1969)
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	eu	<b>Ez da aurkitu <none> konbertsio mota.</b> Mesedez, aukeratu bat ondorengo zerrendatik
+@-eval() is only availible to admins!!!	addressbook	eu	@-eval() administratzaileek bakarrik erabil dezakete
+actions	addressbook	eu	Ekintzak
+add a single entry by passing the fields.	addressbook	eu	Gehitu sarrera berri bat eremua izendatuz.
+add custom field	addressbook	eu	Eremu berri bat gehitu
+address book	common	eu	Helbide-liburua
+address book - vcard in	addressbook	eu	Helbide-liburua - VCard bidez
+address book - view	addressbook	eu	Helbide-liburua - ikusi
+address line 2	addressbook	eu	Helbidea-2.lerroa
+address line 3	addressbook	eu	Helbidea-3.lerroa
+address type	addressbook	eu	Helbide mota
+addressbook	common	eu	Helbidea-2-lerroa
+addressbook preferences	addressbook	eu	Helbidea-luburuko lehenetsiak
+addressbook-fieldname	addressbook	eu	Helbide-liburua - eremu izena
+addvcard	addressbook	eu	VCard-a gehitu
+alt. csv import	addressbook	eu	CVS-ak inportatzeko
+are you sure you want to delete this field?	addressbook	eu	ziur zaude eremu hau ezabatu nahi duzula?
+bbs phone	addressbook	eu	BBS telefonoa
+birthday	common	eu	Jaiotze data
+birthdays	common	eu	Jaiotze datak
+blank	addressbook	eu	Utzik
+business	common	eu	Negozio
+business address type	addressbook	eu	Negozio helbide mota
+business city	addressbook	eu	Negozio hiria
+business country	addressbook	eu	Negozio herrialdea
+business email	addressbook	eu	Negozio Posta Elektronikoa
+business email type	addressbook	eu	Negozio Posta Elektroniko mota
+business fax	addressbook	eu	Negozio Faxa
+business phone	addressbook	eu	Negozio Telefonoa
+business state	addressbook	eu	Negozio Herrialdea
+business street	addressbook	eu	Negozio Kalea
+business zip code	addressbook	eu	Negozio Posta Kodea
+car phone	addressbook	eu	Autoko telefonoa
+cell phone	addressbook	eu	Telefono mugikorra
+charset of file	addressbook	eu	Fitxategiaren Karaktere bilduma
+city	common	eu	Hiria
+company	common	eu	Enpresa
+company name	common	eu	Enpresaren Izena
+configuration	common	eu	Konfigurazioa
+contact	common	eu	Kontaktua
+contact application	admin	eu	Kontatuaren aplikazioa
+contact settings	admin	eu	Kontakturan lehenetsiak
+copied by %1, from record #%2.	addressbook	eu	%1 gatik kopiatua, %2 errenkadatik.
+country	common	eu	Herrialdea
+csv-fieldname	addressbook	eu	CVS - Eremu izena
+csv-filename	addressbook	eu	CVS - Fitxategi izena
+custom	addressbook	eu	Egokitua
+custom fields	addressbook	eu	Egokitu Eremuak
+debug output in browser	addressbook	eu	Hirteera nabigatzailean erakutsi
+default filter	addressbook	eu	Iragazki lehenetsia
+delete a single entry by passing the id.	addressbook	eu	Ezabatu errenkada bakarra id. pasatuaz
+department	common	eu	Departamentua
+domestic	addressbook	eu	Barnekoa
+download	addressbook	eu	Deskargatu
+download export file (uncheck to debug output in browser)	addressbook	eu	Exportazio fitxategia deskargatu (egindakoa nabigatzailean erakusten duen aukera indargabetu)
+edit custom field	addressbook	eu	Aldatu egokitutako eremua
+edit custom fields	admin	eu	Aldatu egokitutako eremuak
+empty for all	addressbook	eu	hutsik guztientzat
+enter the path to the exported file here	addressbook	eu	Sartu hemen exportatutako fitxategiaren bidea
+export contacts	addressbook	eu	Kontaktuak exportatu
+export file name	addressbook	eu	Exportatu fitxategiaren izena
+export from addressbook	addressbook	eu	Exportatu helbide-liburutik
+extra	addressbook	eu	Extra
+fax	addressbook	eu	Fax-a
+fax number	common	eu	Fax zenbakia
+field %1 has been added !	addressbook	eu	%1 eremua gehitua izan da!
+field %1 has been updated !	addressbook	eu	%1 eremua berritua izan da!
+field name	addressbook	eu	Eremuaren izena
+fields to show in address list	addressbook	eu	Helbide zerrendan erakutsi beharreko eremuak
+fieldseparator	addressbook	eu	Eremu bereizlea
+full name	addressbook	eu	Izen osoa
+geo	addressbook	eu	GEO
+global categories	addressbook	eu	Kategoria orokorrak
+grant addressbook access	common	eu	Helbide-libururako sarrera ahalbideratu
+home address type	addressbook	eu	Etxea - Helbide mota
+home city	addressbook	eu	Etxea - Hiria
+home country	addressbook	eu	Etxea - Herrialdea
+home email	addressbook	eu	Etxea - Posta E.
+home email type	addressbook	eu	Etxea - Posta E. mota
+home phone	addressbook	eu	Etxea - Telefonoa
+home state	addressbook	eu	Etxea - Estatua
+home street	addressbook	eu	Etxea - Kalea
+home zip code	addressbook	eu	Etxea - Posta Kutxatila
+import	addressbook	eu	Inportatu
+import contacts	addressbook	eu	Inportatu kontaktuak
+import csv-file into addressbook	addressbook	eu	Inportatu CVS fitxategia Helbide liburura
+import file	addressbook	eu	Inportatu fitxategia
+import from	addressbook	eu	Inportazio iturria
+import from ldif, csv, or vcard	addressbook	eu	Inportatu LDIF, CVS ed VCard formatuak
+import from outlook	addressbook	eu	Inportatu Outlooketik
+import multiple vcard	addressbook	eu	Inportatu VCard talde bat
+import next set	addressbook	eu	Inportatu hurrengo taldea
+import_instructions	addressbook	eu	Netscape erabiliz gero, helbide liburua aukeratu eta klikatu <b>Exportatu</b>, <b>fitxategi</b> menuan. Exportaturiko fitxategia LDIF formatuan egongo da.<p>Edo, Microsoft  outlookarekin, hautatu zure kontaktu karpeta eta ondoren hautatu <b>Inportatu eta Exportatu</b>, <b>Fitxategia</b> menutik eta exportatu kontaktuak komas separaturiko testu fitxategi batetara (CVS). <p>Edo, Palm Desktop 4.0 edo berriagoan, helbide liburura sartu eta hautatu <b>Exportatu</b>, <b>Fitxategia</b> menuan. Exportaturiko fitxategia VCard formatuan egongo da.
+international	addressbook	eu	Internazionala
+isdn phone	addressbook	eu	ISDN Telefonoa
+label	addressbook	eu	Etiketa
+ldap context for contacts	admin	eu	LDAP kontextua kontaktuentzat
+ldap host for contacts	admin	eu	LDAP zerbitzaria kontaktuentzat
+ldap root dn for contacts	admin	eu	LDAP dns nagusia kontaktuentzat
+ldap root pw for contacts	admin	eu	LDAP pasahitza
+ldif	addressbook	eu	LDIF
+line 2	addressbook	eu	2. Errenkada
+load vcard	addressbook	eu	VCard-a kargatu
+mark records as private	addressbook	eu	Errenkara pribatu moduan jarri
+message phone	addressbook	eu	Mezuen telefonoa
+middle name	addressbook	eu	Erdiko izena
+mobile	addressbook	eu	Mugikorra
+mobile phone	addressbook	eu	Mugikorra
+modem phone	addressbook	eu	Modem telefonoa
+multiple vcard	addressbook	eu	VCard anitzak
+no vcard	addressbook	eu	Ez VCard-ik
+number of records to read (%1)	addressbook	eu	Irakurri beharreko errenkaden kopurua (%1)
+other number	addressbook	eu	Beste Zebaki bat
+other phone	addressbook	eu	Beste telefono bat
+pager	common	eu	Bilagailua
+parcel	addressbook	eu	Partzela
+phone number	common	eu	Telefono zenbakia
+phone numbers	common	eu	Telefono zenbakiak
+please enter a name for that field !	addressbook	eu	Mesedez sartu izen bat eremu horretarako!
+postal	common	eu	Posta Kutxatilla
+pref	addressbook	eu	lehenetsia
+prefix	addressbook	eu	Aurrizkia
+public key	addressbook	eu	Giltza publikoa
+read a list of entries.	addressbook	eu	Sarrea zerrenda bat irakurri
+read a single entry by passing the id and fieldlist.	addressbook	eu	Sarrera bakarra irakurri "ID"-a eta "eremu zerrenda" pasatuaz.
+record access	addressbook	eu	Erregistrora sarrera
+record owner	addressbook	eu	Erregistroaren jabea
+retrieve contacts	admin	eu	Berreskuratu kontaktuak
+select all	addressbook	eu	Guztiak hautatu
+select the type of conversion	addressbook	eu	Hautatu bihurketa mota
+select the type of conversion:	addressbook	eu	Hautatu bihurketa mota:
+select where you want to store	admin	eu	Hautatu non gorde nahi dituzun
+show birthday reminders on main screen	addressbook	eu	Erakutsi urtebetetze abisuak orri nagusian
+startrecord	addressbook	eu	Erregistro hasera
+state	common	eu	Estatua
+street	common	eu	Kalea
+successfully imported %1 records into your addressbook.	addressbook	eu	%1 erregistro arrakastaz inportatuak helbide-liburura.
+suffix	addressbook	eu	Atzizki
+test import (show importable records <u>only</u> in browser)	addressbook	eu	Inportazio proba (erakutsi inportatu daitezkeen errenkadak <u>bakarrik</u> nabigatzailean)
+that field name has been used already !	addressbook	eu	Eremu izen hori dagoeneko erabilia izan da!
+this person's first name was not in the address book.	addressbook	eu	Pertsona honen lehen izena ez zegoen helbide-liburuan.
+this person's last name was not in the address book.	addressbook	eu	Pertsona honen abizena ez zegoen helbide-liburuan.
+to many might exceed your execution-time-limit	addressbook	eu	gehiegi, exekuzio denbora gainditu lezake.
+today is %1's birthday!	common	eu	Gaur %1_ren urtebetetzea da!
+tomorrow is %1's birthday.	common	eu	Bihar %1 _ren urtebetetzea da.
+translation	addressbook	eu	Itzulpena
+update a single entry by passing the fields.	addressbook	eu	Eguneratu sarrera bakarra eremua emanez.
+use country list	addressbook	eu	Erabili Herrialde zerrenda
+vcard	common	eu	VCard
+vcards require a first name entry.	addressbook	eu	VCard-ek "izena" sarrera behar du
+vcards require a last name entry.	addressbook	eu	VCard-ek "abizena" sarrera behar du
+video phone	addressbook	eu	Bideo telefonoa
+voice phone	addressbook	eu	Ahots telefonoa
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	eu	KONTUZ!! LDAP balioduna da soilik kontaktuak kontu korronteko datuak gordetzeko ez badituzu erabiltzen!
+work phone	addressbook	eu	Laneko telefonoa
+you must select a vcard. (*.vcf)	addressbook	eu	VCard bat hautatu beharra daukazu. (*.vcf)
+you must select at least 1 column to display	addressbook	eu	Gutxienez erakusteko zutabe bat hautatu beharra daukazu
+zip code	common	eu	ZIP kodea
+zip_note	addressbook	eu	<p><b>Oharra:</b> fitxategia zip formatuan egon liteke, zebait .cvs, .vcf edo .ldif edukiaz. Dena dela, ez nahastu fitxategi motak inportatzerakoan.
