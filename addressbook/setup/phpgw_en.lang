@@ -38,6 +38,8 @@ business zip code	addressbook	en	Business Postal Code
 car phone	addressbook	en	Car Phone
 cell phone	addressbook	en	Mobile phone
 charset of file	addressbook	en	Charset of file
+choose an icon for this contact type	addressbook	en	Choose an icon for this contact type
+chosse an etemplate for this contact type	addressbook	en	Chosse an eTemplate for this contact type
 city	common	en	City
 company	common	en	Company
 company name	common	en	Company Name
@@ -95,6 +97,7 @@ home phone	addressbook	en	Home Phone
 home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
 home zip code	addressbook	en	Home ZIP Code
+icon	addressbook	en	Icon
 import	addressbook	en	Import
 import contacts	addressbook	en	Import Contacts
 import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
@@ -130,6 +133,7 @@ multiple vcard	addressbook	en	Multiple VCard
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
+options for type	addressbook	en	Options for type
 organisation	addressbook	en	organisation
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
@@ -142,6 +146,7 @@ postal	common	en	Postal
 pref	addressbook	en	pref
 prefix	addressbook	en	Prefix
 public key	addressbook	en	Public Key
+publish into groups:	addressbook	en	Publish into groups:
 read a list / search for entries.	addressbook	en	Read a list / search for entries.
 read a list of entries.	addressbook	en	Read a list of entries.
 read a single entry by passing the id and fieldlist.	addressbook	en	Read a single entry by passing the id and fieldlist.

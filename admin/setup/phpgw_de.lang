@@ -4,6 +4,7 @@
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benützt)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	de	(Zur Installation neuer Anwendungen verwenden Sie bitte<br><a href="setup/" target="setup">Setup</a> [Anwendungen Verwalten] !!!)
+-  type	admin	de	-Typ
 accesslog and bruteforce defense	admin	de	Zugangsprotokoll und Abwehr von Brute-Force-Angriffen
 account active	admin	de	Konto aktiv
 account has been created	common	de	Konto wurde erstellt
@@ -52,6 +53,7 @@ application name	admin	de	Name der Anwendung
 application title	admin	de	Titel der Anwendung
 applications	admin	de	Anwendungen
 applications list	admin	de	Liste der Anwendungen
+applies the changes	admin	de	übernimmt Änderungen
 are you sure you want to delete the application %1 ?	admin	de	Sind Sie sicher, dass Sie die Anwendung %1 löschen wollen?
 are you sure you want to delete this account ?	admin	de	Sind Sie sicher, dass Sie dieses Konto löschen wollen?
 are you sure you want to delete this application ?	admin	de	Sind Sie sicher, dass Sie diese Applikation löschen möchten?
@@ -89,6 +91,7 @@ click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
 color	admin	de	Farbe
 country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
+creates a new field	admin	de	erstellt ein neues Feld
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
 cyrus imap server	admin	de	Cyrus IMAP Server
 data	admin	de	Daten
@@ -110,6 +113,7 @@ delete the group	admin	de	Gruppe löschen
 delete this category	admin	de	Kategorie löschen
 delete this group	admin	de	Gruppe löschen
 delete this user	admin	de	Benutzer löschen
+deletes this field	admin	de	löscht dieses Feld
 deliver extern	admin	de	Extern ausliefern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
@@ -127,6 +131,7 @@ deny access to site configuration	admin	de	Zugriff auf Konfiguration der Anwendu
 deny access to user accounts	admin	de	Zugriff auf Benutzerkonten verbieten
 deny all users access to grant other users access to their entries ?	admin	de	Allen Benutzern verbieten anderen Benutzern Zugriff zu ihren Daten zu gewähren?
 description can not exceed 255 characters in length !	admin	de	Die Beschreibung darf nicht länger als 255 Zeichen sein!
+determines the order the fields are displayed	admin	de	finded die Reihenfolge der angezeigten Felder
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable wysiwyg-editor	admin	de	WYSIWYG Editor (formatierter Text) abschalten
 disabled (not recomended)	admin	de	abgeschaltet (nicht empfohlen)
@@ -135,6 +140,8 @@ do not delete the category and return back to the list	admin	de	Kategorie NICHT 
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen?
 do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globale Unterkategorien löschen?
 do you want to move all global subcategories one level down ?	admin	de	Wollen sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
+each value is a line like <id>[=<label>]	admin	de	jeder Wert ist ein Zeile <id>[=<label>]
+each value is a line like id[=label]	admin	de	jeder Wert ist eine Zeile id[=label]
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
 edit email settings	admin	de	Email Einstellungen bearbeiten
@@ -238,6 +245,8 @@ ldap rootdn	admin	de	LDAP rootdn
 leave empty for no quota	admin	de	Leer lassen für keine Quota
 leave the category untouched and return back to the list	admin	de	Kategorie unverändert lassen und zur Liste zurückkehren
 leave the group untouched and return back to the list	admin	de	Gruppe unverändert lassen und zur Liste zurückkehren
+leaves without saveing	admin	de	beendet ohne zu speichern
+length<br>rows	admin	de	Länge<br>Zeilen
 list config settings	admin	de	Konfigurationseinstellungen auflisten
 list current sessions	admin	de	aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
@@ -251,6 +260,7 @@ mail settings	admin	de	EMail Einstellungen
 main email-address	admin	de	Stamm-Emailadresse
 main screen message	admin	de	Nachricht der Startseite
 manager	admin	de	Manager
+max length of the input [, length of the inputfield (optional)]	admin	de	maximale länge für die Ausgabe [. länge des Feldes (optional)]
 maximum account id (e.g. 65535 or 1000000)	admin	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
 maximum entries in click path history	admin	de	Max. Anzahl Einträge in der Click-Path-Historie
 message has been updated	admin	de	Nachricht wurde geändert
@@ -260,6 +270,7 @@ minute	admin	de	Minute
 mode	admin	de	Modus
 month	admin	de	Monat
 new group name	admin	de	Neuer Gruppenname
+new name	admin	de	neuer Name
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
 next run	admin	de	nächste Ausführung
 no algorithms available	admin	de	Kein Algorithmus verfügbar
@@ -272,6 +283,7 @@ no permission to add groups	admin	de	Sie haben keine ausreichenden Rechte eine G
 no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Benutzer hinzuzufügen
 no permission to create groups	admin	de	Sie haben keine ausreichenden Rechte um eine Gruppe zu erstellen
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
+number of row for a multiline inputfield or line of a multi-select-box	admin	de	Anzahl der Zeilen in einem mehrzeiligen Feld oder eine multi-select-box
 outbound	admin	de	ausgehend
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
@@ -291,8 +303,8 @@ postfix with ldap	admin	de	Postfix mit LDAP
 preferences	admin	de	Einstellungen
 primary group	admin	de	primäre Gruppe
 qmaildotmode	admin	de	qmaildotmode
-quota size in mbyte	admin	de	Quotagröße in MByte
 quota settings	admin	de	Quota-Einstellungen
+quota size in mbyte	admin	de	Quotagröße in MByte
 re-enter password	admin	de	Passwort wiederholen
 read this list of methods.	admin	de	Diese Liste der Methoden lesen
 register application hooks	admin	de	Registrieren der "Hooks" der Anwendungen
@@ -305,6 +317,7 @@ route all mails to	admin	de	Alle Mails senden an
 run asynchronous services	admin	de	Asynchrone Dienste ausführen
 save the category	admin	de	Kategorie speichern
 save the category and return back to the list	admin	de	Kategorie speichern und zur Liste zurückkehren
+saves the changes made and leaves	admin	de	beendet und speichert die Änderungen
 search accounts	admin	de	Benutzerkonten durchsuchen
 search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
@@ -347,6 +360,7 @@ standard smtp-server	admin	de	Standard SMTP Server
 start testjob!	admin	de	Testjob starten!
 submit changes	admin	de	Änderungen speichern
 submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
+subtype	admin	de	Untertyp
 template selection	admin	de	Auswahl der Benutzeroberfläche
 text entry	admin	de	Texteingabe
 that application name already exists.	admin	de	Diesen Anwendungsname gibt es bereits.
@@ -359,7 +373,9 @@ the api requires an upgrade	admin	de	Die API benötigt ein Upgrade
 the groups must include the primary group	admin	de	Die Gruppen müssen die primäre Gruppe beinhalten
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nich länger als 8 Zeichen sein
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	de	intern benutzer Name (<= 20 buchstaben), veränderungen machen existierende Daten unerreichbar
 the testjob sends you a mail everytime it is called.	admin	de	Der Testjob sendet Ihnen jedesmal eine Mail wenn er aufgerufen wird.
+the text displayed to the user	admin	de	für den Benutzer angezeiter Text
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein
 the users bellow are still members of group %1	admin	de	Der unten angezeigten Benutzer sind Mitglied der Gruppe %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	de	Es gibt bereits ein Gruppe mit diesem Namen. Benutzernamen dürfen nicht identisch mit Gruppennamen sein.
@@ -374,6 +390,7 @@ top	admin	de	oben
 total records	admin	de	Anzahl Datensätze insgesamt
 trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverhältnis
+type of customfield	admin	de	Typ des Benutzerdefinierten Feldes
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows muß der asynchrone Service %1von Hand%2 installiert werden oder es wird nur die Ausweichmöglichkeit benutzt. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft!!!
 use cookies to pass sessionid	admin	de	SitzungsId in einem Cookie speichern
 use pure html compliant code (not fully working yet)	admin	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
