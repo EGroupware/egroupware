@@ -215,6 +215,10 @@ class uicontacts extends bocontacts
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = true;
 		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
+		
+		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
+		$sel_options['tz'] = $tz;
+		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
 
 		$this->tmpl->read('addressbook.edit');
 		foreach(array('email','email_home','url') as $name)
