@@ -38,6 +38,8 @@ business zip code	addressbook	es-es	Código postal del trabajo
 car phone	addressbook	es-es	Telfono del coche
 cell phone	addressbook	es-es	Teléfono móvil
 charset of file	addressbook	es-es	Juego de caracteres del fichero
+choose an icon for this contact type	addressbook	es-es	Elija un icono para este tipo de contacto
+chosse an etemplate for this contact type	addressbook	es-es	Elija una plantilla para este tipo de contacto
 city	common	es-es	Ciudad
 company	common	es-es	Empresa
 company name	common	es-es	Nombre de la empresa
@@ -95,6 +97,7 @@ home phone	addressbook	es-es	Telefono particular
 home state	addressbook	es-es	Provincia de residencia
 home street	addressbook	es-es	Domicilio personal
 home zip code	addressbook	es-es	Código postal
+icon	addressbook	es-es	Icono
 import	addressbook	es-es	Importar
 import contacts	addressbook	es-es	Importar contactos
 import csv-file into addressbook	addressbook	es-es	Importar archivo CSV en la Libreta de direcciones
@@ -130,6 +133,7 @@ multiple vcard	addressbook	es-es	VCard múltiple
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
+options for type	addressbook	es-es	Opciones para el tipo
 organisation	addressbook	es-es	organización
 other number	addressbook	es-es	Otro número
 other phone	addressbook	es-es	Otro teléfono
@@ -142,6 +146,7 @@ postal	common	es-es	Postal
 pref	addressbook	es-es	pref
 prefix	addressbook	es-es	Prefijo
 public key	addressbook	es-es	Clave pública
+publish into groups:	addressbook	es-es	Publicar en los grupos:
 read a list / search for entries.	addressbook	es-es	Leer una lista / buscar entradas
 read a list of entries.	addressbook	es-es	Leer una lista de entradas
 read a single entry by passing the id and fieldlist.	addressbook	es-es	Leer una sola entrada pasando el identificador y la lista de campos

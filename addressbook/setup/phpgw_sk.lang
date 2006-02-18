@@ -15,7 +15,7 @@ address line 2	addressbook	sk	Adresa riadok 2
 address line 3	addressbook	sk	Adresa riadok 3
 address type	addressbook	sk	Typ adresy
 addressbook	common	sk	Adresár
-addressbook preferences	addressbook	sk	Nastavenia Adresára
+addressbook preferences	addressbook	sk	Predvoµby Adresára
 addressbook-fieldname	addressbook	sk	Pole adresára
 addvcard	addressbook	sk	Pridaj vizitku VCard
 all	addressbook	sk	V¹e
@@ -99,7 +99,7 @@ home state	addressbook	sk	©tát - domov
 home street	addressbook	sk	Ulica -domov
 home zip code	addressbook	sk	PSÈ - domov
 import	addressbook	sk	Import
-import contacts	addressbook	sk	Importuj Kontakty
+import contacts	addressbook	sk	Importuj kontakty
 import csv-file into addressbook	addressbook	sk	Importovat CSV súbor do Adresára
 import file	addressbook	sk	Importuj súbor
 import from	addressbook	sk	Import z

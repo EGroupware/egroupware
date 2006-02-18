@@ -1,7 +1,7 @@
 %1 records imported	addressbook	fr	%1 enregistrements importés
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	fr	%1 enregistrements lus (non encore importé, vous devriez retourner en arrière %2back%3 et décocher le test de límportation)
 (e.g. 1969)	addressbook	fr	(e.g. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fr	<b>Aucun type de conversion &lt;aucun&gt; n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	fr	<b>Aucun type de conversion <aucun> n'a pu être trouvé.</b>  SVP choisissez un type de conversion depuis la liste
 @-eval() is only availible to admins!!!	addressbook	fr	@-eval() est disponible uniquement pour les administrateurs!!!
 actions	addressbook	fr	Actions
 add a single entry by passing the fields.	addressbook	fr	Ajouter une seule entrée en passant les champs.
@@ -16,7 +16,9 @@ addressbook	common	fr	Carnet d'adresses
 addressbook preferences	addressbook	fr	Préférences du carnet d'adresses
 addressbook-fieldname	addressbook	fr	Carnet d'adresses - nom de champ
 addvcard	addressbook	fr	Ajouter VCard
+advanced search	addressbook	fr	Recherche avançée
 alt. csv import	addressbook	fr	Import Alt. CSV
+are you shure you want to delete this contact?	addressbook	fr	Etes-vous sûr que vous voulez supprimer ce contact?
 are you sure you want to delete this field?	addressbook	fr	Etes-vous sûr de vouloir effacer ce champ ?
 bbs phone	addressbook	fr	Téléphone BBS
 birthday	common	fr	Anniversaire
@@ -36,15 +38,19 @@ business zip code	addressbook	fr	Code postal (bureau)
 car phone	addressbook	fr	Téléphone voiture
 cell phone	addressbook	fr	Téléphone portable
 charset of file	addressbook	fr	Jeu de caractères du fichier
+choose an icon for this contact type	addressbook	fr	Choisissez une icône pour ce type de contact
+chosse an etemplate for this contact type	addressbook	fr	Choisissez un eTemplate pour ce type de contact
 city	common	fr	Ville
 company	common	fr	Société
 company name	common	fr	Nom de la société
 configuration	common	fr	Configuration
 contact	common	fr	Contact
 contact application	admin	fr	Application contact
+contact saved	addressbook	fr	Contact sauvé
 contact settings	admin	fr	Paramètres du contact
 copied by %1, from record #%2.	addressbook	fr	Copié par %1, depuis l'enregistrement #%2.
 country	common	fr	Pays
+create new links	addressbook	fr	Créer de nouveaux liens
 csv-fieldname	addressbook	fr	CSV - Nom de champ
 csv-filename	addressbook	fr	CSV - Nom de fichier
 custom	addressbook	fr	Personnalisé
@@ -53,13 +59,20 @@ debug output in browser	addressbook	fr	Deboguer la sortie dans le navigateur
 default filter	addressbook	fr	Filtre par défaut
 delete a single entry by passing the id.	addressbook	fr	Effacer une seule entrée en passant l'ID.
 department	common	fr	Département
+do your really want to delete this contact?	addressbook	fr	Voulez vous vraiment supprimer ce contact?
+doesn't matter	addressbook	fr	sans importance
 domestic	addressbook	fr	Domestique
 download	addressbook	fr	Télécharger
 download export file (uncheck to debug output in browser)	addressbook	fr	Télécharger le fichier export (Décocher pour debugger la sortie dans le navigateur)
+download this contact as vcard file	addressbook	fr	Téléchargez ce contact comme un fichier vCard
 edit custom field	addressbook	fr	Editer le champ personnalisé
 edit custom fields	admin	fr	Editer les champs personnalisés
+edit phonenumbers -	addressbook	fr	Éditez les numéros -
+email & internet	addressbook	fr	Email & Internet
 empty for all	addressbook	fr	vide pour tous
 enter the path to the exported file here	addressbook	fr	Entrer ici le chemin vers le fichier exporté
+existing links	addressbook	fr	Liens existants
+export	addressbook	fr	Exporter
 export contacts	addressbook	fr	Exporter les contacts
 export file name	addressbook	fr	Nom du fichier d'export
 export from addressbook	addressbook	fr	Exporter depuis le carnet d'adresses
@@ -84,6 +97,7 @@ home phone	addressbook	fr	Téléphone (domicile)
 home state	addressbook	fr	Région (domicile)
 home street	addressbook	fr	Rue (domicile)
 home zip code	addressbook	fr	Code postal (domicile)
+icon	addressbook	fr	Icône
 import	addressbook	fr	Importer
 import contacts	addressbook	fr	Importer les contacts
 import csv-file into addressbook	addressbook	fr	Importer le fichier CSV dans le carnet d'adresses
@@ -97,12 +111,14 @@ import_instructions	addressbook	fr	Dans Netscqpe, ouvrir le carnet d´adresses et
 international	addressbook	fr	International
 isdn phone	addressbook	fr	Téléphone RNIS
 label	addressbook	fr	Label
+last modified	addressbook	fr	Dernière modification
 ldap context for contacts	admin	fr	Contexte LDAP pour les contacts
 ldap host for contacts	admin	fr	Hôte LDAP pour les contacts
 ldap root dn for contacts	admin	fr	Racine LDAP dn pour les contacts
 ldap root pw for contacts	admin	fr	Racine LDAP pw pour les contacts
 ldif	addressbook	fr	LDIF
 line 2	addressbook	fr	Ligne 2
+links	addressbook	fr	Liens
 list all categories	addressbook	fr	Lister toutes les catégories
 list all customfields	addressbook	fr	Lister tous les champs spécifiques
 load vcard	addressbook	fr	Charger VCard
@@ -112,10 +128,12 @@ middle name	addressbook	fr	Deuxième prénom
 mobile	addressbook	fr	Portable
 mobile phone	addressbook	fr	Téléphone portable
 modem phone	addressbook	fr	Téléphone modem
+more ...	addressbook	fr	Plus ...
 multiple vcard	addressbook	fr	VCard Multiples
 no vcard	addressbook	fr	Pas de VCard
+number	addressbook	fr	Numéro
 number of records to read (%1)	addressbook	fr	Nombre d'enregistrements à lire (%1)
-number of records to read (<=200)	addressbook	fr	Nombre d'enregistrements à lire (<=200)
+organisation	addressbook	fr	Organisation
 other number	addressbook	fr	Autre numéro
 other phone	addressbook	fr	Autre téléphone
 pager	common	fr	Pager
@@ -139,11 +157,16 @@ select the type of conversion:	addressbook	fr	Sélectionner le type de convertion
 select where you want to store	admin	fr	Choisissez où vous voulez stocker
 show	addressbook	fr	Montre
 show birthday reminders on main screen	addressbook	fr	Montrer les rappels d'anniversaires sur la page principale
+something went wrong by deleting %1	addressbook	fr	Quelque chose a mal tourné en supprimant %1
+something went wrong by deleting this contact	addressbook	fr	Quelque chose a mal tourné en supprimant ce contact
+something went wrong by reading this contact	addressbook	fr	Quelque chose a mal tourné en éditant ce contact
+something went wrong by saving this contact. errorcode %1	addressbook	fr	Quelque chose a mal tourné en sauvant ce contact. code d'erreur %1
 startrecord	addressbook	fr	Enregistrement de départ
 state	common	fr	Région
 street	common	fr	Rue
 successfully imported %1 records into your addressbook.	addressbook	fr	%1 enregistrement(s) ont été enregistrés avec succès dans votre carnet d´adresses.
 suffix	addressbook	fr	Suffixe
+tel home	addressbook	fr	tel maison
 test import (show importable records <u>only</u> in browser)	addressbook	fr	Tester l'import (montrer <u>seulement</u> les enregistrements importables dans le navigateur)
 that field name has been used already !	addressbook	fr	Ce nom de champ a déjà été utilisé !
 this person's first name was not in the address book.	addressbook	fr	Le prénom de cette personne n'était pas dans le carnet d'adresses.
@@ -151,7 +174,6 @@ this person's last name was not in the address book.	addressbook	fr	Le nom de ce
 to many might exceed your execution-time-limit	addressbook	fr	trop pourraient dépasser votre limite de temps d'exéction
 today is %1's birthday!	common	fr	Aujourd'hui c'est l'anniversaire de %1 !
 tomorrow is %1's birthday.	common	fr	Demain c'est l'anniversaire de %1.
-too many might exceed your execution-time-limit	addressbook	fr	trop, peut excéder votre temps d´exécuton limite.
 translation	addressbook	fr	Traduction
 update a single entry by passing the fields.	addressbook	fr	Mettre à jour une seule entrée en passant les champs.
 use country list	addressbook	fr	Utiliser la liste des pays
@@ -161,8 +183,12 @@ vcards require a last name entry.	addressbook	fr	Les Vcards nécessitent une entr
 video phone	addressbook	fr	Téléphone vidéo
 voice phone	addressbook	fr	Téléphone vocal
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fr	Attention!! LDAP est valide seulement si vous n'utilisez pas les contacts pour le stockage des comptes!
+warning: all contacts found will be deleted!	addressbook	fr	AVERTISSEMENT:  Tous les contacts trouvés seront supprimés!
 work phone	addressbook	fr	Téléphone (bureau)
-write (update or add) a single entry by passing the fields.	addressbook	fr	Ecrire (mise à jour ou ajout) une entrée en passant les champs.
+you are not permitted to delete contact %1	addressbook	fr	Vous n'êtes pas autorisés à supprimer le contact %1
+you are not permittet to delete this contact	addressbook	fr	Vous n'êtes pas autorisés à supprimer ce contact
+you are not permittet to edit this contact	addressbook	fr	Vous n'êtes pas autorisés à éditer ce contact
+you are not permittet to view this contact	addressbook	fr	Vous n'êtes pas autorisés à voir ce contact
 you must select a vcard. (*.vcf)	addressbook	fr	Vous devez choisir une vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	fr	Vous devez choisir au moins 1 colonne à afficher
 zip code	common	fr	Code postal

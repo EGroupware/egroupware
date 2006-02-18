@@ -62,15 +62,15 @@ csv-import	common	sk	CSV-Import
 custom	infolog	sk	Pou¾ívateµom definované
 custom contact-address, leave empty to use information from most recent link	infolog	sk	Pou¾ívateµom definovaná kontaktná adresa -ak necháte prázdne, pou¾ije sa údaj z najèerstvej¹ieho odkazu
 custom contact-information, leave emtpy to use information from most recent link	infolog	sk	Pou¾ívateµom definované kontaktné informácie -ak necháte prázdne, pou¾ije sa údaj z najèerstvej¹ieho odkazu
-custom fields	infolog	sk	Pou¾ívateµom definované Polo¾ky
+custom fields	infolog	sk	Pou¾ívateµom definované polo¾ky
 custom fields, typ and status	common	sk	Pou¾ívateµom definované polo¾ky, typ a stav
 custom regarding	infolog	sk	Pou¾ívateµom definované ohµadom
 custom status for typ	infolog	sk	Pou¾ívateµom definovaný stav pre typ
-customfields	infolog	sk	Pou¾ívateµské Polo¾ky
+customfields	infolog	sk	Pou¾ívateµské polo¾ky
 datecreated	infolog	sk	dátum vytvorenia
 dates, status, access	infolog	sk	Dátum, Stav, Prístup
 days	infolog	sk	dní
-default filter for infolog	infolog	sk	Predvolený filter pre Sledovanie Úloh
+default filter for infolog	infolog	sk	Predvolený filter pre Záznamník
 default status for a new log entry	infolog	sk	predvolený stav pre nový záznam
 delegation	infolog	sk	Delegova»
 delete	infolog	sk	Zmaza»
@@ -91,8 +91,8 @@ download	infolog	sk	Stiahnu»
 duration	infolog	sk	Trvanie
 each value is a line like <id>[=<label>]	infolog	sk	ka¾dá hodnota je riadok v tvare <id>[=<label>]
 edit	infolog	sk	Upravi»
-edit or create categories for ingolog	infolog	sk	Upravi» alebo vytvori» kategórie pre Sledovanie Úloh
-edit status	infolog	sk	Upravi» Stav
+edit or create categories for ingolog	infolog	sk	Upravi» alebo vytvori» kategórie pre Záznamník
+edit status	infolog	sk	Upravi» stav
 edit the entry	infolog	sk	Upravi» záznam
 edit this entry	infolog	sk	Uprav tento záznam
 empty for all	infolog	sk	prázdne pre v¹etko
@@ -113,17 +113,17 @@ high	infolog	sk	vysoká
 id	infolog	sk	ID
 import	infolog	sk	Import
 import next set	infolog	sk	importova» ïal¹iu sadu
-info log	common	sk	Sledovanie Úloh
-infolog	common	sk	Sledovanie Úloh
-infolog - delete	infolog	sk	Sledovanie Úloh - Zmaza»
-infolog - edit	infolog	sk	Sledovanie Úloh - Upravi»
-infolog - import csv-file	infolog	sk	Sledovanie Úloh - Importova» súbor CSV
-infolog - new	infolog	sk	Sledovanie Úloh - Nové
-infolog - new subproject	infolog	sk	Sledovanie Úloh - Nový Podprojekt
-infolog - subprojects from	infolog	sk	Sledovanie Úloh - Podprojekty od
-infolog list	infolog	sk	Sledovanie Úloh - zoznam
-infolog preferences	common	sk	Sledovanie Úloh - nastavenia
-infolog-fieldname	infolog	sk	Sledovanie Úloh - Názov polo¾ky
+info log	common	sk	Záznamník
+infolog	common	sk	Záznamník
+infolog - delete	infolog	sk	Záznamník - Zmaza»
+infolog - edit	infolog	sk	Záznamník - Upravi»
+infolog - import csv-file	infolog	sk	Záznamník - Importova» súbor CSV
+infolog - new	infolog	sk	Záznamník - Nové
+infolog - new subproject	infolog	sk	Záznamník - Nový podprojekt
+infolog - subprojects from	infolog	sk	Záznamník - Podprojekty od
+infolog list	infolog	sk	Záznamník - zoznam
+infolog preferences	common	sk	Záznamník - nastavenia
+infolog-fieldname	infolog	sk	Záznamník - Názov polo¾ky
 invalid filename	infolog	sk	Chybný názov súboru
 label<br>helptext	infolog	sk	Oznaèenie<br>Pomocný text
 last changed	infolog	sk	Naposledy zmenený
@@ -198,13 +198,13 @@ select a responsible user: a person you want to delegate this task	infolog	sk	vy
 select a typ to edit it's status-values or delete it	infolog	sk	vyberte typ pre úpravu hodnôt stavov alebo ho zma¾te
 select an app to search in	infolog	sk	Vyberte, v ktorej aplikácii chcete hµada»
 select an entry to link with	infolog	sk	Vyberte záznam na ktorý chcete vytvori» odkaz
-should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	sk	Èi chcete, aby Sledovanie Úloh zobrazovalo va¹e otvorené záznamy, telefonické hovory alebo poznámky -na hlavnej stránke. Funguje len v prípade, ¾e ste vo svojich nastaveniach neurèili niektorú aplikáciu, aby sa zobrazovala na hlavnej stránke.
-should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sk	Èi Sledovanie Úloh má zobrazova» Podúlohy, -hovory alebo -poznámky v normálnom zobrazení alebo nie. V¾dy mô¾ete zobrazi» Podradené záznamy cez ich rodièovský záznam.
-should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	sk	Èi má Sledovanie Úloh zobrazova» odkazy na iné aplikácie a/alebo súborové prílohy priamo v zozname Sledovania Úloh (normálne zobrazenie priamo po vstupe do Sledovania Úloh).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	sk	Èi má Sledovanie Úloh pou¾íva» plné mená (meno, priezvisko) alebo iba pou¾ívateµské mená.
-should this entry only be visible to you and people you grant privat access via the acl	infolog	sk	Èi má by» tento záznam viditeµný IBA pre vás a pre µudí, ktorým pridelíte súkromný prístup cez ACL.
+should infolog display your open entries - not finised tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	sk	Má Záznamník zobrazova» va¹e otvorené záznamy, telefonické hovory alebo poznámky -na hlavnej stránke? Funguje len v prípade, ¾e ste vo svojich nastaveniach neurèili niektorú aplikáciu, aby sa zobrazovala na hlavnej stránke.
+should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sk	Má Záznamník zobrazova» Podúlohy, -hovory alebo -poznámky v normálnom zobrazení alebo nie? V¾dy mô¾ete zobrazi» Podradené záznamy cez ich rodièovský záznam.
+should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when u enter infolog).	infolog	sk	Má Záznamník zobrazova» odkazy na iné aplikácie a/alebo súborové prílohy priamo v zozname InfoZáznamníka (normálne zobrazenie priamo po vstupe do Sledovania Úloh)?
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	sk	Má Záznamník pou¾íva» plné mená (meno, priezvisko) alebo iba pou¾ívateµské mená?
+should this entry only be visible to you and people you grant privat access via the acl	infolog	sk	Má by» tento záznam viditeµný IBA pre vás a pre µudí, ktorým pridelíte súkromný prístup cez ACL?
 show full usernames	infolog	sk	Zobrazi» plné pou¾ívateµské mená
-show in the infolog list	infolog	sk	Zobrazi» v zozname Sledovania Úloh
+show in the infolog list	infolog	sk	Zobrazi» v zozname Záznamníka
 show list of upcoming entries	infolog	sk	zobrazi» zoznam blí¾iacich sa záznamov
 show open entries: tasks/calls/notes on main screen	infolog	sk	Zobrazi» otvorené záznamy: Úlohy/Telefonáty/Poznámky na hlavnej stránke
 small view	infolog	sk	zmen¹ený pohµad
@@ -221,7 +221,7 @@ test import (show importable records <u>only</u> in browser)	infolog	sk	Test imp
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne pou¾ívané meno (<= 10 znakov), jeho zmena zneprístupní existujúce údaje
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	sk	vnútorne pou¾ívané meno (<= 20 znakov), jeho zmena zneprístupní existujúce údaje
 the text displayed to the user	infolog	sk	text zobrazený pou¾ívateµovi
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sk	Toto je filter, ktorý Sledovanie Úloh pou¾íva keï otvoríte aplikáciu. Filtre obmedzujú, ktoré záznamy sú zobrazené vo vybranom pohµade. Sú tu filtre na zobrazenie iba dokonèených záznamov, alebo naopak -e¹te otvorených, alebo budúcich záznamov vás alebo v¹etkých pou¾ívateµov.
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	sk	Toto je filter, ktorý Záznamník pou¾íva keï otvoríte aplikáciu. Filtre obmedzujú, ktoré záznamy sú zobrazené vo vybranom pohµade. Sú tu filtre na zobrazenie iba dokonèených záznamov, alebo naopak -e¹te otvorených, alebo budúcich záznamov vás alebo v¹etkých pou¾ívateµov.
 til when should the todo or phonecall be finished	infolog	sk	dokiaµ sa nedokonèí Úloha alebo Telefonát
 to many might exceed your execution-time-limit	infolog	sk	priveµa mô¾e prekroèi» va¹e obmedzenia týkajúce sa povoleného èasu behu aplikácie
 today	infolog	sk	Dnes

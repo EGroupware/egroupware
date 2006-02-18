@@ -5,6 +5,7 @@
 (default no, leave it off if you dont use it)	admin	es-es	(por defecto, No, desactivar si no se usa)
 (stored password will not be shown here)	admin	es-es	(las claves guardadas no se mostrarán aquí)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	es-es	(Para instalar nuevas aplicaciones, utilice <br><a href="setup/" target="setup">Instalación</a> [Administrar Aplicaciones])
+-  type	admin	es-es	- tipo
 accesslog and bruteforce defense	admin	es-es	Defensa de acceso al registro y fuerza bruta
 account active	admin	es-es	Cuenta activa
 account has been created	common	es-es	La cuenta ha sido creada
@@ -53,6 +54,7 @@ application name	admin	es-es	Nombre de la aplicación
 application title	admin	es-es	Título de la aplicación
 applications	admin	es-es	Aplicaciones
 applications list	admin	es-es	Lista de aplicaciones
+applies the changes	admin	es-es	aplica los cambios
 are you sure you want to delete the application %1 ?	admin	es-es	¿Está seguro de que quiere borrar la aplicación %1 ?
 are you sure you want to delete this account ?	admin	es-es	¿Está seguro de que quiere borrar esta cuenta?
 are you sure you want to delete this application ?	admin	es-es	¿Está seguro de que quiere borrar esta aplicación?
@@ -90,6 +92,7 @@ click to select a color	admin	es-es	Pulse para seleccionar un color
 color	admin	es-es	Color
 country selection	admin	es-es	Selección de país
 create group	admin	es-es	Crear grupo
+creates a new field	admin	es-es	crea un campo nuevo
 crontab only (recomended)	admin	es-es	Sólo mediante crontab (recomendado)
 custom fields	admin	es-es	Campos personalizados
 cyrus imap server	admin	es-es	Servidor IMAP Cyrus
@@ -112,6 +115,7 @@ delete the group	admin	es-es	borrar el grupo
 delete this category	admin	es-es	borrar esta categoría
 delete this group	admin	es-es	borrar este grupo
 delete this user	admin	es-es	borrar este usuario
+deletes this field	admin	es-es	borra este campo
 deliver extern	admin	es-es	entrega externa
 deny access to access log	admin	es-es	Denegar acceso al registro de accesos
 deny access to application registery	admin	es-es	Denegar acceso al registro de aplicaciones
@@ -129,6 +133,7 @@ deny access to site configuration	admin	es-es	Denegar acceso a la configuración 
 deny access to user accounts	admin	es-es	Denegar acceso a las cuentas de usuario
 deny all users access to grant other users access to their entries ?	admin	es-es	¿Denegar a los usuarios conceder acceso a otros usuarios para sus registros?
 description can not exceed 255 characters in length !	admin	es-es	¡La descripción no puede exceder de 255 caracteres de longitud!
+determines the order the fields are displayed	admin	es-es	determina el orden en que se muestran los campos
 disable "auto completion" of the login form	admin	es-es	Desactivar completado automático en el formulario de inicio de sesión
 disable wysiwyg-editor	admin	es-es	desactivar editor WYSIWYG
 disabled (not recomended)	admin	es-es	desactivado (no se recomienda)
@@ -137,6 +142,8 @@ do not delete the category and return back to the list	admin	es-es	NO borrar la 
 do you also want to delete all global subcategories ?	admin	es-es	¿Desea eliminar también todas las subcategorías globales?
 do you want to delete all global subcategories ?	admin	es-es	¿Desea borrar todas las subcategorías globales?
 do you want to move all global subcategories one level down ?	admin	es-es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
+each value is a line like <id>[=<label>]	admin	es-es	cada valor es una línea como <id>[=<etiqueta>]
+each value is a line like id[=label]	admin	es-es	cada valor es una línea como id[=label]
 edit account	admin	es-es	Editar cuenta
 edit application	admin	es-es	Editar aplicación
 edit email settings	admin	es-es	editar configuración de correo
@@ -242,6 +249,8 @@ ldap rootdn	admin	es-es	rootdn LDAP
 leave empty for no quota	admin	es-es	dejar en blanco si no hay cuota
 leave the category untouched and return back to the list	admin	es-es	dejar la categoría intacta y volver a la lista
 leave the group untouched and return back to the list	admin	es-es	Dejar el grupo intacto y volver a la lista
+leaves without saveing	admin	es-es	sale sin guardar
+length<br>rows	admin	es-es	Longitud<br>Filas
 list config settings	admin	es-es	Lista de las opciones de configuración
 list current sessions	admin	es-es	Lista de las sesiones actuales
 list of current users	admin	es-es	Lista de usuarios actuales
@@ -255,6 +264,7 @@ mail settings	admin	es-es	Configuración del correo electrónico
 main email-address	admin	es-es	Dirección de correo principal
 main screen message	admin	es-es	Mensaje de la pantalla principal
 manager	admin	es-es	Administrador
+max length of the input [, length of the inputfield (optional)]	admin	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	es-es	Id máximo de cuenta (ej. 65535 o 1000000)
 maximum entries in click path history	admin	es-es	Número máximo de entradas en la ruta del historial de pulsar con el ratón
 message has been updated	admin	es-es	el mensaje ha sido actualizado
@@ -265,6 +275,7 @@ mode	admin	es-es	Modo
 month	admin	es-es	Mes
 name must not be empty !!!	admin	es-es	El nombre no debe estar vacío
 new group name	admin	es-es	Nuevo nombre de grupo
+new name	admin	es-es	nuevo nombre
 new password [ leave blank for no change ]	admin	es-es	Nueva contraseña [ Dejar en blanco para no cambiar ]
 next run	admin	es-es	Siguiente ejecución
 no algorithms available	admin	es-es	no hay algoritmos disponibles
@@ -277,6 +288,8 @@ no permission to add groups	admin	es-es	no tiene permiso para añadir grupos
 no permission to add users	admin	es-es	no tiene permiso para añadir usuarios
 no permission to create groups	admin	es-es	no tiene permiso para crear grupos
 note: ssl available only if php is compiled with curl support	admin	es-es	Nota: SSL está disponible sólo si PHP está compilado con soporte curl
+number of row for a multiline inputfield or line of a multi-select-box	admin	es-es	número de filas para un campo multilínea or línea de una lista multiselección
+order	admin	es-es	Orden
 outbound	admin	es-es	De salida
 passthrough	admin	es-es	pasage
 password for smtp-authentication	admin	es-es	Contraseña para identificación SMTP
@@ -310,6 +323,7 @@ route all mails to	admin	es-es	dirigir todos los correos a
 run asynchronous services	admin	es-es	Ejecutar servicios asíncronos
 save the category	admin	es-es	guardar la categoría
 save the category and return back to the list	admin	es-es	guardar la categoría y volver a la lista
+saves the changes made and leaves	admin	es-es	guarda los cambios y sale
 search accounts	admin	es-es	Buscar cuentas
 search categories	admin	es-es	Buscar categorías
 search groups	admin	es-es	Buscar grupos
@@ -352,6 +366,7 @@ standard smtp-server	admin	es-es	servidor SMTP estándar
 start testjob!	admin	es-es	Iniciar el trabajo de prueba
 submit changes	admin	es-es	Enviar cambios
 submit the search string	admin	es-es	Enviar la cadena de búsqueda
+subtype	admin	es-es	Subtipo
 template selection	admin	es-es	Selección de plantilla
 text entry	admin	es-es	Entrada de texto
 that application name already exists.	admin	es-es	Ese nombre de aplicación ya existe.
@@ -364,7 +379,9 @@ the api requires an upgrade	admin	es-es	La API requiere ser actualizada
 the groups must include the primary group	admin	es-es	Los grupos deben incluir el grupo principal
 the login and password can not be the same	admin	es-es	El usuario y la contraseña NO pueden ser iguales
 the loginid can not be more then 8 characters	admin	es-es	El nombre de usuario no puede superar 8 caracteres
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	es-es	el nombre usado internamente (<= 20 caracteres). Si se cambia, los datos ya no están disponibles.
 the testjob sends you a mail everytime it is called.	admin	es-es	El trabajo de prueba le envía un correo cada vez que se ejecuta
+the text displayed to the user	admin	es-es	el texto mostrado al usuario
 the two passwords are not the same	admin	es-es	Las dos contraseñas no son iguales
 the users bellow are still members of group %1	admin	es-es	Los usuarios siguientes todavía son miembros del grupo %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	es-es	Ya hay un grupo con este nombre. El id de usuario no puede tener el mismo nombre que el id de un grupo.
@@ -379,6 +396,7 @@ top	admin	es-es	Superior
 total records	admin	es-es	Total de registros
 trust level	admin	es-es	Nivel de confianza
 trust relationship	admin	es-es	Relaciones de confianza
+type of customfield	admin	es-es	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	es-es	En windows, se necesita instalar asyncservice %1manualmente%2 o usar el modo de fallos. El modo de fallos sólo comprueba los trabajos después de ver cada página. ¡Cuidado!
 use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)

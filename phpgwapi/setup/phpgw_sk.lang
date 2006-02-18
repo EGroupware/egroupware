@@ -10,12 +10,13 @@
 - use the %1, %2 buttons to select year	jscalendar	sk	- Pou¾ite %1, %2 tlaèítka pre výber roku
 00 (disable)	admin	sk	00 (zablokova»)
 13 (ntp)	admin	sk	13 (ntp)
+80 (http)	admin	sk	80 (http)
 \n tidying up the html source, please wait...	htmlarea-HtmlTidy	sk	\n Zo¹tíhµujem HTML zdrojový kód, prosím èakajte...
-_delete row	htmlarea-ContextMenu	sk	_Zmaza» Riadok
-_image properties...	htmlarea-ContextMenu	sk	_Vlastnosti Obrázka...
-_modify link...	htmlarea-ContextMenu	sk	_Uprav Linku...
-_remove link...	htmlarea-ContextMenu	sk	_Vyma¾ Linku...
-_table properties...	htmlarea-ContextMenu	sk	_Vlastnosti Tabuµky...
+_delete row	htmlarea-ContextMenu	sk	_Zmaza» riadok
+_image properties...	htmlarea-ContextMenu	sk	_Vlastnosti obrázka...
+_modify link...	htmlarea-ContextMenu	sk	_Uprav odkaz...
+_remove link...	htmlarea-ContextMenu	sk	_Vyma¾ odkaz...
+_table properties...	htmlarea-ContextMenu	sk	_Vlastnosti tabuµky...
 about	common	sk	O
 about %1	common	sk	O %1
 about the calendar	jscalendar	sk	O Kalendári
@@ -88,7 +89,7 @@ calendar	common	sk	Kalendár
 cambodia	common	sk	KAMBOD®A
 canada	common	sk	KANADA
 cancel	common	sk	Zru¹i»
-caption	htmlarea-TableOperations	sk	Zachytenie
+caption	htmlarea-TableOperations	sk	Zachytávanie
 categories	common	sk	Kategórie
 categories for	common	sk	kategórie pre
 category	common	sk	Kategória
@@ -102,6 +103,7 @@ central african republic	common	sk	STREDOAFRICKÁ REPUBLIKA
 change	common	sk	Zmeni»
 char	htmlarea-TableOperations	sk	Znak
 charset	common	sk	iso-8859-2
+chec_k link...	htmlarea-ContextMenu	sk	S_kontroluj odkaz
 check installation	common	sk	Skontroluj in¹taláciu
 check now	common	sk	Skontroluj - Teraz
 china	common	sk	ÈÍNA
@@ -140,23 +142,23 @@ date	common	sk	Dátum
 date due	common	sk	Dátum do
 date selection:	jscalendar	sk	Výber dátumu:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/èas.<br>Ak pou¾ívate port 13,prosím nastavte korektne filtrovacie pravidlá na firewall-e e¹te predtým, ne¾ potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)
-de_lete column	htmlarea-ContextMenu	sk	Zmaza» Ståpec(D)
+de_lete column	htmlarea-ContextMenu	sk	Zmaza» ståpec(D)
 december	common	sk	December
 decimal numbers	htmlarea-ListType	sk	Desiatkové èísla
 default category	common	sk	©tandardná kategória
 delete	common	sk	Zmaza»
-delete cell	htmlarea-TableOperations	sk	Zmaza» bunku
-delete column	htmlarea-TableOperations	sk	Zmaza» ståpec
-delete row	htmlarea-TableOperations	sk	Zmaza» riadok
-delete the current column	htmlarea-ContextMenu	sk	Zmaza» aktuálny ståpec
-delete the current row	htmlarea-ContextMenu	sk	Zmaza» aktuálny riadok
+delete cell	htmlarea-TableOperations	sk	Zmaza» Bunku
+delete column	htmlarea-TableOperations	sk	Zmaza» Ståpec
+delete row	htmlarea-TableOperations	sk	Zmaza» Riadok
+delete the current column	htmlarea-ContextMenu	sk	Zmaza» aktuálny Ståpec
+delete the current row	htmlarea-ContextMenu	sk	Zmaza» aktuálny Riadok
 denmark	common	sk	DÁNSKO
 description	common	sk	Popis
 detail	common	sk	Podrobnosti
 details	common	sk	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnú» spú¹»anie opravného skriptu pre IE5.5 a vy¹¹í pre zobrazenie priesvitnosti v obrázkoch PNG?
 dictionary	htmlarea-SpellChecker	sk	Zápisník
-disable internet explorer png-image-bugfix	common	sk	Vypnú» opravu pre obrázky PNG v Internet Explorer-i
+disable internet explorer png-image-bugfix	common	sk	Vypnú» opravu chyby pre obrázky PNG v Internet Explorer-i
 disable slider effects	common	sk	Vypnú» efekty posuvníka
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sk	Vypnú» animované efekty posuvníka, keï sa zobrazujú alebo skrývajú menu na stránke? Pou¾ívatelia Opery a Konquerer-a to pravdepodobne musia zvoli».
 disabled	common	sk	Zakázané
@@ -180,6 +182,7 @@ edit category	common	sk	Uprav kategóriu
 egroupware api version %1	common	sk	eGroupWare API verzia %1
 egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre pou¾ívateµa '%1', IP %2
 egypt	common	sk	EGYPT
+element...	htmlarea-ContextMenu	sk	Element...
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	emailová adresa pou¾ívateµa, napr. "%1"
 enabled	common	sk	Povolené
@@ -245,7 +248,7 @@ height	htmlarea-TableOperations	sk	Vý¹ka
 help	common	sk	Pomocník
 high	common	sk	Vysoká
 highest	common	sk	Najvy¹¹ia
-holy see (vatican city state)	common	sk	VATIKÁN
+holy see (vatican city state)	common	sk	VATIKÁN (MESTSKÝ ©TÁT)
 home	common	sk	Domov
 home email	common	sk	domáci email
 honduras	common	sk	HONDURAS
@@ -268,21 +271,21 @@ in_sert row after	htmlarea-ContextMenu	sk	Vlo¾i» Riadok Za (S)
 india	common	sk	INDIA
 indonesia	common	sk	INDONÉZIA
 insert _column before	htmlarea-ContextMenu	sk	Vlo¾i» Ståpec Pred (C)
-insert a new column after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový ståpec Za aktuálny
-insert a new column before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový ståpec Pred aktuálny
-insert a new row after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový riadok Za aktuálny
-insert a new row before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový riadok Pred aktuálny
+insert a new column after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Ståpec Za aktuálny
+insert a new column before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Ståpec Pred aktuálny
+insert a new row after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Riadok Za aktuálny
+insert a new row before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Riadok Pred aktuálny
 insert all %1 addresses of the %2 contacts in %3	common	sk	Vlo¾i» v¹etkých %1 adries z %2 kontaktov in %3
-insert c_olumn after	htmlarea-ContextMenu	sk	Vlo¾i» ståpeC za
-insert cell after	htmlarea-TableOperations	sk	Vlo¾i» bunku za
-insert cell before	htmlarea-TableOperations	sk	Vlo¾i» bunku pred
-insert column after	htmlarea-TableOperations	sk	Vlo¾i» ståpec za
-insert column before	htmlarea-TableOperations	sk	Vlo¾i» ståpec pred
-insert image	htmlarea	sk	Vlo¾i» obrázok
-insert row after	htmlarea-TableOperations	sk	Vlo¾i» riadok za
-insert row before	htmlarea-TableOperations	sk	Vlo¾i» riadok pred
+insert c_olumn after	htmlarea-ContextMenu	sk	Vlo¾i» StåpeC Za
+insert cell after	htmlarea-TableOperations	sk	Vlo¾i» Bunku Za
+insert cell before	htmlarea-TableOperations	sk	Vlo¾i» Bunku Pred
+insert column after	htmlarea-TableOperations	sk	Vlo¾i» Ståpec za
+insert column before	htmlarea-TableOperations	sk	Vlo¾i» Ståpec Pred
+insert image	htmlarea	sk	Vlo¾i» Obrázok
+insert row after	htmlarea-TableOperations	sk	Vlo¾i» Riadok Za
+insert row before	htmlarea-TableOperations	sk	Vlo¾i» Riadok Pred
 insert table	htmlarea	sk	Vlo¾i» Tabuµku
-insert web link	htmlarea	sk	Vlo¾i» Webový Odkaz
+insert web link	htmlarea	sk	Vlo¾i» webový Odkaz
 international	common	sk	Mezinárodný
 invalid ip address	common	sk	Chybná IP adresa
 invalid password	common	sk	Chybné heslo
@@ -304,8 +307,8 @@ june	common	sk	Jún
 justify	htmlarea-TableOperations	sk	Zarovna»
 justify center	common	sk	Zarovna» na Stred
 justify full	common	sk	Zarovna» do Bloku
-justify left	common	sk	Zarovna» Vµavo
-justify right	common	sk	Zarovna» Vpravo
+justify left	common	sk	Zarovna» v¥avo
+justify right	common	sk	Zarovna» vpRavo
 kazakstan	common	sk	KAZACHSTAN
 kenya	common	sk	KEÒA
 keywords	common	sk	Kµúèové slová
