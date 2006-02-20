@@ -1,0 +1,183 @@
+/*! \page pageegwicaltzh EgwIcal Timezone Handling
+
+Short description on the timezone handling in EgwIcal
+
+@date 20060216
+@version 0.9.04
+@author JVL
+@note Document needs further editing and annotations!!
+
+
+
+In EgwIcal the timed data of Egroupware like events and tasks get
+converted to elements for an iCalendar. In the Egroupware server we
+are dealing with socalled "egw server" time, in applications that a
+user of egw runs, the user can set a "locale" and thereby defining a
+"local timezone". And finally when events and task get exported to an
+iCalendar that is sent to a client or uploaded from  it, they may also
+have their timesettings defined according to some "timezone".
+
+How is this all handled in EgwIcal?
+
+
+
+@section secegwicalgentzh EgwIcal general Timezone handling
+
+In general EgwIcal distinguishes between two different types of time
+descriptions for an event. An event can either be a:
+<ul>
+<li>
+ DATETIME (DT) (described) event.
+
+  In this case the occurence of the event is described as taking place
+  on a certain day and within that day on a certain time.  E.g. <code>
+  mon 12 june 2006 at 12:33 GMT+001 </code> Examples are: <i>the
+  opening of the Olympic games</i>.
+
+  DT events are thus absolute (in global world time) anchored in time:
+  everyone watching live TV, anywhere in the world can see it happen
+  at that same moment described by DT.
+ 
+ Result is that a DT described event will occur at different hours or
+ even days in different timezones. (Some people have to watch the
+ Olympic game openings at night..)
+ 
+
+<li>DATE (D) (described) events
+
+  These events donot happen at an absolute global time but are only
+  well defined relative to a  timezone.
+  A good example is "your birthday" or "new years day".
+  
+  In principle this could be either <i>whole day</i> events (like
+  birthdays) or events timed within days (like the "easter sunday
+  service at 12:00").
+
+</ul>
+
+
+For handling DT events it can be profitable to use a globally unified standard
+for describing the timingly definitions, like e.g. UTC. 
+And indeed:
+<ul>
+<li>RE.0, REI.0 <b> Egw and EgwIcal try to handle DATE-TIME events in UTC.</b>
+
+Or of course, equivalently, some (time + UTC offset)-pair description.
+</ul>
+
+
+For handling D events you can best give a (timezone/geo) relative
+description together with the GEO location. Then someone who wants to
+visit such a event can checkout the location and see what timezone
+they have there at moment of the event, calculate it back to UTC and
+then she knows when to get there.
+Egw and EgwIcal are no very sophisticated in handling these:
+
+- <b> RE.1 (I am not 100% sure:) Egw tries to handle DATE events relative to
+  the UserInterface its timezone: the so called USER-TIME.</b>
+
+and for EgwIcal:
+
+- <b> REI.1  EgwIcal tries to handle DATE events relative to
+  the UserInterface timezone (USER-TIME) of the IcalSrv proces of the
+  logged in user.</b>
+
+and keep in mind:
+
+- <b> REI.2 EgwIcal currently will only import or export DATE events
+  for <i>whole day</i> events or for <i>occurence settings of recurrent
+  events</i> </b>
+
+In the following sections I will explain a bit more what this means
+for import of Ical data from clients and export to it.
+
+
+
+
+@section secegwicalimptzh EgwIcal Timezone handling for icaldata import from a client.
+
+.....
+
+@subsection subsecvtmz VTIMEZONE import handling.
+
+  No VTIMEZONE ical elements are parsed or used
+  This has a consequence:
+
+  - no basic import timezone setting via this supported
+
+  - no imported timezones with identifiers that can be referenced by
+    VEVENTS or VTODOS are supported
+
+@subsection subsecdtimp DATETIME formatted data import handling.
+
+  DATETIME formatted data is inspected for its timezone. If the
+  timezone is UTC ('Z') then it is converted (i.e. copied) to UTC
+  before processing further.  If the timezone is not given of is
+  referenced with a key to a VTIMEZONE component in the Icalendar
+  file, this timezone info is discarded and <b> a "timezoned" DATETIME
+  is just interpreted as relative to the USERTIME of the IcalSrv
+  process: any timezone info is neglected</b>. 
+
+ Clearly this can be wrong in many occasions: thus this should be
+ considered a BUG!
+
+@subsection subsecdimp  DATE formatted data import handling.
+
+  <b>DATE formatted data is  ust interpreted as relative to the USERTIME of the IcalSrv
+  process: any timezone info is neglected</b>. 
+  
+
+@subsection subsecrruleimp Importing Recurrence Elements
+
+
+
+  Doing recurrence calculation in UTC is notably not a good thing to
+  do because DayTime Savings changes during the runtime of the
+  recurring event can cause troubles. The best thing to do is to
+  calculate the recurrence in the geo/time-zone of the definer. See
+  @url ... of the CAlConnect Group for this. But as clients often dont
+  export their timezones, (and we dont do any processing of it anyhow)
+  we do the following:
+
+<ol>
+ <li> first the START and (if there UNTIL) dates are converted to UTC
+  dates. Then these are converted to the IcalSrv locale setting.
+ 
+ <li> Then the recurrence rules are evaluated, and converted to the info
+  Egw needs. Note: Egw cannot use the COUNT field, so EgwIcal has to
+  rewrite it to a UNTIL value.  
+</ol>
+
+
+
+@section secegwicalexptzh EgwIcal Timezone handling for icaldata export to a client.
+
+On export ....
+
+- all Egw DATETIME info is exported in UTC time.
+
+- all Egw DATE info is exported without any timezone info,
+  and thus should best be considered in the USERTIME of the IcalSrv
+  process.
+
+
+@subsection subsecrruleexp Exporting Recurrence Elements
+
+On export Recurrence Rules are interpreted as follows:
+
+<ul>
+<li> the START date, if in DATE-TIME format is converted to UTC.
+   If it is in DATE format exported right away, thus being in the
+   IcalSrv local timezone: <b>this may be wrong, but best possible!</b>.
+
+<li> If there, an UNTIL date this is exported as UTC
+ 
+</ul>
+
+
+
+Hope this explains things a bit.
+
+Jan
+
+*/

@@ -1,0 +1,205 @@
+/*!
+\page pageegwicalwurh EgwIcal Workers Union Representatives Hierarchy Pattern
+implementation.
+
+@author JVL
+@date 20060214
+@version v0.9.02
+
+The current Egw Ical package provides routines for exporting iCalendar
+data like vevents, vtodos, vcards etc. from the various corresponding
+Egroupware packages (the "backends"). And vice versa importing these to the datastores
+of these packages.  On the other hand there can also be a variety of
+interface components that transport e.g these exported vevents to
+further applications (the "clients"). Think e.g on the "icalsrv"
+service to transport whole sets of vevents in one go over http to a
+client, or the "syncml" service that transports them to syncml
+speaking device, or simple routine that let you save or upload a
+calendar file from within the webgui.
+
+An iCalendar data object can hold a set of these various kinds of
+data-elements as parts of itself. And these data-elements itself can
+also be composed of sub-elements (like e.g. VALARM and VTIMEZONE
+components).
+ 
+
+So in this situation we have Wholes (like an iCalendar object) with
+Parts (like groups of Vevents and groups of Vtodos) on the one hand. 
+And on the other hand we have dedicated subappliations that may handle
+these groups of Part data. To implement this we can make use of a
+smart combination of two implementation primitives "compounds" and
+"classes and subclasses".
+
+In the WURH pattern the combination of these two is very rather
+outspoken and quite entangled and even a bit tricky: each specific
+type of Part is "represented" by specific subclass of the class of
+Whole compound. The data in the parts can now be manipulated in two
+ways:
+
+1) all together as whole, via methods of the compound, or
+2) all in the group of a part, by the methods of the (associated)
+subclass its representative.
+
+@note I forgot the official (GOF) name of the pattern (if there is
+any..)
+
+
+
+\section secwurhexample  Example WURH pattern implementation: Meal preparation
+
+As simple example should explain this: Meal preparation URH pattern
+implementation
+ 
+think of the preparation of meal, that consist of soup and meat.
+To "cook" the meal, the soup has to be boiled and the meat has to be
+baked.
+
+in OO notation: <code><>- </code> or <code>.</code> . means member of,
+<code><- </code> means subclass of
+
+Classes:
+<PRE>
+MealCooker <- SoupCooker;     MealCooker <- MeatCooker;
+MealCooker <>- SoupCooker;    MealCooker <>- MeatCooker;
+</PRE>
+Methods:
+<PRE>
+MealCooker->cook();  SoupCooker->boil();   MeatCooker->bake();
+</PRE>
+and possibly the cook() method may even, for easy of use in the Soup and
+Meat classes by implemented (overridden) by the boil() resp. bake() method.
+
+Now the code to prepare to have $mymealck prepare a meail with $mysoupck  and $mymeatck (without
+subclass overrriding):
+<PRE>
+$mymealck = New MealCooker;
+$mymeatck = New MeatCooker;
+$mysoupck = New SoupCooker;
+
+$meat_in_mealck =  $mymealck->addMeatHandler($mymeatck);  
+$soup_in mealck =  $mymealck->addSoupHandler($mysoupck);
+
+// these are in class MealCooker implemented as
+// $this.m = meatcooker_config($mymeatck); resp. $this.s = soupcooker_config($mysoupck); 
+</PRE>
+
+Now cooking the meal is done by, cooking the soup in its appropiate
+way (namely "boiling()" )via its union representative ($soup_in_mealck). Note that it is
+called "union" representative because multiple SoupCookers parts may have been
+added already to use. And also cooking the meat in its appropiate way
+("baking()") likewise. Thus
+<PRE>
+$mymealck->cook([$apiec_of_meat,$avolum_of_soup]) can be done by calling:
+
+		$meat_in_mealck->bake($apiece_of_meat);
+		$soup_in_mealck->boil($avolume_of_soup);
+</PRE>
+and then you can serve boths parts in one go with:
+<PRE>
+$mymealck->serve();
+</PRE>
+
+If we implemented the specific ways of cooking as overriding subclass
+methods for Meal->cook() then in simple cases we dont even need to use
+the representatives to call the preparation as we implement to main
+cook() method to call all itself on all its parts:
+<PRE>
+$mymealck = New MealCooker;
+$mymeatck = New MeatCooker;
+$mysoupck = New SoupCooker;
+
+		  $mymealck->addMeatHandler($mymeatck);  
+		  $mymealck->addSoupHandler($mysoupck);
+</PRE>
+
+And <code> $mymealck->cook([$apiec_of_meat,$avolum_of_soup]) </code> can then done by
+just calling:
+
+<PRE>
+  $meat_in_mealck->bake($apiece_of_meat);
+  $soup_in_mealck->boil($avolume_of_soup);
+
+  // which effects in $mymealck.m->cook($apiece_o_fmeat);
+  //           and    $mymealck.s ->cook($avolume_of_soup);
+  // that effects again in $mymealck.m->bake($apiece_o_fmeat);
+  //            and    $mymealck.s->boil($avolume_of_soup);
+
+</PRE>
+
+So this allows for using of manipulation methods of the whole (in case
+of simple generic actions reimplemented in the subclasses of the
+parts) together with using more specific methods for specific
+parts. (e.g. $soup_in_mealck->set_boil_time(10) etc.)
+
+
+
+\section securhinei  WURH pattern usage in Egwical.
+
+The Egwical class manages an complete iCalendar component with
+VEVENTS, VTODOS etc. as parts. The handling of these part(unions)s is
+done by specific subclasses of Egwical, like e.g. infolog_bovtodo and
+calendar_bovevents. 
+The system can be used in two different modes of operation: 
+
+- 1) for conversion of egw tasks, events, etc. to their iCal
+ counterparts. (the cnv_ methods).
+
+- 2) for filling the (internal) egwical object with al lot of vtodos and
+ vevents, either coming from import or from conversion of egw
+ counterparts. When the compound is filled it can (as a whole) be
+ exported or imported.
+
+
+add 1) So e.g. exporting a group of events refered to by $event_ids as
+VEVENTS goes as follows:
+<PRE>
+$cal = New Bocal;                       // build calendar
+$event_ids = $cal->search("filt_def');  // get group of egw event ids to export.
+
+$ei = New Egwical;		                // build Compound iCalendar processor
+$bve = $ei->addRsc($cal);               // add calendar part and get representive
+$vcalstr = $bve->cnv2VEVENTS($event_ids); // export some events
+
+</PRE>
+
+if we also want to export some VTODOs this goes as follows: 
+
+<PRE>
+$binf = New Infolog                     // build infolog app. object
+$task_ids = $binf->search("filt_def');  // get group of egw task ids to export.
+
+$bvt = $ei->addRsc($binf);              // add infolog part and get representive
+$vcalstr = $bvt->cnv2VTODOS($task_ids);
+
+</PRE>
+add 2) the same egw elements from 1) are now first collected in
+egwical and then as a whole exported.
+
+<PRE>
+$cal = New Bocal;                       // build calendar
+$event_ids = $cal->search("filt_def');  // get group of egw event ids to export.
+
+$ei = New Egwical;		                // build Compound iCalendar processor
+$bve = $ei->addRsc($cal);               // add calendar sys part and get representive
+	 $bve->clear();                     // empty the list of Vevents in bve
+	 $bve->addEventsOntoVEVENTS($event_ids); // add the converted events to vevents in $ei
+
+</PRE>
+if we also want to add some VTODOs this goes as follows: 
+<PRE>
+$binf = New Infolog                     // build infolog app. object
+$task_ids = $binf->search("filt_def');  // get group of egw task ids to export.
+
+ $bvt = $ei->addRsc($binf);             // add infolog sys part and get representive
+	  $bvt->clear();                    // empty the list of Vtodos  in bvt
+	  $bvt>addTasksOntoVTODOS($task_ids); // add the converted tasks to vtodos in $ei
+
+</PRE>
+and finally export the whole iCalendar
+<PRE>
+$ei->export()
+</PRE>
+
+ ----------
+
+*/

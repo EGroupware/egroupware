@@ -1,0 +1,182 @@
+/*!  @mainpage EgwIcal package for Egroupware
+
+@NOTE this text is not up to date
+@version 0.9.01
+@author jvl
+
+The EgwIcal package provides routines for converting between iCalendar RFC
+2445 conformant dataelements (like VEVENTS, VTODOS, VALARMS etc.) and
+corresponding Egroupware database entries (like calendar events,
+infolog tasks etc.). EgwIcal also provides routines to do import to
+and export from the Egroupware system for these iCalendar elements,
+thereby doing the conversion on the fly. Finally, EgwIcal provides a
+buffering feature where mixed sets of these elements can be accumulated and
+then be imported or exported all at once.
+
+@section secinstall SHORT experimental Install How-To:
+
+ - Install the EgwIcal package by either checking out the egwical module from cvs
+ or untarring some tarball egwical-vx.y.x.tgz of the package (when available).
+
+
+@section  secusage Usage of the EgwIcal system
+
+The EgwIcal system allows four(or 3?) characteristic ways to help you
+with manipulating iCalendar data in a Egw context:.....
+
+@section secusageiecnv Converting iCalendar elements to Egw elements
+
+To convert a iCalendar datacomponent e.g. of type "VEVENT" into a
+corresponding egw component of e.g. "calendar event" you can use the
+following in your code: 
+
+<code> ......
+</code>
+
+@section secusageeicnv Converting Egw elements to iCalendar elements.
+
+To convert a egw component of e.g. "calendar event"  into a
+corresponding  iCalendar datacomponent of e.g. type "VEVENT"you can use the
+following in your code: 
+
+<code> ......
+</code>
+
+@section secusageimport Importing iCalendar elements into Egw
+applications storage.
+
+To import a iCalendar datacomponentof e.g. type "VEVENT" as a
+corresponding egw component of type "calendar event"  into your
+calendar application (its database) you can use the
+following in your code: 
+
+<code> ......
+</code>
+
+@section secusageexport Exporting Egw application elements as iCalendar elements.
+
+To export  as a  egw datacomponent of e.g. type "calendar event" from your
+calendar application (its database) as a iCalendar datacomponentof e.g. type "VEVENT",
+you can use the following in your code: 
+
+<code> ......
+</code>
+
+@section secusageexpimpbuffer Exporting (mixed) collections of iCalendar elements.
+
+Beside directly exporting single elements or sets of
+iCalendar data generated generated from a egw application like
+calendar, you can also use the "buffer" system of EgwIcal, to collect
+various sets of such dataelements, even from different Egw
+applications (like calendar and infolog), and then later on export
+these all together as one big iCalendar.
+
+To do collection followed by export you can use code like below:
+<code> ......
+</code>
+
+
+@section secimplementation How is EgwIcal implemented?
+
+To use or extend EgwIcal best, as a developer, it may be good know a bit about
+its implementation. 
+EgwIcal is built according to the Workers Union Representatives
+Hierarchy (WURH) pattern. Quite a mouthfull, and probably there are
+somewhere better names for this pattern (see ...). In @ref pageegwicalwurh
+you can read more on this.
+
+Basically it means that there is one super "worker" class
+@ref egwical that uses for specific work like e.g. conversion
+between VEVENTS and calendar tasks, a specific subclass
+like e.g. bocalupdate_vevents that is connected to the
+egwical object via a socalled "representative" member in the registry $reg_rscs
+(attribute).
+
+Currently EgwIcal has the following subclasses:
+
+- <code>bocalupdate_vevents</code> for manipulating calendar events as
+  VEVENTS.
+
+- <code>boinfolog_vtodos</code> for manipulating infolog tasks as VTODOS.
+
+Future subclasses might be:
+
+- <code>???_vjournals</code> for manipulating .... as VJOURNALS.
+
+- <code>bocal_vfreebusies</code> for manipulating calendar data as
+  VFREEBUSY elements.
+
+- <code>addressbook_vcard</code> for manipulating addressdata data as
+  VCARDS.
+
+- <code>???_vnotes</code> for manipulating .... as VNOTES.
+
+
+
+@section secdeletioncheatcode Cheatcode for Deleting Calendars, events or todos
+
+Egwical provides a special "hackish" feature specifically meant for
+use with the crippeld ical-over-http (aka webcal) implementation that
+the package IcalSrv provides for Egroupware.
+
+This IcalSrv implementation does not support deletion of egw calendar
+or infolog elements directly (see the IcalSrv package). As a help out
+the "cheat" is implemented that: you can though delete an item by
+simply giving the VEVENT or VTODO 'SUMMARY' field a value
+<code>X-DELETE</code> or <code>_DELETED_</code> and then importing it
+through the Egwical system.  I you do so the the corresponding egw
+element from calendar or infolog will get deleted.
+
+
+@section secpatches Patches
+
+
+You may need to apply some of the patches found in PATCHES.
+Currently there a two patches to fix a warning and a bug (related to EXDATE 
+fields handling) in the horde routines.
+Note these may be already committed in the CVS version.
+
+
+
+@section sectest Extra testing
+
+The package contains two "compatibility" classes (@ref boical and @ref vcalinfolog) with
+which you can replace 
+the current <code>infolog/inc/class.vcalinfolog.inc.php</code> resp.
+<code>calendar/inc/class.boical.inc.php</code>
+files.
+
+When done so, the egw syncml, ical import/export and infolog import/export in egw 
+will all use the new code. This way you can discover more bugs and failure in the code :)
+
+But, when not renamed, these programs will use the old code (and thus are not broken or
+improved by the new one..)
+
+
+@section secdocumentation Documentation
+
+There is (somewhere) complete doxygen generated documentation for the
+EgwIcal package. Otherwise you can generate it yourself by using
+doxygen on the source filetree. Maybe phpdocumenter can give you also
+something usefull. And maybe you are just reading it now this very moment...
+
+
+
+@section secbugandtodo BuG and todo list
+
+ @todo notably timezone handling in EgwIcal should be documented and
+possible features to allow import/export and use of iCalendar
+VTIMEZONE components should be provided.
+
+  -see BUGs and TODOs in  @ref pageegwicalbugandtodo
+
+
+
+
+have fun
+
+
+JVL
+
+
+*/
