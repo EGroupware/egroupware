@@ -1,0 +1,168 @@
+/*!  @mainpage Ical Service for Egroupware
+
+@NOTE: this text is not up to date
+@version 0.9.01
+@author jvl
+
+@section secinstall SHORT experimental Install How-To:
+
+ - Install the icalsrv package by either checking out the icalsrv module from cvs
+ or untarring some tarball icalsrv-vx.y.x.tgz of the package (when available).
+
+ - @note: The IcalSrv package depends on the availability of an
+ EgwIcal (>= 0.9.x) package. So if you dont have this already, be sure
+ to install that too.
+
+ - Take care that icalsrv.php is .../egroupware/icalsrv.php (and the
+ other files from the icalsrv package also in their appropiate places)
+
+- Append something like the following onto your apache httpd.conf part for
+egroupware (assuming that your standard egroupware root path is e.g in
+/var/www/egroupware and with a http alias 'egroupware' pointing to
+it):
+<PRE>
+ <Location /egroupware/icalsrv.php>
+    Script PUT /var/www/egroupware/icalsrv.php
+    AddHandler ical/ics .ics
+    Action ical/ics /var/www/egroupware/icalsrv.php
+    Order allow,deny
+    Allow from all
+ </Location>
+</PRE>
+
+- Restart apache (or other webserver) ( /etc/init.d/httpd restart )
+
+- Connect your ical client (e.g: Sunbird)
+	   with http://your.host.com/egroupware/icalsrv.php
+        
+- now you should need to authenticate (with your normal EGW login and password)
+  and when done you receive the calendar on doing a "reload remote calendars" or so.
+
+- using the "publish" calendar action you can write the (modified) calendar
+  from the sunbird client back to EGW
+
+
+@section secdeletions Deleting Calendars, events or todos
+
+deletion of the whole remote calendar is not supported see the @ref
+webcaldiscusspage webcal protocol discussion.
+
+Individual calendar events or todos cannot be deleted either by just
+deleting them on the client and then hoping that this propagates to
+Egroupware on publish. There are various reasons for why this is not
+implemented. 
+
+But, you can though delete items by simply renaming them to
+<code>X-DELETE</code>.  I you do so they will get deleted in Egw on
+publishing. When you later dowload ("reload"/"refresh") the remote
+calendar in your client you should notice that the event is gone..
+
+
+@section secicalsrvclients Clients for IcalSrv
+
+This is tested with egw1.2rc6 and clients:
+
+  * Korganizer (3.3.2,(read)  3.4.2, 3.5.0 (READ+WRITE))
+  * Mozilla calendar (2004040813-cal) (READ+WRITE)
+  * Evolution 2.2 (READ)
+
+For further use and experience with these clients see @ref
+pageicalsrvclients IcalSrvClients page.
+
+
+@section secpatches Patches
+
+
+You may need to apply some of the patches found in PATCHES.
+Currently there a two patches to fix a warning and a bug (related to EXDATE 
+fields handling) in the horde routines.
+Note these may be already committed in the CVS version.
+
+
+
+@section sectest Extra testing
+
+The package contains "compatibility" classes with which you can replace 
+the current infolog/inc/class.vcalinfolog.inc.php resp. calendar/inc/class.boical.inc.php
+files.
+
+When done so, the egw syncml, ical import/export and infolog import/export in egw 
+will all use the new code. This way you can discover more bugs and failure in the code :)
+
+But, when not renamed, these programs will use the old code (and thus are not broken or
+improved by the new one..)
+
+
+@section secdocumentation Documentation
+
+There is (somewhere) complete doxygen generated documentation for the
+IcalSrv package. Otherwise you can generate it yourself by using
+doxygen on the source filetree. Maybe you are just reading it now ...
+
+
+@section sectestandebug Testing and Debugging
+
+As IcalSrv is still a young and experimental new service for
+Egroupware, that must mediate between a multitude of clients, each
+with their own peculiarities and various internal applications of Egw,
+it is very likely that a lot of problems, deficiencies and bugs will
+appear. 
+
+Thus to get error feedback for it is a healthy thing. You should best
+do this --as with any egw application-- using the sourcforge.net
+buglist and the dedicated egroupware forums or mailinglist (see the
+egroupware wiki for more instructions on this).
+
+What to report? Well you should realize that IcalSrv is --currently--
+on it self just a rather simple http interface script, that relies for
+it connection to the egw backends heavily on the new (re) written
+EgwIcal package. This means that problems with in and export of
+iCalendar data will mostly have their source in that (i.e. EgwIcal)
+package! So in case of errors allways report info on that package and
+when debugging try the debug tools for that package.
+
+@subsection subsecdebugtools Debugging of IcalSrv.
+
+IcalSrv does not generate webpages, so to see any error or debug
+information you there a jsut three other places to look at:
+
++ If you have a really problematic error, IcalSrv will answer your http
+ request with a 403 error and --hopefully-- a short message. In some
+ clients (like Korganize) this is reported back via a popup with a
+ silly message that "exporting went wrong or access denied" or so, instead of displaying
+ this message it got together with the 403 error. Note: Sunbird does
+ display the message. Unfortunately at the moment this will be mostly
+ "VEVENTS import ERROR" or so..
+
++ The httpd errorlog file/stream. Most problematic errors are reported
+ to this file of the egw server. So this is indeed the best source for
+ debug info. But to read it, you need access to the
+ server and to this log file. So only egw administrators are likely
+ the only ones for who this can be of help.
+ 
++ The ical.log files and ical.exportxxxx plus ical.importxxxx
+ files. If you did install the icalsrv.php file with the variable
+ $logdir set to folder where the httpd is allowed to write, you will
+ get a detailed log in file ical.log of all uploads and downloads via
+ IcalSrv furhtermore for each of these the associated iCalendar data
+ will be logged in ical.exportXXXXXX files with XXXX the utime of the
+ action. These files reside on the egw server, mostly in /tmp. So again
+ to read them you will need access to this server directory.
+ Off course this feature needs to be disabled in a production setting:
+ the file growth and the security issues of it demand it.
+
+
+@section secbugandtodo BuG and todo list
+
+  -see BUGs and TODOs in  @ref pageicalsrvbugandtodopage
+
+
+
+
+have fun
+
+
+JVL
+
+
+*/

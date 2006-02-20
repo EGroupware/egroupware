@@ -1,0 +1,107 @@
+/*! \page bugandtodopage BUGS and TODOS
+
+<PRE>
+Know BUGS and things todo
+---------------------------
+TODO means: should be done/would be nice  in a newer release
+BUG means: known problem needs to be fixed
+FAIl means: known failure to provide (not easily to be done/fixed
+
+(note: this list is probably not quite up todate)
+
+
+release: VERSION 0.7.80 NEED TO UPDATE THIS!!
+
+new in V0.7.78 versus v0.7.70:
+
+  bovevents:
+
++ whole day events import/export seems to work nice
++ continue on erroneous overwrites (errors only visible in errorlog)
++ no error messages for forbidden overwrite events of non owned events
++ errormessages (when activated) only shows problematic events
+++ basic (multiple) VALARM import and export, working! (without action select)
++ allow for vevents with either DTEND or DURATION
++ provided (horde iCalendar) patch to prevent segfaults on some bad iCal inputs
+
+1) general (V0.7)
+----------------
+
+1.1 TODO build egw install/setup system for icalsrv 
+1.2 TODO get it nicely into egw cvs
+1.3 TODO build user preferences (export/import period setting) gui
+[ ]1.7 TODO/WISH allow for import of ATTENDEEs not in Egw yet (create new addressbook entry?)
+         (ad hoc solution: add CN and mailto to description)
+1.4 TODO check and generate source code documentation(phpdoc or doxygen)
+
+1.5 TODO test these routines in use for syncml import/export
+
+1.6 TODO/WISH: nothing done yet for vfreebusy, vjournal, notes, components 
+    only vevents and vtodos are supported.
+
+
+2) icalsrv.php (V0.7)
+--------------------
+
+[+]2.1 BUG/CHECK repair/improve the http error return (403) (seems to work) 
+2.2 TODO integrate with 1.3 TODO
+
+[+]2.3 TODO handle (V)alarms
+
+[ ]2.4 TODO(for v0.7.80 ?) for expor: get the agent name from the http header and use
+    to set the ical product field. Then in egwical use it to set the supportedfields()
+
+
+3) egwical (V0.7.75)
+--------------------
+
+[+?]3.1 TODO check/implement correct timezone handling (seems ok) 
+3.2 TODO/WISH handle location (GEO), link(?), url, delegation, ()CONTACT?
+3.3 TODO set and use the productid in the ical, and use it to
+  setsupportedFields() (for mozilla, korganizer etc. ... with a default of.. )
+
+
+4) calendar.bovevents (V0.7.75)
+------------------------------
+
+[+?]4.1 TODO check/implement correct timezone handling (related 3.1)
+[ ]4.2 FAIL rrule-COUNT import not implemented in egw?
+[+]4.2 BUG!!!!  rrule-BYDAY import goes wrong. FIXED (v0.7.76)
+[+]4.3 TODO check and improve ORGANIZER,ATTENDEE<-> participants mapping
+	     ATTENDEE s import and export (appears to work oke >= V0.7.71) 
+[+]4.4 TODO handle import and export of ALARMS
+[ ]4.7 TODO (ad hoc) add non egw known attendees to description on import
+
+4.9 see 3.2
+
+
+5) infolog.bovtodos (V0.7.x)
+----------------------------
+5.1 TODO check/implement correct timezone handling  (related 3.1)
+5.3 FAIL import/export more than 1 category per task (egw doesnot allow)
+5.3 TODO check and improve ORGANIZER,ATTENDEE<-> info_responsible etc mapping
+5.4 TODO handle import and export of ALARMS
+5.5 TODO rewrite code into supportedFields structure (for next version)
+
+5.9 see 3.2
+
+
+
+
+10.) in  used routines from others:
+
+10.1 BUG Horde_iCalendar(1.2rc6): EXDATE bug
+  -[+]fixed by patch 'exdate ....'
+10.2 BUG  Horde_iCalendar(1.2rc6): standard.php Warning
+  -[+]fixed by patch '...??..'
+
+10.3 BUG infolog(1.2rc6): datetime is 1 hour wrong for untimed due field in tasks
+
+11) detected errors/flaws in other programs
+
+11.1 Korganizer 3.5: recurrence endondate display is interpreted different from egw and
+mozilla (and probable also rfc 2445) 
+
+
+</PRE>
+*/
