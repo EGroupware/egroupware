@@ -1256,7 +1256,7 @@
 		 */
 		function lang($key,$vars=null)
 		{
-			if(!is_array($m1))
+			if(!is_array($vars))
 			{
 				$vars = func_get_args();
 				array_shift($vars);	// remove $key

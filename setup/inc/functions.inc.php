@@ -93,21 +93,17 @@
 	}
 
 	/**
-	  * function to handle multilanguage support
-	  *
+	 * function to handle multilanguage support
+	 *
 	 */
-	function lang($key,$m1='',$m2='',$m3='',$m4='',$m5='',$m6='',$m7='',$m8='',$m9='',$m10='')
+	function lang($key,$vars=null)
 	{
-		if(is_array($m1))
+		if(!is_array($vars))
 		{
-			$vars = $m1;
+			$vars = func_get_args();
+			array_shift($vars);	// remove $key
 		}
-		else
-		{
-			$vars = array($m1,$m2,$m3,$m4,$m5,$m6,$m7,$m8,$m9,$m10);
-		}
-		$value = $GLOBALS['egw_setup']->translation->translate("$key", $vars );
-		return $value;
+		return $GLOBALS['egw_setup']->translation->translate("$key", $vars);
 	}
 
 	/**
