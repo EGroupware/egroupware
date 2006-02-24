@@ -982,8 +982,8 @@
 		*/
 		'system.time'  => array(
 			'function'  => '_xmlrpcs_time',
-			'signature' => $GLOBALS['_xmlrpcs_time_sig'],
-			'docstring' => $GLOBALS['_xmlrpcs_time_doc']
+			'signature' => $GLOBALS['_xmlrpcs_egw_time_sig'],
+			'docstring' => $GLOBALS['_xmlrpcs_egw_time_doc']
 		)
 	);
 
