@@ -25,6 +25,8 @@ quantity	timesheet	zh-tw	數量
 save & new	timesheet	zh-tw	儲存&新增
 saves the changes made	timesheet	zh-tw	儲存異動
 saves this entry and add a new one	timesheet	zh-tw	儲存這筆資料後新增另一個
+select a price	timesheet	zh-tw	選擇價格
+select a project	timesheet	zh-tw	選擇專案
 this month	timesheet	zh-tw	這個月
 this week	timesheet	zh-tw	這星期
 this year	timesheet	zh-tw	今年

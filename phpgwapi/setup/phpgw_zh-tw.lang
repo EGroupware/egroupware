@@ -1,5 +1,8 @@
 %1 email addresses inserted	common	zh-tw	已匯入 %1 筆電子郵件位址
 %1 is not executable by the webserver !!!	common	zh-tw	網頁伺服器無法執行 %1 ！
+%1 manual	common	zh-tw	%1 手冊
+%1 start	common	zh-tw	%1 開始
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	zh-tw	%1選擇其他資料夾%2<br />或是設定 %3 能夠讓網頁伺服器寫入
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	zh-tw	%1eGroupWare%2 是多使用者、網頁為基礎的群組軟體，以 %3PHP%4 設計。
 (shift-)click or drag to change value	jscalendar	zh-tw	(Shift 鍵加)點選或拖拉滑鼠游標來改變數值
 - click on any of the time parts to increase it	jscalendar	zh-tw	- 點選任意時間區來增加它
@@ -22,6 +25,7 @@ _table properties...	htmlarea-ContextMenu	zh-tw	_表格屬性...
 a editor instance must be focused before using this command.	tinymce	zh-tw	在使用這個指令前，編輯器中必須先選取資料
 about	common	zh-tw	關於
 about %1	common	zh-tw	關於 %1
+about egroupware	common	zh-tw	關於 eGroupware
 about the calendar	jscalendar	zh-tw	關於行事曆
 about this editor	htmlarea	zh-tw	關於編輯器
 access	common	zh-tw	存取權限
@@ -36,6 +40,7 @@ active	common	zh-tw	啟用
 add	common	zh-tw	新增
 add %1 category for	common	zh-tw	新增 %1 子分類給
 add category	common	zh-tw	新增分類
+add shortcut	common	zh-tw	新增快速鍵
 add sub	common	zh-tw	新增子分類
 addressbook	common	zh-tw	通訊錄
 admin	common	zh-tw	系統管理
@@ -62,6 +67,7 @@ angola	common	zh-tw	安哥拉
 anguilla	common	zh-tw	安圭拉
 antarctica	common	zh-tw	南極洲
 antigua and barbuda	common	zh-tw	ANTIGUA AND BARBUDA
+application	common	zh-tw	應用程式
 apply	common	zh-tw	確認
 april	common	zh-tw	四月
 are you sure you want to delete these entries ?	common	zh-tw	您確定要刪除這些資料？
@@ -73,8 +79,10 @@ august	common	zh-tw	八月
 australia	common	zh-tw	澳洲
 austria	common	zh-tw	奧地利
 author	common	zh-tw	作者
-autohide sidebox menus	common	zh-tw	自動隱藏其他選單
-automatically hide the sidebox menus?	common	zh-tw	自動隱藏其他選單？
+autohide sidebox menu's	common	zh-tw	自動隱藏其他選單項目的
+autohide sidebox menus	common	zh-tw	自動隱藏其他選單項目
+automatically hide the sidebox menu's?	common	zh-tw	自動隱藏其他選單項目的？
+automatically hide the sidebox menus?	common	zh-tw	自動隱藏其他選單項目？
 autosave default category	common	zh-tw	自動儲存預設分類目錄
 azerbaijan	common	zh-tw	亞賽拜然
 back	common	zh-tw	上一頁
@@ -82,6 +90,7 @@ back to user login	common	zh-tw	回到首頁
 background	htmlarea-TableOperations	zh-tw	背景
 background color	htmlarea	zh-tw	背景顏色
 background color:	common	zh-tw	背景顏色：
+backupdir '%1' is not writeable by the webserver	common	zh-tw	備份資料夾 '%1' 無法寫入
 bad login or password	common	zh-tw	錯誤的使用者代碼或密碼
 bahamas	common	zh-tw	巴哈馬
 bahrain	common	zh-tw	巴林
@@ -98,6 +107,7 @@ bg color	tinymce	zh-tw	背景顏色
 bhutan	common	zh-tw	不丹
 blocked, too many attempts	common	zh-tw	被鎖定了，嘗試太多次
 bold	common	zh-tw	粗體
+bold.gif	common	zh-tw	bold.gif
 bolivia	common	zh-tw	玻利維亞
 border	common	zh-tw	框線
 border color	tinymce	zh-tw	框線顏色
@@ -119,6 +129,8 @@ cambodia	common	zh-tw	高棉
 cameroon	common	zh-tw	CAMEROON
 canada	common	zh-tw	加拿大
 cancel	common	zh-tw	取消
+cannot replace %1 because it is a directory	common	zh-tw	無法取代 %1 ，因為它是資料夾
+cant open '%1' for %2	common	zh-tw	無法開啟 '%1' 於 %2
 cape verde	common	zh-tw	CAPE VERDE
 caption	common	zh-tw	標題
 categories	common	zh-tw	分類
@@ -132,6 +144,7 @@ cell properties	htmlarea-TableOperations	zh-tw	欄位屬性
 cellpadding	tinymce	zh-tw	儲存格內距
 cellspacing	tinymce	zh-tw	儲存格間距
 center	tinymce	zh-tw	置中
+centered	common	zh-tw	置中
 central african republic	common	zh-tw	CENTRAL AFRICAN REPUBLIC
 chad	common	zh-tw	CHAD
 change	common	zh-tw	更換
@@ -142,6 +155,11 @@ check installation	common	zh-tw	檢查系統安裝狀態
 check now	common	zh-tw	立刻檢查
 chile	common	zh-tw	智利
 china	common	zh-tw	中國大陸
+choose a background color	common	zh-tw	選擇背景顏色
+choose a background color for the icons	common	zh-tw	選擇圖示背景顏色
+choose a background image.	common	zh-tw	選擇背景圖片
+choose a background style.	common	zh-tw	選擇背景風格
+choose a text color for the icons	common	zh-tw	選擇圖示的文字顏色
 choose directory to move selected folders and files to.	tinymce	zh-tw	選擇指定的檔案與資料夾要移動的目的地
 choose list style type (for ordered lists)	htmlarea-ListType	zh-tw	選擇清單樣式類型(排序的清單)
 choose the category	common	zh-tw	選擇分類
@@ -155,6 +173,7 @@ click	common	zh-tw	點選
 click or mouse over to show menus	common	zh-tw	點選或是移動滑鼠來顯示選單
 click or mouse over to show menus?	common	zh-tw	點選或是移動滑鼠來顯示選單？
 close	common	zh-tw	關閉
+close sidebox	common	zh-tw	關閉其他選單
 cocos (keeling) islands	common	zh-tw	COCOS (KEELING) ISLANDS
 collapsed borders	htmlarea-TableOperations	zh-tw	展開的框線
 colombia	common	zh-tw	哥倫比亞
@@ -167,6 +186,7 @@ company	common	zh-tw	公司
 configuration problem	tinymce	zh-tw	設定問題
 congo	common	zh-tw	剛果
 congo, the democratic republic of the	common	zh-tw	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+contacting server...	common	zh-tw	伺服器連線中...
 cook islands	common	zh-tw	COOK ISLANDS
 copy	common	zh-tw	複製
 copy selection	htmlarea	zh-tw	複製選取的
@@ -174,6 +194,7 @@ copy table row	tinymce	zh-tw	複製表格列
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	zh-tw	在Mozilla與Firefox不支援複製/剪下/貼上。\n您是否要取得這個問題的詳細資訊？
 costa rica	common	zh-tw	COSTA RICA
 cote d ivoire	common	zh-tw	COTE D IVOIRE
+could not contact server. operation timed out!	common	zh-tw	無法連線伺服器，執行時間過長！
 create	common	zh-tw	建立
 create a link	htmlarea-ContextMenu	zh-tw	建立一個連結
 created by	common	zh-tw	建立者
@@ -200,6 +221,8 @@ decimal numbers	htmlarea-ListType	zh-tw	十進位數字
 decrease indent	htmlarea	zh-tw	減少邊緣
 default	tinymce	zh-tw	預設
 default category	common	zh-tw	預設分類
+default height for the windows	common	zh-tw	視窗預設高度
+default width for the windows	common	zh-tw	視窗預設寬度
 delete	common	zh-tw	移除
 delete cell	htmlarea-TableOperations	zh-tw	刪除儲存格
 delete column	htmlarea-TableOperations	zh-tw	刪除欄位
@@ -213,11 +236,13 @@ details	common	zh-tw	詳細
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh-tw	在PNG圖檔中停用IE 5.5或更新版本的修正來顯示透明效果
 dictionary	htmlarea-SpellChecker	zh-tw	字典
 direction	tinymce	zh-tw	方向
+direction left to right	common	zh-tw	方向由左至右
 direction right to left	tinymce	zh-tw	方向由右至左
 directory	tinymce	zh-tw	資料夾
 disable internet explorer png-image-bugfix	common	zh-tw	停用 IE png-image-bugfix
 disable slider effects	common	zh-tw	停用切換效果
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh-tw	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh-tw	停用為 IE 5.5 或是更新版本設計的修正程式？（這是用來顯示 PNG 圖片透明效果）
 disabled	common	zh-tw	停用
 display %s first	jscalendar	zh-tw	先顯示 %s
 djibouti	common	zh-tw	吉布地
@@ -249,6 +274,7 @@ element...	htmlarea-ContextMenu	zh-tw	元件...
 email	common	zh-tw	電子郵件
 email-address of the user, eg. "%1"	common	zh-tw	使用者的電子郵件, 例： "%1"
 emotions	tinymce	zh-tw	表情圖示
+en	common	zh-tw	zh-tw
 enabled	common	zh-tw	啟用
 end date	common	zh-tw	結束日期
 end time	common	zh-tw	結束時間
@@ -265,6 +291,7 @@ error renaming %1 %2 directory	common	zh-tw	無法更名目錄 %1 %2
 estonia	common	zh-tw	ESTONIA
 ethiopia	common	zh-tw	ETHIOPIA
 exact	common	zh-tw	解開
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	zh-tw	無法連線伺服器或是伺服器回應錯誤，請嘗試重新登入或是與管理員聯繫。
 falkland islands (malvinas)	common	zh-tw	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	zh-tw	FAROE ISLANDS
 fax number	common	zh-tw	傳真號碼
@@ -300,6 +327,7 @@ flash properties	tinymce	zh-tw	Flash屬性
 flash-file (.swf)	tinymce	zh-tw	Flash檔案(.swf)
 float	htmlarea-TableOperations	zh-tw	浮點數
 folder	tinymce	zh-tw	資料夾
+folder already exists.	common	zh-tw	資料夾已經存在。
 folder name missing.	tinymce	zh-tw	沒有輸入資料夾名稱
 folder not found.	tinymce	zh-tw	找不到資料夾
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	zh-tw	新的資料夾名稱已經存在，更換名稱/移動失敗
@@ -316,6 +344,7 @@ french southern territories	common	zh-tw	FRENCH SOUTHERN TERRITORIES
 friday	common	zh-tw	星期五
 ftp	common	zh-tw	FTP
 fullname	common	zh-tw	全名
+fullscreen mode	common	zh-tw	全螢幕模式
 gabon	common	zh-tw	加彭
 gambia	common	zh-tw	甘比亞
 general menu	common	zh-tw	一般選單
@@ -372,6 +401,9 @@ hungary	common	zh-tw	匈牙利
 i will open it in a new page.	htmlarea-SpellChecker	zh-tw	在新視窗開啟
 i_nsert row before	htmlarea-ContextMenu	zh-tw	在插入列之前
 iceland	common	zh-tw	冰島
+iespell not detected. click ok to go to download page.	common	zh-tw	找不到 ieSpell 外掛，點選按鈕來前往下載頁面。
+if the clock is enabled would you like it to update it every second or every minute?	common	zh-tw	如果啟用時鐘功能，更新頻率是每秒還是每分鐘？
+if there are some images in the background folder you can choose the one you would like to see.	common	zh-tw	如果背景圖示資料夾中有一些圖片，您可以選擇使用喜歡的圖片。
 ignore	htmlarea-SpellChecker	zh-tw	忽略
 ignore all	htmlarea-SpellChecker	zh-tw	全部忽略
 image description	tinymce	zh-tw	圖片說明
@@ -383,6 +415,7 @@ indent	tinymce	zh-tw	縮排
 india	common	zh-tw	INDIA
 indonesia	common	zh-tw	INDONESIA
 insert	tinymce	zh-tw	插入
+insert 'return false'	common	zh-tw	插入'return false'
 insert / edit flash movie	tinymce	zh-tw	插入 / 編輯Flash影片
 insert / edit horizontale rule	tinymce	zh-tw	插入 / 編輯水平線
 insert _column before	htmlarea-ContextMenu	zh-tw	在插入欄位之前
@@ -411,6 +444,7 @@ insert/edit link	tinymce	zh-tw	插入/編輯連結
 insert/modify table	tinymce	zh-tw	插入/編輯表格
 inserts a new table	tinymce	zh-tw	新增一個表格
 international	common	zh-tw	國際
+invalid filename	common	zh-tw	檔案名稱錯誤
 invalid ip address	common	zh-tw	錯誤的IP位址
 invalid password	common	zh-tw	錯誤的密碼
 iran, islamic republic of	common	zh-tw	IRAN, ISLAMIC REPUBLIC OF
@@ -420,6 +454,7 @@ israel	common	zh-tw	ISRAEL
 it has been more then %1 days since you changed your password	common	zh-tw	距離您上次更改密碼已經 %1 天了
 it is recommended that you run setup to upgrade your tables to the current version	common	zh-tw	建議您執行設定程式將資料表升級至目前的版本。
 italic	common	zh-tw	斜體
+italic.gif	common	zh-tw	italic.gif
 italy	common	zh-tw	義大利
 jamaica	common	zh-tw	牙買加
 january	common	zh-tw	一月
@@ -444,6 +479,7 @@ korea, republic of	common	zh-tw	南韓
 kuwait	common	zh-tw	KUWAIT
 kyrgyzstan	common	zh-tw	KYRGYZSTAN
 language	common	zh-tw	語言
+language_direction_rtl	common	zh-tw	language_direction_rtl
 lao peoples democratic republic	common	zh-tw	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	zh-tw	姓
 last name of the user, eg. "%1"	common	zh-tw	使用者的姓，例： "%1"
@@ -454,11 +490,12 @@ layout	htmlarea-TableOperations	zh-tw	版面
 ldap-mgr	common	zh-tw	LDAP管理員
 lebanon	common	zh-tw	黎巴嫩
 left	common	zh-tw	左
-lesotho	common	zh-tw	LESOTHO
+lesotho	common	zh-tw	賴索托
 liberia	common	zh-tw	賴比瑞亞
 libyan arab jamahiriya	common	zh-tw	LIBYAN ARAB JAMAHIRIYA
 license	common	zh-tw	版權
-liechtenstein	common	zh-tw	LIECHTENSTEIN
+liechtenstein	common	zh-tw	列支敦士敦
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	zh-tw	第 %1 行：'%2'<br><b>csv 資料不符合資料表 %3 的欄位數量 ==> 忽略</b>
 link points to:	htmlarea-ContextMenu	zh-tw	連結點：
 link url	tinymce	zh-tw	連結網址
 list	common	zh-tw	列表
@@ -507,6 +544,7 @@ message	common	zh-tw	訊息
 mexico	common	zh-tw	墨西哥
 micronesia, federated states of	common	zh-tw	MICRONESIA, FEDERATED STATES OF
 middle	htmlarea-TableOperations	zh-tw	中間
+minute	common	zh-tw	分
 mkdir failed.	tinymce	zh-tw	資料夾建立失敗。
 modify url	htmlarea-ContextMenu	zh-tw	修改網址
 moldova, republic of	common	zh-tw	MOLDOVA, REPUBLIC OF
@@ -517,6 +555,7 @@ montserrat	common	zh-tw	MONTSERRAT
 morocco	common	zh-tw	MOROCCO
 move	tinymce	zh-tw	移動
 mozambique	common	zh-tw	MOZAMBIQUE
+multiple	common	zh-tw	多選
 myanmar	common	zh-tw	MYANMAR
 name	common	zh-tw	名稱
 name of the user, eg. "%1"	common	zh-tw	使用者名稱，例： "%1"
@@ -555,6 +594,7 @@ no permission to move files and folders.	tinymce	zh-tw	沒有移動檔案與資�
 no permission to rename files and folders.	tinymce	zh-tw	沒有檔案與資料夾改名的權限。
 no permission to upload.	tinymce	zh-tw	沒有上傳的權限。
 no rules	htmlarea-TableOperations	zh-tw	沒有規則
+no savant2 template directories were found in:	common	zh-tw	在下面路徑找不到 Savant2 樣板資料夾：
 no shadow	tinymce	zh-tw	沒有陰影
 no sides	htmlarea-TableOperations	zh-tw	沒有邊
 no subject	common	zh-tw	無主題
@@ -567,6 +607,7 @@ not assigned	common	zh-tw	未分配
 note	common	zh-tw	備註
 notes	common	zh-tw	備忘
 notify window	common	zh-tw	提示視窗
+notify your administrator to correct this situation	common	zh-tw	請聯絡管理員來處理這個狀況
 november	common	zh-tw	十一月
 october	common	zh-tw	十月
 ok	common	zh-tw	確定
@@ -587,6 +628,7 @@ open link in a new window	tinymce	zh-tw	在新視窗開啟連結
 open link in the same window	tinymce	zh-tw	在原視窗開啟連結
 open notify window	common	zh-tw	開啟警示視窗
 open popup window	common	zh-tw	開啟彈出式視窗
+open sidebox	common	zh-tw	開啟其他選單
 opens this link in a new window	htmlarea-ContextMenu	zh-tw	在新視窗中開啟連結
 ordered list	common	zh-tw	已排序清單
 original	common	zh-tw	原本的
@@ -618,13 +660,16 @@ paste table row before	tinymce	zh-tw	在表格列之前貼上
 path	htmlarea	zh-tw	路徑
 path not found.	tinymce	zh-tw	路徑找不到
 path to user and group files has to be outside of the webservers document-root!!!	common	zh-tw	使用者與群組的檔案路徑必須要在網站伺服器的網頁跟目錄之外！
+pattern for search in addressbook	common	zh-tw	在通訊錄搜尋的規則
+pattern for search in calendar	common	zh-tw	在行事曆搜尋的規則
+pattern for search in projects	common	zh-tw	在專案搜尋的規則
 percent	htmlarea-TableOperations	zh-tw	百分比
 permissions to the files/users directory	common	zh-tw	檔案/使用者資料夾的權限
 personal	common	zh-tw	個人
 peru	common	zh-tw	祕魯
 philippines	common	zh-tw	菲律賓
 phone number	common	zh-tw	電話
-phpgwapi	common	zh-tw	eGroupWare應用介面
+phpgwapi	common	zh-tw	eGroupWare 核心
 pitcairn	common	zh-tw	PITCAIRN
 pixels	htmlarea-TableOperations	zh-tw	畫素
 please %1 by hand	common	zh-tw	請手動 %1
@@ -649,6 +694,7 @@ portugal	common	zh-tw	PORTUGAL
 position (x/y)	tinymce	zh-tw	位置(X/Y)
 postal	common	zh-tw	郵遞區號
 powered by egroupware version %1	common	zh-tw	系統為 <a href="http://www.egroupware.org">eGroupWare</a> 版本 %1
+powered by phpgroupware version %1	common	zh-tw	Powered by eGroupWare version %1
 preferences	common	zh-tw	喜好設定
 preferences for the idots template set	common	zh-tw	idots樣板的設定
 prev. month (hold for menu)	jscalendar	zh-tw	上一個月(按住滑鼠鍵)
@@ -659,6 +705,7 @@ primary style-sheet:	common	zh-tw	主要樣式表：
 print	common	zh-tw	列印
 priority	common	zh-tw	優先權
 private	common	zh-tw	私人
+programs	common	zh-tw	程式
 project	common	zh-tw	專案
 public	common	zh-tw	共用
 puerto rico	common	zh-tw	PUERTO RICO
@@ -666,12 +713,14 @@ qatar	common	zh-tw	QATAR
 re-check	htmlarea-SpellChecker	zh-tw	重新檢查
 read	common	zh-tw	讀取
 read this list of methods.	common	zh-tw	讀取這個方法的列表
+reading	common	zh-tw	閱讀中
 redo	tinymce	zh-tw	重做
 redoes your last action	htmlarea	zh-tw	重新執行最後一個動作
 refresh	tinymce	zh-tw	重新整理
 reject	common	zh-tw	拒絕
 remove col	tinymce	zh-tw	移除欄位
 remove selected accounts	common	zh-tw	移除選取的帳號
+remove shortcut	common	zh-tw	移除快速鍵
 remove the	htmlarea-ContextMenu	zh-tw	移除
 remove this node from the document	htmlarea-ContextMenu	zh-tw	從文件中移除這個節點
 rename	common	zh-tw	更名
@@ -708,11 +757,13 @@ san marino	common	zh-tw	SAN MARINO
 sao tome and principe	common	zh-tw	SAO TOME AND PRINCIPE
 saturday	common	zh-tw	星期六
 saudi arabia	common	zh-tw	SAUDI ARABIA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	zh-tw	Savant2 版本衝突。<br/>程式版本： %1 <br/>Savant2 版本： %2
 save	common	zh-tw	儲存
 search	common	zh-tw	搜尋
 search %1 '%2'	common	zh-tw	搜尋 %1 '%2'
 search or select accounts	common	zh-tw	搜尋或是選擇帳號
 search or select multiple accounts	common	zh-tw	搜尋或是選擇多個帳號
+second	common	zh-tw	秒
 section	common	zh-tw	選擇
 select	common	zh-tw	選擇
 select all	tinymce	zh-tw	選擇全部
@@ -723,6 +774,8 @@ select group	common	zh-tw	選擇群組
 select home email address	common	zh-tw	選擇家用信箱
 select multiple accounts	common	zh-tw	選擇多個帳號
 select one	common	zh-tw	選擇一個
+select the default height for the application windows	common	zh-tw	選擇應用程式視窗的預設高度
+select the default width for the application windows	common	zh-tw	選擇應用程式視窗的預設寬度
 select user	common	zh-tw	選擇使用者
 select work email address	common	zh-tw	選擇工作用信箱
 selection	common	zh-tw	選擇
@@ -730,6 +783,8 @@ send	common	zh-tw	送出
 senegal	common	zh-tw	SENEGAL
 september	common	zh-tw	九月
 server %1 has been added	common	zh-tw	伺服器 %1 已經完成新增
+server answered. processing response...	common	zh-tw	伺服器回應了，處理回應中...
+server contacted. waiting for response...	common	zh-tw	伺服器連上了，等待回應中...
 server name	common	zh-tw	伺服器名稱
 session has been killed	common	zh-tw	連線已被中斷
 setup	common	zh-tw	安裝
@@ -737,14 +792,19 @@ setup main menu	common	zh-tw	安裝主要選單
 seychelles	common	zh-tw	SEYCHELLES
 show all	common	zh-tw	顯示全部
 show all categorys	common	zh-tw	顯示全部類別
+show clock?	common	zh-tw	顯示時鐘？
+show home and logout button in main application bar?	common	zh-tw	在選單列顯示首頁與登出圖示？
 show locationbar	tinymce	zh-tw	顯示網址列
+show logo's on the desktop.	common	zh-tw	在首頁顯示網站圖示
 show menu	common	zh-tw	顯示選單
 show menubar	tinymce	zh-tw	顯示選單列
 show page generation time	common	zh-tw	顯示網頁產生時間
 show page generation time on the bottom of the page?	common	zh-tw	將網頁產生時間顯示在頁尾？
+show page generation time?	common	zh-tw	顯示頁面產生時間？
 show scrollbars	tinymce	zh-tw	顯示捲動列
 show statusbar	tinymce	zh-tw	顯示狀態列
 show the image properties dialog	htmlarea-ContextMenu	zh-tw	顯示圖片屬性對話框
+show the logo's of egroupware and x-desktop on the desktop.	common	zh-tw	在桌面顯示 eGroupware 與 x-desktop 的圖示。
 show the table cell properties dialog	htmlarea-ContextMenu	zh-tw	顯示表單儲存格屬性對話框
 show the table properties dialog	htmlarea-ContextMenu	zh-tw	顯示表格屬性對話框
 show the table row properties dialog	htmlarea-ContextMenu	zh-tw	顯示表格列屬性對話框
@@ -775,9 +835,10 @@ sri lanka	common	zh-tw	SRI LANKA
 start date	common	zh-tw	開始日期
 start time	common	zh-tw	開始時間
 start with	common	zh-tw	開始於
+starting up...	common	zh-tw	開始中...
 status	common	zh-tw	狀態
-strikethrough	htmlarea	zh-tw	突破
-striketrough	tinymce	zh-tw	突破
+strikethrough	htmlarea	zh-tw	刪除線
+striketrough	tinymce	zh-tw	刪除線
 style [css]	htmlarea-TableOperations	zh-tw	樣式[CSS]
 subject	common	zh-tw	主題
 submit	common	zh-tw	送出
@@ -841,6 +902,7 @@ tonga	common	zh-tw	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	zh-tw	太多錯誤的登入：%1 使用者 '%2', %3 IP %4
 top	common	zh-tw	頂部
 total	common	zh-tw	總計
+transparant bg for the icons?	common	zh-tw	圖示使用透明背景？
 trinidad and tobago	common	zh-tw	TRINIDAD AND TOBAGO
 tuesday	common	zh-tw	星期二
 tunisia	common	zh-tw	TUNISIA
@@ -848,9 +910,11 @@ turkey	common	zh-tw	TURKEY
 turkmenistan	common	zh-tw	TURKMENISTAN
 turks and caicos islands	common	zh-tw	TURKS AND CAICOS ISLANDS
 tuvalu	common	zh-tw	TUVALU
+type	common	zh-tw	類型
 uganda	common	zh-tw	UGANDA
 ukraine	common	zh-tw	UKRAINE
 underline	common	zh-tw	底線
+underline.gif	common	zh-tw	underline.gif
 undo	tinymce	zh-tw	復原
 undoes your last action	htmlarea	zh-tw	還原上一個動作
 united arab emirates	common	zh-tw	UNITED ARAB EMIRATES
@@ -865,7 +929,9 @@ unordered list	tinymce	zh-tw	未排序列表
 unset color	htmlarea-TableOperations	zh-tw	重設顏色
 up	tinymce	zh-tw	上
 update	common	zh-tw	更新
+update the clock per minute or per second	common	zh-tw	更新時鐘頻率為分或秒
 upload	common	zh-tw	上傳
+upload directory does not exist, or is not writeable by webserver	common	zh-tw	上傳資料夾不存在，或是無法寫入
 upload image	htmlarea-UploadImage	zh-tw	上傳圖片
 uploading...	tinymce	zh-tw	上傳中...
 upper latin letters	htmlarea-ListType	zh-tw	大寫拉丁字母
@@ -900,11 +966,16 @@ warning!\n renaming or moving folders and files will break existing links in you
 wednesday	common	zh-tw	星期三
 welcome	common	zh-tw	歡迎光臨
 western sahara	common	zh-tw	WESTERN SAHARA
+what color should all the blank space on the desktop have	common	zh-tw	桌面空白區域要使用的顏色
+what style would you like the image to have?	common	zh-tw	圖片的風格？
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	zh-tw	啟用這個項目後，選單就會包含首頁與登出的圖示。
 which groups	common	zh-tw	哪個群組
 width	common	zh-tw	寬度
 window name	tinymce	zh-tw	視窗名稱
 wk	jscalendar	zh-tw	星期
 work email	common	zh-tw	工作信箱
+would you like to display the page generation time at the bottom of every window?	common	zh-tw	是否要在每頁的最下方顯示頁面產生時間？
+writing	common	zh-tw	寫入中
 written by:	common	zh-tw	作者：
 year	common	zh-tw	年
 yemen	common	zh-tw	葉門
@@ -930,3 +1001,4 @@ your settings have been updated	common	zh-tw	您的設定已經更新。
 yugoslavia	common	zh-tw	南斯拉夫
 zambia	common	zh-tw	尚比亞
 zimbabwe	common	zh-tw	辛巴威
+zoom	common	zh-tw	放大

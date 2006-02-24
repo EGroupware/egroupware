@@ -330,41 +330,41 @@ public	addressbook	sk	veøejné
 public key	addressbook	sk	Veøejný klíè
 re-edit event	calendar	sk	Znovu uprav
 read a list of entries.	calendar	sk	Naèítaj zoznam záznamov.
-read a single entry by passing the id and fieldlist.	calendar	sk	Naèti záznam pøedáním id a seznamu polo¾ek.
-read this list of methods.	calendar	sk	Naèti tento seznam metod.
-receive email updates	calendar	sk	Dostávat informace elektronickou po¹tou?
-receive extra information in event mails	calendar	sk	Dostávat roz¹íøené informace v e-mailech o událostech
-receive summary of appointments	calendar	sk	Dostávat souhrn událostí
+read a single entry by passing the id and fieldlist.	calendar	sk	Naèítaj záznam zadaním ID a zoznamu záznamov.
+read this list of methods.	calendar	sk	naèítaj tento zoznam metód.
+receive email updates	calendar	sk	Dostáva» informácie elektronickou po¹tou?
+receive extra information in event mails	calendar	sk	Dostáva» elektronickou po¹tou roz¹írené informácie o udalostiach
+receive summary of appointments	calendar	sk	Dostáva» súhrn udalostí
 record access	addressbook	sk	Pøístup k záznamu
 record owner	addressbook	sk	Vlastník záznamu
-recurring event	calendar	sk	Opakující se událost
-refresh	calendar	sk	Obnov
-reinstate	calendar	sk	Obnovit výskyty
-rejected	calendar	sk	Odmítnuto
-repeat day	calendar	sk	Den pro opakování
-repeat end date	calendar	sk	Datum konce opakování
-repeat type	calendar	sk	Druh opakování
-repeating event information	calendar	sk	Informace o opakování
-repetition	calendar	sk	Opakování
-repetitiondetails (or empty)	calendar	sk	Opakování (nebo nic)
-reset	calendar	sk	Reset
+recurring event	calendar	sk	Opakujúca se udalos»
+refresh	calendar	sk	Obnovi»
+reinstate	calendar	sk	Obnovi» výskyty
+rejected	calendar	sk	Odmietnuté
+repeat day	calendar	sk	Deò pre opakovanie
+repeat end date	calendar	sk	Dátum konca opakovania
+repeat type	calendar	sk	Druh opakovania
+repeating event information	calendar	sk	Informácie o opakovaní udalosti
+repetition	calendar	sk	Opakovanie
+repetitiondetails (or empty)	calendar	sk	Detaily o opakovaní (alebo niè)
+reset	calendar	sk	Vynulova»
 retrieve contacts	admin	sk	naèti kontakty
 rule	calendar	sk	Pravidlo
 sa	calendar	sk	So
 sat	calendar	sk	So
-scheduling conflict	calendar	sk	Konflikt naplánování
-search results	calendar	sk	Výsledky hledání
+scheduling conflict	calendar	sk	Konflikt plánovania
+search results	calendar	sk	Výsledky vyhµadávania
 select all	addressbook	sk	Vybrat v¹e
 select where you want to store	admin	sk	Vyberte místo pro ulo¾ení
-selected contacts (%1)	calendar	sk	Vyber kontakty (%1)
-send updates via email	common	sk	Po¹li zmìny e-mailem
-send/receive updates via email	calendar	sk	Odeslat / pøijmout zmìny e-mailem
+selected contacts (%1)	calendar	sk	Vybrané kontakty (%1)
+send updates via email	common	sk	Posla» zmeny e-mailom
+send/receive updates via email	calendar	sk	Posiela» / prijíma» zmeny e-mailem
 september	addressbook	sk	záøí
-set a year only for one-time / non-regular holidays.	calendar	sk	Rok nastavte jen pro jednorázové a nepravidelné události.
-set new events to private	calendar	sk	Nastav nové události jako soukromé
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sk	Mají se odmítnuté pozvánky stále zobrazovat v kalendáøi?<br>Mù¾ete je pøijmout pozdìji, ale jen pokud jsou stále zobrazeny!
-should new events created as private by default ?	calendar	sk	Mají být nové události vytváøeny jako soukromé?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sk	Mohou nepøihlá¹ené osoby vidìt informace o Va¹em zaneprázdnìní èi volném èase? Mù¾ete i nastavit dodateèné heslo, odli¹né od Va¹eho bì¾ného hesla, k ochranì tìchto údajù. Tyto údaje jsou ve formátu iCal a obsahují pouze èasy va¹eho zaneprázdnìní, nikoli podrobnosti o událostech. Odkaz na tyto informace je %1.
+set a year only for one-time / non-regular holidays.	calendar	sk	Rok nastavte iba pre jednorázové a nepravidelné udalosti.
+set new events to private	calendar	sk	Nastav nové udalosti ako súkromné
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sk	Majú se odmietnuté pozvánky stále zobrazova» v kalendári?<br>Mô¾ete ich prija» neskôr (napríklad keï sa vyrie¹i konflikt plánovania), ale len ak sú stále zobrazené vo va¹om kalendári!
+should new events created as private by default ?	calendar	sk	Majú sa nové udalosti be¾ne vytvára» ako súkromné?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sk	Mô¾u neprihlásené osoby vidie» informácie o Va¹am zaneprázdnení èi voµnom èase? Mô¾ete si nastavi» aj dodatoèné heslo, odli¹né od Va¹eho be¾ného hesla, k ochrane týchto údajov. Tieto  údaje sú vo formáte iCal a obsahujú iba èasy va¹ej zaneprázdnenosti, bez zbytoèných podrobností ako napr. názvov udalostí, opisov alebo miest. Odkaz na tieto informácie je %1.
 should the mini calendars by printed / displayed in the printer friendly views ?	calendar	sk	Mají se minikalendáøe zobrazovat a tisknout i v náhledech tisku?
 should the printer friendly view be in black & white or in color (as in normal view)?	calendar	sk	Má být náhled tisku èernobílý nebo barevný?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sk	Má se za jménem u¾ivatele zobrazovat jeho vztah k události (pøijmul, odmítnul, ...)?

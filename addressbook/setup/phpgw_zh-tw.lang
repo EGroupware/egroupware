@@ -38,6 +38,8 @@ business zip code	addressbook	zh-tw	郵遞區號
 car phone	addressbook	zh-tw	車用電話
 cell phone	addressbook	zh-tw	行動電話
 charset of file	addressbook	zh-tw	檔案字元編碼設定
+choose an icon for this contact type	addressbook	zh-tw	選擇這個聯絡人類型要使用的圖示
+chosse an etemplate for this contact type	addressbook	zh-tw	選擇這個聯絡人類型要使用的 eTemplate
 city	common	zh-tw	縣市
 company	common	zh-tw	公司
 company name	common	zh-tw	公司名稱
@@ -95,6 +97,7 @@ home phone	addressbook	zh-tw	電話
 home state	addressbook	zh-tw	省/市
 home street	addressbook	zh-tw	地址
 home zip code	addressbook	zh-tw	郵遞區號
+icon	addressbook	zh-tw	圖示
 import	addressbook	zh-tw	匯入
 import contacts	addressbook	zh-tw	匯入聯絡人
 import csv-file into addressbook	addressbook	zh-tw	將CSV檔案匯入通訊錄
@@ -130,6 +133,7 @@ multiple vcard	addressbook	zh-tw	多重名片檔
 no vcard	addressbook	zh-tw	沒有VCard
 number	addressbook	zh-tw	數字
 number of records to read (%1)	addressbook	zh-tw	讀取記錄號碼(%1)
+options for type	addressbook	zh-tw	類型選項
 organisation	addressbook	zh-tw	組織
 other number	addressbook	zh-tw	其他號碼
 other phone	addressbook	zh-tw	其他電話
@@ -142,6 +146,7 @@ postal	common	zh-tw	郵政信箱
 pref	addressbook	zh-tw	主要
 prefix	addressbook	zh-tw	稱謂(前置)
 public key	addressbook	zh-tw	公鑰
+publish into groups:	addressbook	zh-tw	發佈於群組：
 read a list / search for entries.	addressbook	zh-tw	讀取一個清單/搜尋資料
 read a list of entries.	addressbook	zh-tw	讀取項目清單。
 read a single entry by passing the id and fieldlist.	addressbook	zh-tw	從id及欄位清單讀取一筆資料。

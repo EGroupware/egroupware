@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	en	%1 - %2 of %3 user accounts
 %1 - %2 of %3 user groups	admin	en	%1 - %2 of %3 user groups
+%1 acl records of not (longer) existing accounts deleted.	admin	en	%1 ACL records of not (longer) existing accounts deleted.
 %1 not found or not executable !!!	admin	en	%1 not found or not executable !!!
 (default no, leave it off if you dont use it)	admin	en	(default No, leave it off if you dont use it)
 (stored password will not be shown here)	admin	en	(Stored password will not be shown here)
@@ -93,6 +94,7 @@ country selection	admin	en	Country Selection
 create group	admin	en	Create Group
 creates a new field	admin	en	creates a new field
 crontab only (recomended)	admin	en	crontab only (recomended)
+custom fields	admin	en	Custom fields
 cyrus imap server	admin	en	Cyrus IMAP Server
 data	admin	en	Data
 day	admin	en	Day
@@ -192,6 +194,7 @@ error: %1 not found or other error !!!	admin	en	Error: %1 not found or other err
 expires	admin	en	Expires
 explanation of ldapman	admin	en	This module has been tested so far for POSTFIX,LDAP,Courier-IMAP and need the schemas  CORE and QMAIL (OID7914). More details about using and configuring this systrem can be found in README.ldapman in the doc folder of ADMIN.
 fallback (after each pageview)	admin	en	fallback (after each pageview)
+field '%1' already exists !!!	admin	en	Field '%1' already exists !!!
 file space	admin	en	File space
 file space must be an integer	admin	en	File space must be an integer
 find and register all application hooks	admin	en	Find and Register all Application Hooks
@@ -200,6 +203,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	en	Force Selectbox
 forward also to	admin	en	forward also to
 forward email's to	admin	en	forward email's to
+forward emails to	admin	en	forward emails to
 forward only	admin	en	forward only
 global categories	common	en	Global Categories
 group ?	admin	en	group ?
@@ -269,6 +273,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	en	Minimum account id (e.g. 500
 minute	admin	en	Minute
 mode	admin	en	Mode
 month	admin	en	Month
+name must not be empty !!!	admin	en	Name must not be empty !!!
 new group name	admin	en	New group name
 new name	admin	en	new name
 new password [ leave blank for no change ]	admin	en	New password [ Leave blank for no change ]
@@ -293,6 +298,7 @@ peer server list	admin	en	Peer server list
 peer servers	admin	en	Peer servers
 percent of users that logged out	admin	en	Percent of users that logged out
 percent this user has logged out	admin	en	Percent this user has logged out
+permission denied	admin	en	Permission denied
 permissions	admin	en	Permissions
 permissions this group has	admin	en	Permissions this group has
 phpinfo	admin	en	PHP information
@@ -411,12 +417,14 @@ view this user	admin	en	view this user
 view user account	admin	en	View user account
 who would you like to transfer all records owned by the deleted user to?	admin	en	Who would you like to transfer ALL records owned by the deleted user to?
 would you like egroupware to cache the egw info array ?	admin	en	Would you like eGroupWare to cache the egw info array ?
+would you like egroupware to cache the phpgw info array ?	admin	en	Would you like eGroupWare to cache the phpgw info array ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	en	Would you like eGroupWare to check for a new version<br>when admins login ?
 would you like egroupware to check for new application versions when admins login ?	admin	en	Would you like eGroupWare to check for new application versions when admins login ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	en	Would you like to automatically load new langfiles (at login-time) ?
 would you like to show each application's upgrade status ?	admin	en	Would you like to show each application's upgrade status ?
 xml-rpc	admin	en	XML-RPC
 you have entered an invalid expiration date	admin	en	You have entered an invalid expiration date
+you have to enter a name, to create a new field!!!	admin	en	You have to enter a name, to create a new field!!!
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
 you must enter a group name.	admin	en	You must enter a group name.
 you must enter a lastname	admin	en	You must enter a lastname

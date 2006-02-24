@@ -185,9 +185,11 @@ phone/email	infolog	zh-tw	電話/Email
 phonecall	infolog	zh-tw	聯絡清單
 planned	infolog	zh-tw	已規劃
 planned time	infolog	zh-tw	已規劃時間
+price	infolog	zh-tw	價格
 priority	infolog	zh-tw	優先權
 private	infolog	zh-tw	私人的
 project	infolog	zh-tw	專案
+project settings: price, times	infolog	zh-tw	專案設定： 價格、時間
 re:	infolog	zh-tw	回覆：
 read one record by passing its id.	infolog	zh-tw	透過傳遞ID來讀取記錄
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zh-tw	本地端IP的過濾規則<br>例如^192\.168\.1\.
@@ -197,7 +199,7 @@ responsible	infolog	zh-tw	責任
 responsible open	infolog	zh-tw	責任開始時間
 responsible overdue	infolog	zh-tw	責任期間
 responsible upcoming	infolog	zh-tw	即將產生的責任
-responsible user, priority, times	infolog	zh-tw	負責人、優先順序、時間
+responsible user, priority	infolog	zh-tw	負責人、順序
 returns a list / search for records.	infolog	zh-tw	傳回一個清單 / 搜尋記錄
 save	infolog	zh-tw	儲存
 saves the changes made and leaves	infolog	zh-tw	儲存後離開
@@ -206,7 +208,9 @@ search	infolog	zh-tw	搜尋
 search for:	infolog	zh-tw	搜尋：
 select	infolog	zh-tw	選擇
 select a category for this entry	infolog	zh-tw	選擇這個事件的類別
+select a price	infolog	zh-tw	選擇價格
 select a priority for this task	infolog	zh-tw	選擇這個任務的優先權
+select a project	infolog	zh-tw	選擇專案
 select a responsible user: a person you want to delegate this task	infolog	zh-tw	選擇負責人：這個任務的代表人
 select a typ to edit it's status-values or delete it	infolog	zh-tw	選擇一個格式來編輯它的狀態或是將它刪除
 select an app to search in	infolog	zh-tw	選擇要搜尋的應用程式
