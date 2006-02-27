@@ -241,7 +241,7 @@ leave empty for no quota	admin	sk	ak nechcete kvóty, ponechajte prázdne
 leave the category untouched and return back to the list	admin	sk	necha» kategóriu bezo zmien a vráti» sa spä» na zoznam
 leave the group untouched and return back to the list	admin	sk	Necha» skupinu bezo zmien a vráti» sa na zoznam
 leaves without saveing	admin	sk	odís» bez ulo¾enia
-length<br>rows	admin	sk	Då¾ka<br>Riadky
+length<br>rows	admin	sk	Då¾ka/<br>Riadkov
 list config settings	admin	sk	Zobrazi» voµby nastavení
 list current sessions	admin	sk	Zobrazi» aktuálne sedenia
 list of current users	admin	sk	zoznam aktuálnych pou¾ívateµov

@@ -35,7 +35,7 @@ calendar - add	calendar	eu	Egutegia-Erantsi
 calendar - edit	calendar	eu	Egutegia-Editatu
 calendar event	calendar	eu	Egutegiko gertakaria
 calendar holiday management	admin	eu	Jai egunen kudeaketa
-calendar preferences	calendar	eu	Lehentasunak-egutegia
+calendar preferences	calendar	eu	Egutegiko hobespenak
 calendar settings	admin	eu	Lehentasunak egutegian
 calendar-fieldname	calendar	eu	Egutegia-Eremuaren izena
 canceled	calendar	eu	Ezeztatu
@@ -46,7 +46,7 @@ click %1here%2 to return to the calendar.	calendar	eu	Klik %1 hemen %2 egutegiar
 configuration	calendar	eu	Konfigurazioa
 countries	calendar	eu	Herrialdeak
 country	calendar	eu	Herrialdea
-created by	calendar	eu	Sortu
+created by	calendar	eu	Sortzailea
 csv-fieldname	calendar	eu	CSV-Fitxategiaren izena
 csv-filename	calendar	eu	CSV-Fitxategiaren izena
 custom fields	calendar	eu	Eremu pertsonalizatua

@@ -1,7 +1,13 @@
 %1 email addresses inserted	common	eu	%1 helbide elektronikoak txertatuak
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1eGroupWare%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
 00 (disable)	admin	eu	00 (desaktibatu)
 13 (ntp)	admin	eu	13 (ntp)
 80 (http)	admin	eu	80 (http)
+_delete row	htmlarea-ContextMenu	eu	_Ezabatu errenkada
+_image properties...	htmlarea-ContextMenu	eu	_Irudiaren propietatea...
+_modify link...	htmlarea-ContextMenu	eu	_Lotura aldatu...
+_remove link...	htmlarea-ContextMenu	eu	_Lotura kendu...
+_table properties...	htmlarea-ContextMenu	eu	_Taularen propietateak...
 about	common	eu	Honi buruz
 about %1	common	eu	%1ri buruz
 about the calendar	jscalendar	eu	Egutegiari buruz
@@ -23,14 +29,17 @@ administration	common	eu	Administrazioa
 afghanistan	common	eu	AFGANISTAN
 albania	common	eu	ALBANIA
 algeria	common	eu	ALJERIA
+align	htmlarea-TableOperations	eu	Lerrokatu
 all	common	eu	Guztiak
+all fields	common	eu	eremu guztiak
 alphabet	common	eu	a,b,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+alternate style-sheet:	common	eu	Txadakatu estilo-orria
 american samoa	common	eu	AMERICAN SAMOA
 andorra	common	eu	ANDORRA
 angola	common	eu	ANGOLA
 anguilla	common	eu	ANGUILLA
 antarctica	common	eu	ANTARTIKA
-antigua and barbuda	common	eu	ANTIGUA AND BARBUDA
+antigua and barbuda	common	eu	ANTIGUA ETA BARBUDA
 apply	common	eu	Aplikatu
 april	common	eu	Apirila
 are you sure you want to delete these entries ?	common	eu	Ziur al zaude sarrera hauek ezbatu nahi dituzula?
@@ -63,8 +72,11 @@ bhutan	common	eu	BHUTAN
 blocked, too many attempts	common	eu	Blokeatuta saiakera gehiegi
 bold	htmlarea	eu	Lodia
 bolivia	common	eu	BOLIBIA
+border	htmlarea-TableOperations	eu	Ertza
+borders	htmlarea-TableOperations	eu	Ertzak
 bosnia and herzegovina	common	eu	BOSNIA ETA HERZEGOVINA
 botswana	common	eu	BOSTWANA
+bottom	htmlarea-TableOperations	eu	Behean
 bouvet island	common	eu	BOUVET ISLAND
 brazil	common	eu	BRASIL
 british indian ocean territory	common	eu	BRITISH INDIAN OCEAN TERRITORY
@@ -79,16 +91,21 @@ cameroon	common	eu	CAMEROON
 canada	common	eu	CANADA
 cancel	common	eu	Ezeztatu
 cape verde	common	eu	CAPE VERDE
+caption	htmlarea-TableOperations	eu	Epigrafea
 categories	common	eu	Kategoriak
 categories for	common	eu	Kategoriak
 category	common	eu	Kategoria
 category %1 has been added !	common	eu	Kategoria %1 erantsia izan da
 category %1 has been updated !	common	eu	Kategoria %1 eguneratua izan da
 cayman islands	common	eu	CAIMAN IRLAK
+cell properties	htmlarea-TableOperations	eu	Gelaxkaren propietateak
+center	htmlarea-TableOperations	eu	Erdian
 central african republic	common	eu	ERTA AFRIKAKO ERREPUBLIKA
 chad	common	eu	CHAD
 change	common	eu	Aldatu
+char	htmlarea-TableOperations	eu	Karaktere
 check installation	common	eu	Instalazioa egiaztu
+check now	common	eu	Egiaztatu orain
 chile	common	eu	CHILE
 china	common	eu	TXINA
 choose the category	common	eu	Kategoria aukeratu
@@ -129,27 +146,41 @@ date	common	eu	Data
 date due	common	eu	Muga eguna
 date selection:	jscalendar	eu	Aukeratu data:
 december	common	eu	Abendua
+decimal numbers	htmlarea-ListType	eu	Zenbaki hamartarrak
 decrease indent	htmlarea	eu	Txikitu koska
 default category	common	eu	Lehenetsitako kategoria
 delete	common	eu	Ezabatu
+delete cell	htmlarea-TableOperations	eu	Gelaxka ezabatu
+delete column	htmlarea-TableOperations	eu	Zutabea ezabatu
+delete row	htmlarea-TableOperations	eu	Errenkada ezabatu
+delete the current column	htmlarea-ContextMenu	eu	Zutabe hau ezabatu
+delete the current row	htmlarea-ContextMenu	eu	Errenkada hau ezabatu
 denmark	common	eu	Danimarka
 description	common	eu	Deskribapena
 detail	common	eu	Zehaztasuna
 details	common	eu	Zehaztasunak
 dictionary	htmlarea-SpellChecker	eu	Hiztegia
 disable slider effects	common	eu	Efektu graduatzaileak desaktibatu
-disabled	common	eu	Desgaitu
+disabled	common	eu	Desaktibatu
+djibouti	common	eu	DJIBOUTI
 do you also want to delete all subcategories ?	common	eu	Azpikategoria guztiak ezabatu nahi dituzu?
+document properties	common	eu	Dokumentuaren propietateak:
+document title:	common	eu	Dokumentuaren izenburua:
 domain	common	eu	Domeinu
+dominica	common	eu	DOMINICA
+dominican republic	common	eu	ERREPUBLICA DOMINIKARRA
 done	common	eu	Egina
 drag to move	jscalendar	eu	Arrastatu mugitzeko
 e-mail	common	eu	Posta elektronikoa
 east timor	common	eu	EAST TIMOR
+ecuador	common	eu	ECUADOR
 edit	common	eu	Editatu
 edit %1 category for	common	eu	Editatu %1 kategoria
 edit categories	common	eu	Editatu kategoriak
 edit category	common	eu	Editatu kategoria
 egypt	common	eu	EGIPTO
+el salvador	common	eu	EL SALVADOR
+element...	htmlarea-ContextMenu	eu	Elementu...
 email	common	eu	Posta elektronikoa
 enabled	common	eu	Lehenengo orria
 end date	common	eu	Amaiera data
@@ -157,12 +188,15 @@ end time	common	eu	Amaiera ordua
 enlarge editor	htmlarea	eu	Editorea handitu
 entry has been deleted sucessfully	common	eu	Sarrera zuzen ezabatu da
 entry updated sucessfully	common	eu	Sarrera zuzen eguneratu da
+equatorial guinea	common	eu	GUINEA ECUATORIAL
+eritrea	common	eu	ERITREA
 error	common	eu	Errorea
 error creating %1 %2 directory	common	eu	Errorea %1 %2 direktorioa sortzerakoan
 error deleting %1 %2 directory	common	eu	Errorea %1 %2 direktorioa ezabatzerakoan
 error renaming %1 %2 directory	common	eu	Errorea %1 %2 direktorioa berizendatzerakoan
 estonia	common	eu	ESTONIA
 ethiopia	common	eu	ETHIOPIA
+exact	common	eu	Zehatz
 falkland islands (malvinas)	common	eu	MALVINAK
 faroe islands	common	eu	FAROE IRLAK
 fax number	common	eu	Fax zenbakia
@@ -171,10 +205,14 @@ fields	common	eu	Eremuak
 files	common	eu	Fitxategiak
 filter	common	eu	Iragazkia
 finland	common	eu	FINLANDIA
+first name	common	eu	Izena
 first page	common	eu	Lehenengo orria
+firstname	common	eu	Izena
 fixme!	common	eu	Zuzendu nazazu!
+float	htmlarea-TableOperations	eu	Mugikorra
 font color	htmlarea	eu	Hizki kolorea
 force selectbox	common	eu	Aukeraketa koadroa indartu
+frames	htmlarea-TableOperations	eu	Markoak
 france	common	eu	FRANTZIA
 french guiana	common	eu	FRANTZIAR GUIANA
 french polynesia	common	eu	FRANTZIAR POLYNESIA
@@ -204,6 +242,12 @@ groups with permission for %1	common	eu	Taldeak %1erako baimenarekin
 groups without permission for %1	common	eu	Taldeak %1erako baimenik gabe
 guadeloupe	common	eu	GUADALUPE
 guatemala	common	eu	GUATEMALA
+guinea	common	eu	GUINEA
+guinea-bissau	common	eu	GUINEA-BISSAU
+guyana	common	eu	GUYANA
+haiti	common	eu	HAITI
+heard island and mcdonald islands	common	eu	HEARD ISLAND ETA MCDONALD ISLANDS
+height	htmlarea-TableOperations	eu	Garaiera
 help	common	eu	Laguntza
 help using editor	htmlarea	eu	Laguntza editorea erabiltzerakoan
 high	common	eu	Altua
@@ -213,49 +257,377 @@ home email	common	eu	Posta elektroniko pribatua
 honduras	common	eu	HONDURAS
 hong kong	common	eu	HONG KONG
 horizontal rule	htmlarea	eu	Erregela horizontala
+how many columns would you like to merge?	htmlarea-TableOperations	eu	Zenbat zutabe nahi dituzu txertatu?
+how many rows would you like to merge?	htmlarea-TableOperations	eu	Zenbat errenkada nahi dituzu txertatu?
 hungary	common	eu	HUNGARIA
+i_nsert row before	htmlarea-ContextMenu	eu	Errenkada bat txertatu aurretik
 iceland	common	eu	ISLANDIA
 ignore	htmlarea-SpellChecker	eu	Ezikusi
 ignore all	htmlarea-SpellChecker	eu	Ezikusi guztiak
+image url	htmlarea-TableOperations	eu	URL irudia
+in_sert row after	htmlarea-ContextMenu	eu	Errenkada bat txertatu ondoren
 increase indent	htmlarea	eu	Handitu koska
 india	common	eu	INDIA
 indonesia	common	eu	INDONESIA
+insert _column before	htmlarea-ContextMenu	eu	Zutabe bat txertatu aurretik
+insert a new column after the current one	htmlarea-ContextMenu	eu	Zutabe berri bat txertatu momentukoaren azpian
+insert a new column before the current one	htmlarea-ContextMenu	eu	Zutabe berri bat txertatu momentukoaren gainean
+insert a new row after the current one	htmlarea-ContextMenu	eu	Errenkada berri bat txertatu momentukoaren azpian
+insert a new row before the current one	htmlarea-ContextMenu	eu	Errenkada berri bat txertatu momentukoaren gainean
+insert cell after	htmlarea-TableOperations	eu	Gelaxka bat txertatu aurretik
+insert cell before	htmlarea-TableOperations	eu	Gelaxka bat txertatu ondoren
+insert column after	htmlarea-TableOperations	eu	Zutabe bat txertatu aurretik
+insert column before	htmlarea-TableOperations	eu	Zutabe bat txertatu aurretik
 insert image	htmlarea	eu	Irudia txertatu
+insert row after	htmlarea-TableOperations	eu	Errenkada bat txertatu aurretik
+insert row before	htmlarea-TableOperations	eu	Errenkada bat txertatu ondoren
 insert table	htmlarea	eu	Taula txertatu
 insert web link	htmlarea	eu	Web lotura bet txertatu
 international	common	eu	Nazioartekoa
 invalid ip address	common	eu	IP helbidea baliogabea
 invalid password	common	eu	Pasahitza baliogabea
+iraq	common	eu	IRAQ
 ireland	common	eu	IRLANDA
+israel	common	eu	ISRAEL
 italic	common	eu	Etzana
 italy	common	eu	ITALIA
+jamaica	common	eu	JAMAICA
 january	common	eu	Urtarrila
 japan	common	eu	JAPONIA
+jordan	common	eu	JORDANIA
 july	common	eu	Uztaila
 jun	common	eu	Ekaina
 june	common	eu	Ekaina
+justify	htmlarea-TableOperations	eu	Justifikatu
 justify center	common	eu	Lerrokatu erdian
 justify full	common	eu	Lerrokatu
 justify left	common	eu	Lerrokatu ezkerrean
 justify right	common	eu	lerrokatu eskuinean
+kazakstan	common	eu	KAZAKSTAN
 kenya	common	eu	KENYA
+keywords	common	eu	Hitz gakoak
+kiribati	common	eu	KIRIBATI
+korea, republic of	common	eu	KOREAKO ERREPUBLIKA
+kuwait	common	eu	KUWAIT
+kyrgyzstan	common	eu	KYRGYZSTAN
 language	common	eu	Hizkuntza
+last name	common	eu	Abizena
 last page	common	eu	Azken orria
+lastname	common	eu	Abizena
+latvia	common	eu	LATVIA
+layout	htmlarea-TableOperations	eu	Layout
+lebanon	common	eu	LIBANO
+left	htmlarea-TableOperations	eu	Ezkerrean
+lesotho	common	eu	LESOTHO
+liberia	common	eu	LIBERIA
+license	common	eu	Lizentzia
+liechtenstein	common	eu	LIECHTENSTEIN
+list	common	eu	Zerrenda
+list members	common	eu	Zerrendako partaideak
+lithuania	common	eu	LITUANIA
+local	common	eu	Lokal
+login	common	eu	Sartu
+loginid	common	eu	Erabiltzaile izena
+logout	common	eu	Irten
+low	common	eu	Baxu
+lowest	common	eu	Baxuena
+luxembourg	common	eu	LUXENBURGO
+macau	common	eu	MACAU
+madagascar	common	eu	MADAGASCAR
+main category	common	eu	Kategoria nagusia
+main screen	common	eu	Pantaila nagusia
+maintainer	common	eu	Nork mantendu
+make lin_k...	htmlarea-ContextMenu	eu	Lotura egin...
+malawi	common	eu	MALAWI
+malaysia	common	eu	MALAYSIA
+maldives	common	eu	MALDIVES
+mali	common	eu	MALI
+malta	common	eu	MALTA
 march	common	eu	Martxoa
+margin	htmlarea-TableOperations	eu	Marjina
+marshall islands	common	eu	MARSHALL ISLANDS
+martinique	common	eu	MARTINIQUE
+mauritania	common	eu	MAURITANIA
+mauritius	common	eu	MAURITIUS
 may	common	eu	Maiatza
+mayotte	common	eu	MAYOTTE
+medium	common	eu	Erdia
+menu	common	eu	Menua
+merge cells	htmlarea-TableOperations	eu	Batu gelaxkak
+message	common	eu	Mezua
+mexico	common	eu	MEXIKO
 monday	common	eu	Astelehena
+mongolia	common	eu	MONGOLIA
+montserrat	common	eu	MONTSERRAT
+morocco	common	eu	MAROKO
+mozambique	common	eu	MOZAMBIQUE
+myanmar	common	eu	NYANMAR
 name	common	eu	Izena
+namibia	common	eu	NAMIBIA
+nauru	common	eu	NAURU
+nepal	common	eu	NEPAL
+netherlands	common	eu	HOLANDA
+never	common	eu	Inoiz
+new caledonia	common	eu	CALEDONIA BERRIA
+new entry added sucessfully	common	eu	Sarrera berria egoki txertatu da
+new main category	common	eu	Kategoria nagusi berria
+new value	common	eu	Balio berria
+new zealand	common	eu	ZELANDA BERRIA
 next	common	eu	Hurrengoa
 next month (hold for menu)	jscalendar	eu	Hurrengo hilabetea
 next page	common	eu	Hurrengo orrialdea
 next year (hold for menu)	jscalendar	eu	Hurrengo urtea
+nicaragua	common	eu	NICARAGUA
+niger	common	eu	NIGER
+nigeria	common	eu	NIGERIA
+niue	common	eu	NIUE
+no	common	eu	Ez
+no entries found, try again ...	common	eu	Ez da sarrerarik aurkitu, saiatu berriro...
+no history for this record	common	eu	Ez dago historiarik erregistro honetarako
+no rules	htmlarea-TableOperations	eu	Erregelarik gabe
+no sides	htmlarea-TableOperations	eu	Eremurik gabe
+no subject	common	eu	Gaiarik gabe
+none	common	eu	Bat ere ez
+normal	common	eu	Normala
+not assigned	common	eu	Esleitu gabe
+note	common	eu	Oharra
+notes	common	eu	Oharrak
+notify window	common	eu	Abisu leihoa
 november	common	eu	Azaroa
 october	common	eu	Urria
+ok	common	eu	Onartu
+old value	common	eu	Aurreko balioa
+oman	common	eu	OMAN
+on mouse over	common	eu	Xagua gainetik mugitzerakoan
+only private	common	eu	pribatua soilik
+only yours	common	eu	bakarrik zureak
+open notify window	common	eu	Abisu leihoa zabaldu
+opens this link in a new window	htmlarea-ContextMenu	eu	Lotura hau leiho berri batean zabaldu
+ordered list	htmlarea	eu	Ordenatutako zerrenda
+original	common	eu	Jatorrizkoa
+original word	htmlarea-SpellChecker	eu	Jatorrizko hitza
+other	common	eu	Besteak
+overview	common	eu	Laburpena
+owner	common	eu	jabea
+padding	htmlarea-TableOperations	eu	Betegarria
+page	common	eu	Orrialdea
+page was generated in %1 seconds	common	eu	Orria %1 segundutan sortu da
+pakistan	common	eu	PAKISTAN
+palau	common	eu	PALAU
+panama	common	eu	PANAMA
+paraguay	common	eu	PARAGUAY
+parcel	common	eu	Paketea
+parent category	common	eu	Goi kategoria
+password	common	eu	Pasahitza
+password could not be changed	common	eu	Pasahitza ezin izan da aldatu
+password has been updated	common	eu	Pasahitza eguneratua izan da
+paste	htmlarea-ContextMenu	eu	Itsatsi
+paste from clipboard	htmlarea	eu	Arbelatik itsatsi
+path	htmlarea	eu	Ruta
+percent	htmlarea-TableOperations	eu	ehunekotan
+personal	common	eu	Pertsonala
+peru	common	eu	PERU
+philippines	common	eu	FILIPINAK
+phone number	common	eu	Telefono zenbakia
+pitcairn	common	eu	PITCAIRN
+pixels	htmlarea-TableOperations	eu	pixelak
+please click into some cell	htmlarea-TableOperations	eu	Mesedez egin klik gelaxka batean
+please confirm that you want to open this link	htmlarea-SpellChecker	eu	Mesedez berretsi lotura hau zabaldu nahi duzula
+please confirm that you want to remove this element:	htmlarea-ContextMenu	eu	Mesedez berretsi elementu hauek kendu nahi dituzula:
+please confirm that you want to unlink this element.	htmlarea-ContextMenu	eu	Mesedez berretsi elementu hauek desestekatu nahi dituzula:
+please enter a name	common	eu	Mesedez izen bat sartu
+please select	common	eu	Mesedez aukeratu
+please wait...	common	eu	Mesedez itxaron
+poland	common	eu	POLONIA
+portugal	common	eu	PORTUGAL
+postal	common	eu	Postala
+powered by phpgroupware version %1	common	eu	Hornitzailea <a href="http://www.egropware.org">eGroupWare</a> %1 bertsioa
+preferences	common	eu	Hobespenak
+prev. month (hold for menu)	jscalendar	eu	Aurreko hilabetea (menuan mantendu)
+prev. year (hold for menu)	jscalendar	eu	Aurreko urtea (menuan mantendu)
+previous page	common	eu	Aurreko orria
+primary style-sheet:	common	eu	Lehenengo estilo orria
+print	common	eu	Inprimatu
+priority	common	eu	Lehentasuna
+private	common	eu	Pribatua
+project	common	eu	Proiektua
+public	common	eu	Publikoa
+puerto rico	common	eu	PUERTO RICO
+qatar	common	eu	QATAR
+re-check	htmlarea-SpellChecker	eu	Egiaztatu
+read	common	eu	Irakurri
+read this list of methods.	common	eu	Metodo zerrenda hau irakurri
+redoes your last action	htmlarea	eu	Azken ekintza ukatu
+reject	common	eu	Ukatu
+remove selected accounts	common	eu	Aukeratutako kontuak kendu
+remove the	htmlarea-ContextMenu	eu	Kendu
+rename	common	eu	Berizendatu
+replace	htmlarea-SpellChecker	eu	Ordezkatu
+replace all	htmlarea-SpellChecker	eu	Ordezkatu guztiak
+replace with	htmlarea-SpellChecker	eu	Ordezkatu -kin
+reunion	common	eu	REUNION
+revert	htmlarea-SpellChecker	eu	Itzuli
+right	htmlarea-TableOperations	eu	Eskuinean
+ro_w properties...	htmlarea-ContextMenu	eu	Errenkadaren propietateak
+romania	common	eu	RUMANIA
+row properties	htmlarea-TableOperations	eu	Errenkadaren propietateak
+rules	htmlarea-TableOperations	eu	Erregelak
+saint helena	common	eu	SANTA HELENA
+saint lucia	common	eu	SANTA LUCIA
+samoa	common	eu	SAMOA
+san marino	common	eu	SAN MARINO
 saturday	common	eu	Larunbata
+saudi arabia	common	eu	SAUDI ARABIA
+save	common	eu	Gorde
+search	common	eu	Bilatu
+search %1 '%2'	common	eu	Bilatu %1 '%2'
+search or select accounts	common	eu	Bilatu aukeratutako kontuetan
+section	common	eu	Sekzioa
+select	common	eu	Aukeratu
+select all %1 %2 for %3	common	eu	Guztiak aukeratu %1 %2 %3tik
+select category	common	eu	Aukeratu kategoria
+select date	common	eu	Aukeratu eguna
+select group	common	eu	Aukeratu taldea
+select home email address	common	eu	Aukeratu hasierako helbide elektronikoa
+select one	common	eu	Aukeratu bat
+select user	common	eu	Aukeratu erabiltzailea
+select work email address	common	eu	Aukeratu laneko helbide elektronikoa
+selection	common	eu	Aukeraketa
+send	common	eu	Bidali
+senegal	common	eu	SENEGAL
 september	common	eu	Iraila
+server %1 has been added	common	eu	%1 zerbitzaria gehitua izan da
+server name	common	eu	Zerbitzariaren izena
+session has been killed	common	eu	Saio ezabatua izan da
+setup	common	eu	Instalazioa
+setup main menu	common	eu	Instalaziorako menu nagusia
+seychelles	common	eu	SEYCHELLES
+show all	common	eu	Erakutsi guztia
+show all categorys	common	eu	erakutsi kategoria guztiak
+show menu	common	eu	erakutsi menua
+show page generation time	common	eu	Orriaren sorkuntza denbora erakutsi
+show page generation time on the bottom of the page?	common	eu	Orriaren sorkuntza denbora orriaren azpian erakutsi?
+show the image properties dialog	htmlarea-ContextMenu	eu	Irudien propietateen elkarrizketa koadroa erakutsi
+show the table properties dialog	htmlarea-ContextMenu	eu	Taulen propietateen elkarrizketa koadroa erakutsi
+show_more_apps	common	eu	Erakutsi aplikazio gehiago
+showing %1	common	eu	%1 erakutsiz
+showing %1 - %2 of %3	common	eu	%1 %2 %3tik erakutsiz
+sierra leone	common	eu	SIERRA LEONA
+singapore	common	eu	SINGAPORE
+slovakia	common	eu	SLOVAKIA
+slovenia	common	eu	SLOVENIA
+solomon islands	common	eu	SOLOMON ISLANDS
+somalia	common	eu	SOMALIA
+sorry, your login has expired	login	eu	Barkatu zure saioa iraungi egin da
+south africa	common	eu	HEGO AFRIKA
+spacing	htmlarea-TableOperations	eu	Tartea
+spacing and padding	htmlarea-TableOperations	eu	Tartea eta betegarria
+spain	common	eu	ESPAINIA
+split cell	htmlarea-TableOperations	eu	Zatitu gelaxka
+split row	htmlarea-TableOperations	eu	Zatitu errenkada
+sri lanka	common	eu	SRI LANKA
+start date	common	eu	Hasiera data
+start time	common	eu	Hasiera ordua
+start with	common	eu	zerrekin hasi
+status	common	eu	Egoera
+strikethrough	htmlarea	eu	Marratua
+subject	common	eu	Gaia
+submit	common	eu	Bidali
+subscript	htmlarea	eu	Azpiindizea
+substitutions and their meanings:	common	eu	Ordezkapenak eta hauen esanahiak:
+sudan	common	eu	SUDAN
+suggestions	htmlarea-SpellChecker	eu	Proposamenak
+summary	htmlarea-TableOperations	eu	Laburpena
 sunday	common	eu	Igandea
+superscript	htmlarea	eu	Goiindizea
+suriname	common	eu	SURINAME
+sweden	common	eu	SUEZIA
+switzerland	common	eu	SUIZA
+table properties	htmlarea-TableOperations	eu	Taularen propietateak
+taiwan	common	eu	TAIWAN/TAIPEI
+tajikistan	common	eu	TAJIKISTAN
+text align	htmlarea-TableOperations	eu	Lerrokatu testuarekin
+text color:	common	eu	Testuaren kolorea:
+thailand	common	eu	THAILAND
+the api is current	common	eu	APIa eguneratua dago
+the api requires an upgrade	common	eu	APIak eguneratze bat behar du
+the bottom side only	htmlarea-TableOperations	eu	Beheko eremua soilik
+this application is current	common	eu	Aplikazio hau eguneratua dago
+this application requires an upgrade	common	eu	Aplikazio honek egunertzea behar du
+this name has been used already	common	eu	Izen hau erabilia dago!
 thursday	common	eu	Osteguna
+time	common	eu	Ordua
+time selection:	jscalendar	eu	Ordua aukeratu:
+time zone	common	eu	Ordu-zona
+time zone offset	common	eu	Ordu-zonako diferentzia
+title	common	eu	Izenburua
 today	common	eu	Gaur
+toggle first day of week	jscalendar	eu	Asteko lehen eguna aldatu
+togo	common	eu	TOGO
+tokelau	common	eu	TOKELAU
+tonga	common	eu	TONGA
+top	htmlarea-TableOperations	eu	Goian
+total	common	eu	Guztia
+trinidad and tobago	common	eu	TRINIDAD ETA TOBAGO
 tuesday	common	eu	Asteartea
+tunisia	common	eu	TUNISIA
+turkey	common	eu	TURKIA
+turkmenistan	common	eu	TURKMENISTAN
+tuvalu	common	eu	TUVALU
+uganda	common	eu	UGANDA
+ukraine	common	eu	UKRANIA
+underline	htmlarea	eu	Azpimarratu
+undoes your last action	htmlarea	eu	Aurreko ekintza desegin
+united kingdom	common	eu	ERRESUMA BATUA
+united states	common	eu	ESTATU BATUAK
+unknown	common	eu	Ezezaguna
+unlink the current element	htmlarea-ContextMenu	eu	Momentuko elementuak desestekatu
+update	common	eu	Eguneratu
+upload image	htmlarea-UploadImage	eu	Irudia kargatu
+url	common	eu	URL
+uruguay	common	eu	URUGUAY
+use button to search for	common	eu	erabili botoia bilaketarako
+use button to search for address	common	eu	erabili botoia helbideen bilaketarako
+use button to search for calendarevent	common	eu	erabili botoia egutegiko gertaeren bilaketarako
+use button to search for project	common	eu	erabili botoia proiektuen bilaketarako
+user	common	eu	Erabiltzailea
+user accounts	common	eu	erabiltzaile kontua
+user groups	common	eu	erabiltzaile taldeak
+username	common	eu	erabiltzaile izena
+users	common	eu	erabiltzaileak
+users choice	common	eu	Erabiltzaileak erabakitzeko
+uzbekistan	common	eu	UZBEKISTAN
+vanuatu	common	eu	VANUATU
+venezuela	common	eu	VENEZUELA
+version	common	eu	Bertsioa
+vertical align	htmlarea-TableOperations	eu	Lerrokatze bertikala
+viet nam	common	eu	VIET NAM
+view	common	eu	Ikusi
+wallis and futuna	common	eu	WALLIS ETA FUTUNA
 wednesday	common	eu	Asteazkena
+welcome	common	eu	Ongo etorri
+western sahara	common	eu	MENDEBALDEKO SAHARA
+which groups	common	eu	Zein taldeak
+width	htmlarea-TableOperations	eu	Zabalera
+wk	jscalendar	eu	wk
+work email	common	eu	laneko posta elektronikoa
+written by:	common	eu	Nork idatzi:
 year	common	eu	Urtea
+yemen	common	eu	YEMEN
+yes	common	eu	Bai
+you have been successfully logged out	login	eu	Zuzen irten zara
+you have not entered a title	common	eu	Ez duzu izenbururik sartu
+you have not entered a valid date	common	eu	Ez duzu baliozko data bat sartu
+you have not entered a valid time of day	common	eu	Ez duzu eguneko ordu bat sartu
+you have not entered participants	common	eu	Ez duzu partehartzailerik sartu
+you have selected an invalid date	common	eu	Aukeratutako datak ez du balio!
+you have selected an invalid main category	common	eu	Aukeratutako kategoria nagusiak ez du balio!
+you have successfully logged out	common	eu	Saioa zuzen bukatu duzu
+your message has been sent	common	eu	Zure mezua bidalia izan da
+your search returned %1 matchs	common	eu	Zure bilaketak %1eko emaitza izan du
+your search returned 1 match	common	eu	Zure bilaketak emaitza bai izan du
+your session could not be verified.	login	eu	Zure saioa ezin izan da egiaztatu
+your settings have been updated	common	eu	Zure hobespenak eguneratuak izan dira
+yugoslavia	common	eu	YUGOSLAVIA
+zambia	common	eu	ZAMBIA
+zimbabwe	common	eu	ZIMBABWE
