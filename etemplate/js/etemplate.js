@@ -163,7 +163,7 @@ function values2url(form,names)
 				} else if (element.options) {	// selectbox
 					for(opt=0; opt < element.options.length; opt++) {
 						//alert('found '+element.name+' option['+opt+'] = '+element.options[opt].value+ ' = '.element.options[opt].text+': '+element.options[opt].selected);
-						if (element.options[opt].selected) url += '&'+element.name+(element.name.indexOf('[]') >= 0 ? '=' : '[]=')+element.options[opt].value;
+						if (element.options[opt].selected) url += '&'+element.name+(element.name.indexOf('[]') >= 0 || !element.multiple ? '=' : '[]=')+element.options[opt].value;
 					}
 				} else if (element.value != null) {
 					url += '&'+element.name+'='+element.value;
