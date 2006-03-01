@@ -320,7 +320,7 @@ class uicontacts extends bocontacts
 					'size' => 'edit',
 					'onclick' => 'window.open(\''.
 					$GLOBALS['egw']->link('/index.php?menuaction=addressbook.uicontacts.edit').
-					'&contact_id=$row_cont[id] \',\'\',\'dependent=yes,width=800,height=600,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\');
+					'&contact_id=$row_cont[id] \',\'\',\'dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\');
 					return false;',
 				)),
 			'delete' => array(
