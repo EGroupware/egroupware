@@ -72,8 +72,8 @@ responsible:	resources	de	Verantwortlich:
 saves entry and exits	resources	de	Speichern und Schlieﬂen
 select a category	resources	de	W‰hlen sie eine Kategorie
 select resource	resources	de	Resuource ausw‰hlen
-select resources	resources	de	Resuource ausw‰hlen
-select/deselect all	resources	de	Alle Ausw‰hlen / Auswahl aufheben
+select resources	common	de	Resuourcen ausw‰hlen
+select/deselect all	resources	de	Alle ausw‰hlen / Auswahl aufheben
 short description	resources	de	Kurzbeschreibung
 short description of resource	resources	de	Kurzbeschreibung der Resouce
 show calendar of resource	resources	de	Kalender der Resource anzeigen

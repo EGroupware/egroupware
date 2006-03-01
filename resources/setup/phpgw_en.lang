@@ -72,7 +72,7 @@ responsible:	resources	en	Responsible:
 saves entry and exits	resources	en	Saves entry and exits
 select a category	resources	en	Select a category
 select resource	resources	en	select resource
-select resources	resources	en	Select resources
+select resources	common	en	Select resources
 select/deselect all	resources	en	select/deselect all
 short description	resources	en	Short description
 short description of resource	resources	en	Short description of resource
