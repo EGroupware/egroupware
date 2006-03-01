@@ -41,19 +41,10 @@
 		
 		include('./header.inc.php');
 	
-		$sessionid	= get_var('sessionid',array('COOKIE','GET'));
-		$kp3		= get_var('kp3',array('COOKIE','GET'));
-	
-		// the session has been created already
-		// the browser is sending all needed egroupware cookies
-		if($GLOBALS['phpgw']->session->verify($sessionid,$kp3))
-		{
+		$ajaxClass = CreateObject("$appName.$className");
+		$argList = $GLOBALS['egw']->translation->convert($argList, 'utf-8');
+		return call_user_func_array(array(&$ajaxClass, $functionName), $argList );
 			
-			$ajaxClass = CreateObject("$appName.$className");
-			
-			return call_user_func_array(array(&$ajaxClass, $functionName), $argList );
-			
-		}
 	}
 	
 	$xajax = new xajax($_SERVER["PHP_SELF"]);
