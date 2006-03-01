@@ -591,7 +591,12 @@ class uiviews extends uical
 		$totalDisplayMinutes	= $wd_end - $this->wd_start;
 		$this->rowsToDisplay	= ($totalDisplayMinutes/$granularity_m)+2+2*$this->extraRows;
 		$this->rowHeight		= round(100/$this->rowsToDisplay,1);
-
+		
+		// ensure a minimum height of each row
+		if ($height < ($this->rowsToDisplay+1) * 12)
+		{
+			$height = ($this->rowsToDisplay+1) * 12;
+		}
 		$html = $indent.'<div class="calTimeGrid" style="height: '.$height.'px;">'."\n";
 
 		$html .= $indent."\t".'<div class="calGridHeader row_on" style="width: 47px; height: '.
