@@ -48,7 +48,7 @@ class uilist extends uical
 	 */
 	function uilist($set_states=null)
 	{
-		$this->uical(false,$set_states);	// call the parent's constructor
+		$this->uical(true,$set_states);	// call the parent's constructor
 
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Listview');
 		
@@ -88,10 +88,19 @@ class uilist extends uical
 		if ($_GET['msg']) $msg = $_GET['msg'];
 
 		$etpl =& CreateObject('etemplate.etemplate','calendar.list');
-		
+
+		if (is_array($content) && $content['nm']['rows']['delete'])
+		{
+			list($id) = each($content['nm']['rows']['delete']);
+
+			if ($this->bo->delete($id))
+			{
+				$msg = lang('Event deleted');
+			}
+		}
 		$content = array(
-			'nm' => $GLOBALS['egw']->session->appsession('calendar_list','calendar'),
-			'msg'      => $msg,
+			'nm'  => $GLOBALS['egw']->session->appsession('calendar_list','calendar'),
+			'msg' => $msg,
 		);
 		if (!is_array($content['nm']))
 		{
