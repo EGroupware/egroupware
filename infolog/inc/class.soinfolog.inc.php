@@ -259,10 +259,13 @@
 		function read($info_id)		// did _not_ ensure ACL
 		{
 			$info_id = (int) $info_id;
-
-			if ($info_id <= 0 || $info_id != $this->data['info_id'] && 
-				(!$this->db->select($this->info_table,'*',array('info_id'=>$info_id),__LINE__,__FILE__) ||
-				 !(($this->data = $this->db->row(true)))))
+			
+			if ($info_id && $info_id == $this->data['info_id'])
+			{
+				return $this->data;		// return the already read entry
+			}
+			if ($info_id <= 0 || !$this->db->select($this->info_table,'*',array('info_id'=>$info_id),__LINE__,__FILE__) ||
+				 !(($this->data = $this->db->row(true))))
 			{
 				$this->init( );
 				return False;
@@ -271,13 +274,10 @@
 			{
 				$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
 			}
-			if ($info_id != $this->data['info_id'])      // data yet read in
+			$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$info_id),__LINE__,__FILE__);
+			while ($this->db->next_record())
 			{
-				$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$info_id),__LINE__,__FILE__);
-				while ($this->db->next_record())
-				{
-					$this->data['#'.$this->db->f(0)] = $this->db->f(1);
-				}
+				$this->data['#'.$this->db->f(0)] = $this->db->f(1);
 			}
 			return $this->data;
 		}
