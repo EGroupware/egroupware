@@ -280,7 +280,7 @@
 		{
 			if (is_array($info_id))
 			{
-				$info_id = (int)$info_id['info_id'];
+				$info_id = (int) (isset($info_id['info_id']) ? $info_id['info_id'] : $info_id[0]);
 			}
 
 			if ($this->so->read($info_id) === False)
