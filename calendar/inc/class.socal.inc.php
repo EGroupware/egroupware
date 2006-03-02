@@ -333,14 +333,15 @@ class socal
 		//_debug_array($where);
 		if (is_numeric($offset))	// get the total too
 		{
-			// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINKT (MsSQL does not allow it for text-columns)
+			// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
 			$this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
 				$where,__LINE__,__FILE__,false,'',false,0,
 				"JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)");
 
 			$this->total = $this->db->num_rows();
 		}
-		$this->db->select($this->cal_table,"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+		$this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').
+			"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
 			$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,false,$num_rows,
 			"JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)");
 			
