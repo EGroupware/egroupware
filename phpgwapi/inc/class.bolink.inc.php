@@ -440,6 +440,8 @@
 			{
 				echo "<p>bolink::title('$app','$id')</p>\n";
 			}
+			if (!$id) return '';
+
 			if ($app == $this->vfs_appname)
 			{
 				if (is_array($id) && $link)
