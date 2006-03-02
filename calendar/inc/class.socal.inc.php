@@ -327,23 +327,22 @@ class socal
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
 		
 		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injunktion
+		
+		$where[] = '(recur_type IS NULL AND cal_recur_date=0 OR cal_recur_date=cal_start)';
 
 		//_debug_array($where);
 		if (is_numeric($offset))	// get the total too
 		{
-			$this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+			// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINKT (MsSQL does not allow it for text-columns)
+			$this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
 				$where,__LINE__,__FILE__,false,'',false,0,
-				",$this->dates_table,$this->user_table LEFT JOIN $this->repeats_table ON $this->user_table.cal_id=$this->repeats_table.cal_id".
-				" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id AND $this->cal_table.cal_id=$this->user_table.cal_id AND ".
-				"(recur_type IS NULL AND cal_recur_date=0 OR cal_recur_date=cal_start)");
+				"JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)");
 
 			$this->total = $this->db->num_rows();
-		}		
-		$this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+		}
+		$this->db->select($this->cal_table,"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
 			$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,false,$num_rows,
-			",$this->dates_table,$this->user_table LEFT JOIN $this->repeats_table ON $this->user_table.cal_id=$this->repeats_table.cal_id".
-			" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id AND $this->cal_table.cal_id=$this->user_table.cal_id AND ".
-			"(recur_type IS NULL AND cal_recur_date=0 OR cal_recur_date=cal_start)");
+			"JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)");
 			
 		$events = $ids = $recur_dates = $recur_ids = array();	
 		while (($row =& $this->db->row(true,'cal_')))
