@@ -37,6 +37,7 @@ class bocalendar
 		'write'     => True,
 		'search'    => True,
 		'categories'=> True,
+		'list_methods' => True,
 	);
 
 	function bocalendar()
@@ -59,7 +60,7 @@ class bocalendar
 	 */
 	function list_methods($_type='xmlrpc')
 	{
-		switch(is_array($_type) ? $_type['type'] : $_type)
+		switch(is_array($_type) ? ($_type['type'] ? $_type['type'] : $_type[0]) : $_type)
 		{
 			case 'xmlrpc':
 				return array(
@@ -153,6 +154,9 @@ class bocalendar
 		}
 		else
 		{
+			// for a single id the event is returned and not an array with the event
+			if (is_array($id)) $events = array_shift($events);
+
 			if (!$this->cal->check_perms(EGW_ACL_READ,$events,0,$this->xmlrpc_date_format))
 			{
 				// xmlrpc_error does NOT return
