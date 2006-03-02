@@ -398,7 +398,7 @@ class uical
 			$icon = $this->html->image('calendar',$icon,lang($title));
 			$link = $view == 'add' ? $this->add_link($icon) : $this->html->a_href($icon,'/index.php',$vars);
 
-			$views .= '<td align="center">'.$link."</a></td>\n";
+			$views .= '<td align="center">'.$link."</td>\n";
 		}
 		$views .= "</tr></table>\n";
 
@@ -601,7 +601,7 @@ function load_cal(url,id) {
 }
 </style>'."\n";
 		$appname = 'calendar';
-		$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
+		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
 		echo "</form>\n";
 		
