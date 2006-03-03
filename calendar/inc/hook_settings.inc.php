@@ -30,14 +30,10 @@
 		'5' => lang('Weekview without weekend'),
 		'7' => lang('Weekview with weekend'),
 	);
-	/* Selection of list for home page is different from default calendar,
-	   since the decision for the front page is different for the decision
-	   for the main calendar page.  But the list could be added to the
-	   default list above, if requested.  - shrykedude. */
+
 	$mainpage = array(
 		'1' => lang('Yes'),
 		'0' => lang('No'),
-		'2' => lang('No').' - '.lang('show list of upcoming events'),
 	);
 /*
 	$summary = array(
