@@ -1537,7 +1537,7 @@
 		*/
 		function select($table,$cols,$where,$line,$file,$offset=False,$append='',$app=False,$num_rows=0,$join='',$table_def=False)
 		{
-			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app')</p>\n";
+			if ($this->Debug) echo "<p>db::select('$table',".print_r($cols,True).",".print_r($where,True).",$line,$file,$offset,'$app',$num_rows,'$join')</p>\n";
 
 			if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
 			if (is_array($cols))
@@ -1554,6 +1554,54 @@
 			if ($where) $sql .= strstr($join,"WHERE") ? ' AND ('.$where.')' : ' WHERE '.$where;
 
 			if ($append) $sql .= ' '.$append;
+
+			if ($this->Debug) echo "<p>sql='$sql'</p>";
+
+			if ($line === false && $file === false)	// call by union, to return the sql rather then run the query
+			{
+				return $sql;
+			}
+			return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows);
+		}
+		
+		/**
+		* Does a union over multiple selects
+		*
+		* @author RalfBecker<at>outdoor-training.de
+		*
+		* @param array $selects array of selects, each select is an array with the possible keys/parameters: table, cols, where, append, app, join, table_def
+		*	For further info about parameters see the definition of the select function, beside table, cols and where all other params are optional
+		* @param int $line line-number to pass to query
+		* @param string $file file-name to pass to query
+		* @param string $order_by ORDER BY statement for the union
+		* @param int/bool $offset offset for a limited query or False (default)
+		* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
+		* @return ADORecordSet or false, if the query fails
+		*/
+		function union($selects,$line,$file,$order_by='',$offset=false,$num_rows=0)
+		{
+			if ($this->Debug) echo "<p>db::union(".print_r($selects,True).",$line,$file,$order_by,$offset,$num_rows)</p>\n";
+
+			$sql = array();
+			foreach($selects as $select)
+			{
+				$sql[] = call_user_func_array(array($this,'select'),array(
+					$select['table'],
+					$select['cols'],
+					$select['where'],
+					false,	// line
+					false,	// file
+					false,	// offset
+					$select['append'],
+					$select['app'],
+					0,		// num_rows,
+					$select['join'],
+					$select['table_def'],
+				));
+			}
+			$sql = count($sql) > 1 ? '(' . implode(")\nUNION\n(",$sql).')' : $sql[0];
+			
+			if ($order_by) $sql .= "\nORDER BY ".$order_by;
 
 			if ($this->Debug) echo "<p>sql='$sql'</p>";
 
