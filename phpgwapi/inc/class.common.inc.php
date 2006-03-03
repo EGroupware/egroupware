@@ -1494,12 +1494,14 @@
 		}
 
 		/**
-		 * show current date
+		 * return a formatted timestamp or current time
 		 *
-		 * @param $t time - optional can be pulled from user preferences
-		 * @param $format - optional can be pulled from user prefernces
+		 * @param int $t=0 timestamp, default current time
+		 * @param string $format='' timeformat, default '' = read from the user prefernces
+		 * @param boolean $adjust_to_usertime=true should datetime::tz_offset be added to $t or not, default true
+		 * @return string the formated date/time
 		 */
-		function show_date($t = '', $format = '')
+		function show_date($t = 0, $format = '', $adjust_to_usertime=true)
 		{
 			if(!is_object($GLOBALS['egw']->datetime))
 			{
@@ -1511,10 +1513,12 @@
 				$t = $GLOBALS['egw']->datetime->gmtnow;
 			}
 
-			//  + (date('I') == 1?3600:0)
-			$t += $GLOBALS['egw']->datetime->tz_offset;
+			if ($adjust_to_usertime)
+			{
+				$t += $GLOBALS['egw']->datetime->tz_offset;
+			}
 
-			if (! $format)
+			if (!$format)
 			{
 				$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' - ';
 				if ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12')
@@ -1530,11 +1534,13 @@
 		}
 
 		/**
-		 * @abstract
-		 * @param $yearstr year - string
-		 * @param $monthstr month - string
-		 * @param $day day - string
-		 * @param $add_seperator boolean defaults to false
+		 * Format a date according to the user preferences
+		 *
+		 * @param string $yearstr year
+		 * @param string $monthstr month
+		 * @param string $day day
+		 * @param boolean $add_seperator=false add the separator specifed in the prefs or not, default no
+		 * @return string
 		 */
 		function dateformatorder($yearstr,$monthstr,$daystr,$add_seperator = False)
 		{
@@ -1548,20 +1554,18 @@
 
 			if ($add_seperator)
 			{
-				return (implode($sep,$dlarr));
+				return implode($sep,$dlarr);
 			}
-			else
-			{
-				return (implode(' ',$dlarr));
-			}
+			return implode(' ',$dlarr);
 		}
 
 		/**
 		 * format the time takes settings from user preferences
 		 *
-		 * @param $hour hour
-		 * @param $min minutes
-		 * @param $sec defaults to ''
+		 * @param int $hour hour
+		 * @param int $min minutes
+		 * @param int/string $sec='' defaults to ''
+		 * @return string formated time
 		 */
 		function formattime($hour,$min,$sec='')
 		{
@@ -1595,10 +1599,10 @@
 
 			if ($sec !== '')
 			{
-				$sec = ":$sec";
+				$sec = ':'.$sec;
 			}
 
-			return "$h12:$min$sec$ampm";
+			return $h12.':'.$min.$sec.$ampm;
 		}
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
