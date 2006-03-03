@@ -3,10 +3,6 @@
 * eGroupWare - Calendar's buisness-object: access + update                 *
 * http://www.egroupware.org                                                *
 * Written and (c) 2005 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-*                                                                          *
-*   Modified by Benjamin Donnachie <benjamin@pythagoras.no-ip.org>         *
-*     to remove calendar reminder bug in send_alarm().                     *
-*     Changes Copyright (c) Benjamin Donnachie 2006.                       *
 * --------------------------------------------                             *
 *  This program is free software; you can redistribute it and/or modify it *
 *  under the terms of the GNU General Public License as published by the   *
@@ -619,7 +615,7 @@ class bocalupdate extends bocal
 		//echo "<p>bocalendar::send_alarm("; print_r($alarm); echo ")</p>\n";
 		$GLOBALS['egw_info']['user']['account_id'] = $this->owner = $alarm['owner'];
 
-		if (/*!$alarm['enabled'] || */!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'])))
+		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'])))
 		{
 			return False;	// event not found
 		}
