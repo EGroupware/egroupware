@@ -68,7 +68,15 @@ class uiforms extends uical
 	{
 		$extra_participants = $_GET['participants'] ? explode(',',$_GET['participants']) : array();
 
-		$owner = isset($_GET['owner']) ? $_GET['owner'] : $this->owner;
+		if (isset($_GET['owner']))
+		{
+			$owner = $_GET['owner'];
+		}
+		// dont set the planner start group as owner/participants if called from planner
+		elseif ($this->view != 'planner' || $this->owner != $this->cal_prefs['planner_start_with_group'])
+		{
+			$owner = $this->owner;
+		}
 		if (!$owner || !is_numeric($owner) || $GLOBALS['egw']->accounts->get_type($owner) != 'u' || 
 			!$this->bo->check_perms(EGW_ACL_ADD,0,$owner))
 		{
@@ -78,7 +86,7 @@ class uiforms extends uical
 			}
 			$owner = $this->user;
 		}
-		//echo "<p>this->owner=$this->owner, _GET[owner]=$_GET[owner], user=$this->user => owner=$owner</p>\n";
+		//echo "<p>this->owner=$this->owner, _GET[owner]=$_GET[owner], user=$this->user => owner=$owner, extra_participants=".implode(',',$extra_participants)."</p>\n";
 
 		// by default include the owner as participant (the user can remove him)
 		$extra_participants[] = $owner;
