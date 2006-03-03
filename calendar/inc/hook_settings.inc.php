@@ -254,16 +254,6 @@
 			'name'   => 'show_rejected',
 			'help'   => 'Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!'
 		),
-/* dont think that need to be configurable -- RalfBecker 2005/11/12
-		'display_status' => array(
-			'type'  => 'check',
-			'label' => 'Display status of events',
-			'name'  => 'display_status',
-			'help'  => 'Should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-*/
 		'weekdaystarts' => array(
 			'type'   => 'select',
 			'label'  => 'weekday starts on',
@@ -338,6 +328,7 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
+/* disabled free/busy stuff til it gets rewritten with new Horde iCal classes -- RalfBecker 2006/03/03
 		'freebusy' => array(
 			'type'  => 'check',
 			'label' => 'Make freebusy information available to not loged in persons?',
@@ -357,4 +348,5 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		)
+*/
 	);
