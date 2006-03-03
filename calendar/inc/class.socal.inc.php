@@ -328,6 +328,30 @@ class socal
 		
 		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injunktion
 		
+		// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
+		$select = array(
+			'table' => $this->cal_table,
+			'join'  => "JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)",
+			'cols'  => "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+			'where' => $where,
+		);
+		$selects = array($select,$select);
+		$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+		$selects[1]['where'][] = 'cal_recur_date=cal_start';
+		
+		if (is_numeric($offset))	// get the total too
+		{
+			// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
+			$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+			
+			$this->db->union($selects,__LINE__,__FILE__);
+			$this->total = $this->db->num_rows();
+
+			$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
+		}
+		$this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
+
+/*		original query	
 		$where[] = '(recur_type IS NULL AND cal_recur_date=0 OR cal_recur_date=cal_start)';
 
 		//_debug_array($where);
@@ -344,7 +368,7 @@ class socal
 			"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
 			$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,false,$num_rows,
 			"JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)");
-			
+*/
 		$events = $ids = $recur_dates = $recur_ids = array();	
 		while (($row =& $this->db->row(true,'cal_')))
 		{
