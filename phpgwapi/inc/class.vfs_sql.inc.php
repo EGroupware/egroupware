@@ -149,7 +149,7 @@
 			{
 				$len = strlen($docroot);
 
-				if ($docroot == substr($path,0,$len))
+				if ($docroot && $docroot == substr($path,0,$len))
 				{
 					$rest = substr($path,$len);
 
