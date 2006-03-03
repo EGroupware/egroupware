@@ -5,6 +5,7 @@
 a non blocking event will not conflict with other events	calendar	en	A non blocking event will not conflict with other events
 accept or reject an invitation	calendar	en	Accept or reject an invitation
 accepted	calendar	en	Accepted
+access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
 actions	calendar	en	Actions
 add alarm	calendar	en	Add alarm
@@ -70,6 +71,7 @@ delete this exception	calendar	en	Delete this exception
 delete this series of recuring events	calendar	en	Delete this series of recuring events
 disinvited	calendar	en	Disinvited
 display status of events	calendar	en	Display status of events
+displayed view	calendar	en	displayed view
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	en	Displays your default calendar view on the startpage (page you get when you enter eGroupWare or click on the homepage icon)?
 do you want a weekview with or without weekend?	calendar	en	Do you want a weekview with or without weekend?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	en	Do you want to be notified about new or changed appointments? You be notified about changes you make yourself.<br>You can limit the notifications to certain changes only. Each item includes all the notification listed above it. All modifications include changes of title, description, participants, but no participant responses. If the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.

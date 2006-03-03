@@ -5,6 +5,7 @@
 a non blocking event will not conflict with other events	calendar	de	Ein nicht blockierender Termin ergibt keine Konflikt mit anderen Terminen
 accept or reject an invitation	calendar	de	Einladung zu- oder absagen
 accepted	calendar	de	Zugesagt
+access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion die die Benachrichtigung verursacht hat: Zugefügt, Storniert, Zugesagt, Abgesagt
 actions	calendar	de	Befehle
 add alarm	calendar	de	Alarm zufügen
@@ -70,6 +71,7 @@ delete this exception	calendar	de	Diese Ausnahme löschen
 delete this series of recuring events	calendar	de	Diese Serie von wiederholenden Terminen löschen
 disinvited	calendar	de	Ausgeladen
 display status of events	calendar	de	Status von Terminen anzeigen
+displayed view	calendar	de	Ansicht
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalendar-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
 do you want a weekview with or without weekend?	calendar	de	Wollen Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
