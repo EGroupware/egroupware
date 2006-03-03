@@ -50,13 +50,17 @@ class uilist extends uical
 	{
 		$this->uical(true,$set_states);	// call the parent's constructor
 
-		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Listview');
+		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Listview').
+			// for a single owner we add it's name to the app-header
+			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
 		
 		$this->date_filters = array(
 			'after'  => lang('After current date'),
 			'before' => lang('Before current date'),
 			'all'    => lang('All events'),
 		);
+		
+		$this->check_owners_access();
 	}
 	
 	/**
@@ -193,7 +197,7 @@ class uilist extends uical
 		}
 		elseif(empty($params['search']))	// active search displays entries from all users
 		{
-			$search_params['users'] = $this->is_group ? $this->g_owner : explode(',',$this->owner);
+			$search_params['users'] = explode(',',$this->owner);
 		}
 		$rows = array();
 		foreach((array) $this->bo->search($search_params) as $event)

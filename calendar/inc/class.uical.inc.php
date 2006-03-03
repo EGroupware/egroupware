@@ -148,6 +148,28 @@ class uical
 		// calendar does not work with hidden sidebox atm.
 		unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
 	}
+	
+	/**
+	 * Checks and terminates with a message if $this->owner include a user/resource we have no read-access to
+	 */
+	function check_owners_access()
+	{
+		$no_access = array();
+		foreach(explode(',',$this->owner) as $owner)
+		{
+			if (!$this->bo->check_perms(EGW_ACL_READ,0,$owner))
+			{
+				$no_access[$owner] = $this->bo->participant_name($owner);
+			}
+		}
+		if (count($no_access))
+		{
+			$GLOBALS['egw']->common->egw_header();
+			echo '<p class="redItalic" align="center">'.lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access))."</p>\n";
+			$GLOBALS['egw']->common->egw_footer();
+			$GLOBALS['egw']->common->egw_exit();
+		}
+	}
 
 	/**
 	 * Manages the states of certain controls in the UI: date shown, category selected, ...
@@ -213,12 +235,22 @@ class uical
 			$states['view'] = $this->view = 'planner';
 		}
 		// set the actual view as return_to
-		list($app,$class,$func) = explode('.',$_GET['menuaction']);
-		if (($class == 'uiviews' || $class == 'uilist') && $func)
+		if ($_GET['menuaction'])
+		{
+			list($app,$class,$func) = explode('.',$_GET['menuaction']);
+		}
+		else	// eg. calendar/index.php
+		{
+			$func = $this->view;
+			$class = $this->view == 'listview' ? 'uilist' : 'uiviews';
+		}
+		if ($class == 'uiviews' || $class == 'uilist')
 		{
 			// if planner_start_with_group is set in the users prefs: switch owner for planner to planner_start_with_group and back
 			if ($this->cal_prefs['planner_start_with_group'])
 			{
+				if (!$states_session && !$_GET['menuaction']) $this->view = '';		// first call to calendar 
+
 				if ($func == 'planner' && $this->view != 'planner' && $this->owner == $this->user)
 				{
 					//echo "<p>switched for planner to {$this->cal_prefs['planner_start_with_group']}, view was $this->view, func=$func, owner was $this->owner</p>\n";
@@ -238,7 +270,7 @@ class uical
 
 		$states['multiple'] = $this->multiple = $_GET['multiple'] || count(explode(',',$this->owner)) > 1;
 
-		if ($this->debug > 0 || $this->debug == 'menage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3, is_group=%4, g_owner=%5',True,$set_states,$states_session,$states,$this->is_group,$this->g_owner);
+		if ($this->debug > 0 || $this->debug == 'menage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
 		// save the states in the session
 		$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
 	}
@@ -408,46 +440,41 @@ class uical
 		$options = '';
 		foreach(array(
 			array(
-				'text' => lang('select one'),
-				'value' => '',
-				'selected' => False,
-			),
-			array(
 				'text' => lang('dayview'),
 				'value' => 'menuaction=calendar.uiviews.day',
-				'selected' => $_GET['menuaction'] == 'calendar.uiviews.day',
+				'selected' => $this->view == 'day',
 			),
 			array(
 				'text' => lang('weekview with weekend'),
 				'value' => 'menuaction=calendar.uiviews.week&days=7',
-				'selected' => $_GET['menuaction'] == 'calendar.uiviews.week' && $this->cal_prefs['days_in_weekview'] != 5,
+				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] != 5,
 			),
 			array(
 				'text' => lang('weekview without weekend'),
 				'value' => 'menuaction=calendar.uiviews.week&days=5',
-				'selected' => $_GET['menuaction'] == 'calendar.uiviews.week' && $this->cal_prefs['days_in_weekview'] == 5,
+				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] == 5,
 			),
 			array(
 				'text' => lang('monthview'),
 				'value' => 'menuaction=calendar.uiviews.month',
-				'selected' => $_GET['menuaction'] == 'calendar.uiviews.month',
+				'selected' => $this->view == 'month',
 			),
 			array(
 				'text' => lang('planner by category'),
 				'value' => 'menuaction=calendar.uiviews.planner&sortby=category'.
 					($planner_days_for_view !== false ? '&planner_days='.$planner_days_for_view : ''),
-				'selected' => $_GET['menuaction'] == 'calendar.uiviews.planner' && $this->sortby != 'user',
+				'selected' => $this->view == 'planner' && $this->sortby != 'user',
 			),
 			array(
 				'text' => lang('planner by user'),
 				'value' => 'menuaction=calendar.uiviews.planner&sortby=user'.
 					($planner_days_for_view !== false ? '&planner_days='.$planner_days_for_view : ''),
-				'selected' => $_GET['menuaction'] == 'calendar.uiviews.planner' && $this->sortby == 'user',
+				'selected' => $this->view == 'planner' && $this->sortby == 'user',
 			),
 			array(
 				'text' => lang('listview'),
 				'value' => 'menuaction=calendar.uilist.listview',
-				'selected' => $_GET['menuaction'] == 'calendar.uilist.listview',
+				'selected' => $this->view == 'listview',
 			),
 		) as $data)
 		{

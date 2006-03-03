@@ -73,23 +73,27 @@ class uiviews extends uical
 
 		$GLOBALS['egw_info']['flags']['nonavbar'] = False;
 		$app_header = array(
-			'calendar.uiviews.day'   => lang('Dayview'),
-			'calendar.uiviews.week'  => lang('Weekview'),
-			'calendar.uiviews.month' => lang('Monthview'),
-			'calendar.uiviews.planner' => lang('Group planner'),
+			'day'   => lang('Dayview'),
+			'week'  => lang('Weekview'),
+			'month' => lang('Monthview'),
+			'planner' => lang('Group planner'),
 		);
 		$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].
-			(isset($app_header[$_GET['menuaction']]) ? ' - '.$app_header[$_GET['menuaction']] : '');
+			(isset($app_header[$this->view]) ? ' - '.$app_header[$this->view] : '').
+			// for a single owner we add it's name to the app-header
+			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
 
 		// standard params for calling bocal::search for all views
 		$this->search_params = array(
 			'start'   => $this->date,
 			'cat_id'  => $this->cat_id,
-			'users'   => $this->is_group ? $this->g_owner : explode(',',$this->owner),
+			'users'   => explode(',',$this->owner),
 			'filter'  => $this->filter,
 			'daywise' => True,
 		);
 		$this->holidays = $this->bo->read_holidays($this->year);
+		
+		$this->check_owners_access();
 	}
 	
 	/**
