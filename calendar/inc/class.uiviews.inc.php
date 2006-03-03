@@ -924,11 +924,11 @@ class uiviews extends uical
 			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
 			'participants' => $participants,
 			'times' => !$event['multiday'] ? $this->add_nonempty($timespan,lang('Time')) :
-				$this->add_nonempty($GLOBALS['egw']->common->show_date($event['start']),lang('Start')).
-				$this->add_nonempty($GLOBALS['egw']->common->show_date($event['end']),lang('End')),
+				$this->add_nonempty($this->bo->format_date($event['start']),lang('Start')).
+				$this->add_nonempty($this->bo->format_date($event['end']),lang('End')),
 			'multidaytimes' => !$event['multiday'] ? '' :
-				$this->add_nonempty($GLOBALS['egw']->common->show_date($event['start']),lang('Start')).
-				$this->add_nonempty($GLOBALS['egw']->common->show_date($event['end']),lang('End')),
+				$this->add_nonempty($this->bo->format_date($event['start']),lang('Start')).
+				$this->add_nonempty($this->bo->format_date($event['end']),lang('End')),
 			'category' => !$is_private ? $this->add_nonempty($cats,lang('Category')) : '',
 			// the tooltip is based on the content of the actual widget, this way it takes no extra bandwidth/volum
 //			'tooltip' => $this->html->tooltip(False,False,array('BorderWidth'=>0,'Padding'=>0)),
