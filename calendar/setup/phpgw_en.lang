@@ -126,6 +126,7 @@ global public and group public	calendar	en	global public and group public
 global public only	calendar	en	global public only
 group planner	calendar	en	Group planner
 group public only	calendar	en	group public only
+groupmember(s) %1 not included, because you have no access.	calendar	en	Groupmember(s) %1 not included, because you have no access.
 here is your requested alarm.	calendar	en	Here is your requested alarm.
 high priority	calendar	en	high priority
 holiday	calendar	en	Holiday

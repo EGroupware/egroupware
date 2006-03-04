@@ -131,22 +131,31 @@ class uiviews extends uical
 			'multiple'   => 0,
 			'view'       => $this->bo->cal_prefs['defaultcalendar'],			
 		));
+		
+		if (($error = $this->check_owners_access()))
+		{
+			return $error;
+		}
+		if ($this->group_warning)
+		{
+			$group_warning = '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
+		}
 		switch($this->cal_prefs['defaultcalendar'])
 		{
 			case 'planner_user':
 			case 'planner_cat':
 			case 'planner':
-				return $this->planner(true);
+				return $group_warning.$this->planner(true);
 
 			case 'month':
-				return $this->month(0,true);
+				return $group_warning.$this->month(0,true);
 
 			default:
 			case 'week':
-				return $this->week(0,true);
+				return $group_warning.$this->week(0,true);
 				
 			case 'day':
-				return $this->day(true);
+				return $group_warning.$this->day(true);
 		}
 	}
 	
@@ -205,8 +214,7 @@ class uiviews extends uical
 
 		if (!$home)
 		{
-			$GLOBALS['egw']->common->egw_header();
-			if ($_GET['msg']) echo '<p class="redItalic" align="center">'.$this->html->htmlspecialchars($_GET['msg'])."</p>\n";
+			$this->do_header();
 		
 			echo $content;
 		}
@@ -262,8 +270,7 @@ class uiviews extends uical
 		}
 		if (!$home)
 		{
-			$GLOBALS['egw']->common->egw_header();
-			if ($_GET['msg']) echo '<p class="redItalic" align="center">'.$this->html->htmlspecialchars($_GET['msg'])."</p>\n";
+			$this->do_header();
 		
 			echo $content;
 		}
@@ -362,8 +369,7 @@ class uiviews extends uical
 		}
 		if (!$home)
 		{
-			$GLOBALS['egw']->common->egw_header();
-			if ($_GET['msg']) echo '<p class="redItalic" align="center">'.$this->html->htmlspecialchars($_GET['msg'])."</p>\n";
+			$this->do_header();
 			
 			echo $content;
 		}
@@ -386,8 +392,7 @@ class uiviews extends uical
 		
 		if (!$home)
 		{
-			$GLOBALS['egw']->common->egw_header();
-			if ($_GET['msg']) echo '<p class="redItalic" align="center">'.$this->html->htmlspecialchars($_GET['msg'])."</p>\n";
+			$this->do_header();
 	
 			$users = $this->search_params['users'];
 			if (!is_array($users)) $users = array($users);

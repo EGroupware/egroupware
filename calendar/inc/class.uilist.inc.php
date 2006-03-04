@@ -89,7 +89,8 @@ class uilist extends uical
 	 */
 	function listview($content=null,$msg='',$home=false)
 	{
-		if ($_GET['msg']) $msg = $_GET['msg'];
+		if ($_GET['msg']) $msg .= $_GET['msg'];
+		if ($this->group_warning) $msg .= $this->group_warning;
 
 		$etpl =& CreateObject('etemplate.etemplate','calendar.list');
 

@@ -126,6 +126,7 @@ global public and group public	calendar	de	Global öffentlich und Gruppen-öffentl
 global public only	calendar	de	nur Global öffentlich
 group planner	calendar	de	Gruppenplaner
 group public only	calendar	de	Gruppen-Öffentlich
+groupmember(s) %1 not included, because you have no access.	calendar	de	Gruppenmitglied(er) %1 nicht enthalten, da Sie keinen Zugriff haben.
 here is your requested alarm.	calendar	de	Hier ist ihr bestellter Alarm.
 high priority	calendar	de	Hohe Priorität
 holiday	calendar	de	Feiertag

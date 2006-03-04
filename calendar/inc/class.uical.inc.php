@@ -150,25 +150,66 @@ class uical
 	}
 	
 	/**
-	 * Checks and terminates with a message if $this->owner include a user/resource we have no read-access to
+	 * Checks and terminates (or returns for home) with a message if $this->owner include a user/resource we have no read-access to
+	 *
+	 * If currentapp == 'home' we return the error instead of terminating with it !!!
+	 *
+	 * @return boolean/string false if there's no error or string with error-message
 	 */
 	function check_owners_access()
 	{
-		$no_access = array();
+		$no_access = $no_access_group = array();
 		foreach(explode(',',$this->owner) as $owner)
 		{
-			if (!$this->bo->check_perms(EGW_ACL_READ,0,$owner))
+			if (is_numeric($owner) && $GLOBALS['egw']->accounts->get_type($owner) == 'g')
+			{
+				foreach($GLOBALS['egw']->accounts->member($owner) as $member)
+				{
+					$member = $member['account_id'];
+					if (!$this->bo->check_perms(EGW_ACL_READ,0,$member))
+					{
+						$no_access_group[$member] = $this->bo->participant_name($member);
+					} 
+				}
+			}
+			elseif (!$this->bo->check_perms(EGW_ACL_READ,0,$owner))
 			{
 				$no_access[$owner] = $this->bo->participant_name($owner);
 			}
 		}
 		if (count($no_access))
 		{
+			$msg = '<p class="redItalic" align="center">'.lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access))."</p>\n";
+		
+			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'home')
+			{
+				return $msg;
+			}
 			$GLOBALS['egw']->common->egw_header();
-			echo '<p class="redItalic" align="center">'.lang('Access denied to the calendar of %1 !!!',implode(', ',$no_access))."</p>\n";
+			if ($GLOBALS['egw_info']['flags']['nonavbar']) parse_navbar();
+
+			echo $msg;
+
 			$GLOBALS['egw']->common->egw_footer();
 			$GLOBALS['egw']->common->egw_exit();
 		}
+		if (count($no_access_group))
+		{
+			$this->group_warning = lang('Groupmember(s) %1 not included, because you have no access.',implode(', ',$no_access_group));
+		}
+		return false;
+	}
+	
+	/**
+	 * show the egw-framework plus possible messages ($_GET['msg'] and $this->group_warning from check_owner_access)
+	 */
+	function do_header()
+	{
+		$GLOBALS['egw']->common->egw_header();
+		
+		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.$this->html->htmlspecialchars($_GET['msg'])."</p>\n";
+
+		if ($this->group_warning) echo '<p class="redItalic" align="center">'.$this->group_warning."</p>\n";
 	}
 
 	/**
