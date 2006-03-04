@@ -332,14 +332,12 @@
 			$nonstd = $this->extrafields + $customfields;
 			foreach($nonstd as $column)
 			{
-				$test = strtolower($column);
-				if(isset($this->prefs[$test]) && $this->prefs[$test])
+				if(isset($this->prefs[$column]) && $this->prefs[$column])
 				{
-					$showcol = $this->display_name($column[0]);
+					$showcol = $this->display_name($column);
 					/* This must be a custom field */
 					if(!$showcol)
 					{
-//						$showcol = $column;
 						$showcol = $namedfields[$column];
 					}
 					$cols .= '  <td height="21">' . "\n";
