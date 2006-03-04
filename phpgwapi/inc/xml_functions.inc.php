@@ -932,7 +932,8 @@
 	$GLOBALS['_xmlrpcs_egw_time_doc'] = 'Returns system time based on optional format string';
 	function _xmlrpcs_time($server,$m)
 	{
-		$format = $m->getParam(0);
+		$param0 = $m->getParam(0);
+		$format = $param0->scalarval();
 		$format = $format ? $format : 'Y/m/d H:i:s';
 
 		return CreateObject(
