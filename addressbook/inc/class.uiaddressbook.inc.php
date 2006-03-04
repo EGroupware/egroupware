@@ -1204,7 +1204,7 @@
 //			while(list($x,$y) = @each($custom))
 			foreach($custom as $x => $y)
 			{
-				$customfields[$y['name']] = $y['name'];
+				$customfields[$y['name']] = $y['title'];
 			}
 
 			$qfields = $this->bo->stock_contact_fields + $this->extrafields + $customfields;
@@ -1284,16 +1284,14 @@
 ';
 				$tr_color = $GLOBALS['egw']->nextmatchs->alternate_row_color($tr_color);
 				$i = 0;
-				while(list($cf) = each($customfields))
+				foreach($customfields as $name => $title)
 				{
 					if(!($i % 6))
 					{
 						$custom_var .= "\n  <tr bgcolor='$tr_color'>\n";
 					}
-					$custom_var .= '    <td><input type="checkbox" name="prefs['
-						. strtolower($cf) . ']"'
-						. ($this->prefs[$cf] ? ' checked' : '')
-						. '>' . str_replace('_',' ',$cf) . '</option></td>' . "\n";
+					$custom_var .= '    <td><input type="checkbox" name="prefs['.htmlspecialchars($name).']"'
+						. ($this->prefs[$name] ? ' checked' : ''). ' />' . htmlspecialchars($title) . '</td>' . "\n";
 
 					if(!(++$i % 6))
 					{
