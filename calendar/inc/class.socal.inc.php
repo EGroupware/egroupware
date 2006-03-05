@@ -304,7 +304,7 @@ class socal
 				}
 				elseif (is_numeric(substr($user,1)))
 				{
-					$users_by_type[$user{0}] = (int) substr($user,1);
+					$users_by_type[$user{0}][] = (int) substr($user,1);
 				}
 			}
 			$to_or = array();
