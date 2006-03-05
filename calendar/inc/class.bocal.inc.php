@@ -246,7 +246,8 @@ class bocal
 	 *  show_rejected if set rejected invitation are shown only when true, otherwise it depends on the cal-pref or a running query
 	 *  ignore_acl if set and true no check_perms for a general EGW_ACL_READ grants is performed
 	 *  enum_groups boolean if set and true, group-members will be added as participants with status 'G'
-	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param)
+	 * @return array of events or array with YYYYMMDD strings / array of events pairs (depending on $daywise param) 
+	 *	or false if there are no read-grants from _any_ of the requested users
 	 */
 	function &search($params)
 	{
@@ -276,6 +277,9 @@ class bocal
 			{
 				continue;	// for non-groups (eg. users), we stop here if we have no read-rights
 			}
+			// the further code is only for real users
+			if (!is_numeric($user)) continue;
+
 			// for groups we have to include the members
 			if ($GLOBALS['egw']->accounts->get_type($user) == 'g')
 			{
@@ -312,7 +316,7 @@ class bocal
 		// as calling the so-layer without users would give the events of all users (!)
 		if (!count($users))
 		{
-			return array();
+			return false;
 		}
 		if (isset($params['start'])) $start = $this->date2ts($params['start']);
 
@@ -834,6 +838,29 @@ class bocal
 	}
 
 	/**
+	 * Fetch information about a resource
+	 *
+	 * We do some caching here, as the resource itself might not do it.
+	 *
+	 * @param string $uid string with one-letter resource-type and numerical resource-id, eg. "r19"
+	 * @return array/boolean array with keys res_id,cat_id,name,useable (name definied by max_quantity in $this->resources),rights,responsible or false if $uid is not found
+	 */
+	function resource_info($uid)
+	{
+		static $res_info_cache = array();
+		
+		if (!isset($res_info_cache[$uid]))
+		{
+			list($res_info_cache[$uid]) = $this->resources[$uid{0}]['info'] ? ExecMethod($this->resources[$uid{0}]['info'],substr($uid,1)) : false;
+		}
+		if ($this->debug && ($this->debug > 2 || $this->debug == 'resource_info'))
+		{
+			$this->debug_message('bocal::resource_info(%1) = %2',True,$uid,$res_info_cache[$uid]);
+		}
+		return $res_info_cache[$uid];
+	}
+
+	/**
 	 * Checks if the current user has the necessary ACL rights
 	 *
 	 * The check is performed on an event or generally on the cal of an other user
@@ -852,9 +879,9 @@ class bocal
 		$event_in = $event;
 		if ($other && !is_numeric($other))
 		{
-			$resource = ExecMethod($this->resources[$other{0}]['info'],substr($other,1));
+			$resource = $this->resource_info($other);
 
-			return $needed & $resource[0]['rights'];
+			return $needed & $resource['rights'];
 		}
 		if (is_int($event) && $event == 0)
 		{
@@ -902,8 +929,8 @@ class bocal
 				elseif (!is_numeric($uid))
 				{
 					// if we have a resource as participant
-					$resource = ExecMethod($this->resources[$uid{0}]['info'],substr($uid,1));
-					$grants |= $resource[0]['rights'];
+					$resource = $this->resource_info($uid);
+					$grants |= $resource['rights'];
 				}	
 			}
 		}
@@ -1250,23 +1277,14 @@ class bocal
 	{
 		static $id2lid = array();
 		
+		if ($use_type && $use_type != 'u') $id = $use_type.$id;
+
 		if (!isset($id2lid[$id]))
 		{
-			if (!is_numeric($id) || $use_type && $use_type != 'u')
+			if (!is_numeric($id))
 			{
-				$type = $use_type ? $use_type : $id[0];
-				$res_id = $use_type ? $id : (int) substr($id,1);
-
-				if (isset($this->resources[$type]) && isset($this->resources[$type]['info']))
-				{
-					list($data) = ExecMethod($this->resources[$type]['info'],$res_id);
-					//echo "$type$res_id: "; _debug_array($data);
-					$id2lid[$id] = $data['name'];
-				}
-				else
-				{
-					$id2lid[$id] = "resource($id)";
-				}
+				$res_info = $this->resource_info($id);
+				$id2lid[$id] = $res_info && isset($res_info['name']) ? $res_info['name'] : "resource($id)";
 			}
 			else
 			{

@@ -126,7 +126,7 @@ class bocalupdate extends bocal
 			$types_with_quantity = array();
 			foreach($this->resources as $type => $data)
 			{
-				if ($data['use_quantity']) $types_with_quantity[] = $type;
+				if ($data['max_quantity']) $types_with_quantity[] = $type;
 			}
 			// get all NOT rejected participants and evtl. their quantity
 			$quantity = $users = array();
@@ -135,9 +135,9 @@ class bocalupdate extends bocal
 				if ($status[0] == 'R') continue;	// ignore rejected participants
 
 				$users[] = $uid;
-				if (in_array($uid[0],$types_with_quantity))
+				if (in_array($uid{0},$types_with_quantity))
 				{
-					$quantity[$uid] = min(1,(int) substr($overlap['participants']['uid'],2));
+					$quantity[$uid] = max(1,(int) substr($status,2));
 				}
 			}
 			$overlapping_events =& $this->search(array(
@@ -167,26 +167,25 @@ class bocalupdate extends bocal
 				$common_parts = array_intersect($users,array_keys($overlap['participants']));
 				foreach($common_parts as $n => $uid)
 				{
-					if ($overlap['participants'][$uid][0] == 'R') 
+					if ($overlap['participants'][$uid]{0} == 'R') 
 					{
 						unset($common_parts[$uid]);
 						continue;
 					}
-					if (is_numeric($uid) || !in_array($uid[0],$types_with_quantity))
+					if (is_numeric($uid) || !in_array($uid{0},$types_with_quantity))
 					{
 						continue;	// no quantity check: quantity allways 1 ==> conflict
 					}
 					if (!isset($max_quantity[$uid]))
 					{
-						$res_info = ExecMethod($this->resources[$uid[0]]['info']);
-						$max_quantity[$uid] = $res_info[$this->resources[$uid[0]]['use_quantity']];
+						$res_info = $this->resource_info($uid);
+						$max_quantity[$uid] = $res_info[$this->resources[$uid{0}]['max_quantity']];
 					}
-					$quantity[$uid] += min(1,(int) substr($overlap['participants']['uid'],2));
-					
-					if ($quantity[$uid] <= $max_quantity)
+					$quantity[$uid] += max(1,(int) substr($overlap['participants'][$uid],2));
+					if ($quantity[$uid] <= $max_quantity[$uid])
 					{
 						$possible_quantity_conflicts[$uid][] =& $overlapping_events[$k];	// an other event can give the conflict
-						unset($common_parts[$uid]);
+						unset($common_parts[$n]);
 						continue;
 					}
 					// now we have a quantity conflict for $uid
@@ -205,9 +204,9 @@ class bocalupdate extends bocal
 			{
 				if ($quantity[$uid] > $max)
 				{
-					foreach($possible_quantity_conflicts[$uid] as $conflict)
+					foreach((array)$possible_quantity_conflicts[$uid] as $conflict)
 					{
-						$conflicts[$conflict['id'].'-'.$this->bo->date2ts($conflict['start'])] =& $possible_quantity_conflicts[$k];
+						$conflicts[$conflict['id'].'-'.$this->date2ts($conflict['start'])] =& $possible_quantity_conflicts[$k];
 					}
 				}
 			}
@@ -233,7 +232,7 @@ class bocalupdate extends bocal
 					$this->debug_message('bocalupdate::update() %1 conflicts found %2',false,count($conflicts),$conflicts);
 				}
 				return $conflicts;
-			}						
+			}					
 		}
 		// save the event to the database
 		if ($touch_modified)
