@@ -215,9 +215,9 @@
 						. '<br />'.lang('Login as user postgres, eg. by using su as root')
 						. "<br /><i>[root@server /root]# <b>su - postgres</b></i><br />"
 						. lang('Create the empty database and grant user permissions -')
-						. "<br /><i>[postgres@server /var/lib/pgsql]# <b>createuser --no-adduser --no-createdb -P " . $info['db_user'] . "</b></i>"
+						. "<br /><i>[postgres@server /var/lib/pgsql]\$ <b>createuser --no-adduser --no-createdb -P " . $info['db_user'] . "</b></i>"
 						. "<br /><i>Enter password for new user: <b>" . $info['db_pass'] . "</b></i>"
-						. "<br /><i>[postgres@server /var/lib/pgsql]# <b>createdb --owner " .  $info['db_user'] . ' ' . $info['db_name'] . "</b></i>"
+						. "<br /><i>[postgres@server /var/lib/pgsql]\$ <b>createdb --owner " .  $info['db_user'] . ' ' . $info['db_name'] . "</b></i>"
 						. '<br />'.lang('to allow password authentification add the following line to your pg_hba.conf (above all others) AND restart postgres:')
 						. '<br /><i># TYPE DATABASE USER CIDR-ADDRESS METHOD</i>'
 						.($info['db_host'] ? "<br /><i><b>host $info[db_name] $info[db_user] $ip/32 password</b></i>" :
