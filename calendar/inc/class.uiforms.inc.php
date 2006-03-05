@@ -187,9 +187,9 @@ class uiforms extends uical
 		unset($event['new_alarm']);
 		unset($event['alarm']['delete_alarm']);
 
-		if (isset($content['participants']['accounts']) && !(isset($content['view']) && $content['view']))	// convert content => event
+		if (isset($content['participants']) && !(isset($content['view']) && $content['view']))	// convert content => event
 		{
-			//echo "participants-data"; _debug_array($content['participants']);
+			//echo "participants="; _debug_array($content['participants']);
 			$event['participants'] = $event['participant_types'] = array();
 			foreach($content['participants'] as $app => $participants)
 			{
