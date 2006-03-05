@@ -193,29 +193,35 @@
 		 */
 		function save_minimal_config()
 		{
+			$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
+		
 			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
 			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'];
-			// files-dir is not longer allowed in document root, for security reasons !!!
-			$GLOBALS['current_config']['files_dir'] = '/outside/webserver/docroot';
 
-			if(@is_dir('/tmp'))
-			{
-				$GLOBALS['current_config']['temp_dir'] = '/tmp';
-			}
-			elseif(@is_dir('c:\\windows\\temp'))
-			{
-				$GLOBALS['current_config']['temp_dir'] = 'c:\\windows\\temp';
-			}
-			else
-			{
-				$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
-			}
 			// guessing the phpGW url
 			$parts = explode('/',$_SERVER['PHP_SELF']);
 			array_pop($parts);	// remove config.php
 			array_pop($parts);	// remove setup
 			$GLOBALS['current_config']['webserver_url'] = implode('/',$parts);
+			$egroupwareDirName = end($parts);
 
+			if(!$is_windows) {
+				if(@is_dir('/tmp')) {
+					$GLOBALS['current_config']['temp_dir'] = '/tmp';
+				} else {
+					$GLOBALS['current_config']['temp_dir'] = '/path/to/temp/dir';
+				}
+				$GLOBALS['current_config']['files_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/files';
+				$GLOBALS['current_config']['backup_dir'] = '/var/lib/'.$egroupwareDirName.'/'.$GLOBALS['egw_setup']->ConfigDomain.'/backup';
+			} else {
+				if(@is_dir('c:\\windows\\temp')) {
+					$GLOBALS['current_config']['temp_dir'] = 'c:\\windows\\temp';
+				} else {
+					$GLOBALS['current_config']['temp_dir'] = 'c:\\path\\to\\temp\\dir';
+				}
+				$GLOBALS['current_config']['files_dir'] = 'c:\\programme files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
+				$GLOBALS['current_config']['backup_dir'] = 'c:\\programme files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
+			} 
 			$datetime =& CreateObject('phpgwapi.datetime');
 			$GLOBALS['current_config']['tz_offset'] = $datetime->getbestguess();
 			unset($datetime);
