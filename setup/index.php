@@ -209,11 +209,11 @@
 					$setup_tpl->parse('V_db_stage_1','B_db_stage_1');
 					break;
 				case 'pgsql':
-					$ip = $info['db_host'] == 'localhsot' ? '127.0.01' : '&lt;ip-address webserver&gt;';
+					$ip = $info['db_host'] == 'localhost' ? '127.0.0.1' : '&lt;ip-address webserver&gt;';
 					$setup_tpl->set_var('instr',
 						'<b>'.lang('Instructions for creating the database in %1:','PostgreSQL').'</b>'
 						. '<br />'.lang('Login as user postgres, eg. by using su as root')
-						. "<br /><i>[root@server /root]# <b>su -l postgres</b></i><br />"
+						. "<br /><i>[root@server /root]# <b>su - postgres</b></i><br />"
 						. lang('Create the empty database and grant user permissions -')
 						. "<br /><i>[postgres@server /var/lib/pgsql]# <b>createuser --no-adduser --no-createdb -P " . $info['db_user'] . "</b></i>"
 						. "<br /><i>Enter password for new user: <b>" . $info['db_pass'] . "</b></i>"
