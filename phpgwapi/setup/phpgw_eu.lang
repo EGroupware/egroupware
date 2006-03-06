@@ -30,10 +30,15 @@ afghanistan	common	eu	AFGANISTAN
 albania	common	eu	ALBANIA
 algeria	common	eu	ALJERIA
 align	htmlarea-TableOperations	eu	Lerrokatu
+align center	tinymce	eu	Lerrokatu erdian
+align left	tinymce	eu	Lerrokatu ezkerrean
+align right	tinymce	eu	Lerrokatu eskubian
+alignment	tinymce	eu	Lerrokatzea
 all	common	eu	Guztiak
 all fields	common	eu	eremu guztiak
 alphabet	common	eu	a,b,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	eu	Txadakatu estilo-orria
+alternative image	tinymce	eu	Ordezko irudia
 american samoa	common	eu	AMERICAN SAMOA
 andorra	common	eu	ANDORRA
 angola	common	eu	ANGOLA
@@ -70,13 +75,14 @@ benin	common	eu	BENIN
 bermuda	common	eu	BERMUDA
 bhutan	common	eu	BHUTAN
 blocked, too many attempts	common	eu	Blokeatuta saiakera gehiegi
-bold	htmlarea	eu	Lodia
+bold	common	eu	Lodia
 bolivia	common	eu	BOLIBIA
-border	htmlarea-TableOperations	eu	Ertza
+border	common	eu	Ertza
+border color	tinymce	eu	Ertzaren kolorea
 borders	htmlarea-TableOperations	eu	Ertzak
 bosnia and herzegovina	common	eu	BOSNIA ETA HERZEGOVINA
 botswana	common	eu	BOSTWANA
-bottom	htmlarea-TableOperations	eu	Behean
+bottom	common	eu	Behean
 bouvet island	common	eu	BOUVET ISLAND
 brazil	common	eu	BRASIL
 british indian ocean territory	common	eu	BRITISH INDIAN OCEAN TERRITORY
@@ -85,13 +91,14 @@ bulgaria	common	eu	BULGARIA
 bulleted list	htmlarea	eu	Eskema zerrenda
 burkina faso	common	eu	BURKINA FASO
 burundi	common	eu	BURUNDI
+c_ell properties...	htmlarea-ContextMenu	eu	Gelaxkaren propietateak...
 calendar	common	eu	Egutegia
 cambodia	common	eu	CAMBODIA
 cameroon	common	eu	CAMEROON
 canada	common	eu	CANADA
 cancel	common	eu	Ezeztatu
 cape verde	common	eu	CAPE VERDE
-caption	htmlarea-TableOperations	eu	Epigrafea
+caption	common	eu	Epigrafea
 categories	common	eu	Kategoriak
 categories for	common	eu	Kategoriak
 category	common	eu	Kategoria
@@ -99,11 +106,13 @@ category %1 has been added !	common	eu	Kategoria %1 erantsia izan da
 category %1 has been updated !	common	eu	Kategoria %1 eguneratua izan da
 cayman islands	common	eu	CAIMAN IRLAK
 cell properties	htmlarea-TableOperations	eu	Gelaxkaren propietateak
-center	htmlarea-TableOperations	eu	Erdian
+cellpadding	tinymce	eu	Gelaxkaren betegarria
+center	tinymce	eu	Erdian
 central african republic	common	eu	ERTA AFRIKAKO ERREPUBLIKA
 chad	common	eu	CHAD
 change	common	eu	Aldatu
 char	htmlarea-TableOperations	eu	Karaktere
+chec_k link...	htmlarea-ContextMenu	eu	Lotura egiaztatu...
 check installation	common	eu	Instalazioa egiaztu
 check now	common	eu	Egiaztatu orain
 chile	common	eu	CHILE
@@ -152,7 +161,7 @@ default category	common	eu	Lehenetsitako kategoria
 delete	common	eu	Ezabatu
 delete cell	htmlarea-TableOperations	eu	Gelaxka ezabatu
 delete column	htmlarea-TableOperations	eu	Zutabea ezabatu
-delete row	htmlarea-TableOperations	eu	Errenkada ezabatu
+delete row	common	eu	Errenkada ezabatu
 delete the current column	htmlarea-ContextMenu	eu	Zutabe hau ezabatu
 delete the current row	htmlarea-ContextMenu	eu	Errenkada hau ezabatu
 denmark	common	eu	Danimarka
@@ -247,7 +256,7 @@ guinea-bissau	common	eu	GUINEA-BISSAU
 guyana	common	eu	GUYANA
 haiti	common	eu	HAITI
 heard island and mcdonald islands	common	eu	HEARD ISLAND ETA MCDONALD ISLANDS
-height	htmlarea-TableOperations	eu	Garaiera
+height	common	eu	Garaiera
 help	common	eu	Laguntza
 help using editor	htmlarea	eu	Laguntza editorea erabiltzerakoan
 high	common	eu	Altua
@@ -264,7 +273,7 @@ i_nsert row before	htmlarea-ContextMenu	eu	Errenkada bat txertatu aurretik
 iceland	common	eu	ISLANDIA
 ignore	htmlarea-SpellChecker	eu	Ezikusi
 ignore all	htmlarea-SpellChecker	eu	Ezikusi guztiak
-image url	htmlarea-TableOperations	eu	URL irudia
+image url	common	eu	URL irudia
 in_sert row after	htmlarea-ContextMenu	eu	Errenkada bat txertatu ondoren
 increase indent	htmlarea	eu	Handitu koska
 india	common	eu	INDIA
@@ -276,11 +285,11 @@ insert a new row after the current one	htmlarea-ContextMenu	eu	Errenkada berri b
 insert a new row before the current one	htmlarea-ContextMenu	eu	Errenkada berri bat txertatu momentukoaren gainean
 insert cell after	htmlarea-TableOperations	eu	Gelaxka bat txertatu aurretik
 insert cell before	htmlarea-TableOperations	eu	Gelaxka bat txertatu ondoren
-insert column after	htmlarea-TableOperations	eu	Zutabe bat txertatu aurretik
-insert column before	htmlarea-TableOperations	eu	Zutabe bat txertatu aurretik
+insert column after	common	eu	Zutabe bat txertatu aurretik
+insert column before	common	eu	Zutabe bat txertatu aurretik
 insert image	htmlarea	eu	Irudia txertatu
-insert row after	htmlarea-TableOperations	eu	Errenkada bat txertatu aurretik
-insert row before	htmlarea-TableOperations	eu	Errenkada bat txertatu ondoren
+insert row after	common	eu	Errenkada bat txertatu aurretik
+insert row before	common	eu	Errenkada bat txertatu ondoren
 insert table	htmlarea	eu	Taula txertatu
 insert web link	htmlarea	eu	Web lotura bet txertatu
 international	common	eu	Nazioartekoa
@@ -317,7 +326,7 @@ lastname	common	eu	Abizena
 latvia	common	eu	LATVIA
 layout	htmlarea-TableOperations	eu	Layout
 lebanon	common	eu	LIBANO
-left	htmlarea-TableOperations	eu	Ezkerrean
+left	common	eu	Ezkerrean
 lesotho	common	eu	LESOTHO
 liberia	common	eu	LIBERIA
 license	common	eu	Lizentzia
@@ -403,7 +412,7 @@ only private	common	eu	pribatua soilik
 only yours	common	eu	bakarrik zureak
 open notify window	common	eu	Abisu leihoa zabaldu
 opens this link in a new window	htmlarea-ContextMenu	eu	Lotura hau leiho berri batean zabaldu
-ordered list	htmlarea	eu	Ordenatutako zerrenda
+ordered list	common	eu	Ordenatutako zerrenda
 original	common	eu	Jatorrizkoa
 original word	htmlarea-SpellChecker	eu	Jatorrizko hitza
 other	common	eu	Besteak
@@ -441,7 +450,6 @@ please wait...	common	eu	Mesedez itxaron
 poland	common	eu	POLONIA
 portugal	common	eu	PORTUGAL
 postal	common	eu	Postala
-powered by phpgroupware version %1	common	eu	Hornitzailea <a href="http://www.egropware.org">eGroupWare</a> %1 bertsioa
 preferences	common	eu	Hobespenak
 prev. month (hold for menu)	jscalendar	eu	Aurreko hilabetea (menuan mantendu)
 prev. year (hold for menu)	jscalendar	eu	Aurreko urtea (menuan mantendu)
@@ -462,12 +470,12 @@ reject	common	eu	Ukatu
 remove selected accounts	common	eu	Aukeratutako kontuak kendu
 remove the	htmlarea-ContextMenu	eu	Kendu
 rename	common	eu	Berizendatu
-replace	htmlarea-SpellChecker	eu	Ordezkatu
+replace	common	eu	Ordezkatu
 replace all	htmlarea-SpellChecker	eu	Ordezkatu guztiak
-replace with	htmlarea-SpellChecker	eu	Ordezkatu -kin
+replace with	common	eu	Ordezkatu -kin
 reunion	common	eu	REUNION
 revert	htmlarea-SpellChecker	eu	Itzuli
-right	htmlarea-TableOperations	eu	Eskuinean
+right	common	eu	Eskuinean
 ro_w properties...	htmlarea-ContextMenu	eu	Errenkadaren propietateak
 romania	common	eu	RUMANIA
 row properties	htmlarea-TableOperations	eu	Errenkadaren propietateak
@@ -543,7 +551,7 @@ superscript	htmlarea	eu	Goiindizea
 suriname	common	eu	SURINAME
 sweden	common	eu	SUEZIA
 switzerland	common	eu	SUIZA
-table properties	htmlarea-TableOperations	eu	Taularen propietateak
+table properties	common	eu	Taularen propietateak
 taiwan	common	eu	TAIWAN/TAIPEI
 tajikistan	common	eu	TAJIKISTAN
 text align	htmlarea-TableOperations	eu	Lerrokatu testuarekin
@@ -566,7 +574,7 @@ toggle first day of week	jscalendar	eu	Asteko lehen eguna aldatu
 togo	common	eu	TOGO
 tokelau	common	eu	TOKELAU
 tonga	common	eu	TONGA
-top	htmlarea-TableOperations	eu	Goian
+top	common	eu	Goian
 total	common	eu	Guztia
 trinidad and tobago	common	eu	TRINIDAD ETA TOBAGO
 tuesday	common	eu	Asteartea
@@ -576,7 +584,7 @@ turkmenistan	common	eu	TURKMENISTAN
 tuvalu	common	eu	TUVALU
 uganda	common	eu	UGANDA
 ukraine	common	eu	UKRANIA
-underline	htmlarea	eu	Azpimarratu
+underline	common	eu	Azpimarratu
 undoes your last action	htmlarea	eu	Aurreko ekintza desegin
 united kingdom	common	eu	ERRESUMA BATUA
 united states	common	eu	ESTATU BATUAK
@@ -608,7 +616,7 @@ wednesday	common	eu	Asteazkena
 welcome	common	eu	Ongo etorri
 western sahara	common	eu	MENDEBALDEKO SAHARA
 which groups	common	eu	Zein taldeak
-width	htmlarea-TableOperations	eu	Zabalera
+width	common	eu	Zabalera
 wk	jscalendar	eu	wk
 work email	common	eu	laneko posta elektronikoa
 written by:	common	eu	Nork idatzi:

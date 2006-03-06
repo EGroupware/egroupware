@@ -17,11 +17,12 @@ addressbook preferences	addressbook	eu	Helbidea-luburuko lehenetsiak
 addressbook-fieldname	addressbook	eu	Helbide-liburua - eremu izena
 addvcard	addressbook	eu	VCard-a gehitu
 alt. csv import	addressbook	eu	CVS-ak inportatzeko
+are you shure you want to delete this contact?	addressbook	eu	Ziur zaude kontaktu hau ezabatu nahi duzula?
 are you sure you want to delete this field?	addressbook	eu	ziur zaude eremu hau ezabatu nahi duzula?
 bbs phone	addressbook	eu	BBS telefonoa
 birthday	common	eu	Jaiotze data
 birthdays	common	eu	Jaiotze datak
-blank	addressbook	eu	Utzik
+blank	addressbook	eu	Hutsik
 business	common	eu	Negozio
 business address type	addressbook	eu	Negozio helbide mota
 business city	addressbook	eu	Negozio hiria
@@ -36,15 +37,19 @@ business zip code	addressbook	eu	Negozio Posta Kodea
 car phone	addressbook	eu	Autoko telefonoa
 cell phone	addressbook	eu	Telefono mugikorra
 charset of file	addressbook	eu	Fitxategiaren Karaktere bilduma
+choose an icon for this contact type	addressbook	eu	Ikono bat aukeratu kontaktu mota honetarako
+chosse an etemplate for this contact type	addressbook	eu	Plantilla bat aukeratu kontaktu mota honetarako
 city	common	eu	Hiria
 company	common	eu	Enpresa
 company name	common	eu	Enpresaren Izena
 configuration	common	eu	Konfigurazioa
 contact	common	eu	Kontaktua
 contact application	admin	eu	Kontatuaren aplikazioa
+contact saved	addressbook	eu	Kontaktua gorde da
 contact settings	admin	eu	Kontakturan lehenetsiak
 copied by %1, from record #%2.	addressbook	eu	%1 gatik kopiatua, %2 errenkadatik.
 country	common	eu	Herrialdea
+create new links	addressbook	eu	Lotura berri bat sortu
 csv-fieldname	addressbook	eu	CVS - Eremu izena
 csv-filename	addressbook	eu	CVS - Fitxategi izena
 custom	addressbook	eu	Egokitua
@@ -53,13 +58,18 @@ debug output in browser	addressbook	eu	Hirteera nabigatzailean erakutsi
 default filter	addressbook	eu	Iragazki lehenetsia
 delete a single entry by passing the id.	addressbook	eu	Ezabatu errenkada bakarra id. pasatuaz
 department	common	eu	Departamentua
+do your really want to delete this contact?	addressbook	eu	Ziur zaude kontaktu hau ezabatu nahi duzula?
 domestic	addressbook	eu	Barnekoa
 download	addressbook	eu	Deskargatu
 download export file (uncheck to debug output in browser)	addressbook	eu	Exportazio fitxategia deskargatu (egindakoa nabigatzailean erakusten duen aukera indargabetu)
 edit custom field	addressbook	eu	Aldatu egokitutako eremua
 edit custom fields	admin	eu	Aldatu egokitutako eremuak
+edit phonenumbers -	addressbook	eu	Editatu telefono zenbakiak
+email & internet	addressbook	eu	Posta elektronikoa & Internet
 empty for all	addressbook	eu	hutsik guztientzat
 enter the path to the exported file here	addressbook	eu	Sartu hemen exportatutako fitxategiaren bidea
+existing links	addressbook	eu	Lehendik dauden loturak
+export	addressbook	eu	esportatu
 export contacts	addressbook	eu	Kontaktuak exportatu
 export file name	addressbook	eu	Exportatu fitxategiaren izena
 export from addressbook	addressbook	eu	Exportatu helbide-liburutik
@@ -84,6 +94,7 @@ home phone	addressbook	eu	Etxea - Telefonoa
 home state	addressbook	eu	Etxea - Estatua
 home street	addressbook	eu	Etxea - Kalea
 home zip code	addressbook	eu	Etxea - Posta Kutxatila
+icon	addressbook	eu	Ikono
 import	addressbook	eu	Inportatu
 import contacts	addressbook	eu	Inportatu kontaktuak
 import csv-file into addressbook	addressbook	eu	Inportatu CVS fitxategia Helbide liburura
@@ -103,6 +114,8 @@ ldap root dn for contacts	admin	eu	LDAP dns nagusia kontaktuentzat
 ldap root pw for contacts	admin	eu	LDAP pasahitza
 ldif	addressbook	eu	LDIF
 line 2	addressbook	eu	2. Errenkada
+links	addressbook	eu	Loturak
+list all categories	addressbook	eu	Kategoria guztien zerrenda
 load vcard	addressbook	eu	VCard-a kargatu
 mark records as private	addressbook	eu	Errenkara pribatu moduan jarri
 message phone	addressbook	eu	Mezuen telefonoa
@@ -110,9 +123,12 @@ middle name	addressbook	eu	Erdiko izena
 mobile	addressbook	eu	Mugikorra
 mobile phone	addressbook	eu	Mugikorra
 modem phone	addressbook	eu	Modem telefonoa
+more ...	addressbook	eu	Gehiago...
 multiple vcard	addressbook	eu	VCard anitzak
 no vcard	addressbook	eu	Ez VCard-ik
+number	addressbook	eu	Zenbakia
 number of records to read (%1)	addressbook	eu	Irakurri beharreko errenkaden kopurua (%1)
+organisation	addressbook	eu	antolaketa
 other number	addressbook	eu	Beste Zebaki bat
 other phone	addressbook	eu	Beste telefono bat
 pager	common	eu	Bilagailua
@@ -124,6 +140,7 @@ postal	common	eu	Posta Kutxatilla
 pref	addressbook	eu	lehenetsia
 prefix	addressbook	eu	Aurrizkia
 public key	addressbook	eu	Giltza publikoa
+publish into groups:	addressbook	eu	Taldeetan publikatu:
 read a list of entries.	addressbook	eu	Sarrea zerrenda bat irakurri
 read a single entry by passing the id and fieldlist.	addressbook	eu	Sarrera bakarra irakurri "ID"-a eta "eremu zerrenda" pasatuaz.
 record access	addressbook	eu	Erregistrora sarrera
