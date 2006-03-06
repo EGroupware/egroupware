@@ -4,44 +4,45 @@
    * @file 
    *  Icalsrv: Export and Import Egw events and task as ICalendar over http
    *
-   * @desc purp egw remote ical-over-http server interface that can import and export vevents,
-   * and vtodos. Possible clients include Mozilla Calendar/Sunbird, Korganizer, Apple Ical
+   * Possible clients include Mozilla Calendar/Sunbird, Korganizer, Apple Ical
    * and Evolution. 
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
-   *
+   * 
    * @version 0.9.02 
    * @date 20060214
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
-   * (see: http://www.egroupware.org )
+   * $Id$ 
+   * (see: @url http://www.egroupware.org  )
    *
    * Based on some code from:
    * @author   RalfBecker@outdoor-training.de (some original code base)
    * @author   bbeckmann (at) optaros.com (some modificationas)
    * @author   l.tulipan (at) mpwi.at (Additional Modifications for egw 1.2).
    *
-   * @license
+   * <b>license:</b><br>
    *  This program is free software; you can redistribute it and/or modify it
    *  under the terms of the GNU General Public License as published by the
    *  Free Software Foundation; either version 2 of the License, or (at your
    *  option) any later version.
    * 
    * @since 0.9.00 use of the new egwical class for iCalendar handling with WURH
-   * according to WURH pattern
+   * TODO list:
+   * @todo incorporate this icalsrv.php script in
+   *  standard egroupware access url, via a setup routine or so.
+   * @todo make this 'ical-service' enabled/disabled from the egw
+   * admin interface
+   * @todo make some parameters of this 'ical-service' interface user
+   * specific configurable, for example the vevent and vtodo export
+   * period (define search filters..) or overwrite or duplicate mode
+   * etc.
+   * @todo for ical GET: get the agent name from the http header
+   * and use to set the ical product field when exporting.
    */
 
-  // TODO list:
-  // - incorporate this icalsrv.php script in standard egroupware access url
-  // - make this 'ical-service' enabled/disabled from  the egw admin interface
-  // - make some parameters of this 'ical-service' interface user specific configurable
-  //  for example the vevent and vtodo export period (define search filters..)
-  // overwrite or duplicate mode etc.
-  //  Build a html interface for this. I guess this goes into $GLOBALS....['preferences']...
-  // CAN SOMEBODY HELP WITH THIS? (not my piece of pudding ....)
 
-
-#$logdir = false; // set to false for no logging
-$logdir = '/tmp'; // set to a valid (writable) directory to get log file generation
+$logdir = false; // set to false for no logging
+#$logdir = '/tmp'; // set to a valid (writable) directory to get log file generation
 
 #  WHY THIS? IS IT NEEDED?
 $GLOBALS['phpgw_info'] =
@@ -266,12 +267,6 @@ function fail_exit($msg){
   $GLOBALS['egw']->common->egw_exit();
 }
 
-/* dummy fail_exit */
-function fail_exit($msg){
-  // log the error in the http server error logging files
-  error_log($msg);
-  return;
-}
 
 
 
