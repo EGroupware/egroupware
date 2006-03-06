@@ -72,7 +72,7 @@ responsible:	resources	es-es	Responsable:
 saves entry and exits	resources	es-es	Guarda la entra y sale
 select a category	resources	es-es	Seleccionar una categoría
 select resource	resources	es-es	seleccionar recurso
-select resources	resources	es-es	Seleccionar recursos
+select resources	common	es-es	Seleccionar recursos
 select/deselect all	resources	es-es	seleccionar/deseleccionar todo
 short description	resources	es-es	Descripción corta
 short description of resource	resources	es-es	Descripción corta del recurso
@@ -96,6 +96,7 @@ web-site for this resource	resources	es-es	Sitio web para este recurso
 where to find this resource?	resources	es-es	¿Dónde encontrar este recurso?
 which category does this resource belong to?	resources	es-es	¿A qué categoría pertenece este recurso?
 write permissions	resources	es-es	Permiso de escritura
+you are not permitted to delete this reource!	resources	es-es	¡No le está permitido borrar este recurso!
 you are not permitted to edit this reource!	resources	es-es	¡No le está permitido editar este recurso!
 you are not permitted to get information about this resource!	resources	es-es	¡No le está permitido obtener información sobre este recurso!
 you chose more resources than available	resources	es-es	Ha elegido más recursos de los disponibles

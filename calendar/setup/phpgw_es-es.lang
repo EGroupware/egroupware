@@ -5,6 +5,7 @@
 a non blocking event will not conflict with other events	calendar	es-es	Un evento que no bloquea no entrará en conflicto con otros eventos
 accept or reject an invitation	calendar	es-es	Aceptar o rechazar una invitación
 accepted	calendar	es-es	Aceptado
+access denied to the calendar of %1 !!!	calendar	es-es	¡Acceso denegado al calendario de %1!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	es-es	Acción que causó la notificación: Añadido, Cancelado, Aceptado, Rechazado, ...
 actions	calendar	es-es	Acciones
 add alarm	calendar	es-es	Añadir alarma
@@ -33,6 +34,7 @@ busy	calendar	es-es	ocupado
 by	calendar	es-es	por
 calendar event	calendar	es-es	Evento de calendario
 calendar holiday management	admin	es-es	Gestión de días festivos
+calendar menu	calendar	es-es	Menú de calendario
 calendar preferences	calendar	es-es	Preferencias - Calendario
 calendar settings	admin	es-es	Preferencias de calendario
 calendar-fieldname	calendar	es-es	Calendario - Nombre de campo
@@ -69,6 +71,7 @@ delete this exception	calendar	es-es	Borrar esta excepción
 delete this series of recuring events	calendar	es-es	Borrar esta serie de eventos recurrentes
 disinvited	calendar	es-es	Ya no está invitado
 display status of events	calendar	es-es	Mostrar estado de los eventos
+displayed view	calendar	es-es	vista mostrada
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	es-es	¿Mostrar la vista predeterminada en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio)?
 do you want a weekview with or without weekend?	calendar	es-es	¿Desea una vista de la semana con o sin fin de semana?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	es-es	¿Desea que se le notifiquen citas nuevas o modificadas? Se le notificará de los cambios que haga usted mismo.<br>Puede limitar las notificaciones para sólo ciertos cambios. Cada elemento incluye toda la notificación listada encima. Todas las modificaciones incluyen cambios de título, participantes, pero no las respuestas de los participantes. Si el dueño de un evento solicitó alguna notificación, siempre obtendrá las respuestas de aceptación o rechazo del participante.
@@ -123,6 +126,7 @@ global public and group public	calendar	es-es	Público Global y grupo público
 global public only	calendar	es-es	Público global sólo
 group planner	calendar	es-es	Planificación de grupo
 group public only	calendar	es-es	Grupo público solamente
+groupmember(s) %1 not included, because you have no access.	calendar	es-es	Los miembros del grupo %1 no están incluidos, porque no tiene acceso.
 here is your requested alarm.	calendar	es-es	Aquí está la alama solicitada
 high priority	calendar	es-es	prioridad alta
 holiday	calendar	es-es	Festivo
@@ -234,7 +238,6 @@ set new events to private	calendar	es-es	Poner los eventos nuevos como privados
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	es-es	¿Mostrar las invitaciones rechazadas por usted en el calendario?<br>Puede aceptarlas después (por ejemplo, cuando elimine el conflicto de calendario), si todavía se ven en su calendario.
 should new events created as private by default ?	calendar	es-es	¿Crear nuevos eventos como privados?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	es-es	¿Deben ver las personas que no inicien sesión la información de ocupación? Se puede poner una contraseña extra, distinta a la normal, para proteger esta información. La información de ocupación está en formato iCal y sólo incluye las horas en las que está ocupado. No incluye el nombre del evento, descripción o sitios. La URL para su información de ocupación es %1.
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is <a href="https://egw.omgs.net/calendar/freebusy.php?user=oscar&password=" target="_blank">https://egw.omgs.net/calendar/freebusy.php?user=oscar&password=</a>.*	calendar	es-es	¿Pueden ver las personas anónimas su información de tiempo sin ocupar? Puede poner una contraseña extra, distinta de la normal, para proteger esta información. La información de tiempo sin ocupar está en formato iCal y sólo incluye las horas en que usted se encuentra ocupado. No incluye el nombre del evento, descripción ni ubicaciones. La URL para acceder a su información de tiempo sin ocupar es <a href="https://" target="_blank">https://servidor/calendar/freebusy.php?user=<usuario>&password=</a>
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	es-es	¿Mostrar el estado de cada evento (aceptar, rechazar, etc) entre corchetes detrás del nombre de cada participante?
 show default view on main screen	calendar	es-es	Mostrar la vista predeterminada en la pantalla principal
 show invitations you rejected	calendar	es-es	Mostar invitaciones rechazadas por usted
