@@ -491,38 +491,64 @@ class ui_resources
 	 * get data für calendar sidebox
 	 *
 	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
+	 * @param array $param with keys menuaction, owner and optional date
 	 * @return array with: label=>link or array with text
 	 */
-	function get_calendar_sidebox($view_menuaction, $date='')
+	function get_calendar_sidebox($param)
 	{
-		$selectbox_content = array(lang('Select resources'));
 		$cats = $this->bo->acl->get_cats(EGW_ACL_READ);
 		if (!$cats) return array();
 		
+		$owners = explode(',',$param['owner']);
+		unset($param['owner']);
+		$res_cats = $selected = array();
+
 		// this gets the resource-ids of the cats and implodes them to the array-key of the selectbox,
 		// so it is possible to select all resources of a category
 		foreach($cats as $cat_id => $cat_name) 
 		{
 			if ($resources = $this->bo->so->search(array('cat_id' => $cat_id, 'bookable' => '1'),'res_id'))
 			{
-				$key = "";
+				$keys = array();
 				foreach($resources as $res)
 				{
-					$key .= ($key == "")?'r'.$res['res_id']:',r'.$res['res_id'];
+					$keys[] = 'r'.$res['res_id'];
 				}
-				$selectbox_content[$key] = $cat_name;
+				$res_cats[implode(',',$keys)] = $cat_name;
+				
+				if (count(array_intersect($keys,$owners)) == count($keys))
+				{
+					$selected[] = implode(',',$keys);
+					$owners = array_diff($owners,$keys);
+				}
 			}
 		}
-		$link_array = array('menuaction' => $view_menuaction);
-		if($date != '') $link_array['date'] = $date;
+		// add already selected single resources to the selectbox, eg. call of the resource-calendar from the resources app
+		$resources = array('r0' => lang('none'));
+		$res_ids = array();
+		foreach($owners as $key => $owner)
+		{
+			if ($owner{0} == 'r')
+			{
+				$res_ids[] = (int) substr($owner,1);
+				$selected[] = $owner;
+			}
+		}
+		if (count($res_ids))
+		{
+			foreach($this->bo->so->search(array('res_id' => $res_ids),'res_id,name') as $data)
+			{
+				$resources['r'.$data['res_id']] = $data['name'];
+			}
+		}		
 		$selectbox = $this->html->select(
 			'owner',
-			$_GET['owner'],
-			$selectbox_content,
+			$selected,
+			array_merge($resources,$res_cats),
 			$no_lang=true,
 			$options='style="width: 165px;" onchange="load_cal(\''.
-				$GLOBALS['egw']->link('/index.php',$link_array).'\',\'uical_select_resource\');" id="uical_select_resource"',
-			$multiple=0
+				$GLOBALS['egw']->link('/index.php',$param).'\',\'uical_select_resource\');" id="uical_select_resource"',
+			$multiple=count($selected) ? 4 : 0
 		);
 		return array(
 			array(
