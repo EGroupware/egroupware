@@ -62,7 +62,6 @@
 			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$arg0.' is not valid. class- or function-name must start with ajax!!!');
 			exit;
 		}
-		
 		$GLOBALS['egw_info'] = array(
 			'flags' => array(
 				'currentapp'			=> $appName,
