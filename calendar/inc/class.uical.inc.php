@@ -80,10 +80,6 @@ class uical
 	 */
 	var $owner;
 	/**
-	 * @var boolean $multiple session-state: true multiple owners selected, false single user/group
-	 */
-	var $multiple;
-	/**
 	 * @var string $sortby session-state: filter of planner: 'category' or 'user'
 	 */
 	var $sortby;
@@ -234,7 +230,6 @@ class uical
 		{
 			$set_states = $_REQUEST;
 		}
-
 		if (!$states['date'] && $states['year'] && $states['month'] && $states['day'])
 		{
 			$states['date'] = $this->bo->date2string($states);
@@ -248,12 +243,30 @@ class uical
 			'save_owner' => 0,
 			'sortby'     => 'category',
 			'planner_days'=> 0,	// full month
-			'multiple'   => 0,
 			'view'       => $this->bo->cal_prefs['defaultcalendar'],
 		) as $state => $default)
 		{
 			if (isset($set_states[$state]))
 			{
+				if ($state == 'owner')
+				{
+					// only change the owners of the same resource-type as given in set_state[owner]
+					$res_type = is_numeric($set_states['owner']{0}) ? false : $set_states['owner']{0};
+					$owners = explode(',',$states['owner'] ? $states['owner'] : $default);
+					foreach($owners as $key => $owner)
+					{
+						if (!$res_type && is_numeric($owner) || $res_type && $owner{0} == $res_type)
+						{
+							unset($owners[$key]);
+						}
+					}
+					$set_owners = explode(',',$set_states['owner']);
+					if (!$res_type || !in_array($res_type.'0',$set_owners))
+					{
+						$owners = array_merge($owners,$set_owners);
+					}
+					$set_states['owner'] = implode(',',$owners);
+				}
 				$states[$state] = $set_states[$state];
 			}
 			elseif (!is_array($states) || !isset($states[$state]))
@@ -309,8 +322,6 @@ class uical
 		}
 		$this->view_menuaction = $this->view == 'listview' ? 'calendar.uilist.listview' : 'calendar.uiviews.'.$this->view;
 
-		$states['multiple'] = $this->multiple = $_GET['multiple'] || count(explode(',',$this->owner)) > 1;
-
 		if ($this->debug > 0 || $this->debug == 'menage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
 		// save the states in the session
 		$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
@@ -337,9 +348,29 @@ class uical
 			{
 				$icons[] = $this->html->image('calendar','recur',lang('recurring event'));
 			}
-			list($first_part) = each($event['participants']);
-			$icons[] = $this->html->image('calendar',count($event['participants']) > 1 || 
-				$GLOBALS['egw']->accounts->get_type($first_part) == 'g' ? 'users' : 'single');
+			// icons for single user, multiple users or group(s) and resources
+			foreach($event['participants'] as  $uid => $status)
+			{
+				if(is_numeric($uid))
+				{
+					if (isset($icons['single']) || $GLOBALS['egw']->accounts->get_type($uid) == 'g')
+					{
+						unset($icons['single']);
+						$icons['multiple'] = $this->html->image('calendar','users');
+					}
+					elseif (!isset($icons['multiple']))
+					{
+						$icons['single'] = $this->html->image('calendar','single');
+					}
+				}					
+				elseif(!isset($icons[$uid{0}]) && isset($this->bo->resources[$uid{0}]) && isset($this->bo->resources[$uid{0}]['icon']))
+				{
+				 	$icons[$uid{0}] = $this->html->image($this->bo->resources[$uid{0}]['app'],
+				 		($this->bo->resources[$uid{0}]['icon'] ? $this->bo->resources[$uid{0}]['icon'] : 'navbar'),
+				 		lang($this->bo->resources[$uid{0}]['app']),
+				 		'width="16px" height="16px"');
+				}
+			}
 		}
 		if($event['public'] == 0)
 		{
@@ -348,18 +379,6 @@ class uical
 		if(isset($event['alarm']) && count($event['alarm']) >= 1 && !$is_private)
 		{
 			$icons[] = $this->html->image('calendar','alarm',lang('alarm'));
-		}
-		foreach($event['participants'] as  $participant => $status)
-		{
-			if(is_numeric($participant)) continue;
-			if(isset($this->bo->resources[$participant{0}]) && isset($this->bo->resources[$participant{0}]['icon']) && !$seticon[$participant{0}])
-			{
-				$seticon[$participant{0}] = true;
-			 	$icons[] = $this->html->image($this->bo->resources[$participant{0}]['app'],
-			 		($this->bo->resources[$participant{0}]['icon'] ? $this->bo->resources[$participant{0}]['icon'] : 'navbar'),
-			 		lang($this->bo->resources[$participant{0}]['app']),
-			 		'width="16px" height="16px"');
-			}
 		}
 		return $icons;
 	}
@@ -616,8 +635,8 @@ function load_cal(url,id) {
 }
 </script>
 ".
-				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',$this->multiple ? 4 : 1,False,
-					' style="width: '.($this->multiple && $this->common_prefs['account_selection']=='selectbox' ? 185 : 165).'px;"'.
+				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
+					' style="width: '.(count($accounts) > 1 && $this->common_prefs['account_selection']=='selectbox' ? 185 : 165).'px;"'.
 					' title="'.lang('select a %1',lang('user')).'" onchange="load_cal(\''.
 					$GLOBALS['egw']->link('/index.php',array(
 						'menuaction' => $this->view_menuaction,
@@ -678,7 +697,10 @@ function load_cal(url,id) {
 		{
 			if(!is_array($resource['cal_sidebox'])) continue;
 			$menu_title = $resource['cal_sidebox']['menu_title'] ? $resource['cal_sidebox']['menu_title'] : lang($resource['app']);
-			$file = ExecMethod($resource['cal_sidebox']['file'], $this->view_menuaction, $this->date);
+			$file = ExecMethod($resource['cal_sidebox']['file'],array(
+				'menuaction' => $this->view_menuaction,
+				'owner' => $this->owner,
+			));
 			display_sidebox($appname,$menu_title,$file);
 		}
 
