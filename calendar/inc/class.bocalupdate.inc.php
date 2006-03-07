@@ -389,6 +389,7 @@ class bocalupdate extends bocal
 	 * @param array $old_event Event before the change
 	 * @param array $new_event=null Event after the change
 	 * @param int $user=0 User who started the notify, default current user
+	 * @return  mixed returncode from send-class or false on error
 	 */
 	function send_update($msg_type,$to_notify,$old_event,$new_event=null,$user=0)
 	{
@@ -609,12 +610,19 @@ class bocalupdate extends bocal
 		return explode("\n",$GLOBALS['egw']->preferences->parse_notify($notify_msg,$details),2);
 	}
 
+	/**
+	 * Function called via async service, when an alarm is to be send
+	 *
+	 * @param array $alarm array with keys owner, cal_id, all
+	 * @return boolean 
+	 */
 	function send_alarm($alarm)
 	{
 		//echo "<p>bocalendar::send_alarm("; print_r($alarm); echo ")</p>\n";
 		$GLOBALS['egw_info']['user']['account_id'] = $this->owner = $alarm['owner'];
 
-		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'])))
+		$event_time_user = $alarm['time'] + $alarm['offset'] + $this->tz_offset_s;	// alarm[time] is in server-time, read requires user-time
+		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'],$event_time_user)))
 		{
 			return False;	// event not found
 		}
@@ -630,7 +638,16 @@ class bocalupdate extends bocal
 		{
 			return False;	// no rights
 		}
-		return $this->send_update(MSG_ALARM,$to_notify,$event,False,$alarm['owner']);
+		$ret = $this->send_update(MSG_ALARM,$to_notify,$event,False,$alarm['owner']);
+
+		// create a new alarm for recuring events for the next event, if one exists
+		if ($event['recur_type'] && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))
+		{
+			$alarm['time'] = $this->date2ts($event['start']) - $alarm['offset'];
+
+			$this->save_alarm($alarm['cal_id'],$alarm);
+		}
+		return $ret;
 	}
 
 	/**
@@ -949,7 +966,7 @@ class bocalupdate extends bocal
 	{
 		if (!$cal_id || !$this->check_perms(EGW_ACL_EDIT,$alarm['all'] ? $cal_id : 0,!$alarm['all'] ? $alarm['owner'] : 0))
 		{
-			//$this->debug='check_perms'; echo "<p>no rights to save the alarm=".print_r($alarm,true)." to event($cal_id)</p>";
+			//echo "<p>no rights to save the alarm=".print_r($alarm,true)." to event($cal_id)</p>";
 			return false;	// no rights to add the alarm
 		}
 		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
