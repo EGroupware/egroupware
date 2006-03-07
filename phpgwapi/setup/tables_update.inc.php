@@ -68,7 +68,7 @@
 	}
 
 	$test[] = '1.2.105';
-	function phpgwapi_upgrade1_2_104()
+	function phpgwapi_upgrade1_2_105()
 	{
 		// 5. 1.2 bugfix-release
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
