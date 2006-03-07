@@ -64,16 +64,17 @@
 
 /* contains (multiple) dayCol's
  */
-.calDayCols{
+.calDayCols,.calDayCols12h{
 	position: absolute;
 	top: 0px;
 	height: 100%;
-	left: 50px;
+	left: 45px;
 	right: 0px;
-/* set via inline style on runtime:
- *  left:  width(calTimeRowTime)
- *  width: 100% - width(calTimeRowTime)
+}
+/* 12h timeformat with am/pm
  */
+.calDayCols12h{
+	left: 65px;
 }
 
 /* contains (multiple) eventCol's

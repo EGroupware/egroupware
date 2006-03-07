@@ -608,7 +608,7 @@ class uiviews extends uical
 		}
 		$html = $indent.'<div class="calTimeGrid" style="height: '.$height.'px;">'."\n";
 
-		$html .= $indent."\t".'<div class="calGridHeader row_on" style="width: 47px; height: '.
+		$html .= $indent."\t".'<div class="calGridHeader" style="height: '.
 			$this->rowHeight.'%;">'.$title."</div>\n";
 
 		$off = false;	// Off-row means a different bgcolor
@@ -641,7 +641,8 @@ class uiviews extends uical
 			// why do we use a div in a div which has the same height and width???
 			// To make IE6 happy!!! Whithout the second div you can't use 
 			// style="left: 50px; right: 0px;"
-			$html .= $indent."\t".'<div id="calDayCols" class="calDayCols"><div style="width=100%; height: 100%;">'."\n";
+			$html .= $indent."\t".'<div id="calDayCols" class="calDayCols'.($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '').
+				'"><div style="width=100%; height: 100%;">'."\n";
 			$dayCol_width = $dayCols_width / count($daysEvents);
 			$n = 0;
 			foreach($daysEvents as $day => $events)
