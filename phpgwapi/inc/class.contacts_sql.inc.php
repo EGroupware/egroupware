@@ -31,6 +31,9 @@
 	* Syntax: CreateObject('phpgwapi.contacts');
 	* Example1: $contacts = CreateObject('phpgwapi.contacts');
 	*
+	* The contacts class now uses user-time in all param- and return-values.
+	* The time stored in the DB is in server-time, as in all other eGW apps.
+	*
 	* Last Editor: $Author$
 	* @class contacts_
 	* @abstract Contact Management System
@@ -46,6 +49,12 @@
 		var $db = '';
 		var $std_table='egw_addressbook';
 		var $ext_table='egw_addressbook_extra';
+
+		/**
+		 * @var int $tz_offset_s offset in secconds between user and server-time,
+		 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
+		 */
+		var $tz_offset_s;
 
 		var $account_id = 0;
 		var $total_records = 0;
@@ -167,6 +176,11 @@
 				'parcel' => lang('Parcel'),
 				'postal' => lang('Postal')
 			);
+			if (!is_object($GLOBALS['egw']->datetime))
+			{
+				$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
+			}
+			$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
 		}
 
 		/* send this the id and whatever fields you want to see */
@@ -402,18 +416,15 @@
 				echo "<br>DEBUG - $ordermethod";
 			}
 
-			if($lastmod >= 0 && $fwhere)
+			if($lastmod >= 0)
 			{
-				$fwhere .= " AND last_mod > ".(int)$lastmod.' ';
-			}
-			elseif($lastmod >= 0)
-			{
-				$fwhere = " WHERE last_mod > ".(int)$lastmod.' ';
-			}
+				if (!$fwhere) $fwhere = ' WHERE ';
+				$fwhere .= " AND last_mod > ".(int)($lastmod - $this->tz_offset_s).' ';
 
-			if ($DEBUG && $last_mod_filter && $fwhere)
-			{
-				echo "<br>DEBUG - last_mod_filter added to fwhere: $fwhere";
+				if ($DEBUG)
+				{
+					echo "<br>DEBUG - last_mod_filter added to fwhere: $fwhere";
+				}
 			}
 
 			$filtermethod = '';
@@ -551,7 +562,7 @@
 				$return_fields[$i]['owner']    = $this->db->f('owner');
 				$return_fields[$i]['access']   = $this->db->f('access');
 				$return_fields[$i]['cat_id']   = $this->db->f('cat_id');
-				$return_fields[$i]['last_mod'] = $this->db->f('last_mod');
+				$return_fields[$i]['last_mod'] = $this->db->f('last_mod')+$this->tz_offset_s;
 				$return_fields[$i]['rights']   = (int)$this->grants[$this->db->f('owner')];
 
 				if(@is_array($stock_fieldnames))
@@ -599,7 +610,7 @@
 
 			//this is added here so it is never tainted
 			$this->stock_contact_fields['last_mod'] = 'last_mod';
-			$stock_fields['last_mod'] = $GLOBALS['egw']->datetime->gmtnow;
+			$stock_fields['last_mod'] = time();
 
 			$data = array(
 				'owner'		=> $owner,
@@ -608,6 +619,7 @@
 				'tid'		=> $fields['tid'],
 			);
 			if (isset($fields['lid'])) $data['lid'] = $fields['lid'];
+			
 
 			$this->db->insert($this->std_table,array_merge($data,$stock_fields),False,__LINE__,__FILE__);
 
@@ -682,7 +694,7 @@
 
 			if (count($stock_fields))
 			{
-				$stock_fields['last_mod'] = $GLOBALS['egw']->datetime->gmtnow;
+				$stock_fields['last_mod'] = time();
 				$this->db->update($this->std_table,$stock_fields,array('id'=>$id),__LINE__,__FILE__);
 			}
 			if (is_array($extra_fields))

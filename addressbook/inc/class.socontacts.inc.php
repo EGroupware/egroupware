@@ -77,6 +77,36 @@ class socontacts
 	}
 	
 	/**
+	 * changes the data from the db-format to your work-format
+	 *
+	 * it gets called everytime when data is read from the db
+	 * This function needs to be reimplemented in the derived class
+	 *
+	 * @param array $data 
+	 */
+	function db2data($data)
+	{
+		// do the necessare changes here
+
+		return $data;
+	}
+
+	/**
+	 * changes the data from your work-format to the db-format
+	 *
+	 * It gets called everytime when data gets writen into db or on keys for db-searches
+	 * this needs to be reimplemented in the derived class
+	 *
+	 * @param array $data
+	 */
+	function data2db($data)
+	{
+		// do the necessary changes here
+
+		return $data;
+	}
+
+	/**
 	* deletes contact entry including custom fields
 	*
 	* @param array &$contact contact data from etemplate::exec
@@ -102,7 +132,7 @@ class socontacts
 	function save(&$contact)
 	{
 		// save mainfields
-		$this->somain->data = $contact;
+		$this->somain->data = $this->data2db($contact);
 		$error_nr = $this->somain->save();
 		$contact['id'] = $this->somain->data['id'];
 		if($error_nr) return $error_nr_main;
@@ -133,7 +163,10 @@ class socontacts
 	function read($contact_id)
 	{
 		// read main data
-		$contact = $this->somain->read($contact_id);
+		if (!($contact = $this->somain->read($contact_id)))
+		{
+			return $contact;
+		}
 		
 		// read customfilds
 		$keys = array(
@@ -145,7 +178,7 @@ class socontacts
 		{
 			$contact['#'.$field[$this->extra_key]] = $field[$this->extra_value];
 		}
-		return $contact;
+		return $this->db2data($contact);
 	}
 	
 	/**
@@ -333,6 +366,10 @@ class socontacts
 					}
 				}
 			}
+		}
+		foreach($result as $num => $contact)
+		{
+			$result[$num] = $this->db2data($contact);
 		}
 		return $need_full_no_count ? count($result) : $result;
 	}

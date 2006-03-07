@@ -34,11 +34,30 @@ class bocontacts extends socontacts
 	*/
 	var $user;
 	
+	/**
+	 * @var int $tz_offset_s offset in secconds between user and server-time,
+	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
+	 */
+	var $tz_offset_s;
+
+	/**
+	 * @var int $now_su actual user (!) time
+	 */
+	var $now_su;
+	
+	/**
+	 * @var array $timestamps timestamps
+	 */
+	var $timestamps = array('last_mod');
+	
 	function bocontacts($contact_app='addressbook')
 	{
 		$this->socontacts($contact_app);
 		$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app);
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
+		$this->tz_offset_s = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+		$this->now_su = time() + $this->tz_offset_s;
+
 /*		foreach(array(
 			'so'    => $appname. 'soadb',
 		) as $my => $app_class)
@@ -54,6 +73,48 @@ class bocontacts extends socontacts
 		
 	}
 	
+	/**
+	 * changes the data from the db-format to your work-format
+	 *
+	 * it gets called everytime when data is read from the db
+	 * This function needs to be reimplemented in the derived class
+	 *
+	 * @param array $data 
+	 */
+	function db2data($data)
+	{
+		// convert timestamps from server-time in the db to user-time
+		foreach($this->timestamps as $name)
+		{
+			if(isset($data[$name]))
+			{
+				$data[$name] += $this->tz_offset_s;
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * changes the data from your work-format to the db-format
+	 *
+	 * It gets called everytime when data gets writen into db or on keys for db-searches
+	 * this needs to be reimplemented in the derived class
+	 *
+	 * @param array $data
+	 */
+	function data2db($data)
+	{
+		// convert timestamps from user-time to server-time in the db
+		foreach($this->timestamps as $name)
+		{
+			if(isset($data[$name]))
+			{
+				$data[$name] -= $this->tz_offset_s;
+			}
+		}
+		return $data;
+	}
+
 	/**
 	* deletes contact in db
 	*
@@ -133,7 +194,7 @@ class bocontacts extends socontacts
 		// convert categories
 		$contact['cat_id'] = $contact['cat_id'] ? implode(',',$contact['cat_id']) : '';
 		// last modified
-		$contact['last_mod'] = time();
+		$contact['last_mod'] = $this->now_su;
 		// only owner can set access status
 		$contact['access'] = $contact['owner'] == $this->user ? ($contact['private'] ? 'private': 'public') : $contact['access'];
 		// create fullname
