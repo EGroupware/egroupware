@@ -82,6 +82,7 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	etemplate	en	CSS-styles
 custom	etemplate	en	custom
 custom fields	etemplate	en	custom fields
+custom javascript for onchange	etemplate	en	custom javascript for onChange
 cut	etemplate	en	Cut
 date+time	etemplate	en	Date+Time
 datum	etemplate	en	Datum
@@ -242,6 +243,7 @@ nothing matched search criteria !!!	etemplate	en	Nothing matched search criteria
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	en	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	en	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	en	of
+onchange	etemplate	en	onChange
 onclick	etemplate	en	onClick
 only an other version found !!!	etemplate	en	only an other Version found !!!
 open the online help.	etemplate	en	Open the online help.
@@ -307,6 +309,7 @@ select which values to show	etemplate	en	select which values to show
 select year	etemplate	en	Select Year
 selectbox	etemplate	en	Selectbox
 sets today as date	etemplate	en	sets today as date
+should the form be submitted or any custom javascript be executed	etemplate	en	Should the form be submitted or any custom javascript be executed
 show	etemplate	en	Show
 show (no save)	etemplate	en	Show (no save)
 show values	etemplate	en	Show Values
@@ -319,6 +322,7 @@ span, class	etemplate	en	Span, Class
 stack	etemplate	en	Stack
 start a new search, cancel this link	etemplate	en	start a new search, cancel this link
 start new search for the above pattern	etemplate	en	start new search for the above pattern
+submit form	etemplate	en	submit form
 submitbutton	etemplate	en	Submitbutton
 swap	etemplate	en	swap
 swap widget with next one	etemplate	en	swap widget with next one

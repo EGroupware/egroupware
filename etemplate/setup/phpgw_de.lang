@@ -82,6 +82,7 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	etemplate	de	CSS Stile
 custom	etemplate	de	Benutzerdefiniert
 custom fields	etemplate	de	Benutzerdefinierte Felder
+custom javascript for onchange	etemplate	de	Benutzerdefiniertes Javascript für onChange
 cut	etemplate	de	Ausschneiden
 date+time	etemplate	de	Datum+Uhrzeit
 datum	etemplate	de	Datum
@@ -242,6 +243,7 @@ nothing matched search criteria !!!	etemplate	de	Nicht gefunden bei diesem Suchk
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	de	Anzahl der Spalten die ein Feld überspannt oder 'all' für die übrigen Spalten, CSS class Name (für das TD-tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	de	Anzahl Zeilen/Spalten der V/HBox, Innenabstand (Cellpadding), Zellenabstand (Cellspacing)
 of	etemplate	de	von
+onchange	etemplate	de	onChange
 onclick	etemplate	de	onClick
 only an other version found !!!	etemplate	de	nur eine andere Version gefunden !!!
 open the online help.	etemplate	de	Öffnet die online Hilfe.
@@ -307,6 +309,7 @@ select which values to show	etemplate	de	auswählen welche Werte angezeigt werden
 select year	etemplate	de	Jahr auswählen
 selectbox	etemplate	de	Auswahlbox
 sets today as date	etemplate	de	setzt heutiges Datum
+should the form be submitted or any custom javascript be executed	etemplate	de	Soll das Formular abgeschickt werden oder beliebiges JavaScript ausgeführt werden
 show	etemplate	de	Anzeigen
 show (no save)	etemplate	de	Anzeigen (nicht speichern)
 show values	etemplate	de	Werte anzeigen
@@ -319,6 +322,7 @@ span, class	etemplate	de	Span, Class
 stack	etemplate	de	Stapel
 start a new search, cancel this link	etemplate	de	neue Suche Starten, diese Verknüpfung abbrechen
 start new search for the above pattern	etemplate	de	neue Suche für das obige Muster starten
+submit form	etemplate	de	Formular abschicken
 submitbutton	etemplate	de	Schaltfläche
 swap	etemplate	de	tauschen
 swap widget with next one	etemplate	de	tauscht das Widget mit dem nächsten

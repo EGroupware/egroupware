@@ -81,6 +81,11 @@
 			'popup'   => 'popup',
 			'custom'  => 'custom',
 		);
+		var $onchange_types = array(
+			''        => 'nothing',
+			'submit'  => 'submit form',
+			'custom'  => 'custom',
+		);
 		var $extensions = '';
 
 		var $public_functions = array
@@ -417,7 +422,7 @@
 					if ($app == 'etemplate')
 					{
 						$additional = $this->etemplate->types + $this->extensions + $this->aligns + $this->valigns +
-							$this->edit_menu + $this->box_menu + $this->row_menu + $this->column_menu + $this->onclick_types;
+							$this->edit_menu + $this->box_menu + $this->row_menu + $this->column_menu + $this->onclick_types + $this->onchange_types;
 					}
 					else	// try to call the writeLangFile function of the app's ui-layer
 					{
@@ -435,7 +440,7 @@
 						}
 						unset($ui);
 					}
-					if (empty($msg))
+					//if (empty($msg))
 					{
 						$msg = $this->etemplate->writeLangFile($app,'en',$additional);
 					}
@@ -1068,6 +1073,46 @@
 		}
 
 		/**
+		 * converts onchange selectbox and onchange text to one javascript call
+		 *
+		 * @param array &$widget reference into the widget-tree
+		 * @param array &$cell_content cell array in content
+		 * @param boolean $widget2content=true copy from widget to content or other direction
+		 */
+		function fix_set_onchange(&$widget,&$cell_content,$widget2content=true)
+		{
+			if ($widget2content)
+			{
+				if (!$widget['onchange'])
+				{
+					$cell_content['onchange_type'] = $cell_content['onchange'] = '';
+				}
+				elseif ($widget['onchange'] == 1 || $widget['onchange'] == 'this.form.submit();')
+				{
+					$cell_content['onchange'] = '';
+					$cell_content['onchange_type'] = 'submit';
+				}
+				else
+				{
+					$cell_content['onchange_type'] = 'custom';
+				}
+			}
+			else	// content --> widget
+			{
+				if ($cell_content['onchange_type'] == 'submit' || $cell_content['onchange'] == 'this.form.submit();')
+				{
+					$widget['onchange'] = 1;
+				}
+				elseif(!$cell_content['onchange'])
+				{
+					$widget['onchange'] = 0;
+				}
+				unset($widget['onchange_type']);
+			}
+			//echo "<p>editor::fix_set_onchange(,,widget2content=".(int)$widget2content.") widget="; _debug_array($widget); echo "content="; _debug_array($cell_content);
+		}
+
+		/**
 		 * edit dialog for a widget
 		 *
 		 * @param array $content the submitted content of the etemplate::exec function, default null
@@ -1159,6 +1204,7 @@
 					case 'goto2':
 						$content['cell'] = $widget;
 						$this->fix_set_onclick($widget,$content['cell'],true);
+						$this->fix_set_onchange($widget,$content['cell'],true);
 						break;
 
 					case '':
@@ -1175,6 +1221,10 @@
 						if ($content['cell']['onclick_type'] || $content['cell']['onclick'])
 						{
 							$this->fix_set_onclick($widget,$content['cell'],false);
+						}
+						if ($content['cell']['onchange_type'] || $content['cell']['onchange'])
+						{
+							$this->fix_set_onchange($widget,$content['cell'],false);
 						}
 						// row- and column-attr for a grid
 						if ($parent['type'] == 'grid' && preg_match('/^([0-9]+)([A-Z]+)$/',$child_id,$matches))
@@ -1225,6 +1275,7 @@
 				$content = $this->etemplate->as_array(-1);
 				$content['cell'] = $widget;
 				$this->fix_set_onclick($widget,$content['cell'],true);
+				$this->fix_set_onchange($widget,$content['cell'],true);
 				
 				foreach($this->etemplate->db_key_cols as $var)
 				{
@@ -1295,6 +1346,7 @@
 					'row_menu'   => &$this->row_menu,
 					'column_menu'=> &$this->column_menu,
 					'onclick_type'=>&$this->onclick_types,
+					'onchange_type'=>&$this->onchange_types,
 					'options[6]' => &$this->overflows,
 				),'',$preserv,2);
 		}
