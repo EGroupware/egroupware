@@ -422,14 +422,22 @@ class socal
 			// alarms, atm. we read all alarms in the system, as this can be done in a single query
 			foreach((array)$this->async->read('cal'.(is_array($ids) ? '' : ':'.(int)$ids).':%') as $id => $job)
 			{
-				list(,$cal_id) = explode(':',$cal_id);
-				if (!isset($events[$cal_id])) continue;	// not needed
+				list(,$cal_id) = explode(':',$id);
 				
 				$alarm         = $job['data'];	// text, enabled
 				$alarm['id']   = $id;
 				$alarm['time'] = $job['next'];
+				
+				$event_start = $alarm['time'] + $alarm['offset'];
 	
-				$events[$cal_id]['alarm'][$id] = $alarm;
+				if (isset($events[$cal_id]))	// none recuring event
+				{
+					$events[$cal_id]['alarm'][$id] = $alarm;
+				}
+				elseif (isset($events[$cal_id.'-'.$event_start]))	// recuring event
+				{
+					$events[$cal_id.'-'.$event_start]['alarm'][$id] = $alarm;
+				}	
 			}
 		}
 		//echo "<p>socal::search\n"; _debug_array($events);
