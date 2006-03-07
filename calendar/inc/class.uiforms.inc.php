@@ -187,7 +187,11 @@ class uiforms extends uical
 		unset($event['new_alarm']);
 		unset($event['alarm']['delete_alarm']);
 
-		if (isset($content['participants']) && !(isset($content['view']) && $content['view']))	// convert content => event
+		if (in_array($button,array('ignore','freetime','reedit')))	// called from conflict display
+		{
+			// no conversation necessary, event is already in the right format
+		}
+		elseif (isset($content['participants']) && !(isset($content['view']) && $content['view']))	// convert content => event
 		{
 			//echo "participants="; _debug_array($content['participants']);
 			$event['participants'] = $event['participant_types'] = array();
