@@ -39,7 +39,6 @@ application name	admin	eu	Aplikazioaren izena
 application title	admin	eu	Aplikazioaren izenburua
 applications	admin	eu	Aplikazioak
 applications list	admin	eu	Aplikazioen zerrenda
-apply	admin	eu	aplikatu
 are you sure you want to delete the application %1 ?	admin	eu	Ziur zaude %1 aplikazioa ezbatu nahi duzula?
 are you sure you want to delete this account ?	admin	eu	Ziur zaude kontu hau ezabatu nahi duzula?
 are you sure you want to delete this application ?	admin	eu	Ziur zaude aplikazio hau ezabatu nahi duzula?
@@ -150,3 +149,174 @@ home directory	admin	eu	Direktorio pertsonala
 host information	admin	eu	Ostalariaren informazioa
 hour<br>(0-23)	admin	eu	Ordua<br>(0-23)
 icon	admin	eu	Ikonoa
+idle	admin	eu	Inaktibo
+in mbyte	admin	eu	MByte-sen
+inbound	admin	eu	sartzen direnak
+install crontab	admin	eu	Crontab instalatu
+installed applications	common	eu	Aplikazioak instalatuta
+installed crontab	admin	eu	Crontab instalatuta
+interface	admin	eu	Interfaze
+ip	admin	eu	IP
+jobs	admin	eu	Lanak
+last %1 logins	admin	eu	Azken %1 saio hasierak
+last %1 logins for %2	admin	eu	Azken %1 saio hasierak %2tik
+last login	admin	eu	azken saio hasiera
+last time read	admin	eu	Azken irakurketa
+ldap accounts context	admin	eu	LDAP kontuen testuingurua
+ldap encryption type	admin	eu	LDAP zifratu mota
+ldap groups context	admin	eu	LDAP taldeen testuingurua
+ldap host	admin	eu	LDAP zerbitzaria
+ldap root password	admin	eu	LDAP supererabiltzaile pasahitza
+ldap rootdn	admin	eu	LDAP rootdn
+leave empty for no quota	admin	eu	zurian utzi kuotarik ez badago
+leave the category untouched and return back to the list	admin	eu	kategoria dagoen moduan utzi eta zerrendara itzuli
+leave the group untouched and return back to the list	admin	eu	Taldea dagoen moduan utzi eta zerrendara itzuli
+leaves without saveing	admin	eu	gorde gabe irten
+list config settings	admin	eu	Konfigurazio aukeren zerrenda
+list current sessions	admin	eu	Momentuko saioen zerrenda
+list of current users	admin	eu	momentuko erabiltzaileen zerrenda
+login history	common	eu	Sarreren historia
+login message	admin	eu	Saio hasierako mezua
+login screen	admin	eu	Saio hasierako pantalla
+login shell	admin	eu	Saio hasierako shell-a
+login time	admin	eu	Saio hasierarako sarrera ordua
+mail settings	admin	eu	Posta elektronikoaren konfigurazioa
+main email-address	admin	eu	Helbide elektroniko nagusia
+main screen message	admin	eu	Pantaila nagusiko mezua
+manager	admin	eu	Administratzailea
+maximum entries in click path history	admin	eu	Historian egon daitezkeen sarrera kopuru maximoa
+message has been updated	admin	eu	mezua eguneratua izan da
+method	admin	eu	Metodoa
+minute	admin	eu	Minutua
+mode	admin	eu	Modua
+month	admin	eu	Hilabetea
+name must not be empty !!!	admin	eu	Izena ez da hutsik utzi behar!
+new group name	admin	eu	Talde izen berria
+new name	admin	eu	izen berria
+new password [ leave blank for no change ]	admin	eu	Pasahitz berria [utzi zurian ez aldatzeko]
+next run	admin	eu	Hurrengo exekutaketa
+no algorithms available	admin	eu	ez dago algoritmorik eskuragarri
+no alternate email address	admin	eu	ez da ordezko helbide elektronikorik
+no jobs in the database !!!	admin	eu	Ez dago lanik datu basean
+no login history exists for this user	admin	eu	Ez dago sarrera erregistrorik erabiltzaile honentzeko
+no matches found	admin	eu	Ez dago emaitzik
+no modes available	admin	eu	ez dago modurik eskuragarri
+no permission to add groups	admin	eu	ez duzu baimenik taldeak gehitzeko
+no permission to add users	admin	eu	ez duzu baimenik erabiltzaileak gehitzeko
+no permission to create groups	admin	eu	ez duzu baimenik taldeak sortzeko
+order	admin	eu	Ordena
+outbound	admin	eu	irteerakoa
+password for smtp-authentication	admin	eu	SMTP-rako identifikazio pasahitza
+path information	admin	eu	Bideko informazioa
+peer server list	admin	eu	Peer zerbitzari zerrenda
+peer servers	admin	eu	Peer zerbitzaria
+percent of users that logged out	admin	eu	Saioa utzi duten erabiltzaile portzentajea
+percent this user has logged out	admin	eu	Erabiltzaile honek saioa utzi duen portzentajea
+permission denied	admin	eu	Baimena ukatuta
+permissions	admin	eu	Baimenak
+permissions this group has	admin	eu	Talde honek dituen baimenak
+phpinfo	admin	eu	PHP informazioa
+please enter a name	admin	eu	Mesedez sartu izen bat
+please enter a name for that server !	admin	eu	Mesedez sartu izen bat zerbitzari honi!
+please run setup to become current	admin	eu	Mesedez setup exekutatu eguneratzeko
+please select	admin	eu	Mesedez aukeratu
+postfix with ldap	admin	eu	Postfix-ak LDAP-arekin
+preferences	admin	eu	Hobespenak
+primary group	admin	eu	Talde nagusia
+quota settings	admin	eu	kuotaren konfigurazioa
+quota size in mbyte	admin	eu	kuotaren tamaina MBytes-etan
+re-enter password	admin	eu	Pasahitza baieztatu
+read this list of methods.	admin	eu	Metodo zerrenda hau irakurri
+register application hooks	admin	eu	Aplikazioaren hooks-ak erregistratu
+remove	admin	eu	ezabatu
+remove all users from this group	admin	eu	Talde honetako erabiltzaile guztiak ezabatu
+remove all users from this group ?	admin	eu	Talde honetako erabiltzaile guztiak ezabatu?
+return to admin mainscreen	admin	eu	administrazioko pantaila nagusira itzuli
+return to view account	admin	eu	Kontua berriz ere ikusi
+route all mails to	admin	eu	e-posta guztiak zuzendu
+run asynchronous services	admin	eu	Zerbitzu asinkromoak exekutatu
+save the category	admin	eu	kategoria gorde
+save the category and return back to the list	admin	eu	kategoria gorde eta zerrendara itzuli
+saves the changes made and leaves	admin	eu	aldaketak gorde eta irten
+search accounts	admin	eu	Kontuak bilatu
+search categories	admin	eu	Kategoriak bilatu
+search groups	admin	eu	Taldeak bilatu
+search peer servers	admin	eu	peer zerbitzariak bilatu
+security	admin	eu	Segurtasuna
+select group managers	admin	eu	Talde administratzaileak aukeratu
+select permissions this group will have	admin	eu	Talde honek izango dituen baimenak aukeratu
+selectbox	admin	eu	Aukeraketa kuadroa
+server %1 has been updated	admin	eu	%1 zerbitzaria eguenratua izan da
+server list	admin	eu	Zerbitzarien zerrenda
+server password	admin	eu	Zerbitzariko pasahitza
+server type(mode)	admin	eu	Zerbitzari mota
+server url	admin	eu	Zerbitzariaren URL-a
+server username	admin	eu	Zerbitzariko erabiltzailea
+set preference values.	admin	eu	Hobespenetarako balioak ezarri
+show access log	admin	eu	Sartzeko erregistroa erakutsi
+show current action	admin	eu	Momentuko ekintza erakutsi
+show error log	admin	eu	Erroreen erregistroa erakutsi
+show phpinfo()	admin	eu	phpinfo( ) erakutsi
+show session ip address	admin	eu	Saioaren IP helbidea erakutsi
+site	admin	eu	Lekua
+site configuration	common	eu	Lekuaren konfigurazioa
+soap	admin	eu	SOAP
+sorry, that group name has already been taken.	admin	eu	Talde izen hau hartuta dago
+sorry, the follow users are still a member of the group %1	admin	eu	Ondorengo erabiltzaileak oraindik %1 taldeko kideak dira
+sort the entries	admin	eu	sarrerak ordenatu
+ssl	admin	eu	ssl
+standard	admin	eu	estandar
+standard imap server	admin	eu	IMAP zerbitzari estandarra
+standard pop3 server	admin	eu	POP3 zerbitzari estandarra
+standard smtp-server	admin	eu	SMTP zerbitzari estandarra
+start testjob!	admin	eu	Froga lana hasi
+submit changes	admin	eu	Aldaketak bidali
+submit the search string	admin	eu	Bilaketa katea bidali
+subtype	admin	eu	Azpimota
+template selection	admin	eu	Pantaila aukeratu
+text entry	admin	eu	Testu sarrera
+that application name already exists.	admin	eu	Aplikazio izen hori existitzen da.
+that application order must be a number.	admin	eu	Aplikazioaren ordena zenbaki bat izan behar da.
+that loginid has already been taken	admin	eu	Erabiltzaile izen hori erabiltzen ari dira
+that name has been used already	admin	eu	Izen hori erabilia izan da
+that server name has been used already !	admin	eu	Zerbitzari izen hori erabilia izan da!
+the api is current	admin	eu	API-ak eguneratua dago
+the api requires an upgrade	admin	eu	API-ak eguneratzea behar du
+the groups must include the primary group	admin	eu	Taldeek talde nagusian sartu behar dira
+the login and password can not be the same	admin	eu	Erabiltzaile izena eta pasahitza ezin dira berdinak izan
+the loginid can not be more then 8 characters	admin	eu	Erabiltzaile izenak ezin ditu 8 karaktere baina gehiago izan
+the text displayed to the user	admin	eu	testua erabltzaileari erakutsita
+the two passwords are not the same	admin	eu	Bi pasahitzak ez dira berdinak
+they must be removed before you can continue	admin	eu	Ezabatuak izan behar dira jarraitu ahal izateko
+this application is current	admin	eu	Aplikazio hau eguneratua dago
+this application requires an upgrade	admin	eu	Aplikazio honek egunetzea behar du
+times	admin	eu	Orduak
+top	admin	eu	Gorenekoa
+total records	admin	eu	Erregistroak guztira
+trust level	admin	eu	Konfiantzako maila
+trust relationship	admin	eu	Konfiantzako erlazioa
+type of customfield	admin	eu	Eremu pertsanalizatu mota
+use cookies to pass sessionid	admin	eu	Cookiak erabili saioak gordetzeko
+use pure html compliant code (not fully working yet)	admin	eu	HTML kode garbia erabili (oraindik ez du guztiz funtzionatzen)
+use theme	admin	eu	Gaia erabili
+user accounts	admin	eu	Erabiltzaile kontuak
+user data	admin	eu	Erabiltzailearen datuak
+user groups	admin	eu	Erabiltzaile taldeak
+userdata	admin	eu	erabiltzaile datuak
+users choice	admin	eu	Erabiltzaileak aukeratzeko
+view access log	admin	eu	Sarrera erregistroa ikusi
+view account	admin	eu	Kontua ikusi
+view category	admin	eu	Kategoria ikusi
+view error log	admin	eu	Errore erregistroa ikusi
+view sessions	admin	eu	Saioak ikusi
+view this user	admin	eu	erabiltzaile hau ikusi
+view user account	admin	eu	erabiltzaile kontua ikusi
+xml-rpc	admin	eu	XML-RPC
+you must add at least 1 permission or group to this account	admin	eu	Gutxienez baimen bat edo talde bat eman behar diozu talde honi
+you must enter a group name.	admin	eu	Taldeari izen bat eman behar diozu.
+you must enter a lastname	admin	eu	Abizen bat sartu behar duzu
+you must enter a loginid	admin	eu	Erabiltzaile izen bat sartu behar duzu
+you must enter an application name and title.	admin	eu	Izen eta izenburu bat jarri behar diozu aplikazioari.
+you must enter an application name.	admin	eu	Aplikazioari izen bat eman behar diozu.
+you must enter an application title.	admin	eu	Aplikazioari izenburu bat jarri behar diozu.
+you must select a file type	admin	eu	Fitxategi mota bat aukeratu behar duzu

@@ -117,14 +117,29 @@ holiday	calendar	eu	Jaieguna
 holiday management	calendar	eu	Jaiegunen kudeaketa
 holidays	calendar	eu	Jaiegunak
 hours	calendar	eu	orduak
+how far to search (from startdate)	calendar	eu	zenbait bilatu (hasiera datatik)
+ical	calendar	eu	¡Cal
+ical / rfc2445	calendar	eu	¡Cal / rfc2445
+ical export	calendar	eu	¡Cal esportatu
+ical file	calendar	eu	¡Cal fitxategia
+ical import	calendar	eu	¡Cal inportatu
+ical successful imported	calendar	eu	¡Cal fitxategia arazorik gabe inportatu da
 ignore conflict	calendar	eu	Gatazka alde batera utzi
 import	calendar	eu	Inportatu
 import csv-file	calendar	eu	Inportatu CSV fitxategia
 interval	calendar	eu	Tartea
 intervals in day view	calendar	eu	Egunaren ikuspegiko tarteak
+invalid email-address "%1" for user %2	calendar	eu	%1 erabiltzailearen helbide elektronikoa ez da %2 erabiltzailearentzat baliogarria
 last	calendar	eu	azkena
 lastname of person to notify	calendar	eu	Abisua eman behar zaion pertsonaren abizena
+link to view the event	calendar	eu	Lotura gertakaria ikusteko
+links	calendar	eu	Loturak
+links, attachments	calendar	eu	Loturak, eranskinak
+listview	calendar	eu	Zerrenda ikusi
 location	calendar	eu	Lekua
+location to autoload from	admin	eu	Automatikoki kargatzeko lekua
+location, start- and endtimes, ...	calendar	eu	Lekua, hasiera eta amaiera ordua
+mail all participants	calendar	eu	Partehartzaile guztiei e-posta bat bidali
 minutes	calendar	eu	minutuak
 modified	calendar	eu	Aldatua
 mon	calendar	eu	Astelehena
@@ -132,10 +147,15 @@ monthly	calendar	eu	Hilabetero
 monthly (by date)	calendar	eu	Hilerokoa (dataren arabera)
 monthly (by day)	calendar	eu	Hilerokoa (egunaren arabera)
 monthview	calendar	eu	Hilabeteko ikuspegia
+new search with the above parameters	calendar	eu	bilaketa berria goiko parametroak erabiliz
+no events found	calendar	eu	Ez da gertakaririk aurkitu
+no filter	calendar	eu	Iragazkirik gabe
 no matches found	calendar	eu	Ez dira baterakidetasunik aurkitu
 no response	calendar	eu	Ez du erantzuten
+non blocking	calendar	eu	ez du blokeatzen
 notification messages for added events	calendar	eu	Abisu mezuak gehitzen diren gertaeretan
 notification messages for canceled events	calendar	eu	Abisu mezuak ezeztatzen diren gertaeretan
+notification messages for disinvited participants	calendar	eu	Abisu mezuak partehartzaileak ez gonbidatzeko
 notification messages for modified events	calendar	eu	Abisu mezuak aldatzen diren gertaeretan
 notification messages for your alarms	calendar	eu	Abisu mezua alarmentzako
 notification messages for your responses	calendar	eu	Abisu mezua erantzunentzako
@@ -143,66 +163,107 @@ number of records to read (%1)	calendar	eu	Irakurtzeko egiteko kopurua (%1)
 observance rule	calendar	eu	Behaketa erregela
 occurence	calendar	eu	Ateraldia
 old startdate	calendar	eu	Antzinako hasiera data
+on %1 %2 %3 your meeting request for %4	calendar	eu	%1 %2 %3 bilaera eskaera %4entzako
+on all modification, but responses	calendar	eu	Aldaketa guztietan erantzunetan izan ezik
 on any time change too	calendar	eu	edozein ordu aldaketan baita ere
 on invitation / cancelation only	calendar	eu	gobidapen edo ezeztapenetan bakarrik
 on participant responses too	calendar	eu	partehartzaileen erantzunetan baita ere
 on time change of more than 4 hours too	calendar	eu	4 orduko ordu aldaketa batean baita ere
+one month	calendar	eu	hilabete bat
+one week	calendar	eu	aste bat
+one year	calendar	eu	urte bat
+only the initial date of that recuring event is checked!	calendar	eu	Hasiera data bakarrik dago markatuta gertakarian!
 open todo's:	calendar	eu	ireki egitekoen zerrenda:
 overlap holiday	calendar	eu	jaiegunak gainjarri
 participants	calendar	eu	Partehartzaileak
+participants disinvited from an event	calendar	eu	Gertakari bateko gonbidapena kentzen zaien pratehartzaileak
+participants, resources, ...	calendar	eu	Partehartzaileak, baliabideak...
 people holiday	calendar	eu	jendearentzako jaieguna
 permission denied	calendar	eu	Baimena ukatua
 planner by category	calendar	eu	Kategorika planifikatu
 planner by user	calendar	eu	Erabiltzaileka planifikatu
 preselected group for entering the planner	calendar	eu	Aurre aukeratu taldea planifikatzailean sartzeko
+previous	calendar	eu	aurrekoa
 private and global public	calendar	eu	Pribatua eta publiko orokorra
 private and group public	calendar	eu	Pribatua eta talde publikoa
 private only	calendar	eu	Pribatua bakarrik
 re-edit event	calendar	eu	Gertaera berriro editatu
 receive email updates	calendar	eu	E-postaren gaurkotzeak jaso
 receive summary of appointments	calendar	eu	Ziten laburpenak jaso
+recurrence	calendar	eu	Errepikapenak
 recurring event	calendar	eu	errepikatzen den gertaera
 rejected	calendar	eu	Ukatu
+repeat days	calendar	eu	Errepikapen egunak
 repeat type	calendar	eu	Errepikapen mota
 repeating event information	calendar	eu	Gertakarietan errepikatzen den informazioa
 repetition	calendar	eu	Errepikapena
 repetitiondetails (or empty)	calendar	eu	Errepikapenaren detaileak (hutsik)
 reset	calendar	eu	Berrezarri
+resources	calendar	eu	Baliabideak
 rule	calendar	eu	Araua
 sat	calendar	eu	Larunbata
+saves the changes made	calendar	eu	gorde egindako aldaketak
+saves the event ignoring the conflict	calendar	eu	Gertakaria gorde gatazka alde batera utziz
 scheduling conflict	calendar	eu	Gatazka egutegian
+select a %1	calendar	eu	%1 aukeratu
+select a time	calendar	eu	ordu bat aukeratu
+select resources	calendar	eu	Baliabideak aukeratu
+select who should get the alarm	calendar	eu	Aukeratu nork jaso behar duen alarma
 set a year only for one-time / non-regular holidays.	calendar	eu	Urtero errepikatzen ez diren oporretan ez ezarri urterik.
 set new events to private	calendar	eu	Gertakari berriak pribatu moduan jarri
 should new events created as private by default ?	calendar	eu	Pribatu moduan sortu gertakariak?
 show default view on main screen	calendar	eu	Ikuspegi lehenetsia erakutsi pantaila nagusian
 show invitations you rejected	calendar	eu	Zuk uko egindako gonbidapenak erakutsi
 show list of upcoming events	calendar	eu	Datozen gertakarien zerrenda erakutsi
+show this month	calendar	eu	Hilabete hau erakutsi
+show this week	calendar	eu	Aste hau erakutsi
 single event	calendar	eu	gertakari sinplea
+start	calendar	eu	Hasiera
 start date/time	calendar	eu	Hasiera data/ordua
+startdate / -time	calendar	eu	Hasiera data eta ordua
+startdate and -time of the search	calendar	eu	Hasiera data eta bilaketarako ordua
+startdate of the export	calendar	eu	Esportatzen hasteko data
 startrecord	calendar	eu	Hasierako egitekoa
+status changed	calendar	eu	Egoera aldatuta
 submit to repository	calendar	eu	Biltegira bidali
 sun	calendar	eu	Igandea
 tentative	calendar	eu	zalantzan
+this message is sent for modified or moved events.	calendar	eu	Mezu hau gertakaria aldatu edo mugitzerakoan bidaliko da.
+this message is sent to disinvited participants.	calendar	eu	Mezu hau gonpidatuak egoteari uzten dutenei bidaltzen zaie.
+three month	calendar	eu	hiru hilabete
 thu	calendar	eu	Osteguna
+timeframe	calendar	eu	Denbora marjina
+timeframe to search	calendar	eu	Bilaketarako denbora marjina
 title of the event	calendar	eu	Gertakariaren izenburua
 to many might exceed your execution-time-limit	calendar	eu	egiteko epe muga
 translation	calendar	eu	Itzulpena
 tue	calendar	eu	Asteartea
+two weeks	calendar	eu	bi aste
 updated	calendar	eu	Gaurkoatua
 use end date	calendar	eu	Amaiera data erabili
+use the selected time and close the popup	calendar	eu	aukeratutako ordua erabili ta leihoa itxi
+view this event	calendar	eu	Gertakari hau ikusi
 wed	calendar	eu	Asteazkena
 week	calendar	eu	Astea
 weekday starts on	calendar	eu	Astea hasten da
+weekdays	calendar	eu	Lan egunak
+weekdays to use in search	calendar	eu	Bilaketan erabili beharreko lan egunak
 weekly	calendar	eu	Astero
 weekview	calendar	eu	Astearen ikuspegia
+weekview with weekend	calendar	eu	Asteko ikuspegia asteburuarekin
+weekview without weekend	calendar	eu	Asteko ikuspegia astebukaerarik gabe
 which events do you want to see when you enter the calendar.	calendar	eu	Zein gertakari nahi dituzu ikusi egutegian sartzerakoan?
 which of calendar view do you want to see, when you start calendar ?	calendar	eu	Egutegiko zein ikuspegi nahi duzu ikusi egutegira sartzerakoan?
+whole day	calendar	eu	egun osoa
+wk	calendar	eu	Astea
 work day ends on	calendar	eu	Lan egunak bukatzen dira
 work day starts on	calendar	eu	Lan egunak hasten dira
 yearly	calendar	eu	Urtero
 yearview	calendar	eu	Urtearen ikuspegia
 you do not have permission to read this record!	calendar	eu	Ez daukazu baimenik erregistro hau irakurtzeko!
 you have a meeting scheduled for %1	calendar	eu	Bilera bat daukazu %1 programatua
+you have been disinvited from the meeting at %1	calendar	eu	%1en bilerara gobidatua egoteari utzi diozu
+you need to select an ical file first	calendar	eu	Lehenago ¡Cal fitxategi bat aukeratu behar duzu
 you need to set either a day or a occurence !!!	calendar	eu	Egun bat edo ateraldi bat jarri behar duzu
 your meeting scheduled for %1 has been canceled	calendar	eu	%1 programatutako bilera ezeztatu egin da
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	eu	%1 programatutako bilera %2 programatu da

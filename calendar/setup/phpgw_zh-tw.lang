@@ -5,6 +5,7 @@
 a non blocking event will not conflict with other events	calendar	zh-tw	一個未鎖定事件將不會與其他事件產生衝突
 accept or reject an invitation	calendar	zh-tw	接受或拒絕邀約
 accepted	calendar	zh-tw	已接受
+access denied to the calendar of %1 !!!	calendar	zh-tw	您沒有權限存取 %1 的行事曆！
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zh-tw	需要提醒的操作：新增、取消、接受、拒絕、...
 actions	calendar	zh-tw	動作
 add alarm	calendar	zh-tw	新增警示
@@ -33,6 +34,7 @@ busy	calendar	zh-tw	忙碌
 by	calendar	zh-tw	於
 calendar event	calendar	zh-tw	日曆事件
 calendar holiday management	admin	zh-tw	行事曆假日管理
+calendar menu	calendar	zh-tw	行事曆選單
 calendar preferences	calendar	zh-tw	行事曆喜好設定
 calendar settings	admin	zh-tw	設定行事曆
 calendar-fieldname	calendar	zh-tw	行事曆欄位名稱
@@ -69,6 +71,7 @@ delete this exception	calendar	zh-tw	刪除這個例外
 delete this series of recuring events	calendar	zh-tw	刪除這個系列的循環事件
 disinvited	calendar	zh-tw	拒絕邀請
 display status of events	calendar	zh-tw	顯示事件的狀態
+displayed view	calendar	zh-tw	檢視方式
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	zh-tw	顯示您預設的行事曆瀏覽模式在啟始頁(您登入egroupWare第一個看到或是按下您的首頁按鈕的頁面)
 do you want a weekview with or without weekend?	calendar	zh-tw	您是否希望週曆包含週末？
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	zh-tw	您希望系統在約會新增或是修改時主動提醒您嗎？您也會收到包括您自己更新的通知。<br>您可以限制系統只提醒確定的修改。每個項目包含它以上的清單。所有的修改包括標題、描述、參與者的改變，但是不包括參與者的回應。如果事件的擁有者要求任何提醒，他會收到參與者接受或是拒絕的回應。
@@ -123,6 +126,7 @@ global public and group public	calendar	zh-tw	全區公用及群組公用
 global public only	calendar	zh-tw	全區公用
 group planner	calendar	zh-tw	群組計畫
 group public only	calendar	zh-tw	群組公用
+groupmember(s) %1 not included, because you have no access.	calendar	zh-tw	無法加入群組成員 %1 ，因為您沒有權限。
 here is your requested alarm.	calendar	zh-tw	這是您要求的提醒。
 high priority	calendar	zh-tw	高優先權
 holiday	calendar	zh-tw	假日
