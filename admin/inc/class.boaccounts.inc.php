@@ -808,7 +808,7 @@
 				/* print "$key,". $groupData['account_id'] ."<br>";*/
 				/* print "$key,". $_userData['account_groups'][1] ."<br>"; */
 
-				if ($newGroups[$groupData['account_id']]) 
+				if ($newGroups[(string) $groupData['account_id']]) 
 				{
 					$acl->add_repository('phpgw_group',$groupData['account_id'],$_userData['account_id'],1);
 				}
