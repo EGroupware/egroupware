@@ -44,7 +44,7 @@
 	
 	function files_dir($settings)
 	{
-		if (!check_dir($settings['files_dir'],$error_msg,true))
+		if ($settings['file_repository'] == 'sql' && $settings['file_store_contents'] == 'filesystem' && !check_dir($settings['files_dir'],$error_msg,true))
 		{
 			$GLOBALS['config_error'] = lang("Your files directory '%1' %2",$settings['files_dir'],$error_msg);
 		}

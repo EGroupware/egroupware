@@ -457,7 +457,7 @@
     </td>
     <td>
      <select name="newsettings[file_store_contents]">
-      <option value="filesystem"{selected_file_store_contents_filesystem}>Filesystem</option>
+      <option value="filesystem"{selected_file_store_contents_filesystem}>{lang_Filesystem}</option>
       <option value="sql"{selected_file_store_contents_sql}>SQL</option>
      </select>
     </td>

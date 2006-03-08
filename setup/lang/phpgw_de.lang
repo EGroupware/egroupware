@@ -196,6 +196,7 @@ file	setup	de	DATEI
 file type, size, version, etc.	setup	de	Dateityp, Größe, Version usw.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	de	Dateiuploads sind ausgeschaltet. Sie können keinen der Dateimanager verwenden, noch können Sie in verschiedenen Anwendungen Dateien anhängen!
 filename	setup	de	Dateiname
+filesystem	setup	de	Dateisystem
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	de	Für eine Neuinstallation, wählen Sie importieren.  Um existierende SQL-Accounts zu LDAP zu konvertieren, w&auml;hlen Sie exportieren.
 force selectbox	setup	de	Auswahl erzwingen
 found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationsdatei gefunden. Lade Einstellungen von der Datei ...
@@ -328,7 +329,7 @@ passwords did not match, please re-enter	setup	de	Passworte stimmten nicht übere
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 pear is needed by syncml or the ical import+export of calendar.	setup	de	PEAR wird von SyncML oder dem iCal Import+Export des Kalenders benötigt.
-pear::log is needed by syncml.	setup	de	PEAR wird von SyncML benötigt.
+pear::log is needed by syncml.	setup	de	PEAR::Log wird von SyncML benötigt.
 persistent connections	setup	de	Permanente Verbindungen
 php plus restore	setup	de	PHP plus Wiederherstellen
 php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	de	PHP plus Wiederherstellen gibt bei weitem die beste Performanze. Es speichert die eGW Umgebung komplett in der Session.
@@ -414,6 +415,7 @@ setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 size	setup	de	Größe
+skip the installation tests (not recommended)	setup	de	Installationstests überspringen (nicht empfohlen)
 smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse
 smtp server port	setup	de	SMTP Server Port
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
@@ -517,6 +519,7 @@ you appear to have %1 support.	setup	de	Sie scheinen %1 Unterstützung zu haben.
 you appear to have php session support. enabling php sessions.	setup	de	Sie scheinen PHP Session Unterstützung zu haben. PHP Sessions eingeschaltet.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
 you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br />
+you can install it by running:	setup	de	Installation durch ausführen von:
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben
 you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benutzernamen für die Domain %1 angegeben
 you didn't enter a header admin password	setup	de	Sie haben kein Passwort für die Headerverwaltung eingegeben

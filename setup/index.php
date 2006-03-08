@@ -430,12 +430,12 @@
 			{
 				$config_msg = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
 			}
-			if (!check_dir($config['files_dir'],$error_msg,true))
+			if ($config['file_repository'] == 'sql' && $config['file_store_contents'] == 'filesystem' && !check_dir($config['files_dir'],$error_msg,true))
 			{
 				$config_msg .= ($config_msg?"<br />\n":'').lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
 			}
 			// set and create the default backup_dir
-			if (@is_writeable($config['files_dir']) && !isset($config['backup_dir']) && $config['file_store_contents'] == 'filesystem')
+			if (@is_writeable($config['files_dir']) && !$config['backup_dir'] && $config['file_store_contents'] == 'filesystem')
 			{
 				$config['backup_dir'] = $config['files_dir'].'/db_backup';
 				if (!is_dir($config['backup_dir']) && mkdir($config['backup_dir']))

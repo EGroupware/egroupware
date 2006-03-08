@@ -196,6 +196,7 @@ file	setup	en	FILE
 file type, size, version, etc.	setup	en	file type, size, version, etc.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	en	File uploads are switched off: You can NOT use any of the filemanagers, nor can you attach files in several applications!
 filename	setup	en	filename
+filesystem	setup	en	Filesystem
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
 force selectbox	setup	en	Force Selectbox
 found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
@@ -414,6 +415,7 @@ setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 size	setup	en	size
+skip the installation tests (not recommended)	setup	en	Skip the installation tests (not recommended)
 smtp server hostname or ip address	setup	en	SMTP server hostname or IP address
 smtp server port	setup	en	SMTP server port
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
@@ -517,6 +519,7 @@ you appear to have %1 support.	setup	en	You appear to have %1 support.
 you appear to have php session support. enabling php sessions.	setup	en	You appear to have PHP session support. Enabling PHP sessions.
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br />	setup	en	You are ready for this stage, but this stage is not yet written.<br />
+you can install it by running:	setup	en	You can install it by running:
 you didn't enter a config password for domain %1	setup	en	You didn't enter a config password for domain %1
 you didn't enter a config username for domain %1	setup	en	You didn't enter a config username for domain %1
 you didn't enter a header admin password	setup	en	You didn't enter a header admin password

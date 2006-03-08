@@ -95,6 +95,7 @@
 					'config_name' => $setting,
 					'config_app'  => 'phpgwapi',
 				),__LINE__,__FILE__);
+				unset($newsettings[$setting]);
 			}
 			elseif($value)
 			{
@@ -125,12 +126,19 @@
 
 	$GLOBALS['egw_setup']->html->show_header(lang('Configuration'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 
-	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINES__,__FILES__);
-	while($GLOBALS['egw_setup']->db->next_record())
+	// if we have an validation error, use the new settings made by the user and not the stored config
+	if($GLOBALS['error'] && is_array($newsettings))
 	{
-		$GLOBALS['current_config'][$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
+		$GLOBALS['current_config'] = $newsettings;
 	}
-
+	else
+	{
+		$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'*',false,__LINES__,__FILES__);
+		while($GLOBALS['egw_setup']->db->next_record())
+		{
+			$GLOBALS['current_config'][$GLOBALS['egw_setup']->db->f('config_name')] = $GLOBALS['egw_setup']->db->f('config_value');
+		}
+	}
 	$setup_tpl->pparse('out','T_config_pre_script');
 
 	/* Now parse each of the templates we want to show here */
