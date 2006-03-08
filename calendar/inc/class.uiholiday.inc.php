@@ -55,6 +55,9 @@
 			{
 				$GLOBALS['egw']->jscalendar =& CreateObject('phpgwapi.jscalendar');
 			}
+			// calendar does not work with hidden sidebox atm.
+			unset($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']);
+
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Holiday Management');
 			
 			$GLOBALS['egw']->template->set_var('help_msg',lang('<b>Please note</b>: The calendar use the holidays of your country, which is set to %1. You can change it in your %2.<br />Holidays are %3 automatic installed from %4. You can changed it in %5.',
