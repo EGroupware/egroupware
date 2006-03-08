@@ -264,3 +264,8 @@ you have entered an invalid ending date	infolog	pt-br	Você informou uma data fin
 you have entered an invalid starting date	infolog	pt-br	Você informou uma data inícial inválida
 you have to enter a name, to create a new typ!!!	infolog	pt-br	Você deve digitar um nome para criar um novo tipo!!!
 you must enter a subject or a description	infolog	pt-br	Você deve digitar um assunto ou uma descrição
+Creation	infolog	pt-br	Criação
+Price	infolog	pt-br	Preço
+planned time	infolog	pt-br	Horas planejadas
+used time	infolog	pt-br	Horas utilizadas
+hours		infolog	pt-br	horas
