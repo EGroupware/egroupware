@@ -36,6 +36,30 @@
 		function boaccounts()
 		{
 			$this->so =& CreateObject('admin.soaccounts');
+			
+			if (get_magic_quotes_gpc())		// deal with magic_quotes_gpc On
+			{
+				$_POST = $this->array_stripslashes($_POST);
+			}
+		}
+
+		/**
+		 * applies stripslashes recursivly on each element of an array
+		 * 
+		 * @param array &$var 
+		 * @return array
+		 */
+		function array_stripslashes($var)
+		{
+			if (!is_array($var))
+			{
+				return stripslashes($var);
+			}
+			foreach($var as $key => $val)
+			{
+				$var[$key] = is_array($val) ? $this->array_stripslashes($val) : stripslashes($val);
+			}
+			return $var;
 		}
 
 		function DONTlist_methods($_type='xmlrpc')
