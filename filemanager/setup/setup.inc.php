@@ -28,6 +28,6 @@
 	/* Dependencies for this app to work */
 	$setup_info['filemanager']['depends'][] = array(
 		'appname' => 'phpgwapi',
-		'versions' => array('1.0.0','1.0.1','1.2')
+		'versions' => array('1.0.0','1.0.1','1.2','1.3')
 	);
 ?>

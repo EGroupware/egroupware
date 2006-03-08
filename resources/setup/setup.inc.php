@@ -36,11 +36,11 @@
 
 	$setup_info['resources']['depends'][]	= array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('1.0.1','1.2')
+		 'versions' => Array('1.0.1','1.2','1.3')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause eTemplates is not in the api yet
 		 'appname' => 'etemplate',
-		 'versions' => Array('1.0.1','1.2')
+		 'versions' => Array('1.0.1','1.2','1.3')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause of vfs psuedoprotocol is not fully in the api yet
 		 'appname' => 'filemanager',
