@@ -1045,7 +1045,7 @@
 				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 					'location' => 'addaccount',
 					// at login-time only the hooks from the following apps will be called
-					'order' => array('felamimail'),
+					'order' => array('felamimail','fudforum'),
 				),False,True);  // called for every app now, not only enabled ones
 			} /* end account setup */
 			else /* if no account id abort the account creation */
