@@ -430,6 +430,8 @@ class bocal
 			'title' => lang('private'),
 			'participants' => array_intersect_key($event['participants'],array_flip($allowed_participants)),
 			'public'=> 0,
+ 			'category' => $event['category'],	// category is visible anyway, eg. by using planner by cat
+ 			'non_blocking' => $event['non_blocking'],
 		);
 	}
 	

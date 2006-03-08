@@ -983,6 +983,8 @@ class uiforms extends uical
 		{
 			if ((int)$cal_id && $event['id'] == (int)$cal_id) continue;	// ignore our own event
 
+ 			if ($event['non_blocking']) continue; // ignore non_blocking events
+
 			if ($this->debug)
 			{
 				echo "<p>ft_start=".date('D d.m.Y H:i',$ft_start)."<br>\n";
