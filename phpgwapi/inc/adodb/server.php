@@ -1,5 +1,8 @@
 <?php
 
+// ralfbecker 2006-03-08 disabled the server.php for security reasons
+die('disabled for security reasons');
+
 /** 
  * @version V4.65 22 July 2005 (c) 2000-2005 John Lim (jlim@natsoft.com.my). All rights reserved.
  * Released under both BSD license and Lesser GPL library license. 
