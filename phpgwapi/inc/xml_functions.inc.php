@@ -928,17 +928,25 @@
 	}
 	*/
 
-	$GLOBALS['_xmlrpcs_egw_time_sig'] = array(array(xmlrpcString,xmlrpcString));
-	$GLOBALS['_xmlrpcs_egw_time_doc'] = 'Returns system time based on optional format string';
+	$GLOBALS['_xmlrpcs_egw_time_sig'] = array(array(xmlrpcStruct));
+	$GLOBALS['_xmlrpcs_egw_time_doc'] = 'returns system-time and -timezone and if loged in user-time and timezone';
 	function _xmlrpcs_time($server,$m)
 	{
-		$param0 = $m->getParam(0);
-		$format = $param0->scalarval();
-		$format = $format ? $format : 'Y/m/d H:i:s';
-
+		$return = array(
+			'system' => $GLOBALS['server']->date2iso8601(time()),
+			'system_tz_offset' => (int) date('Z'),
+		);
+		if ($GLOBALS['server']->authed)
+		{
+			$tz_offset_s = 3600 * (int) $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
+			$return += array(
+				'user' => $GLOBALS['server']->date2iso8601(time()+$tz_offset_s),
+				'user_tz_offset' => (int) date('Z') + $tz_offset_s,
+			);
+		}
 		return CreateObject(
 			'phpgwapi.xmlrpcresp',
-			CreateObject('phpgwapi.xmlrpcval', date($format,time()), 'string')
+			$GLOBALS['server']->build_resp($return,true)
 		);
 	}
 
