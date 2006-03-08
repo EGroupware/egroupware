@@ -258,7 +258,7 @@ foreach($day2int as $name => $n)
 		substr(lang($name),$chars_shortcut)).'"'.($n < 6 ? ',' : '');
 }
 ?>);
-Calendar._SDN_len = <?php echo (int) lang('3 number of chars for day-shortcut'); ?>;
+Calendar._SDN_len = <?php echo abs((int) lang('3 number of chars for day-shortcut')); ?>;
 
 Calendar._MN = new Array
 (<?php // full month names
@@ -283,7 +283,7 @@ foreach($monthnames as $n => $name)
 	echo "\n \"".$short.'"'.($n < 11 ? ',' : '');
 }
 ?>);
-Calendar._SMN_len = <?php echo (int) lang('3 number of chars for month-shortcut'); ?>;
+Calendar._SMN_len = <?php echo abs((int) lang('3 number of chars for month-shortcut')); ?>;
 
 // tooltips
 Calendar._TT = {};
