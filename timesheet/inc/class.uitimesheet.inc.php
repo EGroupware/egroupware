@@ -168,7 +168,7 @@ class uitimesheet extends botimesheet
 			'view' => $view,
 			$tabs  => $content[$tabs],
 			'link_to' => array(
-				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
+				'to_id' => $this->data['ts_id'] || $button == 'save_new' ? $this->data['ts_id'] : $content['link_to']['to_id'],
 				'to_app' => TIMESHEET_APP,
 			),
 			'js' => "<script>\n$js\n</script>\n",
