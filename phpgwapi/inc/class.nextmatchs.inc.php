@@ -389,9 +389,8 @@
 		{
 			if(is_array($search_obj))
 			{
-				$params     = $search_obj;
-				$s_query    = stripslashes($params['query']);
-				$search_obj = $params['search_obj'];
+				$_query    = stripslashes($search_obj['query']);
+				$search_obj = $search_obj['search_obj'];
 			}
 			else
 			{
@@ -400,7 +399,7 @@
 
 			// If they place a '"' in their search, it will mess everything up
 			// Our only option is to remove it
-			if(strstr($query,'"'))
+			if(strstr($_query,'"'))
 			{
 				$_query = str_replace('"','',$_query);
 			}
