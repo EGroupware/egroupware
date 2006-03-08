@@ -152,7 +152,7 @@
 		),	
 		'Log' => array(
 			'func' => 'pear_check',
-			'warning' => '<div class="setup_info">' . lang('PEAR::Log is needed by SyncML.') . "</div>"
+			'warning' => '<div class="setup_info">' . lang('PEAR::Log is needed by SyncML.').' '.lang('You can install it by running:').' pear install Log' . "</div>"
 		),	
 		'gd' => array(
 			'func' => 'gd_check',
@@ -211,7 +211,7 @@
 		}
 		if ($pear_available && $package)
 		{
-			$available = include($package.'.php');
+			$available = @include($package.'.php');
 
 			if (!class_exists($package)) $available = false;
 			
@@ -540,6 +540,7 @@
 			echo '<p>'.lang('The first step in installing eGroupWare is to ensure your environment has the necessary settings to correctly run the application.').'</p>';
 			echo '<p>'.lang('We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.').'</p>';
 			echo '<h3><a href="check_install.php">'.lang('Run installation tests').'</a></h3>';
+			echo '<p><a href="manageheader.php">'.lang('Skip the installation tests (not recommended)')."</a></p>\n";
 			$setup_tpl->pparse('out','T_footer');
 			exit;
 		} else {
