@@ -328,3 +328,26 @@ you need to set either a day or a occurence !!!	calendar	pt-br	Você deve determi
 your meeting scheduled for %1 has been canceled	calendar	pt-br	Seu compromisso agendado para %1 foi cancelado
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pt-br	Seu compromisso agendado para %1 foi remarcado para %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	pt-br	Horário sugerido: <B> %1 - %2 </B> está em conflito com as seguintes entradas no calendário:
+All categories	calendar	pt-br	Todas as categorias
+weekview with weekend	calendar	pt-br	Visão semanal com finais de semana
+weekview without weekend	calendar	pt-br	Visão semanal sem finais de semana
+listview	calendar	pt-br	Visão em lista
+Calendar Menu	calendar	pt-br	Menu da Agenda de Eventos
+Wk	calendar	pt-br	Sem.
+Start	calendar	pt-br	Início
+End	calendar	pt-br	Fim
+whole day	calendar	pt-br	Dia inteiro
+Freetime search	calendar	pt-br	Procurar disponibilidade
+non blocking	calendar	pt-br	Posse compartilhada
+by	calendar	pt-br	por
+mail all participants	calendar	pt-br	Enviar e-mail para todos os participantes
+Cancel	calendar	pt-br	Cancelar
+General	calendar	pt-br	Geral
+Recurrence	calendar	pt-br	Repetição
+Repeat days	calendar	pt-br	Dias para repetição
+all days	calendar	pt-br	Todos os dias
+working days	calendar	pt-br	Dias úteis
+weekend	calendar	pt-br	Finais de semana
+for	calendar	pt-br	para
+All participants	calendar	pt-br	Todos os participantes
+Select resources	calendar	pt-br	Selecionar recursos
