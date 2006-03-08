@@ -374,8 +374,6 @@
 			if(@is_array($this->grants))
 			{
 				$filterfields['phpgwcontactowner'] = array();
-				/* this was not listing private entries when show all was selected */
-				/* $filterfields += array('phpgwcontactaccess' => 'public'); */
 				if($DEBUG) { echo '<br>DEBUG - My user id is: ' . $this->account_id; }
 				foreach($this->grants as $user => $right)
 				{
@@ -588,7 +586,14 @@
 							/* This was most likely created from acl grants in read() above */
 							foreach($y as $a => $b)
 							{
-								$tmp .= '(' . $a . '=' . $b . ')';
+								if ($a == 'phpgwcontactowner' && $b != $GLOBALS['egw_info']['user']['account_id'])
+								{
+									$tmp .= '(&('. $a. '='. $b. ')(phpgwContactAccess=public))';
+								}
+								else
+								{ 
+									$tmp .= '(' . $a . '=' . $b . ')';
+								}
 							}
 						}
 						else
