@@ -29,6 +29,16 @@
 		 */
 		var $supportedFields;
 		
+		var $recur_days_1_0 = array(
+			MCAL_M_MONDAY    => 'MO',
+			MCAL_M_TUESDAY   => 'TU',
+			MCAL_M_WEDNESDAY => 'WE',
+			MCAL_M_THURSDAY  => 'TH',
+			MCAL_M_FRIDAY    => 'FR',
+			MCAL_M_SATURDAY  => 'SA',
+			MCAL_M_SUNDAY    => 'SU',
+		);
+
 		/**
 		 * @var array $status_egw2ical conversation of the participant status egw => ical
 		 */
@@ -68,14 +78,25 @@
 		);
 		
 		/**
-		 * @var array $recur_egw2ical converstaion of egw recur-type => ical FREQ
+		 * @var array $recur_egw2ical_2_0 converstaion of egw recur-type => ical FREQ
 		 */
-		var $recur_egw2ical = array(
+		var $recur_egw2ical_2_0 = array(
 			MCAL_RECUR_DAILY        => 'DAILY',
 			MCAL_RECUR_WEEKLY       => 'WEEKLY',
 			MCAL_RECUR_MONTHLY_MDAY => 'MONTHLY',	// BYMONHTDAY={1..31}
 			MCAL_RECUR_MONTHLY_WDAY => 'MONTHLY',	// BYDAY={1..5}{MO..SO}
 			MCAL_RECUR_YEARLY       => 'YEARLY',
+		);
+
+		/**
+		 * @var array $recur_egw2ical_1_0 converstaion of egw recur-type => ical FREQ
+		 */
+		var $recur_egw2ical_1_0 = array(
+			MCAL_RECUR_DAILY        => 'D',
+			MCAL_RECUR_WEEKLY       => 'W',
+			MCAL_RECUR_MONTHLY_MDAY => 'MD',	// BYMONHTDAY={1..31}
+			MCAL_RECUR_MONTHLY_WDAY => 'MP',	// BYDAY={1..5}{MO..SO}
+			MCAL_RECUR_YEARLY       => 'YM',
 		);
 
 		/**
@@ -96,11 +117,11 @@
 				'DTEND'		=> array('dbName' => 'end'),
 				'ORGANIZER'	=> array('dbName' => 'owner'),
 				'ATTENDEE'	=> array('dbName' => 'participants'),
-				'RRULE'     => array('dbName' => 'recur_type'),
-				'EXDATE'    => array('dbName' => 'recur_exception'),
- 				'PRIORITY'  => array('dbName' => 'priority'),
- 				'TRANSP'    => array('dbName' => 'non_blocking'),
-				'CATEGORIES'=> array('dbName' => 'category'),
+				'RRULE'		=> array('dbName' => 'recur_type'),
+				'EXDATE'	=> array('dbName' => 'recur_exception'),
+ 				'PRIORITY'	=> array('dbName' => 'priority'),
+ 				'TRANSP'	=> array('dbName' => 'non_blocking'),
+				'CATEGORIES'	=> array('dbName' => 'category'),
 			);
 			if(!is_array($this->supportedFields))
 			{
@@ -182,37 +203,67 @@
 		            					
 							case 'RRULE':
 								if ($event['recur_type'] == MCAL_RECUR_NONE) break;		// no recuring event
-								$rrule = array('FREQ' => $this->recur_egw2ical[$event['recur_type']]);
-								switch ($event['recur_type'])
-								{
-	            							case MCAL_RECUR_WEEKLY:
-	            								$days = array();
-	            								foreach($this->recur_days as $id => $day)
-	            								{
-	            									if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
-										}
-		            							$rrule['BYDAY'] = implode(',',$days);
-		            							break;
+								if ($version == '1.0') {
+									$interval = ($event['recur_interval'] > 1) ? $event['recur_interval'] : 1;
+									$rrule = array('FREQ' => $this->recur_egw2ical_1_0[$event['recur_type']].$interval);
+									switch ($event['recur_type'])
+									{
+	            								case MCAL_RECUR_WEEKLY:
+	            									$days = array();
+	            									foreach($this->recur_days_1_0 as $id => $day)
+	            									{
+	            										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
+											}
+		            								$rrule['BYDAY'] = implode(' ',$days);
+		            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+		            								break;
 		            							
-	        	    						case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
-	            								$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
-	            								break;
+	        	    							case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+	            									break;
 	            								
-	             							case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
-	             								$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
-		             								strtoupper(substr(date('l',$event['start']),0,2));
-										break;
+	             								case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+	             									$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).'+ '.
+		             									strtoupper(substr(date('l',$event['start']),0,2));
+		            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
+											break;
+									}
+									$rrule['UNTIL'] = ($event['recur_enddate']) ? date('Ymd',$event['recur_enddate']) : '#0';
+
+									$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
+								} else {
+									$rrule = array('FREQ' => $this->recur_egw2ical_2_0[$event['recur_type']]);
+									switch ($event['recur_type'])
+									{
+	            								case MCAL_RECUR_WEEKLY:
+	            									$days = array();
+	            									foreach($this->recur_days as $id => $day)
+	            									{
+	            										if ($event['recur_data'] & $id) $days[] = strtoupper(substr($day,0,2));
+											}
+		            								$rrule['BYDAY'] = implode(',',$days);
+		            								break;
+		            							
+	        	    							case MCAL_RECUR_MONTHLY_MDAY:	// date of the month: BYMONTDAY={1..31}
+	            									$rrule['BYMONTHDAY'] = (int) date('d',$event['start']);
+	            									break;
+	            								
+	             								case MCAL_RECUR_MONTHLY_WDAY:	// weekday of the month: BDAY={1..5}{MO..SO}
+	             									$rrule['BYDAY'] = (1 + (int) ((date('d',$event['start'])-1) / 7)).
+		             									strtoupper(substr(date('l',$event['start']),0,2));
+											break;
+									}
+									if ($event['recur_interval'] > 1) $rrule['INTERVAL'] = $event['recur_interval'];
+									if ($event['recur_enddate']) $rrule['UNTIL'] = date('Ymd',$event['recur_enddate']);	// only day is set in eGW
+
+									// no idea how to get the Horde parser to produce a standard conformant
+									// RRULE:FREQ=... (note the double colon after RRULE, we cant use the $parameter array)
+									// so we create one value manual ;-)
+									foreach($rrule as $name => $value)
+									{
+										$attributes['RRULE'][] = $name . '=' . $value;
+									}
+									$attributes['RRULE'] = implode(';',$attributes['RRULE']);
 								}
-								if ($event['recur_interval'] > 1) $rrule['INTERVAL'] = $event['recur_interval'];
-								if ($event['recur_enddate']) $rrule['UNTIL'] = date('Ymd',$event['recur_enddate']);	// only day is set in eGW
-								// no idea how to get the Horde parser to produce a standard conformant
-								// RRULE:FREQ=... (note the double colon after RRULE, we cant use the $parameter array)
-								// so we create one value manual ;-)
-								foreach($rrule as $name => $value)
-								{
-									$attributes['RRULE'][] = $name . '=' . $value;
-								}
-								$attributes['RRULE'] = implode(';',$attributes['RRULE']);
 								break;
 							
 							case 'EXDATE':
@@ -381,20 +432,24 @@
 										{
 											$vcardData['recur_interval'] = $recurenceMatches[1];
 											$days = explode(' ',trim($recurenceMatches[2]));
+											if($recurenceMatches[3] != '#0')
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[3]);
+											$recur_days = $this->recur_days_1_0;
 										}
 										elseif (preg_match('/BYDAY=([^;: ]+)/',$recurence,$recurenceMatches))	// 2.0
 										{
-		            						$days = explode(',',$recurenceMatches[1]);
+											$days = explode(',',$recurenceMatches[1]);
+											$recur_days = $this->recur_days;
 										}
 										if ($days)
 										{
-											foreach($this->recur_days as $id => $day)
-		            						{
-		            							if (in_array(strtoupper(substr($day,0,2)),$matches))
-		            							{
-		            								$vcardData['recur_data'] |= $id;
-		            							}
-		            						}
+											foreach($recur_days as $id => $day)
+				            						{
+				            							if (in_array(strtoupper(substr($day,0,2)),$days))
+		            									{
+		            										$vcardData['recur_data'] |= $id;
+		            									}
+		            								}
 											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
 										}
 										break;
@@ -402,7 +457,8 @@
 									case 'D':		// 1.0
 										if(!preg_match('/D(\d+) (.*)/',$recurence, $recurenceMatches)) break;
 										$vcardData['recur_interval'] = $recurenceMatches[1];
-										$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+										if($recurenceMatches[2] != '#0')
+											$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
 										// fall-through
 									case 'DAILY':	// 2.0
 										$vcardData['recur_type'] = MCAL_RECUR_DAILY;
@@ -412,12 +468,18 @@
 										if(preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches))
 										{
 											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
-											$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[1] > 1)
+												$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[2] != '#0')
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
 										}
 										elseif(preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches))
 										{
 											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_WDAY;
-											$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[1] > 1)
+												$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[4] != '#0')
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[4]);
 										}
 										break;
 									case 'MONTHLY':
@@ -428,6 +490,8 @@
 									case 'Y':		// 1.0
 										if(!preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches)) break;
 										$vcardData['recur_interval'] = $recurenceMatches[1];
+										if($recurenceMatches[2] != '#0')
+											$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
 										// fall-through
 									case 'YEARLY':	// 2.0
 										$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
@@ -500,7 +564,7 @@
 								break;
 						}
 					}
-					if(isset($vcardData['recur_enddate']))
+					if(!empty($vcardData['recur_enddate']))
 					{
 						// reset recure_enddate to 00:00:00 on the last day
 						$vcardData['recur_enddate'] = mktime(0, 0, 0, 
