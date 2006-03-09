@@ -251,7 +251,8 @@ class uical
 				if ($state == 'owner')
 				{
 					// only change the owners of the same resource-type as given in set_state[owner]
-					$res_type = is_numeric($set_states['owner']{0}) ? false : $set_states['owner']{0};
+					$set_owners = explode(',',$set_states['owner']);
+					$res_type = is_numeric($set_owners[0]) ? false : $set_owners[0]{0};
 					$owners = explode(',',$states['owner'] ? $states['owner'] : $default);
 					foreach($owners as $key => $owner)
 					{
@@ -260,7 +261,6 @@ class uical
 							unset($owners[$key]);
 						}
 					}
-					$set_owners = explode(',',$set_states['owner']);
 					if (!$res_type || !in_array($res_type.'0',$set_owners))
 					{
 						$owners = array_merge($owners,$set_owners);
