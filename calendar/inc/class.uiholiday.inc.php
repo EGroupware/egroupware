@@ -92,7 +92,7 @@
 				'left_next_matchs'	=> $GLOBALS['egw']->nextmatchs->left('/index.php?menuaction=calendar.uiholiday.admin',$this->bo->start,$this->bo->total),
 				'right_next_matchs'	=> $GLOBALS['egw']->nextmatchs->right('/index.php?menuaction=calendar.uiholiday.admin',$this->bo->start,$this->bo->total),
 				'center'			=> '<td align="center">'.lang('Countries').'</td>',
-				'sort_name'		=> $GLOBALS['egw']->nextmatchs->show_sort_order($this->bo->sort,'locale',$this->bo->order,'/calendar/'.basename($SCRIPT_FILENAME),lang('Country')),
+				'sort_name'		=> $GLOBALS['egw']->nextmatchs->show_sort_order($this->bo->sort,'hol_locale',$this->bo->order,'/calendar/'.basename($SCRIPT_FILENAME),lang('Country')),
 				'header_edit'	=> lang('Edit'),
 				'header_delete'	=> lang('Delete'),
 				'header_extra'	=> lang('Submit to Repository'),

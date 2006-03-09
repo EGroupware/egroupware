@@ -172,11 +172,11 @@
 				$querymethod = 'hol_locale LIKE '.$this->db->quote('%'.$query.'%');
 			}
 		
-			if(preg_match('/^[a-zA-Z0-9_,]+$/',$order))
+			if(!preg_match('/^[a-zA-Z0-9_,]+$/',$order))
 			{
-				$querymethod .= ' ORDER BY '.$order;
+				$order = 'hol_local';
 			}
-			$this->db->select($this->table,'DISTINCT hol_locale',$querymethod,__LINE__,__FILE__);
+			$this->db->select($this->table,'DISTINCT hol_locale',$querymethod,__LINE__,__FILE__,false,$order);
 			while($this->db->next_record())
 			{
 				$locale[] = $this->db->f('hol_locale');
