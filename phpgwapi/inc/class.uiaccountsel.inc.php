@@ -225,7 +225,7 @@
 			}
 			if ($lines == 1 && $this->account_selection == 'selectbox')
 			{
-				$html .= '<a href="#" onclick="'."if (selectBox = document.getElementById('$element_id')) { selectBox.size=3; selectBox.multiple=true; } return false;".'">'.
+				$html .= '<a href="#" onclick="'."if (selectBox = document.getElementById('$element_id')) { selectBox.size=4; selectBox.multiple=true; } return false;".'">'.
 					$this->html->image('phpgwapi','users',lang('select multiple accounts')).'</a>';
 			}
 			if($need_js_popup && !$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'])
