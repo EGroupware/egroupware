@@ -353,20 +353,21 @@ class uiviews extends uical
 		$users = $this->search_params['users'];
 		if (!is_array($users)) $users = array($users);
 		
-		// for more then 3 users, show all in one row
-		if (count($users) > 3) $users = array($users);
-		
-		$content = '';
-		foreach($users as $user)
+		if (count($users) == 1 || count($users) > 3)	// for more then 3 users, show all in one row
 		{
-			$search_params['users'] = $user;
-			if (count($users) > 1)
-			{
-				$content .= '<b>'.$this->bo->participant_name($user)."</b>\n";
-			}
-			$content .= $this->timeGridWidget($this->bo->search($search_params),
-				count($users) * $this->cal_prefs['interval'],400 / count($users),'','',count($users) > 1 ? $user : 0);
+			$content =& $this->timeGridWidget($this->bo->search($search_params),$this->cal_prefs['interval']);
 		}
+		else
+		{
+			$content = '';
+			foreach($this->_get_planner_users(false) as $uid => $label)
+			{
+				$search_params['users'] = $uid;
+				$content .= '<b>'.$label."</b>\n";
+				$content .= $this->timeGridWidget($this->bo->search($search_params),
+					count($users) * $this->cal_prefs['interval'],400 / count($users),'','',$uid);
+			}
+		}		
 		if (!$home)
 		{
 			$this->do_header();
@@ -407,11 +408,10 @@ class uiviews extends uical
 			{
 				$dayEvents = array();
 				$search_params = $this->search_params;
-				foreach($users as $user)
+				foreach($this->_get_planner_users(false) as $uid => $label)
 				{
-					$title = '<b>'.$this->bo->participant_name($user).'</b>';
-					$search_params['users'] = $user;
-					list(,$dayEvents[$title]) = each($this->bo->search($search_params));
+					$search_params['users'] = $uid;
+					list(,$dayEvents['<b>'.$label.'</b>']) = each($this->bo->search($search_params));
 				}
 				$owner = $users;
 			}
@@ -1127,14 +1127,19 @@ class uiviews extends uical
 	/**
 	 * get all users to display in the planner_by_user
 	 *
-	 * @return array with uid => label pairs
+	 * @param boolean $enum_groups=true should groups be returned as there members (eg. planner) or not (day & week)
+	 * @return array with uid => label pairs, first all users alphabetically sorted, then all resources
 	 */
-	function _get_planner_users()
+	function _get_planner_users($enum_groups=true)
 	{
-		$users = array();
+		$users = $resources = array();
 		foreach(explode(',',$this->owner) as $user)
 		{
-			if (is_numeric($user) && $GLOBALS['egw']->accounts->get_type($user) == 'g')
+			if (!is_numeric($user))		// resources
+			{
+				$resources[$user] = $this->bo->participant_name($user);
+			}
+			elseif ($enum_groups && $GLOBALS['egw']->accounts->get_type($user) == 'g')	// groups
 			{
 				foreach((array) $GLOBALS['egw']->accounts->member($user) as $data)
 				{
@@ -1145,13 +1150,15 @@ class uiviews extends uical
 					}
 				}
 			}
-			else
+			else	// users
 			{
 				$users[$user] = $this->bo->participant_name($user);
 			}
-			asort($users);	
 		}
-		return $users;
+		asort($users);
+		asort($resources);
+		
+		return $users+$resources;
 	}
 	
 	/**
