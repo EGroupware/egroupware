@@ -189,10 +189,10 @@
 				'left_next_matchs'	=> $GLOBALS['egw']->nextmatchs->left('/index.php',$this->bo->start,$total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
 				'right_next_matchs'	=> $GLOBALS['egw']->nextmatchs->right('/index.php',$this->bo->start,$total,'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
 				'center'			=> '<td align="right">'.lang('Holidays').' ('.$this->bo->locales[0].')</td><td align="left">'.$year_form.'</td>',
-				'sort_name'			=> $GLOBALS['egw']->nextmatchs->show_sort_order($this->bo->sort,'name',$this->bo->order,'/index.php',lang('Holiday'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
+				'sort_name'			=> $GLOBALS['egw']->nextmatchs->show_sort_order($this->bo->sort,'hol_name',$this->bo->order,'/index.php',lang('Holiday'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year),
 				'header_edit'		=> lang('Edit'),
 				'header_delete'		=> lang('Delete'),
-				'header_rule'		=> '<td>'.$GLOBALS['egw']->nextmatchs->show_sort_order($this->bo->sort,'month_num,mday',$this->bo->order,'/index.php',lang('Rule'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year).'</td>',
+				'header_rule'		=> '<td>'.$GLOBALS['egw']->nextmatchs->show_sort_order($this->bo->sort,'hol_month_num,hol_mday',$this->bo->order,'/index.php',lang('Rule'),'&menuaction=calendar.uiholiday.edit_locale&locale='.$this->bo->locales[0].'&year='.$this->bo->year).'</td>',
 				'header_extra'		=> lang('Copy'),
 				'extra_width'		=> 'width="5%"'
 			);
