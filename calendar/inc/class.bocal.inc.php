@@ -493,6 +493,12 @@ class bocal
 		{
 			$this->debug_message('bocal::set_recurrences(%1,%2)',true,$event,$start);
 		}
+		// check if the caller gave the participants and if not read them from the DB
+		if (!isset($event['participants']))
+		{
+			list(,$event_read) = each($this->so->read($event['id']));
+			$event['participants'] = $event_read['participants'];
+		}
 		if (!$start) $start = $event['start'];
 		
 		$events = array();

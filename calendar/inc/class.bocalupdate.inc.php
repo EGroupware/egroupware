@@ -243,6 +243,8 @@ class bocalupdate extends bocal
 		if (!($new_event = !(int)$event['id']))
 		{
 			$old_event = $this->read((int)$event['id'],null,$ignore_acl);
+			// if no participants are set, set them from the old event, as we might need them to update recuring events
+			if (!isset($event['participants'])) $event['participants'] = $old_event['participants'];
 			//echo "old $event[id]="; _debug_array($old_event);
 		}
 		//echo "saving $event[id]="; _debug_array($event);
@@ -661,8 +663,8 @@ class bocalupdate extends bocal
 	function save($event)
 	{
 		// check if user has the permission to update / create the event
-		if ($event['cal_id'] && !$this->check_perms(EGW_ACL_EDIT,$event['cal_id']) ||
-			!$event['cal_id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']))
+		if ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
+			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']))
 		{
 			return false;
 		}
