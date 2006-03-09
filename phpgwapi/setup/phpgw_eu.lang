@@ -18,6 +18,7 @@ account has been created	common	eu	Kontu bat sortu da
 account has been deleted	common	eu	Kontua ezabatua izan da
 account has been updated	common	eu	Kontua eguneratua izan da
 account is expired	common	eu	Kontua iraungi egin da
+acl	common	eu	ACL
 action	common	eu	Ekin
 active	common	eu	Aktibatua
 add	common	eu	Gehitu
@@ -31,6 +32,7 @@ albania	common	eu	ALBANIA
 algeria	common	eu	ALJERIA
 align	htmlarea-TableOperations	eu	Lerrokatu
 align center	tinymce	eu	Lerrokatu erdian
+align full	tinymce	eu	Lerrokatu osoa
 align left	tinymce	eu	Lerrokatu ezkerrean
 align right	tinymce	eu	Lerrokatu eskubian
 alignment	tinymce	eu	Lerrokatzea
@@ -120,6 +122,7 @@ china	common	eu	TXINA
 choose the category	common	eu	Kategoria aukeratu
 choose the parent category	common	eu	Goi kategoria aukeratu
 christmas island	common	eu	CHRISTMAS ISLAND
+class	tinymce	eu	Klase
 clear	common	eu	Garbitu
 clear form	common	eu	Formularioa garbitu
 click	common	eu	Klikatu
@@ -127,15 +130,21 @@ click or mouse over to show menus	common	eu	Klikatu edo mugitu xagua menuetatik
 click or mouse over to show menus?	common	eu	Klikatu edo mugitu xagua menuetatik?
 close	common	eu	Itxi
 cocos (keeling) islands	common	eu	COCOS (KEELING) ISLANDS
+collapsed borders	htmlarea-TableOperations	eu	Ertz taldekatuak
 colombia	common	eu	COLOMBIA
 color	htmlarea-TableOperations	eu	Kolorea
+columns	tinymce	eu	Zutabeak
+comment	tinymce	eu	Oharra
+common preferences	common	eu	Hobespen orokorrak
 comoros	common	eu	COMOROS
 company	common	eu	Elkartea
+configuration problem	tinymce	eu	kongigurazio arazoak
 congo	common	eu	CONGO
 congo, the democratic republic of the	common	eu	CONGOKO ERREPUBLIKA DEMOKRATIKOA
 cook islands	common	eu	COOK ISLANDS
 copy	common	eu	Kopiatu
 copy selection	htmlarea	eu	Aukeraketa kopiatu
+copy table row	tinymce	eu	Taulako errenkada kopiatu
 costa rica	common	eu	COSTA RICA
 cote d ivoire	common	eu	COTE D IVOIRE
 create	common	eu	Sortu
@@ -149,14 +158,18 @@ current style	htmlarea	eu	Oraingo estiloa
 current users	common	eu	Momentuko erabiltzaileak
 cut	htmlarea-ContextMenu	eu	Moztu
 cut selection	htmlarea	eu	Aukeraketa moztu
+cut table row	tinymce	eu	Taulako errenkada ebaki
 cyprus	common	eu	CYPRUS
 czech republic	common	eu	CZECH REPUBLIC
 date	common	eu	Data
 date due	common	eu	Muga eguna
+date modified	tinymce	eu	Data aldatuta
 date selection:	jscalendar	eu	Aukeratu data:
+de_lete column	htmlarea-ContextMenu	eu	Zutabea ezabatu
 december	common	eu	Abendua
 decimal numbers	htmlarea-ListType	eu	Zenbaki hamartarrak
 decrease indent	htmlarea	eu	Txikitu koska
+default	tinymce	eu	Lehenetsia
 default category	common	eu	Lehenetsitako kategoria
 delete	common	eu	Ezabatu
 delete cell	htmlarea-TableOperations	eu	Gelaxka ezabatu
@@ -169,6 +182,8 @@ description	common	eu	Deskribapena
 detail	common	eu	Zehaztasuna
 details	common	eu	Zehaztasunak
 dictionary	htmlarea-SpellChecker	eu	Hiztegia
+direction	tinymce	eu	Helbidea
+directory	tinymce	eu	Direktorio
 disable slider effects	common	eu	Efektu graduatzaileak desaktibatu
 disabled	common	eu	Desaktibatu
 djibouti	common	eu	DJIBOUTI
@@ -179,6 +194,7 @@ domain	common	eu	Domeinu
 dominica	common	eu	DOMINICA
 dominican republic	common	eu	ERREPUBLICA DOMINIKARRA
 done	common	eu	Egina
+down	tinymce	eu	Behera
 drag to move	jscalendar	eu	Arrastatu mugitzeko
 e-mail	common	eu	Posta elektronikoa
 east timor	common	eu	EAST TIMOR
@@ -187,6 +203,7 @@ edit	common	eu	Editatu
 edit %1 category for	common	eu	Editatu %1 kategoria
 edit categories	common	eu	Editatu kategoriak
 edit category	common	eu	Editatu kategoria
+egroupware api version %1	common	eu	eGroupware API bertsioa %1
 egypt	common	eu	EGIPTO
 el salvador	common	eu	EL SALVADOR
 element...	htmlarea-ContextMenu	eu	Elementu...
