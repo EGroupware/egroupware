@@ -677,7 +677,7 @@
 			{
 				$where['cat_id'] = $cat_id;
 			}
-			if ($parent) $where['cat_parent'] = $cat_parent;
+			if ($parent) $where['cat_parent'] = $parent;
 
 			$this->db->select($this->table,'cat_id',$where,__LINE__,__FILE__);
 
