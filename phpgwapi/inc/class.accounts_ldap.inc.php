@@ -447,7 +447,7 @@
 			if($wasAccount)
 			{
 				// remove the user from any group he is member of
-				$filter    = "(&(objectclass=posixgroup)(memberuid=" . (int)$accountID . "))";
+				$filter    = "(&(objectclass=posixgroup)(memberuid=" . $accountID . "))";
 				$justThese = array('memberuid','gidnumber');
 				$sri = ldap_search($this->ds, $this->group_context, $filter, $justThese);
 				if($sri)
