@@ -117,7 +117,7 @@ class Horde_iCalendar {
         foreach ($keys as $key) {
             if ($this->_attributes[$key]['name'] == $name) {
                 $this->_attributes[$key]['params'] =
-                    array_merge($this->_attributes[$key]['params'] , $params);
+                    array_merge((array)$this->_attributes[$key]['params'] , $params);
                 return true;
             }
         }
@@ -419,7 +419,7 @@ class Horde_iCalendar {
 
         // All subcomponents.
         $matches = null;
-        if (preg_match_all('/BEGIN:([\W\w]*)(\r\n|\r|\n)([\W\w]*)END:\1(\r\n|\r|\n)/U', $vCal, $matches)) {
+        if (preg_match_all('/BEGIN:([\S]*)(\r\n|\r|\n)([\W\w]*)END:\1(\r\n|\r|\n)/U', $vCal, $matches)) {
             foreach ($matches[0] as $key => $data) {
                 $type = $matches[1][$key];
                 $component = &Horde_iCalendar::newComponent(trim($type), $this);
