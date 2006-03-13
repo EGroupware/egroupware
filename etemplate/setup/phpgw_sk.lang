@@ -1,0 +1,97 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sk	%1 (%2 nových) správ napísaných pre aplikáciu '%3' a jazyky '%4'
+%1 etemplates deleted	etemplate	sk	%1 e©ablón zmazaných
+%1 etemplates found	etemplate	sk	Na¹lo sa %1 e©ablón.
+%1 matches on search criteria	etemplate	sk	Nájdených %1 zhôd s vyhµadávacím kritériom
+%1 new etemplates imported for application '%2'	etemplate	sk	Naimportovaných %1 nových e©ablón pre aplikáciu '%2'
+%s disabled	etemplate	sk	%s vypnuté
+%s needed	etemplate	sk	%s potrebné
+%s notranslation	etemplate	sk	%s BezPrekladu
+%s onchange	etemplate	sk	%s saMení
+%s readonly	etemplate	sk	%s lenNaÈítanie
+'%1' has an invalid format !!!	etemplate	sk	'%1' má nesprávny formát !!!
+'%1' is not a valid date !!!	etemplate	sk	'%1' nie je platný dátum !!!
+'%1' is not a valid floatingpoint number !!!	etemplate	sk	'%1' nie je platné èíslo s plávajúcou desatinnou èiarkou !!!
+'%1' is not a valid integer !!!	etemplate	sk	'%1' nie je platné celé èíslo !!!
+a pattern to be searched for	etemplate	sk	hµadaný výraz
+accesskey	etemplate	sk	Prístupový kµúè
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	sk	Prístupový kµúè sa dá ¹pecifikova» aj so znakom & v oznaèení (napr. &Name)
+add a new column (after the existing ones)	etemplate	sk	Prida» nový ståpec (za existujúcimi)
+add a new entry of the selected application	etemplate	sk	Prida» nový záznam vybranej aplikácie
+add a new multi-column index	etemplate	sk	Prida» nový viacståpcový index
+add column	etemplate	sk	Prida» Ståpec
+add index	etemplate	sk	Prida» Index
+add new	etemplate	sk	Prida» nový
+add table	etemplate	sk	Prida» Tabuµku
+advanced search	etemplate	sk	Roz¹írené hµadanie
+align	etemplate	sk	Zarovnaj
+alignment of label and input-field in table-cell	etemplate	sk	zarovnanie oznaèenia a vstupného poµa v bunke tabuµky
+alignment of the v/hbox containing table-cell	etemplate	sk	Zarovnanie V/HBoxu obsahujúceho bunku tabuµky
+all days	etemplate	sk	v¹etky dni
+all operations save the template!	etemplate	sk	v¹etky operácie ukladajú ¹ablónu!
+am	etemplate	sk	dp
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sk	indexovaný ståpec zrýchµuje hµadanie v danom ståpci (av¹ak na úkor miesta na disku !!!)
+application	etemplate	sk	Aplikácia
+applies the changes made	etemplate	sk	pou¾ijú sa vykonané zmeny
+applies the changes to the given version of the template	etemplate	sk	pou¾ije zmeny urobené na danej verzii ¹ablóny
+attach	etemplate	sk	Príloha
+attach file	etemplate	sk	Prilo¾i» súbor
+baseline	etemplate	sk	Základný
+border	etemplate	sk	Okraj
+border-line-thickness for the table-tag	etemplate	sk	Hrúbka okrajovej èiary pre tag tabuµky
+bottom	etemplate	sk	Spodok
+can not have special sql-value null	etemplate	sk	¹peciálna SQL-hodnota nemô¾e by» NULL
+cancel	etemplate	sk	Zru¹i»
+cant delete a single widget from a grid !!!	etemplate	sk	Nedá sa zmaza» jednotlivý widget z matice!!!
+cant delete the only column of a grid !!!	etemplate	sk	Nedá sa zmaza» jediný ståpec matice!!!
+cant delete the only row in a grid !!!	etemplate	sk	Nedá sa zmaza» jediný riadok matice!!!
+category	etemplate	sk	Kategória
+cells	etemplate	sk	Bunky
+center	etemplate	sk	Stred
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sk	Za¹krtnite, ak obsah má by» iba zobrazovaný ale nie menený (obsah sa potom neposiela naspä»!)
+check if field has to be filled by user	etemplate	sk	Za¹krtnite ak pole musí by» vyplnené pou¾ívateµom
+checkbox	etemplate	sk	Za¹krtávacie políèko
+class	etemplate	sk	Trieda
+class, valign	etemplate	sk	trieda, V-zarovnanie
+click here to attach the file	etemplate	sk	kliknite sem pre pripojenie súboru
+click here to create the link	etemplate	sk	Kliknite sem pre vytvorenie odkazu
+click here to start the search	etemplate	sk	Kliknite sem pre spustenie hµadania
+click here to upload the file	etemplate	sk	Kliknite sem pre nahratie súboru
+click to order after that criteria	etemplate	sk	kliknite pre zotriedenie podµa tohto kritéria
+clickable path	etemplate	sk	rozkliknuteµná cesta
+closes the window without saving the changes	etemplate	sk	zavrie okno bez ulo¾enia zmien
+column...	etemplate	sk	Ståpec...
+columnname	etemplate	sk	Názov ståpca
+comment	etemplate	sk	Komentár
+confirm	etemplate	sk	Potvrdi»
+confirmation message or custom javascript (returning true or false)	etemplate	sk	Potvrdzovacia správa alebo pou¾ívateµský javascript (vracia true alebo false - pravda/nepravda)
+confirmation necesary or custom java-script	etemplate	sk	potvrdenie nevyhnutné, alebo pou¾ívateµský javascript
+contains	etemplate	sk	Obsahuje
+create a new table for the application	etemplate	sk	Vytvori» novú tabuµku pre aplikáciu
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sk	vytvorí anglický ('en') jazykový súbor z oznaèenia a pomocných textov (pre aplikáciu uvedenú v Názve)
+css properties	etemplate	sk	CSS nastavenia
+css-styles	etemplate	sk	CSS ¹týly
+custom	etemplate	sk	Pou¾ívateµom definované
+custom fields	etemplate	sk	Pou¾ívateµom definované Polo¾ky
+cut	etemplate	sk	Vystrihnú»
+date+time	etemplate	sk	Dátum+Èas
+datum	etemplate	sk	Dátum
+day	etemplate	sk	Deò
+days	etemplate	sk	dni
+db ensures that every row has a unique value in that column	etemplate	sk	DB zabezpeèuje, aby mal ka¾dý riadok svoju jedineènú hodnotu v tomto ståpci
+db-tools	etemplate	sk	DB-Nástroje
+default	etemplate	sk	Predvolené
+delete a single entry by passing the id.	etemplate	sk	Zmaza» jednotlivý záznam zadaním id.
+delete all selected etemplates, without further inquiry	etemplate	sk	Zmaza» V©ETKY oznaèené e©ablóny, BEZ ïal¹ieho varovania
+delete column	etemplate	sk	Zmaza» ståpec
+delete index	etemplate	sk	Zmaza» index
+delete the spezified etemplate	etemplate	sk	Zmaza» vybranú e©ablónu
+delete this column	etemplate	sk	Zmaza» tento ståpec
+delete this etemplate	etemplate	sk	Zmaza» túto e©ablónu
+delete this file	etemplate	sk	Zmaza» tento súbor
+delete this row	etemplate	sk	Zmaza» tento riadok
+delete whole column (can not be undone!!!)	etemplate	sk	Zmaza» celý ståpec (NEDÁ sa vráti» spä» !!!)
+deletes the above spez. etemplate from the database, can not be undone	etemplate	sk	Vyma¾e vy¹¹ieuvedenú e©ablónu, NEDÁ sa vráti» spä»
+deletes the etemplate spez. above	etemplate	sk	zma¾e vy¹¹ieuvedenú e©ablónu
+deletes this column	etemplate	sk	Zma¾e tento ståpec
+deletes this index	etemplate	sk	Zma¾e tento index
+discard changes	etemplate	sk	zahodi» zmeny
