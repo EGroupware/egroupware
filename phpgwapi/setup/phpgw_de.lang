@@ -172,6 +172,7 @@ copy	common	de	Kopieren
 copy selection	htmlarea	de	Den markierten Text kopieren
 copy table row	tinymce	de	Copy table row
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	de	Kopieren/Ausschneiten/Einfügen ist mit Mozilla und Firefox nicht verfügbar.\nWollen Sie mehr Informationen darüber erhalten?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	de	Kopieren/Ausschneiten/Einfügen ist mit Mozilla und Firefox nicht verfügbar.\nWollen Sie mehr Informationen darüber erhalten?
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 create	common	de	Erstellen
@@ -517,6 +518,7 @@ morocco	common	de	MAROCCO
 move	tinymce	de	Verschieben
 mozambique	common	de	MOZAMBIQUE
 myanmar	common	de	MYANMAR
+n tidying up the html source, please wait...	htmlarea-HtmlTidy	de	\n formatiere das HTML, bitte warten ...
 name	common	de	Name
 name of the user, eg. "%1"	common	de	Name des Benutzers, zB. "%1"
 namibia	common	de	NAMIBIEN
@@ -566,6 +568,7 @@ not assigned	common	de	nicht zugewiesen
 note	common	de	Notiz
 notes	common	de	Notizen
 notify window	common	de	Benachrichtigungsfenster
+notify your administrator to correct this situation	common	de	Benachrichtigen Sie Ihren Administration um diese Situation zu lösen
 november	common	de	November
 october	common	de	Oktober
 ok	common	de	OK
@@ -608,6 +611,11 @@ parent category	common	de	Übergeordnete Kategorie
 password	common	de	Passwort
 password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
+password must contain at least %1 lowercase letters	common	de	Das Passwort muss mindestens %1 Kleinbuchstaben enthalten
+password must contain at least %1 numbers	common	de	Das Passwort muss mindestens %1 Nummern enthalten
+password must contain at least %1 special charactars	common	de	Das Passwort muss mindestens %1 Sonderzeichen enthalten
+password must contain at least %1 uppercase letters	common	de	Das Passwort muss mindestens %1 Großbuchstaben enthalten
+password must have at least %1 characters	common	de	Das Passwort muss mindestens %1 Zeichen lang sein
 paste	htmlarea-ContextMenu	de	Einfügen
 paste as plain text	tinymce	de	Einfügen als reiner Text
 paste from clipboard	htmlarea	de	Aus dem clipboard übernehmen
@@ -865,6 +873,7 @@ unset color	htmlarea-TableOperations	de	Farbe
 up	tinymce	de	Rückwärts
 update	common	de	Aktualisieren
 upload	common	de	Hochladen
+upload directory does not exist, or is not writeable by webserver	common	de	Das Verzeichnis zum Hochladen existiert nicht oder ist nicht vom Webserver beschreibbar.
 upload image	htmlarea-UploadImage	de	Bild hochladen
 uploading...	tinymce	de	Lade hoch...
 upper latin letters	htmlarea-ListType	de	Große lateinische Buchstaben
@@ -895,6 +904,7 @@ virgin islands, british	common	de	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	de	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	de	WALLIS AND FUTUNA
 warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	de	Warnung!\n Umbenennen oder verschieben von Verzeichnissen oder Dateien macht die Verweise in Ihrem Dokument ungültig. Fortfahren?
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	de	Warnung!\n Umbenennen oder verschieben von Verzeichnissen oder Dateien macht die Verweise in Ihrem Dokument ungültig. Fortfahren?
 wednesday	common	de	Mittwoch
 welcome	common	de	Willkommen
 western sahara	common	de	WEST SAHARA

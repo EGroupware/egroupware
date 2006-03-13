@@ -567,6 +567,7 @@ not assigned	common	en	not assigned
 note	common	en	Note
 notes	common	en	Notes
 notify window	common	en	Notify Window
+notify your administrator to correct this situation	common	en	Notify your Administrator to correct this Situation
 november	common	en	November
 october	common	en	October
 ok	common	en	OK
@@ -609,6 +610,11 @@ parent category	common	en	Parent Category
 password	common	en	Password
 password could not be changed	common	en	Password could not be changed
 password has been updated	common	en	Password has been updated
+password must contain at least %1 lowercase letters	common	en	Password must contain at least %1 lowercase letters
+password must contain at least %1 numbers	common	en	Password must contain at least %1 numbers
+password must contain at least %1 special charactars	common	en	Password must contain at least %1 special charactars
+password must contain at least %1 uppercase letters	common	en	Password must contain at least %1 uppercase letters
+password must have at least %1 characters	common	en	Password must have at least %1 characters
 paste	htmlarea-ContextMenu	en	Paste
 paste as plain text	tinymce	en	Paste as Plain Text
 paste from clipboard	htmlarea	en	Paste from clipboard
@@ -866,6 +872,7 @@ unset color	htmlarea-TableOperations	en	Unset color
 up	tinymce	en	Up
 update	common	en	Update
 upload	common	en	Upload
+upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writeable by webserver
 upload image	htmlarea-UploadImage	en	Upload Image
 uploading...	tinymce	en	Uploading...
 upper latin letters	htmlarea-ListType	en	Upper latin letters
