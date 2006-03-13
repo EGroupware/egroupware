@@ -70,6 +70,10 @@
 				{
 					$errors[] = lang('You must enter a password');
 				}
+				if($GLOBALS['egw_info']['server']['check_save_passwd'] && $error_msg = $GLOBALS['egw']->auth->crackcheck($n_passwd))
+				{
+					$errors[] = $error_msg;
+				}
 
 				if(is_array($errors))
 				{
@@ -111,6 +115,7 @@
 				$GLOBALS['egw']->common->egw_header();
 				echo parse_navbar();
 
+				$GLOBALS['egw']->template->set_var('messages',$_GET['message']);
 				$GLOBALS['egw']->template->pfp('out','form');
 				$GLOBALS['egw']->common->egw_footer();
 			}

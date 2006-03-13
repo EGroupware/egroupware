@@ -298,9 +298,18 @@
 			{
 				list($forward,$extra_vars) = explode('?',$forward,2);
 			}
-			//echo "redirecting to ".$GLOBALS['egw']->link($forward,$extra_vars);
-
-			$GLOBALS['egw']->redirect_link($forward,$extra_vars);
+			
+			// Check for save passwd
+			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') && $unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd))
+			{
+				$GLOBALS['egw']->log->write(array('text'=>'D-message, User '. $login. ' authenticated with an unsave password','file' => __FILE__,'line'=>__LINE__));
+				$message = '<font color="red">'. lang('eGroupWare checked your password for saftyness. You have to change your password for the following reason:').'<br>';
+				$GLOBALS['egw']->redirect_link('/index.php', array('menuaction' => 'preferences.uipassword.change','message' => $message. $unsave_msg. '</font>'));
+			}
+			else 
+			{
+				$GLOBALS['egw']->redirect_link($forward,$extra_vars);
+			}
 		}
 	}
 	else

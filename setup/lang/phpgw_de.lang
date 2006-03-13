@@ -10,6 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br />Die Benutzernamen/Passwörter sind: demo/guest, demo2/guest und demo3/guest.
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
+activate save password check	setup	de	Aktiviere die "sichere Passwort" Überprüfung
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	de	Automatisch erzeugte Benutzer zu dieser Grupper hinzufügen ("Default" wird versucht wenn nichts angegeben.)
 add new database instance (egw domain)	setup	de	Neue Datenbankinstanz (eGW Domain) hinzufügen
 additional settings	setup	de	Zusätzliche Einstellungen
@@ -174,7 +175,9 @@ enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br />(benötigt mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
+enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
 enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br />Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br />Beispiel: http://www.domain.com/egroupware   or   /egroupware<br /><b>keinen nachfolgenden Slash /</b>

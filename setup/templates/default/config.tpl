@@ -208,28 +208,36 @@
    <tr class="row_on">
     <td>{lang_sql_encryption_type}:</td>
     <td>
-     <select name="newsettings[sql_encryption_type]">
-{hook_sql_passwdhashes}
-     </select>
+     <select name="newsettings[sql_encryption_type]">{hook_sql_passwdhashes}</select>
     </td>
    </tr>
 
+   <tr class="row_off">
+     <td>{lang_Activate_save_password_check}:</td>
+     <td>
+      <select name="newsettings[check_save_passwd]">
+       <option value="">{lang_No}</option>
+       <option value="True" {selected_check_save_passwd_True}>{lang_Yes}</option>
+      </select>
+     </td>
+    </tr>
+    
    <tr class="row_off">
     <td>{lang_Allow_authentication_via_cookie}:</td>
     <td>
       <select name="newsettings[allow_cookie_auth]">
          <option value="">{lang_No}</option>
-         <option value="True"{selected_allow_cookie_auth_True}>{lang_Yes}</option>
+         <option value="True" {selected_allow_cookie_auth_True}>{lang_Yes}</option>
        </select>
     </td>
    </tr>
-
+   
    <tr class="row_on">
     <td>{lang_Allow_password_migration}:</td>
     <td>
       <select name="newsettings[pwd_migration_allowed]">
          <option value="">{lang_No}</option>
-         <option value="True"{selected_pwd_migration_allowed_True}>{lang_Yes}</option>
+         <option value="True" {selected_pwd_migration_allowed_True}>{lang_Yes}</option>
        </select>
     </td>
    </tr>
