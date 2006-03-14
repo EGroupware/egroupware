@@ -970,8 +970,13 @@
 			array('egw_acl','acl_account'),
 			array('egw_accounts','account_primary_group',"account_type='u'"),
 			array('egw_cal_user','cal_user_id',"cal_user_type='u'"),
+			// adding the old name, as the rename might have not been done (api upgrades run befor app ones)
+			array('phpgw_cal_user','cal_user_id',"cal_user_type='u'"),
 			array('egw_wiki_pages','wiki_readable',true),
 			array('egw_wiki_pages','wiki_writable',true),
+			// adding the old name, as the rename might have not been done (api upgrades run befor app ones)
+			array('phpgw_wiki_pages','wiki_readable',true),
+			array('phpgw_wiki_pages','wiki_writable',true),
 			array('egw_vfs','vfs_owner_id'),
 			array('egw_vfs','vfs_createdby_id'),
 		) as $data)
