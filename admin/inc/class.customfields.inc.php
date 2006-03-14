@@ -30,9 +30,9 @@
 		var $appname;
 		
 		/**
-		* @var array $types array with allowd types of customfields
+		* @var array $cf_types array with allowd types of customfields
 		*/
-		var $types = array(
+		var $cf_types = array(
 			'text'     => 'Text',
 			'label'    => 'Label',
 			'select'   => 'Selectbox',
@@ -52,10 +52,9 @@
 
 		function customfields($appname='')
 		{
-			$this->appname = $appname ? $appname : $_GET['appname'];
-			$this->tmpl =& CreateObject('etemplate.etemplate');
+// 			$this->tmpl =& CreateObject('etemplate.etemplate');
 			$this->config =& CreateObject('phpgwapi.config',$this->appname);
-			
+// 			if($this->tmpl->read($this->appname.'.admin.types')) {$this->manage_content_types = true; echo 'tt';}
 			$GLOBALS['egw']->translation->add_app('infolog');	// til we move the translations
 		}
 
@@ -67,24 +66,38 @@
 		 */
 		function edit($content = null)
 		{
+			// determine appname
+			$this->appname = $_GET['appname'] ? $_GET['appname'] : ($content['appname'] ? $content['appname'] : false);
+			if(!$this->appname) die(lang('Error! No appname found'));
+			
+			$GLOBALS['egw']->translation->add_app('infolog');	// til we move the translations
+			$this->tmpl =& CreateObject('etemplate.etemplate');
+			$this->config =& CreateObject('phpgwapi.config',$this->appname);
+			// do we manage content-types?
+			if($this->tmpl->read($this->appname.'.admin.types')) $this->manage_content_types = true;
+			
+			$this->fields = $this->get_customfields();
+			$this->tmpl->read('admin.customfields');
+			
+			if($this->manage_content_types) $this->content_types = $this->get_content_types();
+			else
+			{
+				$this->tmpl->children[0]['data'][2]['A']['disabled'] = true;
+				$this->tmpl->children[0]['data'][3]['A']['disabled'] = true;
+			}
+			
 			if (is_array($content))
 			{
-				// setting our app again
-				$this->config->config($this->appname = $content['appname']);
-				$this->fields = $this->get_customfields();
-
 				//echo '<pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
-				if($content['fields']['delete'] || $content['fields']['create'])
+				if($this->manage_content_types)
 				{
-					if($content['fields']['delete'])
-					{
-						$this->delete($content);
-					}
-					elseif($content['fields']['create'])
-					{
-						$this->create($content);
-					}
+					$this->content_type = $content['content_types']['types'];
 				}
+
+				if($content['content_types']['delete']) $this->delete_content_type($content);
+				elseif($content['content_types']['create']) $this->create_content_type($content);
+				elseif($content['fields']['delete']) $this->delete_field($content);
+				elseif($content['fields']['create']) $this->create_field($content);
 				else
 				{
 					list($action) = @each($content['button']);
@@ -111,18 +124,35 @@
 			}
 			else
 			{
-				$this->fields = $this->get_customfields();
+				if($this->manage_content_types)
+				{
+					$content_types = array_keys($this->content_types);
+					$this->content_type = $content_types[0];
+				}
 
-				list($type) = each($this->types);
-				$content = array(
-					'type' => $type,
-				);
 				$referer = $GLOBALS['egw']->common->get_referer();
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps'][$this->appname]['title'].' - '.lang('Custom fields');
-
 			$readonlys = array();
-
+			
+			if($this->manage_content_types)
+			{
+				$content['content_types']['app-name'] = $this->appname;
+				foreach($this->content_types as $type => $entry)
+				{
+					$this->types2[$type] = $entry['name'];
+				}
+				$content['content_types']['options-types'] = $this->types2;
+				$this->tmpl->children[0]['data'][3]['A']['name'] = $this->appname.'.admin.types';
+				$this->tmpl->children[0]['data'][3]['A']['size'] = 'content_type_options';
+				$content['content_type_options'] = $this->content_types[$this->content_type]['options'];
+				$content['content_type_options']['type'] = $this->content_types[$this->content_type]['name'];
+				if ($this->content_types[$this->content_type]['non_deletable'])
+				{
+					$content['content_types']['non_deletable'] = true;
+				}
+			}
+			
 			//echo 'customfields=<pre style="text-align: left;">'; print_r($this->fields); echo "</pre>\n";
 			$content['fields'] = array();
 			$n = 0;
@@ -150,13 +180,13 @@
 				$readonlys['fields']["create$name"] = True;
 			}
 			$content['fields'][++$n] = array('name'=>'','order' => 10 * $n);	// new line for create
+			if($this->manage_content_types) $content['fields']['type2'] = 'enable';
 			$readonlys['fields']["delete[]"] = True;
 			//echo '<p>uicustomfields.edit(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
 			//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
-			$this->tmpl->read('admin.customfields');
 			$this->tmpl->exec('admin.customfields.edit',$content,array(
-				'type'     => $this->types,
-				'type2' => $this->types2,
+				'type'     => $this->cf_types,
+				'type2' => $this->types2 + array('tmpl' => 'template'),
 			),$readonlys,array(
 				'fields' => $preserv_fields,
 				'appname' => $this->appname,
@@ -212,6 +242,10 @@
 					'rows'  => intval($field['rows']),
 					'order' => intval($field['order'])
 				);
+				if(!$this->fields[$name]['type2'] && $this->manage_content_types)
+				{
+					$this->fields[$name]['type2'] = (string)0;
+				}
 			}
 			if (!function_exists('sort_by_order'))
 			{
@@ -233,6 +267,7 @@
 		function update(&$content)
 		{
 			$this->update_fields($content);
+			$this->content_types[$this->content_type]['options'] = $content['content_type_options'];
 			// save changes to repository
 			$this->save_repository();
 		}
@@ -240,18 +275,24 @@
 		/**
 		* deletes custom field from customfield definitions
 		*/
-		function delete(&$content)
+		function delete_field(&$content)
 		{
 			unset($this->fields[key($content['fields']['delete'])]);
-			
 			// save changes to repository
 			$this->save_repository();
 		}
-
+		
+		function delete_content_type(&$content)
+		{
+			unset($this->content_types[$content['content_types']['types']]);
+			// save changes to repository
+			$this->save_repository();
+		}
+		
 		/**
 		* create a new custom field
 		*/
-		function create(&$content)
+		function create_field(&$content)
 		{
 			$new_name = trim($content['fields'][count($content['fields'])-1]['name']);
 			if (empty($new_name) || isset($this->fields[$new_name]))
@@ -267,6 +308,31 @@
 				$this->save_repository();
 			}
 		}
+		
+		function create_content_type(&$content)
+		{
+			$new_name = trim($content['content_types']['name']);
+			if (empty($new_name) || isset($this->fields[$new_name]))
+			{
+				$content['error_msg'] .= empty($new_name) ?
+					lang('You have to enter a name, to create a new type!!!') :
+					lang("type '%1' already exists !!!",$new_name);
+			}
+			else
+			{
+				// search free type character
+				for($i=97;$i<=122;$i++)
+				{
+					if(!$this->content_types[chr($i)])
+					{
+						$new_type = chr($i);
+						break;
+					}
+				}
+				$this->content_types[$new_type] = array('name' => $new_name);
+				$this->save_repository();
+			}
+		}
 
 		/**
 		* save changes to repository
@@ -275,7 +341,7 @@
 		{
 			//echo '<p>uicustomfields::save_repository() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
 			$this->config->value('customfields',$this->fields);
-
+			$this->config->value('types',$this->content_types);
 			$this->config->save_repository();
 		}
 		
@@ -293,4 +359,18 @@
 			
 			return is_array($config[$config_name]) ? $config[$config_name] : array();
 		}
+		
+		/**
+		* get_content_types of using application
+		*
+		* @author Cornelius Weiss
+		* @return array with content-types
+		*/
+		function get_content_types()
+		{
+			$config = $this->config->read_repository();
+
+			return is_array($config['types']) ? $config['types'] : array();
+		}
+
 	}

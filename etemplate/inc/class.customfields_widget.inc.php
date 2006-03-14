@@ -14,7 +14,7 @@
 	/* $Id$ */
 
 	/**
-	 * This widget generates a template for customfields based on definitions in epgw_config table
+	 * This widget generates a template for customfields based on definitions in egw_config table
 	 *
 	 * @package etemplate
 	 * @subpackage extensions
@@ -43,6 +43,7 @@
 			//merge old config_name in egw_config table
 			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
 			$this->customfields = $config[$config_name];
+			$this->types = $config['types'];
 			$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
 
 		}
@@ -54,7 +55,7 @@
 			// infolog compability
 			if ($this->appname == 'infolog')
 			{
-				$typ = $value['###typ###'];
+				$type2 = $value['###typ###'];
 				unset($value['###typ###']);
 				$this->customfields = $value;
 			}
@@ -71,9 +72,9 @@
 			//echo '<pre style="text-align: left;">'; print_r($value); echo "</pre>\n";
 			foreach($this->customfields as $name => $field)
 			{
-				if (!empty($field['typ']) && $field['typ'] != $typ)
+				if (!empty($field['type2']) && $field['type2'] != $type2)
 				{
-					continue;	// not for our typ
+					continue;	// not for our content type
 				}
 				if(empty($field['type']))
 				{

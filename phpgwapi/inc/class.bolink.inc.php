@@ -1031,7 +1031,7 @@
 			{
 				$this->contacts = createobject('phpgwapi.contacts');
 			}
-			$addrs = $this->contacts->read( 0,0,'',$pattern,'','DESC','org_name,n_family,n_given' );
+			$addrs = $this->contacts->read( 0,0,'',$pattern,'tid=!','DESC','org_name,n_family,n_given' );
 			$content = array( );
 			while ($addrs && list( $key,$addr ) = each( $addrs ))
 			{

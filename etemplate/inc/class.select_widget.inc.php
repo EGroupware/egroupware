@@ -246,13 +246,19 @@
 					$cell['no_lang'] = True;
 					break;
 
-				case 'select-account':	// options: #rows,{accounts(default)|both|groups},{0(=lid)|1(default=name)|2(=lid+name))}
+				case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name))}
 //echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
+					if($type == 'owngroups') 
+					{
+						$type = 'groups';
+						$owngroups = true;
+						foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
+					}
 					// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
 					if ($cell['readonly'] || $readonlys)
 					{
 						$cell['no_lang'] = True;
-						foreach(is_array($value) ? $value : array($value) as $id)
+						foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
 						{
 							$cell['sel_options'][$id] = $this->accountInfo($id,$acc,$type2,$type=='both');
 						}
@@ -287,7 +293,7 @@
 					}
 					foreach($accs as $acc)
 					{
-						if ($acc['account_type'] == 'g')
+						if ($acc['account_type'] == 'g' && (!$owngroups || ($owngroups && in_array($acc['account_id'],(array)$mygroups))))
 						{
 							$cell['sel_options'][$acc['account_id']] = $this->accountInfo($acc['account_id'],$acc,$type2,$type=='both');
 						}

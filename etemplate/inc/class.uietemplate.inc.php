@@ -1196,6 +1196,14 @@
 					{
 						$sels += $content["options-$name"];
 					}
+					if (empty($sels) && $cell['name']{0} = '#')
+					{
+						if(!is_array($this->customfields))
+						{
+							$this->customfields =& ExecMethod2('admin.customfields.get_customfields', $GLOBALS['egw_info']['flags']['currentapp']);
+						}
+						$sels = (array)$this->customfields[substr($cell['name'],1)]['values'];
+					}
 					if ($multiple && !is_array($value)) $value = explode(',',$value);
 					if ($readonly)
 					{
@@ -1425,7 +1433,7 @@
 			}
 			if ($extra_label && ($label != '' || $html == ''))
 			{
-				if (strlen($label) > 1 && !($cell['no_lang'] && $cell['label'] != $label || (int)$cell['no_lang'] == 2))
+				if (strlen($label) > 1 && !$cell['no_lang'] && !($cell['label'] != $label || (int)$cell['no_lang'] == 2))
 				{
 					$label = lang($label);
 				}

@@ -559,7 +559,7 @@
 					}
 					else	// 1 row with 1 column/child
 					{
-						soetemplate::add_child($widget,soetemplate::empty_cell());
+						soetemplate::add_child($widget,$cell=soetemplate::empty_cell());
 					}
 					break;
 

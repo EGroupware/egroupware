@@ -269,7 +269,7 @@
 		{
 			if(!$start)  { $start  = 0; }
 			if(!$limit)  { $limit  = 0; }
-			if(!$filter) { $filter = 'tid=n'; }
+			if(!$filter) { $filter = 'tid=n'; } 
 
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			$DEBUG = 0;
@@ -329,9 +329,9 @@
 						{
 							$filterlist[] = $name . '=' . $value;
 						}
-						elseif ($value == "!''")	// check for not empty
+						elseif ($value == "!")	// check for not empty
 						{
-							$filterlist[] = $name . "!=''";
+							$filterlist[] = $name . " IS NOT NULL";
 						}
 						else
 						{
@@ -379,7 +379,6 @@
 					$fand   .= $filtermethod;
 				}
 			}
-
 			if(@is_array($this->grants))
 			{
 				$grants = $this->grants;
@@ -394,7 +393,18 @@
 			{
 				$fwhere .= ') '; $fand .= ') ';
 			}
-
+			// acl enhancement
+			/* $this->accounts =& CreateObject('phpgwapi.accounts');
+			$groups = $this->accounts->membership();
+			$gwhere = " AND (published_groups IS NULL OR  CONCAT(',',published_groups,',') LIKE '%,". $groups[0]['account_id']. ",%' ";
+			unset($groups[0]);
+			foreach((array)$groups as $group)
+			{
+				$gwhere .= " OR CONCAT(',',published_groups,',') LIKE '%,". $group['account_id']. ",%'";
+			}
+			$gwhere .= " ) ";
+			$fwhere .= $gwhere;
+			$fand .= $gwhere;*/
 			if ($DEBUG && $filtermethod)
 			{
 				echo '<br>DEBUG - Filtering with: #' . $filtermethod . '#';
