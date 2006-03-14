@@ -51,6 +51,7 @@ contact settings	admin	en	Contact Settings
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 country	common	en	Country
 create new links	addressbook	en	Create new links
+credit	addressbook	en	Credit
 csv-fieldname	addressbook	en	CSV-Fieldname
 csv-filename	addressbook	en	CSV-Filename
 custom	addressbook	en	Custom
@@ -108,6 +109,7 @@ import from outlook	addressbook	en	Import from Outlook
 import multiple vcard	addressbook	en	Import Multiple VCard
 import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
+income	addressbook	en	Income
 international	addressbook	en	International
 isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label

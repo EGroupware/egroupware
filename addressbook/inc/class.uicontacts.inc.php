@@ -70,7 +70,7 @@ class uicontacts extends bocontacts
 		}
 		if (is_array($content))
 		{
-			list($button) = each($content['button']);
+			list($button) = @each($content['button']);
 			switch($button)
 			{
 				case 'save':
@@ -105,6 +105,7 @@ class uicontacts extends bocontacts
 					}
 					break;
 			}
+			// type change
 		}
 		else
 		{
@@ -118,6 +119,8 @@ class uicontacts extends bocontacts
 			}
 			else // look if we have presets for a new contact
 			{
+				$new_type = array_keys($this->content_types);
+				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : $new_type[0];
 				foreach($this->get_contact_conlumns() as $field => $data)
 				{
 					if ($_GET['presets'][$field]) $content[$field] = $_GET['presets'][$field];
@@ -146,7 +149,6 @@ class uicontacts extends bocontacts
 		$preserv = array(
 			'id' => $content['id'],
 			'lid' => $content['lid'],
-			'tid' => $content['tid'],
 			'owner' => $content['owner'],
 			'fn' => $content['fn'],
 			'geo' => $content['geo'],
@@ -156,13 +158,17 @@ class uicontacts extends bocontacts
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
-		
+		foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
+		foreach($GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw']->acl->account_id,'addressbook',true) as $id => $right)
+		{
+			if($id < 0) $sel_options['published_groups'][$id] = $GLOBALS['egw']->accounts->id2name($id);
+		}
+		$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
 		$content['link_to'] = array(
 			'to_app' => 'addressbook',
 			'to_id'  => $content['link_to']['to_id'],
 		);
-		
-		$this->tmpl->read('addressbook.edit');
+		$this->tmpl->read($this->content_types[$content['tid']]['options']['template']);
 		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$preserv, 2);
 	}
 	
@@ -197,7 +203,7 @@ class uicontacts extends bocontacts
 
 			$content = $this->read($contact_id);
 		}
-		foreach($content as $key => $val)
+		foreach((array)$content as $key => $val)
 		{
 			$readonlys[$key] = true;
 			if (in_array($key,array('tel_home','tel_work','tel_cell')))
@@ -220,7 +226,16 @@ class uicontacts extends bocontacts
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
 
-		$this->tmpl->read('addressbook.edit');
+		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
+		$sel_options['tz'] = $tz;
+		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
+		foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
+		foreach(explode(',',$content['published_groups']) as $id)
+		{
+			$sel_options['published_groups'][$id] = $GLOBALS['egw']->accounts->id2name($id);
+		}
+		$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+		$this->tmpl->read($this->content_types[$content['tid']]['options']['template']);
 		foreach(array('email','email_home','url') as $name)
 		{
 			if ($content[$name] )
@@ -354,7 +369,8 @@ class uicontacts extends bocontacts
 		
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
-		
+		$sel_options['tid'][] = lang('all');
+		//foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
 		$this->tmpl->read('addressbook.search');
 		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv);
 	}

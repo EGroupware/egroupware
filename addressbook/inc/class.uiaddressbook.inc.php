@@ -381,6 +381,22 @@
 				}
 				$this->bo->save_preferences($prefs,'',$columns_to_display,'');
 			}
+			
+			$typeicon = '<td height="21">&nbsp;</td>';
+			$cols = $typeicon . $cols;
+			
+			$custom =& CreateObject('admin.customfields',$contact_app);
+			$this->html =& CreateObject('phpgwapi.html');
+			$this->content_types = $custom->get_content_types();
+			if ($this->content_types && !is_array($this->content_types)) $this->content_types = unserialize($this->content_types);
+			foreach($this->content_types as $type => $data)
+			{
+				$this->contact_types[$type] = $data['name'];
+				$icon = !empty($data['options']['icon']) ? $this->html->image('addressbook',$data['options']['icon'],$data['name'], ' width="16px" height="16px"') : $data['name'];
+				$add_buttons .= "<td ><a href=\"\" onClick= \"window.open('". $GLOBALS['egw']->link('/index.php', array('menuaction'=>'addressbook.uicontacts.edit','typeid'=>$type)). "','_blank','dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes'); return false;\" >".$icon." </a></td>";
+			}
+			$GLOBALS['egw']->template->set_var('add_buttons',$add_buttons);
+			$GLOBALS['egw']->template->set_var('addressbuch_type',lang('Addressbook').'-'.lang('type'));
 
 			if(!$this->start)
 			{
@@ -415,7 +431,7 @@
 			Set qfilter to display entries where tid=n (normal contact entry),
 			else they may be accounts, etc.
 			*/
-			$qfilter = 'tid=' . (string)$this->typeid;
+			$qfilter = 'tid='.($this->typeid ? (string)$this->typeid : '!');
 			switch($this->filter)
 			{
 				case 'blank':
@@ -490,20 +506,19 @@
 			$GLOBALS['egw']->template->set_var('searchreturn',$noprefs . ' ' . $searchreturn);
 			$GLOBALS['egw']->template->set_var('lang_showing',$lang_showing);
 			$GLOBALS['egw']->template->set_var('search_filter',$search_filter);
-			/*
 			$GLOBALS['egw']->template->set_var('lang_show',lang('Show') . ':');
-			$GLOBALS['egw']->template->set_var('contact_type_list',$this->formatted_list('typeid',$this->contact_types,$this->typeid,False,True));
+			$GLOBALS['egw']->template->set_var('contact_type_list',$this->formatted_list('typeid',array('' => 'all') + $this->contact_types,$this->typeid,False,True));
 			$GLOBALS['egw']->template->set_var('self_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
-			*/
-			$GLOBALS['egw']->template->set_var('lang_show','');
-			$GLOBALS['egw']->template->set_var('contact_type_list','');
-			$GLOBALS['egw']->template->set_var('self_url','');
+			
+// 			$GLOBALS['egw']->template->set_var('lang_show','');
+// 			$GLOBALS['egw']->template->set_var('contact_type_list','');
+// 			$GLOBALS['egw']->template->set_var('self_url','');
 
 			$GLOBALS['egw']->template->set_var('cats',lang('Category'));
 			$GLOBALS['egw']->template->set_var('cats_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.index'));
 			/* $GLOBALS['egw']->template->set_var('cats_link',$this->cat_option($this->cat_id)); */
 			$GLOBALS['egw']->template->set_var('lang_cats',lang('Select'));
-			//			$GLOBALS['egw']->template->set_var('lang_addressbook',lang('Address book'));
+			//$GLOBALS['egw']->template->set_var('lang_addressbook',lang('Address book'));
 			$GLOBALS['egw']->template->set_var('th_bg',$GLOBALS['egw_info']['theme']['th_bg']);
 			$GLOBALS['egw']->template->set_var('th_font',$GLOBALS['egw_info']['theme']['font']);
 			$GLOBALS['egw']->template->set_var('th_text',$GLOBALS['egw_info']['theme']['th_text']);
@@ -521,7 +536,7 @@
 			$GLOBALS['egw']->template->set_var('lang_export',lang('Export Contacts'));
 			$GLOBALS['egw']->template->set_var('export_url',$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export'));
 			$GLOBALS['egw']->template->set_var('lang_delete',lang('Delete'));
-			$GLOBALS['egw']->template->set_var('column_count',count($columns_to_display));
+			$GLOBALS['egw']->template->set_var('column_count',count($columns_to_display) + 1);
 			$GLOBALS['egw']->template->set_var('lang_sure',lang('Are you sure you want to delete these entries ?'));
 
 			$GLOBALS['egw']->template->set_var('start',$this->start);
@@ -532,6 +547,7 @@
 			$GLOBALS['egw']->template->set_var('cat_id',$this->cat_id);
 
 			$GLOBALS['egw']->template->set_var('qfield',$qfield);
+
 			$GLOBALS['egw']->template->set_var('cols',$cols);
 
 			$GLOBALS['egw']->template->pparse('out','addressbook_header');
@@ -546,6 +562,17 @@
 				$myid    = $entries[$i]['id'];
 				$myowner = $entries[$i]['owner'];
 
+				if(!empty($this->content_types[$entries[$i]['tid']]['options']['icon']))
+				{
+					$icon = $this->html->image('addressbook',$this->content_types[$entries[$i]['tid']]['options']['icon'],$this->content_types[$entries[$i]['tid']]['name'], 'width="16px" height="16px"');
+				}
+				else
+				{
+					$icon = $this->content_types[$entries[$i]['tid']]['name'];
+				}
+				$GLOBALS['egw']->template->set_var('col_data',$icon);
+				$GLOBALS['egw']->template->parse('columns','column',True);
+				
 				/* each entry column */
 				foreach($columns_to_display as $column => $nul)
 				{
@@ -574,6 +601,7 @@
 					{
 						$ref = ''; $data = $coldata;
 					}
+					
 					$GLOBALS['egw']->template->set_var('col_data',$ref.$data);
 					$GLOBALS['egw']->template->parse('columns','column',True);
 				}

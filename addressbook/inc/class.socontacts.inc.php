@@ -69,11 +69,10 @@ class socontacts
 			
 		$custom =& CreateObject('admin.customfields',$contact_app);
 		$this->customfields = $custom->get_customfields();
-		if ($this->customfields && !is_array($this->customfields))
-		{
-			$this->customfields = unserialize($this->customfields);
-		}
+		if ($this->customfields && !is_array($this->customfields)) $this->customfields = unserialize($this->customfields);
 		if (!$this->customfields) $this->customfields = array();
+		$this->content_types = $custom->get_content_types();
+		if ($this->content_types && !is_array($this->content_types)) $this->content_types = unserialize($this->content_types);
 	}
 	
 	/**
@@ -135,11 +134,12 @@ class socontacts
 		$this->somain->data = $this->data2db($contact);
 		$error_nr = $this->somain->save();
 		$contact['id'] = $this->somain->data['id'];
-		if($error_nr) return $error_nr_main;
-
+		if($error_nr) return $error_nr;
+		
 		// save customfields
 		foreach ((array)$this->customfields + array('ophone' => '', 'address2' => '' , 'address3' => '') as $field => $options)
 		{
+			if(!array_key_exists('#'.$field,$contact)) continue;
 			$value = $contact['#'.$field];
 			$data = array(
 				$this->extra_id => $contact['id'],

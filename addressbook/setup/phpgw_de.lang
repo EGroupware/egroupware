@@ -51,6 +51,7 @@ contact settings	admin	de	Kontakt Einstellungen
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 country	common	de	Land
 create new links	addressbook	de	Neue Verknüpfung erstellen
+credit	addressbook	de	Darlehen
 csv-fieldname	addressbook	de	CSV-Feldname
 csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
@@ -108,6 +109,7 @@ import from outlook	addressbook	de	Aus Outlook importieren
 import multiple vcard	addressbook	de	Import mehrere VCards
 import next set	addressbook	de	Nächsten Satz importieren
 import_instructions	addressbook	de	In Netscape, öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Formaz exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im VCard-Format exportiert.
+income	addressbook	de	Einkommen
 international	addressbook	de	International
 isdn phone	addressbook	de	ISDN-Tel.
 label	addressbook	de	Adressetikett

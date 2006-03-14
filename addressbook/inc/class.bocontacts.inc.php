@@ -185,9 +185,6 @@ class bocontacts extends socontacts
 		if($contact['id'] == 0)
 		{
 			$contact['owner'] = $this->user;
-			// we create a normal contact
-			$contact['tid'] = 'n';
-			
 			$isUpdate = false;
 		}
 		
@@ -207,7 +204,7 @@ class bocontacts extends socontacts
 		$contact['#ophone'] = $contact['ophone']; unset($contact['ophone']);
 		$contact['#address2'] = $contact['address2']; unset($contact['address2']);
 		$contact['#address3'] = $contact['address3']; unset($contact['address3']);
-	
+		
 		$error_nr = parent::save($contact);
 
 		if(!$error_nr)
@@ -223,7 +220,7 @@ class bocontacts extends socontacts
 		$contact['ophone'] = $contact['#ophone']; unset($contact['#ophone']);
 		$contact['address2'] = $contact['#address2']; unset($contact['#address2']);
 		$contact['address3'] = $contact['#address3']; unset($contact['#address3']);
-		
+
 		$contact['msg'] = $error_nr ?
 			lang('Something went wrong by saving this contact. Errorcode %1',$error_nr) :
 			lang('Contact saved');
@@ -260,6 +257,7 @@ class bocontacts extends socontacts
 		
 		return $data;
 	}
+	
 	/**
 	* searches contacts for rows matching searchcriteria
 	*

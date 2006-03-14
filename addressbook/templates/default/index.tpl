@@ -37,7 +37,23 @@ function check_all(which)
 	}
 </style>
 <div align="center">
-{lang_showing}
+
+<!-- Type-selection -->
+<table width="95%" border="0">
+<tr>
+<td width="33%">&nbsp;</td>
+<td width="33%">{lang_showing}</td>
+<td width="33%">
+<table width="100%">
+<tr>
+<form action="{self_url}" method="post"><td>{addressbuch_type}:</td><td> {contact_type_list}</td></form>
+<td>{lang_add}: </td>{add_buttons}
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
 <br>{searchreturn}
 {search_filter}
 

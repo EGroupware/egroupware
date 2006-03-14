@@ -92,7 +92,7 @@
 			// are we called via xmlrpc?
 			$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
 
-			/* _debug_array($_POST); */
+			//_debug_array($_POST);
 			$_start   = get_var('start',array('POST','GET'));
 			$_query   = get_var('query',array('POST','GET'),'_UNSET_');
 			$_cquery  = get_var('cquery', array('GET','POST'),'_UNSET_');
@@ -126,11 +126,14 @@
 			{
 				$this->typeid = $_typeid;
 			}
-			if(!@in_array($this->typeid,array('n','c')))
-			{
-				$this->typeid = 'n';
-			}
 
+			/*
+ 			if(!@in_array($this->typeid,array('n','c')))
+ 			{
+ 				$this->typeid = 'n';
+ 			}
+			*/
+			
 			if(isset($_POST['fcat_id']) || isset($_POST['fcat_id']))
 			{
 				$this->cat_id = $_fcat_id;
