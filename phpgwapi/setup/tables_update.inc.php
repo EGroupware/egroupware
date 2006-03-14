@@ -24,4 +24,21 @@
 	{
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.001';
 	}
+
+	$test[] = '1.2.008';
+	function phpgwapi_upgrade1_2_008()
+	{
+		// fixing the lang change from zt -> zh-tw for existing installations
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.002';
+	}
+
+	// updates in HEAD / 1.3
+	$test[] = '1.3.001';
+	function phpgwapi_upgrade1_3_001()
+	{
+		// fixing the lang change from zt -> zh-tw for existing installations
+		$GLOBALS['egw_setup']->db->update('egw_languages',array('lang_id' => 'zh-tw'),array('lang_id' => 'zt'),__LINE__,__FILE__);
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.002';
+	}
 ?>
