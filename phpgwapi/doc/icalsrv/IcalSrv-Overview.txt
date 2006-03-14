@@ -1,28 +1,73 @@
-/*!  @mainpage Ical Service for Egroupware
+/*!  @mainpage  Ical Service for Egroupware
 
 @note this is still <b>EXPERIMENTAL, USE AT YOUR OWN RISK! </b> and better not yet in a
 production environment.
-@version 0.9.01R1
+@version 0.9.01R2
 @author jvl
-@date 2006022
+@date 20060314
+
+@section secabout About IcalSrv
+
+At the moment IcalSrv is a small package that allows a socalled
+<i>ical client</i> like Mozilla Sunbird, Apple iCal or Korganizer to
+access the events and tasks from a persons egroupware calendar and
+infolog application, remotely via a "icalendar over http"
+connection. (see @ref secicalsrvclients)
+
+This means that in the client you can download (aka <i> reload </i>)
+the data from an a socalled <i> subscribed </i> calendar on the
+egroupware server and then read and manipulate it offline.  On a
+later moment you can upload (aka <i> publish </i>) this client
+calendardata again to egroupware. The changes made in your client
+should then propagate to your calendars and infolog maintained on the
+egw server. All this provided you have the appropiate access rights
+for the egroupware server data.
+
+At the moment, the IcalSrv service is just a simple --experimental-- variant
+that is not based on webdav (as most of these services), but that may
+nevertheless can be quite practical. It allows only upload and
+download of complete calendars (with events and todos) and no direct
+deletions of events. (Read more on this below at @ref secdeletions ) 
+
+We are working on extensions towards real groupdav and caldav behaviour.
+
+
+@note We tried to prevent that accidental misuse of the service can ruin all
+your egroupware data. But, <b> be warned: when you use the service for
+<i>publishing</i> from the client, you can (and want to) change data
+in the egroupware server, and thus you have a potential risk of damaging
+or losing egroupware data!</b>
+
+
+
 
 @section secinstall SHORT experimental Install How-To:
+		 
+ - Best thing to do before installing, is to have a look at the
+   egroupware wiki page about IcalSrv
+   at @url http://www.egroupware.org/egroupware/wiki/index.php?page=IcalSrv
+   .
+   There you can find the current status of the project and see what
+   the latest available versions are and where to find them. In @ref pageicalsrvreleaselog
+   you find a small release notes document that tells of about the changes in
+   the releases.
 
  - Install the icalsrv package by either checking out the icalsrv stuff from cvs
-  or untarring some tarball icalsrv-vx.y.x.tgz of the package (when available). 
+  or untarring some tarball icalsrv-vx.y.x.tgz of the package (if available). 
   At the moment (200602xx) the icalsrv is partly in cvs module <i>egroupware</i> and
   partly (the documentation only) in module <i>phpgwapi</i>. So be sure to update at least the first one!
  - @note The IcalSrv package depends on the availability of an
- EgwIcal (>= 0.9.x) package. So if you dont have this already, be sure
- to install that too. Likewise this can be installed by untarring an appropiate
- egwical-vx.y.z.tgz tarball or by checking out the <i> egwical</i> module from cvs (HEAD).
+   EgwIcal (>= 0.9.x) package. So if you dont have this already, be sure
+   to install that too. Likewise this can be installed by untarring an appropiate
+   egwical-vx.y.z.tgz tarball or by checking out the <i> egwical</i> module from cvs (HEAD).
 
  - Take care that icalsrv.php is <code>.../egroupware/icalsrv.php</code>
 (and the other files from the icalsrv package also in their appropiate places)
 
-- Append something like the following onto your apache httpd.conf part for
-egroupware (assuming that your standard egroupware root path is e.g in
-<code>/var/www/egroupware</code> and with a http alias <code>egroupware</code> pointing to it):
+- Append something like the following onto your apache httpd.conf part
+  for egroupware (assuming that your standard egroupware root path is
+  e.g in <code>/var/www/egroupware</code> and with a http alias
+ <code>egroupware</code> pointing to it):
 <PRE>
  <Location /egroupware/icalsrv.php>
     Script PUT /var/www/egroupware/icalsrv.php
@@ -45,21 +90,6 @@ egroupware (assuming that your standard egroupware root path is e.g in
   from the sunbird client back to EGW
 
 
-@section secdeletions Deleting Calendars, events or todos
-
-deletion of the whole remote calendar is not supported see the  webcal protocol discussion in
-@ref pagewebcaldiscussion
-
-Individual calendar events or todos cannot be deleted either by just
-deleting them on the client and then hoping that this propagates to
-Egroupware on publish. There are various reasons for why this is not
-implemented. 
-
-But, you can though delete items by simply renaming them to
-<code>X-DELETE</code>.  I you do so, they will get deleted in Egw on
-publishing. When you later dowload ("reload"/"refresh") the remote
-calendar in your client you should notice that the event is gone..
-
 
 @section secicalsrvclients Clients for IcalSrv
 
@@ -70,13 +100,24 @@ This is tested with egw1.2rc6 and clients:
   - Evolution 2.2 (READ)
   - Apple Ical, is reported to be working too. (READ+WRITE)
 
-For further use and experience with these clients and supported features see @ref
-pageicalsrvclients 
-<i>Now with screenshots too!</i>
+ See @ref pageicalsrvclients for further use and experience with these
+ clients and supported features <i>Now with screenshots too!!</i>
 
 
+@section secdeletions Deleting Calendars, events or todos
 
+deletion of the whole remote calendar is not supported see the webcal
+protocol discussion in @ref pagewebcaldiscussion
 
+Individual calendar events or todos cannot be deleted either by just
+deleting them on the client and then hoping that this propagates to
+Egroupware on publish. There are various reasons for why this is not
+implemented. 
+
+But, you can though delete items by simply renaming them to
+<code>X-DELETE</code>.  I you do so, they will get deleted in Egw on
+publishing. When you later dowload ("reload"/"refresh") the remote
+calendar in your client you should notice that the event is gone..
 
 
 @section secdocumentation Documentation
@@ -111,6 +152,8 @@ EgwIcal package. This means that problems with in and export of
 iCalendar data will mostly have their source in that (i.e. EgwIcal)
 package! So in case of errors allways report info on that package and
 when debugging try the debug tools for that package.
+
+
 
 
 @subsection subsecdebugtools Debugging of IcalSrv.

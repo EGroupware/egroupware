@@ -9,8 +9,8 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.02 
-   * @date 20060214
+   * @version 0.9.06 
+   * @date 20060313
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * $Id$ 
    * (see: @url http://www.egroupware.org  )
@@ -26,6 +26,7 @@
    *  Free Software Foundation; either version 2 of the License, or (at your
    *  option) any later version.
    * 
+   * @since 0.9.06 collect all (todos via query filter iso just 15)
    * @since 0.9.00 use of the new egwical class for iCalendar handling with WURH
    * TODO list:
    * @todo incorporate this icalsrv.php script in
@@ -188,9 +189,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
 				 // timestamp in server time for boical class
 				 'date_format'   => 'server'
 				);
+
+  $todos = array();
   $todos_query = array('col_filter' => array('type' => 'task'),
                        'filter' => 'none',
-					   'order' => 'id_parent'
+					   'order' => 'id_parent',
+					   'start' => 0,
+					   'total' => 1
 					   );
 
   // E2.1: search eGW events based on the $events_query 
@@ -213,8 +218,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
   }
 
   // E3.1: search eGW todos based on the $todos_query 
-
-  $todos =& $binf->search($todos_query);
+  // JVL: the auto update of the start parameter doesnot seem to work???
+  // so I do it manually..
+  while( $todos_query['start'] < $todos_query['total']){
+	$more_todos =& $binf->search($todos_query);
+	//error_log('td start:' . $todos_query['start'] . ' todo_pos:' . $todo_pos . 'td total:' . $todos_query['total'] . ' count-ids:' . count($more_todos));
+	if($more_todos === false)
+	  break;
+    $todos_query['start'] += count($more_todos);
+	$todos = array_merge($todos,$more_todos);
+  }
   if (!$todos){
     $logmsg .="\n no eGW todos found to export";
     // nevertheless fall through to further ical components export
