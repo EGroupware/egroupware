@@ -24,7 +24,7 @@
 	{
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.001';
 	}
-
+	
 	$test[] = '1.2.008';
 	function phpgwapi_upgrade1_2_008()
 	{
@@ -40,5 +40,33 @@
 		$GLOBALS['egw_setup']->db->update('egw_languages',array('lang_id' => 'zh-tw'),array('lang_id' => 'zt'),__LINE__,__FILE__);
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.002';
+	}
+	
+	$test[] = '1.3.002';
+	function phpgwapi_upgrade1_3_002()
+	{
+		/*************************************************************************\
+		 *      add addressbook-type contact into type definition table           *
+		\*************************************************************************/
+		if ($GLOBALS['DEBUG'])
+		{
+			echo "<br>\n<b>initiating to create the default type 'contact' for addressbook";
+		}
+		
+		$newconf = array('n' => array(
+			'name' => 'contact',
+			'options' => array(
+				'template' => 'addressbook.edit',
+				'icon' => 'navbar.png'
+		)));
+		$GLOBALS['egw_setup']->oProc->query("INSERT INTO egw_config (config_app,config_name,config_value) VALUES ('addressbook','types','". serialize($newconf). "')",__LINE__,__FILE__);
+
+		if ($GLOBALS['DEBUG'])
+		{
+			echo " DONE!</b>";
+		}
+		/*************************************************************************/
+		
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.003';
 	}
 ?>

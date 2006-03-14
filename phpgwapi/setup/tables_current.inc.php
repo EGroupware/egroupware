@@ -247,7 +247,7 @@
 			),
 			'pk' => array('id'),
 			'fk' => array(),
-			'ix' => array(array('tid','owner','access','n_family','n_given','email'),array('tid','cat_id','owner','access','n_family','n_given','email')),
+			'ix' => array(array('tid','owner','access','n_family','n_given'),array('tid','cat_id','owner','access','n_family')),
 			'uc' => array()
 		),
 		'egw_addressbook_extra' => array(
