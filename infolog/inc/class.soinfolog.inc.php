@@ -464,6 +464,7 @@
 		 * @param &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
 		 * @param $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
 		 * @param $query[subs] boolean return subs or not, if unset the user preference is used
+		 * @param $query[num_rows] number of rows to return if $query[start] is set, default is to use the value from the general prefs
 		 * @return array with id's as key of the matching log-entries
 		 */
 		function search(&$query)
@@ -581,7 +582,8 @@
 				{
 					$count_subs = ",(SELECT count(*) FROM $this->info_table sub WHERE sub.info_id_parent=main.info_id AND $acl_filter) AS info_anz_subs";
 				}
-				$this->db->limit_query($sql="SELECT $distinct main.* $count_subs $sql_query $ordermethod",$query['start'],__LINE__,__FILE__);
+				$this->db->query($sql="SELECT $distinct main.* $count_subs $sql_query $ordermethod",__LINE__,__FILE__,
+					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1);
 				//echo "<p>sql='$sql'</p>\n";
 				while (($info =& $this->db->row(true)))
 				{			
