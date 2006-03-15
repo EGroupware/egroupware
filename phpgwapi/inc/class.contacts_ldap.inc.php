@@ -457,7 +457,7 @@
 				$myfilter = $this->makefilter($filterfields,'','',$DEBUG);
 			}
 			$myfilter = $GLOBALS['egw']->translation->convert($myfilter,$GLOBALS['egw']->translation->system_charset,'utf-8');
-echo "<p>ldap_search($this->ldap,'".$GLOBALS['egw_info']['server']['ldap_contact_context']."','$myfilter')</p>\n";
+
 			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], $myfilter);
 
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
