@@ -193,7 +193,9 @@
 			$return_fields[0]['tid']    = $ldap_fields[0]['phpgwcontacttypeid'][0];
 			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
-			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
+			// create from the multiple cat_id's in ldap a comma-separated value as in sql
+			unset($ldap_fields[0]['phpgwcontactcatid']['count']);
+			$return_fields[0]['cat_id'] = implode(',',$ldap_fields[0]['phpgwcontactcatid']);
 			$return_fields[0]['rights'] = (int)$this->grants[$return_fields[0]['owner']];
 			if(@is_array($stock_fieldnames))
 			{
@@ -270,7 +272,9 @@
 			$return_fields[0]['tid']    = $ldap_fields[0]['phpgwcontacttypeid'][0];
 			$return_fields[0]['owner']  = $ldap_fields[0]['phpgwcontactowner'][0];
 			$return_fields[0]['access'] = $ldap_fields[0]['phpgwcontactaccess'][0];
-			$return_fields[0]['cat_id'] = $ldap_fields[0]['phpgwcontactcatid'][0];
+			// create from the multiple cat_id's in ldap a comma-separated value as in sql
+			unset($ldap_fields[0]['phpgwcontactcatid']['count']);
+			$return_fields[0]['cat_id'] = implode(',',$ldap_fields[0]['phpgwcontactcatid']);
 			$return_fields[0]['rights'] = (int)$this->grants[$return_fields[0]['owner']];
 
 			if(@is_array($stock_fieldnames))
@@ -371,14 +375,25 @@
 			or maybe not like this - i am not sure what i am doing :)
 			*/
 
-			if(@is_array($this->grants))
+			if(@is_array($this->grants) && strpos($filter,'owner')===false )
 			{
-				$filterfields['phpgwcontactowner'] = array();
+				$filterfields['phpgwcontactowner'] = $filterfields['priv'] = array();
+
+				// to not show private entries we add an additional filter access==public or owner==users with private grants
+				// please note: private grants are not yet supported by the addressbook UI and the SQL backend
+				$filterfields['priv'][]=array('phpgwcontactaccess' => 'public');
+
 				if($DEBUG) { echo '<br>DEBUG - My user id is: ' . $this->account_id; }
 				foreach($this->grants as $user => $right)
 				{
 					if($DEBUG) { echo '<br>DEBUG - Grant from owner: ' . $user; }
 					$filterfields['phpgwcontactowner'][] = array('phpgwcontactowner' => $user);
+					
+					// add users we have a private grants from
+					if ($right & EGW_ACL_PRIVATE)
+					{
+						$filterfields['priv'][]=array('phpgwcontactowner' => $user);
+					}
 				}
 			}
 			/*
@@ -442,7 +457,7 @@
 				$myfilter = $this->makefilter($filterfields,'','',$DEBUG);
 			}
 			$myfilter = $GLOBALS['egw']->translation->convert($myfilter,$GLOBALS['egw']->translation->system_charset,'utf-8');
-
+echo "<p>ldap_search($this->ldap,'".$GLOBALS['egw_info']['server']['ldap_contact_context']."','$myfilter')</p>\n";
 			$sri = ldap_search($this->ldap, $GLOBALS['egw_info']['server']['ldap_contact_context'], $myfilter);
 
 			$ldap_fields = ldap_get_entries($this->ldap, $sri);
@@ -500,7 +515,9 @@
 					$return_fields[$j]['tid']    = $ldap_fields[$i]['phpgwcontacttypeid'][0];
 					$return_fields[$j]['owner']  = $ldap_fields[$i]['phpgwcontactowner'][0];
 					$return_fields[$j]['access'] = $ldap_fields[$i]['phpgwcontactaccess'][0];
-					$return_fields[$j]['cat_id'] = $ldap_fields[$i]['phpgwcontactcatid'][0];
+					// create from the multiple cat_id's in ldap a comma-separated value as in sql
+					unset($ldap_fields[$i]['phpgwcontactcatid']['count']);
+					$return_fields[$j]['cat_id'] = implode(',',$ldap_fields[$i]['phpgwcontactcatid']);
 					$return_fields[$j]['rights'] = (int)$this->grants[$return_fields[$j]['owner']];
 
 					if(@is_array($stock_fieldnames))
@@ -586,14 +603,7 @@
 							/* This was most likely created from acl grants in read() above */
 							foreach($y as $a => $b)
 							{
-								if ($a == 'phpgwcontactowner' && $b != $GLOBALS['egw_info']['user']['account_id'])
-								{
-									$tmp .= '(&('. $a. '='. $b. ')(phpgwContactAccess=public))';
-								}
-								else
-								{ 
-									$tmp .= '(' . $a . '=' . $b . ')';
-								}
+								$tmp .= '(' . $a . '=' . $b . ')';
 							}
 						}
 						else
@@ -620,12 +630,24 @@
 						}
 						$cats = $GLOBALS['egw']->categories->return_all_children((int)$value);
 
-						$aquery .= '(|';
-						foreach($cats as $cat)
+						/* new code to find cats stored as multiple values only (!)
+						if (count($cats) > 1)
 						{
-							$aquery .= '(' . $name . '=*,' . $cat . ',*)(' . $name . '=' . $cat . ')';
+							$aquery .= '(|('.$name.'='.implode(')('.$name.'=',$cats).'))';
 						}
-						$aquery .= ')';
+						else
+						{
+							$aquery .= '('.$name.'='.(int)$cats[0].')';
+						}
+						*/
+						// old code finds cats stored as multiple values or as comma-separated fields with leading and training comma (old format)
+						// but generates a more complex query, so I think it should be removed in the next release by the new code
+ 						$aquery .= '(|';
+ 						foreach($cats as $cat)
+ 						{
+ 							$aquery .= '(' . $name . '=*,' . $cat . ',*)(' . $name . '=' . $cat . ')';
+ 						}
+ 						$aquery .= ')';
 					}
 					elseif ($value == "!''")	// query for not empty
 					{
@@ -682,6 +704,11 @@
 				{
 					$fields[$extra] = $$extra;
 				}
+			}
+			// store cat_id in ldap as multiple values (php array) and not as comma separated value
+			if (isset($fields['cat_id']) && count(explode(',',$fields['cat_id'])) > 1)
+			{
+				$fields['cat_id'] = explode(',',$fields['cat_id']);
 			}
 			if(empty($fields['tid']))
 			{
@@ -852,6 +879,11 @@
 				{
 					$stock_fields[$extra] = $fields[$extra];
 				}
+			}
+			// store cat_id in ldap as multiple values (php array) and not as comma separated value
+			if (isset($fields['cat_id']) && count(explode(',',$fields['cat_id'])) > 1)
+			{
+				$fields['cat_id'] = explode(',',$fields['cat_id']);
 			}
 			$nonfields = $this->non_contact_fields;
 
