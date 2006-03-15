@@ -574,7 +574,7 @@
 				$this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__);
 				$query['total'] = $this->db->num_rows();
 
-				if (!$query['start'] || $query['start'] > $query['total'])
+				if (isset($query['start']) && $query['start'] > $query['total'])
 				{
 					$query['start'] = 0;
 				}
@@ -584,7 +584,7 @@
 				}
 				$this->db->query($sql="SELECT $distinct main.* $count_subs $sql_query $ordermethod",__LINE__,__FILE__,
 					(int) $query['start'],isset($query['start']) ? (int) $query['num_rows'] : -1);
-				//echo "<p>sql='$sql'</p>\n";
+				//echo "<p>db::query('$sql',,,".(int)$query['start'].','.(isset($query['start']) ? (int) $query['num_rows'] : -1).")</p>\n";
 				while (($info =& $this->db->row(true)))
 				{			
 					$info['info_responsible'] = $info['info_responsible'] ? explode(',',$info['info_responsible']) : array();

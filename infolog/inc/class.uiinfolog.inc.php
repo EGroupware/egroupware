@@ -188,6 +188,8 @@
 		function get_rows($query,&$rows,&$readonlys)
 		{
 			//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
+			if (!isset($query['start'])) $query['start'] = 0;
+
 			$this->save_sessiondata($query);
 
 			$ids = $this->bo->search($query);
