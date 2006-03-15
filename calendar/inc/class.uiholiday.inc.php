@@ -399,15 +399,7 @@
 
 		function delete_locale()
 		{
-			if(!$this->bo->total)
-			{
-				$this->admin();
-			}
-
-			unset($GLOBALS['egw_info']['flags']['noheader']);
-			unset($GLOBALS['egw_info']['flags']['nonavbar']);
-			$GLOBALS['egw_info']['flags']['noappfooter'] = True;
-			$GLOBALS['egw']->common->egw_header();
+			$this->admin();
 
 			$p =& CreateObject('phpgwapi.Template',$this->template_dir);
 			$p->set_file(Array('form'=>'delete_common.tpl','form_button'=>'form_button_script.tpl'));
@@ -441,7 +433,7 @@
 
 			if(!$holiday)
 			{
-				$this->edit_locale();
+				return $this->edit_locale();
 			}
 			
 			unset($GLOBALS['egw_info']['flags']['noheader']);
@@ -479,7 +471,7 @@
 		{
 			if(!@$this->bo->locales[0])
 			{
-				$this->admin();
+				return $this->admin();
 			}
 			$this->bo->year = 0;	// for a complete list with all years
 			$holidays = $this->bo->get_holiday_list();
