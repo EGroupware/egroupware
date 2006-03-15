@@ -288,7 +288,7 @@
 //				echo 'Loading from: '.$load_from.'/holidays.'.strtoupper($locale).'.csv'."<br>\n";
 				if($GLOBALS['egw_info']['server']['holidays_url_path'] == 'localhost')
 				{
-					$lines = file(EGW_SERVER_ROOT.'/calendar/egroupware.org/holidays.'.strtoupper($locale).'.csv');
+					$lines = @file(EGW_SERVER_ROOT.'/calendar/egroupware.org/holidays.'.strtoupper($locale).'.csv');
 				}
 				else
 					$lines = $network->gethttpsocketfile($load_from.'/holidays.'.strtoupper($locale).'.csv');
