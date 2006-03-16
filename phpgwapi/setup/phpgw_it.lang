@@ -302,6 +302,7 @@ float	htmlarea-TableOperations	it	Fluttuante
 folder	tinymce	it	Cartella
 folder name missing.	tinymce	it	Nome cartella mancante.
 folder not found.	tinymce	it	Cartella non trovata.
+folder with specified new name already exists. folder was not renamed/moved.	tinymce	it	Una cartella con il nome specificato esiste già. La cartella non è stata rinominata/spostata.
 folder(s)	tinymce	it	cartella/e
 font color	htmlarea	it	Colore Carattere
 for mouse out	tinymce	it	per mouse out
@@ -383,6 +384,9 @@ india	common	it	INDIA
 indonesia	common	it	INDONESIA
 insert	tinymce	it	Inserisci
 insert / edit flash movie	tinymce	it	Inserisci / modifica Filmato Flash
+insert / edit horizontale rule	tinymce	it	Inserisci / modifica Righello Orizzontale
+insert _column before	htmlarea-ContextMenu	it	Inserisci _Colonna Prima
+insert a new column after the current one	htmlarea-ContextMenu	it	Inserisci una nuova colonna dopo quella corrente
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert cell after	htmlarea-TableOperations	it	Inserisci cella dopo
 insert cell before	htmlarea-TableOperations	it	Inserisci cella prima

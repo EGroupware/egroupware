@@ -82,6 +82,7 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	etemplate	zh-tw	CSS風格
 custom	etemplate	zh-tw	自訂
 custom fields	etemplate	zh-tw	自訂欄位
+custom javascript for onchange	etemplate	zh-tw	自訂 onChange 動作的 javascript
 cut	etemplate	zh-tw	剪下
 date+time	etemplate	zh-tw	日期+時間
 datum	etemplate	zh-tw	資料
@@ -242,6 +243,7 @@ nothing matched search criteria !!!	etemplate	zh-tw	搜尋條件找不到任何�
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	zh-tw	合併儲存格的數字或是輸入'all'來合併剩下的儲存格、CSS類別名稱(TD標籤)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	zh-tw	V/HBox中列或是行的欄位間隔、文字與框線的距離
 of	etemplate	zh-tw	的
+onchange	etemplate	zh-tw	異動時
 onclick	etemplate	zh-tw	點選時
 only an other version found !!!	etemplate	zh-tw	只有找到一個其他版本！
 open the online help.	etemplate	zh-tw	開啟線上說明
@@ -307,6 +309,7 @@ select which values to show	etemplate	zh-tw	選擇要顯示的數值
 select year	etemplate	zh-tw	選擇年
 selectbox	etemplate	zh-tw	下拉選單
 sets today as date	etemplate	zh-tw	設定為今天
+should the form be submitted or any custom javascript be executed	etemplate	zh-tw	表單是否要送出或是執行任何自訂的 javascript
 show	etemplate	zh-tw	顯示
 show (no save)	etemplate	zh-tw	顯示(不儲存)
 show values	etemplate	zh-tw	顯示數值
@@ -319,6 +322,7 @@ span, class	etemplate	zh-tw	分割，類別
 stack	etemplate	zh-tw	堆疊
 start a new search, cancel this link	etemplate	zh-tw	取消這個連結，開啟新的搜尋
 start new search for the above pattern	etemplate	zh-tw	用上面的規則開啟一個新的搜尋
+submit form	etemplate	zh-tw	送出表單
 submitbutton	etemplate	zh-tw	送出按鈕
 swap	etemplate	zh-tw	切換
 swap widget with next one	etemplate	zh-tw	與下一個容器切換

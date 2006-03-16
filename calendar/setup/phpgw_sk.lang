@@ -5,7 +5,8 @@
 a non blocking event will not conflict with other events	calendar	sk	neblokujúca udalos» nebude v konflikte s ostatnými udalos»ami
 accept or reject an invitation	calendar	sk	Prija» alebo odmietnu» pozvanie
 accepted	calendar	sk	Prijaté
-action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sk	Zmena, ktorá vyvolala upozornenie: Nové, Zru¹ené, Prijaté, Odmítnuté, ...
+access denied to the calendar of %1 !!!	calendar	sk	Prístup odopretý ku kalendáru patriacemu %1 !!!
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sk	Zmena, ktorá vyvolala upozornenie: Nové, Zru¹ené, Prijaté, Odmietnuté, ...
 actions	calendar	sk	Akcie
 add alarm	calendar	sk	Pridaj pripomienku
 added	calendar	sk	Pridané
@@ -33,6 +34,7 @@ busy	calendar	sk	zaneprázdnený
 by	calendar	sk	s
 calendar event	calendar	sk	Udalos» v kalendári
 calendar holiday management	admin	sk	Správa sviatkov v  kalendári
+calendar menu	calendar	sk	Menu Kalendára
 calendar preferences	calendar	sk	Predvoµby Kalendára
 calendar settings	admin	sk	Nastavenia Kalendára
 calendar-fieldname	calendar	sk	Kalendár - názov polo¾ky
@@ -69,6 +71,7 @@ delete this exception	calendar	sk	Zmaza» túto výnimku
 delete this series of recuring events	calendar	sk	Zmaza» túto sériu pravidelných udalostí
 disinvited	calendar	sk	Zru¹ená pozvánka
 display status of events	calendar	sk	Zobrazi» stav udalostí
+displayed view	calendar	sk	zobrazený pohµad
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	sk	Zobrazi» predvolený kalendár na úvodnej stránke (tej, ktorá sa zobrazuje hneï po prihlásení do eGroupWare)?
 do you want a weekview with or without weekend?	calendar	sk	®eláte si tý¾denný pohµad s alebo bez víkendu?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sk	Chcete dostáva» správy upovedomujúce o nových èi zmenených udalostiach? Budete informovaní aj o zmenách ktoré sami urobíte.<br>Upovedomenia mô¾ete obmedzi» aj na urèité typy zmien. Ka¾dý prvok obsahuje zároveò v¹etky predo¹lé upovedomenia. V¹etky zmeny zahàòajú zmeny titulku, opisu, úèastníkov, ale nie odpovede úèastníkov. Ak vlastník udalosti ¾iada akékoµvek správy o zmenách, dostane v¾dy aj odozvy úèastníkov, napríklad prijatia a odmietnutia.
@@ -123,6 +126,7 @@ global public and group public	calendar	sk	Verejná - globálne i pre skupinu
 global public only	calendar	sk	Iba globálne verejná
 group planner	calendar	sk	Skupinový plánovaè
 group public only	calendar	sk	Prístupné iba pre skupinu
+groupmember(s) %1 not included, because you have no access.	calendar	sk	Èlenovia skupiny %1 neboli zahrnutí, preto¾e nemáte prístup.
 here is your requested alarm.	calendar	sk	Vami vy¾iadaná pripomienka.
 high priority	calendar	sk	vysoká priorita
 holiday	calendar	sk	Sviatky

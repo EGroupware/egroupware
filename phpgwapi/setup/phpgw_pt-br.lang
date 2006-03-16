@@ -1,8 +1,5 @@
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
 %1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web !!!
-%1 manual	common	pt-br	%1 manual
-%1 start	common	pt-br	%1 iniciar
-%1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê permissão de escrita a %3 para o servidor web.
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é uma suíte de colaboração multi-usuário escrita em %3PHP%4.
 (shift-)click or drag to change value	jscalendar	pt-br	(Shift-) Clique ou arraste para alterar o valor
 - click on any of the time parts to increase it	jscalendar	pt-br	- Clique sobre as horas para alterá-las
@@ -25,7 +22,6 @@ _table properties...	htmlarea-ContextMenu	pt-br	Propriedades da _Tabela
 a editor instance must be focused before using this command.	tinymce	pt-br	Uma instância do editor deve estar com o foco antes deste comando ser usado.
 about	common	pt-br	Sobre
 about %1	common	pt-br	Sobre %1
-about egroupware	common	pt-br	Sobre eGroupWare
 about the calendar	jscalendar	pt-br	Sobre a Agenda
 about this editor	htmlarea	pt-br	Sobre o Editor
 access	common	pt-br	Acesso
@@ -40,7 +36,6 @@ active	common	pt-br	Ativo
 add	common	pt-br	Adicionar
 add %1 category for	common	pt-br	Adicionar categoria %1 para
 add category	common	pt-br	Adicionar categoria
-add shortcut	common	pt-br	Adicionar atalho
 add sub	common	pt-br	Adicionar sub-tarefa
 addressbook	common	pt-br	Catálogo de Endereços
 admin	common	pt-br	Administrador
@@ -67,7 +62,6 @@ angola	common	pt-br	ANGOLA
 anguilla	common	pt-br	ANGUILLA
 antarctica	common	pt-br	ANTARTICA
 antigua and barbuda	common	pt-br	ANTIGUA E BARBUDA
-application	common	pt-br	Aplicação
 apply	common	pt-br	Aplicar
 april	common	pt-br	Abril
 are you sure you want to delete these entries ?	common	pt-br	Deseja remover estes registros?
@@ -79,9 +73,7 @@ august	common	pt-br	Agosto
 australia	common	pt-br	AUSTRALIA
 austria	common	pt-br	AUSTRIA
 author	common	pt-br	Autor
-autohide sidebox menu's	common	pt-br	Auto ocultar caixa de menus laterais
 autohide sidebox menus	common	pt-br	Auto ocultar caixa de menus laterais
-automatically hide the sidebox menu's?	common	pt-br	Auto ocultar caixa de menus laterais ?
 automatically hide the sidebox menus?	common	pt-br	Auto ocultar caixa de menus laterais ?
 autosave default category	common	pt-br	Salvar automaticamente categoria padrão
 azerbaijan	common	pt-br	AZERBAIJÃO
@@ -90,7 +82,6 @@ back to user login	common	pt-br	Voltar a tela de login
 background	htmlarea-TableOperations	pt-br	Plano de fundo
 background color	htmlarea	pt-br	Cor de fundo
 background color:	common	pt-br	Cor de fundo:
-backupdir '%1' is not writeable by the webserver	common	pt-br	O web server não pode escrever no diretório de backup %1.
 bad login or password	common	pt-br	Login ou senha incorretos
 bahamas	common	pt-br	BAHAMAS
 bahrain	common	pt-br	BAHRAIN
@@ -106,7 +97,6 @@ bg color	tinymce	pt-br	Cor de fundo
 bhutan	common	pt-br	BUTÃO
 blocked, too many attempts	common	pt-br	Bloqueado, por excesso de tentativas!
 bold	common	pt-br	Negrito
-bold.gif	common	pt-br	bold.gif
 bolivia	common	pt-br	BOLIVIA
 border	common	pt-br	Borda
 border color	tinymce	pt-br	Cor da borda
@@ -128,9 +118,8 @@ cambodia	common	pt-br	CAMBODIA
 cameroon	common	pt-br	CAMARÕES
 canada	common	pt-br	CANADÁ
 cancel	common	pt-br	Cancelar
-cannot replace %1 because it is a directory	common	pt-br	Não é possível substituir %1 pois o mesmo é um diretório
-cant open '%1' for %2	common	pt-br	Não é possível abrir '%1' para '%2'
 cape verde	common	pt-br	CABO VERDE
+caption	common	pt-br	Rótulo
 categories	common	pt-br	Categorias
 categories for	common	pt-br	categorias para
 category	common	pt-br	Categoria
@@ -142,7 +131,6 @@ cell properties	htmlarea-TableOperations	pt-br	Propriedades da Célula
 cellpadding	tinymce	pt-br	Preenchimento da Célula
 cellspacing	tinymce	pt-br	Espaçamento
 center	tinymce	pt-br	Centro
-centered	common	pt-br	Centralizado
 central african republic	common	pt-br	REPÚBLICA CENTRO AFRICANA
 chad	common	pt-br	CHADE
 change	common	pt-br	Alterar
@@ -153,11 +141,6 @@ check installation	common	pt-br	Verificar Instalação
 check now	common	pt-br	Checar agora
 chile	common	pt-br	CHILE
 china	common	pt-br	CHINA
-choose a background color	common	pt-br	Escolha uma cor de fundo
-choose a background color for the icons	common	pt-br	Escolha uma cor de fundo para os ícones
-choose a background image.	common	pt-br	Escolha uma imagem de fundo
-choose a background style.	common	pt-br	Escolha um estilo de fundo
-choose a text color for the icons	common	pt-br	Escolha uma cor de texto para os ícones
 choose directory to move selected folders and files to.	tinymce	pt-br	Escolha o diretório para mover a pasta e arquivos selecionados.
 choose list style type (for ordered lists)	htmlarea-ListType	pt-br	Escolha estilo das listas (para listas ordenadas)
 choose the category	common	pt-br	Escolha a categoria
@@ -171,7 +154,6 @@ click	common	pt-br	Clique
 click or mouse over to show menus	common	pt-br	Clique ou passe o mouse sobre os menús
 click or mouse over to show menus?	common	pt-br	Clicar ou passar o mouse sobre os menús?
 close	common	pt-br	Fechar
-close sidebox	common	pt-br	Fechar caixa de menus laterais
 cocos (keeling) islands	common	pt-br	COCOS (KEELING) ISLANDS
 collapsed borders	htmlarea-TableOperations	pt-br	Bordas descontinuadas
 colombia	common	pt-br	COLÔMBIA
@@ -184,7 +166,6 @@ company	common	pt-br	Empresa
 configuration problem	tinymce	pt-br	Problema de configuração
 congo	common	pt-br	CONGO
 congo, the democratic republic of the	common	pt-br	REPÚBLICA DEMOCRÁTICA DO CONGO
-contacting server...	common	pt-br	Contactando servidor...
 cook islands	common	pt-br	ILHAS COOK
 copy	common	pt-br	Copiar
 copy selection	htmlarea	pt-br	Copiar Seleção
@@ -192,7 +173,6 @@ copy table row	tinymce	pt-br	Copiar linha da tabela
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	pt-br	Copiar/Recortar/Colar não está disponível no Mozilla e Firefox.\nVocê quer mais informações a respeito?
 costa rica	common	pt-br	COSTA RICA
 cote d ivoire	common	pt-br	COTE D IVOIRE
-could not contact server. operation timed out!	common	pt-br	Não foi possível contactar o servidor. Operação alcançou tempo limite!
 create	common	pt-br	Criar
 create a link	htmlarea-ContextMenu	pt-br	Criar um link
 created by	common	pt-br	Criado por
@@ -219,8 +199,6 @@ decimal numbers	htmlarea-ListType	pt-br	Números decimais
 decrease indent	htmlarea	pt-br	Diminuir recúo
 default	tinymce	pt-br	Padrão
 default category	common	pt-br	Categoria padrão
-default height for the windows	common	pt-br	Altura padrão para as janelas
-default width for the windows	common	pt-br	Largura padrão para as janelas
 delete	common	pt-br	Remover
 delete cell	htmlarea-TableOperations	pt-br	Remover célula
 delete column	htmlarea-TableOperations	pt-br	Remover coluna
@@ -234,13 +212,11 @@ details	common	pt-br	Detalhes
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt-br	Desativar a execução dos recursos de exibição de transparências de imagens PNG, para o Explorer 5.5 ou superior?
 dictionary	htmlarea-SpellChecker	pt-br	Dicionário
 direction	tinymce	pt-br	Direção
-direction left to right	common	pt-br	Direção: esquerda para direita
 direction right to left	tinymce	pt-br	Direção: direita para esquerda
 directory	tinymce	pt-br	Diretório
 disable internet explorer png-image-bugfix	common	pt-br	Desativar recursos para imagem-png no Internet Explorer
 disable slider effects	common	pt-br	Desativar efeitos de transição de slide
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	pt-br	Desativar os efeitos de animação ao ocultar os menús da página? Os usuários dos navegadores Ópera ou Konqueror serão beneficiados com esta configuração.
-disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	pt-br	Desativar a execução do script de correção para o Internet Explorer 5.5 ou maior, para mostrar transparência em imagens PNG ?
 disabled	common	pt-br	Desabilitado
 display %s first	jscalendar	pt-br	Exibir %s primeiros
 djibouti	common	pt-br	DJIBOUTI
@@ -272,7 +248,6 @@ element...	htmlarea-ContextMenu	pt-br	Elemento...
 email	common	pt-br	E-mail
 email-address of the user, eg. "%1"	common	pt-br	Endereço de e-mail do usuário, ex. "%1"
 emotions	tinymce	pt-br	Emoções
-en	common	pt-br	en
 enabled	common	pt-br	Habilitado
 end date	common	pt-br	Data do término
 end time	common	pt-br	Hora do término
@@ -289,7 +264,6 @@ error renaming %1 %2 directory	common	pt-br	Erro renomeando diretório %1 %2
 estonia	common	pt-br	ESTONIA
 ethiopia	common	pt-br	ETIÓPIA
 exact	common	pt-br	exato(a)
-failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	pt-br	Falha ao contactar o servidor ou resposta inválida do servidor. Tente relogar. Contacte o administrador em caso de falha.
 falkland islands (malvinas)	common	pt-br	ILHAS FALKLAND (MALVINAS)
 faroe islands	common	pt-br	ILHAS FAROE
 fax number	common	pt-br	Número do FAX
@@ -325,7 +299,6 @@ flash properties	tinymce	pt-br	Propriedades Flash
 flash-file (.swf)	tinymce	pt-br	Arquivo Flash (.swf)
 float	htmlarea-TableOperations	pt-br	Flutuar
 folder	tinymce	pt-br	Pasta
-folder already exists.	common	pt-br	Pasta já existe.
 folder name missing.	tinymce	pt-br	Nome da pasta faltando.
 folder not found.	tinymce	pt-br	Pasta não encontrada.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	pt-br	Uma pasta com o novo nome informado já existe. A pasta não foi renomeada/movida.
@@ -334,6 +307,7 @@ font color	htmlarea	pt-br	Cor da Fonte
 for mouse out	tinymce	pt-br	para mouse fora
 for mouse over	tinymce	pt-br	para mouse por cima
 force selectbox	common	pt-br	Forçar caixa de seleção
+frames	htmlarea-TableOperations	pt-br	Frames
 france	common	pt-br	FRANÇA
 french guiana	common	pt-br	GUIANA FRANCESA
 french polynesia	common	pt-br	FRANÇA POLYNÉSIA
@@ -341,7 +315,6 @@ french southern territories	common	pt-br	FRENCH SOUTHERN TERRITORIES
 friday	common	pt-br	Sexta
 ftp	common	pt-br	FTP
 fullname	common	pt-br	Nome completo
-fullscreen mode	common	pt-br	Modo tela cheia
 gabon	common	pt-br	GABÃO
 gambia	common	pt-br	GAMBIA
 general menu	common	pt-br	Menu Geral
@@ -398,9 +371,6 @@ hungary	common	pt-br	HUNGRIA
 i will open it in a new page.	htmlarea-SpellChecker	pt-br	Será abero em uma nova página.
 i_nsert row before	htmlarea-ContextMenu	pt-br	_Inserir linha antes
 iceland	common	pt-br	ISLÂNDIA
-iespell not detected. click ok to go to download page.	common	pt-br	ieSpell não encontrado. Clique OK para ir à pagina de download.
-if the clock is enabled would you like it to update it every second or every minute?	common	pt-br	Se o relógio estiver habilitado, você o quer atualizado a cada segundo ou minuto?
-if there are some images in the background folder you can choose the one you would like to see.	common	pt-br	Se houver algumas imagens na pasta de fundo, você poderá escolher qual você quer ver.
 ignore	htmlarea-SpellChecker	pt-br	Ignorar
 ignore all	htmlarea-SpellChecker	pt-br	Ignorar tudo
 image description	tinymce	pt-br	Descrição da imagem
@@ -412,7 +382,6 @@ indent	tinymce	pt-br	Recúo para dentro
 india	common	pt-br	INDIA
 indonesia	common	pt-br	INDONESIA
 insert	tinymce	pt-br	Inserir
-insert 'return false'	common	pt-br	Inserir 'não retornar'
 insert / edit flash movie	tinymce	pt-br	Inserir/Editar filme Flash
 insert / edit horizontale rule	tinymce	pt-br	Inserir/Editar barra horizontal
 insert _column before	htmlarea-ContextMenu	pt-br	Inserir _coluna antes
@@ -441,7 +410,6 @@ insert/edit link	tinymce	pt-br	Inserir/Editar link
 insert/modify table	tinymce	pt-br	Inserir/Modificar tabela
 inserts a new table	tinymce	pt-br	Insere uma nova tabela
 international	common	pt-br	Internacional
-invalid filename	common	pt-br	Nome de arquivo inválido
 invalid ip address	common	pt-br	Endereço IP inválido
 invalid password	common	pt-br	Senha inválida
 iran, islamic republic of	common	pt-br	IRÃ
@@ -451,7 +419,6 @@ israel	common	pt-br	ISRAEL
 it has been more then %1 days since you changed your password	common	pt-br	Já passaram mais de %1 dias desde que você mudou sua senha
 it is recommended that you run setup to upgrade your tables to the current version	common	pt-br	É recomendado que seja executada a Configuração para atualizar as tabelas para a versão atual.
 italic	common	pt-br	Itálico
-italic.gif	common	pt-br	italic.gif
 italy	common	pt-br	ITÁLIA
 jamaica	common	pt-br	JAMAICA
 january	common	pt-br	Janeiro
@@ -476,7 +443,6 @@ korea, republic of	common	pt-br	CORÉIA DO SUL
 kuwait	common	pt-br	KUWAIT
 kyrgyzstan	common	pt-br	QUIRGUISTÃO
 language	common	pt-br	Idioma
-language_direction_rtl	common	pt-br	Direção de idioma RTL
 lao peoples democratic republic	common	pt-br	LAOS
 last name	common	pt-br	Último nome
 last name of the user, eg. "%1"	common	pt-br	Último nome do usuário, ex. "%1"
@@ -492,7 +458,6 @@ liberia	common	pt-br	LIBERIA
 libyan arab jamahiriya	common	pt-br	LÍBIA
 license	common	pt-br	Licensa
 liechtenstein	common	pt-br	LIECHTENSTEIN
-line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	pt-br	Linha %1: '%2'<br><b>dados csv não combinam com a quantidade de colunas da tabela %3 ==> ignorado</b>
 link points to:	htmlarea-ContextMenu	pt-br	Link aponta para:
 link url	tinymce	pt-br	URL link
 list	common	pt-br	Lista
@@ -541,7 +506,6 @@ message	common	pt-br	Mensagem
 mexico	common	pt-br	MÉXICO
 micronesia, federated states of	common	pt-br	MICRONESIA
 middle	htmlarea-TableOperations	pt-br	Meio
-minute	common	pt-br	minuto
 mkdir failed.	tinymce	pt-br	Mkdir falhou.
 modify url	htmlarea-ContextMenu	pt-br	Modificar URL
 moldova, republic of	common	pt-br	MOLDÁVIA
@@ -552,7 +516,6 @@ montserrat	common	pt-br	MONTSERRAT
 morocco	common	pt-br	MARROCOS
 move	tinymce	pt-br	Mover
 mozambique	common	pt-br	MOÇAMBIQUE
-multiple	common	pt-br	múltiplo
 myanmar	common	pt-br	MYANMAR
 name	common	pt-br	Nome
 name of the user, eg. "%1"	common	pt-br	Nome do usuário, ex. "%1"
@@ -591,7 +554,6 @@ no permission to move files and folders.	tinymce	pt-br	Sem permissão para mover 
 no permission to rename files and folders.	tinymce	pt-br	Sem permissão para renomear arquivos e pastas.
 no permission to upload.	tinymce	pt-br	Sem permissão para carregar arquivo.
 no rules	htmlarea-TableOperations	pt-br	Sem barras
-no savant2 template directories were found in:	common	pt-br	Nenhum diretório modelo Savant2 foi encontrato em:
 no shadow	tinymce	pt-br	Sem sombra
 no sides	htmlarea-TableOperations	pt-br	Sem lados
 no subject	common	pt-br	Sem assunto
@@ -604,7 +566,6 @@ not assigned	common	pt-br	Não atribuído
 note	common	pt-br	Nota
 notes	common	pt-br	Notas
 notify window	common	pt-br	Janela de notificação
-notify your administrator to correct this situation	common	pt-br	Notifique seu administrador para corrigir esta situação
 november	common	pt-br	Novembro
 october	common	pt-br	Outubro
 ok	common	pt-br	OK
@@ -625,7 +586,6 @@ open link in a new window	tinymce	pt-br	Abrir link em uma nova janela
 open link in the same window	tinymce	pt-br	Abrir link na mesma janela
 open notify window	common	pt-br	Abrir janela de notificação
 open popup window	common	pt-br	Abrir janela
-open sidebox	common	pt-br	Abrir caixa lateral
 opens this link in a new window	htmlarea-ContextMenu	pt-br	Abre este link em uma nova janela
 ordered list	common	pt-br	Lista Classificada
 original	common	pt-br	Original
@@ -657,9 +617,6 @@ paste table row before	tinymce	pt-br	Colar linha de tabela antes
 path	htmlarea	pt-br	Caminho
 path not found.	tinymce	pt-br	Caminho não encontrado
 path to user and group files has to be outside of the webservers document-root!!!	common	pt-br	O caminho para usuários e grupos deve ser FORA do servidor da extranet.!!!
-pattern for search in addressbook	common	pt-br	Teste padrão para a Busca no Catálogo de Endereços
-pattern for search in calendar	common	pt-br	Teste padrão para a Busca no Calendário
-pattern for search in projects	common	pt-br	Teste padrão para a Busca nos Projetos
 percent	htmlarea-TableOperations	pt-br	percentagem
 permissions to the files/users directory	common	pt-br	Permissões do diretório para os arquivos/usuários
 personal	common	pt-br	Pessoal
@@ -691,7 +648,6 @@ portugal	common	pt-br	PORTUGAL
 position (x/y)	tinymce	pt-br	Posição (X/Y)
 postal	common	pt-br	CEP
 powered by egroupware version %1	common	pt-br	Atualizado pela <a href="http://www.egroupware.com.br" target="_blank">eGW-BR</a> sobre a plataforma eGW versão %1
-powered by phpgroupware version %1	common	pt-br	Desenvolvido por phpGroupWare version %1
 preferences	common	pt-br	Preferências
 preferences for the idots template set	common	pt-br	Preferências para o modelo de layout Idots
 prev. month (hold for menu)	jscalendar	pt-br	Mês anterior (congele para o menú)
@@ -702,7 +658,6 @@ primary style-sheet:	common	pt-br	Estilho de folha primário:
 print	common	pt-br	Imprimir
 priority	common	pt-br	Prioridade
 private	common	pt-br	Particular
-programs	common	pt-br	Programas
 project	common	pt-br	Projeto
 public	common	pt-br	público
 puerto rico	common	pt-br	PORTO RICO
@@ -710,14 +665,12 @@ qatar	common	pt-br	QATAR
 re-check	htmlarea-SpellChecker	pt-br	Verificar de novo
 read	common	pt-br	Leitura
 read this list of methods.	common	pt-br	Leia a lista de métodos.
-reading	common	pt-br	lendo
 redo	tinymce	pt-br	Refazer
 redoes your last action	htmlarea	pt-br	Desfazer sua última ação
 refresh	tinymce	pt-br	Atualizar
 reject	common	pt-br	Rejeitar
 remove col	tinymce	pt-br	Remover coluna
 remove selected accounts	common	pt-br	apagar contas selecionadas
-remove shortcut	common	pt-br	Remover atalho
 remove the	htmlarea-ContextMenu	pt-br	Remover o
 remove this node from the document	htmlarea-ContextMenu	pt-br	Remover este nó do documento
 rename	common	pt-br	Renomear
@@ -754,13 +707,11 @@ san marino	common	pt-br	SAN MARINO
 sao tome and principe	common	pt-br	SÃO TOME AND PRINCIPE
 saturday	common	pt-br	Sábado
 saudi arabia	common	pt-br	ARÁBIA SAUDITA
-savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	pt-br	Versão do Savant2 é diferente do empacotador Savant2.<br/>Esta versão: %1 <br/>Versão do Savant: %2
 save	common	pt-br	Salvar
 search	common	pt-br	Procura
 search %1 '%2'	common	pt-br	Procura %1 '%2'
 search or select accounts	common	pt-br	Procura ou seleciona contas
 search or select multiple accounts	common	pt-br	pesquisar or selecionar múltimas contas
-second	common	pt-br	segundo
 section	common	pt-br	Seção
 select	common	pt-br	Selecionar
 select all	tinymce	pt-br	Selecionar tudo
@@ -771,8 +722,6 @@ select group	common	pt-br	Selecionar grupo
 select home email address	common	pt-br	Selecionar endereço de e-mail residencial
 select multiple accounts	common	pt-br	Selecionar múltimas contas
 select one	common	pt-br	Selecionar um
-select the default height for the application windows	common	pt-br	Selecione a altura padrão para a janela da aplicação
-select the default width for the application windows	common	pt-br	Selecione a largura padrão para a janela da aplicação
 select user	common	pt-br	Selecionar usuário
 select work email address	common	pt-br	Selecionar endereço de e-mail comercial
 selection	common	pt-br	Seleção
@@ -780,8 +729,6 @@ send	common	pt-br	Enviar
 senegal	common	pt-br	SENEGAL
 september	common	pt-br	Setembro
 server %1 has been added	common	pt-br	Servidor %1 foi incluído
-server answered. processing response...	common	pt-br	Servidor respondeu. Processando resposta...
-server contacted. waiting for response...	common	pt-br	Servidor contactado. Aguardando resposta...
 server name	common	pt-br	Nome do Servidor
 session has been killed	common	pt-br	Sessão foi terminada
 setup	common	pt-br	Configurar
@@ -789,19 +736,14 @@ setup main menu	common	pt-br	Menu principal de configurações
 seychelles	common	pt-br	SEYCHELLES
 show all	common	pt-br	Exibir tudo
 show all categorys	common	pt-br	Mostrar todas as Categorias
-show clock?	common	pt-br	Exibir relógio?
-show home and logout button in main application bar?	common	pt-br	Exibir botões Página Inicial e Desconectar na barra principal de aplicativos?
 show locationbar	tinymce	pt-br	Exibir local da barra
-show logo's on the desktop.	common	pt-br	Exibir logotipo na tela
 show menu	common	pt-br	Mostrar menu
 show menubar	tinymce	pt-br	Exibir barra de menus
 show page generation time	common	pt-br	Mostrar tempo de criação da página
 show page generation time on the bottom of the page?	common	pt-br	O tempo de criação da página deve ser mostrado no rodapé?
-show page generation time?	common	pt-br	Exibir tempo de geração da página?
 show scrollbars	tinymce	pt-br	Exibir barras laterais
 show statusbar	tinymce	pt-br	Exibir barra de status
 show the image properties dialog	htmlarea-ContextMenu	pt-br	Exibir o diálogo de propriedade de imagem
-show the logo's of egroupware and x-desktop on the desktop.	common	pt-br	Exibir o logotipo do eGroupWare e X-Desktop na tela.
 show the table cell properties dialog	htmlarea-ContextMenu	pt-br	Exibir o diálogo Propriedades da Célula
 show the table properties dialog	htmlarea-ContextMenu	pt-br	Exibir o diálogo Propriedades da Tabela
 show the table row properties dialog	htmlarea-ContextMenu	pt-br	Exibir o diálogo Propriedades da Linha
@@ -832,9 +774,7 @@ sri lanka	common	pt-br	SRI LANKA
 start date	common	pt-br	Data de início
 start time	common	pt-br	Hora de início
 start with	common	pt-br	iniciar com
-starting up...	common	pt-br	Iniciando...
 status	common	pt-br	Status
-stretched	common	pt-br	esticado
 strikethrough	htmlarea	pt-br	Batida completamente
 striketrough	tinymce	pt-br	Batida completamente
 style [css]	htmlarea-TableOperations	pt-br	Estilo [CSS]
@@ -881,7 +821,6 @@ this is just a template popup	tinymce	pt-br	Este é apenas um popup modelo
 this name has been used already	common	pt-br	Este nome já está em uso !
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	pt-br	Isso descartará alterações e terminará o verificador ortográfico. Por favor, confirme.
 thursday	common	pt-br	Quinta
-tiled	common	pt-br	Espichado
 time	common	pt-br	Hora
 time selection:	jscalendar	pt-br	Seleção da hora:
 time zone	common	pt-br	Fuso horário
@@ -901,7 +840,6 @@ tonga	common	pt-br	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	pt-br	Houve tentativas em excesso de login para o usuário:: %1 para o cliente '%2', %3 a partir do endereço IP %4
 top	common	pt-br	Topo
 total	common	pt-br	Total
-transparant bg for the icons?	common	pt-br	Plano de fundo transparente para os ícones?
 trinidad and tobago	common	pt-br	TRINIDAD E TOBAGO
 tuesday	common	pt-br	Terça
 tunisia	common	pt-br	TUNISIA
@@ -909,11 +847,9 @@ turkey	common	pt-br	TURQUIA
 turkmenistan	common	pt-br	TURCOMENISTÃO
 turks and caicos islands	common	pt-br	ILHAS TURKS E CAICOS
 tuvalu	common	pt-br	TUVALU
-type	common	pt-br	Tipo
 uganda	common	pt-br	UGANDA
 ukraine	common	pt-br	UCRÂNIA
 underline	common	pt-br	Sublinhado
-underline.gif	common	pt-br	underline.gif
 undo	tinymce	pt-br	Desfazer
 undoes your last action	htmlarea	pt-br	Refazer a última ação
 united arab emirates	common	pt-br	EMIRADOS ÁRABES UNIDOS
@@ -928,9 +864,7 @@ unordered list	tinymce	pt-br	Lista desordenada
 unset color	htmlarea-TableOperations	pt-br	Retirar cor
 up	tinymce	pt-br	Acima
 update	common	pt-br	Atualizar
-update the clock per minute or per second	common	pt-br	Atualizar o relógio por minuto ou por segundo
 upload	common	pt-br	Carregar
-upload directory does not exist, or is not writeable by webserver	common	pt-br	Diretório de carregamento não existe ou servidor web não pode escrever nele.
 upload image	htmlarea-UploadImage	pt-br	Carregar imagem
 uploading...	tinymce	pt-br	Carregando...
 upper latin letters	htmlarea-ListType	pt-br	Letras latinas maiúsculas
@@ -946,6 +880,7 @@ use ctrl+v on your keyboard to paste the text into the window.	tinymce	pt-br	Use
 user	common	pt-br	Usuário
 user accounts	common	pt-br	Contas do usuário
 user groups	common	pt-br	Grupos do usuário
+user openinstance	common	pt-br	Instância do usuário aberta
 username	common	pt-br	Nome do usuário
 users	common	pt-br	Usuários
 users choice	common	pt-br	À escolha dos usuários
@@ -964,16 +899,11 @@ warning!\n renaming or moving folders and files will break existing links in you
 wednesday	common	pt-br	Quarta
 welcome	common	pt-br	Bem Vindo
 western sahara	common	pt-br	WESTERN SAHARA
-what color should all the blank space on the desktop have	common	pt-br	Que cor os espaços em branco deverão ter na tela
-what style would you like the image to have?	common	pt-br	Que estilo você quer que a imagem tenha ?
-when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Se você escolher sim os botões Página Inicial e Desconectar estarão presentes na barra principal de aplicativos.
 which groups	common	pt-br	Qual grupo
 width	common	pt-br	Largura
 window name	tinymce	pt-br	Nome da janela
 wk	jscalendar	pt-br	wk
 work email	common	pt-br	Endereço de e-mail comercial
-would you like to display the page generation time at the bottom of every window?	common	pt-br	Você quer exibir o tempo de geração da página no rodapé de cada página?
-writing	common	pt-br	escrevendo
 written by:	common	pt-br	Escrito por:
 year	common	pt-br	Ano
 yemen	common	pt-br	YEMEN
@@ -999,4 +929,3 @@ your settings have been updated	common	pt-br	Suas preferências foram atualizadas
 yugoslavia	common	pt-br	IUGOSLÁVIA
 zambia	common	pt-br	ZÂMBIA
 zimbabwe	common	pt-br	ZIMBABUE
-zoom	common	pt-br	Zoom
