@@ -57,6 +57,14 @@
 		 * @var array $sel_options reference to the sel_options-param of the last call to show, for extensions to use
 		 */
 		var $sel_options;
+		/**
+		 * @var string $name_form name of the currently processed etemplate, reference to $GLOBALS['egw_info']['etemplate']['name_form']
+		 */
+		var $name_form;
+		/**
+		 * @var array $name_forms used form-names in this request, reference to $GLOBALS['egw_info']['etemplate']['name_forms']
+		 */
+		var $name_forms;
 
 		/**
 		 * constructor of etemplate class, reads an eTemplate if $name is given
@@ -87,6 +95,9 @@
 				$this->innerWidth = 1018;	// default width for an assumed screen-resolution of 1024x768
 			}
 			//echo "<p>_POST[innerWidth]='$_POST[innerWidth]', innerWidth=$this->innerWidth</p>\n";
+			$this->name_form =& $GLOBALS['egw_info']['etemplate']['name_form'];
+			$this->name_forms =& $GLOBALS['egw_info']['etemplate']['name_forms'];
+			if (!is_array($this->name_forms)) $this->name_forms = array();
 		}
 
 		/**
@@ -155,6 +166,14 @@
 				$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 			}
 			$id = $this->appsession_id();
+			
+			// use different form-names to allows multiple eTemplates in one page, eg. addressbook-view
+			$this->name_form = 'eTemplate';
+			if (in_array($this->name_form,$this->name_forms))
+			{
+				$this->name_form .= count($this->name_forms);
+			}
+			$this->name_forms[] = $this->name_form;
 
 			$GLOBALS['egw_info']['etemplate']['output_mode'] = $output_mode;	// let extensions "know" they are run eg. in a popup
 			$GLOBALS['egw_info']['etemplate']['loop'] = False;
@@ -168,7 +187,7 @@
 					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
 						'etemplate_exec_id' => $id
 					),$this->sitemgr ? '' : '/etemplate/process_exec.php?menuaction='.$method,
-					'','eTemplate',$GLOBALS['egw_info']['etemplate']['form_options'].
+					'',$this->name_form,$GLOBALS['egw_info']['etemplate']['form_options'].
 					// dont set the width of popups!
 					($output_mode != 0 ? '' : ' onsubmit="this.innerWidth.value=window.innerWidth ? window.innerWidth : document.body.clientWidth;"'));
 					//echo "to_process="; _debug_array($GLOBALS['egw_info']['etemplate']['to_process']); 
@@ -1015,7 +1034,7 @@
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
 						$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
-							(($cell['onchange'] == 1 || $img) ? "return submitit(document.eTemplate,'$form_name');" : $cell['onchange']).'; return false;';
+							(($cell['onchange'] == 1 || $img) ? "return submitit($this->name_form,'$form_name');" : $cell['onchange']).'; return false;';
 						
 						if (!$this->html->netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 						{
