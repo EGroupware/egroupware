@@ -10,6 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	<b>Esto creará 1 cuenta de administrador y 3 de demostración</b><br />Los nombres de usuario y contraseñas son: demo/guest, demo2/guest y demo3/guest.
 accounts existing	setup	es-es	Existen cuentas
 actions	setup	es-es	Acciones
+activate save password check	setup	es-es	Activar la comprobación para guardar contraseñas
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	es-es	Añadir usuarios creados automáticamente a este grupo (si está vacío, se le asignará el grupo predeterminado)
 add new database instance (egw domain)	setup	es-es	Añadir nueva instancia de base de datos (dominio eGW)
 additional settings	setup	es-es	Configuración adicional
@@ -196,6 +197,7 @@ file	setup	es-es	FICHERO
 file type, size, version, etc.	setup	es-es	tipo de fichero, tamaño, versión, etc
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	es-es	La subida de ficheros al servidor está desactivada: ¡NO puede usar ningún gestor de ficheros ni adjuntar ficheros en varias aplicaciones!
 filename	setup	es-es	Nombre del fichero
+filesystem	setup	es-es	Sistema de archivos
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	es-es	Para una instalación nueva, seleccione importar. Para convertir las cuentas SQL existentes a LDAP, seleccione exportar
 force selectbox	setup	es-es	Forzar cuadro de selección
 found existing configuration file. loading settings from the file...	setup	es-es	Se encontró un fichero de configuración existente. Cargando la configuración desde el fichero...
@@ -414,6 +416,7 @@ setup the database	setup	es-es	Instalar la base de datos
 setup/config admin login	setup	es-es	Usuario administrador para Instalación/Configuración
 show 'powered by' logo on	setup	es-es	Mostrar el logo en
 size	setup	es-es	tamaño
+skip the installation tests (not recommended)	setup	es-es	Omitir las pruebas de instalación (no se recomienda)
 smtp server hostname or ip address	setup	es-es	Nombre del servidor SMTP o dirección IP
 smtp server port	setup	es-es	Puerto del servidor SMTP
 some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas no se encuentran
@@ -517,6 +520,7 @@ you appear to have %1 support.	setup	es-es	Parece que tiene soporte para %1.
 you appear to have php session support. enabling php sessions.	setup	es-es	Parece que tiene soporte para sesiones PHP. Activando sesiones PHP.
 you appear to have xml support enabled	setup	es-es	Parece que tiene activado el soporte XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	es-es	Está listo para esta fase, pero esta fase aún no está escrita.<br />
+you can install it by running:	setup	es-es	Puede instalarlo ejecutando:
 you didn't enter a config password for domain %1	setup	es-es	No ha introducido una contraseña de configuración para el dominio %1
 you didn't enter a config username for domain %1	setup	es-es	No ha introducido un usuario de configuración para el dominio %1
 you didn't enter a header admin password	setup	es-es	No ha introducido una contraseña para administrar los encabezados

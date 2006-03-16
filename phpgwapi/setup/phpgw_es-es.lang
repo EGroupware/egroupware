@@ -609,6 +609,11 @@ parent category	common	es-es	Categoría superior
 password	common	es-es	Contraseña
 password could not be changed	common	es-es	No se pudo cambiar la contraseña
 password has been updated	common	es-es	Su contraseña ha sido actualizada
+password must contain at least %1 lowercase letters	common	es-es	La contraseña debe contener al menos %1 letras minúsculas
+password must contain at least %1 numbers	common	es-es	La contraseña debe contener al menos %1 números
+password must contain at least %1 special charactars	common	es-es	La contraseña debe contener al menos %1 caracteres especiales
+password must contain at least %1 uppercase letters	common	es-es	La contraseña debe contener al menos %1 letras mayúsculas
+password must have at least %1 characters	common	es-es	La contraseña debe tener al menos %1 caracteres
 paste	htmlarea-ContextMenu	es-es	Pegar
 paste as plain text	tinymce	es-es	Pegar como texto plano
 paste from clipboard	htmlarea	es-es	Pegar desde el portapapeles
@@ -866,6 +871,7 @@ unset color	htmlarea-TableOperations	es-es	Quitar color
 up	tinymce	es-es	Arriba
 update	common	es-es	Insertar
 upload	common	es-es	Subir a un servidor
+upload directory does not exist, or is not writeable by webserver	common	es-es	El directorio para subir archivos no existe o no tiene permisos de escritura para el servidor web
 upload image	htmlarea-UploadImage	es-es	Subir imagen
 uploading...	tinymce	es-es	Subiendo...
 upper latin letters	htmlarea-ListType	es-es	Letras latinas mayúsculas

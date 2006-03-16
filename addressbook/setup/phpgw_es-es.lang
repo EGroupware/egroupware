@@ -51,6 +51,7 @@ contact settings	admin	es-es	Configuración de los contactos
 copied by %1, from record #%2.	addressbook	es-es	Copiado por %1, del registro %2
 country	common	es-es	País
 create new links	addressbook	es-es	Crear enlaces nuevos
+credit	addressbook	es-es	Crédito
 csv-fieldname	addressbook	es-es	Campo CSV
 csv-filename	addressbook	es-es	Archivo CSV
 custom	addressbook	es-es	Personalizado
@@ -108,6 +109,7 @@ import from outlook	addressbook	es-es	Importar desde Outlook
 import multiple vcard	addressbook	es-es	Importar múltiples VCards
 import next set	addressbook	es-es	Importar el registro siguiente
 import_instructions	addressbook	es-es	Si usa Mozilla o Netscape, abra la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato LDIF.<p>O, en Outlook, seleccione su carpeta de contactos, luego, en el menú<b>Fichero</b>, <b>Importar y Exportar</b> para guardarlos en un fichero separado por comas (CSV).<p>O, en Palm Desktop 4.0 o superior, visite la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato VCard.
+income	addressbook	es-es	Ingresos
 international	addressbook	es-es	Internacional
 isdn phone	addressbook	es-es	Telefono RDSI
 label	addressbook	es-es	Etiqueta
@@ -187,7 +189,6 @@ voice phone	addressbook	es-es	Teléfono de voz
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! ¡LDAP es valido sólo si no está usando contactos para almacenar las cuentas!
 warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
 work phone	addressbook	es-es	Teléfono del trabajo
-write (update or add) a single entry by passing the fields.	addressbook	es-es	Escribir (actualizar o añadir) una sola entrada pasando los campos.
 you are not permitted to delete contact %1	addressbook	es-es	No tiene permiso para borrar el contacto %1
 you are not permittet to delete this contact	addressbook	es-es	No tiene permiso para borrar este contacto
 you are not permittet to edit this contact	addressbook	es-es	No tiene permiso para editar este contacto

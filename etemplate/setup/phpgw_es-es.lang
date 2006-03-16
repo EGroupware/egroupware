@@ -82,6 +82,7 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	etemplate	es-es	Estilos CSS
 custom	etemplate	es-es	personalizado
 custom fields	etemplate	es-es	campos personalizados
+custom javascript for onchange	etemplate	es-es	javascript personalizado para onChange
 cut	etemplate	es-es	Cortar
 date+time	etemplate	es-es	Fecha + hora
 datum	etemplate	es-es	Fecha
@@ -242,6 +243,7 @@ nothing matched search criteria !!!	etemplate	es-es	No se encontró nada con ese 
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	es-es	número de columnas por las que el campo o celda debe distribuirse, o 'todas' para el resto de columnas, nombre de la clase CSS (para la etiqueta TD)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	es-es	número de filas o columnas en un recuadro vertical u horizontal, distancia del texto a la celda y espaciado entre celdas
 of	etemplate	es-es	de
+onchange	etemplate	es-es	onChange
 onclick	etemplate	es-es	onClick
 only an other version found !!!	etemplate	es-es	sólo se encontró otra versión
 open the online help.	etemplate	es-es	Abrir la ayuda en línea
@@ -307,6 +309,7 @@ select which values to show	etemplate	es-es	Seleccionar qué valores mostrar
 select year	etemplate	es-es	Seleccionar año
 selectbox	etemplate	es-es	Cuadro de selección
 sets today as date	etemplate	es-es	pone hoy como fecha
+should the form be submitted or any custom javascript be executed	etemplate	es-es	Se debe enviar el formulario o ejecutar cualquier javascript personalizado
 show	etemplate	es-es	Mostrar
 show (no save)	etemplate	es-es	Mostrar (sin guardar)
 show values	etemplate	es-es	Mostar valores
@@ -319,6 +322,7 @@ span, class	etemplate	es-es	span, clase
 stack	etemplate	es-es	Pila
 start a new search, cancel this link	etemplate	es-es	comienzar una nueva búsqueda, cancelar este enlace
 start new search for the above pattern	etemplate	es-es	comenzar una nueva búsqueda para el patrón de arriba
+submit form	etemplate	es-es	enviar formulario
 submitbutton	etemplate	es-es	Botón de enviar
 swap	etemplate	es-es	intercambiar
 swap widget with next one	etemplate	es-es	intercambiar control con el siguiente
