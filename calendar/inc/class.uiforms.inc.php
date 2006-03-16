@@ -767,7 +767,7 @@ class uiforms extends uical
 				'time' => $this->bo->long_date($conflict['start'],$conflict['end'],true),
 				'conflicting_participants' => implode(",\n",$this->bo->participants(array(
 					'participants' => array_intersect_key($conflict['participants'],$event['participants']),
-				))),
+				),true,true)),	// show group invitations too
 				'icon_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? 'recur' : '',
 				'text_recur' => $conflict['recur_type'] != MCAL_RECUR_NONE ? lang('Recurring event') : ' ',
 			);		
@@ -971,6 +971,7 @@ class uiforms extends uical
 			'start' => $start,
 			'end'	=> $end,
 			'users'	=> $participants,
+			'ignore_acl' => true,	// otherwise we get only events readable by the user
 		));
 		$busy[] = array(	// add end-of-search-date as event, to cope with empty search and get freetime til that date
 			'start'	=> $end,

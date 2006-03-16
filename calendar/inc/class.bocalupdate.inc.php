@@ -145,6 +145,7 @@ class bocalupdate extends bocal
 				'end'   => $event['end'],
 				'users' => $users,
 				'ignore_acl' => true,	// otherwise we get only events readable by the user
+				'enum_groups' => true,	// otherwise group-events would not block time
 			));
 			if ($this->debug > 2 || $this->debug == 'update')
 			{

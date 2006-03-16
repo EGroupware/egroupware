@@ -98,6 +98,7 @@ class bocal
 		'R' => 'Rejected',
 		'T' => 'Tentative',
 		'U' => 'No Response',
+		'G' => 'Group invitation',
 	);
 	/**
 	 * @var array recur_types translates MCAL recur-types to verbose labels
@@ -1307,15 +1308,16 @@ class bocal
 	*
 	* @param array $event event-data
 	* @param boolean $long_status=false should the long/verbose status or only the one letter shortcut be used
+	* @param boolean $show_group_invitation=false show group-invitations (status == 'G') or not (default)
 	* @return array with id / names with status pairs
 	*/
-	function participants($event,$long_status=False)
+	function participants($event,$long_status=False,$show_group_invitation=false)
 	{
  		//_debug_array($event);
  		$names = array();
 		foreach($event['participants'] as $id => $status)
 		{
-			if ($status == 'G') continue;	// dont show group-invitation
+			if ($status == 'G' && !$show_group_invitation) continue;	// dont show group-invitation
 
 			$status = $this->verbose_status[$status];
 

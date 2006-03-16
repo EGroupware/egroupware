@@ -124,6 +124,7 @@ fullname of person to notify	calendar	de	Name der zu benachrichtigenden Person
 general	calendar	de	Allgemein
 global public and group public	calendar	de	Global öffentlich und Gruppen-öffentlich
 global public only	calendar	de	nur Global öffentlich
+group invitation	calendar	de	Gruppeneinladung
 group planner	calendar	de	Gruppenplaner
 group public only	calendar	de	Gruppen-Öffentlich
 groupmember(s) %1 not included, because you have no access.	calendar	de	Gruppenmitglied(er) %1 nicht enthalten, da Sie keinen Zugriff haben.
