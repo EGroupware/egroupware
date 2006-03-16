@@ -267,6 +267,12 @@ class uical
 					}
 					$set_states['owner'] = implode(',',$owners);
 				}
+				// for the uiforms class (eg. edit), dont store the (new) owner, as it might change the view
+				if (substr($_GET['menuaction'],0,16) == 'calendar.uiforms')
+				{
+					$this->owner = $set_states[$state];
+					continue;
+				}
 				$states[$state] = $set_states[$state];
 			}
 			elseif (!is_array($states) || !isset($states[$state]))
@@ -371,6 +377,10 @@ class uical
 				 		'width="16px" height="16px"');
 				}
 			}
+		}
+		if($event['non_blocking'])
+		{
+			$icons[] = $this->html->image('calendar','nonblocking',lang('non blocking'));
 		}
 		if($event['public'] == 0)
 		{
