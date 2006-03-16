@@ -406,14 +406,14 @@ class uiviews extends uical
 			}
 			else
 			{
-				$dayEvents = array();
+				$dayEvents = $owner = array();
 				$search_params = $this->search_params;
 				foreach($this->_get_planner_users(false) as $uid => $label)
 				{
 					$search_params['users'] = $uid;
 					list(,$dayEvents['<b>'.$label.'</b>']) = each($this->bo->search($search_params));
+					$owner[] = $uid;
 				}
-				$owner = $users;
 			}
 			$cols = array();
 			$cols[0] =& $this->timeGridWidget($dayEvents,$this->cal_prefs['interval'],450,'','',$owner);
