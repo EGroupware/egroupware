@@ -307,7 +307,7 @@
 						case 'edit_status':
 							return $this->edit($do_id,$action,$action_id,'',$called_as);
 						case 'delete':
-							if (!($values['msg'] = $this->delete($do_id,$called_as,'index'))) return;
+							if (!($values['msg'] = $this->delete($do_id,$called_as,$called_as ? '' : 'index'))) return;
 							break;
 						case 'close':
 							return $this->close($do_id,$called_as,$do == 'close_subs');
@@ -952,17 +952,13 @@
 				case 'addressbook_view':
 					$app     = 'addressbook';
 					$view_id = 'ab_id';
-					$view    = 'addressbook.uiaddressbook.view';
+					$view_id2 = 'contact_id';
+					$view    = 'addressbook.uicontacts.view';
 					break;
 				case 'projects_view':
 					$app     = 'projects';
 					$view_id = 'project_id';
 					$view    = 'projects.uiprojects.view';
-					break;
-				case 'calendar_view':
-					$app     = 'calendar';
-					$view_id = 'cal_id';
-					$view    = 'calendar.uicalendar.view';
 					break;
 				default:
 					$app     = $args['app'];
@@ -987,7 +983,7 @@
 			$GLOBALS['egw_info']['etemplate']['hooked'] = True;
 			$this->index(0,$app,$args[$view_id],array(
 				'menuaction' => $view,
-				$view_id     => $args[$view_id]
+				isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]
 			),True);
 			$GLOBALS['egw_info']['flags']['currentapp'] = $save_app;
 			unset($GLOBALS['egw_info']['etemplate']['hooked']);
