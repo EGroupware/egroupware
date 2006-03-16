@@ -137,7 +137,7 @@
 		// Parse it all into a string
 		function export_end_file($buffer)
 		{
-			$top = 'INSERT INTO phpgw_addressbook(';
+			$top = 'INSERT INTO egw_addressbook(';
 			reset($this->ids);
 			for ($i=0;$i<count($this->ids);$i++)
 			{
