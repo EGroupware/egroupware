@@ -427,7 +427,7 @@ class uiviews extends uical
 						$todo_label .= '&nbsp;'.$this->html->a_href( $this->html->image('infolog',$type,lang('Add')),'infolog.uiinfolog.edit',array(
 							'type' => $type,
 							'start_time' => $ts,
-						),' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=550,scrollbars=yes,status=yes\'); return false;"');
+						),' target="_blank" onclick="window.open(this.href,this.target,\'dependent=yes,width=750,height=590,scrollbars=yes,status=yes\'); return false;"');
 					}
 				}
 				$cols[1] = $this->html->div(
