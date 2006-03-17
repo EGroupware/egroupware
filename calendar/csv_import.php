@@ -37,7 +37,7 @@
 		$GLOBALS['egw']->redirect_link('/admin/index.php');
 	}
 	$GLOBALS['egw_info']['flags']['app_header'] = $GLOBALS['egw_info']['apps']['calendar']['title'].' - '.lang('Import CSV-File');
-	$uical =& CreateObject('calendar.uical',true);
+	$cal =& CreateObject('calendar.uical',true);
 	$GLOBALS['egw']->common->egw_header();
 
 	$GLOBALS['egw']->template->set_file(array('import_t' => 'csv_import.tpl'));
@@ -472,7 +472,7 @@
 					{
 						$values['uid'] = 'cal-csv-import-'.$values['uid'].'-'.$GLOBALS['egw_info']['server']['install_id'];
 					}
-					if (($event = $uical->bo->read($values['uid'],null,$is_admin)))	// no ACL check for admins
+					if (($event = $cal->bo->read($values['uid'],null,$is_admin)))	// no ACL check for admins
 					{
 						//echo "updating existing event"; _debug_array($event);
 						$values['id'] = $event['id'];
@@ -480,7 +480,7 @@
 				}
 				$action = $values['id'] ? 'updating' : 'adding';
 				//echo $action.'<pre>'.print_r($values,True)."</pre>\n";
-				$cal_id = $uical->bo->update($values,true,!$values['modified'],$is_admin);	// ignoring conflicts and ACL (for admins) on import
+				$cal_id = $cal->bo->update($values,true,!$values['modified'],$is_admin);	// ignoring conflicts and ACL (for admins) on import
 				
 				$log .= "\t\t".'<td align="center">'.($cal_id ? $action." cal_id=$cal_id" : 'Error '.$action)."</td>\n\t</tr>\n";
 			}
