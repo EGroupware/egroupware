@@ -3,6 +3,7 @@
 - subprojects from	infolog	de	- Untereinträge von
 0%	infolog	de	0%
 10%	infolog	de	10%
+100%	infolog	de	100%
 20%	infolog	de	20%
 30%	infolog	de	30%
 40%	infolog	de	40%
@@ -16,6 +17,7 @@ a short subject for the entry	infolog	de	einen kurzen Titel für diesen Eintrag
 abort without deleting	infolog	de	Abruch ohne zu Löschen
 accept	infolog	de	bei Annahme
 action	infolog	de	Befehle
+actual date and time	infolog	de	aktuelles Datum und Uhrzeit
 add	infolog	de	Hinzufügen
 add a file	infolog	de	Datei anhängen
 add a new entry	infolog	de	einen neuen Eintrag anlegen
@@ -38,6 +40,7 @@ billed	infolog	de	abgerechnet
 both	infolog	de	Annahme+erledigt
 call	infolog	de	anrufen
 cancel	infolog	de	Abbruch
+cancelled	infolog	de	Abgesagt
 categories	infolog	de	Kategorien
 category	infolog	de	Kategorie
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, zB. ihn als erledigt markieren
@@ -47,6 +50,7 @@ click here to create the link	infolog	de	hier klicken um die Verknüpfung zu erze
 click here to start the search	infolog	de	hier klicken um die Suche zu starten
 close	infolog	de	Schließen
 comment	infolog	de	Kommentar
+completed	infolog	de	Erledigt
 configuration	infolog	de	Konfiguration
 confirm	infolog	de	Bestätigung
 contact	infolog	de	Kontakt
@@ -67,6 +71,8 @@ custom fields, typ and status	common	de	Benutzerdefinierte Felder, Typen und Sta
 custom regarding	infolog	de	Benutzerdefinierter Bezug
 custom status for typ	infolog	de	Benutzerdefinierter Status für Typ
 customfields	infolog	de	Benutzerdefinierte Felder
+date completed	infolog	de	Erledigt am
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	de	Fertigstellungsdatum (leer lassen um es automatisch zu setzen wenn der Status erledigt oder abgerechnet ist)
 datecreated	infolog	de	Erstellt am
 dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
@@ -110,6 +116,7 @@ fieldseparator	infolog	de	Feldbegrenzer
 finish	infolog	de	wenn erledigt
 for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
 from	infolog	de	Von
+general	infolog	de	Allgemein
 high	infolog	de	hoch
 id	infolog	de	Id
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allg. Einstellungen definiert).
@@ -132,14 +139,16 @@ invalid filename	infolog	de	Ungültiger Dateiname
 label<br>helptext	infolog	de	Beschriftung<br>Hilfetext
 last changed	infolog	de	letzte Änderung
 last modified	infolog	de	zuletzt geändert
+leave it empty	infolog	de	leer lassen
 leave without saveing the entry	infolog	de	Abbruch ohne den Eintrag zu speichern
 leaves without saveing	infolog	de	Abbroch ohne speichern
-length<br>rows	infolog	de	Länge<br>Zeilen
+length<br>rows	infolog	de	Länge<br />Zeilen
 link	infolog	de	Verknüpfung
 links	infolog	de	Verknüpfungen
 links of this entry	infolog	de	Verknüpfungen dieses Eintrags
 list all categories	infolog	de	Alle Kathegorien anzeigen
 list no subs/childs	infolog	de	Untereinträge nicht anzeigen
+location	infolog	de	Ort
 longer textual description	infolog	de	längere textliche Beschreibung
 low	infolog	de	niedrig
 max length of the input [, length of the inputfield (optional)]	infolog	de	max. Länge der Eingabe [, Länge des Eingabefeldes (optional)]
@@ -159,6 +168,7 @@ none	infolog	de	keine
 normal	infolog	de	normal
 not	infolog	de	nicht
 not assigned	infolog	de	nicht zugewiesen
+not-started	infolog	de	nicht gestartet
 note	infolog	de	Notiz
 number of records to read (%1)	infolog	de	Anzahl Datensätze lesen (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	de	Anzahl Zeilen für ein mehrzeiliges Eingabefeld oder eines mehrfachen Auswahlfeldes
@@ -179,6 +189,7 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Serve
 path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!!!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
 pattern for search in projects	infolog	de	Muster für Suche des Projekts
+percent completed	infolog	de	Prozent erledigt
 permission denied	infolog	de	Zugriff verweigert
 phone	infolog	de	Anruf
 phone/email	infolog	de	Telefon/Email
@@ -233,10 +244,11 @@ small view	infolog	de	schmale Ansicht
 start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
 startdate enddate	infolog	de	Startdatum Endedatum
+startdate for new entries	infolog	de	Startdatum für neue Einträge
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
 status ...	infolog	de	Status ...
-sub	infolog	de	Unter-<br>einträge
+sub	infolog	de	Unter-<br />einträge
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	de	Untereinträge gehören dann zum übergeordneten Eintrag oder werden Haupteinträge wenn es keinen übergeordneten gibt.
 subject	infolog	de	Titel
 task	infolog	de	Aufgabe
@@ -248,7 +260,9 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	de	bis wann soll der Auftrag oder Anruf erledigt sein
 times	infolog	de	Zeiten
 to many might exceed your execution-time-limit	infolog	de	zu viel können Ihre Laufzeitbeschränkung überschreiten
+to what should the startdate of new entries be set.	infolog	de	Auf was soll das Startdatum von neuen Einträgen gesetzt werden.
 today	infolog	de	Heute
+todays date	infolog	de	heutiges Datum
 todo	infolog	de	Aufgabe
 translation	infolog	de	Translation
 typ	infolog	de	Typ

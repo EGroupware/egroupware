@@ -11,11 +11,27 @@
 
 	/* $Id$ */
 
-	require_once PHPGW_SERVER_ROOT.'/infolog/inc/class.boinfolog.inc.php';
-	require_once PHPGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
+	require_once EGW_SERVER_ROOT.'/infolog/inc/class.boinfolog.inc.php';
+	require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 
 	class vcalinfolog extends boinfolog
 	{
+		var $status2vtodo = array(
+			'offer'       => 'NEEDS-ACTION',
+			'not-started' => 'NEEDS-ACTION',
+			'ongoing'     => 'IN-PROCESS',
+			'done'        => 'COMPLETED',
+			'cancelled'   => 'CANCELLED',
+			'billed'      => 'DONE',
+			'call'        => 'NEEDS-ACTION',
+			'will-call'   => 'IN-PROCESS',			
+		);
+		var $vtodo2status = array(
+			'NEEDS-ACTION' => 'not-started',
+			'IN-PROCESS'   => 'ongoing',
+			'COMPLETED'    => 'done',
+			'CANCELLED'    => 'cancelled',
+		);
 		function exportVTODO($_taskID, $_version)
 		{
 			$taskData = $this->read($_taskID);
@@ -39,16 +55,20 @@
 			
 			$vevent->setAttribute('SUMMARY',$taskData['info_subject']);
 			$vevent->setAttribute('DESCRIPTION',$taskData['info_des']);
+			$vevent->setAttribute('LOCATION',$taskData['info_location']);
 			if($taskData['info_startdate'])
 				$vevent->setAttribute('DTSTART',$taskData['info_startdate']);
 			if($taskData['info_enddate'])
 				$vevent->setAttribute('DUE',$taskData['info_enddate']);
+			if($taskData['info_datecompleted'])
+				$vevent->setAttribute('COMPLETED',$taskData['info_datecompleted']);
 			$vevent->setAttribute('DTSTAMP',time());
 			$vevent->setAttribute('CREATED',$GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'add'));
 			$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'modify'));
 			$vevent->setAttribute('UID',$taskGUID);
-			$vevent->setAttribute('CLASS',(($taskData['info_access'] == 'public')?'PUBLIC':'PRIVATE'));
-			$vevent->setAttribute('STATUS',(($taskData['info_status'] == 'completed')?'COMPLETED':'NEEDS-ACTION'));
+			$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
+			$vevent->setAttribute('STATUS',isset($this->status2vtodo[$taskData['info_status']]) ?  
+				$this->status2vtodo[$taskData['info_status']] : 'NEEDS-ACTION');
 			// 3=urgent => 1, 2=high => 2, 1=normal => 3, 0=low => 4
 			$vevent->setAttribute('PRIORITY',4-$taskData['info_priority']);
 
@@ -71,8 +91,6 @@
 		
 		function importVTODO(&$_vcalData, $_taskID=-1)
 		{
-			$botranslation  = CreateObject('phpgwapi.translation');
-			
 			$vcal = &new Horde_iCalendar;
 			if(!$vcal->parsevCalendar($_vcalData))
 			{
@@ -86,11 +104,10 @@
 				{
 					if($_taskID>0)
 						$taskData['info_id'] = $_taskID;
-					
+						
 					foreach($component->_attributes as $attributes)
 					{
 						#print $attributes['name'].' - '.$attributes['value'].'<br>';
-						#$attributes['value'] = $GLOBALS['egw']->translation->convert($attributes['value'],'UTF-8');
 						switch($attributes['name'])
 						{
 							case 'CLASS':
@@ -99,8 +116,14 @@
 							case 'DESCRIPTION':
 								$taskData['info_des']			= $attributes['value'];
 								break;
+							case 'LOCATION':
+								$taskData['info_location']		= $attributes['value'];
+								break;
 							case 'DUE':
 								$taskData['info_enddate']		= $attributes['value'];
+								break;
+							case 'COMPLETED':
+								$taskData['info_datecompleted']	= $attributes['value'];
 								break;
 							case 'DTSTART':
 								$taskData['info_startdate']		= $attributes['value'];
@@ -117,21 +140,20 @@
 								}
 								break;
 							case 'STATUS':
-								$taskData['info_status']		= (strtolower($attributes['value']) == 'completed') ? 'done' : 'ongoing';
+								$taskData['info_status']		= isset($this->vtodo2status[strtoupper($attributes['value'])]) ?
+									$this->vtodo2status[strtoupper($attributes['value'])] : 'ongoing';
 								break;
 							case 'SUMMARY':
 								$taskData['info_subject']		= $attributes['value'];
 								break;
 						}
 					}
+					$taskData = $GLOBALS['egw']->translation->convert($taskData,'UTF-8');
+
 					#_debug_array($eventData);exit;
 					return $this->write($taskData);
 				}
 			}
-			
 			return FALSE;
 		}
-		
-		
 	}
-?>

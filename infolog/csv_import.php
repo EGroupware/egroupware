@@ -181,23 +181,26 @@ function cat_id($cats)
 
 		$info_names = array(	
 			'type'        => 'Type: char(10) task,phone,note,confirm,reject,email,fax',
-			'from'        => 'From: text(64) free text if no Addressbook-entry assigned',
-			'addr'        => 'Addr: text(64) phone-nr/email-address',
-			'subject'     => 'Subject: text(64)',
+			'from'        => 'From: text(255) free text if no Addressbook-entry assigned',
+			'addr'        => 'Addr: text(255) phone-nr/email-address',
+			'subject'     => 'Subject: text(255)',
 			'des'         => 'Description: text long free text',
+			'location'    => 'Location: text(255)',
 			'responsible' => 'Responsible: int(11) user-id or user-name',
 			'owner'       => 'Owner: int(11) user-id/-name of owner, if empty current user',
 			'access'      => 'Access: public,private',
 			'cat'         => 'Category: int(11) category-id or -name (new ones got created)',
 			'startdate'   => 'Start Date: DateTime: Timestamp or eg. YYYY-MM-DD hh:mm',
 			'enddate'     => 'End Date: DateTime',
+			'datecompleted'=> 'Date completed: DateTime',
 			'datemodified'=> 'Date Last Modified: DateTime, if empty = Date Created',
 			'modifier'    => 'Modifier: int(11) user-id, if empty current user',
 			'priority'    => 'Priority: 3=urgent, 2=high, 1=normal, 0=low',
 			'planned_time'=> 'planned Time: int(11) time used in min',
 			'used_time'   => 'used Time: int(11) time used in min',
-			'status'      => 'Status: char(10) offer,ongoing,call,will-call,done,billed,xx%',
-			'confirm'     => 'Confirmation: char(10) not,accept,finish,both when to confirm',
+			'status'      => 'Status: char(10) offer,not-started,ongoing,call,will-call,done,billed,cancelled',
+			'percent'     => 'Percent completed: int',
+//			'confirm'     => 'Confirmation: char(10) not,accept,finish,both when to confirm',
 			'addr_id'     => 'Addressbook id, to set use @addr_id(nlast,nfirst,org)'
 		);
 
@@ -427,7 +430,7 @@ function cat_id($cats)
 			}
 
 			// convert dates to timestamps
-			foreach(array('startdate','enddate','datemodified') as $date)
+			foreach(array('startdate','enddate','datemodified','datecompleted') as $date)
 			{
 				if (isset($values[$date]) && !is_numeric($date))
 				{
@@ -479,5 +482,3 @@ function cat_id($cats)
 	$GLOBALS['egw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
 	$GLOBALS['egw']->template->pfp('phpgw_body','import');
 	$GLOBALS['egw']->common->egw_footer();
-
-?>

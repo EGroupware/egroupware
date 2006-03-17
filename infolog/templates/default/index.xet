@@ -5,20 +5,20 @@
 		<description class="headertext bold" value="InfoLog"/>
 		<styles>.bold { font-weight: bold; }</styles>
 	</template>
-	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.0.1.001">
+	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.2.002">
 		<hbox>
 			<description class="headertext" value="Add:"/>
-			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
-			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
-			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.0.1.002">
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.2.002">
 		<grid>
 			<columns>
-				<column width="5%"/>
+				<column width="2%"/>
 				<column/>
-				<column width="8%"/>
+				<column width="120"/>
 				<column disabled="@no_times"/>
 				<column width="8%"/>
 				<column width="12%"/>
@@ -27,17 +27,19 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<vbox>
+					<vbox orient="0,0">
 						<description value="Type"/>
-						<description value="Status"/>
+						<description value="Status" align="center"/>
+						<description value="Completed" align="right"/>
 					</vbox>
-					<vbox>
+					<vbox data="" rows="2" cols="1" options="2">
 						<description value="Subject"/>
 						<description value="Description"/>
 					</vbox>
 					<vbox>
 						<description value="Startdate"/>
 						<description value="Enddate"/>
+						<description value="Date completed"/>
 					</vbox>
 					<vbox>
 						<description value="Times"/>
@@ -52,19 +54,21 @@
 					<description value="Action"/>
 				</row>
 				<row class="row" valign="top">
-					<hbox align="center" orient="2,2">
+					<hbox align="center" orient=",5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
-						<button image="$row_cont[info_status]" ro_image="$row_cont[info_status]" label="$row_cont[info_status]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_status]" ro_image="$row_cont[info_status]" label="$row_cont[info_status]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_percent]" ro_image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox orient="0,0">
-						<link label="%s $row_cont[info_addr]" id="${row}[info_link]"/>
+						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
 						<description options=",,1" no_lang="1" id="${row}[info_des]"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
 					<vbox orient="0,0">
-						<date id="${row}[info_startdate]" readonly="true"/>
+						<date-time options=",8" id="${row}[info_startdate]" readonly="true"/>
 						<date class="$row_cont[end_class]" id="${row}[info_enddate]" readonly="true"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true"/>
 					</vbox>
 					<vbox>
 						<date-duration id="${row}[info_used_time]" readonly="true" options=",,,,1"/>
@@ -83,12 +87,12 @@
 						</menulist>
 					</vbox>
 					<vbox align="center" orient="0,0">
-						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
 						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
 					</vbox>
 					<hbox>
-						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
 						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
 					</hbox>
@@ -96,12 +100,12 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index.rows" template="" lang="" group="0" version="1.0.1.003">
+	<template id="infolog.index.rows" template="" lang="" group="0" version="1.2.002">
 		<grid>
 			<columns>
 				<column width="2%"/>
 				<column/>
-				<column width="8%"/>
+				<column width="120"/>
 				<column disabled="@no_times"/>
 				<column width="8%"/>
 				<column width="12%"/>
@@ -113,6 +117,7 @@
 					<vbox orient="0,0">
 						<nextmatch-filterheader options="Type ..." id="info_type"/>
 						<nextmatch-filterheader options="Status ..." id="info_status"/>
+						<nextmatch-sortheader label="Completed" id="info_percent" align="right"/>
 					</vbox>
 					<grid width="100%" spacing="0" padding="0">
 						<columns>
@@ -133,6 +138,7 @@
 					<vbox>
 						<nextmatch-sortheader label="Startdate" id="info_startdate"/>
 						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
+						<nextmatch-sortheader id="info_datecompleted" label="Date completed"/>
 					</vbox>
 					<vbox>
 						<nextmatch-sortheader label="Times" id="info_used_time"/>
@@ -149,7 +155,8 @@
 				<row class="row" valign="top">
 					<hbox align="center" orient=",5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
-						<button image="$row_cont[info_status]" ro_image="$row_cont[info_status]" label="$row_cont[info_status]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_status]" ro_image="$row_cont[info_status]" label="$row_cont[info_status]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_percent]" ro_image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox orient="0,0">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
@@ -160,6 +167,7 @@
 					<vbox orient="0,0">
 						<date-time options=",8" id="${row}[info_startdate]" readonly="true"/>
 						<date class="$row_cont[end_class]" id="${row}[info_enddate]" readonly="true"/>
+						<date-time id="${row}[info_datecompleted]" readonly="true"/>
 					</vbox>
 					<vbox>
 						<date-duration id="${row}[info_used_time]" readonly="true" options=",,,,1"/>
@@ -178,12 +186,12 @@
 						</menulist>
 					</vbox>
 					<vbox align="center" orient="0,0">
-						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
 						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
 					</vbox>
 					<hbox>
-						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
 						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
 					</hbox>
@@ -214,7 +222,7 @@
 				</row>
 				<row>
 					<hbox span="all">
-						<button label="Add" id="add[note]" statustext="Add a new Entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=550,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Add" id="add[note]" statustext="Add a new Entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Cancel" id="cancel" statustext="Back to main list"/>
 					</hbox>
 				</row>

@@ -58,13 +58,17 @@
 		);
 		var $xmlrpc = False;	// called via xmlrpc
 
+		var $tz_offset = 0;
 		/**
 		 * @var int $tz_offset_s offset in secconds between user and server-time,
 		 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
 		 */
-		var $tz_offset = 0;
 		var $tz_offset_s = 0;
 		var $user_time_now;
+		/**
+		 * @var array $timestamps name of timestamps in an InfoLog entry
+		 */
+		var $timestamps = array('info_startdate','info_enddate','info_datemodified','info_datecompleted');
 		/**
 		 * @var array $config infolog configuration
 		 */
@@ -101,15 +105,20 @@
 				'defaults' => array(
 					'task' => 'ongoing', 'phone' => 'call', 'note' => 'done'),
 				'task' => array(
-					'offer' => 'offer','ongoing' => 'ongoing','done' => 'done',
-					'0%' => '0%', '10%' => '10%', '20%' => '20%', '30%' => '30%', '40%' => '40%',
-					'50%' => '50%', '60%' => '60%', '70%' => '70%', '80%' => '80%', '90%' => '90%',
-					'billed' => 'billed' ),
+					'offer' => 'offer',				// -->  NEEDS-ACTION
+					'not-started' => 'not-started',	// iCal NEEDS-ACTION
+					'ongoing' => 'ongoing',			// iCal IN-PROCESS
+					'done' => 'done',				// iCal COMPLETED
+					'cancelled' => 'cancelled',		// iCal CANCELLED
+					'billed' => 'billed' ),			// -->  DONE
 				'phone' => array(
-					'call' => 'call','will-call' => 'will-call',
-					'done' => 'done', 'billed' => 'billed' ),
+					'call' => 'call',				// -->  NEEDS-ACTION
+					'will-call' => 'will-call',		// -->  IN-PROCESS
+					'done' => 'done', 				// iCal COMPLETED
+					'billed' => 'billed' ),			// -->  DONE
 				'note' => array(
-					'ongoing' => 'ongoing', 'done' => 'done'
+					'ongoing' => 'ongoing',			// iCal has no status on notes
+					'done' => 'done'
 			));
 
 			$this->so =& new soinfolog();
@@ -120,7 +129,7 @@
 			}
 			$this->link =& $GLOBALS['egw']->link;
 
-			$this->config =& CreateObject('phpgwapi.config');
+			$this->config =& CreateObject('phpgwapi.config','infolog');
 			$this->config->read_repository();
 
 			$this->customfields = array();
@@ -310,7 +319,7 @@
 			if ($run_link_id2from) $this->link_id2from($data);
 
 			// convert system- to user-time
-			foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
+			foreach($this->timestamps as $time)
 			{
 				if ($data[$time]) $data[$time] += $this->tz_offset_s;
 			}
@@ -416,32 +425,43 @@
 			}
 			if ($status_only)	// make sure only status gets writen
 			{
-				$set_enddate = !$values['info_enddate'] &&	// set enddate of finished job, only if its not already set 
-					($values['info_status'] == 'done' || $values['info_status'] == 'billed');
+				$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set 
+					(in_array($values['info_status'],array('done','billed','cancelled')) || (int)$values['info_percent'] == 100);
 
 				$backup_values = $values;	// to return the full values
 				$values = array(
 					'info_id'     => $values['info_id'],
 					'info_status' => $values['info_status'],
+					'info_percent' => $values['info_percent'],
 					'info_owner'  => $values['info_owner'],
 					'info_datemodified' => $values['info_datemodified'],
 				);
-				if ($set_enddate)
+				if ($set_completed)
 				{
-					$values['info_enddate'] = $this->user_time_now;
+					$values['info_datecompleted'] = $this->user_time_now;
+					$values['info_percent'] = '100%';
+					if (!in_array($values['info_status'],array('done','billed','cancelled'))) $values['info_status'] = 'done';
 				}
 				$check_defaults = False;
 			}
 			if ($check_defaults)
 			{
-				if (!$values['info_enddate'] && 
-					($values['info_status'] == 'done' || $values['info_status'] == 'billed'))
+				if (!$values['info_datecompleted'] && 
+					(in_array($values['info_status'],array('done','billed')) || (int)$values['info_percent'] == 100))
 				{
-					$values['info_enddate'] = $this->user_time_now;	// set enddate to today if status == done
+					$values['info_datecompleted'] = $this->user_time_now;	// set date completed to today if status == done
+				}
+				if (in_array($values['info_status'],array('done','billed')))
+				{
+					$values['info_percent'] == '100%';
+				}
+				if ((int)$values['info_percent'] == 100 && !in_array($values['info_status'],array('done','billed','cancelled')))
+				{
+					$values['info_status'] = 'done';
 				}
 				if (count($values['info_responsible']) && $values['info_status'] == 'offer')
 				{
-					$values['info_status'] = 'ongoing';   // have to match if not finished
+					$values['info_status'] = 'not-started';   // have to match if not finished
 				}
 				if (isset($values['info_subject']) && empty($values['info_subject']))
 				{
@@ -471,7 +491,7 @@
 			$to_write = $values;
 			if ($status_only) $values = array_merge($backup_values,$values);
 			// convert user- to system-time
-			foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
+			foreach($this->timestamps as $time)
 			{
 				if ($to_write[$time]) $to_write[$time] -= $this->tz_offset_s;
 			}
@@ -541,7 +561,7 @@
 			{
 				foreach($ret as $id => $data)
 				{
-					foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
+					foreach($this->timestamps as $time)
 					{
 						if ($data[$time]) $ret[$id][$time] += $this->tz_offset_s;
 					}
@@ -549,7 +569,8 @@
 			}
 			if ($this->xmlrpc && is_array($ret))
 			{
-				$infos = $ret;
+				$infos =& $ret;
+				unset($ret);
 				$ret = array();
 				foreach($infos as $id => $data)
 				{
@@ -782,13 +803,15 @@
 			
 			// translate timestamps
 			if($data['info_enddate'] == 0) unset($data['info_enddate']);
-			foreach(array('info_startdate','info_enddate','info_datemodified') as $name)
+			foreach($this->timestamps as $name)
 			{
 				if (isset($data[$name]))
 				{
 					$data[$name] = $GLOBALS['server']->date2iso8601($data[$name]);
 				}
 			}
+			$ret[$id]['info_percent'] = (int)$data['info_percent'].'%';
+
 			// translate cat_id
 			if (isset($data['info_cat']))
 			{
@@ -830,7 +853,7 @@
 				}
 			}
 			// translate timestamps
-			foreach(array('info_startdate','info_enddate','info_datemodified') as $name)
+			foreach($this->timestamps as $name)
 			{
 				if (isset($data[$name]))
 				{

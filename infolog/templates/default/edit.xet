@@ -13,7 +13,7 @@
 				</row>
 				<row class="row" valign="top">
 					<description/>
-					<textbox multiline="true" rows="14" cols="80" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry"/>
+					<textbox multiline="true" rows="13" cols="75" no_lang="1" id="info_des" statustext="enter a textual description of the log-entry"/>
 				</row>
 			</rows>
 		</grid>
@@ -40,7 +40,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.2.001">
+	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.2.002">
 		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
@@ -48,13 +48,17 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<description span="all" value="Priority"/>
+					<description span="all" value="General"/>
 				</row>
 				<row class="row">
 					<description value="Priority" options=",,,info_priority"/>
 					<menulist>
 						<menupopup id="info_priority" statustext="select a priority for this task"/>
 					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,info_location" value="Location"/>
+					<textbox id="info_location" size="80" maxlength="255"/>
 				</row>
 				<row class="th">
 					<description span="all" value="Delegation"/>
@@ -119,12 +123,12 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.2.001">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.2.002">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
 				<column width="260"/>
-				<column width="120"/>
+				<column width="140"/>
 				<column/>
 			</columns>
 			<rows>
@@ -148,13 +152,13 @@
 				</row>
 				<row class="row">
 					<description value="Contact" options=",,,info_from"/>
-					<textbox size="35" maxlength="64" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title"/>
+					<textbox size="36" maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title"/>
 					<description value="Phone/Email" options=",,,_info_addr"/>
-					<textbox size="35" maxlength="64" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
+					<textbox size="30" maxlength="255" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
 				</row>
 				<row class="row">
 					<description value="Subject" options=",,,info_subject"/>
-					<textbox size="64" maxlength="64" span="all" id="info_subject" needed="1" statustext="a short subject for the entry"/>
+					<textbox size="80" maxlength="255" span="all" id="info_subject" needed="1" statustext="a short subject for the entry"/>
 				</row>
 				<row valign="top" height="250">
 					<tabbox span="all">
@@ -186,8 +190,16 @@
 				<row class="row">
 					<description value="Status" options=",,,info_status"/>
 					<menulist>
-						<menupopup id="info_status" statustext="@status_help"/>
+						<menupopup id="info_status" statustext="@status_help" onchange="if (this.value=='done' || this.value=='billed') this.form['exec[info_percent]'].value=100; else if (this.value=='not-started') this.form['exec[info_percent]'].value=0;"/>
 					</menulist>
+					<description value="Completed" options=",,,info_percent"/>
+					<menulist>
+						<menupopup type="select-percent" id="info_percent" statustext="Percent completed" onchange="if (this.value==100 &amp;&amp; this.form['exec[info_status]'].value != 'done' &amp;&amp; this.form['exec[info_status]'].value != 'billed' &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value='done'; else if (this.value != 100 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled') this.form['exec[info_status]'].value=this.value != 0 ? 'ongoing' : 'not-started'; else if (this.value==0 &amp;&amp; this.form['exec[info_status]'].value != 'cancelled' &amp;&amp; this.form['exec[info_status]'].value != 'offer') this.form['exec[info_status]'].value='not-started'; "/>
+					</menulist>
+				</row>
+				<row class="row">
+					<description options=",,,info_datecompleted" value="Completed"/>
+					<date-time id="info_datecompleted" statustext="Date completed (leave it empty to have it automatic set if status is done or billed)"/>
 					<description value="Private" options=",,,info_access"/>
 					<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL"/>
 				</row>

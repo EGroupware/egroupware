@@ -183,8 +183,8 @@
 
 			switch ($filter)
 			{
-				case 'done':	return " AND info_status IN ('done','billed')";
-				case 'open':	return " AND NOT (info_status IN ('done','billed'))";
+				case 'done':	return " AND info_status IN ('done','billed','cancelled')";
+				case 'open':	return " AND NOT (info_status IN ('done','billed','cancelled'))";
 				case 'offer':	return " AND info_status = 'offer'";
 			}
 			return '';
@@ -229,7 +229,7 @@
 					}
 					return " AND ($today <= info_startdate AND info_startdate < $tomorrow)";
 				case 'limit':
-					return " AND (info_modified >= '$today' OR NOT (info_status IN ('done','billed')))";
+					return " AND (info_modified >= '$today' OR NOT (info_status IN ('done','billed','cancelled')))";
 			}
 			return '';
 		}

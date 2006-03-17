@@ -484,4 +484,45 @@
 
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.001';
 	}
+
+
+	$test[] = '1.2.001';
+	function infolog_upgrade1_2_001()
+	{
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_percent',array(
+			'type' => 'int',
+			'precision' => '2',
+			'default' => '0'
+		));
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_datecompleted',array(
+			'type' => 'int',
+			'precision' => '8'
+		));
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_location',array(
+			'type' => 'varchar',
+			'precision' => '255'
+		));
+		
+		// all not explicit named stati have the default percent 0
+		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_percent=10 WHERE info_status='ongoing'",__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_percent=50 WHERE info_status='will-call'",__LINE__,__FILE__);
+
+		for($p = 0; $p <= 90; $p += 10)
+		{
+			$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_percent=$p,info_status='".(!$p ? 'not-started' : 'ongoing').
+				"' WHERE info_status = '$p%'",__LINE__,__FILE__);
+		}
+		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_datecompleted=info_datemodified,info_percent=100 WHERE info_status IN ('done','billed','100%')",__LINE__,__FILE__);
+		
+		// remove the percentages from the custom stati, if they exist
+		$config =& CreateObject('phpgwapi.config','infolog');
+		$config->read_repository();
+		if (is_array($config->config_data['status']['task']))
+		{
+			$config->config_data['status']['task'] = array_diff($config->config_data['status']['task'],
+				array('0%','10%','20%','30%','40%','50%','60%','70%','80%','90%','100%'));
+			$config->save_repository();
+		}
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.002';
+	}
 ?>

@@ -3,6 +3,7 @@
 - subprojects from	infolog	en	- Subprojects from
 0%	infolog	en	0%
 10%	infolog	en	10%
+100%	infolog	en	100%
 20%	infolog	en	20%
 30%	infolog	en	30%
 40%	infolog	en	40%
@@ -16,6 +17,7 @@ a short subject for the entry	infolog	en	a short subject for the entry
 abort without deleting	infolog	en	Abort without deleting
 accept	infolog	en	accept
 action	infolog	en	Action
+actual date and time	infolog	en	actual date and time
 add	infolog	en	Add
 add a file	infolog	en	Add a file
 add a new entry	infolog	en	Add a new Entry
@@ -38,6 +40,7 @@ billed	infolog	en	billed
 both	infolog	en	both
 call	infolog	en	call
 cancel	infolog	en	Cancel
+cancelled	infolog	en	cancelled
 categories	infolog	en	Categories
 category	infolog	en	Category
 change the status of an entry, eg. close it	infolog	en	Change the status of an entry, eg. close it
@@ -47,6 +50,7 @@ click here to create the link	infolog	en	click here to create the Link
 click here to start the search	infolog	en	click here to start the search
 close	infolog	en	Close
 comment	infolog	en	Comment
+completed	infolog	en	Completed
 configuration	infolog	en	Configuration
 confirm	infolog	en	Confirm
 contact	infolog	en	Contact
@@ -67,6 +71,8 @@ custom fields, typ and status	common	en	Custom fields, type and status
 custom regarding	infolog	en	Custom regarding
 custom status for typ	infolog	en	Custom status for type
 customfields	infolog	en	Customfields
+date completed	infolog	en	Date completed
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	en	Date completed (leave it empty to have it automatic set if status is done or billed)
 datecreated	infolog	en	date created
 dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
@@ -110,6 +116,7 @@ fieldseparator	infolog	en	Fieldseparator
 finish	infolog	en	finish
 for which types should this field be used	infolog	en	for which types should this field be used
 from	infolog	en	From
+general	infolog	en	General
 high	infolog	en	high
 id	infolog	en	Id
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).
@@ -132,6 +139,7 @@ invalid filename	infolog	en	Invalid filename
 label<br>helptext	infolog	en	Label<br>Helptext
 last changed	infolog	en	Last changed
 last modified	infolog	en	Last modified
+leave it empty	infolog	en	leave it empty
 leave without saveing the entry	infolog	en	leave without saveing the entry
 leaves without saveing	infolog	en	leaves without saveing
 length<br>rows	infolog	en	Length<br>Rows
@@ -140,6 +148,7 @@ links	infolog	en	Links
 links of this entry	infolog	en	Links of this entry
 list all categories	infolog	en	List all categories
 list no subs/childs	infolog	en	List no Subs/Childs
+location	infolog	en	Location
 longer textual description	infolog	en	longer textual description
 low	infolog	en	low
 max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the inputfield (optional)]
@@ -159,6 +168,7 @@ none	infolog	en	None
 normal	infolog	en	normal
 not	infolog	en	not
 not assigned	infolog	en	not assigned
+not-started	infolog	en	not started
 note	infolog	en	Note
 number of records to read (%1)	infolog	en	Number of records to read (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	en	number of row for a multiline inputfield or line of a multi-select-box
@@ -179,6 +189,7 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	en	path on (web-)server
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	infolog	en	pattern for search in Addressbook
 pattern for search in projects	infolog	en	pattern for search in Projects
+percent completed	infolog	en	Percent completed
 permission denied	infolog	en	Permission denied
 phone	infolog	en	Phone Call
 phone/email	infolog	en	Phone/Email
@@ -233,6 +244,7 @@ small view	infolog	en	small view
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Start Date
 startdate enddate	infolog	en	Start Date End Date
+startdate for new entries	infolog	en	Startdate for new entries
 startrecord	infolog	en	Startrecord
 status	infolog	en	Status
 status ...	infolog	en	Status ...
@@ -248,7 +260,9 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	en	til when should the ToDo or Phone call be finished
 times	infolog	en	Times
 to many might exceed your execution-time-limit	infolog	en	to many might exceed your execution-time-limit
+to what should the startdate of new entries be set.	infolog	en	To what should the startdate of new entries be set.
 today	infolog	en	Today
+todays date	infolog	en	todays date
 todo	infolog	en	ToDo
 translation	infolog	en	Translation
 typ	infolog	en	Type

@@ -71,15 +71,6 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
-/*		'longNames' => array(
-			'type'   => 'check',
-			'label'  => 'Show full usernames',
-			'name'   => 'longNames',
-			'help'   => 'Should InfoLog use full names (surname and familyname) or just the loginnames.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-*/
 		'show_links' => array(
 			'type'   => 'select',
 			'label'  => 'Show in the InfoLog list',
@@ -102,6 +93,19 @@
 			'label'  => 'Show times',
 			'name'   => 'show_times',
 			'help'   => 'Show a column for used and planned times in the list.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'set_start' => array(
+			'type'   => 'select',
+			'label'  => 'Startdate for new entries',
+			'name'   => 'set_start',
+			'values' => array(
+				'date'     => lang('todays date'),
+				'datetime' => lang('actual date and time'),
+				'empty'    => lang('leave it empty'),
+			),
+			'help'   => 'To what should the startdate of new entries be set.',
 			'xmlrpc' => True,
 			'admin'  => False
 		),

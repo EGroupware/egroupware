@@ -125,6 +125,7 @@
 			}
 			if (!isset($info['info_anz_subs'])) $info['info_anz_subs'] = $this->bo->anzSubs($id);
 			$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
+			$info['info_percent'] = (int) $info['info_percent'].'%';
 			
 			$readonlys["edit[$id]"] = !$this->bo->check_access($info,EGW_ACL_EDIT);
 			$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || 
@@ -336,6 +337,7 @@
 						break;
 					}
 					$values['main'][1] = $this->get_info($action_id,$readonlys['main']);
+					$values['main']['no_times'] = !$this->prefs['show_times'];
 					break;
 			}
 			$readonlys['cancel'] = $action != 'sp';
@@ -628,9 +630,12 @@
 				{
 					$content['info_cat'] = (int) $_REQUEST['cat_id'];
 				}
-				$now = time() + 3600*$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];	// time() is server-time and we need a user-time
-				$today = mktime(0,0,0,date('m',$now),date('d',$now),date('Y',$now));	// time=00:00
-
+				switch($this->prefs['set_start'])
+				{
+					case 'date': default: $set_startdate = mktime(0,0,0,date('m',$this->bo->user_time_now),date('d',$this->bo->user_time_now),date('Y',$this->bo->user_time_now)); break;
+					case 'datetime':      $set_startdate = $this->bo->user_time_now; break;
+					case 'empty':         $set_startdate = 0; break;
+				}
 				if (intval($content['info_link_id']) > 0 && !$this->link->get_link($content['info_link_id']))
 				{
 					$content['info_link_id'] = 0;	// link has been deleted
@@ -655,13 +660,14 @@
 					*/
 					$content['info_type'] = $parent['info_type'];
 					$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+					$content['info_percent'] = '0%';
 					$content['info_confirm'] = 'not';
 					$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
 					$content['info_des'] = '';
 					$content['info_lastmodified'] = '';
 					if ($content['info_startdate'] < $this->bo->user_time_now)	// parent-startdate is in the past => today
 					{
-						$content['info_startdate'] = $today;
+						$content['info_startdate'] = $set_startdate;
 					}
 					if ($content['info_enddate'] < $this->bo->user_time_now)		// parent-enddate is in the past => empty
 					{
@@ -738,7 +744,7 @@
 							break;	// normal edit
 						}
 					case 'new':		// new entry
-						$content['info_startdate'] = (int) $_GET['startdate'] ? (int) $_GET['startdate'] : $today;
+						$content['info_startdate'] = (int) $_GET['startdate'] ? (int) $_GET['startdate'] : $set_startdate;
 						$content['info_priority'] = 1; // normal
 						$content['info_owner'] = $this->user;
 						if ($type != '')
@@ -746,6 +752,7 @@
 							$content['info_type'] = $type;
 						}
 						$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+						$content['info_percent'] = '0%';
 						break;
 				}
 				if (!isset($this->bo->enums['type'][$content['info_type']]))

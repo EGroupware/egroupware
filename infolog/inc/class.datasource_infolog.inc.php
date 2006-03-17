@@ -38,7 +38,7 @@ class datasource_infolog extends datasource
 	{
 		$this->datasource('infolog');
 		
-		$this->valid = PM_COMPLETION|PM_REAL_START|PM_REAL_END|PM_PLANNED_TIME|PM_USED_TIME|PM_RESOURCES;
+		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_USED_TIME|PM_RESOURCES;
 	}
 	
 	/**
@@ -67,9 +67,10 @@ class datasource_infolog extends datasource
 		}
 		return array(
 			'pe_title'        => $GLOBALS['boinfolog']->link_title($data),
-			'pe_completion'   => $this->status2completion($data['info_status']).'%',
-			'pe_real_start'   => $data['info_startdate'] ? $data['info_startdate'] : null,
-			'pe_real_end'     => $data['info_enddate'] ? $data['info_enddate'] : null,
+			'pe_completion'   => $data['info_percent'],
+			'pe_planned_start'=> $data['info_startdate'] ? $data['info_startdate'] : null,
+			'pe_planned_end'  => $data['info_enddate'] ? $data['info_enddate'] : null,
+			'pe_real_end'     => $data['info_datecompleted'] ? $data['info_datecompleted'] : null,
 			'pe_planned_time' => $data['info_planned_time'],
 			'pe_used_time'    => $data['info_used_time'],
 			'pe_resources'    => count($data['info_responsible']) ? $data['info_responsible'] : array($data['info_owner']),
@@ -81,33 +82,6 @@ class datasource_infolog extends datasource
 			'pe_used_quantity'    => $data['info_used_time'] / 60,
 			'pe_used_budget'      => $data['info_used_time'] / 60 * $data['info_price'],
 		);
-	}
-	
-	/**
-	 * converts InfoLog status into a percentage completion
-	 *
-	 * percentages are just used, done&billed give 100, ongoing&will-call give 50, rest (incl. all custome status) give 0
-	 *
-	 * @param string $status
-	 * @return int completion in percent
-	 */
-	function status2completion($status)
-	{
-		if ((int) $status || substr($status,-1) == '%') return (int) $status;	// allready a percentage
-		
-		switch ($status)
-		{
-			case 'done':
-			case 'billed':
-				return 100;
-				
-			case 'will-call':
-				return 50;
-
-			case 'ongoing':
-				return 10;
-		}
-		return 0;
 	}
 	
 	/**
