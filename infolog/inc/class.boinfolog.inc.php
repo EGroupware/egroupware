@@ -230,7 +230,7 @@
 		 */
 		function link_id2from(&$info,$not_app='',$not_id='')
 		{
-			//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id], from='$info[info_from]', not_app='$not_app', not_id='$not_id')";
+			//echo "<p>boinfolog::link_id2from(subject='$info[info_subject]', link_id='$info[info_link_id]', from='$info[info_from]', not_app='$not_app', not_id='$not_id')";
 			if ($info['info_link_id'] > 0 &&
 				 ($link = $this->link->get_link($info['info_link_id'])) !== False)
 			{
@@ -274,9 +274,11 @@
 		 * Read an infolog entry specified by $info_id
 		 *
 		 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
+		 * @param boolean $run_link_id2from=true should link_id2from run, default yes, 
+		 *	need to be set to false if called from link-title to prevent an infinit recursion
 		 * @return array/boolean infolog entry or False if not found or no permission to read it
 		 */
-		function &read($info_id)
+		function &read($info_id,$run_link_id2from=true)
 		{
 			if (is_array($info_id))
 			{
@@ -305,7 +307,7 @@
 			{
 				$data['info_subject'] = '';
 			}
-			$this->link_id2from($data);
+			if ($run_link_id2from) $this->link_id2from($data);
 
 			// convert system- to user-time
 			foreach(array('info_startdate','info_enddate','info_datemodified') as $time)
@@ -596,7 +598,7 @@
 		{
 			if (!is_array($info))
 			{
-				$info = $this->read( $info );
+				$info = $this->read( $info,false );
 			}
 			if (!$info)
 			{
