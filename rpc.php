@@ -26,7 +26,7 @@ include('./header.inc.php');
 // SyncML works currently only with PHP sessions
 if($GLOBALS['egw_info']['server']['sessions_type'] == 'db')
 {
-	error_log('SyncML support is currently not available with DB sessions. Please switch to PHP4 sessions in header.inc.php.');
+	error_log('SyncML support is currently not available with DB sessions. Please switch to PHP sessions in header.inc.php.');
 	exit;
 }
 
@@ -59,6 +59,10 @@ if (!empty($_SERVER['CONTENT_TYPE'])) {
     }
 } else {
     $serverType = 'soap';
+}
+
+if($serverType != 'syncml' && $serverType != 'syncml_wbxml') {
+	die('You can access this URL only with a SyncML enabled device.');
 }
 
 if ($serverType == 'soap' &&
