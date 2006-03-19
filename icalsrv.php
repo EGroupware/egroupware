@@ -9,7 +9,7 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.08 initial version for icalsrv as egw application 
+   * @version 0.9.08-R1 initial version for icalsrv as egw application 
    * @date 20060318
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * $Id$ 
@@ -50,14 +50,14 @@ $logdir = false; // set to false for no logging
 #$logdir = '/tmp'; // set to a valid (writable) directory to get log file generation
 
 #  WHY THIS? IS IT NEEDED?
-$GLOBALS['phpgw_info'] =
+$GLOBALS['egw_info'] =
   array('flags' => array('currentapp' => 'calendar',
 							 'noheader'   => True,
 							 'nofooter'   => True,
 							 ),);
 
-$GLOBALS['phpgw_info']['flags']['currentapp'] = 'login';
-$GLOBALS['phpgw_info']['flags']['noapi'] = True;
+$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
+$GLOBALS['egw_info']['flags']['noapi'] = True;
 include ('./header.inc.php');
 
 include ('./phpgwapi/inc/functions.inc.php');
