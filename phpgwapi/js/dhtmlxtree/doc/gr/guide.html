@@ -1,0 +1,342 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+	<title>DHTML Tree Grid Extension guide and samples</title>
+</head>
+
+<body>
+
+<div style="position:absolute;right:20"><a href="javascript:void(0)" onclick="expandAll(true)">expand</a>&nbsp;<a href="javascript:void(0)" onclick="expandAll(false)">collaps</a></div>
+<script>
+	function openFull(el){
+		el.nextSibling.style.display=='none'?el.nextSibling.style.display='block':el.nextSibling.style.display='none'
+	}
+	function expandAll(fl){
+		var elAr = document.getElementsByTagName("DIV");
+		for(var i=2;i<elAr.length;i++){
+			if(elAr[i].className=='block'){
+				if(fl)
+					elAr[i].style.display = "";
+				else
+					elAr[i].style.display = "none";
+			}
+		}
+	}
+</script>
+<style>
+	body {font-size:14px;line-height:18px;}
+	.{font-family:arial;}
+	h2 {cursor:pointer;font-size:16px;margin-left:10px;line-height:10px}
+	h3 {cursor:pointer;font-weight:normal;color:gray;text-decoration:underline;line-height:10px}
+	h4 {cursor:pointer;font-weight:normal;color:black;text-decoration:underline;line-height:10px}
+	.op {cursor:pointer;}
+	div.block {margin-left:30px;}
+	xmp {color:green;font-size:12px;margin:0px;font-family:courier;background-color:#e6e6fa;padding:2px}
+	li {margin-top:2px;}
+</style>
+<h2 onclick="openFull(this)">dhtmlXTreeGrid Guide and Samples</h2>
+<div class="block">
+<!---  --->
+	
+	<h3 onclick="openFull(this)">Main features</h3
+	><div style="display:show" class="block">
+		<li>Multibrowser/Multiplatform support </li>
+		<li>Full controll with JavaScript</li>
+		<li>Dynamic loading</li>
+		<li>XML support</li>
+		<li>drag-&-drop (within one treegrid, between treegrids) </li>
+		<li>checkboxes (two/three states)</li> 
+		<li>customizable icons (with javascript or xml) </li>
+		<li>user data for nodes</li>
+		<li>high stability</li>
+		<li>Macromedia Cold Fusion support</li>
+	</div>
+	
+	<h3 onclick="openFull(this)">Supported browsers</h3
+	><div style="display:show" class="block">
+		<li>IE 5.x and above</li>
+		<li>Mac OS X Safari</li>
+		<li>Mozilla 1.4 and above</li>
+		<li>FireFox 0.9 and above</li>
+		<li>Opera (Xml loading depends on browser version)</li>
+	</div>
+
+	<h3 onclick="openFull(this)">Working with dhtmlXTreeGrid</h3
+	><div style="display:show" class="block">
+<!--- Initialize object on page --->
+		<h4 onclick="openFull(this)">Initialize object on page</h4
+		><div style="display:none" class="block">
+<XMP>
+<div id="treeBox" style="width:200;height:200"></div>
+<script>
+	treegrid=new dhtmlXTreeGridObject(document.getElementById('treeBox'),"100%","100%",0);
+	tree.setImagePath("gfx/");
+	tree.enableCheckBoxes(false);
+</script>
+</XMP>
+		Parameters passed to the constructor are:
+			<li>object to attach treegrid to (should be loaded before calling constructor)</li>
+			<li>width of the treegrid</li>
+			<li>height of the treegrid</li>
+			<li>identifier of level parent to treegrid root level</li><br>
+		Specify Additional parameters of the treegrid:
+			<li>setImagePath(url) - method specifies the path to the folder with treegrid icons</li>
+			<li>enableCheckBoxes(mode) - enable/disable checkboxes in treegrid (checkboxes appear by default)</li>
+		</div>
+<!--- Set Additional init parameters --->	
+		<h4 onclick="openFull(this)">Set Event Handlers</h4
+		><div style="display:none" class="block">
+<XMP>
+<div id="treeBox" style="width:200;height:200"></div>
+<script>
+	treegrid=new dhtmlXTreeGridObject(document.getElementById('treeBox'),"100%","100%",0);
+	...
+	treegrid.tree.setOnDragHandler(onDrop);//set function object to call on drop
+	treegrid.tree.setOnClickHandler(onNodeSelect);//set function object to call on node select
+	treegrid.tree.setOnOpenHandler(onOpen,state);//set function to call on open/close node
+	treegrid.tree.setOnDblClickHandler(onDblClick);//set function to call on dbl click
+</script>
+</XMP>	
+		<li>Selected node ID will be passed to function specified as argument for setDefaultAction(funcObj)</li>
+		<li>Dropped node ID and new parent node ID  will be passed to function specified as argument for setDragFunction(funcObj)</li>
+		<li>node ID and node state will be passed to the function specified as argument for setOpenAction(funcObj,state)</li>
+		<li>node ID will be passed to the function specified as argument for setDblClickAction(funcObj)</li>
+		</div>
+<!--- Adding nodes with Script --->
+		<h4 onclick="openFull(this)">Adding nodes with Script</h4
+		><div style="display:none" class="block">
+<XMP>
+<script>
+	tree=new dhtmlXTreeObject('treeBox',"100%","100%",0);
+	...
+	tree.insertNewChild(0,1,"New Node 1",0,0,0,0,"SELECT,CALL,TOP,CHILD,CHECKED"));
+	tree.insertNewNext(1,2,"New Node 2",0,0,0,0,"CHILD,CHECKED"));
+</script>
+</XMP>	
+		<li>0s passed to the function for arguments 4-7 (function to call on select, images) mean use default values for them</li>
+		<li>Last argument is a comma delimited string of following possible value (upper case only):</li>
+			<li type="circle">SELECT - move selection to this node after inserting</li>
+			<li type="circle">CALL - call function on select</li>
+			<li type="circle">TOP - add node to the top position </li>
+			<li type="circle">CHILD - node has children</li>
+			<li type="circle">CHECKED - checkbox is checked (if exists)</li>
+		</div>
+<!--- Using XML --->
+		<h4 onclick="openFull(this)">Loading data with XML</h4
+		><div style="display:none" class="block">
+<XMP>
+<script>
+	tree=new dhtmlXTreeObject('treeBox',"100%","100%",0);
+	tree.setXMLAutoLoading("http://127.0.0.1/xml/tree.xml");
+	tree.loadXML();//load root level from xml
+</script>
+</XMP>	
+		<li>ID of opened node (as id url parameter) will be added to URL specified in  initXMLAutoLoading(url) during the call</li>
+		<li>No additional ID is added to the url specified in loadXML(url) method during the call</li>
+		<li>Using loadXML() without parameters you load url specified in initXMLAutoLoading(url) method</li>
+<XMP>
+XML Syntax:
+<?xml version='1.0' encoding='iso-8859-1'?>
+<tree id="0">
+	<item text="My Computer" id="1" child="1" im0="my_cmp.gif" im1="my_cmp.gif" im2="my_cmp.gif" call="true" select="yes">
+		<userdata name="system">true</userdata>
+		<item text="Floppy (A:)" id="11" child="0"  im0="flop.gif" im1="flop.gif" im2="flop.gif"/>
+		<item text="Local Disk (C:)" id="12" child="0"  im0="drv.gif" im1="drv.gif" im2="drv.gif"/>
+	</item>
+	<item text="Recycle Bin" id="4" child="0" im0="recyc.gif" im1="recyc.gif" im2="recyc.gif"/>
+</tree>
+</XMP>	
+		<strong>&lt;tree&gt;</strong> node is mandatory. It specifies the parent of loading block of data. According to this its id parameter specifies the ID oth that parent. 
+		To load root level you need to specify the ID you used when created tree object: new myObjTree(boxObject,width,height,<b>0</b>) <br>
+		
+		<strong>&lt;item&gt;</strong> can contain subitems (in order to load more than one level at once) or not.<br>
+		Mandatory parameters for this tag are:<br>
+			<li>text - label of the node</li>
+			<li>id - id of the node</li>
+		Optional parameters for this tag are:<br>
+			<li>im0 - image for node without children (tree will get images from the path specified in setImagePath(url) method)</li>
+			<li>im1 - image for opened node with children</li>
+			<li>im2 - image for closed node with children</li>
+			<!--- <li>top - </li> --->
+			<li>select - select node on load (0/1)</li>
+			<li>call - call function on select(0/1)</li>
+			<li>checked - check checkbox if exists(0/1)</li>
+			<li>child - spec. if node has children (1) or not (0)</li><br>
+		To set userdata directly within XML use <strong>&lt;userdata&gt;</strong><br>
+		It has just one parameter: <br>
+			<li>name</li><br>
+		and value to specify userdata value			
+		</div>
+<!--- Setting custom icons to nodes --->
+		<h4 onclick="openFull(this)">Setting custom icons to nodes</h4
+		><div style="display:none" class="block">
+			There are two ways to set custom icons for the node. And it depends on the way you add items.<br>
+			<em>Important:</em> tree will get images for the nodes from the path specified in setImagePath(url) method.<br><br>
+			
+			Javascript way. Using arguments of insertNewChild(...) or insertNewNext(...) methods:
+<XMP>
+<script>
+	var im0 = "doc.gif";//icon to show if node contains no children
+	var im1 = "opened.gif";//if node contains children and opened
+	var im2 = "closed.gif";//if node contains children and closed
+	tree.insertNewItem(0,1,"New Node 1",0,im0,im1,im2);
+	tree.insertNewNext(1,2,"New Node 2",0,"txt.gif","opened.gif","closed.gif");
+</script>
+</XMP>	
+			XML way. Using parameters of &lt;item&gt; tag:
+<XMP>
+<?xml version='1.0' encoding='iso-8859-1'?>
+<tree id="0">
+	<item text="My Computer" id="1" child="1" im0="doc.gif" im1="my_opened.gif" im2="my_closed.gif">
+</tree>
+</XMP>	
+			<li>im0 - image for node without children (tree will get images from the path specified in setImagePath(url) method)</li>
+			<li>im1 - image for opened node with children</li>
+			<li>im2 - image for closed node with children</li>
+		</div>
+<!--- Dynamical loading --->		
+		<h4 onclick="openFull(this)">Building dynamic tree</h4
+		><div style="display:none" class="block">
+		If your tree should contain large amount of nodes (or you simply do not want to waist time loading hidden nodes), it would be better to load them on demand, not at once. 
+		For this purpose we made the tree to load levels dynamically using XML.  <br>
+		See chapter <em>"Loading data with XML"</em>
+		</div>
+		
+		
+		
+		<h4 onclick="openFull(this)">Manipulating nodes</h4
+		><div style="display:none" class="block">
+		A few examples of manipulating node with tree object methods:
+<XMP>
+<script>
+	tree=new dhtmlXTreeObject('treeboxbox_tree',"100%","100%",0);
+	...
+	var sID = tree.getSelectedItemId();//get id of selected node
+	tree.setLabel(sID,"New Label");//change label of selecte node
+	tree.setItemColor(sID,'blue','red');//set colors for selected node's label (for not selected state and for selected state)
+	tree.openItem(sID);//expand selected node
+	tree.closeItem(sID);//close selected node
+	tree.changeItemId(sID,100);//change id of selected node to 100
+	alert("This node has children: "+tree.hasChildren(100));//show alert with information if this node has children
+</script>
+</XMP>	
+		</div>
+	</div>
+	
+	
+	
+	<h3 onclick="openFull(this)">Cold Fusion Tag for dhtmlXTree</h3
+	><div style="display:none" class="block">
+<XMP>
+<cf_dhtmlXTree
+	name="tree"
+	width="250"
+	height="250"
+	JSPath="../"
+	CSSPath="../"
+	iconspath="gfx/"
+	xmldoc="tree.xml"
+	checkboxes="false"
+	dragndrop="true"
+	style="background-color:whitesmoke;border:1px solid blue;"
+	onSelect="onNodeSelect"
+	onDrop="onDropNode">
+		...configuration xml...
+	</cf_dhtmlXTree>
+</XMP>
+	<li>name - [optional] name of the tree js object to use in javascript,  if skiped, then name autogenerated</li>
+	<li>width - [optional] width of the tree (definitely it sets the with of the tree box, leaving the with of the tree itself by 100%)</li>
+	<li>height - [optional] height of the tree</li>
+	<li>JSPath - [optional] absolute or relative path to directory which contains tree js files, "js" directory by default</li>
+	<li>CSSPath - [optional] absolute or relative path to directory which contains tree css files, "css" directory by default</li>
+	<li>iconspath - [optional] absolute or relative path to directory which contains tree icon files, "img" directory by default</li>
+	<li>xmldoc - [mandatory for xml loading] url of the xml file used to load levels dynamically</li>
+	<li>checkboxes - [optional] show checkboxes (none, twoState, threeState)</li>
+	<li>dragndrop - [optional] activate drag-&-drop (true,false)</li>
+	<li>style - [optional] style for the tree box</li>
+	<li>onSelect - [optional] javascript function to call on node selection</li>
+	<li>oncheck - [optional] javascript function to call on node (un)checking</li>
+	<li>onDrop - [optional] javascript function to call on node drop</li>
+	<li>im1 - [optional] default image used for child nodes</li>
+	<li>im2 - [optional] default image used for opened branches</li>
+	<li>im3 - [optional] default image used for closed branches</li>			
+	<br>
+	For description of optional configuration xml - see chapter <em>"Loading data with XML"</em>
+	<br><br>
+Minimal possible tag syntax with on-page xml:
+<XMP>
+<cf_dhtmlXTree> 
+	<item text="Top node" id="t1" >
+		<item text="Child node 1" id="c1" ></item>
+		<item text="Child node 2" id="c2" ></item>
+	</item>
+</cf_dhtmlXTree>	
+</XMP>
+Minimal possible tag syntax with server-side xml:
+<XMP>
+<cf_dhtmlXTree 	xmldoc="tree.xml">
+</cf_dhtmlXTree>
+</XMP>
+With images specified:
+<XMP>
+<cf_dhtmlXTree  
+	im1="book.gif" 
+	im2="books_open.gif" 
+	im3="books_close.gif">
+	<item text="Mystery " id="mystery"  open="yes" >
+		<item text="Lawrence Block" id="lb" >
+			<item text="All the Flowers Are Dying" id="lb_1" />
+			<item text="The Burglar on the Prowl" id="lb_2" />
+			<item text="The Plot Thickens" id="lb_3" />
+			<item text="Grifters Game" id="lb_4" />
+			<item text="The Burglar Who Thought He Was Bogart" id="lb_5" />
+		</item>
+		<item text="Robert Crais" id="rc" >
+			<item text="The Forgotten Man" id="rc_1" />
+			<item text="Stalking the Angel" id="rc_2" />
+			<item text="Free Fall" id="rc_3" />
+			<item text="Sunset Express" id="rc_4" />
+			<item text="Hostage" id="rc_5" />
+		</item>
+		<item text="Ian Rankin" id="ir" ></item>
+		<item text="James Patterson" id="jp" ></item>
+		<item text="Nancy Atherton" id="na" ></item>
+	</item>
+</cf_dhtmlXTree>
+</XMP>
+With Events Handlers,Checkboxes and Drag-n-drop:
+<XMP>
+<cf_dhtmlXTree   
+	dragndrop="true"  
+	checkboxes="twoState" 
+	onSelect="onClick" 
+	onCheck="onCheck" 
+	onDrop="onDrag">
+		<item text="Mystery " id="mystery"  open="yes" >
+			<item text="Lawrence Block" id="lb" >
+				<item text="All the Flowers Are Dying" id="lb_1" />
+				<item text="The Burglar on the Prowl" id="lb_2" />
+				<item text="The Plot Thickens" id="lb_3" />
+				<item text="Grifters Game" id="lb_4" />
+				<item text="The Burglar Who Thought He Was Bogart" id="lb_5" />
+			</item>
+			<item text="Robert Crais" id="rc" >
+				<item text="The Forgotten Man" id="rc_1" />
+				<item text="Stalking the Angel" id="rc_2" />
+				<item text="Free Fall" id="rc_3" />
+				<item text="Sunset Express" id="rc_4" />
+				<item text="Hostage" id="rc_5" />
+			</item>
+			<item text="Ian Rankin" id="ir" ></item>
+			<item text="James Patterson" id="jp" ></item>
+			<item text="Nancy Atherton" id="na" ></item>
+		</item>
+</cf_dhtmlXTree>
+</XMP>
+	</div>
+
+
+</div>
+</body>
+</html>

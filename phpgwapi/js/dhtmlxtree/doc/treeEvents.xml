@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<data>
+<event name="onClick" register="setOnClickHandler">
+		<param name="id" order="1">ID of clicked node</param>
+		<description>Event raised immideatly after text part of item in tree was clicked, but after default onClick functionality was processed.
+				Richh mouse button click can be catched by onRightClick handler.</description>
+</event>
+<event name="onDblClick" register="setOnDblClickHandler">
+		<param name="id" order="1">ID of clicked node</param>
+		<description>Event raised immideatly after item in tree was doubleclicked, before default onDblClick functionality was processed.
+			Beware using both onClick and onDblClick events, because component can  generate onClick event before onDblClick event while doubleclicking item in tree. 
+			( that behavior depend on used brouser )
+		</description>
+		<return>
+			true - confirm opening/closing; false - deny opening/closing;
+		</return>		
+</event>
+<event name="onOpen" register="setOnOpenHandler">
+		<param name="id" order="1">ID of node which will be closed</param>
+		<param name="state" order="2">Current open state of tree item. 0 - item has not childs, -1 - item closed, 1 - item opened.</param>		
+		<description>Event raised immideatly after item in tree was opened/closed , and before item opened//closed. Event also raised for unclosable nodes and nodes without open/close functionality - in that case result of function will be ignored.
+				Event not raised if node opened by dhtmlXtree API.
+		</description>
+		<return>
+			true - confirm opening/closing; false - deny opening/closing;
+		</return>
+</event>
+<event name="onOpen" register="setOnCheckHandler">
+		<param name="id" order="1">ID of node which will be closed</param>
+		<param name="state" order="2">Current checkbox state. 1 - item checked, 0 - item unchecked.</param>		
+		<description>Event raised immideatly after item in tree was opened/closed, but after item checked/unchecked.</description>
+</event>
+<event name="onDrag" register="setDragHandler">
+		<param name="sourceId" order="1">ID of source item</param>
+		<param name="targetId" order="2">ID of target item</param>		
+		<description>Event occured after item was dragged and droped on another item, but before item moving processed.  
+		Event also raised while programmatic moving nodes.</description>
+		<return>
+			true - confirm drag-and-drop; false - deny drag-and-drop;
+		</return>		
+</event>
+<event name="onDrop" register="setDropHandler">
+		<edition>Commercial</edition>
+		<param name="sourceId" order="1">ID of source item</param>
+		<param name="targetId" order="2">ID of target item</param>				
+		<param name="id" order="1">ID of clicked node</param>
+		<description>Event raised after drag-and-drop processed. Event also raised while programmatic moving nodes.
+		</description>
+</event>
+<event name="onRightClick" register="setOnRightClickHandler">
+		<edition>Commercial (not released yet)</edition>
+		<param name="Id" order="1">ID of tree item</param>
+		<param name="targetId" order="2">ID of target item</param>				
+		<param name="id" order="1">ID of clicked node</param>
+		<description>
+			Event occured after right mouse button was clicked.
+			Assigning this handler can disable default context menu, and noncompattible with dhtmlXMenu integration.
+		</description>
+</event>
+
+<event name="onXMLLoad" register="loadXML or loadXMLString">
+		<edition>Commercial (not released yet)</edition>
+		<param name="Id" order="1">ID of tree item</param>
+		<param name="targetId" order="2">ID of target item</param>				
+		<param name="id" order="1">ID of clicked node</param>
+		<description>
+			Event occured after right mouse button was clicked.
+			Assigning this handler can disable default context menu, and noncompattible with dhtmlXMenu integration.
+		</description>
+</event>
+
+
+
+</data>

@@ -1,6 +1,10 @@
  
-function dtmlXMLLoaderObject(funcObject,dhtmlObject){
+function dtmlXMLLoaderObject(funcObject,dhtmlObject,async){
  this.xmlDoc="";
+ if(arguments.length==2)
+ this.async=true;
+ else
+ this.async=async;
  this.onloadAction=funcObject||null;
  this.mainObject=dhtmlObject||null;
  return this;
@@ -8,10 +12,12 @@ function dtmlXMLLoaderObject(funcObject,dhtmlObject){
  
  dtmlXMLLoaderObject.prototype.waitLoadFunction=function(dhtmlObject){
  this.check=function(){
+ if(dhtmlObject.onloadAction!=null){
  if(!dhtmlObject.xmlDoc.readyState)dhtmlObject.onloadAction(dhtmlObject.mainObject);
  else{
  if(dhtmlObject.xmlDoc.readyState != 4)return false;
  else dhtmlObject.onloadAction(dhtmlObject.mainObject);}
+}
 };
  return this.check;
 };
@@ -34,6 +40,7 @@ function dtmlXMLLoaderObject(funcObject,dhtmlObject){
 }
  catch(e){
  this.xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+ this.xmlDoc.async=this.async
  this.xmlDoc.loadXML(xmlString);
 }
  this.onloadAction(this.mainObject);
@@ -42,7 +49,7 @@ function dtmlXMLLoaderObject(funcObject,dhtmlObject){
  try 
 {
  this.xmlDoc = new XMLHttpRequest();
- this.xmlDoc.open("GET",filePath,true);
+ this.xmlDoc.open("GET",filePath,this.async);
  this.xmlDoc.onreadystatechange=new this.waitLoadFunction(this);
  this.xmlDoc.send(null);
 }
@@ -56,7 +63,7 @@ function dtmlXMLLoaderObject(funcObject,dhtmlObject){
  else
 {
  this.xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
- this.xmlDoc.async="true";
+ this.xmlDoc.async=this.async
  this.xmlDoc.onreadystatechange=new this.waitLoadFunction(this);
 }
  this.xmlDoc.load(filePath);
@@ -129,6 +136,7 @@ function dhtmlDragAndDropObject(){
  this.waitDrag=0;
  if(window.dhtmlDragAndDrop)return window.dhtmlDragAndDrop;
  window.dhtmlDragAndDrop=this;
+
  return this;
 };
  
@@ -151,9 +159,9 @@ function dhtmlDragAndDropObject(){
  window.dhtmlDragAndDrop.waitDrag=0;
  document.body.onmouseup=window.dhtmlDragAndDrop.tempDOMU;
  document.body.onmousemove=window.dhtmlDragAndDrop.tempDOMM;
- return;
+ return false;
 }
- 
+
  window.dhtmlDragAndDrop.waitDrag=1;
  window.dhtmlDragAndDrop.tempDOMU=document.body.onmouseup;
  window.dhtmlDragAndDrop.tempDOMM=document.body.onmousemove;
@@ -161,36 +169,87 @@ function dhtmlDragAndDropObject(){
  window.dhtmlDragAndDrop.dragStartObject=this.dragStarter;
  document.body.onmouseup=window.dhtmlDragAndDrop.preCreateDragCopy;
  document.body.onmousemove=window.dhtmlDragAndDrop.callDrag;
+
+ if((e)&&(e.preventDefault)){e.preventDefault();return false;}
+ return false;
 };
  dhtmlDragAndDropObject.prototype.callDrag=function(e){
  if(!e)e=window.event;
  dragger=window.dhtmlDragAndDrop;
+
+ if((e.button==0)&&(isIE()))return dragger.stopDrag();
  if(!dragger.dragNode){
  dragger.dragNode=dragger.dragStartObject._createDragNode(dragger.dragStartNode);
+ if(!dragger.dragNode)return dragger.stopDrag();
+ dragger.gldragNode=dragger.dragNode;
  document.body.appendChild(dragger.dragNode);
  document.body.onmouseup=dragger.stopDrag;
  dragger.waitDrag=0;
+ dragger.dragNode.pWindow=window;
+ dragger.initFrameRoute();
 }
 
- dragger.dragNode.style.left=e.clientX+15+document.body.scrollLeft;dragger.dragNode.style.top=e.clientY+3+document.body.scrollTop;
 
+ if(dragger.dragNode.parentNode!=window.document.body){
+ var grd=dragger.gldragNode;
+ if(dragger.gldragNode.old)grd=dragger.gldragNode.old;
+
+ 
+ grd.parentNode.removeChild(grd);
+ var oldBody=dragger.dragNode.pWindow;
+ if(isIE()){
+ var div=document.createElement("Div");
+ div.innerHTML=dragger.dragNode.outerHTML;
+ dragger.dragNode=div.childNodes[0];}
+ else dragger.dragNode=dragger.dragNode.cloneNode(true);
+ dragger.dragNode.pWindow=window;
+ dragger.gldragNode.old=dragger.dragNode;
+ document.body.appendChild(dragger.dragNode);
+ oldBody.dhtmlDragAndDrop.dragNode=dragger.dragNode;
+}
+ dragger.dragNode.style.left=e.clientX+15+(dragger.fx?dragger.fx*(-1):0)+document.body.scrollLeft+"px";
+ dragger.dragNode.style.top=e.clientY+3+(dragger.fy?(-1)*dragger.fy:0)+document.body.scrollTop+"px";
  if(!e.srcElement)var z=e.target;else z=e.srcElement;
- dragger.checkLanding(z);
+ dragger.checkLanding(z,e.clientX,e.clientY);
 }
- dhtmlDragAndDropObject.prototype.checkLanding=function(htmlObject){
- if(htmlObject.dragLanding){if(this.lastLanding)this.lastLanding.dragLanding._dragOut(this.lastLanding);
- this.lastLanding=htmlObject;this.lastLanding=this.lastLanding.dragLanding._dragIn(this.lastLanding,this.dragStartNode);}
+ 
+ dhtmlDragAndDropObject.prototype.calculateFramePosition=function(n){
+ 
+ if(window.name){
+ var el =parent.frames[window.name].frameElement.offsetParent;
+ var fx=0;
+ var fy=0;
+ while(el){fx+= el.offsetLeft;fy+= el.offsetTop;el = el.offsetParent;}
+ if((parent.dhtmlDragAndDrop)){var ls=parent.dhtmlDragAndDrop.calculateFramePosition(1);fx+=ls.split('_')[0]*1;fy+=ls.split('_')[1]*1;}
+ if(n)return fx+"_"+fy;
+ else this.fx=fx;this.fy=fy;
+}
+ return "0_0";
+}
+ dhtmlDragAndDropObject.prototype.checkLanding=function(htmlObject,x,y){
+
+ if((htmlObject)&&(htmlObject.dragLanding)){if(this.lastLanding)this.lastLanding.dragLanding._dragOut(this.lastLanding);
+ this.lastLanding=htmlObject;this.lastLanding=this.lastLanding.dragLanding._dragIn(this.lastLanding,this.dragStartNode,x,y);}
  else{
- if(htmlObject.tagName!="BODY")this.checkLanding(htmlObject.parentNode);
- else{if(this.lastLanding)this.lastLanding.dragLanding._dragOut(this.lastLanding);this.lastLanding=0;}
+ if((htmlObject)&&(htmlObject.tagName!="BODY"))this.checkLanding(htmlObject.parentNode,x,y);
+ else{if(this.lastLanding)this.lastLanding.dragLanding._dragOut(this.lastLanding,x,y);this.lastLanding=0;}
 }
 }
- dhtmlDragAndDropObject.prototype.stopDrag=function(e){
+ dhtmlDragAndDropObject.prototype.stopDrag=function(e,mode){
  dragger=window.dhtmlDragAndDrop;
- if(dragger.lastLanding)dragger.lastLanding.dragLanding._drag(dragger.dragStartNode,dragger.dragStartObject,dragger.lastLanding);
- dragger.lastLanding=0;
- dragger.dragNode.parentNode.removeChild(dragger.dragNode);
+ if(!mode)
+{
+ dragger.stopFrameRoute();
+ var temp=dragger.lastLanding;
+ dragger.lastLanding=null;
+ if(temp)temp.dragLanding._drag(dragger.dragStartNode,dragger.dragStartObject,temp);
+}
+ dragger.lastLanding=null;
+ if((dragger.dragNode)&&(dragger.dragNode.parentNode==document.body))dragger.dragNode.parentNode.removeChild(dragger.dragNode);
  dragger.dragNode=0;
+ dragger.gldragNode=0;
+ dragger.fx=0;
+ dragger.fy=0;
  dragger.dragStartNode=0;
  dragger.dragStartObject=0;
  document.body.onmouseup=dragger.tempDOMU;
@@ -199,3 +258,96 @@ function dhtmlDragAndDropObject(){
  dragger.tempDOMM=null;
  dragger.waitDrag=0;
 }
+ 
+ dhtmlDragAndDropObject.prototype.stopFrameRoute=function(win){
+ if(win)
+ window.dhtmlDragAndDrop.stopDrag(1,1);
+ 
+ for(var i=0;i<window.frames.length;i++)
+ if((window.frames[i]!=win)&&(window.frames[i].dhtmlDragAndDrop))
+ window.frames[i].dhtmlDragAndDrop.stopFrameRoute(window);
+ if((parent.dhtmlDragAndDrop)&&(parent!=window)&&(parent!=win))
+ parent.dhtmlDragAndDrop.stopFrameRoute(window);
+}
+ dhtmlDragAndDropObject.prototype.initFrameRoute=function(win,mode){
+ if(win){
+
+
+ window.dhtmlDragAndDrop.preCreateDragCopy();
+ window.dhtmlDragAndDrop.dragStartNode=win.dhtmlDragAndDrop.dragStartNode;
+ window.dhtmlDragAndDrop.dragStartObject=win.dhtmlDragAndDrop.dragStartObject;
+ window.dhtmlDragAndDrop.dragNode=win.dhtmlDragAndDrop.dragNode;
+ window.dhtmlDragAndDrop.gldragNode=win.dhtmlDragAndDrop.dragNode;
+ window.document.body.onmouseup=window.dhtmlDragAndDrop.stopDrag;
+ window.waitDrag=0;
+ if((!isIE())&&(mode))window.dhtmlDragAndDrop.calculateFramePosition();
+}
+ if((parent.dhtmlDragAndDrop)&&(parent!=window)&&(parent!=win))
+ parent.dhtmlDragAndDrop.initFrameRoute(window);
+ for(var i=0;i<window.frames.length;i++)
+ if((window.frames[i]!=win)&&(window.frames[i].dhtmlDragAndDrop))
+ window.frames[i].dhtmlDragAndDrop.initFrameRoute(window,((!win||mode)?1:0));
+
+}
+ 
+
+
+ 
+function isIE(){
+ if(navigator.appName.indexOf("Microsoft")!=-1)
+ if(navigator.userAgent.indexOf('Opera')== -1)
+ return true;
+ return false;
+}
+
+ 
+dtmlXMLLoaderObject.prototype.doXPath = function(xpathExp,docObj){
+ if(isIE()){
+ if(arguments.length==1){
+ docObj = this.xmlDoc
+}
+ return docObj.selectNodes(xpathExp);
+}else{
+ var nodeObj = docObj;
+ if(!docObj){
+ if(!this.xmlDoc.nodeName){
+ docObj = this.xmlDoc.responseXML
+}else{
+ docObj = this.xmlDoc;
+}
+}
+ if(docObj.nodeName.indexOf("document")!=-1){
+ nodeObj = docObj;
+}else{
+ nodeObj = docObj;
+ docObj = docObj.ownerDocument;
+ 
+}
+ var rowsCol = new Array();
+ var col = docObj.evaluate(xpathExp,nodeObj,null,XPathResult.ANY_TYPE,null);
+ var thisColMemb = col.iterateNext();
+ while(thisColMemb){
+ rowsCol[rowsCol.length] = thisColMemb;
+ thisColMemb = col.iterateNext();
+}
+ return rowsCol;
+}
+}
+
+if(window.Node)
+Node.prototype.removeNode = function(removeChildren)
+{
+ var self = this;
+ if(Boolean(removeChildren))
+{
+ return this.parentNode.removeChild(self);
+}
+ else
+{
+ var range = document.createRange();
+ range.selectNodeContents(self);
+ return this.parentNode.replaceChild(range.extractContents(),self);
+}
+}
+
+

@@ -1,10 +1,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<title>dhtmlxTree v.1.1 Standard Edition</title>
+
+<!--#include virtual="/include/meta.inc" -->
 <META NAME="KEYWORDS" CONTENT="dhtmlxtree, dhtml tree, javascript tree, java, dynamical loading, xml, API, cross-browser, javascript, dhtml, scand, treeview, navigation, menu, bar, script, javascript navigation, web-site, dynamic, dynamic menu, folder, folder tree, internet explorer, firefox, mozilla, opera, safari, tooltip, item, node, asp, .net, jsp, cold fusion, image, custom tag, loading, control, widget, web site, checkbox, drag, drop, drag and drop, component, html, offshore, software, outsourcing, development, company, advanced, efficient">
 <META NAME="DESCRIPTION" CONTENT="Javascript DHTML Tree with XML support, cross-browser compatibility and rich JavaScript API. It allows to create attractive customizable DHTML JavaScript Tree Menu. Has checkboxes and drag-n-drop">
 
+<!--#set var="title" value="dhtmlxTree - an advanced DHTML tree component with rich JavaScript API" -->
+<!--#set var="picture" value="../../img/download/th_dhtmlxtree.gif" -->
+<!--#set var="section" value="dhtmlxTree" -->
 
 <link rel="STYLESHEET" type="text/css" href="css/dhtmlXTree.css">
 <script  src="js/dhtmlXCommon.js"></script>
@@ -31,7 +35,7 @@
 		tree2.loadXML("tree2.xml")
 	}
 	function preLoadImages(){
-		var imSrcAr = new Array("line1.gif","line2.gif","line3.gif","line4.gif","minus2.gif","minus3.gif","minus4.gif","plus2.gif","plus3.gif","plus4.gif","book.gif","books_open.gif","books_close.gif","magazine_open.gif","magazine_close.gif","tombs.gif","tombs_mag.gif","book_titel.gif")
+		var imSrcAr = new Array("line1.gif","line2.gif","line3.gif","line4.gif","minus2.gif","minus3.gif","minus4.gif","plus2.gif","plus3.gif","plus4.gif","book.gif","books_open.gif","books_close.gif","magazines_open.gif","magazines_close.gif","tombs.gif","tombs_mag.gif","book_titel.gif","iconCheckAll.gif")
 		var imAr = new Array(0);
 		for(var i=0;i<imSrcAr.length;i++){
 			imAr[imAr.length] = new Image();
@@ -40,6 +44,7 @@
 	}
 </script>
 
+<!--#include virtual="/include/top.shtml" -->
 
 <body onload="doOnLoad()">
 <select onchange="document.location.href = this.value">
@@ -81,24 +86,24 @@ dhtmlxTree has built-in <b>checkboxes</b> providing a handy tool for any kind of
 <table width="600">
 	<tr>
 		<td colspan="2">
-			<h3>What's new in version 1.1 (June 22, 2005):</h3>
-			<li>possibility to use tree without icons - <em>EnableTreeImages</em> method</li>
-			<li>autoscrolling while drag-and-drop</li>
-			<li>fixed bug in drag-and-drop on pages with scrollbars</li>
-			<li>added another drag-n-drop behavior &ndash; drop-as-sibling *</li>
-			<li><strong>drag-n-drop between frames/iframes</strong> *</li>
-			<li>OnDrop event handler *</li>
-			<li>fixed some visual glitches</li>
-			<li>focus item with script - <em>focusItem</em> method *</li>
-			<li>advanced xml processing for loading big trees - <strong>tested with 50000 items</strong> *</li>
-			<li>saving/Restoring tree <strong>state in cookie</strong> *</li>
-			<li>possibility to <strong>create XML</strong> based on updated tree structure *</li>
-			<li><strong>search functionality</strong> *</li>
-			<li>possibility to change <strong>nodes order</strong> *</li>
-			<li><strong>multi-line</strong> tree items *</li>
-			<li><strong>context menu</strong> - integration with dhtmlXMenu *</li>
-			<br>
-			<small>* - <a href="#editions">professional edition</a></small>
+			<h3>What's new in version 1.2* (October 20, 2005):</h3>
+			<li>XHTML compartibility</li>
+			<li>Complex drag-n-drop (inside/between)</li>
+			<li>Extended Serialization (userdata, more other parameters)</li>
+			<li>Sorting (a-z,z-a)</li>
+			<li>.Net support</li>
+			<li>JSP support</li>
+			<li>Event handlers for loading process</li>
+			<li>Extended event handlers for drag-n-drop</li>
+			<li>drag-n-Drop outside the tree</li>
+			<li>Icon sizes now changable</li>
+			<li>Possibility to turn +/- off</li>
+			<li>Increased overal performance</li>
+			<li>Disabling/hiding checkboxes</li>
+			<li>New Samples</li>
+			<li>More Detailed documentation</li>
+			<li>PHP/MySQL, ASP.Net, JSP sample applications</li>
+		<br><small>* - some functionlity available in <a href="#editions">professional edition</a> only</small>
 		<br><br>
 		</td>
 	</tr>
@@ -111,35 +116,36 @@ dhtmlxTree has built-in <b>checkboxes</b> providing a handy tool for any kind of
 			<li>FireFox 0.9 and above</li>
 			<li>Opera (Xml support depends on browser version)</li>
 		
-		<h3>Features:</h3>
+		<h3>Features:*</h3>
 			<li>Multibrowser/Multiplatform support </li>
+			<li>XHTML compartible</li>
 			<li>Full controll with JavaScript API</li>
-			<li>Dynamic loading <font color=gray>(can load data on demand)</font></li>
-			<li>Dynamic rendering *</li>
-			<li>XML support <font color=gray>(initializes from XML stream)</font></li>
-			<li>drag-&-drop <font color=gray>(within one tree, between trees, between frames *)</font></li>
-			<li>checkboxes <font color=gray>(two/three states)</font></li> 
-			<li>context menu * <font color=gray>(integration with <a href="http://www.scbr.com/docs/products/dhtmlxMenu/index.shtml" target="_blank">dhtmlxMenu</a>)</font></li>
-			<li>tooltips</li> 
-			<li>multi-line tree items *</li>
-			<li>customizable icons <font color=gray>(with javascript or xml)</font></li>
+			<li>Dynamic loading</li>
+			<li>XML support</li>
+			<li>Extended XML serialization</li>
+			<li>drag-&-drop (within one tree, between trees) </li>
+			<li>copy with drag-n-drop</li>
+			<li>drop-between/drop-inside</li>
+			<li>checkboxes (two/three states), disabled/hidden</li> 
+			<li>customizable icons (with javascript or xml), icon size</li>
 			<li>user data for nodes</li>
-			<li>high stability</li>
+			<li>Async mode loading support </li>
 			<li>.NET custom server control</li>
-			<li>JSP custom tag for Java - <font color=gray><i>pending</i></font></li>
+			<li>JSP custom tag</li>
 			<li>Macromedia Cold Fusion support</li>
+			<li>More detailed documentation</li>
 			<br>
-			<small>* - <a href="#editions">professional edition</a></small>
+			<small>* - some functionlity available in <a href="#editions">professional edition</a> only</small>
 		<h3>Editions</h3>
 			<li>Standard - available for free download (for non-commercial use).</li>
-			<li><a name="editions">Professional</a> - contains <a href="pro_features.html" target="_blank">additional features</a> (with examples) which are not present at standard edition. Avalable for users of Commercial and Enterprice licenses.</li>
+			<li><a name="editions">Professional</a> - contains <a href="pro_features.html" target="_blank">additional features</a> (with examples) which are not present at standard edition. Included with Commercial and Enterprise licenses. <a href="mailto:info@scand.com">Contact us</a> to buy.<!--Click <a href=buy.shtml>here</a> to buy.--></li>
 		<h3>Licensing</h3>
 			<li><a target="_blank" href="License_GPL.txt">Open Source - GPL</a> (standard edition only)</li>
-			<li><a target="_blank" name="license" href="License_Commercial.html">Commercial License</a> (standard and professional editions): in order to use any edition of dhtmlxTree in a commercial non-OpenSource project, get all features available in <a href="#editions">professional edition</a> or to have support you can purchase a Commercial License ($99) - please <a href="mailto:info@scand.com">contact us</a></li>
+			<li><a target="_blank" name="license" href="License_Commercial.html">Commercial License</a> (standard and professional editions): in order to use any edition of dhtmlxTree in a commercial project, get all features available in <a href="#editions">professional edition</a> or to have support you can purchase a Commercial License ($99). <a href="mailto:info@scand.com">Contact us</a> to buy.<!--<a href=buy.shtml>here</a>.  - please <a href="mailto:info@scand.com">contact us</a --></li>
 		</td>
 		<td valign="top" style="padding-left:20px">
 			<h3>Download:</h3>
-				<a href="download/dhtmlxTree.zip"><li title="Scripts, Samples, Documentation, ColdFusion Tag">Full package (v.1.1 standard)</li></a>
+				<a href="download/dhtmlxTree.zip"><li title="Scripts, Samples, Documentation, ColdFusion Tag">Full package (v.1.2 standard)</li></a>
 				<a href="download/dhtmlxTreeDoc.zip"><li>Documentation only</li></a>
 			<h3>Examples:</h3>
 				<a target="_blank" href="samples/treeEx11.html"><li>Initialize object</li></a>
@@ -151,13 +157,14 @@ dhtmlxTree has built-in <b>checkboxes</b> providing a handy tool for any kind of
 				<a target="_blank" href="samples/treeEx24.html"><li>Change design</li></a>
 				<a target="_blank" href="samples/treeEx31.html"><li>Autoloading from xml</li></a>
 				<a target="_blank" href="samples/treeEx32.html"><li>Drag and Drop</li></a>
+				<a href="samples/dhtmlxTree_db_sample.zip"><li>Working with database (PHP/MySQL)</li></a>
 			<h3>Documentation:</h3>
-				<a target="_blank" href="doc/index.html"><li>API Functions and Documentation<br>(including CF custom tag doc)</li></a>
+				<a target="_blank" href="doc/index.html"><li>API Functions and Documentation</li></a>
 		</td>
 	</tr>
 </table>
 <br>
-<div align="center" style="width:600"><h3><a href="download/dhtmlxTree.zip">Download latest version source code</a></h3></div>
+<div align="center" style="width:600"><h3><a href="download/dhtmlxTree.zip">Download latest version of javascript tree source code</a></h3></div>
 <h3>Code Sample</h3>
 	
 <XMP style="color:green">

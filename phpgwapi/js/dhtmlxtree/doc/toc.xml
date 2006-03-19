@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<tree id="0">
+	<item text="dhtmlxTree v1.2" open="1" id="root">
+		<item text="Main Features" id="mf">
+			<userdata name="file">guide.html</userdata>
+		</item>
+		<item text="Supported Browsers" id="browsers">
+			<userdata name="file">guide.html</userdata>
+		</item>
+		<item text="Guide" id="guide" select="1">
+			<userdata name="file">guide.html</userdata>
+			<item text="Initialize object on page" id="init"/>
+			<item text="Loading data with XML" id="xmlload"/>
+			<item text="Adding nodes with Script" id="scriptadd"/>
+			<item text="Icons in Tree" id="g_icons"/>
+			<item text="Setting custom icons to nodes" id="iconscust"/>
+			<item text="Checkboxes in tree" id="checkbox"/>
+			<item text="Tooltips" id="tooltip"/>
+			<item text="Moving nodes" id="move"/>
+			<item text="Sorting nodes" id="sort"/>
+			<item text="Dynamical Loading" id="dyntree"/>
+			<item text="Smart XML Parsing" id="smartxml"/>
+			<item text="Set Event Handlers" id="handlers"/>
+			<item text="Drag-and-drop technics" id="dnd"/>
+			<item text="Drag-and-drop between iframes" id="dndifr"/>
+			<item text="Increasing Performance" id="guide_perf"/>
+			<item text="Manipulating nodes" id="nodesman"/>
+			<item text="Refreshing nodes" id="refresh"/>
+			<item text="Serialization" id="serialize"/>
+			<item text="Search functionlity" id="search"/>
+			<item text="Multiline tree items" id="multiline"/>
+			<item text="Add Items Counter" id="counter"/>
+			<item text="Context Menu" id="context_menu"/>
+			<item text="Cold Fusion Tag for dhtmlXTree" id="cftag"/>
+			<item text="Error handling in dhtmlXTree" id="error"/>
+			<!--item text="*.Net Implementation" id="dotnet"/-->
+			
+		</item>
+		<item text="API Functions" id="api" open="1">
+			<item text="Alphabeticaly sorted" id="api_a">
+				<userdata name="file">alpha.html</userdata>
+			</item>
+			<item text="Grouped by Type" id="api_t">
+				<userdata name="file">tgroup.html</userdata>
+			</item>
+			<item text="Grouped by Object" id="api_o">
+				<userdata name="file">ogroup.html</userdata>
+			</item>
+			<!--item text="*Event handlers arguments" id="events_args">
+				<userdata name="file">events.html</userdata>
+			</item-->
+		</item>
+		<item text="Special Technique" id="spec">
+			<userdata name="file">special.html</userdata>
+			<item text="Links in tree" id="spec_link"/>
+			<item text="Drag-n-drop outside tree" id="spec_dnd_out"/>
+			<!--item text="*Context Menu" id="spec_cm"/-->
+		</item>
+		<item text="Frequently asked questions" id="kb_faq">
+			<userdata name="file">kb/faq.html</userdata>
+			<item text="Licenses" id="kb_faq_lic"/>
+			<item text="Performance. Dynamical Loading" id="kb_faq_perf"/>
+			<item text="Drag-n-drop, Nodes ordering" id="kb_faq_dnd"/>
+			<item text="API, Initialization" id="kb_faq_api"/>
+			<item text="Other Questions" id="kb_faq_else"/>
+		</item>
+		<item text="Knowledge Base" id="kb_">
+			<item text="Dynamical loading" id="kb_dn">
+				<userdata name="file">kb/dyn_loading.html</userdata>
+			</item>
+		</item>
+	</item>
+</tree> 
