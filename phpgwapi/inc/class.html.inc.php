@@ -437,6 +437,7 @@ class html
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
+		if (!$plugins) $plugins = 'ColorChooser,FontChooser,ContexMenu,TableOperations';
 		return  $this->tinymce($name,$content,$style,$plugins,$base_href);
 	}
 
