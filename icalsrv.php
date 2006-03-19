@@ -9,8 +9,8 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.06 
-   * @date 20060313
+   * @version 0.9.08 initial version for icalsrv as egw application 
+   * @date 20060318
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * $Id$ 
    * (see: @url http://www.egroupware.org  )
@@ -39,6 +39,10 @@
    * etc.
    * @todo for ical GET: get the agent name from the http header
    * and use to set the ical product field when exporting.
+   * @warning the current calendar filter will export only events in the period
+   * from one month ago till one year ahead.
+   * @warning all and only those events and todos are exported that you have access to
+   * according to the default calendar and infolog settings (is this correct Ralf?)
    */
 
 
@@ -178,24 +182,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
   $last_year = date("Y")-1;
   $next_year = date("Y")+1;
 
+  // until it is configurable we do 1 month back and 1 year ahead
+  $evq_start = date('Ymd',time()-2678400);
+  $evq_end   = date('Ymd',time()+65000000);
+
   // E1.1: get period to be exported for events 
   // For productivity this should be user configurable e.g. to be set via some sort of user
   // preferences to be set via eGW. (config remote-iCalendar...)
-  $events_query = array('start' => $last_year . "-01-01",
-				 'end'   => $next_year . "-12-31",
-				 'enum_recuring' => false,
-				 'daywise'       => false,
-				 'owner'         => $GLOBALS['egw_info']['user']['account_id'],
-				 // timestamp in server time for boical class
-				 'date_format'   => 'server'
+  $events_query = array('start'         => $evq_start,
+						'end'           => $evq_end,
+						'filter'        => 'all',
+						'enum_recuring' => false,
+						'daywise'       => false,
+						'owner'         => $GLOBALS['egw_info']['user']['account_id'],
+						// timestamp in server time for boical class
+						'date_format'   => 'server'
 				);
 
   $todos = array();
+
+  // filter == my: entries user is responsible for,
+  // filter == own: entries the user owns or is responsible for
+  // order == id_parent: ...
+  // order == info_datemodified: ...
+  // todo add a filter to limit how far back entries from the past are retrieved
   $todos_query = array('col_filter' => array('type' => 'task'),
-                       'filter' => 'none',
+                       'filter' => 'my',
 					   'order' => 'id_parent',
-					   'start' => 0,
-					   'total' => 1
+					   'sort' => 'DESC'
 					   );
 
   // E2.1: search eGW events based on the $events_query 
@@ -218,16 +232,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
   }
 
   // E3.1: search eGW todos based on the $todos_query 
-  // JVL: the auto update of the start parameter doesnot seem to work???
-  // so I do it manually..
-  while( $todos_query['start'] < $todos_query['total']){
-	$more_todos =& $binf->search($todos_query);
-	//error_log('td start:' . $todos_query['start'] . ' todo_pos:' . $todo_pos . 'td total:' . $todos_query['total'] . ' count-ids:' . count($more_todos));
-	if($more_todos === false)
-	  break;
-    $todos_query['start'] += count($more_todos);
-	$todos = array_merge($todos,$more_todos);
-  }
+  $todos =& $binf->search($todos_query);
   if (!$todos){
     $logmsg .="\n no eGW todos found to export";
     // nevertheless fall through to further ical components export
