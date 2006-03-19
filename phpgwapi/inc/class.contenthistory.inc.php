@@ -158,6 +158,7 @@
 				'sync_guid'		=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
 				'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
 			);
+			error_log("$_action $_appName $_id");
 			switch($_action)
 			{
 				case 'add':
@@ -171,16 +172,22 @@
 						'sync_appname'		=> $_appName,
 						'sync_contentid'	=> $_id,
 					);
+
 					$this->db->select($this->table,'sync_contentid',$where,__LINE__,__FILE__);
 					if(!$this->db->next_record())
 					{
 						$this->db->insert($this->table,$newData,array(),__LINE__,__FILE__);
 					}
-					
+
+					$this->db->select($this->table,'sync_added',$where,__LINE__,__FILE__);
+					$this->db->next_record();
+					$syncAdded = $this->db->f('sync_added');
+
 					// now update the time stamp
 					$newData = array (
 						'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
 						$_action == 'modify' ? 'sync_modified' : 'sync_deleted' => $_ts,
+						'sync_added'		=> $syncAdded,
 					);
 					$this->db->update($this->table, $newData, $where,__LINE__,__FILE__);
 					break;
