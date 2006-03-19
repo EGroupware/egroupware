@@ -514,7 +514,12 @@ class bocalupdate extends bocal
 		}
 		foreach($to_notify as $userid => $statusid)
 		{
-			if (!is_numeric($userid)) continue;	// eg. a resource, ToDo notify the responsible of the resource
+			if (!is_numeric($userid))
+			{
+				$res_info = $this->resource_info($userid);
+				$userid = $res_info['responsible'];
+				if (!isset($userid)) continue;	
+			}
 
 			if ($statusid == 'R' || $GLOBALS['egw']->accounts->get_type($userid) == 'g')
 			{
