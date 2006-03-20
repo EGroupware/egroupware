@@ -1,7 +1,3 @@
-/*
-Copyright Scand LLC http://www.scbr.com
-This version of Software is free for using in non-commercial applications. For commercial use please contact info@scbr.com to obtain license
-*/
 		/**
           *     @desc: xmlLoader object
           *     @type: private
@@ -26,12 +22,12 @@ function dtmlXMLLoaderObject(funcObject, dhtmlObject,async){
 		  *     @topic: 0
           */
 	dtmlXMLLoaderObject.prototype.waitLoadFunction=function(dhtmlObject){
-		this.check=function (){		
+		this.check=function (){
 			if(dhtmlObject.onloadAction!=null){
 				if (!dhtmlObject.xmlDoc.readyState) dhtmlObject.onloadAction(dhtmlObject.mainObject);
-				else	{ 
+				else	{
 				if (dhtmlObject.xmlDoc.readyState != 4) return false;
-					else dhtmlObject.onloadAction(dhtmlObject.mainObject);	}
+					else dhtmlObject.onloadAction(dhtmlObject.mainObject,null,null,null,dhtmlObject);	}
 			}
 		};
 		return this.check;
@@ -48,16 +44,16 @@ function dtmlXMLLoaderObject(funcObject, dhtmlObject,async){
 			if (this.xmlDoc.responseXML)  { var temp=this.xmlDoc.responseXML.getElementsByTagName(tagName); var z=temp[0];  }
 			else var z=this.xmlDoc.documentElement;	
 			if (z) return z;
-			alert("Incorrect XML");
+            dhtmlxError.throwError("LoadXML","Incorrect XML",[this.xmlDoc])
 			return document.createElement("DIV");
 	};
 	
-		/**  
+		/**
           *     @desc: load XML
           *     @type: private
           *     @param: filePath - xml file path
 		  *     @topic: 0  
-          */	
+          */
 	dtmlXMLLoaderObject.prototype.loadXMLString=function(xmlString){
  	 try 
 	 {
@@ -342,9 +338,17 @@ function dhtmlDragAndDropObject(){
 				window.frames[i].dhtmlDragAndDrop.initFrameRoute(window,((!win||mode)?1:0));
 
 	}
-	
 
+var _isFF=false; var _isIE=false; var _isOpera=false; var _isSafari=false;
+if (navigator.userAgent.indexOf('Safari') != -1 || navigator.userAgent.indexOf('Konqueror') != -1)
+    _isSafari=true;
+else if (navigator.userAgent.indexOf('Opera') != -1)
+    _isOpera=true;
+else if(navigator.appName.indexOf("Microsoft")!=-1)
+    _isIE=true;
+else _isFF=true;
 
+//deprecated, use global constant instead
 //determines if current browser is IE
 function isIE(){
 	if(navigator.appName.indexOf("Microsoft")!=-1)
@@ -355,6 +359,7 @@ function isIE(){
 
 //multibrowser Xpath processor
 dtmlXMLLoaderObject.prototype.doXPath = function(xpathExp,docObj){
+    if ((_isOpera)||(_isSafari)) return this.doXPathOpera(xpathExp,docObj);
 	if(isIE()){//IE
 		if(arguments.length==1){
 			docObj = this.xmlDoc
@@ -374,7 +379,7 @@ dtmlXMLLoaderObject.prototype.doXPath = function(xpathExp,docObj){
 		}else{
 			nodeObj = docObj;
 			docObj = docObj.ownerDocument;
-			
+
 		}
 		var rowsCol = new Array();
     		var col = docObj.evaluate(xpathExp, nodeObj, null, XPathResult.ANY_TYPE,null);
@@ -386,8 +391,8 @@ dtmlXMLLoaderObject.prototype.doXPath = function(xpathExp,docObj){
 	    	return rowsCol;
 	}
 }
-
-if ( window.Node )
+   
+if  (( window.Node )&&(!_isSafari))
 Node.prototype.removeNode = function( removeChildren )
 {
 	var self = this;
@@ -401,5 +406,58 @@ Node.prototype.removeNode = function( removeChildren )
 		range.selectNodeContents( self );
 		return this.parentNode.replaceChild( range.extractContents(), self );
 	}
+}
+
+function _dhtmlxError(type,name,params){
+    if (!this.catches)
+        this.catches=new Array();
+
+    return this;
+}
+
+_dhtmlxError.prototype.catchError=function(type,func_name){
+    this.catches[type]=func_name;
+}
+_dhtmlxError.prototype.throwError=function(type,name,params){
+        if (this.catches[type]) return  this.catches[type](type,name,params);
+        if (this.catches["ALL"]) return  this.catches["ALL"](type,name,params);
+        alert("Error type: " + arguments[0]+"\nDescription: " + arguments[1] );
+        return null;
+}
+
+window.dhtmlxError=new  _dhtmlxError();
+
+
+//opera fake, while 9.0 not released
+//multibrowser Xpath processor
+dtmlXMLLoaderObject.prototype.doXPathOpera = function(xpathExp,docObj){   
+    //this is fake for Opera
+    var z=xpathExp.replace(/[\/]+/gi,"/").split('/');
+    var obj=null;
+    var i=1;
+
+    if (!z.length) return [];
+    if (z[0]==".")
+        obj=[docObj];
+    else if (z[0]=="")
+        {
+        obj=this.xmlDoc.responseXML.getElementsByTagName(z[i]);
+        i++;
+        }
+    else return [];
+
+    for (i; i<z.length; i++)
+        obj=this._getAllNamedChilds(obj,z[i]);
+
+    return obj;
+}
+
+dtmlXMLLoaderObject.prototype._getAllNamedChilds = function(a,b){
+    var c=new Array();
+    for (var i=0; i<a.length; i++)
+        for (var j=0; j<a[i].childNodes.length; j++)
+            if (a[i].childNodes[j].tagName==b) c[c.length]=a[i].childNodes[j];
+
+    return c;
 }
 

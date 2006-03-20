@@ -983,7 +983,9 @@ dhtmlXTreeObject.prototype._correctCheckStates=function(dhtmlObject){
 //			var inp=document.createElement("input");				inp.type="checkbox"; inp.style.width="12px"; inp.style.height="12px";
 			var inp=document.createElement((itemObject.id==this.rootId)?"div":"img");
 			inp.checked=0; inp.src=this.imPath+this.checkArray[0]; inp.style.width="16px"; inp.style.height="16px";
-			if (!acheck) ((this._isOpera)?td11:inp).style.display="none";  
+            //can cause problems with hide/show check
+			if (!acheck) (((_isOpera)||(_isSafari))?td11:inp).style.display="none";
+
 			// td11.className="standartTreeImage";
 					//if (acheck) 
 				td11.appendChild(inp);
@@ -1016,8 +1018,10 @@ dhtmlXTreeObject.prototype._correctCheckStates=function(dhtmlObject){
 				itemObject.span.className="standartTreeRow";
 				if (this.mlitems) itemObject.span.style.width=this.mlitems; 
 				else td2.noWrap=true;
-			td2.style.width="100%";
-		itemObject.span.appendChild(document.createTextNode(itemObject.label));
+                if (!_isSafari) td2.style.width="100%";
+
+//		itemObject.span.appendChild(document.createTextNode(itemObject.label));
+   		itemObject.span.innerHTML=itemObject.label;
 		td2.appendChild(itemObject.span);
 		td2.parentObject=itemObject; 		 td1.parentObject=itemObject;
 		td2.onclick=this.onRowSelect; td1.onclick=this.onRowClick; td2.ondblclick=this.onRowClick2;

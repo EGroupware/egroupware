@@ -1,7 +1,14 @@
+/*
+Copyright Scand LLC http://www.scbr.com
+This version of Software is free for using in non-commercial applications. 
+For commercial use please contact info@scbr.com to obtain license
+*/ 
  
 
  
 function dhtmlXTreeObject(htmlObject,width,height,rootId){
+ this._isOpera=(navigator.userAgent.indexOf('Opera')!= -1);
+
  if(typeof(htmlObject)!="object")
  this.parentObject=document.getElementById(htmlObject);
  else
@@ -776,7 +783,9 @@ dhtmlXTreeObject.prototype._correctCheckStates=function(dhtmlObject){
  
  var inp=document.createElement((itemObject.id==this.rootId)?"div":"img");
  inp.checked=0;inp.src=this.imPath+this.checkArray[0];inp.style.width="16px";inp.style.height="16px";
- if(!acheck)inp.style.display="none";
+ 
+ if(!acheck)(((_isOpera)||(_isSafari))?td11:inp).style.display="none";
+
  
  
  td11.appendChild(inp);
@@ -809,8 +818,10 @@ dhtmlXTreeObject.prototype._correctCheckStates=function(dhtmlObject){
  itemObject.span.className="standartTreeRow";
  if(this.mlitems)itemObject.span.style.width=this.mlitems;
  else td2.noWrap=true;
- td2.style.width="100%";
- itemObject.span.appendChild(document.createTextNode(itemObject.label));
+ if(!_isSafari)td2.style.width="100%";
+
+ 
+ itemObject.span.innerHTML=itemObject.label;
  td2.appendChild(itemObject.span);
  td2.parentObject=itemObject;td1.parentObject=itemObject;
  td2.onclick=this.onRowSelect;td1.onclick=this.onRowClick;td2.ondblclick=this.onRowClick2;

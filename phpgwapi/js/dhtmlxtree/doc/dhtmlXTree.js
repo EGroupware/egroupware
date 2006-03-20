@@ -1,6 +1,7 @@
 /*
 Copyright Scand LLC http://www.scbr.com
-This version of Software is free for using in non-commercial applications. For commercial use please contact info@scbr.com to obtain license
+This version of Software is free for using in non-commercial applications. 
+For commercial use please contact info@scbr.com to obtain license
 */
 /*_TOPICS_
 @0:Initialization
@@ -19,7 +20,7 @@ This version of Software is free for using in non-commercial applications. For c
 *     @param: height - tree height
 *     @param: rootId - id of virtual root node
 *     @type: public
-*     @topic: 0
+*     @topic: 0  
 */
 function dhtmlXTreeObject(htmlObject, width, height, rootId){
     this._isOpera=(navigator.userAgent.indexOf('Opera')!= -1);
@@ -66,7 +67,7 @@ function dhtmlXTreeObject(htmlObject, width, height, rootId){
 	this.timgen=true;
 
 	this.dpcpy=false;
-
+	
 	this.imPath="treeGfx/";
 	this.checkArray=new Array("iconUnCheckAll.gif","iconCheckAll.gif","iconCheckGray.gif","iconUncheckDis.gif");
 	this.lineArray=new Array("line2.gif","line3.gif","line4.gif","blank.gif","blank.gif");
@@ -440,7 +441,7 @@ function dhtmlXTreeItemObject(itemId,itemText,parentObject,treeObject,actionHand
 			{
 				var nodx=node.childNodes[i];
 		  		var name=nodx.getAttribute("text");
-		  		var cId=nodx.getAttribute("id");    
+		  		var cId=nodx.getAttribute("id");
 				if ((!dhtmlObject.waitUpdateXML)||(dhtmlObject.waitUpdateXML.toString().search(","+cId+",")!=-1))
 				{
 		  		var im0=nodx.getAttribute("im0");		
@@ -982,7 +983,9 @@ dhtmlXTreeObject.prototype._correctCheckStates=function(dhtmlObject){
 //			var inp=document.createElement("input");				inp.type="checkbox"; inp.style.width="12px"; inp.style.height="12px";
 			var inp=document.createElement((itemObject.id==this.rootId)?"div":"img");
 			inp.checked=0; inp.src=this.imPath+this.checkArray[0]; inp.style.width="16px"; inp.style.height="16px";
-			if (!acheck) ((this._isOpera)?td11:inp).style.display="none";  
+            //can cause problems with hide/show check
+			if (!acheck) (((_isOpera)||(_isSafari))?td11:inp).style.display="none";
+
 			// td11.className="standartTreeImage";
 					//if (acheck) 
 				td11.appendChild(inp);
@@ -1015,8 +1018,10 @@ dhtmlXTreeObject.prototype._correctCheckStates=function(dhtmlObject){
 				itemObject.span.className="standartTreeRow";
 				if (this.mlitems) itemObject.span.style.width=this.mlitems; 
 				else td2.noWrap=true;
-			td2.style.width="100%";
-		itemObject.span.appendChild(document.createTextNode(itemObject.label));
+                if (!_isSafari) td2.style.width="100%";
+
+//		itemObject.span.appendChild(document.createTextNode(itemObject.label));
+   		itemObject.span.innerHTML=itemObject.label;
 		td2.appendChild(itemObject.span);
 		td2.parentObject=itemObject; 		 td1.parentObject=itemObject;
 		td2.onclick=this.onRowSelect; td1.onclick=this.onRowClick; td2.ondblclick=this.onRowClick2;
