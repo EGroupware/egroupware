@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="addressbook.edit.personal" template="" lang="" group="0" version="1.0.1.002">
-		<grid height="250">
+		<grid class="editphones">
 			<columns>
 				<column/>
 				<column/>
@@ -42,7 +42,7 @@
 				<row valign="top">
 					<image src="folder"/>
 					<description value="category"/>
-					<listbox type="select-cat" id="cat_id" rows="3" span="4"/>
+					<listbox type="select-cat" id="cat_id" rows="3" options=",width:99%" span="4"/>
 				</row>
 				<row>
 					<image src="password"/>
@@ -53,7 +53,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="1.0.1.001">
-		<grid height="250">
+		<grid height="320">
 			<columns>
 				<column/>
 				<column/>
@@ -131,7 +131,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.0.1.001">
-		<grid height="250">
+		<grid width="100%" height="250" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
@@ -166,7 +166,7 @@
 				<row height="30">
 					<description/>
 					<description options=",,,bday" value="Birthday"/>
-					<date 1="label" id="bday" options="m/d/Y"/>
+					<date id="bday" options="m/d/Y"/>
 				</row>
 				<row>
 					<description/>
@@ -184,7 +184,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="250" overflow="auto">
+		<grid height="320">
 			<columns>
 				<column/>
 			</columns>
@@ -205,7 +205,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.0.1.002">
-		<grid width="100%" height="250" overflow="auto">
+		<grid height="320">
 			<columns>
 				<column/>
 			</columns>
@@ -226,7 +226,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.editphones" template="" lang="" group="0" version="1.0.1.001">
-		<grid class="editphones">
+		<grid width="100%">
 			<columns>
 				<column/>
 				<column/>
@@ -334,12 +334,19 @@
 						</columns>
 						<rows>
 							<row>
-								<textbox id="org_name" readonly="true"/>
+								<textbox id="org_name" readonly="true" no_lang="1"/>
 								<description value=":"/>
-								<textbox id="fn" readonly="true" span="all"/>
+								<textbox id="fn" no_lang="1" readonly="true"/>
 							</row>
 						</rows>
 					</grid>
+					<hbox align="right">
+						<description value="Type"/>
+						<menulist>
+							<menupopup no_lang="1" id="tid" onchange="1"/>
+						</menulist>
+						<html class="space" needed="1" label=" " no_lang="1" id="typegfx" readonly="true"/>
+					</hbox>
 				</row>
 				<row valign="top">
 					<tabbox>
