@@ -525,4 +525,25 @@
 		}
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.002';
 	}
+
+
+	$test[] = '1.2.002';
+	function infolog_upgrade1_2_002()
+	{
+		// change the phone-status: call --> not-started, will-call --> ongoing to be able to sync them 
+		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_status='not-started' WHERE info_status='call'",__LINE__,__FILE__);
+		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_status='ongoing' WHERE info_status='will-call'",__LINE__,__FILE__);
+		
+		// remove the call and will-call from the custom stati, if they exist
+		$config =& CreateObject('phpgwapi.config','infolog');
+		$config->read_repository();
+		if (is_array($config->config_data['status']['phone']))
+		{
+			unset($config->config_data['status']['phone']['call']);
+			unset($config->config_data['status']['phone']['will-call']);
+
+			$config->save_repository();
+		}
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.003';
+	}
 ?>

@@ -56,7 +56,7 @@
 				<row class="row" valign="top">
 					<hbox align="center" orient=",5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
-						<button image="$row_cont[info_status]" ro_image="$row_cont[info_status]" label="$row_cont[info_status]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="$row_cont[info_percent]" ro_image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox orient="0,0">
@@ -155,7 +155,7 @@
 				<row class="row" valign="top">
 					<hbox align="center" orient=",5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
-						<button image="$row_cont[info_status]" ro_image="$row_cont[info_status]" label="$row_cont[info_status]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="$row_cont[info_percent]" ro_image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox orient="0,0">

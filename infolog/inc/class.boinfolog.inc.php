@@ -103,7 +103,7 @@
 			);
 			$this->status = $this->stock_status = array(
 				'defaults' => array(
-					'task' => 'ongoing', 'phone' => 'call', 'note' => 'done'),
+					'task' => 'not-started', 'phone' => 'not-started', 'note' => 'done'),
 				'task' => array(
 					'offer' => 'offer',				// -->  NEEDS-ACTION
 					'not-started' => 'not-started',	// iCal NEEDS-ACTION
@@ -112,8 +112,8 @@
 					'cancelled' => 'cancelled',		// iCal CANCELLED
 					'billed' => 'billed' ),			// -->  DONE
 				'phone' => array(
-					'call' => 'call',				// -->  NEEDS-ACTION
-					'will-call' => 'will-call',		// -->  IN-PROCESS
+					'not-started' => 'call',		// iCal NEEDS-ACTION
+					'ongoing' => 'will-call',		// iCal IN-PROCESS
 					'done' => 'done', 				// iCal COMPLETED
 					'billed' => 'billed' ),			// -->  DONE
 				'note' => array(
