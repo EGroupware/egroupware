@@ -1162,9 +1162,9 @@
 					
 					if ($set_readonlys_all) unset($readonlys['__ALL__']);
 					break;
-				case 'select':	// size:[linesOnMultiselect|emptyLabel]
+				case 'select':	// size:[linesOnMultiselect|emptyLabel,extraStyleMulitselect]
 					$sels = array();
-					list($multiple) = explode(',',$cell_options);
+					list($multiple,$extraStyleMultiselect) = explode(',',$cell_options,2);
 					if (!empty($multiple) && 0+$multiple <= 0)
 					{
 						$sels[''] = $multiple < 0 ? 'all' : $multiple;
@@ -1257,7 +1257,7 @@
 						if ($multiple && is_numeric($multiple))	// eg. "3+" would give a regular multiselectbox
 						{
 							$html .= $this->html->checkbox_multiselect($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
-								$cell['no_lang'],$options,$multiple);
+								$cell['no_lang'],$options,$multiple,true,$extraStyleMultiselect);
 						}
 						else
 						{

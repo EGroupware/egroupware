@@ -221,7 +221,7 @@
 					$cell['no_lang'] = True;
 					break;
 
-				case 'select-cat':	// !$type == globals cats too
+				case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect
 					if (!is_object($GLOBALS['egw']->categories))
 					{
 						$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
@@ -243,6 +243,7 @@
 							$cell['sel_options'][$cat['cat_id']] = $s;
 						}
 					}
+					$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 					$cell['no_lang'] = True;
 					break;
 
@@ -321,7 +322,7 @@
 					$value = intval($value);
 					break;
 					
-				case 'select-dow':	// options: rows[,0=summaries befor days, 1=summaries after days, 2=no summaries
+				case 'select-dow':	// options: rows[,0=summaries befor days, 1=summaries after days, 2=no summaries[,extraStyleMultiselect]]
 					if (!defined('MCAL_M_SUNDAY'))
 					{
 						define('MCAL_M_SUNDAY',1);
@@ -386,6 +387,7 @@
 					{
 						$GLOBALS['egw_info']['etemplate']['to_process'][$name] = 'ext-select-dow';
 					}
+					$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 					break;
 
 				case 'select-day':

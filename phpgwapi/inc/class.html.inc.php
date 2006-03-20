@@ -260,10 +260,12 @@ class html
 	 * @param string $options additional options (e.g. 'width')
 	 * @param int $multiple number of lines for a multiselect, default 3
 	 * @param boolean $selected_first show the selected items before the not selected ones, default true
+	 * @param string $style='' extra style settings like "width: 100%", default '' none
 	 * @return string to set for a template or to echo into html page
 	 */
-	function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true)
+	function checkbox_multiselect($name, $key, $arr=0,$no_lang=false,$options='',$multiple=3,$selected_first=true,$style='')
 	{
+		//echo "<p align=right>checkbox_multiselect('$name',".print_r($key,true).",".print_r($arr,true).",$no_lang,'$options',$multiple,$selected_first,'$style')</p>\n";
 		if (!is_array($arr))
 		{
 			$arr = array('no','yes');
@@ -320,7 +322,10 @@ class html
 				' id="'.$base_name.'['.$val.']'.'" '.($title ? 'title="'.$this->htmlspecialchars($title).'" ':'')).
 				$this->htmlspecialchars($label),$base_name.'['.$val.']')."<br />\n";
 		}
-		$style = 'height: '.(1.7*$multiple).'em; width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.55)).'em; background-color: white; overflow: auto; border: lightgray 2px inset;';
+		if ($style && substr($style,-1) != ';') $style .= '; ';
+		if (!strstr($style,'height')) $style .= 'height: '.(1.7*$multiple).'em; ';
+		if (!strstr($style,'width'))  $style .= 'width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.55)).'em; ';
+		$style .= 'background-color: white; overflow: auto; border: lightgray 2px inset;';
 
 		return $this->div($html,$options,'',$style);
 	}
