@@ -264,12 +264,31 @@
 			return $this->read_single_entry($this->db->f(0),$fields);
 		}
 
-		/* send this the range, query, sort, order and whatever fields you want to see */
-		function read($start=0,$limit=0,$fields='',$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
+		/**
+		 * Searches for contacts meating certain criteria and evtl. return only a range of them
+		 *
+		 * @param int $start=0 starting number of the range, if $limit != 0
+		 * @param int $limit=0 max. number of entries to return, 0=all
+		 * @param array $fields=null fields to return or null for all stock fields
+		 * @param string $query='' search pattern or '' for none
+		 * @param string $filter='' filters with syntax like <name>=<value>,<name2>=<value2> OR <name3>=<value3>,<name4>=!'' for not empty
+		 * @param string $sort='' sorting: ASC or DESC
+		 * @param string $order='' column to order, default ('') n_family,n_given,email ASC
+		 * @param int $lastmod=-1 return only values modified after given timestamp, default (-1) return all
+		 * @param string $cquery='' return only entries starting with given character, default ('') all
+		 * @return array of contacts
+		 */
+		function read($start=0,$limit=0,$fields=null,$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
 		{
-			if(!$start)  { $start  = 0; }
-			if(!$limit)  { $limit  = 0; }
-			if(!$filter) { $filter = 'tid=n'; } 
+			if (!$limit)
+			{
+				$limit = -1;	// db::query uses -1 for all
+			}
+			elseif (!$start)
+			{
+				$start  = 0;
+			}
+			if(!$filter) { $filter = 'tid=n'; }
 
 			if (!$fields || empty($fields)) { $fields = $this->stock_contact_fields; }
 			$DEBUG = 0;
@@ -329,9 +348,9 @@
 						{
 							$filterlist[] = $name . '=' . $value;
 						}
-						elseif ($value == "!")	// check for not empty
+						elseif ($value == "!''")	// check for not empty
 						{
-							$filterlist[] = $name . " IS NOT NULL";
+							$filterlist[] = $name . "!=''";
 						}
 						else
 						{
@@ -379,6 +398,7 @@
 					$fand   .= $filtermethod;
 				}
 			}
+
 			if(@is_array($this->grants))
 			{
 				$grants = $this->grants;
@@ -393,18 +413,7 @@
 			{
 				$fwhere .= ') '; $fand .= ') ';
 			}
-			// acl enhancement
-			/* $this->accounts =& CreateObject('phpgwapi.accounts');
-			$groups = $this->accounts->membership();
-			$gwhere = " AND (published_groups IS NULL OR  CONCAT(',',published_groups,',') LIKE '%,". $groups[0]['account_id']. ",%' ";
-			unset($groups[0]);
-			foreach((array)$groups as $group)
-			{
-				$gwhere .= " OR CONCAT(',',published_groups,',') LIKE '%,". $group['account_id']. ",%'";
-			}
-			$gwhere .= " ) ";
-			$fwhere .= $gwhere;
-			$fand .= $gwhere;*/
+
 			if ($DEBUG && $filtermethod)
 			{
 				echo '<br>DEBUG - Filtering with: #' . $filtermethod . '#';
@@ -485,8 +494,13 @@
 							if (!$queryKey) continue;
 						}
 						$queryValue  = strtoupper($this->db->db_addslashes($queryValue));
-						$sql .= " UPPER($queryKey) LIKE '$queryValue' AND ";
-						$sqlcount .= " UPPER($queryKey) LIKE '$queryValue' AND ";
+						if(empty($queryValue)) {
+							$sql .= " ($queryKey IS NULL OR $queryKey = '') AND ";
+							$sqlcount .= " ($queryKey IS NULL OR $queryKey = '') AND ";
+						} else {
+							$sql .= " UPPER($queryKey) LIKE '$queryValue' AND ";
+							$sqlcount .= " UPPER($queryKey) LIKE '$queryValue' AND ";
+						}
 					}
 					$sql = substr($sql,0,-5) . ') ' . $fand . $filtermethod . $ordermethod;
 					$sqlcount = substr($sqlcount,0,-5) . ') ' . $fand . $filtermethod;
@@ -543,25 +557,10 @@
 			unset($sqlcount);
 			$this->total_records = $this->db->f(0);
 
-			if($start && $limit)
-			{
-				if($this->total_records <= $limit)
-				{
-					$this->db->query($sql,__LINE__,__FILE__);
-				}
-				else
-				{
-					$this->db->limit_query($sql,$start,__LINE__,__FILE__,$limit);
-				}
-			}
-			elseif(!$limit)
-			{
-				$this->db->query($sql,__LINE__,__FILE__);
-			}
-			else
-			{
-				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
-			}
+			//echo "<p align=right>search() start=$start, limit=$limit, total=$this->total_records</p>\n";
+			if ($this->total_records < $start) $start = 0;
+
+			$this->db->query($sql,__LINE__,__FILE__,$start,$limit);
 
 			$i = 0;
 			while($this->db->next_record())
