@@ -1,6 +1,17 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
+	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001">
+		<hbox data="" rows="1" cols="1" class="custom_hide">
+			<description value="Start"/>
+			<date id="startdate" needed="1"/>
+			<description value="End"/>
+			<date id="enddate" statustext="Leave it empty for a full week"/>
+		</hbox>
+		<styles>
+			.custom_hide { visibility: hidden; }
+		</styles>
+	</template>
 	<template id="timesheet.index.rows" template="" lang="" group="0" version="0.1.001">
 		<grid width="100%">
 			<columns>
@@ -56,7 +67,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.index" template="" lang="" group="0" version="0.1.001">
+	<template id="timesheet.index" template="" lang="" group="0" version="1.2.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -64,6 +75,9 @@
 			<rows>
 				<row disabled="!@msg">
 					<description span="all" class="redItalic" no_lang="1" id="msg" align="center"/>
+				</row>
+				<row disabled="1">
+					<template align="right" id="timesheet.index.dates"/>
 				</row>
 				<row>
 					<nextmatch id="nm" options="timesheet.index.rows"/>

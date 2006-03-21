@@ -162,54 +162,67 @@ class botimesheet extends so_sql
 		return $data && !!($rights & $required);
 	}
 	
-	function date_filter($name)
+	function date_filter($name,$start=0,$end=0)
 	{
-		if (!isset($this->date_filters[$name]))
+		if ($name == 'custom' && $start)
 		{
-			return false;
-		}
-		$year  = (int) date('Y',$this->today);
-		$month = (int) date('m',$this->today);
-		$day   = (int) date('d',$this->today);
-
-		list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) = $this->date_filters[$name];
-		
-		if ($syear || $eyear)
-		{
-			$start = mktime(0,0,0,1,1,$syear+$year);
-			$end   = mktime(0,0,0,1,1,$eyear+$year);
-		}
-		elseif ($smonth || $emonth)
-		{
-			$start = mktime(0,0,0,$smonth+$month,1,$year);
-			$end   = mktime(0,0,0,$emonth+$month,1,$year);
-		}
-		elseif ($sday || $eday)
-		{
-			$start = mktime(0,0,0,$month,$sday+$day,$year);
-			$end   = mktime(0,0,0,$month,$eday+$day,$year);
-		}
-		elseif ($sweek || $eweek)
-		{
-			$wday = (int) date('w',$this->today); // 0=sun, ..., 6=sat
-			switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
+			if ($end)
 			{
-				case 'Sunday':
-					$weekstart = $this->today - $wday * 24*60*60;
-					break;
-				case 'Saturday':
-					$weekstart = $this->today - (6-$wday) * 24*60*60;
-					break;
-				case 'Moday':
-				default:
-					$weekstart = $this->today - ($wday ? $wday-1 : 6) * 24*60*60;
-					break;
+				$end += 24*60*60;
 			}
-			$start = $weekstart + $sweek*7*24*60*60;
-			$end   = $weekstart + $eweek*7*24*60*60;
-			// todo	
+			else
+			{
+				$end = $start + 8*24*60*60;
+			}
 		}
-		//echo "<p align='right'>date_filter($name) today=".date('l, Y-m-d H:i',$this->today)." ==> ".date('l, Y-m-d H:i:s',$start)." <= date < ".date('l, Y-m-d H:i:s',$end)."</p>\n"; 
+		else
+		{
+			if (!isset($this->date_filters[$name]))
+			{
+				return '1=1';
+			}
+			$year  = (int) date('Y',$this->today);
+			$month = (int) date('m',$this->today);
+			$day   = (int) date('d',$this->today);
+	
+			list($syear,$smonth,$sday,$sweek,$eyear,$emonth,$eday,$eweek) = $this->date_filters[$name];
+			
+			if ($syear || $eyear)
+			{
+				$start = mktime(0,0,0,1,1,$syear+$year);
+				$end   = mktime(0,0,0,1,1,$eyear+$year);
+			}
+			elseif ($smonth || $emonth)
+			{
+				$start = mktime(0,0,0,$smonth+$month,1,$year);
+				$end   = mktime(0,0,0,$emonth+$month,1,$year);
+			}
+			elseif ($sday || $eday)
+			{
+				$start = mktime(0,0,0,$month,$sday+$day,$year);
+				$end   = mktime(0,0,0,$month,$eday+$day,$year);
+			}
+			elseif ($sweek || $eweek)
+			{
+				$wday = (int) date('w',$this->today); // 0=sun, ..., 6=sat
+				switch($GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'])
+				{
+					case 'Sunday':
+						$weekstart = $this->today - $wday * 24*60*60;
+						break;
+					case 'Saturday':
+						$weekstart = $this->today - (6-$wday) * 24*60*60;
+						break;
+					case 'Moday':
+					default:
+						$weekstart = $this->today - ($wday ? $wday-1 : 6) * 24*60*60;
+						break;
+				}
+				$start = $weekstart + $sweek*7*24*60*60;
+				$end   = $weekstart + $eweek*7*24*60*60;
+			}
+		}
+		//echo "<p align='right'>date_filter($name,$start,$end) today=".date('l, Y-m-d H:i',$this->today)." ==> ".date('l, Y-m-d H:i:s',$start)." <= date < ".date('l, Y-m-d H:i:s',$end)."</p>\n"; 
 		// convert start + end from user to servertime
 		$start -= $this->tz_offset_s;
 		$end   -= $this->tz_offset_s;

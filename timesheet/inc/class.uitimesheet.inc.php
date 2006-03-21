@@ -270,12 +270,39 @@ class uitimesheet extends botimesheet
 			$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
 			$query['col_filter']['cat_id'] = count($cats) > 1 ? $cats : $query['cat_id'];
 		}
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet');
+		if ($query['col_filter']['ts_owner'])
+		{
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$GLOBALS['egw']->common->grab_owner_name($query['col_filter']['ts_owner']);
+		}
+		else
+		{
+			unset($query['col_filter']['ts_owner']);
+		}
 		if ($query['filter'])
 		{
-			$query['col_filter'][0] = $this->date_filter($query['filter']);
-		}
-		if (!$query['col_filter']['ts_owner']) unset($query['col_filter']['ts_owner']);
+			$query['col_filter'][0] = $this->date_filter($query['filter'],$query['startdate'],$query['enddate']);
+			
+			if ($query['filter'] == 'custom')	// show the custome dates
+			{
+				if (!is_object($GLOBALS['egw']->js))
+				{
+					$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
+				}
+				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
 
+				if ($query['startdate'])
+				{
+					$df = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+					$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . $GLOBALS['egw']->common->show_date($query['startdate']+12*60*60,$df,false).
+						' - '.$GLOBALS['egw']->common->show_date(($query['enddate'] ? $query['enddate'] : $query['startdate']+7*24*60*60)+12*60*60,$df,false);
+				}
+			}
+			else
+			{
+				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . lang($query['filter']);
+			}
+		}
 		$total = parent::get_rows($query,$rows,$readonlys);
 		
 		unset($query['col_filter'][0]);
@@ -355,12 +382,16 @@ class uitimesheet extends botimesheet
 			{
 				$date_filters[$name] = $name;
 			}
+			$date_filters['custom'] = 'custom';
+
 			$content['nm'] = array(
 				'get_rows'       =>	TIMESHEET_APP.'.uitimesheet.get_rows',
 				'options-filter' => $date_filters,
 				'options-filter2' => array('No details','Details'),
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
+				'header_right'   => 'timesheet.index.dates',
+				'filter_onchange' => "set_style_by_class('*','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 			);
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
