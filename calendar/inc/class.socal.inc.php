@@ -1074,6 +1074,19 @@ ORDER BY cal_user_type, cal_usre_id
 				'cal_user_type' => $user_type,
 				'cal_user_id'   => $user_id,
 			),__LINE__,__FILE__);
+			
+			// delete calendar entries without participants (can happen if the deleted user is the only participants, but not the owner)
+			$ids = array();
+			$this->db->select($this->cal_table,"DISTINCT $this->cal_table.cal_id",'cal_user_id IS NULL',__LINE__,__FILE__,
+				False,'',False,0,"LEFT JOIN $this->user_table USING (cal_id)");
+			while(($row = $this->db->row(true)))
+			{
+				$ids[] = $row['cal_id'];
+			}
+			foreach($ids as $cal_id)
+			{
+				$this->delete($cal_id);
+			}
 		}
 		else
 		{
