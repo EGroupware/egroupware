@@ -897,7 +897,7 @@
 				case 'text':		// size: [length][,maxLength[,preg]]
 					if ($readonly)
 					{
-						$html .= $this->html->bold($this->html->htmlspecialchars($value));
+						$html .= strlen($value) ? $this->html->bold($this->html->htmlspecialchars($value)) : '';
 					}
 					else
 					{
