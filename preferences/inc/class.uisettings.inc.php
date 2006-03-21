@@ -343,7 +343,9 @@
 			{
 				return True;
 			}
-			$this->create_input_box($label_name,$preference_name.'][pw',$help,'',$size,$max_size,'password',$run_lang);
+			$this->create_input_box($label_name,$preference_name.
+				($GLOBALS['type'] != 'user' ? '' : '][pw'),	// we need to show the default or forced pw, otherwise we are never able to reset it
+				$help,'',$size,$max_size,'password',$run_lang);
 		}
 
 		function create_input_box($label,$name,$help='',$default='',$size='',$max_size='',$type='',$run_lang=True)
