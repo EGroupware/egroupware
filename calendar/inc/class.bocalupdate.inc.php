@@ -798,9 +798,9 @@ class bocalupdate extends bocal
 			$details[$key] = $val['data'];
 		}
 		$details['participants'] = $details['participants'] ? implode("\n",$details['participants']) : '';
-		$details['groups'] = $details['groups'] ? implode("\n",$details['groups']) : '';
 
-		$details['link'] = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.view&cal_id='.$event['id'];
+		$event_arr['link']['field'] = lang('URL');
+		$event_arr['link']['data'] = $details['link'] = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.view&cal_id='.$event['id'].'&no_popup=1';
 		// if url is only a path, try guessing the rest ;-)
 		if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
 		{
@@ -892,23 +892,6 @@ class bocalupdate extends bocal
 			'field'	=> lang('Access'),
 			'data'	=> $event['public'] ? lang('Public') : lang('Private')
 		);
-
-		if(is_array($event['groups']))
-		{
-			$cal_grps = '';
-			foreach($event['groups'] as $group)
-			{
-				if(($name = $GLOBALS['egw']->accounts->id2name($group)))
-				{
-					$cal_grps[] = $name;
-				}
-			}
-
-			$var['groups'] = Array(
-				'field'	=> lang('Groups'),
-				'data'	=> $cal_grps,
-			);
-		}
 
 		if (isset($event['participants']) && is_array($event['participants']))
 		{
