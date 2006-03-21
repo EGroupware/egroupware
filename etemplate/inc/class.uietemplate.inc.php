@@ -853,6 +853,10 @@
 				}
 				if ($cell['onchange'] && $cell['type'] != 'button') // values != '1' can only set by a program (not in the editor so fa
 				{
+					if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
+					{
+						$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+					}
 					$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
 				}
 			}

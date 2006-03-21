@@ -16,7 +16,7 @@
 					</menulist>
 				</row>
 				<row>
-					<textbox multiline="true" rows="22" cols="70" id="styles"/>
+					<textbox multiline="true" rows="20" cols="65" id="styles"/>
 				</row>
 				<row>
 					<hbox>

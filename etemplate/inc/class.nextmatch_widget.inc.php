@@ -38,8 +38,10 @@
 	 * 	'col_filter'     =>		// IO array of column-name value pairs (optional for the filterheaders)
 	 * 	'filter'         =>		// IO filter, if not 'no_filter' => True
 	 * 	'filter_no_lang' => True// I  set no_lang for filter (=dont translate the options)
+	 *	'filter_onchange'=> 'this.form.submit();' // I onChange action for filter, default: this.form.submit();
 	 * 	'filter2'        =>		// IO filter2, if not 'no_filter2' => True
 	 * 	'filter2_no_lang'=> True// I  set no_lang for filter2 (=dont translate the options)
+	 *	'filter2_onchange'=> 'this.form.submit();' // I onChange action for filter2, default: this.form.submit();
 	 * 	'rows'           =>		//  O content set by callback
 	 * 	'total'          =>		//  O the total number of entries
 	 * 	'sel_options'    =>		//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options
@@ -165,6 +167,9 @@
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
 					return True;
 			}
+			if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
+			if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
+
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			if ($app && $class)
 			{
