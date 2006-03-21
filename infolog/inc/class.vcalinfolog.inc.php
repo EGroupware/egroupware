@@ -91,12 +91,44 @@
 		
 		function importVTODO(&$_vcalData, $_taskID=-1)
 		{
+			if(!$taskData = $this->vtodotoegw($_vcalData)) {
+				return false;
+			}
+			
+			if($_taskID>0)
+				$taskData['info_id'] = $_taskID;
+						
+			#_debug_array($taskData);exit;
+			return $this->write($taskData);
+		}
+		
+		function searchVTODO($_vcalData) {
+			if(!$egwData = $this->vtodotoegw($_calData)) {
+				return false;
+			}
+
+			$filter = array('col_filter' => $egwData);
+			if($foundItems = $this->search($filter)) {
+				if(count($foundItems) > 0) {
+					#error_log(__LINE__);
+					#error_log(print_r($foundItems, true));
+					$itemIDs = array_keys($foundItems);
+					#error_log($itemIDs[0]);
+					return $itemIDs[0];
+				}
+			}
+			
+			return false;
+		}
+		function vtodotoegw($_vcalData) {
 			$vcal = &new Horde_iCalendar;
 			if(!$vcal->parsevCalendar($_vcalData))
 			{
 				return FALSE;
 			}
+
 			$components = $vcal->getComponents();
+
 			if(count($components) > 0)
 			{
 				$component = $components[0];
@@ -148,10 +180,9 @@
 								break;
 						}
 					}
-					$taskData = $GLOBALS['egw']->translation->convert($taskData,'UTF-8');
+					$taskData = $GLOBALS['egw']->translation->convert($taskData, 'UTF-8');
 
-					#_debug_array($eventData);exit;
-					return $this->write($taskData);
+					return $taskData;
 				}
 			}
 			return FALSE;
