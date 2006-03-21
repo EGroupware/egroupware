@@ -76,11 +76,11 @@
 			$sysCharSet	= $GLOBALS['egw']->translation->charset();
 			$sifData	= base64_decode($_sifData);
 
-			$tmpfname = tempnam('/tmp/sync/contents','sift_');
+			#$tmpfname = tempnam('/tmp/sync/contents','sift_');
 
-			$handle = fopen($tmpfname, "w");
-			fwrite($handle, $sifData);
-			fclose($handle);
+			#$handle = fopen($tmpfname, "w");
+			#fwrite($handle, $sifData);
+			#fclose($handle);
 
 			$this->_currentSIFMapping = $this->_sifTaskMapping;
 			$this->xml_parser = xml_parser_create('UTF-8');
@@ -175,10 +175,7 @@
 			$filter = array('col_filter' => $egwData);
 			if($foundItems = $this->search($filter)) {
 				if(count($foundItems) > 0) {
-					#error_log(__LINE__);
-					#error_log(print_r($foundItems, true));
 					$itemIDs = array_keys($foundItems);
-					#error_log($itemIDs[0]);
 					return $itemIDs[0];
 				}
 			}
@@ -325,9 +322,6 @@
 			//_debug_array($taskData);
 			
 			$taskGUID = $GLOBALS['phpgw']->common->generate_uid('infolog_task',$_taskID);
-			#print "<br>";
-			#print $GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'add');
-			#print "<br>";
 			
 			$vcal = &new Horde_iCalendar;
 			$vcal->setAttribute('VERSION',$_version);
