@@ -108,7 +108,7 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
             || isset($this->_locURI) || isset($this->targetURI)) {
             $output->startElement($state->getURI(), 'Item', $attrs);
             // send only when sending adds
-            if ($this->_locURI != null && strtolower($command) == 'add') {
+            if ($this->_locURI != null && (strtolower($command) == 'add')) {
                 $output->startElement($state->getURI(), 'Source', $attrs);
                 $output->startElement($state->getURI(), 'LocURI', $attrs);
                 $chars = substr($this->_locURI,0,39);

@@ -44,6 +44,10 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
 
     var $_itemDataAnchorLast;
 
+    var $_itemTargetLocURI;
+
+    var $_itemSourceLocURI;
+
     function Horde_SyncML_Command_Status($response = null, $cmd = null)
     {
         if ($response != null) {
@@ -85,18 +89,18 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
             $output->characters($chars);
             $output->endElement($state->getURI(), 'Cmd');
 
-            if (isset($this->_sourceRef)) {
-                $output->startElement($state->getURI(), 'SourceRef', $attrs);
-                $chars = $this->_sourceRef;
-                $output->characters($chars);
-                $output->endElement($state->getURI(), 'SourceRef');
-            }
-
             if (isset($this->_targetRef)) {
                 $output->startElement($state->getURI(), 'TargetRef', $attrs);
                 $chars = $this->_targetRef;
                 $output->characters($chars);
                 $output->endElement($state->getURI(), 'TargetRef');
+            }
+
+            if (isset($this->_sourceRef)) {
+                $output->startElement($state->getURI(), 'SourceRef', $attrs);
+                $chars = $this->_sourceRef;
+                $output->characters($chars);
+                $output->endElement($state->getURI(), 'SourceRef');
             }
 
             // If we are responding to the SyncHdr and we are not
@@ -170,9 +174,61 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
                 $output->endElement($state->getURI(), 'Item');
             }
 
+            if (isset($this->_itemTargetLocURI) && isset($this->_itemSourceLocURI)) {
+                $output->startElement($state->getURI(), 'Item', $attrs);
+
+                $output->startElement($state->getURI(), 'Target', $attrs);
+                $output->startElement($state->getURI(), 'LocURI', $attrs);
+                $output->characters($this->_itemTargetLocURI);
+                $output->endElement($state->getURI(), 'LocURI');
+                $output->endElement($state->getURI(), 'Target');
+
+                $output->startElement($state->getURI(), 'Source', $attrs);
+                $output->startElement($state->getURI(), 'LocURI', $attrs);
+                $output->characters($this->_itemSourceLocURI);
+                $output->endElement($state->getURI(), 'LocURI');
+                $output->endElement($state->getURI(), 'Source');
+
+                $output->endElement($state->getURI(), 'Item');
+            }
+
             $output->endElement($state->getURI(), 'Status');
 
             $currentCmdID++;
+            
+            // moredata pending request them
+/*            if($this->_response == RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED) {
+		$output->startElement($state->getURI(), 'Alert', $attrs);
+
+		$output->startElement($state->getURI(), 'CmdID', $attrs);
+		$chars = $currentCmdID;
+		$output->characters($chars);
+		$output->endElement($state->getURI(), 'CmdID');
+
+		$output->startElement($state->getURI(), 'Data', $attrs);
+		$output->characters(ALERT_NEXT_MESSAGE);
+		$output->endElement($state->getURI(), 'Data');
+		
+		if (isset($this->_itemTargetLocURI) && isset($this->_itemSourceLocURI)) {
+			$output->startElement($state->getURI(), 'Item', $attrs);
+			
+			$output->startElement($state->getURI(), 'Target', $attrs);
+			$output->startElement($state->getURI(), 'LocURI', $attrs);
+			$output->characters($this->_itemTargetLocURI);
+			$output->endElement($state->getURI(), 'LocURI');
+			$output->endElement($state->getURI(), 'Target');
+			
+			$output->startElement($state->getURI(), 'Source', $attrs);
+			$output->startElement($state->getURI(), 'LocURI', $attrs);
+			$output->characters($this->_itemSourceLocURI);
+			$output->endElement($state->getURI(), 'LocURI');
+			$output->endElement($state->getURI(), 'Source');
+		}
+
+		$output->endElement($state->getURI(), 'Alert');		
+
+		$currentCmdID++;
+            } */
         }
 
         return $currentCmdID;
@@ -248,4 +304,23 @@ class Horde_SyncML_Command_Status extends Horde_SyncML_Command {
         $this->_itemDataAnchorLast = $itemDataAnchorLast;
     }
 
+    /**
+     * Setter for property itemSourceLocURI.
+     *
+     * @param string $itemSourceLocURI  New value of property itemSourceLocURI.
+     */
+    function setItemSourceLocURI($itemSourceLocURI)
+    {
+        $this->_itemSourceLocURI = $itemSourceLocURI;
+    }
+
+    /**
+     * Setter for property itemTargetLocURI.
+     *
+     * @param string $itemTargetLocURI  New value of property itemTargetLocURI.
+     */
+    function setItemTargetLocURI($itemTargetLocURI)
+    {
+        $this->_itemTargetLocURI = $itemTargetLocURI;
+    }
 }

@@ -23,13 +23,13 @@ class EGW_SyncML_State extends Horde_SyncML_State
     		'map_guid'	=> $guid,
     	);
 
-    	Horde::logMessage('SyncML: getChangeTS for ' . $mapID .' / '. $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+    	#Horde::logMessage('SyncML: getChangeTS for ' . $mapID .' / '. $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	
     	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__);
     	
     	if($db->next_record())
     	{
-    		Horde::logMessage('SyncML: getChangeTS changets is ' . $db->from_timestamp($db->f('map_timestamp')), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+    		#Horde::logMessage('SyncML: getChangeTS changets is ' . $db->from_timestamp($db->f('map_timestamp')), __FILE__, __LINE__, PEAR_LOG_DEBUG);
     		return $db->from_timestamp($db->f('map_timestamp'));
     	}
     	
@@ -103,7 +103,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     {
     	$mapID = $this->_locName . $this->_sourceURI . $type;
     	
-    	Horde::logMessage('SyncML: search GlobalUID for  ' . $mapID .' / '.$locid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+    	#Horde::logMessage('SyncML: search GlobalUID for  ' . $mapID .' / '.$locid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	
     	$db = clone($GLOBALS['egw']->db);
     	
@@ -145,11 +145,12 @@ class EGW_SyncML_State extends Horde_SyncML_State
     		'map_id'	=> $mapID,
     		'map_guid'	=> $guid
     	);
-    	
+    	Horde::logMessage('SyncML: search LocID for  ' . $mapID .' / '.$guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__);
     	
     	if($db->next_record())
     	{
+    		Horde::logMessage('SyncML: found LocID: '.$db->f('map_locuid'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
     		return $db->f('map_locuid');
     	}
     	
@@ -180,10 +181,10 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	
     	$db->select('egw_syncmlsummary', $cols, $where, __LINE__, __FILE__);
     	
-	Horde::logMessage("SyncML: get SYNCSummary for $deviceID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	#Horde::logMessage("SyncML: get SYNCSummary for $deviceID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	if($db->next_record())
     	{
-		Horde::logMessage("SyncML: get SYNCSummary for $deviceID serverts: ".$db->f('sync_serverts')."  clients: ".$db->f('sync_clientts'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		#Horde::logMessage("SyncML: get SYNCSummary for $deviceID serverts: ".$db->f('sync_serverts')."  clients: ".$db->f('sync_clientts'), __FILE__, __LINE__, PEAR_LOG_DEBUG);
     		$retData = array
     		(
     			'ClientAnchor'	=> $db->f('sync_clientts'),
@@ -211,12 +212,12 @@ class EGW_SyncML_State extends Horde_SyncML_State
                 	$this->_locName .= '@'.$GLOBALS['phpgw_info']['server']['default_domain'];
                 }
 
-		Horde::logMessage('SyncML: Authenticate ' . $this->_locName . ' - ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		#Horde::logMessage('SyncML: Authenticate ' . $this->_locName . ' - ' . $this->_password, __FILE__, __LINE__, PEAR_LOG_DEBUG);
                 
 		if($GLOBALS['sessionid'] = $GLOBALS['egw']->session->create($this->_locName,$this->_password,'text','u'))
 		{
 			$this->_isAuthorized = true;
-			Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			#Horde::logMessage('SyncML_EGW: Authentication of ' . $this->_locName . '/' . $GLOBALS['sessionid'] . ' succeded' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		}
 		else
 		{
@@ -264,7 +265,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	
     	$guid = $db->f('map_guid');
 
-        Horde::logMessage("SyncML:  state->removeUID(type=$type,locid=$locid) : removing guid:$guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+        #Horde::logMessage("SyncML:  state->removeUID(type=$type,locid=$locid) : removing guid:$guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
         
     	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
     	
@@ -295,7 +296,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
     		$ts = time();
     	}
     	
-	Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ".count($guidParts), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ".count($guidParts), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
     	$db = clone($GLOBALS['egw']->db);
     	
@@ -312,9 +313,10 @@ class EGW_SyncML_State extends Horde_SyncML_State
     		'map_expired'	=> 0,
     	);
 
+    	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
     	$db->insert('egw_contentmap', $data, $where, __LINE__, __FILE__);
 
-	Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts $mapID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts $mapID", __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	
     }
 

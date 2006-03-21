@@ -85,158 +85,146 @@ class Horde_SyncML_Sync {
         return $currentCmdID;
     }
 
-    /**
-     * Here's where the actual processing of a client-sent Sync
-     * Command takes place. Entries are added, deleted or replaced
-     * from the server database by using Horde API (Registry) calls.
-     */
-    function runSyncCommand(&$command)
-    {
-        Horde::logMessage('SyncML: content type is ' . $command->getContentType() .' moreData '. $command->_moreData, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-        global $registry;
+	/**
+	* Here's where the actual processing of a client-sent Sync
+	* Command takes place. Entries are added, deleted or replaced
+	* from the server database by using Horde API (Registry) calls.
+	*/
+	function runSyncCommand(&$command) {
+		#Horde::logMessage('SyncML: content type is ' . $command->getContentType() .' moreData '. $command->_moreData, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		global $registry;
+		
+		$history = $GLOBALS['egw']->contenthistory;
+		
+		$state = &$_SESSION['SyncML.state'];
+		
+		if(isset($state->_moreData['luid'])) {
+			if(($command->_luid == $state->_moreData['luid'])) {
+                                Horde::logMessage('SyncML: got next moreData chunk '.$command->getContent(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				$lastChunks = implode('',$state->_moreData['chunks']);
+				$command->_content = $lastChunks.$command->_content;
+				$stringlen1 =  strlen($lastChunks);
+				$stringlen2 =  strlen($command->_content);
+				
+				if(!$command->_moreData && strlen($command->_content) != $state->_moreData['contentSize']) {
+					$command->_status = RESPONSE_SIZE_MISMATCH;
+					$state->_moreData = array();
+					
+					return;
+				} elseif(!$command->_moreData && strlen($command->_content) == $state->_moreData['contentSize']) {
+					$state->_moreData = array();
+					Horde::logMessage('SyncML: chunk ended successful type is ' . $command->getContentType() .' content is '. $command->getContent(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				}
+			} else {
+				// alert 223 needed too
+				#$command->_status = ALERT_NO_END_OF_DATA;
+				
+				$state->_moreData = array();
+				
+				return;
+			}
+		}
+		
+		// don't add/replace the data currently, they are not yet complete
+		if($command->_moreData == TRUE) {
+			$state->_moreData['chunks'][]	= $command->_content;
+			$state->_moreData['luid']	= $command->_luid;
+			
+			// gets only set with the first chunk of data
+			if(isset($command->_contentSize))
+				$state->_moreData['contentSize'] = $command->_contentSize;
+				
+			$command->_status = RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED;
+                        Horde::logMessage('SyncML: added moreData chunk '.$command->getContent(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			
+			return;
+		}
+		
+		$hordeType = $type = $this->_targetLocURI;
+		// remove the './' from the beginning
+		$hordeType = str_replace('./','',$hordeType);
+		if(!$contentType = $command->getContentType()) {
+			$contentType = $state->getPreferedContentType($type);
+		}
+		
+		if ($this->_targetLocURI == 'calendar' && strpos($command->getContent(), 'BEGIN:VTODO') !== false) {
+			$hordeType = 'tasks';
+		}
 
-        #require_once 'Horde/History.php';
-        #$history = &Horde_History::singleton();
-        $history = $GLOBALS['phpgw']->contenthistory;
-
-        $state = &$_SESSION['SyncML.state'];
-        
-        if(isset($state->_moreData['luid']))
-        {
-        	if(($command->_luid == $state->_moreData['luid']))
-        	{
-        		$lastChunks = implode('',$state->_moreData['chunks']);
-        		$command->_content = $lastChunks.$command->_content;
-		        $stringlen1 =  strlen($lastChunks);
-		        $stringlen2 =  strlen($command->_content);
-        		
-        		if(!$command->_moreData && 
-        			strlen($command->_content) 
-        			 != $state->_moreData['contentSize']
-        		)
-        		{
-	        		$command->_status = RESPONSE_SIZE_MISMATCH;
-		        	$state->_moreData = array();
-	        		
-	        		return;
-        		}
-        		elseif(!$command->_moreData && 
-        			strlen($command->_content) 
-        			 == $state->_moreData['contentSize']
-        		)
-        		{
-		        	$state->_moreData = array();
-	        		
-	        		return;
-        		}
-        		
-        	}
-        	else
-        	{
-        		// alert 223 needed too
-        		#$command->_status = ALERT_NO_END_OF_DATA;
-
-	        	$state->_moreData = array();
-        		
-        		return;
-        	}
-        }
-        
-        // don't add/replace the data currently, they are not yet complete
-        if($command->_moreData == TRUE)
-        {
-        	$state->_moreData['chunks'][]	= $command->_content;
-        	$state->_moreData['luid']	= $command->_luid;
-        	
-        	// gets only set with the first chunk of data
-        	if(isset($command->_contentSize))
-        		$state->_moreData['contentSize'] = $command->_contentSize;
-        	
-        	$command->_status = RESPONSE_CHUNKED_ITEM_ACCEPTED_AND_BUFFERED;
-
-        	return;
-        }
-        
-        $hordeType = $type = $this->_targetLocURI;
-        // remove the './' from the beginning
-        $hordeType = str_replace('./','',$hordeType);
-        if(!$contentType = $command->getContentType())
-        {
-        	$contentType = $state->getPreferedContentType($type);
-        }
-        if ($this->_targetLocURI == 'calendar' && strpos($command->getContent(), 'BEGIN:VTODO') !== false) {
-            $hordeType = 'tasks';
-        }
-
-        $guid = false;
-        if (is_a($command, 'Horde_SyncML_Command_Sync_Add')) {
-            $guid = $registry->call($hordeType . '/import',
-                                    array($state->convertClient2Server($command->getContent(), $contentType), $contentType));
-            if (!is_a($guid, 'PEAR_Error')) {
-                $ts = $history->getTSforAction($guid, 'add');
-                $state->setUID($type, $command->getLocURI(), $guid, $ts);
-                $state->log("Client-Add");
-                Horde::logMessage('SyncML: added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-            } else {
-                $state->log("Client-AddFailure");
-                Horde::logMessage('SyncML: Error in adding client entry:' . $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
-            }
-        } elseif (is_a($command, 'Horde_SyncML_Command_Sync_Delete')) {
-            // We can't remove the mapping entry as we need to keep
-            // the timestamp information.
-	    $guid = $state->removeUID($type, $command->getLocURI());
-            #$guid = $state->getGlobalUID($type, $command->getLocURI());
-            Horde::logMessage('SyncML: about to delete entry ' . $type .' / '. $guid . ' due to client request '.$command->getLocURI(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-            if (!is_a($guid, 'PEAR_Error') && $guid != false) {
-                $registry->call($hordeType . '/delete', array($guid));
-                #$ts = $history->getTSforAction($guid, 'delete');
-                #$state->setUID($type, $command->getLocURI(), $guid, $ts);
-                $state->log("Client-Delete");
-                Horde::logMessage('SyncML: deleted entry ' . $guid . ' due to client request', __FILE__, __LINE__, PEAR_LOG_DEBUG);
-            } else {
-                $state->log("Client-DeleteFailure");
-                Horde::logMessage('SyncML: Failure deleting client entry, maybe gone already on server. msg:'. $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
-            }
-        } elseif (is_a($command, 'Horde_SyncML_Command_Sync_Replace')) {
-            $guid = $state->getGlobalUID($type, $command->getLocURI());
-            $ok = false;
-            if ($guid) {
-                Horde::logMessage('SyncML: locuri'. $command->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_ERR);
-                // Entry exists: replace current one.
-                $ok = $registry->call($hordeType . '/replace',
-                                      array($guid, $state->convertClient2Server($command->getContent(), $contentType), $contentType));
-                if (!is_a($ok, 'PEAR_Error')) {
-                    $ts = $history->getTSforAction($guid, 'modify');
-                    $state->setUID($type, $command->getLocURI(), $guid, $ts);
-                    Horde::logMessage('SyncML: replaced entry due to client request guid: '.$guid.' ts: '.$ts, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-                    $state->log("Client-Replace");
-                    $ok = true;
-                } else {
-                    // Entry may have been deleted; try adding it.
-                    $ok = false;
-                }
-            }
-
-            if (!$ok) {
-                // Entry does not exist in map or database: add a new
-                // one.
-                Horde::logMessage('SyncML: try to add contentype ' . $contentType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-                $guid = $registry->call($hordeType . '/import',
-                                        array($state->convertClient2Server($command->getContent(), $contentType), $contentType));
-                if (!is_a($guid, 'PEAR_Error')) {
-                    $ts = $history->getTSforAction($guid, 'add');
-                    $state->setUID($type, $command->getLocURI(), $guid, $ts);
-                    $state->log("Client-AddReplace");
-                    Horde::logMessage('SyncML: r/ added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-                } else {
-                    Horde::logMessage('SyncML: Error in replacing/add client entry:' . $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
-                    $state->log("Client-AddFailure");
-                }
-            }
-        }
-
-        return $guid;
-    }
-
+		$syncElementItems = $command->getSyncElementItems();
+		
+		foreach($syncElementItems as $syncItem) {
+		
+			$guid = false;
+		
+			if (is_a($command, 'Horde_SyncML_Command_Sync_Add')) {
+				$guid = $registry->call($hordeType . '/import',
+					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+				
+				if (!is_a($guid, 'PEAR_Error')) {
+					$ts = $history->getTSforAction($guid, 'add');
+					$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+					$state->log("Client-Add");
+					Horde::logMessage('SyncML: added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				} else {
+					$state->log("Client-AddFailure");
+					Horde::logMessage('SyncML: Error in adding client entry:' . $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
+				}
+			} elseif (is_a($command, 'Horde_SyncML_Command_Sync_Delete')) {
+				// We can't remove the mapping entry as we need to keep
+				// the timestamp information.
+				$guid = $state->removeUID($type, $syncItem->getLocURI());
+				#$guid = $state->getGlobalUID($type, $syncItem->getLocURI());
+				Horde::logMessage('SyncML: about to delete entry ' . $type .' / '. $guid . ' due to client request '.$syncItem->getLocURI(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			
+				if (!is_a($guid, 'PEAR_Error') && $guid != false) {
+					$registry->call($hordeType . '/delete', array($guid));
+					#$ts = $history->getTSforAction($guid, 'delete');
+					#$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+					$state->log("Client-Delete");
+					Horde::logMessage('SyncML: deleted entry ' . $guid . ' due to client request', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				} else {
+					$state->log("Client-DeleteFailure");
+					Horde::logMessage('SyncML: Failure deleting client entry, maybe gone already on server. msg:'. $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
+				}
+			} elseif (is_a($command, 'Horde_SyncML_Command_Sync_Replace')) {
+				$guid = $state->getGlobalUID($type, $syncItem->getLocURI());
+				$ok = false;
+				if ($guid) {
+					Horde::logMessage('SyncML: locuri'. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_ERR);
+					// Entry exists: replace current one.
+					$ok = $registry->call($hordeType . '/replace',
+						array($guid, $state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+					if (!is_a($ok, 'PEAR_Error')) {
+						$ts = $history->getTSforAction($guid, 'modify');
+						$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+						Horde::logMessage('SyncML: replaced entry due to client request guid: ' .$guid. ' ts: ' .$ts, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+						$state->log("Client-Replace");
+						$ok = true;
+					} else {
+						// Entry may have been deleted; try adding it.
+						$ok = false;
+					}
+				}
+				
+				if (!$ok) {
+					// Entry does not exist in map or database: add a new one.
+					Horde::logMessage('SyncML: try to add contentype ' . $contentType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					$guid = $registry->call($hordeType . '/import',
+						array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+					if (!is_a($guid, 'PEAR_Error')) {
+						$ts = $history->getTSforAction($guid, 'add');
+						$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+						$state->log("Client-AddReplace");
+						Horde::logMessage('SyncML: r/ added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					} else {
+						Horde::logMessage('SyncML: Error in replacing/add client entry:' . $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
+						$state->log("Client-AddFailure");
+					}
+				}
+			}
+		}
+		
+		return $guid;
+	}
 }

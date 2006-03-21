@@ -16,17 +16,18 @@ include_once 'Horde/SyncML/Command/Sync/SyncElement.php';
  * @package Horde_SyncML
  */
 class Horde_SyncML_Command_Sync_Replace extends Horde_SyncML_Command_Sync_SyncElement {
-
-    function output($currentCmdID, &$output)
-    {
-        $status = &new Horde_SyncML_Command_Status($this->_status, 'Replace');
-        $status->setCmdRef($this->_cmdID);
-
-        if (isset($this->_luid)) {
-            $status->setSourceRef($this->_luid);
-        }
-
-        return $status->output($currentCmdID, $output);
-    }
+	function output($currentCmdID, &$output) {
+		$status = &new Horde_SyncML_Command_Status($this->_status, 'Replace');
+		$status->setCmdRef($this->_cmdID);
+		
+		if (isset($this->_luid)) {
+			$status->setSourceRef($this->_luid);
+		}
+		
+		#$status->setItemSourceLocURI($this->_sourceLocURI);
+		#$status->setItemTargetLocURI(isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI);
+		
+		return $status->output($currentCmdID, $output);
+	}
 
 }

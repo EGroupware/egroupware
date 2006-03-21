@@ -126,8 +126,10 @@ define('NAME_SPACE_URI_DEVINF_1_1', 'syncml:devinf1.1');
 
 define('CLIENT_SYNC_STARTED',		1);
 define('CLIENT_SYNC_FINNISHED',		2);
-define('SERVER_SYNC_DATA_PENDING',	3);
-define('SERVER_SYNC_FINNISHED',		4);
+define('CLIENT_SYNC_ACKNOWLEDGED',	3);
+define('SERVER_SYNC_DATA_PENDING',	4);
+define('SERVER_SYNC_FINNISHED',		5);
+define('SERVER_SYNC_ACKNOWLEDGED',	6);
 
 define('MAX_DATA',			19);
 define('MAX_ENTRIES',			10);
@@ -148,52 +150,55 @@ define('MAX_ENTRIES',			10);
  * @package Horde_SyncML
  */
 class Horde_SyncML_State {
-
-    var $_sessionID;
-
-    var $_verProto;
-
-    var $_msgID;
-
-    var $_targetURI;
-
-    var $_sourceURI;
-
-    var $_version;
-
-    var $_locName;
-
-    var $_password;
-
-    var $_isAuthorized;
-
-    var $_uri;
-
-    var $_uriMeta;
-
-    var $_syncs = array();
-
-    var $_clientAnchorNext = array(); // written to db after successful sync
-
-    var $_serverAnchorLast = array();
-
-    var $_serverAnchorNext = array(); // written to db after successful sync
-
-    var $_clientDeviceInfo = array();
-    
-    // array list of changed items, which need to be synced to the client
-    var $_changedItems;
-    
-    // array list of deleted items, which need to be synced to the client
-    var $_deletedItems;
-    
-    // array list of added items, which need to be synced to the client
-    var $_addedItems;
-    
-    // bool flag that we need to more data
-    var $_syncStatus;
-
-    var $_log = array();
+	
+	var $_sessionID;
+	
+	var $_verProto;
+	
+	var $_msgID;
+	
+	var $_targetURI;
+	
+	var $_sourceURI;
+	
+	var $_version;
+	
+	var $_locName;
+	
+	var $_password;
+	
+	var $_isAuthorized;
+	
+	var $_uri;
+	
+	var $_uriMeta;
+	
+	var $_syncs = array();
+	
+	var $_clientAnchorNext = array(); // written to db after successful sync
+	
+	var $_serverAnchorLast = array();
+	
+	var $_serverAnchorNext = array(); // written to db after successful sync
+	
+	var $_clientDeviceInfo = array();
+	
+	// array list of changed items, which need to be synced to the client
+	var $_changedItems;
+	
+	// array list of deleted items, which need to be synced to the client
+	var $_deletedItems;
+	
+	// array list of added items, which need to be synced to the client
+	var $_addedItems;
+	
+	// bool flag that we need to more data
+	var $_syncStatus;
+	
+	var $_log = array();
+	
+	// stores if we received Alert 222 already
+	var $_receivedAlert222 = false;
 
     /**
      * Creates a new instance of Horde_SyncML_State.
@@ -465,11 +470,11 @@ class Horde_SyncML_State {
          * by a <SyncML xmlns="syncml:SYNCML1.1"> element. They require
          * just <SyncML>. So don't use an ns for non wbxml devices.
          */
-#        if ($this->isWBXML()) {
+        if ($this->isWBXML()) {
             return $this->_uri;
-#        } else {
-#            return '';
-#        }
+        } else {
+            return '';
+        }
     }
     function getURIMeta()
     {
@@ -625,15 +630,42 @@ class Horde_SyncML_State {
      */
     function getPreferedContentType($type)
     {
-        if ($type == 'contacts') {
-            return 'text/x-vcard';
-        } elseif ($type == 'notes') {
-            return 'text/x-vnote';
-        } elseif ($type == 'tasks') {
-            return 'text/x-vcalendar';
-        } elseif ($type == 'calendar') {
-            return 'text/x-vcalendar';
-        }
+#        if ($type == 'contacts') {
+#            return 'text/x-vcard';
+#        } elseif ($type == 'notes') {
+#            return 'text/x-vnote';
+#        } elseif ($type == 'tasks') {
+#            return 'text/x-vcalendar';
+#        } elseif ($type == 'calendar') {
+#            return 'text/x-vcalendar';
+#        }
+        switch($type) {
+        	case 'contacts':
+        		return 'text/x-vcard';
+        		break;
+        		
+        	case 'sifcontacts':
+        	case './sifcontacts':
+        		return 'text/x-s4j-sifc';
+        		break;
+        		
+        	case 'siftasks':
+        	case './siftasks':
+        		return 'text/x-s4j-sift';
+        		break;
+        		
+		case 'notes':
+			return 'text/x-vnote';
+			break;
+			
+		case 'tasks':
+			return 'text/x-vcalendar';
+			break;
+			
+		case 'calendar':
+			return 'text/x-vcalendar';
+			break;
+	}
     }
 
     /**
@@ -888,5 +920,13 @@ class Horde_SyncML_State {
         var_dump($obj);
         exit;
     }
+
+	function getAlert222Received() {
+		return $this->_receivedAlert222;
+	}
+
+	function setAlert222Received($_status) {
+		$this->_receivedAlert222 = (bool)$_status;
+	}
 
 }

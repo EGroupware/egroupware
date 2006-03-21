@@ -91,6 +91,16 @@ $this->applications['egwcontactssync'] = array(
     'menu_parent' => 'organizing'
 );
 
+$this->applications['egwsifcontactssync'] = array(
+    'fileroot' => EGW_SERVER_ROOT.'/syncml/sifcontacts',
+    'webroot' => $this->applications['horde']['webroot'] . '/mnemo',
+    'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
+    'name' => _("SIF Contacts"),
+    'status' => 'active',
+    'provides' => 'sifcontacts',
+    'menu_parent' => 'organizing'
+);
+
 $this->applications['egwcalendarsync'] = array(
     'fileroot' => EGW_SERVER_ROOT.'/syncml/calendar',
     'webroot' => $this->applications['horde']['webroot'] . '/mnemo',
@@ -108,6 +118,16 @@ $this->applications['egwtaskssync'] = array(
     'name' => _("Tasks"),
     'status' => 'active',
     'provides' => 'tasks',
+    'menu_parent' => 'organizing'
+);
+
+$this->applications['egwsiftaskssync'] = array(
+    'fileroot' => EGW_SERVER_ROOT.'/syncml/siftasks',
+    'webroot' => $this->applications['horde']['webroot'] . '/mnemo',
+    'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
+    'name' => _("SIFTasks"),
+    'status' => 'active',
+    'provides' => 'siftasks',
     'menu_parent' => 'organizing'
 );
 

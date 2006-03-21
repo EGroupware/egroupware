@@ -22,46 +22,48 @@ include_once 'Horde/SyncML/Sync/OneWayFromServerSync.php';
  */
 class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
 
-    var $_isInSource;
-    var $_currentSyncElement;
-    var $_syncElements = array();
+	var $_isInSource;
+	var $_currentSyncElement;
+	var $_syncElements = array();
+	
+	function output($currentCmdID, &$output) {
+	
+		$state = &$_SESSION['SyncML.state'];
+		
+		$attrs = array();
+		
+		Horde::logMessage('SyncML: $this->_targetURI = ' . $this->_targetURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		
+		$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Sync');
+		
+		// $status->setState($state);
+		
+		$status->setCmdRef($this->_cmdID);
+		
+		if ($this->_targetURI != null) {
+			$status->setTargetRef((isset($this->_targetURIParameters) ? $this->_targetURI.'?/'.$this->_targetURIParameters : $this->_targetURI));
+		}
+		
+		if ($this->_sourceURI != null) {
+			$status->setSourceRef($this->_sourceURI);
+		}
+		
+		$currentCmdID = $status->output($currentCmdID, $output);
+		
+		if($sync = $state->getSync($this->_targetURI)) {
+			$currentCmdID = $sync->startSync($currentCmdID, $output);
+			
+			foreach ($this->_syncElements as $element) {
+				$currentCmdID = $sync->nextSyncCommand($currentCmdID, $element, $output);
+			}
+		}
 
-    function output($currentCmdID, &$output)
-    {
-        $state = &$_SESSION['SyncML.state'];
-
-        $attrs = array();
-
-        Horde::logMessage('SyncML: $this->_targetURI = ' . $this->_targetURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-        $status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Sync');
-        // $status->setState($state);
-        $status->setCmdRef($this->_cmdID);
-
-        if ($this->_targetURI != null) {
-            $status->setTargetRef((isset($this->_targetURIParameters) ? $this->_targetURI.'?/'.$this->_targetURIParameters : $this->_targetURI));
-        }
-
-        if ($this->_sourceURI != null) {
-            $status->setSourceRef($this->_sourceURI);
-        }
-
-        $currentCmdID = $status->output($currentCmdID, $output);
-
-        $sync = $state->getSync($this->_targetURI);
-        $currentCmdID = $sync->startSync($currentCmdID, $output);
-
-        foreach ($this->_syncElements as $element       ) {
-            $currentCmdID = $sync->nextSyncCommand($currentCmdID, $element, $output);
-        }
-
-        return $currentCmdID;
-    }
-
-    function getTargetURI()
-    {
-        return $this->_targetURI;
-    }
+		return $currentCmdID;
+	}
+	
+	function getTargetURI() {
+		return $this->_targetURI;
+	}
 
     function startElement($uri, $element, $attrs)
     {
@@ -96,7 +98,7 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
         Horde::logMessage('SyncML: starting sync to client', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
         $state = $_SESSION['SyncML.state'];
-        if($state->getSyncStatus() == CLIENT_SYNC_FINNISHED || $state->getSyncStatus() == SERVER_SYNC_DATA_PENDING)
+        if($state->getSyncStatus() >= CLIENT_SYNC_ACKNOWLEDGED && $state->getSyncStatus() < SERVER_SYNC_FINNISHED)
         {
 	        $deviceInfo = $state->getClientDeviceInfo();
 		$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);      

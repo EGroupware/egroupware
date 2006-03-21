@@ -127,8 +127,8 @@ class Horde_RPC_syncml extends Horde_RPC {
                 $xml, $m)) {
             $this->_charset = $m[1];
         }
-        NLS::setCharset($this->_charset);
-        String::setDefaultCharset($this->_charset);
+        #NLS::setCharset($this->_charset);
+        #String::setDefaultCharset($this->_charset);
 
         /* Create the XML parser and set method references. */
         $this->_parser = xml_parser_create_ns($this->_charset);

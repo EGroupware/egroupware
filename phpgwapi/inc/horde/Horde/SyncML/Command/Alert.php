@@ -196,11 +196,29 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	    $output->endElement($state->getURI(), 'Item');
         	    $output->endElement($state->getURI(), 'Alert');
 
+                    $state->_sendFinal = true;
+
         	    $currentCmdID++;
         	}
-	}
-	else
-	{
+	} elseif ($this->_alert == ALERT_NEXT_MESSAGE) {
+        	$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
+        	$status->setCmdRef($this->_cmdID);
+        	if ($this->_targetLocURI != null) {
+        	    $status->setTargetRef((isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI));
+        	}
+        	if ($this->_sourceLocURI != null) {
+        	    $status->setSourceRef($this->_sourceLocURI);
+        	}
+        	$status->setItemSourceLocURI($this->_sourceLocURI);
+        	$status->setItemTargetLocURI(isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI);
+        	$currentCmdID = $status->output($currentCmdID, $output);
+
+        	$state->setAlert222Received(true);
+        	
+		#if($state->getSyncStatus() > CLIENT_SYNC_STARTED && $state->getSyncStatus() < CLIENT_SYNC_ACKNOWLEDGED) {
+		#	$state->setSyncStatus(CLIENT_SYNC_ACKNOWLEDGED);
+		#}
+	} else {
         	$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
         	$status->setCmdRef($this->_cmdID);
         	if ($this->_sourceLocURI != null) {
