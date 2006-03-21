@@ -756,12 +756,8 @@ class uiviews extends uical
 			);
 			if ($owner) $linkData['owner'] = $owner;
 			
-			if ($this->html->user_agent != 'msie')	// disable add event for IE, as IE cant manage to get the right div
-			{
-				$onclick = 'onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"';
-			}
 			$html .= $indent."\t".'<div style="height:'. $this->rowHeight .'%; top: '. $counter*$this->rowHeight .
-				'%;" class="calAddEvent" '.$onclick.'></div>'."\n";
+				'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";
 		}
 		// displaying all event columns of the day
 		foreach($eventCols as $n => $eventCol)
@@ -987,9 +983,15 @@ class uiviews extends uical
 				'color'   => $color,
 			);
 		}
-		//_debug_array($event);
+		$ie_fix = '';
+        if ($this->html->user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
+        {
+			$ie_fix = $this->html->image('calendar','transparent.gif','',
+				$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+				' style="top:0px; left:0px; position:absolute; height:100%; width:100%; z-index:1"') . "\n";
+        }
 		return $indent.'<div class="calEvent'.($is_private ? 'Private' : '').'" style="top: '.$this->time2pos($event['start_m']).
-			'%; height: '.$height.'%;"'.$popup.'>'."\n".$html.$indent."</div>\n";
+			'%; height: '.$height.'%;"'.$popup.'>'."\n".$ie_fix.$html.$indent."</div>\n";
 	}
 
 	function add_nonempty($content,$label,$one_per_line=False)
