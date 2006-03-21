@@ -109,6 +109,7 @@ category %1 has been updated !	common	eu	Kategoria %1 eguneratua izan da
 cayman islands	common	eu	CAIMAN IRLAK
 cell properties	htmlarea-TableOperations	eu	Gelaxkaren propietateak
 cellpadding	tinymce	eu	Gelaxkaren betegarria
+cellspacing	tinymce	eu	Gelaxken arteko tartea
 center	tinymce	eu	Erdian
 central african republic	common	eu	ERTA AFRIKAKO ERREPUBLIKA
 chad	common	eu	CHAD
@@ -155,8 +156,9 @@ cuba	common	eu	KUBA
 currency	common	eu	Aldaketa
 current	common	eu	Oraingoa
 current style	htmlarea	eu	Oraingo estiloa
+current url is	htmlarea-ContextMenu	eu	Uneko URL-a da
 current users	common	eu	Momentuko erabiltzaileak
-cut	htmlarea-ContextMenu	eu	Moztu
+cut	htmlarea-ContextMenu	eu	Ebaki
 cut selection	htmlarea	eu	Aukeraketa moztu
 cut table row	tinymce	eu	Taulako errenkada ebaki
 cyprus	common	eu	CYPRUS
@@ -191,6 +193,7 @@ do you also want to delete all subcategories ?	common	eu	Azpikategoria guztiak e
 document properties	common	eu	Dokumentuaren propietateak:
 document title:	common	eu	Dokumentuaren izenburua:
 domain	common	eu	Domeinu
+domestic	common	eu	Lokal
 dominica	common	eu	DOMINICA
 dominican republic	common	eu	ERREPUBLICA DOMINIKARRA
 done	common	eu	Egina
@@ -228,14 +231,26 @@ faroe islands	common	eu	FAROE IRLAK
 fax number	common	eu	Fax zenbakia
 february	common	eu	Otsaila
 fields	common	eu	Eremuak
+file manager	tinymce	eu	Fitxategi kudeatzailea
+file(s)	tinymce	eu	Fitxategi(ak)
+file:	tinymce	eu	Fitxategia:
 files	common	eu	Fitxategiak
 filter	common	eu	Iragazkia
+find	tinymce	eu	Bilatu
+find again	tinymce	eu	Bilatu berriro
+find what	tinymce	eu	Aurkitu
+find&nbsp;next	tinymce	eu	Aurkitu hurrengoa
+find/replace	tinymce	eu	Bilatu eta ordezkatu
 finland	common	eu	FINLANDIA
 first name	common	eu	Izena
 first page	common	eu	Lehenengo orria
 firstname	common	eu	Izena
 fixme!	common	eu	Zuzendu nazazu!
 float	htmlarea-TableOperations	eu	Mugikorra
+folder	tinymce	eu	Karpeta
+folder name missing.	tinymce	eu	Karpetaren izena falta da
+folder not found.	tinymce	eu	Karpeta ez da aurkitu
+folder(s)	tinymce	eu	karpeta(k)
 font color	htmlarea	eu	Hizki kolorea
 force selectbox	common	eu	Aukeraketa koadroa indartu
 frames	htmlarea-TableOperations	eu	Markoak
@@ -243,11 +258,13 @@ france	common	eu	FRANTZIA
 french guiana	common	eu	FRANTZIAR GUIANA
 french polynesia	common	eu	FRANTZIAR POLYNESIA
 friday	common	eu	Ostirala
+ftp	common	eu	FTP
 fullname	common	eu	Izen osoa
 gabon	common	eu	GABON
 gambia	common	eu	GAMBIA
 general menu	common	eu	Menu nagusia
 georgia	common	eu	GEORGIA
+german	common	eu	Alemana
 germany	common	eu	ALEMANIA
 ghana	common	eu	GHANA
 gibraltar	common	eu	GIBRALTAR
@@ -256,6 +273,8 @@ global public	common	eu	Publiko guztia
 go today	jscalendar	eu	Gaur joan
 grant access	common	eu	Sarrera eman
 greece	common	eu	GREZIA
+greenland	common	eu	GROENLANDIA
+grenada	common	eu	GRENADA
 group	common	eu	Taldea
 group access	common	eu	Taldeko sarrera
 group has been added	common	eu	Taldea gehitua izan da
@@ -267,6 +286,7 @@ groups	common	eu	Taldeak
 groups with permission for %1	common	eu	Taldeak %1erako baimenarekin
 groups without permission for %1	common	eu	Taldeak %1erako baimenik gabe
 guadeloupe	common	eu	GUADALUPE
+guam	common	eu	GUAM
 guatemala	common	eu	GUATEMALA
 guinea	common	eu	GUINEA
 guinea-bissau	common	eu	GUINEA-BISSAU
@@ -278,6 +298,7 @@ help	common	eu	Laguntza
 help using editor	htmlarea	eu	Laguntza editorea erabiltzerakoan
 high	common	eu	Altua
 highest	common	eu	Altuena
+holy see (vatican city state)	common	eu	HOLY SEE (VATICANO HIRIA)
 home	common	eu	Hasiera
 home email	common	eu	Posta elektroniko pribatua
 honduras	common	eu	HONDURAS
@@ -290,28 +311,42 @@ i_nsert row before	htmlarea-ContextMenu	eu	Errenkada bat txertatu aurretik
 iceland	common	eu	ISLANDIA
 ignore	htmlarea-SpellChecker	eu	Ezikusi
 ignore all	htmlarea-SpellChecker	eu	Ezikusi guztiak
+image description	tinymce	eu	Irudiaren deskribapena
+image title	tinymce	eu	Irudiaren izenburua
 image url	common	eu	URL irudia
 in_sert row after	htmlarea-ContextMenu	eu	Errenkada bat txertatu ondoren
 increase indent	htmlarea	eu	Handitu koska
+indent	tinymce	eu	Koska
 india	common	eu	INDIA
 indonesia	common	eu	INDONESIA
+insert	tinymce	eu	Txertatu
 insert _column before	htmlarea-ContextMenu	eu	Zutabe bat txertatu aurretik
 insert a new column after the current one	htmlarea-ContextMenu	eu	Zutabe berri bat txertatu momentukoaren azpian
 insert a new column before the current one	htmlarea-ContextMenu	eu	Zutabe berri bat txertatu momentukoaren gainean
 insert a new row after the current one	htmlarea-ContextMenu	eu	Errenkada berri bat txertatu momentukoaren azpian
 insert a new row before the current one	htmlarea-ContextMenu	eu	Errenkada berri bat txertatu momentukoaren gainean
+insert c_olumn after	htmlarea-ContextMenu	eu	Txertatu zutabea ondoren
 insert cell after	htmlarea-TableOperations	eu	Gelaxka bat txertatu aurretik
 insert cell before	htmlarea-TableOperations	eu	Gelaxka bat txertatu ondoren
 insert column after	common	eu	Zutabe bat txertatu aurretik
 insert column before	common	eu	Zutabe bat txertatu aurretik
+insert date	tinymce	eu	Txertatu data
+insert file	tinymce	eu	Txertatu fitxategia
 insert image	htmlarea	eu	Irudia txertatu
+insert link to file	tinymce	eu	Txertatu esteka fitxategi honi
 insert row after	common	eu	Errenkada bat txertatu aurretik
 insert row before	common	eu	Errenkada bat txertatu ondoren
 insert table	htmlarea	eu	Taula txertatu
+insert time	tinymce	eu	Txertatu ordua
 insert web link	htmlarea	eu	Web lotura bet txertatu
+insert/edit image	tinymce	eu	Txertatu/irudia editatu
+insert/edit link	tinymce	eu	Txertatu/lotura editatu
+insert/modify table	tinymce	eu	Txertatu/taula aldatu
+inserts a new table	tinymce	eu	Txertatu taula berri bat
 international	common	eu	Nazioartekoa
 invalid ip address	common	eu	IP helbidea baliogabea
 invalid password	common	eu	Pasahitza baliogabea
+iran, islamic republic of	common	eu	IRANEKO ISLAMIAR ERREPUBLIKA
 iraq	common	eu	IRAQ
 ireland	common	eu	IRLANDA
 israel	common	eu	ISRAEL
@@ -330,6 +365,7 @@ justify full	common	eu	Lerrokatu
 justify left	common	eu	Lerrokatu ezkerrean
 justify right	common	eu	lerrokatu eskuinean
 kazakstan	common	eu	KAZAKSTAN
+keep linebreaks	tinymce	eu	Lerro jauzia mantendu
 kenya	common	eu	KENYA
 keywords	common	eu	Hitz gakoak
 kiribati	common	eu	KIRIBATI
@@ -342,6 +378,7 @@ last page	common	eu	Azken orria
 lastname	common	eu	Abizena
 latvia	common	eu	LATVIA
 layout	htmlarea-TableOperations	eu	Layout
+ldap-mgr	common	eu	LDAP-Administratzailea
 lebanon	common	eu	LIBANO
 left	common	eu	Ezkerrean
 lesotho	common	eu	LESOTHO
@@ -351,6 +388,7 @@ liechtenstein	common	eu	LIECHTENSTEIN
 list	common	eu	Zerrenda
 list members	common	eu	Zerrendako partaideak
 lithuania	common	eu	LITUANIA
+loading files	tinymce	eu	Fitxategia kargatzen
 local	common	eu	Lokal
 login	common	eu	Sartu
 loginid	common	eu	Erabiltzaile izena
@@ -373,6 +411,7 @@ march	common	eu	Martxoa
 margin	htmlarea-TableOperations	eu	Marjina
 marshall islands	common	eu	MARSHALL ISLANDS
 martinique	common	eu	MARTINIQUE
+match case	tinymce	eu	Maiuskulak/minuskulak
 mauritania	common	eu	MAURITANIA
 mauritius	common	eu	MAURITIUS
 may	common	eu	Maiatza
@@ -380,12 +419,17 @@ mayotte	common	eu	MAYOTTE
 medium	common	eu	Erdia
 menu	common	eu	Menua
 merge cells	htmlarea-TableOperations	eu	Batu gelaxkak
+merge table cells	tinymce	eu	Taulako gelaxkak konbinatu
 message	common	eu	Mezua
 mexico	common	eu	MEXIKO
+modify url	htmlarea-ContextMenu	eu	Aldatu URL-a
+moldova, republic of	common	eu	MOLDOVAKO ERREPUBLIKA
+monaco	common	eu	MONACO
 monday	common	eu	Astelehena
 mongolia	common	eu	MONGOLIA
 montserrat	common	eu	MONTSERRAT
 morocco	common	eu	MAROKO
+move	tinymce	eu	Eraman
 mozambique	common	eu	MOZAMBIQUE
 myanmar	common	eu	NYANMAR
 name	common	eu	Izena
@@ -396,6 +440,11 @@ netherlands	common	eu	HOLANDA
 never	common	eu	Inoiz
 new caledonia	common	eu	CALEDONIA BERRIA
 new entry added sucessfully	common	eu	Sarrera berria egoki txertatu da
+new file name missing!	tinymce	eu	Fitxitegi berriaren izena falta
+new file name:	tinymce	eu	Fitxategi berriaren izena:
+new folder	tinymce	eu	Karpeta berria
+new folder name missing!	tinymce	eu	Karpeta berriaren izena falta
+new folder name:	tinymce	eu	Karpeta berriaren izena:
 new main category	common	eu	Kategoria nagusi berria
 new value	common	eu	Balio berria
 new zealand	common	eu	ZELANDA BERRIA
@@ -409,12 +458,21 @@ nigeria	common	eu	NIGERIA
 niue	common	eu	NIUE
 no	common	eu	Ez
 no entries found, try again ...	common	eu	Ez da sarrerarik aurkitu, saiatu berriro...
+no files...	tinymce	eu	Ez dago fitxategirik...
 no history for this record	common	eu	Ez dago historiarik erregistro honetarako
+no permission to create folder.	tinymce	eu	Baimenik ez karpeta sortzeko.
+no permission to delete file.	tinymce	eu	Baimenik ez fitxategia ezabatzeko.
+no permission to move files and folders.	tinymce	eu	Baimenik ez fitxategiak eta karpetak lekuz aldatzeko.
+no permission to rename files and folders.	tinymce	eu	Baimenik ez fitxategiak eta karpetak beizendatzeko.
+no permission to upload.	tinymce	eu	Baimenik ez gora kargatzeko.
 no rules	htmlarea-TableOperations	eu	Erregelarik gabe
+no shadow	tinymce	eu	Itzalik gabe
 no sides	htmlarea-TableOperations	eu	Eremurik gabe
 no subject	common	eu	Gaiarik gabe
 none	common	eu	Bat ere ez
+norfolk island	common	eu	NORFOLK IRLAK
 normal	common	eu	Normala
+norway	common	eu	NORWAY
 not assigned	common	eu	Esleitu gabe
 note	common	eu	Oharra
 notes	common	eu	Oharrak
@@ -427,6 +485,12 @@ oman	common	eu	OMAN
 on mouse over	common	eu	Xagua gainetik mugitzerakoan
 only private	common	eu	pribatua soilik
 only yours	common	eu	bakarrik zureak
+open file in new window	tinymce	eu	Fitxategia leiho berri batean ireki
+open in new window	tinymce	eu	Leiho berria ireki
+open in the window	tinymce	eu	Leihoan ireki
+open in this window / frame	tinymce	eu	Leiho honetan ireki / markoa
+open link in a new window	tinymce	eu	Lotura leiho berri batean ireki
+open link in the same window	tinymce	eu	Lotura leiho berean ireki
 open notify window	common	eu	Abisu leihoa zabaldu
 opens this link in a new window	htmlarea-ContextMenu	eu	Lotura hau leiho berri batean zabaldu
 ordered list	common	eu	Ordenatutako zerrenda
@@ -440,7 +504,9 @@ page	common	eu	Orrialdea
 page was generated in %1 seconds	common	eu	Orria %1 segundutan sortu da
 pakistan	common	eu	PAKISTAN
 palau	common	eu	PALAU
+palestinian territory, occupied	common	eu	PALESTINA LURRALDE OKUPATUA
 panama	common	eu	PANAMA
+papua new guinea	common	eu	PAPUA GUINEA BERRIA
 paraguay	common	eu	PARAGUAY
 parcel	common	eu	Paketea
 parent category	common	eu	Goi kategoria
@@ -455,6 +521,7 @@ personal	common	eu	Pertsonala
 peru	common	eu	PERU
 philippines	common	eu	FILIPINAK
 phone number	common	eu	Telefono zenbakia
+phpgwapi	common	eu	eGroupWare API
 pitcairn	common	eu	PITCAIRN
 pixels	htmlarea-TableOperations	eu	pixelak
 please click into some cell	htmlarea-TableOperations	eu	Mesedez egin klik gelaxka batean
@@ -490,17 +557,25 @@ rename	common	eu	Berizendatu
 replace	common	eu	Ordezkatu
 replace all	htmlarea-SpellChecker	eu	Ordezkatu guztiak
 replace with	common	eu	Ordezkatu -kin
+replace&nbsp;all	tinymce	eu	Ordezkatu guztiak
 reunion	common	eu	REUNION
 revert	htmlarea-SpellChecker	eu	Itzuli
 right	common	eu	Eskuinean
 ro_w properties...	htmlarea-ContextMenu	eu	Errenkadaren propietateak
 romania	common	eu	RUMANIA
 row properties	htmlarea-TableOperations	eu	Errenkadaren propietateak
+rows	tinymce	eu	Errenkadak
 rules	htmlarea-TableOperations	eu	Erregelak
+russian federation	common	eu	ERRUSIAKO FEDERAZIOA
+rwanda	common	eu	RWANDA
 saint helena	common	eu	SANTA HELENA
+saint kitts and nevis	common	eu	SAINT KITTS ETA NEVIS
 saint lucia	common	eu	SANTA LUCIA
+saint pierre and miquelon	common	eu	SAINT PIERRE ETA MIQUELON
+saint vincent and the grenadines	common	eu	SAINT VICENT ETA THE GRENADINES
 samoa	common	eu	SAMOA
 san marino	common	eu	SAN MARINO
+sao tome and principe	common	eu	SAO TOME ETA PRINCIPE
 saturday	common	eu	Larunbata
 saudi arabia	common	eu	SAUDI ARABIA
 save	common	eu	Gorde
@@ -509,6 +584,7 @@ search %1 '%2'	common	eu	Bilatu %1 '%2'
 search or select accounts	common	eu	Bilatu aukeratutako kontuetan
 section	common	eu	Sekzioa
 select	common	eu	Aukeratu
+select all	tinymce	eu	Guztiak aukeratu
 select all %1 %2 for %3	common	eu	Guztiak aukeratu %1 %2 %3tik
 select category	common	eu	Aukeratu kategoria
 select date	common	eu	Aukeratu eguna

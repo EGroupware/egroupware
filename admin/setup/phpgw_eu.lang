@@ -2,6 +2,7 @@
 %1 - %2 of %3 user groups	admin	eu	%1 - %2 %3tik erabiltzaile taldeak
 %1 not found or not executable !!!	admin	eu	%1 ez da aurkitu edo ez da exekutagarria
 (stored password will not be shown here)	admin	eu	(Gordetako gakoak ez dira hemen erakutsiko)
+-  type	admin	eu	-mota
 accesslog and bruteforce defense	admin	eu	Erregistro sarrerako defentsa eta indarra
 account active	admin	eu	Kontu aktibatua
 account has been created	common	eu	Kontua sortua izan da
@@ -10,6 +11,8 @@ account has been updated	common	eu	Kontua eguneratua izan da
 account list	admin	eu	Kontu zerrenda
 account permissions	admin	eu	Kontuaren baimenak
 account preferences	admin	eu	Kontuaren hobespenak
+acl manager	admin	eu	ACL administratzailea
+acl rights	common	eu	ACL sarbidea
 action	admin	eu	Ekin
 activate wysiwyg-editor	admin	eu	WYSIWYG editorea aktibatu
 add a category	admin	eu	kategoria bat gehitu
@@ -30,15 +33,19 @@ admin email	admin	eu	Administratzailearen posta elektronikoa
 admin name	admin	eu	Administratzailearen izena
 administration	admin	eu	Administrazioa
 admins	admin	eu	Administratzaileak
+advanced options	admin	eu	Aukera aurreratuak
 all users	admin	eu	Erabiltzaile guztiak
 allow anonymous access to this app	admin	eu	Sarrera anonimoa baimendu aplikazio honi
+alternate email address	admin	eu	Helbide elektroniko alternatiboa
 anonymous user	admin	eu	Erabiltzaile anonimoa
+anonymous user (not shown in list sessions)	admin	eu	Erabiltzaile anonimoa (ez erakutsi saioko zerrendan)
 appearance	admin	eu	Itxura
 application	admin	eu	Aplikazioa
 application name	admin	eu	Aplikazioaren izena
 application title	admin	eu	Aplikazioaren izenburua
 applications	admin	eu	Aplikazioak
 applications list	admin	eu	Aplikazioen zerrenda
+applies the changes	admin	eu	Aldaketak aplikatu
 are you sure you want to delete the application %1 ?	admin	eu	Ziur zaude %1 aplikazioa ezbatu nahi duzula?
 are you sure you want to delete this account ?	admin	eu	Ziur zaude kontu hau ezabatu nahi duzula?
 are you sure you want to delete this application ?	admin	eu	Ziur zaude aplikazio hau ezabatu nahi duzula?
@@ -66,6 +73,8 @@ click to select a color	admin	eu	Egin klik kolore bat aukeratzeko
 color	admin	eu	Kolorea
 country selection	admin	eu	Herrialde bat aukeratu
 create group	admin	eu	Taldea sortu
+creates a new field	admin	eu	Fitxategi berri bat sortu
+custom fields	admin	eu	Pertsonalizatu eremua
 data	admin	eu	Datuak
 day	admin	eu	Eguna
 day of week<br>(0-6, 0=sun)	admin	eu	Asteko eguna <br>(0-6=Iga)
@@ -84,6 +93,7 @@ delete the group	admin	eu	Taldea ezabatu
 delete this category	admin	eu	Kategoria hau ezabatu
 delete this group	admin	eu	Talde hau ezabatu
 delete this user	admin	eu	Erabiltzaile hau ezabatu
+deletes this field	admin	eu	Fitxategi hauek ezabatu
 deny access to access log	admin	eu	Baimena ukatu sarreren erregistrora
 deny access to application registery	admin	eu	Baimena ukatu aplikazioen erregistrora
 deny access to applications	admin	eu	Baimena ukatu aplikazioetara
@@ -117,6 +127,7 @@ edit this group	admin	eu	Talde hau editatu
 edit this user	admin	eu	Erabiltzaile hau editatu
 edit user	admin	eu	Erabiltzailea editatu
 edit user account	admin	eu	Erabiltzaile kontua editatu
+email address	admin	eu	Helbide elektronikoa
 enable debug-messages	admin	eu	Arazketa mezuak aktibatu
 enabled - hidden from navbar	admin	eu	Gaitua- nabigazio barra izkutatu
 enter a description for the category	admin	eu	sar ezazu deskribapen bat kategoria honentzat

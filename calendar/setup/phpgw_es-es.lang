@@ -124,6 +124,7 @@ fullname of person to notify	calendar	es-es	Nombre completo de la persona a la q
 general	calendar	es-es	General
 global public and group public	calendar	es-es	Público Global y grupo público
 global public only	calendar	es-es	Público global sólo
+group invitation	calendar	es-es	Invitación de grupo
 group planner	calendar	es-es	Planificación de grupo
 group public only	calendar	es-es	Grupo público solamente
 groupmember(s) %1 not included, because you have no access.	calendar	es-es	Los miembros del grupo %1 no están incluidos, porque no tiene acceso.

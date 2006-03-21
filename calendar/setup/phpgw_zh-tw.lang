@@ -124,6 +124,7 @@ fullname of person to notify	calendar	zh-tw	需要通知的全名
 general	calendar	zh-tw	一般
 global public and group public	calendar	zh-tw	全區公用及群組公用
 global public only	calendar	zh-tw	全區公用
+group invitation	calendar	zh-tw	邀請群組
 group planner	calendar	zh-tw	群組計畫
 group public only	calendar	zh-tw	群組公用
 groupmember(s) %1 not included, because you have no access.	calendar	zh-tw	無法加入群組成員 %1 ，因為您沒有權限。

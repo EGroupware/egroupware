@@ -7,6 +7,7 @@ a theme defines the colors and fonts used by the template.	preferences	zh-tw	佈
 acl grants have been updated	preferences	zh-tw	ACL 授權已經更新
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	zh-tw	任何 eGroupWare 的列表都會顯示每頁的資料數或行數<br>當資料筆數過多時您可以先做預覽
 are you sure you want to delete this category ?	preferences	zh-tw	您確定要刪除這個分類？
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	zh-tw	修改一個使用者的密碼必須輸入原有以及新的密碼，成功時會傳回 TRUE ，失敗則為 FALSE 。
 change your password	preferences	zh-tw	變更您的密碼
 change your profile	preferences	zh-tw	變更您的個人設定
 change your settings	preferences	zh-tw	變更您的喜好設定
@@ -42,10 +43,12 @@ language	preferences	zh-tw	語言
 max matches per page	preferences	zh-tw	每頁搜尋結果筆數
 max number of icons in navbar	preferences	zh-tw	導覽列最多顯示圖示數量
 no default	preferences	zh-tw	沒有預設值
+note: this feature does *not* change your email password. this will	preferences	zh-tw	注意：這個功能不會修改您的信箱密碼，這將會
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	zh-tw	備註：這個功能將「不會」更動您的電子郵件信箱密碼，您必須手動去更動密碼。
 please, select a new theme	preferences	zh-tw	請選擇一組新的畫面配置
 popup with search	preferences	zh-tw	跳出搜尋
 re-enter your password	preferences	zh-tw	重新輸入您的密碼
+read prefs for the specified application.	preferences	zh-tw	讀取指定應用程式的偏好設定。
 select different theme	preferences	zh-tw	選擇不同的畫面配置
 select one	preferences	zh-tw	請選擇
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	zh-tw	選擇eGroupWare的語言<br>部分語言尚未完成翻譯，您會看到英文的敘述
@@ -71,6 +74,7 @@ use default	preferences	zh-tw	預設值
 users choice	preferences	zh-tw	使用者選擇
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh-tw	當您選擇"是"，首頁與登出圖示會顯示在導覽列中
 which currency symbol or name should be used in egroupware.	preferences	zh-tw	您希望在eGroupWare中使用什麼貨幣符號或名稱。
+write prefs for the specified application.	preferences	zh-tw	寫入指定應用程式的偏好設定。
 you can show the applications as icons only, icons with app-name or both.	preferences	zh-tw	您可以指定只顯示應用程式圖示或是加上它的名稱。
 you do not have permission to set acl's in this mode!	preferences	zh-tw	您沒有權限設定ACL在這個模式
 you must enter a password	preferences	zh-tw	您必須輸入密碼

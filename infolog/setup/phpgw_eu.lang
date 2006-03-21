@@ -2,6 +2,7 @@
 - subprojects from	infolog	eu	-Azpiproiektuak
 0%	infolog	eu	%0
 10%	infolog	eu	%10
+100%	infolog	eu	%100
 20%	infolog	eu	%20
 30%	infolog	eu	%30
 40%	infolog	eu	%40
@@ -14,6 +15,7 @@ a short subject for the entry	infolog	eu	deskribapen labur bat sarrerarako
 abort without deleting	infolog	eu	Ezeztatu ezabatu gabe
 accept	infolog	eu	Onartu
 action	infolog	eu	Ekintza
+actual date and time	infolog	eu	uneko data eta ordua
 add	infolog	eu	Gehitu
 add a file	infolog	eu	Fitxategia gehitu
 add a new entry	infolog	eu	Sarrera berri bat gehitu
@@ -32,6 +34,7 @@ back to main list	infolog	eu	Zerrenda nagusira itzuli
 both	infolog	eu	biak
 call	infolog	eu	deitu
 cancel	infolog	eu	Ezeztatu
+cancelled	infolog	eu	Ezeztatua
 categories	infolog	eu	Kategoriak
 category	infolog	eu	Kategoria
 charset of file	infolog	eu	Fitxategiko karaktereak
@@ -40,6 +43,7 @@ click here to create the link	infolog	eu	egin klik lotura bat sortzeko
 click here to start the search	infolog	eu	egin kilk bilaketa hasteko
 close	infolog	eu	Itxi
 comment	infolog	eu	Komentario
+completed	infolog	eu	Osatua
 configuration	infolog	eu	Konfigurazioa
 confirm	infolog	eu	Berretsi
 contact	infolog	eu	Kontaktua
@@ -195,6 +199,7 @@ the text displayed to the user	infolog	eu	erabiltzaileari erakusten zaion testua
 times	infolog	eu	Aldiak
 to many might exceed your execution-time-limit	infolog	eu	Zenbaiteraino luzatu daiteke exekuzioreko denbora?
 today	infolog	eu	Gaur
+todays date	infolog	eu	gaurko data
 todo	infolog	eu	Egitekoak
 translation	infolog	eu	Itzulpena
 typ	infolog	eu	Mota

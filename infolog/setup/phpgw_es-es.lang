@@ -3,6 +3,7 @@
 - subprojects from	infolog	es-es	- Subproyectos de
 0%	infolog	es-es	0%
 10%	infolog	es-es	10%
+100%	infolog	es-es	100%
 20%	infolog	es-es	20%
 30%	infolog	es-es	30%
 40%	infolog	es-es	40%
@@ -16,6 +17,7 @@ a short subject for the entry	infolog	es-es	descripción corta para la entrada
 abort without deleting	infolog	es-es	Cancelar sin eliminar
 accept	infolog	es-es	aceptar
 action	infolog	es-es	Acción
+actual date and time	infolog	es-es	Fecha y hora actuales
 add	infolog	es-es	Añadir
 add a file	infolog	es-es	Añadir archivo
 add a new entry	infolog	es-es	Añadir una entrada nueva
@@ -38,6 +40,7 @@ billed	infolog	es-es	facturado
 both	infolog	es-es	ambos
 call	infolog	es-es	llamar
 cancel	infolog	es-es	Cancelar
+cancelled	infolog	es-es	Camcelado
 categories	infolog	es-es	Categorías
 category	infolog	es-es	Categoria
 change the status of an entry, eg. close it	infolog	es-es	Cambiar el estado de una entrada, p. ej. cerrarlo
@@ -47,6 +50,7 @@ click here to create the link	infolog	es-es	marcar para crear un enlace
 click here to start the search	infolog	es-es	marcar para empezar la búsqueda
 close	infolog	es-es	Cerrar
 comment	infolog	es-es	Comentario
+completed	infolog	es-es	Completado
 configuration	infolog	es-es	Configuración
 confirm	infolog	es-es	confirmar
 contact	infolog	es-es	Contacto
@@ -67,6 +71,8 @@ custom fields, typ and status	common	es-es	Campos personalizados, tipo y estado
 custom regarding	infolog	es-es	Recuerdos personales
 custom status for typ	infolog	es-es	Estado personalizado para el tipo
 customfields	infolog	es-es	Campos personalizados
+date completed	infolog	es-es	Fecha completada
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	es-es	Fecha completada (dejar en blanco para tenerlo automático si el estado es hecho o facturado)
 datecreated	infolog	es-es	fecha de creación
 dates, status, access	infolog	es-es	Fechas, estado, acceso
 days	infolog	es-es	días
@@ -110,6 +116,7 @@ fieldseparator	infolog	es-es	Separador de campos
 finish	infolog	es-es	finalizar
 for which types should this field be used	infolog	es-es	para qué tipos se usa este campo
 from	infolog	es-es	De
+general	infolog	es-es	General
 high	infolog	es-es	alta
 id	infolog	es-es	id
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no está puesta, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
@@ -132,6 +139,7 @@ invalid filename	infolog	es-es	El nombre de archivo no es válido
 label<br>helptext	infolog	es-es	Marca<br>Texto de ayuda
 last changed	infolog	es-es	último cambio
 last modified	infolog	es-es	Última modificación
+leave it empty	infolog	es-es	dejar en blanco
 leave without saveing the entry	infolog	es-es	abandonar sin guardar la entrada
 leaves without saveing	infolog	es-es	abandonar sin guardar
 length<br>rows	infolog	es-es	Longitud<br>Filas
@@ -140,6 +148,7 @@ links	infolog	es-es	Enlaces
 links of this entry	infolog	es-es	Enlaces de la entrada
 list all categories	infolog	es-es	Lista de todas las categorías
 list no subs/childs	infolog	es-es	No listar subs/hijos
+location	infolog	es-es	Ubicación
 longer textual description	infolog	es-es	descripción larga de la entrada
 low	infolog	es-es	baja
 max length of the input [, length of the inputfield (optional)]	infolog	es-es	longitud máxima de la entrada [, longitud del campo de entrada (opcional)]
@@ -159,6 +168,7 @@ none	infolog	es-es	Ninguno
 normal	infolog	es-es	normal
 not	infolog	es-es	no
 not assigned	infolog	es-es	sin asignar
+not-started	infolog	es-es	sin empezar
 note	infolog	es-es	Nota
 number of records to read (%1)	infolog	es-es	Número de registros a leer (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	es-es	Número de fila para un cuadro de texto multilínea o lista despleglabe multiselección
@@ -179,6 +189,7 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	es-es	Ruta en el servid
 path to user and group files has to be outside of the webservers document-root!!!	infolog	es-es	Ruta a los ficheros de usuario y grupos. ¡¡DEBE ESTAR FUERA de la estructura del servidor web!!
 pattern for search in addressbook	infolog	es-es	expresión a buscar en la Libreta de direcciones
 pattern for search in projects	infolog	es-es	expresión a buscar en Proyectos
+percent completed	infolog	es-es	Porcentaje completado
 permission denied	infolog	es-es	Permiso denegado
 phone	infolog	es-es	Llamada telefónica
 phone/email	infolog	es-es	Teléfono o correo electrónico
@@ -233,6 +244,7 @@ small view	infolog	es-es	vista reducida
 start a new search, cancel this link	infolog	es-es	iniciar nueva búsqueda, cancelar este enlace
 startdate	infolog	es-es	Fecha de inicio
 startdate enddate	infolog	es-es	Fechas de inicio y Fin
+startdate for new entries	infolog	es-es	Fecha de inicio para entradas nuevas
 startrecord	infolog	es-es	Comenzar grabación de registro
 status	infolog	es-es	Estado
 status ...	infolog	es-es	Estado...
@@ -248,7 +260,9 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	es-es	¿Hasta cuándo puede la tarea o llamada telefónica estar sin terminar?
 times	infolog	es-es	Veces
 to many might exceed your execution-time-limit	infolog	es-es	¿Cuánto puede exceder el límite de ejecución?
+to what should the startdate of new entries be set.	infolog	es-es	A qué valor establecer la fecha de inicio para las entradas nuevas.
 today	infolog	es-es	Hoy
+todays date	infolog	es-es	Fecha de hoy
 todo	infolog	es-es	Tareas pendientes
 translation	infolog	es-es	Traducción
 typ	infolog	es-es	Tipo

@@ -3,6 +3,7 @@
 - subprojects from	infolog	zh-tw	- 附加專案來自
 0%	infolog	zh-tw	0%
 10%	infolog	zh-tw	10%
+100%	infolog	zh-tw	100%
 20%	infolog	zh-tw	20%
 30%	infolog	zh-tw	30%
 40%	infolog	zh-tw	40%
@@ -16,6 +17,7 @@ a short subject for the entry	infolog	zh-tw	一個簡短的主題
 abort without deleting	infolog	zh-tw	取消刪除
 accept	infolog	zh-tw	確定
 action	infolog	zh-tw	動作
+actual date and time	infolog	zh-tw	實際日期與時間
 add	infolog	zh-tw	新增
 add a file	infolog	zh-tw	新增檔案
 add a new entry	infolog	zh-tw	新增個事件
@@ -38,6 +40,7 @@ billed	infolog	zh-tw	已付款
 both	infolog	zh-tw	皆
 call	infolog	zh-tw	呼叫
 cancel	infolog	zh-tw	取消
+cancelled	infolog	zh-tw	取消了
 categories	infolog	zh-tw	分類
 category	infolog	zh-tw	類別
 change the status of an entry, eg. close it	infolog	zh-tw	修改資料狀態，例如：關閉
@@ -47,6 +50,7 @@ click here to create the link	infolog	zh-tw	點選這裡來建立連結
 click here to start the search	infolog	zh-tw	點選這裡來開始搜尋
 close	infolog	zh-tw	關閉
 comment	infolog	zh-tw	備註
+completed	infolog	zh-tw	完成了
 configuration	infolog	zh-tw	設定
 confirm	infolog	zh-tw	確認
 contact	infolog	zh-tw	聯絡
@@ -67,6 +71,8 @@ custom fields, typ and status	common	zh-tw	自訂欄位、格式與狀態
 custom regarding	infolog	zh-tw	自訂關於
 custom status for typ	infolog	zh-tw	自訂格式的狀態
 customfields	infolog	zh-tw	自定欄位
+date completed	infolog	zh-tw	完成日期
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	zh-tw	完成日期（保留空白會自動使用狀態改為完成或已付款的時間）
 datecreated	infolog	zh-tw	建立日期
 dates, status, access	infolog	zh-tw	日期、狀態、存取
 days	infolog	zh-tw	日
@@ -110,6 +116,7 @@ fieldseparator	infolog	zh-tw	欄位分隔字元
 finish	infolog	zh-tw	完成
 for which types should this field be used	infolog	zh-tw	這個欄位使用什麼格式
 from	infolog	zh-tw	從
+general	infolog	zh-tw	一般
 high	infolog	zh-tw	高
 id	infolog	zh-tw	ID
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	zh-tw	如果沒有設定，在資料數量少於"每頁顯示資料數量上限"（在您的一般設定中）時會隱藏過濾與搜尋功能。
@@ -132,6 +139,7 @@ invalid filename	infolog	zh-tw	錯誤的檔案名稱
 label<br>helptext	infolog	zh-tw	標籤<br>說明文字
 last changed	infolog	zh-tw	最後修改
 last modified	infolog	zh-tw	最後修改
+leave it empty	infolog	zh-tw	保持空白
 leave without saveing the entry	infolog	zh-tw	離開並且不要儲存這個事件
 leaves without saveing	infolog	zh-tw	離開並且不要儲存
 length<br>rows	infolog	zh-tw	長度<br>列
@@ -140,6 +148,7 @@ links	infolog	zh-tw	連結
 links of this entry	infolog	zh-tw	這個事件的連結
 list all categories	infolog	zh-tw	列出所有類別
 list no subs/childs	infolog	zh-tw	不要列出附屬資訊
+location	infolog	zh-tw	位置
 longer textual description	infolog	zh-tw	較長的原文描述
 low	infolog	zh-tw	低
 max length of the input [, length of the inputfield (optional)]	infolog	zh-tw	最大輸入長度[, 輸入欄位長度 (選填)]
@@ -159,6 +168,7 @@ none	infolog	zh-tw	無
 normal	infolog	zh-tw	一般
 not	infolog	zh-tw	否
 not assigned	infolog	zh-tw	不指定
+not-started	infolog	zh-tw	未開始
 note	infolog	zh-tw	記事
 number of records to read (%1)	infolog	zh-tw	讀取的資料筆數(%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	zh-tw	輸入欄位或是下拉式選單的數量
@@ -179,6 +189,7 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	zh-tw	伺服器(網站-
 path to user and group files has to be outside of the webservers document-root!!!	infolog	zh-tw	使用者與群組檔案路徑必須在網站伺服器的網頁根目錄之外！
 pattern for search in addressbook	infolog	zh-tw	搜尋通訊錄的條件
 pattern for search in projects	infolog	zh-tw	搜尋專案的條件
+percent completed	infolog	zh-tw	完成比例
 permission denied	infolog	zh-tw	拒絕存取
 phone	infolog	zh-tw	聯絡清單
 phone/email	infolog	zh-tw	電話/Email
@@ -233,6 +244,7 @@ small view	infolog	zh-tw	縮小
 start a new search, cancel this link	infolog	zh-tw	開啟一個新的搜尋並且取消這個連結
 startdate	infolog	zh-tw	開始日期
 startdate enddate	infolog	zh-tw	開始日期 結束日期
+startdate for new entries	infolog	zh-tw	新資料的開始日期
 startrecord	infolog	zh-tw	開始紀錄
 status	infolog	zh-tw	狀態
 status ...	infolog	zh-tw	狀態...
@@ -248,7 +260,9 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	zh-tw	待辦事項或是聯絡清單應該完成的時間
 times	infolog	zh-tw	時間
 to many might exceed your execution-time-limit	infolog	zh-tw	超過了程式執行時間
+to what should the startdate of new entries be set.	infolog	zh-tw	新資料的開始日期應該設定為什麼。
 today	infolog	zh-tw	今天
+todays date	infolog	zh-tw	今天日期
 todo	infolog	zh-tw	待辦事項
 translation	infolog	zh-tw	翻譯
 typ	infolog	zh-tw	格式

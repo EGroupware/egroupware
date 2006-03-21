@@ -51,6 +51,7 @@ contact settings	admin	zh-tw	聯絡人設定
 copied by %1, from record #%2.	addressbook	zh-tw	由 %1 複製, 從記錄 #%2.
 country	common	zh-tw	國家/地區
 create new links	addressbook	zh-tw	新增連結
+credit	addressbook	zh-tw	信用額度
 csv-fieldname	addressbook	zh-tw	CSV欄位名稱
 csv-filename	addressbook	zh-tw	CSV檔名
 custom	addressbook	zh-tw	自訂
@@ -108,6 +109,7 @@ import from outlook	addressbook	zh-tw	從Outlook匯入
 import multiple vcard	addressbook	zh-tw	匯入多重名片檔
 import next set	addressbook	zh-tw	匯入下一個
 import_instructions	addressbook	zh-tw	Netscape，開啟通訊錄並且從<b>檔案</b>功能選擇<b>匯出</b>，匯出的檔案是LDIF格式。Outlook，選擇聯絡人資料夾，從<b>檔案</b>功能選擇<b>匯入與匯出...</b>來匯出聯絡人資料成為逗點分隔(CSV)檔案。
+income	addressbook	zh-tw	收入
 international	addressbook	zh-tw	國際
 isdn phone	addressbook	zh-tw	ISDN電話
 label	addressbook	zh-tw	概述
