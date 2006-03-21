@@ -391,6 +391,7 @@
 				$values = array(
 					'info_id'     => $info_id,
 					'info_status' => 'done',
+					'info_percent'=> 100,
 				);
 				$this->bo->write($values);
 				
