@@ -1600,7 +1600,7 @@
 							//echo "<p>setting content[$form_name]='$_cont' because is was unset !!!</p>\n";
 							$this->set_array($content,$form_name,$_cont);
 						}
-						if ($_cont === '' && $attr['needed'])
+						if ($_cont === '' && $attr['needed'] && !$attr['blur'])
 						{
 							$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang('Field must not be empty !!!',$value);
 						}
@@ -1612,7 +1612,7 @@
 					case 'float':
 					case 'text':
 					case 'textarea':
-						if ($value === '' && $attr['needed'])
+						if ($value === '' && $attr['needed'] && !$attr['blur'])
 						{
 							$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang('Field must not be empty !!!',$value);
 						}
