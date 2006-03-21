@@ -27,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	de	einen neuen Unterauftr
 add a new todo	infolog	de	einen neuen Auftrag anlegen
 add file	infolog	de	Datei zufügen
 add sub	infolog	de	neuen Untereintrag anlegen
+add timesheet entry	infolog	de	Stundenzettel Eintrag hinzfügen
 add:	infolog	de	Hinzufügen:
 all	infolog	de	alle
 all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
@@ -101,8 +102,8 @@ edit status	infolog	de	Status ändern
 edit the entry	infolog	de	Eintrag bearbeiten
 edit this entry	infolog	de	diesen Eintrag bearbeiten
 empty for all	infolog	de	leer für alle
-enddate	infolog	de	Enddatum
-enddate can not be before startdate	infolog	de	Das Enddatum kann nicht vor dem Startdatum liegen
+enddate	infolog	de	Fällig am
+enddate can not be before startdate	infolog	de	Das Fälligkeitsdatum kann nicht vor dem Startdatum liegen
 enter a custom contact, leave empty if linked entry should be used	infolog	de	benutzerdefinierter Kontakt, leer lassen um die Daten der Verknüpfung zu verwenden
 enter a custom phone/email, leave empty if linked entry should be used	infolog	de	benutzerdefinierte Telefonnumer/Emailadresse, leer lassen um die Daten der Verknüpfung zu verwenden
 enter a textual description of the log-entry	infolog	de	geben Sie eine textliche Beschreibung des Eintrags ein
@@ -243,7 +244,7 @@ show times	infolog	de	Zeiten anzeigen
 small view	infolog	de	schmale Ansicht
 start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
 startdate	infolog	de	Startdatum
-startdate enddate	infolog	de	Startdatum Endedatum
+startdate enddate	infolog	de	Startdatum Fälligkeitsdatum
 startdate for new entries	infolog	de	Startdatum für neue Einträge
 startrecord	infolog	de	Startdatensatz
 status	infolog	de	Status
@@ -289,7 +290,7 @@ write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufü
 yes - delete	infolog	de	Ja - Löschen
 yes - delete including sub-entries	infolog	de	Ja - Löschen einschließlich Untereinträge
 you can't delete one of the stock types !!!	infolog	de	Sie können keinen der Standardtypen löschen!!!
-you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Enddatum eingegeben
+you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Fälligkeitsdatum eingegeben
 you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
 you have to enter a name, to create a new typ!!!	infolog	de	Sie müssen einen Namen angeben, um einen neuen Typ zu erzeugen!!!
 you must enter a subject or a description	infolog	de	Sie müssen einen Titel oder eine Beschreibung eingeben

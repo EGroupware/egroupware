@@ -10,7 +10,7 @@
 			<rows>
 				<row class="row">
 					<description options=",,,ts_title" value="Title"/>
-					<textbox size="65" maxlength="80" id="ts_title" needed="1"/>
+					<textbox size="65" maxlength="80" id="ts_title" needed="1" blur="@ts_title_blur"/>
 				</row>
 				<row class="row">
 					<description options=",,,cat_id" value="Category"/>
@@ -67,7 +67,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="0.2.001">
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.2.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>

@@ -198,7 +198,7 @@
 					</menulist>
 				</row>
 				<row class="row">
-					<description options=",,,info_datecompleted" value="Completed"/>
+					<description options=",,,info_datecompleted" value="Date completed"/>
 					<date-time id="info_datecompleted" statustext="Date completed (leave it empty to have it automatic set if status is done or billed)"/>
 					<description value="Private" options=",,,info_access"/>
 					<checkbox options="private,public" id="info_access" statustext="should this entry only be visible to you and people you grant privat access via the ACL"/>

@@ -68,7 +68,8 @@ class uitimesheet extends botimesheet
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 				);
 			}
-			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] : TIMESHEET_APP.'.uitimesheet.index';
+			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] : 
+				(strstr($_SERVER['HTTP_REFERER'],'/infolog/index.php') ? 'infolog.uiinfolog.index' : TIMESHEET_APP.'.uitimesheet.index');
 		}
 		else
 		{
@@ -94,6 +95,7 @@ class uitimesheet extends botimesheet
 						$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0;
 					}
 					if (!$this->data['ts_project']) $this->data['ts_project'] = $this->data['ts_project_blur'];
+					if (!$this->data['ts_title']) $this->data['ts_title'] = $this->data['ts_title_blur'];
 
 					if ($this->save() != 0)
 					{
@@ -162,6 +164,7 @@ class uitimesheet extends botimesheet
 		$preserv = $this->data + array(
 			'view'    => $view,
 			'referer' => $referer,
+			'ts_title_blur' => $content['ts_title_blur'],
 		);
 		$content = array_merge($this->data,array(
 			'msg'  => $msg,
@@ -175,14 +178,26 @@ class uitimesheet extends botimesheet
 			'ts_quantity_blur' => $this->data['ts_duration'] ? $this->data['ts_duration'] / 60.0 : '',
 		));
 		$links = array();
-		if (!$this->data['ts_id'] && isset($_GET['link_app']) && isset($_GET['link_id']) &&
-			preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$_GET['link_app'].':'.$_GET['link_id']) &&	// gard against XSS
-			!is_array($content['link_to']['to_id']))
+		// create links specified in the REQUEST (URL)
+		if (!$this->data['ts_id'] && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']) && !is_array($content['link_to']['to_id']))
 		{
-			$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],$_GET['link_app'],$_GET['link_id']);
-			if ($_GET['link_app'] == 'projectmanager')
+			$link_ids = is_array($_REQUEST['link_id']) ? $_REQUEST['link_id'] : array($_REQUEST['link_id']);
+			foreach(is_array($_REQUEST['link_app']) ? $_REQUEST['link_app'] : array($_REQUEST['link_app']) as $n => $link_app)
 			{
-				$links = array($_GET['link_id']);
+				$link_id = $link_ids[$n];
+				if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// gard against XSS
+				{
+					$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],$link_app,$link_id);
+					switch ($link_app)
+					{
+						case 'projectmanager':
+							$links[] = $link_id;
+							break;
+						case 'infolog':
+							$preserv['ts_title_blur'] = $this->link->title('infolog',$link_id);
+							break;
+					}
+				}
 			}
 		}
 		elseif ($this->data['ts_id'])
@@ -196,6 +211,8 @@ class uitimesheet extends botimesheet
 		{
 			$preserv['ts_project_blur'] = $content['ts_project_blur'] = $this->link->title('projectmanager',$content['pm_id']);
 		}
+		$content['ts_title_blur'] = $preserv['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
+
 		$readonlys = array(
 			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
 			'button[edit]'     => !$view || !$this->check_acl(EGW_ACL_EDIT),

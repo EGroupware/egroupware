@@ -27,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	en	Add a new sub-task, -n
 add a new todo	infolog	en	Add a new ToDo
 add file	infolog	en	Add file
 add sub	infolog	en	add Sub
+add timesheet entry	infolog	en	Add timesheet entry
 add:	infolog	en	Add:
 all	infolog	en	All
 all links and attachments	infolog	en	all links and attachments
@@ -97,12 +98,12 @@ duration	infolog	en	Duration
 each value is a line like <id>[=<label>]	infolog	en	each value is a line like <id>[=<label>]
 edit	infolog	en	Edit
 edit or create categories for ingolog	infolog	en	Edit or create categories for IngoLog
-edit status	infolog	en	Edit Status
+edit status	infolog	en	Edit status
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
 empty for all	infolog	en	empty for all
-enddate	infolog	en	End Date
-enddate can not be before startdate	infolog	en	End date can not be before start date
+enddate	infolog	en	Due date
+enddate can not be before startdate	infolog	en	Due date can not be before start date
 enter a custom contact, leave empty if linked entry should be used	infolog	en	enter a custom contact, leave empty if linked entry should be used
 enter a custom phone/email, leave empty if linked entry should be used	infolog	en	enter a custom phone/email, leave empty if linked entry should be used
 enter a textual description of the log-entry	infolog	en	enter a textual description of the log-entry
@@ -243,7 +244,7 @@ show times	infolog	en	Show times
 small view	infolog	en	small view
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
 startdate	infolog	en	Start Date
-startdate enddate	infolog	en	Start Date End Date
+startdate enddate	infolog	en	Start Date Due Date
 startdate for new entries	infolog	en	Startdate for new entries
 startrecord	infolog	en	Startrecord
 status	infolog	en	Status
@@ -289,7 +290,7 @@ write (add or update) a record by passing its fields.	infolog	en	Write (add or u
 yes - delete	infolog	en	Yes - Delete
 yes - delete including sub-entries	infolog	en	Yes - Delete including sub-entries
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
-you have entered an invalid ending date	infolog	en	You have entered an invalid ending date
+you have entered an invalid ending date	infolog	en	You have entered an invalid due date
 you have entered an invalid starting date	infolog	en	You have entered an invalid starting date
 you have to enter a name, to create a new typ!!!	infolog	en	You have to enter a name, to create a new type!!!
 you must enter a subject or a description	infolog	en	You must enter a subject or a description

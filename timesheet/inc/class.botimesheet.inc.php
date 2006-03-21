@@ -76,7 +76,12 @@ class botimesheet extends so_sql
 	var $link;
 	/**
 	 * @var array $grants
-	 */	 
+	 */	
+	var $grants;
+	/**
+	 * @var array $summary array sums of the last search in keys duration and price
+	 */
+	var $summary;
 
 	function botimesheet()
 	{
@@ -229,9 +234,10 @@ class botimesheet extends so_sql
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @param boolean $only_summary=false If true only return the sums as array with keys duration and price, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false,$only_summary=false)
 	{
 		if (!$extra_cols) $extra_cols = 'ts_quantity*ts_unitprice AS ts_total';
 
@@ -254,11 +260,14 @@ class botimesheet extends so_sql
 		if (!count($filter['ts_owner']))
 		{
 			$this->total = 0;
+			$this->summary = array();
 			return array();
 		}
 		$this->summary = parent::search($criteria,'SUM(ts_duration) AS duration,SUM(ts_quantity*ts_unitprice) AS price',
 			'','',$wildcard,$empty,$op,false,$filter,$join);
 		$this->summary = $this->summary[0];
+		
+		if ($only_summary) return $this->summary;
 
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
@@ -380,6 +389,17 @@ class botimesheet extends so_sql
 			if (isset($data[$name]) && $data[$name]) $data[$name] -= $this->tz_offset_s;
 		}
 		return $data;
+	}
+	
+	/**
+	 * Get the time- and pricesum for the given timesheet entries
+	 *
+	 * @param array $ids array of timesheet id's
+	 * @return array with keys time and price
+	 */
+	function sum($ids)
+	{
+		return $this->search(array('ts_id'=>$ids),true,'','','',false,'AND',false,null,'',false,true);
 	}
 	
 	/**

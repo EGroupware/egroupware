@@ -134,19 +134,34 @@
 			$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 			$readonlys['view[0]'] = True;	// no parent
+			$readonlys["timesheet[$id]"] = !$this->prefs['show_times'] || !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 
 			if (!$show_links) $show_links = $this->prefs['show_links'];
 
-			if ($show_links != 'none' && $show_links != 'no_describtion' && ($links = $this->link->get_links('infolog',$info['info_id'])))
+			if (($show_links != 'none' && $show_links != 'no_describtion' || 
+				 $this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) && 
+				($links = $this->link->get_links('infolog',$info['info_id'])))
 			{
+				$timesheets = array();
 				foreach ($links as $link)
 				{
-					if ($link['link_id'] != $info['info_link_id'] &&
+					if ($show_links != 'none' && $show_links != 'no_describtion' &&
+						$link['link_id'] != $info['info_link_id'] &&
 					    ($link['app'] != $action || $link['id'] != $action_id) &&
 						($show_links == 'all' || ($show_links == 'links') === ($link['app'] != $this->link->vfs_appname)))
 					{
 						$info['filelinks'][] = $link;
 					}
+					if (!$info['pm_id'] && $link['app'] == 'projectmanager')
+					{
+						$info['pm_id'] = $link['id'];
+					}
+					if ($link['app'] == 'timesheet') $timesheets[] = $link['id'];
+				}
+				if ($this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet']) && $timesheets)
+				{
+					$sum = ExecMethod('timesheet.botimesheet.sum',$timesheets);
+					$info['info_sum_timesheets'] = $sum['duration'];
 				}
 			}
 			$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
@@ -210,7 +225,8 @@
 				$rows[] = $info;
 			}
 			if ($query['no_actions']) $rows['no_actions'] = true;
-			if ($query['no_times']) $rows['no_times'] = true;
+			$rows['no_times'] = !$this->prefs['show_times'];
+			$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 
@@ -361,7 +377,6 @@
 			$values['nm']['bottom_too'] = True;
 			$values['nm']['never_hide'] = isset($this->prefs['never_hide']) ? 
 				$this->prefs['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
-			$values['nm']['no_times'] = !$this->prefs['show_times'];
 			$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 			$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
 			$persist['called_as'] = $called_as;
