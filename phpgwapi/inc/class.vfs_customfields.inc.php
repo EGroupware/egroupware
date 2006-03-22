@@ -20,7 +20,7 @@
 
 		function vfs_customfields()
 		{
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['phpgw']->db);
 
 		}
 

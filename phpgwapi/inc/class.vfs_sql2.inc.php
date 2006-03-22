@@ -112,7 +112,7 @@
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 
-			$this->db =& $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['phpgw']->db);
 			$this->db_hl =& $GLOBALS['phpgw']->db_hl;
 	
 			$this->vfs_shared ();

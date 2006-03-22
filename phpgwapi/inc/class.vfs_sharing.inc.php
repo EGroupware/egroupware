@@ -32,7 +32,7 @@
 		function vfs_sharing()
 		{
 			$this->accounts =& $GLOBALS['phpgw']->accounts;
-			$this->db = $GLOBALS['phpgw']->db;
+			$this->db = clone($GLOBALS['phpgw']->db);
 		}
 
 		/*!
