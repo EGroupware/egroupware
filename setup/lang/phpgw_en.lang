@@ -143,6 +143,7 @@ db root password	setup	en	DB root password
 db root username	setup	en	DB root username
 db type	setup	en	DB Type
 db user	setup	en	DB User
+default	setup	en	recommended default
 default file system space per user/group ?	setup	en	Default file system space per user/group ?
 delete	setup	en	Delete
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	en	Delete all existing SQL accounts, groups, ACLs and preferences (normally not necessary)?
