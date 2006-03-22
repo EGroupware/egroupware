@@ -1386,7 +1386,8 @@
 								$cell['height'],
 								$cell['width'],
 								$cell['class'],
-							),'height,widht,class'),$cell['name']). ($html ? '' : '</div>');
+								$cell['name']
+							),'height,widht,class,id')). ($html ? '' : '</div>');
 					}
 					if ($box_anz > 1)	// small docu in the html-source
 					{
