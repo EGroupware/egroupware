@@ -1,5 +1,12 @@
 %1 email addresses inserted	common	eu	%1 helbide elektronikoak txertatuak
+%1 is not executable by the webserver !!!	common	eu	%1-ek ez du baimenik web zerbitzaria exekutatzeko!!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1eGroupWare%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
+(shift-)click or drag to change value	jscalendar	eu	Sakatu maiuskula edota arrastatu balioa aldatzeko
+- click on any of the time parts to increase it	jscalendar	eu	- Egin klik edozein zatian handitzeko
+- or click and drag for faster selection.	jscalendar	eu	- sakatu edo arrastatu aukeraketa azkarrerako
+- or shift-click to decrease it	jscalendar	eu	- sakatu maiuskularekin batera gutxitzeko
+- use the %1, %2 buttons to select month	jscalendar	eu	- %1, %2 botoiak erabili hilabetea aukeratzeko
+- use the %1, %2 buttons to select year	jscalendar	eu	- %1, %2 botoiak erabili urtea aukeratzeko
 00 (disable)	admin	eu	00 (desaktibatu)
 13 (ntp)	admin	eu	13 (ntp)
 80 (http)	admin	eu	80 (http)
@@ -22,6 +29,7 @@ acl	common	eu	ACL
 action	common	eu	Ekin
 active	common	eu	Aktibatua
 add	common	eu	Gehitu
+add %1 category for	common	eu	%1 kategoria gehitu zertarako
 add category	common	eu	Kategoria gehitu
 add sub	common	eu	Gehitu azpi-
 addressbook	common	eu	Helbide liburua
@@ -38,6 +46,7 @@ align right	tinymce	eu	Lerrokatu eskubian
 alignment	tinymce	eu	Lerrokatzea
 all	common	eu	Guztiak
 all fields	common	eu	eremu guztiak
+all four sides	htmlarea-TableOperations	eu	Lau ertzak
 alphabet	common	eu	a,b,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	eu	Txadakatu estilo-orria
 alternative image	tinymce	eu	Ordezko irudia
@@ -58,6 +67,8 @@ august	common	eu	Abuztua
 australia	common	eu	AUSTRALIA
 austria	common	eu	AUSTRIA
 author	common	eu	Egilea
+autohide sidebox menus	common	eu	Menuak automatikoki ezkutatu
+automatically hide the sidebox menus?	common	eu	Menuak automatikoki ezkutatu?
 autosave default category	common	eu	Autograbatu kategoria lehenetsia
 azerbaijan	common	eu	AZERBAIJAN
 back	common	eu	Atzera
@@ -70,6 +81,7 @@ bahamas	common	eu	BAHAMAS
 bahrain	common	eu	BAHRAIN
 bangladesh	common	eu	BLANGADESH
 barbados	common	eu	BARBADOS
+baseline	htmlarea-TableOperations	eu	Oinarriko linea
 belarus	common	eu	BELARUS
 belgium	common	eu	BELGIKA
 belize	common	eu	BELIZE
@@ -115,15 +127,19 @@ central african republic	common	eu	ERTA AFRIKAKO ERREPUBLIKA
 chad	common	eu	CHAD
 change	common	eu	Aldatu
 char	htmlarea-TableOperations	eu	Karaktere
+charset	common	eu	iso-8859-1
 chec_k link...	htmlarea-ContextMenu	eu	Lotura egiaztatu...
 check installation	common	eu	Instalazioa egiaztu
 check now	common	eu	Egiaztatu orain
 chile	common	eu	CHILE
 china	common	eu	TXINA
+choose directory to move selected folders and files to.	tinymce	eu	Direktorio bat aukeratu aukeratutako karpeta eta fitxategiak mugitzeko
+choose list style type (for ordered lists)	htmlarea-ListType	eu	Zerrendako estiloa aukeratu ( zerrenda ordenatzeko)
 choose the category	common	eu	Kategoria aukeratu
 choose the parent category	common	eu	Goi kategoria aukeratu
 christmas island	common	eu	CHRISTMAS ISLAND
 class	tinymce	eu	Klase
+cleanup messy code	tinymce	eu	Kodigoa garbitu
 clear	common	eu	Garbitu
 clear form	common	eu	Formularioa garbitu
 click	common	eu	Klikatu
@@ -188,8 +204,10 @@ direction	tinymce	eu	Helbidea
 directory	tinymce	eu	Direktorio
 disable slider effects	common	eu	Efektu graduatzaileak desaktibatu
 disabled	common	eu	Desaktibatu
+display %s first	jscalendar	eu	Erakutsi % lehenengo
 djibouti	common	eu	DJIBOUTI
 do you also want to delete all subcategories ?	common	eu	Azpikategoria guztiak ezabatu nahi dituzu?
+do you want to use the wysiwyg mode for this textarea?	tinymce	eu	WYSIWYG modua erabili nahi al duzu testuaren eremu honetarako?
 document properties	common	eu	Dokumentuaren propietateak:
 document title:	common	eu	Dokumentuaren izenburua:
 domain	common	eu	Domeinu

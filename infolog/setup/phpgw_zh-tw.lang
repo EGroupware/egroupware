@@ -27,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	zh-tw	新增一個附屬�
 add a new todo	infolog	zh-tw	新增待辦事項
 add file	infolog	zh-tw	新增檔案
 add sub	infolog	zh-tw	新增子分類
+add timesheet entry	infolog	zh-tw	新增時間表資料
 add:	infolog	zh-tw	新增：
 all	infolog	zh-tw	全部
 all links and attachments	infolog	zh-tw	所有的連結與附加檔案

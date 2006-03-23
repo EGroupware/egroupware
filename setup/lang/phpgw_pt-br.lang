@@ -10,6 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	pt-br	<b>Isto irá criar 1 conta de administrador e 3 contas demo</b><br />Os usuários/senhas são: demo/guest, demo2/guest and demo3/guest.
 accounts existing	setup	pt-br	Contas existentes
 actions	setup	pt-br	Ações
+activate save password check	setup	pt-br	Ativar salvamento de senhas
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	pt-br	Adicionar usuários criados automaticamente para este grupo (o grupo 'Padrão' será utilizado se este campo estiver vazio.)
 add new database instance (egw domain)	setup	pt-br	Adicionar nova base de dados (domínio eGW )
 additional settings	setup	pt-br	Configurações Adicionais
@@ -410,7 +411,7 @@ setting the system-charset to utf-8 (unicode) allows the coexistens of data from
 settings	setup	pt-br	Configurações
 setup	setup	pt-br	Configurador
 setup demo accounts in ldap	setup	pt-br	Configurar contas de demonstração no LDAP
-setup main menu	setup	pt-br	Configurar o Menu Principal
+setup main menu	setup	pt-br	Menu principal de configuração
 setup the database	setup	pt-br	Configurar a base de dados
 setup/config admin login	setup	pt-br	Definir/Configurar a conexão do Administrador
 show 'powered by' logo on	setup	pt-br	Área para exibição 'powered by  eGroupWare'

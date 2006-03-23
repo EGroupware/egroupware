@@ -1,5 +1,8 @@
 %1 email addresses inserted	common	en	%1 email addresses inserted
 %1 is not executable by the webserver !!!	common	en	%1 is not executable by the webserver !!!
+%1 manual	common	en	%1 manual
+%1 start	common	en	%1 start
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	en	%1Choose an other directory%2<br />or make %3 writeable by webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	en	%1eGroupWare%2 is a multi-user, web-based groupware suite written in %3PHP%4.
 (shift-)click or drag to change value	jscalendar	en	(Shift-)Click or drag to change value
 - click on any of the time parts to increase it	jscalendar	en	- Click on any of the time parts to increase it
@@ -22,6 +25,7 @@ _table properties...	htmlarea-ContextMenu	en	_Table Properties...
 a editor instance must be focused before using this command.	tinymce	en	A editor instance must be focused before using this command.
 about	common	en	About
 about %1	common	en	About %1
+about egroupware	common	en	About eGroupware
 about the calendar	jscalendar	en	About the calendar
 about this editor	htmlarea	en	About this editor
 access	common	en	Access
@@ -36,6 +40,7 @@ active	common	en	Active
 add	common	en	Add
 add %1 category for	common	en	Add %1 category for
 add category	common	en	Add category
+add shortcut	common	en	Add Shortcut
 add sub	common	en	Add sub
 addressbook	common	en	Addressbook
 admin	common	en	Admin
@@ -62,6 +67,7 @@ angola	common	en	ANGOLA
 anguilla	common	en	ANGUILLA
 antarctica	common	en	ANTARCTICA
 antigua and barbuda	common	en	ANTIGUA AND BARBUDA
+application	common	en	Application
 apply	common	en	Apply
 april	common	en	April
 are you sure you want to delete these entries ?	common	en	Are you sure you want to delete these entries ?
@@ -73,7 +79,9 @@ august	common	en	August
 australia	common	en	AUSTRALIA
 austria	common	en	AUSTRIA
 author	common	en	Author
+autohide sidebox menu's	common	en	Autohide Sidebox menu's
 autohide sidebox menus	common	en	Autohide Sidebox menus
+automatically hide the sidebox menu's?	common	en	Automatically hide the Sidebox menu's?
 automatically hide the sidebox menus?	common	en	Automatically hide the Sidebox menus?
 autosave default category	common	en	Autosave Default Category
 azerbaijan	common	en	AZERBAIJAN
@@ -82,6 +90,7 @@ back to user login	common	en	Back to user login
 background	htmlarea-TableOperations	en	Background
 background color	htmlarea	en	Background Color
 background color:	common	en	Background color:
+backupdir '%1' is not writeable by the webserver	common	en	backupdir '%1' is not writeable by the webserver
 bad login or password	common	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
@@ -98,6 +107,7 @@ bg color	tinymce	en	Bg color
 bhutan	common	en	BHUTAN
 blocked, too many attempts	common	en	Blocked, too many attempts
 bold	common	en	Bold
+bold.gif	common	en	bold.gif
 bolivia	common	en	BOLIVIA
 border	common	en	Border
 border color	tinymce	en	Border color
@@ -119,6 +129,8 @@ cambodia	common	en	CAMBODIA
 cameroon	common	en	CAMEROON
 canada	common	en	CANADA
 cancel	common	en	Cancel
+cannot replace %1 because it is a directory	common	en	Cannot replace %1 because it is a directory
+cant open '%1' for %2	common	en	Cant open '%1' for %2
 cape verde	common	en	CAPE VERDE
 caption	common	en	Caption
 categories	common	en	Categories
@@ -132,6 +144,7 @@ cell properties	htmlarea-TableOperations	en	Cell Properties
 cellpadding	tinymce	en	Cellpadding
 cellspacing	tinymce	en	Cellspacing
 center	tinymce	en	Center
+centered	common	en	centered
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
 change	common	en	Change
@@ -142,6 +155,11 @@ check installation	common	en	Check installation
 check now	common	en	Check Now
 chile	common	en	CHILE
 china	common	en	CHINA
+choose a background color	common	en	Choose a background color
+choose a background color for the icons	common	en	Choose a background color for the icons
+choose a background image.	common	en	Choose a background image.
+choose a background style.	common	en	Choose a background style.
+choose a text color for the icons	common	en	Choose a text color for the icons
 choose directory to move selected folders and files to.	tinymce	en	Choose directory to move selected folders and files to.
 choose list style type (for ordered lists)	htmlarea-ListType	en	Choose list style type (for ordered lists)
 choose the category	common	en	Choose the category
@@ -155,6 +173,7 @@ click	common	en	Click
 click or mouse over to show menus	common	en	Click or Mouse Over to show menus
 click or mouse over to show menus?	common	en	Click or Mouse Over to show menus?
 close	common	en	Close
+close sidebox	common	en	Close sidebox
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
 collapsed borders	htmlarea-TableOperations	en	Collapsed borders
 colombia	common	en	COLOMBIA
@@ -167,6 +186,7 @@ company	common	en	Company
 configuration problem	tinymce	en	Configuration problem
 congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
+contacting server...	common	en	Contacting Server...
 cook islands	common	en	COOK ISLANDS
 copy	common	en	Copy
 copy selection	htmlarea	en	Copy selection
@@ -174,6 +194,7 @@ copy table row	tinymce	en	Copy table row
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	en	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
 costa rica	common	en	COSTA RICA
 cote d ivoire	common	en	COTE D IVOIRE
+could not contact server. operation timed out!	common	en	Could not contact server. Operation Timed Out!
 create	common	en	Create
 create a link	htmlarea-ContextMenu	en	Create a link
 created by	common	en	Created By
@@ -200,6 +221,8 @@ decimal numbers	htmlarea-ListType	en	Decimal numbers
 decrease indent	htmlarea	en	Decrease Indent
 default	tinymce	en	Default
 default category	common	en	Default Category
+default height for the windows	common	en	Default height for the windows
+default width for the windows	common	en	Default width for the windows
 delete	common	en	Delete
 delete cell	htmlarea-TableOperations	en	Delete cell
 delete column	htmlarea-TableOperations	en	Delete column
@@ -213,11 +236,13 @@ details	common	en	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
 dictionary	htmlarea-SpellChecker	en	Dictionary
 direction	tinymce	en	Direction
+direction left to right	common	en	Direction left to right
 direction right to left	tinymce	en	Direction right to left
 directory	tinymce	en	Directory
 disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png-image-bugfix
 disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Disable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
 disabled	common	en	Disabled
 display %s first	jscalendar	en	Display %s first
 djibouti	common	en	DJIBOUTI
@@ -249,6 +274,7 @@ element...	htmlarea-ContextMenu	en	Element...
 email	common	en	E-Mail
 email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1"
 emotions	tinymce	en	Emotions
+en	common	en	en
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
@@ -265,6 +291,7 @@ error renaming %1 %2 directory	common	en	Error renaming %1 %2 directory
 estonia	common	en	ESTONIA
 ethiopia	common	en	ETHIOPIA
 exact	common	en	exact
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to Contact Server or Invalid Response from Server. Try to relogin. Contact Admin in case of faliure.
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 fax number	common	en	fax number
@@ -300,6 +327,7 @@ flash properties	tinymce	en	Flash properties
 flash-file (.swf)	tinymce	en	Flash-File (.swf)
 float	htmlarea-TableOperations	en	Float
 folder	tinymce	en	Folder
+folder already exists.	common	en	Folder already exists.
 folder name missing.	tinymce	en	Folder name missing.
 folder not found.	tinymce	en	Folder not found.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	en	Folder with specified new name already exists. Folder was not renamed/moved.
@@ -316,6 +344,7 @@ french southern territories	common	en	FRENCH SOUTHERN TERRITORIES
 friday	common	en	Friday
 ftp	common	en	FTP
 fullname	common	en	Fullname
+fullscreen mode	common	en	Fullscreen mode
 gabon	common	en	GABON
 gambia	common	en	GAMBIA
 general menu	common	en	General Menu
@@ -372,6 +401,9 @@ hungary	common	en	HUNGARY
 i will open it in a new page.	htmlarea-SpellChecker	en	I will open it in a new page.
 i_nsert row before	htmlarea-ContextMenu	en	I_nsert Row Before
 iceland	common	en	ICELAND
+iespell not detected. click ok to go to download page.	common	en	ieSpell not detected. Click OK to go to download page.
+if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute?
+if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
 ignore	htmlarea-SpellChecker	en	Ignore
 ignore all	htmlarea-SpellChecker	en	Ignore all
 image description	tinymce	en	Image description
@@ -383,6 +415,7 @@ indent	tinymce	en	Indent
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
 insert	tinymce	en	Insert
+insert 'return false'	common	en	insert 'return false'
 insert / edit flash movie	tinymce	en	Insert / edit Flash Movie
 insert / edit horizontale rule	tinymce	en	Insert / edit Horizontale Rule
 insert _column before	htmlarea-ContextMenu	en	Insert _Column Before
@@ -411,6 +444,7 @@ insert/edit link	tinymce	en	Insert/edit link
 insert/modify table	tinymce	en	Insert/Modify table
 inserts a new table	tinymce	en	Inserts a new table
 international	common	en	International
+invalid filename	common	en	Invalid filename
 invalid ip address	common	en	Invalid IP address
 invalid password	common	en	Invalid password
 iran, islamic republic of	common	en	IRAN, ISLAMIC REPUBLIC OF
@@ -420,6 +454,7 @@ israel	common	en	ISRAEL
 it has been more then %1 days since you changed your password	common	en	It has been more then %1 days since you changed your password
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
 italic	common	en	Italic
+italic.gif	common	en	italic.gif
 italy	common	en	ITALY
 jamaica	common	en	JAMAICA
 january	common	en	January
@@ -444,6 +479,7 @@ korea, republic of	common	en	KOREA, REPUBLIC OF
 kuwait	common	en	KUWAIT
 kyrgyzstan	common	en	KYRGYZSTAN
 language	common	en	Language
+language_direction_rtl	common	en	language_direction_rtl
 lao peoples democratic republic	common	en	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	en	Last name
 last name of the user, eg. "%1"	common	en	last name of the user, eg. "%1"
@@ -459,6 +495,7 @@ liberia	common	en	LIBERIA
 libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
 link points to:	htmlarea-ContextMenu	en	Link points to:
 link url	tinymce	en	Link URL
 list	common	en	List
@@ -507,6 +544,7 @@ message	common	en	Message
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
 middle	htmlarea-TableOperations	en	Middle
+minute	common	en	minute
 mkdir failed.	tinymce	en	Mkdir failed.
 modify url	htmlarea-ContextMenu	en	Modify URL
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
@@ -517,6 +555,7 @@ montserrat	common	en	MONTSERRAT
 morocco	common	en	MOROCCO
 move	tinymce	en	Move
 mozambique	common	en	MOZAMBIQUE
+multiple	common	en	multiple
 myanmar	common	en	MYANMAR
 name	common	en	Name
 name of the user, eg. "%1"	common	en	name of the user, eg. "%1"
@@ -555,6 +594,7 @@ no permission to move files and folders.	tinymce	en	No permission to move files 
 no permission to rename files and folders.	tinymce	en	No permission to rename files and folders.
 no permission to upload.	tinymce	en	No permission to upload.
 no rules	htmlarea-TableOperations	en	No rules
+no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
 no shadow	tinymce	en	No shadow
 no sides	htmlarea-TableOperations	en	No sides
 no subject	common	en	No Subject
@@ -588,6 +628,7 @@ open link in a new window	tinymce	en	Open link in a new window
 open link in the same window	tinymce	en	Open link in the same window
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
+open sidebox	common	en	Open sidebox
 opens this link in a new window	htmlarea-ContextMenu	en	Opens this link in a new window
 ordered list	common	en	Ordered List
 original	common	en	Original
@@ -624,6 +665,9 @@ paste table row before	tinymce	en	Paste table row before
 path	htmlarea	en	Path
 path not found.	tinymce	en	Path not found.
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
+pattern for search in addressbook	common	en	Pattern for Search in Addressbook
+pattern for search in calendar	common	en	Pattern for Search in Calendar
+pattern for search in projects	common	en	Pattern for Search in Projects
 percent	htmlarea-TableOperations	en	percent
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
@@ -655,6 +699,7 @@ portugal	common	en	PORTUGAL
 position (x/y)	tinymce	en	Position (X/Y)
 postal	common	en	Postal
 powered by egroupware version %1	common	en	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
+powered by phpgroupware version %1	common	en	Powered by phpGroupWare version %1
 preferences	common	en	Preferences
 preferences for the idots template set	common	en	Preferences for the idots template set
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
@@ -665,6 +710,7 @@ primary style-sheet:	common	en	Primary style-sheet:
 print	common	en	Print
 priority	common	en	Priority
 private	common	en	Private
+programs	common	en	Programs
 project	common	en	Project
 public	common	en	public
 puerto rico	common	en	PUERTO RICO
@@ -672,12 +718,14 @@ qatar	common	en	QATAR
 re-check	htmlarea-SpellChecker	en	Re-check
 read	common	en	Read
 read this list of methods.	common	en	Read this list of methods.
+reading	common	en	reading
 redo	tinymce	en	Redo
 redoes your last action	htmlarea	en	Redoes your last action
 refresh	tinymce	en	Refresh
 reject	common	en	Reject
 remove col	tinymce	en	Remove col
 remove selected accounts	common	en	remove selected accounts
+remove shortcut	common	en	Remove Shortcut
 remove the	htmlarea-ContextMenu	en	Remove the
 remove this node from the document	htmlarea-ContextMenu	en	Remove this node from the document
 rename	common	en	Rename
@@ -714,11 +762,13 @@ san marino	common	en	SAN MARINO
 sao tome and principe	common	en	SAO TOME AND PRINCIPE
 saturday	common	en	Saturday
 saudi arabia	common	en	SAUDI ARABIA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	en	Savant2 version differs from Savant2 wrapper. <br/>This version: %1 <br/>Savants version: %2
 save	common	en	Save
 search	common	en	Search
 search %1 '%2'	common	en	Search %1 '%2'
 search or select accounts	common	en	Search or select accounts
 search or select multiple accounts	common	en	search or select multiple accounts
+second	common	en	second
 section	common	en	Section
 select	common	en	Select
 select all	tinymce	en	Select All
@@ -729,6 +779,8 @@ select group	common	en	Select group
 select home email address	common	en	Select home email address
 select multiple accounts	common	en	select multiple accounts
 select one	common	en	Select one
+select the default height for the application windows	common	en	Select the default height for the application windows
+select the default width for the application windows	common	en	Select the default width for the application windows
 select user	common	en	Select user
 select work email address	common	en	Select work email address
 selection	common	en	Selection
@@ -736,6 +788,8 @@ send	common	en	Send
 senegal	common	en	SENEGAL
 september	common	en	September
 server %1 has been added	common	en	Server %1 has been added
+server answered. processing response...	common	en	Server answered. Processing response...
+server contacted. waiting for response...	common	en	Server Contacted. Waiting for response...
 server name	common	en	Server Name
 session has been killed	common	en	Session has been killed
 setup	common	en	Setup
@@ -743,14 +797,19 @@ setup main menu	common	en	Setup Main Menu
 seychelles	common	en	SEYCHELLES
 show all	common	en	show all
 show all categorys	common	en	Show all categorys
+show clock?	common	en	Show clock?
+show home and logout button in main application bar?	common	en	Show home and logout button in main application bar?
 show locationbar	tinymce	en	Show locationbar
+show logo's on the desktop.	common	en	Show logo's on the desktop.
 show menu	common	en	show menu
 show menubar	tinymce	en	Show menubar
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page?
+show page generation time?	common	en	Show page generation time?
 show scrollbars	tinymce	en	Show scrollbars
 show statusbar	tinymce	en	Show statusbar
 show the image properties dialog	htmlarea-ContextMenu	en	Show the image properties dialog
+show the logo's of egroupware and x-desktop on the desktop.	common	en	Show the logo's of eGroupware and x-desktop on the desktop.
 show the table cell properties dialog	htmlarea-ContextMenu	en	Show the Table Cell Properties dialog
 show the table properties dialog	htmlarea-ContextMenu	en	Show the Table Properties dialog
 show the table row properties dialog	htmlarea-ContextMenu	en	Show the Table Row Properties dialog
@@ -781,7 +840,9 @@ sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start time	common	en	Start time
 start with	common	en	start with
+starting up...	common	en	Starting Up...
 status	common	en	Status
+stretched	common	en	stretched
 strikethrough	htmlarea	en	Strikethrough
 striketrough	tinymce	en	Striketrough
 style [css]	htmlarea-TableOperations	en	Style [CSS]
@@ -828,6 +889,7 @@ this is just a template popup	tinymce	en	This is just a template popup
 this name has been used already	common	en	This name has been used already !
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	en	This will drop changes and quit spell checker.  Please confirm.
 thursday	common	en	Thursday
+tiled	common	en	tiled
 time	common	en	Time
 time selection:	jscalendar	en	Time selection:
 time zone	common	en	Timezone
@@ -847,6 +909,7 @@ tonga	common	en	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	en	Too many unsucessful attempts to login: %1 for the user '%2', %3 for the IP %4
 top	common	en	Top
 total	common	en	Total
+transparant bg for the icons?	common	en	Transparant bg for the icons?
 trinidad and tobago	common	en	TRINIDAD AND TOBAGO
 tuesday	common	en	Tuesday
 tunisia	common	en	TUNISIA
@@ -854,9 +917,11 @@ turkey	common	en	TURKEY
 turkmenistan	common	en	TURKMENISTAN
 turks and caicos islands	common	en	TURKS AND CAICOS ISLANDS
 tuvalu	common	en	TUVALU
+type	common	en	Type
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
 underline	common	en	Underline
+underline.gif	common	en	underline.gif
 undo	tinymce	en	Undo
 undoes your last action	htmlarea	en	Undoes your last action
 united arab emirates	common	en	UNITED ARAB EMIRATES
@@ -871,6 +936,7 @@ unordered list	tinymce	en	Unordered list
 unset color	htmlarea-TableOperations	en	Unset color
 up	tinymce	en	Up
 update	common	en	Update
+update the clock per minute or per second	common	en	Update the clock per minute or per second
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writeable by webserver
 upload image	htmlarea-UploadImage	en	Upload Image
@@ -907,11 +973,16 @@ warning!\n renaming or moving folders and files will break existing links in you
 wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western sahara	common	en	WESTERN SAHARA
+what color should all the blank space on the desktop have	common	en	What color should all the blank space on the desktop have
+what style would you like the image to have?	common	en	What style would you like the image to have?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 which groups	common	en	Which groups
 width	common	en	Width
 window name	tinymce	en	Window name
 wk	jscalendar	en	wk
 work email	common	en	work email
+would you like to display the page generation time at the bottom of every window?	common	en	Would you like to display the page generation time at the bottom of every window?
+writing	common	en	writing
 written by:	common	en	Written by:
 year	common	en	Year
 yemen	common	en	YEMEN
@@ -937,3 +1008,4 @@ your settings have been updated	common	en	Your settings have been Updated
 yugoslavia	common	en	YUGOSLAVIA
 zambia	common	en	ZAMBIA
 zimbabwe	common	en	ZIMBABWE
+zoom	common	en	Zoom

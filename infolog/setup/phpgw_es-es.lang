@@ -27,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	es-es	Añadir nueva subtar
 add a new todo	infolog	es-es	Añadir nueva tarea pendiente
 add file	infolog	es-es	Añadir archivo
 add sub	infolog	es-es	agregar Sub
+add timesheet entry	infolog	es-es	Añadir entrada a la hoja de presencia
 add:	infolog	es-es	Añadir:
 all	infolog	es-es	Todos
 all links and attachments	infolog	es-es	todos los enlaces y ficheros adjuntos
