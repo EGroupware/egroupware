@@ -97,7 +97,7 @@
 			}
 
 			$this->snapshotted_files = array();
-			$this->db =& clone($GLOBALS['phpgw']->db);
+			$this->db = clone($GLOBALS['phpgw']->db);
 			$this->now = date('Y-m-d H:i:s');
 			$this->account_id = $GLOBALS['phpgw_info']['user']['account_id'];
 			$this->tmp_dir = $GLOBALS['phpgw_info']['server']['temp_dir'];
