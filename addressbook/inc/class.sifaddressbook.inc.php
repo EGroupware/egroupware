@@ -126,7 +126,7 @@
 			xml_parser_set_option($this->xml_parser, XML_OPTION_CASE_FOLDING, false);
 			xml_set_element_handler($this->xml_parser, "startElement", "endElement");
 			xml_set_character_data_handler($this->xml_parser, "characterData");
-			$this->strXmlData = xml_parse($this->xml_parser, $sifdata);
+			$this->strXmlData = xml_parse($this->xml_parser, $sifData);
 			if(!$this->strXmlData) {
 				error_log(sprintf("XML error: %s at line %d",
 					xml_error_string(xml_get_error_code($this->xml_parser)),
