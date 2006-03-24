@@ -57,11 +57,15 @@
 					<hbox align="center" orient=",5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
 						<button image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<button image="$row_cont[info_percent]" ro_image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
-					<vbox orient="0,0">
+					<vbox class="fullWidth" orient="0,0">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
-						<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
+						<hbox orient=",0,0">
+							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
+							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
+						</hbox>
 						<description options=",,1" no_lang="1" id="${row}[info_des]"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
@@ -71,9 +75,9 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true"/>
 					</vbox>
 					<vbox data="" rows="3" cols="1">
-						<date-duration id="${row}[info_used_time]" readonly="true" options=",,,,1"/>
-						<date-duration id="${row}[info_sum_timesheets]" readonly="true" options=",,,,1" class="timesheet"/>
-						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options=",,,,1"/>
+						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+						<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
 					</vbox>
 					<vbox orient="0,0">
 						<menulist>
@@ -158,11 +162,15 @@
 					<hbox align="center" orient=",5">
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
 						<button image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<button image="$row_cont[info_percent]" ro_image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
-					<vbox orient="0,0">
+					<vbox class="fullWidth" orient="0,0">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
-						<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
+						<hbox orient=",0,0">
+							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
+							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
+						</hbox>
 						<description options=",,1" no_lang="1" id="${row}[info_des]"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
@@ -172,9 +180,9 @@
 						<date-time id="${row}[info_datecompleted]" readonly="true"/>
 					</vbox>
 					<vbox data="" rows="3" cols="1" options="3">
-						<date-duration id="${row}[info_used_time]" readonly="true" options=",,,,1"/>
-						<date-duration id="${row}[info_sum_timesheets]" readonly="true" options=",,,,1" class="timesheet"/>
-						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options=",,,,1"/>
+						<date-duration id="${row}[info_used_time]" readonly="true" options="@duration_format"/>
+						<date-duration id="${row}[info_sum_timesheets]" readonly="true" options="@duration_format" class="timesheet"/>
+						<date-duration id="${row}[info_planned_time]" span="all" class="planned" readonly="true" options="@duration_format"/>
 					</vbox>
 					<vbox orient="0,0">
 						<menulist>

@@ -45,6 +45,10 @@
 		 * @var bolink-object $link reference to instance of the link-class of bo
 		 */
 		var $link;
+		/**
+		 * @var string $duration_format allowed units and hours per day, can be overwritten by the projectmanager configuration, default all units, 8h
+		 */
+		var $duration_format = ',';	// comma is necessary!
 
 		function uiinfolog( )
 		{
@@ -107,6 +111,14 @@
 			
 			$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['infolog'];
 			
+			// read the duration format from project-manager
+			if ($GLOBALS['egw_info']['apps']['projectmanager'])
+			{
+				$pm_config =& CreateObject('phpgwapi.config','projectmanager');
+				$pm_config->read_repository();
+				$this->duration_format = str_replace(',','',$pm_config->config_data['duration_units']).','.$pm_config->config_data['hours_per_workday'];
+				unset($pm_config);
+			}
 			$GLOBALS['uiinfolog'] =& $this;	// make ourself availible for ExecMethod of get_rows function
 		}
 
@@ -130,6 +142,8 @@
 			$readonlys["edit[$id]"] = !$this->bo->check_access($info,EGW_ACL_EDIT);
 			$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || 
 				in_array($this->user, (array)$info['info_responsible'])));
+			$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] = 
+				!$this->bo->check_access($info,EGW_ACL_EDIT) && !in_array($this->user, (array)$info['info_responsible']);
 			$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
 			$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
 			$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
@@ -166,7 +180,23 @@
 			}
 			$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
 			$info['info_status_label'] = $this->bo->status[$info['info_type']][$info['info_status']];
-
+			
+			if (!$this->prefs['show_percent'] || $show_links == 'no_describtion')
+			{
+				if ($info['info_status'] == 'ongoing' && $info['info_type'] != 'phone')
+				{
+					$info['info_status'] = $info['info_status_label'] = $info['info_percent'];
+				}
+				$readonlys["edit_percent[$id]"] = true;
+			}
+			elseif($readonlys["edit_percent[$id]"])	// show percent, but button is switched off
+			{
+				$info['info_percent2'] = $info['info_percent'];
+			}
+			if ($this->prefs['show_id'] && !$show_links == 'no_describtion')
+			{
+				$info['info_number'] = $info['info_id'];
+			}
 			return $info;
 		}
 
@@ -225,8 +255,10 @@
 				$rows[] = $info;
 			}
 			if ($query['no_actions']) $rows['no_actions'] = true;
-			$rows['no_times'] = !$this->prefs['show_times'];
+			$rows['no_details'] = $query['filter2'] == 'no_describtion';
+			$rows['no_times'] = !$this->prefs['show_times'] || $query['filter2'] == 'no_describtion';
 			$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
+			$rows['duration_format'] = ','.$this->duration_format.',,1';
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 
@@ -407,6 +439,7 @@
 					'info_id'     => $info_id,
 					'info_status' => 'done',
 					'info_percent'=> 100,
+					'info_datecompleted' => $this->bo->now_su,
 				);
 				$this->bo->write($values);
 				
@@ -532,6 +565,7 @@
 								$content['info_link_id'] = 0;	// as field has to be int
 							}
 						}
+						$active_tab = $content[$tabs];
 						if (!($info_id = $this->bo->write($content)))
 						{
 							$content['msg'] = $info_id !== 0 || !$content['info_id'] ? lang('Error: saving the entry') :
@@ -551,6 +585,7 @@
 							$content['msg'] = lang('InfoLog entry saved');
 							$content['js'] = "opener.location.href='".($link=$GLOBALS['egw']->link($referer,array('msg' => $content['msg'])))."';";
 						}
+						$content[$tabs] = $active_tab;
 						if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
 						{
 							//echo "<p>pm_id changed: $content[old_pm_id] -> $content[pm_id]</p>\n";
@@ -676,7 +711,7 @@
 					*/
 					$content['info_type'] = $parent['info_type'];
 					$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-					$content['info_percent'] = '0%';
+					$content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
 					$content['info_confirm'] = 'not';
 					$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
 					$content['info_des'] = '';
@@ -692,34 +727,18 @@
 				}
 				else
 				{
-					if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT))
+					if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !in_array($this->user, (array)$content['info_responsible']))
 					{
-						if (in_array($this->user, (array)$content['info_responsible']))
+						if ($no_popup)
 						{
-							$content['status_only'] = True;
-							foreach($content as $name => $value)
-							{
-								$readonlys[$name] = $name != 'info_status';
-							}
-							// need to set all customfields extra, as they are not set if empty
-							foreach($this->bo->customfields as $name => $value)
-							{
-								$readonlys['#'.$name] = true;
-							}
-						}
-						else	// Permission denied
-						{
-							if ($no_popup)
-							{
-								$GLOBALS['egw']->common->egw_header();
-								parse_navbar();
-								echo '<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n";
-								$GLOBALS['egw']->common->egw_exit();
-							}
-							$js = "alert('".lang('Permission denied')."'); window.close();";
-							echo '<html><body onload="'.$js.'"></body></html>';
+							$GLOBALS['egw']->common->egw_header();
+							parse_navbar();
+							echo '<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n";
 							$GLOBALS['egw']->common->egw_exit();
 						}
+						$js = "alert('".lang('Permission denied')."'); window.close();";
+						echo '<html><body onload="'.$js.'"></body></html>';
+						$GLOBALS['egw']->common->egw_exit();
 					}
 				}
 				$content['links'] = $content['link_to'] = array(
@@ -768,12 +787,26 @@
 							$content['info_type'] = $type;
 						}
 						$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
-						$content['info_percent'] = '0%';
+						$content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
 						break;
 				}
 				if (!isset($this->bo->enums['type'][$content['info_type']]))
 				{
 					$content['info_type'] = 'note';
+				}
+			}
+			// for implizit edit of responsible user make all fields readonly, but status and percent
+			if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && in_array($this->user, (array)$content['info_responsible']))
+			{
+				$content['status_only'] = !in_array('link_to',$this->bo->responsible_edit);
+				foreach(array_diff(array_merge(array_keys($content),array('pm_id')),$this->bo->responsible_edit) as $name)
+				{
+					$readonlys[$name] = true;
+				}
+				// need to set all customfields extra, as they are not set if empty
+				foreach($this->bo->customfields as $name => $value)
+				{
+					$readonlys['#'.$name] = true;
 				}
 			}
 			// we allways need to set a non-empty/-zero primary, to make the radiobutton appear
@@ -799,6 +832,8 @@
 			{
 				$readonlys[$tabs]['project'] = true;	// disable the project tab
 			}
+			$content['duration_format'] = $this->duration_format;
+
 			$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
 			if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
 
@@ -860,12 +895,19 @@
 
 		function admin( )
 		{
-			if(get_var('cancel',Array('POST')))
-			{
-				$GLOBALS['egw']->redirect_link('/admin/index.php');
-			}
-
-			if(get_var('save',Array('POST')))
+			$fields = array(
+				'info_cat'      => 'Category',
+				'info_from'     => 'Contact',
+				'info_addr'     => 'Phone/Email',
+				'info_subject'  => 'Subject',
+				'info_des'      => 'Description',
+				'link_to'       => 'Links',
+				'info_priority' => 'Priority',
+				'info_location' => 'Location',
+				'info_planned_time' => 'Planned time',
+				'info_used_time'    => 'Used time',
+			);
+			if($_POST['save'] || $_POST['apply'])
 			{
 				$this->link_pathes = $this->bo->send_file_ips = array();
 
@@ -880,14 +922,26 @@
 						$this->bo->send_file_ips[$val] = stripslashes($ip[$key]);
 					}
 				}
+				$this->bo->responsible_edit = array('info_status','info_percent','info_datecompleted');
+				if ($_POST['responsible_edit']) 
+				{
+					$extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
+					$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
+				}
+				$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
 				$this->bo->config->config_data = array(
 					'link_pathes' => $this->link_pathes,
-					'send_file_ips' => $this->bo->send_file_ips
+					'send_file_ips' => $this->bo->send_file_ips,
+					'implicit_rights' => $this->bo->implicit_rights,
+					'responsible_edit' => implode(',',$extra),
 				);
 				$this->bo->config->save_repository(True);
 			}
+			if($_POST['cancel'] || $_POST['save'])
+			{
+				$GLOBALS['egw']->redirect_link('/admin/index.php');
+			}
 
-			$GLOBALS['egw_info']['flags']['css'] = $this->html->theme2css();
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Configuration');
 			$GLOBALS['egw']->common->egw_header();
 
@@ -896,10 +950,19 @@
 			$GLOBALS['egw']->template->set_block('info_admin_t', 'info_admin');
 
 			$GLOBALS['egw']->template->set_var(Array(
+				'lang_responsible_rights' => lang('Rights for the responsible'),
+				'lang_implicit_rights' => lang('Which implicit ACL rights should the responsible get?'),
+				'implicit_rights' => $this->html->select('implicit_rights',$this->bo->implicit_rights,array(
+					'read' => 'read rights (default)',
+					'edit' => 'edit rights (full edit rights incl. making someone else responsible!)',
+				)),
+				'lang_responsible_edit' => lang('Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.'),
+				'responsible_edit' => $this->html->checkbox_multiselect('responsible_edit',$this->bo->responsible_edit,$fields,false,'',11),
 				'text' => lang('<b>file-attachments via symlinks</b> instead of uploads and retrieval via file:/path for direct lan-clients'),
 				'action_url'  => $this->html->link('/index.php',$this->menuaction('admin')),
 				'save_button' => $this->html->submit_button('save','Save'),
-				'done_button' => $this->html->submit_button('cancel','Cancel'),
+				'apply_button' => $this->html->submit_button('apply','Apply'),
+				'cancel_button' => $this->html->submit_button('cancel','Cancel'),
 				'lang_valid'  => lang('valid path on clientside<br>eg. \\\\Server\\Share or e:\\'),
 				'lang_trans'  => lang('path on (web-)serverside<br>eg. /var/samba/Share'),
 				'lang_ip'     => lang('reg. expr. for local IP\'s<br>eg. ^192\\.168\\.1\\.')

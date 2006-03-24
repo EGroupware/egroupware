@@ -32,7 +32,6 @@
 		'none'   => lang('no links or attachments'),
  		'no_describtion' => lang('no describtion, links or attachments'),
 	);
-
 	/* Settings array for this app */
 	$GLOBALS['settings'] = array(
 		'homeShowEvents' => array(
@@ -93,6 +92,22 @@
 			'label'  => 'Show times',
 			'name'   => 'show_times',
 			'help'   => 'Show a column for used and planned times in the list.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'show_percent' => array(
+			'type'   => 'check',
+			'label'  => 'Show status and percent done separate',
+			'name'   => 'show_percent',
+			'help'   => 'Should the Infolog list show the percent done only for status ongoing or two separate icons.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'show_id' => array(
+			'type'   => 'check',
+			'label'  => 'Show ticket Id',
+			'name'   => 'show_id',
+			'help'   => 'Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.',
 			'xmlrpc' => True,
 			'admin'  => False
 		),

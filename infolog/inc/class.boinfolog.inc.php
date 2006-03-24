@@ -73,6 +73,14 @@
 		 * @var array $config infolog configuration
 		 */
 		var $config;
+		/**
+		 * @var array $responsible_edit=array('info_status','info_percent','info_datecompleted') fields the responsible user can change
+		 */
+		var $responsible_edit=array('info_status','info_percent','info_datecompleted');
+		/**
+		 * @var string $implicit_rights='read' implicit ACL rights of the responsible user: read or edit
+		 */
+		var $implicit_rights='read';
 		
 		/**
 		 * Constructor Infolog BO
@@ -160,8 +168,16 @@
 				{
 					$this->customfields = $this->config->config_data['customfields'];
 				}
-				$this->user = $GLOBALS['egw_info']['user']['account_id'];
+				if (count(explode(',',$this->config->config_data['responsible_edit'])))
+				{
+					$this->responsible_edit = array_merge($this->responsible_edit,explode(',',$this->config->config_data['responsible_edit']));
+				}
+				if ($this->config->config_data['implicit_rights'] == 'edit')
+				{
+					$this->implicit_rights = 'edit';
+				}
 			}
+			$this->user = $GLOBALS['egw_info']['user']['account_id'];
 			/**
 			 * @var int $tz_offset_s offset in secconds between user and server-time,
 			 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
@@ -218,7 +234,7 @@
 			{
 				return $cache[$info_id][$required_rights];
 			}
-			return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights );
+			return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit' );
 		}
 
 		/**
@@ -431,11 +447,12 @@
 				$backup_values = $values;	// to return the full values
 				$values = array(
 					'info_id'     => $values['info_id'],
-					'info_status' => $values['info_status'],
-					'info_percent' => $values['info_percent'],
-					'info_owner'  => $values['info_owner'],
 					'info_datemodified' => $values['info_datemodified'],
 				);
+				foreach($this->responsible_edit as $name)
+				{
+					if (isset($backup_values[$name])) $values[$name] = $backup_values[$name];
+				}
 				if ($set_completed)
 				{
 					$values['info_datecompleted'] = $this->user_time_now;

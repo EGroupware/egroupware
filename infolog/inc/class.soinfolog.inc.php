@@ -57,9 +57,10 @@
 		 *
 		 * @param array/int $info data or info_id of InfoLog entry
 		 * @param int $required_rights EGW_ACL_xyz anded together
+		 * @param boolean $implicit_edit=false
 		 * @return boolean True if access is granted else False
 		 */
-		function check_access( $info,$required_rights )
+		function check_access( $info,$required_rights,$implicit_edit=false )
 		{
 			if (is_array($info))
 			{
@@ -86,7 +87,7 @@
 				// ACL only on public entrys || $owner granted _PRIVATE
 				(!!($this->grants[$owner] & $required_rights) ||
 				// implicite read-rights for responsible user !!!
-				in_array($this->user, $info['info_responsible']) && $required_rights == EGW_ACL_READ) &&
+				in_array($this->user, $info['info_responsible']) && ($required_rights == EGW_ACL_READ || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
 				//$info['info_responsible'] == $this->user && $required_rights == EGW_ACL_READ) &&
 				($info['info_access'] == 'public' ||
 				!!($this->grants[$owner] & EGW_ACL_PRIVATE));
@@ -550,11 +551,12 @@
 			{
 				$pattern = $this->db->quote('%'.$query['search'].'%');
 
-				$columns = array('info_from','info_subject','info_extra_value');
+				$columns = array('info_from','info_addr','info_location','info_subject','info_extra_value');
 				// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
 				if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
-				$sql_query = 'AND ('.implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
+				$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
+					implode(" LIKE $pattern OR ",$columns)." LIKE $pattern) ";
 				$join = "LEFT JOIN $this->extra_table ON main.info_id=$this->extra_table.info_id";
 				// mssql and others cant use DISTICT if text columns (info_des) are involved
 				$distinct = $this->db->capabilities['distinct_on_text'] ? 'DISTINCT' : '';

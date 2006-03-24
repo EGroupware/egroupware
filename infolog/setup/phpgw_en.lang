@@ -98,6 +98,7 @@ duration	infolog	en	Duration
 each value is a line like <id>[=<label>]	infolog	en	each value is a line like <id>[=<label>]
 edit	infolog	en	Edit
 edit or create categories for ingolog	infolog	en	Edit or create categories for IngoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	en	edit rights (full edit rights incl. making someone else responsible!)
 edit status	infolog	en	Edit status
 edit the entry	infolog	en	Edit the entry
 edit this entry	infolog	en	Edit this entry
@@ -204,6 +205,7 @@ project	infolog	en	Project
 project settings: price, times	infolog	en	Project settings: price, times
 re:	infolog	en	Re:
 read one record by passing its id.	infolog	en	Read one record by passing its id.
+read rights (default)	infolog	en	read rights (default)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	en	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	en	Remark
 remove this link (not the entry itself)	infolog	en	Remove this link (not the entry itself)
@@ -213,6 +215,7 @@ responsible overdue	infolog	en	responsible overdue
 responsible upcoming	infolog	en	responsible upcoming
 responsible user, priority	infolog	en	responsible user, priority
 returns a list / search for records.	infolog	en	Returns a list / search for records.
+rights for the responsible	infolog	en	Rights for the responsible
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	saves the changes made and leaves
 saves this entry	infolog	en	Saves this entry
@@ -234,12 +237,16 @@ should infolog display your open entries - not finished tasks, phonecalls or not
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	en	Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	en	Should the Infolog list show the percent done only for status ongoing or two separate icons.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
 show a column for used and planned times in the list.	infolog	en	Show a column for used and planned times in the list.
 show full usernames	infolog	en	Show full usernames
 show in the infolog list	infolog	en	Show in the InfoLog list
 show list of upcoming entries	infolog	en	show list of upcoming entries
 show open entries: tasks/calls/notes on main screen	infolog	en	Show open entries: Tasks/Calls/Notes on main screen
+show status and percent done separate	infolog	en	Show status and percent done separate
+show ticket id	infolog	en	Show ticket Id
 show times	infolog	en	Show times
 small view	infolog	en	small view
 start a new search, cancel this link	infolog	en	start a new search, cancel this link
@@ -285,6 +292,8 @@ view subs	infolog	en	view Subs
 view the parent of this entry and all his subs	infolog	en	View the parent of this entry and all his subs
 view this linked entry in its application	infolog	en	view this linked entry in its application
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	en	when should the ToDo or Phone call be started, it shows up from that date in the filter open or own open (startpage)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	en	Which additional fields should the responsible be allowed to edit without having edit rights?<br />Status, percent and date completed are always allowed.
+which implicit acl rights should the responsible get?	infolog	en	Which implicit ACL rights should the responsible get?
 will-call	infolog	en	will call
 write (add or update) a record by passing its fields.	infolog	en	Write (add or update) a record by passing its fields.
 yes - delete	infolog	en	Yes - Delete

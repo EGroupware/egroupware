@@ -98,6 +98,7 @@ duration	infolog	de	Dauer
 each value is a line like <id>[=<label>]	infolog	de	jeder Wert ist eine Zeile im Format id=[angezeigter Wert]
 edit	infolog	de	Bearbeiten
 edit or create categories for ingolog	infolog	de	Kategorien für InfoLog bearbeiten oder neu anlegen
+edit rights (full edit rights incl. making someone else responsible!)	infolog	de	Bearbeitungsrechte (komplettes Bearbeiten einsch. jemand anderen dafür verantwortlich machen!)
 edit status	infolog	de	Status ändern
 edit the entry	infolog	de	Eintrag bearbeiten
 edit this entry	infolog	de	diesen Eintrag bearbeiten
@@ -204,6 +205,7 @@ project	infolog	de	Projekt
 project settings: price, times	infolog	de	Einstellungen zum Projekt: Preis, Zeiten
 re:	infolog	de	Re:
 read one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id lesen.
+read rights (default)	infolog	de	Leserechte (Vorgabe)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	de	reg. Ausdr. für lokale IP's<br>^192\.168\.1\.
 remark	infolog	de	Bemerkung
 remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nicht den Eintrag selbst)
@@ -213,6 +215,7 @@ responsible overdue	infolog	de	verantwortlich überfällig
 responsible upcoming	infolog	de	verantwortlich zufünftig
 responsible user, priority	infolog	de	Verantwortlicher, Priorität
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
+rights for the responsible	infolog	de	Rechte für den Verantwortlichen
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	speichert die Änderungen und beendet
 saves this entry	infolog	de	diesen Eintrag speichern
@@ -234,12 +237,16 @@ should infolog display your open entries - not finished tasks, phonecalls or not
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	de	Soll InfoLog Untereinträge in der normalen Ansicht anzeigen oder nicht. Sie können die Untereinträge immer über deren Haupteintrag anzeigen.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die zB. als Ticketnummer verwendet werden kann.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	de	soll dieser Eintrag nur sichtbar sein für Sie und Personen denen Sie privaten Zugriff über die ACL erlaubt haben
 show a column for used and planned times in the list.	infolog	de	Zeige eine Spalte für benutzte und geplante Zeiten in der List.
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
 show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
 show list of upcoming entries	infolog	de	Liste zukünftiger Einträge anzeigen
 show open entries: tasks/calls/notes on main screen	infolog	de	Nicht erledigte Einträge: Aufgaben/Anrufe/Notizen auf Startseite anzeigen
+show status and percent done separate	infolog	de	Status und Prozent erledigt separat anzeigen
+show ticket id	infolog	de	Ticketnummer anzeigen
 show times	infolog	de	Zeiten anzeigen
 small view	infolog	de	schmale Ansicht
 start a new search, cancel this link	infolog	de	eine neue Suche starten, diese Verknüpfung abbrechen
@@ -285,6 +292,8 @@ view subs	infolog	de	Untereinträge anzeigen
 view the parent of this entry and all his subs	infolog	de	übergeordneter Eintrag mit allen seinen Untereinträgen anzeigen
 view this linked entry in its application	infolog	de	diesen verknüpfen Eintrag in seiner Anwendung anzeigen
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	de	wann soll mit dem Auftrag oder Anruf begonnen werden, ab diesem Datum wird er beim Filter offen oder eigene offen angezeigt (Startseite)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	de	Welche zusätzlichen Felder soll der Verantwortliche bearbeiten können ohne Bearbeitungsrechte zu haben?<br />Status, Prozent und Datum erledigt sind immer erlaubt.
+which implicit acl rights should the responsible get?	infolog	de	Welche impliziten Zugriffsrechte soll der Verantwortliche bekommen?
 will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
 yes - delete	infolog	de	Ja - Löschen

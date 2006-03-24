@@ -99,7 +99,7 @@
 				</row>
 				<row class="row">
 					<description options=",,,info_planned_time" value="planned time"/>
-					<date-duration id="info_planned_time"/>
+					<date-duration id="info_planned_time" options=",$cont[duration_format]"/>
 				</row>
 				<row class="row" valign="top" height="60%">
 					<description options=",,,info_used_time" value="used time"/>
