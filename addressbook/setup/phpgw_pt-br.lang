@@ -51,6 +51,7 @@ contact settings	admin	pt-br	Preferências de Contatos
 copied by %1, from record #%2.	addressbook	pt-br	Copiado por %1, do registro #%2.
 country	common	pt-br	País
 create new links	addressbook	pt-br	Criar novos links
+credit	addressbook	pt-br	Crédito
 csv-fieldname	addressbook	pt-br	CSV-Nome do Campo
 csv-filename	addressbook	pt-br	CSV-Nome do Arquivo
 custom	addressbook	pt-br	Personalizado

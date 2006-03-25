@@ -13,7 +13,10 @@ bookable	resources	sk	Rezervovateµný
 buy this article	resources	sk	Kúpi» tento èlánok
 buy this resource	resources	sk	Kúpi» tento zdroj
 buyable	resources	sk	Na predaj
+categories admin	resources	sk	Správca kategórií
 category:	resources	sk	Kategória:
+check all	resources	sk	Oznaè v¹etko
+choose categories admin	resources	sk	vyberte správcu kategórií
 clear selection	resources	sk	zru¹i» výber
 configure access permissions	resources	sk	Nastavi» prístupové práva
 create new accessory for this resource	resources	sk	Vytvori» novú kategóriu pre tento zdroj
@@ -60,6 +63,8 @@ prizeing information for booking or buying	resources	sk	Cenník rezervácií a náku
 quantity	resources	sk	Mno¾stvo
 quantity of resource	resources	sk	Poèet kusov zdroja
 quantity:	resources	sk	Mno¾stvo:
+read calendar permissions	resources	sk	Naèíta» prístupové práva Kalendára
+read permissions	resources	sk	Naèíta» práva
 related links	resources	sk	Súvisiace odkazy
 resources	common	sk	zdroje
 resources list	resources	sk	zoznam zdrojov
@@ -67,7 +72,7 @@ responsible:	resources	sk	Zodpovedný:
 saves entry and exits	resources	sk	Ulo¾í záznam a skonèí
 select a category	resources	sk	Vyberte kategóriu
 select resource	resources	sk	vyberte zdroj
-select resources	resources	sk	Vyberte zdroje
+select resources	common	sk	Vyberte zdroje
 select/deselect all	resources	sk	v¹etko oznaèi»/zru¹i» oznaèenie
 short description	resources	sk	Struèný opis
 short description of resource	resources	sk	Zobrazi» opis zdroja

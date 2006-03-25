@@ -38,6 +38,8 @@ business zip code	addressbook	nl	Bedrijf Postcode
 car phone	addressbook	nl	Autotelefoon
 cell phone	addressbook	nl	Mobiele telefoon
 charset of file	addressbook	nl	Karakterset van bestand
+choose an icon for this contact type	addressbook	nl	Kies een pictogram voor dit contact type
+chosse an etemplate for this contact type	addressbook	nl	Kies een eTemplate voor dit contact type
 city	common	nl	Stad
 company	common	nl	Bedrijf
 company name	common	nl	Bedrijfsnaam
@@ -49,6 +51,7 @@ contact settings	admin	nl	Contactinstellingen
 copied by %1, from record #%2.	addressbook	nl	Gekopieerd door %1, van record #%2.
 country	common	nl	Land
 create new links	addressbook	nl	Nieuwe links aanmaken
+credit	addressbook	nl	Tegoed
 csv-fieldname	addressbook	nl	CSV-Veldnaam
 csv-filename	addressbook	nl	CSV-Bestandsnaam
 custom	addressbook	nl	Aangepast
@@ -95,6 +98,7 @@ home phone	addressbook	nl	Privé telefoon
 home state	addressbook	nl	Privé Provincie / Staat / District
 home street	addressbook	nl	Privé Straat
 home zip code	addressbook	nl	Privé Postcode
+icon	addressbook	nl	Pictogram
 import	addressbook	nl	Importeren
 import contacts	addressbook	nl	Contacten Importeren
 import csv-file into addressbook	addressbook	nl	CSV-bestand importeren naar adresboek
@@ -105,6 +109,7 @@ import from outlook	addressbook	nl	Importeren vuit Outlook
 import multiple vcard	addressbook	nl	Importeer Meervoudige VCard
 import next set	addressbook	nl	Importeren volgende serie
 import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geexporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geëxporteerd in het VCard formaat.
+income	addressbook	nl	Inkomen
 international	addressbook	nl	Internationaal
 isdn phone	addressbook	nl	ISDN
 label	addressbook	nl	Label
@@ -130,6 +135,7 @@ multiple vcard	addressbook	nl	Meervoudige VCard
 no vcard	addressbook	nl	Geen VCard
 number	addressbook	nl	Nummer/aantal
 number of records to read (%1)	addressbook	nl	Aantal adressen om te importen (%1)
+options for type	addressbook	nl	Opties voor type
 organisation	addressbook	nl	organisatie
 other number	addressbook	nl	Ander nummer
 other phone	addressbook	nl	Andere telefoon
@@ -142,6 +148,7 @@ postal	common	nl	Postadres
 pref	addressbook	nl	voorkeur
 prefix	addressbook	nl	Voorvoegsel
 public key	addressbook	nl	Public Key
+publish into groups:	addressbook	nl	Publiceer in groepen:
 read a list / search for entries.	addressbook	nl	Lees een lijst / zoek naar records.
 read a list of entries.	addressbook	nl	Lees een lijst met records
 read a single entry by passing the id and fieldlist.	addressbook	nl	Lees een record door een ID. in te voeren en een veldenlijst

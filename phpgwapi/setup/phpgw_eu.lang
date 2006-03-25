@@ -1,22 +1,29 @@
 %1 email addresses inserted	common	eu	%1 helbide elektronikoak txertatuak
 %1 is not executable by the webserver !!!	common	eu	%1-ek ez du baimenik web zerbitzaria exekutatzeko!!!
+%1 manual	common	eu	%1 eskuzkoa
+%1 start	common	eu	%1 hasi
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1eGroupWare%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
 (shift-)click or drag to change value	jscalendar	eu	Sakatu maiuskula edota arrastatu balioa aldatzeko
 - click on any of the time parts to increase it	jscalendar	eu	- Egin klik edozein zatian handitzeko
+- hold mouse button on any of the above buttons for faster selection.	jscalendar	eu	-Xaguaren botoia sakatua mantendu edozein zatian aukeraketa azkarrerako
 - or click and drag for faster selection.	jscalendar	eu	- sakatu edo arrastatu aukeraketa azkarrerako
 - or shift-click to decrease it	jscalendar	eu	- sakatu maiuskularekin batera gutxitzeko
 - use the %1, %2 buttons to select month	jscalendar	eu	- %1, %2 botoiak erabili hilabetea aukeratzeko
 - use the %1, %2 buttons to select year	jscalendar	eu	- %1, %2 botoiak erabili urtea aukeratzeko
 00 (disable)	admin	eu	00 (desaktibatu)
 13 (ntp)	admin	eu	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	eu	3 karaktere egunaren laburduran
+3 number of chars for month-shortcut	jscalendar	eu	3 karaktere hilabetearen laburduran
 80 (http)	admin	eu	80 (http)
 _delete row	htmlarea-ContextMenu	eu	_Ezabatu errenkada
 _image properties...	htmlarea-ContextMenu	eu	_Irudiaren propietatea...
 _modify link...	htmlarea-ContextMenu	eu	_Lotura aldatu...
 _remove link...	htmlarea-ContextMenu	eu	_Lotura kendu...
 _table properties...	htmlarea-ContextMenu	eu	_Taularen propietateak...
+a editor instance must be focused before using this command.	tinymce	eu	Editorearen instantzia enfokatu behar da komando hau erabiltzko.
 about	common	eu	Honi buruz
 about %1	common	eu	%1ri buruz
+about egroupware	common	eu	eGroupwareri buruz
 about the calendar	jscalendar	eu	Egutegiari buruz
 about this editor	htmlarea	eu	Editore honi buruz
 access	common	eu	Sarbide
@@ -31,6 +38,7 @@ active	common	eu	Aktibatua
 add	common	eu	Gehitu
 add %1 category for	common	eu	%1 kategoria gehitu zertarako
 add category	common	eu	Kategoria gehitu
+add shortcut	common	eu	Gehitu lasterbidea
 add sub	common	eu	Gehitu azpi-
 addressbook	common	eu	Helbide liburua
 admin	common	eu	Admin
@@ -47,6 +55,7 @@ alignment	tinymce	eu	Lerrokatzea
 all	common	eu	Guztiak
 all fields	common	eu	eremu guztiak
 all four sides	htmlarea-TableOperations	eu	Lau ertzak
+all occurrences of the search string was replaced.	tinymce	eu	Aurkitzen diren parekatze guztiak ordezkatuko dira
 alphabet	common	eu	a,b,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	eu	Txadakatu estilo-orria
 alternative image	tinymce	eu	Ordezko irudia
@@ -56,6 +65,7 @@ angola	common	eu	ANGOLA
 anguilla	common	eu	ANGUILLA
 antarctica	common	eu	ANTARTIKA
 antigua and barbuda	common	eu	ANTIGUA ETA BARBUDA
+application	common	eu	Aplikazioa
 apply	common	eu	Aplikatu
 april	common	eu	Apirila
 are you sure you want to delete these entries ?	common	eu	Ziur al zaude sarrera hauek ezbatu nahi dituzula?
@@ -67,7 +77,9 @@ august	common	eu	Abuztua
 australia	common	eu	AUSTRALIA
 austria	common	eu	AUSTRIA
 author	common	eu	Egilea
+autohide sidebox menu's	common	eu	Menuak automatikoki ezkutatu
 autohide sidebox menus	common	eu	Menuak automatikoki ezkutatu
+automatically hide the sidebox menu's?	common	eu	Menuak automatikoki ezkutatu?
 automatically hide the sidebox menus?	common	eu	Menuak automatikoki ezkutatu?
 autosave default category	common	eu	Autograbatu kategoria lehenetsia
 azerbaijan	common	eu	AZERBAIJAN
@@ -111,6 +123,7 @@ cambodia	common	eu	CAMBODIA
 cameroon	common	eu	CAMEROON
 canada	common	eu	CANADA
 cancel	common	eu	Ezeztatu
+cannot replace %1 because it is a directory	common	eu	%1 ezin da ordezkatu direktorio bat delako
 cape verde	common	eu	CAPE VERDE
 caption	common	eu	Epigrafea
 categories	common	eu	Kategoriak
@@ -123,6 +136,7 @@ cell properties	htmlarea-TableOperations	eu	Gelaxkaren propietateak
 cellpadding	tinymce	eu	Gelaxkaren betegarria
 cellspacing	tinymce	eu	Gelaxken arteko tartea
 center	tinymce	eu	Erdian
+centered	common	eu	erdian
 central african republic	common	eu	ERTA AFRIKAKO ERREPUBLIKA
 chad	common	eu	CHAD
 change	common	eu	Aldatu
@@ -133,6 +147,9 @@ check installation	common	eu	Instalazioa egiaztu
 check now	common	eu	Egiaztatu orain
 chile	common	eu	CHILE
 china	common	eu	TXINA
+choose a background color	common	eu	Atzeko planoaren kolorea aukeratu
+choose a background image.	common	eu	Atzeko planoko irudia aukeratu
+choose a background style.	common	eu	Aztzko planoko estiloa aukeratu
 choose directory to move selected folders and files to.	tinymce	eu	Direktorio bat aukeratu aukeratutako karpeta eta fitxategiak mugitzeko
 choose list style type (for ordered lists)	htmlarea-ListType	eu	Zerrendako estiloa aukeratu ( zerrenda ordenatzeko)
 choose the category	common	eu	Kategoria aukeratu
@@ -158,6 +175,7 @@ company	common	eu	Elkartea
 configuration problem	tinymce	eu	kongigurazio arazoak
 congo	common	eu	CONGO
 congo, the democratic republic of the	common	eu	CONGOKO ERREPUBLIKA DEMOKRATIKOA
+contacting server...	common	eu	Zerbitzariarekin konektatzen...
 cook islands	common	eu	COOK ISLANDS
 copy	common	eu	Kopiatu
 copy selection	htmlarea	eu	Aukeraketa kopiatu
@@ -201,6 +219,8 @@ detail	common	eu	Zehaztasuna
 details	common	eu	Zehaztasunak
 dictionary	htmlarea-SpellChecker	eu	Hiztegia
 direction	tinymce	eu	Helbidea
+direction left to right	common	eu	Helbidea ezkerretik eskubira
+direction right to left	tinymce	eu	Helbidea eskubitik ezkerrera
 directory	tinymce	eu	Direktorio
 disable slider effects	common	eu	Efektu graduatzaileak desaktibatu
 disabled	common	eu	Desaktibatu
@@ -208,6 +228,7 @@ display %s first	jscalendar	eu	Erakutsi % lehenengo
 djibouti	common	eu	DJIBOUTI
 do you also want to delete all subcategories ?	common	eu	Azpikategoria guztiak ezabatu nahi dituzu?
 do you want to use the wysiwyg mode for this textarea?	tinymce	eu	WYSIWYG modua erabili nahi al duzu testuaren eremu honetarako?
+doctype:	common	eu	DOCTYPE:
 document properties	common	eu	Dokumentuaren propietateak:
 document title:	common	eu	Dokumentuaren izenburua:
 domain	common	eu	Domeinu
@@ -229,6 +250,7 @@ egypt	common	eu	EGIPTO
 el salvador	common	eu	EL SALVADOR
 element...	htmlarea-ContextMenu	eu	Elementu...
 email	common	eu	Posta elektronikoa
+emotions	tinymce	eu	Hunkipenak
 enabled	common	eu	Lehenengo orria
 end date	common	eu	Amaiera data
 end time	common	eu	Amaiera ordua
@@ -248,33 +270,48 @@ falkland islands (malvinas)	common	eu	MALVINAK
 faroe islands	common	eu	FAROE IRLAK
 fax number	common	eu	Fax zenbakia
 february	common	eu	Otsaila
+fg color	htmlarea-TableOperations	eu	Aurreko planoaren kolorea
 fields	common	eu	Eremuak
+fiji	common	eu	FIJI
+file already exists. file was not uploaded.	tinymce	eu	Fitxategia existitzen da. Fitxategia ez da igo.
+file exceeds the size limit	tinymce	eu	Fitxategiaren tamainak muga gainditzen du
 file manager	tinymce	eu	Fitxategi kudeatzailea
+file not found.	tinymce	eu	Fitxategia ez da aurkitu
+file was not uploaded.	tinymce	eu	Fitxategia ez da igo
+file with specified new name already exists. file was not renamed/moved.	tinymce	eu	Izen hori duen fitxategia existitzen da. Fitxategia ezin da berizendatu/mugitu
 file(s)	tinymce	eu	Fitxategi(ak)
 file:	tinymce	eu	Fitxategia:
 files	common	eu	Fitxategiak
+files with this extension are not allowed.	tinymce	eu	Extensio hau duten fitxategiak ez dira onartzen
 filter	common	eu	Iragazkia
 find	tinymce	eu	Bilatu
 find again	tinymce	eu	Bilatu berriro
 find what	tinymce	eu	Aurkitu
 find&nbsp;next	tinymce	eu	Aurkitu hurrengoa
 find/replace	tinymce	eu	Bilatu eta ordezkatu
+finished list of mispelled words	htmlarea-SpellChecker	eu	Gaizki idatzitako hitzen zerrenda bukatu da
 finland	common	eu	FINLANDIA
 first name	common	eu	Izena
 first page	common	eu	Lehenengo orria
 firstname	common	eu	Izena
 fixme!	common	eu	Zuzendu nazazu!
+flash files	tinymce	eu	Flash fitxategiak
+flash properties	tinymce	eu	Flasharen propietateak
 float	htmlarea-TableOperations	eu	Mugikorra
 folder	tinymce	eu	Karpeta
+folder already exists.	common	eu	Karpeta hau existitzen da.
 folder name missing.	tinymce	eu	Karpetaren izena falta da
 folder not found.	tinymce	eu	Karpeta ez da aurkitu
 folder(s)	tinymce	eu	karpeta(k)
 font color	htmlarea	eu	Hizki kolorea
+for mouse out	tinymce	eu	xagua kentzerakoan
+for mouse over	tinymce	eu	xagua pasatzerakoan
 force selectbox	common	eu	Aukeraketa koadroa indartu
 frames	htmlarea-TableOperations	eu	Markoak
 france	common	eu	FRANTZIA
 french guiana	common	eu	FRANTZIAR GUIANA
 french polynesia	common	eu	FRANTZIAR POLYNESIA
+french southern territories	common	eu	HEGOALDEKO LURRALDE FRANTSESAK
 friday	common	eu	Ostirala
 ftp	common	eu	FTP
 fullname	common	eu	Izen osoa
@@ -324,7 +361,9 @@ hong kong	common	eu	HONG KONG
 horizontal rule	htmlarea	eu	Erregela horizontala
 how many columns would you like to merge?	htmlarea-TableOperations	eu	Zenbat zutabe nahi dituzu txertatu?
 how many rows would you like to merge?	htmlarea-TableOperations	eu	Zenbat errenkada nahi dituzu txertatu?
+html tidy	htmlarea-HtmlTidy	eu	HTML garbitu
 hungary	common	eu	HUNGARIA
+i will open it in a new page.	htmlarea-SpellChecker	eu	Orri berri batean irekiko dut
 i_nsert row before	htmlarea-ContextMenu	eu	Errenkada bat txertatu aurretik
 iceland	common	eu	ISLANDIA
 ignore	htmlarea-SpellChecker	eu	Ezikusi
@@ -338,6 +377,8 @@ indent	tinymce	eu	Koska
 india	common	eu	INDIA
 indonesia	common	eu	INDONESIA
 insert	tinymce	eu	Txertatu
+insert / edit flash movie	tinymce	eu	Txertatu / flash filma editatu
+insert / edit horizontale rule	tinymce	eu	Txertatu / lerro horizontala editatu
 insert _column before	htmlarea-ContextMenu	eu	Zutabe bat txertatu aurretik
 insert a new column after the current one	htmlarea-ContextMenu	eu	Zutabe berri bat txertatu momentukoaren azpian
 insert a new column before the current one	htmlarea-ContextMenu	eu	Zutabe berri bat txertatu momentukoaren gainean
@@ -349,6 +390,7 @@ insert cell before	htmlarea-TableOperations	eu	Gelaxka bat txertatu ondoren
 insert column after	common	eu	Zutabe bat txertatu aurretik
 insert column before	common	eu	Zutabe bat txertatu aurretik
 insert date	tinymce	eu	Txertatu data
+insert emotion	tinymce	eu	Txertatu hunkipena
 insert file	tinymce	eu	Txertatu fitxategia
 insert image	htmlarea	eu	Irudia txertatu
 insert link to file	tinymce	eu	Txertatu esteka fitxategi honi
@@ -362,6 +404,7 @@ insert/edit link	tinymce	eu	Txertatu/lotura editatu
 insert/modify table	tinymce	eu	Txertatu/taula aldatu
 inserts a new table	tinymce	eu	Txertatu taula berri bat
 international	common	eu	Nazioartekoa
+invalid filename	common	eu	Fitxategi izena baliogabea
 invalid ip address	common	eu	IP helbidea baliogabea
 invalid password	common	eu	Pasahitza baliogabea
 iran, islamic republic of	common	eu	IRANEKO ISLAMIAR ERREPUBLIKA
@@ -374,6 +417,7 @@ jamaica	common	eu	JAMAICA
 january	common	eu	Urtarrila
 japan	common	eu	JAPONIA
 jordan	common	eu	JORDANIA
+js-popup	tinymce	eu	Javascript leihoa
 july	common	eu	Uztaila
 jun	common	eu	Ekaina
 june	common	eu	Ekaina
@@ -391,6 +435,7 @@ korea, republic of	common	eu	KOREAKO ERREPUBLIKA
 kuwait	common	eu	KUWAIT
 kyrgyzstan	common	eu	KYRGYZSTAN
 language	common	eu	Hizkuntza
+lao peoples democratic republic	common	eu	LAO PEOPLES DEMOCRATIC REPUBLIC
 last name	common	eu	Abizena
 last page	common	eu	Azken orria
 lastname	common	eu	Abizena
@@ -401,8 +446,11 @@ lebanon	common	eu	LIBANO
 left	common	eu	Ezkerrean
 lesotho	common	eu	LESOTHO
 liberia	common	eu	LIBERIA
+libyan arab jamahiriya	common	eu	LIBYAN ARAB JAMAHIRIYA
 license	common	eu	Lizentzia
 liechtenstein	common	eu	LIECHTENSTEIN
+link points to:	htmlarea-ContextMenu	eu	Lotura zuzentza da:
+link url	tinymce	eu	URL lotura
 list	common	eu	Zerrenda
 list members	common	eu	Zerrendako partaideak
 lithuania	common	eu	LITUANIA
@@ -412,9 +460,13 @@ login	common	eu	Sartu
 loginid	common	eu	Erabiltzaile izena
 logout	common	eu	Irten
 low	common	eu	Baxu
+lower greek letters	htmlarea-ListType	eu	Letra grekoak minuskulan
+lower latin letters	htmlarea-ListType	eu	Letra latinak minuskulan
+lower roman numbers	htmlarea-ListType	eu	Erromatar zenbakiak minuskulan
 lowest	common	eu	Baxuena
 luxembourg	common	eu	LUXENBURGO
 macau	common	eu	MACAU
+macedonia, the former yugoslav republic of	common	eu	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
 madagascar	common	eu	MADAGASCAR
 main category	common	eu	Kategoria nagusia
 main screen	common	eu	Pantaila nagusia
@@ -432,6 +484,7 @@ martinique	common	eu	MARTINIQUE
 match case	tinymce	eu	Maiuskulak/minuskulak
 mauritania	common	eu	MAURITANIA
 mauritius	common	eu	MAURITIUS
+max number of icons in navbar	common	eu	Ikono kopuru maximoa barran
 may	common	eu	Maiatza
 mayotte	common	eu	MAYOTTE
 medium	common	eu	Erdia
@@ -440,6 +493,9 @@ merge cells	htmlarea-TableOperations	eu	Batu gelaxkak
 merge table cells	tinymce	eu	Taulako gelaxkak konbinatu
 message	common	eu	Mezua
 mexico	common	eu	MEXIKO
+micronesia, federated states of	common	eu	MICRONESIA FEDERATED STATES OF
+middle	htmlarea-TableOperations	eu	Erdia
+mkdir failed.	tinymce	eu	Direktoria ezin izan da egin
 modify url	htmlarea-ContextMenu	eu	Aldatu URL-a
 moldova, republic of	common	eu	MOLDOVAKO ERREPUBLIKA
 monaco	common	eu	MONACO
@@ -750,3 +806,4 @@ your settings have been updated	common	eu	Zure hobespenak eguneratuak izan dira
 yugoslavia	common	eu	YUGOSLAVIA
 zambia	common	eu	ZAMBIA
 zimbabwe	common	eu	ZIMBABWE
+zoom	common	eu	Zoom

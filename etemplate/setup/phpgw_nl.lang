@@ -82,6 +82,7 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	etemplate	nl	CSS-stijlen
 custom	etemplate	nl	aangepast
 custom fields	etemplate	nl	aangepaste velden
+custom javascript for onchange	etemplate	nl	aangepaste javascript voor onChange
 cut	etemplate	nl	Knippen
 date+time	etemplate	nl	Datum+Tijd
 datum	etemplate	nl	Datum
@@ -242,6 +243,7 @@ nothing matched search criteria !!!	etemplate	nl	Niets kwam overeen met de zoekc
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	nl	aantal kolommen waarover het veld/de kolom een span moet leggen of 'all' voor de overgebleven kolommen, CSS-klasse naam (voor de TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	nl	aantal rijen/kolommen in een V/HBox, Cellpadding, Cellspacing
 of	etemplate	nl	van
+onchange	etemplate	nl	onChange
 onclick	etemplate	nl	onClick
 only an other version found !!!	etemplate	nl	alleen een andere versie gevonden !!!
 open the online help.	etemplate	nl	De online help openen.
@@ -307,6 +309,7 @@ select which values to show	etemplate	nl	Selecteer welke waarden uw wilt weergev
 select year	etemplate	nl	Selecteer jaar
 selectbox	etemplate	nl	Selectieveld
 sets today as date	etemplate	nl	Zet vandaag als datum
+should the form be submitted or any custom javascript be executed	etemplate	nl	Moet het formulier verzonden worden of aangepaste javascript worden uitgevoerd
 show	etemplate	nl	Weergeven
 show (no save)	etemplate	nl	Weergeven (niet opslaan)
 show values	etemplate	nl	Waarden weergeven
@@ -319,6 +322,7 @@ span, class	etemplate	nl	Span, klasse
 stack	etemplate	nl	Stapel
 start a new search, cancel this link	etemplate	nl	start een nieuwe zoekopdracht, annuleer deze link
 start new search for the above pattern	etemplate	nl	start een nieuwe zoekopdracht naar het hierboven genoemde patroon
+submit form	etemplate	nl	formulier verzenden
 submitbutton	etemplate	nl	Verzendknop
 swap	etemplate	nl	verwisselen
 swap widget with next one	etemplate	nl	verwissel widget met de volgende

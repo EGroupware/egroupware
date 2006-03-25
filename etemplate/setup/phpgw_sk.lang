@@ -213,8 +213,11 @@ no row to swap with !!!	etemplate	sk	nemám ¾iadny riadok pre zámenu !!!
 not null	etemplate	sk	NIE NULL
 nothing	etemplate	sk	niè
 nothing found - try again !!!	etemplate	sk	Niè sa nena¹lo - skúste znovu !!!
+nothing in clipboard to paste !!!	etemplate	sk	Z clipboardu niet èo vlo¾i»!
 nothing matched search criteria !!!	etemplate	sk	Niè nevyhovelo vyhµadávacím kritériám !!!
 of	etemplate	sk	z
+onchange	etemplate	sk	priZmene
+onclick	etemplate	sk	priKliknutí
 only an other version found !!!	etemplate	sk	na¹la sa iba iná Verzia !!!
 open the online help.	etemplate	sk	Otvori» online pomocníka.
 operator	etemplate	sk	Operátor
@@ -298,6 +301,7 @@ template	etemplate	sk	©ablóna
 template deleted	etemplate	sk	©ablóna vymazaná
 template saved	etemplate	sk	©ablóna ulo¾ená
 text	etemplate	sk	Text
+textarea	etemplate	sk	Oblas» textu
 time	etemplate	sk	Èas
 to start the db-tools	etemplate	sk	pre spustenie DB-Nástrojov
 to start the etemplate editor	etemplate	sk	pre spustenie editora e©ablón
@@ -324,6 +328,7 @@ view this etemplate	etemplate	sk	zobrazi» túto e©ablónu
 view this linked entry in its application	etemplate	sk	zobrazi» tento pripojený záznam v jeho aplikácii
 weekend	etemplate	sk	víkend
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	sk	èo sa stane s presahujúcim obsahom: viditeµný (predvolené), skrytý, skrolova», automaticky (prehliadaè rozhodne)
+widget copied into clipboard	etemplate	sk	widget skopírovaný do clipboardu
 width	etemplate	sk	©írka
 width of column (in % or pixel)	etemplate	sk	¹írka ståpca (v % alebo pixeloch)
 width of the table in % or pixels for the table-tag and (optional) div	etemplate	sk	©írka tabuµky v % alebo pixeloch pre table-tag a (voliteµne) div

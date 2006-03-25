@@ -1,15 +1,12 @@
-%1 - %2 of %3 user accounts	admin	ca	%1 - %2 de %3 comptes d' usuaris
+%1 - %2 of %3 user accounts	admin	ca	%1 - %2 de %3 comptes d'usuaris
 %1 - %2 of %3 user groups	admin	ca	%1 - %2 de %3 grups d'usuaris
+%1 acl records of not (longer) existing accounts deleted.	admin	ca	S'han esborrat %1 registres ACL de comptes no existents.
 %1 not found or not executable !!!	admin	ca	No s'ha trobat %1 o no és un executable
+(default no, leave it off if you dont use it)	admin	ca	(per defecte NO, deixa-ho així si no l'utilitzes)
 (stored password will not be shown here)	admin	ca	(les contrasenyes desades no es mostraran aquí)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
-(to install new applications use<br><a href="setup/"?sessionid=81a75cf3d7da6625ff0565f1441f3097 target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
-(to install new applications use<br><a href="setup/"?sessionid=81a75cf3d7da6625ff0565f1441f3097&sessionid=81a75cf3d7da6625ff0565f1441f3097 target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
-(to install new applications use<br><a href="setup/"?sessionid=a9d4388df0453d7592409ae1c945e802 target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
-(to install new applications use<br><a href="setup/"?sessionid=a9d4388df0453d7592409ae1c945e802&sessionid=a9d4388df0453d7592409ae1c945e802 target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
-(to install new applications use<br><a href="setup/"?sessionid=f12089ba88601a24bd21ce0b12e70b94 target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
-(to install new applications use<br><a href="setup/"?sessionid=f12089ba88601a24bd21ce0b12e70b94&sessionid=f12089ba88601a24bd21ce0b12e70b94 target="setup">setup</a> [manage applications] !!!)	admin	ca	(Per a instal·lar noves aplicacions feu servir <br><a href="setup/" target="setup">Configura</a> [Manteniment d'Aplicacions] !!!)
-accesslog and bruteforce defense	admin	ca	Defensa d' accés al registre i força bruta
+-  type	admin	ca	- tipus
+accesslog and bruteforce defense	admin	ca	Defensa d'accés al registre i força bruta
 account active	admin	ca	Compte actiu
 account has been created	common	ca	S'ha creat el compte
 account has been deleted	common	ca	S'ha esborrat el compte
@@ -57,6 +54,7 @@ application name	admin	ca	Nom de l'aplicació
 application title	admin	ca	Títol de l'aplicació
 applications	admin	ca	Aplicacions
 applications list	admin	ca	Llista d'aplicacions
+applies the changes	admin	ca	aplica els canvis
 are you sure you want to delete the application %1 ?	admin	ca	Esteu segurs de voler esborrar l'aplicació %1 ?
 are you sure you want to delete this account ?	admin	ca	Esteu segurs de voler esborrar aquest compte?
 are you sure you want to delete this application ?	admin	ca	Esteu segurs de voler esborrar aquesta aplicació?
@@ -94,11 +92,14 @@ click to select a color	admin	ca	Pitjau per a seleccionar un color
 color	admin	ca	Color
 country selection	admin	ca	Seleccionar país
 create group	admin	ca	Crear grup
+creates a new field	admin	ca	crea un camp nou
 crontab only (recomended)	admin	ca	Només per crontab (recomenat)
+custom fields	admin	ca	Camps personalitzats
 cyrus imap server	admin	ca	Servidor IMAP Cyrus
 data	admin	ca	Dades
 day	admin	ca	Dia
 day of week<br>(0-6, 0=sun)	admin	ca	Dia de la setmana<br>(0-6, 0=Diu)
+db backup and restore	admin	ca	BBDD de còpia de seguretat i recuperació
 default	admin	ca	Predeterminat
 default file system space per user	admin	ca	Espai per defecte al sistema d'arxius per usuari
 default file system space per user/group ?	admin	ca	Espai per defecte al sistema d'arxius per usuari/grup ?
@@ -114,12 +115,14 @@ delete the group	admin	ca	esborrar el grup
 delete this category	admin	ca	esborrar aquesta categoria
 delete this group	admin	ca	esborrar aquest grup
 delete this user	admin	ca	esborrar aquest usuari
+deletes this field	admin	ca	esborra aquest camp
 deliver extern	admin	ca	lliura extern
 deny access to access log	admin	ca	Denegar accés al registre d'accesos
 deny access to application registery	admin	ca	Denegar accés al registre d'aplicacions
 deny access to applications	admin	ca	Denegar accés a les aplicacions
 deny access to asynchronous timed services	admin	ca	Denegar accés als serveis asíncrons programats
 deny access to current sessions	admin	ca	Denegar accés a les sessions actuals
+deny access to db backup and restore	admin	ca	Denegar accés a la BBDD de còpia de seguretat i recuperació
 deny access to error log	admin	ca	Denegar accés al registre d'errors
 deny access to global categories	admin	ca	Denegar accés a les categories globals
 deny access to groups	admin	ca	Denegar accés a grups
@@ -130,6 +133,7 @@ deny access to site configuration	admin	ca	Denegar accés a la configuració del l
 deny access to user accounts	admin	ca	Denegar accés als comptes d'usuari
 deny all users access to grant other users access to their entries ?	admin	ca	Prohibir als usuaris cedir accés a d'altres per als seus registres?
 description can not exceed 255 characters in length !	admin	ca	La descripció no pot excedir de 255 caràcters!
+determines the order the fields are displayed	admin	ca	determina l'ordre en que es mostren els camps
 disable "auto completion" of the login form	admin	ca	Desactivar "completat automàtic" al formulari d'inici de sessió
 disable wysiwyg-editor	admin	ca	desactiva l'editor WYSIWYG
 disabled (not recomended)	admin	ca	desactivat (no es recomana)
@@ -138,6 +142,8 @@ do not delete the category and return back to the list	admin	ca	NO esborrar la c
 do you also want to delete all global subcategories ?	admin	ca	Voleu també esborrar totes les subcategories globals?
 do you want to delete all global subcategories ?	admin	ca	Voleu esborrar totes les subcategories globals?
 do you want to move all global subcategories one level down ?	admin	ca	Voleu moure totes les subcategories globals un nivell cap avall?
+each value is a line like <id>[=<label>]	admin	ca	cada valor és una línia com <id>[=<etiqueta>]
+each value is a line like id[=label]	admin	ca	cada valor és una línia com id[=etiqueta]
 edit account	admin	ca	Editar compte
 edit application	admin	ca	Editar aplicació
 edit email settings	admin	ca	edita les preferències de correu
@@ -157,6 +163,8 @@ edit user account	admin	ca	Editar compte de l'usuari
 email account active	admin	ca	compte de correu actiu
 email address	admin	ca	adreça de correu
 enable debug-messages	admin	ca	Activar missatges de depuració
+enable the soap service	admin	ca	Habilita el servei soap
+enable the xmlrpc service	admin	ca	Habilita el servei xmlrpc
 enabled - hidden from navbar	admin	ca	Activat - Amagat a la Barra de Navegació
 enabled - popup window	admin	ca	Activat - Finestra de Popup
 enter a description for the category	admin	ca	Introduïu una descripció per a aquesta categoria
@@ -166,7 +174,7 @@ enter the background color for the site title	admin	ca	Introduïu el color de fon
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	ca	Introduïu el camí complet per als fitxers temporals.<br>Exemples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	ca	Introduïu el camí complet per als fitxers d'usuaris i grups.<br>Exemples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	ca	Introduïu el nom complet de l'ordinador on s'executa aquest servidor
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Introduïu la URL del vostre eGroupware.<br>Exemple: http://www.domini.com/egroupware &nbsp; o &nbsp; /egroupware<br><b>Sense barra al final</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Introduïu la URL del vostre eGroupware.<br>Exemple: http://www.domini.com/egroupware   o   /egroupware<br><b>Sense barra al final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	ca	Introduïu la cadena de recerca. Per a mostrar totes les entrades, deixeu buit aquest camp i premeu el botó ENVIAR altra vegada.
 enter the site password for peer servers	admin	ca	Introduïu la contrasenya del lloc per a servidors parells
 enter the site username for peer servers	admin	ca	Introduïu el nom d'usuari del lloc per a servidors parells
@@ -186,6 +194,7 @@ error: %1 not found or other error !!!	admin	ca	Error: no s'ha trobat %1 o bé un
 expires	admin	ca	Caduca
 explanation of ldapman	admin	ca	Aquest mòdul ha estat provat per POSTFIX,LDAP,Courier-IMAP i necessita els esquemes CORE i QMAIL (OID7914). Més detalls de com utilitzar i configurar aquest sistema es pot trobar a README.ldapman dins la carpeta doc d'ADMIN.
 fallback (after each pageview)	admin	ca	Activar després d'error (després de veure cada pàgina)
+field '%1' already exists !!!	admin	ca	El camp '%1' ja existeix !!!
 file space	admin	ca	Espai per a arxius
 file space must be an integer	admin	ca	L'espai per a arxius ha de ser un nombre sencer
 find and register all application hooks	admin	ca	Trobar i registrar tots els "hooks" de les aplicacions
@@ -194,6 +203,7 @@ for the times below (empty values count as '*', all empty = every minute)	admin	
 force selectbox	admin	ca	Llista desplegable obligatòria
 forward also to	admin	ca	reenviar també a
 forward email's to	admin	ca	reenviar correu a
+forward emails to	admin	ca	reenviar correu a
 forward only	admin	ca	reenviar només
 global categories	common	ca	Categories Globals
 group ?	admin	ca	grup ?
@@ -239,6 +249,8 @@ ldap rootdn	admin	ca	LDAP rootdn
 leave empty for no quota	admin	ca	deixar buit si no té cita
 leave the category untouched and return back to the list	admin	ca	deixar la categoria intacta i tornar a la llista
 leave the group untouched and return back to the list	admin	ca	Deixar el grup intacte i tornar a la llista
+leaves without saveing	admin	ca	Sortir sense desar
+length<br>rows	admin	ca	Longitud<br>Files
 list config settings	admin	ca	Llista de les opcions de configuració
 list current sessions	admin	ca	Llista de les sessions actuals
 list of current users	admin	ca	Llista d'usuaris presents
@@ -252,6 +264,7 @@ mail settings	admin	ca	Configuracions de Correu
 main email-address	admin	ca	Adreça de Correu Principal
 main screen message	admin	ca	Missatge de la Pantalla Principal
 manager	admin	ca	Gestor
+max length of the input [, length of the inputfield (optional)]	admin	ca	longitud màxima de l'entrada [, longitud del camp de text (opcional)]
 maximum account id (e.g. 65535 or 1000000)	admin	ca	Màxim id de compte (ex. 65535 o 1000000)
 maximum entries in click path history	admin	ca	Nombre màxim d'entrades a l'historial de pulsacions de rutes
 message has been updated	admin	ca	el missatge s'ha actualitzat
@@ -260,7 +273,9 @@ minimum account id (e.g. 500 or 100, etc.)	admin	ca	Mínim id de compte (ex. 500 
 minute	admin	ca	Minut
 mode	admin	ca	Mode
 month	admin	ca	Mes
+name must not be empty !!!	admin	ca	El nom no pot estar buit !!!
 new group name	admin	ca	Nou nom de grup
+new name	admin	ca	nou nom
 new password [ leave blank for no change ]	admin	ca	Nova contrasenya [ Deixeu en blanc per a NO canviar ]
 next run	admin	ca	Següent execució
 no algorithms available	admin	ca	no hi ha algorismes disponibles
@@ -273,6 +288,8 @@ no permission to add groups	admin	ca	no teniu permís per a afegir grups
 no permission to add users	admin	ca	no teniu permís per a afegir usuaris
 no permission to create groups	admin	ca	no teniu permís per a crear grups
 note: ssl available only if php is compiled with curl support	admin	ca	Nota: "SSL" disponible només si "PHP" está compilat amb suport "curl"
+number of row for a multiline inputfield or line of a multi-select-box	admin	ca	número de files per a un camp de text de més d'una selecció
+order	admin	ca	Ordre
 outbound	admin	ca	Notes
 passthrough	admin	ca	passant
 password for smtp-authentication	admin	ca	Contrasenya per l'autentificació SMTP
@@ -281,6 +298,7 @@ peer server list	admin	ca	Llista de servidors parells
 peer servers	admin	ca	Servidors Parells
 percent of users that logged out	admin	ca	Percentatge d'usuaris que han sortit
 percent this user has logged out	admin	ca	Percentatge de desconnexions d'aquest usuari
+permission denied	admin	ca	Permís denegat
 permissions	admin	ca	Permisos
 permissions this group has	admin	ca	Permisos d'aquest grup
 phpinfo	admin	ca	Informació de PHP
@@ -292,8 +310,8 @@ postfix with ldap	admin	ca	Postfix amb LDAP
 preferences	admin	ca	Preferències
 primary group	admin	ca	grup principal
 qmaildotmode	admin	ca	mode qmaildot
-quota size in mbyte	admin	ca	mida de la cita en MByte
 quota settings	admin	ca	preferències de la cita
+quota size in mbyte	admin	ca	mida de la cita en MByte
 re-enter password	admin	ca	Torneu a entrar la contrasenya
 read this list of methods.	admin	ca	Llegir aquesta llista de mètodes
 register application hooks	admin	ca	Registrar "hooks" de l'aplicació
@@ -306,6 +324,7 @@ route all mails to	admin	ca	Direcciona tots els Correus a
 run asynchronous services	admin	ca	Executar serveis asíncrons
 save the category	admin	ca	guardar la categoria
 save the category and return back to the list	admin	ca	guardar la categoria i tornar a la llista
+saves the changes made and leaves	admin	ca	Desar els canvis fets i sortir
 search accounts	admin	ca	Cercar comptes
 search categories	admin	ca	Cercar categories
 search groups	admin	ca	Cercar grups
@@ -348,6 +367,7 @@ standard smtp-server	admin	ca	servidor SMTP estàndard
 start testjob!	admin	ca	Iniciar el treball de proves
 submit changes	admin	ca	Enviar canvis
 submit the search string	admin	ca	Enviar la cadena de recerca
+subtype	admin	ca	Subtipus
 template selection	admin	ca	Selecció de plantilla
 text entry	admin	ca	Entrada de text
 that application name already exists.	admin	ca	Aquest nom d'aplicació ja existeix.
@@ -360,7 +380,9 @@ the api requires an upgrade	admin	ca	L'API necessita actualitzacions
 the groups must include the primary group	admin	ca	Els grups han d'incloure el grup principal
 the login and password can not be the same	admin	ca	El nom d'usuari i la contrasenya NO poden ser iguals
 the loginid can not be more then 8 characters	admin	ca	El nom d'usuari no pot ser més gran de 8 caràcters
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	ca	el nom utilitzat internament (<= 20 caràcters), si el canvies fas que les dades existents siguin inaccessibles.
 the testjob sends you a mail everytime it is called.	admin	ca	El treball de prova us envia un correu cada vegada que s'executa
+the text displayed to the user	admin	ca	el text mostrat a l'usuari
 the two passwords are not the same	admin	ca	Les dues contrasenyes no són iguals
 the users bellow are still members of group %1	admin	ca	Els usuaris següents encara són membres del grup %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	ca	Ja existeix un grup amb aquest nom.
@@ -375,6 +397,7 @@ top	admin	ca	Superior
 total records	admin	ca	Total de Registres
 trust level	admin	ca	Nivell de confiança
 trust relationship	admin	ca	Relacions de confiança
+type of customfield	admin	ca	Tipus de camp
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	ca	En Windows necessites instal·lar el servei asíncron %1manualment%2 o utilitzar el mode de sistema alternatiu. Sistema alternatiu significa que les feines només s'activen després de cada vista de pàgina !!!
 use cookies to pass sessionid	admin	ca	Usar galetes per a gestionar sessions
 use pure html compliant code (not fully working yet)	admin	ca	Usar codi HTML pur (no és totalment funcional encara)
@@ -401,8 +424,8 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	ca	Vol
 would you like to show each application's upgrade status ?	admin	ca	Voleu mostrar l'estat d'actualització de cada aplicació ?
 xml-rpc	admin	ca	XML-RPC
 you have entered an invalid expiration date	admin	ca	Heu introduït una data de caducitat incorrecta
+you have to enter a name, to create a new field!!!	admin	ca	Heu d'introduir un nom, per a crear un nou camp!!!
 you must add at least 1 permission or group to this account	admin	ca	Heu d'afegir com a mínim un permís o grup per a aquest compte
-you must add at least 1 permission to this account	admin	ca	Heu d'afegir al menys 1 permís per aquest compte.
 you must enter a group name.	admin	ca	Heu d'introduir un nom de grup
 you must enter a lastname	admin	ca	Heu d'introduir els cognoms
 you must enter a loginid	admin	ca	Heu d'introduir un nom d'usuari
@@ -411,3 +434,4 @@ you must enter an application name.	admin	ca	Heu d'introduir un nom d'aplicació.
 you must enter an application title.	admin	ca	Heu d'introduïr un títol per a l'aplicació.
 you must select a file type	admin	ca	Heu de seleccionar un tipus d'arxiu
 you will need to remove the subcategories before you can delete this category	admin	ca	Heu d'esborrar les subcategories abans de poder esborrar aquesta categoria !
+

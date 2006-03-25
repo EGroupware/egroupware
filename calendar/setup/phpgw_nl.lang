@@ -5,6 +5,7 @@
 a non blocking event will not conflict with other events	calendar	nl	Een niet-blokkerende gebeurtenis zal geen conflicten met andere gebeurtenissen geven
 accept or reject an invitation	calendar	nl	Accepteer of weiger een uitnodiging
 accepted	calendar	nl	Geaccepteerd
+access denied to the calendar of %1 !!!	calendar	nl	Toegang tot de agenda van %1 geweigerd !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	nl	Reden van de notificatie: Toegevoegd, Geannuleerd, Geaccepteerd, Geweigerd, ...
 actions	calendar	nl	Acties
 add alarm	calendar	nl	Alarm toevoegen
@@ -33,6 +34,7 @@ busy	calendar	nl	bezet
 by	calendar	nl	door
 calendar event	calendar	nl	Agenda - Afspraak
 calendar holiday management	admin	nl	Agenda feestdagen beheer
+calendar menu	calendar	nl	Agenda menu
 calendar preferences	calendar	nl	Agenda voorkeuren
 calendar settings	admin	nl	Agenda instellingen
 calendar-fieldname	calendar	nl	Agenda - Veldnaam
@@ -69,6 +71,7 @@ delete this exception	calendar	nl	Deze uitzondering verwijderen
 delete this series of recuring events	calendar	nl	Deze serie herhalende gebeurtenissen verwijderen
 disinvited	calendar	nl	Uitnodiging teruggetrokken
 display status of events	calendar	nl	Status van afspraken weergeven
+displayed view	calendar	nl	getoonde weergave
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	nl	Laat uw standaard agenda weergave zien op de beginpagina (De pagina waarmee eGroupWare geopend wordt of die u krijgt als u op klikt op 'start'
 do you want a weekview with or without weekend?	calendar	nl	Wil je weekoverzicht met of zonder weekend?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	nl	Wilt u worden geinformeerd over nieuwe of gewijzigde afspraken? U wordt geïnformeerd over wijzigingen die u zelf heeft gemaakt.<br />U kunt de de notificaties beperken to alleen bepaalde wijzigingen. Elk item bevat alle notificaties hierboven weergegeven. "Alle wijzigingen" bevat wijziging va titel, beschrijving, deelnemers, maar niet reacties van deelnemers. Als de eigenaar van een afspraak verzocht heeft om een van de notificaties, zal hij of zij altijd reacties krijgen van de deelnemers zoals acceptaties en afwijzigingen.
@@ -121,8 +124,10 @@ fullname of person to notify	calendar	nl	Volledige naam van persoon om te op de 
 general	calendar	nl	Algemeen
 global public and group public	calendar	nl	Globaal publiek en group publiek
 global public only	calendar	nl	Alleen globaal publiek
+group invitation	calendar	nl	Groepsuitnodiging
 group planner	calendar	nl	Groepsplanner
 group public only	calendar	nl	Alleen group publiek
+groupmember(s) %1 not included, because you have no access.	calendar	nl	Groepslid(-leden) %1 niet meegenomen omdat je geen toegang hebt.
 here is your requested alarm.	calendar	nl	Hier is uw verzochte alarm.
 high priority	calendar	nl	hoge prioriteit
 holiday	calendar	nl	Vakantie

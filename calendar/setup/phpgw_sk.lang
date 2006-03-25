@@ -124,6 +124,7 @@ fullname of person to notify	calendar	sk	Celé meno upozoròovanej osoby
 general	calendar	sk	Hlavné
 global public and group public	calendar	sk	Verejná - globálne i pre skupinu
 global public only	calendar	sk	Iba globálne verejná
+group invitation	calendar	sk	Pozvanie skupiny
 group planner	calendar	sk	Skupinový plánovaè
 group public only	calendar	sk	Prístupné iba pre skupinu
 groupmember(s) %1 not included, because you have no access.	calendar	sk	Èlenovia skupiny %1 neboli zahrnutí, preto¾e nemáte prístup.
@@ -205,7 +206,7 @@ planner by user	calendar	sk	Plánovaè - podµa pou¾ívateµa
 please note: you can configure the field assignments after you uploaded the file.	calendar	sk	Upozornenie: a¾ keï nahráte súbor, mô¾ete nastavi» priradenia polí.
 preselected group for entering the planner	calendar	sk	Predvybraná skupina pre vstup do plánovaèa
 previous	calendar	sk	Predchádzajúca
-private and global public	calendar	sk	Súkromé i verejnì prístupné
+private and global public	calendar	sk	Súkromné i verejnì prístupné
 private and group public	calendar	sk	Prístupné súkromne i pre skupinu
 private only	calendar	sk	Iba súkromne
 re-edit event	calendar	sk	Znovu uprav
@@ -291,6 +292,7 @@ weekview without weekend	calendar	sk	Tý¾denný pohµad bez víkendu
 which events do you want to see when you enter the calendar.	calendar	sk	Aké udalosti chcete vidie» pri spustení kalendára?
 which of calendar view do you want to see, when you start calendar ?	calendar	sk	Aký pohµad chcete vidie» pri spustení kalendára?
 whole day	calendar	sk	celý deò
+wk	calendar	sk	Tý¾
 work day ends on	calendar	sk	Pracovný deò zaèína
 work day starts on	calendar	sk	Pracovný deò konèí
 yearly	calendar	sk	Roène

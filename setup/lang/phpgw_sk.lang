@@ -10,6 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sk	<b>Týmto sa vytvorí 1 správcovský úèet a 3 testovacie</b><br />Pou¾ívateµské mená/heslá sú: demo/guest, demo2/guest, demo3/guest.
 accounts existing	setup	sk	Existujúce úèty
 actions	setup	sk	Akcie
+activate save password check	setup	sk	Aktivova» voµbu ukladania hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sk	Automaticky vytvorených pou¾ívateµov priradi» do tejto skupiny (ak prázdne, pou¾ije sa 'Predvolená').
 add new database instance (egw domain)	setup	sk	Prida» novú databázovú in¹tanciu (eGW domain)
 additional settings	setup	sk	Ïal¹ie nastavenia
@@ -141,6 +142,7 @@ db root password	setup	sk	DB root heslo
 db root username	setup	sk	DB root pou¾ívateµské meno
 db type	setup	sk	DB typ
 db user	setup	sk	DB pou¾ívateµ
+default	setup	sk	odporúèaná predvolená hodnota
 default file system space per user/group ?	setup	sk	Predvolený priestor v súborovom systéme na pou¾ívateµa/skupinu?
 delete	setup	sk	Zmaza»
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	sk	Zmaza» v¹etky existujúce SQL úèty, skupiny, ACL (prístupové práva) a nastavenia? Zväè¹a to nie nevyhnutné.
@@ -194,6 +196,7 @@ file	setup	sk	Súbor
 file type, size, version, etc.	setup	sk	typ súboru, veµkos», verzia, atï.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	sk	Nahrávanie súborov je vypnuté: NEmô¾ete pou¾íva» ¾iadneho správcu súborov, ani prilo¾i» súbory v niektorých aplikáciách!
 filename	setup	sk	názov súboru
+filesystem	setup	sk	Súborový systém
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	sk	Pre novú in¹taláciu, zvoµte import. Pre konverziu existujúcich SQL úètov do LDAP, zvoµte export
 force selectbox	setup	sk	Vynú» menu pre výber
 found existing configuration file. loading settings from the file...	setup	sk	Na¹iel som existujúci konfiguraèný súbor. Nahrávam z neho nastavenia...
@@ -400,6 +403,7 @@ setup the database	setup	sk	In¹talácia databázy
 setup/config admin login	setup	sk	Prihlásenie Správcu In¹talátora/Konfigurácie
 show 'powered by' logo on	setup	sk	Kde zobrazova» logo "powered by"
 size	setup	sk	veµkos»
+skip the installation tests (not recommended)	setup	sk	Preskoèi» in¹talaèné testy (neodporúèa sa)
 smtp server hostname or ip address	setup	sk	Názov (hostname) alebo IP adresa SMTP servera
 smtp server port	setup	sk	Port servera SMTP
 some or all of its tables are missing	setup	sk	Chýbajú niektoré alebo v¹etky jeho tabuµky
@@ -502,6 +506,7 @@ you appear to have %1 support.	setup	sk	Zdá sa, ¾e máte podporu %1.
 you appear to have php session support. enabling php sessions.	setup	sk	Zdá sa, ¾e máte podporu PHP sedení. Zapínam PHP sedenia.
 you appear to have xml support enabled	setup	sk	Zdá sa, ¾e máte zapnutú podporu XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	sk	Ste pripravení na túto fázu, ale tá e¹te nebola napísaná,<br />
+you can install it by running:	setup	sk	Mô¾ete to nain¹talova» spustením:
 you didn't enter a config password for domain %1	setup	sk	Nezadali ste konfiguraèné heslo pre doménu %1
 you didn't enter a config username for domain %1	setup	sk	Nezadali ste konfiguraèné pou¾ívateµské meno pre doménu %1
 you didn't enter a header admin password	setup	sk	Nezadali ste heslo Správcu hlavièiek

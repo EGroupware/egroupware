@@ -4,7 +4,7 @@
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sk	<b>Nevybrali ste ¾iadny typ prevodu.</b> Prosím, vyberte ho zo zoznamu.
 @-eval() is only availible to admins!!!	addressbook	sk	Iba správci mô¾u pou¾i» @-eval() !!!
 actions	addressbook	sk	Akcie
-add a single entry by passing the fields.	addressbook	sk	Pridaj záznam preskoèením polo¾iek.
+add a single entry by passing the fields.	addressbook	sk	Pridaj záznam zadaním polo¾iek.
 add custom field	addressbook	sk	Pridaj pou¾ívateµskú polo¾ku
 address book	common	sk	Adresár
 address book - vcard in	addressbook	sk	Adresár - VCard v
@@ -108,6 +108,7 @@ import from outlook	addressbook	sk	Importuj z Outlooku
 import multiple vcard	addressbook	sk	Import viacerých vizitek VCard
 import next set	addressbook	sk	Importova» ïal¹iu sadu
 import_instructions	addressbook	sk	V Netscape otvorte Adresár a vyberte <b>Export<b> v menu <b>Súbor</b>. Exportovaný súbor bude vo formáte LDIF.<p>V Outlooku vyberte Kontakty, zvoµte <b>Import a export...</b> z menu <b>Súbor</b> a exportujte dáta do súboru s hodnotami oddelenými èiarkami.<p>V Palm Desktop 4.0 a vy¹¹om otvorete adresár a zvoµte <b>Export</b> z menu <b>Súbor</b>. Exportované dáta budú vo formáte VCard.
+income	addressbook	sk	Príjem
 international	addressbook	sk	Mezinárodný
 isdn phone	addressbook	sk	ISDN èíslo
 label	addressbook	sk	Nálepka
@@ -165,7 +166,7 @@ something went wrong by reading this contact	addressbook	sk	Nieèo sa nepodarilo 
 something went wrong by saving this contact. errorcode %1	addressbook	sk	Nieèo sa nepodarilo pri ukladaní kontaktu. Chybový kód %1
 startrecord	addressbook	sk	Prvý záznam
 state	common	sk	©tát
-street	common	sk	Ulice
+street	common	sk	Ulica
 successfully imported %1 records into your addressbook.	addressbook	sk	Do adresára bolo úspe¹ne naimportovaných %1 záznamov.
 suffix	addressbook	sk	Prípona
 tel home	addressbook	sk	tel domov
@@ -187,7 +188,6 @@ voice phone	addressbook	sk	Voice telefón
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sk	VAROVANIE!! LDAP sa dá pou¾i» jedine ak NEPOU®ÍVATE kontakty na uchovanie pou¾ívateµských úètov!
 warning: all contacts found will be deleted!	addressbook	sk	POZOR: V¹etky kontakty budú zmazané!
 work phone	addressbook	sk	Telefón do zamestnania
-write (update or add) a single entry by passing the fields.	addressbook	sk	Zapísa» (upravi» alebo prida») jednotlivý záznam zadaním polo¾iek.
 you are not permitted to delete contact %1	addressbook	sk	Nemáte oprávnenie zmaza» kontakt %1
 you are not permittet to delete this contact	addressbook	sk	Nemáte oprávnenie zmaza» tento kontakt
 you are not permittet to edit this contact	addressbook	sk	Nemáte oprávnenie upravi» tento kontakt

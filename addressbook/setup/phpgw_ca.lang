@@ -1,7 +1,7 @@
 %1 records imported	addressbook	ca	%1 registres importats
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	ca	%1 registres llegits (no importats encara, podeu tornar %2enrere%3 i desmarcar Prova d'Importació)
 (e.g. 1969)	addressbook	ca	(p. ex. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ca	<b>No s'ha trobat el tipus de conversió &lt;cap&gt;.</b> Seleccioneu un tipus de la llista
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	ca	<b>No s'ha trobat el tipus de conversió <cap>.</b> Seleccioneu un tipus de la llista
 @-eval() is only availible to admins!!!	addressbook	ca	@-eval() només és disponible per als administradors!!!
 actions	addressbook	ca	Accions
 add a single entry by passing the fields.	addressbook	ca	Afegir una entrada simple passant els camps
@@ -16,7 +16,9 @@ addressbook	common	ca	Llibreta d'adreces
 addressbook preferences	addressbook	ca	Preferències de la llibreta d'adreces
 addressbook-fieldname	addressbook	ca	Camp - Llibreta d'adreces
 addvcard	addressbook	ca	Afegir VCard
+advanced search	addressbook	ca	Cerca avançada
 alt. csv import	addressbook	ca	Importar CSV (avançat)
+are you shure you want to delete this contact?	addressbook	ca	Esteu segurs de voler esborrar aquest contacte?
 are you sure you want to delete this field?	addressbook	ca	Esteu segurs d'esborrar aquest camp?
 bbs phone	addressbook	ca	Telèfon BBS
 birthday	common	ca	Aniversari
@@ -36,15 +38,19 @@ business zip code	addressbook	ca	Codi postal del treball
 car phone	addressbook	ca	Telèfon del cotxe
 cell phone	addressbook	ca	Telèfon móvil
 charset of file	addressbook	ca	Joc de caràcters de l'arxiu
+choose an icon for this contact type	addressbook	ca	Tria una icona per aquest tipus de contacte
+chosse an etemplate for this contact type	addressbook	ca	Tria un eTemplate per aquest tipus de contacte
 city	common	ca	Ciutat
 company	common	ca	Empresa
 company name	common	ca	Nom de l'empresa
 configuration	common	ca	Configuració
 contact	common	ca	Contacte
 contact application	admin	ca	Aplicació del contacte
+contact saved	addressbook	ca	Contacte guardat
 contact settings	admin	ca	Configuració dels contactes
 copied by %1, from record #%2.	addressbook	ca	Copiat per %1, del registre %2
 country	common	ca	País
+create new links	addressbook	ca	Crear nous enllaços
 csv-fieldname	addressbook	ca	Camp CSV
 csv-filename	addressbook	ca	Arxiu CSV
 custom	addressbook	ca	Personalitzat
@@ -53,13 +59,20 @@ debug output in browser	addressbook	ca	Depurar sortida al navegador
 default filter	addressbook	ca	Filtre predeterminat
 delete a single entry by passing the id.	addressbook	ca	Esborrar una entrada senzilla passant l'id
 department	common	ca	Departament
+do your really want to delete this contact?	addressbook	ca	Realment voleu esborrar aquest contacte?
+doesn't matter	addressbook	ca	no importa
 domestic	addressbook	ca	Domèstic
 download	addressbook	ca	Descarregar
 download export file (uncheck to debug output in browser)	addressbook	ca	Descarregar arxiu exportat (desmarcar per a depurar la sortida al navegador)
+download this contact as vcard file	addressbook	ca	baixa aquest contacte com a fitxer vCard
 edit custom field	addressbook	ca	Editar camp personalitzat
 edit custom fields	admin	ca	Editar camps personalitzats
+edit phonenumbers -	addressbook	ca	Edita números de telèfon
+email & internet	addressbook	ca	Email & Internet
 empty for all	addressbook	ca	buit per a tot
 enter the path to the exported file here	addressbook	ca	Introduïu el camí als arxius exportats aquí
+existing links	addressbook	ca	Enllaços existents
+export	addressbook	ca	Exportar
 export contacts	addressbook	ca	Exportar contactes
 export file name	addressbook	ca	Nom de l'arxiu a exportar
 export from addressbook	addressbook	ca	Exportar des de la llibreta d'adreces
@@ -84,6 +97,7 @@ home phone	addressbook	ca	Telèfon particular
 home state	addressbook	ca	Provincia de residència
 home street	addressbook	ca	Adreça particular
 home zip code	addressbook	ca	Codi postal
+icon	addressbook	ca	Icona
 import	addressbook	ca	Importar
 import contacts	addressbook	ca	Importar contactes
 import csv-file into addressbook	addressbook	ca	Importar arxiu CSV a la Llibreta d'adreces
@@ -97,12 +111,14 @@ import_instructions	addressbook	ca	Si useu Mozilla o Netscape, obriu la llibreta
 international	addressbook	ca	Internacional
 isdn phone	addressbook	ca	Telèfon XDSI
 label	addressbook	ca	Etiqueta
+last modified	addressbook	ca	Darrera modificació
 ldap context for contacts	admin	ca	Context LDAP per contactes
 ldap host for contacts	admin	ca	Servidor LDAP per contactes
 ldap root dn for contacts	admin	ca	Arrel LDAP dn per contactes
 ldap root pw for contacts	admin	ca	Arrel LDAP pw per contactes
 ldif	addressbook	ca	LDIF
 line 2	addressbook	ca	Línia 2
+links	addressbook	ca	Enllaços
 list all categories	addressbook	ca	Llista totes les categories
 list all customfields	addressbook	ca	Llista tots els camps personalitzats
 load vcard	addressbook	ca	Carrega VCard
@@ -112,9 +128,13 @@ middle name	addressbook	ca	Segon nom
 mobile	addressbook	ca	Mòbil
 mobile phone	addressbook	ca	Telèfon mòbil
 modem phone	addressbook	ca	Telèfon de módem
+more ...	addressbook	ca	Més ...
 multiple vcard	addressbook	ca	VCard Múltiple
 no vcard	addressbook	ca	Sense VCard
+number	addressbook	ca	Número
 number of records to read (%1)	addressbook	ca	Número de registres a llegir (%1)
+options for type	addressbook	ca	Opcions pel tipus
+organisation	addressbook	ca	Organització
 other number	addressbook	ca	Un altre número
 other phone	addressbook	ca	Un altre telèfon
 pager	common	ca	Buscapersones
@@ -126,6 +146,7 @@ postal	common	ca	Postal
 pref	addressbook	ca	pref
 prefix	addressbook	ca	Prefix
 public key	addressbook	ca	Clau pública
+publish into groups:	addressbook	ca	Publica dins els grups:
 read a list / search for entries.	addressbook	ca	Llegiu una llista / cercau entrades
 read a list of entries.	addressbook	ca	Llegir una llista d'entrades
 read a single entry by passing the id and fieldlist.	addressbook	ca	Llegir una sola entrada passant l'identificador i la llista de camps
@@ -138,11 +159,16 @@ select the type of conversion:	addressbook	ca	Seleccioneu el tipus de conversió:
 select where you want to store	admin	ca	Seleccioneu on voleu desar
 show	addressbook	ca	Mostra
 show birthday reminders on main screen	addressbook	ca	Mostrar recordatoris d'aniversaris a la pantalla principal
+something went wrong by deleting %1	addressbook	ca	Hi ha hagut algun problema esborrant %1
+something went wrong by deleting this contact	addressbook	ca	Hi ha hagut algun problema esborrant aquest contacte
+something went wrong by reading this contact	addressbook	ca	Hi ha hagut algun problema llegint aquest contacte
+something went wrong by saving this contact. errorcode %1	addressbook	ca	Hi ha hagut algun problema guardant aquest contacte. CodiError %1
 startrecord	addressbook	ca	Registre inicial
 state	common	ca	Província
 street	common	ca	Carrer
 successfully imported %1 records into your addressbook.	addressbook	ca	Importats correctament %1 registres a la llibreta d'adreces.
 suffix	addressbook	ca	Sufix
+tel home	addressbook	ca	tel casa
 test import (show importable records <u>only</u> in browser)	addressbook	ca	Prova d'Importació - (mostrar els registres que es poden importar <b>només</b> al navegador)
 that field name has been used already !	addressbook	ca	Aquest nom de camp ja s'ha usat !
 this person's first name was not in the address book.	addressbook	ca	El nom de pila d'aquesta persona no hi era a la llibreta d'adreces.
@@ -159,9 +185,15 @@ vcards require a last name entry.	addressbook	ca	VCard necessita el cognom.
 video phone	addressbook	ca	Telèfon de videoconferència
 voice phone	addressbook	ca	Telèfon de veu
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	ca	ATENCIÓ!! LDAP és vàlid només si NO feu servir contactes per enmagatzemar comptes!
+warning: all contacts found will be deleted!	addressbook	ca	ATENCIÓ: Tots els contacte trobats s'esborraran!
 work phone	addressbook	ca	Telèfon del treball
-write (update or add) a single entry by passing the fields.	addressbook	ca	Escriu (actualitza o afegeix) una entrada simple donant els camps.
+write (update or add) a single entry by passing the fields.	addressbook	ca	Escriu (actualitza o afegeix) una entrada simple, donant els camps.
+you are not permitted to delete contact %1	addressbook	ca	No tens permís per esborrar el contacte %1
+you are not permittet to delete this contact	addressbook	ca	No tens permís per esborrar aquest contacte
+you are not permittet to edit this contact	addressbook	ca	No tens permís per editar aquest contacte
+you are not permittet to view this contact	addressbook	ca	No tens permís per veure aquest contacte
 you must select a vcard. (*.vcf)	addressbook	ca	Heu de seleccionar una targeta vcard (*.vcf)
 you must select at least 1 column to display	addressbook	ca	Heu de seleccionar al menys una columna per mostrar
 zip code	common	ca	Codi postal
 zip_note	addressbook	ca	<p><b>Nota:</b> L'arxiu pot ser un arxiu comprimit zip que tingui arxius .csv, .vcf o .ldif. Tanmateix, no barregeu els tipus en cada importació.
+

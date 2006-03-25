@@ -3,6 +3,7 @@
 - subprojects from	infolog	nl	- Subprojecten van
 0%	infolog	nl	0%
 10%	infolog	nl	10%
+100%	infolog	nl	100%
 20%	infolog	nl	20%
 30%	infolog	nl	30%
 40%	infolog	nl	40%
@@ -16,6 +17,7 @@ a short subject for the entry	infolog	nl	een kort onderwerp voor een nieuw infol
 abort without deleting	infolog	nl	Afbreken zonder te verwijderen
 accept	infolog	nl	Accepteren
 action	infolog	nl	Actie
+actual date and time	infolog	nl	werkelijke datum en tijd
 add	infolog	nl	Toevoegen
 add a file	infolog	nl	Een bestand toevoegen
 add a new entry	infolog	nl	Een nieuw infolog toevoegen
@@ -25,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	nl	Een nieuwe subtaak, su
 add a new todo	infolog	nl	Een nieuwe taak toevoegen
 add file	infolog	nl	Bestand toevoegen
 add sub	infolog	nl	Sub toevoegen
+add timesheet entry	infolog	nl	Urenregistratie toevoegen
 add:	infolog	nl	Toevoegen:
 all	infolog	nl	Alles
 all links and attachments	infolog	nl	alle links en bijlagen
@@ -38,6 +41,7 @@ billed	infolog	nl	gefactureerd
 both	infolog	nl	beiden
 call	infolog	nl	bellen
 cancel	infolog	nl	Annuleren
+cancelled	infolog	nl	geannuleerd
 categories	infolog	nl	Categorieën
 category	infolog	nl	Categorie
 change the status of an entry, eg. close it	infolog	nl	Wijzig de status van een item, bijvoorbeeld afsluiten
@@ -47,6 +51,7 @@ click here to create the link	infolog	nl	klik hier om een link aan te maken
 click here to start the search	infolog	nl	klik hier om te starten met zoeken
 close	infolog	nl	Sluiten
 comment	infolog	nl	Opmerking
+completed	infolog	nl	Voltooid
 configuration	infolog	nl	Configuratie
 confirm	infolog	nl	Bevestigen
 contact	infolog	nl	Contact
@@ -67,6 +72,8 @@ custom fields, typ and status	common	nl	Aangepaste velden, type en status
 custom regarding	infolog	nl	Aangepast m.b.t.
 custom status for typ	infolog	nl	Aangepaste status voor type
 customfields	infolog	nl	Aanpaste velden
+date completed	infolog	nl	Datum voltooid
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	nl	Datum voltooid (leeg laten als je het automatisch wilt laten vullen indien de status op gedaan of gefactureerd wordt gezet)
 datecreated	infolog	nl	datum aangemaakt
 dates, status, access	infolog	nl	Data, Status, Toegang
 days	infolog	nl	dagen
@@ -110,6 +117,7 @@ fieldseparator	infolog	nl	Veldonderbreker
 finish	infolog	nl	Einde
 for which types should this field be used	infolog	nl	Voor welke type wordt dit veld gebruikt
 from	infolog	nl	Van
+general	infolog	nl	Algemeen
 high	infolog	nl	hoog
 id	infolog	nl	ID
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	nl	Indien niet ingesteld wordt de regel met zoeken en filters verborgen in het geval van minder entries dan "maximum aantal matches per pagina" (zoals bepaald in uw algemene voorkeuren).
@@ -132,6 +140,7 @@ invalid filename	infolog	nl	Ongeldige bestandsnaam
 label<br>helptext	infolog	nl	Label<br/>Helptekst
 last changed	infolog	nl	Laatst gewijzigd
 last modified	infolog	nl	Laatst gewijzigd
+leave it empty	infolog	nl	leeg laten
 leave without saveing the entry	infolog	nl	weggaan zonder op te slaan
 leaves without saveing	infolog	nl	weggaan zonder op te slaan
 length<br>rows	infolog	nl	Lengte<br/>Regels
@@ -140,6 +149,7 @@ links	infolog	nl	Links
 links of this entry	infolog	nl	Links van deze infolog
 list all categories	infolog	nl	Toon alle categorieën
 list no subs/childs	infolog	nl	Sub's niet weergeven
+location	infolog	nl	Locatie
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
 max length of the input [, length of the inputfield (optional)]	infolog	nl	maximale lengte van de invoer [lengte van het invoerveld (optioneel)]
@@ -159,6 +169,7 @@ none	infolog	nl	Geen
 normal	infolog	nl	normaal
 not	infolog	nl	niet
 not assigned	infolog	nl	Niet toegewezen
+not-started	infolog	nl	niet gestart
 note	infolog	nl	Notitie
 number of records to read (%1)	infolog	nl	Aantal records om te importen (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	nl	Aantal regels voor een een invoertekstvak of van een menu-box
@@ -179,15 +190,18 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	nl	pad aan de serverkan
 path to user and group files has to be outside of the webservers document-root!!!	infolog	nl	Pad naar gebruiker- en groepsbestanden MOETEN BUITEN de documentendirectory zijn van de webserver's
 pattern for search in addressbook	infolog	nl	Patroon voor zoekopdracht in Adressenboek
 pattern for search in projects	infolog	nl	Patroon voor zoekopdracht in Projecten
+percent completed	infolog	nl	Percentage voltooid
 permission denied	infolog	nl	Toestemming geweigerd
 phone	infolog	nl	Telefoongesprek
 phone/email	infolog	nl	Telefoon/Email
 phonecall	infolog	nl	Telefoongesprek
 planned	infolog	nl	gepland
 planned time	infolog	nl	geplande tijd
+price	infolog	nl	Prijs
 priority	infolog	nl	Prioriteit
 private	infolog	nl	Privé
 project	infolog	nl	Project
+project settings: price, times	infolog	nl	Project instellingen: prijs, tijden
 re:	infolog	nl	Re:
 read one record by passing its id.	infolog	nl	Lees één record door het id mee te geven.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	nl	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
@@ -197,7 +211,7 @@ responsible	infolog	nl	verantwoordelijk
 responsible open	infolog	nl	verantwoordelijk open
 responsible overdue	infolog	nl	verantwoordelijk te laat
 responsible upcoming	infolog	nl	verantwoordelijk toekomstige
-responsible user, priority, times	infolog	nl	verantwoordelijke gebruiker, prioriteit, tijden
+responsible user, priority	infolog	nl	verantwoordelijke gebruiker, prioriteit
 returns a list / search for records.	infolog	nl	Toont een lijst / zoek records
 save	infolog	nl	Opslaan
 saves the changes made and leaves	infolog	nl	Slaat wijzigingen op en verlaat het scherm
@@ -206,7 +220,9 @@ search	infolog	nl	Zoeken
 search for:	infolog	nl	Zoeken naar:
 select	infolog	nl	Selecteren
 select a category for this entry	infolog	nl	Selecteer een categorie voor deze infolog
+select a price	infolog	nl	Selecteer een prijs
 select a priority for this task	infolog	nl	Selecteer een prioriteit voor deze taak
+select a project	infolog	nl	Selecteer een project
 select a responsible user: a person you want to delegate this task	infolog	nl	Selecteer een verantwoordelijke gebruiker: een persoon aan wie u deze taak wilt delegeren
 select a typ to edit it's status-values or delete it	infolog	nl	Selecteer een type waarvan uw de statuswaarden wilt wijzigen of om te verwijderen
 select an app to search in	infolog	nl	Selecteer een applicatie om in te zoeken
@@ -229,6 +245,7 @@ small view	infolog	nl	kleine weergave
 start a new search, cancel this link	infolog	nl	Start een nieuwe zoekopdracht, deze link annuleren
 startdate	infolog	nl	Startdatum
 startdate enddate	infolog	nl	Startdatum Einddatum
+startdate for new entries	infolog	nl	Startdatum voor nieuwe items
 startrecord	infolog	nl	Startregel
 status	infolog	nl	Status
 status ...	infolog	nl	Status ...
@@ -244,7 +261,9 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	nl	Wanneer moet de taak of het telefoongesprek afgehandeld zijn?
 times	infolog	nl	Tijden
 to many might exceed your execution-time-limit	infolog	nl	Te veel kan mogelijk de uitvoertijd van dit programme overschrijden.
+to what should the startdate of new entries be set.	infolog	nl	Waarop moet de startdatum van nieuwe items ingesteld worden.
 today	infolog	nl	Vandaag
+todays date	infolog	nl	datum van vandaag
 todo	infolog	nl	taak
 translation	infolog	nl	Vertaling
 typ	infolog	nl	Type
