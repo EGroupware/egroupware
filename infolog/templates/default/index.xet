@@ -50,8 +50,8 @@
 						<description value="Responsible"/>
 					</vbox>
 					<description value="last changed"/>
-					<description value="Sub"/>
-					<description value="Action"/>
+					<description value="Sub" class="noPrint"/>
+					<description value="Action" class="noPrint"/>
 				</row>
 				<row class="row" valign="top">
 					<hbox align="center" orient=",5">
@@ -91,13 +91,13 @@
 							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<vbox align="center" orient="0,0">
+					<vbox align="center" class="noPrint" orient="0,0">
 						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
 						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
 						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit&amp;link_app[0]=infolog&amp;link_id[0]=$row_cont[info_id]&amp;link_app[1]=projectmanager&amp;link_id[1]=$row_cont[pm_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
 					</vbox>
-					<hbox>
+					<hbox class="noPrint">
 						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
 						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
@@ -155,8 +155,8 @@
 						<nextmatch-accountfilter id="info_responsible" options="Responsible" statustext="Select to filter by responsible"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
-					<description value="Sub"/>
-					<description value="Action"/>
+					<description value="Sub" class="noPrint"/>
+					<description value="Action" class="noPrint"/>
 				</row>
 				<row class="row" valign="top">
 					<hbox align="center" orient=",5">
@@ -196,13 +196,13 @@
 							<menupopup type="select-account" id="${row}[info_modifier]" readonly="true"/>
 						</menulist>
 					</vbox>
-					<vbox align="center" orient="0,0">
+					<vbox align="center" class="noPrint" orient="0,0">
 						<button image="new" label="Add sub" align="center" id="sp[$row_cont[info_id]]" statustext="Add a new sub-task, -note, -call to this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;action=sp&amp;action_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="view.gif" label="View subs" align="center" id="view[$row_cont[info_id]]" statustext="View all subs of this entry"/>
 						<button image="parent.gif" label="View parent" align="center" id="view[$row_cont[info_id_parent]]" statustext="View the parent of this entry and all his subs"/>
 						<button image="timesheet" label="Add timesheet entry" id="timesheet[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit&amp;link_app[0]=infolog&amp;link_id[0]=$row_cont[info_id]&amp;link_app[1]=projectmanager&amp;link_id[1]=$row_cont[pm_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" align="center"/>
 					</vbox>
-					<hbox>
+					<hbox class="noPrint">
 						<button image="edit" label="Edit" id="edit[$row_cont[info_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[info_id]]" statustext="Delete this entry" onclick="return $row_cont[info_anz_subs] || confirm('Delete this entry');"/>
 						<button image="done" label="Close" id="close[$row_cont[info_id]]" statustext="Sets the status of this entry and its subs to done"/>
@@ -232,7 +232,7 @@
 				<row>
 					<nextmatch options="infolog.index.rows" span="all" id="nm"/>
 				</row>
-				<row>
+				<row class="noPrint">
 					<hbox span="all">
 						<button label="Add" id="add[note]" statustext="Add a new Entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Cancel" id="cancel" statustext="Back to main list"/>

@@ -207,6 +207,7 @@
 			$GLOBALS['egw']->session->appsession($for.'session_data','infolog',array(
 				'search' => $values['search'],
 				'start'  => $values['start'],
+				'num_rows' => $values['num_rows'],
 				'filter' => $values['filter'],
 				'filter2' => $values['filter2'],
 				'cat_id' => $values['cat_id'],
