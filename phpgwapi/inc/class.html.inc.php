@@ -824,7 +824,7 @@ class html
 		{
 			return $title;
 		}
-		return '<div title="'.$title.'" '.$options.
+		return '<div class="onlyPrint">'.$title.'</div><div class="noPrint" title="'.$title.'" '.$options.
 			' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px; text-align: left;'.
 			(stristr($options,'onclick="') ? ' cursor: pointer; cursor: hand;' : '').'">'."\n\t".
 			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';"></div>'."\n</div>\n";
