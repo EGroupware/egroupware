@@ -507,41 +507,113 @@ class so_sql
 			}
 			$query = $db_filter;
 		}
-		$num_rows = 0;	// as spec. in max_matches in the user-prefs
-		if (is_array($start)) list($start,$num_rows) = $start;
-
-		if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
-		{
-			if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
-			{
-				$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
-			}
-			elseif (!$need_full_no_count && (!$join || stristr($join,'LEFT JOIN')))
-			{
-				$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
-				$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
-			}
-			else	// cant do a count, have to run the query without limit
-			{
-				$this->db->select($this->table_name,($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
-					($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
-					$query,__LINE__,__FILE__,false,$order_by && !stristr($order_by,'ORDER BY') ? 'ORDER BY '.$order_by : $order_by,false,0,$join);
-				$this->total = $this->db->num_rows();
-			}
-		}
-		$this->db->select($this->table_name,$mysql_calc_rows.($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
-			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : ''),
-			$query,__LINE__,__FILE__,$start,$order_by && !stristr($order_by,'ORDER BY') ? 'ORDER BY '.$order_by : $order_by,false,$num_rows,$join);
-
-		if ($mysql_calc_rows)
-		{
-			$this->total = $this->db->Link_ID->GetOne('SELECT FOUND_ROWS()');
-		}
 		if ((int) $this->debug >= 4)
 		{
 			echo "<p>so_sql::search(,only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty,$op,start='$start',".print_r($filter,true).") query=".print_r($query,true).", total='$this->total'</p>\n";
 			echo "<br>criteria = "; _debug_array($criteria);
 		}
+		$colums = ($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
+			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : '');
+
+		$num_rows = 0;	// as spec. in max_matches in the user-prefs
+		if (is_array($start)) list($start,$num_rows) = $start;
+		
+		if (is_array($order_by))
+		{
+			list($order_by,$union_order_by) = $order_by;
+		}
+		if ($order_by && !stristr($order_by,'ORDER BY'))
+		{
+			$order_by = 'ORDER BY '.$order_by;
+		}
+		static $union = array();
+		static $union_cols = array();
+		if ($start === 'UNION' || $union)
+		{
+			$union[] = array(
+				'table'  => $this->table_name,
+				'cols'   => $colums,
+				'where'  => $query,
+				'append' => $order_by,
+				'join'   => $join,
+			);
+			if ($start === 'UNION')
+			{
+				if (!$union_cols)	// union used the colum-names of the first query
+				{
+					$union_cols = $this->_get_columns($only_keys,$extra_cols);
+				}
+				return true;	// waiting for further calls, before running the union-query
+			}
+			// running the union query now
+			if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
+			{
+				if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
+				{
+					$union[0]['cols'] = ($mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ').$union[0]['cols'];
+				}
+				else	// cant do a count, have to run the query without limit
+				{
+					$this->db->union($union,__LINE__,__FILE__);
+					$this->total = $this->db->num_rows();
+				}
+			}
+			$this->db->union($union,__LINE__,__FILE__,$union_order_by,$start,$num_rows);
+
+			$cols = $union_cols;
+			$union = $union_cols = array();
+		}
+		else	// no UNION
+		{
+			if ($start !== false && $num_rows != 1)	// need to get the total too, saved in $this->total
+			{
+				if ($this->db->Type == 'mysql' && $this->db->ServerInfo['version'] >= 4.0)
+				{
+					$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
+				}
+				elseif (!$need_full_no_count && (!$join || stristr($join,'LEFT JOIN')))
+				{
+					$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
+					$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
+				}
+				else	// cant do a count, have to run the query without limit
+				{
+					$this->db->select($this->table_name,$colums,$query,__LINE__,__FILE__,false,$order_by,false,0,$join);
+					$this->total = $this->db->num_rows();
+				}
+			}
+			$this->db->select($this->table_name,$mysql_calc_rows.$colums,$query,__LINE__,__FILE__,
+				$start,$order_by,false,$num_rows,$join);
+
+			$cols = $this->_get_columns($only_keys,$extra_cols);
+		}
+		if ($mysql_calc_rows)
+		{
+			$this->total = $this->db->Link_ID->GetOne('SELECT FOUND_ROWS()');
+		}
+		$arr = array();
+		for ($n = 0; ($row = $this->db->row(true)); ++$n)
+		{
+			$data = array();
+			foreach($cols as $db_col => $col)
+			{
+				$data[$col] = $row[$db_col];
+			}
+			$arr[] = $this->db2data($data);
+		}
+		return $n ? $arr : False;
+	}
+
+	/**
+	 * extract the requested columns from $only_keys and $extra_cols param of a search
+	 *
+	 * @internal 
+	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @return array with columns as db-name => internal-name pairs
+	 */	 
+	function _get_columns($only_keys,$extra_cols)
+	{
 		if ($only_keys === true)	// only primary key
 		{
 			$cols = $this->db_key_cols;
@@ -570,17 +642,7 @@ class so_sql
 				$cols[$col] = $col;
 			}
 		}
-		$arr = array();
-		for ($n = 0; ($row = $this->db->row(true)); ++$n)
-		{
-			$data = array();
-			foreach($cols as $db_col => $col)
-			{
-				$data[$col] = $row[$db_col];
-			}
-			$arr[] = $this->db2data($data);
-		}
-		return $n ? $arr : False;
+		return $cols;
 	}
 
 	/**
