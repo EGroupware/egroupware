@@ -7,6 +7,7 @@ create new links	timesheet	de	Neue Verknüpfung erstellen
 delete this entry	timesheet	de	Diesen Eintrag löschen
 edit this entry	timesheet	de	diesen Eintrag bearbeiten
 empty if identical to duration	timesheet	de	leer lassen wenn gleich Dauer
+end	timesheet	de	Ende
 entry deleted	timesheet	de	Eintrag gelöscht
 entry saved	timesheet	de	Eintrag gespeichert
 error deleting the entry!!!	timesheet	de	Fehler beim Löschen des Eintrags!!!
@@ -28,11 +29,14 @@ saves the changes made	timesheet	de	Speichert die Änderungen
 saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fügt einen neuen hinzu
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
+start	timesheet	de	Start
+sum %1:	timesheet	de	Summe %1:
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Diese Jahr
 timesheet	common	de	Stundenzettel
 unitprice	timesheet	de	Preis pro Einheit
 view this entry	timesheet	de	Diesen Eintrag anzeigen
+week	timesheet	de	Woche
 yesterday	timesheet	de	Gestern
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	de	Ihre Datenbank ist NICHT aktuell (%1 statt %2), bitte rufen sie %3setup%4 auf um die Datenbank zu aktualisieren.

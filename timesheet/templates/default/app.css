@@ -1,2 +1,3 @@
 /* $Id$ */
 .redItalic { color: red; font-style: italics; }
+.titleSum,.titleDetails { font-weight: bold; }

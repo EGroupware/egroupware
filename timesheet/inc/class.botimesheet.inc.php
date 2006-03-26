@@ -282,6 +282,35 @@ class botimesheet extends so_sql
 		
 		if ($only_summary) return $this->summary;
 
+		// ToDo: get the day- & weeksums working with DB's other then MySQL (problem is a missing equivalent to FROM_UNIXTIME)
+		if ($this->db->Type == 'mysql' && strstr($order_by,'ts_start'))	// day- / weekwise sums only for mysql and if ordered by ts_start
+		{
+			// regular entries
+			parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
+			
+			// month-sums
+			parent::search($criteria,"-2,'',DATE_FORMAT(FROM_UNIXTIME(ts_start),'%Y%m') AS ts_month,'',ts_start,".
+				"SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM(ts_unitprice * ts_quantity) AS ts_total",
+				'GROUP BY ts_month ORDER BY '.$order_by,'',$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
+
+			// week-sums
+			$weekstart = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'] == 'Sunday' ? 0 : 1;
+			parent::search($criteria,"-1,'',YEARWEEK(FROM_UNIXTIME(ts_start),$weekstart) AS ts_week,'',ts_start,".
+				"SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM(ts_unitprice * ts_quantity) AS ts_total",
+				'GROUP BY ts_week ORDER BY '.$order_by,'',$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
+
+			// order of the union: monthsums behind the month, weeksums behind the week and daysums behind the day
+			$sort = substr($order_by,8);
+			$union_order = "DATE_FORMAT(FROM_UNIXTIME(ts_start),'%Y%m') $sort,CASE WHEN ts_id=-2 THEN 1 ELSE 0 END,".
+				"YEARWEEK(FROM_UNIXTIME(ts_start),$weekstart) $sort,CASE WHEN ts_id=-1 THEN 1 ELSE 0 END,".
+				"DATE(FROM_UNIXTIME(ts_start)) $sort,CASE WHEN ts_id=0 THEN 1 ELSE 0 END,$order_by";
+
+			// day-sums
+			return parent::search($criteria,"0,'',DATE(FROM_UNIXTIME(ts_start)) AS ts_date,'',ts_start,".
+				"SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM(ts_unitprice * ts_quantity) AS ts_total",
+				array('GROUP BY ts_date ORDER BY '.$order_by,$union_order),
+				'',$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 

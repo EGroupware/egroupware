@@ -4,7 +4,7 @@
 	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001">
 		<hbox data="" rows="1" cols="1" class="custom_hide">
 			<description value="Start"/>
-			<date id="startdate" needed="1"/>
+			<date id="startdate"/>
 			<description value="End"/>
 			<date id="enddate" statustext="Leave it empty for a full week"/>
 		</hbox>
@@ -42,23 +42,23 @@
 						<textbox type="float" id="price" readonly="true"/>
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1"/>
-					<description value="Actions"/>
+					<description value="Actions" class="noPrint"/>
 				</row>
-				<row class="row">
+				<row class="$row_cont[class]">
 					<date-time id="${row}[ts_start]" readonly="true" options=",8"/>
 					<vbox>
 						<link id="${row}[ts_link]" no_lang="1"/>
-						<description id="${row}[ts_title]" no_lang="1" options="b"/>
+						<description id="${row}[ts_title]" no_lang="1" class="$row_cont[titleClass]"/>
 						<description id="${row}[ts_description]" no_lang="1"/>
 					</vbox>
-					<date-duration id="${row}[ts_duration]" readonly="true" options=",,,,1"/>
+					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1"/>
 					<description id="${row}[ts_quantity]" no_lang="1"/>
 					<description no_lang="1" id="${row}[ts_unitprice]"/>
 					<description no_lang="1" id="${row}[ts_total]"/>
 					<menulist>
 						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
 					</menulist>
-					<hbox>
+					<hbox class="noPrint">
 						<button image="view" label="View" id="view[$row_cont[ts_id]]" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.view&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;" statustext="View this entry"/>
 						<button image="edit" label="Edit" id="edit[$row_cont[ts_id]]" statustext="Edit this entry" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit&amp;ts_id=$row_cont[ts_id]'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 						<button image="delete" label="Delete" id="delete[$row_cont[ts_id]]" statustext="Delete this entry" onclick="return confirm('Delete this entry');"/>
@@ -82,7 +82,7 @@
 				<row>
 					<nextmatch id="nm" options="timesheet.index.rows"/>
 				</row>
-				<row>
+				<row class="noPrint">
 					<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
 				</row>
 			</rows>

@@ -311,6 +311,30 @@ class uitimesheet extends botimesheet
 		foreach($rows as $n => $val)
 		{
 			$row =& $rows[$n];
+			
+			$row['class'] = 'row';
+			if ($row['ts_id'] <= 0)	// sums
+			{
+				$readonlys["view[$row[ts_id]]"] = $readonlys["edit[$row[ts_id]]"] = $readonlys["delete[$row[ts_id]]"] = true;
+				if ($query['sort'] == 'ASC') $row['ts_start'] -= 7200;	// fix for DSL change
+				switch($row['ts_id'])
+				{
+					case 0:	// day-sum
+						$row['ts_title'] = lang('Sum %1:',lang(date('l',$row['ts_start'])).' '.$GLOBALS['egw']->common->show_date($row['ts_start'],
+							$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],false));
+						break;
+					case -1:	// week-sum
+						$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_title'],4).'/'.substr($row['ts_title'],0,4));
+						break;
+					case -2:	// month-sum
+						$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_title'],0,4));
+						break;
+				}	
+				$row['ts_start'] = $row['ts_quantity'] = $row['ts_unitprice'] = '';
+				$row['class'] = 'th';
+				$row['titleClass'] = 'titleSum';
+				continue;
+			}
 			if (!$this->check_acl(EGW_ACL_EDIT,$row))
 			{
 				$readonlys["edit[$row[ts_id]]"] = true;
@@ -337,6 +361,10 @@ class uitimesheet extends botimesheet
 			if (!$query['filter2'])
 			{
 				unset($row['ts_description']);
+			}
+			else
+			{
+				$row['titleClass'] = 'titleDetails';
 			}
 		}
 		$rows['no_owner_col'] = $query['no_owner_col'];
