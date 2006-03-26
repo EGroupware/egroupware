@@ -178,6 +178,7 @@ help	etemplate	en	Help
 horizontal rule	etemplate	en	Horizontal Rule
 hour	etemplate	en	Hour
 hours	etemplate	en	hours
+how many entries should the list show	etemplate	en	How many entries should the list show
 html	etemplate	en	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	en	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	en	Image

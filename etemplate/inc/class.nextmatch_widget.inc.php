@@ -148,7 +148,7 @@
 					{
 						$cell['help'] = 'select which values to show';
 					}
-					$cell['onchange'] = True;
+					$cell['onchange'] = $cell['noprint'] = True;
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
 					return True;
 
@@ -163,7 +163,7 @@
 					{
 						$cell['help'] = 'select which accounts to show';
 					}
-					$cell['onchange'] = True;
+					$cell['onchange'] = $cell['noprint'] = True;
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
 					return True;
 			}
@@ -182,6 +182,25 @@
 					$obj =& CreateObject($app.'.'.$class);
 				}
 			}
+			$max = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			$row_options = array();
+			foreach(array(5,12,25,50,100,200,500,999) as $n)
+			{
+				if ($n-5 <= $max && $max <= $n+5) $n = $max;
+				$row_options[$n] = $n;
+			}
+			if (!isset($row_options[$max]))
+			{
+				$row_options[$max] = $max;
+				ksort($row_options);
+			}
+			$value['options-num_rows'] =& $row_options;
+
+			if (!isset($value['num_rows'])) $value['num_rows'] = $max;
+			if ($value['num_rows'] != $max)
+			{
+				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = $value['num_rows'];
+			}				
 			if (!is_object($obj) || !method_exists($obj,$method))
 			{
 				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
@@ -219,7 +238,6 @@
 			{
 				$value['template']->data[0]['h'.$value['template']->rows] .= ',1';	// disable the last data row
 			}
-			$max   = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			if (!$value['never_hide'] && $total <= $max && $options && $value['search'] == '' &&
 				 ($value['no_cat'] || !$value['cat_id']) &&
 				 ($value['no_filter'] || !$value['filter'] || $value['filter'] == 'none') &&
@@ -327,12 +345,11 @@
 			}
 			$old_value = $extension_data;
 
-			$max   = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 
 			if (is_array($value['bottom']))			// we have a second bottom-bar
 			{
-				$inputs = array('search','cat_id','filter','filter2');
+				$inputs = array('search','cat_id','filter','filter2','num_rows');
 				foreach($inputs as $name)
 				{
 					if (isset($value['bottom'][$name]) && $value[$name] == $old_value[$name])
@@ -351,10 +368,16 @@
 				}
 				unset($value['bottom']);
 			}
-			if ($value['start_search'] || $value['search'] != $old_value['search'] ||
-					isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
-					isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
-					isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
+			if (isset($old_value['num_rows']) && $value['num_rows'] != $old_value['num_rows'])
+			{
+				$loop = true;	// num_rows changed
+			}
+			$max = $value['num_rows'] ? $value['num_rows'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+
+			if (!isset($value['rows']) && ($value['start_search'] || $value['search'] != $old_value['search'] ||
+				isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
+				isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
+				isset($value['filter2']) && $value['filter2'] != $old_value['filter2']))
 			{
 				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
 				//echo "new filter --> loop</p>";
@@ -362,7 +385,7 @@
 				//echo "old_value ="; _debug_array($old_value);
 				$loop = True;
 			}
-			elseif ($value['first'])
+			elseif ($value['first'] || $value['left'] && $old_value['start'] < $max)
 			{
 				$value['start'] = 0;
 				unset($value['first']);

@@ -178,6 +178,7 @@ help	etemplate	de	Hilfe
 horizontal rule	etemplate	de	Waagrechte Linie
 hour	etemplate	de	Stunde
 hours	etemplate	de	Stunden
+how many entries should the list show	etemplate	de	Wieviele Einträge soll die Liste anzeigen
 html	etemplate	de	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	de	wenn das Feld deaktiviert ist, wird eine leere Tabellenzelle angezeigt, zum (zeitweisen) Entfernen eines Feldes
 image	etemplate	de	Grafik

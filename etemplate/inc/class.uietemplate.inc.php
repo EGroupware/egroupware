@@ -561,6 +561,10 @@
 				}
 				$rows[".$row"] .= $this->html->formatOptions($height,'height');
 				list($cl) = explode(',',$class);
+				if ($cl == '@' || strstr($cl,'$') !== false)
+				{
+					$cl = $this->expand_name($cl,0,$r,$content['.c'],$content['.row'],$content);
+				}
 				if ($cl == 'nmr' || $cl == 'row')
 				{
 					$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on'); // alternate color
@@ -1228,7 +1232,7 @@
 						$sels = (array)$this->customfields[substr($cell['name'],1)]['values'];
 					}
 					if ($multiple && !is_array($value)) $value = explode(',',$value);
-					if ($readonly)
+					if ($readonly || $cell['noprint'])
 					{
 						foreach($multiple ? $value : array($value) as $val)
 						{
@@ -1256,8 +1260,13 @@
 							}
 						}
 					}
-					else
+					if (!$readonly)
 					{
+						if ($cell['noprint'])
+						{
+							$html = '<span class="onlyPrint">'.$html.'</span>';
+							$options .= ' class="noPrint"';
+						}
 						if ($multiple && is_numeric($multiple))	// eg. "3+" would give a regular multiselectbox
 						{
 							$html .= $this->html->checkbox_multiselect($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,

@@ -248,7 +248,7 @@
 					break;
 
 				case 'select-account':	// options: #rows,{accounts(default)|both|groups|owngroups},{0(=lid)|1(default=name)|2(=lid+name))}
-//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
+					//echo "<p>select-account widget: name=$cell[name], type='$type', rows=$rows, readonly=".(int)($cell['readonly'] || $readonlys)."</p>\n";
 					if($type == 'owngroups') 
 					{
 						$type = 'groups';
@@ -274,10 +274,23 @@
 						$help = (int)$cell['no_lang'] < 2 ? lang($cell['help']) : $cell['help'];
 						$onFocus = "self.status='".addslashes(htmlspecialchars($help))."'; return true;";
 						$onBlur  = "self.status=''; return true;";
+						if ($cell['noprint'])
+						{
+							foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
+							{
+								if ($id) $onlyPrint[] = $this->accountInfo($id,$acc,$type2,$type=='both');
+							}
+							$onlyPrint = $onlyPrint ? implode('<br />',$onlyPrint) : lang((int)$rows < 0 ? 'all' : $rows);
+							$noPrint_class = ' class="noPrint"';
+						}
 						$value = $GLOBALS['egw']->uiaccountsel->selection($name,'eT_accountsel_'.str_replace(array('[','][',']'),array('_','_',''),$name),
-							$value,$type,$rows > 0 ? $rows : 0,False,' onfocus="'.$onFocus.'" onblur="'.$onBlur.'"',
+							$value,$type,$rows > 0 ? $rows : 0,False,' onfocus="'.$onFocus.'" onblur="'.$onBlur.'"'.$noPrint_class,
 							$cell['onchange'] == '1' ? 'this.form.submit();' : $cell['onchange'],
 							!empty($rows) && 0+$rows <= 0 ? lang($rows < 0 ? 'all' : $rows) : False);
+						if ($cell['noprint'])
+						{
+							$value = '<span class="onlyPrint">'.$onlyPrint.'</span>'.$value;
+						}
 						$cell['type'] = 'html';
 						$cell['size'] = '';	// is interpreted as link otherwise
 						$GLOBALS['egw_info']['etemplate']['to_process'][$name] = 'select';

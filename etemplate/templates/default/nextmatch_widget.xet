@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.0.0.001">
+	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%" spacing="0" padding="5">
 			<columns>
 				<column width="1%"/>
@@ -11,11 +11,12 @@
 				<column/>
 				<column width="15%"/>
 				<column width="5%"/>
+				<column/>
 				<column width="1%"/>
 				<column width="1%"/>
 			</columns>
 			<rows>
-				<row class="nmh">
+				<row class="th">
 					<button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
 					<button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
 					<menulist>
@@ -29,6 +30,9 @@
 					</menulist>
 					<textbox align="right" id="search" onchange="1" statustext="a pattern to be searched for"/>
 					<button label="Search" id="start_search" statustext="to start the search"/>
+					<menulist>
+						<menupopup id="num_rows" no_lang="1" onchange="1" statustext="How many entries should the list show"/>
+					</menulist>
 					<button image="right.gif" ro_image="right-grey.gif" label="Right" id="right" statustext="go to the next page of entries"/>
 					<button image="last.gif" ro_image="last-grey.gif" label="Last" id="last" statustext="go to the last entry"/>
 				</row>
@@ -38,7 +42,7 @@
 			.thinBorder { border: 1px solid black; }
 		</styles>
 	</template>
-	<template id="etemplate.nextmatch_widget" template="" lang="" group="0" version="1.0.0.001">
+	<template id="etemplate.nextmatch_widget" template="" lang="" group="0" version="1.2.001">
 		<grid width="100%">
 			<columns>
 				<column width="35%"/>
@@ -46,7 +50,7 @@
 				<column width="35%"/>
 			</columns>
 			<rows>
-				<row>
+				<row class="noPrint">
 					<template id="@header_left"/>
 					<hbox align="center">
 						<description value="showing" no_lang="1" id="range"/>
@@ -54,13 +58,13 @@
 					</hbox>
 					<template align="right" id="@header_right"/>
 				</row>
-				<row>
+				<row class="noPrint">
 					<template span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>
 				</row>
 				<row>
 					<template content="rows" span="all" align="center" id="@template"/>
 				</row>
-				<row disabled="!@bottom_too">
+				<row class="noPrint" disabled="!@bottom_too">
 					<template content="bottom" span="all" align="center" id="etemplate.nextmatch_widget.nm_row"/>
 				</row>
 			</rows>
