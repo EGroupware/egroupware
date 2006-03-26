@@ -10,6 +10,8 @@
 	.th { color: {th_text}; background-color: {th_bg}; }
 	.narrow_column { width: 6em; }
 	.tablink { color: #000000; }
+	@media screen {	.onlyPrint { display: none; } }
+	@media print {	.noPrint { display: none; } }
 	{app_css}
 -->
 </style>
