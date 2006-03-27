@@ -31,6 +31,7 @@
 	 * 	'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 	 *	'never_hide'     => True// I  never hide the nextmatch-line if less then maxmatch entries
 	 * 	'start'          =>		// IO position in list
+	 *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
 	 * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
 	 * 	'search'         =>		// IO search pattern
 	 * 	'order'          =>		// IO name of the column to sort after (optional for the sortheaders)
@@ -170,6 +171,16 @@
 			if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 			if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
 
+			// presetting the selectboxes with their default values, to NOT loop, because post-process thinks they changed
+			if (!isset($value['cat_id'])) $value['cat_id'] = '';
+			if (!isset($value['search'])) $value['search'] = '';
+			foreach(array('filter','filter2') as $f)
+			{
+				if (!isset($value[$f]))
+				{
+					list($value[$f]) = isset($tmpl->sel_options[$f]) ? @each($tmpl->sel_options[$f]) : @each($value['options-'.$f]);
+				}
+			}
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			if ($app && $class)
 			{
@@ -374,10 +385,10 @@
 			}
 			$max = $value['num_rows'] ? $value['num_rows'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 
-			if (!isset($value['rows']) && ($value['start_search'] || $value['search'] != $old_value['search'] ||
+			if ($value['start_search'] || $value['search'] != $old_value['search'] ||
 				isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
 				isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
-				isset($value['filter2']) && $value['filter2'] != $old_value['filter2']))
+				isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
 			{
 				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
 				//echo "new filter --> loop</p>";
