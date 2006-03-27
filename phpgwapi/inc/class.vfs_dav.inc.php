@@ -40,10 +40,11 @@
 		var $working_lid;
 		var $attributes;
 		var $override_acl;
-		var $linked_dirs;
+		var $linked_dirs = array();
 		var $meta_types;
 		var $now;
 		var $override_locks;
+		var $vfs_table = 'egw_vfs';
 
 		//These are DAV-native properties that have different names in VFS
 		var $vfs_property_map = array(
@@ -106,23 +107,37 @@
 			$this->meta_types = array ('journal', 'journal-deleted');
 
 			/* We store the linked directories in an array now, so we don't have to make the SQL call again */
-			if ($GLOBALS['egw_info']['server']['db_type']=='mssql'
-				|| $GLOBALS['egw_info']['server']['db_type']=='sybase')
+/* I dont think this is needed for WebDAV -- RalfBecker 2006/03/27
+			switch ($GLOBALS['egw']->db->Type)
 			{
-				$query = $GLOBALS['egw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE CONVERT(varchar,link_directory) != '' AND CONVERT(varchar,link_name) != ''" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
+				case 'mssql': 
+				case 'sybase':
+					$where = array(
+						"CONVERT(varchar,vfs_link_directory) != ''",
+						"CONVERT(varchar,vfs_link_name) != ''",
+					);
+					break;
+				default:
+					$where = array(
+						"(vfs_link_directory IS NOT NULL OR vfs_link_directory != '')",
+						"(vfs_link_name IS NOT NULL OR vfs_link_name != '')",
+					);
+					break;
 			}
-			else
-			{
-				$query = $GLOBALS['egw']->db->query ("SELECT directory, name, link_directory, link_name FROM phpgw_vfs WHERE (link_directory IS NOT NULL or link_directory != '') AND (link_name IS NOT NULL or link_name != '')" . $this->extra_sql (array ('query_type' => VFS_SQL_SELECT)), __LINE__,__FILE__);
-			}
+			$where[] = $this->extra_sql(array('query_type' => VFS_SQL_SELECT));
+			$GLOBALS['egw']->db->select($this->vfs_table,'vfs_directory,vfs_name,vfs_link_directory,vfs_link_name',$where,__LINE__,__FILE__);
 
 			$this->linked_dirs = array ();
 			while ($GLOBALS['egw']->db->next_record ())
 			{
-				$this->linked_dirs[] = $GLOBALS['egw']->db->Record;
+				$this->linked_dirs[] = array(
+					'directory' => $GLOBALS['egw']->db->Record['vfs_directory'],
+					'name'      => $GLOBALS['egw']->db->Record['vfs_name'],
+					'link_directory' => $GLOBALS['egw']->db->Record['vfs_link_directory'],
+					'link_name' => $GLOBALS['egw']->db->Record['vfs_link_name'],
+				);
 			}
-
-			
+*/
 			$this->repository = $GLOBALS['egw_info']['server']['files_dir'];
 			$this->dav_user=$GLOBALS['egw_info']['user']['userid'];
 			$this->dav_pwd=$GLOBALS['egw_info']['user']['passwd'];
@@ -627,7 +642,7 @@
 			reset ($rarray);
 			for ($i = 0; (list ($key, $value) = each ($rarray)) && $i != $count; $i++)
 			{
-				$rarray[$key . '_clean'] = $this->db_clean (array ('string' => $value));
+				$rarray[$key . '_clean'] = $GLOBALS['egw']->db_clean (array ('string' => $value));
 			}
 
 			if ($data['object'])
@@ -1986,8 +2001,13 @@ $this->debug('Put complete,  status: '.$status);
 					)
 				);
 
-				$query = $GLOBALS['egw']->db->query ("DELETE FROM phpgw_vfs WHERE directory='$p->fake_leading_dirs_clean' AND name='$p->fake_name_clean'" . $this->extra_sql (array ('query_type' => VFS_SQL_DELETE)), __LINE__, __FILE__);
-
+/* I dont think this is needed for WebDAV -- RalfBecker 2006/03/27
+				$GLOBALS['egw']->db->delete($this->vfs_table,array(
+						'vfs_directory'	=> $p->fake_leading_dirs,
+						'vfs_name'		=> $p->fake_name,
+						$this->extra_sql(array ('query_type' => VFS_SQL_DELETE))
+					), __LINE__, __FILE__);
+*/
 				//rmdir ($p->real_full_path);
 				$this->dav_client->delete($p->real_full_path.'/','Infinity', $this->override_locks[$p->real_full_path]);
 
