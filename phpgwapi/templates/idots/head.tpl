@@ -7,7 +7,7 @@
 		<meta name="keywords" content="eGroupWare" />
 		<meta name="description" content="eGroupware" />
 		<meta name="keywords" content="eGroupWare" />
-		<meta name="copyright" content="eGroupWare http://www.egroupware.org (c) 2003" />
+		<meta name="copyright" content="eGroupWare http://www.egroupware.org (c) 2006" />
 		<meta name="language" content="{lang_code}" />
 		<meta name="author" content="eGroupWare http://www.egroupware.org" />
 		{meta_robots}
