@@ -57,7 +57,7 @@
 		 *
 		 * @param array/int $info data or info_id of InfoLog entry
 		 * @param int $required_rights EGW_ACL_xyz anded together
-		 * @param boolean $implicit_edit=false
+		 * @param boolean $implicit_edit=false responsible has only implicit read and add rigths, unless this is set to true
 		 * @return boolean True if access is granted else False
 		 */
 		function check_access( $info,$required_rights,$implicit_edit=false )
@@ -86,8 +86,8 @@
 			$access_ok = $owner == $this->user ||	// user has all rights
 				// ACL only on public entrys || $owner granted _PRIVATE
 				(!!($this->grants[$owner] & $required_rights) ||
-				// implicite read-rights for responsible user !!!
-				in_array($this->user, $info['info_responsible']) && ($required_rights == EGW_ACL_READ || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
+				// implicite rights for responsible user(s)
+				in_array($this->user, $info['info_responsible']) && ($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
 				//$info['info_responsible'] == $this->user && $required_rights == EGW_ACL_READ) &&
 				($info['info_access'] == 'public' ||
 				!!($this->grants[$owner] & EGW_ACL_PRIVATE));
