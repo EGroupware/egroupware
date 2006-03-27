@@ -721,7 +721,7 @@
 					$content=array();
 					foreach($icons = array(
 						$info['info_type']   => 'infolog',
-						$info['info_status'] => 'infolog'
+						$this->status[$info['info_type']][$info['info_status']] => 'infolog',
 					) as $name => $app)
 					{
 						$content[] = $GLOBALS['egw']->html->image($app,$name,lang($name),'border="0" width="15" height="15"').' ';
