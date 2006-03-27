@@ -39,9 +39,9 @@
 					<nextmatch-sortheader label="Price" id="ts_unitprice"/>
 					<vbox>
 						<nextmatch-sortheader label="Total" id="ts_total"/>
-						<textbox type="float" id="price" readonly="true"/>
+						<textbox type="float" id="price" readonly="true" size=",2"/>
 					</vbox>
-					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1"/>
+					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1" class="$cont[ownerClass]"/>
 					<description value="Actions" class="noPrint"/>
 				</row>
 				<row class="$row_cont[class]">
@@ -52,10 +52,10 @@
 						<description id="${row}[ts_description]" no_lang="1"/>
 					</vbox>
 					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1"/>
-					<description id="${row}[ts_quantity]" no_lang="1"/>
+					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" size=",3" readonly="true"/>
 					<description no_lang="1" id="${row}[ts_unitprice]"/>
-					<description no_lang="1" id="${row}[ts_total]"/>
-					<menulist>
+					<textbox type="float" no_lang="1" id="${row}[ts_total]" size=",2" readonly="true"/>
+					<menulist span=",$cont[ownerClass]">
 						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
 					</menulist>
 					<hbox class="noPrint">

@@ -24,11 +24,11 @@
 				</row>
 				<row class="row">
 					<description options=",,,ts_duration" value="Duration"/>
-					<date-duration id="ts_duration" options=",h"/>
+					<date-duration id="ts_duration" options=",hm"/>
 				</row>
 				<row>
 					<description options=",,,ts_quantity" value="Quantity"/>
-					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur"/>
+					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur" precision="3"/>
 				</row>
 			</rows>
 		</grid>

@@ -175,7 +175,7 @@ class uitimesheet extends botimesheet
 				'to_app' => TIMESHEET_APP,
 			),
 			'js' => "<script>\n$js\n</script>\n",
-			'ts_quantity_blur' => $this->data['ts_duration'] ? $this->data['ts_duration'] / 60.0 : '',
+			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -252,14 +252,56 @@ class uitimesheet extends botimesheet
 	 *
 	 * reimplemented from so_sql to disable action-buttons based on the acl and make some modification on the data
 	 *
-	 * @param array $query
+	 * @param array &$query
 	 * @param array &$rows returned rows/cups
 	 * @param array &$readonlys eg. to disable buttons based on acl
 	 */
-	function get_rows($query,&$rows,&$readonlys)
+	function get_rows(&$query_in,&$rows,&$readonlys)
 	{
-		$GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query);
-
+		$this->show_sums = false;
+		if ($query_in['filter'])
+		{
+			$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$query_in['enddate']);
+			
+			$start = explode('-',date('Y-m-d',$query_in['startdate']+12*60*60));
+			$end   = explode('-',date('Y-m-d',$query_in['enddate'] ? $query_in['enddate'] : $query_in['startdate']+7.5*24*60*60));
+			
+			// show month-sums, if we are month-aligned (show full monthes)?
+			if ((int)$start[2] == 1 && (int)$end[2] == (int)date('d',mktime(12,0,0,$end[1]+1,0,$end[0])))
+			{
+				$this->show_sums['month'] = true;
+			}
+			// show week-sums, if we are week-aligned (show full weeks)?
+			$week_start_day = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'];
+			if (!$week_start_day) $week_start_day = 'Sunday';
+			switch($week_start_day)
+			{
+				case 'Sunday': $week_end_day = 'Saturday'; break;
+				case 'Monday': $week_end_day = 'Sunday'; break;
+				case 'Saturday': $week_end_day = 'Friday'; break;
+			}
+			$filter_start_day = date('l',$query_in['startdate']+12*60*60);
+			$filter_end_day   = $query_in['enddate'] ? date('l',$query_in['enddate']+12*60*60) : false;
+			//echo "<p align=right>prefs: $week_start_day - $week_end_day, filter: $filter_start_day - $filter_end_day</p>\n";
+			if ($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day))
+			{
+				$this->show_sums['week'] = true;
+			}
+			// show day-sums, if range <= 5 weeks
+			if (!$query_in['enddate'] || $query_in['enddate'] - $query_in['startdate'] < 36*24*60*60)
+			{
+				$this->show_sums['day'] = true;
+			}
+		}
+		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
+		$GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
+		$query = $query_in;	// keep the original query
+		
+		if ((int)$query['filter2'] != (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'])
+		{
+			$GLOBALS['egw']->preferences->add(TIMESHEET_APP,'show_details',(int)$query['filter2']);
+			$GLOBALS['egw']->preferences->save_repository(true);
+		}
 		unset($query['col_filter']['cat_id']);
 		if ($query['cat_id'])
 		{
@@ -281,26 +323,48 @@ class uitimesheet extends botimesheet
 		}
 		if ($query['filter'])
 		{
-			$query['col_filter'][0] = $this->date_filter($query['filter'],$query['startdate'],$query['enddate']);
+			$query['col_filter'][0] = $date_filter;
 			
-			if ($query['filter'] == 'custom')	// show the custome dates
+			// generate a meaningful app-header / report title
+			if ($this->show_sums['month'])
 			{
-				if (!is_object($GLOBALS['egw']->js))
+				if ((int)$start[1] == 1 && (int) $end[1] == 12)		// whole year(s)
 				{
-					$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
+					$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . $start[0] . ($start[0] != $end[0] ? ' - '.$end[0] : '');
 				}
-				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
-
-				if ($query['startdate'])
+				else
 				{
-					$df = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
-					$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . $GLOBALS['egw']->common->show_date($query['startdate']+12*60*60,$df,false).
-						' - '.$GLOBALS['egw']->common->show_date(($query['enddate'] ? $query['enddate'] : $query['startdate']+7*24*60*60)+12*60*60,$df,false);
+					$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . lang(date('F',$query['startdate']+12*60*60)) . ' ' . $start[0];
+					if ($start[0] != $end[0] || $start[1] != $end[1])
+					{
+						$GLOBALS['egw_info']['flags']['app_header'] .= ' - ' . lang(date('F',$query['enddate']+12*60*60)) . ' ' . $end[0];
+					}
+				}
+			}
+			elseif ($this->show_sums['week'])
+			{
+				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . lang('week') . ' ' . date('W',$query['startdate']+36*60*60) . '/' . $start[0];
+				if ($query['enddate'] && $query['enddate'] - $query['startdate'] > 10*24*60*60)
+				{
+					$GLOBALS['egw_info']['flags']['app_header'] .= ' - ' . date('W',$query['enddate']-36*60*60) . '/' . $end[0];
 				}
 			}
 			else
 			{
-				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . lang($query['filter']);
+				$df = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+				$GLOBALS['egw_info']['flags']['app_header'] .= ': ' . $GLOBALS['egw']->common->show_date($query['startdate']+12*60*60,$df,false);
+				if ($start != $end)
+				{
+					$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.$GLOBALS['egw']->common->show_date($query['enddate']+12*60*60,$df,false);
+				}
+			}
+			if ($query['filter'] == 'custom')	// show the custome dates
+			{
+				if (!is_object($GLOBALS['egw']->js))
+				{
+					$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+				}
+				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
 			}
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
@@ -367,6 +431,7 @@ class uitimesheet extends botimesheet
 				$row['titleClass'] = 'titleDetails';
 			}
 		}
+		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
 		if ($query['filter'])
 		{
@@ -420,6 +485,7 @@ class uitimesheet extends botimesheet
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
 				'header_right'   => 'timesheet.index.dates',
 				'filter_onchange' => "set_style_by_class('*','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
