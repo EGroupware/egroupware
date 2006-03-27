@@ -1,9 +1,52 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define version 1.2RC6
+%define version 1.2RC7
 %define packaging 1
 %define epoch 0
-%define httpdroot  %(if test -f /etc/SuSE-release; then echo /srv/www/htdocs; else echo /var/www/html; fi)
+%define httpdroot  /var/www/html
+%define httpdconfd  /etc/httpd/conf.d
+
+%define addressbook addressbook
+%define backup backup
+%define browser browser
+%define bookmarks bookmarks
+%define calendar calendar
+%define chatty chatty
+%define comic comic
+%define developer_tools developer_tools
+%define email email
+%define emailadmin emailadmin
+%define felamimail felamimail
+%define filescenter filescenter
+%define filemanager filemanager
+%define forum forum
+%define ftp ftp
+%define fudforum fudforum
+%define headlines headlines
+%define infolog infolog
+%define jinn jinn
+%define manual manual
+%define messenger messenger
+%define mydms mydms
+%define news_admin news_admin
+%define phpldapadmin phpldapadmin
+%define phpbrain phpbrain
+%define phpsysinfo phpsysinfo
+%define polls polls
+%define projects projects
+%define projectmanager projectmanager
+%define registration registration
+%define resources resources
+%define sambaadmin sambaadmin
+%define sitemgr sitemgr
+%define stocks stocks
+%define switchuser switchuser
+%define syncml syncml
+%define timesheet timesheet
+%define tts tts
+%define wiki wiki
+%define workflow workflow
+
 
 Name: %{packagename}
 Version: %{version}
@@ -14,16 +57,22 @@ Summary: eGroupWare is a web-based groupware suite written in php.
 Group: Web/Database
 License: GPL/LGPL
 URL: http://www.egroupware.org/
-Source0:  http://download.sourceforge.net/egroupware/eGroupWare-%{version}-%{packaging}.tar.bz2
+Source0: http://download.sourceforge.net/egroupware/%{packagename}-%{version}-%{packaging}.tar.bz2
+Source1: http://download.sourceforge.net/egroupware/%{packagename}-contrib-%{version}-%{packaging}.tar.bz2
+Source2: egroupware_fedora.tar.bz2
+Patch0: manageheader.php.patch
+Patch1: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: php >= 4.3
+Requires: php >= 4.3 php-mbstring >= 4.3 pear-log => 1.9.3 php-imap php-gd vixie-cron
+Provides: egw-core egw-%{addressbook} egw-%{etemplate}
+Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{infolog} %{packagename}-%{manual} %{packagename}-%{mydms} %{packagename}-%{news_admin} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
                                                                                                                              
-Prefix: %{httpdroot}
+Prefix: /usr/share
 Buildarch: noarch
 AutoReqProv: no
                                                                                                                              
 Vendor: eGroupWare
-Packager: eGroupWare <RalfBecker@outdoor-training.de>
+Packager: Lars Kneschke <l.kneschke@metaways.de>
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. 
@@ -32,59 +81,413 @@ This package provides the eGroupWare default applications:
 
 egroupware core with: admin, api, docs, etemplate, prefereces and setup, 
 addressbook, bookmarks, calendar, translation-tools, emailadmin, felamimail, 
-filemanager, infolog, jinn, manual, mydms, news admin, knowledgebase, polls, 
+filemanager, infolog, manual, mydms, news admin, knowledgebase, polls, 
 projectmanager, resources, sambaadmin, sitemgr, syncml, timesheet, wiki, workflow
 
 It also provides an API for developing additional applications. 
 
 Further contributed applications are avalible in single packages.
 
+#%package contrib
+#Summary: The eGroupWare contrib package
+#Group: Web/Database
+#Requires: %{packagename}-core = %{version}-%{packaging}
+#%description contrib
+#This package provides the eGroupWare contrib applications.
+
+%package core
+Summary: The eGroupWare contrib package
+Group: Web/Database
+Requires: php >= 4.3 php-mbstring >= 4.3 pear-log => 1.9.3 php-imap php-gd vixie-cron
+Provides: egw-core
+Conflicts: %{packagename}
+%description core
+This package provides the eGroupWare contrib applications.
+
+%package %{addressbook}
+Summary: The eGroupWare %{addressbook} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+Provides: egw-%{addressbook}
+%description %{addressbook}
+Contact manager with Vcard support.
+%{addressbook} is the egroupware default contact application.
+It makes use of the egroupware contacts class to store and retrieve 
+contact information via SQL, LDAP or Active Directory.
+
+%package %{backup}
+Summary: The eGroupWare %{backup} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{backup}
+An online configurable backup app to store data offline. 
+Can store files in zip, tar.gz and tar.bz2 on the local machine 
+or Remote via FTP, SMBMOUNT or NFS 
+
+%package %{browser}
+Summary: The eGroupWare %{browser} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{browser}
+Intergrated browser to surf the web within eGroupWare.
+
+%package %{bookmarks}
+Summary: The eGroupWare %{bookmarks} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{bookmarks}
+Manage your bookmarks with eGroupWare. Has Netscape plugin.
+
+%package %{calendar}
+Summary: The eGroupWare %{calendar} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{calendar}
+Powerful calendar with meeting request system, Alarms, ICal and E-Mail support, 
+and ACL security.
+
+%package %{chatty}
+Summary: Instant messenger for eGroupWare
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{chatty}
+Instant messenger application using AJAX.
+
+%package %{comic}
+Summary: The eGroupWare %{comic} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{comic}
+This application display comic strips.
+
+%package %{developer_tools}
+Summary: The eGroupWare %{developer_tools} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{developer_tools}
+The TranslationTools allow to create and extend translations-files for eGroupWare. 
+They can search the sources for new / added phrases and show you the ones missing in your language. 
+
+%package %{email}
+Summary: The eGroupWare %{email} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}, %{packagename}-%{addressbook} = %{version}-%{packaging}
+%description %{email}
+AngleMail for eGroupWare at www.anglemail.org is an Email reader with multiple accounts and mailbox filtering. Also Anglemail support IMAP, IMAPS, POP3 and POP3S accounts.
+
+%package %{emailadmin}
+Summary: The eGroupWare %{emailadmin} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{emailadmin}
+EmailAdmin allow to maintain User email accounts 
+
+%package %{felamimail}
+Summary: The eGroupWare %{felamimail} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}, %{packagename}-%{emailadmin} = %{version}-%{packaging}
+%description %{felamimail}
+The %{felamimail} Email Reader is a other Email application for eGroupWare.
+
+%package %{filemanager}
+Summary: The eGroupWare %{filemanager} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{filemanager}
+This is the %{filemanager} app for eGroupWare.
+
+%package %{filescenter}
+Summary: The eGroupWare %{filescenter} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{filescenter}
+This is the %{filescenter} app for eGroupWare.
+
+%package %{forum}
+Summary: The eGroupWare %{forum} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{forum}
+This is the %{forum} app for eGroupWare.
+
+%package %{ftp}
+Summary: The eGroupWare %{ftp} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging} 
+%description %{ftp}
+This is the %{ftp} app for eGroupWare.
+
+%package %{fudforum}
+Summary: The eGroupWare %{fudforum} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{fudforum}
+This is the %{fudforum} app for eGroupWare.
+
+%package %{headlines}
+Summary: The eGroupWare %{headlines} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging} 
+%description %{headlines}
+This is the %{headlines} app for eGroupWare.
+
+%package %{infolog}
+Summary: The eGroupWare %{infolog} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}, egw-%{etemplate} = %{version}-%{packaging}
+%description %{infolog}
+This is the %{infolog} app for eGroupWare (Notes, ToDo, Phonelogs, CRM).
+
+%package %{jinn}
+Summary: The eGroupWare %{jinn} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{jinn}
+The %{jinn} app is a multi-site, multi-database, multi-user/-group, database driven Content Management System written in and for the eGroupWare Framework.
+
+%package %{manual}
+Summary: The eGroupWare %{manual} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{manual}
+This is the %{manual} app for eGroupWare: online help system.
+
+%package %{messenger}
+Summary: The eGroupWare %{messenger} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging} 
+%description %{messenger}
+This is the %{messenger} app for eGroupWare.
+
+%package %{mydms}
+Summary: The eGroupWare %{mydms} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging} 
+%description %{mydms}
+This is a %{mydms} port to eGroupWare.
+
+%package %{news_admin}
+Summary: The eGroupWare %{news_admin} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging} 
+%description %{news_admin}
+This is the %{news_admin} app for eGroupWare.
+
+%package %{phpbrain}
+Summary: The eGroupWare %{phpbrain} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}, %{packagename}-%{addressbook} = %{version}-%{packaging}
+%description %{phpbrain}
+This is the %{phpbrain} app for eGroupWare.
+
+%package %{phpldapadmin}
+Summary: The eGroupWare %{phpldapadmin} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{phpldapadmin}
+This is the cire %{phpldapadmin} of eGroupWare.
+
+%package %{phpsysinfo}
+Summary: The eGroupWare %{phpsysinfo} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{phpsysinfo}
+This is the cire %{phpsysinfo} of eGroupWare.
+
+%package %{polls}
+Summary: The eGroupWare %{polls} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{polls}
+This is the %{polls} app for eGroupWare.
+
+%package %{projectmanager}
+Summary: The eGroupWare %{projectmanager} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging},
+%description %{projectmanager}
+The %{projectmanager} is eGroupWare's new project management application.
+It's fully integrated into eGroupWare and use the data of InfoLog and Calendar.
+Plugable datasources allow to support and manage further applications.
+
+%package %{projects}
+Summary: The eGroupWare %{projects} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging},
+%description %{projects}
+This is the %{projects} app for eGroupWare.
+
+%package %{registration}
+Summary: The eGroupWare %{registration} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{registration}
+This is the %{registration} app for eGroupWare.
+
+%package %{resources}
+Summary: The eGroupWare %{resources} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{resources}
+%{resources} is a resource booking sysmtem for eGroupWare.
+Which integrates into the calendar.
+
+%package %{sambaadmin}
+Summary: The eGroupWare %{sambaadmin} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{sambaadmin}
+Manage LDAP based sambaacounts and workstations.
+
+%package %{sitemgr}
+Summary: The eGroupWare Sitemanager CMS application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{sitemgr}
+This is the Sitemanager CMS app for eGroupWare.
+
+%package %{stocks}
+Summary: The eGroupWare %{stocks} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{stocks}
+This is the %{stocks} app for eGroupWare.
+
+%package %{syncml}
+Summary: The eGroupWare %{syncml} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{syncml}
+This is the %{syncml} app for eGroupWare.
+
+%package %{timesheet}
+Summary: The eGroupWare timesheet application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{timesheet}
+Simple timesheet application, which allow to record and report
+the times and other expenses. It can be uses as well standalone 
+as together with the ProjectManager application.
+
+%package %{tts}
+Summary: The eGroupWare trouble ticket system application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging}
+%description %{tts}
+This is the trouble ticket system} app for eGroupWare.
+
+%package %{wiki}
+Summary: The eGroupWare %{wiki} application
+Group: Web/Database
+Conflicts: %{packagename}
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging},
+%description %{wiki}
+This is the %{wiki} app for eGroupWare.
+
+%package %{workflow}
+Summary: The eGroupWare %{workflow} application
+Group: Web/Database
+AutoReqProv: no
+Requires: egw-core = %{version}-%{packaging},
+%description %{workflow}
+This is the %{workflow} app for eGroupWare.
+
 %prep
-%setup -n %{egwdirname}
+%setup0 -c -n %{egwdirname}
+%setup1 -T -D -a 1 -n %{egwdirname}
+%setup2 -T -D -a 2 -n %{egwdirname}
+%patch0 -p 0
+%patch1 -p 0
 
 %build
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-mkdir -p $RPM_BUILD_ROOT%{prefix}/egroupware
-cp -aRf * $RPM_BUILD_ROOT%{prefix}/egroupware
+mkdir -p $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+cp -aRf  etc var $RPM_BUILD_ROOT
+cp -aRf egroupware/* $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+
 rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
-#cp .htaccess $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/xmlrpc
+rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/switchuser
+rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/skel
+rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/soap
+
+find $RPM_BUILD_ROOT%{prefix}/%{egwdirname} -name CVS | xargs rm -rf
+
+cd $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
+ln -s ../../../var/lib/egroupware/header.inc.php
+ln -s sitemgr/sitemgr-link
 
 %clean
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %post
-                                                                                                                             
-    echo "***************************************************"
-    echo "* Attention: You must create the FILES directory  *"
-    echo "* manually outside the document root of your      *"
-    echo "* webserver:                                      *"
-    echo "* eg. docroot: /var/www/html                      *"
-    echo "*     FILES:   /var/www/egwfiles/                 *"
-    echo "* Give the webserver the rights to read and write *"
-    echo "* and no anonymous access to this folders         *"
-    echo "* *************************************************"                                                
-    echo "* Please secure you apache and add                *"
-    echo "* the follow lines to you httpd.conf              *"
-    echo "*                                                 *"
-    echo "* <Directory /var/www/html/egroupware>            *"
-    echo "*   <Files ~ "\.inc\.php$">                       *"
-    echo "*      Order allow,deny                           *"
-    echo "*      Deny from all                              *"
-    echo "*    </Files>                                     *"
-    echo "* </Directory>                                    *"
-    echo "***************************************************"
-
 %postun
 
 %files
-%defattr(0744,root,root)
 %dir %{prefix}/%{egwdirname}
+%dir /var/lib/egroupware
 %{prefix}/%{egwdirname}/about.php
 %{prefix}/%{egwdirname}/anon_wrapper.php
+%{prefix}/%{egwdirname}/header.inc.php
 %{prefix}/%{egwdirname}/header.inc.php.template
-%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/index.php
 %{prefix}/%{egwdirname}/login.php
 %{prefix}/%{egwdirname}/logout.php
@@ -97,7 +500,6 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/soap.php
 %{prefix}/%{egwdirname}/xajax.php
 %{prefix}/%{egwdirname}/xmlrpc.php
-%{prefix}/%{egwdirname}/CVS
 %{prefix}/%{egwdirname}/admin
 %{prefix}/%{egwdirname}/doc
 %{prefix}/%{egwdirname}/etemplate
@@ -107,16 +509,12 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/setup
 %{prefix}/%{egwdirname}/addressbook
 %{prefix}/%{egwdirname}/bookmarks
-%{prefix}/%{egwdirname}/browser
 %{prefix}/%{egwdirname}/calendar
-%{prefix}/%{egwdirname}/comic
 %{prefix}/%{egwdirname}/developer_tools
 %{prefix}/%{egwdirname}/emailadmin
 %{prefix}/%{egwdirname}/felamimail
 %{prefix}/%{egwdirname}/filemanager
-%{prefix}/%{egwdirname}/filescenter
 %{prefix}/%{egwdirname}/infolog
-%{prefix}/%{egwdirname}/jinn
 %{prefix}/%{egwdirname}/manual
 %{prefix}/%{egwdirname}/mydms
 %{prefix}/%{egwdirname}/news_admin
@@ -127,10 +525,189 @@ rm -f $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/.htaccess
 %{prefix}/%{egwdirname}/resources
 %{prefix}/%{egwdirname}/sambaadmin
 %{prefix}/%{egwdirname}/sitemgr
+%{prefix}/%{egwdirname}/sitemgr-link
 %{prefix}/%{egwdirname}/syncml
 %{prefix}/%{egwdirname}/timesheet
 %{prefix}/%{egwdirname}/wiki
-%{prefix}/%{egwdirname}/workflow
+%dir %attr(0755,apache,apache) /var/lib/egroupware/default
+%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
+%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
+%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
+%config %attr(0644,root,root) %{httpdconfd}/egroupware.conf
+%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
+
+%files core
+%dir %{prefix}/%{egwdirname}
+%dir /var/lib/egroupware
+%{prefix}/%{egwdirname}/about.php
+%{prefix}/%{egwdirname}/anon_wrapper.php
+%{prefix}/%{egwdirname}/header.inc.php.template
+%{prefix}/%{egwdirname}/index.php
+%{prefix}/%{egwdirname}/login.php
+%{prefix}/%{egwdirname}/logout.php
+%{prefix}/%{egwdirname}/notify.php
+%{prefix}/%{egwdirname}/notify_simple.php
+%{prefix}/%{egwdirname}/notifyxml.php
+%{prefix}/%{egwdirname}/redirect.php
+%{prefix}/%{egwdirname}/rpc.php
+%{prefix}/%{egwdirname}/set_box.php
+%{prefix}/%{egwdirname}/soap.php
+%{prefix}/%{egwdirname}/xajax.php
+%{prefix}/%{egwdirname}/xmlrpc.php
+%{prefix}/%{egwdirname}/admin
+%{prefix}/%{egwdirname}/doc
+%{prefix}/%{egwdirname}/etemplate
+%{prefix}/%{egwdirname}/home
+%{prefix}/%{egwdirname}/phpgwapi
+%{prefix}/%{egwdirname}/preferences
+%{prefix}/%{egwdirname}/setup
+%dir %attr(0755,apache,apache) /var/lib/egroupware/default
+%dir %attr(0755,apache,apache) /var/lib/egroupware/default/files
+%dir %attr(0755,apache,apache) /var/lib/egroupware/default/backup
+%dir %attr(0755,apache,apache) /var/lib/egroupware/sessions
+%config %attr(0644,root,root) %{httpdconfd}/egroupware.conf
+%config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
+
+#%files contrib
+#%{prefix}/%{egwdirname}/browser
+#%{prefix}/%{egwdirname}/chatty
+#%{prefix}/%{egwdirname}/filescenter
+#%{prefix}/%{egwdirname}/messenger
+#%{prefix}/%{egwdirname}/projects
+#%{prefix}/%{egwdirname}/registration
+#%{prefix}/%{egwdirname}/skel
+#%{prefix}/%{egwdirname}/soap
+#%{prefix}/%{egwdirname}/switchuser
+#%{prefix}/%{egwdirname}/tts
+#%{prefix}/%{egwdirname}/workflow
+#%{prefix}/%{egwdirname}/xmlrpc
+#%{prefix}/%{egwdirname}/stocks
+#%{prefix}/%{egwdirname}/phpsysinfo
+#%{prefix}/%{egwdirname}/phpldapadmin
+#%{prefix}/%{egwdirname}/headlines
+#%{prefix}/%{egwdirname}/fudforum
+#%{prefix}/%{egwdirname}/ftp
+#%{prefix}/%{egwdirname}/forum
+#%{prefix}/%{egwdirname}/email
+#%{prefix}/%{egwdirname}/comic
+#%{prefix}/%{egwdirname}/backup
+
+%files %{addressbook}
+%{prefix}/%{egwdirname}/%{addressbook}
+
+%files %{backup}
+%{prefix}/%{egwdirname}/%{backup}
+
+%files %{bookmarks}
+%{prefix}/%{egwdirname}/%{bookmarks}
+
+%files %{browser}
+%{prefix}/%{egwdirname}/%{browser}
+
+%files %{calendar}
+%{prefix}/%{egwdirname}/%{calendar}
+
+%files %{chatty}
+%{prefix}/%{egwdirname}/%{chatty}
+
+%files %{comic}
+%{prefix}/%{egwdirname}/%{comic}
+
+%files %{developer_tools}
+%{prefix}/%{egwdirname}/%{developer_tools}
+
+%files %{email}
+%{prefix}/%{egwdirname}/%{email}
+
+%files %{emailadmin}
+%{prefix}/%{egwdirname}/%{emailadmin}
+
+%files %{felamimail}
+%{prefix}/%{egwdirname}/%{felamimail}
+
+%files %{filemanager}
+%{prefix}/%{egwdirname}/%{filemanager}
+
+%files %{filescenter}
+%{prefix}/%{egwdirname}/%{filescenter}
+
+%files %{forum}
+%{prefix}/%{egwdirname}/%{forum}
+
+%files %{ftp}
+%{prefix}/%{egwdirname}/%{ftp}
+
+%files %{fudforum}
+%{prefix}/%{egwdirname}/%{fudforum}
+
+%files %{headlines}
+%{prefix}/%{egwdirname}/%{headlines}
+
+%files %{infolog}
+%{prefix}/%{egwdirname}/%{infolog}
+
+%files %{jinn}
+%{prefix}/%{egwdirname}/%{jinn}
+
+%files %{manual}
+%{prefix}/%{egwdirname}/%{manual}
+
+%files %{messenger}
+%{prefix}/%{egwdirname}/%{messenger}
+
+%files %{mydms}
+%{prefix}/%{egwdirname}/%{mydms}
+
+%files %{news_admin}
+%{prefix}/%{egwdirname}/%{news_admin}
+
+%files %{phpbrain}
+%{prefix}/%{egwdirname}/%{phpbrain}
+
+%files %{phpldapadmin}
+%{prefix}/%{egwdirname}/%{phpldapadmin}
+
+%files %{phpsysinfo}
+%{prefix}/%{egwdirname}/%{phpsysinfo}
+
+%files %{polls}
+%{prefix}/%{egwdirname}/%{polls}
+
+%files %{projectmanager}
+%{prefix}/%{egwdirname}/%{projectmanager}
+
+%files %{projects}
+%{prefix}/%{egwdirname}/%{projects}
+
+%files %{registration}
+%{prefix}/%{egwdirname}/%{registration}
+
+%files %{resources}
+%{prefix}/%{egwdirname}/%{resources}
+
+%files %{sambaadmin}
+%{prefix}/%{egwdirname}/%{sambaadmin}
+
+%files %{sitemgr}
+%{prefix}/%{egwdirname}/%{sitemgr}
+
+%files %{stocks}
+%{prefix}/%{egwdirname}/%{stocks}
+
+%files %{syncml}
+%{prefix}/%{egwdirname}/%{syncml}
+
+%files %{timesheet}
+%{prefix}/%{egwdirname}/%{timesheet}
+
+%files %{tts}
+%{prefix}/%{egwdirname}/%{tts}
+
+%files %{wiki}
+%{prefix}/%{egwdirname}/%{wiki}
+
+%files %{workflow}
+%{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
 * Sat Jan 22 2006 Lars Kneschke <lars@kneschke.de> 1.2RC6-1
