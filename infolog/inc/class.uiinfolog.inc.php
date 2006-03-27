@@ -193,7 +193,7 @@
 			{
 				$info['info_percent2'] = $info['info_percent'];
 			}
-			if ($this->prefs['show_id'] && !$show_links == 'no_describtion')
+			if ($this->prefs['show_id'] && $show_links != 'no_describtion')
 			{
 				$info['info_number'] = $info['info_id'];
 			}
