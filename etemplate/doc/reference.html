@@ -430,10 +430,11 @@ implement only a subset of XUL. Here are the main differences:</p>
 		<b>a input-field to enter a float</b><br />
 		In the html-UI this is rendered as &lt;input ...>. <i>The input-validation is done at the moment only on server-side,
 		clientside validation and input-restriction to only numbers is planed.</i><p>
-		<b>Options</b> has 3 comma-separated fields:<br />
+		<b>Options</b> has 4 comma-separated fields:<br />
 		xml: <b>min</b>: minimum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br />
 		xml: <b>max</b>: maximum value, default none, empty values are Ok, as long as <b>needed</b> is not set<br />
 		xml: <b>size</b>: the length in chars of the input-field, default 5
+		xml: <b>precision</b>: precision of the float number, default maximum
 	</td>
 </tr>
 <tr>

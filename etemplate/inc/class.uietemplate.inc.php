@@ -893,12 +893,16 @@
 					list($extra_link,$extra_link_target,$extra_link_popup) = explode(',',$cell_options);
 					$html .= $value;
 					break;
-				case 'int':		// size: [min][,[max][,len]]
+				case 'int':		// size: [min],[max],[len],[precission (only float)]
 				case 'float':
-					list($min,$max,$cell_options) = explode(',',$cell_options);
+					list($min,$max,$cell_options,$pre) = explode(',',$cell_options);
 					if ($cell_options == '')
 					{
 						$cell_options = $cell['type'] == 'int' ? 5 : 8;
+					}
+					if ($type == 'float' && $value && $pre)
+					{
+						$value = round($value,$pre);
 					}
 					$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 					// fall-through

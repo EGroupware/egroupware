@@ -79,7 +79,7 @@
 				'float' => array(
 					'.name' => 'textbox',
 					'.set' => 'type=float',
-					'size' => 'min,max,size'
+					'size' => 'min,max,size,precision'
 				),
 				'select' => array(
 					'.name' => 'menulist,menupopup',
