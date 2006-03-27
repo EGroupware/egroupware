@@ -51,6 +51,7 @@ class Horde_SyncML_Command_Sync extends Horde_Syncml_Command {
 		$currentCmdID = $status->output($currentCmdID, $output);
 		
 		if($sync = $state->getSync($this->_targetURI)) {
+			Horde::logMessage('SyncML: starting from client for $this->_targetURI = ' . $this->_targetURI, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			$currentCmdID = $sync->startSync($currentCmdID, $output);
 			
 			foreach ($this->_syncElements as $element) {

@@ -99,7 +99,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 	* from the server database by using Horde API (Registry) calls.
 	*/
 	function runSyncCommand(&$command) {
-		#Horde::logMessage('SyncML: content type is ' . $command->getContentType() .' moreData '. $command->_moreData, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		Horde::logMessage('SyncML: content type is ' . $command->getContentType() .' moreData '. $command->_moreData, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		global $registry;
 		
 		$history = $GLOBALS['egw']->contenthistory;
@@ -153,6 +153,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		$hordeType = str_replace('./','',$hordeType);
 		
 		$syncElementItems = $command->getSyncElementItems();
+		Horde::logMessage('SyncML: found '. count($syncElementItems) .' items to import', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		
 		foreach($syncElementItems as $syncItem) {
 			if(!$contentType = $syncItem->getContentType()) {
@@ -178,8 +179,10 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		#		}
 		#	} elseif (is_a($command, 'Horde_SyncML_Command_Sync_Replace')) {
 				#$guid = $state->getGlobalUID($type, $syncItem->getLocURI());
+				Horde::logMessage('SyncML: start search for '. $syncItem->getContent() .' ('. $contentType .')' , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				$guid = $registry->call($hordeType . '/search',
 					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+				Horde::logMessage('SyncML: found guid: '. ($guid ? $guid : 'not found') , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				$ok = false;
 				if ($guid) {
 					#Horde::logMessage('SyncML: locuri'. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_ERR);
