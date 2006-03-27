@@ -316,11 +316,11 @@
 		 * pre-processing of the duration extension
 		 *
 		 * Options contain $data_format,$input_format,$hours_per_day,$empty_not_0,$short_labels
-		 *  1. data_format: d = days, h = hours, default minutes
-		 *	2. input_format: d = days, h = hours, default hours+days (selectbox), optional % = allow to enter a percent value (no conversation)
+		 *  1. data_format: d = days, h = hours, m = minutes, default minutes
+		 *	2. input_format: d = days, h = hours, m = minutes,  default hours+days (selectbox), optional % = allow to enter a percent value (no conversation)
 		 *	3. hours_per_day: default 8 (workday)
 		 *  4. should the widget differ between 0 and empty, which get then returned as NULL
-		 *  5. short_labels use d/h instead of day/hour
+		 *  5. short_labels use d/h/m instead of day/hour/minute
 		 *
 		 * @param string $name form-name of the control
 		 * @param mixed &$value value / existing content, can be modified
@@ -340,7 +340,7 @@
 			{
 				$input_format = str_replace('%','',$input_format);
 			}
-			if ($input_format != 'h' && $input_format != 'd') $input_format = 'dh'; // hours + days
+			if (!in_array($input_format,array('d','h','dh','m','hm','dhm'))) $input_format = 'dh'; // hours + days
 			
 			$extension_data = array(
 				'type'			=> $cell['type'],
@@ -368,14 +368,18 @@
 			$cell_name = $cell['name'];
 			$cell['name'] .= '[value]';
 			
-			if ($input_format == 'dh' && $value >= 60*$hours_per_day)
+			if (strstr($input_format,'m') && $value < 60)
+			{
+				$unit = 'm';
+			}
+			elseif (strstr($input_format,'d') && $value >= 60*$hours_per_day)
 			{
 				$unit = 'd';
 			}
 			$value = $empty_not_0 && (string) $value === '' || !$empty_not_0 && !$value ? '' : 
-				round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3);
+				($unit == 'm' ? (int) $value : round($value / 60 / ($unit == 'd' ? $hours_per_day : 1),3));
 
-			if (!$readonly && $input_format == 'dh') // selectbox to switch between hours and days
+			if (!$readonly && strlen($input_format) > 1) // selectbox to switch between hours and days
 			{
 				$value = array(
 					'value' => $value,
@@ -387,10 +391,9 @@
 				$tpl->no_onclick = true;
 				
 				$selbox =& $tpl->empty_cell('select',$cell_name.'[unit]');
-				$selbox['sel_options'] = array(
-					'h' => $short_labels ? 'h' : 'hours',
-					'd' => $short_labels ? 'd' : 'days',
-				);
+				if (strstr($input_format,'m')) $selbox['sel_options']['m'] = $short_labels ? 'm' : 'minutes';
+				if (strstr($input_format,'h')) $selbox['sel_options']['h'] = $short_labels ? 'h' : 'hours';
+				if (strstr($input_format,'d')) $selbox['sel_options']['d'] = $short_labels ? 'd' : 'days';
 				if ($cell['tabindex']) $selbox['tabindex'] = $cell['tabindex'];
 				
 				$tpl->data[0] = array();
@@ -410,8 +413,13 @@
 			elseif (!$readonly || $value)
 			{
 				$cell['no_lang'] = 2;
-				$cell['label'] .= ($cell['label'] ? ' ' : '') . '%s '.($unit == 'h' ? ($short_labels ? 'h' : lang('hours')) : 
-					($short_labels ? 'd' : lang('days')));
+				$cell['label'] .= ($cell['label'] ? ' ' : '') . '%s ';
+				switch($unit)
+				{
+					case 'm': $cell['label'] .= $short_labels ? 'm' : lang('minutes'); break;
+					case 'h': $cell['label'] .= $short_labels ? 'h' : lang('hours'); break;
+					case 'd': $cell['label'] .= $short_labels ? 'd' : lang('days'); break;
+				}
 			}
 			return True;	// extra Label is ok
 		}
@@ -466,7 +474,7 @@
 					$value = null;
 					return true;
 				}
-				$value = (int) round(str_replace(',','.',$value) * 60 * ($unit == 'd' ? $extension_data['hours_per_day'] : 1)); 
+				$value = (int) round(str_replace(',','.',$value) * ($unit == 'm' ? 1 : (60 * ($unit == 'd' ? $extension_data['hours_per_day'] : 1))));
 
 				switch($extension_data['data_format'])
 				{
