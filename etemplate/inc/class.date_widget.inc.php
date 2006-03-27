@@ -368,7 +368,7 @@
 			$cell_name = $cell['name'];
 			$cell['name'] .= '[value]';
 			
-			if (strstr($input_format,'m') && $value < 60)
+			if (strstr($input_format,'m') && $value && $value < 60)
 			{
 				$unit = 'm';
 			}
