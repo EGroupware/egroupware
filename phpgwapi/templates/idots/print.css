@@ -5,7 +5,7 @@
 */
 /* $Id$ */
 
-#divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,.noPrint {
+#divLogo,#divAppIconBar,#tdSidebox,#divStatusBar,#sideboxdragarea,.noPrint {
 	display:none;
 }
 
