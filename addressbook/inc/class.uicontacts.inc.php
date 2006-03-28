@@ -186,22 +186,21 @@ class uicontacts extends bocontacts
 					$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uiaddressbook.index');
 
 				case 'delete':
-					if(!$this->delete($content))
-					{
-						$content['msg'] = lang('Something went wrong by deleting this contact');
-					}
-					else
-					{
-						$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uiaddressbook.index');
-					}
+					$GLOBALS['egw']->redirect_link('/index.php',array(
+						'menuaction' => 'addressbook.uiaddressbook.index',
+						'msg' => $this->delete($content) ? lang('Something went wrong by deleting this contact') : lang('Contact deleted !!!'),
+					));
 			}
 		}
 		else
 		{
-			$contact_id = $_GET['contact_id'];
-			if(!$contact_id) return false;
-
-			$content = $this->read($contact_id);
+			if(!(int)$_GET['contact_id'] || !is_array($content = $this->read((int) $_GET['contact_id'])))
+			{
+				$GLOBALS['egw']->redirect_link('/index.php',array(
+					'menuaction' => 'addressbook.uiaddressbook.index',
+					'msg' => $content,
+				));
+			}
 		}
 		foreach((array)$content as $key => $val)
 		{

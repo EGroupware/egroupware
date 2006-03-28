@@ -111,15 +111,17 @@ class socontacts
 	* @param array &$contact contact data from etemplate::exec
 	* @return bool false if all went right
 	*/
-	function delete(&$contact)
+	function delete($contact)
 	{
 		// delete mainfields
-		$ok_main = $this->somain->delete(array('id' => $contact['id']));
-		
-		// delete customfields
-		$ok_extra = $this->soextra->delete(array($this->extra_id => $contact['id']));
-		return !((bool)$ok_extra & (bool)$ok);
-		
+		if ($this->somain->delete(array('id' => $contact['id'])))
+		{		
+			// delete customfields, can return 0 if there are no customfields
+			$this->soextra->delete(array($this->extra_id => $contact['id']));
+
+			return false;
+		}
+		return true;
 	}
 	
 	/**

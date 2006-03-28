@@ -241,11 +241,11 @@ class bocontacts extends socontacts
 		$data = parent::read($keys,$extra_cols,$join);
 		if (!$data)
 		{
-			return $content['msg'] = lang('something went wrong by reading this contact');
+			return lang('something went wrong by reading this contact');
 		}
 		if(!$this->check_perms(EGW_ACL_READ,$data))
 		{
-			return $content['msg'] = lang('you are not permittet to view this contact');
+			return lang('you are not permittet to view this contact');
 		}
 		
 		// convert access into private for historical reasons
