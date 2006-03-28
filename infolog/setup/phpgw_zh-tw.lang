@@ -98,6 +98,7 @@ duration	infolog	zh-tw	進行期間
 each value is a line like <id>[=<label>]	infolog	zh-tw	每個值都是這樣的線 <id>[=<label>]
 edit	infolog	zh-tw	編輯
 edit or create categories for ingolog	infolog	zh-tw	編輯或建立訊息紀錄的類別
+edit rights (full edit rights incl. making someone else responsible!)	infolog	zh-tw	編輯權限（完整的編輯權限包括指定負責人！）
 edit status	infolog	zh-tw	編輯狀態
 edit the entry	infolog	zh-tw	編輯這個事件
 edit this entry	infolog	zh-tw	編輯這個事件
@@ -204,6 +205,7 @@ project	infolog	zh-tw	專案
 project settings: price, times	infolog	zh-tw	專案設定： 價格、時間
 re:	infolog	zh-tw	回覆：
 read one record by passing its id.	infolog	zh-tw	透過傳遞ID來讀取記錄
+read rights (default)	infolog	zh-tw	閱讀權限（預設）
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zh-tw	本地端IP的過濾規則<br>例如^192\.168\.1\.
 remark	infolog	zh-tw	標註
 remove this link (not the entry itself)	infolog	zh-tw	移除這個連結(不是它的資料)
@@ -213,6 +215,7 @@ responsible overdue	infolog	zh-tw	責任期間
 responsible upcoming	infolog	zh-tw	即將產生的責任
 responsible user, priority	infolog	zh-tw	負責人、順序
 returns a list / search for records.	infolog	zh-tw	傳回一個清單 / 搜尋記錄
+rights for the responsible	infolog	zh-tw	負責人權限
 save	infolog	zh-tw	儲存
 saves the changes made and leaves	infolog	zh-tw	儲存後離開
 saves this entry	infolog	zh-tw	儲存這個事件
@@ -234,12 +237,16 @@ should infolog display your open entries - not finished tasks, phonecalls or not
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	zh-tw	記事本需要在一般瀏覽中顯示附屬任務，聯絡清單或是記事嗎？您可以在原始事件中看到附屬的資訊。
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	zh-tw	記事本是否要顯示與其他應用程式的連結與/或附加檔案（通常會在進入記事本時看到）。
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	zh-tw	記事本使用全名或是登入名稱？
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	zh-tw	記事清單是否要顯示唯一的編號，其他功能可能會需要，例如傳票編號。
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	zh-tw	記事清單是否只要顯示進行中狀態完成的比率或是兩個獨立的圖示。
 should this entry only be visible to you and people you grant privat access via the acl	infolog	zh-tw	這個事件只允許您以及您從ACL取得存取權限的人？
 show a column for used and planned times in the list.	infolog	zh-tw	在清單中顯示一個用於已使用與已規劃時間的欄位。
 show full usernames	infolog	zh-tw	顯示完整的使用者姓名
 show in the infolog list	infolog	zh-tw	在記事本清單中顯示
 show list of upcoming entries	infolog	zh-tw	顯示所有即將到來的記錄
 show open entries: tasks/calls/notes on main screen	infolog	zh-tw	在主要畫面中顯示開啟的事件：工作/聯絡清單/記事
+show status and percent done separate	infolog	zh-tw	將狀態與完成度比率分開
+show ticket id	infolog	zh-tw	顯示傳票編號
 show times	infolog	zh-tw	顯示時間
 small view	infolog	zh-tw	縮小
 start a new search, cancel this link	infolog	zh-tw	開啟一個新的搜尋並且取消這個連結
@@ -285,6 +292,8 @@ view subs	infolog	zh-tw	顯示附屬的
 view the parent of this entry and all his subs	infolog	zh-tw	顯示這個事件的主要與所有附屬事件
 view this linked entry in its application	infolog	zh-tw	在應用程式中顯示這個被連結的事件
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	zh-tw	待辦事項或是聯絡清單應該開始的時間？當過濾條件為"所有未完成"或是"自己未完成"時顯示在開始頁面。
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	zh-tw	哪些額外欄位即使負責人沒有編輯權限也能夠編輯？<br />狀態、比率與完成日期預設都會允許。
+which implicit acl rights should the responsible get?	infolog	zh-tw	負責人可以取得哪個隱含的權限？
 will-call	infolog	zh-tw	將連絡
 write (add or update) a record by passing its fields.	infolog	zh-tw	透過傳遞它的欄位來寫入(新增或更新)一筆記錄
 yes - delete	infolog	zh-tw	確定 - 刪除

@@ -7,6 +7,7 @@ create new links	timesheet	es-es	Crear enlaces nuevos
 delete this entry	timesheet	es-es	Borrar esta entrada
 edit this entry	timesheet	es-es	Editar esta entrada
 empty if identical to duration	timesheet	es-es	Vacío si es idéntico a la duración
+end	timesheet	es-es	Fin
 entry deleted	timesheet	es-es	Se ha borrado la entrada
 entry saved	timesheet	es-es	Se ha guardado la entrada
 error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
@@ -28,11 +29,14 @@ saves the changes made	timesheet	es-es	Guardar los cambios realizados
 saves this entry and add a new one	timesheet	es-es	Guarda esta entrada y añade una nueva
 select a price	timesheet	es-es	Seleccionar un precio
 select a project	timesheet	es-es	Seleccionar un proyecto
+start	timesheet	es-es	Inicio
+sum %1:	timesheet	es-es	Suma %1:
 this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana
 this year	timesheet	es-es	Este año
 timesheet	common	es-es	Hoja de presencia
 unitprice	timesheet	es-es	Precio por unidad
 view this entry	timesheet	es-es	Ver esta entrada
+week	timesheet	es-es	Semana
 yesterday	timesheet	es-es	Ayer
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	es-es	La base de datos NO está actualizada (%1 vs %2). Por favor, ejecute %3setup%4 para actualizar la base de datos.

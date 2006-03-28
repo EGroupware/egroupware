@@ -1,5 +1,5 @@
 %1 records imported	addressbook	zh-tw	共有%1  筆紀錄被匯入
-%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh-tw	共有%1 筆記錄被讀取（還未被匯入，您應該前往 %2back%3 並取消「匯入測試」）
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	zh-tw	共有%1 筆記錄被讀取（還未被匯入，您應該 %2回上頁%3 並取消「匯入測試」）
 (e.g. 1969)	addressbook	zh-tw	(例如 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	zh-tw	<b>沒有轉換格式 <沒有> 可以被指定。</b>  請從選單選取一種轉換格式
 @-eval() is only availible to admins!!!	addressbook	zh-tw	@-eval() 只提供給管理者使用！！
@@ -189,6 +189,7 @@ voice phone	addressbook	zh-tw	語音電話
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh-tw	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
 warning: all contacts found will be deleted!	addressbook	zh-tw	警告：找到的所有聯絡人都會被刪除！
 work phone	addressbook	zh-tw	工作電話
+write (update or add) a single entry by passing the fields.	addressbook	zh-tw	透過提供的欄位寫入（更新或新增）一筆獨立資料。
 you are not permitted to delete contact %1	addressbook	zh-tw	您沒有權限刪除聯絡人 %1
 you are not permittet to delete this contact	addressbook	zh-tw	您沒有權限刪除這個聯絡人
 you are not permittet to edit this contact	addressbook	zh-tw	您沒有權限編輯這個聯絡人

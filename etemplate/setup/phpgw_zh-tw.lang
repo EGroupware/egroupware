@@ -178,6 +178,7 @@ help	etemplate	zh-tw	求助
 horizontal rule	etemplate	zh-tw	合併規則
 hour	etemplate	zh-tw	小時
 hours	etemplate	zh-tw	小時
+how many entries should the list show	etemplate	zh-tw	清單要顯示多少筆資料
 html	etemplate	zh-tw	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	zh-tw	如果儲存格被停用則會顯示一個空白的表格區，藉此(暫時)移除一個儲存格
 image	etemplate	zh-tw	圖片
@@ -216,6 +217,7 @@ linkto	etemplate	zh-tw	連結網址
 load this template into the editor	etemplate	zh-tw	將這個樣板載入編輯器中
 middle	etemplate	zh-tw	中間
 minute	etemplate	zh-tw	分
+minutes	etemplate	zh-tw	分
 month	etemplate	zh-tw	月
 multicolumn indices	etemplate	zh-tw	多欄索引
 name	etemplate	zh-tw	名稱

@@ -1,7 +1,7 @@
 %1 records imported	addressbook	sl	%1 zapisov uvoženih
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sl	1% zapisov prebranih (niso še uvoženi, lahko greste %2nazaj%3 in odznačite preizkus uvoza)
 (e.g. 1969)	addressbook	sl	(npr. 1969)
-<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sl	<b>Ni tipa prevoda &lt;noben&gt; lahko je zaklenjen.</b> Izberite tip prevoda s seznama.
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sl	<b>Ni tipa prevoda <noben> lahko je zaklenjen.</b> Izberite tip prevoda s seznama.
 @-eval() is only availible to admins!!!	addressbook	sl	Funkcija @-eval() je na voljo samo za oskrbniku!
 actions	addressbook	sl	Dejanja
 add a single entry by passing the fields.	addressbook	sl	Dodaj  zapis z vnosom polj.
@@ -16,7 +16,9 @@ addressbook	common	sl	Adresar
 addressbook preferences	addressbook	sl	Lastnosti adresarja
 addressbook-fieldname	addressbook	sl	Adresar-Ime polja
 addvcard	addressbook	sl	Dodaj VCard
+advanced search	addressbook	sl	Napredno iskanje
 alt. csv import	addressbook	sl	Uvoz CSV datoteke
+are you shure you want to delete this contact?	addressbook	sl	Res želite zbrisati ta stik?
 are you sure you want to delete this field?	addressbook	sl	Ste prepričani, da želite izbrisati to polje?
 bbs phone	addressbook	sl	BBS Telefon
 birthday	common	sl	Rojstni dan
@@ -36,15 +38,20 @@ business zip code	addressbook	sl	Poštna št.
 car phone	addressbook	sl	Telefon v avtu
 cell phone	addressbook	sl	GSM
 charset of file	addressbook	sl	Kodna tabela datoteke
+choose an icon for this contact type	addressbook	sl	Izberite ikono za to vrsto stika
+chosse an etemplate for this contact type	addressbook	sl	Izberite eTemplate za to vrsto stika
 city	common	sl	Mesto
 company	common	sl	Podjetje
 company name	common	sl	Ime podjetja
 configuration	common	sl	Nastavitve
 contact	common	sl	Stik
 contact application	admin	sl	Kontaktna aplikacija
+contact saved	addressbook	sl	Stik shranjen
 contact settings	admin	sl	Nastavitve stikov
 copied by %1, from record #%2.	addressbook	sl	Kopirano iz zapisa %2 v zapis %1.
 country	common	sl	Država
+create new links	addressbook	sl	Ustvari nove povezave
+credit	addressbook	sl	Zasluge
 csv-fieldname	addressbook	sl	CSV-Ime polja
 csv-filename	addressbook	sl	CSV-Ime datoteke
 custom	addressbook	sl	Lasten
@@ -53,13 +60,20 @@ debug output in browser	addressbook	sl	Preglej izpis v brskalniku
 default filter	addressbook	sl	Privzeti filter
 delete a single entry by passing the id.	addressbook	sl	Zbriši zapis s podano šifro
 department	common	sl	Oddelek
+do your really want to delete this contact?	addressbook	sl	Res želite zbrisati ta stik?
+doesn't matter	addressbook	sl	ni pomembno
 domestic	addressbook	sl	Domači
 download	addressbook	sl	Prenos
 download export file (uncheck to debug output in browser)	addressbook	sl	Prenos izvožene datoteke (Odznači za izpis v brskalniku)
+download this contact as vcard file	addressbook	sl	Prenesite ta stik kot datoteko vCard
 edit custom field	addressbook	sl	Uredi lastno polje
 edit custom fields	admin	sl	Uredi lastna polja
+edit phonenumbers -	addressbook	sl	Uredi telefonske številke -
+email & internet	addressbook	sl	E-pošta in Splet
 empty for all	addressbook	sl	izprazni za vse
 enter the path to the exported file here	addressbook	sl	Vnesite pot do izhodne datoteke
+existing links	addressbook	sl	Obstoječe povezave
+export	addressbook	sl	izvozi
 export contacts	addressbook	sl	Izvozi kontakte
 export file name	addressbook	sl	Ime izvožene datoteke
 export from addressbook	addressbook	sl	Izvoz iz adresarja
@@ -84,6 +98,7 @@ home phone	addressbook	sl	Telefon
 home state	addressbook	sl	Država
 home street	addressbook	sl	Naslov
 home zip code	addressbook	sl	Poštna št.
+icon	addressbook	sl	Ikona
 import	addressbook	sl	Uvozi
 import contacts	addressbook	sl	Uvozi  kontakte
 import csv-file into addressbook	addressbook	sl	Uvozi CSV-polja v imenik
@@ -94,15 +109,18 @@ import from outlook	addressbook	sl	Uvoz iz Outlook-a
 import multiple vcard	addressbook	sl	Uvoz večih VCard
 import next set	addressbook	sl	Uvozi naslednji niz
 import_instructions	addressbook	sl	V Netscapu odprite adresar in izberite <b>Export</b> v meniju <b>File</b>. Izvožena datoteka bo v obliki LDIF.<p>V Outlooku izberite mapo Stiki (Contacts), izberite <b>Uvoz/izvoz (Import/Export)</b> v meniju <b>Datoteka (File)</b>. Izvožena datoteka bo v obliki CSV.
+income	addressbook	sl	Priliv
 international	addressbook	sl	Mednarodni
 isdn phone	addressbook	sl	ISDN
 label	addressbook	sl	Značilnosti
+last modified	addressbook	sl	nazadnje spremenjeno
 ldap context for contacts	admin	sl	LDAP kontekst za kontakte
 ldap host for contacts	admin	sl	LDAP strežnik za kontakte
 ldap root dn for contacts	admin	sl	LDAP root dn za kontakte
 ldap root pw for contacts	admin	sl	LDAP root pw za povezave
 ldif	addressbook	sl	LDIF
 line 2	addressbook	sl	Vrstica 2
+links	addressbook	sl	Povezave
 list all categories	addressbook	sl	Izpis vseh kategorij
 list all customfields	addressbook	sl	Izpis vseh lastnih polj
 load vcard	addressbook	sl	Naloži VCard
@@ -112,10 +130,13 @@ middle name	addressbook	sl	Srednje ime
 mobile	addressbook	sl	Mobilni
 mobile phone	addressbook	sl	GSM
 modem phone	addressbook	sl	Modem
+more ...	addressbook	sl	Več ...
 multiple vcard	addressbook	sl	Več VCard zapisov
 no vcard	addressbook	sl	Ni VCard zapisov
+number	addressbook	sl	Število
 number of records to read (%1)	addressbook	sl	Število zapisov za branje (%1)
-number of records to read (<=200)	addressbook	sl	Številka zapisov za branje(<=200)
+options for type	addressbook	sl	Možnosti za vrsto
+organisation	addressbook	sl	organizacija
 other number	addressbook	sl	Številka
 other phone	addressbook	sl	Telefon
 pager	common	sl	Pozivnik
@@ -127,6 +148,7 @@ postal	common	sl	Poštni
 pref	addressbook	sl	privzeta
 prefix	addressbook	sl	Predpona
 public key	addressbook	sl	Javni ključ
+publish into groups:	addressbook	sl	Objavi v skupinah:
 read a list / search for entries.	addressbook	sl	Preberi seznam / iskanje vnosov
 read a list of entries.	addressbook	sl	Preberi seznam vnosov.
 read a single entry by passing the id and fieldlist.	addressbook	sl	Preberi zapis s podano šifro in seznamom polj.
@@ -139,11 +161,16 @@ select the type of conversion:	addressbook	sl	Izberite tip pretvorbe:
 select where you want to store	admin	sl	Izberite kam želite shraniti
 show	addressbook	sl	Prikaži
 show birthday reminders on main screen	addressbook	sl	Prikaži opomnike rojstnih dni v glavnem oknu
+something went wrong by deleting %1	addressbook	sl	Napaka pri brisanju %1
+something went wrong by deleting this contact	addressbook	sl	Napaka pri brisanju tega stika
+something went wrong by reading this contact	addressbook	sl	Napaka pri branju tega stika
+something went wrong by saving this contact. errorcode %1	addressbook	sl	Napaka pri shranjevanju tega stika. Koda napake %1
 startrecord	addressbook	sl	Začetni zapis
 state	common	sl	Država
 street	common	sl	Ulica
 successfully imported %1 records into your addressbook.	addressbook	sl	Uspešno prenesenih %1 zapisov v vaš adresar.
 suffix	addressbook	sl	Pripona
+tel home	addressbook	sl	domači telefon
 test import (show importable records <u>only</u> in browser)	addressbook	sl	Preizkus uvoza (Pokaže uvožene zapise<u>samo</u> v brskalniku).
 that field name has been used already !	addressbook	sl	To ime polja je že v uporabi!
 this person's first name was not in the address book.	addressbook	sl	Imena te osebe ni v adresarju.
@@ -160,8 +187,13 @@ vcards require a last name entry.	addressbook	sl	VCards zahteva vpis priimka.
 video phone	addressbook	sl	Videotelefon
 voice phone	addressbook	sl	Glasovni telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate kontaktov za skladiščenje računov!
+warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najdeni stiki bodo zbrisani!
 work phone	addressbook	sl	Telefon
 write (update or add) a single entry by passing the fields.	addressbook	sl	Zapiši (posodobi ali dodaj) zapis s podanimi polji.
+you are not permitted to delete contact %1	addressbook	sl	Nimate dovoljenja brisati stik %1
+you are not permittet to delete this contact	addressbook	sl	Nimate dovoljenja brisati tega stika
+you are not permittet to edit this contact	addressbook	sl	Nimate dovoljenja spremeniti tega stika
+you are not permittet to view this contact	addressbook	sl	Nimate dovoljenja pogledati tega stika
 you must select a vcard. (*.vcf)	addressbook	sl	Izbrati morate VCard. (*.vcf)
 you must select at least 1 column to display	addressbook	sl	Izbrati morate najmanj 1 stolpec za prikaz
 zip code	common	sl	Poštna številka

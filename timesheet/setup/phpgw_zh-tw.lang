@@ -7,6 +7,7 @@ create new links	timesheet	zh-tw	建立新連結
 delete this entry	timesheet	zh-tw	刪除這筆資料
 edit this entry	timesheet	zh-tw	編輯這筆資料
 empty if identical to duration	timesheet	zh-tw	如果期間相同就保持空白
+end	timesheet	zh-tw	結束
 entry deleted	timesheet	zh-tw	資料刪除了
 entry saved	timesheet	zh-tw	資料儲存了
 error deleting the entry!!!	timesheet	zh-tw	資料刪除時發生錯誤！
@@ -28,11 +29,14 @@ saves the changes made	timesheet	zh-tw	儲存異動
 saves this entry and add a new one	timesheet	zh-tw	儲存這筆資料後新增另一個
 select a price	timesheet	zh-tw	選擇價格
 select a project	timesheet	zh-tw	選擇專案
+start	timesheet	zh-tw	開始
+sum %1:	timesheet	zh-tw	%1 小計：
 this month	timesheet	zh-tw	這個月
 this week	timesheet	zh-tw	這星期
 this year	timesheet	zh-tw	今年
 timesheet	common	zh-tw	時間表
 unitprice	timesheet	zh-tw	單位價格
 view this entry	timesheet	zh-tw	檢視這筆資料
+week	timesheet	zh-tw	週
 yesterday	timesheet	zh-tw	昨天
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	zh-tw	您的資料庫不是最新版本（%1 vs. %2），請執行 %3安裝程式%4來更新您的資料庫。

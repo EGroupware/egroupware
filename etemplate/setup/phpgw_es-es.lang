@@ -178,6 +178,7 @@ help	etemplate	es-es	Ayuda
 horizontal rule	etemplate	es-es	Línea horizontal
 hour	etemplate	es-es	Hora
 hours	etemplate	es-es	horas
+how many entries should the list show	etemplate	es-es	¿Cuántas entradas se muestran en la lista?
 html	etemplate	es-es	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	es-es	Si el campo está desactivado, la celda de la tabla estará vacía, para borrar temporalmente un campo o celda.
 image	etemplate	es-es	Imagen
@@ -216,6 +217,7 @@ linkto	etemplate	es-es	Enlace a
 load this template into the editor	etemplate	es-es	cargar esta plantilla en el editor
 middle	etemplate	es-es	Medio
 minute	etemplate	es-es	Minuto
+minutes	etemplate	es-es	MInutos
 month	etemplate	es-es	Mes
 multicolumn indices	etemplate	es-es	Indices multicolumna
 name	etemplate	es-es	Nombre

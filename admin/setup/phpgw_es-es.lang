@@ -190,6 +190,7 @@ enter your smtp server hostname or ip address	admin	es-es	Introduzca su servidor
 enter your smtp server port	admin	es-es	Introduzca el puerto del servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	es-es	Error al cancelar el temporizador ¡Puede que no haya ninguno!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	es-es	Error al configurar el temporizador. La sintaxis es incorrecta o puede que haya uno que ya se esté ejecutándo.
+error! no appname found	admin	es-es	¡Error! No se encontró el nombre de la aplicación
 error: %1 not found or other error !!!	admin	es-es	Error: no se encontró %1 u otro error
 expires	admin	es-es	Expira
 explanation of ldapman	admin	es-es	Este módulo ha sido probado en POSTFIX, LDAP, Courier-IMAP y necesita los esquemas CORE y QMAIL (OID7914). Más detalles sobre el uso y configuración de este sistema puede encontrarse en el fichero README.ldapman en el directorio doc de ADMIN.
@@ -309,6 +310,7 @@ please select	admin	es-es	Por favor, seleccione
 postfix with ldap	admin	es-es	Postfix con LDAP
 preferences	admin	es-es	Preferencias
 primary group	admin	es-es	Grupo principal
+qmaildotmode	admin	es-es	qmaildotmode
 quota settings	admin	es-es	configuración de la cuota
 quota size in mbyte	admin	es-es	tamaño de la cuota en MBytes
 re-enter password	admin	es-es	Confirmar contraseña
@@ -396,6 +398,7 @@ top	admin	es-es	Superior
 total records	admin	es-es	Total de registros
 trust level	admin	es-es	Nivel de confianza
 trust relationship	admin	es-es	Relaciones de confianza
+type '%1' already exists !!!	admin	es-es	¡El tipo '%1' ya existe!
 type of customfield	admin	es-es	Tipo de campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	es-es	En windows, se necesita instalar asyncservice %1manualmente%2 o usar el modo de fallos. El modo de fallos sólo comprueba los trabajos después de ver cada página. ¡Cuidado!
 use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
@@ -424,6 +427,7 @@ would you like to show each application's upgrade status ?	admin	es-es	¿Desea mo
 xml-rpc	admin	es-es	XML-RPC
 you have entered an invalid expiration date	admin	es-es	Ha introducido una fecha de expiración que no es válida
 you have to enter a name, to create a new field!!!	admin	es-es	Tiene que introducir un nombre para crear un nuevo campo
+you have to enter a name, to create a new type!!!	admin	es-es	¡Tiene que introducir un nombre para crear un tipo nuevo!
 you must add at least 1 permission or group to this account	admin	es-es	Debe añadir al menos 1 permiso o grupo para esta cuenta
 you must enter a group name.	admin	es-es	Debe introducir un nombre de grupo
 you must enter a lastname	admin	es-es	Debe introducir un apellido
