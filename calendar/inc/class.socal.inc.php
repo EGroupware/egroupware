@@ -26,7 +26,7 @@ if(extension_loaded('mcal') == False)
 	define('MCAL_RECUR_SECONDLY',6);
 	define('MCAL_RECUR_MINUTELY',7);
 	define('MCAL_RECUR_HOURLY',8);
-	
+
 	define('MCAL_M_SUNDAY',1);
 	define('MCAL_M_MONDAY',2);
 	define('MCAL_M_TUESDAY',4);
@@ -34,7 +34,7 @@ if(extension_loaded('mcal') == False)
 	define('MCAL_M_THURSDAY',16);
 	define('MCAL_M_FRIDAY',32);
 	define('MCAL_M_SATURDAY',64);
-	
+
 	define('MCAL_M_WEEKDAYS',62);
 	define('MCAL_M_WEEKEND',65);
 	define('MCAL_M_ALLDAYS',127);
@@ -54,7 +54,7 @@ define('ACCEPTED',3);
  *	- egw_cal_users: participant info including status (multiple entries per cal_id AND startdate for recuring events)
  * 	- egw_cal_repeats: recur-data: type, optional enddate, etc.
  *  - egw_cal_extra: custom fields (multiple entries per cal_id possible)
- * 
+ *
  * The new UI, BO and SO classes have a strikt definition, in which time-zone they operate:
  *  UI only operates in user-time, so there have to be no conversation at all !!!
  *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
@@ -72,7 +72,7 @@ class socal
 	 */
 	var $cal_table = 'egw_cal';
 	var $extra_table,$repeats_table,$user_table,$dates_table,$all_tables;
-	
+
 	/**
 	 * internal copy of the global db-object
 	 */
@@ -98,7 +98,7 @@ class socal
 		}
 		$this->db = clone($GLOBALS['egw']->db);
 		$this->db->set_app('calendar');
-		
+
 		$this->all_tables = array($this->cal_table);
 		foreach(array('extra','repeats','user','dates') as $name)
 		{
@@ -106,7 +106,7 @@ class socal
 			$this->all_tables[] = $this->$vname = $this->cal_table.'_'.$name;
 		}
 	}
-	
+
 	/**
 	 * reads one or more calendar entries
 	 *
@@ -148,7 +148,7 @@ class socal
 			$where,__LINE__,__FILE__,false,'GROUP BY '.$group_by_cols,false,0,
 			",$this->dates_table LEFT JOIN $this->repeats_table ON $this->dates_table.cal_id=$this->repeats_table.cal_id".
 			" WHERE $this->cal_table.cal_id=$this->dates_table.cal_id");
-		
+
 		$events = false;
 		while (($row = $this->db->row(true,'cal_')))
 		{
@@ -161,7 +161,7 @@ class socal
 			if (!is_array($ids) && !is_numeric($ids)) $ids = $row['id'];
 		}
 		if (!$events) return false;
-		
+
 		// check if we have a real recurance, if not set $recur_date=0
 		if (is_array($ids) || $events[(int)$ids]['recur_type'] == MCAL_RECUR_NONE)
 		{
@@ -173,7 +173,7 @@ class socal
 			$this->db->select($this->dates_table,'MIN(cal_start) AS cal_start',array('cal_id' => $ids),__LINE__,__FILE__);
 			$first = $this->db->row(true);
 			$recur_date = $first['cal_start'] == $events[$ids]['start'] ? 0 : $events[$ids]['start'];
-			
+
 			if ($recur_date) $events[$ids]['recur_date'] = $recur_date;	// remember it, maybe we need it later, duno now
 		}
 		// participants, if a recur_date give, we read that recurance, else the one users from the default entry with recur_date=0
@@ -205,13 +205,13 @@ class socal
 		{
 			$events[$row['cal_id']]['#'.$row['cal_extra_name']] = $row['cal_extra_value'];
 		}
-		
+
 		// alarms, atm. we read all alarms in the system, as this can be done in a single query
 		foreach((array)$this->async->read('cal'.(is_array($ids) ? '' : ':'.(int)$ids).':%') as $id => $job)
 		{
 			list(,$cal_id) = explode(':',$id);
 			if (!isset($events[$cal_id])) continue;	// not needed
-			
+
 			$alarm         = $job['data'];	// text, enabled
 			$alarm['id']   = $id;
 			$alarm['time'] = $job['next'];
@@ -224,7 +224,7 @@ class socal
 
 	/**
 	 * generate SQL to filter after a given category (evtl. incl. subcategories)
-	 * 
+	 *
 	 * @param array/int $cat_id cat-id or array of cat-ids, or !$cat_id for none
 	 * @return string SQL to include in the query
 	 */
@@ -316,7 +316,7 @@ class socal
 				));
 			}
 			$where[] = '('.implode(' OR ',$to_or).')';
-			
+
 			if (!$show_rejected) $where[] = "cal_status != 'R'";
 		}
 		if ($cat_id)
@@ -325,51 +325,54 @@ class socal
 		}
 		if ($start) $where[] = (int)$start.' < cal_end';
 		if ($end)   $where[] = 'cal_start < '.(int)$end;
-		
+
 		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injunktion
-		
-		// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
-		$select = array(
-			'table' => $this->cal_table,
-			'join'  => "JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)",
-			'cols'  => "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
-			'where' => $where,
-		);
-		$selects = array($select,$select);
-		$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
-		$selects[1]['where'][] = 'cal_recur_date=cal_start';
-		
-		if (is_numeric($offset))	// get the total too
+
+		if ($this->db->capabilities['distinct_on_text'] && $this->capabilities['union'])
 		{
-			// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-			$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
-			
-			$this->db->union($selects,__LINE__,__FILE__);
-			$this->total = $this->db->num_rows();
+			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
+			$select = array(
+				'table' => $this->cal_table,
+				'join'  => "JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id",
+				'cols'  => "$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+				'where' => $where,
+			);
+			$selects = array($select,$select);
+			$selects[0]['where'][] = 'recur_type IS NULL AND cal_recur_date=0';
+			$selects[1]['where'][] = 'cal_recur_date=cal_start';
 
-			$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
+			if (is_numeric($offset))	// get the total too
+			{
+				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
+				$selects[0]['cols'] = $selects[1]['cols'] = "DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date";
+
+				$this->db->union($selects,__LINE__,__FILE__);
+				$this->total = $this->db->num_rows();
+
+				$selects[0]['cols'] = $selects[1]['cols'] = $select['cols'];	// restore the original cols
+			}
+			$this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
 		}
-		$this->db->union($selects,__LINE__,__FILE__,$order,$offset,$num_rows);
-
-/*		original query	
-		$where[] = '(recur_type IS NULL AND cal_recur_date=0 OR cal_recur_date=cal_start)';
-
-		//_debug_array($where);
-		if (is_numeric($offset))	// get the total too
+		else	// MsSQL oder MySQL 3.23
 		{
-			// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
-			$this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
-				$where,__LINE__,__FILE__,false,'',false,0,
-				"JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)");
+			$where[] = '(recur_type IS NULL AND cal_recur_date=0 OR cal_recur_date=cal_start)';
 
-			$this->total = $this->db->num_rows();
+			//_debug_array($where);
+			if (is_numeric($offset))	// get the total too
+			{
+				// we only select cal_table.cal_id (and not cal_table.*) to be able to use DISTINCT (eg. MsSQL does not allow it for text-columns)
+				$this->db->select($this->cal_table,"DISTINCT $this->repeats_table.*,$this->cal_table.cal_id,cal_start,cal_end,cal_recur_date",
+					$where,__LINE__,__FILE__,false,'',false,0,
+					"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
+
+				$this->total = $this->db->num_rows();
+			}
+			$this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').
+				"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
+				$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,false,$num_rows,
+				"JOIN $this->dates_table ON $this->cal_table.cal_id=$this->dates_table.cal_id JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id LEFT JOIN $this->repeats_table ON $this->cal_table.cal_id=$this->repeats_table.cal_id");
 		}
-		$this->db->select($this->cal_table,($this->db->capabilities['distinct_on_text'] ? 'DISTINCT ' : '').
-			"$this->repeats_table.*,$this->cal_table.*,cal_start,cal_end,cal_recur_date",
-			$where,__LINE__,__FILE__,$offset,'ORDER BY '.$order,false,$num_rows,
-			"JOIN $this->dates_table USING(cal_id) JOIN $this->user_table USING(cal_id) LEFT JOIN $this->repeats_table USING(cal_id)");
-*/
-		$events = $ids = $recur_dates = $recur_ids = array();	
+		$events = $ids = $recur_dates = $recur_ids = array();
 		while (($row =& $this->db->row(true,'cal_')))
 		{
 			$ids[] = $id = $row['id'];
@@ -383,7 +386,7 @@ class socal
 
 			$events[$id] = $row;
 		}
-		
+
 		if (count($events))
 		{
 			// now ready all users with the given cal_id AND (cal_recur_date=0 or the fitting recur-date)
@@ -391,16 +394,16 @@ class socal
 			$recur_dates[] = 0;
 			$this->db->select($this->user_table,'*',array(
 				'cal_id' => array_unique($ids),
-				'cal_recur_date' => $recur_dates, 
+				'cal_recur_date' => $recur_dates,
 			),__LINE__,__FILE__,false,'ORDER BY cal_id,cal_user_type DESC');	// DESC puts users before resources and contacts
-	
+
 			while (($row = $this->db->row(true)))
 			{
 				$id = $row['cal_id'];
 				if ($row['cal_recur_date']) $id .= '-'.$row['cal_recur_date'];
-				
+
 				if (!isset($events[$id])) continue;		// not needed first entry of recuring event
-	
+
 				$events[$id]['participants'][$this->combine_user($row['cal_user_type'],$row['cal_user_id'])] = $row['cal_status'];
 			}
 /*			custom fields are not shown in the regular views, so we can ignore them here for the moment
@@ -409,7 +412,7 @@ class socal
 			{
 				$set_ids = array($row['cal_id']);
 				if (isset($recur_ids[$row['cal_id']])) $set_ids += $recur_ids[$row['cal_id']];
-				
+
 				foreach($set_ids as $id)
 				{
 					if (isset($events[$cal_id]))
@@ -418,18 +421,18 @@ class socal
 					}
 				}
 			}
-*/		
+*/
 			// alarms, atm. we read all alarms in the system, as this can be done in a single query
 			foreach((array)$this->async->read('cal'.(is_array($ids) ? '' : ':'.(int)$ids).':%') as $id => $job)
 			{
 				list(,$cal_id) = explode(':',$id);
-				
+
 				$alarm         = $job['data'];	// text, enabled
 				$alarm['id']   = $id;
 				$alarm['time'] = $job['next'];
-				
+
 				$event_start = $alarm['time'] + $alarm['offset'];
-	
+
 				if (isset($events[$cal_id]))	// none recuring event
 				{
 					$events[$cal_id]['alarm'][$id] = $alarm;
@@ -437,19 +440,19 @@ class socal
 				elseif (isset($events[$cal_id.'-'.$event_start]))	// recuring event
 				{
 					$events[$cal_id.'-'.$event_start]['alarm'][$id] = $alarm;
-				}	
+				}
 			}
 		}
 		//echo "<p>socal::search\n"; _debug_array($events);
 		return $events;
 	}
-	
+
 	/**
 	 * Checks for conflicts
 	 */
 
 /* folowing SQL checks for conflicts completly on DB level
-	 
+
 SELECT cal_user_type, cal_user_id, SUM( cal_quantity )
 FROM egw_cal, egw_cal_dates, egw_cal_user
 LEFT JOIN egw_cal_repeats ON egw_cal.cal_id = egw_cal_repeats.cal_id
@@ -475,8 +478,8 @@ AND cal_status != 'R'
 GROUP BY cal_user_type, cal_user_id
 ORDER BY cal_user_type, cal_usre_id
 
-*/ 
-	
+*/
+
 	/**
 	 * Saves or creates an event
 	 *
@@ -494,9 +497,9 @@ ORDER BY cal_user_type, cal_usre_id
 
 		$cal_id = (int) $event['id'];
 		unset($event['id']);
-		
+
 		$set_recurrences = !$cal_id && $event['recur_type'] != MCAL_RECUR_NONE;
-		
+
 		// add colum prefix 'cal_' if there's not already a 'recur_' prefix
 		foreach($event as $col => $val)
 		{
@@ -616,7 +619,7 @@ ORDER BY cal_user_type, cal_usre_id
 						'cal_id'			=> $cal_id,
 						'cal_extra_name'	=> substr($name,1),
 					),__LINE__,__FILE__);
-				}	
+				}
 			}
 		}
 		// updating or saving the alarms, new alarms have a temporary numeric id!
@@ -628,13 +631,13 @@ ORDER BY cal_user_type, cal_usre_id
 				if (is_numeric($id)) unset($alarm['id']);	// unset the temporary id, to add the alarm
 
 				$alarm['time'] = $event['cal_start'] - $alarm['offset'];	// recalculate the offset, as the start-time might have changed
-				
+
 				$this->save_alarm($cal_id,$alarm);
 			}
 		}
 		return $cal_id;
 	}
-	
+
 	/**
 	 * moves an event to an other start- and end-time taken into account the evtl. recurrences of the event(!)
 	 *
@@ -649,7 +652,7 @@ ORDER BY cal_user_type, cal_usre_id
 	function move($cal_id,$start,$end,$change_since=0,$old_start=0,$old_end=0)
 	{
 		//echo "<p>socal::move($cal_id,$start,$end,$change_since,$old_start,$old_end)</p>\n";
-		
+
 		if (!(int) $cal_id) return false;
 
 		if (!$old_start)
@@ -691,7 +694,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		return $this->db->affected_rows();
 	}
-	
+
 	/**
 	 * combines user_type and user_id into a single string or integer (for users)
 	 *
@@ -707,7 +710,7 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		return $user_type.$user_id;
 	}
-	
+
 	/**
 	 * splits the combined user_type and user_id into a single values
 	 *
@@ -728,10 +731,10 @@ ORDER BY cal_user_type, cal_usre_id
 			$user_id = (int) substr($uid,1);
 		}
 	}
-	
+
 	/**
 	 * updates the participants of an event, taken into account the evtl. recurrences of the event(!)
-	 * 
+	 *
 	 * @param int $cal_id
 	 * @param array $participants id => status pairs
 	 * @param int/boolean $change_since=0 false=new entry, > 0 time from which on the repetitions should be changed, default 0=all
@@ -814,12 +817,12 @@ ORDER BY cal_user_type, cal_usre_id
 						'cal_id'	=> $cal_id,
 						'cal_user_type'   => $type,
 						'cal_user_id' 	  => $id,
-						
+
 					),__LINE__,__FILE__);
 				}
 			}
 		}
-		return true;				
+		return true;
 	}
 
 	/**
@@ -841,9 +844,9 @@ ORDER BY cal_user_type, cal_usre_id
 			ACCEPTED	=> 'A'
 		);
 		if (!(int)$cal_id || !(int)$user_id) return false;
-		
+
 		if (is_numeric($status)) $status = $status_code_short[$status];
-		
+
 		$where = array(
 			'cal_id'		=> $cal_id,
 			'cal_user_type'	=> $user_type ? $user_type : 'u',
@@ -869,11 +872,11 @@ ORDER BY cal_user_type, cal_usre_id
 		}
 		return $this->db->affected_rows();
 	}
-	
+
 	/**
 	 * creates or update a recurrence in the dates and users table
 	 *
-	 * @param int $cal_id 
+	 * @param int $cal_id
 	 * @param int $start
 	 * @param int $end
 	 * @param array $participants uid => status pairs
@@ -887,7 +890,7 @@ ORDER BY cal_user_type, cal_usre_id
 			'cal_id' => $cal_id,
 			'cal_start'  => $start,
 		),__LINE__,__FILE__);
-		
+
 		foreach($participants as $uid => $status)
 		{
 			if ($status == 'G') continue;	// dont save group-invitations
@@ -908,7 +911,7 @@ ORDER BY cal_user_type, cal_usre_id
 	/**
 	 * Get all unfinished recuring events (or all users) after a given time
 	 *
-	 * @param int $time 
+	 * @param int $time
 	 * @return array with cal_id => max(cal_start) pairs
 	 */
 	function unfinished_recuring($time)
@@ -1050,13 +1053,13 @@ ORDER BY cal_user_type, cal_usre_id
 	{
 		return $this->async->cancel_timer($id);
 	}
-	
+
 	function change_delete_user($old_user,$new_user=false)
 	{
 		if (!(int)$new_user)
 		{
 			$this->split_user($old_user,$user_type,$user_id);
-			
+
 			if ($user_type == 'u')	// only accounts can be owners of events
 			{
 				$ids = array();
@@ -1074,11 +1077,11 @@ ORDER BY cal_user_type, cal_usre_id
 				'cal_user_type' => $user_type,
 				'cal_user_id'   => $user_id,
 			),__LINE__,__FILE__);
-			
+
 			// delete calendar entries without participants (can happen if the deleted user is the only participants, but not the owner)
 			$ids = array();
 			$this->db->select($this->cal_table,"DISTINCT $this->cal_table.cal_id",'cal_user_id IS NULL',__LINE__,__FILE__,
-				False,'',False,0,"LEFT JOIN $this->user_table USING (cal_id)");
+				False,'',False,0,"LEFT JOIN $this->user_table ON $this->cal_table.cal_id=$this->user_table.cal_id");
 			while(($row = $this->db->row(true)))
 			{
 				$ids[] = $row['cal_id'];
