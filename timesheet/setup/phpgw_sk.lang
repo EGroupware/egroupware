@@ -1,0 +1,37 @@
+2 month ago	timesheet	sk	2 mesiace spä»
+2 years ago	timesheet	sk	2 roky spä»
+3 years ago	timesheet	sk	3 roky spä»
+actions	timesheet	sk	Akcie
+create new links	timesheet	sk	Vytvori» nové odkazy
+delete this entry	timesheet	sk	zmaza» tento záznam
+edit this entry	timesheet	sk	Uprav tento záznam
+empty if identical to duration	timesheet	sk	prázdne ak sa zhoduje då¾ka trvania
+entry deleted	timesheet	sk	Záznam vymazaný
+entry saved	timesheet	sk	Záznam ulo¾ený
+error deleting the entry!!!	timesheet	sk	Chyba pri mazaní záznamu !!!
+error saving the entry!!!	timesheet	sk	Chyba pri ukladaní záznamu !!!
+existing links	timesheet	sk	Existujúce odkazy
+general	timesheet	sk	Hlavné
+last modified	timesheet	sk	Naposledy upravené
+last month	timesheet	sk	Posledný mesiac
+last week	timesheet	sk	Posledný tý¾deò
+last year	timesheet	sk	Posledný rok
+leave it empty for a full week	timesheet	sk	Ponechajte prázdne ak chcete plný tý¾deò
+links	timesheet	sk	Odkazy
+no details	timesheet	sk	¾iadne podrobnosti
+permission denied!!!	timesheet	sk	Prístup bol odopretý !!!
+price	timesheet	sk	Cena
+quantity	timesheet	sk	Mno¾stvo
+save & new	timesheet	sk	Ulo¾i» & Nové
+saves the changes made	timesheet	sk	Ulo¾í vykonané zmeny
+saves this entry and add a new one	timesheet	sk	Ulo¾í tento záznam a pridá nový
+select a price	timesheet	sk	Vyberte cenu
+select a project	timesheet	sk	Vyberte projekt
+this month	timesheet	sk	Tento mesiac
+this week	timesheet	sk	Tento tý¾deò
+this year	timesheet	sk	Tento rok
+timesheet	common	sk	Harmonogram
+unitprice	timesheet	sk	Jednotková cena
+view this entry	timesheet	sk	Zobrazi» záznam
+yesterday	timesheet	sk	Vèera
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sk	Va¹a databáza NIE je aktuálna (%1 oproti %2), prosím spustite %3setup%4 kvôli aktualizácii va¹ej databázy.
