@@ -25,7 +25,7 @@
 			
 		list($appName, $className, $functionName) = explode('.',$arg0);
 		
-		if(substr($className,0,4) != 'ajax')
+		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec')
 		{
 			// stopped for security reasons
 			error_log($_SERVER["PHP_SELF"]. ' stopped for security reason. className '.$className.' is not valid. className must start with ajax!!!');
@@ -38,9 +38,9 @@
 			'noheader'			=> True,
 			'disable_Template_class'	=> True,
 		);
-		
+
 		include('./header.inc.php');
-	
+
 		$ajaxClass = CreateObject("$appName.$className");
 		$argList = $GLOBALS['egw']->translation->convert($argList, 'utf-8');
 		return call_user_func_array(array(&$ajaxClass, $functionName), $argList );

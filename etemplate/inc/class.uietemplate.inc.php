@@ -78,6 +78,10 @@
 			{
 				$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
 			}
+			if (!is_object($GLOBALS['egw']->template))
+			{
+				$GLOBALS['egw']->template =& CreateObject('phpgwapi.template');
+			}
 			$this->html = &$GLOBALS['egw']->html;
 
 			$this->boetemplate($name,$load_via);
@@ -318,24 +322,28 @@
 		 *
 		 * @return mixed false if no sessiondata and $this->sitemgr, else the returnvalue of exec of the method-calls
 		 */
-		function process_exec()
+		function process_exec($etemplate_exec_id = null, $submit_button = null, $exec = null )
 		{
+			if(!$etemplate_exec_id) $etemplate_exec_id = $_POST['etemplate_exec_id'];
+			if(!$submit_button) $submit_button = $_POST['submit_button'];
+			if(!$exec) $exec = $_POST;
+
 			//echo "process_exec: _POST ="; _debug_array($_POST);
-			$session_data = $this->get_appsession($_POST['etemplate_exec_id']);
+			$session_data = $this->get_appsession($etemplate_exec_id);
 			//echo "<p>process_exec: session_data ="; _debug_array($session_data);
 
-			if (!$_POST['etemplate_exec_id'] || !is_array($session_data) || count($session_data) < 10)
+			if (!$etemplate_exec_id || !is_array($session_data) || count($session_data) < 10)
 			{
 				if ($this->sitemgr) return false;
 				//echo "uitemplate::process_exec() id='$_POST[etemplate_exec_id]' invalid session-data !!!"; _debug_array($_SESSION);
 				// this prevents an empty screen, if the sessiondata gets lost somehow
 				$this->location(array('menuaction' => $_GET['menuaction']));
 			}
-			if (isset($_POST['submit_button']) && !empty($_POST['submit_button']))
+			if (isset($submit_button) && !empty($submit_button))
 			{
-				$this->set_array($_POST,$_POST['submit_button'],'pressed');
+				$this->set_array($exec,$submit_button,'pressed');
 			}
-			$content = $_POST['exec'];
+			$content = $exec['exec'];
 			if (!is_array($content))
 			{
 				$content = array();
