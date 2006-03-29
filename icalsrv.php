@@ -2,23 +2,21 @@
   /* WARNING: EXPERIMENTAL CODE DO NOT USE FOR PRODUCTION  */
   /**
    * @file 
-   *  Icalsrv: Export and Import Egw events and task as ICalendar over http
+   *  IcalsrvNG: Export and Import Egw events and task as ICalendar over http using
+   *  Virtual Calendars
    *
    * Possible clients include Mozilla Calendar/Sunbird, Korganizer, Apple Ical
    * and Evolution. 
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.08-R1 initial version for icalsrv as egw application 
-   * @date 20060318
+   * @version 0.9.33NGb2 first version for use with virtual calendars
+   * @date 20060329
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
-   * $Id$ 
    * (see: @url http://www.egroupware.org  )
    *
    * Based on some code from:
    * @author   RalfBecker@outdoor-training.de (some original code base)
-   * @author   bbeckmann (at) optaros.com (some modificationas)
-   * @author   l.tulipan (at) mpwi.at (Additional Modifications for egw 1.2).
    *
    * <b>license:</b><br>
    *  This program is free software; you can redistribute it and/or modify it
@@ -26,262 +24,377 @@
    *  Free Software Foundation; either version 2 of the License, or (at your
    *  option) any later version.
    * 
-   * @since 0.9.06 collect all (todos via query filter iso just 15)
-   * @since 0.9.00 use of the new egwical class for iCalendar handling with WURH
-   * TODO list:
-   * @todo incorporate this icalsrv.php script in
-   *  standard egroupware access url, via a setup routine or so.
    * @todo make this 'ical-service' enabled/disabled from the egw
    * admin interface
-   * @todo make some parameters of this 'ical-service' interface user
-   * specific configurable, for example the vevent and vtodo export
-   * period (define search filters..) or overwrite or duplicate mode
-   * etc.
+   * @todo make the definition of virtual calendars possible from a 'ical-service' web
+   * user interface user
+   *
    * @todo for ical GET: get the agent name from the http header
    * and use to set the ical product field when exporting.
-   * @warning the current calendar filter will export only events in the period
-   * from one month ago till one year ahead.
-   * @warning all and only those events and todos are exported that you have access to
-   * according to the default calendar and infolog settings (is this correct Ralf?)
+   * @todo make code robust against xss attacke etc.
+   * @todo check that the reqvircal_owner is the same as the logged in user  or ....
+   * @todo add possibly some ACL checking and granting via the vircal definitions
    */
 
+  //-------- basic operation configuration variables ----------
 
-$logdir = false; // set to false for no logging
-#$logdir = '/tmp'; // set to a valid (writable) directory to get log file generation
+#$logdir = false; // set to false for no logging
+$logdir = '/tmp'; // set to a valid (writable) directory to get log file generation
 
-#  WHY THIS? IS IT NEEDED?
-$GLOBALS['egw_info'] =
-  array('flags' => array('currentapp' => 'calendar',
-							 'noheader'   => True,
-							 'nofooter'   => True,
-							 ),);
+// set to true for debug logging to errorlog
+#$isdebug = True;
+$isdebug = False;
 
-$GLOBALS['egw_info']['flags']['currentapp'] = 'login';
-$GLOBALS['egw_info']['flags']['noapi'] = True;
-include ('./header.inc.php');
+// add flags array to egw_info
+$GLOBALS['egw_info'] = array('flags' => array(),);
 
+// for sure, configure noapi flags
+$GLOBALS['egw_info']['flags'] =  array(
+									   'currentapp'			=> 'login',
+									   'noheader'			=> True,
+									   'nonavbar'			=> True,
+									   'disable_Template_class'	=> True,
+									   'noapi'              => True
+									   );
+include('./header.inc.php');
 include ('./phpgwapi/inc/functions.inc.php');
+#$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
 
-$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
+
+// now set the variables that will control the working mode of icalvircal
+// the defines are in the egwical_resourcehandler sourcefile
+require_once EGW_SERVER_ROOT. '/egwical/inc/class.egwical_resourcehandler.inc.php' ;
+
+/** uid  mapping export  configuration switch
+ * @var int
+ * Parameter that determines, a the time of export from Egw (aka dowload by client), how 
+ * ical elements (like VEVENT's) get their uid fields filled, from data in
+ * the related Egroupware element.
+ * See further in @ref secuidmapping in the egwical_resourcehandler documentation.
+ */
+$uid_export_mode = UMM_ID2UID;
+
+/** uid  mapping import  configuration switch
+ * @var int
+ * Parameter that determines, at the time of import into Egw (aka publish by client), how
+ * ical elements (like VEVENT's) will find, based on their uid fields,  related egw
+ * elements, that are then updated with the ical info.
+ * See further in @ref secuidmapping in the egwical_resourcehandler documentation.
+ */
+$uid_import_mode = UMM_UID2ID;
+
+/** 
+ * @section secisuidmapping Basic Possible settings of UID to ID mapping.
+ *
+ * @warning the default setting in icalsrv.php is one of the 3 basic uid mapping modes:
+ * #The standard mode that allows a published client calendar to add new events and todos
+ *  to the egw calendar, and allows to update already before published (to egw) and
+ *  at least once downloaded (from egw) events and todos.
+ *  .
+ *  setting: <PRE>$uid_export_mode = UMM_ID2UID; $uid_import_mode = UMM_UID2ID; </PRE> (default)
+ * #The fool proof mode that will prevent accidental change or deletion of existing
+ *  egw events or todos. Note that the price to pay is <i>duplication</i> on republishing or
+ *  re-download!
+ *  .
+ *  setting: <PRE>$uid_export_mode = UMM_NEWUID; $uid_import_mode = UMM_NEWID; </PRE> (discouraged)
+ * #The flaky sync mode that in principle would make each event and todo recognizable by
+ *  both the client and egw at each moment. In this mode a once given uid field is both used
+ *  in the client and in egw. Unfortunately there are quite some problems with this, making it
+ *  very unreliable to use!
+ *  .
+ *  setting: <PRE>$uid_export_mode = UMM_UID2UID; $uid_import_mode = UMM_UID2UID; </PRE> (discouraged!)
+ */
+
+/** allow elements gone(deleted) in egw to be imported again from client
+ * @var boolean $reimport_missing_elements
+ */
+$reimport_missing_elements = true;
 
 
-// oke there we go .....
+  //-------- end of basic operation configuration variables ----------
 
-// exit on non authenticated http request
-if ((!isset($_SERVER['PHP_AUTH_USER']))	||
-	(!$GLOBALS['egw']->auth->authenticate($_SERVER['PHP_AUTH_USER'],
-											$_SERVER['PHP_AUTH_PW']))) {
-  header('WWW-Authenticate: Basic realm="ICal Server"');
-  header('HTTP/1.1 401 Unauthorized');
-  exit;
+
+
+#error_log('_SERVER:' . print_r($_SERVER, true));
+
+// go parse our request uri
+$requri = $_SERVER['REQUEST_URI'];
+$reqpath= $_SERVER['PATH_INFO'];
+$reqagent = $_SERVER['HTTP_USER_AGENT'];
+
+# maybe later also do something with content_type?
+# if (!empty($_SERVER['CONTENT_TYPE'])) {
+#    if (strpos($_SERVER['CONTENT_TYPE'], 'application/vnd.syncml+xml') !== false) {
+# ical/ics ???
+
+
+// ex1: $requri='egroupware/icalsrv.php/demouser/todos.ics'
+//   then $reqpath='/demouser/todos.ics'
+//        $rvc_owner='demouser'
+//        $rvc_basename='/todos.ics'
+// ex2:or $recuri ='egroupware/icalsrv.php/uk/holidays.ics'
+//   then $reqpath='/uk/holidays.ics'
+//        $rvc_owner = null;    // unset
+//        $rvc_basename=null;   // unset
+// ex3: $requri='egroupware/icalsrv.php/demouser/todos?pw=mypw01'
+//   then $reqpath='/demouser/todos.ics'
+//        $rvc_owner='demouser'
+//        $rvc_basename='/todos.ics'
+//        $_GET['pw'] = 'mypw01'
+
+// S-- parse the $reqpath  to get $reqvircal names
+unset($reqvircal_owner);
+unset($reqvircal_owner_id);
+unset($reqvircal_basename);
+
+if(empty($_SERVER['PATH_INFO'])){
+  // no specific calendar requested, so do default.ics
+  $reqvircal_pathname = '/default.ics';
+
+  // try owner + base for a personal vircal request 
+ } elseif (preg_match('#^/([\w]+)(/[^<^>^?]+)$#', $_SERVER['PATH_INFO'], $matches)){
+   $reqvircal_pathname = $matches[0];  	  
+   $reqvircal_owner = $matches[1];
+   $reqvircal_basename = $matches[2];
+
+   if(!$reqvircal_owner_id = $GLOBALS['egw']->accounts->name2id($reqvircal_owner)){
+	 // owner is unknown, so forget about personal calendar
+
+	 unset($reqvircal_owner);
+	 unset($reqvircal_basename);
+   }
+
+   // check for decent non personal path
+ } elseif (preg_match('#^(/[^<^>]+)$#', $_SERVER['PATH_INFO'], $matches)){
+   $reqvircal_pathname = $matches[0];  	  
+
+   // just default to standard path
+ } else {
+  $reqvircal_pathname = 'default.ics';
  }
 
-$user = $GLOBALS['egw']->accounts->name2id($_SERVER['PHP_AUTH_USER']);
-$pw   = $GLOBALS['egw']->preferences->account_id = $user;
 
-#  WHY THIS? IS IT NEEDED?
-$GLOBALS['egw_info']['user']['preferences'] =
-  $GLOBALS['egw']->preferences->read_repository();
+if($isdebug)		   
+  error_log('http-user-agent:' . $reqagent .
+			',pathinfo:' . $reqpath . ',rvc_pathname:' . $reqvircal_pathname .
+			',rvc_owner:' . $reqvircal_owner . ',rvc_owner_id:' . $reqvircal_owner_id .
+			',rvc_basename:' . $reqvircal_basename);
 
-$GLOBALS['egw_info']['user']['account_id'] = $user;
-$GLOBALS['egw_info']['user']['account_lid'] = $_SERVER['PHP_AUTH_USER'];
+// S1A search for the requested calendar in the vircal_ardb's 
+if(is_numeric($reqvircal_owner_id)){
+  // check if the requested personal calender is provided by the owner..
+
+  /**
+   * @todo 1. create somehow the list of available personal vircal arstores
+   * note: this should be done via preferences and read repository, but how....
+   * I have to find out and write it...
+   */
+
+  // find personal database of (array stored) virtual calendars
+  $cnmsg = 'calendar [' . $reqvircal_basename . '] for user [' . $reqvircal_owner . ']';
+  $vo_personal_vircal_ardb =& CreateObject('icalsrv.personal_vircal_ardb', $reqvircal_owner_id);
+  if(!(is_object($vo_personal_vircal_ardb))){
+	   error_log('icalsrv.php: couldnot create personal vircal_ardb for user:' . $reqvircal_owner);
+	   fail_exit('couldnot access' . $cnmsg, '403');
+  }
+
+  // check if a /<username>/list.html is requested
+  if ($reqvircal_basename == '/list.html'){
+	echo $vo_personal_vircal_ardb->listing(1);
+	$GLOBALS['egw']->common->egw_exit();
+  }
+
+#  error_log('vo_personal_vircal_ardb:' . print_r($vo_personal_vircal_ardb->calendars, true));
+
+  // search our calendar in personal vircal database
+  if(!($vircal_arstore = $vo_personal_vircal_ardb->calendars[$reqvircal_basename])){
+	   error_log('icalsrv.php: ' . $cnmsg . ' not found.');
+	   fail_exit($cnmsg . ' not found.' , '404');
+  }
+  // oke we have a valid personal vircal in array_storage format!
+
+ } else {
+  // check if the requested system calender is provided by system
+  $cnmsg = 'system calendar [' . $reqvircal_pathname . ']';  
+  /**
+   * @todo 1. create somehow the list of available system vircal arstores
+   * note: this should be done via preferences and read repository, but how.... I have to find out
+   */
+
+  // find system database of (array stored) virtual calendars
+  $system_vircal_ardb = CreateObject('icalsrv.system_vircal_ardb');
+  if(!(is_object($system_vircal_ardb))){
+	   error_log('icalsrv.php: couldnot create system vircal_ardb');
+	   fail_exit('couldnot access ' . $cnmsg, '403');
+  }
+
+  // check if a /list.html is requested
+  if ($reqvircal_pathname == '/list.html'){
+	echo $system_vircal_ardb->listing(1);
+	$GLOBALS['egw']->common->egw_exit();
+  }
+
+  // search our calendar in system vircal database
+  if(!($vircal_arstore = $system_vircal_ardb->calendars[$reqvircal_pathname])){
+	fail_exit($cnmsg . ' not found', '404');
+  }
+  // oke we have a valid system vircal in array_storage format!
+
+ }
+if($isdebug)
+  error_log('vircal_arstore:' . print_r($vircal_arstore, true));
+
+// build a virtual calendar with ical facilities from the found vircal
+// array_storage data
+$icalvc =& CreateObject('icalsrv.icalvircal');
+if(! $icalvc->fromArray($vircal_arstore)){
+  error_log('icalsrv.php: ' . $cnmsg . ' couldnot restore from repository.' );
+  fail_exit($cnmsg . ' internal problem ' , '403');
+ }
+
+// YES: $icalvc created ok! acces rights needs to be checked though!
+
+// HACK: ATM basic auth is always needed!! (JVL) ,so we force icalvc into it
+$icalvc->auth = ':basic';
+
+// check if the virtual calendar demands authentication
+if(strpos($icalvc->auth,'none') !== false){
+  // no authentication demanded so continue
+
+ } elseif(strpos($icalvc->auth,'basic') !== false){
+   //basic http authentication demanded
+   //so exit on non authenticated http request
+   if ((!isset($_SERVER['PHP_AUTH_USER']))	||
+	   (!$GLOBALS['egw']->auth->authenticate($_SERVER['PHP_AUTH_USER'],
+											 $_SERVER['PHP_AUTH_PW']))) {
+	 header('WWW-Authenticate: Basic realm="ICal Server"');
+	 header('HTTP/1.1 401 Unauthorized');
+	 exit;
+   }
+
+   // else, use the active basic authentication to set preferences
+   $user_id = $GLOBALS['egw']->accounts->name2id($_SERVER['PHP_AUTH_USER']);
+   $GLOBALS['egw']->preferences->account_id = $user_id;
+   $GLOBALS['egw_info']['user']['preferences'] =
+	 $GLOBALS['egw']->preferences->read_repository();
+
+   $GLOBALS['egw_info']['user']['account_id'] = $user_id;
+   $GLOBALS['egw_info']['user']['account_lid'] = $_SERVER['PHP_AUTH_USER'];
 
 
-/* WARNING:
- * SET $euid_export ONLY TO TRUE IF YOU NEED IT TO USE THE EXPORTED ICAL INFO
- * SEPARATED FROM EGW, IN A CONTEXT WHERE IT ORIGINATED FROM. SO NORMALLY LEAVE IT
- * TO FALSE IF WANT TO USE YOUR CLIENT REGULARY (TO SUBSCRIBE/PUBLISH TO) WITH EGW
+ } elseif(strpos($icalvc->auth,'ssl') !== false){
+   // ssl demanded, check if we are in https authenticated connection
+   // if not redirect to https
+   error_log('icalsrv.php:' . $cnmsg . ' demands secure connection');
+   fail_exit($cnmsg . ' demands secure connection: please use https', '403');
+
+ } else {
+  error_log('*** icalsrv.php:' . $cnmsg . ' requires unknown authentication method:'
+			. $icalcv->auth);
+  fail_exit($cnmsg . ' demands unavailable authentication method:'
+			 . $icalcv->auth, '403');
+ }
+
+
+/** 
+ * @todo this extra password checkin should, at least for logged-in users,
+ * better be incorporated in the ACL checkings. At some time...
  */
-$euid_export = false;
+// check if an extra password is needed too
+if(strpos($icalvc->auth,'passw') !== false){
+   //extra parameter password authentication demanded
+   //so exit if pw parameter is not valid
+   if ((!isset($_GET['password']))	||
+	   (!$icalvc->pw !== $_GET['password']) ) {
+	 error_log('icalsrv.php:' . $cnmsg . ' demands extra password parameter');
+	 fail_exit($cnmsg . ' demands extra password parameter', '403');
+   }
+ }
 
+// now we are authenticated  enough
+// go setup import and export mode in our ical virtual calendar
 
-/* select mode for importing the ical components,
- * safeMode=-1 -> allows new creation and deletion (in combi with $importMode = 'OVERWRITE')
- *          0 -> allow new creation and change, but no deletion?
-* WARNING:
- * USE safeMode = -1 WILL DELETE EXISTING events WHEN NO VALID ATTENDEES ARE
- * GIVEN IN THE  RELATED ICAL IMPORTED VEVENT !!
- *   ---!!! USE WITH CARE OR YOUR DATA GETS LOST!! ---------
- */
-$safeMode = 0;
-
-$importMode = 'OVERWRITE';  // OVERWRITE or DUPLICATE
-
+$icalvc->uid_mapping_export = $uid_export_mode; 
+$icalvc->uid_mapping_import = $uid_import_mode; 
+$icalvc->reimport_missing_elements = $reimport_missing_elements;
 $logmsg = "";
 
-
-// IO-0 setup an Egwical object, and add a Calendar and a Infolog Resource
-// these will do all the work
-$ei =& CreateObject('egwical.egwical');
-// for free an Horde_iCalendar object that we may use to collect or convert ical elements
-$hIcal = $ei->hi; 
-$boc =& CreateObject('calendar.bocalupdate');
-$binf =& CreateObject('infolog.boinfolog');
-
-//calendar_vevents_handler: this will allow $ei to convert events<->vevents and
-// store and retrieve them from the egw db
-$cvehnd = $ei->addRsc($boc);  
-//infolog_vtodos_handler: this will allow $ei to convert tasks<->vtodos and
-// store and retrieve them from the egw db
-$ivthnd = $ei->addRsc($binf); 
-
-
-
-// oke now process the http request...
-
-if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
-
+// oke now process the actual import or export to/from icalvc..
+if ($_SERVER['REQUEST_METHOD'] == 'PUT')  {
   // *** PUT Request so do an Import *************
-
+  
   // I0 read the payload
   $logmsg = 'IMPORTING in '. $importMode . ' mode';
   $fpput = fopen("php://input", "r");
-  $putData = "";
-  while ($data = fread($fpput, 1024))
-	$putData .= $data;
+  $vcalstr = "";
+  while ($data = fread($fpput, 1024)){
+	$vcalstr .= $data;
+  }
   fclose($fpput);
-
-
-  // I1: parse $putData using the egwical builtin ical parser
-  $hIcal =& $ei->parsevCalendar($putData);
-
-  if(!$hIcal){
-	$msg ="icalsrv.php: error parsing iCal import data";
-	fail_exit($msg);
-  }
-  $logmsg .= "\n parsed iCalendar data:" . count($hIcal->_components) . " components found";
   
-
-  // I2: now import possibly found VEVENTS into eGW calendar
-  $vcnt = $cvehnd->importVEventsFromIcal($hIcal, $importMode, $safeMode); 
-
-  if($vcnt === false){
-	$msg = 'icalsrv.php:  VEVENTS import: ERRORS';
-	fail_exit($msg);
-  } else{
-	$logmsg .= "\n imported " . $vcnt ." VEVENTS: OK";
-  }
-
-  // I3: now import possibly found VTODOS into eGW calendar
-  $tcnt = $ivthnd->importVTodosFromIcal($hIcal, $importMode); 
-  if ($tcnt === false){
-	$msg = 'icalsrv.php:  VTODOS import: ERRORS';
-	fail_exit($msg);
-  }
-  $logmsg .= "\n imported " . $tcnt . " VTODOS: OK ";
+  // import the icaldata into the virtual calendar
+  // note: ProductType is auto derived from $vcalstr
+  $import_table =& $icalvc->import_vcal($vcalstr);
   
-  if($logdir) log_ical($logmsg,"import",$putData);
-  
+  // count the successes..
+  if ($import_table === false) {
+	$msg = 'icalsrv.php:  importing '. $cnmsg . ' ERRORS';
+	fail_exit($msg,'403');
+  } else {
+	$logmsg .= "\n imported " . $cnmsg . ' : ';
+	foreach ($import_table as $rsc_class => $vids){
+	  $logmsg .=  "\n   resource: " . $rsc_class . ' : ' . count($vids) .' elements OK';
+	}
 
- } else {
+  } 
+  // DONE importing
+  if($logdir) log_ical($logmsg,"import",$vcalstr);
 
-  // *** GET (or POST?) Request
+  // handle response ...
+  $GLOBALS['egw']->common->egw_exit();
+
+ } else  {
+
+  // *** GET (or POST?) Request so do an export
   $logmsg = 'EXPORTING';
+  // derive a ProductType from our http Agent and set it in icalvc
+  $icalvc->deviceType = egwical_resourcehandler::httpUserAgent2deviceType($reqagent);
 
-  //   Get events from 3 years (last year, current, next), rather silly..  */
-  $last_year = date("Y")-1;
-  $next_year = date("Y")+1;
+  // export the data from the virtual calendar
+  $vcalstr = $icalvc->export_vcal();
 
-  // until it is configurable we do 1 month back and 1 year ahead
-  $evq_start = date('Ymd',time()-2678400);
-  $evq_end   = date('Ymd',time()+65000000);
-
-  // E1.1: get period to be exported for events 
-  // For productivity this should be user configurable e.g. to be set via some sort of user
-  // preferences to be set via eGW. (config remote-iCalendar...)
-  $events_query = array('start'         => $evq_start,
-						'end'           => $evq_end,
-						'filter'        => 'all',
-						'enum_recuring' => false,
-						'daywise'       => false,
-						'owner'         => $GLOBALS['egw_info']['user']['account_id'],
-						// timestamp in server time for boical class
-						'date_format'   => 'server'
-				);
-
-  $todos = array();
-
-  // filter == my: entries user is responsible for,
-  // filter == own: entries the user owns or is responsible for
-  // order == id_parent: ...
-  // order == info_datemodified: ...
-  // todo add a filter to limit how far back entries from the past are retrieved
-  $todos_query = array('col_filter' => array('type' => 'task'),
-                       'filter' => 'my',
-					   'order' => 'id_parent',
-					   'sort' => 'DESC'
-					   );
-
-  // E2.1: search eGW events based on the $events_query 
-  $events =  & $boc->search($events_query);
-  if (!$events){
-    $logmsg .="\n no eGW events found to export";
-    // nevertheless fall through to further ical components export
+  // handle response
+  if ($vcalstr === false) {
+	$msg = 'icalsrv.php:  exporting '. $cnmsg . ' ERRORS';
+	fail_exit($msg,'403');
   } else {
-    $logmsg .=  "\n found " . count($events) . " eGW events to export";
-
-    //E2.2 convert the found eGW events and add them to the iCal container
-    $vcnt = $cvehnd->exportEventsOntoIcal($hIcal, $events, $euid_export);
-	if($vcnt === false){
-	  $msg = 'icalsrv.php:  eGW to VEVENTS conversion: ERRORS';
-	  fail_exit($msg);
-	} else {
-	  $logmsg .= "\n exported the eGW events as " . $vcnt . " VEvents: OK ";
-    }
-    $bove = null; //destroy object
-  }
-
-  // E3.1: search eGW todos based on the $todos_query 
-  $todos =& $binf->search($todos_query);
-  if (!$todos){
-    $logmsg .="\n no eGW todos found to export";
-    // nevertheless fall through to further ical components export
-  } else {
-    $logmsg .=  "\n found " . count($todos) . " eGW todos to export";
-
-    //E3.2 convert the found eGW todos and add them to the iCal container
-    $tcnt = $ivthnd->exportTodosOntoIcal($hIcal, $todos, $euid_export);
-	if ($tcnt === false){
-	  $msg = 'icalsrv.php:  eGW to VTODOS conversion: ERRORS';
-	  fail_exit($msg);
-    } else {
-	  $logmsg .= "\n exported the eGW todos as " . $tcnt . " VTODOS: OK ";
-     } 
-	  $bovt = null; //destroy object
-  }
-
-
-  // E4.1: add good vcal header info to iCal object
-  $hIcal->setAttribute('PRODID', '-//eGroupWare//NONSGML eGroupWare Calendar '
-			     . $GLOBALS['egw_info']['apps']['calendar']['version'].'//'
-			     . strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
-  $hIcal->setAttribute('VERSION','2.0');
-  $hIcal->setAttribute('METHOD','PUBLISH');
-  
-  // now let Horde stringify it and deliver as result
-  $content = $hIcal->exportvCalendar();
-  echo $content;
+	$logmsg .= "\n exported " . $cnmsg ." : OK ";
+  } 
   // DONE exporting
-  if($logdir) log_ical($logmsg,"export",$content);
+
+  if($logdir) log_ical($logmsg,"export",$vcalstr);
+  // handle response ...
+  echo $vcalstr;
+  $GLOBALS['egw']->common->egw_exit();
  
  }
 
-$GLOBALS['egw']->common->egw_exit();
 
 
-
-// --- SOME UTILITY FUNCTIONS -------
+// // --- SOME UTILITY FUNCTIONS -------
 
 /**
  * Exit with an error message in html
  * @param $msg string
  *      message that gets return as html error description
  */
-function fail_exit($msg){
+function fail_exit($msg, $errno = '403')
+{
   // log the error in the http server error logging files
-  error_log($msg);
-  // return http error 403 can this be done this way?
-  header('HTTP/1.1 403' . $msg);
+  error_log('resp: ' . $errno . ' ' . $msg);
+  // return http error $errno can this be done this way?
+  header('HTTP/1.1 '. $errno . ' ' . $msg);
+#  header('HTTP/1.1 403 ' . $msg);
   $GLOBALS['egw']->common->egw_exit();
 }
 
@@ -296,11 +409,10 @@ function fail_exit($msg){
  * @param $icalmethod $string value can be import or export 
  * @global $logdir string/boolean log directory. Set to false to disab logging
  */
-function log_ical($msg,$icalmethod="data",$data){
-
+function log_ical($msg,$icalmethod="data",$data)
+{
   global $logdir;
-  if (!$logdir)
-	return; // loggin seems off
+  if (!$logdir)	return; // loggin seems off
 
   // some info used for logging
   $logstamp = date("U");
