@@ -50,7 +50,7 @@ class bo_resources
 	{
 		if ($this->debug) _debug_array($query);
 		$query['search'] = $query['search'] ? $query['search'] : '*';
-		$criteria = array('name' => $query['search'], 'short_description' => $query['search']);
+		$criteria = array('name' => $query['search'], 'short_description' => $query['search'], 'inventory_number' => $query['search']);
 		$read_onlys = 'res_id,name,short_description,quantity,useable,bookable,buyable,cat_id,location,storage_info';
 		
 		$accessory_of = $query['view_accs_of'] ? $query['view_accs_of'] : -1;
