@@ -193,7 +193,7 @@
 			{
 				$info['info_percent2'] = $info['info_percent'];
 			}
-			if ($this->prefs['show_id'] && $show_links != 'no_describtion')
+			if ($this->prefs['show_id'])
 			{
 				$info['info_number'] = $info['info_id'];
 			}
@@ -257,7 +257,7 @@
 			}
 			if ($query['no_actions']) $rows['no_actions'] = true;
 			$rows['no_details'] = $query['filter2'] == 'no_describtion';
-			$rows['no_times'] = !$this->prefs['show_times'] || $query['filter2'] == 'no_describtion';
+			$rows['no_times'] = !$this->prefs['show_times'];
 			$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 			$rows['duration_format'] = ','.$this->duration_format.',,1';
 			//echo "<p>readonlys = "; _debug_array($readonlys);
