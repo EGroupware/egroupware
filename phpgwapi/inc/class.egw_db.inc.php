@@ -62,12 +62,12 @@
 		* @var string $Database name of database to use
 		*/
 		var $Database = '';
-        
+
 		/**
 		* @var string $User name of database user
 		*/
 		var $User     = '';
-        
+
 		/**
 		* @var string $Password password for database user
 		*/
@@ -77,22 +77,22 @@
 		* @var int $Auto_Free automatically free results - 0 no, 1 yes
 		*/
 		var $Auto_Free     = 0;
-        
+
 		/**
 		* @var int $Debug enable debuging - 0 no, 1 yes
 		*/
 		var $Debug         = 0;
-        
+
 		/**
 		* @var string $Halt_On_Error "yes" (halt with message), "no" (ignore errors quietly), "report" (ignore errror, but spit a warning)
 		*/
 		var $Halt_On_Error = 'yes';
-        
+
 		/**
 		* @var array $Record current record
 		*/
 		var $Record   = array();
-        
+
 		/**
 		* @var int row number for current record
 		*/
@@ -102,7 +102,7 @@
 		* @var int $Errno internal rdms error number for last error
 		*/
 		var $Errno    = 0;
-        
+
 		/**
 		* @var string descriptive text from last error
 		*/
@@ -114,19 +114,20 @@
 		var $Link_ID = 0;
 		var $privat_Link_ID = False;	// do we use a privat Link_ID or a reference to the global ADOdb object
 		var $Query_ID = 0;
-		
+
 		/**
 		 * @var array $capabilities, defaults will be changed be method set_capabilities($ado_driver,$db_version)
 		 */
 		var $capabilities = array(
 			'sub_queries'      => true,	// will be set to false for mysql < 4.1
+			'union'            => true, // will be set to false for mysql < 4.0
 			'distinct_on_text' => true,	// is the DB able to use DISTINCT with a text or blob column
 			'like_on_text'     => true,	// is the DB able to use LIKE with text columns
 			'name_case'        => 'upper',	// case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
 			'client_encoding'  => false,	// db uses a changeable clientencoding
-			'order_on_text'    => true,	// is the DB able to order by a given text column, boolean or 
+			'order_on_text'    => true,	// is the DB able to order by a given text column, boolean or
 		);								// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
-		
+
 		var $prepared_sql = array();	// sql is the index
 
 		/**
@@ -232,11 +233,11 @@
 					case 'sapdb':
 						$this->Type = 'maxdb';
 						// fall through
-					case 'maxdb': 
+					case 'maxdb':
 						$type ='sapdb';	// name in ADOdb
 						$php_extension = 'odbc';
 						break;
-						
+
 					case 'mysqlt':
 						$php_extension = 'mysql';	// you can use $this->setupType to determine if it's mysqlt or mysql
 						// fall through
@@ -255,7 +256,7 @@
 						$this->Host != $GLOBALS['egw']->db->Host ||
 						$this->Port != $GLOBALS['egw']->db->Port)))
 				{
-					if (!extension_loaded($php_extension) && (!function_exists('dl') || 
+					if (!extension_loaded($php_extension) && (!function_exists('dl') ||
 						!dl(PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX)))
 					{
 						$this->halt("Necessary php database support for $this->Type (".PHP_SHLIB_PREFIX.$php_extension.'.'.PHP_SHLIB_SUFFIX.") not loaded and can't be loaded, exiting !!!");
@@ -290,7 +291,7 @@
 					if ($this->Debug)
 					{
 						echo function_backtrace();
-						echo "<p>new ADOdb connection to $this->Type://$this->Host/$this->Database: Link_ID".($this->Link_ID === $GLOBALS['egw']->ADOdb ? '===' : '!==')."\$GLOBALS[egw]->ADOdb</p>"; 
+						echo "<p>new ADOdb connection to $this->Type://$this->Host/$this->Database: Link_ID".($this->Link_ID === $GLOBALS['egw']->ADOdb ? '===' : '!==')."\$GLOBALS[egw]->ADOdb</p>";
 						//echo "<p>".print_r($this->Link_ID->ServerInfo(),true)."</p>\n";
 						_debug_array($this);
 						echo "\$GLOBALS[egw]->db="; _debug_array($GLOBALS[egw]->db);
@@ -330,26 +331,27 @@
 				case 'mysqlt':
 				case 'mysqli':
 					$this->capabilities['sub_queries'] = (float) $db_version >= 4.1;
+					$this->capabilities['union'] = (float) $db_version >= 4.0;
 					$this->capabilities['name_case'] = 'preserv';
 					$this->capabilities['client_encoding'] = (float) $db_version >= 4.1;
 					break;
-					
+
 				case 'postgres':
 					$this->capabilities['name_case'] = 'lower';
 					$this->capabilities['client_encoding'] = (float) $db_version >= 7.4;
-					break;					
+					break;
 
 				case 'mssql':
 					$this->capabilities['distinct_on_text'] = false;
 					$this->capabilities['order_on_text'] = 'CAST (%s AS varchar)';
 					break;
-					
+
 				case 'maxdb':	// if Lim ever changes it to maxdb ;-)
 				case 'sapdb':
 					$this->capabilities['distinct_on_text'] = false;
 					$this->capabilities['like_on_text'] = (float) $db_version >= 7.6;
 					$this->capabilities['order_on_text'] = false;
-					break;	
+					break;
 			}
 			//echo "db::set_capabilities('$adodb_driver',$db_version)"; _debug_array($this->capabilities);
 		}
@@ -417,7 +419,7 @@
 			}
 			return $this->Link_ID->UnixTimeStamp($timestamp);
 		}
-		
+
 		/**
 		 * convert a rdbms specific boolean value
 		 *
@@ -488,7 +490,7 @@
 			if (! $this->Query_ID)
 			{
 				$this->halt("Invalid SQL: ".(is_array($Query_String)?$Query_String[0]:$Query_String).
-					($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''), 
+					($inputarr ? "<br>Parameters: '".implode("','",$inputarr)."'":''),
 					$line, $file);
 			}
 			return $this->Query_ID;
@@ -536,7 +538,7 @@
 			++$this->Row;
 
 			$this->Record = $this->Query_ID->fields;
-			
+
 			if ($this->Query_ID->EOF || !$this->Query_ID->RecordCount() || !is_array($this->Record))
 			{
 				return False;
@@ -1078,7 +1080,7 @@
 		function quote($value,$type=False,$not_null=true)
 		{
 			if ($this->Debug) echo "<p>db::quote(".(is_null($value)?'NULL':"'$value'").",'$type','$not_null')</p>\n";
-			
+
 			if (!$not_null && is_null($value))	// writing unset php-variables and those set to NULL now as SQL NULL
 			{
 				return 'NULL';
@@ -1087,7 +1089,7 @@
 			{
 				case 'int':
 				case 'auto':
-					return (int) $value;	
+					return (int) $value;
 				case 'bool':
 					if ($this->Type == 'mysql')		// maybe it's not longer necessary with mysql5
 					{
@@ -1109,7 +1111,7 @@
 						case 'I':
 							return $this->Link_ID->BlobEncode($value);
 					}
-					break;	// handled like strings					
+					break;	// handled like strings
 				case 'date':
 					return $this->Link_ID->DBDate($value);
 				case 'timestamp':
@@ -1155,11 +1157,11 @@
 			$keys = $values = array();
 			foreach($array as $key => $data)
 			{
-				if (is_int($key) || !$only || $only === True && isset($column_definitions[$key]) || 
+				if (is_int($key) || !$only || $only === True && isset($column_definitions[$key]) ||
 					is_array($only) && in_array($key,$only))
 				{
 					$keys[] = $this->name_quote($key);
-					
+
 					if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]))
 					{
 						// give a warning that we have no column-type
@@ -1181,8 +1183,8 @@
 							}
 							$data[$k] = $this->quote($v,$column_type,$not_null);
 						}
-						$values[] = ($or_null?'(':'').(!count($data) ? '' : 
-							($use_key===True ? $this->name_quote($key).' IN ' : '') . 
+						$values[] = ($or_null?'(':'').(!count($data) ? '' :
+							($use_key===True ? $this->name_quote($key).' IN ' : '') .
 							'('.implode(',',$data).')'.($or_null ? ' OR ' : '')).$or_null;
 					}
 					elseif (is_int($key) && $use_key===True)
@@ -1218,9 +1220,9 @@
 		}
 
 		/**
-		 * Sets the application in which the db-class looks for table-defintions 
+		 * Sets the application in which the db-class looks for table-defintions
 		 *
-		 * Used by table_definitions, insert, update, select, expression and delete. If the app is not set via set_app, 
+		 * Used by table_definitions, insert, update, select, expression and delete. If the app is not set via set_app,
 		 * it need to be set for these functions on every call
 		 *
 		 * @param string $app the app-name
@@ -1327,12 +1329,12 @@
 					{
 						$data[$column] = $value;
 					}
-				} 
+				}
 			}
 			$inputarr = false;
 			if ($use_prepared_statement && $this->Link_ID->_bindInputArray)	// eg. MaxDB
 			{
-				$this->Link_ID->Param(false);	// reset param-counter 
+				$this->Link_ID->Param(false);	// reset param-counter
 				$cols = array_keys($data);
 				foreach($cols as $k => $col)
 				{
@@ -1379,9 +1381,9 @@
 		{
 			if ($this->Debug) echo "<p>db::update('$table',".print_r($data,true).','.print_r($where,true).",$line,$file,'$app')</p>\n";
 			if (!$table_def) $table_def = $this->get_table_definitions($app,$table);
-			
+
 			$blobs2update = array();
-			// SapDB/MaxDB cant update LONG columns / blob's: if a blob-column is included in the update we remember it in $blobs2update 
+			// SapDB/MaxDB cant update LONG columns / blob's: if a blob-column is included in the update we remember it in $blobs2update
 			// and remove it from $data
 			switch ($this->Type)
 			{
@@ -1530,7 +1532,7 @@
 		* @param string $append string to append to the end of the query, eg. ORDER BY ...
 		* @param string/boolean $app string with name of app or False to use the current-app
 		* @param int $num_rows number of rows to return if offset set, default 0 = use default in user prefs
-		* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+		* @param string $join=null sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or
 		*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 		* @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
 		* @return ADORecordSet or false, if the query fails
@@ -1549,7 +1551,7 @@
 				$where = $this->column_data_implode(' AND ',$where,True,False,$table_def['fd']);
 			}
 			$sql = "SELECT $cols FROM $table $join";
-			
+
 			// if we have a where clause, we need to add it together with the WHERE statement, if thats not in the join
 			if ($where) $sql .= strstr($join,"WHERE") ? ' AND ('.$where.')' : ' WHERE '.$where;
 
@@ -1563,7 +1565,7 @@
 			}
 			return $this->query($sql,$line,$file,$offset,$offset===False ? -1 : (int)$num_rows);
 		}
-		
+
 		/**
 		* Does a union over multiple selects
 		*
@@ -1600,7 +1602,7 @@
 				));
 			}
 			$sql = count($sql) > 1 ? '(' . implode(")\nUNION\n(",$sql).')' : $sql[0];
-			
+
 			if ($order_by) $sql .= "\nORDER BY ".$order_by;
 
 			if ($this->Debug) echo "<p>sql='$sql'</p>";
