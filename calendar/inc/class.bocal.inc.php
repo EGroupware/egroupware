@@ -1600,7 +1600,7 @@ class bocal
 	 */
 	function check_set_default_prefs()
 	{
-		if (($set = $GLOBALS['egw']->session->appsession('default_prefs_set','calendar')))
+		if ($this->cal_prefs['interval'] && ($set = $GLOBALS['egw']->session->appsession('default_prefs_set','calendar')))
 		{
 			return;
 		}
