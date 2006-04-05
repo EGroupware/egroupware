@@ -33,7 +33,7 @@ start	timesheet	de	Start
 sum %1:	timesheet	de	Summe %1:
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
-this year	timesheet	de	Diese Jahr
+this year	timesheet	de	Dieses Jahr
 timesheet	common	de	Stundenzettel
 unitprice	timesheet	de	Preis pro Einheit
 view this entry	timesheet	de	Diesen Eintrag anzeigen
