@@ -128,6 +128,7 @@
 					{
 						$cell[1] = $cell;
 						$cell[1]['span'] .= ',activ_sortcolumn';
+						unset($cell[1]['align']);
 						$cell[2] = $tmpl->empty_cell('image',$nm_global['sort'] != 'DESC' ? 'down' : 'up');
 						$cell['type'] = 'hbox';
 						$cell['size'] = '2,0,0';
@@ -179,6 +180,7 @@
 				if (!isset($value[$f]))
 				{
 					list($value[$f]) = isset($tmpl->sel_options[$f]) ? @each($tmpl->sel_options[$f]) : @each($value['options-'.$f]);
+					if (!is_string($value[$f])) $value[$f] = (string) $value[$f];
 				}
 			}
 			list($app,$class,$method) = explode('.',$value['get_rows']);
@@ -379,7 +381,7 @@
 				}
 				unset($value['bottom']);
 			}
-			if (isset($old_value['num_rows']) && $value['num_rows'] != $old_value['num_rows'])
+			if (isset($old_value['num_rows']) && !is_null($value['num_rows']) && $value['num_rows'] != $old_value['num_rows'])
 			{
 				$loop = true;	// num_rows changed
 			}
