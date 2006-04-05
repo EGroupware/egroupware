@@ -32,7 +32,7 @@ if ($setup_info['infolog']['version'] != $GLOBALS['egw_info']['apps']['infolog']
 }
 unset($setup_info);
 
-ExecMethod('infolog.uiinfolog.index');
+ExecMethod('infolog.uiinfolog.index','reset_action_view');
 
 $GLOBALS['egw']->common->egw_exit();
 ?>

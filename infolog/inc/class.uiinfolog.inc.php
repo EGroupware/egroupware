@@ -35,7 +35,6 @@
 			'hook_view'   => True,
 			'writeLangFile' => True
 		);
-		var $icons;
 		var $prefs;
 		/**
 		 * @var boinfolog-object $bo
@@ -49,59 +48,58 @@
 		 * @var string $duration_format allowed units and hours per day, can be overwritten by the projectmanager configuration, default all units, 8h
 		 */
 		var $duration_format = ',';	// comma is necessary!
+		
+		var $icons = array(
+			'type' => array(
+				'task'      => 'task.gif',      'task_alt'      => 'Task',
+				'phone'     => 'phone.gif',     'phone_alt'     => 'Phonecall',
+				'note'      => 'note.gif',      'note_alt'      => 'Note',
+				'confirm'   => 'confirm.gif',   'confirm_alt'   => 'Confirmation',
+				'reject'    => 'reject.gif',    'reject_alt'    => 'Reject',
+				'email'     => 'email.gif',     'email_alt'     => 'Email' ),
+			'action' => array(
+				'new'       => 'new.gif',       'new_alt'       => 'Add Sub',
+				'view'      => 'view.gif',      'view_alt'      => 'View Subs',
+				'parent'    => 'parent.gif',    'parent_alt'    => 'View other Subs',
+				'edit'      => 'edit.gif',      'edit_alt'      => 'Edit',
+				'addfile'   => 'addfile.gif',   'addfile_alt'   => 'Add a file',
+				'delete'    => 'delete.gif',    'delete_alt'    => 'Delete',
+				'close'     => 'done.gif',      'close_alt'     => 'Close' ),
+			'status' => array(
+				'billed'    => 'billed.gif',    'billed_alt'    => 'billed',
+				'done'      => 'done.gif',      'done_alt'      => 'done',
+				'will-call' => 'will-call.gif', 'will-call_alt' => 'will-call',
+				'call'      => 'call.gif',      'call_alt'      => 'call',
+				'ongoing'   => 'ongoing.gif',   'ongoing_alt'   => 'ongoing',
+				'offer'     => 'offer.gif',     'offer_alt'     => 'offer' )
+		);
+		var $filters = array(
+			'none'             =>	'no Filter',
+			'done'             =>	'done',
+			'my'               =>	'responsible',
+			'my-open-today'    =>	'responsible open',
+			'my-open-overdue'  =>	'responsible overdue',
+			'my-upcoming'      =>	'responsible upcoming',
+			'own'              =>	'own',
+			'own-open-today'   =>	'own open',
+			'own-open-overdue' =>	'own overdue',
+			'own-upcoming'     =>	'own upcoming',
+			'open-today'       =>	'open',
+			'open-overdue'     =>	'overdue',
+			'upcoming'         =>	'upcoming'
+		);
+		var $messages = array(
+			'edit'    => 'InfoLog - Edit',
+			'add'     => 'InfoLog - New',
+			'add_sub' => 'InfoLog - New Subproject',
+			'sp'      => '- Subprojects from',
+			're'      => 'Re:'
+		);
 
-		function uiinfolog( )
+		function uiinfolog()
 		{
 			$this->bo =& new boinfolog();
 
-			$this->icons = array(
-				'type' => array(
-					'task'      => 'task.gif',      'task_alt'      => 'Task',
-					'phone'     => 'phone.gif',     'phone_alt'     => 'Phonecall',
-					'note'      => 'note.gif',      'note_alt'      => 'Note',
-					'confirm'   => 'confirm.gif',   'confirm_alt'   => 'Confirmation',
-					'reject'    => 'reject.gif',    'reject_alt'    => 'Reject',
-					'email'     => 'email.gif',     'email_alt'     => 'Email' ),
-				'action' => array(
-					'new'       => 'new.gif',       'new_alt'       => 'Add Sub',
-					'view'      => 'view.gif',      'view_alt'      => 'View Subs',
-					'parent'    => 'parent.gif',    'parent_alt'    => 'View other Subs',
-					'edit'      => 'edit.gif',      'edit_alt'      => 'Edit',
-					'addfile'   => 'addfile.gif',   'addfile_alt'   => 'Add a file',
-					'delete'    => 'delete.gif',    'delete_alt'    => 'Delete',
-					'close'     => 'done.gif',      'close_alt'     => 'Close' ),
-				'status' => array(
-					'billed'    => 'billed.gif',    'billed_alt'    => 'billed',
-					'done'      => 'done.gif',      'done_alt'      => 'done',
-					'will-call' => 'will-call.gif', 'will-call_alt' => 'will-call',
-					'call'      => 'call.gif',      'call_alt'      => 'call',
-					'ongoing'   => 'ongoing.gif',   'ongoing_alt'   => 'ongoing',
-					'offer'     => 'offer.gif',     'offer_alt'     => 'offer' )
-			);
-
-			$this->filters = array(
-				'none'             =>	'no Filter',
-				'done'             =>	'done',
-				'my'               =>	'responsible',
-				'my-open-today'    =>	'responsible open',
-				'my-open-overdue'  =>	'responsible overdue',
-				'my-upcoming'      =>	'responsible upcoming',
-				'own'              =>	'own',
-				'own-open-today'   =>	'own open',
-				'own-open-overdue' =>	'own overdue',
-				'own-upcoming'     =>	'own upcoming',
-				'open-today'       =>	'open',
-				'open-overdue'     =>	'overdue',
-				'upcoming'         =>	'upcoming'
-			);
-
-			$this->messages = array(
-				'edit'    => 'InfoLog - Edit',
-				'add'     => 'InfoLog - New',
-				'add_sub' => 'InfoLog - New Subproject',
-				'sp'      => '- Subprojects from',
-				're'      => 'Re:'
-			);
 			$this->link = &$this->bo->link;
 			
 			$this->tmpl =& CreateObject('etemplate.etemplate');
@@ -181,7 +179,7 @@
 			$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
 			$info['info_status_label'] = $this->bo->status[$info['info_type']][$info['info_status']];
 			
-			if (!$this->prefs['show_percent'] || $show_links == 'no_describtion')
+			if (!$this->prefs['show_percent'])
 			{
 				if ($info['info_status'] == 'ongoing' && $info['info_type'] != 'phone')
 				{
@@ -262,14 +260,19 @@
 			$rows['duration_format'] = ','.$this->duration_format.',,1';
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
-
+			
+			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog')
+			{
+				$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog').($query['filter'] == 'none' ? '' :
+					' - '.lang($this->filters[$query['filter']]));
+			}
 			return $query['total'];
 		}
 
 		/**
 		 * Shows the infolog list
 		 *
-		 * @param array $values=null etemplate content
+		 * @param array/string $values=null etemplate content or 'reset_action_view' if called by index.php to reset an action-view
 		 * @param string $action='' if set only entries liked to that $action:$action_id are shown
 		 * @param string $action_id='' if set only entries liked to that $action:$action_id are shown
 		 * @param mixed $called_as=0 this is how we got called, for a hook eg. the call-params of that page containing the hook
@@ -277,7 +280,7 @@
 		 * @param boolean $return_html=false
 		 * @param string $own_referer='' this is our own referer
 		 */
-		function index($values = 0,$action='',$action_id='',$called_as=0,$extra_app_header=False,$return_html=False,$own_referer='')
+		function index($values = null,$action='',$action_id='',$called_as=0,$extra_app_header=False,$return_html=False,$own_referer='')
 		{
 			if (is_array($values))
 			{
@@ -300,7 +303,16 @@
 			{
 				$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
 				$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
-				if (!$action)
+				
+				if ($values === 'reset_action_view')	// only read action from session, if not called by index.php
+				{
+					$session = $this->read_sessiondata();
+					$session['action'] = $action = '';
+					$session['action_id'] = $action_id = 0;
+					$this->save_sessiondata($session);
+					unset($session);
+				}
+				elseif (!$action)
 				{
 					$session = $this->read_sessiondata();
 					$action = $session['action'];
@@ -312,7 +324,7 @@
 			if (!is_array($values))
 			{
 				$values = array('nm' => $this->read_sessiondata());
-				if (isset($_GET['filter']) && $_GET['filter'] != 'default' || !isset($values['nm']['filter']))
+				if (isset($_GET['filter']) && $_GET['filter'] != 'default' || !isset($values['nm']['filter']) && !$this->called_by)
 				{
 					$values['nm']['filter'] = $_GET['filter'] && $_GET['filter'] != 'default' ? $_GET['filter'] :
 						$this->prefs['defaultFilter'];
@@ -420,9 +432,15 @@
 			{
 				if ($typ != 'defaults') $all_stati += $stati;
 			}
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog');
-			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
-
+			if (!$called_as)
+			{
+				$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog');
+				$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
+			}
+			else
+			{
+				$values['css'] = '<style type="text/css">@import url('.$GLOBALS['egw_info']['server']['webserver_url'].'/infolog/templates/default/app.css);'."</style>";
+			}
 			return $this->tmpl->exec('infolog.uiinfolog.index',$values,array(
 				'info_type'     => $this->bo->enums['type'],
 				'info_status'   => $all_stati
@@ -662,6 +680,12 @@
 					}
 					if ($content['js']) $content['js'] = '<script>'.$content['js'].'</script>';
 				}
+				// on a type-change, set the status to the default status of that type, if the actual status is not supported by the new type
+				if (!in_array($content['info_status'],$this->bo->status[$content['info_type']]))
+				{
+					$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+					if ($content['info_status'] != 'done') $content['info_datecompleted'] = '';
+				}
 			}
 			else
 			{
@@ -713,6 +737,7 @@
 					$content['info_type'] = $parent['info_type'];
 					$content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
 					$content['info_percent'] = $content['info_status'] == 'done' ? '100%' : '0%';
+					$content['info_datecompleted'] =$content['info_status'] == 'done' ? $this->bo->user_time_now : 0;
 					$content['info_confirm'] = 'not';
 					$content['info_subject']=lang($this->messages['re']).' '.$parent['info_subject'];
 					$content['info_des'] = '';
@@ -1062,9 +1087,6 @@
 			}
 			$this->called_by = $app;	// for read/save_sessiondata, to have different sessions for the hooks
 
-			$save_app = $GLOBALS['egw_info']['flags']['currentapp'];
-			$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
-
 			$GLOBALS['egw']->translation->add_app('infolog');
 
 			$GLOBALS['egw_info']['etemplate']['hooked'] = True;
@@ -1072,7 +1094,6 @@
 				'menuaction' => $view,
 				isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]
 			),True);
-			$GLOBALS['egw_info']['flags']['currentapp'] = $save_app;
 			unset($GLOBALS['egw_info']['etemplate']['hooked']);
 		} 
 	}
