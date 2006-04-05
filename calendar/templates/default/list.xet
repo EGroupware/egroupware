@@ -25,7 +25,7 @@
 						<nextmatch-sortheader id="cal_location" label="Location"/>
 					</vbox>
 					<nextmatch-accountfilter options="All participants" id="participant"/>
-					<description value="Actions"/>
+					<description value="Actions" class="noPrint"/>
 				</row>
 				<row class="row" valign="top">
 					<vbox id="start">
@@ -44,7 +44,7 @@
 						<description id="${row}[location]" no_lang="1"/>
 					</vbox>
 					<description id="${row}[parts]" readonly="true" no_lang="1"/>
-					<hbox>
+					<hbox class="noPrint">
 						<button image="view" label="view" id="view[$row_cont[id]]" statustext="View this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.view&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
 						<button image="edit" label="Edit" id="edit[$row_cont[id]]" statustext="Edit this event" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.edit&amp;cal_id=$row_cont[id]&amp;date=$row_cont[date]'),'425','dependent=yes,width=750,height=450,scrollbars=yes,status=yes'); return false;"/>
 						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this event" onclick="return confirm('Delete this event');"/>
