@@ -536,7 +536,10 @@ class html
 							$tab2a .= ',separator,insertdate,inserttime';
 							break;
 						default:
-						//	echo $plugin .'<br>';
+							if(strstr($plugin,'='))
+							{
+								$init .= ','. str_replace('=',':',$plugin);
+							}
 					}
 				}
 			}
