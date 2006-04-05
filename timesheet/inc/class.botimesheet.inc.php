@@ -256,8 +256,17 @@ class botimesheet extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false,$only_summary=false)
 	{
-		if (!$extra_cols) $extra_cols = 'round(ts_quantity*ts_unitprice,2) AS ts_total';
+		// postgres can't round from double precission, only from numeric ;-)
+		$total_sql = $this->db->Type != 'pgsql' ? "round(ts_quantity*ts_unitprice,2)" : "round(cast(ts_quantity*ts_unitprice AS numeric),2)";
 
+		if ($extra_cols && !is_array($extra_cols))
+		{
+			$extra_cols = explode(',',$extra_cols);
+		}
+		else
+		{
+			$extra_cols = array($total_sql.' AS ts_total');
+		}
 		if (!isset($filter['ts_owner']) || !count($filter['ts_owner']))
 		{
 			$filter['ts_owner'] = array_keys($this->grants);
@@ -280,42 +289,45 @@ class botimesheet extends so_sql
 			$this->summary = array();
 			return array();
 		}
-		$this->summary = parent::search($criteria,'SUM(ts_duration) AS duration,SUM(round(ts_quantity*ts_unitprice,2)) AS price',
+		$this->summary = parent::search($criteria,"SUM(ts_duration) AS duration,SUM($total_sql) AS price",
 			'','',$wildcard,$empty,$op,false,$filter,$join);
 		$this->summary = $this->summary[0];
 		
 		if ($only_summary) return $this->summary;
 
-		// ToDo: get the day- & weeksums working with DB's other then MySQL (problem is a missing equivalent to FROM_UNIXTIME)
-		if ($this->show_sums && $this->db->Type == 'mysql' && strstr($order_by,'ts_start'))	// day- / weekwise sums only for mysql and if ordered by ts_start
+		if ($this->show_sums && strstr($order_by,'ts_start') && 	// sums only make sense if ordered by ts_start
+			$this->db->capabilities['union'] && ($from_unixtime_ts_start = $this->db->from_unixtime('ts_start')))
 		{
+			$sum_sql = array(
+				'year'  => $this->db->date_format($from_unixtime_ts_start,'%Y'),
+				'month' => $this->db->date_format($from_unixtime_ts_start,'%Y%m'),
+				'week'  => $this->db->date_format($from_unixtime_ts_start,$GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'] == 'Sunday' ? '%X%V' : '%x%v'),
+				'day'   => $this->db->date_format($from_unixtime_ts_start,'%Y-%m-%d'),
+			);
+			foreach($this->show_sums as $type)
+			{
+				$extra_cols[] = $sum_sql[$type].' AS ts_'.$type;
+				$extra_cols[] = '0 AS is_sum_'.$type;
+				$sum_extra_cols[] = str_replace('ts_start','MIN(ts_start)',$sum_sql[$type]);	// as we dont group by ts_start
+				$sum_extra_cols[$type] = '0 AS is_sum_'.$type;
+			}
 			// regular entries
 			parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
 			
-			if ($this->show_sums['month'])	// month-sums
-			{
-				parent::search($criteria,"-2,'',DATE_FORMAT(FROM_UNIXTIME(ts_start),'%Y%m') AS ts_month,'',ts_start,".
-					"SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM(round(ts_unitprice * ts_quantity,2)) AS ts_total",
-					'GROUP BY ts_month ORDER BY '.$order_by,'',$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
-			}
-			$weekstart = $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts'] == 'Sunday' ? 0 : 1;
-			if ($this->show_sums['week'])	// week-sums
-			{
-				parent::search($criteria,"-1,'',YEARWEEK(FROM_UNIXTIME(ts_start),$weekstart) AS ts_week,'',ts_start,".
-					"SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM(round(ts_unitprice * ts_quantity,2)) AS ts_total",
-					'GROUP BY ts_week ORDER BY '.$order_by,'',$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
-			}
-			// order of the union: monthsums behind the month, weeksums behind the week and daysums behind the day
 			$sort = substr($order_by,8);
-			$union_order = "DATE_FORMAT(FROM_UNIXTIME(ts_start),'%Y%m') $sort,CASE WHEN ts_id=-2 THEN 1 ELSE 0 END,".
-				"YEARWEEK(FROM_UNIXTIME(ts_start),$weekstart) $sort,CASE WHEN ts_id=-1 THEN 1 ELSE 0 END,".
-				"DATE(FROM_UNIXTIME(ts_start)) $sort,CASE WHEN ts_id=0 THEN 1 ELSE 0 END,$order_by";
-
-			// day-sums
-			return parent::search($criteria,"0,'',DATE(FROM_UNIXTIME(ts_start)) AS ts_date,'',ts_start,".
-				"SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM(round(ts_unitprice * ts_quantity,2)) AS ts_total",
-				array('GROUP BY ts_date ORDER BY '.$order_by,$union_order),
-				'',$wildcard,$empty,$op,$start,$this->show_sums['day'] ? $filter : array('ts_id'=>0),$join,$need_full_no_count);
+			$union_order = array();
+			$sum_ts_id = array('year' => -3,'month' => -2,'week' => -1,'day' => 0);
+			foreach($this->show_sums as $type)
+			{
+				$union_order[] = 'ts_'.$type . ' ' . $sort;
+				$union_order[] = 'is_sum_'.$type;
+				$sum_extra_cols[$type]{0} = '1';
+				// the $type sum
+				parent::search($criteria,$sum_ts_id[$type].",'','','',MIN(ts_start),SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM($total_sql) AS ts_total",
+					'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
+				$sum_extra_cols[$type]{0} = '0';
+			}
+			return parent::search('','',implode(',',$union_order),'','',false,'',$start);
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
