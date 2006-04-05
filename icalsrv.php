@@ -28,9 +28,11 @@
    * admin interface
    * @todo make the definition of virtual calendars possible from a 'ical-service' web
    * user interface user
+   * @bug if you dont have enough privilages to access a personal calendar of someone
+   * icalsrv will not give you an access denied error, but will just return no events
+   * from this calendar. (Needed otherwise you cannot collect events from multiple resources
+   * into a single virtual calendar.
    *
-   * @todo for ical GET: get the agent name from the http header
-   * and use to set the ical product field when exporting.
    * @todo make code robust against xss attacke etc.
    * @todo check that the reqvircal_owner is the same as the logged in user  or ....
    * @todo add possibly some ACL checking and granting via the vircal definitions
@@ -38,8 +40,8 @@
 
   //-------- basic operation configuration variables ----------
 
-#$logdir = false; // set to false for no logging
-$logdir = '/tmp'; // set to a valid (writable) directory to get log file generation
+$logdir = false; // set to false for no logging
+#$logdir = '/tmp'; // set to a valid (writable) directory to get log file generation
 
 // set to true for debug logging to errorlog
 #$isdebug = True;
@@ -56,10 +58,10 @@ $GLOBALS['egw_info']['flags'] =  array(
 									   'disable_Template_class'	=> True,
 									   'noapi'              => True
 									   );
+
+$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
 include('./header.inc.php');
 include ('./phpgwapi/inc/functions.inc.php');
-#$GLOBALS['egw_info']['flags']['currentapp'] = 'calendar';
-
 
 // now set the variables that will control the working mode of icalvircal
 // the defines are in the egwical_resourcehandler sourcefile
@@ -257,6 +259,9 @@ if(! $icalvc->fromArray($vircal_arstore)){
 // HACK: ATM basic auth is always needed!! (JVL) ,so we force icalvc into it
 $icalvc->auth = ':basic';
 
+
+
+
 // check if the virtual calendar demands authentication
 if(strpos($icalvc->auth,'none') !== false){
   // no authentication demanded so continue
@@ -274,10 +279,12 @@ if(strpos($icalvc->auth,'none') !== false){
 
    // else, use the active basic authentication to set preferences
    $user_id = $GLOBALS['egw']->accounts->name2id($_SERVER['PHP_AUTH_USER']);
+
    $GLOBALS['egw']->preferences->account_id = $user_id;
    $GLOBALS['egw_info']['user']['preferences'] =
 	 $GLOBALS['egw']->preferences->read_repository();
 
+   // NEXT LINE WILL PREVENT THE access of granted calendars and infologs somehow ????
    $GLOBALS['egw_info']['user']['account_id'] = $user_id;
    $GLOBALS['egw_info']['user']['account_lid'] = $_SERVER['PHP_AUTH_USER'];
 
