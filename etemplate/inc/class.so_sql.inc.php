@@ -410,6 +410,8 @@ class so_sql
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
 	 *
+	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
+	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
 	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
@@ -417,12 +419,12 @@ class so_sql
 	 * @param string $wildcard='' appended befor and after each criteria
 	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
 	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
-	 * @return array of matching rows (the row is an array of the cols) or False
+	 * @return boolean/array of matching rows (the row is an array of the cols) or False
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
@@ -518,11 +520,7 @@ class so_sql
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
 		
-		if (is_array($order_by))
-		{
-			list($order_by,$union_order_by) = $order_by;
-		}
-		if ($order_by && !stristr($order_by,'ORDER BY'))
+		if ($order_by && !stristr($order_by,'ORDER BY') && !stristr($order_by,'GROUP BY'))
 		{
 			$order_by = 'ORDER BY '.$order_by;
 		}
@@ -530,15 +528,15 @@ class so_sql
 		static $union_cols = array();
 		if ($start === 'UNION' || $union)
 		{
-			$union[] = array(
-				'table'  => $this->table_name,
-				'cols'   => $colums,
-				'where'  => $query,
-				'append' => $order_by,
-				'join'   => $join,
-			);
 			if ($start === 'UNION')
 			{
+				$union[] = array(
+					'table'  => $this->table_name,
+					'cols'   => $colums,
+					'where'  => $query,
+					'append' => $order_by,
+					'join'   => $join,
+				);
 				if (!$union_cols)	// union used the colum-names of the first query
 				{
 					$union_cols = $this->_get_columns($only_keys,$extra_cols);
@@ -558,7 +556,7 @@ class so_sql
 					$this->total = $this->db->num_rows();
 				}
 			}
-			$this->db->union($union,__LINE__,__FILE__,$union_order_by,$start,$num_rows);
+			$this->db->union($union,__LINE__,__FILE__,$order_by,$start,$num_rows);
 
 			$cols = $union_cols;
 			$union = $union_cols = array();
