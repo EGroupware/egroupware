@@ -21,7 +21,7 @@
 				<column width="120"/>
 				<column disabled="@no_times"/>
 				<column width="8%"/>
-				<column width="12%"/>
+				<column width="12%" disabled="1"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>
@@ -114,15 +114,15 @@
 				<column width="120"/>
 				<column disabled="@no_times"/>
 				<column width="8%"/>
-				<column width="12%"/>
+				<column width="12%" disabled="1"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>
 			<rows>
 				<row class="th">
 					<vbox orient="0,0">
-						<nextmatch-filterheader options="Type ..." id="info_type"/>
-						<nextmatch-filterheader options="Status ..." id="info_status"/>
+						<nextmatch-filterheader options="Type" id="info_type"/>
+						<nextmatch-filterheader options="Status" id="info_status" align="center"/>
 						<nextmatch-sortheader label="Completed" id="info_percent" align="right"/>
 					</vbox>
 					<grid width="100%" spacing="0" padding="0">
@@ -132,12 +132,16 @@
 						</columns>
 						<rows>
 							<row>
+								<description/>
+								<nextmatch-sortheader label="Priority" align="right" id="info_priority" options="DESC" class="noPrint"/>
+							</row>
+							<row>
 								<nextmatch-sortheader label="Subject" id="info_subject"/>
-								<nextmatch-sortheader label="Priority" align="right" id="info_priority" options="DESC"/>
+								<nextmatch-sortheader label="Creation" align="right" id="info_id" options="DESC" class="noPrint"/>
 							</row>
 							<row>
 								<nextmatch-sortheader label="Description" id="info_des"/>
-								<nextmatch-sortheader label="Creation" align="right" id="info_id" options="DESC"/>
+								<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC" class="noPrint" align="right"/>
 							</row>
 						</rows>
 					</grid>
@@ -211,13 +215,16 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.0.1.002">
+	<template id="infolog.index" template="" lang="" group="0" version="1.2.001">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="90%"/>
 				<column/>
 			</columns>
 			<rows>
+				<row>
+					<html span="all" id="css"/>
+				</row>
 				<row disabled="!@msg">
 					<description span="all" class="redItalic" align="center" id="msg" no_lang="1"/>
 					<description/>

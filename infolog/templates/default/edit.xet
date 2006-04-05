@@ -190,7 +190,7 @@
 				<row class="row">
 					<description value="Status" options=",,,info_status"/>
 					<menulist>
-						<menupopup id="info_status" statustext="@status_help" onchange="if (this.value=='done' || this.value=='billed') this.form['exec[info_percent]'].value=100; else if (this.value=='not-started') this.form['exec[info_percent]'].value=0;"/>
+						<menupopup id="info_status" statustext="@status_help" onchange="if (this.value=='done' || this.value=='billed') set_element(this.form,'exec[info_percent]','100'); else if (this.value=='not-started') set_element(this.form,'exec[info_percent]','0');"/>
 					</menulist>
 					<description value="Completed" options=",,,info_percent"/>
 					<menulist>
