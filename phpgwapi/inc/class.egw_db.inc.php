@@ -1030,6 +1030,65 @@
 			}
 			return call_user_func_array(array(&$this->Link_ID,'concat'),$args);
 		}
+		
+		/**
+		 * Convert a unix timestamp stored as integer in the db into a db timestamp, like MySQL: FROM_UNIXTIME(ts)
+		 *
+		 * @param string $expr name of an integer column or integer expression
+		 * @return string SQL expression of type timestamp
+		 */
+		function from_unixtime($expr)
+		{
+			switch($this->Type)
+			{
+				case 'mysql':
+					return "FROM_UNIXTIME($expr)";
+
+				case 'pgsql':	// we use date(,0) as we store server-time
+					return "(timestamp '".date('Y-m-d H:i:s',0)."' + ($expr) * interval '1 sec')";
+
+				case 'mssql':	// we use date(,0) as we store server-time
+					return "DATEADD(second,($expr),'".date('Y-m-d H:i:s',0)."')";
+			}
+			return false;
+		}
+
+		/**
+		 * format a timestamp as string, like MySQL: DATE_FORMAT(ts)
+		 *
+		 * Please note: only a subset of the MySQL formats are implemented
+		 *
+		 * @param string $expr name of a timestamp column or timestamp expression
+		 * @param string $format format specifier like '%Y-%m-%d %H:%i:%s' or '%V%X' ('%v%x') weeknumber & year with Sunday (Monday) as first day
+		 * @return string SQL expression of type timestamp
+		 */
+		function date_format($expr,$format)
+		{
+			switch($this->Type)
+			{
+				case 'mysql':
+					return "DATE_FORMAT($expr,'$format')";
+
+				case 'pgsql':
+					$format = str_replace(
+						array('%Y',  '%y','%m','%d','%H',  '%h','%i','%s','%V','%v','%X',  '%x'),
+						array('YYYY','YY','MM','DD','HH24','HH','MI','SS','IW','IW','YYYY','YYYY'),
+						$format);
+					return "TO_CHAR($expr,'$format')";
+
+				case 'mssql':
+					$from = $to = array();
+					foreach(array('%Y'=>'yyyy','%y'=>'yy','%m'=>'mm','%d'=>'dd','%H'=>'hh','%i'=>'mi','%s'=>'ss','%V'=>'wk','%v'=>'wk','%X'=>'yyyy','%x'=>'yyyy') as $f => $t)
+					{
+						$from[] = $f;
+						$to[] = "'+DATEPART($t,($expr))+'";
+					}
+					$from[] = "''+"; $to[] = '';
+					$from[] = "+''"; $to[] = '';
+					return str_replace($from,$to,$format);
+			}
+			return false;
+		}
 
 		/**
 		* Correctly Quote Identifiers like table- or colmnnames for use in SQL-statements
@@ -1603,7 +1662,7 @@
 			}
 			$sql = count($sql) > 1 ? '(' . implode(")\nUNION\n(",$sql).')' : $sql[0];
 
-			if ($order_by) $sql .= "\nORDER BY ".$order_by;
+			if ($order_by) $sql .=  (!stristr($order_by,'ORDER BY') ? "\nORDER BY " : '').$order_by;
 
 			if ($this->Debug) echo "<p>sql='$sql'</p>";
 
