@@ -202,16 +202,20 @@
 			}
 			elseif (!$this->xslt)
 			{
-				$hooked = $GLOBALS['egw']->template->get_var('phpgw_body');
+				$hooked = isset($GLOBALS['egw_info']['etemplate']['content']) ? $GLOBALS['egw_info']['etemplate']['content'] :
+					$GLOBALS['egw']->template->get_var('phpgw_body');
+
 				if (!@$GLOBALS['egw_info']['etemplate']['hooked'] && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
 				{
 					$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
 					$GLOBALS['egw']->common->egw_header();
 				}
-				else
+				elseif (!isset($GLOBALS['egw_info']['etemplate']['content']))
 				{
 					$html = $this->include_java_script(2).$html;	// better than nothing
 				}
+				// saving the etemplate content for other hooked etemplate apps (atm. infolog hooked into addressbook)
+				$GLOBALS['egw_info']['etemplate']['content'] =& $html;
 			}
 			else
 			{
@@ -271,6 +275,7 @@
 				'java_script' => $GLOBALS['egw_info']['etemplate']['java_script'],
 				'dom_enabled' => $GLOBALS['egw_info']['etemplate']['dom_enabled'],
 				'hooked' => $hooked != '' ? $hooked : $GLOBALS['egw_info']['etemplate']['hook_content'],
+				'hook_app' => $hooked ? $GLOBALS['egw_info']['flags']['currentapp'] : $GLOBALS['egw_info']['etemplate']['hook_app'],
 				'app_header' => $GLOBALS['egw_info']['flags']['app_header'],
 				'output_mode' => $output_mode != -1 ? $output_mode : 0,
 				'session_used' => 0,
@@ -280,7 +285,7 @@
 
 			if ($this->sitemgr || (int) $output_mode == 1 || (int) $output_mode == -1)	// return html
 			{
-					return $html;
+				return $html;
 			}
 		}
 
@@ -374,8 +379,8 @@
 				{
 					if (!$this->xslt)
 					{
-						//echo "<p>process_exec: hook_content set</p>\n";
 						$GLOBALS['egw_info']['etemplate']['hook_content'] = $session_data['hooked'];
+						$GLOBALS['egw_info']['flags']['currentapp'] = $GLOBALS['egw_info']['etemplate']['hook_app'] = $session_data['hook_app'];
 					}
 					else
 					{
