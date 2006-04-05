@@ -143,6 +143,7 @@ db root password	setup	pt-br	Senha do super-usuário no base de dados
 db root username	setup	pt-br	Nome do super-usuário na base de dados
 db type	setup	pt-br	Tipo de base de dados
 db user	setup	pt-br	Usuário da base de dados
+default	setup	pt-br	padrão recomendado
 default file system space per user/group ?	setup	pt-br	Cota padrão por usuário/grupo ?
 delete	setup	pt-br	Remover
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	pt-br	Remover todas as contas SQL, grupos, regras de acesso e preferências existentes? (Normalmente isso não é necessário - seus dados serão perdidos)

@@ -31,7 +31,7 @@ before current date	calendar	sk	Pred súèasným dátumom
 before the event	calendar	sk	pred udalos»ou
 birthday	calendar	sk	Narodeniny
 busy	calendar	sk	zaneprázdnený
-by	calendar	sk	s
+by	calendar	sk	(kým)
 calendar event	calendar	sk	Udalos» v kalendári
 calendar holiday management	admin	sk	Správa sviatkov v  kalendári
 calendar menu	calendar	sk	Menu Kalendára
@@ -57,12 +57,12 @@ daily	calendar	sk	Denne
 days	calendar	sk	dni
 days of the week for a weekly repeated event	calendar	sk	Dni v tý¾dni pre tý¾denne sa opakujúce udalosti
 days repeated	calendar	sk	dní sa opakuje
-dayview	calendar	sk	Náhµad dòa
-default appointment length (in minutes)	calendar	sk	predvolená då¾ka udalostí (v minútach)
+dayview	calendar	sk	Denný pohµad
+default appointment length (in minutes)	calendar	sk	Predvolená då¾ka udalostí (v minútach)
 default calendar filter	calendar	sk	Predvolený filter kalendára
 default calendar view	calendar	sk	Predvolený pohµad na kalendár
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sk	Predvolená då¾ka novovytvorených udalostí, v minútach.
-default week view	calendar	sk	predvolený tý¾denný pohµad
+default week view	calendar	sk	Predvolený tý¾denný pohµad
 defines the size in minutes of the lines in the day view.	calendar	sk	Definuje, koµkým minútam zodpovedá jeden riadok v dennom pohµade.
 delete series	calendar	sk	Zmaza» sériu
 delete this alarm	calendar	sk	Zmaza» túto pripomienku
@@ -173,6 +173,7 @@ no filter	calendar	sk	®iadny Filter
 no matches found	calendar	sk	Nena¹li sa ¾iadne záznamy
 no response	calendar	sk	®iadna odozva
 non blocking	calendar	sk	neblokujúce
+not	calendar	sk	nie
 notification messages for added events	calendar	sk	Tvar správy pre nové udalosti
 notification messages for canceled events	calendar	sk	Tvar správy pri zru¹ení udalosti
 notification messages for disinvited participants	calendar	sk	Tvar správy pre úèastníkov so zru¹ením pozvánky
@@ -245,6 +246,7 @@ show list of upcoming events	calendar	sk	Zobraz zoznam nadchádzajúcich udalostí
 show this month	calendar	sk	uká¾ tento mesiac
 show this week	calendar	sk	uká¾ tento tý¾deò
 single event	calendar	sk	samostatná udalos»
+site configuration	calendar	sk	Nastavenia Stránky
 start	calendar	sk	Zaèiatok
 start date/time	calendar	sk	Dátum/èas zaèiatku
 startdate / -time	calendar	sk	Dátum/èas zaèiatku
@@ -293,8 +295,8 @@ which events do you want to see when you enter the calendar.	calendar	sk	Aké uda
 which of calendar view do you want to see, when you start calendar ?	calendar	sk	Aký pohµad chcete vidie» pri spustení kalendára?
 whole day	calendar	sk	celý deò
 wk	calendar	sk	Tý¾
-work day ends on	calendar	sk	Pracovný deò zaèína
-work day starts on	calendar	sk	Pracovný deò konèí
+work day ends on	calendar	sk	Pracovný deò konèí o
+work day starts on	calendar	sk	Pracovný deò zaèína o
 yearly	calendar	sk	Roène
 yearview	calendar	sk	Roèný pohµad
 you can either set a year or a occurence, not both !!!	calendar	sk	Mô¾ete zada» buï rok alebo výskyt, ale nie obidvoje !!!

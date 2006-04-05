@@ -190,6 +190,7 @@ enter your smtp server hostname or ip address	admin	pt-br	Digite o endereço de s
 enter your smtp server port	admin	pt-br	Digite a porta de seu servidor SMTP
 error canceling timer, maybe there's none set !!!	admin	pt-br	Erro cancelando timer, possivelmente nenhum está configurado !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	pt-br	Erro configurando timer, sintaxe errada ou talvez já exista um sendo executado !!!
+error! no appname found	admin	pt-br	Erro: Nome de aplicativo não encontrado
 error: %1 not found or other error !!!	admin	pt-br	Erro: %1 não encrontrado ou outro erro não definido !!!
 expires	admin	pt-br	Expira
 explanation of ldapman	admin	pt-br	Até o momento, este módulo foi testado para POSTFIX, LDAP, Courier-IMAP e precisa dos esquemas CORE e QMAIL (OID7914). Mais detalhes, sobre como usar e configurar este sistema, pode ser encontrato no arquivo README.ldapman na pasta doc de ADMIN.
@@ -397,6 +398,7 @@ top	admin	pt-br	topo
 total records	admin	pt-br	Total de registros
 trust level	admin	pt-br	Nível de confiança
 trust relationship	admin	pt-br	Relação de confiança
+type '%1' already exists !!!	admin	pt-br	tipo '%1' já existe !!
 type of customfield	admin	pt-br	Tipo do campo personalizado
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pt-br	No Windows você precisa instalar o asyncservide %1manualmente%2 ou usar o modo fallback. Fallback significa que os trabalhos serão verificados somente após cada visualização de página!!!
 use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de sessão
@@ -425,6 +427,7 @@ would you like to show each application's upgrade status ?	admin	pt-br	Deseja ex
 xml-rpc	admin	pt-br	XML-RPC
 you have entered an invalid expiration date	admin	pt-br	A data de expiração digitada é inválida
 you have to enter a name, to create a new field!!!	admin	pt-br	Você precisa informar um nome para criar um novo campo!!!
+you have to enter a name, to create a new type!!!	admin	pt-br	Você precisa informar um novo para criar um novo tipo!!!
 you must add at least 1 permission or group to this account	admin	pt-br	Você deve adicionar no mínimo uma permissão ou grupo para esta conta
 you must enter a group name.	admin	pt-br	Você deve digitar um nome de grupo.
 you must enter a lastname	admin	pt-br	Você deve digitar um sobrenome

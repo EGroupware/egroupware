@@ -1,6 +1,6 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
-%1 records imported	calendar	pt-br	%1 registros importados
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt-br	%1 registros lidos (não importados ainda. Você deve voltar e desmarcar Testar Importação)
+%1 records imported	calendar	pt-br	%1 registro(s) importado(s)
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar "Testar Importação")
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pt-br	<b>Atenção</b>: A Agenda de Eventos usa os feriados de seu país, que está configurado como %1. Você pode alterá-lo em %2.<br/>Feriados são %3 automaticamente instalados de %4. Você pode alterar isso em %5.
 a non blocking event will not conflict with other events	calendar	pt-br	Um evento não bloqueador não irá conflitar com outros eventos
 accept or reject an invitation	calendar	pt-br	Aceitar ou rejeitar um convite
@@ -124,6 +124,7 @@ fullname of person to notify	calendar	pt-br	Nome completo da pessoa a ser notifi
 general	calendar	pt-br	Geral
 global public and group public	calendar	pt-br	Público global e Grupo público
 global public only	calendar	pt-br	Público global somente
+group invitation	calendar	pt-br	Convite de grupo
 group planner	calendar	pt-br	Planejamento do Grupo
 group public only	calendar	pt-br	Grupo público somente
 groupmember(s) %1 not included, because you have no access.	calendar	pt-br	Membro(s) %1 não incluído(s), pois você não tem acesso.

@@ -35,8 +35,8 @@ how many of the resources are useable?	resources	sk	Koµko zdrojov je pou¾íteµnýc
 how many of them are useable?	resources	sk	Koµko z nich je pou¾iteµných?
 how many of this resource are usable	resources	sk	Koµko kusov tohto zdroja je pou¾iteµných
 how many of this resource exists	resources	sk	Koµko kusov tohto zdroja existuje
-implies booking permission	resources	sk	implikuje rezervaèné právo
-implies read permission	resources	sk	implikuje právo èítania
+implies booking permission	resources	sk	z toho automaticky vyplýva aj rezervaèné právo
+implies read permission	resources	sk	z toho automaticky vyplýva aj právo na èítanie
 information about storage	resources	sk	Informácie o sklade
 informations about the location of resource	resources	sk	Informácie o umiestnení zdroja
 inventory number	resources	sk	Inventárne èíslo
@@ -63,8 +63,8 @@ prizeing information for booking or buying	resources	sk	Cenník rezervácií a náku
 quantity	resources	sk	Mno¾stvo
 quantity of resource	resources	sk	Poèet kusov zdroja
 quantity:	resources	sk	Mno¾stvo:
-read calendar permissions	resources	sk	Naèíta» prístupové práva Kalendára
-read permissions	resources	sk	Naèíta» práva
+read calendar permissions	resources	sk	Právo prezera» Kalendár
+read permissions	resources	sk	Právo na èítanie
 related links	resources	sk	Súvisiace odkazy
 resources	common	sk	zdroje
 resources list	resources	sk	zoznam zdrojov

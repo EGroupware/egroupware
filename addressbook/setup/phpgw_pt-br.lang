@@ -46,6 +46,7 @@ company name	common	pt-br	Nome da empresa
 configuration	common	pt-br	Configuração
 contact	common	pt-br	Contato
 contact application	admin	pt-br	Aplicação de Contatos
+contact deleted !!!	addressbook	pt-br	Contato removido !!
 contact saved	addressbook	pt-br	Contato salvo
 contact settings	admin	pt-br	Preferências de Contatos
 copied by %1, from record #%2.	addressbook	pt-br	Copiado por %1, do registro #%2.
@@ -109,6 +110,7 @@ import from outlook	addressbook	pt-br	Importar do Outlook
 import multiple vcard	addressbook	pt-br	Importar múltiplo VCard
 import next set	addressbook	pt-br	Importar próximo conjunto
 import_instructions	addressbook	pt-br	No Netscape, abra o Catálogo de Endereços e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do format LDIF.<p> Ou, no Outlook, selecione a sua pastas de contatos, selecione <b>Importar e Exportar...</b> do menu <b>Arquivo</b> e exporte seus contatos para um arquivo separado por vírgulas (CSV). Ou no Palmdesktop 4.0 ou superior, vá para seu catálogo de endereços e selecione <b>Exportar</b> do menu <b>Arquivo</b>. O arquivo exportado será do tipo VCard.
+income	addressbook	pt-br	Renda
 international	addressbook	pt-br	Internacional
 isdn phone	addressbook	pt-br	Teleone ISDN
 label	addressbook	pt-br	Comentário
