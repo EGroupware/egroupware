@@ -2045,28 +2045,28 @@
 		 * gets an eGW conformat referer from $_SERVER['HTTP_REFERER'], suitable for direct use in the link function
 		 *
 		 * @param string $default='' default to use if referer is not set by webserver or not determinable
+		 * @param string $referer='' referer string to use, default ('') use $_SERVER['HTTP_REFERER']
 		 * @return string
 		 */
-		function get_referer($default='')
+		function get_referer($default='',$referer='')
 		{
-			$referer = $_SERVER['HTTP_REFERER'];
+			if (!$referer) $referer = $_SERVER['HTTP_REFERER'];
 			
 			$webserver_url = $GLOBALS['egw_info']['server']['webserver_url'];
-			if (empty($webserver_url) || $webserver_url == '/')	// fix for eGW installed in the docroot
+			if (empty($webserver_url) || $webserver_url{0} == '/')	// url is just a path
 			{
 				$referer = preg_replace('/^https?:\/\/[^\/]+/','',$referer);	// removing the domain part
 			}
-			else
+			if (strlen($webserver_url) > 1)
 			{
-				$parts = explode($webserver_url,$referer);
-				$referer = array_pop($parts);
+				list(,$referer) = explode($webserver_url,$referer,2);
 			}
 			$referer = str_replace('/etemplate/process_exec.php','/index.php',$referer);
 
 			if (empty($referer)) $referer = $default;
 			
 			return $referer;
-		}	
+		}
 
 		// some depricated functions for the migration
 		function phpgw_exit($call_footer = False)
