@@ -205,6 +205,10 @@ class socontacts
 	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
  		//echo 'socontacts::search->criteria:'; _debug_array($criteria);
+ 		// we can only deal with one category atm.
+ 		$criteria['cat_id'] = $criteria['cat_id'][0];
+ 		if (empty($criteria['cat_id'])) unset($criteria['cat_id']);
+ 		
 		// We just want to deal with generalized vars, to simpyfie porting of this code to so_sql later...
 		$this->main_id = $this->somain->contacts_id;
 

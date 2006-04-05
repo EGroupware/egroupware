@@ -299,6 +299,7 @@ class uicontacts extends bocontacts
 			$GLOBALS['egw']->common->egw_exit();
 		}
 		
+		$content['advs']['msg'] = lang('Please select only one category');
 		// This is no fun yet, as we dont have a sortorder in prefs now, AND as we are not able to sort within cf.
 // 		$prefs = $GLOBALS['egw']->preferences->read_repository();
 // 		foreach($prefs['addressbook'] as $key => $value)

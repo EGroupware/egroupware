@@ -79,9 +79,9 @@
 			$tpl =& new etemplate;
 			$tpl->init('*** generated advanced search widget','','',0,'',0,0);	// make an empty template
 
-			if($extension_data['msg'])
+			if($extension_data['message'])
 			{
-				$tpl->add_child($tpl,$msg = $tpl->empty_cell('label','msg',array(
+				$tpl->add_child($tpl,$message = $tpl->empty_cell('label','message',array(
 					'no_lang' => true,
 				)));
 			}
@@ -239,7 +239,7 @@
 					if($extension_data['actions'][$action]['type'] == 'button')
 					{
 						$result = $GLOBALS['egw']->session->appsession('advanced_search_result',$GLOBALS['egw_info']['flags']['currentapp']);
-						$extension_data['msg'] = ExecMethod2($extension_data['actions'][$action]['method'],$result);
+						$extension_data['message'] = ExecMethod2($extension_data['actions'][$action]['method'],$result);
 					}
 				}
 			}
@@ -251,7 +251,7 @@
 					if($extension_data['row_actions'][$action]['type'] == 'button')
 					{
 						$result = $GLOBALS['egw']->session->appsession('advanced_search_result',$GLOBALS['egw_info']['flags']['currentapp']);
-						$extension_data['msg'] = ExecMethod2($extension_data['row_actions'][$action]['method'],key($id));
+						$extension_data['message'] = ExecMethod2($extension_data['row_actions'][$action]['method'],key($id));
 					}
 				}
 			}
