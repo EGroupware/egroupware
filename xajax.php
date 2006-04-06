@@ -87,6 +87,9 @@
 				);
 				error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$arg0', menuaction='$_GET[menuaction]'");
 				break;
+			case 'etemplate':	// eg. ajax code in an eTemplate widget
+				$arg0 = ($appName = 'etemplate').'.'.$className.'.'.$functionName;
+				break;
 		}
 		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
 			!preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$arg0))
