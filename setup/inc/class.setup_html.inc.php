@@ -69,7 +69,7 @@
 			}
 
 			$GLOBALS['header_template']->set_var('domain','');
-
+			
 			$setting = get_var('setting',Array('POST'));
 			while($setting && list($k,$v) = @each($setting))
 			{
@@ -164,6 +164,18 @@
 				'main_menu'     => lang('Setup Main Menu'),
 				'user_login'    => lang('Back to user login')
 			));
+
+			// manual / help link to the install manual on egroupware.org
+			$manual_remote_egw_url = 'http://egroupware.org/egroupware';
+			$url_parts = explode('/',$_SERVER['PHP_SELF']);
+			$script = array_pop($url_parts);
+			$lang = get_var('ConfigLang',Array('POST','COOKIE'));
+			$url = $manual_remote_egw_url.'/manual/index.php?referer='.urlencode($manual_remote_egw_url.'/setup/'.$script).
+				($lang ? '&lang='.urlencode($lang) : '');
+			$GLOBALS['setup_tpl']->set_var('manual','<a href="'.$url.'" target="manual" onclick="'.
+				"window.open('$url','manual','width=800,height=600,scrollbars=yes,resizable=yes'); return false;".'">'.
+				htmlspecialchars(lang('Manual / help')).'</a>');
+
 			$GLOBALS['setup_tpl']->pparse('out','T_head');
 			/* $setup_tpl->set_var('T_head',''); */
 		}

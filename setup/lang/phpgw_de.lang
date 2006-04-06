@@ -276,6 +276,7 @@ mail server protocol	setup	de	Mail Server Protokol
 make sure that your database is created and the account permissions are set	setup	de	Stellen Sie sicher, dass Ihre Datenbank erstellt und die Benutzerrechte gesetzt wurden
 manage applications	setup	de	Anwendungen verwalten
 manage languages	setup	de	Sprachen verwalten
+manual / help	setup	de	Handbuch / Hilfe
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	de	max_execution_time (maximale Ausführungszeit eines Skripts) ist auf weniger als 30 (Sekunden) gesetzt: eGroupWare benötigt teilweise längere Ausführungszeiten. Sie müssen mit gelegentlichen Fehlern rechnen.
 maximum account id (e.g. 65535 or 1000000)	setup	de	Maximum für Benutzer-ID (z.B. 65535 oder 1000000)
 may be broken	setup	de	kann kaput sein

@@ -276,6 +276,7 @@ mail server protocol	setup	en	Mail server protocol
 make sure that your database is created and the account permissions are set	setup	en	Make sure that your database is created and the account permissions are set
 manage applications	setup	en	Manage Applications
 manage languages	setup	en	Manage Languages
+manual / help	setup	en	Manual / help
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	en	max_execution_time is set to less than 30 (seconds): eGroupWare sometimes needs a higher execution_time, expect occasional failures
 maximum account id (e.g. 65535 or 1000000)	setup	en	Maximum account id (e.g. 65535 or 1000000)
 may be broken	setup	en	may be broken

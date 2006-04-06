@@ -110,6 +110,12 @@
 									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{logoutbutton}</td>
 								</tr>
 <!-- END loged_in -->
+								<tr class="divSideboxEntry">
+									<td colspan="2" class="textSidebox">&nbsp;</td>
+								</tr>
+								<tr class="divSideboxEntry">
+									<td width="20" align="center" valign="middle" class="textSidebox"><img src="../phpgwapi/templates/idots/images/orange-ball.png" alt="ball" /></td><td class="textSidebox">{manual}</td>
+								</tr>
 							</table>
 						</div>
 					</div>
