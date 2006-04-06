@@ -393,6 +393,10 @@
 			}
 			$GLOBALS['egw']->hooks->register_all_hooks();
 			
+			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			{
+				$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
+			}
 			$GLOBALS['egw']->redirect_link('/admin/index.php');
 		}
 	}
