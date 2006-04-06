@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	de	%1 - %2 von %3 Benutzerkonten
 %1 - %2 of %3 user groups	admin	de	%1 - %2 von %3 Benutzergruppen
+%1 acl records of not (longer) existing accounts deleted.	admin	de	%1 ACL Einträge von nicht (mehr) existierenden Accounts gelöscht.
 %1 not found or not executable !!!	admin	de	%1 nicht gefunden oder nicht ausführbar!!!
 (default no, leave it off if you dont use it)	admin	de	(Vorgabe Nein, ausgeschaltet lassen, wenn nicht benützt)
 (stored password will not be shown here)	admin	de	(Gespeichertes Passwort wird hier nicht angezeigt)
@@ -47,6 +48,8 @@ allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung
 alternate email address	admin	de	Alternative Emailadresse
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei Sitzungen anzeigen nicht angezeigt)
+anonymous user does not exist!	admin	de	Anonymer Benutzer existiert NICHT!
+anonymous user has no run-rights for the application!	admin	de	Anonymer Benutzer hat KEINE Ausführungsrechte für die Anwendung!
 appearance	admin	de	Aussehen
 application	admin	de	Anwendung
 application name	admin	de	Name der Anwendung
@@ -93,6 +96,7 @@ country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
 creates a new field	admin	de	erstellt ein neues Feld
 crontab only (recomended)	admin	de	nur Crontab (empfohlen)
+custom fields	admin	de	Benutzerdefinierte Felder
 cyrus imap server	admin	de	Cyrus IMAP Server
 data	admin	de	Daten
 day	admin	de	Tag
@@ -188,10 +192,12 @@ enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder
 enter your smtp server port	admin	de	SMTP-Server Port
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Testjobs, eventuell läuft gar keiner!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Testjobs, falsche Syntax oder es läuft schon einer!!!
+error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!!!
 expires	admin	de	abgelaufen
 explanation of ldapman	admin	de	Dieses Modul ist derzeit nur für folgende Konfiguration getestet: Postfix, LDAP, Courier-Imap, Procmail und erfordert die Schemas: core und qmail(OID 7914). Weitere Konfigurationshinweise sind im README.ldapman im DOC Verzeichnis des Moduls ADMIN zu finden.
 fallback (after each pageview)	admin	de	Ausweichmöglichkeit (nach jedem Seitenaufbau)
+field '%1' already exists !!!	admin	de	Feld '%1' existiert bereits !!!
 file space	admin	de	Dateiraum
 file space must be an integer	admin	de	Speicherplatz muss eine Zahl sein
 find and register all application hooks	admin	de	Suchen und registrieren der "Hooks" aller Anwendungen
@@ -199,7 +205,7 @@ for the times above	admin	de	für die darüber angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
 force selectbox	admin	de	Auswahl erzwingen
 forward also to	admin	de	Zusätzlich weiterleiten an
-forward email's to	admin	de	Email's weiterleiten an
+forward emails to	admin	de	Emails weiterleiten an
 forward only	admin	de	Nur weiterleiten
 global categories	common	de	Globale Kategorien
 group ?	admin	de	Gruppe ?
@@ -269,6 +275,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer ID (z.B
 minute	admin	de	Minute
 mode	admin	de	Modus
 month	admin	de	Monat
+name must not be empty !!!	admin	de	Name darf nicht leer sein !!!
 new group name	admin	de	Neuer Gruppenname
 new name	admin	de	neuer Name
 new password [ leave blank for no change ]	admin	de	Neues Passwort [ Feld leerlassen, wenn das Passwort nicht geändert werden soll ]
@@ -284,6 +291,7 @@ no permission to add users	admin	de	Sie haben keine ausreichenden Rechte eine Be
 no permission to create groups	admin	de	Sie haben keine ausreichenden Rechte um eine Gruppe zu erstellen
 note: ssl available only if php is compiled with curl support	admin	de	Notiz: SSL ist nur verfügbar, wenn PHP mit CURL-Unterstützung gebaut wurde
 number of row for a multiline inputfield or line of a multi-select-box	admin	de	Anzahl der Zeilen in einem mehrzeiligen Feld oder eine multi-select-box
+order	admin	de	Reihenfolge
 outbound	admin	de	ausgehend
 passthrough	admin	de	durchgehend
 password for smtp-authentication	admin	de	Passwort für SMTP Authentifizierung
@@ -292,6 +300,7 @@ peer server list	admin	de	Liste der Server im Verbund
 peer servers	admin	de	Server-Verbund
 percent of users that logged out	admin	de	Prozent der Benutzer, die sich korrekt abgemeldet haben
 percent this user has logged out	admin	de	Prozentsatz wie oft sich dieser Benutzer abgemeldet hat
+permission denied	admin	de	Zugriff verweigert
 permissions	admin	de	Zugriffsrechte
 permissions this group has	admin	de	Zugriffsrechte für diese Gruppe
 phpinfo	admin	de	PHP-Informationen
@@ -390,6 +399,7 @@ top	admin	de	oben
 total records	admin	de	Anzahl Datensätze insgesamt
 trust level	admin	de	Grad des Vertrauens
 trust relationship	admin	de	Vertrauensverhältnis
+type '%1' already exists !!!	admin	de	Typ '%1' existiert bereits !!!
 type of customfield	admin	de	Typ des Benutzerdefinierten Feldes
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	de	Unter Windows muß der asynchrone Service %1von Hand%2 installiert werden oder es wird nur die Ausweichmöglichkeit benutzt. Bei der Ausweichmöglichkeit werden die Jobs nur nach jedem Seitenaufbau überprüft!!!
 use cookies to pass sessionid	admin	de	SitzungsId in einem Cookie speichern
@@ -409,13 +419,15 @@ view sessions	admin	de	Sitzungen anzeigen
 view this user	admin	de	Diesen Benutzer anzeigen
 view user account	admin	de	Benutzerkonto anzeigen
 who would you like to transfer all records owned by the deleted user to?	admin	de	Wem sollen alle Datensätze, die dem zu löschenden Benutzer gehören, übertragen werden?
-would you like egroupware to cache the egw info array ?	admin	de	Soll eGroupWare das egw info Array cachen ?
+would you like egroupware to cache the egw info array ?	admin	de	Soll eGroupWare das egw_info Array cachen ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	de	Soll eGroupWare prüfen ob eine neue Version vorhanden ist,<br> wenn sich ein Administrator anmeldet ?
 would you like egroupware to check for new application versions when admins login ?	admin	de	Soll eGroupWare auf neue Versionen der Anwendungen prüfen, wenn sich ein Administrator anmeldet ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	de	Sollen neue Sprachdateien automatisch gelanden werden (beim Login) ?
 would you like to show each application's upgrade status ?	admin	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 xml-rpc	admin	de	XML-RPC
 you have entered an invalid expiration date	admin	de	Sie haben ein ungültiges Ablaufdatum angegeben
+you have to enter a name, to create a new field!!!	admin	de	Sie müssen einen Namen angeben um ein neues Feld anzulegen!!!
+you have to enter a name, to create a new type!!!	admin	de	Sie müssen einen Namen angeben um einen neuen Typ anzulegen!!!
 you must add at least 1 permission or group to this account	admin	de	Sie müssen mindestens ein Zugriffsrecht oder eine Gruppe für diesen Benutzer angeben
 you must enter a group name.	admin	de	Sie müssen einen Gruppennamen angeben.
 you must enter a lastname	admin	de	Sie müssen einen Nachname angeben
