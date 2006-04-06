@@ -173,8 +173,10 @@
 
 			$vars = $t->get_undefined('body');
 
-			$GLOBALS['egw']->hooks->single('config',$appname);
-
+			if ($GLOBALS['egw']->hooks->single('config',$appname))	// reload the config-values, they might have changed
+			{
+				$c->read_repository();
+			}
 			foreach($vars as $value)
 			{
 				$valarray = explode('_',$value);
