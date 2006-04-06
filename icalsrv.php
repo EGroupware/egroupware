@@ -10,7 +10,7 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.33NGb2 first version for use with virtual calendars
+   * @version 0.9.33NG-a4 first version for use with virtual calendars
    * @date 20060329
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * (see: @url http://www.egroupware.org  )
@@ -59,7 +59,7 @@ $GLOBALS['egw_info']['flags'] =  array(
 									   'noapi'              => True
 									   );
 
-$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
+#$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
 include('./header.inc.php');
 include ('./phpgwapi/inc/functions.inc.php');
 
