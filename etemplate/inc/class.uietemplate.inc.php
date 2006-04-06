@@ -598,7 +598,7 @@
 				}
 				$rows[".$row"] .= $this->html->formatOptions($height,'height');
 				list($cl) = explode(',',$class);
-				if ($cl == '@' || strstr($cl,'$') !== false)
+				if ($cl == '@' || $cl && strstr($cl,'$') !== false)
 				{
 					$cl = $this->expand_name($cl,0,$r,$content['.c'],$content['.row'],$content);
 				}
@@ -745,6 +745,8 @@
 		 */
 		function form_name($cname,$name)
 		{
+			if(is_object($name)) return '';
+
 			$name_parts = explode('[',str_replace(']','',$name));
 			if (!empty($cname))
 			{
@@ -808,7 +810,7 @@
 			{
 				$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && !strstr($cell['size'],','))
+			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && $cell['size'] && !strstr($cell['size'],','))
 			{
 				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
@@ -920,8 +922,8 @@
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br($this->html->htmlspecialchars($value));
 					if ($activate_links) $value = $this->html->activate_links($value);
-					if ($value != '' && strstr($style,'b')) $value = $this->html->bold($value);
-					if ($value != '' && strstr($style,'i')) $value = $this->html->italic($value);
+					if ($value != '' && $style && strstr($style,'b')) $value = $this->html->bold($value);
+					if ($value != '' && $style && strstr($style,'i')) $value = $this->html->italic($value);
 					$html .= $value;
 					if ($help)
 					{
@@ -1512,7 +1514,7 @@
 					$label = lang($label);
 				}
 				$accesskey = false;
-				if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' && $form_name != '' &&
+				if (($accesskey = $label && strstr($label,'&')) && $accesskey[1] != ' ' && $form_name != '' &&
 						(($pos = strpos($accesskey,';')) === False || $pos > 5))
 				{
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
@@ -1523,7 +1525,7 @@
 					$label = $this->html->label($label,$label_for ? $this->form_name($cname,$label_for) : 
 						$form_name.($set_val?"[$set_val]":''),$accesskey);
 				}
-				if ($type == 'radio' || $type == 'checkbox' || strstr($label,'%s'))	// default for radio is label after the button
+				if ($type == 'radio' || $type == 'checkbox' || $label && strstr($label,'%s'))	// default for radio is label after the button
 				{
 					$html = strstr($label,'%s') ? str_replace('%s',$html,$label) : $html.' '.$label;
 				}
@@ -1603,6 +1605,12 @@
 				$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
 				$on = str_replace($matches[0],'confirm(\''.addslashes($question).'\')',$on);
 				//$on = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$on);
+			}
+			// replace xajax calls to code in widgets, with the "etemplate" handler,
+			// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
+			if (strstr($on,"xajax_doXMLHTTP('etemplate."))
+			{
+				$on = preg_replace("/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/",'xajax_doXMLHTTP(\''.$GLOBALS['egw_info']['flags']['currentapp'].'.\\1.etemplate\'',$on);
 			}
 			return $on;
 		}
