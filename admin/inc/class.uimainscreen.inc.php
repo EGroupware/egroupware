@@ -24,9 +24,9 @@
 		{
 
 			$html =& CreateObject('phpgwapi.html');
-			$section     = addslashes($_POST['section']);
-			$select_lang = addslashes($_POST['select_lang']);
-			$message     = addslashes($_POST['message']);
+			$section     = $_POST['section'];
+			$select_lang = $_POST['select_lang'];
+			$message     = get_magic_quotes_gpc() ? stripslashes($_POST['message']) : $_POST['message'];
 
 			$acl_ok = array();
 			if (!$GLOBALS['egw']->acl->check('mainscreen_message_access',1,'admin'))
@@ -83,7 +83,7 @@
 				 echo parse_navbar();
 					
 				 
-				 $GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
+				$GLOBALS['egw']->template->set_var('form_action',$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index'));
 				$GLOBALS['egw']->template->set_var('tr_color',$GLOBALS['egw_info']['theme']['th_bg']);
 				$GLOBALS['egw']->template->set_var('value','&nbsp;');
 				$GLOBALS['egw']->template->fp('rows','row_2',True);
@@ -129,12 +129,12 @@
 				
 				if($_POST['htmlarea'])
 				{
-					 $text_or_htmlarea=$html->htmlarea('message',stripslashes($current_message));
+					 $text_or_htmlarea=$html->htmlarea('message',$html->htmlspecialchars($current_message));
 					 $htmlarea_button='<input type="submit" name="no-htmlarea" onclick="self.location.href=\''.$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('disable WYSIWYG-editor').'">';
 				}
 				else
 				{
-					 $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' . stripslashes($current_message) . '</textarea>';
+					 $text_or_htmlarea='<textarea name="message" style="width:100%; min-width:350px; height:300px;" wrap="virtual">' . $html->htmlspecialchars($current_message) . '</textarea>';
 					 $htmlarea_button='<input type="submit" name="htmlarea" onclick="self.location.href=\''.$GLOBALS['egw']->link('/index.php','menuaction=admin.uimainscreen.index&htmlarea=true').'\'" value="'.lang('activate WYSIWYG-editor').'">';
 
 				}			   
