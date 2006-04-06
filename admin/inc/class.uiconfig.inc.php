@@ -73,11 +73,6 @@
 			$c =& CreateObject('phpgwapi.config',$config_appname);
 			$c->read_repository();
 
-			if ($c->config_data)
-			{
-				$current_config = $c->config_data;
-			}
-
 			if ($_POST['cancel'] || $_POST['submit'] && $GLOBALS['egw']->acl->check('site_config_access',2,'admin'))
 			{
 				$GLOBALS['egw']->redirect($referer);
@@ -92,6 +87,7 @@
 				{
 					if ($config)
 					{
+						$c->config_data[$key] = $config;
 						if($GLOBALS['egw_info']['server']['found_validation_hook'] && function_exists($key))
 						{
 							call_user_func($key,$config);
@@ -100,28 +96,17 @@
 								$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
 								$GLOBALS['config_error'] = False;
 							}
-							else
-							{
-								$c->config_data[$key] = $config;
-							}
-						}
-						else
-						{
-							$c->config_data[$key] = $config;
 						}
 					}
-					else
+					/* don't erase passwords, since we also don't print them */
+					elseif(!ereg('passwd',$key) && !ereg('password',$key) && !ereg('root_pw',$key))
 					{
-						/* don't erase passwords, since we also don't print them */
-						if(!ereg('passwd',$key) && !ereg('password',$key) && !ereg('root_pw',$key))
-						{
-							unset($c->config_data[$key]);
-						}
+						unset($c->config_data[$key]);
 					}
 				}
 				if($GLOBALS['egw_info']['server']['found_validation_hook'] && function_exists('final_validation'))
 				{
-					final_validation($newsettings);
+					final_validation($_POST['newsettings']);
 					if($GLOBALS['config_error'])
 					{
 						$errors .= lang($GLOBALS['config_error']) . '&nbsp;';
@@ -197,13 +182,13 @@
 						}
 						else
 						{
-							$t->set_var($value,$current_config[$newval]);
+							$t->set_var($value,$c->config_data[$newval]);
 						}
 						break;
 					/*
 					case 'checked':
 						$newval = str_replace(' ','_',$newval);
-						if ($current_config[$newval])
+						if ($c->config_data[$newval])
 						{
 							$t->set_var($value,' checked');
 						}
@@ -223,8 +208,8 @@
 							$configs[] = $newvals[$i];
 						}
 						$config = implode('_',$configs);
-						/* echo $config . '=' . $current_config[$config]; */
-						if ($current_config[$config] == $setting)
+						/* echo $config . '=' . $c->config_data[$config]; */
+						if ($c->config_data[$config] == $setting)
 						{
 							$t->set_var($value,' selected');
 						}
@@ -237,7 +222,7 @@
 						$newval = str_replace(' ','_',$newval);
 						if(function_exists($newval))
 						{
-							$t->set_var($value,$newval($current_config));
+							$t->set_var($value,$newval($c->config_data));
 						}
 						else
 						{
