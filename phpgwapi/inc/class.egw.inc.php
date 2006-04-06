@@ -287,12 +287,15 @@
 				Header('Location: https://' . $GLOBALS['egw_info']['server']['hostname'] . $GLOBALS['egw_info']['server']['webserver_url'] . $_SERVER['REQUEST_URI']);
 				exit;
 			}
-			$account_callback = $GLOBALS['egw_info']['flags']['autocreate_session_callback'];
-
 			// check if we have a session, if not try to automatic create one
-			if (!$this->session->verify() &&
-			!($account_callback && function_exists($account_callback) && $account_callback($account) &&
-			($sessionid = $this->session->create($account))))
+			if ($this->session->verify()) return true;
+
+			if (($account_callback = $GLOBALS['egw_info']['flags']['autocreate_session_callback']) && function_exists($account_callback) &&
+				($sessionid = $account_callback($account)) === true)	// $account_call_back returns true, false or a session-id
+			{
+				$sessionid = $this->session->create($account);
+			}
+			if (!$sessionid)
 			{
 				//echo "<p>account_callback='$account_callback', account=".print_r($account,true).", sessionid=$sessionid</p>\n"; exit;
 				// we forward to the same place after the re-login
