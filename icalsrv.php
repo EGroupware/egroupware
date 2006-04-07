@@ -10,8 +10,8 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.33NG-a4 first version for use with virtual calendars
-   * @date 20060329
+   * @version 0.9.34-ng-a4x first version with xmlrpc copied session handling
+   * @date 20060407
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * (see: @url http://www.egroupware.org  )
    *
@@ -34,8 +34,6 @@
    * into a single virtual calendar.
    *
    * @todo make code robust against xss attacke etc.
-   * @todo check that the reqvircal_owner is the same as the logged in user  or ....
-   * @todo add possibly some ACL checking and granting via the vircal definitions
    */
 
   //-------- basic operation configuration variables ----------
@@ -47,21 +45,107 @@ $logdir = false; // set to false for no logging
 #$isdebug = True;
 $isdebug = False;
 
-// add flags array to egw_info
-$GLOBALS['egw_info'] = array('flags' => array(),);
+// icalsrv variant with session setup modeled after xmlrpc.php
 
-// for sure, configure noapi flags
-$GLOBALS['egw_info']['flags'] =  array(
-									   'currentapp'			=> 'login',
-									   'noheader'			=> True,
-									   'nonavbar'			=> True,
-									   'disable_Template_class'	=> True,
-									   'noapi'              => True
-									   );
+$GLOBALS['egw_info'] = array();
+$GLOBALS['egw_info']['flags'] =
+  array(
+		'currentapp'            => 'login',
+		'noheader'              => True,
+		'disable_Template_class' => True
+		);
+include('header.inc.php');
 
-#$GLOBALS['egw_info']['flags']['currentapp'] = 'home';
-include('./header.inc.php');
-include ('./phpgwapi/inc/functions.inc.php');
+// silly for now but who knows...
+$GLOBALS['egw_info']['server']['icalsrv'] = true;
+
+/** Control and status of the icalsrv session setup
+ * @bug icalsrv enabled checking is not yet working...
+ * @var array $icalsrv
+ */
+$icalsrv = array();
+
+// Somehow check if icalsrv is enabled none of the 2 ways works yet..
+// either via 1:
+$icalsrv['enabled'] = isset($GLOBALS['egw_info']['user']['apps']['icalsrv']);
+// or via 2: the configdata
+$c =& CreateObject('phpgwapi.config','icalsrv');
+$c->read_repository();
+$config =& $c->config_data;
+unset($c);
+$icalsrv['enabled'] = $config['icalsrv_enabled'];
+
+// or via 3: force it! Yes this works :-)
+$icalsrv['enabled'] = true;
+
+if(!$icalsrv['enabled']) {
+  fail_exit('IcalSRV not enabled','403');
+ }
+
+// now check if we have a session there (according to cookie and auth)
+// define this function ourselves if not there..
+if(!function_exists('getallheaders')) {
+	function getallheaders(){
+	  settype($headers,'array');
+	  foreach($_SERVER as $h => $v)	{
+		if(ereg('HTTP_(.+)',$h,$hp)){
+		  $headers[$hp[1]] = $v;
+		}
+	  }
+	  return $headers;
+	}
+ }
+$headers = getallheaders();
+$auth_header = $headers['Authorization']
+  ? $headers['Authorization'] : $headers['authorization'];
+if(eregi('Basic *([^ ]*)',$auth_header,$auth))  {
+  list($sessionid,$kp3) = explode(':',base64_decode($auth[1]));
+  //	echo "auth='$auth[1]', sessionid='$sessionid', kp3='$kp3'\n";
+ } else {
+  $sessionid = get_var('sessionid',array('COOKIE','GET'));
+  $kp3 = get_var('kp3',array('COOKIE','GET'));
+ }
+
+if($icalsrv['session_ok'] = $GLOBALS['egw']->session->verify($sessionid,$kp3)){
+  $s_user_id = $GLOBALS['egw_info']['user']['account_id'];
+  // check if the new user is the one from the session
+  $a_user_id = $GLOBALS['egw']->accounts->name2id($_SERVER['PHP_AUTH_USER']);
+  if( !($a_user_id == $s_user_id)){
+	$icalsrv['session_ok'] = false;
+  }
+ } else {
+  if($isdebug)
+	error_log('NO OLD SESSION');
+ }
+
+if (!$icalsrv['session_ok'] and isset($_SERVER['PHP_AUTH_USER'])
+	and isset($_SERVER['PHP_AUTH_PW'])) {
+  $login = $_SERVER['PHP_AUTH_USER'];
+  $domain = 'default';
+  $sess_id = $GLOBALS['egw']->session->create($login.'@'.$domain, $_SERVER['PHP_AUTH_PW'],
+											  'text');
+  if ($sess_id)	{
+	$icalsrv['session_ok'] = true;
+	$GLOBALS['egw_info']['user']['account_id'] = $sess_id->account_id;
+  } 
+ }
+
+if($icalsrv['session_ok']){
+  $icalsrv['authed'] = $GLOBALS['egw']->auth->authenticate($_SERVER['PHP_AUTH_USER'],
+														   $_SERVER['PHP_AUTH_PW']);
+ }
+
+// bad session or bad authentication so please re-authenticate..
+if (!($icalsrv['session_ok'] && $icalsrv['authed'])) {
+  header('WWW-Authenticate: Basic realm="ICal Server"');
+  header('HTTP/1.1 401 Unauthorized');
+  exit;
+ }
+
+// no debug for rest needed atm
+$isdebug =false;
+
+// oke we have a session!
 
 // now set the variables that will control the working mode of icalvircal
 // the defines are in the egwical_resourcehandler sourcefile
@@ -113,8 +197,7 @@ $uid_import_mode = UMM_UID2ID;
 $reimport_missing_elements = true;
 
 
-  //-------- end of basic operation configuration variables ----------
-
+//-------- end of basic operation configuration variables ----------
 
 
 #error_log('_SERVER:' . print_r($_SERVER, true));
@@ -126,7 +209,7 @@ $reqagent = $_SERVER['HTTP_USER_AGENT'];
 
 # maybe later also do something with content_type?
 # if (!empty($_SERVER['CONTENT_TYPE'])) {
-#    if (strpos($_SERVER['CONTENT_TYPE'], 'application/vnd.syncml+xml') !== false) {
+#    if (strpos($_SERVER['CONTENT_TYPE'], 'application/vnd....+xml') !== false) {
 # ical/ics ???
 
 
@@ -219,8 +302,9 @@ if(is_numeric($reqvircal_owner_id)){
   // check if the requested system calender is provided by system
   $cnmsg = 'system calendar [' . $reqvircal_pathname . ']';  
   /**
-   * @todo 1. create somehow the list of available system vircal arstores
-   * note: this should be done via preferences and read repository, but how.... I have to find out
+   * @todo 1. create somehow the list of available system vircal
+   * arstores note: this should be done via preferences and read
+   * repository, but how.... I have to find out
    */
 
   // find system database of (array stored) virtual calendars
@@ -260,8 +344,6 @@ if(! $icalvc->fromArray($vircal_arstore)){
 $icalvc->auth = ':basic';
 
 
-
-
 // check if the virtual calendar demands authentication
 if(strpos($icalvc->auth,'none') !== false){
   // no authentication demanded so continue
@@ -269,24 +351,25 @@ if(strpos($icalvc->auth,'none') !== false){
  } elseif(strpos($icalvc->auth,'basic') !== false){
    //basic http authentication demanded
    //so exit on non authenticated http request
-   if ((!isset($_SERVER['PHP_AUTH_USER']))	||
-	   (!$GLOBALS['egw']->auth->authenticate($_SERVER['PHP_AUTH_USER'],
-											 $_SERVER['PHP_AUTH_PW']))) {
-	 header('WWW-Authenticate: Basic realm="ICal Server"');
-	 header('HTTP/1.1 401 Unauthorized');
-	 exit;
-   }
 
-   // else, use the active basic authentication to set preferences
-   $user_id = $GLOBALS['egw']->accounts->name2id($_SERVER['PHP_AUTH_USER']);
+   //-- As we atm only allow authenticated users the
+   // actions in  the next lines are already done at the begining
+   // of this file --
+//    if ((!isset($_SERVER['PHP_AUTH_USER']))	||
+//  	   (!$GLOBALS['egw']->auth->authenticate($_SERVER['PHP_AUTH_USER'],
+//  											 $_SERVER['PHP_AUTH_PW']))) {
+// 	 if($isdebug)
+// 	   error_log('SESSION IS SETUP, BUT AUTHENTICATE FAILED'.$_SERVER['PHP_AUTH_USER'] );
+//  	 header('WWW-Authenticate: Basic realm="ICal Server"');
+//  	 header('HTTP/1.1 401 Unauthorized');
+//  	 exit;
+//    }
 
-   $GLOBALS['egw']->preferences->account_id = $user_id;
-   $GLOBALS['egw_info']['user']['preferences'] =
-	 $GLOBALS['egw']->preferences->read_repository();
-
-   // NEXT LINE WILL PREVENT THE access of granted calendars and infologs somehow ????
-   $GLOBALS['egw_info']['user']['account_id'] = $user_id;
-   $GLOBALS['egw_info']['user']['account_lid'] = $_SERVER['PHP_AUTH_USER'];
+//    // else, use the active basic authentication to set preferences
+//    $user_id = $GLOBALS['egw']->accounts->name2id($_SERVER['PHP_AUTH_USER']);
+//    $GLOBALS['egw_info']['user']['account_id'] = $user_id;
+//    error_log(' ACCOUNT SETUP FOR'
+// 			 . $GLOBALS['egw_info']['user']['account_id']);
 
 
  } elseif(strpos($icalvc->auth,'ssl') !== false){
