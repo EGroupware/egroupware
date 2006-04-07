@@ -630,14 +630,18 @@ class Horde_SyncML_State {
      */
     function getPreferedContentType($type)
     {
+#        if ($type == 'contacts') {
+#            return 'text/x-vcard';
+#        } elseif ($type == 'notes') {
+#            return 'text/x-vnote';
+#        } elseif ($type == 'tasks') {
+#            return 'text/x-vcalendar';
+#        } elseif ($type == 'calendar') {
+#            return 'text/x-vcalendar';
+#        }
         switch($type) {
         	case 'contacts':
         		return 'text/x-vcard';
-        		break;
-        		
-        	case 'sifcalendar':
-        	case './sifcalendar':
-        		return 'text/x-s4j-sife';
         		break;
         		
         	case 'sifcontacts':

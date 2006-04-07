@@ -157,7 +157,7 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
         // has been authorized. Make sure we have a valid session id.
         if(!empty($_GET['syncml_sessionid'])) {
         	session_id($_GET['syncml_sessionid']);
-	        Horde::logMessage('SyncML['.  session_id() .']: reusing existing session', __FILE__, __LINE__, PEAR_LOG_INFO);
+	        Horde::logMessage('SyncML['.  session_id() .']: reusing existing session', __FILE__, __LINE__, PEAR_LOG_DEBUG);
         } else {
         	#session_id('syncml' . preg_replace('/[^a-zA-Z0-9]/', '', $sourceURI . $sessionID));
         	session_id('syncml-' . md5(uniqid(rand(), true)));
@@ -527,7 +527,6 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 				// we do still have some data to send OR
 				// we should reply to the Sync command
 				if($state->getSyncStatus() >= CLIENT_SYNC_ACKNOWLEDGED && $state->getSyncStatus() < SERVER_SYNC_FINNISHED) {
-					Horde::logMessage('SyncML sending syncdata to client '. CLIENT_SYNC_ACKNOWLEDGED .'/'. SERVER_SYNC_FINNISHED .'/'. $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_INFO);
 					$sync = &new Horde_SyncML_Command_Sync();
 					$this->_currentCmdID = $sync->syncToClient($this->_currentCmdID, $this->_output);
 				}

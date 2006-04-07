@@ -111,16 +111,6 @@ $this->applications['egwcalendarsync'] = array(
     'menu_parent' => 'organizing'
 );
 
-$this->applications['egwsifcalendarsync'] = array(
-    'fileroot' => EGW_SERVER_ROOT.'/syncml/sifcalendar',
-    'webroot' => $this->applications['horde']['webroot'] . '/mnemo',
-    'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
-    'name' => _("Calendar"),
-    'status' => 'active',
-    'provides' => 'sifcalendar',
-    'menu_parent' => 'organizing'
-);
-
 $this->applications['egwtaskssync'] = array(
     'fileroot' => EGW_SERVER_ROOT.'/syncml/tasks',
     'webroot' => $this->applications['horde']['webroot'] . '/mnemo',

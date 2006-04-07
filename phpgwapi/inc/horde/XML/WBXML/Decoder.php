@@ -94,7 +94,10 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
      */
     function getByte($input)
     {
-        return ord($input{$this->_strpos++});
+        $value =  $input{$this->_strpos++};
+        $value =  ord($value);
+        
+        return $value;
     }
 
     /**
@@ -131,7 +134,6 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
     function decode($wbxml)
     {
         $this->_error = false; // reset state
-
         $this->_strpos = 0;
 
         if (empty($this->_ch)) {
@@ -149,7 +151,6 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
         // Containing the value zero (0)
         // The actual DPI is determined after the String Table is read.
         $dpiStruct = $this->getDocumentPublicIdentifier($wbxml);
-
         // Get Charset from 5.6
         // charset = mb_u_int32
         $this->_charset = $this->getCharset($wbxml);
@@ -366,6 +367,7 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
             $size = XML_WBXML::MBUInt32ToInt($input, $this->_strpos);
             // print "opaque of size $size\n"; // @todo remove debug
             $b = substr($input, $this->_strpos, $size);
+            #$b = mb_substr($input, $this->_strpos, $size, 'ISO-8859-1');
             $this->_strpos += $size;
 
             // opaque data inside a <data> element may or may not be
