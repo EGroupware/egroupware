@@ -30,6 +30,18 @@ if($GLOBALS['egw_info']['server']['sessions_type'] == 'db')
 	exit;
 }
 
+if(ini_get('mbstring.func_overload') != 0)
+{
+	error_log('You need to disable mbstring.func_overload for rpc.php.');
+	exit;
+}
+
+if(version_compare(PHP_VERSION, '5.0.0') < 0)
+{
+	error_log('SyncML requires PHP5. Please update to PHP5 if you want to make use of SyncML.');
+	exit;
+}
+
 $config =& CreateObject('phpgwapi.config','syncml');
 $config->read_repository();
 $GLOBALS['config_syncml'] =& $config->config_data;
@@ -92,6 +104,7 @@ $server->authorize();
 if ($input === null) {
     $input = $server->getInput();
 }
+
 $out = $server->getResponse($input, $params);
 
 /* Return the response to the client. */
