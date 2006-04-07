@@ -560,7 +560,7 @@ class Horde_iCalendar {
                     $dates = array();
                     preg_match_all('/,([^,]*)/', ',' . $value, $values);
 
-                    foreach ($values as $value) {
+                    foreach ($values[1] as $value) {
                         if (isset($params['VALUE'])) {
                             if ($params['VALUE'] == 'DATE-TIME') {
                                 $dates[] = $this->_parseDateTime($value);
