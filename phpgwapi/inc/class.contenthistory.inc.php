@@ -77,20 +77,20 @@
 			switch($_action)
 			{
 				case 'modify':
-					$query .= "sync_modified > '".$this->db->to_timestamp($_ts)."' and sync_deleted is null";
+					$query .= "sync_modified > '".$this->db->to_timestamp($_ts)."' and (sync_deleted is null or sync_deleted = '0')";
 					break;
 				case 'delete':
 					$query .= "sync_deleted > '".$this->db->to_timestamp($_ts)."'";
 					break;
 				case 'add':
-					$query .= "sync_added > '".$this->db->to_timestamp($_ts)."' and sync_deleted is null and sync_modified is null ";
+					$query .= "sync_added > '".$this->db->to_timestamp($_ts)."' and (sync_deleted is null or sync_deleted = '0') and (sync_modified is null or sync_modified = '0') ";
 					break;
 				default:
 					// no valid $_action set
 					return array();
 					break;
 			}
-			//Horde::logMessage("SymcML: egwcontactssync $query", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			#Horde::logMessage("SymcML: egwcontactssync $query", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			$this->db->query($query, __LINE__, __FILE__);
 
 			$guidList = array();
@@ -158,7 +158,7 @@
 				'sync_guid'		=> $GLOBALS['egw']->common->generate_uid($_appName, $_id),
 				'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
 			);
-			error_log("$_action $_appName $_id");
+
 			switch($_action)
 			{
 				case 'add':
