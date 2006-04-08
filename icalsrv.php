@@ -10,7 +10,7 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.34-ng-a4x first version with xmlrpc copied session handling
+   * @version 0.9.34-ng-a5x first version with xmlrpc copied session handling
    * @date 20060407
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * (see: @url http://www.egroupware.org  )
@@ -44,6 +44,11 @@ $logdir = false; // set to false for no logging
 // set to true for debug logging to errorlog
 #$isdebug = True;
 $isdebug = False;
+
+/** Disallow users to import in non owned calendars and infologs
+ * @var boolean $disable_nonowner_import
+ */
+$disable_nonowner_import = true;
 
 // icalsrv variant with session setup modeled after xmlrpc.php
 
@@ -142,8 +147,6 @@ if (!($icalsrv['session_ok'] && $icalsrv['authed'])) {
   exit;
  }
 
-// no debug for rest needed atm
-$isdebug =false;
 
 // oke we have a session!
 
@@ -412,7 +415,18 @@ $logmsg = "";
 // oke now process the actual import or export to/from icalvc..
 if ($_SERVER['REQUEST_METHOD'] == 'PUT')  {
   // *** PUT Request so do an Import *************
-  
+ 
+  if($isdebug)
+	error_log('icalsrv.php: importing, by user:' .$GLOBALS['egw_info']['user']['account_id']
+			  . ' for virtual calendar of: ' . $reqvircal_owner_id);
+  // check if importing in not owned calendars is disabled
+  if($reqvircal_owner_id
+	 && ($GLOBALS['egw_info']['user']['account_id'] !== $reqvircal_owner_id)){
+	if($disable_nonowner_import){
+	  error_log('icalsrv.php: importing in non owner calendars currently disabled');
+	  fail_exit('importing in non owner calendars currently disabled', '403');
+	}
+  }
   // I0 read the payload
   $logmsg = 'IMPORTING in '. $importMode . ' mode';
   $fpput = fopen("php://input", "r");
