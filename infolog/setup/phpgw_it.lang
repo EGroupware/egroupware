@@ -3,6 +3,7 @@
 - subprojects from	infolog	it	- Sottoprogetti da
 0%	infolog	it	0%
 10%	infolog	it	10%
+100%	infolog	it	100%
 20%	infolog	it	20%
 30%	infolog	it	30%
 40%	infolog	it	40%
@@ -16,6 +17,7 @@ a short subject for the entry	infolog	it	un breve oggetto per la nota
 abort without deleting	infolog	it	Annulla senza cancellare
 accept	infolog	it	accetta
 action	infolog	it	Azione
+actual date and time	infolog	it	data e ora attuale
 add	infolog	it	Aggiungi
 add a file	infolog	it	Aggiungi File
 add a new entry	infolog	it	Aggiungi una voce
@@ -25,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	it	Aggiungi un sub ToDo, 
 add a new todo	infolog	it	Aggiungi un ToDo
 add file	infolog	it	Aggiungi file
 add sub	infolog	it	Aggiungi Sub
+add timesheet entry	infolog	it	Aggiungi voce foglio ore
 add:	infolog	it	Aggiungi:
 all	infolog	it	Tutto
 all links and attachments	infolog	it	tutti i link links e gli allegati
@@ -38,6 +41,7 @@ billed	infolog	it	fatturato
 both	infolog	it	entrambi
 call	infolog	it	chiamata
 cancel	infolog	it	Annulla
+cancelled	infolog	it	annullato
 categories	infolog	it	Categorie
 category	infolog	it	Categoria
 change the status of an entry, eg. close it	infolog	it	Cambia lo stato di una voce, es. chiudi
@@ -47,6 +51,7 @@ click here to create the link	infolog	it	premi qui per creare un Link
 click here to start the search	infolog	it	premi qui per iniziare la ricerca
 close	infolog	it	Chiudi
 comment	infolog	it	Commento
+completed	infolog	it	Completato
 configuration	infolog	it	Configurazione
 confirm	infolog	it	conferma
 contact	infolog	it	Rubrica
@@ -67,6 +72,8 @@ custom fields, typ and status	common	it	Campi personalizzati, tipi e stati
 custom regarding	infolog	it	Considerazione personale
 custom status for typ	infolog	it	Stato personalizzato per i tipi
 customfields	infolog	it	Customfields
+date completed	infolog	it	Data completamento
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	it	Data completamento (lasciala vuota per averla impostata automaticamento se lo stato è Fatto o Fatturato)
 datecreated	infolog	it	data creazione
 dates, status, access	infolog	it	Date, Stati, Accessi
 days	infolog	it	giorni
@@ -91,6 +98,7 @@ duration	infolog	it	Durata
 each value is a line like <id>[=<label>]	infolog	it	ogni valore è una linea tipo <id>[=<label>]
 edit	infolog	it	Modifica
 edit or create categories for ingolog	infolog	it	Modifica o crea una categoria di IngoLog
+edit rights (full edit rights incl. making someone else responsible!)	infolog	it	diritti di modifica (diritti di modifica completi incluso rendere qualcun'altro responsabile!)
 edit status	infolog	it	Modifica lo Stato
 edit the entry	infolog	it	Modifica una voce
 edit this entry	infolog	it	Modifica questa voce
@@ -110,6 +118,7 @@ fieldseparator	infolog	it	Separatore campi
 finish	infolog	it	finito
 for which types should this field be used	infolog	it	per quali tipo devi usare questo campo
 from	infolog	it	Da
+general	infolog	it	Generale
 high	infolog	it	Alta
 id	infolog	it	Id
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	it	Se non impostato, la linea con ricerca e filtri viene nascosta per meno voci di "massime occorrenze per pagina" (come definito nelle tue preferenze comuni).
@@ -132,6 +141,7 @@ invalid filename	infolog	it	Nome di Campo non valido
 label<br>helptext	infolog	it	Etichetta<br>Testo di Help
 last changed	infolog	it	Ultima modifica
 last modified	infolog	it	Ultima modifica
+leave it empty	infolog	it	lascia vuoto
 leave without saveing the entry	infolog	it	uscire senza salvare la voce
 leaves without saveing	infolog	it	uscire senza salvare
 length<br>rows	infolog	it	Lunghezza<br>Righe
@@ -140,7 +150,8 @@ links	infolog	it	Links
 links of this entry	infolog	it	Links della voce
 list all categories	infolog	it	Elenca tutte le categorie
 list no subs/childs	infolog	it	Non elencare Sub/figli
-longer textual description	infolog	it	lunga descrizione testuale
+location	infolog	it	Localizzazione
+longer textual description	infolog	it	descrizione testuale più lunga
 low	infolog	it	Bassa
 max length of the input [, length of the inputfield (optional)]	infolog	it	massima lunghezza di inserimento [, lunghezza dal campo di inserimento (opzionale)]
 max number of entries to display on the main screen	infolog	it	Numero massimo di voci da visualizzare nella schermata principale
@@ -151,6 +162,7 @@ new name	infolog	it	nuovo nome
 new search	infolog	it	Nuova ricerca
 no - cancel	infolog	it	No - Annulla
 no describtion, links or attachments	infolog	it	nessuna descrizione, collegamenti o allegati
+no details	infolog	it	no dettagli
 no entries found, try again ...	infolog	it	nessun risulato, prova ancora...
 no filter	infolog	it	Nessun Filtro
 no links or attachments	infolog	it	nessun link o allegato
@@ -158,6 +170,7 @@ none	infolog	it	Nessuno
 normal	infolog	it	Normale
 not	infolog	it	non
 not assigned	infolog	it	non assegnato
+not-started	infolog	it	non iniziato
 note	infolog	it	Nota
 number of records to read (%1)	infolog	it	Numero di record da leggere (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	it	numeri di righe per la casella di inserimento multilinea o linee per una select-box multipla
@@ -178,16 +191,21 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	it	percorso lato (web)s
 path to user and group files has to be outside of the webservers document-root!!!	infolog	it	Il path ai file utente e gruppo DEVE ESSERE ESTERNO alla directory principale del webserver!!!
 pattern for search in addressbook	infolog	it	stringa da ricercare nella rubrica
 pattern for search in projects	infolog	it	stringa da ricercare nei progetti
+percent completed	infolog	it	Percentuale completamento
 permission denied	infolog	it	Permesso negato
 phone	infolog	it	Chiamata Telefonica
 phone/email	infolog	it	Telefono/Email
 phonecall	infolog	it	Chiamata Telefonica
+planned	infolog	it	pianificato
 planned time	infolog	it	tempo pianificato
+price	infolog	it	Prezzo
 priority	infolog	it	Priorità
 private	infolog	it	Privato
 project	infolog	it	Progetto
+project settings: price, times	infolog	it	Impostazioni progetto: prezzo, tempi
 re:	infolog	it	Re:
 read one record by passing its id.	infolog	it	Leggi un record fornendo la sua ID
+read rights (default)	infolog	it	diritti di lettura (default)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	it	espressione corretta per indirizzi IP Locali<br>es.^192\.168\.1\.
 remark	infolog	it	Osservazione
 remove this link (not the entry itself)	infolog	it	Rimuovi questo link (non la voce)
@@ -195,8 +213,9 @@ responsible	infolog	it	responsabile
 responsible open	infolog	it	responsabile aperti
 responsible overdue	infolog	it	responsabile scaduti
 responsible upcoming	infolog	it	responsabile imminenti
-responsible user, priority, times	infolog	it	utente responsabile, priorità, tempi
+responsible user, priority	infolog	it	utente responsabile, priorità
 returns a list / search for records.	infolog	it	Restituisce un elenco / cerca record
+rights for the responsible	infolog	it	Diritti del responsabile
 save	infolog	it	Salva
 saves the changes made and leaves	infolog	it	salva i cambiamenti ed esci
 saves this entry	infolog	it	Salva questa voce
@@ -204,7 +223,9 @@ search	infolog	it	Cerca
 search for:	infolog	it	Ricerca:
 select	infolog	it	Seleziona
 select a category for this entry	infolog	it	seleziona una ricerca per questa voce
+select a price	infolog	it	Seleziona un prezzo
 select a priority for this task	infolog	it	seleziona una priorità per questo ToDo
+select a project	infolog	it	Seleziona un progetto
 select a responsible user: a person you want to delegate this task	infolog	it	seleziona una responsabile: una persoa a cui vuoi delegare questo ToDo
 select a typ to edit it's status-values or delete it	infolog	it	seleziona un tipo per modificare il suo stato o cancellarlo
 select an app to search in	infolog	it	Seleziona un'applicazione un cui cercare
@@ -222,11 +243,14 @@ show full usernames	infolog	it	Mostra nomi utente completi
 show in the infolog list	infolog	it	Visualizza nella lista di InfoLog
 show list of upcoming entries	infolog	it	visualizza la lista delle voci imminenti
 show open entries: tasks/calls/notes on main screen	infolog	it	Mostra voci aperte: Compiti/Chiamate/Note sulla videata principale
+show status and percent done separate	infolog	it	Mostra status e percentuale completamento separati
+show ticket id	infolog	it	Mostra ID ticket
 show times	infolog	it	Mostra tempi
 small view	infolog	it	vista ridotta
 start a new search, cancel this link	infolog	it	inizia una nuova ricerca, annulla questo link
 startdate	infolog	it	Data Inizio
 startdate enddate	infolog	it	Data Inizio Data Fine
+startdate for new entries	infolog	it	Data iniziale per nuove voci
 startrecord	infolog	it	Record Iniziale
 status	infolog	it	Stato
 status ...	infolog	it	Stato ...
@@ -243,6 +267,7 @@ til when should the todo or phonecall be finished	infolog	it	esegue fino a quand
 times	infolog	it	Tempi
 to many might exceed your execution-time-limit	infolog	it	troppi potrebbero superare il limite del tempo di esecuzione
 today	infolog	it	Oggi
+todays date	infolog	it	data odierna
 todo	infolog	it	ToDo
 translation	infolog	it	Traduzione
 typ	infolog	it	Tipo

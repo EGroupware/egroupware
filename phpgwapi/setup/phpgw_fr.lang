@@ -1,5 +1,7 @@
 %1 email addresses inserted	common	fr	%1 adresses email ont été insérée(s)
 %1 is not executable by the webserver !!!	common	fr	%1 n'est pas exécutable par le serveur web !!!
+%1 manual	common	fr	%1 manuel
+%1 start	common	fr	% départ
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	fr	%1Choisissez un autre répertoire%2<br />ou rendez %3 écrivable par le serveur web
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	fr	%1eGroupWare%2 est un logiciel de GroupWare multi-utilisateur basé sur les technologies Web et PHP
 (shift-)click or drag to change value	jscalendar	fr	(Shift-)Cliquer ou 'drag' pour changer la valeur
@@ -21,6 +23,7 @@ _remove link...	htmlarea-ContextMenu	fr	_Effacer Lien
 _table properties...	htmlarea-ContextMenu	fr	Propriétés _Table...
 about	common	fr	A propos
 about %1	common	fr	A propos de %1
+about egroupware	common	fr	A propos d'eGroupware
 about the calendar	jscalendar	fr	A propos du Calendrier
 about this editor	htmlarea	fr	A propos de cet éditeur
 access	common	fr	Accès
@@ -35,6 +38,7 @@ active	common	fr	Actif
 add	common	fr	Ajouter
 add %1 category for	common	fr	Ajouter la catégorie %1 pour
 add category	common	fr	Ajouter catégorie
+add shortcut	common	fr	Ajouter raccourci
 add sub	common	fr	Ajouter sous
 addressbook	common	fr	Carnet d'adresses
 admin	common	fr	Admin
@@ -61,6 +65,7 @@ angola	common	fr	ANGOLA
 anguilla	common	fr	ANGUILLA
 antarctica	common	fr	ANTARCTIQUE
 antigua and barbuda	common	fr	ANTIGUE ET BARBADE
+application	common	fr	Application
 apply	common	fr	Appliquer
 april	common	fr	Avril
 are you sure you want to delete these entries ?	common	fr	Etes-vous sûr de vouloir effacer ces entrées ?
@@ -136,6 +141,7 @@ cell properties	htmlarea-TableOperations	fr	Propriétés Cellule...
 cellpadding	tinymce	fr	Cellpadding
 cellspacing	tinymce	fr	Cellspacing
 center	tinymce	fr	Milieu
+centered	common	fr	centré
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
 change	common	fr	Changer
@@ -146,6 +152,11 @@ check installation	common	fr	Vérifier l'installation
 check now	common	fr	Vérifier maintenant
 chile	common	fr	CHILI
 china	common	fr	CHINE
+choose a background color	common	fr	Choisissez une couleur de fond
+choose a background color for the icons	common	fr	Choisissez une couleur de fond pour les icônes
+choose a background image.	common	fr	Choisissez une image de fond
+choose a background style.	common	fr	Choisissez un style de fond
+choose a text color for the icons	common	fr	Choisissez une couleur de texte pour les icônes
 choose directory to move selected folders and files to.	tinymce	fr	Choisissez un répertoire pour y déplacer les fichiers et dossiers séléctionnés
 choose list style type (for ordered lists)	htmlarea-ListType	fr	Choisir le type de style de la liste (Pour les listes ordonnées)
 choose the category	common	fr	Choisir la catégorie
@@ -159,6 +170,7 @@ click	common	fr	Cliquer
 click or mouse over to show menus	common	fr	Cliquer ou passer la souris dessus pour voir les menus
 click or mouse over to show menus?	common	fr	Cliquer ou passer la souris dessus pour voir les menus ?
 close	common	fr	Fermer
+close sidebox	common	fr	Fermer la barre de menu latérale
 cocos (keeling) islands	common	fr	COCOS (KEELING) ISLANDS
 collapsed borders	htmlarea-TableOperations	fr	Bords joints
 colombia	common	fr	COLOMBIE
@@ -206,6 +218,8 @@ decimal numbers	htmlarea-ListType	fr	Nombres décimaux
 decrease indent	htmlarea	fr	Diminuer l'indentation
 default	tinymce	fr	D&eacute;faut
 default category	common	fr	Catégorie par défaut
+default height for the windows	common	fr	Hauteur par défaut de la fenêtre
+default width for the windows	common	fr	largeur par défaut de la fenêtre
 delete	common	fr	Supprimer
 delete cell	htmlarea-TableOperations	fr	Effacer cellule
 delete column	htmlarea-TableOperations	fr	Effacer colonne
@@ -383,6 +397,8 @@ i will open it in a new page.	htmlarea-SpellChecker	fr	Je vais l'ouvrir dans une
 i_nsert row before	htmlarea-ContextMenu	fr	I_nsérer Ligne Avant
 iceland	common	fr	ISLANDE
 iespell not detected. click ok to go to download page.	common	fr	ieSpell non détécté. Cliquez sur Ok pour aller à la page de téléchargement.
+if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée vouslez vous le mettre à jour toutes les secondes ou toutes les minutes?
+if there are some images in the background folder you can choose the one you would like to see.	common	fr	Si il y a des images dans le dossier des fonds, vous pouvez choisir celle que vous voulez voir.
 ignore	htmlarea-SpellChecker	fr	Ignorer
 ignore all	htmlarea-SpellChecker	fr	Ignorer tout
 image description	tinymce	fr	Description de l'image
@@ -522,6 +538,7 @@ message	common	fr	Message
 mexico	common	fr	MEXIQUE
 micronesia, federated states of	common	fr	MICRONESIA, FEDERATED STATES OF
 middle	htmlarea-TableOperations	fr	Milieu
+minute	common	fr	minute
 mkdir failed.	tinymce	fr	Mkdir échoué.
 modify url	htmlarea-ContextMenu	fr	Modifier l'URL
 moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
@@ -605,6 +622,7 @@ open link in a new window	tinymce	fr	Ouvrir le lien dans une nouvelle fen&ecirc;
 open link in the same window	tinymce	fr	Ouvrir le lien dans la même fen&ecirc;tre
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
+open sidebox	common	fr	Ouvrir la barre de menu latérale
 opens this link in a new window	htmlarea-ContextMenu	fr	Ouvrir ce lien dans une nouvelle fenêtre
 ordered list	common	fr	Liste ordonn&eacute;e (num&eacute;ros)
 original	common	fr	Original
@@ -635,6 +653,7 @@ password must have at least %1 characters	common	fr	Le mot de passe doit conteni
 paste	htmlarea-ContextMenu	fr	Coller
 paste as plain text	tinymce	fr	Coller comme du texte simple
 paste from clipboard	htmlarea	fr	Coller depuis la presse-papiers
+paste from word	tinymce	fr	Coller depuis Word
 paste table row after	tinymce	fr	Paste table row after
 paste table row before	tinymce	fr	Paste table row before
 path	htmlarea	fr	Chemin
@@ -674,6 +693,7 @@ portugal	common	fr	PORTUGAL
 position (x/y)	tinymce	fr	Position (X/Y)
 postal	common	fr	Code postal
 powered by egroupware version %1	common	fr	Motorisé par <a href="http://www.egroupware.org">eGroupWare</a> version %1
+powered by phpgroupware version %1	common	fr	Motorisé par eGroupware version %1
 preferences	common	fr	Préférences
 preferences for the idots template set	common	fr	Préférences pour l´application du template idots
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
@@ -698,6 +718,7 @@ refresh	tinymce	fr	Rafraichir
 reject	common	fr	Rejeter
 remove col	tinymce	fr	Supprimer la colonne
 remove selected accounts	common	fr	effacer les comptes sélectionnés
+remove shortcut	common	fr	Effacer le raccourci
 remove the	htmlarea-ContextMenu	fr	Enlever le
 remove this node from the document	htmlarea-ContextMenu	fr	Enlever ce noeud du document
 rename	common	fr	Renommer
@@ -739,6 +760,7 @@ search	common	fr	Chercher
 search %1 '%2'	common	fr	Chercher %1 '%2'
 search or select accounts	common	fr	Chercher ou sélectionner des comptes
 search or select multiple accounts	common	fr	Chercher ou sélectionner des comptes multiples
+second	common	fr	seconde
 section	common	fr	Section
 select	common	fr	Sélectionner
 select all	tinymce	fr	Sélectionner tout
@@ -749,6 +771,8 @@ select group	common	fr	Sélectionner le groupe
 select home email address	common	fr	Sélectionner l'email Maison
 select multiple accounts	common	fr	Sélectionner des comptes multiples
 select one	common	fr	Sélectionner un
+select the default height for the application windows	common	fr	choisissez la hauteur par défaut de la fenêtre d'application
+select the default width for the application windows	common	fr	choisissez la largeur par défaut de la fenêtre d'application
 select user	common	fr	Sélectionner l'utilisateur
 select work email address	common	fr	Sélectionner l'email Bureau
 selection	common	fr	Sélection
@@ -765,15 +789,19 @@ setup main menu	common	fr	Menu principal du Seup
 seychelles	common	fr	SEYCHELLES
 show all	common	fr	Tous les éléments
 show all categorys	common	fr	Voir toutes les catégories
+show clock?	common	fr	Afficher l'horloge?
 show home and logout button in main application bar?	common	fr	Afficher les bouttons Accueil et déconnecter dans la barre d'application principale?
 show locationbar	tinymce	fr	Afficher la barre d'adresse
+show logo's on the desktop.	common	fr	Afficher le logo sur le bureau?
 show menu	common	fr	Voir menu
 show menubar	tinymce	fr	Montrer la barre du menu
 show page generation time	common	fr	Voir le temps de génération de page
 show page generation time on the bottom of the page?	common	fr	Montrer le temps de génération de page au fond de la page?
+show page generation time?	common	fr	Afficher le temps de génération de la page?
 show scrollbars	tinymce	fr	Montrer la barre de d&eacute;filement
 show statusbar	tinymce	fr	Afficher la barre de status
 show the image properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des propriétés de l'image
+show the logo's of egroupware and x-desktop on the desktop.	common	fr	Afficher le logo d'eGroupware et x-destop sur le bureau?
 show the table cell properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau de Cellules
 show the table properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau
 show the table row properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau de Lignes
@@ -806,6 +834,7 @@ start time	common	fr	Heure de début
 start with	common	fr	commence avec
 starting up...	common	fr	Démarrage...
 status	common	fr	Etat
+stretched	common	fr	étiré
 strikethrough	htmlarea	fr	Rayé
 striketrough	tinymce	fr	Barré
 style [css]	htmlarea-TableOperations	fr	Style [CSS]
@@ -852,6 +881,7 @@ this is just a template popup	tinymce	fr	C'est juste un modèle de popup
 this name has been used already	common	fr	Ce nom est déjà utilisé !
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	fr	Ceci annulera les modifications et quittera le correcteur orthographique. Veuillez confirmer SVP.
 thursday	common	fr	Jeudi
+tiled	common	fr	carrelé
 time	common	fr	Heure
 time selection:	jscalendar	fr	Sélection du temps:
 time zone	common	fr	Fuseau horaire
@@ -871,6 +901,7 @@ tonga	common	fr	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fr	Trop d'essais de connexions: %1 pour l'utilisateur '%2', %3 pour l'IP %4
 top	common	fr	Haut
 total	common	fr	Total
+transparant bg for the icons?	common	fr	Fond transparent pour les icones?
 trinidad and tobago	common	fr	TRINIDAD AND TOBAGO
 tuesday	common	fr	Mardi
 tunisia	common	fr	TUNISIE
@@ -897,6 +928,7 @@ unordered list	tinymce	fr	Liste désordonn&eacute;e (puces)
 unset color	htmlarea-TableOperations	fr	Enlever la couleur
 up	tinymce	fr	Haut
 update	common	fr	Insertion
+update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
 upload	common	fr	Upload
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire d'upload n'existe pas ou n'est pas ecrivable par le serveur web
 upload image	htmlarea-UploadImage	fr	Uploader l'Image
@@ -932,12 +964,15 @@ warning!\n renaming or moving folders and files will break existing links in you
 wednesday	common	fr	Mercredi
 welcome	common	fr	Bienvenue
 western sahara	common	fr	SAHARA OUEST
+what color should all the blank space on the desktop have	common	fr	Quelle couleur l'espace vide du bureau doit-il avoir?
+what style would you like the image to have?	common	fr	Quel style  vouslez-vous pour l'image?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Quand vous dites oui, les bouttons Acceuil et déconnexion sont affichés comme des applications dans la barre d'application principale.
 which groups	common	fr	Quels groupes
 width	common	fr	Largeur
 window name	tinymce	fr	Nom de la fen?tre
 wk	jscalendar	fr	wk
 work email	common	fr	email Bureau
+would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
 writing	common	fr	ecriture
 written by:	common	fr	Ecrit par:
 year	common	fr	Année

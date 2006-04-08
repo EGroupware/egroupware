@@ -48,6 +48,8 @@ allow anonymous access to this app	admin	es-es	Permitir acceso anónimo a esta ap
 alternate email address	admin	es-es	dirección de correo alternativa
 anonymous user	admin	es-es	Usuario anónimo
 anonymous user (not shown in list sessions)	admin	es-es	Usuario anónimo (no se muestra en la lista de sesiones)
+anonymous user does not exist!	admin	es-es	¡El usuario anónimo no existe!
+anonymous user has no run-rights for the application!	admin	es-es	¡El usuario anónimo NO tiene derecho de ejecución para la aplicación!
 appearance	admin	es-es	Apariencia
 application	admin	es-es	Aplicación
 application name	admin	es-es	Nombre de la aplicación
@@ -203,7 +205,6 @@ for the times above	admin	es-es	durante las horas indicadas arriba
 for the times below (empty values count as '*', all empty = every minute)	admin	es-es	para las horas indicadas debajo (los valores vacíos cuentan como '*', todos vacío = cada minuto)
 force selectbox	admin	es-es	Forzar cuadro de selección
 forward also to	admin	es-es	reenviar también a
-forward email's to	admin	es-es	reenviar correos a
 forward emails to	admin	es-es	reenviar correos a
 forward only	admin	es-es	reenviar solamente
 global categories	common	es-es	Categorías globales
@@ -419,7 +420,6 @@ view this user	admin	es-es	ver este usuario
 view user account	admin	es-es	Ver cuenta de usuario
 who would you like to transfer all records owned by the deleted user to?	admin	es-es	¿A quién desea transferirle todos los registros del usuario eliminado?
 would you like egroupware to cache the egw info array ?	admin	es-es	¿Desea que eGroupWare almacene en memoria el array egw info?
-would you like egroupware to cache the phpgw info array ?	admin	es-es	¿Desea que eGroupWare guarde en la caché el array phpgw info?
 would you like egroupware to check for a new version<br>when admins login ?	admin	es-es	¿Desea que eGroupWare revise si hay versiones nuevas<br>cuando inicie la sesión un administrador?
 would you like egroupware to check for new application versions when admins login ?	admin	es-es	¿Desea que eGroupWare compruebe nuevas versiones de las aplicaciones cuando un administrador inicie la sesión?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	es-es	¿Desea cargar automáticamente nuevos ficheros de idioma (al iniciar la sesión)?

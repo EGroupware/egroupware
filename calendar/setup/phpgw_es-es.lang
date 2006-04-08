@@ -173,7 +173,6 @@ no filter	calendar	es-es	Sin filtro
 no matches found	calendar	es-es	No se encontraron coincidencias
 no response	calendar	es-es	Sin respuesta
 non blocking	calendar	es-es	no bloquea
-not	calendar	es-es	no
 notification messages for added events	calendar	es-es	Mensajes de notificación para eventos añadidos
 notification messages for canceled events	calendar	es-es	Mensajes de notificación para eventos cancelados
 notification messages for disinvited participants	calendar	es-es	Mensajes de notificación para participantes que dejan de ser invitados
@@ -246,7 +245,6 @@ show list of upcoming events	calendar	es-es	Mostrar la lista de eventos próximos
 show this month	calendar	es-es	Mostrar este mes
 show this week	calendar	es-es	Mostrar esta semana
 single event	calendar	es-es	evento simple
-site configuration	calendar	es-es	configuración del sitio
 start	calendar	es-es	Inicio
 start date/time	calendar	es-es	Fecha/Hora inicio
 startdate / -time	calendar	es-es	Fecha de incio / -hora

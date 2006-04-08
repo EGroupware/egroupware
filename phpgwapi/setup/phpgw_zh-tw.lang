@@ -146,7 +146,7 @@ cellspacing	tinymce	zh-tw	儲存格間距
 center	tinymce	zh-tw	置中
 centered	common	zh-tw	置中
 central african republic	common	zh-tw	CENTRAL AFRICAN REPUBLIC
-chad	common	zh-tw	CHAD
+chad	common	zh-tw	查德
 change	common	zh-tw	更換
 char	htmlarea-TableOperations	zh-tw	字元
 charset	common	zh-tw	utf-8
@@ -412,8 +412,8 @@ image url	common	zh-tw	圖片網址
 in_sert row after	htmlarea-ContextMenu	zh-tw	在插入列之後
 increase indent	htmlarea	zh-tw	增加邊緣
 indent	tinymce	zh-tw	縮排
-india	common	zh-tw	INDIA
-indonesia	common	zh-tw	INDONESIA
+india	common	zh-tw	印度
+indonesia	common	zh-tw	印尼
 insert	tinymce	zh-tw	插入
 insert 'return false'	common	zh-tw	插入'return false'
 insert / edit flash movie	tinymce	zh-tw	插入 / 編輯Flash影片
@@ -449,8 +449,8 @@ invalid ip address	common	zh-tw	錯誤的IP位址
 invalid password	common	zh-tw	錯誤的密碼
 iran, islamic republic of	common	zh-tw	IRAN, ISLAMIC REPUBLIC OF
 iraq	common	zh-tw	伊拉克
-ireland	common	zh-tw	IRELAND
-israel	common	zh-tw	ISRAEL
+ireland	common	zh-tw	愛爾蘭
+israel	common	zh-tw	以色列
 it has been more then %1 days since you changed your password	common	zh-tw	距離您上次更改密碼已經 %1 天了
 it is recommended that you run setup to upgrade your tables to the current version	common	zh-tw	建議您執行設定程式將資料表升級至目前的版本。
 italic	common	zh-tw	斜體
@@ -469,14 +469,14 @@ justify center	common	zh-tw	置中
 justify full	common	zh-tw	全螢幕
 justify left	common	zh-tw	靠左
 justify right	common	zh-tw	靠右
-kazakstan	common	zh-tw	KAZAKSTAN
+kazakstan	common	zh-tw	哈薩克
 keep linebreaks	tinymce	zh-tw	保留段落
-kenya	common	zh-tw	KENYA
+kenya	common	zh-tw	肯亞
 keywords	common	zh-tw	關鍵字
 kiribati	common	zh-tw	KIRIBATI
 korea, democratic peoples republic of	common	zh-tw	北韓
 korea, republic of	common	zh-tw	南韓
-kuwait	common	zh-tw	KUWAIT
+kuwait	common	zh-tw	科威特
 kyrgyzstan	common	zh-tw	KYRGYZSTAN
 language	common	zh-tw	語言
 language_direction_rtl	common	zh-tw	language_direction_rtl
@@ -485,7 +485,7 @@ last name	common	zh-tw	姓
 last name of the user, eg. "%1"	common	zh-tw	使用者的姓，例： "%1"
 last page	common	zh-tw	最後一頁
 lastname	common	zh-tw	姓
-latvia	common	zh-tw	LATVIA
+latvia	common	zh-tw	拉托維亞
 layout	htmlarea-TableOperations	zh-tw	版面
 ldap-mgr	common	zh-tw	LDAP管理員
 lebanon	common	zh-tw	黎巴嫩
