@@ -66,8 +66,32 @@ class datasource_calendar extends datasource
 			'pe_resources'     => array(),
 			'pe_details'       => $data['description'] ? nl2br($data['description']) : '',
 		);
+		// calculation of the time
 		$ds['pe_planned_time'] = (int) (($ds['pe_planned_end'] - $ds['pe_planned_start'])/60);	// time is in minutes
 
+		// if the event spans multiple days, we have to substract the nights (24h - daily working time specified in PM)
+		if (date('Y-m-d',$ds['pe_planned_end']) != date('Y-m-d',$ds['pe_planned_start']))
+		{
+			foreach(array('start','end') as $name)
+			{
+				$$name = $GLOBALS['bocal']->date2array($ds['pe_planned_'.$name]);
+				${$name}['hour'] = 12;
+				${$name}['minute'] = ${$name}['second'] = 0;
+				unset(${$name}['raw']);
+				$$name = $GLOBALS['bocal']->date2ts($$name);
+			}
+			$nights = round(($end - $start) / DAY_s);
+			
+			if (!is_array($this->pm_config))
+			{
+				$c =& CreateObject('phpgwapi.config','projectmanager');
+				$c->read_repository();
+				$this->pm_config = $c->config_data;
+				unset($c);
+				if (!$this->pm_config['hours_per_workday']) $this->pm_config['hours_per_workday'] = 8;
+			}
+			$ds['pe_planned_time'] -= $nights * 60 * (24 - $this->pm_config['hours_per_workday']);
+		}
 		foreach($data['participants'] as $uid => $status)
 		{
 			if ($status != 'R' && is_numeric($uid))	// only users for now
@@ -75,6 +99,9 @@ class datasource_calendar extends datasource
 				$ds['pe_resources'][] = $uid;
 			}
 		}
+		// if we have multiple participants we have to multiply the time by the number of participants to get the total time
+		$ds['pe_planned_time'] *= count($ds['pe_resources']);
+
 /*
 		// ToDO: this does not change automatically after the event is over, 
 		// maybe we need a flag for that in egw_pm_elements
