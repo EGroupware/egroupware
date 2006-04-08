@@ -291,10 +291,21 @@
 		 */
 		function get_status($ids)
 		{
-			$this->db->select($this->info_table,'info_id,info_status',array('info_id'=>$ids),__LINE__,__FILE__);
-			while ($this->db->next_record())
+			$this->db->select($this->info_table,'info_id,info_type,info_status,info_percent',array('info_id'=>$ids),__LINE__,__FILE__);
+			while (($info = $this->db->row(true)))
 			{
-				$stati[$this->db->f(0)] = $this->db->f(1);
+				switch ($info['info_type'].'-'.$info['info_status'])
+				{
+					case 'phone-not-started':
+						$status = 'call';
+						break;
+					case 'phone-ongoing':
+						$status = 'will-call';
+						break;
+					default:
+						$status = $info['info_status'] == 'ongoing' ? $info['info_percent'].'%' : $info['info_status'];
+				}
+				$stati[$info['info_id']] = $status;
 			}
 			return $stati;
 		}	
