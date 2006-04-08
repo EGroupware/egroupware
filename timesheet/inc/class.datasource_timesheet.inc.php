@@ -83,4 +83,17 @@ class datasource_timesheet extends datasource
 		}
 		return $ds;
 	}
+
+	/**
+	 * Copy method (usally copies a projectelement) returns only false to prevent copying
+	 *
+	 * @param array $element source project element representing an InfoLog entry, $element['pe_app_id'] = info_id
+	 * @param int $target target project id
+	 * @param array $target_data=null data of target-project, atm not used by the infolog datasource
+	 * @return array/boolean array(info_id,link_id) on success, false otherwise
+	 */
+	function copy($element,$target,$extra=null)
+	{
+		return false;
+	}
 }
