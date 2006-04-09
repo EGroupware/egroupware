@@ -115,6 +115,32 @@
 		}
 		
 		/**
+		 * Check if the given $columns exist as index in the index array $indexes
+		 *
+		 * @param string/array $columns column-name as string or array of column-names plus optional options key
+		 * @param array $indexs array of indexes (column-name as string or array of column-names plus optional options key)
+		 * @return boolean true if index over $columns exist in the $indexes array
+		 */
+		function _in_index($columns,$indexs)
+		{
+			if (is_array($columns))
+			{
+				unset($columns['options']);
+				$columns = implode('-',$columns);
+			}
+			foreach($indexs as $index)
+			{
+				if (is_array($index))
+				{
+					unset($index['options']);
+					$index = implode('-',$index);
+				}
+				if ($columns == $index) return true;
+			}
+			return false;
+		}
+		
+		/**
 		 * Created a table named $sTableName as defined in $aTableDef
 		 *
 		 * @param string $sTableName
@@ -143,6 +169,10 @@
 			// creating unique indices/constrains
 			foreach ($aTableDef['uc'] as $name => $mFields)
 			{
+				if ($this->_in_index($mFields,array($aTableDef['pk'])))
+				{
+					continue;	// is already created as primary key
+				}
 				if (is_numeric($name))
 				{
 					$name = $this->_index_name($sTableName,$mFields);
@@ -156,6 +186,11 @@
 			// creation indices
 			foreach ($aTableDef['ix'] as $name => $mFields)
 			{
+				if ($this->_in_index($mFields,array($aTableDef['pk'])) ||
+					$this->_in_index($mFields,$aTableDef['uc']))
+				{
+					continue;	// is already created as primary key or unique index
+				}
 				$options = False;
 				if (is_array($mFields))
 				{
@@ -354,9 +389,9 @@
 				// only drop sequence, if there is no dependency on it
 				if (!$this->adodb->GetOne("SELECT relname FROM pg_class JOIN pg_depend ON pg_class.relfilenode=pg_depend.objid WHERE relname='$seq' AND relkind='S' AND deptype='i'"))
 				{
-				$this->query('DROP SEQUENCE '.$seq,__LINE__,__FILE__);
+					$this->query('DROP SEQUENCE '.$seq,__LINE__,__FILE__);
+				}
 			}
-		}
 		}
 
 		/**
