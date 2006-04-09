@@ -3,6 +3,7 @@
 - subprojects from	infolog	no	- Underprosjekter fra
 0%	infolog	no	0%
 10%	infolog	no	10%
+100%	infolog	no	100%
 20%	infolog	no	20%
 30%	infolog	no	30%
 40%	infolog	no	40%
@@ -16,6 +17,7 @@ a short subject for the entry	infolog	no	en kort emnebeskrivelse for innslaget
 abort without deleting	infolog	no	Avslutt uten å slette
 accept	infolog	no	aksepter
 action	infolog	no	Funksjon
+actual date and time	infolog	no	Aktuell dato og tid
 add	infolog	no	Legg til
 add a file	infolog	no	Legg til fil
 add a new entry	infolog	no	Legg til ny oppføring
@@ -25,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	no	Legg til under-oppgave
 add a new todo	infolog	no	Legg til nytt gjøremål
 add file	infolog	no	Vedlegg fil
 add sub	infolog	no	legg til under
+add timesheet entry	infolog	no	Legg til forekomst i timeregistrering
 add:	infolog	no	Legg til:
 all	infolog	no	Alle
 all links and attachments	infolog	no	alle lenker og vedlegg
@@ -38,6 +41,7 @@ billed	infolog	no	fakturert
 both	infolog	no	begge
 call	infolog	no	ring
 cancel	infolog	no	Avbryt
+cancelled	infolog	no	Kansellert
 categories	infolog	no	Kategorier
 category	infolog	no	Kategori
 change the status of an entry, eg. close it	infolog	no	Endre status på innslag, f.eks lukke saken
@@ -47,6 +51,7 @@ click here to create the link	infolog	no	klikk her for å lage lenke
 click here to start the search	infolog	no	klikk her for å starte søket
 close	infolog	no	Lukk
 comment	infolog	no	Kommentar
+completed	infolog	no	Utført
 configuration	infolog	no	Konfigurasjon
 confirm	infolog	no	Bekreft
 contact	infolog	no	Kontakt
@@ -67,6 +72,8 @@ custom fields, typ and status	common	no	Egendefinerte felter, type og status
 custom regarding	infolog	no	Egendefinert angående
 custom status for typ	infolog	no	Egendefinert status for type
 customfields	infolog	no	Egendefinertfelt
+date completed	infolog	no	Dato utført
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	no	Dato utført (la den stå tom for å settes automatisk ved status er lik utført eller ved fakturering)
 datecreated	infolog	no	dato opprettet
 dates, status, access	infolog	no	Datoer, Status, Tilgang
 days	infolog	no	dager
@@ -110,6 +117,7 @@ fieldseparator	infolog	no	Feltseparator
 finish	infolog	no	ferdig
 for which types should this field be used	infolog	no	hvilke typer skal feltet brukes til
 from	infolog	no	Fra
+general	infolog	no	Generell
 high	infolog	no	høy
 id	infolog	no	Id
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	no	Dersom ikke satt, linjen med søk og filter er skjult dersom færre antall enn "maks antall pr. side" (som definert i globale preferanser).
@@ -132,6 +140,7 @@ invalid filename	infolog	no	Ugyldig filnavn
 label<br>helptext	infolog	no	Etikett<br>Hjelpetekst
 last changed	infolog	no	Sist endret
 last modified	infolog	no	Sist endret
+leave it empty	infolog	no	La stå tom
 leave without saveing the entry	infolog	no	avslutt uten å lagre innslaget
 leaves without saveing	infolog	no	avslutt uten å lagre
 length<br>rows	infolog	no	Lengde<br>Kolonner
@@ -140,6 +149,7 @@ links	infolog	no	Lenker
 links of this entry	infolog	no	Lenker i dette innslaget
 list all categories	infolog	no	Liste over alle kategorier
 list no subs/childs	infolog	no	Liste antall Under/Barn
+location	infolog	no	Lokasjon
 longer textual description	infolog	no	lenger ordrett beskrivelse
 low	infolog	no	lav
 max length of the input [, length of the inputfield (optional)]	infolog	no	maks. lengde på innslag [,feltlengde (valgfri)]
@@ -159,6 +169,7 @@ none	infolog	no	Ingen
 normal	infolog	no	normal
 not	infolog	no	ikke
 not assigned	infolog	no	ikke tildelt
+not-started	infolog	no	ikke påbegynt
 note	infolog	no	Notat
 number of records to read (%1)	infolog	no	Antall rekker som skal leses (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	no	antall rekker i multi-linje felter eller linjer i multi-valg bokser
@@ -179,15 +190,18 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	no	sti på (web-)tjener<
 path to user and group files has to be outside of the webservers document-root!!!	infolog	no	Sti til bruker og gruppefiler. MÅ VÆRE UTENFOR web tjenerens dokument-rot!!!
 pattern for search in addressbook	infolog	no	mønster for søk i Adresseliste
 pattern for search in projects	infolog	no	mønster for søk i Prosjekter
+percent completed	infolog	no	Prosent utført
 permission denied	infolog	no	Adgang nektet
 phone	infolog	no	Telefonoppkall
 phone/email	infolog	no	Telefon/Epost
 phonecall	infolog	no	Telefonoppkall
 planned	infolog	no	Planlagt
 planned time	infolog	no	Planlagt tid
+price	infolog	no	Pris
 priority	infolog	no	Prioritet
 private	infolog	no	Privat
 project	infolog	no	Prosjekt
+project settings: price, times	infolog	no	Prosjektinnstillinger: pris, timer
 re:	infolog	no	Ang:
 read one record by passing its id.	infolog	no	Les en rekke ved å oppgi rekke-ID.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	no	reg. ekspr. for lokale IP-adresser<b>f.eks^192\.168\.1\.
@@ -197,7 +211,7 @@ responsible	infolog	no	Ansvarlig
 responsible open	infolog	no	Ansvarlig for åpne
 responsible overdue	infolog	no	Ansvarlig for overskredne
 responsible upcoming	infolog	no	Ansvarlig for kommende
-responsible user, priority, times	infolog	no	ansvarlig bruker, prioritet, ant.ganger
+responsible user, priority	infolog	no	Ansvarlig bruker, prioritet
 returns a list / search for records.	infolog	no	Viser en liste / søk etter rekker.
 save	infolog	no	Lagre
 saves the changes made and leaves	infolog	no	lagrer endringene og lukker
@@ -205,8 +219,10 @@ saves this entry	infolog	no	Lagrer innslaget
 search	infolog	no	Søk
 search for:	infolog	no	Søk etter:
 select	infolog	no	Velg
-select a category for this entry	infolog	no	velg en kategori for innslaget
-select a priority for this task	infolog	no	velg prioritet for denne oppgaven
+select a category for this entry	infolog	no	Velg en kategori for innslaget
+select a price	infolog	no	Velg en pris
+select a priority for this task	infolog	no	Velg prioritet for denne oppgaven
+select a project	infolog	no	Velg et prosjekt
 select a responsible user: a person you want to delegate this task	infolog	no	velg en ansvarlig bruker: personen du vil tildele oppgaven
 select a typ to edit it's status-values or delete it	infolog	no	velg en type for å endre status verdi eller slette
 select an app to search in	infolog	no	Velg applikasjon det skal søkes i
@@ -227,8 +243,9 @@ show open entries: tasks/calls/notes on main screen	infolog	no	Vis åpne innslag:
 show times	infolog	no	Vis tider
 small view	infolog	no	liten visning
 start a new search, cancel this link	infolog	no	start nytt søk, annuller denne lenken
-startdate	infolog	no	Start Dato
-startdate enddate	infolog	no	Start Dato Slutt Dato
+startdate	infolog	no	Startdato
+startdate enddate	infolog	no	Startdato Forfallsdato
+startdate for new entries	infolog	no	Startdato for nye oppgaver
 startrecord	infolog	no	Startrekke
 status	infolog	no	Status
 status ...	infolog	no	Status ...
@@ -244,7 +261,9 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	no	innen hvilket tidspunkt skal gjøremål eller telefonoppkall være avsluttet
 times	infolog	no	Ant. ganger
 to many might exceed your execution-time-limit	infolog	no	for mange kan overgå din uførelse-tids-begrensning
+to what should the startdate of new entries be set.	infolog	no	Hva skal startdato for nye forekomster settes lik
 today	infolog	no	Idag
+todays date	infolog	no	Dagens dato
 todo	infolog	no	Gjøremål
 translation	infolog	no	Oversetting
 typ	infolog	no	Type

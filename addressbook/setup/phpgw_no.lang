@@ -12,7 +12,7 @@ address book - view	addressbook	no	Adressebok - vis
 address line 2	addressbook	no	Adresse Linje 2
 address line 3	addressbook	no	Adresse Linke 3
 address type	addressbook	no	Adressetype
-addressbook	common	no	Addressebok
+addressbook	common	no	Adressebok
 addressbook preferences	addressbook	no	Adressebok preferanser
 addressbook-fieldname	addressbook	no	Adressebok-Feltnavn
 addvcard	addressbook	no	Legg til VCard
@@ -38,6 +38,8 @@ business zip code	addressbook	no	Postkode, Arbeid
 car phone	addressbook	no	Bil Telefon
 cell phone	addressbook	no	Mobiltelefon
 charset of file	addressbook	no	Karaktersett for filen
+choose an icon for this contact type	addressbook	no	Velg et ikon for denne kontakttype
+chosse an etemplate for this contact type	addressbook	no	Velg en emal for denne kontakttype
 city	common	no	By
 company	common	no	Firma
 company name	common	no	Firmanavn
@@ -49,6 +51,7 @@ contact settings	admin	no	Kontakt Innstillinger
 copied by %1, from record #%2.	addressbook	no	Kopiert av %1, fra rekke #%2.
 country	common	no	Land
 create new links	addressbook	no	Opprette nye lenker
+credit	addressbook	no	Krediter
 csv-fieldname	addressbook	no	CSV-Feltnavn
 csv-filename	addressbook	no	CSV-FIlnavn
 custom	addressbook	no	Egendefinert
@@ -95,6 +98,7 @@ home phone	addressbook	no	Telefon, Hjemme
 home state	addressbook	no	Fylke, Hjemme
 home street	addressbook	no	Gate, Hjemme
 home zip code	addressbook	no	Postkode, Hjemme
+icon	addressbook	no	Ikon
 import	addressbook	no	Importer
 import contacts	addressbook	no	Importer Kontakter
 import csv-file into addressbook	addressbook	no	Importer CSV-fil i Adresselisten
@@ -105,6 +109,7 @@ import from outlook	addressbook	no	Importer fra Outlook
 import multiple vcard	addressbook	no	Importer flere VCard
 import next set	addressbook	no	Importer neste sett
 import_instructions	addressbook	no	I Netscape, åpne adresselisten og velg <b>Eksporter</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være i LDIF format. I Outlook velger du Kontakter mappen, så <b>Import og eksport...</b> fra <b>Fil</b> menyen, og eksporterer kontaktene til en kommaseparert (CSV) fil.<p>For Palm Desktop 4.0 og høyere, gå til adresseliste og velg <b>Eksport</b> fra <b>Fil</b> menyen. Den eksporterte filen vil være på VCard format.
+income	addressbook	no	Inntekt
 international	addressbook	no	Internasjonal
 isdn phone	addressbook	no	ISDN Telefon
 label	addressbook	no	Etikett
@@ -130,6 +135,7 @@ multiple vcard	addressbook	no	Flere VCard
 no vcard	addressbook	no	Ingen VCard
 number	addressbook	no	Nummer
 number of records to read (%1)	addressbook	no	Antall rekker som leses (%1)
+options for type	addressbook	no	Valg for type
 organisation	addressbook	no	Organisasjon
 other number	addressbook	no	Annet Nummer
 other phone	addressbook	no	Annen Telefon
@@ -142,6 +148,7 @@ postal	common	no	Post
 pref	addressbook	no	Pref.
 prefix	addressbook	no	Forstavelse
 public key	addressbook	no	Offentlig Nøkkel
+publish into groups:	addressbook	no	Publiser i grupper :
 read a list / search for entries.	addressbook	no	Les en liste / søk etter forekomster
 read a list of entries.	addressbook	no	Lese liste
 read a single entry by passing the id and fieldlist.	addressbook	no	Les ett enkelt innslag ved å gi id og feltliste.
@@ -173,15 +180,15 @@ today is %1's birthday!	common	no	I dag har %1 fødselsdag!
 tomorrow is %1's birthday.	common	no	I morgen er det %1's fødselsdag.
 translation	addressbook	no	Oversetting
 update a single entry by passing the fields.	addressbook	no	Oppdater ett enkelt innslag ved å legge inn felter.
-use country list	addressbook	no	Bruk Land Liste
+use country list	addressbook	no	Bruk landliste
 vcard	common	no	VCard
 vcards require a first name entry.	addressbook	no	VCard krever fornavn.
-vcards require a last name entry.	addressbook	no	VCard kever etternavn.
+vcards require a last name entry.	addressbook	no	VCard krever etternavn.
 video phone	addressbook	no	Video Telefon
 voice phone	addressbook	no	Vanlig Telefon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	no	ADVARSEL!! LDAP er kun aktuellt dersom du IKKE bruker kontakter til konto lagring!
 warning: all contacts found will be deleted!	addressbook	no	Advarsel: Alle kontakter funnet vil bli slettet!
-work phone	addressbook	no	Arbeids telefon
+work phone	addressbook	no	Telefon arbeid
 you are not permitted to delete contact %1	addressbook	no	Du har ikke tillatelse til å slette kontakt %1
 you are not permittet to delete this contact	addressbook	no	Du har ikke tillatelse til å slette denne kontakten
 you are not permittet to edit this contact	addressbook	no	Du har ikke tillatelse til å endre denne kontakten

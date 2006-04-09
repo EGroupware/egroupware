@@ -5,6 +5,7 @@
 a non blocking event will not conflict with other events	calendar	no	En hendelse som ikke blokkerer vil ikke være i konflikt med andre hendelser
 accept or reject an invitation	calendar	no	Aksepter eller avslå invitasjonen
 accepted	calendar	no	Godtatt
+access denied to the calendar of %1 !!!	calendar	no	Ikke tilgang til %1 kalender !
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	no	Handling som utløste denne meldingen: Lagt til, Kansellert, Akseptert, Avslått, ...
 actions	calendar	no	Aksjoner
 add alarm	calendar	no	Legg til alarm
@@ -33,6 +34,7 @@ busy	calendar	no	Opptatt
 by	calendar	no	av
 calendar event	calendar	no	Kalender Hendelse
 calendar holiday management	admin	no	Kalender Feriestyring
+calendar menu	calendar	no	Kalendermeny
 calendar preferences	calendar	no	Kalender Preferanser
 calendar settings	admin	no	Kalender Innstillinger
 calendar-fieldname	calendar	no	Kalender-Feltnavn
@@ -69,6 +71,7 @@ delete this exception	calendar	no	Slett dette unntaket
 delete this series of recuring events	calendar	no	Slett serie med repeterende hendelser
 disinvited	calendar	no	Ikke lenger invitert
 display status of events	calendar	no	Vis Status av Hending
+displayed view	calendar	no	Gjeldende visning
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	no	Viser din standard kalender visning på startsiden (siden du får når du logger på eGroupWare eller klikker på hjemmeside-ikonet)?
 do you want a weekview with or without weekend?	calendar	no	Ønsker du ukevisning uten helg ?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	no	Vil du bli varslet om alle forandrede avtaler? Du blir varslet om alle endringer du selv utfører.<br>Du kan begrense varslingen til bare å gjelde spesifikke endringer. Hvert objekt inkluderer alle varslingene over det. Alle endringer inkluderer endringer av tittel, beskrivelse, men ikke deltakeres responser. Hvis eieren av en oppføring ber om varsling, vil han alltid få deltakeres responser som godkjenninger eller avslag også.
@@ -121,8 +124,10 @@ fullname of person to notify	calendar	no	Hele navnet til person som skal varsles
 general	calendar	no	Generell
 global public and group public	calendar	no	Global offentlig og gruppe offentlig
 global public only	calendar	no	Global offentlig Bare
+group invitation	calendar	no	Gruppeinvitasjon
 group planner	calendar	no	Gruppeplanlegger
 group public only	calendar	no	Bare offentlig gruppe
+groupmember(s) %1 not included, because you have no access.	calendar	no	Gruppemedlem(mer) %1 ikke inkludert fordi du ikke har nødvendig tillatelse
 here is your requested alarm.	calendar	no	Her er varslingen du ba om.
 high priority	calendar	no	høy prioritet
 holiday	calendar	no	Ferie

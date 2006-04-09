@@ -17,6 +17,7 @@ last modified	timesheet	no	Sist endret
 last month	timesheet	no	Siste måned
 last week	timesheet	no	Siste uke
 last year	timesheet	no	Siste år
+leave it empty for a full week	timesheet	no	La stå tom for en full uke
 links	timesheet	no	Lenker
 no details	timesheet	no	Ingen detaljer
 permission denied!!!	timesheet	no	Adgang nektes!
@@ -25,6 +26,8 @@ quantity	timesheet	no	Antall
 save & new	timesheet	no	Lagre og ny
 saves the changes made	timesheet	no	Lagre endringene
 saves this entry and add a new one	timesheet	no	Lagre denne forekomsten og opprette en ny
+select a price	timesheet	no	Velg en pris
+select a project	timesheet	no	Velg et prosjekt
 this month	timesheet	no	Denne måneden
 this week	timesheet	no	Denne uken
 this year	timesheet	no	Dette året
