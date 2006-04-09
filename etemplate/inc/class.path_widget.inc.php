@@ -77,18 +77,21 @@
 			$cell['name'] = '';
 			$cell['type'] = 'hbox';
 			$cell['size'] = 0;
+
 			foreach ($value as $id => $label)
 			{
-				$sep =& soetemplate::empty_cell();
+				$sep = soetemplate::empty_cell();
 				$sep['label'] = $seperator;
 				soetemplate::add_child($cell,$sep);
+				unset($sep);
 				
-				$button =& soetemplate::empty_cell('button',$cell_name.'['.$id.']');
+				$button = soetemplate::empty_cell('button',$cell_name.'['.$id.']');
 				$button['label'] = $label;
 				$button['onchange'] = 1; // display as link
 				$button['no_lang'] = $cell['no_lang'];
 				$button['help'] = $cell['help'] ? $cell['help'] : lang($label)."($i)";
 				soetemplate::add_child($cell,$button);
+				unset($button);
 			}	
 			return True;	// extra Label Ok
 		}
