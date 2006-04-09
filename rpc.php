@@ -23,21 +23,22 @@ $GLOBALS['egw_info']['flags'] = array(
 );
 include('./header.inc.php');
 
+$errors = array();
+
 // SyncML works currently only with PHP sessions
 if($GLOBALS['egw_info']['server']['sessions_type'] == 'db')
 {
-	error_log('SyncML support is currently not available with DB sessions. Please switch to PHP sessions in header.inc.php.');
-	exit;
+	$errors[] = 'SyncML support is currently not available with DB sessions. Please switch to PHP sessions in header.inc.php.';
 }
 
+// SyncML does not support func_overload
 if(ini_get('mbstring.func_overload') != 0) {
-	error_log('You need to set mbstring.func_overload to 0 for rpc.php.');
-	exit;
+	$errors[] = 'You need to set mbstring.func_overload to 0 for rpc.php.';
 }
 
+// SyncML requires PHP version 5.0.x
 if(version_compare(PHP_VERSION, '5.0.0') < 0) {
-	error_log('eGroupWare\'s SyncML server requires PHP5. Please update to PHP5 if you want to make use of SyncML.');
-	exit;
+	$errors[] = 'eGroupWare\'s SyncML server requires PHP5. Please update to PHP 5.0.x if you want to use SyncML.';
 }
 
 $config =& CreateObject('phpgwapi.config','syncml');
@@ -72,15 +73,15 @@ if (!empty($_SERVER['CONTENT_TYPE'])) {
 }
 
 if($serverType != 'syncml' && $serverType != 'syncml_wbxml') {
-	if(ini_get('mbstring.func_overload') != 0) {
-		echo 'You need to set mbstring.func_overload to 0 for rpc.php.<br>';
+	foreach($errors as $error) {
+		echo "$error<br>";
 	}
-
-	if(version_compare(PHP_VERSION, '5.0.0') < 0) {
-		echo 'eGroupWare\'s SyncML server requires PHP5. Please update to PHP5 if you want to make use of SyncML.<br>';
-	}
-	
 	die('You should access this URL only with a SyncML enabled device.');
+} elseif (count($errors) > 0) {
+	foreach($errors as $error) {
+		error_log($error);
+	}
+	exit;
 }
 
 if ($serverType == 'soap' &&
