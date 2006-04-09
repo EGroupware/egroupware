@@ -642,7 +642,7 @@
 			reset ($rarray);
 			for ($i = 0; (list ($key, $value) = each ($rarray)) && $i != $count; $i++)
 			{
-				$rarray[$key . '_clean'] = $GLOBALS['egw']->db_clean (array ('string' => $value));
+				$rarray[$key . '_clean'] = $this->db_clean (array ('string' => $value));
 			}
 
 			if ($data['object'])
