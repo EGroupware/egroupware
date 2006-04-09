@@ -132,18 +132,13 @@
 		// Tack on some extra values
 		function export_end_record($buffer)
 		{
+			$context = 'ou=contacts,dc=domain,dc=com';	// some default to replace later
 			if ($GLOBALS['egw_info']['server']['ldap_contact_context'])
 			{
 				$context = $GLOBALS['egw_info']['server']['ldap_contact_context'];
 			}
-			$time = gettimeofday();
-			$cn = str_replace(',','',$buffer[$this->id]['cn']);
-			$buffer[$this->id]['dn']  = 'uid='.time().$time['usec'].':'.$cn.','.$context;
-			$buffer[$this->id]['uid'] = time().$time['usec'];
-			if ($buffer[$this->id]['cn'])
-			{
-				$buffer[$this->id]['uid'] .= ':'.$buffer[$this->id]['cn'];
-			}
+			$buffer[$this->id]['uid'] = time().':'.$this->id.($buffer[$this->id]['cn'] ? ':'.str_replace(',','',$buffer[$this->id]['cn']) : '');
+			$buffer[$this->id]['dn']  = 'uid='.$buffer[$this->id]['uid'].','.$context;
 			$buffer[$this->id]['description'] = ereg_replace("\r\n",';',$buffer[$this->id]['description']);
 			//echo '<br>'.$this->id.' - '.$buffer[$this->id]['dn'];
 			return $buffer;
@@ -168,7 +163,7 @@
 				$entries .= 'objectClass: organizationalPerson' . "\n";
 				# not needed for openldap > 2.1 anymore
 				#$entries .= 'objectClass: inetOrgPerson' . "\n";
-				$entries .= 'objectClass: egwContact' . "\n";
+				$entries .= 'objectClass: phpgwContact' . "\n";
 				$entries .= "\n";
 			}
 			$buffer = $entries;
