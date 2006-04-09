@@ -93,19 +93,50 @@ class ADODB2_mssql extends ADODB_DataDict {
 		return $sql;
 	}
 	
-	/*
-	function AlterColumnSQL($tabname, $flds)
+	/**
+	 * query the name of a default constrain
+	 *
+	 * @param string $tabname table-name
+	 * @param string $colname column-name
+	 * @return boolean/string name of the default constrain or false if there's none
+	 */
+	function _get_default_name($tabname,$colname)
+	{
+		return $this->connection->GetOne("SELECT sysobjects.name FROM sysobjects JOIN syscolumns ON syscolumns.id=parent_obj AND info=colorder ".
+			"WHERE syscolumns.name='$colname' AND sysobjects.xtype='D' AND parent_obj=(SELECT id FROM sysobjects WHERE name='$tableoptions' and type='U')");
+	}
+
+	/**
+	 * Change the definition of one column
+	 *
+	 * Reimplemented because MSSQL need a different handling for DEFAULT, it cant be in an ALTER COLUMN
+	 * 
+	 * @param string $tabname table-name
+	 * @param string $flds column-name and type for the changed column
+	 * @param string $tableflds='' complete defintion of the new table, eg. for postgres, default ''
+	 * @param array/string $tableoptions='' options for the new table see CreateTableSQL, default ''
+	 * @return array with SQL strings
+	 */
+	function AlterColumnSQL($tabname, $flds, $tableflds='',$tableoptions='')
 	{
 		$tabname = $this->TableName ($tabname);
 		$sql = array();
 		list($lines,$pkey) = $this->_GenFields($flds);
+		$alter = 'ALTER TABLE ' . $tabname . $this->alterCol . ' ';
 		foreach($lines as $v) {
-			$sql[] = "ALTER TABLE $tabname $this->alterCol $v";
+			list($colname) = explode(' ',$v);
+			// drop a default if it exists
+			$def_name = $this->_get_default_name($tabname,$colname);
+			$sql[] = "EXEC sp_unbindefault '$tabname.$colname'";
+			$sql[] = "DROP DEFAULT $def_name";
+			if (preg_match("/DEFAULT ([0-9]+|'[^']*')/",$lines,$matches)) {
+				$sql[] = $alter . str_replace("DEFAULT $matches[1]",'',$v);
+				$sql[] = "ALTER TABLE $tabname ADD CONSTRAINT def_{$tabname}_$colname DEFAULT $matches[1] FOR $colname"; 
+			} else
+				$sql[] = $alter . $v;
 		}
-
 		return $sql;
 	}
-	*/
 	
 	function DropColumnSQL($tabname, $flds)
 	{
