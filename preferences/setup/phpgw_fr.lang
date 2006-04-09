@@ -7,6 +7,7 @@ a theme defines the colors and fonts used by the template.	preferences	fr	Un thè
 acl grants have been updated	preferences	fr	Les droits ACL ont été mis à jour
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	fr	N'importe quelle liste dans eGroupWare va vous montrer ce nombre d'entrées ou de lignes par page.<br>Une valeur trop grande ralentit l'affichage, une valeur trop petite vous en montre moins.
 are you sure you want to delete this category ?	preferences	fr	Etes-vous sûr de vouloir effacer cette catégorie ?
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	fr	Change un mot de passe utilisateur en fournissant l'ancien et le nouveau mot de passe. Retourne TRUE pour un succès, FALSE en cas d'échec.
 change your password	preferences	fr	Changer votre mot de passe
 change your profile	preferences	fr	Changer votre profil
 change your settings	preferences	fr	Changer vos réglages
@@ -22,6 +23,7 @@ description can not exceed 255 characters in length !	preferences	fr	La descript
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fr	Préférez-vous un format d'heure sur 24 h, ou un format sur 12 h avec am/pm derrière.
 edit custom fields	preferences	fr	Modifier les champs personnalisés
 enter your new password	preferences	fr	Entrez votre nouveau mot de passe
+enter your old password	preferences	fr	Entrez votre ancien mot de passe
 error: there was a problem finding the preference file for %1 in %2	preferences	fr	Erreur: il y a eu un problème pour trouver le fichier de préférence pour %1 dans %2
 failed to change password.  please contact your administrator.	preferences	fr	Erreur lors du changement de mot de passe. Veuillez contacter votre administrateur.
 forced preferences	preferences	fr	Préférences forcées
@@ -41,10 +43,12 @@ language	preferences	fr	Langue
 max matches per page	preferences	fr	Nombre max d'occurences correspondantes par page
 max number of icons in navbar	preferences	fr	Nombre maximal d'icônes de la barre de navigation
 no default	preferences	fr	Pas de défaut
+note: this feature does *not* change your email password. this will	preferences	fr	note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci va
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fr	Note: cette fonctionnalité ne change *pas* votre mot de passe de compte EMail. Ceci va devoir être fait manuellement.
 please, select a new theme	preferences	fr	SVP, choisissez un nouveau thème
 popup with search	preferences	fr	Ouvrir une fenêtre Popup avec la recherche
 re-enter your password	preferences	fr	Ré-entrez votre mot de passe
+read prefs for the specified application.	preferences	fr	Lire les préférences pour l'apllication spécifiée.
 select different theme	preferences	fr	Choisissez un thème différent
 select one	preferences	fr	Choisissez un
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fr	Choisissez la langue des textes et messages dans eGroupWare.<br>Certaines langues peuvent ne pas contenir toutes les traductions, dans ce cas vous verrez le message en anglais.
@@ -60,6 +64,7 @@ show text on navigation icons	preferences	fr	Montrer le texte sur les icônes de 
 show_more_apps	common	fr	Montrer plus d'Applications
 text only	preferences	fr	Texte seulement
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fr	L'application par défaut sera exécutée quand vous entrez dans eGroupWare ou cliquez sur l'icône de la page maison (homepage).<br>Vous pouvez aussi avoir plus d'une application s'affichant sur la page maison, si vous ne choisissez pas d'application spécifique ici (ceci doit être configuré dans les préférences de chaque application).
+the old password is not correct	preferences	fr	L'ancien mon de passe est erroné
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fr	La boîte de sélection montre tous les utilisateurs disponibles (ceci peut être très lent sur les installations importantes avec beaucoup d'utilisateurs). La fenêtre Popup peut rechercher les utilisateurs par nom ou groupe.
 the two passwords are not the same	preferences	fr	Les deux mots de passe ne sont pas les mêmes
 theme (colors/fonts) selection	preferences	fr	Sélection de thème (couleurs/fontes)
@@ -69,6 +74,7 @@ use default	preferences	fr	Utiliser le défaut
 users choice	preferences	fr	Choix des utilisateurs
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fr	Si vous dites oui les boutons Accueil et Déconnexion sont présentés comme des applications dans la barre de navigation.
 which currency symbol or name should be used in egroupware.	preferences	fr	Quel symbole de monnaie ou nom devrait être utilisé dans eGroupWare.
+write prefs for the specified application.	preferences	fr	Ecrire les préférences pour l'apllication spécifiée.
 you can show the applications as icons only, icons with app-name or both.	preferences	fr	Vous pouvez montrer les applications comme des icônes seulement, des icônes avec le nom de l'application ou les deux.
 you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez pas les droits pour régler les ACLs dans ce mode!
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe
