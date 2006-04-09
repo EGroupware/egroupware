@@ -120,7 +120,7 @@
 			$GLOBALS['uiinfolog'] =& $this;	// make ourself availible for ExecMethod of get_rows function
 		}
 
-		function get_info($info,&$readonlys,$action='',$action_id='',$show_links=false)
+		function get_info($info,&$readonlys,$action='',$action_id='',$show_links=false,$details = 1)
 		{
 			if (!is_array($info))
 			{
@@ -179,7 +179,7 @@
 			$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
 			$info['info_status_label'] = $this->bo->status[$info['info_type']][$info['info_status']];
 			
-			if (!$this->prefs['show_percent'])
+			if (!$this->prefs['show_percent'] || $this->prefs['show_percent'] == 2 && !$details)
 			{
 				if ($info['info_status'] == 'ongoing' && $info['info_type'] != 'phone')
 				{
@@ -191,7 +191,7 @@
 			{
 				$info['info_percent2'] = $info['info_percent'];
 			}
-			if ($this->prefs['show_id'])
+			if ($this->prefs['show_id'] == 1 || $this->prefs['show_id'] == 2 && $details)
 			{
 				$info['info_number'] = $info['info_id'];
 			}
@@ -242,10 +242,11 @@
 			{
 				$ids = array( );
 			}
+			$details = $query['filter2'] == 'all';
 			$readonlys = $rows = array();
 			foreach($ids as $id => $info)
 			{
-				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2']);
+				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
 				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
 					$query['filter2'] == 'no_describtion')
 				{
@@ -254,8 +255,8 @@
 				$rows[] = $info;
 			}
 			if ($query['no_actions']) $rows['no_actions'] = true;
-			$rows['no_details'] = $query['filter2'] == 'no_describtion';
-			$rows['no_times'] = !$this->prefs['show_times'];
+			$rows['no_modified'] = !$this->prefs['show_modified'] || $this->prefs['show_modified'] == 2 && !$details;
+			$rows['no_times'] = !$this->prefs['show_times'] || $this->prefs['show_times'] == 2 && !$details;
 			$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 			$rows['duration_format'] = ','.$this->duration_format.',,1';
 			//echo "<p>readonlys = "; _debug_array($readonlys);

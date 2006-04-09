@@ -21,7 +21,7 @@
 				<column width="120"/>
 				<column disabled="@no_times"/>
 				<column width="8%"/>
-				<column width="12%" disabled="1"/>
+				<column width="12%" disabled="@no_modified"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>
@@ -114,7 +114,7 @@
 				<column width="120"/>
 				<column disabled="@no_times"/>
 				<column width="8%"/>
-				<column width="12%" disabled="1"/>
+				<column width="12%" disabled="@no_modified"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>

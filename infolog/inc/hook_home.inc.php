@@ -10,7 +10,7 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	if (($showevents = (int) $GLOBALS['egw_info']['user']['preferences']['infolog']['homeShowEvents']) > 0)
+	if (($showevents = $GLOBALS['egw_info']['user']['preferences']['infolog']['homeShowEvents']))
 	{
 		$save_app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
@@ -23,15 +23,8 @@
 		$infolog =& CreateObject('infolog.uiinfolog');
 		$infolog->called_by = 'home';
 
-		/*switch($showevents)
-		{
-			case 1:*/
-				$html = $infolog->index(array('nm' => array('filter' => 'own-open-today')),'','',0,False,True);
-				/*break;
-			case 2:
-				$html = ExecMethod('calendar.uicalendar.get_todos', array('', false));
-				break;
-		}*/
+		if (in_array($showevents,array('1','2'))) $showevents = 'own-open-today';
+		$html = $infolog->index(array('nm' => array('filter' => $showevents)),'','',0,False,True);
 		$title = lang('InfoLog').' - '.lang($infolog->filters['own-open-today']);
 		unset($infolog);
 

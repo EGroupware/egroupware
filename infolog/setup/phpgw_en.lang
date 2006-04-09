@@ -92,6 +92,7 @@ description	infolog	en	Description
 determines the order the fields are displayed	infolog	en	determines the order the fields are displayed
 disables a status without deleting it	infolog	en	disables a status without deleting it
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	en	do you want a confirmation of the responsible on: accepting, finishing the task or both
+don't show infolog	infolog	en	DON'T show InfoLog
 done	infolog	en	done
 download	infolog	en	Download
 duration	infolog	en	Duration
@@ -134,6 +135,7 @@ infolog - new subproject	infolog	en	InfoLog - New Subproject
 infolog - subprojects from	infolog	en	InfoLog - Subprojects from
 infolog entry deleted	infolog	en	InfoLog entry deleted
 infolog entry saved	infolog	en	InfoLog entry saved
+infolog filter for the main screen	infolog	en	InfoLog filter for the main screen
 infolog list	infolog	en	InfoLog list
 infolog preferences	common	en	InfoLog preferences
 infolog-fieldname	infolog	en	Info Log-Fieldname
@@ -154,7 +156,6 @@ location	infolog	en	Location
 longer textual description	infolog	en	longer textual description
 low	infolog	en	low
 max length of the input [, length of the inputfield (optional)]	infolog	en	max length of the input [, length of the inputfield (optional)]
-max number of entries to display on the main screen	infolog	en	Max number of entries to display on the main screen
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of new type to create	infolog	en	name of new type to create
 never hide search and filters	infolog	en	Never hide search and filters
@@ -176,9 +177,9 @@ number of records to read (%1)	infolog	en	Number of records to read (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	en	number of row for a multiline inputfield or line of a multi-select-box
 offer	infolog	en	offer
 ongoing	infolog	en	ongoing
+only for details	infolog	en	Only for details
 only the attachments	infolog	en	only the attachments
 only the links	infolog	en	only the links
-only up to this number of entries are displayed on the main screen.	infolog	en	Only up to this number of entries are displayed on the main screen.
 open	infolog	en	open
 optional note to the link	infolog	en	optional note to the Link
 order	infolog	en	Order
@@ -233,18 +234,18 @@ select an entry to link with	infolog	en	Select an entry to link with
 select to filter by owner	infolog	en	select to filter by owner
 select to filter by responsible	infolog	en	select to filter by responsible
 sets the status of this entry and its subs to done	infolog	en	Sets the status of this entry and its subs to done
-should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog display your open entries - not finised tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	en	Should InfoLog show Subtasks, -calls or -notes in the normal view or not. You can always view the subs via their parent.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	en	Should InfoLog show the links to other applications and/or the file-attachments in the InfoLog list (normal view when you enter InfoLog).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	en	Should InfoLog show up on the main screen and with which filter. Works only if you dont selected an application for the main screen (in your preferences).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	en	Should InfoLog use full names (surname and familyname) or just the loginnames.
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	en	Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.
+should the infolog list show the column "last modified".	infolog	en	Should the Infolog list show the column "last modified".
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	en	Should the Infolog list show the percent done only for status ongoing or two separate icons.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	en	should this entry only be visible to you and people you grant privat access via the ACL
 show a column for used and planned times in the list.	infolog	en	Show a column for used and planned times in the list.
 show full usernames	infolog	en	Show full usernames
 show in the infolog list	infolog	en	Show in the InfoLog list
-show list of upcoming entries	infolog	en	show list of upcoming entries
-show open entries: tasks/calls/notes on main screen	infolog	en	Show open entries: Tasks/Calls/Notes on main screen
+show last modified	infolog	en	Show last modified
 show status and percent done separate	infolog	en	Show status and percent done separate
 show ticket id	infolog	en	Show ticket Id
 show times	infolog	en	Show times

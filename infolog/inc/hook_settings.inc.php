@@ -13,18 +13,21 @@
 	/* $Id$ */
 
 	/* Setup some values to fill the array of this app's settings below */
-	$show_entries = array(
-		0 => lang('No'),
-		1 => lang('Yes'),
-		2 => lang('Yes').' - '.lang('show list of upcoming entries'),
-	);
-
 	$ui =& CreateObject('infolog.uiinfolog');	// need some labels from
+	$filters = $show_home = array();
+	$show_home[] = lang("DON'T show InfoLog");
 	foreach($ui->filters as $key => $label)
 	{
-		$filters[$key] = lang($label);
+		$show_home[$key] = $filters[$key] = lang($label);
 	}
 	unset($ui);
+
+	// migrage old filter-pref 1,2 to the filter one 'own-open-today'
+	if (in_array($GLOBALS['egw']->preferences->{$GLOBALS['type']}['homeShowEvents'],array('1','2')))
+	{
+		$GLOBALS['egw']->preferences->add('infolog','homeShowEvents','own-open-today',$GLOBALS['type']);
+		$GLOBALS['egw']->preferences->save_repository();
+	}
 	$show_links = array(
 		'all'    => lang('all links and attachments'),
 		'links'  => lang('only the links'),
@@ -32,33 +35,28 @@
 		'none'   => lang('no links or attachments'),
  		'no_describtion' => lang('no describtion, links or attachments'),
 	);
+	$show_details = array(
+		0 => lang('No'),
+		1 => lang('Yes'),
+		2 => lang('Only for details'),
+	);
 	/* Settings array for this app */
 	$GLOBALS['settings'] = array(
-		'homeShowEvents' => array(
-			'type'   => 'select',
-			'label'  => 'Show open entries: Tasks/Calls/Notes on main screen',
-			'name'   => 'homeShowEvents',
-			'values' => $show_entries,
-			'help'   => 'Should InfoLog display your open entries - not finished tasks, phonecalls or notes - on the main screen. Works only if you dont selected an application for the main screen (in your preferences).',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'mainscreen_maxshow' => array(
-			'type'   => 'input',
-			'label'  => 'Max number of entries to display on the main screen',
-			'name'   => 'mainscreen_maxshow',
-			'size'    => 3,
-			'maxsize'    => 10,
-			'help'   => 'Only up to this number of entries are displayed on the main screen.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
 		'defaultFilter' => array(
 			'type'   => 'select',
 			'label'  => 'Default Filter for InfoLog',
 			'name'   => 'defaultFilter',
 			'values' => $filters,
 			'help'   => 'This is the filter InfoLog uses when you enter the application. Filters limit the entries to show in the actual view. There are filters to show only finished, still open or futures entries of yourself or all users.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'homeShowEvents' => array(
+			'type'   => 'select',
+			'label'  => 'InfoLog filter for the main screen',
+			'name'   => 'homeShowEvents',
+			'values' => $show_home,
+			'help'   => 'Should InfoLog show up on the main screen and with which filter. Works only if you dont selected an application for the main screen (in your preferences).',
 			'xmlrpc' => True,
 			'admin'  => False
 		),
@@ -88,26 +86,38 @@
 			'admin'  => False
 		),
 		'show_times' => array(
-			'type'   => 'check',
+			'type'   => 'select',
 			'label'  => 'Show times',
 			'name'   => 'show_times',
+			'values' => $show_details,
 			'help'   => 'Show a column for used and planned times in the list.',
 			'xmlrpc' => True,
 			'admin'  => False
 		),
 		'show_percent' => array(
-			'type'   => 'check',
+			'type'   => 'select',
 			'label'  => 'Show status and percent done separate',
 			'name'   => 'show_percent',
+			'values' => $show_details,
 			'help'   => 'Should the Infolog list show the percent done only for status ongoing or two separate icons.',
 			'xmlrpc' => True,
 			'admin'  => False
 		),
 		'show_id' => array(
-			'type'   => 'check',
+			'type'   => 'select',
 			'label'  => 'Show ticket Id',
 			'name'   => 'show_id',
+			'values' => $show_details,
 			'help'   => 'Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'show_modified' => array(
+			'type'   => 'select',
+			'label'  => 'Show last modified',
+			'name'   => 'show_modified',
+			'values' => $show_details,
+			'help'   => 'Should the Infolog list show the column "last modified".',
 			'xmlrpc' => True,
 			'admin'  => False
 		),
@@ -126,6 +136,7 @@
 		),
 	);
 
-	unset($show_entries);
+	unset($show_home);
+	unset($show_details);
 	unset($filters);
 	unset($show_links);
