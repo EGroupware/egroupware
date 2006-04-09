@@ -77,7 +77,7 @@
 	$GLOBALS['egw']->translation->add_app('mainscreen');
 	if (lang('mainscreen_message') != 'mainscreen_message*')
 	{
-		echo '<div style="text-align: center;">' . stripslashes(lang('mainscreen_message')) . "</div>\n";
+		echo '<div style="text-align: center;">' . lang('mainscreen_message') . "</div>\n";
 	}
 
 	/*
@@ -215,24 +215,15 @@
 		}
 		$varnames = $portal_oldvarnames;
 		$varnames[] = 'homepage_display';
-		$thisd = 0;
 		foreach($varnames as $varcheck)
 		{
 			//echo "$appname:$varcheck=".$GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck]."<br>";
-			if($GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck]=='True')
+			$thisd = (int)$GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck];
+			if (!$thisd && $GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck]) $thisd = 1;
+			if($thisd>0)
 			{
-				$thisd = 1;
+				//echo "Found $appname=$_thisd through $varcheck<br>";
 				break;
-			}
-			else
-			{
-				$_thisd = (int)$GLOBALS['egw_info']['user']['preferences'][$appname][$varcheck];
-				if($_thisd>0)
-				{
-					//echo "Found $appname=$_thisd through $varcheck<br>";
-					$thisd = $_thisd;
-					break;
-				}
 			}
 		}
 		//echo "$appname: $thisd<br>";
