@@ -219,8 +219,8 @@
 				} else {
 					$GLOBALS['current_config']['temp_dir'] = 'c:\\path\\to\\temp\\dir';
 				}
-				$GLOBALS['current_config']['files_dir'] = 'c:\\programme files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
-				$GLOBALS['current_config']['backup_dir'] = 'c:\\programme files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
+				$GLOBALS['current_config']['files_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\files';
+				$GLOBALS['current_config']['backup_dir'] = 'c:\\Program files\\'.$egroupwareDirName.'\\'.$GLOBALS['egw_setup']->ConfigDomain.'\\backup';
 			} 
 			$datetime =& CreateObject('phpgwapi.datetime');
 			$GLOBALS['current_config']['tz_offset'] = $datetime->getbestguess();
