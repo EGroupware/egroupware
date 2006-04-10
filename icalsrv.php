@@ -10,8 +10,8 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.34-ng-a5x first version with xmlrpc copied session handling
-   * @date 20060407
+   * @version 0.9.36-ng-a1 first version for NAPI-3.1 (write in non owner rscs)
+   * @date 20060410
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * (see: @url http://www.egroupware.org  )
    *
@@ -48,7 +48,7 @@ $isdebug = False;
 /** Disallow users to import in non owned calendars and infologs
  * @var boolean $disable_nonowner_import
  */
-$disable_nonowner_import = true;
+$disable_nonowner_import = false;
 
 // icalsrv variant with session setup modeled after xmlrpc.php
 
@@ -427,6 +427,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT')  {
 	  fail_exit('importing in non owner calendars currently disabled', '403');
 	}
   }
+  if(isset($reqvircal_owner_id) && ($reqvircal_owner_id < 0)){
+	error_log('icalsrv.php: importing in group calendars not allowed');
+	fail_exit('importing in groupcalendars is not allowed', '403');
+  }
+
   // I0 read the payload
   $logmsg = 'IMPORTING in '. $importMode . ' mode';
   $fpput = fopen("php://input", "r");
