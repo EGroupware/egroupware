@@ -30,13 +30,14 @@
 		var $type = 'csv';
 
 		var $export = array(
-			'title'               => 'Anrede',
+			'n_prefix'            => 'Anrede',
 			'n_given'             => 'Vorname',
 			'n_middle'            => 'Weitere Vornamen',
 			'n_family'            => 'Nachname',
 			'n_suffix'            => 'Suffix',
 			'org_name'            => 'Firma',
 			'org_unit'            => 'Abteilung',
+			'title'               => 'Position',
 			'adr_one_street'      => 'Straße geschäftlich',
 			'address2'            => 'Straße geschäftlich 2',
 			'address3'            => 'Straße geschäftlich 3',
