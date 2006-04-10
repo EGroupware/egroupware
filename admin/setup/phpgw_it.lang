@@ -5,6 +5,7 @@
 (default no, leave it off if you dont use it)	admin	it	(predefinito No, lascialo così se non lo usi)
 (stored password will not be shown here)	admin	it	(La password memorizzata non verrà mostrata qui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	it	(Per installare nuove applicazioni utilizzare<br><a href="setup/" target="setup">Setup</a> [Gestione Applicazioni] !!!)
+-  type	admin	it	- tipo
 accesslog and bruteforce defense	admin	it	Log Accessi e difesa BruteForce
 account active	admin	it	Account attivo
 account has been created	common	it	L'account è stato creato
@@ -47,12 +48,15 @@ allow anonymous access to this app	admin	it	Consenti accesso anonimo a questa ap
 alternate email address	admin	it	indirizzo email alternativo
 anonymous user	admin	it	Utente anonimo
 anonymous user (not shown in list sessions)	admin	it	Utente Anonimo (non visualizzato nella lista delle sessioni)
+anonymous user does not exist!	admin	it	L'Utente Anonimo NON esiste!
+anonymous user has no run-rights for the application!	admin	it	L'Utente Anonimo NON ha diritti di esecuzione per l'applicazione!
 appearance	admin	it	Aspetto
 application	admin	it	Applicazione
 application name	admin	it	Nome applicazione
 application title	admin	it	Titolo applicazione
 applications	admin	it	Applicazioni
 applications list	admin	it	Elenco applicazioni
+applies the changes	admin	it	applica le modifiche
 are you sure you want to delete the application %1 ?	admin	it	Sei sicuro di voler cancellare l'applicazione %1 ?
 are you sure you want to delete this account ?	admin	it	Vuoi davvero eliminare questo account ?
 are you sure you want to delete this application ?	admin	it	Vuoi davvero eliminare questa applicazione ?
@@ -90,6 +94,7 @@ click to select a color	admin	it	Clicca per selezionare un colore
 color	admin	it	Colore
 country selection	admin	it	Selezione Nazione
 create group	admin	it	Crea gruppo
+creates a new field	admin	it	crea un nuovo campo
 crontab only (recomended)	admin	it	solo crontab (raccomandato)
 custom fields	admin	it	Campi Personalizzati
 cyrus imap server	admin	it	Server IMAP Cyrus
@@ -112,6 +117,7 @@ delete the group	admin	it	cancella il gruppo
 delete this category	admin	it	cancella questa categoria
 delete this group	admin	it	cancella questo gruppo
 delete this user	admin	it	cancella questo utente
+deletes this field	admin	it	cancella questo campo
 deliver extern	admin	it	invia esterno
 deny access to access log	admin	it	Nega l'accesso ai log di accesso
 deny access to application registery	admin	it	Nega l'accesso alla registrazione applicazioni
@@ -129,6 +135,7 @@ deny access to site configuration	admin	it	Nega l'accesso alla configurazione de
 deny access to user accounts	admin	it	Nega l'accesso alla gestione degli account utente
 deny all users access to grant other users access to their entries ?	admin	it	Nega a tutti gli utenti l'accesso ai dati inseriti dagli altri utenti ?
 description can not exceed 255 characters in length !	admin	it	La descrizione non può essere più lunga di 255 caratteri!
+determines the order the fields are displayed	admin	it	determina l'ordine di visualizzazione dei campi
 disable "auto completion" of the login form	admin	it	Disabilita l' "auto completamento" del form di login
 disable wysiwyg-editor	admin	it	disabilita editor WYSIWYG
 disabled (not recomended)	admin	it	disabilitato (non consigliato)
@@ -137,6 +144,8 @@ do not delete the category and return back to the list	admin	it	NON eliminare la
 do you also want to delete all global subcategories ?	admin	it	Vuoi eliminare anche tutte le sotto-categorie globali ?
 do you want to delete all global subcategories ?	admin	it	Vuoi cancellare tutte le sotto-categorie globali ?
 do you want to move all global subcategories one level down ?	admin	it	Vuoi spostare tutte le sotto-categorie globali sotto di un livello ?
+each value is a line like <id>[=<label>]	admin	it	ogni valore è una linea come <id>[=<label>]
+each value is a line like id[=label]	admin	it	ogni valore è una linea come id[=label]
 edit account	admin	it	Modifica account
 edit application	admin	it	Modifica Applicazione
 edit email settings	admin	it	Modifica impostazioni email
@@ -183,10 +192,12 @@ enter your smtp server hostname or ip address	admin	it	Inserisci l'host o l'IP d
 enter your smtp server port	admin	it	Inserisci la porta del server SMTP
 error canceling timer, maybe there's none set !!!	admin	it	Errore cancellando il timer, forse non è impostato !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	it	Errore impostando il timer, sintassi sbagliata o forse uno è già in esecuzione !!!
+error! no appname found	admin	it	Errore! Nome applicazione non trovato
 error: %1 not found or other error !!!	admin	it	Errore: %1 non trovato o altro errore !!!
 expires	admin	it	Scade
 explanation of ldapman	admin	it	Questo modulo è stato testato fino ad oggi per POSTFIX, LDAP, Courier-IMAP e necessita degli schemi CORE e QMAIL(OID7914). Ulteriori dettagli riguardo l'uso e la configurazione di questo sistema possono essere trovati in README.ldap nella cartella documenti di ADMIN.
 fallback (after each pageview)	admin	it	fallback (dopo ogni cambio pagina)
+field '%1' already exists !!!	admin	it	Il campo '%1' esiste già !!!
 file space	admin	it	Spazio per i file
 file space must be an integer	admin	it	Lo spazio per i file deve essere un intero
 find and register all application hooks	admin	it	Trova e registra tutti gli gli agganci alle chiamate delle applicazioni
@@ -194,7 +205,7 @@ for the times above	admin	it	per il tempo sovrastante
 for the times below (empty values count as '*', all empty = every minute)	admin	it	per i tempi sottostanti (un valore vuoto equivale a '*', tutti vuoti = ogni minuto)
 force selectbox	admin	it	Forza elenco a discesa
 forward also to	admin	it	inoltra anche a
-forward email's to	admin	it	inoltra email a
+forward emails to	admin	it	inoltra le email a
 forward only	admin	it	inoltra solo
 global categories	common	it	Categorie Globali
 group ?	admin	it	gruppo ?
@@ -240,6 +251,8 @@ ldap rootdn	admin	it	LDAP rootdn
 leave empty for no quota	admin	it	lascia vuoto per nessuna quota
 leave the category untouched and return back to the list	admin	it	lascia le categorie inalterate e ritorna alla lista
 leave the group untouched and return back to the list	admin	it	Lascia i gruppi inalterati e ritorna alla lista
+leaves without saveing	admin	it	esce senza salvare
+length<br>rows	admin	it	Lunghezza<br>Righe
 list config settings	admin	it	Lista impostazioni di configurazione
 list current sessions	admin	it	Lista sessioni currenti
 list of current users	admin	it	lista utenti attivi
@@ -253,6 +266,7 @@ mail settings	admin	it	Impostazioni Mail
 main email-address	admin	it	Indirizzo email Principale
 main screen message	admin	it	Messaggio nella schermata principale
 manager	admin	it	Manager
+max length of the input [, length of the inputfield (optional)]	admin	it	lunghezza massima del input [, length of the inputfield (optional)]
 maximum account id (e.g. 65535 or 1000000)	admin	it	ID massimo per l'account (es. 65535 or 100000, etc.)
 maximum entries in click path history	admin	it	Voci massime cliccando nella history dei path
 message has been updated	admin	it	il messaggio è stato aggiornato
@@ -263,6 +277,7 @@ mode	admin	it	Modalità
 month	admin	it	Mese
 name must not be empty !!!	admin	it	Il nome non può essere vuoto !!!
 new group name	admin	it	Nome nuovo gruppo
+new name	admin	it	nuovo nome
 new password [ leave blank for no change ]	admin	it	Nuova password [ Lascia in bianco per non cambiarla ]
 next run	admin	it	Prossima esecuzione
 no algorithms available	admin	it	nessun algoritmo disponibile
@@ -275,6 +290,7 @@ no permission to add groups	admin	it	nessun permesso di aggiunta gruppi
 no permission to add users	admin	it	nessun permesso di aggiunta utenti
 no permission to create groups	admin	it	nessun permesso di creazione gruppi
 note: ssl available only if php is compiled with curl support	admin	it	Nota: SSL dispobile solo con il PHP compilato con il supporto curl
+order	admin	it	Ordine
 outbound	admin	it	in uscita
 passthrough	admin	it	passthrough
 password for smtp-authentication	admin	it	Password per autenticazione SMTP
@@ -309,6 +325,7 @@ route all mails to	admin	it	Indirizza tutte le mail a
 run asynchronous services	admin	it	Esegui lo Schedulatore
 save the category	admin	it	salva la categoria
 save the category and return back to the list	admin	it	salva la categoria e ritorna alla lista
+saves the changes made and leaves	admin	it	salva le modifiche fatte ed esce
 search accounts	admin	it	Cerca account
 search categories	admin	it	Cerca categorie
 search groups	admin	it	Cerca gruppi
@@ -351,6 +368,7 @@ standard smtp-server	admin	it	Server SMTP standard
 start testjob!	admin	it	Inizia il Lavoro di Test
 submit changes	admin	it	Invia Modifiche
 submit the search string	admin	it	Invia la stringa di ricerca
+subtype	admin	it	Sottotipo
 template selection	admin	it	Selezione Aspetto
 text entry	admin	it	Inserimento di Testo
 that application name already exists.	admin	it	Quel nome di applicazione esiste già
@@ -363,7 +381,9 @@ the api requires an upgrade	admin	it	Le API hanno bisogno di essere aggiornate
 the groups must include the primary group	admin	it	I gruppi devono includere il gruppo principale
 the login and password can not be the same	admin	it	La login e la pasword non possono essere uguali
 the loginid can not be more then 8 characters	admin	it	La loginid non può essere più lunga di 8 caratteri
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	it	il nome usato internamente (<= 20 caratteri), cambiarlo rende i dati esistenti indisponibili
 the testjob sends you a mail everytime it is called.	admin	it	Il TestJob invia una e-mail ogni volta che viene richiamato.
+the text displayed to the user	admin	it	il testo mostrato all'utente
 the two passwords are not the same	admin	it	Le due password non coincidono
 the users bellow are still members of group %1	admin	it	L'utente sottostante fa ancora parte del gruppo %1
 there already is a group with this name. userid's can not have the same name as a groupid	admin	it	C'è già un gruppo con questo nome. L'ID utente non può avere lo stesso nome di un gruppo.
@@ -378,6 +398,8 @@ top	admin	it	in alto
 total records	admin	it	Inserimenti totali
 trust level	admin	it	Livello di Fiducia
 trust relationship	admin	it	Relazioni Fidate
+type '%1' already exists !!!	admin	it	il tipo '%1' esiste già !!!
+type of customfield	admin	it	Tipo di campo personalizzato
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	it	Sotto windows devi installare lo schedulatore %1manualmente%2 o usare la modalità fallback. Fallback significa che i lavori vengono controllati solo dopo ogni vista pagina !!!
 use cookies to pass sessionid	admin	it	utilizza i cookie per passare l'id di sessione
 use pure html compliant code (not fully working yet)	admin	it	Usa codice HTML compliant (non ancora completamente implementato)
@@ -397,7 +419,6 @@ view this user	admin	it	visualizza questo utente
 view user account	admin	it	Visualizza account utente
 who would you like to transfer all records owned by the deleted user to?	admin	it	A chi vuoi trasferire TUTTI i dati di questo utente?
 would you like egroupware to cache the egw info array ?	admin	it	Vuoi che eGroupWare utilizzi la cache per l'array egw info?
-would you like egroupware to cache the phpgw info array ?	admin	it	Vuoi che eGroupWare ricordi l'array phpgw info ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	it	Vuoi che eGroupWare controlli se c'è una nuova versione<br>quando un amministratore effettua il login ?
 would you like egroupware to check for new application versions when admins login ?	admin	it	Vuoi che eGroupWare controlli se ci sono nuove versioni delle applicazioni<br>quando un amministratore effettua il login ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	it	Vuoi caricare automaticamente i nuovi file di traduzione (al momento del login) ?
@@ -405,6 +426,7 @@ would you like to show each application's upgrade status ?	admin	it	Vuoi che ven
 xml-rpc	admin	it	XML-RPC
 you have entered an invalid expiration date	admin	it	Hai inserito una data di scadenza non valida
 you have to enter a name, to create a new field!!!	admin	it	Devi inserire un nome, per creare un nuovo campo!!!
+you have to enter a name, to create a new type!!!	admin	it	Devi inserire un nome, per creare un nuovo tipo!!!
 you must add at least 1 permission or group to this account	admin	it	Devi aggiungere almeno 1 permesso o gruppo a questo account
 you must enter a group name.	admin	it	Devi inserire un nome di gruppo
 you must enter a lastname	admin	it	Devi inserire un cognome

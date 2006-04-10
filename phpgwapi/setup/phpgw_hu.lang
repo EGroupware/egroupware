@@ -22,6 +22,7 @@ _table properties...	htmlarea-ContextMenu	hu	Táblázat tulajdonságai
 a editor instance must be focused before using this command.	tinymce	hu	A szerkeszteni kívánt területet ki kell jelölni ezen funkció használata elõtt.
 about	common	hu	Névjegy
 about %1	common	hu	%1 névjegye
+about egroupware	common	hu	eGroupware névjegye
 about the calendar	jscalendar	hu	Naptár névjegye
 about this editor	htmlarea	hu	A szerkesztõ névjegye
 access	common	hu	Hozzáférés
@@ -62,6 +63,7 @@ angola	common	hu	Angola
 anguilla	common	hu	Anguilla
 antarctica	common	hu	Antarktisz
 antigua and barbuda	common	hu	Antigua és Barbuda
+application	common	hu	Alkalmazás
 apply	common	hu	Alkalmaz
 april	common	hu	Április
 are you sure you want to delete these entries ?	common	hu	Biztosan törölni akarja ezeket a bejegyzéseket?
@@ -73,7 +75,9 @@ august	common	hu	Augusztus
 australia	common	hu	Ausztrália
 austria	common	hu	Ausztria
 author	common	hu	Szerzõ
+autohide sidebox menu's	common	hu	Oldalmenük automatikus elrejtése
 autohide sidebox menus	common	hu	Oldalmenük automatikus elrejtése
+automatically hide the sidebox menu's?	common	hu	Az oldalmenüket automatikusan elrejtse?
 automatically hide the sidebox menus?	common	hu	Az oldalmenüket automatikusan elrejtse?
 autosave default category	common	hu	Alapértelmezett kategória automatikus mentése
 azerbaijan	common	hu	Azerbajdzsán
@@ -82,6 +86,7 @@ back to user login	common	hu	Vissza a felhasználói bejelentkezéshez
 background	htmlarea-TableOperations	hu	Háttér
 background color	htmlarea	hu	Háttérszín
 background color:	common	hu	Háttérszín:
+backupdir '%1' is not writeable by the webserver	common	hu	'%1' könyvtár nem írható a webszerver számára
 bad login or password	common	hu	Rossz felhasználó vagy jelszó
 bahamas	common	hu	Bahamák
 bahrain	common	hu	Bahrain
@@ -98,6 +103,7 @@ bg color	tinymce	hu	Háttérszín
 bhutan	common	hu	Bhután
 blocked, too many attempts	common	hu	Túl sok próbálkozás, blokkolva!
 bold	common	hu	Félkövér
+bold.gif	common	hu	Félkövér.gif
 bolivia	common	hu	Bolívia
 border	common	hu	Keret
 border color	tinymce	hu	Keretszín
@@ -119,6 +125,8 @@ cambodia	common	hu	Kambodzsa
 cameroon	common	hu	Kamerun
 canada	common	hu	Kanada
 cancel	common	hu	Mégsem
+cannot replace %1 because it is a directory	common	hu	%1 nem cserélhetõ, mert könyvtár
+cant open '%1' for %2	common	hu	'%1' nem nyitható meg %2 számára
 cape verde	common	hu	Zöld-foki Köztársaság
 caption	common	hu	Felirat - needfix
 categories	common	hu	Kategóriák
@@ -132,6 +140,7 @@ cell properties	htmlarea-TableOperations	hu	Cella tulajdonságok
 cellpadding	tinymce	hu	Cella helykitöltés
 cellspacing	tinymce	hu	Cellák helykitöltése
 center	tinymce	hu	Középre
+centered	common	hu	Középre zárt
 central african republic	common	hu	Közép-Afrikai Köztársaság
 chad	common	hu	Csád
 change	common	hu	Változtat
@@ -142,6 +151,11 @@ check installation	common	hu	Telepítés ellenõrzése
 check now	common	hu	Ellenõrzés most
 chile	common	hu	Chile
 china	common	hu	Kína
+choose a background color	common	hu	Háttérszín kiválasztása
+choose a background color for the icons	common	hu	Ikon háttérszínének kiválasztása
+choose a background image.	common	hu	Háttérkép kiválasztása
+choose a background style.	common	hu	Háttér stílus kiválasztása
+choose a text color for the icons	common	hu	Ikon szövegszín kiválasztása
 choose directory to move selected folders and files to.	tinymce	hu	Célkönyvtár kiválasztása a kijelölt mappák és állományok mozgatásához.
 choose list style type (for ordered lists)	htmlarea-ListType	hu	Lista stílus választása (rendezett listához)
 choose the category	common	hu	Kategória választás
@@ -155,6 +169,7 @@ click	common	hu	Kattintás
 click or mouse over to show menus	common	hu	Menük megjelenítése kattintással vagy egérkurzor fölé helyezéssel
 click or mouse over to show menus?	common	hu	Menü megjelenítés kattintással vagy egérkurzor fölé helyezéssel?
 close	common	hu	Bezár
+close sidebox	common	hu	Oldalmenü bezárása
 cocos (keeling) islands	common	hu	Kókusz (Keeling)-szigetek
 collapsed borders	htmlarea-TableOperations	hu	Összeomlott keretek. - needfix
 colombia	common	hu	Kolumbia
@@ -167,6 +182,7 @@ company	common	hu	Társaság
 configuration problem	tinymce	hu	Konfigurációs probléma
 congo	common	hu	Kongó
 congo, the democratic republic of the	common	hu	Kongó (Kongói Köztársaság)
+contacting server...	common	hu	Csatlakozás szerverhez...
 cook islands	common	hu	Cook-szigetek
 copy	common	hu	Másol
 copy selection	htmlarea	hu	Kijelölés másolása
@@ -174,6 +190,7 @@ copy table row	tinymce	hu	Táblázat sorának másolása
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	hu	Másolás/Kivágás/Beillesztés nem elérhetõ alapértelmezésként a Mozilla és Firefox böngészõkben.\nSzeretne többet tudni errõl?
 costa rica	common	hu	Costa Rica
 cote d ivoire	common	hu	Elefántcsontpart
+could not contact server. operation timed out!	common	hu	Szerverhez csatlakozás nem sikerült. Idõtúllépés.
 create	common	hu	Létrehoz
 create a link	htmlarea-ContextMenu	hu	Hivatkozás létrehozása
 created by	common	hu	Készítette
@@ -213,6 +230,7 @@ details	common	hu	Részletek
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	hu	Letiltja az Internet Explorer 5.5+ böngészõk esetén a PNG típusú képek átlátszóságának kezelését javító szkript futtatását? (Javaslat: Firefox böngészõ használata)
 dictionary	htmlarea-SpellChecker	hu	Szótár
 direction	tinymce	hu	Irány
+direction left to right	common	hu	Balról jobbra irány
 direction right to left	tinymce	hu	Jobbról balra irány
 directory	tinymce	hu	Könyvtár
 disable internet explorer png-image-bugfix	common	hu	Internet Explorer png-image-bugfix tiltása
@@ -841,6 +859,7 @@ turkey	common	hu	Törökország
 turkmenistan	common	hu	Türkmenisztán
 turks and caicos islands	common	hu	Turks és Caicos-szigetek
 tuvalu	common	hu	Tuvalu
+type	common	hu	Típus
 uganda	common	hu	Uganda
 ukraine	common	hu	Ukrajna
 underline	common	hu	Aláhúzott
@@ -857,7 +876,7 @@ unlink the current element	htmlarea-ContextMenu	hu	Aktuáliselemhivatkozás törlés
 unordered list	tinymce	hu	Felsorolás (nem rendezett)
 unset color	htmlarea-TableOperations	hu	Szín törlése
 up	tinymce	hu	Fel
-update	common	hu	Beillesztés
+update	common	hu	Frissít
 upload	common	hu	Feltöltés
 upload image	htmlarea-UploadImage	hu	Kép feltöltése
 uploading...	tinymce	hu	Feltöltés folyamatban...

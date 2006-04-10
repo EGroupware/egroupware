@@ -7,6 +7,7 @@ create new links	timesheet	hu	Új hivatkozás létrehozása
 delete this entry	timesheet	hu	Bejegyzés törlése
 edit this entry	timesheet	hu	Bejegyzés szerkesztése
 empty if identical to duration	timesheet	hu	üres, ha azonos az idõtartammal
+end	timesheet	hu	Befejezés
 entry deleted	timesheet	hu	Bejegyzés törölve
 entry saved	timesheet	hu	Bejegyzés elmentve
 error deleting the entry!!!	timesheet	hu	Bejegyzés törlése közben hiba lépett fel!!!
@@ -14,11 +15,12 @@ error saving the entry!!!	timesheet	hu	Bejegyzés mentése közben hiba lépett fel!
 existing links	timesheet	hu	Meglévõ hivatkozások
 general	timesheet	hu	Általános
 last modified	timesheet	hu	Utolsó módosítás
-last month	timesheet	hu	Korábbi hónap
-last week	timesheet	hu	Korábbi hét
-last year	timesheet	hu	Korábbi év
+last month	timesheet	hu	Elõzõ hónap
+last week	timesheet	hu	Elzõ hét
+last year	timesheet	hu	Elõzõ év
+leave it empty for a full week	timesheet	hu	Teljes héthez hagyja üresen
 links	timesheet	hu	Hivatkozások
-no details	timesheet	hu	nincsenek részletek
+no details	timesheet	hu	Részletek nélkül
 permission denied!!!	timesheet	hu	Hozzáférés megtagadva!!!
 price	timesheet	hu	Ár
 quantity	timesheet	hu	Mennyiség
@@ -27,11 +29,14 @@ saves the changes made	timesheet	hu	Változások elmentése
 saves this entry and add a new one	timesheet	hu	Bejegyzés elmentése és új hozzáadása
 select a price	timesheet	hu	Ár kiválasztása
 select a project	timesheet	hu	Projekt kiválasztása
+start	timesheet	hu	Kezdés
+sum %1:	timesheet	hu	Összesen %1:
 this month	timesheet	hu	Folyó hónap
 this week	timesheet	hu	Folyó hét
 this year	timesheet	hu	Folyó év
-timesheet	common	hu	Idõtábla - frappánsabbat kellene találni
+timesheet	common	hu	Idõkártya
 unitprice	timesheet	hu	Egységár
 view this entry	timesheet	hu	Bejegyzés megtekintése
+week	timesheet	hu	Hét
 yesterday	timesheet	hu	Tegnap
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	hu	Az adatbázis nem friss (%1 <-> %2), kérjük %3frissítse%4 az adatbázist.

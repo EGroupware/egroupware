@@ -2,10 +2,10 @@
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	hu	%1 bejegyzés beolvasva (nincs importálva, importáláshoz %2vissza%3 kell lépni és meg kell szüntetni a 'Test Import' opciót)
 (e.g. 1969)	addressbook	hu	(pl.: 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	hu	<b>Nem találtam konverzió típust <none>.</b>Konverzió típus választása szükséges.
-@-eval() is only availible to admins!!!	addressbook	hu	@-eval() csak adminisztrátoroknak érhetö el!!!
+@-eval() is only availible to admins!!!	addressbook	hu	@-eval() csak adminisztrátoroknak érhetõ el!!!
 actions	addressbook	hu	Mûveletek
 add a single entry by passing the fields.	addressbook	hu	Egy bejegyzés hozzáadása a mezõk átadásával
-add custom field	addressbook	hu	Egyéni mezö hozzáadása
+add custom field	addressbook	hu	Egyéni mezõ hozzáadása
 address book	common	hu	Címjegyzék
 address book - vcard in	addressbook	hu	Címjegyzék - VCard formában
 address book - view	addressbook	hu	Címjegyzék - nézet
@@ -38,6 +38,8 @@ business zip code	addressbook	hu	Üzleti irányító szám
 car phone	addressbook	hu	Autó telefon
 cell phone	addressbook	hu	Mobiltelefon
 charset of file	addressbook	hu	Állomány karakterkészlete
+choose an icon for this contact type	addressbook	hu	Ikon választása ehhez a típusú Kapcsolathoz
+chosse an etemplate for this contact type	addressbook	hu	eTemplate választása ehhez a típusú Kapcsolathoz
 city	common	hu	Város
 company	common	hu	Társaság
 company name	common	hu	Cégnév
@@ -49,10 +51,11 @@ contact settings	admin	hu	Kapcsolat beállítások
 copied by %1, from record #%2.	addressbook	hu	Másolva %1 által, a #%2 bejegyzéstõl
 country	common	hu	Ország/megye
 create new links	addressbook	hu	Új hivatkozás létrehozása
-csv-fieldname	addressbook	hu	CSV-Mezönév
+credit	addressbook	hu	Hitel
+csv-fieldname	addressbook	hu	CSV-Mezõnév
 csv-filename	addressbook	hu	CSV-Fájlnév
 custom	addressbook	hu	Egyedi
-custom fields	addressbook	hu	Egyedi mezök
+custom fields	addressbook	hu	Egyedi mezõk
 debug output in browser	addressbook	hu	Nyomkövetés kimenet a böngészõben
 default filter	addressbook	hu	Alapértelmezett Szûrõ
 delete a single entry by passing the id.	addressbook	hu	Töröl egy bejegyzést az azonosító megadásával.
@@ -73,13 +76,13 @@ existing links	addressbook	hu	Meglévõ hivatkozások
 export	addressbook	hu	exportál
 export contacts	addressbook	hu	Kapcsolatok exportálása
 export file name	addressbook	hu	Export állomány neve
-export from addressbook	addressbook	hu	Export a Címjegyzékböl
+export from addressbook	addressbook	hu	Export a Címjegyzékbõl
 extra	addressbook	hu	Extra
 fax	addressbook	hu	Fax
 fax number	common	hu	Fax Szám
 field %1 has been added !	addressbook	hu	%1 mezõ hozzáadva!
-field %1 has been updated !	addressbook	hu	%1 mezö frissítve!
-field name	addressbook	hu	Mezö neve
+field %1 has been updated !	addressbook	hu	%1 mezõ frissítve!
+field name	addressbook	hu	Mezõ neve
 fields to show in address list	addressbook	hu	Címjegyzékben megjelenõ mezõk
 fieldseparator	addressbook	hu	Mezõ elválasztó
 full name	addressbook	hu	Teljes Neve
@@ -89,12 +92,13 @@ grant addressbook access	common	hu	Címjegyzék elérés engedélyezése
 home address type	addressbook	hu	Otthoni cím típusa
 home city	addressbook	hu	Otthoni Város
 home country	addressbook	hu	Otthoni ország
-home email	addressbook	hu	Otthoni  email
+home email	addressbook	hu	Otthoni email
 home email type	addressbook	hu	Otthoni email típusa
 home phone	addressbook	hu	Otthoni telefon
 home state	addressbook	hu	Otthoni megye
 home street	addressbook	hu	Otthoni utca
 home zip code	addressbook	hu	Otthoni postai irányítószám
+icon	addressbook	hu	Ikon
 import	addressbook	hu	Import
 import contacts	addressbook	hu	Kapcsolat importálás
 import csv-file into addressbook	addressbook	hu	CVS-Állomány importálása a Címjegyzékbe
@@ -103,8 +107,9 @@ import from	addressbook	hu	Importálás innen...
 import from ldif, csv, or vcard	addressbook	hu	Importálás LDIF, CSV, vagy VCard formátumból
 import from outlook	addressbook	hu	Importálás Outlookból
 import multiple vcard	addressbook	hu	Több vCard importálása
-import next set	addressbook	hu	Következö beállítás importálása
+import next set	addressbook	hu	Következõ beállítás importálása
 import_instructions	addressbook	hu	Netscape esetében meg kell nyitni a Címjegyzéket és ki kell választani az <b>Export</b> menüpontot a <b>File</b> menübõl. LDIF formátumban történik az exportálás.<p>Outlook esetében a <b>File</b> menübõl ki kell választani az <b>Import and export...</b> menüpontot. vCard formátumban történik az exportálás.
+income	addressbook	hu	Jövedelem
 international	addressbook	hu	Nemzetközi
 isdn phone	addressbook	hu	ISDN Telefon
 label	addressbook	hu	Címke
@@ -130,6 +135,7 @@ multiple vcard	addressbook	hu	Több vCard
 no vcard	addressbook	hu	Nem VCard
 number	addressbook	hu	Szám
 number of records to read (%1)	addressbook	hu	Bejegyzések száma olvasáshoz (%1)
+options for type	addressbook	hu	Típus opciók
 organisation	addressbook	hu	szervezet
 other number	addressbook	hu	Más telefonszám
 other phone	addressbook	hu	Egyéb telefon
@@ -142,6 +148,7 @@ postal	common	hu	Postai
 pref	addressbook	hu	elõtag
 prefix	addressbook	hu	Elõtag
 public key	addressbook	hu	Nyilvános kulcs
+publish into groups:	addressbook	hu	Megjelenítés a Csoportokban:
 read a list / search for entries.	addressbook	hu	Bejegyzések listája/keresése.
 read a list of entries.	addressbook	hu	Bejegyzés lista olvasása.
 read a single entry by passing the id and fieldlist.	addressbook	hu	Egyedi bejegyzés olvasása az azonositó és mezõlista alapján.

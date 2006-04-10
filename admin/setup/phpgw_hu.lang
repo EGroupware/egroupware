@@ -122,7 +122,7 @@ enter your smtp server hostname or ip address	admin	hu	Az SMTP-kiszolgáló hosztn
 enter your smtp server port	admin	hu	Az SMTP-kiszolgáló portszáma
 expires	admin	hu	Lejár
 forward only	admin	hu	csak továbbküldés
-global categories	common	hu	Általános kategóriák
+global categories	common	hu	Globális kategóriák
 group has been added	common	hu	A csoport hozzáadása megtörtént
 group has been deleted	common	hu	A csoport törlése megtörtént
 group has been updated	common	hu	A csoport frissítése megtörtént
