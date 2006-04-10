@@ -1,0 +1,79 @@
+application	filemanager	hu	Alkalmazás
+back to file manager	filemanager	hu	Vissza a Fájlkezelõbe
+comment	filemanager	hu	Megjegyzés
+comments cannot contain "%1"	filemanager	hu	Megjegyzés nem tartalmazhatja "%1"
+copied %1 to %2	filemanager	hu	%1 átmásolva ide: %2
+copy to	filemanager	hu	Másold ide:
+copy to:	filemanager	hu	Másold ide:
+could not copy %1 to %2	filemanager	hu	%1 nem másolható ide: %2
+could not copy file because no destination directory is given	filemanager	hu	Másolás nem lehetséges mert nincs megadva célkönyvtár
+could not create %1	filemanager	hu	%1 nem hozható létre
+could not create directory %1	filemanager	hu	%1 könyvtár nem hozható létre
+could not delete %1	filemanager	hu	%1 nem törölhetõ
+could not move %1 to %2	filemanager	hu	%1 nem mozgatható át ide: %2
+could not move file because no destination directory is given	filemanager	hu	Mozgatás nem lehetséges mert nincs megadva célkönyvtár
+could not rename %1 to %2	filemanager	hu	%1 nem nevezhetõ át erre: %2
+could not save %1	filemanager	hu	%1 nem menthetõ el
+create file	filemanager	hu	Fájl létrehozása
+create folder	filemanager	hu	Mappa létrehozása
+created	filemanager	hu	Létrehozva
+created %1	filemanager	hu	Létrehozva %1
+created by	filemanager	hu	Létrehozta
+created directory %1	filemanager	hu	%1 könyvtár létrehozva
+date	filemanager	hu	Dátum
+delete	filemanager	hu	Törlés
+deleted %1	filemanager	hu	%1 törölve
+directory	filemanager	hu	Könyvtár
+directory %1 already exists	filemanager	hu	%1 könyvtár már létezik
+directory %1 does not exist	filemanager	hu	%1 könyvtár nem létezik
+directory names cannot contain "%1"	filemanager	hu	Könyvtárnév nem tartalmazhatja: "%1"
+display attributes	filemanager	hu	Tulajdonságok mutatása
+download	filemanager	hu	Letölt
+edit	filemanager	hu	Szerkeszt
+edit comments	filemanager	hu	Megjegyzés szerkesztése
+execute	filemanager	hu	Végrehajt
+failed to create directory	filemanager	hu	Könyvtár létrehozás sikertelen
+fake base dir did not exist, egroupware created a new one.	filemanager	hu	Ál-Báziskönyvtár nem létezik, új létrehozása megtörtént. Nincs más teendõ.
+file	filemanager	hu	Fájl
+file %1 could not be created.	filemanager	hu	%1 fájl nem hozható létre.
+file name	filemanager	hu	Fájlnév
+filemanager	common	hu	Fájlkezelõ
+filemanager preferences	filemanager	hu	Fájlkezelõ tulajdonságok
+files	filemanager	hu	Fájlok
+files in this directory	filemanager	hu	A könyvtár fájljai
+folder	filemanager	hu	Mappa
+folder up	filemanager	hu	Felsõ mappa
+go home	filemanager	hu	Saját mappára ugrás
+go to	filemanager	hu	Ugorj ide
+go to %1	filemanager	hu	Ugorj ide: %1
+go to your home directory	filemanager	hu	Saját mappára ugrás
+go to:	filemanager	hu	Ugorj ide:
+go up	filemanager	hu	Egy szinttel feljebb
+home	filemanager	hu	Saját mappa
+location	filemanager	hu	Hely
+locked	filemanager	hu	Zárolt
+mime type	filemanager	hu	MIME típus
+modified	filemanager	hu	Módosítva
+modified by	filemanager	hu	Módosította:
+move to	filemanager	hu	Mozgatás ide:
+move to:	filemanager	hu	Mozgatás ide:
+owner	filemanager	hu	Tulajdonos
+preview %1	filemanager	hu	Elõnézet %1
+preview of %1	filemanager	hu	%1 elõnézete
+quick jump to	filemanager	hu	Gyors ugrás ide
+reload	filemanager	hu	Újratölt
+rename	filemanager	hu	Átnevez
+save %1	filemanager	hu	Mentés %1
+show	filemanager	hu	Mutat
+show ..	filemanager	hu	Mutat ..
+show .files	filemanager	hu	Mutat .files
+show command line (experimental. dangerous.)	filemanager	hu	Parancssor mutatása (VESZÉLYES! CSAK SAJÁT FELELÕSSÉGRE!)
+show help	filemanager	hu	Segítség mutatása
+size	filemanager	hu	Méret
+sort by:	filemanager	hu	Rendezés
+total files	filemanager	hu	Összes fájl
+up	filemanager	hu	Fel
+update	filemanager	hu	Frissít
+upload	filemanager	hu	Feltölt
+users	filemanager	hu	Felhasználók
+version	filemanager	hu	Verzió
