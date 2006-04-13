@@ -24,6 +24,8 @@
 		$GLOBALS['jerryr_tpl']->set_block('navbar','navbar_header','navbar_header');
 		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_blocks_header','extra_block_header');
 		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_block_row','extra_block_row');
+		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_block_row_raw','extra_block_row_raw');
+		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_block_row_no_link','extra_block_row_no_link');
 		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_block_spacer','extra_block_spacer');
 		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_blocks_footer','extra_blocks_footer');
 		$GLOBALS['jerryr_tpl']->set_block('navbar','sidebox_hide_header','sidebox_hide_header');
@@ -61,6 +63,7 @@
 				$title = $GLOBALS['egw_info']['apps'][$app]['title'];
 				$icon = '<img src="' . $app_data['icon'] . '" alt="' . $title . '" title="'. $title . '" border="0" />';
 
+
 				if($app=='home')
 				{
 					$title = lang('home');
@@ -77,24 +80,25 @@
 					{
 						$tdwidth = 100/($max_icons+2);
 					}
+					$tdwidth=round($tdwidth);
 
-					$app_icons .= '<td height="40" valign="bottom" align="center"><a href="' . $app_data['url'] . '"';
+					$app_icons .= '<td width="'.$tdwidth.'%" height="40" valign="bottom" align="center" style="text-align:center"><a href="' . $app_data['url'] . '"';
 
 					if(isset($GLOBALS['egw_info']['flags']['navbar_target']) && $GLOBALS['egw_info']['flags']['navbar_target'])
 					{
 						$app_icons .= ' target="' . $GLOBALS['egw_info']['flags']['navbar_target'] . '"';
 					}
 
-					$app_icons .= $app_data['target'] . '>' . $icon . '</a></td>';
+					$app_icons .= $app_data['target'].'>' . $icon . '</a></td>';
 
-					$app_titles .= '<td align=center valign="top" class="appTitles"><a href="'.$app_data['url'] . '"';
+					$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$app_data['url'] . '"';
 
 					if(isset($GLOBALS['egw_info']['flags']['navbar_target']) && $GLOBALS['egw_info']['flags']['navbar_target'])
 					{
 						$app_titles .= ' target="' . $GLOBALS['egw_info']['flags']['navbar_target'] . '"';
 					}
 
-					$app_titles .= $app_data['target'] . '>' . $title . '</a></td>';
+					$app_titles .= $app_data['target'].'>' . $title . '</a></td>';
 				}
 				//				else // generate extra icon layer | always shows icons and text
 				else // generate extra icon layer shows icons and/or text
@@ -113,7 +117,7 @@
 							$app_extra_icons .= ' target="' . $GLOBALS['egw_info']['flags']['navbar_target'] . '"';
 						}
 
-						$app_extra_icons .= $app_data['target'].'>' . $icon . '</a></td>';
+						$app_extra_icons .= $app_data['target'].' >' . $icon . '</a></td>';
 					}
 
 
@@ -145,8 +149,7 @@
 
 			if($GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons']!='no')
 			{
-				$app_icons .= '<td width="'.$tdwidth.'%" height="32" valign="bottom" align="center" style="text-align:center"><a 
-href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['egw_info']['navbar']['logout']['icon'].'" title="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'" alt="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'"></a></td>';
+				$app_icons .= '<td width="'.$tdwidth.'%" height="32" valign="bottom" align="center" style="text-align:center"><a href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['egw_info']['navbar']['logout']['icon'].'" title="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'" alt="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'"></a></td>';
 				$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'">'.$GLOBALS['egw_info']['navbar']['logout']['title'].'</a></td>';
 
 			}
@@ -158,19 +161,21 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 
 			if($i > $max_icons)
 			{
+// table width=100% fixed layout bug (ndee130204)
 				$app_extra_icons_div = '
 				<script language="javascript">
-				new ypSlideOutMenu("menu1", "down", 10, 90, 160, 200,\'right\')
+				new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,\'right\')
 				</script>
 				<div id="menu1Container">
 				<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
 
 				<div id="extraIcons">
+
 				<table cellspacing="0" cellpadding="0" border="0" width="100%">
 				<tr><td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd;padding:1px;">
 				<a href="#" '.$show_menu_event.'="ypSlideOutMenu.hide(\'menu1\')" title="'.lang('close').'">
 				<img style="" border="0" src="'.$var['img_root'].'/close.png"/></a></td></tr>
-				'.$app_extra_icons.'					</table>
+				'.$app_extra_icons.'</table>
 				</div>
 
 				</div>
@@ -178,8 +183,8 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 				';
 
 				$var['app_extra_icons_div']= $app_extra_icons_div;
-				//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:30px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
-				$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:30px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+				//			$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:50px;"><a title="'.lang('show_more_apps').'" href="javascript:void(0);" onClick="HideShow(\'extraIcons\');"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
+				$var['app_extra_icons_icon']= '<td width="26" valign="top" align="right" style="padding-right:3px;padding-top:20px;"><a title="'.lang('show_more_apps').'" href="#"  '.$show_menu_event.'="ypSlideOutMenu.showMenu(\'menu1\')"><img src="'.$var['img_root'].'/extra_icons.png" border="0" /></a></td>';
 			}
 
 			if($GLOBALS['egw_info']['user']['preferences']['common']['navbar_format']!='icons')
@@ -202,19 +207,19 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 			if(isset($GLOBALS['egw_info']['navbar']['admin']) && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
 			{
 				$var['current_users'] = '<a href="'
-				. $GLOBALS['phpgw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">'
-				. lang('Current users') . ': ' . $GLOBALS['phpgw']->session->total() . '</a>';
+				. $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">'
+				. lang('Current users') . ': ' . $GLOBALS['egw']->session->total() . '</a>';
 			}
 			$now = time();
-			$var['user_info'] = '<b>'.$GLOBALS['phpgw']->common->display_fullname() .'</b>'. ' - '
-			. lang($GLOBALS['phpgw']->common->show_date($now,'l')) . ' '
-			. $GLOBALS['phpgw']->common->show_date($now,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+			$var['user_info'] = '<b>'.$GLOBALS['egw']->common->display_fullname() .'</b>'. ' - '
+			. lang($GLOBALS['egw']->common->show_date($now,'l')) . ' '
+			. $GLOBALS['egw']->common->show_date($now,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 
 			if($GLOBALS['egw_info']['user']['lastpasswd_change'] == 0)
 			{
 				$api_messages = lang('You are required to change your password during your first login')
 				. '<br> Click this image on the navbar: <img src="'
-				. $GLOBALS['phpgw']->common->image('preferences','navbar.gif').'">';
+				. $GLOBALS['egw']->common->image('preferences','navbar.gif').'">';
 			}
 			elseif($GLOBALS['egw_info']['user']['lastpasswd_change'] < time() - (86400*30))
 			{
@@ -233,7 +238,7 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 			}
 			else
 			{
-				$var['logo_file'] = $GLOBALS['phpgw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
+				$var['logo_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
 			}
 			$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
 			if (substr($var['logo_url'],0,4) != 'http')
@@ -268,10 +273,11 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 			if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']==1)
 			{
 				$GLOBALS['jerryr_tpl']->set_var('show_menu_event',$show_menu_event);
+				$GLOBALS['jerryr_tpl']->set_var('lang_show_menu',lang('show menu'));
 				$GLOBALS['jerryr_tpl']->pparse('out','sidebox_hide_header');
 
 				display_sidebox('',$menu_title,$file);
-				$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
+				$GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
 
 				$GLOBALS['jerryr_tpl']->pparse('out','sidebox_hide_footer');
 
@@ -291,7 +297,7 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 				$GLOBALS['jerryr_tpl']->pparse('out','appbox');
 
 				display_sidebox('',$menu_title,$file);
-				$GLOBALS['phpgw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
+				$GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
 
 				$var['sideboxcolend'] = '</td>';
 			}
@@ -308,7 +314,7 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 					$GLOBALS[$class]->header();
 				}
 			}
-			$GLOBALS['phpgw']->hooks->process('after_navbar');
+			$GLOBALS['egw']->hooks->process('after_navbar');
 			return;
 		}
 
@@ -344,7 +350,7 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 					if(isset($item_link['icon']))
 					{
 						$app = isset($item_link['app']) ? $item_link['app'] : $GLOBALS['egw_info']['flags']['currentapp'];
-						$var['icon_or_star'] = '<img src="'.$GLOBALS['phpgw']->common->image($app,$item_link['icon']).'"/>';
+						$var['icon_or_star'] = $item_link['icon'] ? '<img style="margin:0px 2px 0px 2px" src="'.$GLOBALS['egw']->common->image($app,$item_link['icon']).'"/>' : False;
 					}
 					$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
 					$var['item_link'] = $item_link['link'];
@@ -359,7 +365,13 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 					$var['item_link'] = $item_link;
 				}
 				$GLOBALS['jerryr_tpl']->set_var($var);
-				$GLOBALS['jerryr_tpl']->pparse('out','extra_block_row');
+
+				$block = 'extra_block_row';
+				if ($var['item_link'] === False)
+				{
+					$block .= $var['icon_or_star'] === False ? '_raw' : '_no_link';
+				}
+				$GLOBALS['jerryr_tpl']->pparse('out',$block);
 			}
 		}
 
@@ -377,7 +389,7 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 				'table_bg_color' => $GLOBALS['egw_info']['theme']['navbar_bg'],
 				'version'        => $GLOBALS['egw_info']['server']['versions']['phpgwapi']
 			);
-			$GLOBALS['phpgw']->hooks->process('navbar_end');
+			$GLOBALS['egw']->hooks->process('navbar_end');
 
 			if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
 			{
@@ -388,9 +400,6 @@ href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS[
 
 			$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
 			$var['activate_tooltips'] = '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>';
-
-
-
 			$GLOBALS['jerryr_tpl']->set_var($var);
 			$GLOBALS['jerryr_tpl']->pfp('out','footer');
 		}
