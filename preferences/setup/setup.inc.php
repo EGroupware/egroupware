@@ -23,6 +23,7 @@
 	$setup_info['preferences']['hooks'][] = 'config';
 	$setup_info['preferences']['hooks'][] = 'preferences';
 	$setup_info['preferences']['hooks'][] = 'settings';
+	$setup_info['preferences']['hooks']['edit_user']    = 'preferences.uisettings.edit_user';
 
 	/* Dependencies for this app to work */
 	$setup_info['preferences']['depends'][] = array(

@@ -28,7 +28,28 @@
 			{
 				/* Don't use a global variable for this ... */
 				define('HAS_ADMIN_RIGHTS',1);
+				
+				if ((int) $_GET['account_id'])
+				{
+					$GLOBALS['egw']->preferences->account_id = (int) $_GET['account_id'];
+					$GLOBALS['egw']->preferences->read_repository();
+				}
 			}
+		}
+
+	
+		/**
+		 * add nation ACL tab to Admin >> Edit user
+		 */
+		function edit_user()
+		{
+			global $menuData;
+	
+			$menuData[] = array(
+				'description'   => 'Preferences',
+				'url'           => '/index.php',
+				'extradata'     => 'menuaction=preferences.uisettings.index&appname=preferences'
+			);
 		}
 
 		function index()
@@ -62,6 +83,10 @@
 					'menuaction' => 'preferences.uisettings.index',
 					'appname'    => $_GET['appname'],
 				);
+				if ($this->is_admin() && (int) $_GET['account_id'])
+				{
+					$link_params['account_id'] = (int) $_GET['account_id'];
+				}
 			}
 			$user    = get_var('user',Array('POST'));
 			$forced  = get_var('forced',Array('POST'));
@@ -259,8 +284,9 @@
 				}
 			}
 
-			$GLOBALS['egw_info']['flags']['app_header'] = $_GET['appname'] == 'preferences' ?
-				lang('Preferences') : lang('%1 - Preferences',$GLOBALS['egw_info']['apps'][$_GET['appname']]['title']);
+			$GLOBALS['egw_info']['flags']['app_header'] = ($this->is_admin() && (int) $_GET['account_id'] ?
+				$GLOBALS['egw']->common->grab_owner_name((int) $_GET['account_id']).': ' : '').($_GET['appname'] == 'preferences' ?
+				lang('Common preferences') : lang('%1 - Preferences',$GLOBALS['egw_info']['apps'][$_GET['appname']]['title']));
 			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 
@@ -271,8 +297,14 @@
 			}
 			if($this->is_admin())
 			{
+				if ((int) $_GET['account_id'])
+				{
+					echo '<table><tr valign="top"><td>'."\n".ExecMethod('admin.uimenuclass.createHTMLCode','edit_user')."\n</td>\n<td>".
+						'<p class="th" style="width: 100%; text-align: left; font-weight: bold; margin-top: 2px; padding: 1px;">'.
+						lang('Common preferences')."</p>\n";
+				}
 				$tabs[] = array(
-					'label' => lang('Your preferences'),
+					'label' => (int) $_GET['account_id'] ? $GLOBALS['egw']->common->grab_owner_name($_GET['account_id']) : lang('Your preferences'),
 					'link'  => $GLOBALS['egw']->link($pref_link,$link_params+array('type'=>'user')),
 				);
 				$tabs[] = array(
@@ -305,6 +337,10 @@
 			}
 			$this->t->pfp('phpgw_body','preferences');
 
+			if($this->is_admin() && (int) $_GET['account_id'])
+			{
+				echo "\n</td></tr></table>\n";
+			}
 			//echo '<pre style="text-align: left;">'; print_r($GLOBALS['egw']->preferences->data); echo "</pre>\n";
 
 			$GLOBALS['egw']->common->egw_footer();

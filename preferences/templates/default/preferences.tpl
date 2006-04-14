@@ -1,4 +1,3 @@
-<br>
 <center><b>{messages}</b></center>
 
 <!-- BEGIN form -->
