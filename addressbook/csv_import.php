@@ -36,7 +36,7 @@
 		$GLOBALS['egw']->redirect_link('/addressbook/index.php');
 	}
 	$GLOBALS['egw_info']['flags']['app_header'] = lang('Import CSV-File into Addressbook');
-	$GLOBALS['egw']->common->phpgw_header();
+	$GLOBALS['egw']->common->egw_header();
 
 	$GLOBALS['egw']->contacts = createobject('phpgwapi.contacts');
 
@@ -81,51 +81,36 @@
 		return False;
 	}
 
-	$cat2id = array();
-
 	function cat_id($cats)
 	{
 		if(!$cats)
 		{
 			return '';
 		}
-
+		if(!is_object($GLOBALS['egw']->categories))
+		{
+			$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
+		}
 		$ids = array();
 		foreach(split(' *[,;] *',$cats) as $cat)
 		{
-			if(isset($cat2id[$cat]))
+			if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
 			{
-				$ids[$cat] = $cat2id[$cat];	// cat is in cache
+				$id = (int) $cat;
+			}	
+			elseif ($id = $GLOBALS['egw']->categories->name2id(addslashes($cat)))
+			{	
+				// cat exists
 			}
 			else
-			{
-				if(!is_object($GLOBALS['egw']->categories))
-				{
-					$GLOBALS['egw']->categories = createobject('phpgwapi.categories');
-				}
-				if (is_numeric($cat) && $GLOBALS['egw']->categories->id2name($cat) != '--')
-				{
-					$cat2id[$cat] = $ids[$cat] = $cat;
-				}	
-				elseif ($id = $GLOBALS['egw']->categories->name2id(addslashes($cat)))
-				{	// cat exists
-					$cat2id[$cat] = $ids[$cat] = $id;
-				}
-				else
-				{	// create new cat
-					$GLOBALS['egw']->categories->add(array('name' => $cat,'descr' => $cat));
-					$cat2id[$cat] = $ids[$cat] = $GLOBALS['egw']->categories->name2id(addslashes($cat));
-				}
+			{	// create new cat
+				$id = $GLOBALS['egw']->categories->add(array('name' => $cat,'descr' => $cat));
 			}
+			$ids[$id] = $id;	// we use the $id as index to not ass a cat twice
 		}
-		$id_str = implode(',',$ids);
-
-		if(count($ids) > 1)		// multiple cats need to be in ','
-		{
-			$id_str = ",$id_str,";
-		}
-		return $id_str;
+		return implode(',',$ids);
 	}
+
 	if (!is_object($GLOBALS['egw']->html))
 	{
 		$GLOBALS['egw']->html = CreateObject('phpgwapi.html');
@@ -410,7 +395,7 @@
 				$empty = !count($values);
 
 				// convert the category name to an id
-				if ($values['cat_id'] && !is_numeric($values['cat_id']) && $values['cat_id'][0] != ',')
+				if ($values['cat_id'])
 				{
 					$values['cat_id'] = cat_id($values['cat_id']);
 				}
@@ -438,9 +423,8 @@
 				}
 				if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 				{
-					$GLOBALS['egw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['egw_info']['user']['account_id'],
-						$values);
-					// echo "<p>adding: ".print_r($values)."</p>\n";
+					$GLOBALS['egw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['egw_info']['user']['account_id'],$values);
+					//echo "<p>adding: ".print_r($values,true)."</p>\n";
 				}
 			}
 			$log .= "\t</tr>\n</table>\n";
@@ -459,5 +443,5 @@
 
 	$GLOBALS['egw']->template->set_var('hiddenvars',str_replace('{','&#x7B;',$hiddenvars));
 	$GLOBALS['egw']->template->pfp('out','import',True);
-	$GLOBALS['egw']->common->phpgw_footer();
+	$GLOBALS['egw']->common->egw_footer();
 ?>

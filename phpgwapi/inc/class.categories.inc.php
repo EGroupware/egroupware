@@ -607,7 +607,9 @@
 				'(cat_owner = '.(int)$this->account_id.' OR cat_owner = -1)',
 			),__LINE__,__FILE__);
 
-			return $cache[$cat_name] = $this->db->next_record() ? $this->db->f('cat_id') : 0;
+			if (!$this->db->next_record()) return 0;	// cat not found, dont cache it, as it might be created in this request
+
+			return $cache[$cat_name] = (int) $this->db->f('cat_id');
 		}
 
 		/**

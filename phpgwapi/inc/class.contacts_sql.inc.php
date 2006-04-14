@@ -610,10 +610,11 @@
 			{
 				$fields['tid'] = 'n';
 			}
-			// setting the following fields to empty if unset, as the addressbook does not seem to set them anymore and I dont want to change the db-default atm.
-			foreach(array('tel_voice','tel_bbs','tel_modem') as $name)
+			// setting the telephone numbers to empty if unset, as otherwise the db-default adds '+1 (000) 000-0000' 
+			// I dont want to change the default in the stable release
+			foreach($this->stock_contact_fields as $name)
 			{
-				if (!isset($fields[$name])) $fields[$name] = '';
+				if (substr($name,0,4) == 'tel_' && !isset($fields[$name])) $fields[$name] = '';
 			}
 			list($stock_fields,$stock_fieldnames,$extra_fields) = $this->split_stock_and_extras($fields);
 
