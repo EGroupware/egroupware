@@ -18,7 +18,7 @@ category:	resources	en	Category:
 check all	resources	en	Check all
 choose categories admin	resources	en	choose categories admin
 clear selection	resources	en	clear selection
-configure access permissions	resources	en	Configure Access Permissions
+configure access permissions	admin	en	Configure Access Permissions
 create new accessory for this resource	resources	en	Create new accessory for this resource
 create new links	resources	en	Create new links
 delete selected resources	resources	en	delete selected resources
