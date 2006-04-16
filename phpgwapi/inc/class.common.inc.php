@@ -1604,6 +1604,50 @@
 
 			return $h12.':'.$min.$sec.$ampm;
 		}
+		
+		/**
+		 * Format an email address according to the system standard
+		 *
+		 * Convert all european special chars to ascii and fallback to the accountname, if nothing left eg. chiniese
+		 *
+		 * @param string $first firstname
+		 * @param string $last lastname
+		 * @param string $account account-name (lid)
+		 * @return string with email address
+		 */
+		function email_address($first,$last,$account)
+		{
+			// convert all european special chars to ascii, (c) RalfBecker-AT-egroupware.org ;-)
+			static $extra = array(
+				'&szlig;' => 'ss',
+			);
+			foreach (array('first','last','account') as $name) 
+			{
+				$$name = htmlentities($$name,ENT_NOQUOTES,$GLOBALS['egw']->translation->charset());
+				$$name = str_replace(array_keys($extra),array_values($extra),$$name);
+				$$name = preg_replace('/&([aAuUoO])uml;/','\\1e',$$name);	// replace german umlauts with the letter plus one 'e'
+				$$name = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$$name);	// remove all types of acents
+				$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+);/','',$$name);	// remove all other entities
+			}
+			if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
+			{
+				$first = '';
+				$last = $account;
+			}
+			if (!$first || !$last)
+			{
+				$dot = $underscore = '';
+			}
+			else
+			{
+				$dot = '.';
+				$underscore = '_';
+			}
+			return str_replace(array('first','last','initial','account','dot','underscore','_'),
+				array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
+				$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first_dot_last').
+				'@'.$GLOBALS['egw_info']['server']['mail_suffix'];
+		}			
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
 		/**
