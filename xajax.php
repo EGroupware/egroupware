@@ -25,7 +25,7 @@
 			
 		list($appName, $className, $functionName) = explode('.',$arg0);
 		
-		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec')
+		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax')
 		{
 			// stopped for security reasons
 			error_log($_SERVER["PHP_SELF"]. ' stopped for security reason. className '.$className.' is not valid. className must start with ajax!!!');
