@@ -1,6 +1,34 @@
 <!-- BEGIN form -->
 {error_messages}
-
+<script>
+var email_set=0;
+function check_account_email(id)
+{
+	account   = document.getElementById('account').value;
+	firstname = document.getElementById('firstname').value;
+	lastname  = document.getElementById('lastname').value;
+	email     = document.getElementById('email').value;
+	
+	if (!email || email_set || id == 'account')
+	{
+		xajax_doXMLHTTP('admin.uiaccounts.ajax_check_account_email',firstname,lastname,account,{account_id},email_set ? '' : email,id);
+		email_set = !email || email_set;
+	}
+}
+function check_password(id)
+{
+	password  = document.getElementById('password').value;
+	password2 = document.getElementById('password2').value;
+	
+	if (password && (password2 || id == 'password2') && password != password2)
+	{
+		alert('{lang_passwds_unequal}');
+		document.getElementById('password2').focus();
+		return false;
+	}
+	return true;
+}
+</script>
  <form method="POST" action="{form_action}">
  	<div align="center">
 	<table border="0" width="95%">
@@ -75,9 +103,9 @@
 <!-- BEGIN form_passwordinfo -->
     <tr class="row_on">
      <td>{lang_password}</td>
-     <td><input type="password" name="account_passwd" value="{account_passwd}"></td>
+     <td><input id="password" onchange="check_password(this.id);" type="password" name="account_passwd" value="{account_passwd}"></td>
      <td>{lang_reenter_password}</td>
-     <td><input type="password" name="account_passwd_2" value="{account_passwd_2}"></td>
+     <td><input id="password2" onblur="check_password(this.id);" type="password" name="account_passwd_2" value="{account_passwd_2}"></td>
     </tr>
 <!-- END form_passwordinfo -->
 

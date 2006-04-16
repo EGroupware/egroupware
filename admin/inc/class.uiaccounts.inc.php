@@ -1029,6 +1029,8 @@
 
 		function create_edit_user($_account_id,$_userData='',$_errors='')
 		{
+			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+	
 			$sbox =& CreateObject('phpgwapi.sbox');
 			$jscal =& CreateObject('phpgwapi.jscalendar');
 
@@ -1127,7 +1129,8 @@
 				'lang_firstname' 		=> lang('First Name'),
 				'lang_anonymous' 		=> lang('Anonymous User (not shown in list sessions)'),
 				'lang_changepassword' 	=> lang('Can change password'),
-				'lang_button'    		=> ($_account_id?lang('Save'):lang('Add'))
+				'lang_button'    		=> ($_account_id?lang('Save'):lang('Add')),
+				'lang_passwds_unequal'  => lang('The two passwords are not the same'),
 			/* 'lang_file_space' 		=> lang('File Space') */
 			);
 			$t->set_var($var);
@@ -1187,7 +1190,7 @@
 			$var = Array(
 				'input_expires' 	=> $jscal->input('expires',$userData['expires']<0?'':($userData['expires']?$userData['expires']:time()+(60*60*24*7))),
 				'lang_never'    	=> lang('Never'),
-				'account_lid'   	=> $accountPrefix.'<input name="account_lid" value="' . $userData['account_lid'] . '">',
+				'account_lid'   	=> $accountPrefix.'<input id="account" onchange="check_account_email(this.id);" name="account_lid" value="' . $userData['account_lid'] . '">',
 				'lang_homedir'  	=> $lang_homedir,
 				'lang_shell'    	=> $lang_shell,
 				'homedirectory' 	=> $homedirectory,
@@ -1195,12 +1198,13 @@
 				'anonymous'     	=> '<input type="checkbox" name="anonymous" value="1"'.($userData['anonymous'] ? ' checked' : '').'>',
 				'changepassword'	=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
 				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
-				'account_firstname' => '<input name="account_firstname" value="' . $userData['firstname'] . '">',
-				'account_lastname'  => '<input name="account_lastname" value="' . $userData['lastname'] . '">',
-				'account_email'     => '<input name="account_email" size="32" value="' . $userData['email'] . '">',
+				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" value="' . $userData['firstname'] . '">',
+				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" value="' . $userData['lastname'] . '">',
+				'account_email'     => '<input id="email" onchange="check_account_email(this.id);" name="account_email" size="32" value="' . $userData['email'] . '">',
 				'account_passwd'    => $userData['account_passwd'],
 				'account_passwd_2'  => $userData['account_passwd_2'],
-				'account_file_space' => $account_file_space
+				'account_file_space' => $account_file_space,
+				'account_id'        => (int) $userData['account_id'],
 			);
 
 			if($userData['expires'] == -1)
@@ -1325,6 +1329,22 @@
 			echo $t->fp('out','form');
 		}
 
+		function ajax_check_account_email($first,$last,$account_lid,$account_id,$email,$id)
+		{
+			$response =& new xajaxResponse();
+			if (!$email)
+			{
+				$response->addAssign('email','value',$GLOBALS['egw']->common->email_address($first,$last,$account_lid));
+			}
+			$id_account_lid = (int) $GLOBALS['egw']->accounts->name2id($account_lid);
+			if ($id == 'account' && $id_account_lid && $id_account_lid != (int) $account_id)
+			{
+				$response->addScript("alert('".addslashes(lang('That loginid has already been taken').': '.$account_lid)."'); document.getElementById('account').value='".
+					($account_id ? $GLOBALS['egw']->accounts->id2name($account_id) : '')."'; document.getElementById('account').focus();");
+			}
+			return $response->getXML();
+		}
+	
 		function edit_group_managers($group_info,$_errors='')
 		{
 			if ($GLOBALS['egw']->acl->check('group_access',16,'admin'))

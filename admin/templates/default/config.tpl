@@ -71,6 +71,25 @@
     </td>
    </tr>
 
+    <tr class="row_on">
+    <td>{lang_How_should_EMail_addresses_for_new_users_be_constructed?}:</td>
+    <td>
+     <select name="newsettings[email_address_format]">
+      <option value="first_dot_last">{lang_Firstname}.{lang_Lastname}@domain.com</option>
+      <option value="first_last">{lang_Firstname}{lang_Lastname}@domain.com</option>
+      <option value="first_underscore_last">{lang_Firstname}_{lang_Lastname}@domain.com</option>
+      <option value="initial_last">{lang_Initial}{lang_Lastname}@domain.com</option>
+      <option value="initial_dot_last">{lang_Initial}.{lang_Lastname}@domain.com</option>
+      <option value="last_dot_first">{lang_Lastname}.{lang_Firstname}@domain.com</option>
+      <option value="last_first">{lang_Lastname}{lang_Firstname}@domain.com</option>
+      <option value="last_underscore_first">{lang_Lastname}_{lang_Firstname}@domain.com</option>
+      <option value="last">{lang_Lastname}@domain.com</option>
+      <option value="first">{lang_Firstname}@domain.com</option>
+      <option value="account">{lang_Username}@domain.com</option>
+     </select>
+    </td>
+   </tr>
+
   <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_appearance}</b></td>
    </tr>
