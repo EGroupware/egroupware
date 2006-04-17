@@ -48,6 +48,8 @@ allow anonymous access to this app	admin	zh-tw	允許匿名使用者存取此應
 alternate email address	admin	zh-tw	替代郵件位址
 anonymous user	admin	zh-tw	匿名使用者
 anonymous user (not shown in list sessions)	admin	zh-tw	匿名用戶(上線列表中不顯示)
+anonymous user does not exist!	admin	zh-tw	匿名用戶不存在！
+anonymous user has no run-rights for the application!	admin	zh-tw	匿名用戶沒有這個模組的執行權限！
 appearance	admin	zh-tw	外觀
 application	admin	zh-tw	應用程式
 application name	admin	zh-tw	應用程式名稱
@@ -203,7 +205,6 @@ for the times above	admin	zh-tw	次數上限
 for the times below (empty values count as '*', all empty = every minute)	admin	zh-tw	下面的次數(空白視為"*"，全部空白等於每一分鐘)
 force selectbox	admin	zh-tw	固定勾選方塊
 forward also to	admin	zh-tw	同時轉寄到
-forward email's to	admin	zh-tw	轉寄信件到
 forward emails to	admin	zh-tw	轉寄信件到
 forward only	admin	zh-tw	轉寄
 global categories	common	zh-tw	全區分類
@@ -419,7 +420,6 @@ view this user	admin	zh-tw	查看該使用者
 view user account	admin	zh-tw	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zh-tw	您希望將被移除使用者的資料轉移給誰？
 would you like egroupware to cache the egw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 egw 資訊嗎？
-would you like egroupware to cache the phpgw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 phpgw 資訊嗎？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zh-tw	您希望 egroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like egroupware to check for new application versions when admins login ?	admin	zh-tw	您希望egroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh-tw	您想要自動讀取新的語言檔案嗎(登入時)？

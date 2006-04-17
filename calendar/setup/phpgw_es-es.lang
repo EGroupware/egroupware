@@ -1,7 +1,7 @@
 %1 %2 in %3	calendar	es-es	%1 %2 en %3
 %1 records imported	calendar	es-es	%1 registros importados
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-es	%1 registros leídos (todavía sin importar, puede volver atrás desmarcar Probar Importar)
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	es-es	<b>Por favor, tenga en cuenta que</b>: El calendario usa las fiestas de su país, que es %1. Puede cambiarlo en su %2.<br />Las vacaciones %3 se instalan automáticamente desde %4. Lo puede cambiar en %5.
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	es-es	%1 registros leídos (todavía sin importar, puede volver atrás y desmarcar Probar Importar)
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	es-es	<b>Por favor, tenga en cuenta lo siguiente</b>: El calendario usa las fiestas de su país, que es %1. Puede cambiarlo en su %2.<br />Las vacaciones %3 se instalan automáticamente desde %4. Lo puede cambiar en %5.
 a non blocking event will not conflict with other events	calendar	es-es	Un evento que no bloquea no entrará en conflicto con otros eventos
 accept or reject an invitation	calendar	es-es	Aceptar o rechazar una invitación
 accepted	calendar	es-es	Aceptado
@@ -280,7 +280,7 @@ updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
 use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana
 view this event	calendar	es-es	Ver este evento
-wed	calendar	es-es	Mie
+wed	calendar	es-es	Mié
 week	calendar	es-es	Semana
 weekday starts on	calendar	es-es	La semana empieza en
 weekdays	calendar	es-es	Días laborales

@@ -317,6 +317,9 @@ first name of the user, eg. "%1"	common	sl	ime uporabnika, npr. "%1"
 first page	common	sl	Prva stran
 firstname	common	sl	Ime
 fixme!	common	sl	POPRAVI ME!
+flash files	tinymce	sl	Datoteke flash
+flash properties	tinymce	sl	Lastnosti flash
+flash-file (.swf)	tinymce	sl	Datoteka flash (.swf)
 float	htmlarea-TableOperations	sl	Plavajoč
 folder	tinymce	sl	Mapa
 folder already exists.	common	sl	Mapa že obstaja.
