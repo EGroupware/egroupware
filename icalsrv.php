@@ -10,7 +10,8 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.36-ng-a1 first version for NAPI-3.1 (write in non owner rscs)
+   * @version 0.9.36-ng-a4 first https robust version
+   * @since 0.9.36-ng-a1 first version for NAPI-3.1 (write in non owner rscs)
    * @date 20060410
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * (see: @url http://www.egroupware.org  )
@@ -203,7 +204,7 @@ $reimport_missing_elements = true;
 //-------- end of basic operation configuration variables ----------
 
 
-#error_log('_SERVER:' . print_r($_SERVER, true));
+error_log('_SERVER:' . print_r($_SERVER, true));
 
 // go parse our request uri
 $requri = $_SERVER['REQUEST_URI'];
