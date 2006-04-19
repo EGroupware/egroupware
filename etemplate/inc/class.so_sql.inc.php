@@ -72,6 +72,10 @@ class so_sql
 	 */
 	var $db_cols = array();
 	/**
+	 * @var array $this->table_def eGW table definition
+	 */
+	var $table_def = array();
+	/**
 	 * @var array $data holds the content of all columns
 	 */
 	var $data = array();
@@ -89,8 +93,9 @@ class so_sql
 	 * @param string $app should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
+	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 */
-	function so_sql($app='',$table='',$db=null)
+	function so_sql($app='',$table='',$db=null,$column_prefix='')
 	{
 		$this->db = is_object($db) ? clone($db) : clone($GLOBALS['egw']->db);
 		$this->db_cols = $this->db_key_cols + $this->db_data_cols;
@@ -99,7 +104,7 @@ class so_sql
 		{
 			$this->db->set_app($app);
 
-			if ($table) $this->setup_table($app,$table);
+			if ($table) $this->setup_table($app,$table,$column_prefix);
 		}
 		$this->init();
 
@@ -113,37 +118,47 @@ class so_sql
 	/**
 	 * sets up the class for an app and table (by using the table-definition of $app/setup/tables_current.inc.php
 	 *
-	 * Does NOT set a different internal-data-name. If you want this, you have to do so in a derifed class !!!
+	 * If you need a more complex conversation then just removing the column_prefix, you have to do so in a derifed class !!!
+	 *
+	 * @param string $app app-name $table belongs too
+	 * @param string $table table-name
+	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
 	 */
-	function setup_table($app,$table)
+	function setup_table($app,$table,$colum_prefix='')
 	{
 		$this->table_name = $table;
-		$table_def = $this->db->get_table_definitions($app,$table);
-		if (!$table_def || !is_array($table_def['fd']))
+		$this->table_def = $this->db->get_table_definitions($app,$table);
+		if (!$this->table_def || !is_array($this->table_def['fd']))
 		{
 			echo "<p>so_sql::setup_table('$app','$table'): No table definitions found !!!<br>\n".function_backtrace()."</p>\n";
 		}
 		$this->db_key_cols = $this->db_data_cols = $this->db_cols = array();
 		$this->autoinc_id = '';
-		foreach($table_def['fd'] as $name => $def)
+		$len_prefix = strlen($colum_prefix);
+		foreach($this->table_def['fd'] as $col => $def)
 		{
-			if (in_array($name,$table_def['pk']))
+			$name = $col;
+			if ($len_prefix && substr($name,0,$len_prefix) == $colum_prefix)
 			{
-				$this->db_key_cols[$name] = $name;
+				$name = substr($col,$len_prefix);
+			}
+			if (in_array($col,$this->table_def['pk']))
+			{
+				$this->db_key_cols[$col] = $name;
 			}
 			else
 			{
-				$this->db_data_cols[$name] = $name;
+				$this->db_data_cols[$col] = $name;
 			}
-			$this->db_cols[$name] = $name;
+			$this->db_cols[$col] = $name;
 
 			if ($def['type'] == 'auto')
 			{
-				$this->autoinc_id = $name;
+				$this->autoinc_id = $col;
 			}
-			if (in_array($name,$table_def['uc']))
+			if (in_array($name,$this->table_def['uc']))
 			{
-				$this->db_uni_cols[$name] = $name;
+				$this->db_uni_cols[$col] = $name;
 			}
 		}
 	}
@@ -242,7 +257,7 @@ class so_sql
 	{
 		if (!is_array($keys))
 		{
-			$pk = array_keys($this->db_key_cols);
+			$pk = array_values($this->db_key_cols);
 			if ($pk) $keys = array($pk[0] => $keys);
 		}	
 		
@@ -324,12 +339,18 @@ class so_sql
 
 		if ((int) $this->debug >= 4) { echo "so_sql::save(".print_r($keys,true).") autoinc_id='$this->autoinc_id', data="; _debug_array($this->data); }
 
-		if ($this->autoinc_id && !$this->data[$this->db_key_cols[$this->autoinc_id]])	// insert
+		if ($this->autoinc_id && !$this->data[$this->db_key_cols[$this->autoinc_id]])	// insert with auto id
 		{
 			foreach($this->db_cols as $db_col => $col)
 			{
 				if (!$this->autoinc_id || $db_col != $this->autoinc_id)	// not write auto-inc-id
 				{
+					if (!isset($this->data[$col]) && 	// handling of unset columns in $this->data
+						(isset($this->table_def['fd'][$db_col]['default']) ||	// we have a default value
+						 !isset($this->table_def['fd'][$db_col]['nullable']) || $this->table_def['fd'][$db_col]['nullable']))	// column is nullable
+					{
+						continue;	// no need to write that (unset) column
+					}
 					$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 				}
 			}
@@ -340,10 +361,17 @@ class so_sql
 				$this->data[$this->db_key_cols[$this->autoinc_id]] = $this->db->get_last_insert_id($this->table_name,$this->autoinc_id);
 			}
 		}
-		else //update existing row, preserv other cols not used here
+		else // insert in table without auto id or update of existing row, dont write colums unset in $this->data
 		{
 			foreach($this->db_data_cols as $db_col => $col)
 			{
+				if (!isset($this->data[$col]) &&	// handling of unset columns in $this->data
+					($this->autoinc_id ||			// update of table with auto id or
+					 isset($this->table_def['fd'][$db_col]['default']) ||	// we have a default value or
+					 !isset($this->table_def['fd'][$db_col]['nullable']) || $this->table_def['fd'][$db_col]['nullable']))	// column is nullable
+				{
+					continue;	// no need to write that (unset) column
+				}
 				$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 			}
 			$keys = '';
