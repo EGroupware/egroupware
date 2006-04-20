@@ -145,7 +145,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	en	If you dont set a password here, the information is available to everyone, who knows the URL!!!
 ignore conflict	calendar	en	Ignore conflict
 import	calendar	en	Import
-import csv-file	calendar	en	Import CSV-File
+import csv-file	common	en	Import CSV-File
 interval	calendar	en	Interval
 intervals in day view	calendar	en	Intervals in day view
 invalid email-address "%1" for user %2	calendar	en	Invalid email-address "%1" for user %2
@@ -173,6 +173,7 @@ no filter	calendar	en	No filter
 no matches found	calendar	en	no matches found
 no response	calendar	en	No response
 non blocking	calendar	en	non blocking
+not	calendar	en	not
 notification messages for added events	calendar	en	Notification messages for added events
 notification messages for canceled events	calendar	en	Notification messages for canceled events
 notification messages for disinvited participants	calendar	en	Notification messages for disinvited participants
@@ -245,6 +246,7 @@ show list of upcoming events	calendar	en	show list of upcoming events
 show this month	calendar	en	show this month
 show this week	calendar	en	show this week
 single event	calendar	en	single event
+site configuration	calendar	en	site configuration
 start	calendar	en	Start
 start date/time	calendar	en	Start Date/Time
 startdate / -time	calendar	en	Startdate / -time

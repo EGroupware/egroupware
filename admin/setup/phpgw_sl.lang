@@ -1,8 +1,10 @@
 %1 - %2 of %3 user accounts	admin	sl	Uporabniški računi %1 do %2 od vseh %3
 %1 - %2 of %3 user groups	admin	sl	Uporabniške skupine %1 do %2 od vseh %3
 %1 not found or not executable !!!	admin	sl	Ne najdem datoteke %1 ali pa ni izvedljiva!
+(default no, leave it off if you dont use it)	admin	sl	(privzeto Ne. Če ne uporabljate, pustite Ne)
 (stored password will not be shown here)	admin	sl	(Shranjeno geslo tu ne bo vidno)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	sl	(Za namestitev novih aplikacij uporabite <br><a href="setup/" target="setup">Namestitev</a> [Upravljanje aplikacij]!)
+-  type	admin	sl	- vrsta
 accesslog and bruteforce defense	admin	sl	Beleženje dostopov in BruteForce obramba
 account active	admin	sl	Račun je aktiven
 account has been created	common	sl	Račun je bil ustvarjen.
@@ -14,7 +16,6 @@ account preferences	admin	sl	Nastavitve računa
 acl manager	admin	sl	Upravljalec ACL
 acl rights	common	sl	Pravice ACL
 action	admin	sl	Dejanje
-activate wsiwyg-editor	admin	sl	aktiviraj WSIWYG-urejevalnik
 activate wysiwyg-editor	admin	sl	aktiviraj WYSIWYG urejevalnik
 add a category	admin	sl	dodaj kategorijo
 add a group	admin	sl	dodaj skupino
@@ -89,6 +90,7 @@ click to select a color	admin	sl	Izbira barve
 color	admin	sl	Barva
 country selection	admin	sl	Izbor države
 create group	admin	sl	Ustvari skupino
+creates a new field	admin	sl	ustvari novo polje
 crontab only (recomended)	admin	sl	samo crontab (priporočeno)
 cyrus imap server	admin	sl	Cyrus IMAP strežnik
 data	admin	sl	Podatki
@@ -110,6 +112,7 @@ delete the group	admin	sl	izbriši skupino
 delete this category	admin	sl	izbriši to kategorijo
 delete this group	admin	sl	izbriši to skupino
 delete this user	admin	sl	izbriši tega uporabnika
+deletes this field	admin	sl	zbriše to polje
 deliver extern	admin	sl	dostavi zunanji aplikaciji
 deny access to access log	admin	sl	Prepreči dostop do dnevnika dostopov
 deny access to application registery	admin	sl	Prepreči dostop do registra aplikacij
@@ -127,8 +130,8 @@ deny access to site configuration	admin	sl	Prepreči dostop do konfiguracije str
 deny access to user accounts	admin	sl	Prepreči dostop do uporabniških računov
 deny all users access to grant other users access to their entries ?	admin	sl	Preprečim vsem uporabnikom dostop do upravljanja pravic dostopa njihovih zapisov?
 description can not exceed 255 characters in length !	admin	sl	Opis po dolžini ne sme presegati 255 znakov!
+determines the order the fields are displayed	admin	sl	določa vrstni red prikaza polj
 disable "auto completion" of the login form	admin	sl	Prepreči samodejno izpolnjevanje prijavne forme
-disable wsiwyg-editor	admin	sl	deaktiviraj WSIWYG-urejevalnik
 disable wysiwyg-editor	admin	sl	onemogoči WYSIWYG urejevalnik
 disabled (not recomended)	admin	sl	onemogočeno (ni priporočeno)
 display	admin	sl	Prikaži
@@ -136,6 +139,8 @@ do not delete the category and return back to the list	admin	sl	<B>Ne</B> izbri�
 do you also want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi vse globalne podkategorije?
 do you want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi globalne vse podkategorije?
 do you want to move all global subcategories one level down ?	admin	sl	Ali želite premakniti vse globalne podkategorije nivo niže?
+each value is a line like <id>[=<label>]	admin	sl	vsaka vrednost je vrstica oblike <id>[=<oznaka>]
+each value is a line like id[=label]	admin	sl	vsaka vrednost je vrstica oblike id[=oznaka]
 edit account	admin	sl	Urejanje računa
 edit application	admin	sl	Urejanje aplikacije
 edit email settings	admin	sl	urejanje E-poštnih nastavitev
@@ -155,19 +160,18 @@ edit user account	admin	sl	uredi uporabniški račun
 email account active	admin	sl	E-poštni račun je aktiven
 email address	admin	sl	E-poštni naslov
 enable debug-messages	admin	sl	Omogoči sporočila za iskanje napak
+enable the soap service	admin	sl	Omogoči servis SOAP
+enable the xmlrpc service	admin	sl	Omogoči servis XMLRPC
 enabled - hidden from navbar	admin	sl	Omogočeno - skrito z navigacijske vrstice
 enabled - popup window	admin	sl	Omogočeno - pojavna okna
 enter a description for the category	admin	sl	vnesite opis kategorije
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	sl	Vnesi neko naključno besedilo za <br> kodiranje app_session (zahteva mcrypt)
 enter the background color for the login page	admin	sl	Vnesite barvo ozadja prijavne strani
 enter the background color for the site title	admin	sl	Vnesite barvo ozadja naslova strežnika
-enter the file name of your logo	admin	sl	Vnesite ime datoteke vašega logotipa
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sl	Vnesite polno pot do začasnih datotek. <br> Primera: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sl	Vnesite polno ime do začasnih datotek. <br> Primera: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
-enter the full path for users and group files.<br>examples: /files, e:files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sl	Vnesite ime računalnika, na katerem teče strežnik.
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL eGroupware strežnika.<br>Primer: http://www.domena.si/egw &nbsp; ali &nbsp; /egw<br><b>Brez končne poševnice.</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL eGroupware strežnika.<br>Primer: http://www.domena.si/egw   ali   /egw<br><b>Brez končne poševnice.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sl	Vnesite niz za iskanje. Za prikaz vseh vnosov izpraznite to polje in kliknite gumb Pošlji.
 enter the site password for peer servers	admin	sl	Vnesite geslo vzporednega strežnika
 enter the site username for peer servers	admin	sl	Vnesite uporabniško ime vzporednega strežnika
@@ -187,6 +191,7 @@ error: %1 not found or other error !!!	admin	sl	Napaka: ne najdem %1 ali druga n
 expires	admin	sl	Preteče
 explanation of ldapman	admin	sl	Ta modul je bil zaenkrat testiran z Postfixom, LDAPom in Courier-IMAP in potrebuje sheme CORE in QMAIL (OID7914). Podrobnosti o uporabi in konfiguraciji lahko preberete v README.ldapman v mapi "doc" oskrbnika.
 fallback (after each pageview)	admin	sl	vzpostavitven (po prikazu vsake strani)
+field '%1' already exists !!!	admin	sl	Polje '%1' že obstaja
 file space	admin	sl	Prostor za datoteke
 file space must be an integer	admin	sl	Prostor za datoteke mora biti celo števlio
 find and register all application hooks	admin	sl	Poišči in registriraj vse zanke v aplikacijah
@@ -194,7 +199,7 @@ for the times above	admin	sl	za čase nad
 for the times below (empty values count as '*', all empty = every minute)	admin	sl	za čase pod (prazno šteje kot '*'; vse prazno = vsako minuto)
 force selectbox	admin	sl	Vsili izbiro
 forward also to	admin	sl	posreduj tudi
-forward email's to	admin	sl	posreduj E-pošto na
+forward emails to	admin	sl	posreduj sporočila
 forward only	admin	sl	samo posreduj
 global categories	common	sl	Globalne kategorije
 group ?	admin	sl	skupina ?
@@ -216,6 +221,7 @@ if no acl records for user or any group the user is a member of	admin	sl	Če ni 
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sl	Če se uporablja LDAP, ali želite upravljati lastnosti domačega direktorija in prijavne lupine?
 in mbyte	admin	sl	v megabajtih
 inbound	admin	sl	vhodno
+initial	admin	sl	Začetno
 install crontab	admin	sl	Namesti crontab
 installed applications	common	sl	Nameščene aplikacije
 installed crontab	admin	sl	Crontab je nameščen
@@ -261,7 +267,9 @@ minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 1
 minute	admin	sl	Minute
 mode	admin	sl	Način
 month	admin	sl	Mesec
+name must not be empty !!!	admin	sl	Ime ne sme biti prazno!
 new group name	admin	sl	Ime nove skupine
+new name	admin	sl	novo ime
 new password [ leave blank for no change ]	admin	sl	Novo geslo [ pustite prazno če ni sprememb ]
 next run	admin	sl	Naslednji zagon
 no algorithms available	admin	sl	ni razpoložljivih algoritmov
@@ -274,6 +282,7 @@ no permission to add groups	admin	sl	ni dovoljenja za dodajanje skupin
 no permission to add users	admin	sl	ni dovoljenja za dodajanje uporabnikov
 no permission to create groups	admin	sl	ni dovoljenja za ustvarjanje skupin
 note: ssl available only if php is compiled with curl support	admin	sl	Pozor: SSL je na razpolago le, če je PHP preveden s curl podporo.
+order	admin	sl	Vrstni red
 outbound	admin	sl	izhodno
 passthrough	admin	sl	prehod (passthrough)
 password for smtp-authentication	admin	sl	Geslo za SMTP avtentikacijo
@@ -282,6 +291,7 @@ peer server list	admin	sl	Seznam vzporednih strežnikov
 peer servers	admin	sl	Vzporedni strežniki
 percent of users that logged out	admin	sl	Delež uporabnikov, ki so se odjavili
 percent this user has logged out	admin	sl	Delež odjav tega uporabnika
+permission denied	admin	sl	Dostop zavrnjen
 permissions	admin	sl	Dovoljenja
 permissions this group has	admin	sl	Dovoljenja za to skupino
 phpinfo	admin	sl	Podatki o PHPju
@@ -293,8 +303,8 @@ postfix with ldap	admin	sl	Pripona za LDAP
 preferences	admin	sl	Nastavitve
 primary group	admin	sl	osnovna skupina
 qmaildotmode	admin	sl	qmaildot način
-qouta size in mbyte	admin	sl	velikost kvote v megabajtih
 quota settings	admin	sl	nastavitvev kvote
+quota size in mbyte	admin	sl	velikost kvote v MB
 re-enter password	admin	sl	Ponovite geslo
 read this list of methods.	admin	sl	Preberite ta seznam metod
 register application hooks	admin	sl	Registrirajte zanke aplikacij
@@ -307,6 +317,7 @@ route all mails to	admin	sl	Preusmeri vso pošto na
 run asynchronous services	admin	sl	Poženi asinhrone storitve
 save the category	admin	sl	shrani to kategorijo
 save the category and return back to the list	admin	sl	shrani kategorijo in se vrni na seznam
+saves the changes made and leaves	admin	sl	shrani narejene spremembe in zapusti program
 search accounts	admin	sl	Išči po računih
 search categories	admin	sl	Išči po kategorijah
 search groups	admin	sl	Išči skupine
@@ -349,6 +360,7 @@ standard smtp-server	admin	sl	standardni SMTP strežnik
 start testjob!	admin	sl	Poženi testno nalogo (TestJob)!
 submit changes	admin	sl	Shrani spremembe
 submit the search string	admin	sl	Pošlji iskalni niz
+subtype	admin	sl	Podtip
 template selection	admin	sl	Izbor predloge
 text entry	admin	sl	Besedilni vnos
 that application name already exists.	admin	sl	Aplikacija s tem imenom že obstaja.
@@ -362,6 +374,7 @@ the groups must include the primary group	admin	sl	Skupine morajo vsebovati prim
 the login and password can not be the same	admin	sl	Uporabniško ime in geslo ne smeta biti enaka.
 the loginid can not be more then 8 characters	admin	sl	Uporabniško ime ne sme biti daljše od 8 znakov.
 the testjob sends you a mail everytime it is called.	admin	sl	Testna naloga "TestJob" vam pošlje E-pošto vedno, ko se zažene.
+the text displayed to the user	admin	sl	besedilo, ki se prikaže uporabniku
 the two passwords are not the same	admin	sl	Gesli se ne ujemata.
 the users bellow are still members of group %1	admin	sl	spodnji uporabniki so še vedno člani skupine %1.
 there already is a group with this name. userid's can not have the same name as a groupid	admin	sl	Skupina s tem imenom že obstaja. Uporabniško ime ne sme biti enako imenu skupine.
@@ -376,13 +389,12 @@ top	admin	sl	vrh
 total records	admin	sl	Skupno vseh zapisov
 trust level	admin	sl	Stopnja zaupanja
 trust relationship	admin	sl	Povezava zaupanja
-under windows you can only use the fallback mode at the moment. fallback means the jobs get only checked after each page-view !!!	admin	sl	Pod Windows je trenutno mogoče uporabljati le naknadni način: posli se preverijo po pregledu vsake strani.
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sl	Pod Windowsi morate asinhrone storitve namestiti %1ročno%2.
 use cookies to pass sessionid	admin	sl	Uporaba piškotkov za prenos ID seje.
 use pure html compliant code (not fully working yet)	admin	sl	Uporabi HTML veljavno kodo (popolnoma še ne deluje).
 use theme	admin	sl	Uporabi temo
 user accounts	admin	sl	Uporabniški računi
-user data	admin	sl	Podatki o uporabniku
+user data	common	sl	Podatki o uporabniku
 user for smtp-authentication (leave it empty if no auth required)	admin	sl	Uporabniško ime za SMTP avtentikacijo (pustite prazno, če ni zahtevana)
 user groups	admin	sl	Uporabniške skupine
 userdata	admin	sl	podatki o uporabniku
@@ -396,7 +408,6 @@ view this user	admin	sl	preglej tega uporabnika
 view user account	admin	sl	Preglej uporabnikov račun
 who would you like to transfer all records owned by the deleted user to?	admin	sl	Komu se dodelijo <b>vsi</b> zapisi v lasti izbrisanega uporabnika?
 would you like egroupware to cache the egw info array ?	admin	sl	Želite, da eGroupWare shrani informacije v predpomnilnik kot niz egw_info?
-would you like egroupware to cache the phpgw info array ?	admin	sl	Ali želite, da eGroupWare shrani spremenljivko phpgw_info v predpomnilnik?
 would you like egroupware to check for a new version<br>when admins login ?	admin	sl	Ali želite, da eGroupWare preveri veljavnost različice ob oskrbnikovi prijavi?
 would you like egroupware to check for new application versions when admins login ?	admin	sl	Ali želite, da eGroupWare preveri veljavnost različice aplikacij ob oskrbnikovi prijavi?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sl	Ali želite samodejno naložiti nove jezike (ob prijavi)?

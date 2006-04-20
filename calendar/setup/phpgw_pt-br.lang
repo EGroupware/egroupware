@@ -145,7 +145,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	pt-br	Se você não configurar uma senha aqui a informação ficará disponível para qualquer um que souber a URL!
 ignore conflict	calendar	pt-br	Ignorar conflito
 import	calendar	pt-br	Importar
-import csv-file	calendar	pt-br	Importar arquivo-CSV
+import csv-file	common	pt-br	Importar arquivo-CSV
 interval	calendar	pt-br	Intervalo
 intervals in day view	calendar	pt-br	Intervalo na visão diária
 invalid email-address "%1" for user %2	calendar	pt-br	E-mail %1 inválido para o usuário %2

@@ -145,7 +145,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	es-es	¡Si no pone aquí una contraseña, la información está disponible para todos los que conozcan la URL!
 ignore conflict	calendar	es-es	Ignorar conflicto
 import	calendar	es-es	Importar
-import csv-file	calendar	es-es	Importar fichero CSV
+import csv-file	common	es-es	Importar fichero CSV
 interval	calendar	es-es	Intervalo
 intervals in day view	calendar	es-es	Intervalos en la vista de día
 invalid email-address "%1" for user %2	calendar	es-es	La dirección de correo "%1" no es válida para el usuario %2

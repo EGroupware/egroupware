@@ -145,7 +145,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	zh-tw	如果您在此並未設定密碼，知道網址的人就能夠讀取。
 ignore conflict	calendar	zh-tw	忽略重疊的約會
 import	calendar	zh-tw	匯入
-import csv-file	calendar	zh-tw	匯入CSV逗點分隔檔案
+import csv-file	common	zh-tw	匯入CSV逗點分隔檔案
 interval	calendar	zh-tw	間隔
 intervals in day view	calendar	zh-tw	每日瀏覽的間隔
 invalid email-address "%1" for user %2	calendar	zh-tw	錯誤的信箱 "%1" 於使用者 %2
@@ -173,6 +173,7 @@ no filter	calendar	zh-tw	沒有規則
 no matches found	calendar	zh-tw	沒有找到符合的結果
 no response	calendar	zh-tw	沒有回應
 non blocking	calendar	zh-tw	未鎖定
+not	calendar	zh-tw	否
 notification messages for added events	calendar	zh-tw	新增事件提醒
 notification messages for canceled events	calendar	zh-tw	取消事件提醒
 notification messages for disinvited participants	calendar	zh-tw	拒絕參與事件提醒
@@ -245,6 +246,7 @@ show list of upcoming events	calendar	zh-tw	顯示即將到來的行程
 show this month	calendar	zh-tw	顯示這個月
 show this week	calendar	zh-tw	顯示這一週
 single event	calendar	zh-tw	單一事件
+site configuration	calendar	zh-tw	網站設定
 start	calendar	zh-tw	開始
 start date/time	calendar	zh-tw	開始日期/時間
 startdate / -time	calendar	zh-tw	開始日期 / 時間

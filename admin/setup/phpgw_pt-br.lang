@@ -2,7 +2,7 @@
 %1 - %2 of %3 user groups	admin	pt-br	%1 - %2 de %3 grupos de usuários
 %1 acl records of not (longer) existing accounts deleted.	admin	pt-br	%1 registro(s) ACL de contas inexistentes removido(s).
 %1 not found or not executable !!!	admin	pt-br	%1 não encontrado ou não-executável !!!
-(default no, leave it off if you dont use it)	admin	pt-br	(padrão Não, deixe-o assim você não o usa)
+(default no, leave it off if you dont use it)	admin	pt-br	(padrão Não, deixe-o assim se você não o usa)
 (stored password will not be shown here)	admin	pt-br	(Senha salva não será exibida aqui)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pt-br	(Para instalar um novo aplicativo use <br><a href="setup/" target="setup">Setup</a>[Gerenciar aplicativos] !!!)
 -  type	admin	pt-br	- tipo
@@ -48,6 +48,8 @@ allow anonymous access to this app	admin	pt-br	Permitir acesso anônimo a esta ap
 alternate email address	admin	pt-br	endereço de e-mail alternativo
 anonymous user	admin	pt-br	Usuário Anônimo
 anonymous user (not shown in list sessions)	admin	pt-br	Usuário Anônimo (não é exibido na lista de sessões)
+anonymous user does not exist!	admin	pt-br	Usuário Anônimo não existe!
+anonymous user has no run-rights for the application!	admin	pt-br	Usuário Anônimo não tem acesso de execução para este aplicativo!
 appearance	admin	pt-br	Aparência
 application	admin	pt-br	Aplicativo
 application name	admin	pt-br	Nome do Aplicativo
@@ -203,7 +205,6 @@ for the times above	admin	pt-br	para os horários acima
 for the times below (empty values count as '*', all empty = every minute)	admin	pt-br	para os horários abaixo (campos vazios contam como '*', todos vazios = a cada minuto)
 force selectbox	admin	pt-br	Forçar Caixa de seleção
 forward also to	admin	pt-br	encaminhar também para
-forward email's to	admin	pt-br	encaminhar e-mails para
 forward emails to	admin	pt-br	encaminhar e-mails para
 forward only	admin	pt-br	apenas encaminhar
 global categories	common	pt-br	Categorias globais
@@ -220,12 +221,14 @@ host information	admin	pt-br	Informações do servidor
 hour<br>(0-23)	admin	pt-br	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pt-br	Quantos dias as entradas devem ser mantidas no registro de acessos, antes de serem removidas (padrão 90)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	pt-br	Quantos minutos uma conta ou endereço IP devem ser bloqueados (padrão 30)?
+how should email addresses for new users be constructed?	admin	pt-br	Como deverão ser construídos oo endereços de e-mail, para novos usuários ?
 icon	admin	pt-br	Ícone
 idle	admin	pt-br	ocioso
 if no acl records for user or any group the user is a member of	admin	pt-br	Se não houver registro de permissoes ou grupo para o usuário ele é membro do
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pt-br	se estiver usando LDAP, você deseja definir atributos de diretório home e shell de login?
 in mbyte	admin	pt-br	em MByte
 inbound	admin	pt-br	Entrada
+initial	admin	pt-br	Inicial
 install crontab	admin	pt-br	Instalar crontab
 installed applications	common	pt-br	Aplicativos Instalados
 installed crontab	admin	pt-br	Crontab instalado
@@ -405,7 +408,7 @@ use cookies to pass sessionid	admin	pt-br	Usar cookies para transmitir id de ses
 use pure html compliant code (not fully working yet)	admin	pt-br	Usar código HTML puro (não funciona totalmente ainda)
 use theme	admin	pt-br	Usar tema
 user accounts	admin	pt-br	Contas de usuários
-user data	admin	pt-br	Dados de usuários
+user data	common	pt-br	Dados de usuários
 user for smtp-authentication (leave it empty if no auth required)	admin	pt-br	Usuário para autenticação SMTP (deixe em branco se não requer autenticação)
 user groups	admin	pt-br	Grupos de usuários
 userdata	admin	pt-br	Dados de usuário

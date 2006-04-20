@@ -221,12 +221,14 @@ host information	admin	es-es	Información del servidor
 hour<br>(0-23)	admin	es-es	Hora<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	es-es	¿Cuántos días deben permanecer las entradas en el registro de acceso, antes de borrarlas? (por defecto, 90)
 how many minutes should an account or ip be blocked (default 30) ?	admin	es-es	¿Cuántos minutos debe permanecer bloqueada una cuenta o una IP? (por defecto, 30)
+how should email addresses for new users be constructed?	admin	es-es	¿Cómo deben construirse las direcciones para los usuarios nuevos?
 icon	admin	es-es	Icono
 idle	admin	es-es	inactivo
 if no acl records for user or any group the user is a member of	admin	es-es	Si no se encuentran registros ACL del usuario y grupo, entonces el usuario es miembro de
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	es-es	Si se usa LDAP, ¿desea manejar los atributos del directorio de inicio y la cuenta?
 in mbyte	admin	es-es	en Mbytes
 inbound	admin	es-es	entrantes
+initial	admin	es-es	Inicial
 install crontab	admin	es-es	Instalar crontab
 installed applications	common	es-es	Aplicaciones instaladas
 installed crontab	admin	es-es	Crontab instalado
@@ -406,7 +408,7 @@ use cookies to pass sessionid	admin	es-es	Usar cookies para almacenar sesiones
 use pure html compliant code (not fully working yet)	admin	es-es	Usar codigo HTML puro (todavía no funciona completamente)
 use theme	admin	es-es	Usar tema
 user accounts	admin	es-es	Cuentas de usuario
-user data	admin	es-es	Datos del usuario
+user data	common	es-es	Datos del usuario
 user for smtp-authentication (leave it empty if no auth required)	admin	es-es	Usuario para identificación SMTP (dejar en blanco si no se necesita)
 user groups	admin	es-es	Grupos de usuarios
 userdata	admin	es-es	Datos del usuario

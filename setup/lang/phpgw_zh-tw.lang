@@ -10,6 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	zh-tw	<b>這會產生 1 個管理者帳號以及 3 個測試帳號</b><br />測試帳號的密碼分別是： demo/guest, demo2/guest 與 demo3/guest。
 accounts existing	setup	zh-tw	帳號已經存在
 actions	setup	zh-tw	動作
+activate save password check	setup	zh-tw	啟用儲存密碼功能
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh-tw	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
 add new database instance (egw domain)	setup	zh-tw	新增資料庫實例(eGW 網域)
 additional settings	setup	zh-tw	其他設定
@@ -142,6 +143,7 @@ db root password	setup	zh-tw	資料庫 ROOT 密碼
 db root username	setup	zh-tw	資料庫 ROOT 帳號
 db type	setup	zh-tw	資料庫種類
 db user	setup	zh-tw	資料庫使用者名稱
+default	setup	zh-tw	建議的預設值
 default file system space per user/group ?	setup	zh-tw	預設各使用者／群組可使用的檔案空間？
 delete	setup	zh-tw	刪除
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	zh-tw	刪除所有資料庫中的帳號、群組、ACLs與個人設定(通常不需要)？
@@ -173,8 +175,8 @@ enable ldap version 3	setup	zh-tw	啟用LDAP版本3
 enable mcrypt	setup	zh-tw	啟用MCrypt
 enter some random text for app session encryption	setup	zh-tw	您可以輸入任意的文字來提供系統加密的依據
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	zh-tw	輸入用於連線加密的任意字串﹝需要安裝 MCRYPT﹞<br />
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	zh-tw	輸入暫存檔案存放的完整路徑：<br />﹝如：/tmp、C:\TEMP﹞
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	zh-tw	輸入使用者或群組檔案存放的完整路徑：<br />﹝如：/files、E:\FILES﹞
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	zh-tw	輸入暫存檔案存放的完整路徑：<br />﹝如：/tmp、C:/TEMP﹞
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	zh-tw	輸入使用者或群組檔案存放的完整路徑：<br />﹝如：/files、E:/FILES﹞
 enter the full path to the backup directory.<br />if empty: files directory	setup	zh-tw	輸入備份檔案存放的完整路徑：<br />如果空白會使用存放一般檔案的資料夾
 enter the hostname of the machine on which this server is running	setup	zh-tw	輸入這個伺服器主機的主機名稱
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	zh-tw	輸入 eGroupWare 的網頁位址 URL：<br />如：http://www.domain.com/egroupware  或  /egroupware<br /><b>結尾無斜線</b>
@@ -196,6 +198,7 @@ file	setup	zh-tw	檔案
 file type, size, version, etc.	setup	zh-tw	檔案格式、大小、版本等。
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	zh-tw	檔案上傳功能關閉中： 您無法使用任何檔案管理程式，也無法在各個模組中附加檔案！
 filename	setup	zh-tw	檔案名稱
+filesystem	setup	zh-tw	檔案系統
 for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	zh-tw	第一次安裝請選擇「匯入」；要轉換現存於 SQL 中的帳號資料到 LDAP請選擇「匯出」
 force selectbox	setup	zh-tw	強制使用選取方塊
 found existing configuration file. loading settings from the file...	setup	zh-tw	找到已經存在的設定檔案，讀取設定中...
@@ -273,6 +276,7 @@ mail server protocol	setup	zh-tw	郵件伺服器協定
 make sure that your database is created and the account permissions are set	setup	zh-tw	確認您的資料庫已經安裝完成、使用者帳號權限設定完成
 manage applications	setup	zh-tw	管理應用程式
 manage languages	setup	zh-tw	管理語言
+manual / help	setup	zh-tw	手冊
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	zh-tw	max_execution_time(最大可執行時間)被設定為小於30(秒)：eGroupWare有時候需要更多的執行時間，特別是無法預期的錯誤
 maximum account id (e.g. 65535 or 1000000)	setup	zh-tw	使用者帳號編碼最大值﹝如：65535 或 1000000﹞
 may be broken	setup	zh-tw	或許毀損
@@ -414,6 +418,7 @@ setup the database	setup	zh-tw	安裝資料庫
 setup/config admin login	setup	zh-tw	安裝/設定管理員登入
 show 'powered by' logo on	setup	zh-tw	顯示「powered by」圖示位置
 size	setup	zh-tw	大小
+skip the installation tests (not recommended)	setup	zh-tw	略過安裝測試（不建議）
 smtp server hostname or ip address	setup	zh-tw	SMTP伺服器主機名稱或IP位址
 smtp server port	setup	zh-tw	SMTP伺服器連接埠
 some or all of its tables are missing	setup	zh-tw	遺失部份或所有的資料表
@@ -517,6 +522,7 @@ you appear to have %1 support.	setup	zh-tw	您的系統支援 %1 。
 you appear to have php session support. enabling php sessions.	setup	zh-tw	您的系統支援 PHP session ，PHP sessions功能啟用中。
 you appear to have xml support enabled	setup	zh-tw	您的系統支援XML
 you are ready for this stage, but this stage is not yet written.<br />	setup	zh-tw	您已經準備好要使用這個步驟，但這個步驟尚未開發完成。<br />
+you can install it by running:	setup	zh-tw	您可以執行下面指令安裝：
 you didn't enter a config password for domain %1	setup	zh-tw	您並未輸入%1的組態密碼
 you didn't enter a config username for domain %1	setup	zh-tw	您並未輸入
 you didn't enter a header admin password	setup	zh-tw	您並未輸入頁首管理員密碼
