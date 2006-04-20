@@ -143,7 +143,7 @@
 			$this->dav_pwd=$GLOBALS['egw_info']['user']['passwd'];
 			$parsed_url = parse_url($this->repository);
 			$this->dav_host=$parsed_url['host'];
-			$this->dav_port=@isset($parsed_url['port']) ? $parsed_url['port'] : 80;
+			$this->dav_port=@isset($parsed_url['port']) ? $parsed_url['port'] : ($parsed_url['scheme'] == 'https' ? 443 : 80);
 
 			$this->dav_client =& CreateObject('phpgwapi.http_dav_client');
 			$this->dav_client->set_credentials($this->dav_user,$this->dav_pwd);
