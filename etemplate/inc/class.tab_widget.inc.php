@@ -1,16 +1,13 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - eTemplate Extension - Tab Widget                            *
-	* http://www.egroupware.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
-
-	/* $Id$ */
+	/**
+	 * eGroupWare - eTemplate Extension - Tab Widget
+	 *
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 * @package etemplate
+	 * @link http://www.egroupware.org
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @version $Id$
+	 */
 
 	/**
 	 * eTemplate Extension: widget that shows one row of tabs and an other row with the eTemplate of the selected tab

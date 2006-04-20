@@ -1,17 +1,14 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - eTemplate Extension - Advanced search                       *
-	* http://www.egroupware.org                                                *
-	* Written by Cornelius Weiss <egw@von-und-zu-weiss.de>                     *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
+	/**
+	 * eGroupWare eTemplate Extension - Advanced search
+	 *
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 * @package etemplate
+	 * @link http://www.egroupware.org
+	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+	 * @version $Id$
+	 */
 
-	/* $Id$ */
-	
 	/**
 	* eTemplate Extension: Advanced Search
 	*
@@ -160,9 +157,8 @@
 			else
 			{
 				$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
-
 				$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$extension_data['input_template']));
-				$tpl->add_child($tpl, $button_box = $tpl->empty_cell('hbox','button_box'));
+				$tpl->add_child($tpl, $button_box =& $tpl->empty_cell('hbox','button_box'));
 				$tpl->add_child($button_box, $op_select = $tpl->empty_cell('select','opt_select',array(
 					'sel_options' => array(
 						'OR' => 'OR',
@@ -171,7 +167,8 @@
 					'label' => 'Operator',
 					'no_lang' => true,
 				)));
-				$tpl->add_child($button_box, $meth_select = $tpl->empty_cell('select','meth_select',array(
+//								_debug_array($button_box);
+$tpl->add_child($button_box, $meth_select = $tpl->empty_cell('select','meth_select',array(
 					'sel_options' => array(
 						'%' => lang('contains'),
 						false => lang('exact'),
@@ -183,6 +180,7 @@
 					'label' => 'Search',
 				)));
 			}
+_debug_array($tpl);
 
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';

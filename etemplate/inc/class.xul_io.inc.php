@@ -1,16 +1,13 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - eTemplates - XUL/XML Import & Export                        *  
-	* http://www.egroupware.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
-
-	/* $Id$ */
+	/**
+	 * eGroupWare - eTemplates - XUL/XML Import & Export
+	 *
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 * @package etemplate
+	 * @link http://www.egroupware.org
+	 * @author Ralf Becker <RalfBecker@outdoor-training.de>
+	 * @version $Id$
+	 */
 
 	if (!function_exists('var2xml'))
 	{

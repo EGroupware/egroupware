@@ -1,16 +1,13 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - generalized SQL Storage Object                              *
-	* http://www.egroupware.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
-
-	/* $Id$ */
+/**
+ * eGroupWare generalized SQL Storage Object
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
 
 /**
  * generalized SQL Storage Object
@@ -250,7 +247,7 @@ class so_sql
 	 *
 	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
 	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 * @param string $join sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 * @return array/boolean data if row could be retrived else False
 	*/
 	function read($keys,$extra_cols='',$join='')
