@@ -45,20 +45,6 @@
 			'bool'      => 'boolean',
 //			'abstime'   => 'abstime (mysql:timestamp)',
 		);
-		var $setup_header = '<?php
-	/**************************************************************************\\
-	* eGroupWare - Setup                                                       *
-	* http://www.eGroupWare.org                                                *
-	* Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
-	* --------------------------------------------                             *
-	* This program is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU General Public License as published by the    *
-	* Free Software Foundation; either version 2 of the License, or (at your   *
-	* option) any later version.                                               *
-	\\**************************************************************************/
-	
-	/* $Id$ */
-';
 
 		/**
 		 * constructor of class
@@ -673,7 +659,7 @@
 			}
 			if (!$header)
 			{
-				$header = $this->setup_header . "\n\n";
+				$header = $this->setup_header($this->app) . "\n\n";
 			}
 			if (!is_writeable(EGW_SERVER_ROOT."/$app/setup") || !($f = fopen($file,'w')))
 			{
@@ -842,7 +828,7 @@
 			}
 			else
 			{
-				$update = $this->setup_header;
+				$update = $this->setup_header($this->app);
 			}
 			$update .= "
 	\$test[] = '$old_version';
@@ -1064,4 +1050,25 @@
 
 			return $a == $b;
 		}
+		
+	/**
+	 * creates file header 
+	 *
+	 */
+	function setup_header($app)
+	{
+		return '<?php
+
+	/**
+	 * eGroupWare - Setup
+	 * http://www.egroupware.org 
+	 * Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de
+	 *
+	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+	 * @package '. $app. '
+	 * @subpackage setup
+	 * @version $Id$
+	 */
+';
 	}
+}
