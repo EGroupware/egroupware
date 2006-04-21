@@ -5,6 +5,7 @@
 	 *
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 * @package resources
+	 * @subpackage setup
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * @author Lukas Weiss <wnz_gh05t@users.sourceforge.net>
 	 * @version $Id$
