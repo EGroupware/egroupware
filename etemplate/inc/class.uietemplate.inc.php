@@ -871,6 +871,11 @@
 					{
 						$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 					}
+					if (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$cell['onchange'],$matches))
+					{
+						$cell['onchange'] = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/',
+							'confirm(\''.addslashes(lang($matches[1])).'\')',$cell['onchange']);
+					}
 					$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
 				}
 			}
