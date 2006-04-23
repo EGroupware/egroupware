@@ -33,8 +33,6 @@
 	$setup_info['phpgwapi']['tables'][]  = 'egw_lang';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_nextid';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_categories';
-	$setup_info['phpgwapi']['tables'][]  = 'egw_addressbook';
-	$setup_info['phpgwapi']['tables'][]  = 'egw_addressbook_extra';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_log';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_log_msg';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_interserv';
