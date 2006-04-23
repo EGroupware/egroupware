@@ -488,7 +488,7 @@ class so_sql
 					{
 						list($table,$only_col) = explode('.',$db_col);
 						
-						$table_def = $this->db->get_table_definitions(false,$table);
+						$table_def = $this->db->get_table_definitions(true,$table);
 						
 						$query[] = $db_col.(is_array($val) ? ' IN ' : '=').$this->db->quote($val,$table_def['fd'][$only_col]);
 					}
@@ -539,7 +539,7 @@ class so_sql
 			echo "<p>so_sql::search(,only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty,$op,start='$start',".print_r($filter,true).") query=".print_r($query,true).", total='$this->total'</p>\n";
 			echo "<br>criteria = "; _debug_array($criteria);
 		}
-		$colums = ($only_keys === true ? implode(',',$this->db_key_cols) : (!$only_keys ? '*' : $only_keys)).
+		$colums = ($only_keys === true ? implode(',',array_keys($this->db_key_cols)) : (!$only_keys ? '*' : $only_keys)).
 			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : '');
 
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
@@ -653,7 +653,7 @@ class so_sql
 				else	// only the specified columns
 				{
 					if (stristr($col,'as')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
-					$cols[$col] = $col;
+					$cols[$col] = isset($this->db_cols[$col]) ? $this->db_cols[$col] : $col;
 				}
 			}
 		}
@@ -662,7 +662,7 @@ class so_sql
 			foreach(is_array($extra_cols) ? $extra_cols : explode(',',$extra_cols) as $col)
 			{
 				if (stristr($col,'as ')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
-				$cols[$col] = $col;
+				$cols[$col] = isset($this->db_cols[$col]) ? $this->db_cols[$col] : $col;
 			}
 		}
 		return $cols;
@@ -759,7 +759,7 @@ class so_sql
 		if (!is_array($value_col)) $value_col = array($value_col);
 		
 		$cols = array();
-		foreach(is_array($value_col) ? $value_col : array($value_col) as $key => $col)
+		foreach($value_col as $key => $col)
 		{
 			$cols[$key] = preg_match('/AS ([a-z_0-9]+)$/i',$col,$matches) ? $matches[1] : $col;
 		}			
