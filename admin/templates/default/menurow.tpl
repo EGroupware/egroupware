@@ -14,6 +14,6 @@
 <!-- END menu_links -->
 <!-- BEGIN link_row -->
 					<tr class="{class}">
-						<td>&nbsp;&nbsp;<a href="{row_link}">{row_text}</a></td>
+						<td>&nbsp;&nbsp;<a href="{row_link}" {row_options}>{row_text}</a></td>
 					</tr>
 <!-- END link_row -->

@@ -3,7 +3,8 @@
 * eGroupWare - Adressbook - General business object                        *
 * http://www.egroupware.org                                                *
 * Written and (c) 2005 by Cornelius_weiss <egw@von-und-zu-weiss.de>        *
-* --------------------------------------------                             *
+* and Ralf Becker <RalfBecker-AT-outdoor-training.de>                      *
+* ------------------------------------------------------------------------ *
 *  This program is free software; you can redistribute it and/or modify it *
 *  under the terms of the GNU General Public License as published by the   *
 *  Free Software Foundation; either version 2 of the License, or (at your  *
@@ -15,25 +16,16 @@
 require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.socontacts.inc.php');
 
 /**
-* General business object of the adressbook
-*
-* @package addressbook
-* @author Cornelius Weiss <egw@von-und-zu-weiss.de>
-* @copyright (c) 2005 by Cornelius Weiss <egw@von-und-zu-weiss.de>
-* @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-*/
+ * General business object of the adressbook
+ *
+ * @package addressbook
+ * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ */
 class bocontacts extends socontacts
 {
-	/**
-	* @var $grants array with grants
-	*/
-	var $grants;
-	
-	/**
-	* @var $user userid of current user
-	*/
-	var $user;
-	
 	/**
 	 * @var int $tz_offset_s offset in secconds between user and server-time,
 	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
@@ -48,13 +40,33 @@ class bocontacts extends socontacts
 	/**
 	 * @var array $timestamps timestamps
 	 */
-	var $timestamps = array('last_mod');
+	var $timestamps = array('modified','created');
 	
+	/**
+	 * @var array $fileas_types
+	 */
+	var $fileas_types = array(
+		'org_name: n_family, n_given',
+		'org_name: n_family, n_prefix',
+		'org_name: n_given n_family',
+		'org_name: n_fn',
+		'n_family, n_given: org_name',
+		'n_family, n_prefix: org_name',
+		'n_given n_family: org_name',
+		'n_prefix n_family: org_name',
+		'n_fn: org_name',
+		'org_name',
+		'n_given n_family',
+		'n_prefix n_family',
+		'n_family, n_given',
+		'n_family, n_prefix',
+		'n_fn',
+	);
+
 	function bocontacts($contact_app='addressbook')
 	{
 		$this->socontacts($contact_app);
-		$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app);
-		$this->user = $GLOBALS['egw_info']['user']['account_id'];
+		
 		$this->tz_offset_s = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 		$this->now_su = time() + $this->tz_offset_s;
 
@@ -72,7 +84,92 @@ class bocontacts extends socontacts
 		}*/
 		
 	}
-	
+
+	/**
+	 * calculate the file_as string from the contact and the file_as type
+	 *
+	 * @param array $contact
+	 * @param string $type=null file_as type, default null to read it from the contact, unknown/not set type default to the first one
+	 * @return string
+	 */
+	function fileas($contact,$type=null)
+	{
+		if (is_null($type)) $type = $contact['fileas_type'];
+		if (!$type || !in_array($type,$this->fileas_types)) $type = $this->fileas_types[0];
+		
+		if (strstr($type,'n_fn')) $contact['n_fn'] = $this->fullname($contact);
+		
+		return str_replace(array_keys($contact),array_values($contact),$type);
+	}
+
+	/**
+	 * determine the file_as type from the file_as string and the contact
+	 *
+	 * @param array $contact
+	 * @param string $type=null file_as type, default null to read it from the contact, unknown/not set type default to the first one
+	 * @return string
+	 */
+	function fileas_type($contact,$file_as=null)
+	{
+		if (is_null($file_as)) $file_as = $contact['n_fileas'];
+		
+		if ($file_as)
+		{
+			foreach($this->fileas_types as $type)
+			{
+				if ($this->fileas($contact,$type) == $file_as)
+				{
+					return $type;
+				}
+			}
+		}
+		return $this->fileas_types[0];
+	}
+
+	/**
+	 * get selectbox options for the fileas types with translated labels, or real content
+	 *
+	 * @param array $contact=null real content to use, default none
+	 * @return array with options: fileas type => label pairs
+	 */
+	function fileas_options($contact=null)
+	{
+		$labels = array(
+			'n_prefix' => lang('prefix'),
+			'n_given'  => lang('first name'),
+			'n_middle' => lang('middle name'),
+			'n_family' => lang('last name'),
+			'n_suffix' => lang('suffix'),
+			'n_fn'     => lang('full name'),
+			'org_name' => lang('company name'),
+		);
+		foreach($labels as $name => $label)
+		{
+			if ($contact[$name]) $labels[$name] = $contact[$name];
+		}
+		foreach($this->fileas_types as $fileas_type)
+		{
+			$options[$fileas_type] = $this->fileas($labels,$fileas_type);
+		}
+		return $options;
+	}
+
+	/**
+	 * get full name from the name-parts
+	 *
+	 * @param array $contact
+	 * @return string full name
+	 */
+	function fullname($contact)
+	{
+		$parts = array();
+		foreach(array('n_prefix','n_given','n_middle','n_family','n_suffix') as $n)
+		{
+			if ($contact[$n]) $parts[] = $contact[$n];
+		}
+		return implode(' ',$parts);
+	}
+
 	/**
 	 * changes the data from the db-format to your work-format
 	 *
@@ -91,7 +188,24 @@ class bocontacts extends socontacts
 				$data[$name] += $this->tz_offset_s;
 			}
 		}
+		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto']);
+
 		return $data;
+	}
+	
+	/**
+	 * src for photo: returns array with linkparams if jpeg exists or the $default image-name if not
+	 * @param int $id contact_id
+	 * @param boolean $jpeg=false jpeg exists or not
+	 * @param string $default='' image-name to use if !$jpeg, eg. 'template'
+	 * @return string/array
+	 */
+	function photo_src($id,$jpeg,$default='')
+	{
+		return $jpeg ? array(
+			'menuaction' => 'addressbook.uicontacts.photo',
+			'contact_id' => $id,
+		) : $default;
 	}
 
 	/**
@@ -118,114 +232,78 @@ class bocontacts extends socontacts
 	/**
 	* deletes contact in db
 	*
-	* @param mixed &contact contact array from etemplate::exec or id
-	* @return bool false if all went right
+	* @param mixed &$contact contact array with key id or (array of) id(s)
+	* @return boolean true on success or false on failiure
 	*/
-	function delete(&$contact)
+	function delete($contact)
 	{
-		// multiple delete from advanced search
-		if(isset($contact[0]))
+		if (is_array($contact) && isset($contact['id']))
 		{
-			foreach($contact as $single)
-			{
-				if($this->check_perms(EGW_ACL_DELETE,$single['id']))
-				{
-					if(parent::delete($single))
-					{
-						$msg .= lang('Something went wrong by deleting %1', $single['n_given'].$single['n_family']);
-					}
-					else
-					{
-						$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $single['id'], 'delete', time());
-					}
-				}
-				else
-				{
-					$msg .= lang('You are not permitted to delete contact %1', $single['n_given'].$single['n_family']);
-				}
-			}
-			return $msg;
+			$contact = array($contact);
 		}
-		if((isset($contact['id']) && !$this->check_perms(EGW_ACL_DELETE,$contact['id'])) ||
-			(is_numeric($contact) && !$this->check_perms(EGW_ACL_DELETE,$contact)))
+		elseif (!is_array($contact))
 		{
-			$contact['msg'] = lang('You are not permittet to delete this contact');
-			return 1;
+			$contact = array($contact);
 		}
-		if(is_numeric($contact)) $contact = array('id' => $contact);
-		if(parent::delete($contact))
+		foreach($contact as $c)
 		{
-			$contact['msg'] = lang('Something went wrong by deleting this contact');
-			return 1;
-		}
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'], 'delete', time());
+			$id = is_array($c) ? $c['id'] : $c;
 
-		return;
+			if ($this->check_perms(EGW_ACL_DELETE,$c) && parent::delete($id))
+			{
+				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
+			}
+			else
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
 	* saves contact to db
 	*
 	* @param array &contact contact array from etemplate::exec
-	* @return array $contact
+	* @return boolean true on success, false on failure, an error-message is in $contact['msg']
 	* TODO make fullname format choosable at best with selectbox and javascript in edit dialoge
 	*/
 	function save(&$contact)
 	{
 		// stores if we add or update a entry
-		$isUpdate = true;
-		
-		if($contact['id'] && !$this->check_perms(EGW_ACL_EDIT,$contact['id']))
+		if (!($isUpdate = $contact['id']))
+		{
+			if (!isset($contact['owner'])) $contact['owner'] = $this->user;	// write to users personal addressbook
+			$contact['creator'] = $this->user;
+			$contact['created'] = $this->now_su;
+		}
+		if($contact['id'] && !$this->check_perms(EGW_ACL_EDIT,$contact))
 		{
 			$contact['msg'] = lang('You are not permittet to edit this contact');
-			return $contact;
+			return false;
 		}
-		
-		// new contact
-		if($contact['id'] == 0)
-		{
-			$contact['owner'] = $this->user;
-			$isUpdate = false;
-		}
-		
 		// convert categories
-		$contact['cat_id'] = $contact['cat_id'] ? implode(',',$contact['cat_id']) : '';
+		$contact['cat_id'] = is_array($contact['cat_id']) ? implode(',',$contact['cat_id']) : $contact['cat_id'];
 		// last modified
-		$contact['last_mod'] = $this->now_su;
-		// only owner can set access status
-		$contact['access'] = $contact['owner'] == $this->user ? ($contact['private'] ? 'private': 'public') : $contact['access'];
-		// create fullname
-		$contact['fn'] = $contact['prefix'].
-			($contact['n_given'] ? ' '.$contact['n_given'] : '').
-			($contact['n_middle'] ? ' '.$contact['n_middle'] : '').
-			($contact['n_family'] ? ' '.$contact['n_family'] : '').
-			($contact['n_suffix'] ? ' '.$contact['n_suffix'] : '');
-		// for some bad historical reasons we mainfileds saved in cf :-(((
-		$contact['#ophone'] = $contact['ophone']; unset($contact['ophone']);
-		$contact['#address2'] = $contact['address2']; unset($contact['address2']);
-		$contact['#address3'] = $contact['address3']; unset($contact['address3']);
-		
+		$contact['modifier'] = $this->user;
+		$contact['modified'] = $this->now_su;
+		// set access if not set or bogus
+		if ($contact['access'] != 'private') $contact['access'] = 'public';
+		// set full name and fileas from the content
+		$contact['n_fn'] = $this->fullname($contact);
+		$contact['n_fileas'] = $this->fileas($contact);
+
 		$error_nr = parent::save($contact);
 
 		if(!$error_nr)
 		{
-			if($isUpdate) {
-				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'], 'modify', time());
-			} else {
-				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'], 'add', time());
-			}
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 		}
-		
-		// for some bad historical reasons we mainfileds saved in cf :-(((
-		$contact['ophone'] = $contact['#ophone']; unset($contact['#ophone']);
-		$contact['address2'] = $contact['#address2']; unset($contact['#address2']);
-		$contact['address3'] = $contact['#address3']; unset($contact['#address3']);
-
 		$contact['msg'] = $error_nr ?
 			lang('Something went wrong by saving this contact. Errorcode %1',$error_nr) :
 			lang('Contact saved');
 		
-		return $contact;
+		return !$error_nr;
 	}
 	
 	/**
@@ -234,57 +312,26 @@ class bocontacts extends socontacts
 	* @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
 	* @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	* @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
-	* @return array with data or errormessage
+	* @return array/boolean contact data or false on error
 	*/
 	function read($keys,$extra_cols='',$join='')
 	{
 		$data = parent::read($keys,$extra_cols,$join);
-		if (!$data)
+		if (!$data || !$this->check_perms(EGW_ACL_READ,$data))
 		{
-			return lang('something went wrong by reading this contact');
+			return false;
 		}
-		if(!$this->check_perms(EGW_ACL_READ,$data))
-		{
-			return lang('you are not permittet to view this contact');
-		}
-		
-		// convert access into private for historical reasons
-		$data['private'] = $data['access'] == 'private' ? 1 : 0;
-		// for some bad historical reasons we mainfileds saved in cf :-(((
-		$data['ophone'] = $data['#ophone']; unset($data['#ophone']);
-		$data['address2'] = $data['#address2']; unset($data['#address2']);
-		$data['address3'] = $data['#address3']; unset($data['#address3']);
+		// determine the file-as type
+		$data['fileas_type'] = $this->fileas_type($data);
 		
 		return $data;
 	}
 	
 	/**
-	* searches contacts for rows matching searchcriteria
-	*
-	* @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	* @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
-	* @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	* @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	* @param string $wildcard='' appended befor and after each criteria
-	* @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
-	* @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	* @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
-	* @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	* @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
-	*	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	* @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
-	* @return array of matching rows (the row is an array of the cols) or False
-	*/
-	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
-	{
-		$filter = array(
-			'owner' => array_keys($this->grants),
-		);
-		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
-	}
-	
-	/**
 	* Checks if the current user has the necessary ACL rights
+	*
+	* If the access of a contact is set to private, one need a private grant for a personal addressbook
+	* or the group membership for a group-addressbook
 	*
 	* @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
 	* @param mixed $contact contact as array or the contact-id
@@ -292,22 +339,98 @@ class bocontacts extends socontacts
 	*/
 	function check_perms($needed,&$contact)
 	{
-		if (is_array($contact))
+		if (!is_array($contact) && !($contact = parent::read($contact)))
 		{
-			$owner = $contact['owner'];
-			$access = $contact['access'];
+			return false;
 		}
-		elseif (is_numeric($contact))
-		{
-			$read_contact = parent::read($contact);
-			$owner = $read_contact['owner'];
-			$access = $read_contact['access'];
-		}
-		if($owner == $this->user)
+		$owner = $contact['owner'];
+		
+		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $this->user)
 		{
 			return true;
 		}
-		$access = $access ? $access : 'public';
-		return $access == 'private' ? false : $this->grants[$owner] & $needed;
+		return ($this->grants[$owner] & $needed) && 
+			(!$contact['private'] || ($this->grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$this->memberships));
+	}
+
+	/**
+	 * get title for a contact identified by $contact
+	 * 
+	 * Is called as hook to participate in the linking
+	 *
+	 * @param int/string/array $contact int/string id or array with contact
+	 * @param string the title
+	 */
+	function link_title($contact)
+	{
+		if (!is_array($contact) && $contact)
+		{
+			$contact = $this->read($contact);
+		}
+		if (!is_array($contact))
+		{
+			return False;
+		}
+		return $contact['n_fileas'];
+	}
+
+	/**
+	 * query addressbook for contacts matching $pattern
+	 *
+	 * Is called as hook to participate in the linking
+	 *
+	 * @param string $pattern pattern to search
+	 * @return array with id - title pairs of the matching entries
+	 */
+	function link_query($pattern)
+	{
+		$result = $criteria = array();
+		if ($pattern)
+		{
+			foreach($this->columns_to_search as $col)
+			{
+				$criteria[$col] = $pattern;
+			}
+		}
+		foreach((array) $this->regular_search($criteria,false,'org_name,n_family,n_given','','%',false,'OR') as $contact)
+		{
+			$result[$contact['id']] = $this->link_title($contact);
+		}
+		return $result;
+	}
+	
+	/**
+	 * Hook called by link-class to include calendar in the appregistry of the linkage
+	 *
+	 * @param array/string $location location and other parameters (not used)
+	 * @return array with method-names
+	 */
+	function search_link($location)
+	{
+		return array(
+			'query' => 'addressbook.bocontacts.link_query',
+			'title' => 'addressbook.bocontacts.link_title',
+			'view' => array(
+				'menuaction' => 'addressbook.uicontacts.view'
+			),
+			'view_id' => 'contact_id',
+		);
+	}
+
+	/**
+	 * Called by delete-account hook if an account gets deleted
+	 *
+	 * @param array $data
+	 */
+	function deleteaccount($data)
+	{
+		// delete/move personal addressbook
+		parent::deleteaccount($data);
+		
+		// delete contact linked to account
+		if (($contact_id = $GLOBALS['egw']->accounts->id2name($data['account_id'],'person_id')))
+		{
+			$this->delete($contact_id);
+		}
 	}
 }

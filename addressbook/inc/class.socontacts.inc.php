@@ -3,7 +3,8 @@
 * eGroupWare - Adressbook - General storage object                         *
 * http://www.egroupware.org                                                *
 * Written and (c) 2005 by Cornelius_weiss <egw@von-und-zu-weiss.de>        *
-* --------------------------------------------                             *
+* and Ralf Becker <RalfBecker-AT-outdoor-training.de>                      *
+* ------------------------------------------------------------------------ *
 *  This program is free software; you can redistribute it and/or modify it *
 *  under the terms of the GNU General Public License as published by the   *
 *  Free Software Foundation; either version 2 of the License, or (at your  *
@@ -17,7 +18,8 @@
  *
  * @package addressbook
  * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
- * @copyright (c) 2005 by Cornelius Weiss <egw@von-und-zu-weiss.de>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
@@ -53,19 +55,93 @@ class socontacts
 	*/
 	var $extra_value = 'contact_value';
 	
+	/**
+	 * @var string $contacts_repository 'sql' or 'ldap'
+	 */
+	var $contacts_repository = 'sql';
+	
+	/**
+	 * @var array $grants account_id => rights pairs
+	 */
+	var $grants;
+
+	/**
+	* @var int $user userid of current user
+	*/
+	var $user;
+	
+	/**
+	 * @var array $memberships of the current user
+	 */
+	var $memberships;
+	
+	/**
+	 * @var array $columns_to_search when we search for a single pattern
+	 */
+	var $columns_to_search = array();
+	/**
+	 * @var array $account_extra_search extra columns to search if accounts are included, eg. account_lid
+	 */
+	var $account_extra_search = array();
+	
+	/**
+	 * @var array $customfields name => array(...) pairs
+	 */
+	var $customfields = array();
+	/**
+	 * @var array $content_types name => array(...) pairs
+	 */
+	var $content_types = array();
+	
 	function socontacts($contact_app='addressbook')
 	{
-		if($GLOBALS['egw_info']['server']['contact_repository'] == 'sql' || !isset($GLOBALS['egw_info']['server']['contact_repository']))
+		$this->user = $GLOBALS['egw_info']['user']['account_id'];
+		foreach($GLOBALS['egw']->accounts->membership($this->user) as $group)
 		{
-			$this->somain =& CreateObject('etemplate.so_sql','phpgwapi','egw_addressbook');
+			$this->memberships[] = $group['account_id'];
+		}
+
+		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap')
+		{
+			$this->contact_repository = 'ldap';
+			$this->somain =& CreateObject('addressbook.so_'.$this->contact_repository);
+
+			// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
+			$this->grants = array($this->user => ~0);
+			foreach($this->memberships as $gid)
+			{
+				$this->grants[$gid] = ~0;
+			}
+			// LDAP uses a limited set for performance reasons, you NEED an index for that columns, ToDo: make it configurable
+			// minimum: $this->columns_to_search = array('n_family','n_given','org_name');
+			$this->columns_to_search = array('n_family','n_middle','n_given','org_name','org_unit','adr_one_location','adr_two_location','note');
+			$this->account_extra_search = array('uid');
 		}
 		else
 		{
-			$this->somain =& CreateObject('addressbook.so_'.$GLOBALS['egw_info']['server']['contact_repository']);
+			$this->somain =& CreateObject('addressbook.socontacts_sql','addressbook','egw_addressbook',null,'contact_');
+			// group grants are now grants for the group addressbook and NOT grants for all its members, therefor the param false!
+			$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
+			
+			// remove some columns, absolutly not necessary to search in sql
+			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),array('jpegphoto','owner','tid','private','id','cat_id','modified','modifier','creator','created'));
+			$this->account_extra_search = array('account_firstname','account_lastname','account_email','account_lid');
 		}
+		// add grants for accounts: admin --> everything, everyone --> read
+		$this->grants[0] = EGW_ACL_READ;	// everyone read access
+		if (isset($GLOBALS['egw_info']['user']['apps']['admin']))	// admin rights can be limited by ACL!
+		{
+			if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $this->grants[0] |= EGW_ACL_EDIT;
+			// no add at the moment if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $this->grants[0] |= EGW_ACL_ADD;
+			if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $this->grants[0] |= EGW_ACL_DELETE;
+		} 
+		// ToDo: it should be the other way arround, the backend should set the grants it uses
+		$this->somain->grants =& $this->grants;
+
+		$this->total =& $this->somain->total;
 		$this->somain->contacts_id = 'id';
 		$this->soextra =& CreateObject('etemplate.so_sql');
-		$this->soextra->so_sql('phpgwapi',$this->extra_table);
+		$this->soextra->so_sql('addressbook',$this->extra_table);
 			
 		$custom =& CreateObject('admin.customfields',$contact_app);
 		$this->customfields = $custom->get_customfields();
@@ -73,6 +149,22 @@ class socontacts
 		if (!$this->customfields) $this->customfields = array();
 		$this->content_types = $custom->get_content_types();
 		if ($this->content_types && !is_array($this->content_types)) $this->content_types = unserialize($this->content_types);
+	}
+	
+	/**
+	 * Read all customfields of the given id's
+	 *
+	 * @param int/array $ids
+	 * @return array id => name => value
+	 */
+	function read_customfields($ids)
+	{
+		$fields = array();
+		foreach((array)$this->soextra->search(array($this->extra_id => $ids),false) as $data)
+		{
+			if ($data) $fields[$data[$this->extra_id]][$data[$this->extra_key]] = $data[$this->extra_value];
+		}
+		return $fields;
 	}
 	
 	/**
@@ -108,20 +200,22 @@ class socontacts
 	/**
 	* deletes contact entry including custom fields
 	*
-	* @param array &$contact contact data from etemplate::exec
-	* @return bool false if all went right
+	* @param mixed $contact array with key id or just the id
+	* @return boolean true on success or false on failiure
 	*/
 	function delete($contact)
 	{
+		if (is_array($contact)) $contact = $contact['id'];
+
 		// delete mainfields
-		if ($this->somain->delete(array('id' => $contact['id'])))
+		if ($this->somain->delete($contact))
 		{		
 			// delete customfields, can return 0 if there are no customfields
-			$this->soextra->delete(array($this->extra_id => $contact['id']));
+			$this->soextra->delete(array($this->extra_id => $contact));
 
-			return false;
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	/**
@@ -139,27 +233,33 @@ class socontacts
 		if($error_nr) return $error_nr;
 		
 		// save customfields
-		foreach ((array)$this->customfields + array('ophone' => '', 'address2' => '' , 'address3' => '') as $field => $options)
+		foreach ((array)$this->customfields as $field => $options)
 		{
-			if(!array_key_exists('#'.$field,$contact)) continue;
-			$value = $contact['#'.$field];
+			if (!isset($contact['#'.$field])) continue;
+
 			$data = array(
-				$this->extra_id => $contact['id'],
+				$this->extra_id    => $contact['id'],
 				$this->extra_owner => $contact['owner'],
-				$this->extra_key => $field,
-				$this->extra_value => $value,
+				$this->extra_key   => $field,
 			);
-			$this->soextra->data = $data;
-			$error_nr = $this->soextra->save();
-			if($error_nr) return $error_nr;
+			if((string) $contact['#'.$field] === '')	// dont write empty values
+			{
+				$this->soextra->delete($data);	// just delete them, in case they were previously set
+				continue;
+			}
+			$data[$this->extra_value] =  $contact['#'.$field];
+			if (($error_nr = $this->soextra->save($data)))
+			{
+				return $error_nr;
+			}
 		}
-		return;
+		return false;	// no error
 	}
 	
 	/**
 	 * reads contact data including custom fields
 	 *
-	 * @param interger $contact_id contact_id
+	 * @param interger/string $contact_id contact_id or 'a'.account_id
 	 * @return array/boolean data if row could be retrived else False
 	*/
 	function read($contact_id)
@@ -169,8 +269,7 @@ class socontacts
 		{
 			return $contact;
 		}
-		
-		// read customfilds
+		// read customfields
 		$keys = array(
 			$this->extra_id => $contact['id'],
 			$this->extra_owner => $contact['owner'],
@@ -319,7 +418,7 @@ class socontacts
 		{
 			$criteria[$this->main_id] = $resultextra;
 		}
-		if (count($criteria) >= 1)
+		if (count($criteria) >= 0)	// RB-CHANGED was 1
 		{
 			// We do have to apply wildcard by hand, as the result-ids of extrasearch are included in this search
 			if($wildcard)
@@ -381,9 +480,57 @@ class socontacts
 	}
 	
 	/**
+	 * searches db for rows matching searchcriteria
+	 *
+	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
+	 *
+	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard='' appended befor and after each criteria
+	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
+	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+	 * @return array of matching rows (the row is an array of the cols) or False
+	 */
+	function &regular_search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
+	{
+		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
+
+		if (is_array($criteria) && count($criteria))
+		{
+			$criteria = $this->data2db($criteria);
+		}
+		if (is_array($filter) && count($filter))
+		{
+			$filter = $this->data2db($filter);
+		}
+		else
+		{
+			$filter = $filter ? array($filter) : array();
+		}
+		$rows =& $this->somain->search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+		
+		if ($rows)
+		{
+			foreach($rows as $n => $row)
+			{
+				$rows[$n] = $this->db2data($row);
+			}
+		}
+		// ToDo: read custom-fields, if displayed in the index page
+		return $rows;
+	}
+
+ 	/**
 	 * gets all contact fields from database
 	 */
-	function get_contact_conlumns()
+	function get_contact_columns()
 	{
 		$fields = $this->somain->db_data_cols;
 		foreach ((array)$this->customfields as $cfield => $coptions)
@@ -391,5 +538,33 @@ class socontacts
 			$fields['#'.$cfield] = '#'.$cfield;
 		}
 		return $fields;
+	}
+	
+	/**
+	 * delete / move all contacts of an addressbook
+	 *
+	 * @param array $data
+	 * @param int $data['account_id'] owner to change
+	 * @param int $data['new_owner']  new owner or 0 for delete
+	 */
+	function deleteaccount($data)
+	{
+		$account_id = $data['account_id'];
+		$new_owner =  $data['new_owner'];
+		
+		if (!$new_owner)
+		{
+			$this->somain->delete(array('owner' => $account_id));
+			$this->soextra->delete(array($this->extra_owner => $account_id));
+		}
+		else
+		{
+			$this->somain->change_owner($account_id,$new_owner);
+			$this->soextra->db->update($this->soextra->table_name,array(
+				$this->extra_owner => $new_owner
+			),array(
+				$this->extra_owner => $account_id
+			),__LINE__,__FILE__);
+		}
 	}
 }

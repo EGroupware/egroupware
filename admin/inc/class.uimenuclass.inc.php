@@ -28,11 +28,12 @@
 			$this->rowColor[1] = $GLOBALS['egw_info']['theme']['row_off'];
 		}
 
-		function section_item($pref_link='',$pref_text='', $class)
+		function section_item($pref_link='',$pref_text='', $class='',$options='')
 		{
 			$this->t->set_var('row_link',$pref_link);
 			$this->t->set_var('row_text',$pref_text);
 			$this->t->set_var('class',$class);
+			$this->t->set_var('row_options',$options);
 			$this->t->parse('all_rows','link_row',True);
 		}
 
@@ -58,7 +59,7 @@
 				{
 					$link = $GLOBALS['egw']->link($value['url'],'account_id=' . get_var('account_id',array('GET','POST')));
 				}
-				$this->section_item($link,lang($value['description']),($i%2) ? "row_on": "row_off");
+				$this->section_item($link,lang($value['description']),($i%2) ? "row_on": "row_off",$value['options']);
 				$i++;
 			}
 

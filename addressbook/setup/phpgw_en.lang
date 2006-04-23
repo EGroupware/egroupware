@@ -1,35 +1,40 @@
+%1 contact(s) %2	addressbook	en	%1 contact(s) %2
+%1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficent rights !!!
 %1 records imported	addressbook	en	%1 records imported
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
+%1 starts with '%2'	addressbook	en	%1 starts with '%2'
 (e.g. 1969)	addressbook	en	(e.g. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
 actions	addressbook	en	Actions
+add a new contact	addressbook	en	Add a new contact
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add custom field	addressbook	en	Add Custom Field
 address book	common	en	Address Book
 address book - vcard in	addressbook	en	Address book - VCard in
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
-address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
 addressbook preferences	addressbook	en	Addressbook preferences
+addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
 addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
 advanced search	addressbook	en	Advanced search
 alt. csv import	addressbook	en	Alt. CSV Import
+always	addressbook	en	always
+apply the action on the whole selection, not only the shown contacts!!!	addressbook	en	Apply the action on the whole selection, NOT only the shown contacts!!!
 are you shure you want to delete this contact?	addressbook	en	Are you shure you want to delete this contact?
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
-bbs phone	addressbook	en	BBS Phone
+assistent	addressbook	en	Assistent
 birthday	common	en	Birthday
 birthdays	common	en	Birthdays
 blank	addressbook	en	Blank
 business	common	en	Business
-business address type	addressbook	en	Business Address Type
+business address	addressbook	en	Business address
 business city	addressbook	en	Business City
 business country	addressbook	en	Business Country
 business email	addressbook	en	Business EMail
-business email type	addressbook	en	Business EMail Type
 business fax	addressbook	en	Business Fax
 business phone	addressbook	en	Business Phone
 business state	addressbook	en	Business State
@@ -38,11 +43,11 @@ business zip code	addressbook	en	Business Postal Code
 car phone	addressbook	en	Car Phone
 cell phone	addressbook	en	Mobile phone
 charset of file	addressbook	en	Charset of file
-choose an icon for this contact type	addressbook	en	Choose an icon for this contact type
-chosse an etemplate for this contact type	addressbook	en	Chosse an eTemplate for this contact type
+check all	addressbook	en	Check all
+choose an icon for this contact type	admin	en	Choose an icon for this contact type
+chosse an etemplate for this contact type	admin	en	Chosse an eTemplate for this contact type
 city	common	en	City
 company	common	en	Company
-company name	common	en	Company Name
 configuration	common	en	Configuration
 contact	common	en	Contact
 contact application	admin	en	Contact application
@@ -51,6 +56,7 @@ contact settings	admin	en	Contact Settings
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 country	common	en	Country
 create new links	addressbook	en	Create new links
+created	addressbook	en	Created
 credit	addressbook	en	Credit
 csv-fieldname	addressbook	en	CSV-Fieldname
 csv-filename	addressbook	en	CSV-Filename
@@ -59,7 +65,12 @@ custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
+delete this contact	addressbook	en	Delete this contact
+deleted	addressbook	en	deleted
+deletes the photo	addressbook	en	Deletes the photo
 department	common	en	Department
+displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter eGroupWare or click on the homepage icon).
+do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?
 do your really want to delete this contact?	addressbook	en	Do your really want to delete this contact?
 doesn't matter	addressbook	en	doesn't matter
 domestic	addressbook	en	Domestic
@@ -71,12 +82,15 @@ edit custom fields	admin	en	Edit Custom Fields
 edit phonenumbers -	addressbook	en	Edit Phonenumbers -
 email & internet	addressbook	en	Email & Internet
 empty for all	addressbook	en	empty for all
+enable an extra private addressbook	addressbook	en	Enable an extra private addressbook
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
 existing links	addressbook	en	Existing links
 export	addressbook	en	export
+export as vcard	addressbook	en	Export as VCard
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
+exported	addressbook	en	exported
 extra	addressbook	en	Extra
 fax	addressbook	en	Fax
 fax number	common	en	Fax Number
@@ -89,11 +103,11 @@ full name	addressbook	en	Full Name
 geo	addressbook	en	GEO
 global categories	addressbook	en	Global Categories
 grant addressbook access	common	en	Grant Addressbook Access
-home address type	addressbook	en	Home Address Type
+group %1	addressbook	en	Group %1
+home address	addressbook	en	Home address
 home city	addressbook	en	Home City
 home country	addressbook	en	Home Country
 home email	addressbook	en	Home EMail
-home email type	addressbook	en	Home EMail Type
 home phone	addressbook	en	Home Phone
 home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
@@ -111,7 +125,6 @@ import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
 income	addressbook	en	Income
 international	addressbook	en	International
-isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
 last modified	addressbook	en	last modified
 ldap context for contacts	admin	en	LDAP context for contacts
@@ -131,11 +144,13 @@ mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
 more ...	addressbook	en	More ...
+moved	addressbook	en	moved
 multiple vcard	addressbook	en	Multiple VCard
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
-options for type	addressbook	en	Options for type
+only if there is content	addressbook	en	only if there is content
+options for type	admin	en	Options for type
 organisation	addressbook	en	organisation
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
@@ -143,7 +158,9 @@ pager	common	en	Pager
 parcel	addressbook	en	Parcel
 phone number	common	en	Phone Number
 phone numbers	common	en	Phone Numbers
+photo	addressbook	en	Photo
 please enter a name for that field !	addressbook	en	Please enter a name for that field !
+please select only one category	addressbook	en	Please select only one category
 postal	common	en	Postal
 pref	addressbook	en	pref
 prefix	addressbook	en	Prefix
@@ -154,12 +171,18 @@ read a list of entries.	addressbook	en	Read a list of entries.
 read a single entry by passing the id and fieldlist.	addressbook	en	Read a single entry by passing the id and fieldlist.
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
-retrieve contacts	admin	en	retrieve contacts
+role	addressbook	en	Role
+room	addressbook	en	Room
+search for '%1'	addressbook	en	Search for '%1'
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be resized to 60 pixel width.
+select addressbook type	addressbook	en	Select addressbook type
 select all	addressbook	en	Select all
+select an action or addressbook to move to	addressbook	en	Select an action or addressbook to move to
 select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
-select where you want to store	admin	en	Select where you want to store
+select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
 show	addressbook	en	Show
+show a column for %1	addressbook	en	Show a column for %1
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 something went wrong by deleting %1	addressbook	en	Something went wrong by deleting %1
 something went wrong by deleting this contact	addressbook	en	Something went wrong by deleting this contact
@@ -175,19 +198,21 @@ test import (show importable records <u>only</u> in browser)	addressbook	en	Test
 that field name has been used already !	addressbook	en	That field name has been used already !
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
+timezone	addressbook	en	Timezone
 to many might exceed your execution-time-limit	addressbook	en	to many might exceed your execution-time-limit
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
 translation	addressbook	en	Translation
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
+upload or delete the photo	addressbook	en	Upload or delete the photo
 use country list	addressbook	en	Use Country List
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 vcards require a last name entry.	addressbook	en	Vcards require a last name entry.
-video phone	addressbook	en	Video Phone
-voice phone	addressbook	en	Voice Phone
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
+when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	en	When should the contacts list display that colum. "Only if there is content" hides the column, unless there is some content in the view.
+whole selection	addressbook	en	whole selection
 work phone	addressbook	en	Work Phone
 write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
 you are not permitted to delete contact %1	addressbook	en	You are not permitted to delete contact %1
@@ -196,5 +221,6 @@ you are not permittet to edit this contact	addressbook	en	You are not permittet 
 you are not permittet to view this contact	addressbook	en	you are not permittet to view this contact
 you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
+you need to select some contacts first	addressbook	en	You need to select some contacts first
 zip code	common	en	ZIP Code
 zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files.  However, do not mix file types per import.

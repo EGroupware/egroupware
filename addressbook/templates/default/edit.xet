@@ -1,59 +1,72 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="addressbook.edit.personal" template="" lang="" group="0" version="1.0.1.002">
-		<grid class="editphones">
+	<template id="addressbook.edit.personal" template="" lang="" group="0" version="1.3.002">
+		<grid height="258">
 			<columns>
 				<column/>
 				<column/>
 				<column/>
 			</columns>
 			<rows>
-				<row>
-					<image src="personal"/>
-					<description value="prefix"/>
-					<textbox id="n_prefix" size="45" maxlength="64"/>
-				</row>
-				<row>
-					<description/>
-					<description value="first name"/>
-					<textbox id="n_given" size="45" maxlength="64"/>
-				</row>
-				<row>
-					<description/>
-					<description value="middle name"/>
-					<textbox id="n_middle" size="45" maxlength="64"/>
-				</row>
-				<row>
-					<description/>
-					<description value="last name"/>
-					<textbox id="n_family" size="45" maxlength="64"/>
-				</row>
-				<row>
-					<description/>
-					<description value="suffix"/>
-					<textbox id="n_suffix" size="45" maxlength="64"/>
-				</row>
-				<row height="40">
-					<image src="gohome"/>
-					<description value="company name" options=",,,org_name"/>
-					<textbox size="45" maxlength="64" id="org_name"/>
-				</row>
 				<row valign="top">
+					<image src="accounts"/>
+					<vbox>
+						<image src="photo" class="photo"/>
+						<button label="change" id="change_photo" statustext="Upload or delete the photo" onclick="set_style_by_class('table','uploadphoto','display','inline'); return false;"/>
+						<template id="addressbook.edit"/>
+					</vbox>
+					<grid>
+						<columns>
+							<column width="20%"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<description options=",,,n_prefix" value="prefix"/>
+								<textbox id="n_prefix" size="35" maxlength="64" onchange="setFileasOptions(this);"/>
+							</row>
+							<row>
+								<description value="first name" options=",,,n_given"/>
+								<textbox id="n_given" size="35" maxlength="64" onchange="setFileasOptions(this);"/>
+							</row>
+							<row>
+								<description options=",,,n_middle" value="middle name"/>
+								<textbox id="n_middle" size="35" maxlength="64" onchange="setFileasOptions(this);"/>
+							</row>
+							<row>
+								<description options=",,,n_family" value="last name"/>
+								<textbox id="n_family" size="35" maxlength="64" onchange="setFileasOptions(this);"/>
+							</row>
+							<row>
+								<description options=",,,n_suffix" value="suffix"/>
+								<textbox id="n_suffix" size="35" maxlength="64" onchange="setFileasOptions(this);"/>
+							</row>
+						</rows>
+					</grid>
+				</row>
+				<row height="30">
+					<image src="gohome"/>
+					<description value="company" options=",,,org_name"/>
+					<textbox size="45" maxlength="64" id="org_name" onchange="setFileasOptions(this);"/>
+				</row>
+				<row valign="top" height="70">
 					<image src="folder"/>
 					<description value="category"/>
 					<listbox type="select-cat" id="cat_id" rows="3" options=",width:99%" span="4"/>
 				</row>
 				<row>
-					<image src="password"/>
-					<description value="Private" options=",,,private"/>
-					<checkbox id="private"/>
+					<image src="private.png"/>
+					<description value="Addressbook" options=",,,owner"/>
+					<menulist span=",owner">
+						<menupopup id="owner" statustext="Addressbook the contact should be saved to" no_lang="1"/>
+					</menulist>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="1.0.1.001">
-		<grid height="320">
+	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="1.3.001">
+		<grid height="258">
 			<columns>
 				<column/>
 				<column/>
@@ -63,14 +76,23 @@
 			<rows>
 				<row>
 					<image src="gear"/>
-					<description value="title"/>
+					<description value="title" options=",,,title"/>
 					<textbox size="45" maxlength="64" id="title"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="department"/>
+					<description value="department" options=",,,org_unit"/>
 					<textbox id="org_unit" size="45" maxlength="64"/>
+					<description/>
+				</row>
+				<row>
+					<description/>
+					<description options=",,,role" value="Role"/>
+					<hbox orient=",0,0">
+						<textbox id="role" size="25" maxlength="64"/>
+						<textbox size="8" maxlength="64" label="Room" align="right" id="room"/>
+					</hbox>
 					<description/>
 				</row>
 				<row>
@@ -81,43 +103,37 @@
 				</row>
 				<row>
 					<image src="gohome"/>
-					<description value="street"/>
+					<description value="street" options=",,,adr_one_street"/>
 					<textbox size="45" maxlength="64" id="adr_one_street"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="address line 2"/>
-					<textbox size="45" maxlength="64" id="address2"/>
+					<description value="address line 2" options=",,,adr_one_street2"/>
+					<textbox size="45" maxlength="64" id="adr_one_street2"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="address line 3"/>
-					<textbox size="45" maxlength="64" id="address3"/>
-					<description/>
-				</row>
-				<row>
-					<description/>
-					<description value="city"/>
+					<description value="city" options=",,,adr_one_locality"/>
 					<textbox size="45" maxlength="64" id="adr_one_locality"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="zip code"/>
+					<description value="zip code" options=",,,adr_one_postalcode"/>
 					<textbox size="45" maxlength="64" id="adr_one_postalcode"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="state"/>
+					<description value="state" options=",,,adr_one_region"/>
 					<textbox size="45" maxlength="64" id="adr_one_region"/>
 					<description/>
 				</row>
 				<row>
 					<description/>
-					<description value="country"/>
+					<description value="country" options=",,,adr_one_countryname"/>
 					<textbox size="45" maxlength="64" id="adr_one_countryname"/>
 					<description/>
 				</row>
@@ -130,8 +146,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%" height="250" overflow="auto">
+	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.3.001">
+		<grid height="258">
 			<columns>
 				<column/>
 				<column/>
@@ -140,60 +156,63 @@
 			<rows>
 				<row>
 					<image src="gohome"/>
-					<description value="street"/>
+					<description value="street" options=",,,adr_two_street"/>
 					<textbox size="45" maxlength="64" id="adr_two_street"/>
 				</row>
 				<row>
 					<description/>
-					<description value="city"/>
+					<description options=",,,adr_two_street2" value="address line 2"/>
+					<textbox size="45" maxlength="64" id="adr_two_street2"/>
+				</row>
+				<row>
+					<description/>
+					<description value="city" options=",,,adr_two_locality"/>
 					<textbox size="45" maxlength="64" id="adr_two_locality"/>
 				</row>
 				<row>
 					<description/>
-					<description value="zip code"/>
+					<description value="zip code" options=",,,adr_two_postalcode"/>
 					<textbox size="45" maxlength="64" id="adr_two_postalcode"/>
 				</row>
 				<row>
 					<description/>
-					<description value="state"/>
+					<description value="state" options=",,,adr_two_region"/>
 					<textbox size="45" maxlength="64" id="adr_two_region"/>
 				</row>
 				<row>
 					<description/>
-					<description value="country"/>
+					<description value="country" options=",,,adr_two_countryname"/>
 					<textbox size="45" maxlength="64" id="adr_two_countryname"/>
 				</row>
 				<row height="30">
 					<description/>
 					<description options=",,,bday" value="Birthday"/>
-					<date id="bday" options="m/d/Y"/>
+					<hbox id="bday" orient=",0,0">
+						<date options="Y-m-d" id="bday"/>
+						<menulist>
+							<menupopup id="tz" no_lang="1" label="Timezone" align="right"/>
+						</menulist>
+					</hbox>
 				</row>
 				<row>
-					<description/>
-					<description options=",,,tz" value="Time zone"/>
-					<menulist>
-						<menupopup id="tz" no_lang="1"/>
-					</menulist>
-				</row>
-				<row>
-					<description/>
-					<description value="Public key"/>
-					<textbox multiline="true" rows="2" cols="45" id="pubkey"/>
+					<image src="private"/>
+					<description value="Public key" options=",,,pubkey"/>
+					<textbox multiline="true" rows="2" cols="40" id="pubkey"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.0.1.001">
-		<grid height="320">
+	<template id="addressbook.edit.details" template="" lang="" group="0" version="1.3.001">
+		<grid width="100%" height="258" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
 			<rows>
 				<row>
-					<description value="Notes"/>
+					<description value="Notes" options=",,,note"/>
 				</row>
 				<row valign="top">
-					<textbox multiline="true" rows="4" cols="56" id="note"/>
+					<textbox multiline="true" rows="4" cols="50" id="note"/>
 				</row>
 				<row class="th">
 					<description value="Custom fields"/>
@@ -204,8 +223,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.0.1.002">
-		<grid height="320">
+	<template id="addressbook.edit.links" template="" lang="" group="0" version="1.3.001">
+		<grid width="100%" height="258" overflow="auto">
 			<columns>
 				<column/>
 			</columns>
@@ -225,8 +244,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.editphones" template="" lang="" group="0" version="1.0.1.001">
-		<grid width="100%">
+	<template id="addressbook.editphones" template="" lang="" group="0" version="1.3.001">
+		<grid class="editphones">
 			<columns>
 				<column/>
 				<column/>
@@ -244,69 +263,67 @@
 					<description value="pref"/>
 				</row>
 				<row>
-					<description value="business"/>
+					<description value="business" options=",,,tel_work2" class="bold"/>
 					<textbox size="30" id="tel_work2"/>
 					<radio options="tel_work" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value="mobile phone"/>
+					<description value="mobile phone" options=",,,tel_cell2"/>
 					<textbox size="30" id="tel_cell2"/>
 					<radio options="tel_cell" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value="Private"/>
-					<textbox size="30" id="tel_home2"/>
-					<radio options="tel_home" id="tel_prefer"/>
-				</row>
-				<row>
-					<description value="fax"/>
+					<description value="fax" options=",,,tel_fax"/>
 					<textbox size="30" id="tel_fax"/>
 					<radio options="tel_fax" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value="car phone"/>
+					<description value="car phone" options=",,,tel_car"/>
 					<textbox size="30" id="tel_car"/>
 					<radio options="tel_car" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value="video phone"/>
-					<textbox size="30" id="tel_video"/>
-					<radio options="tel_video" id="tel_prefer"/>
-				</row>
-				<row>
-					<description value="pager"/>
+					<description value="pager" options=",,,tel_pager"/>
 					<textbox size="30" id="tel_pager"/>
 					<radio options="tel_pager" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value="voice phone"/>
-					<textbox size="30" id="tel_voice"/>
-					<radio options="tel_voice" id="tel_prefer"/>
+					<hrule span="all"/>
 				</row>
 				<row>
-					<description value="message phone"/>
-					<textbox size="30" id="tel_msg"/>
+					<description value="Assistent" options=",,,assistent" class="bold"/>
+					<textbox size="35" id="assistent" span="2"/>
+				</row>
+				<row>
+					<description value="number" options=",,,tel_assistent"/>
+					<textbox size="30" id="tel_assistent"/>
 					<radio options="tel_msg" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value="bbs phone"/>
-					<textbox size="30" id="tel_bbs"/>
-					<radio options="tel_bbs" id="tel_prefer"/>
+					<hrule span="all"/>
 				</row>
 				<row>
-					<description value="modem phone"/>
-					<textbox size="30" id="tel_modem"/>
-					<radio options="tel_modem" id="tel_prefer"/>
+					<description value="Private" options=",,,tel_home2" class="bold"/>
+					<textbox size="30" id="tel_home2"/>
+					<radio options="tel_home" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value="isdn phone"/>
-					<textbox size="30" id="tel_isdn"/>
-					<radio options="tel_isdn" id="tel_prefer"/>
+					<description value="mobile phone" options=",,,tel_cell_private"/>
+					<textbox size="30" id="tel_cell_private"/>
+					<radio options="tel_cell_private" id="tel_prefer"/>
 				</row>
 				<row>
-					<description value=" Other Phone"/>
-					<textbox size="30" id="ophone"/>
-					<radio options="ophone" id="tel_prefer"/>
+					<description value="fax" options=",,,tel_fax_home"/>
+					<textbox size="30" id="tel_fax_home"/>
+					<radio options="tel_fax_home" id="tel_prefer"/>
+				</row>
+				<row>
+					<hrule span="all"/>
+				</row>
+				<row>
+					<description value=" Other Phone" options=",,,tel_other"/>
+					<textbox size="30" id="tel_other"/>
+					<radio options="tel_other" id="tel_prefer"/>
 				</row>
 				<row>
 					<button label="Ok" onclick="hidephones(this.form); return false;" span="all" align="center"/>
@@ -314,8 +331,8 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.0.1.002">
-		<grid>
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.3.002">
+		<grid width="800">
 			<columns>
 				<column width="450"/>
 				<column/>
@@ -326,24 +343,12 @@
 					<description/>
 				</row>
 				<row>
-					<grid>
-						<columns>
-							<column disabled="!@org_name"/>
-							<column disabled="!@org_name"/>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<textbox id="org_name" readonly="true" no_lang="1"/>
-								<description value=":"/>
-								<textbox id="fn" no_lang="1" readonly="true"/>
-							</row>
-						</rows>
-					</grid>
+					<menulist span=",fileas">
+						<menupopup data="" rows="1" cols="3" id="fileas_type" no_lang="1"/>
+					</menulist>
 					<hbox align="right">
-						<description value="Type"/>
-						<menulist>
-							<menupopup no_lang="1" id="tid" onchange="1"/>
+						<menulist span=",leftPad5">
+							<menupopup no_lang="1" id="tid" onchange="1" label="Type"/>
 						</menulist>
 						<html class="space" needed="1" label=" " no_lang="1" id="typegfx" readonly="true"/>
 					</hbox>
@@ -376,7 +381,7 @@
 								</columns>
 								<rows>
 									<row>
-										<image src="kaddressbook"/>
+										<image src="phone"/>
 										<description value="business" options=",,,tel_work"/>
 										<textbox id="tel_work" size="28" maxlength="40"/>
 									</row>
@@ -408,18 +413,23 @@
 								</columns>
 								<rows>
 									<row>
-										<image src="package_network"/>
+										<image src="internet"/>
 										<description value="url" options=",,,url"/>
 										<textbox id="url" size="28" maxlength="128"/>
 									</row>
 									<row>
-										<image src="email_icon"/>
-										<description value="business email" options=",,,email"/>
+										<description/>
+										<description options=",,,url_home" value="Private"/>
+										<textbox id="url_home" size="28" maxlength="128"/>
+									</row>
+									<row>
+										<image src="email.png"/>
+										<description value="email" options=",,,email"/>
 										<textbox id="email" size="28" maxlength="64"/>
 									</row>
 									<row>
 										<description/>
-										<description value="home email" options=",,,email_home"/>
+										<description value="Private" options=",,,email_home"/>
 										<textbox id="email_home" size="28" maxlength="64"/>
 									</row>
 								</rows>
@@ -427,13 +437,19 @@
 						</groupbox>
 					</vbox>
 				</row>
-				<row disabled="!@id">
-					<menulist>
-						<menupopup type="select-account" id="owner" readonly="true" label="Owner"/>
-					</menulist>
+				<row>
+					<hbox orient=",0,0">
+						<menulist span=",leftPad5">
+							<menupopup type="select-account" id="creator" readonly="true" label="Created"/>
+						</menulist>
+						<date-time id="created" class="leftPad5" readonly="true"/>
+					</hbox>
 					<hbox align="right">
 						<description value="Last modified"/>
-						<date-time id="last_mod" readonly="true"/>
+						<menulist>
+							<menupopup type="select-account" id="modifier" readonly="true"/>
+						</menulist>
+						<date-time id="modified" readonly="true"/>
 					</hbox>
 				</row>
 				<row disabled="@hidebuttons">

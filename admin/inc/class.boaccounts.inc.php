@@ -150,16 +150,17 @@
 				// make this information also in hook available
 				$lid = $GLOBALS['egw']->accounts->id2name($account_id);
 
-				$GLOBALS['hook_values']['account_id'] = $account_id;
-				$GLOBALS['hook_values']['account_lid'] = $lid;
-				
-				$singleHookValues = $GLOBALS['hook_values']+array('location' => 'deleteaccount');
-
+				$GLOBALS['hook_values'] = array(
+					'account_id'  => $account_id,
+					'account_lid' => $lid,
+					'new_owner'   => (int)$_POST['new_owner'],
+					'location'    => 'deleteaccount',
+				);
 				foreach($GLOBALS['egw_info']['apps'] as $appname => $data)
 				{
 					if($appname != 'admin' && $appname != 'preferences')
 					{
-						$GLOBALS['egw']->hooks->single($singleHookValues,$appname);
+						$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$appname);
 					}
 				}
 

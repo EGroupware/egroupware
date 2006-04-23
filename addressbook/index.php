@@ -11,16 +11,14 @@
 
 	/* $Id$ */
 
-	$GLOBALS['egw_info'] = array();
-	$GLOBALS['egw_info']['flags'] = array(
-		'currentapp' => 'addressbook',
-		'noheader'   => True,
-		'nonavbar'   => True
-	);
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => 'addressbook',
+			'noheader'   => True,
+			'nonavbar'   => True
+	));
 	include('../header.inc.php');
 
-	$obj = CreateObject('addressbook.uiaddressbook');
-	$obj->index();
+	ExecMethod('addressbook.uicontacts.index');
 
-	$GLOBALS['phpgw']->common->phpgw_footer();
-?>
+	$GLOBALS['egw']->common->egw_footer();

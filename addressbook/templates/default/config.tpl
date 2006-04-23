@@ -22,7 +22,7 @@
     <td align="center" colspan="2">{lang_WARNING!!_LDAP_is_valid_only_if_you_are_NOT_using_contacts_for_accounts_storage!}</td>
    </tr> -->
    <tr class="row_off">
-    <td>{lang_Select_where_you_want_to_store}/{lang_retrieve_contacts}.</td>
+    <td>{lang_Select_where_you_want_to_store_/_retrieve_contacts}.</td>
     <td>
      <select name="newsettings[contact_repository]">
       <option value="sql" {selected_contact_repository_sql}>SQL</option>
