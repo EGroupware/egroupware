@@ -121,6 +121,7 @@
 		var $capabilities = array(
 			'sub_queries'      => true,	// will be set to false for mysql < 4.1
 			'union'            => true, // will be set to false for mysql < 4.0
+			'outer_join'       => false,	// does the DB has an outer join, will be set eg. for postgres
 			'distinct_on_text' => true,	// is the DB able to use DISTINCT with a text or blob column
 			'like_on_text'     => true,	// is the DB able to use LIKE with text columns
 			'name_case'        => 'upper',	// case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
@@ -339,6 +340,7 @@
 				case 'postgres':
 					$this->capabilities['name_case'] = 'lower';
 					$this->capabilities['client_encoding'] = (float) $db_version >= 7.4;
+					$this->capabilities['outer_join'] = true;
 					break;
 
 				case 'mssql':
@@ -1298,12 +1300,24 @@
 		*
 		* @author RalfBecker<at>outdoor-training.de
 		*
-		* @param bool/string $app name of the app or default False to use the app set by db::set_app or the current app
+		* @param bool/string $app name of the app or default False to use the app set by db::set_app or the current app, 
+		*	true to search the already loaded table-definitions for $table
 		* @param bool/string $table if set return only defintions of that table, else return all defintions
 		* @return mixed array with table-defintions or False if file not found
 		*/
 		function get_table_definitions($app=False,$table=False)
 		{
+			if ($app === true && $table && isset($GLOBALS['egw_info']['apps']))
+			{
+				foreach($GLOBALS['egw_info']['apps'] as $app => $app_data)
+				{
+					if (isset($data['table_defs'][$table]))
+					{
+						return $data['table_defs'][$table];
+					}
+				}
+				$app = false;
+			}
 			if (!$app)
 			{
 				$app = $this->app ? $this->app : $GLOBALS['egw_info']['flags']['currentapp'];
@@ -1325,7 +1339,8 @@
 					return $this->app_data['table_defs'] = False;
 				}
 				include($tables_current);
-				$this->app_data['table_defs'] = &$phpgw_baseline;
+				$this->app_data['table_defs'] =& $phpgw_baseline;
+				unset($phpgw_baseline);
 			}
 			if ($table && (!$this->app_data['table_defs'] || !isset($this->app_data['table_defs'][$table])))
 			{
