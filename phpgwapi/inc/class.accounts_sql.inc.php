@@ -228,7 +228,9 @@
 		 */
 		function name2id($name,$which='account_lid')
 		{
-			$this->db->select($this->table,'account_id,account_type',array($which=>$name),__LINE__,__FILE__);
+			$where = $which == 'account_fullname' ? '('.$this->db->concat('account_firstname',"' '",'account_lastname').')='.$this->db->quote($name) :
+				array($which => $name);
+			$this->db->select($this->table,'account_id,account_type',$where,__LINE__,__FILE__);
 			if($this->db->next_record())
 			{
 				return ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id');

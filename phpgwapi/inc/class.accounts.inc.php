@@ -664,7 +664,7 @@
 		 * convert an alphanumeric account-value (account_lid, account_email) to the account_id
 		 *
 		 * @param string $name value to convert
-		 * @param string $which='account_lid' type of $name: account_lid (default), account_email
+		 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
 		 * @return int/false numeric account_id or false on error ($name not found)
 		 */
 		function name2id($name,$which='account_lid')
