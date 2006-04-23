@@ -42,15 +42,6 @@
 		 * @var array $app_register
 		 */
 		var $app_register = array(
-			'addressbook' => array(
-				'query' => 'addressbook_query',
-				'title' => 'addressbook_title',
-				'view' => array(
-					'menuaction' => 'addressbook.uicontacts.view'
-				),
-				'view_id' => 'contact_id',
-				//'view_popup' => '800x600',
-			),
 			'projects' => array(
 				'query' => 'projects_query',
 				'title' => 'projects_title',
@@ -921,123 +912,6 @@
 		function decode_htmlspecialchars($str)
 		{
 			return str_replace(array('&amp;','&quot;','&lt;','&gt;'),array('&','"','<','>'),$str);
-		}
-
-		/**
-		 * get title for an event, should be moved to bocalendar.link_title
-		 *
-		 * @param int/array $event event-id or already read event
-		 * @return string/boolean the title (startdate plus subject), of false if event is not found
-		 */
-		function calendar_title( $event )
-		{
-			if (!is_object($this->bocal))
-			{
-				$this->bocal = createobject('calendar.bocalendar');
-			}
-			if (!is_array($event) && (int) $event > 0)
-			{
-				$event = $this->bocal->read_entry($event);
-			}
-			if (!is_array($event))
-			{
-				return False;
-			}
-			$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' '.
-				($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == '12' ? 'h:i a' : 'H:i');
-			
-			$name = $GLOBALS['egw']->common->show_date($this->bocal->maketime($event['start']) - $this->bocal->datetime->tz_offset,$format);
-			$name .= ': ' . $this->decode_htmlspecialchars($event['title']);	// cal returns entities
-
-			return $name;
-		}
-
-		/**
-		 * query calendar for an event $matching pattern, should be moved to bocalendar.link_query
-		 *
-		 * @param string $pattern pattern to search
-		 * @return array with id => title pairs of matching events
-		 */
-		function calendar_query($pattern)
-		{
-			if (!is_object($this->bocal))
-			{
-				$this->bocal = createobject('calendar.bocalendar');
-			}
-			$content = array( );
-
-			if ($event_ids = $this->bocal->search_keywords($pattern))
-			{
-				foreach($event_ids as $id)
-				{
-					// only include it in the list, if we have permissions to read it
-					if ($this->bocal->check_perms(EGW_ACL_READ,$id))
-					{
-						$content[$id] = $this->calendar_title( $id );
-					}
-				}
-			}
-			return $content;
-		}
-
-		/**
-		 * get title for an address, should be moved to boaddressbook.link_title
-		 *
-		 * @param int/array $event address-id or already read address
-		 * @return string/boolean the title ([org:] n_familiy[, n_given|n_prefix]), of false if address is not found
-		 */
-		function addressbook_title( $addr )
-		{
-			if (!is_object($this->contacts))
-			{
-				$this->contacts = createobject('phpgwapi.contacts');
-			}
-			if (!is_array($addr))
-			{
-				list( $addr ) = $this->contacts->read_single_entry( $addr );
-			}
-			if (!is_array($addr))
-			{
-				return False;
-			}
-			$name = $addr['n_family'];
-			if ($addr['n_given'])
-			{
-				$name .= ', '.$addr['n_given'];
-			}
-			else
-			{
-				if ($addr['n_prefix'])
-				{
-					$name .= ', '.$addr['n_prefix'];
-				}
-			}
-			if ($addr['org_name'])
-			{
-				$name = $addr['org_name'].($name !== '' ? ': '.$name : '');
-			}
-			return stripslashes($name);		// addressbook returns quotes with slashes
-		}
-
-		/**
-		 * query addressbook for $pattern, should be moved to boaddressbook.link_query
-		 *
-		 * @param string $pattern pattern to search
-		 * @return array with id => title pairs of matching addresses
-		 */
-		function addressbook_query( $pattern )
-		{
-			if (!is_object($this->contacts))
-			{
-				$this->contacts = createobject('phpgwapi.contacts');
-			}
-			$addrs = $this->contacts->read( 0,0,'',$pattern,'tid=!','DESC','org_name,n_family,n_given' );
-			$content = array( );
-			while ($addrs && list( $key,$addr ) = each( $addrs ))
-			{
-				$content[$addr['id']] = $this->addressbook_title( $addr );
-			}
-			return $content;
 		}
 
 		/**
