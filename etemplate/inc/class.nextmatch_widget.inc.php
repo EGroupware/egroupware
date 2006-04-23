@@ -27,6 +27,8 @@
 	 * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)
 	 * 	'bottom_too'     => True// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 	 *	'never_hide'     => True// I  never hide the nextmatch-line if less then maxmatch entries
+	 *  'lettersearch'   => True// I  show a lettersearch
+	 *  'searchletter'   =>     // I0 active letter of the lettersearch or false for [all]
 	 * 	'start'          =>		// IO position in list
 	 *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
 	 * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
@@ -271,8 +273,35 @@
 			{
 				$nextmatch =& new etemplate('etemplate.nextmatch_widget');
 				// keep the editor away from the generated tmpls
-				$nextmatch->no_onclick = true;			
+				$nextmatch->no_onclick = true;
 				
+				if ($value['lettersearch'])
+				{
+					$lettersearch =& $nextmatch->get_widget_by_name('lettersearch');	// hbox for the letters
+					if (($alphabet = lang('alphabet')) == 'alphabet*') $alphabet = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
+					$alphabet = explode(',',$alphabet);
+					$alphabet['all'] = lang('all');
+					foreach($alphabet as $key => $letter)
+					{
+						// make each letter internally behave like a button
+						$form_name = $name.'[searchletter]['.($key === 'all' ? $key : $letter).']';
+						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = 'button';
+
+						if (!$key) $letterbox =& $lettersearch[1];	// to re-use the first child
+						$letterbox = etemplate::empty_cell('label',$letter,array(
+							'label'   => $letter,
+							'span'    => ',lettersearch'.($letter == (string) $value['searchletter'] || 
+								$key === 'all' && !$value['searchletter'] ? '_active' : ''),
+							'no_lang' => 2,
+							'align'   => $key == 'all' ? 'right' : '',
+							'onclick' => "return submitit($tmpl->name_form,'$form_name');",
+						));
+						// if not the first (re-used) child, add it to the parent
+						if ($key) etemplate::add_child($lettersearch,$letterbox); 
+						unset($letterbox);
+					}
+					//_debug_array($GLOBALS['egw_info']['etemplate']['to_process']);
+				}				
 				if(isset($value['no_search'])) $value['no_start_search'] = $value['no_search'];
 				foreach(array('no_cat'=>'cat_id','no_filter'=>'filter','no_filter2'=>'filter2', 'no_search' => 'search', 'no_start_search' => 'start_search' ) as $val_name => $cell_name)
 				{
@@ -333,7 +362,7 @@
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'];
-			//echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in='$value_in',order='$nm_global[order]'): value = "; _debug_array($value);
+			//echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in=".print_r($value_in,true).",order='$nm_global[order]'): value = "; _debug_array($value);
 			switch($extension_data['type'])
 			{
 				case 'nextmatch-sortheader':
@@ -438,6 +467,12 @@
 				if (!is_array($value['col_filter'])) $value['col_filter'] = array();
 
 				$value['col_filter'] += $nm_global['filter'];
+				$loop = True;
+			}
+			elseif (isset($value['searchletter']))
+			{
+				list($value['searchletter']) = @each($value['searchletter']);
+				if ($value['searchletter'] === 'all') $value['searchletter'] = false;
 				$loop = True;
 			}
 			return True;
