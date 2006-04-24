@@ -1,583 +1,221 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Contact Management Shared Routines                      *
-	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
-	*        and Miles Lott <milosch@groupwhere.org>                           *
-	*        and Bettina Gille <ceb@phpgroupware.org>                          *
-	* View and manipulate contact records                                      *
-	* Copyright (C) 2001, 2002 Joseph Engo, Miles Lott, Bettina Gille          *
-	* ------------------------------------------------------------------------ *
-	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org                                                *
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
-	/* $Id$ */
+/**************************************************************************\
+* eGroupWare - contacts service provided by the addressbook application    *
+* http://www.egroupware.org                                                *
+* Written and (c) 2006 Ralf Becker <RalfBecker-AT-outdoor-training.de>     *
+* ------------------------------------------------------------------------ *
+*  This program is free software; you can redistribute it and/or modify it *
+*  under the terms of the GNU General Public License as published by the   *
+*  Free Software Foundation; either version 2 of the License, or (at your  *
+*  option) any later version.                                              *
+\**************************************************************************/
 
-	if (!isset($GLOBALS['egw_info']['server']['contact_repository']))
+/* $Id$ */
+
+require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
+
+/**
+ * contacts service provided by the addressbook application
+ *
+ * @package api
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ */
+class contacts extends bocontacts
+{
+	/**
+	 * @deprecated since 1.3 use total
+	 * @var int $total_records
+	 */
+	var $total_records;
+
+	function contacts($contact_app='addressbook')
 	{
-		$GLOBALS['egw_info']['server']['contact_repository'] = 'sql';
+		$this->bocontacts($contact_app);
+		
+		$this->total_records =& $this->total;
 	}
-	require_once(EGW_API_INC . '/class.contacts_'.$GLOBALS['egw_info']['server']['contact_repository'] . '.inc.php');
-
-	class contacts extends contacts_
+	
+	/**
+	* reads contacts matched by key and puts all cols in the data array
+	*
+	* @param int/string $contact_id 
+	* @return array/boolean contact data or false on error
+	*/
+	function read($contact_id)
 	{
-		function contacts()
+		if (func_num_args() > 1)	// calling the old / depricated read function
 		{
-			$this->contacts_();	// call constructor of extended class
+			$args = func_get_args();
+			return call_user_func_array(array(&$this,'old_read'),$args);
 		}
-
-		/*!
-		@function check_perms
-		@abstract checks if user has the necessary permissions on a contact
-		@syntax check_perms($rights,$needed,$addr=False)
-		@param $rights integer the rights the user has / grants from the owner of the contact, only used if $addr not given
-		@param $needed integer PHPGW_ACL_{READ|EDIT|DELETE}
-		@param $addr mixed contact-array or contact-id, if False rights have to be supplyed in $rights
-		*/
-		function check_perms($rights,$needed,$addr=False)
-		{
-			//echo "<p>contacts::check_perms($rights,$needed,".print_r($addr,True).")";
-			if ($addr !== False)	// addr-record or id given
-			{
-				if(@is_array($addr))
-				{
-					if (isset($addr['rights']))
-					{
-						$rights = $addr['rights'];
-					}
-					elseif (isset($addr['owner']))
-					{
-						$rights = $this->grants[$addr['owner']];
-					}
-					else
-					{
-						$id = (int)(isset($addr['id']) ? $addr['id'] : $addr['ab_id']);
-					}
-				}
-				else
-				{
-					$id = (int)$addr;
-				}
-				if (isset($id))
-				{
-					$addr = $this->read_single_entry($id,array('owner' => 'owner'));
-					$rights = @$addr[0]['rights'];
-					//echo "addr($id)=<pre>".print_r($addr[0],True)."</pre>\n";
-				}
-			}
-			$ret = !!((int)$rights & $needed);
-			//echo " rights=$rights, id=$id => ".($ret?'True':'False')."</p>\n";
-			//echo "grants=<pre>".print_r($this->grants,True)."</pre>\n";
-
-			return $ret;
-		}
-
-		/**
-		* Get the the person data what you want. Wrapper function to stay compatible with egroupware.
-		*
-		* @author Lars Kneschke <lars@kneschke.de>
-		* @param array $fields The fields that you can see from person
-		* @param integer $limit Limit of records that you want
-		* @param integer $ofset Ofset of record that you want start
-		* @param string $orderby The field which you want order
-		* @param string $sort ASC | DESC depending what you want
-		* @param mixed $criteria All criterias what you want
-		* @param mixed $criteria_token same like $criteria but builded<br>with sql_criteria class, more powerfull
-		* @return array with records
-		*/
-		function get_persons($_fields, $start='', $limit='', $orderby='', $sort='', $_criteria='', $token_criteria='')
-		{
-			// transform fields from phpgw to egw structure
-			foreach($_fields as $fieldValue)
-			{
-				switch($fieldValue)
-				{
-					case 'per_first_name':
-						$fields['n_given']='n_given';
-					case 'per_last_name':
-						$fields['n_family']='n_family';
-					default:
-						$fields[$fieldValue]=$fieldValue;
-				}
-			}
-
-			// transform criteria from phpgw to egw structure
-			if(is_array($_criteria))
-			{
-				foreach($_criteria as $criteriaKey => $criteriaValue)
-				{
-					if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap')
-					{
-						switch($criteriaKey)
-						{
-							case 'contact_id':
-							$criteria['uid']=$criteriaValue;
-									break;
-							default:
-								$criteria[$criteriaKey] = $criteria[$criteriaValue];
-								break;
-						}
-					}
-					else
-					{
-						switch($criteriaKey)
-						{
-							case 'contact_id':
-							$criteria['id']=$criteriaValue;
-									break;
-							default:
-								$criteria[$criteriaKey] = $criteria[$criteriaValue];
-								break;
-						}
-					}
-				}
-			}
-			$entries = $this->read($start,$limit,$fields,$criteria,'',$sort,$orderby);
-
-			// transform entries from egw to phpgw structure
-			if(is_array($entries))
-			{
-				foreach($entries as $entryKey => $entryValue)
-				{
-					$entryValue['per_first_name'] 	= $entryValue['n_given'];
-					$entryValue['per_last_name'] 	= $entryValue['n_family'];
-					$entryValue['contact_id']	= $entryValue['id'];
-					$entries[$entryKey]		= $entryValue;
-				}
-			}
-			return $entries;
-		}
-
-		function split_stock_and_extras($fields)
-		{
-			settype($fields, 'array');
-			foreach($fields as $field => $value)
-			{
-				/* Depending on how the array was built, this is needed. */
-				if (is_int($field))
-				{
-					$field = $value;
-				}
-				if(@is_int($value))
-				{
-					$value = $field;
-				}
-				if ($this->stock_contact_fields[$field])
-				{
-					$stock_fields[$field]     = $value;
-					$stock_fieldnames[$field] = $this->stock_contact_fields[$field];
-				}
-				elseif (!isset($this->non_contact_fields[$field]))
-				{
-					$extra_fields[$field] = $value;
-				}
-			}
-			return array($stock_fields,$stock_fieldnames,$extra_fields);
-		}
-
-		function loop_addslashes($fields)
-		{
-			$absf = $this->stock_contact_fields;
-			foreach($absf as $t => $nul)
-			{
-				$ta[] = $this->db->db_addslashes($fields[$t]);
-			}
-			return $ta;
-		}
-
-		/* This will take an array or integer */
-		function delete($id)
-		{
-			if(@is_array($id))
-			{
-				foreach($id as $nul => $t_id)
-				{
-					$this->delete_($t_id);
-				}
-			}
-			else
-			{
-				$this->delete_($id);
-			}
-		}
-
-		function asc_sort($a,$b)
-		{
-			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1] == $b[1])
-			{
-				return 0;
-			}
-			return ($a[1]>$b[1])?1:-1;
-		}
-
-		function desc_sort($a,$b)
-		{
-			echo "<br>A:'".$a."' B:'".$b;
-			if($a[1]==$b[1])
-			{
-				return 0;
-			}
-			return ($a[1]<$b[1])?1:-1;
-		}
-
-		/**
-		* To be used in usort()
-		*
-		* compares two 2-dimensional arrays a and b.
-		* The first dimension holds the key, the array is sorted by.
-		* The second dimension holds the data, that's actually string-compared.
-		*
-		* @author Carsten Wolff <wolffc@egroupware.org>
-		* @param array $fields The fields, the array is to be sorted by. Use of multiple keys is for subsorting.
-		* @param string $order ASC | DESC ascending or descending order
-		* @param array $a one item
-		* @param array $b the other item
-		* @return integer -1 | 0 | 1 equals: a is smaller | the same | larger than b.
-		*/
-		function _cmp($fields, $order, $a, $b)
-		{
-			foreach ($fields as $field)
-			{
-				$result = strcasecmp($a[$field][0], $b[$field][0]);
-				if ($result == 0)
-				{
-					continue;
-				}
-				if ($order == "DESC")
-				{
-					return -$result;
-				}
-				else
-				{
-					return $result;
-				}
-			}
-			return 0;
-		}
-
-		function formatted_address($id, $business = True, $afont = '', $asize = '2')
-		{
-			$t = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('addressbook'));
-			$s = CreateObject('phpgwapi.sbox');
-
-			$fields = array(
-				'n_given'  => 'n_given',
-				'n_family' => 'n_family',
-				'title'    => 'title',
-				'org_name' => 'org_name',
-				'org_unit' => 'org_unit',
-				'adr_one_street'      => 'adr_one_street',
-				'adr_one_locality'    => 'adr_one_locality',
-				'adr_one_postalcode'  => 'adr_one_postalcode',
-				'adr_one_region'      => 'adr_one_region',
-				'adr_one_countryname' => 'adr_one_countryname',
-				'adr_two_street'      => 'adr_two_street',
-				'adr_two_locality'    => 'adr_two_locality',
-				'adr_two_postalcode'  => 'adr_two_postalcode',
-				'adr_two_region'      => 'adr_two_region',
-				'adr_two_countryname' => 'adr_two_countryname'
-			);
-
-			list($address) = $this->read_single_entry($id,$fields);
-			foreach($address as $k => $val)
-			{
-				$address[$k] = $GLOBALS['egw']->strip_html($val);
-			}
-
-			if ($address['title'])
-			{
-				$title = $address['title'] . '&nbsp;';
-			}
-
-			if ($business)
-			{
-				if ($address['org_name'])
-				{
-					$company = $address['org_name'];
-				}
-				else
-				{
-					$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
-				}
-
-				$street  = $address['adr_one_street'];
-				$city    = $address['adr_one_locality'];
-				$zip     = $address['adr_one_postalcode'];
-				$state   = $address['adr_one_region'];
-				$country = $address['adr_one_countryname'];
-			}
-			else
-			{
-				$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
-				$street  = $address['adr_two_street'];
-				$city    = $address['adr_two_locality'];
-				$zip     = $address['adr_two_postalcode'];
-				$state   = $address['adr_two_region'];
-				$country = $address['adr_two_countryname'];
-			}
-
-			if (! $country)
-			{
-				$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
-			}
-
-			if (file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'format_' . strtolower($country) . '.tpl'))
-			{
-				$a = $t->set_file(array('address_format' => 'format_' . strtolower($country) . '.tpl'));
-			}
-			else
-			{
-				$a = $t->set_file(array('address_format' => 'format_us.tpl'));
-			}
-
-			if (!$afont)
-			{
-				$afont = $GLOBALS['egw_info']['theme']['font'];
-			}
-
-			$a .= $t->set_var('font',$afont);
-			$a .= $t->set_var('fontsize',$asize);
-			$a .= $t->set_var('company',$company);
-			$a .= $t->set_var('department',$address['org_unit']);
-			$a .= $t->set_var('street',$street);
-			$a .= $t->set_var('city',$city);
-			$a .= $t->set_var('zip',$zip);
-			$a .= $t->set_var('state',$state);
-
-			if ($country != $GLOBALS['egw_info']['user']['preferences']['common']['country'])
-			{
-				$countryname = $s->get_full_name($country);
-				$a .= $t->set_var('country',lang($countryname));
-			}
-
-			$a .= $t->fp('out','address_format');
-			return $a;
-		}
-
-		function formatted_address_full($id, $business = True, $afont = '', $asize = '2')
-		{
-			$t = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('addressbook'));
-			$s = CreateObject('phpgwapi.sbox');
-
-			$fields = array(
-				'n_given'				=> 'n_given',
-				'n_family'				=> 'n_family',
-				'title'					=> 'title',
-				'org_name'				=> 'org_name',
-				'org_unit'				=> 'org_unit',
-				'adr_one_street'		=> 'adr_one_street',
-				'adr_one_locality'		=> 'adr_one_locality',
-				'adr_one_postalcode'	=> 'adr_one_postalcode',
-				'adr_one_region'		=> 'adr_one_region',
-				'tel_work'				=> 'tel_work',
-				'tel_fax'				=> 'tel_fax',
-				'email'					=> 'email',
-				'url'					=> 'url',
-				'adr_one_countryname'	=> 'adr_one_countryname',
-				'adr_two_street'		=> 'adr_two_street',
-				'adr_two_locality'		=> 'adr_two_locality',
-				'adr_two_postalcode'	=> 'adr_two_postalcode',
-				'adr_two_region'		=> 'adr_two_region',
-				'adr_two_countryname'	=> 'adr_two_countryname',
-				'tel_home'				=> 'tel_home',
-				'email_home'			=> 'email_home'
-			);
-
-			list($address) = $this->read_single_entry($id,$fields);
-			foreach($address as $k => $val)
-			{
-				$address[$k] = $GLOBALS['egw']->strip_html($val);
-			}
-
-			if($address['title'])
-			{
-				$title = $address['title'] . '&nbsp;';
-			}
-
-			if($business)
-			{
-				if($address['org_name'])
-				{
-					$company = $address['org_name'];
-				}
-				else
-				{
-					$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
-				}
-
-				$street		= $address['adr_one_street'];
-				$city		= $address['adr_one_locality'];
-				$zip		= $address['adr_one_postalcode'];
-				$state		= $address['adr_one_region'];
-				$country	= $address['adr_one_countryname'];
-				$tel		= $address['tel_work'];
-				$email		= $address['email'];
-			}
-			else
-			{
-				$company	= $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
-				$street		= $address['adr_two_street'];
-				$city		= $address['adr_two_locality'];
-				$zip		= $address['adr_two_postalcode'];
-				$state		= $address['adr_two_region'];
-				$country	= $address['adr_two_countryname'];
-				$tel		= $address['tel_home'];
-				$email		= $address['email_home'];
-			}
-
-			if(!$country)
-			{
-				$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
-			}
-
-			if(file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'full_format_' . strtolower($country) . '.tpl'))
-			{
-				$a = $t->set_file(array('address_format' => 'full_format_' . strtolower($country) . '.tpl'));
-			}
-			else
-			{
-				$a = $t->set_file(array('address_format' => 'full_format_us.tpl'));
-			}
-
-			if(!$afont)
-			{
-				$afont = $GLOBALS['egw_info']['theme']['font'];
-			}
-
-			$a .= $t->set_var('font',$afont);
-			$a .= $t->set_var('fontsize',$asize);
-			$a .= $t->set_var('lang_url',lang('url'));
-			$a .= $t->set_var('lang_email',lang('email'));
-			$a .= $t->set_var('lang_fax',lang('fax number'));
-			$a .= $t->set_var('lang_fon',lang('phone number'));
-			$a .= $t->set_var('company',$company);
-			$a .= $t->set_var('department',$address['org_unit']);
-			$a .= $t->set_var('street',$street);
-			$a .= $t->set_var('city',$city);
-			$a .= $t->set_var('zip',$zip);
-			$a .= $t->set_var('state',$state);
-			$a .= $t->set_var('email',$email);
-			$a .= $t->set_var('tel',$tel);
-			$a .= $t->set_var('fax',$address['tel_fax']);
-			$a .= $t->set_var('url',$address['url']);
-
-			if($country != $GLOBALS['egw_info']['user']['preferences']['common']['country'])
-			{
-				$countryname = $s->get_full_name($country);
-				$a .= $t->set_var('country',lang($countryname));
-			}
-
-			$a .= $t->fp('out','address_format');
-			return $a;
-		}
-
-		function formatted_address_line($id, $business = True, $afont = '', $asize = '2')
-		{
-			$t = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('addressbook'));
-			$s = CreateObject('phpgwapi.sbox');
-
-			$fields = array(
-				'n_given'				=> 'n_given',
-				'n_family'				=> 'n_family',
-				'title'					=> 'title',
-				'org_name'				=> 'org_name',
-				'adr_one_street'		=> 'adr_one_street',
-				'adr_one_locality'		=> 'adr_one_locality',
-				'adr_one_postalcode'	=> 'adr_one_postalcode',
-				'adr_one_region'		=> 'adr_one_region',
-				'adr_one_countryname'	=> 'adr_one_countryname',
-				'adr_two_street'		=> 'adr_two_street',
-				'adr_two_locality'		=> 'adr_two_locality',
-				'adr_two_postalcode'	=> 'adr_two_postalcode',
-				'adr_two_region'		=> 'adr_two_region',
-				'adr_two_countryname'	=> 'adr_two_countryname'
-			);
-
-			list($address) = $this->read_single_entry($id,$fields);
-			foreach($address as $k => $val)
-			{
-				$address[$k] = $GLOBALS['egw']->strip_html($val);
-			}
-
-			if($address['title'])
-			{
-				$title = $address['title'] . '&nbsp;';
-			}
-
-			if($business)
-			{
-				if($address['org_name'])
-				{
-					$company = $address['org_name'];
-				}
-				else
-				{
-					$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
-				}
-
-				$street  = $address['adr_one_street'];
-				$city    = $address['adr_one_locality'];
-				$zip     = $address['adr_one_postalcode'];
-				$state   = $address['adr_one_region'];
-				$country = $address['adr_one_countryname'];
-			}
-			else
-			{
-				$company = $title . $address['n_given'] . '&nbsp;' . $address['n_family'];
-				$street  = $address['adr_two_street'];
-				$city    = $address['adr_two_locality'];
-				$zip     = $address['adr_two_postalcode'];
-				$state   = $address['adr_two_region'];
-				$country = $address['adr_two_countryname'];
-			}
-
-			if(!$country)
-			{
-				$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
-			}
-
-			if(file_exists(PHPGW_SERVER_ROOT . SEP . 'addressbook' . SEP . 'templates' . SEP .'default' . SEP . 'line_format_' . strtolower($country) . '.tpl'))
-			{
-				$a = $t->set_file(array('address_format' => 'line_format_' . strtolower($country) . '.tpl'));
-			}
-			else
-			{
-				$a = $t->set_file(array('address_format' => 'line_format_us.tpl'));
-			}
-
-			if(!$afont)
-			{
-				$afont = $GLOBALS['egw_info']['theme']['font'];
-			}
-
-			$a .= $t->set_var('font',$afont);
-			$a .= $t->set_var('fontsize',$asize);
-			$a .= $t->set_var('company',$company);
-			$a .= $t->set_var('street',$street);
-			$a .= $t->set_var('city',$city);
-			$a .= $t->set_var('zip',$zip);
-			$a .= $t->set_var('state',$state);
-
-			if($country != $GLOBALS['egw_info']['user']['preferences']['common']['country'])
-			{
-				$countryname = $s->get_full_name($country);
-				$a .= $t->set_var('country','&nbsp;°&nbsp;' . lang($countryname));
-			}
-
-			$a .= $t->fp('out','address_format');
-			return $a;
-		}
+		return parent::read($contact_id);
 	}
-?>
+
+	/**
+	 * searches db for rows matching searchcriteria
+	 *
+	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
+	 *
+	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
+	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
+	 * @param string $wildcard='' appended befor and after each criteria
+	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
+	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
+	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
+	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @return array of matching rows (the row is an array of the cols) or False
+	 */
+/*	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null)
+	{
+		//echo "<p>contacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start')</p>\n";
+		return parent::regular_search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter);
+	}*/
+
+	/**
+	 * Deprecated methods and class vars for compatibility with the old contacts class
+	 *
+	 * They will be removed after one release, so dont use them in new code!!!
+	 */
+	
+	/**
+	 * Searches for contacts meating certain criteria and evtl. return only a range of them
+	 *
+	 * This method was named read in eGW 1.0 and 1.2
+	 *
+	 * @deprecated since 1.3 use search() instead
+	 * @param int $start=0 starting number of the range, if $limit != 0
+	 * @param int $limit=0 max. number of entries to return, 0=all
+	 * @param array $fields=null fields to return or null for all stock fields
+	 * @param string $query='' search pattern or '' for none
+	 * @param string $filter='' filters with syntax like <name>=<value>,<name2>=<value2>,<name3>=!'' for not empty
+	 * @param string $sort='' sorting: ASC or DESC
+	 * @param string $order='' column to order, default ('') n_family,n_given,email ASC
+	 * @param int $lastmod=-1 return only values modified after given timestamp, default (-1) return all
+	 * @param string $cquery='' return only entries starting with given character, default ('') all
+	 * @return array of contacts
+	 */
+	function old_read($start=0,$limit=0,$fields=null,$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
+	{
+		//echo "<p>contacts::old_read($start,$limit,".print_r($fields,true).",$query,'$filter','$sort','$order',$lastmod,$cquery)</p>\n";
+		$criteria = $sfilter = array();
+		if ($cquery) $query = $cquery.'*';
+		if ($query)
+		{
+			foreach(array_merge($this->columns_to_search,$this->account_extra_search) as $col)
+			{
+				$criteria[$col] = $query['search'];
+			}
+		}
+		foreach(explode(',',$filter) as $expr)
+		{
+			list($col,$value) = explode('=',$expr);
+			
+			$sfilter[$col] = $value;
+		}
+		if ($lastmod != -1)
+		{
+			$sfilter[] = 'contact_modified > '.(int)$lastmod;
+		}
+		if ($order && !strstr($order,'_')) $order = 'contact_'.$order;
+		if (!$order) $order = 'org_name';
+		
+		if (is_array($fields))
+		{
+			$fields = array_values($fields);
+		}
+		//echo '<p>contacts::search('.print_r($criteria,true).','.print_r($fields,true).",'$order $sort','','$wildcard',false,'OR',".(!$limit ? 'false' : "array($start,$limit)").",".print_r($sfilter,true).");</p>\n";
+		$rows =& $this->search($criteria,$fields,$order.($sort ? ' '.$sort : ''),'',$wildcard,false,'OR',
+			!$limit ? false : array((int)$start,(int)$limit),$sfilter);
+			
+		// fix the old birthday format
+		if ($rows && in_array('bday',$fields))
+		{
+			foreach($rows as $n => $row)
+			{
+				list($y,$m,$d) = explode('-',$row['bday']);
+				$rows[$n]['bday'] = sprintf('%d/%d/%04d',$m,$d,$y);
+			}
+		}
+		return $rows;
+	}
+
+	/**
+	 * read a single entry
+	 *
+	 * @deprecated since 1.3 use read() instead
+	 * @param int $id
+	 * @param string $fields='' we always return all fields now
+	 * @return array/boolean contact or false on failure
+	 */
+	function read_single_entry($id,$fields='')
+	{
+		return $this->read($id);
+	}
+	
+	/**
+	 * add a contact
+	 *
+	 * @deprecated since 1.3 use save() instead
+	 * @param int $owner owner of the entry
+	 * @param array $fields contains access, cat_id and tif if their param is null
+	 * @param string $access=null 'private' or 'public'
+	 * @param int $cat_id=null
+	 * @param string $tid=null 'n'
+	 * @return array/boolean contact or false on failure
+	 */
+	function add($owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
+	{
+		// access, cat_id and tid can be in $fields now or as extra params
+		foreach(array('access','cat_id','tid') as $extra)
+		{
+			if (!is_null($$extra))
+			{
+				$fields[$extra] = $$extra;
+			}
+		}
+		if(empty($fields['tid']))
+		{
+			$fields['tid'] = 'n';
+		}
+		$fields['private'] = (int) $fields['access'] == 'private';
+		unset($fields['id']);	// in case it's set
+
+		return !$this->save($fields) ? $fields['id'] : false;
+	}
+
+	/**
+	 * update a contact
+	 *
+	 * @deprecated since 1.3 use save() instead
+	 * @param int $id id of the entry
+	 * @param int $owner owner of the entry
+	 * @param array $fields contains access, cat_id and tif if their param is null
+	 * @param string $access=null 'private' or 'public'
+	 * @param int $cat_id=null
+	 * @param string $tid=null 'n'
+	 * @return array/boolean contact or false on failure
+	 */
+	function update($id,$owner,$fields,$access=NULL,$cat_id=NULL,$tid=NULL)
+	{
+		// access, cat_id and tid can be in $fields now or as extra params
+		foreach(array('access','cat_id','tid') as $extra)
+		{
+			if (!is_null($$extra))
+			{
+				$fields[$extra] = $$extra;
+			}
+		}
+		if(empty($fields['tid']))
+		{
+			$fields['tid'] = 'n';
+		}
+		$fields['private'] = (int) $fields['access'] == 'private';
+		$fields['id'] = $id;
+
+		return $id && !$this->save($fields);
+	}
+}
