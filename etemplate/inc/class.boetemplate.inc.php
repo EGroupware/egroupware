@@ -111,7 +111,7 @@
 			{
 				$check_val = $this->get_array($content,substr($check_val,1));
 			}
-			$result = count($vals) == 1 ? $val != '' : $val == $check_val;
+			$result = count($vals) == 1 ? $val != '' : ($check_val{0} == '/' ? preg_match($check_val,$val) : $val == $check_val);
 			if ($not) $result = !$result;
 			//echo "<p>check_disabled: '".($not?'!':'')."$disabled' = '$val' ".(count($vals) == 1 ? '' : ($not?'!':'=')."= '$check_val'")." = ".($result?'True':'False')."</p>\n";
 			return $result;
