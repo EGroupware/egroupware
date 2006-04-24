@@ -28,6 +28,9 @@
 							<column/>
 						</columns>
 						<rows>
+							<row disabled="!@order=n_fileas">
+								<nextmatch-sortheader span="all" label="own sorting" id="n_fileas"/>
+							</row>
 							<row disabled="!@order=n_given">
 								<nextmatch-sortheader id="n_given" label="Firstname"/>
 								<nextmatch-sortheader label="Name" id="n_family"/>
@@ -39,9 +42,12 @@
 							<row>
 								<nextmatch-sortheader id="org_name" label="Company" span="all"/>
 							</row>
-							<row disabled="!@order=org_name">
+							<row disabled="!@order=/^(org_name|n_fileas)$/">
 								<nextmatch-sortheader id="n_family" label="Name"/>
-								<nextmatch-sortheader id="n_given" label="Firstname"/>
+								<nextmatch-sortheader id="n_given" label="Firstname" class="leftPad5"/>
+							</row>
+							<row disabled="@order=n_fileas">
+								<nextmatch-sortheader span="all" label="own sorting" id="n_fileas"/>
 							</row>
 						</rows>
 					</grid>
@@ -76,9 +82,8 @@
 				<row class="row" valign="top">
 					<image label="$row_cont[type_label]" src="${row}[type]" align="center" no_lang="1"/>
 					<vbox id="${row}[id]" orient=",0,0">
-						<description id="${row}[first_given]" no_lang="1"/>
-						<description id="${row}[first_family]" no_lang="1"/>
-						<description id="${row}[org_name]" no_lang="1"/>
+						<description id="${row}[line1]" no_lang="1"/>
+						<description id="${row}[line2]" no_lang="1"/>
 						<description id="${row}[org_unit]" no_lang="1"/>
 						<description id="${row}[title]" no_lang="1"/>
 						<description id="${row}[first_org]" no_lang="1"/>
@@ -154,7 +159,7 @@
 				<row class="noPrint">
 					<button id="add" label="Add" statustext="Add a new contact" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 					<hbox align="right">
-						<checkbox id="use_all" label="whole selection" onchange="if (!confirm('Apply the action on the whole selection, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole selection, NOT only the shown contacts!!!"/>
+						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
 						<menulist>
 							<menupopup onchange="1" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
 						</menulist>

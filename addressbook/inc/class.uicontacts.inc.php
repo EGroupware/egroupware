@@ -104,7 +104,7 @@ class uicontacts extends bocontacts
 			'msg' => $msg ? $msg : $_GET['msg'],
 		);
 		$content['nm'] = $GLOBALS['egw']->session->appsession('index','addressbook');
-//		if (!is_array($content['nm']))
+		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
 				'get_rows'       =>	'addressbook.uicontacts.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
@@ -262,6 +262,7 @@ class uicontacts extends bocontacts
 				'cat_id' => $query['cat_id'],
 				'order'  => $query['order'],
 				'sort'   => $query['sort'],
+				'col_filter' => array('tid' => $query['col_filter']['tid']),
 			));
 			if ($state != $this->prefs['index_state'])
 			{
@@ -329,6 +330,7 @@ class uicontacts extends bocontacts
 			$query['col_filter'][] = $query['order']."!=''";
 		}
 		$rows = (array) $this->regular_search($criteria,$id_only,$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
+		//echo "<p style='margin-top: 100px;'>".$this->somain->db->Query_ID->sql."</p>\n";
 
 		if ($id_only) return $this->total;	// no need to set other fields or $readonlys
 
@@ -355,15 +357,19 @@ class uicontacts extends bocontacts
 			switch($order)
 			{
 				case 'org_name':
-					$row['first_org'] = $row['n_family'].($given ? ', '.$given : '');
+					$row['line1'] = $row['org_name'];
+					$row['line2'] = $row['n_family'].($given ? ', '.$given : '');
 					break;
-				default:
-					$order = 'n_family';
 				case 'n_family':
-					$row['first_family'] = $row['n_family'].($given ? ', '.$given : '');
+					$row['line1'] = $row['n_family'].($given ? ', '.$given : '');
+					$row['line2'] = $row['org_name'];
 					break;
 				case 'n_given':
-					$row['first_given'] = $given.' '.$row['n_family'];
+					$row['line1'] = $given.' '.$row['n_family'];
+					$row['line2'] = $row['org_name'];
+					break;
+				case 'n_fileas':
+					list($row['line1'],$row['line2']) = explode(': ',$row['n_fileas']);
 					break;
 			}
 			$this->type_icon($row['owner'],$row['private'],$row['tid'],$row['type'],$row['type_label']);
@@ -983,7 +989,6 @@ class uicontacts extends bocontacts
 		
 		function showphones(form) 
 		{
-			set_style_by_class("table","editphones","display","inline");
 			if (form) {
 				copyvalues(form,"tel_home","tel_home2");
 				copyvalues(form,"tel_work","tel_work2");
@@ -993,7 +998,6 @@ class uicontacts extends bocontacts
 		
 		function hidephones(form) 
 		{
-			set_style_by_class("table","editphones","display","none");
 			if (form) {
 				copyvalues(form,"tel_home2","tel_home");
 				copyvalues(form,"tel_work2","tel_work");

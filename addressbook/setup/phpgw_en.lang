@@ -6,7 +6,6 @@
 (e.g. 1969)	addressbook	en	(e.g. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
-accounts	addressbook	en	Accounts
 actions	addressbook	en	Actions
 add a new contact	addressbook	en	Add a new contact
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
@@ -15,10 +14,8 @@ address book	common	en	Address Book
 address book - vcard in	addressbook	en	Address book - VCard in
 address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
-address line 3	addressbook	en	Address Line 3
 address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
-addressbook menu	addressbook	en	Addressbook menu
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
 addressbook-fieldname	addressbook	en	Addressbook-Fieldname
@@ -26,7 +23,7 @@ addvcard	addressbook	en	Add VCard
 advanced search	addressbook	en	Advanced search
 alt. csv import	addressbook	en	Alt. CSV Import
 always	addressbook	en	always
-apply the action on the whole selection, not only the shown contacts!!!	addressbook	en	Apply the action on the whole selection, NOT only the shown contacts!!!
+apply the action on the whole query, not only the shown contacts!!!	addressbook	en	Apply the action on the whole query, NOT only the shown contacts!!!
 are you shure you want to delete this contact?	addressbook	en	Are you shure you want to delete this contact?
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
 assistent	addressbook	en	Assistent
@@ -38,7 +35,6 @@ business address	addressbook	en	Business address
 business city	addressbook	en	Business City
 business country	addressbook	en	Business Country
 business email	addressbook	en	Business EMail
-business email type	addressbook	en	Business EMail Type
 business fax	addressbook	en	Business Fax
 business phone	addressbook	en	Business Phone
 business state	addressbook	en	Business State
@@ -52,11 +48,9 @@ choose an icon for this contact type	admin	en	Choose an icon for this contact ty
 chosse an etemplate for this contact type	admin	en	Chosse an eTemplate for this contact type
 city	common	en	City
 company	common	en	Company
-company name	addressbook	en	company name
 configuration	common	en	Configuration
 contact	common	en	Contact
 contact application	admin	en	Contact application
-contact deleted !!!	addressbook	en	Contact deleted !!!
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
@@ -85,7 +79,6 @@ download export file (uncheck to debug output in browser)	addressbook	en	Downloa
 download this contact as vcard file	addressbook	en	download this contact as vCard file
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
-edit extra account-data in the addressbook	addressbook	en	Edit extra account-data in the addressbook
 edit phonenumbers -	addressbook	en	Edit Phonenumbers -
 email & internet	addressbook	en	Email & Internet
 empty for all	addressbook	en	empty for all
@@ -115,7 +108,6 @@ home address	addressbook	en	Home address
 home city	addressbook	en	Home City
 home country	addressbook	en	Home Country
 home email	addressbook	en	Home EMail
-home email type	addressbook	en	Home EMail Type
 home phone	addressbook	en	Home Phone
 home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
@@ -133,7 +125,6 @@ import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
 income	addressbook	en	Income
 international	addressbook	en	International
-isdn phone	addressbook	en	ISDN Phone
 label	addressbook	en	Label
 last modified	addressbook	en	last modified
 ldap context for contacts	admin	en	LDAP context for contacts
@@ -163,6 +154,7 @@ options for type	admin	en	Options for type
 organisation	addressbook	en	organisation
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
+own sorting	addressbook	en	own sorting
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
 phone number	common	en	Phone Number
@@ -187,6 +179,8 @@ select a portrait format jpeg photo. it will be resized to 60 pixel width.	addre
 select addressbook type	addressbook	en	Select addressbook type
 select all	addressbook	en	Select all
 select an action or addressbook to move to	addressbook	en	Select an action or addressbook to move to
+select multiple contacts for a further action	addressbook	en	Select multiple contacts for a further action
+select phone number as prefered way of contact	addressbook	en	select phone number as prefered way of contact
 select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
@@ -215,14 +209,14 @@ translation	addressbook	en	Translation
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 upload or delete the photo	addressbook	en	Upload or delete the photo
 use country list	addressbook	en	Use Country List
+used for links and for the own sorting of the list	addressbook	en	used for links and for the own sorting of the list
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 vcards require a last name entry.	addressbook	en	Vcards require a last name entry.
-video phone	addressbook	en	Video Phone
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	en	When should the contacts list display that colum. "Only if there is content" hides the column, unless there is some content in the view.
-whole selection	addressbook	en	whole selection
+whole query	addressbook	en	whole query
 work phone	addressbook	en	Work Phone
 write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
 you are not permitted to delete contact %1	addressbook	en	You are not permitted to delete contact %1
