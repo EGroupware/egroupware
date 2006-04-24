@@ -438,7 +438,8 @@ class so_sql
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or 
+	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard='' appended befor and after each criteria
@@ -446,14 +447,14 @@ class so_sql
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num), or 'UNION' for a part of a union query
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
-	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
+	 * @param string $join='' sql to do a join, added as is after the table-name, eg. "JOIN table2 ON x=y" or
+	 *	"LEFT JOIN table2 ON (x=y AND z=o)", Note: there's no quoting done on $join, you are responsible for it!!!
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return boolean/array of matching rows (the row is an array of the cols) or False
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		if ((int) $this->debug >= 4) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
+		if ((int) $this->debug >= 4) echo "<p>so_sql::search(".print_r($criteria,true).",'$only_keys','$order_by',".print_r($extra_cols,true).",'$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
 		if (!is_array($criteria))
 		{
@@ -518,7 +519,14 @@ class so_sql
 					{
 						$col = $c;
 					}
-					$db_filter[$col] = $val;
+					if ($val == "!''")
+					{
+						$db_filter[] = $col." != ''";
+					}
+					else
+					{
+						$db_filter[$col] = $val;
+					}
 				}
 			}
 			if ($query) 
@@ -539,8 +547,28 @@ class so_sql
 			echo "<p>so_sql::search(,only_keys=$only_keys,order_by='$order_by',wildcard='$wildcard',empty=$empty,$op,start='$start',".print_r($filter,true).") query=".print_r($query,true).", total='$this->total'</p>\n";
 			echo "<br>criteria = "; _debug_array($criteria);
 		}
-		$colums = ($only_keys === true ? implode(',',array_keys($this->db_key_cols)) : (!$only_keys ? '*' : $only_keys)).
-			($extra_cols ? ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols) : '');
+		if ($only_keys === true)
+		{
+			$colums = implode(',',array_keys($this->db_key_cols));
+		}
+		elseif (is_array($only_keys))
+		{
+			$colums = array();
+			foreach($only_keys as $key => $col)
+			{
+				$colums[] = ($db_col = array_search($col,$this->db_cols)) ? $db_col : $col;
+			}
+			$colums = implode(',',$colums);
+		}
+		elseif (!$only_keys)
+		{
+			$colums = '*';
+		}
+		else
+		{
+			$colums = $only_keys;
+		}
+		if ($extra_cols) $colums .= ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols);
 
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
@@ -610,6 +638,8 @@ class so_sql
 
 			$cols = $this->_get_columns($only_keys,$extra_cols);
 		}
+		if ((int) $this->debug >= 4) echo "<p>sql='{$this->db->Query_ID->sql}'</p>\n";
+
 		if ($mysql_calc_rows)
 		{
 			$this->total = $this->db->Link_ID->GetOne('SELECT FOUND_ROWS()');
@@ -637,6 +667,7 @@ class so_sql
 	 */	 
 	function _get_columns($only_keys,$extra_cols)
 	{
+		//echo "_get_columns() only_keys="; _debug_array($only_keys); echo "extra_cols="; _debug_array($extra_cols);
 		if ($only_keys === true)	// only primary key
 		{
 			$cols = $this->db_key_cols;
@@ -644,7 +675,7 @@ class so_sql
 		else
 		{
 			$cols = array();
-			foreach(explode(',',str_replace(array('DISTINCT ','distinct '),'',$only_keys)) as $col)
+			foreach(is_array($only_keys) ? $only_keys : explode(',',str_replace(array('DISTINCT ','distinct '),'',$only_keys)) as $col)
 			{
 				if (!$col || $col == '*' || $col == $this->table_name.'.*')	// all columns
 				{
@@ -653,7 +684,14 @@ class so_sql
 				else	// only the specified columns
 				{
 					if (stristr($col,'as')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
-					$cols[$col] = isset($this->db_cols[$col]) ? $this->db_cols[$col] : $col;
+					if (($db_col = array_search($col,$this->db_cols)) !== false)
+					{
+						$cols[$db_col] = $col;
+					}
+					else
+					{
+						$cols[$col] = isset($this->db_cols[$col]) ? $this->db_cols[$col] : $col;
+					}
 				}
 			}
 		}
@@ -662,7 +700,14 @@ class so_sql
 			foreach(is_array($extra_cols) ? $extra_cols : explode(',',$extra_cols) as $col)
 			{
 				if (stristr($col,'as ')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
-				$cols[$col] = isset($this->db_cols[$col]) ? $this->db_cols[$col] : $col;
+				if (($db_col = array_search($col,$this->db_cols)) !== false)
+				{
+					$cols[$db_col] = $col;
+				}
+				else
+				{
+					$cols[$col] = isset($this->db_cols[$col]) ? $this->db_cols[$col] : $col;
+				}
 			}
 		}
 		return $cols;
