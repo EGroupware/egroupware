@@ -75,7 +75,7 @@
 			),
 			'pk' => array('contact_id'),
 			'fk' => array(),
-			'ix' => array('cat_id','contact_owner','contact_fileas',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
+			'ix' => array('cat_id','contact_owner','n_fileas',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
 			'uc' => array()
 		),
 		'egw_addressbook_extra' => array(
