@@ -124,7 +124,7 @@
 					}
 					else
 					{
-						$addresses = split('[, ]',$$adr);
+						$addresses = explode(',',trim($$adr));
 						$names = array();
 					}
 					$method = 'Add'.($adr == 'to' ? 'Address' : $adr);
