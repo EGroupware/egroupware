@@ -25,7 +25,9 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 class socontacts_sql extends so_sql 
 {
-	var $accounts_join = "JOIN egw_accounts ON person_id=contact_id";
+	var $accounts_table = 'egw_accounts';
+	var $accounts_join = ' JOIN egw_accounts ON person_id=egw_addressbook.contact_id';
+	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
 	
 	/**
 	 * searches db for rows matching searchcriteria
@@ -66,16 +68,18 @@ class socontacts_sql extends so_sql
 			}
 			else	// search all addressbooks, incl. accounts
 			{
-				$filter[] = '(contact_owner='.(int)$GLOBALS['egw_info']['user']['account_id'].' OR contact_private=0 AND contact_owner IN ('.
-					implode(',',array_keys($this->grants)).') OR contact_owner IS NULL)';
+				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					" OR contact_private=0 AND $this->table_name.contact_owner IN (".
+					implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
 			}
 		}	
 		if (!$owner)	// owner not set (=all) or 0 --> include accounts
 		{
 			if (!is_array($extra_cols)) $extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 			$accounts2contacts = array(
-				'contact_id'      => 'CASE WHEN contact_id IS NULL THEN '.$this->db->concat("'account:'",'account_id').' ELSE contact_id END AS contact_id',
-				'contact_owner'   => 'CASE WHEN contact_owner IS NULL THEN 0 ELSE contact_owner END AS contact_owner',
+				'contact_id'      => "CASE WHEN $this->table_name.contact_id IS NULL THEN ".$this->db->concat("'account:'",'account_id').
+					" ELSE $this->table_name.contact_id END AS contact_id",
+				'contact_owner'   => "CASE WHEN $this->table_name.contact_owner IS NULL THEN 0 ELSE $this->table_name.contact_owner END AS contact_owner",
 				'contact_tid'     => 'CASE WHEN contact_tid IS NULL THEN \'n\' ELSE contact_tid END AS contact_tid',
 				'n_family'        => 'CASE WHEN n_family IS NULL THEN account_lastname ELSE n_family END AS n_family',
 				'n_given'         => 'CASE WHEN n_given IS NULL THEN account_firstname ELSE n_given END AS n_given',
@@ -86,7 +90,7 @@ class socontacts_sql extends so_sql
 
 			if (!$only_keys)
 			{
-				$account_table = $this->db->get_table_definitions('phpgwapi','egw_accounts');
+				$account_table = $GLOBALS['egw']->db->get_table_definitions('phpgwapi',$this->accounts_table);	// global db is on phpgwapi
 				// all addressbook columns, but the ones given with CASE ... AS above plus the account-columns
 				$only_keys = implode(',',array_merge(array_diff(array_keys($this->db_cols),array_keys($accounts2contacts)),
 					array_keys($account_table['fd'])));
@@ -110,26 +114,39 @@ class socontacts_sql extends so_sql
 				}
 			}
 			// dont list groups
-			$filter[] = "(account_type!='g' OR account_type IS NULL)";
+			$filter[] = "(account_type != 'g' OR account_type IS NULL)";
+		}
+		if ($criteria['contact_value'])	// search the custom-fields
+		{
+			$join .= $this->extra_join;
+			if (is_string($only_keys)) $only_keys = 'DISTINCT '.str_replace(array('contact_id','contact_owner'),
+				array($this->table_name.'.contact_id',$this->table_name.'.contact_owner'),$only_keys);
+				
+			if (isset($filter['owner']))
+			{
+				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
+				unset($filter['owner']);
+			}
 		}
 		if (is_null($owner))	// search for accounts AND contacts of all addressbooks
 		{
+			/* only enable that after testing with postgres, I dont want to break more postgres stuff ;-)
 			if ($this->db->capabilities['outer_join'])
 			{
-				$join = 'OUTER '.$this->accounts_join;
+				$join = 'OUTER'.$this->accounts_join.' '.$join;
 			}
-			else // simulate the outer join with a union
+			else */ // simulate the outer join with a union
 			{
 				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-					'LEFT '.$this->accounts_join,$need_full_no_count);
+					'LEFT'.$this->accounts_join.' '.$join,$need_full_no_count);
 				$filter[] = 'person_id=0';
 				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-					'RIGHT '.$this->accounts_join,$need_full_no_count);
+					'RIGHT'.$this->accounts_join.' '.$join,$need_full_no_count);
 			}
 		}
 		elseif (!$owner)		// search for accounts only
 		{
-			$join = 'RIGHT '.$this->accounts_join;
+			$join .= ' RIGHT'.$this->accounts_join;
 			$filter[] =  "account_type='u'";	// no groups
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
