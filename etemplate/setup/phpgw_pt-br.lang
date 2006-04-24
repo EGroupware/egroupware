@@ -77,7 +77,8 @@ create a new table for the application	etemplate	pt-br	Criar uma nova tabela par
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pt-br	criados em um arquivo de idioma inglês ('en') da etiqueta e arquivos de ajuda (para a aplicação em nome)
 css class for the table-tag	etemplate	pt-br	Classe CSS para a tabela
 css properties	etemplate	pt-br	Propriedades CSS
-css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	pt-br	Classe CSS nome para esta linha, pré-ajuste: 'nmh' = NextMatch cabeçalho, 'nmr' = alternar NM linha, 'nmr0'+'nmr1' NM linhas
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	pt-br	Nome da classe CSS para esta linha, pré-ajuste: 'nmh' = NextMatch cabeçalho, 'nmr' = alternar NM linha, 'nmr0'+'nmr1' NM linhas
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	pt-br	Nome da classe CSS para esta linha, pré-ajuste: 'th' = cabeçalho, 'row' = linha alternada 'row_off'+'row_on'
 css-styles	etemplate	pt-br	Estilo-CSS
 custom	etemplate	pt-br	Personalizado
 custom fields	etemplate	pt-br	Campos personalizados
@@ -177,6 +178,7 @@ help	etemplate	pt-br	Ajuda
 horizontal rule	etemplate	pt-br	Filtro horizontal
 hour	etemplate	pt-br	Hora
 hours	etemplate	pt-br	Horas
+how many entries should the list show	etemplate	pt-br	Quantos items a lista deverá exibir
 html	etemplate	pt-br	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	pt-br	se o campo for desativado uma célula vazia na tabela será mostrada, para remoção (temporária) de um campo/célula
 image	etemplate	pt-br	Imagem
@@ -215,6 +217,7 @@ linkto	etemplate	pt-br	Linkar para
 load this template into the editor	etemplate	pt-br	carregar este modelo para o editor
 middle	etemplate	pt-br	Meio
 minute	etemplate	pt-br	Minuto
+minutes	etemplate	pt-br	Minutos
 month	etemplate	pt-br	Mês
 multicolumn indices	etemplate	pt-br	Indices de multicolunas
 name	etemplate	pt-br	Nome
@@ -380,3 +383,6 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	pt-br	Importar arquivo xml
 xslt template	etemplate	pt-br	Modelo XSLT
 year	etemplate	pt-br	Ano
+1	etemplate	pt-br	1
+2	etemplate	pt-br	2
+3	etemplate	pt-br	3

@@ -18,7 +18,7 @@ category:	resources	pt-br	Categoria:
 check all	resources	pt-br	Checar tudo
 choose categories admin	resources	pt-br	Escolha o administrador de categorias
 clear selection	resources	pt-br	Limpar seleção
-configure access permissions	resources	pt-br	Configurar permissões de acesso
+configure access permissions	admin	pt-br	Configurar permissões de acesso
 create new accessory for this resource	resources	pt-br	Criar novo acessório para este recurso
 create new links	resources	pt-br	Criar novos links
 delete selected resources	resources	pt-br	Remover recursos selecionados

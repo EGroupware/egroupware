@@ -92,12 +92,14 @@ description	infolog	pt-br	Descrição
 determines the order the fields are displayed	infolog	pt-br	determine a ordem em que os campos aparecerão
 disables a status without deleting it	infolog	pt-br	desabilitar o status após a remoção
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pt-br	você quer uma confirmação do responsável quanto à: aceitação, encerramento ou ambos
+don't show infolog	infolog	pt-br	Não exibir Tarefas
 done	infolog	pt-br	Encerrado
 download	infolog	pt-br	Baixar
 duration	infolog	pt-br	Duração
 each value is a line like <id>[=<label>]	infolog	pt-br	cada valor por linha <id>[=<label>]
 edit	infolog	pt-br	Editar
 edit or create categories for ingolog	infolog	pt-br	Editar ou criar categorias para o Módulo Tarefas
+edit rights (full edit rights incl. making someone else responsible!)	infolog	pt-br	Permissões de edição (edição total inclui fazer outra pessoa responsável)
 edit status	infolog	pt-br	Editar o Status
 edit the entry	infolog	pt-br	Editar o registro
 edit this entry	infolog	pt-br	Editar este registro
@@ -133,6 +135,7 @@ infolog - new subproject	infolog	pt-br	Novo Subprojeto - Tarefas
 infolog - subprojects from	infolog	pt-br	Novo Subprojeto de - Tarefas
 infolog entry deleted	infolog	pt-br	Tarefa removida
 infolog entry saved	infolog	pt-br	Tarefa salva
+infolog filter for the main screen	infolog	pt-br	Filtro para Tarefas na Página Inicial
 infolog list	infolog	pt-br	Lista de Tarefas
 infolog preferences	common	pt-br	Preferências - Tarefas
 infolog-fieldname	infolog	pt-br	Nome do campo - Tarefas
@@ -153,7 +156,6 @@ location	infolog	pt-br	Local
 longer textual description	infolog	pt-br	descrição detalhada
 low	infolog	pt-br	baixo
 max length of the input [, length of the inputfield (optional)]	infolog	pt-br	tamanho máximo para inclusão [, tamanho para o campo (opcional)]
-max number of entries to display on the main screen	infolog	pt-br	Número máximo de registros para exibição
 name must not be empty !!!	infolog	pt-br	O campo nome não pode estar vazio!!!
 name of new type to create	infolog	pt-br	nome para o novo tipo
 never hide search and filters	infolog	pt-br	Nunca ocultar Pesquisa e Filtros
@@ -175,9 +177,9 @@ number of records to read (%1)	infolog	pt-br	Número de registros para ler (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	pt-br	Número de linha para campos ou caixas de entrada multilinhas
 offer	infolog	pt-br	Livre
 ongoing	infolog	pt-br	Aberto
+only for details	infolog	pt-br	Somente para detalhes
 only the attachments	infolog	pt-br	apenas arquivos anexos
 only the links	infolog	pt-br	apenas links
-only up to this number of entries are displayed on the main screen.	infolog	pt-br	Apenas números de registros maiores que este serão mostrados na janela principal.
 open	infolog	pt-br	abrir
 optional note to the link	infolog	pt-br	Nota opcional para o Link
 order	infolog	pt-br	Ordem
@@ -204,11 +206,16 @@ project	infolog	pt-br	Projeto
 project settings: price, times	infolog	pt-br	Configurações do projeto: preço, tempo
 re:	infolog	pt-br	Re:
 read one record by passing its id.	infolog	pt-br	Ler um registro contornando seu id.
+read rights (default)	infolog	pt-br	Permissões de leitura (padrão)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	pt-br	Destaque
 remove this link (not the entry itself)	infolog	pt-br	Remover este link (não o registro)
 responsible	infolog	pt-br	Responsável
+responsible open	infolog	pt-br	Responsável pela abertura
+responsible overdue	infolog	pt-br	Responsável pela realização
+responsible user, priority	infolog	pt-br	Usuário responsável, prioridade
 returns a list / search for records.	infolog	pt-br	Retornar uma lista / pesquisar por registros
+rights for the responsible	infolog	pt-br	Permissões para o responsável
 save	infolog	pt-br	Salvar
 saves the changes made and leaves	infolog	pt-br	salvar as alterações realizadas e sair.
 saves this entry	infolog	pt-br	Salvar este registro
@@ -226,16 +233,20 @@ select an entry to link with	infolog	pt-br	Selecione um registro para link
 select to filter by owner	infolog	pt-br	Selecione para filtrar por proprietário
 select to filter by responsible	infolog	pt-br	Selecione para filtrar por responsável
 sets the status of this entry and its subs to done	infolog	pt-br	Configura o status deste registros e seus sub-registros como Completada
-should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	pt-br	O Módulo Tarefas deve mostrar suas tarefas abertas - não concluídas - chamadas telefônicas ou notas - na tela principal? isto só funcionará se você não selecionar um aplicativo padrão  na tela principal. (no menu preferências).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	pt-br	As sub tarefas de chamadas, notas, devem ser mostradas ou não . Você pode sempre pode visualizar as sub tarefas à partir da principal.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt-br	Links para outros aplicativos ou anexos deverão ser exibidos na lista de Tarefas (quando você abrir Tarefas em modo normal de visualização).
-should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt-br	O Módulo de Tarefas deve usar o nome completo (nome e sobrenome) ou apenas o login de acesso.
-should this entry only be visible to you and people you grant privat access via the acl	infolog	pt-br	Esse deve ser visível apenas para você e para usuários que você determine atráves das regras de controle de acesso, ou deve ser público?
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pt-br	O aplicativo Tarefas deverá ser exibido na Página Inicial ? Com qual filtro? Funciona somente se você não selecionou um aplicativo para sua Página Inicial (em suas preferências).
+should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt-br	O aplicativo Tarefas deve usar o nome completo (nome e sobrenome) ou apenas o login de acesso.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir um identificador número único, que poderá ser usado, por exemplo, como identificador de Ticket.
+should the infolog list show the column "last modified".	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir a coluna "Última alteração".
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir a percentagem já realizada somente para o status ou dois ícones separados.
+should this entry only be visible to you and people you grant privat access via the acl	infolog	pt-br	Este registro deve ser visível apenas para você e para usuários que você determine atráves das regras de controle de acesso, ou deve ser público?
 show a column for used and planned times in the list.	infolog	pt-br	Exibir uma coluna para tempo planejado e usado na lista.
 show full usernames	infolog	pt-br	Mostrar nomes completos
 show in the infolog list	infolog	pt-br	Mostrar na lista de tarefas
-show list of upcoming entries	infolog	pt-br	mostrar registros disponíveis
-show open entries: tasks/calls/notes on main screen	infolog	pt-br	Mostrar registros abertos: Tarefas/Ligações/Notas na tela principal.
+show last modified	infolog	pt-br	Exibir última alteração
+show status and percent done separate	infolog	pt-br	Exibir status e percentagem já realizada separados
+show ticket id	infolog	pt-br	Exibir identificador do Ticket
 show times	infolog	pt-br	Exibir horários
 small view	infolog	pt-br	visão compacta
 start a new search, cancel this link	infolog	pt-br	iniciar um nova pesquisa, cancelar este link
@@ -280,6 +291,8 @@ view subs	infolog	pt-br	ver inferiores
 view the parent of this entry and all his subs	infolog	pt-br	Ver o registro superior e todos os inferiores
 view this linked entry in its application	infolog	pt-br	Ver esse link no aplicativo correspondente
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	pt-br	Quando uma pendência ou chamada for iniciada ela deverá ser mostrada primeiro no filtro que esteja aberto ou na sua página inicial
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	pt-br	Que registros adicionais o responsável estará autorizado a editar sem ter acesso à edição?<br/>Status, percentagem e data de finalização são sempre autorizados.
+which implicit acl rights should the responsible get?	infolog	pt-br	Que direitos implícitos o responsável deverá receber ?
 will-call	infolog	pt-br	a chamar
 write (add or update) a record by passing its fields.	infolog	pt-br	Escrever (adicionar ou atualizar) um registro contornando seus campos.
 yes - delete	infolog	pt-br	Sim - Apagar

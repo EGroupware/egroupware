@@ -6,7 +6,7 @@
 00 (disable)	setup	pt-br	00 (desabilitado / recomendado)
 13 (ntp)	setup	pt-br	13 (ntp)
 80 (http)	setup	pt-br	80 (http)
-<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pt-br	<b>codificação de caracteres</b> (use utf-8 se você pretende usar linguagens com diferentes codificações.
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pt-br	<b>codificação de caracteres</b> (use utf-8 se você pretende usar idiomas com diferentes codificações).
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	pt-br	<b>Isto irá criar 1 conta de administrador e 3 contas demo</b><br />Os usuários/senhas são: demo/guest, demo2/guest and demo3/guest.
 accounts existing	setup	pt-br	Contas existentes
 actions	setup	pt-br	Ações
@@ -31,7 +31,7 @@ allow authentication via cookie	setup	pt-br	Permitir autenticação via cookie
 allow password migration	setup	pt-br	Permitir migração de senhas
 allowed migration types (comma-separated)	setup	pt-br	Tipos permitidos de migração (separados por vírgula)
 analysis	setup	pt-br	Análise
-and reload your webserver, so the above changes take effect !!!	setup	pt-br	AND reinicie seu servidor Web, de forma que as mudanças acima surtam efeito !!!
+and reload your webserver, so the above changes take effect !!!	setup	pt-br	E reinicie seu servidor Web, de forma que as mudanças acima surtam efeito !!!
 app details	setup	pt-br	Detlhes do aplicativo
 app install/remove/upgrade	setup	pt-br	instalação/remoção/atualização de Aplicativos
 app process	setup	pt-br	Processos de Aplicativos
@@ -122,7 +122,7 @@ create the empty database -	setup	pt-br	Criar uma base de dados vazia -
 create the empty database and grant user permissions -	setup	pt-br	Criar uma base de dados vazia e garantir as permissões do usuário
 create your header.inc.php	setup	pt-br	criar o arquivo header.ini.php
 created	setup	pt-br	criado
-created header.inc.php!	setup	pt-br	Criador header.inc.php!
+created header.inc.php!	setup	pt-br	Arquivo header.inc.php criado!
 creating tables	setup	pt-br	Criando tabelas
 current system-charset	setup	pt-br	Codificação de caracteres atual do sistema
 current system-charset is %1.	setup	pt-br	Codificação de caracteres atual do sistema é %1.
@@ -175,8 +175,8 @@ enable ldap version 3	setup	pt-br	Habilitar LDAP versão 3
 enable mcrypt	setup	pt-br	Habilitar MCrypt
 enter some random text for app session encryption	setup	pt-br	Digite algum texto aleatório para encriptação de sessão
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	pt-br	Digite um texto aleatório para a encriptação de sessão (requer MCrypt)
-enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt-br	Digite o caminho completo para arquivos temporários.<br />Exemplos: /tmp, C:TEMP
-enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br />Exemplos: /files, E:FILES
+enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt-br	Digite o caminho completo para arquivos temporários.<br />Exemplos: /tmp, C:\TEMP
+enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br />Exemplos: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pt-br	Informe o caminho completo para o diretório de backup.<br/>Se vazio: diretório de arquivos
 enter the hostname of the machine on which this server is running	setup	pt-br	Digite o nome da máquina em que este servidor está sendo executado
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt-br	Digite a URL do eGroupWare.<br />Ex.: http://www.dominio.com.br/egroupware   ou   /egroupware<br /><b>Sem a barra final</b>
@@ -227,7 +227,7 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	se
 if you did not receive any errors, your applications have been	setup	pt-br	Se não foi exibido nenhum erro, suas aplicações foram
 if you did not receive any errors, your tables have been	setup	pt-br	Se não foi exibido nenhum erro, as tabelas foram
 if you running this the first time, don't forget to manualy %1 !!!	setup	pt-br	Se você está rodando isso pela primeira vez, não esqueça de  %1 manualmente!!!
-if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	pt-br	Se você usa apenas linguagens do mesmo conjunto de caracteres (ex: western european) você não precisa definir um conjunto de caracteres!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	pt-br	Se você usa apenas idiomas do mesmo conjunto de caracteres (ex: western european) você não precisa definir um conjunto de caracteres!
 image type selection order	setup	pt-br	Seleção de ordem de tipos de imagens
 import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	pt-br	Importar contas LDAP para as tabelas do eGroupWare (para uma nova instalação usando contas no SQL)
 import has been completed!	setup	pt-br	A importação está completa!
@@ -276,6 +276,7 @@ mail server protocol	setup	pt-br	Protocolo do servidor de e-mail
 make sure that your database is created and the account permissions are set	setup	pt-br	Verifique se sua base de dados está criada e as permissões de acesso estão definidas
 manage applications	setup	pt-br	Configurar aplicações
 manage languages	setup	pt-br	Configurar idiomas
+manual / help	setup	pt-br	Manual / Ajuda
 max_execution_time is set to less than 30 (seconds): egroupware sometimes needs a higher execution_time, expect occasional failures	setup	pt-br	O tempo limite de execução está setado para menos de 30 segundos. Algumas vezes, o eGroupWare necessita de um limite maior que esse. É possível que ocorram problemas.
 maximum account id (e.g. 65535 or 1000000)	setup	pt-br	Id máximo para contas (Exemplo: 65535 ou 1000000)
 may be broken	setup	pt-br	pode estar quebrado
@@ -408,7 +409,7 @@ server root	setup	pt-br	Raiz do Servidor
 sessions type	setup	pt-br	Tipo de seção
 set	setup	pt-br	Configure
 set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	pt-br	Defina esse valor para "old"para versões < 2.4, ou para a versão exata do MCrypt em uso.
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	pt-br	Definir o conjunto de caracteres para UTF-8 (unicode) permite que dados de linguagens diferentes possam aparecer e coexistir no sistema.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	pt-br	Definir o conjunto de caracteres para UTF-8 (unicode) permite que dados de idiomas diferentes possam aparecer e coexistir no sistema.
 settings	setup	pt-br	Configurações
 setup	setup	pt-br	Configurador
 setup demo accounts in ldap	setup	pt-br	Configurar contas de demonstração no LDAP
@@ -427,11 +428,11 @@ standard mailserver settings (used for mail authentication too)	setup	pt-br	Conf
 start the postmaster	setup	pt-br	Iniciar o postmaster
 status	setup	pt-br	Status
 step %1 - admin account	setup	pt-br	Passo %1 - Conta do administrador
-step %1 - advanced application management	setup	pt-br	Passo %1 - Gerenciamento avançado da aplicação
+step %1 - advanced application management	setup	pt-br	Passo %1 - Gerenciamento avançado da instalação
 step %1 - configuration	setup	pt-br	Passo %1 - Configuração
 step %1 - db backup and restore	setup	pt-br	Passo %1 - Backup e Restauração de base de dados
-step %1 - language management	setup	pt-br	Passo %1 - Gerenciamento da linguagem
-step %1 - simple application management	setup	pt-br	Passo %1 - Gerenciamento simples da aplicação
+step %1 - language management	setup	pt-br	Passo %1 - Gerenciamento de idiomas
+step %1 - simple application management	setup	pt-br	Passo %1 - Gerenciamento simples  de aplicativos
 succesfully uploaded file %1	setup	pt-br	Arquivo % carregado com sucesso.
 table change messages	setup	pt-br	Mensagens de alterações nas tabelas
 tables dropped	setup	pt-br	tabelas removidas (DROP)
@@ -509,7 +510,7 @@ would you like egroupware to cache the phpgw info array ?	setup	pt-br	Deseja que
 would you like egroupware to check for a new version<br />when admins login ?	setup	pt-br	Deseja que o eGroupWare verifique se há uma nova versão disponível <br />quando administradores estejam acessando o sistema?
 would you like to show each application's upgrade status ?	setup	pt-br	Deseja exibir o status de atualização de cada aplicativo?
 writable by the webserver	setup	pt-br	Escrita permitida para o servidor Web
-write config	setup	pt-br	Configuração de escrita
+write config	setup	pt-br	Gravar configuração
 year	setup	pt-br	ano
 yes	setup	pt-br	Sim
 yes, with lowercase usernames	setup	pt-br	Sim, com nome de usuários em letras minúsculas
