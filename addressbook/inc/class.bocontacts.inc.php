@@ -309,14 +309,12 @@ class bocontacts extends socontacts
 	/**
 	* reads contacts matched by key and puts all cols in the data array
 	*
-	* @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
-	* @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	* @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	* @param int/string $contact_id 
 	* @return array/boolean contact data or false on error
 	*/
-	function read($keys,$extra_cols='',$join='')
+	function read($contact_id)
 	{
-		$data = parent::read($keys,$extra_cols,$join);
+		$data = parent::read($contact_id);
 		if (!$data || !$this->check_perms(EGW_ACL_READ,$data))
 		{
 			return false;

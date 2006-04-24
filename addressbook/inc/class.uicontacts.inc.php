@@ -329,7 +329,7 @@ class uicontacts extends bocontacts
 		{
 			$query['col_filter'][] = $query['order']."!=''";
 		}
-		$rows = (array) $this->regular_search($criteria,$id_only,$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
+		$rows = (array) parent::search($criteria,$id_only,$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 		//echo "<p style='margin-top: 100px;'>".$this->somain->db->Query_ID->sql."</p>\n";
 
 		if ($id_only) return $this->total;	// no need to set other fields or $readonlys
@@ -878,7 +878,7 @@ class uicontacts extends bocontacts
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook'). ' - '. lang('Advanced search');
 		if(!($GLOBALS['egw_info']['server']['contact_repository'] == 'sql' || !isset($GLOBALS['egw_info']['server']['contact_repository'])))
 		{
-			$GLOBALS['egw']->common->phpgw_header();
+			$GLOBALS['egw']->common->egw_header();
 			echo parse_navbar();
 			echo '<p> Advanced Search is not supported for ldap storage yet. Sorry! </p>';
 			$GLOBALS['egw']->common->egw_exit();
@@ -956,6 +956,11 @@ class uicontacts extends bocontacts
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
 		$sel_options['tid'][] = lang('all');
 		//foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
+		
+		// some changes for the new addressbook
+		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ,lang('all'));
+		$readonlys['change_photo'] = true;
+		
 		$this->tmpl->read('addressbook.search');
 		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv);
 	}

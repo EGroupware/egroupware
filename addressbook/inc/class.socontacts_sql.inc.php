@@ -37,7 +37,8 @@ class socontacts_sql extends so_sql
 	 * For a union-query you call search for each query with $start=='UNION' and one more with only $order_by and $start set to run the union-query.
 	 *
 	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
+	 * @param boolean/string/array $only_keys=true True returns only keys, False returns all cols. or 
+	 *	comma seperated list or array of columns to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $wildcard='' appended befor and after each criteria
@@ -52,7 +53,7 @@ class socontacts_sql extends so_sql
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		if ((int) $this->debug >= 4) echo "<p>socontacts_sql::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
+		if ((int) $this->debug >= 4) echo "<p>socontacts_sql::search(".print_r($criteria,true).",".print_r($only_keys,true).",'$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 		
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
@@ -88,6 +89,8 @@ class socontacts_sql extends so_sql
 			$extra_cols = $extra_cols ? array_merge(is_array($extra_cols) ? $extra_cols : implode(',',$extra_cols),array_values($accounts2contacts)) :
 				array_values($accounts2contacts);
 
+			// we need to remove the above columns from the select list, as they are added again via extra_cols and 
+			// having them double is ambigues
 			if (!$only_keys)
 			{
 				$account_table = $GLOBALS['egw']->db->get_table_definitions('phpgwapi',$this->accounts_table);	// global db is on phpgwapi
@@ -95,20 +98,39 @@ class socontacts_sql extends so_sql
 				$only_keys = implode(',',array_merge(array_diff(array_keys($this->db_cols),array_keys($accounts2contacts)),
 					array_keys($account_table['fd'])));
 			}
+			elseif($only_keys !== true)
+			{
+				if (!is_array($only_keys)) $only_keys = explode(',',$only_keys);
+
+				foreach(array_keys($accounts2contacts) as $col)
+				{
+					if (($key = array_search($col,$only_keys)) !== false ||
+						($key = array_search(str_replace('contact_','',$col),$only_keys)) !== false)
+					{
+						unset($only_keys[$key]);
+					}
+				}						
+			}
 			foreach($filter as $col => $value)
 			{
-				if (!is_int($col))
+				if (!is_int($col) && ($db_col = array_search($col,$this->db_cols)) !== false)
 				{
-					if (($db_col = array_search($col,$this->db_cols)) !== false && isset($accounts2contacts[$db_col]))
+					if (isset($accounts2contacts[$db_col]))
 					{
 						unset($filter[$col]);
-						$filter[] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).'='.$this->db->quote($value,$this->table_def['fd'][$db_col]['type']);
+						$filter[] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).
+							($value === "!''" ? "!=''" : '='.$this->db->quote($value,$this->table_def['fd'][$db_col]['type']));
+					}
+					elseif($value == "!''")		// not empty query, will match all accounts, as their value is NULL not ''
+					{
+						$filter[] = "($db_col != '' AND $db_col IS NOT NULL)";
 					}
 				}
-				elseif (preg_match("/^([a-z0-9_]+) *(=|!=|LIKE|NOT LIKE) *'(.*)'\$/i",$value,$matches))
+				elseif (preg_match("/^([a-z0-9_]+) *(=|!=|LIKE|NOT LIKE|=!) *'(.*)'\$/i",$value,$matches))
 				{
 					if (($db_col = array_search($matches[1],$this->db_cols)) !== false && isset($accounts2contacts[$db_col]))
 					{
+						if ($matches[2] == '=!') $matches[2] = '!=';
 						$filter[$col] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).' '.$matches[2].' \''.$matches[3].'\'';
 					}
 				}

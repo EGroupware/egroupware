@@ -26,11 +26,6 @@
 class socontacts
 {
 	/**
-	 * @var string $links_table table name 'egw_links'
-	 */
-	var $links_table = 'egw_links';
-	
-	/**
 	 * @var string $extra_table name of customefields table
 	 */
 	var $extra_table = 'egw_addressbook_extra';
@@ -93,6 +88,11 @@ class socontacts
 	 */
 	var $content_types = array();
 	
+	/**
+	 * @var int $total total number of matches of last search
+	 */
+	var $total;
+	
 	function socontacts($contact_app='addressbook')
 	{
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
@@ -124,7 +124,9 @@ class socontacts
 			$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
 			
 			// remove some columns, absolutly not necessary to search in sql
-			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),array('jpegphoto','owner','tid','private','id','cat_id','modified','modifier','creator','created'));
+			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),array('jpegphoto','owner','tid',
+				'private','id','cat_id','modified','modifier','creator','created','tz'));
+			$this->columns_to_search[] = $this->extra_value;	// custome fields from extra_table
 			$this->account_extra_search = array('account_firstname','account_lastname','account_email','account_lid');
 		}
 		// add grants for accounts: admin --> everything, everyone --> read
@@ -259,7 +261,7 @@ class socontacts
 	/**
 	 * reads contact data including custom fields
 	 *
-	 * @param interger/string $contact_id contact_id or 'a'.account_id
+	 * @param int/string $contact_id contact_id or 'a'.account_id
 	 * @return array/boolean data if row could be retrived else False
 	*/
 	function read($contact_id)
@@ -301,7 +303,7 @@ class socontacts
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
+	function ex_search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
  		//echo 'socontacts::search->criteria:'; _debug_array($criteria);
  		// we can only deal with one category atm.
@@ -498,7 +500,7 @@ class socontacts
 	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function &regular_search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
