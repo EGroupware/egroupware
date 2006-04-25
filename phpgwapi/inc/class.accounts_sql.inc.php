@@ -104,16 +104,21 @@
 		 */
 		function save_repository()
 		{
-			$this->db->update($this->table,array(
+			$data = array(
 				'account_firstname' => $this->data['firstname'],
 				'account_lastname'  => $this->data['lastname'],
 				'account_status'    => $this->data['status'],
 				'account_expires'   => $this->data['expires'],
 				'account_lid'       => $this->data['account_lid'],
-				'person_id'         => $this->data['person_id'],
 				'account_primary_group' => $this->data['account_primary_group'],
 				'account_email'     => $this->data['email'],
-			),array(
+			);
+			// overwrite person_id only if it's set in this->data!
+			if (isset($this->data['person_id']))
+			{
+				$data['person_id'] = $this->data['person_id'];
+			}
+			$this->db->update($this->table,$data,array(
 				'account_id'        => abs($this->account_id)
 			),__LINE__,__FILE__);
 		}
