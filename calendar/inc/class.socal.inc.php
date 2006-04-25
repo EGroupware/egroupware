@@ -328,7 +328,7 @@ class socal
 
 		if (!preg_match('/^[a-z_ ,]+$/i',$order)) $order = 'cal_start';		// gard against SQL injunktion
 
-		if ($this->db->capabilities['distinct_on_text'] && $this->capabilities['union'])
+		if ($this->db->capabilities['distinct_on_text'] && $this->db->capabilities['union'])
 		{
 			// changed the original OR in the query into a union, to speed up the query execution under MySQL 5
 			$select = array(
