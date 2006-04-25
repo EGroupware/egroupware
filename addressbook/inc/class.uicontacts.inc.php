@@ -669,7 +669,8 @@ class uicontacts extends bocontacts
 		{
 			if (!isset($sel_options['owner'][(int)$content['owner']]))
 			{
-				$sel_options['owner'][(int)$content['owner']] = $GLOBALS['egw']->common->grab_owner_name($content['owner']);
+				$sel_options['owner'][(int)$content['owner']] = !$content['owner'] ? lang('Accounts') :
+					$GLOBALS['egw']->common->grab_owner_name($content['owner']);
 			}
 			$readonlys['owner'] = !$content['owner'] || 		// dont allow to move accounts, as this mean deleting the user incl. all content he owns
 				!$this->check_perms(EGW_ACL_DELETE,$content);	// you need delete rights to move a contact into an other addressbook

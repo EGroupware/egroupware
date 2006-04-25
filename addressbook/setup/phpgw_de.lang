@@ -16,6 +16,7 @@ address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adresszeile 2
 address type	addressbook	de	Adresstyp
 addressbook	common	de	Adressbuch
+addressbook menu	addressbook	de	Adressbuch Menü
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in das der Kontakt gespeichert werden soll
 addressbook-fieldname	addressbook	de	Adressbuch Feldname
@@ -79,6 +80,7 @@ download export file (uncheck to debug output in browser)	addressbook	de	Downloa
 download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
+edit extra account-data in the addressbook	admin	de	Zusätzliche Benutzerdaten im Adressbuch bearbeiten.
 edit phonenumbers -	addressbook	de	Telefonnummern bearbeiten
 email & internet	addressbook	de	Email & Internet
 empty for all	addressbook	de	leer für alle

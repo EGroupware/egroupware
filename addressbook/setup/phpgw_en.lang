@@ -16,6 +16,7 @@ address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
 address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
+addressbook menu	addressbook	en	Addressbook menu
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
 addressbook-fieldname	addressbook	en	Addressbook-Fieldname
@@ -79,6 +80,7 @@ download export file (uncheck to debug output in browser)	addressbook	en	Downloa
 download this contact as vcard file	addressbook	en	download this contact as vCard file
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
+edit extra account-data in the addressbook	admin	en	Edit extra account-data in the addressbook
 edit phonenumbers -	addressbook	en	Edit Phonenumbers -
 email & internet	addressbook	en	Email & Internet
 empty for all	addressbook	en	empty for all

@@ -141,7 +141,7 @@ class bocontacts extends socontacts
 			'n_family' => lang('last name'),
 			'n_suffix' => lang('suffix'),
 			'n_fn'     => lang('full name'),
-			'org_name' => lang('company name'),
+			'org_name' => lang('company'),
 		);
 		foreach($labels as $name => $label)
 		{
@@ -264,9 +264,8 @@ class bocontacts extends socontacts
 	/**
 	* saves contact to db
 	*
-	* @param array &contact contact array from etemplate::exec
+	* @param array &$contact contact array from etemplate::exec
 	* @return boolean true on success, false on failure, an error-message is in $contact['msg']
-	* TODO make fullname format choosable at best with selectbox and javascript in edit dialoge
 	*/
 	function save(&$contact)
 	{
@@ -279,7 +278,6 @@ class bocontacts extends socontacts
 		}
 		if($contact['id'] && !$this->check_perms(EGW_ACL_EDIT,$contact))
 		{
-			$contact['msg'] = lang('You are not permittet to edit this contact');
 			return false;
 		}
 		// convert categories
@@ -293,16 +291,10 @@ class bocontacts extends socontacts
 		$contact['n_fn'] = $this->fullname($contact);
 		$contact['n_fileas'] = $this->fileas($contact);
 
-		$error_nr = parent::save($contact);
-
-		if(!$error_nr)
+		if(!($error_nr = parent::save($contact)))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 		}
-		$contact['msg'] = $error_nr ?
-			lang('Something went wrong by saving this contact. Errorcode %1',$error_nr) :
-			lang('Contact saved');
-		
 		return !$error_nr;
 	}
 	
@@ -416,7 +408,7 @@ class bocontacts extends socontacts
 	}
 
 	/**
-	 * Called by delete-account hook if an account gets deleted
+	 * Delete contact linked to account, called by delete-account hook, when an account get deleted
 	 *
 	 * @param array $data
 	 */
@@ -429,6 +421,37 @@ class bocontacts extends socontacts
 		if (($contact_id = $GLOBALS['egw']->accounts->id2name($data['account_id'],'person_id')))
 		{
 			$this->delete($contact_id);
+		}
+	}
+
+	/**
+	 * Update contact if linked account get updated, called by edit-account hook, when an account get edited
+	 *
+	 * @param array $data
+	 */
+	function editaccount($data)
+	{
+		//echo "bocontacts::editaccount()"; _debug_array($data);
+		
+		// check if account is linked to a contact
+		if (($contact_id = $GLOBALS['egw']->accounts->id2name($data['account_id'],'person_id')) &&
+			($contact = $this->read($contact_id)))
+		{
+			$need_update = false;
+			foreach(array(
+				'n_family' => 'lastname',
+				'n_given'  => 'firstname',
+				'email'    => 'email',
+			) as $cname => $aname)
+			{
+				if ($contact[$cname] != $data[$aname]) $need_update = true;
+
+				$contact[$cname] = $data[$aname];
+			}
+			if ($need_update)
+			{
+				$this->save($contact);
+			}
 		}
 	}
 }

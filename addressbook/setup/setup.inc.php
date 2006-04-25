@@ -19,16 +19,15 @@
 	$setup_info['addressbook']['enable']    = 1;
 
 	$setup_info['addressbook']['author'] = 'Ralf Becker, Cornelius Weiss, Lars Kneschke';
-	$setup_info['addressbook']['note']   = 'The phpgwapi manages contact data.  Addressbook manages servers for its remote capability.';
+//	$setup_info['addressbook']['note']   = 'The phpgwapi manages contact data.  Addressbook manages servers for its remote capability.';
 	$setup_info['addressbook']['license']  = 'GPL';
 	$setup_info['addressbook']['description'] =
-		'Contact manager with Vcard support.<br>
-		 Always have your address book available for updates or look ups from anywhere. <br>
-		 Share address book contact information with others. <br>
-		 Link contacts to calendar events or InfoLog entires like phonecalls.<br> 
-		 Addressbook is the eGroupWare default contact application. <br>
-		 It makes use of the eGroupWare contacts class to store and retrieve 
-		 contact information via SQL or LDAP.';
+		'Contact manager with Vcard support.<br />
+		 Always have your address book available for updates or look ups from anywhere. <br />
+		 Share address book contact information with others. <br />
+		 Link contacts to calendar events or InfoLog entires like phonecalls.<br /> 
+		 Addressbook is the eGroupWare default contact application. <br />
+		 It stores contact information via SQL or LDAP and provides contact services via the eGroupWare API.';
 
 	$setup_info['addressbook']['maintainer'] = 'eGroupWare coreteam';
 	$setup_info['addressbook']['maintainer_email'] = 'egroupware-developers@lists.sourceforge.net';

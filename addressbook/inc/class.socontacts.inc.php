@@ -147,10 +147,20 @@ class socontacts
 			
 		$custom =& CreateObject('admin.customfields',$contact_app);
 		$this->customfields = $custom->get_customfields();
-		if ($this->customfields && !is_array($this->customfields)) $this->customfields = unserialize($this->customfields);
-		if (!$this->customfields) $this->customfields = array();
+//		if ($this->customfields && !is_array($this->customfields)) $this->customfields = unserialize($this->customfields);
+//		if (!$this->customfields) $this->customfields = array();
 		$this->content_types = $custom->get_content_types();
-		if ($this->content_types && !is_array($this->content_types)) $this->content_types = unserialize($this->content_types);
+//		if ($this->content_types && !is_array($this->content_types)) $this->content_types = unserialize($this->content_types);
+		if (!$this->content_types)
+		{
+			$this->content_types = $custom->content_types = array('n' => array(
+				'name' => 'contact',
+				'options' => array(
+					'template' => 'addressbook.edit',
+					'icon' => 'navbar.png'
+			)));
+			$custom->save_repository();
+		}
 	}
 	
 	/**

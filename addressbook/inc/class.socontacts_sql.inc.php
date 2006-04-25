@@ -93,10 +93,7 @@ class socontacts_sql extends so_sql
 			// having them double is ambigues
 			if (!$only_keys)
 			{
-				$account_table = $GLOBALS['egw']->db->get_table_definitions('phpgwapi',$this->accounts_table);	// global db is on phpgwapi
-				// all addressbook columns, but the ones given with CASE ... AS above plus the account-columns
-				$only_keys = implode(',',array_merge(array_diff(array_keys($this->db_cols),array_keys($accounts2contacts)),
-					array_keys($account_table['fd'])));
+				$only_keys = array_diff(array_keys($this->db_cols),array_keys($accounts2contacts));
 			}
 			elseif($only_keys !== true)
 			{
@@ -121,8 +118,9 @@ class socontacts_sql extends so_sql
 						$filter[] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).
 							($value === "!''" ? "!=''" : '='.$this->db->quote($value,$this->table_def['fd'][$db_col]['type']));
 					}
-					elseif($value == "!''")		// not empty query, will match all accounts, as their value is NULL not ''
+					elseif($value === "!''")		// not empty query, will match all accounts, as their value is NULL not ''
 					{
+						unset($filter[$col]);
 						$filter[] = "($db_col != '' AND $db_col IS NOT NULL)";
 					}
 				}
@@ -161,7 +159,7 @@ class socontacts_sql extends so_sql
 			{
 				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
 					'LEFT'.$this->accounts_join.' '.$join,$need_full_no_count);
-				$filter[] = 'person_id=0';
+				$filter[] = '(person_id=0 OR person_id IS NULL)';	// unfortunally both is used in eGW
 				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
 					'RIGHT'.$this->accounts_join.' '.$join,$need_full_no_count);
 			}
@@ -214,6 +212,10 @@ class socontacts_sql extends so_sql
 					'email'    => $account->data['email'],
 					'owner'    => 0,
 					'tid'      => 'n',
+					'creator'  => $GLOBALS['egw_info']['user']['account_id'],
+					'created'  => time(),
+					'modifier' => $GLOBALS['egw_info']['user']['account_id'],
+					'modified' => time(),
 				),$account_id);
 	
 				return $this->data+array('account_id' => $account_id);
@@ -244,8 +246,7 @@ class socontacts_sql extends so_sql
 			'n_family' => $lastname,
 			'private'  => 0,
 		));
-		//echo "<p>soccontacts_sql::_find_unique_contacts($firstname,$lastname)</p>\n"; _debug_array($contacts);
-		
+
 		return $contacts && count($contacts) == 1 ? $contacts[0]['id'] : false;
 	}
 

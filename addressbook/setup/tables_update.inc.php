@@ -12,6 +12,15 @@
 	
 	/* $Id$ */
 
+	$test[] = '1.0.0';
+	function addressbook_upgrade1_0_0()
+	{
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_addressbook','egw_addressbook');
+		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_addressbook_extra','egw_addressbook_extra');
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2';
+	}
+	
 	$test[] = '1.2';
 	function addressbook_upgrade1_2()
 	{
