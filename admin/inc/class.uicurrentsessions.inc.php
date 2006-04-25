@@ -61,21 +61,21 @@
 				$this->store_location($info);
 			}
 
-			if ($GLOBALS['start'] || $GLOBALS['sort'] || $GLOBALS['order'])
+			if ($_REQUEST['start'] || $_REQUEST['sort'] || $_REQUEST['order'])
 			{
-				if ($GLOBALS['start'] == 0 || $GLOBALS['start'] && $GLOBALS['start'] != $info['start'])
+				if ($_REQUEST['start'] == 0 || $_REQUEST['start'] && $_REQUEST['start'] != $info['start'])
 				{
-					$info['start'] = $GLOBALS['start'];
+					$info['start'] = $_REQUEST['start'];
 				}
 
-				if ($GLOBALS['sort'] && $GLOBALS['sort'] != $info['sort'])
+				if ($_REQUEST['sort'] && $_REQUEST['sort'] != $info['sort'])
 				{
-					$info['sort'] = $GLOBALS['sort'];
+					$info['sort'] = $_REQUEST['sort'];
 				}
 
-				if ($GLOBALS['order'] && $GLOBALS['order'] != $info['order'])
+				if ($_REQUEST['order'] && $_REQUEST['order'] != $info['order'])
 				{
-					$info['order'] = $GLOBALS['order'];
+					$info['order'] = $_REQUEST['order'];
 				}
 
 				$this->store_location($info);
