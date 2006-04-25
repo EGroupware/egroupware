@@ -118,7 +118,7 @@
 	if ($all)
 	{
 		$qfilter .= ',email'.($all[0] == 'h' ? '_home' : '')."=!''";
-		$entries = $contacts->read(0,0,$cols,$query,$qfilter,$sort,$order,$account_id);
+		$entries = $contacts->read(0,0,$cols,$query,$qfilter,$sort,$order);
 		//echo "<pre>".print_r($entries,True)."</pre>\n";
 		if (!$entries)
 		{
@@ -128,7 +128,7 @@
 	}
 	if (!$all)
 	{
-		$entries = $contacts->read($start,$offset,$cols,$query,$qfilter,$sort,$order,$account_id);
+		$entries = $contacts->read($start,$offset,$cols,$query,$qfilter,$sort,$order);
 	}
 	//------------------------------------------- nextmatch --------------------------------------------
 	$GLOBALS['egw']->template->set_var('left',$GLOBALS['egw']->nextmatchs->left(
