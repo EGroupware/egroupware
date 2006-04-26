@@ -161,7 +161,7 @@
 					<hbox align="right">
 						<checkbox id="use_all" label="whole query" onchange="if (this.checked==true &amp;&amp; !confirm('Apply the action on the whole query, NOT only the shown contacts!!!')) this.checked=false;" statustext="Apply the action on the whole query, NOT only the shown contacts!!!"/>
 						<menulist>
-							<menupopup onchange="1" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
+							<menupopup onchange="if (this.value != '') { this.form.submit(); this.value=''; }" options="Select an action or addressbook to move to..." no_lang="1" id="action" statustext="Select an action or addressbook to move to"/>
 						</menulist>
 						<button image="arrow_ltr" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('nm[rows][checked][]')); return false;" needed="1" class="checkAllArrow"/>
 					</hbox>
