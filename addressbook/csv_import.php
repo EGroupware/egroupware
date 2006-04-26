@@ -63,14 +63,14 @@
 	// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
 	function addr_id($n_family,$n_given,$org_name)
 	{
-		$addrs = $GLOBALS['egw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name");
+		$addrs = $GLOBALS['egw']->contacts->search(array('n_family'=>$n_family,'n_given'=>$n_given,'org_name'=>$org_name));
 		if(!count($addrs))
 		{
-			$addrs = $GLOBALS['egw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,n_given=$n_given");
+			$addrs = $GLOBALS['egw']->contacts->search(array('n_family'=>$n_family,'n_given'=>$n_given));
 		}
 		if(!count($addrs))
 		{
-			$addrs = $GLOBALS['egw']->contacts->read(0,0,array('id'),'',"n_family=$n_family,org_name=$org_name");
+			$addrs = $GLOBALS['egw']->contacts->search(array('n_family'=>$n_family,'org_name'=>$org_name));
 		}
 
 		if(count($addrs))
@@ -128,7 +128,7 @@
 				$GLOBALS['egw']->html->select('charset','',
 				$GLOBALS['egw']->translation->get_installed_charsets()+
 				array('utf-8' => 'utf-8 (Unicode)'),True));
-			$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
+			$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
 			$GLOBALS['egw']->template->set_var('submit',lang('Import'));
 			$GLOBALS['egw']->template->set_var('csvfile',$csvfile);
 			$GLOBALS['egw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
@@ -152,28 +152,16 @@
 			$GLOBALS['egw']->template->set_var('lang_debug',lang('Test Import (show importable records <u>only</u> in browser)'));
 			$GLOBALS['egw']->template->parse('fheaderhandle','fheader');
 
-			$addr_names = $GLOBALS['egw']->contacts->stock_contact_fields + array(
-				'cat_id' => 'Categories: id\'s or names, comma separated list',
-				'access' => 'Access: public, private',
-				'owner'  => 'Owner: user-id/-name, defaults to user',
-				'address2' => 'address line 2',
-				'address3' => 'address line 3',
-				'ophone'   => 'Other Phone'
-			);
-			$config = CreateObject('phpgwapi.config','addressbook');
-			$config->read_repository();
-			while(list($name,$descr) = @each($config->config_data['custom_fields']))
-			{
-				$addr_names[$name] = $descr;
-			}
-			unset($config);
+			$addr_names = $GLOBALS['egw']->contacts->contact_fields;
+			$addr_names['cat_id']  .= ': id or name, comma separated list';
+			$addr_names['private'] .= ': 0 = public, 1 = private';
+			$addr_names['owner']   .= ': id or account name of user or group, defaults to importing user';
+			$addr_names['bday']    .= ': YYYY-mm-dd';
+			unset($addr_names['jpegphoto']);	// cant cvs import that
 
-			foreach($addr_names as $field => $name)
+			foreach($GLOBALS['egw']->contacts->customfields as $name => $data)
 			{
-				if($dn = display_name($field))
-				{
-					$addr_names[$field] = $dn;
-				}
+				$addr_names['#'.$name] = $data['label'];
 			}
 			$addr_name_options = "<option value=\"\">none\n";
 			foreach($addr_names as $field => $name)
@@ -315,15 +303,9 @@
 				}
 				$log .= "\t\t<td><b>$addr</b></td>\n";
 			}
-			if (!in_array('fn',$addr_fields))	// autocreate full name, if not set by user
+			if (!in_array('private',$addr_fields))	// autocreate public access if not set by user
 			{
-				$log .= "\t\t<td><b>fn</b></td>\n";
-
-				$auto_fn = array('n_prefix','n_given','n_middle','n_family','n_suffix');
-			}
-			if (!in_array('access',$addr_fields))	// autocreate public access if not set by user
-			{
-				$log .= "\t\t<td><b>access</b></td>\n";
+				$log .= "\t\t<td><b>private</b></td>\n";
 			}
 			$start = $_POST['start'] < 1 ? 1 : $_POST['start'];
 
@@ -399,31 +381,42 @@
 				{
 					$values['cat_id'] = cat_id($values['cat_id']);
 				}
-
+				// convert dates to timestamps
+				foreach(array('created','modified') as $date)
+				{
+					if (isset($values[$date]) && !is_numeric($date))
+					{
+						// convert german DD.MM.YYYY format into ISO YYYY-MM-DD format
+						$values[$date] = ereg_replace('([0-9]{1,2}).([0-9]{1,2}).([0-9]{4})','\3-\2-\1',$values[$date]);
+						// remove fractures of seconds if present at the end of the string
+						if (ereg('(.*)\.[0-9]+',$values[$date],$parts)) $values[$date] = $parts[1];
+						$values[$date] = strtotime($values[$date]);
+					}
+				}
 				// convert user-names to user-id's
-				foreach(array('owner') as $user)
+				foreach(array('owner','modifier','creator') as $user)
 				{
 					if (isset($values[$user]) && !is_numeric($user))
 					{
 						$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user]);
 					}
 				}
-				if (is_array($auto_fn))	// autocreate full name
+				if (!in_array('owner',$addr_fields) || !$values['owner'])
 				{
-					foreach($auto_fn as $name)
-					{
-						$values['fn'] .= ($values['fn'] != '' && $values[$name] != '' ? ' ' : '') . $values[$name];
-					}
-					$log .= "\t\t<td>".$values['fn']."</td>\n";
+					$values['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 				}
-				if (!in_array('access',$addr_fields))
+				if (!in_array('private',$addr_fields))
 				{
-					$values['access'] = 'public';	// public access if not set by user
-					$log .= "\t\t<td>".$values['access']."</td>\n";
+					$values['private'] = 0;	// public access if not set by user
+					$log .= "\t\t<td>".$values['private']."</td>\n";
+				}
+				else
+				{
+					$values['private'] = (int) in_array($values['private'],array(lang('yes'),'yes','private','1','true'));
 				}
 				if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 				{
-					$GLOBALS['egw']->contacts->add( $values['owner'] ? $values['owner'] : $GLOBALS['egw_info']['user']['account_id'],$values);
+					$GLOBALS['egw']->contacts->save($values);
 					//echo "<p>adding: ".print_r($values,true)."</p>\n";
 				}
 			}

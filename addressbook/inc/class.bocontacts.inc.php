@@ -62,6 +62,10 @@ class bocontacts extends socontacts
 		'n_family, n_prefix',
 		'n_fn',
 	);
+	
+	var $contact_fields = array();
+	var $business_contact_fields = array();
+	var $home_contact_fields = array();
 
 	function bocontacts($contact_app='addressbook')
 	{
@@ -83,6 +87,101 @@ class bocontacts extends socontacts
 			$this->$my = &$GLOBALS['egw']->$class;
 		}*/
 		
+		$this->contact_fields = array(
+			'id'                   => lang('Contact ID'),
+			'tid'                  => lang('Type'),
+			'owner'                => lang('Addressbook'),
+			'private'              => lang('private'),
+			'cat_id'               => lang('Category'),
+			'n_prefix'             => lang('prefix'),
+			'n_given'              => lang('first name'),
+			'n_middle'             => lang('middle name'),
+			'n_family'             => lang('last name'),
+			'n_suffix'             => lang('suffix'),
+			'n_fn'                 => lang('full name'),
+			'n_fileas'             => lang('own sorting'),
+			'bday'                 => lang('birthday'),
+			'org_name'             => lang('Company'),
+			'org_unit'             => lang('Department'),
+			'title'                => lang('Title'),
+			'role'                 => lang('Role'),
+			'assistent'            => lang('Assistent'),
+			'room'                 => lang('Room'),
+			'adr_one_street'       => lang('street').' ('.lang('business').')',
+			'adr_one_street2'      => lang('address line 2').' ('.lang('business').')',
+			'adr_one_locality'     => lang('city').' ('.lang('business').')',
+			'adr_one_region'       => lang('state').' ('.lang('business').')',
+			'adr_one_postalcode'   => lang('zip code').' ('.lang('business').')',
+			'adr_one_countryname'  => lang('country').' ('.lang('business').')',
+			'label'                => lang('label'),
+			'adr_two_street'       => lang('street').' ('.lang('private').')',
+			'adr_two_street2'      => lang('address line 2').' ('.lang('private').')',
+			'adr_two_locality'     => lang('city').' ('.lang('private').')',
+			'adr_two_region'       => lang('state').' ('.lang('private').')',
+			'adr_two_postalcode'   => lang('zip code').' ('.lang('private').')',
+			'adr_two_countryname'  => lang('country').' ('.lang('private').')',
+			'tel_work'             => lang('work phone'),
+			'tel_cell'             => lang('mobile phone'),
+			'tel_fax'              => lang('fax').' ('.lang('business').')',
+			'tel_assistent'        => lang('assistent phone'),
+			'tel_car'              => lang('car phone'),
+			'tel_pager'            => lang('pager'),
+			'tel_home'             => lang('home phone'),
+			'tel_fax_home'         => lang('fax').' ('.lang('private').')',
+			'tel_cell_private'     => lang('mobile phone').' ('.lang('private').')',
+			'tel_other'            => lang('other phone'),
+			'tel_prefer'           => lang('preferred phone'),
+			'email'                => lang('email').' ('.lang('business').')',
+			'email_home'           => lang('email').' ('.lang('private').')',
+			'url'                  => lang('url').' ('.lang('business').')',
+			'url_home'             => lang('url').' ('.lang('private').')',
+			'freebusy_uri'         => lang('Freebusy URI'),
+			'calendar_uri'         => lang('Calendar URI'),
+			'note'                 => lang('note'),
+			'tz'                   => lang('time zone'),
+			'geo'                  => lang('geo'),
+			'pubkey'               => lang('public key'),
+			'created'              => lang('created'),
+			'creator'              => lang('created by'),
+			'modified'             => lang('last modified'),
+			'modifier'             => lang('last modified by'),
+			'jpegphoto'            => lang('photo'),
+		);
+		$this->business_contact_fields = array(
+			'org_name'             => lang('Company'),
+			'org_unit'             => lang('Department'),
+			'title'                => lang('Title'),
+			'role'                 => lang('Role'),
+			'n_prefix'             => lang('prefix'),
+			'n_given'              => lang('first name'),
+			'n_middle'             => lang('middle name'),
+			'n_family'             => lang('last name'),
+			'n_suffix'             => lang('suffix'),
+			'adr_one_street'       => lang('street').' ('.lang('business').')',
+			'adr_one_street2'      => lang('address line 2').' ('.lang('business').')',
+			'adr_one_locality'     => lang('city').' ('.lang('business').')',
+			'adr_one_region'       => lang('state').' ('.lang('business').')',
+			'adr_one_postalcode'   => lang('zip code').' ('.lang('business').')',
+			'adr_one_countryname'  => lang('country').' ('.lang('business').')',
+		);
+		$this->home_contact_fields = array(
+			'org_name'             => lang('Company'),
+			'org_unit'             => lang('Department'),
+			'title'                => lang('Title'),
+			'role'                 => lang('Role'),
+			'n_prefix'             => lang('prefix'),
+			'n_given'              => lang('first name'),
+			'n_middle'             => lang('middle name'),
+			'n_family'             => lang('last name'),
+			'n_suffix'             => lang('suffix'),
+			'adr_two_street'       => lang('street').' ('.lang('business').')',
+			'adr_two_street2'      => lang('address line 2').' ('.lang('business').')',
+			'adr_two_locality'     => lang('city').' ('.lang('business').')',
+			'adr_two_region'       => lang('state').' ('.lang('business').')',
+			'adr_two_postalcode'   => lang('zip code').' ('.lang('business').')',
+			'adr_two_countryname'  => lang('country').' ('.lang('business').')',
+		);
+		//_debug_array($this->contact_fields);
 	}
 
 	/**
@@ -275,6 +374,8 @@ class bocontacts extends socontacts
 			if (!isset($contact['owner'])) $contact['owner'] = $this->user;	// write to users personal addressbook
 			$contact['creator'] = $this->user;
 			$contact['created'] = $this->now_su;
+			
+			if (!$contact['tid']) $contact['tid'] = 'n';
 		}
 		if($contact['id'] && !$this->check_perms(EGW_ACL_EDIT,$contact))
 		{
@@ -285,8 +386,6 @@ class bocontacts extends socontacts
 		// last modified
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
-		// set access if not set or bogus
-		if ($contact['access'] != 'private') $contact['access'] = 'public';
 		// set full name and fileas from the content
 		$contact['n_fn'] = $this->fullname($contact);
 		$contact['n_fileas'] = $this->fileas($contact);
@@ -327,7 +426,7 @@ class bocontacts extends socontacts
 	* @param mixed $contact contact as array or the contact-id
 	* @return boolean true permission granted or false for permission denied
 	*/
-	function check_perms($needed,&$contact)
+	function check_perms($needed,$contact)
 	{
 		if (!is_array($contact) && !($contact = parent::read($contact)))
 		{

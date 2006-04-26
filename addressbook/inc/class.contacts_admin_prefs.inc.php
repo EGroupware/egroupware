@@ -57,7 +57,7 @@ class contacts_admin_prefs
 //				'Advanced search'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.search'),
 //				'import contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.import'),
 //				'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export')
-//				'CSV-Import'      => $GLOBALS['egw']->link('/addressbook/csv_import.php')
+				'CSV-Import'      => $GLOBALS['egw']->link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);
 		}
@@ -145,6 +145,30 @@ class contacts_admin_prefs
 				'admin'  => false,
 			);
 		}
+		// CSV Export
+		$GLOBALS['settings']['csv_fields'] = array(
+			'type'   => 'select',
+			'label'  => 'Fields for the CSV export',
+			'name'   => 'csv_fields',
+			'values' => array(
+				'' => lang('All'),
+				'business' => lang('Business address'),
+				'home'     => lang('Home address'),
+			),	
+			'help'   => 'Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.',
+			'xmlrpc' => True,
+			'admin'  => false,
+		);
+		$GLOBALS['settings']['csv_charset'] = array(
+			'type'   => 'select',
+			'label'  => 'Charset for the CSV export',
+			'name'   => 'csv_charset',
+			'values' => $GLOBALS['egw']->translation->get_installed_charsets()+array('utf-8' => 'utf-8 (Unicode)'),		
+			'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
+			'xmlrpc' => True,
+			'admin'  => false,
+		);
+
 		if ($this->contacts_repository == 'sql')
 		{
 			$GLOBALS['settings']['private_addressbook'] = array(

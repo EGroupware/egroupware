@@ -6,6 +6,7 @@
 (e.g. 1969)	addressbook	de	(z.B. 1966)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verfügbar für Administratoren!!!
+accounts	addressbook	de	Benutzerkonten
 actions	addressbook	de	Befehle
 add a new contact	addressbook	de	Neuen Kontakt anlegen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
@@ -28,6 +29,7 @@ apply the action on the whole query, not only the shown contacts!!!	addressbook	
 are you shure you want to delete this contact?	addressbook	de	Diesen Kontakt löschen?
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass Sie dieses Feld löschen wollen?
 assistent	addressbook	de	Assistent
+assistent phone	addressbook	de	Telefon Assistent
 birthday	common	de	Geburtstag
 birthdays	common	de	Geburtstage
 blank	addressbook	de	Leer
@@ -41,17 +43,21 @@ business phone	addressbook	de	Tel. geschäftl.
 business state	addressbook	de	Bundesland geschäftl.
 business street	addressbook	de	Straße geschäftl.
 business zip code	addressbook	de	PLZ geschäftl.
+calendar uri	addressbook	de	Kalender URI
 car phone	addressbook	de	Autotelefon
 cell phone	addressbook	de	Mobiltelefon
+charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
 charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
 company	common	de	Firma
+company name	addressbook	de	Firmenname
 configuration	common	de	Konfiguration
 contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
+contact id	addressbook	de	Kontakt ID
 contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
@@ -88,7 +94,8 @@ enable an extra private addressbook	addressbook	de	Privates Adressbuch einschalt
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
 existing links	addressbook	de	Bestehende Verknüpfungen
 export	addressbook	de	Export
-export as vcard	addressbook	de	VCard exportieren
+export as csv	addressbook	de	Exportieren als CSV
+export as vcard	addressbook	de	Exportieren als VCard
 export contacts	addressbook	de	Kontakte exportieren
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
@@ -99,8 +106,10 @@ fax number	common	de	Telefaxnummer
 field %1 has been added !	addressbook	de	Feld %1 wurde hinzugefügt !
 field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
 field name	addressbook	de	Feldname
+fields for the csv export	addressbook	de	Felder für den CSV Export
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
+freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
 geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
@@ -129,6 +138,7 @@ income	addressbook	de	Einkommen
 international	addressbook	de	International
 label	addressbook	de	Adressetikett
 last modified	addressbook	de	Letzte Änderung
+last modified by	addressbook	de	Letzte Änderung durch
 ldap context for contacts	admin	de	LDAP-Kontext für Kontakte
 ldap host for contacts	admin	de	LDAP-Host für Kontakte
 ldap root dn for contacts	admin	de	LDAP-rootdn für Kontakte
@@ -166,6 +176,7 @@ please enter a name for that field !	addressbook	de	Bitte geben sie einen Namen 
 please select only one category	addressbook	de	Bitte nur eine Kategorie auswählen
 postal	common	de	Postanschrift
 pref	addressbook	de	präf
+preferred phone	addressbook	de	präferierte Telefonnummer
 prefix	addressbook	de	Anrede
 public key	addressbook	de	öffentlicher Schlüssel
 publish into groups:	addressbook	de	In folgende Gruppen veröffentlichen:
@@ -218,6 +229,8 @@ vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachname
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	de	Wann soll die Adressliste diese Spalte anzeigen. "Nur wenn etwas angezeigt wird" blendet die Spalte aus, wenn Sie in dieser Anzeige leer wäre.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. Alle bedeutet jedes Feld das im Adressbuch gespeichert ist einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage
 work phone	addressbook	de	Tel dienstl.
 write (update or add) a single entry by passing the fields.	addressbook	de	Schreibt (aktualiseren oder zufügen) eines einzelnen Eintrags durch Übergabe der Felder

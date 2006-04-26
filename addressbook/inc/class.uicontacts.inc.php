@@ -137,6 +137,7 @@ class uicontacts extends bocontacts
 		);
 		$sel_options['action'] = array(
 			'delete' => lang('Delete'),
+			'csv'    => lang('Export as CSV'),
 			'vcard'  => lang('Export as VCard'),
 		)+$this->get_addressbooks(EGW_ACL_ADD);
 		foreach($this->content_types as $tid => $data)
@@ -170,6 +171,33 @@ class uicontacts extends bocontacts
 			$query['num_rows'] = -1;	// all
 			$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 		}
+		switch($action)
+		{
+			case 'csv':
+				$action_msg = lang('exported');
+				$csv_export =& CreateObject('addressbook.csv_export',$this,$this->prefs['csv_charset']);
+				switch ($this->prefs['csv_fields'])
+				{
+					case 'business':
+						$fields = $this->business_contact_fields;
+						break;
+					case 'home':
+						$fields = $this-home_contact_fields;
+						break;
+					default:
+						$fields = $this->contact_fields;
+						foreach($this->customfields as $name => $data)
+						{
+							$fields['#'.$name] = $data['label'];
+						}
+						break;
+				}
+				$csv_export->export($checked,$fields);
+				// does not return!
+				$Ok = true;
+				break;
+		}
+
 		foreach($checked as $id)
 		{
 			switch($action)
@@ -198,11 +226,6 @@ class uicontacts extends bocontacts
 					break;
 
 				case 'vcard':
-					$action_msg = lang('exported');
-					$Ok = false;	// todo
-					break;
-
-				case 'csv':
 					$action_msg = lang('exported');
 					$Ok = false;	// todo
 					break;
@@ -316,11 +339,18 @@ class uicontacts extends bocontacts
 		{
 			$query['col_filter'][] = $query['order']."!=''";
 		}
-		$rows = (array) parent::search($query['search'],$id_only,$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
+		$rows = (array) parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
+			$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 		//echo "<p style='margin-top: 100px;'>".$this->somain->db->Query_ID->sql."</p>\n";
 
-		if ($id_only) return $this->total;	// no need to set other fields or $readonlys
-
+		if ($id_only)
+		{
+			foreach($rows as $n => $row)
+			{
+				$rows[$n] = $row['id'];
+			}
+			return $this->total;	// no need to set other fields or $readonlys
+		}
 		if ($this->prefs['custom_colum'] != 'never' && $rows)	// do we need the custom fields
 		{
 			foreach($rows as $n => $val)
