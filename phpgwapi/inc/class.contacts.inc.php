@@ -29,6 +29,11 @@ class contacts extends bocontacts
 	 * @var int $total_records
 	 */
 	var $total_records;
+	/**
+	 * @deprecated since 1.3 use contact_fields
+	 * @var array $stock_contact_fields
+	 */
+	var $stock_contact_fields = array();
 
 	/**
 	 * constructor calling the constructor of the extended class
@@ -38,6 +43,7 @@ class contacts extends bocontacts
 		$this->bocontacts($contact_app);
 		
 		$this->total_records =& $this->total;
+		$this->stock_contact_fields = array_keys($this->contact_fields);
 	}
 	
 	/**
