@@ -495,8 +495,8 @@ class uiforms extends uical
 			{
 				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 				 
-				$to[] = '"'.$GLOBALS['egw']->common->display_fullname('',$firstname,$lastname).
-					'" <'.$GLOBALS['egw']->accounts->id2name($uid,'account_email').'>';
+				$to[] = $firstname.' '.$lastname.
+					' <'.$GLOBALS['egw']->accounts->id2name($uid,'account_email').'>';
 			}
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
@@ -520,7 +520,7 @@ class uiforms extends uical
 			'preset[type]'    => 'text/calendar; method=request',
 			'preset[size]'    => filesize($ics_file),
 		);
-		return "window.open('".addslashes($GLOBALS['egw']->link('/index.php',$vars))."','_blank','width=700,height=700,scrollbars=yes,status=no');";
+		return "window.open('".$GLOBALS['egw']->link('/index.php',$vars)."','_blank','width=700,height=700,scrollbars=yes,status=no');";
 	}
 
 	/**
