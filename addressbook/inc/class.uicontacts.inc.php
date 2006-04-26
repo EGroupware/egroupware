@@ -308,19 +308,6 @@ class uicontacts extends bocontacts
 				$order = 'n_fileas '.$sort;
 				break;
 		}
-		$criteria = array();
-		if ($query['search'])
-		{
-			$cols = $this->columns_to_search;
-			if (!$query['filter'])	// extra columns for search if accounts are included, eg. account_lid
-			{
-				$cols = array_merge($cols,$this->account_extra_search);
-			}
-			foreach($cols as $col)
-			{
-				$criteria[$col] = $query['search'];
-			}
-		}
 		if ($query['searchletter'])	// only show contacts which ordercriteria starts with the given letter
 		{
 			$query['col_filter'][] = $query['order'].' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
@@ -329,7 +316,7 @@ class uicontacts extends bocontacts
 		{
 			$query['col_filter'][] = $query['order']."!=''";
 		}
-		$rows = (array) parent::search($criteria,$id_only,$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
+		$rows = (array) parent::search($query['search'],$id_only,$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 		//echo "<p style='margin-top: 100px;'>".$this->somain->db->Query_ID->sql."</p>\n";
 
 		if ($id_only) return $this->total;	// no need to set other fields or $readonlys

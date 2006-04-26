@@ -496,7 +496,7 @@ class socontacts
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
 	 *
-	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
+	 * @param array/string $criteria array of key and data cols, OR string to search over all standard search fields
 	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
 	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
 	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
@@ -505,15 +505,29 @@ class socontacts
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
-	 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
-	 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null)
 	{
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
+		// single string to search for --> create so_sql conformant search criterial for the standard search columns
+		if ($criteria && !is_array($criteria))	
+		{
+			$op = 'OR';
+			$wildcard = '%';
+			$search = $criteria;
+			$criteria = array();
+			$cols = $this->columns_to_search;
+			if (!$filter['owner'])	// extra columns for search if accounts are included, eg. account_lid
+			{
+				$cols = array_merge($cols,$this->account_extra_search);
+			}
+			foreach($cols as $col)
+			{
+				$criteria[$col] = $search;
+			}
+		}
 		if (is_array($criteria) && count($criteria))
 		{
 			$criteria = $this->data2db($criteria);
