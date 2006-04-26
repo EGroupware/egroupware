@@ -30,6 +30,9 @@ class contacts extends bocontacts
 	 */
 	var $total_records;
 
+	/**
+	 * constructor calling the constructor of the extended class
+	 */
 	function contacts($contact_app='addressbook')
 	{
 		$this->bocontacts($contact_app);
@@ -39,6 +42,8 @@ class contacts extends bocontacts
 	
 	/**
 	* reads contacts matched by key and puts all cols in the data array
+	*
+	* reimplemented from bocontacts to call the old read function, if more then one param
 	*
 	* @param int/string $contact_id 
 	* @return array/boolean contact data or false on error
@@ -54,29 +59,7 @@ class contacts extends bocontacts
 	}
 
 	/**
-	 * searches db for rows matching searchcriteria
-	 *
-	 * '*' and '?' are replaced with sql-wildcards '%' and '_'
-	 *
-	 * @param array/string $criteria array of key and data cols, OR a SQL query (content for WHERE), fully quoted (!)
-	 * @param boolean/string $only_keys=true True returns only keys, False returns all cols. comma seperated list of keys to return
-	 * @param string $order_by='' fieldnames + {ASC|DESC} separated by colons ',', can also contain a GROUP BY (if it contains ORDER BY)
-	 * @param string/array $extra_cols='' string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $wildcard='' appended befor and after each criteria
-	 * @param boolean $empty=false False=empty criteria are ignored in query, True=empty have to be empty in row
-	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
-	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
-	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
-	 * @return array of matching rows (the row is an array of the cols) or False
-	 */
-/*	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null)
-	{
-		//echo "<p>contacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start')</p>\n";
-		return parent::regular_search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter);
-	}*/
-
-	/**
-	 * Deprecated methods and class vars for compatibility with the old contacts class
+	 * Deprecated methods for compatibility with the old contacts class
 	 *
 	 * They will be removed after one release, so dont use them in new code!!!
 	 */
@@ -101,15 +84,7 @@ class contacts extends bocontacts
 	function old_read($start=0,$limit=0,$fields=null,$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
 	{
 		//echo "<p>contacts::old_read($start,$limit,".print_r($fields,true).",$query,'$filter','$sort','$order',$lastmod,$cquery)</p>\n";
-		$criteria = $sfilter = array();
-		if ($cquery) $query = $cquery.'*';
-		if ($query)
-		{
-			foreach(array_merge($this->columns_to_search,$this->account_extra_search) as $col)
-			{
-				$criteria[$col] = $query['search'];
-			}
-		}
+		$sfilter = array();
 		foreach(explode(',',$filter) as $expr)
 		{
 			list($col,$value) = explode('=',$expr);
@@ -121,17 +96,17 @@ class contacts extends bocontacts
 			$sfilter[] = 'contact_modified > '.(int)$lastmod;
 		}
 		if ($order && !strstr($order,'_')) $order = 'contact_'.$order;
-		if (!$order) $order = 'org_name';
+		if (!$order) $order = 'org_name,n_family,n_given';
 		
 		if (is_array($fields))
 		{
 			$fields = array_values($fields);
 		}
-		//echo '<p>contacts::search('.print_r($criteria,true).','.print_r($fields,true).",'$order $sort','','$wildcard',false,'OR',".(!$limit ? 'false' : "array($start,$limit)").",".print_r($sfilter,true).");</p>\n";
-		$rows =& $this->search($criteria,$fields,$order.($sort ? ' '.$sort : ''),'',$wildcard,false,'OR',
-			!$limit ? false : array((int)$start,(int)$limit),$sfilter);
+		//echo '<p>contacts::search('.($cquery ? $cquery.'*' : $query).','.print_r($fields,true).",'$order $sort','','".($cquery ? '' : '%')."',false,'OR',".(!$limit ? 'false' : "array($start,$limit)").",".print_r($sfilter,true).");</p>\n";
+		$rows =& $this->search($cquery ? $cquery.'*' : $query,$fields,$order.($sort ? ' '.$sort : ''),'',
+			$cquery ? '' : '%',false,'OR',!$limit ? false : array((int)$start,(int)$limit),$sfilter);
 			
-		// fix the old birthday format
+		// return the old birthday format
 		if ($rows && in_array('bday',$fields))
 		{
 			foreach($rows as $n => $row)
