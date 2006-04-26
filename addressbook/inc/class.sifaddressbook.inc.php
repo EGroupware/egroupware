@@ -18,8 +18,8 @@
 	{
 		var $sifMapping = array(
 			'Anniversary'			=> '',
-			'AssistantName'			=> '',
-			'AssistantTelephoneNumber'	=> '',
+			'AssistantName'			=> 'assistent',
+			'AssistantTelephoneNumber'	=> 'tel_assistent',
 			'BillingInformation'		=> '',
 			'Birthday'			=> 'bday',
 			'Body'				=> 'note',
@@ -27,13 +27,13 @@
 			'BusinessAddressCity'		=> 'adr_one_locality',
 			'BusinessAddressCountry'	=> 'adr_one_countryname',
 			'BusinessAddressPostalCode'	=> 'adr_one_postalcode',
-			'BusinessAddressPostOfficeBox'	=> '',
+			'BusinessAddressPostOfficeBox'	=> 'adr_one_street2',
 			'BusinessAddressState'		=> 'adr_one_region',
 			'BusinessAddressStreet'		=> 'adr_one_street',
 			'BusinessFaxNumber'		=> 'tel_fax',
 			'BusinessTelephoneNumber'	=> 'tel_work',
 			'CallbackTelephoneNumber'	=> '',
-			'CarTelephoneNumber'		=> '',
+			'CarTelephoneNumber'		=> 'tel_car',
 			'Categories'			=> 'cat_id',
 			'Children'			=> '',
 			'Companies'			=> '',
@@ -47,17 +47,17 @@
 			'Email2AddressType'		=> '',
 			'Email3Address'			=> '',
 			'Email3AddressType'		=> '',
-			'FileAs'			=> '',
+			'FileAs'			=> 'n_fileas',
 			'FirstName'			=> 'n_given',
 			'Hobby'				=> '',
 			'Home2TelephoneNumber'		=> '',
 			'HomeAddressCity'		=> 'adr_two_locality',
 			'HomeAddressCountry'		=> 'adr_two_countryname',
 			'HomeAddressPostalCode'		=> 'adr_two_postalcode',
-			'HomeAddressPostOfficeBox'	=> '',
+			'HomeAddressPostOfficeBox'	=> 'adr_two_street2',
 			'HomeAddressState'		=> 'adr_two_region',
 			'HomeAddressStreet'		=> 'adr_two_street',
-			'HomeFaxNumber'			=> '',
+			'HomeFaxNumber'			=> 'tel_fax_home',
 			'HomeTelephoneNumber'		=> 'tel_home',
 			'Importance'			=> '',
 			'Initials'			=> '',
@@ -69,7 +69,7 @@
 			'Mileage'			=> '',
 			'MobileTelephoneNumber'		=> 'tel_cell',
 			'NickName'			=> '',
-			'OfficeLocation'		=> '',
+			'OfficeLocation'		=> 'room',
 			'OrganizationalIDNumber'	=> '',
 			'OtherAddressCity'		=> '',
 			'OtherAddressCountry'		=> '',
@@ -78,12 +78,12 @@
 			'OtherAddressState'		=> '',
 			'OtherAddressStreet'		=> '',
 			'OtherFaxNumber'		=> '',
-			'OtherTelephoneNumber'		=> '',
+			'OtherTelephoneNumber'		=> 'tel_other',
 			'PagerNumber'			=> 'tel_pager',
 			'PrimaryTelephoneNumber'	=> '',
-			'Profession'			=> '',
+			'Profession'			=> 'role',
 			'RadioTelephoneNumber'		=> '',
-			'Sensitivity'			=> 'access',
+			'Sensitivity'			=> 'private',
 			'Spouse'			=> '',
 			'Subject'			=> '',
 			'Suffix'			=> 'n_suffix',
@@ -93,7 +93,7 @@
 			'YomiCompanyName'		=> '',
 			'YomiFirstName'			=> '',
 			'YomiLastName'			=> '',
-			'HomeWebPage'			=> '',
+			'HomeWebPage'			=> 'url_home',
 			'Folder'			=> '',
 		);
 
@@ -137,10 +137,6 @@
 			foreach($this->contact as $key => $value) {
 				$value = $GLOBALS['egw']->translation->convert($value, 'utf-8', $sysCharSet);
 				switch($key) {
-					case 'access':
-						$finalContact[$key] = ((int)$value > 0) ? 'private' : 'public';
-						break;
-						
 					case 'cat_id':
 						if(!empty($value)) {
 							$isAdmin = $GLOBALS['egw']->acl->check('run',1,'admin');
@@ -160,44 +156,41 @@
 						}
 						break;
 						
-					case 'bday':
-						if(!empty($value)) {
-							$bdayParts = explode('-',$value);
-							$finalContact[$key] = $bdayParts[1]. '/' .$bdayParts[2]. '/' .$bdayParts[0];
-						}
-						break;
-						
 					default:
 						$finalContact[$key] = $value;
 						break;
 				}
 			}
-			
-			$middleName = ($finalContact['n_middle']) ? ' '.trim($finalContact['n_middle']) : '';
-			$finalContact['fn']  = trim($finalContact['n_given']. $middleName .' '. $finalContact['n_family']);
-
-			
 			return $finalContact;
 		}
 		
-		function search($_sifdata) {
-			if(!$contact = $this->siftoegw($_sifdata)) {
+		/**
+		 * Search an exactly matching entry (used for slow sync)
+		 *
+		 * @param string $_sifdata
+		 * @return boolean/int/string contact-id or false, if not found
+		 */
+		function search($_sifdata) 
+		{
+			if(!$contact = $this->siftoegw($_sifdata)) 
+			{
 				return false;
 			}
 			
-			if($foundContacts = $this->read_entries(array('query' => $contact))) {
+			if(($foundContacts = $this->search($contact)))
+			{
 				error_log(print_r($foundContacts,true));
-				return $foundContacts[0][id];
+				return $foundContacts[0]['id'];
 			}
-			
 			return false;
 		}
 
 		/**
+		* import a vard into addressbook
+		*
 		* @return int contact id
 		* @param string	$_vcard		the vcard
 		* @param int	$_abID		the internal addressbook id
-		* @desc import a vard into addressbook
 		*/
 		function addSIF($_sifdata, $_abID)
 		{
@@ -208,17 +201,9 @@
 				return false;
 			}
 
-			if($_abID > 0)
-			{
-				// update entry
-				$contact['ab_id'] = $_abID;
-				return $this->update_entry($contact);
-			}
-			else
-			{
-				// add entry
-				return $this->add_entry($contact);
-			}
+			if($_abID > 0) $contact['ab_id'] = $_abID;
+				
+			return $this->save($contact);
 		}
 
 		/**
@@ -233,79 +218,59 @@
 			$fields = array_unique(array_values($this->sifMapping));
 			sort($fields);
 
-			if($this->check_perms($_id,EGW_ACL_READ))
+			if(!($entry = $this->so->read_entry($_id)))
 			{
-				$sifContact = '<contact>';
-				//$data = array('id' => $_id, 'fields' => $fields);
-				$entry = $this->so->read_entry($_id,$fields);
-				$entry = $this->strip_html($entry);
-				if($this->xmlrpc)
-				{
-					$entry = $this->data2xmlrpc($entry);
-				}
-				#error_log(print_r($entry,true));
-				$sysCharSet	= $GLOBALS['egw']->translation->charset();
+				return false;
+			}
+			$sifContact = '<contact>';
+			#error_log(print_r($entry,true));
+			$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
-				foreach($this->sifMapping as $sifField => $egwField)
-				{
-					if(empty($egwField)) continue;
-					
-					#error_log("$sifField => $egwField");
-					#error_log('VALUE1: '.$entry[0][$egwField]);
-					$value = $GLOBALS['egw']->translation->convert($entry[0][$egwField], $sysCharSet, 'utf-8');
-					#error_log('VALUE2: '.$value);
+			foreach($this->sifMapping as $sifField => $egwField)
+			{
+				if(empty($egwField)) continue;
+				
+				#error_log("$sifField => $egwField");
+				#error_log('VALUE1: '.$entry[0][$egwField]);
+				$value = $GLOBALS['egw']->translation->convert($entry[0][$egwField], $sysCharSet, 'utf-8');
+				#error_log('VALUE2: '.$value);
 
-					switch($sifField)
-					{
-						// TODO handle multiple categories
-						case 'Categories':
-							if(!empty($value)) {
-								$egwCategories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'addressbook');
-								$categories = explode(',',$value);
-								$value = '';
-								foreach($categories as $cat_id) {
-									if($catData = $egwCategories->return_single($cat_id)) {
-										if(!empty($value)) $value .= '; ';
-										$value .= $catData[0]['name'];
-									}
+				switch($sifField)
+				{
+					// TODO handle multiple categories
+					case 'Categories':
+						if(!empty($value)) {
+							$egwCategories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'addressbook');
+							$categories = explode(',',$value);
+							$value = '';
+							foreach($categories as $cat_id) {
+								if(($catData = $egwCategories->return_single($cat_id)))
+								{
+									if(!empty($value)) $value .= '; ';
+									$value .= $catData[0]['name'];
 								}
 							}
-							$sifContact .= "<$sifField>$value</$sifField>";							
-							break;
-							
-						case 'Sensitivity':
-							$value = ($value == 'private' ? '2' : '0');
-							$sifContact .= "<$sifField>$value</$sifField>";							
-							break;
-							
-						case 'Birthday':
-							if(!empty($value)) {
-								$dateParts = explode('/',$value);
-								$value = sprintf('%04-d%02-d%02',$dateParts[2],$dateParts[0],$dateParts[1]);
-							}
-							$sifContact .= "<$sifField>$value</$sifField>";
-							break;
-							
-						case 'Folder':
-							# skip currently. This is the folder where Outlook stores the contact.
-							#$sifContact .= "<$sifField>/</$sifField>";
-							break;
-							
-						default:
-							$sifContact .= "<$sifField>$value</$sifField>";
-							break;
-					}
+						}
+						$sifContact .= "<$sifField>$value</$sifField>";							
+						break;
+						
+					case 'Sensitivity':
+						$value = 2 * $value;	// eGW private is 0 (public) or 1 (private)
+						$sifContact .= "<$sifField>$value</$sifField>";							
+						break;
+						
+					case 'Folder':
+						# skip currently. This is the folder where Outlook stores the contact.
+						#$sifContact .= "<$sifField>/</$sifField>";
+						break;
+						
+					default:
+						$sifContact .= "<$sifField>$value</$sifField>";
+						break;
 				}
-				$sifContact .= "</contact>";
-
-				return base64_encode($sifContact);
 			}
+			$sifContact .= "</contact>";
 
-			if($this->xmlrpc)
-			{
-				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
-			}
-			return False;
+			return base64_encode($sifContact);
 		}
-
 	}
