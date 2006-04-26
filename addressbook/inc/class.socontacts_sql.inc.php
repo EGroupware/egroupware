@@ -158,15 +158,15 @@ class socontacts_sql extends so_sql
 			else */ // simulate the outer join with a union
 			{
 				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-					'LEFT'.$this->accounts_join.' '.$join,$need_full_no_count);
+					'LEFT'.$this->accounts_join.$join,$need_full_no_count);
 				$filter[] = '(person_id=0 OR person_id IS NULL)';	// unfortunally both is used in eGW
 				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-					'RIGHT'.$this->accounts_join.' '.$join,$need_full_no_count);
+					'RIGHT'.$this->accounts_join.$join,$need_full_no_count);
 			}
 		}
 		elseif (!$owner)		// search for accounts only
 		{
-			$join .= ' RIGHT'.$this->accounts_join;
+			$join = ' RIGHT'.$this->accounts_join.$join;
 			$filter[] =  "account_type='u'";	// no groups
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
