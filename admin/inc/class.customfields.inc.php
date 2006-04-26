@@ -44,6 +44,7 @@
 		* @var $types2 array with userdefiened types e.g. type of infolog
 		*/
 		var $types2 = array();
+		var $content_types,$fields;
 		
 		var $public_functions = array
 		(
@@ -53,7 +54,12 @@
 		function customfields($appname='')
 		{
 // 			$this->tmpl =& CreateObject('etemplate.etemplate');
-			$this->config =& CreateObject('phpgwapi.config',$this->appname);
+			$this->config =& CreateObject('phpgwapi.config',$this->appname=$appname);
+			if ($appname)
+			{
+				$this->fields = $this->get_customfields();
+				$this->content_types = $this->get_content_types();
+			}
 // 			if($this->tmpl->read($this->appname.'.admin.types')) {$this->manage_content_types = true; echo 'tt';}
 			$GLOBALS['egw']->translation->add_app('infolog');	// til we move the translations
 		}
