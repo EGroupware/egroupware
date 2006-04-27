@@ -276,7 +276,7 @@
 				}
 			}
 			
-			return $calID;
+			return $eventID;
 		}
 
 		/**
