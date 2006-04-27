@@ -221,12 +221,14 @@ host information	admin	zh-tw	主機資訊
 hour<br>(0-23)	admin	zh-tw	小時<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	zh-tw	存取紀錄應該保留幾天內的事件後刪除(預設90)？
 how many minutes should an account or ip be blocked (default 30) ?	admin	zh-tw	帳號鎖定將持續幾分鐘(預設30)？
+how should email addresses for new users be constructed?	admin	zh-tw	新使用者的信箱該如何建構？
 icon	admin	zh-tw	圖示
 idle	admin	zh-tw	閒置時間
 if no acl records for user or any group the user is a member of	admin	zh-tw	如果使用者或任何群組沒有 ACL 資料，要將它歸類於
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	zh-tw	如果使用 LDAP ，您是否要管理家目錄與登入指令列屬性？
 in mbyte	admin	zh-tw	以MB顯示
 inbound	admin	zh-tw	聚集
+initial	admin	zh-tw	初始的
 install crontab	admin	zh-tw	安裝排定的工作
 installed applications	common	zh-tw	已安裝之應用程式
 installed crontab	admin	zh-tw	已經安裝的排定工作
@@ -406,7 +408,7 @@ use cookies to pass sessionid	admin	zh-tw	使用 COOKIE 傳遞連線代碼
 use pure html compliant code (not fully working yet)	admin	zh-tw	使用標準 HTML 原始碼（尚未完全支援）
 use theme	admin	zh-tw	使用佈景主題
 user accounts	admin	zh-tw	使用者管理
-user data	admin	zh-tw	使用者資料
+user data	common	zh-tw	使用者資料
 user for smtp-authentication (leave it empty if no auth required)	admin	zh-tw	SMTP認證帳號(如果不需要就不用填入)
 user groups	admin	zh-tw	使用者群組管理
 userdata	admin	zh-tw	使用者資料
@@ -420,6 +422,7 @@ view this user	admin	zh-tw	查看該使用者
 view user account	admin	zh-tw	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zh-tw	您希望將被移除使用者的資料轉移給誰？
 would you like egroupware to cache the egw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 egw 資訊嗎？
+would you like egroupware to cache the phpgw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 phpgw 資訊嗎？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zh-tw	您希望 egroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like egroupware to check for new application versions when admins login ?	admin	zh-tw	您希望egroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh-tw	您想要自動讀取新的語言檔案嗎(登入時)？

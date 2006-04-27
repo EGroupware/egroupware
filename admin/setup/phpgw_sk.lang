@@ -48,6 +48,8 @@ allow anonymous access to this app	admin	sk	Povoli» anonymnému pou¾ívateµovi prí
 alternate email address	admin	sk	alternatívna emailová adresa
 anonymous user	admin	sk	Anonymný pou¾ívateµ
 anonymous user (not shown in list sessions)	admin	sk	Anonymný pou¾ívateµ (nezobrazuje sa na zozname sedení)
+anonymous user does not exist!	admin	sk	Anonymný pou¾ívateµ NEexistuje!
+anonymous user has no run-rights for the application!	admin	sk	Anonymný pou¾ívateµ NEMÁ právo spusti» túto aplikáciu!
 appearance	admin	sk	Vzhµad
 application	admin	sk	Aplikácia
 application name	admin	sk	Názov aplikácie
@@ -190,6 +192,7 @@ enter your smtp server hostname or ip address	admin	sk	Zadajte hostname alebo IP
 enter your smtp server port	admin	sk	Zadajte port vá¹ho SMTP servera
 error canceling timer, maybe there's none set !!!	admin	sk	Chyba pri ru¹ení èasovaèa, mo¾no¾e ¾iadny nie je nastavený !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sk	Chyba pri nastavovaní èasovaèa, chybná syntax alebo mo¾no u¾ nejaký be¾í !!!
+error! no appname found	admin	sk	CHYBA! Nena¹iel sa názov aplikácie
 error: %1 not found or other error !!!	admin	sk	Chyba: %1 sa nena¹iel, alebo iná chyba !!!
 expires	admin	sk	Vypr¹í
 explanation of ldapman	admin	sk	Tento modul bol testovaný doposiaµ pre POSTFIX,LDAP,Courier-IMAP vy¾aduje schémy CORE a QMAIL (OID7914). Podrobnosti o pou¾ívaní a nastavení tohto systému nájdete v README.ldapman v doc adresári ADMIN-a.
@@ -201,7 +204,6 @@ for the times above	admin	sk	pre vy¹¹ieuvedené èasy
 for the times below (empty values count as '*', all empty = every minute)	admin	sk	pre ni¾¹ieuvedené èasy (prázdne hodnoty sa berú ako '*', v¹etky prázdne = ka¾dú minútu)
 force selectbox	admin	sk	Vynú» menu pre výber
 forward also to	admin	sk	Preposla» e¹te
-forward email's to	admin	sk	Preposla» emaily (komu)
 forward emails to	admin	sk	preposla» správy (komu)
 forward only	admin	sk	iba preposla»
 global categories	common	sk	Globálne kategórie
@@ -214,14 +216,18 @@ group manager	admin	sk	Správca skupín
 group name	admin	sk	Názov skupiny
 hide php information	admin	sk	skry» php informácie
 home directory	admin	sk	Domovský (home) adresár
+host information	admin	sk	Informácie o stroji
 hour<br>(0-23)	admin	sk	Hodina<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sk	Koµko dní má záznam ostáva» v Prístupových Záznamoch ne¾ sa zma¾e (predvolené: 90) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	sk	Koµko minút má trva» zablokovanie úètu alebo IP? (predvolené: 30) ?
+how should email addresses for new users be constructed?	admin	sk	Ako sa majú vytvára» emailové adresy pre nových pou¾ívateµov?
 icon	admin	sk	Ikona
+idle	admin	sk	voµné
 if no acl records for user or any group the user is a member of	admin	sk	Ak pre pou¾ívateµa alebo akúkoµvek skupinu, ktorej je èlenom, neexistujú ACL záznamy
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	sk	Ak pou¾ívate LDAP, chcete spravova» domovský (home) adresár a atribúty login shellu?
 in mbyte	admin	sk	v Megabajtoch
 inbound	admin	sk	príchodzie
+initial	admin	sk	Poèiatoèné
 install crontab	admin	sk	Nain¹talova» crontab
 installed applications	common	sk	Nain¹talované aplikácie
 installed crontab	admin	sk	Nain¹talovaný crontab
@@ -390,7 +396,7 @@ use cookies to pass sessionid	admin	sk	Pou¾i» cookies na odovzdanie ID sedenia
 use pure html compliant code (not fully working yet)	admin	sk	Pou¾i» èistý HTML kód (zatiaµ nie je plne funkèné)
 use theme	admin	sk	Pou¾i» tému
 user accounts	admin	sk	Pou¾ívateµské úèty
-user data	admin	sk	Pou¾ívateµské dáta
+user data	common	sk	Pou¾ívateµské dáta
 user for smtp-authentication (leave it empty if no auth required)	admin	sk	Pou¾ívateµ pre SMTP autentifikáciu (ak netreba, ponechajte prázdne)
 user groups	admin	sk	Pou¾ívateµské skupiny
 userdata	admin	sk	pou¾ívateµské dáta
@@ -412,6 +418,7 @@ would you like to show each application's upgrade status ?	admin	sk	Má sa vám zo
 xml-rpc	admin	sk	XML-RPC
 you have entered an invalid expiration date	admin	sk	Zadali ste nesprávny èas vypr¹ania
 you have to enter a name, to create a new field!!!	admin	sk	Ak chcete vytvori» novú polo¾ku, musíte zada» názov!!!
+you have to enter a name, to create a new type!!!	admin	sk	Ak chcete vytvori» nový typ, musíte zada» názov!!!
 you must add at least 1 permission or group to this account	admin	sk	Tomuto úètu musíte prida» aspoò 1 oprávnenie alebo skupinu
 you must enter a group name.	admin	sk	Musíte zada» názov skupiny
 you must enter a lastname	admin	sk	Musíte zada» priezvisko
