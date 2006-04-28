@@ -10,12 +10,12 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.36-ng-a4 first https robust version
+   * @version 0.9.37-ng-a1 removed fixed default domain authentication
+   * @date 20060427
    * @since 0.9.36-ng-a1 first version for NAPI-3.1 (write in non owner rscs)
-   * @date 20060410
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * (see: @url http://www.egroupware.org  )
-   *
+   * $Id$
    * Based on some code from:
    * @author   RalfBecker@outdoor-training.de (some original code base)
    *
@@ -126,10 +126,24 @@ if($icalsrv['session_ok'] = $GLOBALS['egw']->session->verify($sessionid,$kp3)){
 
 if (!$icalsrv['session_ok'] and isset($_SERVER['PHP_AUTH_USER'])
 	and isset($_SERVER['PHP_AUTH_PW'])) {
-  $login = $_SERVER['PHP_AUTH_USER'];
-  $domain = 'default';
-  $sess_id = $GLOBALS['egw']->session->create($login.'@'.$domain, $_SERVER['PHP_AUTH_PW'],
+  //  $login = $_SERVER['PHP_AUTH_USER'];
+  //  $domain = 'default';
+  // check for a possible valid login domain present as parameter
+  if(isset($_GET['domain'])){
+	$domain = $_GET['domain'];	 
+  }else{
+	$domain = $GLOBALS['egw_info']['server']['default_domain'];
+  }
+  if(!array_key_exists($domain, $GLOBALS['egw_domain'])){
+	error_log('icalsrv.php: login, invalid domain:' .$domain);
+  } else {
+	$userlogin = $_SERVER['PHP_AUTH_USER'] . '@' . $domain;
+	if($isdebug)
+	  error_log('TRY NEW SESSION FOR login:' . $userlogin);
+
+	$sess_id = $GLOBALS['egw']->session->create($userlogin, $_SERVER['PHP_AUTH_PW'],
 											  'text');
+  }
   if ($sess_id)	{
 	$icalsrv['session_ok'] = true;
 	$GLOBALS['egw_info']['user']['account_id'] = $sess_id->account_id;
@@ -204,7 +218,8 @@ $reimport_missing_elements = true;
 //-------- end of basic operation configuration variables ----------
 
 
-error_log('_SERVER:' . print_r($_SERVER, true));
+#error_log('_SERVER:' . print_r($_SERVER, true));
+
 
 // go parse our request uri
 $requri = $_SERVER['REQUEST_URI'];
@@ -484,6 +499,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT')  {
 
   if($logdir) log_ical($logmsg,"export",$vcalstr);
   // handle response ...
+  $content_type = egwical_resourcehandler::deviceType2contentType($icalvc->deviceType);
+  if($content_type){
+	header($content_type);
+  }
   echo $vcalstr;
   $GLOBALS['egw']->common->egw_exit();
  
