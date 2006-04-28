@@ -103,7 +103,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				$state->log('Server-Replace');
 				
 				// return if we have to much data
-				if(++$counter >= MAX_ENTRIES) {
+				if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalender' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
 					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 					return $currentCmdID;
 				}
@@ -139,8 +139,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
             $state->removeUID($syncType, $locid);
 
 	    // return if we have to much data
-	    if(++$counter >= MAX_ENTRIES)
-	    {
+	    if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalender' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
                	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 	    	return $currentCmdID;
 	    }
@@ -201,7 +200,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 				$state->log('Server-Add');
 				
 				// return if we have to much data
-				if(++$counter >= MAX_ENTRIES) {
+				if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalender' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
 					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 					return $currentCmdID;
 				}
@@ -223,13 +222,13 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
         $hordeType = str_replace('./','',$syncType);
         $refts = $state->getServerAnchorLast($syncType);
 	
-	#Horde::logMessage("SyncML: reading changed items from database", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	Horde::logMessage("SyncML: reading changed items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	$state->setChangedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'modify', 'timestamp' => $refts)));
 	
-	#Horde::logMessage("SyncML: reading deleted items from database", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	Horde::logMessage("SyncML: reading deleted items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	$state->setDeletedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'delete', 'timestamp' => $refts)));
 	
-	#Horde::logMessage("SyncML: reading added items from database", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	$state->setAddedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'add', 'timestamp' => $refts)));
 	
 	$this->_syncDataLoaded = TRUE;

@@ -36,7 +36,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 	#	$adds = &$state->getAddedItems($hordeType);
         #}
 
-	#Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
         $serverAnchorNext = $state->getServerAnchorNext($syncType);
 	$counter = 0;	
 
@@ -79,8 +79,8 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			$state->log('Server-Add');
 			
 			// return if we have to much data
-			if(++$counter >= MAX_ENTRIES)
-			{
+			#Horde::logMessage("SyncML: ".' checking hordetype '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
 				$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 				return $currentCmdID;
 			}
@@ -229,7 +229,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
         $syncType = $this->_targetLocURI;
         $hordeType = str_replace('./','',$syncType);
 
-	#Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 	$state->setAddedItems($hordeType, $registry->call($hordeType. '/list', array()));
 	$adds = &$state->getAddedItems($hordeType);
 	$this->_syncDataLoaded = TRUE;
