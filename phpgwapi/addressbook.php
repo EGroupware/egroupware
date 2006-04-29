@@ -132,9 +132,9 @@
 	}
 	//------------------------------------------- nextmatch --------------------------------------------
 	$GLOBALS['egw']->template->set_var('left',$GLOBALS['egw']->nextmatchs->left(
-		$link,$start,$contacts->total_records,'&'.explode('&',$common_vars)));
+		$link,$start,$contacts->total_records,$GLOBALS['egw']->nextmatchs->extras_to_string($common_vars)));
 	$GLOBALS['egw']->template->set_var('right',$GLOBALS['egw']->nextmatchs->right(
-		$link,$start,$contacts->total_records,'&'.explode('&',$common_vars)));
+		$link,$start,$contacts->total_records,$GLOBALS['egw']->nextmatchs->extras_to_string($common_vars)));
 	foreach(array(
 		'n_given'  => lang('Firstname'),
 		'n_family' => lang('Lastname'),
