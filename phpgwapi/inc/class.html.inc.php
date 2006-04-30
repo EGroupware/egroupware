@@ -908,17 +908,21 @@ class html
 	 */
 	function a_href( $content,$url,$vars='',$options='')
 	{
-		if (!strstr($url,'/') && count(explode('.',$url)) == 3)
-		{
-			$url = "/index.php?menuaction=$url";
-		}
 		if (is_array($url))
 		{
 			$vars = $url;
 			$url = '/index.php';
 		}
+		elseif (!strstr($url,'/') && count(explode('.',$url)) == 3)
+		{
+			$url = "/index.php?menuaction=$url";
+		}
+		if ($url{0} == '/')		// link relative to eGW
+		{
+			$url = $this->link($url,$vars);
+		}
 		//echo "<p>html::a_href('".htmlspecialchars($content)."','$url',".print_r($vars,True).") = ".$this->link($url,$vars)."</p>";
-		return '<a href="'.$this->link($url,$vars).'" '.$options.'>'.$content.'</a>';
+		return '<a href="'.$url.'" '.$options.'>'.$content.'</a>';
 	}
 
 	/**
