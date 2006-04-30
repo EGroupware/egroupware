@@ -1013,8 +1013,9 @@
 						if (!$multiple) unset($set_val);	// otherwise it will be added to the label
 					}
 					break;
-				case 'radio':		// size: value if checked
-					$set_val = $this->expand_name($cell_options,$show_c,$show_row,$content['.c'],$content['.row'],$content);
+				case 'radio':		// size: value if checked, readonly set, readonly unset
+					list($set_val,$ro_true,$ro_false) = explode(',',$cell_options);
+					$set_val = $this->expand_name($set_val,$show_c,$show_row,$content['.c'],$content['.row'],$content);
 
 					if ($value == $set_val)
 					{
@@ -1025,7 +1026,8 @@
 
 					if ($readonly)
 					{
-						$html .= $value == $set_val ? $this->html->bold('x') : '';
+						if (!$ro_true && !$ro_false) $ro_true = 'x';
+						$html .= $value == $set_val ? $this->html->bold($ro_true) : $ro_false;
 					}
 					else
 					{
