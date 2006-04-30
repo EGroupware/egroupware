@@ -1,5 +1,6 @@
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficent rights !!!
+%1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organisation member(s) changed
 %1 records imported	addressbook	en	%1 records imported
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
 %1 starts with '%2'	addressbook	en	%1 starts with '%2'
@@ -8,6 +9,7 @@
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
 accounts	addressbook	en	Accounts
 actions	addressbook	en	Actions
+add a contact to this organisation	addressbook	en	Add a contact to this organisation
 add a new contact	addressbook	en	Add a new contact
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add custom field	addressbook	en	Add Custom Field
@@ -23,8 +25,10 @@ addressbook the contact should be saved to	addressbook	en	Addressbook the contac
 addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
 advanced search	addressbook	en	Advanced search
+all contacts	addressbook	en	All contacts
 alt. csv import	addressbook	en	Alt. CSV Import
 always	addressbook	en	always
+apply changes to all members, whose fields have the same previous content	addressbook	en	Apply changes to all members, whose fields have the same previous content
 apply the action on the whole query, not only the shown contacts!!!	addressbook	en	Apply the action on the whole query, NOT only the shown contacts!!!
 are you shure you want to delete this contact?	addressbook	en	Are you shure you want to delete this contact?
 are you sure you want to delete this field?	addressbook	en	Are you sure you want to delete this field?
@@ -46,6 +50,7 @@ business zip code	addressbook	en	Business Postal Code
 calendar uri	addressbook	en	Calendar URI
 car phone	addressbook	en	Car Phone
 cell phone	addressbook	en	Mobile phone
+change all organisation members	addressbook	en	change all organisation members
 charset for the csv export	addressbook	en	Charset for the CSV export
 charset of file	addressbook	en	Charset of file
 check all	addressbook	en	Check all
@@ -57,10 +62,12 @@ company name	addressbook	en	company name
 configuration	common	en	Configuration
 contact	common	en	Contact
 contact application	admin	en	Contact application
+contact deleted	addressbook	en	Contact deleted
 contact id	addressbook	en	Contact ID
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
+copy a contact and edit the copy	addressbook	en	Copy a contact and edit the copy
 country	common	en	Country
 create new links	addressbook	en	Create new links
 created	addressbook	en	Created
@@ -73,9 +80,11 @@ debug output in browser	addressbook	en	Debug output in browser
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 delete this contact	addressbook	en	Delete this contact
+delete this organisation including all its contacts	addressbook	en	Delete this organisation including ALL its contacts
 deleted	addressbook	en	deleted
 deletes the photo	addressbook	en	Deletes the photo
 department	common	en	Department
+departments	addressbook	en	departments
 displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter eGroupWare or click on the homepage icon).
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?
 do your really want to delete this contact?	addressbook	en	Do your really want to delete this contact?
@@ -92,6 +101,8 @@ email & internet	addressbook	en	Email & Internet
 empty for all	addressbook	en	empty for all
 enable an extra private addressbook	addressbook	en	Enable an extra private addressbook
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
+error deleting the contact !!!	addressbook	en	Error deleting the contact !!!
+error saving the contact !!!	addressbook	en	Error saving the contact !!!
 existing links	addressbook	en	Existing links
 export	addressbook	en	export
 export as csv	addressbook	en	Export as CSV
@@ -101,6 +112,7 @@ export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
 exported	addressbook	en	exported
 extra	addressbook	en	Extra
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	failed to change %1 organisation member(s) (insufficent rights) !!!
 fax	addressbook	en	Fax
 fax number	common	en	Fax Number
 field %1 has been added !	addressbook	en	Field %1 has been added !
@@ -149,6 +161,7 @@ links	addressbook	en	Links
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all customfields
 load vcard	addressbook	en	Load VCard
+locations	addressbook	en	locations
 mark records as private	addressbook	en	Mark records as private
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
@@ -164,6 +177,9 @@ number of records to read (%1)	addressbook	en	Number of records to read (%1)
 only if there is content	addressbook	en	only if there is content
 options for type	admin	en	Options for type
 organisation	addressbook	en	organisation
+organisations	addressbook	en	Organisations
+organisations by departments	addressbook	en	Organisations by departments
+organisations by location	addressbook	en	Organisations by location
 other number	addressbook	en	Other Number
 other phone	addressbook	en	Other Phone
 own sorting	addressbook	en	own sorting
@@ -189,6 +205,7 @@ role	addressbook	en	Role
 room	addressbook	en	Room
 search for '%1'	addressbook	en	Search for '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	en	Select a portrait format jpeg photo. It will be resized to 60 pixel width.
+select a view	addressbook	en	Select a view
 select addressbook type	addressbook	en	Select addressbook type
 select all	addressbook	en	Select all
 select an action or addressbook to move to	addressbook	en	Select an action or addressbook to move to
@@ -200,10 +217,7 @@ select where you want to store / retrieve contacts	admin	en	Select where you wan
 show	addressbook	en	Show
 show a column for %1	addressbook	en	Show a column for %1
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
-something went wrong by deleting %1	addressbook	en	Something went wrong by deleting %1
-something went wrong by deleting this contact	addressbook	en	Something went wrong by deleting this contact
-something went wrong by reading this contact	addressbook	en	something went wrong by reading this contact
-something went wrong by saving this contact. errorcode %1	addressbook	en	Something went wrong by saving this contact. Errorcode %1
+show the contacts of this organisation	addressbook	en	Show the contacts of this organisation
 startrecord	addressbook	en	Startrecord
 state	common	en	State
 street	common	en	Street

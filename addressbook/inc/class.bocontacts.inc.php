@@ -63,6 +63,32 @@ class bocontacts extends socontacts
 		'n_fn',
 	);
 	
+	/**
+	 * @var array $org_fields fields belonging to the (virtual) organisation entry
+	 */
+	var $org_fields = array(
+		'org_name',
+		'org_unit',
+		'adr_one_street',
+		'adr_one_street2',
+		'adr_one_locality',
+		'adr_one_region',
+		'adr_one_postalcode',
+		'adr_one_countryname',
+		'label',
+		'tel_work',
+		'tel_fax',
+		'tel_assistent',
+		'assistent',
+		'email',
+		'url',
+		'tz',
+	);
+	/**
+	 * @var double $org_common_factor minimum percentage of the contacts with identical values to construct the "common" (virtual) org-entry
+	 */
+	var $org_common_factor = 0.6;
+	
 	var $contact_fields = array();
 	var $business_contact_fields = array();
 	var $home_contact_fields = array();
@@ -440,6 +466,146 @@ class bocontacts extends socontacts
 		}
 		return ($this->grants[$owner] & $needed) && 
 			(!$contact['private'] || ($this->grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$this->memberships));
+	}
+	
+	/**
+	 * Read (virtual) org-entry (values "common" for most contacts in the given org)
+	 *
+	 * @param string $org_id org_name:oooooo|||org_unit:uuuuuuuuu|||adr_one_locality:lllllll (org_unit and adr_one_locality are optional)
+	 * @return array/boolean array with common org fields or false if org not found
+	 */
+	function read_org($org_id)
+	{
+		if (!$org_id) return false;
+		
+		$org = array();
+		foreach(explode('|||',$org_id) as $part)
+		{
+			list($name,$value) = explode(':',$part);
+			$org[$name] = $value;
+		}
+		$contacts = parent::search('',$this->org_fields,'','','',false,'AND',false,$org);
+		
+		if (!$contacts) return false;
+		
+		// create a statistic about the commonness of each fields values
+		$fields = array();
+		foreach($contacts as $contact)
+		{
+			foreach($contact as $name => $value)
+			{
+				$fields[$name][$value]++;
+			}
+		}
+		foreach($fields as $name => $values)
+		{
+			if (!in_array($name,$this->org_fields)) continue;
+
+			arsort($values,SORT_NUMERIC);
+
+			list($value,$num) = each($values);
+			//echo "<p>$name: '$value' $num/".count($contacts)."=".($num / (double) count($contacts))." >= $this->org_common_factor = ".($num / (double) count($contacts) >= $this->org_common_factor ? 'true' : 'false')."</p>\n";
+			if ($value && $num / (double) count($contacts) >= $this->org_common_factor)
+			{
+				$org[$name] = $value;
+			}
+		}
+		echo $org_id; _debug_array($org);
+		
+		return $org;
+	}
+	
+	/**
+	 * Return all org-members with same content in one or more of the given fields (only org_fields are counting)
+	 *
+	 * @param string $org_name
+	 * @param array $fields field-name => value pairs
+	 * @return array with contacts
+	 */
+	function org_similar($org_name,$fields)
+	{
+		$criteria = array();
+		foreach($this->org_fields as $name)
+		{
+			if (isset($fields[$name]))
+			{
+				$criteria[$name] = $fields[$name];
+			}
+		}
+		return parent::search($criteria,false,'n_family,n_given','','',false,'OR',false,array('org_name'=>$org_name));
+	}
+	
+	/**
+	 * Return the changed fields from two versions of a contact (not modified or modifier)
+	 *
+	 * @param array $from original/old version of the contact
+	 * @param array $to changed/new version of the contact
+	 * @param boolean $onld_org_fields=true check and return only org_fields, default true
+	 * @return array with field-name => value from $from
+	 */
+	function changed_fields($from,$to,$only_org_fields=true)
+	{
+		$changed = array();
+		foreach($only_org_fields ? $this->org_fields : array_keys($this->contact_fields) as $name)
+		{
+			if (!isset($from[$name]) || in_array($name,array('modified','modifier')))	// never count these
+			{
+				continue;
+			}
+			if ((string) $from[$name] != (string) $to[$name])
+			{
+				$changed[$name] = $from[$name];
+			}
+		}
+		return $changed;
+	}
+	
+	/**
+	 * Change given fields in all members of the org with identical content in the field
+	 *
+	 * @param string $org_name
+	 * @param array $from original/old version of the contact
+	 * @param array $to changed/new version of the contact
+	 * @param array $members=null org-members to change, default null --> function queries them itself
+	 * @return array/boolean (changed-members,changed-fields,failed-members) or false if no org_fields changed or no (other) members matching that fields
+	 */ 
+	function change_org($org_name,$from,$to,$members=null)
+	{
+		if (!($changed = $this->changed_fields($from,$to,true))) return false;
+
+		if (is_null($members) || !is_array($members))
+		{
+			$members = $this->org_similar($org_name,$changed);
+		}
+		if (!$members) return false;
+		
+		$changed_members = $changed_fields = $failed_members = 0;
+		foreach($members as $member)
+		{
+			$fields = 0;
+			foreach($changed as $name => $value)
+			{
+				if ((string)$value == (string)$member[$name])
+				{
+					$member[$name] = $to[$name];
+					//echo "<p>$member[n_family], $member[n_given]: $name='{$to[$name]}'</p>\n";
+					++$fields;
+				}
+			}
+			if ($fields)
+			{
+				if (!$this->check_perms(EGW_ACL_EDIT,$member) || !$this->save($member))
+				{
+					++$failed_members;
+				}
+				else
+				{
+					++$changed_members;
+					$changed_fields += $fields;
+				}
+			}
+		}
+		return array($changed_members,$changed_fields,$failed_members);
 	}
 
 	/**

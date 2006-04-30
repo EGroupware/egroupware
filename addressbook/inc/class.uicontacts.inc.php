@@ -38,6 +38,7 @@ class uicontacts extends bocontacts
 	 * var boolean $private_addressbook use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
 	 */
 	var $private_addressbook = false;
+	var $org_views;
 
 	function uicontacts($contact_app='addressbook')
 	{
@@ -57,6 +58,12 @@ class uicontacts extends bocontacts
 		}
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 		$this->private_addressbook = $this->contacts_repository == 'sql' && $this->prefs['private_addressbook'];
+		
+		$this->org_views = array(
+			'org_name'                  => lang('Organisations'),
+			'org_name,adr_one_locality' => lang('Organisations by location'),
+			'org_name,org_unit'         => lang('Organisations by departments'),
+		);
 
 		// our javascript
 		// to be moved in a seperate file if rewrite is over
@@ -71,6 +78,7 @@ class uicontacts extends bocontacts
 	 */
 	function index($content=null,$msg=null)
 	{
+		//echo "<p>uicontacts::index(".print_r($content,true).",'$msg')</p>\n";
 		if (is_array($content))
 		{
 			$msg = $content['msg'];
@@ -99,6 +107,14 @@ class uicontacts extends bocontacts
 					}
 				}
 			}
+			if ($content['nm']['rows']['view'])	// show all contacts of an organisation
+			{
+				list($org_view) = each($content['nm']['rows']['view']);
+			}
+			else
+			{
+				$org_view = $content['nm']['org_view'];
+			}
 		}
 		$content = array(
 			'msg' => $msg ? $msg : $_GET['msg'],
@@ -108,7 +124,8 @@ class uicontacts extends bocontacts
 		{
 			$content['nm'] = array(
 				'get_rows'       =>	'addressbook.uicontacts.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-				'header_right'   =>	'addressbook.index.right',	// I  template to show right of the range-value, right-aligned (optional)
+				'header_left'    =>	'addressbook.index.left',	// I  template to show right of the range-value, right-aligned (optional)
+//				'header_right'   =>	'addressbook.index.right',	// I  template to show right of the range-value, right-aligned (optional)
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
@@ -138,12 +155,40 @@ class uicontacts extends bocontacts
 		$sel_options['action'] = array(
 			'delete' => lang('Delete'),
 			'csv'    => lang('Export as CSV'),
-			'vcard'  => lang('Export as VCard'),
+// ToDo:	'vcard'  => lang('Export as VCard'),
+// ToDo:	'copy'   => lang('Copy a contact and edit the copy'),
 		)+$this->get_addressbooks(EGW_ACL_ADD);
-		foreach($this->content_types as $tid => $data)
+		
+		// dont show tid-selection if we have only one content_type
+		if (count($this->content_types) <= 1)
 		{
-			$sel_options['col_filter[tid]'][$tid] = $data['name'];
+			$preserv['tid'] = 'n';
 		}
+		else
+		{
+			$content['nm']['header_right'] = 'addressbook.index.right';
+			foreach($this->content_types as $tid => $data)
+			{
+				$sel_options['col_filter[tid]'][$tid] = $data['name'];
+			}
+		}
+		
+		// get the availible org-views plus the label of the contacts view of one org
+		$sel_options['org_view'] = $this->org_views;
+		if (isset($org_view)) $content['nm']['org_view'] = $org_view;
+		if (!isset($sel_options['org_view'][(string) $content['nm']['org_view']]))
+		{
+			$org_name = array();
+			foreach(explode('|||',$content['nm']['org_view']) as $part)
+			{
+				list(,$name) = explode(':',$part,2);
+				if ($name) $org_name[] = $name; 
+			}
+			$org_name = implode(': ',$org_name);
+			$sel_options['org_view'][(string) $content['nm']['org_view']] = $org_name;
+		}
+		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
+
 		$this->tmpl->read('addressbook.index');
 		return $this->tmpl->exec('addressbook.uicontacts.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -171,6 +216,23 @@ class uicontacts extends bocontacts
 			$query['num_rows'] = -1;	// all
 			$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 		}
+		// replace org_name:* id's with all id's of that org
+		$org_contacts = array();
+		foreach($checked as $n => $id)
+		{
+			if (substr($id,0,9) == 'org_name:')
+			{
+				unset($checked[$n]);
+				$query = $GLOBALS['egw']->session->appsession('index','addressbook');
+				$query['num_rows'] = -1;	// all
+				$query['org_view'] = $id;
+				$this->get_rows($query,$extra,$readonlys,true);	// true = only return the id's
+				if ($extra[0]) $org_contacts = array_merge($org_contacts,$extra);
+			}		
+		}
+		if ($org_contacts) $checked = array_unique($checked ? array_merge($checked,$org_contacts) : $org_contacts);
+		//_debug_array($checked); return false;
+
 		switch($action)
 		{
 			case 'csv':
@@ -281,11 +343,12 @@ class uicontacts extends bocontacts
 			$GLOBALS['egw']->session->appsession('index','addressbook',$query);
 			// save the state of the index in the user prefs
 			$state = serialize(array(
-				'filter' => $query['filter'],
-				'cat_id' => $query['cat_id'],
-				'order'  => $query['order'],
-				'sort'   => $query['sort'],
+				'filter'     => $query['filter'],
+				'cat_id'     => $query['cat_id'],
+				'order'      => $query['order'],
+				'sort'       => $query['sort'],
 				'col_filter' => array('tid' => $query['col_filter']['tid']),
+				'org_view'   => $query['org_view'],
 			));
 			if ($state != $this->prefs['index_state'])
 			{
@@ -312,36 +375,69 @@ class uicontacts extends bocontacts
 				$query['col_filter']['private'] = substr($query['filter'],-1) == 'p' ? 1 : 0;
 			}
 		}
-		// translate the select order to the realy used over all 3 columns
-		$sort = $query['sort'];
-		switch($query['order'])
+		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
-			case 'org_name':
-				$order = "org_name $sort,n_family $sort,n_given $sort";
-				break;
-			default:
-				$query['order'] = 'n_family';
-			case 'n_family':
-				$order = "n_family $sort,n_given $sort,org_name $sort";
-				break;
-			case 'n_given':
-				$order = "n_given $sort,n_family $sort,org_name $sort";
-				break;
-			case 'n_fileas':
-				$order = 'n_fileas '.$sort;
-				break;
+			$query['template'] = 'addressbook.index.org_rows';
+
+			if ($query['order'] != 'org_name')
+			{
+				$query['sort'] = 'ASC';
+				$query['order'] = 'org_name';
+			}
+			$rows = parent::organisations($query);
 		}
-		if ($query['searchletter'])	// only show contacts which ordercriteria starts with the given letter
+		else	// contacts view
 		{
-			$query['col_filter'][] = $query['order'].' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
+			$query['template'] = 'addressbook.index.rows';
+			
+			if ($query['org_view'])	// view the contacts of one organisation only
+			{
+				foreach(explode('|||',$query['org_view']) as $part)
+				{
+					list($name,$value) = explode(':',$part,2);
+					$query['col_filter'][$name] = $value;
+				}
+			}
+			// translate the select order to the realy used over all 3 columns
+			$sort = $query['sort'];
+			switch($query['order'])
+			{
+				case 'org_name':
+					$order = "org_name $sort,n_family $sort,n_given $sort";
+					break;
+				default:
+					$query['order'] = 'n_family';
+				case 'n_family':
+					$order = "n_family $sort,n_given $sort,org_name $sort";
+					break;
+				case 'n_given':
+					$order = "n_given $sort,n_family $sort,org_name $sort";
+					break;
+				case 'n_fileas':
+					$order = 'n_fileas '.$sort;
+					break;
+			}
+			if ($query['searchletter'])	// only show contacts which ordercriteria starts with the given letter
+			{
+				$query['col_filter'][] = $query['order'].' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
+			}
+			else	// dont show contacts with empty order criteria
+			{
+				$query['col_filter'][] = $query['order']."!=''";
+			}
+			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
+				$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
+			
+			if (!$id_only && $this->prefs['custom_colum'] != 'never' && $rows)	// do we need the custom fields
+			{
+				foreach((array) $rows as $n => $val)
+				{
+					if ($val) $ids[] = $val['id'];
+				}
+				if ($ids) $customfields = $this->read_customfields($ids);
+			}
 		}
-		else	// dont show contacts with empty order criteria
-		{
-			$query['col_filter'][] = $query['order']."!=''";
-		}
-		$rows = (array) parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
-			$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
-		//echo "<p style='margin-top: 100px;'>".$this->somain->db->Query_ID->sql."</p>\n";
+		if (!$rows) $rows = array();
 
 		if ($id_only)
 		{
@@ -351,17 +447,7 @@ class uicontacts extends bocontacts
 			}
 			return $this->total;	// no need to set other fields or $readonlys
 		}
-		if ($this->prefs['custom_colum'] != 'never' && $rows)	// do we need the custom fields
-		{
-			foreach($rows as $n => $val)
-			{
-				$ids[] = $val['id'];
-			}
-			$customfields = $this->read_customfields($ids);
-		}
 		$order = $query['order'];
-		
-		if (!$rows) $rows = array();
 		
 		$readonlys = array();
 		$photos = $homeaddress = false;
@@ -389,53 +475,63 @@ class uicontacts extends bocontacts
 					list($row['line1'],$row['line2']) = explode(': ',$row['n_fileas']);
 					break;
 			}
-			$this->type_icon($row['owner'],$row['private'],$row['tid'],$row['type'],$row['type_label']);
-			
-			static $tel2show = array('tel_work','tel_cell','tel_home');
-			foreach($tel2show as $name)
+			if (isset($this->org_views[(string) $query['org_view']]))
 			{
+				$row['type'] = 'home';
+				$row['type_label'] = lang('Organisation');
 				
-				$row[$name] .= ' '.($row['tel_prefer'] == $name ? '&#9829;' : '');		// .' ' to NOT remove the field
+				$readonlys["delete[$row[id]]"] = $query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE);
 			}
-			// allways show the prefered phone, if not already shown
-			if (!in_array($row['tel_prefer'],$tel2show) && $row[$row['tel_prefer']])
+			else
 			{
-				$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
-			}
-			foreach(array('email','email_home') as $name)
-			{
-				if ($row[$name])
+				$this->type_icon($row['owner'],$row['private'],$row['tid'],$row['type'],$row['type_label']);
+				
+				static $tel2show = array('tel_work','tel_cell','tel_home');
+				foreach($tel2show as $name)
 				{
-					$row[$name.'_link'] = $this->email2link($row[$name]);
-					if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+					
+					$row[$name] .= ' '.($row['tel_prefer'] == $name ? '&#9829;' : '');		// .' ' to NOT remove the field
+				}
+				// allways show the prefered phone, if not already shown
+				if (!in_array($row['tel_prefer'],$tel2show) && $row[$row['tel_prefer']])
+				{
+					$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
+				}
+				foreach(array('email','email_home') as $name)
+				{
+					if ($row[$name])
 					{
-						$row[$name.'_popup'] = '700x750';
+						$row[$name.'_link'] = $this->email2link($row[$name]);
+						if ($GLOBALS['egw_info']['user']['apps']['felamimail'])
+						{
+							$row[$name.'_popup'] = '700x750';
+						}
+					}
+					else
+					{
+						$row[$name] = ' ';	// to NOT remove the field
 					}
 				}
-				else
+				$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row);
+				$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
+				
+				if ($row['photo']) $photos = true;
+				
+				if (isset($customfields[$row['id']]))
 				{
-					$row[$name] = ' ';	// to NOT remove the field
+					foreach($this->customfields as $name => $data)
+					{
+						$row['customfields'][] = $customfields[$row['id']][$name];
+					}
 				}
-			}
-			$readonlys["delete[$row[id]]"] = !$this->check_perms(EGW_ACL_DELETE,$row);
-			$readonlys["edit[$row[id]]"] = !$this->check_perms(EGW_ACL_EDIT,$row);
-			
-			if ($row['photo']) $photos = true;
-			
-			if (isset($customfields[$row['id']]))
-			{
-				foreach($this->customfields as $name => $data)
+				if ($this->prefs['home_column'] != 'never' && !$homeaddress)
 				{
-					$row['customfields'][] = $customfields[$row['id']][$name];
+					foreach(array('adr_two_countryname','adr_two_locality','adr_two_postalcode','adr_two_street','adr_two_street2') as $name)
+					{
+						if ($row[$name]) $homeaddress = true;
+					}
 				}
-			}
-			if ($this->prefs['home_column'] != 'never' && !$homeaddress)
-			{
-				foreach(array('adr_two_countryname','adr_two_locality','adr_two_postalcode','adr_two_street','adr_two_street2') as $name)
-				{
-					if ($row[$name]) $homeaddress = true;
 				}
-			}
 		}
 		// disable photo column, if view contains no photo(s)
 		if (!$photos || $this->prefs['photo_column'] == 'never') $rows['no_photo'] = '1';
@@ -448,15 +544,19 @@ class uicontacts extends bocontacts
 		
 		$rows['customfields'] = array_values($this->customfields);
 		
-		// full app-header with all search criteria for specially for the print
+		// full app-header with all search criteria specially for the print
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('addressbook');
-		if ($query['filter'] !== '')
+		if ($query['filter'] !== '' && !isset($this->org_views[$query['org_view']]))
 		{ 
-			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.($query['filter'] == '0' ? lang('accounts') :
+			$GLOBALS['egw_info']['flags']['app_header'] .= ' '.($query['filter'] == '0' ? lang('accounts') :
 				($GLOBALS['egw']->accounts->get_type($query['filter']) == 'g' ? 
 					lang('Group %1',$GLOBALS['egw']->accounts->id2name($query['filter'])) :
 					$GLOBALS['egw']->common->grab_owner_name((int)$query['filter']).
 						(substr($query['filter'],-1) == 'p' ? ' ('.lang('private').')' : '')));
+		}
+		if ($query['org_view'])
+		{
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$query['org_view_label'];
 		}
 		if ($query['cat_id'])
 		{
@@ -594,7 +694,33 @@ class uicontacts extends bocontacts
 					{
 						$links = $content['link_to']['to_id'];
 					}
-					$this->save($content);
+					if ($content['id'] && $content['org_name'] && $content['change_org'])
+					{
+						$old_org_entry = $this->read($content['id']);
+					}
+					if ($this->save($content))
+					{
+						$content['msg'] = lang('Contact saved');
+						if ($content['change_org'] && $old_org_entry && ($changed = $this->changed_fields($old_org_entry,$content,true)) &&
+							($members = $this->org_similar($old_org_entry['org_name'],$changed)))
+						{
+							//foreach($changed as $name => $old_value) echo "<p>$name: '$old_value' --> '{$content[$name]}'</p>\n";
+							list($changed_members,$changed_fields,$failed_members) = $this->change_org($old_org_entry['org_name'],$changed,$content,$members);
+							if ($changed_members)
+							{
+								$content['msg'] .= ', '.lang('%1 fields in %2 other organisation member(s) changed',$changed_fields,$changed_members);
+							}
+							if ($failed_members)
+							{
+								$content['msg'] .= ', '.lang('failed to change %1 organisation member(s) (insufficent rights) !!!',$failed_members);
+							}
+						}
+					}
+					else
+					{
+						$content['msg'] = lang('Error saving the contact !!!');
+						$button = 'apply';	// to not leave the dialog
+					}
 					// writing links for new entry, existing ones are handled by the widget itself
 					if ($links && $content['id'])	
 					{
@@ -603,21 +729,25 @@ class uicontacts extends bocontacts
 					if ($button == 'save')
 					{
 						echo "<html><body><script>var referer = opener.location;opener.location.href = referer+(referer.search?'&':'?')+'msg=".
-							addslashes(urlencode(lang('Contact saved')))."'; window.close();</script></body></html>\n";
+							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
 						$GLOBALS['egw']->common->egw_exit();
 					}
 					$content['link_to']['to_id'] = $content['id'];
 					$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
 						var referer = opener.location;
-						opener.location.href = referer+(referer.search?'&':'?')+'msg=".addslashes(urlencode(lang('Contact saved')))."';</script>";
+						opener.location.href = referer+(referer.search?'&':'?')+'msg=".addslashes(urlencode($content['msg']))."';</script>";
 					break;
 					
 				case 'delete':
-					if($this->delete($content));
+					if($this->delete($content))
 					{
 						echo "<html><body><script>var referer = opener.location; opener.location.href = referer+(referer.search?'&':'?')+'msg=".
-							addslashes(urlencode(lang('Contact deleted !!!')))."';window.close();</script></body></html>\n";
+							addslashes(urlencode(lang('Contact deleted')))."';window.close();</script></body></html>\n";
 						$GLOBALS['egw']->common->egw_exit();
+					}
+					else
+					{
+						$content['msg'] = lang('Error deleting the contact !!!');
 					}
 					break;
 			}
@@ -635,15 +765,23 @@ class uicontacts extends bocontacts
 			}
 			else // not found
 			{
+				$state = $GLOBALS['egw']->session->appsession('index','addressbook');
+				// check if we create the new contact in an existing org
+				if ($_GET['org'])
+				{
+					$content = $this->read_org($_GET['org']);
+				}
+				elseif ($state['org_view'] && !isset($this->org_views[$state['org_view']]))
+				{
+					$content = $this->read_org($state['org_view']);
+				}
 				if (isset($_GET['owner']) && $_GET['owner'] !== '')
 				{
 					$content['owner'] = $_GET['owner'];
 				}
 				else
 				{
-					$state = $GLOBALS['egw']->session->appsession('index','addressbook');
 					$content['owner'] = $state['filter'];
-					unset($state);
 				}
 				$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 				if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
@@ -658,6 +796,7 @@ class uicontacts extends bocontacts
 				}
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
+				unset($state);
 			}
 			
 			if($content && $_GET['makecp'])	// copy the contact
@@ -695,13 +834,24 @@ class uicontacts extends bocontacts
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
-		foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
-
+		if (count($this->content_types) > 1)
+		{
+			foreach($this->content_types as $type => $data)
+			{
+				$sel_options['tid'][$type] = $data['name'];
+			}
+			$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+		}
+		else
+		{
+			$content['no_tid'] = true;
+		}
+/* Conny: what's that?
 		foreach($GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw']->acl->account_id,'addressbook',true) as $id => $right)
 		{
 			if($id < 0) $sel_options['published_groups'][$id] = $GLOBALS['egw']->accounts->id2name($id);
 		}
-		$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+*/
 		$content['link_to'] = array(
 			'to_app' => 'addressbook',
 			'to_id'  => $content['link_to']['to_id'],
@@ -792,7 +942,7 @@ class uicontacts extends bocontacts
 				case 'delete':
 					$GLOBALS['egw']->redirect_link('/index.php',array(
 						'menuaction' => 'addressbook.uicontacts.index',
-						'msg' => $this->delete($content) ? lang('Something went wrong by deleting this contact') : lang('Contact deleted !!!'),
+						'msg' => $this->delete($content) ? lang('Error deleting the contact !!!') : lang('Contact deleted'),
 					));
 			}
 		}
@@ -806,7 +956,7 @@ class uicontacts extends bocontacts
 				));
 			}
 		}
-		foreach((array)$content as $key => $val)
+		foreach(array_keys($this->contact_fields) as $key)
 		{
 			$readonlys[$key] = true;
 			if (in_array($key,array('tel_home','tel_work','tel_cell')))
@@ -824,24 +974,38 @@ class uicontacts extends bocontacts
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['change_photo'] = true;
 		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
-		
+// ToDo: fix vCard export
+$readonlys['button[vcard]'] = true;
+
 		$sel_options['fileas_type'][$content['fileas_type']] = $this->fileas($content);
 		$sel_options['owner'] = $this->get_addressbooks();
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
-		foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
+		if (count($this->content_types) > 1)
+		{
+			foreach($this->content_types as $type => $data)
+			{
+				$sel_options['tid'][$type] = $data['name'];
+			}
+			$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+		}
+		else
+		{
+			$content['no_tid'] = true;
+		}
+/* Conny: what's that?
 		foreach(explode(',',$content['published_groups']) as $id)
 		{
 			$sel_options['published_groups'][$id] = $GLOBALS['egw']->accounts->id2name($id);
 		}
-		$content['typegfx'] = $GLOBALS['egw']->html->image('addressbook',$this->content_types[$content['tid']]['options']['icon'],'',' width="16px" height="16px"');
+*/
 		$this->tmpl->read($this->content_types[$content['tid']]['options']['template']);
-		foreach(array('email','email_home','url') as $name)
+		foreach(array('email','email_home','url','url_home') as $name)
 		{
 			if ($content[$name] )
 			{
-				$url = $name == 'url' ? $content[$name] : $this->email2link($content[$name]);
+				$url = substr($name,0,3) == 'url' ? $content[$name] : $this->email2link($content[$name]);
 				if (!is_array($url))
 				{
 					$this->tmpl->set_cell_attribute($name,'size','b,,1');

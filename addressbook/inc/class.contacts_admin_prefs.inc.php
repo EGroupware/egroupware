@@ -56,7 +56,7 @@ class contacts_admin_prefs
 // Disabled til they are working again
 //				'Advanced search'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.search'),
 //				'import contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.import'),
-//				'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export')
+//				'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export'),
 				'CSV-Import'      => $GLOBALS['egw']->link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);

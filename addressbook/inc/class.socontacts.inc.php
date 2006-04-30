@@ -93,6 +93,15 @@ class socontacts
 	 */
 	var $total;
 	
+	/**
+	 * @var object $somain sql (socontacts_sql) or ldap (so_ldap) backend class
+	 */
+	var $somain;
+	/**
+	 * @var so_sql-object $soextra custom fields backend
+	 */
+	var $soextra;
+
 	function socontacts($contact_app='addressbook')
 	{
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
@@ -147,10 +156,7 @@ class socontacts
 			
 		$custom =& CreateObject('admin.customfields',$contact_app);
 		$this->customfields = $custom->get_customfields();
-//		if ($this->customfields && !is_array($this->customfields)) $this->customfields = unserialize($this->customfields);
-//		if (!$this->customfields) $this->customfields = array();
 		$this->content_types = $custom->get_content_types();
-//		if ($this->content_types && !is_array($this->content_types)) $this->content_types = unserialize($this->content_types);
 		if (!$this->content_types)
 		{
 			$this->content_types = $custom->content_types = array('n' => array(
@@ -550,6 +556,65 @@ class socontacts
 			}
 		}
 		// ToDo: read custom-fields, if displayed in the index page
+		return $rows;
+	}
+	
+	/**
+	 * Query organisations by given parameters
+	 *
+	 * @var array $param
+	 * @var string $param[org_view] 'org_name', 'org_name,adr_one_location', 'org_name,org_unit' how to group
+	 * @var int $param[owner] addressbook to search
+	 * @var string $param[search] search pattern for org_name
+	 * @var string $param[searchletter] letter the org_name need to start with
+	 * @var int $param[start]
+	 * @var int $param[num_rows]
+	 * @var string $param[sort] ASC or DESC
+	 * @return array or arrays with keys org_name,count and evtl. adr_one_location or org_unit
+	 */ 
+	function organisations($param)
+	{
+		if (!method_exists($this->somain,'organisations')) return false;
+
+		if ($param['search'] && !is_array($param['search']))	
+		{
+			$search = $param['search'];
+			$param['search'] = array();
+			foreach($this->columns_to_search as $col)
+			{
+				if ($col != 'contact_value') $param['search'][$col] = $search;	// we dont search the customfields
+			}
+		}
+		if (is_array($param['search']) && count($param['search']))
+		{
+			$param['search'] = $this->data2db($param['search']);
+		}
+		$rows = $this->somain->organisations($param);
+		//echo "<p>socontacts::organisations(".print_r($param,true).")<br />".$this->somain->db->Query_ID->sql."</p>\n";
+
+		if (!$rows) return array();
+
+		list(,$by) = explode(',',$param['org_view']);
+		if (!$by) $by = 'adr_one_locality';
+
+		foreach($rows as $n => $row)
+		{
+			$rows[$n]['id'] = 'org_name:'.$row['org_name'];
+			foreach(array(
+				'org_unit' => lang('departments'),
+				'adr_one_locality' => lang('locations'),
+			) as $by => $by_label)
+			{
+				if ($row[$by.'_count'] > 1)
+				{
+					$rows[$n][$by] = $row[$by.'_count'].' '.$by_label;
+				}
+				else
+				{
+					$rows[$n]['id'] .= '|||'.$by.':'.$row[$by];
+				}
+			}
+		}
 		return $rows;
 	}
 

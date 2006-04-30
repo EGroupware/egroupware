@@ -30,6 +30,135 @@ class socontacts_sql extends so_sql
 	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
 	
 	/**
+	 * Query organisations by given parameters
+	 *
+	 * @var array $param
+	 * @var string $param[org_view] 'org_name', 'org_name,adr_one_location', 'org_name,org_unit' how to group
+	 * @var int $param[owner] addressbook to search
+	 * @var string $param[search] search pattern for org_name
+	 * @var string $param[searchletter] letter the org_name need to start with
+	 * @var array $param[col_filter] filter
+	 * @var string $param[search] or'ed search pattern
+	 * @var int $param[start]
+	 * @var int $param[num_rows]
+	 * @var string $param[sort] ASC or DESC
+	 * @return array or arrays with keys org_name,count and evtl. adr_one_location or org_unit
+	 */ 
+	function organisations($param)
+	{
+		$filter = is_array($param['col_filter']) ? $param['col_filter'] : array();
+
+		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
+		if ($param['owner'] && $param['owner'] == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$filter['owner'] = $param['owner'];
+		}
+		else
+		{
+			// we have no private grants in addressbook at the moment, they have then to be added here too
+			if ($param['owner'])
+			{
+				if (!$this->grants[(int) $filter['owner']]) return false;	// we have no access to that addressbook
+				
+				$filter['owner'] = $param['owner'];
+				$filter['private'] = 0;
+			}
+			else	// search all addressbooks, incl. accounts
+			{
+				$filter[] = "(contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
+					" OR contact_private=0 AND contact_owner IN (".
+					implode(',',array_keys($this->grants))."))";
+			}
+		}
+		if ($param['searchletter'])
+		{
+			$filter[] = 'org_name LIKE '.$this->db->quote($param['searchletter'].'%');
+		}
+		else
+		{
+			$filter[] = "org_name != ''";// AND org_name IS NOT NULL";
+		}
+		$sort = $param['sort'] == 'DESC' ? 'DESC' : 'ASC';
+
+		list(,$by) = explode(',',$param['org_view']);
+		if (!$by)
+		{
+			$extra = array(
+				'COUNT(org_name) AS org_count',
+				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
+				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
+			);
+			$append = "GROUP BY org_name ORDER BY org_name $sort";
+		}
+		else	// by adr_one_location or org_unit
+		{
+			// org total for more then one $by
+			$append = "GROUP BY org_name HAVING {$by}_count > 1 ORDER BY org_name $sort";
+			parent::search($param['search'],array('org_name'),$append,array(
+				"NULL AS $by",
+				'COUNT(org_name) AS org_count',
+				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
+				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
+			),'%',false,'OR','UNION',$filter);
+			// org by location
+			$append = "GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort";
+			parent::search($param['search'],array('org_name'),$append,array(
+				"CASE WHEN $by IS NULL THEN '' ELSE $by END AS $by",
+				'COUNT(org_name) AS org_count',
+				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
+				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
+			),'%',false,'OR','UNION',$filter);
+			$append = "ORDER BY org_name $sort,CASE WHEN $by IS NULL THEN 1 ELSE 2 END,$by $sort";
+		}
+		$rows = parent::search($param['search'],array('org_name'),$append,$extra,'%',false,'OR',
+			array($param['start'],$param['num_rows']),$filter);
+			
+		if (!$rows) return false;
+
+		// query the values for *_count == 1, to display them instead
+		$filter['org_name'] = $orgs = array();
+		foreach($rows as $n => $row)
+		{
+			if ($row['org_unit_count'] == 1 || $row['adr_one_locality_count'] == 1)
+			{
+				$filter['org_name'][$row['org_name']] = $row['org_name'];	// use as key too to have every org only once
+			}
+			$org_key = $row['org_name'].($by ? '|||'.($row[$by] || $row[$by.'_count']==1 ? $row[$by] : '|||') : '');
+			$orgs[$org_key] = $row; 
+		}
+		unset($rows);
+		
+		if (count($filter['org_name']))
+		{
+			foreach((array) parent::search($criteria,array('org_name','org_unit','adr_one_locality'),'GROUP BY org_name,org_unit,adr_one_locality',
+				'','%',false,'AND',false,$filter) as $row)
+			{
+				$org_key = $row['org_name'].($by ? '|||'.$row[$by] : '');
+				if ($orgs[$org_key]['org_unit_count'] == 1)
+				{
+					$orgs[$org_key]['org_unit'] = $row['org_unit'];
+				}
+				if ($orgs[$org_key]['adr_one_locality_count'] == 1)
+				{
+					$orgs[$org_key]['adr_one_locality'] = $row['adr_one_locality'];
+				}
+				if ($by && isset($orgs[$org_key = $row['org_name'].'||||||']))
+				{
+					if ($orgs[$org_key]['org_unit_count'] == 1)
+					{
+						$orgs[$org_key]['org_unit'] = $row['org_unit'];
+					}
+					if ($orgs[$org_key]['adr_one_locality_count'] == 1)
+					{
+						$orgs[$org_key]['adr_one_locality'] = $row['adr_one_locality'];
+					}
+				}
+			}
+		}
+		return array_values($orgs);
+	}
+
+	/**
 	 * searches db for rows matching searchcriteria
 	 *
 	 * '*' and '?' are replaced with sql-wildcards '%' and '_'

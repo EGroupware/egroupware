@@ -1,93 +1,6 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="addressbook.editphones" template="" lang="" group="0" version="1.3.001">
-		<grid class="editphones">
-			<columns>
-				<column/>
-				<column/>
-				<column/>
-			</columns>
-			<rows>
-				<row>
-					<description span="all" class="windowheader" value="Edit Phonenumbers - " no_lang="1" align="center" id="fn"/>
-					<description/>
-					<description/>
-				</row>
-				<row class="th">
-					<description value="Description"/>
-					<description value="Number"/>
-					<description value="pref"/>
-				</row>
-				<row>
-					<description value="business" options=",,,tel_work2" class="bold"/>
-					<textbox size="30" id="tel_work2"/>
-					<radio options="tel_work" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<description value="mobile phone" options=",,,tel_cell2"/>
-					<textbox size="30" id="tel_cell2"/>
-					<radio options="tel_cell" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<description value="fax" options=",,,tel_fax"/>
-					<textbox size="30" id="tel_fax"/>
-					<radio options="tel_fax" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<description value="car phone" options=",,,tel_car"/>
-					<textbox size="30" id="tel_car"/>
-					<radio options="tel_car" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<description value="pager" options=",,,tel_pager"/>
-					<textbox size="30" id="tel_pager"/>
-					<radio options="tel_pager" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<hrule span="all"/>
-				</row>
-				<row>
-					<description value="Assistent" options=",,,assistent" class="bold"/>
-					<textbox size="35" id="assistent" span="2"/>
-				</row>
-				<row>
-					<description value="number" options=",,,tel_assistent"/>
-					<textbox size="30" id="tel_assistent"/>
-					<radio options="tel_assistent" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<hrule span="all"/>
-				</row>
-				<row>
-					<description value="Private" options=",,,tel_home2" class="bold"/>
-					<textbox size="30" id="tel_home2"/>
-					<radio options="tel_home" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<description value="mobile phone" options=",,,tel_cell_private"/>
-					<textbox size="30" id="tel_cell_private"/>
-					<radio options="tel_cell_private" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<description value="fax" options=",,,tel_fax_home"/>
-					<textbox size="30" id="tel_fax_home"/>
-					<radio options="tel_fax_home" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<hrule span="all"/>
-				</row>
-				<row>
-					<description value=" Other Phone" options=",,,tel_other"/>
-					<textbox size="30" id="tel_other"/>
-					<radio options="tel_other" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
-				</row>
-				<row>
-					<button label="Ok" onclick="set_style_by_class('table','editphones','display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" align="center"/>
-				</row>
-			</rows>
-		</grid>
-	</template>
 	<template id="addressbook.edit.personal" template="" lang="" group="0" version="1.3.002">
 		<grid height="258">
 			<columns>
@@ -132,8 +45,8 @@
 						</rows>
 					</grid>
 				</row>
-				<row height="30">
-					<image src="gohome"/>
+				<row height="28">
+					<image src="home"/>
 					<description value="company" options=",,,org_name"/>
 					<textbox size="45" maxlength="64" id="org_name" onchange="setFileasOptions(this);"/>
 				</row>
@@ -152,7 +65,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="1.3.001">
+	<template id="addressbook.edit.organisation" template="" lang="" group="0" version="1.3.002">
 		<grid height="258">
 			<columns>
 				<column/>
@@ -169,12 +82,6 @@
 				</row>
 				<row>
 					<description/>
-					<description value="department" options=",,,org_unit"/>
-					<textbox id="org_unit" size="45" maxlength="64"/>
-					<description/>
-				</row>
-				<row>
-					<description/>
 					<description options=",,,role" value="Role"/>
 					<hbox orient=",0,0">
 						<textbox id="role" size="25" maxlength="64"/>
@@ -182,10 +89,10 @@
 					</hbox>
 					<description/>
 				</row>
-				<row>
-					<description/>
-					<description/>
-					<description/>
+				<row valign="bottom" height="30">
+					<image src="home"/>
+					<description value="department" options=",,,org_unit"/>
+					<textbox id="org_unit" size="45" maxlength="64"/>
 					<description/>
 				</row>
 				<row>
@@ -224,16 +131,15 @@
 					<textbox size="45" maxlength="64" id="adr_one_countryname"/>
 					<description/>
 				</row>
-				<row>
+				<row disabled="@view">
+					<image src="check"/>
 					<description/>
-					<description/>
-					<description/>
-					<description/>
+					<checkbox label="change all organisation members" id="change_org" span="all" statustext="Apply changes to all members, whose fields have the same previous content"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.3.001">
+	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.3.002">
 		<grid height="258">
 			<columns>
 				<column/>
@@ -242,7 +148,7 @@
 			</columns>
 			<rows>
 				<row>
-					<image src="gohome"/>
+					<image src="accounts"/>
 					<description value="street" options=",,,adr_two_street"/>
 					<textbox size="45" maxlength="64" id="adr_two_street"/>
 				</row>
@@ -272,7 +178,7 @@
 					<textbox size="45" maxlength="64" id="adr_two_countryname"/>
 				</row>
 				<row height="30">
-					<description/>
+					<image src="gear"/>
 					<description options=",,,bday" value="Birthday"/>
 					<hbox id="bday" orient=",0,0">
 						<date options="Y-m-d" id="bday"/>
@@ -282,7 +188,7 @@
 					</hbox>
 				</row>
 				<row>
-					<image src="private"/>
+					<image src="private.png"/>
 					<description value="Public key" options=",,,pubkey"/>
 					<textbox multiline="true" rows="2" cols="40" id="pubkey"/>
 				</row>
@@ -331,11 +237,98 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit" template="" lang="" group="0" version="1.3.002">
-		<grid width="800">
+	<template id="addressbook.editphones" template="" lang="" group="0" version="1.3.002">
+		<grid class="editphones">
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description span="all" class="windowheader" value="Edit Phonenumbers - " no_lang="1" align="center" id="fn"/>
+					<description/>
+					<description/>
+				</row>
+				<row class="th">
+					<description value="Description"/>
+					<description value="Number"/>
+					<description value="pref"/>
+				</row>
+				<row>
+					<description value="business" options=",,,tel_work2" class="bold"/>
+					<textbox size="30" id="tel_work2"/>
+					<radio options="tel_work,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<description value="mobile phone" options=",,,tel_cell2"/>
+					<textbox size="30" id="tel_cell2"/>
+					<radio options="tel_cell,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<description value="fax" options=",,,tel_fax"/>
+					<textbox size="30" id="tel_fax"/>
+					<radio options="tel_fax,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<description value="car phone" options=",,,tel_car"/>
+					<textbox size="30" id="tel_car"/>
+					<radio options="tel_car,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<description value="pager" options=",,,tel_pager"/>
+					<textbox size="30" id="tel_pager"/>
+					<radio options="tel_pager,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<hrule span="all"/>
+				</row>
+				<row>
+					<description value="Assistent" options=",,,assistent" class="bold"/>
+					<textbox size="35" id="assistent" span="2"/>
+				</row>
+				<row>
+					<description value="number" options=",,,tel_assistent"/>
+					<textbox size="30" id="tel_assistent"/>
+					<radio options="tel_assistent,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<hrule span="all"/>
+				</row>
+				<row>
+					<description value="Private" options=",,,tel_home2" class="bold"/>
+					<textbox size="30" id="tel_home2"/>
+					<radio options="tel_home,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<description value="mobile phone" options=",,,tel_cell_private"/>
+					<textbox size="30" id="tel_cell_private"/>
+					<radio options="tel_cell_private,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<description value="fax" options=",,,tel_fax_home"/>
+					<textbox size="30" id="tel_fax_home"/>
+					<radio options="tel_fax_home,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<hrule span="all"/>
+				</row>
+				<row>
+					<description value=" Other Phone" options=",,,tel_other"/>
+					<textbox size="30" id="tel_other"/>
+					<radio options="tel_other,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+				</row>
+				<row>
+					<button label="Ok" onclick="set_style_by_class('table','editphones','display','none'); if (window.hidephones) hidephones(this.form); return false;" span="all" align="center"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="addressbook.edit" template="" lang="" group="0" version="1.3.003">
+		<grid>
 			<columns>
 				<column width="450"/>
-				<column/>
+				<column width="350"/>
 			</columns>
 			<rows>
 				<row disabled="!@msg">
@@ -344,15 +337,22 @@
 				</row>
 				<row>
 					<menulist span=",fileas">
-						<menupopup data="" rows="1" cols="3" id="fileas_type" no_lang="1" statustext="used for links and for the own sorting of the list"/>
+						<menupopup data="" rows="1" cols="3" id="fileas_type" no_lang="1"/>
 					</menulist>
-					<hbox align="right">
-						<template id="addressbook.editphones"/>
-						<menulist span=",leftPad5">
-							<menupopup no_lang="1" id="tid" onchange="1" label="Type"/>
-						</menulist>
-						<html class="space" needed="1" label=" " no_lang="1" id="typegfx" readonly="true"/>
-					</hbox>
+					<grid>
+						<columns>
+							<column/>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="@no_tid">
+								<menulist span=",leftPad5">
+									<menupopup no_lang="1" id="tid" onchange="1" label="Type"/>
+								</menulist>
+								<html class="space" needed="1" label=" " no_lang="1" id="typegfx" readonly="true"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 				<row valign="top">
 					<tabbox>
@@ -372,6 +372,7 @@
 						</tabpanels>
 					</tabbox>
 					<vbox>
+						<template id="addressbook.editphones"/>
 						<groupbox class="phoneGroup">
 							<caption label="Phone Numbers"/>
 							<grid>
@@ -385,20 +386,20 @@
 									<row>
 										<image src="phone"/>
 										<description value="business" options=",,,tel_work"/>
-										<textbox id="tel_work" size="24" maxlength="40"/>
-										<radio options="tel_work" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+										<textbox id="tel_work" size="24" maxlength="40" class="telNumbers"/>
+										<radio options="tel_work,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 									</row>
 									<row>
 										<description/>
 										<description value="mobile phone" options=",,,tel_cell"/>
-										<textbox id="tel_cell" size="24" maxlength="40"/>
-										<radio options="tel_cell" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+										<textbox id="tel_cell" size="24" maxlength="40" class="telNumbers"/>
+										<radio options="tel_cell,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 									</row>
 									<row>
 										<description/>
 										<description value="Private" options=",,,tel_home"/>
-										<textbox id="tel_home" size="24" maxlength="40"/>
-										<radio options="tel_home" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
+										<textbox id="tel_home" size="24" maxlength="40" class="telNumbers"/>
+										<radio options="tel_home,&amp;hearts;" id="tel_prefer" statustext="select phone number as prefered way of contact"/>
 									</row>
 									<row>
 										<description/>
