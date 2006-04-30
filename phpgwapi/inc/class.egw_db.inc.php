@@ -1550,18 +1550,21 @@
 		 * The function has a variable number of arguments, from which the expession gets constructed
 		 * eg. db::expression('my_table','(',array('name'=>"test'ed",'lang'=>'en'),') OR ',array('owner'=>array('',4,10)))
 		 * gives "(name='test\'ed' AND lang='en') OR 'owner' IN (0,4,5,6,10)" if name,lang are strings and owner is an integer
-		 * @param string $table name of the table
+		 *
+		 * @param string/array $table_def table-name or definition array
 		 * @param mixed $args variable number of arguments of the following types:
 		 *	string: get's as is into the result
 		 *	array:	column-name / value pairs: the value gets quoted according to the type of the column and prefixed
 		 *		with column-name=, multiple pairs are AND'ed together, see db::column_data_implode
 		 *	bool: If False or is_null($arg): the next 2 (!) arguments gets ignored
-		 * @param array/bool $table_def use this table definition. If False, the table definition will be read from tables_baseline
+		 *
+		 * Please note: As the function has a variable number of arguments, you CAN NOT add further parameters !!!
+		 *
 		 * @return string the expression generated from the arguments
 		 */
-		function expression($table,$args,$table_def=False)
+		function expression($table_def,$args)
 		{
-			if (!$table_def) $table_def = $this->get_table_definitions('',$table);
+			if (!is_array($table_def)) $table_def = $this->get_table_definitions('',$table_def);
 			$sql = '';
 			$ignore_next = 0;
 			foreach(func_get_args() as $n => $arg)
