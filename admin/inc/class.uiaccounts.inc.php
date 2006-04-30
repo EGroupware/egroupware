@@ -1063,7 +1063,7 @@
 			$theme = $GLOBALS['egw_info']['user']['preferences']['common']['theme'];			
 			$t->set_var('icon_create_edit', '<img src="'. $GLOBALS['egw_info']['server']['webserver_url'] .'/admin/templates/'.$theme.'/images/useradm.gif">');
 			
-			print_debug('Type : '.gettype($_userData).'<br>_userData(size) = "'.$_userData.'"('.strlen($_userData).')');
+			//print_debug('Type : '.gettype($_userData).'<br>_userData(size) = "'.$_userData.'"('.strlen($_userData).')');
 			if (is_array($_userData))
 			{
 				$userData = Array();
@@ -1190,7 +1190,7 @@
 			$var = Array(
 				'input_expires' 	=> $jscal->input('expires',$userData['expires']<0?'':($userData['expires']?$userData['expires']:time()+(60*60*24*7))),
 				'lang_never'    	=> lang('Never'),
-				'account_lid'   	=> $accountPrefix.'<input id="account" onchange="check_account_email(this.id);" name="account_lid" value="' . $userData['account_lid'] . '">',
+				'account_lid'   	=> $accountPrefix.'<input id="account" onchange="check_account_email(this.id);" name="account_lid" maxlength="64" value="' . $userData['account_lid'] . '">',
 				'lang_homedir'  	=> $lang_homedir,
 				'lang_shell'    	=> $lang_shell,
 				'homedirectory' 	=> $homedirectory,
@@ -1198,9 +1198,9 @@
 				'anonymous'     	=> '<input type="checkbox" name="anonymous" value="1"'.($userData['anonymous'] ? ' checked' : '').'>',
 				'changepassword'	=> '<input type="checkbox" name="changepassword" value="1"'.($userData['changepassword'] ? ' checked' : '').'>',
 				'account_status'    => '<input type="checkbox" name="account_status" value="A"'.($userData['status']?' checked':'').'>',
-				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" value="' . $userData['firstname'] . '">',
-				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" value="' . $userData['lastname'] . '">',
-				'account_email'     => '<input id="email" onchange="check_account_email(this.id);" name="account_email" size="32" value="' . $userData['email'] . '">',
+				'account_firstname' => '<input id="firstname" onchange="check_account_email(this.id);" name="account_firstname" maxlength="50" value="' . $userData['firstname'] . '">',
+				'account_lastname'  => '<input id="lastname" onchange="check_account_email(this.id);" name="account_lastname" maxlength="50" value="' . $userData['lastname'] . '">',
+				'account_email'     => '<input id="email" onchange="check_account_email(this.id);" name="account_email" size="32" maxlength="100" value="' . $userData['email'] . '">',
 				'account_passwd'    => $userData['account_passwd'],
 				'account_passwd_2'  => $userData['account_passwd_2'],
 				'account_file_space' => $account_file_space,

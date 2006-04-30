@@ -27,10 +27,10 @@
 				$userData['account_email'] = $userData['email'];
 			}
 			
-			$GLOBALS['egw']->accounts->create($userData);
-
-			$userData['account_id'] = $GLOBALS['egw']->accounts->name2id($userData['account_lid']);
-			
+			if (!($userData['account_id'] = $GLOBALS['egw']->accounts->create($userData)))
+			{
+				return false;
+			}
 			$apps =& CreateObject('phpgwapi.applications',$userData['account_id']);
 			$apps->read_installed_apps();
 			// Read Group Apps

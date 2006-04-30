@@ -313,8 +313,10 @@
 				// only use account_id, if it's not already used
 				$account_data['account_id'] = abs($account_info['account_id']);
 			}
-			$this->db->insert($this->table,$account_data,False,__LINE__,__FILE__);
-
+			if (!$this->db->insert($this->table,$account_data,False,__LINE__,__FILE__))
+			{
+				return false;
+			}
 			$id = $account_data['account_id'] ? $account_data['account_id'] : $this->db->get_last_insert_id($this->table,'account_id');
 			
 			if ($account_info['account_type'] == 'g' && $id > 0)	// create negative id for groups
