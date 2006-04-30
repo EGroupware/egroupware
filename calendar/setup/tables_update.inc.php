@@ -1498,4 +1498,13 @@
 
 		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.2';
 	}
-?>
+	
+
+	$test[] = '1.2';
+	function calendar_upgrade1_2()
+	{
+		// get old alarms (saved before 1.2) working again
+		$GLOBALS['egw_setup']->db->query("UPDATE egw_async SET async_method ='calendar.bocalupdate.send_alarm' WHERE async_method ='calendar.bocalendar.send_alarm'",__LINE__,__FILE__);
+		
+		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.2.001';
+	}
