@@ -238,7 +238,7 @@
 				array_unshift($value['rows'],false);
 			}
 			list($template,$options) = explode(',',$cell['size']);
-			if ($template)	// template name can be supplied either in $value['template'] or the options-field
+			if (!$value['template'] && $template)	// template name can be supplied either in $value['template'] or the options-field
 			{
 				$value['template'] = $template;
 			}
