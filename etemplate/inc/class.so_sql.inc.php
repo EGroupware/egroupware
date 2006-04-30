@@ -519,7 +519,7 @@ class so_sql
 					{
 						$col = $c;
 					}
-					if ($val == "!''")
+					if ($val === "!''")
 					{
 						$db_filter[] = $col." != ''";
 					}
