@@ -39,6 +39,13 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.002';
 	}
 
+	$test[] = '1.2.101';
+	function phpgwapi_upgrade1_2_101()
+	{
+		// 1. 1.2 bugfix-release: egw_accounts.account_lid is varchar(64)
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
+	}
+
 	// updates in HEAD / 1.3
 	$test[] = '1.3.001';
 	function phpgwapi_upgrade1_3_001()
@@ -75,5 +82,18 @@
 		/*************************************************************************/
 		
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.003';
+	}
+
+
+	$test[] = '1.3.003';
+	function phpgwapi_upgrade1_3_003()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_accounts','account_lid',array(
+			'type' => 'varchar',
+			'precision' => '64',
+			'nullable' => False
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
 	}
 ?>
