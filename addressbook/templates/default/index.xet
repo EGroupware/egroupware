@@ -113,10 +113,10 @@
 						<description id="${row}[adr_two_street2]" no_lang="1"/>
 					</vbox>
 					<vbox orient=",0,0">
-						<description no_lang="1" id="${row}[tel_work]" class="telNumbers"/>
-						<description id="${row}[tel_cell]" no_lang="1" class="telNumbers"/>
-						<description id="${row}[tel_home]" no_lang="1" class="telNumbers"/>
-						<description id="${row}[tel_prefered]" no_lang="1"/>
+						<description no_lang="1" id="${row}[tel_work]" class="telNumbers" options=",$row_cont[tel_work_link],,,,$row_cont[call_popup]"/>
+						<description id="${row}[tel_cell]" no_lang="1" class="telNumbers" options=",$row_cont[tel_cell_link],,,,$row_cont[call_popup]"/>
+						<description id="${row}[tel_home]" no_lang="1" class="telNumbers" options=",$row_cont[tel_home_link],,,,$row_cont[call_popup]"/>
+						<description id="${row}[tel_prefered]" no_lang="1" options=",$row_cont[tel_prefered_link],,,,$row_cont[call_popup]"/>
 					</vbox>
 					<vbox orient=",0,0">
 						<description options=",,1" class="fixedHeight" no_lang="1" id="${row}[url]"/>

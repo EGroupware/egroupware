@@ -40,6 +40,8 @@ class uicontacts extends bocontacts
 	var $private_addressbook = false;
 	var $org_views;
 
+//	var $config = array('call_link'=>'skype:%1?call','call_popup'=>'');	// popup wxh, eg. 640x480
+
 	function uicontacts($contact_app='addressbook')
 	{
 		$this->bocontacts($contact_app);
@@ -489,12 +491,13 @@ class uicontacts extends bocontacts
 				static $tel2show = array('tel_work','tel_cell','tel_home');
 				foreach($tel2show as $name)
 				{
-					
+					$this->call_link($row[$name],$row[$name.'_link']);
 					$row[$name] .= ' '.($row['tel_prefer'] == $name ? '&#9829;' : '');		// .' ' to NOT remove the field
 				}
 				// allways show the prefered phone, if not already shown
 				if (!in_array($row['tel_prefer'],$tel2show) && $row[$row['tel_prefer']])
 				{
+					$this->call_link($row[$row['tel_prefer']],$row['tel_prefered_link']);
 					$row['tel_prefered'] = $row[$row['tel_prefer']].' &#9829;';
 				}
 				foreach(array('email','email_home') as $name)
@@ -541,7 +544,7 @@ class uicontacts extends bocontacts
 		if ($homeaddress && !$this->prefs['home_column'] || $this->prefs['home_column'] == 'always') $rows['show_home'] = '1';
 
 		$rows['order'] = $order;
-		
+		$rows['call_popup'] = $this->config['call_popup'];
 		$rows['customfields'] = array_values($this->customfields);
 		
 		// full app-header with all search criteria specially for the print
@@ -1146,7 +1149,10 @@ $readonlys['button[vcard]'] = true;
 		$this->tmpl->read('addressbook.search');
 		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv);
 	}
-	
+
+	/**
+	 * download photo of the given ($_GET['contact_id'] or $_GET['account_id']) contact
+	 */
 	function photo()
 	{
 		ob_start();
@@ -1170,6 +1176,20 @@ $readonlys['button[vcard]'] = true;
 		}
 	}
 	
+	/**
+	 * returns link to call the given phonenumer
+	 *
+	 * @param string $number phone number
+	 * @param string &$link returns the link
+	 * @return boolean true if we have a link, false if not
+	 */
+	function call_link($number,&$link)
+	{
+		if (!$number || !$this->config['call_link']) return false;
+
+		$link = str_replace('%1',$number,$this->config['call_link']);
+	}
+
 	function js()
 	{
 		return '<script LANGUAGE="JavaScript">
