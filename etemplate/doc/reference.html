@@ -9,6 +9,7 @@ pre { font-family: monospace; background-color: #e0e0e0; padding: 2mm; border-wi
 span { color: darkblue; font-family: sans-serife; }
 li { margin-top: 5px; }
 body { background-color: white; color: black; }
+table {	border: 1px solid black; border-collapse: collapse; }
 -->
 </style>
 </head>
@@ -492,9 +493,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		<b>a widget in a group of which only one can be checked</b><br />
 		In the html-UI this is rendered as &lt;input type="radio" ...><br />
-		Unlike XUL (and like html) the radio-buttons are grouped by giving them the same name / id.
-		If it is checked, the value is set to what is entered in <b>Options</b>. If the value of the
-		content array at index name/id matches the options-field the radiobutton is marked 'checked'.
+		Unlike XUL (and like html) the radio-buttons are grouped by giving them the same name / id.<br />
+		<b>Options</b>: [set_value][,ro_true[,ro_false]]<br />
+		<b>set_value</b>: which value in the content represents the checked state, default=1<br />
+		<b>ro_true</b>: what should be displayed for a readonly checked box, default=x<br />
+		<b>ro_false</b>: display for an unchecked box, can be set to 'disable', to not display the widget (incl. label), default is empty
+		If the value of the content array at index name/id matches <b>set_value</b> the radiobutton is marked 'checked'.
 	</td>
 </tr>
 <tr>
@@ -795,7 +799,10 @@ $content[$id] = array(		<span>// I = value set by the app, 0 = value on return /
 	'header_right'   =>	<span>// I  template to show right of the range-value, right-aligned (optional)</span>
 	'bottom_too'     => True<span>// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows</span>
 	'never_hide'     => True<span>// I  never hide the nextmatch-line if less then maxmatch entrie</span>
+	'lettersearch'   => True<span>// I  show a lettersearch</span>
+	'searchletter'   =>	<span>// I0 active letter of the lettersearch or false for [all]</span>
 	'start'          =>	<span>// IO position in list</span>
+	'num_rows'       =>	<span>// IO number of rows to show, defaults to maxmatches from the general prefs</span>
 	'cat_id'         =>	<span>// IO category, if not 'no_cat' => True</span>
 	'search'         =>	<span>// IO search pattern</span>
 	'order'          =>	<span>// IO name of the column to sort after (optional for the sortheaders)</span>
@@ -803,10 +810,13 @@ $content[$id] = array(		<span>// I = value set by the app, 0 = value on return /
 	'col_filter'     =>	<span>// IO array of column-name value pairs (optional for the filterheaders)</span>
 	'filter'         =>	<span>// IO filter, if not 'no_filter' => True</span>
 	'filter_no_lang' => True<span>// I  set no_lang for filter (=dont translate the options)</span>
+	'filter_onchange'=> 'this.form.submit();'<span>// I onChange action for filter, default: this.form.submit();</span>
 	'filter2'        =>	<span>// IO filter2, if not 'no_filter2' => True</span>
 	'filter2_no_lang'=> True<span>// I  set no_lang for filter2 (=dont translate the options)</span>
+	'filter2_onchange'=> 'this.form.submit();'<span>// I onChange action for filter, default: this.form.submit();</span>
 	'rows'           =>	<span>//  O content set by callback</span>
 	'total'          =>	<span>//  O the total number of entries</span>
+	'sel_options'    =>	<span>//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options</span>
 );
 
 <span>/*
