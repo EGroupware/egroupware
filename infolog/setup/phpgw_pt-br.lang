@@ -213,6 +213,7 @@ remove this link (not the entry itself)	infolog	pt-br	Remover este link (não o r
 responsible	infolog	pt-br	Responsável
 responsible open	infolog	pt-br	Responsável pela abertura
 responsible overdue	infolog	pt-br	Responsável pela realização
+responsible upcoming	infolog	pt-br	Responsável futuro
 responsible user, priority	infolog	pt-br	Usuário responsável, prioridade
 returns a list / search for records.	infolog	pt-br	Retornar uma lista / pesquisar por registros
 rights for the responsible	infolog	pt-br	Permissões para o responsável
@@ -257,6 +258,7 @@ startrecord	infolog	pt-br	Iniciar registro
 status	infolog	pt-br	Status
 status ...	infolog	pt-br	Status ...
 sub	infolog	pt-br	Sub
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	pt-br	Sub-entradas tornam-se "filhas" da "entrada-pai" ou, se não houver "entrada-pai", da entrada principal
 subject	infolog	pt-br	Assunto
 task	infolog	pt-br	Pendências
 test import (show importable records <u>only</u> in browser)	infolog	pt-br	Teste de Importação (mostrará arquivos importados <u>apenas</u> no navegador)

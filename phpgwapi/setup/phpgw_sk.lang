@@ -24,7 +24,7 @@ _remove link...	htmlarea-ContextMenu	sk	_Vyma¾ odkaz...
 _table properties...	htmlarea-ContextMenu	sk	_Vlastnosti tabuµky...
 a editor instance must be focused before using this command.	tinymce	sk	In¹tancia Editora musí ma» fokus, ne¾ pou¾ijete tento príkaz.
 about	common	sk	O aplikácii
-about %1	common	sk	O %1
+about %1	common	sk	O aplikácii %1
 about egroupware	common	sk	O eGroupWare
 about the calendar	jscalendar	sk	O Kalendári
 about this editor	htmlarea	sk	O tomto editore
