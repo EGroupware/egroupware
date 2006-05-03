@@ -1,6 +1,5 @@
-home	home sl	domov
-Home	home sl	Domov
-egroupware	home sl	egroupware
-eGroupware	home sl	eGroupware
-eGroupWare	home sl	eGroupWare
-Displays home	home sl	Prikaže dom
+displays home	home	sl	Prikaže domačo stran
+egroupware	home	sl	eGroupWare
+home	home	sl	Domov
+mainscreen_message	home	sl	sporočilo uvodnega zaslona
+there is a new version of egroupware available	home	sl	Na voljo je nova različica eGroupWare-a

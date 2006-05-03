@@ -145,7 +145,7 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sl	Če tukaj ne vnesete gesla, bo informacija na voljo vsem, ki poznajo URL!!!
 ignore conflict	calendar	sl	Prezri navzkrižje
 import	calendar	sl	Uvoz
-import csv-file	calendar	sl	Uvozi CSV datoteko
+import csv-file	common	sl	Uvozi CSV datoteko
 interval	calendar	sl	Interval
 intervals in day view	calendar	sl	Intervali v dnevnem pogledu
 invalid email-address "%1" for user %2	calendar	sl	Nepravilen elektronski naslov "%1" za uporabnika %2
@@ -173,6 +173,7 @@ no filter	calendar	sl	Brez filtra
 no matches found	calendar	sl	Ni zadetkov
 no response	calendar	sl	Ni odgovora
 non blocking	calendar	sl	ne-blokiran
+not	calendar	sl	ne
 notification messages for added events	calendar	sl	Sporočilo ob dodanih dogodkih
 notification messages for canceled events	calendar	sl	Sporočilo ob preklicanih dogodkih
 notification messages for disinvited participants	calendar	sl	Sporočilo preklica povabila za udeležence
@@ -245,6 +246,7 @@ show list of upcoming events	calendar	sl	Prikaži prihajajoče dogodke
 show this month	calendar	sl	prikaži ta mesec
 show this week	calendar	sl	prikaži ta teden
 single event	calendar	sl	posamezen dogodek
+site configuration	calendar	sl	konfiguracija strani
 start	calendar	sl	Začetek
 start date/time	calendar	sl	Začetni datum/čas
 startdate / -time	calendar	sl	Začetni datum /-čas

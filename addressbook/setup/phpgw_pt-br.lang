@@ -1,5 +1,6 @@
 %1 contact(s) %2	addressbook	pt-br	%1 contato(s) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pt-br	%1 contato(s) %2, %3 falhou(aram) por insuficiência de direiros de acesso !!!
+%1 fields in %2 other organisation member(s) changed	addressbook	pt-br	%1 campo(s) em %2 outro(s) membro(s) da organização alterado(s)
 %1 records imported	addressbook	pt-br	%1 registro(s) importado(s)
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar o campo Testar Importação)
 %1 starts with '%2'	addressbook	pt-br	%1 inicia(m) com '%2'
@@ -8,6 +9,7 @@
 @-eval() is only availible to admins!!!	addressbook	pt-br	@-eval() está disponível somente para administradores !!!
 accounts	addressbook	pt-br	Contas
 actions	addressbook	pt-br	Ações
+add a contact to this organisation	addressbook	pt-br	Adicionar um contato para esta organização
 add a new contact	addressbook	pt-br	Adicionar um novo contato
 add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os campos.
 add custom field	addressbook	pt-br	Adicionar campo personalizado
@@ -24,8 +26,10 @@ addressbook the contact should be saved to	addressbook	pt-br	Contatos em que o c
 addressbook-fieldname	addressbook	pt-br	Contatos - Nome do Campo
 addvcard	addressbook	pt-br	Adicionar VCard
 advanced search	addressbook	pt-br	Pesquisa avançada
+all contacts	addressbook	pt-br	Todos os contatos
 alt. csv import	addressbook	pt-br	Importar CSV
 always	addressbook	pt-br	sempre
+apply changes to all members, whose fields have the same previous content	addressbook	pt-br	Aplicar alterações para todos os membros, onde os campos tenham o mesmo conteúdo anterior.
 apply the action on the whole query, not only the shown contacts!!!	addressbook	pt-br	Aplicar as ações em toda a pesquisa, não apenas nos contatos exibidos!!!
 are you shure you want to delete this contact?	addressbook	pt-br	Tem certeza que deseja remover este contato?
 are you sure you want to delete this field?	addressbook	pt-br	Tem certeza que deseja remover este campo?
@@ -48,6 +52,7 @@ business zip code	addressbook	pt-br	CEP
 calendar uri	addressbook	pt-br	URI do Agenda
 car phone	addressbook	pt-br	Telefone no veículo
 cell phone	addressbook	pt-br	Telefone celular
+change all organisation members	addressbook	pt-br	Alterar todos os membros da organização
 charset for the csv export	addressbook	pt-br	Códificação de caracteres para a exportação CSV
 charset of file	addressbook	pt-br	Charset do arquivo
 check all	addressbook	pt-br	Verificar todos
@@ -59,11 +64,12 @@ company name	addressbook	pt-br	Nome da empresa
 configuration	common	pt-br	Configuração
 contact	common	pt-br	Contato
 contact application	admin	pt-br	Aplicação de Contatos
-contact deleted !!!	addressbook	pt-br	Contato removido !!!
+contact deleted	addressbook	pt-br	Contato removido
 contact id	addressbook	pt-br	ID do contato
 contact saved	addressbook	pt-br	Contato salvo
 contact settings	admin	pt-br	Preferências de Contatos
 copied by %1, from record #%2.	addressbook	pt-br	Copiado por %1, do registro #%2.
+copy a contact and edit the copy	addressbook	pt-br	Copiar um contato e editar a cópia
 country	common	pt-br	País
 create new links	addressbook	pt-br	Criar novos links
 created	addressbook	pt-br	Criado
@@ -76,9 +82,11 @@ debug output in browser	addressbook	pt-br	Depurar saída no navegador
 default filter	addressbook	pt-br	Filtro padrão
 delete a single entry by passing the id.	addressbook	pt-br	Apagar um única entrada informando o ID.
 delete this contact	addressbook	pt-br	Remover este contato
+delete this organisation including all its contacts	addressbook	pt-br	Remover esta organização incluindo todos seus contatos
 deleted	addressbook	pt-br	removido
 deletes the photo	addressbook	pt-br	Remove a foto
 department	common	pt-br	Departamento
+departments	addressbook	pt-br	Departamentos
 displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	pt-br	Exibe um lembrete para aniversários de hoje ou amanhã na Página Inicial (página que você recebe quando entra no eGroupWare ou clica no botão 'Página Inicial').
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	pt-br	Você quer uma lista de contatos privativa, que podem ser vistos por usuários que você permitir ?
 do your really want to delete this contact?	addressbook	pt-br	Tem certeza que deseja remover este contato?
@@ -95,6 +103,8 @@ email & internet	addressbook	pt-br	Email & Internet
 empty for all	addressbook	pt-br	vazio para todos
 enable an extra private addressbook	addressbook	pt-br	Habilitar uma lista de contatos extra
 enter the path to the exported file here	addressbook	pt-br	Entre aqui com o caminho do arquivo exportado
+error deleting the contact !!!	addressbook	pt-br	Erro removendo o contato !!!
+error saving the contact !!!	addressbook	pt-br	Erro salvando o contato !!!
 existing links	addressbook	pt-br	Links existentes
 export	addressbook	pt-br	exportar
 export as csv	addressbook	pt-br	Exportar como CSV
@@ -104,6 +114,7 @@ export file name	addressbook	pt-br	Exportar arquivo
 export from addressbook	addressbook	pt-br	Exportar dos Contatos
 exported	addressbook	pt-br	exportado
 extra	addressbook	pt-br	Extra
+failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pt-br	Falha ao alterar %1 membro(s) da organização (direitos insuficientes) !!!
 fax	addressbook	pt-br	Fax
 fax number	common	pt-br	Número do Fax
 field %1 has been added !	addressbook	pt-br	Campo %1 foi adicionado !
@@ -154,6 +165,7 @@ links	addressbook	pt-br	Links
 list all categories	addressbook	pt-br	Listar todas as categorias
 list all customfields	addressbook	pt-br	Listas todos os campos personalizados
 load vcard	addressbook	pt-br	Carregar VCard
+locations	addressbook	pt-br	Localizações
 mark records as private	addressbook	pt-br	Marcar registos como particulares
 message phone	addressbook	pt-br	Telefone para recado
 middle name	addressbook	pt-br	Nome do meio
@@ -168,7 +180,10 @@ number	addressbook	pt-br	Número
 number of records to read (%1)	addressbook	pt-br	Número de registros a ler (%1)
 only if there is content	addressbook	pt-br	somente se houver conteúdo
 options for type	admin	pt-br	Opções para tipo
-organisation	addressbook	pt-br	organização
+organisation	addressbook	pt-br	Organização
+organisations	addressbook	pt-br	Organizações
+organisations by departments	addressbook	pt-br	Organizações por departamento
+organisations by location	addressbook	pt-br	Organizações por localização
 other number	addressbook	pt-br	Outro número
 other phone	addressbook	pt-br	Outro telefone
 own sorting	addressbook	pt-br	ordem própria
@@ -194,6 +209,7 @@ role	addressbook	pt-br	Função
 room	addressbook	pt-br	Sala
 search for '%1'	addressbook	pt-br	Procurar por '%1'
 select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pt-br	Selecione uma foto no formato jpeg. Ela será alterada para o tamanho de 60 pixels de largura
+select a view	addressbook	pt-br	Selecionar uma exibição
 select addressbook type	addressbook	pt-br	Selecionar tipo de Contatos
 select all	addressbook	pt-br	Selecionar todos
 select an action or addressbook to move to	addressbook	pt-br	Selecione uma ação ou lista de Contatos para mover
@@ -205,10 +221,7 @@ select where you want to store / retrieve contacts	admin	pt-br	Selecione onde vo
 show	addressbook	pt-br	Exibir
 show a column for %1	addressbook	pt-br	Exibir uma coluna para %1
 show birthday reminders on main screen	addressbook	pt-br	Exibir lembrete de aniversários na tela principal
-something went wrong by deleting %1	addressbook	pt-br	Algo errado ocorreu removendo %1
-something went wrong by deleting this contact	addressbook	pt-br	Algo errado ocorreu removendo este contato
-something went wrong by reading this contact	addressbook	pt-br	Algo errado ocorreu lendo este contato
-something went wrong by saving this contact. errorcode %1	addressbook	pt-br	Algo errado ocorreu salvando este contato. Código de erro: %1
+show the contacts of this organisation	addressbook	pt-br	Exibir os contatos desta organização
 startrecord	addressbook	pt-br	Registro inicial
 state	common	pt-br	Estado
 street	common	pt-br	Rua
