@@ -510,7 +510,7 @@ class bocontacts extends socontacts
 				$org[$name] = $value;
 			}
 		}
-		echo $org_id; _debug_array($org);
+		//echo $org_id; _debug_array($org);
 		
 		return $org;
 	}
@@ -647,7 +647,7 @@ class bocontacts extends socontacts
 				$criteria[$col] = $pattern;
 			}
 		}
-		foreach((array) $this->regular_search($criteria,false,'org_name,n_family,n_given','','%',false,'OR') as $contact)
+		foreach((array) parent::search($criteria,false,'org_name,n_family,n_given','','%',false,'OR') as $contact)
 		{
 			$result[$contact['id']] = $this->link_title($contact);
 		}
