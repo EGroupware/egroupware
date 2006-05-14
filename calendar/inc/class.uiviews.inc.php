@@ -55,7 +55,7 @@ class uiviews extends uical
 	/**
 	 * @var int $rowHeight height in percent of one row, gets set be the timeGridWidget
 	 */
-	var $rowHeigth;
+	var $rowHeight;
 	
 	/**
 	 * @var array $search_params standard params for calling bocal::search for all views, set by the constructor
@@ -568,7 +568,7 @@ class uiviews extends uical
 	 */
 	function times2height($start,$end,$minimum=0)
 	{
-		$minimum = $this->rowHeigth;
+		$minimum = $this->rowHeight;
 		$height = $this->time2pos($end) - $this->time2pos($start);
 
 		if ($this->debug > 3) $this->bo->debug_message('uiviews::times2height(%1,%2,min=%3)=%4',False,$start,$end,$minimum,$height);
