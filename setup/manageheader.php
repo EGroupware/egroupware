@@ -268,10 +268,13 @@
 				$setup_tpl->set_var('lang_select','<tr><td colspan="2"><form action="manageheader.php" method="post">Please Select your language '.lang_select(True,'en')."</form></td></tr>");
 			}
 
-			$detected = '';
-			$detected .= '<tr><td colspan="2"><p>' . $GLOBALS['egw_info']['setup']['PageMSG'] . '<br />&nbsp;</p></td></tr>';
+			$setup_tpl->set_var('pagemsg',$GLOBALS['egw_info']['setup']['PageMSG']);
+			$setup_tpl->set_var('lang_analysis',lang('Analysis'));
+
+			//$detected = '';
+			//$detected .= '<tr><td colspan="2"><p>' . $GLOBALS['egw_info']['setup']['PageMSG'] . '<br />&nbsp;</p></td></tr>';
 			
-			$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr>'."\n".'<tr><td colspan="2">'. "\n";
+			//$detected .= '<tr class="th"><td colspan="2">' . lang('Analysis') . '</td></tr>'."\n".'<tr><td colspan="2">'. "\n";
 
 			$supported_db = array();
 			foreach(array(
@@ -521,7 +524,7 @@
 				$GLOBALS['egw_info']['server']['include_root'] = $updir; 
 			}
 
-			$detected .= "</td></tr>\n";
+		
 			$setup_tpl->set_var('detected',$detected);
 			/* End of detected settings, now display the form with the detected or prior values */
 
@@ -576,7 +579,8 @@
 			$setup_tpl->set_var('mcrypt',$GLOBALS['egw_info']['server']['versions']['mcrypt']);
 			$setup_tpl->set_var('mcrypt_iv',$GLOBALS['egw_info']['server']['mcrypt_iv']);
 
-			$setup_tpl->set_var('lang_setup_acl',lang('Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)'));
+			$setup_tpl->set_var('lang_setup_acl',lang('Limit access'));
+			$setup_tpl->set_var('lang_setup_acl_descr',lang('Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)'));
 			$setup_tpl->set_var('setup_acl',$GLOBALS['egw_info']['server']['setup_acl']);
 
 			if(@$GLOBALS['egw_info']['server']['show_domain_selectbox'])
@@ -625,8 +629,11 @@
 			$setup_tpl->set_var('lang_adddomain',lang('Add new database instance (eGW domain)'));
 			$setup_tpl->set_var('lang_serverroot',lang('Server Root'));
 			$setup_tpl->set_var('lang_includeroot',lang('Include Root (this should be the same as Server Root unless you know what you are doing)'));
-			$setup_tpl->set_var('lang_adminuser',lang('Admin user for header manager'));
-			$setup_tpl->set_var('lang_adminpass',lang('Admin password to header manager'));
+			$setup_tpl->set_var('lang_adminuser',lang('Header loginname'));
+			$setup_tpl->set_var('lang_adminuser_descr',lang('Admin user for header manager'));
+			$setup_tpl->set_var('lang_adminpass',lang('Header password'));
+			$setup_tpl->set_var('lang_adminpass_descr',lang('Admin password to header manager.'));
+			$setup_tpl->set_var('lang_leave_empty',lang('Leave empty to keep current.'));
 			$setup_tpl->set_var('lang_dbhost',lang('DB Host'));
 			$setup_tpl->set_var('lang_dbhostdescr',lang('Hostname/IP of database server').'<br />'.
 				lang('Postgres: Leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection').'<br />'.
@@ -642,8 +649,9 @@
 			$setup_tpl->set_var('lang_dbtype',lang('DB Type'));
 			$setup_tpl->set_var('lang_whichdb',lang('Which database type do you want to use with eGroupWare?'));
 			$setup_tpl->set_var('lang_configuser',lang('Configuration User'));
+			$setup_tpl->set_var('lang_configuser_descr',lang('Loginname needed for domain configuration'));
 			$setup_tpl->set_var('lang_configpass',lang('Configuration Password'));
-			$setup_tpl->set_var('lang_passforconfig',lang('Password needed for configuration'));
+			$setup_tpl->set_var('lang_passforconfig',lang('Password needed for domain configuration.'));
 			$setup_tpl->set_var('lang_persist',lang('Persistent connections'));
 			$setup_tpl->set_var('lang_persistdescr',lang('Do you want persistent connections (higher performance, but consumes more resources)'));
 			$setup_tpl->set_var('lang_sesstype',lang('Sessions Type'));
@@ -657,6 +665,7 @@
 			$setup_tpl->set_var('lang_mcryptiv',lang('MCrypt initialization vector'));
 			$setup_tpl->set_var('lang_mcryptivdescr',lang('This should be around 30 bytes in length.<br />Note: The default has been randomly generated.'));
 			$setup_tpl->set_var('lang_domselect',lang('Domain select box on login'));
+			$setup_tpl->set_var('lang_domselect_descr',lang('Alternatively domains can be accessed by logging in with <i>username@domain</i>.'));
 			$setup_tpl->set_var('lang_finaldescr',lang('After retrieving the file, put it into place as the header.inc.php.  Then, click "continue".'));
 			$setup_tpl->set_var('lang_continue',lang('Continue'));
 			$setup_tpl->set_var('lang_Yes',lang('Yes'));

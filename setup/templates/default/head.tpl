@@ -39,15 +39,42 @@
 			<!--
 			.row_on { color: #000000; background-color: #eeeeee; }
 			.row_off { color: #000000; background-color: #e8f0f0; }
-			.th 
+			.th
 			{ 
-			  color: #000000; 
-			  background-color: #cccccc; 
+				color: #000000; 
+				background-color: #cccccc; 
+				font-weight:bold;
+				font-size:120%;
+			}
+			
+			td
+			{
+				/*font-size:12px;*/
+				line-height:170%;
+			}
+
+			/* some styles specially for setup */
+			#tbl_manage_header td
+			{
+				border:solid 0px green;
+				vertical-align:top;
+				padding-bottom:10px;
+			}
+			.th th,
+			.th td
+			{
+				padding:3px;	
+			}
+			.table_domains
+			{
+				border:solid 1px #cccccc;
+				width:100%;
+				margin-bottom:10px;
 			}
 
 			-->	
 		</style>
-		
+
 		<!--{java_script}-->
 		
 		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and higher --> 
