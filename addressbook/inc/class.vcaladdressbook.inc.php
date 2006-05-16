@@ -160,10 +160,7 @@
 			if(!$contact = $this->vcardtoegw($_vcard)) {
 				return false;
 			}
-
-			// they can be problematic
-			unset($contact['note']);
-
+			
 			if($foundContacts = $this->read_entries(array('query' => $contact))) {
 				return $foundContacts[0][id];
 			}
