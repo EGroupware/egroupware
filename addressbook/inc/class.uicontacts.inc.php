@@ -164,7 +164,7 @@ class uicontacts extends bocontacts
 		// dont show tid-selection if we have only one content_type
 		if (count($this->content_types) <= 1)
 		{
-			$preserv['tid'] = 'n';
+			$content['nm']['col_filter']['tid'] = 'n';
 		}
 		else
 		{
@@ -174,7 +174,6 @@ class uicontacts extends bocontacts
 				$sel_options['col_filter[tid]'][$tid] = $data['name'];
 			}
 		}
-		
 		// get the availible org-views plus the label of the contacts view of one org
 		$sel_options['org_view'] = $this->org_views;
 		if (isset($org_view)) $content['nm']['org_view'] = $org_view;
