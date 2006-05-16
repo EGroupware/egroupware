@@ -309,6 +309,8 @@ class uical
 			// if planner_start_with_group is set in the users prefs: switch owner for planner to planner_start_with_group and back
 			if ($this->cal_prefs['planner_start_with_group'])
 			{
+				if ($this->cal_prefs['planner_start_with_group'] > 0) $this->cal_prefs['planner_start_with_group'] *= -1;	// fix old 1.0 pref
+
 				if (!$states_session && !$_GET['menuaction']) $this->view = '';		// first call to calendar 
 
 				if ($func == 'planner' && $this->view != 'planner' && $this->owner == $this->user)
