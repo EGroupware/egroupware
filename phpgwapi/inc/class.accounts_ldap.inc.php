@@ -307,7 +307,8 @@
 				// add the list group members
 				if($this->data['account_type'] == 'g' && $this->group_context )
 				{
-					$members = $this->member($this->account_id);
+					$members = $this->member($this->account_id) ? $this->member($this->account_id) : NULL;
+
 					#_debug_array($members);
 					$newData['memberuid'] = array();
 					for($i=0;$i<count($members);$i++)
