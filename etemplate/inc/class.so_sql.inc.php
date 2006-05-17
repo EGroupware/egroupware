@@ -568,7 +568,7 @@ class so_sql
 		{
 			$colums = $only_keys;
 		}
-		if ($extra_cols) $colums .= ','.(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols);
+		if ($extra_cols) $colums .= ($colums ? ',' : '').(is_array($extra_cols) ? implode(',',$extra_cols) : $extra_cols);
 
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
