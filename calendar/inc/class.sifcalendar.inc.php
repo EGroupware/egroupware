@@ -220,14 +220,29 @@
 			if(!$event = $this->siftoegw($_sifdata)) {
 				return false;
 			}
-			
-			return false;
-			
-			if($foundEvents = $this->read_entries(array('query' => $contact))) {
-				error_log(print_r($foundContacts,true));
-				return $foundContacts[0][id];
+
+			$search['start'] = $event['start'];
+			$search['end']	= $event['end'];
+
+			unset($event['description']);
+			unset($event['start']);
+			unset($event['end']);
+
+			foreach($event as $key => $value) {
+				if (substr($key,0,6) != 'recur_') {
+					$search['query']['cal_'.$key] = $value;
+				} else {
+					#$search['query'][$key] = $value;
+				}
 			}
-			
+
+			if($foundEvents = parent::search($search)) {
+				if(is_array($foundEvents)) {
+					$event = array_shift($foundEvents);
+					return $event['id'];
+				}
+			}
+
 			return false;
 		}
 
@@ -474,7 +489,7 @@
 					}
 				}
 				$sifEvent .= '</appointment>';
-error_log($sifEvent);
+
 				return base64_encode($sifEvent);
 			}
 

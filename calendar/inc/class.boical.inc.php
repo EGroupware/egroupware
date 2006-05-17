@@ -724,5 +724,309 @@
 					break;
 			}
 		}
+		
+		function icaltoegw($_vcalData) {
+			// our (patched) horde classes, do NOT unfold folded lines, which causes a lot trouble in the import
+			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
+
+			$vcal = &new Horde_iCalendar;
+			if(!$vcal->parsevCalendar($_vcalData))
+			{
+				return FALSE;
+			}
+
+			if(!is_array($this->supportedFields))
+			{
+				$this->setSupportedFields();
+			}
+			//echo "supportedFields="; _debug_array($this->supportedFields);
+
+			$Ok = false;	// returning false, if file contains no components
+			foreach($vcal->getComponents() as $component)
+			{
+				if(is_a($component, 'Horde_iCalendar_vevent'))
+				{
+					$supportedFields = $this->supportedFields;
+					#$event = array('participants' => array());
+					$event		= array();
+					$alarms		= array();
+					$vcardData	= array('recur_type' => 0);
+					
+					// lets see what we can get from the vcard
+					foreach($component->_attributes as $attributes)
+					{
+						$attributes['value'] = $GLOBALS['egw']->translation->convert($attributes['value'],'UTF-8');
+						//echo "$attributes[name] = '$attributes[value]'<br />\n";
+
+						switch($attributes['name'])
+						{
+							case 'AALARM':
+							case 'DALARM':
+								if (preg_match('/.*Z$/',$attributes['value'],$matches))
+								{
+									$alarmTime = $vcal->_parseDateTime($attributes['value']);
+									$alarms[$alarmTime] = array(
+										'time' => $alarmTime
+									);
+								}
+								break;
+							case 'CLASS':
+								$vcardData['public']		= (int)(strtolower($attributes['value']) == 'public');
+								break;
+							case 'DESCRIPTION':
+								$vcardData['description']	= $attributes['value'];
+								break;
+							case 'DTEND':
+								if(date('H:i:s',$attributes['value']) == '00:00:00')
+									$attributes['value']--;
+								$vcardData['end']		= $attributes['value'];
+								break;
+							case 'DTSTART':
+								$vcardData['start']		= $attributes['value'];
+								break;
+							case 'LOCATION':
+								$vcardData['location']	= $attributes['value'];
+								break;
+							case 'RRULE':
+								$recurence = $attributes['value'];
+								$type = preg_match('/FREQ=([^;: ]+)/i',$recurence,$matches) ? $matches[1] : $recurence{0};
+								// vCard 2.0 values for all types
+								if (preg_match('/UNTIL=([0-9T]+)/',$recurence,$matches))
+								{
+									$vcardData['recur_enddate'] = $vcal->_parseDateTime($matches[1]);
+								}
+								if (preg_match('/INTERVAL=([0-9]+)/',$recurence,$matches))
+								{
+									$vcardData['recur_interval'] = (int) $matches[1];
+								}
+								$vcardData['recur_data'] = 0;
+								switch($type)
+								{
+									case 'W':
+									case 'WEEKLY':
+										$days = array();
+										if(preg_match('/W(\d+) (.*) (.*)/',$recurence, $recurenceMatches))		// 1.0
+										{
+											$vcardData['recur_interval'] = $recurenceMatches[1];
+											$days = explode(' ',trim($recurenceMatches[2]));
+											if($recurenceMatches[3] != '#0')
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[3]);
+											$recur_days = $this->recur_days_1_0;
+										}
+										elseif (preg_match('/BYDAY=([^;: ]+)/',$recurence,$recurenceMatches))	// 2.0
+										{
+											$days = explode(',',$recurenceMatches[1]);
+											$recur_days = $this->recur_days;
+										}
+										if ($days)
+										{
+											foreach($recur_days as $id => $day)
+				            						{
+				            							if (in_array(strtoupper(substr($day,0,2)),$days))
+		            									{
+		            										$vcardData['recur_data'] |= $id;
+		            									}
+		            								}
+											$vcardData['recur_type'] = MCAL_RECUR_WEEKLY;
+										}
+										break;
+									
+									case 'D':		// 1.0
+										if(!preg_match('/D(\d+) (.*)/',$recurence, $recurenceMatches)) break;
+										$vcardData['recur_interval'] = $recurenceMatches[1];
+										if($recurenceMatches[2] != '#0')
+											$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+										// fall-through
+									case 'DAILY':	// 2.0
+										$vcardData['recur_type'] = MCAL_RECUR_DAILY;
+										break;
+
+									case 'M':
+										if(preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches))
+										{
+											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
+											if($recurenceMatches[1] > 1)
+												$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[2] != '#0')
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+										}
+										elseif(preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches))
+										{
+											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_WDAY;
+											if($recurenceMatches[1] > 1)
+												$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[4] != '#0')
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[4]);
+										}
+										break;
+									case 'MONTHLY':
+										$vcardData['recur_type'] = strstr($recurence,'BYDAY') ? 
+											MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
+										break;										
+
+									case 'Y':		// 1.0
+										if(!preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches)) break;
+										$vcardData['recur_interval'] = $recurenceMatches[1];
+										if($recurenceMatches[2] != '#0')
+											$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+										// fall-through
+									case 'YEARLY':	// 2.0
+										$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
+										break;
+								}
+								break;
+							case 'EXDATE':
+								// ToDo: $vcardData['recur_exception'] = ...
+								break;
+							case 'SUMMARY':
+								$vcardData['title']		= $attributes['value'];
+								break;
+							case 'UID':
+								$event['uid'] = $vcardData['uid'] = $attributes['value'];
+								if ($cal_id <= 0 && !empty($vcardData['uid']) && ($uid_event = $this->read($vcardData['uid'])))
+								{
+									$event['id'] = $uid_event['id'];
+									unset($uid_event);
+								}
+								break;
+	 						case 'TRANSP':
+								$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
+								break;
+							case 'PRIORITY':
+	 							$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
+	 							break;
+	 						case 'CATEGORIES':
+	 							$vcardData['category'] = array();
+	 							if ($attributes['value'])
+	 							{
+									if (!is_object($this->cat))
+									{
+										if (!is_object($GLOBALS['egw']->categories))
+										{
+											$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$this->owner,'calendar');
+										}
+										$this->cat =& $GLOBALS['egw']->categories;
+									}
+	 								foreach(explode(',',$attributes['value']) as $cat_name)
+	 								{
+	 									if (!($cat_id = $this->cat->name2id($cat_name)))
+	 									{
+	 										$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
+	 									}
+ 										$vcardData['category'][] = $cat_id;
+	 								}
+	 							}
+	 							break;	
+	 						case 'ATTENDEE':
+	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
+	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
+	 							{
+	 								$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
+	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] : 
+	 									($uid == $event['owner'] ? 'A' : 'U');
+	 							}
+	 							break;
+	 						case 'ORGANIZER':	// will be written direct to the event
+	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
+	 								($uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email')))
+	 							{
+	 								$event['owner'] = $uid;
+	 							}
+	 							break;
+	 						case 'CREATED':		// will be written direct to the event
+	 							if ($event['modified']) break;
+	 							// fall through
+	 						case 'LAST-MODIFIED':	// will be written direct to the event
+								$event['modified'] = $attributes['value'];
+								break;
+						}
+					}
+					if(!empty($vcardData['recur_enddate']))
+					{
+						// reset recure_enddate to 00:00:00 on the last day
+						$vcardData['recur_enddate'] = mktime(0, 0, 0, 
+							date('m',$vcardData['recur_enddate']),
+							date('d',$vcardData['recur_enddate']),
+							date('Y',$vcardData['recur_enddate'])
+						);
+					}
+					//echo "event=";_debug_array($vcardData);
+					
+					// now that we know what the vard provides, we merge that data with the information we have about the device
+					$event['priority']		= 2;
+					if($cal_id > 0)
+					{
+						$event['id'] = $cal_id;
+					}
+					while(($fieldName = array_shift($supportedFields)))
+					{
+						switch($fieldName)
+						{
+							case 'alarms':
+								// not handled here
+								break;
+							case 'recur_type':
+								$event['recur_type'] = $vcardData['recur_type'];
+								if ($event['recur_type'] != MCAL_RECUR_NONE)
+								{
+									foreach(array('recur_interval','recur_enddate','recur_data','recur_exception') as $r)
+									{
+										if(isset($vcardData[$r]))
+										{
+											$event[$r] = $vcardData[$r];
+										}
+									}
+								}
+								unset($supportedFields['recur_type']);
+								unset($supportedFields['recur_interval']);
+								unset($supportedFields['recur_enddate']);
+								unset($supportedFields['recur_data']);
+								break;
+							default:
+								if (isset($vcardData[$fieldName]))
+								{
+									$event[$fieldName] = $vcardData[$fieldName];
+								}
+								unset($supportedFields[$fieldName]);
+								break;
+						}
+					}
+					
+					return $event;
+				}
+			}
+			
+			return false;
+		}
+
+		function search($_vcalData) {
+			if(!$event = $this->icaltoegw($_vcalData)) {
+				return false;
+			}
+			
+			$search['start'] = $event['start'];
+			$search['end']	= $event['end'];
+
+			unset($event['description']);
+			unset($event['start']);
+			unset($event['end']);
+
+			foreach($event as $key => $value) {
+				if (substr($key,0,6) != 'recur_') {
+					$search['query']['cal_'.$key] = $value;
+				} else {
+					#$search['query'][$key] = $value;
+				}
+			}
+
+			if($foundEvents = parent::search($search)) {
+				if(is_array($foundEvents)) {
+					$event = array_shift($foundEvents);
+					return $event['id'];
+				}
+			}
+
+			return false;
+		}
 	}
 ?>
