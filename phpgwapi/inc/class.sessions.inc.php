@@ -1176,7 +1176,14 @@
 				foreach(explode('&',$extravars) as $expr)
 				{
 					list($var,$val) = explode('=', $expr,2);
-					$vars[$var] = $val;
+					if (substr($var,-2) == '[]')
+					{
+						$vars[substr($var,0,-2)][] = $val;
+					}
+					else
+					{
+						$vars[$var] = $val;
+					}
 				}
 			}
 
@@ -1194,7 +1201,17 @@
 				$query = array();
 				foreach($vars as $key => $value)
 				{
-					$query[] = $key.'='.urlencode($value);
+					if (is_array($value))
+					{
+						foreach($value as $val)
+						{
+							$query[] = $key.'[]='.urlencode($val);
+						}
+					}
+					else
+					{
+						$query[] = $key.'='.urlencode($value);
+					}
 				}
 				$url .= '?' . implode('&',$query);
 			}
