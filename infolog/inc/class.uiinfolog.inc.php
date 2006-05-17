@@ -169,6 +169,11 @@
 						$info['pm_id'] = $link['id'];
 					}
 					if ($link['app'] == 'timesheet') $timesheets[] = $link['id'];
+					
+					if ($link['app'] != 'timesheet' && $link['app'] != $this->link->vfs_appname)
+					{
+						$info['extra_links'] .= '&link_app[]='.$link['app'].'&link_id[]='.$link['id'];
+					}
 				}
 				if ($this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet']) && $timesheets)
 				{
