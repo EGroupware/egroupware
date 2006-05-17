@@ -77,13 +77,13 @@
 			switch($_action)
 			{
 				case 'modify':
-					$query .= "sync_modified > '".$this->db->to_timestamp($_ts)."' and (sync_deleted is null or sync_deleted = '0')";
+					$query .= "sync_modified > '".$this->db->to_timestamp($_ts)."' and sync_deleted is null";
 					break;
 				case 'delete':
 					$query .= "sync_deleted > '".$this->db->to_timestamp($_ts)."'";
 					break;
 				case 'add':
-					$query .= "sync_added > '".$this->db->to_timestamp($_ts)."' and (sync_deleted is null or sync_deleted = '0') and (sync_modified is null or sync_modified = '0') ";
+					$query .= "sync_added > '".$this->db->to_timestamp($_ts)."' and sync_deleted is null and sync_modified is null";
 					break;
 				default:
 					// no valid $_action set
@@ -179,15 +179,15 @@
 						$this->db->insert($this->table,$newData,array(),__LINE__,__FILE__);
 					}
 
-					$this->db->select($this->table,'sync_added',$where,__LINE__,__FILE__);
-					$this->db->next_record();
-					$syncAdded = $this->db->f('sync_added');
+					#$this->db->select($this->table,'sync_added',$where,__LINE__,__FILE__);
+					#$this->db->next_record();
+					#$syncAdded = $this->db->f('sync_added');
 
 					// now update the time stamp
 					$newData = array (
 						'sync_changedby'	=> $GLOBALS['egw_info']['user']['account_id'],
-						$_action == 'modify' ? 'sync_modified' : 'sync_deleted' => $_ts,
-						'sync_added'		=> $syncAdded,
+						$_action == 'modify' ? 'sync_modified' : 'sync_deleted' => $_ts ,
+					#	'sync_added'		=> $syncAdded,
 					);
 					$this->db->update($this->table, $newData, $where,__LINE__,__FILE__);
 					break;

@@ -180,6 +180,7 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				#$guid = $state->getGlobalUID($type, $syncItem->getLocURI());
 				$guid = $registry->call($hordeType . '/search',
 					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+				Horde::logMessage('SyncML: found guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				$ok = false;
 				if ($guid) {
 					#Horde::logMessage('SyncML: locuri'. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_ERR);

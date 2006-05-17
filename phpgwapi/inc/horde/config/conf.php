@@ -1,7 +1,7 @@
 <?php
 /* CONFIG START. DO NOT CHANGE ANYTHING IN OR AFTER THIS LINE. */
 // $Horde: horde/config/conf.xml,v 1.79 2005/02/16 15:42:35 jan Exp $
-$conf['debug_level'] = E_ALL;
+$conf['debug_level'] = E_ERROR | E_WARNING | E_PARSE;
 $conf['max_exec_time'] = 0;
 $conf['use_ssl'] = 2;
 $conf['server']['name'] = $_SERVER['SERVER_NAME'];
