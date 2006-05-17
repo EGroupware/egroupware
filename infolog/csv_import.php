@@ -66,31 +66,52 @@
 	$CPre = '|['; $CPreReg = '\|\['; // |{csv-fieldname} is expanded to the value of the csv-field
 	$CPos = ']';  $CPosReg = '\]';	// if used together with @ (replacement is eval-ed) value gets autom. quoted
 
-function addr_id( $n_family,$n_given=False,$org_name=False )
+function addr_id( $n_family,$n_given=null,$org_name=null )
 {		// find in Addressbook, at least n_family AND (n_given OR org_name) have to match
-	$contacts = createobject('phpgwapi.contacts');
-
-	if ($org_name !== False)	// org_name given?
+	static $contacts;
+	if (!is_object($contacts))
+	{
+		$contacts =& CreateObject('phpgwapi.contacts');
+	}
+	if (!is_null($org_name))	// org_name given?
 	{
 		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
 		if (!count($addrs))
 		{
-			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name" );
+			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name",'','n_family,org_name');
 		}
 	}
-	if ($n_given !== False && ($org_name === False || !count($addrs)))	// first name given and no result so far
+	if (!is_null($n_given) && (is_null($org_name) || !count($addrs)))	// first name given and no result so far
 	{
-		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given" );
+		$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given",'','n_family,n_given' );
 	}
-	if ($n_given === False && $org_name === False)	// just one name given, check against fn (= full name)
+	if (is_null($n_given) && is_null($org_name))	// just one name given, check against fn (= full name)
 	{
-		$addrs = $contacts->read( 0,0,array('id'),'',"fn=$n_family" );
+		$addrs = $contacts->read( 0,0,array('id'),'',"n_fn=$n_family",'','n_fn' );
 	}
 	if (count($addrs))
 	{
 		return $addrs[0]['id'];
 	}
 	return False;
+}
+
+function project_id($num_or_title)
+{
+	static $boprojects;
+
+	if (!$num_or_title) return false;
+
+	if (!is_object($boprojects))
+	{
+		$boprojects =& CreateObject('projectmanager.boprojectmanager');
+	}
+	if (($projects = $boprojects->search(array('pm_number' => $num_or_title))) ||
+		($projects = $boprojects->search(array('pm_title'  => $num_or_title))))
+	{
+		return $projects[0]['pm_id'];
+	}
+	return false;
 }
 
 $cat2id = array( );
@@ -119,7 +140,7 @@ function cat_id($cats)
 			{
 				$cat2id[$cat] = $ids[$cat] = $cat;
 			}	
-			elseif ($id = $GLOBALS['egw']->categories->name2id( addslashes($cat) ))
+			elseif (($id = $GLOBALS['egw']->categories->name2id( addslashes($cat) )))
 			{	// cat exists
 				$cat2id[$cat] = $ids[$cat] = $id;
 			}
@@ -155,7 +176,7 @@ function cat_id($cats)
 			$GLOBALS['egw']->html->select('charset','',
 			$GLOBALS['egw']->translation->get_installed_charsets()+
 			array('utf-8' => 'utf-8 (Unicode)'),True));
-		$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ',');
+		$GLOBALS['egw']->template->set_var('fieldsep',$_POST['fieldsep'] ? $_POST['fieldsep'] : ';');
 		$GLOBALS['egw']->template->set_var('submit',lang('Import'));
 		$GLOBALS['egw']->template->set_var('enctype','ENCTYPE="multipart/form-data"');
 
@@ -201,7 +222,11 @@ function cat_id($cats)
 			'status'      => 'Status: char(10) offer,not-started,ongoing,call,will-call,done,billed,cancelled',
 			'percent'     => 'Percent completed: int',
 //			'confirm'     => 'Confirmation: char(10) not,accept,finish,both when to confirm',
-			'addr_id'     => 'Addressbook id, to set use @addr_id(nlast,nfirst,org)'
+			'project_id'  => 'Link to Projectmanager, use Project-ID, Title or @project_id(id_or_title)',
+			'addr_id'     => 'Link to Addressbook, use nlast,nfirst[,org] or @addr_id(nlast,nfirst,org)',
+			'link_1'      => '1. link: appname:appid the entry should be linked to, eg.: addressbook:123',
+			'link_2'      => '2. link: appname:appid the entry should be linked to, eg.: addressbook:123',
+			'link_3'      => '3. link: appname:appid the entry should be linked to, eg.: addressbook:123',
 		);
 
 		// the next line is used in the help-text too
@@ -234,7 +259,8 @@ function cat_id($cats)
 		{
 			$GLOBALS['egw']->template->set_var('csv_field',$csv_field);
 			$GLOBALS['egw']->template->set_var('csv_idx',$csv_idx);
-			if ($def = $defaults[$csv_field]) 
+			
+			if (($def = $defaults[$csv_field]))
 			{
 				list( $info,$trans ) = explode($PSep,$def,2);
 				$GLOBALS['egw']->template->set_var('trans',$trans);
@@ -455,14 +481,46 @@ function cat_id($cats)
 			}
 			if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 			{
-				$id = $boinfolog->write($values,True,False);
-
-				if ($id && $values['addr_id'])
+				// create new names with info_ prefix
+				$to_write = array();
+				foreach($values as $name => $value)
 				{
-					$boinfolog->write(array(
-						'info_id'      => $id,
-						'info_link_id' => $boinfolog->link->link('infolog',$id,'addressbook',$values['addr_id'])
-					));
+					$to_write[substr($name,0,5) != 'info_' ? 'info_'.$name : $name] = $value;
+				}
+				if ($values['addr_id'] && !is_numeric($values['addr_id']))
+				{
+					list($lastname,$firstname,$org_name) = explode(',',$values['addr_id']);
+					$values['addr_id'] = addr_id($lastname,$firstname,$org_name);
+				}
+				if ($values['project_id'] && !is_numeric($values['project_id']))
+				{
+					$values['project_id'] = project_id($values['project_id']);
+				}
+				if (($id = $boinfolog->write($to_write,True,False)))
+				{
+					$info_link_id = false;
+					foreach(array(
+						'projectmanager:'.$values['project_id'],
+						'addressbook:'.$values['addr_id'],
+						$values['link_1'],$values['link_2'],$values['link_3'],
+					) as $value)
+					{
+						list($app,$app_id) = explode(':',$value);
+						if ($app && $app_id)
+						{
+							//echo "<p>linking infolog:$id with $app:$app_id</p>\n";
+							$link_id = $boinfolog->link->link('infolog',$id,$app,$app_id);
+							if ($link_id && !$info_link_id)
+							{
+								$to_write = array(
+									'info_id'      => $id,
+									'info_link_id' => $link_id,
+								);
+								$boinfolog->write($to_write);
+								$info_link_id = true;
+							}
+						}
+					}
 				}
 			}
 		}
