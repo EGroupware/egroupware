@@ -972,7 +972,7 @@ class uicontacts extends bocontacts
 			'to_app' => 'addressbook',
 			'to_id'  => $content['id'],
 		);
-		$readonlys['link_to'] = $readonlys['customfields'] = true;
+		$readonlys['link_to'] = $readonlys['customfields'] = $readonlys['fileas_type'] = true;
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['change_photo'] = true;
 		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
