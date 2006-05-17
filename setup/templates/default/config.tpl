@@ -213,7 +213,7 @@
    </tr>
 
    <tr class="row_off">
-     <td>{lang_Activate_save_password_check}:</td>
+     <td>{lang_Activate_safe_password_check}:</td>
      <td>
       <select name="newsettings[check_save_passwd]">
        <option value="">{lang_No}</option>

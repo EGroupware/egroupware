@@ -10,7 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	zh-tw	<b>這會產生 1 個管理者帳號以及 3 個測試帳號</b><br />測試帳號的密碼分別是： demo/guest, demo2/guest 與 demo3/guest。
 accounts existing	setup	zh-tw	帳號已經存在
 actions	setup	zh-tw	動作
-activate save password check	setup	zh-tw	啟用儲存密碼功能
+activate safe password check	setup	zh-tw	啟用儲存密碼功能
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	zh-tw	新增自動建立使用者到這個群組﹝若留空白則使用「Default」﹞
 add new database instance (egw domain)	setup	zh-tw	新增資料庫實例(eGW 網域)
 additional settings	setup	zh-tw	其他設定

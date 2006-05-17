@@ -10,7 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	<b>This will create 1 admin account and 3 demo accounts</b><br />The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
-activate save password check	setup	en	Activate save password check
+activate safe password check	setup	en	Activate safe password check
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	en	Add auto-created users to this group ('Default' will be attempted if this is empty.)
 add new database instance (egw domain)	setup	en	Add new database instance (eGW domain)
 additional settings	setup	en	Additional settings

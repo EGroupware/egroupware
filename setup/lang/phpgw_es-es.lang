@@ -10,7 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	es-es	<b>Esto creará 1 cuenta de administrador y 3 de demostración</b><br />Los nombres de usuario y contraseñas son: demo/guest, demo2/guest y demo3/guest.
 accounts existing	setup	es-es	Existen cuentas
 actions	setup	es-es	Acciones
-activate save password check	setup	es-es	Activar la comprobación para guardar contraseñas
+activate safe password check	setup	es-es	Activar la comprobación para guardar contraseñas
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	es-es	Añadir usuarios creados automáticamente a este grupo (si está vacío, se le asignará el grupo predeterminado)
 add new database instance (egw domain)	setup	es-es	Añadir nueva instancia de base de datos (dominio eGW)
 additional settings	setup	es-es	Configuración adicional

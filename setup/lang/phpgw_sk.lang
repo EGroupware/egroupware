@@ -10,7 +10,7 @@
 <b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sk	<b>Týmto sa vytvorí 1 správcovský úèet a 3 testovacie</b><br />Pou¾ívateµské mená/heslá sú: demo/guest, demo2/guest, demo3/guest.
 accounts existing	setup	sk	Existujúce úèty
 actions	setup	sk	Akcie
-activate save password check	setup	sk	Aktivova» voµbu ukladania hesla
+activate safe password check	setup	sk	Aktivova» voµbu ukladania hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sk	Automaticky vytvorených pou¾ívateµov priradi» do tejto skupiny (ak prázdne, pou¾ije sa 'Predvolená').
 add new database instance (egw domain)	setup	sk	Prida» novú databázovú in¹tanciu (eGW domain)
 additional settings	setup	sk	Ïal¹ie nastavenia
