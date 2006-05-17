@@ -11,10 +11,10 @@
 
 	/* $Id$ */
 
-	require_once EGW_SERVER_ROOT.'/addressbook/inc/class.bocontacts.inc.php';
+	require_once EGW_SERVER_ROOT.'/addressbook/inc/class.boaddressbook.inc.php';
 	require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 
-	class vcaladdressbook extends bocontacts 
+	class vcaladdressbook extends boaddressbook
 	{
 		#function vcaladdressbook()
 		#{
@@ -30,20 +30,27 @@
 		*/
 		function addVCard($_vcard, $_abID)
 		{
-			if(!($contact = $this->vcardtoegw($_vcard)))
-			{
+			if(!$contact = $this->vcardtoegw($_vcard)) {
 				return false;
 			}
 			
-			if($_abID > 0) $contact['ab_id'] = $_abID;
-
-			return $this->save($contact);
+			if($_abID > 0)
+			{
+				// update entry
+				$contact['ab_id'] = $_abID;
+				return $this->update_entry($contact);
+			}
+			else
+			{
+				// add entry
+				return $this->add_entry($contact);
+			}
 		}
 
 		/**
 		* return a vcard
 		*
-		* @param int	$_id			the id of the contact
+		* @param int	$_id		the id of the contact
 		* @param int	$_vcardProfile	profile id for mapping from vcard values to egw addressbook
 		* @return string containing the vcard
 		*/
@@ -58,10 +65,28 @@
 				$this->setSupportedFields();
 			}
 
+			foreach($this->supportedFields as $databaseFields)
+			{
+				foreach($databaseFields as $databaseField)
+				{
+					if(!empty($databaseField))
+					{
+						$fields[] = $databaseField;
+					}
+				}
+			}
+
 			#_debug_array($fields);
 
-			if(($entry = $this->read($_id)))
+			if($this->check_perms($_id,EGW_ACL_READ))
 			{
+				//$data = array('id' => $_id, 'fields' => $fields);
+				$entry = $this->so->read_entry($_id,$fields);
+				$entry = $this->strip_html($entry);
+				if($this->xmlrpc)
+				{
+					$entry = $this->data2xmlrpc($entry);
+				}
 				#_debug_array($entry);
 				$sysCharSet	= $GLOBALS['egw']->translation->charset();
 
@@ -90,13 +115,13 @@
 							$value = $catData[0]['name'];
 							break;
 						case 'CLASS':
-							$value = $value ? 'PRIVATE' : 'PUBLIC';
+							$value = ($value == 'private' ? 'PRIVATE' : 'PUBLIC');
 							break;
 						case 'BDAY':
 							if(!empty($value))
 							{
-								list($y,$m,$d) = explode('-',$value);
-								$value = sprintf('%04d%02d%02dT000000Z',$y,$m,$d);
+								$dateParts = explode('/',$value);
+								$value = sprintf('%04d%02d%02dT000000Z',$dateParts[2],$dateParts[0],$dateParts[1]);
 							}
 							break;
 					}
@@ -123,26 +148,23 @@
 
 				return $result;
 			}
+
+			if($this->xmlrpc)
+			{
+				$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['no_access'],$GLOBALS['xmlrpcstr']['no_access']);
+			}
 			return False;
 		}
 
-		/**
-		 * Search an exactly matching entry (used for slow sync)
-		 *
-		 * @param string $_vcard
-		 * @return boolean/int/string contact-id or false, if not found
-		 */
-		function search($_vcard) 
-		{
-			if(!($contact = $this->vcardtoegw($_vcard)))
-			{
+		function search($_vcard) {
+			if(!$contact = $this->vcardtoegw($_vcard)) {
 				return false;
 			}
-
-			if(($foundContacts = $this->search($contact)))
-			{
-				return $foundContacts[0]['id'];
+			
+			if($foundContacts = $this->read_entries(array('query' => $contact))) {
+				return $foundContacts[0][id];
 			}
+			
 			return false;
 		}
 
@@ -152,7 +174,7 @@
 				'ADR' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 								'adr_one_postalcode','adr_one_countryname'),
 				'CATEGORIES' 	=> array('cat_id'),
-				'CLASS'		=> array('private'),
+				'CLASS'		=> array('access'),
 				'EMAIL'		=> array('email'),
 				'N'		=> array('n_family','n_given','','',''),
 				'NOTE'		=> array('note'),
@@ -190,7 +212,7 @@
 								'adr_one_postalcode','adr_one_countryname'),
 				'BDAY'		=> array('bday'),
 				'CATEGORIES' 	=> array('cat_id'),
-				'CLASS'		=> array('private'),
+				'CLASS'		=> array('access'),
 				'EMAIL'		=> array('email'),
 				'N'		=> array('n_family','n_given','','',''),
 				'NOTE'		=> array('note'),
@@ -287,8 +309,7 @@
 			}
 		}
 		
-		function vcardtoegw($_vcard) 
-		{
+		function vcardtoegw($_vcard) {
 			if(!is_array($this->supportedFields))
 			{
 				$this->setSupportedFields();
@@ -314,6 +335,8 @@
 			foreach($vcardValues as $key => $vcardRow)
 			{
 				$rowName  = $vcardRow['name'];
+				$mailtype = ';INTERNET';
+				$tempVal  = ';WORK';
 
 				if(isset($vcardRow['params']['INTERNET']))
 				{
@@ -424,8 +447,15 @@
 						{
 							switch($fieldName)
 							{
-								case 'private':
-									$contact[$fieldName] = $vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE';
+								case 'access':
+									if($vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE')
+									{
+										$contact[$fieldName] = 'private';
+									}
+									else
+									{
+										$contact[$fieldName] = 'public';
+									}
 									break;
 								case 'cat_id':
 									if (!is_object($this->cat))
@@ -457,6 +487,48 @@
 			#return true;
 
 			/* _debug_array($contact);exit; */
+			$contact['fn']  = trim($contact['n_given'].' '.$contact['n_family']);
+			if(!$contact['tel_work'])
+			{
+				$contact['tel_work'] = '';
+			}
+			if(!$contact['tel_home'])
+			{
+				$contact['tel_home'] = '';
+			}
+			if(!$contact['tel_voice'])
+			{
+				$contact['tel_voice'] = '';
+			}
+			if(!$contact['tel_fax'])
+			{
+				$contact['tel_fax'] = '';
+			}
+			if(!$contact['tel_msg'])
+			{
+				$contact['tel_msg'] = '';
+			}
+			if(!$contact['tel_cell'])
+			{
+				$contact['tel_cell'] = '';
+			}
+			if(!$contact['tel_pager'])
+			{
+				$contact['tel_pager'] = '';
+			}
+			if(!$contact['tel_car'])
+			{
+				$contact['tel_car'] = '';
+			}
+			if(!$contact['tel_isdn'])
+			{
+				$contact['tel_isdn'] = '';
+			}
+			if(!$contact['tel_video'])
+			{
+				$contact['tel_video'] = '';
+			}
+
 			return $contact;
 		}
 	}
