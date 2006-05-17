@@ -91,11 +91,14 @@ class contacts extends bocontacts
 	{
 		//echo "<p>contacts::old_read($start,$limit,".print_r($fields,true).",$query,'$filter','$sort','$order',$lastmod,$cquery)</p>\n";
 		$sfilter = array();
-		foreach(explode(',',$filter) as $expr)
+		if ($filter)
 		{
-			list($col,$value) = explode('=',$expr);
-			
-			$sfilter[$col] = $value;
+			foreach(explode(',',$filter) as $expr)
+			{
+				list($col,$value) = explode('=',$expr);
+				
+				$sfilter[$col] = $value;
+			}
 		}
 		if ($lastmod != -1)
 		{
