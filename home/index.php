@@ -75,7 +75,7 @@
 	** Display the mainscreen message
 	*/
 	$GLOBALS['egw']->translation->add_app('mainscreen');
-	if (lang('mainscreen_message') != 'mainscreen_message*')
+	if((lang('mainscreen_message') != 'mainscreen_message*') && (lang('mainscreen_message') != 'mainscreen_message'))
 	{
 		echo '<div style="text-align: center;">' . lang('mainscreen_message') . "</div>\n";
 	}
