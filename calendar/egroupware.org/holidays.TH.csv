@@ -1,15 +1,20 @@
-TH	วันขึ้นปีใหม่	1	1	0	0	0
-TH	มาฆบูชา	26	2	0	0	0
-TH	วันจักรี	8	4	0	0	0
-TH	สงกรานต์	15	4	0	0	0
-TH	สงกรานต์	16	4	0	0	0
-TH	ชดเชยวันฉัตรมงคล	6	5	0	0	0
-TH	วันพืชมงคล	9	5	0	0	0
-TH	ชดเชยวันวิสาขบูชา	27	5	0	0	0
-TH	วันอาสาฬหบูชา	24	7	0	0	0
-TH	เข้าพรรษา	25	7	0	0	0
-TH	วันเฉลิมพระชนมพรรษาสมเด็จพระราชินี	12	8	0	0	0
-TH	วันปิยมหาราช	23	10	0	0	0
-TH	วันเฉลิมพระชนม์พรรษาสมเด็จพระเจ้าอยู่หัว	5	12	0	0	0
-TH	วันรัฐธรรมนูญ	10	12	0	0	0
-TH	วันสิ้นปี	31	12	0	0	0
+charset	utf-8
+
+regular (year=0):
+TH	New Years Day	1	1	0	0	1
+TH	Labour Day	1	5	0	0	1
+TH	Coronation Day	5	5	0	0	1
+TH	H.M. The Queen's Birthday	12	8	0	0	1
+TH	Chulalongkorn Day	23	10	0	0	1
+TH	H.M. The King's Birthday 	5	12	0	0	1
+TH	Constitution Day	10	12	0	0	1
+TH	New Years Eve	31	12	0	0	1
+
+2006:
+TH	Makha Bucha Day	13	2	2006	0	1
+TH	Chakri Day	6	4	2006	0	1
+TH	Songkran	13	4	2006	0	1
+TH	Songkran	14	4	2006	0	1
+TH	Songkran	15	4	2006	0	1
+TH	Visakha Bucha Day	12	5	2006	0	1
+TH	Khao Pansa Day	11	7	2006	0	1
