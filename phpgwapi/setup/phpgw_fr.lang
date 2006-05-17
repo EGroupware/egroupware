@@ -647,7 +647,7 @@ password could not be changed	common	fr	Le mot de passe n'a pas pu être changé
 password has been updated	common	fr	Le mot de passe a été mis à jour avec succès
 password must contain at least %1 lowercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères minuscules
 password must contain at least %1 numbers	common	fr	Le mot de passe doit contenir au moins %1 chiffres
-password must contain at least %1 special charactars	common	fr	Le mot de passe doit contenir au moins %1 caractères spéciaux
+password must contain at least %1 special characters	common	fr	Le mot de passe doit contenir au moins %1 caractères spéciaux
 password must contain at least %1 uppercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères majuscules
 password must have at least %1 characters	common	fr	Le mot de passe doit contenir au moins %1 caractères
 paste	htmlarea-ContextMenu	fr	Coller

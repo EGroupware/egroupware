@@ -1,4 +1,4 @@
-<?php 
+<?php
 	/**************************************************************************\
 	* eGroupWare API - Password auth and crypt functions                       *
 	* This file written by Miles Lott <milos@groupwhere.org>                   *
@@ -241,32 +241,42 @@
 		}
 
 		/**
-		 * Checks if a given password is "save"
+		 * Checks if a given password is "safe"
 		 *
 		 * @param string $login
 		 * @abstract atm a simple check in length, #digits, #uppercase and #lowercase
-		 * 				could be made more save using e.g. pecl libary cracklib
-		 * 				but as pecl dosn't tun on any platform and isn't GPL'd
-		 * 				i havn't implemented it yet
-		 *				Windows compatible check is: 7 char lenth, 1 Up, 1 Low, 1 Num and 1 Special 
+		 * 				could be made more safe using e.g. pecl library cracklib
+		 * 				but as pecl dosn't run on any platform and isn't GPL'd
+		 * 				i haven't implemented it yet
+		 *				Windows compatible check is: 7 char lenth, 1 Up, 1 Low, 1 Num and 1 Special
 		 * @author cornelius weiss<egw at von-und-zu-weiss.de>
-		 * @return mixed false if password is considerd "save" or a string $message if "unsafe" 
+		 * @return mixed false if password is considered "safe" or a string $message if "unsafe"
 		 */
 		function crackcheck($passwd)
 		{
 			if (!preg_match('/.{'. ($noc=7). ',}/',$passwd))
+			{
 				$message = lang('Password must have at least %1 characters',$noc). '<br>';
+			}
 			if(!preg_match('/(.*\d.*){'. ($non=1). ',}/',$passwd))
+			{
 				$message .= lang('Password must contain at least %1 numbers',$non). '<br>';
+			}
 			if(!preg_match('/(.*[[:upper:]].*){'. ($nou=1). ',}/',$passwd))
+			{
 				$message .= lang('Password must contain at least %1 uppercase letters',$nou). '<br>';
+			}
 			if(!preg_match('/(.*[[:lower:]].*){'. ($nol=1). ',}/',$passwd))
+			{
 				$message .= lang('Password must contain at least %1 lowercase letters',$nol). '<br>';
+			}
 			if(!preg_match('/(.*[\\!"#$%&\'()*+,-.\/:;<=>?@\[\]\^_ {|}~`].*){'. ($nol=1). ',}/',$passwd))
-				$message .= lang('Password must contain at least %1 special charactars',$nol). '<br>';
+			{
+				$message .= lang('Password must contain at least %1 special characters',$nol). '<br>';
+			}
 			return $message ? $message : false;
 		}
-		
+
 		/**
 		@function smd5_compare
 		@abstract compare SMD5-encrypted passwords for authentication

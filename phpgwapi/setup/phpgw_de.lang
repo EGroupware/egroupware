@@ -613,7 +613,7 @@ password could not be changed	common	de	Passwort konnte nicht geändert werden
 password has been updated	common	de	Passwort wurde aktualisiert
 password must contain at least %1 lowercase letters	common	de	Das Passwort muss mindestens %1 Kleinbuchstaben enthalten
 password must contain at least %1 numbers	common	de	Das Passwort muss mindestens %1 Nummern enthalten
-password must contain at least %1 special charactars	common	de	Das Passwort muss mindestens %1 Sonderzeichen enthalten
+password must contain at least %1 special characters	common	de	Das Passwort muss mindestens %1 Sonderzeichen enthalten
 password must contain at least %1 uppercase letters	common	de	Das Passwort muss mindestens %1 Großbuchstaben enthalten
 password must have at least %1 characters	common	de	Das Passwort muss mindestens %1 Zeichen lang sein
 paste	htmlarea-ContextMenu	de	Einfügen

@@ -653,7 +653,7 @@ password could not be changed	common	nl	Wachtwoord kon niet worden gewijzigd
 password has been updated	common	nl	Wachtwoord is gewijzigd
 password must contain at least %1 lowercase letters	common	nl	Wachtwoord moet minstens %1 kleine letters bevatten
 password must contain at least %1 numbers	common	nl	Wachtwoord moet minstens %1 cijfers bevatten
-password must contain at least %1 special charactars	common	nl	Wachtwoord moet minstens %1 bijzondere tekens bevatten
+password must contain at least %1 special characters	common	nl	Wachtwoord moet minstens %1 bijzondere tekens bevatten
 password must contain at least %1 uppercase letters	common	nl	Wachtwoord moet minstens %1 hoofdletters bevatten
 password must have at least %1 characters	common	nl	Wachtwoord moet minstens %1  tekens bevatten
 paste	htmlarea-ContextMenu	nl	Plakken

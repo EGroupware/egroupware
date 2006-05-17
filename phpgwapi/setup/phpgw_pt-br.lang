@@ -653,7 +653,7 @@ password could not be changed	common	pt-br	Senha não pode ser alterada
 password has been updated	common	pt-br	Senha foi alterada
 password must contain at least %1 lowercase letters	common	pt-br	Senha deve ter ao menos %1 caractere(s) minúsculo(s)
 password must contain at least %1 numbers	common	pt-br	Senha deve ter ao menos %1 número(s)
-password must contain at least %1 special charactars	common	pt-br	Senha deve ter ao menos %1 caractere(s) especial(is)
+password must contain at least %1 special characters	common	pt-br	Senha deve ter ao menos %1 caractere(s) especial(is)
 password must contain at least %1 uppercase letters	common	pt-br	Senha deve ter ao menos %1 caractere(s) maiúsculo(s)
 password must have at least %1 characters	common	pt-br	Senha deve ter ao menos %1 caractere(s)
 paste	htmlarea-ContextMenu	pt-br	Colar

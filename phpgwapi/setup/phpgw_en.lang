@@ -653,7 +653,7 @@ password could not be changed	common	en	Password could not be changed
 password has been updated	common	en	Password has been updated
 password must contain at least %1 lowercase letters	common	en	Password must contain at least %1 lowercase letters
 password must contain at least %1 numbers	common	en	Password must contain at least %1 numbers
-password must contain at least %1 special charactars	common	en	Password must contain at least %1 special charactars
+password must contain at least %1 special characters	common	en	Password must contain at least %1 special characters
 password must contain at least %1 uppercase letters	common	en	Password must contain at least %1 uppercase letters
 password must have at least %1 characters	common	en	Password must have at least %1 characters
 paste	htmlarea-ContextMenu	en	Paste
