@@ -49,8 +49,10 @@ class Horde_iCalendar {
 #        require_once 'Horde/String.php';
         $type = strtolower($type);
         $class = 'Horde_iCalendar_' . strtolower($type);
-        include_once dirname(__FILE__) . '/iCalendar/' . $type . '.php';
-        if (class_exists($class)) {
+		if (!class_exists($class)) {
+		  include_once dirname(__FILE__) . '/iCalendar/' . $type . '.php';
+		}
+		if (class_exists($class)) {
             $component = &new $class();
             if ($container !== false) {
                 $component->_container = &$container;
