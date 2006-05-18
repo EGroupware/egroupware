@@ -270,6 +270,8 @@
 				'extension_data' => $GLOBALS['egw_info']['etemplate']['extension_data'],
 				'to_process' => $GLOBALS['egw_info']['etemplate']['to_process'],
 				'java_script' => $GLOBALS['egw_info']['etemplate']['java_script'],
+				'java_script_from_flags' => $GLOBALS['egw_info']['flags']['java_script'],
+				'java_script_body_tags' => $GLOBALS['egw']->js->body,
 				'dom_enabled' => $GLOBALS['egw_info']['etemplate']['dom_enabled'],
 				'hooked' => $hooked != '' ? $hooked : $GLOBALS['egw_info']['etemplate']['hook_content'],
 				'hook_app' => $hooked ? $GLOBALS['egw_info']['flags']['currentapp'] : $GLOBALS['egw_info']['etemplate']['hook_app'],
@@ -388,6 +390,21 @@
 				{
 					$GLOBALS['egw_info']['flags']['app_header'] = $session_data['app_header'];
 				}
+				
+				$GLOBALS['egw_info']['flags']['java_script'] .= $session_data['java_script_from_flags'];
+				if (!empty($session_data['java_script_body_tags']))
+				{
+					if( !is_object($GLOBALS['phpgw']->js))
+					{
+						$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+					}
+					foreach ($session_data['java_script_body_tags'] as $tag => $code)
+					{
+						error_log($GLOBALS['egw']->js->body[$tag]);
+						$GLOBALS['egw']->js->body[$tag] .= $code;
+					}
+				}
+				
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
 				return $this->exec($session_data['method'],$session_data['content'],$session_data['sel_options'],
 					$session_data['readonlys'],$session_data['preserv'],$session_data['output_mode'],
