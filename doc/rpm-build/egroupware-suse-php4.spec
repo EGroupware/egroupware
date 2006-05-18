@@ -1,8 +1,8 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define egwversion 1.2RC8
-%define packaging 1
-%define epoch 0
+%define egwversion 1.2
+%define packaging 2
+%define epoch 1
 %define httpdroot /srv/www/htdocs
 %define httpdconfd /etc/apache2/conf.d
 %define osversion %(grep VERSION /etc/SuSE-release|cut -f3 -d" ")
@@ -63,7 +63,7 @@ License: GPL/LGPL
 URL: http://www.egroupware.org/
 Source0: http://download.sourceforge.net/egroupware/%{packagename}-%{egwversion}-%{packaging}.tar.bz2
 Source1: http://download.sourceforge.net/egroupware/%{packagename}-contrib-%{egwversion}-%{packaging}.tar.bz2
-Source2: egroupware_suse_php4.tar.bz2
+Source2: egroupware_suse.tar.bz2
 Patch0: manageheader.php.patch
 Patch1: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
@@ -368,10 +368,11 @@ This is the cire %{phpldapadmin} of eGroupWare.
 Version: %{egwversion}
 Summary: The eGroupWare %{phpsysinfo} application
 Group: Web/Database
+Conflicts: %{packagename}
 AutoReqProv: no
 Requires: egw-core = %{egwversion}-%{packaging}
 %description %{phpsysinfo}
-This is the cire %{phpsysinfo} of eGroupWare.
+This is the %{phpsysinfo} app for eGroupWare.
 
 %package %{polls}
 Version: %{egwversion}
@@ -516,7 +517,7 @@ rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/skel
 rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/soap
 rm -rf $RPM_BUILD_ROOT%{prefix}/%{egwdirname}/syncml
 
-find $RPM_BUILD_ROOT%{prefix}/%{egwdirname} -name CVS | xargs rm -rf
+find $RPM_BUILD_ROOT%{prefix}/%{egwdirname} -name .svn | xargs rm -rf
 
 cd $RPM_BUILD_ROOT%{prefix}/%{egwdirname}
 ln -s ../../../var/lib/egroupware/header.inc.php
@@ -783,6 +784,15 @@ ln -s sitemgr/sitemgr-link
 %{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
+* Wed Apr 11 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-1
+- manual is now available via http://manual.egroupware.org
+- various bugfixes in calendar and projectmanager
+- timesheet has now reports for each day, week, month and year
+- the colums for both views are now configureable via the user preferences
+- syncml supports now also the calendar using the sycn4j client
+- added phpsysinfo to the egroupware base package
+- various bugfixes for icalserver
+
 * Wed Mar 22 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2RC8-1
 - added support for sync4j syncml clients
 - splitted status and percent done in two fields in infolog
