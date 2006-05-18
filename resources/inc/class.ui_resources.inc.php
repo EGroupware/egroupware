@@ -361,6 +361,12 @@ class ui_resources
 	 */
 	function select($content='')
 	{
+		if (!is_object($GLOBALS['phpgw']->js))
+		{
+			$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+		}
+		$GLOBALS['phpgw']->js->set_onload("copyOptions('exec[resources][selectbox]');");
+		
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
 			window.focus();
 			
@@ -461,12 +467,6 @@ class ui_resources
 			*/
 				window.close();
 			}</script>";
-
-		if (!is_object($GLOBALS['phpgw']->js))
-		{
-			$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
-		}
-		$GLOBALS['phpgw']->js->set_onload("copyOptions('exec[resources][selectbox]');");
 		
 		$content['nm']['header_left'] = 'resources.resource_select.header';
 		$content['nm']['show_bookable'] = true;
