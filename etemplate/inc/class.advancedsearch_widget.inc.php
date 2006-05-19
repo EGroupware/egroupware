@@ -158,7 +158,8 @@
 			{
 				$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 				$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$extension_data['input_template']));
-				$tpl->add_child($tpl, $button_box =& $tpl->empty_cell('hbox','button_box'));
+				$button_box = $tpl->empty_cell('hbox','button_box'); 
+				$tpl->add_child($tpl, $button_box);
 				$tpl->add_child($button_box, $op_select = $tpl->empty_cell('select','opt_select',array(
 					'sel_options' => array(
 						'OR' => 'OR',
@@ -167,8 +168,7 @@
 					'label' => 'Operator',
 					'no_lang' => true,
 				)));
-//								_debug_array($button_box);
-$tpl->add_child($button_box, $meth_select = $tpl->empty_cell('select','meth_select',array(
+				$tpl->add_child($button_box, $meth_select = $tpl->empty_cell('select','meth_select',array(
 					'sel_options' => array(
 						'%' => lang('contains'),
 						false => lang('exact'),
@@ -180,8 +180,6 @@ $tpl->add_child($button_box, $meth_select = $tpl->empty_cell('select','meth_sele
 					'label' => 'Search',
 				)));
 			}
-_debug_array($tpl);
-
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';
 			$cell['name'] = $tpl->name;
@@ -189,7 +187,6 @@ _debug_array($tpl);
 				
 			// keep the editor away from the generated tmpls
 			$tpl->no_onclick = true;
-//_debug_array($tpl);
 			return True;
 		}
 		
