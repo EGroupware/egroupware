@@ -10,8 +10,9 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
-   * @version 0.9.37-ng-a1 removed fixed default domain authentication
-   * @date 20060427
+   * @version 0.9.37-ng-a2 added a todo plan for v0.9.40
+   * @date 20060510
+   * @since 0.9.37-ng-a1 removed fixed default domain authentication
    * @since 0.9.36-ng-a1 first version for NAPI-3.1 (write in non owner rscs)
    * @author Jan van Lieshout <jvl (at) xs4all.nl> Rewrite and extension for egw 1.2. 
    * (see: @url http://www.egroupware.org  )
@@ -29,6 +30,8 @@
    * admin interface
    * @todo make the definition of virtual calendars possible from a 'ical-service' web
    * user interface user
+   * @todo (for 0.9.40 versions) move much parsing of the vc to class.vcsrv.inc.php
+   * and add the $vcpath var where pathinfo is parsed to communicate to vc_X class
    * @bug if you dont have enough privilages to access a personal calendar of someone
    * icalsrv will not give you an access denied error, but will just return no events
    * from this calendar. (Needed otherwise you cannot collect events from multiple resources
