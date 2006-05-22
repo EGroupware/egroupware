@@ -413,7 +413,7 @@
 				if (!isset($to_write['info_id_parent'])) $to_write['info_id_parent'] = 0;	// must not be null
 
 				$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
-				$this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
+				$info_id = $this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
 			}
 			//echo "<p>soinfolog.write values= "; _debug_array($values);
 
