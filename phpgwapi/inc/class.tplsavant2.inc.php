@@ -23,7 +23,7 @@
    \**************************************************************************/
 
    /* $Id$ */
-   
+
    if(is_file(EGW_INCLUDE_ROOT.'/phpgwapi/inc/savant2/Savant2.php'))
    {
 	  include_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/savant2/Savant2.php');
@@ -79,18 +79,18 @@
 		 }
 	  }
 
-	  
+
 	  /*!
 	  @function set_tpl_path
 	  @abstract sets the preferred and fallback template search paths  
 	  @return void
 	  */
-	  function set_tpl_path()
+	  function set_tpl_path($man_dir=false)
 	  {
 		 $preferred_dir=$this->get_tpl_dir(); 
 		 $fallback_dir=$this->get_tpl_dir(true); 
 
-		 if(!$preferred_dir && $fallback_dir)
+		 if(!$preferred_dir && $man_dir && $fallback_dir)
 		 {
 			$this->halt(lang('No Savant2 template directories were found in:'.EGW_APP_ROOT)); 
 		 }
@@ -104,6 +104,11 @@
 			if($preferred_dir)
 			{
 			   $this->addPath('template',$preferred_dir);
+			}
+
+			if($man_dir)
+			{
+			   $this->addPath('template',$man_dir);
 			}
 
 		 }
@@ -207,6 +212,19 @@
 		 $file_arr= explode('/',$tmpfname);
 		 return $this->fetch($file_arr[2]);
 		 unlink($tmpfname);
+	  }
+
+	  /**
+	   * set_var the same as assign()
+	   * 
+	   * @param mixed $tplvar 
+	   * @param string $val 
+	   * @access public
+	   * @return void
+	   */
+	  function set_var($tplvar,$val='')
+	  {
+		 $this->assign($tplvar,$val);
 	  }
 
    }
