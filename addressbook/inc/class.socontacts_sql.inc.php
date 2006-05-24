@@ -48,6 +48,12 @@ class socontacts_sql extends so_sql
 	{
 		$filter = is_array($param['col_filter']) ? $param['col_filter'] : array();
 
+		// fix cat_id filter to search in comma-separated multiple cats and return subcats
+		if ((int)$filter['cat_id'])
+		{
+			$filter[] = $this->_cat_filter($filter['cat_id']);
+			unset($filter['cat_id']);
+		}
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if ($param['owner'] && $param['owner'] == $GLOBALS['egw_info']['user']['account_id'])
 		{
@@ -186,6 +192,12 @@ class socontacts_sql extends so_sql
 		
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
+		// fix cat_id filter to search in comma-separated multiple cats and return subcats
+		if ((int)$filter['cat_id'])
+		{
+			$filter[] = $this->_cat_filter($filter['cat_id']);
+			unset($filter['cat_id']);
+		}
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if (!(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
@@ -301,6 +313,25 @@ class socontacts_sql extends so_sql
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 	
+	/**
+	 * fix cat_id filter to search in comma-separated multiple cats and return subcats
+	 * 
+	 * @internal 
+	 * @param int $cat_id
+	 * @return string sql to filter by given cat
+	 */
+	function _cat_filter($cat_id)
+	{
+		if (!is_object($GLOBALS['egw']->categories))
+		{
+			$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
+		}
+		foreach($GLOBALS['egw']->categories->return_all_children((int)$cat_id) as $cat)
+		{
+			$cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
+		}
+		return '('.implode(' OR ',$cat_filter).')';
+	}
 	
 	/**
 	 * reads contact data including custom fields
