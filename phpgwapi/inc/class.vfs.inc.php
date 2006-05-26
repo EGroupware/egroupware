@@ -800,7 +800,8 @@
 				$basedir = ereg_replace ($sep . $sep, $sep, $basedir);
 			}
 
-			$basedir = ereg_replace ($sep . '$', '', $basedir);
+			// remove trailing slash
+			if ($basedir != '/' && substr($basedir,-1) == '/') $basedir = substr($basedir,0,-1);
 
 			return $basedir;
 		}

@@ -247,8 +247,8 @@
 				'vfs_owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
 				'vfs_createdby_id' => array('type' => 'int','precision' => '4'),
 				'vfs_modifiedby_id' => array('type' => 'int','precision' => '4'),
-				'vfs_created' => array('type' => 'date','nullable' => False,'default' => '1970-01-01'),
-				'vfs_modified' => array('type' => 'date'),
+				'vfs_created' => array('type' => 'timestamp','nullable' => False,'default' => 'current_timestamp'),
+				'vfs_modified' => array('type' => 'timestamp'),
 				'vfs_size' => array('type' => 'int','precision' => '4'),
 				'vfs_mime_type' => array('type' => 'varchar','precision' => '64'),
 				'vfs_deleteable' => array('type' => 'char','precision' => '1','default' => 'Y'),
@@ -259,7 +259,7 @@
 				'vfs_link_directory' => array('type' => 'varchar','precision' => '255'),
 				'vfs_link_name' => array('type' => 'varchar','precision' => '128'),
 				'vfs_version' => array('type' => 'varchar','precision' => '30','nullable' => False,'default' => '0.0.0.0'),
-				'vfs_content' => array('type' => 'text')
+				'vfs_content' => array('type' => 'blob')
 			),
 			'pk' => array('vfs_file_id'),
 			'fk' => array(),

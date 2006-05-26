@@ -54,7 +54,7 @@
 			$this->basedir = $GLOBALS['egw_info']['server']['files_dir'];
 			$this->working_id = $GLOBALS['egw_info']['user']['account_id'];
 			$this->working_lid = $GLOBALS['egw_info']['user']['account_lid'];
-			$this->now = date ('Y-m-d');
+			$this->now = date ('Y-m-d H:i:s');
 
 			/*
 				 File/dir attributes, each corresponding to a database field.  Useful for use in loops
@@ -134,7 +134,8 @@
 					'link_name' => $this->db->Record['vfs_link_name'],
 				);
 			}
-			$this->grants = $GLOBALS['egw']->acl->get_grants('filemanager');
+			// group grants in filemanage are used for group-directories, NOT as grants for each group-member!!!
+			$this->grants = $GLOBALS['egw']->acl->get_grants('filemanager',false);
 		}
 
 		/**
@@ -2327,7 +2328,7 @@
 				}
 				$this->db->select($this->vfs_table,array_keys($this->attributes),$where,__LINE__,__FILE__);
 
-				$record = $this->db->Row(true,$this->vfs_column_prefix);
+				if (!($record = $this->db->Row(true,$this->vfs_column_prefix))) return array();
 
 				/* We return an array of one array to maintain the standard */
 				$rarray = array ();
@@ -2419,7 +2420,7 @@
 			for ($i = 0; ($record = $this->db->Row(true,$this->vfs_column_prefix)); $i++)
 			{
 				/* Further checking on the directory.  This makes sure /home/user/test won't match /home/user/test22 */
-				if (@!ereg ("^$dir(/|$)", $record['directory']))
+				if (@!ereg ("^$dir(/|$)", $record['directory']) || $record['name'] === '')
 				{
 					continue;
 				}

@@ -96,4 +96,23 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
 	}
+
+
+	$test[] = '1.3.004';
+	function phpgwapi_upgrade1_3_004()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_vfs','vfs_created',array(
+			'type' => 'timestamp',
+			'nullable' => False,
+			'default' => 'current_timestamp'
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_vfs','vfs_modified',array(
+			'type' => 'timestamp'
+		));
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_vfs','vfs_content',array(
+			'type' => 'blob'
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.005';
+	}
 ?>
