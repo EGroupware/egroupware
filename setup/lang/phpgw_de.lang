@@ -1,5 +1,7 @@
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	de	%1 '%2' existiert NICHT, ist nicht vom Webserver lesbar oder enthält keine eGroupWare Installation!
 %1 does not exist !!!	setup	de	%1 existiert nicht!!!
 %1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
+%1, %2 or %3 the configuration file.	setup	de	%1, %2 oder %3 der Konfigurationsdatei.
 (searching accounts and changing passwords)	setup	de	Benutzerkonten suchen und Passwörter ändern)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	de	*** Updaten Sie NICHT Ihre Datenbank via Setup, da das Update von der max_execution_time (max. Ausführungszeit für Skripte) unterbrochen werden kann. Ihre Datenbank ist dann in einem nicht mehr wiederherstellbaren Zustand (Ihre Daten sind VERLOREN)!!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	de	*** Sie müssen die Änderungen manuell in Ihrer php.ini Datei (üblicherweise in /etc unter Linux) durchführen, um eGroupWare vollständig/fehlerfrei ausführen zu können!!!
@@ -30,6 +32,7 @@ all users	setup	de	Alle Benutzer
 allow authentication via cookie	setup	de	Erlaube Benutzerauthentifizierung über ein Cookie
 allow password migration	setup	de	Erlaube Password Migration
 allowed migration types (comma-separated)	setup	de	Erlauber Migrationstypen (Komma separiert)
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	de	Auf Domains kann alternative auch durch Anmelden als <i>benutzer@domain</i> zugegriffen werden.
 analysis	setup	de	Analyse
 and reload your webserver, so the above changes take effect !!!	setup	de	UND reloaden Sie ihren Webserver, damit die obigen Änderungen in Kraft treten!!!
 app details	setup	de	Details der Anwendung
@@ -79,7 +82,7 @@ because the enable flag for this app is set to 0, or is undefined	setup	de	weil 
 bottom	setup	de	unten
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	de	Aber wir <u>raten Ihnen dringend, eine Sicherungskopie</u> anzulegen f&uuml;r den Fall, dass dieses Skript Ihre bestehenden Daten besch&auml;digt!<br /><strong>Diese automatisierten Skripts k&ouml;nnen leicht Ihre Daten besch&auml;digen!.</strong>
 cancel	setup	de	Abbrechen
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br />Stattdessen können Sie die Datei %1.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	de	Kann die Datei header.inc.php wegen unzureichenden Zugriffsrechten nicht erzeugen.<br />Stattdessen können Sie die Datei %1 oder %2.
 change system-charset	setup	de	Systemzeichensatz wechseln
 charset	setup	de	ISO-8859-1
 charset to convert to	setup	de	Zeichensatz in den konvertiert werden soll
@@ -128,9 +131,9 @@ current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
+database	setup	de	Datenbank
 database instance (egw domain)	setup	de	Datenbankinstanz (eGW Domain)
 database successfully converted from '%1' to '%2'	setup	de	Datenbank erfolgreich von "%1" nach "%2" konvertiert
-datebase	setup	de	Datenbank
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	de	Port für Datum/Zeitabfragen<br />Wenn der Port 13 verwendet wird, bitte VOR dem Absenden die Firewallregeln dementsprechend setzen.<br />(Port 13/Host: 129.6.15.28)
 day	setup	de	Tag
 day of week<br />(0-6, 0=sunday)	setup	de	Wochentag<br />(0-6, 0=Sonntag)
@@ -176,7 +179,9 @@ enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br />(benötigt mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	de	Vollständiger Pfad für temporäre Dateien.<br />Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
+enter the full path for users and group files.<br />examples: /files, e:files	setup	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br />Beispiel: /files, E:\Files
 enter the full path to the backup directory.<br />if empty: files directory	setup	de	Vollständiger Pfad für das Datensicherungsverzeichnis.<br />Wenn leer: Dateiverzeichnis
 enter the hostname of the machine on which this server is running	setup	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	de	URL zur eGroupWare Installation.<br />Beispiel: http://www.domain.com/egroupware   or   /egroupware<br /><b>keinen nachfolgenden Slash /</b>
@@ -233,7 +238,7 @@ import accounts from ldap to the egroupware accounts table (for a new install us
 import has been completed!	setup	de	Import ist beendet!
 import ldap users/groups	setup	de	LDAP-Benutzer/-Gruppen importieren
 importing old settings into the new format....	setup	de	Importiere alte Einstellung in das neue Format ...
-include root (this should be the same as server root unless you know what you are doing)	setup	de	Include-Root (sollte das gleiche Verzeichnis wie die Server-Root sein, au&szlig;er Sie wissen was Sie tun)
+include root	setup	de	Include-Root
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
 install	setup	de	Installieren
 install all	setup	de	Alle Installieren
@@ -266,9 +271,12 @@ ldap modify	setup	de	LDAP Ändern
 ldap root password	setup	de	LDAP-Root-Passwort
 ldap rootdn	setup	de	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=eGW Domain
+leave empty to keep current.	setup	de	Leer lassen um das existierende Password zu behalten.
+limit access	setup	de	Zugang beschränken
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login as user postgres, eg. by using su as root	setup	de	Als Benutzer postgres einlogen, zB. durch benutzen von su als root
 login to mysql -	setup	de	mysql aufrufen -
+loginname needed for domain configuration	setup	de	Benutzername für die Konfiguration der Domain
 logout	setup	de	Abmelden
 mail domain (for virtual mail manager)	setup	de	Mail Domain (für Virtual Mail Manager)
 mail server login type	setup	de	Mail Server Login Typ
@@ -326,9 +334,10 @@ or http://webdav.domain.com (webdav)	setup	de	oder http://webdav.domain.com (für
 or we can attempt to create the database for you:	setup	de	Oder wir können versuchen die Datenbank für Sie anzulegen:
 or you can install a previous backup.	setup	de	Oder Sie können eine vorherige Datensicherung installieren.
 password for smtp-authentication	setup	de	Passwort für SMTP Authentifizierung
-password needed for configuration	setup	de	Passwort wird für die Konfiguration benötgt
+password needed for domain configuration.	setup	de	Passwort für die Konfiguration der Domain.
 password of db user	setup	de	Passwort des Datenbank Benutzers
 passwords did not match, please re-enter	setup	de	Passworte stimmten nicht überein, bitte nocheinmal eingeben
+path (not url!) to your egroupware installation.	setup	de	Pfad (nicht Internetadresse/URL!) Ihrer eGroupWare Installation.
 path information	setup	de	Pfadinformationen
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 pear is needed by syncml or the ical import+export of calendar.	setup	de	PEAR wird von SyncML oder dem iCal Import+Export des Kalenders benötigt.
@@ -416,6 +425,7 @@ setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
 setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
+should be the same as server root unless you know what you are doing.	setup	de	Sollte das gleiche Verzeichnis wie die Server-Root sein, au&szlig;er Sie wissen was Sie tun.
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
 size	setup	de	Größe
 skip the installation tests (not recommended)	setup	de	Installationstests überspringen (nicht empfohlen)
@@ -493,6 +503,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	de	Benut
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
 utf-8 (unicode)	setup	de	utf-8 (Unicode)
+validation errors	setup	de	Fehler bei der Prüfung der Eingaben
 version	setup	de	Version
 version mismatch	setup	de	Versionen passen nicht zueinander
 view	setup	de	Anzeigen
@@ -510,7 +521,7 @@ would you like egroupware to cache the phpgw info array ?	setup	de	Soll eGroupWa
 would you like egroupware to check for a new version<br />when admins login ?	setup	de	Soll eGroupWare nach neuen Versionen suchen,<br /> wenn sich ein Administrator anmeldet ?
 would you like to show each application's upgrade status ?	setup	de	Soll der Upgrade-Status aller Anwendungen angezeigt werden ?
 writable by the webserver	setup	de	schreibar durch den Webserver
-write config	setup	de	Konfiguration schreiben
+write	setup	de	Schreiben
 year	setup	de	Jahr
 yes	setup	de	Ja
 yes, with lowercase usernames	setup	de	Ja, mit kleingeschriebenen Benutzernamen
@@ -522,6 +533,7 @@ you appear to have %1 support.	setup	de	Sie scheinen %1 Unterstützung zu haben.
 you appear to have php session support. enabling php sessions.	setup	de	Sie scheinen PHP Session Unterstützung zu haben. PHP Sessions eingeschaltet.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
 you are ready for this stage, but this stage is not yet written.<br />	setup	de	Sie sind bereit für diesen Schritt, aber dieser Abschnitt wurde noch nicht geschrieben.<br />
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	de	Sie benutzen die PHP Version %1. eGroupWare benötigt mindestens die Version %2, empfohlen ist PHP %3.
 you can install it by running:	setup	de	Installation durch ausführen von:
 you didn't enter a config password for domain %1	setup	de	Sie haben kein Passwort für die Domain %1 angegeben
 you didn't enter a config username for domain %1	setup	de	Sie haben keinen Benutzernamen für die Domain %1 angegeben
@@ -531,7 +543,7 @@ you do not have any languages installed. please install one now <br />	setup	de	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	de	Sie haben bisher noch keine header.inc.php angelegt!<br />Sie können sie jetzt anlegen.
 you have successfully logged out	setup	de	Sie haben sich erfolgreich abgemeldet.
 you must enter a username for the admin	setup	de	Sie müssen einen Benutzernamen für den Administrator eingeben!
-you need to add some domains to your header.inc.php.	setup	de	Sie müssen mindestens eine Domain zu Ihrer header.inc.php hinzufügen.
+you need to add at least one egroupware domain / database instance.	setup	de	Sie müssen mindestens eine eGroupWare Domain / Datenbank Instanz hinzufügen.
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das notwendige phpgwAccounts Schema auf Ihrem LDAP Server installieren - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>.

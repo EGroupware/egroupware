@@ -1,5 +1,7 @@
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	en	%1 '%2' does NOT exist, is not readable by the webserver or contains no eGroupWare installation!
 %1 does not exist !!!	setup	en	%1 does not exist !!!
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !!!
+%1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
 (searching accounts and changing passwords)	setup	en	(searching accounts and changing passwords)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	en	*** Do NOT update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your DB in an unrecoverable state (your data is lost) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	en	*** You have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get eGW fully working !!!
@@ -30,6 +32,7 @@ all users	setup	en	All Users
 allow authentication via cookie	setup	en	Allow authentication via cookie
 allow password migration	setup	en	Allow password migration
 allowed migration types (comma-separated)	setup	en	Allowed migration types (comma-separated)
+alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	en	Alternatively domains can be accessed by logging in with <i>username@domain</i>.
 analysis	setup	en	Analysis
 and reload your webserver, so the above changes take effect !!!	setup	en	AND reload your webserver, so the above changes take effect !!!
 app details	setup	en	App details
@@ -79,7 +82,7 @@ because the enable flag for this app is set to 0, or is undefined	setup	en	becau
 bottom	setup	en	bottom
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	en	but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>These automated scripts can easily destroy your data.</strong>
 cancel	setup	en	Cancel
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br /> Instead you can %1 the file.
+cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 or %2 the file.	setup	en	Cannot create the header.inc.php due to file permission restrictions.<br /> Instead you can %1 or %2 the file.
 change system-charset	setup	en	Change system-charset
 charset	setup	en	ISO-8859-1
 charset to convert to	setup	en	Charset to convert to
@@ -128,9 +131,9 @@ current system-charset	setup	en	Current system-charset
 current system-charset is %1.	setup	en	Current system-charset is %1.
 current version	setup	en	Current Version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br />
+database	setup	en	Database
 database instance (egw domain)	setup	en	Database instance (eGW domain)
 database successfully converted from '%1' to '%2'	setup	en	Database successfully converted from '%1' to '%2'
-datebase	setup	en	Datebase
 datetime port.<br />if using port 13, please set firewall rules appropriately before submitting this page.<br />(port: 13 / host: 129.6.15.28)	setup	en	Datetime port.<br />If using port 13, please set firewall rules appropriately before submitting this page.<br />(Port: 13 / Host: 129.6.15.28)
 day	setup	en	day
 day of week<br />(0-6, 0=sunday)	setup	en	day of week<br />(0-6, 0=sunday)
@@ -233,7 +236,7 @@ import accounts from ldap to the egroupware accounts table (for a new install us
 import has been completed!	setup	en	Import has been completed!
 import ldap users/groups	setup	en	Import LDAP users/groups
 importing old settings into the new format....	setup	en	Importing old settings into the new format....
-include root (this should be the same as server root unless you know what you are doing)	setup	en	Include Root (this should be the same as Server Root unless you know what you are doing)
+include root	setup	en	Include root
 include_path need to contain "." - the current directory	setup	en	include_path need to contain "." - the current directory
 install	setup	en	Install
 install all	setup	en	Install All
@@ -266,9 +269,12 @@ ldap modify	setup	en	LDAP Modify
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=eGW-domain
+leave empty to keep current.	setup	en	Leave empty to keep current.
+limit access	setup	en	Limit access
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
 login as user postgres, eg. by using su as root	setup	en	Login as user postgres, eg. by using su as root
 login to mysql -	setup	en	Login to mysql -
+loginname needed for domain configuration	setup	en	Loginname needed for domain configuration
 logout	setup	en	Logout
 mail domain (for virtual mail manager)	setup	en	Mail domain (for Virtual mail manager)
 mail server login type	setup	en	Mail server login type
@@ -326,9 +332,10 @@ or http://webdav.domain.com (webdav)	setup	en	or http://webdav.domain.com (WebDA
 or we can attempt to create the database for you:	setup	en	Or we can attempt to create the database for you:
 or you can install a previous backup.	setup	en	Or you can install a previous backup.
 password for smtp-authentication	setup	en	Password for SMTP-authentication
-password needed for configuration	setup	en	Password needed for configuration
+password needed for domain configuration.	setup	en	Password needed for domain configuration.
 password of db user	setup	en	Password of db user
 passwords did not match, please re-enter	setup	en	Passwords did not match, please re-enter
+path (not url!) to your egroupware installation.	setup	en	Path (not URL!) to your eGroupWare installation.
 path information	setup	en	Path information
 path to user and group files has to be outside of the webservers document-root!!!	setup	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pear is needed by syncml or the ical import+export of calendar.	setup	en	PEAR is needed by SyncML or the iCal import+export of calendar.
@@ -416,6 +423,7 @@ setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 setup main menu	setup	en	Setup Main Menu
 setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
+should be the same as server root unless you know what you are doing.	setup	en	Should be the same as Server Root unless you know what you are doing.
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
 size	setup	en	size
 skip the installation tests (not recommended)	setup	en	Skip the installation tests (not recommended)
@@ -493,6 +501,7 @@ user for smtp-authentication (leave it empty if no auth required)	setup	en	User 
 usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice
 utf-8 (unicode)	setup	en	utf-8 (Unicode)
+validation errors	setup	en	Validation errors
 version	setup	en	version
 version mismatch	setup	en	Version Mismatch
 view	setup	en	View
@@ -510,7 +519,7 @@ would you like egroupware to cache the phpgw info array ?	setup	en	Would you lik
 would you like egroupware to check for a new version<br />when admins login ?	setup	en	Would you like eGroupWare to check for a new version<br />when admins login ?
 would you like to show each application's upgrade status ?	setup	en	Would you like to show each application's upgrade status ?
 writable by the webserver	setup	en	writable by the webserver
-write config	setup	en	Write config
+write	setup	en	Write
 year	setup	en	year
 yes	setup	en	Yes
 yes, with lowercase usernames	setup	en	Yes, with lowercase usernames
@@ -522,6 +531,7 @@ you appear to have %1 support.	setup	en	You appear to have %1 support.
 you appear to have php session support. enabling php sessions.	setup	en	You appear to have PHP session support. Enabling PHP sessions.
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
 you are ready for this stage, but this stage is not yet written.<br />	setup	en	You are ready for this stage, but this stage is not yet written.<br />
+you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	en	You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.
 you can install it by running:	setup	en	You can install it by running:
 you didn't enter a config password for domain %1	setup	en	You didn't enter a config password for domain %1
 you didn't enter a config username for domain %1	setup	en	You didn't enter a config username for domain %1
@@ -531,7 +541,7 @@ you do not have any languages installed. please install one now <br />	setup	en	
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	en	You have not created your header.inc.php yet!<br /> You can create it now.
 you have successfully logged out	setup	en	You have successfully logged out
 you must enter a username for the admin	setup	en	You must enter a username for the admin
-you need to add some domains to your header.inc.php.	setup	en	You need to add some domains to your header.inc.php.
+you need to add at least one egroupware domain / database instance.	setup	en	You need to add at least one eGroupWare domain / database instance.
 you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
 you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	en	You will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/README

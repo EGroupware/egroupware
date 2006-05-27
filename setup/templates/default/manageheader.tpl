@@ -30,25 +30,32 @@ function setDefaultDBPort(selectBox,portField)
 		<!--		<tr>
 			<td>-->
 				<form name="domain_settings" action="manageheader.php" method="post">
-					<input type="hidden" name="setting[write_config]" value="true" />
 					<!--					<table style="border-spacing:5px;" border="0" width="100%" cellspacing="0" cellpadding="0">
 						<tbody>-->
 							<tr class="th">
 								<th colspan="2">{lang_settings}</th>
 							</tr>
 							<tr>
-								<td colspan="2"><strong>{lang_serverroot}</strong><br /><input type="text" name="setting[server_root]" size="80" value="{server_root}" /></td>
+								<td colspan="2">
+									<strong>{lang_serverroot}</strong> {lang_serverroot_descr}<br />
+									<input type="text" name="setting[server_root]" size="80" value="{server_root}" />
+								</td>
 							</tr>
 							<tr>
-								<td colspan="2"><strong>{lang_includeroot}</strong><br /><input type="text" name="setting[include_root]" size="80" value="{include_root}" /></td>
+								<td colspan="2">
+									<strong>{lang_includeroot}</strong> {lang_includeroot_descr}<br />
+									<input type="text" name="setting[include_root]" size="80" value="{include_root}" />
+								</td>
 							</tr>
 							<tr>
-								<td><strong>{lang_adminuser}</strong><br /><input type="text" name="setting[HEADER_ADMIN_USER]" size="30" value="{header_admin_user}" /></td>
+								<td><strong>{lang_adminuser}</strong><br /><input type="text" name="setting[header_admin_user]" size="30" value="{header_admin_user}" /></td>
 								<td>{lang_adminuser_descr}</td>
 							</tr>
 							<tr>
-								<td><strong>{lang_adminpass}</strong><br /><input type="password" name="setting[HEADER_ADMIN_PASSWORD]" size="30" value="{header_admin_password}" /><input type="hidden" name="setting[HEADER_ADMIN_PASS]" value="{header_admin_pass}" /></td>
-								<td>{lang_adminpass_descr} {lang_leave_empty}</td>
+								<td><strong>{lang_adminpass}</strong><br />
+									<input type="hidden" name="setting[header_admin_password]" value="{header_admin_password}" />
+									<input type="password" name="setting[new_admin_password]" size="30" value="" /></td>
+								<td>{lang_adminpass_descr}<br />{lang_leave_empty}</td>
 							</tr>
 							<tr>
 								<td><strong>{lang_setup_acl}</strong><br /><input type="text" name="setting[setup_acl]" size="30" value="{setup_acl}" /></td>
@@ -73,7 +80,7 @@ function setDefaultDBPort(selectBox,portField)
 							</tr>
 							<tr>
 								<td><strong>{lang_enablemcrypt}</strong><br />
-									<select name="setting[enable_mcrypt]">
+									<select name="setting[mcrypt_enabled]">
 										<option value="True"{mcrypt_enabled_yes}>{lang_Yes}</option>
 										<option value="False"{mcrypt_enabled_no}>{lang_No}</option>
 									</select>
@@ -81,7 +88,7 @@ function setDefaultDBPort(selectBox,portField)
 								<td>{lang_mcrypt_warning}</td>
 							</tr>
 							<tr>
-								<td><strong>{lang_mcryptversion}</strong><br /><input type="text" name="setting[mcrypt_version]" value="{mcrypt}" /></td>
+								<td><strong>{lang_mcryptversion}</strong><br /><input type="text" name="setting[mcrypt_version]" value="{mcrypt_version}" /></td>
 								<td>{lang_mcryptversiondescr}</td>
 							</tr>
 							<tr>
@@ -90,7 +97,7 @@ function setDefaultDBPort(selectBox,portField)
 							</tr>
 							<tr>
 								<td><strong>{lang_domselect}</strong><br />
-									<select name="setting[domain_selectbox]">
+									<select name="setting[show_domain_selectbox]">
 										<option value="True"{domain_selectbox_yes}>{lang_Yes}</option>
 										<option value="False"{domain_selectbox_no}>{lang_No}</option>
 								</select></td>
@@ -107,7 +114,7 @@ function setDefaultDBPort(selectBox,portField)
 							</tr>
 							{comment_r}
 							<tr>
-								<td colspan="2">{errors}</td>
+								<td colspan="2">{actions}</td>
 							</tr>
 							<!--						</tbody>
 					</table>-->
@@ -173,8 +180,10 @@ function setDefaultDBPort(selectBox,portField)
 		<td>{lang_configuser_descr}</td>
 	</tr>
 	<tr>
-		<td><strong>{lang_configpass}</strong><br /><input type="password" name="setting_{db_domain}[config_pass]" value="{config_pass}" /><input type="hidden" name="setting_{db_domain}[config_password]" value="{config_password}" /></td>
-		<td>{lang_passforconfig} {lang_leave_empty}</td>
+		<td><strong>{lang_configpass}</strong><br />
+			<input type="hidden" name="setting_{db_domain}[config_passwd]" value="{config_passwd}" />
+			<input type="password" name="setting_{db_domain}[new_config_passwd]" value="" /></td>
+		<td>{lang_passforconfig}<br />{lang_leave_empty}</td>
 	</tr>
 </table>
 <!-- END domain -->
