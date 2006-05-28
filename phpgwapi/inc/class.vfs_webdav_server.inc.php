@@ -1,16 +1,16 @@
 <?php
-/**************************************************************************\
-* eGroupWare - FileManger - WebDAV access                                  *
-* http://www.egroupware.org                                                *
-* Written and (c) 2006 by  Ralf Becker <RalfBecker-AT-outdoor-training.de> *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id: class.socontacts_sql.inc.php 21634 2006-05-24 02:28:57Z ralfbecker $ */
+/**
+ * FileManger - WebDAV access
+ *
+ * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
+ * 
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package filemanger
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @version $Id: class.boetemplate.inc.php 21437 2006-04-24 20:42:42Z ralfbecker $
+ */
 
 require_once('HTTP/WebDAV/Server.php');
 
@@ -252,16 +252,14 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 			'string'    => dirname($GLOBALS['egw']->translation->convert($options['path'],'utf-8')),
 			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
 		);
-		if (!$this->vfs->file_exists($path)) 
+		if (!$this->vfs->file_exists($vfs_data))
 		{
 			return '404 Not found';
 		}
-		$vfs_data = array(
-			'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
-			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
-		);
-		$this->vfs->rm($vfs_data);
-		
+		if (!$this->vfs->rm($vfs_data))
+		{
+			return '403 Forbidden';                 
+		}
 		return '204 No Content';
 	}
 
