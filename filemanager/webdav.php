@@ -1,26 +1,15 @@
 <?php
-/**************************************************************************\
-* eGroupWare - FileManger - WebDAV access                                  *
-* http://www.egroupware.org                                                *
-* Written and (c) 2006 by  Ralf Becker <RalfBecker-AT-outdoor-training.de> *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id: class.socontacts_sql.inc.php 21634 2006-05-24 02:28:57Z ralfbecker $ */
-
 /**
  * FileManger - WebDAV access
  *
  * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
  * 
+ * @link http://www.egroupware.org
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package filemanger
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id: class.boetemplate.inc.php 21437 2006-04-24 20:42:42Z ralfbecker $
  */
 
 /**
