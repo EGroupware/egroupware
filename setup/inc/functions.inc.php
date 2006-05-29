@@ -1,20 +1,17 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Setup                                                       *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  * This file written by Joseph Engo<jengo@phpgroupware.org>                 *
-  *  and Dan Kuykendall<seek3r@phpgroupware.org>                             *
-  *  and Mark Peters<skeeter@phpgroupware.org>                               *
-  *  and Miles Lott<milosch@groupwhere.org>                                  *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+/**
+ * Setup
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Joseph Engo <jengo@phpgroupware.org>
+ * @author Dan Kuykendall <seek3r@phpgroupware.org>
+ * @author Mark Peters <skeeter@phpgroupware.org>
+ * @author Miles Lott <milos@groupwhere.org>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 	error_reporting(error_reporting() & ~E_NOTICE);
 	
@@ -63,7 +60,7 @@
 			$msg = lang('does not exist');
 			return false;
 		}
-		if (!@is_writeable($dir))
+		if (!@is_writeable($dir) && $_SERVER['HTTP_HOST'])	// only do the check if we run by the webserver
 		{
 			$msg = lang('is not writeable by the webserver');
 			return false;

@@ -1,36 +1,35 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare                                                               *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
+/**
+ * Setup - create admin account
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Miles Lott <milos@groupwhere.org>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-  /* $Id$ */
-
-	// Little file to setup a demo install
-
-	$GLOBALS['egw_info'] = array(
-		'flags' => array(
-			'noheader'   => True,
-			'nonavbar'   => True,
-			'currentapp' => 'home',
-			'noapi'      => True
-	));
-	include('./inc/functions.inc.php');
-
-	// Authorize the user to use setup app and load the database
-	// Does not return unless user is authorized
-	if(!$GLOBALS['egw_setup']->auth('Config') || get_var('cancel',Array('POST')))
+	if (!strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
 	{
-		Header('Location: index.php');
-		exit;
+		$GLOBALS['egw_info'] = array(
+			'flags' => array(
+				'noheader'   => True,
+				'nonavbar'   => True,
+				'currentapp' => 'home',
+				'noapi'      => True
+		));
+		include('./inc/functions.inc.php');
+	
+		// Authorize the user to use setup app and load the database
+		// Does not return unless user is authorized
+		if(!$GLOBALS['egw_setup']->auth('Config') || get_var('cancel',Array('POST')))
+		{
+			Header('Location: index.php');
+			exit;
+		}
+		$GLOBALS['egw_setup']->loaddb(true);
 	}
-	$GLOBALS['egw_setup']->loaddb(true);
-
 	$error = '';
 	if ($_POST['submit'])
 	{
@@ -40,6 +39,7 @@
 		$username = get_var('username',Array('POST'));
 		$fname    = get_var('fname',Array('POST'));
 		$lname    = get_var('lname',Array('POST'));
+		$email    = get_var('email',Array('POST'));
 	
 		if($passwd != $passwd2 || !$username)
 		{
@@ -81,7 +81,8 @@
 		$setup_tpl->set_var('adminusername',lang('Admin username'));
 		$setup_tpl->set_var('adminfirstname',lang('Admin first name'));
 		$setup_tpl->set_var('adminlastname',lang('Admin last name'));
-		$setup_tpl->set_var('adminpassword',lang('Admin password'));
+		$setup_tpl->set_var('adminemail',lang('Admin email address'));
+		$setup_tpl->set_var('adminpassword',lang('Admin password'));		
 		$setup_tpl->set_var('adminpassword2',lang('Re-enter password'));
 		$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
 
@@ -183,7 +184,7 @@
 		}
 
 		/* Create records for administrator account, with Admins as primary and Default as additional group */
-		$accountid = $GLOBALS['egw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True);
+		$accountid = $GLOBALS['egw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True,$email);
 		if (!$accountid)
 		{
 			echo '<p><b>'.lang('Error in admin-creation !!!')."</b></p>\n";
@@ -196,7 +197,8 @@
 
 		$GLOBALS['egw_setup']->db->transaction_commit();
 
-		Header('Location: index.php');
-		exit;
+		if (!strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
+		{
+			Header('Location: index.php');
+		}
 	}
-?>

@@ -1,18 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare                                                               *
-* http://www.egroupware.org                                                *
-* ------------------------------------------------------------------------ *
-* Redesigned 2006 by RalfBecker-AT-outdoor-training.de, to use the new     *
-*  setup_header class shared with the setup command line interface.        *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * Setup - Manage the eGW config file header.inc.php
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Miles Lott <milos@groupwhere.org>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 $GLOBALS['egw_info'] = array(
 	'flags' => array(
@@ -26,12 +22,6 @@ include('./inc/functions.inc.php');
 
 require_once('./inc/class.setup_header.inc.php');
 $GLOBALS['egw_setup']->header =& new setup_header(); 
-
-/* necessary ?
-$GLOBALS['egw_info']['server']['versions']['current_header'] = $setup_info['phpgwapi']['versions']['current_header'];
-$GLOBALS['egw_info']['server']['versions']['phpgwapi'] = $setup_info['phpgwapi']['version'];
-unset($setup_info);
-*/
 
 $setup_tpl = CreateObject('setup.Template','./templates/default');
 $setup_tpl->set_file(array(
@@ -233,12 +223,22 @@ function show_header_form($validation_errors)
 
 	$setup_tpl->set_var('pagemsg',$GLOBALS['egw_info']['setup']['PageMSG']);
 
-	// checking required PHP version 4.3+
-	if((float) PHP_VERSION < '4.3')
+	// checking required PHP version
+	if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 	{
-		echo '<p align="center" class="msg"><b>'
-			. lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',PHP_VERSION,'4.3','5'). "\n"
-			. '</b></p>';
+		$GLOBALS['egw_setup']->html->show_header($GLOBALS['egw_info']['setup']['header_msg'],True);
+		$GLOBALS['egw_setup']->html->show_alert_msg('Error',
+			lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',
+			PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version));
+		$GLOBALS['egw_setup']->html->show_footer();
+		exit;
+	}
+	if((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
+	{
+		echo '<p align="center" class="msg"><b>' .
+			lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',
+			PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version) .
+			"</b></p>\n";
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}

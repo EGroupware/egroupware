@@ -29,6 +29,10 @@
             <td><input type="text" name="lname" value="{lname}" /></td>
           </tr>
           <tr>
+            <td>{adminemail}</td>
+            <td><input type="text" name="email" value="{email}" /></td>
+          </tr>
+          <tr>
             <td>{adminpassword}</td>
             <td><input type="password" name="passwd" /></td>
           </tr>

@@ -1,18 +1,14 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Setup                                                       *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  * This file written by Dan Kuykendall<seek3r@phpgroupware.org>             *
-  *  and Miles Lott<milos@groupwhere.org>                                    *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+/**
+ * Setup
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Dan Kuykendall <seek3r@phpgroupware.org>
+ * @author Miles Lott <milos@groupwhere.org>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 	class setup_detection
 	{
@@ -306,6 +302,11 @@
 			}
 		}
 
+		/**
+		 * Check if eGW configuration exists
+		 *
+		 * @return int 1 = Needs config, ..., 10 = Config Ok
+		 */
 		function check_config()
 		{
 			$GLOBALS['egw_setup']->db->Halt_On_Error = 'no';
@@ -314,18 +315,58 @@
 				return '';
 			}
 
-			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_value',array('config_name'=>'freshinstall'),__LINE__,__FILE__);
-			$configured = $GLOBALS['egw_setup']->db->next_record() ? $GLOBALS['egw_setup']->db->f('config_value') : False;
-			if($configed)
+			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array('config_app' => 'phpgwapi'),__LINE__,__FILE__);
+			while($GLOBALS['egw_setup']->db->next_record())
 			{
-				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Needs Configuration)';
+				$config[$GLOBALS['egw_setup']->db->f(0)] = $GLOBALS['egw_setup']->db->f(1);
+			}
+
+			$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Needs Configuration)';
+			if(!count($config))
+			{
 				return 1;
 			}
-			else
+			$config_errors =& $GLOBALS['egw_info']['setup']['config_errors'];
+			$config_errors = array();
+			if (!check_dir($config['temp_dir'],$error_msg))
 			{
-				$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Configuration OK)';
-				return 10;
+				$config_errors[] = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
 			}
+
+			if ((!isset($config['file_repository']) || $config['file_repository'] == 'sql') && 
+				(!isset($config['file_store_contents']) || $config['file_store_contents'] == 'filesystem') && 
+				!check_dir($config['files_dir'],$error_msg,true))
+			{
+				$config_errors[] = lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
+			}
+			// set and create the default backup_dir
+			if (@is_writeable($config['files_dir']) && !$config['backup_dir'] && $config['file_store_contents'] == 'filesystem')
+			{
+				$config['backup_dir'] = $config['files_dir'].'/db_backup';
+				if (!is_dir($config['backup_dir']) && mkdir($config['backup_dir']))
+				{
+					$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+						'config_value' => $config['backup_dir'],
+					),array(
+						'config_app'  => 'phpgwapi',
+						'config_name' => 'backup_dir',
+					),__LINE__,__FILE__);
+				}
+			}
+			if (!check_dir($config['backup_dir'],$error_msg,true))
+			{
+				$config_errors[] = lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
+			}
+			if (!$config['mail_server'] || !$config['mail_server_type'] || !$config['smtp_server'])
+			{
+				$config_errors[] = lang('Missing or uncomplete mailserver configuration');
+			}
+			if ($config_errors)
+			{
+				return 2;
+			}
+			$GLOBALS['egw_info']['setup']['header_msg'] = 'Stage 2 (Configuration OK)';
+			return 10;
 		}
 
 		function check_lang($check = True)

@@ -1,28 +1,17 @@
 #!/usr/bin/php
 <?php
-/**************************************************************************\
-* eGroupWare - Setup - Command line interface                              *
-* http://www.egroupware.org                                                *
-* Written and (c) 2006 by  Ralf Becker <RalfBecker-AT-outdoor-training.de> *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id: class.socontacts_sql.inc.php 21634 2006-05-24 02:28:57Z ralfbecker $ */
-
 /**
- * Command line interface for setup
+ * Setup - Command line interface
  *
- * @package addressbook
+ * @link http://www.egroupware.org
+ * @package setup
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
  */
 
-chdir(dirname(__FILE__));	// to enable our relative pathes to work, if we are called with a path
+chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
 if ($_SERVER['argc'] > 1)
 {
@@ -35,178 +24,491 @@ else
 	$action = '--version';
 }
 
-if ((float) PHP_VERSION < '4.3')
+// setting the language from the enviroment
+$_POST['ConfigLang'] = get_lang();
+create_http_enviroment();	// guessing the docroot etc.
+
+// setting up the $GLOBALS['egw_setup'] object AND including the header.inc.php if it exists
+$GLOBALS['egw_info'] = array(
+	'flags' => array(
+		'currentapp' => 'home',
+		'noapi' => true,
+));
+include('inc/functions.inc.php');
+$GLOBALS['egw_setup']->translation->no_translation_marker = '';
+
+if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 {
-	fail(98,lang2('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',PHP_VERSION,'4.3','5+'));
+	fail(98,lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version));
 }
 
 switch($action)
 {
-	case '--show-languages':
-	case '--show-lang':
-		echo html_entity_decode(file_get_contents('lang/languages'),ENT_COMPAT,'utf-8');
-		break;
-	
 	case '--version':
 	case '--check':
-		do_check();
+		do_check($arguments[0]);
 		break;
 		
 	case '--create-header':
 	case '--edit-header':
-	case '--update-header':
+	case '--upgrade-header':
 		do_header($action == '--create-header',$arguments);
 		break;
 		
+	case '--install':
+		do_install($arguments[0]);
+		break;
+		
+	case '--config':
+		do_config($arguments);
+		break;
+
+	case '--admin':
+		do_admin($arguments[0]);
+		break;
+
+	case '--language':
+		do_lang($arguments[0]);
+		break;
+		
+	case '--update':
+		do_update($arguments[0]);
+		break;
+		
+	case '--backup':
+		do_backup($arguments[0]);
+		break;
+
+	case '--languages':
+		echo html_entity_decode(file_get_contents('lang/languages'),ENT_COMPAT,'utf-8');
+		break;
+
+	case '--charsets':
+		echo html_entity_decode(implode("\n",$GLOBALS['egw_setup']->translation->get_charsets(false)),ENT_COMPAT,'utf-8')."\n";
+		break;
+	
 	case '--exit-codes':
 		list_exit_codes();
 		break;
 		
-	default:
-		fail(20,lang2("Unknows option '%1' !!!",$action));
-
 	case '--help':
 	case '--usage':
 		do_usage();
 		break;
+
+	default:
+		fail(90,lang("Unknows option '%1' !!!",$action));
 }
 exit(0);
 
 /**
- * Dummy translation function, if we ever want to translate the command line interface
+ * Configure eGroupWare
  *
- * @param string $message the message with %# replacements
- * @param string $arg variable number of arguments
- * @return string
+ * @param array $args domain(default),[config user(admin)],password,[,name=value,...] --files-dir --backup-dir --mailserver
  */
-function lang2($message,$arg=null)
+function do_config($args)
 {
-	$args = func_get_args();
-	array_shift($args);
+	$options = _check_auth_config(array_shift($args),15);
 	
-	return str_replace(array('%1','%2','%3','%4','%5'),$args,$message);
-}
-
-/**
- * Echos usage message
- */
-function do_usage()
-{
-	echo lang2('Usage: %1 {--version|--create-header|--edit-header|--install|--update} [additional options]',basename($_SERVER['argv'][0]))."\n\n";
-	
-	echo '--install '.lang2('[comma-separated languages(en)],[charset(default depending on languages default)],[backup to install]')."\n";
-	echo '--show-languages '.lang2('get a list of availible languages')."\n";
-	echo '--update '.lang2('run a database schema update (if necessary)')."\n";
-	echo '--check '.lang2('checks eGroupWare\'s installed, it\'s versions and necessary upgrads (exits 0: eGW is up to date, 1: no header.inc.php exists, 2: header update necessary, 3: database schema update necessary)')."\n";
-	echo '--exit-codes '.lang2('list all exist codes of the command line interface, 0 means Ok')."\n";
-
-	echo "\n".lang2('Create or edit the eGroupWare configuration file: header.inc.php:')."\n";
-	echo '--create-header '.lang2('header-password[,header-user(admin)]')."\n";
-	echo '--edit-header '.lang2('[header-password],[header-user],[new-password],[new-user]')."\n";
-
-	echo "\n".lang2('Additional options and there defaults (int brackets)')."\n";
-	echo '--server-root '.lang2('path of eGroupWare install directory (default auto-detected)')."\n";
-	echo '--session-type '.lang2('{db|php(default)|php-restore}')."\n";
-	echo '--limit-access '.lang2('comma separated ip-addresses or host-names, default access to setup from everywhere')."\n";
-	echo '--mcrypt '.lang2('use mcrypt to crypt session-data: {off(default)|on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version(default empty = recent)]')."\n";
-	echo '--db-persistent '.lang2('use persistent db connections: {on(default)|off}')."\n";
-	echo '--domain-selectbox '.lang2('{off(default)|on}')."\n";
-
-	echo "\n".lang2('Adding, editing or deleting an eGroupWare domain / database instance:')."\n";
-	echo '--domain '.lang2('add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]')."\n";
-	echo '--delete-domain '.lang2('domain-name')."\n";
-}
-
-/**
- * detect eGW versions
- *
- * @return array array with versions (keys phpgwapi, current_header and header)
- */
-function detect_versions()
-{
-	$versions = null;
-	$GLOBALS['egw_info']['flags']['noapi'] = true;
-	if (!@include('../header.inc.php'))
+	$values = array();
+	foreach($options as $option)
 	{
-		if (!@include('../phpgwapi/setup/setup.inc.php'))
-		{
-			fail(99,lang2("eGroupWare sources in '%1' are not complete, file '%2' missing !!!",realpath('..'),'phpgwapi/setup/setup.inc.php'));	// should not happen ;-)
-		}
-		return array(
-			'phpgwapi' => $setup_info['phpgwapi']['version'],
-			'current_header' => $setup_info['phpgwapi']['versions']['current_header'],
-		);
+		list($name,$value) = explode('=',$option,2);
+		$values[$name] = $value;
 	}
-	return $GLOBALS['egw_info']['server']['versions'];
+	static $config = array(
+		'--files-dir'  => 'files_dir',
+		'--backup-dir' => 'backup_dir',
+		'--temp-dir'   => 'temp_dir',
+		'--webserver-url' => 'webserver_url',
+		'--mailserver' => array(	//server,{IMAP|IMAPS|POP|POPS},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]
+			'mail_server',
+			array('name' => 'mail_server_type','allowed' => array('imap','imaps','pop3','pop3s')),
+			'mail_suffix',
+			array('name' => 'mail_login_type','allowed'  => array('standard','vmailmgr')),
+		),
+		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password]
+			'smtp_server','smtp_port','smtp_auth_user','smtp_auth_passwd'),
+	);
+	while (($arg = array_shift($args)))
+	{
+		if (!isset($config[$arg])) fail(90,lang("Unknow option '%1' !!!",$arg));
+
+		foreach(explode(',',array_shift($args)) as $n => $value)
+		{
+			if ($value === '') continue;
+			
+			$name = $config[$arg][$n];
+			if (is_array($name))
+			{
+				if (!in_array($value,$name['allowed'])) fail(91,"'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg);
+				$name = $name['name'];
+			}
+			$values[$name] = $value;
+		}
+	}
+	foreach($values as $name => $value)
+	{
+		$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
+			'config_value' => $value,
+		),array(
+			'config_app'  => 'phpgwapi',
+			'config_name' => $name,
+		),__LINE__,__FILE__);
+	}
+}
+
+/**
+ * Create an admin account
+ *
+ * @param string $arg domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
+ */
+function do_admin($arg)
+{
+	list($_POST['username'],$_POST['passwd'],$_POST['fname'],$_POST['lname'],$_POST['email']) =	_check_auth_config($arg,15);
+	$_POST['passwd2'] = $_POST['passwd'];
+	
+	if (!$_POST['fname']) $_POST['fname'] = 'Admin';
+	if (!$_POST['lname']) $_POST['lname'] = 'User';
+	
+	$_POST['submit'] = true;
+	ob_start();
+	include('admin_account.php');
+	$error = ob_get_contents();
+	ob_end_clean();
+
+	if ($error)
+	{
+		fail(41,lang('Error in admin-creation !!!'));
+	}
+	echo lang('Admin account successful created.')."\n";
+}
+
+/**
+ * Backup one or all domains
+ *
+ * @param string $arg domain(all),[config user(admin)],password,[backup-file, 'no' for no backup or empty for default name]
+ * @param boolean $quite_check quiten the call to _check_auth_config
+ */
+function do_backup($arg,$quite_check=false)
+{
+	list($domain,,,$backup) = $options = explode(',',$arg);
+
+	$domains = $GLOBALS['egw_domain'];
+	if ($domain && $domain != 'all')
+	{
+		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
+	}
+	foreach($domains as $domain => $data)
+	{
+		$options[0] = $domain;
+		
+		if ($quite_check) ob_start();
+		_check_auth_config(implode(',',$options),14);
+		if ($quite_check) ob_end_clean();
+		
+		if ($backup == 'no')
+		{
+			echo lang('Backup skipped!')."\n";
+		}
+		else
+		{
+			$db_backup =& CreateObject('phpgwapi.db_backup');
+			if (is_resource($f = $db_backup->fopen_backup($backup)))
+			{
+				echo lang('backup started, this might take a view minutes ...')."\n";
+				$db_backup->backup($f);
+				fclose($f);
+				echo lang('backup finished')."\n";
+			}
+			else	// backup failed ==> dont start the upgrade
+			{
+				fail(50,lang('Backup failed').': '.$f);
+			}
+		}
+	}
+}
+
+/**
+ * Update one or all domains
+ *
+ * @param string $arg domain(all),[config user(admin)],password,[backup-file, 'no' for no backup or empty for default name]
+ */
+function do_update($arg)
+{
+	global $setup_info;
+
+	list($domain,,,$no_backup) = $options = explode(',',$arg);
+
+	$domains = $GLOBALS['egw_domain'];
+	if ($domain && $domain != 'all')
+	{
+		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
+	}
+	foreach($domains as $domain => $data)
+	{
+		$options[0] = $domain;
+		$arg = implode(',',$options);
+		
+		_check_auth_config($arg,14);
+		
+		if ($GLOBALS['egw_info']['setup']['stage']['db'] != 4)
+		{
+			echo lang('No update necessary, domain %1(%2) is up to date.',$domain,$data['db_type'])."\n";
+		}
+		else
+		{
+			echo lang('Starting update ...')."\n";
+			
+			do_backup($arg,true);
+			
+			ob_start();
+			$GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',false);
+			$messages = ob_get_contents();
+			ob_end_clean();
+			if ($messages) strip_tags($messages)."\n";
+			
+			echo lang('Update finished.')."\n";
+		}
+	}
+}
+
+/**
+ * Install / update languages
+ *
+ * @param string $arg domain(all),[config user(admin)],password,[+][lang1][,lang2,...]
+ */
+function do_lang($arg)
+{
+	global $setup_info;
+
+	list($domain,,,$no_backup) = $options = explode(',',$arg);
+
+	$domains = $GLOBALS['egw_domain'];
+	if ($domain && $domain != 'all')
+	{
+		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
+	}
+	foreach($domains as $domain => $data)
+	{
+		$options[0] = $domain;
+		$arg = implode(',',$options);
+		
+		$langs = _check_auth_config($arg,15);
+		
+		$GLOBALS['egw_setup']->translation->setup_translation_sql();
+
+		if ($langs[0]{0} === '+' || !count($langs))	// update / add to existing languages
+		{
+			if ($langs[0]{0} === '+')
+			{
+				if ($langs[0] === '+')
+				{
+					array_shift($langs);
+				}
+				else
+				{
+					$langs[0] = substr($langs[0],1);
+				}
+			}
+			$installed_langs = $GLOBALS['egw_setup']->translation->sql->get_installed_langs(true);
+			if (is_array($installed_langs))
+			{
+				$langs = array_merge($langs,array_keys($installed_langs));
+			}
+		}
+		$langs = array_unique($langs);
+		echo lang('Start updating languages %1 ...',implode(',',$langs))."\n";
+		$GLOBALS['egw_setup']->translation->sql->install_langs($langs);
+		echo lang('languages updated.')."\n";
+	}
+}		
+
+/**
+ * Check if eGW is installed according to $stop and we have the necessary authorization for config
+ * 
+ * We allow the config user/pw of the domain or the header admin user/pw!
+ *
+ * @param string $arg [domain(default)],[user(admin)],password
+ * @param int $stop see do_check()
+ * @return array with unprocessed arguments from $arg
+ */
+function _check_auth_config($arg,$stop=15)
+{
+	$options = explode(',',$arg);
+	if (!($domain = array_shift($options))) $domain = 'default';
+	if (!($user = array_shift($options))) $user = 'admin';
+	$password = array_shift($options);
+	
+	do_check($domain,$stop);	// check if eGW is installed
+	
+	//echo "check_auth('$user','$password','{$GLOBALS['egw_domain'][$domain]['config_user']}','{$GLOBALS['egw_domain'][$domain]['config_passwd']}')\n";
+	if (!$GLOBALS['egw_setup']->check_auth($user,$password,$GLOBALS['egw_domain'][$domain]['config_user'],
+		$GLOBALS['egw_domain'][$domain]['config_passwd']))
+	{
+		fail(40,lang("Access denied: wrong username or password to configure the domain '%1(%2)' !!!",$domain,$GLOBALS['egw_domain'][$domain]['db_type']));
+	}
+	return $options;
+}
+
+/**
+ * Install eGroupWare
+ *
+ * @param string $args domain,[backup-file],[charset]
+ */
+function do_install($args)
+{
+	global $setup_info;
+
+	list($domain,$backup,$charset) = explode(',',$args);
+	if (!$domain) $domain = 'default';
+	
+	if (!do_check($domain,13))	// check and fail if we have no working db
+	{
+		fail(30,lang('eGroupWare is already installed!'));
+	}
+	// use uploaded backup, instead installing from scratch
+	if ($backup)
+	{
+		$db_backup =& CreateObject('phpgwapi.db_backup');
+
+		if (!is_resource($f = $db_backup->fopen_backup($backup,true)))
+		{
+			fail(31,lang('Restore failed'));
+		}
+		echo lang('Restore started, this might take a view minutes ...')."\n";
+		$db_backup->restore($f,$charset);
+		fclose($f);
+		echo lang('Restore finished')."\n";
+	}
+	else
+	{
+		if (!$charset) $charset = $GLOBALS['egw_setup']->translation->langarray['charset'];
+
+		$setup_info = $GLOBALS['egw_setup']->detection->upgrade_exclude($setup_info);
+
+		// Set the DB's client charset if a system-charset is set
+		$GLOBALS['egw_setup']->system_charset = strtolower($charset);
+		$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($charset);
+
+		echo lang('Installation started, this might take a view minutes ...')."\n";
+		$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',false,True);
+		echo lang('Installation finished')."\n";
+	}	
 }
 
 /**
  * Check if eGW is installed, which versions and if an update is needed
+ * 
+ * @param string $domain='' domain to check, default '' = all
+ * @param int $stop=0 stop checks before given exit-code, defaul 0 = all checks
  */
-function do_check()
+function do_check($domain='',$stop=0)
 {
-	$versions = detect_versions();
-	echo lang2('eGroupWare API version %1 found.',$versions['phpgwapi'])."\n";
+	global $setup_info;
+	static $header_checks=true;	// output the header checks only once
 
-	if (isset($versions['header']))	// header.inc.php exists
+	$versions =& $GLOBALS['egw_info']['server']['versions'];
+
+	if (!$versions['phpgwapi'])
 	{
-		echo lang2("eGroupWare configuration file (header.inc.php) version %1 exists%2",$versions['header'],
-			($versions['header'] == $versions['current_header'] ? ' '.lang2('and is up to date') : '')).".\n";
-
-		if ($versions['header'] != $versions['current_header'])
+		if (!include('../phpgwapi/setup/setup.inc.php'))
 		{
-			// exit-code 2: header.inc.php needs upgrading
-			fail(2,lang2('You need to upgrade your header to the new version %1 (using --edit-header)!',$versions['current_header']));
+			fail(99,lang("eGroupWare sources in '%1' are not complete, file '%2' missing !!!",realpath('..'),'phpgwapi/setup/setup.inc.php'));	// should not happen ;-)
+		}
+		$versions['phpgwapi'] = $setup_info['phpgwapi']['version'];
+		unset($setup_info);
+	}
+	if ($header_checks)
+	{
+		echo lang('eGroupWare API version %1 found.',$versions['phpgwapi'])."\n";
+	}
+	$header_stage = $GLOBALS['egw_setup']->detection->check_header();
+	if ($stop && $header_stage == $stop) return true;
+	
+	switch ($header_stage)
+	{
+		case 1: fail(1,lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'));
+			
+		case 2: fail(2,lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No header admin password set! Use --edit-header <password>[,<user>] to set one (--usage gives more options).'));
+
+		case 3: fail(3,lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('No eGroupWare domains / database instances exist! Use --edit-header --domain to add one (--usage gives more options).'));
+
+		case 4: fail(4,lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',$versions['header'],'.')."\n".lang('It needs upgrading to version %1! Use --update-header <password>[,<user>] to do so (--usage gives more options).',$versions['current_header']));
+	}
+	if ($header_checks)
+	{
+		echo lang('eGroupWare configuration file (header.inc.php) version %1 exists%2',
+			$versions['header'],' '.lang('and is up to date')).".\n";
+	}
+	$header_checks = false;	// no further output of the header checks
+
+	$domains = $GLOBALS['egw_domain'];
+	if ($domain)	// domain to check given
+	{
+		if (!isset($GLOBALS['egw_domain'][$domain])) fail(92,lang("Domain '%1' does NOT exist !!!",$domain));
+		
+		$domains = array($domain => $GLOBALS['egw_domain'][$domain]);
+	}
+	foreach($domains as $domain => $data)
+	{
+		$GLOBALS['egw_setup']->ConfigDomain = $domain;	// set the domain the setup class operates on
+		if (count($GLOBALS['egw_domain']) > 1) echo "\n".lang('eGroupWare domain/instance %1(%2):',$domain,$data['db_type'])."\n";
+
+		$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
+		// check if there's already a db-connection and close if, otherwise the db-connection of the previous domain will be used
+		if (is_object($GLOBALS['egw_setup']->db))
+		{
+			$GLOBALS['egw_setup']->db->disconnect();
+		}
+		$GLOBALS['egw_setup']->loaddb();
+		
+		$db = $data['db_type'].'://'.$data['db_user'].'@'.$data['db_host'].'/'.$data['db_name'];
+
+		$db_stage =& $GLOBALS['egw_info']['setup']['stage']['db'];
+		if (($db_stage = $GLOBALS['egw_setup']->detection->check_db($setup_info)) != 1)
+		{
+			$setup_info = $GLOBALS['egw_setup']->detection->get_db_versions($setup_info);
+			$db_stage = $GLOBALS['egw_setup']->detection->check_db($setup_info);
+		}
+		if ($stop && 10+$db_stage == $stop) return true;
+
+		switch($db_stage)
+		{
+			case 1: fail(11,lang('Your Database is not working!')." $db: ".$GLOBALS['egw_setup']->db->Error);
+
+			case 3: fail(13,lang('Your database is working, ibut you dont have any applications installed')." ($db). ".lang("Use --install to install eGroupWare."));
+
+			case 4: fail(14,lang('eGroupWare API needs a database (schema) update from version %1 to %2!',$setup_info['phpgwapi']['currentver'],$versions['phpgwapi']).' '.lang('Use --update to do so.'));
+			
+			case 10:	// also check apps of updates
+				$apps_to_upgrade = array();
+				foreach($setup_info as $app => $data)
+				{
+					if ($data['currentver'] && $data['version'] && $data['version'] != $data['currentver'])
+					{
+						$apps_to_upgrade[] = $app;
+					}
+				}
+				if ($apps_to_upgrade)
+				{
+					$db_stage = 4;
+					if ($stop && 10+$db_stage == $stop) return true;
+					fail(14,lang('The following applications need to be upgraded:').' '.implode(', ',$apps_to_upgrade).'! '.lang('Use --update to do so.'));
+				}
+				break;
+		}
+		echo lang("database is version %1 and up to date.",$setup_info['phpgwapi']['currentver'])."\n";
+
+		$GLOBALS['egw_setup']->detection->check_config();
+		if ($GLOBALS['egw_info']['setup']['config_errors'] && $stop != 15)
+		{
+			fail(15,lang('You need to configure eGroupWare:')."\n- ".@implode("\n- ",$GLOBALS['egw_info']['setup']['config_errors']));
 		}
 	}
-	else
-	{
-		// exit-code 1: no header.inc.php
-		$this->check_fail_header_exists();
-	}
-	// ToDo: check if eGW needs a schema upgrade and exit(3) if so
+	return false;
 }
 
-function fail($exit_code,$message)
-{
-	echo $message."\n";
-	exit($exit_code);
-}
-
-/**
- * List all exit codes used by the command line interface
- *
- */
-function list_exit_codes()
-{
-	error_reporting(error_reporting() & ~E_NOTICE);
-
-	$codes = array();
-	foreach(file(__FILE__) as $line)
-	{
-		if (preg_match('/fail\(([0-9]+),(.*)\);/',$line,$matches))
-		{
-			eval('$codes['.$matches[1].'] = '.$matches[2].';');
-		}
-	}
-	ksort($codes,SORT_NUMERIC);
-	foreach($codes as $num => $msg)
-	{
-		echo $num."\t".str_replace("\n","\n\t",$msg)."\n";
-	}
-}
-
-/**
- * Check if we have a header.inc.php and fail with exit(10) if not
- *
- */
-function check_fail_header_exists()
-{
-	if (!file_exists('../header.inc.php'))
-	{
-		fail(1,lang2('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang2('Use --create-header to create the configuration file (--usage gives more options).'));
-	}
-}
 /**
  * Create, edit or update the header.inc.php
  *
@@ -216,38 +518,32 @@ function check_fail_header_exists()
  */
 function do_header($create,&$arguments)
 {
-	// setting up the $GLOBALS['egw_setup'] object AND including the header.inc.php if it exists
-	$GLOBALS['egw_info'] = array(
-		'flags' => array(
-			'currentapp' => 'home',
-			'noapi' => true,
-	));
-	include('inc/functions.inc.php');
-
 	require_once('inc/class.setup_header.inc.php');
 	$GLOBALS['egw_setup']->header =& new setup_header();
 
 	if (!file_exists('../header.inc.php'))
 	{
-		if (!$create) $this->check_fail_header_exists();
+		if (!$create) fail(1,lang('eGroupWare configuration file (header.inc.php) does NOT exist.')."\n".lang('Use --create-header to create the configuration file (--usage gives more options).'));
 
 		$GLOBALS['egw_setup']->header->defaults(false);
 	}
 	else
 	{
-		if ($create) fail(11,lang2('eGroupWare configuration file header.inc.php already exists, you need to use --edit-header or delete it first!'));
+		if ($create) fail(20,lang('eGroupWare configuration file header.inc.php already exists, you need to use --edit-header or delete it first!'));
 		
 		// header.inc.php is already include by include('inc/functions.inc.php')!
 		unset($GLOBALS['egw_info']['flags']);
 
-		// check header-admin-user and -password
-		@list($password,$user) = explode(',',@$arguments[0]);
-		if (!$user) $user = 'admin';
-		require_once('inc/class.setup.inc.php');
-		if (!setup::check_auth($user,$password,$GLOBALS['egw_info']['server']['header_admin_user'],
-			$GLOBALS['egw_info']['server']['header_admin_password']))
+		// check header-admin-user and -password (only if a password is set!)
+		if ($GLOBALS['egw_info']['server']['header_admin_password'])
 		{
-			fail(12,lang2('Access denied: wrong username or password for manage-header !!!'));
+			@list($password,$user) = explode(',',@$arguments[0]);
+			if (!$user) $user = 'admin';
+			if (!$GLOBALS['egw_setup']->check_auth($user,$password,$GLOBALS['egw_info']['server']['header_admin_user'],
+					$GLOBALS['egw_info']['server']['header_admin_password']))
+			{
+				fail(21,lang('Access denied: wrong username or password for manage-header !!!'));
+			}
 		}
 		$GLOBALS['egw_info']['server']['server_root'] = EGW_SERVER_ROOT;
 		$GLOBALS['egw_info']['server']['include_root'] = EGW_INCLUDE_ROOT;
@@ -314,12 +610,12 @@ function do_header($create,&$arguments)
 		
 		if ($arg == '--delete-domain')
 		{
-			if (!isset($GLOBALS['egw_domain'][$values])) fail(22,lang2("Domain '%1' does NOT exist !!!",$values));
+			if (!isset($GLOBALS['egw_domain'][$values])) fail(92,lang("Domain '%1' does NOT exist !!!",$values));
 			unset($GLOBALS['egw_domain'][$values]);
 			continue;
 		}
 		
-		if (!isset($options[$arg]))	fail(20,lang2("Unknow option '%1' !!!",$arg));
+		if (!isset($options[$arg]))	fail(90,lang("Unknow option '%1' !!!",$arg));
 
 		$option = $options[$arg];
 		$values = !is_array($option) ? array($values) : explode(',',$values);
@@ -337,7 +633,7 @@ function do_header($create,&$arguments)
 			{
 				if (!isset($data['allowed'][$value]))
 				{
-					fail(21,lang2("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg));
+					fail(91,lang("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg));
 				}
 				$value = $data['allowed'][$value];
 			}
@@ -351,10 +647,10 @@ function do_header($create,&$arguments)
 			}
 			elseif ($value !== '')
 			{
-				set_value($GLOBALS,str_replace('@',$remember,$type),$name,$value);
+				_set_value($GLOBALS,str_replace('@',$remember,$type),$name,$value);
 				if ($name == 'egw_info/server/server_root')
 				{
-					set_value($GLOBALS,'egw_info/server/include_root',$name,$value);
+					_set_value($GLOBALS,'egw_info/server/include_root',$name,$value);
 				}
 			}
 			++$n;
@@ -364,8 +660,8 @@ function do_header($create,&$arguments)
 	{
 		echo '$GLOBALS[egw_info] = '; print_r($GLOBALS['egw_info']);
 		echo '$GLOBALS[egw_domain] = '; print_r($GLOBALS['egw_domain']);
-		echo "\n".lang2('Configuration errors:')."\n- ".implode("\n- ",$errors)."\n";
-		fail(23,lang2("You need to fix the above errors, before the configuration file header.inc.php can be written!"));
+		echo "\n".lang('Configuration errors:')."\n- ".implode("\n- ",$errors)."\n";
+		fail(23,lang("You need to fix the above errors, before the configuration file header.inc.php can be written!"));
 	}
 	$header = $GLOBALS['egw_setup']->header->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain'],
 		$GLOBALS['egw_info']['server']['server_root'],$GLOBALS['egw_info']['server']['include_root']);
@@ -378,14 +674,22 @@ function do_header($create,&$arguments)
 		if (($f = fopen('../header.inc.php','wb')) && fwrite($f,$header))
 		{
 			fclose($f);
-			echo "\n".lang2('header.inc.php successful written.')."\n\n";
+			echo "\n".lang('header.inc.php successful written.')."\n\n";
 			exit(0);
 		}
 	}
-	fail(24,lang2("Failed writing configuration file header.inc.php, check the permissions !!!"));
+	fail(24,lang("Failed writing configuration file header.inc.php, check the permissions !!!"));
 }
 
-function set_value($arr,$index,$name,$value)
+/**
+ * Set a value in the given array $arr with (multidimensional) key $index[/$name]
+ *
+ * @param array &$arr
+ * @param string $index multidimensional index written with / as separator, eg. egw_info/server/
+ * @param string $name additional index to use if $index end with a slash
+ * @param mixed $value value to set
+ */
+function _set_value(&$arr,$index,$name,$value)
 {
 	if (substr($index,-1) == '/') $index .= $name;
 	
@@ -397,23 +701,117 @@ function set_value($arr,$index,$name,$value)
 	$var = strstr($name,'passw') ? md5($value) : $value;
 }
 
-if (!function_exists('generate_mcyrpt_iv'))
+/**
+ * Reads the users language from the enviroment
+ *
+ * @return string 2 or 5 digit language code used in eGW
+ */
+function get_lang()
 {
-	function generate_mcyrpt_iv()
+	list($lang,$nation,$charset) = split("[_.]",$_SERVER['LANG']);
+	$nation = strtolower($nation);
+	
+	foreach(file('lang/languages') as $line)
 	{
-		srand((double)microtime()*1000000);
-		$random_char = array(
-			'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f',
-			'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
-			'w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L',
-			'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
-		);
+		list($code,$language) = explode("\t",$line);
+		$languages[$code] = $language;
+	}
+	if (isset($languages[$lang.'-'.$nation])) return $lang.'-'.$nation;
 
-		$iv = '';
-		for($i=0; $i<30; $i++)
+	if (isset($languages[$lang])) return $lang;
+	
+	return 'en';
+}
+
+/**
+ * Try guessing the document root of the webserver, should work for RH, SuSE, debian and plesk
+ */
+function create_http_enviroment()
+{
+	$_SERVER['SCRIPT_FILENAME'] = __FILE__;
+
+	foreach(array('httpsdocs','httpdocs','htdocs','html','www') as $docroottop)
+	{
+		$parts = explode($docroottop,__FILE__);
+		if (count($parts) == 2)
 		{
-			$iv .= $random_char[rand(1,count($random_char))];
+			$_SERVER['DOCUMENT_ROOT'] = $parts[0].$docroottop;
+			$_SERVER['PHP_SELF'] = str_replace('\\','/',$parts[1]);
+			break;
 		}
-		return $iv;
+	}
+	//print_r($_SERVER); exit;
+}
+
+/**
+ * Echos usage message
+ */
+function do_usage()
+{
+	echo lang('Usage: %1 {--check|--create-header|--edit-header|--install|--config|--admin|--language|--backup|--update} [additional options]',basename($_SERVER['argv'][0]))."\n\n";
+	
+	echo '--check '.lang('checks eGroupWare\'s installed, it\'s versions and necessary upgrads (return values see --exit-codes)')."\n";
+	echo '--install '.lang('domain(default),[backup to install],[charset(default depends on language)]')."\n";
+	echo '--config '.lang('domain(default),[config user(admin)],password,[,name=value,...] sets config values beside:')."\n";
+	echo '	--files-dir, --backup-dir, --temp-dir '.lang('path to various directories: have to exist and be writeable by the webserver')."\n";
+	echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
+	echo '	--mailserver '.lang('host,{imap|pop3|imaps|pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
+	echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password]')."\n";
+	echo '--admin '.lang('creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]')."\n";
+	echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
+	echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";
+	echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password')."\n";
+
+	echo "\n".lang('Create or edit the eGroupWare configuration file: header.inc.php:')."\n";
+	echo '--create-header '.lang('header-password[,header-user(admin)]')."\n";
+	echo '--edit-header '.lang('[header-password],[header-user],[new-password],[new-user]')."\n";
+
+	echo "\n".lang('Additional options and there defaults (int brackets)')."\n";
+	echo '--server-root '.lang('path of eGroupWare install directory (default auto-detected)')."\n";
+	echo '--session-type '.lang('{db|php(default)|php-restore}')."\n";
+	echo '--limit-access '.lang('comma separated ip-addresses or host-names, default access to setup from everywhere')."\n";
+	echo '--mcrypt '.lang('use mcrypt to crypt session-data: {off(default)|on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]')."\n";
+	echo '--db-persistent '.lang('use persistent db connections: {on(default)|off}')."\n";
+	echo '--domain-selectbox '.lang('{off(default)|on}')."\n";
+
+	echo "\n".lang('Adding, editing or deleting an eGroupWare domain / database instance:')."\n";
+	echo '--domain '.lang('add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]')."\n";
+	echo '--delete-domain '.lang('domain-name')."\n";
+
+	echo "\n".lang('List availible values:')."\n";
+	echo '--languages '.lang('list of availible translations')."\n";
+	echo '--charsets '.lang('charsets used by the different languages')."\n";
+	echo '--exit-codes '.lang('all exit codes of the command line interface')."\n";
+}
+
+function fail($exit_code,$message)
+{
+	echo $message."\n";
+	exit($exit_code);
+}
+
+/**
+ * List all exit codes used by the command line interface
+ *
+ * The list is generated by "greping" this file for calls to the fail() function. 
+ * Calls to fail() have to be in one line, to be recogniced!
+ */
+function list_exit_codes()
+{
+	error_reporting(error_reporting() & ~E_NOTICE);
+
+	$codes = array('Ok');
+	foreach(file(__FILE__) as $n => $line)
+	{
+		if (preg_match('/fail\(([0-9]+),(.*)\);/',$line,$matches))
+		{
+			//echo "Line $n: $matches[1]: $matches[2]\n";
+			eval('$codes['.$matches[1].'] = '.$matches[2].';');
+		}
+	}
+	ksort($codes,SORT_NUMERIC);
+	foreach($codes as $num => $msg)
+	{
+		echo $num."\t".str_replace("\n","\n\t",$msg)."\n";
 	}
 }

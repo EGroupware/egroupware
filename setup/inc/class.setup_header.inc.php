@@ -1,19 +1,15 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Setup - Manage the eGW config file header.inc.php           *
-* http://www.egroupware.org                                                *
-* ------------------------------------------------------------------------ *
-* Written 2006 by RalfBecker-AT-outdoor-training.de, partially using code  *
-*  from manageheader.php and class.setup_html.inc.php written by           *
-*  Tony Puglisi (Angles) and Miles Lott <milosch@egroupware.org>           *
-* ------------------------------------------------------------------------ *
-* This program is free software; you can redistribute it and/or modify it  *
-* under the terms of the GNU General Public License as published by the    *
-* Free Software Foundation; either version 2 of the License, or (at your   *
-* option) any later version.                                               *
-\**************************************************************************/
-
-/* $Id: class.setup_html.inc.php 20991 2006-04-06 11:19:56Z ralfbecker $ */
+/**
+ * Setup - Manage the eGW config file header.inc.php
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @author Miles Lott <milos@groupwhere.org>
+ * @author Tony Puglisi (Angles)
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 /**
  * Functions to manage the eGW config file header.inc.php

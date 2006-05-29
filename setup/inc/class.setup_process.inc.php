@@ -196,9 +196,9 @@
 			$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 		
 			$GLOBALS['current_config']['site_title'] = 'eGroupWare';
-			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'];
+			$GLOBALS['current_config']['hostname']  = $_SERVER['HTTP_HOST'] ? $_SERVER['HTTP_HOST'] : 'localhost';
 
-			// guessing the phpGW url
+			// guessing the eGW url
 			$parts = explode('/',$_SERVER['PHP_SELF']);
 			array_pop($parts);	// remove config.php
 			array_pop($parts);	// remove setup

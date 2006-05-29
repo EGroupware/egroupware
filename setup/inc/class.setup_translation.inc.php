@@ -1,27 +1,15 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - Translation class for phpgw lang files                  *
-  * This file written by Miles Lott <milosch@groupwhere.org>                 *
-  * and Dan Kuykendall <seek3r@phpgroupware.org>                             *
-  * Handles multi-language support using flat files                          *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            *  
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-  /* $Id$ */
+/**
+ * Setup
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Dan Kuykendall <seek3r@phpgroupware.org>
+ * @author Miles Lott <milos@groupwhere.org>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 	if (!defined('MAX_MESSAGE_ID_LENGTH'))
 	{
@@ -31,6 +19,8 @@
 	class setup_translation
 	{
 		var $langarray = array();
+		
+		var $no_translation_marker = '*';
 
 		/**
 		 * constructor for the class, loads all phrases into langarray
@@ -81,7 +71,7 @@
 		 */
 		function translate($key, $vars=False) 
 		{
-			$ret = $key.'*';
+			$ret = $key . $this->no_translation_marker;
 			$key = strtolower(trim($key));
 			if (isset($this->langarray[$key]))
 			{
@@ -99,7 +89,7 @@
 			{
 				foreach($vars as $n => $var)
 				{
-					$ret = preg_replace( '/%'.($n+1).'/', $var, $ret );
+					$ret = str_replace( '%'.($n+1), $var, $ret );
 				}
 			}
 			return $ret;

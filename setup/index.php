@@ -1,14 +1,14 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare                                                               *
-	* http://www.egroupware.org                                                *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
-	/* $Id$ */
+/**
+ * Setup
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Miles Lott <milos@groupwhere.org>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 	$GLOBALS['DEBUG'] = False;
 	$GLOBALS['egw_info'] = array(
@@ -157,11 +157,12 @@
 	$setup_tpl->set_var('subaction',@$subaction);
 
 	// Old PHP
-	if (!function_exists('version_compare'))//version_compare() is only available in PHP4.1+
+	if ((float) PHP_VERSION < $GLOBALS['egw_setup']->required_php_version)
 	{
 		$GLOBALS['egw_setup']->html->show_header($GLOBALS['egw_info']['setup']['header_msg'],True);
 		$GLOBALS['egw_setup']->html->show_alert_msg('Error',
-			 lang('You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version %1','4.1'));
+			lang('You are using PHP version %1. eGroupWare now requires %2 or later, recommended is PHP %3.',
+			PHP_VERSION,$GLOBALS['egw_setup']->required_php_version,$GLOBALS['egw_setup']->recommended_php_version));
 		$GLOBALS['egw_setup']->html->show_footer();
 		exit;
 	}
@@ -178,8 +179,8 @@
 
 	$setup_tpl->set_var('db_step_text',lang('Step %1 - Simple Application Management',1));
 	$setup_tpl->set_var('lang_system_charset',lang('<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):'));
-	$setup_tpl->set_var('system_charset',str_replace('&amp;','&',$GLOBALS['egw_setup']->translation->get_charsets('system_charset',
-		$GLOBALS['egw_setup']->system_charset)));
+	$setup_tpl->set_var('system_charset',str_replace('&amp;','&',
+		$GLOBALS['egw_setup']->translation->get_charsets('system_charset',$GLOBALS['egw_setup']->system_charset)));
 
 	switch($GLOBALS['egw_info']['setup']['stage']['db'])
 	{
@@ -307,7 +308,7 @@
 					// use uploaded backup, instead installing from scratch
 					if ($_POST['upload'])
 					{
-						$db_backup = CreateObject('phpgwapi.db_backup');
+						$db_backup =& CreateObject('phpgwapi.db_backup');
 						if (is_array($_FILES['uploaded']) && !$_FILES['uploaded']['error'] && 
 							is_uploaded_file($_FILES['uploaded']['tmp_name']))
 						{
@@ -410,7 +411,7 @@
 	$setup_tpl->set_var('config_status_alt',lang('not completed'));
 	switch($GLOBALS['egw_info']['setup']['stage']['config'])
 	{
-		case 1:
+		case 1:	// AFAIK this dont happen any more, as we have setup_process::save_minimal_config() now -- RalfBecker
 			$btn_config_now = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				lang('Please configure eGroupWare for your environment'),
 				'post','config.php',
@@ -420,48 +421,13 @@
 			$setup_tpl->set_var('ldap_table_data','&nbsp;');
 			break;
 		case 10:
-			$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array('config_app' => 'phpgwapi'),__LINE__,__FILE__);
-			while($GLOBALS['egw_setup']->db->next_record())
+			$setup_tpl->set_var('config_status_img',$completed);
+			$setup_tpl->set_var('config_status_alt',lang('completed'));
+			$config_msg = lang('Configuration completed');
+		case 2:
+			if ($GLOBALS['egw_info']['setup']['config_errors'])
 			{
-				$config[$GLOBALS['egw_setup']->db->f(0)] = $GLOBALS['egw_setup']->db->f(1);
-			}
-			$config_msg = '';
-			if (!check_dir($config['temp_dir'],$error_msg))
-			{
-				$config_msg = lang("Your temporary directory '%1' %2",$config['temp_dir'],$error_msg);
-			}
-			if ($config['file_repository'] == 'sql' && $config['file_store_contents'] == 'filesystem' && !check_dir($config['files_dir'],$error_msg,true))
-			{
-				$config_msg .= ($config_msg?"<br />\n":'').lang("Your files directory '%1' %2",$config['files_dir'],$error_msg);
-			}
-			// set and create the default backup_dir
-			if (@is_writeable($config['files_dir']) && !$config['backup_dir'] && $config['file_store_contents'] == 'filesystem')
-			{
-				$config['backup_dir'] = $config['files_dir'].'/db_backup';
-				if (!is_dir($config['backup_dir']) && mkdir($config['backup_dir']))
-				{
-					$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->config_table,array(
-						'config_value' => $config['backup_dir'],
-					),array(
-						'config_app'  => 'phpgwapi',
-						'config_name' => 'backup_dir',
-					),__LINE__,__FILE__);
-				}
-			}
-			if (!check_dir($config['backup_dir'],$error_msg,true))
-			{
-				$no_backup_dir = lang("Your backup directory '%1' %2",$config['backup_dir'],$error_msg);
-				$config_msg .= ($config_msg?"<br />\n":'').$no_backup_dir;
-			}
-			if (!$config['mail_server'] || !$config['mail_server_type'] || !$config['smtp_server'])
-			{
-				$config_msg .= ($config_msg?"<br />\n":'').lang('Missing or uncomplete mailserver configuration');
-			}
-			if (!$config_msg)
-			{
-				$setup_tpl->set_var('config_status_img',$completed);
-				$setup_tpl->set_var('config_status_alt',lang('completed'));
-				$config_msg = lang('Configuration completed');
+				$config_msg = implode('<br />',$GLOBALS['egw_info']['setup']['config_errors']);
 			}
 			$btn_edit_config = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
 				$config_msg,

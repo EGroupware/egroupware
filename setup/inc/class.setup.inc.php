@@ -1,20 +1,17 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Setup                                                       *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  * This file written by Joseph Engo<jengo@phpgroupware.org>                 *
-  *  and Dan Kuykendall<seek3r@phpgroupware.org>                             *
-  *  and Mark Peters<skeeter@phpgroupware.org>                               *
-  *  and Miles Lott<milosch@groupwhere.org>                                  *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+/**
+ * Setup
+ *
+ * @link http://www.egroupware.org
+ * @package setup
+ * @author Joseph Engo <jengo@phpgroupware.org>
+ * @author Dan Kuykendall <seek3r@phpgroupware.org>
+ * @author Mark Peters <skeeter@phpgroupware.org>
+ * @author Miles Lott <milos@groupwhere.org>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 	class egw_dummy {
 		var $db;
@@ -49,6 +46,12 @@
 		var $tbl_apps;
 		var $tbl_config;
 		var $tbl_hooks;
+		
+		/**
+		 * @var float $required_php_version php version required by eGroupWare
+		 */
+		var $required_php_version = 4.3;
+		var $recommended_php_version = '5+';
 
 		function setup($html=False, $translation=False)
 		{
@@ -885,14 +888,16 @@
 		 *
 		 * if the $username already exists, only the id is returned, no new user / group gets created
 		 *
-		 * @param username string alphanumerical username or groupname (account_lid)
-		 * @param first, last string first / last name
+		 * @param string $username alphanumerical username or groupname (account_lid)
+		 * @param string $first first name
+		 * @param string $last last name
 		 * @param $passwd string cleartext pw
-		 * @param $group string/boolean Groupname for users primary group or False for a group, default 'Default'
-		 * @param $changepw boolean user has right to change pw, default False
-		 * @return the numerical user-id
+		 * @param string/boolean $group Groupname for users primary group or False for a group, default 'Default'
+		 * @param boolean $changepw user has right to change pw, default False
+		 * @param string $email 
+		 * @return int the numerical user-id
 		 */
-		function add_account($username,$first,$last,$passwd,$group='default',$changepw=False)
+		function add_account($username,$first,$last,$passwd,$group='default',$changepw=False,$email='')
 		{
 			$this->setup_account_object();
 
@@ -908,7 +913,8 @@
 					'account_lastname'  => $last,
 					'account_status'    => 'A',
 					'account_primary_group' => $groupid,
-					'account_expires'   => -1
+					'account_expires'   => -1,
+					'account_email'     => $email,
 				));
 			}
 			$accountid = (int)$accountid;
