@@ -61,7 +61,7 @@
 				$this->placeholders[] = '%'.$i;
 			}
 			$this->db = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
-			$this->db->set_app('phpgwapi');
+			if (is_object($this->db)) $this->db->set_app('phpgwapi');
 
 			if (!isset($GLOBALS['egw_setup']))
 			{
