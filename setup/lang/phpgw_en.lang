@@ -118,6 +118,7 @@ completed	setup	en	Completed
 config password	setup	en	Config Password
 config username	setup	en	Config Username
 configuration	setup	en	Configuration
+configuration changed.	setup	en	Configuration changed.
 configuration completed	setup	en	Configuration completed
 configuration errors:	setup	en	Configuration errors:
 configuration password	setup	en	Configuration Password
@@ -145,6 +146,7 @@ created	setup	en	created
 created header.inc.php!	setup	en	Created header.inc.php!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	en	creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	en	Creating Tables
+current configuration:	setup	en	Current configuration:
 current system-charset	setup	en	Current system-charset
 current system-charset is %1.	setup	en	Current system-charset is %1.
 current version	setup	en	Current Version
@@ -540,7 +542,7 @@ unfortunally some php/apache packages have problems with it (apache dies and you
 uninstall	setup	en	uninstall
 uninstall all applications	setup	en	Uninstall all applications
 uninstalled	setup	en	uninstalled
-unknow option '%1' !!!	setup	en	Unknow option '%1' !!!
+unknown option '%1' !!!	setup	en	Unknown option '%1' !!!
 update finished.	setup	en	Update finished.
 upgrade	setup	en	Upgrade
 upgrade all	setup	en	Upgrade All

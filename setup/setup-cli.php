@@ -98,7 +98,7 @@ switch($action)
 		break;
 
 	default:
-		fail(90,lang("Unknows option '%1' !!!",$action));
+		fail(90,lang("Unknown option '%1' !!!",$action));
 }
 exit(0);
 
@@ -133,7 +133,7 @@ function do_config($args)
 	);
 	while (($arg = array_shift($args)))
 	{
-		if (!isset($config[$arg])) fail(90,lang("Unknow option '%1' !!!",$arg));
+		if (!isset($config[$arg])) fail(90,lang("Unknown option '%1' !!!",$arg));
 
 		foreach(explode(',',array_shift($args)) as $n => $value)
 		{
@@ -156,6 +156,19 @@ function do_config($args)
 			'config_app'  => 'phpgwapi',
 			'config_name' => $name,
 		),__LINE__,__FILE__);
+	}
+	if (count($values))
+	{
+		echo lang('Configuration changed.')."\n";
+	}
+	echo lang('Current configuration:')."\n";
+	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array(
+		'config_app'  => 'phpgwapi',
+		"config_name LIKE '%\\_dir' OR (config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp%' OR config_name IN ('webserver_url','system_charset')",
+	),__LINE__,__FILE__);
+	while (($row = $GLOBALS['egw_setup']->db->row(true)))
+	{
+		echo $row['config_name'].':	'.$row['config_value']."\n";
 	}
 }
 
@@ -283,7 +296,7 @@ function do_lang($arg)
 {
 	global $setup_info;
 
-	list($domain,,,$no_backup) = $options = explode(',',$arg);
+	list($domain) = $options = explode(',',$arg);
 
 	$domains = $GLOBALS['egw_domain'];
 	if ($domain && $domain != 'all')
@@ -295,7 +308,7 @@ function do_lang($arg)
 		$options[0] = $domain;
 		$arg = implode(',',$options);
 		
-		$langs = _check_auth_config($arg,15);
+		$langs = _check_auth_config($arg,15,false);		// false = leave eGW's charset, dont set ours!!!
 		
 		$GLOBALS['egw_setup']->translation->setup_translation_sql();
 
@@ -335,9 +348,10 @@ function do_lang($arg)
  *
  * @param string $arg [domain(default)],[user(admin)],password
  * @param int $stop see do_check()
+ * @param boolean $set_lang=true set our charset, overwriting the charset of the eGW installation, default true
  * @return array with unprocessed arguments from $arg
  */
-function _check_auth_config($arg,$stop=15)
+function _check_auth_config($arg,$stop,$set_lang=true)
 {
 	$options = explode(',',$arg);
 	if (!($domain = array_shift($options))) $domain = 'default';
@@ -352,6 +366,9 @@ function _check_auth_config($arg,$stop=15)
 		}
 	}
 	do_check($domain,$stop);	// check if eGW is installed
+
+	// reset charset for the output to the charset used by the OS
+	if ($set_lang) $GLOBALS['egw_setup']->system_charset = $GLOBALS['charset'];
 	
 	//echo "check_auth('$user','$password','{$GLOBALS['egw_domain'][$domain]['config_user']}','{$GLOBALS['egw_domain'][$domain]['config_passwd']}')\n";
 	if (!$GLOBALS['egw_setup']->check_auth($user,$password,$GLOBALS['egw_domain'][$domain]['config_user'],
@@ -422,7 +439,7 @@ function do_check($domain='',$stop=0)
 {
 	global $setup_info;
 	static $header_checks=true;	// output the header checks only once
-
+	
 	if ($stop && !is_array($stop)) $stop = array($stop);
 
 	$versions =& $GLOBALS['egw_info']['server']['versions'];
@@ -518,7 +535,7 @@ function do_check($domain='',$stop=0)
 		echo lang("database is version %1 and up to date.",$setup_info['phpgwapi']['currentver'])."\n";
 
 		$GLOBALS['egw_setup']->detection->check_config();
-		if ($GLOBALS['egw_info']['setup']['config_errors'] && $stop != 15)
+		if ($GLOBALS['egw_info']['setup']['config_errors'] && !in_array(15,$stop))
 		{
 			fail(15,lang('You need to configure eGroupWare:')."\n- ".@implode("\n- ",$GLOBALS['egw_info']['setup']['config_errors']));
 		}
@@ -639,7 +656,7 @@ function do_header($create,&$arguments)
 			continue;
 		}
 		
-		if (!isset($options[$arg]))	fail(90,lang("Unknow option '%1' !!!",$arg));
+		if (!isset($options[$arg]))	fail(90,lang("Unknown option '%1' !!!",$arg));
 
 		$option = $options[$arg];
 		$values = !is_array($option) ? array($values) : explode(',',$values);
@@ -734,7 +751,7 @@ function _set_value(&$arr,$index,$name,$value)
  */
 function get_lang(&$charset)
 {
-	list($lang,$nation,$charset) = split("[_.]",strtolower($_SERVER['LANG']));
+	@list($lang,$nation,$charset) = split("[_.]",strtolower($_SERVER['LANG']));
 
 	foreach(file('lang/languages') as $line)
 	{

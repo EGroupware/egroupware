@@ -99,7 +99,7 @@
 
 		function setup_translation_sql()
 		{
-			if (!is_object($this->sql))
+			if (!is_object($this->sql) || is_object($GLOBALS['egw_setup']->db) && !is_object($this->sql->db))
 			{
 				include_once(EGW_API_INC.'/class.translation.inc.php');
 				$this->sql =& new translation;

@@ -118,6 +118,7 @@ completed	setup	de	Abgeschlossen
 config password	setup	de	Konfigurationspasswort
 config username	setup	de	Konfigurationsbenutzername
 configuration	setup	de	Konfiguration
+configuration changed.	setup	de	Konfiguration geändert.
 configuration completed	setup	de	Konfiguration abgeschlossen
 configuration errors:	setup	de	Fehler in der Konfiguration;
 configuration password	setup	de	Konfigurationspasswort
@@ -145,6 +146,7 @@ created	setup	de	erzeugt
 created header.inc.php!	setup	de	header.inc.php erzeugt!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	de	anlegen eines Administrator Benutzers: Domain(default),[Konfigurationsbenutzer(admin)],Passwort,Benutzername,Passwort,[Vorname],[Nachname],[Email Adresse]
 creating tables	setup	de	Erstelle Tabellen
+current configuration:	setup	de	Aktuelle Konfiguration:
 current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
@@ -542,7 +544,7 @@ unfortunally some php/apache packages have problems with it (apache dies and you
 uninstall	setup	de	deinstaliert
 uninstall all applications	setup	de	Alle Anwendungen deinstallieren
 uninstalled	setup	de	nicht installiert
-unknow option '%1' !!!	setup	de	Unbekannte Option '%1' !!!
+unknown option '%1' !!!	setup	de	Unbekannte Option '%1' !!!
 update finished.	setup	de	Aktualisierung beendet.
 upgrade	setup	de	Aktualisieren
 upgrade all	setup	de	Alle Aktualiseren
