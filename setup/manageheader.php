@@ -200,7 +200,7 @@ function check_header_form()
 		
 	//echo "egw_info[server]=<pre>".print_r($GLOBALS['egw_info']['server'],true)."</pre>\n";
 	//echo "egw_domain=<pre>".print_r($GLOBALS['egw_domain'],true)."</pre>\n";
-	if ($validation_errors) echo "validation_errors=<pre>".print_r($validation_errors,true)."</pre>\n";
+	//if ($validation_errors) echo "validation_errors=<pre>".print_r($validation_errors,true)."</pre>\n";
 	
 	return $validation_errors;
 }
