@@ -63,7 +63,6 @@ default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendareinträgen. Die Länge ist in Minuten, zb. 60 für 1 Stunde.
 default week view	calendar	de	Vorgabe Wochenansicht
-defines the size in minutes of the lines in the day view.	calendar	de	Bestimmt die Zeitskala in Minuten der Tagesansicht des Kalendars.
 delete series	calendar	de	Serie löschen
 delete this alarm	calendar	de	Diesen Alarm löschen
 delete this event	calendar	de	Diesen Termin löschen
@@ -113,6 +112,7 @@ filename of the download	calendar	de	Name der herunterzuladenden Datei
 find free timeslots where the selected participants are availible for the given timespan	calendar	de	Such freie Zeitslots an denen die ausgewählten Teilnehmer für die gegebene Zeitspanne verfügbar sind
 firstname of person to notify	calendar	de	Vorname der zu benachrichtigenden Person
 for	calendar	de	für
+for which views should calendar show distinct lines with a fixed time interval.	calendar	de	Für welche Ansichten soll der Kalender einzelne Zeilen mit festen Zeitintervallen anzeigen.
 format of event updates	calendar	de	Format der Benachrichtigungen
 forward half a month	calendar	de	einen halben Monat weiter
 forward one month	calendar	de	einen Monat weiter
@@ -135,6 +135,7 @@ holiday management	calendar	de	Feiertagsverwaltung
 holidays	calendar	de	Feiertage
 hours	calendar	de	Stunden
 how far to search (from startdate)	calendar	de	wie weit suchen (vom Startdatum)
+how many minutes should each interval last?	calendar	de	Wie viele Minute soll jedes Interval dauern?
 ical	calendar	de	iCal
 ical / rfc2445	calendar	de	iCal / RFC2445
 ical export	calendar	de	iCal Export
@@ -145,12 +146,12 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	de	Wenn Sie hier kein Passwort angeben, ist die Information für jeden verfügbar, der die Adresse (URL) kennt!!!
 ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
-import csv-file	calendar	de	CSV-Datei importieren
+import csv-file	common	de	CSV-Datei importieren
 interval	calendar	de	Intervall
-intervals in day view	calendar	de	Zeitintervalle in der Tagesansicht
 invalid email-address "%1" for user %2	calendar	de	Ungültige Email-Adresse "%1" für Benutzer %2
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
+length of the time interval	calendar	de	Länge des Zeitintervals
 link to view the event	calendar	de	Verweis (Weblink) um den Termin anzuzeigen
 links	calendar	de	Verknüpfungen
 links, attachments	calendar	de	Verknüpfungen, Dateianhänge
@@ -280,6 +281,7 @@ updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Popup
 view this event	calendar	de	Diesen Termin anzeigen
+views with fixed time intervals	calendar	de	Ansichten mit festen Zeitintervallen
 wed	calendar	de	Mi
 week	calendar	de	Woche
 weekday starts on	calendar	de	Arbeitswoche beginnt am

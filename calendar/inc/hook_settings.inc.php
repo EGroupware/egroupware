@@ -25,6 +25,11 @@
 		'planner_user' => lang('Planner by user'),
 		'listview'     => lang('Listview'),
 	);
+	$grid_views = array(
+		'' => lang('Dayview').', '.lang('Weekview').' &amp; '.lang('Monthview'),
+		'day_week' => lang('Dayview').' &amp; '.lang('Weekview'),
+		'day' => lang('Dayview'),
+	);
 	/* Select list with number of day by week */
 	$week_view = array(
 		'5' => lang('Weekview without weekend'),
@@ -149,6 +154,84 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
+		'show_rejected' => array(
+			'type'   => 'check',
+			'label'  => 'Show invitations you rejected',
+			'name'   => 'show_rejected',
+			'help'   => 'Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!'
+		),
+		'weekdaystarts' => array(
+			'type'   => 'select',
+			'label'  => 'weekday starts on',
+			'name'   => 'weekdaystarts',
+			'values' => $weekdaystarts,
+			'help'   => 'This day is shown as first day in the week or month view.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'workdaystarts' => array(
+			'type'   => 'select',
+			'label'  => 'work day starts on',
+			'name'   => 'workdaystarts',
+			'values' => $times,
+			'help'   => 'This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'workdayends' => array(
+			'type'   => 'select',
+			'label'  => 'work day ends on',
+			'name'   => 'workdayends',
+			'values' => $times,
+			'help'   => 'This defines the end of your dayview. Events after this time, are shown below the dayview.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'use_time_grid' => array(
+			'type'   => 'select',
+			'label'  => 'Views with fixed time intervals',
+			'name'   => 'use_time_grid',
+			'values' => $grid_views,
+			'help'   => 'For which views should calendar show distinct lines with a fixed time interval.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'interval' => array(
+			'type'   => 'select',
+			'label'  => 'Length of the time interval',
+			'name'   => 'interval',
+			'values' => $intervals,
+			'help'   => 'How many minutes should each interval last?',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'defaultlength' => array(
+			'type'    => 'input',
+			'label'   => 'default appointment length (in minutes)',
+			'name'    => 'defaultlength',
+			'help'    => 'Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.',
+			'default' => '',
+			'size'    => 3,
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'planner_start_with_group' => array(
+			'type'   => 'select',
+			'label'  => 'Preselected group for entering the planner',
+			'name'   => 'planner_start_with_group',
+			'values' => $options,
+			'help'   => 'This group that is preselected when you enter the planner. You can change it in the planner anytime you want.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
+		'default_private' => array(
+			'type'  => 'check',
+			'label' => 'Set new events to private',
+			'name'  => 'default_private',
+			'help'  => 'Should new events created as private by default ?',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
 		'receive_updates' => array(
 			'type'   => 'select',
 			'label'  => 'Receive email updates',
@@ -241,86 +324,6 @@
 			'default' => '',
 			'values' => $event_details,
 			'subst_help' => False,
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'show_rejected' => array(
-			'type'   => 'check',
-			'label'  => 'Show invitations you rejected',
-			'name'   => 'show_rejected',
-			'help'   => 'Should invitations you rejected still be shown in your calendar ?<br>You can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!'
-		),
-		'weekdaystarts' => array(
-			'type'   => 'select',
-			'label'  => 'weekday starts on',
-			'name'   => 'weekdaystarts',
-			'values' => $weekdaystarts,
-			'help'   => 'This day is shown as first day in the week or month view.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'workdaystarts' => array(
-			'type'   => 'select',
-			'label'  => 'work day starts on',
-			'name'   => 'workdaystarts',
-			'values' => $times,
-			'help'   => 'This defines the start of your dayview. Events before this time, are shown above the dayview.<br>This time is also used as a default starttime for new events.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'workdayends' => array(
-			'type'   => 'select',
-			'label'  => 'work day ends on',
-			'name'   => 'workdayends',
-			'values' => $times,
-			'help'   => 'This defines the end of your dayview. Events after this time, are shown below the dayview.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'interval' => array(
-			'type'   => 'select',
-			'label'  => 'Intervals in day view',
-			'name'   => 'interval',
-			'values' => $intervals,
-			'help'   => 'Defines the size in minutes of the lines in the day view.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'defaultlength' => array(
-			'type'    => 'input',
-			'label'   => 'default appointment length (in minutes)',
-			'name'    => 'defaultlength',
-			'help'    => 'Default length of newly created events. The length is in minutes, eg. 60 for 1 hour.',
-			'default' => '',
-			'size'    => 3,
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'planner_start_with_group' => array(
-			'type'   => 'select',
-			'label'  => 'Preselected group for entering the planner',
-			'name'   => 'planner_start_with_group',
-			'values' => $options,
-			'help'   => 'This group that is preselected when you enter the planner. You can change it in the planner anytime you want.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-/* dont think that default is realy necessary -- RalfBecker 2005/11/12
-		'defaultfilter' => array(
-			'type'   => 'select',
-			'label'  => 'Default calendar filter',
-			'name'   => 'defaultfilter',
-			'values' => $defaultfilter,
-			'help'   => 'Which events do you want to see when you enter the calendar.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-*/
-		'default_private' => array(
-			'type'  => 'check',
-			'label' => 'Set new events to private',
-			'name'  => 'default_private',
-			'help'  => 'Should new events created as private by default ?',
 			'xmlrpc' => True,
 			'admin'  => False
 		),
