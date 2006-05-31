@@ -39,6 +39,8 @@
 		define('EGW_INCLUDE_ROOT','..');
 		define('PHPGW_SERVER_ROOT','..');
 		define('PHPGW_INCLUDE_ROOT','..');
+
+		define('EGW_API_INC',EGW_SERVER_ROOT.'/phpgwapi/inc');
 	}
 
 	require(EGW_INCLUDE_ROOT . '/phpgwapi/inc/common_functions.inc.php');
