@@ -184,7 +184,6 @@
 		}
 		
 		function addSIF($_sifData, $_id, $_sifType) {
-
 			if(!$egwData = $this->siftoegw($_sifData, $_sifType)) {
 				return false;
 			}
@@ -258,18 +257,10 @@
 									break;
 							}
 						}
-					
-						$sifTask .= '<RecurrenceType>1</RecurrenceType>
-						<Interval>1</Interval>
-						<MonthOfYear>0</MonthOfYear>
-						<DayOfMonth>0</DayOfMonth>
-						<DayOfWeekMask>4</DayOfWeekMask>
-						<Instance>0</Instance>
-						<PatternStartDate>20060320T230000Z</PatternStartDate>
-						<NoEndDate>1</NoEndDate>
-						<PatternEndDate></PatternEndDate>
-						<Occurrences>10</Occurrences></task>';
-						#error_log($sifTask);
+
+						$sifTask .= '<ActualWork>0</ActualWork><IsRecurring>0</IsRecurring>';
+						return base64_encode($sifTask);
+
 /*						return base64_encode("<task>
 						<ActualWork>0</ActualWork>
 						<BillingInformation></BillingInformation>
@@ -302,8 +293,7 @@
 						<PatternEndDate></PatternEndDate>
 						<Occurrences>10</Occurrences>
 						</task>
-						");*/
-						return base64_encode($sifTask);
+						"); */
 					}
 					break;
 				
