@@ -137,9 +137,9 @@ function do_config($args)
 
 		foreach(explode(',',array_shift($args)) as $n => $value)
 		{
-			if ($value === '') continue;
+			if ($value === '' && is_array($config[$arg])) continue;
 			
-			$name = $config[$arg][$n];
+			$name = is_array($config[$arg]) || $n ? $config[$arg][$n] : $config[$arg];
 			if (is_array($name))
 			{
 				if (!in_array($value,$name['allowed'])) fail(91,"'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg);
@@ -576,8 +576,8 @@ function do_header($create,&$arguments)
 				$password = trim(fgets($f = fopen('php://stdin','rb')));
 				fclose($f);
 			}
-			$options[0] = $user;
-			$options[1] = $password;
+			$options[0] = $password;
+			$options[1] = $user;
 			$arguments[0] = implode(',',$options);
 
 			if (!$GLOBALS['egw_setup']->check_auth($user,$password,$GLOBALS['egw_info']['server']['header_admin_user'],
