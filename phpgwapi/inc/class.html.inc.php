@@ -876,11 +876,17 @@ class html
 			{
 				$url = $name;		// name may already contain absolut path
 			}
-			if(!$GLOBALS['egw_info']['server']['webserver_url'])
+			if($GLOBALS['egw_info']['server']['webserver_url'])
 			{
-				$base_path = "./";
+				list(,$path) = explode($GLOBALS['egw_info']['server']['webserver_url'],$url);
+				$path = EGW_SERVER_ROOT.$path;
 			}
-			if (!@is_readable($base_path . str_replace($GLOBALS['egw_info']['server']['webserver_url'],PHPGW_SERVER_ROOT,$url)))
+			else
+			{
+				$path = EGW_SERVER_ROOT.$url;
+			}
+			
+			if (!@is_readable($path))
 			{
 				// if the image-name is a percentage, use a progressbar
 				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
