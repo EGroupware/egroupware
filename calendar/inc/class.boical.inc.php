@@ -376,18 +376,20 @@
 					$vcardData	= array('recur_type' => 0);
 					
 					// lets see what we can get from the vcard
-					foreach($component->_attributes as $attributes)
+					foreach($component->_attributes as $attributes) 
 					{
-						$attributes['value'] = $GLOBALS['egw']->translation->convert($attributes['value'],'UTF-8');
-						//echo "$attributes[name] = '$attributes[value]'<br />\n";
-
-						switch($attributes['name'])
+						switch($attributes['name']) 
 						{
 							case 'AALARM':
 							case 'DALARM':
-								if (preg_match('/.*Z$/',$attributes['value'],$matches))
-								{
+								if (preg_match('/.*Z$/',$attributes['value'],$matches)) {
 									$alarmTime = $vcal->_parseDateTime($attributes['value']);
+									$alarms[$alarmTime] = array(
+										'time' => $alarmTime
+									);
+								} elseif (preg_match('/(........T......);;;$/',$attributes['value'],$matches)) {
+									#error_log(print_r($matches,true));
+									$alarmTime = $vcal->_parseDateTime($matches[1]);
 									$alarms[$alarmTime] = array(
 										'time' => $alarmTime
 									);
@@ -620,11 +622,9 @@
 	 				{
 						$event['participants'] = array($GLOBALS['egw_info']['user']['account_id'] => 'A');
 	 				}
-					#foreach($event as $key => $value)
-					#{
-					#	error_log("KEY: $key  VALUE: $value");
-					#}
-					#echo "event=";_debug_array($event);exit;
+
+					#error_log('ALARMS');
+					#error_log(print_r($alarms,true));
 					
 					if (!($Ok = $this->update($event, TRUE))) {
 						break;	// stop with the first error
@@ -755,9 +755,6 @@
 					// lets see what we can get from the vcard
 					foreach($component->_attributes as $attributes)
 					{
-						$attributes['value'] = $GLOBALS['egw']->translation->convert($attributes['value'],'UTF-8');
-						//echo "$attributes[name] = '$attributes[value]'<br />\n";
-
 						switch($attributes['name'])
 						{
 							case 'AALARM':
@@ -1012,6 +1009,7 @@
 			unset($event['end']);
 
 			foreach($event as $key => $value) {
+				error_log("$key => $value");
 				if (substr($key,0,6) != 'recur_') {
 					$search['query']['cal_'.$key] = $value;
 				} else {
