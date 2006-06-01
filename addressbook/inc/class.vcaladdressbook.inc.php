@@ -127,6 +127,7 @@
 					}
 
 					$value = $GLOBALS['egw']->translation->convert($value,$sysCharSet,'utf-8');
+					$value = html_entity_decode($value, ENT_QUOTES, 'UTF-8');
 
 					// don't add the entry if it contains only ';'
 					if(strlen(str_replace(';','',$value)) != 0)
@@ -171,16 +172,16 @@
 		function setSupportedFields($_productManufacturer='file', $_productName='')
 		{
 			$defaultFields[0] = array(
-				'ADR' 		=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+				'ADR;WORK' 	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
 								'adr_one_postalcode','adr_one_countryname'),
 				'CATEGORIES' 	=> array('cat_id'),
 				'CLASS'		=> array('access'),
-				'EMAIL'		=> array('email'),
+				'EMAIL;INTERNET;WORK' => array('email'),
 				'N'		=> array('n_family','n_given','','',''),
 				'NOTE'		=> array('note'),
 				'ORG'		=> array('org_name',''),
-				'TEL;CELL'	=> array('tel_cell'),
-				'TEL;FAX'	=> array('tel_fax'),
+				'TEL;CELL;WORK'	=> array('tel_cell'),
+				'TEL;FAX;WORK'	=> array('tel_fax'),
 				'TEL;HOME'	=> array('tel_home'),
 				'TEL;WORK'	=> array('tel_work'),
 				'TITLE'		=> array('title'),
