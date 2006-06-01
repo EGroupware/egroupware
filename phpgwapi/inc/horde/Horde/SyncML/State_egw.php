@@ -309,18 +309,25 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	
     	$mapID = $this->_locName . $this->_sourceURI . $type;
     	
+    	// delete all client id's
+    	$where = array(
+    		'map_id'	=> $mapID,
+    		'map_locuid'	=> $locid,
+    	);
+    	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
+    	
+    	// delete all egw id's
     	$where = array(
     		'map_id'	=> $mapID,
     		'map_guid'	=> $guid,
     	);
+    	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
     	
     	$data = $where + array(
     		'map_locuid'	=> $locid,
     		'map_timestamp'	=> $ts,
     		'map_expired'	=> 0,
     	);
-
-    	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
     	$db->insert('egw_contentmap', $data, $where, __LINE__, __FILE__);
 
 	#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts $mapID", __FILE__, __LINE__, PEAR_LOG_DEBUG);

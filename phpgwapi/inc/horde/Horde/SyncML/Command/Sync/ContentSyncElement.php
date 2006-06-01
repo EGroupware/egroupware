@@ -56,6 +56,11 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
         $this->_contentType = $c;
     }
 
+    function setContentFormat($_format)
+    {
+        $this->_contentFormat = $_format;
+    }
+
     function getContentType()
     {
         return $this->_contentType;
@@ -115,6 +120,14 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
                 $output->characters($chars);
                 $output->endElement($state->getURI(), 'LocURI');
                 $output->endElement($state->getURI(), 'Source');
+            }
+            
+            if(isset($this->_contentFormat)) {
+                $output->startElement($state->getURI(), 'Meta', $attrs);
+                $output->startElement($state->getURIMeta(), 'Format', $attrs);
+                $output->characters($this->_contentFormat);
+                $output->endElement($state->getURIMeta(), 'Format');
+                $output->endElement($state->getURI(), 'Meta');
             }
 
             if ($this->_targetURI != null) {
