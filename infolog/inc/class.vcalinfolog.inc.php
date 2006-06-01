@@ -85,7 +85,7 @@
 			#print "<pre>";
 			#print $vcal->exportvCalendar();
 			#print "</pre>";
-
+			
 			return $vcal->exportvCalendar();
 		}
 		
@@ -103,7 +103,7 @@
 		}
 		
 		function searchVTODO($_vcalData) {
-			if(!$egwData = $this->vtodotoegw($_calData)) {
+			if(!$egwData = $this->vtodotoegw($_vcalData)) {
 				return false;
 			}
 
