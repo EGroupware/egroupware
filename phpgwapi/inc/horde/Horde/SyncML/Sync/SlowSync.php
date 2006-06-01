@@ -73,6 +73,9 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			// can happen.
 			#LK		$cmd->setContent($state->convertServer2Client($c, $contentType));
 			$cmd->setContent($c);
+			if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
+				$cmd->setContentFormat('b64');
+			}
 			$cmd->setContentType($contentType['ContentType']);
 			$cmd->setSourceURI($guid);
 			$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Add');
