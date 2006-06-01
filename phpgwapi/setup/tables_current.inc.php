@@ -114,7 +114,7 @@
 		),
 		'egw_access_log' => array(
 			'fd' => array(
-				'sessionid' => array('type' => 'char','precision' => '32','nullable' => False),
+				'sessionid' => array('type' => 'char','precision' => '128','nullable' => False),
 				'loginid' => array('type' => 'varchar','precision' => '64','nullable' => False),
 				'ip' => array('type' => 'varchar','precision' => '40','nullable' => False),
 				'li' => array('type' => 'int','precision' => '4','nullable' => False),

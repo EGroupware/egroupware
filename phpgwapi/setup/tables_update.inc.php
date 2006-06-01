@@ -46,6 +46,13 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
 	}
 
+	$test[] = '1.2.102';
+	function phpgwapi_upgrade1_2_102()
+	{
+		// 2. 1.2 bugfix-release: egw_accesslog.sessionid is varchar(128)
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
+	}
+
 	// updates in HEAD / 1.3
 	$test[] = '1.3.001';
 	function phpgwapi_upgrade1_3_001()
@@ -114,5 +121,18 @@
 		));
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.005';
+	}
+
+
+	$test[] = '1.3.005';
+	function phpgwapi_upgrade1_3_005()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_access_log','sessionid',array(
+			'type' => 'char',
+			'precision' => '128',
+			'nullable' => False
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.006';
 	}
 ?>
