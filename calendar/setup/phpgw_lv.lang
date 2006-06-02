@@ -285,3 +285,4 @@ you need to set either a day or a occurence !!!	calendar	lv	Tev jāuzstāda dien
 your meeting scheduled for %1 has been canceled	calendar	lv	Tava ieplānotā tikšanās %1 ir atcelta
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	lv	Tava ieplānotā tikšanās %1 tika pārcelta uz %2
 your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	lv	Tavs ieteiktais  <B> %1 - %2 </B> laiks nonāķ pretrunā ar sekojošīem kalendāra ierakstiem:
+h	calendar	lv	h

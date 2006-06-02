@@ -308,3 +308,4 @@ you need to select an ical file first	calendar	pt-br	Você precisa selecionar um 
 you need to set either a day or a occurence !!!	calendar	pt-br	Você deve determinar um dia ou recorrência!!!
 your meeting scheduled for %1 has been canceled	calendar	pt-br	Seu compromisso agendado para %1 foi cancelado
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pt-br	Seu compromisso agendado para %1 foi remarcado para %2
+h	calendar	pt-br	h

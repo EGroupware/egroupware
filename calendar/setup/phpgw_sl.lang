@@ -308,3 +308,4 @@ you need to select an ical file first	calendar	sl	Najprej morate izbrati datotek
 you need to set either a day or a occurence !!!	calendar	sl	Nastaviti morate dan ali pojavljanje!
 your meeting scheduled for %1 has been canceled	calendar	sl	Vaš sestanek %1 je izbrisan
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sl	Sestanek za %1 je bil prestavljen na %2
+h	calendar	sl	h

@@ -308,3 +308,4 @@ you need to select an ical file first	calendar	zh-tw	您必須先選擇一個 iC
 you need to set either a day or a occurence !!!	calendar	zh-tw	您必須設定一個日期或是一個期間！
 your meeting scheduled for %1 has been canceled	calendar	zh-tw	您與%1的行程已經取消了
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	zh-tw	您與%1的行程已經重新安排到%2
+h	calendar	zh-tw	時

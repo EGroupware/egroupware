@@ -306,3 +306,4 @@ you need to select an ical file first	calendar	nl	U moet eerst een iCal selecter
 you need to set either a day or a occurence !!!	calendar	nl	U moet of een Dag  of een Gebeurtenis instellen !!!
 your meeting scheduled for %1 has been canceled	calendar	nl	U geplande vergadering voor %1 is geannuleerd.
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	nl	Uw vergadering die stond gepland voor %1 is opnieuw ingepland naar %2
+h	calendar	nl	h

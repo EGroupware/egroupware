@@ -19,6 +19,7 @@
 
 	$default = array(
 		'day'          => lang('Dayview'),
+		'day4'         => lang('Four days view'),
 		'week'         => lang('Weekview'),
 		'month'        => lang('Monthview'),
 		'planner_cat'  => lang('Planner by category'),
@@ -26,8 +27,9 @@
 		'listview'     => lang('Listview'),
 	);
 	$grid_views = array(
-		'' => lang('Dayview').', '.lang('Weekview').' &amp; '.lang('Monthview'),
-		'day_week' => lang('Dayview').' &amp; '.lang('Weekview'),
+		'' => lang('all'),
+		'day_week' => lang('Dayview').', '.lang('Four days view').' &amp; '.lang('Weekview'),
+		'day4' => lang('Dayview').' &amp; '.lang('Four days view'),
 		'day' => lang('Dayview'),
 	);
 	/* Select list with number of day by week */

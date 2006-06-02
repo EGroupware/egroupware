@@ -306,3 +306,4 @@ you need to select an ical file first	calendar	no	Du må velge en iCal-fil først
 you need to set either a day or a occurence !!!	calendar	no	Du må enten sette en dag eller hendelse !!!
 your meeting scheduled for %1 has been canceled	calendar	no	Møtet ditt planlagt for %1 har blitt kansellert
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	no	Møtet ditt som var planlagt for %1 har blitt flyttet til %2
+h	calendar	no	t

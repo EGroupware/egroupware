@@ -517,6 +517,11 @@ class uical
 				'selected' => $this->view == 'day',
 			),
 			array(
+				'text' => lang('four days view'),
+				'value' => 'menuaction=calendar.uiviews.day4',
+				'selected' => $this->view == 'day4',
+			),
+			array(
 				'text' => lang('weekview with weekend'),
 				'value' => 'menuaction=calendar.uiviews.week&days=7',
 				'selected' => $this->view == 'week' && $this->cal_prefs['days_in_weekview'] != 5,
@@ -582,7 +587,7 @@ class uical
 				}
 				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the planner
 			}
-			elseif ($this->view == 'listview')
+			elseif ($this->view == 'listview' || $view == 'day' && $this->view == 'day4')
 			{
 				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the listview
 			}

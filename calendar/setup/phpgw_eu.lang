@@ -267,3 +267,4 @@ you need to select an ical file first	calendar	eu	Lehenago ¡Cal fitxategi bat au
 you need to set either a day or a occurence !!!	calendar	eu	Egun bat edo ateraldi bat jarri behar duzu
 your meeting scheduled for %1 has been canceled	calendar	eu	%1 programatutako bilera ezeztatu egin da
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	eu	%1 programatutako bilera %2 programatu da
+h	calendar	eu	h

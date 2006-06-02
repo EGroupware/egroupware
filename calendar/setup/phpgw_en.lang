@@ -116,6 +116,7 @@ for which views should calendar show distinct lines with a fixed time interval.	
 format of event updates	calendar	en	Format of event updates
 forward half a month	calendar	en	forward half a month
 forward one month	calendar	en	forward one month
+four days view	calendar	en	four days view
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	en	freebusy: Unknow user '%1', wrong password or not availible to not loged in users !!!
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
@@ -128,6 +129,7 @@ group invitation	calendar	en	Group invitation
 group planner	calendar	en	Group planner
 group public only	calendar	en	group public only
 groupmember(s) %1 not included, because you have no access.	calendar	en	Groupmember(s) %1 not included, because you have no access.
+h	calendar	en	h
 here is your requested alarm.	calendar	en	Here is your requested alarm.
 high priority	calendar	en	high priority
 holiday	calendar	en	Holiday

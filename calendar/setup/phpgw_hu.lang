@@ -233,3 +233,4 @@ you can either set a year or a occurence, not both !!!	calendar	hu	Tudsz állítan
 you can only set a year or a occurence !!!	calendar	hu	Tudsz állítani csupán egy évet vagy egy esemény!!!
 you do not have permission to read this record!	calendar	hu	Neked nincs jogosultságod  olvasni ezt a bejegyzést!
 you have a meeting scheduled for %1	calendar	hu	Neked van egy ütemezett találkozód %1-el!
+h	calendar	hu	óra

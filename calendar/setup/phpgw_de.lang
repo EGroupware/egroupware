@@ -116,6 +116,7 @@ for which views should calendar show distinct lines with a fixed time interval.	
 format of event updates	calendar	de	Format der Benachrichtigungen
 forward half a month	calendar	de	einen halben Monat weiter
 forward one month	calendar	de	einen Monat weiter
+four days view	calendar	de	Vier-Tagesansicht
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	de	Belegtzeiten: Unbekannter Benutzername '%1', falsches Passwort oder nicht verfügbar für nicht angemeldete Benutzer !!!
 freetime search	calendar	de	Terminsuche
 fri	calendar	de	Fr
@@ -128,6 +129,7 @@ group invitation	calendar	de	Gruppeneinladung
 group planner	calendar	de	Gruppenplaner
 group public only	calendar	de	Gruppen-Öffentlich
 groupmember(s) %1 not included, because you have no access.	calendar	de	Gruppenmitglied(er) %1 nicht enthalten, da Sie keinen Zugriff haben.
+h	calendar	de	h
 here is your requested alarm.	calendar	de	Hier ist ihr bestellter Alarm.
 high priority	calendar	de	Hohe Priorität
 holiday	calendar	de	Feiertag
