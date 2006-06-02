@@ -42,6 +42,13 @@ class uiforms extends uical
 	);
 	
 	/**
+	 * Standard durations used in edit and freetime search
+	 *
+	 * @var array
+	 */
+	var $durations = array();
+	
+	/**
 	 * Constructor
 	 */
 	function uiforms()
@@ -49,6 +56,11 @@ class uiforms extends uical
 		$this->uical(true);	// call the parent's constructor
 		
 		$this->link =& $this->bo->link;
+		
+		for ($n=15; $n <= 8*60; $n+=($n < 60 ? 15 : ($n < 240 ? 30 : 60)))
+		{
+			$this->durations[$n*60] = sprintf('%d:%02d',$n/60,$n%60);
+		}
 	}
 	
 	/**
@@ -182,6 +194,10 @@ class uiforms extends uical
 			{
 				unset($content['alarm'][$id]);
 			}
+		}
+		if ($content['duration'])
+		{
+			$content['end'] = $content['start'] + $content['duration'];
 		}
 		$event = $content;
 		unset($event['new_alarm']);
@@ -541,9 +557,10 @@ class uiforms extends uical
 		$etpl =& CreateObject('etemplate.etemplate','calendar.edit');
 		
 		$sel_options = array(
-			'recur_type' => &$this->bo->recur_types,
+			'recur_type'      => &$this->bo->recur_types,
 			'accounts_status' => $this->bo->verbose_status,
 			'owner'           => array(),
+			'duration'        => $this->durations,
 		);
 		if (!is_array($event))
 		{
@@ -595,6 +612,10 @@ class uiforms extends uical
 			'view' => $view,
 		));
 		$content['participants'] = array();
+
+		$content['duration'] = $content['end'] - $content['start'];
+		if (isset($this->durations[$content['duration']])) $content['end'] = '';
+
 		foreach($event['participant_types'] as $type => $participants)
 		{
 			$name = 'accounts';
@@ -683,6 +704,7 @@ class uiforms extends uical
 
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['freetime'] = true;
 			$readonlys['link_to'] = $readonlys['customfields'] = true;
+			$readonlys['duration'] = true;
 			
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
@@ -694,6 +716,14 @@ class uiforms extends uical
 		}
 		else
 		{
+			if (!is_object($GLOBALS['egw']->js))
+			{
+				$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
+			}
+			// We hide the enddate if one of our predefined durations fits
+			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
+			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
+
 			$readonlys['button[copy]'] = $readonlys['button[vcal]'] = true;
 			unset($preserv['participants']);	// otherwise deleted participants are still reported
 			$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
@@ -807,7 +837,11 @@ class uiforms extends uical
 		if (!is_array($content))
 		{
 			$edit_content = $etpl->process_values2url();
-			
+
+			if ($edit_content['duration'])
+			{
+				$edit_content['end'] = $edit_content['start'] + $edit_content['duration'];
+			}
 			if ($edit_content['whole_day'])
 			{
 				$arr = $this->bo->date2array($edit_content['start']);
@@ -881,6 +915,7 @@ class uiforms extends uical
 					'exec[start][i]'	=> (int) date('i',$start),
 					'exec[end][str]'	=> date($this->common_prefs['dateformat'],$end),
 					'exec[end][i]'		=> (int) date('i',$end),
+					'exec[duration]'    => $content['duration'],
 				);
 				if ($this->common_prefs['timeformat'] == 12)
 				{
@@ -925,12 +960,6 @@ class uiforms extends uical
 		}
 		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$content['duration'],$content['cal_id']);
 		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$content['duration'],$content['weekdays'],$content['start_time'],$content['end_time'],$sel_options);
-		$sel_options['duration'][] = lang('use end date');
-		for ($n=15; $n <= 8*60; $n+=($n < 60 ? 15 : ($n < 240 ? 30 : 60)))
-		{
-			$sel_options['duration'][$n*60] = sprintf('%d:%02d',$n/60,$n%60);
-		}
-		if ($content['duration'] <= 8*HOUR_s) $content['end'] = '';
 
 		//echo "<pre>".print_r($content,true)."</pre>\n";
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('freetime search');
@@ -941,10 +970,11 @@ class uiforms extends uical
 		{
 			$GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
 		}
+		$sel_options['duration'] = $this->durations;
+		if ($content['duration'] && isset($sel_options['duration'][$content['duration']])) $content['end'] = '';
 		// We hide the enddate if one of our predefined durations fits
 		// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
-		$GLOBALS['egw']->js->set_onload("set_style_by_class('*','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
-		$etpl->set_cell_attribute('duration','onchange',"set_style_by_class('*','end_hide','visibility',this.value == 0 ? 'visible' : 'hidden');");
+		$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
 
 		$etpl->exec('calendar.uiforms.freetimesearch',$content,$sel_options,'',array(
 				'participants'	=> $content['participants'],
