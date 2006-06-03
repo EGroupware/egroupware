@@ -63,7 +63,6 @@ default calendar filter	calendar	sl	Privzeti koledarski filter
 default calendar view	calendar	sl	Privzeti pogled koledarja
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sl	Privzeta dolžina novih dogodkov. Dolžina se meri v minutah, npr. 60 minut za 1 uro.
 default week view	calendar	sl	Privzeti tedenski pogled
-defines the size in minutes of the lines in the day view.	calendar	sl	Nastavi velikost vrstic (v minutah) v dnevnem pogledu.
 delete series	calendar	sl	Izbriši serijo
 delete this alarm	calendar	sl	Zbriši ta alarm
 delete this event	calendar	sl	Zbriši ta dogodek
@@ -113,6 +112,7 @@ filename of the download	calendar	sl	Ime datoteke za prenos
 find free timeslots where the selected participants are availible for the given timespan	calendar	sl	Najdi prost termin, kjer so vsi udeleženci prosti
 firstname of person to notify	calendar	sl	Ime osebe, ki jo obveščamo
 for	calendar	sl	za
+for which views should calendar show distinct lines with a fixed time interval.	calendar	sl	Za katere poglede naj Koledar prikaže različne vrstice s stalnim časovnim intervalom?
 format of event updates	calendar	sl	Format popravkov dogodka
 forward half a month	calendar	sl	naprej pol meseca
 forward one month	calendar	sl	naprej en mesec
@@ -128,13 +128,15 @@ group invitation	calendar	sl	Skupinsko povabilo
 group planner	calendar	sl	Skupinski planer
 group public only	calendar	sl	Samo skupinska publika
 groupmember(s) %1 not included, because you have no access.	calendar	sl	Člani grupe %1 niso bili vključeni, ker nimate pravice dostopa.
-here is your requested alarm.	calendar	sl	Tu je tvoj zahtevani alarm
+h	calendar	sl	h
+here is your requested alarm.	calendar	sl	Tu je vaš zahtevani alarm
 high priority	calendar	sl	visoka prioriteta
 holiday	calendar	sl	Prazniki
 holiday management	calendar	sl	Urejanje praznikov
 holidays	calendar	sl	Prazniki
 hours	calendar	sl	ure
 how far to search (from startdate)	calendar	sl	kako daleč od začetnega datuma naj iščem
+how many minutes should each interval last?	calendar	sl	Koliko minut naj traja posamezen interval?
 ical	calendar	sl	iCal
 ical / rfc2445	calendar	sl	iCal / rfc2445
 ical export	calendar	sl	Izvozi iCal
@@ -147,10 +149,10 @@ ignore conflict	calendar	sl	Prezri navzkrižje
 import	calendar	sl	Uvoz
 import csv-file	common	sl	Uvozi CSV datoteko
 interval	calendar	sl	Interval
-intervals in day view	calendar	sl	Intervali v dnevnem pogledu
 invalid email-address "%1" for user %2	calendar	sl	Nepravilen elektronski naslov "%1" za uporabnika %2
 last	calendar	sl	zadnji
 lastname of person to notify	calendar	sl	Priimek osebe, ki jo obveščamo
+length of the time interval	calendar	sl	Dolžina časovnega intervala
 link to view the event	calendar	sl	Povezava na ogled dogodka
 links	calendar	sl	Povezave
 links, attachments	calendar	sl	Povezave, priponke
@@ -173,7 +175,6 @@ no filter	calendar	sl	Brez filtra
 no matches found	calendar	sl	Ni zadetkov
 no response	calendar	sl	Ni odgovora
 non blocking	calendar	sl	ne-blokiran
-not	calendar	sl	ne
 notification messages for added events	calendar	sl	Sporočilo ob dodanih dogodkih
 notification messages for canceled events	calendar	sl	Sporočilo ob preklicanih dogodkih
 notification messages for disinvited participants	calendar	sl	Sporočilo preklica povabila za udeležence
@@ -246,7 +247,6 @@ show list of upcoming events	calendar	sl	Prikaži prihajajoče dogodke
 show this month	calendar	sl	prikaži ta mesec
 show this week	calendar	sl	prikaži ta teden
 single event	calendar	sl	posamezen dogodek
-site configuration	calendar	sl	konfiguracija strani
 start	calendar	sl	Začetek
 start date/time	calendar	sl	Začetni datum/čas
 startdate / -time	calendar	sl	Začetni datum /-čas
@@ -282,6 +282,7 @@ updated	calendar	sl	Podosodobljeno
 use end date	calendar	sl	Uporabi končni datum
 use the selected time and close the popup	calendar	sl	uporabi izbrani čas in zapri pojavno okno
 view this event	calendar	sl	Poglej ta dogodek
+views with fixed time intervals	calendar	sl	Pogledi s stalnimi časovnimi intervali
 wed	calendar	sl	Sre
 week	calendar	sl	Teden
 weekday starts on	calendar	sl	Teden se začne z dnem
@@ -306,6 +307,5 @@ you have a meeting scheduled for %1	calendar	sl	Imate napovedan sestanek ob %1
 you have been disinvited from the meeting at %1	calendar	sl	Za sestanek %1 ste dobili preklic povabila
 you need to select an ical file first	calendar	sl	Najprej morate izbrati datoteko iCal
 you need to set either a day or a occurence !!!	calendar	sl	Nastaviti morate dan ali pojavljanje!
-your meeting scheduled for %1 has been canceled	calendar	sl	Vaš sestanek %1 je izbrisan
+your meeting scheduled for %1 has been canceled	calendar	sl	Vaš sestanek %1 je odpovedan
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sl	Sestanek za %1 je bil prestavljen na %2
-h	calendar	sl	h
