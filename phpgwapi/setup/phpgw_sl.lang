@@ -648,7 +648,7 @@ password could not be changed	common	sl	Gesla ni mogoče zamenjati.
 password has been updated	common	sl	Geslo je bilo zamenjano.
 password must contain at least %1 lowercase letters	common	sl	Geslo mora vsebovati najmanj %1 majhnih črk
 password must contain at least %1 numbers	common	sl	Geslo mora vsebovati najmanj %1številk
-password must contain at least %1 special charactars	common	sl	Geslo mora vsebovati najmanj %1 posebnih znakov
+password must contain at least %1 special characters	common	sl	Geslo mora vsebovati najmanj %1 številk
 password must contain at least %1 uppercase letters	common	sl	Geslo mora vsebovati najmanj %1 velikih črk
 password must have at least %1 characters	common	sl	Geslo mora imeti najmanj %1 znakov
 paste	htmlarea-ContextMenu	sl	Prilepi

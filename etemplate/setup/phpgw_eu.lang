@@ -141,3 +141,59 @@ html	etemplate	eu	Html
 image	etemplate	eu	Irudia
 import	etemplate	eu	Inportatu
 import an etemplate from a xml-file	etemplate	eu	Plantilla xml fitxategi batetik inportatu
+import xml	etemplate	eu	XML inportatu
+indexed	etemplate	eu	Indexatua
+indexoptions	etemplate	eu	Indexatzearen aukerak
+insert a column before	etemplate	eu	zutabe bat txertatu aurrean
+insert a column behind	etemplate	eu	zutabe bat txertatu ondoren
+insert a row above	etemplate	eu	errenkada bat txertatu gainean
+insert a row below	etemplate	eu	errenkada bat txertatu azpian
+insert a widget before	etemplate	eu	kontrol bat txertatu aurrean
+insert a widget behind	etemplate	eu	kontrol bat txertatu atzean
+insert new column behind this one	etemplate	eu	zutabe berri bat txertatu honen ondoren
+insert new column in front of all	etemplate	eu	zutabe berri bat txerta denen aurretik
+insert new row after this one	etemplate	eu	errenkada berri  bat txertatu honen ondoren
+insert new row in front of first line	etemplate	eu	errenkada berri bat txertatu lehenengoaren aurrean
+integer	etemplate	eu	Osoa
+key	etemplate	eu	Gakoa
+label	etemplate	eu	Etiketa
+lang	etemplate	eu	Hizkuntza
+last	etemplate	eu	Azkena
+left	etemplate	eu	Ezkerra
+link	etemplate	eu	Lotura
+linkentry	etemplate	eu	Lotura sarrera
+linklist	etemplate	eu	Loturen zerrenda
+linkstring	etemplate	eu	Loturen katea
+linkto	etemplate	eu	Lotu
+load this template into the editor	etemplate	eu	plantilla hau editorean kargatu
+middle	etemplate	eu	Erdia
+minute	etemplate	eu	Minutua
+minutes	etemplate	eu	Minutuak
+month	etemplate	eu	Hilabetea
+multicolumn indices	etemplate	eu	Zutabe askotako aurkibidea
+name	etemplate	eu	Izena
+name of table to add	etemplate	eu	Gehitu behar den taularen izena
+new search	etemplate	eu	Bilaketa berria
+new table created	etemplate	eu	Taula berri bat sortu da
+newer version '%1' exists !!!	etemplate	eu	Bertsio '%1' berriagoa dago!!!
+nextmatch	etemplate	eu	Hurrengo parekatzea
+no column to swap with !!!	etemplate	eu	Ez dago zutaberik aldatzeko!!!
+no file	etemplate	eu	ez dago fitxategirik
+no row to swap with !!!	etemplate	eu	Ez dago errenkadarik aldatzeko!!!
+not null	etemplate	eu	NOT NULL
+nothing	etemplate	eu	ezerrez
+nothing found - try again !!!	etemplate	eu	Ez da ezerrez aurkitu. Saiatu berriro!!!
+nothing in clipboard to paste !!!	etemplate	eu	Ez dago ezerrez arbelean Itsasteko!!!
+nothing matched search criteria !!!	etemplate	eu	Ez da ezerrez aurkitu irizpide horrekin!!!
+onchange	etemplate	eu	onChange
+onclick	etemplate	eu	onClick
+only an other version found !!!	etemplate	eu	bakarrik bertsio bat aurkitu da
+open the online help.	etemplate	eu	On line laguntza zabaldu
+operator	etemplate	eu	Operadorea
+optional note about the link	etemplate	eu	loturari buruzko aukerazko oharra
+options	etemplate	eu	Aukerak
+overflow	etemplate	eu	Gainezkatzea
+padding	etemplate	eu	Testutik gelaxkarako distantzia
+paste	etemplate	eu	Itsatsi
+path	etemplate	eu	Ruta
+pm	etemplate	eu	pm

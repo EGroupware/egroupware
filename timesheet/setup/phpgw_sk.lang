@@ -6,6 +6,7 @@ create new links	timesheet	sk	Vytvori» nové odkazy
 delete this entry	timesheet	sk	zmaza» tento záznam
 edit this entry	timesheet	sk	Uprav tento záznam
 empty if identical to duration	timesheet	sk	prázdne ak sa zhoduje då¾ka trvania
+end	timesheet	sk	Koniec
 entry deleted	timesheet	sk	Záznam vymazaný
 entry saved	timesheet	sk	Záznam ulo¾ený
 error deleting the entry!!!	timesheet	sk	Chyba pri mazaní záznamu !!!
@@ -27,11 +28,14 @@ saves the changes made	timesheet	sk	Ulo¾í vykonané zmeny
 saves this entry and add a new one	timesheet	sk	Ulo¾í tento záznam a pridá nový
 select a price	timesheet	sk	Vyberte cenu
 select a project	timesheet	sk	Vyberte projekt
+start	timesheet	sk	Zaèiatok
+sum %1:	timesheet	sk	Súèet %1:
 this month	timesheet	sk	Tento mesiac
 this week	timesheet	sk	Tento tý¾deò
 this year	timesheet	sk	Tento rok
 timesheet	common	sk	Harmonogram
 unitprice	timesheet	sk	Jednotková cena
 view this entry	timesheet	sk	Zobrazi» záznam
+week	timesheet	sk	Tý¾deò
 yesterday	timesheet	sk	Vèera
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sk	Va¹a databáza NIE je aktuálna (%1 oproti %2), prosím spustite %3setup%4 kvôli aktualizácii va¹ej databázy.

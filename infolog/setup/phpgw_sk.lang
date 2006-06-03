@@ -92,12 +92,14 @@ description	infolog	sk	Opis
 determines the order the fields are displayed	infolog	sk	urèuje poradie v akom sa polo¾ky zobrazujú
 disables a status without deleting it	infolog	sk	zablokuje stav bez toho, aby sa zmazal
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	sk	vy¾adujete potvrdenie zodpovedného k: prijatiu, ukonèeniu úlohy alebo oboje
+don't show infolog	infolog	sk	NEzobrazova» Záznamník
 done	infolog	sk	hotovo
 download	infolog	sk	Stiahnu»
 duration	infolog	sk	Trvanie
 each value is a line like <id>[=<label>]	infolog	sk	ka¾dá hodnota je riadok v tvare <id>[=<label>]
 edit	infolog	sk	Upravi»
 edit or create categories for ingolog	infolog	sk	Upravi» alebo vytvori» kategórie pre Záznamník
+edit rights (full edit rights incl. making someone else responsible!)	infolog	sk	upravi» oprávnenia (plné práva úpravy, vrátane nastavenia niekoho iného za zodpovednú osobu!)
 edit status	infolog	sk	Upravi» stav
 edit the entry	infolog	sk	Upravi» záznam
 edit this entry	infolog	sk	Uprav tento záznam
@@ -133,6 +135,7 @@ infolog - new subproject	infolog	sk	Záznamník - Nový podprojekt
 infolog - subprojects from	infolog	sk	Záznamník - Podprojekty od
 infolog entry deleted	infolog	sk	Záznam vymazaný
 infolog entry saved	infolog	sk	Záznam ulo¾ený
+infolog filter for the main screen	infolog	sk	Filter Záznamníka pre hlavnú stránku
 infolog list	infolog	sk	Záznamník - zoznam
 infolog preferences	common	sk	Záznamník - nastavenia
 infolog-fieldname	infolog	sk	Záznamník - Názov polo¾ky
@@ -153,7 +156,6 @@ location	infolog	sk	Umiestnenie
 longer textual description	infolog	sk	dlh¹í opisný text
 low	infolog	sk	nízka
 max length of the input [, length of the inputfield (optional)]	infolog	sk	maximálna då¾ka vstupu [, då¾ka vstupného poµa (voliteµné)]
-max number of entries to display on the main screen	infolog	sk	Maximálny poèet záznamov zobrazených na hlavnej stránke
 name must not be empty !!!	infolog	sk	Názov nemô¾e by» prázdny!
 name of new type to create	infolog	sk	názov novovytvoreného typu
 never hide search and filters	infolog	sk	Vyhµadávanie a filtre neschováva»
@@ -175,9 +177,9 @@ number of records to read (%1)	infolog	sk	Poèet záznamov k naèítaniu (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	sk	èíslo riadku pre viacriadkové vstupné pole alebo riadok vo výberovom okne
 offer	infolog	sk	ponuka
 ongoing	infolog	sk	prebiehajúci
+only for details	infolog	sk	Len pre podrobnosti
 only the attachments	infolog	sk	iba prílohy
 only the links	infolog	sk	iba odkazy
-only up to this number of entries are displayed on the main screen.	infolog	sk	Nanajvý¹ tento poèet záznamov sa zobrazí na hlavnej stránke.
 open	infolog	sk	otvorené
 optional note to the link	infolog	sk	voliteµná poznámka k odkazu
 order	infolog	sk	Triedenie
@@ -204,6 +206,7 @@ project	infolog	sk	Projekt
 project settings: price, times	infolog	sk	Nastavenia Projektu: cena, èasy
 re:	infolog	sk	Re:
 read one record by passing its id.	infolog	sk	Naèítaj jednotlivý záznam zadaním id.
+read rights (default)	infolog	sk	naèíta» práva (predvolené)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	sk	reg. výraz pre lokálne IP adresy<br>napr. ^192\.168\.1\.
 remark	infolog	sk	Poznámka
 remove this link (not the entry itself)	infolog	sk	Odstráni» tento odkaz (nie záznam samotný)
@@ -213,6 +216,7 @@ responsible overdue	infolog	sk	zodpovedný - me¹kanie
 responsible upcoming	infolog	sk	zodpovedný - blí¾iace sa
 responsible user, priority	infolog	sk	zodpovedný pou¾ívateµ, priorita
 returns a list / search for records.	infolog	sk	Vráti zoznam / vyhµadávanie záznamov.
+rights for the responsible	infolog	sk	Práva pre zodpovednú osobu
 save	infolog	sk	Ulo¾i»
 saves the changes made and leaves	infolog	sk	ulo¾í vykonané zmeny a odíde
 saves this entry	infolog	sk	Ulo¾í tento záznam
@@ -230,16 +234,20 @@ select an entry to link with	infolog	sk	Vyberte záznam na ktorý chcete vytvori» 
 select to filter by owner	infolog	sk	filtrovanie podµa vlastníka
 select to filter by responsible	infolog	sk	filtrovanie podµa zodpovedného
 sets the status of this entry and its subs to done	infolog	sk	Nastaví stav záznamu a jeho podzáznamov na Hotovo
-should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	sk	Má Záznamník zobrazova» va¹e otvorené záznamy - nedokonèené úlohy, telefonáty alebo poznámky - na hlavnej stránke? Funguje len ak ste nevybrali aplikáciu hlavnej stránky (v nastaveniach).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	sk	Má Záznamník zobrazova» Podúlohy, -hovory alebo -poznámky v normálnom zobrazení alebo nie? V¾dy mô¾ete zobrazi» Podradené záznamy cez ich rodièovský záznam.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	sk	Má Záznamník zobrazova» v zozname odkazy na iné aplikácie a/alebo súbory v prílohe (v normálnom pohµade, keï otvoríte Záznamník)?
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	sk	Zobrazova» Záznamník na hlavnej stránke? Ak áno, s akým filtrom? Funguje len ak ste u¾ nevybrali konkrétnu aplikáciu pre hlavnú stránku (vo va¹ich nastaveniach).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	sk	Má Záznamník pou¾íva» plné mená (meno, priezvisko) alebo iba pou¾ívateµské mená?
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	sk	Má sa v zozname Záznamníka zobrazova» jedineèné èíselné ID, ktoré mô¾e by» pou¾ité napr. ako ID problému?
+should the infolog list show the column "last modified".	infolog	sk	Zobrazova» v zozname Záznamníka aj ståpec "naposledy upravené"?
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	sk	Zobrazova» v zozname Záznamníka percentuálny stav vybavenia len pre stav "prebiehajúci", alebo ako dve samostatné ikony?
 should this entry only be visible to you and people you grant privat access via the acl	infolog	sk	Má by» tento záznam viditeµný IBA pre vás a pre µudí, ktorým pridelíte súkromný prístup cez ACL?
 show a column for used and planned times in the list.	infolog	sk	V zozname zobrazi» ståpec pre pou¾ité a plánované èasy.
 show full usernames	infolog	sk	Zobrazi» plné pou¾ívateµské mená
 show in the infolog list	infolog	sk	Zobrazi» v zozname Záznamníka
-show list of upcoming entries	infolog	sk	zobrazi» zoznam blí¾iacich sa záznamov
-show open entries: tasks/calls/notes on main screen	infolog	sk	Zobrazi» otvorené záznamy: Úlohy/Telefonáty/Poznámky na hlavnej stránke
+show last modified	infolog	sk	Zobrazi» èas poslednej úpravy
+show status and percent done separate	infolog	sk	Zobrazi» stav záznamu a percentuálny stav vybavenia samostatne
+show ticket id	infolog	sk	Zobrazi» ID problému
 show times	infolog	sk	Zobrazi» èasy
 small view	infolog	sk	zmen¹ený pohµad
 start a new search, cancel this link	infolog	sk	spusti» nové vyhµadávanie, zru¹i» tento odkaz
@@ -285,6 +293,8 @@ view subs	infolog	sk	zobrazi» Podradené záznamy
 view the parent of this entry and all his subs	infolog	sk	Zobrazi» Rodièovský záznam a v¹etky jeho podradené
 view this linked entry in its application	infolog	sk	zobrazi» tento odkaz v jeho aplikácii
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	sk	keï má by» zaèatá Úloha alebo Telefonát, uká¾e akoby od tohto dátumu vo filtri "otvorené" alebo "moje otvorené" (úvodná stránka)
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	sk	Ktoré prídavné polo¾ky majú by» zodpovednej osobe prístupné pre úpravy, a to aj bez pridelených práv na úpravy?<br />Stav, percentuálny stav vybavenia a dátum vybavenia sú prístupné v¾dy.
+which implicit acl rights should the responsible get?	infolog	sk	Ktoré implicitné ACL oprávnenia má zodpovedná osoba obdr¾a» automaticky?
 will-call	infolog	sk	zatelefonuje
 write (add or update) a record by passing its fields.	infolog	sk	Zapísa» (prida» alebo upravi») záznam pou¾itím príslu¹ných polo¾iek.
 yes - delete	infolog	sk	Áno - Zmaza»

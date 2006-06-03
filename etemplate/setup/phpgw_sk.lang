@@ -1,5 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sk	%1 (%2 nových) správ napísaných pre aplikáciu '%3' a jazyky '%4'
 %1 etemplates deleted	etemplate	sk	%1 e©ablón zmazaných
+%1 etemplates for application '%2' dumped to '%3'	etemplate	sk	%1 e©ablón pre aplikáciu '%2' urobilo výpis do '%3'
 %1 etemplates found	etemplate	sk	Na¹lo sa %1 e©ablón.
 %1 matches on search criteria	etemplate	sk	Nájdených %1 zhôd s vyhµadávacím kritériom
 %1 new etemplates imported for application '%2'	etemplate	sk	Naimportovaných %1 nových e©ablón pre aplikáciu '%2'
@@ -31,6 +32,7 @@ all operations save the template!	etemplate	sk	v¹etky operácie ukladajú ¹ablónu!
 am	etemplate	sk	dp
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	sk	indexovaný ståpec zrýchµuje hµadanie v danom ståpci (av¹ak na úkor miesta na disku !!!)
 application	etemplate	sk	Aplikácia
+application name needed to write a langfile or dump the etemplates !!!	etemplate	sk	Názov aplikácie potrebuje zapísa» jazykový súbor alebo urobi» výpis z e©ablón !!!
 applies the changes made	etemplate	sk	pou¾ijú sa vykonané zmeny
 applies the changes to the given version of the template	etemplate	sk	pou¾ije zmeny urobené na danej verzii ¹ablóny
 attach	etemplate	sk	Príloha
@@ -45,7 +47,9 @@ cant delete a single widget from a grid !!!	etemplate	sk	Nedá sa zmaza» jednotli
 cant delete the only column of a grid !!!	etemplate	sk	Nedá sa zmaza» jediný ståpec matice!!!
 cant delete the only row in a grid !!!	etemplate	sk	Nedá sa zmaza» jediný riadok matice!!!
 category	etemplate	sk	Kategória
+cellpadding for the table-tag	etemplate	sk	Odstup okraja bunky od jej obsahu pre tag tabuµky
 cells	etemplate	sk	Bunky
+cellspacing for the table-tag	etemplate	sk	Rozostup medzi bunkami pre tag tabuµky
 center	etemplate	sk	Stred
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sk	Za¹krtnite, ak obsah má by» iba zobrazovaný ale nie menený (obsah sa potom neposiela naspä»!)
 check if field has to be filled by user	etemplate	sk	Za¹krtnite ak pole musí by» vyplnené pou¾ívateµom
@@ -68,6 +72,7 @@ confirmation necesary or custom java-script	etemplate	sk	potvrdenie nevyhnutné, 
 contains	etemplate	sk	Obsahuje
 create a new table for the application	etemplate	sk	Vytvori» novú tabuµku pre aplikáciu
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sk	vytvorí anglický ('en') jazykový súbor z oznaèenia a pomocných textov (pre aplikáciu uvedenú v Názve)
+css class for the table-tag	etemplate	sk	CSS trieda pre tag tabuµky
 css properties	etemplate	sk	CSS nastavenia
 css-styles	etemplate	sk	CSS ¹týly
 custom	etemplate	sk	Pou¾ívateµom definované
@@ -128,6 +133,8 @@ etemplate	common	sk	e©ablóna
 etemplate '%1' imported, use save to put it in the database	etemplate	sk	e©ablóna '%1' naimportované, pou¾ite Ulo¾i» pre vlo¾enie do databázy
 etemplate '%1' written to '%2'	etemplate	sk	e©ablóna '%1' zapísaná do '%2'
 etemplate editor	etemplate	sk	Editor e©ablón
+etemplate reference	etemplate	sk	Referenèná príruèka e©ablón
+etemplate tutorial	etemplate	sk	Tutoriál e©ablón
 exchange this row with the one above	etemplate	sk	zameni» tento riadok s riadkom vy¹¹ie
 exchange this two columns	etemplate	sk	zameni» tieto dva ståpce
 export the loaded etemplate into a xml-file	etemplate	sk	exportova» nahranú e©ablónu do súboru xml
@@ -159,6 +166,7 @@ help	etemplate	sk	Pomocník
 horizontal rule	etemplate	sk	Vodorovné pravítko
 hour	etemplate	sk	Hodina
 hours	etemplate	sk	hodín
+how many entries should the list show	etemplate	sk	Koµko záznamov má zoznam zobrazi»
 html	etemplate	sk	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	sk	ak je polo¾ka vypnutá, zobrazuje sa prázdna bunka tabuµky, pre (doèasné) odstránenie polo¾ky/bunky
 image	etemplate	sk	Obrázok
@@ -196,6 +204,7 @@ linkto	etemplate	sk	Odkáza» Na
 load this template into the editor	etemplate	sk	nahra» túto ¹ablónu do editora
 middle	etemplate	sk	Stred
 minute	etemplate	sk	Minúta
+minutes	etemplate	sk	Minút
 month	etemplate	sk	Mesiac
 name	etemplate	sk	Názov
 name of other table where column is a key from	etemplate	sk	názov inej tabuµky kde ståpec je kµúèom z
@@ -223,6 +232,7 @@ open the online help.	etemplate	sk	Otvori» online pomocníka.
 operator	etemplate	sk	Operátor
 optional note about the link	etemplate	sk	voliteµná poznámka o Odkaze
 options	etemplate	sk	Voµby
+order to navigating by tab key through the form	etemplate	sk	Poradie pre navigáciu vo formulári pomocou klávesy TAB
 overflow	etemplate	sk	Preteèenie
 padding	etemplate	sk	Odstup
 parent is a '%1' !!!	etemplate	sk	rodiè je '%1' !!!

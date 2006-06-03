@@ -16,11 +16,13 @@
 3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis jour
 3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis mois
 80 (http)	admin	fr	80 (http)
+\n tidying up the html source, please wait...	htmlarea-HtmlTidy	fr	Stockage du source HTML en cours...
 _delete row	htmlarea-ContextMenu	fr	Effacer _Ligne
 _image properties...	htmlarea-ContextMenu	fr	Propriétés _Image
 _modify link...	htmlarea-ContextMenu	fr	_Modifier Lien
 _remove link...	htmlarea-ContextMenu	fr	_Effacer Lien
 _table properties...	htmlarea-ContextMenu	fr	Propriétés _Table...
+a editor instance must be focused before using this command.	tinymce	fr	Une instance de l'editeur doit être désignée avant d'utiliser cette commande.
 about	common	fr	A propos
 about %1	common	fr	A propos de %1
 about egroupware	common	fr	A propos d'eGroupware
@@ -94,6 +96,7 @@ bahamas	common	fr	BAHAMAS
 bahrain	common	fr	BAHRAIN
 bangladesh	common	fr	BANGLADESH
 barbados	common	fr	BARBADE
+baseline	htmlarea-TableOperations	fr	Guide de base
 bcc	common	fr	Bcc
 belarus	common	fr	BIELORUSSIE
 belgium	common	fr	BELGIQUE
@@ -245,6 +248,7 @@ display %s first	jscalendar	fr	Affiche %s en premier
 djibouti	common	fr	DJIBOUTI
 do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
 do you want to use the wysiwyg mode for this textarea?	tinymce	fr	Voulez-vous utiliser le mode WYSIWYG pour cette zone de texte (textarea) ?
+doctype:	common	fr	Type de document
 document properties	common	fr	Propriétés du document
 document title:	common	fr	Titre du document:
 domain	common	fr	domaine
@@ -270,6 +274,7 @@ element...	htmlarea-ContextMenu	fr	Elément...
 email	common	fr	EMail
 email-address of the user, eg. "%1"	common	fr	Adresse EMail de l'utilisateur, p.e. "%1"
 emotions	tinymce	fr	&Eacute;moticons
+en	common	fr	en
 enabled	common	fr	Activé
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
@@ -704,6 +709,7 @@ primary style-sheet:	common	fr	Feuilles de style primaire:
 print	common	fr	Imprimer
 priority	common	fr	Priorité
 private	common	fr	Privé
+programs	common	fr	Programmes
 project	common	fr	Projet
 public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
@@ -946,6 +952,7 @@ use ctrl+v on your keyboard to paste the text into the window.	tinymce	fr	Utilis
 user	common	fr	Utilisateur
 user accounts	common	fr	Comptes utilisateurs
 user groups	common	fr	Groupes utilisateurs
+user openinstance	common	fr	Instance utilisateur ouverte
 username	common	fr	Nom d'utilisateur
 users	common	fr	Utilisateurs
 users choice	common	fr	Choix d'utilisateurs

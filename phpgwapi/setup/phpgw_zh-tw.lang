@@ -653,7 +653,7 @@ password could not be changed	common	zh-tw	無法修改密碼
 password has been updated	common	zh-tw	已成功更新密碼
 password must contain at least %1 lowercase letters	common	zh-tw	密碼必須包含至少 %1 個小寫英文字母
 password must contain at least %1 numbers	common	zh-tw	密碼必須包含至少 %1 個數字
-password must contain at least %1 special charactars	common	zh-tw	密碼必須包含至少 %1 個特殊字元
+password must contain at least %1 special characters	common	zh-tw	密碼必須包含至少 %1 個特殊字元
 password must contain at least %1 uppercase letters	common	zh-tw	密碼必須包含至少 %1 個大寫英文字母
 password must have at least %1 characters	common	zh-tw	密碼必須包含至少 %1 個字元
 paste	htmlarea-ContextMenu	zh-tw	貼上

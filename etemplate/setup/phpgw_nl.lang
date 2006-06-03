@@ -178,6 +178,7 @@ help	etemplate	nl	Help
 horizontal rule	etemplate	nl	Horizontale lijn
 hour	etemplate	nl	Uur
 hours	etemplate	nl	uren
+how many entries should the list show	etemplate	nl	Hoeveel items mogen er in de lijst getoond worden
 html	etemplate	nl	HTML
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	nl	indien het veld is uitgeschakeld wordt een lege tabelcel getoond, voor (tijdelijke) verwijdering van een veld/cel
 image	etemplate	nl	Afbeelding
@@ -216,6 +217,7 @@ linkto	etemplate	nl	LinkNaar
 load this template into the editor	etemplate	nl	laad deze tempate in de editor
 middle	etemplate	nl	Midden
 minute	etemplate	nl	Minuur
+minutes	etemplate	nl	Minuten
 month	etemplate	nl	Maand
 multicolumn indices	etemplate	nl	Multi-column Indices
 name	etemplate	nl	Naam

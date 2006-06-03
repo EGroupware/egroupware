@@ -92,12 +92,14 @@ description	infolog	nl	Beschrijving
 determines the order the fields are displayed	infolog	nl	bepaald hoe de volgorde van de velden wordt weergegeven
 disables a status without deleting it	infolog	nl	deactiveerd een status zonder het te verwijderen
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	nl	Wilt een een bevestiging van de verantwoordelijke voor accepteren, voor beëindigen, of voor beide
+don't show infolog	infolog	nl	InfoLog NIET weergeven
 done	infolog	nl	gereed
 download	infolog	nl	Downloaden
 duration	infolog	nl	Duur
 each value is a line like <id>[=<label>]	infolog	nl	elke waarde is een regel zoals <id>[=<label>]
 edit	infolog	nl	Wijzigen
 edit or create categories for ingolog	infolog	nl	Categorieën voor InfoLog aanmaken of wijzigen
+edit rights (full edit rights incl. making someone else responsible!)	infolog	nl	bewerk rechten (volledige rechten voor bewerking, inclusief anderen hiervoor verantwoordelijk maken!)
 edit status	infolog	nl	Wijzig status
 edit the entry	infolog	nl	Wijzig de infolog
 edit this entry	infolog	nl	Wijzig dit infolog
@@ -133,6 +135,7 @@ infolog - new subproject	infolog	nl	InfoLog - Nieuw subproject
 infolog - subprojects from	infolog	nl	InfoLog - Subprojecten van
 infolog entry deleted	infolog	nl	InfoLog verwijderd
 infolog entry saved	infolog	nl	InfoLog opgeslagen
+infolog filter for the main screen	infolog	nl	InfoLog filter tbv de voorpagina
 infolog list	infolog	nl	InfoLog lijst
 infolog preferences	common	nl	InfoLog voorkeuren
 infolog-fieldname	infolog	nl	InfoLog-veldnaam
@@ -153,7 +156,6 @@ location	infolog	nl	Locatie
 longer textual description	infolog	nl	langere tekstuele beschrijving
 low	infolog	nl	laag
 max length of the input [, length of the inputfield (optional)]	infolog	nl	maximale lengte van de invoer [lengte van het invoerveld (optioneel)]
-max number of entries to display on the main screen	infolog	nl	Maximum aantal items dat op het hoofdscherm getoond mag worden
 name must not be empty !!!	infolog	nl	Naam mag niet leeg zijn !!!
 name of new type to create	infolog	nl	Naam van het nieuw te creëren type
 never hide search and filters	infolog	nl	Zoeken en filters niet verbergen
@@ -175,9 +177,9 @@ number of records to read (%1)	infolog	nl	Aantal records om te importen (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	nl	Aantal regels voor een een invoertekstvak of van een menu-box
 offer	infolog	nl	offerte
 ongoing	infolog	nl	lopende
+only for details	infolog	nl	Alleen voor details
 only the attachments	infolog	nl	alleen de bijlagen
 only the links	infolog	nl	alleen de links
-only up to this number of entries are displayed on the main screen.	infolog	nl	Tot en met dit aantal items wordt op het hoofdscherm getoond.
 open	infolog	nl	open
 optional note to the link	infolog	nl	optionele notitie bij de link
 order	infolog	nl	Order
@@ -204,6 +206,7 @@ project	infolog	nl	Project
 project settings: price, times	infolog	nl	Project instellingen: prijs, tijden
 re:	infolog	nl	Re:
 read one record by passing its id.	infolog	nl	Lees één record door het id mee te geven.
+read rights (default)	infolog	nl	leesrechten (standaard)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	nl	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	nl	aandachtspunt
 remove this link (not the entry itself)	infolog	nl	Verwijder deze link (niet het record zeld)
@@ -213,6 +216,7 @@ responsible overdue	infolog	nl	verantwoordelijk te laat
 responsible upcoming	infolog	nl	verantwoordelijk toekomstige
 responsible user, priority	infolog	nl	verantwoordelijke gebruiker, prioriteit
 returns a list / search for records.	infolog	nl	Toont een lijst / zoek records
+rights for the responsible	infolog	nl	Rechten voor de verantwoordelijke
 save	infolog	nl	Opslaan
 saves the changes made and leaves	infolog	nl	Slaat wijzigingen op en verlaat het scherm
 saves this entry	infolog	nl	Slaat deze infolog op
@@ -230,16 +234,20 @@ select an entry to link with	infolog	nl	Selecteer een infolog om mee te linken
 select to filter by owner	infolog	nl	selecteer om te filteren op eigenaar
 select to filter by responsible	infolog	nl	selecteer om te filteren bij verantwoordelijke
 sets the status of this entry and its subs to done	infolog	nl	Zet de status van dit item en de onderliggende op gedaan
-should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	nl	Moet InfoLog uw openstaande items weergeven - niet voltooide taken, telefoongesprekken of notities - op het hoofdscherm. Werkt alleen indien u geen toepassing voor het hoofdscherm hebt geselecteerd (in uw voorkeuren).
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	nl	Moet InfoLog subtaken, -telefoongesprekken of -notities standaard weergeven, ja of nee. U kunt altijd sub's weergeven via de bovenliggende infolog ?
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	nl	Moet InfoLog de links naar andere toepassingen en/of bestanden in de InfoLog lijst (normale weergave als u InfoLog start).
+should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	nl	Moet InfoLog op de voorpagina getoond worden en met welk filter. Werkt alleen indien u geen toepassing voor de voorpagina heeft gekozen (in uw voorkeuren).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	nl	Moet InfoLog volledige namen (voor- en achternaam) gebruiken of alleen gebruikersnamen?
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	nl	Moet de InfoLog lijst een uniek nummer tonen dat bijvoorbeeld als ticket ID gebruik kan worden?
+should the infolog list show the column "last modified".	infolog	nl	Moet de InfoLog lijst de kolom "laatst gewijzigd" tonen?
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	nl	Moet de InfoLog lijst uitsluitend het percentage voltooid tonen bij status in behandeling of moet het twee separate ikonen tonen.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	nl	Moet deze infolog alleen zochtbaar zijn voor u en de personen die toegang hebben tot uw persoonlijke informatie d.m.v. het ingestelde toegangsbeheer
 show a column for used and planned times in the list.	infolog	nl	Toont een kolom voor gebruikte en geplande tijden in de lijst.
 show full usernames	infolog	nl	Volledige gebruikersnamen weergeven
 show in the infolog list	infolog	nl	In de InfoLoglijst weergeven
-show list of upcoming entries	infolog	nl	toon lijst van toekomstige items
-show open entries: tasks/calls/notes on main screen	infolog	nl	Open infologs op hoofdscherm weergeven: Taken/Telefoongesprekken/Notities
+show last modified	infolog	nl	Laatst gewijzigd weergeven
+show status and percent done separate	infolog	nl	Status en percentage voltooid separaat weergeven
+show ticket id	infolog	nl	Ticket ID weergeven
 show times	infolog	nl	Toon tijden
 small view	infolog	nl	kleine weergave
 start a new search, cancel this link	infolog	nl	Start een nieuwe zoekopdracht, deze link annuleren
@@ -285,6 +293,8 @@ view subs	infolog	nl	Sub's weergeven
 view the parent of this entry and all his subs	infolog	nl	Van deze infolog de bovenliggende en alle bijbehorende zijn sub's weergeven
 view this linked entry in its application	infolog	nl	Gelinkt record in bijbehorende applicatie bekijken
 when should the todo or phonecall be started, it shows up from that date in the filter open or own open (startpage)	infolog	nl	Wanneer moet de Taak of het Telefoongesprek worden gestart? If zal vanaf die datum worden weergeven in het filter OPEN of EIGEN OPENSTAANDE
+which additional fields should the responsible be allowed to edit without having edit rights?<br />status, percent and date completed are always allowed.	infolog	nl	Welke additionele velden moet de verantwoordelijke kunnen bewerken zonder daarvoor speciale bewerk rechten te moeten krijgen?<br />Status, percentage en datum voltooid zijn altijd toegestaan.
+which implicit acl rights should the responsible get?	infolog	nl	Welke impliciete ACL rechten moet de verantwoordelijke krijgen?
 will-call	infolog	nl	zal bellen
 write (add or update) a record by passing its fields.	infolog	nl	Schrijf (toevoegen of bijwerken) een record door de velden mee te geven.
 yes - delete	infolog	nl	Ja - Verwijderen
