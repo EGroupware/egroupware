@@ -35,10 +35,10 @@
 		var $applications;
 		var $db;
 	}
-	$phpgw = new egw;
-	$egw->common = CreateObject('phpgwapi.common');
+	$egw =& new egw;
+	$egw->common =& CreateObject('phpgwapi.common');
 
-	$common = $egw->common;
+	$common =& $egw->common;
 	$GLOBALS['egw_setup']->loaddb();
 	$egw->db = clone($GLOBALS['egw_setup']->db);
 
@@ -60,8 +60,8 @@
 	}
 	$GLOBALS['egw_info']['server']['account_repository'] = 'ldap';
 
-	$egw->accounts     = CreateObject('phpgwapi.accounts');
-	$acct              = $egw->accounts;
+	$egw->accounts     =& CreateObject('phpgwapi.accounts');
+	$acct              =& $egw->accounts;
 
 	// First, see if we can connect to the LDAP server, if not send `em back to config.php with an
 	// error message.
@@ -78,141 +78,96 @@
 		exit;
 	}
 
-	$sql = "SELECT * FROM ".$GLOBALS['egw_setup']->accounts_table." WHERE account_type='u'";
-	$GLOBALS['egw_setup']->db->query($sql,__LINE__,__FILE__);
-	while($GLOBALS['egw_setup']->db->next_record())
+	// read all accounts & groups direct from SQL for export
+	$group_info = $account_info = array();
+	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->accounts_table,'*',false,__LINE__,__FILE__);
+	while(($row = $GLOBALS['egw_setup']->db->row(true)))
 	{
-		$i = $GLOBALS['egw_setup']->db->f('account_id');
-		$account_info[$i]['account_id']        = $GLOBALS['egw_setup']->db->f('account_id');
-		$account_info[$i]['account_lid']       = $GLOBALS['egw_setup']->db->f('account_lid');
-		$account_info[$i]['account_firstname'] = $GLOBALS['egw_setup']->db->f('account_firstname');
-		$account_info[$i]['account_lastname']  = $GLOBALS['egw_setup']->db->f('account_lastname');
-		$account_info[$i]['account_status']    = $GLOBALS['egw_setup']->db->f('account_status');
-		$account_info[$i]['account_expires']   = $GLOBALS['egw_setup']->db->f('account_expires');
-		$account_info[$i]['account_primary_group'] = $GLOBALS['egw_setup']->db->f('account_primary_group');
-	}
-	
-	$sql = "SELECT * FROM ".$GLOBALS['egw_setup']->accounts_table." WHERE account_type='g'";
-	$GLOBALS['egw_setup']->db->query($sql,__LINE__,__FILE__);
-	while($GLOBALS['egw_setup']->db->next_record())
-	{
-		$i = $GLOBALS['egw_setup']->db->f('account_id');
-		$group_info[$i]['account_id']        = -$GLOBALS['egw_setup']->db->f('account_id');
-		$group_info[$i]['account_lid']       = $GLOBALS['egw_setup']->db->f('account_lid');
-		$group_info[$i]['account_firstname'] = $GLOBALS['egw_setup']->db->f('account_firstname');
-		$group_info[$i]['account_lastname']  = $GLOBALS['egw_setup']->db->f('account_lastname');
-		$group_info[$i]['account_status']    = $GLOBALS['egw_setup']->db->f('account_status');
-		$group_info[$i]['account_expires']   = $GLOBALS['egw_setup']->db->f('account_expires');
+		if ($row['account_type'] == 'u')	// account
+		{
+			$account_info[$row['account_id']] = $row;
+		}
+		else	// group
+		{
+			$row['account_id'] *= -1;	// group account_id is internally negative since 1.2
+			$group_info[(string)$row['account_id']] = $row;
+			
+		}
 	}
 
-	$cancel = get_var('cancel','POST');
-	$submit = get_var('submit','POST');
-	$users  = get_var('users','POST');
-	$admins = get_var('admins','POST');
-	$s_apps = get_var('s_apps','POST');
-	$ldapgroups = get_var('ldapgroups','POST');
-
-	if($cancel)
+	if($_POST['cancel'])
 	{
 		Header('Location: ldap.php');
 		exit;
 	}
-
-	if($submit)
+	$GLOBALS['egw_setup']->html->show_header(lang('LDAP Export'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
+	
+	if($_POST['submit'])
 	{
-		if($ldapgroups)
+		if($_POST['users'])
 		{
-			while(list($key,$groupid) = each($ldapgroups))
+			foreach($_POST['users'] as $accountid)
 			{
-				$id_exist = 0;
-				$thisacctid    = $group_info[$groupid]['account_id'];
-				$thisacctlid   = $group_info[$groupid]['account_lid'];
-				$thisfirstname = $group_info[$groupid]['account_firstname'];
-				$thislastname  = $group_info[$groupid]['account_lastname'];
-				$thismembers   = $group_info[$groupid]['members'];
+				if (!isset($account_info[$accountid])) continue;
 
-				// Do some checks before we try to import the data to LDAP.
-				if(!empty($thisacctid) && !empty($thisacctlid))
+				$accounts =& CreateObject('phpgwapi.accounts',(int)$accountid);
+
+				// check if user already exists in ldap
+				if ($accounts->exists($accountid))
 				{
-					$groups = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-
-					// Check if the account is already there.
-					// If so, we won't try to create it again.
-					$acct_exist = $acct->name2id($thisacctlid);
-					if($acct_exist)
-					{
-						$thisacctid = $acct_exist;
-					}
-					$id_exist = $groups->exists((int)$thisacctid);
-					
-					/* If not, create it now. */
-					if(!$id_exist)
-					{
-						$thisaccount_info = array(
-							'account_type'      => 'g',
-							'account_id'        => $thisacctid,
-							'account_lid'       => $thisacctlid,
-							'account_passwd'    => 'x',
-							'account_firstname' => $thisfirstname,
-							'account_lastname'  => $thislastname,
-							'account_status'    => 'A',
-							'account_expires'   => -1,
-						);
-						$groups->create($thisaccount_info);
-					}
+					echo '<p>'.lang('%1 already exists in LDAP.',lang('User')." $accountid ({$account_info[$accountid]['account_lid']})")."</p>\n";
+					continue;
 				}
+				$account_info[$accountid]['homedirectory'] = $GLOBALS['egw_info']['server']['ldap_account_home'] . '/' . $account_info[$accountid]['account_lid'];
+				$account_info[$accountid]['loginshell'] = $GLOBALS['egw_info']['server']['ldap_account_shell'];
+
+				if (!$accounts->create($account_info[$accountid]))
+				{
+					echo '<p>'.lang('Creation of %1 in LDAP failed !!!',lang('User')." $accountid ({$account_info[$accountid]['account_lid']})")."</p>\n";
+					continue;
+				}
+				echo '<p>'.lang('%1 created in LDAP.',lang('User')." $accountid ({$account_info[$accountid]['account_lid']})")."</p>\n";
 			}
 		}
-
-		if($users)
+		if($_POST['ldapgroups'])
 		{
-			while(list($key,$accountid) = each($users))
+			foreach($_POST['ldapgroups'] as $groupid)
 			{
-				$id_exist = 0; $acct_exist = 0;
-				$thisacctid    = $account_info[$accountid]['account_id'];
-				$thisacctlid   = $account_info[$accountid]['account_lid'];
-				$thisfirstname = $account_info[$accountid]['account_firstname'];
-				$thislastname  = $account_info[$accountid]['account_lastname'];
-				$thisprimarygroup = $account_info[$accountid]['account_primary_group'];
+				if (!isset($group_info[$groupid])) continue;
 
-				// Do some checks before we try to import the data.
-				if(!empty($thisacctid) && !empty($thisacctlid))
+				$groups =& CreateObject('phpgwapi.accounts',(int)$groupid);
+				
+				// check if group already exists in ldap
+				if (!$groups->exists($groupid))
 				{
-					$accounts = CreateObject('phpgwapi.accounts',(int)$thisacctid);
-
-					// Check if the account is already there.
-					// If so, we won't try to create it again.
-					$acct_exist = $acct->name2id($thisacctlid);
-					if($acct_exist)
+					if (!$groups->create($group_info[$groupid]))
 					{
-						$thisacctid = $acct_exist;
+						echo '<p>'.lang('Creation of %1 failed !!!',lang('Group')." $groupid ({$group_info[$groupid]['account_lid']})")."</p>\n";
+						continue;
 					}
-					$id_exist = $accounts->exists((int)$thisacctid);
-					// If not, create it now.
-					if(!$id_exist)
+					echo '<p>'.lang('%1 created in LDAP.',lang('Group')." $groupid ({$group_info[$groupid]['account_lid']})")."</p>\n";
+				}
+				else
+				{
+					echo '<p>'.lang('%1 already exists in LDAP.',lang('Group')." $groupid ({$group_info[$groupid]['account_lid']})")."</p>\n";
+
+					if ($groups->id2name($groupid) != $group_info[$groupid]['account_lid'])
 					{
-						$thisaccount_info = array(
-							'account_type'      => 'u',
-							'account_id'        => $thisacctid,
-							'account_lid'       => $thisacctlid,
-							'account_passwd'    => 'x',
-							'account_firstname' => $thisfirstname,
-							'account_lastname'  => $thislastname,
-							'account_status'    => 'A',
-							'account_expires'   => -1,
-							'homedirectory'     => $GLOBALS['egw_info']['server']['ldap_account_home'] . '/' . $thisacctlid,
-							'loginshell'        => $GLOBALS['egw_info']['server']['ldap_account_shell'],
-							'account_primary_group' => $thisprimarygroup,
-						);
-						$accounts->create($thisaccount_info);
+						continue;	// different group under that gidnumber in ldap!
 					}
 				}
+				// now saving / updating the memberships
+				$groups->read_repository();
+				if (!is_object($GLOBALS['egw']->acl))
+				{
+					$GLOBALS['egw']->acl =& CreateObject('phpgwapi.acl');
+				}
+				$groups->save_repository();
 			}
 		}
 		$setup_complete = True;
 	}
 
-	$GLOBALS['egw_setup']->html->show_header(lang('LDAP Export'),False,'config',$GLOBALS['egw_setup']->ConfigDomain . '(' . $GLOBALS['egw_domain'][$GLOBALS['egw_setup']->ConfigDomain]['db_type'] . ')');
 
 	if($error)
 	{
@@ -236,24 +191,16 @@
 	$setup_tpl->set_block('ldap','submit','submit');
 	$setup_tpl->set_block('ldap','footer','footer');
 
-	while(list($key,$account) = @each($account_info))
+	foreach($account_info as $account)
 	{
-		$user_list .= '<option value="' . $account['account_id'] . '">'
+		$user_list .= '<option value="' . $account['account_id'] . '" selected="1">'
 			. $common->display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname'])
 			. '</option>';
 	}
 
-	@reset($account_info);
-	while(list($key,$account) = @each($account_info))
+	foreach($group_info as $group)
 	{
-		$admin_list .= '<option value="' . $account['account_id'] . '">'
-			. $common->display_fullname($account['account_lid'],$account['account_firstname'],$account['account_lastname'])
-			. '</option>';
-	}
-
-	while(list($key,$group) = @each($group_info))
-	{
-		$group_list .= '<option value="' . $group['account_id'] . '">'
+		$group_list .= '<option value="' . $group['account_id'] . '" selected="1">'
 			. $group['account_lid']
 			. '</option>';
 	}
@@ -284,4 +231,3 @@
 	$setup_tpl->pfp('out','footer');
 
 	$GLOBALS['egw_setup']->html->show_footer();
-?>
