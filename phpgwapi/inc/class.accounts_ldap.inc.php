@@ -38,10 +38,13 @@
 
 		var $requiredObjectClasses = array(
 			'user' => array(
-				'top','organizationalperson','inetorgperson','posixaccount','shadowaccount','phpgwaccount'
+				'top','person','organizationalperson','inetorgperson','posixaccount','shadowaccount','phpgwaccount'
 			),
 			'group' => array(
-				'top','posixgroup','phpgwaccount'
+				'top','posixgroup','phpgwaccount',
+				// some newer ldap require namedObject here, as none of the above is a structural object there
+				// this gets now autodetected
+				//'namedObject'
 			)
 		);
 
@@ -113,7 +116,6 @@
 
 		function save_repository()
 		{
-
 			$acct_type = $this->get_type($this->account_id);
 
 			/* search the dn for the given u/gidnumber */
@@ -277,14 +279,15 @@
 				if($this->data['account_type'] == 'g' && $this->group_context )
 				{
 					$newDN = 'cn='.$this->data['account_lid'].','.$this->group_context;
-					$members = $this->member($this->account_id);
 					$newData['memberuid'] = array();
-					for($i=0;$i<count($members);$i++)
+					if (($members = $this->member($this->account_id)))
 					{
-						$currname = $this->id2name($members[$i]['account_id']);
-						if(!in_array($currname,$entry['memberuid']))
+						foreach($members as $member)
 						{
-							$newData['memberuid'][] = $currname;
+							if (!in_array($member['account_name'],$newData['memberuid']))
+							{
+								$newData['memberuid'][] = $member['account_name'];
+							}
 						}
 					}
 				}
@@ -298,29 +301,31 @@
 
 				// add the new account
 				#_debug_array($newData);
-				ldap_add($this->ds, $newDN, $newData);
+				if (!@ldap_add($this->ds, $newDN, $newData) && $this->data['account_type'] == 'g')
+				{
+					// try again with namedObject added, in case we have the newer schema which eg. SuSE uses
+					// in which our required objectclasses for a group, have no structural object
+					$newData['objectclass'][] = 'namedObject';
+					ldap_add($this->ds, $newDN, $newData);
+				}
 			}
-			/* Normal behavior for save_repository
-				 update Account */
+			/* Normal behavior for save_repository update Account */
 			else
 			{
 				// add the list group members
-				if($this->data['account_type'] == 'g' && $this->group_context )
+				if($this->data['account_type'] == 'g' && ($members = $this->member($this->account_id)))
 				{
-					$members = $this->member($this->account_id) ? $this->member($this->account_id) : NULL;
-
-					#_debug_array($members);
 					$newData['memberuid'] = array();
-					for($i=0;$i<count($members);$i++)
+					foreach($members as $member)
 					{
-						$currname = $this->id2name($members[$i]['account_id']);
-						if(!in_array($currname,$newData['memberuid']))
+						if (!in_array($member['account_name'],$newData['memberuid']))
 						{
-							$newData['memberuid'][] = $currname;
+							$newData['memberuid'][] = $member['account_name'];
 						}
 					}
 				}
 				// modify the DN
+				//echo "<p>ldap_modify(,'{$allValues[0]['dn']}',".print_r($newData,true).")</p>\n";
 				ldap_modify($this->ds, $allValues[0]['dn'], $newData);
 			}
 
@@ -783,23 +788,13 @@
 
 				if ($account_info['account_type'] == 'g')
 				{
-					$tmpentry['objectclass'][0] = 'top';
-					$tmpentry['objectclass'][1] = 'posixGroup';
-					$tmpentry['objectclass'][2] = 'phpgwAccount';
-					#$tmpentry['objectclass'][3] = 'namedObject';
+					$tmpentry['objectclass'] = $this->requiredObjectClasses['group'];
 				}
 				else
 				{
+					$tmpentry['objectclass'] = $this->requiredObjectClasses['user'];
 					$tmpentry['uidnumber']      = $account_id;
-					$tmpentry['objectclass'][0] = 'top';
-					$tmpentry['objectclass'][1] = 'person';
-					$tmpentry['objectclass'][2] = 'organizationalPerson';
-					$tmpentry['objectclass'][3] = 'inetOrgPerson';
 					$tmpentry['userpassword']   = $GLOBALS['egw']->common->encrypt_password($account_info['account_passwd'],False);
-					/* $tmpentry['objectclass'][4] = 'account'; Causes problems with some LDAP servers */
-					$tmpentry['objectclass'][4] = 'posixAccount';
-					$tmpentry['objectclass'][5] = 'shadowAccount';
-					$tmpentry['objectclass'][6] = 'phpgwAccount';
 					$tmpentry['phpgwaccountstatus']    = $account_info['account_status'];
 					$tmpentry['phpgwaccounttype']      = $account_info['account_type'];
 					$tmpentry['phpgwaccountexpires']   = $account_info['account_expires'];
@@ -815,10 +810,7 @@
 					unset($entry['homedirectory']);
 					unset($entry['loginshell']);
 					unset($entry['userpassword']);
-					$entry['objectclass'][0] = 'top';
-					$entry['objectclass'][1] = 'posixGroup';
-					$entry['objectclass'][2] = 'phpgwAccount';
-					#$entry['objectclass'][3] = 'namedObject';
+					$entry['objectclass'] = $this->requiredObjectClasses['group'];
 					$entry['cn']             = $GLOBALS['egw']->translation->convert($account_info['account_lid'],$GLOBALS['egw']->translation->charset(),'utf-8');
 					$entry['gidnumber']      = $account_id;
 					$entry['description']    = 'eGW-created group';
@@ -863,13 +855,7 @@
 					$entry['uidnumber']      = $account_id;
 					$entry['gidnumber']      = abs($account_info['account_primary_group']);
 					$entry['userpassword']   = $GLOBALS['egw']->common->encrypt_password($account_info['account_passwd']);
-					$entry['objectclass'][0] = 'top';
-					$entry['objectclass'][1] = 'person';
-					$entry['objectclass'][2] = 'organizationalPerson';
-					$entry['objectclass'][3] = 'inetOrgPerson';
-					$entry['objectclass'][4] = 'posixAccount';
-					$entry['objectclass'][5] = 'shadowAccount';
-					$entry['objectclass'][6] = 'phpgwAccount';
+					$entry['objectclass'] = $this->requiredObjectClasses['user'];
 					if($account_info['account_status'])
 					{
 						$entry['phpgwaccountstatus']    = $account_info['account_status'];
@@ -881,9 +867,23 @@
 				#_debug_array($entry);
 
 				// stop processing if ldap_add fails
-				if(!ldap_add($this->ds, $dn, $entry))
+				if(!@ldap_add($this->ds, $dn, $entry))
 				{
-					return false;
+					if ($account_info['account_type'] != 'g')
+					{
+						return false;
+					}
+					// try again with namedObject added, in case we have the newer schema which eg. SuSE uses
+					// in which our required objectclasses for a group, have no structural object
+					if ($account_info['account_type'] == 'g')
+					{
+						$entry['objectclass'][] = 'namedObject';
+					
+						if (!@ldap_add($this->ds, $dn, $entry))
+						{
+							return false;
+						}
+					}
 				}
 			}
 			// print ldap_error($this->ds);
