@@ -196,6 +196,7 @@ error! no appname found	admin	sk	CHYBA! Nena¹iel sa názov aplikácie
 error: %1 not found or other error !!!	admin	sk	Chyba: %1 sa nena¹iel, alebo iná chyba !!!
 expires	admin	sk	Vypr¹í
 explanation of ldapman	admin	sk	Tento modul bol testovaný doposiaµ pre POSTFIX,LDAP,Courier-IMAP vy¾aduje schémy CORE a QMAIL (OID7914). Podrobnosti o pou¾ívaní a nastavení tohto systému nájdete v README.ldapman v doc adresári ADMIN-a.
+fallback (after each pageview)	admin	sk	návrat (po ka¾dom zobrazení stránky)
 field '%1' already exists !!!	admin	sk	Polo¾ka '%1' u¾ existuje
 file space	admin	sk	Priestor pre súbory
 file space must be an integer	admin	sk	Priestor pre súbory musí by» celé èíslo
@@ -388,8 +389,10 @@ this application requires an upgrade	admin	sk	Táto aplikácia vy¾aduje upgrade
 this category is currently being used by applications as a parent category	admin	sk	Táto kategória je práve pou¾ívaná aplikáciami ako rodièovská.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	sk	Èas vypr¹ania údajov o sedení aplikácie, v sekundách (predvolené: 86400 = 1 deò)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	sk	Èas vypr¹ania údajov o sedení, v sekundách (predvolené: 14400 = 4 hodiny)
+times	admin	sk	Èasy
 top	admin	sk	navrchu
 total records	admin	sk	Záznamov spolu
+type '%1' already exists !!!	admin	sk	typ '%1' u¾ existuje !!!
 type of customfield	admin	sk	Typ pou¾ívateµskej polo¾ky
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sk	Pod windows musíte asyncslu¾by nain¹talova» %1manuálne%2 alebo pou¾i» fallback re¾im. Fallback znamená, ¾e úlohy sú skontrolované iba po jednotlivých zobrazeniach stránky !!!
 use cookies to pass sessionid	admin	sk	Pou¾i» cookies na odovzdanie ID sedenia
@@ -410,7 +413,6 @@ view this user	admin	sk	zobrazi» tohto pou¾ívateµa
 view user account	admin	sk	Zobrazi» pou¾ívateµský úèet
 who would you like to transfer all records owned by the deleted user to?	admin	sk	Na koho by ste chceli prenies» V©ETKY záznamy zmazaného pou¾ívateµa?
 would you like egroupware to cache the egw info array ?	admin	sk	Má eGroupWare ke¹ova» egw info pole ?
-would you like egroupware to cache the phpgw info array ?	admin	sk	Chcete, aby eGroupWare pou¾il vyrovnávaciu pamä» pre phpgw info pole?
 would you like egroupware to check for a new version<br>when admins login ?	admin	sk	Má eGroupWare skontrolova» aktuálnos» svojej verzie <br>po prihlásení správcu ?
 would you like egroupware to check for new application versions when admins login ?	admin	sk	Má eGroupWare skontrolova» aktuálnos» verzie aplikácií po prihlásení správcu ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	sk	Majú sa nové jazykové súbory natiahnu» automaticky poèas prihlasovania ?

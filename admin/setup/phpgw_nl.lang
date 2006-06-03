@@ -48,6 +48,8 @@ allow anonymous access to this app	admin	nl	Geef anonieme gebruikers toegang tot
 alternate email address	admin	nl	alternatief emailadres
 anonymous user	admin	nl	Anonieme gebruiker
 anonymous user (not shown in list sessions)	admin	nl	Anonieme gebruiker (wordt niet weergegeven in sessieoverzichten)
+anonymous user does not exist!	admin	nl	Anonieme gebruiker bestaat NIET!
+anonymous user has no run-rights for the application!	admin	nl	Anonieme gebruiker heeft geen uitvoer rechten voor deze toepassing.
 appearance	admin	nl	Weergave
 application	admin	nl	Toepassing
 application name	admin	nl	Toepassingsnaam
@@ -203,7 +205,6 @@ for the times above	admin	nl	voor de tijden hierboven
 for the times below (empty values count as '*', all empty = every minute)	admin	nl	voor de tijden hieronder (lege waarden gelden als '*', alles leeg = elke minuut)
 force selectbox	admin	nl	Forceer Selectbox
 forward also to	admin	nl	ook doorsturen naar
-forward email's to	admin	nl	stuur emails door naar
 forward emails to	admin	nl	stuurt emails door naar
 forward only	admin	nl	alleen doorsturen
 global categories	common	nl	Globale Categorieën
@@ -220,12 +221,14 @@ host information	admin	nl	Hostinformatie
 hour<br>(0-23)	admin	nl	Uur<br /> (0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	nl	Hoeveel dagen moeten record worden bewaard in het toegangslogboek voordat zo worden verwijderd (standaard 90 dagen)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	nl	Hoeveel minuten moet een account of IP-adres worden geblokkeerd (standaard 30 minuten)?
+how should email addresses for new users be constructed?	admin	nl	Hoe moet het Emailadres voor nieuwe gebruikers samengesteld worden?
 icon	admin	nl	Pictogram
 idle	admin	nl	inactief
 if no acl records for user or any group the user is a member of	admin	nl	Als er geen ACL-records if groepen zijn voor de gebruiker is de gebruiker lid van
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	nl	Als u LDAP gebruikt, wilt u dan homedirectory en loginshell attributen beheren?
 in mbyte	admin	nl	in MByte
 inbound	admin	nl	inkomend
+initial	admin	nl	Initiaal
 install crontab	admin	nl	Installeer crontab
 installed applications	common	nl	Geïnstalleerde toepassingen
 installed crontab	admin	nl	Geïnstalleerde crontab
@@ -405,7 +408,7 @@ use cookies to pass sessionid	admin	nl	Gebruik cookies om sessie-ID door te geve
 use pure html compliant code (not fully working yet)	admin	nl	Gebruik pure HTML compatible code (werk momenteel niet volledig)
 use theme	admin	nl	Gebruik thema
 user accounts	admin	nl	Gebruikersaccounts
-user data	admin	nl	Gebruikersgegevens
+user data	common	nl	Gebruikersgegevens
 user for smtp-authentication (leave it empty if no auth required)	admin	nl	Gebruikersnaam voor SMTP-authenticatie (leeglaten indien geen auth vereist is)
 user groups	admin	nl	Gebruikersgroepen
 userdata	admin	nl	gebruikersgegevens
@@ -419,7 +422,6 @@ view this user	admin	nl	Deze gebruiker weergeven
 view user account	admin	nl	Gebruikersaccount weergeven
 who would you like to transfer all records owned by the deleted user to?	admin	nl	Wilt u tevens ALLE records in eigendom van de verwijderde gebruikers
 would you like egroupware to cache the egw info array ?	admin	nl	Wilt u eGroupWare de egw info array laten cachen ? (EXTREEM GEVAARLIJK!)
-would you like egroupware to cache the phpgw info array ?	admin	nl	Wilt u eGroupWare de phpgw info array laten cachen ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor een nieuwe eGroupWare versie<br />wanneer beheerders inloggen?
 would you like egroupware to check for new application versions when admins login ?	admin	nl	Wilt u eGroupWare laten controleren voor nieuwe toepassingensversies wanneer beheerders inloggen?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	nl	Wilt u automatisch (bij inloggen) nieuwe taalbestanden laden?

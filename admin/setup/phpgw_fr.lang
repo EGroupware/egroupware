@@ -1,6 +1,8 @@
 %1 - %2 of %3 user accounts	admin	fr	%1 - %2 de %3 comptes utilisateurs
 %1 - %2 of %3 user groups	admin	fr	%1 - %2 de %3 groupes utilisateurs
+%1 acl records of not (longer) existing accounts deleted.	admin	fr	Les droits d'accès de %1 pour les comptes n'existant pas (ou plus) sont détruits
 %1 not found or not executable !!!	admin	fr	%1 introuvable ou pas exécutable !!!
+(default no, leave it off if you dont use it)	admin	fr	(Non par défaut, ne pas modifier si vous ne l'utilisez pas)
 (stored password will not be shown here)	admin	fr	(Le mot de passe enregistré ne sera pas montré ici)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fr	(Pour installer de nouvelles applications utilisez<br><a href="setup/" target="setup">Setup</a> [Gérer Les Applications] !!!)
 -  type	admin	fr	- type
@@ -39,12 +41,15 @@ admins	admin	fr	Administrateurs
 advanced options	admin	fr	options avançées
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, un compte doit-il être bloqué (3 par défaut) ?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	fr	Après combien de tentatives infructueuses de connexion, une adresse IP doit-elle être bloquée (3 par défaut) ?
+aliases	admin	fr	Alias
 all records and account information will be lost!	admin	fr	Tous les enregistrements et informations sur les comptes vont être perdus!
 all users	admin	fr	Tous les utilisateurs
 allow anonymous access to this app	admin	fr	Autoriser l'accès anonyme à cette application
 alternate email address	admin	fr	Adresse email alternative
 anonymous user	admin	fr	Utilisateur anonyme
 anonymous user (not shown in list sessions)	admin	fr	Utilisateur anonyme (n'apparaît pas dans la liste des sessions)
+anonymous user does not exist!	admin	fr	L'utilisateur anonyme n'existe pas !
+anonymous user has no run-rights for the application!	common	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
 appearance	admin	fr	Apparence
 application	admin	fr	Application
 application name	admin	fr	Nom d'application
@@ -87,6 +92,7 @@ country selection	admin	fr	Sélection du pays
 create group	admin	fr	Créer un groupe
 creates a new field	admin	fr	Créer un nouveau champ
 crontab only (recomended)	admin	fr	crontab seulement (recommandé)
+custom fields	admin	fr	Champs personnalisés
 cyrus imap server	admin	fr	Serveur Cyrus IMAP
 data	admin	fr	Données
 day	admin	fr	Jour
@@ -108,6 +114,7 @@ delete this category	admin	fr	Effacer cette catégorie
 delete this group	admin	fr	Effacer ce groupe
 delete this user	admin	fr	Effacer cet utilisateur
 deletes this field	admin	fr	Suppirmer ce champ
+deliver extern	admin	fr	Envoi externe
 deny access to access log	admin	fr	Refuser l'accès au log d'accès
 deny access to application registery	admin	fr	Refuser l'accès à l'enregistrement d'applications
 deny access to applications	admin	fr	Refuser l'accès aux applications
@@ -133,12 +140,15 @@ do not delete the category and return back to the list	admin	fr	Ne PAS effacer l
 do you also want to delete all global subcategories ?	admin	fr	Voulez-vous aussi effacer toutes les sous-catégories globales ?
 do you want to delete all global subcategories ?	admin	fr	Voulez-vous effacer toutes les sous-catégories globales ?
 do you want to move all global subcategories one level down ?	admin	fr	Voulez-vous déplacer toutes les sous-catégories globales un niveau plus bas ?
+each value is a line like <id>[=<label>]	admin	fr	Chaque valeur est une ligne comme <id>[=<label>]
+each value is a line like id[=label]	admin	fr	Chaque valeur est une ligne comme id[=<label>]
 edit account	admin	fr	Editer le compte
 edit application	admin	fr	Modifier l'application
+edit email settings	admin	fr	Edition du paramétrage e-mail
 edit global category	admin	fr	Modifier la catégorie globale
 edit global category for %1	admin	fr	Modifier la catégorie globale pour %1
 edit group	admin	fr	Modifier le groupe
-edit group acl's	admin	fr	éditer les autorisations d'accès du groupe (ACL)
+edit group acl's	admin	fr	Editer les autorisations d'accès du groupe (ACL)
 edit login screen message	admin	fr	Modifier le message de l'écran de connexion
 edit main screen message	admin	fr	Modifier le message de l'écran principal
 edit peer server	admin	fr	Modifier le serveur pair
@@ -148,6 +158,8 @@ edit this group	admin	fr	Modifier ce groupe
 edit this user	admin	fr	Modifier cet utilisateur
 edit user	admin	fr	Modifier l'utilisateur
 edit user account	admin	fr	Modifier le compte de l'utilisateur
+email account active	admin	fr	compte de messagerie actif
+email address	admin	fr	adresse email
 enable debug-messages	admin	fr	Activer les messages de déboguage
 enable the soap service	admin	fr	Activer le service soap
 enable the xmlrpc service	admin	fr	Activer le service xmlrp
@@ -176,9 +188,12 @@ enter your smtp server hostname or ip address	admin	fr	Entrez votre nom de serve
 enter your smtp server port	admin	fr	Entrez le port de votre serveur SMTP
 error canceling timer, maybe there's none set !!!	admin	fr	Erreur en annulant le timer, peut-être qu'il n'y en a aucun de défini !!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	fr	Erreur en créant le timer, erreur de syntaxe ou peut-être il y en a déjà un qui tourne !!!
+error! no appname found	admin	fr	Erreur : pas de nom d'application trouvé !
 error: %1 not found or other error !!!	admin	fr	Erreur: %1 introuvable ou autre erreur !!!
 expires	admin	fr	Expire
+explanation of ldapman	admin	fr	Ce module à été testé avec POSTFIX, LDAP, Courier-IMAP and nécessite les schémas CORE et QMAIL (OID7914). Des informations supplémentaires pour configurer ce système sont disponibles dans le fichier README.ldapman dans le répertoire ADMIN.
 fallback (after each pageview)	admin	fr	retour au défaut (après chaque prévisualisation)
+field '%1' already exists !!!	admin	fr	Le Champ '%1'  existe déjà !
 file space	admin	fr	Espace fichiers
 file space must be an integer	admin	fr	La valeur Espace fichiers doit être un entier
 find and register all application hooks	admin	fr	Trouver et enregistrer tous les "application hooks"
@@ -186,7 +201,7 @@ for the times above	admin	fr	pour le timing ci-dessus
 for the times below (empty values count as '*', all empty = every minute)	admin	fr	pour le timing ci-dessous (valeurs vides comptent comme '*', tout vide = chaque minute)
 force selectbox	admin	fr	Forcer la boite de sélection
 forward also to	admin	fr	Transférer également à
-forward email's to	admin	fr	Transférer les mails à
+forward emails to	admin	fr	Transfèrer le message à
 forward only	admin	fr	Transférer seulement à
 global categories	common	fr	Catégories globales
 group ?	admin	fr	Groupe ?
@@ -202,12 +217,14 @@ host information	admin	fr	Informations sur l'hôte
 hour<br>(0-23)	admin	fr	Heure<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	fr	Pendant combien de jours les entrées doivent-elles rester dans la log d'accès, avant d'être effacées (90 par défaut) ?
 how many minutes should an account or ip be blocked (default 30) ?	admin	fr	Pendant combien de minutes un compte ou une adresse IP doit-il(elle) être bloqué(e) (30 par défaut) ?
+how should email addresses for new users be constructed?	admin	fr	Comment former les adresses de messagerie des nouveaux utilisateurs ?
 icon	admin	fr	Icône
 idle	admin	fr	Disponible
 if no acl records for user or any group the user is a member of	admin	fr	Si pas d'enregistrements dans les droits d'accès pour l'utilisateur ou n'importe quel groupe, l'utilisateur est membre de
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fr	Si vous utilisez LDAP, voulez-vous gérer les attributs répertoire maison et shell de connexion?
 in mbyte	admin	fr	en Moctet
 inbound	admin	fr	Entrant
+initial	admin	fr	Initial
 install crontab	admin	fr	Installer le crontab
 installed applications	common	fr	Applications installées
 installed crontab	admin	fr	Crontab installée
@@ -233,6 +250,7 @@ leave empty for no quota	admin	fr	Laisser vide pour ne pas avoir de quota
 leave the category untouched and return back to the list	admin	fr	Laisser la catégorie telle quelle et retourner à la liste
 leave the group untouched and return back to the list	admin	fr	Laisser le groupe tel quel et retouner à la liste
 leaves without saveing	admin	fr	Quitter sans sauver
+length<br>rows	admin	fr	Longueur <br> lignes
 list config settings	admin	fr	Afficher les paramètres de configuration
 list current sessions	admin	fr	Afficher les sessions actuelles
 list of current users	admin	fr	Liste des utilisateurs actuels
@@ -246,6 +264,7 @@ mail settings	admin	fr	Réglages mail
 main email-address	admin	fr	Adresse mail principale
 main screen message	admin	fr	Message de l'écran principal
 manager	admin	fr	Gestionnaire
+max length of the input [, length of the inputfield (optional)]	admin	fr	Longueur maximum de l'entrée [, longueur du champ de saisi (optionnel)]
 maximum account id (e.g. 65535 or 1000000)	admin	fr	Numéro de compte maximum (p.e. 65535 ou 1000000)
 maximum entries in click path history	admin	fr	Nombre maximal d'entrées dans l'historique des clics sur les liens
 message has been updated	admin	fr	le message a été mis à jour
@@ -254,6 +273,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	fr	Numéro de compte minimum (p.
 minute	admin	fr	Minute
 mode	admin	fr	Mode
 month	admin	fr	Mois
+name must not be empty !!!	admin	fr	Le nom ne doit pas être vide !
 new group name	admin	fr	Nouveau nom de groupe
 new name	admin	fr	Nouveau nom
 new password [ leave blank for no change ]	admin	fr	Nouveau mot de passe [ Laisser vide pour aucun changement ]
@@ -268,6 +288,7 @@ no permission to add groups	admin	fr	Aucune permission pour ajouter des groupes
 no permission to add users	admin	fr	Aucune permission pour ajouter des utilisateurs
 no permission to create groups	admin	fr	Aucune permission pour créer des groupes
 note: ssl available only if php is compiled with curl support	admin	fr	Note: SSL disponible si PHP est compilé avec le support de CURL
+number of row for a multiline inputfield or line of a multi-select-box	admin	fr	Nombre de lignes pour un champ multi-ligne ou pour une boite de sélection multiple.
 order	admin	fr	Ordre
 outbound	admin	fr	sortant
 passthrough	admin	fr	passage
@@ -277,6 +298,7 @@ peer server list	admin	fr	Liste des serveurs (peer servers)
 peer servers	admin	fr	Serveurs pairs
 percent of users that logged out	admin	fr	Pourcentage des utilisateurs qui se sont déconnectés
 percent this user has logged out	admin	fr	Pourcentage de déconnexion de cet utilisateur
+permission denied	admin	fr	Permission refusée
 permissions	admin	fr	Permissions
 permissions this group has	admin	fr	Permissions attribuées à ce groupe
 phpinfo	admin	fr	Informations PHP
@@ -287,6 +309,9 @@ please select	admin	fr	SVP choisissez
 postfix with ldap	admin	fr	Postfix avec support LDAP
 preferences	admin	fr	Préférences
 primary group	admin	fr	groupe initial
+qmaildotmode	admin	fr	qmaildotmode
+quota settings	admin	fr	Paramétrage des quotas
+quota size in mbyte	admin	fr	Taille des quota en Mo
 re-enter password	admin	fr	Ré-entrez le mot de passe
 read this list of methods.	admin	fr	Lisez cette liste de méthodes.
 register application hooks	admin	fr	Enregistrer les "application hooks"
@@ -371,13 +396,14 @@ top	admin	fr	Haut
 total records	admin	fr	Enregistrements totaux
 trust level	admin	fr	Niveau de confiance
 trust relationship	admin	fr	Relation de confiance
+type '%1' already exists !!!	admin	fr	Le type '%1'  existe déjà !
 type of customfield	admin	fr	Type de champ personnalisé
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	fr	Sous windows vous devez installer les services asynchrones %1manuellement%2  ou utiliser le mode "fallback". "Fallback" veut dire que les travaux ne sont vérifiés qu'après chaque affichage de page !!!
 use cookies to pass sessionid	admin	fr	Utiliser les cookies pour passer l'ID de session
 use pure html compliant code (not fully working yet)	admin	fr	Utiliser du code HTML standard (ne fonctionne pas encore complètement)
 use theme	admin	fr	Utiliser le thème
 user accounts	admin	fr	Comptes utilisateurs
-user data	admin	fr	Données utilisateurs
+user data	common	fr	Données utilisateurs
 user for smtp-authentication (leave it empty if no auth required)	admin	fr	Utilisateur pour l'authentification SMTP (laisser vide si pas requis)
 user groups	admin	fr	Groupes utilisateurs
 userdata	admin	fr	Données utilisateur
@@ -397,6 +423,8 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	fr	Vou
 would you like to show each application's upgrade status ?	admin	fr	Voudriez-vous montrer l'état de mise à jour de chaque application ?
 xml-rpc	admin	fr	XML-RPC
 you have entered an invalid expiration date	admin	fr	Vous avez entré une date d'expiration invalide
+you have to enter a name, to create a new field!!!	admin	fr	Vous avez saisi un nom pour créer un nouveau champ !
+you have to enter a name, to create a new type!!!	admin	fr	Vous avez saisi un nom pour créer un nouveau type !
 you must add at least 1 permission or group to this account	admin	fr	Vous devez ajouter au moins 1 permission ou groupe à ce compte
 you must enter a group name.	admin	fr	Vous devez entrer un nom de groupe
 you must enter a lastname	admin	fr	Vous devez entrer un nom
