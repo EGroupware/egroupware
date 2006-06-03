@@ -149,7 +149,7 @@ class setup_header
 	/**
 	 * generate header.inc.php file from given values
 	 *
-	 * setup_header::generate(EGW_SERVER_ROOT,EGW_INCLUDE_ROOT,$GLOBALS['egw_info'],$GLOBALS['egw_domains'])
+	 * setup_header::generate($GLOBALS['egw_info'],$GLOBALS['egw_domains'])
 	 * should write an identical header.inc.php as the one include
 	 * 
 	 * @param array $egw_info usual content (in server key) plus keys server_root and include_root

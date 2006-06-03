@@ -53,6 +53,7 @@ switch($action)
 	case '--create-header':
 	case '--edit-header':
 	case '--upgrade-header':
+	case '--update-header':
 		do_header($action == '--create-header',$arguments);
 		break;
 		
@@ -535,7 +536,7 @@ function do_check($domain='',$stop=0)
 		echo lang("database is version %1 and up to date.",$setup_info['phpgwapi']['currentver'])."\n";
 
 		$GLOBALS['egw_setup']->detection->check_config();
-		if ($GLOBALS['egw_info']['setup']['config_errors'] && !in_array(15,$stop))
+		if ($GLOBALS['egw_info']['setup']['config_errors'] && $stop && !in_array(15,$stop))
 		{
 			fail(15,lang('You need to configure eGroupWare:')."\n- ".@implode("\n- ",$GLOBALS['egw_info']['setup']['config_errors']));
 		}
@@ -705,8 +706,7 @@ function do_header($create,&$arguments)
 		echo "\n".lang('Configuration errors:')."\n- ".implode("\n- ",$errors)."\n";
 		fail(23,lang("You need to fix the above errors, before the configuration file header.inc.php can be written!"));
 	}
-	$header = $GLOBALS['egw_setup']->header->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain'],
-		$GLOBALS['egw_info']['server']['server_root'],$GLOBALS['egw_info']['server']['include_root']);
+	$header = $GLOBALS['egw_setup']->header->generate($GLOBALS['egw_info'],$GLOBALS['egw_domain']);
 		
 	echo $header;
 
