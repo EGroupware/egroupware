@@ -718,7 +718,7 @@
 			{
 				return True;
 			}
-			$rights = $this->grants[$owner_id];
+			$rights = $this->grants[(string)$owner_id];
 			//echo "rights=$rights, ";
 			if ($rights & $data['operation'])
 			{
