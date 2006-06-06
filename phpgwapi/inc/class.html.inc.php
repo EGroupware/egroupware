@@ -879,14 +879,15 @@ class html
 			if($GLOBALS['egw_info']['server']['webserver_url'])
 			{
 				list(,$path) = explode($GLOBALS['egw_info']['server']['webserver_url'],$url);
-				$path = EGW_SERVER_ROOT.$path;
+
+				if (!is_null($path)) $path = EGW_SERVER_ROOT.$path;
 			}
 			else
 			{
 				$path = EGW_SERVER_ROOT.$url;
 			}
 			
-			if (!@is_readable($path))
+			if (is_null($path) || !@is_readable($path))
 			{
 				// if the image-name is a percentage, use a progressbar
 				if (substr($name,-1) == '%' && is_numeric($percent = substr($name,0,-1)))
