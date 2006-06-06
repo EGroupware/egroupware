@@ -42,6 +42,9 @@
 			{
 				return False;
 			}
+			// allow non-ascii in username & password
+			$username = $GLOBALS['egw']->translation->convert($username,$GLOBALS['egw']->translation->charset(),'utf-8');
+			$passwd = $GLOBALS['egw']->translation->convert($passwd,$GLOBALS['egw']->translation->charset(),'utf-8');
 
 			if(!$ldap = @ldap_connect($GLOBALS['egw_info']['server']['ldap_host']))
 			{
@@ -61,29 +64,30 @@
 				return False;
 			}
 			/* find the dn for this uid, the uid is not always in the dn */
-			$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','gidNumber');
+			$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','gidNumber','shadowExpire');
 
 			$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
 			$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
 
 			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
 			{
-				$filter = "(&$filter(phpgwaccountstatus=A))";
+				$filter = "(&$filter(objectclass=posixaccount))";
 			}
-
 			$sri = ldap_search($ldap, $GLOBALS['egw_info']['server']['ldap_context'], $filter, $attributes);
 			$allValues = ldap_get_entries($ldap, $sri);
 
 			if ($allValues['count'] > 0)
 			{
-				if($GLOBALS['egw_info']['server']['case_sensitive_username'] == true)
+				if ($GLOBALS['egw_info']['server']['case_sensitive_username'] == true &&
+					$allValues[0]['uid'][0] != $username)
 				{
-					if($allValues[0]['uid'][0] != $username)
-					{
-						return false;
-					}
+					return false;
 				}
-				/* we only care about the first dn */
+				if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
+					isset($allValues[0]['shawdowexpire']) && $allValues[0]['shawdowexpire'][0]*24*3600 < time())
+				{
+					return false;	// account is expired
+				}
 				$userDN = $allValues[0]['dn'];
 				/*
 				generate a bogus password to pass if the user doesn't give us one
@@ -93,12 +97,11 @@
 				{
 					$passwd = crypt(microtime());
 				}
-				/* try to bind as the user with user suplied password */
+				// try to bind as the user with user suplied password
 				if (@ldap_bind($ldap, $userDN, $passwd))
 				{
 					if ($GLOBALS['egw_info']['server']['account_repository'] != 'ldap')
 					{
-						$account =& CreateObject('phpgwapi.accounts',$username,'u');
 						if (!$account->account_id && $GLOBALS['egw_info']['server']['auto_create_acct'])
 						{
 							// create a global array with all availible info about that account
@@ -106,7 +109,7 @@
 							foreach(array(
 								'givenname' => 'firstname',
 								'sn'        => 'lastname',
-								'uidnumber' => 'id',
+								'uidnumber' => 'account_id',
 								'mail'      => 'email',
 								'gidnumber' => 'primary_group',
 							) as $ldap_name => $acct_name)
@@ -116,19 +119,22 @@
 							}
 							return True;
 						}
-						$data = $account->read_repository();
-						return $data['status'] == 'A';
+						return ($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')) &&
+							$GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
 					}
 					return True;
 				}
 			}
-			/* dn not found or password wrong */
+			// dn not found or password wrong
 			return False;
 		}
 
 		/**
 		 * changes password in LDAP
 		 *
+		 * If $old_passwd is given, the password change is done binded as user and NOT with the 
+		 * "root" dn given in the configurations.
+		 * 
 		 * @param string $old_passwd must be cleartext or empty to not to be checked
 		 * @param string $new_passwd must be cleartext
 		 * @param int $account_id account id of user whose passwd should be changed
@@ -142,7 +148,8 @@
 			}
 			else
 			{
-				$username = $GLOBALS['egw']->accounts->id2name($account_id);
+				$username = $GLOBALS['egw']->translation->convert($GLOBALS['egw']->accounts->id2name($account_id),
+					$GLOBALS['egw']->translation->charset(),'utf-8');
 			}
 			//echo "<p>auth_ldap::change_password('$old_password','$new_passwd',$account_id) username='$username'</p>\n";
 
@@ -152,10 +159,14 @@
 			$ds = $GLOBALS['egw']->common->ldapConnect();
 			$sri = ldap_search($ds, $GLOBALS['egw_info']['server']['ldap_context'], $filter);
 			$allValues = ldap_get_entries($ds, $sri);
-
+			
 			$entry['userpassword'] = $this->encrypt_password($new_passwd);
 			$dn = $allValues[0]['dn'];
 
+			if($old_passwd)	// if old password given (not called by admin) --> bind as that user to change the pw
+			{
+				$ds = $GLOBALS['egw']->common->ldapConnect('',$dn,$old_passwd);
+			}
 			if (!@ldap_modify($ds, $dn, $entry))
 			{
 				return false;

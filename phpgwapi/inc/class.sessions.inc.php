@@ -548,7 +548,7 @@
 			$GLOBALS['egw']->crypto->init(array($this->key,$this->iv));
 
 			$this->read_repositories(False);
-			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
+			if ($GLOBALS['egw']->accounts->is_expired($this->user))
 			{
 				if(is_object($GLOBALS['egw']->log))
 				{

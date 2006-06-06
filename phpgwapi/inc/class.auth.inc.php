@@ -165,8 +165,33 @@
 			}
 			return $e_password;
 		}
+		
+		/**
+		 * Create an ldap hash from an sql hash
+		 *
+		 * @param string $hash
+		 */
+		function hash_sql2ldap($hash)
+		{
+			switch(strtolower($GLOBALS['egw_info']['server']['sql_encryption_type']))
+			{
+				case '':	// not set sql_encryption_type
+				case 'md5':
+					$hash = '{md5}' . base64_encode(pack("H*",$hash));
+					break;
+				case 'crypt':
+					$hash = '{crypt}' . $hash;
+					break;
+			}
+			return $hash;
+		}
 
-		/* Create a password for storage in the accounts table */
+		/**
+		 * Create a password for storage in the accounts table
+		 * 
+		 * @param string $password
+		 * @return string hash
+		 */
 		function encrypt_sql($password)
 		{
 			/* Grab configured type, or default to md5() (old method) */
@@ -249,7 +274,7 @@
 		 * 				but as pecl dosn't run on any platform and isn't GPL'd
 		 * 				i haven't implemented it yet
 		 *				Windows compatible check is: 7 char lenth, 1 Up, 1 Low, 1 Num and 1 Special
-		 * @author cornelius weiss<egw at von-und-zu-weiss.de>
+		 * @author cornelius weiss <egw at von-und-zu-weiss.de>
 		 * @return mixed false if password is considered "safe" or a string $message if "unsafe"
 		 */
 		function crackcheck($passwd)
@@ -278,11 +303,11 @@
 		}
 
 		/**
-		@function smd5_compare
-		@abstract compare SMD5-encrypted passwords for authentication
-		@param $form_val user input value for comparison
-		@param $db_val   stored value (from database)
-		@return boolean	 True on successful comparison
+		 * compare SMD5-encrypted passwords for authentication
+		 * 
+		 * @param string $form_val user input value for comparison
+		 * @param string $db_val stored value (from database)
+		 * @return boolean True on successful comparison
 		*/
 		function smd5_compare($form_val,$db_val)
 		{
@@ -304,11 +329,11 @@
 		}
 
 		/**
-		@function sha_compare
-		@abstract compare SHA-encrypted passwords for authentication
-		@param $form_val user input value for comparison
-		@param $db_val   stored value (from database)
-		@return boolean	 True on successful comparison
+		 * compare SHA-encrypted passwords for authentication
+		 * 
+		 * @param string $form_val user input value for comparison
+		 * @param string $db_val   stored value (from database)
+		 * @return boolean True on successful comparison
 		*/
 		function sha_compare($form_val,$db_val)
 		{
@@ -325,11 +350,11 @@
 		}
 
 		/**
-		@function ssha_compare
-		@abstract compare SSHA-encrypted passwords for authentication
-		@param $form_val user input value for comparison
-		@param $db_val   stored value (from database)
-		@return boolean	 True on successful comparison
+		 * compare SSHA-encrypted passwords for authentication
+		 * 
+		 * @param string $form_val user input value for comparison
+		 * @param string $db_val   stored value (from database)
+		 * @return boolean	 True on successful comparison
 		*/
 		function ssha_compare($form_val,$db_val)
 		{
@@ -349,12 +374,12 @@
 		}
 
 		/**
-		@function crypt_compare
-		@abstract compare crypted passwords for authentication whether des,ext_des,md5, or blowfish crypt
-		@param $form_val user input value for comparison
-		@param $db_val   stored value (from database)
-		@param $type     crypt() type
-		@return boolean	 True on successful comparison
+		 * compare crypted passwords for authentication whether des,ext_des,md5, or blowfish crypt
+		 * 
+		 * @param string $form_val user input value for comparison
+		 * @param string $db_val   stored value (from database)
+		 * @param string $type     crypt() type
+		 * @return boolean	 True on successful comparison
 		*/
 		function crypt_compare($form_val,$db_val,$type)
 		{
@@ -378,13 +403,13 @@
 		}
 
 		/**
-		@function md5_hmac_compare
-		@abstract compare md5_hmac-encrypted passwords for authentication (see RFC2104)
-		@param $form_val user input value for comparison
-		@param $db_val   stored value (from database)
-		@param $key       key for md5_hmac-encryption (username for imported smf users)
-		@return boolean	 True on successful comparison
-		*/
+		 * compare md5_hmac-encrypted passwords for authentication (see RFC2104)
+		 * 
+		 * @param string $form_val user input value for comparison
+		 * @param string $db_val   stored value (from database)
+		 * @param string $key       key for md5_hmac-encryption (username for imported smf users)
+		 * @return boolean	 True on successful comparison
+		 */
 		function md5_hmac_compare($form_val,$db_val,$key)
 		{
 			$key = str_pad(strlen($key) <= 64 ? $key : pack('H*', md5($key)), 64, chr(0x00));

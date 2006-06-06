@@ -1,483 +1,385 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Accounts manager for SQL                                *
-	* Written by Joseph Engo <jengo@phpgroupware.org>                          *
-	*        and Dan Kuykendall <seek3r@phpgroupware.org>                      *
-	*        and Bettina Gille [ceb@phpgroupware.org]                          *
-	* View and manipulate account records using SQL                            *
-	* Copyright (C) 2000 - 2002 Joseph Engo                                    *
-	* Copyright (C) 2003 Joseph Engo, Bettina Gille                            *
-	* ------------------------------------------------------------------------ *
-	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org                                                *
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
-	/* $Id$ */
+/**
+ * API - accounts SQL backend
+ * 
+ * The SQL backend stores the group memberships via the ACL class (location 'phpgw_group')
+ * 
+ * The (positive) account_id's of groups are mapped in this class to negative numeric 
+ * account_id's, to conform wit the way we handle groups in LDAP!
+ * 
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and
+ * 	earlier to use the new DB functions
+ * 
+ * This class replaces the former accounts_sql class written by 
+ * Joseph Engo <jengo@phpgroupware.org>, Dan Kuykendall <seek3r@phpgroupware.org> 
+ * and Bettina Gille <ceb@phpgroupware.org>.
+ * Copyright (C) 2000 - 2002 Joseph Engo
+ * Copyright (C) 2003 Lars Kneschke, Bettina Gille
+ * 
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage accounts
+ * @version $Id$
+ */
+
+/**
+ * SQL Backend for accounts
+ * 
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @subpackage accounts
+ * @access internal only use the interface provided by the accounts class
+ */
+class accounts_backend
+{
+	/**
+	 * instance of the db class
+	 *
+	 * @var object
+	 */
+	var $db;
+	/**
+	 * table name for the accounts
+	 *
+	 * @var string
+	 */
+	var $table = 'egw_accounts';
+	/**
+	 * total number of found entries from get_list method
+	 *
+	 * @var int
+	 */
+	var $total;
+
+	function accounts_backend()
+	{
+		if (is_object($GLOBALS['egw_setup']->db))
+		{
+			$this->db = clone($GLOBALS['egw_setup']->db);
+		}
+		else
+		{
+			$this->db = clone($GLOBALS['egw']->db);
+		}
+		$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
+	}
 
 	/**
-	 * Class for handling user and group accounts in SQL
+	 * Reads the data of one account
+	 *
+	 * @param int $account_id numeric account-id
+	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
 	 */
-	class accounts_
+	function read($account_id)
 	{
-		var $db;
-		var $account_id;
-		var $data;
-		var $total;
-		var $table = 'egw_accounts';
-
-		function accounts_()
-		{
-		}
-
-		function list_methods($_type='xmlrpc')
-		{
-			if (is_array($_type))
-			{
-				$_type = $_type['type'] ? $_type['type'] : $_type[0];
-			}
-
-			switch($_type)
-			{
-				case 'xmlrpc':
-					$xml_functions = array(
-						'get_list' => array(
-							'function'  => 'get_list',
-							'signature' => array(array(xmlrpcStruct)),
-							'docstring' => lang('Returns a full list of accounts on the system.  Warning: This is return can be quite large')
-						),
-						'list_methods' => array(
-							'function'  => 'list_methods',
-							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
-							'docstring' => lang('Read this list of methods.')
-						)
-					);
-					return $xml_functions;
-					break;
-				case 'soap':
-					return $this->soap_functions;
-					break;
-				default:
-					return array();
-					break;
-			}
-		}
-
-		/**
-		 * grabs the records from the data store
-		 *
-		 */
-		function read_repository()
-		{
-			$this->db->select($this->table,'*',array('account_id'=>abs($this->account_id)),__LINE__,__FILE__);
-
-			$this->data['account_id']        = $this->db->next_record() ? $this->account_id : null;
-			$this->data['account_lid']       = $this->data['userid'] = $this->db->f('account_lid');
-			$this->data['firstname']         = $this->db->f('account_firstname');
-			$this->data['lastname']          = $this->db->f('account_lastname');
-			$this->data['fullname']          = $this->db->f('account_firstname') . ' ' . $this->db->f('account_lastname');
-			$this->data['lastlogin']         = $this->db->f('account_lastlogin');
-			$this->data['lastloginfrom']     = $this->db->f('account_lastloginfrom');
-			$this->data['lastpasswd_change'] = $this->db->f('account_lastpwd_change');
-			$this->data['status']            = $this->db->f('account_status');
-			$this->data['expires']           = $this->db->f('account_expires');
-			$this->data['person_id']         = $this->db->f('person_id');
-			$this->data['account_primary_group'] = $this->db->f('account_primary_group');
-			$this->data['email']             = $this->db->f('account_email');
-
-			return $this->data;
-		}
-
-		/**
-		 * saves the records to the data store
-		 *
-		 */
-		function save_repository()
-		{
-			$data = array(
-				'account_firstname' => $this->data['firstname'],
-				'account_lastname'  => $this->data['lastname'],
-				'account_status'    => $this->data['status'],
-				'account_expires'   => $this->data['expires'],
-				'account_lid'       => $this->data['account_lid'],
-				'account_primary_group' => $this->data['account_primary_group'],
-				'account_email'     => $this->data['email'],
-			);
-			// overwrite person_id only if it's set in this->data!
-			if (isset($this->data['person_id']))
-			{
-				$data['person_id'] = $this->data['person_id'];
-			}
-			$this->db->update($this->table,$data,array(
-				'account_id'        => abs($this->account_id)
-			),__LINE__,__FILE__);
-		}
-
-		function delete($accountid = '')
-		{
-			$account_id = get_account_id($accountid);
-
-			/* Do this last since we are depending upon this record to get the account_lid above */
-			$this->db->lock(Array($this->table));
-			$this->db->delete($this->table,array('account_id'=>abs($account_id)),__LINE__,__FILE__);
-			$this->db->unlock();
-		}
-
-		function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
-		{
-			if (! $sort)
-			{
-				$sort = "DESC";
-			}
-
-			if (!empty($order) && preg_match('/^[a-zA-Z_0-9, ]+$/',$order) && (empty($sort) || preg_match('/^(DESC|ASC|desc|asc)$/',$sort)))
-			{
-				$orderclause = "ORDER BY $order $sort";
-			}
-			else
-			{
-				$orderclause = "ORDER BY account_lid ASC";
-			}
-
-			switch($_type)
-			{
-				case 'accounts':
-					$whereclause = "WHERE account_type = 'u'";
-					break;
-				case 'groups':
-					$whereclause = "WHERE account_type = 'g'";
-					break;
-				default:
-					$whereclause = '';
-			}
-
-			if ($query)
-			{
-				if ($whereclause)
-				{
-					$whereclause .= ' AND ( ';
-				}
-				else
-				{
-					$whereclause = ' WHERE ( ';
-				}
-				switch($query_type)
-				{
-					case 'all':
-					default:
-						$query = '%'.$query;
-						// fall-through
-					case 'start':
-						$query .= '%';
-						// fall-through
-					case 'exact':
-						$query = $this->db->quote($query);
-						$whereclause .= " account_firstname LIKE $query OR account_lastname LIKE $query OR account_lid LIKE $query )";
-						break;
-					case 'firstname':
-					case 'lastname':
-					case 'lid':
-					case 'email':
-						$query = $this->db->quote('%'.$query.'%');
-						$whereclause .= " account_$query_type LIKE $query )";
-						break;
-				}
-			}
-
-			$sql = "SELECT * FROM $this->table $whereclause $orderclause";
-			if ($offset)
-			{
-				$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
-			}
-			elseif (is_numeric($start))
-			{
-				$this->db->limit_query($sql,$start,__LINE__,__FILE__);
-			}
-			else
-			{
-				$this->db->query($sql,__LINE__,__FILE__);
-			}
-			while ($this->db->next_record())
-			{
-				$accounts[] = Array(
-					'account_id'        => ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id'),
-					'account_lid'       => $this->db->f('account_lid'),
-					'account_type'      => $this->db->f('account_type'),
-					'account_firstname' => $this->db->f('account_firstname'),
-					'account_lastname'  => $this->db->f('account_lastname'),
-					'account_status'    => $this->db->f('account_status'),
-					'account_expires'   => $this->db->f('account_expires'),
-					'person_id'         => $this->db->f('person_id'),
-					'account_primary_group' => $this->db->f('account_primary_group'),
-					'account_email'     => $this->db->f('account_email'),
-				);
-			}
-			$this->db->query("SELECT count(*) FROM $this->table $whereclause");
-			$this->total = $this->db->next_record() ? $this->db->f(0) : 0;
-
-			return $accounts;
-		}
-
-		/**
-		 * converts a name / unique value from the accounts-table (account_lid,account_email) to an id
-		 */
-		function name2id($name,$which='account_lid')
-		{
-			$where = $which == 'account_fullname' ? '('.$this->db->concat('account_firstname',"' '",'account_lastname').')='.$this->db->quote($name) :
-				array($which => $name);
-			$this->db->select($this->table,'account_id,account_type',$where,__LINE__,__FILE__);
-			if($this->db->next_record())
-			{
-				return ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id');
-			}
-			return False;
-		}
-
-		/**
-		 * converts an id to the corresponding value of the accounts-table (account_lid,account_email,account_firstname,...)
-		 */
-		function id2name($account_id,$which='account_lid')
-		{
-			$this->db->select($this->table,$this->db->name_quote($which),array('account_id'=>abs($account_id)),__LINE__,__FILE__);
-			if($this->db->next_record())
-			{
-				return $this->db->f(0);
-			}
-			return False;
-		}
-
-		function exists($account_lid)
-		{
-			static $by_id, $by_lid;
-
-			$where = array();
-			if(is_numeric($account_lid))
-			{
-				if(@isset($by_id[$account_lid]) && $by_id[$account_lid] != '')
-				{
-					return $by_id[$account_lid];
-				}
-				$where['account_id'] = abs($account_lid);
-			}
-			else
-			{
-				if(@isset($by_lid[$account_lid]) && $by_lid[$account_lid] != '')
-				{
-					return $by_lid[$account_lid];
-				}
-				$where['account_lid'] = $account_lid;
-			}
-
-			$this->db->select($this->table,'count(*)',$where,__LINE__,__FILE__);
-			$this->db->next_record();
-			$ret_val = $this->db->f(0) > 0;
-			if(is_numeric($account_lid))
-			{
-				$by_id[$account_lid] = $ret_val;
-				$by_lid[$this->id2name($account_lid)] = $ret_val;
-			}
-			else
-			{
-				$by_lid[$account_lid] = $ret_val;
-				$by_id[$this->name2id($account_lid)] = $ret_val;
-			}
-			return $ret_val;
-		}
-
-		function create($account_info)
-		{
-			$account_data = array(
-				'account_lid'			=> $account_info['account_lid'],
-				'account_pwd'			=> $GLOBALS['egw']->common->encrypt_password($account_info['account_passwd'],True),
-				'account_firstname'		=> $account_info['account_firstname'],
-				'account_lastname'		=> $account_info['account_lastname'],
-				'account_status'		=> $account_info['account_status'],
-				'account_expires'		=> $account_info['account_expires'],
-				'account_type'			=> $account_info['account_type'],
-				'person_id'				=> $account_info['person_id'],
-				'account_primary_group'	=> $account_info['account_primary_group'],
-				'account_email'			=> $account_info['account_email'],
-			);
-			if (isset($account_info['account_id']) && (int)$account_info['account_id'] && !$this->id2name($account_info['account_id']))
-			{
-				// only use account_id, if it's not already used
-				$account_data['account_id'] = abs($account_info['account_id']);
-			}
-			if (!$this->db->insert($this->table,$account_data,False,__LINE__,__FILE__))
-			{
-				return false;
-			}
-			$id = $account_data['account_id'] ? $account_data['account_id'] : $this->db->get_last_insert_id($this->table,'account_id');
-			
-			if ($account_info['account_type'] == 'g' && $id > 0)	// create negative id for groups
-			{
-				$id = -$id;
-			}
-			return $id;
-		}
-
-		function auto_add($accountname, $passwd, $default_prefs = False, $default_acls = False, $expiredate = 0, $account_status = 'A')
-		{
-			if ($expiredate == 0)
-			{
-				if(isset($GLOBALS['egw_info']['server']['auto_create_expire']) == True)
-				{
-					if($GLOBALS['egw_info']['server']['auto_create_expire'] == 'never')
-					{
-						$expires = -1;
-					}
-					else
-					{
-						$expiredate = time() + $GLOBALS['egw_info']['server']['auto_create_expire'];
-					}
-				}
-			}
-			else
-			{
-				/* expire in 30 days by default */
-				$expiredate = time() + ((60 * 60) * (30 * 24));
-			}
-
-			if ($expires != -1)
-			{
-				$expires = mktime(2,0,0,date('n',$expiredate), (int)date('d',$expiredate), date('Y',$expiredate));
-			}
-
-			$default_group_id  = $this->name2id($GLOBALS['egw_info']['server']['default_group_lid']);
-			if (!$default_group_id)
-			{
-				$default_group_id = (int) $this->name2id('Default');
-			}
-			$primary_group = $GLOBALS['auto_create_acct']['primary_group'] &&
-				$this->get_type((int)$GLOBALS['auto_create_acct']['primary_group']) == 'g' ?
-				(int) $GLOBALS['auto_create_acct']['primary_group'] : $default_group_id;
-
-			$acct_info = array(
-				'account_id'        => (int) $GLOBALS['auto_create_acct']['id'],
-				'account_lid'       => $accountname,
-				'account_type'      => 'u',
-				'account_passwd'    => $passwd,
-				'account_firstname' => $GLOBALS['auto_create_acct']['firstname'] ? $GLOBALS['auto_create_acct']['firstname'] : 'New',
-				'account_lastname'  => $GLOBALS['auto_create_acct']['lastname'] ? $GLOBALS['auto_create_acct']['lastname'] : 'User',
-				'account_status'    => $account_status,
-				'account_expires'   => $expires,
-				'account_primary_group' => $primary_group,
-			);
-
-			/* attempt to set an email address */
-			if (isset($GLOBALS['auto_create_acct']['email']) == True && $GLOBALS['auto_create_acct']['email'] != '')
-			{
-				$acct_info['account_email'] = $GLOBALS['auto_create_acct']['email'];
-			}
-			elseif(isset($GLOBALS['egw_info']['server']['mail_suffix']) == True && $GLOBALS['egw_info']['server']['mail_suffix'] != '')
-			{
-				$acct_info['account_email'] = $accountname . '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
-			}
-
-			$this->db->transaction_begin();
-
-			$accountid = $this->create($acct_info); /* create the account */
-
-			if ($accountid) /* begin account setup */
-			{
-				/* If we have a primary_group, add it as "regular" eGW group (via ACL) too. */
-				if ($primary_group)
-				{
-					$GLOBALS['egw']->acl->add_repository('phpgw_group', $primary_group,$accountid,1);
-				}
-
-				/* if we have an mail address set it in the users' email preference */
-				if (isset($GLOBALS['auto_create_acct']['email']) && $GLOBALS['auto_create_acct']['email'] != '')
-				{
-					$GLOBALS['egw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
-					$GLOBALS['egw']->preferences->preferences($accountid);
-					$GLOBALS['egw']->preferences->read_repository();
-					$GLOBALS['egw']->preferences->add('email','address',$GLOBALS['auto_create_acct']['email']);
-					$GLOBALS['egw']->preferences->save_repository();
-				}
-				/* use the default mail domain to set the uesrs' email preference  */
-				elseif(isset($GLOBALS['egw_info']['server']['mail_suffix']) && $GLOBALS['egw_info']['server']['mail_suffix'] != '') 
-				{
-					$GLOBALS['egw']->acl->acl($accountid);	/* needed als preferences::save_repository calls acl */
-					$GLOBALS['egw']->preferences->preferences($accountid);
-					$GLOBALS['egw']->preferences->read_repository();
-					$GLOBALS['egw']->preferences->add('email','address', $accountname . '@' . $GLOBALS['egw_info']['server']['mail_suffix']);
-					$GLOBALS['egw']->preferences->save_repository();
-				}
-
-				/* commit the new account transaction */
-				$this->db->transaction_commit();
-
-				// call hook to notify interested apps about the new account
-				$GLOBALS['hook_values']['account_lid']	= $acct_info['account_lid'];
-				$GLOBALS['hook_values']['account_id']	= $accountid;
-				$GLOBALS['hook_values']['new_passwd']	= $acct_info['account_passwd'];
-				$GLOBALS['hook_values']['account_status'] = $acct_info['account_status'];
-				$GLOBALS['hook_values']['account_firstname'] = $acct_info['account_firstname'];
-				$GLOBALS['hook_values']['account_lastname'] =  $acct_info['account_lastname'];
-				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-					'location' => 'addaccount',
-					// at login-time only the hooks from the following apps will be called
-					'order' => array('felamimail','fudforum'),
-				),False,True);  /* called for every app now, not only enabled ones */
-
-			} /* end account setup */
-			else /* if no account id abort the account creation */
-			{
-				$this->db->transaction_abort();
-			}
-
-			/* 
-			 * If we succeeded in creating the account (above), return the accountid, else, 
-			 * return the error value from $this->name2id($accountname)
-			 */
-			return $accountid;
-
-		} /* end auto_add() */
-
-		function get_account_name($accountid,&$lid,&$fname,&$lname)
-		{
-			$this->db->select($this->table,'account_lid,account_firstname,account_lastname',array('account_id'=>abs($accountid)),__LINE__,__FILE__);
-			if (!$this->db->next_record())
-			{
-				return False;
-			}
-			$lid   = $this->db->f('account_lid');
-			$fname = $this->db->f('account_firstname');
-			$lname = $this->db->f('account_lastname');
-
-			return True;
-		}
+		if (!(int)$account_id) return false;
 		
-		/**
-		 * Update the last login timestamps and the IP
-		 *
-		 * @param int $account_id
-		 * @param string $ip
-		 * @return int lastlogin time
-		 */
-		function update_lastlogin($account_id, $ip)
+		$this->db->select($this->table,'*',array('account_id' => abs($account_id)),__LINE__,__FILE__);
+		if (!($data = $this->db->row(true)))
 		{
-			$this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__);
-			$previous_login = $this->db->next_record() ? $this->db->f('account_lastlogin') : false;
+			return false;
+		}
+		if ($data['account_type'] == 'g')
+		{
+			$data['account_id'] = -$data['account_id'];
+		}
+		$data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
 
-			$this->db->update($this->table,array(
-				'account_lastloginfrom' => $ip,
-				'account_lastlogin'     => time(),
-			),array(
-				'account_id' => abs($account_id),
-			),__LINE__,__FILE__);
-			
-			return $previous_login;
+		return $data;
+	}
+
+	/**
+	 * Saves / adds the data of one account
+	 * 
+	 * If no account_id is set in data the account is added and the new id is set in $data.
+	 *
+	 * @param array $data array with account-data
+	 * @return int/boolean the account_id or false on error
+	 */
+	function save(&$data)
+	{
+		echo "<p>accounts_sql::save(".print_r($data,true).")</p>\n";
+		$to_write = $data;
+		unset($to_write['account_id']);
+		unset($to_write['account_passwd']);
+		
+		// encrypt password if given or unset it if not
+		if ($data['account_passwd'])
+		{
+			$to_write['account_pwd'] = $GLOBALS['egw']->auth->encrypt_sql($data['account_passwd']);
+		}
+		if (!(int)$data['account_id'])
+		{
+			if (!in_array($to_write['account_type'],array('u','g')) ||
+				!$this->db->insert($this->table,$to_write,false,__LINE__,__FILE__)) return false;
+				
+			$data['account_id'] = $this->db->get_last_insert_id($this->table,'account_id');
+			if ($data['account_type'] == 'g') $data['account_id'] *= -1;
+		}
+		elseif (!$this->db->update($this->table,$to_write,array('account_id' => abs($data['account_id'])),__LINE__,__FILE__))
+		{
+			return false;
+		}
+		return $data['account_id'];
+	}
+	
+	/**
+	 * Delete one account, deletes also all acl-entries for that account
+	 *
+	 * @param int $id numeric account_id
+	 * @return boolean true on success, false otherwise
+	 */
+	function delete($account_id)
+	{
+		if (!(int)$account_id) return false;
+
+		return !!$this->db->delete($this->table,array('account_id' => abs($account_id)),__LINE__,__FILE__);
+	}
+
+	/**
+	 * Get all memberships of an account $accountid / groups the account is a member off
+	 *
+	 * @param int $account_id numeric account-id
+	 * @return array/boolean array with account_id => account_lid pairs or false if account not found
+	 */
+	function memberships($account_id)
+	{
+		if (!(int)$account_id) return false;
+
+		$memberships = array();
+		if(($gids = $GLOBALS['egw']->acl->get_location_list_for_id('phpgw_group', 1, $account_id)))
+		{
+			foreach($gids as $gid)
+			{
+				$memberships[(string) $gid] = $this->id2name($gid);
+			}
+		}
+		//echo "accounts::memberships($account_id)"; _debug_array($memberships);
+		return $memberships;
+	}
+
+	/**
+	 * Sets the memberships of the account this class is instanciated for
+	 *
+	 * @param array $groups array with gidnumbers
+	 * @param int $account_id numerical account-id
+	 */
+	function set_memberships($groups,$account_id)
+	{
+		if (!(int)$account_id) return;
+		
+		$acl =& CreateObject('phpgwapi.acl',$account_id);
+		$acl->read_repository();
+		$acl->delete('phpgw_group',false);
+
+		foreach($groups as $group)
+		{
+			$acl->add('phpgw_group',$group,1);
+		}
+		$acl->save_repository();
+	}
+
+	/**
+	 * Get all members of the group $accountid
+	 *
+	 * @param int/string $account_id numeric account-id
+	 * @return array with account_id => account_lid pairs
+	 */
+	function members($account_id)
+	{
+		if (!($uids = $GLOBALS['egw']->acl->get_ids_for_location($account_id, 1, 'phpgw_group')))
+		{
+			return False;
+		}
+		$members = array();
+		foreach ($uids as $uid)
+		{
+			$members[$uid] = $this->id2name($uid);
+		}
+		//echo "accounts::members($accountid)"; _debug_array($members);
+		return $members;
+	}
+
+	/**
+	 * Set the members of a group
+	 * 
+	 * @param array $members array with uidnumber or uid's
+	 * @param int $gid gidnumber of group to set
+	 */
+	function set_members($members,$gid)
+	{
+		//echo "<p>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
+		$GLOBALS['egw']->acl->delete_repository('phpgw_group',$gid);
+		foreach($members as $id)
+		{
+			$GLOBALS['egw']->acl->add_repository('phpgw_group',$gid,$id,1);
 		}
 	}
+
+	/**
+	 * Searches users and/or groups
+	 * 
+	 * ToDo: implement a search like accounts::search
+	 *
+	 * @param string $_type
+	 * @param int $start=null
+	 * @param string $sort=''
+	 * @param string $order=''
+	 * @param string $query
+	 * @param int $offset=null
+	 * @param string $query_type
+	 * @return array
+	 */
+	function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = null, $query_type='')
+	{
+		if (! $sort)
+		{
+			$sort = "DESC";
+		}
+
+		if (!empty($order) && preg_match('/^[a-zA-Z_0-9, ]+$/',$order) && (empty($sort) || preg_match('/^(DESC|ASC|desc|asc)$/',$sort)))
+		{
+			$orderclause = "ORDER BY $order $sort";
+		}
+		else
+		{
+			$orderclause = "ORDER BY account_lid ASC";
+		}
+
+		switch($_type)
+		{
+			case 'accounts':
+				$whereclause = "WHERE account_type = 'u'";
+				break;
+			case 'groups':
+				$whereclause = "WHERE account_type = 'g'";
+				break;
+			default:
+				$whereclause = '';
+		}
+
+		if ($query)
+		{
+			if ($whereclause)
+			{
+				$whereclause .= ' AND ( ';
+			}
+			else
+			{
+				$whereclause = ' WHERE ( ';
+			}
+			switch($query_type)
+			{
+				case 'all':
+				default:
+					$query = '%'.$query;
+					// fall-through
+				case 'start':
+					$query .= '%';
+					// fall-through
+				case 'exact':
+					$query = $this->db->quote($query);
+					$whereclause .= " account_firstname LIKE $query OR account_lastname LIKE $query OR account_lid LIKE $query )";
+					break;
+				case 'firstname':
+				case 'lastname':
+				case 'lid':
+				case 'email':
+					$query = $this->db->quote('%'.$query.'%');
+					$whereclause .= " account_$query_type LIKE $query )";
+					break;
+			}
+		}
+
+		$sql = "SELECT * FROM $this->table $whereclause $orderclause";
+		if ($offset)
+		{
+			$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
+		}
+		elseif (is_numeric($start))
+		{
+			$this->db->limit_query($sql,$start,__LINE__,__FILE__);
+		}
+		else
+		{
+			$this->db->query($sql,__LINE__,__FILE__);
+		}
+		while ($this->db->next_record())
+		{
+			$accounts[] = Array(
+				'account_id'        => ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id'),
+				'account_lid'       => $this->db->f('account_lid'),
+				'account_type'      => $this->db->f('account_type'),
+				'account_firstname' => $this->db->f('account_firstname'),
+				'account_lastname'  => $this->db->f('account_lastname'),
+				'account_status'    => $this->db->f('account_status'),
+				'account_expires'   => $this->db->f('account_expires'),
+				'person_id'         => $this->db->f('person_id'),
+				'account_primary_group' => $this->db->f('account_primary_group'),
+				'account_email'     => $this->db->f('account_email'),
+			);
+		}
+		$this->db->query("SELECT count(*) FROM $this->table $whereclause");
+		$this->total = $this->db->next_record() ? $this->db->f(0) : 0;
+
+		return $accounts;
+	}
+
+	/**
+	 * convert an alphanumeric account-value (account_lid, account_email) to the account_id
+	 *
+	 * Please note:
+	 * - if a group and an user have the same account_lid the group will be returned (LDAP only)
+	 * - if multiple user have the same email address, the returned user is undefined
+	 * 
+	 * @param string $name value to convert
+	 * @param string $which='account_lid' type of $name: account_lid (default), account_email, person_id, account_fullname
+	 * @param string $account_type u = user, g = group, default null = try both
+	 * @return int/false numeric account_id or false on error ($name not found)
+	 */
+	function name2id($name,$which='account_lid',$account_type=null)
+	{
+		$where = array();
+		switch($which)
+		{
+			case 'account_fullname':
+				$where[] = '('.$this->db->concat('account_firstname',"' '",'account_lastname').')='.$this->db->quote($name);
+				break;
+
+			default:
+				$where[$which] = $name;
+		}
+		if ($account_type)
+		{
+			$where['account_type'] = $account_type;
+		}
+		$this->db->select($this->table,'account_id,account_type',$where,__LINE__,__FILE__);
+		if(!$this->db->next_record()) return false;
+		
+		return ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id');
+	}
+	
+	/**
+	 * Update the last login timestamps and the IP
+	 *
+	 * @param int $account_id
+	 * @param string $ip
+	 * @return int lastlogin time
+	 */
+	function update_lastlogin($account_id, $ip)
+	{
+		$this->db->select($this->table,'account_lastlogin',array('account_id'=>abs($account_id)),__LINE__,__FILE__);
+		$previous_login = $this->db->next_record() ? $this->db->f('account_lastlogin') : false;
+
+		$this->db->update($this->table,array(
+			'account_lastloginfrom' => $ip,
+			'account_lastlogin'     => time(),
+		),array(
+			'account_id' => abs($account_id),
+		),__LINE__,__FILE__);
+		
+		return $previous_login;
+	}
+}

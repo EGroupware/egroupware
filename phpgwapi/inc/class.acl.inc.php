@@ -151,8 +151,8 @@
 			{
 				$this->acl();
 			}
- 			$acl_acc_list = array_values((array)$this->get_location_list_for_id('phpgw_group', 1, $this->account_id)); 
- 			array_unshift($acl_acc_list,$this->account_id,0); 
+			$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
+ 			array_unshift($acl_acc_list,$this->account_id); 
 			$this->db->select($this->table_name,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__); 
  
 			$this->data = Array();
@@ -210,7 +210,7 @@
 		 * Delete ACL record in the repository of the class
 		 *
 		 * @param string $appname appname or '' for $GLOBALS['egw_info']['flags']['currentapp']
-		 * @param string $location location
+		 * @param string/boolean $location location or false for all locations
 		 * @return array all ACL records from $this->data.
 		 */
 		function delete($appname,$location)
@@ -219,7 +219,9 @@
 
 			foreach($this->data as $idx => $value)
 			{
-				if ($this->data[$idx]['appname'] == $appname && $this->data[$idx]['location'] == $location && $this->data[$idx]['account'] == $this->account_id)
+				if ($this->data[$idx]['appname'] == $appname && 
+					($location === false || $this->data[$idx]['location'] == $location) && 
+					$this->data[$idx]['account'] == $this->account_id)
 				{
 					unset($this->data[$idx]);
 				}
