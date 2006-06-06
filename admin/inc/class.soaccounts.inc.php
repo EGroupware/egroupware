@@ -20,7 +20,6 @@
 		function add_user($userData)
 		{
 			$userData['account_expires']	= $userData['expires'];
-			//$userData['account_email'] 	= $userData['email'];
 			
 			if($userData['email'] != "")
 			{
@@ -31,8 +30,11 @@
 			{
 				return false;
 			}
+			$GLOBALS['egw']->accounts->set_memberships($userData['account_groups'],$userData['account_id']);
+
 			$apps =& CreateObject('phpgwapi.applications',$userData['account_id']);
 			$apps->read_installed_apps();
+/* dont think this is still used -- RalfBecker 2006-06-03
 			// Read Group Apps
 			if ($userData['account_groups'])
 			{
@@ -52,7 +54,7 @@
 					}
 				}
 			}
-
+*/
 			$apps->account_type = 'u';
 			$apps->account_id = $userData['account_id'];
 			$apps->data = Array(Array());
@@ -65,10 +67,12 @@
 					if ($turned_on)
 					{
 						$apps->add($app);
+/* dont think this is still used -- RalfBecker 2006-06-03
 						if (!$apps_after[$app])
 						{
 							$apps_after[] = $app;
 						}
+*/
 					}
 				}
 			}
@@ -78,18 +82,9 @@
 			{
 				$GLOBALS['egw']->acl->add_repository('preferences','changepassword',$userData['account_id'],1);
 			}
-			// Assign user to groups
-			if ($userData['account_groups'])
-			{
-				$c_acct_groups = count($userData['account_groups']);
-				for ($i=0;$i<$c_acct_groups;$i++)
-				{
-					$GLOBALS['egw']->acl->add_repository('phpgw_group',$userData['account_groups'][$i],$userData['account_id'],1);
-				}
-			}
 
 			$apps->account_apps = array(array());
-			$apps_after = array(array());
+//			$apps_after = array(array());
 
 			return $userData['account_id'];
 		}

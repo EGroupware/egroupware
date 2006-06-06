@@ -109,16 +109,8 @@
 			
 			$account_id = (int)$_POST['account_id'];
 
-			$old_group_list = $GLOBALS['egw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
-
-			@reset($old_group_list);
-			while($old_group_list && $id = each($old_group_list))
-			{
-				$GLOBALS['egw']->acl->delete_repository('phpgw_group',$account_id,(int)$id[1]);
-				$GLOBALS['egw']->session->delete_cache((int)$id[1]);
-			}
-
-			$GLOBALS['egw']->acl->delete_repository('%%','run',$account_id);
+			// delete all acl (and memberships) of group
+			$GLOBALS['egw']->acl->delete_account($account_id);
 
 			if (! @rmdir($GLOBALS['egw_info']['server']['files_dir'].SEP.'groups'.SEP.$GLOBALS['egw']->accounts->id2name($account_id)))
 			{
@@ -191,15 +183,6 @@
 				return False;
 			}
 
-			$temp_users = ($_POST['account_user']?$_POST['account_user']:Array());
-			$account_user = Array();
-			@reset($temp_users);
-			while(list($key,$user_id) = each($temp_users))
-			{
-				$account_user[$user_id] = ' selected';
-			}
-			@reset($account_user);
-
 			$group_permissions = ($_POST['account_apps']?$_POST['account_apps']:Array());
 			$account_apps = Array();
 			@reset($group_permissions);
@@ -215,7 +198,7 @@
 			$group_info = Array(
 				'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
 				'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
-				'account_user' => $account_user,
+				'account_user' => $_POST['account_user'],
 				'account_apps' => $account_apps
 			);
 
@@ -237,6 +220,8 @@
 			// do the following only if we got an id - the create succided
 			if ($group_info['account_id'])
 			{
+				$group->set_members($group_info['account_user'],$group_info['account_id']);
+
 				$apps =& CreateObject('phpgwapi.applications',$group_info['account_id']);
 				$apps->update_data(Array());
 				reset($group_info['account_apps']);
@@ -246,38 +231,6 @@
 					$new_apps[] = $app;
 				}
 				$apps->save_repository();
-	
-				$acl =& CreateObject('phpgwapi.acl',$group_info['account_id']);
-				$acl->read_repository();
-	
-				@reset($group_info['account_user']);
-				while(list($user_id,$dummy) = each($group_info['account_user']))
-				{
-					if(!$dummy)
-					{
-						continue;
-					}
-					$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
-	
-					$docommit = False;
-					$GLOBALS['pref'] =& CreateObject('phpgwapi.preferences',$user_id);
-					$t = $GLOBALS['pref']->read_repository();
-					@reset($new_apps);
-					while(is_array($new_apps) && list($app_key,$app_name) = each($new_apps))
-					{
-						if (!$t[($app_name=='admin'?'common':$app_name)])
-						{
-							$GLOBALS['egw']->hooks->single('add_def_pref', $app_name);
-							$docommit = True;
-						}
-					}
-					if ($docommit)
-					{
-						$GLOBALS['pref']->save_repository();
-					}
-				}
-	
-				$acl->save_repository();
 	
 				$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
 				$cd = 31;
@@ -397,15 +350,6 @@
 				return False;
 			}
 
-			$temp_users = ($_POST['account_user']?$_POST['account_user']:Array());
-			$account_user = Array();
-			@reset($temp_users);
-			while($temp_users && list($key,$user_id) = each($temp_users))
-			{
-				$account_user[$user_id] = ' selected';
-			}
-			@reset($account_user);
-
 			$group_permissions = ($_POST['account_apps']?$_POST['account_apps']:Array());
 			$account_apps = Array();
 			@reset($group_permissions);
@@ -421,10 +365,11 @@
 			$group_info = Array(
 				'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
 				'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
-				'account_user' => $account_user,
+				'account_user' => $_POST['account_user'],
 				'account_apps' => $account_apps
 			);
-
+_debug_array($_POST);
+_debug_array($group_info);
 			$this->validate_group($group_info);
 
 			$group =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
@@ -470,28 +415,7 @@
 				$cd = 33;
 			}
 
-			// Set group acl
-			$acl =& CreateObject('phpgwapi.acl',$group_info['account_id']);
-			$old_group_list = $acl->get_ids_for_location($group_info['account_id'],1,'phpgw_group');
-			if (is_array($old_group_list))
-			{
-				foreach($old_group_list as $key => $user_id)
-				{
-					$acl->delete_repository('phpgw_group',$group_info['account_id'],$user_id);
-				}
-			}
-
-			if (is_array($group_info['account_user']))
-			{
-				foreach($group_info['account_user'] as $user_id => $dummy)
-				{
-					if(!$dummy)
-					{
-						continue;
-					}
-					$acl->add_repository('phpgw_group',$group_info['account_id'],$user_id,1);
-				}
-			}
+			$group->set_members($group_info['account_user'],$group_info['account_id']);
 
 			// This is down here so we are sure to catch the acl changes
 			// for LDAP to update the memberuid attribute
@@ -771,6 +695,9 @@
 			$account =& CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
 			$account->update_data($_userData);
 			$account->save_repository();
+			
+			$account->set_memberships($_userData['account_groups'],$_userData['account_id']);
+			
 			if ($_userData['account_passwd'])
 			{
 				$auth =& CreateObject('phpgwapi.auth');
@@ -797,35 +724,7 @@
 			}
 			$apps->save_repository();
 
-			$account =& CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
-			$allGroups = $account->get_list('groups');
-
-			if ($_userData['account_groups'])
-			{
-				reset($_userData['account_groups']);
-				while (list($key,$value) = each($_userData['account_groups']))
-				{
-					$newGroups[$value] = $value;
-				}
-			}
-
 			$acl =& CreateObject('phpgwapi.acl',$_userData['account_id']);
-
-			reset($allGroups);
-			while (list($key,$groupData) = each($allGroups)) 
-			{
-				/* print "$key,". $groupData['account_id'] ."<br>";*/
-				/* print "$key,". $_userData['account_groups'][1] ."<br>"; */
-
-				if ($newGroups[(string) $groupData['account_id']]) 
-				{
-					$acl->add_repository('phpgw_group',$groupData['account_id'],$_userData['account_id'],1);
-				}
-				else
-				{
-					$acl->delete_repository('phpgw_group',$groupData['account_id'],$_userData['account_id']);
-				}
-			}
 			if ($_userData['anonymous']) 
 			{
 				$acl->add_repository('phpgwapi','anonymous',$_userData['account_id'],1);
@@ -843,26 +742,6 @@
 				$GLOBALS['egw']->acl->delete_repository('preferences','changepassword',$_userData['account_id']);
 			}
 			$GLOBALS['egw']->session->delete_cache((int)$_userData['account_id']);
-		}
-
-		function load_group_users($account_id)
-		{
-			$temp_user = $GLOBALS['egw']->acl->get_ids_for_location($account_id,1,'phpgw_group');
-			if(!$temp_user)
-			{
-				return Array();
-			}
-			else
-			{
-				$group_user = $temp_user;
-			}
-			$account_user = Array();
-			while (list($key,$user) = each($group_user))
-			{
-				$account_user[$user] = ' selected';
-			}
-			@reset($account_user);
-			return $account_user;
 		}
 
 		function load_group_managers($account_id)

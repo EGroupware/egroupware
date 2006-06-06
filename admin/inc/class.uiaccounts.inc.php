@@ -498,9 +498,7 @@
 			$p->set_var('message_display',lang('Are you sure you want to delete this group ?'));
 			$p->parse('messages','message_row');
 
-			$old_group_list = $GLOBALS['egw']->acl->get_ids_for_location((int)$_GET['account_id'],1,'phpgw_group');
-
-			if($old_group_list)
+			if(($old_group_list = $GLOBALS['egw']->accounts->memberships((int)$_GET['account_id'],true)))
 			{
 				$group_name = $GLOBALS['egw']->accounts->id2name($_GET['account_id']);
 
@@ -640,7 +638,7 @@
 				$group_info = Array(
 					'account_id'   => (int)$_GET['account_id'],
 					'account_name' => $GLOBALS['egw']->accounts->id2name($_GET['account_id']),
-					'account_user' => $this->bo->load_group_users($_GET['account_id']),
+					'account_user' => $GLOBALS['egw']->accounts->members($_GET['account_id']),
 					'account_apps' => $this->bo->load_group_apps($_GET['account_id'])
 				);
 
@@ -1068,8 +1066,8 @@
 			{
 				$userData = Array();
 				$userData=$_userData;
-				$userData['firstname'] = $userData['account_firstname'];
-				$userData['lastname']  = $userData['account_lastname'];
+//				$userData['firstname'] = $userData['account_firstname'];
+//				$userData['lastname']  = $userData['account_lastname'];
 				@reset($userData['account_groups']);
 				while (list($key, $value) = @each($userData['account_groups']))
 				{
