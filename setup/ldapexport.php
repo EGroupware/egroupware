@@ -51,6 +51,21 @@
 		'T_alert_msg' => 'msg_alert_msg.tpl'
 	));
 
+	function hash_sql2ldap($hash)
+	{
+		switch(strtolower($GLOBALS['egw_info']['server']['sql_encryption_type']))
+		{
+			case '':	// not set sql_encryption_type
+			case 'md5':
+				$hash = '{md5}' . base64_encode(pack("H*",$hash));
+				break;
+			case 'crypt':
+				$hash = '{crypt}' . $hash;
+				break;
+		}
+		return $hash;
+	}
+
 	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array(
 		"config_name LIKE 'ldap%'",
 	),__LINE__,__FILE__);
@@ -120,6 +135,8 @@
 				}
 				$account_info[$accountid]['homedirectory'] = $GLOBALS['egw_info']['server']['ldap_account_home'] . '/' . $account_info[$accountid]['account_lid'];
 				$account_info[$accountid]['loginshell'] = $GLOBALS['egw_info']['server']['ldap_account_shell'];
+				
+				$account_info[$accountid]['account_passwd'] = hash_sql2ldap($account_info[$accountid]['account_passwd']);
 
 				if (!$accounts->create($account_info[$accountid]))
 				{

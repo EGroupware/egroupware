@@ -192,8 +192,7 @@
 			$GLOBALS['egw_setup']->db->transaction_abort();
 			exit;
 		}
-		$GLOBALS['egw_setup']->add_acl('phpgw_group',$admingroupid,$accountid);
-		$GLOBALS['egw_setup']->add_acl('phpgw_group',$defaultgroupid,$accountid);
+		$GLOBALS['egw_setup']->set_memberships(array($admingroupid,$defaultgroupid),$accountid);
 
 		$GLOBALS['egw_setup']->db->transaction_commit();
 

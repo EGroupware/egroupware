@@ -905,7 +905,7 @@
 
 			if(!($accountid = $GLOBALS['egw']->accounts->name2id($username)))
 			{
-				$accountid = $accountid ? $accountid : $GLOBALS['egw']->accounts->create(array(
+				if (!($accountid = $GLOBALS['egw']->accounts->create(array(
 					'account_type'      => $group ? 'u' : 'g',
 					'account_lid'       => $username,
 					'account_passwd'    => $passwd,
@@ -915,16 +915,38 @@
 					'account_primary_group' => $groupid,
 					'account_expires'   => -1,
 					'account_email'     => $email,
-				));
+				))))
+				{
+					return false;
+				}
+				$memberships = array();
 			}
-			$accountid = (int)$accountid;
+			else
+			{
+				$memberships = $GLOBALS['egw']->accounts->memberships($accountid);
+			}
 			if($groupid)
 			{
-				$this->add_acl('phpgw_group',(int)$groupid,$accountid);
+				$memberships[] = $groupid;
+				
+				$GLOBALS['egw']->accounts->set_memberships($memberships,$accountid);
 			}
 			$this->add_acl('preferences','changepassword',$accountid,(int)$changepw);
 
 			return $accountid;
+		}
+		
+		/**
+		 * Set the memberships of an account
+		 *
+		 * @param array $groups array of group-id's
+		 * @param int $user account_id
+		 */
+		function set_memberships($groups,$user)
+		{
+			$this->setup_account_object();
+			
+			return $GLOBALS['egw']->accounts->set_memberships($groups,$user);
 		}
 		
 		/**
@@ -962,6 +984,8 @@
 		/**
 		 * Add ACL rights
 		 *
+		 * Dont use it to set group-membership, use set_memberships instead!
+		 * 
 		 * @param $app string/array with app-names
 		 * @param $locations string eg. run
 		 * @param $account int/string accountid or account_lid
