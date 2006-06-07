@@ -245,9 +245,33 @@ body {
 	z-index:51;
 }
 
+#divUpperTabs
+{
+	text-align:right;
+	height: 15px;
+	margin-right: 10px;
+}
+
+#divUpperTabs ul
+{
+	display:inline;
+	margin:0;
+	padding:10px 10px 0 1px;
+	list-style:none;
+}
+
+#divUpperTabs li
+{
+	float:right;
+	margin:0 5px 0 0;;
+	padding:0 5px 0 5px;
+	border:solid 1px #9c9c9c;
+	border-bottom: 0px;
+}
+
 #divAppIconBar
 {
-	margin-top: 15px;
+	/*margin-top: 15px;*/
 	background-color:silver;
 	border:solid 1px #9c9c9c;
 	background-image: url(../images/background-icon-bar.png); 
