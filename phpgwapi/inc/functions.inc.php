@@ -99,9 +99,16 @@
 
 	if (!isset($GLOBALS['egw_info']['server']['default_domain']) ||	// allow to overwrite the default domain
 		!isset($GLOBALS['egw_domain'][$GLOBALS['egw_info']['server']['default_domain']]))
-	{
-		reset($GLOBALS['egw_domain']);
-		list($GLOBALS['egw_info']['server']['default_domain']) = each($GLOBALS['egw_domain']);
+	{ 
+		if(isset($GLOBALS['egw_domain'][$_SERVER['SERVER_NAME']]))
+		{
+			$GLOBALS['egw_info']['server']['default_domain'] = $_SERVER['SERVER_NAME'];
+		}
+		else
+		{
+			reset($GLOBALS['egw_domain']);
+			list($GLOBALS['egw_info']['server']['default_domain']) = each($GLOBALS['egw_domain']);
+		}
 	}
 	if (isset($_POST['login']))	// on login
 	{
