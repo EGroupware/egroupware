@@ -262,89 +262,36 @@
 		 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
 		 * It's actually a PHP-Bug, that we have to escape space.
 		 * For all other Characters, refer to RFC2254.
+		 * 
 		 * @param $string either a string to be escaped, or an array of values to be escaped
+		 * @return string
 		 */
 		function ldap_addslashes($string='')
 		{
-			return str_replace(array('\\','*','(',')','\0',' '),array('\\\\','\*','\(','\)','\\0','\20'),$string);
+			// use Lars new ldap class
+			if (!is_object($GLOBALS['egw']->ldap))
+			{
+				$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
+			}
+			return $GLOBALS['egw']->ldap->ldap_addslashes($string);
 		}
 
-		// connect to the ldap server and return a handle
 		/**
 		 * connect to the ldap server and return a handle
 		 *
 		 * @param $host ldap host
 		 * @param $dn ldap_root_dn
 		 * @param $passwd ldap_root_pw
+		 * @return resource
 		 */
 		function ldapConnect($host='', $dn='', $passwd='')
 		{
-			if(!function_exists('ldap_connect'))
+			// use Lars new ldap class
+			if (!is_object($GLOBALS['egw']->ldap))
 			{
-				/* log does not exist in setup(, yet) */
-				if(is_object($GLOBALS['egw']->log))
-				{
-					$GLOBALS['egw']->log->message('F-Abort, LDAP support unavailable');
-					$GLOBALS['egw']->log->commit();
-				}
-
-				printf('<b>Error: LDAP support unavailable</b><br>',$host);
-				return False;
+				$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
 			}
-
-			if(!$host)
-			{
-				$host = $GLOBALS['egw_info']['server']['ldap_host'];
-			}
-
-			if(!$dn)
-			{
-				$dn = $GLOBALS['egw_info']['server']['ldap_root_dn'];
-			}
-
-			if(!$passwd)
-			{
-				$passwd = $GLOBALS['egw_info']['server']['ldap_root_pw'];
-			}
-
-			// connect to ldap server
-			if(!$ds = ldap_connect($host))
-			{
-				/* log does not exist in setup(, yet) */
-				if(is_object($GLOBALS['egw']->log))
-				{
-					$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server');
-					$GLOBALS['egw']->log->commit();
-				}
-
-				printf("<b>Error: Can't connect to LDAP server %s!</b><br>",$host);
-				echo function_backtrace(1);
-				return False;
-			}
-
-			if($GLOBALS['egw_info']['server']['ldap_version3'])
-			{
-				if(!ldap_set_option($ds,LDAP_OPT_PROTOCOL_VERSION,3))
-				{
-					$GLOBALS['egw_info']['server']['ldap_version3'] = False;
-				}
-			}
-
-			// bind as admin
-			if(!ldap_bind($ds,$dn,$passwd))
-			{
-				if(is_object($GLOBALS['egw']->log))
-				{
-					$GLOBALS['egw']->log->message('F-Abort, Failed binding to LDAP server');
-					$GLOBALS['egw']->log->commit();
-				}
-
-				printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
-				echo function_backtrace(1);
-				return False;
-			}
-
-			return $ds;
+			return $GLOBALS['egw']->ldap->ldapConnect($host,$dn,$passwd);
 		}
 
 		/**
