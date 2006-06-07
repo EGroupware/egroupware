@@ -48,13 +48,6 @@
 				'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
 			);
 
-			if(!$this->seeded && phpversion() < '4.2.0')
-			{
-				list($usec, $sec) = explode(' ', microtime());
-				mt_srand((float)$sec + ((float)$usec * 100000));
-				$this->seeded = True;
-			}
-
 			for ($i=0; $i<$size; $i++)
 			{
 				$s .= $random_char[mt_rand(1,61)];
@@ -84,12 +77,29 @@
 		 * encryption type set in setup and calls the appropriate encryption functions
 		 *
 		 * @param $cleartext cleartext password
-		 * @param $encrypted encrypted password
+		 * @param $encrypted encrypted password, can have a {hash} prefix, which overrides $type
 		 * @param $type type of encryption
 		 * @param $username used as optional key of encryption for md5_hmac
 		 */
 		function compare_password($cleartext,$encrypted,$type,$username='')
 		{
+			// allow to specify the hash type to prefix the hash, to easy migrate passwords from ldap
+			if (preg_match('/^\\{([a-z_5]+)\\}(.+)$/i',$encrypted,$matches))
+			{
+				$type = strtolower($matches[1]);
+				$encrypted = $matches[2];
+				
+				switch($type)	// some hashs are specially "packed" in ldap
+				{
+					case 'md5':
+						$encrypted = implode('',unpack('H*',base64_decode($encrypted)));
+						break;
+					case 'crypt':
+						// nothing to do
+						break;
+					// ToDo: the others ...
+				}
+			}
 			switch($type)
 			{
 				case 'smd5':
@@ -127,7 +137,7 @@
 				case 'des':
 					$salt       = $this->randomstring(2);
 					$_password  = crypt($password, $salt);
-					$e_password = sprintf('%s%s', '{crypt}', $_password);
+					$e_password = '{crypt}'.$_password;
 					break;
 				case 'md5':
 					/* New method taken from the openldap-software list as recommended by
