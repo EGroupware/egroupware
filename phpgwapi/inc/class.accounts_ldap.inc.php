@@ -216,7 +216,8 @@ class accounts_backend
 		if ($old && !ldap_modify($this->ds,$dn,$to_write) ||
 			!$old && !ldap_add($this->ds,$dn,$to_write))
 		{
-			//echo ldap_error($this->ds); exit;
+			echo "ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")\n";
+			echo ldap_error($this->ds);
 			return false;
 		}
 		if ($memberships)	// setting the previous memberships of the renamed account
@@ -396,9 +397,15 @@ class accounts_backend
 		$to_write['uidnumber'] = $data['account_id'];
 		$to_write['uid']       = $data['account_lid'];
 		$to_write['gidnumber'] = abs($data['account_primary_group']);
-		$to_write['givenname'] = $data['account_firstname'];
+		if (!$new_entry || $data['account_firstname'])
+		{
+			$to_write['givenname'] = $data['account_firstname'] ? $data['account_firstname'] : array();
+		}
 		$to_write['sn']        = $data['account_lastname'];
-		$to_write['mail']      = (string) $data['account_email'];
+		if (!$new_entry || $data['account_email'])
+		{
+			$to_write['mail']  = $data['account_email'] ? $data['account_email'] : array();
+		}
 		$to_write['cn']        = $data['account_fullname'] ? $data['account_fullname'] : $data['account_firstname'].' '.$data['account_lastname'];
 		
 		if (isset($data['account_passwd']) && $data['account_passwd'])
@@ -739,12 +746,15 @@ class accounts_backend
 		
 		foreach($members as $key => $member)
 		{
-			if (is_numeric($member))
+			if (is_numeric($member) && ($member = $this->id2name($member)))
 			{
-				$members[$key] = $this->id2name($member);
+				$members[$key] = $member;
 			}
 		}
-		ldap_modify($this->ds,'cn='.$cn.','.$this->group_context,array('memberUid' => array_values($members)));
+		if (!ldap_modify($this->ds,'cn='.$cn.','.$this->group_context,array('memberUid' => array_values(array_unique($members)))))
+		{
+			echo "ldap_modify(,'cn=$cn','$this->group_context',array('memberUid' => ".print_r(array_values(array_unique($members)),true)."))\n";
+		}
 	}
 
 	/**
