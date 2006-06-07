@@ -1,0 +1,387 @@
+/*
+	font styling
+	allowed attributes: font-family,font-size,color,font-weight
+*/
+
+body,td
+{
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px; 
+}
+
+select,input,button
+{
+	color: #006699; 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:110%;
+}
+
+select
+{
+	font-size:100%;
+}
+
+a:link,a:visited
+{
+	cursor:pointer;
+	color: #006699; 
+	text-decoration: none;
+}
+
+a:hover,a:active
+{
+	cursor:pointer;
+	color: #ff9933;
+	text-decoration: underline;
+}
+.divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
+{
+	font-size:90%;
+}
+
+.prefSection
+{
+	font-weight:bold;
+	font-size:145%;
+	line-height:40px;
+}
+
+#divAppboxHeader
+{
+	line-height:28px;
+	font-size:125%;
+	font-weight:bold;
+	color:#666666;
+}
+
+#divGenTime,#divPoweredBy
+{
+	font-size: 80%;
+	color: #ff0000;
+}
+
+#divPoweredBy 
+{
+	color: #000000;
+}
+
+/* 
+	other styling
+*/
+
+body 
+{
+	background-image:url(../images/body-background.png);
+	padding:3px;
+}
+
+form
+{
+	margin:0px;
+	padding:0px;
+}
+
+img
+{
+	border:0;
+}
+
+
+input,button,select
+{
+	border: solid 1px #bbbbbb;
+}
+
+input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+
+{
+/*	color:white;*/
+	background-color:#c5c5c5;
+	border:  outset 1px #dcdad5;
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer; 
+	color:  #004e7d;
+	cursor:  hand;
+}
+
+input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
+{
+	background-color:#94bfd4;
+	border:  outset 1px #b9d5e3;
+	color:  #006699;
+	color:  #004e7d;
+}
+
+input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+
+{
+	border:  inset 1px #bbbbbb;
+}
+
+input.egwbutton
+{
+   background-color:#c5c5c5;
+   border:  outset 1px #dcdad5;
+   background-color:#b9d5e3;
+   border:  outset 1px #b9d5e3;
+   margin:  1px;
+   padding: 1px;
+   cursor:  pointer; 
+   color:  #004e7d;
+   cursor:  hand;
+}
+
+input.egwbutton:hover
+{
+   background-color:#94bfd4;
+   border:  outset 1px #b9d5e3;
+   color:  #006699;
+   color:  #004e7d;
+
+}
+input.egwbutton:active
+{
+   border:  inset 1px #bbbbbb;
+}
+
+input[type=image]
+{
+   cursor: pointer; 
+   cursor: hand;
+   border: 0;
+}
+
+.divLoginbox,.divSidebox 
+
+{
+	position:relative;
+	width: 370px; 
+	border: #9c9c9c 1px solid; 
+}
+
+.divSidebox 
+{
+	width: 177px; 
+}
+
+.divSideboxHeader,.divLoginboxHeader 
+{
+	text-align:center;
+	background-color:#dddddd;
+	padding-top:2px;
+	color:#666666;
+}
+
+a.divSideboxEntry, .divSideboxEntry
+{
+	text-align:left;
+	height:16px;
+	background-color:#FDFDFD;
+}
+
+a.appTitles,.appTitles
+{
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
+}
+
+a.textSidebox
+{
+	border-top: 0;
+}
+
+.textSidebox
+{
+	height:18px;
+	padding-top:2px;
+	padding-bottom:2px;
+	border-top: solid #aaaaaa 1px;
+}
+
+.sideboxSpace
+{
+	height:9px;
+}
+
+.greyLine
+{
+	margin:1px;
+	border-top:solid 1px #7e7e7e;
+	height:1px;
+}
+
+#extraIcons
+{
+	background-color:#eeeeee;
+	border:solid 1px #7e7e7e;
+}
+
+.extraIconsRow
+{
+	border:solid 1px #dddddd;
+	padding:2px;
+}
+
+body {
+	padding: 0px;
+}
+
+#divMain
+{
+	background-color:white;
+	padding:9px;
+	border:solid 1px #7e7e7e;
+}
+
+#divLogo
+{
+	position:absolute;
+	left:30px;
+	top:15px;
+	z-index:51;
+}
+
+#divUpperTabs
+{
+	text-align:right;
+	height: 15px;
+	margin-right: 10px;
+}
+
+#divUpperTabs ul
+{
+display:inline;
+margin:0;
+padding:10px 10px 0 1px;
+list-style:none;
+}
+
+#divUpperTabs li
+{
+float:right;
+margin:0 5px 0 0;;
+padding:0 5px 0 5px;
+border:solid 1px #9c9c9c;
+border-bottom: 0px;
+}
+
+
+#divAppIconBar
+{
+	/*margin-top: 15px;*/
+	background-color:silver;
+	border:solid 1px #9c9c9c;
+	background-image: url(../images/background-icon-bar.png); 
+	background-repeat: repeat-x;
+	height: 45px;
+}
+
+#divAppTextBar
+{
+	background-color:white;
+}
+
+#divStatusBar
+{
+	background-color:white;
+	height:15px;
+	padding-left:10px;
+	margin-top: 13px;
+}
+
+#tdSidebox
+{
+	width:170px;
+	background-color:white;
+	overflow:visible;
+}
+
+#tdAppbox
+{
+	background-color:white;
+	padding-left:5px;
+	width: 100%;
+}
+
+#divAppboxHeader
+{
+	background-image:url(../images/appbox-header-background.png);
+	background-repeat: repeat-x;
+	height:36px;
+	text-align:center;
+	padding-bottom:0px;
+	border-top:solid 1px #9c9c9c;
+	border-left:solid 1px #9c9c9c;
+	border-right:solid 1px #9c9c9c;
+}
+
+#divAppbox
+{
+	background-color:#ffffff;
+	padding:5px;
+	border-bottom:solid 1px #9c9c9c;
+	border-left:solid 1px #9c9c9c;
+	border-right:solid 1px #9c9c9c;
+}
+
+
+
+/*
+	this must move to the filemanager app
+*/
+
+#fmStatusBar
+{
+	margin-left:4px;
+	margin-bottom:3px;
+}
+
+.fmButton
+{
+	background-repeat: no-repeat;
+	background-image:url(../images/buttonbackground.png);
+	width:28px;
+	height:28px;
+}
+
+#fmLocation
+{
+	position:relative;
+	margin-bottom:3px;
+	height:27px;
+}
+
+#fmMenu
+{
+	position:relative;
+}
+
+#fmFileWindow
+{
+	background-color:#ffffff;
+	margin-left:4px;
+	padding:5px;
+	position:relative;
+	border-right: #cccccc 1px solid; 
+	border-top: #9c9c9c 2px solid; 
+	border-left: #9c9c9c 2px solid; 
+	border-bottom: #cccccc 1px solid
+}
+
+#admin_info
+{
+	position:relative;
+	text-align:right;
+}
+
+#divGenTime,#divPoweredBy 
+
+{
+	bottom:4px;
+	text-align:center;
+	width:99%;
+}
