@@ -64,6 +64,11 @@ class accounts_backend
 			$this->db = clone($GLOBALS['egw']->db);
 		}
 		$this->db->set_app('phpgwapi');	// to load the right table-definitions for insert, select, update, ...
+
+		if (!is_object($GLOBALS['egw']->acl))
+		{
+			$GLOBALS['egw']->acl =& CreateObject('phpgwapi.acl');
+		}
 	}
 
 	/**
@@ -100,7 +105,7 @@ class accounts_backend
 	 */
 	function save(&$data)
 	{
-		echo "<p>accounts_sql::save(".print_r($data,true).")</p>\n";
+		//echo "<p>accounts_sql::save(".print_r($data,true).")</p>\n";
 		$to_write = $data;
 		unset($to_write['account_id']);
 		unset($to_write['account_passwd']);
@@ -108,6 +113,10 @@ class accounts_backend
 		// encrypt password if given or unset it if not
 		if ($data['account_passwd'])
 		{
+			if (!is_object($GLOBALS['egw']->auth))
+			{
+				$GLOBALS['egw']->auth =& CreateObject('phpgwapi.auth');
+			}
 			$to_write['account_pwd'] = $GLOBALS['egw']->auth->encrypt_sql($data['account_passwd']);
 		}
 		if (!(int)$data['account_id'])

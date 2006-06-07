@@ -136,7 +136,7 @@ class accounts_backend
 	 */
 	function save(&$data)
 	{
-		$is_group = $data['account_id'] < 0 || $data['type'] == 'g';
+		$is_group = $data['account_id'] < 0 || $data['account_type'] === 'g';
 
 		$data_utf8 = $this->translation->convert($data,$this->translation->charset(),'utf-8');
 				
@@ -211,12 +211,12 @@ class accounts_backend
 			$to_write = $this->_merge_user($to_write,$data_utf8,!$old);
 			$data['account_type'] = 'u';
 		}
-		echo "<p>ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")</p>\n";
+		//echo "<p>ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")</p>\n";
 		// modifying or adding the entry
 		if ($old && !ldap_modify($this->ds,$dn,$to_write) ||
 			!$old && !ldap_add($this->ds,$dn,$to_write))
 		{
-			echo ldap_error($this->ds); exit;
+			//echo ldap_error($this->ds); exit;
 			return false;
 		}
 		if ($memberships)	// setting the previous memberships of the renamed account

@@ -300,7 +300,7 @@ class accounts extends accounts_backend
 				}
 			}
 		}
-		if (($id = parent::save($data)) && $data['account_primary_group'] &&
+		if (($id = parent::save($data)) && $data['account_type'] == 'u' && $data['account_primary_group'] &&
 			(!($memberships = $this->memberships($id,true)) || !in_array($data['account_primary_group'],$memberships)))
 		{
 			$memberships[] = $data['account_primary_group'];
@@ -343,8 +343,7 @@ class accounts extends accounts_backend
 		if (is_null($data)) $data = $this->data;	// depricated use
 
 		$expires = isset($data['account_expires']) ? $data['account_expires'] : $data['expires'];
-echo "<p>is_expired(".print_r($data,true).") expires=$expires --> ".(int)($expires != -1 && $expires < time())."</p>\n";
-echo function_backtrace();
+
 		return $expires != -1 && $expires < time();
 	}
 
