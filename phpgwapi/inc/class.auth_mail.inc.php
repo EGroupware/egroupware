@@ -29,6 +29,7 @@
 
 		function authenticate($username, $passwd)
 		{
+			$notls = '/notls';
 			if ($GLOBALS['egw_info']['server']['mail_login_type'] == 'vmailmgr')
 			{
 				$username = $username . '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
@@ -44,6 +45,7 @@
 			elseif ($GLOBALS['egw_info']['server']['mail_server_type']=='imaps')
 			{
 				$GLOBALS['egw_info']['server']['mail_port'] = '993';
+				$notls = '';
 			}
 			elseif ($GLOBALS['egw_info']['server']['mail_server_type']=='pop3s')
 			{
@@ -71,7 +73,7 @@
 			{
 				/* assume imap */
 				$mailauth = imap_open('{'.$GLOBALS['egw_info']['server']['mail_server']
-					.':'.$GLOBALS['egw_info']['server']['mail_port'].'}INBOX', $username , $passwd);
+					.':'.$GLOBALS['egw_info']['server']['mail_port'].$notls.'}INBOX', $username , $passwd);
 			}
 
 			if ($mailauth == False)
