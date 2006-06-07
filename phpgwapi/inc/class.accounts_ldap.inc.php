@@ -325,7 +325,7 @@ class accounts_backend
 	function _read_user($account_id)
 	{
 		$sri = ldap_search($this->ds, $this->user_context, 'uidnumber=' . $account_id,
-			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail',
+			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword',
 			'shadowexpire','shadowlastchange','homedirectory','loginshell'));
 		
 		$data = ldap_get_entries($this->ds, $sri);
@@ -345,6 +345,7 @@ class accounts_backend
 			'account_lastname'  => $data['sn'][0],
 			'account_email'     => $data['mail'][0],
 			'account_fullname'  => $data['cn'][0],
+			'account_pwd'       => $data['userpassword'][0],
 			// both status and expires are encoded in the single shadowexpire value in LDAP
 			// - if it's unset an account is enabled AND does never expire
 			// - if it's set to 0, the account is disabled
