@@ -368,8 +368,6 @@
 				'account_user' => $_POST['account_user'],
 				'account_apps' => $account_apps
 			);
-_debug_array($_POST);
-_debug_array($group_info);
 			$this->validate_group($group_info);
 
 			$group =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
