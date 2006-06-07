@@ -859,13 +859,16 @@
 					$this->loaddb();
 				}
 				/* Load up some configured values */
-				$this->db->query("SELECT config_name,config_value FROM $this->config_table "
-					. "WHERE config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%'",__LINE__,__FILE__);
-				while($this->db->next_record())
+				$this->db->select($this->config_table,'config_name,config_value',
+					"config_name LIKE 'ldap%' OR config_name LIKE 'account_%' OR config_name LIKE '%encryption%' OR config_name='auth_type'",__LINE__,__FILE__);
+				while(($row = $this->db->row(true)))
 				{
-					$GLOBALS['egw_info']['server'][$this->db->f('config_name')] = $this->db->f('config_value');
+					if (!isset($GLOBALS['egw_info']['server'][$row['config_name']]))	// dont overwrite
+					{
+						$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
+					}
 				}
-				//if (!is_object($GLOBALS['egw']))
+				if (!is_object($GLOBALS['egw']))
 				{
 					$GLOBALS['egw'] =& new egw_dummy();
 					$GLOBALS['phpgw'] =& $GLOBALS['egw'];

@@ -111,16 +111,8 @@
 		{
 			$GLOBALS['egw_setup']->db->transaction_commit();
 
-			if($newsettings['auth_type'] == 'ldap')
-			{
-				Header('Location: ldap.php');
-				exit;
-			}
-			else
-			{
-				Header('Location: index.php');
-				exit;
-			}
+			Header('Location: index.php');
+			exit;
 		}
 	}
 

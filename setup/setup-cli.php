@@ -131,12 +131,22 @@ function do_config($args)
 		),
 		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password]
 			'smtp_server','smtp_port','smtp_auth_user','smtp_auth_passwd'),
+		'--account-auth' => array(
+			array('name' => 'account_repository','allowed' => array('sql','ldap')),
+			array('name' => 'auth_type','allowed' => array('sql','ldap','mail','ads','http','sqlssl','nis','pam')),
+			array('name' => 'sql_encryption','allowed' => array('md5','blowfish_crypt','md5_crypt','crypt')),
+			'check_save_password','allow_cookie_auth'),
+		'--ldap-host' => 'ldap_host',
+		'--ldap-root-dn' => 'ldap_root_dn',
+		'--ldap-root-pw' => 'ldap_root_pw',
+		'--ldap-context' => 'ldap_context',
+		'--ldap-group-context' => 'ldap_group_context',
 	);
 	while (($arg = array_shift($args)))
 	{
 		if (!isset($config[$arg])) fail(90,lang("Unknown option '%1' !!!",$arg));
 
-		foreach(explode(',',array_shift($args)) as $n => $value)
+		foreach(is_array($config[$arg]) ? explode(',',array_shift($args)) : array(array_shift($args)) as $n => $value)
 		{
 			if ($value === '' && is_array($config[$arg])) continue;
 			
@@ -187,14 +197,14 @@ function do_admin($arg)
 	if (!$_POST['lname']) $_POST['lname'] = 'User';
 	
 	$_POST['submit'] = true;
-	ob_start();
-	include('admin_account.php');
-	$error = ob_get_contents();
-	ob_end_clean();
+	$error = include('admin_account.php');
 
-	if ($error)
+	switch ($error)
 	{
-		fail(41,lang('Error in admin-creation !!!'));
+		case 41:
+			fail(41,lang('Error in admin-creation !!!'));
+		case 42:
+			fail(42,lang('Error in group-creation !!!'));
 	}
 	echo lang('Admin account successful created.')."\n";
 }
@@ -799,6 +809,8 @@ function do_usage()
 	echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
 	echo '	--mailserver '.lang('host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
 	echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password]')."\n";
+	echo '	--account-auth '.lang('account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]')."\n";
+	echo '	--ldap-host  --ldap-root-dn  --ldap-root-pw  --ldap-context  --ldap-group-context'."\n";
 	echo '--admin '.lang('creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]')."\n";
 	echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
 	echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";

@@ -72,9 +72,10 @@
 			'username' => $username,
 			'fname'    => $fname,
 			'lname'    => $lname,
+			'email'    => $email,
 		));
 		$setup_tpl->set_var('action_url','admin_account.php');
-		$setup_tpl->set_var('description',lang('<b>This will create 1 admin account and 3 demo accounts</b><br />The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
+		$setup_tpl->set_var('description',lang('This will create a first user in eGroupWare or reset password and admin rights of an exiting user'));
 		$setup_tpl->set_var('lang_deleteall',lang('Delete all existing SQL accounts, groups, ACLs and preferences (normally not necessary)?'));
 
 		$setup_tpl->set_var('detailadmin',lang('Details for Admin account'));
@@ -84,7 +85,10 @@
 		$setup_tpl->set_var('adminemail',lang('Admin email address'));
 		$setup_tpl->set_var('adminpassword',lang('Admin password'));		
 		$setup_tpl->set_var('adminpassword2',lang('Re-enter password'));
+		$setup_tpl->set_var('admin_all_apps',lang('Give admin access to all installed apps'));
+		$setup_tpl->set_var('all_apps_desc',lang('Usually more annoying.<br />Admins can use Admin >> Manage accounts or groups to give access to further apps.'));
 		$setup_tpl->set_var('create_demo_accounts',lang('Create demo accounts'));
+		$setup_tpl->set_var('demo_desc',lang('The username/passwords are: demo/guest, demo2/guest and demo3/guest.'));
 
 		$setup_tpl->set_var('lang_submit',lang('Save'));
 		$setup_tpl->set_var('lang_cancel',lang('Cancel'));
@@ -110,24 +114,34 @@
 		
 		if (!$defaultgroupid || !$admingroupid)
 		{
+			if (strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
+			{
+				return 42; //lang('Error in group-creation !!!');	// dont exit on setup-cli
+			}
 			echo '<p><b>'.lang('Error in group-creation !!!')."</b></p>\n";
 			echo '<p>'.lang('click <a href="index.php">here</a> to return to setup.')."</p>\n";
 			$GLOBALS['egw_setup']->db->transaction_abort();
 			exit;
 		}
 
-		/* Group perms for the default group */
+		// Group perms for the default group
 		$GLOBALS['egw_setup']->add_acl(array('addressbook','calendar','infolog','felamimail','preferences','home','manual'),'run',$defaultgroupid);
 
-		// give admin access to all apps, to save us some support requests
-		$all_apps = array();
+		$apps = array();
 		$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'app_name','app_enabled < 3',__LINE__,__FILE__);
 		while ($GLOBALS['egw_setup']->db->next_record())
 		{
-			$all_apps[] = $GLOBALS['egw_setup']->db->f('app_name');
+			$apps[] = $GLOBALS['egw_setup']->db->f('app_name');
 		}
-		$GLOBALS['egw_setup']->add_acl($all_apps,'run',$admingroupid);
+		// if not otherwise selected, give admin only access to the rest of the default apps, 
+		// not yet set for the default group or development only apps like (etemplate, jinn, tt's)
+		if (!$_POST['admin_all_apps'])	
+		{
+			$apps = array_intersect(array('admin','emailadmin','filemanager','mydms','news_admin','phpbrain','phpsysinfo','polls','projectmanager','resources','sambaadmin','sitemgr','timesheet','wiki'),$apps);
+		}
+		$GLOBALS['egw_setup']->add_acl($apps,'run',$admingroupid);
 
+		// give admin access to default apps, not yet set for the default group
 		function insert_default_prefs($accountid)
 		{
 			$defaultprefs = array(
@@ -187,6 +201,10 @@
 		$accountid = $GLOBALS['egw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True,$email);
 		if (!$accountid)
 		{
+			if (strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
+			{
+				return 41; //lang('Error in admin-creation !!!');	// dont exit on setup-cli
+			}
 			echo '<p><b>'.lang('Error in admin-creation !!!')."</b></p>\n";
 			echo '<p>'.lang('click <a href="index.php">here</a> to return to setup.')."</p>\n";
 			$GLOBALS['egw_setup']->db->transaction_abort();

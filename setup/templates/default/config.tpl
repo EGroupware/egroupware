@@ -327,29 +327,6 @@
    <tr class="th">
     <td colspan="2"><b>{lang_If_using_LDAP}:</b></td>
    </tr>
-   <tr class="row_on">
-    <td colspan="2"><b>{lang_You_will_need_to_load_the_proper_schema_into_your_ldap_server_-_see_phpgwapi/doc/ldap/README} !!!</b></td>
-   </tr>
-
-   <tr class="row_off">
-     <td>{lang_Do_you_want_to_manage_homedirectory_and_loginshell_attributes?}:</td>
-     <td>
-      <select name="newsettings[ldap_extra_attributes]">
-       <option value="">{lang_No}</option>
-       <option value="True"{selected_ldap_extra_attributes_True}>{lang_Yes}</option>
-      </select>
-     </td>
-    </tr>
-
-   <tr class="row_on">
-    <td>{lang_LDAP_Default_homedirectory_prefix_(e.g._/home_for_/home/username)}:</td>
-    <td><input name="newsettings[ldap_account_home]" value="{value_ldap_account_home}" /></td>
-   </tr>
-
-   <tr class="row_off">
-    <td>{lang_LDAP_Default_shell_(e.g._/bin/bash)}:</td>
-    <td><input name="newsettings[ldap_account_shell]" value="{value_ldap_account_shell}" /></td>
-   </tr>
 
    <tr class="row_on">
     <td>{lang_LDAP_host}:</td>
@@ -391,19 +368,35 @@
    </tr>
 
    <tr class="row_off">
-     <td>{lang_Enable_LDAP_Version_3}:</td>
+     <td>{lang_Do_you_want_to_manage_homedirectory_and_loginshell_attributes?}:</td>
      <td>
-      <select name="newsettings[ldap_version3]">
+      <select name="newsettings[ldap_extra_attributes]">
        <option value="">{lang_No}</option>
-       <option value="True" {selected_ldap_version3_True}>{lang_Yes}</option>
+       <option value="True"{selected_ldap_extra_attributes_True}>{lang_Yes}</option>
       </select>
      </td>
     </tr>
 
    <tr class="row_on">
-    <td colspan="2">&nbsp;</td>
+    <td>{lang_LDAP_Default_homedirectory_prefix_(e.g._/home_for_/home/username)}:</td>
+    <td><input name="newsettings[ldap_account_home]" value="{value_ldap_account_home}" /></td>
    </tr>
 
+   <tr class="row_off">
+    <td>{lang_LDAP_Default_shell_(e.g._/bin/bash)}:</td>
+    <td><input name="newsettings[ldap_account_shell]" value="{value_ldap_account_shell}" /></td>
+   </tr>
+
+   <tr class="row_on" valign="top">
+    <td>
+     <a href="account_migration.php"><b>{lang_Migration_between_eGroupWare_account_repositories}:</b></a>
+    </td>
+    <td>
+      <li>{lang_Account_repository_need_to_be_set_to_the_one_you_migrate_to!}</li>
+      <li>{lang_You_need_to_save_the_settings_you_made_here_first!}</li>
+    </td>
+   </tr>
+   
    <tr class="th">
     <td colspan="2"><b>{lang_If_using_ADS_(Active_Directory)_authentication}:</b></td>
    </tr>
