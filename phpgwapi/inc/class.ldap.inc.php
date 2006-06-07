@@ -97,7 +97,6 @@
 				printf('<b>Error: LDAP support unavailable</b><br>',$host);
 				return False;
 			}
-
 			if(!$host)
 			{
 				$host = $GLOBALS['egw_info']['server']['ldap_host'];
@@ -130,7 +129,12 @@
 
 			if(!isset($this->ldapServerInfo[$host])) {
 				//print "no ldap server info found<br>";
-				$ldapbind = ldap_bind($this->ds, '', '');
+				if (!($ldapbind = @ldap_bind($this->ds, '', '')))
+				{
+					// try with version 3 ;-)
+					ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+					$ldapbind = ldap_bind($this->ds, '', '');
+				}
 				$filter='(objectclass=*)';
 				$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry');
 				
@@ -228,8 +232,10 @@
 		/**
 		 * disconnect from the ldap server
 		 */
-		function ldapDisconnect() {
-			if(is_resource($this->ds)) {
+		function ldapDisconnect() 
+		{
+			if(is_resource($this->ds)) 
+			{
 				ldap_unbind($this->ds);
 			}
 		}
@@ -237,14 +243,22 @@
 		/**
 		 * restore the session data
 		 */
-		function restoreSessionData() {
-			$this->ldapServerInfo = $GLOBALS['egw']->session->appsession('ldapServerInfo');
+		function restoreSessionData() 
+		{
+			if (is_object($GLOBALS['egw']->session))	// no availible in setup
+			{
+				$this->ldapServerInfo = $GLOBALS['egw']->session->appsession('ldapServerInfo');
+			}
 		}
 		/**
 		 * save the session data
 		 */
-		function saveSessionData() {
-			$GLOBALS['egw']->session->appsession('ldapServerInfo','',$this->ldapServerInfo);
+		function saveSessionData() 
+		{
+			if (is_object($GLOBALS['egw']->session))	// no availible in setup
+			{
+				$GLOBALS['egw']->session->appsession('ldapServerInfo','',$this->ldapServerInfo);
+			}
 		}
 		                                                        
 	}
