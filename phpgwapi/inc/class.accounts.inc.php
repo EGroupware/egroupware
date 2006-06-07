@@ -288,8 +288,6 @@ class accounts extends accounts_backend
 	 */
 	function save(&$data,$check_depricated_names=false)
 	{
-		$this->cache_invalidate($data['account_id']);
-		
 		if ($check_depricated_names)
 		{
 			foreach($this->depricated_names as $name)
@@ -303,9 +301,12 @@ class accounts extends accounts_backend
 		if (($id = parent::save($data)) && $data['account_type'] == 'u' && $data['account_primary_group'] &&
 			(!($memberships = $this->memberships($id,true)) || !in_array($data['account_primary_group'],$memberships)))
 		{
+			$this->cache_invalidate($data['account_id']);
 			$memberships[] = $data['account_primary_group'];
 			$this->set_memberships($memberships,$id);
 		}
+		$this->cache_invalidate($data['account_id']);
+		
 		return $id;
 	}
 	
