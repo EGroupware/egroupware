@@ -5,6 +5,9 @@
 
 
 <div id="divMain">
+	<div id="divUpperTabs">
+	{upper_tabs}
+	</div>
 	<div id="divAppIconBar">
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 7px">
 			<tr>
