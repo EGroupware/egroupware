@@ -212,7 +212,7 @@
 					{
 						if (isset($entry[$attr])) $to_write[$attr] = array();
 					}
-					echo $entry['dn']; _debug_array($to_write);
+					//echo $entry['dn']; _debug_array($to_write);
 					ldap_modify($ds,$entry['dn'],$to_write);
 				}
 			}
