@@ -157,6 +157,13 @@
 				$submit = True;
 			}
 		}
+		if(!$passwd && ($GLOBALS['egw_info']['server']['auto_anon_login']) && !$_GET['cd'])
+		{
+			$_SERVER['PHP_AUTH_USER'] = $login = 'anonymous';
+			$_SERVER['PHP_AUTH_PW'] =  $passwd = 'anonymous';
+			$passwd_type = 'text';
+			$submit = True;
+		}
 	}
 
 	# Apache + mod_ssl style SSL certificate authentication
