@@ -1,4 +1,6 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	de	%1 '%2' existiert NICHT, ist nicht vom Webserver lesbar oder enthält keine eGroupWare Installation!
+%1 already exists in ldap.	setup	de	%1 existiert bereits im LDAP
+%1 created in ldap.	setup	de	%1 im LDAP erstellt.
 %1 does not exist !!!	setup	de	%1 existiert nicht!!!
 %1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
 %1, %2 or %3 the configuration file.	setup	de	%1, %2 oder %3 der Konfigurationsdatei.
@@ -68,6 +70,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert "application/octet-stream"
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifizierte Benutzer automatisch anlegen
+auto login anonymous user	setup	de	Automatisches einloggen des anonymen Benutzers (anonymous/anonymous)
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab in
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
@@ -146,6 +149,8 @@ created	setup	de	erzeugt
 created header.inc.php!	setup	de	header.inc.php erzeugt!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	de	anlegen eines Administrator Benutzers: Domain(default),[Konfigurationsbenutzer(admin)],Passwort,Benutzername,Passwort,[Vorname],[Nachname],[Email Adresse]
 creating tables	setup	de	Erstelle Tabellen
+creation of %1 failed !!!	setup	de	Erstellen von %1 fehlgeschlagen!!!
+creation of %1 in ldap failed !!!	setup	de	Erstellen von %1 im LDAP fehlgeschlagen!!!
 current configuration:	setup	de	Aktuelle Konfiguration:
 current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.

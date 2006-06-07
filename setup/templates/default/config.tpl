@@ -230,9 +230,19 @@
          <option value="True" {selected_allow_cookie_auth_True}>{lang_Yes}</option>
        </select>
     </td>
-   </tr>
+   </tr>  
    
    <tr class="row_on">
+    <td>{lang_Auto_login_anonymous_user}:</td>
+    <td>
+      <select name="newsettings[auto_anon_login]">
+         <option value="">{lang_No}</option>
+         <option value="True"{selected_auto_anon_login_True}>{lang_Yes}</option>
+       </select>
+    </td>
+   </tr>
+
+   <tr class="row_off">
     <td>{lang_Allow_password_migration}:</td>
     <td>
       <select name="newsettings[pwd_migration_allowed]">

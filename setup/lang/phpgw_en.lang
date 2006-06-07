@@ -1,4 +1,6 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	en	%1 '%2' does NOT exist, is not readable by the webserver or contains no eGroupWare installation!
+%1 already exists in ldap.	setup	en	%1 already exists in LDAP.
+%1 created in ldap.	setup	en	%1 created in LDAP.
 %1 does not exist !!!	setup	en	%1 does not exist !!!
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !!!
 %1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
@@ -68,6 +70,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 authentication / accounts	setup	en	Authentication / Accounts
 auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
+auto login anonymous user	setup	en	Auto login anonymous user
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
 back to the previous screen	setup	en	Back to the previous screen
@@ -146,6 +149,8 @@ created	setup	en	created
 created header.inc.php!	setup	en	Created header.inc.php!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	en	creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	en	Creating Tables
+creation of %1 failed !!!	setup	en	Creation of %1 failed !!!
+creation of %1 in ldap failed !!!	setup	en	Creation of %1 in LDAP failed !!!
 current configuration:	setup	en	Current configuration:
 current system-charset	setup	en	Current system-charset
 current system-charset is %1.	setup	en	Current system-charset is %1.
