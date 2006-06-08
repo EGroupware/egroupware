@@ -15,6 +15,7 @@
 [header-password],[header-user],[new-password],[new-user]	setup	en	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	en	Access denied: wrong username or password for manage-header !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	en	Access denied: wrong username or password to configure the domain '%1(%2)' !!!
+account repository need to be set to the one you migrate to!	setup	en	Account repository need to be set to the one you migrate to!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	en	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
@@ -70,6 +71,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 authentication / accounts	setup	en	Authentication / Accounts
 auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
+auto login anonymous user	setup	en	Auto login anonymous user
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
 back to the previous screen	setup	en	Back to the previous screen
@@ -244,6 +246,7 @@ give admin access to all installed apps	setup	en	Give admin access to all instal
 go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
+group	setup	en	group
 group memberships will be migrated too.	setup	en	Group memberships will be migrated too.
 has a version mismatch	setup	en	has a version mismatch
 header admin login	setup	en	Header Admin Login
@@ -551,6 +554,7 @@ use cookies to pass sessionid	setup	en	Use cookies to pass sessionid
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	en	use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
 use persistent db connections: {on(default) | off}	setup	en	use persistent db connections: {on(default) | off}
 use pure html compliant code (not fully working yet)	setup	en	Use pure HTML compliant code (not fully working yet)
+user	setup	en	user
 user account prefix	setup	en	User account prefix
 user for smtp-authentication (leave it empty if no auth required)	setup	en	User for SMTP-authentication (leave it empty if no auth required)
 usernames are casesensitive	setup	en	Usernames are casesensitive

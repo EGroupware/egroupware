@@ -15,6 +15,7 @@
 [header-password],[header-user],[new-password],[new-user]	setup	de	[Header-Passwort],[Header-Benutzer],[neues-Passwort],[neuer-Benutzer]
 access denied: wrong username or password for manage-header !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für die Headerverwaltung !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für Konfiguration der Domain '%1(%2)'  !!!
+account repository need to be set to the one you migrate to!	setup	de	Speicherort für Benutzerkonten muss auf den zu migrierenden gesetzt sein!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	de	Benutzer speichern{sql(Vorgabe) | ldap},[Authentifizierung{sql | ldap | mail | ads | http | ...}],[sql Verschlüsselung{md5 | blowfish_crypt | md5_crypt | crypt}],[überprüfe Passworte{ (Vorgabe) | True}],[erlaube Cookie Authtentifizierung{ (Vorgabe) | True}]
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
@@ -70,6 +71,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert "application/octet-stream"
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifizierte Benutzer automatisch anlegen
+auto login anonymous user	setup	de	Anonymen Benutzer automatisch einlogen
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab in
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
@@ -84,7 +86,7 @@ backup finished	setup	de	Datensicherung beendet
 backup now	setup	de	jetzt sichern
 backup sets	setup	de	Datensicherungen
 backup skipped!	setup	de	Datensicherung ausgelassen!
-backup started, this might take a view minutes ...	setup	de	Datensicherung gestartet, das kann einige Minuten dauern ...
+backup started, this might take a few minutes ...	setup	de	Datensicherung gestartet, das kann einige Minuten dauern ...
 because an application it depends upon was upgraded	setup	de	da eine Anwendung von der sie abhängt upgegradet wurde
 because it depends upon	setup	de	weil es abhängt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Anwendung ist, oder der Zugriff über ACL kontrolliert wird
@@ -246,6 +248,7 @@ give admin access to all installed apps	setup	de	Admin Zugang zu allen installie
 go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
+group	setup	de	Gruppe
 group memberships will be migrated too.	setup	de	Gruppenmitgliedschaften werden auch migriert.
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
 header admin login	setup	de	Login Headerverwaltung
@@ -553,6 +556,7 @@ use cookies to pass sessionid	setup	de	SitzungsId in einem Cookie speichern
 use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	de	benutze mcrypt zur Verschlüselung der Sitzungsdaten: {off(Vorgabe) | on},[mcrypt Initialisierung(Vorgabe ist zufällig erzeugt)],[mcrypt Version]
 use persistent db connections: {on(default) | off}	setup	de	benutze permanente Datenbankverbindung: {on(Vorgabe) | off}
 use pure html compliant code (not fully working yet)	setup	de	Vollständig HTML kompatiblen Code verwenden (nicht vollständig implementiert)
+user	setup	de	Benutzer
 user account prefix	setup	de	Präfix für Benutzernamen
 user for smtp-authentication (leave it empty if no auth required)	setup	de	Benutzer für SMTP-Authentifizierung (leer lassen wenn keine notwendig ist)
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
