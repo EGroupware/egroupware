@@ -175,7 +175,7 @@ class accounts_backend
 				}
 			}
 		}
-		if (!$data['account_id'])	// new group
+		if (!$data['account_id'])	// new account
 		{
 			if (!($data['account_id'] = $data_utf8['account_id'] = $this->_get_nextid($is_group ? 'g' : 'u')))
 			{
@@ -214,7 +214,7 @@ class accounts_backend
 		//echo "<p>ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")</p>\n";
 		// modifying or adding the entry
 		if ($old && !ldap_modify($this->ds,$dn,$to_write) ||
-			!$old && !ldap_add($this->ds,$dn,$to_write))
+			!$old && !@ldap_add($this->ds,$dn,$to_write))
 		{
 			$err = true;
 			if (!$old && $is_group)
@@ -772,7 +772,7 @@ class accounts_backend
 	 *
 	 * @internal 
 	 * @param $string $account_type='u' (optional, default to 'u')
-	 * @return int/boolean interger account_id or false if none is free anymore
+	 * @return int/boolean integer account_id (negative for groups) or false if none is free anymore
 	 */
 	function _get_nextid($account_type='u')
 	{
@@ -801,6 +801,6 @@ class accounts_backend
 		{
 			return False;
 		}
-		return $account_id;
+		return $sign * $account_id;
 	}
 }
