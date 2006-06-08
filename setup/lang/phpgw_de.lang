@@ -1,6 +1,6 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	de	%1 '%2' existiert NICHT, ist nicht vom Webserver lesbar oder enthält keine eGroupWare Installation!
-%1 already exists in ldap.	setup	de	%1 existiert bereits im LDAP
-%1 created in ldap.	setup	de	%1 im LDAP erstellt.
+%1 already exists in %2.	setup	de	%1 existiert bereits in %2.
+%1 created in %2.	setup	de	%1 in %2 angelegt.
 %1 does not exist !!!	setup	de	%1 existiert nicht!!!
 %1 is %2%3 !!!	setup	de	%1 ist %2%3!!!
 %1, %2 or %3 the configuration file.	setup	de	%1, %2 oder %3 der Konfigurationsdatei.
@@ -12,10 +12,10 @@
 13 (ntp)	setup	de	13 (ntp)
 80 (http)	setup	de	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	de	<b>Zeichensatz</b> (benutzen sie utf-8 wenn sie planen Sprachen mit verschiedenen Zeichensätzen zu verwenden)
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	<b>Dies wird 1 Admin- und 3 Demo-Benutzerkonten anlegen.</b><br />Die Benutzernamen/Passwörter sind: demo/guest, demo2/guest und demo3/guest.
 [header-password],[header-user],[new-password],[new-user]	setup	de	[Header-Passwort],[Header-Benutzer],[neues-Passwort],[neuer-Benutzer]
 access denied: wrong username or password for manage-header !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für die Headerverwaltung !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	de	Zugriff verweigert: Falsche Benutzername oder Passwort für Konfiguration der Domain '%1(%2)'  !!!
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	de	Benutzer speichern{sql(Vorgabe) | ldap},[Authentifizierung{sql | ldap | mail | ads | http | ...}],[sql Verschlüsselung{md5 | blowfish_crypt | md5_crypt | crypt}],[überprüfe Passworte{ (Vorgabe) | True}],[erlaube Cookie Authtentifizierung{ (Vorgabe) | True}]
 accounts existing	setup	de	Benutzerkonten existieren
 actions	setup	de	Aktionen
 activate safe password check	setup	de	Aktiviere die "sichere Passwort" Überprüfung
@@ -70,7 +70,6 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	de	Soll versucht werden den korrekten MIME-typ für FTP zu verwenden statt dem Vorgabewert "application/octet-stream"
 authentication / accounts	setup	de	Authentifizierung / Benutzerkonten
 auto create account records for authenticated users	setup	de	Benutzerkonten für authentifizierte Benutzer automatisch anlegen
-auto login anonymous user	setup	de	Automatisches einloggen des anonymen Benutzers (anonymous/anonymous)
 auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten laufen ab in
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
@@ -149,8 +148,7 @@ created	setup	de	erzeugt
 created header.inc.php!	setup	de	header.inc.php erzeugt!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	de	anlegen eines Administrator Benutzers: Domain(default),[Konfigurationsbenutzer(admin)],Passwort,Benutzername,Passwort,[Vorname],[Nachname],[Email Adresse]
 creating tables	setup	de	Erstelle Tabellen
-creation of %1 failed !!!	setup	de	Erstellen von %1 fehlgeschlagen!!!
-creation of %1 in ldap failed !!!	setup	de	Erstellen von %1 im LDAP fehlgeschlagen!!!
+creation of %1 in %2 failed !!!	setup	de	Anlegen von %1 in %2 fehlgeschlagen !!!
 current configuration:	setup	de	Aktuelle Konfiguration:
 current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
@@ -214,7 +212,6 @@ egroupware domain/instance %1(%2):	setup	de	eGroupWare Domain/Instanz %1(%2):
 egroupware is already installed!	setup	de	eGroupWare ist bereits installiert!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	de	eGroupWare Quellen in '%1' sind nicht komplett, Datei '%2' fehlt !!!
 enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
-enable ldap version 3	setup	de	LDAP Version 3 verwenden
 enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung<br />(benötigt mcrypt)
@@ -235,9 +232,7 @@ enter your http proxy server port	setup	de	Port des HTTP-Proxy-Servers
 enter your http proxy server username	setup	de	Benutzername des HTTP-Proxy-Servers
 error in admin-creation !!!	setup	de	Fehler beim Anlegen des Admin-Kontos !!!
 error in group-creation !!!	setup	de	Fehler beim Anlegen der Gruppen !!!
-export egroupware accounts from sql to ldap	setup	de	eGroupWare Benutzerkonten von SQL nach LDAP exportieren
-export has been completed!  you will need to set the user passwords manually.	setup	de	Export ist abgeschlossen! Sie müssen die Benutzerpasswörter manuell setzen.
-export sql users to ldap	setup	de	SQL-Benutzer in LDAP exportieren
+export has been completed!	setup	de	Export ist abgeschlossen!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	de	Fehler beim Schreiben der Konfigurationsdatei header.inc.php, bitte überprüfen Sie die Zugriffsrechte !!!
 false	setup	de	Falsch
 file	setup	de	DATEI
@@ -245,12 +240,13 @@ file type, size, version, etc.	setup	de	Dateityp, Größe, Version usw.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	de	Dateiuploads sind ausgeschaltet. Sie können keinen der Dateimanager verwenden, noch können Sie in verschiedenen Anwendungen Dateien anhängen!
 filename	setup	de	Dateiname
 filesystem	setup	de	Dateisystem
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	de	Für eine Neuinstallation, wählen Sie importieren.  Um existierende SQL-Accounts zu LDAP zu konvertieren, w&auml;hlen Sie exportieren.
 force selectbox	setup	de	Auswahl erzwingen
 found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationsdatei gefunden. Lade Einstellungen von der Datei ...
+give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
 go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
+group memberships will be migrated too.	setup	de	Gruppenmitgliedschaften werden auch migriert.
 has a version mismatch	setup	de	hat eine falsche Versionsanpassung
 header admin login	setup	de	Login Headerverwaltung
 header password	setup	de	Passwort Headerverwaltung
@@ -279,9 +275,7 @@ if you did not receive any errors, your tables have been	setup	de	Wenn Sie keine
 if you running this the first time, don't forget to manualy %1 !!!	setup	de	Wenn Sie das zum ersten Mal ausführen, vergessen Sie nicht manuell die %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	de	Wenn Sie nur Sprachen des gleichen Zeichensatzes (zB. westeuropäische) benützen, brauchen Sie keinen Systemzeichensatz zu setzten!
 image type selection order	setup	de	Auswahlreihenfolge der Bilddateitypen
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	de	Benutzerkonton von LDAP in die eGroupWare Kontentabelle importieren (für eine neue Installation mit SQL Konten)
 import has been completed!	setup	de	Import ist beendet!
-import ldap users/groups	setup	de	LDAP-Benutzer/-Gruppen importieren
 importing old settings into the new format....	setup	de	Importiere alte Einstellung in das neue Format ...
 include root	setup	de	Include-Root
 include_path need to contain "." - the current directory	setup	de	include_path muss "." - das aktuelle Verzeichnis - enthalten
@@ -304,20 +298,15 @@ is in the webservers docroot	setup	de	ist im Dokumentenverzeichnis (Documentroot
 is not writeable by the webserver	setup	de	ist nicht vom Webserver schreibbar
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	de	Benötigt eine Aktualisierung auf Version %1! Benutzen Sie --update-header Passwort[,Benutzer] dafür (--usage gibt weitere Optionen)
 languages updated.	setup	de	Sprachen aktualisiert.
-ldap account import/export	setup	de	LDAP-Benutzerkonten importieren/exportieren
 ldap accounts configuration	setup	de	LDAP-Benutzerkonten Konfiguration
 ldap accounts context	setup	de	LDAP-Kontext für Benutzerkonten
 ldap config	setup	de	LDAP-Konfiguration
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	de	LDAP-Vorgabewert für Benutzerverzeichnisse (z.B. /home für /home/username)
 ldap default shell (e.g. /bin/bash)	setup	de	LDAP-Vorgabewert für Kommandointerpreter (shell) (z.B. /bin/bash)
 ldap encryption type	setup	de	LDAP-Verschlüsselungstyp
-ldap export	setup	de	LDAP-Export
-ldap export users	setup	de	LDAP-Benutzer exportieren
 ldap groups context	setup	de	LDAP-Kontext für Gruppe
 ldap host	setup	de	LDAP-Host
 ldap import	setup	de	LDAP-Import
-ldap import users	setup	de	LDAP-Benutzer importieren
-ldap modify	setup	de	LDAP Ändern
 ldap root password	setup	de	LDAP-Root-Passwort
 ldap rootdn	setup	de	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	de	LDAP Suchfilter für Benutzerkonten, Vorgabe "(uid=%user)", %domain=eGW Domain
@@ -346,12 +335,12 @@ mcrypt mode (default cbc)	setup	de	MCrypt-Modus (Vorgabe CBC)
 mcrypt settings (requires mcrypt php extension)	setup	de	MCrypt-Einstellungen (benötigt die mcrypt Erweiterung von PHP)
 mcrypt version	setup	de	MCrypt-Version
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	de	memory_limit (maximale Speicher für ein Skript) ist auf weniger als 16M gesetzt: einige eGroupWare Anwendungen benötigen mehr als die empfohlenen 8M. Sie müssen mit gelegentlichen Fehlern rechnen.
+migration between egroupware account repositories	setup	de	Migration zwischen versch. Orten zur Speicherung von eGroupWare Benutzern
 minimum account id (e.g. 500 or 100, etc.)	setup	de	Minimum für Benutzer-ID (z.B. 500 oder 100)
 minute	setup	de	Minute
 missing or uncomplete mailserver configuration	setup	de	Fehlende oder nicht komplette Mailserver Konfiguration
 modifications have been completed!	setup	de	Änderung ist abgeschlossen!
 modify	setup	de	Ändern
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	de	Bestehende LDAP-Benutzerkonten für die Benutzung durch eGroupWare anpassen (für eine neue Installation mit LDAP-Konten)
 month	setup	de	Monat
 multi-language support setup	setup	de	Mehr-Sprachen Unterstützung einrichten
 name of database	setup	de	Name der Datenbank
@@ -459,7 +448,7 @@ select to download file	setup	de	Auswähle um die Datei herunterzuladen
 select where you want to store/retrieve file contents	setup	de	Wählen Sie aus wo Sie Dateiinhalte speichern/lesen wollen
 select where you want to store/retrieve filesystem information	setup	de	Wo wollen Sie Datei Informationen ablegen/lesen
 select where you want to store/retrieve user accounts	setup	de	Wo wollen Sie die Benutzerkonten speichern
-select which group(s) will be exported (group membership will be maintained)	setup	de	Wählen Sie die zu exportierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
+select which group(s) will be exported	setup	de	Wählen Sie die zu exportierende(n) Gruppe(n)
 select which group(s) will be imported (group membership will be maintained)	setup	de	Wählen Sie die zu importierende(n) Gruppe(n) (Gruppenmitgliedschaft wird erhalten)
 select which group(s) will be modified (group membership will be maintained)	setup	de	Wählen Sie welche Gruppe(n) verändert werden sollen (Gruppenmitgliedschaft wird erhalten)
 select which languages you would like to use	setup	de	Wählen Sie die Sprachen, die Sie benutzen möchten
@@ -479,7 +468,6 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	de	Den Systemzeichensatz auf UTF-8 (unicode) zu setzten, erlaubt die Koexistenz von Daten in Sprachen mit verschiedenen Zeichensätzen.
 settings	setup	de	Einstellungen
 setup	setup	de	Einrichtung
-setup demo accounts in ldap	setup	de	Demo-Benutzer in LDAP einrichten
 setup main menu	setup	de	Setup-Hauptmenü
 setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
@@ -522,6 +510,7 @@ the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or oth
 the session extension is needed to use php sessions (db-sessions work without).	setup	de	Die session Erweiterung (php extension) ist notwendig für PHP Sessions (Datenbank Sessions arbeiten ohne diese).
 the table definition was correct, and the tables were installed	setup	de	Die Tabellen Definition war korrekt und die Tabellen wurden installiert
 the tables	setup	de	die Tabellen
+the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	de	Die Benutzernamen/Passworte sind: demo/guest, demo2/guest und demo3/guest
 there was a problem trying to connect to your ldap server. <br />	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	de	Es gab ein Problem eine Verbindung zu Ihrem LDAP-Server herzustellen.<br />Bitte überprüfen Sie die Konfiguration Ihres LDAP-Servers.
 this has to be outside the webservers document-root!!!	setup	de	Muss au&szlig;erhalb des Wurzelverzeichnisses (document root) des Webservers sein!!!
@@ -529,11 +518,9 @@ this might take a while, please wait ...	setup	de	Dieser Test braucht einige Zei
 this program lets you backup your database, schedule a backup or restore it.	setup	de	Mit diesem Programm können Sie Ihre Datenbank sichern, eine regelmäßige Datensicherung planen oder sie zurücksichern.
 this program will convert your database to a new system-charset.	setup	de	Dieses Programm wird Ihre Datenbank in einen neuen Systemzeichensatz konvertieren.
 this program will help you upgrade or install different languages for egroupware	setup	de	Dieses Programm wird Ihnen bei der Aktualisierung oder Installation verschiedender Sprachen für eGroupWare behilflich sein
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	de	Dieser Abschnitt wird Ihnen beim Exportieren von Benutzern/Gruppen aus eGroupWare's Account-Tabellen in Ihren LDAP-Baum behilflich sein
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	de	Dieser Abschnitt wird Ihnen beim Importieren von Benutzern/Gruppen aus Ihrem LDAP-Baum in eGroupWare's Account-Tabellen behilflich sein
-this section will help you setup your ldap accounts for use with egroupware	setup	de	Dieser Abschnitt wird Ihnen helfen Ihre LDAP-Benutzer für eGroupWare vorzubereiten.
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	de	Das sollte ungefähr 30 Zeichen lang sein<br />Hinweis: Die Vorgabe wurde zufällig erzeugt.
 this stage is completed<br />	setup	de	Dieser Schritt ist abgeschlossen<br />
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	de	Anlegen eines ersten eGroupWare Benutzers oder rücksetzen von Passwort und Adminrechten eines existierenden Benutzers.
 to a version it does not know about	setup	de	auf eine Version von der nichts bekannt ist
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	de	um Passwort Authentifizierung zu verwenden, folgende Zeile (vor allen anderen) in ihre pg_hba.conf einfügen UND postgres neu starten
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	de	Zum Ändern des Zeichensatzes: Datenbank sichern, alle Anwendungen deinstallieren und die Datensicherung mit "Konvertiere zum ausgewählten Zeichensatz" abgehakt wieder installieren.
@@ -570,6 +557,7 @@ user account prefix	setup	de	Präfix für Benutzernamen
 user for smtp-authentication (leave it empty if no auth required)	setup	de	Benutzer für SMTP-Authentifizierung (leer lassen wenn keine notwendig ist)
 usernames are casesensitive	setup	de	Benutzername mit Unterscheidung zwischen Groß- und Kleinschreibung
 users choice	setup	de	Benutzerauswahl
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	de	Normalerweise mehr ärgerlich als nützlich<br />
 utf-8 (unicode)	setup	de	utf-8 (Unicode)
 validation errors	setup	de	Fehler bei der Prüfung der Eingaben
 version	setup	de	Version
@@ -596,7 +584,6 @@ yes, with lowercase usernames	setup	de	Ja, mit kleingeschriebenen Benutzernamen
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	de	Es sieht so aus, als ob Sie eine vor-beta Version von eGroupWare benutzen.<br />Diese Versionen werden nicht länger unterstützt, und es gibt keinen Aktualisierungs-Pfad für Sie im Einrichtung-Programm.<br />Sie möchten vieleicht erst auf
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	de	Es sieht so aus als ob Sie eine alte PHP-Version benutzen<br />Es ist notwendig auf eine neue Version zu aktualisieren.<br />Ältere PHP-Versionen könnten eGroupWare (wenn überhaupt) nicht korrekt ausführen. <br /><br />Biite aktualisieren Sie mindestens auf Version %1
 you appear to be running version %1 of egroupware	setup	de	Es sieht so aus als benutzen Sie Version %1 von eGroupWare
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	de	Sie scheinen php in einer Version vor 4.1.0 zu verwenden. eGroupWare benötigt nun Version 4.1.0 oder höher.
 you appear to have %1 support.	setup	de	Sie scheinen %1 Unterstützung zu haben.
 you appear to have php session support. enabling php sessions.	setup	de	Sie scheinen PHP Session Unterstützung zu haben. PHP Sessions eingeschaltet.
 you appear to have xml support enabled	setup	de	Sie scheinen XML Unterstützung zu haben.
@@ -616,9 +603,9 @@ you need to add at least one egroupware domain / database instance.	setup	de	Sie
 you need to add some domains to your header.inc.php.	setup	de	Sie müssen eine Domain zu ihrer header.inc.php hinzufügen.
 you need to configure egroupware:	setup	de	Sie müssen eGroupWare konfigurieren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	de	Sie müssen die obigen Fehler beheben, bevor die Konfigurationsdatei header.inc.php gespeichert werden kann!
+you need to save the settings you made here first!	setup	de	Sie müssen die hier vorgenommenen Einstellungen zuerst speichern!
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	de	Sie müssen das notwendige phpgwAccounts Schema auf Ihrem LDAP Server installieren - siehe <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>.
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell

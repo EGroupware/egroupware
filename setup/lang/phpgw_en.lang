@@ -1,6 +1,6 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	en	%1 '%2' does NOT exist, is not readable by the webserver or contains no eGroupWare installation!
-%1 already exists in ldap.	setup	en	%1 already exists in LDAP.
-%1 created in ldap.	setup	en	%1 created in LDAP.
+%1 already exists in %2.	setup	en	%1 already exists in %2.
+%1 created in %2.	setup	en	%1 created in %2.
 %1 does not exist !!!	setup	en	%1 does not exist !!!
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !!!
 %1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
@@ -12,10 +12,10 @@
 13 (ntp)	setup	en	13 (ntp)
 80 (http)	setup	en	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	en	<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	<b>This will create 1 admin account and 3 demo accounts</b><br />The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 [header-password],[header-user],[new-password],[new-user]	setup	en	[header-password],[header-user],[new-password],[new-user]
 access denied: wrong username or password for manage-header !!!	setup	en	Access denied: wrong username or password for manage-header !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	en	Access denied: wrong username or password to configure the domain '%1(%2)' !!!
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	en	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
 accounts existing	setup	en	Accounts existing
 actions	setup	en	Actions
 activate safe password check	setup	en	Activate safe password check
@@ -70,7 +70,6 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	en	Attempt to use correct mimetype for FTP instead of default 'application/octet-stream'
 authentication / accounts	setup	en	Authentication / Accounts
 auto create account records for authenticated users	setup	en	Auto create account records for authenticated users
-auto login anonymous user	setup	en	Auto login anonymous user
 auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
 back to the previous screen	setup	en	Back to the previous screen
@@ -149,8 +148,7 @@ created	setup	en	created
 created header.inc.php!	setup	en	Created header.inc.php!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	en	creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	en	Creating Tables
-creation of %1 failed !!!	setup	en	Creation of %1 failed !!!
-creation of %1 in ldap failed !!!	setup	en	Creation of %1 in LDAP failed !!!
+creation of %1 in %2 failed !!!	setup	en	Creation of %1 in %2 failed !!!
 current configuration:	setup	en	Current configuration:
 current system-charset	setup	en	Current system-charset
 current system-charset is %1.	setup	en	Current system-charset is %1.
@@ -214,7 +212,6 @@ egroupware domain/instance %1(%2):	setup	en	eGroupWare domain/instance %1(%2):
 egroupware is already installed!	setup	en	eGroupWare is already installed!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	en	eGroupWare sources in '%1' are not complete, file '%2' missing !!!
 enable for extra debug-messages	setup	en	enable for extra debug-messages
-enable ldap version 3	setup	en	Enable LDAP Version 3
 enable mcrypt	setup	en	Enable MCrypt
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	en	Enter some random text for app_session <br />encryption (requires mcrypt)
@@ -233,9 +230,7 @@ enter your http proxy server port	setup	en	Enter your HTTP proxy server port
 enter your http proxy server username	setup	en	Enter your HTTP proxy server username
 error in admin-creation !!!	setup	en	Error in admin-creation !!!
 error in group-creation !!!	setup	en	Error in group-creation !!!
-export egroupware accounts from sql to ldap	setup	en	Export eGroupWare accounts from SQL to LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	en	Export has been completed!  You will need to set the user passwords manually.
-export sql users to ldap	setup	en	Export SQL users to LDAP
+export has been completed!	setup	en	Export has been completed!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	en	Failed writing configuration file header.inc.php, check the permissions !!!
 false	setup	en	False
 file	setup	en	FILE
@@ -243,12 +238,13 @@ file type, size, version, etc.	setup	en	file type, size, version, etc.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	en	File uploads are switched off: You can NOT use any of the filemanagers, nor can you attach files in several applications!
 filename	setup	en	filename
 filesystem	setup	en	Filesystem
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	en	For a new install, select import.  To convert existing SQL accounts to LDAP, select export
 force selectbox	setup	en	Force Selectbox
 found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
+give admin access to all installed apps	setup	en	Give admin access to all installed apps
 go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
+group memberships will be migrated too.	setup	en	Group memberships will be migrated too.
 has a version mismatch	setup	en	has a version mismatch
 header admin login	setup	en	Header Admin Login
 header password	setup	en	Header Password
@@ -277,9 +273,7 @@ if you did not receive any errors, your tables have been	setup	en	If you did not
 if you running this the first time, don't forget to manualy %1 !!!	setup	en	If you running this the first time, don't forget to manualy %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	en	If you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!
 image type selection order	setup	en	Image type selection order
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	en	Import accounts from LDAP to the eGroupWare accounts table (for a new install using SQL accounts)
 import has been completed!	setup	en	Import has been completed!
-import ldap users/groups	setup	en	Import LDAP users/groups
 importing old settings into the new format....	setup	en	Importing old settings into the new format....
 include root	setup	en	Include root
 include_path need to contain "." - the current directory	setup	en	include_path need to contain "." - the current directory
@@ -302,20 +296,15 @@ is in the webservers docroot	setup	en	is in the webservers docroot
 is not writeable by the webserver	setup	en	is not writeable by the webserver
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	en	It needs upgrading to version %1! Use --update-header <password>[,<user>] to do so (--usage gives more options).
 languages updated.	setup	en	Languages updated.
-ldap account import/export	setup	en	LDAP account import/export
 ldap accounts configuration	setup	en	LDAP Accounts Configuration
 ldap accounts context	setup	en	LDAP accounts context
 ldap config	setup	en	LDAP Config
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	en	LDAP Default homedirectory prefix (e.g. /home for /home/username)
 ldap default shell (e.g. /bin/bash)	setup	en	LDAP Default shell (e.g. /bin/bash)
 ldap encryption type	setup	en	LDAP encryption type
-ldap export	setup	en	LDAP Export
-ldap export users	setup	en	LDAP export users
 ldap groups context	setup	en	LDAP groups context
 ldap host	setup	en	LDAP host
 ldap import	setup	en	LDAP Import
-ldap import users	setup	en	LDAP import users
-ldap modify	setup	en	LDAP Modify
 ldap root password	setup	en	LDAP root password
 ldap rootdn	setup	en	LDAP rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	en	LDAP search filter for accounts, default: "(uid=%user)", %domain=eGW-domain
@@ -344,12 +333,12 @@ mcrypt mode (default cbc)	setup	en	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requires mcrypt PHP extension)
 mcrypt version	setup	en	MCrypt version
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
+migration between egroupware account repositories	setup	en	Migration between eGroupWare account repositories
 minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
 minute	setup	en	minute
 missing or uncomplete mailserver configuration	setup	en	Missing or uncomplete mailserver configuration
 modifications have been completed!	setup	en	Modifications have been completed!
 modify	setup	en	Modify
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	en	Modify an existing LDAP account store for use with eGroupWare (for a new install using LDAP accounts)
 month	setup	en	month
 multi-language support setup	setup	en	Multi-Language support setup
 name of database	setup	en	Name of database
@@ -457,7 +446,7 @@ select to download file	setup	en	Select to download file
 select where you want to store/retrieve file contents	setup	en	Select where you want to store/retrieve file contents
 select where you want to store/retrieve filesystem information	setup	en	Select where you want to store/retrieve filesystem information
 select where you want to store/retrieve user accounts	setup	en	Select where you want to store/retrieve user accounts
-select which group(s) will be exported (group membership will be maintained)	setup	en	Select which group(s) will be exported (group membership will be maintained)
+select which group(s) will be exported	setup	en	Select which group(s) will be exported
 select which group(s) will be imported (group membership will be maintained)	setup	en	Select which group(s) will be imported (group membership will be maintained)
 select which group(s) will be modified (group membership will be maintained)	setup	en	Select which group(s) will be modified (group membership will be maintained)
 select which languages you would like to use	setup	en	Select which languages you would like to use
@@ -477,7 +466,6 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	en	Setting the system-charset to UTF-8 (unicode) allows the coexistens of data from languages of different charsets.
 settings	setup	en	Settings
 setup	setup	en	Setup
-setup demo accounts in ldap	setup	en	Setup demo accounts in LDAP
 setup main menu	setup	en	Setup Main Menu
 setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
@@ -520,6 +508,7 @@ the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or oth
 the session extension is needed to use php sessions (db-sessions work without).	setup	en	The session extension is needed to use php sessions (db-sessions work without).
 the table definition was correct, and the tables were installed	setup	en	The table definition was correct, and the tables were installed
 the tables	setup	en	the tables
+the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	en	The username/passwords are: demo/guest, demo2/guest and demo3/guest.
 there was a problem trying to connect to your ldap server. <br />	setup	en	There was a problem trying to connect to your LDAP server. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	en	There was a problem trying to connect to your LDAP server. <br />please check your LDAP server configuration
 this has to be outside the webservers document-root!!!	setup	en	This has to be outside the webservers document-root!!!
@@ -527,11 +516,9 @@ this might take a while, please wait ...	setup	en	This might take a while, pleas
 this program lets you backup your database, schedule a backup or restore it.	setup	en	This program lets you backup your database, schedule a backup or restore it.
 this program will convert your database to a new system-charset.	setup	en	This program will convert your database to a new system-charset.
 this program will help you upgrade or install different languages for egroupware	setup	en	This program will help you upgrade or install different languages for eGroupWare
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	en	This section will help you export users and groups from eGroupWare's account tables into your LDAP tree
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	en	This section will help you import users and groups from your LDAP tree into eGroupWare's account tables
-this section will help you setup your ldap accounts for use with egroupware	setup	en	This section will help you setup your LDAP accounts for use with eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	en	This should be around 30 bytes in length.<br />Note: The default has been randomly generated.
 this stage is completed<br />	setup	en	This stage is completed<br />
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	en	This will create a first user in eGroupWare or reset password and admin rights of an exiting user
 to a version it does not know about	setup	en	to a version it does not know about
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	en	to allow password authentification add the following line to your pg_hba.conf (above all others) AND restart postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	en	To change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.
@@ -568,6 +555,7 @@ user account prefix	setup	en	User account prefix
 user for smtp-authentication (leave it empty if no auth required)	setup	en	User for SMTP-authentication (leave it empty if no auth required)
 usernames are casesensitive	setup	en	Usernames are casesensitive
 users choice	setup	en	Users Choice
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	en	Usually more annoying.<br />Admins can use Admin >> Manage accounts or groups to give access to further apps.
 utf-8 (unicode)	setup	en	utf-8 (Unicode)
 validation errors	setup	en	Validation errors
 version	setup	en	version
@@ -594,7 +582,6 @@ yes, with lowercase usernames	setup	en	Yes, with lowercase usernames
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	en	You appear to be running a pre-beta version of eGroupWare.<br />These versions are no longer supported, and there is no upgrade path for them in setup.<br /> You may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	en	You appear to be running an old version of PHP <br />It its recommend that you upgrade to a new version. <br />Older version of PHP might not run eGroupWare correctly, if at all. <br /><br />Please upgrade to at least version %1
 you appear to be running version %1 of egroupware	setup	en	You appear to be running version %1 of eGroupWare
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	en	You appear to be using PHP earlier than 4.1.0. eGroupWare now requires 4.1.0 or later
 you appear to have %1 support.	setup	en	You appear to have %1 support.
 you appear to have php session support. enabling php sessions.	setup	en	You appear to have PHP session support. Enabling PHP sessions.
 you appear to have xml support enabled	setup	en	You appear to have XML support enabled
@@ -614,9 +601,9 @@ you need to add at least one egroupware domain / database instance.	setup	en	You
 you need to add some domains to your header.inc.php.	setup	en	You need to add some domains to your header.inc.php.
 you need to configure egroupware:	setup	en	You need to configure eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	en	You need to fix the above errors, before the configuration file header.inc.php can be written!
+you need to save the settings you made here first!	setup	en	You need to save the settings you made here first!
 you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	en	You will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/README
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
 your applications are current	setup	en	Your applications are current
