@@ -908,7 +908,7 @@
 
 			if(!($accountid = $GLOBALS['egw']->accounts->name2id($username)))
 			{
-				if (!($accountid = $GLOBALS['egw']->accounts->create(array(
+				$account = array(
 					'account_type'      => $group ? 'u' : 'g',
 					'account_lid'       => $username,
 					'account_passwd'    => $passwd,
@@ -918,7 +918,8 @@
 					'account_primary_group' => $groupid,
 					'account_expires'   => -1,
 					'account_email'     => $email,
-				))))
+				);
+				if (!($accountid = $GLOBALS['egw']->accounts->save($account)))
 				{
 					return false;
 				}
@@ -934,7 +935,7 @@
 				
 				$GLOBALS['egw']->accounts->set_memberships($memberships,$accountid);
 			}
-			$this->add_acl('preferences','changepassword',$accountid,(int)$changepw);
+			if (!$group) $this->add_acl('preferences','changepassword',$accountid,(int)$changepw);
 
 			return $accountid;
 		}
