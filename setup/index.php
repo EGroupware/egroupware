@@ -418,7 +418,6 @@
 				'submit',lang('Configure Now'),
 				'');
 			$setup_tpl->set_var('config_table_data',$btn_config_now);
-			$setup_tpl->set_var('ldap_table_data','&nbsp;');
 			break;
 		case 10:
 			$setup_tpl->set_var('config_status_img',$completed);
@@ -435,30 +434,12 @@
 				'submit',lang('Edit Current Configuration'),
 				''
 			);
-			if ($config['auth_type'] == 'ldap')
-			{
-				if ($config['ldap_host'] != '')
-				{
-					$btn_config_ldap = $GLOBALS['egw_setup']->html->make_frm_btn_simple(
-						lang('LDAP account import/export'),
-						'post','ldap.php',
-						'submit',lang('Configure Now'),
-						''
-					);
-				}
-				else
-				{
-					$btn_config_ldap = '';
-				}
-			}
 			$setup_tpl->set_var('config_table_data',$btn_edit_config);
-			$setup_tpl->set_var('ldap_table_data',$btn_config_ldap);
 			break;
 		default:
 			$setup_tpl->set_var('config_status_img',$incomplete);
 			$setup_tpl->set_var('config_status_alt',lang('not completed'));
 			$setup_tpl->set_var('config_table_data',lang('Not ready for this stage yet'));
-			$setup_tpl->set_var('ldap_table_data','&nbsp;');
 			break;
 	}
 	// Admin Account Section

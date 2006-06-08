@@ -20,12 +20,6 @@
 		{config_table_data}
 	</td>
 </tr>
-<tr>
-	<td>&nbsp;</td>
-	<td>
-		{ldap_table_data}
-	</td>
-</tr>
 <!-- end the config section -->
 <!-- begin the admin section -->
 <tr class="th">
