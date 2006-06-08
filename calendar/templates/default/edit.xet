@@ -20,7 +20,7 @@
 						<menulist>
 							<menupopup id="duration" options="Use end date" no_lang="1" statustext="Duration of the meeting" onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden');"/>
 						</menulist>
-						<date-time id="end" needed="1" class="end_hide"/>
+						<date-time id="end" class="end_hide"/>
 					</hbox>
 					<button label="Freetime search" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.freetimesearch')+values2url(this.form,'start,end,duration,participants,recur_type,whole_day'),'ft_search','dependent=yes,width=700,height=500,scrollbars=yes,status=yes'); return false;"/>
 				</row>
