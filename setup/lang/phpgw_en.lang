@@ -74,7 +74,7 @@ auto-created user accounts expire	setup	en	Auto-created user accounts expire
 available version	setup	en	Available Version
 back to the previous screen	setup	en	Back to the previous screen
 back to user login	setup	en	Back to user login
-back's up your db now, this might take a view minutes	setup	en	back's up your DB now, this might take a view minutes
+back's up your db now, this might take a few minutes	setup	en	back's up your DB now, this might take a few minutes
 backup '%1' deleted	setup	en	backup '%1' deleted
 backup '%1' renamed to '%2'	setup	en	backup '%1' renamed to '%2'
 backup '%1' restored	setup	en	backup '%1' restored
@@ -84,7 +84,7 @@ backup finished	setup	en	backup finished
 backup now	setup	en	backup now
 backup sets	setup	en	backup sets
 backup skipped!	setup	en	Backup skipped!
-backup started, this might take a view minutes ...	setup	en	backup started, this might take a view minutes ...
+backup started, this might take a few minutes ...	setup	en	backup started, this might take a few minutes ...
 because an application it depends upon was upgraded	setup	en	because an application it depends upon was upgraded
 because it depends upon	setup	en	because it depends upon
 because it is not a user application, or access is controlled via acl	setup	en	because it is not a user application, or access is controlled via acl
@@ -284,7 +284,7 @@ install backup	setup	en	install backup
 install language	setup	en	Install Language
 install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	en	install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones
 installation finished	setup	en	Installation finished
-installation started, this might take a view minutes ...	setup	en	Installation started, this might take a view minutes ...
+installation started, this might take a few minutes ...	setup	en	Installation started, this might take a few minutes ...
 installed	setup	en	installed
 instructions for creating the database in %1:	setup	en	Instructions for creating the database in %1:
 invalid ip address	setup	en	Invalid IP address
@@ -427,7 +427,7 @@ resolve	setup	en	Resolve
 restore	setup	en	restore
 restore failed	setup	en	Restore failed
 restore finished	setup	en	restore finished
-restore started, this might take a view minutes ...	setup	en	restore started, this might take a view minutes ...
+restore started, this might take a few minutes ...	setup	en	restore started, this might take a few minutes ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	en	Restoring a backup will delete/replace all content in your database. Are you sure?
 return to setup	setup	en	Return to Setup
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	en	run a database schema update (if necessary): domain(all),[config user(admin)],password

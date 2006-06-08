@@ -59,7 +59,7 @@ backup and restore	setup	lv	dublēt un atjaunot
 backup failed	setup	lv	Dublēšana neizdevās
 backup finished	setup	lv	dublēšana pabeigta
 backup now	setup	lv	dublēt tagad
-backup started, this might take a view minutes ...	setup	lv	dublēšana sākusies, tas var aizņemt dažas minūtes...
+backup started, this might take a few minutes ...	setup	lv	dublēšana sākusies, tas var aizņemt dažas minūtes...
 because it depends upon	setup	lv	tāpēc tas atgarīgs no
 because it was manually disabled	setup	lv	tāpēc tas tika manuāli aizliegts
 because of a failed upgrade or install	setup	lv	tāpec, ka bija neveiksmīga atjaunināšana vai instalēšana

@@ -54,7 +54,7 @@ auto-created user accounts expire	setup	no	Autoskapte brukerkonti forfaller
 available version	setup	no	Tilgjengelig versjon
 back to the previous screen	setup	no	Tilbake til foregående side
 back to user login	setup	no	Tilbake til brukerpålogging
-back's up your db now, this might take a view minutes	setup	no	Tar sikkerhetskopi av din database, dette kan ta noen minutter.
+back's up your db now, this might take a few minutes	setup	no	Tar sikkerhetskopi av din database, dette kan ta noen minutter.
 backup '%1' deleted	setup	no	Sikkerhetskopi %1 slettet
 backup '%1' renamed to '%2'	setup	no	Sikkerhetskopi %1 omdøpt til %2
 backup '%1' restored	setup	no	Sikkerhetskopi %1 lest inn
@@ -63,7 +63,7 @@ backup failed	setup	no	Sikkerhetskopi lyktes ikke
 backup finished	setup	no	Sikkerhetskopiering ferdig
 backup now	setup	no	Ta sikkerhetskopi nå
 backup sets	setup	no	backup-set
-backup started, this might take a view minutes ...	setup	no	Backup har påbörjats, kan ta några minuter
+backup started, this might take a few minutes ...	setup	no	Backup har påbörjats, kan ta några minuter
 because an application it depends upon was upgraded	setup	no	på grund av att en applikation som den var beroende av uppgraderats
 because it depends upon	setup	no	eftersom den är beroende av
 because it is not a user application, or access is controlled via acl	setup	no	eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
@@ -349,7 +349,7 @@ resolve	setup	no	Løser
 restore	setup	no	Tilbakestille
 restore failed	setup	no	Återställning misslyckades
 restore finished	setup	no	Återställning klar
-restore started, this might take a view minutes ...	setup	no	återställning startad, detta kan ta några minuter...
+restore started, this might take a few minutes ...	setup	no	återställning startad, detta kan ta några minuter...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	no	Återställning av backup kommer att radera/ersätta allt innehåll i databasen. Är du säker?
 return to setup	setup	no	Gå tilbake til Setup
 run installation tests	setup	no	Start installasjonstester

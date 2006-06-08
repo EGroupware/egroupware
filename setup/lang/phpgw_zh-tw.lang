@@ -58,7 +58,7 @@ auto-created user accounts expire	setup	zh-tw	自動建立的使用者帳號過�
 available version	setup	zh-tw	可使用的版本
 back to the previous screen	setup	zh-tw	回到上一個畫面
 back to user login	setup	zh-tw	回到首頁
-back's up your db now, this might take a view minutes	setup	zh-tw	立刻被份您的資料庫，這也許要多等幾分鐘
+back's up your db now, this might take a few minutes	setup	zh-tw	立刻被份您的資料庫，這也許要多等幾分鐘
 backup '%1' deleted	setup	zh-tw	刪除備份 '%1'
 backup '%1' renamed to '%2'	setup	zh-tw	備份資料 '%1' 改名為 '%2'
 backup '%1' restored	setup	zh-tw	還原備份 '%1'
@@ -67,7 +67,7 @@ backup failed	setup	zh-tw	備份錯誤
 backup finished	setup	zh-tw	備份完成
 backup now	setup	zh-tw	立刻備份
 backup sets	setup	zh-tw	備份資料
-backup started, this might take a view minutes ...	setup	zh-tw	備份進行中，請等待...
+backup started, this might take a few minutes ...	setup	zh-tw	備份進行中，請等待...
 because an application it depends upon was upgraded	setup	zh-tw	因為它所依存的應用程式已經升級了
 because it depends upon	setup	zh-tw	因為此應用程式被關聯到
 because it is not a user application, or access is controlled via acl	setup	zh-tw	因為此應用程式不是一個使用者端的應用程式，或是由權限控管存取權限。
@@ -374,7 +374,7 @@ resolve	setup	zh-tw	處理
 restore	setup	zh-tw	還原
 restore failed	setup	zh-tw	還原失敗
 restore finished	setup	zh-tw	還原成功
-restore started, this might take a view minutes ...	setup	zh-tw	還原進行中，請稍候...
+restore started, this might take a few minutes ...	setup	zh-tw	還原進行中，請稍候...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	zh-tw	還原備份資料將會刪除/置換目前資料庫中的所有內容，您確定？
 return to setup	setup	zh-tw	回到安裝程式
 run installation tests	setup	zh-tw	執行安裝測試

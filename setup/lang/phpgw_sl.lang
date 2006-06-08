@@ -55,7 +55,7 @@ auto-created user accounts expire	setup	sl	Avtomatično ustvarjeni uporabniški 
 available version	setup	sl	Razpoložljiva različica
 back to the previous screen	setup	sl	Nazaj na prejšnji zaslon
 back to user login	setup	sl	Nazaj na uporabniško prijavo
-back's up your db now, this might take a view minutes	setup	sl	arhiviram podatkovno bazo, kar lahko traja nekaj minut
+back's up your db now, this might take a few minutes	setup	sl	arhiviram podatkovno bazo, kar lahko traja nekaj minut
 backup '%1' deleted	setup	sl	arhiv '%1' zbrisan
 backup '%1' renamed to '%2'	setup	sl	arhiv '%1' preimenovan v '%2'
 backup '%1' restored	setup	sl	arhiv '%1' obnovljen
@@ -64,7 +64,7 @@ backup failed	setup	sl	Arhiviranje je spodletelo
 backup finished	setup	sl	arhiviranje dokončano
 backup now	setup	sl	arhiviraj takoj
 backup sets	setup	sl	arhivski nizi
-backup started, this might take a view minutes ...	setup	sl	zaganjam arhiviranje, ki lahko traja nekaj minut ...
+backup started, this might take a few minutes ...	setup	sl	zaganjam arhiviranje, ki lahko traja nekaj minut ...
 backupwarn	setup	sl	toda, <u>zelo priporočamo izdelavo rezervne kopije</u> vaših podatkov, če skripta le te poškoduje. <br /><strong>Samodejne skripte lahko zaradi nepredvidenih okoliščin uničijo vaše podatke.</strong> <br /><em>Preden nadaljujete, izdelajte rezervno kopijo podatkov!</em>
 because an application it depends upon was upgraded	setup	sl	ker je bila aplikacija, od katere je odvisen, nadgrajena
 because it depends upon	setup	sl	ker je odvisen od
@@ -356,7 +356,7 @@ resolve	setup	sl	Razreši
 restore	setup	sl	obnovi
 restore failed	setup	sl	Obnovitev je splodletela
 restore finished	setup	sl	obnovitev končana
-restore started, this might take a view minutes ...	setup	sl	obnovitev se je začela kar lahko traja nekaj minut
+restore started, this might take a few minutes ...	setup	sl	obnovitev se je začela kar lahko traja nekaj minut
 restoring a backup will delete/replace all content in your database. are you sure?	setup	sl	Obnova rezervne kopije bo zbrisala/zamenjala vso vsebino podatkovne baze. Ste prepričani?
 return to setup	setup	sl	Vrnitev v namestitev
 run installation tests	setup	sl	Poženi namestitvene teste

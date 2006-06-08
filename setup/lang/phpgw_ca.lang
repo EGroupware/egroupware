@@ -57,7 +57,7 @@ auto-created user accounts expire	setup	ca	Els comptes creats automàticament per
 available version	setup	ca	Versió disponible
 back to the previous screen	setup	ca	Tornar a la pantalla anterior
 back to user login	setup	ca	Tornar a l'inici de sessió d'usuari
-back's up your db now, this might take a view minutes	setup	ca	s'està fent la còpia de seguretat de la vostra base de dades. Això trigarà uns minuts
+back's up your db now, this might take a few minutes	setup	ca	s'està fent la còpia de seguretat de la vostra base de dades. Això trigarà uns minuts
 backup '%1' deleted	setup	ca	còpia de seguretat '%1' esborrada
 backup '%1' renamed to '%2'	setup	ca	còpia de seguretat '%1' renomenada com a '%2'
 backup '%1' restored	setup	ca	còpia de seguretat '%1' restaurada
@@ -66,7 +66,7 @@ backup failed	setup	ca	Ha fallat la còpia de seguretat
 backup finished	setup	ca	còpia de seguretat finalitzada
 backup now	setup	ca	fent la còpia de seguretat ara
 backup sets	setup	ca	configuració de la còpia de seguretat
-backup started, this might take a view minutes ...	setup	ca	còpia de seguretat iniciada, això pot trigar uns minuts...
+backup started, this might take a few minutes ...	setup	ca	còpia de seguretat iniciada, això pot trigar uns minuts...
 because an application it depends upon was upgraded	setup	ca	perquè una aplicació de la que en depèn s'ha actualitzat
 because it depends upon	setup	ca	perquè depèn de
 because it is not a user application, or access is controlled via acl	setup	ca	perqué no és una aplicació d'usuari, o bé l'accés està controlat per ACL
@@ -371,7 +371,7 @@ resolve	setup	ca	Resoldre
 restore	setup	ca	restaurar
 restore failed	setup	ca	Ha fallat la restauració
 restore finished	setup	ca	restauració finalitzada
-restore started, this might take a view minutes ...	setup	ca	s'ha iniciat la restauració, això pot trigar uns minuts...
+restore started, this might take a few minutes ...	setup	ca	s'ha iniciat la restauració, això pot trigar uns minuts...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	ca	Restaurar uns còpia de seguretat pot esborrar/reemplaçar tot el vostre contingut de la base de dades. Esteu segurs?
 return to setup	setup	ca	Tornar a la instal·lació
 run installation tests	setup	ca	Arranca els test d'instal·lació

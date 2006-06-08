@@ -58,7 +58,7 @@ auto-created user accounts expire	setup	pt-br	Usuários criados automaticamente e
 available version	setup	pt-br	Versão Disponível
 back to the previous screen	setup	pt-br	Voltar a tela anterior
 back to user login	setup	pt-br	Voltar a tela de conexão
-back's up your db now, this might take a view minutes	setup	pt-br	Fazer backup de sua base de dados agora. Isto pode demorar alguns minutos...
+back's up your db now, this might take a few minutes	setup	pt-br	Fazer backup de sua base de dados agora. Isto pode demorar alguns minutos...
 backup '%1' deleted	setup	pt-br	Backup '%1' removido
 backup '%1' renamed to '%2'	setup	pt-br	Backup '%1' renomeado para '%2'
 backup '%1' restored	setup	pt-br	Backup '%1' restaurado
@@ -67,7 +67,7 @@ backup failed	setup	pt-br	Backup falhou
 backup finished	setup	pt-br	Backup terminou
 backup now	setup	pt-br	Fazer backup agora
 backup sets	setup	pt-br	Configurações de backup
-backup started, this might take a view minutes ...	setup	pt-br	Backup iniciado. Isto pode demorar alguns minutos...
+backup started, this might take a few minutes ...	setup	pt-br	Backup iniciado. Isto pode demorar alguns minutos...
 because an application it depends upon was upgraded	setup	pt-br	Porque um aplicativo que ele depende foi atualizado
 because it depends upon	setup	pt-br	pois depende de
 because it is not a user application, or access is controlled via acl	setup	pt-br	porque não é uma aplicação de usuário ou o acesso é controlado através das regras de acesso
@@ -374,7 +374,7 @@ resolve	setup	pt-br	Resolver
 restore	setup	pt-br	Restaurar
 restore failed	setup	pt-br	Restauração falhou
 restore finished	setup	pt-br	Restauração terminou
-restore started, this might take a view minutes ...	setup	pt-br	Restauração iniciou. Isto pode demorar alguns minutos...
+restore started, this might take a few minutes ...	setup	pt-br	Restauração iniciou. Isto pode demorar alguns minutos...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	pt-br	Restaurar um backup poderá remover/substituir todo o conteúdo de sua base de dados. Você tem certeza?
 return to setup	setup	pt-br	Retornar ao Configurador
 run installation tests	setup	pt-br	Executar testes de instalação

@@ -74,7 +74,7 @@ auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten 
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
 back to user login	setup	de	Zurück zur Benutzeranmeldung
-back's up your db now, this might take a view minutes	setup	de	Sichert Ihre DB jetzt direkt, das kann einige Minuten dauern
+back's up your db now, this might take a few minutes	setup	de	Sichert Ihre DB jetzt direkt, das kann einige Minuten dauern
 backup '%1' deleted	setup	de	Datensicherung '%1' gelöscht
 backup '%1' renamed to '%2'	setup	de	Datensicherung '%1' nach '%2' umbenannt
 backup '%1' restored	setup	de	Datensicherung '%1' zurückgesichert
@@ -286,7 +286,7 @@ install backup	setup	de	Datensicherung installieren
 install language	setup	de	Sprachen installieren
 install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	de	Sprachen installieren oder aktualisieren: Domain(alle),[Konfigurationsbenutzer(admin)],Passwort,[[+]Sprache1[,Sprache2,...]] + hinzufügen, keine Sprachen aktualisiert die installierten
 installation finished	setup	de	Installation beendet
-installation started, this might take a view minutes ...	setup	de	Installation gestartet, das kann einige Minuten dauern ...
+installation started, this might take a few minutes ...	setup	de	Installation gestartet, das kann einige Minuten dauern ...
 installed	setup	de	installiert
 instructions for creating the database in %1:	setup	de	Anweisungen um eine Datenbank unter %1 anzulegen:
 invalid ip address	setup	de	Ungültige IP Adresse
@@ -429,7 +429,7 @@ resolve	setup	de	Lösen
 restore	setup	de	Wiederherstellen
 restore failed	setup	de	Wiederherstellen fehlgeschlagen
 restore finished	setup	de	Wiederherstellen beendet
-restore started, this might take a view minutes ...	setup	de	Wiederherstellung gestartet, das kann einige Minuten dauern ...
+restore started, this might take a few minutes ...	setup	de	Wiederherstellung gestartet, das kann einige Minuten dauern ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	de	Das Wiederherstellen einer Datensicherung löscht / ersetzt den Inhalt Ihrer Datenbank. Sind Sie sicher?
 return to setup	setup	de	Zurück zum Setup
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	de	Führt eine Aktualisierung des Datenbank Schema aus (falls notwendig): Domain(alle),[Konfigurationsbenutzer(admin)],Passwort

@@ -85,7 +85,7 @@
 	{
 		if (is_resource($f = $db_backup->fopen_backup()))
 		{
-			echo '<p align="center">'.lang('backup started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
+			echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 			$db_backup->backup($f);
 			fclose($f);
 			$setup_tpl->set_var('error_msg',lang('backup finished'));
@@ -95,7 +95,7 @@
 			$setup_tpl->set_var('error_msg',$f);
 		}
 	}
-	$setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" title="'.htmlspecialchars(lang("back's up your DB now, this might take a view minutes")).'" value="'.htmlspecialchars(lang('backup now')).'" />');
+	$setup_tpl->set_var('backup_now_button','<input type="submit" name="backup" title="'.htmlspecialchars(lang("back's up your DB now, this might take a few minutes")).'" value="'.htmlspecialchars(lang('backup now')).'" />');
 	$setup_tpl->set_var('upload','<input type="file" name="uploaded" /> &nbsp;'.
 		'<input type="submit" name="upload" value="'.htmlspecialchars(lang('upload backup')).'" title="'.htmlspecialchars(lang("uploads a backup to the backup-dir, from where you can restore it")).'" />');
 
@@ -140,7 +140,7 @@
 
 		if (is_resource($f = $db_backup->fopen_backup($file,true)))
 		{
-			echo '<p align="center">'.lang('restore started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
+			echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 			$db_backup->restore($f);
 			fclose($f);
 			$setup_tpl->set_var('error_msg',lang("backup '%1' restored",$file));

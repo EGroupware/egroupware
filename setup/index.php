@@ -320,7 +320,7 @@
 							}
 							if (is_resource($f = $db_backup->fopen_backup($_FILES['uploaded']['tmp_name'],true)))
 							{
-								echo '<p align="center">'.lang('restore started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
+								echo '<p align="center">'.lang('restore started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 								$db_backup->restore($f,$_POST['convert_charset']);
 								fclose($f);
 								echo '<p align="center">'.lang('restore finished')."</p>\n";
@@ -354,7 +354,7 @@
 						$db_backup =& CreateObject('phpgwapi.db_backup');
 						if (is_resource($f = $db_backup->fopen_backup()))
 						{
-							echo '<p align="center">'.lang('backup started, this might take a view minutes ...')."</p>\n".str_repeat(' ',4096);
+							echo '<p align="center">'.lang('backup started, this might take a few minutes ...')."</p>\n".str_repeat(' ',4096);
 							$db_backup->backup($f);
 							fclose($f);
 							echo '<p align="center">'.lang('backup finished')."</p>\n";

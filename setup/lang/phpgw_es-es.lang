@@ -72,7 +72,7 @@ auto-created user accounts expire	setup	es-es	Las cuentas creadas automáticament
 available version	setup	es-es	Versión disponible
 back to the previous screen	setup	es-es	Volver al menú anterior
 back to user login	setup	es-es	Volver al inicio de sesión de usuario
-back's up your db now, this might take a view minutes	setup	es-es	realiza una copia de seguridad de la base de datos. Puede tardar unos minutos
+back's up your db now, this might take a few minutes	setup	es-es	realiza una copia de seguridad de la base de datos. Puede tardar unos minutos
 backup '%1' deleted	setup	es-es	se ha borrado la copia de seguridad '%1'
 backup '%1' renamed to '%2'	setup	es-es	la copia de seguridad '%1' se ha renombrado a '%2'
 backup '%1' restored	setup	es-es	se ha restaurado la copia de seguridad '%1'
@@ -82,7 +82,7 @@ backup finished	setup	es-es	finalizó la copia de seguridad
 backup now	setup	es-es	hacer copia de seguridad ahora
 backup sets	setup	es-es	conjuntos de copia de seguridad
 backup skipped!	setup	es-es	¡Se ha omitido la copia de seguridad!
-backup started, this might take a view minutes ...	setup	es-es	copia de seguridad iniciada, puede tardar unos minutos...
+backup started, this might take a few minutes ...	setup	es-es	copia de seguridad iniciada, puede tardar unos minutos...
 because an application it depends upon was upgraded	setup	es-es	porque se actualizó una aplicación de la que depende
 because it depends upon	setup	es-es	porque depende de
 because it is not a user application, or access is controlled via acl	setup	es-es	porque no es una aplicación de usuario, o el acceso está controlado por ACL
@@ -283,7 +283,7 @@ install backup	setup	es-es	instalar copia de seguridad
 install language	setup	es-es	Instalar idiomas
 install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	es-es	Instalar o actualizar traducciones: doinio (todos), [usuario de configuración (admin)], contraseña, [[+]idioma1[, idioma2,...]] + añadidos, ningún idioma actualiza los existentes
 installation finished	setup	es-es	La instalación ha finalizado
-installation started, this might take a view minutes ...	setup	es-es	La instalación ha empezado. Esto puede tardar unos minutos...
+installation started, this might take a few minutes ...	setup	es-es	La instalación ha empezado. Esto puede tardar unos minutos...
 installed	setup	es-es	instaladas
 instructions for creating the database in %1:	setup	es-es	Instrucciones para crear la base de datos en %1:
 invalid ip address	setup	es-es	La dirección IP no es válida
@@ -431,7 +431,7 @@ resolve	setup	es-es	Resolver
 restore	setup	es-es	restaurar
 restore failed	setup	es-es	Se ha producido un falla al restaurar
 restore finished	setup	es-es	Se terminó de restaurar
-restore started, this might take a view minutes ...	setup	es-es	Se comenzó a restaurar. Esto puede tardar unos minutos...
+restore started, this might take a few minutes ...	setup	es-es	Se comenzó a restaurar. Esto puede tardar unos minutos...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	es-es	Restaurar una copia de seguridad borrará/sustituirá todo el contenido de la base de datos. ¿Está seguro?
 return to setup	setup	es-es	Volver a la instalación
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	es-es	ejecutar una actualización del esquema de la base de datos (si es necesario): dominio (todos,[usuario de configuración (admin)], contraseña

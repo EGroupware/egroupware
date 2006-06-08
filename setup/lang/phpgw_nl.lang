@@ -57,7 +57,7 @@ auto-created user accounts expire	setup	nl	Automatisch aangemaakte gebruikers ac
 available version	setup	nl	Beschikbare versie
 back to the previous screen	setup	nl	Terug naar het vorige scherm
 back to user login	setup	nl	Terug naar gebruikerslogin
-back's up your db now, this might take a view minutes	setup	nl	maakt nu een backup van uw DB, dit kan enkele minuten duren
+back's up your db now, this might take a few minutes	setup	nl	maakt nu een backup van uw DB, dit kan enkele minuten duren
 backup '%1' deleted	setup	nl	backup '%1' verwijderd
 backup '%1' renamed to '%2'	setup	nl	backup '%1' hernoemd in '%2'
 backup '%1' restored	setup	nl	backup '%1' teruggezet
@@ -66,7 +66,7 @@ backup failed	setup	nl	Backup is mislukt
 backup finished	setup	nl	backup voltooid
 backup now	setup	nl	backup nu
 backup sets	setup	nl	backup sets
-backup started, this might take a view minutes ...	setup	nl	backup gestart, dit kan enkele minute duren ...
+backup started, this might take a few minutes ...	setup	nl	backup gestart, dit kan enkele minute duren ...
 because an application it depends upon was upgraded	setup	nl	omdat een toepassing waar het afhankelijk van is, is bijgewerkt
 because it depends upon	setup	nl	omdat het afhankelijk is van
 because it is not a user application, or access is controlled via acl	setup	nl	omdat het geen gebruikerstoepassing is, of omdat de toegang geregeld wordt via ACL
@@ -362,7 +362,7 @@ resolve	setup	nl	Oplossen
 restore	setup	nl	terugzetten
 restore failed	setup	nl	Terugzetten mislukte
 restore finished	setup	nl	terugzetten is voltooid
-restore started, this might take a view minutes ...	setup	nl	terugzetten is gestart, dat kan een paar minuten duren...
+restore started, this might take a few minutes ...	setup	nl	terugzetten is gestart, dat kan een paar minuten duren...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	nl	Een backup terugzetten zal alle inhoud van uw database verwijderen/overschrijven. Weet u het zeker?
 return to setup	setup	nl	Ga terug naar installatie
 run installation tests	setup	nl	Voer de installatie testen uit

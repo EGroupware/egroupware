@@ -71,7 +71,7 @@ auto-created user accounts expire	setup	sk	Automaticky vytvorený pou¾ívateµský ú
 available version	setup	sk	Dostupná verzia
 back to the previous screen	setup	sk	Naspä» na predchádzajúcu stránku
 back to user login	setup	sk	Naspä» na prihlásenie pou¾ívateµa
-back's up your db now, this might take a view minutes	setup	sk	vykoná okam¾itú zálohu va¹ej databázy, potrvá to zopár minút
+back's up your db now, this might take a few minutes	setup	sk	vykoná okam¾itú zálohu va¹ej databázy, potrvá to zopár minút
 backup '%1' deleted	setup	sk	záloha '%1' zmazaná
 backup '%1' renamed to '%2'	setup	sk	záloha '%1' premenovaná na '%2'
 backup '%1' restored	setup	sk	záloha '%1' obnovená
@@ -81,7 +81,7 @@ backup finished	setup	sk	zálohovanie sa skonèilo
 backup now	setup	sk	zálohuj teraz
 backup sets	setup	sk	umiestnenie záloh
 backup skipped!	setup	sk	Záloha preskoèená!
-backup started, this might take a view minutes ...	setup	sk	záloha spustená, potrvá to zopár minút
+backup started, this might take a few minutes ...	setup	sk	záloha spustená, potrvá to zopár minút
 because an application it depends upon was upgraded	setup	sk	preto¾e aplikácia, na ktorej závisí, bola aktualizovaná
 because it depends upon	setup	sk	preto¾e závisí na
 because it is not a user application, or access is controlled via acl	setup	sk	preto¾e nie je pou¾ívateµskou aplikáciou, alebo je prístup kontrolovaný cez ACL
@@ -269,7 +269,7 @@ install backup	setup	sk	in¹talova» zálohu
 install language	setup	sk	In¹talova» jazyk
 install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones	setup	sk	in¹talova» alebo aktualizova» preklady: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + pridáva, bez jazykov aktualizuje existujúce jazyky
 installation finished	setup	sk	In¹talácia je ukonèená
-installation started, this might take a view minutes ...	setup	sk	In¹talácia sa zaèína, potrvá to niekoµko minút...
+installation started, this might take a few minutes ...	setup	sk	In¹talácia sa zaèína, potrvá to niekoµko minút...
 installed	setup	sk	nain¹talované
 instructions for creating the database in %1:	setup	sk	In¹trukcie pre vytvorenie databázy v %1:
 invalid ip address	setup	sk	Chybná IP adresa
@@ -409,7 +409,7 @@ resolve	setup	sk	Vyrie¹i»
 restore	setup	sk	Obnovi»
 restore failed	setup	sk	Obnova sa nepodarila
 restore finished	setup	sk	obnova dokonèená
-restore started, this might take a view minutes ...	setup	sk	obnova sa zaèala, potrvá to zopár minút...
+restore started, this might take a few minutes ...	setup	sk	obnova sa zaèala, potrvá to zopár minút...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	sk	Obnova zo zálohy zma¾e/prepí¹e celý obsah databázy. Ste si istí?
 return to setup	setup	sk	Návrat do In¹talátora
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	sk	Spusti» aktualizácie databázovej schémy, ak je nevyhnutné: domain(all),[config user(admin)],password

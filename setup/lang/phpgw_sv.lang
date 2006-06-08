@@ -54,7 +54,7 @@ auto-created user accounts expire	setup	sv	Autoskapade användarkonton  förfaller
 available version	setup	sv	Tillgänglig version
 back to the previous screen	setup	sv	Tillbaka till föregående sida
 back to user login	setup	sv	Tillbaka till användarlogin
-back's up your db now, this might take a view minutes	setup	sv	Backar upp din databas, kan ta några minuter
+back's up your db now, this might take a few minutes	setup	sv	Backar upp din databas, kan ta några minuter
 backup '%1' deleted	setup	sv	backup %1 raderad
 backup '%1' renamed to '%2'	setup	sv	backup %1 omdöpt till %2
 backup '%1' restored	setup	sv	backup %1 återläst
@@ -63,7 +63,7 @@ backup failed	setup	sv	backup misslyckades
 backup finished	setup	sv	backup färdig
 backup now	setup	sv	backa upp nu
 backup sets	setup	sv	backup-set
-backup started, this might take a view minutes ...	setup	sv	Backup har påbörjats, kan ta några minuter
+backup started, this might take a few minutes ...	setup	sv	Backup har påbörjats, kan ta några minuter
 because an application it depends upon was upgraded	setup	sv	på grund av att en applikation som den var beroende av uppgraderats
 because it depends upon	setup	sv	eftersom den är beroende av
 because it is not a user application, or access is controlled via acl	setup	sv	eftersom det inte är en användarapplikation, eller för att åtkomst kontrolleras med en ACL
@@ -347,7 +347,7 @@ resolve	setup	sv	Lösa
 restore	setup	sv	återställa
 restore failed	setup	sv	Återställning misslyckades
 restore finished	setup	sv	Återställning klar
-restore started, this might take a view minutes ...	setup	sv	återställning startad, detta kan ta några minuter...
+restore started, this might take a few minutes ...	setup	sv	återställning startad, detta kan ta några minuter...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	sv	Återställning av backup kommer att radera/ersätta allt innehåll i databasen. Är du säker?
 return to setup	setup	sv	Återgå till Setup
 run installation tests	setup	sv	Kör installationstest
