@@ -352,21 +352,9 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
         $output->endElement($uri, 'LocURI');
         $output->endElement($uri, 'Source');
 
-	if(session_id() != '') {
+	if(session_id() != '' && !strpos($this->_targetURI,'syncml_sessionid')) {
 		$output->startElement($uri, 'RespURI', $attrs);
-		if($_SERVER['HTTPS'] == 'on') {
-			$httpPrefix = 'https://';
-		} else {
-			$httpPrefix = 'http://';
-		}
-		
-		if($_SERVER['SERVER_PORT'] != '443' && $_SERVER['SERVER_PORT'] != '80') {
-			$port = ':'. $_SERVER['SERVER_PORT'];
-		} else {
-			$port = '';
-		}
-		
-		$output->characters($httpPrefix . $_SERVER['SERVER_NAME'] . $port . $_SERVER['PHP_SELF'] . '?syncml_sessionid=' . session_id());
+		$output->characters($this->_targetURI . '?syncml_sessionid=' . session_id());
 		$output->endElement($uri, 'RespURI');
 	}
 
