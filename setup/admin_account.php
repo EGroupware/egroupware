@@ -186,7 +186,7 @@
 				}
 			}
 		}
-		insert_default_prefs(-2);	// set some default prefs
+		insert_default_prefs($defaultgroupid);	// set some default prefs
 
 		/* Creation of the demo accounts is optional - the checkbox is on by default. */
 		if(get_var('create_demo',Array('POST')))
