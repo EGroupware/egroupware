@@ -241,7 +241,7 @@ function do_backup($arg,$quite_check=false)
 			$db_backup =& CreateObject('phpgwapi.db_backup');
 			if (is_resource($f = $db_backup->fopen_backup($backup)))
 			{
-				echo lang('Backup started, this might take a view minutes ...')."\n";
+				echo lang('Backup started, this might take a few minutes ...')."\n";
 				$db_backup->backup($f);
 				fclose($f);
 				echo lang('Backup finished')."\n";
@@ -415,7 +415,7 @@ function do_install($args)
 		{
 			fail(31,lang('Restore failed'));
 		}
-		echo lang('Restore started, this might take a view minutes ...')."\n";
+		echo lang('Restore started, this might take a few minutes ...')."\n";
 		$db_backup->restore($f,$charset);
 		fclose($f);
 		echo lang('Restore finished')."\n";
@@ -434,7 +434,7 @@ function do_install($args)
 		$GLOBALS['egw_setup']->system_charset = strtolower($charset);
 		$GLOBALS['egw_setup']->db->Link_ID->SetCharSet($charset);
 
-		echo lang('Installation started, this might take a view minutes ...')."\n";
+		echo lang('Installation started, this might take a few minutes ...')."\n";
 		$setup_info = $GLOBALS['egw_setup']->process->pass($setup_info,'new',false,True);
 		echo lang('Installation finished')."\n";
 	}	
