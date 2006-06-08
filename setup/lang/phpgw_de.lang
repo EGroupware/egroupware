@@ -61,7 +61,7 @@ auto-created user accounts expire	setup	de	Automatisch angelegte Benutzerkonten 
 available version	setup	de	Verfügbare Version
 back to the previous screen	setup	de	Zurück zur vorhergehenden Seite
 back to user login	setup	de	Zurück zur Benutzeranmeldung
-back's up your db now, this might take a view minutes	setup	de	Sichert Ihre DB jetzt direkt, das kann einige Minuten dauern
+back's up your db now, this might take a few minutes	setup	de	Sichert Ihre DB jetzt direkt, das kann einige Minuten dauern
 backup '%1' deleted	setup	de	Datensicherung '%1' gelöscht
 backup '%1' renamed to '%2'	setup	de	Datensicherung '%1' nach '%2' umbenannt
 backup '%1' restored	setup	de	Datensicherung '%1' zurückgesichert
@@ -70,7 +70,7 @@ backup failed	setup	de	Datensicherung fehlgeschlagen
 backup finished	setup	de	Datensicherung beendet
 backup now	setup	de	jetzt sichern
 backup sets	setup	de	Datensicherungen
-backup started, this might take a view minutes ...	setup	de	Datensicherung gestartet, das kann einige Minuten dauern ...
+backup started, this might take a few minutes ...	setup	de	Datensicherung gestartet, das kann einige Minuten dauern ...
 because an application it depends upon was upgraded	setup	de	da eine Anwendung von der sie abhängt upgegradet wurde
 because it depends upon	setup	de	weil es abhängt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Anwendung ist, oder der Zugriff über ACL kontrolliert wird
@@ -381,7 +381,7 @@ resolve	setup	de	Lösen
 restore	setup	de	Wiederherstellen
 restore failed	setup	de	Wiederherstellen fehlgeschlagen
 restore finished	setup	de	Wiederherstellen beendet
-restore started, this might take a view minutes ...	setup	de	Wiederherstellung gestartet, das kann einige Minuten dauern ...
+restore started, this might take a few minutes ...	setup	de	Wiederherstellung gestartet, das kann einige Minuten dauern ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	de	Das Wiederherstellen einer Datensicherung löscht / ersetzt den Inhalt Ihrer Datenbank. Sind Sie sicher?
 return to setup	setup	de	Zurück zum Setup
 run installation tests	setup	de	Installationstests starten
