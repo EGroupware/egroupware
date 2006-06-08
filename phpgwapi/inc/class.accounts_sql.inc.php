@@ -107,7 +107,6 @@ class accounts_backend
 	{
 		//echo "<p>accounts_sql::save(".print_r($data,true).")</p>\n";
 		$to_write = $data;
-		unset($to_write['account_id']);
 		unset($to_write['account_passwd']);
 		
 		// encrypt password if given or unset it if not
@@ -117,19 +116,34 @@ class accounts_backend
 			{
 				$GLOBALS['egw']->auth =& CreateObject('phpgwapi.auth');
 			}
-			$to_write['account_pwd'] = $GLOBALS['egw']->auth->encrypt_sql($data['account_passwd']);
+			// if password it's not already entcrypted, do so now
+			if (!preg_match('/^\\{[a-z5]{3,5}\\}.+/i',$data['account_passwd']) && 
+				!preg_match('/^[0-9a-f]{32}$/',$data['account_passwd']))	// md5 hash
+			{
+				$data['account_passwd'] = $GLOBALS['egw']->auth->encrypt_sql($data['account_passwd']);
+			}
+			$to_write['account_pwd'] = $data['account_passwd'];
 		}
-		if (!(int)$data['account_id'])
+		if (!(int)$data['account_id'] || !$this->id2name($data['account_id']))
 		{
+			if ($to_write['account_id'] < 0) $to_write['account_id'] *= -1;
+
 			if (!in_array($to_write['account_type'],array('u','g')) ||
 				!$this->db->insert($this->table,$to_write,false,__LINE__,__FILE__)) return false;
 				
-			$data['account_id'] = $this->db->get_last_insert_id($this->table,'account_id');
-			if ($data['account_type'] == 'g') $data['account_id'] *= -1;
+			if (!(int)$data['account_id'])
+			{
+				$data['account_id'] = $this->db->get_last_insert_id($this->table,'account_id');
+				if ($data['account_type'] == 'g') $data['account_id'] *= -1;
+			}
 		}
-		elseif (!$this->db->update($this->table,$to_write,array('account_id' => abs($data['account_id'])),__LINE__,__FILE__))
+		else
 		{
-			return false;
+			unset($to_write['account_id']);
+			if (!$this->db->update($this->table,$to_write,array('account_id' => abs($data['account_id'])),__LINE__,__FILE__))
+			{
+				return false;
+			}
 		}
 		return $data['account_id'];
 	}
