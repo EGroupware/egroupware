@@ -216,9 +216,18 @@ class accounts_backend
 		if ($old && !ldap_modify($this->ds,$dn,$to_write) ||
 			!$old && !ldap_add($this->ds,$dn,$to_write))
 		{
-			echo "ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")\n";
-			echo ldap_error($this->ds);
-			return false;
+			$err = true;
+			if (!$old && $is_group)
+			{
+				$to_write['objectclass'][] = 'namedobject';
+				$err = !ldap_add($this->ds,$dn,$to_write);
+			}
+			if ($err)
+			{
+				echo "ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")\n";
+				echo ldap_error($this->ds);
+				return false;
+			}
 		}
 		if ($memberships)	// setting the previous memberships of the renamed account
 		{
@@ -754,7 +763,7 @@ class accounts_backend
 		}
 		if (!ldap_modify($this->ds,'cn='.$cn.','.$this->group_context,array('memberUid' => array_values(array_unique($members)))))
 		{
-			echo "ldap_modify(,'cn=$cn','$this->group_context',array('memberUid' => ".print_r(array_values(array_unique($members)),true)."))\n";
+			echo "ldap_modify(,'cn=$cn,$this->group_context',array('memberUid' => ".print_r(array_values(array_unique($members)),true)."))\n";
 		}
 	}
 
