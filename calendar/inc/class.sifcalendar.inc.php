@@ -229,7 +229,7 @@
 			unset($event['end']);
 
 			foreach($event as $key => $value) {
-				if (substr($key,0,6) != 'recur_') {
+				if (substr($key,0,6) != 'recur_' && substr($key,0,5) != 'alarm') {
 					$search['query']['cal_'.$key] = $value;
 				} else {
 					#$search['query'][$key] = $value;
@@ -286,7 +286,6 @@
 					$alarmData['offset']	= $alarm*60;
 					$alarmData['all']	= 1;
 					$alarmData['owner']	= $GLOBALS['egw_info']['user']['account_id'];
-					error_log(print_r($alarm, true));
 					$this->save_alarm($eventID, $alarmData);
 				}
 			}
