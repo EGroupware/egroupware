@@ -1009,8 +1009,7 @@
 			unset($event['end']);
 
 			foreach($event as $key => $value) {
-				error_log("$key => $value");
-				if (substr($key,0,6) != 'recur_') {
+				if (substr($key,0,6) != 'recur_' && substr($key,0,5) != 'alarm') {
 					$search['query']['cal_'.$key] = $value;
 				} else {
 					#$search['query'][$key] = $value;
