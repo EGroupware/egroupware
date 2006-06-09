@@ -450,10 +450,9 @@
 				}
 				$userData = array(
 					'account_lid'           => $accountPrefix.$_POST['account_lid'],
-					'firstname'             => $_POST['account_firstname'],
-					'lastname'              => $_POST['account_lastname'],
+					'account_firstname'     => $_POST['account_firstname'],
+					'account_lastname'      => $_POST['account_lastname'],
 					'account_passwd'        => $_POST['account_passwd'],
-					'status'                => ($_POST['account_status'] ? 'A' : ''),
 					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
 					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
 					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
@@ -466,7 +465,7 @@
 					'homedirectory'         => $_POST['homedirectory'],
 					'loginshell'            => $_POST['loginshell'],
 					'account_expires_never' => $_POST['never_expires'],
-					'email'                 => $email,
+					'account_email'         => $email,
 					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
 				);
 				if ($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
