@@ -923,13 +923,10 @@
 				{
 					return false;
 				}
-				$memberships = array();
 			}
-			else
-			{
-				$memberships = $GLOBALS['egw']->accounts->memberships($accountid);
-			}
-			if($groupid)
+			$memberships = $GLOBALS['egw']->accounts->memberships($accountid,true);
+
+			if($groupid && !in_array($groupid,$memberships))
 			{
 				$memberships[] = $groupid;
 				
