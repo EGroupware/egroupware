@@ -31,7 +31,17 @@
 
 		function changepass($old,$new)
 		{
-			return $GLOBALS['egw']->auth->change_password($old, $new);
+			if (($ret = $GLOBALS['egw']->auth->change_password($old, $new)))
+			{
+				$GLOBALS['hook_values']['account_id'] = $GLOBALS['egw_info']['user']['account_id'];
+				$GLOBALS['hook_values']['old_passwd'] = $old;
+				$GLOBALS['hook_values']['new_passwd'] = $new;
+
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'changepassword'
+				),False,True);	// called for every app now, not only enabled ones)
+			}
+			return $ret;
 		}
 
 		function list_methods($_type='xmlrpc')
