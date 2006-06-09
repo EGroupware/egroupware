@@ -46,16 +46,11 @@
 			$username = $GLOBALS['egw']->translation->convert($username,$GLOBALS['egw']->translation->charset(),'utf-8');
 			$passwd = $GLOBALS['egw']->translation->convert($passwd,$GLOBALS['egw']->translation->charset(),'utf-8');
 
-			if(!$ldap = @ldap_connect($GLOBALS['egw_info']['server']['ldap_host']))
+			if(!$ldap = $GLOBALS['egw']->common->ldapConnect())
 			{
 				$GLOBALS['egw']->log->message('F-Abort, Failed connecting to LDAP server for authenication, execution stopped');
 				$GLOBALS['egw']->log->commit();
 				return False;
-			}
-
-			if($GLOBALS['egw_info']['server']['ldap_version3'])
-			{
-				ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 			}
 
 			/* Login with the LDAP Admin. User to find the User DN.  */
