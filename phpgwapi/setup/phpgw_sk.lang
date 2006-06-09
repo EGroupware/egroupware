@@ -631,17 +631,17 @@ priority	common	sk	Priorita
 private	common	sk	Súkromné
 programs	common	sk	Programy
 project	common	sk	Projekt
-public	common	sk	Verejný
+public	common	sk	Verejné
 re-check	htmlarea-SpellChecker	sk	Znovu skontroluj
 read	common	sk	Èíta»
 read this list of methods.	common	sk	Èítaj tento zoznam metód.
-reading	common	sk	naèítavam
+reading	common	sk	Naèítavam
 redo	tinymce	sk	Znovu
 redoes your last action	htmlarea	sk	Znovu vykoná va¹u poslednú akciu
 refresh	tinymce	sk	Obnovi»
-reject	common	sk	Odmietni
+reject	common	sk	Odmietnu»
 remove col	tinymce	sk	Odstráni» ståpec
-remove selected accounts	common	sk	odstráni» vybrané úèty
+remove selected accounts	common	sk	Odstráni» vybrané úèty
 remove shortcut	common	sk	Odstráni» skratku
 remove the	htmlarea-ContextMenu	sk	Odstráò
 remove this node from the document	htmlarea-ContextMenu	sk	Odstráò tento uzol z dokumentu
@@ -687,7 +687,7 @@ select category	common	sk	Vyber kategóriu
 select date	common	sk	Vyber dátum
 select group	common	sk	Vyber skupinu
 select home email address	common	sk	Vyber domácu emailovú adresu
-select multiple accounts	common	sk	vybra» viacero úètov
+select multiple accounts	common	sk	Vybra» viacero úètov
 select one	common	sk	Vyber
 select the default height for the application windows	common	sk	Vyberte predvolenú vý¹ku okien aplikácií
 select the default width for the application windows	common	sk	Vyberte predvolenú ¹írku okien aplikácií

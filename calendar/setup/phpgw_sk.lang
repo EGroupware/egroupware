@@ -63,7 +63,6 @@ default calendar filter	calendar	sk	Predvolený filter kalendára
 default calendar view	calendar	sk	Predvolený pohµad na kalendár
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sk	Predvolená då¾ka novovytvorených udalostí, v minútach.
 default week view	calendar	sk	Predvolený tý¾denný pohµad
-defines the size in minutes of the lines in the day view.	calendar	sk	Definuje, koµkým minútam zodpovedá jeden riadok v dennom pohµade.
 delete series	calendar	sk	Zmaza» sériu
 delete this alarm	calendar	sk	Zmaza» túto pripomienku
 delete this event	calendar	sk	Zmaza» túto udalos»
@@ -113,9 +112,11 @@ filename of the download	calendar	sk	Názov súboru na stiahnutie
 find free timeslots where the selected participants are availible for the given timespan	calendar	sk	Nájs» voµné èasové úseky, kde sú v¹etci uvedení úèastníci voµní
 firstname of person to notify	calendar	sk	Krstné meno upozoròovanej osoby
 for	calendar	sk	pre
+for which views should calendar show distinct lines with a fixed time interval.	calendar	sk	Pre ktoré pohµady má kalendár zobrazova» rozli¹ovacie èiary v pevných èasových intervaloch.
 format of event updates	calendar	sk	Formát správy o zmenách
 forward half a month	calendar	sk	dopredu o polovicu mesiaca
 forward one month	calendar	sk	dopredu o mesiac
+four days view	calendar	sk	©tvordenný pohµad
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sk	Informácie o zaneprázdnení nie sú povolené neprihláseným pou¾ívateµom: po¾ívateµ '%1' je neznámý alebo zadal chybné heslo !!!
 freetime search	calendar	sk	Vyhµadanie voµného èasu
 fri	calendar	sk	Pi
@@ -128,6 +129,7 @@ group invitation	calendar	sk	Pozvanie skupiny
 group planner	calendar	sk	Skupinový plánovaè
 group public only	calendar	sk	Prístupné iba pre skupinu
 groupmember(s) %1 not included, because you have no access.	calendar	sk	Èlenovia skupiny %1 neboli zahrnutí, preto¾e nemáte prístup.
+h	calendar	sk	h
 here is your requested alarm.	calendar	sk	Vami vy¾iadaná pripomienka.
 high priority	calendar	sk	vysoká priorita
 holiday	calendar	sk	Sviatky
@@ -135,6 +137,7 @@ holiday management	calendar	sk	Správa sviatkov
 holidays	calendar	sk	Sviatky
 hours	calendar	sk	hodín
 how far to search (from startdate)	calendar	sk	ako ïaleko hµada» (od dátumu zaèiatku)
+how many minutes should each interval last?	calendar	sk	Koµko minút má trva» ka¾dý interval?
 ical	calendar	sk	iCal
 ical / rfc2445	calendar	sk	iCal - rfc2445
 ical export	calendar	sk	Export iCal
@@ -145,12 +148,12 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sk	Ak tu nezadáte heslo, informácia sa sprístupní ka¾dému kto pozná URL!!!
 ignore conflict	calendar	sk	Ignoruj konflikt
 import	calendar	sk	Import
-import csv-file	calendar	sk	Importova» CSV súbor
+import csv-file	common	sk	Importova» CSV súbor
 interval	calendar	sk	Interval
-intervals in day view	calendar	sk	Èasové rozlí¹enie v dennom pohµade
 invalid email-address "%1" for user %2	calendar	sk	Chybná emailová adresa "%1" pre pou¾ívateµa %2
 last	calendar	sk	Posledné
 lastname of person to notify	calendar	sk	Priezvisko upozoròovanej osoby
+length of the time interval	calendar	sk	Då¾ka èasového intervalu
 link to view the event	calendar	sk	Odkaz na zobrazenie udalosti
 links	calendar	sk	Odkazy
 links, attachments	calendar	sk	Odkazy, prílohy
@@ -173,7 +176,6 @@ no filter	calendar	sk	®iadny Filter
 no matches found	calendar	sk	Nena¹li sa ¾iadne záznamy
 no response	calendar	sk	®iadna odozva
 non blocking	calendar	sk	neblokujúce
-not	calendar	sk	nie
 notification messages for added events	calendar	sk	Tvar správy pre nové udalosti
 notification messages for canceled events	calendar	sk	Tvar správy pri zru¹ení udalosti
 notification messages for disinvited participants	calendar	sk	Tvar správy pre úèastníkov so zru¹ením pozvánky
@@ -246,7 +248,6 @@ show list of upcoming events	calendar	sk	Zobraz zoznam nadchádzajúcich udalostí
 show this month	calendar	sk	uká¾ tento mesiac
 show this week	calendar	sk	uká¾ tento tý¾deò
 single event	calendar	sk	samostatná udalos»
-site configuration	calendar	sk	Nastavenia Stránky
 start	calendar	sk	Zaèiatok
 start date/time	calendar	sk	Dátum/èas zaèiatku
 startdate / -time	calendar	sk	Dátum/èas zaèiatku
@@ -279,9 +280,10 @@ translation	calendar	sk	Preklad
 tue	calendar	sk	Ut
 two weeks	calendar	sk	dva tý¾dne
 updated	calendar	sk	Aktualizované
-use end date	calendar	sk	dátum konca pou¾itia
+use end date	calendar	sk	pou¾i» koncový dátum
 use the selected time and close the popup	calendar	sk	Pou¾i» zvolený èas a zavrie» okno
 view this event	calendar	sk	Zobrazi» túto udalos»
+views with fixed time intervals	calendar	sk	Pohµady s pevnými intervalmi zobrazenia
 wed	calendar	sk	St
 week	calendar	sk	Tý¾deò
 weekday starts on	calendar	sk	Tý¾deò zaèína dòom

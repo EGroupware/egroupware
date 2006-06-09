@@ -479,6 +479,7 @@ korea, republic of	common	fr	COREE, REPUBLIQUE DE
 kuwait	common	fr	KOWAIT
 kyrgyzstan	common	fr	KYRGYZSTAN
 language	common	fr	Langue
+language_direction_rtl	common	fr	language_direction_rtl
 lao peoples democratic republic	common	fr	LAOS, REPUBLIQUE DEMOCRATIQUE DES PEUPLES DU
 last name	common	fr	Nom
 last name of the user, eg. "%1"	common	fr	Nom de famille de l'utilisateur, p.e. "%1"
@@ -761,6 +762,8 @@ san marino	common	fr	SAN MARIN
 sao tome and principe	common	fr	SAO TOME AND PRINCIPE
 saturday	common	fr	Samedi
 saudi arabia	common	fr	ARABIE SAOUDITE
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fr	La version de Savant2 n'est pas identique à celle du package Savant2.
+<br/> Version proposée %1 <br/> Version de Savant2 : %2.
 save	common	fr	Sauver
 search	common	fr	Chercher
 search %1 '%2'	common	fr	Chercher %1 '%2'

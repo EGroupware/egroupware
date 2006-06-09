@@ -49,7 +49,7 @@ alternate email address	admin	fr	Adresse email alternative
 anonymous user	admin	fr	Utilisateur anonyme
 anonymous user (not shown in list sessions)	admin	fr	Utilisateur anonyme (n'apparaît pas dans la liste des sessions)
 anonymous user does not exist!	admin	fr	L'utilisateur anonyme n'existe pas !
-anonymous user has no run-rights for the application!	common	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
+anonymous user has no run-rights for the application!	admin	fr	L'utilisateur anonyme n'a pas le droit d'exécuter cette application !
 appearance	admin	fr	Apparence
 application	admin	fr	Application
 application name	admin	fr	Nom d'application
@@ -68,7 +68,11 @@ are you sure you want to kill this session ?	admin	fr	Etes-vous sûr de vouloir t
 async services last executed	admin	fr	Dernière exécution des services asynchrones
 asynchronous timed services	admin	fr	Services asynchrones
 asyncservices not yet installed or other error (%1) !!!	admin	fr	services asynchrones pas encore installés ou autre erreur (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fr	Tentative d'utiliser la type MIME correct pour ftp à la place de celui par défaut 'application/octet-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fr	Tentative d'utiliser le type MIME correct pour ftp à la place de celui par défaut 'application/octet-stream'
+attribute accountstatus explained	admin	fr	Ceci modifie l'attribut <b><i>accountStatus</i></b> (Status du compte) pour le schéma de QMAIL.
+attribute mail explained	admin	fr	Ceci modifie l'attribut <b><i>-mail-</b></i> du schéma QMAIL. Cet attribut doit toujours être renseigné, c'est aussi le champ de l'adresse de courriel interne de eGW.
+attribute mailalternateaddress explained	admin	fr	Ceci modifie l'attibut <b><i>-mailAlternateAddress-</i></b> (adresse de messagerie alternative) du schéma QMAIL. Celà peut être utilisé comme un alias ou un adressage virtuel.
+attribute mailforwardingaddress explained	admin	fr	Ceci modifie l'attibut <b><i>-mailForwardingAddress-</i></b> (adresse de routage de messagerie) du schéma QMAIL. En cas d'utilisation de cette valeur, elle ne peut être vide.
 authentication / accounts	admin	fr	Authentification / Comptes
 auto create account records for authenticated users	admin	fr	Créer automatiquement les enregistrements de comptes pour les utilisateurs authentifiés
 back to the list	admin	fr	retour à la liste
@@ -380,6 +384,7 @@ the api requires an upgrade	admin	fr	L'API nécessite une mise à jour
 the groups must include the primary group	admin	fr	Les groupes doivent inclure le groupe primaire
 the login and password can not be the same	admin	fr	Le login et le mot de passe ne peuvent être identiques
 the loginid can not be more then 8 characters	admin	fr	Le loginid ne peut pas être composé de plus de 8 caractères
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fr	Nom utilisé en interne (<= 20 caractères), le changer rendra certaines données inaccessibles.
 the testjob sends you a mail everytime it is called.	admin	fr	Le Travail de test vous envoie un mail chaque fois qu'il est appelé.
 the text displayed to the user	admin	fr	le texte montré à l'utilisateur
 the two passwords are not the same	admin	fr	Les deux mots de passe ne sont pas identiques

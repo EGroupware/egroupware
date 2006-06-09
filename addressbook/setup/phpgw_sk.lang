@@ -27,13 +27,13 @@ addvcard	addressbook	sk	Pridaj vizitku VCard
 advanced search	addressbook	sk	Roz¹írené hµadanie
 all contacts	addressbook	sk	V¹etky kontakty
 alt. csv import	addressbook	sk	Alternatívny import z CSV
-always	addressbook	sk	v¾dy
+always	addressbook	sk	V¾dy
 apply changes to all members, whose fields have the same previous content	addressbook	sk	Vykona» zmeny u v¹etkých èlenov, ktorých polo¾ky majú ten istý uvedený obsah
 apply the action on the whole query, not only the shown contacts!!!	addressbook	sk	Vykona» akciu na celom dopyte, NIE iba na zobrazených kontaktoch!!!
 are you shure you want to delete this contact?	addressbook	sk	Naozaj chcete zmaza» tento kontakt?
 are you sure you want to delete this field?	addressbook	sk	Naozaj mám zmaza» túto polo¾ku?
 assistent	addressbook	sk	Pomocník
-assistent phone	addressbook	sk	telefón asistenta
+assistent phone	addressbook	sk	Telefón asistenta
 birthday	common	sk	Narodeniny
 birthdays	common	sk	Narodeniny
 blank	addressbook	sk	Prázdne
@@ -75,7 +75,7 @@ csv-fieldname	addressbook	sk	Pole v CSV
 csv-filename	addressbook	sk	CSV súbor
 custom	addressbook	sk	Vlastné
 custom fields	addressbook	sk	Vlastné polo¾ky
-debug output in browser	addressbook	sk	Ladiací výstup v prehliadaèi
+debug output in browser	addressbook	sk	Ladiaci výstup v prehliadaèi
 default filter	addressbook	sk	©tandardný filter
 delete a single entry by passing the id.	addressbook	sk	Zma¾ záznam zadaním id.
 delete this contact	addressbook	sk	Zmaza» tento kontakt
@@ -83,27 +83,27 @@ delete this organisation including all its contacts	addressbook	sk	Zmaza» túto o
 deleted	addressbook	sk	Zmazané
 deletes the photo	addressbook	sk	Zma¾e obrázok
 department	common	sk	Oddelenie
-departments	addressbook	sk	oddelenia
+departments	addressbook	sk	Oddelenia
 displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sk	Zobrazí na úvodnej stránke pripomienku ku ka¾dým narodeninám, ktoré majú nasta» dnes alebo zajtra. To je tá stránka, ktorá sa zobrazí keï sa prihlásite do eGroupWare, alebo keï kliknete na ikonu Domovskej stránky v eGroupWare.
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sk	Chcete súkromný adresár, ktorý ostatní pou¾ívatelia nemô¾u prezera»? Vy prideµujete prístupové oprávnenia ku svojmu osobnému Adresáru.
 do your really want to delete this contact?	addressbook	sk	Naozaj chcete zmaza» tento kontakt?
-doesn't matter	addressbook	sk	nezále¾í
+doesn't matter	addressbook	sk	Nezále¾í
 domestic	addressbook	sk	Domáci
 download	addressbook	sk	Stiahnutie
 download export file (uncheck to debug output in browser)	addressbook	sk	Ulo¾i» exportovaný súbor (Od¹krtnite ak chcete zobrazi» výsledek v prehliadaèi)
-download this contact as vcard file	addressbook	sk	stiahnu» tento kontakt ak súbor vCard
+download this contact as vcard file	addressbook	sk	Stiahnu» tento kontakt ak súbor vCard
 edit custom field	addressbook	sk	Oprav vlastnú polo¾ku
 edit custom fields	admin	sk	Oprav vlastné polo¾ky
 edit extra account-data in the addressbook	admin	sk	Upravi» extra dáta úètu v Adresári
 edit phonenumbers -	addressbook	sk	Upravi» telefónne èísla -
 email & internet	addressbook	sk	Email & Internet
-empty for all	addressbook	sk	prázdne znamená v¹etko
+empty for all	addressbook	sk	Prázdne znamená v¹etko
 enable an extra private addressbook	addressbook	sk	Zapnú» extra súkromný adresár
 enter the path to the exported file here	addressbook	sk	Zadajte cestu k exportovanému súboru
 error deleting the contact !!!	addressbook	sk	Chyba pri mazaní kontaktu !!!
 error saving the contact !!!	addressbook	sk	Chyba pri ukladaní kontaktu !!!
 existing links	addressbook	sk	Existujúce odkazy
-export	addressbook	sk	export
+export	addressbook	sk	Export
 export as csv	addressbook	sk	Exportova» ako CSV
 export as vcard	addressbook	sk	Exportova» ako VCard
 export contacts	addressbook	sk	Export kontaktov
@@ -148,8 +148,8 @@ import_instructions	addressbook	sk	V Netscape otvorte Adresár a vyberte <b>Expor
 income	addressbook	sk	Príjem
 international	addressbook	sk	Mezinárodný
 label	addressbook	sk	Nálepka
-last modified	addressbook	sk	naposledy zmenené
-last modified by	addressbook	sk	naposledy zmenil:
+last modified	addressbook	sk	Naposledy zmenené
+last modified by	addressbook	sk	Naposledy zmenil:
 ldap context for contacts	admin	sk	LDAP kontext pre kontakty
 ldap host for contacts	admin	sk	LDAP hostiteµ pre kontakty
 ldap root dn for contacts	admin	sk	LDAP koreòové dn pre kontakty
@@ -160,7 +160,7 @@ links	addressbook	sk	Odkazy
 list all categories	addressbook	sk	Zoznam v¹etkých kategórií
 list all customfields	addressbook	sk	Zobrazi» v¹etky pou¾ívateµské polo¾ky
 load vcard	addressbook	sk	Nahra» vizitku VCard
-locations	addressbook	sk	umiestnenia
+locations	addressbook	sk	Umiestnenia
 mark records as private	addressbook	sk	Oznaèi» záznam ako súkromý
 message phone	addressbook	sk	Telefón pre správy
 middle name	addressbook	sk	Prostredné meno
@@ -175,13 +175,13 @@ number	addressbook	sk	Èíslo
 number of records to read (%1)	addressbook	sk	Poèet záznamov k naèítaniu (%1)
 only if there is content	addressbook	sk	Iba ak je tam nejaký obsah
 options for type	admin	sk	Voµby pre tento typ
-organisation	addressbook	sk	organizácia
+organisation	addressbook	sk	Organizácia
 organisations	addressbook	sk	Organizácie
 organisations by departments	addressbook	sk	Organizácie podµa oddelení
 organisations by location	addressbook	sk	Organizácie podµa umiestnenia
 other number	addressbook	sk	Telefón - ostatné
 other phone	addressbook	sk	Iný telefón
-own sorting	addressbook	sk	vlastné triedenie
+own sorting	addressbook	sk	Vlastné triedenie
 pager	common	sk	Pager
 parcel	addressbook	sk	Parcela
 phone number	common	sk	Telefónne èíslo
@@ -191,7 +191,7 @@ please enter a name for that field !	addressbook	sk	Prosím zadajte meno pre túto
 please select only one category	addressbook	sk	Prosím, vyberte iba jednu kategóriu
 postal	common	sk	Po¹tové
 pref	addressbook	sk	Titul
-preferred phone	addressbook	sk	preferovaný telefón
+preferred phone	addressbook	sk	Preferovaný telefón
 prefix	addressbook	sk	Titul
 public key	addressbook	sk	Verejný kµúè
 publish into groups:	addressbook	sk	Publikova» do skupín:
@@ -228,14 +228,14 @@ that field name has been used already !	addressbook	sk	Takýto názov polo¾ky u¾ e
 this person's first name was not in the address book.	addressbook	sk	Takéto meno sa v adresári nenachádza.
 this person's last name was not in the address book.	addressbook	sk	Takéto priezvisko sa v adresári nenachádza.
 timezone	addressbook	sk	Èasové pásmo
-to many might exceed your execution-time-limit	addressbook	sk	príli¹ veµa záznamov mô¾e spôsobi» prekroèenie povoleného èasového limitu
+to many might exceed your execution-time-limit	addressbook	sk	Príli¹ veµa záznamov mô¾e spôsobi» prekroèenie povoleného èasového limitu
 today is %1's birthday!	common	sk	Dnes má narodeniny %1!
 tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
 translation	addressbook	sk	Preklad
 update a single entry by passing the fields.	addressbook	sk	Zmeni» jednotlivý záznam zadaním polo¾iek.
 upload or delete the photo	addressbook	sk	Nahra» alebo vymaza» túto fotku
 use country list	addressbook	sk	Pou¾i» zoznam krajín
-used for links and for the own sorting of the list	addressbook	sk	pou¾íva sa pre odkazy a vlastné spôsoby triedenia zoznamu
+used for links and for the own sorting of the list	addressbook	sk	Pou¾íva sa pre odkazy a vlastné spôsoby triedenia zoznamu
 vcard	common	sk	Vizitka VCard
 vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.
 vcards require a last name entry.	addressbook	sk	Vizitky potøebujú zadané priezvisko.
@@ -244,7 +244,7 @@ warning: all contacts found will be deleted!	addressbook	sk	POZOR: V¹etky kontak
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	sk	Kedy má zoznam kontaktov zobrazova» tento ståpec. "Iba ak je tam nejaký obsah" skryje ståpec v prípade, ak v zobrazení nie je nejaký obsah.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu pou¾íva» pri exporte do CSV. Predvolená je tá, ktorá je pou¾ívaná ako znaková sada v tejto in¹talácii eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sk	Ktoré polo¾ky sa majú exportova». "V¹etky" znamená ka¾dé pole ulo¾ené v Adresári, vrátane pou¾ívateµských polo¾iek. Pracovná alebo domáca adresa obsahuje iba meno, firmu a vybrané adresy.
-whole query	addressbook	sk	celý dopyt
+whole query	addressbook	sk	Celý dopyt
 work phone	addressbook	sk	Telefón do zamestnania
 write (update or add) a single entry by passing the fields.	addressbook	sk	Zapísa» (aktualizova» alebo prida») jednotlivú polo¾ku zadaním polí.
 you are not permitted to delete contact %1	addressbook	sk	Nemáte oprávnenie zmaza» kontakt %1

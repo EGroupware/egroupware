@@ -6,10 +6,8 @@
 00 (disable)	setup	fr	00 (désactiver)
 13 (ntp)	setup	fr	13 (ntp)
 80 (http)	setup	fr	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	fr	<b>Ceci va créer un compte administrateur et trois comptes de démonstration</b><br />Les identifiants et mots de passes des comptes de démonstrations sont: demo/guest, demo2/guest et demo3/guest.
 accounts existing	setup	fr	Comptes déjà créés
 actions	setup	fr	Actions
-add a domain	setup	fr	Ajouter un domaine
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-crées à ce groupe ('Default' sera tenté si ceci est vide.)
 additional settings	setup	fr	Réglages additionnels
 admin first name	setup	fr	Prénom de l'administrateur
@@ -61,7 +59,6 @@ because the enable flag for this app is set to 0, or is undefined	setup	fr	Parce
 bottom	setup	fr	Bas
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fr	Mais nous vous <u>recommendons fortement de sauvegarder</u> vos tables pour le cas où le script endommagerait vos données.<br /><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong>
 cancel	setup	fr	Abandon
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	fr	Ne peut pas créer le fichier header.inc.php à cause de restrictions sur les permissions sur le fichier.<br /> A la place vous pouvez %1 le fichier.
 change system-charset	setup	fr	Changement du jeu de caractère
 charset	setup	fr	ISO-8859-1
 charset to convert to	setup	fr	Conversion vers
@@ -100,7 +97,6 @@ created	setup	fr	Crée
 created header.inc.php!	setup	fr	Créé header.inc.php!
 creating tables	setup	fr	Création de tables en cours
 current system-charset	setup	fr	Jeu de caractère courant
-current system-charset is %1, click %2here%3 to change it.	setup	fr	Le jeu de caractères est %1, cliquez %2ici%3 pour le changer <br />(note: attention, certain navigateur ne le supporte pas, notamment Internet Explorer sous MacOS)
 current version	setup	fr	Version actuelle
 currently installed languages: %1 <br />	setup	fr	Langues installées actuellement: %1 <br />
 database successfully converted from '%1' to '%2'	setup	fr	Base de données convertie de '%1' à '%2' avec succès
@@ -138,7 +134,6 @@ edit your existing header.inc.php	setup	fr	Modifier votre fichier header.inc.php
 edit your header.inc.php	setup	fr	Modifier votre fichier header.inc.php
 egroupware administration manual	setup	fr	Manuel d'Administration eGroupWare
 enable for extra debug-messages	setup	fr	Activer pour les messages de déboguage supplémentaires
-enable ldap version 3	setup	fr	Activer le support du protocole version 3 pour LDAP
 enable mcrypt	setup	fr	Activer MCrypt
 enter some random text for app session encryption	setup	fr	Entrez du texte au hasard pour le cryptage des sessions applicatives
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	fr	Entrez du texte au hasard pour le <br />cryptage app_session (nécessite mcrypt)
@@ -156,13 +151,9 @@ enter your http proxy server port	setup	fr	Entrez le port de votre serveur proxy
 enter your http proxy server username	setup	fr	Entrez le nom d'utilisateur pour le proxy HTTP
 error in admin-creation !!!	setup	fr	Erreur lors de la création admin !!!
 error in group-creation !!!	setup	fr	Erreur lors de la création groupe !!!
-export egroupware accounts from sql to ldap	setup	fr	Exporter les comptes eGroupWare de SQL vers LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	fr	L'export a été complété!  Vous allez devoir régler les mots de passe des utilisateurs manuellement.
-export sql users to ldap	setup	fr	Exporter les utilisateurs SQL vers LDAP
 false	setup	fr	Faux
 file	setup	fr	Fichier
 file type, size, version, etc.	setup	fr	Type de fichier, taille, version, etc.
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	fr	Pour une nouvelle install, choisir importer.  Pour convertir les comptes SQL existants vers LDAP, choisir exporter
 force selectbox	setup	fr	Forcer la boîte de sélection
 found existing configuration file. loading settings from the file...	setup	fr	J'ai trouvé un fichier de configuration existant. Je charge les réglages depuis ce fichier...
 go back	setup	fr	Retour arrière
@@ -189,11 +180,8 @@ if you did not receive any errors, your tables have been	setup	fr	Si vous n'avez
 if you running this the first time, don't forget to manualy %1 !!!	setup	fr	Si vous exécutez ceci pour la première fois, n'oubliez pas  de faire manuellement %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	fr	Si vous utilisez des langues qui appartiennent aux mêmes jeux de caractères (exemple: Europe de l'ouest), vous n'avez pas besoin de définir le jeu de caractère au niveau du système
 image type selection order	setup	fr	Ordre de sélection de type d'image
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	fr	Importer les comptes de LDAP vers la table des comptes eGroupWare (pour une nouvelle installation utilisant les comptes SQL)
 import has been completed!	setup	fr	L'import a été complété!
-import ldap users/groups	setup	fr	Importer les utilisateurs/groupes LDAP
 importing old settings into the new format....	setup	fr	J'importe les vieux réglages dans le nouveau format....
-include root (this should be the same as server root unless you know what you are doing)	setup	fr	Racine d'inclusion (ceci devrait être la même chose de racine du serveur à moins que vous ne sachiez ce que vous faîtes)
 include_path need to contain "." - the current directory	setup	fr	« include_path » a besoin de contenir "." - le répertoire courant
 install	setup	fr	Installer
 install all	setup	fr	Installer tout
@@ -205,20 +193,15 @@ invalid ip address	setup	fr	Adresse IP invalide
 invalid password	setup	fr	Mot de passe invalide
 is broken	setup	fr	est cassé
 is disabled	setup	fr	est désactivé
-ldap account import/export	setup	fr	Import/export de compte LDAP
 ldap accounts configuration	setup	fr	Configuration des comptes LDAP
 ldap accounts context	setup	fr	Contexte des comptes LDAP
 ldap config	setup	fr	Configuration LDAP
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	fr	Préfixe par défaut du répertoire maison LDAP (p.e. /home pour /home/utilisateur)
 ldap default shell (e.g. /bin/bash)	setup	fr	Shell LDAP par défaut (p.e. /bin/bash)
 ldap encryption type	setup	fr	Type de cryptage LDAP
-ldap export	setup	fr	Export LDAP
-ldap export users	setup	fr	Export utilisateurs LDAP
 ldap groups context	setup	fr	Contexte des groupes LDAP
 ldap host	setup	fr	Hôte LDAP
 ldap import	setup	fr	Import LDAP
-ldap import users	setup	fr	Import utilisateurs LDAP
-ldap modify	setup	fr	Modification LDAP
 ldap root password	setup	fr	Mot de passe root LDAP
 ldap rootdn	setup	fr	Rootdn LDAP
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fr	Filtre de recherche LDAP pour les comptes, par défaut: "(uid=%user)", %domain=domaineEGW
@@ -240,7 +223,6 @@ memory_limit is set to less than 16m: some applications of egroupware need more 
 minimum account id (e.g. 500 or 100, etc.)	setup	fr	ID de compte minimum (p.e. 500 ou 100, etc.)
 modifications have been completed!	setup	fr	Les modifications ont été complétées!
 modify	setup	fr	Modifier
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	fr	Modifier un compte LDAP existant pour stocker et utiliser avec eGroupWare (pour une nouvelle installation utilisant les comptes LDAP)
 multi-language support setup	setup	fr	Setup pour le support multilingue
 name of database	setup	fr	Nom de la base de données
 name of db user egroupware uses to connect	setup	fr	Nom de l'utilisateur de la base de données dont eGroupWare se sert pour se connecter
@@ -270,7 +252,6 @@ or	setup	fr	ou
 or %1continue to the header admin%2	setup	fr	ou %1continuer vers la configuration d'entête%2
 or http://webdav.domain.com (webdav)	setup	fr	ou http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	fr	Ou nous pouvons tenter de créer la base de données pour vous:
-password needed for configuration	setup	fr	Mot de passe nécessaire pour la configuration
 password of db user	setup	fr	Mot de passe de l'utilisateur de la base de données
 passwords did not match, please re-enter	setup	fr	Les mots de passe ne correspondaient pas, essayez encore SVP
 path information	setup	fr	Information de chemin
@@ -322,7 +303,6 @@ select to download file	setup	fr	Choisissez pour downloader le fichier
 select where you want to store/retrieve file contents	setup	fr	Choisissez où vous voulez stocker/récupérer les contenus de fichiers
 select where you want to store/retrieve filesystem information	setup	fr	Choisissez où vous voulez stocker/récupérer les informations sur le système de fichiers
 select where you want to store/retrieve user accounts	setup	fr	Choisissez où vous voulez stocker/récupérer les informations de comptes utilisateurs
-select which group(s) will be exported (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être exporté(s) (l'appartenance au groupe sera conservée)
 select which group(s) will be imported (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être importé(s) (l'appartenance au groupe sera conservée)
 select which group(s) will be modified (group membership will be maintained)	setup	fr	Choisissez quel(s) groupe(s) va(vont) être modifié(s) (l'appartenance au groupe sera conservée)
 select which languages you would like to use	setup	fr	Choisissez quelles langues vous voudriez utiliser
@@ -342,7 +322,6 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractère en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.
 settings	setup	fr	Réglages
 setup	setup	fr	Installation
-setup demo accounts in ldap	setup	fr	Configurer des comptes de démo dans LDAP
 setup main menu	setup	fr	Menu principal de configuration
 setup the database	setup	fr	Configurer la base de données
 setup/config admin login	setup	fr	Page de connexion pour la configuration et l'installation
@@ -379,9 +358,6 @@ this has to be outside the webservers document-root!!!	setup	fr	Ceci doit figure
 this might take a while, please wait ...	setup	fr	Cela peu prendre un certain temps, veuillez patienter ...
 this program will convert your database to a new system-charset.	setup	fr	Ce programme va convertir les informations de votre base de données vers le nouveau jeu de caractère.
 this program will help you upgrade or install different languages for egroupware	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans eGroupWare
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	fr	Cette section va vous aider à exporter les utilisateurs et groupes des tables de comptes de eGroupWare vers votre arbre LDAP
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	fr	Cette section va vous aider à importer les utilisateurs et groupes de votre arborescence LDAP vers les tables de comptes d'eGroupWare
-this section will help you setup your ldap accounts for use with egroupware	setup	fr	Cette section va vous aider à configurer vos comptes LDAP pour les utiliser dans eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br />Note: la valeur par défaut a été générée au hasard.
 this stage is completed<br />	setup	fr	Cette étape est complétée<br />
 to a version it does not know about	setup	fr	vers une version qu'il ne connaît pas
@@ -414,7 +390,6 @@ we can proceed	setup	fr	Nous pouvons continuer
 we will automatically update your tables/records to %1	setup	fr	Nous allons automatiquement mettre à jour vos tables/enregistrements vers %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fr	Nous allons démarrer une série de tests qui vont prendre quelques minutes. Cliquez sur le lien ci-dessous pour commencer.
 welcome to the egroupware installation	setup	fr	Bienvenue sur l'installateur eGroupWare
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	fr	Quel type de gestion de sessions voulez-vous utiliser (la gestion de session PHP4 devrait être plus performante)?
 which database type do you want to use with egroupware?	setup	fr	Quel type de base de données voulez-vous utiliser avec eGroupWare?
 world readable	setup	fr	visible par tous
 world writable	setup	fr	accès en écriture pour tous
@@ -422,12 +397,10 @@ would you like egroupware to cache the phpgw info array ?	setup	fr	Voulez-vous q
 would you like egroupware to check for a new version<br />when admins login ?	setup	fr	Voudriez-vous que eGroupWare vérifie la disponibilité d'une nouvelle version<br />quand les administrateurs se connectent ?
 would you like to show each application's upgrade status ?	setup	fr	Voulez-vous afficher le statut de mise à jour de chaque application ?
 writable by the webserver	setup	fr	accès en écriture pour le serveur Web
-write config	setup	fr	Ecrire la configuration
 yes	setup	fr	Oui
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fr	Vous semblez utiliser une version pre-beta de eGroupWare.<br />Ces versions ne sont plus supportées, et il n'y a pas de possibilité de mise à jour pour elles dans le setup.<br /> Vous devriez d'abord mettre votre version à jour vers la version 0.9.10 (la dernière version à supporter les mises à jour pre-beta) <br />puis mettre à jour depuis cette version jusqu'à la version actuelle.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fr	Vous semblez utiliser une ancienne version de PHP<br />Il est recommandé de faire une mise à jour.<br />Les anciennes versions de PHP pourraient ne pas fonctionner correctement, ou pas du tout, avec eGroupWare.<br /><br />SVP faites une mise à jour à la dernière version %1
 you appear to be running version %1 of egroupware	setup	fr	Vous semblez utiliser la version %1 d'eGroupWare
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	fr	Vous semblez utiliser une version de PHP plus ancienne que 4.1.0. eGroupWare nécessite maintenant 4.1.0 ou plus récent
 you appear to have %1 support.	setup	fr	Votre support %1 semble activé
 you appear to have php session support. enabling php sessions.	setup	fr	Votre support sessions PHP semble activé. J'active le support de sessions PHP
 you appear to have xml support enabled	setup	fr	Votre support XML semble activé
@@ -443,7 +416,6 @@ you must enter a username for the admin	setup	fr	Vous devez entrer un nom d'util
 you need to add some domains to your header.inc.php.	setup	fr	Vous devez ajouter quelques domaines dans votre header.inc.php.
 you need to select your current charset!	setup	fr	Vous devez sélectionner votre jeu de caractères!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	fr	Vous devriez soit le désinstaller et le ré-installer, soit tenter une réparation manuelle
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	fr	Vous devrez charger votre propre schéma LDAP dans votre serveur LDAP centralisé - lisez <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	fr	Vous utilisez un ancien format de fichier de configuration...
 you're using an old header.inc.php version...	setup	fr	Vous utilisez une ancienne version du fichier header.inc.php...
 your applications are current	setup	fr	Vos applications sont à jour
