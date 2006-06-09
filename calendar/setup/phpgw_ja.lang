@@ -1,0 +1,310 @@
+%1 %2 in %3	calendar	ja	%3　の　%1 %2
+%1 records imported	calendar	ja	%1 件インポートされました
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	ja	%1 件読み込みました(まだインポートされていません。戻ってテストインポートのチェックを外してやりなおしてください)
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	ja	<b>注意</b>: カレンダーは　%1　に指定した、あなたの国の祝祭日を使用します。これはあなたの %2 で変更可能です。<br />祝祭日は %3 %4　から自動的にインストールされます。%5　から変更することが可能です。
+a non blocking event will not conflict with other events	calendar	ja	この予定(ノンブロッキング)は他の予定とダブルブッキング可能です
+accept or reject an invitation	calendar	ja	予定への出欠席
+accepted	calendar	ja	了解済
+access denied to the calendar of %1 !!!	calendar	ja	%1 のカレンダーへのアクセスを拒否されました。 　　
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	ja	通知された理由：追加、キャンセル、受諾、拒否
+actions	calendar	ja	実行
+add alarm	calendar	ja	アラームを追加
+added	calendar	ja	追加済
+after current date	calendar	ja	現在の日付より後
+alarm	calendar	ja	アラーム
+alarm added	calendar	ja	アラーム追加済
+alarm deleted	calendar	ja	アラーム削除済
+alarm for %1 at %2 in %3	calendar	ja	%3　の　%2 の　%1 アラーム
+alarm management	calendar	ja	アラーム管理
+alarms	calendar	ja	アラーム
+all categories	calendar	ja	全カテゴリ
+all day	calendar	ja	全日
+all events	calendar	ja	全イベント
+all participants	calendar	ja	全参加者
+allows to edit the event again	calendar	ja	再度イベント編集可能
+apply the changes	calendar	ja	変更を適用
+are you sure you want to delete this country ?	calendar	ja	この国の休日を削除してもよろしいですか?
+are you sure you want to delete this holiday ?	calendar	ja	この休日を削除してもよろしいですか?
+back half a month	calendar	ja	半月戻る
+back one month	calendar	ja	1月戻る
+before current date	calendar	ja	以前
+before the event	calendar	ja	イベントの前
+birthday	calendar	ja	誕生日
+busy	calendar	ja	先約有
+by	calendar	ja	by
+calendar event	calendar	ja	カレンダーイベント
+calendar holiday management	admin	ja	休日設定
+calendar menu	calendar	ja	カレンダーメニュー
+calendar preferences	calendar	ja	カレンダーユーザ設定
+calendar settings	admin	ja	カレンダー設定
+calendar-fieldname	calendar	ja	カレンダーファイル名
+can't add alarms in the past !!!	calendar	ja	過去にアラームを追加できません
+canceled	calendar	ja	キャンセルされた
+charset of file	calendar	ja	ファイルのキャラクタセット
+close the window	calendar	ja	ウインドを閉じる
+compose a mail to all participants after the event is saved	calendar	ja	イベントを保存した後に全参加者へのメールを作成する
+copy of:	calendar	ja	次の複製：
+copy this event	calendar	ja	この予定をコピーする
+countries	calendar	ja	国一覧
+country	calendar	ja	国
+create an exception at this recuring event	calendar	ja	リピートする予定の例外を作成する
+create new links	calendar	ja	新しいリンクを作成する
+csv	calendar	ja	CSV
+csv-fieldname	calendar	ja	CSV フィールド名
+csv-filename	calendar	ja	CSV ファイル名
+custom fields	common	ja	カスタム項目
+daily	calendar	ja	日単位
+days	calendar	ja	日
+days of the week for a weekly repeated event	calendar	ja	毎週ある予定の日数
+days repeated	calendar	ja	曜日
+dayview	calendar	ja	日表示
+default appointment length (in minutes)	calendar	ja	標準の予約の長さ(分単位)
+default calendar filter	calendar	ja	カレンダーの初期選択
+default calendar view	calendar	ja	カレンダーの初期表示
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	ja	新規に作成された予定の標準の長さ（分単位）。例：60分または1時間
+default week view	calendar	ja	標準の週単位表示
+defines the size in minutes of the lines in the day view.	calendar	ja	日単位表示の各行の分ごとのサイズ
+delete series	calendar	ja	連続削除しますか
+delete this alarm	calendar	ja	このアラームを削除しますか
+delete this event	calendar	ja	この予定を削除しますか
+delete this exception	calendar	ja	この例外を削除しますか
+delete this series of recuring events	calendar	ja	この連続した、リピートする予定を削除しますか
+disinvited	calendar	ja	参加できない
+display status of events	calendar	ja	イベント状況表示
+displayed view	calendar	ja	表示
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	ja	先頭ページ(あなたが eGroupWare　に入ったときやホームページのアイコンをクリックしたときに表示されるページ)にあなたの標準カレンダーを表示しますか。
+do you want a weekview with or without weekend?	calendar	ja	週表示に週末を入れますか、はずしますか。
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	ja	新規または変更された予定について通知を受けますか。あなた自身での変更も通知されます。<br>特定の変更についてだけ通知するように制限をかけることが可能です。各事項はそれより前にリストされている全ての通知を含みます。全変更は主題、概要、参加者が含まれますが、参加者からの返事は含まれません。もし予定作成者が通知を要求した場合は、作成者は参加者からの出欠応答を必ず受け取ります。
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	ja	Emailでの予約の要約を受け取りますか。<br>要約は当日の朝か、週間要約の場合は月曜にあなたの通常のEmailアドレスに送信されます。　
+do you wish to autoload calendar holidays files dynamically?	admin	ja	休日ファイルを自動ロードする
+download	calendar	ja	ダウンロード
+download this event as ical	calendar	ja	iCal としてこの予定をダウンロードする
+duration of the meeting	calendar	ja	会議の時間
+edit exception	calendar	ja	例外を編集
+edit series	calendar	ja	連続訂正
+edit this event	calendar	ja	この予定を編集
+edit this series of recuring events	calendar	ja	この連続予定を編集
+empty for all	calendar	ja	全て空にする
+end	calendar	ja	終了
+end date/time	calendar	ja	終了日時
+enddate	calendar	ja	終了日
+enddate / -time of the meeting, eg. for more then one day	calendar	ja	終了日時 / 会議時間。例：1日以上
+enddate of the export	calendar	ja	エキスポートの終了日時
+ends	calendar	ja	終了日
+error adding the alarm	calendar	ja	アラーム追加のエラー
+error: importing the ical	calendar	ja	エラー： iCal インポート出来ませんでした
+error: no participants selected !!!	calendar	ja	エラー：参加者が選択されていません
+error: saving the event !!!	calendar	ja	エラー：予定を保存出来ませんでした
+error: starttime has to be before the endtime !!!	calendar	ja	エラー：開始日時は終了日時よりも先でないといけません
+event copied - the copy can now be edited	calendar	ja	予定のコピーが終了しました。コピーの編集可能です。
+event deleted	calendar	ja	予定は削除されました
+event details follow	calendar	ja	予定詳細：
+event saved	calendar	ja	予定が保存されました
+event will occupy the whole day	calendar	ja	予定は全日です
+exception	calendar	ja	例外
+exceptions	calendar	ja	例外
+existing links	calendar	ja	登録済みのリンク
+export	calendar	ja	エクスポート
+extended	calendar	ja	拡張
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	ja	拡張更新は必ず予定詳細が含まれます。iCal　は他の特定のカレンダーアプリケーションによってインポートすることが出来ます。
+fieldseparator	calendar	ja	フィールド分割文字
+filename	calendar	ja	ファイル名
+filename of the download	calendar	ja	ダウンロードのファイル名
+find free timeslots where the selected participants are availible for the given timespan	calendar	ja	指定した期間のうち、選択した参加者が参加可能な空き時間をみつける
+firstname of person to notify	calendar	ja	通知する人の名前
+for	calendar	ja	対象者
+format of event updates	calendar	ja	予定更新のフォーマット
+forward half a month	calendar	ja	半月進む
+forward one month	calendar	ja	一月進む
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	ja	freebusy: 不明なユーザ '%1'。パスワードの間違いか、ログインしていないユーザ向けには公開されていません。
+freetime search	calendar	ja	空き時間検索
+fri	calendar	ja	金
+full description	calendar	ja	詳細
+fullname of person to notify	calendar	ja	被通知者の姓名
+general	calendar	ja	一般
+global public and group public	calendar	ja	パブリックと所属グループ
+global public only	calendar	ja	パブリック
+group invitation	calendar	ja	グループへの通知
+group planner	calendar	ja	グループ予定表
+group public only	calendar	ja	所属グループ
+groupmember(s) %1 not included, because you have no access.	calendar	ja	グループメンバー %1　は含まれていません。あなたにはアクセス権がありません。
+here is your requested alarm.	calendar	ja	あなたの要求したアラームです。
+high priority	calendar	ja	高優先
+holiday	calendar	ja	休日
+holiday management	calendar	ja	休日管理
+holidays	calendar	ja	休日一覧
+hours	calendar	ja	時
+how far to search (from startdate)	calendar	ja	どのくらい検索(開始日時から)
+ical	calendar	ja	iCal
+ical / rfc2445	calendar	ja	iCal / rfc2445
+ical export	calendar	ja	iCal エクスポート
+ical file	calendar	ja	iCal ファイル
+ical import	calendar	ja	iCal インポート
+ical successful imported	calendar	ja	iCal インポート成功
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	ja	もしチェックした休日が週末の場合は、次の月曜日とします。
+if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	ja	もしここでパスワードの設定をしなかった場合は、URL を知っている人全員に情報が公開されます。
+ignore conflict	calendar	ja	無視
+import	calendar	ja	インポート
+import csv-file	calendar	ja	CSVファイルをインポート
+interval	calendar	ja	間隔
+intervals in day view	calendar	ja	日単位表示での間隔
+invalid email-address "%1" for user %2	calendar	ja	ユーザ %2 の Email アドレス "%1" は正しくありません
+last	calendar	ja	最後
+lastname of person to notify	calendar	ja	被通知者の名前
+link to view the event	calendar	ja	予定へのリンク
+links	calendar	ja	リンク
+links, attachments	calendar	ja	リンク、添付
+listview	calendar	ja	リスト
+location	calendar	ja	場所
+location to autoload from	admin	ja	自動ロード元
+location, start- and endtimes, ...	calendar	ja	場所、開始と終了時間等、、、
+mail all participants	calendar	ja	全参加者にメールする
+make freebusy information available to not loged in persons?	calendar	ja	freebusy 情報をログインしていない人にも公開しますか。
+minutes	calendar	ja	分
+modified	calendar	ja	変更済
+mon	calendar	ja	月
+monthly	calendar	ja	月単位
+monthly (by date)	calendar	ja	月単位(日)
+monthly (by day)	calendar	ja	月単位(曜日)
+monthview	calendar	ja	月表示
+new search with the above parameters	calendar	ja	上記内容で検索
+no events found	calendar	ja	予定はみつかりませんでした
+no filter	calendar	ja	フィルタなし
+no matches found	calendar	ja	該当しませんでした
+no response	calendar	ja	返答なし
+non blocking	calendar	ja	非ブロッキング(ダブルブッキング可能)
+not	calendar	ja	非
+notification messages for added events	calendar	ja	追加した予定の通知メッセージ
+notification messages for canceled events	calendar	ja	キャンセルした予定の通知メッセージ
+notification messages for disinvited participants	calendar	ja	召集されなかった人への通知メッセージ
+notification messages for modified events	calendar	ja	変更した予定の通知メッセージ
+notification messages for your alarms	calendar	ja	あなたのアラームへの通知メッセージ
+notification messages for your responses	calendar	ja	あなたの返答への通知メッセージ
+number of records to read (%1)	calendar	ja	読み込みの報告数 (%1)
+observance rule	calendar	ja	休日のルールを適用
+occurence	calendar	ja	曜日指定
+old startdate	calendar	ja	旧開始日時
+on %1 %2 %3 your meeting request for %4	calendar	ja	%1 %2 %3 での %4 への 会議リクエスト
+on all modification, but responses	calendar	ja	全ての変更、返答以外
+on any time change too	calendar	ja	いかなる時間変更も
+on invitation / cancelation only	calendar	ja	通知/キャンセルのみ
+on participant responses too	calendar	ja	参加者の返答も
+on time change of more than 4 hours too	calendar	ja	4時間より上の時間変更も
+one month	calendar	ja	一ヶ月
+one week	calendar	ja	一週
+one year	calendar	ja	一年
+only the initial date of that recuring event is checked!	calendar	ja	繰替えしの予定の初期日時のみチェックされます。
+open todo's:	calendar	ja	ToDo リストを開く
+overlap holiday	calendar	ja	振替休日
+participants	calendar	ja	参加者
+participants disinvited from an event	calendar	ja	予定に召集されなかった参加者
+participants, resources, ...	calendar	ja	参加者、リソース等
+password for not loged in users to your freebusy information?	calendar	ja	あなたの freebusy 情報を閲覧するための、ログインしていない人のパスワード
+people holiday	calendar	ja	国民の休日
+permission denied	calendar	ja	許可されていません
+planner by category	calendar	ja	カテゴリ別の予定表
+planner by user	calendar	ja	ユーザ別の予定表
+please note: you can configure the field assignments after you uploaded the file.	calendar	ja	注意：アップロードした「後」からフィールド割り振りの設定が出来ます
+preselected group for entering the planner	calendar	ja	予定表に入るために予め選択されたグループ
+previous	calendar	ja	前
+private and global public	calendar	ja	プライベートと共有
+private and group public	calendar	ja	プライベートと所属グループ
+private only	calendar	ja	プライベートのみ
+re-edit event	calendar	ja	再編集
+receive email updates	calendar	ja	Email での更新を受信する
+receive summary of appointments	calendar	ja	予約の概要を受信する
+recurrence	calendar	ja	繰返し
+recurring event	calendar	ja	繰返し予定
+rejected	calendar	ja	拒否済み
+repeat days	calendar	ja	繰返す曜日
+repeat the event until which date (empty means unlimited)	calendar	ja	どの日時まで予定をくり返しますか(空白の場合は無制限)
+repeat type	calendar	ja	タイプ
+repeating event information	calendar	ja	繰返しイベント
+repeating interval, eg. 2 to repeat every second week	calendar	ja	繰返し期間。例：2の場合は第二週目ごとにくり返す。
+repetition	calendar	ja	繰返し
+repetitiondetails (or empty)	calendar	ja	繰返し詳細
+reset	calendar	ja	再入力
+resources	calendar	ja	リソース
+rule	calendar	ja	ルール
+sat	calendar	ja	土
+saves the changes made	calendar	ja	変更個所を保存
+saves the event ignoring the conflict	calendar	ja	バッティングを無視して予定を保存
+scheduling conflict	calendar	ja	予定のバッティング
+select a %1	calendar	ja	%1 を選択
+select a time	calendar	ja	時間を選択
+select resources	calendar	ja	リソースを選択
+select who should get the alarm	calendar	ja	誰がアラームを受け取るか選択
+set a year only for one-time / non-regular holidays.	calendar	ja	1度だけの、例外的な休日の年を設定
+set new events to private	calendar	ja	新規予定をプライベートとして設定
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	ja	あなたが断わった参加通知もカレンダーに表示しますか。<br> あなたのカレンダーに表示されたままでも、後程(例：スケジュールのバッティングを削除した時に)受諾する事ができます。
+should new events created as private by default ?	calendar	ja	標準として新規予定をプライベートとしますか。
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	ja	ログインしていない人があなたの freebusy 情報を閲覧する事を許可しますか。この情報を保護するために通常のパスワードとは別のもう1つのパスワードの設定をする事が出来ます。freebusy 情報は iCal フォーマットになっていて、あなたが忙しい時だけを含みます。この情報は予定の名称、概要や場所は含まれません。あなたの freebusy 情報の URL は  %1 です。
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	ja	予定への参加者の状態(承諾、拒否等...)を参加者の名前の後にブラケットで表示しますか。
+show default view on main screen	calendar	ja	初期表示をメイン画面に表示する
+show invitations you rejected	calendar	ja	断わった参加通知を表示する
+show list of upcoming events	calendar	ja	予定のリストを表示する
+show this month	calendar	ja	今月を表示する
+show this week	calendar	ja	今週を表示する
+single event	calendar	ja	スポット予定
+site configuration	calendar	ja	サイト設定
+start	calendar	ja	開始
+start date/time	calendar	ja	開始日時
+startdate / -time	calendar	ja	開始日時 / 時間
+startdate and -time of the search	calendar	ja	開始日時と検索時間
+startdate of the export	calendar	ja	エクスポートの開始日時
+startrecord	calendar	ja	記録開始
+status changed	calendar	ja	ステータス変更
+submit to repository	calendar	ja	転送
+sun	calendar	ja	日
+tentative	calendar	ja	仮承諾
+test import (show importable records <u>only</u> in browser)	calendar	ja	インポートのテスト(ブラウザで<u>のみ</u>インポート可能な記録を表示する)
+this day is shown as first day in the week or month view.	calendar	ja	この日は週または月表示で初日として表示します。
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	ja	日表示終了を設定します。この時間より後の予定は日表示の後に表示されます。
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	ja	日表示開始を設定します。この時間より前の予定は日表示の前に表示されます。<br>この時間は新規予定の標準開始時間としても使用されます。
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	ja	予定表に入るために予め選択されたこのグループを予定表にていつでも変更可能です。
+this message is sent for canceled or deleted events.	calendar	ja	このメッセージはキャンセルまたは削除された予定のために送信されます。
+this message is sent for modified or moved events.	calendar	ja	このメッセージは変更または移動した予定のために送信されます。
+this message is sent to disinvited participants.	calendar	ja	このメッセージは予定に召集されなかった参加者に送信されます。
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	ja	このメッセージはあなたの予定への参加者で、新規予定の通知を要求した人全員に送信されます。<br>予定のデータのかわりに特定の変数を使用する事が出来ます。最初の行は Email のタイトルです。
+this message is sent when you accept, tentative accept or reject an event.	calendar	ja	このメッセージは、あなたが予定への参加を受諾、一時的に受諾する、または断わるかした場合に送信されます。
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	ja	このメッセージは特定の予定に対してアラームを設定した場合に送信されます。必要とおもわれる情報全てが含まれています。
+three month	calendar	ja	3ヵ月
+thu	calendar	ja	木
+til	calendar	ja	迄
+timeframe	calendar	ja	時間枠
+timeframe to search	calendar	ja	時間枠検索
+title of the event	calendar	ja	予定のタイトル
+to many might exceed your execution-time-limit	calendar	ja	多くが処理時間制限をこえるかもしれません。
+translation	calendar	ja	翻訳
+tue	calendar	ja	火
+two weeks	calendar	ja	2週間
+updated	calendar	ja	更新
+use end date	calendar	ja	終了日指定
+use the selected time and close the popup	calendar	ja	選択した時間を使用し、ポップアップを閉じる
+view this event	calendar	ja	この予定を見る
+wed	calendar	ja	水
+week	calendar	ja	週
+weekday starts on	calendar	ja	週の初め
+weekdays	calendar	ja	週日
+weekdays to use in search	calendar	ja	検索につかう週日
+weekly	calendar	ja	週単位
+weekview	calendar	ja	週表示
+weekview with weekend	calendar	ja	週末を含む週表示
+weekview without weekend	calendar	ja	週末を含まない週表示
+which events do you want to see when you enter the calendar.	calendar	ja	カレンダーに入ったときにどの予定を表示させますか。
+which of calendar view do you want to see, when you start calendar ?	calendar	ja	どのカレンダー表示をカレンダー開始時に表示しますか。
+whole day	calendar	ja	全日
+wk	calendar	ja	週
+work day ends on	calendar	ja	就業時間（終了）
+work day starts on	calendar	ja	就業時間（開始）
+yearly	calendar	ja	年単位
+yearview	calendar	ja	年表示
+you can either set a year or a occurence, not both !!!	calendar	ja	年か、1回だけで、両方設定することはできません
+you can only set a year or a occurence !!!	calendar	ja	年または1回は設定する必要があります
+you do not have permission to read this record!	calendar	ja	あなたはこの記録を読む許可がありません
+you have a meeting scheduled for %1	calendar	ja	%1 に会議の予定があります
+you have been disinvited from the meeting at %1	calendar	ja	%1の会議にはあなたは招集されていません
+you need to select an ical file first	calendar	ja	iCalファイルを先に選択する必要があります
+you need to set either a day or a occurence !!!	calendar	ja	日または1回は設定する必要があります
+your meeting scheduled for %1 has been canceled	calendar	ja	%1 に予定されていた会議はキャンセルされました
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	ja	%1 に予定されていた会議は　%2 に変更されました
