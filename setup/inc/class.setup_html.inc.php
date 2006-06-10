@@ -166,7 +166,7 @@
 			));
 
 			// manual / help link to the install manual on egroupware.org
-			$manual_remote_egw_url = 'http://egroupware.org/egroupware';
+			$manual_remote_egw_url = 'http://manual.egroupware.org/egroupware';
 			$url_parts = explode('/',$_SERVER['PHP_SELF']);
 			$script = array_pop($url_parts);
 			$lang = get_var('ConfigLang',Array('POST','COOKIE'));
