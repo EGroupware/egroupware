@@ -63,7 +63,6 @@ default calendar filter	calendar	pt-br	Filtro padrão do calendário
 default calendar view	calendar	pt-br	Visualização padrão do calendário
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pt-br	Duração padrão dos novos compromissos. A duração é em minutos, ex. 60 para 1 hora
 default week view	calendar	pt-br	Visualização semanal padrão
-defines the size in minutes of the lines in the day view.	calendar	pt-br	Defina o tamanho em minutos para as linhas na Visão diária
 delete series	calendar	pt-br	Remover série
 delete this alarm	calendar	pt-br	Remover este alarme
 delete this event	calendar	pt-br	Remover este evento
@@ -113,9 +112,11 @@ filename of the download	calendar	pt-br	Nome do arquivo do download
 find free timeslots where the selected participants are availible for the given timespan	calendar	pt-br	Encontrar horário onde os participantes selecionados estão disponíveis
 firstname of person to notify	calendar	pt-br	Primeiro nome da pessoa a ser notificada
 for	calendar	pt-br	para
+for which views should calendar show distinct lines with a fixed time interval.	calendar	pt-br	Para cada visualização a Agenda deverá exibir linhas distintas com intervalos de tempo fixos.
 format of event updates	calendar	pt-br	Formato de atualizção de eventos
 forward half a month	calendar	pt-br	avançar metade de um mês
 forward one month	calendar	pt-br	avançar um mês
+four days view	calendar	pt-br	Visão de 4 dias
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	pt-br	Disponibilidade: Usuário '%1' desconhecido, senha incorreta ou não disponível para os usuários acessando o sistema.
 freetime search	calendar	pt-br	Procurar disponibilidade
 fri	calendar	pt-br	Sex
@@ -128,6 +129,7 @@ group invitation	calendar	pt-br	Convite de grupo
 group planner	calendar	pt-br	Planejamento do Grupo
 group public only	calendar	pt-br	Grupo público somente
 groupmember(s) %1 not included, because you have no access.	calendar	pt-br	Membro(s) %1 não incluído(s), pois você não tem acesso.
+h	calendar	pt-br	h
 here is your requested alarm.	calendar	pt-br	Aqui está o alarme solicitado
 high priority	calendar	pt-br	Alta prioridade
 holiday	calendar	pt-br	Feriado
@@ -135,6 +137,7 @@ holiday management	calendar	pt-br	Gerenciamento de Feriados
 holidays	calendar	pt-br	Feriados
 hours	calendar	pt-br	horas
 how far to search (from startdate)	calendar	pt-br	até onde procurar (da data de início)
+how many minutes should each interval last?	calendar	pt-br	Quantos minutos cada intervalo deverá durar ?
 ical	calendar	pt-br	iCal
 ical / rfc2445	calendar	pt-br	iCal / rfc2445
 ical export	calendar	pt-br	exportação iCal
@@ -147,10 +150,10 @@ ignore conflict	calendar	pt-br	Ignorar conflito
 import	calendar	pt-br	Importar
 import csv-file	common	pt-br	Importar arquivo-CSV
 interval	calendar	pt-br	Intervalo
-intervals in day view	calendar	pt-br	Intervalo na visão diária
 invalid email-address "%1" for user %2	calendar	pt-br	E-mail %1 inválido para o usuário %2
 last	calendar	pt-br	Último
 lastname of person to notify	calendar	pt-br	Sobrenome da pessoa a ser notificada
+length of the time interval	calendar	pt-br	Duração do tempo de intervalo
 link to view the event	calendar	pt-br	Link para visualizar o evento
 links	calendar	pt-br	Links
 links, attachments	calendar	pt-br	Links, Anexos
@@ -173,7 +176,6 @@ no filter	calendar	pt-br	Sem filtro
 no matches found	calendar	pt-br	Nenhum registro encontrado
 no response	calendar	pt-br	Sem resposta
 non blocking	calendar	pt-br	Posse compartilhada
-not	calendar	pt-br	não
 notification messages for added events	calendar	pt-br	Mensagem para notificação de eventos adicionados
 notification messages for canceled events	calendar	pt-br	Mensagem para notificação de eventos cancelados
 notification messages for disinvited participants	calendar	pt-br	Mensagem para notificação de participantes desconvidados
@@ -246,7 +248,6 @@ show list of upcoming events	calendar	pt-br	Exibir a lista de eventos futuros
 show this month	calendar	pt-br	Exibir este mês
 show this week	calendar	pt-br	Exibir esta semana
 single event	calendar	pt-br	Evento único
-site configuration	calendar	pt-br	Configuração do servidor
 start	calendar	pt-br	Início
 start date/time	calendar	pt-br	Início Data/Hora
 startdate / -time	calendar	pt-br	Data Inicial / Horário
@@ -282,6 +283,7 @@ updated	calendar	pt-br	Atualizado
 use end date	calendar	pt-br	Usar data de término
 use the selected time and close the popup	calendar	pt-br	Usar o horário selecionado e fechar a janela
 view this event	calendar	pt-br	Exibir este evento
+views with fixed time intervals	calendar	pt-br	Exibir com tempo de intervalo fixo
 wed	calendar	pt-br	Qua
 week	calendar	pt-br	Semana
 weekday starts on	calendar	pt-br	A semana começa em
@@ -308,4 +310,3 @@ you need to select an ical file first	calendar	pt-br	Você precisa selecionar um 
 you need to set either a day or a occurence !!!	calendar	pt-br	Você deve determinar um dia ou recorrência!!!
 your meeting scheduled for %1 has been canceled	calendar	pt-br	Seu compromisso agendado para %1 foi cancelado
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	pt-br	Seu compromisso agendado para %1 foi remarcado para %2
-h	calendar	pt-br	h
