@@ -715,21 +715,21 @@ class accounts_backend
 	 * Sets the memberships of the given account
 	 *
 	 * @param array $groups array with gidnumbers
-	 * @param int $accountid uidnumber
+	 * @param int $account_id uidnumber
 	 */
-	function set_memberships($groups,$accountid)
+	function set_memberships($groups,$account_id)
 	{
-		//echo "<p>accounts_ldap::set_memberships(".print_r($groups,true).",$accountid)</p>\n";
+		//echo "<p>accounts_ldap::set_memberships(".print_r($groups,true).",$account_id)</p>\n";
 
 		// remove not longer existing memberships
-		if (($old_memberships = $this->memberships($accountid)))
+		if (($old_memberships = $this->memberships($account_id)))
 		{
 			$old_memberships = array_keys($old_memberships);
 			foreach(array_diff($old_memberships,$groups) as $gid)
 			{
 				if (($members = $this->members($gid)))
 				{
-					unset($members[$this->account_id]);
+					unset($members[$account_id]);
 					$this->set_members($members,$gid);
 				}
 			}
@@ -738,7 +738,7 @@ class accounts_backend
 		foreach($old_memberships ? array_diff($groups,$old_memberships) : $groups as $gid)
 		{
 			$members = $this->members($gid);
-			$members[$accountid] = $this->id2name($accountid);
+			$members[$account_id] = $this->id2name($account_id);
 			$this->set_members($members,$gid);
 		}
 	}
