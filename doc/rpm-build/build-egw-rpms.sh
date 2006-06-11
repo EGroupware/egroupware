@@ -52,7 +52,7 @@ PACKAGING=`grep "%define packaging" $SPECFILE | cut -f3 -d' '`
                                                                                                                              
 HOMEBUILDDIR=`whoami`
 #which account to use for checkouts and updates, after that the tree is made anonymous anyway, to allow users to update
-CVSACCOUNT=ext:lkneschke
+#CVSACCOUNT=ext:lkneschke
 #CVSACCOUNT=pserver:anonymous
 ANONCVSDIR=/tmp/build_root/egroupware
 RHBASE=$HOME/rpm
@@ -71,15 +71,14 @@ echo ""											>> $LOGFILE 2>&1
 date                                                        				>> $LOGFILE 2>&1
 cd $ANONCVSDIR
 	
-[ "$CVSACCOUNT" = 'pserver:anonymous' ] && CVS_RSH="ssh" cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware login
+#[ "$CVSACCOUNT" = 'pserver:anonymous' ] && CVS_RSH="ssh" cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware login
 
 if [ ! -d egroupware/phpgwapi ]	# new checkout
 then
-	echo -n "Creating a new checkout using $CVSACCOUNT ... "			>> $LOGFILE 2>&1
+	echo -n "Creating a new checkout ... "			>> $LOGFILE 2>&1
 	svn checkout http://svn.egroupware.org/egroupware/branches/1.2/aliases/all ./
 else										# updating an existing checkout in the build-root
-	echo -n "Updating existing checkout using $CVSACCOUNT ... "			>> $LOGFILE 2>&1
-	cd egroupware						# need to step into the eGW dir (no CVS dir otherwise)
+	echo -n "Updating existing checkout ... "			>> $LOGFILE 2>&1
 	svn update
 fi
 

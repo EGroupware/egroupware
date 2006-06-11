@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
 %define egwversion 1.2
-%define packaging 2
+%define packaging 102
 %define epoch 1
 %define httpdroot /srv/www/htdocs
 %define httpdconfd /etc/apache2/conf.d
@@ -244,6 +244,13 @@ ln -s sitemgr/sitemgr-link
 
 
 %changelog
+* Sat Jun 11 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-102
+- improved SyncML handling
+- improved authentication trough existing imap/pop3 server
+- updated many translations
+- duplicated folders fixed in mydms
+- icalsrv updates
+
 * Wed Apr 11 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-1
 - manual is now available via http://manual.egroupware.org
 - various bugfixes in calendar and projectmanager
