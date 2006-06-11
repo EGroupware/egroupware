@@ -1,45 +1,41 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - Addressbook                                                 *
-  * http://www.egroupware.org                                                *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or(at your   *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-	/* $Id$ */
+/**
+ * Addressbook - birthday reminder on home-page
+ *
+ * @package addressbook
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 	
-	$d1 = strtolower(substr(EGW_APP_INC,0,3));
-	if($d1 == 'htt' || $d1 == 'ftp' )
+if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
+	($days = $GLOBALS['egw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays']))
+{
+	echo "\n<!-- Birthday info -->\n";
+
+	if (!(int) $days) $days = 1;	// old pref
+
+	include_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
+	$contacts =& new bocontacts();
+	
+	$month_start = date('*-m-*',$contacts->now_su-$days*24*3600);
+	$bdays =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family');
+	
+	if (($month_end = date('*-m-*',$contacts->now_su)) != $month_start)
 	{
-		echo "Failed attempt to break in via an old Security Hole!<br>\n";
-		$GLOBALS['egw']->common->phpgw_exit();
+		if (($bdays2 =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family')))
+		{
+			$bdays = !$bdays ? $bdays2 : array_merge($bdays,$bdays2);
+		}
+		unset($bdays2);
 	}
-	unset($d1);
+	unset($month_start); unset($month_end);
 
-	if($GLOBALS['egw_info']['user']['apps']['addressbook']
-		&& $GLOBALS['egw_info']['user']['preferences']['addressbook']['mainscreen_showbirthdays'])
+	if ($bdays)
 	{
-		echo "\n<!-- Birthday info -->\n";
-
-		$c = CreateObject('phpgwapi.contacts');
-		$qfields = array(
-			'n_given'  => 'n_given',
-			'n_family' => 'n_family',
-			'bday'     => 'bday'
-		);
-		$now = time() - ((60 * 60) * (int)$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
-		$today = $GLOBALS['egw']->common->show_date($now,'n/d/');
-		
-		$bdays = $c->read(0,15,$qfields,$today,'tid=n','','',$GLOBALS['egw_info']['user']['account_id']);
-		
-		$title = '<center><font color="#FFFFFF">'.lang('Birthdays').'</font></center>';
-
 		$portalbox = CreateObject('phpgwapi.listbox',
 			Array(
-				'title'     => $title,
+				'title'     => lang('Birthdays'),
 				'primary'   => $GLOBALS['egw_info']['theme']['navbar_bg'],
 				'secondary' => $GLOBALS['egw_info']['theme']['navbar_bg'],
 				'tertiary'  => $GLOBALS['egw_info']['theme']['navbar_bg'],
@@ -50,59 +46,55 @@
 		);
 		$app_id = $GLOBALS['egw']->applications->name2id('addressbook');
 		$GLOBALS['portal_order'][] = $app_id;
-		$var = Array(
+		foreach(Array(
 			'up'       => Array('url' => '/set_box.php', 'app' => $app_id),
 			'down'     => Array('url' => '/set_box.php', 'app' => $app_id),
 			'close'    => Array('url' => '/set_box.php', 'app' => $app_id),
 			'question' => Array('url' => '/set_box.php', 'app' => $app_id),
 			'edit'     => Array('url' => '/set_box.php', 'app' => $app_id)
-		);
-
-		while(list($key,$value) = each($var))
+		) as $key => $contactue)
 		{
-			$portalbox->set_controls($key,$value);
+			$portalbox->set_controls($key,$contactue);
 		}
-
 		$portalbox->data = Array();
-
-		while(list($key,$val) = @each($bdays))
+		for($n = 0; $n <= $days; ++$n)
 		{
-			if(substr($val['bday'],0,strlen($today)) == $today)
+			$day = date('-m-d',$contacts->now_su+$n*24*3600);
+			foreach($bdays as $contact)
 			{
-				$portalbox->data[] = array(
-					'text' => lang("Today is %1's birthday!", $val['n_given'] . ' ' . $val['n_family']),
-					'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $val['id'])
-				);
+				if(substr($contact['bday'],-6) == $day)
+				{
+					switch($n)
+					{
+						case 0: 
+							$text = lang("Today is %1's birthday!", $contact['n_given'].' '.$contact['n_family']);
+							break;
+						case 1:
+							$text = lang("Tomorrow is %1's birthday.", $contact['n_given'].' '.$contact['n_family']);
+							break;
+						default:
+							list($y,$m,$d) = explode('-',$contact['bday']);
+							$text = lang("In %1 days (%2) is %3's birthday.",$n,
+								$GLOBALS['egw']->common->dateformatorder($y,$m,$d,true),
+								$contact['n_given'].' '.$contact['n_family']);
+							break;
+					}
+					$portalbox->data[] = array(
+						'text' => $text,
+						'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $contact['id'])
+					);
+				}
 			}
-//			$tmp = '<a href="'
-//				. $GLOBALS['egw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
-//				. $val['n_given'] . ' ' . $val['n_family'] . '</a>';
-//			echo '<tr><td align="left">' . lang("Today is %1's birthday!", $tmp) . '</td></tr>' . "\n";
-		}
-
-		$tomorrow = $GLOBALS['egw']->common->show_date($now + 86400,'n/d/');
-
-		$bdays = $c->read(0,15,$qfields,$tomorrow,'tid=n','','',$GLOBALS['egw_info']['user']['account_id']);
-
-		while(list($key,$val) = @each($bdays))
-		{
-			if(substr($val['bday'],0,strlen($tomorrow)) == $tomorrow)
-			{
-				$portalbox->data[] = array(
-					'text' => lang("Tomorrow is %1's birthday.",$val['n_given'] . ' ' . $val['n_family']),
-					'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id='.$val['id'])
-				);
-			}
-//			$tmp = '<a href="'
-//				. $GLOBALS['egw']->link('/addressbook/view.php','ab_id=' . $val['id']) . '">'
-//				. $val['n_given'] . ' ' . $val["n_family"] . '</a>';
-//			echo '<tr><td align="left">' . lang("Tomorrow is %1's birthday.", $tmp) . '</td></tr>' . "\n";
 		}
 		if(count($portalbox->data))
 		{
 			echo $portalbox->draw();
 		}
-		unset($portalbox);
-		echo "\n<!-- Birthday info -->\n";
+		unset($portalbox); 
+		unset($days); unset($day);
+		unset($n); unset($y); unset($m); unset($d);
 	}
-?>
+	unset($contacts); unset($bdays);
+
+	echo "\n<!-- Birthday info -->\n";
+}
