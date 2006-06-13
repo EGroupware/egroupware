@@ -643,7 +643,6 @@ class socontacts
 				$rows[$n] = $this->db2data($row);
 			}
 		}
-		// ToDo: read custom-fields, if displayed in the index page
 		return $rows;
 	}
 	

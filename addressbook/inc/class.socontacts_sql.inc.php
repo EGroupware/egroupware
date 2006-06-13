@@ -295,6 +295,10 @@ class socontacts_sql extends so_sql
 			$join .= $this->extra_join;
 			if (is_string($only_keys)) $only_keys = 'DISTINCT '.str_replace(array('contact_id','contact_owner'),
 				array($this->table_name.'.contact_id',$this->table_name.'.contact_owner'),$only_keys);
+			
+			// only return the egw_addressbook columns, to not generate dublicates by the left join
+			// and to not return the NULL for contact_{id|owner} of not found custom fields!
+			if (is_bool($only_keys)) $only_keys = 'DISTINCT '.$this->table_name.'.*';
 				
 			if (isset($filter['owner']))
 			{

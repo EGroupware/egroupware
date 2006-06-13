@@ -57,8 +57,8 @@ class uicontacts extends bocontacts
 			$this->$my = &$GLOBALS['egw']->$class;
 		}
 		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
-		$this->private_addressbook = $this->contacts_repository == 'sql' && $this->prefs['private_addressbook'];
-		
+		$this->private_addressbook = $this->contact_repository == 'sql' && $this->prefs['private_addressbook'];
+
 		$this->org_views = array(
 			'org_name'                  => lang('Organisations'),
 			'org_name,adr_one_locality' => lang('Organisations by location'),
@@ -187,7 +187,7 @@ class uicontacts extends bocontacts
 			$sel_options['org_view'][(string) $content['nm']['org_view']] = $org_name;
 		}
 		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
-
+		
 		$this->tmpl->read('addressbook.index');
 		return $this->tmpl->exec('addressbook.uicontacts.index',$content,$sel_options,$readonlys,$preserv);
 	}
@@ -339,6 +339,20 @@ class uicontacts extends bocontacts
 		//echo "<p>uicontacts::get_rows(".print_r($query,true).")</p>\n";
 		if (!$id_only)
 		{
+			// check if accounts are stored in ldap, which does NOT yet support the org-views
+			if ($this->so_accounts && $query['filter'] === '0' && $query['org_view'])
+			{
+				$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
+				if ($old_state['filter'] === '0')	// user changed to org_view
+				{
+					$query['filter'] = '';			// --> change filter to all contacts
+				}
+				else								// user changed to accounts
+				{
+					$query['org_view'] = '';		// --> change to regular contacts view
+				}
+				unset($old_state);
+			}
 			$GLOBALS['egw']->session->appsession('index','addressbook',$query);
 			// save the state of the index in the user prefs
 			$state = serialize(array(
@@ -352,7 +366,8 @@ class uicontacts extends bocontacts
 			if ($state != $this->prefs['index_state'])
 			{
 				$GLOBALS['egw']->preferences->add('addressbook','index_state',$state);
-				$GLOBALS['egw']->preferences->save_repository();
+				// save prefs, but do NOT invalid the cache (unnecessary)
+				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 			}
 		}
 		if (isset($query['col_filter']['cat_id'])) unset($query['col_filter']['cat_id']);
@@ -426,7 +441,7 @@ class uicontacts extends bocontacts
 			}
 			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
 				$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
-			
+
 			if (!$id_only && $this->prefs['custom_colum'] != 'never' && $rows)	// do we need the custom fields
 			{
 				foreach((array) $rows as $n => $val)
@@ -718,7 +733,8 @@ class uicontacts extends bocontacts
 					}
 					else
 					{
-						$content['msg'] = lang('Error saving the contact !!!');
+						$content['msg'] = lang('Error saving the contact !!!').
+							($this->error ? ' '.$this->error : '');
 						$button = 'apply';	// to not leave the dialog
 					}
 					// writing links for new entry, existing ones are handled by the widget itself

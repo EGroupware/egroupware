@@ -91,6 +91,13 @@ class bocontacts extends socontacts
 	var $business_contact_fields = array();
 	var $home_contact_fields = array();
 
+	/**
+	 * Number and message of last error or false if no error, atm. only used for saving
+	 *
+	 * @var string/boolean
+	 */
+	var $error;
+
 	function bocontacts($contact_app='addressbook')
 	{
 		$this->socontacts($contact_app);
@@ -403,6 +410,7 @@ class bocontacts extends socontacts
 		}
 		if($contact['id'] && !$this->check_perms(EGW_ACL_EDIT,$contact))
 		{
+			$this->error = 'access denied';
 			return false;
 		}
 		// convert categories
@@ -414,11 +422,11 @@ class bocontacts extends socontacts
 		$contact['n_fn'] = $this->fullname($contact);
 		$contact['n_fileas'] = $this->fileas($contact);
 
-		if(!($error_nr = parent::save($contact)))
+		if(!($this->error = parent::save($contact)))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 		}
-		return !$error_nr;
+		return !$this->error;
 	}
 	
 	/**

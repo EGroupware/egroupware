@@ -1,16 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Addressbook Admin-, Preferences- and SideboxMenu-Hooks      *
-* http://www.eGroupWare.org                                                *
-* Written and (c) 2006 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * Addressbook - admin, preferences and sidebox-menus
+ *
+ * @link http://www.egroupware.org
+ * @package addressbook
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @copyright (c) 2006 by Ralf Becker <RalfBecker@outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 /**
  * Class containing admin, preferences and sidebox-menus (used as hooks)
@@ -22,14 +20,14 @@
  */
 class contacts_admin_prefs
 {
-	var $contacts_repository = 'sql';
+	var $contact_repository = 'sql';
 	
 	/**
 	 * constructor
 	 */
 	function contacts_admin_prefs()
 	{
-		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap') $this->contacts_repository = 'ldap';
+		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap') $this->contact_repository = 'ldap';
 	}
 
 	/**
@@ -69,7 +67,7 @@ class contacts_admin_prefs
 				'Grant Access'    => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$appname),
 				'Edit Categories' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uicategories.index&cats_app=' . $appname . '&cats_level=True&global_cats=True')
 			);
-			if ($this->contacts_repository == 'ldap' || $GLOBALS['egw_info']['server']['deny_user_grants_access'])
+			if ($this->contact_repository == 'ldap' || $GLOBALS['egw_info']['server']['deny_user_grants_access'])
 			{
 				unset($file['Grant Access']);
 			}
@@ -176,7 +174,7 @@ class contacts_admin_prefs
 			'admin'  => false,
 		);
 
-		if ($this->contacts_repository == 'sql')
+		if ($this->contact_repository == 'sql')
 		{
 			$GLOBALS['settings']['private_addressbook'] = array(
 				'type'   => 'check',

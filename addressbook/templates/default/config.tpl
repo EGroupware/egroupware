@@ -5,22 +5,14 @@
    <tr class="th">
 	   <td colspan="2"><font color="{th_text}">&nbsp;<b>{title}</b></font></td>
    </tr>
-   <tr bgcolor="{th_err}">
-    <td colspan="2">&nbsp;<b>{error}</b></font></td>
+   <tr>
+    <td colspan="2">&nbsp;<i><font color="red">{error}</i></font></td>
    </tr>
 <!-- END header -->
 <!-- BEGIN body -->
    <tr class="th">
-    <td colspan="2">&nbsp;<b>{lang_Addressbook}/{lang_Contact_Settings}</b></font></td>
+    <td colspan="2">&nbsp;<b>{lang_Addressbook}/{lang_Contact_Settings}</b></td>
    </tr>
-   <!--
-   <tr class="row_on">
-    <td>{lang_Contact_application}:</td>
-    <td><input name="newsettings[contact_application]" value="{value_contact_application}"></td>
-   </tr>
-   <tr class="row_off">
-    <td align="center" colspan="2">{lang_WARNING!!_LDAP_is_valid_only_if_you_are_NOT_using_contacts_for_accounts_storage!}</td>
-   </tr> -->
    <tr class="row_off">
     <td>{lang_Select_where_you_want_to_store_/_retrieve_contacts}.</td>
     <td>
@@ -38,22 +30,15 @@
     <td>{lang_LDAP_context_for_contacts}:</td>
     <td><input name="newsettings[ldap_contact_context]" value="{value_ldap_contact_context}" size="40"></td>
    </tr>
-  <tr class="row_on">
-   <td>{lang_LDAP_root_dn_for_contacts}:</td>
-   <td><input name="newsettings[ldap_contact_dn]" value="{value_ldap_contact_dn}" size="40"></td>
-  </tr>
-  <tr class="row_off">
-   <td>{lang_LDAP_root_pw_for_contacts}:</td>
-   <td><input name="newsettings[ldap_contact_pw]" type="password" value=""></td>
-  </tr>
+   <tr class="th">
+    <td colspan="2">
+    	{lang_Additional_information_about_using_LDAP_as_contact_repository}: 
+    	<a href="addressbook/doc/README" target="_blank">README</a>
+    </td>
+   </tr>
 <!-- END body -->
 <!-- BEGIN footer -->
-  <tr class="th">
-    <td colspan="2">
-&nbsp;
-    </td>
-  </tr>
-  <tr>
+  <tr valign="bottom" style="height: 30px;">
     <td colspan="2" align="center">
       <input type="submit" name="submit" value="{lang_submit}">
       <input type="submit" name="cancel" value="{lang_cancel}">

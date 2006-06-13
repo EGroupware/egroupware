@@ -294,7 +294,7 @@ class so_ldap
 		if((int)$data['owner']) 
 		{
 			// group address book
-			if(!$cn = strtolower($GLOBALS['egw']->accounts->id2name((int)$data['owner']))) 
+			if(!($cn = strtolower($GLOBALS['egw']->accounts->id2name((int)$data['owner']))))
 			{
 				return true;
 			}
@@ -313,49 +313,27 @@ class so_ldap
 			return true;	// only admin is allowd to write accounts!
 		}
 
-		// check if $baseDN exists. If not create new one
-		if(!($result = ldap_read($this->ds, $baseDN, 'objectclass=*')))
+		// check if $baseDN exists. If not create it
+		if (($err = $this->_check_create_dn($baseDN)))
 		{
-			if(ldap_errno($this->ds) == 32 && $cn) 
-			{
-				// create a admin connection to add the needed DN
-				$adminLDAP =& new ldap;
-				$adminDS = $adminLDAP->ldapConnect();
-
-				// emtry does not exist, lets try to create it
-				$baseDNData['objectClass'] = 'organizationalRole';
-				$baseDNData['cn']	= $cn;
-				if(!ldap_add($adminDS, $baseDN, $baseDNData)) 
-				{
-					$adminLDAP->ldapDisconnect();
-					return true;
-				}
-				$adminLDAP->ldapDisconnect();
-			} 
-			else 
-			{
-				return true;
-			}
+			return $err;
 		}
 
 		// check the existing objectclasses of an entry, none = array() for new ones
 		$oldObjectclasses = array();
 		$attributes = array('dn','cn','objectClass','uid');
-		if(!empty($this->data[$this->contacts_id])) 
+		$contactUID	= $this->data[$this->contacts_id];
+		if(!empty($contactUID) &&
+			($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], 
+				'(|(entryUUID='.ldap::quote($contactUID).')(uid='.ldap::quote($contactUID).'))', $attributes)) &&
+			($oldContactInfo = ldap_get_entries($this->ds, $result)) && $oldContactInfo['count'])
 		{
-			$contactUID	= $this->data[$this->contacts_id];
-			
-			$result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], 
-				'(|(entryUUID='.ldap::quote($contactUID).')(uid='.ldap::quote($contactUID).'))', $attributes);
-			
-			$oldContactInfo	= ldap_get_entries($this->ds, $result);
 			foreach($oldContactInfo[0]['objectclass'] as $objectclass)
 			{
 				$oldObjectclasses[]	= strtolower($objectclass);
 			}
 		   	$isUpdate = true;
 		}
-		
 		if(!$contactUID) 
 		{
 			$contactUID = md5($GLOBALS['egw']->common->randomstring(15));
@@ -370,7 +348,7 @@ class so_ldap
 			
 			if(!in_array($objectclass, $oldObjectclasses)) 
 			{
-				$newObjectClasses['objectClass'][] = $objectclass;
+				$ldapContact['objectClass'][] = $objectclass;
 			}
 			if (isset($this->required_subs[$objectclass]))
 			{
@@ -378,7 +356,7 @@ class so_ldap
 				{
 					if(!in_array($sub, $oldObjectclasses)) 
 					{
-						$newObjectClasses['objectClass'][] = $sub;
+						$ldapContact['objectClass'][] = $sub;
 					}
 				}
 			}
@@ -410,20 +388,21 @@ class so_ldap
 			$needRecreation = false;
 
 			// add missing objectclasses
-			if(count($newObjectClasses) > 0) 
+			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses)) 
 			{
-				$result = @ldap_mod_add($this->ds, $dn, $newObjectClasses);
-				if(!$result) 
+				if (!@ldap_mod_add($this->ds, $dn, array('objectClass' => $ldapContact['objectClass']))) 
 				{
 					if(ldap_errno($this->ds) == 69) 
 					{
 						// need to modify structural objectclass
 						$needRecreation = true;
+						
 					} 
 					else 
 					{
+						//echo "<p>ldap_mod_add($this->ds,'$dn',array(objectClass =>".print_r($ldapContact['objectClass'],true)."))</p>\n";
 						error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-						return ldap_errno($this->ds).': '.ldap_error($this->ds);
+						return $this->_error(__LINE__);
 					}
 				}
 			}
@@ -445,45 +424,46 @@ class so_ldap
 				}
 				$newContact['uid'] = $contactUID;
 
-				if(is_array($newObjectClasses['objectClass']) && count($newObjectClasses['objectClass']) > 0) 
+				if(is_array($ldapContact['objectClass']) && count($ldapContact['objectClass']) > 0) 
 				{
-					$newContact['objectclass'] = array_merge($newContact['objectclass'], $newObjectClasses['objectClass']);
+					$newContact['objectclass'] = array_merge($newContact['objectclass'], $ldapContact['objectClass']);
 				}
 
 				if(ldap_delete($this->ds, $dn)) 
 				{
-					if(!ldap_add($this->ds, $newDN, $newContact)) 
+					if(!@ldap_add($this->ds, $newDN, $newContact)) 
 					{
+						//echo "<p>recreate: ldap_add($this->ds,'$newDN',".print_r($newContact,true).")</p>\n";
 						//print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';_debug_array($newContact);exit;
-						return ldap_errno($this->ds).': '.ldap_error($this->ds);
+						return $this->_error(__LINE__);
 					}
-				} 
+				}
 				else 
 				{
 					error_log('class.so_ldap.inc.php ('. __LINE__ .') delete of old '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-					return ldap_errno($this->ds).': '.ldap_error($this->ds);
+					return $this->_error(__LINE__);
 				}
 
 				$dn = $newDN;
 			}
+			unset($ldapContact['objectClass']);
 
-			$result = ldap_modify($this->ds, $dn, $ldapContact);
-			if (!$result) 
+			if (!@ldap_modify($this->ds, $dn, $ldapContact)) 
 			{
+				//echo "<p>ldap_modify($this->ds,'$dn',".print_r($ldapContact,true).")</p>\n";
 				error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-				return ldap_errno($this->ds).': '.ldap_error($this->ds);
+				return $this->_error(__LINE__);
 			}
-		} 
-		else 
+		}
+		else
 		{
 			$dn = 'uid='. ldap::quote($ldapContact['uid']) .','. $baseDN;
 			
-			$result = ldap_add($this->ds, $dn, $ldapContact);
-			
-			if (!$result) 
+			if (!@ldap_add($this->ds, $dn, $ldapContact))
 			{
+				//echo "<p>ldap_add($this->ds,'$dn',".print_r($ldapContact,true).")</p>\n";
 				error_log('class.so_ldap.inc.php ('. __LINE__ .') add of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-				return ldap_errno($this->ds).': '.ldap_error($this->ds);
+				return $this->_error(__LINE__);
 			}
 		}
 		return 0;	// Ok, no error
@@ -516,7 +496,7 @@ class so_ldap
 				"(|(entryUUID=$entry)(uid=$entry))", $attributes)) 
 			{
 				$contactInfo = ldap_get_entries($this->ds, $result);
-				if(ldap_delete($this->ds, $contactInfo[0]['dn'])) 
+				if(@ldap_delete($this->ds, $contactInfo[0]['dn'])) 
 				{
 					$ret++;
 				}
@@ -860,6 +840,68 @@ class so_ldap
 	{
 		return mktime(substr($date,8,2),substr($date,10,2),substr($date,12,2), 
 			substr($date,4,2),substr($date,6,2),substr($date,0,4));
+	}
+	
+	/**
+	 * check if $baseDN exists. If not create it
+	 *
+	 * @param string $baseDN cn=xxx,ou=yyy,ou=contacts,$GLOBALS['egw_info']['server']['ldap_contact_context']
+	 * @return boolean/string fase on success or string with error-message
+	 */
+	function _check_create_dn($baseDN)
+	{
+		// check if $baseDN exists. If not create new one
+		if(@ldap_read($this->ds, $baseDN, 'objectclass=*'))
+		{
+			return false;
+		}
+		if(ldap_errno($this->ds) != 32 || substr($baseDN,0,3) != 'cn=') 
+		{
+			return $this->_error(__LINE__);	// baseDN does NOT exist and we cant/wont create it
+		}
+		// create a admin connection to add the needed DN
+		$adminLDAP =& new ldap;
+		$adminDS = $adminLDAP->ldapConnect();
+		
+		list(,$ou) = explode(',',$baseDN);
+		foreach(array(
+			'ou=contacts,'.$GLOBALS['egw_info']['server']['ldap_contact_context'],
+			$ou.',ou=contacts,'.$GLOBALS['egw_info']['server']['ldap_contact_context'],
+			$baseDN,
+		) as $dn)
+		{
+			if (!@ldap_read($this->ds, $dn, 'objectclass=*') && ldap_errno($this->ds) == 32)
+			{
+				// entry does not exist, lets try to create it
+				list($top) = explode(',',$dn);
+				list($var,$val) = explode('=',$top);
+				$data = array(
+					'objectClass' => $var == 'cn' ? 'organizationalRole' : 'organizationalUnit',
+					$var => $val,
+				);
+				if(!@ldap_add($adminDS, $dn, $data))
+				{
+					//echo "<p>ldap_add($adminDS,'$dn',".print_r($data,true).")</p>\n";
+					$err = $this->_error(__LINE__,$adminDS);
+					$adminLDAP->ldapDisconnect();
+					return $err;
+				}
+			}
+		}
+		$adminLDAP->ldapDisconnect();
+		
+		return false;
+	}
+	
+	/**
+	 * error message for failed ldap operation
+	 *
+	 * @param int $line
+	 * @return string
+	 */
+	function _error($line,$ds=null)
+	{
+		return ldap_error($ds ? $ds : $this->ds).': so_ldap: '.$line;
 	}
 
 	/**
