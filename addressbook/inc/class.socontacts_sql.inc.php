@@ -302,7 +302,7 @@ class socontacts_sql extends so_sql
 				unset($filter['owner']);
 			}
 		}
-		if (!$this->account_repository == 'sql')
+		if ($this->account_repository == 'sql')
 		{
 			if (is_null($owner))	// search for accounts AND contacts of all addressbooks
 			{
