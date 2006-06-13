@@ -662,8 +662,11 @@ class socontacts
 	 */ 
 	function organisations($param)
 	{
-		if (!method_exists($this->somain,'organisations')) return false;
-
+		if (!method_exists($this->somain,'organisations'))
+		{
+			$this->total = 0;
+			return false;
+		}
 		if ($param['search'] && !is_array($param['search']))	
 		{
 			$search = $param['search'];
@@ -678,6 +681,7 @@ class socontacts
 			$param['search'] = $this->data2db($param['search']);
 		}
 		$rows = $this->somain->organisations($param);
+		$this->total = $this->somain->total;
 		//echo "<p>socontacts::organisations(".print_r($param,true).")<br />".$this->somain->db->Query_ID->sql."</p>\n";
 
 		if (!$rows) return array();
