@@ -103,6 +103,7 @@ class so_ldap
 			'jpegphoto'		=> 'jpegphoto',
 			'n_fileas'		=> 'displayname',
 			'label'			=> 'postaladdress',
+			'pubkey'		=> 'userSMIMECertificate',
 		),
 
 		#displayName
@@ -146,7 +147,6 @@ class so_ldap
 		# anniversary
 		# spouseName
 		# companyPhone 
-		# callbackPhone
 		# otherFacsimileTelephoneNumber
 		# radio
 		# telex
@@ -166,16 +166,15 @@ class so_ldap
 			'freebusy_uri'	=> 'freeBusyuri',
 			'calendar_uri'	=> 'calendaruri',
 			'tel_other'		=> 'otherphone',
+			'tel_cell_private' => 'callbackPhone',	// not the best choice, but better then nothing
 		),
 		// additional schema can be added here, including special functions 
 		
 		/**
 		 * still unsupported fields in LDAP:
 		 * --------------------------------
-		 * tel_cell_private - only important one imo.
 		 * tz
 		 * geo
-		 * pubkey - inetOrgPerson has a lot: question is which one is the right one?
 		 */
 	);
 	
