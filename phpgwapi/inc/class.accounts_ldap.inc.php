@@ -333,7 +333,7 @@ class accounts_backend
 	 */
 	function _read_user($account_id)
 	{
-		$sri = ldap_search($this->ds, $this->user_context, 'uidnumber=' . $account_id,
+		$sri = ldap_search($this->ds, $this->user_context, 'uidnumber=' . (int)$account_id,
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword',
 			'shadowexpire','shadowlastchange','homedirectory','loginshell'));
 		
@@ -479,7 +479,7 @@ class accounts_backend
 	function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = null, $query_type='')
 	{
 		//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset, \$query_type=$query_type<br>";
-		$query = strtolower($query);
+		$query = ldap::quote(strtolower($query));
 
 		if($_type != 'groups')
 		{
@@ -605,7 +605,7 @@ class accounts_backend
 	 */
 	function name2id($name,$which='account_lid',$account_type=null)
 	{
-		$name = $this->translation->convert($name,$this->translation->charset(),'utf-8');
+		$name = ldap::quote($this->translation->convert($name,$this->translation->charset(),'utf-8'));
 
 		if ($which == 'account_lid' && $account_type !== 'u') // groups only support account_lid
 		{
@@ -669,7 +669,7 @@ class accounts_backend
 	{
 		if (!(int) $account_id || !($account_lid = $this->id2name($account_id))) return false;
 		
-		$sri = ldap_search($this->ds,$this->group_context,"(&(objectClass=posixGroup)(memberuid=$account_lid))",array('cn','gidnumber'));
+		$sri = ldap_search($this->ds,$this->group_context,'(&(objectClass=posixGroup)(memberuid='.ldap::quote($account_lid).'))',array('cn','gidnumber'));
 		$memberships = array();
 		foreach(ldap_get_entries($this->ds, $sri) as $key => $data)
 		{
@@ -761,7 +761,7 @@ class accounts_backend
 				$members[$key] = $member;
 			}
 		}
-		if (!ldap_modify($this->ds,'cn='.$cn.','.$this->group_context,array('memberUid' => array_values(array_unique($members)))))
+		if (!ldap_modify($this->ds,'cn='.ldap::quote($cn).','.$this->group_context,array('memberUid' => array_values(array_unique($members)))))
 		{
 			echo "ldap_modify(,'cn=$cn,$this->group_context',array('memberUid' => ".print_r(array_values(array_unique($members)),true)."))\n";
 		}
