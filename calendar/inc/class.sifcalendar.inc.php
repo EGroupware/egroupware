@@ -210,8 +210,7 @@
 			#$middleName = ($finalEvent['n_middle']) ? ' '.trim($finalEvent['n_middle']) : '';
 			#$finalEvent['fn']  = trim($finalEvent['n_given']. $middleName .' '. $finalEvent['n_family']);
 
-			error_log(print_r($finalEvent, true));
-
+			#error_log(print_r($finalEvent, true));
 			
 			return $finalEvent;
 		}
@@ -417,8 +416,6 @@
 													if($event['recur_data'] & 8) $occurrences++;
 													break;
 												case 4:
-													error_log(decbin($event['recur_data']));
-													error_log(decbin(8));
 													if($event['recur_data'] & 16) $occurrences++;
 													break;
 												case 5:
