@@ -1,0 +1,18 @@
+eGroupWare Addressbook 1.3+ LDAP support
+========================================
+
+The new Addressbook requires only the inetOrgPerson schema.
+
+If you want to use extra attributes availible in the SQL addressbook
+like eg. the home-address you need to use some other supported schema:
+- evolutionOrgPerson	used by evolution
+- mozillaAbPersonAlpha	used by thunderbird & sunbird 1.5+
+- mozillaOrgPerson		older mozilla schema (depricated, but mostly compatible to mozillaAbPersonAlpha)
+
+Please note: 
+You can install the evolutionPerson schema together with ONE
+of the mozilla schemas. You can NOT install both mozilla schema!
+
+If the addressbook detects the schemas, it fills the extra fields of each schema.
+
+Ralf

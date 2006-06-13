@@ -1,17 +1,15 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Adressbook - General user interface object                  *
-* http://www.egroupware.org                                                *
-* Written and (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de>      *
-* and Ralf Becker <RalfBecker-AT-outdoor-training.de>                      *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * Addressbook - user interface
+ *
+ * @link www.egroupware.org
+ * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package addressbook
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
 
@@ -424,7 +422,7 @@ class uicontacts extends bocontacts
 			}
 			else	// dont show contacts with empty order criteria
 			{
-				$query['col_filter'][] = $query['order']."!=''";
+				$query['col_filter'][$query['order']] = "!''";
 			}
 			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
 				$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
@@ -833,6 +831,11 @@ class uicontacts extends bocontacts
 			$readonlys['owner'] = !$content['owner'] || 		// dont allow to move accounts, as this mean deleting the user incl. all content he owns
 				!$this->check_perms(EGW_ACL_DELETE,$content);	// you need delete rights to move a contact into an other addressbook
 		}
+		// set the unsupported fields from the backend to readonly
+		foreach($this->get_fields('unsupported',$content['id'],$content['owner']) as $field)
+		{
+			$readonlys[$field] = true;
+		}
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
@@ -1169,7 +1172,7 @@ $readonlys['button[vcard]'] = true;
 		if (!ob_get_contents())
 		{
 			header('Content-type: image/jpeg');
-			header('Content-length: '.(extension_loaded(mbstring) ? mb_strlen($contact['jpeg_photo'],'ascii') : strlen($contact['jpeg_photo'])));
+			header('Content-length: '.(extension_loaded(mbstring) ? mb_strlen($contact['jpegphoto'],'ascii') : strlen($contact['jpegphoto'])));
 			echo $contact['jpegphoto'];
 			exit;
 		}

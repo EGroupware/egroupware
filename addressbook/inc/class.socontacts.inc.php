@@ -1,23 +1,21 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Adressbook - General storage object                         *
-* http://www.egroupware.org                                                *
-* Written and (c) 2005 by Cornelius_weiss <egw@von-und-zu-weiss.de>        *
-* and Ralf Becker <RalfBecker-AT-outdoor-training.de>                      *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * Addressbook - General storage object
+ *
+ * @link http://www.egroupware.org
+ * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package addressbook
+ * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 /**
  * General storage object of the adressbook
  *
  * @package addressbook
- * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
+ * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2005/6 by Cornelius Weiss <egw@von-und-zu-weiss.de> and Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -26,90 +24,130 @@
 class socontacts
 {
 	/**
-	 * @var string $extra_table name of customefields table
+	 * name of customefields table
+	 * 
+	 * @var string
 	 */
 	var $extra_table = 'egw_addressbook_extra';
 	
 	/**
-	* @var string $extra_id
+	* @var string
 	*/
 	var $extra_id = 'contact_id';
 	
 	/**
-	* @var string $extra_owner
+	* @var string
 	*/
 	var $extra_owner = 'contact_owner';
 
 	/**
-	* @var string $extra_key
+	* @var string
 	*/
 	var $extra_key = 'contact_name';
 	
 	/**
-	* @var string $extra_value
+	* @var string
 	*/
 	var $extra_value = 'contact_value';
 	
 	/**
-	 * @var string $contacts_repository 'sql' or 'ldap'
+	 * Contact repository in 'sql' or 'ldap'
+	 * 
+	 * @var string
 	 */
-	var $contacts_repository = 'sql';
+	var $contact_repository = 'sql';
 	
 	/**
-	 * @var array $grants account_id => rights pairs
+	 * Grants as  account_id => rights pairs
+	 * 
+	 * @var array
 	 */
 	var $grants;
 
 	/**
-	* @var int $user userid of current user
-	*/
+	 *  userid of current user
+	 * 
+	 * @var int $user
+	 */
 	var $user;
 	
 	/**
-	 * @var array $memberships of the current user
+	 * memberships of the current user
+	 * 
+	 * @var array
 	 */
 	var $memberships;
 	
 	/**
-	 * @var array $columns_to_search when we search for a single pattern
+	 * columns to search, if we search for a single pattern
+	 * 
+	 * @var array
 	 */
 	var $columns_to_search = array();
 	/**
-	 * @var array $account_extra_search extra columns to search if accounts are included, eg. account_lid
+	 * extra columns to search if accounts are included, eg. account_lid
+	 * 
+	 * @var array
 	 */
 	var $account_extra_search = array();
+	/**
+	 * columns to search for accounts, if stored in different repository
+	 * 
+	 * @var array
+	 */
+	var $account_cols_to_search = array();
 	
 	/**
-	 * @var array $customfields name => array(...) pairs
+	 * customfields name => array(...) pairs
+	 * 
+	 * @var array
 	 */
 	var $customfields = array();
 	/**
-	 * @var array $content_types name => array(...) pairs
+	 * content-types as name => array(...) pairs
+	 * 
+	 * @var array
 	 */
 	var $content_types = array();
 	
 	/**
-	 * @var int $total total number of matches of last search
+	 * total number of matches of last search
+	 * 
+	 * @var int
 	 */
 	var $total;
 	
 	/**
-	 * @var object $somain sql (socontacts_sql) or ldap (so_ldap) backend class
+	 * storage object: sql (socontacts_sql) or ldap (so_ldap) backend class
+	 * 
+	 * @var object
 	 */
 	var $somain;
 	/**
-	 * @var so_sql-object $soextra custom fields backend
+	 * storage object for accounts, if not identical to somain (eg. accounts in ldap, contacts in sql)
+	 *
+	 * @var object
+	 */
+	var $so_accounts;
+	/**
+	 * account repository sql or ldap
+	 *
+	 * @var string
+	 */
+	var $account_repository = 'sql';
+	/**
+	 * custom fields backend
+	 * 
+	 * @var so_sql-object
 	 */
 	var $soextra;
 
 	function socontacts($contact_app='addressbook')
 	{
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
-		foreach($GLOBALS['egw']->accounts->membership($this->user) as $group)
-		{
-			$this->memberships[] = $group['account_id'];
-		}
+		$this->memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
 
+		// contacts backend
 		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap')
 		{
 			$this->contact_repository = 'ldap';
@@ -124,7 +162,6 @@ class socontacts
 			// LDAP uses a limited set for performance reasons, you NEED an index for that columns, ToDo: make it configurable
 			// minimum: $this->columns_to_search = array('n_family','n_given','org_name');
 			$this->columns_to_search = array('n_family','n_middle','n_given','org_name','org_unit','adr_one_location','adr_two_location','note');
-			$this->account_extra_search = array('uid');
 		}
 		else
 		{
@@ -136,7 +173,40 @@ class socontacts
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),array('jpegphoto','owner','tid',
 				'private','id','cat_id','modified','modifier','creator','created','tz'));
 			$this->columns_to_search[] = $this->extra_value;	// custome fields from extra_table
-			$this->account_extra_search = array('account_firstname','account_lastname','account_email','account_lid');
+		}
+		// account backend
+		if ($GLOBALS['egw_info']['server']['account_repository'])
+		{
+			$this->account_repository = $GLOBALS['egw_info']['server']['account_repository'];
+		}
+		elseif ($GLOBALS['egw_info']['server']['auth_type'])
+		{
+			$this->account_repository = $GLOBALS['egw_info']['server']['auth_type'];
+		}
+		if ($this->account_repository == 'ldap')
+		{
+			if ($this->account_repository != $this->contact_repository)
+			{
+				$this->so_accounts =& CreateObject('addressbook.so_ldap');
+				$this->so_accounts->contacts_id = 'id';
+				$this->account_cols_to_search = array('uid','n_family','n_middle','n_given','org_name','org_unit','adr_one_location','adr_two_location','note');
+			}
+			else
+			{
+				$this->account_extra_search = array('uid');
+			}
+		}
+		else
+		{
+			if ($this->account_repository != $this->contact_repository)
+			{
+				// contacts in ldap & accounts in sql is not tested or supported at the moment!!!
+				$this->so_accounts =& CreateObject('addressbook.socontacts_sql','addressbook','egw_addressbook',null,'contact_');
+			}
+			else
+			{
+				$this->account_extra_search = array('account_firstname','account_lastname','account_email','account_lid');
+			}
 		}
 		// add grants for accounts: admin --> everything, everyone --> read
 		$this->grants[0] = EGW_ACL_READ;	// everyone read access
@@ -149,7 +219,6 @@ class socontacts
 		// ToDo: it should be the other way arround, the backend should set the grants it uses
 		$this->somain->grants =& $this->grants;
 
-		$this->total =& $this->somain->total;
 		$this->somain->contacts_id = 'id';
 		$this->soextra =& CreateObject('etemplate.so_sql');
 		$this->soextra->so_sql('addressbook',$this->extra_table);
@@ -195,8 +264,6 @@ class socontacts
 	 */
 	function db2data($data)
 	{
-		// do the necessare changes here
-
 		return $data;
 	}
 
@@ -210,8 +277,6 @@ class socontacts
 	 */
 	function data2db($data)
 	{
-		// do the necessary changes here
-
 		return $data;
 	}
 
@@ -245,9 +310,20 @@ class socontacts
 	function save(&$contact)
 	{
 		// save mainfields
-		$this->somain->data = $this->data2db($contact);
-		$error_nr = $this->somain->save();
-		$contact['id'] = $this->somain->data['id'];
+		if ($contact['id'] && $this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
+			($this->contact_repository == 'sql' && !is_numeric($contact['id']) ||
+			 $this->contact_repository == 'ldap' && is_numeric($contact['id'])))
+		{
+			$this->so_accounts->data = $this->data2db($contact);
+			$error_nr = $this->so_accounts->save();
+			$contact['id'] = $this->so_accounts->data['id'];
+		}
+		else
+		{
+			$this->somain->data = $this->data2db($contact);
+			$error_nr = $this->somain->save();
+			$contact['id'] = $this->somain->data['id'];
+		}
 		if($error_nr) return $error_nr;
 		
 		// save customfields
@@ -283,7 +359,8 @@ class socontacts
 	function read($contact_id)
 	{
 		// read main data
-		if (!($contact = $this->somain->read($contact_id)))
+		$backend =& $this->get_backend($contact_id);
+		if (!($contact = $backend->read($contact_id)))
 		{
 			return $contact;
 		}
@@ -517,6 +594,7 @@ class socontacts
 	{
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
+		$backend =& $this->get_backend(null,$filter['owner']);
 		// single string to search for --> create so_sql conformant search criterial for the standard search columns
 		if ($criteria && !is_array($criteria))	
 		{
@@ -524,10 +602,18 @@ class socontacts
 			$wildcard = '%';
 			$search = $criteria;
 			$criteria = array();
-			$cols = $this->columns_to_search;
-			if (!$filter['owner'])	// extra columns for search if accounts are included, eg. account_lid
+			
+			if ($backend === $this->somain)
 			{
-				$cols = array_merge($cols,$this->account_extra_search);
+				$cols = $this->columns_to_search;
+				if (!$filter['owner'])	// extra columns for search if accounts are included, eg. account_lid
+				{
+					$cols = array_merge($cols,$this->account_extra_search);
+				}
+			}
+			else
+			{
+				$cols = $this->account_cols_to_search;
 			}
 			foreach($cols as $col)
 			{
@@ -546,8 +632,10 @@ class socontacts
 		{
 			$filter = $filter ? array($filter) : array();
 		}
-		$rows =& $this->somain->search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
-		
+		// get the used backend for the search and call it's search method
+		$rows = $backend->search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
+		$this->total = $backend->total;
+
 		if ($rows)
 		{
 			foreach($rows as $n => $row)
@@ -657,5 +745,58 @@ class socontacts
 				$this->extra_owner => $account_id
 			),__LINE__,__FILE__);
 		}
+	}
+	
+	/**
+	 * return the backend, to be used for the given $contact_id
+	 *
+	 * @param mixed $contact_id=null
+	 * @param int $owner=null account_id of owner or 0 for accounts
+	 * @return object
+	 */
+	function &get_backend($contact_id=null,$owner=null)
+	{
+		if ($this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
+			(!is_null($owner) && !$owner || !is_null($contact_id) &&
+			($this->contact_repository == 'sql' && !is_numeric($contact_id) ||
+			 $this->contact_repository == 'ldap' && is_numeric($contact_id))))
+		{
+			return $this->so_accounts;
+		}
+		return $this->somain;
+	}
+
+	/**
+	 * Returns the supported, all or unsupported fields of the backend (depends on owner or contact_id)
+	 *
+	 * @param sting $type='all' 'supported', 'unsupported' or 'all'
+	 * @param mixed $contact_id=null
+	 * @param int $owner=null account_id of owner or 0 for accounts
+	 * @return array with eGW contact field names
+	 */
+	function get_fields($type='all',$contact_id=null,$owner=null)
+	{
+		$def = $this->soextra->db->get_table_definitions('addressbook','egw_addressbook');
+		
+		$all_fields = array();
+		foreach($def['fd'] as $field => $data)
+		{
+			$all_fields[] = substr($field,0,8) == 'contact_' ? substr($field,8) : $field;
+		}
+		if ($type == 'all')
+		{
+			return $all_fields;
+		}
+		$backend =& $this->get_backend($contact_id,$owner);
+		
+		$supported_fields = method_exists($backend,supported_fields) ? $backend->supported_fields() : $all_fields;
+		//echo "supported fields=";_debug_array($supported_fields);
+		
+		if ($type == 'supported')
+		{
+			return $supported_fields;
+		}
+		//echo "unsupported fields=";_debug_array(array_diff($all_fields,$supported_fields));
+		return array_diff($all_fields,$supported_fields);
 	}
 }

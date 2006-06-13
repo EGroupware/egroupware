@@ -1,0 +1,212 @@
+#
+# Depends upon
+#   Definition of an X.500 Attribute Type and an Object Class to Hold
+#   Uniform Resource Identifiers (URIs) [RFC2079]
+#	(core.schema)
+#   
+#   A Summary of the X.500(96) User Schema for use with LDAPv3 [RFC2256]
+#	(core.schema)
+#
+#   The COSINE and Internet X.500 Schema [RFC1274] (cosine.schema)
+#
+#   The Internet Organizational Person Schema (inetorgperson)
+#
+# OIDs are broken up into the following:
+#   1.3.6.1.4.1.8506.1.?
+#                     .1  Syntaxes
+#                     .2  Attributes
+#                     .3  Objectclasses
+   
+# primaryPhone
+attributetype ( 1.3.6.1.4.1.8506.1.2.1
+	NAME 'primaryPhone'
+	DESC 'preferred phone number used to contact a person'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15
+	SINGLE-VALUE )
+
+# carPhone
+attributetype ( 1.3.6.1.4.1.8506.1.2.2
+	NAME 'carPhone'
+	DESC 'car phone telephone number of the person'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50
+	SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.3
+	NAME ( 'homeFacsimileTelephoneNumber' 'homeFax' )
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.22 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.4
+	NAME 'otherPhone'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.5
+	NAME 'businessRole'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.6
+	NAME 'managerName'
+	SUP name )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.7
+	NAME 'assistantName'
+	SUP name )
+
+# spouseName
+# single valued (/me smirks)
+attributetype ( 1.3.6.1.4.1.8506.1.2.8
+	NAME 'spouseName'
+	SUP name
+	SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.9
+	NAME 'otherPostalAddress'
+	EQUALITY caseIgnoreListMatch
+	SUBSTR caseIgnoreListSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.41 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.10
+	NAME ( 'mailer' 'mua' )
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{32} )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.11
+	NAME ( 'birthDate' 'dob' )
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128} )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.12
+	NAME 'anniversary'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128} )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.13
+	NAME 'note'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{1024} )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.14
+	NAME 'evolutionArbitrary'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{4096} )
+	)
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.15
+	NAME 'fileAs'
+	SUP name )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.16
+	NAME 'assistantPhone'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.17
+	NAME 'companyPhone'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.18
+	NAME 'callbackPhone'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.19
+	NAME ( 'otherFacsimileTelephoneNumber' 'otherFax' )
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.22 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.20
+	NAME 'radio'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.21
+	NAME 'telex'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.22
+	NAME 'tty'
+	EQUALITY telephoneNumberMatch
+	SUBSTR telephoneNumberSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.50 )
+
+# deprecated - use the multivalued category
+attributetype ( 1.3.6.1.4.1.8506.1.2.23
+	NAME 'categories'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{4096} )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.24
+	NAME 'contact'
+        EQUALITY distinguishedNameMatch
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.12 )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.25
+	NAME 'listName'
+	SUP name
+	SINGLE-VALUE )
+
+# deprecated - use calEntry and its attributes from RFC 2739
+attributetype ( 1.3.6.1.4.1.8506.1.2.26
+	NAME 'calendarURI'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
+	SINGLE-VALUE )
+
+# deprecated - use calEntry and its attributes from RFC 2739
+attributetype ( 1.3.6.1.4.1.8506.1.2.27
+	NAME 'freeBusyURI'
+        EQUALITY caseExactIA5Match
+        SYNTAX 1.3.6.1.4.1.1466.115.121.1.26
+	SINGLE-VALUE )
+
+attributetype ( 1.3.6.1.4.1.8506.1.2.28
+	NAME 'category'
+	EQUALITY caseIgnoreMatch
+	SUBSTR caseIgnoreSubstringsMatch
+	SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{4096} )
+
+
+# evolutionPerson
+objectclass	( 1.3.6.1.4.1.8506.1.3.1
+    NAME 'evolutionPerson'
+	DESC 'Objectclass geared to Evolution Usage'
+    SUP inetOrgPerson
+    STRUCTURAL
+	MAY (
+	        fileAs $ primaryPhone $ carPhone $ homeFacsimileTelephoneNumber $ 
+		otherPhone $ businessRole $ managerName $ assistantName $ assistantPhone $
+		otherPostalAddress $ mailer $ birthDate $ anniversary $ spouseName $
+		note $ companyPhone $ callbackPhone $ otherFacsimileTelephoneNumber $
+		radio $ telex $ tty $ categories $ category $ calendarURI $ freeBusyURI )
+	)
+
+# evolutionPersonList
+objectclass	( 1.3.6.1.4.1.8506.1.3.2
+    NAME 'evolutionPersonList'
+	DESC 'Objectclass geared to Evolution Contact Lists'
+    SUP top
+    STRUCTURAL
+	MUST (
+		listName )
+	MAY (
+		mail $ contact )
+	)

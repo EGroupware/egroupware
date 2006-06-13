@@ -1,123 +1,109 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - LDAP wrapper class for contacts                             *
-	* http://www.egroupware.org                                                *
-	* Written by Cornelius Weiss <egw@von-und-zu-weiss.de>                     *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
+/**
+ * Addressbook - LDAP Backend
+ *
+ * @link http://www.egroupware.org
+ * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
+ * @author Lars Kneschke <l.kneschke-AT-metaways.de>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package addressbook
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
-	/* $Id$ */
+define('ADDRESSBOOK_ALL',0);
+define('ADDRESSBOOK_ACCOUNTS',1);
+define('ADDRESSBOOK_PERSONAL',2);
+define('ADDRESSBOOK_GROUP',3);
 
-	require_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.contacts.inc.php');
-
-	define('ADDRESSBOOK_ALL',0);
-	define('ADDRESSBOOK_ACCOUNTS',1);
-	define('ADDRESSBOOK_PERSONAL',2);
-	define('ADDRESSBOOK_GROUP',3);
+/**
+ * LDAP Backend for contacts, compatible with vars and parameters of eTemplate's so_sql.
+ * Maybe one day this becomes a generalized ldap storage object :-)
+ * 
+ * All values used to construct filters need to run through ldap::quote(), 
+ * to be save against LDAP query injection!!!
+ *
+ * @package addressbook
+ * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
+ * @author Lars Kneschke <l.kneschke-AT-metaways.de>
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ */
+class so_ldap
+{
+	var $data;
+	//var $db_data_cols;
+	//var $db_key_cols;
+	var $groupName = 'Default';
+	
+	/**
+	* @var string $accountName holds the accountname of the current user
+	*/
+	var $accountName;
 
 	/**
-	 * Wrapper class for phpgwapi.contacts_ldap
-	 * This makes it compatible with vars and parameters of so_sql
-	 * Maybe one day this becomes a generalized ldap storage object :-)
-	 *
-	 * @package addressbook
-	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-	 */
-	class so_ldap extends contacts {
+	* @var object $ldapServerInfo holds the information about the current used ldap server
+	*/
+	var $ldapServerInfo;
 	
-		var $data;
-		//var $db_data_cols;
-		//var $db_key_cols;
-		var $groupName = 'Default';
-		
-		/**
-		* @var string $accountName holds the accountname of the current user
-		*/
-		var $accountName;
+	/**
+	* @var int $ldapLimit how many rows to fetch from ldap server
+	*/
+	var $ldapLimit = 300;
+	
+	/**
+	* @var string $personalContactsDN holds the base DN for the personal addressbooks
+	*/
+	var $personalContactsDN;
 
-		/**
-		* @var object $ldapServerInfo holds the information about the current used ldap server
-		*/
-		var $ldapServerInfo;
-		
-		/**
-		* @var int $ldapLimit how many rows to fetch from ldap server
-		*/
-		var $ldapLimit = 300;
-		
-		/**
-		* @var string $personalContactsDN holds the base DN for the personal addressbooks
-		*/
-		var $personalContactsDN;
-
-		/**
-		* @var string $sharedContactsDN holds the base DN for the shared addressbooks
-		*/
-		var $sharedContactsDN;
-		
-		/**
-		* @var int $total holds the total count of found rows
-		*/
-		var $total;
-		
-		# jpegPhoto
-		var $inetOrgPersonFields = array(
+	/**
+	* @var string $sharedContactsDN holds the base DN for the shared addressbooks
+	*/
+	var $sharedContactsDN;
+	
+	/**
+	* @var int $total holds the total count of found rows
+	*/
+	var $total;
+	
+	/**
+	 * Charset used by eGW
+	 * 
+	 * @var string
+	 */
+	var $charset;
+	
+	/**
+	 * maps between diverse ldap schema and the eGW internal names
+	 *
+	 * @var array
+	 */
+	var $schema2egw = array(
+		'inetorgperson' => array(
 			'n_fn'			=> 'cn',
 			'n_given'		=> 'givenname',
 			'n_family'		=> 'sn',
-			#'n_middle'            => 'phpgwmiddlename',
-			#'n_prefix'            => 'phpgwprefix',
-			#'n_suffix'            => 'phpgwsuffix',
 			'sound'			=> 'audio',
-			#'bday'                => 'phpgwbirthday',
 			'note'			=> 'description',
-			#'tz'                  => 'phpgwtz',
-			#'geo'                 => 'phpgwgeo',
 			'url'			=> 'labeleduri',
-			#'pubkey'              => 'phpgwpublickey',
-
 			'org_name'		=> 'o',
 			'org_unit'		=> 'ou',
 			'title'			=> 'title',
-
-			'adr_one_street'	=> 'street',
-			'adr_one_locality'	=> 'l',
-			'adr_one_region'	=> 'st',
+			'adr_one_street'		=> 'street',
+			'adr_one_locality'		=> 'l',
+			'adr_one_region'		=> 'st',
 			'adr_one_postalcode'	=> 'postalcode',
-			#'adr_one_countryname'	=> 'co',
-			#'adr_one_type'        => 'phpgwadronetype',
-			#'label'               => 'phpgwaddresslabel',
-
-			#'adr_two_street'      => 'phpgwadrtwostreet',
-			#'adr_two_locality'    => 'phpgwadrtwolocality',
-			#'adr_two_region'      => 'phpgwadrtworegion',
-			#'adr_two_postalcode'  => 'phpgwadrtwopostalcode',
-			#'adr_two_countryname' => 'phpgwadrtwocountryname',
-			#'adr_two_type'        => 'phpgwadrtwotype',
-
+			'adr_one_countryname'	=> 'co',
 			'tel_work'		=> 'telephonenumber',
 			'tel_home'		=> 'homephone',
-			#'tel_voice'           => 'phpgwvoicetelephonenumber',
 			'tel_fax'		=> 'facsimiletelephonenumber',
-			#'tel_msg'             => 'phpgwmsgtelephonenumber',
-			#'tel_cell'            => 'phpgwcelltelephonenumber',
-			#'tel_pager'           => 'phpgwpagertelephonenumber',
-			#'tel_bbs'             => 'phpgwbbstelephonenumber',
-			#'tel_modem'           => 'phpgwmodemtelephonenumber',
-			#'tel_car'             => 'phpgwmobiletelephonenumber',
-			#'tel_isdn'            => 'phpgwisdnphonenumber',
-			#'tel_video'           => 'phpgwvideophonenumber',
-			#'tel_prefer'          => 'phpgwpreferphone',
+			'tel_cell'		=> 'mobile',
+			'tel_pager'		=> 'pager',
 			'email'			=> 'mail',
-			#'email_type'          => 'phpgwmailtype',
-			#'email_home'          => 'phpgwmailhome',
-			#'email_home_type'     => 'phpgwmailhometype',
 			'room'			=> 'roomnumber',
-		);
+			'jpegphoto'		=> 'jpegphoto',
+			'n_fileas'		=> 'displayname',
+			'label'			=> 'postaladdress',
+		),
 
 		#displayName
 		#mozillaCustom1
@@ -129,67 +115,32 @@
 		#mozillaUseHtmlMail
 		#nsAIMid
 		#postOfficeBox
-		var $mozillaAbPersonFields = array(
-			#'fn'			=> 'cn',
-			#'n_given'		=> 'givenname',
-			#'n_family'		=> 'sn',
-			#'n_middle'            => 'phpgwmiddlename',
-			#'n_prefix'            => 'phpgwprefix',
-			#'n_suffix'            => 'phpgwsuffix',
-			#'sound'               => 'phpgwaudio',
-			#'bday'                => 'phpgwbirthday',
-			#'note'			=> 'description',
-			#'tz'                  => 'phpgwtz',
-			#'geo'                 => 'phpgwgeo',
-			#'url'			=> 'mozillaworkurl',
-			#'pubkey'              => 'phpgwpublickey',
-
-			#'org_name'		=> 'o',
-			#'org_unit'		=> 'ou',
-			#'title'			=> 'title',
-
-			#'adr_one_street'	=> 'street',
-			'adr_one_street2'	=> 'mozillaworkstreet2',
-			#'adr_one_locality'	=> 'l',
-			#'adr_one_region'	=> 'st',
-			#'adr_one_postalcode'	=> 'postalcode',
-			#'adr_one_countryname'	=> 'c',
-			#'adr_one_type'        => 'phpgwadronetype',
-			#'label'               => 'phpgwaddresslabel',
-
+		'mozillaabpersonalpha' => array(
+			'adr_one_street2'	=> 'mozillapostalstreet2',
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomestreet2',
 			'adr_two_locality'	=> 'mozillahomelocalityname',
 			'adr_two_region'	=> 'mozillahomestate',
 			'adr_two_postalcode'	=> 'mozillahomepostalcode',
 			'adr_two_countryname'	=> 'mozillahomecountryname',
-			#'adr_two_type'        => 'phpgwadrtwotype',
-
-			#'tel_work'		=> 'telephonenumber',
-			#'tel_home'		=> 'homephone',
-			#'tel_voice'           => 'phpgwvoicetelephonenumber',
-			'tel_fax'		=> 'fax',
-			#'tel_msg'             => 'phpgwmsgtelephonenumber',
-			'tel_cell'		=> 'mobile',
-			'tel_pager'		=> 'pager',
-			#'tel_bbs'             => 'phpgwbbstelephonenumber',
-			#'tel_modem'           => 'phpgwmodemtelephonenumber',
-			#'tel_car'             => 'phpgwmobiletelephonenumber',
-			#'tel_isdn'            => 'phpgwisdnphonenumber',
-			#'tel_video'           => 'phpgwvideophonenumber',
-			#'tel_prefer'          => 'phpgwpreferphone',
-			#'email'			=> 'mail',
-			#'email_type'          => 'phpgwmailtype',
+			'tel_fax'			=> 'fax',
 			'email_home'		=> 'mozillasecondemail',
-			#'email_home_type'     => 'phpgwmailhometype',
-			'url_home'		=> 'mozillahomeurl',
-		);
-	
-		# homeFacsimileTelephoneNumber
-		# otherPhone
-		# businessRole
+			'url_home'			=> 'mozillahomeurl',
+		),
+		// similar to the newer mozillaAbPerson, but uses mozillaPostalAddress2 instead of mozillaStreet2
+		'mozillaorgperson' => array(
+			'adr_one_street2'	=> 'mozillapostaladdress2',
+			'adr_two_street'	=> 'mozillahomestreet',
+			'adr_two_street2'	=> 'mozillahomepostaladdress2',
+			'adr_two_locality'	=> 'mozillahomelocalityname',
+			'adr_two_region'	=> 'mozillahomestate',
+			'adr_two_postalcode'	=> 'mozillahomepostalcode',
+			'adr_two_countryname'	=> 'mozillahomecountryname',
+			'tel_fax'			=> 'fax',
+			'email_home'		=> 'mozillasecondemail',
+			'url_home'			=> 'mozillahomeurl',
+		),
 		# managerName
-		# assistantName
 		# otherPostalAddress
 		# mailer
 		# anniversary
@@ -201,195 +152,128 @@
 		# telex
 		# tty
 		# categories(deprecated)
-		# calendarURI
-		# freeBusyURI
-		var $evolutionPersonFields = array(
-			'fn'			=> 'fileas',
-			#'n_given'		=> 'givenname',
-			#'n_family'		=> 'sn',
-			#'n_middle'            => 'phpgwmiddlename',
-			#'n_prefix'            => 'phpgwprefix',
-			#'n_suffix'            => 'phpgwsuffix',
-			#'sound'               => 'phpgwaudio',
+		'evolutionperson' => array(
 			'bday'			=> 'birthdate',
 			'note'			=> 'note',
-			#'tz'                  => 'phpgwtz',
-			#'geo'                 => 'phpgwgeo',
-			#'url'			=> 'mozillaworkurl',
-			#'pubkey'              => 'phpgwpublickey',
-
-			#'org_name'		=> 'o',
-			#'org_unit'		=> 'ou',
-			#'title'			=> 'title',
-
-			#'adr_one_street'	=> 'street',
-			#'adr_one_locality'	=> 'l',
-			#'adr_one_region'	=> 'st',
-			#'adr_one_postalcode'	=> 'postalcode',
-			#'adr_one_countryname'	=> 'c',
-			#'adr_one_type'        => 'phpgwadronetype',
-			#'label'               => 'phpgwaddresslabel',
-
-			#'adr_two_street'	=> 'mozillahomestreet',
-			#'adr_two_locality'	=> 'mozillahomelocalityname',
-			#'adr_two_region'	=> 'mozillahomestate',
-			#'adr_two_postalcode'	=> 'mozillahomepostalcode',
-			#'adr_two_countryname'	=> 'mozillahomecountryname',
-			#'adr_two_type'        => 'phpgwadrtwotype',
-
-			#'tel_work'		=> 'telephonenumber',
-			#'tel_home'		=> 'homephone',
-			#'tel_voice'           => 'phpgwvoicetelephonenumber',
-			#'tel_fax'		=> 'fax',
-			#'tel_msg'             => 'phpgwmsgtelephonenumber',
-			#'tel_cell'		=> 'mobile',
-			#'tel_pager'		=> 'pager',
-			#'tel_bbs'             => 'phpgwbbstelephonenumber',
-			#'tel_modem'           => 'phpgwmodemtelephonenumber',
 			'tel_car'		=> 'carphone',
-			#'tel_isdn'            => 'phpgwisdnphonenumber',
-			#'tel_video'           => 'phpgwvideophonenumber',
-			'tel_prefer'		=> 'primaryphone',
-			#'email'		=> 'mail',
-			#'email_type'		=> 'phpgwmailtype',
-			#'email_home'		=> 'mozillasecondemail',
-			#'email_home_type'	=> 'phpgwmailhometype',
-			'cat_id'		=> 'category',
+			'tel_prefer'	=> 'primaryphone',
+			'cat_id'		=> 'category',	// special handling in _egw2evolutionperson method
 			'role'			=> 'businessrole',
-			'tel_assistent'		=> 'assistantphone',
+			'tel_assistent'	=> 'assistantphone',
 			'assistent'		=> 'assistantname',
 			'n_fileas'		=> 'fileas',
-		);
-	
+			'tel_fax_home'	=> 'homefacsimiletelephonenumber',
+			'freebusy_uri'	=> 'freeBusyuri',
+			'calendar_uri'	=> 'calendaruri',
+			'tel_other'		=> 'otherphone',
+		),
+		// additional schema can be added here, including special functions 
+		
 		/**
-		 * constructor of the class
-		 *
+		 * still unsupported fields in LDAP:
+		 * --------------------------------
+		 * tel_cell_private - only important one imo.
+		 * tz
+		 * geo
+		 * pubkey - inetOrgPerson has a lot: question is which one is the right one?
 		 */
-		function so_ldap()
-		{
-			//$this->db_data_cols 	= $this->stock_contact_fields + $this->non_contact_fields;
-			$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];
-			
-			$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
-			$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
-			
-			$this->ldap = CreateObject('phpgwapi.ldap');
-			$this->ds = $this->ldap->ldapConnect(
-				$GLOBALS['egw_info']['server']['ldap_contact_host'],
-				$GLOBALS['egw_info']['user']['account_dn'],
-				$GLOBALS['egw_info']['user']['passwd']
-			);
-			$this->ldapServerInfo = $this->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_contact_host']);
-		}
+	);
+	
+	/**
+	 * additional schema required by one of the above schema
+	 *
+	 * @var array
+	 */
+	var $required_subs = array(
+		'inetorgperson' => array('person'),
+	);
 
 	/**
-	 * reads row matched by key and puts all cols in the data array
+	 * array with the names of all ldap attributes of the above schema2egw array
 	 *
-	 * @param array $keys array with keys in form internalName => value, may be a scalar value if only one key
-	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
-	 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+	 * @var array
+	 */
+	var  $all_attributes = array();
+	
+	/**
+	 * constructor of the class
+	 */
+	function so_ldap()
+	{
+		//$this->db_data_cols 	= $this->stock_contact_fields + $this->non_contact_fields;
+		$this->accountName 		= $GLOBALS['egw_info']['user']['account_lid'];
+		
+		$this->personalContactsDN	= 'ou=personal,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
+		$this->sharedContactsDN		= 'ou=shared,ou=contacts,'. $GLOBALS['egw_info']['server']['ldap_contact_context'];
+		
+		if (is_object($GLOBALS['egw']->ldap))
+		{
+			$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
+		}
+		// if ldap is NOT the contact repository, we only do accounts and need to use the account-data
+		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
+		{
+			$GLOBALS['egw_info']['server']['ldap_contact_host'] = $GLOBALS['egw_info']['server']['ldap_host'];
+			$GLOBALS['egw_info']['server']['ldap_contact_context'] = $GLOBALS['egw_info']['server']['ldap_context'];
+		}
+		$this->ds = $GLOBALS['egw']->ldap->ldapConnect(
+			$GLOBALS['egw_info']['server']['ldap_contact_host'],
+			$GLOBALS['egw_info']['user']['account_dn'],
+			$GLOBALS['egw_info']['user']['passwd']
+		);
+		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_contact_host']);
+		
+		foreach($this->schema2egw as $schema => $attributes)
+		{
+			$this->all_attributes = array_merge($this->all_attributes,array_values($attributes));
+		}
+		$this->all_attributes = array_values(array_unique($this->all_attributes));
+		
+		$this->charset = $GLOBALS['egw']->translation->charset();
+	}
+	
+	/**
+	 * Returns the supported fields of this LDAP server (based on the objectclasses it supports)
+	 *
+	 * @return array with eGW contact field names
+	 */
+	function supported_fields()
+	{
+		$fields = array(
+			'id','tid','owner',
+			'n_middle','n_prefix','n_suffix',	// stored in the cn
+			'created','modified',				// automatic timestamps
+			'creator','modifier',				// automatic for non accounts
+			'private',							// true for personal addressbooks, false otherwise
+		);
+		foreach($this->schema2egw as $objectclass => $mapping)
+		{
+			if($this->ldapServerInfo->supportsObjectClass($objectclass))
+			{
+				$fields = array_merge($fields,array_keys($mapping));
+			}
+		}
+		return array_values(array_unique($fields));
+	}
+
+	/**
+	 * reads contact data
+	 *
+	 * @param string $contact_id contact_id or 'account:'.account_id
 	 * @return array/boolean data if row could be retrived else False
 	*/
-	function read($keys,$extra_cols='',$join='')
+	function read($contact_id)
 	{
-		$attributes = array_unique(array_merge(array_values($this->inetOrgPersonFields), 
-						       array_values($this->mozillaAbPersonFields),
-						       array_values($this->evolutionPersonFields)
-		));
-		
-		#$rows = $this->searchLDAP($GLOBALS['egw_info']['server']['ldap_contact_context'], "(|(entryUUID=$keys)(uid=$keys))", $attributes, ADDRESSBOOK_ALL);
-		
-		#_debug_array($rows);
-		
-		#return $rows[0];
-	
-		sort($attributes);
-		$attributes[] = 'entryUUID';
-		$attributes[] = 'objectClass';
-		$attributes[] = 'uid';
-		if($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], "(|(entryUUID=$keys)(uid=$keys))", $attributes)) {
-			$entry = ldap_get_entries($this->ds, $result);
-			#_debug_array($entry);
-			$contacts[0]['id'] = $entry[0]['uid'][0] ? $entry[0]['uid'][0] : $entry[0]['entryuuid'][0];
-			for($i=0; $i<$entry[0]['objectclass']['count']; $i++) {
-				switch(strtolower($entry[0]['objectclass'][$i])) {
-					case 'inetorgperson':
-						foreach($this->inetOrgPersonFields as $egwFieldName => $ldapFieldName) {
-							if(!empty($entry[0][$ldapFieldName][0]) && !isset($contacts[0][$egwFieldName])) {
-								$contacts[0][$egwFieldName] = $GLOBALS['egw']->translation->convert(($entry[0][$ldapFieldName][0]),'utf-8');
-							}
-						}
-
-						#print $entry[0]['cn'][0]."<br>";
-						#print $entry[0]['sn'][0]."<br>";
-						if(empty($entry[0]['givenname'][0])) {
-							$parts = preg_split('/'.$entry[0]['sn'][0].'/', $entry[0]['cn'][0]);
-							$contacts[0]['n_prefix'] = trim($parts[0]);
-							$contacts[0]['n_suffix'] = trim($parts[1]);
-						} else {
-							$parts = preg_split('/'. $entry[0]['givenname'][0] .'.*'. $entry[0]['sn'][0] .'/', $entry[0]['cn'][0]);
-							$contacts[0]['n_prefix'] = trim($parts[0]);
-							$contacts[0]['n_suffix'] = trim($parts[1]);
-							if(preg_match('/'. $entry[0]['givenname'][0] .' (.*) '. $entry[0]['sn'][0] .'/',$entry[0]['cn'][0], $matches)) {
-								$contacts[0]['n_middle'] = $matches[1];
-							}
-						}
-						break;
-
-					case 'mozillaabpersonalpha':
-						foreach($this->mozillaAbPersonFields as $egwFieldName => $ldapFieldName) {
-							if(!empty($entry[0][$ldapFieldName][0]) && !isset($contacts[0][$egwFieldName])) {
-								$contacts[0][$egwFieldName] = $GLOBALS['egw']->translation->convert(($entry[0][$ldapFieldName][0]),'utf-8');
-							}
-						}
-						break;
-
-					case 'evolutionperson':
-						foreach($this->evolutionPersonFields as $egwFieldName => $ldapFieldName) {
-							if(!empty($entry[0][$ldapFieldName][0]) && !isset($contacts[0][$egwFieldName])) {
-								switch($egwFieldName) {
-									case 'cat_id':
-										for($ii=0; $ii<$entry[0][$ldapFieldName]['count']; $ii++) {
-											if(!empty($contacts[0][$egwFieldName])) $contacts[0][$egwFieldName] .= ',';
-											$contacts[0][$egwFieldName] .= ExecMethod('phpgwapi.categories.name2id',$entry[0][$ldapFieldName][$ii]);
-										}
-										break;
-
-					#				case 'bday':
-					#					$bdayParts = explode('-',$entry[0][$ldapFieldName][0]);
-					#					$contacts[0][$egwFieldName] = $bdayParts[1]. '/' .$bdayParts[2]. '/' .$bdayParts[0];
-					#					break;
-					
-									default;
-										if(!empty($entry[0][$ldapFieldName][0]) && !isset($contacts[0][$egwFieldName])) {
-											$contacts[0][$egwFieldName] = $GLOBALS['egw']->translation->convert(($entry[0][$ldapFieldName][0]),'utf-8');
-										}
-										break;
-								}
-							}
-							if(!empty($entry[0]['fileas'][0])) {
-								$contacts[0]['fn'] = $GLOBALS['egw']->translation->convert(($entry[0]['fileas'][0]),'utf-8');
-							}
-						}
-						break;
-				}
-			}
-				$contacts[0]['tid'] = 'n';
-				if(strpos($entry[0]['dn'],$this->personalContactsDN)) {
-					$contacts[0]['access'] = 'private';
-					$contacts[0]['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-				} else {
-					$contacts[0]['access'] = 'public';
-					$contacts[0]['owner'] = -1000;
-				}
-#			if(strpos($entry[0]['dn'],$this->personalContactsDN)) {
-#				$contacts[0]['access'] = 'private';
-#			} else {
-#				$contacts[0]['access'] = 'public';
-#			}
+		if (substr($contact_id,0,8) == 'account:' &&
+			!($contact_id = $GLOBALS['egw']->accounts->id2name((int) substr($contact_id,8))))
+		{
+			return false;	// account does not exist
 		}
-#		_debug_array($contacts);
-		return $contacts[0];
+		$contact_id = ldap::quote($contact_id);
+		$rows = $this->_searchLDAP($GLOBALS['egw_info']['server']['ldap_contact_context'], 
+			"(|(entryUUID=$contact_id)(uid=$contact_id))", $this->all_attributes, ADDRESSBOOK_ALL);
+
+		return $rows ? $rows[0] : false;
 	}
 
 	/**
@@ -407,253 +291,203 @@
 		$ldapContact = array();
 		$data =& $this->data;
 		
-		#_debug_array($data);exit;
 		// generate addressbook dn
-		
-		if((int)$data['owner'] < 0) {
+		if((int)$data['owner']) 
+		{
 			// group address book
-			if(!$groupName = strtolower($GLOBALS['egw']->accounts->id2name((int)$data['owner']))) {
-				return false;
+			if(!$cn = strtolower($GLOBALS['egw']->accounts->id2name((int)$data['owner']))) 
+			{
+				return true;
 			}
-			$baseDN = 'cn='. $groupName .','. $this->sharedContactsDN;
-			$cn	= $groupName;
-		} elseif((int)$data['owner'] > 0) {
-			// personal addressbook
-			$baseDN = 'cn='. strtolower($this->accountName) .','. $this->personalContactsDN;
-			$cn	= strtolower($this->accountName);
-		} else {
-			return false;
+			$baseDN = 'cn='. ldap::quote($cn) .','.($data['owner'] < 0 ? $this->sharedContactsDN : $this->personalContactsDN);
+		} 
+		elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			// account
+			$baseDN = $GLOBALS['egw_info']['server']['ldap_context'];
+			$cn	= false;
+			// we need an admin connection
+			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
+		}
+		else
+		{
+			return true;	// only admin is allowd to write accounts!
 		}
 
 		// check if $baseDN exists. If not create new one
-		if(!$result = ldap_read($this->ds, $baseDN, 'objectclass=*')) {
-			if(ldap_errno($this->ds) == 32) {
+		if(!($result = ldap_read($this->ds, $baseDN, 'objectclass=*')))
+		{
+			if(ldap_errno($this->ds) == 32 && $cn) 
+			{
 				// create a admin connection to add the needed DN
-				$adminLDAP = CreateObject('phpgwapi.ldap');
+				$adminLDAP =& new ldap;
 				$adminDS = $adminLDAP->ldapConnect();
 
 				// emtry does not exist, lets try to create it
 				$baseDNData['objectClass'] = 'organizationalRole';
 				$baseDNData['cn']	= $cn;
-				if(!ldap_add($adminDS, $baseDN, $baseDNData)) {
+				if(!ldap_add($adminDS, $baseDN, $baseDNData)) 
+				{
 					$adminLDAP->ldapDisconnect();
-					return false;
+					return true;
 				}
 				$adminLDAP->ldapDisconnect();
-			} else {
-				return false;
+			} 
+			else 
+			{
+				return true;
 			}
 		}
 
+		// check the existing objectclasses of an entry, none = array() for new ones
+		$oldObjectclasses = array();
 		$attributes = array('dn','cn','objectClass','uid');
-		if(!empty($this->data[$this->contacts_id])) {
+		if(!empty($this->data[$this->contacts_id])) 
+		{
 			$contactUID	= $this->data[$this->contacts_id];
 			
-			$result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], "(|(entryUUID=$contactUID)(uid=$contactUID))", $attributes);
+			$result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], 
+				'(|(entryUUID='.ldap::quote($contactUID).')(uid='.ldap::quote($contactUID).'))', $attributes);
 			
 			$oldContactInfo	= ldap_get_entries($this->ds, $result);
-			$oldObjectclass	= $oldContactInfo[0]['objectclass'];
+			foreach($oldContactInfo[0]['objectclass'] as $objectclass)
+			{
+				$oldObjectclasses[]	= strtolower($objectclass);
+			}
 		   	$isUpdate = true;
 		}
 		
-		if(!$contactUID) {
+		if(!$contactUID) 
+		{
 			$contactUID = md5($GLOBALS['egw']->common->randomstring(15));
 		}
 
 		$ldapContact['uid'] = $contactUID;
 
-		if($this->ldapServerInfo->supportsObjectClass('inetOrgPerson')) {
-			if(!$isUpdate) {
-				$ldapContact['objectclass'][] = 'inetOrgPerson';
-				$ldapContact['objectclass'][] = 'person';
-			} else {
-				if(!in_array('person', $oldObjectclass)) {
-					$newObjectClasses['objectClass'][] = 'person';
-				}
-				if(!in_array('inetOrgPerson', $oldObjectclass) && !in_array('inetorgperson', $oldObjectclass)) {
-					$newObjectClasses['objectClass'][] = 'inetOrgPerson';
-				}
+		// add for all supported objectclasses the objectclass and it's attributes
+		foreach($this->schema2egw as $objectclass => $mapping)
+		{
+			if(!$this->ldapServerInfo->supportsObjectClass($objectclass)) continue;
+			
+			if(!in_array($objectclass, $oldObjectclasses)) 
+			{
+				$newObjectClasses['objectClass'][] = $objectclass;
 			}
-			foreach($this->inetOrgPersonFields as $egwFieldName => $ldapFieldName) {
-				if(!empty($data[$egwFieldName])) {
-					switch($ldapFieldName) {
-						case 'cn':
-							$cneGWFields = array('n_prefix', 'n_given', 'n_middle', 'n_family', 'n_suffix');
-							foreach($cneGWFields as $cn_eGWField) {
-								if(!empty($data[$cn_eGWField])) {
-									$ldapContact[$ldapFieldName] .= $data[$cn_eGWField].' ';
-								}
-							}
-							$ldapContact[$ldapFieldName] = trim($ldapContact[$ldapFieldName]);
-							break;
-						default:
-							$ldapContact[$ldapFieldName] = $GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$GLOBALS['egw']->translation->charset(),'utf-8');
-							break;
+			if (isset($this->required_subs[$objectclass]))
+			{
+				foreach($this->required_subs[$objectclass] as $sub)
+				{
+					if(!in_array($sub, $oldObjectclasses)) 
+					{
+						$newObjectClasses['objectClass'][] = $sub;
 					}
-				} elseif($isUpdate) {
+				}
+			}
+			foreach($mapping as $egwFieldName => $ldapFieldName) 
+			{
+				if(!empty($data[$egwFieldName])) 
+				{
+					// dont convert the (binary) jpegPhoto!
+					$ldapContact[$ldapFieldName] = $ldapContact == 'jpegphoto' ? $data[$egwFieldName] :
+						$GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
+				} 
+				elseif($isUpdate) 
+				{
 					$ldapContact[$ldapFieldName] = array();
 				}
 			}
-		}
-
-		if($this->ldapServerInfo->supportsObjectClass('mozillaAbPersonAlpha')) {
-			if(!$isUpdate) {
-				$ldapContact['objectclass'][] = 'mozillaAbPersonAlpha';
-			} else {
-				if(!in_array('mozillaAbPersonAlpha', $oldObjectclass) && !in_array('mozillaabpersonalpha', $oldObjectclass)) {
-					$newObjectClasses['objectClass'][] = 'mozillaAbPersonAlpha';
-				}
-			}
-			foreach($this->mozillaAbPersonFields as $egwFieldName => $ldapFieldName) {
-				if(empty($ldapContact[$ldapFieldName]) && !empty($data[$egwFieldName])) {
-					$ldapContact[$ldapFieldName] = $GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$GLOBALS['egw']->translation->charset(),'utf-8');
-				} elseif(empty($ldapContact[$ldapFieldName]) && $isUpdate) {
-					$ldapContact[$ldapFieldName] = array();
-				}
+			// handling of special attributes, like cat_id in evolutionPerson
+			$egw2objectclass = '_egw2'.$objectclass;
+			if (method_exists($this,$egw2objectclass))
+			{
+				$this->$egw2objectclass($ldapContact,$data,$isUpdate);
 			}
 		}
 
-		if($this->ldapServerInfo->supportsObjectClass('mozillaOrgPerson')) {
-			if(!$isUpdate) {
-				$ldapContact['objectclass'][] = 'mozillaOrgPerson';
-			} else {
-				if(!in_array('mozillaOrgPerson', $oldObjectclass) && !in_array('mozillaorgperson', $oldObjectclass)) {
-					$newObjectClasses['objectClass'][] = 'mozillaOrgPerson';
-				}
-			}
-			foreach($this->mozillaAbPersonFields as $egwFieldName => $ldapFieldName) {
-				if(empty($ldapContact[$ldapFieldName]) && !empty($data[$egwFieldName])) {
-					$ldapContact[$ldapFieldName] = $GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$GLOBALS['egw']->translation->charset(),'utf-8');
-				} elseif(empty($ldapContact[$ldapFieldName]) && $isUpdate) {
-					$ldapContact[$ldapFieldName] = array();
-				}
-			}
-		}
-
-		if($this->ldapServerInfo->supportsObjectClass('evolutionPerson')) {
-			if(!$isUpdate) {
-				$ldapContact['objectclass'][] = 'evolutionPerson';
-			} else {
-				if(!in_array('evolutionPerson', $oldObjectclass) && !in_array('evolutionperson', $oldObjectclass)) {
-					$newObjectClasses['objectClass'][] = 'evolutionPerson';
-				}
-			}
-			foreach($this->evolutionPersonFields as $egwFieldName => $ldapFieldName) {
-				if(empty($ldapContact[$ldapFieldName]) && !empty($data[$egwFieldName])) {
-					switch($egwFieldName) {
-						case 'cat_id':
-							if(!empty($data[$egwFieldName])) {
-								$catIDs = explode(',',$data[$egwFieldName]);
-								foreach($catIDs as $value) {
-									$ldapContact[$ldapFieldName][] = $GLOBALS['egw']->translation->convert(ExecMethod('phpgwapi.categories.id2name',$value),$GLOBALS['egw']->translation->charset(),'utf-8');
-								}
-							}
-							break;
-
-					#	case 'bday':
-					#		$dateParts = explode('/',$data[$egwFieldName]);
-					#		$bday = $dateParts[2] .'-'. $dateParts[0] .'-'. $dateParts[1];
-					#		$ldapContact[$ldapFieldName] = $bday;
-					#		break;
-
-						default:
-							$ldapContact[$ldapFieldName] = $GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$GLOBALS['egw']->translation->charset(),'utf-8');
-							break;
-					}
-				} elseif(empty($ldapContact[$ldapFieldName]) && $isUpdate) {
-					$ldapContact[$ldapFieldName] = array();
-				}
-				$postalAddress = $data['adr_one_street'] .'$'. $data['adr_one_locality'] .', '. $data['adr_one_region'] .'$'. $data['adr_one_postalcode'] .'$$'. $data['adr_one_countryname'];
-				if($postalAddress != '$, $$$') {
-					$ldapContact['postalAddress'] = $GLOBALS['egw']->translation->convert($postalAddress,$GLOBALS['egw']->translation->charset(),'utf-8');
-				} elseif($isUpdate) {
-					$ldapContact['postalAddress'] = array();
-				}
-				$homePostalAddress = $data['adr_two_street'] .'$'. $data['adr_two_locality'] .', '. $data['adr_two_region'] .'$'. $data['adr_two_postalcode'] .'$$'. $data['adr_two_countryname'];
-				if($homePostalAddress != '$, $$$') {
-					$ldapContact['homePostalAddress'] = $GLOBALS['egw']->translation->convert($homePostalAddress,$GLOBALS['egw']->translation->charset(),'utf-8');
-				} elseif($isUpdate) {
-					$ldapContact['homePostalAddress'] = array();
-				}
-			}
-			#if(!empty($ldapContact['givenname']) && !empty($ldapContact['sn'])) {
-			#	$ldapContact['fileas'] = $ldapContact['sn'] .', '. $ldapContact['givenname'];
-			#} else {
-			#	$ldapContact['fileas'] = $ldapContact['sn'];
-			#}
-		}
-
-		if($isUpdate) {
+		if($isUpdate) 
+		{
 			// update entry
 			$dn = $oldContactInfo[0]['dn'];
 			$needRecreation = false;
 
 			// add missing objectclasses
-			if(count($newObjectClasses) > 0) {
+			if(count($newObjectClasses) > 0) 
+			{
 				$result = @ldap_mod_add($this->ds, $dn, $newObjectClasses);
-				if(!$result) {
-					#print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';exit;
-					if(ldap_errno($this->ds) == 69) {
+				if(!$result) 
+				{
+					if(ldap_errno($this->ds) == 69) 
+					{
 						// need to modify structural objectclass
 						$needRecreation = true;
-					} else {
+					} 
+					else 
+					{
 						error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-						return false;
+						return ldap_errno($this->ds).': '.ldap_error($this->ds);
 					}
 				}
 			}
 			
 			// check if we need to rename the DN or need to recreate the contact
-			$newRDN = 'uid='. $contactUID;
+			$newRDN = 'uid='. ldap::quote($contactUID);
 			$newDN = $newRDN .','. $baseDN;
-			if(strtolower($dn) != strtolower($newDN) || $needRecreation) {
+			if(strtolower($dn) != strtolower($newDN) || $needRecreation) 
+			{
 				$result = ldap_read($this->ds, $dn, 'objectclass=*');
 				$oldContact = ldap_get_entries($this->ds, $result);
-				foreach($oldContact[0] as $key => $value) {
-					if(is_array($value)) {
+				foreach($oldContact[0] as $key => $value) 
+				{
+					if(is_array($value)) 
+					{
 						unset($value['count']);
 						$newContact[$key] = $value;
 					}
 				}
 				$newContact['uid'] = $contactUID;
 
-				if(is_array($newObjectClasses['objectClass']) && count($newObjectClasses['objectClass']) > 0) {
+				if(is_array($newObjectClasses['objectClass']) && count($newObjectClasses['objectClass']) > 0) 
+				{
 					$newContact['objectclass'] = array_merge($newContact['objectclass'], $newObjectClasses['objectClass']);
 				}
 
-				if(ldap_delete($this->ds, $dn)) {
-					if(!ldap_add($this->ds, $newDN, $newContact)) {
-						print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';_debug_array($newContact);exit;
+				if(ldap_delete($this->ds, $dn)) 
+				{
+					if(!ldap_add($this->ds, $newDN, $newContact)) 
+					{
+						//print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';_debug_array($newContact);exit;
+						return ldap_errno($this->ds).': '.ldap_error($this->ds);
 					}
-				} else {
+				} 
+				else 
+				{
 					error_log('class.so_ldap.inc.php ('. __LINE__ .') delete of old '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-					return false;
+					return ldap_errno($this->ds).': '.ldap_error($this->ds);
 				}
 
 				$dn = $newDN;
 			}
 
-			#_debug_array($ldapContact);exit;
 			$result = ldap_modify($this->ds, $dn, $ldapContact);
-			if (!$result) {
+			if (!$result) 
+			{
 				error_log('class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-				#print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';exit;
-				#_debug_array($ldapContact);exit;
-				return false;
+				return ldap_errno($this->ds).': '.ldap_error($this->ds);
 			}
-		} else {
-			$dn = 'uid='. $ldapContact['uid'] .','. $baseDN;
+		} 
+		else 
+		{
+			$dn = 'uid='. ldap::quote($ldapContact['uid']) .','. $baseDN;
 			
-			#print "Save $dn<bR>";_debug_array($ldapContact);exit;
 			$result = ldap_add($this->ds, $dn, $ldapContact);
 			
-			if (!$result) {
+			if (!$result) 
+			{
 				error_log('class.so_ldap.inc.php ('. __LINE__ .') add of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')');
-				return false;
+				return ldap_errno($this->ds).': '.ldap_error($this->ds);
 			}
 		}
-
-		return true;
+		return 0;	// Ok, no error
 	}
 
 	/**
@@ -667,8 +501,9 @@
 		// single entry
 		if($keys[$this->contacts_id]) $keys = array( 0 => $keys);
 		
-		if(!is_array($keys)) {
-			$keys = array( 0 => $keys);
+		if(!is_array($keys)) 
+		{
+			$keys = array( $keys);
 		}
 
 		$ret = 0;
@@ -677,9 +512,13 @@
 
 		foreach($keys as $entry)
 		{
-			if($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], "(|(entryUUID=$entry)(uid=$entry))", $attributes)) {
+			$entry = ldap::quote($entry);
+			if($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], 
+				"(|(entryUUID=$entry)(uid=$entry))", $attributes)) 
+			{
 				$contactInfo = ldap_get_entries($this->ds, $result);
-				if(ldap_delete($this->ds, $contactInfo[0]['dn'])) {
+				if(ldap_delete($this->ds, $contactInfo[0]['dn'])) 
+				{
 					$ret++;
 				}
 			}
@@ -708,7 +547,7 @@
 	 */
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='',$need_full_no_count=false)
 	{
-		#_debug_array($criteria); print "OrderBY: $order_by";_debug_array($extra_cols);_debug_array($filter);
+		//_debug_array($criteria); print "OrderBY: $order_by";_debug_array($extra_cols);_debug_array($filter);
 		#$order_by = explode(',',$order_by);
 		#$order_by = explode(' ',$order_by);
 		#$sort = $order_by[0];
@@ -718,207 +557,399 @@
 		#$limit = $need_full_no_count ? 0 : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 		#return parent::read($start,$limit,$fields,$query,$filter,$sort,$order);
 
-		$searchFilter = '';
-		$categoryFilter = '';
-		
-		$ownerID = (int)$filter['owner'];
-		
-		if($ownerID < 0) {
-			if($groupName = $GLOBALS['egw']->accounts->id2name($ownerID)) {
-				$searchDN = 'cn='. strtolower($groupName) .','. $this->sharedContactsDN;
+		if((int)$filter['owner']) 
+		{
+			if (!($accountName = $GLOBALS['egw']->accounts->id2name($filter['owner']))) return false;
+
+			$searchDN = 'cn='. ldap::quote(strtolower($accountName)) .',';
+			
+			if ($filter['owner'] < 0)
+			{
+				$searchDN .= $this->sharedContactsDN;
 				$addressbookType = ADDRESSBOOK_GROUP;
-			} else {
-				return false;
 			}
-		} elseif($ownerID > 0) {
-			$searchDN = 'cn='. strtolower($this->accountName) .','. $this->personalContactsDN;
-			$addressbookType = ADDRESSBOOK_PERSONAL;
-		} else {
+			else
+			{
+				$searchDN .= $this->personalContactsDN;
+				$addressbookType = ADDRESSBOOK_PERSONAL;
+			}
+		} 
+		elseif (!isset($filter['owner']))
+		{
 			$searchDN = $GLOBALS['egw_info']['server']['ldap_contact_context'];
 			$addressbookType = ADDRESSBOOK_ALL;
 		}
+		else
+		{
+			$searchDN = $GLOBALS['egw_info']['server']['ldap_context'];
+			$addressbookType = ADDRESSBOOK_ACCOUNTS;
+		}
 		
 		// create the search filter
-		switch($addressbookType) {
+		switch($addressbookType) 
+		{
 			case ADDRESSBOOK_ALL:
 				$objectFilter = '(|(objectclass=inetorgperson)(objectclass=posixaccount))';
-				$attributes = array_unique(array_merge(array_values($this->inetOrgPersonFields), 
-								       array_values($this->mozillaAbPersonFields),
-								       array_values($this->evolutionPersonFields)
-				));
 				break;
 			case ADDRESSBOOK_ACCOUNTS:
 				$objectFilter = '(objectclass=posixaccount)';
-				$attributes = array_unique(array_merge(array_values($this->inetOrgPersonFields), 
-								       array_values($this->mozillaAbPersonFields),
-								       array_values($this->evolutionPersonFields)
-				));
-				break;
 				break;
 			default:
 				$objectFilter = '(objectclass=inetorgperson)';
-				$attributes = array_unique(array_merge(array_values($this->inetOrgPersonFields), 
-								       array_values($this->mozillaAbPersonFields),
-								       array_values($this->evolutionPersonFields)
-				));
 				break;
 		}
-		sort($attributes);
-		
-		if($catID = (int)$filter['cat_id']) {
-			$catName = $GLOBALS['egw']->translation->convert(ExecMethod('phpgwapi.categories.id2name',$catID),$GLOBALS['egw']->translation->charset(),'utf-8');
-			$categoryFilter = "(category=$catName)";
-		}
-		
-		# 
-		if(is_array($criteria) && count($criteria) > 0) {
+
+		$searchFilter = '';		
+		if(is_array($criteria) && count($criteria) > 0) 
+		{
+			$wildcard = $wildcard === '%' ? '*' : '';
 			$searchFilter = '';
-			foreach($criteria as $egwSearchKey => $searchValue) {
-				$ldapSearchKey = '';
-				if($ldapSearchKey = $this->inetOrgPersonFields[$egwSearchKey]) {
-					#print $ldapSearchKey.$searchValue.'<br>';
-					$searchString = $GLOBALS['egw']->translation->convert($searchValue,$GLOBALS['egw']->translation->charset(),'utf-8');
-					$searchFilter .= "($ldapSearchKey=$wildcard$searchString$wildcard)";
+			foreach($criteria as $egwSearchKey => $searchValue) 
+			{
+				foreach($this->schema2egw as $mapping)
+				{
+					if(($ldapSearchKey = $mapping[$egwSearchKey])) 
+					{
+						$searchString = $GLOBALS['egw']->translation->convert($searchValue,$this->charset,'utf-8');
+						$searchFilter .= '('.$ldapSearchKey.'='.$wildcard.ldap::quote($searchString).$wildcard.')';
+						break;
+					}
 				}
 			}
-			if($op == 'AND') {
+			if($op == 'AND') 
+			{
 				$searchFilter = "(&$searchFilter)";
-			} else {
+			} 
+			else 
+			{
 				$searchFilter = "(|$searchFilter)";
 			}
 		}
-		$ldapFilter = "(&$objectFilter$categoryFilter$searchFilter)";
-		
-		$rows = $this->searchLDAP($searchDN, $ldapFilter, $attributes, $addressbookType);
+		$colFilter = $this->_colFilter($filter);
 
-		#_debug_array($rows);
+		$ldapFilter = "(&$objectFilter$searchFilter$colFilter)";
+		
+		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType)))
+		{
+			return $rows;
+		}
+		if ($order_by)
+		{
+			$order = array();
+			$sort = 'ASC';
+			foreach(explode(',',$order_by) as $o)
+			{
+				if (substr($o,-4) == ' ASC')
+				{
+					$sort = 'ASC';
+					$order[] = substr($o,0,-4);
+				}
+				elseif (substr($o,-5) == ' DESC')
+				{
+					$sort = 'DESC';
+					$order[] = substr($o,0,-5);
+				}
+				elseif ($o)
+				{
+					$order[] = $o;
+				}
+			}
+			$rows = ExecMethod2('phpgwapi.arrayfunctions.arfsort',$rows,$order,$sort);
+		}
+		// if requested ($start !== false) return only limited resultset
+		if (is_array($start))
+		{
+			list($start,$offset) = $start;
+		}
+		if(is_numeric($start) && is_numeric($offset))
+		{
+			return array_slice($rows, $start, $offset);
+		}
+		elseif(is_numeric($start))
+		{
+			return array_slice($rows, $start, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
+		}
 		return $rows;
 	}
 	
-	function searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype) {
+	/**
+	 * Process so_sql like filters (at the moment only a subset used by the addressbook UI
+	 *
+	 * @param array $filter col-name => value pairs or just sql strings
+	 * @return string ldap filter
+	 */
+	function _colFilter($filter)
+	{
+		if (!is_array($filter)) return '';
+
+		$filters = '';
+		foreach($filter as $key => $value)
+		{
+			if (!$value) continue;
+
+			switch((string) $key)
+			{
+				case 'owner':	// already handled
+				case 'tid':		// ignored
+					break;
+					
+				case 'cat_id':
+					if((int)$value)
+					{
+						$catName = $GLOBALS['egw']->translation->convert(
+							ExecMethod('phpgwapi.categories.id2name',$value),$this->charset,'utf-8');
+						$filters .= '(category='.ldap::quote($catName).')';
+					}
+					break;
+				
+				default:
+					if (!is_int($key))
+					{
+						foreach($this->schema2egw as $mapping)
+						{
+							if (isset($mapping[$key]))
+							{
+								// todo: value = "!''"
+								$filters .= '('.$mapping[$key].'='.($value === "!''" ? '*' :
+									ldap::quote($GLOBALS['egw']->translation->convert($value,$this->charset,'utf-8'))).')';
+								break;
+							}
+						}
+					}
+					// filter for letter-search
+					elseif (preg_match("/^([^ ]+) LIKE '(.*)%'$/",$value,$matches))
+					{
+						foreach($this->schema2egw as $mapping)
+						{
+							if (isset($mapping[$matches[1]]))
+							{
+								$filters .= '('.$mapping[$matches[1]].'='.ldap::quote(
+									$GLOBALS['egw']->translation->convert($matches[2],$this->charset,'utf-8')).'*)';
+								break;
+							}
+						}
+					}
+					break;
+			}
+		}
+		return $filters;
+	}
+	
+	/**
+	 * Perform the actual ldap-search, retrieve and convert all entries
+	 * 
+	 * Used be read and search
+	 *
+	 * @internal 
+	 * @param string $_ldapContext
+	 * @param string $_filter
+	 * @param array $_attributes
+	 * @param int $_addressbooktype
+	 * @return array/boolean with eGW contacts or false on error
+	 */
+	function _searchLDAP($_ldapContext, $_filter, $_attributes, $_addressbooktype) 
+	{
 		$this->total = 0;
 		
 		$_attributes[] = 'entryUUID';
 		$_attributes[] = 'uid';
+		$_attributes[] = 'uidNumber';
 		$_attributes[] = 'objectClass';
 		$_attributes[] = 'createTimestamp';
 		$_attributes[] = 'modifyTimestamp';
+		$_attributes[] = 'creatorsName';
+		$_attributes[] = 'modifiersName';
 
-		if($_addressbooktype == ADDRESSBOOK_ALL) {
+		//echo "<p>ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit)</p>\n";
+		if($_addressbooktype == ADDRESSBOOK_ALL) 
+		{
 			$result = ldap_search($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
-		} else {
+		} 
+		else 
+		{
 			$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
 		}
-
-		#print 'class.so_ldap.inc.php ('. __LINE__ .') update of '. $dn .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';		
-		if($result) {
-			$entries = ldap_get_entries($this->ds, $result);
-			$this->total = $entries['count'];
-			for($i=0; $i<$entries['count']; $i++) {
-				$contacts[$i]['id'] = $entries[$i]['uid'][0] ? $entries[$i]['uid'][0] : $entries[$i]['entryuuid'][0];
-				for($ii=0; $ii<$entries[$i]['objectclass']['count']; $ii++) {
-					switch(strtolower($entries[$i]['objectclass'][$ii])) {
-						case 'inetorgperson':
-							foreach($this->inetOrgPersonFields as $egwFieldName => $ldapFieldName) {
-								if(!empty($entries[$i][$ldapFieldName][0]) && !isset($contacts[$i][$egwFieldName])) {
-									$contacts[$i][$egwFieldName] = $GLOBALS['egw']->translation->convert(($entries[$i][$ldapFieldName][0]),'utf-8');
-								}
-							}
-							
-							#print $entries[$i]['cn'][0]."<br>";
-							#print $entries[$i]['sn'][0]."<br>";
-							if(empty($entries[$i]['givenname'][0])) {
-								$parts = preg_split('/'.$entries[$i]['sn'][0].'/', $entries[$i]['cn'][0]);
-								$contacts[$i]['n_prefix'] = trim($parts[0]);
-								$contacts[$i]['n_suffix'] = trim($parts[1]);
-							} else {
-								$parts = preg_split('/'. $entries[$i]['givenname'][0] .'.*'. $entries[$i]['sn'][0] .'/', $entries[$i]['cn'][0]);
-								$contacts[$i]['n_prefix'] = trim($parts[0]);
-								$contacts[$i]['n_suffix'] = trim($parts[1]);
-								if(preg_match('/'. $entries[$i]['givenname'][0] .' (.*) '. $entries[$i]['sn'][0] .'/',$entries[$i]['cn'][0], $matches)) {
-									$contacts[$i]['n_middle'] = $matches[1];
-								}
-							}
-							break;
-							
-						case 'mozillaabpersonalpha':
-							foreach($this->mozillaAbPersonFields as $egwFieldName => $ldapFieldName) {
-								if(!empty($entries[$i][$ldapFieldName][0]) && !isset($contacts[$i][$egwFieldName])) {
-									$contacts[$i][$egwFieldName] = $GLOBALS['egw']->translation->convert(($entries[$i][$ldapFieldName][0]),'utf-8');
-								}
-							}
-							break;
-
-						case 'evolutionperson':
-							foreach($this->evolutionPersonFields as $egwFieldName => $ldapFieldName) {
-								if(!empty($entries[$i][$ldapFieldName][0]) && !isset($contacts[$i][$egwFieldName])) {
-									switch($egwFieldName) {
-										case 'cat_id':
-											for($iii=0; $iii<$entries[$i][$ldapFieldName]['count']; $iii++) {
-												if(!empty($contacts[$i][$egwFieldName])) $contacts[$i][$egwFieldName] .= ',';
-												$contacts[$i][$egwFieldName] .= ExecMethod('phpgwapi.categories.name2id',$entries[$i][$ldapFieldName][$iii]);
-											}
-											break;
-
-										case 'bday':
-											$bdayParts = explode('-',$entries[$i][$ldapFieldName][0]);
-											$contacts[$i][$egwFieldName] = $bdayParts[1]. '/' .$bdayParts[2]. '/' .$bdayParts[0];
-											break;
-										default;
-											if(!empty($entries[$i][$ldapFieldName][0]) && !isset($contacts[$i][$egwFieldName])) {
-												$contacts[$i][$egwFieldName] = $GLOBALS['egw']->translation->convert(($entries[$i][$ldapFieldName][0]),'utf-8');
-											}
-											break;
-									}
-								}
-								if(!empty($entries[$i]['fileas'][0])) {
-									$contacts[$i]['fn'] = $GLOBALS['egw']->translation->convert(($entries[$i]['fileas'][0]),'utf-8');
-								}
-							}
-							break;
+		if(!$result) return array();
+		
+		$entries = ldap_get_entries($this->ds, $result);
+		$this->total = $entries['count'];
+		foreach($entries as $i => $entry)
+		{
+			if (!is_int($i)) continue;	// eg. count
+			
+			$contact = array(
+				'id'  => $entry['uid'][0] ? $entry['uid'][0] : $entry['entryuuid'][0],
+				'tid' => 'n',	// the type id for the addressbook
+			);
+			foreach($entry['objectclass'] as $ii => $objectclass) 
+			{
+				$objectclass = strtolower($objectclass);
+				if (!is_int($ii) || !isset($this->schema2egw[$objectclass]))
+				{
+					continue;	// eg. count or unsupported objectclass
+				}
+				foreach($this->schema2egw[$objectclass] as $egwFieldName => $ldapFieldName) 
+				{
+					if(!empty($entry[$ldapFieldName][0]) && !isset($contact[$egwFieldName])) 
+					{
+						$contact[$egwFieldName] = $GLOBALS['egw']->translation->convert($entry[$ldapFieldName][0],'utf-8');
 					}
 				}
-				// the template id for the addressbook
-				$contacts[$i]['tid'] = 'n';
-				
-				if(strpos($entries[$i]['dn'],$this->personalContactsDN)) {
-					$contacts[$i]['access'] = 'private';
-					$contacts[$i]['owner'] = $GLOBALS['egw_info']['user']['account_id'];
-				} else {
-					$contacts[$i]['access'] = 'public';
-					$contacts[$i]['owner'] = -1000;
-				}
-
-				# modifier
-				# creator
-				if(!empty($entries[$i]['createtimestamp'][0])) {
-					$year	= substr($entries[$i]['createtimestamp'][0],0,4);
-					$month	= substr($entries[$i]['createtimestamp'][0],4,2);
-					$day	= substr($entries[$i]['createtimestamp'][0],6,2);
-					$hour	= substr($entries[$i]['createtimestamp'][0],8,2);
-					$minute	= substr($entries[$i]['createtimestamp'][0],10,2);
-					$second	= substr($entries[$i]['createtimestamp'][0],12,2);
-					$contacts[$i]['created'] = mktime($hour, $minute, $second, $month, $day, $year);
-				}
-
-				if(!empty($entries[$i]['modifytimestamp'][0])) {
-					$year	= substr($entries[$i]['modifytimestamp'][0],0,4);
-					$month	= substr($entries[$i]['modifytimestamp'][0],4,2);
-					$day	= substr($entries[$i]['modifytimestamp'][0],6,2);
-					$hour	= substr($entries[$i]['modifytimestamp'][0],8,2);
-					$minute	= substr($entries[$i]['modifytimestamp'][0],10,2);
-					$second	= substr($entries[$i]['modifytimestamp'][0],12,2);
-					$contacts[$i]['modified'] = mktime($hour, $minute, $second, $month, $day, $year);
+				$objectclass2egw = '_'.$objectclass.'2egw';
+				if (method_exists($this,$objectclass2egw))
+				{
+					$this->$objectclass2egw($contact,$entry);
 				}
 			}
-			
-			#_debug_array($contacts);
-			#exit;
-			return $contacts;
+			// read binary jpegphoto only for one result == call by read
+			if ($this->total == 1 && isset($entry['jpegphoto'][0]))
+			{
+				$bin = ldap_get_values_len($this->ds,ldap_first_entry($this->ds,$result),'jpegphoto');
+				$contact['jpegphoto'] = $bin[0];
+			}
+			if(preg_match('/cn=([^,]+),'.preg_quote($this->personalContactsDN).'$/i',$entry['dn'],$matches))
+			{
+				// personal addressbook
+				$contact['owner'] = $GLOBALS['egw']->accounts->name2id($matches[1],'account_lid','u');
+				$contact['private'] = true;
+			}
+			elseif(preg_match('/cn=([^,]+),'.preg_quote($this->sharedContactsDN).'$/i',$entry['dn'],$matches))
+			{
+				// group addressbook
+				$contact['owner'] = $GLOBALS['egw']->accounts->name2id($matches[1],'account_lid','g');
+				$contact['private'] = false;
+			}
+			else
+			{
+				// accounts
+				$contact['owner'] = 0;	
+				$contact['private'] = false;
+			}
+			foreach(array(
+				'creatorsname' => 'creator',
+				'modifiersname' => 'modifier',
+			) as $ldapFieldName => $egwFieldName)
+			{
+				if (!empty($entry[$ldapFieldName][0]) && preg_match('/^cn=([^,]+),/',$entry[$ldapFieldName][0],$matches))
+				{
+					$contact[$egwFieldName] = $GLOBALS['egw']->accounts->name2id($matches[1],'u');
+				}
+			}
+			foreach(array(
+				'createtimestamp' => 'created',
+				'modifytimestamp' => 'modified',
+			) as $ldapFieldName => $egwFieldName)
+			{
+				if(!empty($entry[$ldapFieldName][0])) 
+				{
+					$contact[$egwFieldName] = $this->_ldap2ts($entry[$ldapFieldName][0]);
+				}
+			}
+			$contacts[] = $contact;
 		}
-		#print 'class.so_ldap.inc.php ('. __LINE__ .') renaming of '. $dn .' to '. $newDN .' failed errorcode: '. ldap_errno($this->ds) .' ('. ldap_error($this->ds) .')';
-		#print "bad<br>";
-		return array();
+		return $contacts;
+	}
+	
+	/**
+	 * Creates a timestamp from the date returned by the ldap server
+	 *
+	 * @internal 
+	 * @param string $date YYYYmmddHHiiss
+	 * @return int
+	 */
+	function _ldap2ts($date)
+	{
+		return mktime(substr($date,8,2),substr($date,10,2),substr($date,12,2), 
+			substr($date,4,2),substr($date,6,2),substr($date,0,4));
 	}
 
+	/**
+	 * Special handling for mapping of eGW contact-data to the evolutionPerson objectclass
+	 * 
+	 * Please note: all regular fields are already copied!
+	 *
+	 * @internal 
+	 * @param array &$ldapContact already copied fields according to the mapping
+	 * @param array $data eGW contact data
+	 * @param boolean $isUpdate
+	 */
+	function _egw2evolutionperson(&$ldapContact,$data,$isUpdate)
+	{
+		if(!empty($data['cat_id'])) 
+		{
+			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat) 
+			{
+				$ldapContact['category'][] = $GLOBALS['egw']->translation->convert(
+					ExecMethod('phpgwapi.categories.id2name',$value),$this->charset,'utf-8');
+			}
+		}
+		foreach(array(
+			'postalAddress' => $data['adr_one_street'] .'$'. $data['adr_one_locality'] .', '. $data['adr_one_region'] .'$'. $data['adr_one_postalcode'] .'$$'. $data['adr_one_countryname'],
+			'homePostalAddress' => $data['adr_two_street'] .'$'. $data['adr_two_locality'] .', '. $data['adr_two_region'] .'$'. $data['adr_two_postalcode'] .'$$'. $data['adr_two_countryname'],
+		) as $attr => $value)
+		{
+			if($value != '$, $$$') 
+			{
+				$ldapContact[$attr] = $GLOBALS['egw']->translation->convert($value,$this->charset,'utf-8');
+			} 
+			elseif($isUpdate) 
+			{
+				$ldapContact[$attr] = array();
+			}
+		}
+	}
+
+	/**
+	 * Special handling for mapping data of the evolutionPerson objectclass to eGW contact
+	 * 
+	 * Please note: all regular fields are already copied!
+	 *
+	 * @internal 
+	 * @param array &$contact already copied fields according to the mapping
+	 * @param array $data eGW contact data
+	 * @param boolean $isUpdate
+	 */
+	function _evolutionperson2egw(&$contact,$data)
+	{
+		if (is_array($data['category']))
+		{
+			foreach($data['category'] as $iii => $cat) 
+			{
+				if (!is_int($iii)) continue;
+				
+				$contact['cat_id'][] = ExecMethod('phpgwapi.categories.name2id',$cat);
+			}
+			if ($contact['cat_id']) $contact['cat_id'] = implode(',',$contact['cat_id']);
+		}
+	}
+
+	/**
+	 * Special handling for mapping data of the inetOrgPerson objectclass to eGW contact
+	 * 
+	 * Please note: all regular fields are already copied!
+	 *
+	 * @internal 
+	 * @param array &$contact already copied fields according to the mapping
+	 * @param array $data eGW contact data
+	 * @param boolean $isUpdate
+	 */
+	function _inetorgperson2egw(&$contact,$data)
+	{
+		if(empty($data['givenname'][0]))
+		{
+			$parts = explode($data['sn'][0], $data['cn'][0]);
+			$contact['n_prefix'] = trim($parts[0]);
+			$contact['n_suffix'] = trim($parts[1]);
+		} 
+		else 
+		{
+			$parts = preg_split('/'. preg_quote($data['givenname'][0]) .'.*'. preg_quote($data['sn'][0]) .'/', $data['cn'][0]);
+			$contact['n_prefix'] = trim($parts[0]);
+			$contact['n_suffix'] = trim($parts[1]);
+			if(preg_match('/'. preg_quote($data['givenname'][0]) .' (.*) '. preg_quote($data['sn'][0]) .'/',$data['cn'][0], $matches)) 
+			{
+				$contact['n_middle'] = $matches[1];
+			}
+		}
+	}
 }

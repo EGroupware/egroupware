@@ -1,16 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Adressbook - SQL storage object                             *
-* http://www.egroupware.org                                                *
-* Written and (c) 2006 by  Ralf Becker <RalfBecker-AT-outdoor-training.de> *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * Addressbook - SQL backend
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package addressbook
+ * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
@@ -28,6 +26,21 @@ class socontacts_sql extends so_sql
 	var $accounts_table = 'egw_accounts';
 	var $accounts_join = ' JOIN egw_accounts ON person_id=egw_addressbook.contact_id';
 	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
+	var $account_repository = 'sql';
+	
+	function socontacts_sql($app='',$table='',$db=null,$column_prefix='')
+	{
+		$this->so_sql($app,$table,$db,$column_prefix);	// calling the constructor of the extended class
+
+		if ($GLOBALS['egw_info']['server']['account_repository'])
+		{
+			$this->account_repository = $GLOBALS['egw_info']['server']['account_repository'];
+		}
+		elseif ($GLOBALS['egw_info']['server']['auth_type'])
+		{
+			$this->account_repository = $GLOBALS['egw_info']['server']['auth_type'];
+		}
+	}
 	
 	/**
 	 * Query organisations by given parameters
@@ -215,7 +228,7 @@ class socontacts_sql extends so_sql
 					implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
 			}
 		}	
-		if (!$owner)	// owner not set (=all) or 0 --> include accounts
+		if (!$owner && $this->account_repository == 'sql')	// owner not set (=all) or 0 --> include accounts
 		{
 			if (!is_array($extra_cols)) $extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 			$accounts2contacts = array(
@@ -289,26 +302,29 @@ class socontacts_sql extends so_sql
 				unset($filter['owner']);
 			}
 		}
-		if (is_null($owner))	// search for accounts AND contacts of all addressbooks
+		if (!$this->account_repository == 'sql')
 		{
-			/* only enable that after testing with postgres, I dont want to break more postgres stuff ;-)
-			if ($this->db->capabilities['outer_join'])
+			if (is_null($owner))	// search for accounts AND contacts of all addressbooks
 			{
-				$join = 'OUTER'.$this->accounts_join.' '.$join;
+				/* only enable that after testing with postgres, I dont want to break more postgres stuff ;-)
+				if ($this->db->capabilities['outer_join'])
+				{
+					$join = 'OUTER'.$this->accounts_join.' '.$join;
+				}
+				else */ // simulate the outer join with a union
+				{
+					parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
+						'LEFT'.$this->accounts_join.$join,$need_full_no_count);
+					$filter[] = '(person_id=0 OR person_id IS NULL)';	// unfortunally both is used in eGW
+					parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
+						'RIGHT'.$this->accounts_join.$join,$need_full_no_count);
+				}
 			}
-			else */ // simulate the outer join with a union
+			elseif (!$owner)		// search for accounts only
 			{
-				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-					'LEFT'.$this->accounts_join.$join,$need_full_no_count);
-				$filter[] = '(person_id=0 OR person_id IS NULL)';	// unfortunally both is used in eGW
-				parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-					'RIGHT'.$this->accounts_join.$join,$need_full_no_count);
+				$join = ' RIGHT'.$this->accounts_join.$join;
+				$filter[] =  "account_type='u'";	// no groups
 			}
-		}
-		elseif (!$owner)		// search for accounts only
-		{
-			$join = ' RIGHT'.$this->accounts_join.$join;
-			$filter[] =  "account_type='u'";	// no groups
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
