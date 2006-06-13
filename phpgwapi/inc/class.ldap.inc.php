@@ -69,9 +69,10 @@
 		 * Escaped Characters are: '*', '(', ')', ' ', '\', NUL
 		 * It's actually a PHP-Bug, that we have to escape space.
 		 * For all other Characters, refer to RFC2254.
-		 * @param $string either a string to be escaped, or an array of values to be escaped
+		 * 
+		 * @param string/array $string either a string to be escaped, or an array of values to be escaped
 		 */
-		function ldapAddslashes($string='')
+		function quote($string)
 		{
 			return str_replace(array('\\','*','(',')','\0',' '),array('\\\\','\*','\(','\)','\\0','\20'),$string);
 		}

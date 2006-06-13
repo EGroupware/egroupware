@@ -273,7 +273,7 @@
 			{
 				$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
 			}
-			return $GLOBALS['egw']->ldap->ldap_addslashes($string);
+			return ldap::quote($string);
 		}
 
 		/**
