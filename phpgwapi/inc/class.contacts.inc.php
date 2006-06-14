@@ -95,6 +95,11 @@ class contacts extends bocontacts
 			{
 				list($col,$value) = explode('=',$expr);
 				
+				if ($col == 'access')	// text field access is renamed to private and using boolean 0/1
+				{
+					$col = 'private';
+					$value = $value == 'private';
+				}
 				$sfilter[$col] = $value;
 			}
 		}
