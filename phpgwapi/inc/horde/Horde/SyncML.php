@@ -351,10 +351,16 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
        	$output->characters($this->_targetURI);
         $output->endElement($uri, 'LocURI');
         $output->endElement($uri, 'Source');
-
+        
 	if(session_id() != '' && !strpos($this->_targetURI,'syncml_sessionid')) {
 		$output->startElement($uri, 'RespURI', $attrs);
-		$output->characters($this->_targetURI . '?syncml_sessionid=' . session_id());
+		
+		// some clients don't send the whole URL as targetURI
+		if (strpos($this->_targetURI,$_SERVER['PHP_SELF']) === false) {
+			$output->characters($this->_targetURI . $_SERVER['PHP_SELF'] . '?syncml_sessionid=' . session_id());
+		} else {
+			$output->characters($this->_targetURI . '?syncml_sessionid=' . session_id());
+		}
 		$output->endElement($uri, 'RespURI');
 	}
 
