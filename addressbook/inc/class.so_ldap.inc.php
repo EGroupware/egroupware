@@ -78,6 +78,10 @@ class so_ldap
 	 * @var array
 	 */
 	var $schema2egw = array(
+		'posixaccount' => array(
+			'account_id'	=> 'uidnumber',
+			'account_lid'	=> 'uid',
+		),
 		'inetorgperson' => array(
 			'n_fn'			=> 'cn',
 			'n_given'		=> 'givenname',

@@ -271,7 +271,8 @@ class uicontacts extends bocontacts
 						{
 							$Ok = $this->delete($id);
 						}
-						elseif (count($checked) == 1)	// delete single account --> redirect to admin
+						// delete single account --> redirect to admin
+						elseif (count($checked) == 1 && $contact['account_id'])	
 						{
 							$GLOBALS['egw']->redirect_link('/index.php',array(
 								'menuaction' => 'admin.uiaccounts.delete_user',

@@ -466,9 +466,15 @@ class bocontacts extends socontacts
 		}
 		$owner = $contact['owner'];
 		
+		// allow the user to edit his own account
 		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $this->user)
 		{
 			return true;
+		}
+		// dont allow to delete own account (as admin handels it too)
+		if (!$owner && $needed == EGW_ACL_DELETE && $contact['account_id'] == $this->user)
+		{
+			return false;
 		}
 		return ($this->grants[$owner] & $needed) && 
 			(!$contact['private'] || ($this->grants[$owner] & EGW_ACL_PRIVATE) || in_array($owner,$this->memberships));
