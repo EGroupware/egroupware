@@ -49,21 +49,43 @@ dc=domain,dc=com    base DN of your LDAP server
 The contact base DN must include the accounts and groups base DN, otherwise they will not be 
 searched AND the ACL given below does NOT work!
  
-The following ACL in slapd conf allow:
--------------------------------------
-- everyone to read the account addressbook
-- the user to edit his account (incl. password)
-- the egwadmin user for each domain to edit all accounts (eGW uses it when admins edit accounts)
+The example acl_addressbook.conf allow:
+--------------------------------------
 - only the user to read, edit or delete in his personal addressbook
-- group-members to read, edit or delete in their group addressbook
-
-Add or include the rows after the line behind the exiting ACL rules in your slapd.conf
+- group-members to read, edit or delete in their group addressbook(s)
 
 Please note: 
 -----------
+- You need to copy our example acl_addressbook.conf into your openldap conf dir.
 - You need to change all dc=domain,dc=com with the base DN your LDAP uses!!!
 - If you want to use the old mozillaOrgPerson schema, you need to change it here too!
----------------------------------------------------------------------------------------------------
+- You need to include "your" acl_addressbook.conf BEFORE the last acl entry (access to *) 
+  in your slapd.conf and restart the LDAP server. 
+  
+This is how the default ACL's in /etc/openldap/slapd.conf of my (SuSE 10.1) looks and 
+where I included it:
+
+access to dn.base=""
+        by * read
+
+access to dn.base="cn=Subschema"
+        by * read
+
+access to attrs=userPassword,userPKCS12
+        by self write
+        by * auth
+
+access to attrs=shadowLastChange
+        by self write
+        by * read
+
+include /etc/openldap/acl_addressbook.conf
+
+access to *
+        by * read
+
+---- acl_addressbook.conf --------------------------------------------------------
+
 # Access to users personal addressbooks
 
 # allow read of addressbook by owner and egwadmin account
