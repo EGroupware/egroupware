@@ -103,45 +103,32 @@
 		function commit()
 		{
 			$db = clone($GLOBALS['egw']->db);
-//			$db->lock($this->log_table);
-			$db->query("insert into $this->log_table (log_date, log_user, log_app, log_severity) values "
-				."('". $GLOBALS['egw']->db->to_timestamp(time())
-				."','".(int)$GLOBALS['egw']->session->account_id
-				."','".$GLOBALS['egw_info']['flags']['currentapp']."'"
-				.",'".$this->severity()."'"
-				.")"
-				,__LINE__,__FILE__
-			);
+
+			$db->insert($this->log_table,array(
+				'log_date' => $GLOBALS['egw']->db->to_timestamp(time()),
+				'log_user' => $GLOBALS['egw_info']['user']['account_id'],
+				'log_app'  => $GLOBALS['egw_info']['flags']['currentapp'],
+				'log_severity' => $this->severity(),
+			),false,__LINE__,__FILE__);
 
 			$log_id = $db->get_last_insert_id($this->log_table,'log_id');
-//			$db->query('select max(log_id) as lid from $this->log_table');
-//			$db->next_record();
-//			$log_id = $db->f('lid');
-//			$db->unlock();
 
-			$errorstack = $this->errorstack;
-			for ($i = 0; $i < count($errorstack); $i++)
+			foreach($this->errorstack as $i => $err)
 			{
-				$err = $errorstack[$i];
-				$db->query("insert into $this->msg_table "
-					."(Log_msg_log_id, log_msg_seq_no, log_msg_date, log_msg_severity, "
-					."log_msg_code, log_msg_msg, log_msg_parms, log_msg_file, log_msg_line) values "
-					."(" . $log_id
-					."," . $i
-					.", '" . $GLOBALS['egw']->db->to_timestamp($err->timestamp)
-					."', '". $err->severity . "'"
-					.", '". $err->code . "'"
-					.", '". $db->db_addslashes($err->msg) . "'"
-					.", '". $db->db_addslashes((count($err->parms) > 1?implode('|',$err->parms):$err->parms[1])). "'"
-					.", '". $err->fname . "'"
-					.", " . (int)$err->line
-					.")" 
-					,__LINE__,__FILE__
-				);
+				$db->insert($this->msg_table,array(
+					'log_msg_log_id' => $log_id,
+					'log_msg_seq_no' => $i,
+					'log_msg_date'   => $GLOBALS['egw']->db->to_timestamp($err->timestamp),
+					'log_msg_severity' => $err->severity,
+					'log_msg_code'   => $err->code,
+					'log_msg_msg'    => $err->msg,
+					'log_msg_parms'  => implode('|',(array)$err->parms),
+					'log_msg_file'   => $err->fname,
+					'log_msg_line'   => $err->line,
+				),false,__LINE__,__FILE__);
 			}
-			unset ($errorstack);
-			unset ($this->errorstack);
 			$this->errorstack = array();
+
 			return true;
 		}
 
