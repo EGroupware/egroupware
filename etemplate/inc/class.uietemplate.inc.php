@@ -902,10 +902,10 @@
 			}
 			switch ($type)
 			{
-				case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size]
+				case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
 					if (is_array($value))
 						break;
-					list($style,$extra_link,$activate_links,$label_for,$extra_link_target,$extra_link_popup) = explode(',',$cell_options);
+					list($style,$extra_link,$activate_links,$label_for,$extra_link_target,$extra_link_popup,$extra_link_title) = explode(',',$cell_options);
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br($this->html->htmlspecialchars($value));
 					if ($activate_links) $value = $this->html->activate_links($value);
@@ -921,8 +921,8 @@
 						);
 					}
 					break;
-				case 'html':	//  size: [link],[link_target],[link_popup_size]
-					list($extra_link,$extra_link_target,$extra_link_popup) = explode(',',$cell_options);
+				case 'html':	//  size: [link],[link_target],[link_popup_size],[link_title]
+					list($extra_link,$extra_link_target,$extra_link_popup,$extra_link_title) = explode(',',$cell_options);
 					$html .= $value;
 					break;
 				case 'int':		// size: [min],[max],[len],[precission (only float)]
@@ -1534,6 +1534,10 @@
 				{
 					list($w,$h) = explode('x',$extra_link_popup);
 					$options .= ' onclick="window.open(this,this.target,\'width='.(int)$w.',height='.(int)$h.',location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\'); return false;"';
+				}
+				if ($extra_link_title)
+				{
+					$options .= ' title="'.addslashes($extra_link_title).'"';
 				}
 				return $this->html->a_href($html,$extra_link,'',$options);
 			}
