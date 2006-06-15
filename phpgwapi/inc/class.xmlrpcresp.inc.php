@@ -79,7 +79,7 @@
 </member>
 <member>
 <name>faultString</name>
-<value><string>' . xmlrpc_encode_entitites($this->errstr) . '</string></value>
+<value><string>' . xmlrpc_encode_entities($this->errstr) . '</string></value>
 </member>
 </struct>
 </value>

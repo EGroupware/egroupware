@@ -209,7 +209,7 @@
 						case xmlrpcString:
 							// G. Giunta 2005/2/13: do NOT use htmlentities, since
 							// it will produce named html entities, which are invalid xml
-							$rs.="<${typ}>" . xmlrpc_encode_entitites($val). "</${typ}>";
+							$rs.="<${typ}>" . xmlrpc_encode_entities($val). "</${typ}>";
 							// $rs.="<${typ}>" . htmlentities($val). "</${typ}>";
 							break;
 						default:

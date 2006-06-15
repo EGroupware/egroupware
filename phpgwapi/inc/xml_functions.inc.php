@@ -192,7 +192,7 @@
 	* are independent of the charset encoding used to transmit them, and all XML
 	* parsers are bound to understand them.
 	*/
-	function xmlrpc_encode_entitites($data)
+	function xmlrpc_encode_entities($data)
 	{
 		$length = strlen($data);
 		$escapeddata = "";
