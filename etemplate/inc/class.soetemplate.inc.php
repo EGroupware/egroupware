@@ -87,8 +87,15 @@
 		 */
 		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
-			$this->db = clone($GLOBALS['egw']->db);
-			$this->db->set_app('etemplate');
+			if (is_object($GLOBALS['egw']->db))
+			{
+				$this->db = clone($GLOBALS['egw']->db);
+				$this->db->set_app('etemplate');
+			}
+			else
+			{
+				$GLOBALS['egw_info']['server']['eTemplate-source'] = 'files';
+			}
 			$this->db_cols = $this->db_key_cols + $this->db_data_cols;
 
 			if (empty($name))
