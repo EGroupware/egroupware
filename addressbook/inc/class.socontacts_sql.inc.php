@@ -238,6 +238,7 @@ class socontacts_sql extends so_sql
 				'contact_tid'     => 'CASE WHEN contact_tid IS NULL THEN \'n\' ELSE contact_tid END AS contact_tid',
 				'n_family'        => 'CASE WHEN n_family IS NULL THEN account_lastname ELSE n_family END AS n_family',
 				'n_given'         => 'CASE WHEN n_given IS NULL THEN account_firstname ELSE n_given END AS n_given',
+				'n_fn'            => 'CASE WHEN n_fn IS NULL THEN '.$this->db->concat('account_firstname',"' '",'account_lastname').' ELSE n_fn END AS n_fn',
 				'contact_email'   => 'CASE WHEN contact_email IS NULL THEN account_email ELSE contact_email END AS contact_email',
 			);
 			$extra_cols = $extra_cols ? array_merge(is_array($extra_cols) ? $extra_cols : implode(',',$extra_cols),array_values($accounts2contacts)) :
@@ -262,33 +263,11 @@ class socontacts_sql extends so_sql
 					}
 				}						
 			}
-			foreach($filter as $col => $value)
-			{
-				if (!is_int($col) && ($db_col = array_search($col,$this->db_cols)) !== false)
-				{
-					if (isset($accounts2contacts[$db_col]))
-					{
-						unset($filter[$col]);
-						$filter[] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).
-							($value === "!''" ? "!=''" : '='.$this->db->quote($value,$this->table_def['fd'][$db_col]['type']));
-					}
-					elseif($value === "!''")		// not empty query, will match all accounts, as their value is NULL not ''
-					{
-						unset($filter[$col]);
-						$filter[] = "($db_col != '' AND $db_col IS NOT NULL)";
-					}
-				}
-				elseif (preg_match("/^([a-z0-9_]+) *(=|!=|LIKE|NOT LIKE|=!) *'(.*)'\$/i",$value,$matches))
-				{
-					if (($db_col = array_search($matches[1],$this->db_cols)) !== false && isset($accounts2contacts[$db_col]))
-					{
-						if ($matches[2] == '=!') $matches[2] = '!=';
-						$filter[$col] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).' '.$matches[2].' \''.$matches[3].'\'';
-					}
-				}
-			}
+			$this->_fix_filter($filter,$accounts2contacts);
 			// dont list groups
 			$filter[] = "(account_type != 'g' OR account_type IS NULL)";
+			
+			if (is_array($criteria)) $this->_fix_filter($criteria,$accounts2contacts,$wildcard);
 		}
 		if ($criteria['contact_value'])	// search the custom-fields
 		{
@@ -333,6 +312,43 @@ class socontacts_sql extends so_sql
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 	
+	/**
+	 * Fixing column-names in the filter to use CASE expressions to include the account-data
+	 *
+	 * @param array &$filter column => value pairs or sql strings
+	 * @param array $accounts2contacts mapping column-name => sql statement
+	 * @param string $wildcard='' wildcard if one should be append before and after the value
+	 */
+	function _fix_filter(&$filter,$accounts2contacts,$wildcard='')
+	{
+		foreach($filter as $col => $value)
+		{
+			if (!is_int($col) && ($db_col = array_search($col,$this->db_cols)) !== false)
+			{
+				if (isset($accounts2contacts[$db_col]))
+				{
+					unset($filter[$col]);
+					$filter[] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).
+						($value === "!''" ? "!=''" : ($wildcard ? ' LIKE ' : '=').
+						$this->db->quote($wildcard.$value.$wildcard,$this->table_def['fd'][$db_col]['type']));
+				}
+				elseif($value === "!''")		// not empty query, will match all accounts, as their value is NULL not ''
+				{
+					unset($filter[$col]);
+					$filter[] = "($db_col != '' AND $db_col IS NOT NULL)";
+				}
+			}
+			elseif (preg_match("/^([a-z0-9_]+) *(=|!=|LIKE|NOT LIKE|=!) *'(.*)'\$/i",$value,$matches))
+			{
+				if (($db_col = array_search($matches[1],$this->db_cols)) !== false && isset($accounts2contacts[$db_col]))
+				{
+					if ($matches[2] == '=!') $matches[2] = '!=';
+					$filter[$col] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).' '.$matches[2].' \''.$matches[3].'\'';
+				}
+			}
+		}
+	}
+
 	/**
 	 * fix cat_id filter to search in comma-separated multiple cats and return subcats
 	 * 
