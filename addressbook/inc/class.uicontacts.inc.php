@@ -30,6 +30,7 @@ class uicontacts extends bocontacts
 		'view'		=> True,
 		'index'     => True,
 		'photo'		=> True,
+		'emailpopup'=> True,
 	);
 	var $prefs;
 	/**
@@ -75,13 +76,15 @@ class uicontacts extends bocontacts
 	 *
 	 * @param array $content=null submitted content
 	 * @param string $msg=null	message to show	
+	 * @param boolean $do_email=false do an email-selection popup or the regular index-page
 	 */
-	function index($content=null,$msg=null)
+	function index($content=null,$msg=null,$do_email=false)
 	{
 		//echo "<p>uicontacts::index(".print_r($content,true).",'$msg')</p>\n";
-		if (is_array($content))
+		if (($re_submit = is_array($content)))
 		{
-			$msg = $content['msg'];
+//			$msg = $content['msg'];
+			$do_email = $content['do_email'];
 
 			if (isset($content['nm']['rows']['delete']))	// handle a single delete like delete with the checkboxes
 			{
@@ -116,15 +119,18 @@ class uicontacts extends bocontacts
 				$org_view = $content['nm']['org_view'];
 			}
 		}
+		$preserv = array(
+			'do_email' => $do_email,
+		);
 		$content = array(
 			'msg' => $msg ? $msg : $_GET['msg'],
 		);
-		$content['nm'] = $GLOBALS['egw']->session->appsession('index','addressbook');
+		$content['nm'] = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
 				'get_rows'       =>	'addressbook.uicontacts.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-				'header_left'    =>	'addressbook.index.left',	// I  template to show right of the range-value, right-aligned (optional)
+				'header_left'    =>	$do_email ? 'addressbook.email.left' : 'addressbook.index.left',	// I  template to show right of the range-value, right-aligned (optional)
 //				'header_right'   =>	'addressbook.index.right',	// I  template to show right of the range-value, right-aligned (optional)
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
@@ -134,7 +140,7 @@ class uicontacts extends bocontacts
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'
 				'col_filter'     =>	array(),	// IO array of column-name value pairs (optional for the filterheaders)
-				'filter_label'   =>	'Addressbook',	// I  label for filter    (optional)
+				'filter_label'   =>	lang('Addressbook'),	// I  label for filter    (optional)
 				// filter needs to be type string as as int it matches the private addressbook too!
 				'filter'         =>	(string) $GLOBALS['egw_info']['user']['account_id'],	// IO filter, if not 'no_filter' => True
 				'filter_no_lang' => True,		// I  set no_lang for filter (=dont translate the options)
@@ -142,15 +148,26 @@ class uicontacts extends bocontacts
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
+				'do_email'       => $do_email,
 			);
 			// use the state of the last session stored in the user prefs
-			if (($state = @unserialize($this->prefs['index_state'])))
+			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
+		if ($do_email && !$re_submit)
+		{
+			$content['nm']['to'] = 'to';
+			$content['nm']['search'] = '@';
+		}
 		$sel_options = array(
 			'filter' => $this->get_addressbooks(EGW_ACL_READ,lang('All')),
+			'to' => array(
+				'to'  => 'To',
+				'cc'  => 'Cc',
+				'bcc' => 'Bcc',
+			),
 		);
 		$sel_options['action'] = array(
 			'delete' => lang('Delete'),
@@ -188,8 +205,56 @@ class uicontacts extends bocontacts
 		}
 		$content['nm']['org_view_label'] = $sel_options['org_view'][(string) $content['nm']['org_view']];
 		
-		$this->tmpl->read('addressbook.index');
-		return $this->tmpl->exec('addressbook.uicontacts.index',$content,$sel_options,$readonlys,$preserv);
+		$this->tmpl->read(/*$do_email ? 'addressbook.email' :*/ 'addressbook.index');
+		return $this->tmpl->exec($do_email ? 'addressbook.uicontacts.emailpopup' : 'addressbook.uicontacts.index',
+			$content,$sel_options,$readonlys,$preserv,$do_email ? 2 : 0);
+	}
+	
+	/**
+	 * Email address-selection popup
+	 *
+	 * @param array $content=null submitted content
+	 * @param string $msg=null	message to show	
+	 */
+	function emailpopup($content=null,$msg=null)
+	{		
+		if ($_GET['compat'])	// 1.2 felamimail or old email
+		{
+			$handler = "if (opener.document.doit[to].value != '')
+		{
+			opener.document.doit[to].value += ',';
+		}
+		opener.document.doit[to].value += email";
+		}
+		else	// 1.3+ felamimail
+		{
+			$handler = 'opener.addEmail(to,email)';
+		}
+			
+		$GLOBALS['egw_info']['flags']['java_script'] .= "
+<script>
+	window.focus();
+		
+	function addEmail(email)
+	{
+		var to = 'to';
+		if (document.getElementById('exec[nm][to][cc]').checked == true) 
+		{
+			to = 'cc';
+		}
+		else
+		{
+			if (document.getElementById('exec[nm][to][bcc]').checked == true)
+			{
+				to = 'bcc';
+			}
+		}
+		//alert(to+': '+email);
+		$handler;
+	}	
+</script>
+";
+		return $this->index($content,$msg,true);
 	}
 	
 	/**
@@ -337,6 +402,8 @@ class uicontacts extends bocontacts
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
+		$do_email = $query['do_email'];
+
 		//echo "<p>uicontacts::get_rows(".print_r($query,true).")</p>\n";
 		if (!$id_only)
 		{
@@ -354,7 +421,7 @@ class uicontacts extends bocontacts
 				}
 				unset($old_state);
 			}
-			$GLOBALS['egw']->session->appsession('index','addressbook',$query);
+			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$query);
 			// save the state of the index in the user prefs
 			$state = serialize(array(
 				'filter'     => $query['filter'],
@@ -366,7 +433,7 @@ class uicontacts extends bocontacts
 			));
 			if ($state != $this->prefs['index_state'])
 			{
-				$GLOBALS['egw']->preferences->add('addressbook','index_state',$state);
+				$GLOBALS['egw']->preferences->add('addressbook',$do_mail ? 'email_state' : 'index_state',$state);
 				// save prefs, but do NOT invalid the cache (unnecessary)
 				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 			}
@@ -403,7 +470,7 @@ class uicontacts extends bocontacts
 		}
 		else	// contacts view
 		{
-			$query['template'] = 'addressbook.index.rows';
+			$query['template'] = $do_email ? 'addressbook.email.rows' : 'addressbook.index.rows';
 			
 			if ($query['org_view'])	// view the contacts of one organisation only
 			{
@@ -750,7 +817,7 @@ class uicontacts extends bocontacts
 						$GLOBALS['egw']->common->egw_exit();
 					}
 					$content['link_to']['to_id'] = $content['id'];
-					$GLOBALS['egw_info']['flags']['java_script'] .= "<script LANGUAGE=\"JavaScript\">
+					$GLOBALS['egw_info']['flags']['java_script'] .= "<script language=\"JavaScript\">
 						var referer = opener.location;
 						opener.location.href = referer+(referer.search?'&':'?')+'msg=".addslashes(urlencode($content['msg']))."';</script>";
 					break;
@@ -1272,7 +1339,6 @@ $readonlys['button[vcard]'] = true;
 				selbox.options[i].text = options[i];
 			}
 		}
-	
 		</script>';
 	}
 }

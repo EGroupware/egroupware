@@ -1,3 +1,4 @@
+.emailCol div { width: 100%; overflow: hidden; }
 .redItalic { color: red; font-style: italic; }
 .fixedHeight,.telNumbers { height: 12px; }
 .telNumbers { white-space: nowrap; }
