@@ -920,7 +920,7 @@ class html
 			$vars = $url;
 			$url = '/index.php';
 		}
-		elseif (!strstr($url,'/') && count(explode('.',$url)) == 3 && substr($url,0,7) != 'mailto:')
+		elseif (!strstr($url,'/') && count(explode('.',$url)) == 3 && !strstr($url,':'))
 		{
 			$url = "/index.php?menuaction=$url";
 		}
