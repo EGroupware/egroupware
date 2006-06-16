@@ -76,7 +76,7 @@ class contacts extends bocontacts
 	 * @deprecated since 1.3 use search() instead
 	 * @param int $start=0 starting number of the range, if $limit != 0
 	 * @param int $limit=0 max. number of entries to return, 0=all
-	 * @param array $fields=null fields to return or null for all stock fields
+	 * @param array $fields=null fields to return or null for all stock fields, fields are either in the keys or values
 	 * @param string $query='' search pattern or '' for none
 	 * @param string $filter='' filters with syntax like <name>=<value>,<name2>=<value2>,<name3>=!'' for not empty
 	 * @param string $sort='' sorting: ASC or DESC
@@ -87,6 +87,7 @@ class contacts extends bocontacts
 	 */
 	function old_read($start=0,$limit=0,$fields=null,$query='',$filter='',$sort='',$order='', $lastmod=-1,$cquery='')
 	{
+		error_log("contacts::old_read($start,$limit,".print_r($fields,true).",$query,'$filter','$sort','$order',$lastmod,$cquery)");
 		//echo "<p>contacts::old_read($start,$limit,".print_r($fields,true).",$query,'$filter','$sort','$order',$lastmod,$cquery)</p>\n";
 		$sfilter = array();
 		if ($filter)
@@ -107,24 +108,49 @@ class contacts extends bocontacts
 		{
 			$sfilter[] = 'contact_modified > '.(int)$lastmod;
 		}
-		if ($order && !strstr($order,'_')) $order = 'contact_'.$order;
-		if (!$order) $order = 'org_name,n_family,n_given';
-		
+		static $old2new = array('fn' => 'n_fn','bday' => 'bday');
+
 		if (is_array($fields))
 		{
-			$fields = array_values($fields);
+			$fields2 = array_values($fields);
+			// check if the fields are in the keys with values true or 1
+			$fields = $fields2[0] === true || $fields2[0] === 1 ? array_keys($fields) : $fields2;
+			
+			
+			foreach($old2new as $old => $new)
+			{
+				if (($key = array_search($old,$fields)) !== false)
+				{
+					$fields[$key] = $new;
+				}
+			}
 		}
+		elseif (is_string($fields))
+		{
+			$fields = explode(',',$fields);
+		}
+		if ($order && !strstr($order,'_')) $order = 'contact_'.$order;
+		if (!$order) $order = $fields ? $fields[0] : 'org_name,n_family,n_given';
+		
 		//echo '<p>contacts::search('.($cquery ? $cquery.'*' : $query).','.print_r($fields,true).",'$order $sort','','".($cquery ? '' : '%')."',false,'OR',".(!$limit ? 'false' : "array($start,$limit)").",".print_r($sfilter,true).");</p>\n";
 		$rows =& $this->search($cquery ? $cquery.'*' : $query,$fields,$order.($sort ? ' '.$sort : ''),'',
 			$cquery ? '' : '%',false,'OR',!$limit ? false : array((int)$start,(int)$limit),$sfilter);
 			
 		// return the old birthday format
-		if ($rows && in_array('bday',$fields))
+		if ($rows && (is_null($fields) || array_intersect($old2new,$fields)))
 		{
 			foreach($rows as $n => $row)
 			{
-				list($y,$m,$d) = explode('-',$row['bday']);
-				$rows[$n]['bday'] = sprintf('%d/%d/%04d',$m,$d,$y);
+				foreach($old2new as $old => $new)
+				{
+					if (isset($row[$new])) $rows[$n][$old] = $row[$new];
+
+					if (isset($row['bday']))
+					{
+						list($y,$m,$d) = explode('-',$row['bday']);
+						$rows[$n]['bday'] = sprintf('%d/%d/%04d',$m,$d,$y);
+					}
+				}
 			}
 		}
 		return $rows;
