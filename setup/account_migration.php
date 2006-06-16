@@ -61,12 +61,12 @@ if (!is_object($GLOBALS['egw_setup']->db))
 	$GLOBALS['egw_setup']->loaddb();
 }
 // Load configuration values account_repository and auth_type, a setup has not yet done so
-/*$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',
+$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',
 	array('config_name'=>array('account_respository','auth_type')),__LINE__,__FILE__);
 while(($row = $GLOBALS['egw_setup']->db->row(true)))
 {
 	$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
-}*/
+}
 $to = $GLOBALS['egw_info']['server']['account_repository'];
 if (!$to && !($to = $GLOBALS['egw_info']['server']['auth_type']))
 {
