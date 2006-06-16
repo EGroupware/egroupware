@@ -60,8 +60,6 @@
 				$this->fields = $this->get_customfields();
 				$this->content_types = $this->get_content_types();
 			}
-// 			if($this->tmpl->read($this->appname.'.admin.types')) {$this->manage_content_types = true; echo 'tt';}
-			$GLOBALS['egw']->translation->add_app('infolog');	// til we move the translations
 		}
 
 		/**
@@ -72,6 +70,8 @@
 		 */
 		function edit($content = null)
 		{
+			$GLOBALS['egw']->translation->add_app('infolog');       // til we move the translations
+
 			// determine appname
 			$this->appname = $_GET['appname'] ? $_GET['appname'] : ($content['appname'] ? $content['appname'] : false);
 			if(!$this->appname) die(lang('Error! No appname found'));
