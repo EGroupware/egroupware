@@ -114,7 +114,7 @@
 			}
 
 			// connects to ldap server
-			if(!$this->ds = ldap_connect("ldap://$host", 389))
+			if(!$this->ds = ldap_connect($host))
 			{
 				/* log does not exist in setup(, yet) */
 				if(is_object($GLOBALS['egw']->log))
