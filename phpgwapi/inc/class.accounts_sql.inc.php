@@ -47,6 +47,18 @@ class accounts_backend
 	 */
 	var $table = 'egw_accounts';
 	/**
+	 * table name for the contacts
+	 *
+	 * @var string
+	 */
+	var $contacts_table = 'egw_addressbook';			
+	/**
+	 * Join with the accounts-table used in contacts::search
+	 *
+	 * @var string
+	 */
+	var $contacts_join = ' RIGHT JOIN egw_accounts ON egw_accounts.account_id=egw_addressbook.account_id';
+	/**
 	 * total number of found entries from get_list method
 	 *
 	 * @var int
@@ -73,6 +85,9 @@ class accounts_backend
 
 	/**
 	 * Reads the data of one account
+	 * 
+	 * For performance reasons and because the contacts-object itself depends on the accounts-object,
+	 * we directly join with the contacts table for reading!
 	 *
 	 * @param int $account_id numeric account-id
 	 * @return array/boolean array with account data (keys: account_id, account_lid, ...) or false if account not found
@@ -81,7 +96,19 @@ class accounts_backend
 	{
 		if (!(int)$account_id) return false;
 		
-		$this->db->select($this->table,'*',array('account_id' => abs($account_id)),__LINE__,__FILE__);
+		$join = $extra_cols = '';
+		if ($account_id > 0)
+		{
+			$extra_cols = $this->contacts_table.'.n_given AS account_firstname,'.
+				$this->contacts_table.'.n_family AS account_lastname,'.
+				$this->contacts_table.'.contact_email AS account_email,'.
+				$this->contacts_table.'.n_fn AS account_fullname,'.
+				$this->contacts_table.'.contact_id AS person_id,';
+			$join = 'LEFT JOIN '.$this->contacts_table.' ON '.$this->table.'.account_id='.$this->contacts_table.'.account_id';
+		}
+		$this->db->select($this->table,$extra_cols.$this->table.'.*',$this->table.'.account_id='.abs($account_id),
+			__LINE__,__FILE__,false,'',false,0,$join);
+		
 		if (!($data = $this->db->row(true)))
 		{
 			return false;
@@ -90,8 +117,20 @@ class accounts_backend
 		{
 			$data['account_id'] = -$data['account_id'];
 		}
-		$data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
+		if (!$data['account_firstname']) $data['account_firstname'] = $data['account_lid'];
+		if (!$data['account_lastname'])
+		{
+			$data['account_lastname'] = $data['account_type'] == 'g' ? 'Group' : 'User';
+			// if we call lang() before the translation-class is correctly setup,
+			// we can't switch away from english language anymore!
+			if ($GLOBALS['egw']->translations->lang_arr)
+			{
+				$data['account_lastname'] = lang($data['account_lastname']);
+			}
+		}
+		if (!$data['account_fullname']) $data['account_fullname'] = $data['account_firstname'].' '.$data['account_lastname'];
 
+		//echo "accounts_sql::read($account_id)"; _debug_array($data);
 		return $data;
 	}
 
@@ -140,14 +179,37 @@ class accounts_backend
 				if ($data['account_type'] == 'g') $data['account_id'] *= -1;
 			}
 		}
-		else
+		else	// update of existing account
 		{
 			unset($to_write['account_id']);
 			if (!$this->db->update($this->table,$to_write,array('account_id' => abs($data['account_id'])),__LINE__,__FILE__))
 			{
 				return false;
 			}
+			// check if account and the contact-data changed
+			if ($data['account_type'] == 'g' || ($old = $this->read($data['account_id'])) &&
+				$old['account_firstname'] == $data['account_firstname'] &&
+				$old['account_lastname'] == $data['account_lastname'] &&
+				$old['account_email'] == $data['account_email'])
+			{
+				return $data['account_id'];	// group or no change --> no need to update the contact
+			}
+			if (!$data['person_id']) $data['person_id'] = $old['person_id'];
 		}
+		if (!is_object($GLOBALS['egw']->contacts))
+		{
+			$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
+		}
+		$contact = array(
+			'n_given'    => $data['account_firstname'],
+			'n_family'   => $data['account_lastname'],
+			'email'      => $data['account_email'],
+			'account_id' => $data['account_id'],
+			'id'         => $data['person_id'],
+			'owner'      => 0,
+		);
+		$GLOBALS['egw']->contacts->save($contact);
+
 		return $data['account_id'];
 	}
 	
@@ -160,8 +222,22 @@ class accounts_backend
 	function delete($account_id)
 	{
 		if (!(int)$account_id) return false;
+		
+		$contact_id = $this->id2name($account_id,'person_id');
 
-		return !!$this->db->delete($this->table,array('account_id' => abs($account_id)),__LINE__,__FILE__);
+		if (!$this->db->delete($this->table,array('account_id' => abs($account_id)),__LINE__,__FILE__))
+		{
+			return false;
+		}
+		if ($contact_id)
+		{
+			if (!is_object($GLOBALS['egw']->contacts))
+			{
+				$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
+			}
+			$GLOBALS['egw']->contacts->delete($contact_id);
+		}
+		return true;
 	}
 
 	/**
@@ -249,112 +325,101 @@ class accounts_backend
 	 * 
 	 * ToDo: implement a search like accounts::search
 	 *
-	 * @param string $_type
-	 * @param int $start=null
-	 * @param string $sort=''
+	 * @param string $_type='both', 'accounts', 'groups'
+	 * @param int $start=null 
+	 * @param string $sort='' ASC or DESC
 	 * @param string $order=''
-	 * @param string $query
+	 * @param string $query=''
 	 * @param int $offset=null
-	 * @param string $query_type
+	 * @param string $query_type='all' 'start', 'all' (default), 'exact'
 	 * @return array
 	 */
-	function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = null, $query_type='')
+	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='')
 	{
-		if (! $sort)
+		if (!is_object($GLOBALS['egw']->contacts))
 		{
-			$sort = "DESC";
+			$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
 		}
-
-		if (!empty($order) && preg_match('/^[a-zA-Z_0-9, ]+$/',$order) && (empty($sort) || preg_match('/^(DESC|ASC|desc|asc)$/',$sort)))
-		{
-			$orderclause = "ORDER BY $order $sort";
-		}
-		else
-		{
-			$orderclause = "ORDER BY account_lid ASC";
-		}
-
+		static $order2contact = array(
+			'account_firstname' => 'n_given',
+			'account_lastname'  => 'n_family',
+			'account_email'     => 'contact_email',
+		);
+		if (isset($order2contact[$order])) $order = $account2contact[$order];
+		if ($sort) $order .= ' '.$sort;
+		
 		switch($_type)
 		{
 			case 'accounts':
-				$whereclause = "WHERE account_type = 'u'";
+				$filter = array('owner' => 0);
 				break;
 			case 'groups':
-				$whereclause = "WHERE account_type = 'g'";
+				$filter = "account_type = 'g'";
 				break;
 			default:
-				$whereclause = '';
+			case 'both':
+				$filter = "(contact_owner=0 OR contact_owner IS NULL)";
+				break;
 		}
-
+		$criteria = array();
+		$wildcard = $query_type == 'start' || $query_type == 'exact' ? '' : '%';
 		if ($query)
 		{
-			if ($whereclause)
-			{
-				$whereclause .= ' AND ( ';
-			}
-			else
-			{
-				$whereclause = ' WHERE ( ';
-			}
 			switch($query_type)
 			{
+				case 'start':
+					$query .= '*';
+					// fall-through
 				case 'all':
 				default:
-					$query = '%'.$query;
-					// fall-through
-				case 'start':
-					$query .= '%';
-					// fall-through
 				case 'exact':
-					$query = $this->db->quote($query);
-					$whereclause .= " account_firstname LIKE $query OR account_lastname LIKE $query OR account_lid LIKE $query )";
+					foreach(array('account_lid','n_family','n_given','email') as $col)
+					{
+						$criteria[$col] = $query;
+					}
 					break;
+				case 'account_firstname':
 				case 'firstname':
+					$criteria['n_given'] = $query;
+					break;
+				case 'account_lastname':
 				case 'lastname':
+					$criteria['n_family'] = $query;
+					break;
+				case 'account_lid':
 				case 'lid':
+					$criteria['account_lid'] = $query;
+					break;
+				case 'account_email':
 				case 'email':
-					$query = $this->db->quote('%'.$query.'%');
-					$whereclause .= " account_$query_type LIKE $query )";
+					$criteria['email'] = $query;
 					break;
 			}
 		}
-
-		$sql = "SELECT * FROM $this->table $whereclause $orderclause";
-		if ($offset)
+		$accounts = array();
+		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,'account_lid,account_type',
+			$wildcard,false,'OR',$offset ? array($start,$offset) : $start,$filter,$this->contacts_join)))
 		{
-			$this->db->limit_query($sql,$start,__LINE__,__FILE__,$offset);
+			foreach($contacts as $contact)
+			{
+				$accounts[] = array(
+					'account_id'        => ($contact['account_type'] == 'g' ? -1 : 1) * $contact['account_id'],
+					'account_lid'       => $contact['account_lid'],
+					'account_type'      => $contact['account_type'],
+					'account_firstname' => $contact['n_given'],
+					'account_lastname'  => $contact['n_family'],
+					'account_email'     => $contact['email'],
+					'person_id'         => $contact['id'],
+				);
+			}
 		}
-		elseif (is_numeric($start))
-		{
-			$this->db->limit_query($sql,$start,__LINE__,__FILE__);
-		}
-		else
-		{
-			$this->db->query($sql,__LINE__,__FILE__);
-		}
-		while ($this->db->next_record())
-		{
-			$accounts[] = Array(
-				'account_id'        => ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id'),
-				'account_lid'       => $this->db->f('account_lid'),
-				'account_type'      => $this->db->f('account_type'),
-				'account_firstname' => $this->db->f('account_firstname'),
-				'account_lastname'  => $this->db->f('account_lastname'),
-				'account_status'    => $this->db->f('account_status'),
-				'account_expires'   => $this->db->f('account_expires'),
-				'person_id'         => $this->db->f('person_id'),
-				'account_primary_group' => $this->db->f('account_primary_group'),
-				'account_email'     => $this->db->f('account_email'),
-			);
-		}
-		$this->db->query("SELECT count(*) FROM $this->table $whereclause");
-		$this->total = $this->db->next_record() ? $this->db->f(0) : 0;
+		$this->total = $GLOBALS['egw']->contacts->total;
 
 		return $accounts;
 	}
 
 	/**
-	 * convert an alphanumeric account-value (account_lid, account_email) to the account_id
+	 * convert an alphanumeric account-value (account_lid, account_email, account_fullname) to the account_id
 	 *
 	 * Please note:
 	 * - if a group and an user have the same account_lid the group will be returned (LDAP only)
@@ -367,21 +432,34 @@ class accounts_backend
 	 */
 	function name2id($name,$which='account_lid',$account_type=null)
 	{
+		if ($account_type === 'g' && $which != 'account_lid') return false;
+
 		$where = array();
+		$cols = 'account_id';
 		switch($which)
 		{
 			case 'account_fullname':
-				$where[] = '('.$this->db->concat('account_firstname',"' '",'account_lastname').')='.$this->db->quote($name);
+				$table = $this->contacts_table;
+				$where['n_fn'] = $name;
 				break;
-
+			case 'account_email':
+				$table = $this->contacts_table;
+				$where['contact_email'] = $name;
+				break;
+			case 'person_id':
+				$table = $this->contacts_table;
+				$where['contact_id'] = $name;
+				break;	
 			default:
+				$table = $this->table;
+				$cols .= ',account_type';
 				$where[$which] = $name;
 		}
 		if ($account_type)
 		{
 			$where['account_type'] = $account_type;
 		}
-		$this->db->select($this->table,'account_id,account_type',$where,__LINE__,__FILE__);
+		$this->db->select($table,$cols,$where,__LINE__,__FILE__);
 		if(!$this->db->next_record()) return false;
 		
 		return ($this->db->f('account_type') == 'g' ? -1 : 1) * $this->db->f('account_id');
