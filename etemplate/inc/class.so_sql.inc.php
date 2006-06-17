@@ -515,11 +515,15 @@ class so_sql
 				if ($val !== '')
 				{
 					// check if a db-internal name conversation necessary
-					if (!is_numeric($col) && ($c = array_search($col,$this->db_cols))) 
+					if (!is_int($col) && ($c = array_search($col,$this->db_cols))) 
 					{
 						$col = $c;
 					}
-					if ($val === "!''")
+					if(is_int($col))
+					{
+						$db_filter[] = $val;
+					}
+					elseif ($val === "!''")
 					{
 						$db_filter[] = $col." != ''";
 					}
