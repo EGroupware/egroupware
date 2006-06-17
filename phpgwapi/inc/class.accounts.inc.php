@@ -84,7 +84,7 @@ class accounts extends accounts_backend
 	 * 
 	 * @var boolean $use_session_cache
 	 */
-	var $use_session_cache = false;
+	var $use_session_cache = true;
 	
 	/**
 	 * Depricated: Account this class was instanciated for
