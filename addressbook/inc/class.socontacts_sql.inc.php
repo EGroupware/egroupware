@@ -23,14 +23,13 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 class socontacts_sql extends so_sql 
 {
-	var $accounts_table = 'egw_accounts';
-	var $accounts_join = ' JOIN egw_accounts ON person_id=egw_addressbook.contact_id';
 	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
 	var $account_repository = 'sql';
+	var $contact_repository = 'sql';
 	
-	function socontacts_sql($app='',$table='',$db=null,$column_prefix='')
+	function socontacts_sql()
 	{
-		$this->so_sql($app,$table,$db,$column_prefix);	// calling the constructor of the extended class
+		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_');	// calling the constructor of the extended class
 
 		if ($GLOBALS['egw_info']['server']['account_repository'])
 		{
@@ -39,6 +38,10 @@ class socontacts_sql extends so_sql
 		elseif ($GLOBALS['egw_info']['server']['auth_type'])
 		{
 			$this->account_repository = $GLOBALS['egw_info']['server']['auth_type'];
+		}
+		if ($GLOBALS['egw_info']['server']['contact_repository'])
+		{
+			$this->contact_repository = $GLOBALS['egw_info']['server']['contact_repository'];
 		}
 	}
 	
@@ -84,6 +87,10 @@ class socontacts_sql extends so_sql
 			}
 			else	// search all addressbooks, incl. accounts
 			{
+				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
+				{
+					$filter[] = 'contact_owner != 0';	// in case there have been accounts in sql previously
+				}
 				$filter[] = "(contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR contact_private=0 AND contact_owner IN (".
 					implode(',',array_keys($this->grants))."))";
@@ -223,52 +230,15 @@ class socontacts_sql extends so_sql
 			}
 			else	// search all addressbooks, incl. accounts
 			{
+				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
+				{
+					$filter[] = 'contact_owner != 0';	// in case there have been accounts in sql previously
+				}
 				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR contact_private=0 AND $this->table_name.contact_owner IN (".
 					implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
 			}
 		}	
-		if (!$owner && $this->account_repository == 'sql')	// owner not set (=all) or 0 --> include accounts
-		{
-			if (!is_array($extra_cols)) $extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
-			$accounts2contacts = array(
-				'contact_id'      => "CASE WHEN $this->table_name.contact_id IS NULL THEN ".$this->db->concat("'account:'",'account_id').
-					" ELSE $this->table_name.contact_id END AS contact_id",
-				'contact_owner'   => "CASE WHEN $this->table_name.contact_owner IS NULL THEN 0 ELSE $this->table_name.contact_owner END AS contact_owner",
-				'contact_tid'     => 'CASE WHEN contact_tid IS NULL THEN \'n\' ELSE contact_tid END AS contact_tid',
-				'n_family'        => 'CASE WHEN n_family IS NULL THEN account_lastname ELSE n_family END AS n_family',
-				'n_given'         => 'CASE WHEN n_given IS NULL THEN account_firstname ELSE n_given END AS n_given',
-				'n_fn'            => 'CASE WHEN n_fn IS NULL THEN '.$this->db->concat('account_firstname',"' '",'account_lastname').' ELSE n_fn END AS n_fn',
-				'contact_email'   => 'CASE WHEN contact_email IS NULL THEN account_email ELSE contact_email END AS contact_email',
-			);
-			$extra_cols = $extra_cols ? array_merge(is_array($extra_cols) ? $extra_cols : implode(',',$extra_cols),array_values($accounts2contacts)) :
-				array_values($accounts2contacts);
-
-			// we need to remove the above columns from the select list, as they are added again via extra_cols and 
-			// having them double is ambigues
-			if (!$only_keys)
-			{
-				$only_keys = array_diff(array_keys($this->db_cols),array_keys($accounts2contacts));
-			}
-			elseif($only_keys !== true)
-			{
-				if (!is_array($only_keys)) $only_keys = explode(',',$only_keys);
-
-				foreach(array_keys($accounts2contacts) as $col)
-				{
-					if (($key = array_search($col,$only_keys)) !== false ||
-						($key = array_search(str_replace('contact_','',$col),$only_keys)) !== false)
-					{
-						unset($only_keys[$key]);
-					}
-				}						
-			}
-			$this->_fix_filter($filter,$accounts2contacts);
-			// dont list groups
-			$filter[] = "(account_type != 'g' OR account_type IS NULL)";
-			
-			if (is_array($criteria)) $this->_fix_filter($criteria,$accounts2contacts,$wildcard);
-		}
 		if ($criteria['contact_value'])	// search the custom-fields
 		{
 			$join .= $this->extra_join;
@@ -285,70 +255,9 @@ class socontacts_sql extends so_sql
 				unset($filter['owner']);
 			}
 		}
-		if ($this->account_repository == 'sql')
-		{
-			if (is_null($owner))	// search for accounts AND contacts of all addressbooks
-			{
-				/* only enable that after testing with postgres, I dont want to break more postgres stuff ;-)
-				if ($this->db->capabilities['outer_join'])
-				{
-					$join = 'OUTER'.$this->accounts_join.' '.$join;
-				}
-				else */ // simulate the outer join with a union
-				{
-					parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-						'LEFT'.$this->accounts_join.$join,$need_full_no_count);
-					$filter[] = '(person_id=0 OR person_id IS NULL)';	// unfortunally both is used in eGW
-					parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,
-						'RIGHT'.$this->accounts_join.$join,$need_full_no_count);
-				}
-			}
-			elseif (!$owner)		// search for accounts only
-			{
-				$join = ' RIGHT'.$this->accounts_join.$join;
-				$filter[] =  "account_type='u'";	// no groups
-			}
-		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 	
-	/**
-	 * Fixing column-names in the filter to use CASE expressions to include the account-data
-	 *
-	 * @param array &$filter column => value pairs or sql strings
-	 * @param array $accounts2contacts mapping column-name => sql statement
-	 * @param string $wildcard='' wildcard if one should be append before and after the value
-	 */
-	function _fix_filter(&$filter,$accounts2contacts,$wildcard='')
-	{
-		foreach($filter as $col => $value)
-		{
-			if (!is_int($col) && ($db_col = array_search($col,$this->db_cols)) !== false)
-			{
-				if (isset($accounts2contacts[$db_col]))
-				{
-					unset($filter[$col]);
-					$filter[] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).
-						($value === "!''" ? "!=''" : ($wildcard ? ' LIKE ' : '=').
-						$this->db->quote($wildcard.$value.$wildcard,$this->table_def['fd'][$db_col]['type']));
-				}
-				elseif($value === "!''")		// not empty query, will match all accounts, as their value is NULL not ''
-				{
-					unset($filter[$col]);
-					$filter[] = "($db_col != '' AND $db_col IS NOT NULL)";
-				}
-			}
-			elseif (preg_match("/^([a-z0-9_]+) *(=|!=|LIKE|NOT LIKE|=!) *'(.*)'\$/i",$value,$matches))
-			{
-				if (($db_col = array_search($matches[1],$this->db_cols)) !== false && isset($accounts2contacts[$db_col]))
-				{
-					if ($matches[2] == '=!') $matches[2] = '!=';
-					$filter[$col] = str_replace(' AS '.$db_col,'',$accounts2contacts[$db_col]).' '.$matches[2].' \''.$matches[3].'\'';
-				}
-			}
-		}
-	}
-
 	/**
 	 * fix cat_id filter to search in comma-separated multiple cats and return subcats
 	 * 
@@ -367,132 +276,5 @@ class socontacts_sql extends so_sql
 			$cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
 		}
 		return '('.implode(' OR ',$cat_filter).')';
-	}
-	
-	/**
-	 * reads contact data including custom fields
-	 *
-	 * reimplemented to read/convert accounts and return the account_id for them
-	 *
-	 * @param integer/string $contact_id contact_id or 'account:'.account_id
-	 * @return array/boolean data if row could be retrived else False
-	*/
-	function read($contact_id)
-	{
-		//echo "<p>socontacts_sql::read($contact_id)</p>\n";
-		if (substr($contact_id,0,8) == 'account:')
-		{
-			$account_id = (int) substr($contact_id,8);
-			
-			if (!$GLOBALS['egw']->accounts->exists($account_id)) return false;	// account does not exist
-			
-			// check if the account is already linked with a contact, if not create one with the content of the account
-			if (!($contact_id = $GLOBALS['egw']->accounts->id2name($account_id,'person_id')) &&
-				!($matching_contact_id = $this->_find_unique_contact(
-					$GLOBALS['egw']->accounts->id2name($account_id,'account_firstname'),
-					$GLOBALS['egw']->accounts->id2name($account_id,'account_lastname'))))
-			{
-				// as the account object has no function to just read a record and NOT override it's internal data,
-				// we have to instanciate a new object and can NOT use $GLOBALS['egw']->accounts !!!
-				$account =& new accounts($account_id,'u');
-				$account->read();
-				
-				if (!$account->data['account_id']) return false;	// account not found
-				
-				$this->init();
-				$this->save(array(
-					'n_family' => $account->data['lastname'],
-					'n_given'  => $account->data['firstname'],
-					'n_fn'     => $account->data['firstname'].' '.$account->data['lastname'],
-					'n_fileas' => $account->data['lastname'].', '.$account->data['firstname'],
-					'email'    => $account->data['email'],
-					'owner'    => 0,
-					'tid'      => 'n',
-					'creator'  => $GLOBALS['egw_info']['user']['account_id'],
-					'created'  => time(),
-					'modifier' => $GLOBALS['egw_info']['user']['account_id'],
-					'modified' => time(),
-				),$account_id);
-	
-				return $this->data+array('account_id' => $account_id);
-			}
-			elseif ($matching_contact_id)
-			{
-				//echo "<p>socontacts_sql($contact_id) account_id=$account_id, matching_contact_id=$matching_contact_id</p>\n";
-				$contact = parent::read($matching_contact_id);
-				$contact['owner'] = 0;
-				$this->save($contact,$account_id);
-
-				return $this->data+array('account_id' => $account_id);
-			}
-			//echo "<p>socontacts_sql::read() account_id='$account_id', contact_id='$contact_id'</p>\n"; exit;
-		}
-		if (($contact = parent::read($contact_id)) && !$contact['owner'])	// return account_id for accounts
-		{
-			$contact['account_id'] = $GLOBALS['egw']->accounts->name2id($contact_id,'person_id');
-		}
-		return $contact;
-	}
-	
-	function _find_unique_contact($firstname,$lastname)
-	{
-		$contacts =& $this->search(array(
-			'contact_owner != 0',
-			'n_given'  => $firstname,
-			'n_family' => $lastname,
-			'private'  => 0,
-		));
-
-		return $contacts && count($contacts) == 1 ? $contacts[0]['id'] : false;
-	}
-
-	/**
-	 * saves the content of data to the db
-	 *
-	 * reimplemented to write for accounts some of the data to the account too and link it with the contact
-	 *
-	 * @param array $keys if given $keys are copied to data before saveing => allows a save as
-	 * @param int $account_id if called by read account_id of account to save/link with contact (we dont overwrite the account-data in that case),
-	 *	otherwise we try getting it by accounts::name2id('person_id',$contact_id)
-	 * @return int 0 on success and errno != 0 else
-	 */
-	function save($data=null,$account_id=0)
-	{
-		$this->data_merge($data);
-
-		// if called by read's automatic conversation --> dont change the email of the account (if set)
-		if (!$this->data['owner'] && $account_id &&	
-			($email = $GLOBALS['egw']->accounts->id2name($account_id,'account_email')) && $data['email'] != $email)
-		{
-			if (!$data['email_home']) $data['email_home'] = $data['email'];
-			$data['email'] = $email;
-		}
-		if (!($error = parent::save()) && !$this->data['owner'])	// successfully saved an account --> sync our data in the account-table
-		{
-			if (!$account_id && !($account_id = $GLOBALS['egw']->accounts->name2id($this->data['id'],'person_id')) &&
-				// try find a matching account for migration
-				!($account_id = $GLOBALS['egw']->accounts->name2id($this->data['n_given'].' '.$this->data['n_family'],'account_fullname')))
-			{
-				// ToDo create new account
-			}
-			// as the account object has no function to just read a record and NOT override it's internal data,
-			// we have to instanciate a new object and can NOT use $GLOBALS['egw']->accounts !!!
-			$account =& new accounts($account_id,'u');
-			$account->read_repository();
-			
-			if (!$account->data['account_id']) return false;	// account not found
-			
-			foreach(array(
-				'n_family'  => 'lastname',
-				'n_given'   => 'firstname',
-				'email'     => 'email',
-				'id'        => 'person_id',
-			) as $c_name => $a_name)
-			{
-				$account->data[$a_name] = $this->data[$c_name];
-			}
-			$account->save_repository();
-		}
-		return $error;
 	}
 }

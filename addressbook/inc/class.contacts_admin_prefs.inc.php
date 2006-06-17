@@ -91,12 +91,17 @@ class contacts_admin_prefs
 				'Global Categories'  => $GLOBALS['egw']->link('/index.php',array(
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
-					'global_cats'=> True)),
-				'Custom fields' => $GLOBALS['egw']->link('/index.php',array(
-					'menuaction' => 'admin.customfields.edit',
-					'appname'    => $appname,
+					'global_cats'=> True,
 				)),
 			);
+			// custom fields are not availible in LDAP
+			if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
+			{
+				$file['Custom fields'] = $GLOBALS['egw']->link('/index.php',array(
+					'menuaction' => 'admin.customfields.edit',
+					'appname'    => $appname,
+				));
+			}
 			if ($location == 'admin')
 			{
 				display_section($appname,$file);

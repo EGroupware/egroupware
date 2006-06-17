@@ -408,7 +408,7 @@ class bocontacts extends socontacts
 			
 			if (!$contact['tid']) $contact['tid'] = 'n';
 		}
-		if($contact['id'] && !$this->check_perms(EGW_ACL_EDIT,$contact))
+		if(!$this->check_perms($isUpdate ? EGW_ACL_EDIT : EGW_ACL_ADD,$contact))
 		{
 			$this->error = 'access denied';
 			return false;
@@ -419,8 +419,11 @@ class bocontacts extends socontacts
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
 		// set full name and fileas from the content
-		$contact['n_fn'] = $this->fullname($contact);
-		$contact['n_fileas'] = $this->fileas($contact);
+		if (isset($contact['n_family']) && isset($contact['n_given']))
+		{
+			$contact['n_fn'] = $this->fullname($contact);
+			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
+		}
 
 		if(!($this->error = parent::save($contact)))
 		{

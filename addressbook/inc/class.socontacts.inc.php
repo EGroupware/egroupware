@@ -13,6 +13,20 @@
 
 /**
  * General storage object of the adressbook
+ * 
+ * The contact storage has 3 operation modi (contact_repository):
+ * - sql: contacts are stored in the SQL table egw_addressbook & egw_addressbook_extra (custom fields)
+ * - ldap: contacts are stored in LDAP (accounts have to be stored in LDAP too!!!).
+ *   Custom fields are not availible in that case!
+ * - sql-ldap: contacts are read and searched in SQL, but saved to both SQL and LDAP.
+ *   Other clients (Thunderbird, ...) can use LDAP readonly. The get maintained via eGroupWare only.
+ * 
+ * The accounts can be stored in SQL or LDAP too (account_repository):
+ * If the account-repository is different from the contacts-repository, the filter all (no owner set)
+ * will only search the accounts and NOT the contacts! Only the filter accounts (owner=0) shows accounts.
+ * 
+ * If sql-ldap is used as contact-storage (LDAP is managed from eGroupWare) the filter all, searches
+ * the accounts in the SQL contacts-table too. Change in made in LDAP, are not detected in that case!
  *
  * @package addressbook
  * @author Cornelius Weiss <egw-AT-von-und-zu-weiss.de>
@@ -147,11 +161,20 @@ class socontacts
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
 
-		// contacts backend
-		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap')
+		// account backend used
+		if ($GLOBALS['egw_info']['server']['account_repository'])
+		{
+			$this->account_repository = $GLOBALS['egw_info']['server']['account_repository'];
+		}
+		elseif ($GLOBALS['egw_info']['server']['auth_type'])
+		{
+			$this->account_repository = $GLOBALS['egw_info']['server']['auth_type'];
+		}
+		// contacts backend (contacts in LDAP require accounts in LDAP!)
+		if($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap' && $this->account_repository == 'ldap')
 		{
 			$this->contact_repository = 'ldap';
-			$this->somain =& CreateObject('addressbook.so_'.$this->contact_repository);
+			$this->somain =& CreateObject('addressbook.so_ldap');
 
 			// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
 			$this->grants = array($this->user => ~0);
@@ -163,27 +186,23 @@ class socontacts
 			// minimum: $this->columns_to_search = array('n_family','n_given','org_name');
 			$this->columns_to_search = array('n_family','n_middle','n_given','org_name','org_unit','adr_one_location','adr_two_location','note');
 		}
-		else
+		else	// sql or sql->ldap
 		{
-			$this->somain =& CreateObject('addressbook.socontacts_sql','addressbook','egw_addressbook',null,'contact_');
+			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'sql-ldap')
+			{
+				$this->contact_repository = 'sql-ldap';
+			}
+			$this->somain =& CreateObject('addressbook.socontacts_sql');
 			// group grants are now grants for the group addressbook and NOT grants for all its members, therefor the param false!
 			$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
 			
 			// remove some columns, absolutly not necessary to search in sql
-			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),array('jpegphoto','owner','tid',
-				'private','id','cat_id','modified','modifier','creator','created','tz'));
-			$this->columns_to_search[] = $this->extra_value;	// custome fields from extra_table
+			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),array(
+				'jpegphoto','owner','tid','private','id','cat_id',
+				'modified','modifier','creator','created','tz','account_id',
+			));
 		}
-		// account backend
-		if ($GLOBALS['egw_info']['server']['account_repository'])
-		{
-			$this->account_repository = $GLOBALS['egw_info']['server']['account_repository'];
-		}
-		elseif ($GLOBALS['egw_info']['server']['auth_type'])
-		{
-			$this->account_repository = $GLOBALS['egw_info']['server']['auth_type'];
-		}
-		if ($this->account_repository == 'ldap')
+		if ($this->account_repository == 'ldap' && $this->contact_repository == 'sql')
 		{
 			if ($this->account_repository != $this->contact_repository)
 			{
@@ -194,18 +213,6 @@ class socontacts
 			else
 			{
 				$this->account_extra_search = array('uid');
-			}
-		}
-		else
-		{
-			if ($this->account_repository != $this->contact_repository)
-			{
-				// contacts in ldap & accounts in sql is not tested or supported at the moment!!!
-				$this->so_accounts =& CreateObject('addressbook.socontacts_sql','addressbook','egw_addressbook',null,'contact_');
-			}
-			else
-			{
-				$this->account_extra_search = array('account_firstname','account_lastname','account_email','account_lid');
 			}
 		}
 		// add grants for accounts: admin --> everything, everyone --> read
@@ -221,7 +228,7 @@ class socontacts
 
 		$this->somain->contacts_id = 'id';
 		$this->soextra =& CreateObject('etemplate.so_sql');
-		$this->soextra->so_sql('addressbook',$this->extra_table);
+		$this->soextra->so_sql('phpgwapi',$this->extra_table);
 			
 		$custom =& CreateObject('admin.customfields',$contact_app);
 		$this->customfields = $custom->get_customfields();
@@ -246,6 +253,12 @@ class socontacts
 	 */
 	function read_customfields($ids)
 	{
+		foreach($ids as $key => $id)
+		{
+			if (!(int)$id) unset($ids[$key]);
+		}
+		if (!$ids) return array();	// nothing to do, eg. all these contacts are in ldap
+
 		$fields = array();
 		foreach((array)$this->soextra->search(array($this->extra_id => $ids),false) as $data)
 		{
@@ -283,7 +296,7 @@ class socontacts
 	/**
 	* deletes contact entry including custom fields
 	*
-	* @param mixed $contact array with key id or just the id
+	* @param mixed $contact array with id or just the id
 	* @return boolean true on success or false on failiure
 	*/
 	function delete($contact)
@@ -295,7 +308,17 @@ class socontacts
 		{		
 			// delete customfields, can return 0 if there are no customfields
 			$this->soextra->delete(array($this->extra_id => $contact));
-
+			
+			if ($this->contact_repository == 'sql-ldap')
+			{
+				if ($contact['account_id'])
+				{
+					// LDAP uses the uid attributes for the contact-id (dn), 
+					// which need to be the account_lid for accounts!
+					$contact['id'] = $GLOBALS['egw']->account->id2name($contact['account_id']);
+				}
+				ExecMethod('addressbook.so_ldap.delete',$contact);
+			}
 			return true;
 		}
 		return false;
@@ -321,8 +344,22 @@ class socontacts
 		else
 		{
 			$this->somain->data = $this->data2db($contact);
-			$error_nr = $this->somain->save();
-			$contact['id'] = $this->somain->data['id'];
+			if (!($error_nr = $this->somain->save()))
+			{
+				$contact['id'] = $this->somain->data['id'];
+
+				if ($this->contact_repository == 'sql-ldap')
+				{
+					$data = $this->somain->data;
+					if ($contact['account_id'])
+					{
+						// LDAP uses the uid attributes for the contact-id (dn), 
+						// which need to be the account_lid for accounts!
+						$data['id'] = $GLOBALS['egw']->account->id2name($contact['account_id']);
+					}
+					ExecMethod('addressbook.so_ldap.save',$data);
+				}
+			}
 		}
 		if($error_nr) return $error_nr;
 		
@@ -358,6 +395,11 @@ class socontacts
 	*/
 	function read($contact_id)
 	{
+		if (substr($contact_id,0,8) == 'account:' &&
+			(!($contact_id = $GLOBALS['egw']->accounts->id2name((int) substr($contact_id,8),'person_id'))))
+		{
+			return false;
+		}
 		// read main data
 		$backend =& $this->get_backend($contact_id);
 		if (!($contact = $backend->read($contact_id)))
@@ -369,10 +411,13 @@ class socontacts
 			$this->extra_id => $contact['id'],
 			$this->extra_owner => $contact['owner'],
 		);
-		$customfields = $this->soextra->search($keys,false);
-		foreach ((array)$customfields as $field)
+		if ($this->customfields)	// try reading customfields only if we have some
 		{
-			$contact['#'.$field[$this->extra_key]] = $field[$this->extra_value];
+			$customfields = $this->soextra->search($keys,false);
+			foreach ((array)$customfields as $field)
+			{
+				$contact['#'.$field[$this->extra_key]] = $field[$this->extra_value];
+			}
 		}
 		return $this->db2data($contact);
 	}
@@ -588,9 +633,10 @@ class socontacts
 	 * @param string $op='AND' defaults to 'AND', can be set to 'OR' too, then criteria's are OR'ed together
 	 * @param mixed $start=false if != false, return only maxmatch rows begining with start, or array($start,$num)
 	 * @param array $filter=null if set (!=null) col-data pairs, to be and-ed (!) into the query without wildcards
+	 * @param string $join='' sql to do a join (only used by sql backend!), eg. " RIGHT JOIN egw_accounts USING(account_id)"
 	 * @return array of matching rows (the row is an array of the cols) or False
 	 */
-	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null)
+	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
 	{
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
 
@@ -606,14 +652,15 @@ class socontacts
 			if ($backend === $this->somain)
 			{
 				$cols = $this->columns_to_search;
-				if (!$filter['owner'])	// extra columns for search if accounts are included, eg. account_lid
-				{
-					$cols = array_merge($cols,$this->account_extra_search);
-				}
 			}
 			else
 			{
 				$cols = $this->account_cols_to_search;
+			}
+			// search the customfields only if some exist, but only for sql!
+			if (get_class($backend) == 'socontacts_sql' && $this->customfields)
+			{
+				$cols[] = $this->extra_value;
 			}
 			foreach($cols as $col)
 			{
@@ -779,7 +826,7 @@ class socontacts
 	 */
 	function get_fields($type='all',$contact_id=null,$owner=null)
 	{
-		$def = $this->soextra->db->get_table_definitions('addressbook','egw_addressbook');
+		$def = $this->soextra->db->get_table_definitions('phpgwapi','egw_addressbook');
 		
 		$all_fields = array();
 		foreach($def['fd'] as $field => $data)

@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['addressbook']['name']      = 'addressbook';
 	$setup_info['addressbook']['title']     = 'Addressbook';
-	$setup_info['addressbook']['version']   = '1.3.001';
+	$setup_info['addressbook']['version']   = '1.3.002';
 	$setup_info['addressbook']['app_order'] = 4;
 	$setup_info['addressbook']['enable']    = 1;
 
@@ -32,21 +32,20 @@
 	$setup_info['addressbook']['maintainer'] = 'eGroupWare coreteam';
 	$setup_info['addressbook']['maintainer_email'] = 'egroupware-developers@lists.sourceforge.net';
 
-	$setup_info['addressbook']['tables'][]  = 'egw_addressbook';
-	$setup_info['addressbook']['tables'][]  = 'egw_addressbook_extra';
+	$setup_info['addressbook']['tables']  = array();	// addressbook tables are in phpgwapi!
 
 	/* The hooks this app includes, needed for hooks registration */
 	$setup_info['addressbook']['hooks']['admin'] = 'addressbook.contacts_admin_prefs.all_hooks';
 	$setup_info['addressbook']['hooks']['preferences'] = 'addressbook.contacts_admin_prefs.all_hooks';
 	$setup_info['addressbook']['hooks']['sidebox_menu'] = 'addressbook.contacts_admin_prefs.all_hooks';
 	$setup_info['addressbook']['hooks']['settings'] = 'addressbook.contacts_admin_prefs.settings';
-	$setup_info['addressbook']['hooks'][] = 'config_validate';
 	$setup_info['addressbook']['hooks'][] = 'home';
 	$setup_info['addressbook']['hooks']['editaccount'] = 'addressbook.bocontacts.editaccount';
 	$setup_info['addressbook']['hooks']['deleteaccount'] = 'addressbook.bocontacts.deleteaccount';
 	$setup_info['addressbook']['hooks'][] = 'notifywindow';
 	$setup_info['addressbook']['hooks']['search_link'] = 'addressbook.bocontacts.search_link';
 	$setup_info['addressbook']['hooks']['edit_user']    = 'addressbook.contacts_admin_prefs.edit_user';
+	$setup_info['addressbook']['hooks'][] = 'config';
 
 	/* Dependencies for this app to work */
 	$setup_info['addressbook']['depends'][] = array(
@@ -57,4 +56,5 @@
 		'appname' => 'etemplate',
 		'versions' => Array('1.0.0','1.0.1','1.2','1.3')
 	);
+
 

@@ -39,7 +39,7 @@ class uicontacts extends bocontacts
 	var $private_addressbook = false;
 	var $org_views;
 
-//	var $config = array('call_link'=>'skype:%1?call','call_popup'=>'');	// popup wxh, eg. 640x480
+	var $config;
 
 	function uicontacts($contact_app='addressbook')
 	{
@@ -69,6 +69,8 @@ class uicontacts extends bocontacts
 		// our javascript
 		// to be moved in a seperate file if rewrite is over
 		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
+		
+		$this->config =& $GLOBALS['egw_info']['server'];
 	}
 	
 	/**
@@ -83,7 +85,6 @@ class uicontacts extends bocontacts
 		//echo "<p>uicontacts::index(".print_r($content,true).",'$msg')</p>\n";
 		if (($re_submit = is_array($content)))
 		{
-//			$msg = $content['msg'];
 			$do_email = $content['do_email'];
 
 			if (isset($content['nm']['rows']['delete']))	// handle a single delete like delete with the checkboxes
@@ -130,8 +131,6 @@ class uicontacts extends bocontacts
 		{
 			$content['nm'] = array(
 				'get_rows'       =>	'addressbook.uicontacts.get_rows',	// I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
-				'header_left'    =>	$do_email ? 'addressbook.email.left' : 'addressbook.index.left',	// I  template to show right of the range-value, right-aligned (optional)
-//				'header_right'   =>	'addressbook.index.right',	// I  template to show right of the range-value, right-aligned (optional)
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
@@ -156,10 +155,19 @@ class uicontacts extends bocontacts
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
-		if ($do_email && !$re_submit)
+		if ($do_email)
 		{
-			$content['nm']['to'] = 'to';
-			$content['nm']['search'] = '@';
+			if (!$re_submit)
+			{
+				$content['nm']['to'] = 'to';
+				$content['nm']['search'] = '@';
+			}
+			$content['nm']['header_left'] = 'addressbook.email.left';
+		}
+		// Organisation stuff is not (yet) availible with ldap
+		elseif($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
+		{
+			$content['nm']['header_left'] = 'addressbook.index.left';
 		}
 		$sel_options = array(
 			'filter' => $this->get_addressbooks(EGW_ACL_READ,lang('All')),
@@ -510,11 +518,12 @@ class uicontacts extends bocontacts
 			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
 				$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 
-			if (!$id_only && $this->prefs['custom_colum'] != 'never' && $rows)	// do we need the custom fields
+			// do we need the custom fields
+			if (!$id_only && $this->prefs['custom_colum'] != 'never' && $rows && $this->customfields)
 			{
 				foreach((array) $rows as $n => $val)
 				{
-					if ($val) $ids[] = $val['id'];
+					if ($val && (int)$val['id']) $ids[] = $val['id'];
 				}
 				if ($ids) $customfields = $this->read_customfields($ids);
 			}
@@ -614,7 +623,7 @@ class uicontacts extends bocontacts
 						if ($row[$name]) $homeaddress = true;
 					}
 				}
-				}
+			}
 		}
 		// disable photo column, if view contains no photo(s)
 		if (!$photos || $this->prefs['photo_column'] == 'never') $rows['no_photo'] = '1';
@@ -1273,7 +1282,7 @@ $readonlys['button[vcard]'] = true;
 	{
 		if (!$number || !$this->config['call_link']) return false;
 
-		$link = str_replace('%1',$number,$this->config['call_link']);
+		$link = str_replace('%1',urlencode($number),$this->config['call_link']);
 	}
 
 	function js()
