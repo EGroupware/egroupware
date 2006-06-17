@@ -557,10 +557,11 @@
 		 * User prefs for saveing are in $this->user not in $this->data, which are the effectiv prefs only!
 		 *
 		 * @param boolean $update_session_info=false old param, seems not to be used
-		 * @param string $type='user' which prefs to update: user/default/forced 
+		 * @param string $type='user' which prefs to update: user/default/forced
+		 * @param boolean $invalid_cache=true should we invalidate the cache, default true
 		 * @return array with new effective prefs (even when forced or default prefs are deleted!)
 		 */
-		function save_repository($update_session_info = False,$type='user')
+		function save_repository($update_session_info = False,$type='user',$invalid_cache=true)
 		{
 			switch($type)
 			{
@@ -606,7 +607,7 @@
 				$GLOBALS['egw_info']['user']['preferences'] = $this->data;
 				$GLOBALS['egw']->session->save_repositories();
 			}
-			if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+			if ($invalid_cache && method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
 			{
 				$GLOBALS['egw']->invalidate_session_cache();	// in case with cache the egw_info array in the session
 			}
