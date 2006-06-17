@@ -134,6 +134,7 @@
 			$salt = '';
 			switch($type)
 			{
+				default:	// eg. setup >> config never saved
 				case 'des':
 					$salt       = $this->randomstring(2);
 					$_password  = crypt($password, $salt);
@@ -170,8 +171,6 @@
 					$hash = mhash(MHASH_SHA1, $password . $salt);
 					$e_password = '{SSHA}' . base64_encode($hash . $salt);
 					break;
-				default:
-					return False;
 			}
 			return $e_password;
 		}
