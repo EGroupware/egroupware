@@ -292,7 +292,7 @@
 			$GLOBALS['egw_info']['user']['kp3'] = $this->kp3;
 
 			$this->update_dla();
-			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid);
+			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
 			if (!$this->account_id)
 			{
 				return False;
