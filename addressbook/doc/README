@@ -56,6 +56,12 @@ The example acl_addressbook.conf allow:
 
 Please note: 
 -----------
+- The group ACL requires that the used groups have the groupOfNames objectclass with
+  member attributes containing the dn's of all members! The memberUid attribute of
+  posixGroup is NOT enough. If you use a distribution other then SuSE, you can NOT
+  use both objectclasses together, as both are structural objects. You have to use
+  the alternative rfc2307bis.schema instead of the stock nis.schema to do so.
+  The README in phpgwapi/doc/ldap describs how to change your ldap accordingly!
 - You need to copy our example acl_addressbook.conf into your openldap conf dir.
 - You need to change all dc=domain,dc=com with the base DN your LDAP uses!!!
 - If you want to use the old mozillaOrgPerson schema, you need to change it here too!
