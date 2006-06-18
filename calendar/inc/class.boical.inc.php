@@ -550,6 +550,21 @@
 	 									$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] : 
 	 									($uid == $event['owner'] ? 'A' : 'U');
 	 							}
+
+	 							if (preg_match('/<([@.a-z0-9_-]+)>/i',$attributes['value'],$matches)) {
+	 								$uid = '';
+	 								$uid = $GLOBALS['egw']->accounts->name2id($matches[1],'account_email');
+	 								if(!empty($uid)) {
+	 									$event['participants'][$uid] = isset($attributes['params']['PARTSTAT']) ?
+	 										$this->status_ical2egw[strtoupper($attributes['params']['PARTSTAT'])] : 
+	 										($uid == $event['owner'] ? 'A' : 'U');
+									}
+	 							}
+	 							
+	 							if($attributes['value'] == 'Unknown') {
+	 								$event['participants'][$GLOBALS['egw_info']['user']['account_id']] = 'A';
+	 							}
+	 							
 	 							break;
 	 						case 'ORGANIZER':	// will be written direct to the event
 	 							if (preg_match('/MAILTO:([@.a-z0-9_-]+)/i',$attributes['value'],$matches) &&
@@ -624,7 +639,7 @@
 	 				}
 
 					#error_log('ALARMS');
-					#error_log(print_r($alarms,true));
+					#error_log(print_r($event['participants'], true));
 					
 					if (!($Ok = $this->update($event, TRUE))) {
 						break;	// stop with the first error
