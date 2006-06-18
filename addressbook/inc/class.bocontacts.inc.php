@@ -424,8 +424,8 @@ class bocontacts extends socontacts
 			$contact['n_fn'] = $this->fullname($contact);
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
-
-		if(!($this->error = parent::save($contact)))
+		// we dont update the content-history, if we run inside setup (admin-account-creation)
+		if(!($this->error = parent::save($contact)) && is_object($GLOBALS['egw']->contenthistory))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 		}
