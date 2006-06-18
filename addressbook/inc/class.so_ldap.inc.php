@@ -749,7 +749,7 @@ class so_ldap
 		} 
 		else 
 		{
-			$result = ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
+			$result = @ldap_list($this->ds, $_ldapContext, $_filter, $_attributes, 0, $this->ldapLimit);
 		}
 		if(!$result) return array();
 		
