@@ -7,12 +7,14 @@
 (e.g. 1969)	addressbook	en	(e.g. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
+account repository	admin	en	Account repository
 accounts	addressbook	en	Accounts
 actions	addressbook	en	Actions
 add a contact to this organisation	addressbook	en	Add a contact to this organisation
 add a new contact	addressbook	en	Add a new contact
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add custom field	addressbook	en	Add Custom Field
+additional information about using ldap as contact repository	admin	en	Additional information about using LDAP as contact repository
 address book	common	en	Address Book
 address book - vcard in	addressbook	en	Address book - VCard in
 address book - view	addressbook	en	Address book - view
@@ -48,6 +50,7 @@ business state	addressbook	en	Business State
 business street	addressbook	en	Business Street
 business zip code	addressbook	en	Business Postal Code
 calendar uri	addressbook	en	Calendar URI
+can be changed via setup >> configuration	admin	en	Can be changed via Setup >> Configuration
 car phone	addressbook	en	Car Phone
 cell phone	addressbook	en	Mobile phone
 change all organisation members	addressbook	en	change all organisation members
@@ -64,6 +67,7 @@ contact	common	en	Contact
 contact application	admin	en	Contact application
 contact deleted	addressbook	en	Contact deleted
 contact id	addressbook	en	Contact ID
+contact repository	admin	en	Contact repository
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
@@ -154,8 +158,7 @@ last modified	addressbook	en	last modified
 last modified by	addressbook	en	last modified by
 ldap context for contacts	admin	en	LDAP context for contacts
 ldap host for contacts	admin	en	LDAP host for contacts
-ldap root dn for contacts	admin	en	LDAP root dn for contacts
-ldap root pw for contacts	admin	en	LDAP root pw for contacts
+ldap settings for contacts	admin	en	LDAP settings for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
 links	addressbook	en	Links
@@ -200,6 +203,7 @@ publish into groups:	addressbook	en	Publish into groups:
 read a list / search for entries.	addressbook	en	Read a list / search for entries.
 read a list of entries.	addressbook	en	Read a list of entries.
 read a single entry by passing the id and fieldlist.	addressbook	en	Read a single entry by passing the id and fieldlist.
+read only	addressbook	en	read only
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 role	addressbook	en	Role
@@ -219,12 +223,14 @@ show	addressbook	en	Show
 show a column for %1	addressbook	en	Show a column for %1
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 show the contacts of this organisation	addressbook	en	Show the contacts of this organisation
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup (WxH, eg.400x300, if a popup should be used)
 startrecord	addressbook	en	Startrecord
 state	common	en	State
 street	common	en	Street
 successfully imported %1 records into your addressbook.	addressbook	en	Successfully imported %1 record(s) into your addressbook.
 suffix	addressbook	en	Suffix
 tel home	addressbook	en	tel home
+telephony integration	admin	en	Telephony integration
 test import (show importable records <u>only</u> in browser)	addressbook	en	Test Import (show importable records <u>only</u> in browser)
 that field name has been used already !	addressbook	en	That field name has been used already !
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
@@ -236,6 +242,7 @@ tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
 translation	addressbook	en	Translation
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 upload or delete the photo	addressbook	en	Upload or delete the photo
+url to link telephone numbers to (use %1 for the number)	admin	en	URL to link telephone numbers to (use %1 for the number)
 use country list	addressbook	en	Use Country List
 used for links and for the own sorting of the list	addressbook	en	used for links and for the own sorting of the list
 vcard	common	en	VCard
@@ -257,6 +264,7 @@ you are not permitted to delete contact %1	addressbook	en	You are not permitted 
 you are not permittet to delete this contact	addressbook	en	You are not permittet to delete this contact
 you are not permittet to edit this contact	addressbook	en	You are not permittet to edit this contact
 you are not permittet to view this contact	addressbook	en	you are not permittet to view this contact
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	en	You can only use LDAP as contact repository if the accounts are stored in LDAP too!
 you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
 you need to select some contacts first	addressbook	en	You need to select some contacts first

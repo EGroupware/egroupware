@@ -7,12 +7,14 @@
 (e.g. 1969)	addressbook	de	(z.B. 1966)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verfügbar für Administratoren!!!
+account repository	admin	de	Speicherort für Benutzerkonten
 accounts	addressbook	de	Benutzerkonten
 actions	addressbook	de	Befehle
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
+additional information about using ldap as contact repository	admin	de	Zusätzliche Information über die Nutzung von LDAP zum Speichern der Kontakte
 address book	common	de	Adressbuch
 address book - vcard in	addressbook	de	Adressbuch - VCard in
 address book - view	addressbook	de	Adressbuch - Anzeigen
@@ -48,6 +50,7 @@ business state	addressbook	de	Bundesland geschäftl.
 business street	addressbook	de	Straße geschäftl.
 business zip code	addressbook	de	PLZ geschäftl.
 calendar uri	addressbook	de	Kalender URI
+can be changed via setup >> configuration	admin	de	Kann über Setup >> Konfiguration geändert werden
 car phone	addressbook	de	Autotelefon
 cell phone	addressbook	de	Mobiltelefon
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
@@ -64,6 +67,7 @@ contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
 contact deleted	addressbook	de	Kontakt gelöscht
 contact id	addressbook	de	Kontakt ID
+contact repository	admin	de	Speicherort Kontakte
 contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
@@ -152,10 +156,9 @@ international	addressbook	de	International
 label	addressbook	de	Adressetikett
 last modified	addressbook	de	Letzte Änderung
 last modified by	addressbook	de	Letzte Änderung durch
-ldap context for contacts	admin	de	LDAP-Kontext für Kontakte
-ldap host for contacts	admin	de	LDAP-Host für Kontakte
-ldap root dn for contacts	admin	de	LDAP-rootdn für Kontakte
-ldap root pw for contacts	admin	de	LDAP-Passwort für Kontakte
+ldap context for contacts	admin	de	LDAP Kontext für Kontakte
+ldap host for contacts	admin	de	LDAP Host für Kontakte
+ldap settings for contacts	admin	de	LDAP Einstellungen für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
 links	addressbook	de	Verknüpfungen
@@ -200,6 +203,7 @@ publish into groups:	addressbook	de	In folgende Gruppen veröffentlichen:
 read a list / search for entries.	addressbook	de	Lese die Liste / Suche nach Einträgen
 read a list of entries.	addressbook	de	Liest eine Liste von Einträgen.
 read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen einzelnen Eintrag über seine ID und Feldliste.
+read only	addressbook	de	nur lesend
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
 role	addressbook	de	Funktion
@@ -219,12 +223,14 @@ show	addressbook	de	Anzeigen
 show a column for %1	addressbook	de	Zeige eine %1 Spalte
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	de	Größe des Popup (WxH, zB. 400x300, falls ein Popup verwendet werden soll)
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
 tel home	addressbook	de	Telefon privat
+telephony integration	admin	de	Telefonie Integration
 test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datensätze <u>nur</u> im Browser an)
 that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt!
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
@@ -236,6 +242,7 @@ tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 translation	addressbook	de	Übersetzung
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
+url to link telephone numbers to (use %1 for the number)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (%1 für die Nummber verwenden)
 use country list	addressbook	de	Länderliste benutzen
 used for links and for the own sorting of the list	addressbook	de	wird für Verküpfungen und die eigene Sortierung der Liste benützt
 vcard	common	de	VCard
@@ -257,6 +264,7 @@ you are not permitted to delete contact %1	addressbook	de	Sie haben nicht die Be
 you are not permittet to delete this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu löschen
 you are not permittet to edit this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu bearbeiten
 you are not permittet to view this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu betrachen
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	de	Sie können LDAP nur dann zum Speichern von Kontakten verwenden, wenn die Benutzerkonten auch in LDAP gespeichert sind!
 you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswählen (*.vcf)
 you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
 you need to select some contacts first	addressbook	de	Sie müssen zuerst Kontakte auswählen
