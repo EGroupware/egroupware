@@ -63,6 +63,8 @@ class accounts_backend
 	 * @var int
 	 */
 	var $total;
+	
+	var $ldapServerInfo;
 
 	/**
 	 * required classe for user and groups
@@ -74,10 +76,7 @@ class accounts_backend
 			'top','person','organizationalperson','inetorgperson','posixaccount','shadowaccount'
 		),
 		'group' => array(
-			'top','posixgroup',
-			// some newer ldap require namedObject here, as none of the above is a structural object there
-			// this gets now autodetected
-			//'namedObject'
+			'top','posixgroup','groupofnames'
 		)
 	);
 	/**
@@ -95,7 +94,7 @@ class accounts_backend
 	function accounts_backend()
 	{
 		// enable the caching in the session, done by the accounts class extending this class.
-		$this->use_session_cache = true;
+	$this->use_session_cache = true;
 
 		$this->ds = $GLOBALS['egw']->common->ldapConnect();
 		if(!@is_object($GLOBALS['egw']->translation))
@@ -139,7 +138,12 @@ class accounts_backend
 		$is_group = $data['account_id'] < 0 || $data['account_type'] === 'g';
 
 		$data_utf8 = $this->translation->convert($data,$this->translation->charset(),'utf-8');
+		$members = $data['account_members'];
 				
+		if (!is_object($this->ldapServerInfo))
+		{
+			$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_host']);
+		}
 		// common code for users and groups
 		// checks if accout_lid (dn) has been changed or required objectclass'es are missing
 		if ($data_utf8['account_id'] && $data_utf8['account_lid'])
@@ -160,16 +164,26 @@ class accounts_backend
 				{
 					$old['objectclass'][$n] = strtolower($class);
 				}
-				if ($is_group && ($old['cn'] != $data_utf8['account_lid'] || substr($old['dn'],0,3) != 'cn=') ||
+				$key = false;
+				if ($is_group && ($key = array_search('namedobject',$old['objectclass'])) !== false ||
+					$is_group && ($old['cn'] != $data_utf8['account_lid'] || substr($old['dn'],0,3) != 'cn=') ||
 					!$is_group && ($old['uid'] != $data_utf8['account_lid'] || substr($old['dn'],0,4) != 'uid='))
 				{
 					// query the memberships to set them again later
-					if (!$is_group) $memberships = $this->memberships($data['account_id']);
-
+					if (!$is_group)
+					{
+						$memberships = $this->memberships($data['account_id']);
+					}
+					else
+					{
+						$members = $old ? $old['memberuid'] : $this->members($data['account_id']);
+					}
 					// if dn has changed --> delete the old entry, as we cant rename the dn
 					// $this->delete would call accounts::delete, which will delete als ACL of the user too!
 					accounts_backend::delete($data['account_id']);	
 					unset($old['dn']);
+					// removing the namedObject object-class, if it's included
+					if ($key !== false) unset($old['objectclass'][$key]);
 					$to_write = $old;
 					unset($old);
 				}
@@ -205,6 +219,13 @@ class accounts_backend
 		{
 			$to_write = $this->_merge_group($to_write,$data_utf8);
 			$data['account_type'] = 'g';
+			
+			$groupOfNames = in_array('groupofnames',$old ? $old['objectclass'] : $to_write['objectclass']);
+			if (!$old && $groupOfNames || $members)
+			{
+				$to_write = array_merge($to_write,accounts_backend::set_members($members,
+					$data['account_id'],$groupOfNames,$dn));
+			}
 		}
 		else
 		{
@@ -217,9 +238,11 @@ class accounts_backend
 			!$old && !@ldap_add($this->ds,$dn,$to_write))
 		{
 			$err = true;
-			if (!$old && $is_group)
+			if (!$old && $is_group && ($key = array_search('groupofnames',$to_write['objectclass'])) !== false)
 			{
-				$to_write['objectclass'][] = 'namedobject';
+				// try again with removed groupOfNames stuff, as I cant detect if posixGroup is a structural object
+				unset($to_write['objectclass'][$key]);
+				unset($to_write['member']);
 				$err = !ldap_add($this->ds,$dn,$to_write);
 			}
 			if ($err)
@@ -229,7 +252,7 @@ class accounts_backend
 				return false;
 			}
 		}
-		if ($memberships)	// setting the previous memberships of the renamed account
+		if ($memberships)
 		{
 			$this->set_memberships($memberships,$data['account_id']);
 		}
@@ -305,7 +328,7 @@ class accounts_backend
 	function _read_group($account_id)
 	{
 		$sri = ldap_search($this->ds, $this->group_context, 'gidnumber=' . abs($account_id),
-			array('dn','gidnumber','cn'));
+			array('dn','gidnumber','cn','objectclass'));
 		
 		$data = ldap_get_entries($this->ds, $sri);
 		if (!$data['count'])
@@ -314,14 +337,20 @@ class accounts_backend
 		}
 		$data = $this->translation->convert($data[0],'utf-8');
 		
-		return array(
+		$group = array(
 			'account_dn'        => $data['dn'],
 			'account_id'        => -$data['gidnumber'][0],
 			'account_lid'       => $data['cn'][0],
 			'account_type'      => 'g',
 			'account_firstname' => $data['cn'][0],
 			'account_lastname'  => lang('Group'),
+			'groupOfNames'      => in_array('groupOfNames',$data['objectclass']),
 		);
+		if (!is_object($this->ldapServerInfo))
+		{
+			$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_host']);
+		}
+		return $group;
 	}
 
 	/**
@@ -748,23 +777,42 @@ class accounts_backend
 	 * 
 	 * @param array $members array with uidnumber or uid's
 	 * @param int $gid gidnumber of group to set
+	 * @param boolean $groupOfNames=null should we set the member attribute of groupOfNames (default detect it)
+	 * @param string $use_cn=null if set $cn is used instead $gid and the attributes are returned, not written to ldap
+	 * @return boolean/array false on failure, array or true otherwise
 	 */
-	function set_members($members,$gid)
+	function set_members($members,$gid,$groupOfNames=null,$use_cn=null)
 	{
 		//echo "<p>accounts_ldap::set_members(".print_r($members,true).",$gid)</p>\n";
-		if (!($cn = $this->id2name($gid))) return false;
+		if (!($cn = $use_cn) && !($cn = $this->id2name($gid))) return false;
+
+		// do that group is a groupOfNames?
+		if (is_null($groupOfNames)) $groupOfNames = $this->id2name($gid,'groupOfNames');
 		
-		foreach($members as $key => $member)
+		$to_write = array();
+		foreach((array)$members as $key => $member)
 		{
-			if (is_numeric($member) && ($member = $this->id2name($member)))
+			if (is_numeric($member)) $member = $this->id2name($member);
+
+			if ($member)
 			{
-				$members[$key] = $member;
+				$to_write['memberuid'][] = $member;
+				if ($groupOfNames) $to_write['member'][] = 'uid='.$member.','.$this->user_context;
 			}
 		}
-		if (!ldap_modify($this->ds,'cn='.ldap::quote($cn).','.$this->group_context,array('memberUid' => array_values(array_unique($members)))))
+		if ($groupOfNames && !$to_write['member'])
 		{
-			echo "ldap_modify(,'cn=$cn,$this->group_context',array('memberUid' => ".print_r(array_values(array_unique($members)),true)."))\n";
+			// hack as groupOfNames requires the member attribute
+			$to_write['member'][] = 'uid=dummy'.','.$this->user_context;
 		}
+		if ($use_cn) return $to_write;
+
+		if (!ldap_modify($this->ds,'cn='.ldap::quote($cn).','.$this->group_context,$to_write))
+		{
+			echo "ldap_modify(,'cn=$cn,$this->group_context',".print_r($to_write,true)."))\n";
+			return false;
+		}
+		return true;
 	}
 
 	/**

@@ -5,4 +5,25 @@ eGroupWare needs no more special LDAP schemas since version 1.3.007:
 - valid eGroupWare users have a posixAccount and shadowAccount object class.
 - valid Groups have a posixGroup object class and store there members in the memberuid attribute.
 
+If you want to use group-addressbooks in LDAP, the ACL requires that groups get expanded by the LDAP server.
+To do so, we need to use groupOfNames together with posixGroup (groupOfNames stores the dn, posixGroup only the uid).
+If your LDAP uses the original nis.schema, posixGroup is a structural object and can NOT be used together!
+Newer SuSE distributions use a rfc2307bis schema, which can be used on other distributions too
+(instead of the nis.schema, NOT together). The schema is in the same directory as this README.
+
+To change to the rfc2307bis.schema (not needed with newer SuSE distros!):
+----------------------------------
+- create an ldif from your ldap: slapcat > my.ldif
+- add objectclass groupOfNames to every group (only the groups!)
+- edit your slapd.conf:
+  + remove the include of the nis.schema
+  + include the rfc2307bis.schema in this dir
+- stoping ldap
+- empty the ldap database (eg. by removing the content of /var/lib/ldap)
+- add the edited ldif file
+- start ldap again
+
+eGroupWare detects if it can use groupOfNames together with posixGroup and fills the member attribute,
+if you edit the group or changes the members.
+
 Ralf
