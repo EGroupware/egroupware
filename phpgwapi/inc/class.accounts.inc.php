@@ -747,7 +747,7 @@ class accounts extends accounts_backend
 	 */
 	function read_repository()
 	{
-		return $this->data = $this->read($this->account_id,true);
+		return $this->data = $this->account_id ? $this->read($this->account_id,true) : array();
 	}
 
 	/**
