@@ -728,13 +728,22 @@ class uiviews extends uical
 
 			$dayCols_width = $width - $this->timeRow_width - 1;
 
-			// Lars Kneschke 2005-08-28
-			// why do we use a div in a div which has the same height and width???
-			// To make IE6 happy!!! Without the second div you can't use 
-			// style="left: 50px; right: 0px;"
 			$html .= $indent."\t".'<div id="calDayCols" class="calDayCols'.
-				($this->use_time_grid ? ($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '') : 'NoTime').
-				'"><div style="width: 100%; height: 100%;">'."\n";
+				($this->use_time_grid ? ($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '') : 'NoTime').'">'."\n";
+
+			if ($this->html->user_agent == 'msie')	// necessary IE hack - stupid thing ...
+			{
+				// Lars Kneschke 2005-08-28
+				// why do we use a div in a div which has the same height and width???
+				// To make IE6 happy!!! Without the second div you can't use 
+				// style="left: 50px; right: 0px;"
+				//$html .= '<div style="width=100%; height: 100%;">'."\n";
+
+				// Ralf Becker 2006-06-19
+				// Lars original typo "width=100%; height: 100%;" is important ;-) 
+				// means you width: 100% does NOT work, you need no width!
+				$html .= '<div style="height: 100%;">'."\n";
+			}
 			$dayCol_width = $dayCols_width / count($daysEvents);
 			$n = 0;
 			foreach($daysEvents as $day => $events)
@@ -751,7 +760,9 @@ class uiviews extends uical
 					$dayColWidth,$indent."\t\t",$short_title,++$on_off & 1,$col_owner);
 				++$n;
 			}
-			$html .= $indent."\t</div></div>\n";	// calDayCols
+			if ($this->html->user_agent == 'msie') $html .= "</div>\n";
+
+			$html .= $indent."\t</div>\n";	// calDayCols
 		}
 		$html .= $indent."</div>\n";	// calTimeGrid
 		
