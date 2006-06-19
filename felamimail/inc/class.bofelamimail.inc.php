@@ -395,7 +395,7 @@
 			
 			$type 		= $sections[$_partID]["mimeType"];
 			$encoding 	= $sections[$_partID]["encoding"];
-			$filename 	= $sections[$_partID]["name"];
+			$filename 	= $this->decode_header($sections[$_partID]["name"]);
 			
 			$attachment = imap_fetchbody($this->mbox, $_uid, $_partID, FT_UID);
 			
@@ -1415,7 +1415,7 @@
 								switch(strtolower($value->attribute))
 								{
 									case 'filename':
-										$_sections[$_currentPartID]["name"] = $value->value;
+										$_sections[$_currentPartID]["name"] = $this->decode_header($value->value);
 										break;
 								}
 							}
@@ -1471,7 +1471,7 @@
 						switch(strtolower($param->attribute))
 						{
 							case 'filename':
-								$_sections[$_currentPartID]["name"] = $param->value;
+								$_sections[$_currentPartID]["name"] = $this->decode_header($param->value);
 								break;
 						}
 					}
@@ -1511,7 +1511,7 @@
 						switch(strtolower($param->attribute))
 						{
 							case 'filename':
-								$_sections[$_currentPartID]["name"] = $param->value;
+								$_sections[$_currentPartID]["name"] = $this->decode_header($param->value);
 								break;
 						}
 					}
@@ -1536,7 +1536,7 @@
 						switch(strtolower($param->attribute))
 						{
 							case 'filename':
-								$_sections[$_currentPartID]["name"] = $param->value;
+								$_sections[$_currentPartID]["name"] = $this->decode_header($param->value);
 								break;
 						}
 					}
@@ -1560,7 +1560,7 @@
 						switch(strtolower($param->attribute))
 						{
 							case 'filename':
-								$_sections[$_currentPartID]["name"] = $param->value;
+								$_sections[$_currentPartID]["name"] = $this->decode_header($param->value);
 								break;
 						}
 					}
@@ -1584,7 +1584,7 @@
 						switch(strtolower($param->attribute))
 						{
 							case 'filename':
-								$_sections[$_currentPartID]["name"] = $param->value;
+								$_sections[$_currentPartID]["name"] = $this->decode_header($param->value);
 								break;
 						}
 					}
