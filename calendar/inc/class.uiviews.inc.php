@@ -440,7 +440,7 @@ class uiviews extends uical
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::day() date=%1',True,$this->date);
 
 		$this->last = $this->first = $this->bo->date2ts((string)$this->date);
-		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang(adodb_date('l',$this->first)).', '.$this->bo->long_date($this->first);
+		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$this->bo->long_date($this->first,0,false,true);
 		
 		$this->use_time_grid = true;    // day-view always uses a time-grid, independent what's set in the prefs!
 		
@@ -832,7 +832,8 @@ class uiviews extends uical
 
 		// Creation of the header-column with date, evtl. holiday-names and a matching background-color
 		$ts = $this->bo->date2ts((string)$day_ymd);
-		$title = is_bool($short_title) ? (lang(adodb_date('l',$ts)).', '.($short_title ? adodb_date('d.',$ts) : $this->bo->long_date($ts))) : $short_title;
+		$title = !is_bool($short_title) ? $short_title :
+			($short_title ? lang(adodb_date('l',$ts)).' '.adodb_date('d.',$ts) : $this->bo->long_date($ts,0,false,true));
 		$day_view = array(
 			'menuaction' => 'calendar.uiviews.day',
 			'date' => $day_ymd,
@@ -994,11 +995,7 @@ class uiviews extends uical
 		}
 		else
 		{
-			$mins = $event['end_m'] - $event['start_m'];
-			if ($event['end_m'] == 24*60-1) ++$mins;
-			$timespan = $timespan2 = $GLOBALS['egw']->common->formattime(sprintf('%02d',$event['start_m']/60),sprintf('%02d',$event['start_m']%60)).
-				' '.floor($mins/60).lang('h').($mins%60 ? $mins%60 : '');
-			$timespan2 = str_replace(' ',' - '.$GLOBALS['egw']->common->formattime(sprintf('%02d',$event['end_m']/60),sprintf('%02d',$event['end_m']%60)).': ',$timespan);
+			$timespan = $this->bo->timespan($event['start_m'],$event['end_m']);
 		}
 		$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
 
@@ -1052,7 +1049,7 @@ class uiviews extends uical
 			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])) : '',
 			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
 			'participants' => $participants,
-			'times' => !$event['multiday'] ? $this->add_nonempty($timespan2,lang('Time')) :
+			'times' => !$event['multiday'] ? $this->add_nonempty($this->bo->timespan($event['start_m'],$event['end_m'],true),lang('Time')) :
 				$this->add_nonempty($this->bo->format_date($event['start']),lang('Start')).
 				$this->add_nonempty($this->bo->format_date($event['end']),lang('End')),
 			'multidaytimes' => !$event['multiday'] ? '' :

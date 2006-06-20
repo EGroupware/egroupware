@@ -1197,11 +1197,12 @@ class bocal
 	 * Formats one or two dates (range) as long date (full monthname), optionaly with a time
 	 *
 	 * @param mixed $first first date
-	 * @param mixed $last last date if != 0 (default)
-	 * @param boolean $display_time should a time be displayed too
+	 * @param mixed $last=0 last date if != 0 (default)
+	 * @param boolean $display_time=false should a time be displayed too
+	 * @param boolean $display_day=false should a day-name prefix the date, eg. monday June 20, 2006
 	 * @return string with formated date
 	 */
-	function long_date($first,$last=0,$display_time=false)
+	function long_date($first,$last=0,$display_time=false,$display_day=false)
 	{
 		$first = $this->date2array($first);
 		if ($last)
@@ -1214,6 +1215,10 @@ class bocal
 		$month_before_day = strtolower($datefmt[0]) == 'm' ||
 			strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
 
+		if ($display_day)
+		{
+			$range = lang(adodb_date('l',$first['raw'])).($this->common_prefs['dateformat']{0} != 'd' ? ' ' : ', ');
+		}
 		for ($i = 0; $i < 5; $i += 2)
 		{
 			switch($datefmt[$i])
@@ -1265,7 +1270,10 @@ class bocal
 					$range .= ' '.lang(strftime('%B',$month_before_day ? $first['raw'] : $last['raw'])) . ' ';
 					break;
 				case 'Y':
-					$range .= ($datefmt[0] == 'm' ? ', ' : ' ') . ($datefmt[0] == 'Y' ? $first['year'].($datefmt[2] == 'd' ? ', ' : ' ') : $last['year'].' ');
+					if ($datefmt[0] != 'm')
+					{
+						$range .= ' ' . ($datefmt[0] == 'Y' ? $first['year'].($datefmt[2] == 'd' ? ', ' : ' ') : $last['year'].' ');
+					}
 					break;
 			}
 		}
@@ -1273,7 +1281,39 @@ class bocal
 		{
 			$range .= ' '.adodb_date($timefmt,$last['raw']);
 		}
+		if ($datefmt[4] == 'Y' && $datefmt[0] == 'm')
+		{
+			$range .= ', ' . $last['year'];
+		}
 		return $range;
+	}
+	
+	/**
+	 * Displays a timespan, eg. $both ? "10:00 - 13:00: 3h" (10:00 am - 1 pm: 3h) : "10:00 3h" (10:00 am 3h)
+	 *
+	 * @param int $start_m start time in minutes since 0h
+	 * @param int $end_m end time in minutes since 0h
+	 * @param boolean $both=false display the end-time too, duration is always displayed
+	 */
+	function timespan($start_m,$end_m,$both=false)
+	{
+		$duration = $end_m - $start_m;
+		if ($end_m == 24*60-1) ++$duration;
+		$duration = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
+
+		$timespan = $t = $GLOBALS['egw']->common->formattime(sprintf('%02d',$start_m/60),sprintf('%02d',$start_m%60));
+		
+		if ($both)	// end-time too
+		{
+			$timespan .= ' - '.$GLOBALS['egw']->common->formattime(sprintf('%02d',$end_m/60),sprintf('%02d',$end_m%60));
+			// dont double am/pm if they are the same in both times
+			if ($this->common_prefs['timeformat'] == 12 && substr($timespan,-2) == substr($t,-2))
+			{
+				$timespan = str_replace($t,substr($t,0,-3),$timespan);
+			}
+			$timespan .= ':';
+		}
+		return $timespan . ' ' . $duration;
 	}
 
 	/**
