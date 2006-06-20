@@ -56,9 +56,9 @@
 	$checks = array(
 		'phpversion' => array(
 			'func' => 'php_version',
-			'value' => 4.3,
-			'verbose_value' => '4.3+',
-			'recommended' => '5.0',
+			'value' => $GLOBALS['egw_setup']->required_php_version,
+			'verbose_value' => $GLOBALS['egw_setup']->required_php_version.'+',
+			'recommended' => $GLOBALS['egw_setup']->recommended_php_version,
 		),
 		'safe_mode' => array(
 			'func' => 'php_ini_check',
@@ -109,28 +109,28 @@
 		),
 		'mysql' => array(
 			'func' => 'extension_check',
-			'warning' => "<div class='setup_info'>" . lang('The %1 extension is needed, if you plan to use a %2 database.','mysql','MySQL').'</div>'
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','mysql','MySQL')
 		),
 		'pgsql' => array(
 			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','pgsql','pgSQL').'</div>'
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','pgsql','pgSQL')
 		),
 		'mssql' => array(
 			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','mssql','MsSQL') . '</div>',
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','mssql','MsSQL'),
 			'win_only' => True
 		),
 		'odbc' => array(
 			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','odbc','MaxDB, MsSQL or Oracle') . '</div>',
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','odbc','MaxDB, MsSQL or Oracle'),
 		),
 		'oci8' => array(
 			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The %1 extension is needed, if you plan to use a %2 database.','oci','Oracle') . '</div>',
+			'warning' => lang('The %1 extension is needed, if you plan to use a %2 database.','oci','Oracle'),
 		),
 		'mbstring' => array(
 			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>"
+			'warning' => lang('The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.')
 		),
 		'mbstring.func_overload' => array(
 			'func' => 'php_ini_check',
@@ -138,21 +138,18 @@
 			'warning' => '<div class="setup_info">' . lang('The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.') . "</div>",
 			'change' => extension_loaded('mbstring')  || function_exists('dl') && @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX) ? 'mbstring.func_overload = 7' : '',
 		),
-		'imap' => array(
-			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).') . '</div>'
-		),
 		'session' => array(
 			'func' => 'extension_check',
-			'warning' => '<div class="setup_info">' . lang('The session extension is needed to use php sessions (db-sessions work without).') . "</div>"
+			'warning' => lang('The session extension is needed to use php sessions (db-sessions work without).')
 		),	
+		// leave SyncML checks here for now, as it is no app atm.
 		'' => array(
 			'func' => 'pear_check',
-			'warning' => '<div class="setup_info">' . lang('PEAR is needed by SyncML or the iCal import+export of calendar.') . "</div>"
+			'from' => 'SyncML',
 		),	
 		'Log' => array(
 			'func' => 'pear_check',
-			'warning' => '<div class="setup_info">' . lang('PEAR::Log is needed by SyncML.').' '.lang('You can install it by running:').' pear install Log' . "</div>"
+			'from' => 'SyncML',
 		),	
 		'gd' => array(
 			'func' => 'gd_check',
@@ -167,13 +164,53 @@
 			'is_world_readable' => False,
 			'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 		),
-		'fudforum' => array(
-			'func' => 'permission_check',
-			'is_writable' => True,
-			'only_if_exists' => True
-		),
 	);
+	$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
+	foreach($setup_info as $app => $app_data)
+	{
+		if (!isset($app_data['check_install'])) continue;
 
+		foreach ($app_data['check_install'] as $name => $data)
+		{
+			if (isset($checks[$name]))
+			{
+				if ($checks[$name] == $data) continue;	// identical check --> ignore it
+				
+				if ($data['func'] == 'pear_check' || $data['func'] == 'extension_check' && !isset($args['warning']))
+				{
+					if ($checks[$name]['from'] && !is_array($checks[$name]['from']))
+					{
+						$checks[$name]['from'] = array($checks[$name]['from']);
+					}
+					$checks[$name]['from'][] = $data['from'] ? $data['from'] : $app;
+				}
+				else
+				{
+					$checks[$app.'_'.$name] = $data;
+				}
+			}
+			else
+			{
+				$checks[$name] = $data;
+			}
+			//echo "added check $data[func]($name) for $app"; _debug_array($data);
+		}
+	}
+	$sorted_checks = array();
+	foreach(array('php_version','php_ini_check','extension_check','pear_check','gd_check','permission_check') as $func)
+	{
+		foreach($checks as $name => $data)
+		{
+			if ($data['func'] == $func)
+			{
+				$sorted_checks[$name] = $data;
+				unset($checks[$name]);
+			}
+		}
+	}
+	if ($checks) $sorted_checks += $checks;
+	$checks =& $sorted_checks;
+	
 	// some constants for pre php4.3
 	if (!defined('PHP_SHLIB_SUFFIX'))
 	{
@@ -211,7 +248,8 @@
 		}
 		if ($pear_available && $package)
 		{
-			$available = @include($package.'.php');
+			$file = str_replace('_','/',$package).'.php';
+			$available = @include($file);
 
 			if (!class_exists($package)) $available = false;
 			
@@ -219,10 +257,21 @@
 				lang('Checking PEAR%1 is installed','::'.$package).': '.($available ? lang('True') : lang('False'))."</span></div>\n";
 		}
 		$available = $pear_available && (!$package || $available);
-		
+	
 		if (!$available)
 		{
-			echo $args['warning'];
+			echo '<div class="setup_info">' . lang('PEAR%1 is needed by: %2.',$package ? '::'.$package : '',
+				is_array($args['from']) ? implode(', ',$args['from']) : $args['from']);
+			if ($package)
+			{
+				echo ' '.lang('You can install it by running:').' pear install '.$package;
+			}
+			else
+			{
+				echo ' '.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
+					'<a href="http://pear.php.net" target="_blank">pear.php.net</a>','php-pear');
+			}
+			echo "</div>";
 		}
 		echo "\n";
 
@@ -244,7 +293,12 @@
 
 		if (!$available)
 		{
-			echo $args['warning'];
+			if (!isset($args['warning']))
+			{
+				$args['warning'] = lang('The %1 extension is needed from: %2.',$name,
+					is_array($args['from'] ? implode(', ',$args['from']) : $args['from']));
+			}
+			echo "<div class='setup_info'>".$args['warning'].'</div>';
 		}
 		echo "\n";
 

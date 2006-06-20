@@ -389,8 +389,8 @@ path information	setup	de	Pfadinformationen
 path of egroupware install directory (default auto-detected)	setup	de	Pfad des eGroupWare Installationsverzeichnis (Vorgabe wird automatisch erkannt)
 path to user and group files has to be outside of the webservers document-root!!!	setup	de	Pfad zu Benutzer und Gruppen Dateien MUSS AUSSERHALB des Wurzelverzeichnisses (document root) des Webservers sein!!!
 path to various directories: have to exist and be writeable by the webserver	setup	de	Pfade zu verschiedenen Verzeichnissen: Diese müssen vorhanden sein und vom Webserver beschreibbar
-pear is needed by syncml or the ical import+export of calendar.	setup	de	PEAR wird von SyncML oder dem iCal Import+Export des Kalenders benötigt.
-pear::log is needed by syncml.	setup	de	PEAR::Log wird von SyncML benötigt.
+pear (%1) is a php repository and is usually in a package called %2.	setup	de	PEAR (%1) ist eine PHP Sammlung und ist überlicherweise in einem Packet namens %2.
+pear%1 is needed by: %2.	setup	de	PEAR%1 wird benötigt von: %2.
 persistent connections	setup	de	Permanente Verbindungen
 php plus restore	setup	de	PHP plus Wiederherstellen
 php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	de	PHP plus Wiederherstellen gibt bei weitem die beste Performanze. Es speichert die eGW Umgebung komplett in der Session.
@@ -502,12 +502,12 @@ tables upgraded	setup	de	Tabellen wurden aktualisiert
 target version	setup	de	Ziel Version
 tcp port number of database server	setup	de	TCP-Port des Datenbank-Servers
 text entry	setup	de	Texteingabe
+the %1 extension is needed from: %2.	setup	de	Die %1 Erweiterung (php-extension) wird benötigt von: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	de	Die %1 Erweiterung (php extension) wird benötigt, wenn Sie die %2 Datenbank einsetzen wollen.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	de	Der Datenbanktyp in den Vorgaben (%1) wird von diesem Server nicht unterstützt, verwende ersten unterstützten Typ.
 the file	setup	de	der Datei
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
 the following applications need to be upgraded:	setup	de	Die folgenden Anwendungen müssen aktualisiert werden:
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	de	Die imap Erweiterung (php extension) wird von den beiden Email Applikationen benötigt (auch wenn Sie das POP3-Protokoll verwenden).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the session extension is needed to use php sessions (db-sessions work without).	setup	de	Die session Erweiterung (php extension) ist notwendig für PHP Sessions (Datenbank Sessions arbeiten ohne diese).
