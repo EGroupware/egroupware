@@ -151,9 +151,6 @@
 			'func' => 'pear_check',
 			'from' => 'SyncML',
 		),	
-		'gd' => array(
-			'func' => 'gd_check',
-		),
 		'.' => array(
 			'func' => 'permission_check',
 			'is_world_writable' => False,
