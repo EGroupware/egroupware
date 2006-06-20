@@ -201,6 +201,12 @@ a.textSidebox
 	padding-bottom:2px;
 	border-top: solid #aaaaaa 1px;
 }
+/* 
+ ** make the sidebox entries consistently start with a capital letter 
+ */
+.textSidebox:first-letter {
+	text-transform:uppercase;
+}
 
 .sideboxSpace
 {
