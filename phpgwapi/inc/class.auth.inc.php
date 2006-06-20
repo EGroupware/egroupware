@@ -72,7 +72,7 @@
 		}
 
 		/**
-		 * compagres an encrypted password
+		 * compares an encrypted password
 		 *
 		 * encryption type set in setup and calls the appropriate encryption functions
 		 *
@@ -84,6 +84,7 @@
 		function compare_password($cleartext,$encrypted,$type,$username='')
 		{
 			// allow to specify the hash type to prefix the hash, to easy migrate passwords from ldap
+			$saved_enc = $encrypted;
 			if (preg_match('/^\\{([a-z_5]+)\\}(.+)$/i',$encrypted,$matches))
 			{
 				$type = strtolower($matches[1]);
@@ -97,6 +98,8 @@
 					case 'crypt':
 						// nothing to do
 						break;
+					default:
+						$encrypted = $saved_enc;
 					// ToDo: the others ...
 				}
 			}
