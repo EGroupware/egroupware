@@ -208,7 +208,7 @@ class accounts_backend
 			'id'         => $data['person_id'],
 			'owner'      => 0,
 		);
-		$GLOBALS['egw']->contacts->save($contact);
+		$GLOBALS['egw']->contacts->save($contact,true);		// true = ignore addressbook acl
 
 		return $data['account_id'];
 	}
