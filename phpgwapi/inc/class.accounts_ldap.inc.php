@@ -395,6 +395,7 @@ class accounts_backend
 			// lastlogin and lastlogin from are not availible via the shadowAccount object class
 			// 'account_lastlogin' => $data['phpgwaccountlastlogin'][0],
 			// 'account_lastloginfrom' => $data['phpgwaccountlastloginfrom'][0],
+			'person_id'         => $data['uid'][0],	// id of associated contact
 		);
 		if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
 		{
