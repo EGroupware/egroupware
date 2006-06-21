@@ -395,9 +395,10 @@ class bocontacts extends socontacts
 	* saves contact to db
 	*
 	* @param array &$contact contact array from etemplate::exec
+	* @param boolean $ignore_acl=false should the acl be checked or not
 	* @return boolean true on success, false on failure, an error-message is in $contact['msg']
 	*/
-	function save(&$contact)
+	function save(&$contact,$ignore_acl=false)
 	{
 		// stores if we add or update a entry
 		if (!($isUpdate = $contact['id']))
@@ -408,7 +409,7 @@ class bocontacts extends socontacts
 			
 			if (!$contact['tid']) $contact['tid'] = 'n';
 		}
-		if(!$this->check_perms($isUpdate ? EGW_ACL_EDIT : EGW_ACL_ADD,$contact))
+		if(!$ignore_acl && !$this->check_perms($isUpdate ? EGW_ACL_EDIT : EGW_ACL_ADD,$contact))
 		{
 			$this->error = 'access denied';
 			return false;
@@ -428,6 +429,11 @@ class bocontacts extends socontacts
 		if(!($this->error = parent::save($contact)) && is_object($GLOBALS['egw']->contenthistory))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
+			
+			if ($contact['account_id'])	// invalidate the cache of the accounts class
+			{
+				$GLOBALS['egw']->accounts->cache_invalidate($contact['account_id']);
+			}
 		}
 		return !$this->error;
 	}
