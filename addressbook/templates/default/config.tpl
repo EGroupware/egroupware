@@ -38,7 +38,7 @@
    <tr class="row_on">
     <td>&nbsp;{lang_Account_repository}:</td>
     <td>
-     <b><script>document.write('{value_account_reposiory}' == 'ldap' || '{value_account_reposiory}' == '' && '{value_auth_type}' == 'ldap' ? 'LDAP' : 'SQL');</script></b>
+     <b><script>document.write('{value_account_repository}' == 'ldap' || '{value_account_repository}' == '' && '{value_auth_type}' == 'ldap' ? 'LDAP' : 'SQL');</script></b>
      ({lang_Can_be_changed_via_Setup_>>_Configuration})
     </td>
    </tr>
