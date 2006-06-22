@@ -24,7 +24,16 @@
 			}
 			$referer = $_POST['submit'] || $_POST['cancel'] ? $_POST['referer'] : $_SERVER['HTTP_REFERER'];
 			if (!$referer) $referer = $GLOBALS['egw']->link('/admin/index.php');
-			list(,$show_app) = explode($GLOBALS['egw_info']['server']['webserver_url'],$referer);
+			if ($GLOBALS['egw_info']['server']['webserver_url'])
+			{
+				list(,$show_app) = explode($GLOBALS['egw_info']['server']['webserver_url'],$referer);
+			}
+			else
+			{
+				$parts = parse_url($referer);
+				$show_app = $parts['path'];
+				unset($parts);
+			}
 			list(,$show_app) = explode('/',$show_app);
 			if (!$show_app) $show_app = 'admin';
 
