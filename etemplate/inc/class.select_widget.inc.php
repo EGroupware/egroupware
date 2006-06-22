@@ -47,6 +47,7 @@
 			'select-month'    => 'Select Month',
 			'select-day'      => 'Select Day',
 			'select-dow'      => 'Select Day of week',
+			'select-hour'     => 'Select Hour',		// either 0-23 or 0am-11am,12pm,1pm-11pm
 			'select-number'   => 'Select Number',
 			'select-app'      => 'Select Application'
 		);
@@ -422,6 +423,16 @@
 					for ($i=0,$n=$type; $n <= $type2 && $i <= 100; $n += $type3)
 					{
 						$cell['sel_options'][$n] = sprintf($format,$n);
+					}
+					$cell['no_lang'] = True;
+					break;
+					
+				case 'select-hour':
+					for ($h = 0; $h <= 23; ++$h)
+					{
+						$cell['sel_options'][$h] = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ?
+							(($h % 12 ? $h % 12 : 12).' '.($h < 12 ? lang('am') : lang('pm'))) : 
+							sprintf('%02d',$h);
 					}
 					$cell['no_lang'] = True;
 					break;

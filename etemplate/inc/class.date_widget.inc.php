@@ -105,7 +105,7 @@
 					'm' => '',
 					'd' => '',
 					'H' => '',
-					'i' => ''
+					'i' => '',
 				);
 			}
 			elseif ($data_format != '')
@@ -142,21 +142,17 @@
 			}
 			$time_0h0 = !(int)$value['H'] && !(int)$value['i'];
 
+			$readonly = $cell['readonly'] || $readonlys;
+
 			$timeformat = array(3 => 'H', 4 => 'i');
-			if ($this->timeformat == '12')
+			if ($this->timeformat == '12' && $readonly && $value['H'] !== '')
 			{
 				$value['a'] = $value['H'] < 12 ? 'am' : 'pm';
-				
-				if ($value['H'] > 12)
-				{
-					$value['H'] -= 12; 
-				}
+				$value['H'] = $value['H'] % 12 ?  $value['H'] % 12 : 12;	// no leading 0 and 0h => 12am
 				$timeformat += array(5 => 'a');
 			}
 			$format = split('[/.-]',$this->dateformat);
 			
-			$readonly = $cell['readonly'] || $readonlys;
-
 			// no time also if $options&8 and readonly and time=0h0
 			if ($type != 'date' && !($readonly && ($options & 8) && $time_0h0))
 			{
@@ -164,6 +160,8 @@
 			}
 			if ($readonly)	// is readonly
 			{
+				if ($value['H'] === '') unset($value['a']);	// no am/pm if no hour set
+
 				$sep = array(
 					1 => $this->dateformat[1],
 					2 => $this->dateformat[1],
@@ -209,7 +207,7 @@
 				'm' => 'select-month',
 				'M' => 'select-month',
 				'd' => 'select-day',
-				'H' => 'select-number',
+				'H' => 'select-hour',
 				'i' => 'select-number'
 			);
 			$opts = array(
@@ -282,19 +280,6 @@
 					unset($dcell);
 				}
 				if ($type == 'date-houronly') $n++;	// no minutes
-
-				if ($n == 4 && $type != 'date' && $this->timeformat == '12')
-				{
-					$dcell = $tpl->empty_cell();
-					$dcell['type'] = 'radio';
-					$dcell['name'] = 'a';
-					$dcell['help'] = $cell['help'];
-					$dcell['size'] = $dcell['label'] = 'am';
-					$row[$tpl->num2chrs(++$i)] = $dcell;
-					$dcell['size'] = $dcell['label'] = 'pm';
-					$row[$tpl->num2chrs(++$i)] = &$dcell;
-					unset($dcell);
-				}
 			}
 			$tpl->data[0] = array();
 			$tpl->data[1] = &$row;
@@ -524,13 +509,6 @@
 				{
 					$value['d'] = $value['m'] = 1;
 					$value['Y'] = 1970;
-				}
-				if (isset($value['a']))
-				{
-					if ($value['a'] == 'pm' && $value['H'] < 12)
-					{
-						$value['H'] += 12;
-					}
 				}
 				// checking the date is a correct one
 				if (!checkdate($value['m'],$value['d'],$value['Y']))
