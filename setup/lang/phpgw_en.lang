@@ -156,6 +156,7 @@ current system-charset	setup	en	Current system-charset
 current system-charset is %1.	setup	en	Current system-charset is %1.
 current version	setup	en	Current Version
 currently installed languages: %1 <br />	setup	en	Currently installed languages: %1 <br />
+cyrus imap: admin user,password	setup	en	Cyrus IMAP: Admin user,Password
 database	setup	en	Database
 database instance (egw domain)	setup	en	Database instance (eGW domain)
 database is version %1 and up to date.	setup	en	database is version %1 and up to date.
@@ -213,6 +214,7 @@ egroupware configuration file header.inc.php already exists, you need to use --e
 egroupware domain/instance %1(%2):	setup	en	eGroupWare domain/instance %1(%2):
 egroupware is already installed!	setup	en	eGroupWare is already installed!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	en	eGroupWare sources in '%1' are not complete, file '%2' missing !!!
+emailadmin profile updated:	setup	en	EMailAdmin profile updated:
 enable for extra debug-messages	setup	en	enable for extra debug-messages
 enable mcrypt	setup	en	Enable MCrypt
 enter some random text for app session encryption	setup	en	Enter some random text for app session encryption
@@ -243,6 +245,7 @@ filesystem	setup	en	Filesystem
 force selectbox	setup	en	Force Selectbox
 found existing configuration file. loading settings from the file...	setup	en	Found existing configuration file. Loading settings from the file...
 give admin access to all installed apps	setup	en	Give admin access to all installed apps
+gives further options	setup	en	gives further options
 go back	setup	en	Go back
 go to	setup	en	Go to
 grant access	setup	en	Grant Access
@@ -314,7 +317,7 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 leave empty to keep current.	setup	en	Leave empty to keep current.
 limit access	setup	en	Limit access
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	en	Limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)
-list availible values:	setup	en	List availible values:
+list availible values	setup	en	List availible values
 list of availible translations	setup	en	list of availible translations
 login as user postgres, eg. by using su as root	setup	en	Login as user postgres, eg. by using su as root
 login to mysql -	setup	en	Login to mysql -
@@ -406,6 +409,7 @@ pop/imap mail server hostname or ip address	setup	en	POP/IMAP mail server hostna
 possible reasons	setup	en	Possible Reasons
 possible solutions	setup	en	Possible Solutions
 post-install dependency failure	setup	en	Post-install Dependency Failure
+postfix with ldap: [yes(user edit forwarding)]	setup	en	Postfix with LDAP: [yes(user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	en	Postgres: Leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection
 potential problem	setup	en	Potential Problem
 preferences	setup	en	Preferences
@@ -474,6 +478,7 @@ setup the database	setup	en	Setup the database
 setup/config admin login	setup	en	Setup/Config Admin Login
 should be the same as server root unless you know what you are doing.	setup	en	Should be the same as Server Root unless you know what you are doing.
 show 'powered by' logo on	setup	en	Show 'powered by' logo on
+sieve: host[,port(2000)]	setup	en	Sieve: Host[,Port(2000)]
 size	setup	en	size
 skip the installation tests (not recommended)	setup	en	Skip the installation tests (not recommended)
 smtp server hostname or ip address	setup	en	SMTP server hostname or IP address

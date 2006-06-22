@@ -156,6 +156,7 @@ current system-charset	setup	de	Aktueller Systemzeichensatz
 current system-charset is %1.	setup	de	Aktueller Systemzeichensatz ist %1.
 current version	setup	de	Gegenwärtige Version
 currently installed languages: %1 <br />	setup	de	Gegenwärtig installierte Sprachen: %1 <br />
+cyrus imap: admin user,password	setup	de	Cyrus IMAP: Adminbenutzer,Passwort
 database	setup	de	Datenbank
 database instance (egw domain)	setup	de	Datenbankinstanz (eGW Domain)
 database is version %1 and up to date.	setup	de	Datenbank ist Version %1 und aktuell.
@@ -213,6 +214,7 @@ egroupware configuration file header.inc.php already exists, you need to use --e
 egroupware domain/instance %1(%2):	setup	de	eGroupWare Domain/Instanz %1(%2):
 egroupware is already installed!	setup	de	eGroupWare ist bereits installiert!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	de	eGroupWare Quellen in '%1' sind nicht komplett, Datei '%2' fehlt !!!
+emailadmin profile updated:	setup	de	EMailAdmin Profil aktualisiert:
 enable for extra debug-messages	setup	de	ankreuzen für zusätzliche Diagnosemeldungen
 enable mcrypt	setup	de	MCrypt einschalten
 enter some random text for app session encryption	setup	de	Zufallstext zur Verschlüsselung der Anwendungssitzung
@@ -245,6 +247,7 @@ filesystem	setup	de	Dateisystem
 force selectbox	setup	de	Auswahl erzwingen
 found existing configuration file. loading settings from the file...	setup	de	Existierende Konfigurationsdatei gefunden. Lade Einstellungen von der Datei ...
 give admin access to all installed apps	setup	de	Admin Zugang zu allen installierten Anwendungen geben
+gives further options	setup	de	gibt zusätzliche Optionen
 go back	setup	de	Zurück gehen
 go to	setup	de	Gehen zu
 grant access	setup	de	Zugriff gewähren
@@ -316,7 +319,7 @@ ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setu
 leave empty to keep current.	setup	de	Leer lassen um das existierende Password zu behalten.
 limit access	setup	de	Zugang beschränken
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	de	Zugang zu Setup auf die folgenden IP Adressen, Netzwerke oder Hostnamen beschränken (z.B. 127.0.0.1,10.1.1,myhost.dnydns.org)
-list availible values:	setup	de	Listen der verfügbaren Werte:
+list availible values	setup	de	Listen der verfügbaren Werte
 list of availible translations	setup	de	Liste der verfügbaren Sprachen
 login as user postgres, eg. by using su as root	setup	de	Als Benutzer postgres einlogen, zB. durch benutzen von su als root
 login to mysql -	setup	de	mysql aufrufen -
@@ -408,6 +411,7 @@ pop/imap mail server hostname or ip address	setup	de	POP/IMAP Mail Server Hostna
 possible reasons	setup	de	Mögliche Gründe
 possible solutions	setup	de	Mögliche Lösungen
 post-install dependency failure	setup	de	Abhängigkeitsfehler nach der Installation
+postfix with ldap: [yes(user edit forwarding)]	setup	de	Postfix mit LDAP: [yes(Benutzer Weiterleitung ändern)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	de	Postgres: Leer lassen für die empfohlenen Unix Domain Sockets anstatt einer tcp/ip Verbindung
 potential problem	setup	de	Potentielles Problem
 preferences	setup	de	Einstellungen
@@ -476,6 +480,7 @@ setup the database	setup	de	Datenbank einzurichten
 setup/config admin login	setup	de	Setup-/Konfigurationsadmin-Login
 should be the same as server root unless you know what you are doing.	setup	de	Sollte das gleiche Verzeichnis wie die Server-Root sein, au&szlig;er Sie wissen was Sie tun.
 show 'powered by' logo on	setup	de	Zeige "powered by" Logo
+sieve: host[,port(2000)]	setup	de	Sieve: Rechner[,Port(2000)]
 size	setup	de	Größe
 skip the installation tests (not recommended)	setup	de	Installationstests überspringen (nicht empfohlen)
 smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse

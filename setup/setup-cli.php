@@ -95,7 +95,7 @@ switch($action)
 		
 	case '--help':
 	case '--usage':
-		do_usage();
+		do_usage($arguments[0]);
 		break;
 
 	default:
@@ -129,8 +129,24 @@ function do_config($args)
 			'mail_suffix',
 			array('name' => 'mail_login_type','allowed'  => array('standard','vmailmgr')),
 		),
+		'--cyrus' => array(
+			'imapAdminUsername',
+			'imapAdminPW',
+			array('name' => 'imapType','default' => 3),
+			array('name' => 'imapEnableCyrusAdmin','default' => 'yes'),
+		),
+		'--sieve' => array(
+			array('name' => 'imapSieveServer','default' => 'localhost'),
+			array('name' => 'imapSievePort','default' => 2000),
+			array('name' => 'imapEnableSieve','default' => 'yes'),	// null or yes
+		),
+		'--postfix' => array(
+			array('name' => 'editforwardingaddress','allowed' => array('yes',null)),
+			array('name' => 'smtpType','default' => 2),
+		),
 		'--smtpserver' => array(	//smtp server,[smtp port],[smtp user],[smtp password]
-			'smtp_server','smtp_port','smtp_auth_user','smtp_auth_passwd'),
+			'smtp_server','smtp_port','smtp_auth_user','smtp_auth_passwd',''
+		),
 		'--account-auth' => array(
 			array('name' => 'account_repository','allowed' => array('sql','ldap')),
 			array('name' => 'auth_type','allowed' => array('sql','ldap','mail','ads','http','sqlssl','nis','pam')),
@@ -142,21 +158,36 @@ function do_config($args)
 		'--ldap-context' => 'ldap_context',
 		'--ldap-group-context' => 'ldap_group_context',
 	);
+	$do_ea_profile = false;
 	while (($arg = array_shift($args)))
 	{
 		if (!isset($config[$arg])) fail(90,lang("Unknown option '%1' !!!",$arg));
 
-		foreach(is_array($config[$arg]) ? explode(',',array_shift($args)) : array(array_shift($args)) as $n => $value)
+		$options = array();
+		if (substr($args[0],0,2) !== '--')
 		{
-			if ($value === '' && is_array($config[$arg])) continue;
+			$options = is_array($config[$arg]) ? explode(',',array_shift($args)) : array(array_shift($args));
+		}
+		$options[] = ''; $options[] = '';
+		foreach($options as $n => $value)
+		{
+			if ($value === '' && is_array($config[$arg]) && !isset($config[$arg][$n]['default'])) continue;
 			
 			$name = is_array($config[$arg]) || $n ? $config[$arg][$n] : $config[$arg];
 			if (is_array($name))
 			{
-				if (!in_array($value,$name['allowed'])) fail(91,"'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg);
+				if (isset($name['allowed']) && !in_array($value,$name['allowed']))
+				{
+					fail(91,lang("'%1' is not allowed as %2. arguments of option %3 !!!",$value,1+$n,$arg));
+				}
+				if (!$value && isset($name['default'])) $value = $name['default'];
 				$name = $name['name'];
 			}
 			$values[$name] = $value;
+		}
+		if (in_array($arg,array('--mailserver','--smtpserver','--cyrus','--postfix','--sieve')))
+		{
+			$do_ea_profile = true;
 		}
 	}
 	foreach($values as $name => $value)
@@ -171,15 +202,44 @@ function do_config($args)
 	if (count($values))
 	{
 		echo lang('Configuration changed.')."\n";
+		
+		if ($do_ea_profile) do_emailadmin($values);
 	}
-	echo lang('Current configuration:')."\n";
+	echo "\n".lang('Current configuration:')."\n";
 	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array(
 		'config_app'  => 'phpgwapi',
-		"config_name LIKE '%\\_dir' OR (config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp%' OR config_name IN ('webserver_url','system_charset')",
+		"(config_name LIKE '%\\_dir' OR (config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp\\_%' OR config_name LIKE 'ldap%' OR config_name IN ('webserver_url','system_charset','auth_type','account_repository'))",
 	),__LINE__,__FILE__);
 	while (($row = $GLOBALS['egw_setup']->db->row(true)))
 	{
-		echo $row['config_name'].':	'.$row['config_value']."\n";
+		echo str_pad($row['config_name'].':',22).$row['config_value']."\n";
+	}
+}
+
+/**
+ * Updates the default EMailAdmin profile
+ *
+ * @param array $values
+ */
+function do_emailadmin()
+{
+	$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->config_table,'config_name,config_value',array(
+		'config_app'  => 'phpgwapi',
+		"((config_name LIKE 'mail%' AND config_name != 'mail_footer') OR config_name LIKE 'smtp%' OR config_name LIKE 'imap%' OR config_name='editforwardingaddress')",
+	),__LINE__,__FILE__);
+	while (($row = $GLOBALS['egw_setup']->db->row(true)))
+	{
+		$config[$row['config_name']] = $row['config_value'];
+	}
+	$config['smtpAuth'] = $config['smtp_auth_user'] ? 'yes' : null;
+
+	$emailadmin =& CreateObject('emailadmin.bo',-1,false);	// false=no session stuff
+	$emailadmin->setDefaultProfile($config);
+	
+	echo "\n".lang('EMailAdmin profile updated:')."\n";
+	foreach($config as $name => $value)
+	{
+		echo str_pad($name.':',22).$value."\n";
 	}
 }
 
@@ -798,45 +858,76 @@ function create_http_enviroment()
 /**
  * Echos usage message
  */
-function do_usage()
+function do_usage($what='')
 {
 	echo lang('Usage: %1 command [additional options]',basename($_SERVER['argv'][0]))."\n\n";
 	
-	echo '--check '.lang('checks eGroupWare\'s installed, it\'s versions and necessary upgrads (return values see --exit-codes)')."\n";
-	echo '--install '.lang('domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]')."\n";
-	echo '--config '.lang('domain(default),[config user(admin)],password,[name=value,...] sets config values beside:')."\n";
-	echo '	--files-dir, --backup-dir, --temp-dir '.lang('path to various directories: have to exist and be writeable by the webserver')."\n";
-	echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
-	echo '	--mailserver '.lang('host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
-	echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password]')."\n";
-	echo '	--account-auth '.lang('account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]')."\n";
-	echo '	--ldap-host  --ldap-root-dn  --ldap-root-pw  --ldap-context  --ldap-group-context'."\n";
-	echo '--admin '.lang('creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]')."\n";
-	echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
-	echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";
-	echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password')."\n";
-	echo lang('You can use the header user and password for every domain too. If the password is not set via the commandline, it is read from the enviroment variable EGW_CLI_PASSWORD or queried from the user.')."\n";
-
-	echo "\n".lang('Create or edit the eGroupWare configuration file: header.inc.php:')."\n";
-	echo '--create-header '.lang('header-password[,header-user(admin)]')."\n";
-	echo '--edit-header '.lang('[header-password],[header-user],[new-password],[new-user]')."\n";
-
-	echo "\n".lang('Additional options and there defaults (in brackets)')."\n";
-	echo '--server-root '.lang('path of eGroupWare install directory (default auto-detected)')."\n";
-	echo '--session-type '.lang('{db | php(default) | php-restore}')."\n";
-	echo '--limit-access '.lang('comma separated ip-addresses or host-names, default access to setup from everywhere')."\n";
-	echo '--mcrypt '.lang('use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]')."\n";
-	echo '--db-persistent '.lang('use persistent db connections: {on(default) | off}')."\n";
-	echo '--domain-selectbox '.lang('{off(default) | on}')."\n";
-
-	echo "\n".lang('Adding, editing or deleting an eGroupWare domain / database instance:')."\n";
-	echo '--domain '.lang('add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]')."\n";
-	echo '--delete-domain '.lang('domain-name')."\n";
-
-	echo "\n".lang('List availible values:')."\n";
-	echo '--languages '.lang('list of availible translations')."\n";
-	echo '--charsets '.lang('charsets used by the different languages')."\n";
-	echo '--exit-codes '.lang('all exit codes of the command line interface')."\n";
+	if (!$what)
+	{
+		echo '--check '.lang('checks eGroupWare\'s installed, it\'s versions and necessary upgrads (return values see --exit-codes)')."\n";
+		echo '--install '.lang('domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]')."\n";
+	}
+	if (!$what || $what == 'config')
+	{
+		echo '--config '.lang('domain(default),[config user(admin)],password,[name=value,...] sets config values beside:')."\n";
+		if (!$what) echo '	--help config '.lang('gives further options')."\n";
+	}
+	if ($what == 'config')
+	{
+		echo '	--files-dir, --backup-dir, --temp-dir '.lang('path to various directories: have to exist and be writeable by the webserver')."\n";
+		echo '	--webserver-url '.lang('eg. /egroupware or http://domain.com/egroupware, default: %1',str_replace('/setup/setup-cli.php','',$_SERVER['PHP_SELF']))."\n";
+		echo '	--mailserver '.lang('host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]')."\n";
+		echo '	--smtpserver '.lang('host,[smtp port],[smtp user],[smtp password]')."\n";
+		echo '	--postfix '.lang('Postfix with LDAP: [yes(user edit forwarding)]')."\n";
+		echo '	--cyrus '.lang('Cyrus IMAP: Admin user,Password')."\n";
+		echo '	--sieve '.lang('Sieve: Host[,Port(2000)]')."\n";
+		echo '	--account-auth '.lang('account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]')."\n";
+		echo '	--ldap-host  --ldap-root-dn  --ldap-root-pw  --ldap-context  --ldap-group-context'."\n";
+	}
+	if (!$what)
+	{
+		echo '--admin '.lang('creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]')."\n";
+		echo '--language '.lang('install or update translations: domain(all),[config user(admin)],password,[[+]lang1[,lang2,...]] + adds, no langs update existing ones')."\n";
+		echo '--backup '.lang('domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]')."\n";
+		echo '--update '.lang('run a database schema update (if necessary): domain(all),[config user(admin)],password')."\n";
+		echo lang('You can use the header user and password for every domain too. If the password is not set via the commandline, it is read from the enviroment variable EGW_CLI_PASSWORD or queried from the user.')."\n";
+	}
+	if (!$what || $what == 'header')
+	{
+		echo lang('Create or edit the eGroupWare configuration file: header.inc.php:')."\n";
+		echo '--create-header '.lang('header-password[,header-user(admin)]')."\n";
+		echo '--edit-header '.lang('[header-password],[header-user],[new-password],[new-user]')."\n";
+		if (!$what) echo '	--help header '.lang('gives further options')."\n";
+	}
+	if ($what == 'header')
+	{
+		echo "\n".lang('Additional options and there defaults (in brackets)')."\n";
+		echo '--server-root '.lang('path of eGroupWare install directory (default auto-detected)')."\n";
+		echo '--session-type '.lang('{db | php(default) | php-restore}')."\n";
+		echo '--limit-access '.lang('comma separated ip-addresses or host-names, default access to setup from everywhere')."\n";
+		echo '--mcrypt '.lang('use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]')."\n";
+		echo '--db-persistent '.lang('use persistent db connections: {on(default) | off}')."\n";
+		echo '--domain-selectbox '.lang('{off(default) | on}')."\n";
+	
+		echo "\n".lang('Adding, editing or deleting an eGroupWare domain / database instance:')."\n";
+		echo '--domain '.lang('add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]')."\n";
+		echo '--delete-domain '.lang('domain-name')."\n";
+	}
+	if (!$what)
+	{
+		echo '--help list '.lang('List availible values')."\n";
+	}
+	if ($what == 'list')
+	{
+		echo lang('List availible values').":\n";
+		echo '--languages '.lang('list of availible translations')."\n";
+		echo '--charsets '.lang('charsets used by the different languages')."\n";
+		echo '--exit-codes '.lang('all exit codes of the command line interface')."\n";
+	}
+	if (!$what || !in_array($what,array('config','header','list')))
+	{
+		echo '--help [config|header|list] '.lang('gives further options')."\n";
+	}
 }
 
 function fail($exit_code,$message)
@@ -861,7 +952,7 @@ function list_exit_codes()
 		if (preg_match('/fail\(([0-9]+),(.*)\);/',$line,$matches))
 		{
 			//echo "Line $n: $matches[1]: $matches[2]\n";
-			eval('$codes['.$matches[1].'] = '.$matches[2].';');
+			@eval('$codes['.$matches[1].'] = '.$matches[2].';');
 		}
 	}
 	ksort($codes,SORT_NUMERIC);
