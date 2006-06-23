@@ -28,6 +28,17 @@
 	/* Dependencies for this app to work */
 	$setup_info['filemanager']['depends'][] = array(
 		'appname' => 'phpgwapi',
-		'versions' => array('1.0.0','1.0.1','1.2','1.3')
+		'versions' => array('1.3')
 	);
-?>
+
+	// installation checks for filemanager
+	$setup_info['filemanager']['check_install'] = array(
+		'' => array(
+			'func' => 'pear_check',
+			'from' => 'Filemanager',
+		),
+		'HTTP_WebDAV_Server' => array(
+			'func' => 'pear_check',
+			'from' => 'Filemanager',
+		),
+	);
