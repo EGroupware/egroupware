@@ -514,4 +514,44 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.008';
 	}
-?>
+
+	$test[] = '1.3.008';
+	function phpgwapi_upgrade1_3_008()
+	{
+		// reverse change-password ACL from 'changepassword' to 'nopasswordchange',
+		// to allow users created in LDAP to be automatic full eGW users
+		$acocunts = $change_passwd_acls = array();
+		// get all accounts with acl settings
+		$GLOBALS['egw_setup']->db->select('egw_acl','DISTINCT acl_account','acl_account > 0',__LINE__,__FILE__);
+		while(($row = $GLOBALS['egw_setup']->db->row(true)))
+		{
+			$accounts[] = $row['acl_account'];
+		}
+		// get all accounts with change password acl (allowance to change the password)
+		$GLOBALS['egw_setup']->db->select('egw_acl','DISTINCT acl_account',array(
+			'acl_appname'  => 'preferences',
+			'acl_location' => 'changepassword',
+			'acl_rights'   => 1,
+			'acl_account > 0',
+		),__LINE__,__FILE__);
+		while(($row = $GLOBALS['egw_setup']->db->row(true)))
+		{
+			$change_passwd_acls[] = $row['acl_account'];
+		}
+		$GLOBALS['egw_setup']->db->delete('egw_acl',array(
+			'acl_appname'  => 'preferences',
+			'acl_location' => 'changepassword',
+		),__LINE__,__FILE__);
+		
+		// set the acl now for everyone NOT allowed to change the password
+		foreach(array_diff($accounts,$change_passwd_acls) as $account_id)
+		{
+			$GLOBALS['egw_setup']->db->insert('egw_acl',array(
+				'acl_appname'  => 'preferences',
+				'acl_location' => 'nopasswordchange',
+				'acl_rights'   => 1,
+				'acl_account'  => $account_id,
+			),false,__LINE__,__FILE__);
+		}
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.009';
+	}
