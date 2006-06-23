@@ -31,11 +31,18 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 
 	var $dav_powered_by = 'eGroupWare WebDAV server';
 	
-	var $debug = true;
+	/**
+	 * Debug level: 0 = nothing, 1 = function calls, 2 = additionally $_SERVER
+	 * 
+	 * The debug messages are send to the apache error_log
+	 *
+	 * @var integer
+	 */
+	var $debug = 1;
 
 	function vfs_webdav_server()
 	{
-		if ($this->debug) foreach($_SERVER as $name => $val) error_log("vfs_webdav_server: \$_SERVER[$name]='$val'");
+		if ($this->debug === 2) foreach($_SERVER as $name => $val) error_log("vfs_webdav_server: \$_SERVER[$name]='$val'");
 
 		parent::HTTP_WebDAV_Server();
 		
@@ -58,18 +65,31 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 			'checksubdirs'	=> False,
 			'nofiles'	=> True
 		);
-		if (!($vfs_files = $this->vfs->ls($vfs_data)))
+		if (!($vfs_files = $this->vfs->ls($vfs_data)))	// path not found
 		{
-			if ($this->debug) error_log("vfs_webdav_server::PROPFIND(path='$options[path]',depth=$options[depth]) return false");
-			return false;	// path not found
+			// check if the users home-dir is just not yet created (should be done by the vfs-class!)
+			// ToDo: group-dirs
+			if ($vfs_data['string'] == '/home/'.$GLOBALS['egw_info']['user']['account_lid'])
+			{
+				$this->vfs->override_acl = true;	// user has no right to create dir in /home
+				$created = $this->vfs->mkdir(array(
+					'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
+					'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
+				));
+				$this->vfs->override_acl = false;
+				
+				if (!$created)
+				{
+					if ($this->debug) error_log("vfs_webdav_server::PROPFIND(path='$options[path]',depth=$options[depth]) could not create home dir");
+				}
+				$vfs_files = $this->vfs->ls($vfs_data);
+			}
+			if (!$vfs_files)
+			{
+				if ($this->debug) error_log("vfs_webdav_server::PROPFIND(path='$options[path]',depth=$options[depth]) return false (path not found)");
+				return false;	// path not found
+			}
 		}
-/*
-		if (!$this->vfs->acl_check($vfs_data+array('operation'=>EGW_ACL_READ)))
-		{
-			if ($this->debug) error_log("vfs_webdav_server::PROPFIND(path='$options[path]',depth=$options[depth]) return 403 forbidden");
-			return '403 Forbidden';
-		}
-*/
 		// if depth > 0 and path is a directory => show it's contents
 		if (!empty($options['depth']) && $vfs_files[0]['mime_type'] == 'Directory')
 		{
@@ -92,7 +112,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 		$egw_charset = $GLOBALS['egw']->translation->charset();
 		foreach($vfs_files as $fileinfo)
 		{
-			error_log('dir="'.$fileinfo['directory'].'", name="'.$fileinfo['name'].'": '.$fileinfo['mime_type']);
+			if ($this->debug) error_log('dir="'.$fileinfo['directory'].'", name="'.$fileinfo['name'].'": '.$fileinfo['mime_type']);
 			foreach(array('modified','created') as $date)
 			{
 				// our vfs has no modified set, if never modified, use created
@@ -120,6 +140,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
             }
             $files['files'][] = $info;
 		}
+		if ($this->debug == 2) foreach($files['files'] as $info) error_log(print_r($info,true));
  		// ok, all done
 		return true;
 	}
@@ -372,15 +393,21 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 	/**
 	 * auth check in the session creation in dav.php, to avoid being redirected to login.php
 	 *
-	 * @param unknown_type $type
-	 * @param unknown_type $user
-	 * @param unknown_type $password
+	 * @param string $type
+	 * @param string $login account_lid or account_lid@domain
+	 * @param string $password this is checked in the session creation
 	 * @return boolean true if authorized or false otherwise
 	 */
-	function checkAuth($type,$user,$password)
+	function checkAuth($type,$login,$password)
 	{
-		if ($this->debug) error_log("vfs_webdav_server::checkAuth('$type','$user','$password')");
+		list($account_lid,$domain) = explode('@',$login);
 		
-		return $user == $GLOBALS['egw_info']['user']['account_lid'] && $GLOBALS['egw_info']['user']['apps']['filemanager'];
+		$auth = ($login === $GLOBALS['egw_info']['user']['account_lid'] ||
+			($account_lid === $GLOBALS['egw_info']['user']['account_lid'] && $domain === $GLOBALS['egw']->session->account_domain)) &&
+			$GLOBALS['egw_info']['user']['apps']['filemanager'];
+
+		if ($this->debug) error_log("vfs_webdav_server::checkAuth('$type','$login','\$password'): account_lid='$account_lid', domain='$domain' ==> ".(int)$auth);
+
+		return $auth;
 	}
 }
