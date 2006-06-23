@@ -121,7 +121,7 @@ class so_ldap
 		#nsAIMid
 		#postOfficeBox
 		'mozillaabpersonalpha' => array(
-			'adr_one_street2'	=> 'mozillapostalstreet2',
+			'adr_one_street2'	=> 'mozillaworkstreet2',
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomestreet2',
 			'adr_two_locality'	=> 'mozillahomelocalityname',
