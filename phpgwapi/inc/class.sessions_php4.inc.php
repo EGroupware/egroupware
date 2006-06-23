@@ -43,6 +43,16 @@
 			session_name('sessionid');
 		}
 
+		/**
+		* commit the sessiondata to the filesystem
+		*
+		* @return bool
+		*/
+		function commit_session() {
+			session_write_close();
+			return true;
+		}
+
 		function read_session()
 		{
 			if (!$this->sessionid)
