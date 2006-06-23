@@ -730,13 +730,13 @@
 			{
 				$acl->delete_repository('phpgwapi','anonymous',$_userData['account_id']);
 			}
-			if ($_userData['changepassword']) 
+			if (!$_userData['changepassword']) 
 			{
-				$GLOBALS['egw']->acl->add_repository('preferences','changepassword',$_userData['account_id'],1);
+				$GLOBALS['egw']->acl->add_repository('preferences','nopasswordchange',$_userData['account_id'],1);
 			}
 			else
 			{
-				$GLOBALS['egw']->acl->delete_repository('preferences','changepassword',$_userData['account_id']);
+				$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$_userData['account_id']);
 			}
 			$GLOBALS['egw']->session->delete_cache((int)$_userData['account_id']);
 		}

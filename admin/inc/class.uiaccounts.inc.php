@@ -670,7 +670,7 @@
 			// NDEE210804
 			// added for different way of handling ldap entries inside account manager
 			// we show this only, if accounts are stored in ldap
-
+/* just doublicated EMailAdmin functionality 
 			if ($GLOBALS['egw_info']['server']['account_repository'] == "ldap")
 			{
 				$GLOBALS['menuData'][] = array(
@@ -679,6 +679,7 @@
 				'extradata'     => 'menuaction=admin.uildap_mgr.editUserData'
 				);
 			}
+*/
 			//NDEE
 			
 			
@@ -767,7 +768,7 @@
 
 			$acl =& CreateObject('phpgwapi.acl',(int)$_GET['account_id']);
 			$var['anonymous']         = $acl->check('anonymous',1,'phpgwapi') ? '&nbsp;&nbsp;X' : '&nbsp;';
-			$var['changepassword']    = $acl->check('changepassword',0xFFFF,'preferences') ? '&nbsp;&nbsp;X' : '&nbsp;';
+			$var['changepassword']    = !$acl->check('nopasswordchange',1,'preferences') ? '&nbsp;&nbsp;X' : '&nbsp;';
 			unset($acl);
 
 			if ($userData['status'])
@@ -1087,7 +1088,7 @@
 					$acl =& CreateObject('phpgwapi.acl',$_account_id);
 					$acl->read_repository();
 					$userData['anonymous'] = $acl->check('anonymous',1,'phpgwapi');
-					$userData['changepassword'] = $acl->check('changepassword',0xFFFF,'preferences');
+					$userData['changepassword'] = !$acl->check('nopasswordchange',1,'preferences');
 					unset($acl);
 				}
 				else

@@ -78,9 +78,9 @@
 			}
 			$apps->save_repository();
 
-			if ($userData['changepassword'])
+			if (!$userData['changepassword'])
 			{
-				$GLOBALS['egw']->acl->add_repository('preferences','changepassword',$userData['account_id'],1);
+				$GLOBALS['egw']->acl->add_repository('preferences','nopasswordchange',$userData['account_id'],1);
 			}
 
 			$apps->account_apps = array(array());
