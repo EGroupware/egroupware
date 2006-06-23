@@ -332,6 +332,12 @@ class SMTP
             # smaller lines
             while(strlen($line) > $max_line_length) {
                 $pos = strrpos(substr($line,0,$max_line_length)," ");
+
+                # Patch to fix DOS attack
+                if(!$pos) {
+                    $pos = $max_line_length - 1;
+                }
+
                 $lines_out[] = substr($line,0,$pos);
                 $line = substr($line,$pos + 1);
                 # if we are processing headers we need to
@@ -359,7 +365,31 @@ class SMTP
         # over with aleady
         fputs($this->smtp_conn, $this->CRLF . "." . $this->CRLF);
 
+        # get server response
         $rply = $this->get_lines();
+
+	# if the server is slow try to get an answer within 30 seconds
+	$timeout_counter = 0;
+	while(($rply=="") && ($timeout_counter<30))
+	{
+        	$timeout_counter+=1;
+        	sleep(1);
+        	$rply = $this->get_lines();
+	}
+	# still no response to our data -> fail!
+	if($rply=="")
+	{
+		$this->error = array("error" => "timeout from server after data sent.",
+			"smtp_code" => 0,
+			"smtp_msg" => "(nothing)");
+			
+		if($this->do_debug >= 1) {
+			echo "SMTP -> ERROR: " . $this->error["error"] .
+			": " . $rply . $this->CRLF;
+		}
+		return false;
+	}
+
         $code = substr($rply,0,3);
 
         if($this->do_debug >= 2) {
@@ -1035,5 +1065,4 @@ class SMTP
 
 }
 
-
- ?>
+?>

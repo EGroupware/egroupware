@@ -330,6 +330,33 @@ class PHPMailer
         $this->ReplyTo[$cur][1] = $name;
     }
 
+	function getMessageBody() {
+		if(!isset($this->sentBody)) {
+			// Set whether the message is multipart/alternative
+			if(!empty($this->AltBody))
+				$this->ContentType = "multipart/alternative";
+			
+			$this->SetMessageType();
+			$body = $this->CreateBody();
+			$this->sentBody = $body;
+		}
+		
+		return $this->sentBody;
+	}
+
+	function getMessageHeader() {
+		if(!isset($this->sentHeader)) {
+			// Set whether the message is multipart/alternative
+			if(!empty($this->AltBody))
+				$this->ContentType = "multipart/alternative";
+			
+			$this->SetMessageType();
+			$header = $this->CreateHeader();
+			$this->sentHeader = $header;
+		}
+
+		return $this->sentHeader;
+	}
 
     /////////////////////////////////////////////////
     // MAIL SENDING METHODS
