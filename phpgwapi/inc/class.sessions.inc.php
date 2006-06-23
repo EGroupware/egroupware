@@ -212,6 +212,15 @@
 			}
 		}
 
+		/**
+		* commit the sessiondata to storage (needs to be reimplemented for the subclasses)
+		*
+		* @return bool
+		*/
+		function commit_session() {
+			return true;
+		}
+
 		function split_login_domain($both,&$login,&$domain)
 		{
 			$parts = explode('@',$both);
