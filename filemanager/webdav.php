@@ -36,9 +36,6 @@ function check_access(&$account)
 	}
 	return $sessionid;
 }
-// uncomment the next line if dav should use a eGW domain different from the first one defined in your header.inc.php
-// and of cause change the name accordingly ;-)
-// $GLOBALS['egw_info']['user']['domain'] = $GLOBALS['egw_info']['server']['default_domain'] = 'developers';
 
 $GLOBALS['egw_info']['flags'] = array(
 	'disable_Template_class' => True,
