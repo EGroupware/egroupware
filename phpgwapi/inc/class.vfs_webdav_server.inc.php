@@ -32,13 +32,13 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 	var $dav_powered_by = 'eGroupWare WebDAV server';
 	
 	/**
-	 * Debug level: 0 = nothing, 1 = function calls, 2 = additionally $_SERVER
+	 * Debug level: 0 = nothing, 1 = function calls, 2 = more info, eg. complete $_SERVER array
 	 * 
 	 * The debug messages are send to the apache error_log
 	 *
 	 * @var integer
 	 */
-	var $debug = 1;
+	var $debug = 0;
 
 	function vfs_webdav_server()
 	{
@@ -270,7 +270,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 		if ($this->debug) error_log('vfs_webdav_server::DELETE('.print_r($options,true).')');
 
 		$vfs_data = array(
-			'string'    => dirname($GLOBALS['egw']->translation->convert($options['path'],'utf-8')),
+			'string'    => $GLOBALS['egw']->translation->convert($options['path'],'utf-8'),
 			'relatives'	=> array(RELATIVE_ROOT),	// filename is relative to the vfs-root
 		);
 		if (!$this->vfs->file_exists($vfs_data))
