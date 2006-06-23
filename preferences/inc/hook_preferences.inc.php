@@ -12,7 +12,7 @@
 
 	/* $Id$ */
 
-	if ($GLOBALS['egw']->acl->check('changepassword',1))
+	if (!$GLOBALS['egw']->acl->check('nopasswordchange',1))
 	{
 		$file['Change your Password'] = $GLOBALS['egw']->link('/index.php','menuaction=preferences.uipassword.change');
 	}

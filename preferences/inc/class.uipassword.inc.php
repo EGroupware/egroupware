@@ -30,7 +30,7 @@
 			$n_passwd_2 = $_POST['n_passwd_2'];
 			$o_passwd_2 = $_POST['o_passwd_2'];
 
-			if(!$GLOBALS['egw']->acl->check('changepassword', 1) || $_POST['cancel'])
+			if($GLOBALS['egw']->acl->check('nopasswordchange', 1) || $_POST['cancel'])
 			{
 				 $GLOBALS['egw']->redirect_link('/preferences/index.php');
 				$GLOBALS['egw']->common->egw_exit();
