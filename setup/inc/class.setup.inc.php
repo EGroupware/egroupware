@@ -932,7 +932,7 @@
 				
 				$GLOBALS['egw']->accounts->set_memberships($memberships,$accountid);
 			}
-			if (!$group) $this->add_acl('preferences','changepassword',$accountid,(int)$changepw);
+			if (!$group) $this->add_acl('preferences','nopasswordchange',$accountid,(int)!$changepw);
 
 			return $accountid;
 		}
