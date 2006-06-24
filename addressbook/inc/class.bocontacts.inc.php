@@ -442,14 +442,17 @@ class bocontacts extends socontacts
 	* reads contacts matched by key and puts all cols in the data array
 	*
 	* @param int/string $contact_id 
-	* @return array/boolean contact data or false on error
+	* @return array/boolean array with contact data, null if not found or false on no view perms
 	*/
 	function read($contact_id)
 	{
-		$data = parent::read($contact_id);
-		if (!$data || !$this->check_perms(EGW_ACL_READ,$data))
+		if (!($data = parent::read($contact_id)))
 		{
-			return false;
+			return null;	// not found
+		}
+		if (!$this->check_perms(EGW_ACL_READ,$data))
+		{
+			return false;	// no view perms
 		}
 		// determine the file-as type
 		$data['fileas_type'] = $this->fileas_type($data);
@@ -635,7 +638,7 @@ class bocontacts extends socontacts
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param int/string/array $contact int/string id or array with contact
-	 * @param string the title
+	 * @param string/boolean string with the title, null if contact does not exitst, false if no perms to view it
 	 */
 	function link_title($contact)
 	{
@@ -645,9 +648,9 @@ class bocontacts extends socontacts
 		}
 		if (!is_array($contact))
 		{
-			return False;
+			return $contact;
 		}
-		return $contact['n_fileas'];
+		return $contact['n_fileas'] ? $contact['n_fileas'] : $this->fileas($contact);
 	}
 
 	/**
