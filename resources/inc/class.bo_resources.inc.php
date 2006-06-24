@@ -339,15 +339,18 @@ class bo_resources
 	 * @author Cornelius Weiss <egw@von-und-zu-weiss.de>
 	 * get title for an infolog entry identified by $res_id
 	 *
+	 * @return string/boolean string with title, null if resource does not exist or false if no perms to view it
 	 */
 	function link_title( $resource )
 	{
-		if (!is_array($resource) && $resource > 0)
+		if (!is_array($resource))
 		{
-			$resource  = $this->so->read(array('res_id' => $resource));
-			$title = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
+			if (!($resource  = $this->so->read(array('res_id' => $resource)))) return null;
 		}
-		return $title ? $title : false;
+		// ToDo Conny: ACL check !!!
+		//if (!$this->check_acl($resource,EGW_ACL_READ)) return false;
+		
+		return $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 	}
 	
 	/**
