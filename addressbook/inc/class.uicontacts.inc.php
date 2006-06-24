@@ -140,8 +140,7 @@ class uicontacts extends bocontacts
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'
 				'col_filter'     =>	array(),	// IO array of column-name value pairs (optional for the filterheaders)
 				'filter_label'   =>	lang('Addressbook'),	// I  label for filter    (optional)
-				// filter needs to be type string as as int it matches the private addressbook too!
-				'filter'         =>	(string) $GLOBALS['egw_info']['user']['account_id'],	// IO filter, if not 'no_filter' => True
+				'filter'         =>	'',	// =All	// IO filter, if not 'no_filter' => True
 				'filter_no_lang' => True,		// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'     => True,		// I  disable the 2. filter (params are the same as for filter)
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
