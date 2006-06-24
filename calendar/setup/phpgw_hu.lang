@@ -1,0 +1,236 @@
+%1 %2 in %3	calendar	hu	%1 %2 a %3-ban
+%1 records imported	calendar	hu	%1 bejegyzés importálva
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	hu	%1 bejegyzés beolvasva (importálás nem történt, az elõzõ lépésben a Test Import kikapcsolása után élesben történik a beolvasás)
+accept or reject an invitation	calendar	hu	Elfogad vagy elutasít egy meghívást
+accepted	calendar	hu	Elfogadva
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	hu	Értesítés a kövektezõk miatt: Hozzáadva, Mégsem, Elfogadva, Elutasítva, ...
+actions	calendar	hu	Mûveletek
+add alarm	calendar	hu	Riasztás hozzáadása
+added	calendar	hu	Hozzáadva
+after current date	calendar	hu	Aktuális dátum után
+alarm	calendar	hu	Riasztás
+alarm added	calendar	hu	Riasztás hozzáadva
+alarm deleted	calendar	hu	Riasztás törölve
+alarm for %1 at %2 in %3	calendar	hu	Riasztás %1-nek %2-nél %3-ban
+alarm management	calendar	hu	Riasztás kezelés
+alarms	calendar	hu	Riasztások
+all categories	calendar	hu	Összes kategória
+all day	calendar	hu	egész nap
+all events	calendar	hu	Összes esemény
+all participants	calendar	hu	Összes résztvevõ
+allows to edit the event again	calendar	hu	Esemény szerkesztésre megnyitásának engedélyezése
+apply the changes	calendar	hu	Változások elfogadása
+are you sure you want to delete this country ?	calendar	hu	Biztosan törölni kívánja ezt az országot?
+are you sure you want to delete this holiday ?	calendar	hu	Biztosan törölni kívánja ezt a szabadságot?
+back half a month	calendar	hu	fél hónapot vissza
+back one month	calendar	hu	egy hónapot vissza
+before current date	calendar	hu	aktuális dátum elõtt
+before the event	calendar	hu	esemény elött
+birthday	calendar	hu	Születésnap
+busy	calendar	hu	elfoglalt
+by	calendar	hu	by
+calendar event	calendar	hu	Naptár Esemény
+calendar holiday management	admin	hu	Naptár Szabadság Kezelõ
+calendar preferences	calendar	hu	Naptár tulajdonságok
+calendar settings	admin	hu	Naptár Beállítások
+calendar-fieldname	calendar	hu	Naptár-Mezõnév
+can't add alarms in the past !!!	calendar	hu	A múltban riasztást nem lehet létrehozni!
+canceled	calendar	hu	Törölve
+charset of file	calendar	hu	Állomány karakterkészlete
+close the window	calendar	hu	Ablak bezárás
+copy this event	calendar	hu	Esemény másolása
+countries	calendar	hu	Országok
+country	calendar	hu	Ország
+create an exception at this recuring event	calendar	hu	Kivétel létrehozása ismétlõdõ esemény hez
+create new links	calendar	hu	Új hivatkozások létrehozása
+csv	calendar	hu	CSV
+csv-fieldname	calendar	hu	CSV-Mezõnév
+csv-filename	calendar	hu	CSV-Fájlnév
+custom fields	common	hu	Egyedi Mezõk
+daily	calendar	hu	Naponta
+days	calendar	hu	napok
+days repeated	calendar	hu	napon ismétlõdik
+dayview	calendar	hu	Napi nézet
+default appointment length (in minutes)	calendar	hu	alapértelmezett megbeszélés hossz (percben)
+default calendar filter	calendar	hu	Alapértelmezett naptár szûrõ
+default calendar view	calendar	hu	Alapértelmezett naptár nézet
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	hu	Az újonnan létrehozott események alapértelmezett hossza. Ez percben van megadva, pl. 60 az egy órának.
+default week view	calendar	hu	alapértelmezett hét nézet
+defines the size in minutes of the lines in the day view.	calendar	hu	A sorok mérete percben a napi nézetben.
+delete series	calendar	hu	Sorozat törlése
+delete this alarm	calendar	hu	Riasztás törlése
+delete this event	calendar	hu	Esemény törlése
+delete this exception	calendar	hu	Kivétel törlése
+delete this series of recuring events	calendar	hu	Ismétlõdõ esemény sorozatának törlése
+disinvited	calendar	hu	Nem meghívott
+display status of events	calendar	hu	Esemányek státuszának megjelenítése
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	hu	Alapértelmezett naptár nézet kijelzése a kezdõ lapon (a lap amit kapsz az eGroupWare belépésnél vagy a kezdölap ikonra kattintáskor)?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	hu	Szeretnél kapni értesítést az új vagy megváltozott találkozókról? Értesítve leszel arról amit változtattál. <br>Különbözö változásoknál beállíthatod az értesítéseket. Az értesítési listán minden szerepel. Minden módosítás tartalmazza a változás címét, leírását, résztvevöket, de a résztvevök válaszait nem. Ha az esemény tulajdonosa kér valamilyen értesítést, mindíg megkapja a résztvevö válaszát hogy elfogadták vagy elutasították.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	hu	Akarsz kapni egyszerü összesítést a Te  találkozóidról emailben? <br>Az összesítö az email címedre lesz küldve aznap reggel vagy hétfön a heti összesítés. <br>Csak akkor lesz elküldve amikor neked van találkozód azon a napon vagy héten.
+do you wish to autoload calendar holidays files dynamically?	admin	hu	Akarod dinamikusan betölteni a naptár szabadság állományait.
+download	calendar	hu	Letölt
+duration of the meeting	calendar	hu	Megbeszélés hossza
+edit exception	calendar	hu	Kivétel szerkesztése
+edit series	calendar	hu	Sorozat szerkesztése
+edit this event	calendar	hu	Esemény szerkesztése
+empty for all	calendar	hu	minden ürítése
+end	calendar	hu	Befejezés
+end date/time	calendar	hu	Befejezés dátuma/ideje
+enddate	calendar	hu	Befejezési dátum
+ends	calendar	hu	vége
+event details follow	calendar	hu	Esemény jellemzõinek követése
+exceptions	calendar	hu	Kivételek
+export	calendar	hu	Export
+extended	calendar	hu	Kibõvített
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	hu	Kibövített frissítések mindíg tartalmazzák a komplett esemény-jellemzöket.
+fieldseparator	calendar	hu	Mezõ elválasztó
+filename	calendar	hu	Állomány név
+firstname of person to notify	calendar	hu	A szemály keresztneve az értesítéshez
+format of event updates	calendar	hu	Esemény frissítés formája
+forward half a month	calendar	hu	fél hónappal késõbb
+forward one month	calendar	hu	egy hónappal késõbb
+freetime search	calendar	hu	Szabadidõ keresés
+fri	calendar	hu	P
+full description	calendar	hu	Teljes leírás
+fullname of person to notify	calendar	hu	A személy teljes neve az értesítéshez
+general	calendar	hu	Általános
+global public and group public	calendar	hu	Globális publiskus és csoport publikus
+global public only	calendar	hu	Csak globális publikus
+group planner	calendar	hu	Csoport tervezet
+group public only	calendar	hu	Csak csoport publikus
+here is your requested alarm.	calendar	hu	Itt van a kért riasztásod.
+high priority	calendar	hu	magas prioritás
+holiday	calendar	hu	Szabadság
+holiday management	calendar	hu	Szabadság Kezelés
+holidays	calendar	hu	Szabadságok
+hours	calendar	hu	órák
+ical	calendar	hu	iCal
+ical / rfc2445	calendar	hu	iCal / rfc2445
+ical export	calendar	hu	iCal export
+ical file	calendar	hu	iCal állomány
+ical import	calendar	hu	iCal import
+ical successful imported	calendar	hu	iCal sikeresen importálva
+ignore conflict	calendar	hu	Átfedés figyelmen kivül hagyása
+import	calendar	hu	Import
+import csv-file	calendar	hu	CSV-Állomány Import
+interval	calendar	hu	Idötartam
+intervals in day view	calendar	hu	Idötartamok a napi nézetben
+last	calendar	hu	utolsó
+lastname of person to notify	calendar	hu	A személy vezeték neve
+links	calendar	hu	Hivatkozások
+links, attachments	calendar	hu	Hivatkozások, mellékletek
+listview	calendar	hu	listanézet
+location	calendar	hu	Helyszín
+location to autoload from	admin	hu	Automatikus betöltés helye
+minutes	calendar	hu	perc
+modified	calendar	hu	Módosított
+mon	calendar	hu	H
+monthly	calendar	hu	Havonta
+monthly (by date)	calendar	hu	Havonta (dátum szerint)
+monthly (by day)	calendar	hu	Havonta (naponta)
+monthview	calendar	hu	Havi Nézet
+no events found	calendar	hu	Esemény nem található
+no filter	calendar	hu	Szûrõ nélkül
+no matches found	calendar	hu	Egyezés nem található
+no response	calendar	hu	Nincs válasz
+notification messages for added events	calendar	hu	Értesítési üzenet a hozzáadott eseményekhez
+notification messages for canceled events	calendar	hu	Értesítési üzenet a megszakított eseményekhez
+notification messages for modified events	calendar	hu	Értesítési üzenet a módosított eseményekhez
+notification messages for your alarms	calendar	hu	Értesítési üzenet a Te riasztásaidhoz
+notification messages for your responses	calendar	hu	Értesítési üzenet a Te válaszaidhoz
+number of records to read (%1)	calendar	hu	Az olvasott bejegyzések száma (%1)
+observance rule	calendar	hu	Elöírás szabálya
+occurence	calendar	hu	Esemény
+old startdate	calendar	hu	Régi Kezdési Dátum
+on %1 %2 %3 your meeting request for %4	calendar	hu	%1 %2 %3-on a Te találkozó kérésed %4-el
+on all modification, but responses	calendar	hu	minden módosítás, de válaszok
+on any time change too	calendar	hu	bármikor váltiz szintén
+on invitation / cancelation only	calendar	hu	meghívás / megszakítás csupán
+on participant responses too	calendar	hu	résztvevö válaszai szintén
+on time change of more than 4 hours too	calendar	hu	több mint 4 óra idö változás szintén
+one month	calendar	hu	egy hónap
+one week	calendar	hu	egy hét
+one year	calendar	hu	egy év
+open todo's:	calendar	hu	Tennivalók Megnyitása:
+overlap holiday	calendar	hu	szabadság átfedés
+participants	calendar	hu	Résztvevök
+people holiday	calendar	hu	emberek szabadsága
+permission denied	calendar	hu	Engedély tiltott
+planner by category	calendar	hu	Tervezö kategória szerint
+planner by user	calendar	hu	Tervezö felhasználó szerint
+preselected group for entering the planner	calendar	hu	Elöre kiválasztott csoport a tervezöbe lépéshez
+previous	calendar	hu	elõzõ
+private and global public	calendar	hu	Személyes és globális publikus
+private and group public	calendar	hu	Személyes és csoport publikus
+private only	calendar	hu	Csak személyes
+re-edit event	calendar	hu	Esemény módosítása
+receive email updates	calendar	hu	Email frissítések fogadása
+receive summary of appointments	calendar	hu	Találkozók összesítöjének fogadása
+recurrence	calendar	hu	Ismétlõdés
+recurring event	calendar	hu	ismétlõdõ esemény
+rejected	calendar	hu	Elutasított
+repeat type	calendar	hu	Ismétlödés típusa
+repeating event information	calendar	hu	Ismétlödö esemény információ
+repetition	calendar	hu	Ismétlödés
+repetitiondetails (or empty)	calendar	hu	Ismétlödés jellemzök (vagy üres)
+reset	calendar	hu	Alaphelyzet
+resources	calendar	hu	Erõforrások
+rule	calendar	hu	Szabály
+sat	calendar	hu	Sz
+saves the changes made	calendar	hu	Változások elmentése
+scheduling conflict	calendar	hu	Ütemezési konfliktus
+select resources	calendar	hu	Erõforrások választása
+set a year only for one-time / non-regular holidays.	calendar	hu	Állíts be egy évet csupán / nem szabályos szabadságok.
+set new events to private	calendar	hu	Új magán események megadása
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	hu	Lehet mutatni az elutasított meghívsokat a naptárban? <br>Akkor tudod késöbb ezeket elfogadni (pl. amikor megoldod az ütemezési problémákat), ha ezek mutatva vannak a naptáradban!
+should new events created as private by default ?	calendar	hu	Létre lehet hozni az eseményeket mint magán alapértelmezésben?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	hu	Az esemény résztvevök státusza (elfogad, elutasít, ...) megjeleníthetö minden résztvevö neve után?
+show default view on main screen	calendar	hu	Alapértelmezett nézet megjelenítése a fö képernyön
+show invitations you rejected	calendar	hu	Mutassa az elutasított meghívásokat
+show list of upcoming events	calendar	hu	A bejövö események listájának mutatása
+show this month	calendar	hu	hónap mutatása
+show this week	calendar	hu	hét mutatása
+single event	calendar	hu	Egyedi esemény
+start	calendar	hu	Kezdés
+start date/time	calendar	hu	Kezdet dátuma/ideje
+startrecord	calendar	hu	Kezdö bejegyzés
+submit to repository	calendar	hu	Bizalmashoz továbítás
+sun	calendar	hu	V
+tentative	calendar	hu	Próba
+test import (show importable records <u>only</u> in browser)	calendar	hu	Import tesztelése (<u>csupán</u> a nem beolvasható bejegyzések mutatása a böngészöben)
+this day is shown as first day in the week or month view.	calendar	hu	Ez a nap lesz az elsö nap a heti vagy havi nézetben.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	hu	Ez beállítja a napi nézet végét. Az ez utáni események lejjebb vannak mutatva a napi nézetben.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	hu	Ez beállítja a napi nézet kezdetét. Az ez elötti események feljebb vannak mutatva a napi nézetben. <b>Ezt az idöt használjuk szintén mint az alapértelmezett kezési idöt az új eseményekhez.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	hu	Ez a csoport ami ki van választva amikor belépsz a tervezöbe. A tervezöben bármikor meg tudod változtatni.
+this message is sent for canceled or deleted events.	calendar	hu	Ez az üzenet akkor lesz elküldve amikor megszatítasz vagy törölsz egy eseményt.
+this message is sent for modified or moved events.	calendar	hu	Ez az üzenet akkor lesz elküldve amikor módisítasz vagy mozgatsz egy eseményt.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	hu	Ez az üzenet akkor lesz elküldve a Te eseményed minden résztvevönek, akiknek van kért értesítés egy új eseményröl. <b>Különbözö változókat használhasz amik helyettesítve vannak az esemény adatával. Az elsö sor az email tárgya.
+this message is sent when you accept, tentative accept or reject an event.	calendar	hu	Ez az üzenet akkor lesz elküldve amikor elfogadsz, próbaként elfogadsz, vagy elutasítasz egy eseményt.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	hu	Ez az üzenet akkor lesz elküldve amikor beállítasz egy riasztást egy bizonyos eseményhez.
+three month	calendar	hu	három hónap
+thu	calendar	hu	Cs
+title of the event	calendar	hu	Esemény címe
+to many might exceed your execution-time-limit	calendar	hu	elérted a futtatási-idö-határt
+translation	calendar	hu	Fordítás
+tue	calendar	hu	K
+two weeks	calendar	hu	két hét
+updated	calendar	hu	Frissítve
+use end date	calendar	hu	Végs? dátumot használja
+wed	calendar	hu	Sz
+week	calendar	hu	Hét
+weekday starts on	calendar	hu	Hétköznap kezdete
+weekly	calendar	hu	Hetente
+weekview	calendar	hu	Heti Nézet
+which events do you want to see when you enter the calendar.	calendar	hu	Amelyik eseményeket látni akarod amikor belépsz a naptárba.
+which of calendar view do you want to see, when you start calendar ?	calendar	hu	Melyik naptár nézetet akarod látni amikor elindítod a naptárat?
+whole day	calendar	hu	egész nap
+wk	calendar	hu	hét
+work day ends on	calendar	hu	Munkanapok vége
+work day starts on	calendar	hu	Munkanapok kezdete
+yearly	calendar	hu	Évente
+yearview	calendar	hu	Éves Nézet
+you can either set a year or a occurence, not both !!!	calendar	hu	Tudsz állítani egy Évet vagy egy Eseményt, de nem mindkettöt!!!
+you can only set a year or a occurence !!!	calendar	hu	Tudsz állítani csupán egy évet vagy egy esemény!!!
+you do not have permission to read this record!	calendar	hu	Neked nincs jogosultságod  olvasni ezt a bejegyzést!
+you have a meeting scheduled for %1	calendar	hu	Neked van egy ütemezett találkozód %1-el!
+h	calendar	hu	óra

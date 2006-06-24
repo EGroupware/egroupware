@@ -26,42 +26,70 @@ class uiviews extends uical
 {
 	var $public_functions = array(
 		'day'   => True,
+		'day4'  => True,
 		'week'  => True,
 		'month' => True,
 		'planner' => True,
 	);
+
 	/**
-	 * @var $debug mixed integer level or string function- or widget-name
+	 * integer level or string function- or widget-name
+	 * 
+	 * @var mixed $debug 
 	 */
 	var $debug=false;
 
 	/**
-	 * @var minimum width for an event
+	 * minimum width for an event
+	 * 
+	 * @var int $eventCol_min_width
 	 */
 	var $eventCol_min_width = 80;
 	
 	/**
-	 * @var int $extraRows extra rows above and below the workday
+	 * extra rows above and below the workday
+	 * 
+	 * @var int $extraRows 
 	 */
 	var $extraRows = 1;
 
 	var $timeRow_width = 40;
 
 	/**
-	 * @var int $rowsToDisplay how many rows per day get displayed, gets set be the timeGridWidget
+	 * how many rows per day get displayed, gets set be the timeGridWidget
+	 * 
+	 * @var int $rowsToDisplay 
 	 */
 	var $rowsToDisplay;
 
 	/**
-	 * @var int $rowHeight height in percent of one row, gets set be the timeGridWidget
+	 * height in percent of one row, gets set be the timeGridWidget
+	 * 
+	 * @var int $rowHeight
 	 */
 	var $rowHeight;
 	
 	/**
-	 * @var array $search_params standard params for calling bocal::search for all views, set by the constructor
+	 * standard params for calling bocal::search for all views, set by the constructor
+	 * 
+	 * @var array $search_params
 	 */
 	var $search_params;
 	
+	/**
+	 * should we use a time grid, can be set for week- and month-view to false by the cal_pref no_time_grid
+	 * 
+	 * @var boolean $use_time_grid=true 
+	 */
+	var $use_time_grid=true;
+	
+	/**
+	 * Can we display the whole day in a timeGrid of the size of the workday and just scroll to workday start
+	 *
+	 * @var boolean $scroll_to_wdstart;
+	 */
+	var $scroll_to_wdstart=false;
+
 	/**
 	 * Constructor
 	 *
@@ -74,6 +102,7 @@ class uiviews extends uical
 		$GLOBALS['egw_info']['flags']['nonavbar'] = False;
 		$app_header = array(
 			'day'   => lang('Dayview'),
+			'4day'  => lang('Four days view'),
 			'week'  => lang('Weekview'),
 			'month' => lang('Monthview'),
 			'planner' => lang('Group planner'),
@@ -231,6 +260,8 @@ class uiviews extends uical
 	{
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(weeks=%1) date=%2',True,$weeks,$this->date);
 
+		$this->use_time_grid = $this->cal_prefs['use_time_grid'] == '';	// all views
+
 		if ($weeks)
 		{
 			$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day=1);
@@ -266,7 +297,7 @@ class uiviews extends uical
 			$title = lang('Wk').' '.adodb_date('W',$week_start);
 			$title = $this->html->a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
 
-			$content .= $this->timeGridWidget($week,60,200,'',$title);
+			$content .= $this->timeGridWidget($week,60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
 		if (!$home)
 		{
@@ -305,6 +336,17 @@ class uiviews extends uical
 		unset($last['raw']);	// otherwise date2ts does not calc raw new, but uses it
 		$last = $this->bo->date2ts($last);
 	}
+	
+	/**
+	 * Four days view, everythings done by the week-view code ...
+	 *
+	 * @param boolean $home=false if true return content suitable for home-page
+	 * @return string
+	 */
+	function day4($home=false)
+	{
+		return $this->week(4,$home);
+	}
 
 	/**
 	 * Displays the weekview, with 5 or 7 days
@@ -314,6 +356,9 @@ class uiviews extends uical
 	 */
 	function week($days=0,$home=false)
 	{
+		$this->use_time_grid = $days != 4 && !in_array($this->cal_prefs['use_time_grid'],array('day','day4')) ||
+			$days == 4 && $this->cal_prefs['use_time_grid'] != 'day';
+
 		if (!$days)
 		{
 			$days = isset($_GET['days']) ? $_GET['days'] : $this->cal_prefs['days_in_weekview'];
@@ -327,23 +372,31 @@ class uiviews extends uical
 		}
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::week(days=%1) date=%2',True,$days,$this->date);
 
-		$wd_start = $this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
-		if ($days == 5)		// no weekend-days
+		if ($days == 4)		// next 4 days view
 		{
-			switch($this->cal_prefs['weekdaystarts'])
+			$wd_start = $this->first = $this->bo->date2ts($this->date);
+			$this->last = $this->first + $days * DAY_s - 1;
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Four days view').' '.$this->bo->long_date($this->first,$this->last);
+		}
+		else
+		{
+			$wd_start = $this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
+			if ($days == 5)		// no weekend-days
 			{
-				case 'Saturday':
-					$this->first += DAY_s;
-					// fall through
-				case 'Sunday':
-					$this->first += DAY_s;
-					break;
+				switch($this->cal_prefs['weekdaystarts'])
+				{
+					case 'Saturday':
+						$this->first += DAY_s;
+						// fall through
+					case 'Sunday':
+						$this->first += DAY_s;
+						break;
+				}
 			}
+			$this->last = $this->first + $days * DAY_s - 1;
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
-		$this->last = $this->first + $days * DAY_s - 1;
-
-		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
 
 		$search_params = array(
 				'start'   => $this->first,
@@ -387,7 +440,9 @@ class uiviews extends uical
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::day() date=%1',True,$this->date);
 
 		$this->last = $this->first = $this->bo->date2ts((string)$this->date);
-		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang(adodb_date('l',$this->first)).', '.$this->bo->long_date($this->first);
+		$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$this->bo->long_date($this->first,0,false,true);
+		
+		$this->use_time_grid = true;    // day-view always uses a time-grid, independent what's set in the prefs!
 		
 		$this->search_params['end'] = $this->last = $this->first+DAY_s-1;
 		
@@ -398,8 +453,8 @@ class uiviews extends uical
 			$users = $this->search_params['users'];
 			if (!is_array($users)) $users = array($users);
 
-			// for more then 3 users, show all in one row
-			if (count($users) == 1 || count($users) > 3) 
+			// for more then 5 users, show all in one row
+			if (count($users) == 1 || count($users) > 5) 
 			{
 				$dayEvents =& $this->bo->search($this->search_params);
 				$owner = 0;
@@ -418,7 +473,8 @@ class uiviews extends uical
 			$cols = array();
 			$cols[0] =& $this->timeGridWidget($dayEvents,$this->cal_prefs['interval'],450,'','',$owner);
 
-			if (($todos = $this->get_todos($todo_label)) !== false)
+			// only show todo's for a single user
+			if (count($users) == 1 && ($todos = $this->get_todos($todo_label)) !== false)
 			{
 				if ($GLOBALS['egw_info']['user']['apps']['infolog'])
 				{
@@ -534,6 +590,10 @@ class uiviews extends uical
 	 */
 	function time2pos($time)
 	{
+		if ($this->scroll_to_wdstart)	// we display the complete day - thought only workday is visible without scrolling
+		{
+			return $this->rowHeight * (1 + $this->extraRows + $time/$this->granularity_m);
+		}
 		// time before workday => condensed in the first $this->extraRows rows
 		if ($this->wd_start > 0 && $time < $this->wd_start)
 		{
@@ -587,17 +647,30 @@ class uiviews extends uical
 	 * @param string $indent='' string for correct indention
 	 * @param string $title='' title of the time-grid
 	 * @param int/array $owner=0 owner of the calendar (default 0 = $this->owner) or array with owner for each column
+	 * @param boolean $last=true last timeGrid displayed, default true
 	 */
-	function &timeGridWidget($daysEvents,$granularity_m=30,$height=400,$indent='',$title='',$owner=0)
+	function &timeGridWidget($daysEvents,$granularity_m=30,$height=400,$indent='',$title='',$owner=0,$last=true)
 	{
 		if ($this->debug > 1 || $this->debug==='timeGridWidget') $this->bo->debug_message('uiviews::timeGridWidget(events=%1,granularity_m=%2,height=%3,,title=%4)',True,$daysEvents,$granularity_m,$height,$title);
 
+		// determine if the browser supports scrollIntoView: IE4+, firefox1.0+ and safari2.0+ does
+		// then show all hours in a div of the size of the workday and scroll to the workday start
+		// still disabled, as things need to be re-aranged first, to that the column headers are not scrolled
+		$this->scroll_to_wdstart = false;/*$this->use_time_grid && ($this->html->user_agent == 'msie' || 
+			$this->html->user_agent == 'mozilla' && $this->html->ua_version >= 5.0 ||
+			$this->html->user_agent == 'safari' && $this->html->ua_version >= 2.0);*/
+	
+		if ($this->scroll_to_wdstart)
+		{
+			$this->extraRows = 0;	// no extra rows necessary
+			$overflow = 'overflow: scroll;';
+		}
 		$this->granularity_m = $granularity_m;
 		$this->display_start = $this->wd_start - ($this->extraRows * $this->granularity_m);
 		$this->display_end	= $this->wd_end + ($this->extraRows * $this->granularity_m);
 
-		$wd_end = ($this->wd_end === 0 ? 1440 : $this->wd_end);
-		$totalDisplayMinutes	= $wd_end - $this->wd_start;
+		if (!$this->wd_end) $this->wd_end = 1440;
+		$totalDisplayMinutes	= $this->wd_end - $this->wd_start;
 		$this->rowsToDisplay	= ($totalDisplayMinutes/$granularity_m)+2+2*$this->extraRows;
 		$this->rowHeight		= round(100/$this->rowsToDisplay,1);
 		
@@ -606,30 +679,48 @@ class uiviews extends uical
 		{
 			$height = ($this->rowsToDisplay+1) * 12;
 		}
-		$html = $indent.'<div class="calTimeGrid" style="height: '.$height.'px;">'."\n";
+		$html = $indent.'<div class="calTimeGrid" style="height: '.$height.'px;'.$overflow.'">'."\n";
 
 		$html .= $indent."\t".'<div class="calGridHeader" style="height: '.
 			$this->rowHeight.'%;">'.$title."</div>\n";
 
-		$off = false;	// Off-row means a different bgcolor
-		$add_links = count($daysEvents) == 1;
-
-		// the hour rows
-		for($i=1; $i < $this->rowsToDisplay; $i++)
+		if ($this->use_time_grid)
 		{
-			$currentTime = $this->display_start + (($i-1) * $this->granularity_m);
-			if($this->wd_start <= $currentTime && $this->wd_end >= $currentTime)
+			$off = false;	// Off-row means a different bgcolor
+			$add_links = count($daysEvents) == 1;
+	
+			// the hour rows
+			for($t = $this->scroll_to_wdstart ? 0 : $this->wd_start,$i = 1+$this->extraRows;
+				$t <= $this->wd_end || $this->scroll_to_wdstart && $t < 24*60;
+				$t += $this->granularity_m,++$i)
 			{
-				$html .= $indent."\t".'<div class="calTimeRow'.($off ? 'Off row_off' : ' row_on').
+				$set_id = '';
+				if ($t == $this->wd_start)
+				{
+					list($id) = @each($daysEvents);
+					$id = 'wd_start_'.$id;
+					$set_id = ' id="'.$id.'"';
+				}
+				$html .= $indent."\t".'<div'.$set_id.' class="calTimeRow'.($off ? 'Off row_off' : ' row_on').
 					'" style="height: '.$this->rowHeight.'%; top:'. $i*$this->rowHeight .'%;">'."\n";
-				$time = $GLOBALS['egw']->common->formattime(sprintf('%02d',$currentTime/60),sprintf('%02d',$currentTime%60));
-				if ($add_links) $time = $this->add_link($time,$this->date,(int) ($currentTime/60),$currentTime%60);
+				// show time for full hours, allways for 45min interval and at least on every 3 row
+				$time = '';
+				static $show = array(
+					5  => array(0,15,30,45),
+					10 => array(0,30),
+					15 => array(0,30),
+					45 => array(0,15,30,45),
+				);
+				if (!isset($show[$this->granularity_m]) ? $t % 60 == 0 : in_array($t % 60,$show[$this->granularity_m]))
+				{
+					$time = $GLOBALS['egw']->common->formattime(sprintf('%02d',$t/60),sprintf('%02d',$t%60));
+				}
+				if ($add_links) $time = $this->add_link($time,$this->date,(int) ($t/60),$t%60);
 				$html .= $indent."\t\t".'<div class="calTimeRowTime">'.$time."</div>\n";
 				$html .= $indent."\t</div>\n";	// calTimeRow
 				$off = !$off;
 			}
 		}
-
 		if (is_array($daysEvents) && count($daysEvents))
 		{
 			$numberOfDays	= count($daysEvents);
@@ -637,12 +728,22 @@ class uiviews extends uical
 
 			$dayCols_width = $width - $this->timeRow_width - 1;
 
-			// Lars Kneschke 2005-08-28
-			// why do we use a div in a div which has the same height and width???
-			// To make IE6 happy!!! Whithout the second div you can't use 
-			// style="left: 50px; right: 0px;"
-			$html .= $indent."\t".'<div id="calDayCols" class="calDayCols'.($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '').
-				'"><div style="width=100%; height: 100%;">'."\n";
+			$html .= $indent."\t".'<div id="calDayCols" class="calDayCols'.
+				($this->use_time_grid ? ($this->bo->common_prefs['timeformat'] == 12 ? '12h' : '') : 'NoTime').'">'."\n";
+
+			if ($this->html->user_agent == 'msie')	// necessary IE hack - stupid thing ...
+			{
+				// Lars Kneschke 2005-08-28
+				// why do we use a div in a div which has the same height and width???
+				// To make IE6 happy!!! Without the second div you can't use 
+				// style="left: 50px; right: 0px;"
+				//$html .= '<div style="width=100%; height: 100%;">'."\n";
+
+				// Ralf Becker 2006-06-19
+				// Lars original typo "width=100%; height: 100%;" is important ;-) 
+				// means you width: 100% does NOT work, you need no width!
+				$html .= '<div style="height: 100%;">'."\n";
+			}
 			$dayCol_width = $dayCols_width / count($daysEvents);
 			$n = 0;
 			foreach($daysEvents as $day => $events)
@@ -659,10 +760,21 @@ class uiviews extends uical
 					$dayColWidth,$indent."\t\t",$short_title,++$on_off & 1,$col_owner);
 				++$n;
 			}
-			$html .= $indent."\t</div></div>\n";	// calDayCols
+			if ($this->html->user_agent == 'msie') $html .= "</div>\n";
+
+			$html .= $indent."\t</div>\n";	// calDayCols
 		}
 		$html .= $indent."</div>\n";	// calTimeGrid
-
+		
+		if ($this->scroll_to_wdstart)
+		{
+			$html .= "<script>\n\tdocument.getElementById('$id').scrollIntoView();\n";
+			if ($last)	// last timeGrid --> scroll whole document back up
+			{
+				$html .= "\tdocument.getElementById('divMain').scrollIntoView();\n";
+			}
+			$html .= "</script>\n";
+		}
 		return $html;
 	}
 
@@ -703,25 +815,16 @@ class uiviews extends uical
 				$event['end_m'] = 24*60-1;
 				$event['multiday'] = True;
 			}
-			for($c = 0; $event['start_m'] < $col_ends[$c]; ++$c);
-			$eventCols[$c][] = $event;
-			$col_ends[$c] = $event['end_m'];
-		}
-
-		if (count($eventCols))
-		{
-			/* code to overlay the column, not used at the moment
-			$eventCol_dist = $eventCol_width = round($width / count($eventCols));
-			$eventCol_min_width = 80;
-			if ($eventCol_width < $eventCol_min_width)
+			if ($this->use_time_grid)
 			{
-				$eventCol_width = $eventCol_dist = $eventCol_min_width;
-				if (count($eventCols) > 1)
-				{
-					$eventCol_dist = round(($width - $eventCol_min_width) / (count($eventCols)-1));
-				}
-			}*/
-			$eventCol_dist = $eventCol_width = round(100 / count($eventCols));
+				for($c = 0; $event['start_m'] < $col_ends[$c]; ++$c);
+				$col_ends[$c] = $event['end_m'];
+			}
+			else
+			{
+				$c = 0;		// without grid we only use one column
+			}
+			$eventCols[$c][] = $event;
 		}
 
 		$html = $indent.'<div id="calColumn'.$this->calColumnCounter++.'" class="calDayCol" style="left: '.$left.
@@ -729,7 +832,8 @@ class uiviews extends uical
 
 		// Creation of the header-column with date, evtl. holiday-names and a matching background-color
 		$ts = $this->bo->date2ts((string)$day_ymd);
-		$title = is_bool($short_title) ? (lang(adodb_date('l',$ts)).', '.($short_title ? adodb_date('d.',$ts) : $this->bo->long_date($ts))) : $short_title;
+		$title = !is_bool($short_title) ? $short_title :
+			($short_title ? lang(adodb_date('l',$ts)).' '.adodb_date('d.',$ts) : $this->bo->long_date($ts,0,false,true));
 		$day_view = array(
 			'menuaction' => 'calendar.uiviews.day',
 			'date' => $day_ymd,
@@ -739,30 +843,43 @@ class uiviews extends uical
 			$title = $this->html->a_href($title,$day_view,'',
 				!isset($this->holidays[$day_ymd])?' title="'.lang('Dayview').'"':'');
 		}
+		elseif ($short_title === false)
+		{
+			// add arrows to go to the previous and next day (dayview only)
+			$day_view['date'] = $this->bo->date2string($ts -= 12*HOUR_s);
+			$title = $this->html->a_href($this->html->image('phpgwapi','left',$this->bo->long_date($ts)),$day_view).' &nbsp; '.$title;
+			$day_view['date'] = $this->bo->date2string($ts += 48*HOUR_s);
+			$title .= ' &nbsp; '.$this->html->a_href($this->html->image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
+		}
 		$this->_day_class_holiday($day_ymd,$class,$holidays);
 		// the weekday and date
-		$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%" class="calDayColHeader '.$class.'"'.($holidays ? ' title="'.$holidays.'"':'').'>'.
+		$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.($holidays ? ' title="'.$holidays.'"':'').'>'.
 			$title.(!$short_title && $holidays ? ': '.$holidays : '')."</div>\n";
 
-		// adding divs to click on for each row / time-span
-		for($counter = 1; $counter < $this->rowsToDisplay; $counter++)
+		if ($this->use_time_grid)
 		{
-			//print "$counter - ". $counter*$this->rowHeight ."<br>";
-			$linkData = array(
-				'menuaction'	=>'calendar.uiforms.edit',
-				'date'		=> $day_ymd,
-				'hour'		=> floor(($this->wd_start + (($counter-$this->extraRows-1)*$this->granularity_m))/60),
-				'minute'	=> floor(($this->wd_start + (($counter-$this->extraRows-1)*$this->granularity_m))%60),
-			);
-			if ($owner) $linkData['owner'] = $owner;
-			
-			$html .= $indent."\t".'<div style="height:'. $this->rowHeight .'%; top: '. $counter*$this->rowHeight .
-				'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";
+			// adding divs to click on for each row / time-span
+			for($t = $this->scroll_to_wdstart ? 0 : $this->wd_start,$i = 1+$this->extraRows;
+				$t <= $this->wd_end || $this->scroll_to_wdstart && $t < 24*60;
+				$t += $this->granularity_m,++$i)
+			{
+				$linkData = array(
+					'menuaction'	=>'calendar.uiforms.edit',
+					'date'		=> $day_ymd,
+					'hour'		=> floor($t / 60),
+					'minute'	=> floor($t % 60),
+				);
+				if ($owner) $linkData['owner'] = $owner;
+				
+				$html .= $indent."\t".'<div style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
+					'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";
+			}
 		}
 		// displaying all event columns of the day
 		foreach($eventCols as $n => $eventCol)
 		{
-			$html .= $this->eventColWidget($eventCol,$n*$eventCol_dist,$eventCol_width,$indent."\t");
+			$html .= $this->eventColWidget($eventCol,!$n ? 0 : 60-10*(count($eventCols)-$n),
+				count($eventCols) == 1 ? 100 : (!$n ? 80 : 50),$indent."\t");
 		}
 		$html .= $indent."</div>\n";	// calDayCol
 
@@ -834,7 +951,8 @@ class uiviews extends uical
 	{
 		if ($this->debug > 1 || $this->debug==='eventColWidget') $this->bo->debug_message('uiviews::eventColWidget(%1,left=%2,width=%3,)',False,$events,$left,$width);
 
-		$html = $indent.'<div class="calEventCol" style="left: '.$left.'%; width:'.$width.'%;">'."\n";
+		$html = $indent.'<div class="calEventCol" style="left: '.$left.'%; width:'.$width.'%;'.
+			(!$this->use_time_grid ? ' top: '.$this->rowHeight.'%;' : '').'">'."\n";
 		foreach($events as $event)
 		{
 			$html .= $this->eventWidget($event,$width,$indent."\t");
@@ -877,11 +995,7 @@ class uiviews extends uical
 		}
 		else
 		{
-			foreach(array($event['start_m'],$event['end_m']) as $minutes)
-			{
-				$timespan[] = $GLOBALS['egw']->common->formattime(sprintf('%02d',$minutes/60),sprintf('%02d',$minutes%60));
-			}
-			$timespan = implode(' - ',$timespan);
+			$timespan = $this->bo->timespan($event['start_m'],$event['end_m']);
 		}
 		$is_private = !$this->bo->check_perms(EGW_ACL_READ,$event);
 
@@ -897,7 +1011,7 @@ class uiviews extends uical
 		$border=1;
 		$headerbgcolor = $color ? $color : '#808080';
 		// the body-colors (gradient) are calculated from the headercolor, which depends on the cat of an event
-		$bodybgcolor1 = $this->brighter($headerbgcolor,170);
+		$bodybgcolor1 = $this->brighter($headerbgcolor,$headerbgcolor == '#808080' ? 100 : 170);
 		$bodybgcolor2 = $this->brighter($headerbgcolor,220);
 		
 		// seperate each participant types
@@ -917,19 +1031,25 @@ class uiviews extends uical
 		{
 			$participants .= $this->add_nonempty($participant,$part_group,True);
 		}
-		
+		// as we only deal with percentual widht, we consider only the full dayview (1 colum) as NOT small
+		$small = $this->view != 'day' || $width < 50;
+		// $small = $width <= $small_trigger_width
+
+		$small_height = $this->use_time_grid && ( $event['end_m']-$event['start_m'] < 2*$this->granularity_m || 
+			$event['end_m'] <= $this->wd_start || $event['start_m'] >= $this->wd_end);
+
 		$tpl->set_var(array(
 			// event-content, some of it displays only if it really has content or is needed
-			'header_icons' => $width > $small_trigger_width ? implode("",$icons) : '',
-			'body_icons' => $width > $small_trigger_width ? '' : implode("\n",$icons),
-			'icons' => implode("\n",$icons),
+			'header_icons' => $small ? '' : implode("",$icons),
+			'body_icons' => $small ? implode("\n",$icons) : '',
+			'icons' => implode('',$icons),
 			'timespan' => $timespan,
-			'header' => !$is_private ? $this->html->htmlspecialchars($event['title']) : lang('private'), // $timespan,
-			'title'   => !$is_private ? $this->html->htmlspecialchars($event['title']) : lang('private'),
+			'title' => ($title = !$is_private ? $this->html->htmlspecialchars($event['title']) : lang('private')),
+			'header' => $small_height ? $title : $timespan,
 			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])) : '',
 			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
 			'participants' => $participants,
-			'times' => !$event['multiday'] ? $this->add_nonempty($timespan,lang('Time')) :
+			'times' => !$event['multiday'] ? $this->add_nonempty($this->bo->timespan($event['start_m'],$event['end_m'],true),lang('Time')) :
 				$this->add_nonempty($this->bo->format_date($event['start']),lang('Start')).
 				$this->add_nonempty($this->bo->format_date($event['end']),lang('End')),
 			'multidaytimes' => !$event['multiday'] ? '' :
@@ -947,12 +1067,13 @@ class uiviews extends uical
 			'border' => $border,
 			'bordercolor' => $headerbgcolor,
 			'headerbgcolor' => $headerbgcolor,
-			'bodybackground' => 'url('.$GLOBALS['egw_info']['server']['webserver_url'].
+			'bodybackground' => ($background = 'url('.$GLOBALS['egw_info']['server']['webserver_url'].
 				'/calendar/inc/gradient.php?color1='.urlencode($bodybgcolor1).'&color2='.urlencode($bodybgcolor2).
-				'&width='.$width.') repeat-y '.$bodybgcolor2,
-			'Small' => $width > $small_trigger_width ? '' : 'Small',	// to use in css class-names
-			// otherwise a click in empty parts of the event, will "click through" and create a new event
+				'&width='.$width.') repeat-y '.$bodybgcolor2),
+			'Small' => $small ? 'Small' : '',	// to use in css class-names
+			'indent' => $indent."\t",
 		));
+/* not used at the moment
 		foreach(array(
 			'upper_left'=>array('width'=>-$corner_radius,'height'=>$header_height,'border'=>0,'bgcolor'=>$headerbgcolor),
 			'upper_right'=>array('width'=>$corner_radius,'height'=>$header_height,'border'=>0,'bgcolor'=>$headerbgcolor),
@@ -966,6 +1087,7 @@ class uiviews extends uical
 				(isset($data['color']) ? '&color='.urlencode($data['color']) : '').
 				(isset($data['border']) ? '&border='.urlencode($data['border']) : ''));
 		}
+*/
 		$tooltip = $tpl->fp('tooltip','event_tooltip');
 		$tpl->set_var('tooltip',$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)));
 		$html = $tpl->fp('out',$block);
@@ -986,12 +1108,22 @@ class uiviews extends uical
 		$ie_fix = '';
         if ($this->html->user_agent == 'msie')	// add a transparent image to make the event "opaque" to mouse events
         {
-			$ie_fix = $this->html->image('calendar','transparent.gif','',
+			$ie_fix = $indent."\t".$this->html->image('calendar','transparent.gif','',
 				$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
 				' style="top:0px; left:0px; position:absolute; height:100%; width:100%; z-index:1"') . "\n";
         }
-		return $indent.'<div class="calEvent'.($is_private ? 'Private' : '').'" style="top: '.$this->time2pos($event['start_m']).
-			'%; height: '.$height.'%;"'.$popup.'>'."\n".$ie_fix.$html.$indent."</div>\n";
+		if ($this->use_time_grid)
+		{
+			$style = 'top: '.$this->time2pos($event['start_m']).'%; height: '.$height.'%;';
+		}
+		else
+		{
+			$style = 'position: relative; margin-top: 3px;';
+		}
+		return $indent.'<div class="calEvent'.($is_private ? 'Private' : '').
+			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.';"'.
+			$popup.' '.$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
+			'>'."\n".$ie_fix.$html.$indent."</div>\n";
 	}
 
 	function add_nonempty($content,$label,$one_per_line=False)
