@@ -166,11 +166,6 @@
 		$_SESSION['egw_included_files'] = array();
 		foreach(array_slice(get_included_files(),4) as $file)
 		{
-			if (!strstr($file,'phpgwapi'))
-			{
-				continue;
-			}
-
 			switch(basename($file))
 			{
 				case 'head.inc.php':	// needs EGW_TEMPLATE_DIR and is included anyway by common::egw_header()
