@@ -582,14 +582,13 @@ class bocal
 	 * @param mixed $date=null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
-	 * @return boolean/array event or array of id => event pairs or False if the acl-check went wrong
+	 * @return boolean/array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
 	function read($ids,$date=null,$ignore_acl=False,$date_format='ts')
 	{
 		if ($date) $date = $this->date2ts($date);
 
-		$return = false;
-		if ($ignore_acl || is_array($ids) || $this->check_perms(EGW_ACL_READ,$ids,0,$date_format))
+		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format)))
 		{
 			if (is_array($ids) || !isset($this->cached_event['id']) || $this->cached_event['id'] != $ids || 
 				$this->cached_event_date_format != $date_format ||
@@ -881,7 +880,7 @@ class bocal
 	 * @param mixed $event event as array or the event-id or 0 for a general check
 	 * @param int $other uid to check (if event==0) or 0 to check against $this->user
 	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'array'=array, 'string'=iso8601 string for xmlrpc
-	 * @return boolean true permission granted or false for permission denied
+	 * @return boolean true permission granted, false for permission denied or null if event not found
 	 */
 	function check_perms($needed,$event=0,$other=0,$date_format='ts')
 	{
@@ -908,7 +907,7 @@ class bocal
 				{
 					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
 				}
-				return False;
+				return null;	// event not found
 			}
 			$owner = $event['owner'];
 			$private = !$event['public'];
@@ -1575,7 +1574,7 @@ class bocal
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param int/array $entry int cal_id or array with event
-	 * @param string the title
+	 * @param string/boolean string with title, null if not found or false if not read perms
 	 */
 	function link_title($event)
 	{
@@ -1585,7 +1584,7 @@ class bocal
 		}
 		if (!is_array($event))
 		{
-			return False;
+			return $event;
 		}
 		return $this->format_date($event['start']) . ': ' . $event['title'];
 	}
