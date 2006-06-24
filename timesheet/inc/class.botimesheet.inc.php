@@ -147,7 +147,7 @@ class botimesheet extends so_sql
 	 *
 	 * @param int $required EGW_ACL_READ, EGW_ACL_WRITE, EGW_ACL_ADD, EGW_ACL_DELETE, EGW_ACL_BUDGET, EGW_ACL_EDIT_BUDGET
 	 * @param array/int $data=null project or project-id to use, default the project in $this->data
-	 * @return boolean true if the rights are ok, false if not
+	 * @return boolean true if the rights are ok, null if not found, false if no rights
 	 */
 	function check_acl($required,$data=null)
 	{
@@ -160,6 +160,8 @@ class botimesheet extends so_sql
 			$save_data = $this->data;
 			$data = $this->read($data,true);
 			$this->data = $save_data;
+			
+			if (!$data) return null; 	// entry not found
 		}
 		$rights = $this->grants[$data['ts_owner']];
 		
@@ -337,14 +339,15 @@ class botimesheet extends so_sql
 	 *
 	 * @param int $ts_id
 	 * @param boolean $ignore_acl=false should the acl be checked
-	 * @return array/boolean array with timesheet entry or false if no rights
+	 * @return array/boolean array with timesheet entry, null if timesheet not found or false if no rights
 	 */
 	function read($ts_id,$ignore_acl=false)
 	{
-		if (!(int)$ts_id || !$ignore_acl && !$this->check_acl(EGW_ACL_READ,$ts_id) ||
+		$ret = null;
+		if (!(int)$ts_id || !$ignore_acl && !($ret = $this->check_acl(EGW_ACL_READ,$ts_id)) ||
 			$this->data['ts_id'] != (int)$ts_id && !parent::read((int)$ts_id))
 		{
-			return false;	// no read rights, or entry not found
+			return $ret;	// no read rights, or entry not found
 		}
 		return $this->data;
 	}
@@ -468,7 +471,7 @@ class botimesheet extends so_sql
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param int/array $entry int ts_id or array with timesheet entry
-	 * @param string the title
+	 * @param string/boolean string with title, null if timesheet not found, false if no perms to view it
 	 */
 	function link_title( $entry )
 	{
@@ -478,7 +481,7 @@ class botimesheet extends so_sql
 		}
 		if (!$entry)
 		{
-			return False;
+			return $entry;
 		}
 		$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 		if (date('H:i',$entry['ts_start']) != '00:00')	// dont show 00:00 time, as it means date only
