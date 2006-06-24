@@ -423,7 +423,7 @@
 		 * @param string $app appname
 		 * @param string $id id in $app 
 		 * @param array $link=null link-data for file-attachments
-		 * @return the title or false if $id does not exist in $app
+		 * @return string/boolean string with title, null if $id does not exist in $app or false if no perms to view it
 		 */
 		function title($app,$id,$link=null)
 		{
@@ -466,7 +466,7 @@
 
 			$title = strchr($method,'.') ? ExecMethod($method,$id) : $this->$method($id);
 
-			if ($id && !$title)	// $app,$id has been deleted ==> unlink als links to it
+			if ($id && is_null($title))	// $app,$id has been deleted ==> unlink all links to it
 			{
 				$this->unlink(0,$app,$id);
 				return False;
@@ -566,9 +566,13 @@
 			$id  = get_var('id','GET');
 			$filename = get_var('filename','GET');
 
-			if (empty($app) || empty($id) || empty($filename) /* || !$this->bo->check_access($info_id,EGW_ACL_READ)*/)
+			if (empty($app) || empty($id) || empty($filename) || !$this->title($app,$id))
 			{
-				$GLOBALS['egw']->redirect_link('/');
+				$GLOBALS['egw_info']['flags']['nonavbar'] = false;
+				$GLOBALS['egw']->common->egw_header();
+				echo '<h1 style="text-align: center; color: red;">'.lang('Access not permitted')." !!!</h1>\n";
+				$GLOBALS['egw']->common->egw_footer();
+				$GLOBALS['egw']->common->egw_exit();
 			}
 			$browser =& CreateObject('phpgwapi.browser');
 
@@ -847,13 +851,14 @@
 		 * @param string $app appname
 		 * @param string $id id in app
 		 * @param string $filename filename
-		 * @return string content of the attached file
+		 * @return string/boolean content of the attached file, null if $id not found, false if no view perms
 		 */
 		function read_attached($app,$id,$filename)
 		{
-			if (empty($app) || !$id || empty($filename) /*|| !$this->check_access($info_id,EGW_ACL_READ)*/)
+			$ret = null;
+			if (empty($app) || !$id || empty($filename) || !($ret = $this->title($app,$id)))
 			{
-				return False;
+				return $ret;
 			}
 			$this->vfs->override_acl = 1;
 			$data = $this->vfs->read($this->vfs_path($app,$id,$filename,RELATIVE_ROOT));
@@ -918,14 +923,16 @@
 		 * get title for a project, should be moved to boprojects.link_title
 		 *
 		 * @param int/array $event project-id or already read project
-		 * @return string/boolean the title (number: title), of false if address is not found
+		 * @return string/boolean the title (number: title), null if project is not found or false if no perms to view it
 		 */
 		function projects_title( $proj )
 		{
 			if (!is_object($this->boprojects))
 			{
 				if (!file_exists(EGW_SERVER_ROOT.'/projects'))	// check if projects installed
-					return '';  
+				{
+					return false;
+				}
 				$this->boprojects = createobject('projects.boprojects');
 			}
 			if (!is_array($proj))
