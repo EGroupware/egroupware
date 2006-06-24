@@ -301,7 +301,7 @@
 		 * @param int/array $info_id integer id or array with key 'info_id' of the entry to read
 		 * @param boolean $run_link_id2from=true should link_id2from run, default yes, 
 		 *	need to be set to false if called from link-title to prevent an infinit recursion
-		 * @return array/boolean infolog entry or False if not found or no permission to read it
+		 * @return array/boolean infolog entry, null if not found or false if no permission to read it
 		 */
 		function &read($info_id,$run_link_id2from=true)
 		{
@@ -316,7 +316,7 @@
 				{
 					$GLOBALS['server']->xmlrpc_error($GLOBALS['xmlrpcerr']['not_exist'],$GLOBALS['xmlrpcstr']['not_exist']);
 				}
-				return False;
+				return null;
 			}
 			if (!$this->check_access($info_id,EGW_ACL_READ))	// check behind read, to prevent a double read
 			{
@@ -630,7 +630,7 @@
 		 * Is called as hook to participate in the linking
 		 *
 		 * @param int/array $info int info_id or array with infolog entry
-		 * @return string the title
+		 * @return string/boolean string with the title, null if $info not found, false if no perms to view
 		 */
 		function link_title( $info )
 		{
@@ -640,7 +640,7 @@
 			}
 			if (!$info)
 			{
-				return False;
+				return $info;
 			}
 			return !empty($info['info_subject']) ? $info['info_subject'] :
 				$this->subject_from_des($info['info_descr']);
