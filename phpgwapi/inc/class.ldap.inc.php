@@ -139,7 +139,7 @@
 				$filter='(objectclass=*)';
 				$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry');
 				
-				if($sr=ldap_read($this->ds, '', $filter, $justthese)) {
+				if(($sr = @ldap_read($this->ds, '', $filter, $justthese))) {
 					if($info = ldap_get_entries($this->ds, $sr)) {
 
 						$ldapServerInfo = new ldapserverinfo();
