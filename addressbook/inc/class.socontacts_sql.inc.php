@@ -89,7 +89,7 @@ class socontacts_sql extends so_sql
 			{
 				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
 				{
-					$filter[] = 'contact_owner != 0';	// in case there have been accounts in sql previously
+					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
 				}
 				$filter[] = "(contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR contact_private=0 AND contact_owner IN (".
@@ -232,7 +232,7 @@ class socontacts_sql extends so_sql
 			{
 				if ($this->account_repository != 'sql' && $this->contact_repository != 'sql-ldap')
 				{
-					$filter[] = 'contact_owner != 0';	// in case there have been accounts in sql previously
+					$filter[] = $this->table_name.'.contact_owner != 0';	// in case there have been accounts in sql previously
 				}
 				$filter[] = "($this->table_name.contact_owner=".(int)$GLOBALS['egw_info']['user']['account_id'].
 					" OR contact_private=0 AND $this->table_name.contact_owner IN (".
