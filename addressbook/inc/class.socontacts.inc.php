@@ -93,6 +93,23 @@ class socontacts
 	var $memberships;
 	
 	/**
+	 * LDAP searches only a limited set of attributes for performance reasons, 
+	 * you NEED an index for that columns, ToDo: make it configurable
+	 * minimum: $this->columns_to_search = array('n_family','n_given','org_name','email');
+	 */
+	var $ldap_search_attributes = array(
+		'n_family','n_middle','n_given','org_name','org_unit',
+		'adr_one_location','adr_two_location','note',
+		'email','mozillasecondemail',
+	);
+	/**
+	 * In SQL we can search all columns, though a view make on real sense
+	 */
+	var $sql_cols_not_to_search = array(
+		'jpegphoto','owner','tid','private','id','cat_id',
+		'modified','modifier','creator','created','tz','account_id',
+	);
+	/**
 	 * columns to search, if we search for a single pattern
 	 * 
 	 * @var array
@@ -155,7 +172,7 @@ class socontacts
 	 * @var so_sql-object
 	 */
 	var $soextra;
-
+	
 	function socontacts($contact_app='addressbook')
 	{
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
@@ -182,9 +199,7 @@ class socontacts
 			{
 				$this->grants[$gid] = ~0;
 			}
-			// LDAP uses a limited set for performance reasons, you NEED an index for that columns, ToDo: make it configurable
-			// minimum: $this->columns_to_search = array('n_family','n_given','org_name');
-			$this->columns_to_search = array('n_family','n_middle','n_given','org_name','org_unit','adr_one_location','adr_two_location','note');
+			$this->columns_to_search = $this->ldap_search_attributes;
 		}
 		else	// sql or sql->ldap
 		{
@@ -197,10 +212,7 @@ class socontacts
 			$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
 			
 			// remove some columns, absolutly not necessary to search in sql
-			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),array(
-				'jpegphoto','owner','tid','private','id','cat_id',
-				'modified','modifier','creator','created','tz','account_id',
-			));
+			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
 		}
 		if ($this->account_repository == 'ldap' && $this->contact_repository == 'sql')
 		{
@@ -208,7 +220,7 @@ class socontacts
 			{
 				$this->so_accounts =& CreateObject('addressbook.so_ldap');
 				$this->so_accounts->contacts_id = 'id';
-				$this->account_cols_to_search = array('uid','n_family','n_middle','n_given','org_name','org_unit','adr_one_location','adr_two_location','note');
+				$this->account_cols_to_search = $this->ldap_search_attributes; 
 			}
 			else
 			{
@@ -639,6 +651,7 @@ class socontacts
 	function &search($criteria,$only_keys=True,$order_by='',$extra_cols='',$wildcard='',$empty=False,$op='AND',$start=false,$filter=null,$join='')
 	{
 		//echo "<p>socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')</p>\n";
+error_log("socontacts::search(".print_r($criteria,true).",'$only_keys','$order_by','$extra_cols','$wildcard','$empty','$op','$start',".print_r($filter,true).",'$join')");
 
 		$backend =& $this->get_backend(null,$filter['owner']);
 		// single string to search for --> create so_sql conformant search criterial for the standard search columns
