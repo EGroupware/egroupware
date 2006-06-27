@@ -710,11 +710,13 @@
 				{
 					$time = (int) adodb_date('Hi',$info['info_startdate']);
 					$date = adodb_date('Y/m/d',$info['info_startdate']);
+					/* As event-like infologs are not showen in current calendar, 
+					we need to present all open infologs to the user! (2006-06-27 nelius)
 					if ($do_events && !$time ||
 					    !$do_events && $time && $date == $date_wanted)
 					{
 						continue;
-					}
+					}*/
 					$title = ($do_events?$GLOBALS['egw']->common->formattime(adodb_date('H',$info['info_startdate']),adodb_date('i',$info['info_startdate'])).' ':'').
 						$info['info_subject'];
 					$view = $this->link->view('infolog',$info['info_id']);
