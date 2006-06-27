@@ -322,9 +322,13 @@ class bo_resources
 	 */
 	function link_query( $pattern )
 	{
-		$criteria = array('name' => $pattern, 'short_description'  => $pattern);
+		$criteria = array('name' => $pattern, 'short_description' => $pattern);
 		$only_keys = 'res_id,name,short_description';
-		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR');
+		$filter = array(
+			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
+			//'accessory_of' => '-1'
+		);
+		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR','',$filter);
 		foreach($data as $num => $resource)
 		{
 			if($num != 0)
@@ -347,9 +351,8 @@ class bo_resources
 		{
 			if (!($resource  = $this->so->read(array('res_id' => $resource)))) return null;
 		}
-		// ToDo Conny: ACL check !!!
-		//if (!$this->check_acl($resource,EGW_ACL_READ)) return false;
-		
+		if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_READ)) return false;
+
 		return $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 	}
 	
