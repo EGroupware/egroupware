@@ -246,7 +246,7 @@ class setup_header
 		foreach(array(
 			// short => array(extension,func_to_check,supported_db(s))
 			'mysql'  => array('mysql','mysql_connect','mysql'),
-			'mysqli' => array('mysql','mysql_iconnect','mysqli'),
+			'mysqli' => array('mysql','mysqli_connect','mysqli'),
 			'pgsql'  => array('pgsql','pg_connect','pgsql'),
 			'mssql'  => array('mssql','mssql_connect','mssql'),
 			'odbc'   => array('odbc',false,'sapdb','odbc_mssql','odbc_oracle'),
