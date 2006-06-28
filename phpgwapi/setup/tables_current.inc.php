@@ -557,7 +557,7 @@
 				'link_id1' => array('type' => 'varchar','precision' => '50','nullable' => False),
 				'link_app2' => array('type' => 'varchar','precision' => '25','nullable' => False),
 				'link_id2' => array('type' => 'varchar','precision' => '50','nullable' => False),
-				'link_remark' => array('type' => 'varchar','precision' => '50'),
+				'link_remark' => array('type' => 'varchar','precision' => '100'),
 				'link_lastmod' => array('type' => 'int','precision' => '4','nullable' => False),
 				'link_owner' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
