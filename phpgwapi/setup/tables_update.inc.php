@@ -562,3 +562,15 @@
 		}
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.009';
 	}
+
+	$test[] = '1.3.009';
+	function phpgwapi_upgrade1_3_009()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_links','link_remark',array(
+			'type' => 'varchar',
+			'precision' => '100'
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.010';
+	}
+?>
