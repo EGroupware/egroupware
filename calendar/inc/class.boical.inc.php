@@ -163,7 +163,7 @@
 									$mailto = $GLOBALS['egw']->accounts->id2name($uid,'account_email');
 									$cn = trim($GLOBALS['egw']->accounts->id2name($uid,'account_firstname'). ' ' .
 										$GLOBALS['egw']->accounts->id2name($uid,'account_lastname'));
-									$attributes['ATTENDEE'][]	= $mailto ? 'MAILTO:'.$mailto : '';
+									$attributes['ATTENDEE'][]	= $mailto ? 'MAILTO:'. $cn .'<'. $mailto .'>' : '';
 									// ROLE={CHAIR|REQ-PARTICIPANT|OPT-PARTICIPANT|NON-PARTICIPANT} NOT used by eGW atm.
 									$role = $uid == $event['owner'] ? 'CHAIR' : 'REQ-PARTICIPANT';
 									// RSVP={TRUE|FALSE}	// resonse expected, not set in eGW => status=U
@@ -686,9 +686,8 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							# participants disabled until working correctly
-							#$this->supportedFields = $defaultFields + array('participants' => 'participants');
-							$this->supportedFields = $defaultFields;
+							$this->supportedFields = $defaultFields + array('participants' => 'participants');
+							#$this->supportedFields = $defaultFields;
 							break;
 					}
 					break;
