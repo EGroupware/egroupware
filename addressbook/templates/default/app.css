@@ -33,7 +33,7 @@
   padding: 4px; 
 }
 .windowheader{
-  background-image:url(/egroupware/phpgwapi/templates/idots/images/appbox-header-background.png);
+  background-image:url(../../../phpgwapi/templates/idots/images/appbox-header-background.png);
   background-repeat:repeat-x;
   height: 20px;
   border-spacing: 0px;
