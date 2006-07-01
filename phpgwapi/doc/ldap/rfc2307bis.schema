@@ -79,6 +79,7 @@ attributetype ( 1.3.6.1.1.1.1.11 NAME 'shadowFlag'
 
 attributetype ( 1.3.6.1.1.1.1.12 NAME 'memberUid'
   EQUALITY caseExactIA5Match
+  SUBSTRINGS caseExactIA5SubstringsMatch
   SYNTAX 1.3.6.1.4.1.1466.115.121.1.26 )
 
 attributetype ( 1.3.6.1.1.1.1.13 NAME 'memberNisNetgroup'
