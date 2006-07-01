@@ -87,11 +87,11 @@
 	{
 		// removing the ACL entries of deleted accounts
 		$GLOBALS['egw_setup']->setup_account_object();
-		if ($GLOBALS['phpgw']->accounts->table)
+		if ($GLOBALS['egw']->accounts->table)
 		{
-			$GLOBALS['phpgw']->accounts->table = $GLOBALS['egw_setup']->accounts_table;
+			$GLOBALS['egw']->accounts->table = $GLOBALS['egw_setup']->accounts_table;
 		}
-		if (($all_accounts = $GLOBALS['phpgw']->accounts->search(array('type'=>'both'))))
+		if (($all_accounts = $GLOBALS['egw']->accounts->search(array('type'=>'both'))))
 		{
 			foreach($all_accounts as $key => $value)
 			{
@@ -588,9 +588,9 @@
 	{
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_accounts','egw_accounts');
 		$GLOBALS['egw_setup']->set_table_names(True);
-		if ($GLOBALS['phpgw']->accounts->table)
+		if ($GLOBALS['egw']->accounts->table)
 		{
-			$GLOBALS['phpgw']->accounts->table = $GLOBALS['egw_setup']->accounts_table;
+			$GLOBALS['egw']->accounts->table = $GLOBALS['egw_setup']->accounts_table;
 		}
 		$GLOBALS['egw_setup']->oProc->RenameTable('phpgw_acl','egw_acl');
 		$GLOBALS['egw_setup']->set_table_names(True);
