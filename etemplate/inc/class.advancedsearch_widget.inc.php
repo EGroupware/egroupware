@@ -127,7 +127,8 @@
 				}
 				if(!empty($extension_data['row_actions']))
 				{
-					$result_rows_tpl->add_child($grid,$row_actions = $result_rows_tpl->empty_cell('hbox','row_action'));
+					$row_actions =& $result_rows_tpl->empty_cell('hbox','row_action');
+					$result_rows_tpl->add_child($grid,$row_actions);
 					foreach($extension_data['row_actions'] as $action => $options)
 					{
 						$result_rows_tpl->add_child($row_actions, $row_action = $result_rows_tpl->empty_cell($options['type'],$action.'[$row_cont[id]]',$options['options']));
