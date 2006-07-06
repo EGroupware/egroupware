@@ -793,4 +793,24 @@
 			
 			return $this->db->next_record() ? $this->db->f('content') : false;
 		}
+		
+		/**
+		 * Return the message_id of a given translation
+		 *
+		 * @param string $translation
+		 * @param string $app='' default check all apps
+		 * @param string $lang='' default check all langs
+		 * @return string
+		 */
+		function get_message_id($translation,$app=null,$lang=null)
+		{
+			$like = $this->db->Type == 'pgsql' ? 'ILIKE' : 'LIKE';
+			$where = array('content '.$like.' '.$this->db->quote($translation));	// like to be case-insensitive
+			if ($app) $where['app_name'] = $app;
+			if ($lang) $where['lang'] = $lang;
+			
+			$this->db->select($this->lang_table,'message_id',$where,__LINE__,__FILE__);
+			
+			return $this->db->next_record() ? $this->db->f(0) : false;
+		}
 	}
