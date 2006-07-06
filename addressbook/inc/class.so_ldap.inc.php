@@ -96,7 +96,6 @@ class so_ldap
 			'adr_one_locality'		=> 'l',
 			'adr_one_region'		=> 'st',
 			'adr_one_postalcode'	=> 'postalcode',
-			'adr_one_countryname'	=> 'co',
 			'tel_work'		=> 'telephonenumber',
 			'tel_home'		=> 'homephone',
 			'tel_fax'		=> 'facsimiletelephonenumber',
@@ -122,6 +121,7 @@ class so_ldap
 		#postOfficeBox
 		'mozillaabpersonalpha' => array(
 			'adr_one_street2'	=> 'mozillaworkstreet2',
+			'adr_one_countryname'	=> 'c',	// 2 letter country code
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomestreet2',
 			'adr_two_locality'	=> 'mozillahomelocalityname',
@@ -135,6 +135,8 @@ class so_ldap
 		// similar to the newer mozillaAbPerson, but uses mozillaPostalAddress2 instead of mozillaStreet2
 		'mozillaorgperson' => array(
 			'adr_one_street2'	=> 'mozillapostaladdress2',
+			'adr_one_countryname'	=> 'c',	// 2 letter country code
+			'adr_one_countryname'	=> 'co',	// human readable country name, must be after 'c' to take precedence on read!
 			'adr_two_street'	=> 'mozillahomestreet',
 			'adr_two_street2'	=> 'mozillahomepostaladdress2',
 			'adr_two_locality'	=> 'mozillahomelocalityname',
@@ -368,7 +370,7 @@ class so_ldap
 				if(!empty($data[$egwFieldName])) 
 				{
 					// dont convert the (binary) jpegPhoto!
-					$ldapContact[$ldapFieldName] = $ldapContact == 'jpegphoto' ? $data[$egwFieldName] :
+					$ldapContact[$ldapFieldName] = $ldapFieldName == 'jpegphoto' ? $data[$egwFieldName] :
 						$GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
 				} 
 				elseif($isUpdate) 
@@ -941,6 +943,15 @@ class so_ldap
 				$ldapContact[$attr] = array();
 			}
 		}
+		// save the phone number of the primary contact and not the eGW internal field-name
+		if ($data['tel_prefer'] && $data[$data['tel_prefer']])
+		{
+			$ldapContact['primaryphone'] = $data[$data['tel_prefer']];
+		}
+		elseif($isUpdate)
+		{
+			$ldapContact['primaryphone'] = array();
+		}
 	}
 
 	/**
@@ -951,7 +962,6 @@ class so_ldap
 	 * @internal 
 	 * @param array &$contact already copied fields according to the mapping
 	 * @param array $data eGW contact data
-	 * @param boolean $isUpdate
 	 */
 	function _evolutionperson2egw(&$contact,$data)
 	{
@@ -965,6 +975,11 @@ class so_ldap
 			}
 			if ($contact['cat_id']) $contact['cat_id'] = implode(',',$contact['cat_id']);
 		}
+		if ($data['primaryphone'])
+		{
+			unset($contact['tel_prefer']);	// to not find itself
+			$contact['tel_prefer'] = array_search($data['primaryphone'][0],$contact);
+		}
 	}
 
 	/**
@@ -975,7 +990,6 @@ class so_ldap
 	 * @internal 
 	 * @param array &$contact already copied fields according to the mapping
 	 * @param array $data eGW contact data
-	 * @param boolean $isUpdate
 	 */
 	function _inetorgperson2egw(&$contact,$data)
 	{
@@ -995,5 +1009,83 @@ class so_ldap
 				$contact['n_middle'] = $matches[1];
 			}
 		}
+	}
+	
+	/**
+	 * Special handling for mapping data of the mozillaAbPersonAlpha objectclass to eGW contact
+	 * 
+	 * Please note: all regular fields are already copied!
+	 *
+	 * @internal 
+	 * @param array &$contact already copied fields according to the mapping
+	 * @param array $data eGW contact data
+	 */
+	function _mozillaabpersonalpha2egw(&$contact,$data)
+	{
+		if ($data['c'])
+		{
+			$contact['adr_one_countryname'] = ExecMethod('phpgwapi.country.get_full_name',$data['c'][0]);
+		}
+	}
+
+	/**
+	 * Special handling for mapping of eGW contact-data to the mozillaAbPersonAlpha objectclass
+	 * 
+	 * Please note: all regular fields are already copied!
+	 *
+	 * @internal 
+	 * @param array &$ldapContact already copied fields according to the mapping
+	 * @param array $data eGW contact data
+	 * @param boolean $isUpdate
+	 */
+	function _egw2mozillaabpersonalpha(&$ldapContact,$data,$isUpdate)
+	{
+		if ($data['adr_one_countryname'])
+		{
+			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+		}
+		elseif ($isUpdate)
+		{
+			$ldapContact['c'] = array();
+		}		
+	}
+	
+	/**
+	 * Special handling for mapping data of the mozillaOrgPerson objectclass to eGW contact
+	 * 
+	 * Please note: all regular fields are already copied!
+	 *
+	 * @internal 
+	 * @param array &$contact already copied fields according to the mapping
+	 * @param array $data eGW contact data
+	 */
+	function _mozillaorgperson2egw(&$contact,$data)
+	{
+		if ($data['c'] && strlen($contact['adr_one_countryname']) <= 2)	// dont overwrite a set human readable name
+		{
+			$contact['adr_one_countryname'] = ExecMethod('phpgwapi.country.get_full_name',$data['c'][0]);
+		}
+	}
+
+	/**
+	 * Special handling for mapping of eGW contact-data to the mozillaOrgPerson objectclass
+	 * 
+	 * Please note: all regular fields are already copied!
+	 *
+	 * @internal 
+	 * @param array &$ldapContact already copied fields according to the mapping
+	 * @param array $data eGW contact data
+	 * @param boolean $isUpdate
+	 */
+	function _egw2mozillaorgperson(&$ldapContact,$data,$isUpdate)
+	{
+		if ($data['adr_one_countryname'])
+		{
+			$ldapContact['c'] = ExecMethod('phpgwapi.country.country_code',$data['adr_one_countryname']);
+		}
+		elseif ($isUpdate)
+		{
+			$ldapContact['c'] = array();
+		}		
 	}
 }
