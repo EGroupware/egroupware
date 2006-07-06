@@ -1,0 +1,15 @@
+HOWTO APPLY PATCHES TO TINYMCE.JS
+
+TinyMCE is developed outside the eGW project so after very update we 
+must apply our patches again. In order to keep it traceble which 
+changes are applied to the original tinymce code for eGroupWare, 
+changes are done against 'tiny_mce_src.js'. This file is human 
+readable and we can do diffs, etc...
+
+To make the changes active in the optimized file 'tiny_mce.js' make 
+sure you have got ttkcrunch installed on you POSIX compatible 
+computer and then run make.
+
+ttkcrunch can be downloaded from http://www.ticatk.com/download.html.
+A copy can also be found in phpgwapi/doc
+
