@@ -67,7 +67,6 @@
 		'24' => lang('24 hour')
 	);
 
-	$sbox =& CreateObject('phpgwapi.sbox');
 	$langs = $GLOBALS['egw']->translation->get_installed_langs();
 
 	$user_apps = array();
@@ -163,7 +162,7 @@
 			'type'   => 'select',
 			'label'  => 'Country',
 			'name'   => 'country',
-			'values' => $sbox->country_array,
+			'values' => ExecMethod('phpgwapi.country.countries'),
 			'help'   => 'In which country are you. This is used to set certain defaults for you.',
 			'xmlrpc' => True,
 			'admin'  => False
