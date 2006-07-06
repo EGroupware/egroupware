@@ -907,6 +907,7 @@ class uicontacts extends bocontacts
 				$content['link_to']['to_id'] = $contact_id;
 			}
 		}
+		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[copy]'] = $readonlys['button[edit]'] = $readonlys['button[vcard]'] = true;

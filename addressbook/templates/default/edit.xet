@@ -47,7 +47,7 @@
 				</row>
 				<row height="28">
 					<image src="home"/>
-					<description value="company" options=",,,org_name"/>
+					<description value="organisation" options=",,,org_name"/>
 					<textbox size="45" maxlength="64" id="org_name" onchange="setFileasOptions(this);"/>
 				</row>
 				<row valign="top" height="70">
@@ -128,10 +128,12 @@
 				<row>
 					<description/>
 					<description value="country" options=",,,adr_one_countryname"/>
-					<textbox size="45" maxlength="64" id="adr_one_countryname"/>
+					<menulist span=",fullWidth">
+						<menupopup type="select-country" options="Select one,1" id="adr_one_countryname"/>
+					</menulist>
 					<description/>
 				</row>
-				<row disabled="@view">
+				<row disabled="@disable_change_org">
 					<image src="check"/>
 					<description/>
 					<checkbox label="change all organisation members" id="change_org" span="all" statustext="Apply changes to all members, whose fields have the same previous content"/>
@@ -175,7 +177,9 @@
 				<row>
 					<description/>
 					<description value="country" options=",,,adr_two_countryname"/>
-					<textbox size="45" maxlength="64" id="adr_two_countryname"/>
+					<menulist span=",fullWidth">
+						<menupopup type="select-country" options="Select one,1" id="adr_two_countryname"/>
+					</menulist>
 				</row>
 				<row height="30">
 					<image src="gear"/>
@@ -358,7 +362,7 @@
 					<tabbox>
 						<tabs>
 							<tab label="Personal" statustext=""/>
-							<tab label="Company" statustext=""/>
+							<tab label="Organisation" statustext=""/>
 							<tab label="Private" statustext=""/>
 							<tab label="Details" statustext=""/>
 							<tab label="Links" statustext=""/>

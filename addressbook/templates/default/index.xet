@@ -45,7 +45,7 @@
 								<nextmatch-sortheader id="n_given" label="Firstname"/>
 							</row>
 							<row>
-								<nextmatch-sortheader id="org_name" label="Company" span="all"/>
+								<nextmatch-sortheader id="org_name" label="Organisation" span="all"/>
 							</row>
 							<row disabled="!@order=/^(org_name|n_fileas)$/">
 								<nextmatch-sortheader id="n_family" label="Name"/>
