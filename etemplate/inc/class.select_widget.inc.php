@@ -12,7 +12,7 @@
 	/**
 	 * eTemplate Extension: several select-boxes with predefined eGW specific content
 	 *
-	 * This widgets replaces the old phpgwapi.sbox class. The widgets are independent of the UI,
+	 * This widgets replaces the not longer exiting phpgwapi.sbox class. The widgets are independent of the UI,
 	 * as they only uses etemplate-widgets and therefor have no render-function.
 	 *
 	 * @package etemplate
@@ -47,7 +47,7 @@
 			'select-month'    => 'Select Month',
 			'select-day'      => 'Select Day',
 			'select-dow'      => 'Select Day of week',
-			'select-hour'     => 'Select Hour',		// either 0-23 or 0am-11am,12pm,1pm-11pm
+			'select-hour'     => 'Select Hour',		// either 0-23 or 12am,1am-11am,12pm,1pm-11pm
 			'select-number'   => 'Select Number',
 			'select-app'      => 'Select Application'
 		);
@@ -68,64 +68,6 @@
 			10 => 'October',
 			11 => 'November',
 			12 => 'December'
-		);
-		/**
-		 * @var array
-		 */
-		var $states = array(
-			''		=> '',
-			'--'	=> 'non US',
-			'AL'	=>	'Alabama',
-			'AK'	=>	'Alaska',
-			'AZ'	=>	'Arizona',
-			'AR'	=>	'Arkansas',
-			'CA'	=>	'California',
-			'CO'	=>	'Colorado',
-			'CT'	=>	'Connecticut',
-			'DE'	=>	'Delaware',
-			'DC'	=>	'District of Columbia',
-			'FL'	=>	'Florida',
-			'GA'	=>	'Georgia',
-			'HI'	=>	'Hawaii',
-			'ID'	=>	'Idaho',
-			'IL'	=>	'Illinois',
-			'IN'	=>	'Indiana',
-			'IA'	=>	'Iowa',
-			'KS'	=>	'Kansas',
-			'KY'	=>	'Kentucky',
-			'LA'	=>	'Louisiana',
-			'ME'	=>	'Maine',
-			'MD'	=>	'Maryland',
-			'MA'	=>	'Massachusetts',
-			'MI'	=>	'Michigan',
-			'MN'	=>	'Minnesota',
-			'MO'	=>	'Missouri',
-			'MS'	=>	'Mississippi',
-			'MT'	=>	'Montana',
-			'NC'	=>	'North Carolina',
-			'ND'	=>	'Noth Dakota',
-			'NE'	=>	'Nebraska',
-			'NH'	=>	'New Hampshire',
-			'NJ'	=>	'New Jersey',
-			'NM'	=>	'New Mexico',
-			'NV'	=>	'Nevada',
-			'NY'	=>	'New York',
-			'OH'	=>	'Ohio',
-			'OK'	=>	'Oklahoma',
-			'OR'	=>	'Oregon',
-			'PA'	=>	'Pennsylvania',
-			'RI'	=>	'Rhode Island',
-			'SC'	=>	'South Carolina',
-			'SD'	=>	'South Dakota',
-			'TN'	=>	'Tennessee',
-			'TX'	=>	'Texas',
-			'UT'	=>	'Utah',
-			'VA'	=>	'Virginia',
-			'VT'	=>	'Vermont',
-			'WA'	=>	'Washington',
-			'WI'	=>	'Wisconsin',
-			'WV'	=>	'West Virginia',
-			'WY'	=>	'Wyoming'
 		);
 
 		/**
@@ -192,30 +134,30 @@
 					);
 					break;
 
-				case 'select-country':
-					if (!$this->countrys)
+				case 'select-country':	// #Row|Extralabel,1=use country name, 0=use 2 letter-code
+					if (!is_object($GLOBALS['egw']->country))
 					{
-						$country =& CreateObject('phpgwapi.country');
-						$this->countrys = &$country->country_array;
-						unset($country);
-						unset($this->countrys['  ']);
-						$this->countrys[''] = '';
-						// try to translate them and sort alphabetic
-						foreach($this->countrys as $k => $name)
-						{
-							if (($translated = lang($name)) != $name.'*')
-							{
-								$this->countrys[$k] = $translated;
-							}
-						}
-						asort($this->countrys);
+						$GLOBALS['egw']->country =& CreateObject('phpgwapi.country');
 					}
-					$cell['sel_options'] = $this->countrys;
+					$cell['sel_options'] = $GLOBALS['egw']->country->countries();
+
+					if (($extension_data['country_use_name'] = $type) && $value)
+					{
+						$value = $GLOBALS['egw']->country->country_code($value);
+						if (!isset($cell['sel_options'][$value]))
+						{
+							$cell['sel_options'][$value] = $value;
+						}
+					}
 					$cell['no_lang'] = True;
 					break;
 
 				case 'select-state':
-					$cell['sel_options'] = $this->states;
+					if (!is_object($GLOBALS['egw']->country))
+					{
+						$GLOBALS['egw']->country =& CreateObject('phpgwapi.country');
+					}
+					$cell['sel_options'] = $GLOBALS['egw']->country->us_states();
 					$cell['no_lang'] = True;
 					break;
 
@@ -552,6 +494,19 @@
 					}
 					//echo "<p>select_widget::post_process('$name',...,'$value_in'): value='$value'</p>\n";
 					break;
+				case 'select-country':
+					if ($extension_data['country_use_name'] && $value_in)
+					{
+						if (!is_object($GLOBALS['egw']->country))
+						{
+							$GLOBALS['egw']->country =& CreateObject('phpgwapi.country');
+						}
+						if (($value = $GLOBALS['egw']->country->get_full_name($value_in)))
+						{
+							break;
+						}
+					}
+					// fall through
 				default:
 					$value = $value_in;
 					break;
