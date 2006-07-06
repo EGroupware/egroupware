@@ -919,8 +919,6 @@
 
 		function create_edit_group($group_info,$_errors='')
 		{
-			$sbox =& CreateObject('phpgwapi.sbox');
-
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			if(!@is_object($GLOBALS['egw']->js))
@@ -1030,7 +1028,6 @@
 		{
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 	
-			$sbox =& CreateObject('phpgwapi.sbox');
 			$jscal =& CreateObject('phpgwapi.jscalendar');
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
