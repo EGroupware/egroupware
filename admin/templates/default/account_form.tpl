@@ -69,7 +69,7 @@ function check_password(id)
 
 			    <tr class="row_on">
 			     <td>{lang_expires}</td>
-			     <td>{input_expires}&nbsp;&nbsp;{lang_never}&nbsp;{never_expires}</td>
+			     <td>{input_expires} <label style="white-space: nowrap;">{never_expires} {lang_never}</label></td>
 			     <td>{lang_email}</td>
 			     <td>{account_email}</td>
 			    </tr>
