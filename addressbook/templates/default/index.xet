@@ -123,7 +123,7 @@
 						<description options=",@${row}[email_link],,,_blank,$row_cont[email_popup]" class="fixedHeight" id="${row}[email]" no_lang="1"/>
 						<description options=",@${row}[email_home_link],,,_blank,$row_cont[email_home_popup]" class="fixedHeight" id="${row}[email_home]" no_lang="1"/>
 					</vbox>
-					<grid height="60" spacing="0" padding="0" overflow="auto">
+					<grid height="45" border="0" spacing="0" padding="0" overflow="auto">
 						<columns>
 							<column/>
 						</columns>
