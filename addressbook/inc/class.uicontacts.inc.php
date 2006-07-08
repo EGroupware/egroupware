@@ -180,7 +180,7 @@ class uicontacts extends bocontacts
 		$sel_options['action'] = array(
 			'delete' => lang('Delete'),
 			'csv'    => lang('Export as CSV'),
-// ToDo:	'vcard'  => lang('Export as VCard'),
+			'vcard'  => lang('Export as VCard'),
 // ToDo:	'copy'   => lang('Copy a contact and edit the copy'),
 		)+$this->get_addressbooks(EGW_ACL_ADD);
 		
@@ -330,6 +330,13 @@ class uicontacts extends bocontacts
 				// does not return!
 				$Ok = true;
 				break;
+
+			case 'vcard':
+				$action_msg = lang('exported');
+				ExecMethod('addressbook.vcaladdressbook.export',$checked);
+				// does not return!
+				$Ok = false;
+				break;
 		}
 
 		foreach($checked as $id)
@@ -358,11 +365,6 @@ class uicontacts extends bocontacts
 							$Ok = false;
 						}
 					}
-					break;
-
-				case 'vcard':
-					$action_msg = lang('exported');
-					$Ok = false;	// todo
 					break;
 
 				default:	// move to an other addressbook
