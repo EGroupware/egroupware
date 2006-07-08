@@ -234,6 +234,29 @@
 	 * as the addressdata of the accounts is no stored only in the addressbook!
 	 * 
 	 * It is called, if needed, from phpgwap_upgrade1_3_007 function 
+	 * 
+	 * + changes / renamed fields in 1.3+:
+	 *   - access           --> private (already done by Ralf)
+	 *   - tel_msg          --> tel_assistent
+	 *   - tel_modem        --> tel_fax_home
+	 *   - tel_isdn         --> tel_cell_private
+	 *   - tel_voice/ophone --> tel_other
+	 *   - address2         --> adr_one_street2
+	 *   - address3         --> adr_two_street2
+	 *   - freebusy_url     --> freebusy_uri (i instead l !)
+	 *   - fn               --> n_fn
+	 *   - last_mod         --> modified
+	 * + new fields in 1.3+:
+	 *   - n_fileas
+	 *   - role
+	 *   - assistent
+	 *   - room
+	 *   - calendar_uri
+	 *   - url_home
+	 *   - created
+	 *   - creator (preset with owner)
+	 *   - modifier
+	 *   - jpegphoto
 	 */
 	function addressbook_upgrade1_2()
 	{
