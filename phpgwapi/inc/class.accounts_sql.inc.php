@@ -5,7 +5,7 @@
  * The SQL backend stores the group memberships via the ACL class (location 'phpgw_group')
  * 
  * The (positive) account_id's of groups are mapped in this class to negative numeric 
- * account_id's, to conform wit the way we handle groups in LDAP!
+ * account_id's, to conform with the way we handle groups in LDAP!
  * 
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and
@@ -186,30 +186,7 @@ class accounts_backend
 			{
 				return false;
 			}
-			// check if account and the contact-data changed
-			if ($data['account_type'] == 'g' || ($old = $this->read($data['account_id'])) &&
-				$old['account_firstname'] == $data['account_firstname'] &&
-				$old['account_lastname'] == $data['account_lastname'] &&
-				$old['account_email'] == $data['account_email'])
-			{
-				return $data['account_id'];	// group or no change --> no need to update the contact
-			}
-			if (!$data['person_id']) $data['person_id'] = $old['person_id'];
 		}
-		if (!is_object($GLOBALS['egw']->contacts))
-		{
-			$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
-		}
-		$contact = array(
-			'n_given'    => $data['account_firstname'],
-			'n_family'   => $data['account_lastname'],
-			'email'      => $data['account_email'],
-			'account_id' => $data['account_id'],
-			'id'         => $data['person_id'],
-			'owner'      => 0,
-		);
-		$GLOBALS['egw']->contacts->save($contact,true);		// true = ignore addressbook acl
-
 		return $data['account_id'];
 	}
 	

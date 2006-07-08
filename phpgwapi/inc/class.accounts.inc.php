@@ -298,12 +298,40 @@ class accounts extends accounts_backend
 				}
 			}
 		}
-		if (($id = parent::save($data)) && $data['account_type'] == 'u' && $data['account_primary_group'] &&
-			(!($memberships = $this->memberships($id,true)) || !in_array($data['account_primary_group'],$memberships)))
-		{
-			$this->cache_invalidate($data['account_id']);
-			$memberships[] = $data['account_primary_group'];
-			$this->set_memberships($memberships,$id);
+		if (($id = parent::save($data)) && $data['account_type'] != 'g')
+		{ 
+			// if we are not on a pure LDAP system, we have to write the account-date via the contacts class now
+			if (($GLOBALS['egw_info']['server']['account_repository'] != 'ldap' ||
+				$GLOBALS['egw_info']['server']['contact_repository'] != 'ldap') &&
+				(!($old = $this->read($data['account_id'])) ||	// only for new account or changed contact-data
+				$old['account_firstname'] != $data['account_firstname'] ||
+				$old['account_lastname'] != $data['account_lastname'] ||
+				$old['account_email'] != $data['account_email']))
+			{
+				if (!$data['person_id']) $data['person_id'] = $old['person_id'];
+
+				if (!is_object($GLOBALS['egw']->contacts))
+				{
+					$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
+				}
+				$contact = array(
+					'n_given'    => $data['account_firstname'],
+					'n_family'   => $data['account_lastname'],
+					'email'      => $data['account_email'],
+					'account_id' => $data['account_id'],
+					'id'         => $data['person_id'],
+					'owner'      => 0,
+				);
+				$GLOBALS['egw']->contacts->save($contact,true);		// true = ignore addressbook acl
+			}
+			// save primary group if necessary
+			if ($data['account_primary_group'] && (!($memberships = $this->memberships($id,true)) || 
+				!in_array($data['account_primary_group'],$memberships)))
+			{
+				$this->cache_invalidate($data['account_id']);
+				$memberships[] = $data['account_primary_group'];
+				$this->set_memberships($memberships,$id);
+			}
 		}
 		$this->cache_invalidate($data['account_id']);
 		
