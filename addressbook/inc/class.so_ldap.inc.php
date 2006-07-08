@@ -31,10 +31,14 @@ define('ADDRESSBOOK_GROUP',3);
 class so_ldap
 {
 	var $data;
-	//var $db_data_cols;
-	//var $db_key_cols;
-	var $groupName = 'Default';
 	
+	/**
+	 * internal name of the id, gets mapped to uid
+	 *
+	 * @var string
+	 */
+	var $contacts_id='id';
+
 	/**
 	* @var string $accountName holds the accountname of the current user
 	*/
@@ -216,7 +220,7 @@ class so_ldap
 			$GLOBALS['egw']->ldap =& CreateObject('phpgwapi.ldap');
 		}
 		// if ldap is NOT the contact repository, we only do accounts and need to use the account-data
-		if ($GLOBALS['egw_info']['server']['contact_repository'] != 'ldap')
+		if (substr($GLOBALS['egw_info']['server']['contact_repository'],-4) != 'ldap')	// not (ldap or sql-ldap)
 		{
 			$GLOBALS['egw_info']['server']['ldap_contact_host'] = $GLOBALS['egw_info']['server']['ldap_host'];
 			$GLOBALS['egw_info']['server']['ldap_contact_context'] = $GLOBALS['egw_info']['server']['ldap_context'];
@@ -264,14 +268,22 @@ class so_ldap
 	/**
 	 * reads contact data
 	 *
-	 * @param string $contact_id contact_id or 'account:'.account_id
+	 * @param string/array $contact_id contact_id or array with values for id or account_id
 	 * @return array/boolean data if row could be retrived else False
 	*/
 	function read($contact_id)
 	{
-		$contact_id = ldap::quote($contact_id);
+		if (is_array($contact_id) && isset($contact_id['account_id']) || substr($contact_id,0,8) == 'account:')
+		{
+			$filter = 'uidNumber='.(int)(is_array($contact_id) ? $contact_id['account_id'] : substr($contact_id,8));
+		}
+		else
+		{
+			$contact_id = ldap::quote(is_array($contact_id) ? $contact_id['id'] : $contact_id);
+			$filter = "(|(entryUUID=$contact_id)(uid=$contact_id))";
+		}
 		$rows = $this->_searchLDAP($GLOBALS['egw_info']['server']['ldap_contact_context'], 
-			"(|(entryUUID=$contact_id)(uid=$contact_id))", $this->all_attributes, ADDRESSBOOK_ALL);
+			$filter, $this->all_attributes, ADDRESSBOOK_ALL);
 
 		return $rows ? $rows[0] : false;
 	}
@@ -305,17 +317,25 @@ class so_ldap
 			}
 			$baseDN = 'cn='. ldap::quote($cn) .','.($data['owner'] < 0 ? $this->sharedContactsDN : $this->personalContactsDN);
 		} 
-		elseif ($GLOBALS['egw_info']['user']['apps']['admin'])
+		// only an admin or the user itself is allowed to change the data of an account
+		elseif ($data['account_id'] && ($GLOBALS['egw_info']['user']['apps']['admin'] ||
+			$data['account_id'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
 			// account
 			$baseDN = $GLOBALS['egw_info']['server']['ldap_context'];
 			$cn	= false;
 			// we need an admin connection
 			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
+
+			// for sql-ldap we need to account_lid/uid as id, NOT the contact_id in id!
+			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'sql-ldap')
+			{
+				$data['id'] = $GLOBALS['egw']->accounts->id2name($data['account_id']);
+			}
 		}
 		else
 		{
-			return true;	// only admin is allowd to write accounts!
+			return true;	// only admin or the user itself is allowd to write accounts!
 		}
 
 		// check if $baseDN exists. If not create it
@@ -795,19 +815,19 @@ class so_ldap
 			{
 				// personal addressbook
 				$contact['owner'] = $GLOBALS['egw']->accounts->name2id($matches[1],'account_lid','u');
-				$contact['private'] = true;
+				$contact['private'] = 1;
 			}
 			elseif(preg_match('/cn=([^,]+),'.preg_quote($this->sharedContactsDN).'$/i',$entry['dn'],$matches))
 			{
 				// group addressbook
 				$contact['owner'] = $GLOBALS['egw']->accounts->name2id($matches[1],'account_lid','g');
-				$contact['private'] = false;
+				$contact['private'] = 0;
 			}
 			else
 			{
 				// accounts
 				$contact['owner'] = 0;	
-				$contact['private'] = false;
+				$contact['private'] = 0;
 			}
 			foreach(array(
 				'creatorsname' => 'creator',

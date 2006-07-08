@@ -31,6 +31,7 @@ class uicontacts extends bocontacts
 		'index'     => True,
 		'photo'		=> True,
 		'emailpopup'=> True,
+		'migrate2ldap' => True,
 	);
 	var $prefs;
 	/**
@@ -1349,5 +1350,23 @@ $readonlys['button[vcard]'] = true;
 			}
 		}
 		</script>';
+	}
+	
+	function migrate2ldap()
+	{
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook').' - '.lang('Migration to LDAP');
+		$GLOBALS['egw']->common->egw_header();
+		parse_navbar();
+		
+		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			echo '<h1>'.lang('Permission denied !!!')."</h1>\n";
+		}
+		else
+		{
+			parent::migrate2ldap($_GET['type']);
+			echo '<p style="margin-top: 20px;"><b>'.lang('Migration finished')."</b></p>\n";
+		}
+		$GLOBALS['egw']->common->egw_footer();
 	}
 }

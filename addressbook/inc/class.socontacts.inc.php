@@ -219,7 +219,6 @@ class socontacts
 			if ($this->account_repository != $this->contact_repository)
 			{
 				$this->so_accounts =& CreateObject('addressbook.so_ldap');
-				$this->so_accounts->contacts_id = 'id';
 				$this->account_cols_to_search = $this->ldap_search_attributes; 
 			}
 			else
@@ -238,7 +237,6 @@ class socontacts
 		// ToDo: it should be the other way arround, the backend should set the grants it uses
 		$this->somain->grants =& $this->grants;
 
-		$this->somain->contacts_id = 'id';
 		$this->soextra =& CreateObject('etemplate.so_sql');
 		$this->soextra->so_sql('phpgwapi',$this->extra_table);
 			
@@ -265,6 +263,10 @@ class socontacts
 	 */
 	function read_customfields($ids)
 	{
+		if ($this->contact_repository == 'ldap')
+		{
+			return array();	// ldap does not support custom-fields (non-nummeric uid)
+		}
 		foreach($ids as $key => $id)
 		{
 			if (!(int)$id) unset($ids[$key]);
@@ -327,7 +329,7 @@ class socontacts
 				{
 					// LDAP uses the uid attributes for the contact-id (dn), 
 					// which need to be the account_lid for accounts!
-					$contact['id'] = $GLOBALS['egw']->account->id2name($contact['account_id']);
+					$contact['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 				}
 				ExecMethod('addressbook.so_ldap.delete',$contact);
 			}
@@ -355,7 +357,15 @@ class socontacts
 		}
 		else
 		{
+			// contact_repository sql-ldap (accounts in ldap) the person_id is the uid (account_lid)
+			// for the sql write here we need to find out the existing contact_id 
+			if ($this->contact_repository == 'sql-ldap' && $contact['id'] && !is_numeric($contact['id']) && 
+				$contact['account_id'] && ($old = $this->somain->read(array('account_id' => $contact['account_id']))))
+			{
+				$contact['id'] = $old['id'];
+			}
 			$this->somain->data = $this->data2db($contact);
+			
 			if (!($error_nr = $this->somain->save()))
 			{
 				$contact['id'] = $this->somain->data['id'];
@@ -367,7 +377,7 @@ class socontacts
 					{
 						// LDAP uses the uid attributes for the contact-id (dn), 
 						// which need to be the account_lid for accounts!
-						$data['id'] = $GLOBALS['egw']->account->id2name($contact['account_id']);
+						$data['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
 					}
 					ExecMethod('addressbook.so_ldap.save',$data);
 				}
@@ -407,10 +417,9 @@ class socontacts
 	*/
 	function read($contact_id)
 	{
-		if (substr($contact_id,0,8) == 'account:' &&
-			(!($contact_id = $GLOBALS['egw']->accounts->id2name((int) substr($contact_id,8),'person_id'))))
+		if (!is_array($contact_id) && substr($contact_id,0,8) == 'account:')
 		{
-			return false;
+			$contact_id = array('account_id' => (int) substr($contact_id,8));
 		}
 		// read main data
 		$backend =& $this->get_backend($contact_id);
@@ -418,14 +427,13 @@ class socontacts
 		{
 			return $contact;
 		}
-		// read customfields
-		$keys = array(
-			$this->extra_id => $contact['id'],
-			$this->extra_owner => $contact['owner'],
-		);
-		if ($this->customfields)	// try reading customfields only if we have some
+		// try reading customfields only if we have some (none for LDAP!)
+		if ($this->customfields && $this->contact_repository != 'ldap')
 		{
-			$customfields = $this->soextra->search($keys,false);
+			$customfields = $this->soextra->search(array(
+				$this->extra_id => $contact['id'],
+				$this->extra_owner => $contact['owner'],
+			),false);
 			foreach ((array)$customfields as $field)
 			{
 				$contact['#'.$field[$this->extra_key]] = $field[$this->extra_value];
@@ -861,5 +869,70 @@ error_log("socontacts::search(".print_r($criteria,true).",'$only_keys','$order_b
 		}
 		//echo "unsupported fields=";_debug_array(array_diff($all_fields,$supported_fields));
 		return array_diff($all_fields,$supported_fields);
+	}
+	
+	/**
+	 * Migrates an SQL contact storage to LDAP or SQL-LDAP
+	 *
+	 * @param string $type "contacts" (default), "contacts+accounts" or "contacts+accounts-back" (sql-ldap!)
+	 */
+	function migrate2ldap($type)
+	{
+		$sql_contacts  =& CreateObject('addressbook.socontacts_sql');
+		$ldap_contacts =& CreateObject('addressbook.so_ldap');
+
+		$start = $n = 0;
+		$num = 100;
+		while (($contacts = $sql_contacts->search(false,false,'n_family,n_given','','',false,'AND',
+			array($start,$num),$type != 'contacts,accounts' ? array('contact_owner != 0') : false)))
+		{
+			foreach($contacts as $contact)
+			{
+				if ($contact['account_id']) $contact['id'] = $GLOBALS['egw']->accounts->id2name($contact['account_id']);
+
+				$ldap_contacts->data = $contact;
+				$n++;
+				if (!($err = $ldap_contacts->save()))
+				{
+					echo '<p style="margin: 0px;">'.$n.': '.$contact['n_fn'].
+						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '')." --> LDAP</p>\n";
+				}
+				else
+				{
+					echo '<p style="margin: 0px; color: red;">'.$n.': '.$contact['n_fn'].
+						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '').': '.$err."</p>\n";
+				}
+			}
+			$start += $num;
+		}
+		if ($type == 'contacts,accounts-back')	// migrate the accounts to sql
+		{
+			foreach($ldap_contacts->search(false,false,'n_family,n_given','','',false,'AND',
+				false,array('owner' => 0)) as $contact)
+			{
+				if ($contact['jpegphoto'])	// photo is NOT read by LDAP backend on search, need to do an extra read
+				{
+					$contact = $ldap_contacts->read($contact['id']);
+				}
+				unset($contact['id']);	// ldap uid/account_lid
+				if ($contact['account_id'] && ($old = $sql_contacts->read(array('account_id' => $contact['account_id']))))
+				{
+					$contact['id'] = $old['id'];
+				}
+				$sql_contacts->data = $contact;
+				
+				$n++;
+				if (!($err = $sql_contacts->save()))
+				{
+					echo '<p style="margin: 0px;">'.$n.': '.$contact['n_fn'].
+						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '')." --> SQL (".lang('User').")</p>\n";
+				}
+				else
+				{
+					echo '<p style="margin: 0px; color: red;">'.$n.': '.$contact['n_fn'].
+						($contact['org_name'] ? ' ('.$contact['org_name'].')' : '').': '.$err."</p>\n";
+				}
+			}
+		}
 	}
 }

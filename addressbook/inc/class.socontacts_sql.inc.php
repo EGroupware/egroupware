@@ -27,6 +27,13 @@ class socontacts_sql extends so_sql
 	var $account_repository = 'sql';
 	var $contact_repository = 'sql';
 	
+	/**
+	 * internal name of the id, gets mapped to uid
+	 *
+	 * @var string
+	 */
+	var $contacts_id='id';
+
 	function socontacts_sql()
 	{
 		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_');	// calling the constructor of the extended class
@@ -219,7 +226,7 @@ class socontacts_sql extends so_sql
 			unset($filter['cat_id']);
 		}
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
-		if (!(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
+		if (isset($this->grants) && !(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
 			// we have no private grants in addressbook at the moment, they have then to be added here too
 			if (isset($filter['owner']))

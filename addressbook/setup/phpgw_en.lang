@@ -70,6 +70,9 @@ contact id	addressbook	en	Contact ID
 contact repository	admin	en	Contact repository
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
+contacts and account contact-data to ldap	admin	en	contacts and account contact-data to LDAP
+contacts to ldap	admin	en	contacts to LDAP
+contacts to ldap, account contact-data to sql	admin	en	contacts to LDAP, account contact-data to SQL
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 copy a contact and edit the copy	addressbook	en	Copy a contact and edit the copy
 country	common	en	Country
@@ -125,6 +128,7 @@ field name	addressbook	en	Field Name
 fields for the csv export	addressbook	en	Fields for the CSV export
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Fieldseparator
+for read only ldap	admin	en	for read only LDAP
 freebusy uri	addressbook	en	Freebusy URI
 full name	addressbook	en	Full Name
 geo	addressbook	en	GEO
@@ -140,6 +144,7 @@ home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
 home zip code	addressbook	en	Home ZIP Code
 icon	addressbook	en	Icon
+if accounts are already in ldap	admin	en	if accounts are already in LDAP
 import	addressbook	en	Import
 import contacts	addressbook	en	Import Contacts
 import csv-file into addressbook	addressbook	en	Import CSV-File into Addressbook
@@ -169,6 +174,8 @@ locations	addressbook	en	locations
 mark records as private	addressbook	en	Mark records as private
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
+migration finished	addressbook	en	Migration finished
+migration to ldap	admin	en	Migration to LDAP
 mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
@@ -214,6 +221,7 @@ select a view	addressbook	en	Select a view
 select addressbook type	addressbook	en	Select addressbook type
 select all	addressbook	en	Select all
 select an action or addressbook to move to	addressbook	en	Select an action or addressbook to move to
+select migration type	admin	en	Select migration type
 select multiple contacts for a further action	addressbook	en	Select multiple contacts for a further action
 select phone number as prefered way of contact	addressbook	en	select phone number as prefered way of contact
 select the type of conversion	addressbook	en	Select the type of conversion
@@ -224,6 +232,7 @@ show a column for %1	addressbook	en	Show a column for %1
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 show the contacts of this organisation	addressbook	en	Show the contacts of this organisation
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup (WxH, eg.400x300, if a popup should be used)
+start	admin	en	Start
 startrecord	addressbook	en	Startrecord
 state	common	en	State
 street	common	en	Street
@@ -244,6 +253,7 @@ update a single entry by passing the fields.	addressbook	en	Update a single entr
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url to link telephone numbers to (use %1 for the number)	admin	en	URL to link telephone numbers to (use %1 for the number)
 use country list	addressbook	en	Use Country List
+use setup for a full account-migration	admin	en	use setup for a full account-migration
 used for links and for the own sorting of the list	addressbook	en	used for links and for the own sorting of the list
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.

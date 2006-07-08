@@ -70,6 +70,9 @@ contact id	addressbook	de	Kontakt ID
 contact repository	admin	de	Speicherort Kontakte
 contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
+contacts and account contact-data to ldap	admin	de	Kontakte und Kontaktdaten der Benutzer nach LDAP
+contacts to ldap	admin	de	Kontakte nach LDAP
+contacts to ldap, account contact-data to sql	admin	de	Kontakte nach LDAP, Kontaktdaten der Benutzer nach SQL
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 copy a contact and edit the copy	addressbook	de	Kopiert einen Kontakt und bearbeitet dann die Kopie
 country	common	de	Land
@@ -125,6 +128,7 @@ field name	addressbook	de	Feldname
 fields for the csv export	addressbook	de	Felder für den CSV Export
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
+for read only ldap	admin	de	für nur lesendes LDAP
 freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
 geo	addressbook	de	GEO
@@ -140,6 +144,7 @@ home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straße privat
 home zip code	addressbook	de	PLZ privat
 icon	addressbook	de	Icon
+if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
 import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Adressbuch
@@ -169,6 +174,8 @@ locations	addressbook	de	Standorte
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
+migration finished	addressbook	de	Migration beendet
+migration to ldap	admin	de	Migration nach LDAP
 mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobiltelefon
 modem phone	addressbook	de	Modem
@@ -214,6 +221,7 @@ select a view	addressbook	de	Eine Ansicht auswählen
 select addressbook type	addressbook	de	Typ des Adressbuchs auswählen
 select all	addressbook	de	Alles auswählen
 select an action or addressbook to move to	addressbook	de	Befehl oder Adressbuch zum Verschieben auswählen
+select migration type	admin	de	Migrationstyp auswählen
 select multiple contacts for a further action	addressbook	de	Mehrere Adressen für weiteren Befehl auswählen
 select phone number as prefered way of contact	addressbook	de	Telefonnummer als präferierten Kontaktweg auswählen
 select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
@@ -224,6 +232,7 @@ show a column for %1	addressbook	de	Zeige eine %1 Spalte
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	de	Größe des Popup (WxH, zB. 400x300, falls ein Popup verwendet werden soll)
+start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
@@ -244,6 +253,7 @@ update a single entry by passing the fields.	addressbook	de	Aktualisiert einen e
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 for the number)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (%1 für die Nummber verwenden)
 use country list	addressbook	de	Länderliste benutzen
+use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
 used for links and for the own sorting of the list	addressbook	de	wird für Verküpfungen und die eigene Sortierung der Liste benützt
 vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
