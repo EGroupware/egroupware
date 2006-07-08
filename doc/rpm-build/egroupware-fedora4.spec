@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
 %define egwversion 1.2
-%define packaging 102
+%define packaging 104
 %define epoch 1
 %define httpdroot  /var/www/html
 %define httpdconfd  /etc/httpd/conf.d
@@ -633,6 +633,9 @@ ln -s sitemgr/sitemgr-link
 %config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 
 %changelog
+* Sat Jul 17 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-104
+- bugfix release
+
 * Sat Jun 11 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-102
 - improved SyncML handling
 - improved authentication trough existing imap/pop3 server
