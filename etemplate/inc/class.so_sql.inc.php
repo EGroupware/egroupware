@@ -279,6 +279,16 @@ class so_sql
 				}
 			}
 		}
+		if (!$query)	// no unique key in keys, lets try everything else
+		{
+			foreach($this->db_data_cols as $db_col => $col)
+			{
+				if ($this->data[$col] != '')
+				{
+					$query[$db_col] = $this->data[$col];
+				}
+			}
+		}
 		if (!$query)	// keys has no cols
 		{
 			$this->db2data();
