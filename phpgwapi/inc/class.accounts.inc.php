@@ -302,7 +302,7 @@ class accounts extends accounts_backend
 		{ 
 			// if we are not on a pure LDAP system, we have to write the account-date via the contacts class now
 			if (($GLOBALS['egw_info']['server']['account_repository'] != 'ldap' ||
-				$GLOBALS['egw_info']['server']['contact_repository'] != 'ldap') &&
+				$GLOBALS['egw_info']['server']['contact_repository'] == 'sql-ldap') &&
 				(!($old = $this->read($data['account_id'])) ||	// only for new account or changed contact-data
 				$old['account_firstname'] != $data['account_firstname'] ||
 				$old['account_lastname'] != $data['account_lastname'] ||
