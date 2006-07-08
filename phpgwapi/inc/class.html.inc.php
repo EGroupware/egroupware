@@ -199,7 +199,7 @@ class html
 	 * @param array $arr array with items to select, eg. $arr = array ( 'y' => 'yes','n' => 'no','m' => 'maybe');
 	 * @param boolean $no_lang NOT run the labels of the options through lang(), default false=use lang()
 	 * @param string $options additional options (e.g. 'width')
-	 * @param int $multiple number of lines for a multiselect, default 0 = no multiselect
+	 * @param int $multiple number of lines for a multiselect, default 0 = no multiselect, < 0 sets size without multiple
 	 * @return string to set for a template or to echo into html page
 	 */
 	function select($name, $key, $arr=0,$no_lang=false,$options='',$multiple=0)
@@ -216,12 +216,16 @@ class html
 				$name .= '[]';
 			}
 		}
+		elseif($multiple < 0)
+		{
+			$options .= ' size="'.abs($multiple).'"';
+		}
 		$out = "<select name=\"$name\" $options>\n";
 
 		if (!is_array($key))
 		{
 			// explode on ',' only if multiple values expected and the key contains just numbers and commas
-			$key = $multiple && preg_match('/^[,0-9]+$/',$key) ? explode(',',$key) : array($key);
+			$key = $multiple > 0 && preg_match('/^[,0-9]+$/',$key) ? explode(',',$key) : array($key);
 		}
 		foreach($arr as $k => $data)
 		{
@@ -319,8 +323,8 @@ class html
 			if (strlen($label) > $max_len) $max_len = strlen($label);
 
 			$html .= $this->label($this->checkbox($name,in_array($val,$key),$val,$options_no_id.
-				' id="'.$base_name.'['.$val.']'.'" '.($title ? 'title="'.$this->htmlspecialchars($title).'" ':'')).
-				$this->htmlspecialchars($label),$base_name.'['.$val.']')."<br />\n";
+				' id="'.$base_name.'['.$val.']'.'"').$this->htmlspecialchars($label),
+				$base_name.'['.$val.']','',($title ? 'title="'.$this->htmlspecialchars($title).'" ':''))."<br />\n";
 		}
 		if ($style && substr($style,-1) != ';') $style .= '; ';
 		if (!strstr($style,'height')) $style .= 'height: '.(1.7*$multiple).'em; ';
