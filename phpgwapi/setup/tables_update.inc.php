@@ -573,4 +573,20 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.010';
 	}
+
+
+	$test[] = '1.3.010';
+	function phpgwapi_upgrade1_3_010()
+	{
+		// account_id should be unique, the (unique) index also speed up the joins with the account-table
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','account_id',array(
+			'type' => 'int',
+			'precision' => '4'
+		));
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_addressbook SET account_id=NULL WHERE account_id=0',__LINE__,__FILE__);
+		
+		$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook',array('account_id'),true);
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.011';
+	}
 ?>

@@ -549,12 +549,12 @@
 				'contact_modified' => array('type' => 'int','precision' => '8','nullable' => False),
 				'contact_modifier' => array('type' => 'int','precision' => '4'),
 				'contact_jpegphoto' => array('type' => 'blob'),
-				'account_id' => array('type' => 'int','precision' => '4','default' => '0')
+				'account_id' => array('type' => 'int','precision' => '4')
 			),
 			'pk' => array('contact_id'),
 			'fk' => array(),
 			'ix' => array('contact_owner','cat_id','n_fileas',array('n_family','n_given'),array('n_given','n_family'),array('org_name','n_family','n_given')),
-			'uc' => array()
+			'uc' => array('account_id')
 		),
 		'egw_addressbook_extra' => array(
 			'fd' => array(
