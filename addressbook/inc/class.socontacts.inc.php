@@ -193,11 +193,14 @@ class socontacts
 			$this->contact_repository = 'ldap';
 			$this->somain =& CreateObject('addressbook.so_ldap');
 
-			// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
-			$this->grants = array($this->user => ~0);
-			foreach($this->memberships as $gid)
+			if ($this->user)	// not set eg. in setup
 			{
-				$this->grants[$gid] = ~0;
+				// static grants from ldap: all rights for the own personal addressbook and the group ones of the meberships
+				$this->grants = array($this->user => ~0);
+				foreach($this->memberships as $gid)
+				{
+					$this->grants[$gid] = ~0;
+				}
 			}
 			$this->columns_to_search = $this->ldap_search_attributes;
 		}
@@ -208,9 +211,13 @@ class socontacts
 				$this->contact_repository = 'sql-ldap';
 			}
 			$this->somain =& CreateObject('addressbook.socontacts_sql');
-			// group grants are now grants for the group addressbook and NOT grants for all its members, therefor the param false!
-			$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
-			
+
+			if ($this->user)	// not set eg. in setup
+			{			
+				// group grants are now grants for the group addressbook and NOT grants for all its members, 
+				// therefor the param false!
+				$this->grants = $GLOBALS['egw']->acl->get_grants($contact_app,false);
+			}
 			// remove some columns, absolutly not necessary to search in sql
 			$this->columns_to_search = array_diff(array_values($this->somain->db_cols),$this->sql_cols_not_to_search);
 		}
