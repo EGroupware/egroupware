@@ -425,6 +425,12 @@ class bocontacts extends socontacts
 			$contact['n_fn'] = $this->fullname($contact);
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
+		// savegard the account_id against changes not triggered by the accounts-class
+		if (isset($contact['account_id']) && !$ignore_acl)
+		{
+			$account_id = $contact['account_id'];
+			unset($contact['account_id']);
+		}
 		// we dont update the content-history, if we run inside setup (admin-account-creation)
 		if(!($this->error = parent::save($contact)) && is_object($GLOBALS['egw']->contenthistory))
 		{
@@ -435,6 +441,9 @@ class bocontacts extends socontacts
 				$GLOBALS['egw']->accounts->cache_invalidate($contact['account_id']);
 			}
 		}
+		// restoring the unset account_id
+		if ($account_id) $contact['account_id'] = $acount_id;
+
 		return !$this->error;
 	}
 	
