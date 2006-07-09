@@ -34,6 +34,7 @@
 		var $hooks_table        = 'egw_hooks';
 		var $cats_table         = 'egw_categories';
 		var $oProc;
+		var $cookie_domain;
 
 		var $detection;
 		var $process;
@@ -134,7 +135,8 @@
 		*/
 		function set_cookiedomain()
 		{
-			$this->cookie_domain = $_SERVER['HTTP_HOST'];
+			// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
+			$this->cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
 
 			// remove port from HTTP_HOST
 			if (preg_match("/^(.*):(.*)$/",$this->cookie_domain,$arr))
@@ -157,7 +159,7 @@
 		*/
 		function set_cookie($cookiename,$cookievalue='',$cookietime=0)
 		{
-			if(!isset($this->cookie_domain) || !$this->cookie_domain)
+			if(!isset($this->cookie_domain))
 			{
 				$this->set_cookiedomain();
 			}
