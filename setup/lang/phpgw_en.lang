@@ -109,6 +109,7 @@ check ip address of all sessions	setup	en	check ip address of all sessions
 checking extension %1 is loaded or loadable	setup	en	Checking extension %1 is loaded or loadable
 checking file-permissions of %1 for %2 %3: %4	setup	en	Checking file-permissions of %1 for %2 %3: %4
 checking for gd support...	setup	en	Checking for GD support...
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	en	Checking if php.ini setting session.save_path='%1' is writable by the webserver
 checking pear%1 is installed	setup	en	Checking PEAR%1 is installed
 checking php.ini	setup	en	Checking php.ini
 checking required php version %1 (recommended %2)	setup	en	Checking required PHP version %1 (recommended %2)
@@ -613,6 +614,7 @@ you need to fix the above errors, before the configuration file header.inc.php c
 you need to save the settings you made here first!	setup	en	You need to save the settings you made here first!
 you need to select your current charset!	setup	en	You need to select your current charset!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	en	You will NOT be able to log into eGroupWare using PHP sessions: "session could not be verified" !!!
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
 you're using an old header.inc.php version...	setup	en	You're using an old header.inc.php version...
 your applications are current	setup	en	Your applications are current

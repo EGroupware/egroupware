@@ -109,6 +109,7 @@ check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüf
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	de	Überprüfe ob der Webserver auf die php.ini Einstellung session.save_path='%1' schreiben kann
 checking pear%1 is installed	setup	de	Überprüfe ob PEAR%1 installiert ist
 checking php.ini	setup	de	Überprüfe die php.ini Datei
 checking required php version %1 (recommended %2)	setup	de	Überprüfe benötigte PHP Version %1 (empfohlen %2)
@@ -615,6 +616,7 @@ you need to fix the above errors, before the configuration file header.inc.php c
 you need to save the settings you made here first!	setup	de	Sie müssen die hier vorgenommenen Einstellungen zuerst speichern!
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	de	Sie werden sich NICHT mit PHP Sitzungen in die eGroupWare einlogen: "Ihre Sitzung konnte nicht verifiziert werden" !!!
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
 you're using an old header.inc.php version...	setup	de	Sie verwenden eine alte header.inc.php Version ...
 your applications are current	setup	de	Ihre Anwendungen sind aktuell

@@ -141,7 +141,7 @@
 		'session' => array(
 			'func' => 'extension_check',
 			'warning' => lang('The session extension is needed to use php sessions (db-sessions work without).')
-		),	
+		),
 		// leave SyncML checks here for now, as it is no app atm.
 		'' => array(
 			'func' => 'pear_check',
@@ -150,18 +150,30 @@
 		'Log' => array(
 			'func' => 'pear_check',
 			'from' => 'SyncML',
-		),	
+		),
+/*
 		'.' => array(
 			'func' => 'permission_check',
 			'is_world_writable' => False,
 			'recursiv' => True
 		),
+*/
 		'header.inc.php' => array(
 			'func' => 'permission_check',
 			'is_world_readable' => False,
 			'only_if_exists' => @$GLOBALS['egw_info']['setup']['stage']['header'] != 10
 		),
 	);
+	if (extension_loaded('session'))
+	{
+		//ini_set('session.save_path','/hugo');
+		$checks[session_save_path()] = array(
+			'func' => 'permission_check',
+			'is_writable' => true,
+			'msg' => lang("Checking if php.ini setting session.save_path='%1' is writable by the webserver",session_save_path()),
+			'error' => lang('You will NOT be able to log into eGroupWare using PHP sessions: "session could not be verified" !!!'),
+		);
+	}
 	$setup_info = $GLOBALS['egw_setup']->detection->get_versions();
 	foreach($setup_info as $app => $app_data)
 	{
@@ -362,12 +374,12 @@
 		global $passed_icon, $error_icon, $warning_icon,$is_windows;
 		//echo "<p>permision_check('$name',".print_r($args,True).",'$verbose')</p>\n";
 
-		if (substr($name,0,3) != '../')
+		// add a ../ for non-absolute pathes
+		$rel_name = $name;
+		if (substr($name,0,3) != '../' && $name{0} != '/' && $name{0} != '\\' && strstr($name,':') === false)
 		{
 			$name = '../'.$name;
 		}
-		$rel_name = substr($name,3);
-
 		if (!file_exists($name) && isset($args['only_if_exists']) && $args['only_if_exists'])
 		{
 			return True;
@@ -384,32 +396,42 @@
 		$checks = array();
 		if (isset($args['is_readable']))
 		{
-		  $checks[] = lang('readable by the webserver');
-		  $check_not = (!$args['is_readable']?lang('not'):'');
+			$checks[] = lang('readable by the webserver');
+			$check_not = (!$args['is_readable']?lang('not'):'');
 		}
 		if (isset($args['is_writable']))
 		{
-		  $checks[] = lang('writable by the webserver');
-		  $check_not = (!$args['is_writable']?lang('not'):'');
+			$checks[] = lang('writable by the webserver');
+			$check_not = (!$args['is_writable']?lang('not'):'');
 		}
 		if (isset($args['is_world_readable']))
 		{
-		  $checks[] = lang('world readable');
-		  $check_not = (!$args['is_world_readable']?lang('not'):'');
+			$checks[] = lang('world readable');
+			$check_not = (!$args['is_world_readable']?lang('not'):'');
 		}
 		if (isset($args['is_world_writable']))
 		{
-		  $checks[] = lang('world writable');
-		  $check_not = (!$args['is_world_writable']?lang('not'):'');
+			$checks[] = lang('world writable');
+			$check_not = (!$args['is_world_writable']?lang('not'):'');
 		}
 		$checks = implode(', ',$checks);
 
 		$icon = $passed_icon;
-		$msg = lang('Checking file-permissions of %1 for %2 %3: %4',$rel_name,$check_not,$checks,$perms)."<br />\n";
-
+		if (($msg = $args['msg']))
+		{
+			$msg .= ': '.$perms."<br />\n";
+		}
+		else
+		{
+			$msg = lang('Checking file-permissions of %1 for %2 %3: %4',$rel_name,$check_not,$checks,$perms)."<br />\n";
+		}
+		if ($args['error'])
+		{
+			$extra_error_msg = "<br />\n".$args['error'];
+		}
 		if (!file_exists($name))
 		{
-			echo '<div>'. $error_icon . '<span class="setup_error">' . $msg . lang('%1 does not exist !!!',$rel_name)."</span></div>\n";
+			echo '<div>'. $error_icon . '<span class="setup_error">' . $msg . lang('%1 does not exist !!!',$rel_name).$extra_error_msg."</span></div>\n";
 			return False;
 		}
 		$warning = False;
@@ -423,22 +445,22 @@
 		$Ok = True;
 		if (isset($args['is_writable']) && is_writable($name) != $args['is_writable'])
 		{
-			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_writable']?lang('not').' ':'',lang('writable by the webserver'))."</span></div>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_writable']?lang('not').' ':'',lang('writable by the webserver')).$extra_error_msg."</span></div>\n";
 			$Ok = False;
 		}
 		if (isset($args['is_readable']) && is_readable($name) != $args['is_readable'])
 		{
-			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_readable']?lang('not').' ':'',lang('readable by the webserver'))."</span></div>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_readable']?lang('not').' ':'',lang('readable by the webserver')).$extra_error_msg."</span></div>\n";
 			$Ok = False;
 		}
 		if (!$is_windows && isset($args['is_world_readable']) && !(fileperms($name) & 04) == $args['is_world_readable'])
 		{
-			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_world_readable']?lang('not').' ':'',lang('world readable'))."</span></div>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_world_readable']?lang('not').' ':'',lang('world readable')).$extra_error_msg."</span></div>\n";
 			$Ok = False;
 		}
 		if (!$is_windows && isset($args['is_world_writable']) && !(fileperms($name) & 02) == $args['is_world_writable'])
 		{
-			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_world_writable']?lang('not').' ':'',lang('world writable'))."</span></div>\n";
+			echo '<div>'.$error_icon.' <span class="setup_error">'.$msg.' '.lang('%1 is %2%3 !!!',$rel_name,$args['is_world_writable']?lang('not').' ':'',lang('world writable')).$extra_error_msg."</span></div>\n";
 			$Ok = False;
 		}
 		if ($Ok && !$warning && $verbose)
