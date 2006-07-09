@@ -472,7 +472,8 @@ class bocontacts extends socontacts
 	*/
 	function check_perms($needed,$contact)
 	{
-		if ((!is_array($contact) || !isset($contact['owner'])) && !($contact = parent::read($contact)))
+		if ((!is_array($contact) || !isset($contact['owner'])) && 
+			!($contact = parent::read(is_array($contact) ? $contact['id'] : $contact)))
 		{
 			return false;
 		}
