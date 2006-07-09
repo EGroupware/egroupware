@@ -29,12 +29,17 @@ class vcaladdressbook extends bocontacts
 			return false;
 		}
 		
-		if($_abID)
-		{
+		if($_abID) {
 			// update entry
-			$contact['ab_id'] = $_abID;
+			#$contact['ab_id'] = $_abID;
+			$contact['id'] = $_abID;
 		}
-		return $this->save($contact);
+
+		if($this->save($contact)) {
+			return $contact['id'];
+		} 
+		
+		return false;
 	}
 
 	/**
@@ -50,25 +55,21 @@ class vcaladdressbook extends bocontacts
 
 		$vCard =& new Horde_iCalendar_vcard;
 
-		if(!is_array($this->supportedFields))
-		{
+		if(!is_array($this->supportedFields)) {
 			$this->setSupportedFields();
 		}
 		$sysCharSet = $GLOBALS['egw']->translation->charset();
 
-		if(!($entry = $this->read($_id)))
-		{
+		if(!($entry = $this->read($_id))) {
 			return false;
 		}
 		foreach($this->supportedFields as $vcardField => $databaseFields)
 		{
 			$options = array();
 			$value = '';
-			foreach($databaseFields as $databaseField)
-			{
+			foreach($databaseFields as $databaseField) {
 				$tempVal = ';';
-				if(!empty($databaseField))
-				{
+				if(!empty($databaseField)) {
 					$tempVal = trim($entry[$databaseField]).';';
 				}
 				$value .= $tempVal;
@@ -87,27 +88,24 @@ class vcaladdressbook extends bocontacts
 					$value = $value ? 'PRIVATE' : 'PUBLIC';
 					break;
 				case 'BDAY':
-					if(!empty($value))
-					{
+					if(!empty($value)) {
 						$value = str_replace('-','',$value).'T000000Z';
 					}
 					break;
 			}
-			if ($databaseField != 'jpegphoto') 
-			{
+			
+			if ($databaseField != 'jpegphoto') {
 				$value = $GLOBALS['egw']->translation->convert($value,$sysCharSet,'utf-8');
 			}
+			
 			// don't add the entry if it contains only ';'
-			if(strlen(str_replace(';','',$value)) != 0)
-			{
+			if(strlen(str_replace(';','',$value)) != 0) {
 				$vCard->setAttribute($vcardField, $value);
 			}
-			if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value))
-			{
+			if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value)) {
 				$options['ENCODING'] = 'QUOTED-PRINTABLE';
 			}
-			if(preg_match('/([\177-\377])/',$value))
-			{
+			if(preg_match('/([\177-\377])/',$value)) {
 				$options['CHARSET'] = 'UTF-8';
 			}
 			$vCard->setParameter($vcardField, $options);
@@ -120,13 +118,15 @@ class vcaladdressbook extends bocontacts
 
 	function search($_vcard) 
 	{
-		if(!($contact = $this->vcardtoegw($_vcard))) 
-		{
+		if(!($contact = $this->vcardtoegw($_vcard))) {
 			return false;
 		}
 		
-		if(($foundContacts = $this->search($contact)))
-		{
+		unset($contact['private']);
+		unset($contact['note']);
+		unset($contact['n_fn']);
+		
+		if($foundContacts = parent::search($contact)) {
 			return $foundContacts[0]['id'];
 		}
 		return false;
@@ -194,6 +194,7 @@ class vcaladdressbook extends bocontacts
 			'TEL;WORK'	=> array('tel_work'),
 			'TITLE'		=> array('title'),
 			'URL;WORK'	=> array('url'),
+			'ROLE'		=> array('role'),
 		);
 
 		$defaultFields[2] = array(
@@ -211,7 +212,7 @@ class vcaladdressbook extends bocontacts
 			'TEL;HOME'	=> array('tel_home'),
 			'TEL;WORK'	=> array('tel_work'),
 			'TITLE'		=> array('title'),
-			'URL'		=> array('url'),
+			'URL;WORK'	=> array('url'),
 		);
 
 		$defaultFields[3] = array(
@@ -301,7 +302,7 @@ class vcaladdressbook extends bocontacts
 	function vcardtoegw($_vcard) 
 	{
 		// convert from utf-8 to eGW's charset
-		$_vcard = $GLOBALS['egw']->translation->convert($_vcard,'utf-8');
+		$_vcard = $GLOBALS['egw']->translation->convert($_vcard, 'utf-8');
 
 		if(!is_array($this->supportedFields))
 		{
@@ -357,7 +358,7 @@ class vcaladdressbook extends bocontacts
 			$rowNames[$rowName] = $key;
 		}
 
-		#error_log('rowNames: '.print_r($rowNames,true));
+		#error_log(print_r($rowNames, true));
 
 		// now we have all rowNames the vcard provides
 		// we just need to map to the right addressbook fieldnames
@@ -370,6 +371,7 @@ class vcaladdressbook extends bocontacts
 			{
 				case 'ADR':
 				case 'TEL':
+				case 'URL':
 				case 'TEL;FAX':
 				case 'TEL;CELL':
 				case 'TEL;PAGER':
@@ -380,6 +382,7 @@ class vcaladdressbook extends bocontacts
 					break;
 				case 'EMAIL':
 				case 'EMAIL;WORK':
+				case 'EMAIL;INTERNET':
 					if(!isset($rowNames['EMAIL;INTERNET;WORK']))
 					{
 						$finalRowNames['EMAIL;INTERNET;WORK'] = $vcardKey;
@@ -418,13 +421,15 @@ class vcaladdressbook extends bocontacts
 
 				case 'VERSION':
 					break;
+					
 				default:
 					$finalRowNames[$rowName] = $vcardKey;
 					break;
 			}
 		}
 
-		#_debug_array($finalRowNames);
+		#error_log(print_r($finalRowNames, true));
+
 		$contact = array();
 
 		foreach($finalRowNames as $key => $vcardKey)
@@ -438,9 +443,14 @@ class vcaladdressbook extends bocontacts
 					{
 						switch($fieldName)
 						{
+							case 'bday':
+								$contact[$fieldName] = date('Y-m-d', $vcardValues[$vcardKey]['values'][$fieldKey]);
+								break;
+								
 							case 'private':
 								$contact[$fieldName] = (int) $vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE';
 								break;
+								
 							case 'cat_id':
 								if (!is_object($this->cat))
 								{
