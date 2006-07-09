@@ -191,9 +191,9 @@ class sifaddressbook extends bocontacts
 	*
 	* @return int contact id
 	* @param string	$_vcard		the vcard
-	* @param int	$_abID		the internal addressbook id
+	* @param int/string	$_abID=null		the internal addressbook id or !$_abID for a new enty
 	*/
-	function addSIF($_sifdata, $_abID)
+	function addSIF($_sifdata, $_abID=null)
 	{
 		#error_log('ABID: '.$_abID);
 		#error_log(base64_decode($_sifdata));
@@ -202,10 +202,7 @@ class sifaddressbook extends bocontacts
 			return false;
 		}
 
-// ToDo Lars: This will not work on LDAP
-// either we use "if ($_abID)" and false, null, 0 as $_abID for new entries (prefered, as this works in all other apps)
-// or we use something like "if ($_abID && $_abID != -1)" ... 
-		if($_abID > 0) {
+		if($_abID) {
 			// update entry
 			$contact['id'] = $_abID;
 		}

@@ -19,8 +19,7 @@ class vcaladdressbook extends bocontacts
 	* import a vard into addressbook
 	* 
 	* @param string	$_vcard		the vcard
-	* @param int	$_abID		the internal addressbook id
-	* @param int	$_vcardProfile	profile id for mapping from vcard values to egw addressbook
+	* @param int/string	$_abID=null		the internal addressbook id or !$_abID for a new enty
 	* @return int contact id
 	*/
 	function addVCard($_vcard, $_abID)
@@ -29,10 +28,7 @@ class vcaladdressbook extends bocontacts
 			return false;
 		}
 		
-// ToDo Lars: This will not work on LDAP
-// either we use "if ($_abID)" and false, null, 0 as $_abID for new entries (prefered, as this works in all other apps)
-// or we use something like "if ($_abID && $_abID != -1)" ... 
-		if($_abID > 0) {
+		if($_abID) {
 			// update entry
 			$contact['id'] = $_abID;
 		}
