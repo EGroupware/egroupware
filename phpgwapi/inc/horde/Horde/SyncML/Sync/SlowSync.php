@@ -19,82 +19,76 @@ include_once 'Horde/SyncML/Sync/TwoWaySync.php';
  * @package Horde_SyncML
  */
 class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
+	function handleSync($currentCmdID, $hordeType, $syncType,&$output, $refts) {
+		global $registry;
+		
+		$history = $GLOBALS['egw']->contenthistory;
+		$state = &$_SESSION['SyncML.state'];
+		
+		$adds = &$state->getAddedItems($hordeType);
+		
+		Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$serverAnchorNext = $state->getServerAnchorNext($syncType);
+		$counter = 0;
+		
+		if(is_array($adds)) {
+			while($guid = array_shift($adds)) {
+				#$guid_ts = max($history->getTSforAction($guid, 'add'),$history->getTSforAction($guid, 'modify'));
+				$sync_ts = $state->getChangeTS($syncType, $guid);
+				#Horde::logMessage("SyncML: slowsync timestamp add: $guid sync_ts: $sync_ts anchorNext: ". $serverAnchorNext.' / '.time(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				// $sync_ts                       it got synced from client to server someone
+				// $sync_ts >= $serverAnchorNext  it got synced from client to server in this sync package already
+				if ($sync_ts && $sync_ts >= $serverAnchorNext) {
+					// Change was done by us upon request of client.
+					// Don't mirror that back to the client.
+					//Horde::logMessage("SyncML: slowsync add: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					continue;
+				}
+				
+				#$locid = $state->getLocID($syncType, $guid);
+				
+				// Create an Add request for client.
+# LK				$contentType = $state->getPreferedContentTypeClient($syncType);
 
-    function handleSync($currentCmdID, $hordeType, $syncType,&$output, $refts)
-    {
-        global $registry;
-        
-        $history = $GLOBALS['phpgw']->contenthistory;
-        $state = &$_SESSION['SyncML.state'];
-        
-        $adds = &$state->getAddedItems($hordeType);
-        
-	#if($adds === FALSE)
-	#{
-	#	Horde::logMessage("SyncML: reading added items from database", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-	#	$state->setAddedItems($hordeType, $registry->call($hordeType. '/list', array()));
-	#	$adds = &$state->getAddedItems($hordeType);
-        #}
-
-	Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-        $serverAnchorNext = $state->getServerAnchorNext($syncType);
-	$counter = 0;	
-
-	while($guid = array_shift($adds))
-	{
-		#$guid_ts = max($history->getTSforAction($guid, 'add'),$history->getTSforAction($guid, 'modify'));
-		$sync_ts = $state->getChangeTS($syncType, $guid);
-		#Horde::logMessage("SyncML: slowsync timestamp add: $guid sync_ts: $sync_ts anchorNext: ". $serverAnchorNext.' / '.time(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		// $sync_ts                       it got synced from client to server someone
-		// $sync_ts >= $serverAnchorNext  it got synced from client to server in this sync package already
-		if ($sync_ts && $sync_ts >= $serverAnchorNext) {
-			// Change was done by us upon request of client.
-			// Don't mirror that back to the client.
-			//Horde::logMessage("SyncML: slowsync add: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			continue;
-		}
-
-		#$locid = $state->getLocID($syncType, $guid);
-
-		// Create an Add request for client.
-# LK            $contentType = $state->getPreferedContentTypeClient($syncType);
-
-		$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
-		if(is_a($contentType, 'PEAR_Error')) {
-			// Client did not sent devinfo
-			$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
-		}
-
-		$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
-		$c = $registry->call($hordeType . '/export', array('guid' => $guid, 'contentType' => $contentType));
-		#Horde::logMessage("SyncML: slowsync add to server $c", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		if (!is_a($c, 'PEAR_Error')) {
-			// Item in history but not in database. Strange, but
-			// can happen.
-			#LK		$cmd->setContent($state->convertServer2Client($c, $contentType));
-			$cmd->setContent($c);
-			if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
-				$cmd->setContentFormat('b64');
-			}
-			$cmd->setContentType($contentType['ContentType']);
-			$cmd->setSourceURI($guid);
-			$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Add');
-			$state->log('Server-Add');
-			
-			// return if we have to much data
-			#Horde::logMessage("SyncML: ".' checking hordetype '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
-				$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
-				return $currentCmdID;
+				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
+				if(is_a($contentType, 'PEAR_Error')) {
+					// Client did not sent devinfo
+					$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
+				}
+				
+				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+				$c = $registry->call($hordeType . '/export', array('guid' => $guid, 'contentType' => $contentType));
+				Horde::logMessage("SyncML: slowsync add to client $c", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if (!is_a($c, 'PEAR_Error')) {
+					// Item in history but not in database. Strange, but
+					// can happen.
+#LK					$cmd->setContent($state->convertServer2Client($c, $contentType));
+					$cmd->setContent($c);
+					if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
+						$cmd->setContentFormat('b64');
+					}
+					
+					$cmd->setContentType($contentType['ContentType']);
+					$cmd->setSourceURI($guid);
+					$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Add');
+					$state->log('Server-Add');
+					
+					// return if we have to much data
+					#Horde::logMessage("SyncML: ".' checking hordetype '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
+						$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
+						return $currentCmdID;
+					}
+				}
 			}
 		}
+		
+		#Horde::logMessage("SyncML: handling sync ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		
+		$state->clearSync($syncType);
+		
+		return $currentCmdID;
 	}
-	#Horde::logMessage("SyncML: handling sync ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-	
-       	$state->clearSync($syncType);
-
-        return $currentCmdID;
-    }
     
 	/**
 	* Here's where the actual processing of a client-sent Sync

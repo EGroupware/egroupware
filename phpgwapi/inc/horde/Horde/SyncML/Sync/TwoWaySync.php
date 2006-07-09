@@ -19,31 +19,31 @@ include_once 'Horde/SyncML/Command/Sync/ContentSyncElement.php';
  * @package Horde_SyncML
  */
 class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
-
-    function endSync($currentCmdID, &$output)
-    {
-        global $registry;
-
-        $state = &$_SESSION['SyncML.state'];
-
-        $syncType = $this->_targetLocURI;
-        $hordeType = str_replace('./','',$syncType);
-
-        $refts = $state->getServerAnchorLast($syncType);
-        $currentCmdID = $this->handleSync($currentCmdID,
+	function endSync($currentCmdID, &$output) {
+		global $registry;
+		
+		$state = &$_SESSION['SyncML.state'];
+		
+		$syncType = $this->_targetLocURI;
+		
+		$hordeType = str_replace('./','',$syncType);
+		
+		$refts = $state->getServerAnchorLast($syncType);
+		$currentCmdID = $this->handleSync($currentCmdID,
                                           $hordeType,
                                           $syncType,
                                           $output,
                                           $refts);
-        if ($syncType == 'calendar' && $state->handleTasksInCalendar()) {
-            Horde::logMessage("SyncML: handling tasks in calendar sync", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-            $currentCmdID = $this->handleSync($currentCmdID, 'tasks', $syncType,
-                                              $output, $refts);
-        }
-        
-        return $currentCmdID;
-    }
+		
+		if ($syncType == 'calendar' && $state->handleTasksInCalendar()) {
+			Horde::logMessage("SyncML: handling tasks in calendar sync", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+			
+			$currentCmdID = $this->handleSync($currentCmdID, 'tasks', $syncType,
+				$output, $refts);
+		}
+		
+		return $currentCmdID;
+	}
 
 	function handleSync($currentCmdID, $hordeType, $syncType,&$output, $refts) {
 		global $registry;
@@ -63,93 +63,98 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		Horde::logMessage("SyncML: ".count($deletes).' deleted items found for '.$hordeType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		Horde::logMessage("SyncML: ".count($adds).   ' added items found for '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		
-		while($guid = array_shift($changes)) {
-			$guid_ts = $history->getTSforAction($guid, 'modify');
-			$sync_ts = $state->getChangeTS($syncType, $guid);
-			Horde::logMessage("SyncML: timestamp modify guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			if ($sync_ts && $sync_ts == $guid_ts) {
-				// Change was done by us upon request of client.
-				// Don't mirror that back to the client.
-				Horde::logMessage("SyncML: change: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				continue;
-			}
-			Horde::logMessage("SyncML: change $guid hs_ts:$guid_ts dt_ts:" . $state->getChangeTS($syncType, $guid), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			$locid = $state->getLocID($syncType, $guid);
-			if (!$locid) {
-				// somehow we missed to add, lets store the uid, so we add this entry later
-				$missedAdds[] = $guid;
-				Horde::logMessage("SyncML: unable to create change for $guid: locid not found in map", __FILE__, __LINE__, PEAR_LOG_WARNING);
-				continue;
-			}
-			
-			// Create a replace request for client.
-			$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
-			if(is_a($contentType, 'PEAR_Error')) {
-				// Client did not sent devinfo
-				$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
-			}
-			$c = $registry->call($hordeType. '/export',
-				array('guid' => $guid, 'contentType' => $contentType));
-			if (!is_a($c, 'PEAR_Error')) {
-				// Item in history but not in database. Strange, but can happen.
-				Horde::logMessage("SyncML: change: $guid export content: $c", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
-# LK				$cmd->setContent($state->convertServer2Client($c, $contentType));
-				$cmd->setContent($c);
-				$cmd->setSourceURI($guid);
-				$cmd->setTargetURI($locid);
-				$cmd->setContentType($contentType['ContentType']);
-				if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
-					$cmd->setContentFormat('b64');
+		// handle changes
+		if(is_array($changes)) {
+			while($guid = array_shift($changes)) {
+				$guid_ts = $history->getTSforAction($guid, 'modify');
+				$sync_ts = $state->getChangeTS($syncType, $guid);
+				Horde::logMessage("SyncML: timestamp modify guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if ($sync_ts && $sync_ts == $guid_ts) {
+					// Change was done by us upon request of client.
+					// Don't mirror that back to the client.
+					Horde::logMessage("SyncML: change: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					continue;
 				}
-				$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Replace');
-				$state->log('Server-Replace');
+				Horde::logMessage("SyncML: change $guid hs_ts:$guid_ts dt_ts:" . $state->getChangeTS($syncType, $guid), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				$locid = $state->getLocID($syncType, $guid);
+				if (!$locid) {
+					// somehow we missed to add, lets store the uid, so we add this entry later
+					$missedAdds[] = $guid;
+					Horde::logMessage("SyncML: unable to create change for $guid: locid not found in map", __FILE__, __LINE__, PEAR_LOG_WARNING);
+					continue;
+				}
+			
+				// Create a replace request for client.
+				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
+				if(is_a($contentType, 'PEAR_Error')) {
+					// Client did not sent devinfo
+					$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
+				}
+				$c = $registry->call($hordeType. '/export',
+					array('guid' => $guid, 'contentType' => $contentType));
+				if (!is_a($c, 'PEAR_Error')) {
+					// Item in history but not in database. Strange, but can happen.
+					Horde::logMessage("SyncML: change: $guid export content: $c", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+# LK					$cmd->setContent($state->convertServer2Client($c, $contentType));
+					$cmd->setContent($c);
+					$cmd->setSourceURI($guid);
+					$cmd->setTargetURI($locid);
+					$cmd->setContentType($contentType['ContentType']);
+					if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
+						$cmd->setContentFormat('b64');
+					}
+					$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Replace');
+					$state->log('Server-Replace');
 				
-				// return if we have to much data
-				if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
-					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
-					return $currentCmdID;
+					// return if we have to much data
+					if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
+						$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
+						return $currentCmdID;
+					}
 				}
 			}
 		}
 		Horde::logMessage("SyncML: handling sync (changes done) ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-	// deletes
-        while($guid = array_shift($deletes))
-        {
-            $guid_ts = $history->getTSforAction($guid, 'delete');
-            $sync_ts = $state->getChangeTS($syncType, $guid);
-            Horde::logMessage("SyncML: timestamp delete guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-            if ($sync_ts && $sync_ts == $guid_ts) {
-                // Change was done by us upon request of client.
-                // Don't mirror that back to the client.
-                Horde::logMessage("SyncML: delete $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-                continue;
-            }
-            $locid = $state->getLocID($syncType, $guid);
-            if (!$locid) {
-                Horde::logMessage("SyncML: unable to create delete for $guid: locid not found in map", __FILE__, __LINE__, PEAR_LOG_WARNING);
-                continue;
-            }
+		// handle deletes
+		if(is_array($deletes)) {
+			while($guid = array_shift($deletes)) {
+				$guid_ts = $history->getTSforAction($guid, 'delete');
+				$sync_ts = $state->getChangeTS($syncType, $guid);
+				Horde::logMessage("SyncML: timestamp delete guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if ($sync_ts && $sync_ts == $guid_ts) {
+					// Change was done by us upon request of client.
+					// Don't mirror that back to the client.
+					Horde::logMessage("SyncML: delete $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					continue;
+				}
+				
+				$locid = $state->getLocID($syncType, $guid);
+				if (!$locid) {
+					Horde::logMessage("SyncML: unable to create delete for $guid: locid not found in map", __FILE__, __LINE__, PEAR_LOG_WARNING);
+					continue;
+				}
+				
+				Horde::logMessage("SyncML: delete: $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				// Create a Delete request for client.
+				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+				$cmd->setTargetURI($locid);
+				$cmd->setSourceURI($guid);
+				$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Delete');
+				$state->log('Server-Delete');
+				$state->removeUID($syncType, $locid);
+				
+				// return if we have to much data
+				if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalender' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
+					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
+					return $currentCmdID;
+				}
+			}
+		}
+		#Horde::logMessage("SyncML: handling sync ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
-            Horde::logMessage("SyncML: delete: $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-            // Create a Delete request for client.
-            $cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
-            $cmd->setTargetURI($locid);
-            $cmd->setSourceURI($guid);
-            $currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Delete');
-            $state->log('Server-Delete');
-            $state->removeUID($syncType, $locid);
-
-	    // return if we have to much data
-	    if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalender' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
-               	$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
-	    	return $currentCmdID;
-	    }
-        }
-	#Horde::logMessage("SyncML: handling sync ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-
-		// Get adds.
+		// handle missing  adds.
 		if(count($missedAdds) > 0) {
 			Horde::logMessage("SyncML: add missed changes as adds ".count($adds).' / '.$missedAdds[0], __FILE__, __LINE__, PEAR_LOG_DEBUG);
 			$state->setAddedItems($hordeType, array_merge($adds, $missedAdds));
@@ -157,6 +162,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 			Horde::logMessage("SyncML: merged adds counter ".count($adds).' / '.$adds[0], __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		}
 		
+		if(is_array($adds)) {
 		while($guid = array_shift($adds)) {
 			$guid_ts = $history->getTSforAction($guid, 'add');
 			$sync_ts = $state->getChangeTS($syncType, $guid);
@@ -211,6 +217,7 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 					return $currentCmdID;
 				}
 			}
+		}
 		}
 		Horde::logMessage("SyncML: handling sync ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		
