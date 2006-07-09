@@ -396,7 +396,7 @@ class bocontacts extends socontacts
 	*
 	* @param array &$contact contact array from etemplate::exec
 	* @param boolean $ignore_acl=false should the acl be checked or not
-	* @return boolean true on success, false on failure, an error-message is in $contact['msg']
+	* @return int/string/boolean id on success, false on failure, the error-message is in $this->error
 	*/
 	function save(&$contact,$ignore_acl=false)
 	{
@@ -444,7 +444,7 @@ class bocontacts extends socontacts
 		// restoring the unset account_id
 		if ($account_id) $contact['account_id'] = $acount_id;
 
-		return !$this->error;
+		return $this->error ? false : $contact['id'];
 	}
 	
 	/**
