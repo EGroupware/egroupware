@@ -29,6 +29,12 @@ if (!$GLOBALS['egw_setup']->auth('Config') || $_POST['cancel'])
 // Does not return unless user is authorized
 
 // the migration script needs a session to store the accounts
+session_name('setup_session');
+session_set_cookie_params(0,'/',$GLOBALS['egw_setup']->cookie_domain);
+if (isset($_REQUEST['setup_session']))
+{
+    session_id($_REQUEST['setup_session']);
+}
 session_start();
 
 $tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
