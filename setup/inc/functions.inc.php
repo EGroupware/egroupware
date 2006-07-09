@@ -64,7 +64,7 @@
 	 */
 	function check_dir($dir,&$msg,$check_in_docroot=false)
 	{
-		if (!@is_dir($dir) && !(@is_writeable(dirname($dir)) && @mkdir($dir,0700,true)))
+		if (!@is_dir($dir) && !@mkdir($dir,0700,true))
 		{
 			$msg = lang('does not exist');
 			return false;
