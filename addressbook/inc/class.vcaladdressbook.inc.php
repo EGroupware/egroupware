@@ -29,9 +29,8 @@ class vcaladdressbook extends bocontacts
 			return false;
 		}
 		
-		if($_abID) {
+		if($_abID > 0) {
 			// update entry
-			#$contact['ab_id'] = $_abID;
 			$contact['id'] = $_abID;
 		}
 
