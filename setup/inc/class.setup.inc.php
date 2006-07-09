@@ -897,45 +897,49 @@
 		 * @param string $first first name
 		 * @param string $last last name
 		 * @param $passwd string cleartext pw
-		 * @param string/boolean $group Groupname for users primary group or False for a group, default 'Default'
-		 * @param boolean $changepw user has right to change pw, default False
+		 * @param string/boolean $primary_group Groupname for users primary group or False for a group, default 'Default'
+		 * @param boolean $changepw user has right to change pw, default False = Pw change NOT allowed
 		 * @param string $email 
 		 * @return int the numerical user-id
 		 */
-		function add_account($username,$first,$last,$passwd,$group='default',$changepw=False,$email='')
+		function add_account($username,$first,$last,$passwd,$primary_group='Default',$changepw=False,$email='')
 		{
 			$this->setup_account_object();
 
-			$groupid = $group ? $GLOBALS['egw']->accounts->name2id($group) : False;
+			$primary_group_id = $primary_group ? $GLOBALS['egw']->accounts->name2id($primary_group) : False;
 
 			if(!($accountid = $GLOBALS['egw']->accounts->name2id($username)))
 			{
 				$account = array(
-					'account_type'      => $group ? 'u' : 'g',
+					'account_type'      => $primary_group ? 'u' : 'g',
 					'account_lid'       => $username,
 					'account_passwd'    => $passwd,
 					'account_firstname' => $first,
 					'account_lastname'  => $last,
 					'account_status'    => 'A',
-					'account_primary_group' => $groupid,
+					'account_primary_group' => $primary_group_id,
 					'account_expires'   => -1,
 					'account_email'     => $email,
 				);
 				if (!($accountid = $GLOBALS['egw']->accounts->save($account)))
 				{
+					error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') failed! accountid=$accountid");
 					return false;
 				}
 			}
-			$memberships = $GLOBALS['egw']->accounts->memberships($accountid,true);
-
-			if($groupid && !in_array($groupid,$memberships))
+			if ($primary_group)	// only for users, NOT groups
 			{
-				$memberships[] = $groupid;
-				
-				$GLOBALS['egw']->accounts->set_memberships($memberships,$accountid);
+				$memberships = $GLOBALS['egw']->accounts->memberships($accountid,true);
+	
+				if($primary_group_id && !in_array($primary_group_id,$memberships))
+				{
+					$memberships[] = $primary_group_id;
+					
+					$GLOBALS['egw']->accounts->set_memberships($memberships,$accountid);
+				}
+				if (!$changepw) $this->add_acl('preferences','nopasswordchange',$accountid);
 			}
-			if (!$group) $this->add_acl('preferences','nopasswordchange',$accountid,(int)!$changepw);
-
+			error_log("setup::add_account('$username','$first','$last',\$passwd,'$primary_group',$changepw,'$email') successfull created accountid=$accountid");
 			return $accountid;
 		}
 		
@@ -996,7 +1000,8 @@
 		 */
 		function add_acl($apps,$location,$account,$rights=1)
 		{
-			if (!is_int($account))
+			error_log("setup::add_acl(".(is_array($apps) ? "array('".implode("','",$apps)."')" : "'$apps'").",'$location',$account,$rights)");
+			if (!is_numeric($account))
 			{
 				$this->setup_account_object();
 				$account = $GLOBALS['egw']->accounts->name2id($account);
