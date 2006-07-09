@@ -151,13 +151,11 @@
 			'func' => 'pear_check',
 			'from' => 'SyncML',
 		),
-/*
 		'.' => array(
 			'func' => 'permission_check',
 			'is_world_writable' => False,
 			'recursiv' => True
 		),
-*/
 		'header.inc.php' => array(
 			'func' => 'permission_check',
 			'is_world_readable' => False,
