@@ -1,16 +1,13 @@
 <?php
-/**************************************************************************\
-* eGroupWare - exporting contacts as csv file                              *
-* http://www.egroupware.org                                                *
-* Written and (c) 2006 Ralf Becker <RalfBecker-AT-outdoor-training.de>     *
-* ------------------------------------------------------------------------ *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * Addressbook - export to csv
+ *
+ * @link www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 /**
  * export to csv
@@ -37,7 +34,11 @@ class csv_export
 	}
 
 	/**
-	 * Create a csv export
+	 * Exports some contacts as CSV: download or write to a file
+	 *
+	 * @param array $ids contact-ids
+	 * @param array $fields 
+	 * @param string $file filename or null for download
 	 */
 	function export($ids,$fields,$file=null)
 	{
