@@ -29,16 +29,14 @@ class vcaladdressbook extends bocontacts
 			return false;
 		}
 		
+// ToDo Lars: This will not work on LDAP
+// either we use "if ($_abID)" and false, null, 0 as $_abID for new entries (prefered, as this works in all other apps)
+// or we use something like "if ($_abID && $_abID != -1)" ... 
 		if($_abID > 0) {
 			// update entry
 			$contact['id'] = $_abID;
 		}
-
-		if($this->save($contact)) {
-			return $contact['id'];
-		} 
-		
-		return false;
+		return $this->save($contact);
 	}
 
 	/**
