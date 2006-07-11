@@ -234,16 +234,16 @@ class accounts_backend
 		}
 		//echo "<p>ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")</p>\n";
 		// modifying or adding the entry
-		if ($old && !ldap_modify($this->ds,$dn,$to_write) ||
+		if ($old && !@ldap_modify($this->ds,$dn,$to_write) ||
 			!$old && !@ldap_add($this->ds,$dn,$to_write))
 		{
 			$err = true;
-			if (!$old && $is_group && ($key = array_search('groupofnames',$to_write['objectclass'])) !== false)
+			if ($is_group && ($key = array_search('groupofnames',$to_write['objectclass'])) !== false)
 			{
 				// try again with removed groupOfNames stuff, as I cant detect if posixGroup is a structural object
 				unset($to_write['objectclass'][$key]);
 				unset($to_write['member']);
-				$err = !ldap_add($this->ds,$dn,$to_write);
+				$err = $old ? !ldap_modify($this->ds,$dn,$to_write) : !ldap_add($this->ds,$dn,$to_write);
 			}
 			if ($err)
 			{
