@@ -641,6 +641,7 @@ class Horde_SyncML_State {
 #        }
         switch($type) {
         	case 'contacts':
+        	case './contacts':
         		return 'text/x-vcard';
         		break;
         		
@@ -668,6 +669,7 @@ class Horde_SyncML_State {
 			break;
 			
 		case 'calendar':
+		case './calendar':
 			return 'text/x-vcalendar';
 			break;
 	}
