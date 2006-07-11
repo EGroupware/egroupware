@@ -14,16 +14,27 @@ Newer SuSE distributions use a rfc2307bis schema, which can be used on other dis
 
 To change to the rfc2307bis.schema (not needed with newer SuSE distros!):
 ----------------------------------
-- create an ldif from your ldap: slapcat > my.ldif
+1. create an ldif from your ldap: slapcat > my.ldif
+2. run: ./nis2rfc2307bis.php my.ldif > new.ldif
+or alternativly edit my.ldif by hand:
 - add objectclass groupOfNames to every group (only the groups!)
 - change every occurence of "structuralObjectClass: posixGroup" to "structuralObjectClass: groupOfNames"
-- edit your slapd.conf:
+- add the required (by groupOfNames) member attributes, by using the information from memberUid,
+  eg. memberUid: hugo --> member: uid=hugo,ou=account,o=egw,dc=domain,dc=com
+--> easier: use the provided script
+3. edit your slapd.conf:
   + remove the include of the nis.schema
   + include the rfc2307bis.schema in this dir
-- stoping ldap
-- empty the ldap database (eg. by removing the content of /var/lib/ldap)
-- add the edited ldif file
-- start ldap again
+4. stoping ldap
+5. empty the ldap database (eg. by removing the content of /var/lib/ldap)
+6. add the edited ldif file: slapadd -f new.ldif
+7. start ldap again
+
+Please note:
+-----------
+You can use nis2rfc2307bis.php on newer SuSE distros too, to get groupOfNames and the member
+attributes set, without editing & saving each group in Admin >> Manage groups. 
+
 
 eGroupWare detects if it can use groupOfNames together with posixGroup and fills the member attribute,
 if you edit the group or changes the members.
