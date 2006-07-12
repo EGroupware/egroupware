@@ -375,7 +375,8 @@ class accounts_backend
 		}
 		$accounts = array();
 		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,'account_lid,account_type',
-			$wildcard,false,'OR',$offset ? array($start,$offset) : $start,$filter,$this->contacts_join)))
+			$wildcard,false,'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
+			$filter,$this->contacts_join)))
 		{
 			foreach($contacts as $contact)
 			{
