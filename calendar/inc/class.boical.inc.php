@@ -1010,33 +1010,30 @@
 			return false;
 		}
 
-		function search($_vcalData) {
-			if(!$event = $this->icaltoegw($_vcalData)) {
+		function search($_vcalData) 
+		{
+			if(!$event = $this->icaltoegw($_vcalData)) 
+			{
 				return false;
 			}
-			
-			$search['start'] = $event['start'];
-			$search['end']	= $event['end'];
-
-			unset($event['description']);
-			unset($event['start']);
-			unset($event['end']);
-
-			foreach($event as $key => $value) {
-				if (substr($key,0,6) != 'recur_' && substr($key,0,5) != 'alarm') {
-					$search['query']['cal_'.$key] = $value;
-				} else {
-					#$search['query'][$key] = $value;
-				}
+			$query = array(
+				'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
+				'cal_end='.$this->date2ts($event['end'],true),
+			);
+			foreach(array('title','location','priority','public','non_blocking') as $name)
+			{
+				if (isset($event[$name])) $query['cal_'.$name] = $event[$name];
 			}
 
-			if($foundEvents = parent::search($search)) {
+			if($foundEvents = parent::search(array(
+				'user'  => $this->user,
+				'query' => $query,
+			))) {
 				if(is_array($foundEvents)) {
 					$event = array_shift($foundEvents);
 					return $event['id'];
 				}
 			}
-
 			return false;
 		}
 	}
