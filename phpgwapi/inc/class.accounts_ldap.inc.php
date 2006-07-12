@@ -611,7 +611,9 @@ class accounts_backend
 			}
 			elseif(is_numeric($start))
 			{
-				return array_slice($sortedAccounts, $start, $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs']);
+				if (!($maxmatches = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatches = 15;
+
+				return array_slice($sortedAccounts, $start, $maxmatchs);
 			}
 			else
 			{
