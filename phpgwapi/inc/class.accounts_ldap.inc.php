@@ -585,7 +585,7 @@
 				}
 				elseif(is_numeric($start))
 				{
-					if (!($maxmatches = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatches = 15;
+					if (!($maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatchs = 15;
 	
 					return array_slice($sortedAccounts, $start, $maxmatchs);
 				}
