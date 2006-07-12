@@ -94,7 +94,7 @@ class accounts_backend
 	function accounts_backend()
 	{
 		// enable the caching in the session, done by the accounts class extending this class.
-	$this->use_session_cache = true;
+		$this->use_session_cache = true;
 
 		$this->ds = $GLOBALS['egw']->common->ldapConnect();
 		if(!@is_object($GLOBALS['egw']->translation))
@@ -506,7 +506,7 @@ class accounts_backend
 	 * @param string $query_type
 	 * @return array
 	 */
-	function get_list($_type='both', $start = '',$sort = '', $order = '', $query = '', $offset = null, $query_type='')
+	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='')
 	{
 		//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset, \$query_type=$query_type<br>";
 		$query = ldap::quote(strtolower($query));
@@ -611,7 +611,7 @@ class accounts_backend
 			}
 			elseif(is_numeric($start))
 			{
-				if (!($maxmatches = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatches = 15;
+				if (!($maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatchs = 15;
 
 				return array_slice($sortedAccounts, $start, $maxmatchs);
 			}
