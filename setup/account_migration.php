@@ -74,7 +74,7 @@ while(($row = $GLOBALS['egw_setup']->db->row(true)))
 	$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
 }
 $to = $GLOBALS['egw_info']['server']['account_repository'];
-if (!$to && !($to = $GLOBALS['egw_info']['server']['auth_type']))
+if (!$to || !($to = $GLOBALS['egw_info']['server']['auth_type']))
 {
 	$to = 'sql';
 }
@@ -191,6 +191,8 @@ else	// do the migration
 				// maybe we should change sql to store passwords identical to ldap prefixed with {hash}
 				$accounts[$account_id]['account_passwd'] = $accounts[$account_id]['account_pwd'];
 			}
+			unset($accounts[$account_id]['person_id']);
+
 			if (!$GLOBALS['egw']->accounts->save($accounts[$account_id]))
 			{
 				echo '<p>'.lang('Creation of %1 in %2 failed !!!',lang('User')." $account_id ({$accounts[$account_id]['account_lid']})",$target)."</p>\n";
