@@ -291,9 +291,13 @@ class accounts_backend
 	{
 		//echo "<p>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
 		$GLOBALS['egw']->acl->delete_repository('phpgw_group',$gid);
-		foreach($members as $id)
+		
+		if (is_array($members))
 		{
-			$GLOBALS['egw']->acl->add_repository('phpgw_group',$gid,$id,1);
+			foreach($members as $id)
+			{
+				$GLOBALS['egw']->acl->add_repository('phpgw_group',$gid,$id,1);
+			}
 		}
 	}
 
