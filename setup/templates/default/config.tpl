@@ -165,7 +165,7 @@
    </tr>
    <tr class="row_off">
     <td>{lang_Password_for_SMTP-authentication}:</td>
-    <td><input name="newsettings[smtp_auth_passwd]" value="{value_smtp_auth_passwd}"></td>
+    <td><input type="password" name="newsettings[smtp_auth_passwd]" value="{value_smtp_auth_passwd}"></td>
    </tr>
    <tr class="row_on">
     <td colspan="2">&nbsp;</td>
