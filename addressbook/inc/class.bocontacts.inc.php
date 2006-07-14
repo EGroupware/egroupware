@@ -319,7 +319,14 @@ class bocontacts extends socontacts
 			}
 		}
 		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto']);
-
+		
+		// set freebusy_uri for accounts
+		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'])
+		{
+			static $fb_url;
+			if (!$fb_url && @is_dir(EGW_SERVER_ROOT.'/calendar/inc')) $fb_url = ExecMethod('calendar.bocal.freebusy_url','');
+			if ($fb_url) $data['freebusy_uri'] = $fb_url.urlencode($GLOBALS['egw']->accounts->id2name($data['account_id']));
+		}
 		return $data;
 	}
 	
