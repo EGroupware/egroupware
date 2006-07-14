@@ -170,6 +170,9 @@ class accounts_backend
 			if (!isset($to_write['account_pwd'])) $to_write['account_pwd'] = '';	// is NOT NULL!
 			if (!isset($to_write['account_status'])) $to_write['account_status'] = '';	// is NOT NULL!
 
+			// postgres requires the auto-id field to be unset!
+			if (isset($to_write['account_id']) && !$to_write['account_id']) unset($to_write['account_id']);
+
 			if (!in_array($to_write['account_type'],array('u','g')) ||
 				!$this->db->insert($this->table,$to_write,false,__LINE__,__FILE__)) return false;
 				
