@@ -74,7 +74,7 @@
 			0 => 0,		// undefined
 			9 => 1,	8 => 1, 7 => 1, 6 => 1,	// low
 			5 => 2,		// normal
-			4 => 3, 3 => 3, 2 => 3, 1 => 3,	// high
+			4 => 3, 2 => 3, 3 => 3, 1 => 3,	// high
 		);
 		
 		/**
@@ -98,6 +98,14 @@
 			MCAL_RECUR_MONTHLY_WDAY => 'MP',	// BYDAY={1..5}{MO..SO}
 			MCAL_RECUR_YEARLY       => 'YM',
 		);
+		
+		/**
+		 * manufacturer and name of the sync-client
+		 *
+		 * @var string
+		 */
+		var $productManufacturer = 'file';
+		var $productName = '';
 
 		/**
 		 * Exports one calendar event to an iCalendar item
@@ -318,7 +326,7 @@
 				}
 				
 				$attributes['UID'] = $eventGUID;
-	
+
 				foreach($attributes as $key => $value)
 				{
 					foreach(is_array($value) ? $value : array($value) as $valueID => $valueData)
@@ -673,6 +681,10 @@
 
 		function setSupportedFields($_productManufacturer='file', $_productName='')
 		{
+			// save them vor later use
+			$this->productManufacturere = $_productManufacturer;
+			$this->productName = $_productName;
+
 			$defaultFields = array('public' => 'public', 'description' => 'description', 'end' => 'end',
 				'start' => 'start', 'location' => 'location', 'recur_type' => 'recur_type',
 				'recur_interval' => 'recur_interval', 'recur_data' => 'recur_data', 'recur_enddate' => 'recur_enddate',
@@ -904,7 +916,14 @@
 								$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
 								break;
 							case 'PRIORITY':
-	 							$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
+								if ($this->productManufacturer == 'nexthaus corporation')
+								{
+									$vcardData['priority'] = $attributes['value'] == 1 ? 3 : 2; // 1=high, 2=normal
+								}
+								else
+								{
+	 								$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
+								}
 	 							break;
 	 						case 'CATEGORIES':
 	 							$vcardData['category'] = array();
@@ -1036,5 +1055,57 @@
 			}
 			return false;
 		}
+		
+		/**
+		 * Create a freebusy vCal for the given user(s)
+		 *
+		 * @param int $user account_id
+		 * @param mixed $end=null end-date, default now+1 month
+		 * @return string
+		 */
+		function freebusy($user,$end=null)
+		{
+			if (!$end) $end = $this->now_su + 100*DAY_s;	// default next 100 days
+			
+			$vcal = &new Horde_iCalendar;
+			$vcal->setAttribute('PRODID','-//eGroupWare//NONSGML eGroupWare Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
+				strtoupper($GLOBALS['egw_info']['user']['preferences']['common']['lang']));
+			$vcal->setAttribute('VERSION','2.0');
+
+			$vfreebusy = Horde_iCalendar::newComponent('VFREEBUSY',$vcal);
+			$parameters = array(
+				'ORGANIZER' => $GLOBALS['egw']->translation->convert(
+					$GLOBALS['egw']->accounts->id2name($user,'account_firstname').' '.
+					$GLOBALS['egw']->accounts->id2name($user,'account_lastname'),
+					$GLOBALS['egw']->translation->charset(),'utf-8'),
+			);
+			foreach(array(
+				'URL' => $this->freebusy_url($user),
+				'DTSTART' => $this->date2ts($this->now_su,true),	// true = server-time
+				'DTEND' => $this->date2ts($end,true),	// true = server-time
+			  	'ORGANIZER' => $GLOBALS['egw']->accounts->id2name($user,'account_email'),
+				'DTSTAMP' => time(),
+			) as $attr => $value)
+			{
+				$vfreebusy->setAttribute($attr, $value, $parameters[$name]);
+			}
+			foreach(parent::search(array(
+				'start' => $this->now_su,
+				'end'   => $end,
+				'users' => $user,
+				'date_format' => 'server',
+				'show_rejected' => false,
+			)) as $event)
+			{
+				if ($event['non_blocking']) continue;
+
+				$vfreebusy->setAttribute('FREEBUSY',array(array(
+					'start' => $event['start'],
+					'end' => $event['end'],
+				)));
+			}
+			$vcal->addComponent($vfreebusy);
+
+			return $vcal->exportvCalendar();
+		}
 	}
-?>
