@@ -15,7 +15,8 @@
 
 	/* $Id$ */
 
-	ExecMethod('calendar.bocal.check_set_default_prefs');
+	$bocal =& CreateObject('calendar.bocal');
+	$bocal->check_set_default_prefs();
 
 	$default = array(
 		'day'          => lang('Dayview'),
@@ -121,11 +122,7 @@
 //		'private+group'  => lang('private and group public'),
 //		'public+group'   => lang('global public and group public')
 	);
-	$freebusy_url = $GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.$GLOBALS['egw_info']['user']['account_lid'].'&password='.$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw'];
-	if ($freebusy_url[0] == '/')
-	{
-		$freebusy_url = ($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'].$freebusy_url;
-	}
+	$freebusy_url = $bocal->freebusy_url($GLOBALS['egw_info']['user']['account_lid'],$GLOBALS['egw_info']['user']['preferences']['calendar']['freebusy_pw']);
 	$freebusy_help = lang('Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.','<a href="'.$freebusy_url.'" target="_blank">'.$freebusy_url.'</a>');
 
 	$GLOBALS['settings'] = array(
@@ -329,7 +326,7 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
-/* disabled free/busy stuff til it gets rewritten with new Horde iCal classes -- RalfBecker 2006/03/03
+// disabled free/busy stuff til it gets rewritten with new Horde iCal classes -- RalfBecker 2006/03/03
 		'freebusy' => array(
 			'type'  => 'check',
 			'label' => 'Make freebusy information available to not loged in persons?',
@@ -349,5 +346,4 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		)
-*/
 	);

@@ -1685,6 +1685,22 @@ class bocal
 			$GLOBALS['egw']->preferences->save_repository(False,'default');
 		}
 	}
+	
+	/**
+	 * Get the freebusy URL of a user
+	 *
+	 * @param int/string $user account_id or account_lid
+	 * @param string $pw=null password
+	 */
+	function freebusy_url($user,$pw=null)
+	{
+		if (is_numeric($user)) $user = $GLOBALS['egw']->accounts->id2name($user);
+
+		return (!$GLOBALS['egw_info']['server']['webserver_url'] || $GLOBALS['egw_info']['server']['webserver_url']{0} == '/' ?
+			($_SERVER['HTTPS'] ? 'https://' : 'http://').$_SERVER['HTTP_HOST'] : '').
+			$GLOBALS['egw_info']['server']['webserver_url'].'/calendar/freebusy.php?user='.urlencode($user).
+			($pw ? '&password='.urlencode($pw) : '');
+	}
 }
 
 if (!function_exists('array_intersect_key'))	// php5.1 function
