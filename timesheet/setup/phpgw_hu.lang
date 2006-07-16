@@ -1,7 +1,7 @@
 2 month ago	timesheet	hu	2 hónappal korábban
 2 years ago	timesheet	hu	2 évvel korábban
 3 years ago	timesheet	hu	3 évvel korábban
-actions	timesheet	hu	Mûveletek
+actions	timesheet	hu	M?veletek
 by	timesheet	hu	by
 create new links	timesheet	hu	Új hivatkozás létrehozása
 delete this entry	timesheet	hu	Bejegyzés törlése
@@ -34,7 +34,7 @@ sum %1:	timesheet	hu	Összesen %1:
 this month	timesheet	hu	Folyó hónap
 this week	timesheet	hu	Folyó hét
 this year	timesheet	hu	Folyó év
-timesheet	common	hu	Idõkártya
+timesheet	common	hu	Regiszter
 unitprice	timesheet	hu	Egységár
 view this entry	timesheet	hu	Bejegyzés megtekintése
 week	timesheet	hu	Hét

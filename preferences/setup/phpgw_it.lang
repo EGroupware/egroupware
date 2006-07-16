@@ -7,6 +7,7 @@ a theme defines the colors and fonts used by the template.	preferences	it	Un Tem
 acl grants have been updated	preferences	it	Le autorizzazioni ACL sono state aggiornate
 any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	it	Ogni lista in eGroupWare visualizzerà questo numero di voci o di linee per pagina.<br>Un numero elevato rallenta la visualizzazione della pagina, troppo poche ti costringono ad un lavoro aggiuntivo.
 are you sure you want to delete this category ?	preferences	it	Sei sicuro di voler eliminare questa categoria?
+change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	it	Modifica la password di un utente passando la vecchia e nuova password. Restituisce TRUE se ha successo, FALSE se fallisce.
 change your password	preferences	it	Cambia la tua password
 change your profile	preferences	it	Cambia il tuo profilo
 change your settings	preferences	it	Cambia le tue impostazioni
@@ -22,6 +23,7 @@ description can not exceed 255 characters in length !	preferences	it	La descrizi
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	it	Preferisci il formato a 24 ore, o a 12 ore con l'aggiunta di am/pm?
 edit custom fields	preferences	it	modifica campi personalizzati
 enter your new password	preferences	it	Inserisci la tua nuova password
+enter your old password	preferences	it	Inserisci la tua vecchia password
 error: there was a problem finding the preference file for %1 in %2	preferences	it	Errore: c'è stato un problema nel trovare il file delle preferenze per %1 in %2
 failed to change password.  please contact your administrator.	preferences	it	Impossibile cambiare la password. Prego contatta l'amministratore.
 forced preferences	preferences	it	Preferenze Forzate
@@ -41,10 +43,12 @@ language	preferences	it	Lingua
 max matches per page	preferences	it	Numero massimo di risultati per pagina
 max number of icons in navbar	preferences	it	Numero massimo di icone nella barra di navigazione
 no default	preferences	it	Nessun predefinito
+note: this feature does *not* change your email password. this will	preferences	it	nota: Questa funzione *non* cambia la tua password email.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	it	Nota: Questo *NON* cambia la vostra password di email. Dovrà essere fatto manualmente.
 please, select a new theme	preferences	it	Per favore, selezionare un nuovo tema
 popup with search	preferences	it	Popup con ricerca
 re-enter your password	preferences	it	Reinserisci la password
+read prefs for the specified application.	preferences	it	Legge le preferenze per l'applicazione specificata.
 select different theme	preferences	it	Seleziona un tema differente
 select one	preferences	it	Seleziona uno
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	it	Seleziona la lingua dei testi e dei messaggi di eGroupWare.<br>Alcune lingue non contengono tutti i messaggi, in quel caso rimarranno in inglese.
@@ -60,6 +64,7 @@ show text on navigation icons	preferences	it	Mostra testo nelle icone di navigaz
 show_more_apps	common	it	Visualizza altre applicazioni
 text only	preferences	it	Solo Testo
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	it	L'applicazione predefinita partirà quando entri in eGroupWare o premi sull'icona della homepage.<br>Puoi avere più di una applicazione visualizzata in homepage, se non scegli un'applicazione specifica (dovrà esser configurato nelle preferenze di ogni applicazione).
+the old password is not correct	preferences	it	La vecchia password non è corretta.
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	it	La selectbox visualizza tutti gli utenti disponibili (può essere molto lenta nelle grandi installazioni con molto utenti). Il popup può cercare gli utenti per nome o gruppo.
 the two passwords are not the same	preferences	it	Le due password non sono uguali
 theme (colors/fonts) selection	preferences	it	Selezione tema (colori/caratteri)
@@ -69,9 +74,9 @@ use default	preferences	it	Usa il predefinito
 users choice	preferences	it	Scelta dell'utente
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	it	Quando dici sì i pulsanti Home e Uscita sono presentati come applicazioni nella barra principale superiore.
 which currency symbol or name should be used in egroupware.	preferences	it	Quale simbolo monetario o nome deve essere usato in eGroupWare.
+write prefs for the specified application.	preferences	it	Scrive le preferenze per l'applicazione selezionata.
 you can show the applications as icons only, icons with app-name or both.	preferences	it	Puoi visualizzare le applicazioni come icone, icone con nome o entrambi.
 you do not have permission to set acl's in this mode!	preferences	it	Non hai il permesso di stabilire i permessi ACL in questa modo!
-you do not have permission to set acl\'s in this mode!	preferences	it	Non sei autorizzato ad impostare l'ACL in questo modo!
 you must enter a password	preferences	it	Devi inserire una password
 your current theme is: %1	preferences	it	il tuo tema attuale è: %1
 your preferences	preferences	it	Preferenze personali

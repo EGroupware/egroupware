@@ -5,6 +5,7 @@
 a non blocking event will not conflict with other events	calendar	it	Un evento non bloccante non sarà in conflitto con altri eventi
 accept or reject an invitation	calendar	it	Accetta o o rifiuta un invito
 accepted	calendar	it	Accettato
+access denied to the calendar of %1 !!!	calendar	it	Accesso negato all'agenda di %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	it	Azione che ha causato la notifica: Aggiunto, Cancellato, Accettato, Rifiutato, ...
 actions	calendar	it	Azioni
 add alarm	calendar	it	Aggiungi Allarme
@@ -33,6 +34,7 @@ busy	calendar	it	occupato
 by	calendar	it	da
 calendar event	calendar	it	Evento in Agenda
 calendar holiday management	admin	it	Gestione Festività Agenda
+calendar menu	calendar	it	Menù Agenda
 calendar preferences	calendar	it	Preferenze Agenda
 calendar settings	admin	it	Impostazioni Agenda
 calendar-fieldname	calendar	it	Campi-Agenda
@@ -61,7 +63,6 @@ default calendar filter	calendar	it	Filtro agenda predefinito
 default calendar view	calendar	it	Vista agenda predefinita
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	it	Lunghezza predefinita dei nuovi eventi. La lunghezza è in minuti, es. 60 per 1 ora.
 default week view	calendar	it	Vista settimanale predefinita
-defines the size in minutes of the lines in the day view.	calendar	it	Definisci la lunghezza in minuti delle linee nella vista giornaliera.
 delete series	calendar	it	Cancella serie
 delete this alarm	calendar	it	Cancella questa sveglia
 delete this event	calendar	it	Cancella questo evento
@@ -69,6 +70,7 @@ delete this exception	calendar	it	Cancella questa eccezione
 delete this series of recuring events	calendar	it	Cancella questa serie di eventi ricorrenti
 disinvited	calendar	it	Disinvitato
 display status of events	calendar	it	Visualizza lo stato per gli Eventi
+displayed view	calendar	it	vista mostrata
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	it	Visualizzare la tua vista agenda predefinita sulla pagina iniziale (la pagina che appare quando entri in eGroupWare o clicchi sull'icona HOME) ?
 do you want a weekview with or without weekend?	calendar	it	Vuoi una vista settimanale con o senza weekend?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	it	Vuoi una notifica per i nuovi appuntamenti o per quelli cambiati? Sarai avvertito dei cambiamenti da te effettuati.<br>Puoi limitare la notifica su alcuni cambiamenti. TUTTE LE VOCI include tutte le notifiche elencate sopra di esso. TUTTE LE MODIFICHE include il cambiamento del titolo, della descrizione, dei partecipanti, ma non delle risposte dei partecipanti. Se il creatore dell'evento richiede ogni notifica, avrà sempre le risposte dei partecipanti sia gli accetti che i rifiuti.
@@ -110,9 +112,11 @@ filename of the download	calendar	it	Nome file del download
 find free timeslots where the selected participants are availible for the given timespan	calendar	it	Trova spazi di tempo libero in cui tutti i partecipanti sono disponibili per il periodo stabilito
 firstname of person to notify	calendar	it	Nome della persona da avvisare
 for	calendar	it	per
+for which views should calendar show distinct lines with a fixed time interval.	calendar	it	Per quali viste Agenda deve mostrare linee distinte con un intervallo fisso.
 format of event updates	calendar	it	Formato degli aggiornamenti degli eventi
 forward half a month	calendar	it	avanti metà mese
 forward one month	calendar	it	avanti un mese
+four days view	calendar	it	vista quattro giorni
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	it	libero/occupato: Utente '%1' sconosciuto, password errata o non disponibile agli utenti non loggati !!!
 freetime search	calendar	it	Ricerca Tempo libero
 fri	calendar	it	Ven
@@ -121,8 +125,11 @@ fullname of person to notify	calendar	it	Nome completo della persona da avvisare
 general	calendar	it	Generale
 global public and group public	calendar	it	Pubblico Globale e Pubblico per il Gruppo
 global public only	calendar	it	Solo Pubblico Globale
+group invitation	calendar	it	Invito di gruppo
 group planner	calendar	it	Pianificatore di Gruppo
 group public only	calendar	it	Solo Pubblico per il Gruppo
+groupmember(s) %1 not included, because you have no access.	calendar	it	Membro(i) del gruppo %1 non incluso(i), perché non hai accesso.
+h	calendar	it	h
 here is your requested alarm.	calendar	it	la tua richiesta di allarme.
 high priority	calendar	it	priorità alta
 holiday	calendar	it	Festività
@@ -130,6 +137,7 @@ holiday management	calendar	it	Gestione Festività
 holidays	calendar	it	Festività
 hours	calendar	it	ore
 how far to search (from startdate)	calendar	it	quanto lontano cercare (dalla data iniziale)
+how many minutes should each interval last?	calendar	it	Quanti minuti deve durare ogni intervallo?
 ical	calendar	it	iCal
 ical / rfc2445	calendar	it	iCal / rfc2445
 ical export	calendar	it	Esportazione iCal
@@ -140,12 +148,12 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	it	Se non stabilisci una password qui, l'informazione sarà disponibile a chiunque conosca l'URL!!!
 ignore conflict	calendar	it	Ignora Conflitto
 import	calendar	it	Importa
-import csv-file	calendar	it	Importa File-CSV
+import csv-file	common	it	Importa File-CSV
 interval	calendar	it	Intervallo
-intervals in day view	calendar	it	Intervallo nella Vista giornaliera
 invalid email-address "%1" for user %2	calendar	it	Indirizzo email "%1" non valido per utente %2
 last	calendar	it	ultimo
 lastname of person to notify	calendar	it	Cognome della persona da avvisare
+length of the time interval	calendar	it	Lunghezza dell'intervallo di tempo
 link to view the event	calendar	it	Link per visualizzare l'evento
 links	calendar	it	Collegamenti
 links, attachments	calendar	it	Collegamenti, Allegati
@@ -275,6 +283,7 @@ updated	calendar	it	Aggiornato
 use end date	calendar	it	Usa data di termine
 use the selected time and close the popup	calendar	it	utilizza l'ora selezionata e chiudi popup
 view this event	calendar	it	Visualizza questo evento
+views with fixed time intervals	calendar	it	Viste con intervalli di tempo fissi
 wed	calendar	it	Mer
 week	calendar	it	Settimana
 weekday starts on	calendar	it	La settimana inizia di
@@ -301,4 +310,3 @@ you need to select an ical file first	calendar	it	Devi prima selezionare un file
 you need to set either a day or a occurence !!!	calendar	it	Impostare un giorno o una ricorrenza !!!
 your meeting scheduled for %1 has been canceled	calendar	it	Il tuo meeting fissato per il %1 è stato cancellato
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	it	Il tuo meeting fissato per il %1 è stato spostato al %2
-h	calendar	it	h

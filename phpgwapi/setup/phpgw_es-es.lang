@@ -652,7 +652,7 @@ password could not be changed	common	es-es	No se pudo cambiar la contraseña
 password has been updated	common	es-es	Su contraseña ha sido actualizada
 password must contain at least %1 lowercase letters	common	es-es	La contraseña debe contener al menos %1 letras minúsculas
 password must contain at least %1 numbers	common	es-es	La contraseña debe contener al menos %1 números
-password must contain at least %1 special charactars	common	es-es	La contraseña debe contener al menos %1 caracteres especiales
+password must contain at least %1 special characters	common	es-es	La contraseña debe contener al menos %1 caracteres especiales
 password must contain at least %1 uppercase letters	common	es-es	La contraseña debe contener al menos %1 letras mayúsculas
 password must have at least %1 characters	common	es-es	La contraseña debe tener al menos %1 caracteres
 paste	htmlarea-ContextMenu	es-es	Pegar

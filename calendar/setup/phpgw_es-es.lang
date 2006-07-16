@@ -63,7 +63,6 @@ default calendar filter	calendar	es-es	Filtro por defecto del calendario
 default calendar view	calendar	es-es	Vista por defecto del calendario
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	es-es	Longitud predeterminada de los eventos nuevos. La longitud es en minutos, ej. 60 = 1 hora.
 default week view	calendar	es-es	Vista semanal predeterminada
-defines the size in minutes of the lines in the day view.	calendar	es-es	Define el tamaño en minutos de las línes de la vista de diario.
 delete series	calendar	es-es	Borrar series
 delete this alarm	calendar	es-es	Borrar esta alarma
 delete this event	calendar	es-es	Borrar este evento
@@ -113,9 +112,11 @@ filename of the download	calendar	es-es	Nombre de fichero de la descarga
 find free timeslots where the selected participants are availible for the given timespan	calendar	es-es	Buscar márgenes de tiempo libres donde los participantes seleccionados estén disponibles para las horas indicadas
 firstname of person to notify	calendar	es-es	Nombre de pila de la persona a notificar
 for	calendar	es-es	para
+for which views should calendar show distinct lines with a fixed time interval.	calendar	es-es	Para qué vistas debe mostrar el calendario distintas líneas con un intervalo fijo de tiempo.
 format of event updates	calendar	es-es	Formato de las actualizaciones de eventos
 forward half a month	calendar	es-es	medio mes hacia adelante
 forward one month	calendar	es-es	un mes hacia adelante
+four days view	calendar	es-es	vista de cuatro días
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	es-es	libre-ocupado: Usuario desconocido "%1", contraseña incorrecta o no está disponible
 freetime search	calendar	es-es	Buscar en el tiempo libre
 fri	calendar	es-es	Vie
@@ -128,6 +129,7 @@ group invitation	calendar	es-es	Invitación de grupo
 group planner	calendar	es-es	Planificación de grupo
 group public only	calendar	es-es	Grupo público solamente
 groupmember(s) %1 not included, because you have no access.	calendar	es-es	Los miembros del grupo %1 no están incluidos, porque no tiene acceso.
+h	calendar	es-es	h
 here is your requested alarm.	calendar	es-es	Aquí está la alama solicitada
 high priority	calendar	es-es	prioridad alta
 holiday	calendar	es-es	Festivo
@@ -135,6 +137,7 @@ holiday management	calendar	es-es	Gestión de festivos
 holidays	calendar	es-es	Festivos
 hours	calendar	es-es	horas
 how far to search (from startdate)	calendar	es-es	cuánto buscar (desde la fecha de inicio)
+how many minutes should each interval last?	calendar	es-es	¿Cuántos minutos debe durar cada intervalo?
 ical	calendar	es-es	iCal
 ical / rfc2445	calendar	es-es	iCal / rfc2445
 ical export	calendar	es-es	Exportar iCal
@@ -147,10 +150,10 @@ ignore conflict	calendar	es-es	Ignorar conflicto
 import	calendar	es-es	Importar
 import csv-file	common	es-es	Importar fichero CSV
 interval	calendar	es-es	Intervalo
-intervals in day view	calendar	es-es	Intervalos en la vista de día
 invalid email-address "%1" for user %2	calendar	es-es	La dirección de correo "%1" no es válida para el usuario %2
 last	calendar	es-es	último
 lastname of person to notify	calendar	es-es	Apellido de la persona a la que notificar
+length of the time interval	calendar	es-es	Longitud del intervalo de tiempo
 link to view the event	calendar	es-es	Vínculo para ver el evento
 links	calendar	es-es	Enlaces
 links, attachments	calendar	es-es	Enlaces, adjuntos
@@ -173,7 +176,6 @@ no filter	calendar	es-es	Sin filtro
 no matches found	calendar	es-es	No se encontraron coincidencias
 no response	calendar	es-es	Sin respuesta
 non blocking	calendar	es-es	no bloquea
-not	calendar	es-es	no
 notification messages for added events	calendar	es-es	Mensajes de notificación para eventos añadidos
 notification messages for canceled events	calendar	es-es	Mensajes de notificación para eventos cancelados
 notification messages for disinvited participants	calendar	es-es	Mensajes de notificación para participantes que dejan de ser invitados
@@ -246,7 +248,6 @@ show list of upcoming events	calendar	es-es	Mostrar la lista de eventos próximos
 show this month	calendar	es-es	Mostrar este mes
 show this week	calendar	es-es	Mostrar esta semana
 single event	calendar	es-es	evento simple
-site configuration	calendar	es-es	configuración del sitio
 start	calendar	es-es	Inicio
 start date/time	calendar	es-es	Fecha/Hora inicio
 startdate / -time	calendar	es-es	Fecha de incio / -hora
@@ -282,6 +283,7 @@ updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
 use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana
 view this event	calendar	es-es	Ver este evento
+views with fixed time intervals	calendar	es-es	Vistas con intervalos de tiempo fijos
 wed	calendar	es-es	Mié
 week	calendar	es-es	Semana
 weekday starts on	calendar	es-es	La semana empieza en
@@ -308,4 +310,3 @@ you need to select an ical file first	calendar	es-es	Necesita seleccionar antes 
 you need to set either a day or a occurence !!!	calendar	es-es	Debe indicar un día o una ocurrencia
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	es-es	Su reunión programada para %1 ha sido reprogramada para %2
-h	calendar	es-es	h

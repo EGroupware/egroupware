@@ -1,29 +1,44 @@
+%1 - %2 of %3 user accounts	admin	hu	%1 - %2 felhasználói azonosító a %3 fiókból
+%1 - %2 of %3 user groups	admin	hu	%1 - %2 felhasználói csoport a %3 csoportból
+%1 acl records of not (longer) existing accounts deleted.	admin	hu	%1 ACL bejegyzés törölve a tovább már nem létezõ fiókokhoz.
+%1 not found or not executable !!!	admin	hu	%1 nem található, vagy nem futtatható!
+(default no, leave it off if you dont use it)	admin	hu	(alapértelmezésként Nem, hagyja ki ha nem használja)
+(stored password will not be shown here)	admin	hu	(a tárolt jelszó  nem fog itt megjelenni)
+(to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	hu	(Új alkalmazás telepítéséhez használja a<br><a href="setup/" target="setup">Setup</a> [Manage Applications] !!!)
+-  type	admin	hu	- típus
+accesslog and bruteforce defense	admin	hu	Log elérése és brute force védelem
 account active	admin	hu	Hozzáférés aktív
 account has been created	common	hu	Az azonosító létrehozva
 account has been deleted	common	hu	Az azonosító törölve
-account has been updated	common	hu	Az azonosító frissült
+account has been updated	common	hu	Az azonosító frissítve
 account list	admin	hu	Azonosítók listája
 account permissions	admin	hu	Azonosító jogosultságai
 account preferences	admin	hu	Azonosító beállításai
+acl manager	admin	hu	ACL kezelõ
+acl rights	common	hu	ACL jogok
 action	admin	hu	Mûvelet
 activate wysiwyg-editor	admin	hu	WYSIWYG-szerkesztõ engedélyezése
 add a category	admin	hu	kategória hozzáadása
 add a group	admin	hu	csoport hozzáadása
+add a new account.	admin	hu	Új azonosító hozzáadása
 add a subcategory	admin	hu	alkategória hozzáadása
 add a user	admin	hu	felhasználó hozzáadása
 add account	admin	hu	Azonosító hozzáadása
 add application	admin	hu	Alkalmazás hozzáadása
-add global category	admin	hu	Általános kategória hozzáadása
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	hu	Automatikusan létrehozott felhasználók ebbe a csoportba tartoznak ('Default' lesz az alapértelmezett, ha ez a mezõ üresen van)
+add global category	admin	hu	Globális kategória hozzáadása
+add global category for %1	admin	hu	Globális kategória hozzáadása ehhez %1
 add group	admin	hu	Csoport hozzáadása
-add new account	admin	hu	Hozzáférést hozzáad
+add new account	admin	hu	Új azonosító hozzáadása
 add new application	admin	hu	Alkalmazás hozzáadása
+add peer server	admin	hu	Add Peer Server
 add sub-category	admin	hu	Alkategória hozzáadása
 admin email	admin	hu	Admin email
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	hu	Ezek az adminisztrátori emailcímek (vesszével elválasztva) lesznek értesítve a blokkolt IP-címekrõl és azonosítókról (üresen hagyva nem lesz értesítés)
 admin name	admin	hu	Adminisztrátor neve
 administration	admin	hu	Adminisztráció
 admins	admin	hu	Adminisztrátorok
-advanced options	admin	hu	További beállítások
+advanced options	admin	hu	Haladó beállítások
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az azonosító blokkolt (alapértelmezésben 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	hu	Mennyi sikertelen belépési kísérlet után legyen az IP-cím blokkolt (alapértelmezésben 3)?
 aliases	admin	hu	Álnevek
@@ -33,12 +48,15 @@ allow anonymous access to this app	admin	hu	Engedélyezi az anonim hozzáféréseket
 alternate email address	admin	hu	alternatív emailcím
 anonymous user	admin	hu	Név nélküli felhasználó
 anonymous user (not shown in list sessions)	admin	hu	Anonim felhasználó (nem jelenik meg a listázáskor)
+anonymous user does not exist!	admin	hu	Anonymous felhasználó nem létezik!
+anonymous user has no run-rights for the application!	admin	hu	Anonymous felhasználónak nincs futtatási joga ehhez az alkalmazáshoz!
 appearance	admin	hu	Megjelenés
 application	admin	hu	Alkalmazás
 application name	admin	hu	Alkalmazás neve
 application title	admin	hu	Alkalmazás címe
 applications	admin	hu	Alkalmazások
 applications list	admin	hu	Alkalmazások listája
+applies the changes	admin	hu	változások végrehajtása
 are you sure you want to delete the application %1 ?	admin	hu	Valóban törlésre kerüljön ez az alkalmazás: %1 ?
 are you sure you want to delete this account ?	admin	hu	Biztosan törölésre kerüljön ez az azonosító?
 are you sure you want to delete this application ?	admin	hu	Biztosan törölésre kerüljön ez az alkalmazás?
@@ -48,15 +66,24 @@ are you sure you want to delete this group ?	admin	hu	Biztosan törölni akarja ez
 are you sure you want to delete this server?	admin	hu	Biztosan törlésre kerüljön ez a szolgáltatás?
 are you sure you want to kill this session ?	admin	hu	Biztosan ki akarja tiltani ezt a hozzáférést?
 authentication / accounts	admin	hu	Azonosítás / Azonosítók
+back to the list	admin	hu	vissza a listához
 bi-directional	admin	hu	kétirányú
+bottom	admin	hu	legalsó
 can change password	admin	hu	Megváltoztathatja a jelszavát
 categories list	admin	hu	Kategóriák listája
+category %1 has been saved !	admin	hu	%1 kategória elmentve
 category list	admin	hu	Kategórialista
+change acl rights	admin	hu	ACL jogok változtatása
 change config settings	admin	hu	Beállítások megváltoztatása
+change main screen message	admin	hu	Fõ képernyõn megjelenõ üzenet változtatása
+check ip address of all sessions	admin	hu	Összes session IP cím ellenõrzése
+click to select a color	admin	hu	Színválasztás
 color	admin	hu	Szín
 country selection	admin	hu	Ország kiválasztása
 create group	admin	hu	Csoport létrehozása
+creates a new field	admin	hu	Új mezõ létrehozása
 crontab only (recomended)	admin	hu	csak crontab (ajánlott)
+custom fields	admin	hu	Egyedi mezõk
 cyrus imap server	admin	hu	Cyrus IMAP-kiszolgáló
 data	admin	hu	Adat
 day	admin	hu	Nap
@@ -76,15 +103,17 @@ delete the group	admin	hu	csoport törlése
 delete this category	admin	hu	kategória törlése
 delete this group	admin	hu	csoport törlése
 delete this user	admin	hu	felhasználó törlése
-deny access to access log	admin	hu	A hozzáférési naplóhoz történõ hozzáférés letíltva
-deny access to applications	admin	hu	Az alkalmazásokhoz történõ hozzáférés letíltva
-deny access to error log	admin	hu	A hibanaplóhoz történõ hozzáférés letíltva
-deny access to global categories	admin	hu	Az általános kategóriákhoz történõ hozzáférés letíltva
-deny access to groups	admin	hu	A csoportokhoz történõ hozzáférés letíltva
-deny access to phpinfo	admin	hu	A phpinfo()-hoz történõ hozzáférés letíltva
-deny access to site configuration	admin	hu	A webhely beállításaihoz történõ hozzáférés letíltva
-deny access to user accounts	admin	hu	A felhasználói azonosítókhoz történõ hozzáférés letíltva
+deletes this field	admin	hu	Aktuális mezõ törlése
+deny access to access log	admin	hu	A hozzáférési naplóhoz történõ hozzáférés letiltva
+deny access to applications	admin	hu	Az alkalmazásokhoz történõ hozzáférés letiltva
+deny access to error log	admin	hu	A hibanaplóhoz történõ hozzáférés letiltva
+deny access to global categories	admin	hu	Az általános kategóriákhoz történõ hozzáférés letiltva
+deny access to groups	admin	hu	A csoportokhoz történõ hozzáférés letiltva
+deny access to phpinfo	admin	hu	A phpinfo()-hoz történõ hozzáférés letiltva
+deny access to site configuration	admin	hu	A webhely beállításaihoz történõ hozzáférés letiltva
+deny access to user accounts	admin	hu	A felhasználói azonosítókhoz történõ hozzáférés letiltva
 description can not exceed 255 characters in length !	admin	hu	A leírás nem haladhatja meg a 255 karaktert!
+determines the order the fields are displayed	admin	hu	megjelenitett mezõk rendezésének meghatározása
 disable "auto completion" of the login form	admin	hu	Az automatikus kiegészítés tiltása a bejelentkezõképernyõn
 disable wysiwyg-editor	admin	hu	WYSIWYG-szerkesztõ kikapcsolása
 disabled (not recomended)	admin	hu	tiltott (nem ajánlott)
@@ -98,12 +127,16 @@ edit email settings	admin	hu	emailbeállítások szerkesztése
 edit global category	admin	hu	Általános kategória szerkesztése
 edit global category for %1	admin	hu	%1 általános kategória szerkesztése
 edit group	admin	hu	Csoport módosítása
+edit group acl's	admin	hu	csoport ACL szerkesztése
+edit login screen message	admin	hu	Bejelentkezési képernyõn megjelenõ üzenet szerkesztése
+edit main screen message	admin	hu	Fõképernyõn megjelenõ üzenet szerkesztése
 edit table format	admin	hu	Táblázatos formátum szerkesztése
 edit this category	admin	hu	kategória szerkesztése
 edit this group	admin	hu	csoport szerkesztése
 edit this user	admin	hu	felhasználó szerkesztése
 edit user	admin	hu	felhasználó szerkesztése
 edit user account	admin	hu	Felhasználói azonosító szerkesztése
+email account active	admin	hu	email azonosító aktív
 email address	admin	hu	email cím
 enable debug-messages	admin	hu	Hibajelentõ üzenetek engedélyezése
 enable the soap service	admin	hu	SOAP-szolgáltatás engedélyezése
@@ -146,6 +179,8 @@ last login from	admin	hu	utolsó bejelentkezés címe
 last time read	admin	hu	Utolsó olvasás idõpontja
 ldap host	admin	hu	LDAP hoszt
 ldap rootdn	admin	hu	LDAP rootdn
+leaves without saveing	admin	hu	kilépés mentés nélkül
+length<br>rows	admin	hu	Sorok<br>Hossza
 list of current users	admin	hu	aktuális felhasználók listája
 login time	admin	hu	Belépés ideje
 loginid	admin	hu	LoginID
@@ -155,7 +190,9 @@ method	admin	hu	Metódus
 minute	admin	hu	Perc
 mode	admin	hu	Mód
 month	admin	hu	Hónap
+name must not be empty !!!	admin	hu	Név nem lehet üres!!!
 new group name	admin	hu	Új csoport neve
+new name	admin	hu	új név
 new password [ leave blank for no change ]	admin	hu	Új jelszó [ üresen hagyva nem lesz változás ]
 next run	admin	hu	Következõ futtatás
 no algorithms available	admin	hu	nincsenek elérhetõ algoritmusok
@@ -165,23 +202,32 @@ no modes available	admin	hu	nincs elérhetó mód
 no permission to add groups	admin	hu	nincs jogosultság csoportok hozzáadására
 no permission to add users	admin	hu	nincs jogosultság felhasználók hozzáadására
 no permission to create groups	admin	hu	nincs jogosultság csoportok létrehozására
+order	admin	hu	Rendezés
 outbound	admin	hu	kimenõ
 password for smtp-authentication	admin	hu	Jelszó az SMTP-azonosításhoz
 path information	admin	hu	Útvonal-információ
 percent of users that logged out	admin	hu	Rendesen kijelentkezett felhasználók %-ban
+permission denied	admin	hu	Hozzáférés megtagadva
 permissions	admin	hu	Jogok
 permissions this group has	admin	hu	A csoport jogosultságai
 phpinfo	admin	hu	PHP információk
+please enter a name	admin	hu	Kérem adjon meg egy nevet!
+please run setup to become current	admin	hu	Kérem futtassa a setup-ot hogy a változás érvényre jusson.
+please select	admin	hu	Kérem válasszon
 postfix with ldap	admin	hu	Postfix LDAP-vel
+preferences	admin	hu	Tulajdonságok
 primary group	admin	hu	elsõdleges csoport
 quota settings	admin	hu	kvóta beállításai
 quota size in mbyte	admin	hu	kvóta Mbájtokban
 re-enter password	admin	hu	Jelszó újra
+read this list of methods.	admin	hu	Eljárás lista olvasása.
 remove	admin	hu	eltávolítás
 remove all users from this group	admin	hu	Csoport összes felhasználójának törlése
+saves the changes made and leaves	admin	hu	Változás mentése és kilépés
 security	admin	hu	Biztonság
 select permissions this group will have	admin	hu	Válassza ki milyen jogosultságokkal rendelkezzen a csoport
 select users for inclusion	admin	hu	Felhasználók kiválasztása
+selectbox	admin	hu	Kiválasztó doboz
 show 'powered by' logo on	admin	hu	Powered by logó megjelenítése
 show access log	admin	hu	Hozzáférési napló megjelenítése
 show current action	admin	hu	Jelenlegi mûvelet megjelenítése
@@ -205,16 +251,20 @@ that loginid has already been taken	admin	hu	Ez a felhasználónév már foglalt
 the api is current	admin	hu	Az API nem igényel frissítést
 the api requires an upgrade	admin	hu	Az API frissítést igényel
 the login and password can not be the same	admin	hu	A felhasználónév és a jelszó nem egyezhet meg
+the text displayed to the user	admin	hu	a szöveg megjelenítve a felhasználónak
 the two passwords are not the same	admin	hu	A két jelszó nem egyezik
 they must be removed before you can continue	admin	hu	El kell távolítani õket a folytatáshoz
 this application is current	admin	hu	Az alkalmazás nem igényel frissítést
 this application requires an upgrade	admin	hu	Az alkalmazás frissítést igényel
+times	admin	hu	Idõk
+top	admin	hu	Felül
 total records	admin	hu	Összes rekord
 trust level	admin	hu	Bizalmi szint
 trust relationship	admin	hu	Bizalmi viszony
 use cookies to pass sessionid	admin	hu	Használjon sütiket a viszonyazonosító átadásához
 user accounts	admin	hu	Felhasználói hozzáférések
 user groups	admin	hu	Felhasználói csoportok
+users choice	admin	hu	Felhasználó választása
 view access log	admin	hu	Elérési napló megtekintése
 view account	admin	hu	Azonosító megtekintése
 view category	admin	hu	Kategória megtekintése

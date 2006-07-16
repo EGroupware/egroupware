@@ -63,7 +63,6 @@ default calendar filter	calendar	zh-tw	預設行事曆過濾器
 default calendar view	calendar	zh-tw	預設行事曆檢視模式
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	zh-tw	預設建立事件的長度(分鐘)，預設為60=1小時。
 default week view	calendar	zh-tw	預設週曆模式
-defines the size in minutes of the lines in the day view.	calendar	zh-tw	定義行事曆瀏覽時每個時段的分鐘數
 delete series	calendar	zh-tw	刪除連鎖項目
 delete this alarm	calendar	zh-tw	刪除這個警告
 delete this event	calendar	zh-tw	刪除這個事件
@@ -113,9 +112,11 @@ filename of the download	calendar	zh-tw	要下載的檔案名稱
 find free timeslots where the selected participants are availible for the given timespan	calendar	zh-tw	在指定的期間找尋選擇的參與人都有空的時間區塊
 firstname of person to notify	calendar	zh-tw	需要通知的人名
 for	calendar	zh-tw	給
+for which views should calendar show distinct lines with a fixed time interval.	calendar	zh-tw	透過什麼模式檢視時行事曆要以固定時間間隔顯示分隔線。
 format of event updates	calendar	zh-tw	事件更新的格式
 forward half a month	calendar	zh-tw	下半個月
 forward one month	calendar	zh-tw	下個月
+four days view	calendar	zh-tw	四天檢視模式
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	zh-tw	狀態：不知名的使用者'%1'，錯誤的密碼或是目前無法登入！
 freetime search	calendar	zh-tw	時間空檔查詢
 fri	calendar	zh-tw	五
@@ -128,6 +129,7 @@ group invitation	calendar	zh-tw	邀請群組
 group planner	calendar	zh-tw	群組計畫
 group public only	calendar	zh-tw	群組公用
 groupmember(s) %1 not included, because you have no access.	calendar	zh-tw	無法加入群組成員 %1 ，因為您沒有權限。
+h	calendar	zh-tw	時
 here is your requested alarm.	calendar	zh-tw	這是您要求的提醒。
 high priority	calendar	zh-tw	高優先權
 holiday	calendar	zh-tw	假日
@@ -135,6 +137,7 @@ holiday management	calendar	zh-tw	假日管理
 holidays	calendar	zh-tw	假日
 hours	calendar	zh-tw	小時
 how far to search (from startdate)	calendar	zh-tw	搜尋的期間(從開始日期)
+how many minutes should each interval last?	calendar	zh-tw	每個間隔時間持續幾分鐘？
 ical	calendar	zh-tw	iCal
 ical / rfc2445	calendar	zh-tw	iCal / rfc2445
 ical export	calendar	zh-tw	iCal 匯出
@@ -147,10 +150,10 @@ ignore conflict	calendar	zh-tw	忽略重疊的約會
 import	calendar	zh-tw	匯入
 import csv-file	common	zh-tw	匯入CSV逗點分隔檔案
 interval	calendar	zh-tw	間隔
-intervals in day view	calendar	zh-tw	每日瀏覽的間隔
 invalid email-address "%1" for user %2	calendar	zh-tw	錯誤的信箱 "%1" 於使用者 %2
 last	calendar	zh-tw	最後
 lastname of person to notify	calendar	zh-tw	要提醒的人名(姓)
+length of the time interval	calendar	zh-tw	時間間隔的長度
 link to view the event	calendar	zh-tw	事件連結
 links	calendar	zh-tw	連結
 links, attachments	calendar	zh-tw	連結、附加檔案
@@ -173,7 +176,6 @@ no filter	calendar	zh-tw	沒有規則
 no matches found	calendar	zh-tw	沒有找到符合的結果
 no response	calendar	zh-tw	沒有回應
 non blocking	calendar	zh-tw	未鎖定
-not	calendar	zh-tw	否
 notification messages for added events	calendar	zh-tw	新增事件提醒
 notification messages for canceled events	calendar	zh-tw	取消事件提醒
 notification messages for disinvited participants	calendar	zh-tw	拒絕參與事件提醒
@@ -246,7 +248,6 @@ show list of upcoming events	calendar	zh-tw	顯示即將到來的行程
 show this month	calendar	zh-tw	顯示這個月
 show this week	calendar	zh-tw	顯示這一週
 single event	calendar	zh-tw	單一事件
-site configuration	calendar	zh-tw	網站設定
 start	calendar	zh-tw	開始
 start date/time	calendar	zh-tw	開始日期/時間
 startdate / -time	calendar	zh-tw	開始日期 / 時間
@@ -282,6 +283,7 @@ updated	calendar	zh-tw	更新日期
 use end date	calendar	zh-tw	有結束日期
 use the selected time and close the popup	calendar	zh-tw	使用指定的時間並且關閉彈出視窗
 view this event	calendar	zh-tw	檢視這個事件
+views with fixed time intervals	calendar	zh-tw	以固定時間間隔檢視
 wed	calendar	zh-tw	三
 week	calendar	zh-tw	星期
 weekday starts on	calendar	zh-tw	星期開始日
@@ -308,4 +310,3 @@ you need to select an ical file first	calendar	zh-tw	您必須先選擇一個 iC
 you need to set either a day or a occurence !!!	calendar	zh-tw	您必須設定一個日期或是一個期間！
 your meeting scheduled for %1 has been canceled	calendar	zh-tw	您與%1的行程已經取消了
 your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	zh-tw	您與%1的行程已經重新安排到%2
-h	calendar	zh-tw	時

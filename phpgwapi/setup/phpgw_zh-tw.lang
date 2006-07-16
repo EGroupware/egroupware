@@ -14,7 +14,7 @@
 00 (disable)	admin	zh-tw	00 (關閉)
 13 (ntp)	admin	zh-tw	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	zh-tw	-1
-3 number of chars for month-shortcut	jscalendar	zh-tw	-1
+3 number of chars for month-shortcut	jscalendar	zh-tw	2
 80 (http)	admin	zh-tw	80 (http)
 \n tidying up the html source, please wait...	htmlarea-HtmlTidy	zh-tw	\n 整理 HTML 原始碼中，請稍候...
 _delete row	htmlarea-ContextMenu	zh-tw	_刪除列
@@ -722,6 +722,7 @@ reading	common	zh-tw	閱讀中
 redo	tinymce	zh-tw	重做
 redoes your last action	htmlarea	zh-tw	重新執行最後一個動作
 refresh	tinymce	zh-tw	重新整理
+register	common	zh-tw	註冊
 reject	common	zh-tw	拒絕
 remove col	tinymce	zh-tw	移除欄位
 remove selected accounts	common	zh-tw	移除選取的帳號

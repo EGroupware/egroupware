@@ -4,7 +4,7 @@
 %1 start	common	eu	%1 hasi
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	eu	%1eGroupWare%2 web-ean oinarritutako talde lanerako tresna erabiltzaile anitza da
 (shift-)click or drag to change value	jscalendar	eu	Sakatu maiuskula edota arrastatu balioa aldatzeko
-- click on any of the time parts to increase it	jscalendar	eu	- Egin klik edozein zatian handitzeko
+- click on any of the time parts to increase it	jscalendar	eu	- Egin klik edozein zatitan handitzeko
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	eu	-Xaguaren botoia sakatua mantendu edozein zatian aukeraketa azkarrerako
 - or click and drag for faster selection.	jscalendar	eu	- sakatu edo arrastatu aukeraketa azkarrerako
 - or shift-click to decrease it	jscalendar	eu	- sakatu maiuskularekin batera gutxitzeko
@@ -21,11 +21,11 @@ _modify link...	htmlarea-ContextMenu	eu	_Lotura aldatu...
 _remove link...	htmlarea-ContextMenu	eu	_Lotura kendu...
 _table properties...	htmlarea-ContextMenu	eu	_Taularen propietateak...
 a editor instance must be focused before using this command.	tinymce	eu	Editorearen instantzia enfokatu behar da komando hau erabiltzko.
-about	common	eu	Honi buruz
-about %1	common	eu	%1ri buruz
-about egroupware	common	eu	eGroupwareri buruz
-about the calendar	jscalendar	eu	Egutegiari buruz
-about this editor	htmlarea	eu	Editore honi buruz
+about	common	eu	Honi buruzkoak
+about %1	common	eu	%1 honi buruzkoak
+about egroupware	common	eu	eGroupwareri buruzkoak
+about the calendar	jscalendar	eu	Egutegiari buruzkoak
+about this editor	htmlarea	eu	Editore honi buruzkoak
 access	common	eu	Sarbide
 access not permitted	common	eu	Sarrera ez onartua
 account has been created	common	eu	Kontu bat sortu da
@@ -94,14 +94,17 @@ bahrain	common	eu	BAHRAIN
 bangladesh	common	eu	BLANGADESH
 barbados	common	eu	BARBADOS
 baseline	htmlarea-TableOperations	eu	Oinarriko linea
+bcc	common	eu	Bcc
 belarus	common	eu	BELARUS
 belgium	common	eu	BELGIKA
 belize	common	eu	BELIZE
 benin	common	eu	BENIN
 bermuda	common	eu	BERMUDA
+bg color	tinymce	eu	Bg kolorea
 bhutan	common	eu	BHUTAN
 blocked, too many attempts	common	eu	Blokeatuta saiakera gehiegi
 bold	common	eu	Lodia
+bold.gif	common	eu	lodia.gif
 bolivia	common	eu	BOLIBIA
 border	common	eu	Ertza
 border color	tinymce	eu	Ertzaren kolorea
@@ -124,6 +127,7 @@ cameroon	common	eu	CAMEROON
 canada	common	eu	CANADA
 cancel	common	eu	Ezeztatu
 cannot replace %1 because it is a directory	common	eu	%1 ezin da ordezkatu direktorio bat delako
+cant open '%1' for %2	common	eu	Ezin da %1 ireki %2rentzako
 cape verde	common	eu	CAPE VERDE
 caption	common	eu	Epigrafea
 categories	common	eu	Kategoriak
@@ -132,6 +136,7 @@ category	common	eu	Kategoria
 category %1 has been added !	common	eu	Kategoria %1 erantsia izan da
 category %1 has been updated !	common	eu	Kategoria %1 eguneratua izan da
 cayman islands	common	eu	CAIMAN IRLAK
+cc	common	eu	Cc
 cell properties	htmlarea-TableOperations	eu	Gelaxkaren propietateak
 cellpadding	tinymce	eu	Gelaxkaren betegarria
 cellspacing	tinymce	eu	Gelaxken arteko tartea
@@ -148,8 +153,10 @@ check now	common	eu	Egiaztatu orain
 chile	common	eu	CHILE
 china	common	eu	TXINA
 choose a background color	common	eu	Atzeko planoaren kolorea aukeratu
+choose a background color for the icons	common	eu	Aukeratu ikonoen atzeko planorako kolore bat
 choose a background image.	common	eu	Atzeko planoko irudia aukeratu
 choose a background style.	common	eu	Aztzko planoko estiloa aukeratu
+choose a text color for the icons	common	eu	Aukeratu ikonoen testu kolorea
 choose directory to move selected folders and files to.	tinymce	eu	Direktorio bat aukeratu aukeratutako karpeta eta fitxategiak mugitzeko
 choose list style type (for ordered lists)	htmlarea-ListType	eu	Zerrendako estiloa aukeratu ( zerrenda ordenatzeko)
 choose the category	common	eu	Kategoria aukeratu
@@ -454,7 +461,7 @@ link url	tinymce	eu	URL lotura
 list	common	eu	Zerrenda
 list members	common	eu	Zerrendako partaideak
 lithuania	common	eu	LITUANIA
-loading files	tinymce	eu	Fitxategia kargatzen
+loading files	tinymce	eu	Fitxategiak kargatzen
 local	common	eu	Lokal
 login	common	eu	Sartu
 loginid	common	eu	Erabiltzaile izena
@@ -505,12 +512,14 @@ montserrat	common	eu	MONTSERRAT
 morocco	common	eu	MAROKO
 move	tinymce	eu	Eraman
 mozambique	common	eu	MOZAMBIQUE
+multiple	common	eu	anizkoitza
 myanmar	common	eu	NYANMAR
 name	common	eu	Izena
 namibia	common	eu	NAMIBIA
 nauru	common	eu	NAURU
 nepal	common	eu	NEPAL
 netherlands	common	eu	HOLANDA
+netherlands antilles	common	eu	NETHERLANDS ANTILLES
 never	common	eu	Inoiz
 new caledonia	common	eu	CALEDONIA BERRIA
 new entry added sucessfully	common	eu	Sarrera berria egoki txertatu da
@@ -546,11 +555,13 @@ no subject	common	eu	Gaiarik gabe
 none	common	eu	Bat ere ez
 norfolk island	common	eu	NORFOLK IRLAK
 normal	common	eu	Normala
+northern mariana islands	common	eu	NORTHERN MARIANA ISLANDS
 norway	common	eu	NORWAY
 not assigned	common	eu	Esleitu gabe
 note	common	eu	Oharra
 notes	common	eu	Oharrak
 notify window	common	eu	Abisu leihoa
+notify your administrator to correct this situation	common	eu	Zure adaministratzaileari abisatu egoera hau zuzentzeko
 november	common	eu	Azaroa
 october	common	eu	Urria
 ok	common	eu	Onartu
@@ -589,6 +600,7 @@ password could not be changed	common	eu	Pasahitza ezin izan da aldatu
 password has been updated	common	eu	Pasahitza eguneratua izan da
 paste	htmlarea-ContextMenu	eu	Itsatsi
 paste from clipboard	htmlarea	eu	Arbelatik itsatsi
+paste from word	tinymce	eu	Word-etik itsatsi
 path	htmlarea	eu	Ruta
 percent	htmlarea-TableOperations	eu	ehunekotan
 personal	common	eu	Pertsonala

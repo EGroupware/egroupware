@@ -116,6 +116,7 @@ for which views should calendar show distinct lines with a fixed time interval.	
 format of event updates	calendar	sl	Format popravkov dogodka
 forward half a month	calendar	sl	naprej pol meseca
 forward one month	calendar	sl	naprej en mesec
+four days view	calendar	sl	Pogled štirih dni
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sl	Prost/Zaseden: Neznani uporabnik '%1', napačno geslo ali pa ni na voljo neprijavljenim uporabnikom!
 freetime search	calendar	sl	Iskanje prostega termina
 fri	calendar	sl	Pet

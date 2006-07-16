@@ -141,6 +141,8 @@ category %1 has been updated !	common	sl	Osvežena je bila kategorija %1!
 cayman islands	common	sl	KAJMANSKI OTOKI
 cc	common	sl	CC
 cell properties	htmlarea-TableOperations	sl	Lastnosti celice
+cellpadding	tinymce	sl	Razmik med robom in vsebino celice
+cellspacing	tinymce	sl	Razmik med dvema celicama
 center	tinymce	sl	Sredina
 centered	common	sl	na sredini
 central african republic	common	sl	SREDNJEAFRIŠKA REPUBLIKA
@@ -164,6 +166,7 @@ choose the category	common	sl	Izberi kategorijo
 choose the parent category	common	sl	Izberi nadrejeno kategorijo
 christmas island	common	sl	BOŽIČNI OTOK
 class	tinymce	sl	Razred
+cleanup messy code	tinymce	sl	Počisti grdo kodo
 clear	common	sl	Izprazni
 clear form	common	sl	Izprazni formo
 click	common	sl	Klikni
@@ -239,6 +242,7 @@ directory	tinymce	sl	Mapa
 disable internet explorer png-image-bugfix	common	sl	Onemogoči popravek PNG hrošča v IE?
 disable slider effects	common	sl	Onemogoči učinek drsnika
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sl	Onemogoči animirane učinke drsnika ob prikazu menija ob strani? Uporabniki Opere in Konquererja bodo verjetno hoteli to možnost.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogočim izvajanje bugfixscript za Internet Explorer različica 5.5 in višja za prikaz prosojnosti v slikah PNG?
 disabled	common	sl	Onemogočeno
 display %s first	jscalendar	sl	Pokaži najprej %1
 djibouti	common	sl	DŽIBUTI
@@ -286,7 +290,8 @@ error deleting %1 %2 directory	common	sl	Napaka pri brisanju %1 %2 mape
 error renaming %1 %2 directory	common	sl	Napaka ob preimenovanju %1 %2 mape
 estonia	common	sl	ESTONIJA
 ethiopia	common	sl	ETIOPIJA
-exact	common	sl	natančno
+exact	common	sl	Natančno
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sl	Povezava s strežnikom ni uspela oz. strežnik je javil napačen odgovor. Poskusite se ponovno prijaviti. Če vam ne uspe, kontaktirajte skrbnika.
 falkland islands (malvinas)	common	sl	FALKLANDSKO OTOČJE
 faroe islands	common	sl	FERSKO OTOČJE
 fax number	common	sl	faks
@@ -757,6 +762,7 @@ san marino	common	sl	SAN MARINO
 sao tome and principe	common	sl	SAO TOME IN PRINCIPE
 saturday	common	sl	Sobota
 saudi arabia	common	sl	SAVDSKA ARABIJA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sl	Različica Savant2 se razlikuje od ovojnice Savant2. <br/>Ta različica: %1 <br/>Različica Savant: %2
 save	common	sl	Shrani
 search	common	sl	Išči
 search %1 '%2'	common	sl	Išči %1 '%2'
@@ -883,6 +889,7 @@ this is just a template popup	tinymce	sl	To je samo pojavno okno predloge
 this name has been used already	common	sl	To ime je že uporabljeno!
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	sl	To bo zavrglo spremembe in ustavilo črkovalnik. Prosim potrdite.
 thursday	common	sl	Četrtek
+tiled	common	sl	Razpostavljeno
 time	common	sl	Čas
 time selection:	jscalendar	sl	Izbor časa:
 time zone	common	sl	Časovni pas
@@ -945,8 +952,8 @@ use button to search for project	common	sl	Uporabi gumb za iskanje projekta
 use ctrl and/or shift to select multiple items.	tinymce	sl	Za večkratno izbiro uporabite tipko Ctrl in/ali Shift
 use ctrl+v on your keyboard to paste the text into the window.	tinymce	sl	Uporabite Ctrl+V da prilepite besedil v okno.
 user	common	sl	Uporabnik
-user accounts	common	sl	uporabniški račun
-user groups	common	sl	uporabniška skupina
+user accounts	common	sl	Uporabniški račun
+user groups	common	sl	Uporabniška skupina
 username	common	sl	Uporabniško ime
 users	common	sl	uporabniki
 users choice	common	sl	Uporabnikov izbor

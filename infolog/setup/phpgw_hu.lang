@@ -3,6 +3,7 @@
 - subprojects from	infolog	hu	- Alprojektek innen
 0%	infolog	hu	0%
 10%	infolog	hu	10%
+100%	infolog	hu	100%
 20%	infolog	hu	20%
 30%	infolog	hu	30%
 40%	infolog	hu	40%
@@ -15,7 +16,8 @@
 a short subject for the entry	infolog	hu	egy rövid tárgy a bejegyzésnek
 abort without deleting	infolog	hu	Megszakítás törlés nélkül
 accept	infolog	hu	elfogad
-action	infolog	hu	Mûvelet
+action	infolog	hu	M?velet
+actual date and time	infolog	hu	aktuális dátum és id?
 add	infolog	hu	Hozzáad
 add a file	infolog	hu	Állomány hozzáadása
 add a new entry	infolog	hu	Új bejegyzés hozzáadása
@@ -25,6 +27,7 @@ add a new sub-task, -note, -call to this entry	infolog	hu	Új alfeladat, -jegyzet
 add a new todo	infolog	hu	Új tennivaló hozzáadása
 add file	infolog	hu	Állomány hozzáadása
 add sub	infolog	hu	Albejegyzés hozzáadása
+add timesheet entry	infolog	hu	Regiszter bejegyzés hozzáadása
 add:	infolog	hu	Hozzáadás:
 all	infolog	hu	Mind
 all links and attachments	infolog	hu	Minden hivatkozás és melléklet
@@ -38,6 +41,7 @@ billed	infolog	hu	számlázva
 both	infolog	hu	mindkét
 call	infolog	hu	hívás
 cancel	infolog	hu	Mégsem
+cancelled	infolog	hu	megszakítva
 categories	infolog	hu	Kategóriák
 category	infolog	hu	Kategória
 change the status of an entry, eg. close it	infolog	hu	Bejegyzés státusza megváltozott, pl. lezárták
@@ -47,6 +51,7 @@ click here to create the link	infolog	hu	hivatkozás létrehozásához kattintson id
 click here to start the search	infolog	hu	keresés elindításához kattintson ide
 close	infolog	hu	Bezár
 comment	infolog	hu	Megjegyzés
+completed	infolog	hu	Teljesítve
 configuration	infolog	hu	Konfiguráció
 confirm	infolog	hu	Megerõsít
 contact	infolog	hu	Kapcsolat
@@ -67,12 +72,14 @@ custom fields, typ and status	common	hu	Egyedi mezõk, típus és státusz
 custom regarding	infolog	hu	Egyedi vonatkozás
 custom status for typ	infolog	hu	Típus egyedi státusza
 customfields	infolog	hu	Egyedi mezõk
+date completed	infolog	hu	Teljesítés dátuma
+date completed (leave it empty to have it automatic set if status is done or billed)	infolog	hu	Teljesítés dátuma (ha üresen hagyja, akkor a kész vagy számlázva státusz esetén automatikusan kitöltésre kerül)
 datecreated	infolog	hu	dátum létrehozva
 dates, status, access	infolog	hu	Dátumok, Státusz, Elérés
 days	infolog	hu	napok
 default filter for infolog	infolog	hu	Infolog alapértelmezett szûrõje
 default status for a new log entry	infolog	hu	Alapértelmezett státusz egy új napló bejegyzésnek
-delegation	infolog	hu	Megbízottak
+delegation	infolog	hu	Delegálás
 delete	infolog	hu	Töröl
 delete one record by passing its id.	infolog	hu	Egy rekord törlése az azonosítója alapján
 delete the entry	infolog	hu	Bejegyzés törlése
@@ -85,12 +92,14 @@ description	infolog	hu	Leírás
 determines the order the fields are displayed	infolog	hu	megjelenitett mezõk rendezésének meghatározása
 disables a status without deleting it	infolog	hu	státusz tiltása annak törlése nélkül
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	hu	A felelõs jóváhagyása szükséges a feladat elfogadásához / befejezéséhez vagy mindkettõhöz.
+don't show infolog	infolog	hu	Infolog bejegyzés elrejtése
 done	infolog	hu	kész
 download	infolog	hu	Letölt
 duration	infolog	hu	Idõtartam
 each value is a line like <id>[=<label>]	infolog	hu	minden érték egy sorban, formája: <id>[=<label>]
 edit	infolog	hu	Szerkeszt
 edit or create categories for ingolog	infolog	hu	Szerkesztés vagy kategória létrehozása az Infolognak
+edit rights (full edit rights incl. making someone else responsible!)	infolog	hu	jogosultságok szerkesztése (teljes jogkör, beleértve azt, hogy mást lehet megteni felel?snek!)
 edit status	infolog	hu	Állapot szerkesztése
 edit the entry	infolog	hu	Bejegyzés szerkesztése
 edit this entry	infolog	hu	Aktuális bejegyzés szerkesztése
@@ -110,13 +119,14 @@ fieldseparator	infolog	hu	Mezõ elválasztó
 finish	infolog	hu	befejez
 for which types should this field be used	infolog	hu	használható típusok a mezõben
 from	infolog	hu	Feladó
+general	infolog	hu	Általános
 high	infolog	hu	magas
 id	infolog	hu	Azonosító
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	hu	Ha nincs beállítva, a keresõ és szûrõ sor rejtve marad abban az esetben, ha a "maximális egyezés egy lapon" limittõl kevesebb találat volt (ahogy az Általános beállítások alatt be van állítva)
 import	infolog	hu	Importál
 import next set	infolog	hu	Következõ széria importálása
 info log	common	hu	InfoLog
-infolog	common	hu	InfoLog-Teendõk
+infolog	common	hu	InfoLog
 infolog - delete	infolog	hu	InfoLog - Törlés
 infolog - edit	infolog	hu	InfoLog - Szerkesztés
 infolog - import csv-file	infolog	hu	InfoLog - CSV-állomány import
@@ -125,6 +135,7 @@ infolog - new subproject	infolog	hu	InfoLog - Új alprojekt
 infolog - subprojects from	infolog	hu	InfoLog - Alprojekt innen
 infolog entry deleted	infolog	hu	InfoLog bejegyzés törölve
 infolog entry saved	infolog	hu	InfoLog bejegyzés elmentve
+infolog filter for the main screen	infolog	hu	InfoLog sz?r? a f? képerny?n
 infolog list	infolog	hu	InfoLog lista
 infolog preferences	common	hu	InfoLog tulajdonságok
 infolog-fieldname	infolog	hu	InfoLog - Mezõnév
@@ -132,6 +143,7 @@ invalid filename	infolog	hu	Érvénytelen állománynév
 label<br>helptext	infolog	hu	Címke<br>Segítség szöveg
 last changed	infolog	hu	Utolsó változás
 last modified	infolog	hu	Utolsó módosítás
+leave it empty	infolog	hu	hagyja üresen
 leave without saveing the entry	infolog	hu	kilépés mentés nélkül
 leaves without saveing	infolog	hu	kilépés mentés nélkül
 length<br>rows	infolog	hu	Sorok<br>Hossza
@@ -140,10 +152,10 @@ links	infolog	hu	Hivatkozások
 links of this entry	infolog	hu	Aktuális bejegyzés hivatkozásai
 list all categories	infolog	hu	Összes kategória listázása
 list no subs/childs	infolog	hu	Albejegyzéssel nem rendelkezõk listája
+location	infolog	hu	Helyszín
 longer textual description	infolog	hu	hosszabb szöveges leírás
 low	infolog	hu	alacsony
 max length of the input [, length of the inputfield (optional)]	infolog	hu	beviteli mezõ maximális mérete (opcionális)
-max number of entries to display on the main screen	infolog	hu	Fõképernyõn megjelenõ bejegyzések maximális száma
 name must not be empty !!!	infolog	hu	Név nem lehet üres!!!
 name of new type to create	infolog	hu	új típus név létrehozása
 never hide search and filters	infolog	hu	Ne rejtse el a keresést és szûrést
@@ -159,14 +171,15 @@ none	infolog	hu	Semmi
 normal	infolog	hu	Normál
 not	infolog	hu	nem
 not assigned	infolog	hu	Nincs hozzárendelve senkihez
-note	infolog	hu	Figyelem
+not-started	infolog	hu	Még nem indult el
+note	infolog	hu	Feljegyzés
 number of records to read (%1)	infolog	hu	Bejegyzések száma olvasáshoz (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	hu	többsoros beviteli mezõ vagy többszörös kiválasztó doboz sorainak száma
 offer	infolog	hu	ajánlat
 ongoing	infolog	hu	folyamatban levõ
+only for details	infolog	hu	Csak a részletekhez
 only the attachments	infolog	hu	csupán a mellékletek
 only the links	infolog	hu	csupán a hivatkozások
-only up to this number of entries are displayed on the main screen.	infolog	hu	Fõképernyõn maximálisan megjelenõ bejegyzések száma.
 open	infolog	hu	nyitott
 optional note to the link	infolog	hu	tetszõleges megjegyzés a hivatkozáshoz
 order	infolog	hu	Rendezés
@@ -179,6 +192,7 @@ path on (web-)serverside<br>eg. /var/samba/share	infolog	hu	út a (web-)szerverol
 path to user and group files has to be outside of the webservers document-root!!!	infolog	hu	A felhasználók/csoportok állományainak útvonala KÍVÜL KELL ESSEN a webszerver dokumentum könyvtárán!!!
 pattern for search in addressbook	infolog	hu	keresési minta a címjegyzékben
 pattern for search in projects	infolog	hu	keresési minta a projektekben
+percent completed	infolog	hu	Teljesítés százalékban
 permission denied	infolog	hu	Hozzáférés megtagadva
 phone	infolog	hu	Telefonhívás
 phone/email	infolog	hu	Telefon/Email
@@ -192,6 +206,7 @@ project	infolog	hu	Projekt
 project settings: price, times	infolog	hu	Projekt beállítások: ár, idõ
 re:	infolog	hu	Válasz:
 read one record by passing its id.	infolog	hu	Egy bejegyzés olvasása az azonosítója alapján.
+read rights (default)	infolog	hu	olvasási jogok (alapbeállítás)
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	hu	reguláris kifejezés a helyi IP címhez <b>pl. ^192\.168\.1\.
 remark	infolog	hu	Megjegyzés
 remove this link (not the entry itself)	infolog	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
@@ -201,6 +216,7 @@ responsible overdue	infolog	hu	Felelõs lejárt
 responsible upcoming	infolog	hu	Felelõs közelgõ
 responsible user, priority	infolog	hu	Felelõs felhasználó, prioritás
 returns a list / search for records.	infolog	hu	Lista visszaadása / bejegyzés keresése
+rights for the responsible	infolog	hu	Felel?s jogai
 save	infolog	hu	Mentés
 saves the changes made and leaves	infolog	hu	Változás mentése és kilépés
 saves this entry	infolog	hu	Bejegyzés mentése
@@ -218,7 +234,6 @@ select an entry to link with	infolog	hu	Bejegyzés választása hivatkozás készítés
 select to filter by owner	infolog	hu	szûrés tulajdonosra
 select to filter by responsible	infolog	hu	szûrés felelõsre
 sets the status of this entry and its subs to done	infolog	hu	Bejegyzés és hozzátartozó albejegyzések állapotának megváltoztatása készre
-should infolog display your open entries - not finished tasks, phonecalls or notes - on the main screen. works only if you dont selected an application for the main screen (in your preferences).	infolog	hu	InfoLog megjelenítse-e a nyitott bejegyzéseket - nem befejezett feladatok, telefonhívások, feljegyzések - a Fõképernyõn.
 should infolog show subtasks, -calls or -notes in the normal view or not. you can always view the subs via there parent.	infolog	hu	InfoLog megjelenítse-e az alfeladatokat, -hívásokat vagy -feljegyzéseket a normál nézetben. Az albejegyzéseket mindig el lehet érni a szülõn keresztül.
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	hu	Infolog megjelenítse-e a hivatkozásokat más alkalmazáskhoz és/vagy állomány mellékleteket a normál nézetben.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	hu	InfoLog használja-e a teljes nevet (családi és keresztnév), vagy csak a bejelentkezõ nevet.
@@ -226,13 +241,15 @@ should this entry only be visible to you and people you grant privat access via 
 show a column for used and planned times in the list.	infolog	hu	Tervezett és felhasznált idõk számára oszlop megjelenítése a listában.
 show full usernames	infolog	hu	Teljes felhasználónév mutatása
 show in the infolog list	infolog	hu	InfoLog listában mutassa a következõket
-show list of upcoming entries	infolog	hu	közelgõ bejegyzések listája
-show open entries: tasks/calls/notes on main screen	infolog	hu	Nyitott bejegyzések - feladatok/hívások/feljegyzések - megjelenítése a Fõképernyõn.
+show last modified	infolog	hu	Mutassa az utolsónak módosítottat
+show status and percent done separate	infolog	hu	Mutassa a státuszt és százalékos készültséged külön-külön
+show ticket id	infolog	hu	Mutassa a jegy azonosítóját
 show times	infolog	hu	Idõtartamok megjelenítése
 small view	infolog	hu	kis nézet
 start a new search, cancel this link	infolog	hu	új keresés indítása, hivatkozás elhagyása
 startdate	infolog	hu	Kezdés dátuma
 startdate enddate	infolog	hu	Kezdés dátuma Befejezés dátuma
+startdate for new entries	infolog	hu	Új bejegyzés kezdési id?pontja
 startrecord	infolog	hu	Kezdõ bejegyzés
 status	infolog	hu	Állapot
 status ...	infolog	hu	Állapot ...
@@ -248,7 +265,9 @@ this is the filter infolog uses when you enter the application. filters limit th
 til when should the todo or phonecall be finished	infolog	hu	amíg a Tennivalók vagy Telefonhívások befejezõdnek
 times	infolog	hu	Idõigény
 to many might exceed your execution-time-limit	infolog	hu	Futtatási idõkorlát túllépés
+to what should the startdate of new entries be set.	infolog	hu	Milyen kezdési id?pont legyen beállítva az új bejegyzésnek?
 today	infolog	hu	Ma
+todays date	infolog	hu	Mai dátum
 todo	infolog	hu	Tennivalók
 translation	infolog	hu	Fordítás
 typ	infolog	hu	Típus
