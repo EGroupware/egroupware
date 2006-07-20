@@ -235,7 +235,7 @@ class sifaddressbook extends bocontacts
 			
 			#error_log("$sifField => $egwField");
 			#error_log('VALUE1: '.$entry[0][$egwField]);
-			$value = $GLOBALS['egw']->translation->convert($entry[0][$egwField], $sysCharSet, 'utf-8');
+			$value = $GLOBALS['egw']->translation->convert($entry[$egwField], $sysCharSet, 'utf-8');
 			#error_log('VALUE2: '.$value);
 
 			switch($sifField)
