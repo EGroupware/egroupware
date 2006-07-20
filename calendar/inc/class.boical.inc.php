@@ -1071,18 +1071,15 @@
 			return false;
 		}
 
-		function search($_vcalData) 
-		{
-			if(!$event = $this->icaltoegw($_vcalData)) 
-			{
+		function search($_vcalData) {
+			if(!$event = $this->icaltoegw($_vcalData)) {
 				return false;
 			}
 			$query = array(
 				'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
 				'cal_end='.$this->date2ts($event['end'],true),
 			);
-			foreach(array('title','location','priority','public','non_blocking') as $name)
-			{
+			foreach(array('title','location','priority','public','non_blocking') as $name) {
 				if (isset($event[$name])) $query['cal_'.$name] = $event[$name];
 			}
 
