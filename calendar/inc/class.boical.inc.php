@@ -464,27 +464,53 @@
 										}
 										break;
 									
-									case 'D':		// 1.0
-										if(!preg_match('/D(\d+) (.*)/',$recurence, $recurenceMatches)) break;
-										$vcardData['recur_interval'] = $recurenceMatches[1];
-										if($recurenceMatches[2] != '#0')
-											$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+									case 'D':	// 1.0
+										if(preg_match('/D(\d+) #(.\d)/', $recurence, $recurenceMatches)) {
+											$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[2] > 0 && $vcardData['end']) {
+												$vcardData['recur_enddate'] = mktime(
+													date('H', $vcardData['end']),
+													date('i', $vcardData['end']),
+													date('s', $vcardData['end']),
+													date('m', $vcardData['end']),
+													date('d', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
+													date('Y', $vcardData['end']),
+												);
+											}
+										} elseif(preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches)) {
+											$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[2] != '#0') {
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+											}
+										} else {
+											break;
+										}
 										// fall-through
 									case 'DAILY':	// 2.0
 										$vcardData['recur_type'] = MCAL_RECUR_DAILY;
 										break;
 
 									case 'M':
-										if(preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches))
-										{
+										if(preg_match('/MD(\d+) #(.\d)/', $recurence, $recurenceMatches)) {
+											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
+											$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[2] > 0 && $vcardData['end']) {
+												$vcardData['recur_enddate'] = mktime(
+													date('H', $vcardData['end']),
+													date('i', $vcardData['end']),
+													date('s', $vcardData['end']),
+													date('m', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
+													date('d', $vcardData['end']),
+													date('Y', $vcardData['end']),
+												);
+											}
+										} elseif(preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches)) {
 											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_MDAY;
 											if($recurenceMatches[1] > 1)
 												$vcardData['recur_interval'] = $recurenceMatches[1];
 											if($recurenceMatches[2] != '#0')
 												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
-										}
-										elseif(preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches))
-										{
+										} elseif(preg_match('/MP(\d+) (.*) (.*) (.*)/',$recurence, $recurenceMatches)) {
 											$vcardData['recur_type'] = MCAL_RECUR_MONTHLY_WDAY;
 											if($recurenceMatches[1] > 1)
 												$vcardData['recur_interval'] = $recurenceMatches[1];
@@ -498,10 +524,26 @@
 										break;										
 
 									case 'Y':		// 1.0
-										if(!preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches)) break;
-										$vcardData['recur_interval'] = $recurenceMatches[1];
-										if($recurenceMatches[2] != '#0')
-											$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+										if(preg_match('/YM(\d+) #(.\d)/', $recurence, $recurenceMatches)) {
+											$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[2] > 0 && $vcardData['end']) {
+												$vcardData['recur_enddate'] = mktime(
+													date('H', $vcardData['end']),
+													date('i', $vcardData['end']),
+													date('s', $vcardData['end']),
+													date('m', $vcardData['end']),
+													date('d', $vcardData['end']),
+													date('Y', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
+												);
+											}
+										} elseif(preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches)) {
+											$vcardData['recur_interval'] = $recurenceMatches[1];
+											if($recurenceMatches[2] != '#0') {
+												$vcardData['recur_enddate'] = $vcal->_parseDateTime($recurenceMatches[2]);
+											}
+										} else {
+											break;
+										}
 										// fall-through
 									case 'YEARLY':	// 2.0
 										$vcardData['recur_type'] = MCAL_RECUR_YEARLY;
