@@ -449,7 +449,7 @@
 
 						case 'Start':
 							if($event['end'] - $event['start'] == 86399 && date('Y-m-d', $event['end']) == date('Y-m-d', $event['start'])) {
-								$value = date('Y-m-d');
+								$value = date('Y-m-d', $event['start']);
 								$sifEvent .= "<Start>$value</Start>";
 								$sifEvent .= "<End>$value</End>";
 								$sifEvent .= "<AllDayEvent>1</AllDayEvent>";
