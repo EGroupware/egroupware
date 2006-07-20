@@ -343,6 +343,10 @@
 			}
 			else
 			{
+				if (strtolower($item_text) == 'grant access' && $GLOBALS['egw_info']['server']['deny_user_grants_access']) {
+					return;
+				}
+				
 				$var['icon_or_star']='<img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
 				$var['target'] = '';
 				if(is_array($item_link))

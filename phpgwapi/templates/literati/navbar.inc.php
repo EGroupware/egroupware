@@ -179,6 +179,10 @@
 		}
 		else
 		{
+			if (strtolower($item_text) == 'grant access' && $GLOBALS['egw_info']['server']['deny_user_grants_access']) {
+				return;
+			}
+			
 			$var['icon_or_star']='<font color="#ff9933">*</font>';
 			$var['lang_item']=lang($item_text);
 			$var['item_link']=$item_link;
