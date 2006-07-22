@@ -588,7 +588,7 @@
 		}
 		
 		function getMultipartAlternative($_uid, $_parentPartID, $_structure, $_htmlMode) {
-				// a multipart/alternative has exactly 2 parts (text and html)
+				// a multipart/alternative has exactly 2 parts (text and html  OR  text and something else)
 				$i=1;
 				$partText;
 				$partHTML;
@@ -607,6 +607,22 @@
 							'charset'	=> $this->getMimePartCharset($mimePart) ,
 							'encoding'	=> $mimePart->encoding ,
 						);
+					} elseif ($mimePart->type == TYPEMULTIPART && $mimePart->subtype == 'RELATED' && is_object($mimePart->parts[0])) {
+						$mimePart = $mimePart->parts[0];
+						$parentPartID = $parentPartID.$i;
+						if($mimePart->type == TYPETEXT && $mimePart->subtype == 'PLAIN' && $mimePart->bytes > 0) {
+							$partText = array(
+								'partID'	=> $parentPartID.'.1',
+								'charset'	=> $this->getMimePartCharset($mimePart) ,
+								'encoding'	=> $mimePart->encoding ,
+							);
+						} elseif ($mimePart->type == TYPETEXT && $mimePart->subtype == 'HTML' && $mimePart->bytes > 0) {
+							$partHTML = array(
+								'partID'	=> $parentPartID.'.1',
+								'charset'	=> $this->getMimePartCharset($mimePart) ,
+								'encoding'	=> $mimePart->encoding ,
+							);
+						}					
 					}
 					$i++;
 				}
