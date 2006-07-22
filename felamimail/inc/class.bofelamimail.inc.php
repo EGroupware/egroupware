@@ -221,18 +221,18 @@
 			}
 		}
 
-		function decode_header($string)
+		function decode_header($_string)
 		{
-			#print "decode header: $string<br><br>";
 			$newString = '';
+
+			$string = preg_replace('/\?=\s+=\?/', '?= =?', $_string);
+
 			$elements=imap_mime_header_decode($string);
-			for($i=0;$i<count($elements);$i++) 
-			{
-				#echo "Charset: {$elements[$i]->charset}<br>";
-				#echo "Text: {$elements[$i]->text}<BR><BR>";
-				if ($elements[$i]->charset == 'default')
-					$elements[$i]->charset = 'iso-8859-1';
-				$tempString = $this->botranslation->convert($elements[$i]->text,$elements[$i]->charset);
+
+			foreach((array)$elements as $element) {
+				if ($element->charset == 'default')
+					$element->charset = 'iso-8859-1';
+				$tempString = $this->botranslation->convert($element->text,$element->charset);
 				$newString .= $tempString;
 			}
 			return $newString;
