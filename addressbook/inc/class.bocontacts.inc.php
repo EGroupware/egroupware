@@ -321,7 +321,7 @@ class bocontacts extends socontacts
 		$data['photo'] = $this->photo_src($data['id'],$data['jpegphoto']);
 		
 		// set freebusy_uri for accounts
-		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'])
+		if (!$data['freebusy_uri'] && !$data['owner'] && $data['account_id'] && !is_object($GLOBALS['egw_setup']))
 		{
 			static $fb_url;
 			if (!$fb_url && @is_dir(EGW_SERVER_ROOT.'/calendar/inc')) $fb_url = ExecMethod('calendar.bocal.freebusy_url','');
