@@ -474,7 +474,7 @@
 													date('s', $vcardData['end']),
 													date('m', $vcardData['end']),
 													date('d', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
-													date('Y', $vcardData['end']),
+													date('Y', $vcardData['end'])
 												);
 											}
 										} elseif(preg_match('/D(\d+) (.*)/', $recurence, $recurenceMatches)) {
@@ -501,7 +501,7 @@
 													date('s', $vcardData['end']),
 													date('m', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
 													date('d', $vcardData['end']),
-													date('Y', $vcardData['end']),
+													date('Y', $vcardData['end'])
 												);
 											}
 										} elseif(preg_match('/MD(\d+) (.*)/',$recurence, $recurenceMatches)) {
