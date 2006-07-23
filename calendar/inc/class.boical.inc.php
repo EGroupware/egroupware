@@ -533,7 +533,7 @@
 													date('s', $vcardData['end']),
 													date('m', $vcardData['end']),
 													date('d', $vcardData['end']),
-													date('Y', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval']),
+													date('Y', $vcardData['end']) + ($recurenceMatches[2] * $vcardData['recur_interval'])
 												);
 											}
 										} elseif(preg_match('/YM(\d+) (.*)/',$recurence, $recurenceMatches)) {
