@@ -246,6 +246,26 @@
 				'URL;WORK'	=> array('url'),
 			);
 
+			$defaultFields[4] = array(
+				'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+								'adr_one_postalcode','adr_one_countryname'),
+				'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+								'adr_two_postalcode','adr_two_countryname'),
+				'BDAY'		=> array('bday'),
+				'EMAIL;INTERNET;WORK' => array('email'),
+				'EMAIL;INTERNET;HOME' => array('email_home'),
+				'N'		=> array('n_family','n_given','','',''),
+				'NOTE'		=> array('note'),
+				'ORG'		=> array('org_name',''),
+				'TEL;CELL;WORK'	=> array('tel_cell'),
+				'TEL;FAX;WORK'	=> array('tel_fax'),
+				'TEL;HOME'	=> array('tel_home'),
+				'TEL;PAGER;WORK' => array('tel_pager'),
+				'TEL;WORK'	=> array('tel_work'),
+				'TITLE'		=> array('title'),
+				'URL;WORK'	=> array('url'),
+			);
+
 			switch(strtolower($_productManufacturer))
 			{
 				case 'nexthaus corporation':
@@ -254,6 +274,16 @@
 						case 'syncje outlook edition':
 						default:
 							$this->supportedFields = $defaultFields[1];
+							break;
+					}
+					break;
+
+				case 'nokia':
+					switch(strtolower($_productName))
+					{
+						case '6600':
+						default:
+							$this->supportedFields = $defaultFields[4];
 							break;
 					}
 					break;
