@@ -228,6 +228,29 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'	=> array('url'),
 		);
 
+		$defaultFields[4] = array(
+			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+							'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+							'adr_two_postalcode','adr_two_countryname'),
+			'BDAY'		=> array('bday'),
+			'EMAIL;INTERNET;WORK' => array('email'),
+			'EMAIL;INTERNET;HOME' => array('email_home'),
+			'N'		=> array('n_family','n_given','','',''),
+			'NOTE'		=> array('note'),
+			'ORG'		=> array('org_name',''),
+			'TEL;CELL;WORK'	=> array('tel_cell'),
+			'TEL;CELL;HOME'	=> array('tel_cell_private'),
+			'TEL;FAX;WORK'	=> array('tel_fax'),
+			'TEL;FAX;HOME'	=> array('tel_fax_home'),
+			'TEL;HOME'	=> array('tel_home'),
+			'TEL;PAGER;WORK' => array('tel_pager'),
+			'TEL;WORK'	=> array('tel_work'),
+			'TITLE'		=> array('title'),
+			'URL;WORK'	=> array('url'),
+			'URL:HOME'	=> array('url_home'),
+		);
+
 		switch(strtolower($_productManufacturer))
 		{
 			case 'nexthaus corporation':
@@ -239,6 +262,17 @@ class vcaladdressbook extends bocontacts
 						break;
 				}
 				break;
+
+			case 'nokia':
+				switch(strtolower($_productName))
+				{
+					case '6600':
+					default:
+						$this->supportedFields = $defaultFields[4];
+						break;
+				}
+				break;
+				
 
 			// multisync does not provide anymore information then the manufacturer
 			// we suppose multisync with evolution
@@ -317,7 +351,7 @@ class vcaladdressbook extends bocontacts
 
 		#print "<pre>$_vcard</pre>";
 
-		#_debug_array($vcardValues);
+		#error_log(print_r($vcardValues, true));
 
 		foreach($vcardValues as $key => $vcardRow)
 		{
