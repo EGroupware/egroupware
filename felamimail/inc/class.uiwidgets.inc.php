@@ -159,16 +159,16 @@
 					$image3 = "'kfm_home.png'";
 				}
 				
-				$parentName = htmlspecialchars($parentName, ENT_QUOTES, $this->charset);
-				$longName = htmlspecialchars($longName, ENT_QUOTES, $this->charset);
-				$folder_name = htmlspecialchars($folder_name, ENT_QUOTES, $this->charset);
+				$parentName = @htmlspecialchars($parentName, ENT_QUOTES, $this->charset);
+				$longName = @htmlspecialchars($longName, ENT_QUOTES, $this->charset);
+				$folder_name = @htmlspecialchars($folder_name, ENT_QUOTES, $this->charset);
 
 				$folder_tree_new .= "tree.insertNewItem('$parentName','$longName','$folder_name',onNodeSelect,$image1,$image2,$image3,'$entryOptions');\n";
 				if($_displayCheckBox)
 					$folder_tree_new .= "tree.setCheck('$longName','".(int)$obj->subscribed."');";
 			}
 
-			$selected = htmlspecialchars($_selected, ENT_QUOTES, $this->charset);
+			$selected = @htmlspecialchars($_selected, ENT_QUOTES, $this->charset);
 			$folder_tree_new.= "tree.closeAllItems(0);tree.openItem('$selected');</script>";
 			
 			return $folder_tree_new;
