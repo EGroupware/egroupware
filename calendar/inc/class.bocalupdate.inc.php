@@ -578,11 +578,7 @@ class bocalupdate extends bocal
 						break;
 
 					case  'ical':
-						$ics = ExecMethod('calendar.boicalendar.export',array(
-							'l_event_id'  => array($event),
-							'method'      => $method,
-							'chunk_split' => False
-						));
+						$ics = ExecMethod2('calendar.boical.exportVCal',$event['id'],'2.0',$method);
 						if ($method == "request") 
 						{
 							$send->AddStringAttachment($ics, "cal.ics", "8bit", "text/calendar; method=$method");
@@ -800,14 +796,15 @@ class bocalupdate extends bocal
 		$details['participants'] = $details['participants'] ? implode("\n",$details['participants']) : '';
 
 		$event_arr['link']['field'] = lang('URL');
-		$event_arr['link']['data'] = $details['link'] = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.view&cal_id='.$event['id'].'&no_popup=1';
+		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.view&cal_id='.$event['id'].'&no_popup=1';
 		// if url is only a path, try guessing the rest ;-)
-		if ($GLOBALS['egw_info']['server']['webserver_url'][0] == '/')
+		if ($link{0} == '/')
 		{
-			$details['link'] = ($GLOBALS['egw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
-				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : 'localhost').
+			$link = ($GLOBALS['egw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
+				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).
 				$details['link'];
 		}
+		$event_arr['link']['data'] = $details['link'] = $link;
 		$dis = array();
 		foreach($disinvited as $uid)
 		{
