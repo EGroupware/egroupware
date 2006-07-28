@@ -943,6 +943,7 @@ class so_ldap
 	{
 		if(!empty($data['cat_id'])) 
 		{
+			$ldapContact['category'] = array();
 			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat) 
 			{
 				$ldapContact['category'][] = $GLOBALS['egw']->translation->convert(
