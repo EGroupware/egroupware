@@ -70,6 +70,9 @@ contact id	addressbook	es-es	ID del contacto
 contact repository	admin	es-es	Repositorio de contactos
 contact saved	addressbook	es-es	Se ha guardado la entrada
 contact settings	admin	es-es	Configuración de los contactos
+contacts and account contact-data to ldap	admin	es-es	Contactos y datos del contacto y la cuenta en LDAP
+contacts to ldap	admin	es-es	Contactos en LDAP
+contacts to ldap, account contact-data to sql	admin	es-es	Contactos en LDAP, datos del contacto y la cuenta en SQL
 copied by %1, from record #%2.	addressbook	es-es	Copiado por %1, del registro %2
 copy a contact and edit the copy	addressbook	es-es	Copiar un contacto y editar la copia
 country	common	es-es	País
@@ -125,6 +128,7 @@ field name	addressbook	es-es	Nombre del campo
 fields for the csv export	addressbook	es-es	Campos para exportar a CSV
 fields to show in address list	addressbook	es-es	Campos a mostrar en la lista de direcciones
 fieldseparator	addressbook	es-es	Separador de campos
+for read only ldap	admin	es-es	para LDAP de sólo lectura
 freebusy uri	addressbook	es-es	URI para tiempo libre
 full name	addressbook	es-es	Nombre completo
 geo	addressbook	es-es	GEO
@@ -140,6 +144,7 @@ home state	addressbook	es-es	Provincia de residencia
 home street	addressbook	es-es	Domicilio personal
 home zip code	addressbook	es-es	Código postal
 icon	addressbook	es-es	Icono
+if accounts are already in ldap	admin	es-es	si las cuentas ya están en LDAP
 import	addressbook	es-es	Importar
 import contacts	addressbook	es-es	Importar contactos
 import csv-file into addressbook	addressbook	es-es	Importar archivo CSV en la Libreta de direcciones
@@ -169,6 +174,8 @@ locations	addressbook	es-es	ubicaciones
 mark records as private	addressbook	es-es	Marcar registros como privados
 message phone	addressbook	es-es	Teléfono de mensajes
 middle name	addressbook	es-es	Segundo nombre
+migration finished	addressbook	es-es	Migración finalizada
+migration to ldap	admin	es-es	Migración a LDAP
 mobile	addressbook	es-es	Móvil
 mobile phone	addressbook	es-es	Teléfono móvil
 modem phone	addressbook	es-es	Teléfono módem
@@ -214,6 +221,7 @@ select a view	addressbook	es-es	Seleccionar una vista
 select addressbook type	addressbook	es-es	Seleccionar el tipo de libreta de direcciones
 select all	addressbook	es-es	Seleccionar todo
 select an action or addressbook to move to	addressbook	es-es	Seleccionar una acción o libreta de direcciones a la que mover
+select migration type	admin	es-es	Seleccionar tipo de migración
 select multiple contacts for a further action	addressbook	es-es	Seleccionar múltiples contactos para una acción posterior
 select phone number as prefered way of contact	addressbook	es-es	Seleccionar el número de teléfono como forma preferida de contacto
 select the type of conversion	addressbook	es-es	Seleccione el tipo de conversión
@@ -224,6 +232,7 @@ show a column for %1	addressbook	es-es	Mostrar una columna para %1
 show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumpleaños en la pantalla principal
 show the contacts of this organisation	addressbook	es-es	Mostrar los contactos de esta organización
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	es-es	Tamaño de la ventana (ancho x alto, p.ej. 400x300, si se usa una ventana emergente)
+start	admin	es-es	Empezar
 startrecord	addressbook	es-es	Registro inicial
 state	common	es-es	Provincia
 street	common	es-es	Calle
@@ -244,6 +253,7 @@ update a single entry by passing the fields.	addressbook	es-es	Actualizar una so
 upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
 url to link telephone numbers to (use %1 for the number)	admin	es-es	URL para vincular números de teléfono (use %1 para el número)
 use country list	addressbook	es-es	Utilizar lista de países
+use setup for a full account-migration	admin	es-es	Use la instalación para una migración completa de las cuentas
 used for links and for the own sorting of the list	addressbook	es-es	utilizado para los enlaces y para el orden propio de la lista
 vcard	common	es-es	Tarjeta de visita
 vcards require a first name entry.	addressbook	es-es	Las tarjetas de visita requieren el primer nombre.

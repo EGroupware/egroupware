@@ -70,6 +70,9 @@ contact id	addressbook	pt-br	ID do contato
 contact repository	admin	pt-br	Repositório de contatos
 contact saved	addressbook	pt-br	Contato salvo
 contact settings	admin	pt-br	Preferências de Contatos
+contacts and account contact-data to ldap	admin	pt-br	contatos e dados da conta de contatos para LDAP
+contacts to ldap	admin	pt-br	contatos para LDAP
+contacts to ldap, account contact-data to sql	admin	pt-br	contatos para LDAP, dados da conta de contatos para SQL
 copied by %1, from record #%2.	addressbook	pt-br	Copiado por %1, do registro #%2.
 copy a contact and edit the copy	addressbook	pt-br	Copiar um contato e editar a cópia
 country	common	pt-br	País
@@ -125,6 +128,7 @@ field name	addressbook	pt-br	Nome do campo
 fields for the csv export	addressbook	pt-br	Campos para a exportação CSV
 fields to show in address list	addressbook	pt-br	Campos a serem exibidos na lista de endereços
 fieldseparator	addressbook	pt-br	Separador de campos
+for read only ldap	admin	pt-br	para LDAP somente leitura
 freebusy uri	addressbook	pt-br	URI para disponbilidade
 full name	addressbook	pt-br	Nome Completo
 geo	addressbook	pt-br	GEO
@@ -140,6 +144,7 @@ home state	addressbook	pt-br	Estado
 home street	addressbook	pt-br	Rua, Av, Trav., etc.
 home zip code	addressbook	pt-br	CEP
 icon	addressbook	pt-br	Ícone
+if accounts are already in ldap	admin	pt-br	se as contas já estiverem em LDAP
 import	addressbook	pt-br	Importar
 import contacts	addressbook	pt-br	Importar contatos
 import csv-file into addressbook	addressbook	pt-br	Importar arquivo CSV para Contatos
@@ -169,6 +174,8 @@ locations	addressbook	pt-br	Localizações
 mark records as private	addressbook	pt-br	Marcar registos como particulares
 message phone	addressbook	pt-br	Telefone para recado
 middle name	addressbook	pt-br	Nome do meio
+migration finished	addressbook	pt-br	Migração concluída
+migration to ldap	admin	pt-br	Migração para LDAP
 mobile	addressbook	pt-br	Celular
 mobile phone	addressbook	pt-br	Telefone celular
 modem phone	addressbook	pt-br	Telefone de Dados (Modem)
@@ -214,6 +221,7 @@ select a view	addressbook	pt-br	Selecionar uma exibição
 select addressbook type	addressbook	pt-br	Selecionar tipo de Contatos
 select all	addressbook	pt-br	Selecionar todos
 select an action or addressbook to move to	addressbook	pt-br	Selecione uma ação ou lista de Contatos para mover
+select migration type	admin	pt-br	Selecionar tipo de migração
 select multiple contacts for a further action	addressbook	pt-br	Selecione múltiplos contatos para ação posterior
 select phone number as prefered way of contact	addressbook	pt-br	Selecione telefone como forma preferida de contato
 select the type of conversion	addressbook	pt-br	Selecione o tipo de conversão
@@ -224,6 +232,7 @@ show a column for %1	addressbook	pt-br	Exibir uma coluna para %1
 show birthday reminders on main screen	addressbook	pt-br	Exibir lembrete de aniversários na tela principal
 show the contacts of this organisation	addressbook	pt-br	Exibir os contatos desta organização
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	pt-br	Tamanho do popup (Largura x Altura, exemplo: 400x300, se um popup for usado)
+start	admin	pt-br	Iniciar
 startrecord	addressbook	pt-br	Registro inicial
 state	common	pt-br	Estado
 street	common	pt-br	Rua
@@ -244,6 +253,7 @@ update a single entry by passing the fields.	addressbook	pt-br	Atualizar uma úni
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 for the number)	admin	pt-br	URL para linkar números de telefones (usar %1 para o número)
 use country list	addressbook	pt-br	Usar lista de países
+use setup for a full account-migration	admin	pt-br	usar setup para uma migração de contas completa
 used for links and for the own sorting of the list	addressbook	pt-br	usado para links e para a ordem própria da lista
 vcard	common	pt-br	VCard
 vcards require a first name entry.	addressbook	pt-br	VCards requer um primeiro nome.
