@@ -14,21 +14,25 @@
 
 /* $Id$ */
 
-$GLOBALS['phpgw_info']['flags'] = Array(
-	'currentapp'  => 'home',		// can't be phpgwapi, nor jscalendar (no own directory)
-	'noheader'    => True,
-	'nonavbar'    => True,
-	'noappheader' => True,
-	'noappfooter' => True,
-	'nofooter'    => True,
-	'nocachecontrol' => True			// allow cacheing
+$GLOBALS['egw_info'] = array(
+	'flags' => Array(
+		'currentapp'  => 'home',		// can't be phpgwapi, nor jscalendar (no own directory)
+		'noheader'    => True,
+		'nonavbar'    => True,
+		'noappheader' => True,
+		'noappfooter' => True,
+		'nofooter'    => True,
+		'nocachecontrol' => True			// allow cacheing
+	)
 );
 
 include('../../header.inc.php');
-header('Content-type: text/javascript; charset='.$GLOBALS['phpgw']->translation->charset());
-$GLOBALS['phpgw']->translation->add_app('jscalendar');
 
-$dateformat = $GLOBALS['phpgw_info']['user']['preferences']['common']['dateformat'];
+header('Content-type: text/javascript; charset='.$GLOBALS['egw']->translation->charset());
+$GLOBALS['egw']->translation->add_app('jscalendar');
+
+$dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+if (empty($dateformat)) $dateformat = 'Y-m-d';
 $jsDateFormat = str_replace(array('Y','d','m','M'),array('%Y','%d','%m','%b'),$dateformat);
 $dayFirst = strpos($dateformat,'d') < strpos($dateformat,'m');
 $jsLongDateFormat = '%a, '.($dayFirst ? '%e' : '%b').($dateformat[1] == '.' ? '. ' : ' ').($dayFirst ? '%b' : '%e');
@@ -118,7 +122,7 @@ Calendar.setup = function (params) {
 	param_default("disableFirstDowChange", true);
 	param_default("firstDay",       <?php // was 0 defaults to "Sunday" first
 	$day2int = array('Sunday'=>0,'Monday'=>1,'Tuesday'=>2,'Wednesday'=>3,'Thursday'=>4,'Friday'=>5,'Saturday'=>6);
-	echo (int) @$day2int[$GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts']]; ?>); // <?php echo $GLOBALS['phpgw_info']['user']['preferences']['calendar']['weekdaystarts']."\n"; ?>
+	echo (int) @$day2int[$GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts']]; ?>); // <?php echo $GLOBALS['egw_info']['user']['preferences']['calendar']['weekdaystarts']."\n"; ?>
 	param_default("align",          "Bl");
 	param_default("range",          [1900, 2999]);
 	param_default("weekNumbers",    true);
@@ -133,7 +137,7 @@ Calendar.setup = function (params) {
 	param_default("onUpdate",       null);
 	param_default("date",           null);
 	param_default("showsTime",      false);
-	param_default("timeFormat",     "<?php /* was 24 */ echo $GLOBALS['phpgw_info']['user']['preferences']['common']['timeformat']; ?>");
+	param_default("timeFormat",     "<?php /* was 24 */ echo $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] ? $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] : 24; ?>");
 	param_default("electric",       true);
 	param_default("step",           2);
 	param_default("position",       null);
