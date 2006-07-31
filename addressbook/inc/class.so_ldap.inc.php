@@ -986,8 +986,9 @@ class so_ldap
 	 */
 	function _evolutionperson2egw(&$contact,$data)
 	{
-		if (is_array($data['category']))
+		if ($data['category'] && is_array($data['category']))
 		{
+			$contact['cat_id'] = array();
 			foreach($data['category'] as $iii => $cat) 
 			{
 				if (!is_int($iii)) continue;
