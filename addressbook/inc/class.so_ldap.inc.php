@@ -224,12 +224,16 @@ class so_ldap
 		{
 			$GLOBALS['egw_info']['server']['ldap_contact_host'] = $GLOBALS['egw_info']['server']['ldap_host'];
 			$GLOBALS['egw_info']['server']['ldap_contact_context'] = $GLOBALS['egw_info']['server']['ldap_context'];
+			$this->ds = $GLOBALS['egw']->ldap->ldapConnect();
 		}
-		$this->ds = $GLOBALS['egw']->ldap->ldapConnect(
-			$GLOBALS['egw_info']['server']['ldap_contact_host'],
-			$GLOBALS['egw_info']['user']['account_dn'],
-			$GLOBALS['egw_info']['user']['passwd']
-		);
+		else
+		{
+			$this->ds = $GLOBALS['egw']->ldap->ldapConnect(
+				$GLOBALS['egw_info']['server']['ldap_contact_host'],
+				$GLOBALS['egw_info']['user']['account_dn'],
+				$GLOBALS['egw_info']['user']['passwd']
+			);
+		}
 		$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_contact_host']);
 		
 		foreach($this->schema2egw as $schema => $attributes)
