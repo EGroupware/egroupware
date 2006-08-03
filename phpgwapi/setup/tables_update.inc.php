@@ -60,6 +60,13 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
 	}
 
+	$test[] = '1.2.104';
+	function phpgwapi_upgrade1_2_104()
+	{
+		// 4. 1.2 bugfix-release: SyncML, ...
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
+	}
+
 	// updates in HEAD / 1.3
 	$test[] = '1.3.001';
 	function phpgwapi_upgrade1_3_001()
