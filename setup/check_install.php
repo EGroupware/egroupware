@@ -415,7 +415,7 @@
 		$checks = implode(', ',$checks);
 
 		$icon = $passed_icon;
-		if (($msg = $args['msg']))
+		if (isset($args['msg']) && ($msg = $args['msg']))
 		{
 			$msg .= ': '.$perms."<br />\n";
 		}
@@ -423,7 +423,7 @@
 		{
 			$msg = lang('Checking file-permissions of %1 for %2 %3: %4',$rel_name,$check_not,$checks,$perms)."<br />\n";
 		}
-		if ($args['error'])
+		if (isset($args['error']) && $args['error'])
 		{
 			$extra_error_msg = "<br />\n".$args['error'];
 		}
