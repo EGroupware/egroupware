@@ -5,7 +5,7 @@
   <td width="40%">
    <div align="center">
     <form method="POST" action="{action_url}">
-{common_hidden_vars}
+{common_hidden_vars_form}
      <input type="text" name="query" value="{search_value}">
      <input type="submit" name="search" value="{search}">
     </form>
