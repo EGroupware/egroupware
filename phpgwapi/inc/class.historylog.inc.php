@@ -89,7 +89,7 @@ class historylog
 	 */
 	function delete($record_id)
 	{
-		$where = array('history_appname' => $record_id);
+		$where = array('history_appname' => $this->appname);
 		
 		if (is_array($record_id) || is_numeric($record_id))
 		{
