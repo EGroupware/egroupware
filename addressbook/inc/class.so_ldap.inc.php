@@ -951,7 +951,7 @@ class so_ldap
 			foreach(is_array($data['cat_id']) ? $data['cat_id'] : explode(',',$data['cat_id'])  as $cat) 
 			{
 				$ldapContact['category'][] = $GLOBALS['egw']->translation->convert(
-					ExecMethod('phpgwapi.categories.id2name',$value),$this->charset,'utf-8');
+					ExecMethod('phpgwapi.categories.id2name',$cat),$this->charset,'utf-8');
 			}
 		}
 		foreach(array(
