@@ -94,10 +94,16 @@
 			}
 			list($data_format,$options,$options2) = explode(',',$cell['size']);
 			if ($type == 'date-houronly' && empty($data_format)) $data_format = 'H';
-			$extension_data = array(
-				'type'			=> $type,
-				'data_format'	=> $data_format,
-			);	
+			
+			$readonly = $cell['readonly'] || $readonlys;
+
+			if (!$readonly)	// dont set extension-data on readonly, it's not needed and can conflict with other widgets
+			{
+				$extension_data = array(
+					'type'			=> $type,
+					'data_format'	=> $data_format,
+				);
+			}
 			if (!$value)
 			{
 				$value = array(
@@ -141,8 +147,6 @@
 				);
 			}
 			$time_0h0 = !(int)$value['H'] && !(int)$value['i'];
-
-			$readonly = $cell['readonly'] || $readonlys;
 
 			$timeformat = array(3 => 'H', 4 => 'i');
 			if ($this->timeformat == '12' && $readonly && $value['H'] !== '')
@@ -324,15 +328,18 @@
 			}
 			if (!in_array($input_format,array('d','h','dh','m','hm','dhm'))) $input_format = 'dh'; // hours + days
 			
-			$extension_data = array(
-				'type'			=> $cell['type'],
-				'data_format'	=> $data_format,
-				'unit'          => ($unit = $input_format == 'd' ? 'd' : 'h'),
-				'input_format'  => $input_format,
-				'hours_per_day' => $hours_per_day,
-				'percent_allowed'=> $percent_allowed,
-				'empty_not_0'   => $empty_not_0,
-			);
+			if (!$readonly)	// dont set extension-data on readonly, it's not needed and can conflict with other widgets
+			{
+				$extension_data = array(
+					'type'			=> $cell['type'],
+					'data_format'	=> $data_format,
+					'unit'          => ($unit = $input_format == 'd' ? 'd' : 'h'),
+					'input_format'  => $input_format,
+					'hours_per_day' => $hours_per_day,
+					'percent_allowed'=> $percent_allowed,
+					'empty_not_0'   => $empty_not_0,
+				);
+			}
 			if ($value)
 			{
 				switch($data_format)

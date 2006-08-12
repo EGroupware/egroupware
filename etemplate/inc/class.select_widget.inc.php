@@ -512,6 +512,6 @@
 					break;
 			}
 			//echo "<p>select_widget::post_process('$name',,'$extension_data',,,'$value_in'): value='$value', is_null(value)=".(int)is_null($value)."</p>\n";
-			return !is_null($value);
+			return true;
 		}
 	}

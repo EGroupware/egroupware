@@ -959,8 +959,15 @@
 					}
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
-					$html .= $this->html->textarea($form_name,$value,
-						$options.$this->html->formatOptions($cell_options,'ROWS,COLS'));
+					if ($readonly && !$cell_options)
+					{
+						$html .= '<pre style="margin-top: 0px;">'.$this->html->htmlspecialchars($value)."</pre>\n";
+					}
+					else
+					{
+						$html .= $this->html->textarea($form_name,$value,
+							$options.$this->html->formatOptions($cell_options,'ROWS,COLS'));
+					}
 					if (!$readonly)
 					{
 						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
@@ -1073,7 +1080,7 @@
 						elseif (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$cell['onclick'],$matches))
 						{
 							$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
-							$onclick = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.$question.'\')',$onclick);
+							$onclick = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$onclick);
 							//$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars($question))."');";
 						}
 					}
@@ -1544,7 +1551,7 @@
 			// if necessary show validation-error behind field
 			if (isset($GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name]))
 			{
-				$html .= ' <font color="red">'.$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name].'</font>';
+				$html .= ' <span style="color: red; white-space: nowrap;">'.$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name].'</span>';
 			}
 			// generate an extra div, if we have an onclick handler and NO children or it's an extension
 			//echo "<p>$this->name($this->onclick_handler:$this->no_onclick:$this->onclick_proxy): $cell[type]/$cell[name]</p>\n";
