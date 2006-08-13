@@ -195,7 +195,7 @@
 			
 			if ($this->sitemgr)
 			{
-				
+				$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
 			}
 			elseif (!$this->xslt)
 			{
