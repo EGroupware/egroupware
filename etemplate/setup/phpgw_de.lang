@@ -54,6 +54,7 @@ cellpadding for the table-tag	etemplate	de	Innenabstand (cellpadding) der Tabell
 cells	etemplate	de	Zellen
 cellspacing for the table-tag	etemplate	de	Zellenabstand (cellspacing) der Tabelle
 center	etemplate	de	Zentriert
+changed	etemplate	de	Geändert
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	de	abhaken wenn der Inhalt nur angezeigt aber nicht geändert werden soll (der Inhalt wird dann nicht zurückgesendet!)
 check if field has to be filled by user	etemplate	de	abhaken wenn das Eingabefeld vom Benutzer zwingend ausgefüllt werden muss
 checkbox	etemplate	de	Checkbox
@@ -222,10 +223,10 @@ month	etemplate	de	Monat
 multicolumn indices	etemplate	de	Mehrspaltige Indices
 name	etemplate	de	Name
 name of other table where column is a key from	etemplate	de	Name der anderen Tabelle von der diese Spalte ein Schlüssel ist
-name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des phpGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
+name of phpgw-template set (e.g. verdilak): '' = default (will read pref. template, us 'default' to read default template '')	etemplate	de	Name des eGW layouts (zb. verdilak): '' = Standard (ließt das bevorzugte Layout, benutze 'default' um das standard Layout '' zu lesen)
 name of table to add	etemplate	de	Name der zuzufügenden Tabelle
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	de	Name des eTemplate, in der Form anwendung.funktion[.subTemplate]
-need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf ein reserviertes Wort von SQL sein, am besten alle mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
+need to be unique in the table and no reseved word from sql, best prefix all with a common 2-digit short for the app, eg. 'et_'	etemplate	de	muss für die Tabelle einmalig sein und darf kein reserviertes Wort in SQL sein, am besten alle Spalten mit einem gemeinsammen Kürzel der Anwendung beginnen: zb. 'et_'
 new search	etemplate	de	Neue Suche
 new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!

@@ -54,6 +54,7 @@ cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
 cells	etemplate	en	Cells
 cellspacing for the table-tag	etemplate	en	Cellspacing for the table-tag
 center	etemplate	en	Center
+changed	etemplate	en	Changed
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	en	check if content should only be displayed but not altered (the content is not send back then!)
 check if field has to be filled by user	etemplate	en	check if field has to be filled by user
 checkbox	etemplate	en	Checkbox
