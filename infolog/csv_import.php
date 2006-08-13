@@ -201,7 +201,7 @@ function cat_id($cats)
 		$GLOBALS['egw']->template->parse('rows','fheader');
 
 		$info_names = array(	
-			'type'        => 'Type: char(10) task,phone,note,confirm,reject,email,fax',
+			'type'        => 'Type: char(10) task,phone,note',
 			'from'        => 'From: text(255) free text if no Addressbook-entry assigned',
 			'addr'        => 'Addr: text(255) phone-nr/email-address',
 			'subject'     => 'Subject: text(255)',
@@ -467,11 +467,18 @@ function cat_id($cats)
 			if (!isset($values['datemodified'])) $values['datemodified'] = $values['startdate'];
 
 			// convert user-names to user-id's
-			foreach(array('owner','responsible') as $user)
+			if (isset($values['owner']) && !is_numeric($values['owner']))
 			{
-				if (isset($values[$user]) && !is_numeric($user))
+				$values['owner'] = $GLOBALS['egw']->accounts->name2id($values['owner']);
+			}
+			if (isset($values['responsible']))
+			{
+				$responsible = $values['responsible'];
+				$values['responsible'] = array();
+				foreach(split('[,;]',$responsible) as $user)
 				{
-					$values[$user] = $GLOBALS['egw']->accounts->name2id($values[$user]);
+					if ($user && !is_numeric($user)) $user = $GLOBALS['egw']->accounts->name2id($user);
+					if ($user) $values['responsible'][] = $user;
 				}
 			}
 			if (!in_array('access',$info_fields))
