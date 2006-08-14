@@ -841,7 +841,7 @@
 		}
 		else
 		{
-			return 'error in parts';
+			return "<p>ExecMethod('$method'): error in parts!<br />".function_backtrace()."</p>\n";
 		}
 	}
 
