@@ -210,7 +210,7 @@
 		
 		if (is_null($pear_available))
 		{
-			$pear_available = include('PEAR.php');
+			$pear_available = @include('PEAR.php');
 
 			if (!class_exists('PEAR')) $pear_available = false;
 		
