@@ -235,7 +235,7 @@
 		            								$rrule['FREQ'] = $rrule['FREQ'].' '.$rrule['BYDAY'];
 											break;
 									}
-									$rrule['UNTIL'] = ($event['recur_enddate']) ? date('Ymd',$event['recur_enddate']) : '#0';
+									$rrule['UNTIL'] = ($event['recur_enddate']) ? date('Ymd',$event['recur_enddate']).'T'.date('His',$event['start']) : '#0';
 
 									$attributes['RRULE'] = $rrule['FREQ'].' '.$rrule['UNTIL'];
 								} else {
@@ -395,8 +395,14 @@
 									$alarms[$alarmTime] = array(
 										'time' => $alarmTime
 									);
-								} elseif (preg_match('/(........T......);;;$/',$attributes['value'],$matches)) {
-									#error_log(print_r($matches,true));
+								} elseif (preg_match('/(........T......);;(\d*);$/',$attributes['value'],$matches)) {
+									//error_log(print_r($matches,true));
+									$alarmTime = $vcal->_parseDateTime($matches[1]);
+									$alarms[$alarmTime] = array(
+										'time' => $alarmTime
+									);
+								} elseif (preg_match('/(........T......Z);;(\d*);$/',$attributes['value'],$matches)) {
+									//error_log(print_r($matches,true));
 									$alarmTime = $vcal->_parseDateTime($matches[1]);
 									$alarms[$alarmTime] = array(
 										'time' => $alarmTime
@@ -727,10 +733,17 @@
 			$this->productManufacturere = $_productManufacturer;
 			$this->productName = $_productName;
 
-			$defaultFields = array('public' => 'public', 'description' => 'description', 'end' => 'end',
+			$defaultFields[0] = array('public' => 'public', 'description' => 'description', 'end' => 'end',
 				'start' => 'start', 'location' => 'location', 'recur_type' => 'recur_type',
 				'recur_interval' => 'recur_interval', 'recur_data' => 'recur_data', 'recur_enddate' => 'recur_enddate',
 				'title' => 'title',	'priority' => 'priority', 'alarms' => 'alarms', 
+
+			);
+			
+			$defaultFields[1] = array('public' => 'public', 'description' => 'description', 'end' => 'end',
+				'start' => 'start', 'location' => 'location', 'recur_type' => 'recur_type',
+				'recur_interval' => 'recur_interval', 'recur_data' => 'recur_data', 'recur_enddate' => 'recur_enddate',
+				'title' => 'title', 'alarms' => 'alarms', 
 
 			);
 			
@@ -740,7 +753,7 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields + array('participants' => 'participants');
+							$this->supportedFields = $defaultFields[0] + array('participants' => 'participants');
 							#$this->supportedFields = $defaultFields;
 							break;
 					}
@@ -752,7 +765,17 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields;
+							$this->supportedFields = $defaultFields[0];
+							break;
+					}
+					break;
+
+				case 'nokia':
+					switch(strtolower($_productName))
+					{
+						case 'e61':
+						default:
+							$this->supportedFields = $defaultFields[1];
 							break;
 					}
 					break;
@@ -762,7 +785,7 @@
 					{
 						case 'd750i':
 						default:
-							$this->supportedFields = $defaultFields;
+							$this->supportedFields = $defaultFields[0];
 							break;
 					}
 					break;
@@ -771,13 +794,13 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields;
+							$this->supportedFields = $defaultFields[0];
 							break;
 					}
 					break;
 					
 				case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
-					$this->supportedFields = $defaultFields + array(
+					$this->supportedFields = $defaultFields[0] + array(
 						'participants' => 'participants',
 						'owner'        => 'owner',
 						'non_blocking' => 'non_blocking',
@@ -1024,12 +1047,6 @@
 					}
 					//echo "event=";_debug_array($vcardData);
 					
-					// now that we know what the vard provides, we merge that data with the information we have about the device
-					$event['priority']		= 2;
-					if($cal_id > 0)
-					{
-						$event['id'] = $cal_id;
-					}
 					while(($fieldName = array_shift($supportedFields)))
 					{
 						switch($fieldName)
@@ -1071,15 +1088,19 @@
 			return false;
 		}
 
-		function search($_vcalData) {
+		function search($_vcalData) 
+		{
 			if(!$event = $this->icaltoegw($_vcalData)) {
 				return false;
 			}
+			
 			$query = array(
 				'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
 				'cal_end='.$this->date2ts($event['end'],true),
 			);
-			foreach(array('title','location','priority','public','non_blocking') as $name) {
+			
+			#foreach(array('title','location','priority','public','non_blocking') as $name) {
+			foreach(array('title','location','public','non_blocking') as $name) {
 				if (isset($event[$name])) $query['cal_'.$name] = $event[$name];
 			}
 
