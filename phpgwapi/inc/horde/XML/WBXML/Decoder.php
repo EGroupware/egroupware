@@ -133,6 +133,11 @@ class XML_WBXML_Decoder extends XML_WBXML_ContentHandler {
      */
     function decode($wbxml)
     {
+	// fix for Nokia Series 60 which seem to send empty data block sometimes
+	if(strlen($wbxml) == 0) {
+        	return true;
+	}
+	
         $this->_error = false; // reset state
         $this->_strpos = 0;
 
