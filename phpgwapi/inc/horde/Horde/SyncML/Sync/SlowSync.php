@@ -19,7 +19,7 @@ include_once 'Horde/SyncML/Sync/TwoWaySync.php';
  * @package Horde_SyncML
  */
 class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
-	function handleSync($currentCmdID, $hordeType, $syncType,&$output, $refts) {
+	function handleSync($currentCmdID, $hordeType, $syncType, &$output, $refts) {
 		global $registry;
 		
 		$history = $GLOBALS['egw']->contenthistory;
@@ -33,23 +33,11 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 		
 		if(is_array($adds)) {
 			while($guid = array_shift($adds)) {
-				#$guid_ts = max($history->getTSforAction($guid, 'add'),$history->getTSforAction($guid, 'modify'));
-				$sync_ts = $state->getChangeTS($syncType, $guid);
-				#Horde::logMessage("SyncML: slowsync timestamp add: $guid sync_ts: $sync_ts anchorNext: ". $serverAnchorNext.' / '.time(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				// $sync_ts                       it got synced from client to server someone
-				// $sync_ts >= $serverAnchorNext  it got synced from client to server in this sync package already
-				if ($sync_ts && $sync_ts >= $serverAnchorNext) {
-					// Change was done by us upon request of client.
-					// Don't mirror that back to the client.
-					//Horde::logMessage("SyncML: slowsync add: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if ($locID = $state->getLocID($syncType, $guid)) {
+					Horde::logMessage("SyncML: slowsync add to client: $guid ignored, already at client($locID)", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 					continue;
 				}
 				
-				#$locid = $state->getLocID($syncType, $guid);
-				
-				// Create an Add request for client.
-# LK				$contentType = $state->getPreferedContentTypeClient($syncType);
-
 				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
 				if(is_a($contentType, 'PEAR_Error')) {
 					// Client did not sent devinfo
@@ -60,9 +48,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 				$c = $registry->call($hordeType . '/export', array('guid' => $guid, 'contentType' => $contentType));
 				Horde::logMessage("SyncML: slowsync add to client $c", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				if (!is_a($c, 'PEAR_Error')) {
-					// Item in history but not in database. Strange, but
-					// can happen.
-#LK					$cmd->setContent($state->convertServer2Client($c, $contentType));
 					$cmd->setContent($c);
 					if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
 						$cmd->setContentFormat('b64');
@@ -74,7 +59,6 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 					$state->log('Server-Add');
 					
 					// return if we have to much data
-					#Horde::logMessage("SyncML: ".' checking hordetype '.$hordeType  , __FILE__, __LINE__, PEAR_LOG_DEBUG);
 					if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' && $hordeType != 'siftasks') {
 						$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
 						return $currentCmdID;
@@ -161,58 +145,30 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 			}
 		
 			$guid = false;
-		#	if (is_a($command, 'Horde_SyncML_Command_Sync_Add')) {
-		#		$guid = $registry->call($hordeType . '/import',
-		#			array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
-		#		if (!is_a($guid, 'PEAR_Error')) {
-		#			$ts = $history->getTSforAction($guid, 'add');
-		#			$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
-		#			$state->log("Client-Add");
-		#			#Horde::logMessage('SyncML: added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		#		} else {
-		#			$state->log("Client-AddFailure");
-		#			Horde::logMessage('SyncML: Error in adding client entry:' . $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
-		#		}
-		#	} elseif (is_a($command, 'Horde_SyncML_Command_Sync_Replace')) {
-				#$guid = $state->getGlobalUID($type, $syncItem->getLocURI());
-				$guid = $registry->call($hordeType . '/search',
-					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
-				Horde::logMessage('SyncML: found guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				$ok = false;
-				if ($guid) {
-					#Horde::logMessage('SyncML: locuri'. $syncItem->getLocURI() . ' guid ' . $guid , __FILE__, __LINE__, PEAR_LOG_ERR);
-					// Entry exists: replace current one.
-					$ok = $registry->call($hordeType . '/replace',
-						array($guid, $state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
-					if (!is_a($ok, 'PEAR_Error')) {
-						$ts = $history->getTSforAction($guid, 'modify');
-						$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
-						#Horde::logMessage('SyncML: replaced entry due to client request guid: '. $guid  .' LocURI: '. $syncItem->getLocURI() .' ts: '. $ts, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-						$state->log("Client-Replace");
-						$ok = true;
-					} else {
-						// Entry may have been deleted; try adding it.
-						$ok = false;
-					}
-				}
 			
-				if (!$ok) {
-					// Entry does not exist in map or database: add a new
-					// one.
-					Horde::logMessage('SyncML: try to add contentype ' . $contentType .' to '. $hordeType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-					$guid = $registry->call($hordeType . '/import',
-						array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
-					if (!is_a($guid, 'PEAR_Error')) {
-						$ts = $history->getTSforAction($guid, 'add');
-						$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
-						$state->log("Client-AddReplace");
-						Horde::logMessage('SyncML: r/ added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-					} else {
-						Horde::logMessage('SyncML: Error in replacing/add client entry:' . $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
-						$state->log("Client-AddFailure");
-					}
+			$guid = $registry->call($hordeType . '/search',
+				array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+			
+			if ($guid) {
+				# entry exists in database already. Just update the mapping
+				Horde::logMessage('SyncML: adding mapping for locuri:'. $syncItem->getLocURI() . ' and guid:' . $guid , __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				$state->setUID($type, $syncItem->getLocURI(), $guid, mktime());
+				$state->log("Client-Replace");
+			} else {
+				# Entry does not exist in database: add a new one.
+				Horde::logMessage('SyncML: try to add contentype ' . $contentType .' to '. $hordeType, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				$guid = $registry->call($hordeType . '/import',
+					array($state->convertClient2Server($syncItem->getContent(), $contentType), $contentType));
+				if (!is_a($guid, 'PEAR_Error')) {
+					$ts = $history->getTSforAction($guid, 'add');
+					$state->setUID($type, $syncItem->getLocURI(), $guid, $ts);
+					$state->log("Client-AddReplace");
+					Horde::logMessage('SyncML: r/ added client entry as ' . $guid, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				} else {
+					Horde::logMessage('SyncML: Error in replacing/add client entry:' . $guid->message, __FILE__, __LINE__, PEAR_LOG_ERR);
+					$state->log("Client-AddFailure");
 				}
-		#	}
+			}
 		}
 
 		return true;

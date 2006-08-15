@@ -19,6 +19,7 @@ include_once 'Horde/SyncML/Command/Sync/ContentSyncElement.php';
  * @package Horde_SyncML
  */
 class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
+
 	function endSync($currentCmdID, &$output) {
 		global $registry;
 		
@@ -35,12 +36,12 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
                                           $output,
                                           $refts);
 		
-		if ($syncType == 'calendar' && $state->handleTasksInCalendar()) {
-			Horde::logMessage("SyncML: handling tasks in calendar sync", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			
-			$currentCmdID = $this->handleSync($currentCmdID, 'tasks', $syncType,
-				$output, $refts);
-		}
+		#if ($syncType == 'calendar' && $state->handleTasksInCalendar()) {
+		#	Horde::logMessage("SyncML: handling tasks in calendar sync", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		#	
+		#	$currentCmdID = $this->handleSync($currentCmdID, 'tasks', $syncType,
+		#		$output, $refts);
+		#}
 		
 		return $currentCmdID;
 	}
@@ -163,92 +164,90 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
 		}
 		
 		if(is_array($adds)) {
-		while($guid = array_shift($adds)) {
-			$guid_ts = $history->getTSforAction($guid, 'add');
-			$sync_ts = $state->getChangeTS($syncType, $guid);
-			Horde::logMessage("SyncML: timestamp add $guid guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			if ($sync_ts && $sync_ts == $guid_ts) {
-				// Change was done by us upon request of client.
-				// Don't mirror that back to the client.
-				Horde::logMessage("SyncML: add: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				continue;
-			}
-			
-			$locid = $state->getLocID($syncType, $guid);
-			
-			if ($locid && $refts == 0) {
-				// For slow sync (ts=0): do not add data for which we
-				// have a locid again.  This is a heuristic to avoid
-				// duplication of entries.
-				Horde::logMessage("SyncML: skipping add of guid $guid as there already is a locid $locid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-				continue;
-			}
-			Horde::logMessage("SyncML: add: $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-			
-			// Create an Add request for client.
-			$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
-			if(is_a($contentType, 'PEAR_Error')) {
-				// Client did not sent devinfo
-				$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
-			}
-			
-			$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
-			$c = $registry->call($hordeType . '/export',
-				array(
-					'guid'		=> $guid ,
-					'contentType'	=> $contentType ,
-				)
-			);
-			
-			if (!is_a($c, 'PEAR_Error')) {
-				// Item in history but not in database. Strange, but can happen.
-				$cmd->setContent($c);
-				if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
-					$cmd->setContentFormat('b64');
+			while($guid = array_shift($adds)) {
+				$guid_ts = $history->getTSforAction($guid, 'add');
+				$sync_ts = $state->getChangeTS($syncType, $guid);
+				Horde::logMessage("SyncML: timestamp add $guid guid_ts: $guid_ts sync_ts: $sync_ts", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				if ($sync_ts && $sync_ts == $guid_ts) {
+					// Change was done by us upon request of client.
+					// Don't mirror that back to the client.
+					Horde::logMessage("SyncML: add: $guid ignored, came from client", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					continue;
 				}
-				$cmd->setContentType($contentType['ContentType']);
-				$cmd->setSourceURI($guid);
-				$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Add');
-				$state->log('Server-Add');
 				
-				// return if we have to much data
-				if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
-					$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
-					return $currentCmdID;
+				$locid = $state->getLocID($syncType, $guid);
+				
+				if ($locid && $refts == 0) {
+					// For slow sync (ts=0): do not add data for which we
+					// have a locid again.  This is a heuristic to avoid
+					// duplication of entries.
+					Horde::logMessage("SyncML: skipping add of guid $guid as there already is a locid $locid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					continue;
+				}
+				Horde::logMessage("SyncML: add: $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+				
+				// Create an Add request for client.
+				$contentType = $state->getPreferedContentTypeClient($this->_sourceLocURI);
+				if(is_a($contentType, 'PEAR_Error')) {
+					// Client did not sent devinfo
+					$contentType = array('ContentType' => $state->getPreferedContentType($this->_targetLocURI));
+				}
+				
+				$cmd = &new Horde_SyncML_Command_Sync_ContentSyncElement();
+				$c = $registry->call($hordeType . '/export',
+					array(
+						'guid'		=> $guid ,
+						'contentType'	=> $contentType ,
+					)
+				);
+				
+				if (!is_a($c, 'PEAR_Error')) {
+					// Item in history but not in database. Strange, but can happen.
+					$cmd->setContent($c);
+					if($hordeType == 'sifcalendar' || $hordeType == 'sifcontacts' || $hordeType == 'siftasks') {
+						$cmd->setContentFormat('b64');
+					}
+					$cmd->setContentType($contentType['ContentType']);
+					$cmd->setSourceURI($guid);
+					$currentCmdID = $cmd->outputCommand($currentCmdID, $output, 'Add');
+					$state->log('Server-Add');
+					
+					// return if we have to much data
+					if(++$counter >= MAX_ENTRIES && $hordeType != 'sifcalendar' && $hordeType != 'sifcontacts' &&$hordeType != 'siftasks') {
+						$state->setSyncStatus(SERVER_SYNC_DATA_PENDING);
+						return $currentCmdID;
+					}
 				}
 			}
 		}
-		}
-		Horde::logMessage("SyncML: handling sync ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		#Horde::logMessage("SyncML: handling sync ".$currentCmdID, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		
 		$state->clearSync($syncType);
 		
 		return $currentCmdID;
 	}
-    
-    function loadData()
-    {
-        global $registry;
-
-	$state = &$_SESSION['SyncML.state'];
-        $syncType = $this->_targetLocURI;
-        $hordeType = str_replace('./','',$syncType);
-        $refts = $state->getServerAnchorLast($syncType);
 	
-	Horde::logMessage("SyncML: reading changed items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-	$state->setChangedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'modify', 'timestamp' => $refts)));
-	
-	Horde::logMessage("SyncML: reading deleted items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-	$state->setDeletedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'delete', 'timestamp' => $refts)));
-	
-	Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-	$state->setAddedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'add', 'timestamp' => $refts)));
-	
-	$this->_syncDataLoaded = TRUE;
-
-	return count($state->getChangedItems($hordeType)) +
-		count($state->getDeletedItems($hordeType)) +
-		count($state->getAddedItems($hordeType));
-    }
-
+	function loadData() {
+		global $registry;
+		
+		$state = &$_SESSION['SyncML.state'];
+		$syncType = $this->_targetLocURI;
+		$hordeType = str_replace('./','',$syncType);
+		$refts = $state->getServerAnchorLast($syncType);
+		
+		Horde::logMessage("SyncML: reading changed items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$state->setChangedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'modify', 'timestamp' => $refts)));
+		
+		Horde::logMessage("SyncML: reading deleted items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$state->setDeletedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'delete', 'timestamp' => $refts)));
+		
+		Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$state->setAddedItems($hordeType, $registry->call($hordeType. '/listBy', array('action' => 'add', 'timestamp' => $refts)));
+		
+		$this->_syncDataLoaded = TRUE;
+		
+		return count($state->getChangedItems($hordeType)) +
+			count($state->getDeletedItems($hordeType)) +
+			count($state->getAddedItems($hordeType));
+	}
 }

@@ -493,12 +493,6 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             
             switch($element)
             {
-#            	case 'Final':
-#            		if($state->getClientSyncStatus() == 1)
-#            		{
-#            			$state->setClientSyncStatus(2);
-#            		}
-#            		break;
             	case 'Sync':
             		$state->setSyncStatus(CLIENT_SYNC_STARTED);
                 	Horde::logMessage('SyncML['. session_id() .']: syncStatus(client sync started) ' . $state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_DEBUG);

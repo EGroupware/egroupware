@@ -78,8 +78,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 
 
 
-	if($this->_alert < ALERT_RESULT_ALERT)
-	{
+	if($this->_alert < ALERT_RESULT_ALERT) {
 
         	$type = $this->_targetLocURI;
 
@@ -121,6 +120,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 		    if(isset($this->_targetLocURIParameters))
 		    	$sync->_targetLocURIParameters = $this->_targetLocURIParameters;
 		    $state->setSync($this->_targetLocURI, $sync);
+		    $state->removeAllUID($this->_targetLocURI);
         	}
 
         	$status = &new Horde_SyncML_Command_Status($code, 'Alert');
@@ -196,10 +196,46 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	    $output->endElement($state->getURI(), 'Item');
         	    $output->endElement($state->getURI(), 'Alert');
 
+        	    // still needed? lars
                     $state->_sendFinal = true;
-
+                    
         	    $currentCmdID++;
+
+                    if($state->_devinfoRequested == false && 
+			$this->_sourceLocURI != null && 
+			is_a($state->getPreferedContentTypeClient($this->_sourceLocURI), 'PEAR_Error')) {
+			
+			$output->startElement($state->getURI(), 'Get', $attrs);
+
+			$output->startElement($state->getURI(), 'CmdID', $attrs);
+			$output->characters($currentCmdID);
+			$currentCmdID++;
+			$output->endElement($state->getURI(), 'CmdID');
+			
+			$output->startElement($state->getURI(), 'Meta', $attrs);
+			$output->startElement($state->getURIMeta(), 'Type', $attrs);
+			if(is_a($output, 'XML_WBXML_Encoder')) {
+				$output->characters('application/vnd.syncml-devinf+wbxml');
+			} else {
+				$output->characters('application/vnd.syncml-devinf+xml');
+			}
+			$output->endElement($state->getURIMeta(), 'Type');
+			$output->endElement($state->getURI(), 'Meta');
+			
+			$output->startElement($state->getURI(), 'Item', $attrs);
+			$output->startElement($state->getURI(), 'Target', $attrs);
+			$output->startElement($state->getURI(), 'LocURI', $attrs);
+			$output->characters(($state->getVersion() == 0) ? './devinf10' : './devinf11');
+			$output->endElement($state->getURI(), 'LocURI');
+			$output->endElement($state->getURI(), 'Target');
+			$output->endElement($state->getURI(), 'Item');
+			
+			$output->endElement($state->getURI(), 'Get');
+			
+			$state->_devinfoRequested = true;
+		    }
         	}
+
 	} elseif ($this->_alert == ALERT_NEXT_MESSAGE) {
         	$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
         	$status->setCmdRef($this->_cmdID);
@@ -214,10 +250,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	$currentCmdID = $status->output($currentCmdID, $output);
 
         	$state->setAlert222Received(true);
-        	
-		#if($state->getSyncStatus() > CLIENT_SYNC_STARTED && $state->getSyncStatus() < CLIENT_SYNC_ACKNOWLEDGED) {
-		#	$state->setSyncStatus(CLIENT_SYNC_ACKNOWLEDGED);
-		#}
+
 	} else {
         	$status = &new Horde_SyncML_Command_Status(RESPONSE_OK, 'Alert');
         	$status->setCmdRef($this->_cmdID);
@@ -230,46 +263,6 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 
         	$currentCmdID = $status->output($currentCmdID, $output);
 	}
-/*	else
-	{
-        	if ($state->isAuthorized()) {
-        	    $output->startElement($state->getURI(), 'Alert', $attrs);
-
-        	    $output->startElement($state->getURI(), 'CmdID', $attrs);
-        	    $chars = $currentCmdID;
-        	    $output->characters($chars);
-        	    $output->endElement($state->getURI(), 'CmdID');
-
-        	    $output->startElement($state->getURI(), 'Data', $attrs);
-        	    $chars = $this->_alert;
-        	    $output->characters($chars);
-        	    $output->endElement($state->getURI(), 'Data');
-
-        	    $output->startElement($state->getURI(), 'Item', $attrs);
-
-        	    if ($this->_sourceLocURI != null) {
-	                $output->startElement($state->getURI(), 'Target', $attrs);
-        	        $output->startElement($state->getURI(), 'LocURI', $attrs);
-        	        $chars = $this->_sourceLocURI;
-        	        $output->characters($chars);
-        	        $output->endElement($state->getURI(), 'LocURI');
-        	        $output->endElement($state->getURI(), 'Target');
-        	    }
-	
-        	    if ($this->_targetLocURI != null) {
-        	        $output->startElement($state->getURI(), 'Source', $attrs);
-        	        $output->startElement($state->getURI(), 'LocURI', $attrs);
-        	        $chars = (isset($this->_targetLocURIParameters) ? $this->_targetLocURI.'?/'.$this->_targetLocURIParameters : $this->_targetLocURI);
-        	        $output->characters($chars);
-        	        $output->endElement($state->getURI(), 'LocURI');
-        	        $output->endElement($state->getURI(), 'Source');
-        	    }
-        	    $output->endElement($state->getURI(), 'Item');
-        	    $output->endElement($state->getURI(), 'Alert');
-		    
-		    $currentCmdID++;
-		}
-	}*/
 
         return $currentCmdID;
     }
@@ -325,60 +318,68 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         }
     }
 
-    function endElement($uri, $element)
-    {
-        switch ($this->_xmlStack) {
-        case 1:
-            $state = & $_SESSION['SyncML.state'];
-            $sync = $state->getSync($this->_targetLocURI);
+	function endElement($uri, $element)
+	{
+		switch ($this->_xmlStack) {
+			case 1:
+				$state = & $_SESSION['SyncML.state'];
+				$sync = $state->getSync($this->_targetLocURI);
+				
+				if (!$sync && $this->_alert < ALERT_RESULT_ALERT) {
+					Horde::logMessage('SyncML: create new sync for ' . $this->_targetLocURI . ' ' . $this->_alert, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+					$sync = &Horde_SyncML_Sync::factory($this->_alert);
+					
+					$sync->_targetLocURI = $this->_targetLocURI;
+					$sync->_sourceLocURI = $this->_sourceLocURI;
+					if(isset($this->_targetLocURIParameters)) {
+						$sync->_targetLocURIParameters = $this->_targetLocURIParameters;
+					}
+					
+					$state->setSync($this->_targetLocURI, $sync);
 
-            if (!$sync && $this->_alert < ALERT_RESULT_ALERT) {
-                Horde::logMessage('SyncML: create new sync for ' . $this->_targetLocURI . ' ' . $this->_alert, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-                $sync = &Horde_SyncML_Sync::factory($this->_alert);
-                
-                $sync->_targetLocURI = $this->_targetLocURI;
-                $sync->_sourceLocURI = $this->_sourceLocURI;
-                if(isset($this->_targetLocURIParameters))
-                	$sync->_targetLocURIParameters = $this->_targetLocURIParameters;
-                	
-                $state->setSync($this->_targetLocURI, $sync);
-            }
-            break;
-
-        case 2:
-            if ($element == 'Data') {
-                $this->_alert = intval(trim($this->_chars));
-            }
-            break;
-
-        case 4:
-            if ($element == 'LocURI') {
-                if ($this->_isInSource) {
-                    $this->_sourceLocURI = trim($this->_chars);
-                } else {
-                    $targetLocURIData = explode('?/',trim($this->_chars));
-
-		    $this->_targetLocURI = $targetLocURIData[0];
-		    
-		    if(isset($targetLocURIData[1]))
-		    {
-		    	$this->_targetLocURIParameters = $targetLocURIData[1];
-		    }
-                }
-            }
-            break;
-
-        case 5:
-            if ($element == 'Next') {
-                $this->_metaAnchorNext = trim($this->_chars);
-            } else if ($element == 'Last') {
-                $this->_metaAnchorLast = trim($this->_chars);
-            }
-            break;
-        }
-
-        parent::endElement($uri, $element);
-    }
+					if($this->_alert == ALERT_SLOW_SYNC) {
+						$state->removeAllUID($this->_targetLocURI);
+					}
+				}
+				
+				break;
+				
+			case 2:
+				if ($element == 'Data') {
+					$this->_alert = intval(trim($this->_chars));
+				}
+				
+				break;
+				
+			case 4:
+				if ($element == 'LocURI') {
+					if ($this->_isInSource) {
+						$this->_sourceLocURI = trim($this->_chars);
+					} else {
+						$targetLocURIData = explode('?/',trim($this->_chars));
+						
+						$this->_targetLocURI = $targetLocURIData[0];
+						
+						if(isset($targetLocURIData[1])) {
+							$this->_targetLocURIParameters = $targetLocURIData[1];
+						}
+					}
+				}
+				
+				break;
+				
+			case 5:
+				if ($element == 'Next') {
+					$this->_metaAnchorNext = trim($this->_chars);
+				} else if ($element == 'Last') {
+					$this->_metaAnchorLast = trim($this->_chars);
+				}
+				
+				break;
+		}
+			
+		parent::endElement($uri, $element);
+	}
 
     function getAlert()
     {

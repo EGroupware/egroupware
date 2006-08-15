@@ -36,61 +36,73 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	return false;
     }
 
-    /**
-     * Retrieves information about the clients device info if any. Returns
-     * false if no info found or a DateTreeObject with at least the
-     * following attributes:
-     *
-     * a array containing all available infos about the device
-     */
-    function getClientDeviceInfo()
-    {
-        $deviceID = $this->_locName . $this->_sourceURI;
-    	
-    	$db = clone($GLOBALS['egw']->db);
-    	
-    	$cols = array
-    	(
-    		'dev_dtdversion',
-    		'dev_numberofchanges',
-    		'dev_largeobjs',
-    		'dev_swversion',
-    		'dev_oem',
-    		'dev_model',
-    		'dev_manufacturer',
-    		'dev_devicetype',
-    		'dev_deviceid',
-    		'dev_datastore',
-    	);
-    	
-    	$where = array
-    	(
-    		'dev_id'	=> $deviceID,
-    	);
-    	
-    	$db->select('egw_syncmldevinfo', $cols, $where, __LINE__, __FILE__);
-    	
-    	if($db->next_record())
-    	{
-    		$devInfo = array
-    		(
-    			'DTDVersion'			=> $db->f('dev_dtdversion'),
-    			'supportNumberOfChanges'	=> $db->f('dev_numberofchanges'),
-    			'supportLargeObjs'		=> $db->f('dev_largeobjs'),
-    			'softwareVersion'		=> $db->f('dev_swversion'),
-    			'oem'				=> $db->f('dev_oem'),
-    			'model'				=> $db->f('dev_model'),
-    			'manufacturer'			=> $db->f('dev_manufacturer'),
-    			'deviceType'			=> $db->f('dev_devicetype'),
-    			'deviceID'			=> $db->f('dev_deviceid'),
-    			'dataStore'			=> unserialize($db->f('dev_datastore')),
-    		);
-    		
-    		return $devInfo;
-    	}
-    	
-    	return false;
-    }
+	/**
+	* Retrieves information about the clients device info if any. Returns
+	* false if no info found or a DateTreeObject with at least the
+	* following attributes:
+	*
+	* a array containing all available infos about the device
+	*/
+	function getClientDeviceInfo() {
+		$db = clone($GLOBALS['egw']->db);
+		
+		$cols = array(
+			'owner_devid',
+		);
+		
+		$where = array (
+			'owner_locname'		=> $this->_locName,
+			'owner_deviceid'	=> $this->_sourceURI,
+		);
+		
+		$db->select('egw_syncmldeviceowner', $cols, $where, __LINE__, __FILE__);
+		
+		if($db->next_record()) {
+			$deviceID = $db->f('owner_devid');
+			
+			$cols = array(
+				'dev_dtdversion',
+				'dev_numberofchanges',
+				'dev_largeobjs',
+				'dev_swversion',
+				'dev_fwversion',
+				'dev_hwversion',
+				'dev_oem',
+				'dev_model',
+				'dev_manufacturer',
+				'dev_devicetype',
+				'dev_datastore',
+				'dev_utc',
+			);
+			
+			$where = array(
+				'dev_id'	=> $deviceID,
+			);
+			
+			$db->select('egw_syncmldevinfo', $cols, $where, __LINE__, __FILE__);
+			
+			if($db->next_record()) {
+				$devInfo = array (
+					'DTDVersion'			=> $db->f('dev_dtdversion'),
+					'supportNumberOfChanges'	=> $db->f('dev_numberofchanges'),
+					'supportLargeObjs'		=> $db->f('dev_largeobjs'),
+					'UTC'				=> $db->f('dev_utc'),
+					'softwareVersion'		=> $db->f('dev_swversion'),
+					'hardwareVersion'		=> $db->f('dev_hwversion'),
+					'firmwareVersion'		=> $db->f('dev_fwversion'),
+					'oem'				=> $db->f('dev_oem'),
+					'model'				=> $db->f('dev_model'),
+					'manufacturer'			=> $db->f('dev_manufacturer'),
+					'deviceType'			=> $db->f('dev_devicetype'),
+					'dataStore'			=> unserialize($db->f('dev_datastore')),
+				);
+			
+				return $devInfo;
+			}
+		}
+		
+		return false;
+	}
 
     /**
      * Retrieves the Horde server guid (like
@@ -243,41 +255,62 @@ class EGW_SyncML_State extends Horde_SyncML_State
         return $this->_isAuthorized;
     }
 
-    /**
-     * Removes the locid<->guid mapping for the given locid. Returns
-     * the guid that was removed or false if no mapping entry was
-     * found.
-     */
-    function removeUID($type, $locid)
-    {
-    	$mapID = $this->_locName . $this->_sourceURI . $type;
-    	
-    	$db = clone($GLOBALS['egw']->db);
-    	
-    	$cols = array('map_guid');
-    	
-    	$where = array
-    	(
-    		'map_id'	=> $mapID,
-    		'map_locuid'	=> $locid
-    	);
-    	
-    	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__);
-    	
-    	if(!$db->next_record())
-    	{
-    		Horde::logMessage("SyncML: state->removeUID(type=$type,locid=$locid) : nothing to remove", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-    		return false;
-    	}
-    	
-    	$guid = $db->f('map_guid');
+	/**
+	* Removes all locid<->guid mappings for the given type. 
+	* Returns always true.
+	*/
+	function removeAllUID($type)
+	{
+		$mapID = $this->_locName . $this->_sourceURI . $type;
+		
+		$db = clone($GLOBALS['egw']->db);
+		
+		$cols = array('map_guid');
+		
+		$where = array (
+			'map_id'	=> $mapID
+		);
+		
+		Horde::logMessage("SyncML: state->removeAllUID(type=$type)", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		
+		$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
+		
+		return true;
+	}
 
-        #Horde::logMessage("SyncML:  state->removeUID(type=$type,locid=$locid) : removing guid:$guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-        
-    	$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
-    	
-    	return $guid;
-    }
+	/**
+	* Removes the locid<->guid mapping for the given locid. Returns
+	* the guid that was removed or false if no mapping entry was
+	* found.
+	*/
+	function removeUID($type, $locid)
+	{
+		$mapID = $this->_locName . $this->_sourceURI . $type;
+		
+		$db = clone($GLOBALS['egw']->db);
+		
+		$cols = array('map_guid');
+		
+		$where = array (
+			'map_id'	=> $mapID,
+			'map_locuid'	=> $locid
+		);
+		
+		$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__);
+		
+		if(!$db->next_record()) {
+			Horde::logMessage("SyncML: state->removeUID(type=$type,locid=$locid) : nothing to remove", __FILE__, __LINE__, PEAR_LOG_INFO);
+			return false;
+		}
+		
+		$guid = $db->f('map_guid');
+		
+		Horde::logMessage("SyncML:  state->removeUID(type=$type,locid=$locid) : removing guid:$guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		
+		$db->delete('egw_contentmap', $where, __LINE__, __FILE__);
+		
+		return $guid;
+	}
 
     /**
      * Puts a given client $locid and Horde server $guid pair into the
@@ -334,39 +367,72 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	
     }
 
-    /**
-     * write clients device info to database
-     */
-    function writeClientDeviceInfo()
-    {
-        if (!isset($this->_clientDeviceInfo) || !is_array($this->_clientDeviceInfo)) {
-            return false;
-        }
+	/**
+	* writes clients deviceinfo into database
+	*/
+	function writeClientDeviceInfo() {
+		if (!isset($this->_clientDeviceInfo) || !is_array($this->_clientDeviceInfo)) {
+			return false;
+		}
+		
+		$db = clone($GLOBALS['egw']->db);
+		
+		$cols = array(
+			'dev_id',
+		);
+		
+		$softwareVersion = !empty($this->_clientDeviceInfo['softwareVersion']) ? $this->_clientDeviceInfo['softwareVersion'] : '';
+		$hardwareVersion = !empty($this->_clientDeviceInfo['hardwareVersion']) ? $this->_clientDeviceInfo['hardwareVersion'] : '';
+		$firmwareVersion = !empty($this->_clientDeviceInfo['firmwareVersion']) ? $this->_clientDeviceInfo['firmwareVersion'] : '';
+		
+		$where = array (
+			'dev_model'		=> $this->_clientDeviceInfo['model'],
+			'dev_manufacturer'	=> $this->_clientDeviceInfo['manufacturer'],
+			'dev_swversion'		=> $softwareVersion, 
+			'dev_hwversion'		=> $hardwareVersion, 
+			'dev_fwversion'		=> $firmwareVersion, 
+		);
 
-        $deviceID = $this->_locName . $this->_sourceURI;
-        
-        $data = array
-        (
-        	'dev_id'		=> $deviceID,
-        	'dev_dtdversion' 	=> $this->_clientDeviceInfo['DTDVersion'],
-        	'dev_numberofchanges'	=> $this->_clientDeviceInfo['supportNumberOfChanges'],
-        	'dev_largeobjs'		=> $this->_clientDeviceInfo['supportLargeObjs'],
-        	'dev_swversion'		=> $this->_clientDeviceInfo['softwareVersion'],
-        	'dev_oem'		=> $this->_clientDeviceInfo['oem'],
-        	'dev_model'		=> $this->_clientDeviceInfo['model'],
-        	'dev_manufacturer'	=> $this->_clientDeviceInfo['manufacturer'],
-        	'dev_devicetype'	=> $this->_clientDeviceInfo['deviceType'],
-        	'dev_deviceid'		=> $this->_clientDeviceInfo['deviceID'],
-        	'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),
-        );
+		$db->select('egw_syncmldevinfo', $cols, $where, __LINE__, __FILE__);
+		
+		if($db->next_record()) {
+			$deviceID = $db->f('dev_id');
 
-        $where = array
-        (
-        	'dev_id'		=> $deviceID,
-        );
-        
-    	$GLOBALS['egw']->db->insert('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__);
-    }
+			$data = array (
+				'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),
+			);
+			
+			$db->update('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__);
+		
+		} else {
+			$data = array (
+				'dev_dtdversion' 	=> $this->_clientDeviceInfo['DTDVersion'],
+				'dev_numberofchanges'	=> $this->_clientDeviceInfo['supportNumberOfChanges'] ? true : false,
+				'dev_largeobjs'		=> $this->_clientDeviceInfo['supportLargeObjs'] ? true : false,
+				'dev_utc'		=> $this->_clientDeviceInfo['UTC'] ? true : false,
+				'dev_swversion'		=> $softwareVersion, 
+				'dev_hwversion'		=> $hardwareVersion, 
+				'dev_fwversion'		=> $firmwareVersion, 
+				'dev_oem'		=> $this->_clientDeviceInfo['oem'],
+				'dev_model'		=> $this->_clientDeviceInfo['model'],
+				'dev_manufacturer'	=> $this->_clientDeviceInfo['manufacturer'],
+				'dev_devicetype'	=> $this->_clientDeviceInfo['deviceType'],
+				'dev_datastore'		=> serialize($this->_clientDeviceInfo['dataStore']),
+			);
+		
+			$db->insert('egw_syncmldevinfo', $data, $where, __LINE__, __FILE__);
+		
+			$deviceID = $db->get_last_insert_id('egw_syncmldevinfo', 'dev_id');
+		}
+		
+		$where = $data = array (
+			'owner_locname'		=> $this->_locName,
+			'owner_deviceid'	=> $this->_sourceURI,
+			'owner_devid'		=> $deviceID,
+		);
+
+		$db->insert('egw_syncmldeviceowner', $data, $where, __LINE__, __FILE__);
+	}
 
     /**
      * After a successful sync, the client and server's Next Anchors

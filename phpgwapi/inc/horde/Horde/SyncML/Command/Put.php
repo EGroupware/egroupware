@@ -42,116 +42,136 @@ class Horde_SyncML_Command_Put extends Horde_SyncML_Command {
 
     var $_softwareVersion;
 
-    function endElement($uri, $element)
-    {
-        #Horde::logMessage('SyncML: put endelement ' . $element . ' stack ' . $this->_xmlStack, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-        switch ($this->_xmlStack) {
-        	case 5:
-        		switch($element) {
-        			case 'DataStore':
-        				$this->_deviceInfo['dataStore'][$this->_sourceReference] = array(
-        					'maxGUIDSize'		=> $this->_maxGUIDSize,
-        					'rxPreference'		=> $this->_rxPreference,
-        					'txPreference'		=> $this->_txPreference,
-        					'syncCapabilities'	=> $this->_syncCapabilities,
-        				);
-        				break;
-        			case 'DevID':
-        				$this->_deviceInfo['deviceID'] 		= trim($this->_chars);
-        				break;
-        			case 'DevTyp':
-        				$this->_deviceInfo['deviceType']	= trim($this->_chars);
-        				break;
-        			case 'Man':
-        				$this->_deviceInfo['manufacturer']	= trim($this->_chars);
-        				break;
-        			case 'Mod':
-        				$this->_deviceInfo['model']		= trim($this->_chars);
-        				break;
-        			case 'OEM':
-        				$this->_deviceInfo['oem']		= trim($this->_chars);
-        				break;
-        			case 'SwV':
-        				$this->_deviceInfo['softwareVersion']	= trim($this->_chars);
-        				break;
-        			case 'SupportLargeObjs':
-        				$this->_deviceInfo['supportLargeObjs']	= true;
-        				break;
-        			case 'SupportNumberOfChanges':
-        				$this->_deviceInfo['supportNumberOfChanges'] = true;
-        				break;
-        			case 'VerDTD':
-        				$this->_deviceInfo['DTDVersion']	= trim($this->_chars);
-        				break;
-        		}
-        		break;
-        	case 6:
-        		switch($element) {
-        			case 'MaxGUIDSize':
-        				$this->_maxGUIDSize = trim($this->_chars);
-        				break;
-        			case 'Rx-Pref':
-        				$this->_rxPreference = array(
-        					'contentType'		=> $this->_contentType,
-        					'contentVersion'	=> $this->_contentVersion,
-        				);
-        				break;
-        			case 'SourceRef':
-        				$this->_sourceReference = trim($this->_chars);
-        				break;
-        			case 'Tx-Pref':
-        				$this->_txPreference = array(
-        					'contentType'		=> $this->_contentType,
-        					'contentVersion'	=> $this->_contentVersion,
-        				);
-        				break;
-        		}
-        		break;
-        	case 7:
-        		switch($element) {
-        			case 'CTType':
-        				$this->_contentType = trim($this->_chars);
-        				break;
-        			case 'SyncType':
-        				$this->_syncCapabilities[] = trim($this->_chars);
-        				break;
-        			case 'VerCT':
-        				$this->_contentVersion = trim($this->_chars);
-        				break;
-        		}
-        		break;
-        }
-        
-        parent::endElement($uri, $element);
-    }
+	function endElement($uri, $element) {
+		switch ($this->_xmlStack) {
+			case 5:
+				switch($element) {
+					case 'DataStore':
+						$this->_deviceInfo['dataStore'][$this->_sourceReference] = array(
+							'maxGUIDSize'		=> $this->_maxGUIDSize,
+							'rxPreference'		=> $this->_rxPreference,
+							'txPreference'		=> $this->_txPreference,
+							'syncCapabilities'	=> $this->_syncCapabilities,
+						);
+						break;
+					
+					case 'DevID':
+						$this->_deviceInfo['deviceID'] 		= trim($this->_chars);
+						break;
+					
+					case 'DevTyp':
+						$this->_deviceInfo['deviceType']	= trim($this->_chars);
+						break;
+					
+					case 'FwV':
+						$this->_deviceInfo['firmwareVersion']	= trim($this->_chars);
+						break;
+						
+					case 'HwV':
+						$this->_deviceInfo['hardwareVersion']	= trim($this->_chars);
+						break;
+					
+					case 'Man':
+						$this->_deviceInfo['manufacturer']	= trim($this->_chars);
+						break;
+					
+					case 'Mod':
+						$this->_deviceInfo['model']		= trim($this->_chars);
+						break;
+					
+					case 'OEM':
+						$this->_deviceInfo['oem']		= trim($this->_chars);
+						break;
+					
+					case 'SwV':
+						$this->_deviceInfo['softwareVersion']	= trim($this->_chars);
+						break;
+					
+					case 'SupportLargeObjs':
+						$this->_deviceInfo['supportLargeObjs']	= true;
+						break;
+					
+					case 'SupportNumberOfChanges':
+						$this->_deviceInfo['supportNumberOfChanges'] = true;
+						break;
+					
+					case 'UTC':
+						$this->_deviceInfo['UTC']		= true;
+						break;
+						
+					case 'VerDTD':
+						$this->_deviceInfo['DTDVersion']	= trim($this->_chars);
+						break;
+				}
+				break;
+			case 6:
+				switch($element) {
+					case 'MaxGUIDSize':
+						$this->_maxGUIDSize = trim($this->_chars);
+						break;
+					
+					case 'Rx-Pref':
+						$this->_rxPreference = array(
+							'contentType'		=> $this->_contentType,
+							'contentVersion'	=> $this->_contentVersion,
+						);
+						break;
+						
+					case 'SourceRef':
+						$this->_sourceReference = trim($this->_chars);
+						break;
+					
+					case 'Tx-Pref':
+						$this->_txPreference = array(
+							'contentType'		=> $this->_contentType,
+							'contentVersion'	=> $this->_contentVersion,
+						);
+						break;
+				}
+				break;
+				
+			case 7:
+				switch($element) {
+					case 'CTType':
+						$this->_contentType = trim($this->_chars);
+						break;
+					
+					case 'SyncType':
+						$this->_syncCapabilities[] = trim($this->_chars);
+						break;
+						
+					case 'VerCT':
+						$this->_contentVersion = trim($this->_chars);
+						break;
+				}
+				break;
+		}
+			
+		parent::endElement($uri, $element);
+	}
     
-    function output($currentCmdID, &$output )
-    {
-        $state = &$_SESSION['SyncML.state'];
+	function output($currentCmdID, &$output ) {
+		$state = &$_SESSION['SyncML.state'];
+		
+		$status = &new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Put');
+		$status->setCmdRef($this->_cmdID);
+		
+		$ref = ($state->getVersion() == 0) ? './devinf10' : './devinf11';
+		
+		$status->setSourceRef($ref);
+		
+		if($state->isAuthorized()) {
+			if(count((array)$this->_deviceInfo) > 0) {
+				$state->setClientDeviceInfo($this->_deviceInfo);
+				$state->writeClientDeviceInfo();
+			}
+		}
+		
+		return $status->output($currentCmdID, $output);
+	}
 
-        $status = &new Horde_SyncML_Command_Status((($state->isAuthorized()) ? RESPONSE_OK : RESPONSE_INVALID_CREDENTIALS), 'Put');
-        $status->setCmdRef($this->_cmdID);
-
-        $ref = ($state->getVersion() == 0) ? './devinf10' : './devinf11';
-
-        $status->setSourceRef($ref);
-        
-        if($state->isAuthorized())
-        {
-        	if(count((array)$this->_deviceInfo) > 0)
-        	{
-        		$state->setClientDeviceInfo($this->_deviceInfo);
-        		$state->writeClientDeviceInfo();
-        	}
-        }
-
-        return $status->output($currentCmdID, $output);
-    }
-
-    function startElement($uri, $element, $attrs)
-    {
-        #Horde::logMessage('SyncML: put startelement ' . $element, __FILE__, __LINE__, PEAR_LOG_DEBUG);
-        parent::startElement($uri, $element, $attrs);
-    }
+	function startElement($uri, $element, $attrs) {
+		parent::startElement($uri, $element, $attrs);
+	}
 
 }
