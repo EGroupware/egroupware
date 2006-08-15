@@ -510,7 +510,7 @@
 			//echo "<p>session::create(login='$login'): lid='$this->account_lid', domain='$this->account_domain'</p>\n";
 			$user_ip = $this->getuser_ip();
 
-			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid);
+			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
 
 			if (($blocked = $this->login_blocked($login,$user_ip)) ||	// too many unsuccessful attempts
 				$GLOBALS['egw_info']['server']['global_denied_users'][$this->account_lid] ||
@@ -733,7 +733,7 @@
 			$GLOBALS['egw_info']['flags'] = $phpgw_info_flags;
 
 			$this->update_dla();
-			$this->account_id = $GLOBALS['egw']->interserver->name2id($this->account_lid);
+			$this->account_id = $GLOBALS['egw']->interserver->name2id($this->account_lid,'account_lid','u');
 
 			if (!$this->account_id)
 			{
@@ -869,7 +869,7 @@
 
 			if (!$GLOBALS['egw']->interserver->exists($this->account_lid))
 			{
-				$this->account_id = $GLOBALS['egw']->interserver->name2id($this->account_lid);
+				$this->account_id = $GLOBALS['egw']->interserver->name2id($this->account_lid,'account_lid','u');
 			}
 			$GLOBALS['egw_info']['user']['account_id'] = $this->account_id;
 			$GLOBALS['egw']->interserver->serverid = $this->account_id;
