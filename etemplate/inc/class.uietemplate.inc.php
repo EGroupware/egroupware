@@ -1316,7 +1316,11 @@
 						}
 						if (!isset($GLOBALS['egw_info']['etemplate']['to_process'][$form_name]))
 						{
-							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
+							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
+								'type'    => $cell['type'],
+								'needed'  => $cell['needed'],
+								'allowed' => array_keys($sels), 
+							);
 						}
 					}
 					break;
@@ -1725,7 +1729,24 @@
 						}
 						break;
 					case 'select':
-						$this->set_array($content,$form_name,is_array($value) ? implode(',',$value) : $value);
+						if ($attr['allowed'])	// only check for $value is allowed, if allowed values are set
+						{
+							foreach(is_array($value) ? $value : array($value) as $val)
+							{
+								if (!in_array($val,$attr['allowed']))
+								{
+									$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' is NOT allowed ('%2')!",$val,implode("','",$attr['allowed']));
+									$value = '';
+									break;
+								}
+							}
+						}
+						if (is_array($value)) $value = implode(',',$value);
+						if ($value === '' && $attr['needed'])
+						{
+							$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] .= lang('Field must not be empty !!!',$value);
+						}
+						$this->set_array($content,$form_name,$value);
 						break;
 					case 'checkbox':
 						if (!isset($value))
