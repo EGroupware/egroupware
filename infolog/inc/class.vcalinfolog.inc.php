@@ -26,23 +26,25 @@
 			'call'        => 'NEEDS-ACTION',
 			'will-call'   => 'IN-PROCESS',			
 		);
+		
 		var $vtodo2status = array(
 			'NEEDS-ACTION' => 'not-started',
 			'IN-PROCESS'   => 'ongoing',
 			'COMPLETED'    => 'done',
 			'CANCELLED'    => 'cancelled',
 		);
+		
 		function exportVTODO($_taskID, $_version)
 		{
 			$taskData = $this->read($_taskID);
 
-			$taskData = $GLOBALS['egw']->translation->convert($taskData,$GLOBALS['egw']->translation->charset(),'UTF-8');
+			$taskData = $GLOBALS['egw']->translation->convert($taskData, $GLOBALS['egw']->translation->charset(), 'UTF-8');
 			
 			//_debug_array($taskData);
 			
-			$taskGUID = $GLOBALS['phpgw']->common->generate_uid('infolog_task',$_taskID);
+			$taskGUID = $GLOBALS['egw']->common->generate_uid('infolog_task',$_taskID);
 			#print "<br>";
-			#print $GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'add');
+			#print $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add');
 			#print "<br>";
 			
 			$vcal = &new Horde_iCalendar;
@@ -63,8 +65,8 @@
 			if($taskData['info_datecompleted'])
 				$vevent->setAttribute('COMPLETED',$taskData['info_datecompleted']);
 			$vevent->setAttribute('DTSTAMP',time());
-			$vevent->setAttribute('CREATED',$GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'add'));
-			$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['phpgw']->contenthistory->getTSforAction($eventGUID,'modify'));
+			$vevent->setAttribute('CREATED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add'));
+			$vevent->setAttribute('LAST-MODIFIED',$GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify'));
 			$vevent->setAttribute('UID',$taskGUID);
 			$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 			$vevent->setAttribute('STATUS',isset($this->status2vtodo[$taskData['info_status']]) ?  
@@ -95,8 +97,14 @@
 				return false;
 			}
 			
-			if($_taskID>0)
+			if($_taskID > 0) {
 				$taskData['info_id'] = $_taskID;
+			}
+
+			// we suppose that a not set status in a vtodo means that the task did not started yet
+			if(empty($taskData['info_status'])) {
+				$taskData['info_status'] = 'not-started';
+			}
 						
 			#_debug_array($taskData);exit;
 			return $this->write($taskData);
@@ -107,23 +115,22 @@
 				return false;
 			}
 
+			#unset($egwData['info_priority']);
+
 			$filter = array('col_filter' => $egwData);
 			if($foundItems = $this->search($filter)) {
 				if(count($foundItems) > 0) {
-					#error_log(__LINE__);
-					#error_log(print_r($foundItems, true));
 					$itemIDs = array_keys($foundItems);
-					#error_log($itemIDs[0]);
 					return $itemIDs[0];
 				}
 			}
 			
 			return false;
 		}
+		
 		function vtodotoegw($_vcalData) {
 			$vcal = &new Horde_iCalendar;
-			if(!$vcal->parsevCalendar($_vcalData))
-			{
+			if(!$vcal->parsevCalendar($_vcalData)) {
 				return FALSE;
 			}
 
@@ -180,7 +187,9 @@
 								break;
 						}
 					}
-					$taskData = $GLOBALS['egw']->translation->convert($taskData, 'UTF-8');
+					# the horde ical class does already convert in parsevCalendar
+					# do NOT convert here
+					//$taskData = $GLOBALS['egw']->translation->convert($taskData, 'UTF-8');
 
 					return $taskData;
 				}
