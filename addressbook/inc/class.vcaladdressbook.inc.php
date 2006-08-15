@@ -88,7 +88,7 @@ class vcaladdressbook extends bocontacts
 			}
 			
 			if ($databaseField != 'jpegphoto') {
-				$value = $GLOBALS['egw']->translation->convert($value,$sysCharSet,'utf-8');
+				$value = $GLOBALS['egw']->translation->convert($value, $sysCharSet, 'utf-8');
 			}
 			
 			// don't add the entry if it contains only ';'
@@ -248,9 +248,32 @@ class vcaladdressbook extends bocontacts
 			'TEL;WORK'	=> array('tel_work'),
 			'TITLE'		=> array('title'),
 			'URL;WORK'	=> array('url'),
-			'URL:HOME'	=> array('url_home'),
+			'URL;HOME'	=> array('url_home'),
 		);
 
+		$defaultFields[5] = array(
+			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+							'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+							'adr_two_postalcode','adr_two_countryname'),
+			'BDAY'		=> array('bday'),
+			'EMAIL;INTERNET;WORK' => array('email'),
+			'EMAIL;INTERNET;HOME' => array('email_home'),
+			'N'		=> array('n_family','n_given','','n_prefix','n_suffix'),
+			'NOTE'		=> array('note'),
+			'ORG'		=> array('org_name',''),
+			'TEL;CELL;WORK'	=> array('tel_cell'),
+			'TEL;CELL;HOME'	=> array('tel_cell_private'),
+			'TEL;FAX;WORK'	=> array('tel_fax'),
+			'TEL;FAX;HOME'	=> array('tel_fax_home'),
+			'TEL;HOME'	=> array('tel_home'),
+			'TEL;PAGER;WORK' => array('tel_pager'),
+			'TEL;WORK'	=> array('tel_work'),
+			'TITLE'		=> array('title'),
+			'URL;WORK'	=> array('url'),
+			'URL;HOME'	=> array('url_home'),
+		);
+		//error_log("Client: $_productManufacturer $_productName");
 		switch(strtolower($_productManufacturer))
 		{
 			case 'nexthaus corporation':
@@ -266,6 +289,9 @@ class vcaladdressbook extends bocontacts
 			case 'nokia':
 				switch(strtolower($_productName))
 				{
+					case 'e61':
+						$this->supportedFields = $defaultFields[5];
+						break;
 					case '6600':
 					default:
 						$this->supportedFields = $defaultFields[4];
@@ -328,11 +354,9 @@ class vcaladdressbook extends bocontacts
 	
 	function vcardtoegw($_vcard) 
 	{
-		// convert from utf-8 to eGW's charset
-		$_vcard = $GLOBALS['egw']->translation->convert($_vcard, 'utf-8');
+		// the horde class does the charset conversion. DO NOT CONVERT HERE.
 
-		if(!is_array($this->supportedFields))
-		{
+		if(!is_array($this->supportedFields)) {
 			$this->setSupportedFields();
 		}
 
@@ -491,7 +515,7 @@ class vcaladdressbook extends bocontacts
 								{
 									if (!($cat_id = $this->cat->name2id($cat_name)))
 									{
-										$cat_id = $this->cat->add( array('name' => $cat_name,'descr' => $cat_name ));
+										$cat_id = $this->cat->add( array('name' => $cat_name, 'descr' => $cat_name ));
 									}
 									$contact[$fieldName] = $cat_id;
 								}
@@ -504,6 +528,7 @@ class vcaladdressbook extends bocontacts
 				}
 			}
 		}
+		
 		$contact['n_fn']  = trim($contact['n_given'].' '.$contact['n_family']);
 		
 		return $contact;
