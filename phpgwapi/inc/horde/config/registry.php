@@ -141,3 +141,13 @@ $this->applications['egwsiftaskssync'] = array(
     'menu_parent' => 'organizing'
 );
 
+$this->applications['egwcaltaskssync'] = array(
+    'fileroot' => EGW_SERVER_ROOT.'/syncml/caltasks',
+    'webroot' => $this->applications['horde']['webroot'] . '/mnemo',
+    'icon' => $this->applications['horde']['webroot'] . '/mnemo/graphics/mnemo.gif',
+    'name' => _("Calendar and Tasks"),
+    'status' => 'active',
+    'provides' => 'caltasks',
+    'menu_parent' => 'organizing'
+);
+
