@@ -802,12 +802,12 @@
 			}
 			if (empty($GLOBALS['egw_info']['server']['template_set']))
 			{
-				$GLOBALS['egw_info']['server']['template_set'] = 'default';
+				$GLOBALS['egw_info']['server']['template_set'] = 'idots';
 			}
 
 			$imagedir            = EGW_SERVER_ROOT . '/' . $appname . '/templates/'
 				. $GLOBALS['egw_info']['server']['template_set'] . '/images';
-			$imagedir_default    = EGW_SERVER_ROOT . '/' . $appname . '/templates/default/images';
+			$imagedir_default    = EGW_SERVER_ROOT . '/' . $appname . '/templates/idots/images';
 			$imagedir_olddefault = EGW_SERVER_ROOT . '/' . $appname . '/images';
 
 			if ($this->is_image_dir ($imagedir))
@@ -842,11 +842,11 @@
 
 			if (empty($GLOBALS['egw_info']['server']['template_set']))
 			{
-				$GLOBALS['egw_info']['server']['template_set'] = 'default';
+				$GLOBALS['egw_info']['server']['template_set'] = 'idots';
 			}
 
 			$imagedir            = EGW_SERVER_ROOT . '/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/images';
-			$imagedir_default    = EGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
+			$imagedir_default    = EGW_SERVER_ROOT . '/'.$appname.'/templates/idots/images';
 			$imagedir_olddefault = EGW_SERVER_ROOT . '/'.$appname.'/images';
 
 			if ($this->is_image_dir ($imagedir))
@@ -855,7 +855,7 @@
 			}
 			elseif ($this->is_image_dir ($imagedir_default))
 			{
-				return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/default/images';
+				return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/idots/images';
 			}
 			elseif ($this->is_image_dir ($imagedir_olddefault))
 			{
@@ -873,8 +873,8 @@
 			
 			if (!@is_array($this->found_files[$appname]))
 			{
-				$imagedir_olddefault = '/'.$appname.'/images';
-				$imagedir_default    = '/'.$appname.'/templates/default/images';
+				$imagedir_olddefault = '/'.$appname.'/templates/default/images';
+				$imagedir_default    = '/'.$appname.'/templates/idots/images';
 				
 				if (@is_dir(EGW_INCLUDE_ROOT.$imagedir_olddefault))
 				{
@@ -1281,10 +1281,12 @@
 			if ($GLOBALS['egw_info']['flags']['include_xajax'])
 			{
 				require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
-				$xajax =& new xajax($GLOBALS['egw']->link('/xajax.php'));
+
+				$xajax =& new xajax($GLOBALS['egw']->link('/xajax.php'), 'xajax_', $GLOBALS['egw']->translation->charset());
+				$xajax->waitCursorOff();
 				$xajax->registerFunction("doXMLHTTP");
 
-				$java_script .= $xajax->getJavascript();
+				$java_script .= $xajax->getJavascript($GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/js/');
 			}
 
 			/* this flag is for all javascript code that has to be put before other jscode. 
