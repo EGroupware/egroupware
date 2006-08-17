@@ -180,8 +180,6 @@
 								break;
 						}
 					}
-					$taskData = $GLOBALS['egw']->translation->convert($taskData, 'UTF-8');
-
 					return $taskData;
 				}
 			}
