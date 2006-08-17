@@ -117,7 +117,7 @@
 				$app = $this->appname;
 				$this->config_data[$name] = $value;
 			}
-			if ($app == $this->appname && $this->read_data[$name] == $value)
+			if ($app == $this->appname && isset($this->read_data[$name]) && $this->read_data[$name] == $value)
 			{
 				return True;	// no change ==> exit
 			}
