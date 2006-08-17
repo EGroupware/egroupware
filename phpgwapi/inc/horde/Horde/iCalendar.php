@@ -1319,8 +1319,9 @@ class Horde_iCalendar {
      */
     function EncodeQP ($str) {
         $encoded = $this->FixEOL($str);
-        if (substr($encoded, -(strlen($this->LE))) != $this->LE)
-            $encoded .= $this->LE;
+        # see bug report http://sourceforge.net/tracker/index.php?func=detail&aid=1536674&group_id=78745&atid=554338
+        #if (substr($encoded, -(strlen($this->LE))) != $this->LE)
+        #    $encoded .= $this->LE;
 
         // Replace every high ascii, control and = characters
         #$encoded = preg_replace('/([\000-\010\013\014\016-\037\075\177-\377])/e',
