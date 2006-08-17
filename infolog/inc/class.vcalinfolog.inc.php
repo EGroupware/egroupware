@@ -189,7 +189,7 @@
 					}
 					# the horde ical class does already convert in parsevCalendar
 					# do NOT convert here
-					//$taskData = $GLOBALS['egw']->translation->convert($taskData, 'UTF-8');
+					#$taskData = $GLOBALS['egw']->translation->convert($taskData, 'UTF-8');
 
 					return $taskData;
 				}
