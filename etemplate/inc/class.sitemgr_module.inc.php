@@ -32,7 +32,7 @@ class sitemgr_module extends Module // the Module class get automatic included b
 	/**
 	 * generate the module content AND process submitted forms
 	 *
-	 * @param array &$arguments
+	 * @param array &$arguments $arguments['arg1']-$arguments['arg3'] will be passed for non-submitted forms (first call)
 	 * @param array $properties
 	 * @return string the html content
 	 */
@@ -52,6 +52,6 @@ class sitemgr_module extends Module // the Module class get automatic included b
 		{
 			$ret = ExecMethod('etemplate.etemplate.process_exec');
 		}
-		return $css.($ret ? $ret : ExecMethod($this->etemplate_method));
+		return $css.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments['arg1'],$arguments['arg2'],$arguments['arg3']));
 	}
 }
