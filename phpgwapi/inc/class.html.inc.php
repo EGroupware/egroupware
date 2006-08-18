@@ -568,7 +568,7 @@ class html
 			</script>
 
 			<textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">
-				'.$this->htmlspecialchars($content).'
+				'.@htmlspecialchars($content,ENT_COMPAT,$this->charset).'
 			</textarea>
 			';
 	}
