@@ -1,6 +1,6 @@
 /* $Id$ */
 .headertext { color: black; font-size: 120%; }
-.lpadding5 { padding-left: 5px; };
+.lpadding5 { padding-left: 5px; }
 .redItalic { color: red; font-style: italic; }
 .low,.low_done,.normal,.normal_done,.high,.high_done,.urgent,.urgent_done { font-weight: bold; }
 .low,.low_done { color:#606060; }
