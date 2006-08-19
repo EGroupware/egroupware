@@ -54,6 +54,6 @@ tr.th td {
 
 /* show links as regular text */
 a,a:link,a:visited,a:hover {
-	font-style: none;
+	font-style: normal;
 	color: black;
 }
