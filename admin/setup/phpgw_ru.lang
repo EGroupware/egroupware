@@ -1,0 +1,126 @@
+(stored password will not be shown here)	admin	ru	(Хранящиеся пароли не будут отображены здесь)
+account active	admin	ru	Учетная запись активна
+account has been created	common	ru	Учетная запись была создана
+account has been deleted	common	ru	Учетная запись была удалена
+account has been updated	common	ru	Учетная запись была изменена
+action	admin	ru	Действие
+activate wysiwyg-editor	admin	ru	включить визуальный (WYSIWYG) редактор
+add a category	admin	ru	Добавить категорию
+add a group	admin	ru	Добавить группу
+add a new account.	admin	ru	Добавить новую учетную запись
+add a subcategory	admin	ru	добавить подкатегорию
+add a user	admin	ru	добавить пользователя
+add account	admin	ru	Добавить учетную запись
+add application	admin	ru	Добавить приложение
+add group	admin	ru	Добавить группу
+add new account	admin	ru	Добавить новую учетную запись
+add new application	admin	ru	Добавить новое приложение
+add sub-category	admin	ru	Добавить подкатегорию
+admin email	admin	ru	E-mail Администратора
+admin name	admin	ru	Имя Администратора
+administration	admin	ru	Администрирование
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать учетную запись (по умолчанию 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	ru	После скольких неудачных попыток входа в систему блокировать IP-адрес (по умолчанию 3)?
+all records and account information will be lost!	admin	ru	Все записи и учетные записи будут потеряны!
+all users	admin	ru	Все пользователи
+allow anonymous access to this app	admin	ru	Разрешить анонимный доступ к данному приложению
+anonymous user	admin	ru	Анонимный пользователь
+anonymous user (not shown in list sessions)	admin	ru	Анонимный пользователь (не отображается в списке сессий)
+application	admin	ru	Приложение
+application name	admin	ru	Имя приложения
+applications	admin	ru	Приложения
+applications list	admin	ru	Список приложений
+are you sure you want to delete the application %1 ?	admin	ru	Вы уверены, что желаете удалить приложение %1?
+are you sure you want to delete this account ?	admin	ru	Вы уверены, что хотите удалить данную учетную запичь?
+are you sure you want to delete this application ?	admin	ru	Вы уверены, что хотите удалить данное приложение?
+are you sure you want to delete this category ?	common	ru	Вы уверены, что хотите удалить данную категорию?
+are you sure you want to delete this group ?	admin	ru	Вы уверены, что хотите удалить данную группу?
+are you sure you want to delete this server?	admin	ru	Вы уверены, что хотите удалить данный сервер?
+are you sure you want to kill this session ?	admin	ru	Вы уверены, что хотите прервать данную сессию?
+authentication / accounts	admin	ru	Авторизация / Учетные записи
+back to the list	admin	ru	назад к списку
+can change password	admin	ru	Возможно изменять пароль
+categories list	admin	ru	Список категорий
+category %1 has been saved !	admin	ru	Категория %1 сохранена !
+change main screen message	admin	ru	Изменить сообщение на главной странице
+check ip address of all sessions	admin	ru	Проверить IP-адреса всех сессий
+click to select a color	admin	ru	Щелкните для выбора цвета
+color	admin	ru	Цвет
+country selection	admin	ru	Выбор страны
+create group	admin	ru	Создать группу
+data	admin	ru	Дата
+day	admin	ru	День
+day of week<br>(0-6, 0=sun)	admin	ru	День недели<br> (0-6, 0=Вск)
+db backup and restore	admin	ru	Резервное копирование и восстановление Базы Данных
+delete account	admin	ru	Удалить учетную запись
+delete all records	admin	ru	Удалить Все записи
+delete application	admin	ru	Удалить приложение
+delete category	admin	ru	Удалить категорию
+delete group	admin	ru	Удалить группу
+delete the category	admin	ru	удалить категорию
+delete the group	admin	ru	удалить группу
+delete this category	admin	ru	удалить данную категорию
+delete this group	admin	ru	удалить данную группу
+delete this user	admin	ru	удалить данного пользователя
+disable wysiwyg-editor	admin	ru	отключить визуальный (WYSIWYG) редактор
+edit account	admin	ru	Редактировать учетную запись
+edit application	admin	ru	Редактировать приложение
+edit group	admin	ru	Редактировать группу
+edit login screen message	admin	ru	Редактировать сообщение при входе в систему
+edit this category	admin	ru	редактировать данную категорию
+edit this group	admin	ru	редактировать данную группу
+edit this user	admin	ru	редактировать данного пользователя
+edit user	admin	ru	редактировать пользователя
+edit user account	admin	ru	Редактировать учетную запись пользователя
+enter a description for the category	admin	ru	введите описание категории
+enter your default mail domain ( from: user@domain )	admin	ru	Введите Ваш почтовый домен по умолчанию  ( From: user@domain )
+enter your http proxy server	admin	ru	Введитн адрес HTTP прокси сервера
+enter your http proxy server port	admin	ru	Введите порт HTTP прокси сервера
+enter your smtp server hostname or ip address	admin	ru	Введите IP-адрес или имя Вашего SMTP-сервера
+enter your smtp server port	admin	ru	Введите порт Вашего SMTP-сервера
+expires	admin	ru	Окончание действия
+global categories	common	ru	Общие Категории
+group has been added	common	ru	Группа была добавлена
+group has been deleted	common	ru	Группа была удалена
+group has been updated	common	ru	Группа была обновлена
+group manager	admin	ru	Менеджер Группы
+group name	admin	ru	Имя Группы
+home directory	admin	ru	Домашняя директория
+icon	admin	ru	Иконка
+installed applications	common	ru	Установленные приложения
+ip	admin	ru	IP
+kill	admin	ru	Прервать
+kill session	admin	ru	Прервать сессию
+last %1 logins	admin	ru	Последние %1 подключений
+last %1 logins for %2	admin	ru	Последние %1 подключений для %2
+last login	admin	ru	последнее подключение
+last login from	admin	ru	последнее подключение с
+list current sessions	admin	ru	Список текущих сессий
+list of current users	admin	ru	Список текущих пользователей
+login history	common	ru	История Подключений
+login time	admin	ru	Время подключения
+loginid	admin	ru	LoginID
+mail settings	admin	ru	Установки почты
+new group name	admin	ru	Название новой группы
+new password [ leave blank for no change ]	admin	ru	Новый пародь [оставьте пустым, если без изменения]
+no permission to add users	admin	ru	нет прав для добавления пользователей
+no permission to create groups	admin	ru	нет прав для создания групп
+permissions this group has	admin	ru	Эта группа имеет доступ к
+primary group	admin	ru	основная Группа
+re-enter password	admin	ru	Введите пароль еще раз
+remove all users from this group ?	admin	ru	Исключить всех пользователей из данной группы?
+select users for inclusion	admin	ru	Выбирите пользователя для включения в Группу
+sorry, that group name has already been taken.	admin	ru	Извините. Такое имя группы уже существует.
+sorry, the above users are still a member of the group %1	admin	ru	Извините, но указанные выше пользователи являются членами группы %1
+submit changes	admin	ru	Отправить изменения
+the login and password can not be the same	admin	ru	Логин и пароль не могут быть одинаковы
+they must be removed before you can continue	admin	ru	Они должны быть исключены прежде, чем вы сможете продолжить
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	ru	Таймаут для сессии в секундах (по умолчанию 14400 = 4 часа)
+total records	admin	ru	Всего записей
+user data	admin	ru	Данные Пользователя
+view access log	admin	ru	Смотреть журнал подключений
+view error log	admin	ru	Смотреть журнал ошибок
+view user account	admin	ru	Просмотр учетной записи пользователя
+would you like egroupware to check for a new version<br>when admins login ?	admin	ru	Хотите, что бы eGroupWare делала проверку на наличие новой версии <br> когда подключается администратор?
+you must select a file type	admin	ru	Вы должны выбрать тип файла
+you will need to remove the subcategories before you can delete this category	admin	ru	Вам нужно удалить все подкатегории прежде, чем вы сможете удалить данную категорию !
