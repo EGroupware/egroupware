@@ -226,8 +226,11 @@
 					{
 						if (isset($entry[$attr])) $to_write[$attr] = array();
 					}
-					//echo $entry['dn']; _debug_array($to_write);
-					ldap_modify($ds,$entry['dn'],$to_write);
+					if (!ldap_modify($ds,$entry['dn'],$to_write))
+					{
+						echo $entry['dn']; _debug_array($to_write);
+						echo '<p style="color: red;">'.'LDAP error: '.ldap_error($ds)."</p>\n";
+					}
 				}
 			}
 		}
@@ -618,5 +621,26 @@
 		$GLOBALS['egw_setup']->oProc->CreateIndex('egw_addressbook',array('account_id'),true);
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.011';
+	}
+
+
+	$test[] = '1.3.011';
+	function phpgwapi_upgrade1_3_011()
+	{
+		// moving the sync-ml table in to the (new) syncml app and marking the syncml app installed, if not already installed
+		if (!isset($GLOBALS['setup_info']['syncml']['currentver']))
+		{
+			$GLOBALS['egw_setup']->db->insert($GLOBALS['egw_setup']->applications_table,array(
+				'app_enabled' => 3,
+				'app_order'   => 99,
+				'app_tables'  => 'egw_contentmap,egw_syncmldevinfo,egw_syncmlsummary',
+				'app_version' => $GLOBALS['setup_info']['syncml']['currentver'] = '0.9.0',
+			),array('app_name' => 'syncml'),__LINE__,__FILE__);
+
+			// we can't do the syncml update in the same go, as it would only set the version, but not run any updates!
+			unset($GLOBALS['setup_info']['syncml']);
+		}
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.012';
 	}
 ?>

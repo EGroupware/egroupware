@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'eGroupWare API';
-	$setup_info['phpgwapi']['version']   = '1.3.011';
+	$setup_info['phpgwapi']['version']   = '1.3.012';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -48,9 +48,6 @@
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_versioning';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_customfields_data';
 	$setup_info['phpgwapi']['tables'][]  = 'phpgw_vfs2_prefixes';
-	$setup_info['phpgwapi']['tables'][]  = 'egw_contentmap';
-	$setup_info['phpgwapi']['tables'][]  = 'egw_syncmldevinfo';
-	$setup_info['phpgwapi']['tables'][]  = 'egw_syncmlsummary';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_links';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_addressbook';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_addressbook_extra';
