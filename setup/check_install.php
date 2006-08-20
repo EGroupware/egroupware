@@ -142,15 +142,6 @@
 			'func' => 'extension_check',
 			'warning' => lang('The session extension is needed to use php sessions (db-sessions work without).')
 		),
-		// leave SyncML checks here for now, as it is no app atm.
-		'' => array(
-			'func' => 'pear_check',
-			'from' => 'SyncML',
-		),	
-		'Log' => array(
-			'func' => 'pear_check',
-			'from' => 'SyncML',
-		),
 		'.' => array(
 			'func' => 'permission_check',
 			'is_world_writable' => False,
