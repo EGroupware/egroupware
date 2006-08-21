@@ -693,7 +693,7 @@ class bocal
 			{
 				foreach((array)$event['recur_exception'] as $exception_ts)
 				{
-					$have_exception = $search_date_ymd == (int)$this->date2string($exception_ts);
+					if (($have_exception = $search_date_ymd == (int)$this->date2string($exception_ts))) break;
 				}
 			}
 			if ($this->debug && ((int) $this->debug > 3 || $this->debug == 'insert_all_repetions' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_repitions'))
