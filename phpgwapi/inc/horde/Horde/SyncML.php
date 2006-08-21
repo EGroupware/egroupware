@@ -211,6 +211,8 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
             #Horde::logMessage('SymcML: SyncHdr done. Try to load state from session.', __FILE__, __LINE__, PEAR_LOG_DEBUG);
             $state = $this->getStateFromSession($this->_sourceURI, $this->_locName, $this->_sessionID);
 
+		Horde::logMessage('SyncML['. session_id() .']: package '.$this->_msgID.' +++++++++++++++++++++ started', __FILE__, __LINE__, PEAR_LOG_DEBUG);
+
             $state->setVersion($this->_version);
             $state->setMsgID($this->_msgID);
             $state->setTargetURI($this->_targetURI);
@@ -446,6 +448,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
         case 2:
             $state = & $_SESSION['SyncML.state'];
 
+
             $this->_actionCommands = false; // so far, we have not seen commands that require action from our side
             $state->_sendFinal = false;
 
@@ -481,6 +484,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             $state = & $_SESSION['SyncML.state'];
 
             // <SyncML><SyncBody><[Command]>
+		Horde::logMessage('SyncML['. session_id() ."]:    found command    $element         ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
             $this->_currentCommand = Horde_SyncML_Command::factory($element);
             $this->_currentCommand->startElement($uri, $element, $attrs);
 
@@ -512,6 +516,8 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 			case 2:
 				// </SyncBody></SyncML>
 				$state = & $_SESSION['SyncML.state'];
+
+				Horde::logMessage('SyncML['. session_id() .']: package ----------------------- done', __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				
 				if($state->getSyncStatus() == CLIENT_SYNC_FINNISHED && $state->getAlert222Received() == true) {
 					$state->setSyncStatus(CLIENT_SYNC_ACKNOWLEDGED);
@@ -579,7 +585,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
 					$state->setSyncStatus(CLIENT_SYNC_ACKNOWLEDGED);
 					Horde::logMessage('SyncML['. session_id() .']: syncStatus(client sync acknowledged) '.$state->getSyncStatus(), __FILE__, __LINE__, PEAR_LOG_DEBUG);
 				}
-				                                                                
+
 				break;
 			
 			case 3:

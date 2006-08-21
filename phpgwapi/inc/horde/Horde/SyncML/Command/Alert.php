@@ -98,13 +98,13 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	    $clientlast = $info['ClientAnchor'];
         	    $state->setServerAnchorLast($type, $info['ServerAnchor']);
         	} else {
-        	    $clientlast = 0;
+        	    $clientlast === false;
         	    $state->setServerAnchorLast($type, 0);
         	}
-
+        	Horde::logMessage("SyncML: checking anchor \$clientlast " . $clientlast .' '. $this->_metaAnchorLast .' '. $clientlast == $this->_metaAnchorLast, __FILE__, __LINE__, PEAR_LOG_DEBUG);
         	// Set Server Anchor for this sync to current time.
         	$state->setServerAnchorNext($type,time());
-        	if ($clientlast && $clientlast == $this->_metaAnchorLast) {
+        	if ($clientlast !== false && $clientlast == $this->_metaAnchorLast) {
         	    // Last Sync Anchor matches, TwoWaySync will do.
         	    $code = RESPONSE_OK;
         	    Horde::logMessage("SyncML: Anchor match, TwoWaySync since " . $clientlast, __FILE__, __LINE__, PEAR_LOG_DEBUG);
