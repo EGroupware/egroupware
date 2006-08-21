@@ -466,7 +466,7 @@ class html
 
 	   if (!strstr($GLOBALS['egw_info']['flags']['java_script'],'tinyMCE'))
 	   {
-		  $GLOBALS['egw']->js->validate_file('tinymce','jscripts/tiny_mce/tiny_mce');
+		  $GLOBALS['egw']->js->validate_file('tiny_mce','tiny_mce');
 	   }
 	}
 
