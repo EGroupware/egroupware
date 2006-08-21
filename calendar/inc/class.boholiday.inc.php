@@ -463,9 +463,11 @@
 			{
 				return false;
 			}
-			$sbox =& CreateObject('phpgwapi.sbox');
-			$month = $holiday['month'] ? lang($sbox->monthnames[$holiday['month']]) : '';
-			unset($sbox);
+			$monthnames = array(
+				'','January','February','March','April','May','June',
+				'July','August','September','October','November','December'
+			);
+			$month = $holiday['month'] ? lang($monthnames[$holiday['month']]) : '';
 
 			if (!$holiday['day'])
 			{
