@@ -481,6 +481,7 @@ class html
 	* @param string $init_options='', see http://tinymce.moxiecode.com/ for all init options. mode and elements are allready set.
 	*                                 to make things more easy, you also can just provide a comma seperated list here with the options you need.
 	*                                 Supportet are: 'TableOperations','ContextMenu','ColorChooser'
+	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	* @todo make wrapper for backwards compatibility with htmlarea
 	* @todo enable all features from htmlarea
@@ -554,7 +555,7 @@ class html
 
 			$init_options = $init. ','. $tab1a. '",'. $tab2a. '",'. $tab3a. '",'. $plugs. '",'. $eve. '"';
 		}
-
+		
 		/* do again and again */
 		return '<script language="javascript" type="text/javascript">
 			tinyMCE.init({
@@ -567,10 +568,61 @@ class html
 			});
 			</script>
 
-			<textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">
-				'.@htmlspecialchars($content,ENT_COMPAT,$this->charset).'
-			</textarea>
-			';
+			<textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">'.
+			@htmlspecialchars($content, ENT_QUOTES, $this->charset) 
+			.'</textarea>';
+	}
+
+	/**
+	* this function is a wrapper for tinymce to create some reuseable layouts
+	*
+	* Please note: if you did not run init_tinymce already you this function need to be called before the call to phpgw_header() !!!
+	*
+	* @param string $_name name and id of the input-field
+	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
+	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
+	* @param string $style='' initial css for the style attribute
+	* @param string $base_href=''
+	* @return string the necessary html for the textarea
+	*/
+	function tinymceQuick($_name, $_mode, $_content='', $_style='', $base_href='') {
+		switch($_mode) {
+			case 'ascii':
+				$init_options='theme : "advanced",
+					theme_advanced_toolbar_location : "top", 
+					theme_advanced_toolbar_align : "left",
+					theme_advanced_buttons1 : "",
+					theme_advanced_buttons2 : "",
+					theme_advanced_buttons3 : "",
+					valid_elements : "br"';
+
+				return $this->tinymce($_name, $_content, $_style, $init_options, $_base_href);
+				break;
+			
+			case 'simple':
+				$init_options='theme : "advanced",
+					theme_advanced_toolbar_location : "top", 
+					theme_advanced_toolbar_align : "left",
+					theme_advanced_buttons1 : "bold,italic,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,bullist,numlist,outdent,indent,undo,redo,separator,forecolor",
+					theme_advanced_buttons2 : "",
+					theme_advanced_buttons3 : "",
+					valid_elements : "strong/b[class],em/i[class],strike[class],u[class],p[dir|class|align],ol,ul,li,br,\
+					sub,sup,blockquote[dir|style],pre[class|align],address[class|align],hr",
+				';
+
+				return $this->tinymce($_name, $_content, $_style, $init_options, $_base_href);
+				break;
+			
+			case 'extended':
+				$init_options='';
+				return $this->tinymce($_name, $_content,$_style, $init_options='',$_base_href);
+				break;
+			
+			case 'advanced':
+				$init_options='';
+				return $this->tinymce($_name, $_content,$_style, $init_options='',$_base_href);
+				break;
+		}
 	}
 
 	/**
