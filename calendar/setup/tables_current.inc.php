@@ -26,7 +26,8 @@
 				'cal_location' => array('type' => 'varchar','precision' => '255'),
 				'cal_reference' => array('type' => 'int','precision' => '4','nullable' => False,'default' => '0'),
 				'cal_modifier' => array('type' => 'int','precision' => '4'),
-				'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0')
+				'cal_non_blocking' => array('type' => 'int','precision' => '2','default' => '0'),
+				'cal_special' => array('type' => 'int','precision' => '2','default' => '0')
 			),
 			'pk' => array('cal_id'),
 			'fk' => array(),

@@ -1508,3 +1508,16 @@
 		
 		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.2.001';
 	}
+
+	$test[] = '1.2.001';
+	function calendar_upgrade1_2_001()
+	{
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_cal','cal_special',array(
+			'type' => 'int',
+			'precision' => '2',
+			'default' => '0'
+		));
+
+		return $GLOBALS['setup_info']['calendar']['currentver'] = '1.3.001';
+	}
+?>
