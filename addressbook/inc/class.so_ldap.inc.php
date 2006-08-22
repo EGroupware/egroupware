@@ -955,8 +955,8 @@ class so_ldap
 			}
 		}
 		foreach(array(
-			'postalAddress' => $data['adr_one_street'] .'$'. $data['adr_one_locality'] .', '. $data['adr_one_region'] .'$'. $data['adr_one_postalcode'] .'$$'. $data['adr_one_countryname'],
-			'homePostalAddress' => $data['adr_two_street'] .'$'. $data['adr_two_locality'] .', '. $data['adr_two_region'] .'$'. $data['adr_two_postalcode'] .'$$'. $data['adr_two_countryname'],
+			'postaladdress' => $data['adr_one_street'] .'$'. $data['adr_one_locality'] .', '. $data['adr_one_region'] .'$'. $data['adr_one_postalcode'] .'$$'. $data['adr_one_countryname'],
+			'homepostaladdress' => $data['adr_two_street'] .'$'. $data['adr_two_locality'] .', '. $data['adr_two_region'] .'$'. $data['adr_two_postalcode'] .'$$'. $data['adr_two_countryname'],
 		) as $attr => $value)
 		{
 			if($value != '$, $$$') 
