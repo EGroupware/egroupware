@@ -233,10 +233,16 @@ class socontacts
 				$this->account_extra_search = array('uid');
 			}
 		}
-		// add grants for accounts: admin --> everything, everyone --> read
-		$this->grants[0] = EGW_ACL_READ;	// everyone read access
+		// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access
+		// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
+		if (!in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'],array('none','groupmembers')))
+		{
+			$this->grants[0] = EGW_ACL_READ;
+		}
+		// add account grants for admins
 		if (isset($GLOBALS['egw_info']['user']['apps']['admin']))	// admin rights can be limited by ACL!
 		{
+			$this->grants[0] = EGW_ACL_READ;	// admins always have read-access
 			if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $this->grants[0] |= EGW_ACL_EDIT;
 			// no add at the moment if (!$GLOBALS['egw']->acl->check('account_access',4,'admin'))  $this->grants[0] |= EGW_ACL_ADD;
 			if (!$GLOBALS['egw']->acl->check('account_access',32,'admin')) $this->grants[0] |= EGW_ACL_DELETE;
