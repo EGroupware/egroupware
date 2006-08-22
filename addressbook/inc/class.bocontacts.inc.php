@@ -229,7 +229,9 @@ class bocontacts extends socontacts
 		
 		if (strstr($type,'n_fn')) $contact['n_fn'] = $this->fullname($contact);
 		
-		return str_replace(array_keys($contact),array_values($contact),$type);
+		$fileas = str_replace(array_keys($contact),array_values($contact),$type);
+		
+		return $fileas{0} == ':' ? substr($fileas,2) : $fileas;
 	}
 
 	/**
@@ -407,9 +409,22 @@ class bocontacts extends socontacts
 	*/
 	function save(&$contact,$ignore_acl=false)
 	{
-		// stores if we add or update a entry
-		if (!($isUpdate = $contact['id']))
+		// remember if we add or update a entry
+		if (($isUpdate = $contact['id']))
 		{
+			if (!isset($contact['owner']))	// owner not set on update, eg. SyncML
+			{
+				if (($old = $this->read[$contact['id']]))	// --> try reading the old entry and set it from there
+				{
+					$contact['owner'] = $old['owner'];
+				}
+				else	// entry not found --> create a new one
+				{
+					$isUpdate = $contact['id'] = null;
+				}
+			}
+		}
+		if (!$isUpdate) {
 			if (!isset($contact['owner'])) $contact['owner'] = $this->user;	// write to users personal addressbook
 			$contact['creator'] = $this->user;
 			$contact['created'] = $this->now_su;
