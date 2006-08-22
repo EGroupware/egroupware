@@ -79,9 +79,11 @@
 	}
 
 	$account_sels = array(
-		'selectbox' => lang('Selectbox'),
+		'selectbox'     => lang('Selectbox'),
 		'primary_group' => lang('Selectbox with primary group and search'),
-		'popup'     => lang('Popup with search')
+		'popup'         => lang('Popup with search'),
+		'groupmembers'  => lang('Selectbox with groupmembers'),
+		'none'          => lang('No user-selection at all'),
 	);
 
 	$account_display = array(
@@ -206,7 +208,9 @@
 			'label'  => 'How do you like to select accounts',
 			'name'   => 'account_selection',
 			'values' => $account_sels,
-			'help'   => 'The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.',
+			'help'   => lang('The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.').' '.
+				lang('The two last options limit the visibility of other users. There for they should be forced and apply NOT to administrators.'),
+			'run_lang' => false,
 			'xmlrpc' => True,
 			'admin'  => False
 		),

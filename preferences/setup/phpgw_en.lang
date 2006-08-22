@@ -80,3 +80,6 @@ you do not have permission to set acl's in this mode!	preferences	en	You do not 
 you must enter a password	preferences	en	You must enter a password
 your current theme is: %1	preferences	en	your current theme is: %1
 your preferences	preferences	en	Your Preferences
+the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	en	The two last options limit the visibility of other users. There for they should be forced and apply NOT to administrators.
+no user-selection at all	common	en	No user-selection at all
+selectbox with groupmembers	common	en	Selectbox with groupmembers
