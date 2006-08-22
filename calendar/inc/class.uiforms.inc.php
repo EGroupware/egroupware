@@ -40,6 +40,12 @@ class uiforms extends uical
 		'export' => true,
 		'import' => true,
 	);
+	/**
+	 * Reference to link-class of bocal
+	 *
+	 * @var bolink
+	 */
+	var $link;
 	
 	/**
 	 * Standard durations used in edit and freetime search
@@ -730,7 +736,8 @@ class uiforms extends uical
 		}
 		// disabling the custom fields tab, if there are none
 		$readonlys['general|description|participants|recurrence|custom|links|alarms'] = array(
-			'custom' => !count($this->bo->config['customfields'])
+			'custom' => !count($this->bo->config['customfields']),
+			'participants' => $this->accountsel->account_selection == 'none',
 		);
 		if ($view || !isset($GLOBALS['egw_info']['user']['apps']['felamimail']))
 		{

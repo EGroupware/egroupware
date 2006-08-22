@@ -36,9 +36,41 @@ class uical
 	 */
 	var $debug=false;
 	/**
-	 * @var $bo class bocal
+	 * instance of the bocal or bocalupdate class
+	 * 
+	 * @var bocalupdate
 	 */
-	var $bo,$jscal,$html,$datetime,$cats,$accountsel;
+	var $bo;
+	/**
+	 * instance of jscalendar
+	 *
+	 * @var jscalendar
+	 */
+	var $jscal;
+	/**
+	 * Reference to global html class
+	 *
+	 * @var html
+	 */
+	var $html;
+	/**
+	 * Reference to global datetime class
+	 *
+	 * @var datetime
+	 */
+	var $datetime;
+	/**
+	 * Reference to global categories class
+	 *
+	 * @var categories
+	 */
+	var $cats;
+	/**
+	 * Reference to global uiaccountsel class
+	 *
+	 * @var uiaccountsel
+	 */
+	var $accountsel;
 	/**
 	 * @var array $common_prefs reference to $GLOBALS['egw_info']['user']['preferences']['common']
 	 */
@@ -621,8 +653,7 @@ class uical
 		}
 */
 		// Calendarselection: User or Group
-		if(count($this->bo->grants) > 0 && (!isset($GLOBALS['egw_info']['server']['deny_user_grants_access']) ||
-			!$GLOBALS['egw_info']['server']['deny_user_grants_access']))
+		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')
 		{
 			$grants = array();
 			foreach($this->bo->list_cals() as $grant)
