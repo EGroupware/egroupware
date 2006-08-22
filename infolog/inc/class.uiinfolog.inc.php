@@ -35,17 +35,40 @@
 			'hook_view'   => True,
 			'writeLangFile' => True
 		);
+		/**
+		 * reference to the infolog preferences of the user
+		 *
+		 * @var array
+		 */
 		var $prefs;
 		/**
-		 * @var boinfolog-object $bo
+		 * instance of the bo-class
+		 * 
+		 * @var boinfolog
 		 */
 		var $bo;
 		/**
-		 * @var bolink-object $link reference to instance of the link-class of bo
+		 * reference to instance of the link-class of bo
+		 * 
+		 * @var bolink
 		 */
 		var $link;
 		/**
-		 * @var string $duration_format allowed units and hours per day, can be overwritten by the projectmanager configuration, default all units, 8h
+		 * instance of the etemplate class
+		 *
+		 * @var etemplate
+		 */
+		var $tmpl;
+		/**
+		 * reference to the html object of etemplate
+		 *
+		 * @var html
+		 */
+		var $html;
+		/**
+		 * allowed units and hours per day, can be overwritten by the projectmanager configuration, default all units, 8h
+		 * 
+		 * @var string
 		 */
 		var $duration_format = ',';	// comma is necessary!
 		
@@ -264,6 +287,8 @@
 			$rows['no_times'] = !$this->prefs['show_times'] || $this->prefs['show_times'] == 2 && !$details;
 			$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 			$rows['duration_format'] = ','.$this->duration_format.',,1';
+			$rows['no_users'] = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+				!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 			//echo "<p>readonlys = "; _debug_array($readonlys);
 			//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 			
@@ -864,6 +889,9 @@
 			{
 				$readonlys[$tabs]['project'] = true;	// disable the project tab
 			}
+			$readonlys[$tabs]['delegation'] = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+				!isset($GLOBALS['egw_info']['user']['apps']['admin']);
+
 			$content['duration_format'] = $this->duration_format;
 
 			$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
