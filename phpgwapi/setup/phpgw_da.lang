@@ -13,7 +13,6 @@
 about	common	da	Om
 about %1	common	da	Om %1
 about the calendar	jscalendar	da	Om kalenderen
-about this editor	htmlarea	da	Om udgiveren
 access	common	da	Adgang
 access not permitted	common	da	Ingen adgang
 access type	common	da	Adgangstype
@@ -35,9 +34,7 @@ administration	common	da	Administration
 afghanistan	common	da	Afghanistan
 albania	common	da	Albanien
 algeria	common	da	Algeriet
-align	htmlarea-TableOperations	da	Placer
 all	common	da	Alle
-all four sides	htmlarea-TableOperations	da	Alle fire sider
 alphabet	common	da	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z
 american samoa	common	da	Amerikansk Samoa
 andorra	common	da	Andorra
@@ -62,14 +59,11 @@ autosave default category	common	da	Autogem Standard Kategori
 azerbaijan	common	da	Azerbaijan
 back	common	da	Tilbage
 back to user login	common	da	Tilbage til bruger login
-background	htmlarea-TableOperations	da	Baggrund
-background color	htmlarea	da	Baggrundsfarve
 bad login or password	common	da	Forkert brugernavn eller password
 bahamas	common	da	Bahamas
 bahrain	common	da	Bahrain
 bangladesh	common	da	Bangladesh
 barbados	common	da	Barbados
-baseline	htmlarea-TableOperations	da	Bundlinie
 bcc	common	da	BCC
 belarus	common	da	Belarus
 belgium	common	da	Belgien
@@ -78,13 +72,9 @@ benin	common	da	Benin
 bermuda	common	da	Bermuda
 bhutan	common	da	Bhutan
 blocked, too many attempts	common	da	Afvist, for mange forsøg
-bold	htmlarea	da	Fed
 bolivia	common	da	Bolivia
-border	htmlarea-TableOperations	da	Kant
-borders	htmlarea-TableOperations	da	Kanter
 bosnia and herzegovina	common	da	Bosnien og Herzegovina
 botswana	common	da	Botswana
-bottom	htmlarea-TableOperations	da	Bund
 bouvet island	common	da	Bouvet Øen
 brazil	common	da	Brazilien
 british indian ocean territory	common	da	Britisk Indiske ocean
@@ -98,7 +88,6 @@ cameroon	common	da	Cameroon
 canada	common	da	Canada
 cancel	common	da	Annullér
 cape verde	common	da	Cape Verde
-caption	htmlarea-TableOperations	da	Titel
 categories	common	da	Kategorier
 categories for	common	da	kategorier for
 category	common	da	Kategori
@@ -106,12 +95,9 @@ category %1 has been added !	common	da	Kategorien %1 er blevet tilføjet!
 category %1 has been updated !	common	da	Kategorien %1 er blevet opdateret!
 cayman islands	common	da	Cayman Øerne
 cc	common	da	CC
-cell properties	htmlarea-TableOperations	da	Celle egenskaber
-center	htmlarea-TableOperations	da	Centrer
 central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
 change	common	da	Ændre
-char	htmlarea-TableOperations	da	Plads
 charset	common	da	ISO-8859-1
 check installation	common	da	Kontroller installation
 chile	common	da	Chile
@@ -126,9 +112,7 @@ click or mouse over to show menus	common	da	Klik eller før musen over til sideme
 click or mouse over to show menus?	common	da	Klik eller før musen over til sidemenuen?
 close	common	da	Luk
 cocos (keeling) islands	common	da	Cocos (Keeling) øerne
-collapsed borders	htmlarea-TableOperations	da	Sammensmelt rammer
 colombia	common	da	Columbia
-color	htmlarea-TableOperations	da	Farve
 comments	common	da	Bemærkninger
 comoros	common	da	Comoros
 company	common	da	Firma
@@ -136,7 +120,6 @@ congo	common	da	Congo
 congo, the democratic republic of the	common	da	Congo, Den Demokratiske Republik
 cook islands	common	da	Cook øerne
 copy	common	da	Kopiér
-copy selection	htmlarea	da	Kopiér udvalgte
 costa rica	common	da	Costa Rica
 cote d ivoire	common	da	Elfenbenskysten
 create	common	da	Opret
@@ -145,9 +128,7 @@ croatia	common	da	Kroatien
 cuba	common	da	Cuba
 currency	common	da	Valutaenhed
 current	common	da	Nuværende
-current style	htmlarea	da	Nuværende stil
 current users	common	da	Nuværende antal brugere
-cut selection	htmlarea	da	Klip udvalgte
 cyprus	common	da	Cupern
 czech republic	common	da	Tjekkiet
 date	common	da	Dato
@@ -158,15 +139,11 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 december	common	da	December
 default category	common	da	Standard Kategori
 delete	common	da	Slet
-delete cell	htmlarea-TableOperations	da	Slet celle
-delete column	htmlarea-TableOperations	da	Slet kollonne
-delete row	htmlarea-TableOperations	da	Slet rÃ¦kke
 denmark	common	da	Danmark
 description	common	da	Beskrivelse
 detail	common	da	Detalje
 details	common	da	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
-dictionary	htmlarea-SpellChecker	da	Ordbog
 disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
 disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
@@ -199,7 +176,6 @@ email-address of the user, eg. "%1"	common	da	email-adresse for brugeren, f.eks.
 enabled	common	da	Slået til
 end date	common	da	Slutdato
 end time	common	da	Sluttid
-enlarge editor	htmlarea	da	Forstør editoren
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware &nbsp; eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
 entry updated sucessfully	common	da	Emnet er succesrigt opdateret
@@ -216,22 +192,17 @@ falkland islands (malvinas)	common	da	Falklands Øerne
 faroe islands	common	da	Færøerne
 fax number	common	da	Fax nummer
 february	common	da	Februar
-fg color	htmlarea-TableOperations	da	Font farve
 fields	common	da	Felter
 fiji	common	da	Fiji
 files	common	da	Filer
 filter	common	da	Filter
-finished list of mispelled words	htmlarea-SpellChecker	da	Listen med stavefejl er gennemgÃ¥et
 finland	common	da	Finland
 first name	common	da	Fornavn
 first name of the user, eg. "%1"	common	da	fornavn på brugeren, f.eks. "%1"
 first page	common	da	Første side
 firstname	common	da	Fornavn
 fixme!	common	da	RETMIG!
-float	htmlarea-TableOperations	da	Justering
-font color	htmlarea	da	Skrift farve
 force selectbox	common	da	Påtving Valgbox
-frames	htmlarea-TableOperations	da	Udvendig
 france	common	da	Frankrig
 french guiana	common	da	Fransk Guinea
 french polynesia	common	da	Fransk Polynesien
@@ -271,9 +242,7 @@ guinea-bissau	common	da	Guinea-Bissau
 guyana	common	da	Guyana
 haiti	common	da	Haiti
 heard island and mcdonald islands	common	da	Heard Øen og McDonald øerne
-height	htmlarea-TableOperations	da	HÃ¸jde
 help	common	da	Hjælp
-help using editor	htmlarea	da	Hjælp til editoren
 high	common	da	Høj
 highest	common	da	Højeste
 holy see (vatican city state)	common	da	Vatikanet
@@ -281,31 +250,12 @@ home	common	da	Startside
 home email	common	da	privat e-mail
 honduras	common	da	Honduras
 hong kong	common	da	Hong Kong
-horizontal rule	htmlarea	da	Horisontal Regl
-how many columns would you like to merge?	htmlarea-TableOperations	da	Hvor mange kollonner vil du samle?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
-how many rows would you like to merge?	htmlarea-TableOperations	da	Hvor mange rÃ¦kker vil du samle?
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	da	Du kan ikke slette den sidste celle i en rÃ¦kke.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	da	Du kan ikke slette den sidste kolonne i en tabel.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	da	Du kan ikke slette den sidste rÃ¦kke i en tabel.
 hungary	common	da	Ungarn
-i will open it in a new page.	htmlarea-SpellChecker	da	Jeg vil Ã¥bne det i en ny side.
 iceland	common	da	Island
-ignore	htmlarea-SpellChecker	da	Ignorer
-ignore all	htmlarea-SpellChecker	da	Ignorer alle
-image url	htmlarea-TableOperations	da	Billede URL
 india	common	da	Indien
 indonesia	common	da	Indonesien
 insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
-insert cell after	htmlarea-TableOperations	da	IndsÃ¦t celle efter
-insert cell before	htmlarea-TableOperations	da	IndsÃ¦t celle fÃ¸r
-insert column after	htmlarea-TableOperations	da	IndsÃ¦t kolonne efter
-insert column before	htmlarea-TableOperations	da	IndsÃ¦t kolonne fÃ¸r
-insert image	htmlarea	da	Indsæt billede
-insert row after	htmlarea-TableOperations	da	IndsÃ¦t rÃ¦kke efter
-insert row before	htmlarea-TableOperations	da	IndsÃ¦t rÃ¦kke fÃ¸r
-insert table	htmlarea	da	Indsæt tabel
-insert web link	htmlarea	da	Insæt hyperlink
 international	common	da	International
 invalid ip address	common	da	Ugyldig IP
 invalid password	common	da	Ugyldig adgangskode
@@ -323,11 +273,6 @@ japan	common	da	Japan
 jordan	common	da	Jordan
 july	common	da	Juli
 june	common	da	Juni
-justify	htmlarea-TableOperations	da	Lige margener
-justify center	htmlarea	da	Justify Centrer
-justify full	htmlarea	da	Justify Fuld
-justify left	htmlarea	da	Justify Venstre
-justify right	htmlarea	da	Justify Højre
 kazakstan	common	da	Kazakstan
 kenya	common	da	Kenia
 keywords	common	da	Stikord
@@ -343,9 +288,7 @@ last name of the user, eg. "%1"	common	da	efternavn på brugeren, f.eks. "%1"
 last page	common	da	Sidste side
 lastname	common	da	Efternavn
 latvia	common	da	Letland
-layout	htmlarea-TableOperations	da	OpsÃ¦tning
 lebanon	common	da	Libanon
-left	htmlarea-TableOperations	da	Venstre
 lesotho	common	da	Lesotho
 liberia	common	da	Liberia
 libyan arab jamahiriya	common	da	Libyen
@@ -374,7 +317,6 @@ maldives	common	da	Maldiverne
 mali	common	da	Mali
 malta	common	da	Malta
 march	common	da	Marts
-margin	htmlarea-TableOperations	da	Margen
 marshall islands	common	da	Marshall Øerne
 martinique	common	da	Martinique
 mauritania	common	da	Mauritanien
@@ -384,11 +326,9 @@ may	common	da	Maj
 mayotte	common	da	Mayotte
 medium	common	da	Medium
 menu	common	da	Menu
-merge cells	htmlarea-TableOperations	da	SammensÃ¦t celler
 message	common	da	Besked
 mexico	common	da	Mexico
 micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
-middle	htmlarea-TableOperations	da	Centrer
 mobile	common	da	Mobil
 moldova, republic of	common	da	Moldova, Republikken
 monaco	common	da	Monaco
@@ -423,9 +363,6 @@ niue	common	da	Niue
 no	common	da	Nej
 no entries found, try again ...	common	da	ingen resultater fundet, prøv igen....
 no history for this record	common	da	Ingen historie fundet for denne post
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	da	Der blev ikke fundet nogle stavefejl med den valgte ordbog.
-no rules	htmlarea-TableOperations	da	Ingen rammer
-no sides	htmlarea-TableOperations	da	Ingen sider
 no subject	common	da	Intet Emne
 none	common	da	Ingen
 norfolk island	common	da	Norfolk Øen
@@ -447,13 +384,10 @@ only private	common	da	kun private
 only yours	common	da	Kun Din
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	åben popup vindue
-ordered list	htmlarea	da	Sorteret visning
 original	common	da	Original
-original word	htmlarea-SpellChecker	da	Oprindeligt ord
 other	common	da	Anden
 overview	common	da	Oversigt
 owner	common	da	Ejer
-padding	htmlarea-TableOperations	da	Margen
 page was generated in %1 seconds	common	da	Siden var genereret på %1 sekunder
 pager	common	da	Pager
 pakistan	common	da	Pakistan
@@ -467,13 +401,10 @@ parent category	common	da	Ovenstående Kategori
 password	common	da	Adgangskode
 password could not be changed	common	da	Adgangskoden kunne ikke ændres
 password has been updated	common	da	Password er opdateret
-paste from clipboard	htmlarea	da	Indsæt fra udklipsholder
-path	htmlarea	da	Sti
 path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!!!
 pattern for search in addressbook	common	da	Mønster for søg i Adressebog
 pattern for search in calendar	common	da	Mønster for søg i Kalender
 pattern for search in projects	common	da	Mønster for søg i Projekter
-percent	htmlarea-TableOperations	da	procent
 permissions to the files/users directory	common	da	Rettigheder for fil/bruger mappen
 personal	common	da	Personlig
 peru	common	da	Peru
@@ -481,19 +412,13 @@ philippines	common	da	Fillipinerne
 phone	common	da	Telefon
 phone number	common	da	Telefonnummer
 pitcairn	common	da	Pitcairn
-pixels	htmlarea-TableOperations	da	pixel
 please %1 by hand	common	da	Udfør venligst %1 manuelt
-please click into some cell	htmlarea-TableOperations	da	Klik pÃ¥ en celle
-please confirm that you want to open this link	htmlarea-SpellChecker	da	Vil du fÃ¸lge dette link?
 please enter a name	common	da	Indtast venligst et navn!
 please run setup to become current	common	da	Kør venligst setup for at blive opdateret
 please select	common	da	Vælg venligst
 please set your global preferences	common	da	Indstil venligst dine globale indstillinger!
 please set your preferences for this application	common	da	Indtast venligst dine præferencer for denne applikation
-please wait.  calling spell checker.	htmlarea-SpellChecker	da	Vent venligst.  Henter stavekontrol.
 please wait...	common	da	Vent venligst...
-please wait: changing dictionary to	htmlarea-SpellChecker	da	Vent venligst: skifter ordbog til
-pliz weit ;-)	htmlarea-SpellChecker	da	Vent venligst
 poland	common	da	Polen
 portugal	common	da	Portugal
 postal	common	da	Post
@@ -510,26 +435,15 @@ project	common	da	Projekt
 public	common	da	offentlig
 puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
-re-check	htmlarea-SpellChecker	da	Tjek igen
 read	common	da	Læs
 read this list of methods.	common	da	Læs denne liste over metoder
-redoes your last action	htmlarea	da	Fortryder din sidste handling
 reject	common	da	Afvis
 rename	common	da	Omdøb
-replace	htmlarea-SpellChecker	da	Erstat
-replace all	htmlarea-SpellChecker	da	Erstat alle
-replace with	htmlarea-SpellChecker	da	Erstat med
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
 returns an array of todo items	common	da	Returnere et array af opgaver
 returns struct of users application access	common	da	Returnere en struct af brugerapplikations adgang
 reunion	common	da	Reunion
-right	htmlarea-TableOperations	da	HÃ¸jre
 romania	common	da	Romanien
-row properties	htmlarea-TableOperations	da	RÃ¦kke egenskaber
-rules	htmlarea-TableOperations	da	Invendig
-rules will appear between all rows and columns	htmlarea-TableOperations	da	Rammer mellem rÃ¦kker og kolonner
-rules will appear between columns only	htmlarea-TableOperations	da	Kun rammer mellem kolonner
-rules will appear between rows only	htmlarea-TableOperations	da	Kun rammer mellem rÃ¦kker
 russian federation	common	da	Rusland
 rwanda	common	da	Rwanda
 saint helena	common	da	Sankt Helena
@@ -581,53 +495,32 @@ sorry, there was a problem processing your request.	common	da	Desværre opstod de
 sorry, your login has expired	login	da	Desværre, Din session er udløbet
 south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
-spacing	htmlarea-TableOperations	da	Afstand
-spacing and padding	htmlarea-TableOperations	da	Afstand og margen
 spain	common	da	Spanien
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	da	Stavekontrollen er gennemfÃ¸rt, der blev ikke fundet nogle stavefejl.  Lukker...
-spell-check	htmlarea-SpellChecker	da	Stavekontrol
-split cell	htmlarea-TableOperations	da	Opdel celle
-split column	htmlarea-TableOperations	da	Opdel kolonne
-split row	htmlarea-TableOperations	da	Opdel rÃ¦kke
 sri lanka	common	da	Sri Lanka
 start date	common	da	Startdato
 start time	common	da	Starttid
 status	common	da	Status
-style [css]	htmlarea-TableOperations	da	Stil [CSS]
 subject	common	da	Emne
 submit	common	da	Send
-subscript	htmlarea	da	Underscript
 sudan	common	da	Sudan
-suggestions	htmlarea-SpellChecker	da	Forslag
-summary	htmlarea-TableOperations	da	Beskrivelse
 sunday	common	da	Søndag
-superscript	htmlarea	da	Superscript
 suriname	common	da	Suriname
 svalbard and jan mayen	common	da	Svalbard og Jan Mayen
 swaziland	common	da	Swaziland
 sweden	common	da	Sverige
 switzerland	common	da	Schweiz
 syrian arab republic	common	da	Syrien, Den Arabiske Republik
-table properties	htmlarea-TableOperations	da	Tabel egenskaber
 taiwan	common	da	Taiwan/Taipei
 tajikistan	common	da	Tajikistan
 tanzania, united republic of	common	da	Tanzania, Den forenede Republik
-text align	htmlarea-TableOperations	da	Tekst
 thailand	common	da	Thailand
 the api is current	common	da	APIen er up-to-date
 the api requires an upgrade	common	da	APIen skal opdateres
-the bottom side only	htmlarea-TableOperations	da	Kun i bunden
 the following applications require upgrades	common	da	Følgende applikationer skal opdateres
-the left-hand side only	htmlarea-TableOperations	da	Kun i hÃ¸jre side
 the mail server returned	common	da	Postserveren retunerede
-the right and left sides only	htmlarea-TableOperations	da	Kun i siderne
-the right-hand side only	htmlarea-TableOperations	da	Kun i venstre side
-the top and bottom sides only	htmlarea-TableOperations	da	Kun i top og bund
-the top side only	htmlarea-TableOperations	da	Kun i toppen
 this application is current	common	da	Denne applikation er up-to-date
 this application requires an upgrade	common	da	Denne applikation skal opdateres
 this name has been used already	common	da	Dette navn er allerede i brug!
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	da	Alle dine Ã¦ndringer vil gÃ¥ tabt, vil du fortsÃ¦tte?
 thursday	common	da	Torsdag
 time	common	da	Tid
 time selection:	jscalendar	da	Tid valgt:
@@ -641,12 +534,10 @@ to go back to the msg list, click <a href= %1 >here</a>	common	da	For at gå tilb
 today	common	da	I dag
 todays date, eg. "%1"	common	da	i dags dato, f.eks. "%1"
 toggle first day of week	jscalendar	da	Toogle første dag på ugen
-toggle html source	htmlarea	da	Toggle HTML Source
 togo	common	da	Togo
 tokelau	common	da	Tokelau
 tonga	common	da	Tonga
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	da	For mange fejlede forsøg på at logge ind: %1 fra brugeren '%2', %3 fra IP'en %4
-top	htmlarea-TableOperations	da	Top
 total	common	da	Total
 translation management	common	da	Håndtering af oversættelser
 trinidad and tobago	common	da	Trinidad og Tobago
@@ -658,14 +549,11 @@ turks and caicos islands	common	da	Tyrkiske og Caicos Øerne
 tuvalu	common	da	Tuvalu
 uganda	common	da	Uganda
 ukraine	common	da	Ukraine
-underline	htmlarea	da	Understreg
-undoes your last action	htmlarea	da	Fortryder din sidste handling
 united arab emirates	common	da	Forenede Arabiske Emirater
 united kingdom	common	da	England
 united states	common	da	USA
 united states minor outlying islands	common	da	USA Mindre omkringliggende øer
 unknown	common	da	Ukendt
-unset color	htmlarea-TableOperations	da	Farve ikke valgt
 update	common	da	Opdatering
 updated	common	da	Opdatéret
 url	common	da	URL
@@ -687,7 +575,6 @@ vacation hours used	common	da	Anvendte ferie timer
 vanuatu	common	da	Vanuatu
 venezuela	common	da	Venezuela
 version	common	da	Version
-vertical align	htmlarea-TableOperations	da	Vertikal placering
 viet nam	common	da	Viet Nam
 view	common	da	Se
 virgin islands, british	common	da	Jomfru Øer, De Britiske
@@ -697,14 +584,12 @@ wednesday	common	da	Onsdag
 welcome	common	da	Velkommen
 western sahara	common	da	Vest Sahara
 which groups	common	da	Hvilke grupper
-width	htmlarea-TableOperations	da	Bredde
 wk	jscalendar	da	uge
 work email	common	da	arbejds e-mail
 written by:	common	da	Skrevet af:
 year	common	da	År
 yemen	common	da	Yemen
 yes	common	da	Ja
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	da	Når du er i TEKST MODE. Brug [<>] tasterne for at skifte til WYSIWIG
 you are required to change your password during your first login	common	da	Du skal ændre Dit password ved Din første log ind
 you have %1 new messages!	common	da	Du har %1 nye beskeder!
 you have 1 new message!	common	da	Du har 1 ny besked!

@@ -13,7 +13,6 @@
 about	common	ru	About
 about %1	common	ru	About %1
 about the calendar	jscalendar	ru	О календаре
-about this editor	htmlarea	ru	Об этом редакторе
 access	common	ru	Доступ
 access not permitted	common	ru	Доступ запрещен
 account has been created	common	ru	Учетная запись создана
@@ -58,7 +57,6 @@ autosave default category	common	ru	Автоматически сохранять Категорию по умолчан
 azerbaijan	common	ru	AZERBAIJAN
 back	common	ru	Назад
 back to user login	common	ru	Назад на Вход пользователя
-background color	htmlarea	ru	Цвет фона
 bad login or password	common	ru	Неправильные Имя/Пароль
 bahamas	common	ru	BAHAMAS
 bahrain	common	ru	BAHRAIN
@@ -72,7 +70,6 @@ benin	common	ru	BENIN
 bermuda	common	ru	BERMUDA
 bhutan	common	ru	BHUTAN
 blocked, too many attempts	common	ru	Заблокировано, слишком много попыток
-bold	htmlarea	ru	Жирный
 bolivia	common	ru	BOLIVIA
 bosnia and herzegovina	common	ru	BOSNIA AND HERZEGOVINA
 botswana	common	ru	BOTSWANA
@@ -81,7 +78,6 @@ brazil	common	ru	BRAZIL
 british indian ocean territory	common	ru	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	ru	BRUNEI DARUSSALAM
 bulgaria	common	ru	BULGARIA
-bulleted list	htmlarea	ru	Отмеченный список
 burkina faso	common	ru	BURKINA FASO
 burundi	common	ru	BURUNDI
 calendar	common	ru	Календарь
@@ -121,7 +117,6 @@ congo	common	ru	CONGO
 congo, the democratic republic of the	common	ru	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 cook islands	common	ru	COOK ISLANDS
 copy	common	ru	Копировать
-copy selection	htmlarea	ru	Копировать выбранное
 costa rica	common	ru	COSTA RICA
 cote d ivoire	common	ru	COTE D IVOIRE
 create	common	ru	Создать
@@ -130,9 +125,7 @@ croatia	common	ru	CROATIA
 cuba	common	ru	CUBA
 currency	common	ru	Валюта
 current	common	ru	Текущий
-current style	htmlarea	ru	Текущий стиль
 current users	common	ru	Текущие пользователи
-cut selection	htmlarea	ru	Вырезать выбранное
 cyprus	common	ru	CYPRUS
 czech republic	common	ru	CZECH REPUBLIC
 date	common	ru	Дата
@@ -140,7 +133,6 @@ date due	common	ru	Дата до
 date selection:	jscalendar	ru	Выбор даты:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ru	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	ru	Декабрь
-decrease indent	htmlarea	ru	Уменьшить отступ
 default category	common	ru	Категория по умолчанию
 delete	common	ru	Удалить
 denmark	common	ru	DENMARK
@@ -179,7 +171,6 @@ email-address of the user, eg. "%1"	common	ru	Почтовый адрес для пользователя, н
 enabled	common	ru	Включено
 end date	common	ru	Дата окончания
 end time	common	ru	Время окончания
-enlarge editor	htmlarea	ru	Увеличить Редактор
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ru	Enter the location of eGroupWare's URL.<br>Example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>No trailing slash</b>
 entry has been deleted sucessfully	common	ru	Запись успешно удалена
 entry updated sucessfully	common	ru	Запись успешно изменена
@@ -205,7 +196,6 @@ first name of the user, eg. "%1"	common	ru	Имя пользователя, напр. "%1"
 first page	common	ru	Первая страница
 firstname	common	ru	Имя
 fixme!	common	ru	Поправь !
-font color	htmlarea	ru	Цвет шрифта
 force selectbox	common	ru	Force SelectBox
 france	common	ru	FRANCE
 french guiana	common	ru	FRENCH GUIANA
@@ -247,7 +237,6 @@ guyana	common	ru	GUYANA
 haiti	common	ru	HAITI
 heard island and mcdonald islands	common	ru	HEARD ISLAND AND MCDONALD ISLANDS
 help	common	ru	Помощь
-help using editor	htmlarea	ru	Помощь по редактору
 high	common	ru	Верхний
 highest	common	ru	Наивысший
 holy see (vatican city state)	common	ru	HOLY SEE (VATICAN CITY STATE)
@@ -255,17 +244,12 @@ home	common	ru	Главная
 home email	common	ru	домашняя почта
 honduras	common	ru	HONDURAS
 hong kong	common	ru	HONG KONG
-horizontal rule	htmlarea	ru	Горизонтальная линейка
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ru	How many icons should be shown in the navbar (top of the page). Additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.
 hungary	common	ru	HUNGARY
 iceland	common	ru	ICELAND
-increase indent	htmlarea	ru	Увеличить отступ
 india	common	ru	INDIA
 indonesia	common	ru	INDONESIA
 insert all %1 addresses of the %2 contacts in %3	common	ru	Вставить все адреса %1 контактов %2 в %3
-insert image	htmlarea	ru	Вставить рисунок
-insert table	htmlarea	ru	Вставить таблицу
-insert web link	htmlarea	ru	Вставить WEB-ссылку
 international	common	ru	Международный
 invalid ip address	common	ru	Неправильный IP-адрес
 invalid password	common	ru	Неправильный пароль
@@ -283,10 +267,6 @@ japan	common	ru	JAPAN
 jordan	common	ru	JORDAN
 july	common	ru	Июль
 june	common	ru	Июнь
-justify center	htmlarea	ru	Выровнять по центру
-justify full	htmlarea	ru	Выровнять по ширине
-justify left	htmlarea	ru	Выровнять по левому краю
-justify right	htmlarea	ru	Выровнять по правому краю
 kazakstan	common	ru	KAZAKSTAN
 kenya	common	ru	KENYA
 keywords	common	ru	Ключевые слова
@@ -395,7 +375,6 @@ only private	common	ru	только личные
 only yours	common	ru	только Ваши
 open notify window	common	ru	Открыить окно предупреждения
 open popup window	common	ru	Открыть всплывающее окно
-ordered list	htmlarea	ru	Упорядоченный список
 original	common	ru	Оригинал
 other	common	ru	Другие
 overview	common	ru	Просмотр
@@ -412,8 +391,6 @@ parent category	common	ru	Родительская категория
 password	common	ru	Пароль
 password could not be changed	common	ru	Пароль нельзя изменить
 password has been updated	common	ru	Пароль изменен
-paste from clipboard	htmlarea	ru	Вставить из буфера
-path	htmlarea	ru	Путь
 path to user and group files has to be outside of the webservers document-root!!!	common	ru	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	common	ru	Маска для поиска в адресной книге
 pattern for search in calendar	common	ru	Маска для поиска в Календаре
@@ -449,7 +426,6 @@ puerto rico	common	ru	PUERTO RICO
 qatar	common	ru	QATAR
 read	common	ru	Читать
 read this list of methods.	common	ru	Читать список методов
-redoes your last action	htmlarea	ru	Повторяет Ваше последнее действие
 reject	common	ru	Отбросить
 rename	common	ru	Переименовать
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ru	Returns a full list of accounts on the system. Warning: This return can be quite large.
@@ -512,14 +488,11 @@ sri lanka	common	ru	SRI LANKA
 start date	common	ru	Дата начала
 start time	common	ru	Время начала
 status	common	ru	Статус
-strikethrough	htmlarea	ru	Зачеркивание
 subject	common	ru	Тема
 submit	common	ru	Послать
-subscript	htmlarea	ru	Нижний индекс
 substitutions and their meanings:	common	ru	Подстановки и их значения
 sudan	common	ru	SUDAN
 sunday	common	ru	Воскресенье
-superscript	htmlarea	ru	Верхний индекс
 suriname	common	ru	SURINAME
 svalbard and jan mayen	common	ru	SVALBARD AND JAN MAYEN
 swaziland	common	ru	SWAZILAND
@@ -549,7 +522,6 @@ to go back to the msg list, click <a href= %1 >here</a>	common	ru	To go back to 
 today	common	ru	Сегодня
 todays date, eg. "%1"	common	ru	Сегодняшняя дата, напр. "%1"
 toggle first day of week	jscalendar	ru	Переключить первый день недели
-toggle html source	htmlarea	ru	Toggle HTML Source
 togo	common	ru	TOGO
 tokelau	common	ru	TOKELAU
 tonga	common	ru	TONGA
@@ -564,8 +536,6 @@ turks and caicos islands	common	ru	TURKS AND CAICOS ISLANDS
 tuvalu	common	ru	TUVALU
 uganda	common	ru	UGANDA
 ukraine	common	ru	UKRAINE
-underline	htmlarea	ru	Подчеркивание
-undoes your last action	htmlarea	ru	Отменяет Ваше последнее действие
 united arab emirates	common	ru	UNITED ARAB EMIRATES
 united kingdom	common	ru	UNITED KINGDOM
 united states	common	ru	UNITED STATES
@@ -603,7 +573,6 @@ written by:	common	ru	Написано :
 year	common	ru	Год
 yemen	common	ru	YEMEN
 yes	common	ru	Да
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	ru	You are in TEXT MODE. Use the [<>] button to switch back to WYSIWIG.
 you are required to change your password during your first login	common	ru	You are required to change your password during your first login
 you have been successfully logged out	login	ru	Ваш сеанс успешно завершен
 you have not entered a title	common	ru	Вы не ввели заголовок

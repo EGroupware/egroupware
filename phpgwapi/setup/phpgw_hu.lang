@@ -13,18 +13,11 @@
 3 number of chars for day-shortcut	jscalendar	hu	3 karakteres nap rövidítés
 3 number of chars for month-shortcut	jscalendar	hu	3 karakteres hónap rövidítés
 80 (http)	admin	hu	80 (http)
-\n tidying up the html source, please wait...	htmlarea-HtmlTidy	hu	\n HTML kód takarítás
-_delete row	htmlarea-ContextMenu	hu	Sortörlés
-_image properties...	htmlarea-ContextMenu	hu	Kép tulajdonságai
-_modify link...	htmlarea-ContextMenu	hu	Hivatkozás módosítása
-_remove link...	htmlarea-ContextMenu	hu	Hivatkozás törlése
-_table properties...	htmlarea-ContextMenu	hu	Táblázat tulajdonságai
 a editor instance must be focused before using this command.	tinymce	hu	A szerkeszteni kívánt területet ki kell jelölni ezen funkció használata elõtt.
 about	common	hu	Névjegy
 about %1	common	hu	%1 névjegye
 about egroupware	common	hu	eGroupware névjegye
 about the calendar	jscalendar	hu	Naptár névjegye
-about this editor	htmlarea	hu	A szerkesztõ névjegye
 access	common	hu	Hozzáférés
 access not permitted	common	hu	Hozzáférés nincs engedélyezve
 account has been created	common	hu	Felhasználói fiók létrehozva
@@ -44,7 +37,6 @@ administration	common	hu	Adminisztráció
 afghanistan	common	hu	Afganisztán
 albania	common	hu	Albánia
 algeria	common	hu	Algéria
-align	htmlarea-TableOperations	hu	Igazítás
 align center	tinymce	hu	Középre igazítás
 align full	tinymce	hu	Sorkizárt
 align left	tinymce	hu	Balra igazítás
@@ -52,7 +44,6 @@ align right	tinymce	hu	Jobbra igazítás
 alignment	tinymce	hu	Igazítás
 all	common	hu	Összes
 all fields	common	hu	Összes mezõ
-all four sides	htmlarea-TableOperations	hu	Mind a négy oldal
 all occurrences of the search string was replaced.	tinymce	hu	A keresett szöveg minden elõrfordulása cserélve.
 alphabet	common	hu	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	hu	Stíluslap változtatása
@@ -83,8 +74,6 @@ autosave default category	common	hu	Alapértelmezett kategória automatikus mentés
 azerbaijan	common	hu	Azerbajdzsán
 back	common	hu	Vissza
 back to user login	common	hu	Vissza a felhasználói bejelentkezéshez
-background	htmlarea-TableOperations	hu	Háttér
-background color	htmlarea	hu	Háttérszín
 background color:	common	hu	Háttérszín:
 backupdir '%1' is not writeable by the webserver	common	hu	'%1' könyvtár nem írható a webszerver számára
 bad login or password	common	hu	Rossz felhasználó vagy jelszó
@@ -92,7 +81,6 @@ bahamas	common	hu	Bahamák
 bahrain	common	hu	Bahrain
 bangladesh	common	hu	Banglades
 barbados	common	hu	Barbados
-baseline	htmlarea-TableOperations	hu	Alapvonal
 bcc	common	hu	Bcc
 belarus	common	hu	Fehéroroszország
 belgium	common	hu	Belgium
@@ -107,7 +95,6 @@ bold.gif	common	hu	Félkövér.gif
 bolivia	common	hu	Bolívia
 border	common	hu	Keret
 border color	tinymce	hu	Keretszín
-borders	htmlarea-TableOperations	hu	Keretek
 bosnia and herzegovina	common	hu	Bosznia Hercegovina
 botswana	common	hu	Botswana
 bottom	common	hu	Alul
@@ -116,10 +103,8 @@ brazil	common	hu	Brazília
 british indian ocean territory	common	hu	Brit Indiai Óceáni Területek
 brunei darussalam	common	hu	Brunei
 bulgaria	common	hu	Bulgária
-bulleted list	htmlarea	hu	Bogyós lista - needfix
 burkina faso	common	hu	Burkina Faso
 burundi	common	hu	Burundi
-c_ell properties...	htmlarea-ContextMenu	hu	Cella tulajdonságok
 calendar	common	hu	Naptár
 cambodia	common	hu	Kambodzsa
 cameroon	common	hu	Kamerun
@@ -136,7 +121,6 @@ category %1 has been added !	common	hu	%1 kategória hozzáadva!
 category %1 has been updated !	common	hu	%1 kategória frissítve!
 cayman islands	common	hu	Kajmán-szigetek
 cc	common	hu	Cc
-cell properties	htmlarea-TableOperations	hu	Cella tulajdonságok
 cellpadding	tinymce	hu	Cella helykitöltés
 cellspacing	tinymce	hu	Cellák helykitöltése
 center	tinymce	hu	Középre
@@ -144,9 +128,7 @@ centered	common	hu	Középre zárt
 central african republic	common	hu	Közép-Afrikai Köztársaság
 chad	common	hu	Csád
 change	common	hu	Változtat
-char	htmlarea-TableOperations	hu	Karakter
 charset	common	hu	iso-8859-2
-chec_k link...	htmlarea-ContextMenu	hu	Hivatkozás ellenõrzése
 check installation	common	hu	Telepítés ellenõrzése
 check now	common	hu	Ellenõrzés most
 chile	common	hu	Chile
@@ -157,7 +139,6 @@ choose a background image.	common	hu	Háttérkép kiválasztása
 choose a background style.	common	hu	Háttér stílus kiválasztása
 choose a text color for the icons	common	hu	Ikon szövegszín kiválasztása
 choose directory to move selected folders and files to.	tinymce	hu	Célkönyvtár kiválasztása a kijelölt mappák és állományok mozgatásához.
-choose list style type (for ordered lists)	htmlarea-ListType	hu	Lista stílus választása (rendezett listához)
 choose the category	common	hu	Kategória választás
 choose the parent category	common	hu	Szülõ kategória választás
 christmas island	common	hu	Karácsony szigetek
@@ -171,9 +152,7 @@ click or mouse over to show menus?	common	hu	Menü megjelenítés kattintással vagy
 close	common	hu	Bezár
 close sidebox	common	hu	Oldalmenü bezárása
 cocos (keeling) islands	common	hu	Kókusz (Keeling)-szigetek
-collapsed borders	htmlarea-TableOperations	hu	Összeomlott keretek. - needfix
 colombia	common	hu	Kolumbia
-color	htmlarea-TableOperations	hu	Szín
 columns	tinymce	hu	Oszlopok
 comment	tinymce	hu	Megjegyzés
 common preferences	common	hu	Általános beállítások
@@ -185,24 +164,18 @@ congo, the democratic republic of the	common	hu	Kongó (Kongói Köztársaság)
 contacting server...	common	hu	Csatlakozás szerverhez...
 cook islands	common	hu	Cook-szigetek
 copy	common	hu	Másol
-copy selection	htmlarea	hu	Kijelölés másolása
 copy table row	tinymce	hu	Táblázat sorának másolása
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	hu	Másolás/Kivágás/Beillesztés nem elérhetõ alapértelmezésként a Mozilla és Firefox böngészõkben.\nSzeretne többet tudni errõl?
 costa rica	common	hu	Costa Rica
 cote d ivoire	common	hu	Elefántcsontpart
 could not contact server. operation timed out!	common	hu	Szerverhez csatlakozás nem sikerült. Idõtúllépés.
 create	common	hu	Létrehoz
-create a link	htmlarea-ContextMenu	hu	Hivatkozás létrehozása
 created by	common	hu	Készítette
 croatia	common	hu	Horvátország
 cuba	common	hu	Kuba
 currency	common	hu	Pénznem
 current	common	hu	Aktuális
-current style	htmlarea	hu	Aktuális stílus
-current url is	htmlarea-ContextMenu	hu	Aktuális URL
 current users	common	hu	Aktuális felhasználók
-cut	htmlarea-ContextMenu	hu	Kivág
-cut selection	htmlarea	hu	Kijelölés kivágása
 cut table row	tinymce	hu	Táblázat sorának kivágása
 cyprus	common	hu	Ciprus
 czech republic	common	hu	Cseh Köztársaság
@@ -211,24 +184,16 @@ date due	common	hu	Határidõ
 date modified	tinymce	hu	Dátum módosítva
 date selection:	jscalendar	hu	Dátum kiválasztás:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hu	Idõszerver port.<br>A 13-as port használatához a tûzfalat ki kell nyitni, mielõtt ez az oldal elküldésre kerülne.<br>
-de_lete column	htmlarea-ContextMenu	hu	Oszlop törlése
 december	common	hu	December
-decimal numbers	htmlarea-ListType	hu	Decimális számok
-decrease indent	htmlarea	hu	Behúzás csökkentése
 default	tinymce	hu	Alapértelmezett
 default category	common	hu	Alapértelmezett kategória
 delete	common	hu	Töröl
-delete cell	htmlarea-TableOperations	hu	Cella törlés
-delete column	htmlarea-TableOperations	hu	Oszlop törlés
 delete row	common	hu	Sor törlése
-delete the current column	htmlarea-ContextMenu	hu	Aktuális oszlop törlése
-delete the current row	htmlarea-ContextMenu	hu	Aktuális sor törlése
 denmark	common	hu	Dánia
 description	common	hu	Leírás
 detail	common	hu	Részlet
 details	common	hu	Részletek
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	hu	Letiltja az Internet Explorer 5.5+ böngészõk esetén a PNG típusú képek átlátszóságának kezelését javító szkript futtatását? (Javaslat: Firefox böngészõ használata)
-dictionary	htmlarea-SpellChecker	hu	Szótár
 direction	tinymce	hu	Irány
 direction left to right	common	hu	Balról jobbra irány
 direction right to left	tinymce	hu	Jobbról balra irány
@@ -263,14 +228,12 @@ egroupware api version %1	common	hu	eGroupWare API verzió %1
 egroupware: login blocked for user '%1', ip %2	common	hu	eGroupWare: %1 felhasználó bejelentkezése blokkolva az %2 IP címrõl
 egypt	common	hu	Egyiptom
 el salvador	common	hu	Salvador
-element...	htmlarea-ContextMenu	hu	Elemek...
 email	common	hu	E-Mail
 email-address of the user, eg. "%1"	common	hu	felhasználó email címe, pl. "%1"
 emotions	tinymce	hu	Érzelmek
 enabled	common	hu	Engedélyezve
 end date	common	hu	Befejezés dátuma
 end time	common	hu	Befejezés ideje
-enlarge editor	htmlarea	hu	Szerkesztõablak felnagyítása
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	hu	Kérem adja meg az eGroupWare URL helyét.<br>Például: http://www.domain.com/eroupware vagy /egroupware<br><b>Lezáró / jel nélkül!<b>
 entry has been deleted sucessfully	common	hu	Bejegyzés törölve
 entry updated sucessfully	common	hu	Bejegyzés módosítva
@@ -287,7 +250,6 @@ falkland islands (malvinas)	common	hu	Falkland-szigetek
 faroe islands	common	hu	Faroe-szigetek
 fax number	common	hu	faxszám
 february	common	hu	Február
-fg color	htmlarea-TableOperations	hu	Elõtér színe
 fields	common	hu	Mezõk
 fiji	common	hu	Fidzsi
 file already exists. file was not uploaded.	tinymce	hu	A fájl már létezik. A fájl feltöltése nem törént meg.
@@ -306,7 +268,6 @@ find again	tinymce	hu	Keresés újra
 find what	tinymce	hu	Mit keres
 find&nbsp;next	tinymce	hu	Következõ keresése
 find/replace	tinymce	hu	Keres/Cserél
-finished list of mispelled words	htmlarea-SpellChecker	hu	A tévesztett szavak listájának vége
 finland	common	hu	Finnország
 first name	common	hu	Keresztnév
 first name of the user, eg. "%1"	common	hu	A felhasználó keresztneve, pl. "%1"
@@ -316,17 +277,14 @@ fixme!	common	hu	FIXME!
 flash files	tinymce	hu	Flash fájlok
 flash properties	tinymce	hu	Flash tulajdonságok
 flash-file (.swf)	tinymce	hu	Flash fájl (.swf)
-float	htmlarea-TableOperations	hu	Lebegõ
 folder	tinymce	hu	Mappa
 folder name missing.	tinymce	hu	Mappanév hiányzik.
 folder not found.	tinymce	hu	Mappa nem található.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	hu	Ilyen nevû mappa már létezik. A mappa átnevezése/mozgatása nem sikerült.
 folder(s)	tinymce	hu	mappák
-font color	htmlarea	hu	Betûkészlet színe
 for mouse out	tinymce	hu	egérkurzor elhagy
 for mouse over	tinymce	hu	egérkurzor felette
 force selectbox	common	hu	Erõltetett selectbox
-frames	htmlarea-TableOperations	hu	Keretek
 france	common	hu	Francaország
 french guiana	common	hu	Francia Guinea
 french polynesia	common	hu	Francia Polinézia
@@ -369,7 +327,6 @@ haiti	common	hu	Haiti
 heard island and mcdonald islands	common	hu	Heard-sziget és McDonald-szigetek
 height	common	hu	Magasság
 help	common	hu	Segítség
-help using editor	htmlarea	hu	Súgó a szerkesztõ használatához
 high	common	hu	Sürgõs
 highest	common	hu	Legmagasabb
 holy see (vatican city state)	common	hu	Vatikán
@@ -377,53 +334,28 @@ home	common	hu	Kezdõlap
 home email	common	hu	otthoni email
 honduras	common	hu	Honduras
 hong kong	common	hu	Hong Kong
-horizontal rule	htmlarea	hu	Vízszintes elválasztó
-how did you get here? (please report!)	htmlarea-ContextMenu	hu	Hogy jutott el ide???? (Kérem jelezze a levlistán!) (Banyek, ezt nevezem!)
-how many columns would you like to merge?	htmlarea-TableOperations	hu	Egyesíteni kívánt oszlopok száma?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	hu	A felsõ menüsoron látható ikonok maximális száma. A többi alkalmazás ikonja a menüsor jobb oldalán található ikonra kattintva érhetõ el.
-how many rows would you like to merge?	htmlarea-TableOperations	hu	Egyesíteni kívánt sorok száma?
-html tidy	htmlarea-HtmlTidy	hu	HTML pucoló
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	hu	HTMLArea gyáván megfutamodik a sor utolsó cellájának törlése elõl.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	hu	HTMLArea gyáván megfutamodik a táblázat utolsó oszlopának törlése elõl.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	hu	HTMLArea gyáván megfutamodik a táblázat utolsó sorának törlése elõl.
 hungary	common	hu	Magyarország
-i will open it in a new page.	htmlarea-SpellChecker	hu	Megnyitás új lapon
-i_nsert row before	htmlarea-ContextMenu	hu	Sor beszúrása elõtte
 iceland	common	hu	Izland
-ignore	htmlarea-SpellChecker	hu	Elvetés
-ignore all	htmlarea-SpellChecker	hu	Minden elvetése
 image description	tinymce	hu	Képleírás
 image title	tinymce	hu	Kép címe
 image url	common	hu	Kép URL
-in_sert row after	htmlarea-ContextMenu	hu	Sor beszúrás késõbb
-increase indent	htmlarea	hu	Behúzás növelése
 indent	tinymce	hu	Behúzás jobbra
 india	common	hu	India
 indonesia	common	hu	Indonézia
 insert	tinymce	hu	Beillesztés
 insert / edit flash movie	tinymce	hu	Flash mozi beillesztése / szerkesztése
 insert / edit horizontale rule	tinymce	hu	Vízszintes elválasztó beszúrása / szerkesztése
-insert _column before	htmlarea-ContextMenu	hu	Oszlop beszúrás korábban
-insert a new column after the current one	htmlarea-ContextMenu	hu	Új oszlop beszúrása az aktuális után
-insert a new column before the current one	htmlarea-ContextMenu	hu	Új oszlop beszúrása az aktuális elé
-insert a new row after the current one	htmlarea-ContextMenu	hu	Új sor beszúrása  az aktuális után
-insert a new row before the current one	htmlarea-ContextMenu	hu	Új sor beszúrása az aktuális elé
 insert all %1 addresses of the %2 contacts in %3	common	hu	A %2 kapcsolat összes %1 címének beillesztése ide %3
-insert c_olumn after	htmlarea-ContextMenu	hu	Oszlop beszúrása utána
-insert cell after	htmlarea-TableOperations	hu	Cella beszúrása utána
-insert cell before	htmlarea-TableOperations	hu	Cella beszúrása elé
 insert column after	common	hu	Oszlop szúrása utána
 insert column before	common	hu	Oszlop beszúrása elé
 insert date	tinymce	hu	Dátum beszúrása
 insert emotion	tinymce	hu	Érzelmi ikon beszúrása
 insert file	tinymce	hu	Fájl beillesztése
-insert image	htmlarea	hu	Kép beillesztése
 insert link to file	tinymce	hu	Fájlra hivatkozás beillesztése
 insert row after	common	hu	Sor beszúrása utána
 insert row before	common	hu	Sor beszúrása elé
-insert table	htmlarea	hu	Táblázat beillesztése
 insert time	tinymce	hu	Idõpont beszúrása
-insert web link	htmlarea	hu	Web hivatkozás beszúrása
 insert/edit image	tinymce	hu	Kép beillesztése/szerkesztése
 insert/edit link	tinymce	hu	Link beillesztése/szerkesztése
 insert/modify table	tinymce	hu	Tábla beillesztése/módosítása
@@ -447,7 +379,6 @@ js-popup	tinymce	hu	JavaScript felbukkanó
 july	common	hu	Július
 jun	common	hu	Jún
 june	common	hu	Június
-justify	htmlarea-TableOperations	hu	Sorkizárás
 justify center	common	hu	Középre zárt
 justify full	common	hu	Sor kitöltése
 justify left	common	hu	Balra  zárt
@@ -467,7 +398,6 @@ last name of the user, eg. "%1"	common	hu	A felhasználó vezetékneve, pl. "%1"
 last page	common	hu	Utolsó oldal
 lastname	common	hu	Vezetéknév
 latvia	common	hu	Lettország
-layout	htmlarea-TableOperations	hu	Elrendezés
 ldap-mgr	common	hu	LDAP kezelõ
 lebanon	common	hu	Libanon
 left	common	hu	Balra
@@ -476,7 +406,6 @@ liberia	common	hu	Libéria
 libyan arab jamahiriya	common	hu	Líbia
 license	common	hu	Licensz
 liechtenstein	common	hu	Liechtenstein
-link points to:	htmlarea-ContextMenu	hu	Hivatkozás ide mutat:
 link url	tinymce	hu	Link URL
 list	common	hu	Lista
 list members	common	hu	Listatagok
@@ -496,7 +425,6 @@ mail domain, eg. "%1"	common	hu	email tartomány, pl. "%1"
 main category	common	hu	Fõ kategória
 main screen	common	hu	Fõképernyõ
 maintainer	common	hu	Karbantartó
-make lin_k...	htmlarea-ContextMenu	hu	Hivatkozás készítése
 make window resizable	tinymce	hu	Változtatható méretû ablak
 malawi	common	hu	Malawi
 malaysia	common	hu	Malajzia
@@ -504,7 +432,6 @@ maldives	common	hu	Maldív-szigetek
 mali	common	hu	Mali
 malta	common	hu	Málta
 march	common	hu	Március
-margin	htmlarea-TableOperations	hu	Margó
 marshall islands	common	hu	Marshall-szigetek
 martinique	common	hu	Martinique
 match case	tinymce	hu	Pontos egyezés
@@ -515,14 +442,11 @@ may	common	hu	Május
 mayotte	common	hu	Mayotte
 medium	common	hu	Közepes
 menu	common	hu	Menü
-merge cells	htmlarea-TableOperations	hu	Cellék egyesítése
 merge table cells	tinymce	hu	Táblázat celláinak egyesítése
 message	common	hu	Üzenet
 mexico	common	hu	Mexikó
 micronesia, federated states of	common	hu	Mikronézia
-middle	htmlarea-TableOperations	hu	Középsõ
 mkdir failed.	tinymce	hu	Könyvtár létrehozás sikertelen.
-modify url	htmlarea-ContextMenu	hu	URL módosítása
 moldova, republic of	common	hu	Moldova
 monaco	common	hu	Monaco
 monday	common	hu	Hétfõ
@@ -562,15 +486,12 @@ no	common	hu	Nem
 no entries found, try again ...	common	hu	nem található bejegyzés, próbálja újra
 no files...	tinymce	hu	Nincsenek fájlok...
 no history for this record	common	hu	Ehhez a rekordhoz nem tartoznak elõzmények
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	hu	A választott szótár szerint nincs tévesztett szó.
 no permission to create folder.	tinymce	hu	Nincs jogosultsága könyvtárat létrehozni!
 no permission to delete file.	tinymce	hu	Nincs jogosultsága fájlt törölni!
 no permission to move files and folders.	tinymce	hu	Nincs jogosultsága könyvtárat vagy fájlt átmozgatni!
 no permission to rename files and folders.	tinymce	hu	Nincs jogosultsága könyvtárat vagy fájlt átnevezni!
 no permission to upload.	tinymce	hu	Nincs jogosultsága feltölteni.
-no rules	htmlarea-TableOperations	hu	Nincsenek elválasztók
 no shadow	tinymce	hu	Nincs árnyék
-no sides	htmlarea-TableOperations	hu	Nincsenek oldalak
 no subject	common	hu	Nincs  tárgy
 none	common	hu	Nincs
 norfolk island	common	hu	Norfolk szigetek
@@ -601,15 +522,12 @@ open link in a new window	tinymce	hu	Hivatkozás megnyitása új ablakban
 open link in the same window	tinymce	hu	Hivatkozás megnyitása azonos ablakban
 open notify window	common	hu	Értesítõ ablak megnyitása
 open popup window	common	hu	Felugró ablak megnyitása
-opens this link in a new window	htmlarea-ContextMenu	hu	Hivatkozás megnyitása új ablakban
 ordered list	common	hu	Számozott lista
 original	common	hu	Eredeti
-original word	htmlarea-SpellChecker	hu	Eredeti szó
 other	common	hu	Más
 outdent	tinymce	hu	Behúzás balra
 overview	common	hu	Áttekintés
 owner	common	hu	Tulajdonos
-padding	htmlarea-TableOperations	hu	Helykitöltés
 page	common	hu	Oldal
 page was generated in %1 seconds	common	hu	Az oldal %1 másodperc alatt generálódott.
 pakistan	common	hu	Pakisztán
@@ -623,16 +541,12 @@ parent category	common	hu	Szülõ kategória
 password	common	hu	Jelszó
 password could not be changed	common	hu	Jelszó nem módosítható
 password has been updated	common	hu	Jelszó módosítva
-paste	htmlarea-ContextMenu	hu	Beilleszt
 paste as plain text	tinymce	hu	Beilleszt mint egyszerû szöveg
-paste from clipboard	htmlarea	hu	Beilleszt a vágólapról
 paste from word	tinymce	hu	Beilleszt a Word-bõl
 paste table row after	tinymce	hu	Táblázat sort beilleszt utána
 paste table row before	tinymce	hu	Táblázat sort beilleszt elé
-path	htmlarea	hu	Útvonal
 path not found.	tinymce	hu	Útvonal nem található.
 path to user and group files has to be outside of the webservers document-root!!!	common	hu	A felhasználói és csoport állományokat tartalmazó könyvtár útvonala KÍVÜL KELL ESSEN a webszerver által használt könyvtáron!!! Pl. a /var/docroot lehet a /var/www/localhost/httpdocs/docroot helyett.
-percent	htmlarea-TableOperations	hu	százalék
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
 personal	common	hu	Személyes
 peru	common	hu	Peru
@@ -640,12 +554,7 @@ philippines	common	hu	Fülöp-szigetek
 phone number	common	hu	telefonszám
 phpgwapi	common	hu	eGroupWare API
 pitcairn	common	hu	Pitcairn-szigetek
-pixels	htmlarea-TableOperations	hu	pixelek
 please %1 by hand	common	hu	Kérem %1 kézzel
-please click into some cell	htmlarea-TableOperations	hu	Kérem kattintson bele pár cellába
-please confirm that you want to open this link	htmlarea-SpellChecker	hu	Megerõsítés
-please confirm that you want to remove this element:	htmlarea-ContextMenu	hu	Elem törlésének megerõsítése:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	hu	Elem hivatkozás megszûntetésének megerõsítése.
 please enter a name	common	hu	Kérem adjon meg egy nevet!
 please enter the caption text	tinymce	hu	Kérem adja meg a feliratot
 please insert a name for the target or choose another option.	tinymce	hu	A cél nevének megadása vagy másik opció választáa.
@@ -653,10 +562,7 @@ please run setup to become current	common	hu	Kérem futtassa a setup-ot hogy a vá
 please select	common	hu	Kérem válasszon
 please set your global preferences	common	hu	Kérem állítsa be a globális tulajdonságait!
 please set your preferences for this application	common	hu	Kérem állítsa be személyes beállításait ehhez az alkalmazáshoz!
-please wait.  calling spell checker.	htmlarea-SpellChecker	hu	Kis türelmet, a helyesírásellenõrzõ hívása folyamatban.
 please wait...	common	hu	Kérem várjon és figyelje a homokórát a szemközti falon...
-please wait: changing dictionary to	htmlarea-SpellChecker	hu	Kis türelmet, szótár cseréje
-pliz weit ;-)	htmlarea-SpellChecker	hu	Kis türelmet ;-)
 poland	common	hu	Lengyelország
 popup url	tinymce	hu	Popup URL
 portugal	common	hu	Portugália
@@ -676,37 +582,25 @@ private	common	hu	Privát
 project	common	hu	Projekt
 public	common	hu	nyilvános
 puerto rico	common	hu	Puerto Rico
-re-check	htmlarea-SpellChecker	hu	Újraellenõrzés
 read	common	hu	Olvas
 read this list of methods.	common	hu	Eljárás lista olvasása.
 redo	tinymce	hu	Ismétlés
-redoes your last action	htmlarea	hu	Utolsó mûvelet megismétlése
 refresh	tinymce	hu	Frissít
 reject	common	hu	Visszautasít
 remove col	tinymce	hu	Oszlop eltávolítása
 remove selected accounts	common	hu	kiválasztott hozzáférések törlése
-remove the	htmlarea-ContextMenu	hu	Ennek törlése
-remove this node from the document	htmlarea-ContextMenu	hu	Dokumentum csomópontjának törlése
 rename	common	hu	Átnevez
 rename failed	tinymce	hu	Átnevezés sikertelen
 replace	common	hu	Csere
-replace all	htmlarea-SpellChecker	hu	Mind cseréje
 replace with	common	hu	Csere a következõre:
 replace&nbsp;all	tinymce	hu	Mindet cserél
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	hu	A rendszeren található összes felhasználói fiók listája. Figyelem: Ez igazán nagy is lehet.
 returns an array of todo items	common	hu	Tennivalók listáját adja vissza egy tömbben
 reunion	common	hu	Réunion
-revert	htmlarea-SpellChecker	hu	Visszaállít
 right	common	hu	Jobbra
 rmdir failed.	tinymce	hu	Könyvtár törlés sikertelen.
-ro_w properties...	htmlarea-ContextMenu	hu	Sor tulajdonságok...
 romania	common	hu	Románia
-row properties	htmlarea-TableOperations	hu	Sor tulajdonságok
 rows	tinymce	hu	Sorok
-rules	htmlarea-TableOperations	hu	Elválasztók
-rules will appear between all rows and columns	htmlarea-TableOperations	hu	Elválasztók az összes sor és oszlop között
-rules will appear between columns only	htmlarea-TableOperations	hu	Elválasztók csak az oszlopok között
-rules will appear between rows only	htmlarea-TableOperations	hu	Elválasztók csak a sorok között
 run spell checking	tinymce	hu	Helyesírásellenõrzés futtatása
 russian federation	common	hu	Orosz föderáció
 rwanda	common	hu	Ruanda
@@ -756,10 +650,6 @@ show page generation time	common	hu	Oldal generálási idõ mutatása
 show page generation time on the bottom of the page?	common	hu	Mutassa az oldal generálására fordított idõt az oldal alján?
 show scrollbars	tinymce	hu	Görgetõsáv mutatása
 show statusbar	tinymce	hu	Státuszsor mutatása
-show the image properties dialog	htmlarea-ContextMenu	hu	Képtulajdonságok mutatása
-show the table cell properties dialog	htmlarea-ContextMenu	hu	Cellatulajdonságok mutatása
-show the table properties dialog	htmlarea-ContextMenu	hu	Táblázat tulajdonságok mutatása
-show the table row properties dialog	htmlarea-ContextMenu	hu	Táblasor tulajdonságok mutatása
 show toolbars	tinymce	hu	Eszközsor mutatása
 show_more_apps	common	hu	Több alkalmazás mutatása
 showing %1	common	hu	%1 listázva
@@ -774,32 +664,19 @@ somalia	common	hu	Szomália
 sorry, your login has expired	login	hu	A hozzáférése lejárt
 south africa	common	hu	Dél Afrika
 south georgia and the south sandwich islands	common	hu	Déli-Georgia és Déli-Sandwich-szigetek
-spacing	htmlarea-TableOperations	hu	Betûköz
-spacing and padding	htmlarea-TableOperations	hu	Betûköz és kitöltés
 spain	common	hu	Spanyolország
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	hu	A helyesírásellenõrzés kész, tévesztett szó nem fordult elõ. Bezárás...
-spell-check	htmlarea-SpellChecker	hu	Helyesírásellenõrzés
-split cell	htmlarea-TableOperations	hu	Cella felosztása
-split column	htmlarea-TableOperations	hu	Oszlop felosztása
-split row	htmlarea-TableOperations	hu	Sor felosztása
 split table cells	tinymce	hu	Cella felosztása
 sri lanka	common	hu	Sri Lanka
 start date	common	hu	Kezdés dátuma
 start time	common	hu	Kezdés idõpontja
 start with	common	hu	Kezdés (start with)
 status	common	hu	Állapot
-strikethrough	htmlarea	hu	Áthúzott
 striketrough	tinymce	hu	Áthúzott
-style [css]	htmlarea-TableOperations	hu	Stílus (CSS)
 subject	common	hu	Tárgy
 submit	common	hu	Elküld
-subscript	htmlarea	hu	Alsó index
 substitutions and their meanings:	common	hu	Behelyettesítések és jelentésük
 sudan	common	hu	Szudán
-suggestions	htmlarea-SpellChecker	hu	Tippek
-summary	htmlarea-TableOperations	hu	Összefoglaló
 sunday	common	hu	Vasárnap
-superscript	htmlarea	hu	Felsõ index
 suriname	common	hu	Suriname
 svalbard and jan mayen	common	hu	Svalbard (Spitzbergák) és Jan Mayen-szigetek
 swaziland	common	hu	Szváziföld
@@ -813,26 +690,18 @@ taiwan	common	hu	Taiwan
 tajikistan	common	hu	Tadzsikisztán
 tanzania, united republic of	common	hu	Tanzánia
 target	tinymce	hu	Cél
-text align	htmlarea-TableOperations	hu	Szöveg igazítás
 text color:	common	hu	Szöveg szín:
 thailand	common	hu	Thaiföld
 the api is current	common	hu	Az API aktuális, nincs szükség frissítésre
 the api requires an upgrade	common	hu	Az API frissítést igényel !!!
-the bottom side only	htmlarea-TableOperations	hu	Csak az alsó oldalon
 the following applications require upgrades	common	hu	A következõ alkalmazásokat frissíteni kell
-the left-hand side only	htmlarea-TableOperations	hu	Csak a baloldalt
 the mail server returned	common	hu	A levelezõszerver visszatért (Jedi attached ;)
-the right and left sides only	htmlarea-TableOperations	hu	Csak a jobb és baloldalt
-the right-hand side only	htmlarea-TableOperations	hu	Csak a jobboldalt
 the search has been compleated. the search string could not be found.	tinymce	hu	A keresés befejezõdött. A keresett szöveg nem található.
-the top and bottom sides only	htmlarea-TableOperations	hu	Csak fent és alul
-the top side only	htmlarea-TableOperations	hu	Csak fent
 this application is current	common	hu	Az alkalmazás friss
 this application requires an upgrade	common	hu	Az alkalmazás frissítést kíván
 this is just a template button	tinymce	hu	Ez csak egy sablon gomb
 this is just a template popup	tinymce	hu	Ez csak egy sablon felugró ablak
 this name has been used already	common	hu	Ez a név már használatban van!
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	hu	Kilépés a változások eldobásával. Jóváhagyja?
 thursday	common	hu	Csütörtök
 time	common	hu	Idõ
 time selection:	jscalendar	hu	Idõ kiválasztása:
@@ -845,7 +714,6 @@ today	common	hu	Mai nap
 todays date, eg. "%1"	common	hu	mai dátum, pl. "%1"
 toggle first day of week	jscalendar	hu	Hét elsõ napjának rögzítése
 toggle fullscreen mode	tinymce	hu	Teljes képernyõs mód
-toggle html source	htmlarea	hu	HTML forrás átkapcsolása
 togo	common	hu	Togo
 tokelau	common	hu	Tokelau
 tonga	common	hu	Tonga
@@ -864,7 +732,6 @@ uganda	common	hu	Uganda
 ukraine	common	hu	Ukrajna
 underline	common	hu	Aláhúzott
 undo	tinymce	hu	Visszavonás
-undoes your last action	htmlarea	hu	Utolsó mûvelet visszavonása
 united arab emirates	common	hu	Egyesült Arab Emirátus
 united kingdom	common	hu	Egyesült Királyság
 united states	common	hu	Egyesült Államok
@@ -872,13 +739,10 @@ united states minor outlying islands	common	hu	Amerikai Egyesült Államok Külsõ S
 unknown	common	hu	Ismeretlen
 unlink	tinymce	hu	Hivatkozás törlése
 unlink failed.	tinymce	hu	Hivatkozás törlése sikertelen
-unlink the current element	htmlarea-ContextMenu	hu	Aktuáliselemhivatkozás törlése
 unordered list	tinymce	hu	Felsorolás (nem rendezett)
-unset color	htmlarea-TableOperations	hu	Szín törlése
 up	tinymce	hu	Fel
 update	common	hu	Frissít
 upload	common	hu	Feltöltés
-upload image	htmlarea-UploadImage	hu	Kép feltöltése
 uploading...	tinymce	hu	Feltöltés folyamatban...
 url	common	hu	URL
 uruguay	common	hu	Uruguay
@@ -899,7 +763,6 @@ uzbekistan	common	hu	Üzbegisztán
 vanuatu	common	hu	Vanuatu
 venezuela	common	hu	Venezuella
 version	common	hu	Verzió
-vertical align	htmlarea-TableOperations	hu	Függõlegeshez igazít
 vertical alignment	tinymce	hu	Függõleges igazítás
 viet nam	common	hu	Vietnám
 view	common	hu	Megtekint
@@ -919,7 +782,6 @@ written by:	common	hu	Írta:
 year	common	hu	Év
 yemen	common	hu	Jemen
 yes	common	hu	Igen
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	hu	Szöveges üzemmód. [<>] használatával visszatérhet a WYSIWYG üzemmódba.
 you are required to change your password during your first login	common	hu	Elsõ bejelentkezéskor meg kell változtatnia a jelszavát
 you have been successfully logged out	login	hu	Sikeresen kijelentkezett a rendszerbõl
 you have not entered a title	common	hu	Nem adott meg címet

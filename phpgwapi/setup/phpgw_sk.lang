@@ -16,18 +16,11 @@
 3 number of chars for day-shortcut	jscalendar	sk	3 poèet znakov skratky dòa
 3 number of chars for month-shortcut	jscalendar	sk	3 poèet znakov skratky mesiaca
 80 (http)	admin	sk	80 (http)
-\n tidying up the html source, please wait...	htmlarea-HtmlTidy	sk	\n Zo¹tíhµujem HTML zdrojový kód, prosím èakajte...
-_delete row	htmlarea-ContextMenu	sk	_Zmaza» riadok
-_image properties...	htmlarea-ContextMenu	sk	_Vlastnosti obrázka...
-_modify link...	htmlarea-ContextMenu	sk	_Uprav odkaz...
-_remove link...	htmlarea-ContextMenu	sk	_Vyma¾ odkaz...
-_table properties...	htmlarea-ContextMenu	sk	_Vlastnosti tabuµky...
 a editor instance must be focused before using this command.	tinymce	sk	In¹tancia Editora musí ma» fokus, ne¾ pou¾ijete tento príkaz.
 about	common	sk	O aplikácii
 about %1	common	sk	O aplikácii %1
 about egroupware	common	sk	O eGroupWare
 about the calendar	jscalendar	sk	O Kalendári
-about this editor	htmlarea	sk	O tomto editore
 access	common	sk	Prístup
 access not permitted	common	sk	Prístup zakázaný
 account has been created	common	sk	Pou¾ívateµský úèet bol vytvorený
@@ -47,7 +40,6 @@ admin	common	sk	Administrátor
 administration	common	sk	Správa
 afghanistan	common	sk	AFGANISTAN
 albania	common	sk	ALBÁNSKO
-align	htmlarea-TableOperations	sk	Zarovnaj
 align center	tinymce	sk	Zarovnaj na stred
 align full	tinymce	sk	Zarovnaj do bloku
 align left	tinymce	sk	Zarovnaj doµava
@@ -55,7 +47,6 @@ align right	tinymce	sk	Zarovnaj doprava
 alignment	tinymce	sk	Zarovnanie
 all	common	sk	V¹etko
 all fields	common	sk	v¹etky polia
-all four sides	htmlarea-TableOperations	sk	V¹etky ¹tyri strany
 all occurrences of the search string was replaced.	tinymce	sk	V¹etky exempláre hµadaného re»azca boli nahradené
 alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternative image	tinymce	sk	Alternatívny obrázok
@@ -80,15 +71,12 @@ autosave default category	common	sk	Automaticky uklada» ¹tandardnú kategóriu
 azerbaijan	common	sk	AZERBAJD®ÁN
 back	common	sk	Naspä»
 back to user login	common	sk	Naspä» na prihlásenie pou¾ívateµa
-background	htmlarea-TableOperations	sk	Pozadie
-background color	htmlarea	sk	Farba pozadia
 background color:	common	sk	Farba pozadia:
 backupdir '%1' is not writeable by the webserver	common	sk	zálohový adresár '%1' nie je zapisovateµný pre webserver
 bad login or password	common	sk	Chybné meno alebo heslo
 bahamas	common	sk	BAHAMY
 bahrain	common	sk	BAHRAIN
 bangladesh	common	sk	BANGLADÉ©
-baseline	htmlarea-TableOperations	sk	Základný
 bcc	common	sk	Skrytá kópia
 belarus	common	sk	BIELORUSKO
 belgium	common	sk	BELGICKO
@@ -99,13 +87,10 @@ bold	common	sk	Tuèné
 bolivia	common	sk	BOLÍVIA
 border	common	sk	Okraj
 border color	tinymce	sk	Farba okraja
-borders	htmlarea-TableOperations	sk	Okraje
 bosnia and herzegovina	common	sk	BOSNA A HERCEGOVINA
 bottom	common	sk	Spodný okraj
 brazil	common	sk	BRAZÍLIA
 bulgaria	common	sk	BULHARSKO
-bulleted list	htmlarea	sk	Odrá¾kový zoznam
-c_ell properties...	htmlarea-ContextMenu	sk	Nastavenia bunky (C)
 calendar	common	sk	Kalendár
 cambodia	common	sk	KAMBOD®A
 canada	common	sk	KANADA
@@ -120,16 +105,13 @@ category %1 has been added !	common	sk	Kategória %1 bola pridaná!
 category %1 has been updated !	common	sk	Kategória %1 bola zmenená!
 cayman islands	common	sk	KAJMANSKÉ OSTROVY
 cc	common	sk	Kópia
-cell properties	htmlarea-TableOperations	sk	Nastavenia bunky
 cellpadding	tinymce	sk	Rozostup medzi bunkami
 cellspacing	tinymce	sk	Odstup buniek od okraja
 center	tinymce	sk	Na stred
 centered	common	sk	na stred
 central african republic	common	sk	STREDOAFRICKÁ REPUBLIKA
 change	common	sk	Zmeni»
-char	htmlarea-TableOperations	sk	Znak
 charset	common	sk	iso-8859-2
-chec_k link...	htmlarea-ContextMenu	sk	S_kontroluj odkaz
 check installation	common	sk	Skontroluj in¹taláciu
 check now	common	sk	Skontroluj - Teraz
 china	common	sk	ÈÍNA
@@ -139,7 +121,6 @@ choose a background image.	common	sk	Vyberte obrázok pozadia.
 choose a background style.	common	sk	Vyberte ¹týl pozadia.
 choose a text color for the icons	common	sk	Vyberte farbu textu pre ikonky
 choose directory to move selected folders and files to.	tinymce	sk	Vyberte adresár, kam presunú» oznaèené prieèinky a súbory.
-choose list style type (for ordered lists)	htmlarea-ListType	sk	Vyberte ¹týl zoznamu (pre zotriedené zoznamy)
 choose the category	common	sk	Vyberte kategóriu
 choose the parent category	common	sk	Vyberte rodièovskú kategóriu
 christmas island	common	sk	VIANOÈNÉ OSTROVY
@@ -154,7 +135,6 @@ close	common	sk	Zavrie»
 close sidebox	common	sk	Zavrie» Sidebox
 cocos (keeling) islands	common	sk	KOKOSOVÉ OSTROVY
 colombia	common	sk	KOLUMBIA
-color	htmlarea-TableOperations	sk	Farba
 columns	tinymce	sk	Ståpce
 comment	tinymce	sk	Komentár
 common preferences	common	sk	Be¾né nastavenia
@@ -164,22 +144,16 @@ congo	common	sk	KONGO
 congo, the democratic republic of the	common	sk	KONGO, DEMOKRATICKÁ REPUBLIKA
 contacting server...	common	sk	Pripájam sa na Server...
 copy	common	sk	Kopírova»
-copy selection	htmlarea	sk	Kopírova» výber
 copy table row	tinymce	sk	Kopírova» riadok tabuµky
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	sk	Funkcie Kopírova»/Vystrihnú»/Vlo¾i» nie sú dostupné v prehliadaèoch Mozilla (vrátane Firefox).\nChcete sa o tomto probléme dozvedie» viac?
 could not contact server. operation timed out!	common	sk	Nedá sa pripoji» na server. Èas operácie vypr¹al!
 create	common	sk	Vytvori»
-create a link	htmlarea-ContextMenu	sk	Vytvori» linku
 created by	common	sk	Vytvoril
 croatia	common	sk	CHORVÁTSKO
 cuba	common	sk	KUBA
 currency	common	sk	Mena
 current	common	sk	Aktuálne
-current style	htmlarea	sk	Aktuálny ¹týl
-current url is	htmlarea-ContextMenu	sk	Aktuálne URL je
 current users	common	sk	Súèasní pou¾ívatelia
-cut	htmlarea-ContextMenu	sk	Vystrihnú»
-cut selection	htmlarea	sk	Vystrihnú» výber
 cut table row	tinymce	sk	Vystrihnú» riadok tabuµky
 cyprus	common	sk	CYPRUS
 czech republic	common	sk	ÈESKÁ REPUBLIKA
@@ -188,26 +162,18 @@ date due	common	sk	Dátum do
 date modified	tinymce	sk	Dátum upravený
 date selection:	jscalendar	sk	Výber dátumu:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/èas.<br>Ak pou¾ívate port 13,prosím nastavte korektne filtrovacie pravidlá na firewall-e e¹te predtým, ne¾ potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)
-de_lete column	htmlarea-ContextMenu	sk	Zmaza» ståpec(D)
 december	common	sk	December
-decimal numbers	htmlarea-ListType	sk	Desiatkové èísla
-decrease indent	htmlarea	sk	Zmen3i5 odsadenie
 default	tinymce	sk	Predvolené
 default category	common	sk	©tandardná kategória
 default height for the windows	common	sk	Predvolená vý¹ka okien
 default width for the windows	common	sk	Predvolená ¹írka okien
 delete	common	sk	Zmaza»
-delete cell	htmlarea-TableOperations	sk	Zmaza» Bunku
-delete column	htmlarea-TableOperations	sk	Zmaza» Ståpec
 delete row	common	sk	Zmaza» Riadok
-delete the current column	htmlarea-ContextMenu	sk	Zmaza» aktuálny Ståpec
-delete the current row	htmlarea-ContextMenu	sk	Zmaza» aktuálny Riadok
 denmark	common	sk	DÁNSKO
 description	common	sk	Popis
 detail	common	sk	Podrobnosti
 details	common	sk	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sk	Vypnú» spú¹»anie opravného skriptu pre IE5.5 a vy¹¹í pre zobrazenie priesvitnosti v obrázkoch PNG?
-dictionary	htmlarea-SpellChecker	sk	Zápisník
 direction	tinymce	sk	Tok písma
 direction left to right	common	sk	Tok zµava doprava
 direction right to left	tinymce	sk	Tok sprava doµava
@@ -239,14 +205,12 @@ edit category	common	sk	Uprav kategóriu
 egroupware api version %1	common	sk	eGroupWare API verzia %1
 egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre pou¾ívateµa '%1', IP %2
 egypt	common	sk	EGYPT
-element...	htmlarea-ContextMenu	sk	Element...
 email	common	sk	E-Mail
 email-address of the user, eg. "%1"	common	sk	emailová adresa pou¾ívateµa, napr. "%1"
 emotions	tinymce	sk	Emócie
 enabled	common	sk	Povolené
 end date	common	sk	Koncový dátum
 end time	common	sk	Koncový èas
-enlarge editor	htmlarea	sk	Zväè¹i» editor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre eGroupware.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukonèovacieho lomítka</b>
 entry has been deleted sucessfully	common	sk	Záznam bol úspe¹ne vymazaný
 entry updated sucessfully	common	sk	Záznam bol úspe¹ne upravený
@@ -262,7 +226,6 @@ failed to contact server or invalid response from server. try to relogin. contac
 falkland islands (malvinas)	common	sk	FALKLANDY
 fax number	common	sk	èíslo faxu
 february	common	sk	Február
-fg color	htmlarea-TableOperations	sk	Farba popredia
 fields	common	sk	Polo¾ky
 fiji	common	sk	FID®I
 file already exists. file was not uploaded.	tinymce	sk	Súbor u¾ existuje, preto NEBOL nahratý.
@@ -281,7 +244,6 @@ find again	tinymce	sk	Hµada» znovu
 find what	tinymce	sk	Èo hµada»
 find&nbsp;next	tinymce	sk	Hµada» ïalej
 find/replace	tinymce	sk	Nájs»/Nahradi»
-finished list of mispelled words	htmlarea-SpellChecker	sk	Ukonèený zoznam chybných slov
 finland	common	sk	FÍNSKO
 first name	common	sk	Meno
 first name of the user, eg. "%1"	common	sk	meno pou¾ívateµa, napr. "%1"
@@ -291,18 +253,15 @@ fixme!	common	sk	OPRAV MA!
 flash files	tinymce	sk	Súbory Flash
 flash properties	tinymce	sk	Nastavenia Flash
 flash-file (.swf)	tinymce	sk	Súbor Flash (.swf)
-float	htmlarea-TableOperations	sk	Plávaj
 folder	tinymce	sk	Prieèinok
 folder already exists.	common	sk	Prieèinok u¾ existuje.
 folder name missing.	tinymce	sk	Chýba názov prieèinku.
 folder not found.	tinymce	sk	Prieèinok sa nena¹iel.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	sk	Taký prieèinok u¾ existuje, preto nebol premenovaný/presunutý.
 folder(s)	tinymce	sk	prieèinok/ky
-font color	htmlarea	sk	Farba písma
 for mouse out	tinymce	sk	pre my¹ mimo
 for mouse over	tinymce	sk	pre my¹ cez
 force selectbox	common	sk	Otvor výberové menu
-frames	htmlarea-TableOperations	sk	Rámce
 france	common	sk	FRANCÚZSKO
 french polynesia	common	sk	FRANCÚZSKA POLYNÉZIA
 friday	common	sk	Piatok
@@ -333,7 +292,6 @@ guinea	common	sk	GUINEA
 haiti	common	sk	HAITI
 height	common	sk	Vý¹ka
 help	common	sk	Pomocník
-help using editor	htmlarea	sk	Pomoc ohµadom editora
 high	common	sk	Vysoká
 highest	common	sk	Najvy¹¹ia
 holy see (vatican city state)	common	sk	VATIKÁN (MESTSKÝ ©TÁT)
@@ -341,56 +299,31 @@ home	common	sk	Domov
 home email	common	sk	domáci email
 honduras	common	sk	HONDURAS
 hong kong	common	sk	HONG KONG
-horizontal rule	htmlarea	sk	Vodorovné pravítko
-how did you get here? (please report!)	htmlarea-ContextMenu	sk	Ako ste sa sem dostali? (Prosím, ohláste to!)
-how many columns would you like to merge?	htmlarea-TableOperations	sk	Koµko ståpcov by ste chceli zlúèi»?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sk	Koµko ikoniek sa má zobrazi» v navigaènom paneli (vrch stránky). Ostatné ikony budú umiestnené do rozbaµovacieho menu, ktoré bude dostupné na úplne pravom okraji navigaèného panelu.
-how many rows would you like to merge?	htmlarea-TableOperations	sk	Koµko riadkov by ste chceli zlúèi»?
-html tidy	htmlarea-HtmlTidy	sk	HTML Tidy (èistiè)
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	sk	HTMLArea hanebne odmieta zmaza» poslednú bunku v riadku.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	sk	HTMLArea hanebne odmieta zmaza» posledný ståpec v tabuµke.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	sk	HTMLArea hanebne odmieta zmaza» posledný riadok v tabuµke.
 hungary	common	sk	MAÏARSKO
-i will open it in a new page.	htmlarea-SpellChecker	sk	Otvorím to na novej stránke.
-i_nsert row before	htmlarea-ContextMenu	sk	Vlo¾i»(I) Riadok Pred
 iceland	common	sk	ISLAND
 iespell not detected. click ok to go to download page.	common	sk	ieSpell sa nena¹iel. Kliknutím na OK sa presuniete na stránku, odkiaµ ho mô¾ete stiahnu».
 if the clock is enabled would you like it to update it every second or every minute?	common	sk	Ak sú hodiny zapnuté, chcete aby sa aktualizovali ka¾dú sekundu, alebo staèí ka¾dú minútu?
 if there are some images in the background folder you can choose the one you would like to see.	common	sk	Ak sú v prieèinku pre pozadia nejaké obrázky, mô¾ete si vybra», ktorý chcete.
-ignore	htmlarea-SpellChecker	sk	Ignorova»
-ignore all	htmlarea-SpellChecker	sk	Ignorova» v¹etko
 image description	tinymce	sk	Opis obrázka
 image title	tinymce	sk	Titulok obrázka
 image url	common	sk	URL obrázka
-in_sert row after	htmlarea-ContextMenu	sk	Vlo¾i» Riadok Za (S)
-increase indent	htmlarea	sk	Zväè¹i» odsadenie
 indent	tinymce	sk	Odsadenie
 india	common	sk	INDIA
 indonesia	common	sk	INDONÉZIA
 insert	tinymce	sk	Vlo¾i»
 insert / edit flash movie	tinymce	sk	Vlo¾i» / upravi» film Flash
 insert / edit horizontale rule	tinymce	sk	Vlo¾i» / upravi» Vodorovné pravítko
-insert _column before	htmlarea-ContextMenu	sk	Vlo¾i» Ståpec Pred (C)
-insert a new column after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Ståpec Za aktuálny
-insert a new column before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Ståpec Pred aktuálny
-insert a new row after the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Riadok Za aktuálny
-insert a new row before the current one	htmlarea-ContextMenu	sk	Vlo¾i» nový Riadok Pred aktuálny
 insert all %1 addresses of the %2 contacts in %3	common	sk	Vlo¾i» v¹etkých %1 adries z %2 kontaktov in %3
-insert c_olumn after	htmlarea-ContextMenu	sk	Vlo¾i» StåpeC Za
-insert cell after	htmlarea-TableOperations	sk	Vlo¾i» Bunku Za
-insert cell before	htmlarea-TableOperations	sk	Vlo¾i» Bunku Pred
 insert column after	common	sk	Vlo¾i» Ståpec za
 insert column before	common	sk	Vlo¾i» Ståpec Pred
 insert date	tinymce	sk	Vlo¾i» dátum
 insert emotion	tinymce	sk	Vlo¾i» smajlík (emotion)
 insert file	tinymce	sk	Vlo¾i» súbor
-insert image	htmlarea	sk	Vlo¾i» Obrázok
 insert link to file	tinymce	sk	Vlo¾i» odkaz na súbor
 insert row after	common	sk	Vlo¾i» Riadok Za
 insert row before	common	sk	Vlo¾i» Riadok Pred
-insert table	htmlarea	sk	Vlo¾i» Tabuµku
 insert time	tinymce	sk	Vlo¾i» èas
-insert web link	htmlarea	sk	Vlo¾i» webový Odkaz
 insert/edit image	tinymce	sk	Vlo¾i»/upravi» obrázok
 insert/edit link	tinymce	sk	Vlo¾i»/upravi» odkaz
 insert/modify table	tinymce	sk	Vlo¾i»/upravi» tabuµku
@@ -414,7 +347,6 @@ jordan	common	sk	JORDÁNSKO
 july	common	sk	Júl
 jun	common	sk	Jún
 june	common	sk	Jún
-justify	htmlarea-TableOperations	sk	Zarovna»
 justify center	common	sk	Zarovna» na Stred
 justify full	common	sk	Zarovna» do Bloku
 justify left	common	sk	Zarovna» v¥avo
@@ -431,7 +363,6 @@ last name	common	sk	Priezvisko
 last name of the user, eg. "%1"	common	sk	priezvisko pou¾ívateµa, napr. "%1"
 last page	common	sk	posledná stránka
 lastname	common	sk	Priezvisko
-layout	htmlarea-TableOperations	sk	Usporiadanie
 ldap-mgr	common	sk	Správca LDAP
 lebanon	common	sk	LIBANON
 left	common	sk	Vµavo
@@ -439,7 +370,6 @@ liberia	common	sk	LIBÉRIA
 license	common	sk	Licencia
 liechtenstein	common	sk	LICHTEN©TAJNSKO
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sk	Riadok %1: '%2'<br><B>csv dáta nesúhlasia s poètom ståpcov tabuµky %3 ==> ignorované</b>
-link points to:	htmlarea-ContextMenu	sk	Odkaz smeruje na:
 link url	tinymce	sk	URL odkazu
 list	common	sk	Zoznam
 list members	common	sk	Zoznam èlenov
@@ -449,9 +379,6 @@ login	common	sk	Prihlási»
 loginid	common	sk	Prihlasovacie ID
 logout	common	sk	Odhlásenie
 low	common	sk	Nízka
-lower greek letters	htmlarea-ListType	sk	Nízke grécke písmená
-lower latin letters	htmlarea-ListType	sk	Nízke latinské písmená
-lower roman numbers	htmlarea-ListType	sk	Nízke rímske èíslice
 lowest	common	sk	Najni¾¹í
 luxembourg	common	sk	LUXEMBURSKO
 macedonia, the former yugoslav republic of	common	sk	MACEDÓNSKO
@@ -460,14 +387,12 @@ mail domain, eg. "%1"	common	sk	mailová doména, napr. "%1"
 main category	common	sk	Hlavná kategória
 main screen	common	sk	Hlavná stránka
 maintainer	common	sk	Správca
-make lin_k...	htmlarea-ContextMenu	sk	Vytvori» lin_ku
 make window resizable	tinymce	sk	Povoli» zmeny rozmerov okna
 malaysia	common	sk	MALAJZIA
 maldives	common	sk	MALEDIVY
 mali	common	sk	MALI
 malta	common	sk	MALTA
 march	common	sk	Marec
-margin	htmlarea-TableOperations	sk	Hranica
 match case	tinymce	sk	Citlivý na veµkos»
 mauritania	common	sk	MAURETÁNIA
 mauritius	common	sk	MAURÍCIUS
@@ -475,14 +400,11 @@ max number of icons in navbar	common	sk	Maximálny poèet ikoniek v navigaènom pan
 may	common	sk	Máj
 medium	common	sk	Stredné
 menu	common	sk	Menu
-merge cells	htmlarea-TableOperations	sk	Zlúèi» bunky
 merge table cells	tinymce	sk	Zlúèi» bunky tabuµky
 message	common	sk	Správa
 mexico	common	sk	MEXIKO
-middle	htmlarea-TableOperations	sk	Stred
 minute	common	sk	Minúta
 mkdir failed.	tinymce	sk	Vytvorenie adresára sa nepodarilo.
-modify url	htmlarea-ContextMenu	sk	Uprav URL
 moldova, republic of	common	sk	MOLDAVSKÁ REPUBLIKA
 monaco	common	sk	MONAKO
 monday	common	sk	Pondelok
@@ -516,16 +438,13 @@ no	common	sk	Nie
 no entries found, try again ...	common	sk	niè som nena¹iel, skúste znovu...
 no files...	tinymce	sk	0 súborov...
 no history for this record	common	sk	®iadna história pre tento záznam
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	sk	Za pomoci vybraného slovníka sa nena¹li ¾iadne chybné slová.
 no permission to create folder.	tinymce	sk	Nemáte oprávnenie na vytvorenie prieèinka.
 no permission to delete file.	tinymce	sk	Nemáte oprávnenie na zmazanie súboru.
 no permission to move files and folders.	tinymce	sk	Nemáte oprávnenie na presunutie súborov a prieèinkov.
 no permission to rename files and folders.	tinymce	sk	Nemáte oprávnenie na premenovanie súborov a prieèinkov.
 no permission to upload.	tinymce	sk	Nemáte oprávnenie na nahratie.
-no rules	htmlarea-TableOperations	sk	Bez pravítok
 no savant2 template directories were found in:	common	sk	®iadne adresáre ¹ablóny Savant2 sa nena¹li v:
 no shadow	tinymce	sk	®iadny tieò
-no sides	htmlarea-TableOperations	sk	Bez okrajov
 no subject	common	sk	Nebol uvedený Predmet
 none	common	sk	®iadne
 normal	common	sk	Normálna
@@ -555,15 +474,12 @@ open link in the same window	tinymce	sk	Otvori» odkaz v tom istom okne
 open notify window	common	sk	Otvor pripomínacie okno
 open popup window	common	sk	Otvor vyskakovacie okno
 open sidebox	common	sk	Otvor Sidebox
-opens this link in a new window	htmlarea-ContextMenu	sk	Otvorí tento odkaz v novom okne
 ordered list	common	sk	Zotriedený zoznam
 original	common	sk	Originál
-original word	htmlarea-SpellChecker	sk	Pôvodné slovo
 other	common	sk	Iný
 outdent	tinymce	sk	Odsek
 overview	common	sk	Prehµad
 owner	common	sk	Vlastník
-padding	htmlarea-TableOperations	sk	Odstup
 page	common	sk	Stránka
 page was generated in %1 seconds	common	sk	Stránka bola vygenerovaná za %1 sekúnd
 pakistan	common	sk	PAKISTAN
@@ -579,31 +495,22 @@ password must contain at least %1 numbers	common	sk	Heslo musí obsahova» aspoò %
 password must contain at least %1 special characters	common	sk	Heslo musí obsahova» aspoò %1 ¹peciálnych znakov
 password must contain at least %1 uppercase letters	common	sk	Heslo musí obsahova» aspoò %1 veµkých písmen
 password must have at least %1 characters	common	sk	Heslo musí ma» då¾ku aspoò %1 znakov
-paste	htmlarea-ContextMenu	sk	Vlo¾i»
 paste as plain text	tinymce	sk	Vlo¾i» ako neformátovaný text
-paste from clipboard	htmlarea	sk	Vlo¾i» zo schránky
 paste from word	tinymce	sk	Vlo¾i» z Wordu
 paste table row after	tinymce	sk	Vlo¾i» riadok tabuµky ZA
 paste table row before	tinymce	sk	Vlo¾i» riadok tabuµky PRED
-path	htmlarea	sk	Cesta
 path not found.	tinymce	sk	Cesta sa nena¹la.
 path to user and group files has to be outside of the webservers document-root!!!	common	sk	Cesta k súborom pou¾ívateµa a skupiny MUSÍ BY« MIMO document-root webservera!!!
 pattern for search in addressbook	common	sk	Výraz pre hµadanie v Adresári
 pattern for search in calendar	common	sk	Výraz pre hµadanie v Kalendári
 pattern for search in projects	common	sk	Výraz pre hµadanie v Projektoch
-percent	htmlarea-TableOperations	sk	percent
 permissions to the files/users directory	common	sk	práva k adresáru pre súbory / pou¾ívateµov
 personal	common	sk	Osobný
 peru	common	sk	PERU
 philippines	common	sk	FILIPÍNY
 phone number	common	sk	telefónne èíslo
 phpgwapi	common	sk	eGroupWare API
-pixels	htmlarea-TableOperations	sk	pixelov
 please %1 by hand	common	sk	Prosím %1 ruène
-please click into some cell	htmlarea-TableOperations	sk	Prosím kliknite na niektorú bunku
-please confirm that you want to open this link	htmlarea-SpellChecker	sk	Prosím potvrïte, ¾e chcete otvori» tento odkaz
-please confirm that you want to remove this element:	htmlarea-ContextMenu	sk	Prosím potvrïte, ¾e chcete odstráni» tento element:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	sk	Prosím potvrïte, ¾e chcete zru¹i» odkaz k tomuto elementu:
 please enter a name	common	sk	Prosím zadajte meno !
 please enter the caption text	tinymce	sk	Prosím zadajte text upútavky
 please insert a name for the target or choose another option.	tinymce	sk	Prosím vlo¾te názov cieµa alebo zvoµte inú mo¾nos».
@@ -611,9 +518,7 @@ please run setup to become current	common	sk	Prosím spus»te setup pre aktualizác
 please select	common	sk	Prosím Vyberte
 please set your global preferences	common	sk	Prosím upravte va¹e globálne nastavenia!
 please set your preferences for this application	common	sk	Prosím upravte va¹e nastavenia pre túto aplikáciu!
-please wait.  calling spell checker.	htmlarea-SpellChecker	sk	Prosím èakajte. Spú¹»am kontrolóra pravopisu.
 please wait...	common	sk	Prosím èakajte...
-please wait: changing dictionary to	htmlarea-SpellChecker	sk	Prosím èakajte: mením adresár na
 poland	common	sk	PO¥SKO
 portugal	common	sk	PORTUGALSKO
 position (x/y)	tinymce	sk	Pozícia (X/Y)
@@ -632,39 +537,27 @@ private	common	sk	Súkromné
 programs	common	sk	Programy
 project	common	sk	Projekt
 public	common	sk	Verejné
-re-check	htmlarea-SpellChecker	sk	Znovu skontroluj
 read	common	sk	Èíta»
 read this list of methods.	common	sk	Èítaj tento zoznam metód.
 reading	common	sk	Naèítavam
 redo	tinymce	sk	Znovu
-redoes your last action	htmlarea	sk	Znovu vykoná va¹u poslednú akciu
 refresh	tinymce	sk	Obnovi»
 reject	common	sk	Odmietnu»
 remove col	tinymce	sk	Odstráni» ståpec
 remove selected accounts	common	sk	Odstráni» vybrané úèty
 remove shortcut	common	sk	Odstráni» skratku
-remove the	htmlarea-ContextMenu	sk	Odstráò
-remove this node from the document	htmlarea-ContextMenu	sk	Odstráò tento uzol z dokumentu
 rename	common	sk	Premenova»
 rename failed	tinymce	sk	Premenovanie neprebehlo
 replace	common	sk	Nahradi»
-replace all	htmlarea-SpellChecker	sk	Nahradi» v¹etko
 replace with	common	sk	Zameni» za
 replace&nbsp;all	tinymce	sk	Nahradi» v¹etky
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sk	Vráti úplný zoznam úètov v systéme. Upozornenie: mô¾e by» pomerne rozsiahly
 returns an array of todo items	common	sk	Vracia pole úloh
 returns struct of users application access	common	sk	Vracia ¹truktúru pou¾ívateµského prístupu k aplikáciám
-revert	htmlarea-SpellChecker	sk	Návrat
 right	common	sk	Vpravo
 rmdir failed.	tinymce	sk	Odstránenie adresára neprebehlo.
-ro_w properties...	htmlarea-ContextMenu	sk	Nastavenia Riadku (W)...
 romania	common	sk	RUMUNSKO
-row properties	htmlarea-TableOperations	sk	Nastavenia Riadku
 rows	tinymce	sk	Riadky
-rules	htmlarea-TableOperations	sk	Pravítka
-rules will appear between all rows and columns	htmlarea-TableOperations	sk	Pravítka sa zobrazia medzi riadkami a ståpcami
-rules will appear between columns only	htmlarea-TableOperations	sk	Pravítka sa zobrazia iba medzi ståpcami
-rules will appear between rows only	htmlarea-TableOperations	sk	Pravítka sa zobrazia iba medzi riadkami
 run spell checking	tinymce	sk	Skontroluj pravopis
 russian federation	common	sk	RUSKÁ FEDERÁCIA
 rwanda	common	sk	RWANDA
@@ -716,11 +609,7 @@ show page generation time on the bottom of the page?	common	sk	Ukáza» èas genero
 show page generation time?	common	sk	Ukáza» èas generovania stránky?
 show scrollbars	tinymce	sk	Ukáza» scrollbars
 show statusbar	tinymce	sk	Ukáza» stavový panel
-show the image properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia obrázku
 show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazova» na desktope logá eGroupWare a x-desktopu.
-show the table cell properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia Bunky z tabuµky
-show the table properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia Tabuµky
-show the table row properties dialog	htmlarea-ContextMenu	sk	Ukáza» dialóg nastavenia Riadku z tabuµky
 show toolbars	tinymce	sk	Ukáza» panel nástrojov
 show_more_apps	common	sk	ukáza» viacero aplikácií
 showing %1	common	sk	zobrazené %1
@@ -733,14 +622,7 @@ solomon islands	common	sk	©ALAMÚNOVE OSTROVY
 somalia	common	sk	SOMÁLSKO
 sorry, your login has expired	login	sk	Prepáète, platnost vá¹ho prihlásenia u¾ vypr¹ala
 south africa	common	sk	JU®NÁ AFRIKA
-spacing	htmlarea-TableOperations	sk	Rozostupy
-spacing and padding	htmlarea-TableOperations	sk	Rozostupy a odstupy
 spain	common	sk	©PANIELSKO
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	sk	Kontrola pravopisu sa skonèila, nena¹iel som ¾iadne chybné slová. Zatváram..
-spell-check	htmlarea-SpellChecker	sk	Kontrola pravopisu
-split cell	htmlarea-TableOperations	sk	Rozdeli» bunku
-split column	htmlarea-TableOperations	sk	Rozdeli» ståpec
-split row	htmlarea-TableOperations	sk	Rozdeli» riadok
 split table cells	tinymce	sk	Rozdeli» bunky tabuµky
 sri lanka	common	sk	SRÍ LANKA
 start date	common	sk	Poèiatoèný dátum
@@ -749,16 +631,11 @@ start with	common	sk	zaèa» s
 starting up...	common	sk	©tartujem...
 status	common	sk	Stav
 stretched	common	sk	natiahnuté
-strikethrough	htmlarea	sk	Preèiarknu»
 striketrough	tinymce	sk	Preèiarknu»
-style [css]	htmlarea-TableOperations	sk	©týl [CSS]
 subject	common	sk	Predmet
 submit	common	sk	Potvrdi»
-subscript	htmlarea	sk	Odosla»
 substitutions and their meanings:	common	sk	Substitúcie a ich významy:
 sudan	common	sk	SUDÁN
-suggestions	htmlarea-SpellChecker	sk	Odporúèania
-summary	htmlarea-TableOperations	sk	Zhrnutie
 sunday	common	sk	Nedeµa
 suriname	common	sk	SURINAM
 sweden	common	sk	©VÉDSKO
@@ -768,26 +645,18 @@ table properties	common	sk	Nastavenia tabuµky
 table row properties	tinymce	sk	Nastavenia riadku tabuµky
 tajikistan	common	sk	TAD®IKISTAN
 target	tinymce	sk	Cieµ
-text align	htmlarea-TableOperations	sk	Zarovnanie textu
 text color:	common	sk	Farba písma:
 thailand	common	sk	THAJSKO
 the api is current	common	sk	API je aktuálne
 the api requires an upgrade	common	sk	API potrebuje upgrade
-the bottom side only	htmlarea-TableOperations	sk	Iba spodok
 the following applications require upgrades	common	sk	Nasledujúce aplikácie vy¾adujú upgrade
-the left-hand side only	htmlarea-TableOperations	sk	Iba po µavej strane
 the mail server returned	common	sk	Po¹tový server vrátil
-the right and left sides only	htmlarea-TableOperations	sk	Iba po pravej a µavej strane
-the right-hand side only	htmlarea-TableOperations	sk	Iba po pravej strane
 the search has been compleated. the search string could not be found.	tinymce	sk	Hµadanie sa skonèilo, bez priaznivého výsledku.
-the top and bottom sides only	htmlarea-TableOperations	sk	Iba vrch a spodok
-the top side only	htmlarea-TableOperations	sk	Iba vrch
 this application is current	common	sk	Táto aplikácia je aktuálna
 this application requires an upgrade	common	sk	Táto aplikácia vy¾aduje upgrade
 this is just a template button	tinymce	sk	Toto je iba ¹ablónové tlaèítko
 this is just a template popup	tinymce	sk	Toto je len ¹ablónový popup
 this name has been used already	common	sk	Toto meno sa u¾ pou¾íva!
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	sk	Zmeny sa zahodia a kontrolór pravopisu sa skonèí. Prosím potvrïte.
 thursday	common	sk	©tvrtok
 tiled	common	sk	dla¾dice
 time	common	sk	Èas
@@ -802,7 +671,6 @@ today	common	sk	Dnes
 todays date, eg. "%1"	common	sk	dne¹ný dátum, napr. "%1"
 toggle first day of week	jscalendar	sk	Urèi» prvý deò tý¾dòa
 toggle fullscreen mode	tinymce	sk	Prepnú» celoobrazovkový re¾im
-toggle html source	htmlarea	sk	Urèi» HTML zdroj
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príli¹ veµa neúspe¹ných pokusov o prihlásenie: %1 na pou¾ívateµa '%2', %3 na IP %4
 top	common	sk	Vrch
 total	common	sk	Spolu
@@ -816,24 +684,18 @@ uganda	common	sk	UGANDA
 ukraine	common	sk	UKRAJINA
 underline	common	sk	Podèiarknu»
 undo	tinymce	sk	Spä»
-undoes your last action	htmlarea	sk	Vráti spä» va¹u poslednú akciu
 united arab emirates	common	sk	SPOJENÉ ARABSKÉ EMIRÁTY
 united states	common	sk	USA
 unknown	common	sk	Neznámy
 unlink	tinymce	sk	Zru¹ odkaz
 unlink failed.	tinymce	sk	Zru¹enie odkazu sa nepodarilo.
-unlink the current element	htmlarea-ContextMenu	sk	Odpoji» vybraný element
 unordered list	tinymce	sk	Nezotriedený zoznam
-unset color	htmlarea-TableOperations	sk	Zru¹i» farbu
 up	tinymce	sk	Hore
 update	common	sk	Aktualizácia
 update the clock per minute or per second	common	sk	Obnovova» hodinky po sekundách alebo po minútach
 upload	common	sk	Nahra»
 upload directory does not exist, or is not writeable by webserver	common	sk	Adresár pre nahratie buï neexistuje, alebo doò webserver nemô¾e zapisova».
-upload image	htmlarea-UploadImage	sk	Nahra» obrázok
 uploading...	tinymce	sk	Nahrávam...
-upper latin letters	htmlarea-ListType	sk	Veµké latinské písmená
-upper roman numbers	htmlarea-ListType	sk	Veµké rímske èíslice
 url	common	sk	URL
 use button to search for	common	sk	stlaè Tlaèidlo pre vyhµadanie
 use button to search for address	common	sk	stlaè Tlaèidlo pre vyhµadanie adresy
@@ -850,7 +712,6 @@ users	common	sk	pou¾ívatelia
 users choice	common	sk	Pou¾ívateµská Ponuka
 venezuela	common	sk	VENEZUELA
 version	common	sk	Verzia
-vertical align	htmlarea-TableOperations	sk	Zvislé zarovnanie
 vertical alignment	tinymce	sk	Zvislé zarovnanie
 viet nam	common	sk	VIETNAM
 view	common	sk	Zobrazi»
@@ -871,7 +732,6 @@ written by:	common	sk	Zapísal:
 year	common	sk	Rok
 yemen	common	sk	JEMEN
 yes	common	sk	Áno
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	sk	Ste v TEXTOVOM RE®IME. Pou¾ite tlaèítka [<>] ak sa chcete vráti» do WYSIWIG.
 you are required to change your password during your first login	common	sk	Poèas svojho prvého prihlásenia budete musie» zmeni» svoje heslo
 you have been successfully logged out	login	sk	Boli ste úspe¹ne odhlásení.
 you have not entered a title	common	sk	Nezadali ste titul

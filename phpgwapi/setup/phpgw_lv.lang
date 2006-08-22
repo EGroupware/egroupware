@@ -13,15 +13,9 @@
 3 number of chars for day-shortcut	jscalendar	lv	3 simbolu dienas saisinājums
 3 number of chars for month-shortcut	jscalendar	lv	3 simbolu mēneša saisinājums
 80 (http)	admin	lv	80 (http)
-_delete row	htmlarea-ContextMenu	lv	_Dzēst rindu
-_image properties...	htmlarea-ContextMenu	lv	_Bildītes rekvizīti...
-_modify link...	htmlarea-ContextMenu	lv	_Mainīt vietni...
-_remove link...	htmlarea-ContextMenu	lv	_Dzēst vietni...
-_table properties...	htmlarea-ContextMenu	lv	_Tabulas rekvizīti...
 about	common	lv	Par
 about %1	common	lv	Par %1
 about the calendar	jscalendar	lv	Par kalendāru
-about this editor	htmlarea	lv	Par šo redaktoru
 access	common	lv	Piekļuve
 access not permitted	common	lv	Piekļuve aizliegta
 account has been created	common	lv	Konts tika izveidots
@@ -41,10 +35,8 @@ administration	common	lv	Administrēšana
 afghanistan	common	lv	AFGANISTĀNA
 albania	common	lv	ALBĀNIJA
 algeria	common	lv	ALŽĪRIJA
-align	htmlarea-TableOperations	lv	Izlīdzināt
 all	common	lv	Visi
 all fields	common	lv	visi lauki
-all four sides	htmlarea-TableOperations	lv	Visas četras puses
 alphabet	common	lv	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	lv	Alternatīvs stila-izklājums:
 american samoa	common	lv	AMERIKĀŅU SAMOA
@@ -70,15 +62,12 @@ autosave default category	common	lv	Automātiski saglabāt  Noklusēto Kategorij
 azerbaijan	common	lv	AZERBAIDŽĀNA
 back	common	lv	Atpakaļ
 back to user login	common	lv	Atpakaļ uz lietotāju izvēli
-background	htmlarea-TableOperations	lv	Fona tapete
-background color	htmlarea	lv	Fona krāsa
 background color:	common	lv	Fona krāsa:
 bad login or password	common	lv	Nezināms lietotājvārds vai nepareiza parole
 bahamas	common	lv	BAHAMU SALAS
 bahrain	common	lv	BAHREINA
 bangladesh	common	lv	BANGLADEŠA
 barbados	common	lv	BARBADOSA
-baseline	htmlarea-TableOperations	lv	Pamatlīnija
 bcc	common	lv	Bcc
 belarus	common	lv	BALTKRIEVIJA
 belgium	common	lv	BEĻĢIJA
@@ -87,29 +76,22 @@ benin	common	lv	BENINA
 bermuda	common	lv	BERMUDU SALAS
 bhutan	common	lv	BUTĀNA
 blocked, too many attempts	common	lv	Bloķēts, pārāk daudz neveiksmīgu mēģinājumu.
-bold	htmlarea	lv	Trekns
 bolivia	common	lv	BOLĪVIJA
-border	htmlarea-TableOperations	lv	Robeža
-borders	htmlarea-TableOperations	lv	Robežas
 bosnia and herzegovina	common	lv	BOSNIJA UN HERCOGOVINA
 botswana	common	lv	BOTSVĀNA
-bottom	htmlarea-TableOperations	lv	Apakšā
 bouvet island	common	lv	BUVĒ SALA
 brazil	common	lv	BRAZĪLIJA
 british indian ocean territory	common	lv	BRITU INDIJAS OKEĀNA TERITORIJA
 brunei darussalam	common	lv	BRUNEJA
 bulgaria	common	lv	BULGĀRIJA
-bulleted list	htmlarea	lv	Ziņojumu saraksts
 burkina faso	common	lv	BURKINAFASO
 burundi	common	lv	BURUNDI
-c_ell properties...	htmlarea-ContextMenu	lv	Šūnas rekvizīti...
 calendar	common	lv	Kalendārs
 cambodia	common	lv	KAMBODŽA
 cameroon	common	lv	KAMERŪNA
 canada	common	lv	KANĀDA
 cancel	common	lv	Atcelt
 cape verde	common	lv	KABOVERDE
-caption	htmlarea-TableOperations	lv	Virsraksts
 categories	common	lv	Kategorijas
 categories for	common	lv	Kategorijas priekš
 category	common	lv	Kategorija
@@ -117,19 +99,14 @@ category %1 has been added !	common	lv	Kategorija %1 tika pievienota !
 category %1 has been updated !	common	lv	Kategorija %1 tika mainīta !
 cayman islands	common	lv	KAIMANU SALAS
 cc	common	lv	Cc
-cell properties	htmlarea-TableOperations	lv	Rūts rekvizīti
-center	htmlarea-TableOperations	lv	Centrā
 central african republic	common	lv	CENTRĀLĀFRIKAS REPUBLIKA
 chad	common	lv	ČADA
 change	common	lv	Mainīt
-char	htmlarea-TableOperations	lv	Simbols
 charset	common	lv	utf-8
-chec_k link...	htmlarea-ContextMenu	lv	Pārbaudīt saiti
 check installation	common	lv	Pārbaudīt installāciju
 check now	common	lv	Pārbaudīt tūlīt
 chile	common	lv	ČĪLE
 china	common	lv	ĶĪNA
-choose list style type (for ordered lists)	htmlarea-ListType	lv	Izvēlies saraksta stila tipu (sakārtotiem sarakstiem)
 choose the category	common	lv	Izvēlies kategoriju
 choose the parent category	common	lv	Izvēlies tēva kategoriju
 christmas island	common	lv	ZIEMASSVĒTKU SALA
@@ -140,51 +117,34 @@ click or mouse over to show menus	common	lv	Klikšķināt vai uzbraukt ar peli v
 click or mouse over to show menus?	common	lv	Klikšķināt vai uzbraukt ar peli virsū, lai  redzētu izvēles?
 close	common	lv	Aizvērt
 cocos (keeling) islands	common	lv	KOKOSU (KĪLINGA) SALAS
-collapsed borders	htmlarea-TableOperations	lv	Sabrukušas robežas
 colombia	common	lv	KOLUMBIJA
-color	htmlarea-TableOperations	lv	Krāsa
 comoros	common	lv	KOMORU SALAS
 company	common	lv	Organizācija
 congo	common	lv	KONGO
 congo, the democratic republic of the	common	lv	KONGO DEMOKRĀTISKĀ REPUBLIKA
 cook islands	common	lv	KUKA SALAS
 copy	common	lv	Kopēt
-copy selection	htmlarea	lv	Kopēt iezīmēto
 costa rica	common	lv	KOSTARIKA
 cote d ivoire	common	lv	KOTDIVUĀRA
 create	common	lv	Izveidot
-create a link	htmlarea-ContextMenu	lv	Izveidot vietni
 created by	common	lv	Pateicoties
 croatia	common	lv	HORVĀTIJA
 cuba	common	lv	KUBA
 currency	common	lv	Valūta
 current	common	lv	Pašreizējais
-current style	htmlarea	lv	Pašreizējais stils
-current url is	htmlarea-ContextMenu	lv	Pašreizējais URL ir
 current users	common	lv	Pašreizējie lietotāji
-cut	htmlarea-ContextMenu	lv	Izgriest
-cut selection	htmlarea	lv	Izgriest iezīmēto
 cyprus	common	lv	KIPRA
 czech republic	common	lv	ČEHIJAS REPUBLIKA
 date	common	lv	Datums
 date due	common	lv	Datums paredzēts
 date selection:	jscalendar	lv	Datuma izvēle:
-de_lete column	htmlarea-ContextMenu	lv	Izdzēst kolonnu
 december	common	lv	Decembris
-decimal numbers	htmlarea-ListType	lv	Decimāli skaitļi
-decrease indent	htmlarea	lv	Samazināt atkāpi
 default category	common	lv	Noklusētā Kategorija
 delete	common	lv	Dzēst
-delete cell	htmlarea-TableOperations	lv	Dzēst rūti
-delete column	htmlarea-TableOperations	lv	Dzēst kolonu
-delete row	htmlarea-TableOperations	lv	Dzēst rindu
-delete the current column	htmlarea-ContextMenu	lv	Dzēst šo kolonu
-delete the current row	htmlarea-ContextMenu	lv	Dzēst šo rindu
 denmark	common	lv	DĀNIJA
 description	common	lv	Izklāsts
 detail	common	lv	Detaļa
 details	common	lv	Detaļas
-dictionary	htmlarea-SpellChecker	lv	Vārdnīca
 disable internet explorer png-image-bugfix	common	lv	Izslēgt Internet Explorer png-image-bugfix
 disabled	common	lv	Izslēgts
 display %s first	jscalendar	lv	Rādīt %s pirmo
@@ -209,13 +169,11 @@ egroupware api version %1	common	lv	eGroupWare API versija %1
 egroupware: login blocked for user '%1', ip %2	common	lv	eGroupWare: bloķēts lietotājvārds '%1', IP %2
 egypt	common	lv	ĒĢIPTE
 el salvador	common	lv	SALVADORA
-element...	htmlarea-ContextMenu	lv	Elements...
 email	common	lv	E-Pasts
 email-address of the user, eg. "%1"	common	lv	lietotāja e-pasta adrese, piemēram, "%1"
 enabled	common	lv	Aktivizēts
 end date	common	lv	Beigu datums
 end time	common	lv	Beigu laiks
-enlarge editor	htmlarea	lv	Palielināt Redaktoru
 entry has been deleted sucessfully	common	lv	Ieraksts tika veiksmīgi izdzēsts
 entry updated sucessfully	common	lv	Ieraksts veiksmīgi tika atjaunināts
 equatorial guinea	common	lv	EKVATORIĀLĀ GVINEJA
@@ -241,8 +199,6 @@ first name of the user, eg. "%1"	common	lv	lietotāja vārds, piemēram, "%1"
 first page	common	lv	Pirmā lapa
 firstname	common	lv	Vārds
 fixme!	common	lv	SALABOMANI!
-font color	htmlarea	lv	Fonta Krāsa
-frames	htmlarea-TableOperations	lv	Freimi
 france	common	lv	FRANCIJA
 french guiana	common	lv	FRANČU GVIĀNA
 french polynesia	common	lv	FRANČU POLINĒZIJA
@@ -280,9 +236,7 @@ guinea-bissau	common	lv	GVINEJA-BISAVA
 guyana	common	lv	GAJANA
 haiti	common	lv	HAITI
 heard island and mcdonald islands	common	lv	HĒRDA UN MAKDONALDA SALAS
-height	htmlarea-TableOperations	lv	Augstums
 help	common	lv	Palīdzība
-help using editor	htmlarea	lv	Palīdzība lietot redaktoru
 high	common	lv	Augsta
 highest	common	lv	Augstākā
 holy see (vatican city state)	common	lv	VATIKĀNS
@@ -290,42 +244,12 @@ home	common	lv	Mājas
 home email	common	lv	e-pasts mājās
 honduras	common	lv	HONDURASA
 hong kong	common	lv	HONKONGA
-horizontal rule	htmlarea	lv	Horizontālais Lineāls
-how did you get here? (please report!)	htmlarea-ContextMenu	lv	Kā Tu šeit nokļuvi? (Lūdzu ziņo!)
-how many columns would you like to merge?	htmlarea-TableOperations	lv	Cik kolonnas Tu vēlies apvienot?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	lv	Cik daudz ikonas tiek rādītas rīku joslā (lapas augšpusē). Citas ikonas atrodas izvēlnē, kuru var atvērt uzspiežot uz ikonas, kas atrodas rīku joslas labajā malā.
-how many rows would you like to merge?	htmlarea-TableOperations	lv	Cik rindas Tu vēlies apvienot?
-html tidy	htmlarea-HtmlTidy	lv	HTML sakārtotājs
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	lv	HTMLArea kašķīgi atsakās izdzēst pēdējo rūtiņu tabulas rindā.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	lv	HTMLArea kašķīgi atsakās izdzēst pēdējo kolonnu tabulā.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	lv	HTMLArea kašķīgi atsakās izdzēst pēdējo rindu tabulā.
 hungary	common	lv	UNGĀRIJA
-i will open it in a new page.	htmlarea-SpellChecker	lv	Es to atvēršu jaunā lapā.
-i_nsert row before	htmlarea-ContextMenu	lv	Ievietot rindiņu pirms
 iceland	common	lv	ISLANDE
-ignore	htmlarea-SpellChecker	lv	Ignorēt
-ignore all	htmlarea-SpellChecker	lv	Ignorēt visu
-image url	htmlarea-TableOperations	lv	Attēla URL
-in_sert row after	htmlarea-ContextMenu	lv	Ievietot rindiņu pēc
-increase indent	htmlarea	lv	Palielināt Atkāpi
 india	common	lv	INDIJA
 indonesia	common	lv	INDONĒZIJA
-insert _column before	htmlarea-ContextMenu	lv	Ievietot _Kolonnu Pirms
-insert a new column after the current one	htmlarea-ContextMenu	lv	Ievietot jaunu kolonnu tieši pēc šīs kolonnas
-insert a new column before the current one	htmlarea-ContextMenu	lv	Ievietot jaunu kolonnu tieši pirms šīs kolonnas
-insert a new row after the current one	htmlarea-ContextMenu	lv	Ievietot jaunu rindu tieši pēc šīs rindas
-insert a new row before the current one	htmlarea-ContextMenu	lv	Ievietot jaunu rindu tieši pirms šīs rindas
 insert all %1 addresses of the %2 contacts in %3	common	lv	Ievietot visas %1adreses no %2 kontaktiem %3
-insert c_olumn after	htmlarea-ContextMenu	lv	Ievietot kolonnu pēc
-insert cell after	htmlarea-TableOperations	lv	Ievietot lauku pēc
-insert cell before	htmlarea-TableOperations	lv	Ievietot lauku pirms
-insert column after	htmlarea-TableOperations	lv	Ievietot kolonnu pēc
-insert column before	htmlarea-TableOperations	lv	Ievietot kolonnu pirms
-insert image	htmlarea	lv	Ievietot attēlu
-insert row after	htmlarea-TableOperations	lv	Ievietot rindu pēc
-insert row before	htmlarea-TableOperations	lv	Ievietot rindu pirms
-insert table	htmlarea	lv	Ievietot Tabulu
-insert web link	htmlarea	lv	Ievietot Saiti
 international	common	lv	Internacionāls
 invalid ip address	common	lv	Nederīga IP adrese
 invalid password	common	lv	Nederīga parole
@@ -344,7 +268,6 @@ jordan	common	lv	JORDĀNIJA
 july	common	lv	Jūlijs
 jun	common	lv	Jun
 june	common	lv	Jūnijs
-justify	htmlarea-TableOperations	lv	Izlīdzināt
 justify center	common	lv	Centra izlīdzināsana
 justify full	common	lv	Pilna izlīdzināšana
 justify left	common	lv	Kreisā izlīdzināšana
@@ -364,15 +287,12 @@ last name of the user, eg. "%1"	common	lv	lietotāja uzvārds, piemēram, "%1"
 last page	common	lv	Pēdeja lapa
 lastname	common	lv	Uzvārds
 latvia	common	lv	LATVIJA
-layout	htmlarea-TableOperations	lv	Izkārtojums
 lebanon	common	lv	LIBĀNA
-left	htmlarea-TableOperations	lv	Kreisais
 lesotho	common	lv	LESOTO
 liberia	common	lv	LIBĒRIJA
 libyan arab jamahiriya	common	lv	LĪBIJAS SOCIĀLISTISKĀ ARĀBU TAUTAS DŽAMAHĪRIJA
 license	common	lv	Licence
 liechtenstein	common	lv	LIHTENŠTEINA
-link points to:	htmlarea-ContextMenu	lv	Vietne norāda uz:
 list	common	lv	Saraksts
 list members	common	lv	Saraksta dalībnieki
 lithuania	common	lv	LIETUVA
@@ -381,9 +301,6 @@ login	common	lv	Pieteikties
 loginid	common	lv	Pieteikuma ID
 logout	common	lv	Beigt darbu
 low	common	lv	Zema
-lower greek letters	htmlarea-ListType	lv	Mazie grieķu burti
-lower latin letters	htmlarea-ListType	lv	Mazie latīņu burti
-lower roman numbers	htmlarea-ListType	lv	Mazieromiešu burti
 lowest	common	lv	Viszemākais
 luxembourg	common	lv	LUKSEMBURGA
 macau	common	lv	MAKAO
@@ -393,14 +310,12 @@ mail domain, eg. "%1"	common	lv	pasta domēns, piemēram, "%1
 main category	common	lv	Galvenā kategorija
 main screen	common	lv	Galvenais logs
 maintainer	common	lv	Uzturētājs
-make lin_k...	htmlarea-ContextMenu	lv	Izveidot saiti....
 malawi	common	lv	MALĀVIJA
 malaysia	common	lv	MALAIZIJA
 maldives	common	lv	MALDĪVU SALAS
 mali	common	lv	MALI
 malta	common	lv	MALTA
 march	common	lv	Marts
-margin	htmlarea-TableOperations	lv	Robeža
 marshall islands	common	lv	MĀRŠALA SALAS
 martinique	common	lv	MARTINIKA
 mauritania	common	lv	MAURITĀNIJA
@@ -410,12 +325,9 @@ may	common	lv	Maijs
 mayotte	common	lv	MAJOTA
 medium	common	lv	Vidēja
 menu	common	lv	Izvēlne
-merge cells	htmlarea-TableOperations	lv	Apvienot laukus
 message	common	lv	Ziņa
 mexico	common	lv	MEKSIKA
 micronesia, federated states of	common	lv	MIKRONĒZIJAS FEDERATĪVĀS VALSTIS
-middle	htmlarea-TableOperations	lv	Vidus
-modify url	htmlarea-ContextMenu	lv	Mainīt URL
 moldova, republic of	common	lv	MOLDOVAS REPUBLIKA
 monaco	common	lv	MONAKO
 monday	common	lv	Pirmdiena
@@ -424,7 +336,6 @@ montserrat	common	lv	MONTSERRATA
 morocco	common	lv	MAROKA
 mozambique	common	lv	MOZAMBIKA
 myanmar	common	lv	MJANMA
-n tidying up the html source, please wait...	htmlarea-HtmlTidy	lv	\n Tiek attīrīts HTML kods, lūdzu uzgaidiet ...
 name	common	lv	Vārds
 name of the user, eg. "%1"	common	lv	lietotāja vārds, piemēram, "%1
 namibia	common	lv	NAMĪBIJA
@@ -449,9 +360,6 @@ niue	common	lv	NIUE
 no	common	lv	Nē
 no entries found, try again ...	common	lv	neviens ieraksts netika atrasts, mēģiniet vēlreiz ...
 no history for this record	common	lv	nav pieejama šī ieraksta vēsture
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	lv	Ar izvēlēto vārdnīcu, kļūdaini vārdi netika atrasti
-no rules	htmlarea-TableOperations	lv	Nav noteikumu
-no sides	htmlarea-TableOperations	lv	Nav pušu
 no subject	common	lv	Nav Tēmas
 none	common	lv	Neviens
 norfolk island	common	lv	NORFOLKAS SALA
@@ -473,14 +381,10 @@ only private	common	lv	tikai privātos
 only yours	common	lv	tikai Jūsu
 open notify window	common	lv	Atvērt informācijas logu
 open popup window	common	lv	Atvērt papildus logu
-opens this link in a new window	htmlarea-ContextMenu	lv	Atvērt šo saiti jaunā logā
-ordered list	htmlarea	lv	Sakārtots Saraksts
 original	common	lv	Orģināls
-original word	htmlarea-SpellChecker	lv	Oriģinālais vārds
 other	common	lv	Citi
 overview	common	lv	Pārskats
 owner	common	lv	Īpašnieks
-padding	htmlarea-TableOperations	lv	Papildināšana
 page	common	lv	Lapa
 page was generated in %1 seconds	common	lv	Lapa tika ģenerēta %1 sekundes
 pakistan	common	lv	PAKISTĀNA
@@ -494,34 +398,22 @@ parent category	common	lv	Vecāku kategorija
 password	common	lv	Parole
 password could not be changed	common	lv	Parole netika nomainīta
 password has been updated	common	lv	Parole tika atjaunināta
-paste	htmlarea-ContextMenu	lv	Iekopēt
-paste from clipboard	htmlarea	lv	iekopēt no clipboard
-path	htmlarea	lv	Ceļš
 path to user and group files has to be outside of the webservers document-root!!!	common	lv	Ceļam uz lietotāju un grupu failiem JĀBŪT ĀRPUS tīkla servera saknes dokumenta!!!
 pattern for search in addressbook	common	lv	Paraugs meklēšanai adrešu grāmatā
 pattern for search in calendar	common	lv	Paraugs meklēšanai kalendārā
 pattern for search in projects	common	lv	Paraugs meklēšanai projektos
-percent	htmlarea-TableOperations	lv	procents
 permissions to the files/users directory	common	lv	atļaujas datņu/lietotāju direktorijai
 personal	common	lv	Personīgs
 peru	common	lv	PERU
 philippines	common	lv	FILIPĪNAS
 phone number	common	lv	telefona nummurs
 pitcairn	common	lv	PITKERNA
-pixels	htmlarea-TableOperations	lv	pikseļi
 please %1 by hand	common	lv	Lūdzu, %1 ar roku
-please click into some cell	htmlarea-TableOperations	lv	Lūdzu, ieklikšķiniet kādā rūtiņā
-please confirm that you want to open this link	htmlarea-SpellChecker	lv	Lūdzu, apstipriniet, ka Jūs vēlaties atvērt šo saiti
-please confirm that you want to remove this element:	htmlarea-ContextMenu	lv	Lūdzu apstiprinat, ka Jūs vēlaties dzēst šo elementu:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	lv	Lūdzu apstiprini, ka vēlies atvienot šo dokumentu
 please enter a name	common	lv	Lūdzu, ieraksti savu vārdu !
 please select	common	lv	Lūdzu izvēlies
 please set your global preferences	common	lv	Lūdzu ierakstiet galvenos datus par sevi !
 please set your preferences for this application	common	lv	Lūdzu uzstādi savas izvēles šai programmatūrai
-please wait.  calling spell checker.	htmlarea-SpellChecker	lv	Lūdzu uzgaidīt. izsaucu parezrakstības pārbaudītāju.
 please wait...	common	lv	Lūdzu uzgaidi...
-please wait: changing dictionary to	htmlarea-SpellChecker	lv	Lūdzu uzgaidi: mainu vārdnīcu pret
-pliz weit ;-)	htmlarea-SpellChecker	lv	ludz gaidīt ;-)
 poland	common	lv	POLIJA
 portugal	common	lv	PORTUGĀLE
 postal	common	lv	Pasta
@@ -539,31 +431,16 @@ project	common	lv	Projekts
 public	common	lv	publisks
 puerto rico	common	lv	PUERTORIKO
 qatar	common	lv	KATARA
-re-check	htmlarea-SpellChecker	lv	Atkārtoti pārbaudīt
 read	common	lv	Lasīt
 read this list of methods.	common	lv	Izlasiet šo metožu sarakstu.
-redoes your last action	htmlarea	lv	Atkārtoti veic Jūsu pēdējo darbību
 reject	common	lv	Noraidīt
 remove selected accounts	common	lv	Likvidēt izvēlētos kontus
-remove the	htmlarea-ContextMenu	lv	Likvidēt
-remove this node from the document	htmlarea-ContextMenu	lv	Izņemt šo gabalu no dokumenta
 rename	common	lv	Pārsaukt
-replace	htmlarea-SpellChecker	lv	Aizstāt
-replace all	htmlarea-SpellChecker	lv	Aizstāt visu
-replace with	htmlarea-SpellChecker	lv	Aizstāt ar
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	lv	Atgriež pilnu sistēmas lietotāju kontu sarakstu. Uzmanību: saraksts var būt samērā liels
 returns an array of todo items	common	lv	Atgriež darāmo lietu sarakstu
 returns struct of users application access	common	lv	Atgriež lietotāju darbināto aplikāciju struktūru
 reunion	common	lv	REINJONA
-revert	htmlarea-SpellChecker	lv	Atgriezt
-right	htmlarea-TableOperations	lv	Pa labi
-ro_w properties...	htmlarea-ContextMenu	lv	Rindas rekvizīti
 romania	common	lv	RUMĀNIJA
-row properties	htmlarea-TableOperations	lv	Rindas Rekvizīti
-rules	htmlarea-TableOperations	lv	Nosacījumi
-rules will appear between all rows and columns	htmlarea-TableOperations	lv	Noteikumi parādīsies satrp visām rindām un kolonnām
-rules will appear between columns only	htmlarea-TableOperations	lv	Noteikumi parādīsies tikai starp kolonnām
-rules will appear between rows only	htmlarea-TableOperations	lv	Noteikumi parādīsies tikai starp rindām
 russian federation	common	lv	KRIEVIJAS FEDERĀCIJA
 rwanda	common	lv	RUANDA
 saint helena	common	lv	SVĒTĀS HELĒNAS SALA
@@ -605,10 +482,6 @@ show all categorys	common	lv	Rādīt visas kategorijas
 show menu	common	lv	rādīt izvēlni
 show page generation time	common	lv	Parādīt lapas ģenerēšanas laiku
 show page generation time on the bottom of the page?	common	lv	Parādīt lapas ģenerēšanas laiku lapas apakšpusē?
-show the image properties dialog	htmlarea-ContextMenu	lv	Parādīt attēla rekvizītu logu
-show the table cell properties dialog	htmlarea-ContextMenu	lv	Parādīt Tabulas Lauku rekvizītu logu
-show the table properties dialog	htmlarea-ContextMenu	lv	Parādīt Tabulas Rekvizītu logu
-show the table row properties dialog	htmlarea-ContextMenu	lv	parādīt Tabulas Rindu Rekvizītu logu
 show_more_apps	common	lv	rādīt_vairāk_aplikācijas
 showing %1	common	lv	rādu %1
 showing %1 - %2 of %3	common	lv	rādu %1 - %2 no %3
@@ -621,57 +494,35 @@ somalia	common	lv	SOMĀLIJA
 sorry, your login has expired	login	lv	Atvainojiet, Jūsu lietotājvārda lietošnas laiks ir beidzies
 south africa	common	lv	DIENVIDĀFRIKA
 south georgia and the south sandwich islands	common	lv	DIENVIDDŽORDŽIJA UN DIENVIDSENDVIČU SALAS
-spacing	htmlarea-TableOperations	lv	Atstarpe
-spacing and padding	htmlarea-TableOperations	lv	Atstarpināšana un paplašināšana
 spain	common	lv	SPĀNIJA
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	lv	Pareizrakstības pārbaude paveikta, neatrada nepareizus vārdus. Tagad aizveras...
-spell-check	htmlarea-SpellChecker	lv	Pareizrakstības- pārbaude
-split cell	htmlarea-TableOperations	lv	Sadalīt lauku
-split column	htmlarea-TableOperations	lv	Sadalī kolonnu
-split row	htmlarea-TableOperations	lv	Sadalīt rindu
 sri lanka	common	lv	ŠRILANKA
 start date	common	lv	Sākuma datums
 start time	common	lv	Sākuma laiks
 start with	common	lv	sākt ar
 status	common	lv	Stāvoklis
-strikethrough	htmlarea	lv	Pārsvītrots
-style [css]	htmlarea-TableOperations	lv	Stils [CSS]
 subject	common	lv	Temats
 submit	common	lv	Saglabāt
-subscript	htmlarea	lv	Apakšraksts
 substitutions and their meanings:	common	lv	Substitūcijas un to nozīmes
 sudan	common	lv	SUDĀNA
-suggestions	htmlarea-SpellChecker	lv	Ierosinājumi
-summary	htmlarea-TableOperations	lv	Kopsavilkums
 sunday	common	lv	Svētdiena
-superscript	htmlarea	lv	Augšraksts
 suriname	common	lv	SURINAMA
 svalbard and jan mayen	common	lv	SVALBĀRA UN JANA MAJENA
 swaziland	common	lv	SVAZILENDA
 sweden	common	lv	ZVIEDRIJA
 switzerland	common	lv	ŠVEICE
 syrian arab republic	common	lv	SĪRIJAS ARĀBU REPUBLIKA
-table properties	htmlarea-TableOperations	lv	Tabulas rekvizīti
 taiwan	common	lv	TAIVANA/TAIPEJA
 tajikistan	common	lv	TADŽIKISTĀNA
 tanzania, united republic of	common	lv	TANZĀNIJA
-text align	htmlarea-TableOperations	lv	Teksta novietojums
 text color:	common	lv	Texta krāsa:
 thailand	common	lv	TAIZEME
 the api is current	common	lv	Pašreizējais API
 the api requires an upgrade	common	lv	API pieprasa jauninājumus
-the bottom side only	htmlarea-TableOperations	lv	Tikai apakšpusi
 the following applications require upgrades	common	lv	Sekojoša programmatūra pieprasa jauninajumus
-the left-hand side only	htmlarea-TableOperations	lv	Tikai kreiso pusi
 the mail server returned	common	lv	Pasta serveris atgrieza
-the right and left sides only	htmlarea-TableOperations	lv	Tikai labo un kreiso pusi
-the right-hand side only	htmlarea-TableOperations	lv	Tikai labo pusi
-the top and bottom sides only	htmlarea-TableOperations	lv	Tikai augšpusi un apakšpusi
-the top side only	htmlarea-TableOperations	lv	Tikai augšpusi
 this application is current	common	lv	Pašreizējā aplikācija
 this application requires an upgrade	common	lv	Šai aplikāčijai ir nepieciešāma atjaunošana
 this name has been used already	common	lv	Šis vārds jau ir aizņemts  !
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	lv	Tas partrauks izmaiņas un izies no pareizrakstības pārbaudītaja. Lūdzu apstiprini.
 thursday	common	lv	Ceturtdiena
 time	common	lv	Laiks
 time selection:	jscalendar	lv	Laika izvēle
@@ -687,7 +538,6 @@ togo	common	lv	TOGO
 tokelau	common	lv	TOKELAU
 tonga	common	lv	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	lv	Pārāk dzudz nevieksmīgi pieslēgšanās mēģinājumi: %1 lietotājam '%2', %3 ar IP %4
-top	htmlarea-TableOperations	lv	Augšpuse
 total	common	lv	Kopā
 trinidad and tobago	common	lv	TRINIDĀDA UN TOBAGO
 tuesday	common	lv	Otrdiena
@@ -698,19 +548,12 @@ turks and caicos islands	common	lv	TĒRKSAS UN KAIKOSAS SALAS
 tuvalu	common	lv	TUVALU
 uganda	common	lv	UGANDA
 ukraine	common	lv	UKRAINA
-underline	htmlarea	lv	Pasvītrojums
-undoes your last action	htmlarea	lv	Atsauc pēdējo darbību
 united arab emirates	common	lv	APVIENOTIE ARĀBU EMIRĀTI
 united kingdom	common	lv	APVIENOTĀ KARALISTE
 united states	common	lv	ASV
 united states minor outlying islands	common	lv	ASV MAZĀS AIZJŪRAS TERITORIJAS
 unknown	common	lv	Nezināms
-unlink the current element	htmlarea-ContextMenu	lv	Atvienot patreizējo elementu
-unset color	htmlarea-TableOperations	lv	Noņemt krāsu
 update	common	lv	Atjaunināt
-upload image	htmlarea-UploadImage	lv	Augšupielādēt Attēlu
-upper latin letters	htmlarea-ListType	lv	Lielie latīņu burti
-upper roman numbers	htmlarea-ListType	lv	Lielie romiešu burti
 url	common	lv	URL
 uruguay	common	lv	URUGVAJA
 use button to search for	common	lv	izmantot Pogu lai meklētu
@@ -727,7 +570,6 @@ uzbekistan	common	lv	UZBEKIJA
 vanuatu	common	lv	VANUATU
 venezuela	common	lv	VENECUĒLA
 version	common	lv	Versija
-vertical align	htmlarea-TableOperations	lv	Vertikāls sakārtojums
 viet nam	common	lv	VJETNAMA
 view	common	lv	Rādīt
 virgin islands, british	common	lv	VIRDŽĪNU SALAS, BRITU
@@ -737,14 +579,12 @@ wednesday	common	lv	Trešdiena
 welcome	common	lv	Laipni Lūdzam
 western sahara	common	lv	RIETUMSAHĀRA
 which groups	common	lv	Kuras grubas
-width	htmlarea-TableOperations	lv	Platums
 wk	jscalendar	lv	ned
 work email	common	lv	darba e-pasts
 written by:	common	lv	Autors:
 year	common	lv	Gads
 yemen	common	lv	JEMENA
 yes	common	lv	Jā
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	lv	Jūs strādājat TEKSTA REŽĪMĀ. Izmantojiet [<>] pogu lai ārslēgtos uz WYSIWIG režīmu.
 you are required to change your password during your first login	common	lv	Jums jāsamaina parole pēc pirmās pieteikšanās
 you are running a newer version of phpgroupware than your database is setup for	common	lv	Jūs strādājat ar jaunāku phpGroupWare versiju nekā atbalsta Jūsu datubāze.
 you have been successfully logged out	login	lv	Veiksmīga darba beigšana

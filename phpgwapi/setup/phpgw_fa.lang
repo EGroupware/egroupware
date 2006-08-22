@@ -10,7 +10,6 @@
 about	common	fa	درباره
 about %1	common	fa	درباره %1
 about the calendar	jscalendar	fa	درباره تقویم
-about this editor	htmlarea	fa	درباره این ویرایشگر
 access	common	fa	دست یابی
 access not permitted	common	fa	اجازه دستیابی وجود ندارد
 account	email	fa	&#1581;&#1587;&#1575;&#1576;
@@ -68,7 +67,6 @@ author	common	fa	ناشر
 azerbaijan	common	fa	آذربايجان
 back	common	fa	بازگشت
 back to user login	common	fa	بازگشت به ورودی کاربر
-background color	htmlarea	fa	رنگ پس زمینه
 bad login or password	common	fa	نام کاربری یا رمزعبور اشتباه
 bahrain	common	fa	بحرين
 bangladesh	common	fa	بنگلادش
@@ -80,7 +78,6 @@ bigger	email	fa	&#1576;&#1586;&#1585;&#1711;&#1578;&#1585;
 biggest	email	fa	&#1576;&#1586;&#1585;&#1711;&#1578;&#1585;&#1610;&#1606;
 blocked, too many attempts	common	fa	بلاک شده، تلاش زياد
 body	email	fa	&#1576;&#1583;&#1606;&#1607;
-bold	htmlarea	fa	درشت
 bosnia and herzegovina	common	fa	بوسنی و هرز گوين
 both	email	fa	&#1607;&#1585;&#1583;&#1608;
 brazil	common	fa	برزيل
@@ -131,7 +128,6 @@ congo	common	fa	کنگو
 congo, the democratic republic of the	common	fa	کنگو، جمهوری دموکراتيک
 contains	email	fa	&#1605;&#1581;&#1578;&#1608;&#1610;&#1575;&#1578;
 copy	common	fa	نسخه برداری
-copy selection	htmlarea	fa	نسخه برداری انتخاب شده
 costa rica	common	fa	کاستاريکا
 could not open this mailbox	email	fa	&#1575;&#1610;&#1606; &#1580;&#1593;&#1576;&#1607; &#1606;&#1575;&#1605;&#1607; &#1585;&#1575; &#1606;&#1605;&#1610; &#1578;&#1608;&#1575;&#1606; &#1576;&#1575;&#1586; &#1705;&#1585;&#1583;
 create	common	fa	ایجاد
@@ -142,11 +138,9 @@ cuba	common	fa	کوبا
 currency	common	fa	پول رایج
 current	common	fa	جاری
 current attachments (%1)	email	fa	&#1590;&#1605;&#1610;&#1605;&#1607; &#1607;&#1575;&#1740; &#1601;&#1593;&#1604;&#1740;
-current style	htmlarea	fa	سبک جاری
 current users	common	fa	کاربران جاری
 custom e-mail preferences	email	fa	&#1575;&#1608;&#1604;&#1608;&#1610;&#1578;&#1607;&#1575;&#1740; &#1606;&#1575;&#1605;&#1607; &#1607;&#1575;&#1740; &#1587;&#1601;&#1575;&#1585;&#1588;&#1740;
 custom e-mail settings	email	fa	&#1605;&#1588;&#1582;&#1589;&#1575;&#1578; &#1606;&#1575;&#1605;&#1607; &#1607;&#1575;&#1740; &#1587;&#1601;&#1575;&#1585;&#1588;&#1740;
-cut selection	htmlarea	fa	بريدن انتخاب
 date	common	fa	تاریخ
 date selection:	jscalendar	fa	انتخاب تاریخ:
 debugging page	email	fa	&#1589;&#1601;&#1581;&#1607; &#1582;&#1591;&#1575; &#1711;&#1610;&#1585;&#1740;
@@ -231,7 +225,6 @@ folder	common	fa	&#1662;&#1608;&#1588;&#1607;
 folder name	email	fa	&#1606;&#1575;&#1605; &#1662;&#1608;&#1588;&#1607;
 folder size	email	fa	&#1580;&#1581;&#1605; &#1662;&#1608;&#1588;&#1607;
 folders	email	fa	&#1662;&#1608;&#1588;&#1607; &#1607;&#1575;
-font color	htmlarea	fa	رنگ قلم
 forward	email	fa	&#1575;&#1585;&#1587;&#1575;&#1604; &#1705;&#1585;&#1583;&#1606;
 france	common	fa	فرانسه
 friday	common	fa	جمعه
@@ -268,7 +261,6 @@ home	common	fa	خانه
 home email	common	fa	پست الکترونيکی خانه
 honduras	common	fa	هندوراس
 hong kong	common	fa	هنگ کنگ
-horizontal rule	htmlarea	fa	قانون افقی
 iceland	common	fa	ايسلند
 icon size	email	fa	&#1575;&#1606;&#1583;&#1575;&#1586;&#1607; &#1588;&#1705;&#1604;&#1705;
 image	email	fa	&#1578;&#1589;&#1608;&#1740;&#1585;
@@ -276,9 +268,6 @@ important	email	fa	&#1605;&#1607;&#1605;
 inbox	email	fa	&#1589;&#1606;&#1583;&#1608;&#1602; &#1583;&#1585;&#1740;&#1575;&#1601;&#1578;&#1740;
 india	common	fa	هند
 indonesia	common	fa	اندونزی
-insert image	htmlarea	fa	درج تصوير
-insert table	htmlarea	fa	درج جدول
-insert web link	htmlarea	fa	درج پيوست وب
 international	common	fa	بين المللی
 invalid ip address	common	fa	آدرسIP  نا معتبر
 invalid password	common	fa	رمز عبور نامعتبر
@@ -336,7 +325,6 @@ original	common	fa	اصلی
 owner	common	fa	مالک
 page	common	fa	صفحه
 password	common	fa	رمزعبور
-path	htmlarea	fa	مسیر
 phone	email	fa	&#1578;&#1604;&#1601;&#1606;
 phone number	common	fa	شماره تلفن
 preferences	common	fa	پیش فرض ها

@@ -13,16 +13,9 @@
 3 number of chars for day-shortcut	jscalendar	fi	3, just a number, don't translate -- RalfBecker 2006/03/14
 3 number of chars for month-shortcut	jscalendar	fi	3, just a number, don't translate -- RalfBecker 2006/03/14
 80 (http)	admin	fi	80 (http)
-\n tidying up the html source, please wait...	htmlarea-HtmlTidy	fi	\n Siivoan HTML-lähdekoodia, odota hetki...
-_delete row	htmlarea-ContextMenu	fi	_Poista rivi
-_image properties...	htmlarea-ContextMenu	fi	_Kuvan ominaisuudet...
-_modify link...	htmlarea-ContextMenu	fi	_Muokkaa linkkiä...
-_remove link...	htmlarea-ContextMenu	fi	P_oista linkki...
-_table properties...	htmlarea-ContextMenu	fi	_Taulukon ominaisuudet...
 about	common	fi	Tietoja
 about %1	common	fi	Tietoja sovelluksesta %1
 about the calendar	jscalendar	fi	Tietoja kalenterista
-about this editor	htmlarea	fi	Tietoja editorista
 access	common	fi	Käyttöoikeus
 access not permitted	common	fi	Ei pääsyä
 account has been created	common	fi	Käyttäjätili on luotu
@@ -42,10 +35,8 @@ administration	common	fi	Ylläpito
 afghanistan	common	fi	AFGANISTAN
 albania	common	fi	ALBANIA
 algeria	common	fi	ALGERIA
-align	htmlarea-TableOperations	fi	Kohdistus
 all	common	fi	Kaikki
 all fields	common	fi	kaikki kentät
-all four sides	htmlarea-TableOperations	fi	Kaikki neljä sivua
 alphabet	common	fi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
 alternate style-sheet:	common	fi	Vaihtoehtoinen tyylisivu:
 american samoa	common	fi	AMERIKAN SAMOA
@@ -71,15 +62,12 @@ autosave default category	common	fi	Tallenna oletusluokka automaattisesti
 azerbaijan	common	fi	AZERBAIJAN
 back	common	fi	Takaisin
 back to user login	common	fi	Kirjaudu sisään
-background	htmlarea-TableOperations	fi	Tausta
-background color	htmlarea	fi	Taustaväri
 background color:	common	fi	Taustaväri:
 bad login or password	common	fi	Tunnus tai salasana ei kelpaa
 bahamas	common	fi	BAHAMA
 bahrain	common	fi	BAHRAIN
 bangladesh	common	fi	BANGLADESH
 barbados	common	fi	BARBADOS
-baseline	htmlarea-TableOperations	fi	Takaraja
 bcc	common	fi	Piilokopio
 belarus	common	fi	VALKOVENÄJÄ
 belgium	common	fi	BELGIA
@@ -88,29 +76,22 @@ benin	common	fi	BENIN
 bermuda	common	fi	BERMUDA
 bhutan	common	fi	BHUTAN
 blocked, too many attempts	common	fi	Pääsy estetty, liian monta yritystä
-bold	htmlarea	fi	Lihavoitu
 bolivia	common	fi	BOLIVIA
-border	htmlarea-TableOperations	fi	Reuna
-borders	htmlarea-TableOperations	fi	Reunat
 bosnia and herzegovina	common	fi	BOSNIA AND HERZEGOVINA
 botswana	common	fi	BOTSWANA
-bottom	htmlarea-TableOperations	fi	Alle
 bouvet island	common	fi	BOUVETSAARET
 brazil	common	fi	BRASILIA
 british indian ocean territory	common	fi	BRITTILÄISEN INTIAN VALTAMEREN ALUE
 brunei darussalam	common	fi	BRUNEI DARUSSALAM
 bulgaria	common	fi	BULGARIA
-bulleted list	htmlarea	fi	Luettelo
 burkina faso	common	fi	BURKINA FASO
 burundi	common	fi	BURUNDI
-c_ell properties...	htmlarea-ContextMenu	fi	_Solun ominaisuudet...
 calendar	common	fi	Kalenteri
 cambodia	common	fi	KAMPUTSEA
 cameroon	common	fi	KAMERUN
 canada	common	fi	KANADA
 cancel	common	fi	Peruuta
 cape verde	common	fi	CAP VERDE
-caption	htmlarea-TableOperations	fi	Otsikko
 categories	common	fi	Luokat
 categories for	common	fi	luokat kohteelle
 category	common	fi	Luokka
@@ -118,19 +99,14 @@ category %1 has been added !	common	fi	Luokka %1 on lisätty!
 category %1 has been updated !	common	fi	Luokka %1 on päivitetty!
 cayman islands	common	fi	CAYMANSAARET
 cc	common	fi	Kopio
-cell properties	htmlarea-TableOperations	fi	Solun asetukset
-center	htmlarea-TableOperations	fi	Keskelle
 central african republic	common	fi	KESKI-AFRIKAN TASAVALTA
 chad	common	fi	TSAD
 change	common	fi	Muuta
-char	htmlarea-TableOperations	fi	Merkki
 charset	common	fi	iso-8859-15
-chec_k link...	htmlarea-ContextMenu	fi	T_arkista linkki...
 check installation	common	fi	Tarkista asennus
 check now	common	fi	Tarkista nyt
 chile	common	fi	CHILE
 china	common	fi	KIINA
-choose list style type (for ordered lists)	htmlarea-ListType	fi	Valitse luettelojen tyyppi (järjestellyille luetteloile)
 choose the category	common	fi	Valitse luokka
 choose the parent category	common	fi	Valitse yläluokka
 christmas island	common	fi	JOULUSAARI
@@ -141,9 +117,7 @@ click or mouse over to show menus	common	fi	Napsauta tai näytä valikot kun osoit
 click or mouse over to show menus?	common	fi	Napsauta tai näytä valikot kun osoitetaan hiirellä?
 close	common	fi	Sulje
 cocos (keeling) islands	common	fi	KOOKOSSAARET (KEELING)
-collapsed borders	htmlarea-TableOperations	fi	Luhistetut reunat
 colombia	common	fi	KOLUMBIA
-color	htmlarea-TableOperations	fi	Väri
 comoros	common	fi	KOMORIT
 company	common	fi	Yhtiö
 config password	common	fi	Asennuksen salasana
@@ -152,44 +126,29 @@ congo	common	fi	KONGO
 congo, the democratic republic of the	common	fi	KONGON DEMOKRAATTINEN KANSANTASAVALTA
 cook islands	common	fi	COOKSAARET
 copy	common	fi	Copy
-copy selection	htmlarea	fi	Copy selection
 costa rica	common	fi	COSTA RICA
 cote d ivoire	common	fi	NORSUNLUURANNIKKO
 create	common	fi	Luo
-create a link	htmlarea-ContextMenu	fi	Luo linkki
 created by	common	fi	Tehnyt
 croatia	common	fi	KROATIA
 cuba	common	fi	KUUBA
 currency	common	fi	Valuutta
 current	common	fi	Nykyinen
-current style	htmlarea	fi	Nykyinen tyyli
-current url is	htmlarea-ContextMenu	fi	Nykyinen URL on
 current users	common	fi	Nykyiset käyttäjät
-cut	htmlarea-ContextMenu	fi	Leikkaa
-cut selection	htmlarea	fi	Leikkaa valinta
 cyprus	common	fi	KYPROS
 czech republic	common	fi	TSEKIN TASAVALTA
 date	common	fi	Päivämäärä
 date due	common	fi	Takaraja
 date selection:	jscalendar	fi	Päivämäärän valinta:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fi	Datetime-portti.<br>Jos käytät porttia 13, määrittele palomuuriasetukset oikein ennen kuin lähetät tämän lomakkeen tiedot.<br>(Port: 13 / Host: 129.6.15.28)
-de_lete column	htmlarea-ContextMenu	fi	Po_ista sarake
 december	common	fi	Joulukuu
-decimal numbers	htmlarea-ListType	fi	Desimaalinumerot
-decrease indent	htmlarea	fi	Kasvata sisennystä
 default category	common	fi	Oletusluokka
 delete	common	fi	Poista
-delete cell	htmlarea-TableOperations	fi	Poista solu
-delete column	htmlarea-TableOperations	fi	Poista sarake
-delete row	htmlarea-TableOperations	fi	Poista rivi
-delete the current column	htmlarea-ContextMenu	fi	Poista nykyinen sarake
-delete the current row	htmlarea-ContextMenu	fi	Poista nykyinen rivi
 denmark	common	fi	TANSKA
 description	common	fi	Kuvaus
 detail	common	fi	Yksityiskohta
 details	common	fi	Yksityiskohdat
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Ota Internet Explorer 5.5 ja uudempien png-bugin korjausskripti pois käytöstä?
-dictionary	htmlarea-SpellChecker	fi	Sanakirja
 disable internet explorer png-image-bugfix	common	fi	Ota Internet Explorerin png-bugin korjausskripti pois käytöstä
 disable slider effects	common	fi	Ota liukuefektit pois käytöstä
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fi	Ota valikoiden näyttämisen ja piilottamisen liukuefekti pois käytöstä? Operan ja Konquerorin käyttäjät haluavat tämän yleensä pois.
@@ -218,13 +177,11 @@ egroupware api version %1	common	fi	eGroupWare API versio %1
 egroupware: login blocked for user '%1', ip %2	common	fi	eGroupWare: Käyttäjän '%1' pääsy estetty, IP %2
 egypt	common	fi	EGYPTI
 el salvador	common	fi	EL SALVADOR
-element...	htmlarea-ContextMenu	fi	Elementti...
 email	common	fi	Sähköposti
 email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
 enabled	common	fi	Käytössä
 end date	common	fi	Loppumispäivä
 end time	common	fi	Loppumisaika
-enlarge editor	htmlarea	fi	Suurenna editori
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWaren URL.<br>Esimerkki: http://www.yritys.com/egroupware &nbsp; tai &nbsp; /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
 entry has been deleted sucessfully	common	fi	Kohde poistettu
 entry updated sucessfully	common	fi	Kohde päivitetty
@@ -241,22 +198,17 @@ falkland islands (malvinas)	common	fi	FALKLANDSAARET (MALVINAS)
 faroe islands	common	fi	FÄRSAARET
 fax number	common	fi	faksinumero
 february	common	fi	Helmikuu
-fg color	htmlarea-TableOperations	fi	FG Väri
 fields	common	fi	Kentät
 fiji	common	fi	FIDJI
 files	common	fi	Tiedostot
 filter	common	fi	Suodin
-finished list of mispelled words	htmlarea-SpellChecker	fi	Luettelo väärin kirjoitetuista sanoista
 finland	common	fi	SUOMI
 first name	common	fi	Etunimi
 first name of the user, eg. "%1"	common	fi	käyttäjän etunimi, esim. "%1"
 first page	common	fi	Ensimmäinen sivu
 firstname	common	fi	Etunimi
 fixme!	common	fi	KORJAA MINUT!
-float	htmlarea-TableOperations	fi	Kelluva
-font color	htmlarea	fi	Fontin väri
 force selectbox	common	fi	Näytä valintaluettelo
-frames	htmlarea-TableOperations	fi	Kehykset
 france	common	fi	RANSKA
 french guiana	common	fi	RANSKAN GUANA
 french polynesia	common	fi	RANSKAN POLYNEESIA
@@ -299,9 +251,7 @@ header admin login	common	fi	Otsikkotiedoston ylläpidon käyttäjätunnus
 header password	common	fi	Otsikkotiedoston salasana
 header username	common	fi	Otsikkotiedoston käyttäjätunnus
 heard island and mcdonald islands	common	fi	HEARDSAARET JA MCDONALDIN SAARET
-height	htmlarea-TableOperations	fi	Korkeus
 help	common	fi	Ohje
-help using editor	htmlarea	fi	Editorin ohje
 high	common	fi	Korkea
 highest	common	fi	Korkein
 holy see (vatican city state)	common	fi	VATIKAANI
@@ -309,42 +259,12 @@ home	common	fi	Koti
 home email	common	fi	kotisähköposti
 honduras	common	fi	HONDURAS
 hong kong	common	fi	HONG KONG
-horizontal rule	htmlarea	fi	Vaakaviiva
-how did you get here? (please report!)	htmlarea-ContextMenu	fi	Miten päädyit tänne? (Kerro meille!)
-how many columns would you like to merge?	htmlarea-TableOperations	fi	Kuinka monta saraketta haluat yhdistää?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fi	Kuinka monta kuvaketta näytetään navigaatiopalkissa. Loput kuvakkeet saa näkyviin oikeasta reunasta avautuvasta alasvetovalikosta.
-how many rows would you like to merge?	htmlarea-TableOperations	fi	Kuinka monta riviä haluat yhdistää?
-html tidy	htmlarea-HtmlTidy	fi	HTML Tidy
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	fi	Ei voida poistaa viimeistä solua rivistä.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	fi	Ei voida poistaa viimeistä saraketta taulusta.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	fi	Ei voida poistaa viimeistä riviä taulusta.
 hungary	common	fi	UNKARI
-i will open it in a new page.	htmlarea-SpellChecker	fi	Avaan sen uudelle sivulle.
-i_nsert row before	htmlarea-ContextMenu	fi	Lisää rivi ennen
 iceland	common	fi	ISLANTI
-ignore	htmlarea-SpellChecker	fi	Ohita
-ignore all	htmlarea-SpellChecker	fi	Ohita kaikki
-image url	htmlarea-TableOperations	fi	Kuvan osoite
-in_sert row after	htmlarea-ContextMenu	fi	Lisää rivi jälkeen
-increase indent	htmlarea	fi	Kasvata sisennystä
 india	common	fi	INTIA
 indonesia	common	fi	INDONEESIA
-insert _column before	htmlarea-ContextMenu	fi	Lisää sarake ennen
-insert a new column after the current one	htmlarea-ContextMenu	fi	Lisää uusi sarake nykyisen jälkeen
-insert a new column before the current one	htmlarea-ContextMenu	fi	Lisää uusi sarake nykyisen eteen
-insert a new row after the current one	htmlarea-ContextMenu	fi	Lisää uusi rivi nykyisen alle
-insert a new row before the current one	htmlarea-ContextMenu	fi	Lisää uusi rivi nykyisen ylle
 insert all %1 addresses of the %2 contacts in %3	common	fi	Lisää kaikki %1 osoitetta %2 yhteystiedosta kohteeseen %3
-insert c_olumn after	htmlarea-ContextMenu	fi	Lisää sarake jälkeen
-insert cell after	htmlarea-TableOperations	fi	Lisää solu perään
-insert cell before	htmlarea-TableOperations	fi	Lisää solu ennen
-insert column after	htmlarea-TableOperations	fi	Lisää sarake perään
-insert column before	htmlarea-TableOperations	fi	Lisää sarake ennen
-insert image	htmlarea	fi	Lisää kuva
-insert row after	htmlarea-TableOperations	fi	Lisää rivi alle
-insert row before	htmlarea-TableOperations	fi	Lisää rivi ylle
-insert table	htmlarea	fi	Lisää taulukko
-insert web link	htmlarea	fi	Lisää verkkolinkki
 international	common	fi	Kansainvälinen
 invalid ip address	common	fi	Virheellinen IP-osoite
 invalid password	common	fi	Virheellinen salasana
@@ -363,7 +283,6 @@ jordan	common	fi	JORDANIA
 july	common	fi	Heinäkuu
 jun	common	fi	Kes
 june	common	fi	Kesäkuu
-justify	htmlarea-TableOperations	fi	Tasaus
 justify center	common	fi	Keskitä
 justify full	common	fi	Tasaa molemmat reunat
 justify left	common	fi	Tasaa vasemmalle
@@ -383,15 +302,12 @@ last name of the user, eg. "%1"	common	fi	käyttäjän sukunimi, esim. "%1"
 last page	common	fi	Viimeinen sivu
 lastname	common	fi	Sukunimi
 latvia	common	fi	LATVIA
-layout	htmlarea-TableOperations	fi	Asettelu
 lebanon	common	fi	LIBANON
-left	htmlarea-TableOperations	fi	Vasen
 lesotho	common	fi	LESOTHO
 liberia	common	fi	LIBERIA
 libyan arab jamahiriya	common	fi	LIBYAN ARAB JAMAHIRIYA
 license	common	fi	Lisenssi
 liechtenstein	common	fi	LICHTENSTEIN
-link points to:	htmlarea-ContextMenu	fi	Linkin kohde:
 list	common	fi	Luettelo
 lithuania	common	fi	LIETTIA
 local	common	fi	Paikallinen
@@ -399,9 +315,6 @@ login	common	fi	Kirjaudu
 loginid	common	fi	Sisäänkirjautumistunnus
 logout	common	fi	Poistu
 low	common	fi	Matala
-lower greek letters	htmlarea-ListType	fi	Pienet kreikkalaiset aakkoset
-lower latin letters	htmlarea-ListType	fi	Pienet latinalaiset aakkoset
-lower roman numbers	htmlarea-ListType	fi	Pienet roomalaiset numerot
 lowest	common	fi	Matalin
 luxembourg	common	fi	LUXEMBOURG
 macau	common	fi	MACAU
@@ -411,14 +324,12 @@ mail domain, eg. "%1"	common	fi	sähköpostin toimialue, esim. "%1"
 main category	common	fi	Pääluokka
 main screen	common	fi	Päänäyttö
 maintainer	common	fi	Ylläpitäjä
-make lin_k...	htmlarea-ContextMenu	fi	Tee linkki...
 malawi	common	fi	MALAWI
 malaysia	common	fi	MALESIA
 maldives	common	fi	MALEDIIVIT
 mali	common	fi	MALI
 malta	common	fi	MALTA
 march	common	fi	Maaliskuu
-margin	htmlarea-TableOperations	fi	Marginaali
 marshall islands	common	fi	MARSHALL-SAARET
 martinique	common	fi	MARTINIQUE
 mauritania	common	fi	MAURITANIA
@@ -428,12 +339,9 @@ may	common	fi	Toukokuu
 mayotte	common	fi	MAYOTTE
 medium	common	fi	Normaali
 menu	common	fi	Valikko
-merge cells	htmlarea-TableOperations	fi	Yhdistä solut
 message	common	fi	Viesti
 mexico	common	fi	MEKSIKO
 micronesia, federated states of	common	fi	MIKRONESIAN LIITTOVALTIO
-middle	htmlarea-TableOperations	fi	Keskelle
-modify url	htmlarea-ContextMenu	fi	Muokkaa URL
 moldova, republic of	common	fi	MOLDOVAN TASAVALTA
 monaco	common	fi	MONACO
 monday	common	fi	Maanantai
@@ -466,9 +374,6 @@ niue	common	fi	NIUE
 no	common	fi	Ei
 no entries found, try again ...	common	fi	ei tietueita, yritä uudelleen ...
 no history for this record	common	fi	Tällä tietueella ei ole historiatietoja
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	fi	Valitulla sanakirjalla ei löydetty väärin kirjoitettuja sanoja.
-no rules	htmlarea-TableOperations	fi	Ei viivoja
-no sides	htmlarea-TableOperations	fi	Ei sivuja
 no subject	common	fi	Ei aihetta
 none	common	fi	Ei mitään
 norfolk island	common	fi	NORFOLKSAARET
@@ -490,14 +395,10 @@ only private	common	fi	vain yksityiset
 only yours	common	fi	vain omat
 open notify window	common	fi	Avaa huomautusikkuna
 open popup window	common	fi	Avaa ponnahdusikkuna
-opens this link in a new window	htmlarea-ContextMenu	fi	Avaa tämän linkin uudessa ikkunassa
-ordered list	htmlarea	fi	Järjestetty luettelo
 original	common	fi	Alkuperäinen
-original word	htmlarea-SpellChecker	fi	Alkuperäinen sana
 other	common	fi	Muu
 overview	common	fi	Yleiskuva
 owner	common	fi	Omistaja
-padding	htmlarea-TableOperations	fi	Palstantäyte
 page	common	fi	Sivu
 page was generated in %1 seconds	common	fi	Sivun luominen kesti %1 sekuntia
 pakistan	common	fi	PAKISTAN
@@ -511,35 +412,23 @@ parent category	common	fi	Yläluokka
 password	common	fi	Salasana
 password could not be changed	common	fi	Salasanaa ei voitu muuttaa
 password has been updated	common	fi	Salasana on päivitetty
-paste	htmlarea-ContextMenu	fi	Liitä
-paste from clipboard	htmlarea	fi	Liitä leikepöydältä
-path	htmlarea	fi	Polku
 path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen asiakirjajuuren ulkopuolella!!!
 pattern for search in addressbook	common	fi	Osoitekirjasta etsittävä merkkijono
 pattern for search in calendar	common	fi	Kalenterista etsittävä merkkijono
 pattern for search in projects	common	fi	Projekteista etsittävä merkkijono
-percent	htmlarea-TableOperations	fi	prosenttia
 permissions to the files/users directory	common	fi	tiedostojen/käyttäjien hakemiston käyttöoikeudet
 personal	common	fi	Henkilökohtainen
 peru	common	fi	PERU
 philippines	common	fi	FILIPPIINIT
 phone number	common	fi	puhelinnumero
 pitcairn	common	fi	PITCAIRN
-pixels	htmlarea-TableOperations	fi	pikseliä
 please %1 by hand	common	fi	Suorita %1 käsin
-please click into some cell	htmlarea-TableOperations	fi	Napsauta jotain solua
-please confirm that you want to open this link	htmlarea-SpellChecker	fi	Vahivista, että haluat avata tämän linkin
-please confirm that you want to remove this element:	htmlarea-ContextMenu	fi	Vahivista, että haluat poistaa tämän elementin:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	fi	Vahivista, että haluat poistaa linkin tästä elementistä.
 please enter a name	common	fi	Anna nimi!
 please run setup to become current	common	fi	Aja asennus nykyiseen
 please select	common	fi	Valitse
 please set your global preferences	common	fi	Määrittele yleiset asetukset!
 please set your preferences for this application	common	fi	Määrittele tämän sovelluksen asetukset!
-please wait.  calling spell checker.	htmlarea-SpellChecker	fi	Odota hetki. Käynnistetään oikolukua.
 please wait...	common	fi	Odota hetki...
-please wait: changing dictionary to	htmlarea-SpellChecker	fi	Odota heki: vaihdetaan sanakirjaksi
-pliz weit ;-)	htmlarea-SpellChecker	fi	Kotvasen kestää vielä ;-)
 poland	common	fi	PUOLA
 portugal	common	fi	PORTUGALI
 postal	common	fi	Posti
@@ -558,31 +447,16 @@ project	common	fi	Projekti
 public	common	fi	julkinen
 puerto rico	common	fi	PUERTO RICO
 qatar	common	fi	QATAR
-re-check	htmlarea-SpellChecker	fi	Tarkista uudelleen
 read	common	fi	Lue
 read this list of methods.	common	fi	Lue metodien luettelo.
-redoes your last action	htmlarea	fi	Toistaa edellisen toimenpiteen
 reject	common	fi	Hylkää
 remove selected accounts	common	fi	poista valitut käyttäjätunnukset
-remove the	htmlarea-ContextMenu	fi	Poista
-remove this node from the document	htmlarea-ContextMenu	fi	Poista tämä noodi asiakirjasta
 rename	common	fi	Nimeä uudelleen
-replace	htmlarea-SpellChecker	fi	Korvaa
-replace all	htmlarea-SpellChecker	fi	Korvaa kaikki
-replace with	htmlarea-SpellChecker	fi	Korvaava merkkijono
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fi	Palauttaa täyden käyttäjäluettelon järjestelmästä. Varoitus: palautus voi olla aika suuri
 returns an array of todo items	common	fi	Palauttaa tehtävien taulukon
 returns struct of users application access	common	fi	Palauttaa käyttäjien oikeudet sovelluksiin
 reunion	common	fi	REUNION
-revert	htmlarea-SpellChecker	fi	Palaa tallennettuun
-right	htmlarea-TableOperations	fi	Oikea
-ro_w properties...	htmlarea-ContextMenu	fi	Rivin ominaisuudet...
 romania	common	fi	ROMANIA
-row properties	htmlarea-TableOperations	fi	Rivin ominaisuudet
-rules	htmlarea-TableOperations	fi	Viivat
-rules will appear between all rows and columns	htmlarea-TableOperations	fi	Viivat jokaisen rivin ja sarakkeen välillä
-rules will appear between columns only	htmlarea-TableOperations	fi	Viivat ainoastaan sarakkeiden välillä
-rules will appear between rows only	htmlarea-TableOperations	fi	Viivat ainoastaan rivien välillä
 russian federation	common	fi	VENÄJÄN FEDERAATIO
 rwanda	common	fi	RUANDA
 saint helena	common	fi	SAINT HELENA
@@ -625,10 +499,6 @@ show all categorys	common	fi	Näytä kaikki luokat
 show menu	common	fi	näytä valikko
 show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
 show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa?
-show the image properties dialog	htmlarea-ContextMenu	fi	Näytä Kuvan ominaisuudet -dialogi
-show the table cell properties dialog	htmlarea-ContextMenu	fi	Näytä Solun ominaisuudet -dialogi
-show the table properties dialog	htmlarea-ContextMenu	fi	Näytä Taulukon ominaisuudet -dialogi
-show the table row properties dialog	htmlarea-ContextMenu	fi	Näytä Rivin ominaisuudet -dialogi
 show_more_apps	common	fi	show_more_apps
 showing %1	common	fi	näytetään %1
 showing %1 - %2 of %3	common	fi	näytetään %1 - %2 of %3
@@ -641,57 +511,35 @@ somalia	common	fi	SOMALIA
 sorry, your login has expired	login	fi	Istuntosi on vanhentunut
 south africa	common	fi	ETELÄAFRIKKA
 south georgia and the south sandwich islands	common	fi	ETELÄ-GEORGIA JA ETELÄISET SANDWICH-SAARET
-spacing	htmlarea-TableOperations	fi	Asettelu
-spacing and padding	htmlarea-TableOperations	fi	Asettelu ja reuna-alueiden täyttö
 spain	common	fi	ESPANJA
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	fi	Oikoluku valmis, väärin kirjoitettuja sanoja ei löytynyt. Lopetetaan...
-spell-check	htmlarea-SpellChecker	fi	Oikolue
-split cell	htmlarea-TableOperations	fi	Jaa solu
-split column	htmlarea-TableOperations	fi	Jaa sarake
-split row	htmlarea-TableOperations	fi	Jaa rivi
 sri lanka	common	fi	SRI LANKA
 start date	common	fi	Alkupäivä
 start time	common	fi	Alkuaika
 start with	common	fi	alkaa
 status	common	fi	Tila
-strikethrough	htmlarea	fi	Yliviivattu
-style [css]	htmlarea-TableOperations	fi	Tyyli [CSS]
 subject	common	fi	Aihe
 submit	common	fi	Lähetä
-subscript	htmlarea	fi	Alaindeksi
 substitutions and their meanings:	common	fi	Korvaukset ja niiden merkitykset:
 sudan	common	fi	SUDAN
-suggestions	htmlarea-SpellChecker	fi	Vaihtoehdot
-summary	htmlarea-TableOperations	fi	Yhteenveto
 sunday	common	fi	Sunnuntai
-superscript	htmlarea	fi	Ylätunniste
 suriname	common	fi	SURINAMI
 svalbard and jan mayen	common	fi	SVALBARD JA JAN MAYEN
 swaziland	common	fi	SWAZIMAA
 sweden	common	fi	RUOTSI
 switzerland	common	fi	SVEITSI
 syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
-table properties	htmlarea-TableOperations	fi	Taulukon asetukset
 taiwan	common	fi	TAIWAN/TAIPEI
 tajikistan	common	fi	TAJIKISTAN
 tanzania, united republic of	common	fi	TANSANIAN YHDISTYNYT TASAVALTA
-text align	htmlarea-TableOperations	fi	Teksti tasaus
 text color:	common	fi	Tekstin väri:
 thailand	common	fi	THAIMAA
 the api is current	common	fi	API on ajan tasalla
 the api requires an upgrade	common	fi	API tarvitsee päivityksen
-the bottom side only	htmlarea-TableOperations	fi	Ainoastaan alapuolelle
 the following applications require upgrades	common	fi	Seuraavat sovellukset tarvitsevat päivityksen
-the left-hand side only	htmlarea-TableOperations	fi	Ainoastaan vasenreuna
 the mail server returned	common	fi	Sähköpostipalvelin palautti
-the right and left sides only	htmlarea-TableOperations	fi	Oikea- ja vasenreuna
-the right-hand side only	htmlarea-TableOperations	fi	Ainoastaan oikeareuna
-the top and bottom sides only	htmlarea-TableOperations	fi	Ylä- ja alapuoli.
-the top side only	htmlarea-TableOperations	fi	Ainoastaan yläpuoli
 this application is current	common	fi	Tämä sovellus on ajan tasalla
 this application requires an upgrade	common	fi	Tämä sovellus tarvitsee päivityksen
 this name has been used already	common	fi	Nimi on jo käytössä!
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	fi	Tämä lopettaa oikoluvun ja menetät tehdyt muutokset. Vahvista, että haluat tehdä näin.
 thursday	common	fi	Torstai
 time	common	fi	Aika
 time selection:	jscalendar	fi	Ajan valinta:
@@ -704,12 +552,10 @@ to go back to the msg list, click <a href= %1 >here</a>	common	fi	To siirtyäkses
 today	common	fi	Tänään
 todays date, eg. "%1"	common	fi	tämä päivämäärä, esim. "%1"
 toggle first day of week	jscalendar	fi	Vaihda viikon alkupäivää
-toggle html source	htmlarea	fi	Näytä/piilota HTML-koodi
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjälle '%2', %3 IP-osoitteesta %4
-top	htmlarea-TableOperations	fi	Ylös
 total	common	fi	Yhteensä
 trinidad and tobago	common	fi	TRINIDAD JA TOBAGO
 tuesday	common	fi	Tiistai
@@ -720,19 +566,12 @@ turks and caicos islands	common	fi	TURKS JA CAICOSSAARET
 tuvalu	common	fi	TUVALU
 uganda	common	fi	UGANDA
 ukraine	common	fi	UKRAINA
-underline	htmlarea	fi	Alleviivaus
-undoes your last action	htmlarea	fi	Peruu edellisen toimenpiteen
 united arab emirates	common	fi	YHDISTYNEET ARABIEMIRAATIT
 united kingdom	common	fi	YHDISTYNYT KUNINGASKUNTA
 united states	common	fi	YHDYSVALLAT
 united states minor outlying islands	common	fi	YHDYSVALTOJEN SAARIOSAVALTIOT
 unknown	common	fi	Tuntematon
-unlink the current element	htmlarea-ContextMenu	fi	Poista linkki valitusta elementistä
-unset color	htmlarea-TableOperations	fi	Poista värimääritys
 update	common	fi	Päivitä
-upload image	htmlarea-UploadImage	fi	Lataa kuva palvelimelle
-upper latin letters	htmlarea-ListType	fi	Suuret latinalaiset kirjaimet
-upper roman numbers	htmlarea-ListType	fi	Suuret roomalaiset numerot
 url	common	fi	URL
 uruguay	common	fi	URUGUAY
 use button to search for	common	fi	käytä painiketta etsiäksesi
@@ -749,7 +588,6 @@ uzbekistan	common	fi	UZBEKISTAN
 vanuatu	common	fi	VANUATU
 venezuela	common	fi	VENEZUELA
 version	common	fi	Versio
-vertical align	htmlarea-TableOperations	fi	Vertikaali kohdistus
 viet nam	common	fi	VIETNAM
 view	common	fi	Näytä
 virgin islands, british	common	fi	NEITSYSTSAARET, BRITTILÄISET
@@ -759,14 +597,12 @@ wednesday	common	fi	Keskiviikko
 welcome	common	fi	Tervetuloa
 western sahara	common	fi	LÄNSISAHARA
 which groups	common	fi	mitkä ryhmät
-width	htmlarea-TableOperations	fi	Leveys
 wk	jscalendar	fi	vk
 work email	common	fi	työsähköposti
 written by:	common	fi	Kirjoittanut:
 year	common	fi	Vuosi
 yemen	common	fi	JEMEN
 yes	common	fi	Kyllä
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	fi	Olet tekstitilassa. Käytä [<>]-painiketta siirtyäksesi WYSIWIG-tilaan.
 you are required to change your password during your first login	common	fi	Salasanasi on vaihdettava ensimmäisen sisäänkirjautumisen yhteydessä.
 you are running a newer version of phpgroupware than your database is setup for	common	fi	Käytät uudempaa eGroupWare-versiota, kuin tietokanta on.
 you have been successfully logged out	login	fi	Olet kirjautunut ulos

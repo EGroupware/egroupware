@@ -13,16 +13,9 @@
 3 number of chars for day-shortcut	jscalendar	cs	3 znaky pro zkratku dne
 3 number of chars for month-shortcut	jscalendar	cs	3 znaky pro zkratku mìsíce
 80 (http)	admin	cs	80 (http)
-\n tidying up the html source, please wait...	htmlarea-HtmlTidy	cs	\n Formátuji HTML kód, èekejte prosím...
-_delete row	htmlarea-ContextMenu	cs	Smazat øádek
-_image properties...	htmlarea-ContextMenu	cs	Vlastnosti obrázku...
-_modify link...	htmlarea-ContextMenu	cs	Upravit odkaz...
-_remove link...	htmlarea-ContextMenu	cs	Odstranit odkaz...
-_table properties...	htmlarea-ContextMenu	cs	Vlastnosti tabulky...
 about	common	cs	O aplikaci
 about %1	common	cs	O aplikaci %1
 about the calendar	jscalendar	cs	O kalendáøi
-about this editor	htmlarea	cs	O tomto editoru
 access	common	cs	Pøístup
 access not permitted	common	cs	Pøístup zakázán
 access type	common	cs	Druh pøístupu
@@ -43,10 +36,8 @@ administration	common	cs	Správa
 afghanistan	common	cs	Afgánistán
 albania	common	cs	Albánie
 algeria	common	cs	Al¾ír
-align	htmlarea-TableOperations	cs	Zarovnat
 all	common	cs	V¹e
 all fields	common	cs	v¹echna pole
-all four sides	htmlarea-TableOperations	cs	V¹echny ètyøi strany
 alphabet	common	cs	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	cs	Alternativní styl (CSS)
 american samoa	common	cs	Americká Samoa
@@ -69,15 +60,12 @@ autosave default category	common	cs	Automaticky ukládat standartní kategorii
 azerbaijan	common	cs	Azerbájd¾án
 back	common	cs	Zpìt
 back to user login	common	cs	Zpìt k pøihlá¹ení u¾ivatele
-background	htmlarea-TableOperations	cs	Pozadí
-background color	htmlarea	cs	Barva pozadí
 background color:	common	cs	Barva pozadí:
 bad login or password	common	cs	©patné jméno nebo heslo
 bahamas	common	cs	Bahamy
 bahrain	common	cs	Bahrajn
 bangladesh	common	cs	Bangladé¹
 barbados	common	cs	Barbados
-baseline	htmlarea-TableOperations	cs	Základní linka
 bcc	common	cs	Bcc
 belarus	common	cs	Bìlorusko
 belgium	common	cs	Belgie
@@ -86,19 +74,13 @@ benin	common	cs	Benin
 bermuda	common	cs	Bermundy
 bhutan	common	cs	Bhútán
 blocked, too many attempts	common	cs	Zablokováno, pøíli¹ mnoho pokusù
-bold	htmlarea	cs	Tuèné
 bolivia	common	cs	Bolívie
-border	htmlarea-TableOperations	cs	Okraj
-borders	htmlarea-TableOperations	cs	Okraje
 bosnia and herzegovina	common	cs	Bosna a Hercegovina
 botswana	common	cs	Botsvana
-bottom	htmlarea-TableOperations	cs	Spodek
 brazil	common	cs	Brazílie
 bulgaria	common	cs	Bulharsko
-bulleted list	htmlarea	cs	Teèkovaný seznam
 burkina faso	common	cs	Burkina Faso
 burundi	common	cs	Burundi
-c_ell properties...	htmlarea-ContextMenu	cs	Vlastnosti buòky
 calendar	common	cs	Kalendáø
 cambodia	common	cs	Kambod¾a
 cameroon	common	cs	Kamerun
@@ -111,18 +93,13 @@ category %1 has been added !	common	cs	Kategorie %1 byla pøidána !
 category %1 has been updated !	common	cs	Kategorie %1 byla zmìnìna !
 cayman islands	common	cs	Kajmanské ostrovy
 cc	common	cs	Cc
-cell properties	htmlarea-TableOperations	cs	Vlastnosti buòky
-center	htmlarea-TableOperations	cs	Støed
 chad	common	cs	Èad
 change	common	cs	Zmìnit
-char	htmlarea-TableOperations	cs	Znak
 charset	common	cs	iso-8859-2
-chec_k link...	htmlarea-ContextMenu	cs	Zkontrolovat odkaz
 check installation	common	cs	Zkontrolovat instalaci
 check now	common	cs	Zkontrolovat teï
 chile	common	cs	Èile
 china	common	cs	Èína
-choose list style type (for ordered lists)	htmlarea-ListType	cs	Vyberte typ seznamu (pro tøídìné seznamy)
 choose the category	common	cs	Vyberte kategorii
 choose the parent category	common	cs	Vyberte rodièovskou kategorii
 christmas island	common	cs	Vánoèní ostrovy
@@ -134,7 +111,6 @@ click or mouse over to show menus?	common	cs	Zobrazit menu kliknutím nebo najetí
 close	common	cs	Zavøít
 cocos (keeling) islands	common	cs	Kokosové ostrovy
 colombia	common	cs	Kolumbie
-color	htmlarea-TableOperations	cs	Barva
 company	common	cs	Spoleènost
 config password	common	cs	Heslo pro konfiguraci
 config username	common	cs	U¾ivatelské jméno pro konfiguraci
@@ -142,43 +118,28 @@ congo	common	cs	Kongo
 congo, the democratic republic of the	common	cs	Demokratická republika Kongo
 cook islands	common	cs	Cookovy ostrovy
 copy	common	cs	Kopírovat
-copy selection	htmlarea	cs	Kopírovat výbìr
 costa rica	common	cs	Kostarika
 create	common	cs	Vytvoøit
-create a link	htmlarea-ContextMenu	cs	Vytvoøit odkaz
 created by	common	cs	Vytvoøil
 croatia	common	cs	Chorvatsko
 cuba	common	cs	Kuba
 currency	common	cs	Mìna
 current	common	cs	Aktuální
-current style	htmlarea	cs	Aktuální styl
-current url is	htmlarea-ContextMenu	cs	Aktuální URL je
 current users	common	cs	Souèasní u¾ivatelé
-cut	htmlarea-ContextMenu	cs	Vystøihnout
-cut selection	htmlarea	cs	Vystøihnout výbìr
 cyprus	common	cs	Kypr
 czech republic	common	cs	Èeská republika
 date	common	cs	Datum
 date due	common	cs	Datum do
 date selection:	jscalendar	cs	Výbìr data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	cs	Datovì-èasový port. Kdy¾ pou¾íváte port 13, nastavte pravidla pro firewall pøed potvrzením této stránky
-de_lete column	htmlarea-ContextMenu	cs	Smazat sloupec
 december	common	cs	Prosinec
-decimal numbers	htmlarea-ListType	cs	Dekadická èísla
-decrease indent	htmlarea	cs	Zmen¹it odsazení
 default category	common	cs	Implicitní kategorie
 delete	common	cs	Vymazat
-delete cell	htmlarea-TableOperations	cs	Vymazat buòku
-delete column	htmlarea-TableOperations	cs	Vymazat sloupec
-delete row	htmlarea-TableOperations	cs	Vymazat øádek
-delete the current column	htmlarea-ContextMenu	cs	Vymazat aktuální sloupec
-delete the current row	htmlarea-ContextMenu	cs	Vymazat aktuální øádek
 denmark	common	cs	Dánsko
 description	common	cs	Popis
 detail	common	cs	Detail
 details	common	cs	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	cs	Zakázat spou¹tìní bugfix skriptu pro zobrazení transparentnosti PNG obrázkù v Internet Exploreru 5.5 a vy¹¹ím?
-dictionary	htmlarea-SpellChecker	cs	Slovník
 disable internet explorer png-image-bugfix	common	cs	Zakázat Internet Explorer png-image-bugfix
 disable slider effects	common	cs	Zakázat efekty posuvníku
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	cs	Zakázat animované efekty posuvníku pøi zobrazování nebo skrývání menu na stránce? U¾ivateé prohlí¾eèù Opera a Konqueror to budou pravdìpodobnì chtít.
@@ -208,13 +169,11 @@ egroupware api version %1	common	cs	eGroupWare API verze %1
 egroupware: login blocked for user '%1', ip %2	common	cs	eGroupWare: pøihla¹ování u¾ivatele '%1' zablokováno, IP %2
 egypt	common	cs	Egypt
 el salvador	common	cs	El Salvador
-element...	htmlarea-ContextMenu	cs	Element...
 email	common	cs	E-Mail
 email-address of the user, eg. "%1"	common	cs	e-mailová adresa u¾ivatele, napø. "%1"
 enabled	common	cs	Povoleno
 end date	common	cs	Koncové datum
 end time	common	cs	Koncový èas
-enlarge editor	htmlarea	cs	Zvìt¹it editor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	cs	Zvolte umístìní URL eGroupWare.<br>Pøíklad: http://www.domena.cz/egroupware &nbsp; nebo &nbsp; /egroupware<br><b>Bez ukonèovacího lomítka</b>
 entry has been deleted sucessfully	common	cs	Záznam úspì¹nì vymazán
 entry updated sucessfully	common	cs	Záznam úspì¹nì upraven
@@ -229,7 +188,6 @@ exit	common	cs	Ukonèit
 falkland islands (malvinas)	common	cs	Falklandské ostrovy
 fax number	common	cs	èíslo faxu
 february	common	cs	Únor
-fg color	htmlarea-TableOperations	cs	Barva popøedí
 fields	common	cs	Polo¾ky
 fiji	common	cs	Fid¾i
 files	common	cs	Soubory
@@ -240,10 +198,7 @@ first name of the user, eg. "%1"	common	cs	Jméno u¾ivatele, napø. "%1"
 first page	common	cs	První strana
 firstname	common	cs	Jméno
 fixme!	common	cs	OPRAV_MÌ!
-float	htmlarea-TableOperations	cs	Plovoucí
-font color	htmlarea	cs	Barva fontu
 force selectbox	common	cs	Otevøi nabídku pro výbìr
-frames	htmlarea-TableOperations	cs	Rámeèky
 france	common	cs	Francie
 friday	common	cs	Pátek
 ftp	common	cs	FTP
@@ -270,50 +225,18 @@ groups	common	cs	Skupiny
 groups with permission for %1	common	cs	Skupiny s oprávnìním pro %1
 groups without permission for %1	common	cs	Skupiny bez oprávnìní pro %1
 guam	common	cs	Guam
-height	htmlarea-TableOperations	cs	Vý¹ka
 help	common	cs	Nápovìda
-help using editor	htmlarea	cs	Pomoc pøi pou¾ívání editoru
 high	common	cs	Vysoká
 highest	common	cs	Nejvy¹¹í
 home	common	cs	Hlavní stránka
 home email	common	cs	soukromý e-mail
 honduras	common	cs	Honduras
-horizontal rule	htmlarea	cs	Vodorovné pravítko
-how did you get here? (please report!)	htmlarea-ContextMenu	cs	Jak jste se sem dostali? (Prosím odpovìzte!)
-how many columns would you like to merge?	htmlarea-TableOperations	cs	Kolik sloupcù si pøejete spojit?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	cs	Kolik ikon by mìlo být zobrazeno v navigaèní li¹tì (na vrcholu stránky). Ikony navíc jsou umístìny ve spou¹tìcím menu, aktivovaném ikonou na pravé stranì navigaèní li¹ty.
-how many rows would you like to merge?	htmlarea-TableOperations	cs	Kolik øádkù si pøejete spojit?
-html tidy	htmlarea-HtmlTidy	cs	HTML Tidy
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	cs	HTMLArea hanebnì odmítla smazat poslední buòku øádku.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	cs	HTMLArea hanebnì odmítla smazat poslední sloupec tabulky.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	cs	HTMLArea hanebnì odmítla smazat poslední øádek tabulky.
 hungary	common	cs	Maïarsko
-i will open it in a new page.	htmlarea-SpellChecker	cs	Otevøu to na nové stránce.
-i_nsert row before	htmlarea-ContextMenu	cs	Vlo¾it pøed øádek
 iceland	common	cs	Island
-ignore	htmlarea-SpellChecker	cs	Ignorovat
-ignore all	htmlarea-SpellChecker	cs	Ignorovat v¹e
-image url	htmlarea-TableOperations	cs	URL obrázku
-in_sert row after	htmlarea-ContextMenu	cs	Vlo¾it za øádek
-increase indent	htmlarea	cs	Zvìt¹it odsazení
 india	common	cs	Indie
 indonesia	common	cs	Indonesie
-insert _column before	htmlarea-ContextMenu	cs	Vlo¾it sloupec pøed
-insert a new column after the current one	htmlarea-ContextMenu	cs	Vlo¾it nový sloupec za aktuální
-insert a new column before the current one	htmlarea-ContextMenu	cs	Vlo¾it nový sloupec pøed aktuální
-insert a new row after the current one	htmlarea-ContextMenu	cs	Vlo¾it nový øádek za aktuální
-insert a new row before the current one	htmlarea-ContextMenu	cs	Vlo¾it nový øádek pøed aktuální
 insert all %1 addresses of the %2 contacts in %3	common	cs	Vlo¾it v¹echny %1 adresy z kontanku %2 v %3
-insert c_olumn after	htmlarea-ContextMenu	cs	Vlo¾it sloupec za
-insert cell after	htmlarea-TableOperations	cs	Vlo¾it buòku za
-insert cell before	htmlarea-TableOperations	cs	Vlo¾it buòku pøed
-insert column after	htmlarea-TableOperations	cs	Vlo¾it sloupec za
-insert column before	htmlarea-TableOperations	cs	Vlo¾it sloupec pøed
-insert image	htmlarea	cs	Vlo¾it obrázek
-insert row after	htmlarea-TableOperations	cs	Vlo¾it øádek za
-insert row before	htmlarea-TableOperations	cs	Vlo¾it øádek pøed
-insert table	htmlarea	cs	Vlo¾it tabulku
-insert web link	htmlarea	cs	Vlo¾it webový odkaz
 international	common	cs	Mezinárodní
 invalid ip address	common	cs	Neplatná IP adresa
 invalid password	common	cs	Neplatné heslo
@@ -332,7 +255,6 @@ jordan	common	cs	Jordánsko
 july	common	cs	Èervenec
 jun	common	cs	Èerven
 june	common	cs	Èerven
-justify	htmlarea-TableOperations	cs	Zarovnat
 justify center	common	cs	Zarovnat na støed
 justify full	common	cs	Zarovnat oboustrannì
 justify left	common	cs	Zarovnat doleva
@@ -350,12 +272,9 @@ last name of the user, eg. "%1"	common	cs	pøíjmení u¾ivatele, napø. "%1"
 last page	common	cs	Poslední stránka
 lastname	common	cs	Pøíjmení
 latvia	common	cs	Litva
-layout	htmlarea-TableOperations	cs	Vzhled
 lebanon	common	cs	Libanon
-left	htmlarea-TableOperations	cs	Vlevo
 license	common	cs	Licence
 liechtenstein	common	cs	Lichten¹tejnsko
-link points to:	htmlarea-ContextMenu	cs	Odkaz smìøuje na:
 list	common	cs	Seznam
 list members	common	cs	Seznam èlenù
 local	common	cs	Místní
@@ -363,9 +282,6 @@ login	common	cs	Pøihlásit
 loginid	common	cs	Pøihla¹ovací_ID
 logout	common	cs	Odhlásit
 low	common	cs	Nízká
-lower greek letters	htmlarea-ListType	cs	Malá øecká písmena
-lower latin letters	htmlarea-ListType	cs	Malá písmena latinky
-lower roman numbers	htmlarea-ListType	cs	Malé øímské èíslice
 lowest	common	cs	Nejni¾¹í
 luxembourg	common	cs	Lucembursko
 macedonia, the former yugoslav republic of	common	cs	Makedonie
@@ -374,30 +290,24 @@ mail domain, eg. "%1"	common	cs	mailová doména, napø. %1
 main category	common	cs	Hlavní kategorie
 main screen	common	cs	Hlavní strana
 maintainer	common	cs	Údr¾ba
-make lin_k...	htmlarea-ContextMenu	cs	Vytvoøit odkaz...
 malaysia	common	cs	Malajsie
 mali	common	cs	Mali
 malta	common	cs	Malta
 manual	common	cs	Pøíruèka
 march	common	cs	Bøezen
-margin	htmlarea-TableOperations	cs	Okraj
 mauritania	common	cs	Mauretánie
 mauritius	common	cs	Mauricius
 max number of icons in navbar	common	cs	Maximální poèet ikon na navigaèní li¹tì
 may	common	cs	Kvìten
 medium	common	cs	Støední
 menu	common	cs	Menu
-merge cells	htmlarea-TableOperations	cs	Spojit buòky
 message	common	cs	Zpráva
 mexico	common	cs	Mexiko
-middle	htmlarea-TableOperations	cs	Støed
-modify url	htmlarea-ContextMenu	cs	Zmìnit URL
 moldova, republic of	common	cs	Moldavská republika
 monaco	common	cs	Monako
 monday	common	cs	Pondìlí
 mongolia	common	cs	Mongolsko
 mozambique	common	cs	Mozambik
-n tidying up the html source, please wait...	htmlarea-HtmlTidy	cs	\n Formátuji HTML kód, èekejte prosím...
 name	common	cs	Jméno
 name of the user, eg. "%1"	common	cs	jméno u¾ivatele, napø. "%1"
 namibia	common	cs	Nanibie
@@ -417,9 +327,6 @@ nicaragua	common	cs	Nikaragua
 no	common	cs	Ne
 no entries found, try again ...	common	cs	Nebylo nalezeno nic, zkuste to znova ...
 no history for this record	common	cs	®ádná historie tohoto záznamu
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	cs	Nastavený slovník nenalezl ¾ádné chybné slovo.
-no rules	htmlarea-TableOperations	cs	Bez pravidel
-no sides	htmlarea-TableOperations	cs	Beze stran
 no subject	common	cs	Pøedmìt neuveden
 none	common	cs	®ádné
 normal	common	cs	Normální
@@ -439,14 +346,10 @@ only private	common	cs	pouze soukromé
 only yours	common	cs	jenom va¹e
 open notify window	common	cs	Otevøi pøipomínací okno
 open popup window	common	cs	Otevøi vyskakovací okno
-opens this link in a new window	htmlarea-ContextMenu	cs	Otevøe tento odkaz v novém oknì
-ordered list	htmlarea	cs	Setøídìný seznam
 original	common	cs	Originál
-original word	htmlarea-SpellChecker	cs	Pùvodní slovo
 other	common	cs	Jiný
 overview	common	cs	Pøehled
 owner	common	cs	Vlastník
-padding	htmlarea-TableOperations	cs	Vycpávka
 page	common	cs	Stránka
 page was generated in %1 seconds	common	cs	Stránka byla vygenerována za %1 sekund
 pakistan	common	cs	Pakistán
@@ -458,34 +361,22 @@ parent category	common	cs	Rodièovská kategorie
 password	common	cs	Heslo
 password could not be changed	common	cs	Heslo nemohlo být zmìnìno
 password has been updated	common	cs	Heslo bylo zmìnìno
-paste	htmlarea-ContextMenu	cs	Vlo¾it
-paste from clipboard	htmlarea	cs	Vlo¾it ze schránky
-path	htmlarea	cs	Cesta
 path to user and group files has to be outside of the webservers document-root!!!	common	cs	Cesta k souborùm u¾ivatelù a skupin MUSÍ BÝT VNÌ document-root adresáøe webového serveru!!!
 pattern for search in addressbook	common	cs	Vzor pro hledání v adresáøi
 pattern for search in calendar	common	cs	Vzor pro hledání v kalendáøi
 pattern for search in projects	common	cs	Vzor pro hledání v projektech
-percent	htmlarea-TableOperations	cs	procent
 permissions to the files/users directory	common	cs	práva k souborùm / u¾ivatelským adresáøùm
 personal	common	cs	Personálie
 peru	common	cs	Peru
 philippines	common	cs	Filipíny
 phone number	common	cs	telefonní èíslo
-pixels	htmlarea-TableOperations	cs	bodù
 please %1 by hand	common	cs	Prosím %1 ruènì
-please click into some cell	htmlarea-TableOperations	cs	Prosím kliknìte na nìjakou buòku
-please confirm that you want to open this link	htmlarea-SpellChecker	cs	Potvrïte prosím, ¾e chete otevøít tento odkaz
-please confirm that you want to remove this element:	htmlarea-ContextMenu	cs	Potvrïte prosím, ¾e chcete odstranit tento element:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	cs	Potvrïte prosím, ¾e chcete odpojit tento element.
 please enter a name	common	cs	Prosím vlo¾te jméno !
 please run setup to become current	common	cs	Prosím spus»te setup pro aktualizaci
 please select	common	cs	Prosím vyberte
 please set your global preferences	common	cs	Prosím nastavte va¹e globální pøedvolby !
 please set your preferences for this application	common	cs	Prosím nastavte va¹e pøedvolby pro tuto aplikaci !
-please wait.  calling spell checker.	htmlarea-SpellChecker	cs	Èekejte prosím, spou¹tím kontrolu pravopisu.
 please wait...	common	cs	Èekejte, prosím...
-please wait: changing dictionary to	htmlarea-SpellChecker	cs	Èekejte, prosím: mìním adresáø na
-pliz weit ;-)	htmlarea-SpellChecker	cs	momentík ;-)
 poland	common	cs	Polsko
 portugal	common	cs	Portugalsko
 postal	common	cs	Po¹tovní
@@ -502,30 +393,15 @@ priority	common	cs	Priorita
 private	common	cs	Soukromý
 project	common	cs	Projekt
 public	common	cs	veøejný
-re-check	htmlarea-SpellChecker	cs	Pøekontrolovat
 read	common	cs	Èíst
 read this list of methods.	common	cs	Èti tento seznam metod
-redoes your last action	htmlarea	cs	Provede znovu va¹i poslední akci
 reject	common	cs	Odmítnout
 remove selected accounts	common	cs	odstranit vybrané úèty
-remove the	htmlarea-ContextMenu	cs	Odstranit
-remove this node from the document	htmlarea-ContextMenu	cs	Odstranit tento uzel z dokumentu
 rename	common	cs	Pøejmenovat
-replace	htmlarea-SpellChecker	cs	Nahradit
-replace all	htmlarea-SpellChecker	cs	Nahradit v¹e
-replace with	htmlarea-SpellChecker	cs	Nahradit tímto
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	cs	Vrátí celý seznam u¾ivatelských úètù v systému. Pozor: Mù¾e vrátit docela dost dat.
 returns an array of todo items	common	cs	Vrací pole úkolù
 returns struct of users application access	common	cs	Vrací strukturu u¾ivatelského pøístupu k aplikacím
-revert	htmlarea-SpellChecker	cs	Vrátit zpìt
-right	htmlarea-TableOperations	cs	Vpravo
-ro_w properties...	htmlarea-ContextMenu	cs	Vlastnosti øádku...
 romania	common	cs	Rumunsko
-row properties	htmlarea-TableOperations	cs	Vlastnosti øádku
-rules	htmlarea-TableOperations	cs	Pravidla
-rules will appear between all rows and columns	htmlarea-TableOperations	cs	Pravidla se projeví mezi øádky a sloupci
-rules will appear between columns only	htmlarea-TableOperations	cs	Pravidla se projeví pouze mezi sloupci
-rules will appear between rows only	htmlarea-TableOperations	cs	Pravidla se projeví pouze mezi øádky
 russian federation	common	cs	Ruská federace
 rwanda	common	cs	Rvanda
 saint helena	common	cs	Svatá Helena
@@ -561,10 +437,6 @@ show all categorys	common	cs	Zobrazit v¹echny kategorie
 show menu	common	cs	zobrazit menu
 show page generation time	common	cs	Zobrazit dobu generování stránky
 show page generation time on the bottom of the page?	common	cs	Zobrazovat dobu generování stránek na spodním okraji stránky?
-show the image properties dialog	htmlarea-ContextMenu	cs	Zobrazit dialog s vlastnostmi obrázku
-show the table cell properties dialog	htmlarea-ContextMenu	cs	Zobrazit dialog s vlastnostmi buòky tabulky
-show the table properties dialog	htmlarea-ContextMenu	cs	Zobrazit dialog s vlastnostmi tabulky
-show the table row properties dialog	htmlarea-ContextMenu	cs	Zobrazit dialog s vlastnostmi øádku tabulky
 show_more_apps	common	cs	zobrazit_více_aplikací
 showing %1	common	cs	zobrazeno %1
 showing %1 - %2 of %3	common	cs	zobrazeno %1 - %2 z %3
@@ -574,53 +446,31 @@ somalia	common	cs	Somálsko
 sorry, there was a problem processing your request.	common	cs	Promiòte, nastala chyba pøi zpracování va¹eho po¾adavku.
 sorry, your login has expired	login	cs	Promiòte, platnost va¹eho pøihlá¹ení ji¾ vypr¹ela
 south africa	common	cs	Jihoafrická republika
-spacing	htmlarea-TableOperations	cs	Odstup
-spacing and padding	htmlarea-TableOperations	cs	Odstup a výplò
 spain	common	cs	©panìlsko
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	cs	Kontrola pravopisu kompletní, nenalezena ¾ádná chybná slova. Zavírám...
-spell-check	htmlarea-SpellChecker	cs	Kontrola pravopisu
-split cell	htmlarea-TableOperations	cs	Rozdìlit buòku
-split column	htmlarea-TableOperations	cs	Rozdìlit sloupec
-split row	htmlarea-TableOperations	cs	Rozdìlit øádek
 sri lanka	common	cs	Srí Lanka (Cejlon)
 start date	common	cs	Poèáteèní datum
 start time	common	cs	Poèáteèní èas
 start with	common	cs	zaèít s
 status	common	cs	Stav
-strikethrough	htmlarea	cs	Pøe¹krtnuté
-style [css]	htmlarea-TableOperations	cs	Styl [CSS]
 subject	common	cs	Pøedmìt
 submit	common	cs	Potvrdit
-subscript	htmlarea	cs	Spodní index
 substitutions and their meanings:	common	cs	Nahrazení a jejich význam:
 sudan	common	cs	Súdán
-suggestions	htmlarea-SpellChecker	cs	Doporuèení
-summary	htmlarea-TableOperations	cs	Pøehled
 sunday	common	cs	Nedìle
-superscript	htmlarea	cs	Horní index
 suriname	common	cs	Surinam
 sweden	common	cs	©védsko
 switzerland	common	cs	©výcarsko
-table properties	htmlarea-TableOperations	cs	Vlastnosti tabulky
 tajikistan	common	cs	Tád¾ikistán
 tanzania, united republic of	common	cs	Tanzánie
-text align	htmlarea-TableOperations	cs	Zarovnání textu
 text color:	common	cs	Barva textu:
 thailand	common	cs	Thajsko
 the api is current	common	cs	API je aktuální
 the api requires an upgrade	common	cs	API potøebuje upgrade
-the bottom side only	htmlarea-TableOperations	cs	Pouze spodní strana
 the following applications require upgrades	common	cs	Následující aplikace vy¾adují upgrade
-the left-hand side only	htmlarea-TableOperations	cs	Pouze pravá strana
 the mail server returned	common	cs	Po¹tovní server vrátil
-the right and left sides only	htmlarea-TableOperations	cs	Pouze pravá a levá strana
-the right-hand side only	htmlarea-TableOperations	cs	Pouze pravá strana
-the top and bottom sides only	htmlarea-TableOperations	cs	Pouze horní a spodní strana
-the top side only	htmlarea-TableOperations	cs	Pouze horní strana
 this application is current	common	cs	Tato aplikace je aktuální
 this application requires an upgrade	common	cs	Tato aplikace vy¾aduje upgrade
 this name has been used already	common	cs	Toto jméno u¾ je pou¾ito !
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	cs	Tímto nebude mo¾no ukonèit kontrolu pravopisu. Potvrïte prosím.
 thursday	common	cs	Ètvrtek
 time	common	cs	Èas
 time selection:	jscalendar	cs	Výbìr èasu:
@@ -633,10 +483,8 @@ to go back to the msg list, click <a href= %1 >here</a>	common	cs	<a href="%1">Z
 today	common	cs	Dnes
 todays date, eg. "%1"	common	cs	dne¹ní datum, napø. "%1"
 toggle first day of week	jscalendar	cs	Zvolit první den v týdnu
-toggle html source	htmlarea	cs	Zvolit HTML kód
 togo	common	cs	Togo
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	cs	Pøíli¹ mnoho neúspì¹ných pokusù o pøihlá¹ení: %1 od u¾ivatele '%2', %3 z IP %4
-top	htmlarea-TableOperations	cs	Vrchol
 total	common	cs	Celkem
 trinidad and tobago	common	cs	Trinidad a Tobago
 tuesday	common	cs	Úterý
@@ -645,19 +493,12 @@ turkey	common	cs	Turecko
 turkmenistan	common	cs	Turkmenistán
 uganda	common	cs	Uganda
 ukraine	common	cs	Ukrajina
-underline	htmlarea	cs	Podtr¾ené
-undoes your last action	htmlarea	cs	Vrátí va¹i poslední akci
 united arab emirates	common	cs	Spojené Arabské emiráty
 united kingdom	common	cs	Velká Británie
 united states	common	cs	Spojené státy
 unknown	common	cs	Neznámý
-unlink the current element	htmlarea-ContextMenu	cs	Odpojit aktuální element
-unset color	htmlarea-TableOperations	cs	Vrátit barvu
 update	common	cs	Aktualizace
 updated	common	cs	Upraven
-upload image	htmlarea-UploadImage	cs	Odeslat obrázek
-upper latin letters	htmlarea-ListType	cs	Velká písmena latinky
-upper roman numbers	htmlarea-ListType	cs	Velké øímské èíslice
 url	common	cs	URL
 use button to search for	common	cs	stisknout tlaèítko pro hledání
 use button to search for address	common	cs	stisknout tlaèítko pro hledání v adresáøi
@@ -673,20 +514,17 @@ users choice	common	cs	U¾ivatelská nabídka
 uzbekistan	common	cs	Uzbekistán
 venezuela	common	cs	Venezuela
 version	common	cs	Verze
-vertical align	htmlarea-TableOperations	cs	Vertikálnì zarovnat
 viet nam	common	cs	Vietnam
 view	common	cs	Prohlí¾et
 wednesday	common	cs	Støeda
 welcome	common	cs	Vítejte
 which groups	common	cs	Které skupiny
-width	htmlarea-TableOperations	cs	©íøka
 wk	jscalendar	cs	prac
 work email	common	cs	pracovní e-mail
 written by:	common	cs	Napsal:
 year	common	cs	Rok
 yemen	common	cs	Jemen
 yes	common	cs	Ano
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	cs	Nyní jste v TEXTOVÉM RE®IMU. Pro návrat do WYSIWIG pou¾ijte klávesy [<>].
 you are required to change your password during your first login	common	cs	Budete muset zmìnit heslo bìhem svého prvního pøihlá¹ení
 you are running a newer version of phpgroupware than your database is setup for	common	cs	Máte spu¹tìnu novìj¹í verzi phpGroupWare, ne¾ na jakou je va¹e databáze nastavena.
 you have %1 new messages!	common	cs	Máte %1 nových zpráv!

@@ -16,18 +16,11 @@
 3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis jour
 3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourcis mois
 80 (http)	admin	fr	80 (http)
-\n tidying up the html source, please wait...	htmlarea-HtmlTidy	fr	Stockage du source HTML en cours...
-_delete row	htmlarea-ContextMenu	fr	Effacer _Ligne
-_image properties...	htmlarea-ContextMenu	fr	Propriétés _Image
-_modify link...	htmlarea-ContextMenu	fr	_Modifier Lien
-_remove link...	htmlarea-ContextMenu	fr	_Effacer Lien
-_table properties...	htmlarea-ContextMenu	fr	Propriétés _Table...
 a editor instance must be focused before using this command.	tinymce	fr	Une instance de l'editeur doit être désignée avant d'utiliser cette commande.
 about	common	fr	A propos
 about %1	common	fr	A propos de %1
 about egroupware	common	fr	A propos d'eGroupware
 about the calendar	jscalendar	fr	A propos du Calendrier
-about this editor	htmlarea	fr	A propos de cet éditeur
 access	common	fr	Accès
 access not permitted	common	fr	Accès non permis
 account has been created	common	fr	Le compte a été créé
@@ -48,7 +41,6 @@ administration	common	fr	Administration
 afghanistan	common	fr	AFGHANISTAN
 albania	common	fr	ALBANIE
 algeria	common	fr	ALGERIE
-align	htmlarea-TableOperations	fr	Aligner
 align center	tinymce	fr	Aligner au centre
 align full	tinymce	fr	Justifier
 align left	tinymce	fr	Aligner &agrave; gauche
@@ -56,7 +48,6 @@ align right	tinymce	fr	Aligner &agrave; droite
 alignment	tinymce	fr	Alignement
 all	common	fr	Tous
 all fields	common	fr	tous les champs
-all four sides	htmlarea-TableOperations	fr	Tous les quatre côtés
 all occurrences of the search string was replaced.	tinymce	fr	Toutes les occurences de la chaine ont &eacute;t&eacute; remplc&eacute;es.
 alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	fr	Feuille de style alternative:
@@ -87,8 +78,6 @@ autosave default category	common	fr	Sauvegarde automatique dans catégorie par dé
 azerbaijan	common	fr	AZERBAIDJAN
 back	common	fr	Retour
 back to user login	common	fr	Retour au Login utilisateur
-background	htmlarea-TableOperations	fr	Arrière-plan
-background color	htmlarea	fr	Couleur de fond
 background color:	common	fr	Couleur d'arrière-plan
 backupdir '%1' is not writeable by the webserver	common	fr	Le répertoire de sauvegarde '%1' n'est pas "écrivable" par le serveur web
 bad login or password	common	fr	Mauvais login ou mot de passe
@@ -96,7 +85,6 @@ bahamas	common	fr	BAHAMAS
 bahrain	common	fr	BAHRAIN
 bangladesh	common	fr	BANGLADESH
 barbados	common	fr	BARBADE
-baseline	htmlarea-TableOperations	fr	Guide de base
 bcc	common	fr	Bcc
 belarus	common	fr	BIELORUSSIE
 belgium	common	fr	BELGIQUE
@@ -111,7 +99,6 @@ bold.gif	common	fr	bold_fr.gif
 bolivia	common	fr	BOLIVIE
 border	common	fr	Bordure
 border color	tinymce	fr	Border color
-borders	htmlarea-TableOperations	fr	Bords
 bosnia and herzegovina	common	fr	BOSNIE HERZEGOVINE
 botswana	common	fr	BOTSWANA
 bottom	common	fr	Bas
@@ -120,10 +107,8 @@ brazil	common	fr	BRESIL
 british indian ocean territory	common	fr	TERRITOIRES ANGLAIS DE L'OCEAN INDIEN
 brunei darussalam	common	fr	SULTANAT DE BRUNEI
 bulgaria	common	fr	BULGARIE
-bulleted list	htmlarea	fr	Liste avec puces
 burkina faso	common	fr	BURKINA FASO
 burundi	common	fr	BURUNDI
-c_ell properties...	htmlarea-ContextMenu	fr	Propriétés C_ellule...
 calendar	common	fr	Calendrier
 cambodia	common	fr	CAMBODGE
 cameroon	common	fr	CAMEROUN
@@ -140,7 +125,6 @@ category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
 category %1 has been updated !	common	fr	La catégorie %1 a été mise à jour !
 cayman islands	common	fr	ILES CAIMAN
 cc	common	fr	Cc
-cell properties	htmlarea-TableOperations	fr	Propriétés Cellule...
 cellpadding	tinymce	fr	Cellpadding
 cellspacing	tinymce	fr	Cellspacing
 center	tinymce	fr	Milieu
@@ -148,9 +132,7 @@ centered	common	fr	centré
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
 change	common	fr	Changer
-char	htmlarea-TableOperations	fr	Caractère
 charset	common	fr	iso-8859-1
-chec_k link...	htmlarea-ContextMenu	fr	Verifier Lien...
 check installation	common	fr	Vérifier l'installation
 check now	common	fr	Vérifier maintenant
 chile	common	fr	CHILI
@@ -161,7 +143,6 @@ choose a background image.	common	fr	Choisissez une image de fond
 choose a background style.	common	fr	Choisissez un style de fond
 choose a text color for the icons	common	fr	Choisissez une couleur de texte pour les icônes
 choose directory to move selected folders and files to.	tinymce	fr	Choisissez un répertoire pour y déplacer les fichiers et dossiers séléctionnés
-choose list style type (for ordered lists)	htmlarea-ListType	fr	Choisir le type de style de la liste (Pour les listes ordonnées)
 choose the category	common	fr	Choisir la catégorie
 choose the parent category	common	fr	Choisir la catégorie parente
 christmas island	common	fr	CHRISTMAS ISLAND
@@ -175,9 +156,7 @@ click or mouse over to show menus?	common	fr	Cliquer ou passer la souris dessus 
 close	common	fr	Fermer
 close sidebox	common	fr	Fermer la barre de menu latérale
 cocos (keeling) islands	common	fr	COCOS (KEELING) ISLANDS
-collapsed borders	htmlarea-TableOperations	fr	Bords joints
 colombia	common	fr	COLOMBIE
-color	htmlarea-TableOperations	fr	Couleur
 columns	tinymce	fr	Colonnes
 comment	tinymce	fr	Commentaire
 common preferences	common	fr	Préférences communes
@@ -189,24 +168,18 @@ congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE D
 contacting server...	common	fr	Connexion au serveur...
 cook islands	common	fr	ILES COOK
 copy	common	fr	Copier
-copy selection	htmlarea	fr	Sélection pour copier
 copy table row	tinymce	fr	Copy table row
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fr	Copier/Couper/Coller non disponible dans Mozilla et Firefox.\nVoulez-vous plus d'informations sur ce problème?
 costa rica	common	fr	COSTA RICA
 cote d ivoire	common	fr	COTE D IVOIRE
 could not contact server. operation timed out!	common	fr	Connexion au serveur impossible. Delai d'attente dépassé!
 create	common	fr	Créer
-create a link	htmlarea-ContextMenu	fr	Créer un lien
 created by	common	fr	Créé par
 croatia	common	fr	CROATIE
 cuba	common	fr	CUBA
 currency	common	fr	Devise
 current	common	fr	Courant
-current style	htmlarea	fr	Style courat
-current url is	htmlarea-ContextMenu	fr	L'URL actuelle est
 current users	common	fr	Utilisateurs connectés
-cut	htmlarea-ContextMenu	fr	Couper
-cut selection	htmlarea	fr	Sélection pour couper
 cut table row	tinymce	fr	Cut table row
 cyprus	common	fr	CHYPRE
 czech republic	common	fr	REPUBLIQUE TCHEQUE
@@ -215,26 +188,18 @@ date due	common	fr	Date butoir
 date modified	tinymce	fr	Date modifiée
 date selection:	jscalendar	fr	Sélection de la date :
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptze svp les règles de votre firewall avant de soumettre cette page.<br>(Port: 13 / Host: 129.6.15.28)
-de_lete column	htmlarea-ContextMenu	fr	Effacer Co_lonne
 december	common	fr	Décembre
-decimal numbers	htmlarea-ListType	fr	Nombres décimaux
-decrease indent	htmlarea	fr	Diminuer l'indentation
 default	tinymce	fr	D&eacute;faut
 default category	common	fr	Catégorie par défaut
 default height for the windows	common	fr	Hauteur par défaut de la fenêtre
 default width for the windows	common	fr	largeur par défaut de la fenêtre
 delete	common	fr	Supprimer
-delete cell	htmlarea-TableOperations	fr	Effacer cellule
-delete column	htmlarea-TableOperations	fr	Effacer colonne
 delete row	common	fr	Supprimer la ligne
-delete the current column	htmlarea-ContextMenu	fr	Effacer la colonne actuelle
-delete the current row	htmlarea-ContextMenu	fr	Effacer la ligne actuelle
 denmark	common	fr	DANEMARK
 description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
-dictionary	htmlarea-SpellChecker	fr	Dictionnaire
 direction	tinymce	fr	Direction
 direction left to right	common	fr	Direction de gauche à droite
 direction right to left	tinymce	fr	Direction de droite à gauche
@@ -270,7 +235,6 @@ egroupware api version %1	common	fr	eGroupWare version API %1
 egroupware: login blocked for user '%1', ip %2	common	fr	eGroupWare: login bloqué pour l´utilisateur '%1', IP %2
 egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
-element...	htmlarea-ContextMenu	fr	Elément...
 email	common	fr	EMail
 email-address of the user, eg. "%1"	common	fr	Adresse EMail de l'utilisateur, p.e. "%1"
 emotions	tinymce	fr	&Eacute;moticons
@@ -278,7 +242,6 @@ en	common	fr	en
 enabled	common	fr	Activé
 end date	common	fr	Date de fin
 end time	common	fr	Heure de fin
-enlarge editor	htmlarea	fr	Elargir l'éditeur
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fr	Entrer l´URL d´eGroupWare.<br>Exemple: http://www.domain.com/egroupware   ou   /egroupware<br><b>Pas de slash final</b>
 entry has been deleted sucessfully	common	fr	Entrée supprimée avec succès
 entry updated sucessfully	common	fr	Entrée mise à jour avec succès
@@ -296,7 +259,6 @@ falkland islands (malvinas)	common	fr	ILES FALKLAND (MALOUINES)
 faroe islands	common	fr	FAROE ISLANDS
 fax number	common	fr	Numéro de Fax
 february	common	fr	Février
-fg color	htmlarea-TableOperations	fr	Couleur avant-plan
 fields	common	fr	Champs
 fiji	common	fr	FIDJI
 file already exists. file was not uploaded.	tinymce	fr	Le fichier existe déjà. Fichier non envoyé.
@@ -315,7 +277,6 @@ find again	tinymce	fr	Trouver encore
 find what	tinymce	fr	Trouver le mot
 find&nbsp;next	tinymce	fr	Trouver le prochain
 find/replace	tinymce	fr	Trouver/Remplacer
-finished list of mispelled words	htmlarea-SpellChecker	fr	Terminé la liste des mots mal orthographiés
 finland	common	fr	FINLANDE
 first name	common	fr	Prénom
 first name of the user, eg. "%1"	common	fr	Prénom de l'utilisateur, p.e. "%1"
@@ -325,18 +286,15 @@ fixme!	common	fr	CORRIGEZ-MOI!
 flash files	tinymce	fr	Fichiers Flash
 flash properties	tinymce	fr	Flash properties
 flash-file (.swf)	tinymce	fr	Fichier-Flash (.swf)
-float	htmlarea-TableOperations	fr	Flottant
 folder	tinymce	fr	Dossier
 folder already exists.	common	fr	Le dossier existe déjà.
 folder name missing.	tinymce	fr	Nom de dossier manquant.
 folder not found.	tinymce	fr	Dossier non trouvé.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	fr	Un dossier avec ce nouveau nom existe déjà. Le dossier n'a pas été renommé/déplacé.
 folder(s)	tinymce	fr	Dossier(s)
-font color	htmlarea	fr	Couleur de la Police
 for mouse out	tinymce	fr	Pour la souris en dehors
 for mouse over	tinymce	fr	Pour la souris au dessus
 force selectbox	common	fr	Forcer la boîte de sélection
-frames	htmlarea-TableOperations	fr	Cadres
 france	common	fr	FRANCE
 french guiana	common	fr	GUYANNE FRANCAISE
 french polynesia	common	fr	POLYNESIE FRANCAISE
@@ -380,7 +338,6 @@ haiti	common	fr	HAITI
 heard island and mcdonald islands	common	fr	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	fr	Hauteur
 help	common	fr	Aide
-help using editor	htmlarea	fr	Aide en utilisant l'éditeur
 high	common	fr	Haut
 highest	common	fr	Plus haut
 holy see (vatican city state)	common	fr	VATICAN
@@ -388,29 +345,15 @@ home	common	fr	Accueil
 home email	common	fr	email Accueil
 honduras	common	fr	HONDURAS
 hong kong	common	fr	HONG KONG
-horizontal rule	htmlarea	fr	Règle Horizontale
-how did you get here? (please report!)	htmlarea-ContextMenu	fr	Comment êtes-vous arrivé là? (Dites-nous SVP!)
-how many columns would you like to merge?	htmlarea-TableOperations	fr	Combien de colonnes voulez-vous fusionner?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fr	Combien d'icônes devraient être montrés sur la barre de navigation (haut de page). Les icônes suplémentaires seront placés dans une liste que l'ont appelera via un icône placé à droite de la barre de navigation.
-how many rows would you like to merge?	htmlarea-TableOperations	fr	Combien de lignes voulez-vous fusionner?
-html tidy	htmlarea-HtmlTidy	fr	Mise en forme HTML
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	fr	HTMLArea refuse d'effacer la dernière cellule de la ligne.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	fr	HTMLArea refuse d'effacer la dernière colonne de la table.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	fr	HTMLArea refuse d'effacer la dernière ligne de la table.
 hungary	common	fr	HONGRIE
-i will open it in a new page.	htmlarea-SpellChecker	fr	Je vais l'ouvrir dans une nouvelle page.
-i_nsert row before	htmlarea-ContextMenu	fr	I_nsérer Ligne Avant
 iceland	common	fr	ISLANDE
 iespell not detected. click ok to go to download page.	common	fr	ieSpell non détécté. Cliquez sur Ok pour aller à la page de téléchargement.
 if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée vouslez vous le mettre à jour toutes les secondes ou toutes les minutes?
 if there are some images in the background folder you can choose the one you would like to see.	common	fr	Si il y a des images dans le dossier des fonds, vous pouvez choisir celle que vous voulez voir.
-ignore	htmlarea-SpellChecker	fr	Ignorer
-ignore all	htmlarea-SpellChecker	fr	Ignorer tout
 image description	tinymce	fr	Description de l'image
 image title	tinymce	fr	Titre de l'image
 image url	common	fr	URL de l'Image
-in_sert row after	htmlarea-ContextMenu	fr	In_sérer Ligne Après
-increase indent	htmlarea	fr	Augmenter l'indentation
 indent	tinymce	fr	Augmenter le retrait
 india	common	fr	INDE
 indonesia	common	fr	INDONESIE
@@ -418,27 +361,16 @@ insert	tinymce	fr	Insertion
 insert 'return false'	common	fr	Insérer 'return false'
 insert / edit flash movie	tinymce	fr	Insérer / éditer une vidéo Flash
 insert / edit horizontale rule	tinymce	fr	Insérer / éditer un Rôle horizontal
-insert _column before	htmlarea-ContextMenu	fr	Insérer _Colonne Avant
-insert a new column after the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle colonne après celle-ci
-insert a new column before the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle colonne avant celle-ci
-insert a new row after the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle ligne après celle-ci
-insert a new row before the current one	htmlarea-ContextMenu	fr	Insérer une nouvelle ligne avant celle-ci
 insert all %1 addresses of the %2 contacts in %3	common	fr	Insérer toutes les %1 adresses des %2 contacts de %3
-insert c_olumn after	htmlarea-ContextMenu	fr	Insérer _Colonne Après
-insert cell after	htmlarea-TableOperations	fr	Insérer cellule après
-insert cell before	htmlarea-TableOperations	fr	Insérer cellule avant
 insert column after	common	fr	Ins&eacute;rer une colonne apr&eacute;s
 insert column before	common	fr	Ins&eacute;rer une colonne avant
 insert date	tinymce	fr	Ins&egrave;rer la date
 insert emotion	tinymce	fr	Ins&egrave;rer un &eacute;moticon
 insert file	tinymce	fr	Insérer un fichier
-insert image	htmlarea	fr	Insérer une image
 insert link to file	tinymce	fr	Insérer un lien vers un fichier
 insert row after	common	fr	Ins&eacute;rer une ligne apr&eacute;s
 insert row before	common	fr	Ins&eacute;rer une ligne avant
-insert table	htmlarea	fr	Insérer une table
 insert time	tinymce	fr	Insérer l'heure
-insert web link	htmlarea	fr	Insérer un lien Web
 insert/edit image	tinymce	fr	Ins&eacute;rer/éditer une image
 insert/edit link	tinymce	fr	Insertion/&eacute;dition lien
 insert/modify table	tinymce	fr	Ins&eacute;rer/Modifier le tableau
@@ -464,7 +396,6 @@ js-popup	tinymce	fr	JS-Popup
 july	common	fr	Juillet
 jun	common	fr	Jun
 june	common	fr	Juin
-justify	htmlarea-TableOperations	fr	Justifier
 justify center	common	fr	Centrer
 justify full	common	fr	Justifier
 justify left	common	fr	Aligner à Gauche
@@ -486,7 +417,6 @@ last name of the user, eg. "%1"	common	fr	Nom de famille de l'utilisateur, p.e. 
 last page	common	fr	Dernière page
 lastname	common	fr	Nom
 latvia	common	fr	LATVIA
-layout	htmlarea-TableOperations	fr	Affichage
 ldap-mgr	common	fr	Gestionnaire-LDAP
 lebanon	common	fr	LIBAN
 left	common	fr	Gauche
@@ -496,7 +426,6 @@ libyan arab jamahiriya	common	fr	LIBYE
 license	common	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv ne correspondent pas au nombre de colonnes de la table %3 ==> ignoré</b>
-link points to:	htmlarea-ContextMenu	fr	Lier les points à:
 link url	tinymce	fr	Lien URL
 list	common	fr	Liste
 list members	common	fr	Liste les membres
@@ -507,9 +436,6 @@ login	common	fr	Login
 loginid	common	fr	LoginID
 logout	common	fr	Déconnexion
 low	common	fr	Bas
-lower greek letters	htmlarea-ListType	fr	Lettres grecques minuscules
-lower latin letters	htmlarea-ListType	fr	Lettres latines minuscules
-lower roman numbers	htmlarea-ListType	fr	Chiffres romains minuscules
 lowest	common	fr	Plus bas
 luxembourg	common	fr	LUXEMBOURG
 macau	common	fr	MACAU
@@ -519,7 +445,6 @@ mail domain, eg. "%1"	common	fr	Domaine EMail, p.e. "%1"
 main category	common	fr	Catégorie principale
 main screen	common	fr	Ecran principal
 maintainer	common	fr	Mainteneur
-make lin_k...	htmlarea-ContextMenu	fr	Créer un lien...
 make window resizable	tinymce	fr	Fabriquer une fen?tre redimensionnable
 malawi	common	fr	MALAWI
 malaysia	common	fr	MALAYSIE
@@ -527,7 +452,6 @@ maldives	common	fr	MALDIVES
 mali	common	fr	MALI
 malta	common	fr	MALTE
 march	common	fr	Mars
-margin	htmlarea-TableOperations	fr	Marge
 marshall islands	common	fr	ILES MARSHALL
 martinique	common	fr	MARTINIQUE
 match case	tinymce	fr	Respecter la casse
@@ -538,15 +462,12 @@ may	common	fr	Mai
 mayotte	common	fr	MAYOTTE
 medium	common	fr	Moyen
 menu	common	fr	Menu
-merge cells	htmlarea-TableOperations	fr	Fusionner les cellules
 merge table cells	tinymce	fr	Merge table cells
 message	common	fr	Message
 mexico	common	fr	MEXIQUE
 micronesia, federated states of	common	fr	MICRONESIA, FEDERATED STATES OF
-middle	htmlarea-TableOperations	fr	Milieu
 minute	common	fr	minute
 mkdir failed.	tinymce	fr	Mkdir échoué.
-modify url	htmlarea-ContextMenu	fr	Modifier l'URL
 moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
 monaco	common	fr	MONACO
 monday	common	fr	Lundi
@@ -587,16 +508,13 @@ no	common	fr	Non
 no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
 no files...	tinymce	fr	Aucun Fichier...
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	fr	Aucun mot mal orthographié dans le dictionnaire sélectionné.
 no permission to create folder.	tinymce	fr	Aucun droit de créer un dossier.
 no permission to delete file.	tinymce	fr	Aucun droit de supprimer un fichier.
 no permission to move files and folders.	tinymce	fr	Aucun droit de déplacer des fichiers ou dossiers.
 no permission to rename files and folders.	tinymce	fr	Aucun droit de renommer des fichiers ou dossiers.
 no permission to upload.	tinymce	fr	Aucun droit d'upload.
-no rules	htmlarea-TableOperations	fr	Sans règles
 no savant2 template directories were found in:	common	fr	Pas de  dossier modèle Savant2 n'a été trouvé dans:
 no shadow	tinymce	fr	Sans ombre
-no sides	htmlarea-TableOperations	fr	Sans côtés
 no subject	common	fr	Sans Sujet
 none	common	fr	Aucun
 norfolk island	common	fr	NORFOLK ISLAND
@@ -629,15 +547,12 @@ open link in the same window	tinymce	fr	Ouvrir le lien dans la même fen&ecirc;tr
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
 open sidebox	common	fr	Ouvrir la barre de menu latérale
-opens this link in a new window	htmlarea-ContextMenu	fr	Ouvrir ce lien dans une nouvelle fenêtre
 ordered list	common	fr	Liste ordonn&eacute;e (num&eacute;ros)
 original	common	fr	Original
-original word	htmlarea-SpellChecker	fr	Mot original
 other	common	fr	Autre
 outdent	tinymce	fr	Diminuer le retrait
 overview	common	fr	Vue d'ensemble
 owner	common	fr	Propriétaire
-padding	htmlarea-TableOperations	fr	Remplissage
 page	common	fr	Page
 page was generated in %1 seconds	common	fr	La page a été générée en %1 secondes
 pakistan	common	fr	PAKISTAN
@@ -656,19 +571,15 @@ password must contain at least %1 numbers	common	fr	Le mot de passe doit conteni
 password must contain at least %1 special characters	common	fr	Le mot de passe doit contenir au moins %1 caractères spéciaux
 password must contain at least %1 uppercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères majuscules
 password must have at least %1 characters	common	fr	Le mot de passe doit contenir au moins %1 caractères
-paste	htmlarea-ContextMenu	fr	Coller
 paste as plain text	tinymce	fr	Coller comme du texte simple
-paste from clipboard	htmlarea	fr	Coller depuis la presse-papiers
 paste from word	tinymce	fr	Coller depuis Word
 paste table row after	tinymce	fr	Paste table row after
 paste table row before	tinymce	fr	Paste table row before
-path	htmlarea	fr	Chemin
 path not found.	tinymce	fr	Chemin non trouvé
 path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
 pattern for search in addressbook	common	fr	Chaîne à rechercher dans le carnet d'adresses
 pattern for search in calendar	common	fr	Chaîne à rechercher dans le calendrier
 pattern for search in projects	common	fr	Chaîne à rechercher dans les projets
-percent	htmlarea-TableOperations	fr	pourcent
 permissions to the files/users directory	common	fr	Permissions sur le répertoire fichiers/utilisateurs
 personal	common	fr	Personnel
 peru	common	fr	PERU
@@ -676,12 +587,7 @@ philippines	common	fr	PHILIPPINES
 phone number	common	fr	Numéro de téléphone
 phpgwapi	common	fr	API eGroupWare
 pitcairn	common	fr	PITCAIRN
-pixels	htmlarea-TableOperations	fr	pixels
 please %1 by hand	common	fr	Veuillez %1 à la main
-please click into some cell	htmlarea-TableOperations	fr	Veuillez cliquer dans une cellule
-please confirm that you want to open this link	htmlarea-SpellChecker	fr	Veuillez confirmer que vous voulez ouvrir ce lien
-please confirm that you want to remove this element:	htmlarea-ContextMenu	fr	Veuillez confirmer que vous voulez effacer cet élément:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	fr	Veuillez confirmer que vous voulez enlever le lien à cet élément.
 please enter a name	common	fr	Veuillez saisir un nom !
 please enter the caption text	tinymce	fr	Veuillez saisir le texte de la légende
 please insert a name for the target or choose another option.	tinymce	fr	Veuillez ins&eacute;rer un nom pour la cible ou choisissez une autre option.
@@ -689,10 +595,7 @@ please run setup to become current	common	fr	Veuillez exécutez setup pour vous m
 please select	common	fr	Veuillez Choisir
 please set your global preferences	common	fr	Veuillez réglez vos préférences globales !
 please set your preferences for this application	common	fr	Veuillez définir vos préférences pour cette application
-please wait.  calling spell checker.	htmlarea-SpellChecker	fr	Veuillez patienter. Appel au correcteur d'orthographe.
 please wait...	common	fr	Veuillez patienter...
-please wait: changing dictionary to	htmlarea-SpellChecker	fr	Veuillez patienter: changement dictionnaire vers
-pliz weit ;-)	htmlarea-SpellChecker	fr	paaatientez SVP ;-)
 poland	common	fr	POLOGNE
 popup url	tinymce	fr	URL de la Popup
 portugal	common	fr	PORTUGAL
@@ -715,40 +618,28 @@ project	common	fr	Projet
 public	common	fr	public
 puerto rico	common	fr	PUERTO RICO
 qatar	common	fr	QATAR
-re-check	htmlarea-SpellChecker	fr	Re-vérifier
 read	common	fr	Lire
 read this list of methods.	common	fr	Lire cette liste de méthodes.
 reading	common	fr	Lecture
 redo	tinymce	fr	Refaire
-redoes your last action	htmlarea	fr	Répète votre dernière action
 refresh	tinymce	fr	Rafraichir
 reject	common	fr	Rejeter
 remove col	tinymce	fr	Supprimer la colonne
 remove selected accounts	common	fr	effacer les comptes sélectionnés
 remove shortcut	common	fr	Effacer le raccourci
-remove the	htmlarea-ContextMenu	fr	Enlever le
-remove this node from the document	htmlarea-ContextMenu	fr	Enlever ce noeud du document
 rename	common	fr	Renommer
 rename failed	tinymce	fr	Renommage échoué
 replace	common	fr	Remplacer
-replace all	htmlarea-SpellChecker	fr	Remplacer tout
 replace with	common	fr	Remplacer avec
 replace&nbsp;all	tinymce	fr	Remplacer tout
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
 returns an array of todo items	common	fr	Retourne une matrice d'objets à faire
 returns struct of users application access	common	fr	Retourne une structure d'accès aux applications des utilisateurs
 reunion	common	fr	REUNION
-revert	htmlarea-SpellChecker	fr	Annuler
 right	common	fr	Droit
 rmdir failed.	tinymce	fr	Rmdir échoué.
-ro_w properties...	htmlarea-ContextMenu	fr	Propriétés de la ligne...
 romania	common	fr	ROUMANIE
-row properties	htmlarea-TableOperations	fr	Propriétés Ligne
 rows	tinymce	fr	Lignes
-rules	htmlarea-TableOperations	fr	Règles
-rules will appear between all rows and columns	htmlarea-TableOperations	fr	Les Règles apparaîtront entre toutes les lignes et colonnes
-rules will appear between columns only	htmlarea-TableOperations	fr	Les Règles apparaîtront entre les colonnes seulement
-rules will appear between rows only	htmlarea-TableOperations	fr	Les Règles apparaîtront entre les lignes seulement
 run spell checking	tinymce	fr	Démarrer la vérification orthographique
 russian federation	common	fr	FEDERATION DE RUSSIE
 rwanda	common	fr	RWANDA
@@ -809,11 +700,7 @@ show page generation time on the bottom of the page?	common	fr	Montrer le temps 
 show page generation time?	common	fr	Afficher le temps de génération de la page?
 show scrollbars	tinymce	fr	Montrer la barre de d&eacute;filement
 show statusbar	tinymce	fr	Afficher la barre de status
-show the image properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des propriétés de l'image
 show the logo's of egroupware and x-desktop on the desktop.	common	fr	Afficher le logo d'eGroupware et x-destop sur le bureau?
-show the table cell properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau de Cellules
-show the table properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau
-show the table row properties dialog	htmlarea-ContextMenu	fr	Montrer la boîte de dialogue des Propriétés du Tableau de Lignes
 show toolbars	tinymce	fr	Afficher la barre d'outils
 show_more_apps	common	fr	Voir plus d'applications
 showing %1	common	fr	Montre %1
@@ -828,14 +715,7 @@ somalia	common	fr	SOMALIE
 sorry, your login has expired	login	fr	Désolé, votre login a expiré
 south africa	common	fr	AFRIQUE DU SUD
 south georgia and the south sandwich islands	common	fr	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
-spacing	htmlarea-TableOperations	fr	Espacement
-spacing and padding	htmlarea-TableOperations	fr	Espacement et remplissage
 spain	common	fr	ESPAGNE
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	fr	Correction orthographique terminée, pas trouvé de mot mal orthographié. Fermeture...
-spell-check	htmlarea-SpellChecker	fr	Correction orthographique
-split cell	htmlarea-TableOperations	fr	Partage de cellule
-split column	htmlarea-TableOperations	fr	Partage de colonne
-split row	htmlarea-TableOperations	fr	Partage de ligne
 split table cells	tinymce	fr	Split table cells
 sri lanka	common	fr	SRI LANKA
 start date	common	fr	Date de début
@@ -844,18 +724,12 @@ start with	common	fr	commence avec
 starting up...	common	fr	Démarrage...
 status	common	fr	Etat
 stretched	common	fr	étiré
-strikethrough	htmlarea	fr	Rayé
 striketrough	tinymce	fr	Barré
-style [css]	htmlarea-TableOperations	fr	Style [CSS]
 subject	common	fr	Sujet
 submit	common	fr	Envoyer
-subscript	htmlarea	fr	Subscript
 substitutions and their meanings:	common	fr	Substitutions et leurs sens:
 sudan	common	fr	SOUDAN
-suggestions	htmlarea-SpellChecker	fr	Suggestions
-summary	htmlarea-TableOperations	fr	Sommaire
 sunday	common	fr	Dimanche
-superscript	htmlarea	fr	Superscript
 suriname	common	fr	SURINAM
 svalbard and jan mayen	common	fr	SVALBARD AND JAN MAYEN
 swaziland	common	fr	SWAZILAND
@@ -869,26 +743,18 @@ taiwan	common	fr	TAIWAN/TAIPEI
 tajikistan	common	fr	TAJIKISTAN
 tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE OF
 target	tinymce	fr	Cible
-text align	htmlarea-TableOperations	fr	Aligner le Texte
 text color:	common	fr	Couleur du Texte:
 thailand	common	fr	THAILANDE
 the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
-the bottom side only	htmlarea-TableOperations	fr	En bas seulement
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
-the left-hand side only	htmlarea-TableOperations	fr	A gauche seulement
 the mail server returned	common	fr	Le serveur de mail a renvoyé
-the right and left sides only	htmlarea-TableOperations	fr	A gauche et droite seulement
-the right-hand side only	htmlarea-TableOperations	fr	A droite seulement
 the search has been compleated. the search string could not be found.	tinymce	fr	Votre recherche a &eacute;t&eacute; compl&eacute;&eacute;. La recherche de la chaine pourra ne pas aboutir.
-the top and bottom sides only	htmlarea-TableOperations	fr	En haut et en bas seulement
-the top side only	htmlarea-TableOperations	fr	En haut seulement
 this application is current	common	fr	Cette application est à jour
 this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
 this is just a template button	tinymce	fr	C'est juste un modèle de boutton
 this is just a template popup	tinymce	fr	C'est juste un modèle de popup
 this name has been used already	common	fr	Ce nom est déjà utilisé !
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	fr	Ceci annulera les modifications et quittera le correcteur orthographique. Veuillez confirmer SVP.
 thursday	common	fr	Jeudi
 tiled	common	fr	carrelé
 time	common	fr	Heure
@@ -903,7 +769,6 @@ today	common	fr	Aujourd'hui
 todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
 toggle first day of week	jscalendar	fr	Voir le premier jour de la semaine
 toggle fullscreen mode	tinymce	fr	Passer en plein-écran
-toggle html source	htmlarea	fr	Voir source HTML
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
 tonga	common	fr	TONGA
@@ -924,7 +789,6 @@ ukraine	common	fr	UKRAINE
 underline	common	fr	Soulign&eacute;
 underline.gif	common	fr	underline.gif
 undo	tinymce	fr	D&eacute;faire
-undoes your last action	htmlarea	fr	Annule votre dernière action
 united arab emirates	common	fr	EMIRATS ARABES UNIS
 united kingdom	common	fr	ROYAUME UNI
 united states	common	fr	ETATS-UNIS
@@ -932,18 +796,13 @@ united states minor outlying islands	common	fr	ILES MINEURES RELIEES AUX ETATS-U
 unknown	common	fr	Inconnu
 unlink	tinymce	fr	Enlever le lien
 unlink failed.	tinymce	fr	Retrait du lien échoué.
-unlink the current element	htmlarea-ContextMenu	fr	Enlever le lien à cet élément
 unordered list	tinymce	fr	Liste désordonn&eacute;e (puces)
-unset color	htmlarea-TableOperations	fr	Enlever la couleur
 up	tinymce	fr	Haut
 update	common	fr	Insertion
 update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
 upload	common	fr	Upload
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire d'upload n'existe pas ou n'est pas ecrivable par le serveur web
-upload image	htmlarea-UploadImage	fr	Uploader l'Image
 uploading...	tinymce	fr	Envoi...
-upper latin letters	htmlarea-ListType	fr	Lettres latines majuscules
-upper roman numbers	htmlarea-ListType	fr	Chiffres romains majuscules
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
@@ -963,7 +822,6 @@ uzbekistan	common	fr	UZBEKISTAN
 vanuatu	common	fr	VANUATU
 venezuela	common	fr	VENEZUELA
 version	common	fr	version
-vertical align	htmlarea-TableOperations	fr	Alignement vertical
 vertical alignment	tinymce	fr	Alignement Vertical
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
@@ -988,7 +846,6 @@ written by:	common	fr	Ecrit par:
 year	common	fr	Année
 yemen	common	fr	YEMEN
 yes	common	fr	Oui
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	fr	Vous êtes en MODE TEXTE. Utilisez le bouton [<>] pour revenir au mode WYSIWIG.
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
 you have been successfully logged out	login	fr	Déconnexion réussie
 you have not entered a title	common	fr	Vous n'avez pas entré de titre

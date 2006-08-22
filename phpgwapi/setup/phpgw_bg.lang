@@ -33,7 +33,6 @@ automatically hide the sidebox menus?	common	bg	Да се скрива ли автоматично стра
 azerbaijan	common	bg	Азербайджан
 back	common	bg	Назад
 back to user login	common	bg	Назад към входа за потребители
-background color	htmlarea	bg	Фонов цвят
 bad login or password	common	bg	Грешно потребителско име или парола
 bahamas	common	bg	Бахамски острови
 bahrain	common	bg	Бахрейн
@@ -44,13 +43,11 @@ belgium	common	bg	Белгия
 benin	common	bg	Бенин
 bhutan	common	bg	Бутан
 blocked, too many attempts	common	bg	Блокирани сте заради твърде много грешни опити
-bold	htmlarea	bg	Получер
 bolivia	common	bg	Боливия
 bosnia and herzegovina	common	bg	Босна и Херцеговина
 botswana	common	bg	Ботсвана
 brazil	common	bg	Бразилия
 bulgaria	common	bg	България
-bulleted list	htmlarea	bg	Списък с точки
 burkina faso	common	bg	Буркина Фасо
 burundi	common	bg	Бурунди
 calendar	common	bg	Календар
@@ -83,7 +80,6 @@ congo	common	bg	Конго
 congo, the democratic republic of the	common	bg	Демократична Република Конго
 cook islands	common	bg	Острови Кук
 copy	common	bg	Копиране
-copy selection	htmlarea	bg	Копиране на избраното
 costa rica	common	bg	Коста Рика
 cote d ivoire	common	bg	Бряг на Слоновата Кост
 create	common	bg	Създаване
@@ -92,12 +88,10 @@ croatia	common	bg	Хърватска
 cuba	common	bg	Куба
 currency	common	bg	Валута
 current users	common	bg	Включени потребители
-cut selection	htmlarea	bg	Изрязване на избраното
 cyprus	common	bg	Кипър
 czech republic	common	bg	Чешка Република
 date	common	bg	Дата
 december	common	bg	Декември
-decrease indent	htmlarea	bg	Намаляване на отстъпа
 default category	common	bg	Категория по подразбиране
 delete	common	bg	Изтриване
 denmark	common	bg	Дания
@@ -142,7 +136,6 @@ files	common	bg	Файлове
 filter	common	bg	Филтър
 finland	common	bg	Финландия
 first page	common	bg	Първа страница
-font color	htmlarea	bg	Цвят на шрифта
 france	common	bg	Франция
 french guiana	common	bg	Френска Гвиана
 french polynesia	common	bg	Френска Полинезия
@@ -179,14 +172,10 @@ home	common	bg	Начало
 home email	common	bg	home email
 honduras	common	bg	Хондурас
 hong kong	common	bg	Хонг-Конг
-horizontal rule	htmlarea	bg	Водоравна черта
 hungary	common	bg	Унгария
 iceland	common	bg	Исландия
-increase indent	htmlarea	bg	Увеличаване на отстъпа
 india	common	bg	Индия
 indonesia	common	bg	Индонезия
-insert image	htmlarea	bg	Вмъкване на изображение
-insert table	htmlarea	bg	Вмъкване на таблица
 invalid ip address	common	bg	Невалиден IP адрес
 invalid password	common	bg	Грешна парола
 iran, islamic republic of	common	bg	Ислямска Република Иран
@@ -281,7 +270,6 @@ oman	common	bg	Оман
 on *nix systems please type: %1	common	bg	На *nix системи напишете: %1
 only private	common	bg	само "лични"
 only yours	common	bg	само вашите
-ordered list	htmlarea	bg	Номериран списък
 other	common	bg	Друго
 overview	common	bg	Преглед
 owner	common	bg	Собственик
@@ -365,10 +353,8 @@ start time	common	bg	Начален час
 status	common	bg	Състояние
 subject	common	bg	Относно
 submit	common	bg	Изпращане
-subscript	htmlarea	bg	Долен индекс
 sudan	common	bg	Судан
 sunday	common	bg	Неделя
-superscript	htmlarea	bg	Горен индекс
 suriname	common	bg	Суринам
 sweden	common	bg	Швеция
 switzerland	common	bg	Швейцария
@@ -398,7 +384,6 @@ turkey	common	bg	Турция
 turkmenistan	common	bg	Туркменистан
 uganda	common	bg	Уганда
 ukraine	common	bg	Украйна
-undoes your last action	htmlarea	bg	Отменя последното ви действие
 united arab emirates	common	bg	Обединени Арабски Емирства
 united kingdom	common	bg	Великобритания
 united states	common	bg	Съединени Американски Щати

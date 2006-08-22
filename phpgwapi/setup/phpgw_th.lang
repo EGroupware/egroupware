@@ -13,7 +13,6 @@
 about	common	th	เรือง
 about %1	common	th	เรือง %1
 about the calendar	jscalendar	th	เรืองปฏิทิน
-about this editor	htmlarea	th	เรืองโปรแกรมแก้ไขนี้
 access	common	th	
 access not permitted	common	th	
 account has been created	common	th	สร้างบัญชีเสร็จแล้ว
@@ -58,7 +57,6 @@ autosave default category	common	th
 azerbaijan	common	th	
 back	common	th	กลับไป
 back to user login	common	th	กลับไปถึงหน้าเข้า
-background color	htmlarea	th	สีพื้นหลัง
 bad login or password	common	th	รหัสผ่านหรือขื่อไม่ถูก
 bahamas	common	th	
 bahrain	common	th	
@@ -72,7 +70,6 @@ benin	common	th
 bermuda	common	th	
 bhutan	common	th	
 blocked, too many attempts	common	th	
-bold	htmlarea	th	เน้น
 bolivia	common	th	
 bosnia and herzegovina	common	th	
 botswana	common	th	
@@ -81,7 +78,6 @@ brazil	common	th
 british indian ocean territory	common	th	
 brunei darussalam	common	th	
 bulgaria	common	th	
-bulleted list	htmlarea	th	
 burkina faso	common	th	
 burundi	common	th	
 calendar	common	th	ปฏิทิน
@@ -121,7 +117,6 @@ congo	common	th
 congo, the democratic republic of the	common	th	
 cook islands	common	th	
 copy	common	th	ถ่าย
-copy selection	htmlarea	th	ถ่ายเขตเลือก
 costa rica	common	th	
 cote d ivoire	common	th	
 create	common	th	สร้าง
@@ -130,9 +125,7 @@ croatia	common	th
 cuba	common	th	
 currency	common	th	เงินตรา
 current	common	th	ปัจจุบัน
-current style	htmlarea	th	ไสตล์ปัจจุบัน
 current users	common	th	ผู้ใช้ปัจจุบัน
-cut selection	htmlarea	th	
 cyprus	common	th	
 czech republic	common	th	
 date	common	th	วันที่
@@ -140,7 +133,6 @@ date due	common	th	วันที่กำหนด
 date selection:	jscalendar	th	
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	th	
 december	common	th	ธันวาคม
-decrease indent	htmlarea	th	
 default category	common	th	
 delete	common	th	ลบ
 denmark	common	th	
@@ -179,7 +171,6 @@ email-address of the user, eg. "%1"	common	th
 enabled	common	th	
 end date	common	th	วันที่เสร็จ
 end time	common	th	เวลาที่เสร็จ
-enlarge editor	htmlarea	th	
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	th	
 entry has been deleted sucessfully	common	th	ลบขัอเสร็จแล้ว
 entry updated sucessfully	common	th	แก้ไขข้อเสร็จแล้ว
@@ -205,7 +196,6 @@ first name of the user, eg. "%1"	common	th
 first page	common	th	หน้าแรก
 firstname	common	th	ขื่อ
 fixme!	common	th	นี่ผิด แก้ซิ
-font color	htmlarea	th	สีตัวอักสร
 force selectbox	common	th	
 france	common	th	
 french guiana	common	th	
@@ -247,7 +237,6 @@ guyana	common	th
 haiti	common	th	
 heard island and mcdonald islands	common	th	
 help	common	th	ช่วยเหลือ
-help using editor	htmlarea	th	
 high	common	th	สูง
 highest	common	th	สูงสุด
 holy see (vatican city state)	common	th	
@@ -255,17 +244,12 @@ home	common	th	โฮม
 home email	common	th	อีเมลบ้าน
 honduras	common	th	
 hong kong	common	th	
-horizontal rule	htmlarea	th	เส้นแนวนอน
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	th	
 hungary	common	th	
 iceland	common	th	
-increase indent	htmlarea	th	
 india	common	th	อินเดีย
 indonesia	common	th	อินโดนิเซีย
 insert all %1 addresses of the %2 contacts in %3	common	th	
-insert image	htmlarea	th	แทรกภาพ
-insert table	htmlarea	th	แทรกตาราง
-insert web link	htmlarea	th	แทรกลิ้งค์
 international	common	th	นานาชาติ
 invalid ip address	common	th	
 invalid password	common	th	รหัสผ่านไม่ถูก
@@ -283,10 +267,6 @@ japan	common	th
 jordan	common	th	
 july	common	th	กรกฎาคม
 june	common	th	มิถุนายน
-justify center	htmlarea	th	
-justify full	htmlarea	th	
-justify left	htmlarea	th	
-justify right	htmlarea	th	
 kazakstan	common	th	
 kenya	common	th	
 keywords	common	th	
@@ -396,7 +376,6 @@ only private	common	th
 only yours	common	th	
 open notify window	common	th	
 open popup window	common	th	
-ordered list	htmlarea	th	รายการต่ามลำดับ
 original	common	th	
 other	common	th	อื่นๆ
 overview	common	th	
@@ -413,8 +392,6 @@ parent category	common	th
 password	common	th	รหัสผ่าน
 password could not be changed	common	th	เปลียนรหัสผ่านไม่ได้
 password has been updated	common	th	แก้รหัสผ่านแล้ว
-paste from clipboard	htmlarea	th	
-path	htmlarea	th	
 path to user and group files has to be outside of the webservers document-root!!!	common	th	
 pattern for search in addressbook	common	th	
 pattern for search in calendar	common	th	
@@ -450,7 +427,6 @@ puerto rico	common	th
 qatar	common	th	
 read	common	th	อ่าน
 read this list of methods.	common	th	
-redoes your last action	htmlarea	th	
 reject	common	th	
 rename	common	th	ตั้งชื่อใหม่
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	th	
@@ -513,14 +489,11 @@ sri lanka	common	th
 start date	common	th	เริ่มวันที่
 start time	common	th	เริ่มเวลา
 status	common	th	
-strikethrough	htmlarea	th	
 subject	common	th	หัวข้อ
 submit	common	th	
-subscript	htmlarea	th	
 substitutions and their meanings:	common	th	
 sudan	common	th	
 sunday	common	th	วันอาทิตย์
-superscript	htmlarea	th	
 suriname	common	th	
 svalbard and jan mayen	common	th	
 swaziland	common	th	
@@ -556,7 +529,6 @@ to go back to the msg list, click <a href= %1?sessionid=839561c3067511c6e0e98021
 today	common	th	วันนี้
 todays date, eg. "%1"	common	th	วันนี้วันที่เท่าไหร่ เช่น "%1"
 toggle first day of week	jscalendar	th	
-toggle html source	htmlarea	th	
 togo	common	th	
 tokelau	common	th	
 tonga	common	th	
@@ -571,8 +543,6 @@ turks and caicos islands	common	th
 tuvalu	common	th	
 uganda	common	th	
 ukraine	common	th	
-underline	htmlarea	th	
-undoes your last action	htmlarea	th	
 united arab emirates	common	th	
 united kingdom	common	th	
 united states	common	th	
@@ -610,7 +580,6 @@ written by:	common	th	เขียนโดย
 year	common	th	ปี
 yemen	common	th	
 yes	common	th	ใช่
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	th	
 you are required to change your password during your first login	common	th	
 you are running a newer version of egroupware than your database is setup for	common	th	
 you have been successfully logged out	login	th	

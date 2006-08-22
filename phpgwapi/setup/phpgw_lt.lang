@@ -6,7 +6,6 @@ about	common	lt	Apie
 about %1	common	lt	% - apie
 about egroupware	common	lt	Apie eGroupware
 about the calendar	jscalendar	lt	Apie kalendorių
-about this editor	htmlarea	lt	Apie redaktorių
 access	common	lt	Prieiga
 access not permitted	common	lt	Prieiga negalima
 addressbook	common	lt	Adresų knyga
@@ -34,7 +33,6 @@ blocked, too many attempts	common	lt	Užblokuota, per daug bandymų
 bolivia	common	lt	BOLIVIJA
 border	common	lt	Rėmelis
 border color	tinymce	lt	Rėmelio spalva
-borders	htmlarea-TableOperations	lt	Rėmeliai
 brazil	common	lt	BRAZILIJA
 bulgaria	common	lt	BULGARIJA
 calendar	common	lt	Kalendorius
@@ -48,7 +46,6 @@ charset	common	lt	utf-8
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
 colombia	common	lt	KOLUMBIJA
-color	htmlarea-TableOperations	lt	Spalva
 columns	tinymce	lt	Stulpeliai
 comment	tinymce	lt	Komentaras
 croatia	common	lt	KROATIJA
@@ -64,11 +61,9 @@ default category	common	lt	Numatyta kategorija
 default height for the windows	common	lt	Numatytas langų aukštis
 default width for the windows	common	lt	Numatytas langų plotis
 delete	common	lt	Trinti
-delete column	htmlarea-TableOperations	lt	Trinti stulpelį
 delete row	common	lt	Trinti eilutę
 denmark	common	lt	DANIJA
 description	common	lt	Apibūdinimas
-dictionary	htmlarea-SpellChecker	lt	Žodynas
 djibouti	common	lt	DŽIBUTIS
 e-mail	common	lt	El. paštas
 ecuador	common	lt	EKVADORAS
@@ -109,11 +104,8 @@ gibraltar	common	lt	GIBRALTARAS
 greece	common	lt	GRAIKIJA
 greenland	common	lt	GRENLANDIJA
 guatemala	common	lt	GVATEMALA
-how did you get here? (please report!)	htmlarea-ContextMenu	lt	Kaip čia patekote? (Prašome pranešti)
 hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
-ignore	htmlarea-SpellChecker	lt	Ignoruoti
-ignore all	htmlarea-SpellChecker	lt	Ignoruoti visus
 india	common	lt	INDIJA
 indonesia	common	lt	INDONEZIJA
 insert	tinymce	lt	Įterpti
@@ -138,8 +130,6 @@ lastname	common	lt	Pavardė
 latvia	common	lt	LATVIJA
 liberia	common	lt	LIBERIJA
 lithuania	common	lt	LIETUVA
-lower greek letters	htmlarea-ListType	lt	Mažosios lotyniškos raidės
-lower latin letters	htmlarea-ListType	lt	Mažosios graikiškos raidės
 luxembourg	common	lt	LIUKSEMBURGAS
 madagascar	common	lt	MADAGASKARAS
 main category	common	lt	Pagrindinė kategorija
@@ -147,7 +137,6 @@ malaysia	common	lt	MALAIZIJA
 mali	common	lt	MALIS
 malta	common	lt	MALTA
 march	common	lt	Kovas
-margin	htmlarea-TableOperations	lt	Paraštė
 menu	common	lt	Meniu
 mexico	common	lt	MEKSIKA
 minute	common	lt	minutė

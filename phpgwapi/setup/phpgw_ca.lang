@@ -16,18 +16,11 @@
 3 number of chars for day-shortcut	jscalendar	ca	3 caràcters per a l'abreviatura del dia
 3 number of chars for month-shortcut	jscalendar	ca	3 caràcters per a l'abreviatura del mes
 80 (http)	admin	ca	80 (http)
-\n tidying up the html source, please wait...	htmlarea-HtmlTidy	ca	\n Ordenant el codi HTML, espereu si us plau...
-_delete row	htmlarea-ContextMenu	ca	_Esborra Fila
-_image properties...	htmlarea-ContextMenu	ca	_Propietats de la Imatge...
-_modify link...	htmlarea-ContextMenu	ca	_Modifica Enllaç...
-_remove link...	htmlarea-ContextMenu	ca	_Esborra enllaç...
-_table properties...	htmlarea-ContextMenu	ca	_Propietats de la Taula...
 a editor instance must be focused before using this command.	tinymce	ca	S'ha d'enfocar una instància d'editor abans de poder utilitzar aquesta comanda.
 about	common	ca	Quant a
 about %1	common	ca	Quant a %1
 about egroupware	common	ca	Quant a eGroupware
 about the calendar	jscalendar	ca	Quant al calendari
-about this editor	htmlarea	ca	Quant a aquest editor
 access	common	ca	Accés
 access not permitted	common	ca	Accés no permès
 account has been created	common	ca	Compte creat
@@ -48,7 +41,6 @@ administration	common	ca	Administració
 afghanistan	common	ca	AFGANISTAN
 albania	common	ca	ALBÀNIA
 algeria	common	ca	ALGÈRIA
-align	htmlarea-TableOperations	ca	Alinea
 align center	tinymce	ca	Alinea al centre
 align full	tinymce	ca	Alinea amplada total
 align left	tinymce	ca	Alinea a l'esquerra
@@ -56,7 +48,6 @@ align right	tinymce	ca	Alinea a la dreta
 alignment	tinymce	ca	Alineació
 all	common	ca	Tot
 all fields	common	ca	tots els camps
-all four sides	htmlarea-TableOperations	ca	Els quatre costats
 all occurrences of the search string was replaced.	tinymce	ca	Totes les ocurrències de la cadena de cerca s'han reemplaçat.
 alphabet	common	ca	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	ca	Fulla d'estils alternativa:
@@ -87,8 +78,6 @@ autosave default category	common	ca	Desar automàticament la Categoria Predetermi
 azerbaijan	common	ca	AZERBAIJÀN
 back	common	ca	Enrere
 back to user login	common	ca	Tornar a identificació d'usuari
-background	htmlarea-TableOperations	ca	Fons
-background color	htmlarea	ca	Color de fons
 background color:	common	ca	Color de fons:
 backupdir '%1' is not writeable by the webserver	common	ca	el servidor web no té permís d'escriptura dins el directori de còpies de seguretat '%1'
 bad login or password	common	ca	Nom d'usuari o contrasenya incorrectes
@@ -96,7 +85,6 @@ bahamas	common	ca	BAHAMES
 bahrain	common	ca	BAHREIN
 bangladesh	common	ca	BANGLADESH
 barbados	common	ca	BARBADOS
-baseline	htmlarea-TableOperations	ca	Línia zero
 bcc	common	ca	CCo
 belarus	common	ca	BIELORÚSSIA
 belgium	common	ca	BÈLGICA
@@ -111,7 +99,6 @@ bold.gif	common	ca	negreta.gif
 bolivia	common	ca	BOLIVIA
 border	common	ca	Vorera
 border color	tinymce	ca	color de vorera
-borders	htmlarea-TableOperations	ca	Voreres
 bosnia and herzegovina	common	ca	BOSNIA I HERZEGOVINA
 botswana	common	ca	BOTSWANA
 bottom	common	ca	Part inferior
@@ -120,10 +107,8 @@ brazil	common	ca	BRASIL
 british indian ocean territory	common	ca	TERRITORI OCEÀNIC DE LES INDIES BRITÀNIQUES
 brunei darussalam	common	ca	BRUNEI DARUSSALAM
 bulgaria	common	ca	BULGÀRIA
-bulleted list	htmlarea	ca	Llista d'esquema
 burkina faso	common	ca	BURKINA FASO
 burundi	common	ca	BURUNDI
-c_ell properties...	htmlarea-ContextMenu	ca	Propietats de Cel·la...
 calendar	common	ca	Calendari
 cambodia	common	ca	CAMBODJA
 cameroon	common	ca	CAMERUN
@@ -140,7 +125,6 @@ category %1 has been added !	common	ca	Categoria %1 afegida !
 category %1 has been updated !	common	ca	Categoria %1 actualitzada !
 cayman islands	common	ca	ILLES CAIMAN
 cc	common	ca	Cc
-cell properties	htmlarea-TableOperations	ca	Propietats de Cel·la
 cellpadding	tinymce	ca	Cellpadding
 cellspacing	tinymce	ca	Cellspacing
 center	tinymce	ca	Centre
@@ -148,9 +132,7 @@ centered	common	ca	centrat
 central african republic	common	ca	REPÚBLICA CENTREAFRICANA
 chad	common	ca	TXAD
 change	common	ca	Canvi
-char	htmlarea-TableOperations	ca	Caràcter
 charset	common	ca	iso-8859-1
-chec_k link...	htmlarea-ContextMenu	ca	Comprova Enllaç...
 check installation	common	ca	Comprovar instal·lació
 check now	common	ca	Comprova-ho Ara
 chile	common	ca	XILE
@@ -161,7 +143,6 @@ choose a background image.	common	ca	Tria una imatge de fons
 choose a background style.	common	ca	Tria un estil de fons
 choose a text color for the icons	common	ca	Tria un color de text per a les icones
 choose directory to move selected folders and files to.	tinymce	ca	Tria el directori on vols moure les carpetes i fitxers seleccionats.
-choose list style type (for ordered lists)	htmlarea-ListType	ca	Trieu el tipus d'estil de la llista (per a llistes ordenades)
 choose the category	common	ca	Trieu la categoria
 choose the parent category	common	ca	Trieu la categoria superior
 christmas island	common	ca	ILLA CHRISTMAS
@@ -175,9 +156,7 @@ click or mouse over to show menus?	common	ca	Prèmer o moure el ratolí per sobre 
 close	common	ca	Tancar
 close sidebox	common	ca	Tanca menú del costat
 cocos (keeling) islands	common	ca	ILLES COCOS (KEELING)
-collapsed borders	htmlarea-TableOperations	ca	Voreres col·lapsades
 colombia	common	ca	COLÒMBIA
-color	htmlarea-TableOperations	ca	Color
 columns	tinymce	ca	Columnes
 comment	tinymce	ca	Comentari
 common preferences	common	ca	Preferències comuns
@@ -191,24 +170,18 @@ congo, the democratic republic of the	common	ca	CONGO, REPÚBLICA DEMOCRÀTICA DEL
 contacting server...	common	ca	Contactant amb servidor...
 cook islands	common	ca	ILLES COOK
 copy	common	ca	Copiar
-copy selection	htmlarea	ca	Copiar selecció
 copy table row	tinymce	ca	Copia la fila de la taula
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ca	Copia/Retalla/Enganxa no està disponible per Mozilla i Firefox.\nVols més informació sobre això?
 costa rica	common	ca	COSTA RICA
 cote d ivoire	common	ca	COSTA D'IVORI
 could not contact server. operation timed out!	common	ca	No s'ha pogut contactar amb el servidor. Ha expirat el temps de l'operació!
 create	common	ca	Crear
-create a link	htmlarea-ContextMenu	ca	Crea un enllaç
 created by	common	ca	Creat per
 croatia	common	ca	CROÀCIA
 cuba	common	ca	CUBA
 currency	common	ca	Moneda
 current	common	ca	Actual
-current style	htmlarea	ca	Estil actual
-current url is	htmlarea-ContextMenu	ca	La URL actual és
 current users	common	ca	Usuaris actuals
-cut	htmlarea-ContextMenu	ca	Retalla
-cut selection	htmlarea	ca	Retalla la selecció
 cut table row	tinymce	ca	Retalla la fila de la taula
 cyprus	common	ca	XIPRE
 czech republic	common	ca	REPÚBLICA TXECA
@@ -217,26 +190,18 @@ date due	common	ca	Data límit
 date modified	tinymce	ca	Data modificada
 date selection:	jscalendar	ca	Selecció de data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ca	Port de data.<br>Si useu el port 13, si us plau, configureu acuradament les regles del tallafocs abans d'enviar aquesta plana.<br>
-de_lete column	htmlarea-ContextMenu	ca	Esborra Columna
 december	common	ca	Desembre
-decimal numbers	htmlarea-ListType	ca	Números decimals
-decrease indent	htmlarea	ca	Reduir sangria
 default	tinymce	ca	Per defecte
 default category	common	ca	Categoria predeterminada
 default height for the windows	common	ca	Alçada per defecte de la finestra
 default width for the windows	common	ca	Amplada per defecte de la finestra
 delete	common	ca	Esborrar
-delete cell	htmlarea-TableOperations	ca	Esborra cel·la
-delete column	htmlarea-TableOperations	ca	Esborra columna
 delete row	common	ca	Esborra fila
-delete the current column	htmlarea-ContextMenu	ca	Esborra la columna actual
-delete the current row	htmlarea-ContextMenu	ca	Esborra la fila actual
 denmark	common	ca	DINAMARCA
 description	common	ca	Descripció
 detail	common	ca	Detall
 details	common	ca	Detalls
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ca	Desactivar l'execució del pegat d'IE 5.5 i superiors per mostrar transparències en imatges PNG?
-dictionary	htmlarea-SpellChecker	ca	Diccionari
 direction	tinymce	ca	Direcció
 direction left to right	common	ca	Direcció d'esquerra a dreta
 direction right to left	tinymce	ca	Direcció de dreta a esquerra
@@ -272,7 +237,6 @@ egroupware api version %1	common	ca	eGroupWare API versió %1
 egroupware: login blocked for user '%1', ip %2	common	ca	eGroupWare: inici de sessió bloquejat per a l'usuari '%1', IP %2
 egypt	common	ca	EGIPTE
 el salvador	common	ca	EL SALVADOR
-element...	htmlarea-ContextMenu	ca	Element...
 email	common	ca	Correu electrònic
 email-address of the user, eg. "%1"	common	ca	Adreces de correu electrònic del usuari, ex. '%1'
 emotions	tinymce	ca	Emocions
@@ -280,7 +244,6 @@ en	common	ca	en
 enabled	common	ca	Activat
 end date	common	ca	Data de finalització
 end time	common	ca	Hora de finalització
-enlarge editor	htmlarea	ca	Agrandar editor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	ca	Entreu l'adreça URL d'eGroupWare.<br>Exemple: http://www.domini.com/egroupware   o bé   /egroupware<br><b>Sense barra final!!</b>
 entry has been deleted sucessfully	common	ca	Entrada esborrada correctament
 entry updated sucessfully	common	ca	Entrada actualitzada correctament
@@ -298,7 +261,6 @@ falkland islands (malvinas)	common	ca	ILLES MALVINES (FALKLAND)
 faroe islands	common	ca	ILLES FEROE
 fax number	common	ca	Fax
 february	common	ca	Febrer
-fg color	htmlarea-TableOperations	ca	Color de Primer Pla
 fields	common	ca	Camps
 fiji	common	ca	FIDJI
 file already exists. file was not uploaded.	tinymce	ca	El fitxer ja existeix. No s'ha carregat el fitxer.
@@ -317,7 +279,6 @@ find again	tinymce	ca	Torna a cercar
 find what	tinymce	ca	Que cerca
 find&nbsp;next	tinymce	ca	Cerca següent
 find/replace	tinymce	ca	Cerca/Reemplaça
-finished list of mispelled words	htmlarea-SpellChecker	ca	Llista acabada de paraules mal escrites
 finland	common	ca	FINLÀNDIA
 first name	common	ca	Nom de pila
 first name of the user, eg. "%1"	common	ca	Nom de pila de l'usuari, ex "%1"
@@ -327,18 +288,15 @@ fixme!	common	ca	ARREGLEU-ME!
 flash files	tinymce	ca	Fitxers flash
 flash properties	tinymce	ca	Propietats flash
 flash-file (.swf)	tinymce	ca	fitxer flash (.swf)
-float	htmlarea-TableOperations	ca	Punt Flotant
 folder	tinymce	ca	Carpeta
 folder already exists.	common	ca	La carpeta ja existeix.
 folder name missing.	tinymce	ca	No se troba el nom de la carpeta.
 folder not found.	tinymce	ca	Carpeta no trobada.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	ca	La carpeta amb el nom especificat ja existeix. La carpeta no s'ha reanomenat ni mogut.
 folder(s)	tinymce	ca	carpeta(es)
-font color	htmlarea	ca	Color de la lletra
 for mouse out	tinymce	ca	en llevar el ratolí
 for mouse over	tinymce	ca	en passar el ratolí per damunt
 force selectbox	common	ca	Forçar quadre de selecció
-frames	htmlarea-TableOperations	ca	Marcs
 france	common	ca	FRANÇA
 french guiana	common	ca	GUAIANA FRANCESA
 french polynesia	common	ca	POLINÈSIA FRANCESA
@@ -385,7 +343,6 @@ header username	common	ca	Nom d'usuari de la Capçalera
 heard island and mcdonald islands	common	ca	ILLA HEARD I ILLES MCDONALD
 height	common	ca	Alçada
 help	common	ca	Ajuda
-help using editor	htmlarea	ca	Ajuda usant editor
 high	common	ca	Alta
 highest	common	ca	La més alta
 holy see (vatican city state)	common	ca	SANTA SEU (ESTAT DE LA CIUTAT DEL VATICÀ)
@@ -393,29 +350,15 @@ home	common	ca	Inici
 home email	common	ca	correu electrònic privat
 honduras	common	ca	HONDURAS
 hong kong	common	ca	HONG KONG
-horizontal rule	htmlarea	ca	Regla horitzontal
-how did you get here? (please report!)	htmlarea-ContextMenu	ca	Com has arribat aquí? (Si us plau envia'ns una notificació!)
-how many columns would you like to merge?	htmlarea-TableOperations	ca	Quantes columnes t'agradaria combinar?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	ca	Quantitat d'icones que es mostren a la barra de navegació (a la part superior de la plana). Les icones addicionals apareixen en una mena de menú emergent, activable clicant a la darrera icona, a la dreta de la barra.
-how many rows would you like to merge?	htmlarea-TableOperations	ca	Quantes files t'agradaria combinar?
-html tidy	htmlarea-HtmlTidy	ca	HTML Ordenat
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	ca	L'àrea HTML no permet esborrar la darrera cel·la d'una fila.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	ca	L'àrea HTML no permet esborrar la darrera columna d'una taula.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	ca	L'àrea HTML no permet esborrar la darrera fila d'una taula.
 hungary	common	ca	HUNGRIA
-i will open it in a new page.	htmlarea-SpellChecker	ca	S'obrirà a una nova pàgina.
-i_nsert row before	htmlarea-ContextMenu	ca	I_nsereix Fila Abans
 iceland	common	ca	ISLÀNDIA
 iespell not detected. click ok to go to download page.	common	ca	No s'ha detectat ieSpell. Pitja OK per anar a la pàgina de descàrrega.
 if the clock is enabled would you like it to update it every second or every minute?	common	ca	Si el rellotge està habilitat, vols que s'actualitzi cada segon o cada minut?
 if there are some images in the background folder you can choose the one you would like to see.	common	ca	Si hi ha algunes imatges a la carpeta de fons, pots triar la que t'agradaria veure.
-ignore	htmlarea-SpellChecker	ca	Ignora
-ignore all	htmlarea-SpellChecker	ca	Ignora-ho tot
 image description	tinymce	ca	Descripció de la imatge
 image title	tinymce	ca	Títol de la imatge
 image url	common	ca	Imatge URL
-in_sert row after	htmlarea-ContextMenu	ca	In_sereix Fila Després
-increase indent	htmlarea	ca	Augmentar sangria
 indent	tinymce	ca	Indentar
 india	common	ca	INDIA
 indonesia	common	ca	INDONÈSIA
@@ -423,27 +366,16 @@ insert	tinymce	ca	Insereix
 insert 'return false'	common	ca	insereix 'return false'
 insert / edit flash movie	tinymce	ca	Insereix / edita pel·lícula flash
 insert / edit horizontale rule	tinymce	ca	Insereix / edita Regla Horitzontal
-insert _column before	htmlarea-ContextMenu	ca	Insereix _Columna Abans
-insert a new column after the current one	htmlarea-ContextMenu	ca	Insereix una nova columna després de l'actual
-insert a new column before the current one	htmlarea-ContextMenu	ca	Insereix una nova columna abans de l'actual
-insert a new row after the current one	htmlarea-ContextMenu	ca	Insereix una nova fila després de l'actual
-insert a new row before the current one	htmlarea-ContextMenu	ca	Insereix una nova fila abans de l'actual
 insert all %1 addresses of the %2 contacts in %3	common	ca	Inseriu totes les adreces %1 del contactes de %2 en %3
-insert c_olumn after	htmlarea-ContextMenu	ca	Insereix C_olumna Després
-insert cell after	htmlarea-TableOperations	ca	Insereix cel·la després
-insert cell before	htmlarea-TableOperations	ca	Insereix cel·la abans
 insert column after	common	ca	Insereix columna després
 insert column before	common	ca	Insereix columna abans
 insert date	tinymce	ca	Insereix data
 insert emotion	tinymce	ca	Insereix emoció
 insert file	tinymce	ca	Insereix Fitxer
-insert image	htmlarea	ca	Inserir imatge
 insert link to file	tinymce	ca	Insereix enllaç a fitxer
 insert row after	common	ca	Insereix fila després
 insert row before	common	ca	Insereix fila abans
-insert table	htmlarea	ca	Inserir taula
 insert time	tinymce	ca	Insereix hora
-insert web link	htmlarea	ca	Inserir enllaç web
 insert/edit image	tinymce	ca	Insereix/edita imatge
 insert/edit link	tinymce	ca	Insereix/edita enllaç
 insert/modify table	tinymce	ca	Insereix/Modifica taula
@@ -469,7 +401,6 @@ js-popup	tinymce	ca	JS-Popup
 july	common	ca	Juliol
 jun	common	ca	Juny
 june	common	ca	Juny
-justify	htmlarea-TableOperations	ca	Justificar
 justify center	common	ca	Justificar centrat
 justify full	common	ca	Justificat total
 justify left	common	ca	Justificat esquerra
@@ -491,7 +422,6 @@ last name of the user, eg. "%1"	common	ca	Cognom de l'usuari, ex "%1"
 last page	common	ca	Darrera plana
 lastname	common	ca	Cognom
 latvia	common	ca	LETÒNIA
-layout	htmlarea-TableOperations	ca	Format
 ldap-mgr	common	ca	Gestor-LDAP
 lebanon	common	ca	LIBAN
 left	common	ca	Esquerra
@@ -501,7 +431,6 @@ libyan arab jamahiriya	common	ca	LIBIA (LYBIAN ARAB JAMAHIRIYA)
 license	common	ca	Llicència
 liechtenstein	common	ca	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ca	Línia %1: '%2'<br><b>les dades csv no coincideixen amb el número de columnes de la taula %3 ==> ignorat</b>
-link points to:	htmlarea-ContextMenu	ca	Punts d'enllaç a:
 link url	tinymce	ca	Enllaç URL
 list	common	ca	Llista
 list members	common	ca	Llista de membres
@@ -512,9 +441,6 @@ login	common	ca	Entrar
 loginid	common	ca	ID d'usuari
 logout	common	ca	Sortir
 low	common	ca	Baixa
-lower greek letters	htmlarea-ListType	ca	Lletres gregues minúscules
-lower latin letters	htmlarea-ListType	ca	Lletres llatines minúscules
-lower roman numbers	htmlarea-ListType	ca	Números romans en minúscules
 lowest	common	ca	La més baixa
 luxembourg	common	ca	LUXEMBURG
 macau	common	ca	MACAU
@@ -524,7 +450,6 @@ mail domain, eg. "%1"	common	ca	domini de correu, ej. "%1"
 main category	common	ca	Categoria Principal
 main screen	common	ca	Pantalla Principal
 maintainer	common	ca	Mantingut per
-make lin_k...	htmlarea-ContextMenu	ca	Fes enllaç...
 make window resizable	tinymce	ca	Fes la finestra redimensionable
 malawi	common	ca	MALAWI
 malaysia	common	ca	MALÀSIA
@@ -532,7 +457,6 @@ maldives	common	ca	MALDIVES
 mali	common	ca	MALI
 malta	common	ca	MALTA
 march	common	ca	Març
-margin	htmlarea-TableOperations	ca	Marge
 marshall islands	common	ca	ILLES MARSHALL
 martinique	common	ca	MARTINICA
 match case	tinymce	ca	Coincidir majúscules/minúscules
@@ -543,15 +467,12 @@ may	common	ca	Maig
 mayotte	common	ca	MAYOTTE
 medium	common	ca	Mig
 menu	common	ca	Menú
-merge cells	htmlarea-TableOperations	ca	Combina cel·les
 merge table cells	tinymce	ca	Agrupa cel·les de la taula
 message	common	ca	Missatge
 mexico	common	ca	MÈXIC
 micronesia, federated states of	common	ca	MICRONESIA, ESTATS FEDERATS DE
-middle	htmlarea-TableOperations	ca	Enmig
 minute	common	ca	Minut
 mkdir failed.	tinymce	ca	Ha fallat mkdir.
-modify url	htmlarea-ContextMenu	ca	Modifica URL
 moldova, republic of	common	ca	MOLDÀViA, REPÚBLICA DE
 monaco	common	ca	MONACO
 monday	common	ca	Dilluns
@@ -592,16 +513,13 @@ no	common	ca	No
 no entries found, try again ...	common	ca	No s'han trobat entrades, proveu un altre cop...
 no files...	tinymce	ca	Sense fitxers...
 no history for this record	common	ca	Sense historial per aquest registre
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	ca	No s'han trobat paraules mal escrites utilitzant el diccionari seleccionat.
 no permission to create folder.	tinymce	ca	Sense permís per crear la carpeta.
 no permission to delete file.	tinymce	ca	Sense permís per esborrar el fitxer.
 no permission to move files and folders.	tinymce	ca	Sense permís per moure fitxers i carpetes.
 no permission to rename files and folders.	tinymce	ca	Sense permís per reanomenar fitxers i carpetes.
 no permission to upload.	tinymce	ca	Sense permís per carregar.
-no rules	htmlarea-TableOperations	ca	Sense regles
 no savant2 template directories were found in:	common	ca	No s'han trobat directoris de plantilles Savant2  a:
 no shadow	tinymce	ca	Sense ombra
-no sides	htmlarea-TableOperations	ca	Sense costats
 no subject	common	ca	Sense assumpte
 none	common	ca	Cap
 norfolk island	common	ca	ILLA NORFOLK
@@ -634,15 +552,12 @@ open link in the same window	tinymce	ca	Obre enllaç a la mateixa finestra
 open notify window	common	ca	Obrir finestra de notificació
 open popup window	common	ca	Obrir finestra emergent
 open sidebox	common	ca	Obre el menú del costat
-opens this link in a new window	htmlarea-ContextMenu	ca	Obre aquest enllaç en una nova finestra
 ordered list	common	ca	Llista ordenada
 original	common	ca	Original
-original word	htmlarea-SpellChecker	ca	Paraula original
 other	common	ca	Altres
 outdent	tinymce	ca	Outdent
 overview	common	ca	Resum
 owner	common	ca	Propietari
-padding	htmlarea-TableOperations	ca	Marge interior
 page	common	ca	Pàgina
 page was generated in %1 seconds	common	ca	Plana generada en %1 segons
 pakistan	common	ca	PAKISTAN
@@ -656,19 +571,15 @@ parent category	common	ca	Categoria superior
 password	common	ca	Contrasenya
 password could not be changed	common	ca	No s'ha pogut canviar la contrasenya
 password has been updated	common	ca	Contrasenya actualitzada
-paste	htmlarea-ContextMenu	ca	Enganxa
 paste as plain text	tinymce	ca	Enganxa com a Text Plà
-paste from clipboard	htmlarea	ca	Enganxar des del portapapers
 paste from word	tinymce	ca	Enganxa de Word
 paste table row after	tinymce	ca	Enganxa fila de taula darrera de
 paste table row before	tinymce	ca	Enganxa fila de taula abans de
-path	htmlarea	ca	Camí
 path not found.	tinymce	ca	Camí no trobat.
 path to user and group files has to be outside of the webservers document-root!!!	common	ca	El camí als arxius d'usuari i grups HA D'ESTAR FORA del directori arrel de documents dels servidors web!!
 pattern for search in addressbook	common	ca	Patró de recerca a la Llibreta d'adreces
 pattern for search in calendar	common	ca	Patró de recerca al Calendari
 pattern for search in projects	common	ca	Patró de recerca als Projectes
-percent	htmlarea-TableOperations	ca	Percentatge
 permissions to the files/users directory	common	ca	permissos als directoris d'arxius/usuaris
 personal	common	ca	Personal
 peru	common	ca	PERU
@@ -676,12 +587,7 @@ philippines	common	ca	FILIPINES
 phone number	common	ca	Número de telèfon
 phpgwapi	common	ca	API eGroupware
 pitcairn	common	ca	PITCAIRN
-pixels	htmlarea-TableOperations	ca	píxels
 please %1 by hand	common	ca	Si us plau, %1 manualment
-please click into some cell	htmlarea-TableOperations	ca	Si us plau, pitjeu dins alguna cel·la
-please confirm that you want to open this link	htmlarea-SpellChecker	ca	Si us plau, confirmeu que voleu obrir aquest enllaç
-please confirm that you want to remove this element:	htmlarea-ContextMenu	ca	Si us plau, confirmeu que voleu esborrar aquest element:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	ca	Si us plau, confirmeu que voleu desvincular aquest element.
 please enter a name	common	ca	Si us plau, introduïu un nom !
 please enter the caption text	tinymce	ca	Per favor, introdueix el contingut del text
 please insert a name for the target or choose another option.	tinymce	ca	Per favor, insereix un nom destí o tria una altra opció.
@@ -689,10 +595,7 @@ please run setup to become current	common	ca	Si us plau, executeu la instal·laci
 please select	common	ca	Si us plau, Trieu
 please set your global preferences	common	ca	Si us plau, establiu les vostres preferències globals !
 please set your preferences for this application	common	ca	Si us plau, establiu les vostres preferències per aquesta aplicació
-please wait.  calling spell checker.	htmlarea-SpellChecker	ca	Si us plau, espereu. Executant el corrector ortogràfic.
 please wait...	common	ca	Si us plau, espereu...
-please wait: changing dictionary to	htmlarea-SpellChecker	ca	Si us plau, espereu. Canviant el disccionari a
-pliz weit ;-)	htmlarea-SpellChecker	ca	Sis plau, espereuuu ;-)
 poland	common	ca	POLÒNIA
 popup url	tinymce	ca	Popup URL
 portugal	common	ca	PORTUGAL
@@ -715,40 +618,28 @@ project	common	ca	Projecte
 public	common	ca	públic
 puerto rico	common	ca	PUERTO RICO
 qatar	common	ca	QATAR
-re-check	htmlarea-SpellChecker	ca	Recomprova
 read	common	ca	Llegir
 read this list of methods.	common	ca	Llegir aquesta llista de mètodes
 reading	common	ca	llegint
 redo	tinymce	ca	Refer
-redoes your last action	htmlarea	ca	Repeteix la darrera acció
 refresh	tinymce	ca	Refrescar
 reject	common	ca	Rebutjar
 remove col	tinymce	ca	Esborra col
 remove selected accounts	common	ca	esborra els comptes seleccionats
 remove shortcut	common	ca	Esborra tecles ràpides
-remove the	htmlarea-ContextMenu	ca	Esborra el/la
-remove this node from the document	htmlarea-ContextMenu	ca	Esborra aquest node del document
 rename	common	ca	Reanomena
 rename failed	tinymce	ca	Reanomenament fallat
 replace	common	ca	Reemplaça
-replace all	htmlarea-SpellChecker	ca	Reemplaça-ho tot
 replace with	common	ca	Reemplaça per
 replace&nbsp;all	tinymce	ca	Reemplaça-ho tot
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ca	Torna una llista completa dels comptes del sistema. Atenció: pot ser molt llarg
 returns an array of todo items	common	ca	Torna una matriu de tasques pendents
 returns struct of users application access	common	ca	Torna una estructura de l'accés dels usuaris a l'aplicació
 reunion	common	ca	REUNION
-revert	htmlarea-SpellChecker	ca	Desfer canvis
 right	common	ca	Dreta
 rmdir failed.	tinymce	ca	Rmdir fallat.
-ro_w properties...	htmlarea-ContextMenu	ca	Propietats de la fila...
 romania	common	ca	ROMANIA
-row properties	htmlarea-TableOperations	ca	Propietats de la fila
 rows	tinymce	ca	Files
-rules	htmlarea-TableOperations	ca	Regles
-rules will appear between all rows and columns	htmlarea-TableOperations	ca	Les regles s'aplicaran a totes les files i columnes
-rules will appear between columns only	htmlarea-TableOperations	ca	Les regles s'aplicaran només a les columnes
-rules will appear between rows only	htmlarea-TableOperations	ca	Les regles s'aplicaran només a les files
 run spell checking	tinymce	ca	Executa corrector lèxic
 russian federation	common	ca	FEDERACIÓ RUSSA
 rwanda	common	ca	RUANDA
@@ -809,11 +700,7 @@ show page generation time on the bottom of the page?	common	ca	Mostrar el temps 
 show page generation time?	common	ca	Mostra el temps de generació de la pàgina?
 show scrollbars	tinymce	ca	Mostra barres desplaçants
 show statusbar	tinymce	ca	Mostra barra d'estat
-show the image properties dialog	htmlarea-ContextMenu	ca	Mostra el quadre de diàleg de les propietats de imatge
 show the logo's of egroupware and x-desktop on the desktop.	common	ca	Mostra el logo d'eGroupware i x-desktop a l'escriptori.
-show the table cell properties dialog	htmlarea-ContextMenu	ca	Mostra el quadre de diàleg de les Propietats de Cel·la de la Taula
-show the table properties dialog	htmlarea-ContextMenu	ca	Mostra el quadre de diàleg de les Propietats de la Taula
-show the table row properties dialog	htmlarea-ContextMenu	ca	Mostra el quadre de diàleg de les Propietats de Fila de la Taula
 show toolbars	tinymce	ca	Mostra barra d'eines
 show_more_apps	common	ca	mostrar més aplicacions
 showing %1	common	ca	mostrant %1
@@ -828,14 +715,7 @@ somalia	common	ca	SOMÀLIA
 sorry, your login has expired	login	ca	La seva sessió ha caducat
 south africa	common	ca	SUDÀFRICA
 south georgia and the south sandwich islands	common	ca	ILLES GEORGIA I SANDWICH MERIDIONALS
-spacing	htmlarea-TableOperations	ca	Espai entre cel·les
-spacing and padding	htmlarea-TableOperations	ca	Espai entre cel·les i marges dins les cel·les
 spain	common	ca	ESPANYA
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	ca	S'ha completat la correcció ortogràfica, sense que s'hagin trobat paraules mal escrites. Tancant ara...
-spell-check	htmlarea-SpellChecker	ca	Corregeix ortografia
-split cell	htmlarea-TableOperations	ca	Divideix cel·la
-split column	htmlarea-TableOperations	ca	Divideix columna
-split row	htmlarea-TableOperations	ca	Divideix fila
 split table cells	tinymce	ca	Divideix cel·les de taula
 sri lanka	common	ca	SRI LANKA
 start date	common	ca	Data d'inici
@@ -844,18 +724,12 @@ start with	common	ca	començar amb
 starting up...	common	ca	Iniciant...
 status	common	ca	Estat
 stretched	common	ca	estirat
-strikethrough	htmlarea	ca	Tatxat
 striketrough	tinymce	ca	Tatxat
-style [css]	htmlarea-TableOperations	ca	Estil [CSS]
 subject	common	ca	Assumpte
 submit	common	ca	Enviar
-subscript	htmlarea	ca	Subíndex
 substitutions and their meanings:	common	ca	Substitucions i els seus significats
 sudan	common	ca	SUDAN
-suggestions	htmlarea-SpellChecker	ca	Suggerències
-summary	htmlarea-TableOperations	ca	Sumari
 sunday	common	ca	Diumenge
-superscript	htmlarea	ca	Superíndex
 suriname	common	ca	SURINAM
 svalbard and jan mayen	common	ca	SVALBARD I JAN MAYEN
 swaziland	common	ca	SWAZILANDIA
@@ -869,26 +743,18 @@ taiwan	common	ca	TAIWAN/TAIPEI
 tajikistan	common	ca	TAJIKISTAN
 tanzania, united republic of	common	ca	TANZANIA, REPÚBLICA UNIDA DE
 target	tinymce	ca	Destí
-text align	htmlarea-TableOperations	ca	Alineació del text
 text color:	common	ca	Color del text:
 thailand	common	ca	TAILÀNDIA
 the api is current	common	ca	La API esta al dia
 the api requires an upgrade	common	ca	La API necessita actualització
-the bottom side only	htmlarea-TableOperations	ca	Només la part inferior
 the following applications require upgrades	common	ca	Les següents aplicacions necessiten actualització
-the left-hand side only	htmlarea-TableOperations	ca	Només la part de l'esquerra
 the mail server returned	common	ca	El servidor de correu ha tornat
-the right and left sides only	htmlarea-TableOperations	ca	Només la part de la dreta i de l'esquerra
-the right-hand side only	htmlarea-TableOperations	ca	Només la part de la dreta
 the search has been compleated. the search string could not be found.	tinymce	ca	La cerca ha acabat. La cadena cercada no s'ha trobat.
-the top and bottom sides only	htmlarea-TableOperations	ca	Només la part superior i la inferior
-the top side only	htmlarea-TableOperations	ca	Només la part superior
 this application is current	common	ca	Aquesta aplicació està al dia
 this application requires an upgrade	common	ca	Aquesta aplicació necessita actualitzar-se
 this is just a template button	tinymce	ca	Això només és un botó plantilla
 this is just a template popup	tinymce	ca	Això només és un popup plantilla
 this name has been used already	common	ca	Aquest nom ja és en ús !
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	ca	Això desferà els canvis i tancarà el corrector ortogràfic. Si us plau, confirmeu.
 thursday	common	ca	Dijous
 tiled	common	ca	apilat
 time	common	ca	Hora
@@ -903,7 +769,6 @@ today	common	ca	Avui
 todays date, eg. "%1"	common	ca	data d'avui, ex. "%1"
 toggle first day of week	jscalendar	ca	Canviar el primer dia de la setmana
 toggle fullscreen mode	tinymce	ca	Canviar a mode pantalla completa
-toggle html source	htmlarea	ca	Canviar a vista de codi HTML
 togo	common	ca	TOGO
 tokelau	common	ca	TOKELAU
 tonga	common	ca	TONGA
@@ -924,7 +789,6 @@ ukraine	common	ca	UCRAÏNA
 underline	common	ca	Subratllat
 underline.gif	common	ca	subratllat.gif
 undo	tinymce	ca	Desfer
-undoes your last action	htmlarea	ca	Desfer la darrera acció
 united arab emirates	common	ca	EMIRATS ÀRABS UNITS
 united kingdom	common	ca	REGNE UNIT
 united states	common	ca	ESTATS UNITS
@@ -932,18 +796,13 @@ united states minor outlying islands	common	ca	ILLES MENORS OUTLYING DELS ESTATS
 unknown	common	ca	Desconegut
 unlink	tinymce	ca	Desvincular
 unlink failed.	tinymce	ca	Desvincle fallat
-unlink the current element	htmlarea-ContextMenu	ca	Desvincula l'element actual
 unordered list	tinymce	ca	Llista desordenada
-unset color	htmlarea-TableOperations	ca	Lleva el color
 up	tinymce	ca	Amunt
 update	common	ca	Actualitzar
 update the clock per minute or per second	common	ca	Actualitza el rellotge per minuts o per segons
 upload	common	ca	Carrega
 upload directory does not exist, or is not writeable by webserver	common	ca	El directori de càrrega no existeix o no és modificable pel webserver
-upload image	htmlarea-UploadImage	ca	Penja la Imatge
 uploading...	tinymce	ca	Carregant...
-upper latin letters	htmlarea-ListType	ca	Lletres llatines majúscules
-upper roman numbers	htmlarea-ListType	ca	Números romans en majúscules
 url	common	ca	URL
 uruguay	common	ca	URUGUAI
 use button to search for	common	ca	useu el Botó per cercar per
@@ -963,7 +822,6 @@ uzbekistan	common	ca	UZBEKISTAN
 vanuatu	common	ca	VANUATU
 venezuela	common	ca	VENEÇUELA
 version	common	ca	Versió
-vertical align	htmlarea-TableOperations	ca	Alineació vertical
 vertical alignment	tinymce	ca	Alineació vertical
 viet nam	common	ca	VIETNAM
 view	common	ca	Veure
@@ -988,7 +846,6 @@ written by:	common	ca	Escrit per:
 year	common	ca	Any
 yemen	common	ca	IEMEN
 yes	common	ca	Sí
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	ca	Esteu en MODUS TEXT. Useu el botó [<>] per tornar a la vista WYSIWIG.
 you are required to change your password during your first login	common	ca	Heu de canviar la vostra contrasenya a la vostra primera connexió.
 you have been successfully logged out	login	ca	Desconnexió correcta
 you have not entered a title	common	ca	No heu entrat un títol

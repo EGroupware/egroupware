@@ -13,17 +13,10 @@
 3 number of chars for day-shortcut	jscalendar	no	3 karakterer for dag
 3 number of chars for month-shortcut	jscalendar	no	3 karakterer for måned
 80 (http)	admin	no	80 (http)
-\n tidying up the html source, please wait...	htmlarea-HtmlTidy	no	\n Rydder opp i HTML koden, vennligst vent...
-_delete row	htmlarea-ContextMenu	no	_Slett rad
-_image properties...	htmlarea-ContextMenu	no	_Bilde egenskaper
-_modify link...	htmlarea-ContextMenu	no	_Endre lenke
-_remove link...	htmlarea-ContextMenu	no	_Fjerne lenke
-_table properties...	htmlarea-ContextMenu	no	_Tabell egenskaper
 a editor instance must be focused before using this command.	tinymce	no	Editoren må være i fokus før du benytter denne kommando.
 about	common	no	Om
 about %1	common	no	Om %1
 about the calendar	jscalendar	no	Om kalenderen
-about this editor	htmlarea	no	Om denne editoren
 access	common	no	Tilgang
 access not permitted	common	no	Ingen tilgang
 account has been created	common	no	Brukerkonto har blitt opprettet
@@ -43,7 +36,6 @@ administration	common	no	Administrasjon
 afghanistan	common	no	AFGANISTAN
 albania	common	no	ALBANIA
 algeria	common	no	ALGERIE
-align	htmlarea-TableOperations	no	Juster
 align center	tinymce	no	Sentrere
 align full	tinymce	no	Fyll
 align left	tinymce	no	Vensterestille
@@ -51,7 +43,6 @@ align right	tinymce	no	Høyerestille
 alignment	tinymce	no	Justering
 all	common	no	Alle
 all fields	common	no	alle felt
-all four sides	htmlarea-TableOperations	no	Alle fire sider
 all occurrences of the search string was replaced.	tinymce	no	Alle forekomster av søkestrengen ble erstattet
 alphabet	common	no	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,x,z
 alternate style-sheet:	common	no	Alternativt Style Sheet
@@ -78,15 +69,12 @@ autosave default category	common	no	Autolagre standard kategori
 azerbaijan	common	no	AZERBADSJAN
 back	common	no	Tilbake
 back to user login	common	no	Tilbake til brukerpålogging
-background	htmlarea-TableOperations	no	Bakgrund
-background color	htmlarea	no	Bakgrunnsfarge
 background color:	common	no	Bakgrunnsfarge:
 bad login or password	common	no	Ugyldig login eller passord
 bahamas	common	no	BAHAMAS
 bahrain	common	no	BAHRAIN
 bangladesh	common	no	BANGLADESH
 barbados	common	no	BARBADOS
-baseline	htmlarea-TableOperations	no	Grunnlinje
 bcc	common	no	Bcc
 belarus	common	no	HVITERUSSLAND
 belgium	common	no	BELGIA
@@ -100,7 +88,6 @@ bold	common	no	Uthevet
 bolivia	common	no	BOLIVIA
 border	common	no	Rammebredde
 border color	tinymce	no	Border color
-borders	htmlarea-TableOperations	no	Kantlinjer
 bosnia and herzegovina	common	no	BOSNIA-HERZEGOVINA
 botswana	common	no	BOTSWANA
 bottom	common	no	Bottom
@@ -109,10 +96,8 @@ brazil	common	no	BRASIL
 british indian ocean territory	common	no	BRITISK INDISKE HAVTERRITORIUM
 brunei darussalam	common	no	BRUNEI
 bulgaria	common	no	BULGARIA
-bulleted list	htmlarea	no	Punkt liste
 burkina faso	common	no	BURKINA FASO
 burundi	common	no	BURUNDI
-c_ell properties...	htmlarea-ContextMenu	no	Celle egenskaper
 calendar	common	no	Kalender
 cambodia	common	no	KAMBODSJA
 cameroon	common	no	KAMERUN
@@ -127,22 +112,18 @@ category %1 has been added !	common	no	Kategori %1 ble lagt til!
 category %1 has been updated !	common	no	Kategori %1 ble oppdatert!
 cayman islands	common	no	CAYMAN-ØYENE
 cc	common	no	Cc
-cell properties	htmlarea-TableOperations	no	Celleegenskaper
 cellpadding	tinymce	no	Celle-padding
 cellspacing	tinymce	no	Celle-mellomrom
 center	tinymce	no	Midten
 central african republic	common	no	SENTRALAFRIKANSKE REPUBLIKK
 chad	common	no	CHAD
 change	common	no	Endre
-char	htmlarea-TableOperations	no	Tegn
 charset	common	no	iso-8859-1
-chec_k link...	htmlarea-ContextMenu	no	Kontroller lenke...
 check installation	common	no	Sjekk installasjon
 check now	common	no	Sjekk nå
 chile	common	no	CHILE
 china	common	no	KINA
 choose directory to move selected folders and files to.	tinymce	no	Velg mappe hvor valgte mapper og filer skal flyttes til
-choose list style type (for ordered lists)	htmlarea-ListType	no	Velg listestiltype (for sorterte lister)
 choose the category	common	no	Velg kategori
 choose the parent category	common	no	Velg overordnet kategori
 christmas island	common	no	CHRISTMAS ISLAND
@@ -155,9 +136,7 @@ click or mouse over to show menus	common	no	Klikk eller hold peker over for å vi
 click or mouse over to show menus?	common	no	Klikk eller hold peker over for å vise menyene?
 close	common	no	Lukk
 cocos (keeling) islands	common	no	COCOS (KEELING) ØYENE
-collapsed borders	htmlarea-TableOperations	no	Fjern kantlinjer
 colombia	common	no	COLOMBIA
-color	htmlarea-TableOperations	no	Farge
 columns	tinymce	no	Kolonner
 comment	tinymce	no	Kommentar
 comoros	common	no	COMOROS
@@ -167,23 +146,17 @@ congo	common	no	KONGO
 congo, the democratic republic of the	common	no	KONGO, Den demokratiske republikk
 cook islands	common	no	COOK ØYENE
 copy	common	no	Kopier
-copy selection	htmlarea	no	Kopier utvalg
 copy table row	tinymce	no	Copy table row
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	no	Kopi/kutt/lim inn er ikke tilgjengelig i Mozilla og Firefox.\NØnsker du mer informasjon om dette?
 costa rica	common	no	COSTA RICA
 cote d ivoire	common	no	ELFENBENSKYSTEN
 create	common	no	Opprett
-create a link	htmlarea-ContextMenu	no	Opprett en lenke
 created by	common	no	Opprettet av
 croatia	common	no	KROATIA
 cuba	common	no	CUBA
 currency	common	no	Myntenhet
 current	common	no	Nåværende
-current style	htmlarea	no	Nåværende stil
-current url is	htmlarea-ContextMenu	no	Nåværende adresse er
 current users	common	no	Nåværende brukere
-cut	htmlarea-ContextMenu	no	Klipp
-cut selection	htmlarea	no	Klipp utvalg
 cut table row	tinymce	no	Cut table row
 cyprus	common	no	KYPROS
 czech republic	common	no	TSJEKKIA
@@ -192,24 +165,16 @@ date due	common	no	Dato Ferdig
 date modified	tinymce	no	Dato endret:
 date selection:	jscalendar	no	Dato utvalg
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	no	Datetime port.<br>Hvis port 13 brukes, vennligst påse at brannmur-reglene er riktige før du oppdaterer denne siden.<br>(Port: 13 / Host: 129.6.15.28)
-de_lete column	htmlarea-ContextMenu	no	Slett kolonne
 december	common	no	Desember
-decimal numbers	htmlarea-ListType	no	Desimalantall
-decrease indent	htmlarea	no	Krymp innrykk
 default	tinymce	no	Ingen
 default category	common	no	Standard kategori
 delete	common	no	Slett
-delete cell	htmlarea-TableOperations	no	Slett celle
-delete column	htmlarea-TableOperations	no	Slett kolonne
 delete row	common	no	Fjern rad
-delete the current column	htmlarea-ContextMenu	no	Slett gjeldende kolonne
-delete the current row	htmlarea-ContextMenu	no	Slett gjeldende rad
 denmark	common	no	DANMARK
 description	common	no	Beskrivelse
 detail	common	no	Detalj
 details	common	no	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	no	Koble ut bugscriptfix for Internet Explorer 5.5 og høyere for å vise gjennomsiktige PNG-bilder?
-dictionary	htmlarea-SpellChecker	no	Ordbok
 direction	tinymce	no	Retning
 direction right to left	tinymce	no	Fra høyre mot venstre
 directory	tinymce	no	Mappe
@@ -243,14 +208,12 @@ egroupware api version %1	common	no	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	no	eGroupWare: pålogging blokkert for bruker '%1', IP %2
 egypt	common	no	EGYPT
 el salvador	common	no	EL SALVADOR
-element...	htmlarea-ContextMenu	no	Element...
 email	common	no	Epost
 email-address of the user, eg. "%1"	common	no	brukerens epost-adresse, f.eks: "%1"
 emotions	tinymce	no	Følelser
 enabled	common	no	Påslått
 end date	common	no	Sluttdato
 end time	common	no	Slutt tidspunkt
-enlarge editor	htmlarea	no	Forstørr editor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	no	Skriv inn eGroupWares Internett adresse (URL).<br> F.eks: http://www.domain.com/egroupware   or   /egroupware<br><b>Ingen avsluttende skråstrek</b>
 entry has been deleted sucessfully	common	no	Innslaget ble slettet
 entry updated sucessfully	common	no	Innslaget ble oppdatert
@@ -267,7 +230,6 @@ falkland islands (malvinas)	common	no	FALKLANDSØYENE
 faroe islands	common	no	FÆRØYENE
 fax number	common	no	Telefaksnummer
 february	common	no	Februar
-fg color	htmlarea-TableOperations	no	FG farge
 fields	common	no	Felter
 fiji	common	no	FIJI
 file already exists. file was not uploaded.	tinymce	no	Filen eksisterer allerede.  Filen ble ikke opplastet
@@ -286,7 +248,6 @@ find again	tinymce	no	Find på nytt
 find what	tinymce	no	Finne hva
 find&nbsp;next	tinymce	no	Finne neste
 find/replace	tinymce	no	Finn/erstatt
-finished list of mispelled words	htmlarea-SpellChecker	no	Avsluttet listing av feilstavede ord
 finland	common	no	FINLAND
 first name	common	no	Fornavn
 first name of the user, eg. "%1"	common	no	brukerens fornavn, f.eks: "%1"
@@ -296,17 +257,14 @@ fixme!	common	no	FIXMEG!
 flash files	tinymce	no	Flash filer
 flash properties	tinymce	no	Flash egenskaper
 flash-file (.swf)	tinymce	no	Flash fil (.swf)
-float	htmlarea-TableOperations	no	Flytende
 folder	tinymce	no	Mappe
 folder name missing.	tinymce	no	Mappenavn mangler
 folder not found.	tinymce	no	Mappe ikke funnet
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	no	Det finnes allerede en mappe med det navnet.  Mappen ble ikke gitt nytt navn eller flyttet.
 folder(s)	tinymce	no	Mappe(r)
-font color	htmlarea	no	Font farge
 for mouse out	tinymce	no	for mus ut
 for mouse over	tinymce	no	for mus over
 force selectbox	common	no	Tvungen utvalgsboks
-frames	htmlarea-TableOperations	no	rammer
 france	common	no	FRANKRIKE
 french guiana	common	no	FRANSKE GUYANA
 french polynesia	common	no	FRANSK POLYNESIA
@@ -348,7 +306,6 @@ haiti	common	no	HAITI
 heard island and mcdonald islands	common	no	HEARD OG MCDONALD ØYENE
 height	common	no	Høyde
 help	tinymce	no	Hjelp
-help using editor	htmlarea	no	Hjelp til editoren
 high	common	no	Høy
 highest	common	no	Høyest
 holy see (vatican city state)	common	no	VATIKANET
@@ -356,53 +313,28 @@ home	common	no	Hjem
 home email	common	no	hjemme epost
 honduras	common	no	HONDURAS
 hong kong	common	no	HONG KONG
-horizontal rule	htmlarea	no	Horisontal regel
-how did you get here? (please report!)	htmlarea-ContextMenu	no	Hvordan kom du hit? (Rapporter dette)
-how many columns would you like to merge?	htmlarea-TableOperations	no	Hvor mange kolonner vil du slå sammen?
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	no	Hvor mange ikoner som skal vises på navigasjonslinjen (på toppen av siden). Ekstra ikoner vises i en rullegardinmeny ved å trykke på ikonet lengst til høyre på navigasjonslinjen.
-how many rows would you like to merge?	htmlarea-TableOperations	no	Hvor mange rader vil du slå sammen?
-html tidy	htmlarea-HtmlTidy	no	Rydd i HTML
-htmlarea cowardly refuses to delete the last cell in row.	htmlarea-TableOperations	no	HTMLArea nekter å slette siste cellen i tabellen.
-htmlarea cowardly refuses to delete the last column in table.	htmlarea-TableOperations	no	HTMLArea nekter å slette siste kolonnen i tabellen.
-htmlarea cowardly refuses to delete the last row in table.	htmlarea-TableOperations	no	HTMLArea nekter å slette siste raden i tabellen.
 hungary	common	no	UNGARN
-i will open it in a new page.	htmlarea-SpellChecker	no	Dette vil åpne en ny side
-i_nsert row before	htmlarea-ContextMenu	no	Sett inn rad før
 iceland	common	no	ISLAND
-ignore	htmlarea-SpellChecker	no	Ignorer
-ignore all	htmlarea-SpellChecker	no	Ignorer alle
 image description	tinymce	no	Bildets beskrivelse
 image title	tinymce	no	Bildetittel
 image url	common	no	Bildets URL
-in_sert row after	htmlarea-ContextMenu	no	Sett inn rad etter
-increase indent	htmlarea	no	Øk marg
 indent	tinymce	no	Indrag
 india	common	no	INDIA
 indonesia	common	no	INONESIA
 insert	tinymce	no	Opprett
 insert / edit flash movie	tinymce	no	Sett inn / endre Flash film
 insert / edit horizontale rule	tinymce	no	Sett inn / endre horisontale regler
-insert _column before	htmlarea-ContextMenu	no	Sett inn kolonne foran
-insert a new column after the current one	htmlarea-ContextMenu	no	Set inn en ny kolonne etter gjeldende
-insert a new column before the current one	htmlarea-ContextMenu	no	Sett inn en ny kolonne før gjeldende
-insert a new row after the current one	htmlarea-ContextMenu	no	Sett inn ny rad etter gjeldende
-insert a new row before the current one	htmlarea-ContextMenu	no	Sett inn ny rad før gjeldende
 insert all %1 addresses of the %2 contacts in %3	common	no	Legg til alle %1 adresser fra %2 kontakter i %3
-insert c_olumn after	htmlarea-ContextMenu	no	Sett inn kolonne etter
-insert cell after	htmlarea-TableOperations	no	Sett inn celle etter
-insert cell before	htmlarea-TableOperations	no	Sett inn celle foran
 insert column after	common	no	Opprett kolonne etter
 insert column before	common	no	Opprett kolonne før
 insert date	tinymce	no	Sett inn dato
 insert emotion	tinymce	no	Sett inn "følelsestegn"
 insert file	tinymce	no	Sett inn fil
-insert image	htmlarea	no	Sett inn bilde
 insert link to file	tinymce	no	Sett inn lenke til fil
 insert row after	common	no	Opprett rad etter
 insert row before	common	no	Opprett rad før
-insert table	htmlarea	no	Sett inn tabell
 insert time	tinymce	no	Sett inn tid
-insert web link	htmlarea	no	Legg til web lenke
 insert/edit image	tinymce	no	Opprett/endre bilde
 insert/edit link	tinymce	no	Opprett/endre lenke
 insert/modify table	tinymce	no	Opprett/endre tabell
@@ -426,7 +358,6 @@ js-popup	tinymce	no	JS Popup
 july	common	no	Juli
 jun	common	no	Jun
 june	common	no	Juni
-justify	htmlarea-TableOperations	no	Juster
 justify center	common	no	Senterjustèr
 justify full	common	no	Fulljustèring
 justify left	common	no	Venstrejustèr
@@ -447,7 +378,6 @@ last name of the user, eg. "%1"	common	no	Brukerens etternavn, f.eks: "%1"
 last page	common	no	siste side
 lastname	common	no	Etternavn
 latvia	common	no	LATVIA
-layout	htmlarea-TableOperations	no	Layout
 ldap-mgr	common	no	LDAP Betjening
 lebanon	common	no	LIBANON
 left	common	no	Venstre
@@ -456,7 +386,6 @@ liberia	common	no	LIBERIA
 libyan arab jamahiriya	common	no	LIBYA
 license	common	no	Lisens
 liechtenstein	common	no	LIECHTENSTEIN
-link points to:	htmlarea-ContextMenu	no	Lenke peker til:
 link url	tinymce	no	Lenkens URL
 list	common	no	Liste
 list members	common	no	Liste medlemmer
@@ -476,14 +405,12 @@ mail domain, eg. "%1"	common	no	mail domene, f.eks: "%1"
 main category	common	no	Hovedkategori
 main screen	common	no	Forside
 maintainer	common	no	Vedlikeholdsansvarlig
-make lin_k...	htmlarea-ContextMenu	no	Lag lenke
 malawi	common	no	MALAWI
 malaysia	common	no	MALAYSIA
 maldives	common	no	MALDIVENE
 mali	common	no	MALI
 malta	common	no	MALTA
 march	common	no	Mars
-margin	htmlarea-TableOperations	no	Marg
 marshall islands	common	no	MARSHALL-ØYENE
 martinique	common	no	MARTINIQUE
 mauritania	common	no	MAURITANIA
@@ -493,14 +420,11 @@ may	common	no	Mai
 mayotte	common	no	MAYOTTE
 medium	common	no	Medium
 menu	common	no	Meny
-merge cells	htmlarea-TableOperations	no	Slå sammen celler
 merge table cells	tinymce	no	Merge table cells
 message	common	no	Melding
 mexico	common	no	MEXICO
 micronesia, federated states of	common	no	MIKRONESIA
-middle	htmlarea-TableOperations	no	Midten
 mkdir failed.	tinymce	no	Mkdir feilet
-modify url	htmlarea-ContextMenu	no	Endre nettstedsadresse
 moldova, republic of	common	no	MOLDOVA
 monaco	common	no	MONACO
 monday	common	no	Mandag
@@ -540,15 +464,12 @@ no	common	no	Nei
 no entries found, try again ...	common	no	ingen treff prøv igjen ...
 no files...	tinymce	no	ingen filer...
 no history for this record	common	no	Ingen historie for denne posten
-no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	no	Ingen feilstavede ord funnet med valgt språkbibliotek
 no permission to create folder.	tinymce	no	Ingen tillatelse til å opprette mapper
 no permission to delete file.	tinymce	no	Ingen tillatelse til å slette filer
 no permission to move files and folders.	tinymce	no	Ingen tillatelse til å flytte filer eller mapper
 no permission to rename files and folders.	tinymce	no	Ingen tillatelse til å gi filer eller mapper nytt navn
 no permission to upload.	tinymce	no	Ingen tillatelse til opplasting
-no rules	htmlarea-TableOperations	no	Ingen linjal
 no shadow	tinymce	no	Ingen skygge
-no sides	htmlarea-TableOperations	no	Ingen sider
 no subject	common	no	Ingen Overskrift
 none	common	no	Ingen
 norfolk island	common	no	NORFOLK-ØYA
@@ -579,15 +500,12 @@ open link in a new window	tinymce	no	Åpne i nytt vindu
 open link in the same window	tinymce	no	Åpne i samme vindu
 open notify window	common	no	Åpne varslingsvindu
 open popup window	common	no	Åpne pop-up vindu
-opens this link in a new window	htmlarea-ContextMenu	no	Åpne denne lenken i et nytt vindu
 ordered list	common	no	Nummerliste
 original	common	no	Orginal
-original word	htmlarea-SpellChecker	no	Originalt ord
 other	common	no	Annet
 outdent	tinymce	no	Undrag
 overview	common	no	Oversikt
 owner	common	no	Eier
-padding	htmlarea-TableOperations	no	Luft
 page	common	no	Side
 page was generated in %1 seconds	common	no	Siden ble generert på %1 sekunder
 pakistan	common	no	PAKISTAN
@@ -601,38 +519,26 @@ parent category	common	no	Overordnet kategori
 password	common	no	Passord
 password could not be changed	common	no	Passord kunne ikke endres
 password has been updated	common	no	Passord har blitt oppdatert
-paste	htmlarea-ContextMenu	no	Lim inn
 paste as plain text	tinymce	no	Lim inn som ren tekst
-paste from clipboard	htmlarea	no	Lim inn fra utklippstavle
 paste from word	tinymce	no	Lim inn fra Word
 paste table row after	tinymce	no	Paste table row after
 paste table row before	tinymce	no	Paste table row before
-path	htmlarea	no	Sti
 path not found.	tinymce	no	Sti ikke funnet.
 path to user and group files has to be outside of the webservers document-root!!!	common	no	Sti til bruker- og gruppe-filer. MÅ VÆRE UTENFOR webserverens dokument-rot!!!
-percent	htmlarea-TableOperations	no	prosent
 permissions to the files/users directory	common	no	tilgang til filmapper / brukermapper
 personal	common	no	Personlig
 peru	common	no	PERU
 philippines	common	no	FILIPPINENE
 phone number	common	no	Telefonnummer
 pitcairn	common	no	PITCAIRN
-pixels	htmlarea-TableOperations	no	billedpunkter
 please %1 by hand	common	no	Vennligst %1 for hånd
-please click into some cell	htmlarea-TableOperations	no	Klikk i en eller annen celle
-please confirm that you want to open this link	htmlarea-SpellChecker	no	Vennligst bekreft at du ønsker å åpne denne lenken
-please confirm that you want to remove this element:	htmlarea-ContextMenu	no	Vennligst bekreft at du øsnker å slette dette elementet:
-please confirm that you want to unlink this element.	htmlarea-ContextMenu	no	Vennligts bekreft at du ønker å fjerne lenken til dette elementet.
 please enter a name	common	no	Vennligst tast inn et navn !
 please insert a name for the target or choose another option.	tinymce	no	Vennligst sett inn et navn for målet eller velg et annet valg.
 please run setup to become current	common	no	Vennligst kjør setup for å oppdatere til siste versjon
 please select	common	no	Velg
 please set your global preferences	common	no	Sett dine globale preferanser
 please set your preferences for this application	common	no	Sett dine preferanser for denne applikasjonen
-please wait.  calling spell checker.	htmlarea-SpellChecker	no	Vennligst vent.  Kaller opp stavekontroll
 please wait...	common	no	Vennligst vent...
-please wait: changing dictionary to	htmlarea-SpellChecker	no	Vennligst vent; endrer mappe til
-pliz weit ;-)	htmlarea-SpellChecker	no	Vennligst vent ;-)
 poland	common	no	POLEN
 popup url	tinymce	no	Popup nettstedsadresse
 portugal	common	no	PORTUGAL
@@ -653,38 +559,26 @@ project	common	no	Prosjekt
 public	common	no	offentlig
 puerto rico	common	no	PUERTO RICO
 qatar	common	no	QATAR
-re-check	htmlarea-SpellChecker	no	Kontroller omigjen
 read	common	no	Les
 read this list of methods.	common	no	Les metode-listen.
 redo	tinymce	no	Gjør om
-redoes your last action	htmlarea	no	Omgjør din siste endring
 refresh	tinymce	no	Oppfrisk
 reject	common	no	Avvis
 remove col	tinymce	no	Fjern kolonne
 remove selected accounts	common	no	fjern valgte konti
-remove the	htmlarea-ContextMenu	no	Fjern
-remove this node from the document	htmlarea-ContextMenu	no	Fjern denne noden fra dokumentet
 rename	common	no	Endre navn
 rename failed	tinymce	no	Kunne ikke gi nytt navn
 replace	common	no	Erstatt
-replace all	htmlarea-SpellChecker	no	Erstatt alle
 replace with	common	no	Erstatt med
 replace&nbsp;all	tinymce	no	Erstatt alle
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	no	Returner en komplett liste av brukerkontoer på systemet. Advarsel: Denne listen kan bli svært lang
 returns an array of todo items	common	no	Viser en tabell med gjøremål
 returns struct of users application access	common	no	Viser en struktur over brukeres tilgang til applikasjonene
 reunion	common	no	REUNION
-revert	htmlarea-SpellChecker	no	Reverser
 right	common	no	Høyre
 rmdir failed.	tinymce	no	Rmdir feilet
-ro_w properties...	htmlarea-ContextMenu	no	Rad egenskaper
 romania	common	no	ROMANIA
-row properties	htmlarea-TableOperations	no	Rad egenskaper
 rows	tinymce	no	Rader
-rules	htmlarea-TableOperations	no	Linjer
-rules will appear between all rows and columns	htmlarea-TableOperations	no	Linjer vil synes mellom alle rader og kolonner
-rules will appear between columns only	htmlarea-TableOperations	no	Linjer vil synes kun mellom kolonner
-rules will appear between rows only	htmlarea-TableOperations	no	Linjer vil synes kun mellom rader
 run spell checking	tinymce	no	Kjør stavekontroll
 russian federation	common	no	RUSSISKE FØDERASJON
 rwanda	common	no	RUANDA
@@ -734,10 +628,6 @@ show page generation time	common	no	Vis sidegenereringstid
 show page generation time on the bottom of the page?	common	no	Vise sidegenereringstid på bunn av siden?
 show scrollbars	tinymce	no	Vis skrollbar
 show statusbar	tinymce	no	Vis statuslinje
-show the image properties dialog	htmlarea-ContextMenu	no	Vis dialog for bildeegenskaper
-show the table cell properties dialog	htmlarea-ContextMenu	no	Vis dialog for tabell kolonneegenskaper
-show the table properties dialog	htmlarea-ContextMenu	no	Vis dialog for tabell egenskaper
-show the table row properties dialog	htmlarea-ContextMenu	no	Vis dialog for tabell linjeegenskaper
 show toolbars	tinymce	no	Vis verktøylinjene
 show_more_apps	common	no	vis_flere_applikasjoner
 showing %1	common	no	viser %1
@@ -752,32 +642,19 @@ somalia	common	no	SOMALIA
 sorry, your login has expired	login	no	Beklager, din bruker har gått ut på dato
 south africa	common	no	SØR_AFRIKA
 south georgia and the south sandwich islands	common	no	SØR GEORGIA OG SØR SANDWICH ØYENE
-spacing	htmlarea-TableOperations	no	Luft
-spacing and padding	htmlarea-TableOperations	no	Luft
 spain	common	no	SPANIA
-spell check complete, didn't find any mispelled words.  closing now...	htmlarea-SpellChecker	no	Stavekontroll fullført, fant ingen feilstavede ord.  Lukker nå...
-spell-check	htmlarea-SpellChecker	no	Stavekontroll
-split cell	htmlarea-TableOperations	no	Del celle
-split column	htmlarea-TableOperations	no	Del kolonne
-split row	htmlarea-TableOperations	no	Del rad
 split table cells	tinymce	no	Split table cells
 sri lanka	common	no	SRI LANKA
 start date	common	no	Startdato
 start time	common	no	Start tid
 start with	common	no	Start med
 status	common	no	Status
-strikethrough	htmlarea	no	Overstrek
 striketrough	tinymce	no	Gjennomstreket
-style [css]	htmlarea-TableOperations	no	Stil [CSS]
 subject	common	no	Emne
 submit	common	no	Send
-subscript	htmlarea	no	Senket skrift
 substitutions and their meanings:	common	no	Erstatninger og deres betydninger:
 sudan	common	no	SUDAN
-suggestions	htmlarea-SpellChecker	no	Forslag
-summary	htmlarea-TableOperations	no	Sammendrag
 sunday	common	no	Søndag
-superscript	htmlarea	no	Hevet script
 suriname	common	no	SURINAM
 svalbard and jan mayen	common	no	SVALBARD OG JAN MAYEN
 swaziland	common	no	SWAZILAND
@@ -791,26 +668,18 @@ taiwan	common	no	TAIWAN/TAIPEI
 tajikistan	common	no	TADJIKISTAN
 tanzania, united republic of	common	no	TANZANIA
 target	tinymce	no	Vindu
-text align	htmlarea-TableOperations	no	Juster tekst
 text color:	common	no	Tekstfarge:
 thailand	common	no	THAILAND
 the api is current	common	no	API er oppdatert
 the api requires an upgrade	common	no	API trenger oppgradering
-the bottom side only	htmlarea-TableOperations	no	Bunnen kun
 the following applications require upgrades	common	no	De følgende applikasjonene trenger oppgradering
-the left-hand side only	htmlarea-TableOperations	no	Venstresiden kun
 the mail server returned	common	no	Epost tjener returnerte
-the right and left sides only	htmlarea-TableOperations	no	Høyre- og venstresiden kun
-the right-hand side only	htmlarea-TableOperations	no	Høyresiden kun
 the search has been compleated. the search string could not be found.	tinymce	no	Søk ble fullført.  Søkestrengen ga ingen resultater.
-the top and bottom sides only	htmlarea-TableOperations	no	The top and bottom sides only
-the top side only	htmlarea-TableOperations	no	Overkanten kun
 this application is current	common	no	Applikasjonen er oppdatert
 this application requires an upgrade	common	no	Applikasjonen trenger oppgradering
 this is just a template button	tinymce	no	Dette er bare en mal-knapp
 this is just a template popup	tinymce	no	Dette er bare en mal-popup
 this name has been used already	common	no	Dette navnet er allerede i bruk !
-this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	no	Dette vil utelate endringene og avslutte stavekontroll.  Vennligst bekreft.
 thursday	common	no	Torsdag
 time	common	no	Tid
 time selection:	jscalendar	no	Valg av tid:
@@ -824,7 +693,6 @@ today	common	no	Idag
 todays date, eg. "%1"	common	no	Dagens dato, f.eks: "%1"
 toggle first day of week	jscalendar	no	Velg føste ukedag
 toggle fullscreen mode	tinymce	no	Veksle fullskjermsmodus
-toggle html source	htmlarea	no	Vis/fjern HTML kildekode
 togo	common	no	TOGO
 tokelau	common	no	TOKELAU
 tonga	common	no	TONGA
@@ -842,7 +710,6 @@ uganda	common	no	UGANDA
 ukraine	common	no	UKRAINA
 underline	common	no	Understreket
 undo	tinymce	no	Angre
-undoes your last action	htmlarea	no	Forkaster din siste endring
 united arab emirates	common	no	FORENEDE ARABISKE EMIRATER
 united kingdom	common	no	STORBRITANIA
 united states	common	no	USA
@@ -850,13 +717,10 @@ united states minor outlying islands	common	no	USA-ØYER
 unknown	common	no	Ukjent
 unlink	tinymce	no	Fjern lenke
 unlink failed.	tinymce	no	Kunne ikke fjerne lenke
-unlink the current element	htmlarea-ContextMenu	no	Fjern lenke for gjeldene element
 unordered list	tinymce	no	Punktliste
-unset color	htmlarea-TableOperations	no	Ikke-bestemt farge
 up	tinymce	no	Opp
 update	common	no	Opprett
 upload	common	no	Last opp
-upload image	htmlarea-UploadImage	no	Last opp bilde
 uploading...	tinymce	no	Laster opp
 url	common	no	URL
 uruguay	common	no	URUGUAY
@@ -876,7 +740,6 @@ uzbekistan	common	no	USBEKISTAN
 vanuatu	common	no	VANUATU
 venezuela	common	no	VENEZUELA
 version	common	no	Versjon
-vertical align	htmlarea-TableOperations	no	Vertikal justering
 vertical alignment	tinymce	no	Vertical alignment
 viet nam	common	no	VIETNAM
 view	common	no	Vis
@@ -896,7 +759,6 @@ written by:	common	no	Skrevet av:
 year	common	no	År
 yemen	common	no	JEMEN
 yes	common	no	Ja
-you are in text mode.  use the [<>] button to switch back to wysiwig.	htmlarea	no	Du er nå i TEKST MODUS. Bruk [<>] knappen for å gå tilbake til visuell editor.
 you are required to change your password during your first login	common	no	Du må endre passord etter din første innlogging
 you have been successfully logged out	login	no	Du har nå logget ut
 you have not entered a title	common	no	Du har ikke tastet inn en tittel
