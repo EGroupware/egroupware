@@ -306,6 +306,12 @@
 				list($forward,$extra_vars) = explode('?',$forward,2);
 			}
 			
+			if(strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']) === false) {
+				// login requuest does not come from login.php
+				// redirect to referer on logout
+				$GLOBALS['egw']->session->appsession('referer', 'login', $_SERVER['HTTP_REFERER']);
+			}
+			
 			// Check for save passwd
 			if($GLOBALS['egw_info']['server']['check_save_passwd'] && $GLOBALS['egw']->acl->check('changepassword', 1, 'preferences') && $unsave_msg = $GLOBALS['egw']->auth->crackcheck($passwd))
 			{

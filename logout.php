@@ -26,6 +26,11 @@
 	$GLOBALS['kp3']       = get_var('kp3',array('GET','COOKIE'));
 
 	$verified = $GLOBALS['egw']->session->verify();
+
+	if(!$redirectTarget = $GLOBALS['egw']->session->appsession('referer', 'login')) {
+		$redirectTarget = $GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain'];
+	}
+
 	if ($verified)
 	{
 		if (file_exists($GLOBALS['egw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']))
@@ -63,6 +68,6 @@
 	{
 		$GLOBALS['egw']->session->phpgw_setcookie(EGW_PHPSESSID);
 	}
-
-	$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=1&domain='.$GLOBALS['egw_info']['user']['domain']);
+	
+	$GLOBALS['egw']->redirect($redirectTarget);
 ?>
