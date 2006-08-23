@@ -598,6 +598,81 @@
 			return $ret;
 		}
 
+		
+		/**
+		 * imports a mail identified by uid as infolog
+		 *
+		 * @author Cornelius Weiss <nelius@cwtech.de>
+		 * @todo search if infolog with from and subject allready exists ->appned body & inform user
+		 * @param string $_email_address rfc822 conform emailaddresses
+		 * @param string $_subject
+		 * @param string $_message
+		 * @param array $_attachments
+		 * @param string $_date
+		 * @return array $content array for uiinfolog
+		 */
+		function import_mail($_email_address,$_subject,$_message,$_attachments,$_date)
+		{
+			$address_array = imap_rfc822_parse_adrlist($_email_address,'');
+			foreach ((array)$address_array as $address) 
+			{
+				$email[] = $emailadr = sprintf('%s@%s',
+					trim($address->mailbox),
+					trim($address->host));
+					$name[] = !empty($address->personal) ? $address->personal : $emailadr;
+			}
+			
+			$info = array(
+				'info_type' => isset($this->enums['type']['email']) ? 'email' : 'note',
+				'info_from' => implode(',',$name),
+				'info_addr' => implode(',',$email),
+				'info_subject' => $_subject,
+				'info_des' => $_message,
+				'info_startdate' => $_date,
+				'info_status' => 'done',
+				'info_priority' => 1,
+				'info_percent' => 100,
+				'referer' => false,
+				'link_to' => array(
+					'to_id' => 0,
+				),
+			);
+
+			// find the addressbookentry to link with
+			$addressbook = CreateObject('addressbook.bocontacts');
+			$contacts = array();
+			foreach ($email as $mailadr)
+			{
+				$contacts = array_merge($contacts,(array)$addressbook->search(
+					array(
+						'email' => $mailadr,
+						'email_home' => $mailadr
+					),True,'','','',false,'OR',false,null,'',false));
+			}
+			
+			if (empty($contacts) || empty($contacts[0]))
+			{
+				$info['msg'] = lang('Attension: No Contact with address %1 found.',$info['info_addr']);
+			}
+			else 
+			{
+				foreach ((array)$contacts as $contact)
+				{
+					$this->link->link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
+				}
+			}
+
+			if (is_array($_attachments))
+			{
+				foreach ($_attachments as $attachment)
+				{
+					$this->link->link('infolog',$info['link_to']['to_id'],'file',$attachment);
+				}
+			}
+
+			return $info;			
+		}
+
 		/**
 		 * Hook called by link-class to include infolog in the appregistry of the linkage
 		 *

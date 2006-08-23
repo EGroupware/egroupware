@@ -33,7 +33,8 @@
 			'close'       => True,
 			'admin'       => True,
 			'hook_view'   => True,
-			'writeLangFile' => True
+			'writeLangFile' => True,
+			'import_mail' => True,
 		);
 		/**
 		 * reference to the infolog preferences of the user
@@ -633,7 +634,10 @@
 						else
 						{
 							$content['msg'] = lang('InfoLog entry saved');
-							$content['js'] = "opener.location.href='".($link=$GLOBALS['egw']->link($referer,array('msg' => $content['msg'])))."';";
+							if ($referer !== false)
+							{
+								$content['js'] = "opener.location.href='".($link=$GLOBALS['egw']->link($referer,array('msg' => $content['msg'])))."';";
+							}
 						}
 						$content[$tabs] = $active_tab;
 						if ((int) $content['pm_id'] != (int) $content['old_pm_id'])
@@ -1055,6 +1059,107 @@
 			{
 				$GLOBALS['egw']->template->fp('phpgw_body','info_admin');
 			}
+		}
+		
+		/**
+		 * imports a mail as infolog
+		 * two possible calls: 
+		 * 1. with function args set. (we come from send mail)
+		 * 2. with $_GET['uid] = someuid (we come from display mail)
+		 * 
+		 * @author Cornelius Weiss <nelius@cwtech.de>
+		 * @param unknown_type $_to_emailAddress
+		 * @param string $_subject
+		 * @param string $_body
+		 * @param array $_attachments
+		 * @param string $_date
+		 */
+		function import_mail($_to_emailAddress=false,$_subject=false,$_body=false,$_attachments=false,$_date=false)
+		{
+			$uid = $_GET['uid'];
+			$mailbox = $_GET['mailbox'];
+			
+			if (!empty($_to_emailAddress))
+			{
+				$GLOBALS['egw_info']['flags']['currentapp'] = 'infolog';
+				$GLOBALS['egw']->translation->add_app($GLOBALS['egw_info']['flags']['currentapp']);
+				echo '<script>window.resizeTo(750,550);</script>';
+
+				if (is_array($_attachments))
+				{
+					foreach ($_attachments as $attachment)
+					{
+						$attachments[] = array(
+							'name' => $attachment['name'],
+							'mimeType' => $attachment['type'],
+							'tmp_name' => $attachment['file'],
+							'size' => $attachment['size'],
+						);
+					}
+				}
+				
+				$this->edit($this->bo->import_mail(
+					implode(',',$_to_emailAddress),$_subject,$_body,$attachments,''
+				));
+				exit;
+			}
+			elseif ($uid && $mailbox)
+			{
+				$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
+				$bopreferences =& CreateObject('felamimail.bopreferences');
+				$bofelamimail->openConnection();
+				
+				$headers = $bofelamimail->getMessageHeader($mailbox,$uid);
+				$bodyParts = $bofelamimail->getMessageBody($uid,'');
+				$attachments = $bofelamimail->getMessageAttachments($uid);
+				
+				if (isset($headers->senderaddress)) $mailaddress = $bofelamimail->decode_header($headers->senderaddress);
+				elseif (isset($headers->fromaddress)) $mailaddress = $bofelamimail->decode_header($headers->fromaddress);
+	
+				$subject = $bofelamimail->decode_header($headers->Subject);
+				
+				// this should be a method of felamimail!
+				// We also need a html2text converter there!
+				for($i=0; $i<count($bodyParts); $i++)
+				{
+					// add line breaks to $bodyParts
+					$newBody        = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+					$newBody    = explode("\n",$newBody);
+					// create it new, with good line breaks
+					reset($newBody);
+					while(list($key,$value) = @each($newBody))
+					{
+						$value .= "\n";
+						$bodyAppend = $bofelamimail->wordwrap($value,75,"\n");
+						$message .= $bodyAppend;
+					}
+				}				
+
+				if (is_array($attachments))
+				{
+					foreach ($attachments as $num => $attachment)
+					{
+						$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($_uid, $attachment['partID']));
+						$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
+						$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
+						fwrite($tmpfile,$attachments[$num]['attachment']);
+						fclose($tmpfile);
+						unset($attachments[$num]['attachment']);
+					}
+				}
+				
+				return $this->edit($this->bo->import_mail(
+					$mailaddress,
+					$subject,
+					$message,
+					$attachments,
+					strtotime($headers->date)
+				));
+			}
+			$GLOBALS['egw']->common->egw_header();
+			echo "<script> window.close(); alert('Error: no mail (Mailbox / UID) given!');</script>";
+			$GLOBALS['egw']->common->egw_exit();
+			exit;
 		}
 		
 		/**
