@@ -38,6 +38,18 @@
 		$argList	= func_get_args();
 		$arg0		= array_shift($argList);
 			
+		if(get_magic_quotes_gpc()) {
+			foreach($argList as $key => $value) {
+				if(is_array($value)) {
+					foreach($argList as $key1 => $value1) {
+						$argList[$key][$key1] = stripslashes($value1);
+					}
+				} else {
+					$argList[$key] = stripslashes($value);
+				}
+			}
+		}
+
 		list($appName, $className, $functionName) = explode('.',$arg0);
 		
 		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax')
