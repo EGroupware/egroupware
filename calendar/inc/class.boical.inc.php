@@ -282,7 +282,7 @@
 									{
 										$days[] = date('Ymd',$day);
 									}
-									$attributes['EXDATE'] = implode(',',$days);
+									$attributes['EXDATE'] = implode(';',$days);
 									$parameters['EXDATE']['VALUE'] = 'DATE';
 								}
 								break;
@@ -292,7 +292,11 @@
 	 							break;
 	 							
 	 						case 'TRANSP':
-								$attributes['TRANSP'] = $event['non_blocking'] ? 'TRANSPARENT' : 'OPAQUE';
+								if ($version == '1.0') {
+									$attributes['TRANSP'] = $event['non_blocking'] ? 1 : 0;
+								} else {
+									$attributes['TRANSP'] = $event['non_blocking'] ? 'TRANSPARENT' : 'OPAQUE';
+								}
 								break;
 								
 							case 'CATEGORIES':
@@ -361,10 +365,11 @@
 			$_vcalData = preg_replace("/[\r\n]+ /",'',$_vcalData);
 
 			$vcal = &new Horde_iCalendar;
-			if(!$vcal->parsevCalendar($_vcalData))
-			{
+			if(!$vcal->parsevCalendar($_vcalData)) {
 				return FALSE;
 			}
+			
+			$version = $vcal->getAttribute('VERSION');
 			
 			if(!is_array($this->supportedFields))
 			{
@@ -557,7 +562,7 @@
 								}
 								break;
 							case 'EXDATE':
-								// ToDo: $vcardData['recur_exception'] = ...
+								$vcardData['recur_exception']	= $attributes['value'];
 								break;
 							case 'SUMMARY':
 								$vcardData['title']		= $attributes['value'];
@@ -571,7 +576,11 @@
 								}
 								break;
 	 						case 'TRANSP':
-								$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
+	 							if($version = '1.0') {
+	 								$vcardData['non_blocking'] = $attributes['value'] == 1;
+	 							} else {
+									$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
+								}
 								break;
 							case 'PRIORITY':
 	 							$vcardData['priority'] = (int) $this->priority_ical2egw[$attributes['value']];
@@ -794,7 +803,10 @@
 					switch(strtolower($_productName))
 					{
 						default:
-							$this->supportedFields = $defaultFields[0];
+							$this->supportedFields = $defaultFields[0] + array(
+								'recur_exception' => 'recur_exception',
+								'non_blocking' => 'non_blocking',
+							);
 							break;
 					}
 					break;
@@ -964,7 +976,7 @@
 								}
 								break;
 							case 'EXDATE':
-								// ToDo: $vcardData['recur_exception'] = ...
+								$vcardData['recur_exception'] = $attributes['value'];
 								break;
 							case 'SUMMARY':
 								$vcardData['title']		= $attributes['value'];
