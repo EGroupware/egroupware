@@ -21,6 +21,10 @@
 	 */
 	function xajax_redirect(&$anon_account)
 	{
+		// now the header is included, we can set the charset
+		$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
+		define('XAJAX_DEFAULT_CHAR_ENCODING',$GLOBALS['egw']->translation->charset());
+
 		$response =& new xajaxResponse();
 		$response->addScript("location.href='".$GLOBALS['egw_info']['server']['webserver_url'].'/login.php?cd=10'."';");
 
@@ -71,6 +75,7 @@
 
 		// now the header is included, we can set the charset
 		$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
+		define('XAJAX_DEFAULT_CHAR_ENCODING',$GLOBALS['egw']->translation->charset());
 
 		$ajaxClass =& CreateObject($appName.'.'.$className);
 		$argList = $GLOBALS['egw']->translation->convert($argList, 'utf-8');

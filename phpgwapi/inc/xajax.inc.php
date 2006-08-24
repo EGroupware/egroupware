@@ -41,14 +41,17 @@
    ----------------------------------------------------------------------------
 */
 
-/**
- * Define XAJAX_DEFAULT_CHAR_ENCODING that is used by both
- * the xajax and xajaxResponse classes
- */
-if (!defined ('XAJAX_DEFAULT_CHAR_ENCODING'))
-{
-	define ('XAJAX_DEFAULT_CHAR_ENCODING', 'utf-8' );
-}
+// RalfBecker: We can't allow to define the charset "now", as the eGW header is not yet included
+// and we dont know the charset at this moment. It will be set in xajax.php after the header include!
+// Please note: The use of this constant is also removed from the constructor further down!
+///**
+// * Define XAJAX_DEFAULT_CHAR_ENCODING that is used by both
+// * the xajax and xajaxResponse classes
+// */
+//if (!defined ('XAJAX_DEFAULT_CHAR_ENCODING'))
+//{
+//	define ('XAJAX_DEFAULT_CHAR_ENCODING', 'utf-8' );
+//}
 
 require_once(dirname(__FILE__)."/xajaxResponse.inc.php");
 
@@ -169,7 +172,9 @@ class xajax
 	 * @param string  defaults to XAJAX_DEFAULT_CHAR_ENCODING defined above
 	 * @param boolean defaults to false
 	 */
-	function xajax($sRequestURI="",$sWrapperPrefix="xajax_",$sEncoding=XAJAX_DEFAULT_CHAR_ENCODING,$bDebug=false)
+// RalfBecker: using the not yet defined constant XAJAX_DEFAULT_CHAR_ENCODING, results in a warning, which messes up the xml
+//	function xajax($sRequestURI="",$sWrapperPrefix="xajax_",$sEncoding=XAJAX_DEFAULT_CHAR_ENCODING,$bDebug=false)
+	function xajax($sRequestURI="",$sWrapperPrefix="xajax_",$sEncoding='utf-8',$bDebug=false)
 	{
 		$this->aFunctions = array();
 		$this->aObjects = array();
