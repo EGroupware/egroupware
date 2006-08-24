@@ -554,7 +554,7 @@ class Horde_iCalendar {
                 case 'EXDATE':
                     $values = array();
                     $dates = array();
-                    preg_match_all('/,([^,]*)/', ',' . $value, $values);
+                    preg_match_all('/;([^;]*)/', ';' . $value, $values);
 
                     foreach ($values[1] as $value) {
                         if (isset($params['VALUE'])) {
