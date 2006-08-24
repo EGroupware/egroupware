@@ -68,7 +68,10 @@
 			)
 		);
 		include('./header.inc.php');
-		
+
+		// now the header is included, we can set the charset
+		$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
+
 		$ajaxClass =& CreateObject($appName.'.'.$className);
 		$argList = $GLOBALS['egw']->translation->convert($argList, 'utf-8');
 
