@@ -373,6 +373,7 @@ class accounts_backend
 		}
 		$data = $this->translation->convert($data[0],'utf-8');
 		
+		$utc_diff = date('Z');
 		$user = array(
 			'account_dn'        => $data['dn'],
 			'account_id'        => (int)$data['uidnumber'][0],
@@ -388,15 +389,16 @@ class accounts_backend
 			// - if it's unset an account is enabled AND does never expire
 			// - if it's set to 0, the account is disabled
 			// - if it's set to > 0, it will or already has expired --> acount is active if it not yet expired
-			// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp / (24*60*60)
-			'account_status'    => isset($data['shadowexpire']) && $data['shadowexpire'][0]*24*3600 < time() ? false : 'A',
-			'account_expires'   => isset($data['shadowexpire']) && $data['shadowexpire'][0] ? $data['shadowexpire'][0]*24*3600 : -1,
+			// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp (int UTC!) / (24*60*60)
+			'account_status'    => isset($data['shadowexpire']) && $data['shadowexpire'][0]*24*3600+$utc_diff < time() ? false : 'A',
+			'account_expires'   => isset($data['shadowexpire']) && $data['shadowexpire'][0] ? $data['shadowexpire'][0]*24*3600+$utc_diff : -1, // LDAP date is in UTC
 			'account_lastpasswd_change' => isset($data['shadowlastchange']) ? $data['shadowlastchange'][0]*24*3600 : null,
 			// lastlogin and lastlogin from are not availible via the shadowAccount object class
 			// 'account_lastlogin' => $data['phpgwaccountlastlogin'][0],
 			// 'account_lastloginfrom' => $data['phpgwaccountlastloginfrom'][0],
 			'person_id'         => $data['uid'][0],	// id of associated contact
 		);
+		//echo "<p align=right>accounts_ldap::_read_user($account_id): shadowexpire={$data['shadowexpire'][0]} --> account_expires=$user[account_expires]=".date('Y-m-d H:i',$user['account_expires'])."</p>\n";
 		if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
 		{
 			$user['homedirectory']  = $data['homedirectory'][0];
@@ -464,10 +466,14 @@ class accounts_backend
 		// - if it's unset an account is enabled AND does never expire
 		// - if it's set to 0, the account is disabled
 		// - if it's set to > 0, it will or already has expired --> acount is active if it not yet expired
-		// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp / (24*60*60)
+		// shadowexpire is in days since 1970/01/01 (equivalent to a timestamp (int UTC!) / (24*60*60)
+		$utc_diff = date('Z');
+		$shadowexpire = ($data['account_expires']-$utc_diff) / (24*3600);
+		$account_expire = $shadowexpire*3600*24+$utc_diff;
+		//echo "<p align=right>account_expires=".date('Y-m-d H:i',$data['account_expires'])." --> $shadowexpire --> ".date('Y-m-d H:i',$account_expire)."</p>\n";
 		$to_write['shadowexpire'] = !$data['account_status'] ? 	
-			($data['account_expires'] != -1 && $data['account_expires'] < time() ? $data['account_expires']/(24*3600) : 0) :
-			($data['account_expires'] != -1 ? $data['account_expires']/(24*3600) : array());	// array() = unset value
+			($data['account_expires'] != -1 && $data['account_expires'] < time() ? round($shadowexpire) : 0) :
+			($data['account_expires'] != -1 ? round($shadowexpire) : array());	// array() = unset value
 		
 		if ($new_entry && is_array($to_write['shadowexpire']) && !count($to_write['shadowexpire']))
 		{
@@ -546,6 +552,7 @@ class accounts_backend
 
 			$sri = ldap_search($this->ds, $this->user_context, $filter);
 			$allValues = ldap_get_entries($this->ds, $sri);
+			$utc_diff = date('Z');
 			while (list($null,$allVals) = @each($allValues))
 			{
 				settype($allVals,'array');
@@ -558,7 +565,7 @@ class accounts_backend
 						'account_type'      => 'u',
 						'account_firstname' => $GLOBALS['egw']->translation->convert($allVals['givenname'][0],'utf-8'),
 						'account_lastname'  => $GLOBALS['egw']->translation->convert($allVals['sn'][0],'utf-8'),
-						'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]/(24*3600) < time() ? false : 'A',
+						'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
 						'account_email'     => $allVals['mail'][0],
 					);
 				}
