@@ -98,10 +98,12 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	    $clientlast = $info['ClientAnchor'];
         	    $state->setServerAnchorLast($type, $info['ServerAnchor']);
         	} else {
-        	    $clientlast === false;
+        	    $clientlast = false;
         	    $state->setServerAnchorLast($type, 0);
         	}
+        	
         	Horde::logMessage("SyncML: checking anchor \$clientlast " . $clientlast .' '. $this->_metaAnchorLast .' '. $clientlast == $this->_metaAnchorLast, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+        	
         	// Set Server Anchor for this sync to current time.
         	$state->setServerAnchorNext($type,time());
         	if ($clientlast !== false && $clientlast == $this->_metaAnchorLast) {
