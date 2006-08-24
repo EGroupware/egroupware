@@ -792,13 +792,15 @@ error_log("socontacts::search(".print_r($criteria,true).",'$only_keys','$order_b
 
  	/**
 	 * gets all contact fields from database
+	 * 
+	 * @return array of (internal) field-names
 	 */
 	function get_contact_columns()
 	{
-		$fields = $this->somain->db_data_cols;
+		$fields = $this->get_fields('all');
 		foreach ((array)$this->customfields as $cfield => $coptions)
 		{
-			$fields['#'.$cfield] = '#'.$cfield;
+			$fields[] = '#'.$cfield;
 		}
 		return $fields;
 	}

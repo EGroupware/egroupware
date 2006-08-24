@@ -885,7 +885,7 @@ class uicontacts extends bocontacts
 				}
 				$new_type = array_keys($this->content_types);
 				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : $new_type[0];
-				foreach($this->get_contact_columns() as $field => $data)
+				foreach($this->get_contact_columns() as $field)
 				{
 					if ($_GET['presets'][$field]) $content[$field] = $_GET['presets'][$field];
 				}
