@@ -1562,22 +1562,26 @@
 		 * @param string $first firstname
 		 * @param string $last lastname
 		 * @param string $account account-name (lid)
+		 * @param string $domain=null domain-name or null to use eGW's default domain $GLOBALS['egw_info']['server']['mail_suffix]
 		 * @return string with email address
 		 */
-		function email_address($first,$last,$account)
+		function email_address($first,$last,$account,$domain=null)
 		{
+			//echo "<p align=right>common::email_address('$first','$last','$account')";
 			// convert all european special chars to ascii, (c) RalfBecker-AT-egroupware.org ;-)
 			static $extra = array(
 				'&szlig;' => 'ss',
+				' ' => '',
 			);
 			foreach (array('first','last','account') as $name) 
 			{
-				$$name = htmlentities($$name,ENT_NOQUOTES,$GLOBALS['egw']->translation->charset());
+				$$name = htmlentities($$name,ENT_QUOTES,$GLOBALS['egw']->translation->charset());
 				$$name = str_replace(array_keys($extra),array_values($extra),$$name);
 				$$name = preg_replace('/&([aAuUoO])uml;/','\\1e',$$name);	// replace german umlauts with the letter plus one 'e'
 				$$name = preg_replace('/&([a-zA-Z])(grave|acute|circ|ring|cedil|tilde|slash|uml);/','\\1',$$name);	// remove all types of acents
-				$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+);/','',$$name);	// remove all other entities
+				$$name = preg_replace('/&([a-zA-Z]+|#[0-9]+|);/','',$$name);	// remove all other entities
 			}
+			//echo " --> ('$first', '$last', '$account')";
 			if (!$first && !$last)	// fallback to the account-name, if real names contain only special chars
 			{
 				$first = '';
@@ -1592,10 +1596,14 @@
 				$dot = '.';
 				$underscore = '_';
 			}
-			return str_replace(array('first','last','initial','account','dot','underscore','_'),
+			if (!$domain) $domain = $GLOBALS['egw_info']['server']['mail_suffix'];
+
+			$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
 				array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
-				$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first_dot_last').
-				'@'.$GLOBALS['egw_info']['server']['mail_suffix'];
+				$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
+				'@'.$domain;
+			//echo " = '$email'</p>\n";
+			return $email;
 		}			
 
 		// This is not the best place for it, but it needs to be shared bewteen Aeromail and SM
