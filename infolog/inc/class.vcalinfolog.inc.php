@@ -32,6 +32,18 @@
 			'COMPLETED'    => 'done',
 			'CANCELLED'    => 'cancelled',
 		);
+		var $egw_priority2vcal_priority = array(
+			0	=> 3,
+			1	=> 2,
+			2	=> 1,
+			3	=> 1,
+			
+		);
+		var $vcal_priority2egw_priority = array(
+			1       => 2,
+			2       => 1,
+			3       => 0,
+		);
 		function exportVTODO($_taskID, $_version)
 		{
 			$taskData = $this->read($_taskID);
@@ -69,8 +81,7 @@
 			$vevent->setAttribute('CLASS',$taskData['info_access'] == 'public' ? 'PUBLIC' : 'PRIVATE');
 			$vevent->setAttribute('STATUS',isset($this->status2vtodo[$taskData['info_status']]) ?  
 				$this->status2vtodo[$taskData['info_status']] : 'NEEDS-ACTION');
-			// 3=urgent => 1, 2=high => 2, 1=normal => 3, 0=low => 4
-			$vevent->setAttribute('PRIORITY',4-$taskData['info_priority']);
+			$vevent->setAttribute('PRIORITY',$this->egw_priority2vcal_priority[$taskData['info_priority']]);
 
 			#$vevent->setAttribute('TRANSP','OPAQUE');
 			# status
@@ -161,10 +172,9 @@
 								$taskData['info_startdate']		= $attributes['value'];
 								break;
 							case 'PRIORITY':
-								// 1 => 3=urgent, 2 => 2=high, 3 => 1=normal, 4 => 0=low
-								if (1 <= $attributes['value'] && $attributes['value'] <= 4)
+								if (1 <= $attributes['value'] && $attributes['value'] <= 3)
 								{
-									$taskData['info_priority']	= 4 - $attributes['value'];
+									$taskData['info_priority']	= $this->vcal_priority2egw_priority[$attributes['value']];
 								}
 								else
 								{
