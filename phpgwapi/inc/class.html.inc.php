@@ -607,7 +607,7 @@ class html
 					theme_advanced_buttons2 : "",
 					theme_advanced_buttons3 : "",
 					valid_elements : "strong/b[class],em/i[class],strike[class],u[class],p[dir|class|align],ol,ul,li,br,\
-					sub,sup,blockquote[dir|style],pre[class|align],address[class|align],hr",
+					sub,sup,blockquote[dir|style],pre[class|align],address[class|align],hr,font[color]",
 				';
 
 				return $this->tinymce($_name, $_content, $_style, $init_options, $_base_href);
