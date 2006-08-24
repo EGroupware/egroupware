@@ -75,17 +75,17 @@
     <td>{lang_How_should_EMail_addresses_for_new_users_be_constructed?}:</td>
     <td>
      <select name="newsettings[email_address_format]">
-      <option value="first_dot_last">{lang_Firstname}.{lang_Lastname}@domain.com</option>
-      <option value="first_last">{lang_Firstname}{lang_Lastname}@domain.com</option>
-      <option value="first_underscore_last">{lang_Firstname}_{lang_Lastname}@domain.com</option>
-      <option value="initial_last">{lang_Initial}{lang_Lastname}@domain.com</option>
-      <option value="initial_dot_last">{lang_Initial}.{lang_Lastname}@domain.com</option>
-      <option value="last_dot_first">{lang_Lastname}.{lang_Firstname}@domain.com</option>
-      <option value="last_first">{lang_Lastname}{lang_Firstname}@domain.com</option>
-      <option value="last_underscore_first">{lang_Lastname}_{lang_Firstname}@domain.com</option>
-      <option value="last">{lang_Lastname}@domain.com</option>
-      <option value="first">{lang_Firstname}@domain.com</option>
-      <option value="account">{lang_Username}@domain.com</option>
+      <option value="first-dot-last"{selected_email_address_format_first-dot-last}>{lang_Firstname}.{lang_Lastname}@domain.com</option>
+      <option value="first-last"{selected_email_address_format_first-last}>{lang_Firstname}{lang_Lastname}@domain.com</option>
+      <option value="first-underscore-last"{selected_email_address_format_first-underscore-last}>{lang_Firstname}_{lang_Lastname}@domain.com</option>
+      <option value="initial-last"{selected_email_address_format_inital-last}>{lang_Initial}{lang_Lastname}@domain.com</option>
+      <option value="initial-dot-last"{selected_email_address_format_inital-dot-last}>{lang_Initial}.{lang_Lastname}@domain.com</option>
+      <option value="last-dot-first"{selected_email_address_format_last-dot-first}>{lang_Lastname}.{lang_Firstname}@domain.com</option>
+      <option value="last-first"{selected_email_address_format_last-first}>{lang_Lastname}{lang_Firstname}@domain.com</option>
+      <option value="last-underscore-first"{selected_email_address_format_last-underscore-first}>{lang_Lastname}_{lang_Firstname}@domain.com</option>
+      <option value="last"{selected_email_address_format_last}>{lang_Lastname}@domain.com</option>
+      <option value="first"{selected_email_address_format_first}>{lang_Firstname}@domain.com</option>
+      <option value="account"{selected_email_address_format_account}>{lang_Username}@domain.com</option>
      </select>
     </td>
    </tr>
