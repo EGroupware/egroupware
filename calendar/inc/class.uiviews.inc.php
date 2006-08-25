@@ -988,10 +988,16 @@ class uiviews extends uical
 			$tpl->set_block('event_widget_t','event_tooltip');
 			$tpl->set_block('event_widget_t','planner_event');
 		}
-
-		if ($event['start_m'] == 0 && $event['end_m'] >= 24*60-1)
+		if (($return_array || $event['start_m'] == 0) && $event['end_m'] >= 24*60-1)
 		{
-			$timespan = lang('all day');
+			if ($return_array && $event['end_m'] > 24*60)
+			{
+				$timespan = $this->bo->format_date($event['start'],false).' - '.$this->bo->format_date($event['end']);
+			}
+			else
+			{
+				$timespan = lang('all day');
+			}
 		}
 		else
 		{
@@ -1006,7 +1012,7 @@ class uiviews extends uical
 		$small_trigger_width = 120 + 20*count($icons);
 		$corner_radius=$width > $small_trigger_width ? 10 : 5;
 		$header_height=$width > $small_trigger_width ? 19 : 12;	// multi_3 icon has a height of 19=16+2*1padding+1border !
-		$height = $this->times2height($event['start_m'],$event['end_m'],$header_height);
+		if (!$return_array) $height = $this->times2height($event['start_m'],$event['end_m'],$header_height);
 		//$body_height = max(0,$height - $header_height - $corner_radius);
 		$border=1;
 		$headerbgcolor = $color ? $color : '#808080';
@@ -1046,7 +1052,7 @@ class uiviews extends uical
 			'timespan' => $timespan,
 			'title' => ($title = !$is_private ? $this->html->htmlspecialchars($event['title']) : lang('private')),
 			'header' => $small_height ? $title : $timespan,
-			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])) : '',
+			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])."\nInstensity: $intensity") : '',
 			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
 			'participants' => $participants,
 			'times' => !$event['multiday'] ? $this->add_nonempty($this->bo->timespan($event['start_m'],$event['end_m'],true),lang('Time')) :
@@ -1702,7 +1708,12 @@ class uiviews extends uical
 	 */
 	function plannerEventWidget($event,$start,$end,$indent='')
 	{
-		$event['multiday'] = true;	// otherwise eventWidgets displays only the time and expects start_m to be set
+		// some fields set by the dayColWidget for the other views
+		$day_start = $this->bo->date2ts((string)$this->bo->date2string($event['start']));
+		$event['start_m'] = ($event['start'] - $day_start) / 60;
+		$event['end_m'] = round(($event['end'] - $day_start) / 60);
+		$event['multiday'] = true;
+
 		$data = $this->eventWidget($event,200,$indent,true,'planner_event');
 		
 		$left = $this->_planner_pos($event['start'],$start,$end);

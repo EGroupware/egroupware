@@ -105,7 +105,7 @@
 		60	=> '60'
 	);
 	$groups = $GLOBALS['egw']->accounts->membership($GLOBALS['egw_info']['user']['account_id']);
-	$options = array(-1 => lang('none'));
+	$options = array('0' => lang('none'));
 	if (is_array($groups))
 	{
 		foreach($groups as $group)
