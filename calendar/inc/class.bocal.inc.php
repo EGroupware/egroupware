@@ -1109,14 +1109,23 @@ class bocal
 	 * Formats a date given as timestamp or array
 	 *
 	 * @param mixed $date integer timestamp or array with ('year','month',..,'second') to convert
-	 * @param string $format='' default common_prefs[dateformat], common_prefs[timeformat]
+	 * @param string/boolean $format='' default common_prefs[dateformat], common_prefs[timeformat], false=time only, true=date only
 	 * @return string the formated date (incl. time)
 	 */
 	function format_date($date,$format='')
 	{
-		if (!$format)
+		$timeformat = $this->common_prefs['timeformat'] != '12' ? 'H:i' : 'h:i a';
+		if ($format === '')		// date+time wanted
 		{
-			$format = $this->common_prefs['dateformat'].', '.($this->common_prefs['timeformat'] != '12' ? 'H:i' : 'h:i a');
+			$format = $this->common_prefs['dateformat'].', '.$timeformat;
+		}
+		elseif ($format === false)	// time wanted
+		{
+			$format = $timeformat;
+		}
+		elseif ($format === true)
+		{
+			$format = $this->common_prefs['dateformat'];
 		}
 		return adodb_date($format,$this->date2ts($date,False));
 	}
@@ -1647,6 +1656,10 @@ class bocal
 
 		$default_prefs =& $GLOBALS['egw']->preferences->default['calendar'];
 
+		if (!($planner_start_with_group = $GLOBALS['egw']->accounts->name2id('Default')))
+		{
+			$planner_start_with_group = '0';
+		}
 		$subject = lang('Calendar Event') . ' - $$action$$: $$startdate$$ $$title$$'."\n";
 		$defaults = array(
 			'defaultcalendar' => 'week',
@@ -1667,13 +1680,13 @@ class bocal
 			'workdayends'     => '17',
 			'interval'        => '30',
 			'defaultlength'   => '60',
-			'planner_start_with_group' => $GLOBALS['egw']->accounts->name2id('Default'),
+			'planner_start_with_group' => $planner_start_with_group,
 			'defaultfilter'   => 'all',
 			'default_private' => '0',
 		);
 		foreach($defaults as $var => $default)
 		{
-			if (!isset($default_prefs[$var]) || $default_prefs[$var] == '')
+			if (!isset($default_prefs[$var]) || (string)$default_prefs[$var] == '')
 			{
 				$GLOBALS['egw']->preferences->add('calendar',$var,$default,'default');
 				$this->cal_prefs[$var] = $default;
