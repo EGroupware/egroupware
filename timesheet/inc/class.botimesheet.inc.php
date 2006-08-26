@@ -1,16 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - TimeSheet: business object                                  *
-* http://www.eGroupWare.org                                                *
-* Written and (c) 2005 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-* -------------------------------------------------------                  *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * TimeSheet - business object
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package timesheet
+ * @copyright (c) 2005/6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
@@ -23,39 +21,46 @@ if (!defined('TIMESHEET_APP'))
  * Business object of the TimeSheet
  *
  * Uses eTemplate's so_sql as storage object (Table: egw_timesheet).
- *
- * @package timesheet
- * @author RalfBecker-AT-outdoor-training.de
- * @copyright (c) 2005 by RalfBecker-AT-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class botimesheet extends so_sql
 {
 	/**
-	 * @var array $config timesheets config data
+	 * Timesheets config data
+	 * 
+	 * @var array
 	 */
 	var $config = array();
 	/**
-	 * @var array $timestamps timestaps that need to be adjusted to user-time on reading or saving
+	 * Timestaps that need to be adjusted to user-time on reading or saving
+	 * 
+	 * @var array
 	 */
 	var $timestamps = array(
 		'ts_start','ts_modified'
 	);
 	/**
-	 * @var int $tz_offset_s offset in secconds between user and server-time,
-	 *	it need to be add to a server-time to get the user-time or substracted from a user-time to get the server-time
+	 * Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time 
+	 * or substracted from a user-time to get the server-time
+	 * 
+	 * @var int
 	 */
 	var $tz_offset_s;
 	/**
-	 * @var int $now actual user-time as timestamp
+	 * Current time as timestamp in user-time
+	 * 
+	 * @var int
 	 */
 	var $now;
 	/**
-	 * @var int $today start of today in user-time
+	 * Start of today in user-time
+	 * 
+	 * @var int
 	 */
 	var $today;
 	/**
-	 * @var array $date_filters filter for search limiting the date-range
+	 * Filter for search limiting the date-range
+	 * 
+	 * @var array
 	 */
 	var $date_filters = array(	// Start: year,month,day,week, End: year,month,day,week
 		'Today'       => array(0,0,0,0,  0,0,1,0),
@@ -71,19 +76,27 @@ class botimesheet extends so_sql
 		'3 years ago' => array(-3,0,0,0, -2,0,0,0),
 	);
 	/**
-	 * @var object $link reference to the (bo)link class instanciated at $GLOBALS['egw']->link
+	 * Reference to the (bo)link class instanciated at $GLOBALS['egw']->link
+	 * 
+	 * @var bolink
 	 */
 	var $link;
 	/**
-	 * @var array $grants
+	 * Grants: $GLOBALS['egw']->acl->get_grants(TIMESHEET_APP);
+	 * 
+	 * @var array
 	 */	
 	var $grants;
 	/**
-	 * @var array $summary array sums of the last search in keys duration and price
+	 * Sums of the last search in keys duration and price
+	 * 
+	 * @var array
 	 */
 	var $summary;
 	/**
-	 * @var array $show_sums array with boolean values in keys 'day', 'week' or 'month', for the sums to return in the search
+	 * Array with boolean values in keys 'day', 'week' or 'month', for the sums to return in the search
+	 * 
+	 * @var array
 	 */
 	var $show_sums;
 
@@ -261,14 +274,12 @@ class botimesheet extends so_sql
 		// postgres can't round from double precission, only from numeric ;-)
 		$total_sql = $this->db->Type != 'pgsql' ? "round(ts_quantity*ts_unitprice,2)" : "round(cast(ts_quantity*ts_unitprice AS numeric),2)";
 
-		if ($extra_cols && !is_array($extra_cols))
+		if (!is_array($extra_cols))
 		{
-			$extra_cols = explode(',',$extra_cols);
+			$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
 		}
-		else
-		{
-			$extra_cols = array($total_sql.' AS ts_total');
-		}
+		$extra_cols[] = $total_sql.' AS ts_total';
+
 		if (!isset($filter['ts_owner']) || !count($filter['ts_owner']))
 		{
 			$filter['ts_owner'] = array_keys($this->grants);
@@ -537,5 +548,33 @@ class botimesheet extends so_sql
 			'add_id'     => 'link_id',		
 			'add_popup'  => '600x400',			
 		);
+	}
+	
+	/**
+	 * Return the timesheets linked with given project(s) AND with entries of other apps, which are also linked to the same project
+	 * 
+	 * Projectmanager will cumulate them in the other apps entries.
+	 *
+	 * @param array $param int/array $param['pm_id'] project-id(s)
+	 * @return array with pm_id, pe_id, pe_app('timesheet'), pe_app_id(ts_id), other_id, other_app, other_app_id
+	 */
+	function cumulate($param)
+	{
+		$links = $this->link->get_3links(TIMESHEET_APP,'projectmanager',$param['pm_id']);
+		
+		$rows = array();
+		foreach($links as $link)
+		{
+			$rows[$link['id']] = array(
+				'pm_id'       => $link['id2'],
+				'pe_id'       => $link['id'],
+				'pe_app'      => $link['app1'],
+				'pe_app_id'   => $link['id1'],
+				'other_id'    => $link['link3'],
+				'other_app'   => $link['app3'],
+				'other_app_id'=> $link['id3'],
+			);
+		}
+		return $rows;
 	}
 }

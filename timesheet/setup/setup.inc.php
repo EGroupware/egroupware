@@ -1,16 +1,15 @@
 <?php
-/**************************************************************************\
-* eGroupWare - TimeSheet - time tracking for ProjectManager                *
-* http://www.egroupware.org                                                *
-* Written and (c) 2005 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * TimeSheet - setup definitions
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package timesheet
+ * @subpackage setup
+ * @copyright (c) 2005/6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 if (!defined('TIMESHEET_APP'))
 {
@@ -43,6 +42,7 @@ $setup_info[TIMESHEET_APP]['hooks']['settings'] = TIMESHEET_APP.'.ts_admin_prefs
 $setup_info[TIMESHEET_APP]['hooks']['admin'] = TIMESHEET_APP.'.ts_admin_prefs_sidebox_hooks.all_hooks';
 $setup_info[TIMESHEET_APP]['hooks']['sidebox_menu'] = TIMESHEET_APP.'.ts_admin_prefs_sidebox_hooks.all_hooks';
 $setup_info[TIMESHEET_APP]['hooks']['search_link'] = TIMESHEET_APP.'.botimesheet.search_link';
+$setup_info[TIMESHEET_APP]['hooks']['pm_cumulate'] = TIMESHEET_APP.'.botimesheet.cumulate';
 
 /* Dependencies for this app to work */
 $setup_info[TIMESHEET_APP]['depends'][] = array(

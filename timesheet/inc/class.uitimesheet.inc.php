@@ -1,27 +1,20 @@
 <?php
-/**************************************************************************\
-* eGroupWare - TimeSheet: user interface                                   *
-* http://www.eGroupWare.org                                                *
-* Written and (c) 2005 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-* -------------------------------------------------------                  *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * TimeSheet - user interface
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package timesheet
+ * @copyright (c) 2005/6 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.uietemplate.inc.php');
 require_once('class.botimesheet.inc.php');
 
 /**
  * User interface object of the TimeSheet
- *
- * @package timesheet
- * @author RalfBecker-AT-outdoor-training.de
- * @copyright (c) 2005 by RalfBecker-AT-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class uitimesheet extends botimesheet
 {

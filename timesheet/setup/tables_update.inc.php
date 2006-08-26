@@ -1,16 +1,15 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - Setup                                                       *
-	* http://www.eGroupWare.org                                                *
-	* Created by eTemplates DB-Tools written by ralfbecker@outdoor-training.de *
-	* --------------------------------------------                             *
-	* This program is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU General Public License as published by the    *
-	* Free Software Foundation; either version 2 of the License, or (at your   *
-	* option) any later version.                                               *
-	\**************************************************************************/
-	
-	/* $Id$ */
+/**
+ * TimeSheet - setup table updates
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package timesheet
+ * @subpackage setup
+ * @copyright (c) 2005 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 	$test[] = '0.1.001';
 	function timesheet_upgrade0_1_001()
@@ -23,4 +22,3 @@
 
 		return $GLOBALS['setup_info']['timesheet']['currentver'] = '0.2.001';
 	}
-?>
