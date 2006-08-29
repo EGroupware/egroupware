@@ -25,43 +25,63 @@
 class so_sql
 {
  	/** 
- 	 * @var string $table_name need to be set in the derived class to the db-table-name 
+ 	 * need to be set in the derived class to the db-table-name 
+ 	 * 
+ 	 * @var string
  	 */
 	var $table_name;
  	/**
- 	 * @var string $autoinc_id db-col-name of autoincrement id or ''
+ 	 * db-col-name of autoincrement id or ''
+ 	 * 
+ 	 * @var string
  	 */
 	var $autoinc_id = '';
 	/**
-	 * @var array $non_db_cols all cols in data which are not (direct)in the db, for data_merge
+	 * all cols in data which are not (direct)in the db, for data_merge
+	 * 
+	 * @var array
 	 */
 	var $non_db_cols = array();
 	/**
-	 * @var int $debug=0 4 turns on the so_sql debug-messages
+	 * 4 turns on the so_sql debug-messages, default 0
+	 * 
+	 * @var int
 	 */
 	var $debug = 0;
 	/**
-	 * @var string $empty_on_write string to be written to db if a col-value is '', eg. "''" or 'NULL' (default)
+	 * string to be written to db if a col-value is '', eg. "''" or 'NULL' (default)
+	 * 
+	 * @var string
 	 */
 	var $empty_on_write = 'NULL';
 	/**
-	 * @var int/boolean $total total number of entries of last search with start != false
+	 * total number of entries of last search with start != false
+	 * 
+	 * @var int/boolean
 	 */
 	var $total = false;
 	/**
-	 * @var db-object $db privat instance of the db-object
+	 * privat instance of the db-object
+	 * 
+	 * @var egw_db
 	 */
 	var $db;
 	/**
-	 * @var array $db_uni_cols unique keys/index, set by derived class or via so_sql($app,$table)
+	 * unique keys/index, set by derived class or via so_sql($app,$table)
+	 * 
+	 * @var array
 	 */
 	var $db_uni_cols = array();
 	/**
-	 * @var array $db_key_cols db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table) 
+	 * db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table)
+	 * 
+	 * @var array
 	 */
 	var $db_key_cols = array();
 	/**
-	 * @var array $db_data_cols db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table) 
+	 * db-col-name / internal-name pairs, set by derived calls or via so_sql($app,$table) 
+	 * 
+	 * @var array
 	 */
 	var $db_data_cols = array();
 	/**
@@ -69,16 +89,20 @@ class so_sql
 	 */
 	var $db_cols = array();
 	/**
-	 * @var array $this->table_def eGW table definition
+	 * eGW table definition
+	 * 
+	 * @var array
 	 */
 	var $table_def = array();
 	/**
-	 * @var array $data holds the content of all columns
+	 * holds the content of all columns
+	 * 
+	 * @var array
 	 */
 	var $data = array();
 	/**
 	 * @deprecated  a SO class dont need to and should NOT export functions (make them callable via menuaction)
-	 * @var array $public_functions
+	 * @var array
 	 */
 	var $public_functions = array();
 
@@ -91,6 +115,8 @@ class so_sql
 	 * @param string $table should be set if table-defs to be read from <app>/setup/tables_current.inc.php
 	 * @param object/db $db database object, if not the one in $GLOBALS['egw']->db should be used, eg. for an other database
 	 * @param string $colum_prefix='' column prefix to automatic remove from the column-name, if the column name starts with it
+	 * 
+	 * @return so_sql
 	 */
 	function so_sql($app='',$table='',$db=null,$column_prefix='')
 	{
@@ -352,7 +378,7 @@ class so_sql
 			{
 				if (!$this->autoinc_id || $db_col != $this->autoinc_id)	// not write auto-inc-id
 				{
-					if (!isset($this->data[$col]) && 	// handling of unset columns in $this->data
+					if (!array_key_exists($col,$this->data) && 	// handling of unset columns in $this->data
 						(isset($this->table_def['fd'][$db_col]['default']) ||	// we have a default value
 						 !isset($this->table_def['fd'][$db_col]['nullable']) || $this->table_def['fd'][$db_col]['nullable']))	// column is nullable
 					{
@@ -372,7 +398,10 @@ class so_sql
 		{
 			foreach($this->db_data_cols as $db_col => $col)
 			{
-				if (!isset($this->data[$col]) &&	// handling of unset columns in $this->data
+				// we need to update columns set to null: after a $this->data[$col]=null:
+				// - array_key_exits($col,$this->data) === true
+				// - isset($this->data[$col]) === false
+				if (!array_key_exists($col,$this->data) &&	// handling of unset columns in $this->data
 					($this->autoinc_id ||			// update of table with auto id or
 					 isset($this->table_def['fd'][$db_col]['default']) ||	// we have a default value or
 					 !isset($this->table_def['fd'][$db_col]['nullable']) || $this->table_def['fd'][$db_col]['nullable']))	// column is nullable
