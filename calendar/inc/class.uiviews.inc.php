@@ -1052,7 +1052,7 @@ class uiviews extends uical
 			'timespan' => $timespan,
 			'title' => ($title = !$is_private ? $this->html->htmlspecialchars($event['title']) : lang('private')),
 			'header' => $small_height ? $title : $timespan,
-			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])."\nInstensity: $intensity") : '',
+			'description' => !$is_private ? nl2br($this->html->htmlspecialchars($event['description'])) : '',
 			'location'   => !$is_private ? $this->add_nonempty($event['location'],lang('Location')) : '',
 			'participants' => $participants,
 			'times' => !$event['multiday'] ? $this->add_nonempty($this->bo->timespan($event['start_m'],$event['end_m'],true),lang('Time')) :
