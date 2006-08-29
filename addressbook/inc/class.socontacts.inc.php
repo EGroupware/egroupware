@@ -81,7 +81,7 @@ class socontacts
 	/**
 	 *  userid of current user
 	 * 
-	 * @var int $user
+	 * @var int
 	 */
 	var $user;
 	
@@ -151,13 +151,13 @@ class socontacts
 	/**
 	 * storage object: sql (socontacts_sql) or ldap (so_ldap) backend class
 	 * 
-	 * @var object
+	 * @var socontacts_sql
 	 */
 	var $somain;
 	/**
 	 * storage object for accounts, if not identical to somain (eg. accounts in ldap, contacts in sql)
 	 *
-	 * @var object
+	 * @var so_ldap
 	 */
 	var $so_accounts;
 	/**
@@ -169,7 +169,7 @@ class socontacts
 	/**
 	 * custom fields backend
 	 * 
-	 * @var so_sql-object
+	 * @var so_sql
 	 */
 	var $soextra;
 	
