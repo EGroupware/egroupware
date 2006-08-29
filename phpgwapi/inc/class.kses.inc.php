@@ -322,13 +322,14 @@
 
 			# Split it
 			$attrarr = $this->_hair($attr);
-
+			
 			# Go through $attrarr, and save the allowed attributes for this element
 			# in $attr2
 			$attr2 = '';
 			foreach ($attrarr as $arreach)
 			{
 				$current = $this->allowed_html[strtolower($element)][strtolower($arreach['name'])];
+
 				if ($current == '')
 				{
 					# the attribute is not allowed
@@ -561,7 +562,7 @@
 		function _check_attr_val($value, $vless, $checkname, $checkvalue)
 		{
 			$ok = true;
-
+			
 			switch (strtolower($checkname))
 			{
 				# The maxlen check makes sure that the attribute value has a length not
@@ -622,6 +623,14 @@
 					$ok = false;
 				}
 				break;
+
+				# The minval check checks that the attribute value is a positive integer,
+				# and that it is not smaller than the given value.
+				case 'match':
+					if (!preg_match($checkvalue, $value)) {
+						$ok = false;
+					}
+					break;
 
 			} # switch
 
