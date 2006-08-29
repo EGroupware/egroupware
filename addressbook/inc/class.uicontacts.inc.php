@@ -777,7 +777,7 @@ class uicontacts extends bocontacts
 			{
 				case 'save':
 				case 'apply':
-					if ($content['delete_photo']) unset($content['jpegphoto']);
+					if ($content['delete_photo']) $content['jpegphoto'] = null;
 					if (is_array($content['upload_photo']) && !empty($content['upload_photo']['tmp_name']) && 
 						$content['upload_photo']['tmp_name'] != 'none')
 					{
