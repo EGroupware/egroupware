@@ -348,6 +348,7 @@ function do_update($arg)
 			do_backup($arg,true);
 			
 			ob_start();
+			$GLOBALS['egw_setup']->process->init_process();	// we need a new schema-proc instance for each new domain
 			$GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',false);
 			$messages = ob_get_contents();
 			ob_end_clean();
