@@ -351,7 +351,7 @@ function do_update($arg)
 			$GLOBALS['egw_setup']->process->pass($setup_info,'upgrade',false);
 			$messages = ob_get_contents();
 			ob_end_clean();
-			if ($messages) strip_tags($messages)."\n";
+			if ($messages) echo strip_tags($messages)."\n";
 			
 			echo lang('Update finished.')."\n";
 		}
