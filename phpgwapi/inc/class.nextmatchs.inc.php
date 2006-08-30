@@ -251,7 +251,7 @@
 				'filter'  => $this->_filter,
 				'q_field' => $this->_qfield,
 				'sort'    => $this->_sort,
-				'query'   => urlencode(stripslashes(@$GLOBALS['query']))
+				'query'   => stripslashes(@$GLOBALS['query'])
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
@@ -297,7 +297,7 @@
 				'filter'  => $this->_filter,
 				'q_field' => $this->_qfield,
 				'sort'    => $this->_sort,
-				'query'   => urlencode(stripslashes(@$GLOBALS['query']))
+				'query'   => stripslashes(@$GLOBALS['query'])
 			);
 
 			$extravars = $this->split_extras($extravars,$extradata);
