@@ -416,6 +416,19 @@
 			'ix' => array(),
 			'uc' => array()
 		),
+		'phpgw_vfs2_prefixes' => array(
+			'fd' => array(
+				'prefix_id' => array('type' => 'auto','nullable' => False),
+				'prefix' => array('type' => 'varchar','precision' => '8','nullable' => False),
+				'owner_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'prefix_description' => array('type' => 'varchar','precision' => '30','nullable' => True),
+				'prefix_type' => array('type' => 'varchar','precision' => '1','nullable' => False,'default' => 'p')
+			),
+			'pk' => array('prefix_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		),
 		'egw_links' => array(
 			'fd' => array(
 				'link_id' => array('type' => 'auto','nullable' => False),
