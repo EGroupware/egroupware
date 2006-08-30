@@ -1,22 +1,19 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare - HTML creation class                                         *
-  * http://www.eGroupWare.org                                                *
-  * Written and (c) by Ralf Becker <RalfBecker@outdoor-training.de>          *
-  * --------------------------------------------                             *
-  *  This program is free software; you can redistribute it and/or modify it *
-  *  under the terms of the GNU General Public License as published by the   *
-  *  Free Software Foundation; either version 2 of the License, or (at your  *
-  *  option) any later version.                                              *
-  \**************************************************************************/
-
-  /* $Id$ */
+/**
+ * generates html with methods representing html-tags or higher widgets
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de> complete rewrite in 6/2006 and earlier modifications
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 /**
  * generates html with methods representing html-tags or higher widgets
  *
  * @package api
  * @subpackage html
+ * @access public
  * @author RalfBecker-AT-outdoor-training.de
  * @license GPL
  */
@@ -560,6 +557,7 @@ class html
 		return '<script language="javascript" type="text/javascript">
 			tinyMCE.init({
 			 mode : "exact",
+			 relative_urls : false,
  			 language: "'.$GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
 			 plugin_insertdate_dateFormat : "'.str_replace(array('Y','m','M','d'),array('%Y','%m','%b','%d'),$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' ",
 			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').' ",
@@ -659,7 +657,7 @@ class html
 		// workaround for idots and IE button problem (wrong cursor-image)
 		if ($this->user_agent == 'msie')
 		{
-			$options .= ' style="cursor: pointer; cursor: hand;"';
+			$options .= ' style="cursor: pointer;"';
 		}
 		if ($image != '')
 		{
@@ -885,7 +883,7 @@ class html
 		}
 		return '<div class="onlyPrint">'.$title.'</div><div class="noPrint" title="'.$title.'" '.$options.
 			' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px; text-align: left;'.
-			(stristr($options,'onclick="') ? ' cursor: pointer; cursor: hand;' : '').'">'."\n\t".
+			(stristr($options,'onclick="') ? ' cursor: pointer;' : '').'">'."\n\t".
 			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';"></div>'."\n</div>\n";
 	}
 
