@@ -527,11 +527,13 @@
 					$targetver  = $appdata['version'];	// The version we need to match when done
 					$appdir     = EGW_SERVER_ROOT . SEP . $appname . SEP . 'setup' . SEP;
 
-					if(file_exists($appdir . 'tables_update.inc.php') && !@$this->updateincluded[$appname])
+					if(file_exists($appdir . 'tables_update.inc.php'))
 					{
-						include ($appdir . 'tables_update.inc.php');
-						$this->updateincluded[$appname] = True;
-
+						if (!@$this->updateincluded[$appname])
+						{
+							include ($appdir . 'tables_update.inc.php');
+							$this->updateincluded[$appname] = True;
+						}
 						while ($currentver && $currentver != $targetver && 
 							function_exists($function = $appname . '_upgrade' . str_replace('.','_',$currentver)))
 						{
