@@ -623,6 +623,7 @@
 			}
 			
 			$info = array(
+				'info_id' => 0,
 				'info_type' => isset($this->enums['type']['email']) ? 'email' : 'note',
 				'info_from' => implode(',',$name),
 				'info_addr' => implode(',',$email),
@@ -634,6 +635,7 @@
 				'info_percent' => 100,
 				'referer' => false,
 				'link_to' => array(
+					'to_app' => 'infolog',
 					'to_id' => 0,
 				),
 			);
