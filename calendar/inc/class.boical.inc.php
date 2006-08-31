@@ -314,6 +314,16 @@
 						}
 					}
 				}
+
+				if(strtolower($this->productManufacturer) == 'nokia') {
+					if($event['special'] == '1') {
+						$attributes['X-EPOCAGENDAENTRYTYPE'] = 'ANNIVERSARY';
+						$attributes['DTEND'] = $attributes['DTSTART'];
+					} else {
+						$attributes['X-EPOCAGENDAENTRYTYPE'] = 'APPOINTMENT';
+					}
+				}
+				
 				$modified = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'modify');
 				$created = $GLOBALS['egw']->contenthistory->getTSforAction($eventGUID,'add');
 				if (!$created && !$modified) $created = $event['modified'];
@@ -646,6 +656,18 @@
 								break;
 						}
 					}
+
+					// check if the entry is a birthday 
+					// this field is only set from NOKIA clients
+					$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
+					if (!is_a($agendaEntryType, 'PEAR_Error')) {
+						if(strtolower($agendaEntryType) == 'anniversary') {
+							$event['special'] = '1';
+							// make it a whole day event for eGW
+							$vcardData['end'] = $vcardData['start'] + 86399;
+						}
+					}
+					
 					if(!empty($vcardData['recur_enddate']))
 					{
 						// reset recure_enddate to 00:00:00 on the last day
@@ -704,7 +726,7 @@
 	 				}
 
 					#error_log('ALARMS');
-					#error_log(print_r($event['participants'], true));
+					#error_log(print_r($event, true));
 					
 					if (!($Ok = $this->update($event, TRUE))) {
 						break;	// stop with the first error
@@ -739,7 +761,7 @@
 		function setSupportedFields($_productManufacturer='file', $_productName='')
 		{
 			// save them vor later use
-			$this->productManufacturere = $_productManufacturer;
+			$this->productManufacturer = $_productManufacturer;
 			$this->productName = $_productName;
 
 			$defaultFields[0] = array('public' => 'public', 'description' => 'description', 'end' => 'end',
@@ -1048,6 +1070,17 @@
 								break;
 						}
 					}
+					
+					// check if the entry is a birthday 
+					// this field is only set from NOKIA clients
+					$agendaEntryType = $component->getAttribute('X-EPOCAGENDAENTRYTYPE');
+					if (!is_a($agendaEntryType, 'PEAR_Error')) {
+						if(strtolower($agendaEntryType) == 'anniversary') {
+							$event['special'] = '1';
+							$vcardData['end'] = $vcardData['start'] + 86399;
+						}
+					}
+					
 					if(!empty($vcardData['recur_enddate']))
 					{
 						// reset recure_enddate to 00:00:00 on the last day
