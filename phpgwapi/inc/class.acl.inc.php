@@ -730,8 +730,8 @@
 				}
 				$grants[$grantor] |= $rights;
 				
-				// if the right is granted to a group and we enummerated group ACL's
-				if ($granted_to != $this->account_id && $enum_group_acls)
+				// if the right is granted from a group and we enummerated group ACL's
+				if ($GLOBALS['egw']->accounts->get_type($grantor) == 'g' && $enum_group_acls)
 				{
 					// return the grant for each member of the group
 					foreach((array)$GLOBALS['egw']->accounts->member($grantor) as $member)
