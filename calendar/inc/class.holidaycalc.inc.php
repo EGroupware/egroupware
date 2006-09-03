@@ -13,7 +13,8 @@
 
 	/* $Id$ */
 
-	if (empty($GLOBALS['egw_info']['user']['preferences']['common']['country']))
+	if (empty($GLOBALS['egw_info']['user']['preferences']['common']['country']) ||
+		strlen($GLOBALS['egw_info']['user']['preferences']['common']['country']) > 2)
 	{
 		$rule = 'US';
 	}
@@ -31,4 +32,3 @@
 	{
 		include(EGW_INCLUDE_ROOT.'/calendar/inc/class.holidaycalc_US.inc.php');
 	}
-?>
