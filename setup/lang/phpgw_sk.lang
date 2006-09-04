@@ -1,4 +1,6 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	sk	%1 '%2' NEexistuje, je neèitateµné webserverom alebo neobsahuje in¹taláciu eGroupWare!
+%1 already exists in %2.	setup	sk	%1 u¾ existuje v %2.
+%1 created in %2.	setup	sk	%1 vytvorené v %2.
 %1 does not exist !!!	setup	sk	%1 neexistuje !!!
 %1 is %2%3 !!!	setup	sk	%1 je %2%3 !!!
 %1, %2 or %3 the configuration file.	setup	sk	%1, %2 alebo %3 konfiguraèný súbor.
@@ -10,9 +12,9 @@
 13 (ntp)	setup	sk	13 (ntp)
 80 (http)	setup	sk	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sk	<b>Akú znakovú sadu pou¾i»</b> (ak plánujete pou¾íva» jazyky s rozliènými znakovými sadami, zvoµte utf-8)
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sk	<b>Týmto sa vytvorí 1 správcovský úèet a 3 testovacie</b><br />Pou¾ívateµské mená/heslá sú: demo/guest, demo2/guest, demo3/guest.
 access denied: wrong username or password for manage-header !!!	setup	sk	Prístup odopretý: chybné pou¾ívateµské meno alebo heslo pre správu hlavièiek!!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sk	Prístup odopretý: chybné pou¾ívateµské meno alebo heslo pre konfiguráciu domény '%1(%2)' !!!
+account repository need to be set to the one you migrate to!	setup	sk	Repozitár úètov musí by» nastavený na jeden z tých, do ktorých migrujete!
 accounts existing	setup	sk	Existujúce úèty
 actions	setup	sk	Akcie
 activate safe password check	setup	sk	Aktivova» voµbu ukladania hesla
@@ -67,6 +69,7 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	sk	Pokúsi» sa pou¾íva» správny MIME typ pre FTP namieste predvoleného 'application/octet-stream'
 authentication / accounts	setup	sk	Autentifikácie / Úèty
 auto create account records for authenticated users	setup	sk	Automaticky vytvori» úètové záznamy pre autentifikovaných pou¾ívateµov
+auto login anonymous user	setup	sk	Automaticky prihlási» anonymného pou¾ívateµa
 auto-created user accounts expire	setup	sk	Automaticky vytvorený pou¾ívateµský úèet vypr¹í
 available version	setup	sk	Dostupná verzia
 back to the previous screen	setup	sk	Naspä» na predchádzajúcu stránku
@@ -104,6 +107,7 @@ check ip address of all sessions	setup	sk	Skontrolova» IP adresu v¹etkých sedení
 checking extension %1 is loaded or loadable	setup	sk	Kontrola - roz¹írenie %1 je nahraté alebo dostupné
 checking file-permissions of %1 for %2 %3: %4	setup	sk	Kontrolujem prístupové práva %1 pre %2 %3: %4
 checking for gd support...	setup	sk	Zis»ujem podporu GD...
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	sk	Zis»ujem, èi php.ini setting session.save_path='%1' je zapisovateµné webserverom
 checking pear%1 is installed	setup	sk	Zis»ujem prítomnos» PEAR%1
 checking php.ini	setup	sk	Kontrolujem php.ini
 checking required php version %1 (recommended %2)	setup	sk	Kontrolujem po¾adovanú verziu PHP %1 (odporúèa sa %2)
@@ -117,6 +121,7 @@ completed	setup	sk	Hotovo
 config password	setup	sk	Heslo pre Konfiguráciu
 config username	setup	sk	Pou¾ívateµské meno pre Konfiguráciu
 configuration	setup	sk	Konfigurácia
+configuration changed.	setup	sk	Konfigurácia zmenená.
 configuration completed	setup	sk	Konfigurácia - hotovo
 configuration errors:	setup	sk	Konfiguraèné chyby:
 configuration password	setup	sk	Heslo pre Konfiguráciu
@@ -144,10 +149,13 @@ created	setup	sk	vytvorené
 created header.inc.php!	setup	sk	Vytvoril som header.inc.php!
 creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	sk	vytvori» správcovského pou¾ívateµa: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	sk	Vytváram tabuµky
+creation of %1 in %2 failed !!!	setup	sk	Nepodarilo sa vytvori» %1 v %2 !!!
+current configuration:	setup	sk	Súèasná konfigurácia:
 current system-charset	setup	sk	Súèasná systémová znaková sada
 current system-charset is %1.	setup	sk	Súèasná systémová znaková sada je %1.
 current version	setup	sk	Súèasná verzia
 currently installed languages: %1 <br />	setup	sk	Momentálne nain¹talované jazyky: %1 <br />
+cyrus imap: admin user,password	setup	sk	Cyrus IMAP: Správcovo pou¾ívateµské meno,heslo
 database	setup	sk	Databáza
 database instance (egw domain)	setup	sk	Databázová in¹tancia (eGW domain)
 database is version %1 and up to date.	setup	sk	Databáza má verziu %1 a je aktuálna.
@@ -200,8 +208,8 @@ egroupware configuration file header.inc.php already exists, you need to use --e
 egroupware domain/instance %1(%2):	setup	sk	eGroupWare doména/in¹tancia %1(%2):
 egroupware is already installed!	setup	sk	eGroupWare je u¾ nain¹talovaný!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sk	Zdroje eGroupWare v '%1' sú neúplné, súbor '%2' chýba !!!
+emailadmin profile updated:	setup	sk	Profil EMailAdmin aktualizovaný:
 enable for extra debug-messages	setup	sk	zapnú» extra ladiace správy
-enable ldap version 3	setup	sk	Zapnú» LDAP verzie 3
 enable mcrypt	setup	sk	Zapnú» MCrypt
 enter some random text for app session encryption	setup	sk	Zadajte nejaký náhodný text pre potreby kódovania sedenia aplikácie
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	sk	Zadajte nejaký náhodný text pre potreby <br />kódovania sedenia aplikácie (vy¾aduje mcrypt)
@@ -220,9 +228,7 @@ enter your http proxy server port	setup	sk	Zadajte port vá¹ho HTTP proxy servera
 enter your http proxy server username	setup	sk	Zadajte pou¾ívateµské meno vá¹ho HTTP proxy servera
 error in admin-creation !!!	setup	sk	Chyba pri vytváraní správcu!!!
 error in group-creation !!!	setup	sk	Chyba pri vytváraní skupiny!!!
-export egroupware accounts from sql to ldap	setup	sk	Exportova» eGroupWare úèty z SQL do LDAP
-export has been completed!  you will need to set the user passwords manually.	setup	sk	Export vykonaný! Budete musie» ruène zada» heslá pou¾ívateµov.
-export sql users to ldap	setup	sk	Exportova» SQL pou¾ívateµov do LDAP
+export has been completed!	setup	sk	Export bol dokonèený!
 failed writing configuration file header.inc.php, check the permissions !!!	setup	sk	Zápis do konfiguraèného súboru header.inc.php sa NEPODARIL, skontrolujte prístupové práva !!!
 false	setup	sk	NIE
 file	setup	sk	Súbor
@@ -230,16 +236,20 @@ file type, size, version, etc.	setup	sk	typ súboru, veµkos», verzia, atï.
 file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	sk	Nahrávanie súborov je vypnuté: NEmô¾ete pou¾íva» ¾iadneho správcu súborov, ani prilo¾i» súbory v niektorých aplikáciách!
 filename	setup	sk	názov súboru
 filesystem	setup	sk	Súborový systém
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	sk	Pre novú in¹taláciu, zvoµte import. Pre konverziu existujúcich SQL úètov do LDAP, zvoµte export
 force selectbox	setup	sk	Vynú» menu pre výber
 found existing configuration file. loading settings from the file...	setup	sk	Na¹iel som existujúci konfiguraèný súbor. Nahrávam z neho nastavenia...
+give admin access to all installed apps	setup	sk	Da» správcovi prístup ku v¹etkým nain¹talovaným aplikáciám
+gives further options	setup	sk	dáva ïal¹ie mo¾nosti
 go back	setup	sk	Naspä»
 go to	setup	sk	Choï na
 grant access	setup	sk	Povoµ prístup
+group	setup	sk	Skupina
+group memberships will be migrated too.	setup	sk	Èlenstvo v skupinách sa taktie¾ premigruje.
 has a version mismatch	setup	sk	má zmätok vo verziách
 header admin login	setup	sk	Prihlásenie Správcu hlavièiek
 header password	setup	sk	Heslo pre hlavièky
 header username	setup	sk	Pou¾ívateµské meno pre hlavièky
+header.inc.php successful written.	setup	sk	header.inc.php bol úspe¹ne zapísaný
 historylog removed	setup	sk	Záznam histórie odstránený
 host/ip domain controler	setup	sk	Názov/IP radièa domény
 hostname/ip of database server	setup	sk	Názov/IP databázového servera
@@ -257,9 +267,7 @@ if you did not receive any errors, your tables have been	setup	sk	Ak ste neobdr¾
 if you running this the first time, don't forget to manualy %1 !!!	setup	sk	Ak ste tu prvýkrát, nezabudnite ruène %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	sk	Ak pou¾ívate iba jazyky s toto¾nou znakovou sadou (napr. západoeurópske), nepotrebujete nastavova» systémovú znakovú sadu!
 image type selection order	setup	sk	Poradie výberu typu obrázku
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	sk	Importova» úèty z LDAP do eGroupWare tabuµky úètov (pre novú in¹taláciu pou¾ívajúcu SQL úèty)
 import has been completed!	setup	sk	Import bol dokonèený!
-import ldap users/groups	setup	sk	Importova» LDAP pou¾ívateµov/skupiny
 importing old settings into the new format....	setup	sk	Importujem staré nastavenia do nového formátu...
 include_path need to contain "." - the current directory	setup	sk	include_path musí obsahova» "." - súèasný adresár
 install	setup	sk	In¹talova»
@@ -281,21 +289,16 @@ is in the webservers docroot	setup	sk	je v docroot-e webservera
 is not writeable by the webserver	setup	sk	nie je zapisovateµný pre webserver
 it needs upgrading to version %1! use --update-header <password>[,<user>] to do so (--usage gives more options).	setup	sk	Potrebuje to aktualizáciu na verziu %1! Pou¾ite --update-header <password>[,<user>] (--usage zobrazí viacero mo¾ností).
 languages updated.	setup	sk	Jazyky aktualizované.
-ldap account import/export	setup	sk	Import/export LDAP úètov
 ldap accounts configuration	setup	sk	Konfigurácia LDAP úètov
 ldap default shell (e.g. /bin/bash)	setup	sk	LDAP predvolený shell (napr. /bin/bash)
 ldap encryption type	setup	sk	LDAP typ kryptovania
-ldap export	setup	sk	LDAP Export
-ldap export users	setup	sk	LDAP export pou¾ívateµov
 ldap import	setup	sk	LDAP Import
-ldap import users	setup	sk	LDAP import pou¾ívateµov
-ldap modify	setup	sk	LDAP zmena
 ldap root password	setup	sk	LDAP root heslo
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	sk	LDAP vyhµadávací filter pre úèty, predvolený: "(uid=%user)", %domain=eGW-domain
 leave empty to keep current.	setup	sk	Ponechajte prázdne ak chcete zachova» súèasný stav.
 limit access	setup	sk	Obmedzi» prístup
 limit access to setup to the following addresses, networks or hostnames (e.g. 127.0.0.1,10.1.1,myhost.dnydns.org)	setup	sk	Povoli» prístup k In¹talátoru len pre nasledujúce adresy, siete alebo hostnames (napr. 127.0.0.1,10.1.1,myhost.dnydns.org)
-list availible values:	setup	sk	Zobrazi» dostupné hodnoty:
+list availible values	setup	sk	Vypísa» dostupné hodnoty
 list of availible translations	setup	sk	zoznam dostupných prekladov
 login as user postgres, eg. by using su as root	setup	sk	Prihlási» sa ako pou¾ívateµ postgres, napr. pou¾itím su pod root-om
 login to mysql -	setup	sk	Prihlási» do mysql -
@@ -317,6 +320,7 @@ mcrypt mode (default cbc)	setup	sk	MCrypt re¾im (predvolený CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sk	Nastavenia MCrypt (vy¾aduje mcrypt PHP roz¹írenie)
 mcrypt version	setup	sk	Verzia MCrypt
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sk	pamä»ový limit je nastavený na menej ne¾ 16M; niektoré aplikácie v eGroupWare potrebujú viac ne¾ odporúèaných 8M, okrem výnimoèných zlyhaní
+migration between egroupware account repositories	setup	sk	Migrácia medzi repozitármi eGroupWare úètov
 minimum account id (e.g. 500 or 100, etc.)	setup	sk	Najmen¹ie ID úètu (napr. 500 alebo 100, atï.)
 minute	setup	sk	minúta
 missing or uncomplete mailserver configuration	setup	sk	Chýbajúce alebo neúplné nastavenie po¹tového servera
@@ -367,8 +371,6 @@ path information	setup	sk	Informácia o ceste
 path of egroupware install directory (default auto-detected)	setup	sk	cesta k in¹talaènému adresáru eGroupWare (predvolené: autodetekcia)
 path to user and group files has to be outside of the webservers document-root!!!	setup	sk	Cesta k súborom pou¾ívateµov a skupín MUSÍ BY« MIMO document-root webservera!!!
 path to various directories: have to exist and be writeable by the webserver	setup	sk	cesta k viacerým adresárom: musia existova» a by» zapisovateµné pre webserver
-pear is needed by syncml or the ical import+export of calendar.	setup	sk	PEAR je potrebný pre SyncML alebo iCal import+export kalendára.
-pear::log is needed by syncml.	setup	sk	PEAR::Log je vy¾adovaný: SyncML.
 persistent connections	setup	sk	Trvalé spojenia
 php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	sk	PHP plus restore dáva ïaleko najlep¹í výkon, keï¾e ukladá kompletné prostredie eGW v rámci sedenia.
 please check for sql scripts within the application's directory	setup	sk	Prosím porozhliadnite sa po sql skriptoch vnútri adresára aplikácie
@@ -428,7 +430,7 @@ select to download file	setup	sk	Zvoµte pre stiahnutie súboru
 select where you want to store/retrieve file contents	setup	sk	Vyberte, kam chcete uklada»/èíta» obsah súboru
 select where you want to store/retrieve filesystem information	setup	sk	Vyberte, kam chcete uklada»/èíta» informácie o súborovom systéme
 select where you want to store/retrieve user accounts	setup	sk	Vyberte, kam chcete uklada»/èíta» pou¾ívateµské úèty
-select which group(s) will be exported (group membership will be maintained)	setup	sk	Vyberte, ktorá skupina/skupiny sa vyexportuje/ú (èlenstvo v skupine sa zachová)
+select which group(s) will be exported	setup	sk	Vyberte, ktoré skupiny sa budú exportova»
 select which group(s) will be imported (group membership will be maintained)	setup	sk	Vyberte, ktorá skupina/skupiny sa naimportuje/ú (èlenstvo v skupine sa zachová)
 select which group(s) will be modified (group membership will be maintained)	setup	sk	Vyberte, ktorá skupina/skupiny sa upraví/ia (èlenstvo v skupine sa zachová)
 select which languages you would like to use	setup	sk	Vyberte, ktoré jazyky budete pou¾íva»
@@ -447,7 +449,6 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	sk	Nastavenie kódovej stránky na UTF-8 (unicode) umo¾òuje koexistenciu dát z rôznych jazykov, pou¾ívajúcich rozlièné kódové stránky.
 settings	setup	sk	Nastavenia
 setup	setup	sk	In¹talátor
-setup demo accounts in ldap	setup	sk	Vytvori» testovacie (demo) úèty v LDAP
 setup main menu	setup	sk	Hlavné menu In¹talátora
 setup the database	setup	sk	In¹talácia databázy
 setup/config admin login	setup	sk	Prihlásenie Správcu In¹talátora/Konfigurácie
@@ -479,17 +480,18 @@ tables upgraded	setup	sk	tabuµky aktualizované
 target version	setup	sk	Cieµová verzia
 tcp port number of database server	setup	sk	Èíslo TCP portu databázového servera
 text entry	setup	sk	Textová polo¾ka
+the %1 extension is needed from: %2.	setup	sk	Roz¹írenie %1 je potrebné z: %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	sk	Ak plánujete pou¾íva» %2 databázu, je potrebné roz¹írenie %1.
 the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	sk	Typ databázy v predvolených (%1) nie je podporovaný na tomto serveri. Pou¾ije sa prvý podporovaný typ.
 the file	setup	sk	súbor
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sk	Prvým krokom pri in¹talácii eGroupWare je kontrola, èi va¹e prostredie obsahuje v¹etky nevyhnutné nastavenia pre správny chod aplikácie.
 the following applications need to be upgraded:	setup	sk	Nasledovné aplikácie potrebujú aktualizáciu:
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	sk	IMAP roz¹írenie je vy¾adované dvoma emailovými aplikáciami (aj v prípade ¾e pou¾ívate POP3 protokol).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	Roz¹írenie mbstring je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	mbstring.func_overload = 7 je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the session extension is needed to use php sessions (db-sessions work without).	setup	sk	Roz¹írenie sedenia je potrebné pre pou¾itie php sedení (db sedenia fungujú aj bez neho).
 the table definition was correct, and the tables were installed	setup	sk	Definícia tabuµky bola korektná, tabuµky sa nain¹talovali.
 the tables	setup	sk	tabuµky
+the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	sk	Pou¾ívateµské mená/heslá sú: demo/guest, demo2/guest and demo3/guest.
 there was a problem trying to connect to your ldap server. <br />	setup	sk	Problém pri pripájaní sa na LDAP server. <br />
 there was a problem trying to connect to your ldap server. <br />please check your ldap server configuration	setup	sk	Nastav problém pri pripájaní sa na LDAP server. <br />prosím skontrolujte nastavenia LDAP servera
 this has to be outside the webservers document-root!!!	setup	sk	Musí by» MIMO document-root webservera!!!
@@ -497,11 +499,9 @@ this might take a while, please wait ...	setup	sk	Chvíµu to potrvá, prosím èakaj
 this program lets you backup your database, schedule a backup or restore it.	setup	sk	Tento program umo¾òuje zálohovanie databázy, naplánovanie záloh a obnovu zo zálohy.
 this program will convert your database to a new system-charset.	setup	sk	Tento program skonvertuje va¹u databázu na novú systémovú znakovú sadu.
 this program will help you upgrade or install different languages for egroupware	setup	sk	Tento program vám pomô¾e s aktualizáciou alebo in¹taláciou rozlièných jazykov v eGroupWare.
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	sk	Táto sekcia vám pomô¾e s exportom pou¾ívateµov a skupín z úètových tabuliek eGroupWare do stromu LDAP
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	sk	Táto sekcia vám pomô¾e s importom pou¾ívateµov a skupín z LDAP stromu do úètovej tabuµky eGroupWare
-this section will help you setup your ldap accounts for use with egroupware	setup	sk	Táto sekcia vám pomô¾e nastavi» LDAP úèty pre ich pou¾itie v eGroupWare
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	sk	Då¾ka by mohla by» okolo 30 bajtov.<br />Upozornenie: Predvolená hodnota sa generovala náhodne.
 this stage is completed<br />	setup	sk	Táto fáza je dokonèená<br />
+this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	sk	Týmto sa vytvorí prvý pou¾ívateµ v eGroupWare, alebo znovunastaví heslo a administrátorské práva existujúceho pou¾ívateµa.
 to a version it does not know about	setup	sk	na verziu ktorú nepozná
 to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sk	pre povolenie autentifikácie hesiel, pridajte nasledujúci riadok do pg_hba.conf (nad v¹etkými ostatnými) A re¹tartujte postgres:
 to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	sk	Pre zmenu znakovej sady: zazálohujte si databázu, odin¹talujte v¹etky aplikácie a prein¹talujte zálohu so zapnutou voµbou "konvertova» zálohu na vybranú znakovú sadu".
@@ -517,7 +517,7 @@ unfortunally some php/apache packages have problems with it (apache dies and you
 uninstall	setup	sk	odin¹talova»
 uninstall all applications	setup	sk	Odin¹talova» v¹etky aplikácie
 uninstalled	setup	sk	odin¹talované
-unknow option '%1' !!!	setup	sk	Neznáma voµba '%1' !!!
+unknown option '%1' !!!	setup	sk	Neznáma voµba '%1' !!!
 update finished.	setup	sk	Aktualizácia ukonèená.
 upgrade	setup	sk	Aktualizova»
 upgrade all	setup	sk	Aktualizova» v¹etko
@@ -532,10 +532,13 @@ use --install to install egroupware.	setup	sk	Pou¾ite --install pre in¹taláciu e
 use --update to do so.	setup	sk	Pou¾ite --update
 use cookies to pass sessionid	setup	sk	Pou¾íva» cookie na odovzdanie ID sedenia
 use pure html compliant code (not fully working yet)	setup	sk	Pou¾íva» èistý HTML kód (zatiaµ nie je plne funkèné)
+user	setup	sk	Pou¾ívateµ
 user for smtp-authentication (leave it empty if no auth required)	setup	sk	Pou¾ívateµ pre SMTP-autentifikáciu (ak netreba, nechajte prázdne)
 usernames are casesensitive	setup	sk	Pou¾ívateµské mená sú citlivé na veµkos» písma
 users choice	setup	sk	Pou¾ívateµská voµba
+usually more annoying.<br />admins can use admin >> manage accounts or groups to give access to further apps.	setup	sk	Zvyèajne otravnej¹ie.<br />Správcovia mô¾u pou¾i» Admin >> Správa úètov alebo skupín pre pridelenie prístupu k ïal¹ím aplikáciám.
 utf-8 (unicode)	setup	sk	utf-8 (Unicode)
+validation errors	setup	sk	Chyby pri overovaní
 version	setup	sk	verzia
 version mismatch	setup	sk	zmätok vo verziách
 view	setup	sk	Zobrazi»
@@ -560,7 +563,6 @@ yes, with lowercase usernames	setup	sk	Áno, s pou¾ívateµskými menami malými písm
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	sk	Zdá sa, ¾e pou¾ívate pre-beta verziu eGroupWare.<br />Tieto verzie u¾ nie sú podporované, a neexistuje mo¾nos» aktualizácie pomocou In¹talátora.<br />Mohli by ste napríklad najprv aktualizova» na 0.9.10 (posledná verzia s podporou pre-beta aktualizácií) <br />a a¾ potom aktualizova» na súèasnú verziu.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	sk	Zdá sa, ¾e pou¾ívate starú verziu PHP <br />Odporúèame vám aktualizova» na nov¹iu verziu.<br />Na starej verzii PHP nemusí eGroupWare správne fungova» (ak vôbec).<br /><br />Prosím prejdite aspoò na verziu %1
 you appear to be running version %1 of egroupware	setup	sk	Zdá sa ¾e pou¾ívate eGroupWare verziu %1.
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	sk	Zdá sa ¾e pou¾ívate PHP star¹ie ne¾ 4.1.0. eGroupWare vy¾aduje verziu 4.1.0 alebo nov¹iu
 you appear to have %1 support.	setup	sk	Zdá sa, ¾e máte podporu %1.
 you appear to have php session support. enabling php sessions.	setup	sk	Zdá sa, ¾e máte podporu PHP sedení. Zapínam PHP sedenia.
 you appear to have xml support enabled	setup	sk	Zdá sa, ¾e máte zapnutú podporu XML
@@ -580,9 +582,10 @@ you need to add at least one egroupware domain / database instance.	setup	sk	Mus
 you need to add some domains to your header.inc.php.	setup	sk	Treba zada» nejaké domény do header.inc.php.
 you need to configure egroupware:	setup	sk	Musíte konfigurova» eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sk	Uvedené chyby musíte opravi», a¾ potom sa zapí¹e súbor header.inc.php !
+you need to save the settings you made here first!	setup	sk	Musíte najprv ulo¾i» zmeny, ktoré ste vykonali!
 you need to select your current charset!	setup	sk	Treba zada» va¹u súèasnú znakovú sadu!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	sk	mali by ste buï odin¹talova» a potom znovu nain¹talova», alebo sa pokúsi» o ruèné opravy
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	sk	Bude potrebné, aby ste nahrali príslu¹nú schému do vá¹ho ldap servera - pozrite phpgwapi/doc/ldap/README
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sk	NEBUDETE schopní prihlási» sa do eGroupWare pomocou PHP sedení: "sedenie sa nedá overi»" !!!
 you're using an old configuration file format...	setup	sk	Pou¾ívate starý formát konfiguraèného súboru...
 you're using an old header.inc.php version...	setup	sk	Pou¾ívate starú verziu header.inc.php...
 your applications are current	setup	sk	Va¹e aplikácie sú aktuálne

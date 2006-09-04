@@ -4,7 +4,7 @@
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sk	<b>Upozornenie:</b>Kalendár pou¾íva sviatky príslu¹né k Va¹ej krajine, ktorá je nastavená na %1. Mô¾ete ju zmeni» vo va¹om %2.<br />Sviatky sa %3 automaticky in¹talujú z %4. Mô¾ete to zmeni» v %5.
 a non blocking event will not conflict with other events	calendar	sk	neblokujúca udalos» nebude v konflikte s ostatnými udalos»ami
 accept or reject an invitation	calendar	sk	Prija» alebo odmietnu» pozvanie
-accepted	calendar	sk	Prijaté
+accepted	calendar	sk	Prijal
 access denied to the calendar of %1 !!!	calendar	sk	Prístup odopretý ku kalendáru patriacemu %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sk	Zmena, ktorá vyvolala upozornenie: Nové, Zru¹ené, Prijaté, Odmietnuté, ...
 actions	calendar	sk	Akcie
@@ -174,7 +174,7 @@ new search with the above parameters	calendar	sk	nové vyhµadávanie s uvedenými p
 no events found	calendar	sk	®iadne udalosti sa nena¹li
 no filter	calendar	sk	®iadny Filter
 no matches found	calendar	sk	Nena¹li sa ¾iadne záznamy
-no response	calendar	sk	®iadna odozva
+no response	calendar	sk	Bez odozvy
 non blocking	calendar	sk	neblokujúce
 notification messages for added events	calendar	sk	Tvar správy pre nové udalosti
 notification messages for canceled events	calendar	sk	Tvar správy pri zru¹ení udalosti
@@ -217,7 +217,7 @@ receive email updates	calendar	sk	Dostáva» informácie elektronickou po¹tou?
 receive summary of appointments	calendar	sk	Dostáva» súhrn udalostí
 recurrence	calendar	sk	Pravidelné opakovanie
 recurring event	calendar	sk	Opakujúca se udalos»
-rejected	calendar	sk	Odmietnuté
+rejected	calendar	sk	Odmietol
 repeat days	calendar	sk	Opakované dni
 repeat the event until which date (empty means unlimited)	calendar	sk	opakova» udalos» a¾ dokedy (prázdne znamená bez obmedzenia)
 repeat type	calendar	sk	Druh opakovania
@@ -257,7 +257,7 @@ startrecord	calendar	sk	Prvý záznam
 status changed	calendar	sk	Stav sa zmenil
 submit to repository	calendar	sk	Ulo¾i» do databázy
 sun	calendar	sk	Ne
-tentative	calendar	sk	Predbe¾né
+tentative	calendar	sk	Predbe¾ne prijal
 test import (show importable records <u>only</u> in browser)	calendar	sk	Otestova» import (importované záznamy sa zobrazia <u>len</u> v prehliadaèi)
 this day is shown as first day in the week or month view.	calendar	sk	Tento deò sa zobrazuje ako prvý v tý¾dennom èi mesaènom pohµade.
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sk	Touto hodinou sa konèí denný pohµad. Udalosti po tejto hodine se zobrazia za denným pohµadem.
@@ -305,7 +305,7 @@ you can either set a year or a occurence, not both !!!	calendar	sk	Mô¾ete zada» 
 you can only set a year or a occurence !!!	calendar	sk	Mô¾ete zada» buï rok alebo výskyt, ale nie obidvoje !!!
 you do not have permission to read this record!	calendar	sk	Nemáte právo èíta» tento záznam!
 you have a meeting scheduled for %1	calendar	sk	Máte naplánované stretnutie na %1
-you have been disinvited from the meeting at %1	calendar	sk	Vae pozvanie na stretnutie o %1 bolo zru¹ené
+you have been disinvited from the meeting at %1	calendar	sk	Va¹e pozvanie na stretnutie o %1 bolo zru¹ené
 you need to select an ical file first	calendar	sk	Najprv treba vybra» súbor iCal.
 you need to set either a day or a occurence !!!	calendar	sk	Musíte nastavi» buï deò alebo výskyt !!!
 your meeting scheduled for %1 has been canceled	calendar	sk	Stretnutie plánovavané na %1 bolo zru¹ené

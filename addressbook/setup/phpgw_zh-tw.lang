@@ -70,6 +70,9 @@ contact id	addressbook	zh-tw	聯絡人編號
 contact repository	admin	zh-tw	聯絡人資料庫
 contact saved	addressbook	zh-tw	聯絡人儲存了
 contact settings	admin	zh-tw	聯絡人設定
+contacts and account contact-data to ldap	admin	zh-tw	聯絡人與帳號聯絡資料到LDAP
+contacts to ldap	admin	zh-tw	聯絡人到LDAP
+contacts to ldap, account contact-data to sql	admin	zh-tw	聯絡人到LDAP，帳號聯絡資料到資料庫
 copied by %1, from record #%2.	addressbook	zh-tw	由 %1 複製, 從記錄 #%2.
 copy a contact and edit the copy	addressbook	zh-tw	複製與編輯聯絡人
 country	common	zh-tw	國家/地區
@@ -125,6 +128,7 @@ field name	addressbook	zh-tw	欄位名稱
 fields for the csv export	addressbook	zh-tw	匯出到 CSV 格式的欄位
 fields to show in address list	addressbook	zh-tw	在住址清單中顯示欄位
 fieldseparator	addressbook	zh-tw	欄位分隔
+for read only ldap	admin	zh-tw	唯讀的LDAP
 freebusy uri	addressbook	zh-tw	行程狀態網址
 full name	addressbook	zh-tw	全名
 geo	addressbook	zh-tw	GEO
@@ -140,6 +144,7 @@ home state	addressbook	zh-tw	省/市
 home street	addressbook	zh-tw	地址
 home zip code	addressbook	zh-tw	郵遞區號
 icon	addressbook	zh-tw	圖示
+if accounts are already in ldap	admin	zh-tw	如果帳號已經存在於 LDAP
 import	addressbook	zh-tw	匯入
 import contacts	addressbook	zh-tw	匯入聯絡人
 import csv-file into addressbook	addressbook	zh-tw	將CSV檔案匯入通訊錄
@@ -169,6 +174,8 @@ locations	addressbook	zh-tw	位置
 mark records as private	addressbook	zh-tw	標示為私人記錄
 message phone	addressbook	zh-tw	留言電話
 middle name	addressbook	zh-tw	中間欄位
+migration finished	addressbook	zh-tw	轉換完成
+migration to ldap	admin	zh-tw	轉換到 LDAP
 mobile	addressbook	zh-tw	行動電話
 mobile phone	addressbook	zh-tw	行動電話
 modem phone	addressbook	zh-tw	撥接電話
@@ -214,6 +221,7 @@ select a view	addressbook	zh-tw	選擇一個檢視
 select addressbook type	addressbook	zh-tw	選擇通訊錄類型
 select all	addressbook	zh-tw	選擇全部
 select an action or addressbook to move to	addressbook	zh-tw	選擇一個操作或是要移動的通訊錄
+select migration type	admin	zh-tw	選擇轉換方式
 select multiple contacts for a further action	addressbook	zh-tw	選擇多個聯絡人來進行操作
 select phone number as prefered way of contact	addressbook	zh-tw	選擇聯絡人的建議聯絡電話方式
 select the type of conversion	addressbook	zh-tw	選擇轉換的格式
@@ -224,6 +232,7 @@ show a column for %1	addressbook	zh-tw	顯示 %1 的欄位
 show birthday reminders on main screen	addressbook	zh-tw	在主畫面顯示生日提示
 show the contacts of this organisation	addressbook	zh-tw	顯示這個組織的聯絡人
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	zh-tw	彈出視窗大小（寬X高，例如 400x300 ，會在需要彈出視窗時使用這個設定）
+start	admin	zh-tw	開始
 startrecord	addressbook	zh-tw	開始記錄
 state	common	zh-tw	省/市
 street	common	zh-tw	地址
@@ -244,6 +253,7 @@ update a single entry by passing the fields.	addressbook	zh-tw	從欄位更新�
 upload or delete the photo	addressbook	zh-tw	上傳或是刪除照片
 url to link telephone numbers to (use %1 for the number)	admin	zh-tw	要引用電話號碼的網址（使用 %1 來替代號碼）
 use country list	addressbook	zh-tw	使用國家清單
+use setup for a full account-migration	admin	zh-tw	使用安裝程式來完整轉換帳號
 used for links and for the own sorting of the list	addressbook	zh-tw	用在連結以及自訂排序清單
 vcard	common	zh-tw	名片檔
 vcards require a first name entry.	addressbook	zh-tw	名片檔需要名字資料。

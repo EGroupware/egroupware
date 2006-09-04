@@ -7,17 +7,20 @@
 (e.g. 1969)	addressbook	nl	(bijv. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	nl	<b>Geen conversietype <none&g; gevonden </b> Selecteer a.u.b. een conversietype uit de lijst.
 @-eval() is only availible to admins!!!	addressbook	nl	@-eval() is alleen beschikbaar voor beheerders
+account repository	admin	nl	Account repository
 accounts	addressbook	nl	Accounts
 actions	addressbook	nl	Acties
 add a contact to this organisation	addressbook	nl	Voeg een contact toe aan deze organisatie
 add a new contact	addressbook	nl	Voeg een contact toe
 add a single entry by passing the fields.	addressbook	nl	Een enkele invoeren door de velden te geven
 add custom field	addressbook	nl	Aangepast veld toevoegen
+additional information about using ldap as contact repository	admin	nl	Aanvullende informatie over het gebruik van LDAP als contact repository
 address book	common	nl	Adresboek
 address book - vcard in	addressbook	nl	Adresboek - VCard in
 address book - view	addressbook	nl	Adresboek - weergave
-address line 2	addressbook	nl	Adres Lijn 1
-address type	addressbook	nl	Type adres
+address line 2	addressbook	nl	Adresregel 2
+address line 3	addressbook	nl	Adresregel 3
+address type	addressbook	nl	Adrestype
 addressbook	common	nl	Adresboek
 addressbook menu	addressbook	nl	Adresboek menu
 addressbook preferences	addressbook	nl	Adresboek voorkeuren
@@ -42,12 +45,14 @@ business address	addressbook	nl	Bedrijf adres
 business city	addressbook	nl	Bedrijf Plaats
 business country	addressbook	nl	Bedrijf Land
 business email	addressbook	nl	Bedrijf Email
+business email type	addressbook	nl	Bedrijf Emailtype
 business fax	addressbook	nl	Bedrijf Fax
 business phone	addressbook	nl	Bedrijf Telefoon
 business state	addressbook	nl	Bedrijf Provincie / Staat / District
 business street	addressbook	nl	Bedrijf Straat
 business zip code	addressbook	nl	Bedrijf Postcode
 calendar uri	addressbook	nl	Kalender URI
+can be changed via setup >> configuration	admin	nl	Kan gewijzigd worden via Setup >> Configuration
 car phone	addressbook	nl	Autotelefoon
 cell phone	addressbook	nl	Mobiele telefoon
 change all organisation members	addressbook	nl	wijzig alle organisatie leden
@@ -64,8 +69,12 @@ contact	common	nl	Contact
 contact application	admin	nl	Contact applicatie
 contact deleted	addressbook	nl	Contact verwijderd
 contact id	addressbook	nl	Contact ID
+contact repository	admin	nl	Contact repository
 contact saved	addressbook	nl	Contact opgeslagen
 contact settings	admin	nl	Contactinstellingen
+contacts and account contact-data to ldap	admin	nl	contacten en account contactgegevens naar LDAP
+contacts to ldap	admin	nl	contacten naar LDAP
+contacts to ldap, account contact-data to sql	admin	nl	contacten naar LDAP, account contactgegevens naar SQL
 copied by %1, from record #%2.	addressbook	nl	Gekopieerd door %1, van record #%2.
 copy a contact and edit the copy	addressbook	nl	Kopieer een contact en bewerk de kopie
 country	common	nl	Land
@@ -85,7 +94,7 @@ deleted	addressbook	nl	verwijderd
 deletes the photo	addressbook	nl	Verwijdert de foto
 department	common	nl	Afdeling
 departments	addressbook	nl	afdelingen
-displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	nl	Toont een herinnering voor verjaardagen die vandaag of morgen plaatshebben op de voorpagina (pagina die je te zien krijgt als je eGroupWare start of wanneer je op de inkoon voor de voorpagina klikt)
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	nl	Toont een herinnering voor verjaardagen op de voorpagina (de pagina die je te zien krijgt als je eGroupWare start of wanneer je op het voorpagina ikoon klikt)
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	nl	Wil je een persoonlijk adresboek dat niet door andere gebruikers bekeken kan worden, jij verleent toegang tot je persoonlijke adresboek
 do your really want to delete this contact?	addressbook	nl	Wilt u dit contactrecord werkelijk verwijderen?
 doesn't matter	addressbook	nl	maakt niets uit
@@ -121,6 +130,7 @@ field name	addressbook	nl	Veldnaam
 fields for the csv export	addressbook	nl	Velden voor de CSV export
 fields to show in address list	addressbook	nl	Velden die zichtbaar zijn in adreslijst
 fieldseparator	addressbook	nl	Scheidingssymbool velden
+for read only ldap	admin	nl	voor alleen-lezen LDAP
 freebusy uri	addressbook	nl	Vrij/bezet URI
 full name	addressbook	nl	Volledige naam
 geo	addressbook	nl	GEO
@@ -131,11 +141,13 @@ home address	addressbook	nl	Privé adres
 home city	addressbook	nl	Privé Plaats
 home country	addressbook	nl	Privé Land
 home email	addressbook	nl	Privé Email
+home email type	addressbook	nl	Privé Emailtype
 home phone	addressbook	nl	Privé telefoon
 home state	addressbook	nl	Privé Provincie / Staat / District
 home street	addressbook	nl	Privé Straat
 home zip code	addressbook	nl	Privé Postcode
 icon	addressbook	nl	Pictogram
+if accounts are already in ldap	admin	nl	indien accounts reeds in LDAP zitten
 import	addressbook	nl	Importeren
 import contacts	addressbook	nl	Contacten Importeren
 import csv-file into addressbook	addressbook	nl	CSV-bestand importeren naar adresboek
@@ -146,15 +158,16 @@ import from outlook	addressbook	nl	Importeren vuit Outlook
 import multiple vcard	addressbook	nl	Importeer Meervoudige VCard
 import next set	addressbook	nl	Importeren volgende serie
 import_instructions	addressbook	nl	In Netscape, open het adressenboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>. Het bestand wordt geexporteerd in het LDIF formaat.<p>Of, in Outlook, selecteer de contacten-folder, kies <b>Importeren en Exporteren...</b> in het menu <b>Bestand</b> en exportoor als komma gescheiden tekst bestand (CSV).<p>Of, in Palm Desktop 4.0 of nieuwer, kies het adresboek en selecteer <b>Exporteren</b> in het menu <b>Bestand</b>, het bestand wordt geëxporteerd in het VCard formaat.
+in %1 days (%2) is %3's birthday.	addressbook	nl	Over %1 dagen (%2) is %3 jarig.
 income	addressbook	nl	Inkomen
 international	addressbook	nl	Internationaal
+isdn phone	addressbook	nl	ISDN telefoon
 label	addressbook	nl	Label
 last modified	addressbook	nl	laatste wijziging
 last modified by	addressbook	nl	laatst gewijzigd door
 ldap context for contacts	admin	nl	LDAP-context voor contacten
 ldap host for contacts	admin	nl	LDAP-host voor contacten
-ldap root dn for contacts	admin	nl	LDAP-root dn voor contacten
-ldap root pw for contacts	admin	nl	LDAP-root pw voor contacten
+ldap settings for contacts	admin	nl	LDAP instellingen voor contacten
 ldif	addressbook	nl	LDIF
 line 2	addressbook	nl	Regel 2
 links	addressbook	nl	Links
@@ -165,6 +178,8 @@ locations	addressbook	nl	locaties
 mark records as private	addressbook	nl	Markeer records als privé
 message phone	addressbook	nl	Bericht Telefoon
 middle name	addressbook	nl	Tweede naam
+migration finished	addressbook	nl	Migratie voltooid
+migration to ldap	admin	nl	Migratie naar LDAP
 mobile	addressbook	nl	Mobiel
 mobile phone	addressbook	nl	Mobiel telefoon
 modem phone	addressbook	nl	Modem telefoon
@@ -185,6 +200,7 @@ other phone	addressbook	nl	Andere telefoon
 own sorting	addressbook	nl	eigen sorteren
 pager	common	nl	Buzzer
 parcel	addressbook	nl	Pakket
+permission denied !!!	addressbook	nl	Toestemming geweigerd !!!
 phone number	common	nl	Telefoonnummer
 phone numbers	common	nl	Telefoonnummers
 photo	addressbook	nl	Foto
@@ -199,6 +215,7 @@ publish into groups:	addressbook	nl	Publiceer in groepen:
 read a list / search for entries.	addressbook	nl	Lees een lijst / zoek naar records.
 read a list of entries.	addressbook	nl	Lees een lijst met records
 read a single entry by passing the id and fieldlist.	addressbook	nl	Lees een record door een ID. in te voeren en een veldenlijst
+read only	addressbook	nl	alleen-lezen
 record access	addressbook	nl	Toegang adres
 record owner	addressbook	nl	Eigenaar adres
 role	addressbook	nl	Rol
@@ -209,6 +226,7 @@ select a view	addressbook	nl	Kies een weergave
 select addressbook type	addressbook	nl	Kies een adresboek type
 select all	addressbook	nl	Alles selecteren
 select an action or addressbook to move to	addressbook	nl	Kies een actie of adresboek om te verplaatsen
+select migration type	admin	nl	Kies een migratie type
 select multiple contacts for a further action	addressbook	nl	Kies meerdere contacten voor verdere actie
 select phone number as prefered way of contact	addressbook	nl	kies het telefoonnummer als voorkeurs contact methode
 select the type of conversion	addressbook	nl	Kies type conversie
@@ -218,12 +236,15 @@ show	addressbook	nl	Toon
 show a column for %1	addressbook	nl	Toon een kolom voor %1
 show birthday reminders on main screen	addressbook	nl	Verjaardagsherinneringen weergeven op hoofdscherm
 show the contacts of this organisation	addressbook	nl	Toon de contacten van deze organisatie
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	nl	Afmetingen van de popup (BxH, bijvoorbeeld 400x300, als een popup nodig is)
+start	admin	nl	Start
 startrecord	addressbook	nl	Startrecord
 state	common	nl	Provincie / Staat / District
 street	common	nl	Straatnaam
 successfully imported %1 records into your addressbook.	addressbook	nl	Met succes %1 record geïmporteerd naar uw adresboek
 suffix	addressbook	nl	Achtervoegsel
 tel home	addressbook	nl	tel thuis
+telephony integration	admin	nl	Telefonie integratie
 test import (show importable records <u>only</u> in browser)	addressbook	nl	Test Import (te importeren adressen ALLEEN WEERGEVEN in uw browser)
 that field name has been used already !	addressbook	nl	Het veldnaam is al in  gebruik !
 this person's first name was not in the address book.	addressbook	nl	De voornaam van deze persoon staat niet het adresboek.
@@ -235,11 +256,14 @@ tomorrow is %1's birthday.	common	nl	Morgen is %1 jarig
 translation	addressbook	nl	Vertaling / Script
 update a single entry by passing the fields.	addressbook	nl	Een record bijwerken door de velden te geven
 upload or delete the photo	addressbook	nl	Upload of verwijder de foto
+url to link telephone numbers to (use %1 for the number)	admin	nl	URL waaraan telefoonnummers gekoppeld worden (gebruik %1 voor het nummer)
 use country list	addressbook	nl	Gebruik Landenlijst
+use setup for a full account-migration	admin	nl	gebruik setup voor een volledige accountmigratie
 used for links and for the own sorting of the list	addressbook	nl	gebruikt voor links en voor de eigen sortering van de lijst
 vcard	common	nl	VCard
 vcards require a first name entry.	addressbook	nl	VCard vereist dat de voornaam ingevoerd is.
 vcards require a last name entry.	addressbook	nl	VCard vereist dat de achternaam ingevoerd is.
+video phone	addressbook	nl	Video telefoon
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	nl	WAARSCHUWING!! Alleen LDAP gebruiken als het adresboek niet wordt gebruikt om de accounts op te slaan!
 warning: all contacts found will be deleted!	addressbook	nl	WAARSCHUWING: Alle gevonden contactrecords worden verwijderd!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	nl	Wanneer moet de contactenlijst deze kolom weergeven. "Alleen als er inhoud is" verbergt de kolom tenzij er iets weer te geven is.
@@ -248,10 +272,15 @@ which fields should be exported. all means every field stored in the addressbook
 whole query	addressbook	nl	gehele query
 work phone	addressbook	nl	Telefoon werk
 write (update or add) a single entry by passing the fields.	addressbook	nl	Schrijf (bijwerken of toevoegen) een record door de velden mee te geven.
+yes, for the next three days	addressbook	nl	Ja, voor de volgende drie dagen
+yes, for the next two weeks	addressbook	nl	Ja, voor de volgende twee dagen
+yes, for the next week	addressbook	nl	Ja, voor de volgende week
+yes, for today and tomorrow	addressbook	nl	Ja, voor vandaag en morgen
 you are not permitted to delete contact %1	addressbook	nl	U bent niet bevoegd om contact %1 te verwijderen
 you are not permittet to delete this contact	addressbook	nl	U bent niet bevoegd om dit contactrecord te verwijderen
 you are not permittet to edit this contact	addressbook	nl	U bent niet bevoegd om dit contactrecord te wijzigen
 you are not permittet to view this contact	addressbook	nl	U bent niet bevoegd om dit contactrecord te bekijken
+you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	nl	U kunt LDAP alleen als contact repository gebruiken als de accounts ook in LDAP zijn opgeslagen!
 you must select a vcard. (*.vcf)	addressbook	nl	U moet een VCard selecteren (*.vcf)
 you must select at least 1 column to display	addressbook	nl	U moet een op z'n minst 1 kolom selecteren om weer te geven
 you need to select some contacts first	addressbook	nl	U moet eerst enkele contacten selecteren

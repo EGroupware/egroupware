@@ -84,7 +84,7 @@ deleted	addressbook	sk	Zmazané
 deletes the photo	addressbook	sk	Zma¾e obrázok
 department	common	sk	Oddelenie
 departments	addressbook	sk	Oddelenia
-displays a remider for birthdays happening today or tomorrow on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sk	Zobrazí na úvodnej stránke pripomienku ku ka¾dým narodeninám, ktoré majú nasta» dnes alebo zajtra. To je tá stránka, ktorá sa zobrazí keï sa prihlásite do eGroupWare, alebo keï kliknete na ikonu Domovskej stránky v eGroupWare.
+displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sk	Zobrazí pripomienku o narodeninách na úvodnej stránke (to je tá, ktorá sa zobrazí hneï po prihlásení do eGroupWare, alebo po kliknutí na ikonu Domov).
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sk	Chcete súkromný adresár, ktorý ostatní pou¾ívatelia nemô¾u prezera»? Vy prideµujete prístupové oprávnenia ku svojmu osobnému Adresáru.
 do your really want to delete this contact?	addressbook	sk	Naozaj chcete zmaza» tento kontakt?
 doesn't matter	addressbook	sk	Nezále¾í
@@ -145,6 +145,7 @@ import from outlook	addressbook	sk	Importuj z Outlooku
 import multiple vcard	addressbook	sk	Import viacerých vizitek VCard
 import next set	addressbook	sk	Importova» ïal¹iu sadu
 import_instructions	addressbook	sk	V Netscape otvorte Adresár a vyberte <b>Export<b> v menu <b>Súbor</b>. Exportovaný súbor bude vo formáte LDIF.<p>V Outlooku vyberte Kontakty, zvoµte <b>Import a export...</b> z menu <b>Súbor</b> a exportujte dáta do súboru s hodnotami oddelenými èiarkami.<p>V Palm Desktop 4.0 a vy¹¹om otvorete adresár a zvoµte <b>Export</b> z menu <b>Súbor</b>. Exportované dáta budú vo formáte VCard.
+in %1 days (%2) is %3's birthday.	addressbook	sk	O %1 dní (%2) bude ma» narodeniny %3.
 income	addressbook	sk	Príjem
 international	addressbook	sk	Mezinárodný
 label	addressbook	sk	Nálepka
@@ -152,8 +153,6 @@ last modified	addressbook	sk	Naposledy zmenené
 last modified by	addressbook	sk	Naposledy zmenil:
 ldap context for contacts	admin	sk	LDAP kontext pre kontakty
 ldap host for contacts	admin	sk	LDAP hostiteµ pre kontakty
-ldap root dn for contacts	admin	sk	LDAP koreòové dn pre kontakty
-ldap root pw for contacts	admin	sk	LDAP koreòové pw pre kontakty
 ldif	addressbook	sk	LDIF
 line 2	addressbook	sk	Riadok 2
 links	addressbook	sk	Odkazy
@@ -164,6 +163,8 @@ locations	addressbook	sk	Umiestnenia
 mark records as private	addressbook	sk	Oznaèi» záznam ako súkromý
 message phone	addressbook	sk	Telefón pre správy
 middle name	addressbook	sk	Prostredné meno
+migration finished	addressbook	sk	Migrácia je dokonèená.
+migration to ldap	admin	sk	Migrácia do LDAP
 mobile	addressbook	sk	Mobil
 mobile phone	addressbook	sk	Mobil
 modem phone	addressbook	sk	Èíslo na modem
@@ -198,6 +199,7 @@ publish into groups:	addressbook	sk	Publikova» do skupín:
 read a list / search for entries.	addressbook	sk	Naèíta» zoznam / vyhµada» záznamy.
 read a list of entries.	addressbook	sk	Naèítaj zoznam záznamov.
 read a single entry by passing the id and fieldlist.	addressbook	sk	Naèítaj záznam zadaním id a zoznamu polo¾ek.
+read only	addressbook	sk	iba na èítanie
 record access	addressbook	sk	Prístup k záznamu
 record owner	addressbook	sk	Vlastník záznamu
 role	addressbook	sk	Pozícia
@@ -208,6 +210,7 @@ select a view	addressbook	sk	Vyberte pohµad
 select addressbook type	addressbook	sk	Vyberte typ Adresára
 select all	addressbook	sk	Oznaèi» v¹etko
 select an action or addressbook to move to	addressbook	sk	Vyberte akciu alebo Adresár kam sa presunú»
+select migration type	admin	sk	Vyberte typ migrácie
 select multiple contacts for a further action	addressbook	sk	Vybra» viacero kontaktov pre vykonanie nejakej akcie
 select phone number as prefered way of contact	addressbook	sk	vybra» èíslo telefónu ako preferovaný spôsob komunikácie
 select the type of conversion	addressbook	sk	Vyberte typ prevodu
@@ -217,12 +220,14 @@ show	addressbook	sk	Ukáza»
 show a column for %1	addressbook	sk	Zobrazi» ståpec pre %1
 show birthday reminders on main screen	addressbook	sk	Pripomína» narodeniny na hlavnej stránke
 show the contacts of this organisation	addressbook	sk	Zobrazi» kontakty v tejto organizácii
+size of popup (wxh, eg.400x300, if a popup should be used)	admin	sk	Veµkos» vyskakovacieho okna (DxV, napr. 400x300, ak sa má pou¾íva» vyskakovacie okno)
 startrecord	addressbook	sk	Prvý záznam
 state	common	sk	©tát
 street	common	sk	Ulica
 successfully imported %1 records into your addressbook.	addressbook	sk	Do adresára bolo úspe¹ne naimportovaných %1 záznamov.
 suffix	addressbook	sk	Prípona
 tel home	addressbook	sk	tel domov
+telephony integration	admin	sk	Integrovanie telefónie
 test import (show importable records <u>only</u> in browser)	addressbook	sk	Otestova» import (importované záznamy sa zobrazia <u>len</u> v prehliadaèi)
 that field name has been used already !	addressbook	sk	Takýto názov polo¾ky u¾ existuje!
 this person's first name was not in the address book.	addressbook	sk	Takéto meno sa v adresári nenachádza.
@@ -234,7 +239,9 @@ tomorrow is %1's birthday.	common	sk	Zajtra má narodeniny %1.
 translation	addressbook	sk	Preklad
 update a single entry by passing the fields.	addressbook	sk	Zmeni» jednotlivý záznam zadaním polo¾iek.
 upload or delete the photo	addressbook	sk	Nahra» alebo vymaza» túto fotku
+url to link telephone numbers to (use %1 for the number)	admin	sk	URL na vytvorenie odkazu na telefónne èísla (pou¾ite %1 pre èíslo)
 use country list	addressbook	sk	Pou¾i» zoznam krajín
+use setup for a full account-migration	admin	sk	Pre plnú migráciu úètov pou¾ite Setup
 used for links and for the own sorting of the list	addressbook	sk	Pou¾íva sa pre odkazy a vlastné spôsoby triedenia zoznamu
 vcard	common	sk	Vizitka VCard
 vcards require a first name entry.	addressbook	sk	Vizitky potrebujú zadané krstné meno.
@@ -247,6 +254,10 @@ which fields should be exported. all means every field stored in the addressbook
 whole query	addressbook	sk	Celý dopyt
 work phone	addressbook	sk	Telefón do zamestnania
 write (update or add) a single entry by passing the fields.	addressbook	sk	Zapísa» (aktualizova» alebo prida») jednotlivú polo¾ku zadaním polí.
+yes, for the next three days	addressbook	sk	Áno, pre nasledujúce 3 dni
+yes, for the next two weeks	addressbook	sk	Áno, pre nasledujúce 2 tý¾dne
+yes, for the next week	addressbook	sk	Áno, pre nasledujúci tý¾deò
+yes, for today and tomorrow	addressbook	sk	Áno, pre dne¹ok a zajtraj¹ok
 you are not permitted to delete contact %1	addressbook	sk	Nemáte oprávnenie zmaza» kontakt %1
 you are not permittet to delete this contact	addressbook	sk	Nemáte oprávnenie zmaza» tento kontakt
 you are not permittet to edit this contact	addressbook	sk	Nemáte oprávnenie upravi» tento kontakt

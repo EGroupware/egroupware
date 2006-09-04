@@ -104,8 +104,8 @@ edit status	infolog	sk	Upravi» stav
 edit the entry	infolog	sk	Upravi» záznam
 edit this entry	infolog	sk	Uprav tento záznam
 empty for all	infolog	sk	Prázdne pre v¹etko
-enddate	infolog	sk	Termín ukonèenia
-enddate can not be before startdate	infolog	sk	Dátum ukonèenia nemô¾e by» pred dátumom zaèiatku
+enddate	infolog	sk	Koneèný termín
+enddate can not be before startdate	infolog	sk	Koneèný termín nemô¾e by» pred dátumom zaèiatku
 enter a custom contact, leave empty if linked entry should be used	infolog	sk	Zadajte pou¾ívateµsky definovaný kontakt, alebo ponechajte prázdne ak sa má pou¾i» záznam pripojený odkazom
 enter a custom phone/email, leave empty if linked entry should be used	infolog	sk	zadajte pou¾ívateµsky definovaný telefón/email, alebo ponechajte prázdne ak sa má pou¾i» záznam pripojený odkazom
 enter a textual description of the log-entry	infolog	sk	Zadajte text opisujúci tento záznam
@@ -252,7 +252,7 @@ show times	infolog	sk	Zobrazi» èasy
 small view	infolog	sk	Zmen¹ený pohµad
 start a new search, cancel this link	infolog	sk	Spusti» nové vyhµadávanie, zru¹i» tento odkaz
 startdate	infolog	sk	Dátum zaèiatku
-startdate enddate	infolog	sk	Dátum zaèiatu Dátum konca
+startdate enddate	infolog	sk	Dátum zaèiatu Koneèný termín
 startdate for new entries	infolog	sk	Dátum zaèiatku pre nové záznamy
 startrecord	infolog	sk	Prvý záznam
 status	infolog	sk	Stav
@@ -300,7 +300,7 @@ write (add or update) a record by passing its fields.	infolog	sk	Zapísa» (prida»
 yes - delete	infolog	sk	Áno - Zmaza»
 yes - delete including sub-entries	infolog	sk	Áno - Zmaza» vrátane podzáznamov
 you can't delete one of the stock types !!!	infolog	sk	Nemô¾ete zmaza» skladový typ!!
-you have entered an invalid ending date	infolog	sk	Zadali ste chybný dátum ukonèenia
+you have entered an invalid ending date	infolog	sk	Zadali ste chybný koneèný termín
 you have entered an invalid starting date	infolog	sk	Zadali ste chybný dátum zaèiatku
 you have to enter a name, to create a new typ!!!	infolog	sk	Ak chcete zada» nový typ, musíte zada» jeho názov!!
 you must enter a subject or a description	infolog	sk	Musíte zada» predmet alebo opis

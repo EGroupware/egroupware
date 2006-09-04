@@ -54,6 +54,7 @@ cellpadding for the table-tag	etemplate	pt-br	Estofamento da célula para a tabel
 cells	etemplate	pt-br	Células
 cellspacing for the table-tag	etemplate	pt-br	Espaçamento da célula para a tabela
 center	etemplate	pt-br	Centralizar
+changed	etemplate	pt-br	Alterado
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pt-br	marque se o conteúdo está sómente sendo mostrado e não alterado (o conteúdo não pode ser desfeito!)
 check if field has to be filled by user	etemplate	pt-br	marque se o campo tiver que ser preenchido pelo usuário
 checkbox	etemplate	pt-br	Caixa de seleção
@@ -383,6 +384,3 @@ writes a 'etemplates.inc.php' file (for application in name) in the setup-dir of
 xml-file to import	etemplate	pt-br	Importar arquivo xml
 xslt template	etemplate	pt-br	Modelo XSLT
 year	etemplate	pt-br	Ano
-1	etemplate	pt-br	1
-2	etemplate	pt-br	2
-3	etemplate	pt-br	3

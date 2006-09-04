@@ -63,7 +63,6 @@ default calendar filter	calendar	nl	Standaard agendafilter
 default calendar view	calendar	nl	Standaard agendaoverzicht
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	nl	Standaard lengte van nieuw aangemaakte afspraken. De lengte is in minuten, bijv. 60 voor 1 uur.
 default week view	calendar	nl	Standaard weekoverzicht
-defines the size in minutes of the lines in the day view.	calendar	nl	Standaard grootte in minutes van de regels in de dagelijkse weergave.
 delete series	calendar	nl	Series verwijderen
 delete this alarm	calendar	nl	Deze herinnering verwijderen
 delete this event	calendar	nl	Deze gebeurtenis verwijderen
@@ -113,9 +112,11 @@ filename of the download	calendar	nl	Bestandsnaam van de download
 find free timeslots where the selected participants are availible for the given timespan	calendar	nl	Zoek vrije tijdstippen waarop de geselecteerde deelnemers beschikbaar zijn binnen de opgegeven tijdsduur
 firstname of person to notify	calendar	nl	Voornaam van persoon om te op de hoogte te brengen
 for	calendar	nl	voor
+for which views should calendar show distinct lines with a fixed time interval.	calendar	nl	Voor welke weergaven moet de agenda duidelijke lijnen met een vast tijdsinterval tonen.
 format of event updates	calendar	nl	Formaat van afspraakbewerkingen
 forward half a month	calendar	nl	halve maand verder
 forward one month	calendar	nl	één maand verder
+four days view	calendar	nl	Vier daagse weergave
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	nl	Vrij/Bezet: onbekende gebruiker '%1', verkeerd wachtwoord of niet beschikbaar voor niet-ingelogde gebruikers!!!
 freetime search	calendar	nl	Beschikbare tijd opzoeken
 fri	calendar	nl	Vri
@@ -136,6 +137,7 @@ holiday management	calendar	nl	Feestdagenbeheer
 holidays	calendar	nl	Vakanties
 hours	calendar	nl	uren
 how far to search (from startdate)	calendar	nl	hoe ver vooruit zoeken (vanaf de begindatum)
+how many minutes should each interval last?	calendar	nl	Hoeveel minuten moet ieder interval duren?
 ical	calendar	nl	iCal
 ical / rfc2445	calendar	nl	iCal / rfc2445
 ical export	calendar	nl	iCal export
@@ -148,10 +150,10 @@ ignore conflict	calendar	nl	Conflict negeren
 import	calendar	nl	Importeren
 import csv-file	common	nl	CSV-bstand importeren
 interval	calendar	nl	Herhaling
-intervals in day view	calendar	nl	Intervallen in dagelijke weergave
 invalid email-address "%1" for user %2	calendar	nl	Ongeldig emailadres "%1" voor gebruiker %2
 last	calendar	nl	laatste
 lastname of person to notify	calendar	nl	Achternaam van persoon om te op de hoogte te brengen
+length of the time interval	calendar	nl	Lengte van het tijdsinterval
 link to view the event	calendar	nl	Link om het evenement te bekijken
 links	calendar	nl	Links
 links, attachments	calendar	nl	Links, bijlagen
@@ -172,7 +174,7 @@ new search with the above parameters	calendar	nl	opnieuw zoeken met de bovenstaa
 no events found	calendar	nl	Geen gebeurtenissen gevonden
 no filter	calendar	nl	Geen filter
 no matches found	calendar	nl	Geen resultaten gevonden
-no response	calendar	nl	Geen Antwoord
+no response	calendar	nl	Niet gereageerd
 non blocking	calendar	nl	niet blokkerend
 not	calendar	nl	niet
 notification messages for added events	calendar	nl	Notificatieberichten voor toegevoegde afspraken
@@ -283,6 +285,7 @@ updated	calendar	nl	Bijgewerkt
 use end date	calendar	nl	Gebruik einddatum
 use the selected time and close the popup	calendar	nl	gebruik de geselecteerde tijd en sluit het popupvenster
 view this event	calendar	nl	Bekijk deze gebeurtenis
+views with fixed time intervals	calendar	nl	Weergaves met vaste tijdsintervallen
 wed	calendar	nl	Woe
 week	calendar	nl	Week
 weekday starts on	calendar	nl	De week begint op

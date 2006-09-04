@@ -158,7 +158,7 @@ cut table row	tinymce	sk	Vystrihnú» riadok tabuµky
 cyprus	common	sk	CYPRUS
 czech republic	common	sk	ÈESKÁ REPUBLIKA
 date	common	sk	Dátum
-date due	common	sk	Dátum do
+date due	common	sk	Termín do
 date modified	tinymce	sk	Dátum upravený
 date selection:	jscalendar	sk	Výber dátumu:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sk	Port pre dátum/èas.<br>Ak pou¾ívate port 13,prosím nastavte korektne filtrovacie pravidlá na firewall-e e¹te predtým, ne¾ potvrdíte túto stránku.<br>(Port: 13 / Host: 129.6.15.28)

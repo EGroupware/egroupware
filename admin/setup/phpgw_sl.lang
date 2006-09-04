@@ -47,12 +47,15 @@ allow anonymous access to this app	admin	sl	Dovoli dostop do te aplikacije anoni
 alternate email address	admin	sl	alternativen E-naslov
 anonymous user	admin	sl	Anonimni uporabnik
 anonymous user (not shown in list sessions)	admin	sl	Anonimni uporabnik (ni viden v seznamu sej)
+anonymous user does not exist!	admin	sl	Anonimni uporabnik ne obstaja!
+anonymous user has no run-rights for the application!	admin	sl	Anonimni uporabnik nima pravic zaganjanja te aplikacije!
 appearance	admin	sl	Videz
 application	admin	sl	Aplikacija
 application name	admin	sl	Ime aplikacije
 application title	admin	sl	Naslov aplikacije
 applications	admin	sl	Aplikacije
 applications list	admin	sl	Seznam aplikacij
+applies the changes	admin	sl	Uveljavi spremembe
 are you sure you want to delete the application %1 ?	admin	sl	Ste prepričani, da želite izbrisati aplikacijo %1?
 are you sure you want to delete this account ?	admin	sl	Ste prepričani, da želite izbrisati ta račun?
 are you sure you want to delete this application ?	admin	sl	Ste prepričani, da želite izbrisati to aplikacijo?
@@ -187,6 +190,7 @@ enter your smtp server hostname or ip address	admin	sl	Vnesite ime SMTP strežni
 enter your smtp server port	admin	sl	Vnesite vrata SMTP strežnika (25)
 error canceling timer, maybe there's none set !!!	admin	sl	Napaka ob prekinjanju kronometra: morda ni nastavljen!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	sl	Napaka ob vzpostavljanju kronometra: napačna sintaksa ali pa je kronometer že vzpostavljen!
+error! no appname found	admin	sl	Napaka! Ime aplikacije ni bilo najdeno
 error: %1 not found or other error !!!	admin	sl	Napaka: ne najdem %1 ali druga napaka!
 expires	admin	sl	Preteče
 explanation of ldapman	admin	sl	Ta modul je bil zaenkrat testiran z Postfixom, LDAPom in Courier-IMAP in potrebuje sheme CORE in QMAIL (OID7914). Podrobnosti o uporabi in konfiguraciji lahko preberete v README.ldapman v mapi "doc" oskrbnika.
@@ -246,6 +250,8 @@ ldap rootdn	admin	sl	LDAP rootdn
 leave empty for no quota	admin	sl	pustite prazno za neomejeno
 leave the category untouched and return back to the list	admin	sl	pusti kategorijo nedotaknjeno in se vrni nazaj na seznam
 leave the group untouched and return back to the list	admin	sl	Pusti skupino nedotaknjeno in se vrni nazaj na seznam
+leaves without saveing	admin	sl	Zapre brez shranjevanja
+length<br>rows	admin	sl	Dolžina<br>Vrstic
 list config settings	admin	sl	Seznam konfiguracijskih nastavitev
 list current sessions	admin	sl	Seznam trenutnih sej
 list of current users	admin	sl	seznam trenutnih uporabnikov

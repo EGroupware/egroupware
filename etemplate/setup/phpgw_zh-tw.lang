@@ -54,6 +54,7 @@ cellpadding for the table-tag	etemplate	zh-tw	表格文字與格線的距離
 cells	etemplate	zh-tw	儲存格
 cellspacing for the table-tag	etemplate	zh-tw	表格欄位與欄位文字的距離
 center	etemplate	zh-tw	置中
+changed	etemplate	zh-tw	已異動
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	zh-tw	如果內容只能被顯示而不能被改變請勾選
 check if field has to be filled by user	etemplate	zh-tw	如果欄位址能夠讓使用者填入請勾選
 checkbox	etemplate	zh-tw	核選方塊
