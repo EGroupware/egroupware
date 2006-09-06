@@ -67,7 +67,6 @@
 		}
 		exit(1);
 	}
-	$GLOBALS['egw_info']['server']['sessions_type'] = 'db';	// no php4-sessions availible for cgi
 
 	include(PHPGW_API_INC.'/functions.inc.php');
 
