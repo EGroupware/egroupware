@@ -1277,7 +1277,12 @@
 					$java_script .= $GLOBALS['egw']->js->get_javascript_globals();
 				}
 			}
-
+			
+			if ($GLOBALS['egw']->acl->check('run',1,'notifications') && !$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup'])
+			{
+				$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+			}
+			
 			if ($GLOBALS['egw_info']['flags']['include_xajax'])
 			{
 				require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
