@@ -793,7 +793,7 @@ class accounts extends accounts_backend
 	 *
 	 * @deprecated use search
 	 */
-	function get_list($_type='both',$start = '',$sort = '', $order = '', $query = '', $offset = '',$query_type='')
+	function get_list($_type='both',$start = null,$sort = '', $order = '', $query = '', $offset = null,$query_type='')
 	{
 		//echo "<p>accounts::get_list(".print_r($_type,True).",start='$start',sort='$sort',order='$order',query='$query',offset='$offset')</p>\n";
 		$this->setup_cache();
