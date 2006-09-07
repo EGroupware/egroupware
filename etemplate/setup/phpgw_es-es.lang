@@ -54,6 +54,7 @@ cellpadding for the table-tag	etemplate	es-es	Distancia de la etiqueta de la tab
 cells	etemplate	es-es	Celdas
 cellspacing for the table-tag	etemplate	es-es	Espaciado en la celda para la etiqueta de la tabla
 center	etemplate	es-es	Centrar
+changed	etemplate	es-es	Modificado
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	es-es	marcar si desea mostrar el contenido sin modificar (el contenido no es devuelto)
 check if field has to be filled by user	etemplate	es-es	marcar si el campo tiene que rellenarlo el usuario
 checkbox	etemplate	es-es	Casilla
