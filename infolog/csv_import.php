@@ -228,6 +228,16 @@ function cat_id($cats)
 			'link_2'      => '2. link: appname:appid the entry should be linked to, eg.: addressbook:123',
 			'link_3'      => '3. link: appname:appid the entry should be linked to, eg.: addressbook:123',
 		);
+		// add custom fields
+		if ($boinfolog->customfields)
+		{
+			foreach($boinfolog->customfields as $name => $field)
+			{
+				if ($field['type'] == 'label' || !count($field['values']) && $field['rows'] <= 1 && $field['len'] <= 0) continue;
+
+				$info_names['#'.$name] = lang('custom fields').': '.$field['label'];
+			}
+		}
 
 		// the next line is used in the help-text too
 		$mktime_lotus = "${PSep}0?([0-9]+)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*)[ .:-]+0?([0-9]*).*$ASep@mktime(${VPre}4,${VPre}5,${VPre}6,${VPre}2,${VPre}3,${VPre}1)";
@@ -492,7 +502,7 @@ function cat_id($cats)
 				$to_write = array();
 				foreach($values as $name => $value)
 				{
-					$to_write[substr($name,0,5) != 'info_' ? 'info_'.$name : $name] = $value;
+					$to_write[substr($name,0,5) != 'info_' && $name{0} != '#' ? 'info_'.$name : $name] = $value;
 				}
 				if ($values['addr_id'] && !is_numeric($values['addr_id']))
 				{
