@@ -129,8 +129,8 @@ class contacts extends bocontacts
 		{
 			$fields = explode(',',$fields);
 		}
-		if ($order && !strstr($order,'_')) $order = 'contact_'.$order;
 		if (!$order) $order = $fields ? $fields[0] : 'org_name,n_family,n_given';
+		if ($order && !strstr($order,'_')) $order = 'contact_'.$order;
 		
 		//echo '<p>contacts::search('.($cquery ? $cquery.'*' : $query).','.print_r($fields,true).",'$order $sort','','".($cquery ? '' : '%')."',false,'OR',".(!$limit ? 'false' : "array($start,$limit)").",".print_r($sfilter,true).");</p>\n";
 		$rows =& $this->search($cquery ? $cquery.'*' : $query,$fields,$order.($sort ? ' '.$sort : ''),'',
