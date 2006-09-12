@@ -57,6 +57,7 @@ class uitimesheet extends botimesheet
 			{
 				$this->data = array(
 					'ts_start' => $this->today,
+					'end_time' => $this->now - $this->today,
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id'   => (int) $_REQUEST['cat_id'],
 				);
@@ -66,11 +67,25 @@ class uitimesheet extends botimesheet
 		}
 		else
 		{
+			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
+			if ($content['start_time'])		// start-time specified
+			{
+				$content['ts_start'] += $content['start_time'];
+			}
+			elseif ($content['ts_duration'] && $content['end_time'])	// no start, calculate from end and duration
+			{
+				$content['ts_start'] += $content['end_time'] - 60*$content['ts_duration'];
+			}
+			if (!$content['ts_duration'])	// no duration, calculate from start- and endtime
+			{
+				$content['ts_duration'] = ($content['end_time'] - $content['start_time']) / 60;
+			}
+			// now we only deal with start (date+time) and duration
 			list($button) = @each($content['button']);
 			$view = $content['view'];
 			$referer = $content['referer'];
 			$this->data = $content;
-			foreach(array('button','view','referer',$tabs) as $key)
+			foreach(array('button','view','referer',$tabs,'end_time','start_time') as $key)
 			{
 				unset($this->data[$key]);
 			}
@@ -123,6 +138,16 @@ class uitimesheet extends botimesheet
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
 					{
+						$msg .= ', '.lang('creating new entry');		// giving some feedback to the user
+
+						if (!is_array($content['link_to']['to_id']))	// set links again, so new entry gets the same links as the existing one
+						{
+							$content['link_to']['to_id'] = 0;
+							foreach($this->link->get_links(TIMESHEET_APP,$this->data['ts_id'],'!'.$this->link->vfs_appname) as $link)
+							{
+								$this->link->link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
+							}
+						}
 						// create a new entry
 						$this->data['ts_start'] += 60 * $this->data['ts_duration'];
 						foreach(array('ts_id','ts_title','ts_description','ts_duration','ts_quantity','ts_modified','ts_modifier') as $name)
@@ -164,11 +189,12 @@ class uitimesheet extends botimesheet
 			'view' => $view,
 			$tabs  => $content[$tabs],
 			'link_to' => array(
-				'to_id' => $this->data['ts_id'] || $button == 'save_new' ? $this->data['ts_id'] : $content['link_to']['to_id'],
+				'to_id' => $this->data['ts_id'] ? $this->data['ts_id'] : $content['link_to']['to_id'],
 				'to_app' => TIMESHEET_APP,
 			),
 			'js' => "<script>\n$js\n</script>\n",
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
+			'start_time' => $this->datetime2time($this->data['ts_start']),
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -238,6 +264,19 @@ class uitimesheet extends botimesheet
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.edit',$content,array(
 			'ts_owner' => $edit_grants,
 		),$readonlys,$preserv,2);
+	}
+	
+	/**
+	 * Calculate the time from a timestamp containing date & time
+	 *
+	 * @param int $datetime
+	 * @return int
+	 */
+	function datetime2time($datetime)
+	{
+		if (!$datetime) return 0;
+
+		return $datetime - mktime(0,0,0,date('m',$datetime),date('d',$datetime),date('Y',$datetime));
 	}
 
 	/**
@@ -484,7 +523,8 @@ class uitimesheet extends botimesheet
 				'options-filter2' => array('No details','Details'),
 				'order'          =>	'ts_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
-				'header_right'   => 'timesheet.index.dates',
+				'header_left'    => 'timesheet.index.dates',
+				'header_right'   => 'timesheet.index.add',
 				'filter_onchange' => "set_style_by_class('*','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
 				'filter2'        => (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'],
 			);

@@ -4,6 +4,7 @@
 actions	timesheet	de	Aktionen
 by	timesheet	de	von
 create new links	timesheet	de	Neue Verknüpfung erstellen
+creating new entry	timesheet	de	neuen Eintrag anlegen
 delete this entry	timesheet	de	Diesen Eintrag löschen
 edit this entry	timesheet	de	diesen Eintrag bearbeiten
 empty if identical to duration	timesheet	de	leer lassen wenn gleich Dauer
@@ -21,6 +22,7 @@ last year	timesheet	de	Letztes Jahr
 leave it empty for a full week	timesheet	de	Leer lassen für eine volle Woche
 links	timesheet	de	Verknüpfungen
 no details	timesheet	de	Keine Details
+or endtime	timesheet	de	oder Endzeit
 permission denied!!!	timesheet	de	Zugriff verweigert!!!
 price	timesheet	de	Preis
 quantity	timesheet	de	Menge
@@ -30,6 +32,7 @@ saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und füg
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
 start	timesheet	de	Start
+starttime	timesheet	de	Startzeit
 sum %1:	timesheet	de	Summe %1:
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche

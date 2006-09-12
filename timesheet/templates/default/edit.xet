@@ -1,34 +1,40 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="timesheet.edit.general" template="" lang="" group="0" version="0.1.001">
+	<template id="timesheet.edit.general" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%" height="150">
 			<columns>
 				<column width="95"/>
+				<column width="120"/>
+				<column width="80"/>
 				<column/>
 			</columns>
 			<rows>
 				<row class="row">
 					<description options=",,,ts_title" value="Title"/>
-					<textbox size="65" maxlength="80" id="ts_title" needed="1" blur="@ts_title_blur"/>
+					<textbox size="65" maxlength="80" id="ts_title" needed="1" blur="@ts_title_blur" span="all"/>
 				</row>
 				<row class="row">
 					<description options=",,,cat_id" value="Category"/>
-					<menulist>
+					<menulist span="all">
 						<menupopup type="select-cat" id="cat_id" options="None"/>
 					</menulist>
 				</row>
 				<row class="row">
 					<description options=",,,ts_start" value="Date"/>
-					<date-time id="ts_start" needed="1" options=",8"/>
+					<date id="ts_start" needed="1" options=",8"/>
+					<description value="Starttime"/>
+					<date-timeonly id="start_time"/>
 				</row>
 				<row class="row">
 					<description options=",,,ts_duration" value="Duration"/>
 					<date-duration id="ts_duration" options=",hm"/>
+					<description value="or endtime" class="noWrap"/>
+					<date-timeonly id="end_time"/>
 				</row>
-				<row>
+				<row class="row">
 					<description options=",,,ts_quantity" value="Quantity"/>
-					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur" precision="3"/>
+					<textbox type="float" id="ts_quantity" statustext="empty if identical to duration" blur="@ts_quantity_blur" precision="3" span="all"/>
 				</row>
 			</rows>
 		</grid>
@@ -136,6 +142,5 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>.width100 { width: 100%; }</styles>
 	</template>
 </overlay>

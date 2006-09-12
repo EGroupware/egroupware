@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="timesheet.index.dates" template="" lang="" group="0" version="1.2.001">
-		<hbox data="" rows="1" cols="1" class="custom_hide">
+		<hbox rows="1" cols="1" class="custom_hide">
 			<description value="Start"/>
 			<date id="startdate"/>
 			<description value="End"/>
@@ -12,11 +12,15 @@
 			.custom_hide { visibility: hidden; }
 		</styles>
 	</template>
-	<template id="timesheet.index.rows" template="" lang="" group="0" version="0.1.001">
+	<template id="timesheet.index.add" template="" lang="" group="0" version="1.3.001">
+		<button label="Add" id="add" onclick="window.open(egw::link('/index.php','menuaction=timesheet.uitimesheet.edit'),'_blank','dependent=yes,width=600,height=400,scrollbars=yes,status=yes'); return false;"/>
+	</template>
+	<template id="timesheet.index.rows" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">
 			<columns>
 				<column width="15%"/>
 				<column width="50%"/>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -31,6 +35,7 @@
 						<nextmatch-filterheader options="Project" id="ts_project" no_lang="1"/>
 						<nextmatch-sortheader label="Title" id="ts_title"/>
 					</vbox>
+					<nextmatch-sortheader label="Category" id="cat_id"/>
 					<vbox>
 						<nextmatch-sortheader label="Duration" id="ts_duration"/>
 						<date-duration id="duration" options=",h,,,1" readonly="true"/>
@@ -39,7 +44,7 @@
 					<nextmatch-sortheader label="Price" id="ts_unitprice"/>
 					<vbox>
 						<nextmatch-sortheader label="Total" id="ts_total"/>
-						<textbox type="float" id="price" readonly="true" size=",2"/>
+						<textbox type="float" id="price" readonly="true" precision="2"/>
 					</vbox>
 					<nextmatch-filterheader id="ts_owner" options="User" no_lang="1" class="$cont[ownerClass]"/>
 					<description value="Actions" class="noPrint"/>
@@ -51,11 +56,14 @@
 						<description id="${row}[ts_title]" no_lang="1" class="$row_cont[titleClass]"/>
 						<description id="${row}[ts_description]" no_lang="1"/>
 					</vbox>
+					<menulist class="noWrap">
+						<menupopup type="select-cat" readonly="true" id="${row}[cat_id]"/>
+					</menulist>
 					<date-duration id="${row}[ts_duration]" readonly="true" options=",h,,,1"/>
-					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" size=",3" readonly="true"/>
+					<textbox type="float" id="${row}[ts_quantity]" no_lang="1" precision="3" readonly="true"/>
 					<description no_lang="1" id="${row}[ts_unitprice]"/>
-					<textbox type="float" no_lang="1" id="${row}[ts_total]" size=",2" readonly="true"/>
-					<menulist span=",$cont[ownerClass]">
+					<textbox type="float" no_lang="1" id="${row}[ts_total]" precision="2" readonly="true"/>
+					<menulist class="$cont[ownerClass]">
 						<menupopup type="select-account" id="${row}[ts_owner]" readonly="true"/>
 					</menulist>
 					<hbox class="noPrint">
@@ -67,7 +75,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.index" template="" lang="" group="0" version="1.2.001">
+	<template id="timesheet.index" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -77,7 +85,10 @@
 					<description span="all" class="redItalic" no_lang="1" id="msg" align="center"/>
 				</row>
 				<row disabled="1">
-					<template align="right" id="timesheet.index.dates"/>
+					<hbox>
+						<template id="timesheet.index.dates"/>
+						<template id="timesheet.index.add" align="right"/>
+					</hbox>
 				</row>
 				<row>
 					<nextmatch id="nm" options="timesheet.index.rows"/>

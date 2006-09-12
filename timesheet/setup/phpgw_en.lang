@@ -4,6 +4,7 @@
 actions	timesheet	en	Actions
 by	timesheet	en	by
 create new links	timesheet	en	Create new links
+creating new entry	timesheet	en	creating new entry
 delete this entry	timesheet	en	Delete this entry
 edit this entry	timesheet	en	Edit this entry
 empty if identical to duration	timesheet	en	empty if identical to duration
@@ -21,6 +22,7 @@ last year	timesheet	en	Last year
 leave it empty for a full week	timesheet	en	Leave it empty for a full week
 links	timesheet	en	Links
 no details	timesheet	en	no details
+or endtime	timesheet	en	or Endtime
 permission denied!!!	timesheet	en	Permission denied!!!
 price	timesheet	en	Price
 quantity	timesheet	en	Quantity
@@ -30,6 +32,7 @@ saves this entry and add a new one	timesheet	en	Saves this entry and add a new o
 select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
 start	timesheet	en	Start
+starttime	timesheet	en	Starttime
 sum %1:	timesheet	en	Sum %1:
 this month	timesheet	en	This month
 this week	timesheet	en	This week
