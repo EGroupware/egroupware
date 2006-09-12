@@ -33,87 +33,86 @@
 	 */
 	class xul_io
 	{
-		var $widget2xul;
-		var $attr2xul;
-		var $xul2widget;
-
-		function xul_io()
-		{
-			/**
-			 * @var array $attr2xul how to translate attr, common to all widgets
-			 */
-			$this->attr2xul = array(
-				'name' => 'id',
-				'help' => 'statustext',
-				'span' => 'span,class',
-				'type' => '',	// this is the widget-name => dont write as attr
-				'disabled' => 'disabled=true',
-				'readonly' => 'readonly=true',
-				'size' => 'options'
-			);
-			/**
-			 * @var array $widget2xul how to widget-names and widget-spec. attr., not set ones are identical
-			 */
-			$this->widget2xul = array(
-				'label' => array(
-					'.name' => 'description',
-					'label' => 'value'
-				),
-				'text' => array(
-					'.name' => 'textbox',
-					'size' => 'size,maxlength,validator'
-				),
-				'textarea' => array(
-					'.name' => 'textbox',
-					'.set' => 'multiline=true',
-					'size' => 'rows,cols'
-				),
-				'integer' => array(
-					'.name' => 'textbox',
-					'.set' => 'type=integer',
-					'size' => 'min,max,size'
-				),
-				'float' => array(
-					'.name' => 'textbox',
-					'.set' => 'type=float',
-					'size' => 'min,max,size,precision'
-				),
-				'select' => array(
-					'.name' => 'menulist,menupopup',
-				),
-				'select-multi' => array(	// multiselection, if size > 0
-					'.name' => 'listbox',
-					'size'  => 'rows,options'
-				),
-				'template' => array(
-					'.name' => 'template',
-					'size'  => 'content'
-				),
-				'image'   => array(
-					'.name' => 'image',
-					'name' => 'src'
-				),
-				'tab' => array(
-					'.name' => 'tabbox,tabs,tabpanels'
-				),
-				'button' => array(
-					'.name' => 'button',
-					'size'  => 'image,ro_image'
-				),
-				'htmlarea' => array(
-					'size' => 'style,plugins',
-				),
-			);
-			/**
-			 * @var array $xul2widget how to xul-widget names to our internal ones, not set ones are identical
-			 */
-			$this->xul2widget = array(
-				'menulist' => 'select',
-				'listbox' => 'select',
-				'menupopup' => 'select',
-				'description' => 'label'
-			);
-		}
+		/**
+		 * translate attr, common to all widgets
+		 * 
+		 * @var array
+		 */
+		var $attr2xul = array(
+			'name' => 'id',
+			'help' => 'statustext',
+			'span' => 'span,class',
+			'type' => '',	// this is the widget-name => dont write as attr
+			'disabled' => 'disabled=true',
+			'readonly' => 'readonly=true',
+			'size' => 'options'
+		);
+		/**
+		 * translate widget-names and widget-spec. attr., not set ones are identical
+		 * 
+		 * @var array
+		 */
+		var $widget2xul = array(
+			'label' => array(
+				'.name' => 'description',
+				'label' => 'value'
+			),
+			'text' => array(
+				'.name' => 'textbox',
+				'size' => 'size,maxlength,validator'
+			),
+			'textarea' => array(
+				'.name' => 'textbox',
+				'.set' => 'multiline=true',
+				'size' => 'rows,cols'
+			),
+			'integer' => array(
+				'.name' => 'textbox',
+				'.set' => 'type=integer',
+				'size' => 'min,max,size'
+			),
+			'float' => array(
+				'.name' => 'textbox',
+				'.set' => 'type=float',
+				'size' => 'min,max,size,precision'
+			),
+			'select' => array(
+				'.name' => 'menulist,menupopup',
+			),
+			'select-multi' => array(	// multiselection, if size > 0
+				'.name' => 'listbox',
+				'size'  => 'rows,options'
+			),
+			'template' => array(
+				'.name' => 'template',
+				'size'  => 'content'
+			),
+			'image'   => array(
+				'.name' => 'image',
+				'name' => 'src'
+			),
+			'tab' => array(
+				'.name' => 'tabbox,tabs,tabpanels'
+			),
+			'button' => array(
+				'.name' => 'button',
+				'size'  => 'image,ro_image'
+			),
+			'htmlarea' => array(
+				'size' => 'style,plugins',
+			),
+		);
+		/**
+		 * translate xul-widget names to our internal ones, not set ones are identical
+		 * 
+		 * @var array
+		 */
+		var $xul2widget = array(
+			'menulist' => 'select',
+			'listbox' => 'select',
+			'menupopup' => 'select',
+			'description' => 'label'
+		);
 
 		/**
 		 * sets an attribute in the xml object representing a widget
@@ -224,7 +223,7 @@
 			case 'menulist':	// id,options belongs to the 'menupopup' child
 				if ($cell['span'])
 				{
-					$widget->set_attribute('span',$cell['span']);
+					$this->set_attributes($widget,'span,class',$cell['span']);
 					unset($cell['span']);
 				}
 				// fall-trought
@@ -253,6 +252,8 @@
 					$this->add_widget($widget,$cell[$n],$embeded_too);
 					unset($cell[$n]);
 				}
+				// no sure where the data key gets set, but it gives a warning in xml serialization (empty array)
+				unset($cell['data']);
 				$cell['orient'] = $orient;
 				$cell['size'] = $options;
 				break;
