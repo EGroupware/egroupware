@@ -2,6 +2,8 @@
 2 years ago	timesheet	de	Vor 2 Jahren
 3 years ago	timesheet	de	Vor 3 Jahren
 actions	timesheet	de	Aktionen
+all projects	timesheet	de	Alle Projekte
+both: allow to use projectmanager and free project-names	admin	de	Beides: verwende Projektmanager und freie Projektnamen
 by	timesheet	de	von
 create new links	timesheet	de	Neue Verknüpfung erstellen
 creating new entry	timesheet	de	neuen Eintrag anlegen
@@ -14,6 +16,7 @@ entry saved	timesheet	de	Eintrag gespeichert
 error deleting the entry!!!	timesheet	de	Fehler beim Löschen des Eintrags!!!
 error saving the entry!!!	timesheet	de	Fehler beim Speichern des Eintrags!!!
 existing links	timesheet	de	Bestehende Verknüpfungen
+full: use only projectmanager	admin	de	Komplett: verwende nur Projektmanager
 general	timesheet	de	Allgemein
 last modified	timesheet	de	Zuletzt geändert
 last month	timesheet	de	Letzten Monat
@@ -22,9 +25,12 @@ last year	timesheet	de	Letztes Jahr
 leave it empty for a full week	timesheet	de	Leer lassen für eine volle Woche
 links	timesheet	de	Verknüpfungen
 no details	timesheet	de	Keine Details
+no project	timesheet	de	Kein Projekt
+none: use only free project-names	admin	de	Keine: verwende nur freie Projektnamen
 or endtime	timesheet	de	oder Endzeit
 permission denied!!!	timesheet	de	Zugriff verweigert!!!
 price	timesheet	de	Preis
+projectmanager integration	admin	de	Integration des Projektmanagers
 quantity	timesheet	de	Menge
 save & new	timesheet	de	Speichern & Neu
 saves the changes made	timesheet	de	Speichert die Änderungen

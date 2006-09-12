@@ -23,10 +23,20 @@ class uitimesheet extends botimesheet
 		'edit' => true,
 		'index' => true,
 	);
+	/**
+	 * ProjectManager integraion: 'none', 'full' or default null
+	 *
+	 * @var string
+	 */
+	var $pm_integration;
 
 	function uitimesheet()
 	{
 		$this->botimesheet();
+		
+		$config =& CreateObject('phpgwapi.config',TIMESHEET_APP);
+		$config->read_repository();
+		$this->pm_integration = $config->config_data['pm_integration'];
 	}
 
 	function view()
@@ -37,6 +47,7 @@ class uitimesheet extends botimesheet
 	function edit($content = null,$view = false)
 	{
 		$tabs = 'general|notes|links';
+		$etpl =& new etemplate('timesheet.edit');
 
 		if (!is_array($content))
 		{
@@ -76,16 +87,17 @@ class uitimesheet extends botimesheet
 			{
 				$content['ts_start'] += $content['end_time'] - 60*$content['ts_duration'];
 			}
-			if (!$content['ts_duration'])	// no duration, calculate from start- and endtime
+			if (!$content['ts_duration'] && $content['start_time'] && $content['end_time'])	// no duration, calculate from start- and endtime
 			{
 				$content['ts_duration'] = ($content['end_time'] - $content['start_time']) / 60;
 			}
+			if ($content['ts_duration']) unset($content['end_time']);
 			// now we only deal with start (date+time) and duration
 			list($button) = @each($content['button']);
 			$view = $content['view'];
 			$referer = $content['referer'];
 			$this->data = $content;
-			foreach(array('button','view','referer',$tabs,'end_time','start_time') as $key)
+			foreach(array('button','view','referer',$tabs,'start_time') as $key)
 			{
 				unset($this->data[$key]);
 			}
@@ -98,12 +110,21 @@ class uitimesheet extends botimesheet
 				case 'save':
 				case 'save_new':
 				case 'apply':
-					if (!$this->data['ts_quantity'])	// set the quantity (in h) from the duration (in min)
+					if (!$this->data['ts_quantity'] && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
 						$this->data['ts_quantity'] = $this->data['ts_duration'] / 60.0;
 					}
+					if (!$this->data['ts_quantity'])
+					{
+						$etpl->set_validation_error('ts_quantity',lang('Field must not be empty !!!'));
+					}
 					if (!$this->data['ts_project']) $this->data['ts_project'] = $this->data['ts_project_blur'];
 					if (!$this->data['ts_title']) $this->data['ts_title'] = $this->data['ts_title_blur'];
+					if (!$this->data['ts_title'])
+					{
+						$etpl->set_validation_error('ts_title',lang('Field must not be empty !!!'));
+					}
+					if ($etpl->validation_errors()) break;	// the user need to fix the error, before we can save the entry
 
 					if ($this->save() != 0)
 					{
@@ -195,6 +216,7 @@ class uitimesheet extends botimesheet
 			'js' => "<script>\n$js\n</script>\n",
 			'ts_quantity_blur' => $this->data['ts_duration'] ? round($this->data['ts_duration'] / 60.0,3) : '',
 			'start_time' => $this->datetime2time($this->data['ts_start']),
+			'pm_integration' => $this->pm_integration,
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)
@@ -254,7 +276,6 @@ class uitimesheet extends botimesheet
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet').' - '.
 			($view ? lang('View') : ($this->data['ts_id'] ? lang('Edit') : lang('Add')));
 		
-		$etpl =& new etemplate('timesheet.edit');
 		// supress unknow widget 'projectmanager-*', if projectmanager is not installed or old
 		if (!@file_exists(EGW_INCLUDE_ROOT.'/projectmanager/inc/class.projectmanager_widget.inc.php'))
 		{
@@ -333,13 +354,24 @@ class uitimesheet extends botimesheet
 		//echo "<p align=right>show_sums=".print_r($this->show_sums,true)."</p>\n";
 		$GLOBALS['egw']->session->appsession('index',TIMESHEET_APP,$query_in);
 		$query = $query_in;	// keep the original query
+
+		// PM project filter for the PM integration
+		if ((string)$query['col_filter']['pm_id'] != '')
+		{
+			$query['col_filter']['ts_project'] = !$query['col_filter']['pm_id'] ? null :
+				$this->link->title('projectmanager',$query['col_filter']['pm_id']);
+		}
+		unset($query['col_filter']['pm_id']);
 		
+		// filter for no project
+		if ((string)$query['col_filter']['ts_project'] == '0') $query['col_filter']['ts_project'] = null;
+
 		if ((int)$query['filter2'] != (int)$GLOBALS['egw_info']['user']['preferences'][TIMESHEET_APP]['show_details'])
 		{
 			$GLOBALS['egw']->preferences->add(TIMESHEET_APP,'show_details',(int)$query['filter2']);
 			$GLOBALS['egw']->preferences->save_repository(true);
 		}
-		unset($query['col_filter']['cat_id']);
+		// category filter: cat_id or ''=All cats or 0=No cat
 		if ($query['cat_id'])
 		{
 			if (!is_object($GLOBALS['egw']->categories))
@@ -348,6 +380,14 @@ class uitimesheet extends botimesheet
 			}
 			$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
 			$query['col_filter']['cat_id'] = count($cats) > 1 ? $cats : $query['cat_id'];
+		}
+		elseif ((string)$query['cat_id'] == '0')	// no category
+		{
+			$query['col_filter']['cat_id'] = null;
+		}
+		else	// all cats --> no filter
+		{
+			unset($query['col_filter']['cat_id']);
 		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('timesheet');
 		if ($query['col_filter']['ts_owner'])
@@ -478,6 +518,8 @@ class uitimesheet extends botimesheet
 			$rows['duration'] = $this->summary['duration'];
 			$rows['price'] = $this->summary['price'];
 		}
+		$rows['pm_integration'] = $this->pm_integration;
+
 		return $total;		
 	}
 
@@ -485,6 +527,7 @@ class uitimesheet extends botimesheet
 	 * List timesheet entries
 	 *
 	 * @param array $content=null
+	 * @param string $msg=''
 	 */
 	function index($content = null,$msg='')
 	{
@@ -533,8 +576,10 @@ class uitimesheet extends botimesheet
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
 
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.index',$content,array(
-			'ts_project' => $this->query_list('ts_project'),
+			'ts_project' => $this->query_list('ts_project')+array(lang('No project')),
 			'ts_owner'   => $read_grants,
+			'pm_id'      => array(lang('No project')),
+			'cat_id'     => array(lang('None')),
 		),$readonlys,$preserv);
 	}
 }

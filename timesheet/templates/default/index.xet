@@ -31,10 +31,22 @@
 			<rows>
 				<row class="th">
 					<nextmatch-sortheader label="Date" id="ts_start"/>
-					<vbox no_lang="1">
-						<nextmatch-filterheader options="Project" id="ts_project" no_lang="1"/>
-						<nextmatch-sortheader label="Title" id="ts_title"/>
-					</vbox>
+					<grid spacing="1" padding="1">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="@pm_integration=full">
+								<nextmatch-filterheader options="All projects" id="ts_project" no_lang="1"/>
+							</row>
+							<row disabled="!@pm_integration=full">
+								<nextmatch-customfilter options="projectmanager-select,All projects" id="pm_id" onchange="1"/>
+							</row>
+							<row>
+								<nextmatch-sortheader label="Title" id="ts_title"/>
+							</row>
+						</rows>
+					</grid>
 					<nextmatch-sortheader label="Category" id="cat_id"/>
 					<vbox>
 						<nextmatch-sortheader label="Duration" id="ts_duration"/>

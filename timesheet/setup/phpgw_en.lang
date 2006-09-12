@@ -2,6 +2,8 @@
 2 years ago	timesheet	en	2 years ago
 3 years ago	timesheet	en	3 years ago
 actions	timesheet	en	Actions
+all projects	timesheet	en	All projects
+both: allow to use projectmanager and free project-names	admin	en	Both: allow to use ProjectManager and free project-names
 by	timesheet	en	by
 create new links	timesheet	en	Create new links
 creating new entry	timesheet	en	creating new entry
@@ -14,6 +16,7 @@ entry saved	timesheet	en	Entry saved
 error deleting the entry!!!	timesheet	en	Error deleting the entry!!!
 error saving the entry!!!	timesheet	en	Error saving the entry!!!
 existing links	timesheet	en	Existing links
+full: use only projectmanager	admin	en	Full: use only ProjectManager
 general	timesheet	en	General
 last modified	timesheet	en	Last modified
 last month	timesheet	en	Last month
@@ -22,9 +25,12 @@ last year	timesheet	en	Last year
 leave it empty for a full week	timesheet	en	Leave it empty for a full week
 links	timesheet	en	Links
 no details	timesheet	en	no details
+no project	timesheet	en	No project
+none: use only free project-names	admin	en	None: use only free project-names
 or endtime	timesheet	en	or Endtime
 permission denied!!!	timesheet	en	Permission denied!!!
 price	timesheet	en	Price
+projectmanager integration	admin	en	ProjectManager integration
 quantity	timesheet	en	Quantity
 save & new	timesheet	en	Save & New
 saves the changes made	timesheet	en	Saves the changes made

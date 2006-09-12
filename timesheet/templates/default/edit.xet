@@ -12,7 +12,7 @@
 			<rows>
 				<row class="row">
 					<description options=",,,ts_title" value="Title"/>
-					<textbox size="65" maxlength="80" id="ts_title" needed="1" blur="@ts_title_blur" span="all"/>
+					<textbox size="65" maxlength="80" id="ts_title" blur="@ts_title_blur" span="all"/>
 				</row>
 				<row class="row">
 					<description options=",,,cat_id" value="Category"/>
@@ -73,7 +73,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="timesheet.edit" template="" lang="" group="0" version="1.2.001">
+	<template id="timesheet.edit" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">
 			<columns>
 				<column width="100"/>
@@ -92,17 +92,34 @@
 				</row>
 				<row class="row">
 					<description options=",,,ts_project" value="Project"/>
-					<vbox span="all">
-						<projectmanager-select options="None" id="pm_id" span="all" statustext="Select a project" onchange="1"/>
-						<textbox id="ts_project" blur="@ts_project_blur" size="65" maxlength="80"/>
-					</vbox>
+					<grid spacing="1" padding="1">
+						<columns>
+							<column/>
+						</columns>
+						<rows>
+							<row disabled="@pm_integration=none">
+								<projectmanager-select options="None" id="pm_id" span="all" statustext="Select a project" onchange="1"/>
+							</row>
+							<row disabled="@pm_integration=full">
+								<textbox id="ts_project" blur="@ts_project_blur" size="65" maxlength="80"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 				<row class="row">
 					<description options=",,ts_unitprice" value="Unitprice"/>
-					<hbox span="all">
-						<projectmanager-pricelist id="pl_id" options="None" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
-						<textbox type="float" id="ts_unitprice" span="all"/>
-					</hbox>
+					<grid>
+						<columns>
+							<column disabled="@pm_integration=none"/>
+							<column/>
+						</columns>
+						<rows>
+							<row>
+								<projectmanager-pricelist id="pl_id" options="None" onchange="this.form['exec[ts_unitprice]'].value=this.options[this.selectedIndex].text.lastIndexOf('(') &lt; 0 ? '' : this.options[this.selectedIndex].text.slice(this.options[this.selectedIndex].text.lastIndexOf('(')+1,-1);"/>
+								<textbox type="float" id="ts_unitprice" span="all"/>
+							</row>
+						</rows>
+					</grid>
 				</row>
 				<row>
 					<tabbox span="all">
