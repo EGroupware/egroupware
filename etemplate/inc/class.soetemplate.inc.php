@@ -43,7 +43,18 @@
 		var $children;	// array with children
 		var $data;		// depricated: first grid of the children
 		var $size;		// depricated: witdh,height,border of first grid
-		var $db,$table_name = 'egw_etemplate'; // name of table
+		/**
+		 * private instance of the db-object
+		 *
+		 * @var egw_db
+		 */
+		var $db;
+		/**
+		 * name of table
+		 *
+		 * @var string
+		 */
+		var $table_name = 'egw_etemplate';
 		var $db_key_cols = array(
 			'et_name' => 'name',
 			'et_template' => 'template',
@@ -59,8 +70,10 @@
 		);
 		var $db_cols;
 		/**
-		 * @var array $widgets_with_children widgets that contain other widgets, eg. for tree_walk method
+		 * widgets that contain other widgets, eg. for tree_walk method
 		 * widget-type is the key, the value specifys how the children are stored.
+		 * 
+		 * @var array
 		 */
 		var $widgets_with_children = array(
 			'template' => 'template',
@@ -84,6 +97,7 @@
 		 * @param string $version version of the eTemplate
 		 * @param int $rows initial size of the template, default 1, only used if no name given !!!
 		 * @param int $cols initial size of the template, default 1, only used if no name given !!!
+		 * @return soetemplate
 		 */
 		function soetemplate($name='',$template='',$lang='',$group=0,$version='',$rows=1,$cols=1)
 		{
