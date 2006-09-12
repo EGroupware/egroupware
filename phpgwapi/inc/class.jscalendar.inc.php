@@ -1,6 +1,6 @@
 <?php
 /**
- * generates html with methods representing html-tags or higher widgets
+ * Wrapper for the jsCalendar
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
@@ -8,29 +8,10 @@
  * @version $Id$
  */
 
-/**************************************************************************\
-* eGroupWare - API jsCalendar wrapper-class                                *
-* http://www.eGroupWare.org                                                *
-* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
-
-/*!
-@class jscalendar
-@author ralfbecker
-@abstract wrapper for the jsCalendar
-@discussion the constructor load the necessary javascript-files
-*/
 /**
  * Wrapper for the jsCalendar
  * 
- * The constructor load the necessary javascript-files.
+ * The constructor loads the necessary javascript-files.
  *
  * @package api
  * @subpackage html
