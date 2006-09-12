@@ -291,11 +291,11 @@
 		/**
 		 * Check if we have not ignored validation errors
 		 *
-		 * @param string $ignore_validation if not empty regular expression for validation-errors to ignore
-		 * @param string $cname name-prefix, which need to be ignored
+		 * @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
+		 * @param string $cname='exec' name-prefix, which need to be ignored
 		 * @return boolean true if there are not ignored validation errors, false otherwise
 		 */
-		function validation_errors($ignore_validation,$cname='exec')
+		function validation_errors($ignore_validation='',$cname='exec')
 		{
 			//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array($GLOBALS['egw_info']['etemplate']['validation_errors']);
 			if (!$ignore_validation) return count($GLOBALS['egw_info']['etemplate']['validation_errors']) > 0;
@@ -1319,7 +1319,8 @@
 							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = array(
 								'type'    => $cell['type'],
 								'needed'  => $cell['needed'],
-								'allowed' => array_keys($sels), 
+								'allowed' => array_keys($sels),
+								'multiple'=> $multiple,
 							);
 						}
 					}
@@ -1661,7 +1662,7 @@
 						}
 						if ($_cont === '' && $attr['needed'] && !$attr['blur'])
 						{
-							$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang('Field must not be empty !!!',$value);
+							$this->set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 						}
 						break;
 					case 'htmlarea':
@@ -1673,7 +1674,7 @@
 					case 'textarea':
 						if ($value === '' && $attr['needed'] && !$attr['blur'])
 						{
-							$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang('Field must not be empty !!!',$value);
+							$this->set_validation_error($form_name,lang('Field must not be empty !!!'),'');
 						}
 						if ((int) $attr['maxlength'] > 0 && strlen($value) > (int) $attr['maxlength'])
 						{
@@ -1684,13 +1685,13 @@
 							switch($type)
 							{
 								case 'int':
-									$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' is not a valid integer !!!",$value);
+									$this->set_validation_error($form_name,lang("'%1' is not a valid integer !!!",$value),'');
 									break;
 								case 'float':
-									$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' is not a valid floatingpoint number !!!",$value);
+									$this->set_validation_error($form_name,lang("'%1' is not a valid floatingpoint number !!!",$value),'');
 									break;
 								default:
-									$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' has an invalid format !!!",$value);
+									$this->set_validation_error($form_name,lang("'%1' has an invalid format !!!",$value),'');
 									break;
 							}
 						}
@@ -1702,12 +1703,12 @@
 
 								if (!empty($attr['min']) && $value < $attr['min'])
 								{
-									$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang("Value has to be at least '%1' !!!",$attr['min']);
+									$this->set_validation_error($form_name,lang("Value has to be at least '%1' !!!",$attr['min']),'');
 									$value = $type == 'int' ? (int) $attr['min'] : (float) $attr['min'];
 								}
 								if (!empty($attr['max']) && $value > $attr['max'])
 								{
-									$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang("Value has to be at maximum '%1' !!!",$attr['max']);
+									$this->set_validation_error($form_name,lang("Value has to be at maximum '%1' !!!",$attr['max']),'');
 									$value = $type == 'int' ? (int) $attr['max'] : (float) $attr['max'];
 								}
 							}
@@ -1733,9 +1734,9 @@
 						{
 							foreach(is_array($value) ? $value : array($value) as $val)
 							{
-								if (!in_array($val,$attr['allowed']))
+								if (!($attr['multiple'] && is_null($val)) && !in_array($val,$attr['allowed']))
 								{
-									$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] = lang("'%1' is NOT allowed ('%2')!",$val,implode("','",$attr['allowed']));
+									$this->validation_errors($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",$attr['allowed'])),'');
 									$value = '';
 									break;
 								}
@@ -1744,7 +1745,7 @@
 						if (is_array($value)) $value = implode(',',$value);
 						if ($value === '' && $attr['needed'])
 						{
-							$GLOBALS['egw_info']['etemplate']['validation_errors'][$form_name] .= lang('Field must not be empty !!!',$value);
+							$this->set_validation_error($form_name,lang('Field must not be empty !!!',$value),'');
 						}
 						$this->set_array($content,$form_name,$value);
 						break;
@@ -1794,6 +1795,24 @@
 				}
 			}
 			return count($GLOBALS['egw_info']['etemplate']['validation_errors']);
+		}
+		
+		/**
+		 * Sets a validation error, to be displayed in the next exec
+		 *
+		 * @param string $name (complete) name of the widget causing the error
+		 * @param string $error error-message already translated
+		 * @param string $cname='exec' set it to '', if the name is already a form-name
+		 */
+		function set_validation_error($name,$error,$cname='exec')
+		{
+			if ($cname) $name = $this->form_name($cname,$name);
+			
+			if ($GLOBALS['egw_info']['etemplate']['validation_errors'][$name])
+			{
+				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] .= ', ';
+			}
+			$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] .= $error;
 		}
 
 		/**
