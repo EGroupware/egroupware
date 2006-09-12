@@ -10,12 +10,12 @@
  * @subpackage ajaxpoup
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $Id$
  * @todo check if user wants notifications via egw popup!
  */
 $GLOBALS['egw']->translation->add_app('notifications');
 if (!$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup']) {
-	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. SEP. 'notifications'. SEP. 'js'. SEP. 'notificationajaxpopup.js'. '" type="text/javascript"></script>';
+	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js'. '" type="text/javascript"></script>';
 	echo '<script type="text/javascript">notificationwindow_init()</script>';
 	echo '
 		<div id="notificationwindow" style="display: none; z-index: 999;">
