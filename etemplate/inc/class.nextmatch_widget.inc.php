@@ -66,10 +66,11 @@
 		 * @var array
 		 */
 		var $human_name = array(
-			'nextmatch' => 'Nextmatch',
-			'nextmatch-sortheader' => 'Nextmatch Sortheader',
-			'nextmatch-filterheader' => 'Nextmatch Filterheader',
+			'nextmatch'               => 'Nextmatch',
+			'nextmatch-sortheader'    => 'Nextmatch Sortheader',
+			'nextmatch-filterheader'  => 'Nextmatch Filterheader',
 			'nextmatch-accountfilter' => 'Nextmatch Accountfilter',
+			'nextmatch-customfilter'  => 'Nextmatch Custom Filterheader',
 		);
 
 		/**
@@ -139,8 +140,15 @@
 					}
 					return True;
 
+				case 'nextmatch-accountfilter':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
+					$cell['size'] = 'select-account,'.$cell['size'];
+					// fall through
+				case 'nextmatch-customfilter':	// Option: widget-name, options as for selectbox
+					list($type,$cell['size']) = explode(',',$cell['size'],2);
+					// fall through					
 				case 'nextmatch-filterheader':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
-					$cell['type'] = 'select';
+					if (!$type) $type = 'select';
+					$cell['type'] = $type;
 					if (!$cell['size'])
 					{
 						$cell['size'] = 'All';
@@ -148,21 +156,6 @@
 					if (!$cell['help'])
 					{
 						$cell['help'] = 'select which values to show';
-					}
-					$cell['onchange'] = $cell['noprint'] = True;
-					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
-					return True;
-
-				case 'nextmatch-accountfilter':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
-					$cell['type'] = 'select-account';
-					$cell['name'] .= '[account]';
-					if (!$cell['size'])
-					{
-						$cell['size'] = 'All';
-					}
-					if (!$cell['help'])
-					{
-						$cell['help'] = 'select which accounts to show';
 					}
 					$cell['onchange'] = $cell['noprint'] = True;
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
@@ -365,6 +358,9 @@
 			//echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in=".print_r($value_in,true).",order='$nm_global[order]'): value = "; _debug_array($value);
 			switch($extension_data['type'])
 			{
+				case 'nextmatch':
+					break;
+
 				case 'nextmatch-sortheader':
 					if ($value_in)
 					{
@@ -373,9 +369,10 @@
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
 
+				default:
 				case 'select-account':		// used by nextmatch-accountfilter
 				case 'nextmatch-filterheader':
-					if ($value_in != $extension_data['old_value'] && !(!$value_in && !$extension_data['old_value']))
+					if ((string)$value_in != (string)$extension_data['old_value'])
 					{
 						//echo "<p>setting nm_global[filter][".$this->last_part($name)."]='$value_in' (was '$extension_data[old_value]')</p>\n";
 						$nm_global['filter'][$this->last_part($name)] = $value_in;

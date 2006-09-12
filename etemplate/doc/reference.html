@@ -886,14 +886,15 @@ function index($content = 0)
 	</td>
 </tr>
 <tr>
-	<td><b>Nextmatch-<br />SortHeader</b><p><b>Nextmatch-<br />FilterHeader</b><p><b>Nextmatch-<br />AccountFilter</b></td>
+	<td><b>Nextmatch-<br />SortHeader</b><p><b>Nextmatch-<br />FilterHeader</b><p><b>Nextmatch-<br />Custom FilterHeader</b><p><b>Nextmatch-<br />AccountFilter</b></td>
 	<td>
 		&lt;nextmatch type="nextmatch-sortheader" id="col-name" options="DESC" label="ColLabel"/><p>
 		&lt;nextmatch type="nextmatch-filterheader" id="col-name"/><p>
+		&lt;nextmatch type="nextmatch-customfilter" id="col-name" options="select-precent"/><p>
 		&lt;nextmatch type="nextmatch-accountfilter" id="col-name"/>
 	</td>
 	<td>no</td>
-	<td>nextmatch-<br />sortheader<p>nextmatch-<br />filterheader<p>nextmatch-<br />accountfilter</td>
+	<td>nextmatch-<br />sortheader<p>nextmatch-<br />filterheader<p>nextmatch-<br />customfilter<p>nextmatch-<br />accountfilter</td>
 	<td>
 		These widget are an optional part of the nextmatch widget.<p>
 		<b>nextmatch-sortheader</b><br />
@@ -907,10 +908,13 @@ function index($content = 0)
 		(xml:id), the options of the displayed selectbox need to be set as for an ordinary selectbox (eg. in the options
 		parameter to the uietemplate::exec function). If no extra-label is given in options, lang('all') will be used for
 		the empty value, which means no filter activ. An (optional) <b>label</b> can be given.<p>
+		<b>nextmatch-customfilter</b><br />
+		The custom filterheader allows to use other (select-)widgets to filter by them. They have to be specified as the first
+		parameter in the comma-separated options attribute. In all other aspects it is identical to the filterheader.<p>
 		<b>nextmatch-accountfilter</b><br />
-		The Accountfilter allows to select users (via the prefered user-selection-method) to filter by them. In all other aspects
-		it is identical to the filterheader.<p>
-		<i><u>Note</u>:</i> All three widgets interoperate with the nextmatch-widget which passes the set values as part if
+		The Accountfilter allows to select users (via the prefered user-selection-method) to filter by them. 
+		It's identical to a <b>nextmatch-customfilter</b> with options="select-account".<p>
+		<i><u>Note</u>:</i> All four widgets interoperate with the nextmatch-widget which passes the set values as part if
 		the query-parameter to its get_rows function, they are <u>not</u> returned in the rows sub-array.
 	</td>
 </tr>
