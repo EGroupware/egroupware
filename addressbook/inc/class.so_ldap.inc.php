@@ -317,6 +317,7 @@ class so_ldap
 			// group address book
 			if(!($cn = strtolower($GLOBALS['egw']->accounts->id2name((int)$data['owner']))))
 			{
+				error_log('Unknown owner');
 				return true;
 			}
 			$baseDN = 'cn='. ldap::quote($cn) .','.($data['owner'] < 0 ? $this->sharedContactsDN : $this->personalContactsDN);
@@ -339,7 +340,8 @@ class so_ldap
 		}
 		else
 		{
-			return true;	// only admin or the user itself is allowd to write accounts!
+			error_log("Permission denied, to write: data[owner]=$data[owner], data[account_id]=$data[account_id], account_id=".$GLOBALS['egw_info']['user']['account_id']);
+			return lang('Permission denied !!!');	// only admin or the user itself is allowd to write accounts!
 		}
 
 		// check if $baseDN exists. If not create it
@@ -415,6 +417,8 @@ class so_ldap
 			// update entry
 			$dn = $oldContactInfo[0]['dn'];
 			$needRecreation = false;
+			// never allow to change the uidNumber (account_id) on update, as it could be misused by eg. xmlrpc or syncml
+			unset($ldapContact['uidnumber']);
 
 			// add missing objectclasses
 			if($ldapContact['objectClass'] && array_diff($ldapContact['objectClass'],$oldObjectclasses)) 
@@ -875,7 +879,7 @@ class so_ldap
 	 * check if $baseDN exists. If not create it
 	 *
 	 * @param string $baseDN cn=xxx,ou=yyy,ou=contacts,$GLOBALS['egw_info']['server']['ldap_contact_context']
-	 * @return boolean/string fase on success or string with error-message
+	 * @return boolean/string false on success or string with error-message
 	 */
 	function _check_create_dn($baseDN)
 	{
