@@ -574,12 +574,18 @@ class uitimesheet extends botimesheet
 		}
 		$read_grants = $this->grant_list(EGW_ACL_READ);
 		$content['nm']['no_owner_col'] = count($read_grants) == 1;
-
-		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.index',$content,array(
-			'ts_project' => $this->query_list('ts_project')+array(lang('No project')),
+		
+		$sel_options = array(
 			'ts_owner'   => $read_grants,
 			'pm_id'      => array(lang('No project')),
 			'cat_id'     => array(lang('None')),
-		),$readonlys,$preserv);
+		);
+		if ($this->pm_integration != 'full')
+		{
+			$projects =& $this->query_list('ts_project');
+			if (!is_array($projects)) $projects = array();
+			$sel_options['ts_project'] = $projects + array(lang('No project'));
+		}
+		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.index',$content,$sel_options,$readonlys,$preserv);
 	}
 }
