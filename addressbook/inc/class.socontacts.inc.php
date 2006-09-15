@@ -240,7 +240,7 @@ class socontacts
 			$this->grants[0] = EGW_ACL_READ;
 		}
 		// add account grants for admins
-		if (isset($GLOBALS['egw_info']['user']['apps']['admin']))	// admin rights can be limited by ACL!
+		if ($this->is_admin())	// admin rights can be limited by ACL!
 		{
 			$this->grants[0] = EGW_ACL_READ;	// admins always have read-access
 			if (!$GLOBALS['egw']->acl->check('account_access',16,'admin')) $this->grants[0] |= EGW_ACL_EDIT;
@@ -266,6 +266,19 @@ class socontacts
 			)));
 			$custom->save_repository();
 		}
+	}
+	
+	/**
+	 * Check if the user is an admin (can unconditionally edit accounts)
+	 * 
+	 * We check now the admin ACL for edit users, as the admin app does it for editing accounts.
+	 *
+	 * @param array $contact=null for future use, where admins might not be admins for all accounts
+	 * @return boolean
+	 */
+	function is_admin($contact=null)
+	{
+		return isset($GLOBALS['egw_info']['user']['apps']['admin']) && !$GLOBALS['egw']->acl->check('account_access',16,'admin');
 	}
 	
 	/**

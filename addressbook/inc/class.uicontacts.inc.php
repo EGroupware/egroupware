@@ -932,6 +932,14 @@ class uicontacts extends bocontacts
 		{
 			$readonlys[$field] = true;
 		}
+		// for editing the own account (by a non-admin), enable only the fields allowed via the "onw_account_acl"
+		if (!$content['owner'] && !$this->is_admin($content))
+		{
+			foreach($this->get_fields('supported',$content['id'],$content['owner']) as $field)
+			{
+				if (!$this->own_account_acl || !in_array($field,$this->own_account_acl)) $readonlys[$field] = true;
+			}
+		}
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
 		$content['tz'] = $content['tz'] ? $content['tz'] : 0;
@@ -1360,7 +1368,7 @@ $readonlys['button[vcard]'] = true;
 		$GLOBALS['egw']->common->egw_header();
 		parse_navbar();
 		
-		if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+		if (!$this->is_admin())
 		{
 			echo '<h1>'.lang('Permission denied !!!')."</h1>\n";
 		}

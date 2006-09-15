@@ -349,7 +349,6 @@ class so_ldap
 		{
 			return $err;
 		}
-
 		// check the existing objectclasses of an entry, none = array() for new ones
 		$oldObjectclasses = array();
 		$attributes = array('dn','cn','objectClass','uid');
@@ -399,7 +398,7 @@ class so_ldap
 					$ldapContact[$ldapFieldName] = $ldapFieldName == 'jpegphoto' ? $data[$egwFieldName] :
 						$GLOBALS['egw']->translation->convert(trim($data[$egwFieldName]),$this->charset,'utf-8');
 				} 
-				elseif($isUpdate) 
+				elseif($isUpdate && isset($data[$egwFieldName])) 
 				{
 					$ldapContact[$ldapFieldName] = array();
 				}
@@ -411,7 +410,6 @@ class so_ldap
 				$this->$egw2objectclass($ldapContact,$data,$isUpdate);
 			}
 		}
-
 		if($isUpdate) 
 		{
 			// update entry

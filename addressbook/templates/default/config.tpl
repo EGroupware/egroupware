@@ -22,6 +22,17 @@
     <td><input name="newsettings[call_popup]" value="{value_call_popup}" size="10"></td>
    </tr>
    <tr class="th">
+    <td colspan="2">
+    	&nbsp;<b>{lang_Allow_users_to_maintain_their_own_account-data}</b>
+    </td>
+   </tr>
+   <tr class="row_on">
+    <td>&nbsp;{lang_Fields_the_user_is_allowed_to_edit_himself}</td>
+    <td>
+     {hook_own_account_acl}
+    </td>
+   </tr>
+   <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Contact_repository}</b></td>
    </tr>
    <tr class="row_on">

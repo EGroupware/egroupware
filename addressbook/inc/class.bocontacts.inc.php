@@ -82,6 +82,14 @@ class bocontacts extends socontacts
 		'url',
 		'tz',
 	);
+
+	/**
+	 * Which fields is a (non-admin) user allowed to edit in his own account
+	 *
+	 * @var array
+	 */
+	var $own_account_acl;
+
 	/**
 	 * @var double $org_common_factor minimum percentage of the contacts with identical values to construct the "common" (virtual) org-entry
 	 */
@@ -120,7 +128,7 @@ class bocontacts extends socontacts
 		
 		$this->contact_fields = array(
 			'id'                   => lang('Contact ID'),
-			'tid'                  => lang('Type'),
+			'tid'                  => lang('Typ'),
 			'owner'                => lang('Addressbook'),
 			'private'              => lang('private'),
 			'cat_id'               => lang('Category'),
@@ -213,6 +221,12 @@ class bocontacts extends socontacts
 			'adr_two_countryname'  => lang('country').' ('.lang('business').')',
 		);
 		//_debug_array($this->contact_fields);
+		$this->own_account_acl = unserialize($GLOBALS['egw_info']['server']['own_account_acl']);
+		// we have only one acl (n_fn) for the whole name, as not all backends store every part in an own field
+		if ($this->own_account_acl && in_array('n_fn',$this->own_account_acl))
+		{
+			$this->own_account_acl = array_merge($this->own_account_acl,array('n_prefix','n_given','n_middle','n_family','n_suffix'));
+		}
 	}
 
 	/**
@@ -447,14 +461,32 @@ class bocontacts extends socontacts
 			$contact['n_fn'] = $this->fullname($contact);
 			if (isset($contact['org_name'])) $contact['n_fileas'] = $this->fileas($contact);
 		}
+		$to_write = $contact;
+		// (non-admin) user editing his own account, make sure he does not change fields he is not allowed to (eg. via SyncML or xmlrpc)
+		if (!$ignore_acl && !$contact['owner'] && !$this->is_admin($contact))
+		{
+			foreach($contact as $field => $value)
+			{
+				if (!in_array($field,$this->own_account_acl) && !in_array($field,array('id','owner','account_id','modified','modifier')))
+				{
+					unset($to_write[$field]);	// user is now allowed to change that
+				}
+			}
+		}
 		// we dont update the content-history, if we run inside setup (admin-account-creation)
-		if(!($this->error = parent::save($contact)) && is_object($GLOBALS['egw']->contenthistory))
+		if(!($this->error = parent::save($to_write)) && is_object($GLOBALS['egw']->contenthistory))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 			
 			if ($contact['account_id'])	// invalidate the cache of the accounts class
 			{
 				$GLOBALS['egw']->accounts->cache_invalidate($contact['account_id']);
+			}
+			// notify interested apps about changes in the account-contact data
+			if (!$to_write['owner'] && $to_write['account_id'])
+			{
+				$to_write['location'] = 'editaccountcontact';
+				$GLOBALS['egw']->hooks->process($to_write,False,True);	// called for every app now, not only enabled ones));
 			}
 		}
 		return $this->error ? false : $contact['id'];
@@ -502,7 +534,7 @@ class bocontacts extends socontacts
 		$owner = $contact['owner'];
 		
 		// allow the user to edit his own account
-		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $this->user)
+		if (!$owner && $needed == EGW_ACL_EDIT && $contact['account_id'] == $this->user && $this->own_account_acl)
 		{
 			return true;
 		}
