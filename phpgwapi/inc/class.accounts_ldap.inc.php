@@ -499,128 +499,161 @@ class accounts_backend
 	}
 
 	/**
-	 * Searches users and/or groups
-	 * 
-	 * ToDo: implement a search like accounts::search
+	 * Searches / lists accounts: users and/or groups
 	 *
-	 * @param string $_type
-	 * @param int $start=null
-	 * @param string $sort=''
-	 * @param string $order=''
-	 * @param string $query
-	 * @param int $offset=null
-	 * @param string $query_type
-	 * @return array
+	 * @param array with the following keys:
+	 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both'
+	 *	or integer group-id for a list of members of that group
+	 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
+	 * @param $param['sort'] string column to sort after, default account_lid if unset
+	 * @param $param['order'] string 'ASC' or 'DESC', default 'DESC' if not set
+	 * @param $param['query'] string to search for, no search if unset or empty
+	 * @param $param['query_type'] string:
+	 *	'all'   - query all fields for containing $param[query]
+	 *	'start' - query all fields starting with $param[query]
+	 *	'exact' - query all fields for exact $param[query]
+	 *	'lid','firstname','lastname','email' - query only the given field for containing $param[query]
+	 * @param $param['offset'] int - number of matches to return if start given, default use the value in the prefs
+	 * @return array with uid / data pairs, data is an array with account_id, account_lid, account_firstname,
+	 *	account_lastname, person_id (id of the linked addressbook entry), account_status, account_expires, account_primary_group
 	 */
-	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='')
+	function search($param)
 	{
-		//print "\$_type=$_type, \$start=$start , \$sort=$sort, \$order=$order, \$query=$query, \$offset=$offset, \$query_type=$query_type<br>";
-		$query = ldap::quote(strtolower($query));
-
-		if($_type != 'groups')
+		//echo "<p>accounts_backend::search(".print_r($param,true)."): ".microtime()."</p>\n";
+		$account_search = &$this->cache['account_search'];
+		
+		// check if the query is cached
+		$serial = serialize($param);
+		if (isset($account_search[$serial]))
 		{
-			$filter = "(&(uidnumber=*)(objectclass=posixaccount)";
-			if (!empty($query) && $query != '*')
+			$this->total = $account_search[$serial]['total'];
+			return $account_search[$serial]['data'];
+		}
+		// if it's a limited query, check if the unlimited query is cached
+		$start = $param['start'];
+		if (!($maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatchs = 15;
+		if (!($offset = $param['offset'])) $offset = $maxmatchs;
+		unset($param['start']);
+		unset($param['offset']);
+		$unl_serial = serialize($param);
+		if (isset($account_search[$unl_serial]))
+		{
+			$this->total = $account_search[$unl_serial]['total'];
+			$sortedAccounts = $account_search[$unl_serial]['data'];
+		}
+		else	// we need to run the unlimited query
+		{
+			$query = ldap::quote(strtolower($param['query']));
+	
+			if($param['type'] != 'groups')
 			{
-				switch($query_type)
+				$filter = "(&(objectclass=posixaccount)";
+				if (!empty($query) && $query != '*')
 				{
-					case 'all':
-					default:
-						$query = '*'.$query;
-						// fall-through
-					case 'start':
-						$query .= '*';
-						// fall-through
-					case 'exact':
-						$filter .= "(|(uid=$query)(sn=$query)(cn=$query)(givenname=$query)(mail=$query))";
-						break;
-					case 'firstname':
-					case 'lastname':
-					case 'lid':
-					case 'email':
-						$to_ldap = array(
-							'firstname' => 'givenname',
-							'lastname'  => 'sn',
-							'lid'       => 'uid',
-							'email'     => 'mail',
+					switch($param['query_type'])
+					{
+						case 'all':
+						default:
+							$query = '*'.$query;
+							// fall-through
+						case 'start':
+							$query .= '*';
+							// fall-through
+						case 'exact':
+							$filter .= "(|(uid=$query)(sn=$query)(cn=$query)(givenname=$query)(mail=$query))";
+							break;
+						case 'firstname':
+						case 'lastname':
+						case 'lid':
+						case 'email':
+							$to_ldap = array(
+								'firstname' => 'givenname',
+								'lastname'  => 'sn',
+								'lid'       => 'uid',
+								'email'     => 'mail',
+							);
+							$filter .= '('.$to_ldap[$param['query_type']].'=*'.$query.'*)';
+							break;
+					}
+				}
+				if (is_numeric($param['type']))	// return only group-members
+				{
+					if (!($members = $this->members($param['type']))) return array();
+					//echo "<p>accounts_backend::search() after members($param[type]): ".microtime()."</p>\n";
+					
+					$filter .= '(|(uid='.implode(')(uid=',$members).'))';
+				}
+				$filter .= ')';
+				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire'));
+				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
+				$allValues = ldap_get_entries($this->ds, $sri);
+	
+				$utc_diff = date('Z');
+				while (list($null,$allVals) = @each($allValues))
+				{
+					settype($allVals,'array');
+					$test = @$allVals['uid'][0];
+					if (!$GLOBALS['egw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
+					{
+						$accounts[] = Array(
+							'account_id'        => $allVals['uidnumber'][0],
+							'account_lid'       => $GLOBALS['egw']->translation->convert($allVals['uid'][0],'utf-8'),
+							'account_type'      => 'u',
+							'account_firstname' => $GLOBALS['egw']->translation->convert($allVals['givenname'][0],'utf-8'),
+							'account_lastname'  => $GLOBALS['egw']->translation->convert($allVals['sn'][0],'utf-8'),
+							'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
+							'account_email'     => $allVals['mail'][0],
 						);
-						$filter .= '('.$to_ldap[$query_type].'=*'.$query.'*)';
-						break;
+					}
 				}
 			}
-			$filter .= ')';
-
-			$sri = ldap_search($this->ds, $this->user_context, $filter);
-			$allValues = ldap_get_entries($this->ds, $sri);
-			$utc_diff = date('Z');
-			while (list($null,$allVals) = @each($allValues))
+			if ($param['type'] == 'groups' || $param['type'] == 'both')
 			{
-				settype($allVals,'array');
-				$test = @$allVals['uid'][0];
-				if (!$GLOBALS['egw_info']['server']['global_denied_users'][$test] && $allVals['uid'][0])
+				if(empty($query) || $query == '*')
 				{
-					$accounts[] = Array(
-						'account_id'        => $allVals['uidnumber'][0],
-						'account_lid'       => $GLOBALS['egw']->translation->convert($allVals['uid'][0],'utf-8'),
-						'account_type'      => 'u',
-						'account_firstname' => $GLOBALS['egw']->translation->convert($allVals['givenname'][0],'utf-8'),
-						'account_lastname'  => $GLOBALS['egw']->translation->convert($allVals['sn'][0],'utf-8'),
-						'account_status'    => isset($allVals['shadowexpire'][0]) && $allVals['shadowexpire'][0]*24*3600-$utc_diff < time() ? false : 'A',
-						'account_email'     => $allVals['mail'][0],
-					);
+					$filter = '(objectclass=posixgroup)';
 				}
-			}
-		}
-		if ($_type != 'accounts')
-		{
-			if(empty($query) || $query == '*')
-			{
-				$filter = '(&(gidnumber=*)(objectclass=posixgroup))';
-			}
-			else
-			{
-				$filter = "(&(gidnumber=*)(objectclass=posixgroup)(|(cn=*$query*)))";
-			}
-			$sri = ldap_search($this->ds, $this->group_context, $filter);
-			$allValues = ldap_get_entries($this->ds, $sri);
-			while (list($null,$allVals) = @each($allValues))
-			{
-				settype($allVals,'array');
-				$test = $allVals['cn'][0];
-				if (!$GLOBALS['egw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
+				else
 				{
-					$accounts[] = Array(
-						'account_id'        => -$allVals['gidnumber'][0],
-						'account_lid'       => $GLOBALS['egw']->translation->convert($allVals['cn'][0],'utf-8'),
-						'account_type'      => 'g',
-						'account_firstname' => $GLOBALS['egw']->translation->convert($allVals['cn'][0],'utf-8'),
-						'account_lastname'  => lang('Group'),
-						'account_status'    => 'A',
-					);
+					$filter = "(&(objectclass=posixgroup)(cn=*$query*))";
+				}
+				$sri = ldap_search($this->ds, $this->group_context, $filter,array('cn','gidNumber'));
+				$allValues = ldap_get_entries($this->ds, $sri);
+				while (list($null,$allVals) = @each($allValues))
+				{
+					settype($allVals,'array');
+					$test = $allVals['cn'][0];
+					if (!$GLOBALS['egw_info']['server']['global_denied_groups'][$test] && $allVals['cn'][0])
+					{
+						$accounts[] = Array(
+							'account_id'        => -$allVals['gidnumber'][0],
+							'account_lid'       => $GLOBALS['egw']->translation->convert($allVals['cn'][0],'utf-8'),
+							'account_type'      => 'g',
+							'account_firstname' => $GLOBALS['egw']->translation->convert($allVals['cn'][0],'utf-8'),
+							'account_lastname'  => lang('Group'),
+							'account_status'    => 'A',
+						);
+					}
 				}
 			}
+			// sort the array
+			$arrayFunctions =& CreateObject('phpgwapi.arrayfunctions');
+			if(empty($param['order']))
+			{
+				$param['order'] = 'account_lid';
+			}
+			$account_search[$unl_serial]['data'] = $sortedAccounts = $arrayFunctions->arfsort($accounts,explode(',',$param['order']),$param['sort']);
+			$account_search[$unl_serial]['total'] = $this->total = count($accounts);
 		}
-		// sort the array
-		$arrayFunctions =& CreateObject('phpgwapi.arrayfunctions');
-		if(empty($order))
-		{
-			$order = 'account_lid';
-		}
-		$sortedAccounts = $arrayFunctions->arfsort($accounts,explode(',',$order),$sort);
-		$this->total = count($accounts);
+		//echo "<p>accounts_backend::search() found $this->total: ".microtime()."</p>\n";
 		// return only the wanted accounts
 		if (is_array($sortedAccounts))
 		{
 			reset($sortedAccounts);
 			if(is_numeric($start) && is_numeric($offset))
 			{
-				return array_slice($sortedAccounts, $start, $offset);
-			}
-			elseif(is_numeric($start))
-			{
-				if (!($maxmatchs = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $maxmatchs = 15;
-
-				return array_slice($sortedAccounts, $start, $maxmatchs);
+				$account_search[$serial]['total'] = $this->total;
+				return $account_search[$serial]['data'] = array_slice($sortedAccounts, $start, $offset);
 			}
 			else
 			{

@@ -144,7 +144,7 @@ class accounts extends accounts_backend
 	 */
 	function search($param)
 	{
-		//echo "<p>accounts::search(".print_r($param,True).")</p>\n";
+		//echo "<p>accounts::search(".print_r($param,True).") start: ".microtime()."</p>\n";
 		$this->setup_cache();
 		$account_search = &$this->cache['account_search'];
 		
@@ -154,7 +154,7 @@ class accounts extends accounts_backend
 		{
 			$this->total = $account_search[$serial]['total'];
 		}
-		elseif (method_exists('accounts_','search'))	// implements its on search function ==> use it
+		elseif (method_exists('accounts_backend','search'))	// implements its on search function ==> use it
 		{
 			$account_search[$serial]['data'] = parent::search($param);
 			$account_search[$serial]['total'] = $this->total;
@@ -232,6 +232,7 @@ class accounts extends accounts_backend
 			}
 		}
 		//echo "<p>accounts::search('$serial')=<pre>".print_r($account_search[$serial]['data'],True).")</pre>\n";
+		//echo "<p>accounts::search() end: ".microtime()."</p>\n";
 		return $account_search[$serial]['data'];
 	}
 	
@@ -568,9 +569,12 @@ class accounts extends accounts_backend
 			if($type == 'g')
 			{
 				$accounts['groups'][$id] = $id;
-				foreach($this->members($id,true) as $id)
+				if ($use != 'groups')
 				{
-					$accounts['accounts'][$id] = $id;
+					foreach($this->members($id,true) as $id)
+					{
+						$accounts['accounts'][$id] = $id;
+					}
 				}
 			}
 			else
@@ -690,8 +694,8 @@ class accounts extends accounts_backend
 		{
 			case 'xmlrpc':
 				$xml_functions = array(
-					'get_list' => array(
-						'function'  => 'get_list',
+					'search' => array(
+						'function'  => 'search',
 						'signature' => array(array(xmlrpcStruct)),
 						'docstring' => lang('Returns a full list of accounts on the system.  Warning: This is return can be quite large')
 					),
@@ -752,7 +756,7 @@ class accounts extends accounts_backend
 	 */
 	function save_session_cache()
 	{
-		if ($this->use_session_cache &&		// are we supposed to use a session-cache
+		if (// is somehow not longer set! $this->use_session_cache &&		// are we supposed to use a session-cache
 			$GLOBALS['egw_info']['accounts']['session_cache_setup'] &&	// is it already setup
 			// is the account-class ready (startup !)
 			is_object($GLOBALS['egw']->session))
@@ -795,44 +799,18 @@ class accounts extends accounts_backend
 	 */
 	function get_list($_type='both',$start = null,$sort = '', $order = '', $query = '', $offset = null,$query_type='')
 	{
-		//echo "<p>accounts::get_list(".print_r($_type,True).",start='$start',sort='$sort',order='$order',query='$query',offset='$offset')</p>\n";
-		$this->setup_cache();
-		$account_list = &$this->cache['account_list'];
-
-		// For XML-RPC
-		if (is_array($_type))
+		if (is_array($_type))	// XML-RPC
 		{
-			$p      = $_type;
-			$_type  = $p['type'];
-			$start  = $p['start'];
-			$order  = $p['order'];
-			$query  = $p['query'];
-			$offset = $p['offset'];
-			$query_type = $p['query_type'];
+			return $this->search($_type);
 		}
-		else
-		{
-			$p = array(
-				'type' => $_type,
-				'start' => $start,
-				'order' => $order,
-				'query' => $query,
-				'offset' => $offset,
-				'query_type' => $query_type ,
-			);
-		}
-		$serial = serialize($p);
-
-		if (isset($account_list[$serial]))
-		{
-			$this->total = $account_list[$serial]['total'];
-		}
-		else
-		{
-			$account_list[$serial]['data'] = parent::get_list($_type,$start,$sort,$order,$query,$offset,$query_type);
-			$account_list[$serial]['total'] = $this->total;
-		}
-		return $account_list[$serial]['data'];
+		return $this->search(array(
+			'type'       => $_type,
+			'start'      => $start,
+			'order'      => $order,
+			'query'      => $query,
+			'offset'     => $offset,
+			'query_type' => $query_type ,
+		));
 	}
 
 	/**
