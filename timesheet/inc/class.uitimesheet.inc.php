@@ -83,13 +83,13 @@ class uitimesheet extends botimesheet
 			{
 				$content['ts_start'] += $content['start_time'];
 			}
+			if ($content['end_time'] && $content['start_time'])	// start- & end-time --> calculate the duration
+			{
+				$content['ts_duration'] = ($content['end_time'] - $content['start_time']) / 60;
+			}
 			elseif ($content['ts_duration'] && $content['end_time'])	// no start, calculate from end and duration
 			{
 				$content['ts_start'] += $content['end_time'] - 60*$content['ts_duration'];
-			}
-			if (!$content['ts_duration'] && $content['start_time'] && $content['end_time'])	// no duration, calculate from start- and endtime
-			{
-				$content['ts_duration'] = ($content['end_time'] - $content['start_time']) / 60;
 			}
 			if ($content['ts_duration']) unset($content['end_time']);
 			// now we only deal with start (date+time) and duration
