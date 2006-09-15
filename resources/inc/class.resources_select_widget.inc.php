@@ -76,6 +76,7 @@ class resources_select_widget
 		
 		if ($value)
 		{
+			$value = is_array($value) ? $value : explode(',',$value);
 			foreach((array)$value as $id)
 			{
 				list($res_id,$quantity) = explode(':',$id);
