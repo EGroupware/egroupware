@@ -326,15 +326,12 @@ class bo_resources
 		$only_keys = 'res_id,name,short_description';
 		$filter = array(
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
-			//'accessory_of' => '-1'
+			'accessory_of' => '-1'
 		);
 		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR','',$filter);
-		foreach($data as $num => $resource)
+		foreach((array)$data as $num => $resource)
 		{
-			if($num != 0)
-			{
-				$list[$resource['res_id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
-			}
+			$list[$resource['res_id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 		}
 		return $list;
 	}
