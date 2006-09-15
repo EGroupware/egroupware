@@ -730,14 +730,15 @@ class accounts extends accounts_backend
 	 */
 	function setup_cache()
 	{
+		//echo "<p>accounts::setup_cache() use_session_cache=$this->use_session_cache, cache_setup=".(int)$GLOBALS['egw_info']['flags']['session_cache_setup']."</p>\n";
 		if ($this->use_session_cache &&		// are we supposed to use a session-cache
-			!@$GLOBALS['egw_info']['accounts']['session_cache_setup'] &&	// is it already setup
+			!@$GLOBALS['egw_info']['flags']['session_cache_setup'] &&	// is it already setup
 			// is the account-class ready (startup !)
 			is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->account_id)
 		{
 			// setting up the session-cache
 			$GLOBALS['egw_info']['accounts']['cache'] = $GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi');
-			$GLOBALS['egw_info']['accounts']['session_cache_setup'] = True;
+			$GLOBALS['egw_info']['flags']['session_cache_setup'] = True;
 			//echo "accounts::setup_cache() cache=<pre>".print_r($GLOBALS['egw_info']['accounts']['cache'],True)."</pre>\n";
 		}
 		if (!isset($this->cache))
@@ -756,11 +757,13 @@ class accounts extends accounts_backend
 	 */
 	function save_session_cache()
 	{
+		//echo "<p>save_session_cache()".($GLOBALS['egw_info']['flags']['session_cache_setup'] ? 'is setup' : 'is NOT setup')."</p>\n";
 		if (// is somehow not longer set! $this->use_session_cache &&		// are we supposed to use a session-cache
-			$GLOBALS['egw_info']['accounts']['session_cache_setup'] &&	// is it already setup
+			$GLOBALS['egw_info']['flags']['session_cache_setup'] &&	// is it already setup
 			// is the account-class ready (startup !)
 			is_object($GLOBALS['egw']->session))
 		{
+			//echo "<p>save_session_cache() saving</p>\n";
 			$GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi',$GLOBALS['egw_info']['accounts']['cache']);
 		}
 	}
