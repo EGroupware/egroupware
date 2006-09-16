@@ -62,7 +62,7 @@ application	common	es-es	Aplicación
 apply	common	es-es	Aplicar
 april	common	es-es	Abril
 are you sure you want to delete these entries ?	common	es-es	¿Seguro que desea borrar estas entradas?
-are you sure you want to delete this entry ?	common	es-es	Esta Ud. Seguro de borrar esta entrada ?
+are you sure you want to delete this entry ?	common	es-es	¿Está seguro de querer borrar esta entrada ?
 argentina	common	es-es	ARGENTINA
 armenia	common	es-es	ARMENIA
 aruba	common	es-es	ARUBA
@@ -74,7 +74,7 @@ autohide sidebox menu's	common	es-es	Ocultar automáticamente el menú lateral
 autohide sidebox menus	common	es-es	Ocultar automáticamente los menús laterales
 automatically hide the sidebox menu's?	common	es-es	¿Ocultar automáticamente el menú lateral?
 automatically hide the sidebox menus?	common	es-es	¿Ocultar automáticamente los menús laterales?
-autosave default category	common	es-es	Autograbar Categoria Predeterminada
+autosave default category	common	es-es	Guardar auotmáticamente la categoria predeterminada
 azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
 back to user login	common	es-es	Volver al inicio de sesión del usuario
@@ -111,19 +111,19 @@ burkina faso	common	es-es	BURKINA FASO
 burundi	common	es-es	BURUNDI
 calendar	common	es-es	Calendario
 cambodia	common	es-es	CAMBODIA
-cameroon	common	es-es	CAMERUN
-canada	common	es-es	CANADA
+cameroon	common	es-es	Camerún
+canada	common	es-es	Canadá
 cancel	common	es-es	Cancelar
 cannot replace %1 because it is a directory	common	es-es	No se puede sustituir %1 porque es un directorio
 cant open '%1' for %2	common	es-es	No se puede abrir '%1' para '%2'
-cape verde	common	es-es	CAPE VERDE
+cape verde	common	es-es	Cabo Verde
 caption	common	es-es	Título
 categories	common	es-es	Categorías
 categories for	common	es-es	categorías para
 category	common	es-es	Categoría
 category %1 has been added !	common	es-es	¡Se ha añadido la categoría %1!
 category %1 has been updated !	common	es-es	¡Se ha actualizado la categoría %1!
-cayman islands	common	es-es	CAYMAN ISLANDS
+cayman islands	common	es-es	Islas Caimán
 cc	common	es-es	CC
 cellpadding	tinymce	es-es	Desplazamiento entre celdas
 cellspacing	tinymce	es-es	Espacio entre celdas
@@ -133,7 +133,7 @@ central african republic	common	es-es	CENTRAL AFRICAN REPUBLIC
 chad	common	es-es	CHAD
 change	common	es-es	Cambiar
 charset	common	es-es	iso-8859-1
-check installation	common	es-es	Comprobar instalación
+check installation	common	es-es	Comprobar la instalación
 check now	common	es-es	Comprobar ahora
 chile	common	es-es	CHILE
 china	common	es-es	CHINA
@@ -169,7 +169,7 @@ contacting server...	common	es-es	Conectando con el servidor...
 cook islands	common	es-es	COOK ISLANDS
 copy	common	es-es	Copiar
 copy table row	tinymce	es-es	Copiar fila de la tabla
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	es-es	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	es-es	Copiar, cortar y pegar no están disponibles en Mozilla y Firefox.\n¿Desea más información acerca de este problema?
 costa rica	common	es-es	COSTA RICA
 cote d ivoire	common	es-es	COSTA DE MARFIL
 could not contact server. operation timed out!	common	es-es	No se pudo conectar con el servidor. La operación superó el tiempo límite de espera
@@ -211,8 +211,8 @@ disable the execution a bugfixscript for internet explorer 5.5 and higher to sho
 disabled	common	es-es	Deshabilitado
 display %s first	jscalendar	es-es	Mostrar %s primero
 djibouti	common	es-es	DJIBOUTI
-do you also want to delete all subcategories ?	common	es-es	¿También desea eliminar todas las subcategorías?
-do you want to use the wysiwyg mode for this textarea?	tinymce	es-es	Quieres usar el modo WYSIWYG para esta area de texto?
+do you also want to delete all subcategories ?	common	es-es	¿Desea eliminar también todas las subcategorías?
+do you want to use the wysiwyg mode for this textarea?	tinymce	es-es	¿Desea usar el modo WYSIWYG para este área de texto?
 doctype:	common	es-es	DOCTYPE:
 document properties	common	es-es	Propiedades del documento
 document title:	common	es-es	Título del documento
@@ -231,12 +231,12 @@ edit	common	es-es	Editar
 edit %1 category for	common	es-es	Editar %1 categoría para
 edit categories	common	es-es	Editar categorías
 edit category	common	es-es	Editar categoría
-egroupware api version %1	common	es-es	eGroupWare API versión %1
+egroupware api version %1	common	es-es	Versión de la API de eGroupWare: %1
 egroupware: login blocked for user '%1', ip %2	common	es-es	eGroupWare: inicio de sesión bloqueado para el usuario '%1', IP %2
 egypt	common	es-es	EGIPTO
 el salvador	common	es-es	EL SALVADOR
 email	common	es-es	Correo electrónico
-email-address of the user, eg. "%1"	common	es-es	Direcciones de correo electrónico para el usuario, ej. '%1'
+email-address of the user, eg. "%1"	common	es-es	Dirección de correo electrónico del usuario, ej. '%1'
 emotions	tinymce	es-es	Emociones
 enabled	common	es-es	Habilitado
 end date	common	es-es	Fecha de finalización
@@ -265,7 +265,7 @@ file exceeds the size limit	tinymce	es-es	El tamaño del fichero excede el límite
 file manager	tinymce	es-es	Administrador de ficheros
 file not found.	tinymce	es-es	No se encontró el fichero
 file was not uploaded.	tinymce	es-es	El fichero no se subió
-file with specified new name already exists. file was not renamed/moved.	tinymce	es-es	El fichero con el nombre especificado ya existe. No se renombó el fichero.
+file with specified new name already exists. file was not renamed/moved.	tinymce	es-es	El fichero con el nombre especificado ya existe. No se renombró el fichero.
 file(s)	tinymce	es-es	fichero(s)
 file:	tinymce	es-es	Fichero:
 files	common	es-es	Ficheros:
@@ -277,8 +277,8 @@ find what	tinymce	es-es	Buscar lo que
 find&nbsp;next	tinymce	es-es	Buscar siguiente
 find/replace	tinymce	es-es	Buscar/sustituir
 finland	common	es-es	FINLAND
-first name	common	es-es	Primer Nombre
-first name of the user, eg. "%1"	common	es-es	Primer nombre del usuario, ej "%1"
+first name	common	es-es	Nombre de pila
+first name of the user, eg. "%1"	common	es-es	Nombre de pila del usuario, ej "%1"
 first page	common	es-es	Primera página
 firstname	common	es-es	Nombre de pila
 fixme!	common	es-es	¡Corríjame!
@@ -304,7 +304,7 @@ fullname	common	es-es	Nombre completo
 fullscreen mode	common	es-es	Modo de pantalla completa
 gabon	common	es-es	GABON
 gambia	common	es-es	GAMBIA
-general menu	common	es-es	Menú General
+general menu	common	es-es	Menú general
 georgia	common	es-es	GEORGIA
 german	common	es-es	Alemán
 germany	common	es-es	ALEMANIA
@@ -320,7 +320,7 @@ grenada	common	es-es	GRANADA
 group	common	es-es	Grupo
 group access	common	es-es	Acceso del grupo
 group has been added	common	es-es	El grupo se ha añadido
-group has been deleted	common	es-es	El gruop se ha borrado
+group has been deleted	common	es-es	El grupo se ha borrado
 group has been updated	common	es-es	El grupo ha sido actualizado
 group name	common	es-es	nombre del grupo
 group public	common	es-es	Grupo público
