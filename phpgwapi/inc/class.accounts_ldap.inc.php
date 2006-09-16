@@ -230,6 +230,13 @@ class accounts_backend
 		else
 		{
 			$to_write = $this->_merge_user($to_write,$data_utf8,!$old);
+			// make sure multiple email-addresses in the mail attribute "survive"
+			if (isset($to_write['mail']) && count($old['mail']) > 1)
+			{
+				$mail = $old['mail'];
+				$mail[0] = $to_write['mail'];
+				$to_write['mail'] = array_values(array_unique($mail));
+			}
 			$data['account_type'] = 'u';
 		}
 		//echo "<p>ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")</p>\n";
