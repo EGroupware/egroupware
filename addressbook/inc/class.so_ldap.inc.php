@@ -351,7 +351,7 @@ class so_ldap
 		}
 		// check the existing objectclasses of an entry, none = array() for new ones
 		$oldObjectclasses = array();
-		$attributes = array('dn','cn','objectClass','uid');
+		$attributes = array('dn','cn','objectClass','uid','mail');
 		$contactUID	= $this->data[$this->contacts_id];
 		if(!empty($contactUID) &&
 			($result = ldap_search($this->ds, $GLOBALS['egw_info']['server']['ldap_contact_context'], 
@@ -412,6 +412,14 @@ class so_ldap
 		}
 		if($isUpdate) 
 		{
+			// make sure multiple email-addresses in the mail attribute "survive"
+			if (isset($ldapContact['mail']) && $oldContactInfo[0]['mail']['count'] > 1)
+			{
+				$mail = $oldContactInfo[0]['mail'];
+				unset($mail['count']);
+				$mail[0] = $ldapContact['mail'];
+				$ldapContact['mail'] = array_values(array_unique($mail));
+			}
 			// update entry
 			$dn = $oldContactInfo[0]['dn'];
 			$needRecreation = false;
