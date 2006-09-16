@@ -2,8 +2,11 @@
 2 years ago	timesheet	es-es	Hace 2 años
 3 years ago	timesheet	es-es	Hace 3 años
 actions	timesheet	es-es	Acciones
+all projects	timesheet	es-es	Todos los proyectos
+both: allow to use projectmanager and free project-names	admin	es-es	Ambos: permitir usar nombres de proyectos del Administrador de proyectos y libres
 by	timesheet	es-es	por
 create new links	timesheet	es-es	Crear enlaces nuevos
+creating new entry	timesheet	es-es	creando nueva entrada
 delete this entry	timesheet	es-es	Borrar esta entrada
 edit this entry	timesheet	es-es	Editar esta entrada
 empty if identical to duration	timesheet	es-es	Vacío si es idéntico a la duración
@@ -13,6 +16,7 @@ entry saved	timesheet	es-es	Se ha guardado la entrada
 error deleting the entry!!!	timesheet	es-es	Error al borrar la entrada
 error saving the entry!!!	timesheet	es-es	¡Se ha producido un error al guardar la entrada!
 existing links	timesheet	es-es	Enlaces existentes
+full: use only projectmanager	admin	es-es	Completo: usar sólo el Administrador de proyectos
 general	timesheet	es-es	General
 last modified	timesheet	es-es	Ultima modificación
 last month	timesheet	es-es	Último mes
@@ -21,8 +25,12 @@ last year	timesheet	es-es	Último año
 leave it empty for a full week	timesheet	es-es	Dejar en blanco durante una semana completa
 links	timesheet	es-es	Enlaces
 no details	timesheet	es-es	Sin detalles
+no project	timesheet	es-es	Sin proyecto
+none: use only free project-names	admin	es-es	Ninguno: usar sólo nombres de proyecto libres
+or endtime	timesheet	es-es	u hora de finalización
 permission denied!!!	timesheet	es-es	¡Se ha denegado el permiso!
 price	timesheet	es-es	Precio
+projectmanager integration	admin	es-es	Integración con el Administrador de proyectos
 quantity	timesheet	es-es	Cantidad
 save & new	timesheet	es-es	Guardar y crear
 saves the changes made	timesheet	es-es	Guardar los cambios realizados
@@ -30,6 +38,7 @@ saves this entry and add a new one	timesheet	es-es	Guarda esta entrada y añade u
 select a price	timesheet	es-es	Seleccionar un precio
 select a project	timesheet	es-es	Seleccionar un proyecto
 start	timesheet	es-es	Inicio
+starttime	timesheet	es-es	Hora de inicio
 sum %1:	timesheet	es-es	Suma %1:
 this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana

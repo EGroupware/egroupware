@@ -40,6 +40,7 @@ admin	common	sk	Administrátor
 administration	common	sk	Správa
 afghanistan	common	sk	AFGANISTAN
 albania	common	sk	ALBÁNSKO
+algeria	common	sk	AL®ÍRSKO
 align center	tinymce	sk	Zarovnaj na stred
 align full	tinymce	sk	Zarovnaj do bloku
 align left	tinymce	sk	Zarovnaj doµava
@@ -93,6 +94,7 @@ brazil	common	sk	BRAZÍLIA
 bulgaria	common	sk	BULHARSKO
 calendar	common	sk	Kalendár
 cambodia	common	sk	KAMBOD®A
+cameroon	common	sk	KAMERUN
 canada	common	sk	KANADA
 cancel	common	sk	Zru¹i»
 cannot replace %1 because it is a directory	common	sk	Nemô¾em prepísa» %1 preto¾e je to adresár
@@ -268,7 +270,9 @@ friday	common	sk	Piatok
 ftp	common	sk	FTP
 fullname	common	sk	Plné meno
 fullscreen mode	common	sk	Celoobrazovkový re¾im
+gambia	common	sk	GAMBIA
 general menu	common	sk	Základné menu
+georgia	common	sk	GRUZÍNSKO
 german	common	sk	Nemecké
 germany	common	sk	NEMECKO
 global	common	sk	Globálne
@@ -276,6 +280,7 @@ global public	common	sk	Verejný pre v¹etkých
 go today	jscalendar	sk	Choï dnes
 grant access	common	sk	Povoµ prístup
 greece	common	sk	GRÉCKO
+greenland	common	sk	GRÓNSKO
 grenada	common	sk	GRENADA
 group	common	sk	Skupina
 group access	common	sk	Skupinový prístup
@@ -393,6 +398,7 @@ maldives	common	sk	MALEDIVY
 mali	common	sk	MALI
 malta	common	sk	MALTA
 march	common	sk	Marec
+marshall islands	common	sk	MARSHALLOVE OSTROVY
 match case	tinymce	sk	Citlivý na veµkos»
 mauritania	common	sk	MAURETÁNIA
 mauritius	common	sk	MAURÍCIUS
@@ -411,6 +417,7 @@ monday	common	sk	Pondelok
 mongolia	common	sk	MONGOLSKO
 morocco	common	sk	MAROKO
 move	tinymce	sk	Presunú»
+mozambique	common	sk	MOZAMBIK
 multiple	common	sk	viacero
 name	common	sk	Meno
 name of the user, eg. "%1"	common	sk	meno pou¾ívateµa, napr. "%1"
@@ -434,6 +441,7 @@ next month (hold for menu)	jscalendar	sk	Ïal¹í mesiac
 next page	common	sk	ïal¹ia stránka
 next year (hold for menu)	jscalendar	sk	Ïal¹í rok (podr¾te pre menu)
 nicaragua	common	sk	NIKARAGUA
+nigeria	common	sk	NIGÉRIA
 no	common	sk	Nie
 no entries found, try again ...	common	sk	niè som nena¹iel, skúste znovu...
 no files...	tinymce	sk	0 súborov...

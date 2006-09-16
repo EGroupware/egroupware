@@ -48,6 +48,7 @@ business state	addressbook	sk	©tát
 business street	addressbook	sk	Ulica
 business zip code	addressbook	sk	PSÈ
 calendar uri	addressbook	sk	URI Kalendára
+can be changed via setup >> configuration	admin	sk	Dá sa zmeni» cez Setup -> Konfigurácia
 car phone	addressbook	sk	Telefón do auta
 cell phone	addressbook	sk	Mobil
 change all organisation members	addressbook	sk	zmeni» v¹etkých èlenov organizácie
@@ -120,6 +121,7 @@ field name	addressbook	sk	Názov polo¾ky
 fields for the csv export	addressbook	sk	Polo¾ky pre CSV export
 fields to show in address list	addressbook	sk	Viditeµné polo¾ky v zozname
 fieldseparator	addressbook	sk	Oddeµovaè polí
+for read only ldap	admin	sk	pre LDAP iba na èítanie
 freebusy uri	addressbook	sk	URI pre zaneprázdnenos»
 full name	addressbook	sk	Celé meno
 geo	addressbook	sk	GEO
@@ -135,6 +137,7 @@ home state	addressbook	sk	©tát - domov
 home street	addressbook	sk	Ulica -domov
 home zip code	addressbook	sk	PSÈ - domov
 icon	addressbook	sk	Ikona
+if accounts are already in ldap	admin	sk	ak sú úèty u¾ v LDAP
 import	addressbook	sk	Import
 import contacts	addressbook	sk	Importuj kontakty
 import csv-file into addressbook	addressbook	sk	Importovat CSV súbor do Adresára
@@ -153,6 +156,7 @@ last modified	addressbook	sk	Naposledy zmenené
 last modified by	addressbook	sk	Naposledy zmenil:
 ldap context for contacts	admin	sk	LDAP kontext pre kontakty
 ldap host for contacts	admin	sk	LDAP hostiteµ pre kontakty
+ldap settings for contacts	admin	sk	Nastavenia LDAP pre kontakty
 ldif	addressbook	sk	LDIF
 line 2	addressbook	sk	Riadok 2
 links	addressbook	sk	Odkazy
