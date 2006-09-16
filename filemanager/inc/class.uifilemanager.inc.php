@@ -84,6 +84,8 @@
 		{
 			//			error_reporting(8);
 			$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
+			
+			$this->dateformat=$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
 			$this->now = date('Y-m-d');
 
@@ -723,7 +725,7 @@
 					# Date created
 					if($this->prefs['created'])
 					{
-						$col_data=$files['created'];
+						$col_data=date($this->dateformat,strtotime($files['created']));
 						$this->t->set_var('col_data',$col_data);
 						$this->t->parse('columns','column',True);
 					}
@@ -733,7 +735,7 @@
 					{
 						if($files['modified'] != '0000-00-00')
 						{
-							$col_data=$files['modified'];
+							$col_data=date($this->dateformat,strtotime($files['modified']));
 						}
 						else
 						{
