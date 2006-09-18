@@ -40,7 +40,6 @@
 	$setup_info['addressbook']['hooks']['sidebox_menu'] = 'addressbook.contacts_admin_prefs.all_hooks';
 	$setup_info['addressbook']['hooks']['settings'] = 'addressbook.contacts_admin_prefs.settings';
 	$setup_info['addressbook']['hooks'][] = 'home';
-	$setup_info['addressbook']['hooks']['editaccount'] = 'addressbook.bocontacts.editaccount';
 	$setup_info['addressbook']['hooks']['deleteaccount'] = 'addressbook.bocontacts.deleteaccount';
 	$setup_info['addressbook']['hooks'][] = 'notifywindow';
 	$setup_info['addressbook']['hooks']['search_link'] = 'addressbook.bocontacts.search_link';
