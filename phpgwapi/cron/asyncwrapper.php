@@ -27,7 +27,7 @@
 	
 	foreach($headerIncPHP as $line) {
 		if(preg_match("/GLOBALS\['egw_domain']\['(.*)']/", $line, $matches)) {
-			system($_ENV["_"]. ' -q -d memory_limit=16M /usr/share/egroupware/phpgwapi/cron/asyncservices.php '. $matches[1]);
+			system($_ENV["_"]. ' -q -d memory_limit=16M '.$path_to_egroupware.'/phpgwapi/cron/asyncservices.php '. $matches[1]);
 		}
 	}
 ?>
