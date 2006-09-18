@@ -752,7 +752,7 @@ class bocontacts extends socontacts
 	}
 
 	/**
-	 * Delete contact linked to account, called by delete-account hook, when an account get deleted
+	 * Called by delete-account hook, when an account get deleted --> deletes/moves the personal addressbook
 	 *
 	 * @param array $data
 	 */
@@ -760,42 +760,20 @@ class bocontacts extends socontacts
 	{
 		// delete/move personal addressbook
 		parent::deleteaccount($data);
-		
-		// delete contact linked to account
-		if (($contact_id = $GLOBALS['egw']->accounts->id2name($data['account_id'],'person_id')))
-		{
-			$this->delete($contact_id);
-		}
 	}
 
 	/**
-	 * Update contact if linked account get updated, called by edit-account hook, when an account get edited
+	 * Called by edit-account hook, when an account get edited --> not longer used
+	 * 
+	 * This function is still there, to not give a fatal error, if the hook still exists.
+	 * Can be removed after the next db-update, which also reloads the hooks. RalfBecker 2006/09/18
 	 *
 	 * @param array $data
 	 */
 	function editaccount($data)
 	{
-		//echo "bocontacts::editaccount()"; _debug_array($data);
-		
-		// check if account is linked to a contact
-		if (($contact_id = $GLOBALS['egw']->accounts->id2name($data['account_id'],'person_id')) &&
-			($contact = $this->read($contact_id)))
-		{
-			$need_update = false;
-			foreach(array(
-				'n_family' => 'lastname',
-				'n_given'  => 'firstname',
-				'email'    => 'email',
-			) as $cname => $aname)
-			{
-				if ($contact[$cname] != $data[$aname]) $need_update = true;
-
-				$contact[$cname] = $data[$aname];
-			}
-			if ($need_update)
-			{
-				$this->save($contact);
-			}
-		}
+		// just force a new registration of the addressbook hooks
+		include(EGW_INCLUDE_ROOT.'/addressbook/setup/setup.inc.php');
+		$GLOBALS['egw']->hooks->register_hooks('addressbook',$setup_info['addressbook']['hooks']);
 	}
 }
