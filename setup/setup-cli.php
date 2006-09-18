@@ -13,7 +13,11 @@
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
-if ($_SERVER['argc'] > 1)
+if (isset($_SERVER['PHP_SELF']))	// security precaution: forbit calling setup-cli as web-page
+{
+	die('<h1>setup-cli.php must NOT be called as web-page --> exiting !!!</h1>');
+}
+elseif ($_SERVER['argc'] > 1)
 {
 	$arguments = $_SERVER['argv'];
 	array_shift($arguments);
