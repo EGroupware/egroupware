@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/php -qC
 <?php
 /**
  * Setup - Command line interface
@@ -13,7 +13,7 @@
 
 chdir(dirname(__FILE__));	// to enable our relative pathes to work
 
-if (isset($_SERVER['PHP_SELF']))	// security precaution: forbit calling setup-cli as web-page
+if (isset($_SERVER['HTTP_HOST']))	// security precaution: forbit calling setup-cli as web-page
 {
 	die('<h1>setup-cli.php must NOT be called as web-page --> exiting !!!</h1>');
 }
