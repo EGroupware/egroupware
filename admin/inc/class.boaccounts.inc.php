@@ -148,16 +148,11 @@
 					'new_owner'   => (int)$_POST['new_owner'],
 					'location'    => 'deleteaccount',
 				);
-				foreach($GLOBALS['egw_info']['apps'] as $appname => $data)
+				// first all other apps, then preferences and admin
+				foreach(array_merge(array_diff(array_keys($GLOBALS['egw_info']['apps']),array('preferences','admin')),array('preferences','admin')) as $app)
 				{
-					if($appname != 'admin' && $appname != 'preferences')
-					{
-						$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$appname);
-					}
+					$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
 				}
-
-				$GLOBALS['egw']->hooks->single('deleteaccount','preferences');
-				$GLOBALS['egw']->hooks->single('deleteaccount','admin');
 
 				$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'users' . SEP;
 
