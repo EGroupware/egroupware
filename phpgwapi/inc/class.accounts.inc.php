@@ -154,7 +154,8 @@ class accounts extends accounts_backend
 		{
 			$this->total = $account_search[$serial]['total'];
 		}
-		elseif (method_exists('accounts_backend','search'))	// implements its on search function ==> use it
+		elseif ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
+		//not correct for php<5.1 elseif ((method_exists($this,'search'))	// implements its on search function ==> use it
 		{
 			$account_search[$serial]['data'] = parent::search($param);
 			$account_search[$serial]['total'] = $this->total;
