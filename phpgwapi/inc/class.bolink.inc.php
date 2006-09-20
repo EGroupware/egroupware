@@ -236,7 +236,7 @@ class bolink extends solink
 					{
 						continue;
 					}
-					$ids[$link['link_id']] = $link;
+					$ids[$link['link_id']] = $only_app ? $link['id'] : $link;
 					prev($id);
 				}
 			}
