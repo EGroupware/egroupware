@@ -106,6 +106,7 @@
 
 			$extension_data['type'] = $cell['type'];
 
+			$readonly = $cell['readonly'] || $readonlys;
 			switch ($cell['type'])
 			{
 				case 'select-percent':	// options: #row,decrement(default=10)
@@ -166,6 +167,15 @@
 					{
 						$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
 					}
+					if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
+					{
+						$cell['no_lang'] = True;
+						foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
+						{
+							if ($id) $cell['sel_options'][$id] = $GLOBALS['egw']->strip_html($GLOBALS['egw']->categories->id2name($id));
+						}
+						break;
+					}
 					foreach((array)$GLOBALS['egw']->categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 					{
 						$s = str_repeat('&nbsp;',$cat['level']) . $GLOBALS['egw']->strip_html($cat['name']);
@@ -196,7 +206,7 @@
 						foreach($GLOBALS['egw']->accounts->membership() as $group) $mygroups[] = $group['account_id'];
 					}
 					// in case of readonly, we read/create only the needed entries, as reading accounts is expensive
-					if ($cell['readonly'] || $readonlys)
+					if ($readonly)
 					{
 						$cell['no_lang'] = True;
 						foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
@@ -321,7 +331,6 @@
 					}
 					$value_in = $value;
 					$value = array();
-					$readonly = $cell['readonly'] || $readonlys;
 					foreach($cell['sel_options'] as $val => $lable)
 					{
 						if (($value_in & $val) == $val)
