@@ -476,6 +476,7 @@ class bocontacts extends socontacts
 		// we dont update the content-history, if we run inside setup (admin-account-creation)
 		if(!($this->error = parent::save($to_write)) && is_object($GLOBALS['egw']->contenthistory))
 		{
+			$contact['id'] = $to_write['id'];
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $contact['id'],$isUpdate ? 'modify' : 'add', time());
 			
 			if ($contact['account_id'])	// invalidate the cache of the accounts class

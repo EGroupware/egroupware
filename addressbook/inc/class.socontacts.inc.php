@@ -368,7 +368,7 @@ class socontacts
 	* saves contact data including custiom felds
 	*
 	* @param array &$contact contact data from etemplate::exec
-	* @return bool false if all went wrong, errornumber on failure
+	* @return bool false on success, errornumber on failure
 	*/
 	function save(&$contact)
 	{
@@ -410,7 +410,7 @@ class socontacts
 			}
 		}
 		if($error_nr) return $error_nr;
-		
+
 		// save customfields
 		foreach ((array)$this->customfields as $field => $options)
 		{
