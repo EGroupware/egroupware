@@ -879,7 +879,11 @@
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] = lang($this->messages[$info_id ? 'edit' : ($action == 'sp' ? 'add_sub' : 'add')]);
 
-			$this->tmpl->read('infolog.edit');
+			// use a typ-specific template (infolog.edit.xyz), if one exists, otherwise fall back to the generic one
+			if (!$this->tmpl->read('infolog.edit.'.$content['info_type']))
+			{
+				$this->tmpl->read('infolog.edit');
+			}
 			if ($this->bo->has_customfields($content['info_type']))
 			{
 				$content['customfields'] = $this->bo->customfields;
@@ -897,7 +901,17 @@
 				!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 
 			$content['duration_format'] = $this->duration_format;
-
+			
+			// make the content of the first linked address availible to show in a custom template
+			if ($this->tmpl->name != 'infolog.edit' &&
+				($addr = $this->link->get_links('infolog',$content['link_to']['to_id'],'addressbook')) &&
+				($contact_id = array_shift($addr)) && ($addr = ExecMethod('phpgwapi.contacts.read',$contact_id)))
+			{
+				foreach($addr as $name => $value)
+				{
+					$content['~'.$name] = $value;
+				}
+			}
 			$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
 			if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
 
