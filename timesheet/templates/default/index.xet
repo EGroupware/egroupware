@@ -20,7 +20,7 @@
 			<columns>
 				<column width="15%"/>
 				<column width="50%"/>
-				<column/>
+				<column disabled="@no_cats"/>
 				<column/>
 				<column/>
 				<column/>

@@ -336,10 +336,11 @@ class botimesheet extends so_sql
 				$union_order[] = 'is_sum_'.$type;
 				$sum_extra_cols[$type]{0} = '1';
 				// the $type sum
-				parent::search($criteria,$sum_ts_id[$type].",'','','',MIN(ts_start),SUM(ts_duration) AS ts_duration,0,0,0,0,0,0,0,SUM($total_sql) AS ts_total",
+				parent::search($criteria,$sum_ts_id[$type].",'','','',MIN(ts_start),SUM(ts_duration) AS ts_duration,0,0,NULL,0,0,0,0,SUM($total_sql) AS ts_total",
 					'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
 				$sum_extra_cols[$type]{0} = '0';
 			}
+			$union_order[] = 'ts_start '.$sort;
 			return parent::search('','',implode(',',$union_order),'','',false,'',$start);
 		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);

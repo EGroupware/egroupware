@@ -449,10 +449,13 @@ class uitimesheet extends botimesheet
 		unset($query['col_filter'][0]);
 		
 		$readonlys = array();
+		$have_cats = false;
 		foreach($rows as $n => $val)
 		{
 			$row =& $rows[$n];
 			
+			if ($row['cat_id']) $have_cats = true;
+
 			$row['class'] = 'row';
 			if ($row['ts_id'] <= 0)	// sums
 			{
@@ -511,6 +514,7 @@ class uitimesheet extends botimesheet
 				$row['titleClass'] = 'titleDetails';
 			}
 		}
+		$rows['no_cats'] = !$have_cats;
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
 		if ($query['filter'])
