@@ -52,10 +52,15 @@
 			if ($this->appname == 'infolog')
 			{
 				$type2 = $value['###typ###'];
+				$type2_var = 'typ';
 				unset($value['###typ###']);
 				$this->customfields = $value;
 			}
-			
+			else
+			{
+				$type2 = $value;
+				$type2_var = 'type2';
+			}
 			if(!is_array($this->customfields))
 			{
 				$cell['type'] = 'label';
@@ -68,7 +73,7 @@
 			//echo '<pre style="text-align: left;">'; print_r($value); echo "</pre>\n";
 			foreach($this->customfields as $name => $field)
 			{
-				if (!empty($field['type2']) && $field['type2'] != $type2)
+				if (!empty($field[$type2_var]) && $field[$type2_var] != $type2)
 				{
 					continue;	// not for our content type
 				}
