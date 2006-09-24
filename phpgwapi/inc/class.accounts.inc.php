@@ -805,16 +805,16 @@ class accounts extends accounts_backend
 	{
 		if (is_array($_type))	// XML-RPC
 		{
-			return $this->search($_type);
+			return array_values($this->search($_type));
 		}
-		return $this->search(array(
+		return array_values($this->search(array(
 			'type'       => $_type,
 			'start'      => $start,
 			'order'      => $order,
 			'query'      => $query,
 			'offset'     => $offset,
 			'query_type' => $query_type ,
-		));
+		)));
 	}
 
 	/**
