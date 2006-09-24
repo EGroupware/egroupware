@@ -123,17 +123,18 @@ function toggle_all(form,name)
 	}
 	else
 	{
-		for (var i = 0; i < form.elements[name].length; i++)
+		var checkboxes = document.getElementsByName(name);
+		for (var i = 0; i < checkboxes.length; i++)
 		{
-			if (!form.elements[name][i].checked)
+			if (!checkboxes[i].checked)
 			{
 				all_set = false;
 				break;
 			}
 		}
-		for (var i = 0; i < form.elements[name].length; i++)
+		for (var i = 0; i < checkboxes.length; i++)
 		{
-			form.elements[name][i].checked = !all_set;
+			checkboxes[i].checked = !all_set;
 		}
 	}
 }
