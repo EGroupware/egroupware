@@ -136,7 +136,7 @@
 				@session_destroy();
 				if ($GLOBALS['egw_info']['server']['usecookies'])
 				{
-					$this->phpgw_setcookie(session_name());
+					$this->egw_setcookie(session_name());
 				}
 			}
 			else
