@@ -1,142 +1,170 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Session management                                      *
-	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	* and Joseph Engo <jengo@phpgroupware.org>                                 *
-	* and Ralf Becker <ralfbecker@outdoor-training.de>                         *
-	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* Parts Copyright (C) 2003 Free Software Foundation Inc                    *
-	* -------------------------------------------------------------------------*
-	* This library is part of the eGroupWare API                               * 
-	* http://www.egroupware.org/api                                            *  
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
-
- 	/* $Id$ */
-
 	/**
-	* Session Management Libabray
+	* eGW's Session Management
 	*
-	* This allows eGroupWare to use php4 or database sessions
+	* This allows eGroupWare to use php or database sessions
 	*
-	* @package api
-	* @subpackage sessions
-	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp <br> hacked on by phpGW
+	* @link www.egroupware.org
+	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp
+	* @author Dan Kuykendall <seek3r@phpgroupware.org>
+	* @author Joseph Engo <jengo@phpgroupware.org>
+	* @author Ralf Becker <ralfbecker@outdoor-training.de>
 	* @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> &copy; 2003 FreeSoftware Foundation
 	* @license LGPL
-	* @link http://www.sanisoft.com/phplib/manual/DB_sql.php
+	* @version $Id$
 	*/
 
+	/**
+	* eGW's Session Management
+	*
+	* Baseclass for db- and php-sessions
+	* 
+	* @package api
+	* @subpackage sessions
+	*/
 	class sessions_
 	{
 		/**
-		* @var string current user login
+		* current user login (account_lid@domain)
+		* 
+		* @var string
 		*/
 		var $login;
 
 		/**
-		* @var string current user password
+		* current user password
+		* 
+		* @var string
 		*/
 		var $passwd;
 
 		/**
-		* @var int current user db/ldap account id
+		* current user db/ldap account id
+		* 
+		* @var int
 		*/
 		var $account_id;
 
 		/**
-		* @var string current user account login id - ie user@domain
+		* current user account login id (without the eGW-domain/-instance part
+		* 
+		* @var string
 		*/
 		var $account_lid;
 
 		/**
-		* @var string previous page call id - repost prevention
+		* previous page call id - repost prevention, not used in eGW
+		* 
+		* @var string
 		*/
 		var $history_id;
 
 		/**
-		* @var string domain for current user
+		* domain for current user
+		* 
+		* @var string
 		*/
 		var $account_domain;
 
 		/**
-		* @var session type flag, A - anonymous session, N - None, normal session
+		* type flag, A - anonymous session, N - None, normal session
+		* 
+		* @var string
 		*/
 		var $session_flags;
 
 		/**
-		* @var string current user session id
+		* current user session id
+		* 
+		* @var string
 		*/
 		var $sessionid;
 
 		/**
-		* @var string not sure what this does, but it is important :)
+		* an other session specific id (md5 from a random string),
+		* used together with the sessionid for xmlrpc basic auth and the encryption of session-data (if that's enabled)
+		* 
+		* @var string
 		*/
 		var $kp3;
 
 		/**
-		* @var string encryption key?
+		* encryption key for the encrption of the session-data, if enabled
+		* 
+		* @var string
 		*/
 		var $key;
 
 		/**
-		* @var string iv == ivegotnoidea ;) (skwashd)
+		* mcrypt's iv
+		*  
+		* @var string
 		*/
 		var $iv;
 
 		/**
-		* @var session data
+		* session data
+		* 
+		* @var array
 		*/
 		var $data;
         
 		/**
-		* @var object holder for the database object
+		* instance of the database object
+		* 
+		* @var egw_db
 		*/
 		var $db;
 		
 		/**
-		 * @var $access_table name of access-log table
+		 * name of access-log table
+		 * 
+		 * @var string
 		 */
 		var $access_table = 'egw_access_log';
         
 		/**
 		* @var array publicly available methods
 		*/
-		var $public_functions = array(
+/*		var $public_functions = array(
 			'list_methods' => True,
 			'update_dla'   => True,
 			'list'         => True,
 			'total'        => True
-		);
+		);*/
 
 		/**
-		* @var string domain for cookies
+		* domain for cookies
+		* 
+		* @var string
 		*/
 		var $cookie_domain;
+		
+		/**
+		 * path for cookies
+		 * 
+		 * @var string
+		 */
+		var $cookie_path;
 
 		/**
-		* @var name of XML-RPC/SOAP method called
+		* name of XML-RPC/SOAP method called
+		* 
+		* @var string
 		*/
 		var $xmlrpc_method_called;
 
 		/**
-		* @var Array with the name of the system domains
+		* Array with the name of the system domains
+		* 
+		* @var array
 		*/
-		var $phpgw_domains;
+		var $egw_domains;
 
 		/**
 		* Constructor just loads up some defaults from cookies
+		* 
+		* @param $domain_names=null domain-names used in this install
 		*/
 		function sessions_($domain_names=null)
 		{
@@ -145,13 +173,13 @@
 			$this->sessionid = get_var('sessionid',array('GET','COOKIE'));
 			$this->kp3       = get_var('kp3',array('GET','COOKIE'));
 
-			$this->phpgw_domains = $domain_names;
+			$this->egw_domains = $domain_names;
 
 			/* Create the crypto object */
 			$GLOBALS['egw']->crypto =& CreateObject('phpgwapi.crypto');
 			if ($GLOBALS['egw_info']['server']['usecookies'])
 			{
-				$this->phpgw_set_cookiedomain();
+				$this->egw_set_cookiedomain();
 			}
 			// verfiy and if necessary create and save our config settings
 			//
@@ -221,9 +249,16 @@
 			return true;
 		}
 
-		function split_login_domain($both,&$login,&$domain)
+		/**
+		 * Splits a login-name into account_lid and eGW-domain/-instance
+		 *
+		 * @param string $login login-name (ie. user@default)
+		 * @param string &$account_lid returned account_lid (ie. user)
+		 * @param string &$domain returned domain (ie. domain)
+		 */
+		function split_login_domain($login,&$account_lid,&$domain)
 		{
-			$parts = explode('@',$both);
+			$parts = explode('@',$login);
 
 //			var_dump(debug_backtrace());
 			//conference - for strings like vinicius@thyamad.com@default ,
@@ -232,18 +267,18 @@
 			{
 				$probable_domain = array_pop($parts);
 				//Last part of login string, when separated by @, is a domain name
-				if (in_array($probable_domain,$this->phpgw_domains))
+				if (in_array($probable_domain,$this->egw_domains))
 				{
 					$got_login = true;
 					$domain = $probable_domain;
-					$login = implode('@',$parts);
+					$account_lid = implode('@',$parts);
 				}
 			}
 
 			if (!$got_login)
 			{
 				$domain = $GLOBALS['egw_info']['server']['default_domain'];
-				$login = $both;
+				$account_lid = $login;
 			}
 		}
 
@@ -423,7 +458,7 @@
 		*
 		* @return string domain
 		*/
-		function phpgw_set_cookiedomain()
+		function egw_set_cookiedomain()
 		{
 			// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
 			$this->cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
@@ -440,7 +475,10 @@
 			}
 			print_debug('COOKIE_DOMAIN',$this->cookie_domain,'api');
 
-			$this->set_cookie_params($this->cookie_domain);	// for php4 sessions necessary
+			$url_parts = parse_url($GLOBALS['egw_info']['server']['webserver_url']);
+			if (!($this->cookie_path = $url_parts['path'])) $this->cookie_path = '/';
+
+			$this->set_cookie_params($this->cookie_domain,$this->cookie_path);	// for php4 sessions necessary
 		}
 
 		/**
@@ -450,13 +488,21 @@
 		* @param string $cookievalue value to be used, if unset cookie is cleared (optional)
 		* @param int $cookietime when cookie should expire, 0 for session only (optional)
 		*/
+		function egw_setcookie($cookiename,$cookievalue='',$cookietime=0)
+		{
+			if (!$this->cookie_domain || !$this->cookie_path)
+			{
+				$this->egw_set_cookiedomain();
+			}
+			setcookie($cookiename,$cookievalue,$cookietime,$this->cookie_path,$this->cookie_domain);
+		}
+
+		/**
+		* @deprecated use egw_setcookie
+		*/
 		function phpgw_setcookie($cookiename,$cookievalue='',$cookietime=0)
 		{
-			if (!$this->cookie_domain)
-			{
-				$this->phpgw_set_cookiedomain();
-			}
-			setcookie($cookiename,$cookievalue,$cookietime,'/',$this->cookie_domain);
+			$this->egw_setcookie($cookiename,$cookievalue,$cookietime);
 		}
 
 		/**
@@ -540,14 +586,14 @@
 
 			if ($GLOBALS['egw_info']['server']['usecookies'])
 			{
-				$this->phpgw_setcookie('sessionid',$this->sessionid);
-				$this->phpgw_setcookie('kp3',$this->kp3);
-				$this->phpgw_setcookie('domain',$this->account_domain);
+				$this->egw_setcookie('sessionid',$this->sessionid);
+				$this->egw_setcookie('kp3',$this->kp3);
+				$this->egw_setcookie('domain',$this->account_domain);
 			}
 			if ($GLOBALS['egw_info']['server']['usecookies'] || isset($_COOKIE['last_loginid']))
 			{ 
-				$this->phpgw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
-				$this->phpgw_setcookie('last_domain',$this->account_domain,$now+1209600);
+				$this->egw_setcookie('last_loginid', $this->account_lid ,$now+1209600); /* For 2 weeks */
+				$this->egw_setcookie('last_domain',$this->account_domain,$now+1209600);
 			}
 			unset($GLOBALS['egw_info']['server']['default_domain']); /* we kill this for security reasons */
 
@@ -1252,18 +1298,20 @@
 		* Set paramaters for cookies - only implemented in PHP4 sessions
 		*
 		* @param string $domain domain name to use in cookie
+		* @param string $path='/' path to use in cookie
 		*/
-
-		function set_cookie_params($domain)
+		function set_cookie_params($domain,$path='/')
 		{}
 
 		/**
-		* Create a new session id
+		* Create a new session id, called by session::create()
 		*
 		* @return string a new session id
 		*/
 		function new_session_id()
-		{}
+		{
+			return md5($GLOBALS['egw']->common->randomstring(15));
+		}
 
 		/**
 		* Create a new session

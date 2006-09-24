@@ -1,33 +1,23 @@
 <?php
-  /**************************************************************************\
-  * eGroupWare API - Session management                                      *
-  * This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-  * and Joseph Engo <jengo@phpgroupware.org>                                 *
-  * and Ralf Becker <ralfbecker@outdoor-training.de>                         *
-  * Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-  * -------------------------------------------------------------------------*
-  * This library is part of the eGroupWare API                               *
-  * http://www.egroupware.org/api                                            * 
-  * ------------------------------------------------------------------------ *
-  * This library is free software; you can redistribute it and/or modify it  *
-  * under the terms of the GNU Lesser General Public License as published by *
-  * the Free Software Foundation; either version 2.1 of the License,         *
-  * or any later version.                                                    *
-  * This library is distributed in the hope that it will be useful, but      *
-  * WITHOUT ANY WARRANTY; without even the implied warranty of               *
-  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-  * See the GNU Lesser General Public License for more details.              *
-  * You should have received a copy of the GNU Lesser General Public License *
-  * along with this library; if not, write to the Free Software Foundation,  *
-  * Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-  \**************************************************************************/
-
-	/* $Id$ */
+ 	/**
+	* eGW's Session Management
+	*
+	* This allows eGroupWare to use php or database sessions
+	*
+	* @link www.egroupware.org
+	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp
+	* @author Dan Kuykendall <seek3r@phpgroupware.org>
+	* @author Joseph Engo <jengo@phpgroupware.org>
+	* @author Ralf Becker <ralfbecker@outdoor-training.de>
+	* @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> &copy; 2003 FreeSoftware Foundation
+	* @license LGPL
+	* @version $Id$
+	*/
 
 	define('EGW_SESSION_VAR','egw_session');	// where to store our session-data $_SESSION[EGW_SESSION_VAR]
 
 	/**
-	* Session Management via php4 sessions
+	* Session Management via php sessions
 	*
 	* @package api
 	* @subpackage sessions
@@ -64,13 +54,27 @@
 			return $_SESSION[EGW_SESSION_VAR];
 		}
 
-		function set_cookie_params($domain)
+		/**
+		* Set paramaters for cookies - only implemented in PHP4 sessions
+		*
+		* @param string $domain domain name to use in cookie
+		* @param string $path='/' path to use in cookie
+		*/
+		function set_cookie_params($domain,$path='/')
 		{
-			session_set_cookie_params(0,'/',$domain);
+			session_set_cookie_params(0,$path,$domain);
 		}
 
+		/**
+		* Create a new session id, called by session::create()
+		* 
+		* Reimplemented to tell the php-sessions to use the id
+		*
+		* @return string a new session id
+		*/
 		function new_session_id()
 		{
+			session_id(parent::new_session_id()); 
 			session_start();
 
 			return session_id();

@@ -1,37 +1,24 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Session management                                      *
-	* This file written by Dan Kuykendall <seek3r@phpgroupware.org>            *
-	* and Joseph Engo <jengo@phpgroupware.org>                                 *
-	* Copyright (C) 2000, 2001 Dan Kuykendall                                  *
-	* -------------------------------------------------------------------------*
-	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org/api                                            * 
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
-
-	/* $Id$ */
-
+ 	/**
+	* eGW's Session Management
+	*
+	* This allows eGroupWare to use php or database sessions
+	*
+	* @link www.egroupware.org
+	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp
+	* @author Dan Kuykendall <seek3r@phpgroupware.org>
+	* @author Joseph Engo <jengo@phpgroupware.org>
+	* @author Ralf Becker <ralfbecker@outdoor-training.de>
+	* @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> &copy; 2003 FreeSoftware Foundation
+	* @license LGPL
+	* @version $Id$
+	*/
+ 
 	/**
 	* Session Management via database (based on phplib sessions)
 	*
 	* @package api
 	* @subpackage sessions
-	* @author NetUSE AG Boris Erdmann, Kristian Koehntopp <br> hacked on by phpGW
-	* @copyright &copy; 1998-2000 NetUSE AG Boris Erdmann, Kristian Koehntopp <br> &copy; 2003 FreeSoftware Foundation
-	* @license LGPL
-	* @link http://www.sanisoft.com/phplib/manual/DB_sql.php
 	*/
 
 	class sessions extends sessions_
@@ -65,11 +52,6 @@
 			$GLOBALS['egw']->db->delete($this->app_sessions_table,array(
 				'session_dla <= ' . (time() - $GLOBALS['egw_info']['server']['sessions_timeout']),
 			),__LINE__,__FILE__);
-		}
-
-		function new_session_id()
-		{
-			return md5($GLOBALS['egw']->common->randomstring(15));
 		}
 
 		function register_session($login,$user_ip,$now,$session_flags)
