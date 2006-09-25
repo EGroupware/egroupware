@@ -596,6 +596,20 @@ class bocalupdate extends bocal
 				$returncode = $send->Send();
 				
 				// ToDo: give error-messages for all all failed sendings
+				
+				// notification via notification app.
+				if (version_compare("5.1.0", phpversion()) && array_key_exists('notifications',$GLOBALS['egw_info']['apps'])) {
+					$notification = new notification();
+					$notification->set_message($body);
+					$notification->set_receivers(array($userid));
+					try {
+						$notification->send();
+					}
+					catch(Exception $exception) { 
+						error_log($exception->getMessage());
+					}
+				}
+
 			}
 		}
 		// restore the enviroment
