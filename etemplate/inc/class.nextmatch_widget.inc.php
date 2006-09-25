@@ -127,17 +127,20 @@
 					if ($this->last_part($name) == $nm_global['order'])	// we're the active column
 					{
 						$cell[1] = $cell;
-						$cell[1]['span'] .= ',activ_sortcolumn';
 						unset($cell[1]['align']);
 						$cell[2] = $tmpl->empty_cell('image',$nm_global['sort'] != 'DESC' ? 'down' : 'up');
 						$cell['type'] = 'hbox';
 						$cell['size'] = '2,0,0';
+						$class = 'activ_sortcolumn';
 						$cell['name'] = $cell['label'] = '';
 					}
 					else
 					{
-						$cell['span'] .= ',inactiv_sortcolumn';
+						$class = 'inactiv_sortcolumn';
 					}
+					$parts = explode(',',$cell['span']);
+					$parts[1] .= ($parts[1] ? ' ' : '').$class;
+					$cell['span'] = implode(',',$parts);
 					return True;
 
 				case 'nextmatch-accountfilter':	// Option: as for selectbox: [extra-label(default ALL)[,#lines(default 1)]]
@@ -158,6 +161,9 @@
 						$cell['help'] = 'select which values to show';
 					}
 					$cell['onchange'] = $cell['noprint'] = True;
+					$parts = explode(',',$cell['span']);
+					$parts[1] .= ($parts[1] ? ' ' : '').'filterheader';
+					$cell['span'] = implode(',',$parts);
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
 					return True;
 			}
