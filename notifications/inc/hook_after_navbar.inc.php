@@ -16,7 +16,7 @@
 $GLOBALS['egw']->translation->add_app('notifications');
 if (!$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup']) {
 	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js'. '" type="text/javascript"></script>';
-	echo '<script type="text/javascript">notificationwindow_init()</script>';
+	echo '<script type="text/javascript">notificationwindow_init();</script>';
 	echo '
 		<div id="notificationwindow" style="display: none; z-index: 999;">
 			<div id="divAppboxHeader">'. lang('Notification'). '</div>
