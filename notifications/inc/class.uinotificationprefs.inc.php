@@ -6,7 +6,7 @@
  * @package notifications
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $id$
+ * @version $Id$
  */
 
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');

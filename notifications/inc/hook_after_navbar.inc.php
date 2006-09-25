@@ -10,7 +10,7 @@
  * @subpackage ajaxpoup
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $id$
+ * @version $Id$
  * @todo check if user wants notifications via egw popup!
  */
 $GLOBALS['egw']->translation->add_app('notifications');

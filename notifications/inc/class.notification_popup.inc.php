@@ -7,7 +7,7 @@
  * @subpackage ajaxpopup
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $id$
+ * @version $Id$
  */
 
 require_once('class.iface_notification.inc.php');
