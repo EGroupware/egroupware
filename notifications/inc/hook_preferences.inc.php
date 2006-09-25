@@ -6,7 +6,7 @@
 	 * @package notifications
 	 * @link http://www.egroupware.org
 	 * @author Cornelius Weiss <nelius@cwtech.de>
-	 * @version $Id:  $
+	 * @version $id$
 	 */
 
 	$title = $appname;

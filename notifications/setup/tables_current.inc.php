@@ -6,13 +6,13 @@
  * @package notifications
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $id$
  */
 
 	$phpgw_baseline = array(
 		'egw_notificationpopup' => array(
 			'fd' => array(
-				'account_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
+				'account_id' => array('type' => 'int','precision' => '20','nullable' => False),
 				'session_id' => array('type' => 'varchar','precision' => '255','nullable' => False),
 				'message' => array('type' => 'longtext')
 			),

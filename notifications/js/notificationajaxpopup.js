@@ -5,7 +5,7 @@
  * @subpackage ajaxpoup
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $id$
  */
 
 function notificationwindow_init() {

@@ -6,7 +6,7 @@
  * @package notifications
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $id$
  */
 
 if (!defined('NOTIFICATION_APP'))
@@ -15,7 +15,7 @@ if (!defined('NOTIFICATION_APP'))
 }
 
 $setup_info[NOTIFICATION_APP]['name']      = NOTIFICATION_APP;
-$setup_info[NOTIFICATION_APP]['version']   = '0.5';
+$setup_info[NOTIFICATION_APP]['version']   = '0.6';
 $setup_info[NOTIFICATION_APP]['app_order'] = 1;
 $setup_info[NOTIFICATION_APP]['tables']    = array('egw_notificationpopup');
 $setup_info[NOTIFICATION_APP]['enable']    = 2;
@@ -46,3 +46,4 @@ $setup_info[NOTIFICATION_APP]['depends'][] = array(
 	 'appname' => 'etemplate',
 	 'versions' => Array('1.2','1.3')
 );
+

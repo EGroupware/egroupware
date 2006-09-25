@@ -6,10 +6,10 @@
  * @package notifications
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $id$
  */
 
-require_once(EGW_INCLUDE_ROOT. SEP. 'etemplate'. SEP. 'inc'. SEP. 'class.etemplate.inc.php');
+require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.etemplate.inc.php');
 
 class uinotificationprefs {
 	

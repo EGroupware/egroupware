@@ -7,7 +7,7 @@
  * @subpackage ajaxpopup
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $id$
  */
 
 require_once('class.iface_notification.inc.php');
@@ -47,14 +47,14 @@ class notification_popup implements iface_notification {
 	/**
 	 * holds preferences object of user to notify
 	 *
-	 * @var unknown_type
+	 * @var object
 	 */
 	private $preferences;
 	
 	/**
 	 * holds db object of SQL database
 	 *
-	 * @var unknown_type
+	 * @var egw_db
 	 */
 	private $db;
 	
