@@ -52,7 +52,7 @@
 			<rows>
 				<row class="noPrint">
 					<template id="@header_left"/>
-					<hbox align="center">
+					<hbox align="center" class="nextmatch-range">
 						<description value="showing" no_lang="1" id="range"/>
 						<description value="of" no_lang="1" id="total"/>
 					</hbox>
@@ -83,7 +83,6 @@
 	border: 1px solid #D3DCE3;
 	text-align: center;
 	cursor: pointer;
-	cusror: hand;
 }
 .lettersearch_active {
 	font-weight: bold;
