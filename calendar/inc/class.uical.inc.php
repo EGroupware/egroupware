@@ -284,20 +284,27 @@ class uical
 				{
 					// only change the owners of the same resource-type as given in set_state[owner]
 					$set_owners = explode(',',$set_states['owner']);
-					$res_type = is_numeric($set_owners[0]) ? false : $set_owners[0]{0};
-					$owners = explode(',',$states['owner'] ? $states['owner'] : $default);
-					foreach($owners as $key => $owner)
+					if ((string)$set_owners[0] === '0')	// set exactly the specified owners (without the 0)
 					{
-						if (!$res_type && is_numeric($owner) || $res_type && $owner{0} == $res_type)
+						$set_states['owner'] = substr($set_states['owner'],2);
+					}
+					else	// change only the owners of the given type
+					{
+						$res_type = is_numeric($set_owners[0]) ? false : $set_owners[0]{0};
+						$owners = explode(',',$states['owner'] ? $states['owner'] : $default);
+						foreach($owners as $key => $owner)
 						{
-							unset($owners[$key]);
+							if (!$res_type && is_numeric($owner) || $res_type && $owner{0} == $res_type)
+							{
+								unset($owners[$key]);
+							}
 						}
+						if (!$res_type || !in_array($res_type.'0',$set_owners))
+						{
+							$owners = array_merge($owners,$set_owners);
+						}
+						$set_states['owner'] = implode(',',$owners);
 					}
-					if (!$res_type || !in_array($res_type.'0',$set_owners))
-					{
-						$owners = array_merge($owners,$set_owners);
-					}
-					$set_states['owner'] = implode(',',$owners);
 				}
 				// for the uiforms class (eg. edit), dont store the (new) owner, as it might change the view
 				if (substr($_GET['menuaction'],0,16) == 'calendar.uiforms')
@@ -666,6 +673,7 @@ class uical
 			{
 				if (is_numeric($owner)) $accounts[] = $owner;
 			}
+			if (!$accounts) $grants[''] = lang('None');
 			$file[] = array(
 				'text' => "
 <script type=\"text/javascript\">
