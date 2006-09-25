@@ -490,32 +490,28 @@ class uicontacts extends bocontacts
 					$query['col_filter'][$name] = $value;
 				}
 			}
-			// translate the select order to the realy used over all 3 columns
+			// translate the select order to the really used over all 3 columns
 			$sort = $query['sort'];
-			switch($query['order'])
-			{
+			switch($query['order'])		// "xxx!='' DESC" sorts contacts with empty order-criteria always at the end
+			{							// we don't exclude them, as the total would otherwise depend on the order-criteria
 				case 'org_name':
-					$order = "org_name $sort,n_family $sort,n_given $sort";
+					$order = "org_name!='' DESC,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				default:
 					$query['order'] = 'n_family';
 				case 'n_family':
-					$order = "n_family $sort,n_given $sort,org_name $sort";
+					$order = "n_family!='' DESC,n_family $sort,n_given $sort,org_name $sort";
 					break;
 				case 'n_given':
-					$order = "n_given $sort,n_family $sort,org_name $sort";
+					$order = "n_given!='' DESC,n_given $sort,n_family $sort,org_name $sort";
 					break;
 				case 'n_fileas':
-					$order = 'n_fileas '.$sort;
+					$order = "n_fileas!='' DESC,n_fileas $sort";
 					break;
 			}
-			if ($query['searchletter'])	// only show contacts which ordercriteria starts with the given letter
+			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
 				$query['col_filter'][] = $query['order'].' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
-			}
-			else	// dont show contacts with empty order criteria
-			{
-				$query['col_filter'][$query['order']] = "!''";
 			}
 			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
 				$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
@@ -565,6 +561,7 @@ class uicontacts extends bocontacts
 					$row['line2'] = $row['org_name'];
 					break;
 				case 'n_fileas':
+					if (!$row['n_fileas']) $row['n_fileas'] = $this->fileas($row);
 					list($row['line1'],$row['line2']) = explode(': ',$row['n_fileas']);
 					break;
 			}
