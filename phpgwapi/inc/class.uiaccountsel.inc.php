@@ -89,7 +89,7 @@ class uiaccountsel extends accounts
 	 * @param string $onchange javascript to execute if the selection changes, eg. to reload the page
 	 * @param array/bool/string $select array with id's as keys or values. If the id is in the key and the value is a string,
 	 *	it gets appended to the user-name. Or false if the selectable values for the selectbox are determined by use.
-	 *  Or a string which gets added as first Option with value=0, eg. lang('all')
+	 *  Or a string which gets added as first Option with value=0, eg. lang('all'), can also be specified in the array with key ''
 	 * @param boolean $nohtml if true, returns an array with the key 'selected' as the selected participants,
 	 *  and with the key 'participants' as the participants data as would fit in a select.
 	 * @return string/array string with html for !$nohtml, array('selected' => $selected,'participants' => $select)
@@ -136,6 +136,11 @@ class uiaccountsel extends accounts
 				break;
 		}
 		$extra_label = is_string($select) && !empty($select) ? $select : False;
+		if (is_array($select) && isset($select['']))
+		{
+			$extra_label = $select[''];
+			unset($select['']);
+		}
 		switch($account_sel)
 		{
 			case 'popup':
