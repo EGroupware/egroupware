@@ -546,4 +546,13 @@
 		}
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.003';
 	}
-?>
+
+
+	$test[] = '1.2.003';
+	function infolog_upgrade1_2_003()
+	{
+		// fix wrong info_responsible='' --> '0'
+		$GLOBALS['egw_setup']->oProc->query("UPDATE egw_infolog SET info_responsible='0' WHERE info_responsible=''",__LINE__,__FILE__);
+
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.004';
+	}

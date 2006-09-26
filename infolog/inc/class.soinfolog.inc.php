@@ -385,9 +385,9 @@
 			//echo "soinfolog::write(,$check_modified) values="; _debug_array($values);
 			$info_id = (int) $values['info_id'];
 
-			if (isset($values['info_responsible']))
+			if (array_key_exists('info_responsible',$values))	// isset($values['info_responsible']) returns false for NULL!
 			{
-				$values['info_responsible'] = count($values['info_responsible']) ? implode(',',$values['info_responsible']) : '0';
+				$values['info_responsible'] = $values['info_responsible'] ? implode(',',$values['info_responsible']) : '0';
 			}
 			$table_def = $this->db->get_table_definitions('infolog',$this->info_table);
 			$to_write = array();
