@@ -149,9 +149,10 @@
 						'search_method' => $extension_data['search_method'],
 						'colums_to_present' => $extension_data['colums_to_present'],
 						'template' => $result_rows_tpl,
-					));
-
-				$tpl->add_child($tpl, $action_buttons = $tpl->empty_cell('hbox','action_buttons'));
+				));
+				
+				$action_buttons =& $tpl->empty_cell('hbox','action_buttons');
+				$tpl->add_child($tpl, $action_buttons);
 				foreach ($extension_data['actions'] as $action => $options)
 				{
 					$tpl->add_child($action_buttons, $result_button = $tpl->empty_cell($options['type'],'action['.$action.']',$options['options']));
