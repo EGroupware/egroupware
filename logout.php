@@ -33,19 +33,6 @@
 
 	if ($verified)
 	{
-		if (file_exists($GLOBALS['egw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']))
-		{
-			$dh = opendir($GLOBALS['egw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
-			while ($file = readdir($dh))
-			{
-				if ($file != '.' && $file != '..')
-				{
-					unlink($GLOBALS['egw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid'] . SEP . $file);
-				}
-			}
-			closedir($dh);
-			rmdir($GLOBALS['egw_info']['server']['temp_dir'] . SEP . $GLOBALS['sessionid']);
-		}
 		$GLOBALS['egw']->hooks->process('logout');
 		$GLOBALS['egw']->session->destroy($GLOBALS['sessionid'],$GLOBALS['kp3']);
 	}
@@ -60,14 +47,9 @@
 			));
 		}
 	}
-	$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember');
-	$GLOBALS['egw']->session->phpgw_setcookie('sessionid');
-	$GLOBALS['egw']->session->phpgw_setcookie('kp3');
-	$GLOBALS['egw']->session->phpgw_setcookie('domain');
-	if(substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4')
-	{
-		$GLOBALS['egw']->session->phpgw_setcookie(EGW_PHPSESSID);
-	}
-	
+	$GLOBALS['egw']->session->egw_setcookie('eGW_remember');
+	$GLOBALS['egw']->session->egw_setcookie('sessionid');
+	$GLOBALS['egw']->session->egw_setcookie('kp3');
+	$GLOBALS['egw']->session->egw_setcookie('domain');
+
 	$GLOBALS['egw']->redirect($redirectTarget);
-?>

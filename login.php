@@ -69,15 +69,15 @@
 /*
 	if($GLOBALS['egw_info']['server']['usecookies'] == True)
 	{
-		$GLOBALS['egw']->session->phpgw_setcookie('eGroupWareLoginTime', time());
+		$GLOBALS['egw']->session->egw_setcookie('eGroupWareLoginTime', time());
 	}
 */
 /*
 	if($_GET['cd'] != 10 && $GLOBALS['egw_info']['server']['usecookies'] == False)
 	{
-		$GLOBALS['egw']->session->setcookie('sessionid');
-		$GLOBALS['egw']->session->setcookie('kp3');
-		$GLOBALS['egw']->session->setcookie('domain');
+		$GLOBALS['egw']->session->egw_setcookie('sessionid');
+		$GLOBALS['egw']->session->egw_setcookie('kp3');
+		$GLOBALS['egw']->session->egw_setcookie('domain');
 	}
 */
 
@@ -97,35 +97,21 @@
 		{
 			case 1:
 				return lang('You have been successfully logged out');
-				break;
 			case 2:
 				return lang('Sorry, your login has expired');
-				break;
 			case 4:
 				return lang('Cookies are required to login to this site.');
-				break;
 			case 5:
-				return '<font color="FF0000">' . lang('Bad login or password') . '</font>';
-				break;
+				return '<font color="red">' . lang('Bad login or password') . '</font>';
 			case 98:
-				return '<font color="FF0000">' . lang('Account is expired') . '</font>';
-				break;
+				return '<font color="red">' . lang('Account is expired') . '</font>';
 			case 99:
-				return '<font color="FF0000">' . lang('Blocked, too many attempts') . '</font>';
-				break;
+				return '<font color="red">' . lang('Blocked, too many attempts') . '</font>';
 			case 10:
-				$GLOBALS['egw']->session->phpgw_setcookie('sessionid');
-				$GLOBALS['egw']->session->phpgw_setcookie('kp3');
-				$GLOBALS['egw']->session->phpgw_setcookie('domain');
-
-				//fix for bug php4 expired sessions bug
-				if(substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4')
-				{
-					$GLOBALS['egw']->session->phpgw_setcookie(EGW_PHPSESSID);
-				}
-
-				return '<font color="#FF0000">' . lang('Your session could not be verified.') . '</font>';
-				break;
+				$GLOBALS['egw']->session->egw_setcookie('sessionid');
+				$GLOBALS['egw']->session->egw_setcookie('kp3');
+				$GLOBALS['egw']->session->egw_setcookie('domain');
+				return '<font color="red">' . lang('Your session could not be verified.') . '</font>';
 			default:
 				return '&nbsp;';
 		}
@@ -205,7 +191,7 @@
 		if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
 			!isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 		{
-			$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember');
+			$GLOBALS['egw']->session->egw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=5'));
 		}
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
@@ -247,7 +233,7 @@
 
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember');
+			$GLOBALS['egw']->session->egw_setcookie('eGW_remember');
 			$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
@@ -274,7 +260,7 @@
 						$remember_time = 2147483647;
 						break;
 				}
-				$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember',serialize(array(
+				$GLOBALS['egw']->session->egw_setcookie('eGW_remember',serialize(array(
 					'login' => $login,
 					'passwd' => $passwd,
 					'passwd_type' => $passwd_type)),
