@@ -599,15 +599,8 @@ class bocalupdate extends bocal
 				
 				// notification via notification app.
 				if (version_compare("5.1.0", phpversion()) && array_key_exists('notifications',$GLOBALS['egw_info']['apps'])) {
-					$notification = new notification();
-					$notification->set_message($body);
-					$notification->set_receivers(array($userid));
-					try {
-						$notification->send();
-					}
-					catch(Exception $exception) { 
-						error_log($exception->getMessage());
-					}
+					require_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php');
+					include(EGW_INCLUDE_ROOT. '/calendar/inc/class.php5_notification.inc.php');
 				}
 
 			}
