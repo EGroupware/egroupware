@@ -147,7 +147,7 @@
 					}
 					if (!$cell['help'])
 					{
-						$cell['help'] = $help;
+						$cell['help'] = $value['help'];
 						$cell['no_lang'] = 2;
 					}
 				}
