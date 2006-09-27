@@ -246,7 +246,7 @@
 			case 'hbox':
 			case 'box':
 			case 'deck':
-				list($anz,$orient,$options) = split(',',$cell['size'],2);
+				list($anz,$orient,$options) = split(',',$cell['size'],3);
 				for ($n = 1; $n <= $anz; ++$n)
 				{
 					$this->add_widget($widget,$cell[$n],$embeded_too);
