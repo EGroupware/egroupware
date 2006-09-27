@@ -692,11 +692,12 @@ implement only a subset of XUL. Here are the main differences:</p>
 	<td>
 		vertical or horizontal <b>container</b> for child widgets. This is useful if one needs more
 		widgets or widgets outside the column- / row-order of a grid. HBox or VBox is rendered as Grid/html:table
-		with only one row or colum. Box is rendered as a html:div containing all child-widgets.<br />
+		with only one row or colum. Box is rendered as a html:div containing all child-widgets.
 		Disabled child-cells are completly left out (no empty cells or rows get generated).<p>
 		<b>Options</b> <i>in the editor</i>: the number of cells in the box (does NOT need to be set in xml).<br />
 		<b>orient</b>: horizontal, vertical or none (means h/vbox as expected and no table for boxes)
-		<b>options</b>: cellpadding,cellspacing of the table
+		<b>cellpadding,cellspacing</b>: known table-options
+		<b>keepEmpty</b>: if true, empty cells (lines or rows) are kept, otherwise they are completly removed
 	</td>
 </tr>
 <tr>

@@ -412,6 +412,7 @@
 			}
 			else
 			{
+				//echo "<p>process_exec($this->name): calling $session_data[method]</p>\n";
 				return ExecMethod($session_data['method'],$this->complete_array_merge($session_data['preserv'],$content));
 			}
 		}
@@ -792,6 +793,10 @@
 			if ((int) $cell['tabindex']) $options .= ' tabindex="'.(int)$cell['tabindex'].'"';
 			if ($cell['accesskey']) $options .= ' accesskey="'.$this->html->htmlspecialchars($cell['accesskey']).'"';
 
+			if (strchr($cell['size'],'$') || $cell['size']{0} == '@')	// expand cell['size'] for the button-disabled-check now
+			{
+				$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
+			}
 			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && !strstr($cell['size'],','))
 			{
 				if ($this->rows == 1) {
@@ -1360,12 +1365,12 @@
 					$box_row = 1;
 					$box_col = 'A';
 					$box_anz = 0;
-					list($num,$orient) = explode(',',$cell_options);
+					list($num,$orient,,,$keep_empty) = explode(',',$cell_options);
 					if (!$orient) $orient = $type == 'hbox' ? 'horizontal' : ($type == 'box' ? false : 'vertical');
 					for ($n = 1; $n <= (int) $num; ++$n)
 					{
 						$h = $this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
-						if ($h != '' && $h != '&nbsp;')
+						if ($h != '' && $h != '&nbsp;' || $keep_empty)
 						{
 							if ($orient != 'horizontal')
 							{
@@ -1640,7 +1645,7 @@
 				{
 					$value = '';	// blur-values is equal to emtpy
 				}
-				// echo "<p>process_show($this->name) $type: $form_name = '$value'</p>\n";
+				//echo "<p>process_show($this->name) loop was {$GLOBALS['egw_info']['etemplate']['loop']}, $type: $form_name = '$value'</p>\n";
 				list($type,$sub) = explode('-',$type);
 				switch ($type)
 				{
