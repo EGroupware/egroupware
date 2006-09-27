@@ -103,7 +103,7 @@
 			$_fcat_id = get_var('fcat_id',array('POST','GET'));
 			$_typeid  = get_var('typeid',array('POST','GET'),'_UNSET_');
 
-			if(!empty($_start) || ($_start == '0') || ($_start == 0))
+			if(!empty($_start) || ($_start === '0') || ($_start === 0))
 			{
 				if($this->debug) { echo '<br>overriding $start: "' . $this->start . '" now "' . $_start . '"'; }
 				$this->start = $_start;
@@ -133,13 +133,16 @@
 
 			if(isset($_POST['fcat_id']) || isset($_POST['fcat_id']))
 			{
+			 	// reset start if category changes
+				if($this->cat_id != $_fcat_id) { $this->start = 0; }
+				
 				$this->cat_id = $_fcat_id;
 			}
-			else
+			elseif(empty($this->cat_id))
 			{
 				$this->cat_id = -1;
 			}
-
+			
 			/*
 			if(isset($_POST['typeid']) || isset($_POST['typeid']))
 			{
