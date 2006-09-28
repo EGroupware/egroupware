@@ -240,6 +240,8 @@
 								$manual =& new etemplate('etemplate.popup.manual');
 								echo $manual->show(array());
 								unset($manual);
+								echo '<style type="text/css">#ajax-loader { position: absolute; right: 27px; top: 24px; display: none; }</style>'."\n";
+								echo '<div id="ajax-loader">'.$this->html->image('phpgwapi','ajax-loader') . '</div>';
 							}
 						}
 					}
