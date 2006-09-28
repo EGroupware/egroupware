@@ -199,3 +199,28 @@ function set_style_by_class(t,c,p,v)
 		}
 	}
 }
+
+function xajax_eT_wrapper(obj) {
+	if (typeof(obj) == 'object') {
+		set_style_by_class('div','popupManual','display','none');
+		document.getElementById('ajax-loader').style.display = 'inline';
+		var etemplate_exec_id = obj.form.etemplate_exec_id.defaultValue;
+		var submit_button = obj.name;
+		xajax_doXMLHTTP('etemplate.etemplate.process_exec', etemplate_exec_id, submit_button, xajax.getFormValues(obj.form));
+	}
+	else {
+		document.getElementById('ajax-loader').style.display = 'none';
+		set_style_by_class('div','popupManual','display','inline');
+	}
+}
+		
+function disable_button(id) {
+	document.getElementById(id).disabled = 'true';
+	document.getElementById(id).style.color = 'gray';
+}
+
+function enable_button(id) {
+	document.getElementById(id).disabled = 'false';
+	document.getElementById(id).style.color = '';
+}
+
