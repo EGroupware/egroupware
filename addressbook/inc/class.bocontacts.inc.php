@@ -282,6 +282,7 @@ class bocontacts extends socontacts
 	{
 		$filter = array(
 			'owner' => array_keys($this->grants),
+			'access' => 'public',
 		);
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
