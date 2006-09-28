@@ -1079,14 +1079,22 @@ class PHPMailer
             $cid         = $this->attachment[$i][7];
             
             $mime[] = sprintf("--%s%s", $this->boundary[1], $this->LE);
-            $mime[] = sprintf("Content-Type: %s; name=\"%s\"%s", $type, $name, $this->LE);
+            if($disposition == 'part') {
+                $mime[] = sprintf("Content-Type: %s; charset =\"%s\"%s", $type, $this->CharSet, $this->LE);
+            } else {
+                $mime[] = sprintf("Content-Type: %s; name=\"%s\"%s", $type, $name, $this->LE);
+            }
             $mime[] = sprintf("Content-Transfer-Encoding: %s%s", $encoding, $this->LE);
 
             if($disposition == "inline")
                 $mime[] = sprintf("Content-ID: <%s>%s", $cid, $this->LE);
 
-            $mime[] = sprintf("Content-Disposition: %s; filename=\"%s\"%s", 
+            if($disposition != "part") {
+                $mime[] = sprintf("Content-Disposition: %s; filename=\"%s\"%s", 
                               $disposition, $name, $this->LE.$this->LE);
+            } else {
+                $mime[] = sprintf("%s", $this->LE);
+            }
 
             // Encode as string attachment
             if($bString)
@@ -1285,6 +1293,30 @@ class PHPMailer
         $this->attachment[$cur][4] = $type;
         $this->attachment[$cur][5] = true; // isString
         $this->attachment[$cur][6] = "attachment";
+        $this->attachment[$cur][7] = 0;
+    }
+    
+    /**
+     * Adds a string or binary attachment (non-filesystem) to the list.
+     * This method can be used to attach ascii or binary data,
+     * such as a BLOB record from a database.
+     * @param string $string String attachment data.
+     * @param string $filename Name of the attachment.
+     * @param string $encoding File encoding (see $Encoding).
+     * @param string $type File extension (MIME) type.
+     * @return void
+     */
+    function AddStringPart($string, $filename, $encoding = "base64", 
+                                 $type = "application/octet-stream") {
+        // Append to $attachment array
+        $cur = count($this->attachment);
+        $this->attachment[$cur][0] = $string;
+        $this->attachment[$cur][1] = $filename;
+        $this->attachment[$cur][2] = $filename;
+        $this->attachment[$cur][3] = $encoding;
+        $this->attachment[$cur][4] = $type;
+        $this->attachment[$cur][5] = true; // isString
+        $this->attachment[$cur][6] = "part";
         $this->attachment[$cur][7] = 0;
     }
     
