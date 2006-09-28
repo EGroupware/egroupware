@@ -202,6 +202,7 @@ class uiforms extends uical
 		$event = $content;
 		unset($event['new_alarm']);
 		unset($event['alarm']['delete_alarm']);
+		unset($event['duration']);
 
 		if (in_array($button,array('ignore','freetime','reedit')))	// called from conflict display
 		{
