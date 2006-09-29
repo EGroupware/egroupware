@@ -33,11 +33,18 @@
 	class etemplate extends boetemplate
 	{
 		/**
-		 * @var int/string='' integer debug-level or template-name or cell-type or '' = off
+		 * integer debug-level or template-name or cell-type or '' = off
 		 * 1=calls to show and process_show, 2=content after process_show,
 		 * 3=calls to show_cell and process_show_cell
+		 * 
+		 * @var int/string
 		 */
 		var $debug;
+		/**
+		 * Instance of the html class
+		 *
+		 * @var html
+		 */
 		var $html;	/* instance of html-class */
 		var $xslt = false;	/* do we run in the xslt framework (true) or the regular eGW one (false) */
 		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
@@ -706,6 +713,7 @@
 				}
 				$rows[$row] = $row_data;
 			}
+			if (!$rows) return '';
 
 			list($width,$height,,,,,$overflow) = $options = explode(',',$grid['size']);
 			if ($overflow && $height)
@@ -713,7 +721,8 @@
 				$options[1] = '';	// set height in div only
 			}
 			$html = $this->html->table($rows,$this->html->formatOptions($options,'width,height,border,class,cellspacing,cellpadding').
-				$this->html->formatOptions($grid['span'],',class')/*TEST-RB,$no_table_tr*/);
+				$this->html->formatOptions($grid['span'],',class').
+				$this->html->formatOptions($grid['name']?$this->form_name($cname,$grid['name']):'','id'));
 
 			if (!empty($overflow)) {
 				if (is_numeric($height)) $height .= 'px';
@@ -889,18 +898,13 @@
 				{
 					$options .= " onFocus=\"$onFocus\" onBlur=\"$onBlur\"";
 				}
-				if ($cell['onchange'] && $cell['type'] != 'button') // values != '1' can only set by a program (not in the editor so fa
+				if ($cell['onchange'] && $cell['type'] != 'button')
 				{
 					if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
 					{
 						$cell['onchange'] = $this->expand_name($cell['onchange'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 					}
-					if (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$cell['onchange'],$matches))
-					{
-						$cell['onchange'] = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/',
-							'confirm(\''.addslashes(lang($matches[1])).'\')',$cell['onchange']);
-					}
-					$options .= ' onChange="'.($cell['onchange']=='1'?'this.form.submit();':$cell['onchange']).'"';
+					$options .= ' onChange="'.($cell['onchange'] == '1' ? 'this.form.submit();' : $this->js_pseudo_funcs($cell['onchange'],$cname)).'"';
 				}
 			}
 			if ($form_name != '')
@@ -1074,22 +1078,7 @@
 					if ($cell['onclick'] &&
 						($onclick = $this->expand_name($cell['onclick'],$show_c,$show_row,$content['.c'],$content['.row'],$content)))
 					{
-						
-						if (preg_match("/egw::link\\('([^']+)','([^']+)'\\)/",$onclick,$matches))
-						{
-							$url = $GLOBALS['egw']->link($matches[1],$matches[2]);
-							$onclick = preg_replace('/egw::link\(\'([^\']+)\',\'([^\']+)\'\)/','\''.$url.'\'',$onclick);
-						}
-						elseif (preg_match("/form::name\\('([^']+)'\\)/",$onclick,$matches))
-						{
-							$onclick = preg_replace("/form::name\\('([^']+)'\\)/",'\''.$this->form_name($cname,$matches[1]).'\'',$onclick);
-						}
-						elseif (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$cell['onclick'],$matches))
-						{
-							$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
-							$onclick = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$onclick);
-							//$onclick = "return confirm('".str_replace('\'','\\\'',$this->html->htmlspecialchars($question))."');";
-						}
+						$onclick = $this->js_pseudo_funcs($onclick,$cname);
 					}
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
@@ -1422,11 +1411,13 @@
 					if ($box_anz > 1 && $orient)	// a single cell is NOT placed into a table
 					{
 						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',,cellpadding,cellspacing').
-							$this->html->formatOptions($cell['span'],',class').
+							$this->html->formatOptions($class,'class').
+							($type != 'groupbox' && $cell['name'] ? ' id="'.$form_name.'"' : '').
 							($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' width="100%"' : ''));	// alignment only works if table has full width
+						$class = '';	// otherwise we create an extra div
 					}
 					// put the class of the box-cell, into the the class of this cell
-					elseif ($box_item_class)
+					elseif ($box_item_class && $box_anz == 1)
 					{
 						$class = ($class ? $class . ' ' : '') . $box_item_class;
 					}
@@ -1436,16 +1427,17 @@
 						{
 							$label = lang($label);
 						}
-						$html = $this->html->fieldset($html,$label);
+						$html = $this->html->fieldset($html,$label,$cell['name'] ? ' id="'.$form_name.'"' : '');
 					}
 					elseif (!$orient)
 					{
 						$html = $this->html->div($html,$this->html->formatOptions(array(
 								$cell['height'],
 								$cell['width'],
-								$cell['class'],
-								$cell['name']
+								$class,
+								$cell['name'] ? $form_name : '',
 							),'height,widht,class,id')). ($html ? '' : '</div>');
+						$class = '';	// otherwise we create an extra div
 					}
 					if ($box_anz > 1)	// small docu in the html-source
 					{
@@ -1578,6 +1570,41 @@
 				return $this->html->div($html,' ondblclick="'.$handler.'"','clickWidgetToEdit');
 			}
 			return $html;
+		}
+
+		/**
+		 * Resolve javascript pseudo functions: 
+		 * - egw::link('$l','$p') calls $egw->link($l,$p)
+		 * - form::name('name') returns expanded name/id taking into account the name at that point of the template hierashy
+		 * - confirm('message') translates 'message' and adds a '?' if not present
+		 * 
+		 * @param string $on onclick, onchange, ... action
+		 * @param string $cname name-prefix / name-space
+		 * @return string
+		 */
+		function js_pseudo_funcs($on,$cname)
+		{
+			if (preg_match("/egw::link\\('([^']+)','([^']+)'\\)/",$on,$matches))
+			{
+				$url = $GLOBALS['egw']->link($matches[1],$matches[2]);
+				$on = str_replace($matches[0],'\''.$url.'\'',$on);
+				//$on = preg_replace('/egw::link\(\'([^\']+)\',\'([^\']+)\'\)/','\''.$url.'\'',$on);
+			}
+			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches))
+			{
+				foreach($matches[1] as $n => $matche_name)
+				{
+					$matches[1][$n] = '\''.$this->form_name($cname,$matche_name).'\'';
+				}
+				$on = str_replace($matches[0],$matches[1],$on);
+			}
+			if (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches))
+			{
+				$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
+				$on = str_replace($matches[0],'confirm(\''.addslashes($question).'\')',$on);
+				//$on = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$on);
+			}
+			return $on;
 		}
 
 		/**
