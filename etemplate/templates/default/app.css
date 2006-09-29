@@ -1,5 +1,5 @@
 /* $Id$ */
 .redItalic { color: red; font-style: italic; }
 .gray { color: gray; }
-.clickWidgetToEdit { cursor: pointer; }
+.clickWidgetToEdit { cursor: pointer; display: inline; }
 .clickWidgetToEdit:hover { background-color: pink; }

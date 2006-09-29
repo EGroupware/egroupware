@@ -25,6 +25,8 @@
 	 * - link-string: comma-separated list of link-titles with a link to its view method, value is like get_links() 
 	 *	or array with keys to_app and to_id (widget calls then get_links itself)
 	 * - link-add:    Add a new entry of the select app, which is already linked to a given entry
+	 * - link-entry:  Allow to select an entry of a selectable or in options specified app
+	 * - link-apps:   Select an app registerd in the link system, options: '' or 'add'
 	 *
 	 *<code>
 	 * $content[$name] = array(
@@ -52,8 +54,9 @@
 		 * @var array exported methods of this class
 		 */
 		var $public_functions = array(
-			'pre_process' => True,
-			'post_process' => True
+			'pre_process'  => True,
+			'post_process' => True,
+			'ajax_search'  => True,
 		);
 		/**
 		 * @var array availible extensions and there names for the editor
@@ -63,14 +66,18 @@
 			'link-to'     => 'LinkTo',
 			'link-list'   => 'LinkList',
 			'link-string' => 'LinkString',
-			'link-add'    => 'LinkEntry',
+			'link-add'    => 'LinkAdd',
+			'link-entry'  => 'LinkEntry',
+			'link-apps'   => 'LinkApps',
 		);
 		/**
 		 * @var boolean $debug switches debug-messages on and off
 		 */
 		var $debug = False;
 		/**
-		 * @var object $link reference to the link class
+		 * reference to the link class
+		 * 
+		 * @var bolink
 		 */
 		var $link;
 
@@ -79,7 +86,7 @@
 		 *
 		 * @param string $ui '' for html
 		 */
-		function link_widget($ui)
+		function link_widget($ui='')
 		{
 			if (!is_object($GLOBALS['egw']->link))
 			{
@@ -103,7 +110,7 @@
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$type = $cell['type'];
+			$extension_data['type'] = $type = $cell['type'];
 			$help = $cell['help'] ? ($value['help'] ? $value['help'] : $cell['help']) : lang('view this linked entry in its application');
 
 			if (($type == 'link-to' || $type == 'link-add') && ($cell['readonly'] || $readonlys))
@@ -113,7 +120,7 @@
 				$cell = $tmpl->empty_cell();
 				return;
 			}
-			if (!is_array($value) && $type != 'link-string' && $type != 'link')
+			if (!is_array($value) && in_array($type,array('link-to','link-list','link-add')))
 			{
 				$value = array(
 					'to_id' => $value,
@@ -126,7 +133,7 @@
 				echo "<p>start: $cell[type][$name]::pre_process: value ="; _debug_array($value);
 				echo "extension_data[$cell[type]][$name] ="; _debug_array($extension_data);
 			}
-			switch ($type = $cell['type'])
+			switch ($cell['type'])
 			{
 			case 'link':
 				$cell['readonly'] = True;	// set it readonly to NOT call our post_process function
@@ -223,6 +230,13 @@
 				break;
 
 			case 'link-to':
+				$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+				if ($value['search_label'] && $extension_data['search_label'] != $value['search_label']) $value['search_label'] = lang($value['search_label']);
+				$extension_data = $value;
+				$tpl =& new etemplate('etemplate.link_widget.to');
+				if ($value['link_label']) $tpl->set_cell_attribute('create','label',$value['link_label']);
+				if ($value['search_label']) $tpl->set_cell_attribute('search','label',$value['search_label']);
+				/* old request code
 				$value['msg'] = '';
 				if ($value['button'] == 'search' && count($ids = $this->link->query($value['app'],$value['query'])))
 				{
@@ -258,7 +272,7 @@
 					}
 					$tpl->set_cell_attribute('comment','onchange',"set_style_by_class('*','hide_comment','display',this.checked ? 'block' : 'none');");
 					unset($value['comment']);
-				}
+				}*/
 				break;
 
 			case 'link-list':
@@ -309,6 +323,63 @@
 					}
 				}
 				break;
+
+			case 'link-entry':
+				$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+				$tpl =& new etemplate('etemplate.link_widget.entry');
+				if ($value)	// show pre-selected entry in select-box and not the search
+				{
+					// add selected-entry plus "new search" to the selectbox-options
+					if (($app = $cell['size']))
+					{
+						$id = $value;
+					}
+					else
+					{
+						list($app,$id) = explode(':',$value);
+					}
+					if ($id && ($title = $this->link->title($app,$id)))
+					{
+						$selectbox =& $tpl->get_widget_by_name('id');
+						$selectbox['sel_options'] = array(
+							$id => $title,
+							'' => lang('new search').' ...',
+						);
+						// remove link_hide class from select-box-line
+						$span =& $tpl->get_cell_attribute('select_line','span');
+						$span = str_replace('link_hide','',$span);
+						// add link_hide class to search_line
+						$span =& $tpl->get_cell_attribute('search_line','span');
+						$span .= ' link_hide';
+						unset($span);
+					}
+				}
+				if (($extension_data['app'] = $cell['size']))	// no app-selection, using app given in $cell['size']
+				{
+					$tpl->disable_cells('app');	
+					$onchange =& $tpl->get_cell_attribute('search','onclick');
+					$onchange = str_replace("document.getElementById(form::name('app')).value",'\''.$cell['size'].'\'',$onchange);
+					unset($onchange);
+				}
+				$value = array(
+					'app'        => $cell['size'],
+					'no_app_sel' => !!$cell['size'],
+					'id'         => $value,
+				);
+				break;
+				
+			case 'link-apps':
+				$apps = $this->link->app_list($cell['size']);
+				if (!$apps)	// cant do an add without apps or already created entry
+				{
+					$cell = $tmpl->empty_cell();
+					return;
+				}
+				asort($apps);	// sort them alphabetic
+				$cell['sel_options'] = $apps;
+				$cell['no_lang'] = True;	// already translated
+				$cell['type'] = 'select';
+				return true;
 			}
 			$cell['size'] = $cell['name'];
 			$cell['type'] = 'template';
@@ -345,6 +416,16 @@
 		{
 			//echo "<p>link_widget::post_process('$name',value=".print_r($value,true).",ext=".print_r($extension_data,true).",$loop,,value_in=".print_r($value_in,true)."</p>\n";
 
+			switch($extension_data['type'])
+			{
+				case 'link-entry':
+					$value = $extension_data['app'] ? $value_in['id'] : $value['app'].':'.$value_in['id'];
+					return !!$value_in['id'];
+					
+				case 'link-apps':
+					$value = $value_in;
+					return !!$value;
+			}
 			$buttons = array('search','create','new','upload','attach');
 			while (!$button && list(,$bname) = each($buttons))
 			{
@@ -374,7 +455,7 @@
 					{
 						$link_id = $this->link->link($value['to_app'],$value['to_id'],
 							$value['app'],$value['id'],$value['remark']);
-						$value['remark'] = '';
+						$value['remark'] = $value['query'] = '';
 
 						if (isset($value['primary']) && !$value['anz_links'] )
 						{
@@ -405,6 +486,7 @@
 						{
 							$value['primary'] = $link_id;
 						}
+						unset($value['comment']);
 						unset($value['file']);
 					}
 					else
@@ -436,5 +518,47 @@
 				echo "<p>end: link_widget[$name]::post_process: value ="; _debug_array($value);
 			}
 			return True;
+		}
+		
+		/**
+		 * ajax callback to search in $app for $pattern, result is displayed in $id
+		 *
+		 * @param string $app app-name to search
+		 * @param string $pattern search-pattern
+		 * @param string $id_res id of selectbox to show the result
+		 * @param string $id_hide id(s) of the search-box/-line to hide after a successful search
+		 * @param string $id_show id(s) of the select-box/-line to show after a successful search
+		 * @param string $id_input id of the search input-field
+		 */
+		function ajax_search($app,$pattern,$id_res,$id_hide,$id_show,$id_input)
+		{
+			$response = new xajaxResponse();
+			//$args = func_get_args(); $response->addAlert("link_widget::ajax_search('".implode("','",$args)."')");
+			
+			if (!($found = $this->link->query($app,$pattern == lang('Search') ? '' : $pattern)))	// ignore the blur-text
+			{
+				$response->addAlert(lang('Nothing found - try again !!!'));
+				$response->addScript("document.getElementById('$id_input').select();");
+			}
+			else
+			{
+				$script = "var select = document.getElementById('$id_res');\nselect.options.length=0;\n";
+				foreach($found as $id => $title)
+				{
+					$script .= "select.options[select.options.length] = new Option('".addslashes($title)."','$id');\n";
+				}
+				$script .= "select.options[select.options.length] = new Option('".addslashes(lang('New search').' ...')."','');\n";
+				foreach(explode(',',$id_show) as $id)
+				{
+					$script .= "document.getElementById('$id').style.display='inline';\n";
+				}
+				foreach(explode(',',$id_hide) as $id)
+				{
+					$script .= "document.getElementById('$id').style.display='none';\n";
+				}
+				//$response->addAlert($script);
+				$response->addScript($script);
+			}
+			return $response->getXML();
 		}
 	}
