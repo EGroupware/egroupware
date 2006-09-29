@@ -660,6 +660,7 @@
 			{
 				foreach ((array)$contacts as $contact)
 				{
+					if(!is_readable($attachment['tmp_name'])) continue;
 					$this->link->link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
 				}
 			}
