@@ -74,7 +74,7 @@ while(($row = $GLOBALS['egw_setup']->db->row(true)))
 	$GLOBALS['egw_info']['server'][$row['config_name']] = $row['config_value'];
 }
 $to = $GLOBALS['egw_info']['server']['account_repository'];
-if (!$to || !($to = $GLOBALS['egw_info']['server']['auth_type']))
+if (!$to && !($to = $GLOBALS['egw_info']['server']['auth_type']))
 {
 	$to = 'sql';
 }
