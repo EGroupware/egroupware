@@ -136,6 +136,7 @@ class uicontacts extends bocontacts
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
 				'cat_id'         =>	0,			// IO category, if not 'no_cat' => True
+				'options-cat_id' => array(lang('none')),
 				'search'         =>	'',			// IO search pattern
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'
@@ -448,15 +449,13 @@ class uicontacts extends bocontacts
 				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 			}
 		}
-		if (isset($query['col_filter']['cat_id'])) unset($query['col_filter']['cat_id']);
-		if ($query['cat_id'])
+		if ((string)$query['cat_id'] != '')
 		{
-			if (!is_object($GLOBALS['egw']->categories))
-			{
-				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
-			}
-			$cats = $GLOBALS['egw']->categories->return_all_children((int)$query['cat_id']);
-			$query['col_filter']['cat_id'] = count($cats) > 1 ? $cats : $query['cat_id'];
+			$query['col_filter']['cat_id'] = $query['cat_id'] ? $query['cat_id'] : null;
+		}
+		else
+		{
+			unset($query['col_filter']['cat_id']);
 		}
 		if ($query['filter'] !== '')	// not all addressbooks
 		{
@@ -651,6 +650,10 @@ class uicontacts extends bocontacts
 		}
 		if ($query['cat_id'])
 		{
+			if (!is_object($GLOBALS['egw']->categories))
+			{
+				$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
+			}
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Category').' '.$GLOBALS['egw']->categories->id2name($query['cat_id']);
 		}
 		if ($query['searchletter']) 

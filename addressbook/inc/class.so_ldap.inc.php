@@ -644,9 +644,8 @@ class so_ldap
 			}
 		}
 		$colFilter = $this->_colFilter($filter);
-
 		$ldapFilter = "(&$objectFilter$searchFilter$colFilter)";
-		
+
 		if (!($rows = $this->_searchLDAP($searchDN, $ldapFilter, $this->all_attributes, $addressbookType)))
 		{
 			return $rows;
@@ -703,7 +702,7 @@ class so_ldap
 		$filters = '';
 		foreach($filter as $key => $value)
 		{
-			if (!$value) continue;
+			if ($key != 'cat_id' && !$value) continue;
 
 			switch((string) $key)
 			{
@@ -712,11 +711,25 @@ class so_ldap
 					break;
 					
 				case 'cat_id':
-					if((int)$value)
+					if (is_null($value))
 					{
-						$catName = $GLOBALS['egw']->translation->convert(
-							ExecMethod('phpgwapi.categories.id2name',$value),$this->charset,'utf-8');
-						$filters .= '(category='.ldap::quote($catName).')';
+						$filters .= '(!(category=*))';
+					}
+					elseif((int)$value)
+					{
+						if (!is_object($GLOBALS['egw']->categories))
+						{
+							$GLOBALS['egw']->categories = CreateObject('phpgwapi.categories');
+						}
+						$cats = $GLOBALS['egw']->categories->return_all_children((int)$value);
+						if (count($cats) > 1) $filters .= '(|';
+						foreach($cats as $cat)
+						{
+							$catName = $GLOBALS['egw']->translation->convert(
+								$GLOBALS['egw']->categories->id2name($cat),$this->charset,'utf-8');
+							$filters .= '(category='.ldap::quote($catName).')';
+						}
+						if (count($cats) > 1) $filters .= ')';
 					}
 					break;
 				
