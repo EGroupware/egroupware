@@ -727,9 +727,12 @@ class bocontacts extends socontacts
 				$criteria[$col] = $pattern;
 			}
 		}
-		foreach((array) parent::search($criteria,false,'org_name,n_family,n_given','','%',false,'OR') as $contact)
+		if (($contacts = parent::search($criteria,false,'org_name,n_family,n_given','','%',false,'OR')))
 		{
-			$result[$contact['id']] = $this->link_title($contact);
+			foreach($contacts as $contact)
+			{
+				$result[$contact['id']] = $this->link_title($contact);
+			}
 		}
 		return $result;
 	}
