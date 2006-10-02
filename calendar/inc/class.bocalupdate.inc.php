@@ -48,7 +48,16 @@ define('MSG_DISINVITE',7);
 
 class bocalupdate extends bocal
 {
-	var $debug=false;
+	/**
+	 * name of method to debug or level of debug-messages:
+	 *	False=Off as higher as more messages you get ;-)
+	 *	1 = function-calls incl. parameters to general functions like search, read, write, delete
+	 *	2 = function-calls to exported helper-functions like check_perms
+	 *	4 = function-calls to exported conversation-functions like date2ts, date2array, ...
+	 *	5 = function-calls to private functions
+	 * @var mixed
+	 */
+	var $debug;
 	
 	/**
 	 * @var string/boolean $log_file filename to enable the login or false for no update-logging
@@ -809,7 +818,7 @@ class bocalupdate extends bocal
 		{
 			$link = ($GLOBALS['egw_info']['server']['enforce_ssl'] || $_SERVER['HTTPS'] ? 'https://' : 'http://').
 				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).
-				$details['link'];
+				$link;
 		}
 		$event_arr['link']['data'] = $details['link'] = $link;
 		$dis = array();
