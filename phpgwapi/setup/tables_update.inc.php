@@ -650,4 +650,13 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.012';
 	}
-?>
+
+
+	$test[] = '1.3.012';
+	function phpgwapi_upgrade1_3_012()
+	{
+		// setting old contacts without cat to cat_id=NULL, they cat be '0' or ''
+		$GLOBALS['egw_setup']->db->query("UPDATE egw_addressbook SET cat_id=NULL WHERE cat_id IN ('','0')",__LINE__,__FILE__);
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.013';
+	}
