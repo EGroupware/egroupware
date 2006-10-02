@@ -41,7 +41,7 @@
 
 		$argList	= func_get_args();
 		$arg0		= array_shift($argList);
-			
+	
 		if(get_magic_quotes_gpc()) {
 			foreach($argList as $key => $value) {
 				if(is_array($value)) {
@@ -53,15 +53,10 @@
 				}
 			}
 		}
+		//error_log("xajax_doXMLHTTP('$arg0',...)");
 
-		list($appName, $className, $functionName) = explode('.',$arg0);
+		@list($appName, $className, $functionName, $handler) = explode('.',$arg0);
 		
-		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax')
-		{
-			// stopped for security reasons
-			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$arg0.' is not valid. class- or function-name must start with ajax!!!');
-			exit;
-		}
 		$GLOBALS['egw_info'] = array(
 			'flags' => array(
 				'currentapp'			=> $appName,
@@ -76,12 +71,38 @@
 		$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
 		define('XAJAX_DEFAULT_CHAR_ENCODING',$GLOBALS['egw']->translation->charset());
 
+		// now the header is included, we can set the charset
+		$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
+
+		switch($handler)
+		{
+			case '/etemplate/process_exec':
+				$_GET['menuaction'] = $appName.'.'.$className.'.'.$functionName;
+				$appName = $className = 'etemplate';
+				$functionName = 'process_exec';
+				$arg0 = 'etemplate.etemplate.process_exec';
+
+				$argList = array(
+					$argList[0]['etemplate_exec_id'],
+					$argList[0]['submit_button'],
+					$argList[0],
+					'xajaxResponse',
+				);
+				error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$arg0', menuaction='$_GET[menuaction]'");
+				break;
+		}
+		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax')
+		{
+			// stopped for security reasons
+			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$arg0.' is not valid. class- or function-name must start with ajax!!!');
+			exit;
+		}
 		$ajaxClass =& CreateObject($appName.'.'.$className);
 		$argList = $GLOBALS['egw']->translation->convert($argList, 'utf-8');
 
-		return call_user_func_array(array(&$ajaxClass, $functionName), $argList );			
+		return call_user_func_array(array(&$ajaxClass, $functionName), $argList );
 	}
-	
+
 	$xajax = new xajax($_SERVER['PHP_SELF']);
 	$xajax->registerFunction('doXMLHTTP');	
 	$xajax->processRequests();
