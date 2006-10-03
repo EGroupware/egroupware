@@ -47,6 +47,8 @@
 		echo '!!! PLEASE CORRECT THIS SITUATION !!!</b></p>';
 	}
 
+	include(EGW_API_INC.'/common_functions.inc.php');
+
 	// check if we can restore the eGW enviroment from the php-session
 	if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUEST['sessionid'])
 	{
@@ -89,8 +91,6 @@
 			unset($_SESSION['egw_object_cache']);
 		}
 	}
-	include(EGW_API_INC.'/common_functions.inc.php');
-
 	print_debug('sane environment','messageonly','api');
 
 	/****************************************************************************\

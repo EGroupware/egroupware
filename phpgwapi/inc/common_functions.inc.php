@@ -663,7 +663,7 @@
 	{
 		list($appname,$classname) = explode('.',$class);
 
-		include_once($file=EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
+		include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 
 		if (class_exists($classname))
 		{
@@ -937,30 +937,15 @@
 	 */
 	function _debug_array($array,$print=True)
 	{
-		$four = False;
-		if(@floor(phpversion()) > 3)
+		$output = '<pre>'.print_r($array,true)."</pre>\n";
+		
+		if ($print)
 		{
-			$four = True;
-		}
-		if($four)
-		{
-			if(!$print)
-			{
-				ob_start();
-			}
-			echo '<pre>';
-			print_r($array);
-			echo '</pre>';
-			if(!$print)
-			{
-				$v = ob_get_contents();
-				ob_end_clean();
-				return $v;
-			}
+			echo $output;
 		}
 		else
 		{
-			return print_r($array,False,$print);
+			return $output;
 		}
 	}
 
@@ -1231,6 +1216,32 @@
 		}
 	}
 	//if (is_array($GLOBALS['egw_unset_vars'])) { echo "egw_unset_vars=<pre>".htmlspecialchars(print_r($GLOBALS['egw_unset_vars'],true))."</pre>"; exit; }
+
+	// neutralises register_globals On, which is not used by eGW
+	// some code from the hardend php project: http://www.hardened-php.net/articles/PHPUG-PHP-Sicherheit-Parametermanipulationen.pdf
+	if (ini_get('register_globals'))
+	{
+		function unregister_globals()
+		{
+			// protect against GLOBALS overwrite or setting egw_info
+			if (isset($_REQUEST['GLOBALS']) || isset($_FILES['GLOBALS']) || isset($_REQUEST['egw_info']) || isset($_FILES['egw_info']))
+			{
+				die('GLOBALS overwrite detected!!!');
+			}
+			// unregister all globals
+			$noUnset = array('GLOBALS','_GET','_POST','_COOKIE','_SERVER','_ENV','_FILES','xajax');
+			foreach(array_unique(array_merge(
+				array_keys($_GET),array_keys($_POST),array_keys($_COOKIE),array_keys($_SERVER),array_keys($_ENV),array_keys($_FILES),
+				isset($_SESSION) && is_array($_SESSION) ? array_keys($_SESSION) : array())) as $k)
+			{
+				if (!in_array($k,$noUnset) && isset($GLOBALS[$k]))
+				{
+					unset($GLOBALS[$k]);
+				}
+			}
+		}
+		unregister_globals();
+	}
 
 	if(floor(phpversion()) <= 4)
 	{
