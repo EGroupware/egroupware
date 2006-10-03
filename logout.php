@@ -12,13 +12,14 @@
 
 	/* $Id$ */
 
-	$egw_info = array();
-	$GLOBALS['egw_info']['flags'] = array(
-		'disable_Template_class' => True,
-		'currentapp'             => 'logout',
-		'noheader'               => True,
-		'nofooter'               => True,
-		'nonavbar'               => True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'disable_Template_class' => True,
+			'currentapp'             => 'logout',
+			'noheader'               => True,
+			'nofooter'               => True,
+			'nonavbar'               => True
+		)
 	);
 	include('./header.inc.php');
 

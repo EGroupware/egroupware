@@ -14,12 +14,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 require_once HORDE_BASE . '/lib/core.php';
 require_once 'Horde/RPC.php';
 
-$GLOBALS['egw_info'] = array();
-$GLOBALS['egw_info']['flags'] = array(
-	'currentapp'			=> 'login',
-	'noheader'			=> True,
-	'nonavbar'			=> True,
-	'disable_Template_class'	=> True
+$GLOBALS['egw_info'] = array(
+	'flags' => array(
+		'currentapp'			=> 'login',
+		'noheader'			=> True,
+		'nonavbar'			=> True,
+		'disable_Template_class'	=> True
+	)
 );
 include('./header.inc.php');
 

@@ -11,7 +11,6 @@
 
 	/* $Id$ */
 
-	$egw_info = array();
 	if(!file_exists('header.inc.php'))
 	{
 		Header('Location: setup/index.php');
@@ -35,9 +34,9 @@
 	/*
 		This is the menuaction driver for the multi-layered design
 	*/
-	if(isset($_GET['menuaction']))
+	if(isset($_GET['menuaction']) && preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$_GET['menuaction']))
 	{
-		list($app,$class,$method) = explode('.',@$_GET['menuaction']);
+		list($app,$class,$method) = explode('.',$_GET['menuaction']);
 		if(! $app || ! $class || ! $method)
 		{
 			$invalid_data = True;
@@ -45,9 +44,6 @@
 	}
 	else
 	{
-	//$egw->log->message('W-BadmenuactionVariable, menuaction missing or corrupt: %1',$menuaction);
-	//$egw->log->commit();
-
 		$app = 'home';
 		$invalid_data = True;
 	}
@@ -58,19 +54,21 @@
 		$api_requested = True;
 	}
 
-	$GLOBALS['egw_info']['flags'] = array(
-		'noheader'   => True,
-		'nonavbar'   => True,
-		'enable_network_class'    => True,
-		'enable_contacts_class'   => True,
-		'enable_nextmatchs_class' => True,
-		'currentapp' => $app
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'noheader'   => True,
+			'nonavbar'   => True,
+			'enable_network_class'    => True,
+			'enable_contacts_class'   => True,
+			'enable_nextmatchs_class' => True,
+			'currentapp' => $app
+		)
 	);
 	include('./header.inc.php');
 
 	// 	Check if we are using windows or normal webpage
 	$windowed = false;
-	$tpl_info = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['user']['preferences']['common']['template_set'] . '/setup/setup.inc.php';
+	$tpl_info = EGW_SERVER_ROOT . '/phpgwapi/templates/' . basename($GLOBALS['egw_info']['user']['preferences']['common']['template_set']) . '/setup/setup.inc.php';
 
 	if(@file_exists($tpl_info))
 	{
@@ -122,7 +120,7 @@
 		}
 
 		$GLOBALS[$class] = CreateObject($app.'.'.$class);	// dont use =& with $GLOBALS, it does NOT behave as expected
-		if((is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions[$method]) && ! $invalid_data)
+		if((is_array($GLOBALS[$class]->public_functions) && $GLOBALS[$class]->public_functions[$method]) && !$invalid_data)
 		{
 			execmethod($_GET['menuaction']);
 			unset($app);
@@ -133,7 +131,7 @@
 		}
 		else
 		{
-			if(!$app || !$class || !$method)
+			if(!$app || !$class || !$method || $invalid_data)
 			{
 				if(@is_object($GLOBALS['egw']->log))
 				{
@@ -146,7 +144,7 @@
 				}
 			}
 
-			if(!is_array($GLOBALS[$class]->public_functions) || ! $$GLOBALS[$class]->public_functions[$method] && $method)
+			if(!is_array($GLOBALS[$class]->public_functions) || !$GLOBALS[$class]->public_functions[$method] && $method)
 			{
 				if(@is_object($GLOBALS['egw']->log))
 				{

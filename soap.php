@@ -12,12 +12,13 @@
 
 	/* $Id$ */
 
-	$egw_info = array();
-	$GLOBALS['egw_info']['flags'] = array(
-		'disable_Template_class' => True,
-		'currentapp' => 'login',
-		'noheader'   => True,
-		'disable_Template_class' => True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'disable_Template_class' => True,
+			'currentapp' => 'login',
+			'noheader'   => True,
+			'disable_Template_class' => True
+		)
 	);
 	include('./header.inc.php');
 
@@ -89,4 +90,3 @@
 	}
 
 	$GLOBALS['server']->service($HTTP_RAW_POST_DATA);
-?>

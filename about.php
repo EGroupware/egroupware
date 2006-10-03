@@ -11,20 +11,16 @@
 
    /* $Id$ */
 
-	$GLOBALS['egw_info'] = array();
-	$app = $_GET['app'];
-	if(isset($app) && $_GET['app'] != 'eGroupWare')
-	{
-		$GLOBALS['egw_info']['flags']['currentapp'] = $app;
-	}
-	else
-	{
-		$GLOBALS['egw_info']['flags']['currentapp'] = 'about';
-	}
-
-	$GLOBALS['egw_info']['flags']['disable_Template_class'] = True;
-	$GLOBALS['egw_info']['flags']['noheader'] = True;
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp' => isset($_GET['app']) && $_GET['app'] != 'eGroupWare' ? $_GET['app'] : 'about',
+			'disable_Template_class' => True,
+			'noheader' => True,
+		)
+	);
 	include('header.inc.php');
+
+	$app = isset($_GET['app']) && $_GET['app'] != 'eGroupWare' ? basename($_GET['app']) : 'about';
 
 	if ($app)
 	{
@@ -38,7 +34,7 @@
 		$api_only = True;
 	}
 
-	$tpl = CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('phpgwapi'));
+	$tpl =& CreateObject('phpgwapi.Template',$GLOBALS['egw']->common->get_tpl_dir('phpgwapi'));
 	$tpl->set_file(array(
 		'phpgw_about'         => 'about.tpl',
 		'phpgw_about_unknown' => 'about_unknown.tpl'
@@ -46,7 +42,7 @@
 
 	$title = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : 'eGroupWare';
 	$GLOBALS['egw_info']['flags']['app_header'] = lang('About %1',$title);
-	$GLOBALS['egw']->common->phpgw_header();
+	$GLOBALS['egw']->common->egw_header();
 
 	$tpl->set_block('phpgw_about', 'egroupware','egroupware');
 	$tpl->set_block('phpgw_about', 'application','application');
@@ -77,11 +73,11 @@
 		}
 	}
 
-	$GLOBALS['egw']->common->phpgw_footer();
+	$GLOBALS['egw']->common->egw_footer();
 
 	function about_app()
 	{
-		global $app;
+		$app = basename($_GET['app']);
 		include(EGW_INCLUDE_ROOT . "/$app/setup/setup.inc.php");
 		$info = $setup_info[$app];
 		$info['icon'] = $GLOBALS['egw']->common->image($app,array('navbar','nonav'));

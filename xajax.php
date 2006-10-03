@@ -71,9 +71,6 @@
 		$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
 		define('XAJAX_DEFAULT_CHAR_ENCODING',$GLOBALS['egw']->translation->charset());
 
-		// now the header is included, we can set the charset
-		$GLOBALS['xajax']->setCharEncoding($GLOBALS['egw']->translation->charset());
-
 		switch($handler)
 		{
 			case '/etemplate/process_exec':
@@ -91,7 +88,8 @@
 				error_log("xajax_doXMLHTTP() /etemplate/process_exec handler: arg0='$arg0', menuaction='$_GET[menuaction]'");
 				break;
 		}
-		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax')
+		if(substr($className,0,4) != 'ajax' && $arg0 != 'etemplate.etemplate.process_exec' && substr($functionName,0,4) != 'ajax' ||
+			!preg_match('/^[A-Za-z0-9_]+\.[A-Za-z0-9_]+\.[A-Za-z0-9_]+$/',$arg0))
 		{
 			// stopped for security reasons
 			error_log($_SERVER['PHP_SELF']. ' stopped for security reason. '.$arg0.' is not valid. class- or function-name must start with ajax!!!');

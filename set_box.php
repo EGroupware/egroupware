@@ -12,10 +12,12 @@
 
   /* $Id$ */
 
-	$GLOBALS['egw_info']['flags'] = Array(
-		'noheader' => True,
-		'nofooter' => True,
-		'currentapp' => 'home'
+	$GLOBALS['egw_info'] = array(
+		'flags' => Array(
+			'noheader' => True,
+			'nofooter' => True,
+			'currentapp' => 'home'
+		)
 	);
 	include('header.inc.php');
 
@@ -97,4 +99,3 @@
 	}
 
 	$GLOBALS['egw']->redirect_link('/home/index.php');
-?>

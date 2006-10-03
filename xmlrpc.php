@@ -15,11 +15,12 @@
 	/*list($usec, $sec) = explode(" ", microtime());
 	$GLOBALS['concisus']['script_start'] = ((float)$usec + (float)$sec);*/
 
-	$GLOBALS['egw_info'] = array();
-	$GLOBALS['egw_info']['flags'] = array(
-		'currentapp'            => 'login',
-		'noheader'              => True,
-		'disable_Template_class' => True
+	$GLOBALS['egw_info'] = array(
+		'flags' => array(
+			'currentapp'            => 'login',
+			'noheader'              => True,
+			'disable_Template_class' => True
+		)
 	);
 	include('header.inc.php');
 
@@ -84,4 +85,3 @@
 	}
 
 	$server->service($_SERVER['HTTP_RAW_POST_DATA']);
-?>
