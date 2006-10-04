@@ -34,9 +34,10 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.customfields.fields" template="" lang="" group="0" version="1.2.001">
+	<template id="infolog.customfields.fields" template="" lang="" group="0" version="1.3.001">
 		<grid>
 			<columns>
+				<column/>
 				<column/>
 				<column/>
 				<column/>
@@ -50,6 +51,7 @@
 					<description value="Typ"/>
 					<description value="Name"/>
 					<description value="Label"/>
+					<description value="Type"/>
 					<description value="Values for selectbox"/>
 					<description value="Length&lt;br&gt;Rows"/>
 					<description value="Order"/>
@@ -57,15 +59,18 @@
 				</row>
 				<row class="row" valign="top">
 					<menulist>
-						<menupopup options="All" id="${row}[typ]" statustext="for which types should this field be used"/>
+						<menupopup options="All" id="${row}[type2]" statustext="for which types should this field be used"/>
 					</menulist>
 					<textbox size="20" maxlength="32" id="${row}[name]" statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible"/>
-					<vbox>
+					<vbox options="0,0">
 						<textbox maxlength="255" id="${row}[label]" statustext="the text displayed to the user"/>
 						<description id="${row}[label]"/>
 					</vbox>
+					<menulist>
+						<menupopup id="${row}[type]" statustext="Type of customfield" no_lang="1"/>
+					</menulist>
 					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like &lt;id&gt;[=&lt;label&gt;]"/>
-					<vbox>
+					<vbox options="0,0">
 						<textbox size="5" id="${row}[len]" statustext="max length of the input [, length of the inputfield (optional)]"/>
 						<int options="0,10,2" id="${row}[rows]" statustext="number of row for a multiline inputfield or line of a multi-select-box" blur="1"/>
 					</vbox>
@@ -78,7 +83,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.customfields" template="" lang="" group="0" version="1.2.001">
+	<template id="infolog.customfields" template="" lang="" group="0" version="1.3.001">
 		<grid>
 			<columns>
 				<column/>
@@ -92,7 +97,7 @@
 				<row>
 					<description value="Typ"/>
 					<menulist>
-						<menupopup id="typ" onchange="1" statustext="select a typ to edit it's status-values or delete it"/>
+						<menupopup id="type2" onchange="1" statustext="select a typ to edit it's status-values or delete it"/>
 					</menulist>
 					<button label="Delete" id="button[delete]" statustext="deletes the selected typ"/>
 					<textbox size="10" maxlength="40" id="new_name" statustext="name of new type to create" blur="new name"/>

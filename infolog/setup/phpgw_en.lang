@@ -48,6 +48,7 @@ category	infolog	en	Category
 change the status of an entry, eg. close it	infolog	en	Change the status of an entry, eg. close it
 charset of file	infolog	en	Charset of file
 check to set startday	infolog	en	check to set startday
+check to specify custom contact	infolog	en	Check to specify custom contact
 click here to create the link	infolog	en	click here to create the Link
 click here to start the search	infolog	en	click here to start the search
 close	infolog	en	Close
@@ -279,6 +280,7 @@ typ	infolog	en	Type
 typ '%1' already exists !!!	infolog	en	Type '%1' already exists !!!
 type	infolog	en	Type
 type ...	infolog	en	Type ...
+type of customfield	infolog	en	Type of customfield
 type of the log-entry: note, phonecall or todo	infolog	en	Type of the log-entry: Note, Phone call or ToDo
 unlink	infolog	en	Unlink
 upcoming	infolog	en	upcoming

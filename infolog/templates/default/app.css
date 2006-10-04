@@ -15,3 +15,4 @@
 .fullWidth table { width: 100%; }
 .infoId:before { content:"#" }
 .fixedHeight { line-height: 12px; }
+.noWrap { white-space: nowrap; }

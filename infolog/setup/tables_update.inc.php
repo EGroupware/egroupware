@@ -556,3 +556,15 @@
 
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.2.004';
 	}
+
+	$test[] = '1.2.004';
+	function infolog_upgrade1_2_004()
+	{
+		// column to save if from contains a custom text
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_custom_from',array(
+			'type' => 'int',
+			'precision' => '1',
+		));
+
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.3.001';
+	}

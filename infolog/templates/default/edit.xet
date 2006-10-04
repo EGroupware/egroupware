@@ -123,7 +123,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.2.002">
+	<template id="infolog.edit" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -152,13 +152,19 @@
 				</row>
 				<row class="row">
 					<description value="Contact" options=",,,info_from"/>
-					<textbox size="36" maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title"/>
+					<vbox options="0,0">
+						<hbox options="0,0">
+							<link-entry id="info_contact" class="noWrap"/>
+							<checkbox id="info_custom_from" onchange="document.getElementById(form::name('info_from')).style.display=this.checked?'block':'none';" statustext="Check to specify custom contact"/>
+						</hbox>
+						<textbox size="36" maxlength="255" id="info_from" statustext="Custom contact-information, leave emtpy to use information from most recent link" blur="@blur_title" class="$cont[hide_from_css]"/>
+					</vbox>
 					<description value="Phone/Email" options=",,,_info_addr"/>
 					<textbox size="30" maxlength="255" id="info_addr" statustext="Custom contact-address, leave empty to use information from most recent link"/>
 				</row>
 				<row class="row">
 					<description value="Subject" options=",,,info_subject"/>
-					<textbox size="80" maxlength="255" span="all" id="info_subject" needed="1" statustext="a short subject for the entry"/>
+					<textbox size="80" maxlength="255" span="all" id="info_subject" statustext="a short subject for the entry"/>
 				</row>
 				<row valign="top" height="250">
 					<tabbox span="all">
@@ -209,7 +215,7 @@
 						<menupopup type="select-account" id="info_owner" readonly="true"/>
 					</menulist>
 					<description value="Last modified"/>
-					<hbox orient="0,0">
+					<hbox options="0" orient="0">
 						<menulist>
 							<menupopup type="select-account" id="info_modifier" readonly="true"/>
 						</menulist>
@@ -228,5 +234,8 @@
 				</row>
 			</rows>
 		</grid>
+		<styles>
+			.hideFrom input { display: none; }
+		</styles>
 	</template>
 </overlay>

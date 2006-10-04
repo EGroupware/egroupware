@@ -48,6 +48,7 @@ category	infolog	de	Kategorie
 change the status of an entry, eg. close it	infolog	de	Status eines Eintrags ändern, zB. ihn als erledigt markieren
 charset of file	infolog	de	Zeichensatz der Datei
 check to set startday	infolog	de	ankreutzen um Startdatum zu setzen
+check to specify custom contact	infolog	de	Ankreutzen um einen eigenen Kontakt anzugeben
 click here to create the link	infolog	de	hier klicken um die Verknüpfung zu erzeugen
 click here to start the search	infolog	de	hier klicken um die Suche zu starten
 close	infolog	de	Schließen
@@ -280,6 +281,7 @@ typ	infolog	de	Typ
 typ '%1' already exists !!!	infolog	de	Typ '%1' existiert bereits !!!
 type	infolog	de	Typ
 type ...	infolog	de	Typ ...
+type of customfield	infolog	de	Typ des benutzerdefinierten Feldes
 type of the log-entry: note, phonecall or todo	infolog	de	Typ des Eintrags: Notiz, Anruf oder Auftrag
 unlink	infolog	de	Verküpfung lösen
 upcoming	infolog	de	zukünftig

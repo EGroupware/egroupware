@@ -39,7 +39,8 @@
 				'info_price' => array('type' => 'float','precision' => '8'),
 				'info_percent' => array('type' => 'int','precision' => '2','default' => '0'),
 				'info_datecompleted' => array('type' => 'int','precision' => '8'),
-				'info_location' => array('type' => 'varchar','precision' => '255')
+				'info_location' => array('type' => 'varchar','precision' => '255'),
+				'info_custom_from' => array('type' => 'int','precision' => '1')
 			),
 			'pk' => array('info_id'),
 			'fk' => array(),
