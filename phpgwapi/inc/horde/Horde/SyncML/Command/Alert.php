@@ -102,7 +102,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
         	    $state->setServerAnchorLast($type, 0);
         	}
         	
-        	Horde::logMessage("SyncML: checking anchor \$clientlast " . $clientlast .' '. $this->_metaAnchorLast .' '. $clientlast == $this->_metaAnchorLast, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+        	Horde::logMessage('SyncML: checking anchor targetLocURI: clientlast: ' . $clientlast .' / '. $this->_metaAnchorLast, __FILE__, __LINE__, PEAR_LOG_DEBUG);
         	
         	// Set Server Anchor for this sync to current time.
         	$state->setServerAnchorNext($type,time());
@@ -339,7 +339,7 @@ class Horde_SyncML_Command_Alert extends Horde_SyncML_Command {
 					
 					$state->setSync($this->_targetLocURI, $sync);
 
-					if($this->_alert == ALERT_SLOW_SYNC) {
+					if($this->_alert == ALERT_SLOW_SYNC || $this->_alert == ALERT_REFRESH_FROM_SERVER) {
 						$state->removeAllUID($this->_targetLocURI);
 					}
 				}

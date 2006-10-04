@@ -36,13 +36,6 @@ class Horde_SyncML_Sync_TwoWaySync extends Horde_SyncML_Sync {
                                           $output,
                                           $refts);
 		
-		#if ($syncType == 'calendar' && $state->handleTasksInCalendar()) {
-		#	Horde::logMessage("SyncML: handling tasks in calendar sync", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-		#	
-		#	$currentCmdID = $this->handleSync($currentCmdID, 'tasks', $syncType,
-		#		$output, $refts);
-		#}
-		
 		return $currentCmdID;
 	}
 

@@ -173,22 +173,19 @@ class Horde_SyncML_Sync_SlowSync extends Horde_SyncML_Sync_TwoWaySync {
 
 		return true;
 	}
-    
-
-    function loadData()
-    {
-        global $registry;
-
-	$state = &$_SESSION['SyncML.state'];
-        $syncType = $this->_targetLocURI;
-        $hordeType = str_replace('./','',$syncType);
-
-	Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
-	$state->setAddedItems($hordeType, $registry->call($hordeType. '/list', array()));
-	$adds = &$state->getAddedItems($hordeType);
-	$this->_syncDataLoaded = TRUE;
-
-	return count($state->getAddedItems($hordeType));
-    }
-
+	
+	function loadData() {
+		global $registry;
+		
+		$state = &$_SESSION['SyncML.state'];
+		$syncType = $this->_targetLocURI;
+		$hordeType = str_replace('./','',$syncType);
+		
+		Horde::logMessage("SyncML: reading added items from database for $hordeType", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		$state->setAddedItems($hordeType, $registry->call($hordeType. '/list', array()));
+		$adds = &$state->getAddedItems($hordeType);
+		$this->_syncDataLoaded = TRUE;
+		
+		return count($state->getAddedItems($hordeType));
+	}
 }
