@@ -48,19 +48,6 @@
 		{
 			$readonly = $cell['readonly'] || $readonlys[$name];
 
-			// infolog compability
-			if ($this->appname == 'infolog')
-			{
-				$type2 = $value['###typ###'];
-				$type2_var = 'typ';
-				unset($value['###typ###']);
-				$this->customfields = $value;
-			}
-			else
-			{
-				$type2 = $value;
-				$type2_var = 'type2';
-			}
 			if(!is_array($this->customfields))
 			{
 				$cell['type'] = 'label';
@@ -73,23 +60,15 @@
 			//echo '<pre style="text-align: left;">'; print_r($value); echo "</pre>\n";
 			foreach($this->customfields as $name => $field)
 			{
-				if (!empty($field[$type2_var]) && $field[$type2_var] != $type2)
+				if (!empty($field['type2']) && $field['type2'] != $value)
 				{
 					continue;	// not for our content type
 				}
-				if(empty($field['type']))
-				{
-					if (count($field['values'])) $field['type'] = 'select'; // selectbox
-					elseif ($field['rows'] > 1) $field['type'] = 'textarea'; // textarea
-					elseif (intval($field['len']) > 0) $field['type'] = 'text'; // regular input field
-					else $field['type'] = 'label'; // header-row
-				}
-				
 				$row_class = 'row';
 				$label = &$tpl->new_cell(++$n,'label',$field['label'],'',array(
 					'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0
 				));
-				switch ($field['type'])
+				switch ((string)$field['type'])
 				{
 					case 'select' :
 						if($this->advanced_search) $field['values'][''] = lang('doesn\'t matter');
@@ -140,7 +119,7 @@
 						break;
 					case 'text' :
 					case 'textarea' :
-					default :
+					case '' :	// not set
 						$field['len'] = $field['len'] ? $field['len'] : 20;
 						if($field['rows'] <= 1)
 						{
@@ -153,9 +132,14 @@
 						{
 							$input = &$tpl->new_cell($n,'textarea','',$this->prefix.$name,array(
 								'size' => $field['rows'].($field['len'] > 0 ? ','.(int)$field['len'] : '')
-						));
+							));
 						}
 						break;
+					case 'link-entry':
+					default :	// link-entry to given app
+						$input = &$tpl->new_cell($n,'link-entry','',$this->prefix.$name,array(
+							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
+						));
 				}
 				if ($readonly) $input['readonly'] = true;
 				
