@@ -325,6 +325,10 @@
 				{
 					$GLOBALS['egw']->accounts->save_session_cache();
 				}
+				if (is_object($GLOBALS['egw']->link))
+				{
+					$GLOBALS['egw']->link->save_session_cache();
+				}
 				// call the asyncservice check_run function if it is not explicitly set to cron-only
 				//
 				if (!$GLOBALS['egw_info']['server']['asyncservice'])	// is default

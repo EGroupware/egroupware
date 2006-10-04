@@ -34,7 +34,8 @@ class bolink extends solink
 	/**
 	 * other apps can participate in the linking by implementing a 'search_link' hook, which
 	 * has to return an array in the format of an app_register entry below
-	 * @var array $app_register
+	 * 
+	 * @var array
 	 */
 	var $app_register = array(
 		'projects' => array(
@@ -57,11 +58,22 @@ class bolink extends solink
 	var $public_functions = array(	// functions callable via menuaction
 		'get_file' => True
 	);
+	/**
+	 * Instance of the vfs class
+	 *
+	 * @var vfs
+	 */
 	var $vfs;
 	var $vfs_basedir='/infolog';
 	var $vfs_appname='file';		// pseudo-appname for own file-attachments in vfs, this is NOT the vfs-app
 	var $valid_pathes = array();
 	var $send_file_ips = array();
+	/**
+	 * Caches link titles for a better performance
+	 *
+	 * @var array
+	 */
+	var $title_cache = array();
 
 	/**
 	 * constructor
@@ -93,6 +105,16 @@ class bolink extends solink
 				}
 			}
 		}
+		if (!($this->title_cache = $GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi'))) $this->title_cache = array();
+	}
+	
+	/**
+	 * Called by egw::egw_final to store the title-cache in the session
+	 *
+	 */
+	function save_session_cache()
+	{
+		$GLOBALS['egw']->session->appsession('link_title_cache','phpgwapi',$this->title_cache);
 	}
 	
 	/**
@@ -346,6 +368,7 @@ class bolink extends solink
 			if (!$link_id && !$app2 && !$id2)
 			{
 				$this->delete_attached($app,$id);	// deleting all attachments
+				unset($this->title_cache[$app.':'.$id]);
 			}
 			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
 			
@@ -427,7 +450,11 @@ class bolink extends solink
 			echo "<p>bolink::title('$app','$id')</p>\n";
 		}
 		if (!$id) return '';
-
+		
+		if (isset($this->title_cache[$app.':'.$id]))
+		{
+			return $this->title_cache[$app.':'.$id];
+		}
 		if ($app == $this->vfs_appname)
 		{
 			if (is_array($id) && $link)
@@ -451,7 +478,7 @@ class bolink extends solink
 				}
 				$extra = ': '.$link['type'] . ' '.$size;
 			}
-			return $id.$extra;
+			return $this->title_cache[$app.':'.$id] = $id.$extra;
 		}
 		if ($app == '' || !is_array($reg = $this->app_register[$app]) || !isset($reg['title']))
 		{
@@ -466,7 +493,7 @@ class bolink extends solink
 			$this->unlink(0,$app,$id);
 			return False;
 		}
-		return $title;
+		return $this->title_cache[$app.':'.$id] = $title;
 	}
 
 	/**
@@ -973,6 +1000,7 @@ class bolink extends solink
 		{
 			$this->notify('update',$link['app'],$link['id'],$app,$id,$link_id,$data);
 		}
+		unset($this->title_cache[$app.':'.$id]);
 	}
 
 	/**
