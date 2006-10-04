@@ -220,6 +220,27 @@
 				return false;
 			}
 
+			$query = array(
+				'cal_start='.$this->date2ts($event['start'],true),	// true = Server-time
+				'cal_end='.$this->date2ts($event['end'],true),
+			);
+			
+			#foreach(array('title','location','priority','public','non_blocking') as $name) {
+			foreach(array('title','location','public','non_blocking') as $name) {
+				if (isset($event[$name])) $query['cal_'.$name] = $event[$name];
+			}
+
+			if($foundEvents = parent::search(array(
+				'user'  => $this->user,
+				'query' => $query,
+			))) {
+				if(is_array($foundEvents)) {
+					$event = array_shift($foundEvents);
+					return $event['id'];
+				}
+			}
+			return false;
+
 			$search['start'] = $event['start'];
 			$search['end']	= $event['end'];
 
