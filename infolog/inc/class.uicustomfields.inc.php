@@ -29,7 +29,7 @@ class uicustomfields
 		'select'   => 'Selectbox',
 		'radio'    => 'Radiobutton',
 		'checkbox' => 'Checkbox',
-		'link-entry' => 'Select an entry',
+		'link-entry' => 'Select entry',
 	);
 	/**
 	 * Instance of the infolog BO class
