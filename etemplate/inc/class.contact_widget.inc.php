@@ -55,10 +55,8 @@ class contact_widget
 	function contact_widget($ui)
 	{
 		$this->ui = $ui;
-		
 		if (!is_object($GLOBALS['egw']->contacts))
 		{
-			$GLOBALS['egw']->translation->add_app('addressbook');
 			$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
 		}
 		$this->contacts =& $GLOBALS['egw']->contacts;
@@ -82,6 +80,8 @@ class contact_widget
 		switch($cell['type'])
 		{
 			case 'contact-fields':
+				$GLOBALS['egw']->translation->add_app('addressbook');
+				$this->contacts->contacts();
 				$cell['sel_options'] = $this->contacts->contact_fields;
 				$cell['type'] = 'select';
 				$cell['no_lang'] = 1;
@@ -89,6 +89,7 @@ class contact_widget
 
 			case 'contact-value':
 			default:
+				if (substr($value,0,12) == 'addressbook:') $value = substr($value,12);	// link-entry syntax
 				if (!$value || !$cell['size'] || (!is_array($this->contact) || $this->contact['id'] != $value) &&
 					!($this->contact = $this->contacts->read($value)))
 				{
