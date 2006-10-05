@@ -1189,6 +1189,10 @@
 						$msg .= $this->column_actions($action,$parent,$child_id);
 						break;
 						
+					case '':	// reload, eg. by changing the type
+						$widget = $content['cell'];
+						break;
+
 					default: 
 						// all menu's are (only) working on the parent, referencing widget is unnecessary 
 						// and gives unexpected results, if parent is changed (eg. content gets copied)
@@ -1310,7 +1314,10 @@
 
 			$editor =& new etemplate('etemplate.editor.widget');
 			$type_tmpl =& new etemplate;
-			if ($type_tmpl->read('etemplate.editor.widget.'.$widget['type']))
+
+			list($ext_type) = explode('-',$widget['type']);
+			if ($type_tmpl->read('etemplate.editor.widget.'.$widget['type']) ||
+				$type_tmpl->read('etemplate.editor.widget.'.$ext_type))
 			{
 				$editor->set_cell_attribute('etemplate.editor.widget.generic','obj',$type_tmpl);
 			}
