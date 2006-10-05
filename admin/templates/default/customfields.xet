@@ -1,6 +1,30 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
+	<template id="admin.customfields.types" template="" lang="" group="0" version="1.2">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+				<column/>
+				<column disabled="@non_deletable"/>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<description id="app-name"/>
+					<description value="-  type"/>
+					<menulist>
+						<menupopup id="types" onchange="1" no_lang="1"/>
+					</menulist>
+					<button label="Delete" id="delete" onclick="return confirm('WARNING: You are about to delete this type. Entries of this type won\'t be accessable then.');"/>
+					<textbox id="name" blur="new name"/>
+					<button label="Create" id="create"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.2">
 		<grid>
 			<columns>
@@ -31,10 +55,10 @@
 						<description id="${row}[label]"/>
 					</vbox>
 					<menulist>
-						<menupopup options="All" id="${row}[type2]"/>
+						<menupopup options="All" id="${row}[type2]" no_lang="1"/>
 					</menulist>
 					<menulist>
-						<menupopup id="{$row}[type]" statustext="Type of customfield"/>
+						<menupopup id="{$row}[type]" statustext="Type of customfield" no_lang="1"/>
 					</menulist>
 					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like id[=label]"/>
 					<vbox>
@@ -58,6 +82,7 @@
 				<column/>
 				<column/>
 				<column/>
+				<column/>
 				<column width="80%"/>
 			</columns>
 			<rows>
@@ -67,7 +92,14 @@
 					<description/>
 					<description/>
 					<description/>
+					<description/>
 					<description no_lang="1"/>
+				</row>
+				<row>
+					<template content="content_types" span="all" id="admin.customfields.types"/>
+				</row>
+				<row>
+					<template span="all"/>
 				</row>
 				<row>
 					<template content="fields" span="all" id="admin.customfields.fields"/>
