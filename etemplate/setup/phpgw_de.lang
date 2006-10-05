@@ -73,6 +73,7 @@ comment	etemplate	de	Kommentar
 confirm	etemplate	de	bestätigen
 confirmation message or custom javascript (returning true or false)	etemplate	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurücklieferned)
 confirmation necesary or custom java-script	etemplate	de	Bestätigung notwendig oder spezielles Javascript
+contact fields	etemplate	de	Kontaktfelder
 contains	etemplate	de	enthalten
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	de	erzeugt eine englische ('en') Sprachdatei aus den Beschriftungen und Hilfetexten (für die Anwendung in Name)
@@ -176,6 +177,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	de	Höhe der Tabelle in % oder Punkten
 height, disabled	etemplate	de	Höhe, Deaktiviert
 help	etemplate	de	Hilfe
+history log	etemplate	de	Versionshistorie
 horizontal rule	etemplate	de	Waagrechte Linie
 hour	etemplate	de	Stunde
 hours	etemplate	de	Stunden
@@ -211,6 +213,7 @@ last	etemplate	de	Letzte
 left	etemplate	de	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	de	Länge für char+varchar, Genauigkeit für int: 2, 4, 8 und float: 4, 8
 link	etemplate	de	Verknüpfung
+linkapps	etemplate	de	VerknüpfungAnwendungen
 linkentry	etemplate	de	VerknüpfungEintrag
 linklist	etemplate	de	VerknüpfungListe
 linkstring	etemplate	de	VerknüpfungZeichenkette
@@ -232,6 +235,7 @@ new table created	etemplate	de	Neue Tabelle erzeugt
 newer version '%1' exists !!!	etemplate	de	Neuere Version '%1' existiert !!!
 nextmatch	etemplate	de	Nextmatch
 nextmatch accountfilter	etemplate	de	Nextmatch Benutzerfilter
+nextmatch custom filterheader	etemplate	de	Nextmatch freier Filterkopf
 nextmatch filterheader	etemplate	de	Nextmatch Filterkopf
 nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
 no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
@@ -298,6 +302,8 @@ select category	etemplate	de	Kategorie auswählen
 select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
 select day of week	etemplate	de	Wochentag auswählen
+select entry	etemplate	de	Eintrag auswählen
+select hour	etemplate	de	Stunde auswählen
 select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
 select month	etemplate	de	Monat auswählen
 select number	etemplate	de	Zahl auswählen

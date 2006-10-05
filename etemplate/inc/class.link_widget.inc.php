@@ -66,8 +66,8 @@
 			'link-to'     => 'LinkTo',
 			'link-list'   => 'LinkList',
 			'link-string' => 'LinkString',
-			'link-add'    => 'LinkAdd',
-			'link-entry'  => 'LinkEntry',
+			'link-add'    => 'LinkEntry',
+			'link-entry'  => 'Select entry',
 			'link-apps'   => 'LinkApps',
 		);
 		/**

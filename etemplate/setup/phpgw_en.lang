@@ -73,6 +73,7 @@ comment	etemplate	en	Comment
 confirm	etemplate	en	confirm
 confirmation message or custom javascript (returning true or false)	etemplate	en	confirmation message or custom javascript (returning true or false)
 confirmation necesary or custom java-script	etemplate	en	confirmation necesary or custom java-script
+contact fields	etemplate	en	Contact fields
 contains	etemplate	en	contains
 create a new table for the application	etemplate	en	Create a new table for the application
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	en	creates an english ('en') langfile from label and helptexts (for application in Name)
@@ -176,6 +177,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	en	Height of the table in % or pixels for the table-tag and (optional) div
 height, disabled	etemplate	en	Height, Disabled
 help	etemplate	en	Help
+history log	etemplate	en	History Log
 horizontal rule	etemplate	en	Horizontal Rule
 hour	etemplate	en	Hour
 hours	etemplate	en	hours
@@ -211,6 +213,7 @@ last	etemplate	en	Last
 left	etemplate	en	Left
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	en	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 link	etemplate	en	Link
+linkapps	etemplate	en	LinkApps
 linkentry	etemplate	en	LinkEntry
 linklist	etemplate	en	LinkList
 linkstring	etemplate	en	LinkString
@@ -232,6 +235,7 @@ new table created	etemplate	en	New table created
 newer version '%1' exists !!!	etemplate	en	newer version '%1' exists !!!
 nextmatch	etemplate	en	Nextmatch
 nextmatch accountfilter	etemplate	en	Nextmatch Accountfilter
+nextmatch custom filterheader	etemplate	en	Nextmatch Custom Filterheader
 nextmatch filterheader	etemplate	en	Nextmatch Filterheader
 nextmatch sortheader	etemplate	en	Nextmatch Sortheader
 no column to swap with !!!	etemplate	en	no column to swap with !!!
@@ -298,6 +302,8 @@ select category	etemplate	en	Select Category
 select country	etemplate	en	Select Country
 select day	etemplate	en	Select Day
 select day of week	etemplate	en	select day of week
+select entry	etemplate	en	Select entry
+select hour	etemplate	en	Select hour
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
 select month	etemplate	en	Select Month
 select number	etemplate	en	Select Number
