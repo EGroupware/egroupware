@@ -25,12 +25,20 @@
 	{
 	
 		/**
-		* @var string $appname string appname of app which want to add / edit its customfields
+		* appname of app which want to add / edit its customfields
+		* 
+		* @var string
 		*/
 		var $appname;
 		
 		/**
-		* @var array $cf_types array with allowd types of customfields
+		* Allowd types of customfields
+		* 
+		* The additionally allowed app-names from the link-class, will be add by the edit-method only,
+		* as the link-class has to be called, which can NOT be instanciated by the constructor, as 
+		* we get a loop in the instanciation.
+		* 
+		* @var array
 		*/
 		var $cf_types = array(
 			'text'     => 'Text',
@@ -38,16 +46,17 @@
 			'select'   => 'Selectbox',
 			'radio'    => 'Radiobutton',
 			'checkbox' => 'Checkbox',
+			'link-entry' => 'Select entry',
 		);
-		
 		/**
-		* @var $types2 array with userdefiened types e.g. type of infolog
+		* userdefiened types e.g. type of infolog
+		* 
+		* @var array
 		*/
 		var $types2 = array();
 		var $content_types,$fields;
 		
-		var $public_functions = array
-		(
+		var $public_functions = array(
 			'edit' => True
 		);
 
@@ -190,10 +199,16 @@
 			$readonlys['fields']["delete[]"] = True;
 			//echo '<p>uicustomfields.edit(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
 			//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
-			$this->tmpl->exec('admin.customfields.edit',$content,array(
-				'type'     => $this->cf_types,
+			$sel_options = array(
 				'type2' => $this->types2 + array('tmpl' => 'template'),
-			),$readonlys,array(
+			);
+			$GLOBALS['egw']->translation->add_app('etemplate');
+			foreach($this->cf_types as $name => $label) $sel_options['type'][$name] = lang($label);
+			$link_types = ExecMethod('phpgwapi.bolink.app_list','');
+			ksort($link_types);
+			foreach($link_types as $name => $label) $sel_options['type'][$name] = '- '.$label;
+
+			$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 				'fields' => $preserv_fields,
 				'appname' => $this->appname,
 				'referer' => $referer,
