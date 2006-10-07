@@ -177,6 +177,10 @@ $oProc->query("INSERT INTO egw_interserv(server_name,server_host,server_url,trus
 $oProc->query ("INSERT INTO egw_vfs (vfs_owner_id, vfs_createdby_id, vfs_modifiedby_id, vfs_created, vfs_modified, vfs_size, vfs_mime_type, vfs_deleteable, vfs_comment, vfs_app, vfs_directory, vfs_name, vfs_link_directory, vfs_link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','', NULL, NULL)");
 $oProc->query ("INSERT INTO egw_vfs (vfs_owner_id, vfs_createdby_id, vfs_modifiedby_id, vfs_created, vfs_modified, vfs_size, vfs_mime_type, vfs_deleteable, vfs_comment, vfs_app, vfs_directory, vfs_name, vfs_link_directory, vfs_link_name) VALUES (0,0,0,'1970-01-01',NULL,NULL,'Directory','Y',NULL,NULL,'/','home', NULL, NULL)");
 
+// Create Addressbook for Default group, by setting a group ACL from the group to itself for all rights: add, read, edit and delete	
+$defaultgroup = $GLOBALS['egw_setup']->add_account('Default','Default','Group',False,False);
+$GLOBALS['egw_setup']->add_acl('addressbook',$defaultgroup,$defaultgroup,1|2|4|8);
+
 /*************************************************************************\
  *                    Default Records for VFS v2                         *
 \*************************************************************************/
