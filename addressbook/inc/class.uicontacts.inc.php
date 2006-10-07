@@ -425,10 +425,10 @@ class uicontacts extends bocontacts
 		//echo "<p>uicontacts::get_rows(".print_r($query,true).")</p>\n";
 		if (!$id_only)
 		{
+			$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
 			// check if accounts are stored in ldap, which does NOT yet support the org-views
 			if ($this->so_accounts && $query['filter'] === '0' && $query['org_view'])
 			{
-				$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
 				if ($old_state['filter'] === '0')	// user changed to org_view
 				{
 					$query['filter'] = '';			// --> change filter to all contacts
@@ -437,8 +437,12 @@ class uicontacts extends bocontacts
 				{
 					$query['org_view'] = '';		// --> change to regular contacts view
 				}
-				unset($old_state);
 			}
+			if ($query['org_view'] && isset($this->org_views[$old_state['org_view']]) && !isset($this->org_views[$query['org_view']]))
+			{
+				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one organisation
+			}
+			unset($old_state);
 			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$query);
 			// save the state of the index in the user prefs
 			$state = serialize(array(
