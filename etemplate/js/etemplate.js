@@ -224,3 +224,17 @@ function enable_button(id) {
 	document.getElementById(id).style.color = '';
 }
 
+// returns selected checkboxes from given 'var form' which REAL names end with 'var suffix'
+function get_selected(form,suffix) {
+	selected = '';
+	el = form.getElementsByTagName('input');
+	for (var i = 0; i < el.length; i++)	{
+		if(el[i].name.substr(el[i].name.length-suffix.length,el[i].name.length) == suffix && el[i].checked) {
+			if(selected.length > 0)	{
+				selected += ',';
+			}
+			selected += el[i].value;
+		}
+	}
+	return selected;
+}
