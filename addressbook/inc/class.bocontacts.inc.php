@@ -128,7 +128,7 @@ class bocontacts extends socontacts
 		
 		$this->contact_fields = array(
 			'id'                   => lang('Contact ID'),
-			'tid'                  => lang('Typ'),
+			'tid'                  => lang('Type'),
 			'owner'                => lang('Addressbook'),
 			'private'              => lang('private'),
 			'cat_id'               => lang('Category'),
