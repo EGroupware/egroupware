@@ -28,6 +28,7 @@ addressbook-fieldname	addressbook	en	Addressbook-Fieldname
 addvcard	addressbook	en	Add VCard
 advanced search	addressbook	en	Advanced search
 all contacts	addressbook	en	All contacts
+allow users to maintain their own account-data	admin	en	Allow users to maintain their own account-data
 alt. csv import	addressbook	en	Alt. CSV Import
 always	addressbook	en	always
 apply changes to all members, whose fields have the same previous content	addressbook	en	Apply changes to all members, whose fields have the same previous content
@@ -84,6 +85,7 @@ csv-filename	addressbook	en	CSV-Filename
 custom	addressbook	en	Custom
 custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
+default addressbook for adding contacts	addressbook	en	Default addressbook for adding contacts
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 delete this contact	addressbook	en	Delete this contact
@@ -126,6 +128,7 @@ field %1 has been added !	addressbook	en	Field %1 has been added !
 field %1 has been updated !	addressbook	en	Field %1 has been updated !
 field name	addressbook	en	Field Name
 fields for the csv export	addressbook	en	Fields for the CSV export
+fields the user is allowed to edit himself	admin	en	Fields the user is allowed to edit himself
 fields to show in address list	addressbook	en	Fields to show in address list
 fieldseparator	addressbook	en	Fieldseparator
 for read only ldap	admin	en	for read only LDAP
@@ -196,6 +199,7 @@ other phone	addressbook	en	Other Phone
 own sorting	addressbook	en	own sorting
 pager	common	en	Pager
 parcel	addressbook	en	Parcel
+permission denied !!!	addressbook	en	Permission denied !!!
 phone number	common	en	Phone Number
 phone numbers	common	en	Phone Numbers
 photo	addressbook	en	Photo
@@ -249,6 +253,7 @@ to many might exceed your execution-time-limit	addressbook	en	to many might exce
 today is %1's birthday!	common	en	Today is %1's birthday!
 tomorrow is %1's birthday.	common	en	Tomorrow is %1's birthday.
 translation	addressbook	en	Translation
+type	addressbook	en	Type
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url to link telephone numbers to (use %1 for the number)	admin	en	URL to link telephone numbers to (use %1 for the number)
@@ -261,6 +266,7 @@ vcards require a last name entry.	addressbook	en	Vcards require a last name entr
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	en	When should the contacts list display that colum. "Only if there is content" hides the column, unless there is some content in the view.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	en	Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.
 whole query	addressbook	en	whole query

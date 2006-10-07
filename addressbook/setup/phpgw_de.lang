@@ -28,6 +28,7 @@ addressbook-fieldname	addressbook	de	Adressbuch Feldname
 addvcard	addressbook	de	VCard hinzufügen
 advanced search	addressbook	de	Erweiterte Suche
 all contacts	addressbook	de	Alle Kontakte
+allow users to maintain their own account-data	admin	de	Erlaube Benutzern ihre eigenen Benutzerdaten zu verwalten
 alt. csv import	addressbook	de	Alt. CSV Import
 always	addressbook	de	immer
 apply changes to all members, whose fields have the same previous content	addressbook	de	Wendet die Änderungen auf alle Mitglieder an, deren Felder gleichen vorherigen Inhalt haben
@@ -84,6 +85,7 @@ csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
 custom fields	addressbook	de	Benutzerdefinierte Felder
 debug output in browser	addressbook	de	Debugausgaben in Browser
+default addressbook for adding contacts	addressbook	de	Vorgabe Adressbuch beim Hinzufügen von Kontakten
 default filter	addressbook	de	Standardfilter
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 delete this contact	addressbook	de	Diesen Kontakt löschen
@@ -126,6 +128,7 @@ field %1 has been added !	addressbook	de	Feld %1 wurde hinzugefügt !
 field %1 has been updated !	addressbook	de	Feld %1 wurde aktualisiert !
 field name	addressbook	de	Feldname
 fields for the csv export	addressbook	de	Felder für den CSV Export
+fields the user is allowed to edit himself	admin	de	Felder die der Benutzer selbst bearbeiten darf
 fields to show in address list	addressbook	de	Felder, die in der Adressliste angezeigt werden sollen
 fieldseparator	addressbook	de	Feldtrenner
 for read only ldap	admin	de	für nur lesendes LDAP
@@ -196,6 +199,7 @@ other phone	addressbook	de	anderes Telefon
 own sorting	addressbook	de	eigene Sortierung
 pager	common	de	Pager
 parcel	addressbook	de	Lieferadresse
+permission denied !!!	addressbook	de	Zugriff verweigert !!!
 phone number	common	de	Telefonnummer
 phone numbers	common	de	Telefonnummern
 photo	addressbook	de	Foto
@@ -249,6 +253,7 @@ to many might exceed your execution-time-limit	addressbook	de	zu viel können ihr
 today is %1's birthday!	common	de	Heute ist der Geburtstag von %1!
 tomorrow is %1's birthday.	common	de	Morgen ist der Geburtstag von %1.
 translation	addressbook	de	Übersetzung
+type	addressbook	de	Typ
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 for the number)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (%1 für die Nummber verwenden)
@@ -261,6 +266,7 @@ vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachname
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	de	Wann soll die Adressliste diese Spalte anzeigen. "Nur wenn etwas angezeigt wird" blendet die Spalte aus, wenn Sie in dieser Anzeige leer wäre.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzfügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. Alle bedeutet jedes Feld das im Adressbuch gespeichert ist einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage

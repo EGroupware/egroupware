@@ -118,6 +118,15 @@ class contacts_admin_prefs
 	 */
 	function settings()
 	{
+		$GLOBALS['settings']['add_default'] = array(
+			'type'   => 'select',
+			'label'  => 'Default addressbook for adding contacts',
+			'name'   => 'add_default',
+			'help'   => 'Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.',
+			'values' => ExecMethod('addressbook.uicontacts.get_addressbooks',EGW_ACL_ADD),
+			'xmlrpc' => True,
+			'admin'  => False,
+		);
 		$GLOBALS['settings']['mainscreen_showbirthdays'] = array(
 			'type'   => 'select',
 			'label'  => 'Show birthday reminders on main screen',

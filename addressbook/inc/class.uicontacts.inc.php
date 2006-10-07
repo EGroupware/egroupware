@@ -33,9 +33,16 @@ class uicontacts extends bocontacts
 		'emailpopup'=> True,
 		'migrate2ldap' => True,
 	);
+	/**
+	 * Addressbook preferences of the user
+	 *
+	 * @var array
+	 */
 	var $prefs;
 	/**
-	 * var boolean $private_addressbook use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
+	 * use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
+	 * 
+	 * @var boolean
 	 */
 	var $private_addressbook = false;
 	var $org_views;
@@ -135,7 +142,7 @@ class uicontacts extends bocontacts
 				'bottom_too'     => false,		// I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
-				'cat_id'         =>	0,			// IO category, if not 'no_cat' => True
+				'cat_id'         =>	'',			// IO category, if not 'no_cat' => True
 				'options-cat_id' => array(lang('none')),
 				'search'         =>	'',			// IO search pattern
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
@@ -881,7 +888,14 @@ class uicontacts extends bocontacts
 				$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
 				if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
 				{
-					$content['owner'] = (string) $this->user;
+					$content['owner'] = $this->prefs['add_default'];
+					$content['private'] = (int) ($content['owner'] && substr($content['owner'],-1) == 'p');
+
+					if (!($this->grants[$content['owner'] = (string) (int) $content['owner']] & EGW_ACL_ADD))
+					{
+						$content['owner'] = (string) $this->user;
+						$content['private'] = 0;
+					}
 				}
 				$new_type = array_keys($this->content_types);
 				$content['tid'] = $_GET['typeid'] ? $_GET['typeid'] : $new_type[0];
