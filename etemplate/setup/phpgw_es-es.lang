@@ -73,6 +73,7 @@ comment	etemplate	es-es	Comentario
 confirm	etemplate	es-es	confirmar
 confirmation message or custom javascript (returning true or false)	etemplate	es-es	mensaje de confirmación o javascript personalizado (devolviendo 'true' o 'false')
 confirmation necesary or custom java-script	etemplate	es-es	confirmación necesaria o javascript personalizado
+contact fields	etemplate	es-es	Campos de contacto
 contains	etemplate	es-es	contiene
 create a new table for the application	etemplate	es-es	Crear una tabla nueva para la aplicación
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	es-es	Crea un fichero de idioma en inglés ('en') a partir de la etiqueta y textos de ayuda (para la aplicación indicada en Nombre)
@@ -176,6 +177,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	es-es	Altura de la tabla en % o píxeles para la etiqueta de la tabla y, opcionalmente, div.
 height, disabled	etemplate	es-es	Altura, desactivada
 help	etemplate	es-es	Ayuda
+history log	etemplate	es-es	Registro histórico
 horizontal rule	etemplate	es-es	Línea horizontal
 hour	etemplate	es-es	Hora (del día)
 hours	etemplate	es-es	horas
@@ -211,6 +213,7 @@ last	etemplate	es-es	Última
 left	etemplate	es-es	Izquierda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	es-es	longitud para char+varchar. Precisiones int: 2, 4, y float: 4, 8
 link	etemplate	es-es	Enlace
+linkapps	etemplate	es-es	Enlace a aplicaciones
 linkentry	etemplate	es-es	Entrada de enlace
 linklist	etemplate	es-es	Lista de enlaces
 linkstring	etemplate	es-es	Cadena de enlace
@@ -232,6 +235,7 @@ new table created	etemplate	es-es	Se ha creado una tabla nueva
 newer version '%1' exists !!!	etemplate	es-es	¡Existe una versión '%1' más reciente!
 nextmatch	etemplate	es-es	Control 'Nextmach' (Siguiente coincidencia)
 nextmatch accountfilter	etemplate	es-es	Nextmatch con filtro de cuentas
+nextmatch custom filterheader	etemplate	es-es	Filtro de cabecera personalizado para nextmatch
 nextmatch filterheader	etemplate	es-es	Nextmatch con filtro de cabeceras
 nextmatch sortheader	etemplate	es-es	Cabecera de orden de siguiente coincidencia
 no column to swap with !!!	etemplate	es-es	¡No hay columna con la que intercambiar!
@@ -298,6 +302,8 @@ select category	etemplate	es-es	Seleccionar categoría
 select country	etemplate	es-es	Seleccionar país
 select day	etemplate	es-es	Seleccionar día
 select day of week	etemplate	es-es	Seleccionar día de la semana
+select entry	etemplate	es-es	Seleccionar entrada
+select hour	etemplate	es-es	Seleccionar hora del día
 select if content of field should not be translated (label gets always translated)	etemplate	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
 select month	etemplate	es-es	Seleccionar mes
 select number	etemplate	es-es	Seleccionar número

@@ -28,6 +28,7 @@ addressbook-fieldname	addressbook	es-es	Campo - Libreta de direcciones
 addvcard	addressbook	es-es	Añadir tarjeta de visita
 advanced search	addressbook	es-es	Búsqueda avanzada
 all contacts	addressbook	es-es	Todos los contactos
+allow users to maintain their own account-data	admin	es-es	Permitir a los usuarios mantener los datos de su cuenta
 alt. csv import	addressbook	es-es	Importar CSV (avanzado)
 always	addressbook	es-es	siempre
 apply changes to all members, whose fields have the same previous content	addressbook	es-es	Aplicar cambios a todos los miembros, cuyos campos tienen el mismo contenido anterior
@@ -84,6 +85,7 @@ csv-filename	addressbook	es-es	Archivo CSV
 custom	addressbook	es-es	Personalizado
 custom fields	addressbook	es-es	Campos personalizados
 debug output in browser	addressbook	es-es	Depurar salida en el navegador
+default addressbook for adding contacts	addressbook	es-es	Libreta de direcciones predeterminada para añadir contactos
 default filter	addressbook	es-es	Filtro predeterminado
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
 delete this contact	addressbook	es-es	Borrar este contacto
@@ -126,6 +128,7 @@ field %1 has been added !	addressbook	es-es	¡El campo %1 ha sido añadido!
 field %1 has been updated !	addressbook	es-es	¡El campo %1 ha sido actualizado!
 field name	addressbook	es-es	Nombre del campo
 fields for the csv export	addressbook	es-es	Campos para exportar a CSV
+fields the user is allowed to edit himself	admin	es-es	Campos que el propio usuario puede editar
 fields to show in address list	addressbook	es-es	Campos a mostrar en la lista de direcciones
 fieldseparator	addressbook	es-es	Separador de campos
 for read only ldap	admin	es-es	para LDAP de sólo lectura
@@ -196,6 +199,7 @@ other phone	addressbook	es-es	Otro teléfono
 own sorting	addressbook	es-es	orden propio
 pager	common	es-es	Buscapersonas
 parcel	addressbook	es-es	Paquete
+permission denied !!!	addressbook	es-es	¡Permiso denegado!
 phone number	common	es-es	Número de teléfono
 phone numbers	common	es-es	Números de teléfono
 photo	addressbook	es-es	Fotografía
@@ -249,6 +253,7 @@ to many might exceed your execution-time-limit	addressbook	es-es	a cuánto puede 
 today is %1's birthday!	common	es-es	¡Hoy es el cumpleaños de %1!
 tomorrow is %1's birthday.	common	es-es	¡Mañana es el cumpleaños de %1!
 translation	addressbook	es-es	Traducción
+type	addressbook	es-es	Tipo
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos
 upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
 url to link telephone numbers to (use %1 for the number)	admin	es-es	URL para vincular números de teléfono (use %1 para el número)
@@ -261,6 +266,7 @@ vcards require a last name entry.	addressbook	es-es	Las tarjetas de visita requi
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! ¡LDAP es valido sólo si no está usando contactos para almacenar las cuentas!
 warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	es-es	Cuándo debe la lista de contactos mostrar esa columna. "Sólo si hay contenido" oculta la columna, a menos que haya algún contenido en la vista.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	es-es	Qué libreta de direcciones debe seleccionarse al añadir un contacto Y cuando no haya permiso de añadir en la libreta de direcciones actual.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	es-es	Qué campos deben exportarse. Indicar todos significa que cada campo almacenado en la libreta de direcciones, incluyendo los personalizados. La dirección del trabajo o particular sólo contiene el nombre, la empresa y la dirección seleccionada.
 whole query	addressbook	es-es	la consulta completa
