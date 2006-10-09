@@ -247,8 +247,8 @@
 								$manual =& new etemplate('etemplate.popup.manual');
 								echo $manual->show(array());
 								unset($manual);
-								echo '<style type="text/css">#ajax-loader { position: absolute; right: 27px; top: 24px; display: none; }</style>'."\n";
-								echo '<div id="ajax-loader">'.$this->html->image('phpgwapi','ajax-loader') . '</div>';
+								echo '<style type="text/css">.ajax-loader { position: absolute; right: 27px; top: 24px; display: none; }</style>'."\n";
+								echo '<div class="ajax-loader">'.$this->html->image('phpgwapi','ajax-loader') . '</div>';
 							}
 						}
 					}
@@ -1900,8 +1900,9 @@ if (document.getElementById) {
 			// here are going all the necesarry functions if javascript is enabled
 			if ($what & 2 && $this->java_script(True))
 			{
+				$lastmod = filectime(EGW_INCLUDE_ROOT. '/etemplate/js/etemplate.js');
 				$js .= '<script type="text/javascript" src="'.
-					$GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js"></script>'."\n";
+					$GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js?'. $lastmod.'"></script>'."\n";
 			}
 			return $js;
 		}
