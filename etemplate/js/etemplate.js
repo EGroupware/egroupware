@@ -203,23 +203,14 @@ function set_style_by_class(t,c,p,v)
 function xajax_eT_wrapper(obj) {
 	if (typeof(obj) == 'object') {
 		set_style_by_class('div','popupManual','display','none');
-		if (document.getElementById('ajax-loader')) {
-			document.getElementById('ajax-loader').style.display = 'inline';
-		}
-		if (document.getElementById('exec[ajax-loader]')) {
-			document.getElementById('exec[ajax-loader]').style.display = 'inline';
-		}
+		set_style_by_class('div','ajax-loader','display','inline');
 		var etemplate_exec_id = obj.form.etemplate_exec_id.defaultValue;
 		var submit_button = obj.name;
-		xajax_doXMLHTTP('etemplate.etemplate.process_exec', etemplate_exec_id, submit_button, xajax.getFormValues(obj.form));
+		var menuaction = obj.form.action.replace(/.+menuaction=/,'');
+		xajax_doXMLHTTP(menuaction+'./etemplate/process_exec', xajax.getFormValues(obj.form));
 	}
 	else {
-		if (document.getElementById('ajax-loader')) {
-			document.getElementById('ajax-loader').style.display = 'none';
-		}
-		if (document.getElementById('exec[ajax-loader]')) {
-			document.getElementById('exec[ajax-loader]').style.display = 'none';
-		}
+		set_style_by_class('div','ajax-loader','display','none');
 		set_style_by_class('div','popupManual','display','inline');
 	}
 }
