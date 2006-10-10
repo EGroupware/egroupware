@@ -1676,7 +1676,7 @@
 				{
 					$attr = array();
 				}
-				$value = $this->get_array($content_in,$form_name,True);
+				$value = $this->get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
 				if($value === false) continue;
 				
 				if (isset($attr['blur']) && $attr['blur'] == $value)

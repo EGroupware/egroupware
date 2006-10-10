@@ -618,9 +618,10 @@
 		 * @param array $arr the array to search, referenz as a referenz gets returned
 		 * @param string $idx the index, may contain sub-indices like a[b], see example below
 		 * @param boolean $reference_into default False, if True none-existing sub-arrays/-indices get created to be returned as referenz, else False is returned
+		 * @param bool $skip_empty returns false if $idx is not present in $arr
 		 * @return mixed reference to $arr[$idx] or false if $idx is not set and not $reference_into
 		 */
-		function &get_array(&$arr,$idx,$reference_into=False)
+		function &get_array(&$arr,$idx,$reference_into=False,$skip_empty=False)
 		{
 			if (!is_array($arr))
 			{
@@ -634,7 +635,7 @@
 				{
 					return False;
 				}
-				if(!isset($pos[$idx])) return false;
+				if($skip_empty && !isset($pos[$idx])) return false;
 				$pos = &$pos[$idx];
 			}
 			return $pos;
