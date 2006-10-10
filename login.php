@@ -422,7 +422,7 @@
 	{
 		if ($config_reg[register_link]=='True')
 		{
-			$reg_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php'). '">'.lang('Not a user yet? Register now').'</a><br/>';
+		   $reg_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','lang_code='.$_GET['lang']). '">'.lang('Not a user yet? Register now').'</a><br/>';
 		}
 		if ($config_reg[lostpassword_link]=='True')
 		{
