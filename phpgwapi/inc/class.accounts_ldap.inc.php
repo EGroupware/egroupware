@@ -6,7 +6,8 @@
  * It does NO longer use the ACL class/table for group membership information.
  * Nor does it use the phpgwAcounts schema (part of that information is stored via shadowAccount now).
  * 
- * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class.
+ * A user is recogniced by eGW, if he's in the user_context tree AND has the posixAccount object class AND 
+ * matches the LDAP search filter specified in setup >> configuration.
  * A group is recogniced by eGW, if it's in the group_context tree AND has the posixGroup object class.
  * The group members are stored as memberuid's.
  * 
@@ -51,6 +52,12 @@ class accounts_backend
 	 * @var string
 	 */
 	var $user_context;
+	/**
+	 * LDAP search filter for user accounts, eg. (uid=%name)
+	 *
+	 * @var string
+	 */
+	var $account_filter;
 	/**
 	 * LDAP context for groups, eg. ou=groups,dc=domain,dc=com
 	 *
@@ -104,6 +111,7 @@ class accounts_backend
 		$this->translation =& $GLOBALS['egw']->translation;
 
 		$this->user_context  = $GLOBALS['egw_info']['server']['ldap_context'];
+		$this->account_filter = $GLOBALS['egw_info']['server']['ldap_search_filter'];
 		$this->group_context = $GLOBALS['egw_info']['server']['ldap_group_context'] ? 
 			$GLOBALS['egw_info']['server']['ldap_group_context'] : $GLOBALS['egw_info']['server']['ldap_context'];
 	}
@@ -590,7 +598,12 @@ class accounts_backend
 					
 					$filter .= '(|(uid='.implode(')(uid=',$members).'))';
 				}
+				// add account_filter to filter (and make $query a wildcard if empty)
+				$filter .= $this->account_filter;
+				if (empty($query)) $query = '*';
+				$filter = str_replace(array('%user','%domain'),array($query,$GLOBALS['egw_info']['user']['domain']),$filter);
 				$filter .= ')';
+
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire'));
 				//echo "<p>ldap_search(,$this->user_context,'$filter',) ".($sri ? '' : ldap_error($this->ds)).microtime()."</p>\n";
 				$allValues = ldap_get_entries($this->ds, $sri);
