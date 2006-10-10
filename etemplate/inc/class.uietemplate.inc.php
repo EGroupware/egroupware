@@ -1664,7 +1664,7 @@
 			}
 			$GLOBALS['egw_info']['etemplate']['validation_errors'] = array();
 			$this->canceled = $this->button_pressed = False;
-
+			
 			foreach($to_process as $form_name => $type)
 			{
 				if (is_array($type))
@@ -1677,7 +1677,8 @@
 					$attr = array();
 				}
 				$value = $this->get_array($content_in,$form_name,True);
-
+				if($value === false) continue;
+				
 				if (isset($attr['blur']) && $attr['blur'] == $value)
 				{
 					$value = '';	// blur-values is equal to emtpy

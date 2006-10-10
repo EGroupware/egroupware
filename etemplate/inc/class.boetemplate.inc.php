@@ -634,11 +634,12 @@
 				{
 					return False;
 				}
+				if(!isset($pos[$idx])) return false;
 				$pos = &$pos[$idx];
 			}
 			return $pos;
 		}
-
+		
 		/**
 		 * unsets $arr[$idx]
 		 *
