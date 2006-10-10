@@ -14,11 +14,6 @@
 	\**************************************************************************/
 	/* $Id$ */
 
-	// On production sites, remove this lines below! \\
-	if (file_exists(EGW_INCLUDE_ROOT . '/uncompressed_thyapi')) define(EGW_UNCOMPRESSED_THYAPI, true);
-	else define(EGW_UNCOMPRESSED_THYAPI, false);
-
-	$GLOBALS['concisus_system']['javascript'] = array();
 
 	/**
 	 * eGroupWare javascript support class
@@ -76,8 +71,6 @@
 		function javascript()
 		{
 			//$this->t =& CreateObject('phpgwapi.Template', ExecMethod('phpgwapi.phpgw.common.get_tpl_dir','phpgwapi'));
-			//not currently used, but will be soon - I hope :)
-			$this->included_files =& $GLOBALS['concisus_system']['javascript']['included_files'];
 		}
 
 		
@@ -131,13 +124,9 @@
 		*/
 		function get_script_links()
 		{
-			$links = '';
-			$links_api = '';
-			$links_api_main = '';
-
+			$links  = "<!--JS Imports from phpGW javascript class -->\n";
 			if(!empty($this->files) && is_array($this->files))
 			{
-				$links_head = "<!--JS Imports from phpGW javascript class -->\n";
 				foreach($this->files as $app => $packages)
 				{
 					if(!empty($packages) && is_array($packages))
@@ -148,58 +137,18 @@
 							{
 								foreach($files as $file => $browser)
 								{
-									if ($app === 'phpgwapi' && $pkg === 'jsapi' && $file === 'jsapi')
-									{
-										$links_api_main = '<script type="text/javascript" src="'
-									 	. $GLOBALS['egw_info']['server']['webserver_url']
-									 	. "/$app/js/$pkg/$browser/$file" . '.js">'
-									 	. "</script>\n";
-										
-										if ($browser !== '.')
-										{
-											$links_api_main = '<script type="text/javascript" src="'
-											. $GLOBALS['egw_info']['server']['webserver_url']
-											. "/$app/js/$pkg/$file" . '.js">'
-											. "</script>\n";
-										}
-									}
-									else if ($app === 'phpgwapi')
-									{
-										if ($browser !== '.')
-										{
-											$links_api .= '<script type="text/javascript" src="'
-											. $GLOBALS['egw_info']['server']['webserver_url']
-											. "/$app/js/$pkg/$file" . '.js">'
-											. "</script>\n";
-										}
-										
-										$links_api .= '<script type="text/javascript" src="'
-									 	. $GLOBALS['egw_info']['server']['webserver_url']
-									 	. "/$app/js/$pkg/$browser/$file" . '.js">'
-									 	. "</script>\n";
-									}
-									else
-									{
-										if ($browser !== '.')
-										{
-											$links .= '<script type="text/javascript" src="'
-											. $GLOBALS['egw_info']['server']['webserver_url']
-											. "/$app/js/$pkg/$file" . '.js">'
-											. "</script>\n";
-										}
-										
-										$links .= '<script type="text/javascript" src="'
-									 	. $GLOBALS['egw_info']['server']['webserver_url']
-									 	. "/$app/js/$pkg/$browser/$file" . '.js">'
-									 	. "</script>\n";
-									}
+									$pkg = $pkg == '.' ? '' : $pkg.'/';
+									$browser = $browser == '.' ? '' : $browser.'/';
+									
+									$f = "/$app/js/$pkg$browser$file" . '.js?'. filectime(EGW_INCLUDE_ROOT."/$app/js/$pkg$browser$file.js") .'">';
+									$links .= '<script type="text/javascript" src="'. $GLOBALS['egw_info']['server']['webserver_url']. $f. "</script>\n";
 								}
 							}
 						}
 					}
 				}
 			}
-			return $links_head.$links_api_main.$links_api.$links;
+			return $links;
 		}
 
 		/**
@@ -280,30 +229,26 @@
 			
 			if ($this->included_files[$app][$package][$file]) return true;
 
-			if(is_readable(EGW_INCLUDE_ROOT .SEP .$app .SEP .'js' .SEP . $package . SEP . $browser_folder . SEP . $file . '.js'))
+			if(is_readable(EGW_INCLUDE_ROOT ."/$app/js/$package/$browser_folder/$file.js"))
 			{
 				$this->files[$app][$package][$file] = $browser_folder;
-				$this->included_files[$app][$package][$file] = $browser_folder;
 				return True;
 			}
-			elseif (is_readable(EGW_INCLUDE_ROOT .SEP .$app .SEP .'js' .SEP . $package . SEP . $file . '.js'))
+			elseif (is_readable(EGW_INCLUDE_ROOT. "/$app/js/$package/$file.js"))
 			{
 				$this->files[$app][$package][$file] = '.';
-				$this->included_files[$app][$package][$file] = '.';
 				return True;
 			}
 			elseif($app != 'phpgwapi')
 			{
-				if(is_readable(EGW_INCLUDE_ROOT .SEP .'phpgwapi' .SEP .'js' .SEP . $package .SEP . $browser_folder . SEP . $file . '.js'))
+				if(is_readable(EGW_INCLUDE_ROOT ."/phpgwapi/js/$package/$browser_folder/$file.js"))
 				{
 					$this->files['phpgwapi'][$package][$file] = $browser_folder;
-					$this->included_files['phpgwapi'][$package][$file] = $browser_folder;
 					return True;
 				}
-				elseif(is_readable(EGW_INCLUDE_ROOT .SEP .'phpgwapi' .SEP .'js' .SEP . $package .SEP . $file . '.js'))
+				elseif(is_readable(EGW_INCLUDE_ROOT ."phpgwapi/js/$package/$file.js"))
 				{
 					$this->files['phpgwapi'][$package][$file] = '.';
-					$this->included_files['phpgwapi'][$package][$file] = '.';
 					return True;
 				}
 				return False;
