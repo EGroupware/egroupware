@@ -53,6 +53,8 @@
 	if ($GLOBALS['egw_info']['server']['sessions_type'] == 'php4-restore' && $_REQUEST['sessionid'])
 	{
 		session_name('sessionid');
+		ini_set('session.use_cookies',0);	// disable the automatic use of cookies, as it uses the path / by default
+		session_id($_REQUEST['sessionid']);
 		session_start();
 
 		if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && $GLOBALS['egw_info']['flags']['currentapp'] != 'logout')
@@ -72,15 +74,16 @@
 				foreach($_SESSION['egw_included_files'] as $file)
 				{
 					//echo "<p>about to include $file</p>\n";
+					if (basename($file) == 'navbar.inc.php') break;	// the rest is not needed and makes only problems
+
 					include_once($file);
 				}
 				$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
-	
+				
 				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
 	
 				//printf("<p style=\"position: absolute; right: 0px; top: 0px;\">egw-enviroment restored in %d ms</p>\n",1000*(perfgetmicrotime()-$GLOBALS['egw_info']['flags']['page_start_time']));
-	
-				return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
+				if (is_object($GLOBALS['egw']->translation)) return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
 			}
 			//echo "<p>could not restore egw_info and the egw-object!!!</p>\n";
 		}
