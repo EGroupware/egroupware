@@ -969,6 +969,13 @@
 			$p->set_var ('account_file_space_select','<select name="account_file_space_type">'."\n".$account_file_space_select.'</select>'."\n");
 	*/
 
+			if ($group_repository['mailAllowed'])
+			{
+				$p->set_var(array(
+					'lang_email' => lang('Email'),
+					'email' => $GLOBALS['egw']->html->input('account_email',$group_repository['account_email'],'',' style="width: 100%;"'),
+				));
+			}
 			reset($GLOBALS['egw_info']['apps']);
 			$sorted_apps = $GLOBALS['egw_info']['apps'];
 			@asort($sorted_apps);

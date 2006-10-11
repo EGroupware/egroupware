@@ -1,5 +1,5 @@
   {error}
-  <table border="0" width="50%" align="center">
+  <table border="0" width="60%" align="center">
    <tr>
     <td valign="top">
      {rows}
@@ -20,6 +20,11 @@
          {accounts}
         </td>
        </tr>
+       
+       <tr>
+        <td>{lang_email}</td>
+        <td>{email}</td>
+      </tr>
 
        <tr>
         <td>{lang_file_space}</td>

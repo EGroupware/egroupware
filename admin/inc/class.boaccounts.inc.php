@@ -208,8 +208,9 @@
 				'account_firstname' => $group_info['account_name'],
 				'account_lastname'  => 'Group',
 				'account_status'    => 'A',
-				'account_expires'   => -1
+				'account_expires'   => -1,
 //				'account_file_space' => $account_file_space_number . "-" . $account_file_space_type,
+				'account_email' => $_POST['account_email'],
 			);
 			$group_info['account_id'] = $group->create($account_info);
 			// do the following only if we got an id - the create succided
@@ -361,7 +362,7 @@
 				'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
 				'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
 				'account_user' => $_POST['account_user'],
-				'account_apps' => $account_apps
+				'account_apps' => $account_apps,
 			);
 			$this->validate_group($group_info);
 
@@ -412,6 +413,7 @@
 
 			// This is down here so we are sure to catch the acl changes
 			// for LDAP to update the memberuid attribute
+			$group->data['account_email'] = $_POST['account_email'];
 			$group->save_repository();
 			
 			$GLOBALS['hook_values'] = $group_info;
