@@ -254,14 +254,15 @@ class bocal
 	{
 		$params_in = $params;
 
-		if (!isset($params['users']) || !$params['users'])
+		if (!isset($params['users']) || !$params['users'] || 
+			count($params['users']) == 1 && isset($params['users'][0]) && !$params['users'][0])	// null or '' casted to an array
 		{
 			// for a search use all account you have read grants from
 			$params['users'] = $params['query'] ? array_keys($this->grants) : $this->user;
 		}
 		if (!is_array($params['users']))
 		{
-			$params['users'] = array($params['users']);
+			$params['users'] = $params['users'] ? array($params['users']) : array();
 		}
 		// only query calendars of users, we have READ-grants from
 		$users = array();
@@ -269,7 +270,7 @@ class bocal
 		{
 			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$user))
 			{
-				if (!in_array($user,$users))	// already added?
+				if ($user && !in_array($user,$users))	// already added?
 				{
 					$users[] = $user;
 				}
