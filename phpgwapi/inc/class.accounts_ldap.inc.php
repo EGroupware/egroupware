@@ -87,6 +87,16 @@ class accounts_backend
 		)
 	);
 	/**
+	 * Classes allowing to set a mail-address for a group and specify the memberaddresses as forwarding addresses
+	 *
+	 * @var unknown_type
+	 */
+	var $group_mail_classes = array(
+//		'dbmailforwardingaddress' => 'mailforwardingaddress',
+		'dbmailuser' => 'mailforwardingaddress',
+		'qmailuser' => 'mailforwardingaddress',
+	);
+	/**
 	 * reference to the translation class
 	 * 
 	 * @var object
@@ -234,6 +244,47 @@ class accounts_backend
 				$to_write = array_merge($to_write,accounts_backend::set_members($members,
 					$data['account_id'],$groupOfNames,$dn));
 			}
+			// check if we should set a mail address and forwards for each member
+			foreach($this->group_mail_classes as $objectclass => $forward)
+			{
+				if ($this->ldapServerInfo->supportsObjectClass($objectclass) &&
+					($old && in_array($objectclass,$old['objectclass']) || $data_utf8['account_email'] || $old['mail']))
+				{
+					if ($data_utf8['account_email'])	// setting an email
+					{
+						if (!in_array($objectclass,$old ? $old['objectclass'] : $to_write['objectclass']))
+						{
+							if ($old) $to_write['objectclass'] = $old['objectclass'];
+							$to_write['objectclass'][] = $objectclass;
+						}
+						if ($objectclass != 'dbmailforwardingaddress') $to_write['uid'] = $data_utf8['account_lid'];
+						$to_write['mail'] = $data_utf8['account_email'];
+						
+						if (!$members) $members = $this->members($data['account_id']);
+						$to_write[$forward] = array();
+						foreach ($members as $member)
+						{
+							if (($email = $this->id2name($member,'account_email')))
+							{
+								$to_write[$forward][] = $email;
+							}
+						}
+					}
+					elseif($old)	// remove the mail and forwards only for existing entries
+					{
+						$to_write['mail'] = $to_write[$forward] = array();
+						if ($objectclass != 'dbmailforwardingaddress') $to_write['uid'] = array();
+						if (($key = array_search($objectclass,$old['objectclass'])))
+						{
+							$to_write['objectclass'] = $old['objectclass'];
+							unset($to_write['objectclass'][$key]);
+							$to_write['objectclass'] = array_values($to_write['objectclass']);
+						}
+					}
+					break;
+				}
+			}
+		
 		}
 		else
 		{
@@ -257,6 +308,7 @@ class accounts_backend
 			{
 				// try again with removed groupOfNames stuff, as I cant detect if posixGroup is a structural object
 				unset($to_write['objectclass'][$key]);
+				$to_write['objectclass'] = array_values($to_write['objectclass']);
 				unset($to_write['member']);
 				$err = $old ? !ldap_modify($this->ds,$dn,$to_write) : !ldap_add($this->ds,$dn,$to_write);
 			}
@@ -343,7 +395,7 @@ class accounts_backend
 	function _read_group($account_id)
 	{
 		$sri = ldap_search($this->ds, $this->group_context, 'gidnumber=' . abs($account_id),
-			array('dn','gidnumber','cn','objectclass'));
+			array('dn','gidnumber','cn','objectclass','mail'));
 		
 		$data = ldap_get_entries($this->ds, $sri);
 		if (!$data['count'])
@@ -360,10 +412,19 @@ class accounts_backend
 			'account_firstname' => $data['cn'][0],
 			'account_lastname'  => lang('Group'),
 			'groupOfNames'      => in_array('groupOfNames',$data['objectclass']),
+			'account_email'     => $data['mail'][0],
 		);
 		if (!is_object($this->ldapServerInfo))
 		{
 			$this->ldapServerInfo = $GLOBALS['egw']->ldap->getLDAPServerInfo($GLOBALS['egw_info']['server']['ldap_host']);
+		}
+		foreach($this->group_mail_classes as $objectclass => $forward)
+		{
+			if ($this->ldapServerInfo->supportsObjectClass($objectclass))
+			{
+				$group['mailAllowed'] = $objectclass;
+				break;
+			}
 		}
 		return $group;
 	}
@@ -434,7 +495,7 @@ class accounts_backend
 	{
 		$to_write['gidnumber'] = abs($data['account_id']);
 		$to_write['cn'] = $data['account_lid'];
-		
+
 		return $to_write;
 	}
 	
@@ -870,6 +931,17 @@ class accounts_backend
 		}
 		if ($use_cn) return $to_write;
 
+		// set the member email addresses as forwards
+		if ($this->id2name($gid,'account_email') &&	($objectclass = $this->id2name($gid,'mailAllowed')))
+		{
+			$forward = $this->group_mail_classes[$objectclass];
+			
+			$to_write[$forward] = array();
+			foreach($members as $key => $member)
+			{
+				if (($email = $this->id2name($member,'account_email')))	$to_write[$forward][] = $email;
+			}
+		}
 		if (!ldap_modify($this->ds,'cn='.ldap::quote($cn).','.$this->group_context,$to_write))
 		{
 			echo "ldap_modify(,'cn=$cn,$this->group_context',".print_r($to_write,true)."))\n";
