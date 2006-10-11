@@ -243,7 +243,8 @@ class bocontacts extends socontacts
 		
 		if (strstr($type,'n_fn')) $contact['n_fn'] = $this->fullname($contact);
 		
-		$fileas = str_replace(array_keys($contact),array_values($contact),$type);
+		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name'),
+			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],$contact['n_fn'],$contact['org_name']),$type);
 		
 		return $fileas{0} == ':' ? substr($fileas,2) : $fileas;
 	}
