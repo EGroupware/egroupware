@@ -23,6 +23,12 @@ include_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 class socontacts_sql extends so_sql 
 {
+	/**
+	 * name of customefields table
+	 * 
+	 * @var string
+	 */
+	var $extra_table = 'egw_addressbook_extra';
 	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
 	var $account_repository = 'sql';
 	var $contact_repository = 'sql';
@@ -245,8 +251,21 @@ class socontacts_sql extends so_sql
 					" OR contact_private=0 AND $this->table_name.contact_owner IN (".
 					implode(',',array_keys($this->grants)).") OR $this->table_name.contact_owner IS NULL)";
 			}
-		}	
-		if ($criteria['contact_value'])	// search the custom-fields
+		}
+		$search_customfields = isset($criteria['contact_value']) && !empty($criteria['contact_value']);
+		if (is_array($criteria))
+		{
+			foreach($criteria as $col => $val)
+			{
+				if ($col{0} == '#')	// search for a value in a certain custom field
+				{
+					unset($criteria[$col]);
+					$criteria[] = $this->db->expression($this->extra_table,'(',array('contact_name'=>substr($col,1),'contact_value'=>$val),')');
+					$search_customfields = true;
+				}
+			}
+		}
+		if ($search_customfields)	// search the custom-fields
 		{
 			$join .= $this->extra_join;
 			if (is_string($only_keys)) $only_keys = 'DISTINCT '.str_replace(array('contact_id','contact_owner'),
