@@ -2,8 +2,11 @@
 2 years ago	timesheet	zh-tw	兩年前
 3 years ago	timesheet	zh-tw	三年前
 actions	timesheet	zh-tw	操作
+all projects	timesheet	zh-tw	所有專案
+both: allow to use projectmanager and free project-names	admin	zh-tw	兩者：允許使用 ProjectManager 與自訂專案名稱
 by	timesheet	zh-tw	由
 create new links	timesheet	zh-tw	建立新連結
+creating new entry	timesheet	zh-tw	建立新資料
 delete this entry	timesheet	zh-tw	刪除這筆資料
 edit this entry	timesheet	zh-tw	編輯這筆資料
 empty if identical to duration	timesheet	zh-tw	如果期間相同就保持空白
@@ -13,6 +16,7 @@ entry saved	timesheet	zh-tw	資料儲存了
 error deleting the entry!!!	timesheet	zh-tw	資料刪除時發生錯誤！
 error saving the entry!!!	timesheet	zh-tw	資料儲存時發生錯誤！
 existing links	timesheet	zh-tw	已經存在的連結
+full: use only projectmanager	admin	zh-tw	完整： 只使用 ProjectManager
 general	timesheet	zh-tw	一般
 last modified	timesheet	zh-tw	最後更新
 last month	timesheet	zh-tw	上個月
@@ -21,8 +25,12 @@ last year	timesheet	zh-tw	去年
 leave it empty for a full week	timesheet	zh-tw	空白表示整個星期
 links	timesheet	zh-tw	連結
 no details	timesheet	zh-tw	沒有細節
+no project	timesheet	zh-tw	沒有專案
+none: use only free project-names	admin	zh-tw	無： 只使用自訂專案名稱
+or endtime	timesheet	zh-tw	或結束時間
 permission denied!!!	timesheet	zh-tw	沒有權限！
 price	timesheet	zh-tw	價格
+projectmanager integration	admin	zh-tw	ProjectManager 整合
 quantity	timesheet	zh-tw	數量
 save & new	timesheet	zh-tw	儲存&新增
 saves the changes made	timesheet	zh-tw	儲存異動
@@ -30,6 +38,7 @@ saves this entry and add a new one	timesheet	zh-tw	儲存這筆資料後新增�
 select a price	timesheet	zh-tw	選擇價格
 select a project	timesheet	zh-tw	選擇專案
 start	timesheet	zh-tw	開始
+starttime	timesheet	zh-tw	開始時間
 sum %1:	timesheet	zh-tw	%1 小計：
 this month	timesheet	zh-tw	這個月
 this week	timesheet	zh-tw	這星期

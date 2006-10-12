@@ -36,6 +36,7 @@ apply the changes	infolog	zh-tw	儲存異動
 are you shure you want to delete this entry ?	infolog	zh-tw	您確定要刪除這個事件？
 attach a file	infolog	zh-tw	附加一個檔案
 attach file	infolog	zh-tw	附加檔案
+attension: no contact with address %1 found.	infolog	zh-tw	注意： 找不到住址包含 "%1"的聯絡人。
 back to main list	infolog	zh-tw	回到主要清單
 billed	infolog	zh-tw	已付款
 both	infolog	zh-tw	皆
@@ -207,6 +208,7 @@ project settings: price, times	infolog	zh-tw	專案設定： 價格、時間
 re:	infolog	zh-tw	回覆：
 read one record by passing its id.	infolog	zh-tw	透過傳遞ID來讀取記錄
 read rights (default)	infolog	zh-tw	閱讀權限（預設）
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	zh-tw	本地端IP的過濾規則<br>例如^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	zh-tw	本地端IP的過濾規則<br>例如^192\.168\.1\.
 remark	infolog	zh-tw	標註
 remove this link (not the entry itself)	infolog	zh-tw	移除這個連結(不是它的資料)
@@ -285,6 +287,7 @@ urgency	infolog	zh-tw	緊急
 urgent	infolog	zh-tw	緊急的
 used time	infolog	zh-tw	使用的時間
 valid path on clientside<br>eg. \\server\share or e:\	infolog	zh-tw	用戶端可用的路徑<br>例如\\Server\Share 或是 e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	zh-tw	用戶端可用的路徑<br>例如\\Server\Share 或是 e:\
 values for selectbox	infolog	zh-tw	選單的值
 view all subs of this entry	infolog	zh-tw	顯示這個事件的所有附屬資訊
 view other subs	infolog	zh-tw	顯示其他附屬資訊

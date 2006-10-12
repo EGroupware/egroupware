@@ -16,6 +16,7 @@
 access denied: wrong username or password for manage-header !!!	setup	es-es	Acceso denegado: ¡usuario o contraseña incorrectas para el administrador de encabezados!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	es-es	Acceso denegado: ¡usuario o contraseña incorrectas para configurar el dominio '%1 (%2)'!
 account repository need to be set to the one you migrate to!	setup	es-es	El repositorio de las cuentas tiene que ser el cual al que se desea migrar
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	es-es	repositorio para cuentas {sql(predeterminado) | ldap},[identificación{sql | ldap | mail | ads | http | ...}],[cifrado sql {md5 | blowfish_crypt | md5_crypt | crypt}],[marcar guardar contraseña{ (predeterminado)|True}],[permitir identificación por cookies{ (predeterminado)|True}]
 accounts existing	setup	es-es	Existen cuentas
 actions	setup	es-es	Acciones
 activate safe password check	setup	es-es	Activar la comprobación para guardar contraseñas
@@ -220,7 +221,9 @@ enable mcrypt	setup	es-es	Activar MCrypt
 enter some random text for app session encryption	setup	es-es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	es-es	Introduzca algún texto aleatorio para el cifrado de la sesión de la aplicación<br />cifrado (necesita mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	es-es	Introduzca la ruta completa para los ficheros temporales.<br />Ejemplo: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	es-es	Introduzca la ruta completa para los ficheros temporales.<br />Ejemplo: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br />Ejemplo: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	es-es	Introduzca la ruta completa para los ficheros de usuarios y grupos.<br />Ejemplo: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	es-es	Introduzca la ruta completa al directorio de la copia de seguridad.<br />Si está vacio: directorio de los ficheros
 enter the hostname of the machine on which this server is running	setup	es-es	Introduzca el nombre de la máquina en la se está ejecutando esta instalación
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	es-es	Introduzca la URL de eGroupWare.<br />Ejemplo: http://www.dominio.com/egroupware o   /egroupware<br /><b>Sin barra invertida al final</b>
@@ -409,6 +412,7 @@ pop/imap mail server hostname or ip address	setup	es-es	Nombre o dirección IP de
 possible reasons	setup	es-es	Posibles razones
 possible solutions	setup	es-es	Posibles soluciones
 post-install dependency failure	setup	es-es	Fallo de dependencias en el proceso de post-instalación
+postfix with ldap: [yes(user edit forwarding)]	setup	es-es	Postfix con LDAP: [sí (user edit forwarding)]
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	es-es	Postgres: dejar en blanco para usar sockets unix (preferido) en vez de una conexión tcp/ip
 potential problem	setup	es-es	Problema potencial
 preferences	setup	es-es	Preferencias

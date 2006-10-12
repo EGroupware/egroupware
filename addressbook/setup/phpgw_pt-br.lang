@@ -28,6 +28,7 @@ addressbook-fieldname	addressbook	pt-br	Contatos - Nome do Campo
 addvcard	addressbook	pt-br	Adicionar VCard
 advanced search	addressbook	pt-br	Pesquisa avançada
 all contacts	addressbook	pt-br	Todos os contatos
+allow users to maintain their own account-data	admin	pt-br	Permitir usuários a manter seus próprios dados de contatos
 alt. csv import	addressbook	pt-br	Importar CSV
 always	addressbook	pt-br	sempre
 apply changes to all members, whose fields have the same previous content	addressbook	pt-br	Aplicar alterações para todos os membros, onde os campos tenham o mesmo conteúdo anterior.
@@ -84,6 +85,7 @@ csv-filename	addressbook	pt-br	CSV-Nome do Arquivo
 custom	addressbook	pt-br	Personalizado
 custom fields	addressbook	pt-br	Campos personalizados
 debug output in browser	addressbook	pt-br	Depurar saída no navegador
+default addressbook for adding contacts	addressbook	pt-br	Lista de contatos padrão para inclusão
 default filter	addressbook	pt-br	Filtro padrão
 delete a single entry by passing the id.	addressbook	pt-br	Apagar um única entrada informando o ID.
 delete this contact	addressbook	pt-br	Remover este contato
@@ -126,6 +128,7 @@ field %1 has been added !	addressbook	pt-br	Campo %1 foi adicionado !
 field %1 has been updated !	addressbook	pt-br	Campo %1 foi atualizado !
 field name	addressbook	pt-br	Nome do campo
 fields for the csv export	addressbook	pt-br	Campos para a exportação CSV
+fields the user is allowed to edit himself	admin	pt-br	Campos que ao usuário é permitir editar
 fields to show in address list	addressbook	pt-br	Campos a serem exibidos na lista de endereços
 fieldseparator	addressbook	pt-br	Separador de campos
 for read only ldap	admin	pt-br	para LDAP somente leitura
@@ -196,6 +199,7 @@ other phone	addressbook	pt-br	Outro telefone
 own sorting	addressbook	pt-br	ordem própria
 pager	common	pt-br	Pager
 parcel	addressbook	pt-br	Parcial
+permission denied !!!	addressbook	pt-br	Permissão negada !!!
 phone number	common	pt-br	Número de telefone
 phone numbers	common	pt-br	Números de telefone
 photo	addressbook	pt-br	Foto
@@ -249,6 +253,7 @@ to many might exceed your execution-time-limit	addressbook	pt-br	muitos poderá e
 today is %1's birthday!	common	pt-br	Hoje é o aniversário de %1.
 tomorrow is %1's birthday.	common	pt-br	Amanhã é o aniversário de %1.
 translation	addressbook	pt-br	Tradução
+type	addressbook	pt-br	Tipo
 update a single entry by passing the fields.	addressbook	pt-br	Atualizar uma única entrada informando os campos
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 for the number)	admin	pt-br	URL para linkar números de telefones (usar %1 para o número)
@@ -261,6 +266,7 @@ vcards require a last name entry.	addressbook	pt-br	VCards requerem que o último
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt-br	AVISO!! LDAP é válido somente se você não estiver usando contatos para guardar as contas!
 warning: all contacts found will be deleted!	addressbook	pt-br	AVISO: Todos os contatos encontrados serão removidos!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	pt-br	Quando a lista de contatos deverá exibir aquela coluna. "Somente se houver conteúdo" oculta a coluna, a menos que haja conteúdo para ser exibido.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	pt-br	Qual lista de contatos deverá ser selecionada quando incluindo um contato E você não tem direitos de inclusão na lista de contatos atual.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pt-br	Que codificação de caracter deverá ser usado para exportação CSV. O padrão é a codificação desta instalação do eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	pt-br	Quais campos devem ser exportados. Todos significa qualquer campo registrado nos Contatos, incluindo os campos personalizados. Os endereços residencial e comercial contêm nome, companhia e o endereço seleciona.
 whole query	addressbook	pt-br	toda a consulta

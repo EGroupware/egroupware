@@ -54,8 +54,9 @@ cellpadding for the table-tag	etemplate	it	Cellpadding per table-tag
 cells	etemplate	it	Celle
 cellspacing for the table-tag	etemplate	it	Spaziatura celle per table-tag
 center	etemplate	it	Centrato
-check if content should only be displayed but not altered (the content is not send back then!)	etemplate	it	check if content should only be displayed but not altered (the content is not send back then!)
-check if field has to be filled by user	etemplate	it	check if field has to be filled by user
+changed	etemplate	it	Modificato
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	it	spunta se il contenuto deve essere solo visualizzato ma non alterato (il contenuto non viene rispedito allora!)
+check if field has to be filled by user	etemplate	it	spunta se il campo deve essere riempito dall'utente
 checkbox	etemplate	it	Checkbox
 class	etemplate	it	Classe
 class, valign	etemplate	it	classe, Valign
@@ -72,6 +73,8 @@ comment	etemplate	it	Commento
 confirm	etemplate	it	conferma
 confirmation message or custom javascript (returning true or false)	etemplate	it	messaggio di conferma o javascript personalizzato (che restituisce vero o falso)
 confirmation necesary or custom java-script	etemplate	it	conferma necessaria o javascript personalizzato
+contact fields	etemplate	it	campi Contatti
+contains	etemplate	it	contiene
 create a new table for the application	etemplate	it	Crea una nuova tabella per l'applicazione
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	it	creates an english ('en') langfile from label and helptexts (for application in Name)
 css class for the table-tag	etemplate	it	classe CSS per table-tag
@@ -81,6 +84,7 @@ css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'ro
 css-styles	etemplate	it	stili-CSS
 custom	etemplate	it	personalizzato
 custom fields	etemplate	it	campi personalizzati
+custom javascript for onchange	etemplate	it	javascript personalizzato per onChange
 cut	etemplate	it	Taglia
 date+time	etemplate	it	Data+Ora
 datum	etemplate	it	Datum
@@ -92,7 +96,7 @@ db-tools	etemplate	it	DB-Tools
 deck	etemplate	it	Deck (interno)
 default	etemplate	it	Predefinito
 delete a single entry by passing the id.	etemplate	it	Delete a single entry by passing the id.
-delete all selected etemplates, without further inquiry	etemplate	it	delete ALL selected eTemplates, WITHOUT further inquiry
+delete all selected etemplates, without further inquiry	etemplate	it	cancella TUTTI gli eTemplate selezionati, SENZA ulteriori domande
 delete and cut save the template!	etemplate	it	cancella e taglia-salva il template!
 delete column	etemplate	it	Cancella Colonna
 delete index	etemplate	it	Cancella Indice
@@ -110,7 +114,7 @@ discard changes	etemplate	it	annulla i cambiamenti
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	it	displayed in front of input or input is inserted for a '%s' in the label (label of the Submitbutton or Image-filename)
 displayed in statusline of browser if input-field gets focus	etemplate	it	displayed in statusline of browser if input-field gets focus
 displayed in the top line of the groupbox (legend)	etemplate	it	visualizzato nella riga più alta del groupbox (legenda)
-do you want to save the changes you made in table %s?	etemplate	it	Do you want to save the changes you made in table %s?
+do you want to save the changes you made in table %s?	etemplate	it	Vuoi salvare i cambiamenti fatti nella tabella %s?
 documentation	etemplate	it	Documentazione
 doesn't matter	etemplate	it	non importa
 drop a table - this can not be undone	etemplate	it	Drop di una tabella - questo NON può essere annullato
@@ -132,7 +136,7 @@ enter '' for an empty default, nothing mean no default	etemplate	it	inserisci ''
 enter a search pattern	etemplate	it	Inserisci una stringa di ricerca
 enter filename to upload and attach, use [browse...] to search for it	etemplate	it	Enter filename to upload and attach, use [Browse...] to search for it
 enter the new version number here (> old_version), empty for no update-file	etemplate	it	enter the new version number here (> old_version), empty for no update-file
-enter the new version number here (has to be > old_version)	etemplate	it	enter the new version number here (has to be > old_version)
+enter the new version number here (has to be > old_version)	etemplate	it	inserisci il numero della nuova versione qui (deve essere > old_version)
 entry saved	etemplate	it	Voce salvata
 error: template not found !!!	etemplate	it	Errore: Template non trovato !!!
 error: webserver is not allowed to write into '%1' !!!	etemplate	it	Errore: il webserver non può scrivere in '%1' !!!
@@ -173,9 +177,11 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	it	Height of the table in % or pixels for the table-tag and (optional) div
 height, disabled	etemplate	it	Altezza, Disabilitata
 help	etemplate	it	Aiuto
+history log	etemplate	it	Log cronologia
 horizontal rule	etemplate	it	Righello Orrizzontale
 hour	etemplate	it	Ora
 hours	etemplate	it	ore
+how many entries should the list show	etemplate	it	Quante voci deve mostrare l'elenco
 html	etemplate	it	Html
 if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	it	if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell
 image	etemplate	it	Immagine
@@ -207,13 +213,15 @@ last	etemplate	it	Ultimo
 left	etemplate	it	Sinistra
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	it	length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8
 link	etemplate	it	Link
+linkapps	etemplate	it	Applicazioni Link
 linkentry	etemplate	it	Voce Link
 linklist	etemplate	it	Elenco Link
 linkstring	etemplate	it	Stringa Link
 linkto	etemplate	it	Link A
 load this template into the editor	etemplate	it	carica questo template nell'editor
 middle	etemplate	it	In mezzo
-minute	etemplate	it	Minuti
+minute	etemplate	it	Minuto
+minutes	etemplate	it	Minuti
 month	etemplate	it	Mese
 multicolumn indices	etemplate	it	Multicolumn Indices
 name	etemplate	it	Nome
@@ -240,9 +248,11 @@ nothing matched search criteria !!!	etemplate	it	Nothing matched search criteria
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	etemplate	it	number of colums the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	etemplate	it	number of rows/cols in a V/HBox, Cellpadding, Cellspacing
 of	etemplate	it	di
+onchange	etemplate	it	onChange
 onclick	etemplate	it	onClick
 only an other version found !!!	etemplate	it	only an other Version found !!!
 open the online help.	etemplate	it	Apre help online.
+operator	etemplate	it	Operatore
 optional note about the link	etemplate	it	optional note about the Link
 options	etemplate	it	Opzioni
 order to navigating by tab key through the form	etemplate	it	Ordine per spostarsi con tasto TAB attraverso modulo
@@ -290,6 +300,8 @@ select category	etemplate	it	Seleziona Categoria
 select country	etemplate	it	Seleziona Nazione
 select day	etemplate	it	Seleziona Giorno
 select day of week	etemplate	it	scegli giorno della settimana
+select entry	etemplate	it	Scegli voce
+select hour	etemplate	it	Scegli ora
 select if content of field should not be translated (label gets always translated)	etemplate	it	scegli se il contenuto del campo non deve essere tradotto (l'etichetta viene sempre tradotta)
 select month	etemplate	it	Seleziona Mese
 select number	etemplate	it	Seleziona Numero
@@ -316,6 +328,7 @@ span, class	etemplate	it	Classe, Span
 stack	etemplate	it	Stack
 start a new search, cancel this link	etemplate	it	inizia una nuova ricerca, annulla questo link
 start new search for the above pattern	etemplate	it	inizia nuova ricerca della stringa
+submit form	etemplate	it	invia modulo
 submitbutton	etemplate	it	Submitbutton
 swap	etemplate	it	scambia
 swap widget with next one	etemplate	it	scambia widget con il seguente

@@ -1,5 +1,5 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	pt-br	%1 (%2 nova) Mensagens escritas para Aplicações '%3' e Idiomas '%4'
-%1 etemplates deleted	etemplate	pt-br	%1 eModelo removido
+%1 etemplates deleted	etemplate	pt-br	%1 eModelo(s) removido(s)
 %1 etemplates for application '%2' dumped to '%3'	etemplate	pt-br	%1 eModelo para a aplicação '%2' copiado para '%3'
 %1 etemplates found	etemplate	pt-br	%1 eModelo encontrados
 %1 matches on search criteria	etemplate	pt-br	%1 encontrados para os critérios da busca
@@ -73,6 +73,7 @@ comment	etemplate	pt-br	Comentário
 confirm	etemplate	pt-br	Confirmar
 confirmation message or custom javascript (returning true or false)	etemplate	pt-br	Mensagem de confirmação ou javascript personalizado (retornando verdadeiro ou falso).
 confirmation necesary or custom java-script	etemplate	pt-br	Confirmação necessária ou javascript personalizado.
+contact fields	etemplate	pt-br	Campos de contatos
 contains	etemplate	pt-br	contém
 create a new table for the application	etemplate	pt-br	Criar uma nova tabela para aplicação
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pt-br	criados em um arquivo de idioma inglês ('en') da etiqueta e arquivos de ajuda (para a aplicação em nome)
@@ -176,6 +177,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	pt-br	Altura da tabela em % ou pixels, para a tag de tabelas (opcional) div
 height, disabled	etemplate	pt-br	Altura, Desativada
 help	etemplate	pt-br	Ajuda
+history log	etemplate	pt-br	Registro do histórico
 horizontal rule	etemplate	pt-br	Filtro horizontal
 hour	etemplate	pt-br	Hora
 hours	etemplate	pt-br	Horas
@@ -211,6 +213,7 @@ last	etemplate	pt-br	Última
 left	etemplate	pt-br	Esquerda
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	pt-br	tamanho para char+varchar, precisões em: 2, 4, 8 e flutuante: 4, 8
 link	etemplate	pt-br	Link
+linkapps	etemplate	pt-br	Link de aplicativos
 linkentry	etemplate	pt-br	Entradas de link
 linklist	etemplate	pt-br	Listar link
 linkstring	etemplate	pt-br	Texto para link
@@ -232,6 +235,7 @@ new table created	etemplate	pt-br	Nova tabela criada
 newer version '%1' exists !!!	etemplate	pt-br	Existe(m) '%1' versão(ões) mais atual(ais) !!!
 nextmatch	etemplate	pt-br	Próximo campo
 nextmatch accountfilter	etemplate	pt-br	Próximo campo - Filtrar contas
+nextmatch custom filterheader	etemplate	pt-br	Próximo campo - Cabeçalho personalizado
 nextmatch filterheader	etemplate	pt-br	Próximo campo - Filtrar cabeçalho
 nextmatch sortheader	etemplate	pt-br	Próximo campo - Classificar cabeçalho
 no column to swap with !!!	etemplate	pt-br	sem coluna para trocar !!!
@@ -298,6 +302,8 @@ select category	etemplate	pt-br	Selecione a Categoria
 select country	etemplate	pt-br	Selecione o País
 select day	etemplate	pt-br	Selecione o Dia
 select day of week	etemplate	pt-br	Selecione o dia da semana
+select entry	etemplate	pt-br	Selecionar entrada
+select hour	etemplate	pt-br	Selecionar hora
 select if content of field should not be translated (label gets always translated)	etemplate	pt-br	selecione o conteúdo do campo caso o índice não seja traduzido (a etiqueta inicia sempre traduzida)
 select month	etemplate	pt-br	Selecione o Mês
 select number	etemplate	pt-br	Selecione o Número

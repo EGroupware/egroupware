@@ -2,8 +2,11 @@
 2 years ago	timesheet	pt-br	2 anos atrás
 3 years ago	timesheet	pt-br	3 anos atrás
 actions	timesheet	pt-br	Ações
+all projects	timesheet	pt-br	Todos projetos
+both: allow to use projectmanager and free project-names	admin	pt-br	Ambos: permitir usar Gerenciador de Projetos e nomes de projetos livres
 by	timesheet	pt-br	por
 create new links	timesheet	pt-br	Criar novos links
+creating new entry	timesheet	pt-br	criando novo registro
 delete this entry	timesheet	pt-br	Remover este registro
 edit this entry	timesheet	pt-br	Editar este registro
 empty if identical to duration	timesheet	pt-br	vazio se idêntico à duração
@@ -13,6 +16,7 @@ entry saved	timesheet	pt-br	Registro salvo
 error deleting the entry!!!	timesheet	pt-br	Erro removendo o registro!!
 error saving the entry!!!	timesheet	pt-br	Erro salvando o registro!!
 existing links	timesheet	pt-br	Links existentes
+full: use only projectmanager	admin	pt-br	Completo: usar apenas Gerenciador de Projetos
 general	timesheet	pt-br	Geral
 last modified	timesheet	pt-br	Modificado por último
 last month	timesheet	pt-br	Último mês
@@ -21,8 +25,12 @@ last year	timesheet	pt-br	Último ano
 leave it empty for a full week	timesheet	pt-br	Deixar vazio para uma semana inteira
 links	timesheet	pt-br	Links
 no details	timesheet	pt-br	Sem detalhes
+no project	timesheet	pt-br	Nenhum projeto
+none: use only free project-names	admin	pt-br	Nenhum: usar apenas nomes de projetos livres
+or endtime	timesheet	pt-br	or horário final
 permission denied!!!	timesheet	pt-br	Permissão negada !!
 price	timesheet	pt-br	Preço
+projectmanager integration	admin	pt-br	Integração com Gerenciador de Projetos
 quantity	timesheet	pt-br	Quantidade
 save & new	timesheet	pt-br	Salvar e Novo
 saves the changes made	timesheet	pt-br	Salvar as alterações feitas
@@ -30,6 +38,7 @@ saves this entry and add a new one	timesheet	pt-br	Salvar este registro e adicio
 select a price	timesheet	pt-br	Selecionar um preço
 select a project	timesheet	pt-br	Selecionar um projeto
 start	timesheet	pt-br	Início
+starttime	timesheet	pt-br	Horário inicial
 sum %1:	timesheet	pt-br	Soma %1:
 this month	timesheet	pt-br	Este mês
 this week	timesheet	pt-br	Esta semana

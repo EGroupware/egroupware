@@ -48,6 +48,7 @@ category	infolog	pt-br	Categoria
 change the status of an entry, eg. close it	infolog	pt-br	Alterar o status de um registro (ex. fechado)
 charset of file	infolog	pt-br	Conjunto de carácteres do arquivo
 check to set startday	infolog	pt-br	Selecione para determinar a data de início
+check to specify custom contact	infolog	pt-br	Marque para especificar contato personalizado
 click here to create the link	infolog	pt-br	clique aqui para inserir um hyperlink
 click here to start the search	infolog	pt-br	clique aqui para iniciar uma pesquisa
 close	infolog	pt-br	Fechar
@@ -208,6 +209,7 @@ project settings: price, times	infolog	pt-br	Configurações do projeto: preço, te
 re:	infolog	pt-br	Re:
 read one record by passing its id.	infolog	pt-br	Ler um registro contornando seu id.
 read rights (default)	infolog	pt-br	Permissões de leitura (padrão)
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	pt-br	reg. expr. for local IP's<br>eg. ^192\.168\.1\.
 remark	infolog	pt-br	Destaque
 remove this link (not the entry itself)	infolog	pt-br	Remover este link (não o registro)
@@ -279,6 +281,7 @@ typ	infolog	pt-br	Tipo
 typ '%1' already exists !!!	infolog	pt-br	O tipo '%1' já existe!!!
 type	infolog	pt-br	Tipo
 type ...	infolog	pt-br	Tipo ...
+type of customfield	infolog	pt-br	Tipo de campo personalizado
 type of the log-entry: note, phonecall or todo	infolog	pt-br	Tipo de registro: Nota, Recado ou Pendência
 unlink	infolog	pt-br	Remover link
 upcoming	infolog	pt-br	futuras
@@ -286,6 +289,8 @@ urgency	infolog	pt-br	urgência
 urgent	infolog	pt-br	urgente
 used time	infolog	pt-br	Horas utilizadas
 valid path on clientside<br>eg. \\server\share or e:\	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
+valid path on clientside<br>eg. servershare or e:	infolog	pt-br	valid path on clientside<br>eg. \\Server\Share or e:\
 values for selectbox	infolog	pt-br	Valores para a caixa de seleção
 view all subs of this entry	infolog	pt-br	Ver todas as subs para este registro
 view other subs	infolog	pt-br	ver outras subs
