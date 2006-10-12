@@ -92,7 +92,7 @@ class accounts_backend
 	 * @var unknown_type
 	 */
 	var $group_mail_classes = array(
-//		'dbmailforwardingaddress' => 'mailforwardingaddress',
+		'dbmailforwardingaddress' => 'mailforwardingaddress',
 		'dbmailuser' => 'mailforwardingaddress',
 		'qmailuser' => 'mailforwardingaddress',
 	);
