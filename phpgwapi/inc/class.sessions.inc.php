@@ -316,6 +316,22 @@
 			}
 
 			$this->session_flags = $session['session_flags'];
+			
+			/* If User is Anonymous and enters a not allowed application its session will be destroyed inmediatly. */
+			$_current_app=$GLOBALS['egw_info']['flags']['currentapp'];
+			if($this->session_flags=='A' && !$GLOBALS['egw_info']['user']['apps'][$_current_app])
+			{
+			   $this->destroy($sessionid,$kp3);
+
+			   /* Overwrite Cookie with empty user. For 2 weeks */
+			   $this->egw_setcookie('sessionid','');
+			   $this->egw_setcookie('kp3','');
+			   $this->egw_setcookie('domain','');
+			   $this->egw_setcookie('last_domain','');
+			   $this->egw_setcookie('last_loginid', ''); 
+
+			   return False;
+			}
 
 			$this->split_login_domain($session['session_lid'],$this->account_lid,$this->account_domain);
 
