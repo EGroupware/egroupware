@@ -204,8 +204,7 @@ function xajax_eT_wrapper(obj) {
 	if (typeof(obj) == 'object') {
 		set_style_by_class('div','popupManual','display','none');
 		set_style_by_class('div','ajax-loader','display','inline');
-		var etemplate_exec_id = obj.form.etemplate_exec_id.defaultValue;
-		var submit_button = obj.name;
+		obj.form.submit_button.value = obj.name;
 		var menuaction = obj.form.action.replace(/.+menuaction=/,'');
 		xajax_doXMLHTTP(menuaction+'./etemplate/process_exec', xajax.getFormValues(obj.form));
 	}
@@ -214,7 +213,7 @@ function xajax_eT_wrapper(obj) {
 		set_style_by_class('div','popupManual','display','inline');
 	}
 }
-		
+
 function disable_button(id) {
 	document.getElementById(id).disabled = 'true';
 	document.getElementById(id).style.color = 'gray';
