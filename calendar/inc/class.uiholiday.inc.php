@@ -48,7 +48,7 @@
 			$this->bo->check_admin();
 			$this->base_url = $this->bo->base_url;
 			$this->template_dir = $GLOBALS['egw']->common->get_tpl_dir('calendar');
-			$this->sb =& CreateObject('phpgwapi.sbox');
+			$this->sb =& CreateObject('calendar.sbox');
 
 			// jscalendar is needed by the new navigation-menu AND it need to be loaded befor the header !!!
 			if (!is_object($GLOBALS['egw']->jscalendar))
