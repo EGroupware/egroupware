@@ -7,14 +7,14 @@
 %s disabled	etemplate	nl	%s uitgeschakeld
 %s needed	etemplate	nl	%s nodig
 %s notranslation	etemplate	nl	%s GeenVertaling
-%s onchange	etemplate	nl	%s bijWijzigen
+%s onchange	etemplate	nl	%s bij Wijziging
 %s readonly	etemplate	nl	%s alleen lezen
 '%1' has an invalid format !!!	etemplate	nl	'%1' heeft een ongeldig formaat !!!
 '%1' is not a valid date !!!	etemplate	nl	'%1' is geen geldige datum !!!
 '%1' is not a valid floatingpoint number !!!	etemplate	nl	'%1' is geen geldig drijvende komma getal !!!
 '%1' is not a valid integer !!!	etemplate	nl	'%1' is geen geldig geheel getal !!!
 a pattern to be searched for	etemplate	nl	een patroon waarnaar gezocht moet worden
-accesskey	etemplate	nl	Accesskey
+accesskey	etemplate	nl	Toegangssleutel
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	nl	Accesskeys kunnen ook gedefinieerd worden door een & in het label te plaatsen (bijvoorbeeld: &Naam)
 add a new column (after the existing ones)	etemplate	nl	Voeg een nieuwe kolom toe (achter de bestaande kolommen)
 add a new entry of the selected application	etemplate	nl	Voeg een nieuw record toe van de geselecteerde toepassing
@@ -38,7 +38,7 @@ applies the changes to the given version of the template	etemplate	nl	de gemaakt
 attach	etemplate	nl	Bijsluiten
 attach file	etemplate	nl	Bestand bijsluiten
 baseline	etemplate	nl	Baseline
-blurtext	etemplate	nl	blurText
+blurtext	etemplate	nl	Vage Text
 border	etemplate	nl	Rand
 border-line-thickness for the table-tag	etemplate	nl	Randlijndikte voor de table-tag
 bottom	etemplate	nl	Onderzijde
@@ -54,9 +54,10 @@ cellpadding for the table-tag	etemplate	nl	Cellpadding voor de table-tag
 cells	etemplate	nl	Cellen
 cellspacing for the table-tag	etemplate	nl	Cellspacing voor de table-tag
 center	etemplate	nl	Centreren
+changed	etemplate	nl	Veranderd
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	nl	aanvinken indien content alleen getoond moet worden maar niet niet gewijzigd (de content wordt dan niet teruggezonden!)
-check if field has to be filled by user	etemplate	nl	vink aan als dit veld door de gebruiker moet worden ingevuld
-checkbox	etemplate	nl	Vinkveld
+check if field has to be filled by user	etemplate	nl	Check of dit veld door de gebruiker moet worden ingevuld
+checkbox	etemplate	nl	Keuzevak
 class	etemplate	nl	Klasse
 class, valign	etemplate	nl	klasse, Valign
 click here to attach the file	etemplate	nl	klik hier om een bestand bij te sluiten
@@ -72,6 +73,7 @@ comment	etemplate	nl	Commentaar
 confirm	etemplate	nl	bevestigen
 confirmation message or custom javascript (returning true or false)	etemplate	nl	bevestigingsbericht of aangepast javascript (geeft true of false terug)
 confirmation necesary or custom java-script	etemplate	nl	bevestiging nodig of aangepast javascript
+contact fields	etemplate	nl	Veldnamen contacten
 contains	etemplate	nl	bevat
 create a new table for the application	etemplate	nl	Maak een nieuwe tabel voor de applicatie
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	nl	creëert een engels ('en') taalbestand van label en helpteksten (voor applicatie in Naam)
@@ -108,7 +110,7 @@ deletes the above spez. etemplate from the database, can not be undone	etemplate
 deletes the etemplate spez. above	etemplate	nl	verwijdert de hierboven gespecificeerde eTemplate
 deletes this column	etemplate	nl	Verwijderd deze kolom
 deletes this index	etemplate	nl	Verwijderd deze index
-discard changes	etemplate	nl	ondankt wijzigingen
+discard changes	etemplate	nl	Wijzigingen wegdoen
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	etemplate	nl	getoond voor invoer of invoer wordt ingevoegd voor een '%s' in het label (label van de verzendknop of afbeeldingsbestandsnaam)
 displayed in statusline of browser if input-field gets focus	etemplate	nl	weergegeven in de statusbalk van de browser indien het invoerveld de focus heeft
 displayed in the top line of the groupbox (legend)	etemplate	nl	weergegeven in de bovenste regel van het groepskader (legenda)
@@ -157,7 +159,7 @@ file contains more than one etemplate, last one is shown !!!	etemplate	nl	Bestan
 file writen	etemplate	nl	Bestand weggeschreven
 fileupload	etemplate	nl	Bestandsupload
 first	etemplate	nl	Eerste
-floating point	etemplate	nl	Drijvende komma
+floating point	etemplate	nl	Drijvende Punt
 foreign key	etemplate	nl	Foreign Key
 formatted text (html)	etemplate	nl	Opgemaakte tekst (HTML)
 go to the first entry	etemplate	nl	ga naar de eerste entry
@@ -194,8 +196,8 @@ insert a column before	etemplate	nl	een kolom hiervoor invoegen
 insert a column behind	etemplate	nl	een kolom hierna invoegen
 insert a row above	etemplate	nl	een rij hierboven invoegen
 insert a row below	etemplate	nl	een rij hieronder invoegen
-insert a widget before	etemplate	nl	een widget hiervoor invoegen
-insert a widget behind	etemplate	nl	een widget hierna invoegen
+insert a widget before	etemplate	nl	een of ander iets hiervoor invoegen
+insert a widget behind	etemplate	nl	een of ander iets hierna invoegen
 insert new column behind this one	etemplate	nl	voeg een nieuwe kolom na deze kolom in
 insert new column in front of all	etemplate	nl	voeg een nieuwe kolom voor deze kolom in
 insert new row after this one	etemplate	nl	voeg een nieuwe rij onder deze rij in
@@ -216,7 +218,7 @@ linkstring	etemplate	nl	LinkString
 linkto	etemplate	nl	LinkNaar
 load this template into the editor	etemplate	nl	laad deze tempate in de editor
 middle	etemplate	nl	Midden
-minute	etemplate	nl	Minuur
+minute	etemplate	nl	Minuut
 minutes	etemplate	nl	Minuten
 month	etemplate	nl	Maand
 multicolumn indices	etemplate	nl	Multi-column Indices
@@ -231,6 +233,7 @@ new table created	etemplate	nl	Nieuwe tabel gemaakt
 newer version '%1' exists !!!	etemplate	nl	niewere versie '%1' bestaat reeds !!!
 nextmatch	etemplate	nl	Volgende overeenkomst
 nextmatch accountfilter	etemplate	nl	Volgende overeenkomst Accountfilter
+nextmatch custom filterheader	etemplate	nl	Volgende overeenkomst aangepaste Filterdeader
 nextmatch filterheader	etemplate	nl	Volgende overeenkomst Filterheader
 nextmatch sortheader	etemplate	nl	Volgende overeenkomst Sortheader
 no column to swap with !!!	etemplate	nl	geen kolom om mee te wisselen !!!
@@ -272,7 +275,7 @@ read etemplate from database (for the keys above)	etemplate	nl	lees eTemplate ui
 readonly	etemplate	nl	alleen lezen
 remove row (can not be undone!!!)	etemplate	nl	Rij verwijderen (kan NIET ongedaan gemaakt worden)
 remove this link (not the entry itself)	etemplate	nl	Verwijder deze link (niet de entry zelf)
-returns savely, without deleting	etemplate	nl	komt veilig terug, ZONDER te vewijderen
+returns savely, without deleting	etemplate	nl	komt veilig terug ZONDER te vewijderen
 right	etemplate	nl	Rechts
 row...	etemplate	nl	Rij...
 save the changes made and close the window	etemplate	nl	Bewaar de gemaakte wijzigingen en sluit het venster
@@ -297,13 +300,15 @@ select category	etemplate	nl	Selecteer categorie
 select country	etemplate	nl	Selecteer land
 select day	etemplate	nl	Selecteer dag
 select day of week	etemplate	nl	Selecteer dag van de week
+select entry	etemplate	nl	Selecteer entry
+select hour	etemplate	nl	Selecteer uur
 select if content of field should not be translated (label gets always translated)	etemplate	nl	markeer als de inhoud van het veld niet vertaald mag worden (label wordt altijd vertaald)
 select month	etemplate	nl	Selecteer maand
 select number	etemplate	nl	Selecteer nummer
 select one ...	etemplate	nl	Selecteer één ...
 select percentage	etemplate	nl	Selecteer percentage
 select priority	etemplate	nl	Selecteer prioriteit
-select state	etemplate	nl	Selecteer staat of provincie
+select state	etemplate	nl	Selecteer staat / provincie / streek
 select the indexed columns in their desired order	etemplate	nl	Selecteer de geindexeerde kolommen in hun gewenste volgorde
 select this etemplate to delete it	etemplate	nl	Select deze eTemplate om hem te verwijderen
 select which accounts to show	etemplate	nl	selecteer welke accounts u wilt weergeven
@@ -318,20 +323,20 @@ show values	etemplate	nl	Waarden weergeven
 showing	etemplate	nl	geeft weer
 shows / allows you to enter values into the etemplate for testing	etemplate	nl	toont / staat u toe om testwaardes in de eTemplate in te vullen
 shows/displays etemplate for testing, does not save it before	etemplate	nl	toont eTemplate om te testen, slaat het NIET eerder op
-spacing	etemplate	nl	Spacing
-span	etemplate	nl	Span
-span, class	etemplate	nl	Span, klasse
+spacing	etemplate	nl	Afstand
+span	etemplate	nl	Breedte
+span, class	etemplate	nl	Breedte, klasse
 stack	etemplate	nl	Stapel
 start a new search, cancel this link	etemplate	nl	start een nieuwe zoekopdracht, annuleer deze link
 start new search for the above pattern	etemplate	nl	start een nieuwe zoekopdracht naar het hierboven genoemde patroon
 submit form	etemplate	nl	formulier verzenden
 submitbutton	etemplate	nl	Verzendknop
 swap	etemplate	nl	verwisselen
-swap widget with next one	etemplate	nl	verwissel widget met de volgende
+swap widget with next one	etemplate	nl	verwissel iets met de volgende
 swap with next column	etemplate	nl	verwissel met volgende kolom
 swap with next row	etemplate	nl	verwissel met volgende rij
-switch to a parent widget	etemplate	nl	schakel om naar een bovenliggend widget
-switch to an other widgets of that container	etemplate	nl	schakel om naar een andere widget in die container
+switch to a parent widget	etemplate	nl	schakel om naar een bovenliggend iets
+switch to an other widgets of that container	etemplate	nl	schakel om naar een ander iets in die container
 tabindex	etemplate	nl	Tabindex
 table unchanged, no write necessary !!!	etemplate	nl	Tabel niet gewijzigd, schrijven niet nodig !!!
 tablename	etemplate	nl	Tabelnaam
@@ -340,7 +345,7 @@ template	etemplate	nl	Template
 template deleted	etemplate	nl	Template verwijderd
 template saved	etemplate	nl	Template opgeslagen
 text	etemplate	nl	Tekst
-textarea	etemplate	nl	Textarea
+textarea	etemplate	nl	Textruimte
 this text gets displayed if the input-field is empty and has no focus (blur)	etemplate	nl	tekst wordt getoond als het invoerveld lees is en niet de focus heeft (blur)
 time	etemplate	nl	Tijd
 to disable: [! = not]<value>[=<check>] eg: '!@data' disables if content of data is empty	etemplate	nl	om uit te schakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt uit als data geen inhoud heeft
@@ -369,7 +374,7 @@ view this etemplate	etemplate	nl	toon deze eTemplate
 view this linked entry in its application	etemplate	nl	toon deze gelinkte entry in zijn toepassing
 weekend	etemplate	nl	weekend
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	nl	wat gebeurt er met overflowing content: visible (standaard), hidden, scroll, auto (browser bepaalt)
-widget copied into clipboard	etemplate	nl	widget is naar het klembord gekopieerd
+widget copied into clipboard	etemplate	nl	iets is naar het klembord gekopieerd
 width	etemplate	nl	Breedte
 width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	nl	breedte van de kolom (in % of pixels), kolom uitschakelen: [! = niet]<value>[=<check>] voorbeeld: '!@data' schakelt de kolom uit indien de inhoud van data leeg is
 width of column (in % or pixel)	etemplate	nl	kolombreedte (in % of pixels)
