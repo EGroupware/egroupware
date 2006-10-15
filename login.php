@@ -43,9 +43,14 @@
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
 	$GLOBALS['egw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
-	include($GLOBALS['egw_info']['server']['template_dir'].'/login.inc.php');
-	
-	//$GLOBALS['egw_info']['server']['deny_all_logins']=true;
+	if(is_file($GLOBALS['egw_info']['server']['template_dir'].'/login.inc.php'))
+	{
+	   include($GLOBALS['egw_info']['server']['template_dir'].'/login.inc.php');
+	}
+	else
+	{
+	   include(EGW_SERVER_ROOT . '/phpgwapi/templates/idots/login.inc.php');
+	}
 
 	// This is used for system downtime, to prevent new logins.
 	if($GLOBALS['egw_info']['server']['deny_all_logins'])
@@ -53,8 +58,6 @@
 	   login_parse_denylogin();
 	   exit;
 	}
-
-	//$tmpl->set_file(array('login_form' => 'login.tpl'));
 
 	function check_logoutcode($code)
 	{
@@ -317,7 +320,7 @@
 		}
 		if(lang('loginscreen_message') != 'loginscreen_message*')
 		{
-		   //$tmpl->set_var('lang_message',stripslashes(lang('loginscreen_message')));
+		   // for now store login message in globals so it is available for the login.inc.php
 		   $GLOBALS['loginscreenmessage']=stripslashes(lang('loginscreen_message'));
 		}
 	 }
