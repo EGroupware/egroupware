@@ -53,7 +53,9 @@
 		 */
 		var $data = Array();
 		/**
-		 * @var object/db $db internal copy of the db-object
+		 * internal copy of the db-object
+		 * 
+		 * @var egw_db
 		 */
 		var $db;
 		/**
@@ -156,14 +158,9 @@
 			$this->db->select($this->table_name,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__); 
  
 			$this->data = Array();
-			while(($row = $this->db->row(true)))
+			while(($row = $this->db->row(true,'acl_')))
 			{
-				$this->data[] = array(
-					'appname'  => $row['acl_appname'],
-					'location' => $row['acl_location'], 
-					'account'  => $row['acl_account'], 
-					'rights'   => $row['acl_rights'],
-				);
+				$this->data[$row['appname'].'-'.$row['location'].'-'.$row['account']] = $row;
 			}
 			return $this->data;
 		}
@@ -196,12 +193,13 @@
 		{
 			if (!$appname) $appname = $GLOBALS['egw_info']['flags']['currentapp'];
 
-			$this->data[] = array(
+			$row = array(
 				'appname'  => $appname, 
 				'location' => $location, 
 				'account'  => (int) $this->account_id, 
 				'rights'   => (int) $rights
 			);
+			$this->data[$row['appname'].'-'.$row['location'].'-'.$row['account']] = $row;
 
 			return $this->data;
 		}
@@ -219,9 +217,9 @@
 
 			foreach($this->data as $idx => $value)
 			{
-				if ($this->data[$idx]['appname'] == $appname && 
-					($location === false || $this->data[$idx]['location'] == $location) && 
-					$this->data[$idx]['account'] == $this->account_id)
+				if ($value['appname'] == $appname && 
+					($location === false || $value['location'] == $location) && 
+					$value['account'] == $this->account_id)
 				{
 					unset($this->data[$idx]);
 				}
