@@ -4,8 +4,8 @@
 %1 start	common	nl	%1 start
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	nl	%1Kies een andere map%2<br />of maak %3 schrijfbaar voor de webserver
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	nl	%1eGroupWare%2 is een multi-user, web-gebaseerd groupware suite, geschreven in %3PHP%4.
-(shift-)click or drag to change value	jscalendar	nl	(Shift-)Klik of slepen om waarde te wijzigen
-- click on any of the time parts to increase it	jscalendar	nl	- Klik op een willekeurig tijd onderdeel om het te verhogen
+(shift-)click or drag to change value	jscalendar	nl	(Shift-)Klik of sleep om waarde te wijzigen
+- click on any of the time parts to increase it	jscalendar	nl	- Klik op een willekeurig tijdsonderdeel om het te verhogen
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	nl	- Hou de muisknop op een van de knoppen hierboven voor een snellere selectie.
 - or click and drag for faster selection.	jscalendar	nl	- of klik en sleep voor snellere selectie
 - or shift-click to decrease it	jscalendar	nl	- of Shift-klik om het te verlagen
@@ -40,7 +40,7 @@ admin	common	nl	Beheer
 administration	common	nl	Beheer
 afghanistan	common	nl	AFGHANISTAN
 albania	common	nl	ALBANIË
-algeria	common	nl	ALGERIJË
+algeria	common	nl	ALGERIJE
 align center	tinymce	nl	Centreren
 align full	tinymce	nl	Uitvullen
 align left	tinymce	nl	Links uitlijnen
@@ -106,7 +106,7 @@ bouvet island	common	nl	Centraal Afrikaanse Republiek
 brazil	common	nl	BRAZILIË
 british indian ocean territory	common	nl	BRITISH INDIAN OCEAN TERRITORY
 brunei darussalam	common	nl	BRUNEI DARUSSALAM
-bulgaria	common	nl	BULGARIË
+bulgaria	common	nl	BULGARIJE
 burkina faso	common	nl	BURKINA FASO
 burundi	common	nl	BURUNDI
 calendar	common	nl	Agenda
@@ -179,7 +179,7 @@ croatia	common	nl	KROATIË
 cuba	common	nl	CUBA
 currency	common	nl	Munteenheid
 current	common	nl	Huidig
-current users	common	nl	huidig aantal gebruikers
+current users	common	nl	Huidig aantal gebruikers
 cut table row	tinymce	nl	Tabelrij knippen
 cyprus	common	nl	CYPRUS
 czech republic	common	nl	TSJECHIË
@@ -633,7 +633,7 @@ replace	common	nl	Vervangen
 replace with	common	nl	Vervangen met
 replace&nbsp;all	tinymce	nl	Alles vervangen
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	nl	Geeft een volledige lijst met accounts die aanwezig zijn op het systeem. Waarschuwing: Deze lijst kan erg lang zijn.
-returns an array of todo items	common	nl	Geef een array met todo items
+returns an array of todo items	common	nl	Geef een serie van todo items
 returns struct of users application access	common	nl	Geeft de toegangsrechten van de gebruikers
 reunion	common	nl	RÉUNION (EILAND)
 right	common	nl	Rechts
@@ -679,7 +679,7 @@ send	common	nl	Verzend
 senegal	common	nl	SENEGAL
 september	common	nl	September
 server %1 has been added	common	nl	Server %1 is toegevoegd
-server answered. processing response...	common	nl	Server antwoorde. Reactie wordt verwerkt...
+server answered. processing response...	common	nl	Server heeft geantwoord. Reactie wordt verwerkt...
 server contacted. waiting for response...	common	nl	Server verbonden. Wacht op reactie...
 server name	common	nl	Servernaam
 session has been killed	common	nl	Sessie is beëindigd
@@ -694,9 +694,9 @@ show locationbar	tinymce	nl	Lokatiebalk tonen
 show logo's on the desktop.	common	nl	Logo's op het bureaublad weergeven.
 show menu	common	nl	toon menu
 show menubar	tinymce	nl	Menubalk tonen
-show page generation time	common	nl	Generatietijd van de pagina's weergeven?
+show page generation time	common	nl	Verlooptijd van de pagina's weergeven?
 show page generation time on the bottom of the page?	common	nl	Generatietijd van de pagina's weergeven onderaan de pagina?
-show page generation time?	common	nl	Pagina genereer tijd weergeven?
+show page generation time?	common	nl	Verlooptijd pagina weergeven?
 show scrollbars	tinymce	nl	Scrollbars tonen
 show statusbar	tinymce	nl	Statusbalk tonen
 show the logo's of egroupware and x-desktop on the desktop.	common	nl	Toont de logo's van eGroupWare en x-desktop op het bureaublad.
@@ -726,7 +726,7 @@ stretched	common	nl	uitgerekt
 striketrough	tinymce	nl	Doorhalen
 subject	common	nl	Onderwerp
 submit	common	nl	Verzenden
-substitutions and their meanings:	common	nl	Substituties en hun betekenissen:
+substitutions and their meanings:	common	nl	Vervangingen en hun betekenissen:
 sudan	common	nl	SUDAN
 sunday	common	nl	Zondag
 suriname	common	nl	SURINAME
@@ -735,9 +735,9 @@ swaziland	common	nl	SWAZILAND
 sweden	common	nl	ZWEDEN
 switzerland	common	nl	ZWITSERLAND
 syrian arab republic	common	nl	SYRIË
-table cell properties	tinymce	nl	Tabel celeigenschappen
-table properties	common	nl	Tabel eigenschappen
-table row properties	tinymce	nl	Tabel rij-eigenschappen
+table cell properties	tinymce	nl	Tabelcel-eigenschappen
+table properties	common	nl	Tabel-eigenschappen
+table row properties	tinymce	nl	Tabelrij-eigenschappen
 taiwan	common	nl	TAIWAN/TAIPEI
 tajikistan	common	nl	TADZJIKISTAN
 tanzania, united republic of	common	nl	TANZANIA
@@ -785,7 +785,7 @@ tuvalu	common	nl	TUVALU
 type	common	nl	Type
 uganda	common	nl	UGANDA
 ukraine	common	nl	OEKRAÏNE
-underline	common	nl	Understrepen
+underline	common	nl	Onderstrepen
 underline.gif	common	nl	underline.gif
 undo	tinymce	nl	Ongedaan maken
 united arab emirates	common	nl	VERENIGDE ARABISCHE EMIRATEN
@@ -834,7 +834,7 @@ western sahara	common	nl	WESTELIJK SAHARA
 what color should all the blank space on the desktop have	common	nl	Welke kleur moet de blanko ruimte op het bureaublad hebben
 what style would you like the image to have?	common	nl	Welke stijl wilt u dat de afbeelding heeft?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.
-which groups	common	nl	welke groepen
+which groups	common	nl	Welke groepen
 width	common	nl	Breedte
 window name	tinymce	nl	Vensternaam
 wk	jscalendar	nl	wk
@@ -865,4 +865,4 @@ your settings have been updated	common	nl	Uw instellingen zijn gewijzigd
 yugoslavia	common	nl	JOEGOSLAVIË
 zambia	common	nl	ZAMBIA
 zimbabwe	common	nl	ZIMBABWE
-zoom	common	nl	Inzoomen
+zoom	common	nl	Inzoemen
