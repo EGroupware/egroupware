@@ -81,11 +81,12 @@
 		</tr>
 <!-- END language_select -->
 <!-- BEGIN domain_selection -->
-			<tr>
+			{select_domain}
+			<!--<tr>
 			<td align="right" tablindex="1">{lang_select_domain}:&nbsp;</td>
 			<td align="left">{select_domain}</td>
 			<td align="left"></td>
-			</tr>
+			</tr>-->
 <!-- END domain_selection -->
 <!-- BEGIN remember_me_selection -->
 		<tr>
