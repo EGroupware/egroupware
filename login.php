@@ -147,13 +147,13 @@
 
 		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 		{
-			$eGW_remember = unserialize(stripslashes($_COOKIE['eGW_remember']));
+			$eGW_remember = explode('::::',stripslashes($_COOKIE['eGW_remember']));
 
-			if($eGW_remember['login'] && $eGW_remember['passwd'] && $eGW_remember['passwd_type'])
+			if($eGW_remember[0] && $eGW_remember[1] && $eGW_remember[2])
 			{
-				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember['login'];
-				$_SERVER['PHP_AUTH_PW'] = $passwd = $eGW_remember['passwd'];
-				$passwd_type = $eGW_remember['passwd_type'];
+				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember[0];
+				$_SERVER['PHP_AUTH_PW'] = $passwd = $eGW_remember[1];
+				$passwd_type = $eGW_remember[2];
 				$submit = True;
 			}
 		}
@@ -274,7 +274,7 @@
 						$remember_time = 2147483647;
 						break;
 				}
-				$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember',serialize(array(
+				$GLOBALS['egw']->session->phpgw_setcookie('eGW_remember',implode('::::',array(
 					'login' => $login,
 					'passwd' => $passwd,
 					'passwd_type' => $passwd_type)),
