@@ -1645,7 +1645,7 @@
 		 * @param array $to_process list of widgets/form-fields to process
 		 * @param string $cname basename of our returnt content (same as in call to show)
 		 * @return int number of validation errors (the adjusted content is returned by the var-param &$content !)
-		*/
+		 */
 		function process_show(&$content,$to_process,$cname='')
 		{
 			if (!isset($content) || !is_array($content) || !is_array($to_process))
@@ -1664,7 +1664,7 @@
 			}
 			$GLOBALS['egw_info']['etemplate']['validation_errors'] = array();
 			$this->canceled = $this->button_pressed = False;
-			
+
 			foreach($to_process as $form_name => $type)
 			{
 				if (is_array($type))
@@ -1677,7 +1677,7 @@
 					$attr = array();
 				}
 				$value = $this->get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
-				if($value === false) continue;
+				if($value === false && $type != 'file') continue;	// file is in $_FILES and not in $content_in
 				
 				if (isset($attr['blur']) && $attr['blur'] == $value)
 				{
