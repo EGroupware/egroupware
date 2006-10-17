@@ -581,10 +581,6 @@ class uiinfolog
 			$no_popup  = $content['no_popup'];
 			$caller    = $content['caller'];
 
-/*				if (isset($content['link_to']['primary']))
-			{
-				$content['info_link_id'] = $content['link_to']['primary'];
-			}*/				
 			list($button) = @each($content['button']);
 			unset($content['button']);
 			if ($button)
@@ -667,7 +663,7 @@ class uiinfolog
 						$this->link->link('infolog',$info_id,$content['link_to']['to_id']);
 						$content['link_to']['to_id'] = $info_id;
 					}
-					if (strstr($info_link_id,':') !== false)	// updating info_link_id if necessary
+					if ($info_link_id && strstr($info_link_id,':') !== false)	// updating info_link_id if necessary
 					{
 						list($app,$id) = explode(':',$info_link_id);
 						$link = $this->link->get_link('infolog',$info_id,$app,$id);
@@ -827,7 +823,7 @@ class uiinfolog
 				case 'projects':
 				case 'calendar':
 				default:	// to allow other apps to participate
-					$content['info_link_id'] = $this->link->link('infolog',$content['link_to']['to_id'],$action,$action_id);
+					$content['info_contact'] = $action.':'.$action_id;
 					$content['blur_title']   = $this->link->title($action,$action_id);
 
 				case '':
@@ -870,8 +866,6 @@ class uiinfolog
 				$readonlys['#'.$name] = true;
 			}
 		}
-		// we allways need to set a non-empty/-zero primary, to make the radiobutton appear
-//			$content['link_to']['primary'] = $content['info_link_id'] ? $content['info_link_id'] : '#';
 		$content['hide_from_css'] = $content['info_custom_from'] ? '' : 'hideFrom';
 
 		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
@@ -902,16 +896,6 @@ class uiinfolog
 
 		$content['duration_format'] = $this->duration_format;
 		
-		// make the content of the first linked address availible to show in a custom template
-		if ($this->tmpl->name != 'infolog.edit' &&
-			($addr = $this->link->get_links('infolog',$content['link_to']['to_id'],'addressbook')) &&
-			($contact_id = array_shift($addr)) && ($addr = ExecMethod('phpgwapi.contacts.read',$contact_id)))
-		{
-			foreach($addr as $name => $value)
-			{
-				$content['~'.$name] = $value;
-			}
-		}
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
 		if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
 

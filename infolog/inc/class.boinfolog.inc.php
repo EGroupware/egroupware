@@ -729,7 +729,6 @@ class boinfolog
 				trim($address->host));
 				$name[] = !empty($address->personal) ? $address->personal : $emailadr;
 		}
-		
 		$info = array(
 			'info_id' => 0,
 			'info_type' => isset($this->enums['type']['email']) ? 'email' : 'note',
@@ -747,7 +746,6 @@ class boinfolog
 				'to_id' => 0,
 			),
 		);
-
 		// find the addressbookentry to link with
 		$addressbook =& CreateObject('addressbook.bocontacts');
 		$contacts = array();
@@ -759,28 +757,32 @@ class boinfolog
 					'email_home' => $mailadr
 				),True,'','','',false,'OR',false,null,'',false));
 		}
-		
-		if (empty($contacts) || empty($contacts[0]))
+		if (!$contacts || !is_array($contacts) || !is_array($contacts[0]))
 		{
-			$info['msg'] = lang('Attension: No Contact with address %1 found.',$info['info_addr']);
+			$info['msg'] = lang('Attention: No Contact with address %1 found.',$info['info_addr']);
+			$info['info_custom_from'] = true;	// show the info_from line and NOT only the link
 		}
 		else 
 		{
-			foreach ((array)$contacts as $contact)
+			// create the first address as info_contact
+			$contact = array_shift($contacts);
+			$info['info_contact'] = 'addressbook:'.$contact['id'];
+			// create the rest a "ordinary" links
+			foreach ($contacts as $contact)
 			{
-				if(!is_readable($attachment['tmp_name'])) continue;
 				$this->link->link('infolog',$info['link_to']['to_id'],'addressbook',$contact['id']);
 			}
 		}
-
 		if (is_array($_attachments))
 		{
 			foreach ($_attachments as $attachment)
 			{
-				$this->link->link('infolog',$info['link_to']['to_id'],'file',$attachment);
+				if(is_readable($attachment['tmp_name']))
+				{
+					$this->link->link('infolog',$info['link_to']['to_id'],'file',$attachment);
+				}
 			}
 		}
-
 		return $info;			
 	}
 
