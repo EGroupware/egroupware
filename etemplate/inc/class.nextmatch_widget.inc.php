@@ -227,7 +227,7 @@
 					unset($value['rows']['sel_options']);
 				}
 			}
-			if ($value['start'] > $total)
+			if ($value['start'] >= $total)
 			{
 				$value['start'] = 0;
 				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
@@ -447,7 +447,7 @@
 			}
 			elseif ($value['last'])
 			{
-				$value['start'] = (int) (($old_value['total']-2) / $max) * $max;
+				$value['start'] = (int) (($old_value['total']-1) / $max) * $max;
 				unset($value['last']);
 				$loop = True;
 			}
