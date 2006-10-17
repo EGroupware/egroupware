@@ -51,7 +51,14 @@ class uiviews extends uical
 	 * 
 	 * @var int $extraRows 
 	 */
-	var $extraRows = 1;
+	var $extraRows = 2;
+
+	/**
+	 * extra rows original (save original value even if it gets changed in the class)
+	 * 
+	 * @var int $extraRowsOriginal
+	 */
+	var $extraRowsOriginal;
 
 	var $timeRow_width = 40;
 
@@ -89,6 +96,13 @@ class uiviews extends uical
 	 * @var boolean $scroll_to_wdstart;
 	 */
 	var $scroll_to_wdstart=false;
+	
+	/**
+	 * counter for the current whole day event of a single day
+	 *
+	 * @var int $wholeDayPosCounter;
+	 */
+	var $wholeDayPosCounter=1;
 
 	/**
 	 * Constructor
@@ -98,6 +112,7 @@ class uiviews extends uical
 	function uiviews($set_states=null)
 	{
 		$this->uical(false,$set_states);	// call the parent's constructor
+		$this->extraRowsOriginal = $this->extraRows; //save original extraRows value
 
 		$GLOBALS['egw_info']['flags']['nonavbar'] = False;
 		$app_header = array(
@@ -408,7 +423,7 @@ class uiviews extends uical
 		
 		if (count($users) == 1 || count($users) > 3)	// for more then 3 users, show all in one row
 		{
-			$content =& $this->timeGridWidget($this->bo->search($search_params),$this->cal_prefs['interval']);
+			$content =& $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),$this->cal_prefs['interval']);
 		}
 		else
 		{
@@ -417,7 +432,7 @@ class uiviews extends uical
 			{
 				$search_params['users'] = $uid;
 				$content .= '<b>'.$label."</b>\n";
-				$content .= $this->timeGridWidget($this->bo->search($search_params),
+				$content .= $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),
 					count($users) * $this->cal_prefs['interval'],400 / count($users),'','',$uid);
 			}
 		}		
@@ -457,6 +472,7 @@ class uiviews extends uical
 			if (count($users) == 1 || count($users) > 5) 
 			{
 				$dayEvents =& $this->bo->search($this->search_params);
+				$dayEvents = $this->tagWholeDayOnTop($dayEvents);
 				$owner = 0;
 			}
 			else
@@ -469,6 +485,7 @@ class uiviews extends uical
 					list(,$dayEvents['<b>'.$label.'</b>']) = each($this->bo->search($search_params));
 					$owner[] = $uid;
 				}
+				$dayEvents = $this->tagWholeDayOnTop($dayEvents);
 			}
 			$cols = array();
 			$cols[0] =& $this->timeGridWidget($dayEvents,$this->cal_prefs['interval'],450,'','',$owner);
@@ -597,7 +614,7 @@ class uiviews extends uical
 		// time before workday => condensed in the first $this->extraRows rows
 		if ($this->wd_start > 0 && $time < $this->wd_start)
 		{
-			$pos = (1 + $this->extraRows * $time / $this->wd_start) * $this->rowHeight;	// 1 for the header
+			$pos = (($this->extraRows - $this->extraRowsOriginal + 1) + ($time / $this->wd_start * ($this->extraRowsOriginal - 1))) * $this->rowHeight;
 		}
 		// time after workday => condensed in the last row
 		elseif ($this->wd_end < 24*60 && $time > $this->wd_end+1*$this->granularity_m)
@@ -748,6 +765,7 @@ class uiviews extends uical
 			$n = 0;
 			foreach($daysEvents as $day => $events)
 			{
+				$this->wholeDayPosCounter=1;
 				$short_title = count($daysEvents) > 1;
 				$col_owner = $owner;
 				if (!is_numeric($day))
@@ -815,7 +833,7 @@ class uiviews extends uical
 				$event['end_m'] = 24*60-1;
 				$event['multiday'] = True;
 			}
-			if ($this->use_time_grid)
+			if ($this->use_time_grid && !$event['whole_day_on_top'])
 			{
 				for($c = 0; $event['start_m'] < $col_ends[$c]; ++$c);
 				$col_ends[$c] = $event['end_m'];
@@ -978,6 +996,8 @@ class uiviews extends uical
 	{
 		if ($this->debug > 1 || $this->debug==='eventWidget') $this->bo->debug_message('uiviews::eventWidget(%1,width=%2)',False,$event,$width);
 
+		if($event['whole_day_on_top']) { $block='event_widget_wholeday_on_top'; }
+
 		static $tpl = False;
 		if (!$tpl)
 		{
@@ -985,6 +1005,7 @@ class uiviews extends uical
 			$tpl->set_root($GLOBALS['egw']->common->get_tpl_dir('calendar'));
 			$tpl->set_file('event_widget_t','event_widget.tpl');
 			$tpl->set_block('event_widget_t','event_widget');
+			$tpl->set_block('event_widget_t','event_widget_wholeday_on_top');
 			$tpl->set_block('event_widget_t','event_tooltip');
 			$tpl->set_block('event_widget_t','planner_event');
 		}
@@ -1120,7 +1141,15 @@ class uiviews extends uical
         }
 		if ($this->use_time_grid)
 		{
-			$style = 'top: '.$this->time2pos($event['start_m']).'%; height: '.$height.'%;';
+			if($event['whole_day_on_top'])
+			{
+					$style = 'top: '.($this->rowHeight*$this->wholeDayPosCounter).'%; height: '.$this->rowHeight.'%;';
+					$this->wholeDayPosCounter++;
+			}
+			else
+			{
+					$style = 'top: '.$this->time2pos($event['start_m']).'%; height: '.$height.'%;';
+			}
 		}
 		else
 		{
@@ -1724,4 +1753,35 @@ class uiviews extends uical
 			'%; width: '.$width.'%; background-color: '.$color.';"'.$data['popup'].' '.
 			$this->html->tooltip($data['tooltip'],False,array('BorderWidth'=>0,'Padding'=>0)).'>'."\n".$data['html'].$indent."</div>\n";
 	}
+
+	/**
+	 * Marks whole day events for later usage and increments extraRows
+	 *
+	 * @param array $dayEvents
+	 * @return array $dayEvents
+	 */
+	function tagWholeDayOnTop($dayEvents)
+	{
+		foreach ($dayEvents as $day=>$oneDayEvents)
+		{
+		  $extraRowsToAdd = 0;
+			foreach ($oneDayEvents as $num=>$event)
+			{
+				$start = $this->bo->date2array($event['start']);
+				$end = $this->bo->date2array($event['end']);
+				if(!$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59 && $event['non_blocking'])
+				{
+						$dayEvents[$day][$num]['whole_day_on_top']=true;
+						$this->whole_day_positions[$num]=($this->rowHeight*($num+2));
+						$extraRowsToAdd++;
+				}
+			}
+			// check after every day if we have to increase $this->extraRows
+			if(($this->extraRowsOriginal+$extraRowsToAdd) > $this->extraRows) { $this->extraRows = ($this->extraRowsOriginal+$extraRowsToAdd); }
+			}
+				
+		return $dayEvents;
+ 	}
+
+
 }

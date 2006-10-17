@@ -6,6 +6,12 @@
 {indent}<div class="calEventBody{Small}">{title}</div>
 <!-- END event_widget -->
 
+<!-- BEGIN event_widget_wholeday_on_top -->
+{indent}<div class="calEventBody{Small}">
+{indent}	{title}
+{indent}</div>
+<!-- END event_widget_wholeday_on_top -->
+
 <!-- BEGIN event_tooltip -->
 <div class="calEventTooltip" style="border-color: {bordercolor}; background: {bodybackground};">
 	<div class="calEventHeaderSmall" style="background-color: {bordercolor};">
