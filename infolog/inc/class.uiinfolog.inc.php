@@ -1137,7 +1137,11 @@ class uiinfolog
 			{
 				foreach ($attachments as $num => $attachment)
 				{
-					$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($_uid, $attachment['partID']));
+					$attachments[$num] = array_merge($attachments[$num],$bofelamimail->getAttachment($uid, $attachment['partID']));
+					if (isset($attachments[$num]['charset'])) {
+						$GLOBALS['egw']->translation->convert($attachments[$num]['attachment'],$attachments[$num]['charset']);
+					}
+					$attachments[$num]['type'] = $attachments[$num]['mimeType'];					
 					$attachments[$num]['tmp_name'] = tempnam($GLOBALS['egw_info']['server']['temp_dir'],$GLOBALS['egw_info']['flags']['currentapp']."_");
 					$tmpfile = fopen($attachments[$num]['tmp_name'],'w');
 					fwrite($tmpfile,$attachments[$num]['attachment']);
