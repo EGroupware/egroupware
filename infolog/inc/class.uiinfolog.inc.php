@@ -580,6 +580,9 @@ class uiinfolog
 			$referer   = $content['referer'];
 			$no_popup  = $content['no_popup'];
 			$caller    = $content['caller'];
+			
+			// convert custom from to 0 or 1, it's unset if not checked, which starts the detection
+			$content['info_custom_from'] = (int)$content['info_custom_from'];
 
 			list($button) = @each($content['button']);
 			unset($content['button']);
