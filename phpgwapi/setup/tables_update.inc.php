@@ -1210,7 +1210,7 @@
 
 
 	$test[] = '1.2.105';
-	function phpgwapi_upgrade1_2_104()
+	function phpgwapi_upgrade1_2_105()
 	{
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.2.106';
 	}
