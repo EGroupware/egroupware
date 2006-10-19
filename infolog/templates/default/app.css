@@ -12,7 +12,7 @@
 .overdue { color:#cc0000; font-weight:bold; }
 .private { font-style:italic; }
 .planned { font-style:italic; }
-.fullWidth table { width: 100%; }
+table.fullWidth { width: 100%; }
 .infoId:before { content:"#" }
 .fixedHeight { line-height: 12px; }
 .noWrap { white-space: nowrap; }
