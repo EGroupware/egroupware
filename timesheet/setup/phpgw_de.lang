@@ -39,6 +39,7 @@ select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
 start	timesheet	de	Start
 starttime	timesheet	de	Startzeit
+starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen !!!
 sum %1:	timesheet	de	Summe %1:
 this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche

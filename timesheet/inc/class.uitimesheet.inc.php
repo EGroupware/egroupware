@@ -91,7 +91,7 @@ class uitimesheet extends botimesheet
 			{
 				$content['ts_start'] += $content['end_time'] - 60*$content['ts_duration'];
 			}
-			if ($content['ts_duration']) unset($content['end_time']);
+			if ($content['ts_duration'] > 0) unset($content['end_time']);
 			// now we only deal with start (date+time) and duration
 			list($button) = @each($content['button']);
 			$view = $content['view'];
@@ -117,6 +117,10 @@ class uitimesheet extends botimesheet
 					if (!$this->data['ts_quantity'])
 					{
 						$etpl->set_validation_error('ts_quantity',lang('Field must not be empty !!!'));
+					}
+					if ($this->data['ts_quantity'] < 0)
+					{
+						$etpl->set_validation_error('ts_quantity',lang('Starttime has to be before endtime !!!'));
 					}
 					if (!$this->data['ts_project']) $this->data['ts_project'] = $this->data['ts_project_blur'];
 					if (!$this->data['ts_title']) $this->data['ts_title'] = $this->data['ts_title_blur'];

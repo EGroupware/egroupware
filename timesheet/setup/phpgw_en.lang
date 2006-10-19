@@ -39,6 +39,7 @@ select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
 start	timesheet	en	Start
 starttime	timesheet	en	Starttime
+starttime has to be before endtime !!!	timesheet	en	Starttime has to be before endtime !!!
 sum %1:	timesheet	en	Sum %1:
 this month	timesheet	en	This month
 this week	timesheet	en	This week
