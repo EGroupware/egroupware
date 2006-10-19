@@ -227,7 +227,7 @@
 					unset($value['rows']['sel_options']);
 				}
 			}
-			if ($value['start'] >= $total)
+			if ($method && $total && $value['start'] >= $total)
 			{
 				$value['start'] = 0;
 				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
