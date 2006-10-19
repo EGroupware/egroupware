@@ -47,7 +47,7 @@ $setup_info['addressbook']['depends'][] = array(
 );
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.3','1.4')
+	'versions' => Array('1.2','1.3','1.4')
 );
 
 
