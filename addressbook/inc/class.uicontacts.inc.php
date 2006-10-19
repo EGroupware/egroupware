@@ -34,12 +34,6 @@ class uicontacts extends bocontacts
 		'migrate2ldap' => True,
 	);
 	/**
-	 * Addressbook preferences of the user
-	 *
-	 * @var array
-	 */
-	var $prefs;
-	/**
 	 * use a separate private addressbook (former private flag), for contacts not shareable via regular read acl
 	 * 
 	 * @var boolean
@@ -65,7 +59,6 @@ class uicontacts extends bocontacts
 			}
 			$this->$my = &$GLOBALS['egw']->$class;
 		}
-		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 		$this->private_addressbook = $this->contact_repository == 'sql' && $this->prefs['private_addressbook'];
 
 		$this->org_views = array(

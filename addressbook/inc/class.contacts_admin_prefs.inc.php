@@ -199,6 +199,21 @@ class contacts_admin_prefs
 				'admin'  => False,
 			);
 		}
+		$GLOBALS['settings']['link_title'] = array(
+			'type'   => 'select',
+			'label'  => 'Link title for contacts show',
+			'name'   => 'link_title',
+			'values' => array(
+				'n_fileas' => lang('own sorting').' ('.lang('default').': '.lang('Company').': '.lang('lastname').', '.lang('firstname').')',
+				'org_name: n_family, n_given' => lang('Company').': '.lang('lastname').', '.lang('firstname'),
+				'org_name, org_unit: n_family, n_given' => lang('Company').', '.lang('Department').': '.lang('lastname').', '.lang('firstname'),
+				'org_name, adr_one_locality: n_family, n_given' => lang('Company').', '.lang('City').': '.lang('lastname').', '.lang('firstname'),
+				'org_name, org_unit, adr_one_locality: n_family, n_given' => lang('Company').', '.lang('Department').', '.lang('City').': '.lang('lastname').', '.lang('firstname'),
+			),		
+			'help'   => 'What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!',
+			'xmlrpc' => True,
+			'admin'  => false,
+		);
 		return true;	// otherwise prefs say it cant find the file ;-)
 	}
 

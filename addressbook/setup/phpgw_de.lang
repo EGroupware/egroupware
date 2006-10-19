@@ -169,6 +169,7 @@ ldap host for contacts	admin	de	LDAP Host für Kontakte
 ldap settings for contacts	admin	de	LDAP Einstellungen für Kontakte
 ldif	addressbook	de	LDIF
 line 2	addressbook	de	Zeile 2
+link title for contacts show	addressbook	de	Titel der Verknüpfung für Kontakte zeigt
 links	addressbook	de	Verknüpfungen
 list all categories	addressbook	de	Liste alle Kategorien
 list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
@@ -265,6 +266,7 @@ vcards require a first name entry.	addressbook	de	VCards benötigen einen Vorname
 vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachnamen.
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	de	Wann soll die Adressliste diese Spalte anzeigen. "Nur wenn etwas angezeigt wird" blendet die Spalte aus, wenn Sie in dieser Anzeige leer wäre.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzfügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.

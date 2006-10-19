@@ -169,6 +169,7 @@ ldap host for contacts	admin	en	LDAP host for contacts
 ldap settings for contacts	admin	en	LDAP settings for contacts
 ldif	addressbook	en	LDIF
 line 2	addressbook	en	Line 2
+link title for contacts show	addressbook	en	Link title for contacts show
 links	addressbook	en	Links
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all customfields
@@ -265,6 +266,7 @@ vcards require a first name entry.	addressbook	en	VCards require a first name en
 vcards require a last name entry.	addressbook	en	Vcards require a last name entry.
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	en	When should the contacts list display that colum. "Only if there is content" hides the column, unless there is some content in the view.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.

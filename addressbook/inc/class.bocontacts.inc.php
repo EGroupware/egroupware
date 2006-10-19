@@ -105,6 +105,12 @@ class bocontacts extends socontacts
 	 * @var string/boolean
 	 */
 	var $error;
+	/**
+	 * Addressbook preferences of the user
+	 *
+	 * @var array
+	 */
+	var $prefs;
 
 	function bocontacts($contact_app='addressbook')
 	{
@@ -113,19 +119,8 @@ class bocontacts extends socontacts
 		$this->tz_offset_s = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 		$this->now_su = time() + $this->tz_offset_s;
 
-/*		foreach(array(
-			'so'    => $appname. 'soadb',
-		) as $my => $app_class)
-		{
-			list(,$class) = explode('.',$app_class);
+		$this->prefs =& $GLOBALS['egw_info']['user']['preferences']['addressbook'];
 
-			if (!is_object($GLOBALS['egw']->$class))
-			{
-				$GLOBALS['egw']->$class =& CreateObject($app_class);
-			}
-			$this->$my = &$GLOBALS['egw']->$class;
-		}*/
-		
 		$this->contact_fields = array(
 			'id'                   => lang('Contact ID'),
 			'tid'                  => lang('Type'),
@@ -239,14 +234,21 @@ class bocontacts extends socontacts
 	function fileas($contact,$type=null)
 	{
 		if (is_null($type)) $type = $contact['fileas_type'];
-		if (!$type || !in_array($type,$this->fileas_types)) $type = $this->fileas_types[0];
+		if (!$type) $type = $this->fileas_types[0];
 		
 		if (strstr($type,'n_fn')) $contact['n_fn'] = $this->fullname($contact);
 		
-		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name'),
-			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],$contact['n_fn'],$contact['org_name']),$type);
-		
-		return $fileas{0} == ':' ? substr($fileas,2) : $fileas;
+		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality'),
+			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],
+				$contact['n_fn'],$contact['org_name'],$contact['org_unit'],$contact['adr_one_locality']),$type);
+				
+		// removing empty delimiters, caused by empty contact fields
+		$fileas = str_replace(array(', : ',': , ',', , ',': : '),array(': ',': ',', ',': '),$fileas);
+		while ($fileas{0} == ':' ||  $fileas{0} == ',') $fileas = substr($fileas,2);
+		while (substr($fileas,-2) == ': ' || substr($fileas,-2) == ', ') $fileas = substr($fileas,0,-2);
+
+		//echo "<p align=right>bocontacts::fileas(,$type)='$fileas'</p>\n";
+		return $fileas;
 	}
 
 	/**
@@ -289,6 +291,8 @@ class bocontacts extends socontacts
 			'n_suffix' => lang('suffix'),
 			'n_fn'     => lang('full name'),
 			'org_name' => lang('company'),
+			'org_unit' => lang('department'),
+			'adr_one_locality' => lang('city'),
 		);
 		foreach($labels as $name => $label)
 		{
@@ -692,10 +696,11 @@ class bocontacts extends socontacts
 	/**
 	 * get title for a contact identified by $contact
 	 * 
-	 * Is called as hook to participate in the linking
+	 * Is called as hook to participate in the linking. The format is determined by the link_title preference.
 	 *
 	 * @param int/string/array $contact int/string id or array with contact
 	 * @param string/boolean string with the title, null if contact does not exitst, false if no perms to view it
+	 * @return string
 	 */
 	function link_title($contact)
 	{
@@ -707,7 +712,13 @@ class bocontacts extends socontacts
 		{
 			return $contact;
 		}
-		return $contact['n_fileas'] ? $contact['n_fileas'] : $this->fileas($contact);
+		$type = $this->prefs['link_title'];
+		if (!$type || $type === 'n_fileas')
+		{
+			if ($contact['n_fileas']) return $contact['n_fileas'];
+			$type = null;
+		}
+		return $this->fileas($contact,$type);
 	}
 
 	/**
