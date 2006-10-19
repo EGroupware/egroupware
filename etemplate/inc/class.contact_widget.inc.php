@@ -94,6 +94,7 @@ class contact_widget
 					!($this->contact = $this->contacts->read($value)))
 				{
 					$cell = $tmpl->empty_cell();
+					$value = '';
 					break;
 				}
 				$value = $this->contact[$cell['size']];
