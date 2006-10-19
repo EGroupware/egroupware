@@ -292,8 +292,8 @@ class accounts_backend
 	 */
 	function set_members($members,$gid)
 	{
-		//echo "<p>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
-		$GLOBALS['egw']->acl->delete_repository('phpgw_group',$gid);
+		//echo "<p align=right>accounts::set_members(".print_r($members,true).",$gid)</p>\n";
+		$GLOBALS['egw']->acl->delete_repository('phpgw_group',$gid,false);
 		
 		if (is_array($members))
 		{
