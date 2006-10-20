@@ -112,6 +112,11 @@ class uiinfolog
 		're'      => 'Re:'
 	);
 
+	/**
+	 * Constructor
+	 *
+	 * @return uiinfolog
+	 */
 	function uiinfolog()
 	{
 		$this->bo =& new boinfolog();
@@ -136,6 +141,17 @@ class uiinfolog
 		$GLOBALS['uiinfolog'] =& $this;	// make ourself availible for ExecMethod of get_rows function
 	}
 
+	/**
+	 * Sets additional fields for one infolog entry, which are not persistent in the DB
+	 *
+	 * @param array $info infolog entry read from the db
+	 * @param array &$readonlys ACL specific settings for the buttons
+	 * @param string $action
+	 * @param string/int $action_id
+	 * @param boolean $show_links
+	 * @param int $details
+	 * @return array
+	 */
 	function get_info($info,&$readonlys,$action='',$action_id='',$show_links=false,$details = 1)
 	{
 		if (!is_array($info))
@@ -219,6 +235,11 @@ class uiinfolog
 		return $info;
 	}
 
+	/**
+	 * Saves state of the infolog list in the session
+	 *
+	 * @param array $values
+	 */
 	function save_sessiondata($values)
 	{
 		$for = @$values['session_for'] ? $values['session_for'] : @$this->called_by;
@@ -239,6 +260,11 @@ class uiinfolog
 		));
 	}
 
+	/**
+	 * reads list-state from the session
+	 *
+	 * @return array
+	 */
 	function read_sessiondata()
 	{
 		$values = $GLOBALS['egw']->session->appsession(@$this->called_by.'session_data','infolog');
@@ -251,7 +277,15 @@ class uiinfolog
 		return $values;
 	}
 
-	function get_rows($query,&$rows,&$readonlys)
+	/**
+	 * Callback for nextmatch widget
+	 *
+	 * @param array &$query
+	 * @param array &$rows
+	 * @param array &$readonlys
+	 * @return int
+	 */
+	function get_rows(&$query,&$rows,&$readonlys)
 	{
 		//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
@@ -289,6 +323,13 @@ class uiinfolog
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog').($query['filter'] == 'none' ? '' :
 				' - '.lang($this->filters[$query['filter']]));
+		}
+		unset($query['template']);
+		if ($query['col_filter']['info_type'])
+		{
+			$tpl =& new etemplate;
+			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type'])) $query['template'] =& $tpl;
+			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
 		}
 		return $query['total'];
 	}
