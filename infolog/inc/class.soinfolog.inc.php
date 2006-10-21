@@ -601,6 +601,14 @@ class soinfolog 				// DB-Layer
 
 				$ids[$info['info_id']] = $info;
 			}
+			if ($ids && $query['custom_fields'])
+			{
+				$this->db->select($this->extra_table,'*',array('info_id'=>array_keys($ids)),__LINE__,__FILE__);
+				while ($row = $this->db->row(true))
+				{
+					$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+				}
+			}
 		}
 		else
 		{

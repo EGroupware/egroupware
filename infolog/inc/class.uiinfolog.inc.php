@@ -292,6 +292,19 @@ class uiinfolog
 
 		$this->save_sessiondata($query);
 
+		// check if we have a custom, type-specific template
+		unset($query['template']);
+		unset($query['custom_fields']);
+		if ($query['col_filter']['info_type'])
+		{
+			$tpl =& new etemplate;
+			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type']))
+			{
+				$query['template'] =& $tpl;
+				$query['custom_fields'] = true;	// read the custom fields too
+			}
+			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
+		}
 		$ids = $this->bo->search($query);
 		if (!is_array($ids))
 		{
@@ -323,13 +336,6 @@ class uiinfolog
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog').($query['filter'] == 'none' ? '' :
 				' - '.lang($this->filters[$query['filter']]));
-		}
-		unset($query['template']);
-		if ($query['col_filter']['info_type'])
-		{
-			$tpl =& new etemplate;
-			if ($tpl->read('infolog.index.rows.'.$query['col_filter']['info_type'])) $query['template'] =& $tpl;
-			//echo "<p align=right>template ='".'infolog.index.rows.'.$query['col_filter']['info_type']."'".(!$query['template'] ? ' not' : '')." found</p>\n";
 		}
 		return $query['total'];
 	}
