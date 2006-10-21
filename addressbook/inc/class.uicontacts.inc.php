@@ -180,10 +180,13 @@ class uicontacts extends bocontacts
 		);
 		$sel_options['action'] = array(
 			'delete' => lang('Delete'),
-			'csv'    => lang('Export as CSV'),
-			'vcard'  => lang('Export as VCard'),
+			'csv'    => lang('Export as CSV'), 
+			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
+//			'export' => lang('Export selection'),
 // ToDo:	'copy'   => lang('Copy a contact and edit the copy'),
 		)+$this->get_addressbooks(EGW_ACL_ADD);
+		
+		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 		
 		// dont show tid-selection if we have only one content_type
 		if (count($this->content_types) <= 1)
@@ -966,12 +969,7 @@ class uicontacts extends bocontacts
 		{
 			$content['no_tid'] = true;
 		}
-/* Conny: what's that?
-		foreach($GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw']->acl->account_id,'addressbook',true) as $id => $right)
-		{
-			if($id < 0) $sel_options['published_groups'][$id] = $GLOBALS['egw']->accounts->id2name($id);
-		}
-*/
+
 		$content['link_to'] = array(
 			'to_app' => 'addressbook',
 			'to_id'  => $content['link_to']['to_id'],
@@ -1175,84 +1173,14 @@ $readonlys['button[vcard]'] = true;
 		return 'mailto:' . $email;
 	}
 
-	function search($content='')
+	function search()
 	{
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook'). ' - '. lang('Advanced search');
-		if(!($GLOBALS['egw_info']['server']['contact_repository'] == 'sql' || !isset($GLOBALS['egw_info']['server']['contact_repository'])))
-		{
-			$GLOBALS['egw']->common->egw_header();
-			echo parse_navbar();
-			echo '<p> Advanced Search is not supported for ldap storage yet. Sorry! </p>';
-			$GLOBALS['egw']->common->egw_exit();
-		}
+		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
+		$GLOBALS['egw']->translation->add_app('addressbook');
 		
-		$content['advs']['msg'] = lang('Please select only one category');
-		// This is no fun yet, as we dont have a sortorder in prefs now, AND as we are not able to sort within cf.
-// 		$prefs = $GLOBALS['egw']->preferences->read_repository();
-// 		foreach($prefs['addressbook'] as $key => $value)
-// 		{
-// 			if($value == 'addressbook_on') $content['advs']['colums_to_present'][$key] = lang($key);
-// 		}
-	
-// 		echo 'addressbook.uicontacts.search->content:'; _debug_array($content);
-		$content['advs']['hidebuttons'] = true;
-		$content['advs']['input_template'] = 'addressbook.edit';
-		$content['advs']['search_method'] = 'addressbook.bocontacts.search';
-		$content['advs']['search_class_constructor'] = $contact_app;
-		$content['advs']['colums_to_present'] = array(
-			'id' => 'id',
-			'n_given' => lang('first name'),
-			'n_family' => lang('last name'),
-			'email_home' => lang('home email'),
-			'email' => lang('work email'),
-			'tel_home' => lang('tel home'),
-		);
-		
-		$content['advs']['row_actions'] = array(
-			'view' => array(
-				'type' => 'button',
-				'options' => array(
-					'size' => 'view',
-					'onclick' => "location.href='".$GLOBALS['egw']->link('/index.php',
-					array('menuaction' => 'addressbook.uicontacts.view',)).'&contact_id=$row_cont[id]\';return false;',
-			)),
-			'edit' => array(
-				'type' => 'button',
-				'options' => array(
-					'size' => 'edit',
-					'onclick' => 'window.open(\''.
-					$GLOBALS['egw']->link('/index.php?menuaction=addressbook.uicontacts.edit').
-					'&contact_id=$row_cont[id] \',\'\',\'dependent=yes,width=850,height=440,location=no,menubar=no,toolbar=no,scrollbars=yes,status=yes\');
-					return false;',
-				)),
-			'delete' => array(
-				'type' => 'button',
-				'method' => 'addressbook.bocontacts.delete',
-				'options' => array(
-					'size' => 'delete',
-					'onclick' => 'if(!confirm(\''. lang('Do your really want to delete this contact?'). '\')) return false;',
-				)),
-		);
-/*		$content['advs']['actions']['email'] = array(
-				'type' => 'button',
-				'options' => array(
-					'label' => lang('email'),
-					'no_lang' => true,
-		));
-		$content['advs']['actions']['export'] = array(
-				'type' => 'button',
-				'options' => array(
-					'label' => lang('export'),
-					'no_lang' => true,
-		));*/
-		$content['advs']['actions']['delete'] = array(
-				'type' => 'button',
-				'method' => 'addressbook.bocontacts.delete',
-				'options' => array(
-					'label'  => lang('delete'),
-					'no_lang' => true,
-					'onclick' => 'if(!confirm(\''. lang('WARNING: All contacts found will be deleted!'). '\')) return false;',
-		));
+		// initialize etemplate arrays
+		$content = $sel_options = $readonlys = $preserv = array();
 		
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
@@ -1262,9 +1190,13 @@ $readonlys['button[vcard]'] = true;
 		// some changes for the new addressbook
 		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ,lang('all'));
 		$readonlys['change_photo'] = true;
-		
-		$this->tmpl->read('addressbook.search');
-		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv);
+		$readonlys['fileas_type'] = true;
+		$readonlys['creator'] = true;
+		$readonlys['button'] = true;
+		$content['hidebuttons'] = true;
+		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
+		$this->tmpl->read('addressbook.edit');
+		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
 	/**
@@ -1369,6 +1301,19 @@ $readonlys['button[vcard]'] = true;
 			{
 				selbox.options[i].text = options[i];
 			}
+		}
+		
+		function adb_get_selection(form)
+		{
+			var use_all = document.getElementById("exec[use_all]");
+			var action = document.getElementById("exec[action]");
+			egw_openWindowCentered(
+				"'. $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=addressbook'). 
+					'&selection="+( use_all.checked  ? "use_all" : get_selected(form,"[rows][checked][]")),
+				"Export",400,400); 
+			action.value="";
+			use_all.checked = false;
+			return false;  
 		}
 		</script>';
 	}
