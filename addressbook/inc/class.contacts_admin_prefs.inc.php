@@ -51,8 +51,17 @@ class contacts_admin_prefs
 					'no_lang' => true,
 					'link' => false
 				),
+/*				array(
+					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array(
+						'menuaction' => 'etemplate.nextmatch_widget.open_advsearch',
+						'function' => 'addressbook.uicontacts.search',
+						'prefix' => 'nm')).
+						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=850,height=480,scrollbars=yes,status=yes\'); 
+						return false;">'.lang('Advanced search').'</a>',
+					'no_lang' => true,
+					'link' => false
+				),*/
 // Disabled til they are working again
-//				'Advanced search'=>$GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.search'),
 //				'import contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.import'),
 //				'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export'),
 				'CSV-Import'      => $GLOBALS['egw']->link('/addressbook/csv_import.php')
