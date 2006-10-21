@@ -9,6 +9,8 @@
 	 * @version $Id$
 	 */
 
+	require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
+	
 	/**
 	 * eTemplate Extension: Widget that show only a certain number of data-rows and allows to modifiy the rows shown (scroll).
 	 *
@@ -29,6 +31,8 @@
 	 *	'never_hide'     => True// I  never hide the nextmatch-line if less then maxmatch entries
 	 *  'lettersearch'   => True// I  show a lettersearch
 	 *  'searchletter'   =>     // I0 active letter of the lettersearch or false for [all]
+	 * 	'advsearch_dlg'	 =>		// I  function that returns complete html dialog app.class.function
+	 *  'advsearch_cont  =>	    // 0  content from advanced_search dialog
 	 * 	'start'          =>		// IO position in list
 	 *	'num_rows'       =>     // IO number of rows to show, defaults to maxmatches from the general prefs
 	 * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
@@ -59,7 +63,8 @@
 		 */
 		var $public_functions = array(
 			'pre_process' => True,
-			'post_process' => True
+			'post_process' => True,
+			'open_advsearch' => True,
 		);
 		/**
 		 * availible extensions and there names for the editor
@@ -415,7 +420,22 @@
 				$loop = true;	// num_rows changed
 			}
 			$max = $value['num_rows'] ? $value['num_rows'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-
+			
+			
+			if(strpos($value['search'],'xjxquery')) {
+				// We deal with advancedsearch
+				$aXml = $value['search'];
+				$value['search'] = '';
+				$aXml = str_replace("<xjxquery><q>","&",$aXml);
+				$aXml = str_replace("</q></xjxquery>","",$aXml);
+				$value['advsearch_cont'] = explode('&',$aXml);
+				//$GLOBALS['egw']->boetemplate = &CreateObject('etemplate.boetemplate');
+				//print_r($GLOBALS['egw']->boetemplate->get_array($value['advsearch_cont'],'exec[]',true));
+				//$value['advsearch_cont'] = preg_replace("/exec\[ (.*)/",'$1',$value['advsearch_cont']);
+				//$value['advsearch_cont'] = preg_replace("\]",'',$value['advsearch_cont']);
+				//print_r($value['advsearch_cont']);
+			}
+			
 			if ($value['start_search'] || $value['search'] != $old_value['search'] ||
 				isset($value['cat_id']) && $value['cat_id'] != $old_value['cat_id'] ||
 				isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
@@ -479,5 +499,59 @@
 				$loop = True;
 			}
 			return True;
+		}
+		
+		/**
+		 * Show an advancedsearch dialog (as popup)
+		 * @abstract This function is a wrapper for an advanced search dialog. 
+		 * It "just" manages the communication with the next match template AND
+		 * showes the Search buttons.
+		 * 
+		 * @param string $_function Name of function that returns complete html dialog app.class.method
+		 * @param string $_prefix name of opening nextmatch template e.g. 'nm'
+		 */
+		function open_advsearch( $_function, $_prefix ) {
+			$function = $_function ? $_function : $_GET['function'] ? $_GET['function'] : false;
+			$prefix = $_prefix ? $_prefix : $_GET['prefix'] ? $_GET['prefix'] : false;
+			if (!$function || !$prefix) {
+				die("Error: No function name given!");
+			}
+			
+			
+			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+			ExecMethod2($function);
+			
+			$tpl =& new etemplate;
+			$tpl->init('*** generated advanced search widget','','',0,'',0,0);	// make an empty template
+			$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$extension_data['input_template']));
+			$button_box = $tpl->empty_cell('hbox','button_box'); 
+			$tpl->add_child($tpl, $button_box);
+			$tpl->add_child($button_box, $op_select = $tpl->empty_cell('select','opt_select',array(
+				'sel_options' => array(
+					'OR' => 'OR',
+					'AND' => 'AND'
+				),
+				'label' => 'Operator',
+				'no_lang' => true,
+			)));
+			$tpl->add_child($button_box, $meth_select = $tpl->empty_cell('select','meth_select',array(
+				'sel_options' => array(
+					'%' => lang('contains'),
+					false => lang('exact'),
+				),
+				'no_lang' => true,
+				'default' => '%',
+			)));
+			$tpl->add_child($button_box, $search_button = $tpl->empty_cell('button','button[search]',array(
+				'label' => 'Search',
+				'onclick' => "
+					var fromobj = document.getElementsByName('eTemplate');
+					opener.document.getElementById('exec[$prefix][search]').value=xajax.getFormValues(fromobj[0])+xajax.getFormValues(this.form);
+					opener.document.getElementById('exec[$prefix][start_search]').form.submit()
+					opener.document.getElementById('exec[$prefix][search]').value='';
+					return false;
+				",
+			)));
+			echo $tpl->exec('','','','','',1);
 		}
 	}
