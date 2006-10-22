@@ -662,6 +662,8 @@
 	function &CreateObject($class)
 	{
 		list($appname,$classname) = explode('.',$class);
+		
+		if ($classname == 'datetime') $classname = 'egw_datetime';	// php5.2 fix
 
 		include_once(EGW_INCLUDE_ROOT.'/'.$appname.'/inc/class.'.$classname.'.inc.php');
 

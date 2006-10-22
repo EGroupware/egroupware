@@ -37,11 +37,12 @@
 	unset($d2);
 	unset($d3);
 
-	/*!
-	@class datetime
-	@abstract datetime class that contains common date/time functions
+	/**
+	* eGroupWare datetime class that contains common date/time functions
+	* 
+	* renamed to egw_datetime to support php5.2
 	*/
-	class datetime
+	class egw_datetime
 	{
 		var $zone_offset_list = array(
 			'ACT' => '+9:30',
@@ -565,7 +566,22 @@
 		var $users_localtime;
 		var $cv_gmtdate;
 
+		/**
+		 * Calling the constructor of the renamed class
+		 *
+		 * @return egw_datetime
+		 */
 		function datetime()
+		{
+			return $this->egw_datetime();
+		}
+
+		/**
+		 * Constructor of the renamed class
+		 *
+		 * @return egw_datetime
+		 */
+		function egw_datetime()
 		{
 			$this->tz_offset = 3600 * (int)@$GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 			print_debug('datetime::datetime::gmtnow',$this->gmtnow,'api');
@@ -587,7 +603,7 @@
 			}
 			$this->users_localtime = time() + $this->tz_offset;
 		}
-
+		
 		function getntpoffset()
 		{
 			$error_occured = False;
