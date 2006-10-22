@@ -97,7 +97,7 @@
 			{
 				if (!empty($this->body[$what]))
 				{
-					$js .= ' '.$what.'="' . str_replace(array('"','\\'),array('\\"','\\\\'),$this->body[$what]) . '"';
+					$js .= ' '.$what.'="' . str_replace(array('\\\'','"','\\','&#39;'),array('&#39;','\\"','\\\\','\\\''),$this->body[$what]) . '"';
 				}
 			}
 			return $js;
