@@ -1,3 +1,4 @@
+%1 added	addressbook	en	%1 added
 %1 contact(s) %2	addressbook	en	%1 contact(s) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	en	%1 contact(s) %2, %3 failed because of insufficent rights !!!
 %1 fields in %2 other organisation member(s) changed	addressbook	en	%1 fields in %2 other organisation member(s) changed
@@ -10,6 +11,7 @@
 account repository	admin	en	Account repository
 accounts	addressbook	en	Accounts
 actions	addressbook	en	Actions
+add %1	addressbook	en	Add %1
 add a contact to this organisation	addressbook	en	Add a contact to this organisation
 add a new contact	addressbook	en	Add a new contact
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
@@ -119,6 +121,7 @@ export as vcard	addressbook	en	Export as VCard
 export contacts	addressbook	en	Export Contacts
 export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
+export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
 extra	addressbook	en	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	failed to change %1 organisation member(s) (insufficent rights) !!!

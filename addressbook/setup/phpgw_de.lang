@@ -1,3 +1,4 @@
+%1 added	addressbook	de	%1 hinzugefügt
 %1 contact(s) %2	addressbook	de	%1 Kontakt(e) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	de	%1 Kontakt(e) %2, %3 nicht wegen fehlender Rechte !!!
 %1 fields in %2 other organisation member(s) changed	addressbook	de	%1 Felder in %2 Mitglied(ern) der Organisation geändert
@@ -10,6 +11,7 @@
 account repository	admin	de	Speicherort für Benutzerkonten
 accounts	addressbook	de	Benutzerkonten
 actions	addressbook	de	Befehle
+add %1	addressbook	de	%1 hinzufügen
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
@@ -119,6 +121,7 @@ export as vcard	addressbook	de	Exportieren als VCard
 export contacts	addressbook	de	Kontakte exportieren
 export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
+export selection	addressbook	de	Auswahl exportieren
 exported	addressbook	de	exportiert
 extra	addressbook	de	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte) !!!

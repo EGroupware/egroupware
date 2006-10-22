@@ -184,7 +184,13 @@ class uicontacts extends bocontacts
 			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
 //			'export' => lang('Export selection'),
 // ToDo:	'copy'   => lang('Copy a contact and edit the copy'),
-		)+$this->get_addressbooks(EGW_ACL_ADD);
+		);
+		if ($do_email)
+		{
+			$sel_options['action']['email'] = lang('Add %1',lang('business email'));
+			$sel_options['action']['email_home'] = lang('Add %1',lang('home email'));
+		}
+		$sel_options['action'] += $this->get_addressbooks(EGW_ACL_ADD);
 		
 		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 		
@@ -342,14 +348,13 @@ class uicontacts extends bocontacts
 				$Ok = false;
 				break;
 		}
-
 		foreach($checked as $id)
 		{
 			switch($action)
 			{
 				case 'delete':
 					$action_msg = lang('deleted');
-					if (($Ok = ($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
 					{
 						if ($contact['owner'])	// regular contact
 						{
@@ -370,6 +375,18 @@ class uicontacts extends bocontacts
 						}
 					}
 					break;
+					
+				case 'email':
+				case 'email_home':
+					$action_msg = lang('%1 added',$action=='email'?lang('Business email') : lang('Home email'));
+					if (($Ok = !!($contact = $this->read($id)) && strstr($contact[$action],'@')))
+					{
+						if(!@is_object($GLOBALS['egw']->js)) $GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+
+						$GLOBALS['egw']->js->set_onload("addEmail('".addslashes(
+							$contact['n_fn'] ? $contact['n_fn'].' <'.$contact[$action].'>' : $contact[$action])."');");
+					}
+					break;
 
 				default:	// move to an other addressbook
 					if (!is_numeric($action) || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
@@ -377,7 +394,7 @@ class uicontacts extends bocontacts
 						return false;
 					}
 					$action_msg = lang('moved');
-					if (($OK = ($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
+					if (($Ok = !!($contact = $this->read($id)) && $this->check_perms(EGW_ACL_DELETE,$contact)))
 					{
 						if (!$contact['owner'])		// no mass-change of accounts
 						{
@@ -396,7 +413,7 @@ class uicontacts extends bocontacts
 			{
 				++$success;
 			}
-			else
+			elseif ($action != 'email' && $action != 'email_home')
 			{
 				++$failed;
 			}
@@ -416,8 +433,10 @@ class uicontacts extends bocontacts
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
-		$do_email = $query['do_email'];
-
+		if (($do_email=$query['do_email']) && $GLOBALS['egw_info']['etemplate']['loop'] && is_object($GLOBALS['egw']->js))	
+		{	// remove previous addEmail() calls, otherwise they will be run again
+			$GLOBALS['egw']->js->body['onLoad'] = preg_replace('/addEmail\([^)]+\);/','',$GLOBALS['egw']->js->body['onLoad']);
+		}
 		//echo "<p>uicontacts::get_rows(".print_r($query,true).")</p>\n";
 		if (!$id_only)
 		{
@@ -451,7 +470,7 @@ class uicontacts extends bocontacts
 			));
 			if ($state != $this->prefs['index_state'])
 			{
-				$GLOBALS['egw']->preferences->add('addressbook',$do_mail ? 'email_state' : 'index_state',$state);
+				$GLOBALS['egw']->preferences->add('addressbook',$do_email ? 'email_state' : 'index_state',$state);
 				// save prefs, but do NOT invalid the cache (unnecessary)
 				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 			}
