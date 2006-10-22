@@ -1146,8 +1146,9 @@ class uiinfolog
 				}
 			}
 			
+			$body = ExecMethod2('felamimail.bocompose.convertHTMLToText',$_body);
 			$this->edit($this->bo->import_mail(
-				implode(',',$_to_emailAddress),$_subject,$_body,$attachments,''
+				implode(',',$_to_emailAddress),$_subject,$body,$attachments,''
 			));
 			exit;
 		}
@@ -1166,13 +1167,12 @@ class uiinfolog
 
 			$subject = $bofelamimail->decode_header($headers->Subject);
 			
-			// this should be a method of felamimail!
-			// We also need a html2text converter there!
 			for($i=0; $i<count($bodyParts); $i++)
 			{
 				// add line breaks to $bodyParts
-				$newBody        = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
-				$newBody    = explode("\n",$newBody);
+				$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
+				$newBody  = ExecMethod2('felamimail.bocompose.convertHTMLToText',$newBody);
+				$newBody  = explode("\n",$newBody);
 				// create it new, with good line breaks
 				reset($newBody);
 				while(list($key,$value) = @each($newBody))
