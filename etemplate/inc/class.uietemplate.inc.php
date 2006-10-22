@@ -184,7 +184,6 @@
 			$this->name_forms[] = $this->name_form;
 
 			$GLOBALS['egw_info']['etemplate']['output_mode'] = $output_mode;	// let extensions "know" they are run eg. in a popup
-			$GLOBALS['egw_info']['etemplate']['loop'] = False;
 			$GLOBALS['egw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['egw_info']['etemplate']['to_process'] = array();
 			$html = $this->html->form($this->include_java_script(1).
@@ -403,13 +402,13 @@
 				$GLOBALS['egw_info']['flags']['java_script'] .= $session_data['java_script_from_flags'];
 				if (!empty($session_data['java_script_body_tags']))
 				{
-					if( !is_object($GLOBALS['phpgw']->js))
+					if( !is_object($GLOBALS['egw']->js))
 					{
-						$GLOBALS['phpgw']->js = CreateObject('phpgwapi.javascript');
+						$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 					}
 					foreach ($session_data['java_script_body_tags'] as $tag => $code)
 					{
-						error_log($GLOBALS['egw']->js->body[$tag]);
+						//error_log($GLOBALS['egw']->js->body[$tag]);
 						$GLOBALS['egw']->js->body[$tag] .= $code;
 					}
 				}
