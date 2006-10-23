@@ -243,7 +243,7 @@ class bocontacts extends socontacts
 				$contact['n_fn'],$contact['org_name'],$contact['org_unit'],$contact['adr_one_locality']),$type);
 				
 		// removing empty delimiters, caused by empty contact fields
-		$fileas = str_replace(array(', : ',': , ',', , ',': : '),array(': ',': ',', ',': '),$fileas);
+		$fileas = str_replace(array(', , : ',', : ',': , ',', , ',': : '),array(': ',': ',': ',', ',': '),$fileas);
 		while ($fileas{0} == ':' ||  $fileas{0} == ',') $fileas = substr($fileas,2);
 		while (substr($fileas,-2) == ': ' || substr($fileas,-2) == ', ') $fileas = substr($fileas,0,-2);
 

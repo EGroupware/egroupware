@@ -112,6 +112,11 @@ class uicontacts extends bocontacts
 					}
 				}
 			}
+			if ($content['nm']['rows']['infolog'])
+			{
+				list($org) = each($content['nm']['rows']['infolog']);
+				return $this->infolog_org_view($org);
+			}
 			if ($content['nm']['rows']['view'])	// show all contacts of an organisation
 			{
 				list($org_view) = each($content['nm']['rows']['view']);
@@ -185,6 +190,10 @@ class uicontacts extends bocontacts
 //			'export' => lang('Export selection'),
 // ToDo:	'copy'   => lang('Copy a contact and edit the copy'),
 		);
+		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
+		{
+			$sel_options['action']['infolog'] = lang('View linked InfoLog entries');
+		}
 		if ($do_email)
 		{
 			$sel_options['action']['email'] = lang('Add %1',lang('business email'));
@@ -276,6 +285,40 @@ class uicontacts extends bocontacts
 	}
 	
 	/**
+	 * Show the infologs of an whole organisation
+	 *
+	 * @param string $org
+	 */
+	function infolog_org_view($org)
+	{
+		$query = $GLOBALS['egw']->session->appsession('index','addressbook');
+		$query['num_rows'] = -1;	// all
+		$query['org_view'] = $org;
+		$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+
+		if (count($checked) > 1)	// use a nicely formatted org-name as title in infolog
+		{
+			$parts = array();
+			foreach(explode('|||',$org) as $part)
+			{
+				list(,$part) = explode(':',$part,2);
+				if ($part) $parts[] = $part;
+			}
+			$org = implode(', ',$parts);
+		}
+		else
+		{
+			$org = '';	// use infolog default of link-title
+		}
+		$GLOBALS['egw']->redirect_link('/index.php',array(
+			'menuaction' => 'infolog.uiinfolog.index',
+			'action' => 'addressbook',
+			'action_id' => implode(',',$checked),
+			'action_title' => $org,
+		));
+	}
+	
+	/**
 	 * apply an action to multiple contacts
 	 *
 	 * @param string/int $action 'delete', 'vcard', 'csv' or nummerical account_id to move contacts to that addessbook
@@ -304,6 +347,10 @@ class uicontacts extends bocontacts
 		{
 			if (substr($id,0,9) == 'org_name:')
 			{
+				if (count($checked) == 1)
+				{
+					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
+				}
 				unset($checked[$n]);
 				$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 				$query['num_rows'] = -1;	// all
@@ -346,6 +393,15 @@ class uicontacts extends bocontacts
 				ExecMethod('addressbook.vcaladdressbook.export',$checked);
 				// does not return!
 				$Ok = false;
+				break;
+				
+			case 'infolog':
+				$GLOBALS['egw']->redirect_link('/index.php',array(
+					'menuaction' => 'infolog.uiinfolog.index',
+					'action' => 'addressbook',
+					'action_id' => implode(',',$checked),
+					'action_title' => count($checked) > 1 ? lang('selected contacts') : '',
+				));
 				break;
 		}
 		foreach($checked as $id)
@@ -428,7 +484,7 @@ class uicontacts extends bocontacts
 	 * @param array &$query
 	 * @param array &$rows returned rows/cups
 	 * @param array &$readonlys eg. to disable buttons based on acl
-	 * @param boolena $id_only=false if true only return (via $rows) an array of contact-ids, dont save state to session
+	 * @param boolean $id_only=false if true only return (via $rows) an array of contact-ids, dont save state to session
 	 * @return int total number of contacts matching the selection
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
@@ -596,6 +652,7 @@ class uicontacts extends bocontacts
 				$row['type_label'] = lang('Organisation');
 				
 				$readonlys["delete[$row[id]]"] = $query['filter'] && !($this->grants[(int)$query['filter']] & EGW_ACL_DELETE);
+				$readonlys["infolog[$row[id]]"] = !$GLOBALS['egw_info']['user']['apps']['infolog'];
 			}
 			else
 			{
@@ -934,9 +991,12 @@ class uicontacts extends bocontacts
 					lang('Copied by %1, from record #%2.',$GLOBALS['egw']->common->display_fullname('',
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
-				unset($content['id']);
+				// create a new contact with the content of the old
+				foreach(array('id','modified','modifier') as $key) unset($content[$key]);
+				$content['owner'] = $this->prefs['add_default'];
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
+				$content['msg'] = lang('Contact copied');
 			}
 			else
 			{
@@ -945,7 +1005,7 @@ class uicontacts extends bocontacts
 		}
 		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
-		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
+		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[copy]'] = $readonlys['button[edit]'] = $readonlys['button[vcard]'] = true;
 
 		$sel_options['fileas_type'] = $this->fileas_options($content);
@@ -1109,7 +1169,7 @@ class uicontacts extends bocontacts
 		);
 		$readonlys['link_to'] = $readonlys['customfields'] = $readonlys['fileas_type'] = true;
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['change_photo'] = true;
-		$readonlys['button[delete]'] = !$this->check_perms(EGW_ACL_DELETE,$content);
+		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
 // ToDo: fix vCard export
 $readonlys['button[vcard]'] = true;

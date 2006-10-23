@@ -68,6 +68,7 @@ company name	addressbook	de	Firmenname
 configuration	common	de	Konfiguration
 contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
+contact copied	addressbook	de	Kontakt kopiert
 contact deleted	addressbook	de	Kontakt gelöscht
 contact id	addressbook	de	Kontakt ID
 contact repository	admin	de	Speicherort Kontakte
@@ -235,9 +236,11 @@ select phone number as prefered way of contact	addressbook	de	Telefonnummer als 
 select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
 select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern wollen
+selected contacts	addressbook	de	ausgewählte Kontakte
 show	addressbook	de	Anzeigen
 show a column for %1	addressbook	de	Zeige eine %1 Spalte
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
+show infolog entries for this organisation	addressbook	de	InfoLog Einträge dieser Organisation anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	de	Größe des Popup (WxH, zB. 400x300, falls ein Popup verwendet werden soll)
 start	admin	de	Starten
@@ -267,6 +270,7 @@ used for links and for the own sorting of the list	addressbook	de	wird für Verkü
 vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachnamen.
+view linked infolog entries	addressbook	de	Verknüpfte InfoLog Einträge anzeigen
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!

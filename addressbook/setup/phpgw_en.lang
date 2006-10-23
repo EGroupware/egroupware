@@ -68,6 +68,7 @@ company name	addressbook	en	company name
 configuration	common	en	Configuration
 contact	common	en	Contact
 contact application	admin	en	Contact application
+contact copied	addressbook	en	Contact copied
 contact deleted	addressbook	en	Contact deleted
 contact id	addressbook	en	Contact ID
 contact repository	admin	en	Contact repository
@@ -235,9 +236,11 @@ select phone number as prefered way of contact	addressbook	en	select phone numbe
 select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
+selected contacts	addressbook	en	selected contacts
 show	addressbook	en	Show
 show a column for %1	addressbook	en	Show a column for %1
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
+show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
 show the contacts of this organisation	addressbook	en	Show the contacts of this organisation
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	en	Size of popup (WxH, eg.400x300, if a popup should be used)
 start	admin	en	Start
@@ -267,6 +270,7 @@ used for links and for the own sorting of the list	addressbook	en	used for links
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 vcards require a last name entry.	addressbook	en	Vcards require a last name entry.
+view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
