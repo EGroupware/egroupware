@@ -338,13 +338,19 @@
 					{
 						list($app,$id) = explode(':',$value);
 					}
-					if ($id && ($title = $this->link->title($app,$id)))
+					$titles = array();
+					foreach(explode(',',$id) as $id)
 					{
+						if ($id && ($title = $this->link->title($app,$id)))
+						{
+							$titles[$id] = $title;
+						}
+					}
+					if ($titles)
+					{
+						$titles[''] = lang('new search').' ...';
 						$selectbox =& $tpl->get_widget_by_name('id');
-						$selectbox['sel_options'] = array(
-							$id => $title,
-							'' => lang('new search').' ...',
-						);
+						$selectbox['sel_options'] = $titles;
 						// remove link_hide class from select-box-line
 						$span =& $tpl->get_cell_attribute('select_line','span');
 						$span = str_replace('link_hide','',$span);
