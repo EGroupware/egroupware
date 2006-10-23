@@ -21,7 +21,7 @@
 	 */
 	class holidaycalc
 	{
-		function calculate_date($holiday, &$holidays, $year, &$i)
+		function calculate_date($holiday, &$holidays, $year)
 		{
 			static	$cached_month;
 			static	$cached_day;
