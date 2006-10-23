@@ -25,12 +25,54 @@ include_once(EGW_API_INC.'/class.solink.inc.php');
  */
 class soinfolog 				// DB-Layer
 {
+	/**
+	 * Instance of the db class
+	 *
+	 * @var egw_db
+	 */
 	var $db;
+	/**
+	 * Instance of the solink class
+	 *
+	 * @var solink
+	 */
+	var $links;
+	/**
+	 * Grants from other users
+	 *
+	 * @var array
+	 */
 	var $grants;
+	/**
+	 * Internal data array
+	 *
+	 * @var array
+	 */
 	var $data = array( );
+	/**
+	 * Current user (account_id)
+	 *
+	 * @var int
+	 */
 	var $user;
+	/**
+	 * Infolog table-name
+	 *
+	 * @var string
+	 */
 	var $info_table = 'egw_infolog';
+	/**
+	 * Infolog custom fileds table-name
+	 *
+	 * @var string
+	 */
 	var $extra_table = 'egw_infolog_extra';
+	/**
+	 * Offset between server- and user-time in h
+	 *
+	 * @var int
+	 */
+	var $tz_offset;
 
 	/**
 	 * constructor
@@ -485,10 +527,11 @@ class soinfolog 				// DB-Layer
 			'event'       => 'calendar'
 		);
 		$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
+		$action_id = strstr($query['action_id'],',') ? explode(',',$query['action_id']) : $query['action_id'];
 
 		if ($action != '')
 		{
-			$links = $this->links->get_links($action=='sp'?'infolog':$action,$query['action_id'],'infolog');
+			$links = $this->links->get_links($action=='sp'?'infolog':$action,$action_id,'infolog');
 
 			if (count($links))
 			{

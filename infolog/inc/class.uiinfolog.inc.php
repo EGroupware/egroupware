@@ -255,6 +255,7 @@ class uiinfolog
 			'sort'   => $values['sort'],
 			'action' => $values['action'],
 			'action_id' => $values['action_id'],
+			'action_title' => $values['action_title'],
 			'col_filter' => $values['col_filter'],
 			'session_for' => $for
 		));
@@ -334,8 +335,15 @@ class uiinfolog
 		
 		if ($GLOBALS['egw_info']['flags']['currentapp'] == 'infolog')
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog').($query['filter'] == 'none' ? '' :
-				' - '.lang($this->filters[$query['filter']]));
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('Infolog');
+			if ($query['filter'] != 'none')
+			{
+				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang($this->filters[$query['filter']]);
+			}
+			if ($query['action'] && ($title = $query['action_title'] ? $query['action_title'] : $this->link->title($query['action'],$query['action_id'])))
+			{
+				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$title;
+			}
 		}
 		return $query['total'];
 	}
@@ -350,8 +358,9 @@ class uiinfolog
 	 * @param boolean $extra_app_header=false
 	 * @param boolean $return_html=false
 	 * @param string $own_referer='' this is our own referer
+	 * @param string $action_title='' app_header for the action, if '' we try the link-title
 	 */
-	function index($values = null,$action='',$action_id='',$called_as=0,$extra_app_header=False,$return_html=False,$own_referer='')
+	function index($values = null,$action='',$action_id='',$called_as=0,$extra_app_header=False,$return_html=False,$own_referer='',$action_title='')
 	{
 		if (is_array($values))
 		{
@@ -374,12 +383,14 @@ class uiinfolog
 		{
 			$action = $values['action'] ? $values['action'] : get_var('action',array('POST','GET'));
 			$action_id = $values['action_id'] ? $values['action_id'] : get_var('action_id',array('POST','GET'));
-			
+			$action_title = $values['action_title'] ? $values['action_title'] : get_var('action_title',array('POST','GET'));
+
 			if ($values === 'reset_action_view')	// only read action from session, if not called by index.php
 			{
 				$session = $this->read_sessiondata();
 				$session['action'] = $action = '';
 				$session['action_id'] = $action_id = 0;
+				$session['action_title'] = $action_title = '';
 				$this->save_sessiondata($session);
 				unset($session);
 			}
@@ -388,10 +399,11 @@ class uiinfolog
 				$session = $this->read_sessiondata();
 				$action = $session['action'];
 				$action_id = $session['action_id'];
+				$action_title = $session['action_title'];
 				unset($session);
 			}
 		}
-		//echo "<p>uiinfolog::index(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
+		//echo "<p align=right>uiinfolog::index(action='$action/$action_id',called_as='$called_as/$values[referer]',own_referer='$own_referer') values=\n"; _debug_array($values);
 		if (!is_array($values))
 		{
 			$values = array('nm' => $this->read_sessiondata());
@@ -495,6 +507,7 @@ class uiinfolog
 			$this->prefs['never_hide'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] > 15;
 		$values['action'] = $persist['action'] = $values['nm']['action'] = $action;
 		$values['action_id'] = $persist['action_id'] = $values['nm']['action_id'] = $action_id;
+		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
 
@@ -505,7 +518,6 @@ class uiinfolog
 		}
 		if (!$called_as)
 		{
-			$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog');
 			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologIndex');
 		}
 		else
