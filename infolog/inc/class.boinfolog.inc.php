@@ -285,6 +285,17 @@ class boinfolog
 		}
 		return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit' );
 	}
+	
+	/**
+	 * Check if use is responsible for an entry: he or one of his memberships is in responsible
+	 *
+	 * @param array $info infolog entry as array
+	 * @return boolean
+	 */
+	function is_responsible($info)
+	{
+		return $this->so->is_responsible($info);
+	}
 
 	/**
 	 * init internal data to be empty

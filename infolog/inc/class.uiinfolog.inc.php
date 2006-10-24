@@ -169,11 +169,12 @@ class uiinfolog
 		$this->bo->link_id2from($info,$action,$action_id);	// unset from for $action:$action_id
 		$info['info_percent'] = (int) $info['info_percent'].'%';
 		
-		$readonlys["edit[$id]"] = !$this->bo->check_access($info,EGW_ACL_EDIT);
-		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || 
-			in_array($this->user, (array)$info['info_responsible'])));
+		$readonlys["edit[$id]"] = !($this->bo->check_access($info,EGW_ACL_EDIT) || // edit rights or more then standard responsible rights
+			$this->bo->is_responsible($info) && array_diff($this->bo->responsible_edit,array('info_status','info_percent','info_datecompleted')));
+		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = 
+			!($this->bo->check_access($info,EGW_ACL_EDIT) || $this->bo->is_responsible($info)));
 		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] = 
-			!$this->bo->check_access($info,EGW_ACL_EDIT) && !in_array($this->user, (array)$info['info_responsible']);
+			!$this->bo->check_access($info,EGW_ACL_EDIT) && !$this->bo->is_responsible($info);
 		$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
 		$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
 		$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
@@ -658,7 +659,7 @@ class uiinfolog
 					if (!($edit_acl = $this->bo->check_access($info_id,EGW_ACL_EDIT)))
 					{
 						$old = $this->bo->read($info_id);
-						$status_only = in_array($this->user, $old['info_responsible']);
+						$status_only = $this->bo->is_responsible($old);
 					}
 				}
 				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only))
@@ -846,7 +847,7 @@ class uiinfolog
 			}
 			else
 			{
-				if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !in_array($this->user, (array)$content['info_responsible']))
+				if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !$this->bo->is_responsible($content))
 				{
 					if ($no_popup)
 					{
@@ -915,7 +916,7 @@ class uiinfolog
 			}
 		}
 		// for implizit edit of responsible user make all fields readonly, but status and percent
-		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && in_array($this->user, (array)$content['info_responsible']))
+		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && $this->bo->is_responsible($content))
 		{
 			$content['status_only'] = !in_array('link_to',$this->bo->responsible_edit);
 			foreach(array_diff(array_merge(array_keys($content),array('pm_id')),$this->bo->responsible_edit) as $name)

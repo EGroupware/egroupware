@@ -92,6 +92,23 @@ class soinfolog 				// DB-Layer
 	}
 
 	/**
+	 * Check if use is responsible for an entry: he or one of his memberships is in responsible
+	 *
+	 * @param array $info infolog entry as array
+	 * @return boolean
+	 */
+	function is_responsible($info)
+	{
+		static $user_and_memberships;
+		if (is_null($user_and_memberships))
+		{
+			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($this->user,true);
+			$user_and_memberships[] = $this->user;
+		}
+		return $info['info_responsible'] && array_intersect($info['info_responsible'],$user_and_memberships);
+	}
+
+	/**
 	 * checks if user has the $required_rights to access $info_id (private access is handled too)
 	 *
 	 * @param array/int $info data or info_id of InfoLog entry
@@ -121,18 +138,40 @@ class soinfolog 				// DB-Layer
 			return False;
 		}
 		$owner = $info['info_owner'];
-
+		
 		$access_ok = $owner == $this->user ||	// user has all rights
 			// ACL only on public entrys || $owner granted _PRIVATE
 			(!!($this->grants[$owner] & $required_rights) ||
-			// implicite rights for responsible user(s)
-			in_array($this->user, $info['info_responsible']) && ($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
-			//$info['info_responsible'] == $this->user && $required_rights == EGW_ACL_READ) &&
-			($info['info_access'] == 'public' ||
-			!!($this->grants[$owner] & EGW_ACL_PRIVATE));
+			$this->is_responsible($info) &&			// implicite rights for responsible user(s) and his memberships
+			($required_rights == EGW_ACL_READ || $required_rights == EGW_ACL_ADD || $implicit_edit && $required_rights == EGW_ACL_EDIT)) &&
+			($info['info_access'] == 'public' || !!($this->grants[$owner] & EGW_ACL_PRIVATE));
 
-		//echo "<p>check_access(info_id=$info_id (owner=$owner, user=$user),required_rights=$required_rights): access".($access_ok?"Ok":"Denied")."</p>\n";
+		//echo "<p align=right>check_access(info_id=$info_id,requited=$required_rights,implicit_edit=$implicit_edit) owner=$owner, responsible=(".implode(',',$info['info_responsible'])."): access".($access_ok?"Ok":"Denied")."</p>\n";
 		return $access_ok;
+	}
+	
+	/**
+	 * Filter for a given responsible user: info_responsible either contains a the user or one of his memberships
+	 *
+	 * @param int $user
+	 * @return string
+	 * 
+	 * @todo make the responsible a second table and that filter a join with the responsible table
+	 */
+	function responsible_filter($user)
+	{
+		if (!$user) return '0';
+
+		$responsible = $user > 0 ? $GLOBALS['egw']->accounts->memberships($user,true) : 
+			$GLOBALS['egw']->accounts->members($user,true);
+
+		$responsible[] = $user;
+		foreach($responsible as $key => $uid)
+		{
+			$responsible[$key] = $this->db->concat("','",'info_responsible',"','")." LIKE '%,$uid,%'";
+		}
+		//echo "<p align=right>responsible_filter($user) = ".'('.implode(' OR ',$responsible).')'."</p>\n";
+		return '('.implode(' OR ',$responsible).')';
 	}
 
 	/**
@@ -152,6 +191,7 @@ class soinfolog 				// DB-Layer
 		{
 			return $this->acl_filter[$filter.$f_user];  // used cached filter if found
 		}
+
 		if (is_array($this->grants))
 		{
 			foreach($this->grants as $user => $grant)
@@ -178,12 +218,12 @@ class soinfolog 				// DB-Layer
 			$filtermethod .= " AND info_responsible='0'";
 		}
 		// implicit read-rights for responsible user
-		$filtermethod .= " OR (".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$this->user,%' AND info_access='public')";
+		$filtermethod .= " OR (".$this->responsible_filter($this->user)." AND info_access='public')";
 
 		// private: own entries plus the one user is responsible for
 		if ($filter == 'private' || $filter == 'own')
 		{
-			$filtermethod .= " OR (".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$this->user,%'".
+			$filtermethod .= " OR (".$this->responsible_filter($this->user).
 				($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
 					" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
 			                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
@@ -203,7 +243,8 @@ class soinfolog 				// DB-Layer
 
 		if ($filter == 'user' && $f_user > 0)
 		{
-			$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR ".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$f_user,%') AND $filtermethod)";
+			$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR $filtermethod AND ".$this->responsible_filter($f_user).
+				" AND $filtermethod)";
 		}
 		//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
 
@@ -574,7 +615,8 @@ class soinfolog 				// DB-Layer
 					{
 						$data = (int) $data;
 						if (!$data) continue;
-						$filtermethod .= " AND (".$this->db->concat("','",'info_responsible',"','")." LIKE '%,$data,%' OR info_responsible='0' AND info_owner=$data)";
+						$filtermethod .= " AND (".$this->responsible_filter($data)." OR info_responsible='0' AND info_owner";
+						$filtermethod .= ($data > 0 ? '='.$data : ' IN ('.implode(',',$GLOBALS['egw']->accounts->members($data,true)).')').')';
 					}
 					else
 					{

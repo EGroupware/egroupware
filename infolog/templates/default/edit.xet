@@ -40,7 +40,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.2.002">
+	<template id="infolog.edit.delegation" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%" height="245">
 			<columns>
 				<column width="100"/>
@@ -65,7 +65,7 @@
 				</row>
 				<row class="row" valign="top">
 					<description value="Responsible" options=",,,info_responsible"/>
-					<listbox type="select-account" rows="10" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
+					<listbox type="select-account" rows="10" options="both" id="info_responsible" statustext="select a responsible user: a person you want to delegate this task"/>
 				</row>
 				<row class="row" disabled="1">
 					<description value="Confirm" options=",,,info_confirm"/>
