@@ -1676,7 +1676,8 @@
 					$attr = array();
 				}
 				$value = $this->get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
-				if($value === false && $type != 'file') continue;	// file is in $_FILES and not in $content_in
+				// not checked checboxes are not returned in HTML and file is in $_FILES and not in $content_in
+				if($value === false && !in_array($type,array('checkbox','file'))) continue;
 				
 				if (isset($attr['blur']) && $attr['blur'] == $value)
 				{
@@ -1792,7 +1793,7 @@
 						$this->set_array($content,$form_name,$value);
 						break;
 					case 'checkbox':
-						if (!isset($value))
+						if ($value === false)	// get_array() returns false for not set
 						{
 							$this->set_array($content,$form_name,$attr['multiple'] ? array() : $attr['unset_value']);	// need to be reported too
 						}
