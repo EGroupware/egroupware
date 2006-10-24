@@ -20,6 +20,7 @@
 	{
 		$show_home[$key] = $filters[$key] = lang($label);
 	}
+	$have_custom_fields = count($ui->bo->customfields) > 0;
 	unset($ui);
 
 	// migrage old filter-pref 1,2 to the filter one 'own-open-today'
@@ -135,7 +136,17 @@
 			'admin'  => False
 		),
 	);
-
+	if ($have_custom_fields)
+	{
+		$GLOBALS['settings']['cal_show_custom'] = array(
+			'type'   => 'check',
+			'label'  => 'Should the calendar show custom types too',
+			'name'   => 'cal_show_custom',
+			'help'   => 'Do you want to see custome InfoLog types in the calendar?',
+			'xmlrpc' => True,
+			'admin'  => False
+		);
+	}
 	unset($show_home);
 	unset($show_details);
 	unset($filters);

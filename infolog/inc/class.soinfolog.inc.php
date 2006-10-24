@@ -243,7 +243,7 @@ class soinfolog 				// DB-Layer
 
 		if ($filter == 'user' && $f_user > 0)
 		{
-			$filtermethod = " ((info_owner=$f_user AND info_responsible=0 OR $filtermethod AND ".$this->responsible_filter($f_user).
+			$filtermethod = " (info_owner=$f_user AND info_responsible=0 OR $filtermethod AND ".$this->responsible_filter($f_user).
 				" AND $filtermethod)";
 		}
 		//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
@@ -615,13 +615,14 @@ class soinfolog 				// DB-Layer
 					{
 						$data = (int) $data;
 						if (!$data) continue;
-						$filtermethod .= " AND (".$this->responsible_filter($data)." OR info_responsible='0' AND info_owner";
-						$filtermethod .= ($data > 0 ? '='.$data : ' IN ('.implode(',',$GLOBALS['egw']->accounts->members($data,true)).')').')';
+						$filtermethod .= " AND (".$this->responsible_filter($data)." OR info_responsible='0' AND ".
+							$this->db->expression($this->info_table,array(
+								'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
+							)).')';
 					}
 					else
 					{
-						if (!$this->table_defs) $this->table_defs = $this->db->get_table_definitions('infolog',$this->info_table);
-						$filtermethod .= ' AND '.$col.'='.$this->db->quote($data,$this->table_defs['fd'][$col]['type']);
+						$filtermethod .= ' AND '.$this->db->expression($this->info_table,array($col => $data));
 					}	
 				}
 			}
