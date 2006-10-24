@@ -594,9 +594,23 @@ class uicontacts extends bocontacts
 			{
 				$query['col_filter'][] = $query['order'].' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
 			}
+			$wildcard = '%';
+			$op = 'OR';
+			if (is_array($query['search'])) // Advanced Search 
+			{
+				$op = $query['search']['operator'];
+				$wildcard = $query['search']['meth_select'];
+				$advanced_search = $query['search'];
+				$query['search'] = array_intersect_key($query['search'],array_flip($this->get_contact_columns()));
+				foreach ($query['search'] as $key => $value) {
+					if(!$value) unset($query['search'][$key]);  
+				}
+			}
 			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
-				$order,'','%',false,'OR',array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
-
+				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
+			if( is_array($advanced_search) ) {
+				$query['search'] = '';
+			}
 			// do we need the custom fields
 			if (!$id_only && $this->prefs['custom_colum'] != 'never' && $rows && $this->customfields)
 			{
@@ -747,6 +761,9 @@ class uicontacts extends bocontacts
 		if ($query['search']) 
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Search for '%1'",$query['search']);
+		}
+		if(is_array($advanced_search)) {
+				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Advanced search");
 		}
 		return $this->total;		
 	}
@@ -1252,11 +1269,29 @@ $readonlys['button[vcard]'] = true;
 		return 'mailto:' . $email;
 	}
 
-	function search()
+	function search($_content=array())
 	{
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('Addressbook'). ' - '. lang('Advanced search');
-		$GLOBALS['egw_info']['flags']['currentapp'] = 'addressbook';
-		$GLOBALS['egw']->translation->add_app('addressbook');
+		if(!empty($_content)) {
+			$response = new xajaxResponse();
+			
+			$index_nm = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
+			$index_nm['search'] = $_content;
+			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$index_nm);
+			
+			$response->addScript("
+				var index_link = opener.location;
+				opener.location= index_link;
+				window.close();
+			");
+			return $response->getXML();
+			
+		}
+		else {
+			
+		}
+		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
+		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
+		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 		
 		// initialize etemplate arrays
 		$content = $sel_options = $readonlys = $preserv = array();
@@ -1266,15 +1301,27 @@ $readonlys['button[vcard]'] = true;
 		$sel_options['tid'][] = lang('all');
 		//foreach($this->content_types as $type => $data) $sel_options['tid'][$type] = $data['name'];
 		
-		// some changes for the new addressbook
+		// configure search options
 		$sel_options['owner'] = $this->get_addressbooks(EGW_ACL_READ,lang('all'));
+		$sel_options['operator'] =  array(
+			'OR' => 'OR',
+			'AND' => 'AND'
+		);
+		$sel_options['meth_select'] = array(
+			'%'		=> lang('contains'),
+			false	=> lang('exact'),
+		);
+		
+		// configure edit template as search dialog
 		$readonlys['change_photo'] = true;
 		$readonlys['fileas_type'] = true;
 		$readonlys['creator'] = true;
 		$readonlys['button'] = true;
+		$readonlys['personal|organisation|home|details|links']['links'] = true;
 		$content['hidebuttons'] = true;
-		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
-		$this->tmpl->read('addressbook.edit');
+		$content['no_tid'] = true;
+		
+		$this->tmpl->read('addressbook.search');
 		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv,2);
 	}
 
