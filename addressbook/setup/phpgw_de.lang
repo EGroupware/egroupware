@@ -77,6 +77,7 @@ contact settings	admin	de	Kontakt Einstellungen
 contacts and account contact-data to ldap	admin	de	Kontakte und Kontaktdaten der Benutzer nach LDAP
 contacts to ldap	admin	de	Kontakte nach LDAP
 contacts to ldap, account contact-data to sql	admin	de	Kontakte nach LDAP, Kontaktdaten der Benutzer nach SQL
+contains	addressbook	de	beinhaltet
 copied by %1, from record #%2.	addressbook	de	Kopiert von %1, vom Datensatz Nr. %2.
 copy a contact and edit the copy	addressbook	de	Kopiert einen Kontakt und bearbeitet dann die Kopie
 country	common	de	Land

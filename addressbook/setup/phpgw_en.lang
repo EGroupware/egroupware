@@ -77,6 +77,7 @@ contact settings	admin	en	Contact Settings
 contacts and account contact-data to ldap	admin	en	contacts and account contact-data to LDAP
 contacts to ldap	admin	en	contacts to LDAP
 contacts to ldap, account contact-data to sql	admin	en	contacts to LDAP, account contact-data to SQL
+contains	addressbook	en	contains
 copied by %1, from record #%2.	addressbook	en	Copied by %1, from record #%2.
 copy a contact and edit the copy	addressbook	en	Copy a contact and edit the copy
 country	common	en	Country
