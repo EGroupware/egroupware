@@ -993,7 +993,7 @@ class uicontacts extends bocontacts
 					$content['id']));
 				// create a new contact with the content of the old
 				foreach(array('id','modified','modifier') as $key) unset($content[$key]);
-				$content['owner'] = $this->prefs['add_default'];
+				$content['owner'] = $this->prefs['add_default'] ? $this->prefs['add_default'] : $this->user;
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
 				$content['msg'] = lang('Contact copied');
