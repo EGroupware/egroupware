@@ -161,9 +161,8 @@
 			else
 			{
 				$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
-				$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 				
-				//$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$extension_data['input_template']));
+				$tpl->add_child($tpl, $search_template = $tpl->empty_cell('template',$extension_data['input_template']));
 				$button_box = $tpl->empty_cell('hbox','button_box'); 
 				$tpl->add_child($tpl, $button_box);
 				$tpl->add_child($button_box, $op_select = $tpl->empty_cell('select','opt_select',array(
@@ -182,16 +181,8 @@
 					'no_lang' => true,
 					'default' => '%',
 				)));
-				$prefix = $extension_data['prefix'];
 				$tpl->add_child($button_box, $search_button = $tpl->empty_cell('button','button[search]',array(
 					'label' => 'Search',
-					'onclick' => "
-					var fromobj = document.getElementsByName('eTemplate');
-					opener.document.getElementById('exec[$prefix][search]').value=xajax.getFormValues(fromobj[0])+xajax.getFormValues(this.form);
-					opener.document.getElementById('exec[$prefix][start_search]').form.submit()
-					opener.document.getElementById('exec[$prefix][search]').value='';
-					return false;
-				",
 				)));
 			}
 			$cell['size'] = $cell['name'];
