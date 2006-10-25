@@ -178,7 +178,7 @@ class sifaddressbook extends bocontacts
 			return false;
 		}
 		
-		if(($foundContacts = bocontact::search($contact)))
+		if(($foundContacts = bocontacts::search($contact)))
 		{
 			error_log(print_r($foundContacts,true));
 			return $foundContacts[0]['id'];
