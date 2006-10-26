@@ -433,7 +433,7 @@ class bocontacts extends socontacts
 		{
 			if (!isset($contact['owner']))	// owner not set on update, eg. SyncML
 			{
-				if (($old = $this->read[$contact['id']]))	// --> try reading the old entry and set it from there
+				if (($old = $this->read($contact['id'])))	// --> try reading the old entry and set it from there
 				{
 					$contact['owner'] = $old['owner'];
 				}
