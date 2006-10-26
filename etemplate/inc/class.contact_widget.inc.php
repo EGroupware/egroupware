@@ -95,7 +95,7 @@ class contact_widget
 			default:
 				if (substr($value,0,12) == 'addressbook:') $value = substr($value,12);	// link-entry syntax
 				if (!$value || !$cell['size'] || (!is_array($this->contact) || 
-					!($this->contact['id'] == $value || 'account:'.$this->contact['account_id'])) &&
+					!($this->contact['id'] == $value || 'account:'.$this->contact['account_id'] == $value)) &&
 					!($this->contact = $this->contacts->read($value)))
 				{
 					$cell = $tmpl->empty_cell();
