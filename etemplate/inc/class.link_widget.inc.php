@@ -543,6 +543,7 @@
 			
 			if (!($found = $this->link->query($app,$pattern == lang('Search') ? '' : $pattern)))	// ignore the blur-text
 			{
+				$GLOBALS['egw']->translation->add_app('etemplate');
 				$response->addAlert(lang('Nothing found - try again !!!'));
 				$response->addScript("document.getElementById('$id_input').select();");
 			}
