@@ -32,6 +32,7 @@ class contact_widget
 	 */
 	var $human_name = array(
 		'contact-value'  => 'Contact',
+		'contact-account'=> 'Account contactdata',
 		'contact-fields' => 'Contact fields',
 	);
 	/**
@@ -87,10 +88,14 @@ class contact_widget
 				$cell['no_lang'] = 1;
 				break;
 
+			case 'contact-account':
+				$value = 'account:'.$value;
+				// fall-throught
 			case 'contact-value':
 			default:
 				if (substr($value,0,12) == 'addressbook:') $value = substr($value,12);	// link-entry syntax
-				if (!$value || !$cell['size'] || (!is_array($this->contact) || $this->contact['id'] != $value) &&
+				if (!$value || !$cell['size'] || (!is_array($this->contact) || 
+					!($this->contact['id'] == $value || 'account:'.$this->contact['account_id'])) &&
 					!($this->contact = $this->contacts->read($value)))
 				{
 					$cell = $tmpl->empty_cell();
