@@ -723,6 +723,7 @@ class uiinfolog
 					// writing links for a new entry
 					if ($info_id && is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))	
 					{
+						//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
 						$this->link->link('infolog',$info_id,$content['link_to']['to_id']);
 						$content['link_to']['to_id'] = $info_id;
 					}
@@ -739,7 +740,9 @@ class uiinfolog
 								'info_link_id' => $content['info_link_id'],
 								'info_from'    => $content['info_from'],
 								'info_owner'   => $content['info_owner'],
+								'info_custom_from' => $content['info_custom_from'],
 							);
+							//echo "<p>updating info_link_id: ".print_r($to_write,true)."</p>\n";
 							$this->bo->write($to_write,False);
 							// we need eg. the new modification date, for further updates
 							$content = array_merge($content,$to_write);
