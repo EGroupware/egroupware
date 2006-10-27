@@ -1462,3 +1462,21 @@ $readonlys['button[vcard]'] = true;
 		$GLOBALS['egw']->common->egw_footer();
 	}
 }
+
+if (!function_exists('array_intersect_key'))	// php5.1 function
+{
+	function array_intersect_key($array1,$array2)
+	{
+		$intersection = $keys = array();
+		foreach(func_get_args() as $arr)
+		{
+			$keys[] = array_keys((array)$arr);
+		}
+		foreach(call_user_func_array('array_intersect',$keys) as $key)
+		{
+			$intersection[$key] = $array1[$key];
+		}
+		return $intersection;
+	}
+}
+
