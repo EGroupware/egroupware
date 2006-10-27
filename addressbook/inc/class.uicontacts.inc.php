@@ -605,6 +605,10 @@ class uicontacts extends bocontacts
 				foreach ($query['search'] as $key => $value) {
 					if(!$value) unset($query['search'][$key]);  
 				}
+				if (empty($query['search'])) {
+					$query['search'] = '';
+					unset($advanced_search);
+				}
 			}
 			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
@@ -1280,8 +1284,8 @@ $readonlys['button[vcard]'] = true;
 			
 			$response->addScript("
 				var index_link = window.opener.location;
-				window.opener.location= index_link;
-				window.close();
+				window.opener.location=index_link;
+				xajax_eT_wrapper();
 			");
 			return $response->getXML();
 			
@@ -1312,6 +1316,10 @@ $readonlys['button[vcard]'] = true;
 			false	=> lang('exact'),
 		);
 		
+		$index_nm = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
+		if (array_key_exists('meth_select',$index_nm['search'])) {
+			$content = $index_nm['search'];
+		}
 		// configure edit template as search dialog
 		$readonlys['change_photo'] = true;
 		$readonlys['fileas_type'] = true;
