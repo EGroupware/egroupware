@@ -1279,8 +1279,8 @@ $readonlys['button[vcard]'] = true;
 			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$index_nm);
 			
 			$response->addScript("
-				var index_link = opener.location;
-				opener.location= index_link;
+				var index_link = window.opener.location;
+				window.opener.location= index_link;
 				window.close();
 			");
 			return $response->getXML();
