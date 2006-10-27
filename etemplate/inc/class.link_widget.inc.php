@@ -360,6 +360,10 @@
 						unset($span);
 					}
 				}
+				else
+				{
+					$app = $cell['size'];
+				}
 				if (($extension_data['app'] = $cell['size']))	// no app-selection, using app given in $cell['size']
 				{
 					$tpl->disable_cells('app');	
@@ -368,7 +372,7 @@
 					unset($onchange);
 				}
 				$value = array(
-					'app'        => $cell['size'],
+					'app'        => $app,
 					'no_app_sel' => !!$cell['size'],
 					'id'         => $value,
 				);
