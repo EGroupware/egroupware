@@ -117,7 +117,8 @@
 						if($value == 1) {
 							$startParts = explode('-',$this->event['start']);
 							$finalEvent['start'] = mktime(0, 0, 0, $startParts[1], $startParts[2], $startParts[0]);
-							$finalEvent['end'] = mktime(23, 59, 59, $startParts[1], $startParts[2], $startParts[0]);
+							$endParts = explode('-',$this->event['end']);
+							$finalEvent['end'] = mktime(23, 59, 59, $endParts[1], $endParts[2], $endParts[0]);
 						}
 						break;
 						
