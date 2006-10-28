@@ -240,14 +240,10 @@
 			{
 				$cd = $param_cd;
 			}
-			
 			if(isset($_REQUEST['query']))
 			{
-				// limit query to limit characters
-				if(eregi('^[a-z_0-9]+$',$_REQUEST['query']))
-					$GLOBALS['query'] = $_REQUEST['query'];
+				$GLOBALS['query'] = $_REQUEST['query'];
 			}
-			
 			if(isset($_REQUEST['start']))
 			{
 				$start = (int)$_REQUEST['start'];
@@ -300,7 +296,7 @@
 				)
 			);
 			$p->set_block('list','row','rows');
-			$p->set_block('list','row_empty','row_empty');
+			$p->set_block('list','row_empty','no_rows');
 			$p->set_block('list','letter_search','letter_search_cells');
 
 			$search_param = array(
@@ -321,12 +317,14 @@
 				'menuaction' => 'admin.uiaccounts.list_users',
 				'group_id'   => $_REQUEST['group_id'],
 				'query_type' => $_REQUEST['query_type'],
+				'query'      => $GLOBALS['query'],
 			);
 			$uiaccountsel =& CreateObject('phpgwapi.uiaccountsel');
 			$p->set_var(array(
 				'left_next_matchs'   => $this->nextmatchs->left('/index.php',$start,$total,$link_data),
 				'lang_showing' => ($_REQUEST['group_id'] ? $GLOBALS['egw']->common->grab_owner_name($_REQUEST['group_id']).': ' : '').
-					($GLOBALS['query'] ? lang("Search %1 '%2'",lang($uiaccountsel->query_types[$_REQUEST['query_type']]),$GLOBALS['query']).': ' : '')
+					($GLOBALS['query'] ? lang("Search %1 '%2'",lang($uiaccountsel->query_types[$_REQUEST['query_type']]),
+					$GLOBALS['egw']->html->htmlspecialchars($GLOBALS['query'])).': ' : '')
 					.$this->nextmatchs->show_hits($total,$start),
 				'right_next_matchs'  => $this->nextmatchs->right('/index.php',$start,$total,$link_data),
 				'lang_loginid'       => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('LoginID'),$link_data),
@@ -343,6 +341,7 @@
 				'sort'       => $sort,
 			);
 			$p->set_var(array(
+				'query' => $GLOBALS['egw']->html->htmlspecialchars($GLOBALS['query']),
 				'query_type' => is_array($uiaccountsel->query_types) ? $GLOBALS['egw']->html->select('query_type',$_REQUEST['query_type'],$uiaccountsel->query_types) : '',
 				'lang_group' => lang('group'),
 				'group' => $uiaccountsel->selection('group_id','admin_uiaccount_listusers_group_id',$_REQUEST['group_id'],'groups',0,False,'','this.form.submit();',lang('all')),

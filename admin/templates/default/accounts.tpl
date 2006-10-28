@@ -27,7 +27,7 @@
 					<td>{lang_group} {group}</td>
 					<td align="right">
 						{query_type}
-						<input type="text" name="query">
+						<input type="text" name="query" value="{query}">
 						<input type="submit" name="search" value="{lang_search}">
 					</td>
 				</tr></table>
