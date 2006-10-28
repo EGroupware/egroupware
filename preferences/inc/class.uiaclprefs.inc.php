@@ -212,9 +212,9 @@
 			}
 			$header_type = '';
 			$processed = Array();
-			foreach($accounts as $uid => $data)
+			foreach((array)$accounts as $uid => $data)
 			{
-				if ($data['account_type'] == 'u' && $uid == $owner)
+				if ($data['account_type'] == 'u' && $uid == $owner || !$uid)
 					continue;	/* no need to grant to self if user */
 
 				if ($data['account_type'] != $header_type)
