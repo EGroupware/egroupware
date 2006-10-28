@@ -659,10 +659,9 @@ class accounts_backend
 					
 					$filter .= '(|(uid='.implode(')(uid=',$members).'))';
 				}
-				// add account_filter to filter (and make $query a wildcard if empty)
+				// add account_filter to filter (user has to be '*', as we otherwise only search uid's)
 				$filter .= $this->account_filter;
-				if (empty($query)) $query = '*';
-				$filter = str_replace(array('%user','%domain'),array($query,$GLOBALS['egw_info']['user']['domain']),$filter);
+				$filter = str_replace(array('%user','%domain'),array('*',$GLOBALS['egw_info']['user']['domain']),$filter);
 				$filter .= ')';
 
 				$sri = ldap_search($this->ds, $this->user_context, $filter,array('uid','uidNumber','givenname','sn','mail','shadowExpire'));
