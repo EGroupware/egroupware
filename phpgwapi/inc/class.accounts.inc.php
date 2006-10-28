@@ -111,6 +111,20 @@ class accounts extends accounts_backend
 		'status','expires','lastlogin','lastloginfrom','lastpasswd_change');
 
 	/**
+	 * Querytypes for the account-search
+	 *
+	 * @var array
+	 */
+	var $query_types = array(
+		'all' => 'all fields',
+		'firstname' => 'firstname',
+		'lastname' => 'lastname',
+		'lid' => 'LoginID',
+		'email' => 'email',	
+		'start' => 'start with',
+		'exact' => 'exact',
+	);
+	/**
 	 * Constructor
 	 * 
 	 * @param int $account_id=0 account to instanciate the class for (depricated)
