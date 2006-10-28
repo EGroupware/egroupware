@@ -128,29 +128,24 @@
 				return False;
 			}
 
+			if(ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3)) {
+				$supportedLDAPVersion = 3;
+			} else {
+				$supportedLDAPVersion = 2;
+			}
+
 			if(!isset($this->ldapServerInfo[$host])) {
-				//print "no ldap server info found<br>";
-				if (!($ldapbind = @ldap_bind($this->ds, '', '')))
-				{
-					// try with version 3 ;-)
-					ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-					$ldapbind = ldap_bind($this->ds, '', '');
-				}
+				//error_log("no ldap server info found");
+				$ldapbind = ldap_bind($this->ds, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']);
+
 				$filter='(objectclass=*)';
 				$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry');
 				
 				if(($sr = @ldap_read($this->ds, '', $filter, $justthese))) {
 					if($info = ldap_get_entries($this->ds, $sr)) {
-
 						$ldapServerInfo = new ldapserverinfo();
 		
-						// check for supported ldap version
-						if($info[0]['supportedldapversion']) {
-							for($i=0; $i<$info[0]['supportedldapversion']['count']; $i++) {
-								$supportedVersion = ($supportedVersion < $info[0]['supportedldapversion'][$i] ? $info[0]['supportedldapversion'][$i] : $supportedVersion);
-							}
-							$ldapServerInfo->setVersion($supportedVersion);
-						}
+						$ldapServerInfo->setVersion($supportedLDAPVersion);
 						
 						// check for naming contexts
 						if($info[0]['namingcontexts']) {
@@ -178,7 +173,7 @@
 							$subschemasubentry = $info[0]['subschemasubentry'][0];
 							$ldapServerInfo->setSubSchemaEntry($subschemasubentry);
 						}
-						
+
 						// create list of supported objetclasses
 						if(!empty($subschemasubentry)) {
 							$filter='(objectclass=*)';
@@ -190,16 +185,19 @@
 										for($i=0; $i<$info[0]['objectclasses']['count']; $i++) {
 											$pattern = '/^\( (.*) NAME \'(\w*)\' /';
 											if(preg_match($pattern, $info[0]['objectclasses'][$i], $matches)) {
+												#_debug_array($matches);
 												if(count($matches) == 3) {
 													$supportedObjectClasses[$matches[1]] = strtolower($matches[2]);
 												}
 											}
 										}
+
 										$ldapServerInfo->setSupportedObjectClasses($supportedObjectClasses);
 									}
 								}
 							}
 						}
+						
 						$this->ldapServerInfo[$host] = $ldapServerInfo;
 					}
 				} else {
@@ -210,14 +208,8 @@
 				$ldapServerInfo = $this->ldapServerInfo[$host];
 			}
 
-			if(is_a($ldapServerInfo, 'ldapserverinfo') && $ldapServerInfo->getVersion() > 2) {
-				ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-			}
-
-			if(!ldap_bind($this->ds,$dn,$passwd))
-			{
-				if(is_object($GLOBALS['egw']->log))
-				{
+			if(!ldap_bind($this->ds, $dn, $passwd)) {
+				if(is_object($GLOBALS['egw']->log)) {
 					$GLOBALS['egw']->log->message('F-Abort, Failed binding to LDAP server');
 					$GLOBALS['egw']->log->commit();
 				}
