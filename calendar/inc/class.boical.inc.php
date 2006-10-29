@@ -586,7 +586,7 @@
 								}
 								break;
 	 						case 'TRANSP':
-	 							if($version = '1.0') {
+	 							if($version == '1.0') {
 	 								$vcardData['non_blocking'] = $attributes['value'] == 1;
 	 							} else {
 									$vcardData['non_blocking'] = $attributes['value'] == 'TRANSPARENT';
