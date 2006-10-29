@@ -815,7 +815,13 @@ class uiviews extends uical
 		if ($this->debug > 1 || $this->debug==='dayColWidget') $this->bo->debug_message('uiviews::dayColWidget(%1,%2,left=%3,width=%4,)',False,$day_ymd,$events,$left,$width);
 
 		$day_start = $this->bo->date2ts((string)$day_ymd);
-
+		
+		// if daylight saving is switched on or off, correct $day_start
+		// gives correct times after 2am, times between 0am and 2am are wrong
+		if(($daylight_diff = $day_start + 12*HOUR_s - ($this->bo->date2ts($day_ymd."T120000"))))
+		{
+			$day_start -= $daylight_diff;
+		}
 		// sorting the event into columns with none-overlapping events, the events are already sorted by start-time
 		$eventCols = $col_ends = array();
 		foreach($events as $event)
