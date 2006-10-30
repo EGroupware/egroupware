@@ -79,20 +79,20 @@
 		 }
 	  }
 
-	  
+
 	  /*!
 	  @function set_tpl_path
-	  @abstract sets the preferred and fallback template search paths  
+	  @abstract sets the preferred and fallback template search paths
 	  @return void
 	  */
-	  function set_tpl_path()
+	  function set_tpl_path($man_dir=false)
 	  {
-		 $preferred_dir=$this->get_tpl_dir(); 
-		 $fallback_dir=$this->get_tpl_dir(true); 
+		 $preferred_dir=$this->get_tpl_dir();
+		 $fallback_dir=$this->get_tpl_dir(true);
 
-		 if(!$preferred_dir && $fallback_dir)
+		 if(!$preferred_dir && $man_dir && $fallback_dir)
 		 {
-			$this->halt(lang('No Savant2 template directories were found in:'.EGW_APP_ROOT)); 
+			$this->halt(lang('No Savant2 template directories were found in:'.EGW_APP_ROOT));
 		 }
 		 else
 		 {
@@ -100,15 +100,20 @@
 			{
 			   $this->addPath('template',$fallback_dir);
 			}
-			// add preferred tpl dir last because savant set the last added first in the search array  
+			// add preferred tpl dir last because savant set the last added first in the search array
 			if($preferred_dir)
 			{
 			   $this->addPath('template',$preferred_dir);
 			}
 
-		 }
+			if($man_dir)
+			{
+			   $this->addPath('template',$man_dir);
+			}
 
+		 }
 	  }
+
 
 	  /*!
 	  @function get_tpl_dir
