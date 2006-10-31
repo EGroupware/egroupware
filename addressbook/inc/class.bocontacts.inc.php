@@ -456,7 +456,9 @@ class bocontacts extends socontacts
 			return false;
 		}
 		// convert categories
-		$contact['cat_id'] = is_array($contact['cat_id']) ? implode(',',$contact['cat_id']) : $contact['cat_id'];
+		if (is_array($contact['cat_id'])) {
+			$contact['cat_id'] = implode(',',$contact['cat_id']);
+		}
 		// last modified
 		$contact['modifier'] = $this->user;
 		$contact['modified'] = $this->now_su;
