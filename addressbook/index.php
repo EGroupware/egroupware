@@ -19,6 +19,11 @@
 	));
 	include('../header.inc.php');
 
-	ExecMethod('addressbook.uicontacts.index');
-
-	$GLOBALS['egw']->common->egw_footer();
+	// check if we have an advanced search and reset it in case
+	$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
+	if ($old_state['advanced_search'])
+	{
+		unset($old_state['advanced_search']);
+		$GLOBALS['egw']->session->appsession('index','addressbook',$old_state);
+	}
+	$GLOBALS['egw']->redirect_link('/index.php','menuaction=addressbook.uicontacts.index');

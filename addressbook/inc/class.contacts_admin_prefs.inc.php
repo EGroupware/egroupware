@@ -54,7 +54,7 @@ class contacts_admin_prefs
 				array(
 					'text' => '<a class="textSidebox" href="'.$GLOBALS['egw']->link('/index.php',array(
 						'menuaction' => 'addressbook.uicontacts.search',)).
-						'" onclick="window.open(this.href,\'_blank\',\'dependent=yes,width=850,height=480,scrollbars=yes,status=yes\'); 
+						'" onclick="window.open(this.href,\'advanced_search\',\'dependent=yes,width=850,height=480,scrollbars=yes,status=yes\'); 
 						return false;">'.lang('Advanced search').'</a>',
 					'no_lang' => true,
 					'link' => false

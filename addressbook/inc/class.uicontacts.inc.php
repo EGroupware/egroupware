@@ -489,6 +489,28 @@ class uicontacts extends bocontacts
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
+		$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
+		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
+		{
+			if (is_array($query['search'])) unset($query['search']);
+			unset($query['advanced_search']);
+		}
+		elseif (is_array($query['search']))	// new advanced search, store it in the session
+		{
+			$query['advanced_search'] = array_intersect_key($query['search'],array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
+			foreach ($query['advanced_search'] as $key => $value) 
+			{
+				if(!$value) unset($query['advanced_search'][$key]);
+			}
+			$query['start'] = 0;
+			$query['search'] = '';
+			// store the advanced search in the session to call it again
+			$GLOBALS['egw']->session->appsession('advanced_search','addressbook',$query['advanced_search']);
+		}
+		elseif(!$query['search'] && $old_state['advanced_search'])	// eg. paging in an advanced search
+		{
+			$query['advanced_search'] = $old_state['advanced_search'];
+		}
 		if (($do_email=$query['do_email']) && $GLOBALS['egw_info']['etemplate']['loop'] && is_object($GLOBALS['egw']->js))	
 		{	// remove previous addEmail() calls, otherwise they will be run again
 			$GLOBALS['egw']->js->body['onLoad'] = preg_replace('/addEmail\([^)]+\);/','',$GLOBALS['egw']->js->body['onLoad']);
@@ -496,7 +518,6 @@ class uicontacts extends bocontacts
 		//echo "<p>uicontacts::get_rows(".print_r($query,true).")</p>\n";
 		if (!$id_only)
 		{
-			$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
 			// check if accounts are stored in ldap, which does NOT yet support the org-views
 			if ($this->so_accounts && $query['filter'] === '0' && $query['org_view'])
 			{
@@ -513,7 +534,6 @@ class uicontacts extends bocontacts
 			{
 				$query['searchletter'] = '';		// reset lettersearch if viewing the contacts of one organisation
 			}
-			unset($old_state);
 			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$query);
 			// save the state of the index in the user prefs
 			$state = serialize(array(
@@ -531,6 +551,8 @@ class uicontacts extends bocontacts
 				$GLOBALS['egw']->preferences->save_repository(false,'user',false);
 			}
 		}
+		unset($old_state);
+
 		if ((string)$query['cat_id'] != '')
 		{
 			$query['col_filter']['cat_id'] = $query['cat_id'] ? $query['cat_id'] : null;
@@ -596,25 +618,17 @@ class uicontacts extends bocontacts
 			}
 			$wildcard = '%';
 			$op = 'OR';
-			if (is_array($query['search'])) // Advanced Search 
+			if ($query['advanced_search'])
 			{
-				$op = $query['search']['operator'];
-				$wildcard = $query['search']['meth_select'];
-				$advanced_search = $query['search'];
-				$query['search'] = array_intersect_key($query['search'],array_flip($this->get_contact_columns()));
-				foreach ($query['search'] as $key => $value) {
-					if(!$value) unset($query['search'][$key]);  
-				}
-				if (empty($query['search'])) {
-					$query['search'] = '';
-					unset($advanced_search);
-				}
+				$op = $query['advanced_search']['operator'];
+				unset($query['advanced_search']['operator']);
+				$wildcard = $query['advanced_search']['meth_select'];
+				unset($query['advanced_search']['meth_select']);
 			}
-			$rows = parent::search($query['search'],$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
+			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],
+				$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
-			if( is_array($advanced_search) ) {
-				$query['search'] = '';
-			}
+			
 			// do we need the custom fields
 			if (!$id_only && $this->prefs['custom_colum'] != 'never' && $rows && $this->customfields)
 			{
@@ -749,6 +763,10 @@ class uicontacts extends bocontacts
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$query['org_view_label'];
 		}
+		if($query['advanced_search']) 
+		{
+				$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Advanced search');
+		}
 		if ($query['cat_id'])
 		{
 			if (!is_object($GLOBALS['egw']->categories))
@@ -757,19 +775,16 @@ class uicontacts extends bocontacts
 			}
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Category').' '.$GLOBALS['egw']->categories->id2name($query['cat_id']);
 		}
-		if ($query['searchletter']) 
+		if ($query['searchletter'])
 		{
 			$order = $order == 'org_name' ? lang('company name') : ($order == 'n_given' ? lang('first name') : lang('last name'));
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("%1 starts with '%2'",$order,$query['searchletter']);
 		}
-		if ($query['search']) 
+		if ($query['search'])
 		{
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Search for '%1'",$query['search']);
 		}
-		if(is_array($advanced_search)) {
-				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Advanced search");
-		}
-		return $this->total;		
+		return $this->total;
 	}
 
 	/**
@@ -1295,10 +1310,12 @@ $readonlys['button[vcard]'] = true;
 		}
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
+		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.focus()</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 		
 		// initialize etemplate arrays
-		$content = $sel_options = $readonlys = $preserv = array();
+		$sel_options = $readonlys = $preserv = array();
+		$content = $GLOBALS['egw']->session->appsession('advanced_search','addressbook');
 		
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz + array('' => lang('doesn\'t matter'));
@@ -1315,11 +1332,6 @@ $readonlys['button[vcard]'] = true;
 			'%'		=> lang('contains'),
 			false	=> lang('exact'),
 		);
-		
-		$index_nm = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
-		if (array_key_exists('meth_select',$index_nm['search'])) {
-			$content = $index_nm['search'];
-		}
 		// configure edit template as search dialog
 		$readonlys['change_photo'] = true;
 		$readonlys['fileas_type'] = true;
@@ -1328,7 +1340,8 @@ $readonlys['button[vcard]'] = true;
 		$readonlys['personal|organisation|home|details|links']['links'] = true;
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
-		
+		$content['disable_change_org'] = true;
+
 		$this->tmpl->read('addressbook.search');
 		return $this->tmpl->exec('addressbook.uicontacts.search',$content,$sel_options,$readonlys,$preserv,2);
 	}

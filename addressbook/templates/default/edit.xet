@@ -58,7 +58,7 @@
 				<row>
 					<image src="private.png"/>
 					<description value="Addressbook" options=",,,owner"/>
-					<menulist span=",owner">
+					<menulist class="owner">
 						<menupopup id="owner" statustext="Addressbook the contact should be saved to" no_lang="1"/>
 					</menulist>
 				</row>
@@ -83,7 +83,7 @@
 				<row>
 					<description/>
 					<description options=",,,role" value="Role"/>
-					<hbox orient=",0,0">
+					<hbox options="0,0">
 						<textbox id="role" size="25" maxlength="64"/>
 						<textbox size="8" maxlength="64" label="Room" align="right" id="room"/>
 					</hbox>
@@ -128,7 +128,7 @@
 				<row>
 					<description/>
 					<description value="country" options=",,,adr_one_countryname"/>
-					<menulist span=",fullWidth">
+					<menulist class="fullWidth">
 						<menupopup type="select-country" options="Select one,1" id="adr_one_countryname"/>
 					</menulist>
 					<description/>
@@ -177,14 +177,14 @@
 				<row>
 					<description/>
 					<description value="country" options=",,,adr_two_countryname"/>
-					<menulist span=",fullWidth">
+					<menulist class="fullWidth">
 						<menupopup type="select-country" options="Select one,1" id="adr_two_countryname"/>
 					</menulist>
 				</row>
 				<row height="30">
 					<image src="gear"/>
 					<description options=",,,bday" value="Birthday"/>
-					<hbox id="bday" orient=",0,0">
+					<hbox id="bday" options="0,0">
 						<date options="Y-m-d" id="bday"/>
 						<menulist>
 							<menupopup id="tz" no_lang="1" label="Timezone" align="right"/>
@@ -340,7 +340,7 @@
 					<description/>
 				</row>
 				<row>
-					<menulist span=",fileas">
+					<menulist class="fileas">
 						<menupopup data="" rows="1" cols="3" id="fileas_type" no_lang="1"/>
 					</menulist>
 					<grid>
@@ -350,7 +350,7 @@
 						</columns>
 						<rows>
 							<row disabled="@no_tid">
-								<menulist span=",leftPad5">
+								<menulist class="leftPad5">
 									<menupopup no_lang="1" id="tid" onchange="1" label="Type"/>
 								</menulist>
 								<html class="space" needed="1" label=" " no_lang="1" id="typegfx" readonly="true"/>
@@ -449,8 +449,8 @@
 					</vbox>
 				</row>
 				<row>
-					<hbox orient=",0,0">
-						<menulist span=",leftPad5">
+					<hbox options="0,0">
+						<menulist class="leftPad5">
 							<menupopup type="select-account" id="creator" readonly="true" label="Created"/>
 						</menulist>
 						<date-time id="created" class="leftPad5" readonly="true"/>
