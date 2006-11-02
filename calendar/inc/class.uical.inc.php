@@ -104,7 +104,7 @@ class uical
 	 */
 	var $cat_id;
 	/**
-	 * @var int $filter session-state: selected filter, NOT used at the moment (was all or private)
+	 * @var int $filter session-state: selected filter, at the moment all or hideprivate
 	 */
 	var $filter;
 	/**
@@ -249,7 +249,7 @@ class uical
 	 *	- cat_id: the selected category
 	 *	- owner: the owner of the displayed calendar
 	 *	- save_owner: the overriden owner of the planner
-	 *	- filter: the used filter: no filter / all or only privat, NOT used atm.
+	 *	- filter: the used filter: all or hideprivate
 	 *	- sortby: category or user of planner
 	 *	- view: the actual view, where dialogs should return to or which they refresh
 	 * @param set_states array to manualy set / change one of the states, default NULL = use $_REQUEST
@@ -650,15 +650,11 @@ class uical
 		$file[$n]['text'] = $this->html->form(False,$base_hidden_vars,'/index.php',array('menuaction' => $_GET['menuaction'])) .
 			$file[$n]['text'];
 
-		// Filter all or private
-/* 		NOT used at the moment
-		if(is_numeric($this->owner) && $this->bo->check_perms(EGW_ACL_PRIVATE,0,$this->owner))
-		{
-			$file[] = $this->_select_box('Filter','filter',
-				'<option value=" all "'.($this->filter==' all '?' selected="1"':'').'>'.lang('No filter').'</option>'."\n".
-				'<option value=" private "'.($this->filter==' private '?' selected="1"':'').'>'.lang('Private Only').'</option>'."\n");
-		}
-*/
+		// Filter all or hideprivate
+		$file[] = $this->_select_box('Filter','filter',
+			'<option value="all"'.($this->filter=='all'?' selected="selected"':'').'>'.lang('No filter').'</option>'."\n".
+			'<option value="hideprivate"'.($this->filter=='hideprivate'?' selected="selected"':'').'>'.lang('Hide private infos').'</option>'."\n");
+
 		// Calendarselection: User or Group
 		if(count($this->bo->grants) > 0 && $this->accountsel->account_selection != 'none')
 		{

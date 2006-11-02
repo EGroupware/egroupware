@@ -265,7 +265,7 @@ class socal
 	 * @param int/array $users user-id or array of user-id's, !$users means all entries regardless of users
 	 * @param int $cat_id=0 mixed category-id or array of cat-id's, default 0 = all
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
-	 * @param string $filter='' string space delimited filter-names, NOT used atm.
+	 * @param string $filter='' string filter-name, atm. all or hideprivate
 	 * @param string $query='' pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 * @param int/bool $offset=False offset for a limited query or False (default)

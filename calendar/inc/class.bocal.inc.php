@@ -232,7 +232,7 @@ class bocal
 	 *	users  mixed integer user-id or array of user-id's to use, defaults to the current user
 	 *	cat_id mixed category-id or array of cat-id's, defaults to all if unset, 0 or False
 	 *		Please note: only a single cat-id, will include all sub-cats (if the common-pref 'cats_no_subs' is False)
-	 *	filter string space delimited filter-names, atm. 'all' or 'private'
+	 *	filter string filter-name, atm. 'all' or 'hideprivate'
 	 *	query string pattern so search for, if unset or empty all matching entries are returned (no search)
 	 *		Please Note: a search never returns repeating events more then once AND does not honor start+end date !!!
 	 *	dayswise boolean on True it returns an array with YYYYMMDD strings as keys and an array with events
@@ -350,7 +350,7 @@ class bocal
 			{
 				$events[$id] = $event;
 			}
-			if (!$this->check_perms(EGW_ACL_READ,$event))
+			if (!$this->check_perms(EGW_ACL_READ,$event) || (!$event['public'] && $filter == 'hideprivate'))
 			{
 				$this->clear_private_infos($events[$id],$users);
 			}
