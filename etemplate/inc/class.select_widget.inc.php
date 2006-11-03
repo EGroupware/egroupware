@@ -193,6 +193,11 @@
 							$cell['sel_options'][$cat['cat_id']] = $s;
 						}
 					}
+					// preserv unavailible cats (eg. private user-cats)
+					if ($value && ($unavailible = array_diff(is_array($value) ? $value : explode(',',$value),array_keys((array)$cell['sel_options']))))
+					{
+						$extension_data['unavailible'] = $unavailible;
+					}
 					$cell['size'] = $rows.($type2 ? ','.$type2 : '');
 					$cell['no_lang'] = True;
 					break;
@@ -494,6 +499,22 @@
 		{
 			switch ($extension_data['type'])
 			{
+				case 'select-cat':
+					$value = $value_in;
+					// check if we have some unavailible cats and add them again
+					if (is_array($extension_data['unavailible']) && $extension_data['unavailible'])
+					{
+						if (is_array($value))	// multiselection
+						{
+							$value = array_merge($value,$extension_data['unavailible']);
+						}
+						elseif (!$value)		// non-multiselection and nothing selected by the user
+						{
+							$value = $extension_data['unavailible'][0];
+						}
+					}
+					break;
+
 				case 'select-dow':
 					$value = 0;
 					if (!is_array($value_in)) $value_in = explode(',',$value_in);
