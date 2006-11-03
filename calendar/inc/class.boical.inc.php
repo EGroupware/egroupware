@@ -431,9 +431,11 @@
 								$vcardData['description']	= $attributes['value'];
 								break;
 							case 'DTEND':
-								if(date('H:i:s',$attributes['value']) == '00:00:00')
-									$attributes['value']--;
-								$vcardData['end']		= $attributes['value'];
+								$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
+								if(date('H:i:s',$dtend_ts) == '00:00:00') {
+									$dtend_ts -= 60;
+								}
+								$vcardData['end']		= $dtend_ts;
 								break;
 							case 'DTSTART':
 								$vcardData['start']		= $attributes['value'];
