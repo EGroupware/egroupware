@@ -418,8 +418,8 @@ class bocalupdate extends bocal
 		}
 		$version = $GLOBALS['egw_info']['apps']['calendar']['version'];
 
-		// ignore events in the past
-		if($old_event != False && $this->date2ts($old_event['start']) < $this->now_su)
+		// ignore events in the past (give a tolerance of 10 seconds for the script)
+		if($old_event != False && $this->date2ts($old_event['start']) < ($this->now_su - 10))
 		{
 			return False;
 		}
