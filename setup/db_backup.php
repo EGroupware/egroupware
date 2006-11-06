@@ -173,7 +173,7 @@
 		}
 	}
 	// input-fields to create a new scheduled backup
-	foreach($times=array('year'=>'*','month'=>'*','day'=>'*','dow'=>'2-6','hour'=>3,'minute'=>0) as $name => $default)
+	foreach($times=array('year'=>'*','month'=>'*','day'=>'*','dow'=>'2-6','hour'=>3,'min'=>0) as $name => $default)
 	{
 		$setup_tpl->set_var($name,'<input name="times['.$name.']" size="5" value="'.$default.'" />');
 	}
