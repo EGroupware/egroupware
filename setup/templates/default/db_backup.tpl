@@ -43,7 +43,7 @@
 					<td>{day}</td>
 					<td>{dow}</td>
 					<td>{hour}</td>
-					<td>{minute}</td>
+					<td>{min}</td>
 					<td>{next_run}</td>
 					<td>{actions}</td>
 				</tr>
