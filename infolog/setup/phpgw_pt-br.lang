@@ -94,6 +94,7 @@ description	infolog	pt-br	Descrição
 determines the order the fields are displayed	infolog	pt-br	determine a ordem em que os campos aparecerão
 disables a status without deleting it	infolog	pt-br	desabilitar o status após a remoção
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pt-br	você quer uma confirmação do responsável quanto à: aceitação, encerramento ou ambos
+do you want to see custome infolog types in the calendar?	infolog	pt-br	Você deseja exibir tipos de tarefas personalizadas na Agenda de Eventos ?
 don't show infolog	infolog	pt-br	Não exibir Tarefas
 done	infolog	pt-br	Encerrado
 download	infolog	pt-br	Baixar
@@ -241,6 +242,7 @@ should infolog show subtasks, -calls or -notes in the normal view or not. you ca
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	pt-br	Links para outros aplicativos ou anexos deverão ser exibidos na lista de Tarefas (quando você abrir Tarefas em modo normal de visualização).
 should infolog show up on the main screen and with which filter. works only if you dont selected an application for the main screen (in your preferences).	infolog	pt-br	O aplicativo Tarefas deverá ser exibido na Página Inicial ? Com qual filtro? Funciona somente se você não selecionou um aplicativo para sua Página Inicial (em suas preferências).
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	pt-br	O aplicativo Tarefas deve usar o nome completo (nome e sobrenome) ou apenas o login de acesso.
+should the calendar show custom types too	infolog	pt-br	A Agenda de Eventos deverá exibir tipos personalizados também ?
 should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir um identificador número único, que poderá ser usado, por exemplo, como identificador de Ticket.
 should the infolog list show the column "last modified".	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir a coluna "Última alteração".
 should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	pt-br	A lista do aplicativo Tarefas deverá exibir a percentagem já realizada somente para o status ou dois ícones separados.

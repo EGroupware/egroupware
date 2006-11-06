@@ -2,7 +2,10 @@
 2 years ago	timesheet	sk	2 roky spä»
 3 years ago	timesheet	sk	3 roky spä»
 actions	timesheet	sk	Akcie
+all projects	timesheet	sk	V¹etky projekty
+both: allow to use projectmanager and free project-names	admin	sk	Obidvoje: povoli» pou¾ívanie Projektovníka a voµné názvy projektov
 create new links	timesheet	sk	Vytvori» nové odkazy
+creating new entry	timesheet	sk	vytvára sa nový záznam
 delete this entry	timesheet	sk	zmaza» tento záznam
 edit this entry	timesheet	sk	Uprav tento záznam
 empty if identical to duration	timesheet	sk	prázdne ak sa zhoduje då¾ka trvania
@@ -12,6 +15,7 @@ entry saved	timesheet	sk	Záznam ulo¾ený
 error deleting the entry!!!	timesheet	sk	Chyba pri mazaní záznamu !!!
 error saving the entry!!!	timesheet	sk	Chyba pri ukladaní záznamu !!!
 existing links	timesheet	sk	Existujúce odkazy
+full: use only projectmanager	admin	sk	Plné: opu¾i» iba Projektovník
 general	timesheet	sk	Hlavné
 last modified	timesheet	sk	Naposledy upravené
 last month	timesheet	sk	Posledný mesiac
@@ -20,8 +24,12 @@ last year	timesheet	sk	Posledný rok
 leave it empty for a full week	timesheet	sk	Ponechajte prázdne ak chcete plný tý¾deò
 links	timesheet	sk	Odkazy
 no details	timesheet	sk	¾iadne podrobnosti
+no project	timesheet	sk	®iadny projekt
+none: use only free project-names	admin	sk	®iadne: pou¾i» iba voµné názvy projektov
+or endtime	timesheet	sk	alebo Èas skonèenia
 permission denied!!!	timesheet	sk	Prístup bol odopretý !!!
 price	timesheet	sk	Cena
+projectmanager integration	admin	sk	integrácia s Projektovníkom
 quantity	timesheet	sk	Mno¾stvo
 save & new	timesheet	sk	Ulo¾i» & Nové
 saves the changes made	timesheet	sk	Ulo¾í vykonané zmeny
@@ -29,6 +37,8 @@ saves this entry and add a new one	timesheet	sk	Ulo¾í tento záznam a pridá nový
 select a price	timesheet	sk	Vyberte cenu
 select a project	timesheet	sk	Vyberte projekt
 start	timesheet	sk	Zaèiatok
+starttime	timesheet	sk	Èas zaèiatku
+starttime has to be before endtime !!!	timesheet	sk	Èas zaèiatku musí by» skôr ne¾ èas konca !!!
 sum %1:	timesheet	sk	Súèet %1:
 this month	timesheet	sk	Tento mesiac
 this week	timesheet	sk	Tento tý¾deò

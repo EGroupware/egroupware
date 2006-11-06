@@ -39,6 +39,7 @@ select a price	timesheet	es-es	Seleccionar un precio
 select a project	timesheet	es-es	Seleccionar un proyecto
 start	timesheet	es-es	Inicio
 starttime	timesheet	es-es	Hora de inicio
+starttime has to be before endtime !!!	timesheet	es-es	¡La hora de comienzo tiene que ser antes que la hora de fin!
 sum %1:	timesheet	es-es	Suma %1:
 this month	timesheet	es-es	Este mes
 this week	timesheet	es-es	Esta semana

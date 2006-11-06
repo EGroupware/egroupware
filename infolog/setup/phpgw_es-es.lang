@@ -48,6 +48,7 @@ category	infolog	es-es	Categoría
 change the status of an entry, eg. close it	infolog	es-es	Cambiar el estado de una entrada, p. ej. cerrarlo
 charset of file	infolog	es-es	Juego de caracteres del fichero
 check to set startday	infolog	es-es	marcar para establecer fecha de inicio
+check to specify custom contact	infolog	es-es	Marcar para especificar un contacto personalizado
 click here to create the link	infolog	es-es	pulsar para crear un enlace
 click here to start the search	infolog	es-es	pulsar para comenzar la búsqueda
 close	infolog	es-es	Cerrar
@@ -208,7 +209,7 @@ project settings: price, times	infolog	es-es	Configuración del proyecto: precio,
 re:	infolog	es-es	Re:
 read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
 read rights (default)	infolog	es-es	derecho de lectura (predeterminado)
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IPs locales<br>ej. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	es-es	expresión regular para IPs locales <br>ej. ^192\.168\.1\.
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
@@ -280,6 +281,7 @@ typ	infolog	es-es	Tipo
 typ '%1' already exists !!!	infolog	es-es	¡El tipo '%1' ya existe!
 type	infolog	es-es	Tipo
 type ...	infolog	es-es	Tipo...
+type of customfield	infolog	es-es	Tipo de campo personalizado
 type of the log-entry: note, phonecall or todo	infolog	es-es	Tipo de entrada para el Registro: Nota, llamada de teléfono o tarea pendiente
 unlink	infolog	es-es	Desvincular
 upcoming	infolog	es-es	próxima

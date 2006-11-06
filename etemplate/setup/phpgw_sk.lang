@@ -51,6 +51,7 @@ cellpadding for the table-tag	etemplate	sk	Odstup okraja bunky od jej obsahu pre
 cells	etemplate	sk	Bunky
 cellspacing for the table-tag	etemplate	sk	Rozostup medzi bunkami pre tag tabuµky
 center	etemplate	sk	Stred
+changed	etemplate	sk	Zmenené
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	sk	Za¹krtnite, ak obsah má by» iba zobrazovaný ale nie menený (obsah sa potom neposiela naspä»!)
 check if field has to be filled by user	etemplate	sk	Za¹krtnite ak pole musí by» vyplnené pou¾ívateµom
 checkbox	etemplate	sk	Za¹krtávacie políèko
@@ -69,6 +70,7 @@ comment	etemplate	sk	Komentár
 confirm	etemplate	sk	Potvrdi»
 confirmation message or custom javascript (returning true or false)	etemplate	sk	Potvrdzovacia správa alebo pou¾ívateµský javascript (vracia true alebo false - pravda/nepravda)
 confirmation necesary or custom java-script	etemplate	sk	potvrdenie nevyhnutné, alebo pou¾ívateµský javascript
+contact fields	etemplate	sk	Kontaktné polo¾ky
 contains	etemplate	sk	Obsahuje
 create a new table for the application	etemplate	sk	Vytvori» novú tabuµku pre aplikáciu
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	sk	vytvorí anglický ('en') jazykový súbor z oznaèenia a pomocných textov (pre aplikáciu uvedenú v Názve)
@@ -163,6 +165,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	sk	Vý¹ka tabuµky v % alebo pixeloch pre table-tag a (voliteµne) div
 height, disabled	etemplate	sk	Vý¹ka, Vypnuté
 help	etemplate	sk	Pomocník
+history log	etemplate	sk	Záznam histórie
 horizontal rule	etemplate	sk	Vodorovné pravítko
 hour	etemplate	sk	Hodina
 hours	etemplate	sk	hodín
@@ -272,6 +275,8 @@ select category	etemplate	sk	Vyberte kategóriu
 select country	etemplate	sk	Vyberte krajinu
 select day	etemplate	sk	Vyberte deò
 select day of week	etemplate	sk	vyberte deò v tý¾dni
+select entry	etemplate	sk	Vyberte záznam
+select hour	etemplate	sk	Vyberte hodinu
 select if content of field should not be translated (label gets always translated)	etemplate	sk	vyberte, ak sa obsah polo¾ky nemá preklada» (menovky sa prekladajú v¾dy)
 select month	etemplate	sk	Vyberte mesiac
 select number	etemplate	sk	Vyberte èíslo
