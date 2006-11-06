@@ -3,7 +3,7 @@
 %1 created in %2.	setup	pt-br	%1 criado em %2.
 %1 does not exist !!!	setup	pt-br	%1 não existe!!!
 %1 is %2%3 !!!	setup	pt-br	%1 é %2%3 !!!
-%1, %2 or %3 the configuration file.	setup	pt-br	%1, %2 or %3 o arquivo de configuração.
+%1, %2 or %3 the configuration file.	setup	pt-br	%1, %2 ou %3 o arquivo de configuração.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	pt-br	'%1' não é permitido como argumento %2 da opção %3 !!!
 (searching accounts and changing passwords)	setup	pt-br	(procurando contas e alterando senhas)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	pt-br	Não atualize sua base de dados usando o configurador, já que a atualização pode ser interrompida pelo limite máximo de tempo seu servidor. Isto pode deixar sua base de dados em uma situação irrecuperável, provocando perda de dados.
@@ -13,7 +13,7 @@
 80 (http)	setup	pt-br	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	pt-br	<b>codificação de caracteres</b> (use utf-8 se você pretende usar idiomas com diferentes codificações).
 [header-password],[header-user],[new-password],[new-user]	setup	pt-br	[senha-header],[usuário-header],[nova-senha],[novo-usuário]
-access denied: wrong username or password for manage-header !!!	setup	pt-br	Acesso negado: nome de usuário ou senha errados para gerenciar o header !!!
+access denied: wrong username or password for manage-header !!!	setup	pt-br	Acesso negado: nome de usuário ou senha errados para gerenciar o servidor !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	pt-br	Acesso negado: nome de usuário ou senha errados para configurar o domínio '%1 (%2)' !!!
 account repository need to be set to the one you migrate to!	setup	pt-br	Repositório de contas precisa ser configurado para o qual você migrou!
 account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	pt-br	repositório de contas {sql(padrão) | ldap},[autenticação{sql | ldap | mail | ads | http | ...}],[criptografia sql{md5 | browfish_crypt | md5_crypt | crypt}],[permitir salvar senha{(padrão) | True}],[permitir autenticação via cookie{(padrão) | True}]
@@ -31,8 +31,8 @@ admin email address	setup	pt-br	E-mail da conta administrativa
 admin first name	setup	pt-br	Primeiro nome do Administrador
 admin last name	setup	pt-br	Último nome do Administrador
 admin password	setup	pt-br	Senha do Administrador
-admin password to header manager	setup	pt-br	Senha de administração para o gerenciador do arquivo header
-admin user for header manager	setup	pt-br	Usuário de administração para o gerenciador do arquivo header
+admin password to header manager	setup	pt-br	Senha de administração para o gerenciador do servidor
+admin user for header manager	setup	pt-br	Usuário de administração para o gerenciador do servidor
 admin username	setup	pt-br	usuário para administração
 admins	setup	pt-br	Administradores
 after backing up your tables first.	setup	pt-br	Após fazer backup de suas tabelas.
@@ -109,6 +109,7 @@ check ip address of all sessions	setup	pt-br	Verificar endereço IP de todas sess
 checking extension %1 is loaded or loadable	setup	pt-br	Verificando se a extensão %1 está carregada ou pode ser carregada
 checking file-permissions of %1 for %2 %3: %4	setup	pt-br	Verificando permissões de arquivo de %1 para %2 %3: %4
 checking for gd support...	setup	pt-br	Verificando suporte à biblioteca GD...
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pt-br	Verificando se session.save_path='%1', do arquivo php.ini, é gravável pelo servidor web
 checking pear%1 is installed	setup	pt-br	Verificando se PEAR %1 está instalado
 checking php.ini	setup	pt-br	Verificando php.ini
 checking required php version %1 (recommended %2)	setup	pt-br	Verificando versão do PHP requerida %1 (recomandada %2)
@@ -131,7 +132,7 @@ configure now	setup	pt-br	Configurar agora
 confirm to delete this backup?	setup	pt-br	Confirma a remoção deste backup?
 contain	setup	pt-br	contém
 continue	setup	pt-br	Continuar
-continue to the header admin	setup	pt-br	Continuar para o header Admin
+continue to the header admin	setup	pt-br	Continuar para a Configuração do Servidor
 convert	setup	pt-br	Converta
 convert backup to charset selected above	setup	pt-br	Converter o backup para a codificação acima selecionada.
 could not open header.inc.php for writing!	setup	pt-br	Não foi possíval abrir o header.inc.php para escrita!
@@ -220,7 +221,9 @@ enable mcrypt	setup	pt-br	Habilitar MCrypt
 enter some random text for app session encryption	setup	pt-br	Digite algum texto aleatório para encriptação de sessão
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	pt-br	Digite um texto aleatório para a encriptação de sessão (requer MCrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	pt-br	Digite o caminho completo para arquivos temporários.<br />Exemplos: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	pt-br	Digite o caminho completo para arquivos temporários.<br />Exemplos: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br />Exemplos: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br />Exemplos: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	pt-br	Informe o caminho completo para o diretório de backup.<br/>Se vazio: diretório de arquivos
 enter the hostname of the machine on which this server is running	setup	pt-br	Digite o nome da máquina em que este servidor está sendo executado
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	pt-br	Digite a URL do eGroupWare.<br />Ex.: http://www.dominio.com.br/egroupware   ou   /egroupware<br /><b>Sem a barra final</b>
@@ -252,9 +255,9 @@ grant access	setup	pt-br	Liberar acesso
 group	setup	pt-br	grupo
 group memberships will be migrated too.	setup	pt-br	Membros do grupo serão migrados também.
 has a version mismatch	setup	pt-br	Existe um erro de versão
-header admin login	setup	pt-br	Conexão para o arquivo header
-header password	setup	pt-br	Senha para o arquivo header
-header username	setup	pt-br	Usuário para o arquivo header
+header admin login	setup	pt-br	Conexão para configuração do servidor
+header password	setup	pt-br	Senha para configuração do servidor
+header username	setup	pt-br	Usuário para configuração do servidor
 header-password[,header-user(admin)]	setup	pt-br	senha-header[,usuário-header(admin)]
 header.inc.php successful written.	setup	pt-br	header.inc.php gravado com sucesso.
 historylog removed	setup	pt-br	Registro histórico removido
@@ -357,7 +360,7 @@ no %1 support found. disabling	setup	pt-br	Não há suporte para %1. Desabilitando
 no accounts existing	setup	pt-br	Não há contas existentes
 no algorithms available	setup	pt-br	Nenhum algoritmo disponível
 no egroupware domains / database instances exist! use --edit-header --domain to add one (--usage gives more options).	setup	pt-br	Nenhum domínio / base de dados do eGroupWare existe! Use --edit-header --domain para adicionar um (--usage retorna mais opções).
-no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	pt-br	Nenhuma senha para administrador do header definida! Use --edit-header <senha>[,<user>] para definir uma (--usage retorna mais opções).
+no header admin password set! use --edit-header <password>[,<user>] to set one (--usage gives more options).	setup	pt-br	Nenhuma senha para configuração do servidor definida! Use --edit-header <senha>[,<user>] para definir uma (--usage retorna mais opções).
 no modes available	setup	pt-br	nenhum modo disponível
 no update necessary, domain %1(%2) is up to date.	setup	pt-br	Nenhuma atualização é necessária. Domínio %1 (%2) está atualizado.
 no xml support found. disabling	setup	pt-br	Não foi encontrado suporte para XML. Desablilitando
@@ -377,7 +380,7 @@ one week	setup	pt-br	uma semana
 only add languages that are not in the database already	setup	pt-br	Somente adicionar idiomas que ainda não estão na base de dados
 only add new phrases	setup	pt-br	Somente adicionar novas frases
 or	setup	pt-br	ou
-or %1continue to the header admin%2	setup	pt-br	ou %1Prosseguir para o Cabeçalho Admin%2
+or %1continue to the header admin%2	setup	pt-br	ou %1Prosseguir para a Configuração do Servidor%2
 or http://webdav.domain.com (webdav)	setup	pt-br	ou http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	pt-br	Ou eGroupWare pode criar a base de dados para você:
 or you can install a previous backup.	setup	pt-br	Ou você pode instalar um backup anterior.
@@ -597,11 +600,11 @@ you appear to have xml support enabled	setup	pt-br	Aparentemente você tem suport
 you are ready for this stage, but this stage is not yet written.<br />	setup	pt-br	Você está pronto para este passo, mas este estágio não está escrito ainda.<br />
 you are using php version %1. egroupware now requires %2 or later, recommended is php %3.	setup	pt-br	Você está usando PHP versão %1. eGroupWare requer %2 ou superior, %3 é recomendada.
 you can install it by running:	setup	pt-br	Você pode instalá-lo rodando:
-you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pt-br	Você pode usar o usuário e senha header para todos os domínios também. Se a senha não for definida pela linha de comando, ela é lida da variável de ambiente EGW_CLI_PASSWORD ou requisitada ao usuário.
+you can use the header user and password for every domain too. if the password is not set via the commandline, it is read from the enviroment variable egw_cli_password or queried from the user.	setup	pt-br	Você pode usar o usuário e senha de configuração do servidor para todos os domínios também. Se a senha não for definida pela linha de comando, ela é lida da variável de ambiente EGW_CLI_PASSWORD ou requisitada ao usuário.
 you didn't enter a config password for domain %1	setup	pt-br	Você não digitou uma senha de configuração para o domínio  %1
 you didn't enter a config username for domain %1	setup	pt-br	Você não digitou um usuário de configuração para o domínio  %1
-you didn't enter a header admin password	setup	pt-br	Você não digitou uma senha para administração do Header
-you didn't enter a header admin username	setup	pt-br	Você não digitou um usuário para administração do Header
+you didn't enter a header admin password	setup	pt-br	Você não digitou uma senha para configuração do servidor
+you didn't enter a header admin username	setup	pt-br	Você não digitou um usuário para configuração do servidor
 you do not have any languages installed. please install one now <br />	setup	pt-br	Não há nenhum idioma instalado. Por favor instale um agora <br />
 you have not created your header.inc.php yet!<br /> you can create it now.	setup	pt-br	Você ainda não criou seu arquivo heades.inc.php!<br /> Você pode criá-lo agora.
 you have successfully logged out	setup	pt-br	Você foi desconectado com sucesso.
@@ -613,6 +616,7 @@ you need to fix the above errors, before the configuration file header.inc.php c
 you need to save the settings you made here first!	setup	pt-br	Você precisa salvar as configurações que você fez aqui antes!
 you need to select your current charset!	setup	pt-br	Você  precisa selecionar seu conjunto de carácteres atual
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt-br	Você pode tentar desinstalar e então reinstalar ou tentar executar reparos manuais.
+you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt-br	Você não poderá logar no eGroupWare usando sessões PHP: "sessão não poderá ser verificada !!"
 you're using an old configuration file format...	setup	pt-br	Você está usando um formato de arquivo de configuração antigo
 you're using an old header.inc.php version...	setup	pt-br	Você está usando uma versão antiga do arquivo header.inc.php
 your applications are current	setup	pt-br	Suas aplicações estão atualizadas
@@ -622,7 +626,7 @@ your database is not working!	setup	pt-br	Sua base de dados não está funcionando
 your database is working, but you dont have any applications installed	setup	pt-br	Sua base de dados está funcionando, mas não há nenhuma aplicação instalada
 your egroupware api is current	setup	pt-br	Sua atual API do eGroupWare é
 your files directory '%1' %2	setup	pt-br	Seu diretório de arquivos '%1' %2
-your header admin password is not set. please set it now!	setup	pt-br	Sua senha de adminstrador para o arquivo header.inc.php não está definida. Por favor defina uma agora.
+your header admin password is not set. please set it now!	setup	pt-br	Sua senha de configuração do servidor não está definida. Por favor defina uma agora.
 your header.inc.php needs upgrading.	setup	pt-br	Seu arquivo header.inc.php precisa ser atualizado
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pt-br	Seu arquivo header.inc.php necessita de atualização <br /><blink><b class="msg">AVISO!</b></blink><br /><b>FAÇA CÓPIAS DE SEGURANÇA!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pt-br	Sua instalação PHP não possui suporte apropriado à biblioteca GD. Você precisa da versão 1.8 ou superior para ver os diagramas de Gantt dos projetos.
