@@ -50,4 +50,14 @@ $setup_info['addressbook']['depends'][] = array(
 	'versions' => Array('1.2','1.3','1.4')
 );
 
+// installation checks for addresbook
+$setup_info['projectmanager']['check_install'] = array(
+	'gd' => array(
+		'func' => 'extension_check',
+	),
+	'imagecreatefromjpeg' => array(
+		'func' => 'func_exist',
+		'warning' => "The imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). It's needed to upload photos for contacts.",
+	),
+);
 
