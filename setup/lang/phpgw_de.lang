@@ -109,6 +109,7 @@ check ip address of all sessions	setup	de	IP Adresse bei allen Sessions überprüf
 checking extension %1 is loaded or loadable	setup	de	Überprüfe ob die Erweiterung %1 geladen oder ladbar ist
 checking file-permissions of %1 for %2 %3: %4	setup	de	Überprüfe Datei Zugriffsrechte von %1 für %2 %3: %4
 checking for gd support...	setup	de	Überprüfe die GD Unterstützung...
+checking function %1 exists	setup	de	Überprüfe ob die Funktion %1 verfügbar ist
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	de	Überprüfe ob der Webserver auf die php.ini Einstellung session.save_path='%1' schreiben kann
 checking pear%1 is installed	setup	de	Überprüfe ob PEAR%1 installiert ist
 checking php.ini	setup	de	Überprüfe die php.ini Datei
@@ -514,6 +515,8 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	de	der Datei
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	de	Der erste Schritt bei Installation von eGroupWare ist sicherzustellen, dass Ihre Umgebung die notwendigen Einstellungen hat, um die Anwendung korrekt auszuführen.
 the following applications need to be upgraded:	setup	de	Die folgenden Anwendungen müssen aktualisiert werden:
+the function %1 is needed from: %2.	setup	de	Die Funktion %1 wird benötigt von: %2.
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	de	Die imagecreatefromjpeg Funktion wird bereitgestellt von der gd Erweiterung (compiliert mit jpeg Unterstützung!). Sie wird benötigt um Fotos für Kontakte hoch zu laden.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die mbstring Erweiterung (php extension) ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	de	Die Einstellung mbstring.func_overload = 7 ist notwendig um Unicode (utf-8) oder andere mehr-byte (multibyte) Zeichensätze vollständig zu unterstützen.
 the session extension is needed to use php sessions (db-sessions work without).	setup	de	Die session Erweiterung (php extension) ist notwendig für PHP Sessions (Datenbank Sessions arbeiten ohne diese).
