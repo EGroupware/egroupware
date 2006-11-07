@@ -1372,7 +1372,7 @@ class bocal
 
 			if (!$long_status)
 			{
-				$status = $status[0];
+				$status = substr($status,0,1);
 			}
 			$names[$id] = $this->participant_name($id).' ('.$status.')';
 		}
