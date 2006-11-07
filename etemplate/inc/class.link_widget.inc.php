@@ -327,6 +327,8 @@
 			case 'link-entry':
 				$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 				$tpl =& new etemplate('etemplate.link_widget.entry');
+				$options = $cell['size'] ? explode(',',$cell['size']) : array();
+				$app = $extension_data['app'] = array_shift($options);
 				if ($value)	// show pre-selected entry in select-box and not the search
 				{
 					// add selected-entry plus "new search" to the selectbox-options
@@ -360,11 +362,7 @@
 						unset($span);
 					}
 				}
-				else
-				{
-					$app = $cell['size'];
-				}
-				if (($extension_data['app'] = $cell['size']))	// no app-selection, using app given in $cell['size']
+				if ($extension_data['app'])	// no app-selection, using app given in first option
 				{
 					$tpl->disable_cells('app');	
 					$onchange =& $tpl->get_cell_attribute('search','onclick');
@@ -373,9 +371,21 @@
 				}
 				$value = array(
 					'app'        => $app,
-					'no_app_sel' => !!$cell['size'],
+					'no_app_sel' => !!$extension_data['app'],
 					'id'         => $value,
 				);
+				if ($options)	// limit the app-selectbox to the given apps
+				{
+					$tpl->set_cell_attribute('app','type','select');
+					$tpl->set_cell_attribute('app','no_lang',true);
+					$apps = $this->link->app_list();
+					asort($apps);	// sort them alphabetic
+					foreach($apps as $app => $label)
+					{
+						if (!in_array($app,$options)) unset($apps[$app]);
+					}
+					$value['options-app'] = $apps;
+				}
 				break;
 				
 			case 'link-apps':
