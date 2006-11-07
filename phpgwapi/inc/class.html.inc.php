@@ -583,6 +583,38 @@ class html
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
+	function fckEditorQuick($_name, $_mode, $_content='', $_style='', $base_href='') {
+		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
+
+		$oFCKeditor		= new FCKeditor($_name) ;
+		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
+		$oFCKeditor->Value	= $_content;
+		$oFCKeditor->Width	= '100%' ;
+		$oFCKeditor->Height	= '400px' ;
+		switch($_mode) {
+			case 'ascii':
+				return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";
+				break;
+			case 'simple':
+				$oFCKeditor->ToolbarSet = 'egw_simple';
+				return $oFCKeditor->CreateHTML() ;
+				break;
+		}
+
+	}
+	
+	/**
+	* this function is a wrapper for tinymce to create some reuseable layouts
+	*
+	* Please note: if you did not run init_tinymce already you this function need to be called before the call to phpgw_header() !!!
+	*
+	* @param string $_name name and id of the input-field
+	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
+	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
+	* @param string $style='' initial css for the style attribute
+	* @param string $base_href=''
+	* @return string the necessary html for the textarea
+	*/
 	function tinymceQuick($_name, $_mode, $_content='', $_style='', $base_href='') {
 		switch($_mode) {
 			case 'ascii':
