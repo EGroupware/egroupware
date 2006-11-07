@@ -627,6 +627,8 @@
 			{
 				die('set_array() $arr is no array<br>'.function_backtrace());
 			}
+			if (is_object($idx)) return false;	// given an error in php5.2
+
 			$idxs = explode('[',str_replace(']','',$idx));
 			$pos = &$arr;
 			foreach($idxs as $idx)
