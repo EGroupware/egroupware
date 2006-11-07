@@ -1,4 +1,4 @@
-﻿/*
+/*
  * FCKeditor - The text editor for internet
  * Copyright (C) 2003-2006 Frederico Caldeira Knabben
  * 
@@ -108,7 +108,6 @@ FCKConfig.ToolbarSets["Basic"] = [
 
 FCKConfig.ToolbarSets["egw_simple"] = [
 	['Bold','Italic','Underline','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','-','UnorderedList','OrderedList','Outdent','Indent','Undo','Redo'],
-	['SpellCheck'],
 	'/',
 	['FontFormat','FontName','FontSize'],
 	['TextColor','BGColor']
