@@ -56,7 +56,7 @@ $setup_info['projectmanager']['check_install'] = array(
 		'func' => 'extension_check',
 	),
 	'imagecreatefromjpeg' => array(
-		'func' => 'func_exist',
+		'func' => 'function_check',
 		'warning' => "The imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). It's needed to upload photos for contacts.",
 	),
 );
