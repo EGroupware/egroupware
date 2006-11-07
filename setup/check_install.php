@@ -303,6 +303,28 @@
 		return $available;
 	}
 
+	function function_check($name,$args)
+	{
+		global $passed_icon, $error_icon, $warning_icon, $is_windows;
+
+		$available = function_exists($name);
+
+		echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.lang('Checking function %1 exists',$name).': '.($available ? lang('True') : lang('False'))."</span></div>\n";
+
+		if (!$available)
+		{
+			if (!isset($args['warning']))
+			{
+				$args['warning'] = lang('The function %1 is needed from: %2.',$name,
+					is_array($args['from'] ? implode(', ',$args['from']) : $args['from']));
+			}
+			echo "<div class='setup_info'>".$args['warning'].'</div>';
+		}
+		echo "\n";
+
+		return $available;
+	}
+
 	function verbosePerms( $in_Perms )
 	{
 		if($in_Perms & 0x1000)     // FIFO pipe
@@ -414,6 +436,7 @@
 		{
 			$msg = lang('Checking file-permissions of %1 for %2 %3: %4',$rel_name,$check_not,$checks,$perms)."<br />\n";
 		}
+		$extra_error_msg = '';
 		if (isset($args['error']) && $args['error'])
 		{
 			$extra_error_msg = "<br />\n".$args['error'];
