@@ -433,7 +433,7 @@
 							case 'DTEND':
 								$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
 								if(date('H:i:s',$dtend_ts) == '00:00:00') {
-									$dtend_ts -= 60;
+									$dtend_ts--;
 								}
 								$vcardData['end']		= $dtend_ts;
 								break;
