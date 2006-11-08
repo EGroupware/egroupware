@@ -583,14 +583,14 @@ class html
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditorQuick($_name, $_mode, $_content='', $_style='', $base_href='') {
+	function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') {
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
 
 		$oFCKeditor		= new FCKeditor($_name) ;
 		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
 		$oFCKeditor->Value	= $_content;
-		$oFCKeditor->Width	= '100%' ;
-		$oFCKeditor->Height	= '400px' ;
+		$oFCKeditor->Width	= $_width ;
+		$oFCKeditor->Height	= $_height ;
 		switch($_mode) {
 			case 'ascii':
 				return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";
