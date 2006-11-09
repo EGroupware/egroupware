@@ -550,11 +550,11 @@ class Horde_iCalendar {
                     }
                     break;
 
-                // Comma seperated dates.
+                // Comma and semicolon seperated dates.
                 case 'EXDATE':
                     $values = array();
                     $dates = array();
-                    preg_match_all('/;([^;]*)/', ';' . $value, $values);
+                    preg_match_all('/[,;]([^,;]*)/', ';' . $value, $values);
 
                     foreach ($values[1] as $value) {
                         if (isset($params['VALUE'])) {
@@ -579,7 +579,7 @@ class Horde_iCalendar {
                 case 'FREEBUSY':
                     $values = array();
                     $periods = array();
-                    preg_match_all('/,([^,]*)/', ',' . $value, $values);
+                    preg_match_all('/[,;]([^,;]*)/', ';' . $value, $values);
                     foreach ($values[1] as $value) {
                         $periods[] = $this->_parsePeriod($value);
                     }
