@@ -131,6 +131,7 @@ group public only	calendar	de	Gruppen-Öffentlich
 groupmember(s) %1 not included, because you have no access.	calendar	de	Gruppenmitglied(er) %1 nicht enthalten, da Sie keinen Zugriff haben.
 h	calendar	de	h
 here is your requested alarm.	calendar	de	Hier ist ihr bestellter Alarm.
+hide private infos	calendar	de	Private Informationen ausblenden
 high priority	calendar	de	Hohe Priorität
 holiday	calendar	de	Feiertag
 holiday management	calendar	de	Feiertagsverwaltung

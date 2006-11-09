@@ -131,6 +131,7 @@ group public only	calendar	en	group public only
 groupmember(s) %1 not included, because you have no access.	calendar	en	Groupmember(s) %1 not included, because you have no access.
 h	calendar	en	h
 here is your requested alarm.	calendar	en	Here is your requested alarm.
+hide private infos	calendar	en	Hide private infos
 high priority	calendar	en	high priority
 holiday	calendar	en	Holiday
 holiday management	calendar	en	Holiday Management
