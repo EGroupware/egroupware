@@ -5,7 +5,7 @@
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 * @package importexport
 	 * @author Cornelius Weiss <nelius@cwtech.de>
-	 * @version $Id:  $
+	 * @version $Id$
 	 */
 	
 	$setup_info['importexport']['name']      = 'importexport';

@@ -10,7 +10,7 @@
 	* option) any later version.                                               *
 	\**************************************************************************/
 	
-	/* $Id: class.db_tools.inc.php,v 1.33 2005/12/19 04:27:19 ralfbecker Exp $ */
+	/* $Id$ */
 
 
 	$phpgw_baseline = array(

@@ -8,7 +8,7 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $Id$
  */
 
 require_once('class.iface_import_record.inc.php');

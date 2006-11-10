@@ -6,7 +6,7 @@
  * @package importexport
  * @link http://www.egroupware.org
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $Id$
  */
 
 if (!defined('IMPORTEXPORT_APP'))

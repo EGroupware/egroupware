@@ -7,7 +7,7 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id:  $
+ * @version $Id$
  */
 
 /**

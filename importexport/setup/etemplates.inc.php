@@ -7,7 +7,7 @@
 	 * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
 	 * @package importexport
 	 * @subpackage setup
-	 * @version $Id: class.soetemplate.inc.php 22413 2006-09-12 07:32:34Z ralfbecker $
+	 * @version $Id$
 	 */
 
 $templ_version=1;

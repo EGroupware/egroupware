@@ -6,7 +6,7 @@
 	 * @package importexport
 	 * @link http://www.egroupware.org
 	 * @author Cornelius Weiss <nelius@cwtech.de>
-	 * @version $Id:  $
+	 * @version $Id$
 	 */
 
 	$definition_table = 'egw_importexport_definitions';
