@@ -1,0 +1,37 @@
+=importexport=
+
+Importexport is a framework for egroupware to handle imports and exports. 
+The idea behind importexport is to have a common userinterface in all apps regarding 
+import and export stuff AND to have common backends whitch handle the stuff.
+Importexport can nothing without the plugins of the applications.
+
+Attending importeport framework with you application is pretty easy.
+
+You just need to have your plugins in files which start with 
+class.import_<type> or
+class.export_<type>
+in 
+EGW_INCLUDE_ROOT/YourApp/inc/
+
+== definitions ==
+The bases of all imports and exports is the '''definition'''.
+A definition defines all nessesary parameters to perform the desired action.
+Moreover definitions can be stored and thus the same import / export can be redone
+by loading the definition. Definitions are also reachable by the importexport 
+'''command line interface'''.
+
+== export ==
+Starting an export is as easy as just putting a button in your app with: 
+onClick="importexport.uiexport.export_dialog&appname=<appname>&have_selection=<{true|false}>"
+If parameter "have_selection" if true, export askes (javascript) opener.get_selection();to retreave
+a list of identifiers of selected records.
+
+NOTE: javascript function get_selection() is the only function which is not part of an interface yet.
+
+==Discussion of interfaces==
+To make live easy there are several general plugins which can be found 
+EGW_INCLUDE_ROOT/importexport/inc/import_...
+EGW_INCLUDE_ROOT/importexport/inc/export_...
+
+
+
