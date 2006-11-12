@@ -148,3 +148,15 @@
 			}
 		}
 	}
+	
+	/**
+	 * Add bracket around the ldap_search_filter, if admin forgot it
+	 *
+	 * @param array $settings
+	 */
+	function ldap_search_filter(&$settings)
+	{
+		$filter =& $settings['ldap_search_filter'];
+		
+		if ($filter && $filter{0} != '(') $filter = '('.$filter.')';
+	}
