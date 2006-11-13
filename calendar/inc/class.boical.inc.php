@@ -834,6 +834,15 @@
 							break;
 					}
 					break;
+
+				//Syncevolution compatibility	
+				case 'patrick ohly':
+					$this->supportedFields = $defaultFields + array(
+						'participants' => 'participants',
+						'owner'        => 'owner',
+						'category'     => 'category',
+					);
+					break;
 					
 				case 'file':	// used outside of SyncML, eg. by the calendar itself ==> all possible fields
 					$this->supportedFields = $defaultFields[0] + array(
