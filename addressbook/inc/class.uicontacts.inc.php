@@ -102,7 +102,8 @@ class uicontacts extends bocontacts
 				}
 				else
 				{
-					if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],$success,$failed,$action_msg))
+					if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
+						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index'))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
 					}
@@ -183,24 +184,25 @@ class uicontacts extends bocontacts
 				'bcc' => 'Bcc',
 			),
 		);
-		$sel_options['action'] = array(
+		$sel_options['action'] = array();
+		if ($do_email)
+		{
+			$sel_options['action'] = array(
+				'email' => lang('Add %1',lang('business email')),
+				'email_home' => lang('Add %1',lang('home email')),
+			);
+		}
+		$sel_options['action'] += array(
 			'delete' => lang('Delete'),
 			'csv'    => lang('Export as CSV'), 
 			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
-//			'export' => lang('Export selection'),
-// ToDo:	'copy'   => lang('Copy a contact and edit the copy'),
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
 			$sel_options['action']['infolog'] = lang('View linked InfoLog entries');
 		}
-		if ($do_email)
-		{
-			$sel_options['action']['email'] = lang('Add %1',lang('business email'));
-			$sel_options['action']['email_home'] = lang('Add %1',lang('home email'));
-		}
 		$sel_options['action'] += $this->get_addressbooks(EGW_ACL_ADD);
-		
+
 		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 		
 		// dont show tid-selection if we have only one content_type
@@ -327,9 +329,10 @@ class uicontacts extends bocontacts
 	 * @param int &$success number of succeded actions
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
+	 * @param string $session_name 'index' or 'email' depending if we are in the main list or the popup
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg)
+	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name)
 	{
 		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
 		$success = $failed = 0;
@@ -337,7 +340,7 @@ class uicontacts extends bocontacts
 		if ($use_all)
 		{
 			// get the whole selection
-			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
+			$query = $GLOBALS['egw']->session->appsession($session_name,'addressbook');
 			$query['num_rows'] = -1;	// all
 			$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 		}
@@ -352,7 +355,7 @@ class uicontacts extends bocontacts
 					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
 				}
 				unset($checked[$n]);
-				$query = $GLOBALS['egw']->session->appsession('index','addressbook');
+				$query = $GLOBALS['egw']->session->appsession($session_name,'addressbook');
 				$query['num_rows'] = -1;	// all
 				$query['org_view'] = $id;
 				$this->get_rows($query,$extra,$readonlys,true);	// true = only return the id's
@@ -489,7 +492,8 @@ class uicontacts extends bocontacts
 	 */
 	function get_rows(&$query,&$rows,&$readonlys,$id_only=false)
 	{
-		$old_state = $GLOBALS['egw']->session->appsession('index','addressbook');
+		$do_email = $query['do_email'];
+		$old_state = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view, reset the advanced search
 		{
 			if (is_array($query['search'])) unset($query['search']);
@@ -511,7 +515,7 @@ class uicontacts extends bocontacts
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
 		}
-		if (($do_email=$query['do_email']) && $GLOBALS['egw_info']['etemplate']['loop'] && is_object($GLOBALS['egw']->js))	
+		if ($do_email && $GLOBALS['egw_info']['etemplate']['loop'] && is_object($GLOBALS['egw']->js))	
 		{	// remove previous addEmail() calls, otherwise they will be run again
 			$GLOBALS['egw']->js->body['onLoad'] = preg_replace('/addEmail\([^)]+\);/','',$GLOBALS['egw']->js->body['onLoad']);
 		}
@@ -625,8 +629,7 @@ class uicontacts extends bocontacts
 				$wildcard = $query['advanced_search']['meth_select'];
 				unset($query['advanced_search']['meth_select']);
 			}
-			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],
-				$id_only ? array('id','org_name','n_family','n_given','n_fileas') : false,
+			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],false,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 			
 			// do we need the custom fields
@@ -944,6 +947,14 @@ class uicontacts extends bocontacts
 					{
 						echo "<html><body><script>var referer = opener.location;opener.location.href = referer+(referer.search?'&':'?')+'msg=".
 							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
+/*
+						$link = $GLOBALS['egw']->link('/index.php',array(
+							'menuaction' => 'addressbook.uicontacts.view',
+							'contact_id' => $content['id'],
+						));
+						echo "<html><body><script>opener.location.href = '$link&msg=".
+							addslashes(urlencode($content['msg']))."'; window.close();</script></body></html>\n";
+*/
 						$GLOBALS['egw']->common->egw_exit();
 					}
 					$content['link_to']['to_id'] = $content['id'];
