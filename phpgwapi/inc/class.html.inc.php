@@ -1005,7 +1005,7 @@ class html
 			$vars = $url;
 			$url = '/index.php';
 		}
-		elseif (!strstr($url,'/') && count(explode('.',$url)) >= 3 && !(strstr($url,'mailto:') || strstr($url,'://')))
+		elseif (!strstr($url,'/') && count(explode('.',$url)) >= 3 && !(strstr($url,'mailto:') || strstr($url,'://') || strstr($url,'javascript:')))
 		{
 			$url = "/index.php?menuaction=$url";
 		}
