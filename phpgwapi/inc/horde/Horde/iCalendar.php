@@ -692,6 +692,7 @@ class Horde_iCalendar {
             }
 
             $value = $attribute['value'];
+
             switch ($name) {
             // Date fields.
             case 'DTSTAMP':
@@ -781,6 +782,17 @@ class Horde_iCalendar {
             case 'EXRULE':
             case 'RRULE':
 
+	    //Text Fields
+	    case 'SUMMARY':
+	    case 'DESCRIPTION':
+	    case 'COMMENT':
+		$value = str_replace('\\', '\\\\', $value);
+		$value = str_replace($this->_newline, '\n', $value);
+		$value = str_replace(',', '\,', $value);
+		$value = str_replace(';', '\;', $value);
+		$value = str_replace(':', '\:', $value);
+                break;
+    	
             default:
                 break;
             }
