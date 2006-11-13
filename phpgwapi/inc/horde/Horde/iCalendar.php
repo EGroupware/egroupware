@@ -915,8 +915,8 @@ class Horde_iCalendar {
     {
         $temp = array();
         if (!is_object($value) || is_array($value)) {
-            $TZOffset  = 3600 * substr(date('O'), 0, 3);
-            $TZOffset += 60 * substr(date('O'), 3, 2);
+            $TZOffset  = 3600 * substr(date('O',$value), 0, 3);
+            $TZOffset += 60 * substr(date('O',$value), 3, 2);
             $value -= $TZOffset;
 
             $temp['zone']   = 'UTC';
@@ -929,13 +929,15 @@ class Horde_iCalendar {
         } else {
             $dateOb = (object)$value;
 
+            $TZOffset = date('O',mktime($dateOb->hour,$dateOb->min,$dateOb->sec,$dateOb->month,$dateOb->mday,$dateOb->year));
+
             // Minutes.
-            $TZOffset = substr(date('O'), 3, 2);
-            $thisMin = $dateOb->min - $TZOffset;
+            $TZOffsetMin = substr($TZOffset, 0, 1) . substr($TZOffset, 3, 2);
+            $thisMin = $dateOb->min - $TZOffsetMin;
 
             // Hours.
-            $TZOffset = substr(date('O'), 0, 3);
-            $thisHour = $dateOb->hour - $TZOffset;
+            $TZOffsetHour = substr($TZOffset, 0, 3);
+            $thisHour = $dateOb->hour - $TZOffsetHour;
 
             if ($thisMin < 0) {
                 $thisHour -= 1;
