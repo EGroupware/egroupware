@@ -355,7 +355,7 @@
 								foreach($categories as $cat_id) {
 									if($catData = $egwCategories->return_single($cat_id)) {
 										if(!empty($value)) $value .= '; ';
-										$value .= $catData[0]['name'];
+										$value .= $GLOBALS['egw']->translation->convert($catData[0]['name'], $sysCharSet, 'utf-8');
 									}
 								}
 							}
