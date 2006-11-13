@@ -42,7 +42,7 @@
 	  </tr>';
    }
 
-   function parse_login_screen()
+   function parse_login_screen($extra_vars)
    {
 	  $tmpl = CreateObject('phpgwapi.Template', $GLOBALS['egw_info']['server']['template_dir']);
 	  $tmpl->set_file(array('login_form' => 'login.tpl'));

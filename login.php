@@ -36,7 +36,6 @@
 		Header('Location: setup/index.php');
 		exit;
 	 }
-
 	$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
 	$tmpl = CreateObject('phpgwapi.Template', $GLOBALS['egw_info']['server']['template_dir']);
 	
@@ -343,6 +342,6 @@
 	* And if the register link must be placed                *
 	\********************************************************/
 
-	parse_login_screen();
+	parse_login_screen($extra_vars);
 
 ?>
