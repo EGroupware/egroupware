@@ -1065,7 +1065,7 @@ class uicontacts extends bocontacts
 					$GLOBALS['egw']->common->grab_owner_name($content['owner']);
 			}
 			$readonlys['owner'] = !$content['owner'] || 		// dont allow to move accounts, as this mean deleting the user incl. all content he owns
-				!$this->check_perms(EGW_ACL_DELETE,$content);	// you need delete rights to move a contact into an other addressbook
+				$content['id'] && !$this->check_perms(EGW_ACL_DELETE,$content);	// you need delete rights to move an existing contact into an other addressbook
 		}
 		// set the unsupported fields from the backend to readonly
 		foreach($this->get_fields('unsupported',$content['id'],$content['owner']) as $field)
