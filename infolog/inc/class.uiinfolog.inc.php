@@ -1062,7 +1062,7 @@ class uiinfolog
 				'link_pathes' => $this->link_pathes,
 				'send_file_ips' => $this->bo->send_file_ips,
 				'implicit_rights' => $this->bo->implicit_rights,
-				'responsible_edit' => implode(',',$extra),
+				'responsible_edit' => is_array($extra) ? implode(',',$extra) : $extra,
 			);
 			$this->bo->config->save_repository(True);
 		}
