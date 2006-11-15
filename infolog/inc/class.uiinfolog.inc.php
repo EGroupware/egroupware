@@ -961,11 +961,11 @@
 					$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 				}
 				$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
-				$this->bo->config->config_data = array(
+				$this->bo->config->config_data += array(	// only "adding" the changed items, to not delete other config like custom fields
 					'link_pathes' => $this->link_pathes,
 					'send_file_ips' => $this->bo->send_file_ips,
 					'implicit_rights' => $this->bo->implicit_rights,
-					'responsible_edit' => implode(',',$extra),
+					'responsible_edit' => is_array($extra) ? implode(',',$extra) : $extra,
 				);
 				$this->bo->config->save_repository(True);
 			}
