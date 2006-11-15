@@ -268,7 +268,7 @@ class uiviews extends uical
 	/**
 	 * Displays the monthview or a multiple week-view
 	 *
-	 * @param int $weeks=0 number of weeks to show, if 0 (default) all weeks of one month are shows
+	 * @param int $weeks=0 number of weeks to show, if 0 (default) all weeks of one month are shown
 	 * @param boolean $home=false if true return content suitable for home-page
 	 */
 	function &month($weeks=0,$home=false)
@@ -312,7 +312,7 @@ class uiviews extends uical
 			$title = lang('Wk').' '.adodb_date('W',$week_start);
 			$title = $this->html->a_href($title,$week_view,'',' title="'.lang('Weekview').'"');
 
-			$content .= $this->timeGridWidget($week,60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
+			$content .= $this->timeGridWidget($this->tagWholeDayOnTop($week),60,200,'',$title,0,$week_start+WEEK_s >= $this->last);
 		}
 		if (!$home)
 		{
@@ -472,7 +472,6 @@ class uiviews extends uical
 			if (count($users) == 1 || count($users) > 5) 
 			{
 				$dayEvents =& $this->bo->search($this->search_params);
-				$dayEvents = $this->tagWholeDayOnTop($dayEvents);
 				$owner = 0;
 			}
 			else
@@ -485,10 +484,9 @@ class uiviews extends uical
 					list(,$dayEvents['<b>'.$label.'</b>']) = each($this->bo->search($search_params));
 					$owner[] = $uid;
 				}
-				$dayEvents = $this->tagWholeDayOnTop($dayEvents);
 			}
 			$cols = array();
-			$cols[0] =& $this->timeGridWidget($dayEvents,$this->cal_prefs['interval'],450,'','',$owner);
+			$cols[0] =& $this->timeGridWidget($this->tagWholeDayOnTop($dayEvents),$this->cal_prefs['interval'],450,'','',$owner);
 
 			// only show todo's for a single user
 			if (count($users) == 1 && ($todos = $this->get_todos($todo_label)) !== false)
@@ -1002,7 +1000,7 @@ class uiviews extends uical
 	{
 		if ($this->debug > 1 || $this->debug==='eventWidget') $this->bo->debug_message('uiviews::eventWidget(%1,width=%2)',False,$event,$width);
 
-		if($event['whole_day_on_top']) { $block='event_widget_wholeday_on_top'; }
+		if($this->use_time_grid && $event['whole_day_on_top']) { $block='event_widget_wholeday_on_top'; }
 
 		static $tpl = False;
 		if (!$tpl)
@@ -1768,6 +1766,7 @@ class uiviews extends uical
 	 */
 	function tagWholeDayOnTop($dayEvents)
 	{
+		$this->extraRows = $this->extraRowsOriginal;
 		foreach ($dayEvents as $day=>$oneDayEvents)
 		{
 		  $extraRowsToAdd = 0;
