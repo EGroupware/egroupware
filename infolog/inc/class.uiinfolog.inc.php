@@ -649,7 +649,7 @@ class uiinfolog
 			if ($button)
 			{
 				//echo "<p>uiinfolog::edit(info_id=$info_id) '$button' button pressed, content="; _debug_array($content);
-				if (($button == 'save' || $button == 'apply') && empty($content['info_subject']))
+				if (($button == 'save' || $button == 'apply') && isset($content['info_subject']) && empty($content['info_subject']))
 				{
 					$this->tmpl->set_validation_error('info_subject',lang('Field must not be empty !!!'));
 					$button = '';	// stop save or apply
@@ -1057,7 +1057,8 @@ class uiinfolog
 				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 			}
 			$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
-			$this->bo->config->config_data = array(
+
+			$this->bo->config->config_data += array(	// only "adding" the changed items, to not delete other config like custom fields
 				'link_pathes' => $this->link_pathes,
 				'send_file_ips' => $this->bo->send_file_ips,
 				'implicit_rights' => $this->bo->implicit_rights,
