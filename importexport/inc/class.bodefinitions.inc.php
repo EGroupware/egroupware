@@ -99,6 +99,10 @@ class bodefinitions {
 	public function delete($keys)
 	{
 		$this->so_sql->delete(array('definition_id' => $keys));
+		// clear private cach
+		foreach ($keys as $key) {
+			unset($this->definitions[array_search($key,$this->definitions)]);
+		}
 	}
 	
 	/**
@@ -161,7 +165,7 @@ class bodefinitions {
 	{
 		$export_data = array('metainfo' => array(
 			'type' => 'importexport definitions',
-			'charset' => 'bal',
+			'charset' => $GLOBALS['egw']->translation->charset(),
 			'entries' => count($keys),
 		));
 		
@@ -184,6 +188,7 @@ class bodefinitions {
 	
 	public function import($import_file)
 	{
+		// read given file and check if its a valid definition
 		if (!is_file($import_file['tmp_name'])) return false;
 		$f = fopen($import_file['tmp_name'],'r');
 		$data = fread($f,100000);
@@ -192,14 +197,12 @@ class bodefinitions {
 		$metainfo = $data['metainfo'];
 		unset($data['metainfo']);
 		
+		// convert charset into internal used charset
+		$data = $GLOBALS['egw']->translation->convert($data,$metainfo['charset'],$GLOBALS['egw']->translation->charset());
+		
+		// save definition(s) into internal table
 		foreach ($data as $name => $definition)
 		{
-			error_log(print_r($definition,true));
-			//if (($ext = $this->search(array('name' => $name),'definition_id')) !== false)
-			//{
-			//	error_log(print_r($ext,true));
-			//	$definition['definition_id'] = $ext[0]['definition_id'];
-			//}
 			$this->save($definition);
 		}
 	}

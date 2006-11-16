@@ -23,7 +23,8 @@
 				'type' => array('type' => 'varchar','precision' => '20'),
 				'allowed_users' => array('type' => 'varchar','precision' => '255'),
 				'plugin_options' => array('type' => 'longtext'),
-				'owner' => array('type' => 'int','precision' => '20')
+				'owner' => array('type' => 'int','precision' => '20'),
+				'description' => array('type' => 'varchar','precision' => '255')
 			),
 			'pk' => array('definition_id'),
 			'fk' => array(),

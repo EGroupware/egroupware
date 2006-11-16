@@ -13,6 +13,7 @@
 require_once('class.iface_export_record.inc.php');
 require_once('class.import_export_helper_functions.inc.php');
 require_once('class.iface_egw_record.inc.php');
+require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.translation.inc.php');
 
 /**
  * class export_csv
@@ -90,7 +91,10 @@ class export_csv implements iface_export_record
 	 * @access public
 	 */
 	public function __construct( $_handle,  $_charset, array $_options=array() ) {
-		$this->translation &= $GLOBALS['egw']->translation;
+		if (!is_object($GLOBALS['egw']->translation)) {
+			$GLOBALS['egw']->translation = new translation();
+		}
+		$this->translation = &$GLOBALS['egw']->translation;
 		$this->handle = $_handle;
 		$this->csv_charset = $_charset;
 		if (!empty($_options)) {
@@ -108,7 +112,7 @@ class export_csv implements iface_export_record
 			throw new Exception('Error: Field mapping can\'t be set during ongoing export!');
 		}
 		foreach ($_mapping as $egw_filed => $csv_field) {
-			$this->mapping[$egw_filed] = $this->translation->convert($csv_field, $this->csv_charset);
+			$this->mapping[$egw_filed] = $this->translation->convert($csv_field, $this->translation->charset(), $this->csv_charset);
 		}
 	}
 	
@@ -136,6 +140,9 @@ class export_csv implements iface_export_record
 			$this->mapping = array_combine(array_keys($record_data),array_keys($record_data));
 		}
 		
+		// just for debug...
+		$this->mapping = $this->translation->convert($this->mapping, 'utf-8', 'iso-8859-1');//$this->translation->charset());
+		
 		if ($this->num_of_records == 0 && $this->csv_options['begin_with_fieldnames'] && !empty($this->mapping)) {
 			fputcsv($this->handle,array_values($this->mapping),$this->csv_options['delimiter'],$this->csv_options['enclosure']);
 		}
@@ -144,6 +151,9 @@ class export_csv implements iface_export_record
 		if ($this->conversion[$egw_field]) {
 			$record_data[$egw_field] = import_export_helper_functions::conversion($record_data,$this->conversion);
 		}
+		
+		// do charset translation
+		$record_data = $this->translation->convert($record_data, $this->translation->charset(), $this->csv_charset);
 		
 		// do fieldmapping
 		foreach ($this->mapping as $egw_field => $csv_field) {

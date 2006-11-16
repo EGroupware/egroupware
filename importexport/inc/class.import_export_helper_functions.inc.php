@@ -27,12 +27,8 @@ class import_export_helper_functions
 
 	/**
 	 * nothing to construct here, only static functions!
-	 *
-	 * @return bool false
 	 */
-	public function __construct() {
-		return false;
-	}
+	
 	/**
 	 * converts accound_lid to account_id
 	 *
@@ -154,6 +150,7 @@ class import_export_helper_functions
 	 * @return bool
 	 * @static
 	 * @access public
+	 * @todo replace this function with a function dealing with reg expressions!
 	 */
 	public static function conversion( $_record,  $_conversion ) {
 		

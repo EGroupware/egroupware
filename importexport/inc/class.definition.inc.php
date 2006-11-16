@@ -35,6 +35,7 @@ class definition implements iface_egw_record {
 		'allowed_users' => 'array',
 		'options' => 'array',
 		'owner' => 'int',
+		'description' => 'string',
 	);
 	
 	/**

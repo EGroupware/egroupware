@@ -21,7 +21,7 @@
  * to attend the importexport framwork with your export.
  * 
  * NOTE: This is an easy interface, cause plugins live in theire own 
- * space. Means that they are respnsible for generationg a defintion AND 
+ * space. Means that they are responsible for generating a defintion AND 
  * working on that definition.
  * So this interface just garanties the interaction with userinterfaces. It
  * has nothing to do with datatypes.
@@ -78,7 +78,6 @@ interface iface_export_plugin {
 	 * 		preserv		=> array,
 	 * )
 	 */
-	
 	public static function get_options_etpl();
 	
 	/**
