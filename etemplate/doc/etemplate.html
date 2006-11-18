@@ -424,7 +424,7 @@ and fill the content:</p>
 		);
 		$this-&gt;tmpl-&gt;read('et_media.show');
 
-		$this-&gt;tmpl-&gt;exec('et_media.et_media.edit',$content);
+		$this-&gt;tmpl-&gt;exec('et_media.ui_et_media.edit',$content);
 	}
 }
 </pre><p>
@@ -455,6 +455,7 @@ edit-function too:</p>
 			elseif (isset($content['read']))
 			{
 				unset($content['id']);					<span>// not set by user, so dont use for seach</span>
+				unset($content['read']);
 				$found = $this-&gt;search($content,False,'name,author');	<span>// searches by using the no-empty fields</span>
 
 				if (!$found)
@@ -493,7 +494,7 @@ edit-function too:</p>
 </p>
 <p>While makeing this changes we can add a [Cancel] and [Delete]
 button too:</p>
-<pre>                        
+<pre>
 			elseif (isset($content['cancel']))
 			{
 				$content = array(); 										<span>// clear the contents</span>
