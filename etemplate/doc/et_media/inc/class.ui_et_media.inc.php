@@ -61,6 +61,7 @@ class ui_et_media extends bo_et_media
 			elseif (isset($content['read']))
 			{
 				unset($content['id']);
+				unset($content['read']);
 				$found = $this->search($content,False,'name,author');
 
 				if (!$found)
@@ -107,7 +108,7 @@ class ui_et_media extends bo_et_media
 		$no_button = array(
 			'delete' => !$this->data[$this->db_key_cols[$this->autoinc_id]]
 		);
-		$this->tmpl->exec('et_media.et_media.edit',$content,$sel_options,$no_button,array(
+		$this->tmpl->exec('et_media.ui_et_media.edit',$content,$sel_options,$no_button,array(
 			'id' => $this->data['id']
 		));
 	}
@@ -131,6 +132,6 @@ class ui_et_media extends bo_et_media
 		);
 		$this->tmpl->read('et_media.show');
 
-		$this->tmpl->exec('et_media.et_media.edit',$content);
+		$this->tmpl->exec('et_media.ui_et_media.edit',$content);
 	}
 }
