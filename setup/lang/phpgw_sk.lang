@@ -174,7 +174,7 @@ db user	setup	sk	DB pou¾ívateµ
 default	setup	sk	odporúèaná predvolená hodnota
 default file system space per user/group ?	setup	sk	Predvolený priestor v súborovom systéme na pou¾ívateµa/skupinu?
 delete	setup	sk	Zmaza»
-delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	sk	Zmaza» v¹etky existujúce SQL úèty, skupiny, ACL (prístupové práva) a nastavenia? Zväè¹a to nie nevyhnutné.
+delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	sk	Zmaza» v¹etky existujúce SQL úèty, skupiny, ACL (prístupové práva) a nastavenia? Zväè¹a to nie je nevyhnutné.
 delete all my tables and data	setup	sk	Zma¾ v¹etky moje tabuµky a dáta
 delete all old languages and install new ones	setup	sk	Zma¾ v¹etky staré jazyky a nain¹taluj nové
 deleting tables	setup	sk	Ma¾em tabuµky
@@ -214,7 +214,9 @@ enable mcrypt	setup	sk	Zapnú» MCrypt
 enter some random text for app session encryption	setup	sk	Zadajte nejaký náhodný text pre potreby kódovania sedenia aplikácie
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	sk	Zadajte nejaký náhodný text pre potreby <br />kódovania sedenia aplikácie (vy¾aduje mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	sk	Zadajte plnú cestu k doèasným súborom.<br />Príklady: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	sk	Zadajte plnú cestu k doèasným súborom.<br />Príklady: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	sk	Zadajte plnú cestu k súborom pou¾ívateµov a skupín.<br />Príklady: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	sk	Zadajte plnú cestu k súborom pou¾ívateµov a skupín.<br />Príklady: /files, E:\FILES
 enter the full path to the backup directory.<br />if empty: files directory	setup	sk	Zadajte plnú cestu k adresáru záloh.<br />ak ponecháte prázdne: adresár files
 enter the hostname of the machine on which this server is running	setup	sk	Zadajte názov (hostname) stroja na ktorom be¾í tento server
 enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	sk	Zadajte umiestnenie URL eGroupWare.<br />Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br /><b>Bez ukonèovacieho lomítka</b>

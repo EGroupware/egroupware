@@ -1,4 +1,4 @@
-%1 email addresses inserted	common	sl	Vnešenih %1 E-naslovov
+%1 email addresses inserted	common	sl	Vnesenih %1 E-naslovov
 %1 is not executable by the webserver !!!	common	sl	Spletni strežnik ne more zagnati %1!
 %1 manual	common	sl	Priročnik %1
 %1 start	common	sl	Zaženi %1
@@ -20,7 +20,7 @@ a editor instance must be focused before using this command.	tinymce	sl	Pred upo
 about	common	sl	Vizitka
 about %1	common	sl	Vizitka aplikacije %1
 about egroupware	common	sl	O programu eGroupware
-about the calendar	jscalendar	sl	O koledarju
+about the calendar	jscalendar	sl	O Koledarju
 access	common	sl	Dostop
 access not permitted	common	sl	Zavrnjen dostop
 account has been created	common	sl	Uporabniški račun je bil ustvarjen
@@ -170,6 +170,7 @@ cook islands	common	sl	COOKOVI OTOKI
 copy	common	sl	Kopiraj
 copy table row	tinymce	sl	Kopiraj vrstico tabele
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	sl	Kopiraj/Izreži/Prilepi ni na voljo v Mozilli in Firefoxu.\nŽelite več informacij o tem problemu?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	sl	Kopiraj/Izreži/Prilepi ni na voljo v Mozilli in Firefoxu.\nŽelite več informacij o tem problemu?
 costa rica	common	sl	KOSTARIKA
 cote d ivoire	common	sl	SLONOKOŠČENA OBALA
 could not contact server. operation timed out!	common	sl	Nisem mogel vzpostaviti povezave s strežnikom. Časovna omejitev se je iztekla!
@@ -827,6 +828,7 @@ virgin islands, british	common	sl	DEVIŠKI OTOKI (BRITANSKI)
 virgin islands, u.s.	common	sl	DEVIŠKI OTOKI (ZDA)
 wallis and futuna	common	sl	WALLIS IN FUTUNA
 warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	sl	Opozorilo!\n Preimenovanje ali premikanje map bo pokvarilo povezave v vaših dokumentih. Nadaljujem?
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	sl	Opozorilo!\n Preimenovanje ali premikanje map bo pokvarilo povezave v vaših dokumentih. Nadaljujem?
 wednesday	common	sl	Sreda
 welcome	common	sl	Dobrodošli!
 western sahara	common	sl	ZAHODNA SAHARA

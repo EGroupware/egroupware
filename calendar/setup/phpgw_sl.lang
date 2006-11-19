@@ -131,6 +131,7 @@ group public only	calendar	sl	Samo skupinska publika
 groupmember(s) %1 not included, because you have no access.	calendar	sl	Člani grupe %1 niso bili vključeni, ker nimate pravice dostopa.
 h	calendar	sl	h
 here is your requested alarm.	calendar	sl	Tu je vaš zahtevani alarm
+hide private infos	calendar	sl	Skrij osebne podatke
 high priority	calendar	sl	visoka prioriteta
 holiday	calendar	sl	Prazniki
 holiday management	calendar	sl	Urejanje praznikov

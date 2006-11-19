@@ -1,5 +1,6 @@
 %1 - %2 of %3 user accounts	admin	sl	Uporabniški računi %1 do %2 od vseh %3
 %1 - %2 of %3 user groups	admin	sl	Uporabniške skupine %1 do %2 od vseh %3
+%1 acl records of not (longer) existing accounts deleted.	admin	sl	%1 zapisov ACL ne več obstoječih računov izbrisanih.
 %1 not found or not executable !!!	admin	sl	Ne najdem datoteke %1 ali pa ni izvedljiva!
 (default no, leave it off if you dont use it)	admin	sl	(privzeto Ne. Če ne uporabljate, pustite Ne)
 (stored password will not be shown here)	admin	sl	(Shranjeno geslo tu ne bo vidno)
@@ -95,6 +96,7 @@ country selection	admin	sl	Izbor države
 create group	admin	sl	Ustvari skupino
 creates a new field	admin	sl	ustvari novo polje
 crontab only (recomended)	admin	sl	samo crontab (priporočeno)
+custom fields	admin	sl	Polja po meri
 cyrus imap server	admin	sl	Cyrus IMAP strežnik
 data	admin	sl	Podatki
 day	admin	sl	Dan
@@ -172,7 +174,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	sl
 enter the background color for the login page	admin	sl	Vnesite barvo ozadja prijavne strani
 enter the background color for the site title	admin	sl	Vnesite barvo ozadja naslova strežnika
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sl	Vnesite polno pot do začasnih datotek. <br> Primera: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sl	Vnesite polno pot do začasnih datotek. <br> Primera: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	sl	Vnesite polno pot do datotek uporabnikov in skupin. <br> Primera: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sl	Vnesite ime računalnika, na katerem teče strežnik.
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sl	Vnesite URL eGroupware strežnika.<br>Primer: http://www.domena.si/egw   ali   /egw<br><b>Brez končne poševnice.</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sl	Vnesite niz za iskanje. Za prikaz vseh vnosov izpraznite to polje in kliknite gumb Pošlji.
@@ -219,6 +223,7 @@ host information	admin	sl	Informacije o gostitelju (host)
 hour<br>(0-23)	admin	sl	Ura <BR> (0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	sl	Koliko dni zapisi ostanejo v evidenci dostopov predno se izbrišejo? (privzeto 90)
 how many minutes should an account or ip be blocked (default 30) ?	admin	sl	Koliko minut naj bo račun ali IP onemogočen? (privzeto 30)
+how should email addresses for new users be constructed?	admin	sl	Kako naj bo sestavljen elektronski naslov za nove uporabnike?
 icon	admin	sl	Ikona
 idle	admin	sl	nedejaven
 if no acl records for user or any group the user is a member of	admin	sl	Če ni nobenega ACL zapisa za uporabnika in za nobeno skupino potem je član
@@ -265,6 +270,7 @@ mail settings	admin	sl	E-poštne nastavitve
 main email-address	admin	sl	Glavni E-naslov
 main screen message	admin	sl	Sporočilo osnovnega zaslona
 manager	admin	sl	Upravitelj
+max length of the input [, length of the inputfield (optional)]	admin	sl	Največja dolžina vnosa [, dolžina vosnega polja (opcijsko)]
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najvišji ID računa (npr. 65535 ali 1000000)
 maximum entries in click path history	admin	sl	Največ vnosov v zgodovino klikanja
 message has been updated	admin	sl	sporočilo je bilo spremenjeno
@@ -288,6 +294,7 @@ no permission to add groups	admin	sl	ni dovoljenja za dodajanje skupin
 no permission to add users	admin	sl	ni dovoljenja za dodajanje uporabnikov
 no permission to create groups	admin	sl	ni dovoljenja za ustvarjanje skupin
 note: ssl available only if php is compiled with curl support	admin	sl	Pozor: SSL je na razpolago le, če je PHP preveden s curl podporo.
+number of row for a multiline inputfield or line of a multi-select-box	admin	sl	Število vrstic za večvrstično vnosno polje ali vrstica v polju z več izbirami
 order	admin	sl	Vrstni red
 outbound	admin	sl	izhodno
 passthrough	admin	sl	prehod (passthrough)
@@ -379,6 +386,7 @@ the api requires an upgrade	admin	sl	API potrebuje nadgradnjo.
 the groups must include the primary group	admin	sl	Skupine morajo vsebovati primarno skupino
 the login and password can not be the same	admin	sl	Uporabniško ime in geslo ne smeta biti enaka.
 the loginid can not be more then 8 characters	admin	sl	Uporabniško ime ne sme biti daljše od 8 znakov.
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	sl	Ime, uporabljeno interno (<= 20 znakov). Če ga spremenite, obstoječi podatki ne bodo več na voljo.
 the testjob sends you a mail everytime it is called.	admin	sl	Testna naloga "TestJob" vam pošlje E-pošto vedno, ko se zažene.
 the text displayed to the user	admin	sl	besedilo, ki se prikaže uporabniku
 the two passwords are not the same	admin	sl	Gesli se ne ujemata.
@@ -395,6 +403,8 @@ top	admin	sl	vrh
 total records	admin	sl	Skupno vseh zapisov
 trust level	admin	sl	Stopnja zaupanja
 trust relationship	admin	sl	Povezava zaupanja
+type '%1' already exists !!!	admin	sl	Vrsta '%1' že obstaja!
+type of customfield	admin	sl	Vrsta polja po meri
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sl	Pod Windowsi morate asinhrone storitve namestiti %1ročno%2.
 use cookies to pass sessionid	admin	sl	Uporaba piškotkov za prenos ID seje.
 use pure html compliant code (not fully working yet)	admin	sl	Uporabi HTML veljavno kodo (popolnoma še ne deluje).
@@ -420,6 +430,8 @@ would you like to automaticaly load new langfiles (at login-time) ?	admin	sl	Ali
 would you like to show each application's upgrade status ?	admin	sl	Ali želite prikazati status različice vsake aplikacije?
 xml-rpc	admin	sl	XML-RPC
 you have entered an invalid expiration date	admin	sl	Vnesli ste napačen datum preteka
+you have to enter a name, to create a new field!!!	admin	sl	Za ustvarjanje novega polja morate vnesti ime!
+you have to enter a name, to create a new type!!!	admin	sl	Za ustvarjanje nove vrste morate vnesti ime!
 you must add at least 1 permission or group to this account	admin	sl	Skupini ali uporabniku morate dati vsaj eno dovoljenje
 you must enter a group name.	admin	sl	Vnesti morate ime skupine.
 you must enter a lastname	admin	sl	Vnesti morate priimek
