@@ -109,6 +109,7 @@ check ip address of all sessions	setup	es-es	Comprobar las direcciones ip de tod
 checking extension %1 is loaded or loadable	setup	es-es	Comprobando si se puede cargar o está cargada la extensión %1
 checking file-permissions of %1 for %2 %3: %4	setup	es-es	Comprobando si %1 %2 tiene permiso de %3: %4
 checking for gd support...	setup	es-es	Comprobando el soporte GD...
+checking function %1 exists	setup	es-es	Comprobando si existe la función %1
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	es-es	Comprobando si el valor de php.ini session.save_path='%1' tiene permiso de escritura para el servidor web
 checking pear%1 is installed	setup	es-es	Comprobando si PEAR %1 está instalado
 checking php.ini	setup	es-es	Comprobando php.ini
@@ -514,6 +515,8 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	es-es	el fichero
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	es-es	El primer paso al instalar eGroupWare es asegurarse que el entorno tiene la configuración necesaria para ejecutar la aplicación correctamente.
 the following applications need to be upgraded:	setup	es-es	Las siguientes aplicaciones necesitan una actualización:
+the function %1 is needed from: %2.	setup	es-es	La función %1 se necesita para: %2.
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	es-es	La función imagecreatefromjpeg viene con la extensión gd (compilada con soporte jpeg). Se necesita para subir fotos para los contactos.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the session extension is needed to use php sessions (db-sessions work without).	setup	es-es	La extensión de sesión es necesaria para usar sesiones php (las sesiones db funcionan sin ella).
