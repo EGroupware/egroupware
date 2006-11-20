@@ -837,7 +837,7 @@
 
 				//Syncevolution compatibility	
 				case 'patrick ohly':
-					$this->supportedFields = $defaultFields + array(
+					$this->supportedFields = $defaultFields[1] + array(
 						'participants' => 'participants',
 						'owner'        => 'owner',
 						'category'     => 'category',
@@ -856,7 +856,7 @@
 				// the fallback for SyncML
 				default:
 					error_log("Client not found: $_productManufacturer $_productName");
-					$this->supportedFields = $defaultFields;
+					$this->supportedFields = $defaultFields[0];
 					break;
 			}
 		}
