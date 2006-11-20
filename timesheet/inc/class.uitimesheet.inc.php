@@ -256,6 +256,10 @@ class uitimesheet extends botimesheet
 		{
 			$preserv['ts_project_blur'] = $content['ts_project_blur'] = $this->link->title('projectmanager',$content['pm_id']);
 		}
+      	if ($this->pm_integration == 'full')
+        {
+            $preserv['ts_project'] = $preserv['ts_project_blur'];
+        }
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
 
 		$readonlys = array(
@@ -271,6 +275,7 @@ class uitimesheet extends botimesheet
 			{
 				$readonlys[$key] = true;
 			}
+			$readonlys['start_time'] = $readonlys['end_time'] = true;
 		}
 		$edit_grants = $this->grant_list(EGW_ACL_EDIT);
 		if (count($edit_grants) == 1)
@@ -362,8 +367,8 @@ class uitimesheet extends botimesheet
 		// PM project filter for the PM integration
 		if ((string)$query['col_filter']['pm_id'] != '')
 		{
-			$query['col_filter']['ts_project'] = !$query['col_filter']['pm_id'] ? null :
-				$this->link->title('projectmanager',$query['col_filter']['pm_id']);
+			$query['col_filter']['ts_id'] = $this->link->get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
+			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
 		unset($query['col_filter']['pm_id']);
 		
