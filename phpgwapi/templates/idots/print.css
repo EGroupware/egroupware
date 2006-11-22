@@ -57,3 +57,8 @@ a,a:link,a:visited,a:hover {
 	font-style: normal;
 	color: black;
 }
+
+/* hide background-image to save print costs and spool time */
+body {
+	background-image: none;
+}
