@@ -19,7 +19,7 @@
 		'disable_Template_class' => True,
 		'currentapp' => 'notifywindow'
 	);
-	include('header.inc.php');
+	include('./header.inc.php');
 	header("Content-type: text/xml");
 
 	header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
