@@ -19,7 +19,7 @@
 			'currentapp' => 'home'
 		)
 	);
-	include('header.inc.php');
+	include('./header.inc.php');
 
 	@reset($GLOBALS['egw_info']['user']['preferences']);
 

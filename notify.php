@@ -18,7 +18,7 @@
 		'disable_Template_class' => True,
 		'currentapp' => 'notifywindow'
 	);
-	include('header.inc.php');
+	include('./header.inc.php');
 	$charSet = $GLOBALS['egw']->translation->charset();
 ?>
 <html>
