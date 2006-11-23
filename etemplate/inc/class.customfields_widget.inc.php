@@ -60,7 +60,8 @@
 			//echo '<pre style="text-align: left;">'; print_r($value); echo "</pre>\n";
 			foreach($this->customfields as $name => $field)
 			{
-				if (!empty($field['type2']) && $field['type2'] != $value)
+				// check if the customfield get's displayed for type $value, we can have multiple comma-separated types now
+				if (!empty($field['type2']) && !strstr(','.$field['type2'].',',','.$value.','))
 				{
 					continue;	// not for our content type
 				}
