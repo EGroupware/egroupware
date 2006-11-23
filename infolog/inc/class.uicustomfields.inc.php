@@ -150,6 +150,7 @@ class uicustomfields
 				}
 				$field['values'] = $values;
 			}
+			if (!$field['type2']) $field['type2']='';	// multiselect returns NULL for nothing selected (=All) which stops the autorepeat
 			$content['fields'][++$n] = $field + array(
 				'name'   => $name
 			);

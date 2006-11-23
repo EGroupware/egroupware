@@ -58,9 +58,7 @@
 					<description value="Action" align="center" statustext="deletes this field"/>
 				</row>
 				<row class="row" valign="top">
-					<menulist>
-						<menupopup options="All" id="${row}[type2]" statustext="for which types should this field be used"/>
-					</menulist>
+					<listbox rows="3" id="${row}[type2]" statustext="for which types should this field be used"/>
 					<textbox size="20" maxlength="32" id="${row}[name]" statustext="the name used internaly (&lt;= 20 chars), changeing it makes existing data unavailible"/>
 					<vbox options="0,0">
 						<textbox maxlength="255" id="${row}[label]" statustext="the text displayed to the user"/>
