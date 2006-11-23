@@ -451,7 +451,7 @@
 				'contact_tid' => array('type' => 'char','precision' => '1','default' => 'n'),
 				'contact_owner' => array('type' => 'int','precision' => '8','nullable' => False),
 				'contact_private' => array('type' => 'int','precision' => '1','default' => '0'),
-				'cat_id' => array('type' => 'varchar','precision' => '32'),
+				'cat_id' => array('type' => 'varchar','precision' => '255'),
 				'n_family' => array('type' => 'varchar','precision' => '64'),
 				'n_given' => array('type' => 'varchar','precision' => '64'),
 				'n_middle' => array('type' => 'varchar','precision' => '64'),

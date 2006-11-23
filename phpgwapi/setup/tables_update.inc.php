@@ -667,3 +667,15 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.013';
 	}
+
+	$test[] = '1.3.013';
+	function phpgwapi_upgrade1_3_013()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','cat_id',array(
+			'type' => 'varchar',
+			'precision' => '255'
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.014';
+	}
+?>
