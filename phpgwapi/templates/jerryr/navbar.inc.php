@@ -20,7 +20,7 @@
 				'navbar' => 'navbar.tpl'
 			)
 		);
-
+			
 		$GLOBALS['jerryr_tpl']->set_block('navbar','navbar_header','navbar_header');
 		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_blocks_header','extra_block_header');
 		$GLOBALS['jerryr_tpl']->set_block('navbar','extra_block_row','extra_block_row');
@@ -35,7 +35,7 @@
 
 		$var['img_root'] = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images';
 		$var['table_bg_color'] = $GLOBALS['egw_info']['theme']['navbar_bg'];
-
+		
 		if($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover']=='onmouseover')
 		{
 			$show_menu_event = 'onMouseOver';
@@ -45,7 +45,20 @@
 			$show_menu_event = 'onClick';
 		}
 
-
+		if($GLOBALS['egw_info']['user']['userid'] == 'anonymous')
+		{
+			$cnf_reg =& CreateObject('phpgwapi.config','registration');
+			$cnf_reg->read_repository();
+			$config_reg = $cnf_reg->config_data;
+		
+			$GLOBALS['jerryr_tpl']->set_var('upper_tabs','
+				<ul>
+					<li><a href="'.$GLOBALS['egw']->link('/logout.php').'">'.lang('Login').'</a></li>'.
+					( ($config_reg[enable_registration]=='True' && $config_reg[register_link]=='True') ? '<li><a href="'.$GLOBALS['egw']->link('/registration/index.php').'">'.lang('Register').'</a></li>' : '').'
+				</ul>
+			');
+		}
+		
 		$applications = '';
 
 		//	== 'icons_and_text')
@@ -82,7 +95,7 @@
 					}
 					$tdwidth=round($tdwidth);
 
-					$app_icons .= '<td width="'.$tdwidth.'%" height="40" valign="bottom" align="center" style="text-align:center"><a href="' . $app_data['url'] . '"';
+					$app_icons .= '<td width="'.$tdwidth.'%" align="center" style="text-align:center; border-right: 1px solid #9f9f9f;border-left: 1px solid #cfcfcf; border-bottom: 1px solid #9f9f9f; border-top: 1px solid #9f9f9f" onMouseOver="style.backgroundColor=\'#a7c4db\'; " onMouseOut="style.backgroundColor=\'\';"><a href="' . $app_data['url'] . '"';
 
 					if(isset($GLOBALS['egw_info']['flags']['navbar_target']) && $GLOBALS['egw_info']['flags']['navbar_target'])
 					{
@@ -91,7 +104,7 @@
 
 					$app_icons .= $app_data['target'].'>' . $icon . '</a></td>';
 
-					$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$app_data['url'] . '"';
+					$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center; "><a href="'.$app_data['url'] . '"';
 
 					if(isset($GLOBALS['egw_info']['flags']['navbar_target']) && $GLOBALS['egw_info']['flags']['navbar_target'])
 					{
@@ -147,7 +160,7 @@
 				}
 			}
 
-			if($GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons']!='no')
+			if($GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons']!='no' && $GLOBALS['egw_info']['user']['userid'] != 'anonymous')
 			{
 				$app_icons .= '<td width="'.$tdwidth.'%" height="32" valign="bottom" align="center" style="text-align:center"><a href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['egw_info']['navbar']['logout']['icon'].'" title="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'" alt="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'"></a></td>';
 				$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'">'.$GLOBALS['egw_info']['navbar']['logout']['title'].'</a></td>';
@@ -164,7 +177,7 @@
 // table width=100% fixed layout bug (ndee130204)
 				$app_extra_icons_div = '
 				<script language="javascript">
-				new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,\'right\')
+				new ypSlideOutMenu("menu1", "left",19, 109, 160, 300,\'right\')
 				</script>
 				<div id="menu1Container">
 				<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
@@ -267,7 +280,7 @@
 					'no_lang' => True,
 					'link'    => $GLOBALS['egw_info']['navbar']['about']['url']
 				),
-				'Logout'=>$GLOBALS['egw_info']['navbar']['logout']['url']
+				$GLOBALS['egw_info']['user']['userid'] != 'anonymous' ? 'Logout' : 'Login' =>$GLOBALS['egw_info']['navbar']['logout']['url']
 			);
 
 			if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox']==1)

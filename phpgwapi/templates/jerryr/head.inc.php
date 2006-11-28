@@ -24,16 +24,18 @@
 	}
 
 	#_debug_array($GLOBALS['egw_info']['user']['preferences']['common']);
-	$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
-	if(!file_exists($theme_css))
+	$theme_css = '/phpgwapi/templates/jerryr/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
+	if(!file_exists(EGW_SERVER_ROOT.$theme_css))
 	{
-		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/css/jerryr.css';
+		$theme_css = '/phpgwapi/templates/jerryr/css/jerryr.css';
 	}
+	$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . $theme_css;
+	$print_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/print.css';
 
 	//pngfix defaults to yes
 	if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])
 	{
-		$pngfix_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/js/pngfix.js';
+		$pngfix_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/pngfix.js';
 		$pngfix ='<!-- This solves the Internet Explorer PNG-transparency bug, but only for IE 5.5 and higher --> 
 		<!--[if gte IE 5.5000]>
 		<script src="'.$pngfix_src.'" type="text/javascript">
@@ -43,21 +45,16 @@
 
 	if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_slider_effects'])
 	{
-		$slider_effects_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/js/slidereffects.js';
+		$slider_effects_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/slidereffects.js';
 		$slider_effects = '<script src="'.$slider_effects_src.'" type="text/javascript">
 		</script>';
 	}
 	else
 	{
-		$simple_show_hide_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/js/simple_show_hide.js';
+		$simple_show_hide_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/idots/js/simple_show_hide.js';
 		$simple_show_hide = '<script src="'.$simple_show_hide_src.'" type="text/javascript">
 		</script>';
 	}
-
-// 030204 ndee for calling foldertree
-
-	$foldertree_src = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/js/foldertree/foldertree.js';
-	$js_foldertree = '<script src="'.$foldertree_src.'" type="text/javascript"></script>';
 
 	$tpl = CreateObject('phpgwapi.Template',EGW_TEMPLATE_DIR);
 	$tpl->set_unknowns('remove');
@@ -73,23 +70,28 @@
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
 		$app = isset($GLOBALS['egw_info']['apps'][$app]) ? $GLOBALS['egw_info']['apps'][$app]['title'] : lang($app);
 	}
+
+	
+	if($app!='wiki') $robots ='<meta name="robots" content="none" />';
+	
 	$var = Array(
-		'img_icon'      => EGW_IMAGES_DIR . '/favicon.ico',
-		'img_shortcut'  => EGW_IMAGES_DIR . '/favicon.ico',
-		'pngfix'        => $pngfix,
-		'slider_effects'=> $slider_effects,
-		'simple_show_hide'=> $simple_show_hide,
-		'lang_code'=> $lang_code,
-		'charset'       => $GLOBALS['egw']->translation->charset(),
-		'font_family'   => $GLOBALS['egw_info']['theme']['font'],
-		'website_title' => $GLOBALS['egw_info']['server']['site_title'] . ($app ? " [$app]" : ''),
-		'body_tags'     => $bodyheader .' '. $GLOBALS['egw']->common->get_body_attribs(),
-		'theme_css'     => $theme_css,
-		'css'           => $GLOBALS['egw']->common->get_css(),
-		'java_script'   => $GLOBALS['egw']->common->get_java_script(),
-		'js_foldertree'	=> $js_foldertree,
-		'dir_code'		=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
-	);
+		'img_icon'      	=> EGW_IMAGES_DIR . '/favicon.ico',
+		'img_shortcut'  	=> EGW_IMAGES_DIR . '/favicon.ico',
+		'pngfix'        	=> $pngfix,
+		'slider_effects'	=> $slider_effects,
+		'simple_show_hide'	=> $simple_show_hide,
+		'lang_code'			=> $lang_code,
+		'charset'       	=> $GLOBALS['egw']->translation->charset(),
+		'font_family'   	=> $GLOBALS['egw_info']['theme']['font'],
+		'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
+		'body_tags'     	=> $bodyheader .' '. $GLOBALS['egw']->common->get_body_attribs(),
+		'theme_css'     	=> $theme_css,
+		'print_css'     	=> $print_css,
+		'css'           	=> $GLOBALS['egw']->common->get_css(),
+		'java_script'   	=> $GLOBALS['egw']->common->get_java_script(),
+		'meta_robots'		=> $robots,
+		'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
+	 );
 	$tpl->set_var($var);
 	$tpl->pfp('out','head');
 	unset($tpl);

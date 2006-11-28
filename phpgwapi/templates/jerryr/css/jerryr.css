@@ -1,172 +1,291 @@
 /*
-StyleSheet coding standards:
-
-1. use lowercase if possible
-
-2. format styles like this:
-
-body
-{
-	font-size: 12px;
-	font-family: Verdana, Arial, Helvetica, sans-serif
-}
-
-3. existing html elements on top of the document, then all self defined .classes and at last all self defined #id's.
-
-4. close every property with ; also the last one.
+	font styling
+	allowed attributes: font-family,font-size,color,font-weight
 */
 
-body 
+.tdJrTopLt
 {
-	background-image:url(../images/body-background.png);
-	font-size: 11px; 
+	background-image: url(../images/coinsupg.png);
+	height: 15px;
+}
+
+.tdJrTopMid
+{
+	background-image: url(../images/sup.png);
+	height: 15px;
+}
+
+.tdJrTopRt
+{
+	background-image: url(../images/coinsupd.png);
+	height: 15px;
+}
+
+.tdJrLt
+{
+	background-image: url(../images/g.png);
+	width:15px;
+}
+
+.tdJrFill
+{
+	background-image: url(../images/fond.png);
+}	
+
+.tdJrRt
+{
+	background-image: url(../images/d.png);
+	width:15px;
+}
+
+.tdJrBotLt
+{
+	background-image: url(../images/coininfg.png);
+	height: 15px;
+	width: 15px;
+}
+
+.tdJrBotMid
+{
+	background-image: url(../images/inf.png);
+	height: 15px;
+}
+
+.tdJrBotRt
+{
+	background-image: url(../images/coininfd.png);
+	height: 15px;
+}
+
+
+
+
+
+
+
+
+
+body,td
+{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	padding:0px;
-	margin-top: 5px;
+	font-size: 11px; 
 }
 
-img
+select,input,button
 {
-	border-width:0px;
-	border-style:none;
-	/*filter:progid:DXImageTransform.Microsoft.AlphaImageLoader;
-*/
+	color: #006699; 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:110%;
+}
+
+select
+{
+	font-size:100%;
 }
 
 a:link,a:visited
 {
 	cursor:pointer;
-	color: #006699; 
+	color: #17202b; 
 	text-decoration: none;
 }
 
-/*
-a:visited 
-{
-	color: #006699; 
-	text-decoration: none;
-}
-*/
 a:hover,a:active
 {
 	cursor:pointer;
-	color: #ff9933;
-}
-/*
-a:active 
-{
-	color: #006699; 
+	color: #ff0000;
 	text-decoration: underline;
 }
-*/
-input,button
+.divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
 {
-	font-size: 12px; 
-	color: #006699; 
-	font-family: Arial, Helvetica, sans-serif;
-	border: 1px #bbbbbb solid;
+	font-size:90%;
 }
 
-input[type=submit],input[type=button],button
+.textSideboxStar
 {
-	margin:1px;
+	font-size:90%;
+	background-color: #a7c4db;
+	border-right: 1px solid #17202b;
+}
+
+.prefSection
+{
+	font-weight:bold;
+	font-size:145%;
+	line-height:40px;
+}
+
+#divAppboxHeader
+{
+	line-height:20px;
+	font-size:12px;
+	font-weight:bold;
+	color:#ffffff;
+}
+
+#divGenTime,#divPoweredBy
+{
+	font-size: 80%;
+	color: #ff0000;
+}
+
+#divPoweredBy 
+{
+	color: #000000;
+}
+
+/* 
+	other styling
+*/
+
+body 
+{
+	/*background-image:url(../images/body-background.png);*/
+	background-color:#9f9f9f;
+	padding:9px;
+	margin:9px;
+}
+
+form
+{
+	margin:0px;
 	padding:0px;
-	cursor: pointer; 
-	cursor: hand;
+}
+
+img
+{
+	border:0;
+}
+
+
+input,button,select
+{
+	border: solid 1px #bbbbbb;
+	color: black;
+}
+
+input[type=submit],input[type=button],input[type=reset],button,.egwbutton
+
+{
+/*	color:white;*/
+	background-color:#c5c5c5;
+	border:  outset 1px #dcdad5;
+	/*background-color:#b9d5e3;*/
+	background-color:#f6efe0;
+	/*border:  outset 1px #b9d5e3;*/
+	border: solid 1px #e2d4b2;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer; 
+	/*color:  #004e7d;*/
+	color: #17202b;
+/*	cursor:  hand; */
+}
+
+input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
+{
+	background-color:#88b4e1;
+	border:  outset 1px #b9d5e3;
+	color:  #006699;
+	color:  #ffffff;
+}
+
+input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
+
+{
+	border:  inset 1px #bbbbbb;
+}
+
+input.egwbutton
+{
+	background-color:#c5c5c5;
+	border:  outset 1px #dcdad5;
+	background-color:#b9d5e3;
+	border:  outset 1px #b9d5e3;
+	margin:  1px;
+	padding: 1px;
+	cursor:  pointer; 
+	color:  #004e7d;
+/*	cursor:  hand; */
+}
+
+input.egwbutton:hover
+{
+   background-color:#94bfd4;
+   border:  outset 1px #b9d5e3;
+   color:  #006699;
+   color:  #004e7d;
+
+}
+input.egwbutton:active
+{
+   border:  inset 1px #bbbbbb;
 }
 
 input[type=image]
 {
 	cursor: pointer; 
-	cursor: hand;
-	border: 0px #bbbbbb none;
-}
-select 
-{
-	font-size: 11px; 
-	color: #006699; 
-	font-family: Arial, Helvetica, sans-serif;
-	border: 1px #bbbbbb solid;
+/*	cursor: hand; */
+	border: 0;
 }
 
-td
-{
-	font-size: 11px;
-	/*	padding-top:1px;
-	padding-bottom:0px;*/
-}
+.divLoginbox,.divSidebox 
 
-.divLoginbox 
 {
 	position:relative;
-	width: 300px; 
-	border-right: #9c9c9c 1px solid; 
-	border-top: #9c9c9c 1px solid; 
-	border-left: #9c9c9c 1px solid; 
-	border-bottom: #9c9c9c 1px solid
+	width: 370px; 
+	border: #17202b 1px solid; 
 }
 
-.divLoginboxHeader 
-{
-	text-align:center;
-	background-color:#dddddd;
-	padding-top:2px;
-	font-size:10px;
-	color:#666666;
-}
 .divSidebox 
 {
-	position:relative;
-	width: 147px; 
-	border-right: #9c9c9c 1px solid; 
-	border-top: #9c9c9c 1px solid; 
-	border-left: #9c9c9c 1px solid; 
-	border-bottom: #9c9c9c 1px solid
+	width: 177px; 
 }
 
-.divSideboxHeader 
+.divSideboxHeader,.divLoginboxHeader 
 {
 	text-align:center;
-	background-image:url(../images/divSideboxHeader-background.png);
-	height:18px;
-	background-color:#ffffff;
-	padding-top:1px;
-	border-bottom: #9c9c9c 1px solid
-	font-size:10px;
-	font-weight:bold;
+	background-image:url(../images/appbox-header2-background.png);
+	/*background-color:#6798cb;*/
+	/*padding-top:2px;*/
 	color:#ffffff;
+	height: 20px;
+	font-weight:bold;
+	font-size:12px;
 }
 
 a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
-	height:16px;
-	background-color:#fafcff;
+	height:18px;
+	background-color:#fbf8f1;
 }
 
 a.appTitles,.appTitles
 {
-	font-size: 10px; 
-	height:16px;
-	padding-top:0px;
-	padding-bottom:0px;
+	height:25px;
+	/*padding-top:2px;*/
+	/*padding-bottom:2px;*/
 }
 
 a.textSidebox
 {
-	
-	font-size: 10px; 
-	border-top: #aaaaaa 1px none;
+	border-top: 0;
 }
 
 .textSidebox
 {
-	
-	font-size: 10px; 
-	height:16px;
-	padding-top:1px;
-	padding-bottom:1px;
-	
+	height:18px;
+	padding-left: 2px;
+	/*padding-top:2px;*/
+	/*padding-bottom:2px;*/
+	border-top: solid #e2d4b2 1px;
+}
+/* 
+ ** make the sidebox entries consistently start with a capital letter 
+ */
+.textSidebox:first-letter {
+	text-transform:uppercase;
 }
 
 .sideboxSpace
@@ -177,195 +296,175 @@ a.textSidebox
 .greyLine
 {
 	margin:1px;
-	border-top-color:#7e7e7e;
-	border-top-width:1px;
-	border-top-style:solid;
+	border-top:solid 1px #7e7e7e;
 	height:1px;
-}
-
-.prefSection
-{
-	font-weight:bold;
-	font-size:16px;
-	line-height:40px;
 }
 
 #extraIcons
 {
-/*	position:absolute;
-	z-index:13;
-	right:10px;
-	top:113px;
-	visibility:hidden;*/
-/*	background-image:url(../images/alpha-white.png); */
 	background-color:#eeeeee;
-	border-width:1px;
-	border-color:#7e7e7e;
-	border-style:solid;
+	border:solid 1px #7e7e7e;
 }
 
+.extraIconsRow
+{
+	border:solid 1px #dddddd;
+	padding:2px;
+}
 
+body {
+	padding: 0px;
+}
 
 #divMain
 {
+	background-image:url(../images/divmain-background.jpg);
+	background-repeat:no-repeat;
 	background-color:white;
-	margin-top: 5px;
-	padding:5px;
-	border-color:#7e7e7e;
-	border-width:1px;
-	border-style:solid;
+	padding:9px;
+	border:solid 1px #17202b;
 }
 
 #divLogo
 {
 	position:absolute;
-	left:15px;
-	top:13px;
+	left:20px;
+	top:20px;
 	z-index:51;
+}
+
+#divUpperTabs
+{
+	text-align:right;
+	height: 15px;
+	margin-right: 10px;
+}
+
+#divUpperTabs ul
+{
+	display:inline;
+	margin:0;
+	padding:10px 10px 0 1px;
+	list-style:none;
+}
+
+#divUpperTabs li
+{
+	float:right;
+	margin:0 5px 0 0;;
+	padding:0 5px 0 5px;
+	border:solid 1px #9c9c9c;
+	border-bottom: 0px;
 }
 
 #divAppIconBar
 {
-	background-color:white;
-	padding=0px;
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	background-image: url(../images/background-icon-bar.png); 
-	background-repeat: repeat-x
+	/*background-color:#fbf8f1;*/
+	border-left: 1px solid #9f9f9f;
+	border-right: 1px solid #9f9f9f;
+	background-image: url(../images/iconBarBack.png); 
+	background-repeat: repeat-x;
+	height: 57px;
+	padding:0px;
 }
 
 #divAppTextBar
 {
-	background-color:white;
+	/*background-color:white;*/
 }
 
 #divStatusBar
 {
-	background-color:white;
-	height:15px;
-	padding-left:10px;
-	margin-top: 1px;
-	/*	margin-bottom: 2px;*/
+	/*background-color:white;*/
+	position: relative;
+	top:0px
+	left:0px;
+	height:18px;
+	border: 0px solid black;
+	padding-left:186px;
+	padding-top:2x;
+	/*margin-top: 18px;*/
 }
 
-/*#divSubContainer
-{
-}
-*/
 #tdSidebox
 {
 	width:170px;
-	background-color:white;
+	/*background-color:white;*/
 	overflow:visible;
 }
 
-
 #tdAppbox
 {
-	background-color:white;
+	/*background-color:white;*/
 	padding-left:5px;
-	padding-right:0px;
-	padding-bottom:2px;
 	width: 100%;
-}
-#divSideboxContainer
-{
-	position:relative;
-	width:150px;
-	top:0px;
-	left:0px;
-	background-color:white;
-	border-width:1px;
-	border-style:solid;
-	z-index:40;
 }
 
 #divAppboxHeader
 {
-	/*width:100%;*/
-	background-image:url(../images/appbox-header-background.png);
-	background-repeat: repeat-x;
+	/*background-image:url(../images/appbox-header-background.png);*/
+	/*background-repeat: repeat-x;*/
+	background-image:url(../images/appbox-header2-background.png);
+	/*background-color:#6798cb;*/
 	height:20px;
-	line-height:22px;
 	text-align:center;
-	/*	padding-top:7px;*/
 	padding-bottom:0px;
-	font-size:14px;
-	font-weight:bold;
-	color:#666666;
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:1px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:1px;
-	border-right-style:solid;
-	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
+	border-top:solid 1px #17202b;
+	border-left:solid 1px #17202b;
+	border-right:solid 1px #17202b;
 }
 
 #divAppbox
 {
-/*	width:100%;*/
-	background-color:#faf8f3;
+	background-color:#fbf8f1;
 	padding:5px;
-	
+	border-bottom:solid 1px #17202b;
+	border-left:solid 1px #17202b;
+	border-right:solid 1px #17202b;
 }
+
+
+
+/*
+	this must move to the filemanager app
+*/
 
 #fmStatusBar
 {
 	margin-left:4px;
 	margin-bottom:3px;
-	font-size: 10px; 
-/*	font-family: Verdana, Arial, Helvetica, sans-serif;*/
-	
-
 }
-
 
 .fmButton
 {
+	background-repeat: no-repeat;
 	background-image:url(../images/buttonbackground.png);
 	width:28px;
 	height:28px;
-	background-repeat: no-repeat;
 }
 
 #fmLocation
 {
 	position:relative;
-	/*background-image:url(../images/buttonbackgroundscaled.png);
-	background-repeat: repeat-x;*/
-	/*margin-left:4px;*/
 	margin-bottom:3px;
 	height:27px;
-
 }
 
 #fmMenu
 {
 	position:relative;
 }
+
 #fmFileWindow
 {
 	background-color:#ffffff;
 	margin-left:4px;
 	padding:5px;
 	position:relative;
-	border-right: #9c9c9c 1px solid; 
+	border-right: #cccccc 1px solid; 
 	border-top: #9c9c9c 2px solid; 
 	border-left: #9c9c9c 2px solid; 
-	border-bottom: #9c9c9c 1px solid
-}
-
-#user_info
-{
-
-
+	border-bottom: #cccccc 1px solid
 }
 
 #admin_info
@@ -374,282 +473,10 @@ a.textSidebox
 	text-align:right;
 }
 
-#divGenTime
+#divGenTime,#divPoweredBy 
+
 {
-	bottom:14px;
-	font-size: 9px;
-	color: #ff0000;
+	bottom:4px;
 	text-align:center;
 	width:99%;
-}
-
-#divPoweredBy 
-{
-	bottom:14px;
-	font-size: 9px;
-	color: #000000;
-	text-align:center;
-	width:99%;
-}
-
-.calRowBottomShadow
-{
-	background: url(../images/mid-foot.png); 
-	background-repeat: repeat-x;
-}
-
-
-.titleBarBackGround
-{
-	background-image: url(../images/appbox-header-background.png); 
-	height:22px;
-	background-repeat: repeat-x;
-	text-align:center;
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:1px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:1px;
-	border-right-style:solid;
-	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-}
-
-.calDayTitleBeige
-{
-	background: url(../images/mid-title-beige.png); 
-	background-repeat: repeat-x;
-	height:28px;
-	text-align:center;
-	padding-bottom:0px;
-	font-size:14px;
-	font-weight:bold;
-	color:#666666;
-}
-
-.calDayTitleBlue
-{
-	background: url(../images/mid-title.png); 
-	background-repeat: repeat-x;
-	height:28px;
-	text-align:center;
-	padding-bottom:0px;
-	font-size:14px;
-	font-weight:bold;
-	color:#ffffff;
-}
-
-.calDayTitleRed
-{
-	background-image: url(../images/mid-title-red.png); 
-	background-repeat: repeat-x;
-	height:28px;
-	text-align:center;
-	padding-bottom:0px;
-	font-size:14px;
-	font-weight:bold;
-	color:#ffffff;
-}
-
-.calLeftShadow
-{
-	background: url(../images/lt-body.png); 
-	padding-bottom:0px;
-}
-
-.calRightShadow
-{
-	background: url(../images/rt-body.png); 
-	padding-bottom:0px;
-}
-
-.calLtLtTitleBlue
-{
-	background: url(../images/lt-lt-title.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calLtMidTitleBlue
-{
-	background: url(../images/lt-mid-title.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calRtMidTitleBlue
-{
-	background: url(../images/rt-mid-title.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calRtMidTitleBeige
-{
-	background: url(../images/rt-mid-title-beige.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calRtRtTitleBeige
-{
-	background: url(../images/rt-rt-title-beige.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calRtRtTitleBlue
-{
-	background: url(../images/rt-rt-title.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calLtLtTitleBeige
-{
-	background: url(../images/lt-lt-title-beige.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calLtLtTitleRed
-{
-	background: url(../images/lt-lt-title-red.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calLtMidTitleBeige
-{
-	background: url(../images/lt-mid-title-beige.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calLtMidTitleRed
-{
-	background: url(../images/lt-mid-title-red.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calRtMidTitleRed
-{
-	background: url(../images/rt-mid-title-red.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calRtRtTitleRed
-{
-	background: url(../images/rt-rt-title-red.png); 
-	padding-bottom:0px;
-	height:28px;
-}
-
-.calLtLtFoot
-{
-	background: url(../images/lt-lt-foot.png); 
-	padding-bottom:0px;
-	height:17px;
-}
-
-.calLtMidFoot
-{
-	background: url(../images/lt-mid-foot.png); 
-	padding-bottom:0px;
-	height:17px;
-}
-
-.calRtMidFoot
-{
-	background: url(../images/rt-mid-foot.png); 
-	padding-bottom:0px;
-	height:17px;
-}
-
-.calRtRtFoot
-{
-	background: url(../images/rt-rt-foot.png); 
-	padding-bottom:0px;
-	height:17px;
-}
-
-.calDayView
-{
-	background-image: url(../images/appbox-header-background.png); 
-	height:22px;
-	background-repeat: repeat-x;
-	text-align:center;
-	padding-bottom:0px;
-	font-size:14px;
-	font-weight:bold;
-	color:#666666;
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:1px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:1px;
-	border-right-style:solid;
-	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-}
-
-.calDayViewSideBoxes
-{
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:1px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:1px;
-	border-right-style:solid;
-	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-	background-color:#faf8f3;
-}
-
-.calDayViewShadowBox
-{
-	border-top-color:#9c9c9c;
-	border-top-width:2px;
-	border-top-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:2px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:2px;
-	border-right-style:solid;
-	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
-	background-color:#ffffff;
-	padding:2px;
-}
-
-.addBookAlphaLinks
-{
-	border-top-color:#9c9c9c;
-	border-top-width:1px;
-	border-top-style:solid;
-	border-left-color:#9c9c9c;
-	border-left-width:1px;
-	border-left-style:solid;
-	border-right-color:#9c9c9c;
-	border-right-width:1px;
-	border-right-style:solid;
-	border-bottom-color:#9c9c9c;
-	border-bottom-width:1px;
-	border-bottom-style:solid;
 }
