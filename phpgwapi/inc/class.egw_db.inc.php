@@ -1630,7 +1630,7 @@
 			$sql = "SELECT $cols FROM $table $join";
 
 			// if we have a where clause, we need to add it together with the WHERE statement, if thats not in the join
-			if ($where) $sql .= strstr($join,"WHERE") ? ' AND ('.$where.')' : ' WHERE '.$where;
+			if ($where) $sql .= @strstr($join,"WHERE") ? ' AND ('.$where.')' : ' WHERE '.$where;
 
 			if ($append) $sql .= ' '.$append;
 
