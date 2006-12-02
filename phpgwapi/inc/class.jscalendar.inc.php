@@ -44,7 +44,7 @@ class jscalendar
 		$this->jscalendar_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/'.$path;
 		$this->dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
-		if ($do_header && !strstr($GLOBALS['egw_info']['flags']['java_script'],'jscalendar'))
+		if ($do_header && !@strstr($GLOBALS['egw_info']['flags']['java_script'],'jscalendar'))
 		{
 			$GLOBALS['egw_info']['flags']['java_script'] .=
 '<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />
