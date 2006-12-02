@@ -964,7 +964,7 @@ class uicontacts extends bocontacts
 					break;
 					
 				case 'delete':
-					if($this->delete($content))
+					if($this->action('delete',array($content['id'])))
 					{
 						echo "<html><body><script>var referer = opener.location; opener.location.href = referer+(referer.search?'&':'?')+'msg=".
 							addslashes(urlencode(lang('Contact deleted')))."';window.close();</script></body></html>\n";
