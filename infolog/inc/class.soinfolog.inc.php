@@ -568,7 +568,7 @@ class soinfolog 				// DB-Layer
 			'event'       => 'calendar'
 		);
 		$action = isset($action2app[$query['action']]) ? $action2app[$query['action']] : $query['action'];
-		$action_id = strstr($query['action_id'],',') ? explode(',',$query['action_id']) : $query['action_id'];
+		$action_id = @strstr($query['action_id'],',') ? explode(',',$query['action_id']) : $query['action_id'];
 
 		if ($action != '')
 		{
