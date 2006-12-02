@@ -461,7 +461,7 @@ class html
 		  $GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
 	   }
 
-	   if (!strstr($GLOBALS['egw_info']['flags']['java_script'],'tinyMCE'))
+	   if (!@strstr($GLOBALS['egw_info']['flags']['java_script'],'tinyMCE'))
 	   {
 		  $GLOBALS['egw']->js->validate_file('tiny_mce','tiny_mce');
 	   }
