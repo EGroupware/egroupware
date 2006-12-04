@@ -1000,6 +1000,16 @@ class uicontacts extends bocontacts
 				{
 					$content = $this->read_org($state['org_view']);
 				}
+				elseif ($GLOBALS['egw_info']['user']['preferences']['common']['country'])
+				{
+					if (!is_object($GLOBALS['egw']->country))
+					{
+						require_once(EGW_API_INC.'/class.country.inc.php');
+						$GLOBALS['egw']->country =& new country;
+					}
+					$content['adr_one_countryname'] = $content['adr_two_countryname'] = 
+						$GLOBALS['egw']->country->get_full_name($GLOBALS['egw_info']['user']['preferences']['common']['country']);
+				}
 				if (isset($_GET['owner']) && $_GET['owner'] !== '')
 				{
 					$content['owner'] = $_GET['owner'];
@@ -1030,7 +1040,6 @@ class uicontacts extends bocontacts
 				$content['created'] = $this->now_su;
 				unset($state);
 			}
-			
 			if($content && $_GET['makecp'])	// copy the contact
 			{
 				$content['link_to']['to_id'] = 0;
