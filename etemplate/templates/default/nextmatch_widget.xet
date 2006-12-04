@@ -20,7 +20,7 @@
 					<button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
 					<button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
 					<menulist>
-						<menupopup type="select-cat" options="-1" label="Category" id="cat_id" onchange="1" statustext="select a Category"/>
+						<menupopup type="select-cat" options="-1,,,$cont[cat_app]" label="Category" id="cat_id" onchange="1" statustext="select a Category"/>
 					</menulist>
 					<menulist>
 						<menupopup label="@filter_label" align="center" id="filter" onchange="@filter_onchange" statustext="@filter_help"/>

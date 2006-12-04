@@ -24,6 +24,7 @@
 	 * 	'no_filter'      => True// I  disable the 1. filter
 	 * 	'no_filter2'     => True// I  disable the 2. filter (params are the same as for filter)
 	 * 	'no_cat'         => True// I  disable the cat-selectbox
+	 *  'cat_app'        =>     // I  application the cat's should be from, default app in get_rows
 	 * 	'template'       =>		// I  template to use for the rows, if not set via options
 	 * 	'header_left'    =>		// I  template to show left of the range-value, left-aligned (optional)
 	 * 	'header_right'   =>		// I  template to show right of the range-value, right-aligned (optional)
@@ -195,6 +196,8 @@
 					$obj =& CreateObject($app.'.'.$class);
 				}
 			}
+			if (!isset($value['cat_app'])) $value['cat_app'] = $app;	// if no cat_app set, use the app from the get_rows func
+
 			$max = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			$row_options = array();
 			foreach(array(5,12,25,50,100,200,500,999) as $n)

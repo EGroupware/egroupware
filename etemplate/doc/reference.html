@@ -599,7 +599,8 @@ implement only a subset of XUL. Here are the main differences:</p>
 		xml: <b>type</b>: can be set to get several predefined select-contents, in that case you dont need to set
 			the content as descripted above (if set it too its in front of the predefined rows): <br />
 			<b>select-cat</b>:<br />
-				Select a phpgw category<br />
+				Select an eGW category, determined by the options-field:<br />
+				,{no_global_cats},{extra_style_multiselct},{cat_app(default:current app)}<br />
 			<b>select-account</b>:<br />
 				Select a user and/or group, determined by the options-field:<br />
 				,{accounts(default)|groups|both},{''(phpgw-default)|0(only lid)|1(only names)|2(both)}<br />
@@ -796,6 +797,7 @@ $content[$id] = array(		<span>// I = value set by the app, 0 = value on return /
 	'no_filter'      => True<span>// I  disable the 1. filter</span>
 	'no_filter2'     => True<span>// I  disable the 2. filter (params are the same as for filter)</span>
 	'no_cat'         => True<span>// I  disable the cat-selectbox</span>
+	'cat_app'        =>     <span>// I  application the cat's should be from, default app in get_rows</span>
 	'template'       =>	<span>// I  template to use for the rows, if not set via options</span>
 	'header_left'    =>	<span>// I  template to show left of the range-value, left-aligned (optional)</span>
 	'header_right'   =>	<span>// I  template to show right of the range-value, right-aligned (optional)</span>
