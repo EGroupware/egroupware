@@ -732,6 +732,8 @@
 		 */
 		function form_name($cname,$name)
 		{
+			if(is_object($name)) return '';
+
 			$name_parts = explode('[',str_replace(']','',$name));
 			if (!empty($cname))
 			{
