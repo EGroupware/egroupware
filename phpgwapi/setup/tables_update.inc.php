@@ -392,7 +392,7 @@
 		$db2 = clone($GLOBALS['egw_setup']->db);
 		$GLOBALS['egw_setup']->db->select('egw_addressbook_extra','contact_id,contact_name,contact_value',
 			"contact_name IN ('ophone','address2','address3','freebusy_url') AND contact_value != '' AND NOT contact_value IS NULL"
-			,__LINE__,__FILE__,false,'','addressbook');
+			,__LINE__,__FILE__);
 		$old2new = array(
 			'ophone'   => 'tel_other',
 			'address2' => 'adr_one_street2',
@@ -404,17 +404,17 @@
 			$db2->update('egw_addressbook',array($old2new[$row['contact_name']] => $row['contact_value']),array(
 				'contact_id' => $row['contact_id'],
 				'('.$old2new[$row['contact_name']].'IS NULL OR '.$old2new[$row['contact_name']]."='')",
-			),__LINE__,__FILE__,'addressbook');
+			),__LINE__,__FILE__);
 		}
 		// delete the not longer used custom fields plus rubish from old bugs
 		$GLOBALS['egw_setup']->db->delete('egw_addressbook_extra',"contact_name IN ('ophone','address2','address3','freebusy_url','cat_id','tid','lid','id','ab_id','access','owner','rights')".
 			" OR contact_value='' OR contact_value IS NULL".
 			($db2->capabilities['subqueries'] ? " OR contact_id NOT IN (SELECT contact_id FROM egw_addressbook)" : ''),
-			__LINE__,__FILE__,'addressbook');
+			__LINE__,__FILE__);
 			
 		// change the m/d/Y birthday format to Y-m-d
 		$GLOBALS['egw_setup']->db->select('egw_addressbook','contact_id,contact_bday',"contact_bday != ''",
-			__LINE__,__FILE__,false,'','addressbook');
+			__LINE__,__FILE__);
 		while (($row = $GLOBALS['egw_setup']->db->row(true)))
 		{
 			list($m,$d,$y) = explode('/',$row['contact_bday']);
@@ -422,7 +422,7 @@
 				'contact_bday' => sprintf('%04d-%02d-%02d',$y,$m,$d)
 			),array(
 				'contact_id' => $row['contact_id'],
-			),__LINE__,__FILE__,'addressbook');
+			),__LINE__,__FILE__);
 		}
 		return $GLOBALS['setup_info']['addressbook']['currentver'] = '1.3.001';
 	}
@@ -677,5 +677,25 @@
 		));
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.014';
+	}
+
+	$test[] = '1.3.014';
+	function phpgwapi_upgrade1_3_014()
+	{
+		// change the m/d/Y birthday format to Y-m-d, if the previous update from 1.2 failed
+		$GLOBALS['egw_setup']->db->select('egw_addressbook','contact_id,contact_bday',"contact_bday LIKE '%/%/%'",
+			__LINE__,__FILE__);
+		while (($row = $GLOBALS['egw_setup']->db->row(true)))
+		{
+			if (!isset($db2)) $db2 = clone($GLOBALS['egw_setup']->db);
+
+			list($m,$d,$y) = explode('/',$row['contact_bday']);
+			$db2->update('egw_addressbook',array(
+				'contact_bday' => sprintf('%04d-%02d-%02d',$y,$m,$d)
+			),array(
+				'contact_id' => $row['contact_id'],
+			),__LINE__,__FILE__);
+		}
+		return $GLOBALS['setup_info']['addressbook']['currentver'] = '1.3.015';
 	}
 ?>
