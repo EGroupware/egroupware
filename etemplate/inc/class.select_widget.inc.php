@@ -222,12 +222,20 @@
 					$cell['no_lang'] = True;
 					break;
 
-				case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect
+				case 'select-cat':	// !$type == globals cats too, $type2: extraStyleMultiselect, $type3: application, if not current-app
 					if (!is_object($GLOBALS['egw']->categories))
 					{
 						$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
 					}
-					foreach((array)$GLOBALS['egw']->categories->return_sorted_array(0,False,'','','',!$type) as $cat)
+					if (!$type3 || $type3 === $GLOBALS['egw']->categories->app_name)
+					{
+						$categories =& $GLOBALS['egw']->categories;
+					}
+					else	// we need to instanciate a new cat object for the correct application
+					{
+						$categories =& new categories('',$type3);
+					}
+					foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 					{
 						$s = str_repeat('&nbsp;',$cat['level']) . $GLOBALS['egw']->strip_html($cat['name']);
 
