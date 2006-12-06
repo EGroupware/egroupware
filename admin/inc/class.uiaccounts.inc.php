@@ -68,6 +68,13 @@
 
 		function list_groups()
 		{
+			$query_types = array(
+				'all' => 'all fields',
+				'lid' => 'LoginID',
+				'start' => 'start with',
+				'exact' => 'exact',
+			);
+			
 			if ($GLOBALS['egw']->acl->check('group_access',1,'admin'))
 			{
 				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/admin/index.php'));
@@ -75,11 +82,11 @@
 
 			$GLOBALS['cd'] = ($_GET['cd']?$_GET['cd']:0);
 
-			if(isset($_POST['query']))
+			if(isset($_REQUEST['query']))
 			{
 				// limit query to limit characters
-				if(eregi('^[a-z_0-9]+$',$_POST['query']))
-					$GLOBALS['query'] = $_POST['query'];
+				//if(eregi('^[a-z_0-9]+$',$_REQUEST['query']))
+					$GLOBALS['query'] = $_REQUEST['query'];
 			}
 			
 			if(isset($_POST['start']))
@@ -90,22 +97,21 @@
 			{
 				$start = 0;
 			}
-
-			switch($_GET['order'])
+			switch($_REQUEST['order'])
 			{
 				case 'account_lid':
-					$order = $_GET['order'];
+					$order = $_REQUEST['order'];
 					break;
 				default:
 					$order = 'account_lid';
 					break;
 			}
 
-			switch($_GET['sort'])
+			switch($_REQUEST['sort'])
 			{
 				case 'ASC':
 				case 'DESC':
-					$sort = $_GET['sort'];
+					$sort = $_REQUEST['sort'];
 					break;
 				default:
 					$sort = 'ASC';
@@ -132,24 +138,38 @@
 			$p->set_block('groups','list','list');
 			$p->set_block('groups','row','row');
 			$p->set_block('groups','row_empty','row_empty');
+			$p->set_block('list','letter_search','letter_search_cells');
 
-			if (! $GLOBALS['egw']->acl->check('account_access',2,'admin'))
+			$search_param = array(
+				'type' => 'groups',
+				'start' => $start,
+				'sort' => $sort,
+				'order' => $order,
+				'query_type' => $_REQUEST['query_type'],
+			);
+			//_debug_array($search_param);
+			if (!$GLOBALS['egw']->acl->check('account_access',2,'admin'))
 			{
-				$account_info = $GLOBALS['egw']->accounts->get_list('groups',$start,$sort, $order, $GLOBALS['query']);
+				$search_param['query'] = $GLOBALS['query'];
 			}
-			else
-			{
-				$account_info = $GLOBALS['egw']->accounts->get_list('groups',$start,$sort, $order);
-			}
+			$account_info = $GLOBALS['egw']->accounts->search($search_param);
 			$total = $GLOBALS['egw']->accounts->total;
 
+			$link_data = array(
+				'menuaction' => 'admin.uiaccounts.list_groups',
+				//'group_id'   => $_REQUEST['group_id'],
+				'query_type' => $_REQUEST['query_type'],
+				'query'      => $GLOBALS['query'],
+			);
+
 			$var = Array(
-				'left_next_matchs'  => $this->nextmatchs->left('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
-				'right_next_matchs' => $this->nextmatchs->right('/index.php',$start,$total,'menuaction=admin.uiaccounts.list_groups'),
+				'left_next_matchs'  => $this->nextmatchs->left('/index.php',$start,$total,$link_data),
+				'right_next_matchs' => $this->nextmatchs->right('/index.php',$start,$total,$link_data),
 				'lang_groups' => lang('%1 - %2 of %3 user groups',$start+1,$start+count($account_info),$total),
-				'sort_name'     => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('name'),'menuaction=admin.uiaccounts.list_groups'),
+				'sort_name'     => $this->nextmatchs->show_sort_order($sort,'account_lid',$order,'/index.php',lang('name'),$link_data),
 				'header_edit'   => lang('Edit'),
-				'header_delete' => lang('Delete')
+				'header_delete' => lang('Delete'),
+				'lang_search'  => lang('search') // KL 20061128 Text fr den Suchbutton hinzugefeugt
 			);
 			$p->set_var($var);
 
@@ -206,6 +226,40 @@
 
 				}
 			}
+			
+			$link_data += array(
+				'order'      => $order,
+				'sort'       => $sort,
+			);
+			$p->set_var(array(
+				'query' => $GLOBALS['egw']->html->htmlspecialchars($GLOBALS['query']),
+				'query_type' => is_array($query_types) ? $GLOBALS['egw']->html->select('query_type',$_REQUEST['query_type'],$query_types) : '',
+				//'lang_group' => lang('group'),
+				//'group' => $uiaccountsel->selection('group_id','admin_uiaccount_listusers_group_id',$_REQUEST['group_id'],'groups',0,False,'','this.form.submit();',lang('all')),
+				'accounts_url' => $GLOBALS['egw']->link('/index.php',$link_data),
+			));
+			$letters = lang('alphabet');
+			$letters = explode(',',substr($letters,-1) != '*' ? $letters : 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z');
+			$link_data['query_type'] = 'start';
+			foreach($letters as $letter)
+			{
+				$link_data['query'] = $letter;
+				$p->set_var(array(
+					'letter' => $letter,
+					'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
+					'class'  => $GLOBALS['query'] == $letter && $_REQUEST['query_type'] == 'start' ? 'letter_box_active' : 'letter_box',
+				));
+				$p->fp('letter_search_cells','letter_search',True);
+			}
+			unset($link_data['query']);
+			unset($link_data['query_type']);
+			$p->set_var(array(
+				'letter' => lang('all'),
+				'link'   => $GLOBALS['egw']->link('/index.php',$link_data),
+				'class'  => $_REQUEST['query_type'] != 'start' || !in_array($GLOBALS['query'],$letters) ? 'letter_box_active' : 'letter_box',
+			));
+			$p->fp('letter_search_cells','letter_search',True);
+			
 			$var = Array(
 				'new_action'    => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.add_group'),
 				'search_action' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups')
