@@ -30,10 +30,19 @@
 
 		function index()
 		{
+			$query_types = array(
+				'all' => 'all fields',
+				'lid' => 'LoginID',
+				'start' => 'start with',
+				'exact' => 'exact',
+			);
+
 			$acl_app	= get_var('acl_app',array('POST','GET'));
 			$start		= get_var('start',array('POST','GET'),0);
 			$query		= get_var('query',array('POST','GET'));
 			$owner		= get_var('owner',array('POST','GET'),$GLOBALS['egw_info']['user']['account_id']);
+			$search_type= get_var('search_type',array('POST','GET'));
+
 
 			if (!$acl_app)
 			{
@@ -50,7 +59,7 @@
 			{
 				$referer = $GLOBALS['egw']->common->get_referer('/preferences/index.php');
 			}
-			//echo '<p align="right">'."referer='$referer'</p>\n";
+			//echo '<p align="right">'."search_type='$search_type'</p>\n";
 
 			$GLOBALS['egw_info']['flags']['currentapp'] = $acl_app;
 
@@ -159,7 +168,8 @@
 			);
 
 			$this->template->set_file($templates);
-
+			$this->template->set_block('preferences','list','list'); // refers to list area in acl.tpl (which is named as preferences)
+			$this->template->set_block('list','letter_search','letter_search_cells'); // refers to the area letter_search (nested within area list)
 			if ($submit)
 			{
 				$this->template->set_var('errors',lang('ACL grants have been updated'));
@@ -171,6 +181,7 @@
 				'owner'		=> $owner,
 				'acl_app'	=> $acl_app,
 				'referer'   => $referer,
+				'search_type' => $search_type, // KL 20061204 added to have a search type available
 			);
 			$var = Array(
 				'errors'      => '',
@@ -200,10 +211,12 @@
 				'type'	=> 'both',
 				'start'	=> $start,
 				'query'	=> $query,
+				'query_type' => $search_type, //KL 20061204 added to have query_type available
 				'order' => 'account_type,account_lid',
 				'sort'	=> 'ASC',
 			));
 			$totalentries = $GLOBALS['egw']->accounts->total;
+			$shownentries = count($accounts);
 
 			$memberships = array();
 			foreach((array) $GLOBALS['egw']->accounts->membership($owner) as $data)
@@ -214,9 +227,12 @@
 			$processed = Array();
 			foreach((array)$accounts as $uid => $data)
 			{
-				if ($data['account_type'] == 'u' && $uid == $owner || !$uid)
+				if ($data['account_type'] == 'u' && $data['account_id'] == $owner)
+				{
+					$shownentries--;
+					$totalentries--;
 					continue;	/* no need to grant to self if user */
-
+				}
 				if ($data['account_type'] != $header_type)
 				{
 					$this->template->set_var('string',$data['account_type'] == 'g' ? lang('Groups') : lang('Users'));
@@ -241,15 +257,42 @@
 				'acl_app'		=> $acl_app,
 				'owner'			=> $owner,
 				'referer'       => $referer,
+				'search_type' => is_array($query_types) ? $search_type : '',
+				'search_value' => isset($query) && $query ? $GLOBALS['egw']->html->htmlspecialchars($query) : '',
+				'query' => isset($query) && $query ? $GLOBALS['egw']->html->htmlspecialchars($query) : '',
 			);
-
 			$var = Array(
 				'nml'          => $GLOBALS['egw']->nextmatchs->left('/index.php',$start,$totalentries,$extra_parms),
 				'nmr'          => $GLOBALS['egw']->nextmatchs->right('/index.php',$start,$totalentries,$extra_parms),
+				'lang_groups' => lang('showing %1 - %2 of %3',$start+1,$start+$shownentries,$totalentries),
+				'search_type' => is_array($query_types) ? $GLOBALS['egw']->html->select('search_type',$search_type,$query_types) : '',				
 				'search_value' => isset($query) && $query ? $GLOBALS['egw']->html->htmlspecialchars($query) : '',
 				'search'       => lang('search'),
 				'processed'    => urlencode(serialize($processed))
 			);
+
+			$letters = lang('alphabet');
+			$letters = explode(',',substr($letters,-1) != '*' ? $letters : 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z');
+			$extra_parms['search_type'] = 'start';
+			foreach($letters as $letter)
+			{
+				$extra_parms['query'] = $letter;
+				$this->template->set_var(array(
+					'letter' => $letter,
+					'link'   => $GLOBALS['egw']->link('/index.php',$extra_parms),
+					'class'  => $query == $letter && $search_type == 'start' ? 'letter_box_active' : 'letter_box',
+				));
+				$this->template->fp('letter_search_cells','letter_search',True);
+			}
+			unset($extra_parms['query']);
+			unset($extra_parms['search_value']);
+			unset($extra_parms['search_type']);
+			$this->template->set_var(array(
+				'letter' => lang('all'),
+				'link'   => $GLOBALS['egw']->link('/index.php',$extra_parms),
+				'class'  => $search_type != 'start' || !in_array($query,$letters) ? 'letter_box_active' : 'letter_box',
+			));
+			$this->template->fp('letter_search_cells','letter_search',True);
 
 			$this->template->set_var($var);
 
