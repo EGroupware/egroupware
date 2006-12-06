@@ -49,7 +49,8 @@
 			'select-dow'      => 'Select Day of week',
 			'select-hour'     => 'Select Hour',		// either 0-23 or 12am,1am-11am,12pm,1pm-11pm
 			'select-number'   => 'Select Number',
-			'select-app'      => 'Select Application'
+			'select-app'      => 'Select Application',
+			'select-lang'     => 'Select Language',
 		);
 		/**
 		 * @var array
@@ -434,6 +435,10 @@
 						$cell['sel_options'][$app] = $apps[$app];
 					}
 					break;
+				case 'select-lang':
+					$cell['sel_options'] = $GLOBALS['egw']->translation->list_langs();
+					$cell['no_lang'] = True;
+				break;
 			}
 			if ($rows > 1)
 			{

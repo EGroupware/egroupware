@@ -950,6 +950,7 @@
 					}
 					$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 					// fall-through
+				case 'passwd' :
 				case 'text':		// size: [length][,maxLength[,preg]]
 					if ($readonly)
 					{
@@ -957,7 +958,7 @@
 					}
 					else
 					{
-						$html .= $this->html->input($form_name,$value,'',
+						$html .= $this->html->input($form_name,$value,$type == 'passwd' ? 'password' : '',
 							$options.$this->html->formatOptions($cell_options,'SIZE,MAXLENGTH'));
 						$cell_options = explode(',',$cell_options,3);
 						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
@@ -1713,6 +1714,7 @@
 						break;
 					case 'int':
 					case 'float':
+					case 'passwd':
 					case 'text':
 					case 'textarea':
 						if ($value === '' && $attr['needed'] && !$attr['blur'])

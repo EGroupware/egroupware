@@ -48,7 +48,8 @@
 			'groupbox' => 'GroupBox',	// a box with a label containing other elements to group them (html: fieldset)
 			'box'	=> 'Box',			// just a container for widgets (html: div)
 			'grid'	=> 'Grid',			// tabular widget containing rows with columns of widgets
-			'deck'	=> 'Deck'			// a container of elements where only one is visible, size = # of elem.
+			'deck'	=> 'Deck',			// a container of elements where only one is visible, size = # of elem.
+			'passwd' => 'Password'		// a text of type password
 		);
 		var $garbage_collection_done;
 
