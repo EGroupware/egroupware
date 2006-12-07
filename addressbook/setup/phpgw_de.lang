@@ -55,6 +55,7 @@ business zip code	addressbook	de	PLZ geschäftl.
 calendar uri	addressbook	de	Kalender URI
 can be changed via setup >> configuration	admin	de	Kann über Setup >> Konfiguration geändert werden
 car phone	addressbook	de	Autotelefon
+categories, notes, ...	addressbook	de	Kategorien, Notizen, ...
 cell phone	addressbook	de	Mobiltelefon
 change all organisation members	addressbook	de	Alle Mitglieder der Organisation ändern
 charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
@@ -139,11 +140,13 @@ fieldseparator	addressbook	de	Feldtrenner
 for read only ldap	admin	de	für nur lesendes LDAP
 freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
+general	addressbook	de	Allgemein
 geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
 group %1	addressbook	de	Gruppe %1
 home address	addressbook	de	Privatadresse
+home address, birthday, ...	addressbook	de	Privatadresse, Geburtstag, ...
 home city	addressbook	de	Stadt privat
 home country	addressbook	de	Land privat
 home email	addressbook	de	E-Mail privat
@@ -191,6 +194,7 @@ modem phone	addressbook	de	Modem
 more ...	addressbook	de	Mehr ...
 moved	addressbook	de	verschoben
 multiple vcard	addressbook	de	Mehrere VCards
+name, address	addressbook	de	Name, Adresse
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
@@ -265,6 +269,7 @@ type	addressbook	de	Typ
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
 url to link telephone numbers to (use %1 for the number)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (%1 für die Nummber verwenden)
+use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?
 use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
 used for links and for the own sorting of the list	addressbook	de	wird für Verküpfungen und die eigene Sortierung der Liste benützt

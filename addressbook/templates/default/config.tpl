@@ -33,6 +33,20 @@
     </td>
    </tr>
    <tr class="th">
+    <td colspan="2">
+    	&nbsp;<b>{lang_General}</b>
+    </td>
+   </tr>
+   <tr class="row_on">
+    <td>&nbsp;{lang_Use_an_extra_category_tab?}</td>
+    <td>
+     <select name="newsettings[cat_tab]">
+      <option value="">{lang_No}</option>
+      <option value="True"{selected_cat_tab_True}>{lang_Yes}</option>
+     </select>
+    </td>
+   </tr>
+   <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Contact_repository}</b></td>
    </tr>
    <tr class="row_on">

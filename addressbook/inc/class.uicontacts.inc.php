@@ -209,6 +209,7 @@ class uicontacts extends bocontacts
 		if (count($this->content_types) <= 1)
 		{
 			$content['nm']['col_filter']['tid'] = 'n';
+			$content['nm']['header_right'] = 'addressbook.index.right_add';
 		}
 		else
 		{
@@ -880,6 +881,8 @@ class uicontacts extends bocontacts
 	*/
 	function edit($content=null)
 	{
+		$tabs = 'general|cats|home|details|links|custom';
+
 		if (!is_object($this->link))
 		{
 			if (!is_object($GLOBALS['egw']->link))
@@ -1081,7 +1084,10 @@ class uicontacts extends bocontacts
 		{
 			$readonlys[$field] = true;
 		}
-		// for editing the own account (by a non-admin), enable only the fields allowed via the "onw_account_acl"
+		// disable not needed tabs
+		$readonlys[$tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
+		$readonlys[$tabs]['custom'] = !$this->customfields;		
+		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->is_admin($content))
 		{
 			foreach($this->get_fields('supported',$content['id'],$content['owner']) as $field)
@@ -1448,7 +1454,7 @@ $readonlys['button[vcard]'] = true;
 			}
 		}
 		
-		function setFileasOptions(input)
+		function setName(input)
 		{
 			var prefix = document.getElementById("exec[n_prefix]").value;
 			var given  = document.getElementById("exec[n_given]").value;
@@ -1457,6 +1463,15 @@ $readonlys['button[vcard]'] = true;
 			var suffix = document.getElementById("exec[n_suffix]").value;
 			var org    = document.getElementById("exec[org_name]").value;
 			
+			var name = document.getElementById("exec[n_fn]");
+			
+			name.value = "";
+			if (prefix) name.value += prefix+" ";
+			if (given) name.value += given+" ";
+			if (middle) name.value += middle+" ";
+			if (family) name.value += family+" ";
+			if (suffix) name.value += suffix;
+
 			xajax_doXMLHTTP("addressbook.uicontacts.ajax_setFileasOptions",prefix,given,middle,family,suffix,org);
 		}
 		

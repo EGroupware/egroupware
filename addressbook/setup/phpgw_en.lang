@@ -55,6 +55,7 @@ business zip code	addressbook	en	Business Postal Code
 calendar uri	addressbook	en	Calendar URI
 can be changed via setup >> configuration	admin	en	Can be changed via Setup >> Configuration
 car phone	addressbook	en	Car Phone
+categories, notes, ...	addressbook	en	Categories, Notes, ...
 cell phone	addressbook	en	Mobile phone
 change all organisation members	addressbook	en	change all organisation members
 charset for the csv export	addressbook	en	Charset for the CSV export
@@ -139,11 +140,13 @@ fieldseparator	addressbook	en	Fieldseparator
 for read only ldap	admin	en	for read only LDAP
 freebusy uri	addressbook	en	Freebusy URI
 full name	addressbook	en	Full Name
+general	addressbook	en	General
 geo	addressbook	en	GEO
 global categories	addressbook	en	Global Categories
 grant addressbook access	common	en	Grant Addressbook Access
 group %1	addressbook	en	Group %1
 home address	addressbook	en	Home address
+home address, birthday, ...	addressbook	en	Home address, Birthday, ...
 home city	addressbook	en	Home City
 home country	addressbook	en	Home Country
 home email	addressbook	en	Home EMail
@@ -191,6 +194,7 @@ modem phone	addressbook	en	Modem Phone
 more ...	addressbook	en	More ...
 moved	addressbook	en	moved
 multiple vcard	addressbook	en	Multiple VCard
+name, address	addressbook	en	Name, Address
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
@@ -265,6 +269,7 @@ type	addressbook	en	Type
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 upload or delete the photo	addressbook	en	Upload or delete the photo
 url to link telephone numbers to (use %1 for the number)	admin	en	URL to link telephone numbers to (use %1 for the number)
+use an extra category tab?	addressbook	en	Use an extra category tab?
 use country list	addressbook	en	Use Country List
 use setup for a full account-migration	admin	en	use setup for a full account-migration
 used for links and for the own sorting of the list	addressbook	en	used for links and for the own sorting of the list

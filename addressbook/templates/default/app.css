@@ -1,3 +1,5 @@
+.cursorHand { cursor: hand; }
+.countrySelect select { width: 150px; }
 .emailCol div { width: 100%; overflow: hidden; }
 .redItalic { color: red; font-style: italic; }
 .fixedHeight,.telNumbers { height: 12px; }
@@ -11,6 +13,7 @@
 .photo img {
   width: 60px;
   min-height: 80px;
+  cursor: hand;
 }
 .uploadphoto{ 
   position: absolute;
@@ -23,7 +26,7 @@
 }
 .checkAllArrow { padding-right: 5px; }
 .typeIcon { height: 16px; width: 16px; }
-.editphones{ 
+.editphones,.editname{ 
   position: absolute;
   top: 10%;
   left: 30%;
@@ -31,6 +34,10 @@
   border: 2px solid black;
   background-color: #ffffff;
   padding: 4px; 
+}
+.editname{ 
+  top: 97px;
+  left: 173px;
 }
 .windowheader{
   background-image:url(../../../phpgwapi/templates/idots/images/appbox-header-background.png);
