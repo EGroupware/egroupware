@@ -253,8 +253,9 @@
 					}
 					echo $GLOBALS['egw_info']['etemplate']['hook_content'].$html;
 
-					if (!@$GLOBALS['egw_info']['etemplate']['hooked'] &&
-							(!isset($_GET['menuaction']) || strstr($_SERVER['PHP_SELF'],'process_exec.php')))
+					if (!$GLOBALS['egw_info']['etemplate']['hooked'] &&
+							(!isset($_GET['menuaction']) || 
+                            strpos($_SERVER['PHP_SELF'],'process_exec.php')!==false))
 					{
 						if((int) $output_mode == 2)
 						{
@@ -597,7 +598,7 @@
 				}
 				$rows[".$row"] .= $this->html->formatOptions($height,'height');
 				list($cl) = explode(',',$class);
-				if ($cl == '@' || $cl && strstr($cl,'$') !== false)
+				if ($cl == '@' || $cl && strpos($cl,'$') !== false)
 				{
 					$cl = $this->expand_name($cl,0,$r,$content['.c'],$content['.row'],$content);
 				}
@@ -809,7 +810,7 @@
 			{
 				$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && $cell['size'] && !strstr($cell['size'],','))
+			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && $cell['size'] && strpos($cell['size'],',')===false)
 			{
 				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
@@ -921,8 +922,8 @@
 					$value = strlen($value) > 1 && !$cell['no_lang'] ? lang($value) : $value;
 					$value = nl2br($this->html->htmlspecialchars($value));
 					if ($activate_links) $value = $this->html->activate_links($value);
-					if ($value != '' && $style && strstr($style,'b')) $value = $this->html->bold($value);
-					if ($value != '' && $style && strstr($style,'i')) $value = $this->html->italic($value);
+					if ($value != '' && $style && strpos($style,'b')!==false) $value = $this->html->bold($value);
+					if ($value != '' && $style && strpos($style,'i')!==false) $value = $this->html->italic($value);
 					$html .= $value;
 					if ($help)
 					{
@@ -1326,7 +1327,7 @@
 				case 'image':	// size: [link],[link_target],[imagemap],[link_popup]
 					$image = $value != '' ? $value : $name;
 					list($app,$img) = explode('/',$image,2);
-					if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strstr($img,'/'))
+					if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
 					{
 						$img = $image;
 						list($app) = explode('.',$this->name);
@@ -1514,8 +1515,8 @@
 					$label = lang($label);
 				}
 				$accesskey = false;
-				if (($accesskey = $label && strstr($label,'&')) && $accesskey[1] != ' ' && $form_name != '' &&
-						(($pos = strpos($accesskey,';')) === False || $pos > 5))
+				if (($accesskey = $label && strpos($label,'&')!==false) && $accesskey[1] != ' ' && $form_name != '' &&
+						(($pos = strpos($accesskey,';')) === false || $pos > 5))
 				{
 					$label = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 					$accesskey = $accesskey[1];
@@ -1525,9 +1526,9 @@
 					$label = $this->html->label($label,$label_for ? $this->form_name($cname,$label_for) : 
 						$form_name.($set_val?"[$set_val]":''),$accesskey);
 				}
-				if ($type == 'radio' || $type == 'checkbox' || $label && strstr($label,'%s'))	// default for radio is label after the button
+				if ($type == 'radio' || $type == 'checkbox' || $label && strpos($label,'%s')!==false)	// default for radio is label after the button
 				{
-					$html = strstr($label,'%s') ? str_replace('%s',$html,$label) : $html.' '.$label;
+					$html = strpos($label,'%s')!==false ? str_replace('%s',$html,$label) : $html.' '.$label;
 				}
 				elseif (($html = $label . ' ' . $html) == ' ')
 				{
@@ -1608,7 +1609,7 @@
 			}
 			// replace xajax calls to code in widgets, with the "etemplate" handler,
 			// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
-			if (strstr($on,"xajax_doXMLHTTP('etemplate."))
+			if (strpos($on,"xajax_doXMLHTTP('etemplate.")!==false)
 			{
 				$on = preg_replace("/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/",'xajax_doXMLHTTP(\''.$GLOBALS['egw_info']['flags']['currentapp'].'.\\1.etemplate\'',$on);
 			}

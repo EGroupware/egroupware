@@ -70,7 +70,7 @@
 			{
 				$tname = &$name['name'];
 			}
-			$tname = (@strstr($tname,'.') === False && !empty($tname) ?
+			$tname = (strpos($tname,'.') === false && !empty($tname) ?
 				(is_array($load_via) ? $load_via['name'] : $load_via).'.':'').$tname;
 
 			if (empty($tname) || !$this->read($name,'','',0,'',$load_via))
@@ -148,7 +148,7 @@
 		function expand_name($name,$c,$row,$c_='',$row_='',$cont='')
 		{
 			$is_index_in_content = $name[0] == '@';
-			if (@strstr($name,'$') !== False)
+			if (strpos($name,'$') !== false)
 			{
 				if (!$cont)
 				{

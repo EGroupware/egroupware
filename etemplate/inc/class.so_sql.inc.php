@@ -341,7 +341,7 @@ class so_sql
 		{
 			foreach(is_array($extra_cols) ? $extra_cols : array($extra_cols) as $col)
 			{
-				if (stristr($col,'as')) $col = preg_replace('/^.*as *([a-z0-9_]+) *$/i','\\1',$col);
+				if (FALSE!==stripos($col,'as')) $col = preg_replace('/^.*as *([a-z0-9_]+) *$/i','\\1',$col);
 				$cols[$col] = $col;
 			}
 		}
@@ -514,7 +514,7 @@ class so_sql
 					{
 						$db_col = $col;
 					}
-					if ($wildcard || strstr($criteria[$col],'*') || strstr($criteria[$col],'?') || $criteria[$col]{0} == '!')
+					if ($wildcard || strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false || $criteria[$col]{0} == '!')
 					{
 						$cmp_op = ' LIKE ';
 						if ($criteria[$col]{0} == '!')
@@ -524,7 +524,7 @@ class so_sql
 						}
 						$query[] = $db_col.$cmp_op.$this->db->quote($wildcard.str_replace(array('%','_','*','?'),array('\\%','\\_','%','_'),$criteria[$col]).$wildcard);
 					}
-					elseif (strstr($db_col,'.'))	// we have a table-name specified
+					elseif (strpos($db_col,'.')!==false)	// we have a table-name specified
 					{
 						list($table,$only_col) = explode('.',$db_col);
 						
@@ -616,7 +616,7 @@ class so_sql
 		$num_rows = 0;	// as spec. in max_matches in the user-prefs
 		if (is_array($start)) list($start,$num_rows) = $start;
 		
-		if ($order_by && !stristr($order_by,'ORDER BY') && !stristr($order_by,'GROUP BY'))
+		if ($order_by && stripos($order_by,'ORDER BY')===false && stripos($order_by,'GROUP BY')===false)
 		{
 			$order_by = 'ORDER BY '.$order_by;
 		}
@@ -665,7 +665,7 @@ class so_sql
 				{
 					$mysql_calc_rows = 'SQL_CALC_FOUND_ROWS ';
 				}
-				elseif (!$need_full_no_count && (!$join || stristr($join,'LEFT JOIN')))
+				elseif (!$need_full_no_count && (!$join || stripos($join,'LEFT JOIN')!==false))
 				{
 					$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
 					$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
@@ -726,7 +726,7 @@ class so_sql
 				}
 				else	// only the specified columns
 				{
-					if (stristr($col,'as')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
+					if (stripos($col,'as')!==false) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
 					if (($db_col = array_search($col,$this->db_cols)) !== false)
 					{
 						$cols[$db_col] = $col;
@@ -742,7 +742,7 @@ class so_sql
 		{
 			foreach(is_array($extra_cols) ? $extra_cols : explode(',',$extra_cols) as $col)
 			{
-				if (stristr($col,'as ')) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
+				if (stripos($col,'as ')!==false) $col = preg_replace('/^.*as +([a-z0-9_]+) *$/i','\\1',$col);
 				if (($db_col = array_search($col,$this->db_cols)) !== false)
 				{
 					$cols[$db_col] = $col;
