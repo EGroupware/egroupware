@@ -25,7 +25,6 @@ class bo_acl
 	var $query = '';
 	var $sort  = '';
 	var $total = 0;
-	var $accounts;
 	var $cats;
 
 	var $debug;
@@ -39,7 +38,6 @@ class bo_acl
 
 		$this->permissions = $GLOBALS['egw']->acl->get_all_location_rights($GLOBALS['egw_info']['user']['account_id'],'resources',true);
 		$this->egw_cats =& CreateObject('phpgwapi.categories','','resources');
-		$this->accounts = $GLOBALS['egw']->accounts->get_list();
 		$this->debug = False;
 		
 		//all this is only needed when called from uiacl.
@@ -192,7 +190,7 @@ class bo_acl
 
 		$GLOBALS['egw']->acl->delete_repository('resources','L' . $cat_id,false);
 
-		foreach($this->accounts as $num => $account)
+		foreach($GLOBALS['egw']->accounts->get_list() as $num => $account)
 		{
 			$account_id = $account['account_id'];
 			$rights = false;

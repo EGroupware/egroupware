@@ -20,7 +20,6 @@ class ui_acl
 	var $sort  = '';
 	var $order = '';
 	var $bo;
-	var $accounts;
 	var $nextmatchs = '';
 	var $rights;
 	var $public_functions = array(
@@ -30,7 +29,6 @@ class ui_acl
 	function ui_acl()
 	{
 		$this->bo =& createobject('resources.bo_acl',True);
-		$this->accounts = $GLOBALS['egw']->accounts->get_list();
 		$this->nextmatchs =& createobject('phpgwapi.nextmatchs');
 		$this->start = $this->bo->start;
 		$this->query = $this->bo->query;
@@ -116,8 +114,7 @@ class ui_acl
 
 	function selectlist($right,$users_only=false)
 	{
-		reset($this->bo->accounts);
-		while (list($null,$account) = each($this->bo->accounts))
+		foreach ($GLOBALS['egw']->accounts->get_list() as $num => $account)
 		{
 			if(!($users_only && $account['account_lastname'] == 'Group'))
 			{
