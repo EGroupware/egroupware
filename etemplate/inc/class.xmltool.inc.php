@@ -491,7 +491,7 @@
 					reset($this->attributes);
 					while(list($key,$val) = each ($this->attributes))
 					{
-						$result .= ' '.$key.'="'.htmlspecialchars($val,ENT_COMPAT,'utf-8').'"';
+						if (!is_array($val)) $result .= ' '.$key.'="'.htmlspecialchars($val,ENT_COMPAT,'utf-8').'"';
 					}
 				}
 
