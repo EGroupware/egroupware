@@ -111,7 +111,7 @@ class html
 	{
 		if (!$this->wz_tooltip_included)
 		{
-			if (strpos('wz_tooltip',$GLOBALS['egw_info']['flags']['need_footer'])===false)
+			if (strpos($GLOBALS['egw_info']['flags']['need_footer'],'wz_tooltip')===false)
 			{
 				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$this->phpgwapi_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
 			}
