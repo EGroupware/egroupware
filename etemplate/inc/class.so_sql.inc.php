@@ -514,7 +514,8 @@ class so_sql
 					{
 						$db_col = $col;
 					}
-					if ($wildcard || strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false || $criteria[$col]{0} == '!')
+					if ($wildcard || $criteria[$col]{0} == '!' ||
+						is_string($criteria[$col]) && (strpos($criteria[$col],'*')!==false || strpos($criteria[$col],'?')!==false))
 					{
 						$cmp_op = ' LIKE ';
 						if ($criteria[$col]{0} == '!')
