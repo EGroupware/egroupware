@@ -399,7 +399,7 @@
 
 			// If they place a '"' in their search, it will mess everything up
 			// Our only option is to remove it
-			if(strstr($_query,'"'))
+			if(strpos($_query,'"')!==false)
 			{
 				$_query = str_replace('"','',$_query);
 			}

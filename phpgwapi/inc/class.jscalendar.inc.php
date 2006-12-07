@@ -44,7 +44,7 @@ class jscalendar
 		$this->jscalendar_url = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/'.$path;
 		$this->dateformat = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
-		if ($do_header && !@strstr($GLOBALS['egw_info']['flags']['java_script'],'jscalendar'))
+		if ($do_header && (strpos($GLOBALS['egw_info']['flags']['java_script'],'jscalendar')===false))
 		{
 			$GLOBALS['egw_info']['flags']['java_script'] .=
 '<link rel="stylesheet" type="text/css" media="all" href="'.$this->jscalendar_url.'/calendar-blue.css" title="blue" />
@@ -81,7 +81,7 @@ class jscalendar
 		if ($year && $month && $day)
 		{
 			$date = adodb_date($this->dateformat,$ts = adodb_mktime(12,0,0,$month,$day,$year));
-			if (strpos($this->dateformat,'M') !== False)
+			if (strpos($this->dateformat,'M') !== false)
 			{
 				$short = lang(adodb_date('M',$ts));	// check if we have a translation of the short-cut
 				if (substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name

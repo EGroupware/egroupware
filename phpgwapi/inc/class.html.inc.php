@@ -111,7 +111,7 @@ class html
 	{
 		if (!$this->wz_tooltip_included)
 		{
-			if (!strstr('wz_tooltip',$GLOBALS['egw_info']['flags']['need_footer']))
+			if (strpos('wz_tooltip',$GLOBALS['egw_info']['flags']['need_footer'])===false)
 			{
 				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$this->phpgwapi_js_url.'/wz_tooltip/wz_tooltip.js"></script>'."\n";
 			}
@@ -324,8 +324,8 @@ class html
 				$base_name.'['.$val.']','',($title ? 'title="'.$this->htmlspecialchars($title).'" ':''))."<br />\n";
 		}
 		if ($style && substr($style,-1) != ';') $style .= '; ';
-		if (!strstr($style,'height')) $style .= 'height: '.(1.7*$multiple).'em; ';
-		if (!strstr($style,'width'))  $style .= 'width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.55)).'em; ';
+		if (strpos($style,'height')===false) $style .= 'height: '.(1.7*$multiple).'em; ';
+		if (strpos($style,'width')===false)  $style .= 'width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.55)).'em; ';
 		$style .= 'background-color: white; overflow: auto; border: lightgray 2px inset;';
 
 		return $this->div($html,$options,'',$style);
@@ -432,7 +432,7 @@ class html
 			case 'mozilla':
 				return $this->ua_version >= 1.3;
 			default:
-				return False;
+				return true;//False;
 		}
 	}
 
@@ -461,7 +461,7 @@ class html
 		  $GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
 	   }
 
-	   if (!@strstr($GLOBALS['egw_info']['flags']['java_script'],'tinyMCE'))
+	   if (strpos($GLOBALS['egw_info']['flags']['java_script'],'tinyMCE')===false)
 	   {
 		  $GLOBALS['egw']->js->validate_file('tiny_mce','tiny_mce');
 	   }
@@ -538,7 +538,7 @@ class html
 							$tab2a .= ',separator,insertdate,inserttime';
 							break;
 						default:
-							if(strstr($plugin,'='))
+							if(strpos($plugin,'=')!==false)
 							{
 								$init .= ','. str_replace('=',':',$plugin);
 							}
@@ -705,7 +705,7 @@ class html
 			$label = lang($label);
 		}
 		if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' &&
-			(($pos = strpos($accesskey,';')) === False || $pos > 5))
+			(($pos = strpos($accesskey,';')) === false || $pos > 5))
 		{
 			$label_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
 			$label = str_replace('&','',$label);
@@ -1005,7 +1005,11 @@ class html
 			$vars = $url;
 			$url = '/index.php';
 		}
-		elseif (!strstr($url,'/') && count(explode('.',$url)) >= 3 && !(strstr($url,'mailto:') || strstr($url,'://') || strstr($url,'javascript:')))
+		elseif (strpos($url,'/')===false && 
+			count(explode('.',$url)) >= 3 && 
+			!(strpos($url,'mailto:')!==false || 
+			strpos($url,'://')!==false || 
+			strpos($url,'javascript:')!==false))
 		{
 			$url = "/index.php?menuaction=$url";
 		}
