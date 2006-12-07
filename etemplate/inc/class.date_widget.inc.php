@@ -339,6 +339,7 @@
 					'percent_allowed'=> $percent_allowed,
 					'empty_not_0'   => $empty_not_0,
 				);
+				$cell['size'] = '4,,/^-?[0-9]*[,.]?[0-9]*'.($percent_allowed ? '%?' : '').'$/';
 			}
 			if ($value)
 			{
@@ -353,7 +354,6 @@
 				}
 			}			
 			$cell['type'] = 'text';
-			$cell['size'] = '4,,/^-?[0-9]*[,.]?[0-9]*'.($percent_allowed ? '%?' : '').'$/';
 			$cell_name = $cell['name'];
 			$cell['name'] .= '[value]';
 			

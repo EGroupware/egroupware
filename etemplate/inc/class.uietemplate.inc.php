@@ -941,7 +941,7 @@
 				case 'int':		// size: [min],[max],[len],[precission (only float)]
 				case 'float':
 					list($min,$max,$cell_options,$pre) = explode(',',$cell_options);
-					if ($cell_options == '')
+					if ($cell_options == '' && !$readonly)
 					{
 						$cell_options = $cell['type'] == 'int' ? 5 : 8;
 					}
@@ -953,7 +953,8 @@
 					// fall-through
 				case 'passwd' :
 				case 'text':		// size: [length][,maxLength[,preg]]
-					if ($readonly)
+					$cell_opts = explode(',',$cell_options,3);
+					if ($readonly && !$cell_opts[0])
 					{
 						$html .= strlen($value) ? $this->html->bold($this->html->htmlspecialchars($value)) : '';
 					}
@@ -961,16 +962,20 @@
 					{
 						$html .= $this->html->input($form_name,$value,$type == 'passwd' ? 'password' : '',
 							$options.$this->html->formatOptions($cell_options,'SIZE,MAXLENGTH'));
-						$cell_options = explode(',',$cell_options,3);
-						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
-							'type'      => $cell['type'],
-							'maxlength' => $cell_options[1],
-							'needed'    => $cell['needed'],
-							'preg'      => $cell_options[2],
-							'min'       => $min,	// int and float only
-							'max'       => $max,
-						);
+
+						if (!$readonly)
+						{
+							$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
+								'type'      => $cell['type'],
+								'maxlength' => $cell_opts[1],
+								'needed'    => $cell['needed'],
+								'preg'      => $cell_opts[2],
+								'min'       => $min,	// int and float only
+								'max'       => $max,
+							);
+						}
 					}
+					unset($cell_opts);
 					break;
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					if ($readonly && !$cell_options)
@@ -1172,7 +1177,7 @@
 					}
 					if (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type'])
 					{
-						echo "<p>show_cell::template(tpl=$this->name,name=$cell[name]): $obj_read</p>\n";
+						echo "<p>show_cell::template(tpl=$this->name,name=$cell[name]): $obj_read, readonly=$readonly</p>\n";
 					}
 					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname) || $cell_options != '')
 					{
