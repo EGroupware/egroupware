@@ -1060,7 +1060,7 @@ class uiviews extends uical
 		}
 		foreach($part_array as $part_group => $participant)
 		{
-			$participants .= $this->add_nonempty($participant,$part_group,True);
+			$participants .= $this->add_nonempty($participant,$part_group,True,False);
 		}
 		// as we only deal with percentual widht, we consider only the full dayview (1 colum) as NOT small
 		$small = $this->view != 'day' || $width < 50;
@@ -1165,11 +1165,18 @@ class uiviews extends uical
 			'>'."\n".$ie_fix.$html.$indent."</div>\n";
 	}
 
-	function add_nonempty($content,$label,$one_per_line=False)
+	function add_nonempty($content,$label,$one_per_line=False,$space = True)
 	{
 		if (is_array($content))
 		{
-			$content = implode($one_per_line ? ",\n" : ', ',$content);
+		   if($space)
+		   {
+			  $content = implode($one_per_line ? ",\n" : ', ',$content);
+		   }
+		   else
+		   {
+			  $content = implode($one_per_line ? "\n" : ', ',$content);
+		   }
 		}
 		if (!empty($content))
 		{
