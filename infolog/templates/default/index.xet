@@ -121,7 +121,7 @@
 			<rows>
 				<row class="th">
 					<vbox options="0,0">
-						<nextmatch-filterheader options="Type" id="info_type"/>
+						<nextmatch-filterheader options="Type" id="info_type" no_lang="1"/>
 						<nextmatch-filterheader options="Status" id="info_status" align="center"/>
 						<nextmatch-sortheader label="Completed" id="info_percent" align="right"/>
 					</vbox>

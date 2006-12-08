@@ -141,7 +141,7 @@
 				<row class="th" height="28">
 					<description value="Type" options=",,,info_type"/>
 					<menulist span="all">
-						<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo"/>
+						<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" no_lang="1"/>
 					</menulist>
 				</row>
 				<row class="row">

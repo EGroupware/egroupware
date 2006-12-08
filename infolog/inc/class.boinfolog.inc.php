@@ -179,6 +179,12 @@ class boinfolog
 				$this->enums['type'] += $this->config->config_data['types'];
 				//echo "types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
 			}
+			// sort types by there translation
+			foreach($this->enums['type'] as $key => $val)
+			{
+				if (($val = lang($key)) != $key.'*') $this->enums['type'][$key] = lang($key);
+			}
+			natcasesort($this->enums['type']);
 			if (isset($this->config->config_data['customfields']) && is_array($this->config->config_data['customfields']))
 			{
 				if (!($this->customfields = $this->config->config_data['customfields'])) $this->customfields = array();
