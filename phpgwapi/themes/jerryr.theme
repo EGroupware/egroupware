@@ -15,10 +15,10 @@
 	$phpgw_info['theme']['vlink']       = 'blue';
 	$phpgw_info['theme']['alink']       = 'red';
 	$phpgw_info['theme']['link']        = 'blue';
-	$phpgw_info['theme']['row_on']      = '#eeeeee';
-	$phpgw_info['theme']['row_off']     = '#EEEEEE';
+	$phpgw_info['theme']['row_on']      = '#e2d9c4';
+	$phpgw_info['theme']['row_off']     = '#e2d9c4';
 	$phpgw_info['theme']['row_text']    = '#000000';
-	$phpgw_info['theme']['th_bg']       = '#ebe8e4';
+	$phpgw_info['theme']['th_bg']       = '#f6efe0';
 	$phpgw_info['theme']['th_text']     = '#000000';
 	$phpgw_info['theme']['navbar_bg']   = '#9999FF';
 	$phpgw_info['theme']['navbar_text'] = '#FFFFFF';
@@ -47,6 +47,6 @@
 	// the iDots template uses only css and the default theme (this file)
 	if ($GLOBALS['phpgw_info']['user']['preferences']['common']['template_set'] == 'jerryr')
 	{
-		$phpgw_info['theme']['row_off'] = '#fffdf8';
+		$phpgw_info['theme']['row_off'] = '#efeadf';
 		$phpgw_info['theme']['em_folder'] = '#a0a0a0';
 	}
