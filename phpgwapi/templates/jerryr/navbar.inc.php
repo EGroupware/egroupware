@@ -95,7 +95,7 @@
 					}
 					$tdwidth=round($tdwidth);
 
-					$app_icons .= '<td width="'.$tdwidth.'%" align="center" style="text-align:center; border-right: 1px solid #9f9f9f;border-left: 1px solid #cfcfcf; border-bottom: 1px solid #9f9f9f; border-top: 1px solid #9f9f9f" onMouseOver="style.backgroundColor=\'#a7c4db\'; " onMouseOut="style.backgroundColor=\'\';"><a href="' . $app_data['url'] . '"';
+					$app_icons .= '<td width="'.$tdwidth.'%" align="center" class="iconBack" onmouseover="this.className=\'iconBackHover\'" onmouseout="this.className=\'iconBack\'" ><a href="' . $app_data['url'] . '"';
 
 					if(isset($GLOBALS['egw_info']['flags']['navbar_target']) && $GLOBALS['egw_info']['flags']['navbar_target'])
 					{
@@ -360,7 +360,7 @@
 					return;
 				}
 				
-				$var['icon_or_star']='<img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
+				$var['icon_or_star']='<img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/jerryr/images'.'/orange-ball.png" width="0" height="0" alt="ball"/>';
 				$var['target'] = '';
 				if(is_array($item_link))
 				{

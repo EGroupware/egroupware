@@ -12,7 +12,7 @@
  <div id="divAppIconBar">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 0px">
                         <tr>
-                                <td width="180"></td>
+                                <td width="178"></td>
                                 <td valign="bottom">
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
@@ -113,24 +113,24 @@
 
 <!-- BEGIN extra_block_row -->
 		<tr class="divSideboxEntry">
-<td width="20" align="center" valign="middle" class="textSideboxStar">{icon_or_star}</td><td class="textSidebox"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
+<td width="20" align="center" valign="middle" class="textSideboxStar">{icon_or_star}</td><td class="textSidebox" onmouseover="this.className='textSideboxHover'" onmouseout="this.className='textSidebox'"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
 </tr>
 <!-- END extra_block_row -->
 
 <!-- BEGIN extra_block_row_raw -->
 		<tr class="divSideboxEntry">
-<td colspan="2" class="textSidebox">{lang_item}</td>
+<td colspan="2">{lang_item}</td>
 </tr>
 <!-- END extra_block_row_raw -->
 
 <!-- BEGIN extra_block_row_no_link -->
 		<tr class="divSideboxEntry">
-<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}</td><td class="textSidebox">{lang_item}</td>
+<td width="20" align="center" valign="middle" class="textSideboxStar">{icon_or_star}</td><td class="textSideboxSpacer">{lang_item}</td>
 </tr>
 <!-- END extra_block_row_no_link -->
 
 <!-- BEGIN extra_block_spacer -->
 <tr class="divSideboxEntry">
-	<td colspan="2" height="8" class="textSidebox">&nbsp;</td>
+<td width="20" align="center" valign="middle" class="textSideboxStar">{icon_or_star}</td><td height="8" class="textSideboxSpacer">&nbsp;</td>
 </tr>
 <!-- END extra_block_spacer -->

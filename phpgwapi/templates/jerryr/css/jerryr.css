@@ -3,68 +3,6 @@
 	allowed attributes: font-family,font-size,color,font-weight
 */
 
-.tdJrTopLt
-{
-	background-image: url(../images/coinsupg.png);
-	height: 15px;
-}
-
-.tdJrTopMid
-{
-	background-image: url(../images/sup.png);
-	height: 15px;
-}
-
-.tdJrTopRt
-{
-	background-image: url(../images/coinsupd.png);
-	height: 15px;
-}
-
-.tdJrLt
-{
-	background-image: url(../images/g.png);
-	width:15px;
-}
-
-.tdJrFill
-{
-	background-image: url(../images/fond.png);
-}	
-
-.tdJrRt
-{
-	background-image: url(../images/d.png);
-	width:15px;
-}
-
-.tdJrBotLt
-{
-	background-image: url(../images/coininfg.png);
-	height: 15px;
-	width: 15px;
-}
-
-.tdJrBotMid
-{
-	background-image: url(../images/inf.png);
-	height: 15px;
-}
-
-.tdJrBotRt
-{
-	background-image: url(../images/coininfd.png);
-	height: 15px;
-}
-
-
-
-
-
-
-
-
-
 body,td
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -86,14 +24,14 @@ select
 a:link,a:visited
 {
 	cursor:pointer;
-	color: #17202b; 
+	color: #727f8a; 
 	text-decoration: none;
 }
 
 a:hover,a:active
 {
 	cursor:pointer;
-	color: #ff0000;
+	color: #9a3028;
 	text-decoration: underline;
 }
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
@@ -105,7 +43,7 @@ a:hover,a:active
 {
 	font-size:90%;
 	background-color: #a7c4db;
-	border-right: 1px solid #17202b;
+	border-right: 1px solid #9f9f9f;
 }
 
 .prefSection
@@ -234,22 +172,20 @@ input[type=image]
 {
 	position:relative;
 	width: 370px; 
-	border: #17202b 1px solid; 
+	border: #9f9f9f 1px solid; 
 }
 
 .divSidebox 
 {
-	width: 177px; 
+	width: 188px; 
 }
 
 .divSideboxHeader,.divLoginboxHeader 
 {
 	text-align:center;
-	background-image:url(../images/appbox-header2-background.png);
-	/*background-color:#6798cb;*/
-	/*padding-top:2px;*/
-	color:#ffffff;
-	height: 20px;
+	background-image:url(../images/menuTitle.png);
+	color:#17202b;
+	height: 18px;
 	font-weight:bold;
 	font-size:12px;
 }
@@ -259,6 +195,7 @@ a.divSideboxEntry, .divSideboxEntry
 	text-align:left;
 	height:18px;
 	background-color:#fbf8f1;
+	border-top: 1px solid #9f9f9f;
 }
 
 a.appTitles,.appTitles
@@ -279,8 +216,34 @@ a.textSidebox
 	padding-left: 2px;
 	/*padding-top:2px;*/
 	/*padding-bottom:2px;*/
-	border-top: solid #e2d4b2 1px;
+	border-top: solid #9f9f9f 1px;
 }
+
+.textSideboxHover
+{
+	/*background-image: url(../images/appTitleBar.png);*/
+	background-color: #ede6d8;
+	background-repeat: repeat-x;
+	border-top: 1px solid #9f9f9f;
+	padding-left: 2px;	
+	font-size: 10px;
+}
+
+.textSideboxHover:first-letter {
+        text-transform:uppercase;
+}
+
+
+.textSideboxSpacer
+{
+        height:18px;
+        padding-left: 0px;
+        /*padding-top:2px;*/
+        /*padding-bottom:2px;*/
+        border-top: solid #9f9f9f 1px;
+}
+
+
 /* 
  ** make the sidebox entries consistently start with a capital letter 
  */
@@ -328,8 +291,8 @@ body {
 #divLogo
 {
 	position:absolute;
-	left:20px;
-	top:20px;
+	left:19px;
+	top:21px;
 	z-index:51;
 }
 
@@ -368,6 +331,24 @@ body {
 	padding:0px;
 }
 
+.iconBack
+{
+	background-image: url(../images/iconBackBlue.png);
+	border-right: 1px solid #9f9f9f;
+	border-left: 1px solid #cfcfcf;
+	border-bottom: 1px solid #9f9f9f;
+	border-top: 1px solid #9f9f9f;
+}
+
+.iconBackHover
+{
+	background-image: url(../images/iconBackYellow.png);
+	border-right: 1px solid #9f9f9f;
+        border-left: 1px solid #cfcfcf;
+        border-bottom: 1px solid #9f9f9f;
+        border-top: 1px solid #9f9f9f;
+}
+
 #divAppTextBar
 {
 	/*background-color:white;*/
@@ -380,9 +361,10 @@ body {
 	top:0px
 	left:0px;
 	height:18px;
+	vertical-align:bottom;
 	border: 0px solid black;
 	padding-left:186px;
-	padding-top:2x;
+	padding-top:10px;
 	/*margin-top: 18px;*/
 }
 
@@ -402,16 +384,12 @@ body {
 
 #divAppboxHeader
 {
-	/*background-image:url(../images/appbox-header-background.png);*/
-	/*background-repeat: repeat-x;*/
-	background-image:url(../images/appbox-header2-background.png);
-	/*background-color:#6798cb;*/
-	height:20px;
+	background-image:url(../images/appTitleBar.png);
+	height:18px;
+	color: black;
 	text-align:center;
 	padding-bottom:0px;
-	border-top:solid 1px #17202b;
-	border-left:solid 1px #17202b;
-	border-right:solid 1px #17202b;
+	border:solid 1px #17202b;
 }
 
 #divAppbox
