@@ -1157,6 +1157,9 @@
 						return $value ? 1 : 0;
 					}
 					return $value ? 'true' : 'false';
+				case 'float':
+				case 'decimal':
+					return (double) $value;
 			}
 			if (!$this->Link_ID && !$this->connect())
 			{
