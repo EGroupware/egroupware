@@ -398,6 +398,9 @@
 					$to_write[$key] = $this->data[$key] = $val;   // update internal data
 				}
 			}
+			// writing no price as SQL NULL (required by postgres)
+			if ($to_write['info_price'] === '') $to_write['info_price'] = NULL;
+
 			if (($this->data['info_id'] = $info_id))
 			{
 				$where = array('info_id' => $info_id);
