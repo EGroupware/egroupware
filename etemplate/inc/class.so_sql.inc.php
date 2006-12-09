@@ -884,3 +884,14 @@ class so_sql
 		return $cache[$cache_key] =& $ret;
 	}
 }
+
+if (!function_exists("stripos")) 
+{
+	/**
+	 * stripos for php < 5
+	 */
+	function stripos($str,$needle,$offset=0)
+	{
+		return strpos(strtolower($str),strtolower($needle),$offset);
+	}
+}
