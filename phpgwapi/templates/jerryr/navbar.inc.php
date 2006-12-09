@@ -162,7 +162,7 @@
 
 			if($GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons']!='no' && $GLOBALS['egw_info']['user']['userid'] != 'anonymous')
 			{
-				$app_icons .= '<td width="'.$tdwidth.'%" height="32" valign="bottom" align="center" style="text-align:center"><a href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['egw_info']['navbar']['logout']['icon'].'" title="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'" alt="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'"></a></td>';
+				$app_icons .= '<td width="'.$tdwidth.'%" height="36" valign="bottom" align="center" style="text-align:center"><a href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'"><img src="'.$GLOBALS['egw_info']['navbar']['logout']['icon'].'" title="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'" alt="'.$GLOBALS['egw_info']['navbar']['logout']['title'].'"></a></td>';
 				$app_titles .= '<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="'.$GLOBALS['egw_info']['navbar']['logout']['url'].'">'.$GLOBALS['egw_info']['navbar']['logout']['title'].'</a></td>';
 
 			}
