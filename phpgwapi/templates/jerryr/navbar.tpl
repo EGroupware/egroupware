@@ -8,11 +8,10 @@
 	<div id="divUpperTabs">
 	{upper_tabs}
 	</div>
-
  <div id="divAppIconBar">
                 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 0px">
                         <tr>
-                                <td width="178"></td>
+                                <td width="180"></td>
                                 <td valign="bottom">
                                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
