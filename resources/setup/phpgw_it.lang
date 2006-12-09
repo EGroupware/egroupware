@@ -18,7 +18,7 @@ category:	resources	it	Categoria:
 check all	resources	it	Seleziona tutto
 choose categories admin	resources	it	gestione scelta categorie
 clear selection	resources	it	cancella selezione
-configure access permissions	resources	it	Configura Permessi Accesso
+configure access permissions	admin	it	Configura Permessi Accesso
 create new accessory for this resource	resources	it	Crea un nuovo accessorio per questa risorsa
 create new links	resources	it	Crea nuovi collegamenti
 delete selected resources	resources	it	elimina risorse selezionate
@@ -72,7 +72,7 @@ responsible:	resources	it	Responsabile:
 saves entry and exits	resources	it	Salva la voce e esce
 select a category	resources	it	Seleziona una categoria
 select resource	resources	it	seleziona risorsa
-select resources	resources	it	Seleziona risorse
+select resources	common	it	Seleziona risorse
 select/deselect all	resources	it	seleziona/deseleziona tutto
 short description	resources	it	Descrizione breve
 short description of resource	resources	it	Descrizione breve della risorsa
@@ -96,6 +96,7 @@ web-site for this resource	resources	it	Pagina Web di questa risorsa
 where to find this resource?	resources	it	Dove trovare questa risorsa?
 which category does this resource belong to?	resources	it	A quale categoria appartiene questa risorsa?
 write permissions	resources	it	Permessi di scrittura
+you are not permitted to delete this reource!	resources	it	Non hai il permesso di cancellare questa risorsa!
 you are not permitted to edit this reource!	resources	it	Non hai il permesso di modificare questa risorsa!
 you are not permitted to get information about this resource!	resources	it	Non hai il permesso di ottenere informazioni su questa risorsa!
 you chose more resources than available	resources	it	Hai scelto più risorse di quelle disponibili

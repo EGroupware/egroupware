@@ -131,6 +131,7 @@ group public only	calendar	it	Solo Pubblico per il Gruppo
 groupmember(s) %1 not included, because you have no access.	calendar	it	Membro(i) del gruppo %1 non incluso(i), perché non hai accesso.
 h	calendar	it	h
 here is your requested alarm.	calendar	it	la tua richiesta di allarme.
+hide private infos	calendar	it	Nascondi informazioni private
 high priority	calendar	it	priorità alta
 holiday	calendar	it	Festività
 holiday management	calendar	it	Gestione Festività
@@ -176,6 +177,7 @@ no filter	calendar	it	Nessun Filtro
 no matches found	calendar	it	Nessuna corrispondenza
 no response	calendar	it	Nessuna Risposta
 non blocking	calendar	it	non bloccante
+not	calendar	it	non
 notification messages for added events	calendar	it	Messaggi di notifica per gli eventi aggiunti
 notification messages for canceled events	calendar	it	Messaggi di notifica per gli eventi cancellati
 notification messages for disinvited participants	calendar	it	Messaggi di notifica per i partecipanti disinvitati
@@ -248,6 +250,7 @@ show list of upcoming events	calendar	it	Visualizza la lista degli eventi immine
 show this month	calendar	it	mostra questo mese
 show this week	calendar	it	mostra questa settimana
 single event	calendar	it	singolo evento
+site configuration	calendar	it	configurazione sito
 start	calendar	it	Inizio
 start date/time	calendar	it	Data/Ora Inizio
 startdate / -time	calendar	it	Data/ora iniziale

@@ -73,6 +73,7 @@ comment	etemplate	zh-tw	備註
 confirm	etemplate	zh-tw	確認
 confirmation message or custom javascript (returning true or false)	etemplate	zh-tw	確認訊息或是自訂的 javascript （傳回 true 或 false）
 confirmation necesary or custom java-script	etemplate	zh-tw	需要確認或自訂的 javascript
+contact fields	etemplate	zh-tw	聯絡人欄位
 contains	etemplate	zh-tw	包含
 create a new table for the application	etemplate	zh-tw	為這個應用程式建立一個新的表格
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	zh-tw	從標籤與求助文字建立一個英文('en')的語言檔
@@ -176,6 +177,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	zh-tw	表格標籤的高度(%或是畫素)，或是其他div區塊
 height, disabled	etemplate	zh-tw	高度，停用
 help	etemplate	zh-tw	求助
+history log	etemplate	zh-tw	歷史記錄
 horizontal rule	etemplate	zh-tw	合併規則
 hour	etemplate	zh-tw	小時
 hours	etemplate	zh-tw	小時
@@ -211,6 +213,7 @@ last	etemplate	zh-tw	最後
 left	etemplate	zh-tw	左
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	zh-tw	字元長度，精確數字：2,4,8 和浮點數：4,8
 link	etemplate	zh-tw	連結
+linkapps	etemplate	zh-tw	連結模組
 linkentry	etemplate	zh-tw	連結資料
 linklist	etemplate	zh-tw	連結清單
 linkstring	etemplate	zh-tw	連結文字
@@ -232,6 +235,7 @@ new table created	etemplate	zh-tw	建立了新的表格
 newer version '%1' exists !!!	etemplate	zh-tw	更新的版本 '%1'！
 nextmatch	etemplate	zh-tw	下一個
 nextmatch accountfilter	etemplate	zh-tw	下一個符合的帳號規則
+nextmatch custom filterheader	etemplate	zh-tw	下一個符合的自訂規則頁首
 nextmatch filterheader	etemplate	zh-tw	下一個條件頁首
 nextmatch sortheader	etemplate	zh-tw	下一個分類頁首
 no column to swap with !!!	etemplate	zh-tw	沒有可以切換的欄位！
@@ -298,6 +302,8 @@ select category	etemplate	zh-tw	類別
 select country	etemplate	zh-tw	國家
 select day	etemplate	zh-tw	日期
 select day of week	etemplate	zh-tw	選一週的一天
+select entry	etemplate	zh-tw	選擇資料
+select hour	etemplate	zh-tw	選擇時數
 select if content of field should not be translated (label gets always translated)	etemplate	zh-tw	如果內容或儲存格不希望被翻譯(標籤都是會被翻譯的)
 select month	etemplate	zh-tw	月份
 select number	etemplate	zh-tw	數字

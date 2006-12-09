@@ -1,7 +1,7 @@
 %1 %2 in %3	calendar	pt-br	%1 %2 em %3
 %1 records imported	calendar	pt-br	%1 registro(s) importado(s)
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	pt-br	%1 registro(s) lido(s) (não importado(s) ainda. Você deve voltar e desmarcar "Testar Importação")
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pt-br	<b>Atenção</b>: A Agenda de Eventos usa os feriados de seu país, que está configurado como %1. Você pode alterá-lo em %2.<br/>Feriados são %3 automaticamente instalados de %4. Você pode alterar isso em %5.
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pt-br	<b>Atenção</b>: A Agenda usa os feriados de seu país, que está configurado como %1. Você pode alterá-lo em %2.<br/>Feriados são %3 automaticamente instalados de %4. Você pode alterar isso em %5.
 a non blocking event will not conflict with other events	calendar	pt-br	Um evento não bloqueador não irá conflitar com outros eventos
 accept or reject an invitation	calendar	pt-br	Aceitar ou rejeitar um convite
 accepted	calendar	pt-br	Aceito
@@ -32,12 +32,12 @@ before the event	calendar	pt-br	antes do evento
 birthday	calendar	pt-br	Aniversário
 busy	calendar	pt-br	ocupado
 by	calendar	pt-br	por
-calendar event	calendar	pt-br	Evento da Agenda de Eventos
-calendar holiday management	admin	pt-br	Gerenciamento de feriados da Agenda de Eventos
-calendar menu	calendar	pt-br	Menu da Agenda de Eventos
-calendar preferences	calendar	pt-br	Preferências da Agenda de Eventos
-calendar settings	admin	pt-br	Configurações da Agenda de Eventos
-calendar-fieldname	calendar	pt-br	Agenda de Eventos-Nome do Campo
+calendar event	calendar	pt-br	Evento da Agenda
+calendar holiday management	admin	pt-br	Gerenciamento de feriados da Agenda
+calendar menu	calendar	pt-br	Menu da Agenda
+calendar preferences	calendar	pt-br	Preferências da Agenda
+calendar settings	admin	pt-br	Configurações da Agenda
+calendar-fieldname	calendar	pt-br	Agenda-Nome do Campo
 can't add alarms in the past !!!	calendar	pt-br	Não é possível incluir alarmes no passado !!
 canceled	calendar	pt-br	Cancelado
 charset of file	calendar	pt-br	Charset do arquivo
@@ -59,8 +59,8 @@ days of the week for a weekly repeated event	calendar	pt-br	Dias da semana para 
 days repeated	calendar	pt-br	dias repetidos
 dayview	calendar	pt-br	Visão diária
 default appointment length (in minutes)	calendar	pt-br	duração padrão do compromisso (em minutos)
-default calendar filter	calendar	pt-br	Filtro padrão do calendário
-default calendar view	calendar	pt-br	Visualização padrão do calendário
+default calendar filter	calendar	pt-br	Filtro padrão da agenda
+default calendar view	calendar	pt-br	Visualização padrão da agenda
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	pt-br	Duração padrão dos novos compromissos. A duração é em minutos, ex. 60 para 1 hora
 default week view	calendar	pt-br	Visualização semanal padrão
 delete series	calendar	pt-br	Remover série
@@ -71,11 +71,11 @@ delete this series of recuring events	calendar	pt-br	Remover esta série de event
 disinvited	calendar	pt-br	Desconvidado
 display status of events	calendar	pt-br	Exibir status dos eventos
 displayed view	calendar	pt-br	Visualização exibida
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	pt-br	Exibe sua Agenda de Eventos padrão na sua página inicial. (será exibida quando você clicar sobre o ícone Página Inicial)
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	pt-br	Exibe sua Agenda padrão na sua página inicial. (será exibida quando você clicar sobre o ícone Página Inicial)
 do you want a weekview with or without weekend?	calendar	pt-br	Você quer uma visualização semanal com ou sem finais de semana?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	pt-br	Deseja ser notificado sobre compromissos novos ou alterados? Você será notificado sobre as alterações efetuadas por você mesmo.<br> Você pode limitar essas notificações para apenas algumas alterações. Cada item inclui as notificações listadas sobre o mesmo. Todas as alterações incluem mudança de título, descrição, participantes (menos suas respostas). Se o dono de um evento requisitar qualquer notificação, sempre receberá as respostas dos participantes como aceite ou cancelamentos.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pt-br	Deseja receber regularmente um resumo de seus compromissos via correio eletrônico?<br>O sumário será enviado para seu endereço eletrônico padrão na manhã de cada dia ou na Segunda-feira para resumos semanais (somente se houverem eventos na semana).<br>
-do you wish to autoload calendar holidays files dynamically?	admin	pt-br	Deseja carregar automaticamente arquivos de feriados da Agenda de Eventos dinâmicamente ?
+do you wish to autoload calendar holidays files dynamically?	admin	pt-br	Deseja carregar automaticamente arquivos de feriados da Agenda dinamicamente ?
 download	calendar	pt-br	Baixar
 download this event as ical	calendar	pt-br	Baixar este arquivo como iCal
 duration of the meeting	calendar	pt-br	Duração do evento
@@ -238,7 +238,7 @@ select resources	calendar	pt-br	Selecionar recursos
 select who should get the alarm	calendar	pt-br	Selecionar quem deverá receber o alarme
 set a year only for one-time / non-regular holidays.	calendar	pt-br	Informar ano apenas para feriado flutuante/ocorrência única
 set new events to private	calendar	pt-br	Colocar novos itens como particular
-should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	pt-br	Os convites recusados devem permanecer no seu calendário ?<br>Você poderá aceitá-los depois (ex. quando desfizer conflitos de horários), caso eles ainda estejam em sua Agenda de Eventos.
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	pt-br	Os convites recusados devem permanecer na sua Agenda ?<br>Você poderá aceitá-los depois (ex. quando desfizer conflitos de horários), caso eles ainda estejam em sua Agenda.
 should new events created as private by default ?	calendar	pt-br	Novos eventos criados devem ser colocados como privados por padrão?
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	pt-br	Usuários não logados podem ver sua informação de disponibilidade? Você pode especificar uma senha extra, diferente da senha normal, para proteger esta informação. A disponibilidade está em formato iCal  e somente inclue os horários em que você está ocupado(a). Não são incluídos o título, descrição ou local do evento. A URL para sua disponibilidade é %1.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	pt-br	O status de cada participante (aceito, rejeitado, ...) deve ser mostrado entre parenteses logo após o nome do mesmo?
@@ -293,8 +293,8 @@ weekly	calendar	pt-br	Semanal
 weekview	calendar	pt-br	Visão Semanal
 weekview with weekend	calendar	pt-br	Visão semanal com finais de semana
 weekview without weekend	calendar	pt-br	Visão semanal sem finais de semana
-which events do you want to see when you enter the calendar.	calendar	pt-br	Quais os eventos que você deseja exibir ao iniciar o Calendário?
-which of calendar view do you want to see, when you start calendar ?	calendar	pt-br	Qual a visão do Calendário você deseja exibir ao iniciar o calendário?
+which events do you want to see when you enter the calendar.	calendar	pt-br	Quais os eventos que você deseja exibir ao iniciar a Agenda ?
+which of calendar view do you want to see, when you start calendar ?	calendar	pt-br	Qual a visão da Agenda você deseja exibir ao iniciá-la ?
 whole day	calendar	pt-br	Dia inteiro
 wk	calendar	pt-br	Semana
 work day ends on	calendar	pt-br	Dia de trabalho termina às

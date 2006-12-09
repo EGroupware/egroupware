@@ -1,9 +1,14 @@
+%1 added	addressbook	sl	%1 dodan
 %1 records imported	addressbook	sl	%1 zapisov uvoženih
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	sl	1% zapisov prebranih (niso še uvoženi, lahko greste %2nazaj%3 in odznačite preizkus uvoza)
+%1 starts with '%2'	addressbook	sl	%1 se začne z '%2'
 (e.g. 1969)	addressbook	sl	(npr. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	sl	<b>Ni tipa prevoda <noben> lahko je zaklenjen.</b> Izberite tip prevoda s seznama.
 @-eval() is only availible to admins!!!	addressbook	sl	Funkcija @-eval() je na voljo samo za oskrbniku!
+accounts	addressbook	sl	Računi
 actions	addressbook	sl	Dejanja
+add %1	addressbook	sl	Dodaj %1
+add a new contact	addressbook	sl	Dodaj nov kontakt
 add a single entry by passing the fields.	addressbook	sl	Dodaj  zapis z vnosom polj.
 add custom field	addressbook	sl	Dodaj polje
 address book	common	sl	Adresar
@@ -12,17 +17,23 @@ address book - view	addressbook	sl	Adresar - pogled
 address line 2	addressbook	sl	Naslov - 2. vrstica
 address type	addressbook	sl	Tip naslova
 addressbook	common	sl	Adresar
+addressbook menu	addressbook	sl	Meni adresarja
 addressbook preferences	addressbook	sl	Lastnosti adresarja
 addressbook-fieldname	addressbook	sl	Adresar-Ime polja
 addvcard	addressbook	sl	Dodaj VCard
 advanced search	addressbook	sl	Napredno iskanje
+all contacts	addressbook	sl	Vsi kontakti
 alt. csv import	addressbook	sl	Uvoz CSV datoteke
+always	addressbook	sl	Vedno
 are you shure you want to delete this contact?	addressbook	sl	Res želite zbrisati ta stik?
 are you sure you want to delete this field?	addressbook	sl	Ste prepričani, da želite izbrisati to polje?
+assistent	addressbook	sl	Pomočnik
+assistent phone	addressbook	sl	Telefon pomočnika
 birthday	common	sl	Rojstni dan
 birthdays	common	sl	Rojstni dnevi
 blank	addressbook	sl	Prazen
 business	common	sl	Služba
+business address	addressbook	sl	Službeni naslov
 business city	addressbook	sl	Kraj
 business country	addressbook	sl	Dežela
 business email	addressbook	sl	E-pošta
@@ -31,9 +42,13 @@ business phone	addressbook	sl	Telefon
 business state	addressbook	sl	Država
 business street	addressbook	sl	Naslov
 business zip code	addressbook	sl	Poštna št.
+calendar uri	addressbook	sl	URI koledarja
+can be changed via setup >> configuration	admin	sl	Lahko spremenite preko Nastavitve >> Konfiguracija
 car phone	addressbook	sl	Telefon v avtu
 cell phone	addressbook	sl	GSM
+change all organisation members	addressbook	sl	Spremeni vse člane organizacije
 charset of file	addressbook	sl	Kodna tabela datoteke
+check all	addressbook	sl	Preveri vse
 choose an icon for this contact type	admin	sl	Izberite ikono za to vrsto stika
 chosse an etemplate for this contact type	admin	sl	Izberite eTemplate za to vrsto stika
 city	common	sl	Mesto
@@ -42,11 +57,16 @@ company name	addressbook	sl	Ime podjetja
 configuration	common	sl	Nastavitve
 contact	common	sl	Stik
 contact application	admin	sl	Kontaktna aplikacija
+contact copied	addressbook	sl	Kontakt kopiran
+contact deleted	addressbook	sl	Kontakt izbrisan
+contact id	addressbook	sl	ID kontakta
 contact saved	addressbook	sl	Stik shranjen
 contact settings	admin	sl	Nastavitve stikov
 copied by %1, from record #%2.	addressbook	sl	Kopirano iz zapisa %2 v zapis %1.
+copy a contact and edit the copy	addressbook	sl	Kopiraj kontakt in uredi kopijo
 country	common	sl	Država
 create new links	addressbook	sl	Ustvari nove povezave
+created	addressbook	sl	Ustvarjeno
 credit	addressbook	sl	Zasluge
 csv-fieldname	addressbook	sl	CSV-Ime polja
 csv-filename	addressbook	sl	CSV-Ime datoteke
@@ -55,6 +75,7 @@ custom fields	addressbook	sl	Lastna polja
 debug output in browser	addressbook	sl	Preglej izpis v brskalniku
 default filter	addressbook	sl	Privzeti filter
 delete a single entry by passing the id.	addressbook	sl	Zbriši zapis s podano šifro
+delete this contact	addressbook	sl	Izbriši ta kontakt
 deleted	addressbook	sl	zbrisano
 deletes the photo	addressbook	sl	Zbriše sliko
 department	common	sl	Oddelek
@@ -71,6 +92,8 @@ edit phonenumbers -	addressbook	sl	Uredi telefonske številke -
 email & internet	addressbook	sl	E-pošta in Splet
 empty for all	addressbook	sl	izprazni za vse
 enter the path to the exported file here	addressbook	sl	Vnesite pot do izhodne datoteke
+error deleting the contact !!!	addressbook	sl	Napaka pri brisanju kontakta!
+error saving the contact !!!	addressbook	sl	Napaka pri shranjevanju kontakta!
 existing links	addressbook	sl	Obstoječe povezave
 export	addressbook	sl	izvozi
 export as csv	addressbook	sl	Izvozi v CSV
@@ -78,6 +101,7 @@ export as vcard	addressbook	sl	Izvozi kot VCard
 export contacts	addressbook	sl	Izvozi kontakte
 export file name	addressbook	sl	Ime izvožene datoteke
 export from addressbook	addressbook	sl	Izvoz iz adresarja
+export selection	addressbook	sl	Izvozi izbor
 exported	addressbook	sl	izvoženo
 extra	addressbook	sl	Dodatno
 fax	addressbook	sl	Faks
@@ -102,6 +126,7 @@ home state	addressbook	sl	Država
 home street	addressbook	sl	Naslov
 home zip code	addressbook	sl	Poštna št.
 icon	addressbook	sl	Ikona
+if accounts are already in ldap	admin	sl	če je račun že v LDAP
 import	addressbook	sl	Uvozi
 import contacts	addressbook	sl	Uvozi  kontakte
 import csv-file into addressbook	addressbook	sl	Uvozi CSV-polja v imenik
@@ -119,8 +144,6 @@ last modified	addressbook	sl	nazadnje spremenjeno
 last modified by	addressbook	sl	nazadnje spremenil
 ldap context for contacts	admin	sl	LDAP kontekst za kontakte
 ldap host for contacts	admin	sl	LDAP strežnik za kontakte
-ldap root dn for contacts	admin	sl	LDAP root dn za kontakte
-ldap root pw for contacts	admin	sl	LDAP root pw za povezave
 ldif	addressbook	sl	LDIF
 line 2	addressbook	sl	Vrstica 2
 links	addressbook	sl	Povezave
@@ -131,6 +154,8 @@ locations	addressbook	sl	lokacije
 mark records as private	addressbook	sl	Označi zapise kot zasebne
 message phone	addressbook	sl	Telefon za sporočila
 middle name	addressbook	sl	Srednje ime
+migration finished	addressbook	sl	Migracija končana
+migration to ldap	admin	sl	Migracija na LDAP
 mobile	addressbook	sl	Mobilni
 mobile phone	addressbook	sl	GSM
 modem phone	addressbook	sl	Modem
@@ -157,13 +182,14 @@ photo	addressbook	sl	Slika
 please enter a name for that field !	addressbook	sl	Prosim vpiši ime za to polje!
 please select only one category	addressbook	sl	Izberite samo eno kategorijo
 postal	common	sl	Poštni
-pref	addressbook	sl	privzeta
+pref	addressbook	sl	Privzeto
 prefix	addressbook	sl	Predpona
 public key	addressbook	sl	Javni ključ
 publish into groups:	addressbook	sl	Objavi v skupinah:
 read a list / search for entries.	addressbook	sl	Preberi seznam / iskanje vnosov
 read a list of entries.	addressbook	sl	Preberi seznam vnosov.
 read a single entry by passing the id and fieldlist.	addressbook	sl	Preberi zapis s podano šifro in seznamom polj.
+read only	addressbook	sl	Samo za branje
 record access	addressbook	sl	Dostop do zapisa
 record owner	addressbook	sl	Lastnik zapisa
 role	addressbook	sl	Vloga
@@ -176,6 +202,7 @@ select the type of conversion	addressbook	sl	Izberite tip pretvorbe
 select the type of conversion:	addressbook	sl	Izberite tip pretvorbe:
 show	addressbook	sl	Prikaži
 show birthday reminders on main screen	addressbook	sl	Prikaži opomnike rojstnih dni v glavnem oknu
+start	admin	sl	Začetek
 startrecord	addressbook	sl	Začetni zapis
 state	common	sl	Država
 street	common	sl	Ulica
@@ -191,6 +218,7 @@ to many might exceed your execution-time-limit	addressbook	sl	preveč lahko pres
 today is %1's birthday!	common	sl	Danes ima rojstni dan %1.
 tomorrow is %1's birthday.	common	sl	Jutri ima rojstni dan %1.
 translation	addressbook	sl	Prevod.
+type	addressbook	sl	Vrsta
 update a single entry by passing the fields.	addressbook	sl	Popravi en zapis z vnosom polj.
 use country list	addressbook	sl	Uporabi seznam držav
 vcard	common	sl	VCard

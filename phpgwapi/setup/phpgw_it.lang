@@ -170,6 +170,7 @@ cook islands	common	it	ISOLE COOK
 copy	common	it	Copia
 copy table row	tinymce	it	Copy table row
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copia/Taglia/Incolla non sono disponibili in Mozilla e Firefox.\nVuoi ulteriori informazioni  al riguardo?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	it	Copia/Taglia/Incolla non sono disponibili in Mozilla e Firefox.\nVuoi ulteriori informazioni  al riguardo?
 costa rica	common	it	COSTA RICA
 cote d ivoire	common	it	COSTA D'AVORIO
 could not contact server. operation timed out!	common	it	Impossibile contattare il server. Operazione fuori tempo massimo!
@@ -206,7 +207,7 @@ direction right to left	tinymce	it	Direzione da destra a sinistra
 directory	tinymce	it	Directory
 disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
 disable slider effects	common	it	Disabilita l'effetto effects slider
-disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menu sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
+disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menù sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilitare l'esecuzione di bugfixscript per Internet Explorer 5.5 e superiori per mostrare la trasparenza nelle immagini PNG?
 disabled	common	it	Disabilitato
 display %s first	jscalendar	it	Mostra prima %1
@@ -461,7 +462,7 @@ max number of icons in navbar	common	it	Numero massimo di icone della barra di n
 may	common	it	Maggio
 mayotte	common	it	MAYOTTE
 medium	common	it	Medio
-menu	common	it	Menu
+menu	common	it	Menù
 merge table cells	tinymce	it	Merge table cells
 message	common	it	Messaggio
 mexico	common	it	MESSICO
@@ -497,9 +498,9 @@ new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
 next	common	it	Successivo
-next month (hold for menu)	jscalendar	it	Mese successivo (premi per menu)
+next month (hold for menu)	jscalendar	it	Mese successivo (premi per menù)
 next page	common	it	Pagina successiva
-next year (hold for menu)	jscalendar	it	Anno successivo (premi per menu)
+next year (hold for menu)	jscalendar	it	Anno successivo (premi per menù)
 nicaragua	common	it	NICARAGUA
 niger	common	it	NIGER
 nigeria	common	it	NIGERIA
@@ -680,6 +681,8 @@ seychelles	common	it	SEYCHELLES
 show all	common	it	visualizza tutto
 show all categorys	common	it	Visualizza tutte le categorie
 show clock?	common	it	Mostrare orologio?
+show home and logout button in main application bar?	common	it	Mostrare i pulsanti Home e Logout nella barra applicazioni principale?
+show locationbar	tinymce	it	Mostra barra luogo
 show logo's on the desktop.	common	it	Mostra logo sul desktop
 show menu	common	it	visualizza menu
 show menubar	tinymce	it	Mostra barra menù
@@ -690,9 +693,9 @@ show scrollbars	tinymce	it	Mostra barre di scorrimento
 show statusbar	tinymce	it	Mostra barra di stato
 show the logo's of egroupware and x-desktop on the desktop.	common	it	Mostra il logo di eGroupware e di x-desktop sul desktop.
 show toolbars	tinymce	it	Mostra barre strumenti
-show_more_apps	common	it	ancora
+show_more_apps	common	it	show_more_apps
 showing %1	common	it	visualizzati %1
-showing %1 - %2 of %3	common	it	visualizzo %1 - %2 di %3
+showing %1 - %2 of %3	common	it	visualizzati da %1 a %2 di %3
 sierra leone	common	it	SIERRA LEONE
 singapore	common	it	SINGAPORE
 size	tinymce	it	Dimensione
@@ -744,6 +747,7 @@ this is just a template button	tinymce	it	Questo è solo un bottone template
 this is just a template popup	tinymce	it	Questo è solo un popup template
 this name has been used already	common	it	Questo nome è già stato usato!
 thursday	common	it	Giovedì
+tiled	common	it	tiled
 time	common	it	Ora
 time selection:	jscalendar	it	Selezione Ora:
 time zone	common	it	Fuso orario

@@ -159,7 +159,7 @@ current system-charset is %1.	setup	es-es	El juego de caracteres actual del sist
 current version	setup	es-es	Versión actual
 currently installed languages: %1 <br />	setup	es-es	Idiomas instalados actualmente: %1 <br />
 cyrus imap: admin user,password	setup	es-es	Cyrus IMAP: Usuario administrador, contraseña
-database	setup	es-es	Base de datps
+database	setup	es-es	Base de datos
 database instance (egw domain)	setup	es-es	Instancia de la base de datos (dominio eGW)
 database is version %1 and up to date.	setup	es-es	La versión de la base de datos es %1 y está actualizada.
 database successfully converted from '%1' to '%2'	setup	es-es	La base de datos se convirtió correctamente de '%1' a '%2'

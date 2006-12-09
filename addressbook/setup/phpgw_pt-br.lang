@@ -1,3 +1,4 @@
+%1 added	addressbook	pt-br	%1 adicionado
 %1 contact(s) %2	addressbook	pt-br	%1 contato(s) %2
 %1 contact(s) %2, %3 failed because of insufficent rights !!!	addressbook	pt-br	%1 contato(s) %2, %3 falhou(aram) por insuficiência de direiros de acesso !!!
 %1 fields in %2 other organisation member(s) changed	addressbook	pt-br	%1 campo(s) em %2 outro(s) membro(s) da organização alterado(s)
@@ -10,6 +11,7 @@
 account repository	admin	pt-br	Repositório de contas
 accounts	addressbook	pt-br	Contas
 actions	addressbook	pt-br	Ações
+add %1	addressbook	pt-br	Adicionar %1
 add a contact to this organisation	addressbook	pt-br	Adicionar um contato para esta organização
 add a new contact	addressbook	pt-br	Adicionar um novo contato
 add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os campos.
@@ -66,6 +68,7 @@ company name	addressbook	pt-br	Nome da empresa
 configuration	common	pt-br	Configuração
 contact	common	pt-br	Contato
 contact application	admin	pt-br	Aplicação de Contatos
+contact copied	addressbook	pt-br	Contato copiado
 contact deleted	addressbook	pt-br	Contato removido
 contact id	addressbook	pt-br	ID do contato
 contact repository	admin	pt-br	Repositório de contatos
@@ -74,6 +77,7 @@ contact settings	admin	pt-br	Preferências de Contatos
 contacts and account contact-data to ldap	admin	pt-br	contatos e dados da conta de contatos para LDAP
 contacts to ldap	admin	pt-br	contatos para LDAP
 contacts to ldap, account contact-data to sql	admin	pt-br	contatos para LDAP, dados da conta de contatos para SQL
+contains	addressbook	pt-br	contém
 copied by %1, from record #%2.	addressbook	pt-br	Copiado por %1, do registro #%2.
 copy a contact and edit the copy	addressbook	pt-br	Copiar um contato e editar a cópia
 country	common	pt-br	País
@@ -119,6 +123,7 @@ export as vcard	addressbook	pt-br	Exportar como VCard
 export contacts	addressbook	pt-br	Exportar contatos
 export file name	addressbook	pt-br	Exportar arquivo
 export from addressbook	addressbook	pt-br	Exportar dos Contatos
+export selection	addressbook	pt-br	Exportar seleção
 exported	addressbook	pt-br	exportado
 extra	addressbook	pt-br	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pt-br	Falha ao alterar %1 membro(s) da organização (direitos insuficientes) !!!
@@ -231,9 +236,11 @@ select phone number as prefered way of contact	addressbook	pt-br	Selecione telef
 select the type of conversion	addressbook	pt-br	Selecione o tipo de conversão
 select the type of conversion:	addressbook	pt-br	Selecione o tipo de conversão:
 select where you want to store / retrieve contacts	admin	pt-br	Selecione onde você quer salvar / recuperar contatos
+selected contacts	addressbook	pt-br	contatos selecionados
 show	addressbook	pt-br	Exibir
 show a column for %1	addressbook	pt-br	Exibir uma coluna para %1
 show birthday reminders on main screen	addressbook	pt-br	Exibir lembrete de aniversários na tela principal
+show infolog entries for this organisation	addressbook	pt-br	Exibir entrada de Tarefas para esta organização
 show the contacts of this organisation	addressbook	pt-br	Exibir os contatos desta organização
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	pt-br	Tamanho do popup (Largura x Altura, exemplo: 400x300, se um popup for usado)
 start	admin	pt-br	Iniciar
@@ -263,8 +270,10 @@ used for links and for the own sorting of the list	addressbook	pt-br	usado para 
 vcard	common	pt-br	VCard
 vcards require a first name entry.	addressbook	pt-br	VCards requer um primeiro nome.
 vcards require a last name entry.	addressbook	pt-br	VCards requerem que o último nome esteja preenchido
+view linked infolog entries	addressbook	pt-br	Exibir entradas de Tarefas relacionadas
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pt-br	AVISO!! LDAP é válido somente se você não estiver usando contatos para guardar as contas!
 warning: all contacts found will be deleted!	addressbook	pt-br	AVISO: Todos os contatos encontrados serão removidos!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pt-br	O que deverão exibir os links para os Contatos em outros aplicativos. Valores vazios serão desconsiderados. Você precisará fazer novo login ser alterar esta configuração!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	pt-br	Quando a lista de contatos deverá exibir aquela coluna. "Somente se houver conteúdo" oculta a coluna, a menos que haja conteúdo para ser exibido.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	pt-br	Qual lista de contatos deverá ser selecionada quando incluindo um contato E você não tem direitos de inclusão na lista de contatos atual.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pt-br	Que codificação de caracter deverá ser usado para exportação CSV. O padrão é a codificação desta instalação do eGroupWare.

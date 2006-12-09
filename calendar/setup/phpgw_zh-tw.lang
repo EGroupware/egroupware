@@ -131,6 +131,7 @@ group public only	calendar	zh-tw	群組公用
 groupmember(s) %1 not included, because you have no access.	calendar	zh-tw	無法加入群組成員 %1 ，因為您沒有權限。
 h	calendar	zh-tw	時
 here is your requested alarm.	calendar	zh-tw	這是您要求的提醒。
+hide private infos	calendar	zh-tw	隱藏私人資訊
 high priority	calendar	zh-tw	高優先權
 holiday	calendar	zh-tw	假日
 holiday management	calendar	zh-tw	假日管理

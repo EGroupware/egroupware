@@ -1,4 +1,8 @@
 %1 email addresses inserted	common	da	%1 e-mail adresser insat
+%1 is not executable by the webserver !!!	common	da	%1 kan ikke udføres af Web server
+%1 manual	common	da	%1 manual
+%1 start	common	da	%1 start
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	da	%1Vælg en anden folder%2<br/>eller gør %3 skrivbar for Web server
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	da	%1eGroupWare%2 er et multi-bruger, web-baseret sammenarbejds værktøj skrevet i %3PHP%4.
 (shift-)click or drag to change value	jscalendar	da	(Shift)Klik eller træk for at ændre værdien
 - click on any of the time parts to increase it	jscalendar	da	- Klik på hvilken som helst tidsandelerne for at forøge den
@@ -9,24 +13,27 @@
 - use the %1, %2 buttons to select year	jscalendar	da	- Brug %1, %2 knapperne for at vælge år
 00 (disable)	admin	da	00 (deaktiveret)
 13 (ntp)	admin	da	13 (ntp)
+3 number of chars for day-shortcut	jscalendar	da	3 antal tegn for dag-forkortelse
+3 number of chars for month-shortcut	jscalendar	da	3 antal tegn for måneds-forkortelse
 80 (http)	admin	da	80 (http)
+a editor instance must be focused before using this command.	tinymce	da	Der skal sættes fokus på sessionen, før man kan bruge denne kommando
 about	common	da	Om
 about %1	common	da	Om %1
+about egroupware	common	da	Om eGroupWare
 about the calendar	jscalendar	da	Om kalenderen
 access	common	da	Adgang
 access not permitted	common	da	Ingen adgang
-access type	common	da	Adgangstype
 account has been created	common	da	Kontoen er oprettet
 account has been deleted	common	da	Kontoen er slettet
 account has been updated	common	da	Kontoen er opdateret
 account is expired	common	da	Kontoen er udløbet
-account preferences	common	da	Konto preferencer
 acl	common	da	ACL
 action	common	da	Handling
 active	common	da	Aktiv
 add	common	da	Tilføj
 add %1 category for	common	da	Tilføj kategorien %1 for
 add category	common	da	Tilføj kategori
+add shortcut	common	da	Tilføj forkortelse
 add sub	common	da	Tilføj underkategori
 addressbook	common	da	Adressebog
 admin	common	da	Admin
@@ -34,7 +41,14 @@ administration	common	da	Administration
 afghanistan	common	da	Afghanistan
 albania	common	da	Albanien
 algeria	common	da	Algeriet
+align center	tinymce	da	Centrer
+align full	tinymce	da	Lige margin
+align left	tinymce	da	Venstrestil
+align right	tinymce	da	Højrestil
+alignment	tinymce	da	Justering
 all	common	da	Alle
+all fields	common	da	alle felter
+all occurrences of the search string was replaced.	tinymce	da	Alle forekomster af søge strengen er ændrede.
 alphabet	common	da	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z
 american samoa	common	da	Amerikansk Samoa
 andorra	common	da	Andorra
@@ -42,6 +56,7 @@ angola	common	da	Angola
 anguilla	common	da	Anguilla
 antarctica	common	da	Antarktis
 antigua and barbuda	common	da	Antigua og Barbuda
+application	common	da	Applikation
 apply	common	da	Anvend
 april	common	da	April
 are you sure you want to delete these entries ?	common	da	Vil du virkelige slette disse felter?
@@ -70,11 +85,16 @@ belgium	common	da	Belgien
 belize	common	da	Belize
 benin	common	da	Benin
 bermuda	common	da	Bermuda
+bg color	tinymce	da	Bg color
 bhutan	common	da	Bhutan
 blocked, too many attempts	common	da	Afvist, for mange forsøg
+bold	common	da	Fed
 bolivia	common	da	Bolivia
+border	common	da	Kant
+border color	tinymce	da	Border color
 bosnia and herzegovina	common	da	Bosnien og Herzegovina
 botswana	common	da	Botswana
+bottom	common	da	Bottom
 bouvet island	common	da	Bouvet Øen
 brazil	common	da	Brazilien
 british indian ocean territory	common	da	Britisk Indiske ocean
@@ -86,7 +106,9 @@ calendar	common	da	Kalender
 cambodia	common	da	Cambodia
 cameroon	common	da	Cameroon
 canada	common	da	Canada
-cancel	common	da	Annullér
+cancel	common	da	Fortryd
+cannot replace %1 because it is a directory	common	da	Kan ikke erstatte %1, fordi det er en folder
+cant open '%1' for %2	common	da	Kan ikke åbne '%1' for %2
 cape verde	common	da	Cape Verde
 categories	common	da	Kategorier
 categories for	common	da	kategorier for
@@ -95,16 +117,28 @@ category %1 has been added !	common	da	Kategorien %1 er blevet tilføjet!
 category %1 has been updated !	common	da	Kategorien %1 er blevet opdateret!
 cayman islands	common	da	Cayman Øerne
 cc	common	da	CC
+cellpadding	tinymce	da	Cellemargen
+cellspacing	tinymce	da	Afstand mellem celler
+center	tinymce	da	Midt i
 central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
 change	common	da	Ændre
 charset	common	da	ISO-8859-1
 check installation	common	da	Kontroller installation
+check now	common	da	Check nu
 chile	common	da	Chile
 china	common	da	Kina
+choose a background color	common	da	Vælg en baggrundsfarve
+choose a background color for the icons	common	da	Vælg en baggrundsfarve for ikonerne
+choose a background image.	common	da	Vælg et baggrundsbillede.
+choose a background style.	common	da	Vælg en baggrundsstil.
+choose a text color for the icons	common	da	Vælg ikonernes tekstfarve
+choose directory to move selected folders and files to.	tinymce	da	Vælg folder hvortil de valgte foldere og filer skal flyttes.
 choose the category	common	da	Vælg kategorien
 choose the parent category	common	da	Vælg ovenstående kategori
 christmas island	common	da	Juleøen
+class	tinymce	da	Klasse
+cleanup messy code	tinymce	da	Ryd op i koden
 clear	common	da	Slet
 clear form	common	da	Slet formular
 click	common	da	Klik
@@ -113,13 +147,20 @@ click or mouse over to show menus?	common	da	Klik eller før musen over til sidem
 close	common	da	Luk
 cocos (keeling) islands	common	da	Cocos (Keeling) øerne
 colombia	common	da	Columbia
-comments	common	da	Bemærkninger
+columns	tinymce	da	Kolonner
+comment	tinymce	da	Kommentar
+common preferences	common	da	Fælles præferencer
 comoros	common	da	Comoros
 company	common	da	Firma
+configuration problem	tinymce	da	Konfigurations problem
 congo	common	da	Congo
 congo, the democratic republic of the	common	da	Congo, Den Demokratiske Republik
+contacting server...	common	da	Kontakter server...
 cook islands	common	da	Cook øerne
 copy	common	da	Kopiér
+copy table row	tinymce	da	Copy table row
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
 costa rica	common	da	Costa Rica
 cote d ivoire	common	da	Elfenbenskysten
 create	common	da	Opret
@@ -129,16 +170,19 @@ cuba	common	da	Cuba
 currency	common	da	Valutaenhed
 current	common	da	Nuværende
 current users	common	da	Nuværende antal brugere
+cut table row	tinymce	da	Cut table row
 cyprus	common	da	Cupern
 czech republic	common	da	Tjekkiet
 date	common	da	Dato
 date due	common	da	Skal være færdig
-date hired	common	da	Dato hyret
+date modified	tinymce	da	Dato ændret
 date selection:	jscalendar	da	Dato valg:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	da	December
+default	tinymce	da	Standard
 default category	common	da	Standard Kategori
 delete	common	da	Slet
+delete row	common	da	Slet række
 denmark	common	da	Danmark
 description	common	da	Beskrivelse
 detail	common	da	Detalje
@@ -149,10 +193,9 @@ disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktiver kørsel af fejlfindingsscript for Internet Explorer 5.5 eller nyere for at vise det transparente i PNG billeder?
 disabled	common	da	Slået fra
-display monday first	jscalendar	da	Vis mandag først
-display sunday first	jscalendar	da	Vis søndag først
 djibouti	common	da	Djibouti
 do you also want to delete all subcategories ?	common	da	Ønsker du at slette alle underkategorierne?
+do you want to use the wysiwyg mode for this textarea?	tinymce	da	Vil du bruge WYSIWYG mode til dette textområde?
 domain	common	da	Domæne
 domain name for mail-address, eg. "%1"	common	da	domænenavn til e-mail adresser, f.eks "%1"
 domestic	common	da	Indenrigs
@@ -176,7 +219,7 @@ email-address of the user, eg. "%1"	common	da	email-adresse for brugeren, f.eks.
 enabled	common	da	Slået til
 end date	common	da	Slutdato
 end time	common	da	Sluttid
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware &nbsp; eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast stien for eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware   eller nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 entry has been deleted sucessfully	common	da	Emnet er succesrigt slettet
 entry updated sucessfully	common	da	Emnet er succesrigt opdateret
 equatorial guinea	common	da	Equatorial Guinea
@@ -187,7 +230,6 @@ error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %
 error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
-exit	common	da	Afslut
 falkland islands (malvinas)	common	da	Falklands Øerne
 faroe islands	common	da	Færøerne
 fax number	common	da	Fax nummer
@@ -242,6 +284,7 @@ guinea-bissau	common	da	Guinea-Bissau
 guyana	common	da	Guyana
 haiti	common	da	Haiti
 heard island and mcdonald islands	common	da	Heard Øen og McDonald øerne
+height	common	da	Højde
 help	common	da	Hjælp
 high	common	da	Høj
 highest	common	da	Højeste
@@ -253,9 +296,21 @@ hong kong	common	da	Hong Kong
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
 hungary	common	da	Ungarn
 iceland	common	da	Island
+image description	tinymce	da	Alternativ tekst
+image url	common	da	Billedets adresse
+indent	tinymce	da	Ryk til højre
 india	common	da	Indien
 indonesia	common	da	Indonesien
+insert	tinymce	da	Indsæt
 insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
+insert column after	common	da	Indslt kolonne efter
+insert column before	common	da	Indsæt kolonne foran
+insert row after	common	da	Indsæt række efter
+insert row before	common	da	Indsæt række foran
+insert/edit image	tinymce	da	Indsæt / rediger billede
+insert/edit link	tinymce	da	Indsæt eller rediger link
+insert/modify table	tinymce	da	Indsæt/rediger tabel
+inserts a new table	tinymce	da	Indsætter en ny tabel
 international	common	da	International
 invalid ip address	common	da	Ugyldig IP
 invalid password	common	da	Ugyldig adgangskode
@@ -265,7 +320,7 @@ ireland	common	da	Irland
 israel	common	da	Israel
 it has been more then %1 days since you changed your password	common	da	Det er mere end %1 dage siden du sidst ændrede dit password
 it is recommended that you run setup to upgrade your tables to the current version	common	da	Det anbefales at du kører setup for at opgradere dine tabeller til den nuværende version.
-italic	common	da	Kusiv
+italic	common	da	Kursiv
 italy	common	da	Italien
 jamaica	common	da	Jamaica
 january	common	da	Januar
@@ -289,15 +344,16 @@ last page	common	da	Sidste side
 lastname	common	da	Efternavn
 latvia	common	da	Letland
 lebanon	common	da	Libanon
+left	common	da	Venstre
 lesotho	common	da	Lesotho
 liberia	common	da	Liberia
 libyan arab jamahiriya	common	da	Libyen
 license	common	da	Licens
 liechtenstein	common	da	Liechenstein
+link url	tinymce	da	Linkadresse
 list	common	da	Liste
 lithuania	common	da	Lithuania
 local	common	da	Lokal
-location	common	da	Lokation
 login	common	da	Login
 loginid	common	da	LoginID
 logout	common	da	Log ud
@@ -326,10 +382,10 @@ may	common	da	Maj
 mayotte	common	da	Mayotte
 medium	common	da	Medium
 menu	common	da	Menu
+merge table cells	tinymce	da	Merge table cells
 message	common	da	Besked
 mexico	common	da	Mexico
 micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
-mobile	common	da	Mobil
 moldova, republic of	common	da	Moldova, Republikken
 monaco	common	da	Monaco
 monday	common	da	Mandag
@@ -349,7 +405,6 @@ never	common	da	Aldrig
 new caledonia	common	da	Ny Caledonien
 new entry added sucessfully	common	da	Nyt punkt succesrigt tilføjet
 new main category	common	da	Ny hovedkategori
-new phrase has been added	common	da	Ny sætning er tilføjet
 new value	common	da	Ny Værdi
 new zealand	common	da	New Zealand
 next	common	da	Næste
@@ -382,14 +437,17 @@ on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
 on mouse over	common	da	Ved mus over
 only private	common	da	kun private
 only yours	common	da	Kun Din
+open link in a new window	tinymce	da	Luk linket op i et nyt vindue
+open link in the same window	tinymce	da	Luk linket op i samme vindue
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	åben popup vindue
+ordered list	common	da	Nummerliste
 original	common	da	Original
 other	common	da	Anden
+outdent	tinymce	da	Ryk til venstre
 overview	common	da	Oversigt
 owner	common	da	Ejer
 page was generated in %1 seconds	common	da	Siden var genereret på %1 sekunder
-pager	common	da	Pager
 pakistan	common	da	Pakistan
 palau	common	da	Palau
 palestinian territory, occupied	common	da	Palestina, Besatte Territorie
@@ -401,6 +459,8 @@ parent category	common	da	Ovenstående Kategori
 password	common	da	Adgangskode
 password could not be changed	common	da	Adgangskoden kunne ikke ændres
 password has been updated	common	da	Password er opdateret
+paste table row after	tinymce	da	Paste table row after
+paste table row before	tinymce	da	Paste table row before
 path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!!!
 pattern for search in addressbook	common	da	Mønster for søg i Adressebog
 pattern for search in calendar	common	da	Mønster for søg i Kalender
@@ -409,7 +469,6 @@ permissions to the files/users directory	common	da	Rettigheder for fil/bruger ma
 personal	common	da	Personlig
 peru	common	da	Peru
 philippines	common	da	Fillipinerne
-phone	common	da	Telefon
 phone number	common	da	Telefonnummer
 pitcairn	common	da	Pitcairn
 please %1 by hand	common	da	Udfør venligst %1 manuelt
@@ -437,13 +496,17 @@ puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 read	common	da	Læs
 read this list of methods.	common	da	Læs denne liste over metoder
+redo	tinymce	da	Gør igen
 reject	common	da	Afvis
+remove col	tinymce	da	Fjern kolonne
 rename	common	da	Omdøb
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
 returns an array of todo items	common	da	Returnere et array af opgaver
 returns struct of users application access	common	da	Returnere en struct af brugerapplikations adgang
 reunion	common	da	Reunion
+right	common	da	Højre
 romania	common	da	Romanien
+rows	tinymce	da	Rækker
 russian federation	common	da	Rusland
 rwanda	common	da	Rwanda
 saint helena	common	da	Sankt Helena
@@ -491,15 +554,16 @@ slovakia	common	da	Slovakiet
 slovenia	common	da	Slovenien
 solomon islands	common	da	Solomon Øerne
 somalia	common	da	Somalia
-sorry, there was a problem processing your request.	common	da	Desværre opstod der et problem med at behandle Dit ønske.
 sorry, your login has expired	login	da	Desværre, Din session er udløbet
 south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spain	common	da	Spanien
+split table cells	tinymce	da	Split table cells
 sri lanka	common	da	Sri Lanka
 start date	common	da	Startdato
 start time	common	da	Starttid
 status	common	da	Status
+striketrough	tinymce	da	Gennemstreg
 subject	common	da	Emne
 submit	common	da	Send
 sudan	common	da	Sudan
@@ -510,9 +574,13 @@ swaziland	common	da	Swaziland
 sweden	common	da	Sverige
 switzerland	common	da	Schweiz
 syrian arab republic	common	da	Syrien, Den Arabiske Republik
+table cell properties	tinymce	da	Table cell properties
+table properties	common	da	Table properties
+table row properties	tinymce	da	Table row properties
 taiwan	common	da	Taiwan/Taipei
 tajikistan	common	da	Tajikistan
 tanzania, united republic of	common	da	Tanzania, Den forenede Republik
+target	tinymce	da	Target
 thailand	common	da	Thailand
 the api is current	common	da	APIen er up-to-date
 the api requires an upgrade	common	da	APIen skal opdateres
@@ -524,7 +592,6 @@ this name has been used already	common	da	Dette navn er allerede i brug!
 thursday	common	da	Torsdag
 time	common	da	Tid
 time selection:	jscalendar	da	Tid valgt:
-time tracking	common	da	Tidsregistrering
 time zone	common	da	Tidszone
 time zone offset	common	da	Tidszone forskel
 title	common	da	Titel
@@ -538,8 +605,8 @@ togo	common	da	Togo
 tokelau	common	da	Tokelau
 tonga	common	da	Tonga
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	da	For mange fejlede forsøg på at logge ind: %1 fra brugeren '%2', %3 fra IP'en %4
+top	common	da	Top
 total	common	da	Total
-translation management	common	da	Håndtering af oversættelser
 trinidad and tobago	common	da	Trinidad og Tobago
 tuesday	common	da	Tirsdag
 tunisia	common	da	Tunesien
@@ -549,20 +616,22 @@ turks and caicos islands	common	da	Tyrkiske og Caicos Øerne
 tuvalu	common	da	Tuvalu
 uganda	common	da	Uganda
 ukraine	common	da	Ukraine
+underline	common	da	Understreg
+undo	tinymce	da	Fortryd
 united arab emirates	common	da	Forenede Arabiske Emirater
 united kingdom	common	da	England
 united states	common	da	USA
 united states minor outlying islands	common	da	USA Mindre omkringliggende øer
 unknown	common	da	Ukendt
-update	common	da	Opdatering
-updated	common	da	Opdatéret
+unlink	tinymce	da	Fjern link
+unordered list	tinymce	da	Bulletliste
+update	common	da	Opdater
 url	common	da	URL
 uruguay	common	da	Uruguay
 use button to search for	common	da	brug knappen for at søge efter
 use button to search for address	common	da	brug knappen for at søge efter adresser
 use button to search for calendarevent	common	da	brug knappen for at søge efter kalender hændelser
 use button to search for project	common	da	brug knappen for at søge efter projekter
-use cookies	login	da	Brug cookies
 user	common	da	Bruger
 user accounts	common	da	bruger kontoer
 user groups	common	da	bruger grupper
@@ -570,11 +639,10 @@ username	common	da	Brugernavn
 users	common	da	Brugere
 users choice	common	da	Brugerens Valg
 uzbekistan	common	da	Uzbekistan
-vacation hours per year	common	da	Antal ferie timer om året
-vacation hours used	common	da	Anvendte ferie timer
 vanuatu	common	da	Vanuatu
 venezuela	common	da	Venezuela
 version	common	da	Version
+vertical alignment	tinymce	da	Vertical alignment
 viet nam	common	da	Viet Nam
 view	common	da	Se
 virgin islands, british	common	da	Jomfru Øer, De Britiske
@@ -584,6 +652,7 @@ wednesday	common	da	Onsdag
 welcome	common	da	Velkommen
 western sahara	common	da	Vest Sahara
 which groups	common	da	Hvilke grupper
+width	common	da	Bredde
 wk	jscalendar	da	uge
 work email	common	da	arbejds e-mail
 written by:	common	da	Skrevet af:
@@ -591,16 +660,14 @@ year	common	da	År
 yemen	common	da	Yemen
 yes	common	da	Ja
 you are required to change your password during your first login	common	da	Du skal ændre Dit password ved Din første log ind
-you have %1 new messages!	common	da	Du har %1 nye beskeder!
-you have 1 new message!	common	da	Du har 1 ny besked!
-you have been successfully logged out	login	da	Du er nu succesrigt logget ud
+you have been successfully logged out	login	da	Du er nu logget ud
 you have not entered a title	common	da	Du har ikke indtastet en titel
 you have not entered a valid date	common	da	Du har ikke indtastet en gyldig dato
 you have not entered a valid time of day	common	da	Du har ikke indtastet en gyldig tidspunkt
 you have not entered participants	common	da	Du har ikke indtastet deltagere
 you have selected an invalid date	common	da	Du har valgt en ugyldig dato!
 you have selected an invalid main category	common	da	Du har valgt en ugyldig hovedkategori!
-you have successfully logged out	common	da	Du har successrigt logget ud
+you have successfully logged out	common	da	Du har logget ud
 your message could <b>not</b> be sent!<br>	common	da	Din besked kunne <b>ikke</b> sendes!
 your message has been sent	common	da	Din besked er afsendt
 your search returned %1 matchs	common	da	Søgningen leverede %1 resultater
@@ -610,107 +677,3 @@ your settings have been updated	common	da	Dine indstillinger er opdateret
 yugoslavia	common	da	Jugoslavien
 zambia	common	da	Zambia
 zimbabwe	common	da	Zimbabwe
-bold	tinymce	da	Fed
-italic	tinymce	da	Kursiv
-underline	tinymce	da	Understreg
-striketrough	tinymce	da	Gennemstreg
-align left	tinymce	da	Venstrestil
-align center	tinymce	da	Centrer
-align right	tinymce	da	H&#248;jrestil
-align full	tinymce	da	Lige margin
-unordered list	tinymce	da	Bulletliste
-ordered list	tinymce	da	Nummerliste
-outdent	tinymce	da	Ryk til venstre
-indent	tinymce	da	Ryk til h&#248;jre
-undo	tinymce	da	Fortryd
-redo	tinymce	da	G&#248;r igen
-insert/edit link	tinymce	da	Inds&#230;t link
-unlink	tinymce	da	Fjern link
-insert/edit image	tinymce	da	Inds&#230;t billede
-cleanup messy code	tinymce	da	Ryd op i koden
-a editor instance must be focused before using this command.	tinymce	da	Der skal s&#230;ttes fokus p&#229; sessionen, f&#248;r man kan bruge denne kommando
-do you want to use the wysiwyg mode for this textarea?	tinymce	da	Vil du bruge WYSIWYG mode til dette textomr&#229;de?
-insert/edit link	tinymce	da	Inds&#230;t eller rediger link
-insert	tinymce	da	Inds&#230;t
-update	tinymce	da	Opdater
-cancel	tinymce	da	Fortryd
-link url	tinymce	da	Linkadresse
-target	tinymce	da	Target
-open link in the same window	tinymce	da	Luk linket op i samme vindue
-open link in a new window	tinymce	da	Luk linket op i et nyt vindue
-insert/edit image	tinymce	da	Inds&#230;t / rediger billede
-image url	tinymce	da	Billedets adresse
-image description	tinymce	da	Alternativ tekst
-help	tinymce	da	Hj&#230;lp
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-bold	tinymce	da	Fed
-italic	tinymce	da	Kursiv
-underline	tinymce	da	Understreg
-striketrough	tinymce	da	Gennemstreg
-align left	tinymce	da	Venstrestil
-align center	tinymce	da	Centrer
-align right	tinymce	da	H&#248;jrestil
-align full	tinymce	da	Lige margin
-unordered list	tinymce	da	Bulletliste
-ordered list	tinymce	da	Nummerliste
-outdent	tinymce	da	Ryk til venstre
-indent	tinymce	da	Ryk til h&#248;jre
-undo	tinymce	da	Fortryd
-redo	tinymce	da	G&#248;r igen
-insert/edit link	tinymce	da	Inds&#230;t link
-unlink	tinymce	da	Fjern link
-insert/edit image	tinymce	da	Inds&#230;t billede
-cleanup messy code	tinymce	da	Ryd op i koden
-a editor instance must be focused before using this command.	tinymce	da	Der skal s&#230;ttes fokus p&#229; sessionen, f&#248;r man kan bruge denne kommando
-do you want to use the wysiwyg mode for this textarea?	tinymce	da	Vil du bruge WYSIWYG mode til dette textomr&#229;de?
-insert/edit link	tinymce	da	Inds&#230;t eller rediger link
-insert	tinymce	da	Inds&#230;t
-update	tinymce	da	Opdater
-cancel	tinymce	da	Fortryd
-link url	tinymce	da	Linkadresse
-target	tinymce	da	Target
-open link in the same window	tinymce	da	Luk linket op i samme vindue
-open link in a new window	tinymce	da	Luk linket op i et nyt vindue
-insert/edit image	tinymce	da	Inds&#230;t / rediger billede
-image url	tinymce	da	Billedets adresse
-image description	tinymce	da	Alternativ tekst
-help	tinymce	da	Hj&#230;lp
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-inserts a new table	tinymce	da	Inds&#230;tter en ny tabel
-insert row before	tinymce	da	Inds&#230;t r&#230;kke foran
-insert row after	tinymce	da	Inds&#230;t r&#230;kke efter
-delete row	tinymce	da	Slet r&#230;kke
-insert column before	tinymce	da	Inds&#230;t kolonne foran
-insert column after	tinymce	da	Indslt kolonne efter
-remove col	tinymce	da	Fjern kolonne
-insert/modify table	tinymce	da	Inds&#230;t/rediger tabel
-width	tinymce	da	Bredde
-height	tinymce	da	H&#248;jde
-columns	tinymce	da	Kolonner
-rows	tinymce	da	R&#230;kker
-cellspacing	tinymce	da	Afstand mellem celler
-cellpadding	tinymce	da	Cellemargen
-border	tinymce	da	Kant
-alignment	tinymce	da	Justering
-default	tinymce	da	Standard
-left	tinymce	da	Venstre
-right	tinymce	da	H&#248;jre
-center	tinymce	da	Midt i
-class	tinymce	da	Klasse
-table row properties	tinymce	da	Table row properties
-table cell properties	tinymce	da	Table cell properties
-table row properties	tinymce	da	Table row properties
-table cell properties	tinymce	da	Table cell properties
-vertical alignment	tinymce	da	Vertical alignment
-top	tinymce	da	Top
-bottom	tinymce	da	Bottom
-table properties	tinymce	da	Table properties
-border color	tinymce	da	Border color
-bg color	tinymce	da	Bg color
-merge table cells	tinymce	da	Merge table cells
-split table cells	tinymce	da	Split table cells
-merge table cells	tinymce	da	Merge table cells
-cut table row	tinymce	da	Cut table row
-copy table row	tinymce	da	Copy table row
-paste table row before	tinymce	da	Paste table row before
-paste table row after	tinymce	da	Paste table row after
