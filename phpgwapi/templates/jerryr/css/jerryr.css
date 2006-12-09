@@ -323,9 +323,9 @@ body {
 #divAppIconBar
 {
 	/*background-color:#fbf8f1;*/
-	border-left: 1px solid #9f9f9f;
-	border-right: 1px solid #9f9f9f;
-	background-image: url(../images/iconBarBack.png); 
+	/*border-left: 1px solid #9f9f9f;*/
+	/*border-right: 1px solid #9f9f9f;*/
+	/*background-image: url(../images/iconBarBack.png);*/ 
 	background-repeat: repeat-x;
 	height: 57px;
 	padding:0px;
@@ -364,7 +364,7 @@ body {
 	vertical-align:bottom;
 	border: 0px solid black;
 	padding-left:186px;
-	padding-top:10px;
+	padding-top:0px;
 	/*margin-top: 18px;*/
 }
 
