@@ -136,7 +136,7 @@
 			$this->preferences    =& CreateObject('phpgwapi.preferences');
 			$this->applications   =& CreateObject('phpgwapi.applications');
 			$this->contenthistory =& CreateObject('phpgwapi.contenthistory');
-			$this->datetime       =& CreateObject('phpgwapi.datetime');
+			$this->datetime       =& CreateObject('phpgwapi.egw_datetime');
 
 			include_once(EGW_INCLUDE_ROOT.'/phpgwapi/inc/class.error.inc.php');
 
@@ -146,8 +146,14 @@
 			{
 				$this->verify_session();
 				$this->applications->read_installed_apps();	// to get translated app-titles, has to be after verify_session
-
+				
 				$this->define_egw_constants();
+
+				// setup the new eGW framework (template sets)
+				$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
+				require_once(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set'].
+					'/class.'.$class.'.inc.php');
+				$this->framework =& new $class;
 
 				$this->load_theme_info();
 

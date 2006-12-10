@@ -684,15 +684,14 @@
 		*/
 		function list_templates()
 		{
+			$list = array();
 			$d = dir(EGW_SERVER_ROOT . '/phpgwapi/templates');
-			while ($entry=$d->read())
+			while (($entry=$d->read()))
 			{
-				 if ($entry != '..' && is_file(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/setup/setup.inc.php')
-				 )
+				if ($entry != '..' && file_exists(EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry .'/class.'.$entry.'_framework.inc.php'))
 				{
 					$list[$entry]['name'] = $entry;
-					$f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php';
-					if (file_exists ($f))
+					if (file_exists ($f = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $entry . '/setup/setup.inc.php'))
 					{
 						include($f);
 						$list[$entry]['title'] = $GLOBALS['egw_info']['template'][$entry]['title'];
@@ -703,11 +702,9 @@
 					}
 				}
 			}
-			//_debug_array($GLOBALS['egw_info'][template]);
-			//die();
-			
 			$d->close();
 			ksort($list);
+
 			return $list;
 		}
 
@@ -715,10 +712,12 @@
 		 * get template dir of an application
 		 *
 		 * @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+		 * @static 
+		 * @return string/boolean dir or false if no dir is found
 		 */
 		function get_tpl_dir($appname = '')
 		{
-			if (! $appname)
+			if (!$appname)
 			{
 				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 			}
@@ -744,12 +743,11 @@
 			{
 				$GLOBALS['egw_info']['server']['template_set'] = $GLOBALS['egw_info']['user']['preferences']['common']['template_set'];
 			}
-			elseif ($GLOBALS['egw_info']['server']['template_set'] == 'user_choice' ||
-				!isset($GLOBALS['egw_info']['server']['template_set']))
+			if (!file_exists(EGW_SERVER_ROOT.'/phpgwapi/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/class.'.
+				$GLOBALS['egw_info']['server']['template_set'].'_framework.inc.php'))
 			{
-				$GLOBALS['egw_info']['server']['template_set'] = 'default';
+				$GLOBALS['egw_info']['server']['template_set'] = 'idots';
 			}
-
 			$tpldir         = EGW_SERVER_ROOT . '/' . $appname . '/templates/' . $GLOBALS['egw_info']['server']['template_set'];
 			$tpldir_default = EGW_SERVER_ROOT . '/' . $appname . '/templates/default';
 
@@ -871,6 +869,17 @@
 			}
 		}
 
+		/**
+		 * Searches and image by a given search order (it maintains a cache of the existing images):
+		 * - image dir of the application for the given template
+		 * - image dir of the application for the default template
+		 * - image dir of the API for the given template
+		 * - image dir of the API for the default template
+		 *
+		 * @param string $appname
+		 * @param string $image
+		 * @return string url of the image
+		 */
 		function find_image($appname,$image)
 		{
 			$imagedir = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/images';
@@ -993,6 +1002,15 @@
 			return $imgfile;
 		}
 
+		/**
+		 * Searches a appname, template and maybe language and type-specific image
+		 *
+		 * @param string $appname
+		 * @param string $image
+		 * @param string $ext
+		 * @param boolean $use_lang
+		 * @return string url of the image
+		 */
 		function image($appname,$image='',$ext='',$use_lang=True)
 		{
 			if (!is_array($image))
@@ -1026,123 +1044,41 @@
 			return $image_found;
 		}
 
+		/**
+		 * Searches an image of a given type, if not found also without type/extension
+		 *
+		 * @param string $appname
+		 * @param string $image
+		 * @param string $extension
+		 * @return string url of the image
+		 */
 		function image_on($appname,$image,$extension='_on')
 		{
-			$with_extension = $this->image($appname,$image,$extension);
-			$without_extension = $this->image($appname,$image);
-			if($with_extension != '')
+			if (($with_extension = $this->image($appname,$image,$extension)))
 			{
 				return $with_extension;
 			}
-			elseif($without_extension != '')
+			if(($without_extension = $this->image($appname,$image)))
 			{
 				return $without_extension;
 			}
-			else
-			{
-				return '';
-			}
+			return '';
 		}
 
 		/**
-		 * none yet
-		 *
-		 * *someone wanna add some detail here*
+	 	 * prepare an array with variables used to render the navbar
+		 * 
+		 * @deprecated inherit from egw_framework class in your template and use egw_framework::_navbar_vars()
 		 */
 		function navbar()
 		{
-			
-
-			list($first) = each($GLOBALS['egw_info']['user']['apps']);
-			if(is_array($GLOBALS['egw_info']['user']['apps']['admin']) && $first != 'admin')
-			{
-				$newarray['admin'] = $GLOBALS['egw_info']['user']['apps']['admin'];
-				foreach($GLOBALS['egw_info']['user']['apps'] as $index => $value)
-				{
-					if($index != 'admin')
-					{
-						$newarray[$index] = $value;
-					}
-				}
-				$GLOBALS['egw_info']['user']['apps'] = $newarray;
-				reset($GLOBALS['egw_info']['user']['apps']);
-			}
-			unset($index);
-			unset($value);
-			unset($newarray);
-
-			foreach($GLOBALS['egw_info']['user']['apps'] as $app => $data)
-			{
-				if (is_long($app))
-				{
-					continue;
-				}
-
-				if ($app == 'preferences' || $GLOBALS['egw_info']['apps'][$app]['status'] != 2 && $GLOBALS['egw_info']['apps'][$app]['status'] != 3)
-				{
-					$GLOBALS['egw_info']['navbar'][$app]['title'] = $GLOBALS['egw_info']['apps'][$app]['title'];
-					$GLOBALS['egw_info']['navbar'][$app]['url']   = $GLOBALS['egw']->link('/' . $app . '/index.php',$GLOBALS['egw_info']['flags']['params'][$app]);
-					$GLOBALS['egw_info']['navbar'][$app]['name']  = $app;
-
-					// create popup target
-					if ($data['status'] == 4)
-					{
-						$GLOBALS['egw_info']['navbar'][$app]['target'] = ' target="'.$app.'" onClick="'."if (this != '') { window.open(this+'".
-							(strstr($GLOBALS['egw_info']['navbar'][$app]['url'],'?') || 
-							ini_get('session.use_trans_sid') && substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4' ?'&':'?').
-							"referer='+encodeURI(location),this.target,'width=800,height=600,scrollbars=yes,resizable=yes'); return false; } else { return true; }".'"';
-					}
-
-					if ($app != $GLOBALS['egw_info']['flags']['currentapp'])
-					{
-						$GLOBALS['egw_info']['navbar'][$app]['icon']  = $this->image($app,Array('navbar','nonav'));
-						$GLOBALS['egw_info']['navbar'][$app]['icon_hover']  = $this->image_on($app,Array('navbar','nonav'),'-over');
-					}
-					else
-					{
-						$GLOBALS['egw_info']['navbar'][$app]['icon']  = $this->image_on($app,Array('navbar','nonav'),'-over');
-						$GLOBALS['egw_info']['navbar'][$app]['icon_hover']  = $this->image($app,Array('navbar','nonav'));
-					}
-
-//					if($GLOBALS['egw_info']['navbar'][$app]['icon'] == '')
-//					{
-//						$GLOBALS['egw_info']['navbar'][$app]['icon']  = $this->image('phpgwapi','nonav');
-//					}
-				}
-			}
-			if ($GLOBALS['egw_info']['flags']['currentapp'] == 'preferences' || $GLOBALS['egw_info']['flags']['currentapp'] == 'about')
-			{
-				$app = $app_title = 'eGroupWare';
-			}
-			else
-			{
-				$app = $GLOBALS['egw_info']['flags']['currentapp'];
-				$app_title = $GLOBALS['egw_info']['apps'][$app]['title'];
-			}
-
-			if ($GLOBALS['egw_info']['user']['apps']['preferences'])	// preferences last
-			{
-				$prefs = $GLOBALS['egw_info']['navbar']['preferences'];
-				unset($GLOBALS['egw_info']['navbar']['preferences']);
-				$GLOBALS['egw_info']['navbar']['preferences'] = $prefs;
-			}
-
-			// We handle this here becuase its special
-			$GLOBALS['egw_info']['navbar']['about']['title'] = lang('About %1',$app_title);
-
-			$GLOBALS['egw_info']['navbar']['about']['url']   = $GLOBALS['egw']->link('/about.php','app='.$app);
-			$GLOBALS['egw_info']['navbar']['about']['icon']  = $this->image('phpgwapi',Array('about','nonav'));
-			$GLOBALS['egw_info']['navbar']['about']['icon_hover']  = $this->image_on('phpgwapi',Array('about','nonav'),'-over');
-
-			$GLOBALS['egw_info']['navbar']['logout']['title'] = lang('Logout');
-			$GLOBALS['egw_info']['navbar']['logout']['url']   = $GLOBALS['egw']->link('/logout.php');
-			$GLOBALS['egw_info']['navbar']['logout']['icon']  = $this->image('phpgwapi',Array('logout','nonav'));
-			$GLOBALS['egw_info']['navbar']['logout']['icon_hover']  = $this->image_on('phpgwapi',Array('logout','nonav'),'-over');
+			$GLOBALS['egw_info']['navbar'] = $GLOBALS['egw']->framework->_get_navbar_vars();
 		}
 
 		/**
 		 * load header.inc.php for an application
 		 *
+		 * @deprecated 
 		 */
 		function app_header()
 		{
@@ -1153,195 +1089,61 @@
 		}
 
 		/**
-		 * load the phpgw header
+		 * load the eGW header
 		 *
+		 * @deprecated use egw_framework::header(), $GLOBALS['egw']->framework->navbar() or better egw_framework::render($content)
 		 */
 		function egw_header()
 		{
-			// add a content-type header to overwrite an existing default charset in apache (AddDefaultCharset directiv)
-			header('Content-type: text/html; charset='.$GLOBALS['egw']->translation->charset());
-
-			ob_end_flush();
-			include_once(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set']
-				. '/head.inc.php');
-			$this->navbar(False);
-			include_once(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set']
-				. '/navbar.inc.php');
-			if (!@$GLOBALS['egw_info']['flags']['nonavbar'] && !@$GLOBALS['egw_info']['flags']['navbar_target'])
+			echo $GLOBALS['egw']->framework->header();
+			
+			if (!$GLOBALS['egw_info']['flags']['nonavbar'])
 			{
-				echo parse_navbar();
+				echo $GLOBALS['egw']->framework->navbar();
 			}
 		}
 
+		/**
+		 * load the eGW footer
+		 *
+		 * @deprecated use egw_framework::footer() or egw_framework::render($content)
+		 */
 		function egw_footer()
 		{
-			if (!defined('EGW_FOOTER'))
-			{
-				define('EGW_FOOTER',True);
-				if (!isset($GLOBALS['egw_info']['flags']['nofooter']) || !$GLOBALS['egw_info']['flags']['nofooter'])
-				{
-					include(EGW_API_INC . '/footer.inc.php');
-				}
-			}
+			echo $GLOBALS['egw']->framework->footer();
 		}
 
 		/**
 		* Used by template headers for including CSS in the header
 		*
-		* This first loads up the basic global CSS definitions, which support
-		* the selected user theme colors.  Next we load up the app CSS.  This is
-		* all merged into the selected theme's css.tpl file.
-		*
-		* @author Dave Hall (*based* on verdilak? css inclusion code)
+		* @deprecated use framework::_get_css()
+		* @return string
 		*/
 		function get_css()
 		{
-			$tpl =& CreateObject('phpgwapi.Template', $this->get_tpl_dir('phpgwapi'));
-			$tpl->set_file('css', 'css.tpl');
-			$tpl->set_var($GLOBALS['egw_info']['theme']);
-			$app_css = '';
-			if(@isset($_GET['menuaction']))
-			{
-				list($app,$class,$method) = explode('.',$_GET['menuaction']);
-				if(is_array($GLOBALS[$class]->public_functions) &&
-					$GLOBALS[$class]->public_functions['css'])
-				{
-					$app_css .= $GLOBALS[$class]->css();
-				}
-			}
-			if (isset($GLOBALS['egw_info']['flags']['css']))
-			{
-				$app_css .= $GLOBALS['egw_info']['flags']['css'];
-			}
-			$tpl->set_var('app_css', $app_css);
-
-			// search for app specific css file
-			if(@isset($GLOBALS['egw_info']['flags']['currentapp']))
-			{
-				$appname = $GLOBALS['egw_info']['flags']['currentapp'];
-
-				if(file_exists(EGW_SERVER_ROOT . SEP . $appname . SEP
-					. 'templates' . SEP . $GLOBALS['egw_info']['server']['template_set']
-					. SEP . 'app.css')
-				)
-				{
-					$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['egw_info']['server']['webserver_url']
-						. "/$appname/templates/".$GLOBALS['egw_info']['server']['template_set']
-						. "/app.css".'" type=text/css rel=StyleSheet>');
-				}
-				elseif(file_exists(EGW_SERVER_ROOT . SEP . $appname . SEP
-					. 'templates' . SEP . 'default'
-					. SEP . 'app.css')
-				)
-				{
-					$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['egw_info']['server']['webserver_url']
-					."/$appname/templates/default/app.css".'" type=text/css rel=StyleSheet>');
-				}
-			}
-
-			return $tpl->subst('css');
+			return $GLOBALS['egw']->framework->_get_css();
 		}
 
 		/**
 		* Used by the template headers for including javascript in the header
 		*
-		* The method is included here to make it easier to change the js support
-		* in phpgw.  One change then all templates will support it (as long as they
-		* include a call to this method).
-		*
-		* @author Dave Hall (*vaguely based* on verdilak? css inclusion code)
+		* @deprecated use framework::_get_js()
 		* @return string the javascript to be included
 		*/
 		function get_java_script()
 		{
-			$java_script = '';
-			
-			if(!@is_object($GLOBALS['egw']->js))
-			{
-				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
-			}
-			
-			// always include javascript helper functions
-			$GLOBALS['egw']->js->validate_file('jsapi','jsapi');
-
-			//viniciuscb: in Concisus this condition is inexistent, and in all
-			//pages the javascript globals are inserted. Today, because
-			//filescenter needs these javascript globals, this
-			//include_jsbackend is a must to the javascript globals be
-			//included.
-			if ($GLOBALS['egw_info']['flags']['include_jsbackend'])
-			{
-				if (!$GLOBALS['egw_info']['flags']['nojsapi'])
-				{
-					$GLOBALS['egw']->js->validate_jsapi();
-				}
-				
-				if(@is_object($GLOBALS['egw']->js))
-				{
-					$java_script .= $GLOBALS['egw']->js->get_javascript_globals();
-				}
-			}
-			
-			if ($GLOBALS['egw']->acl->check('run',1,'notifications') && !$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup'])
-			{
-				$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-			}
-			
-			if ($GLOBALS['egw_info']['flags']['include_xajax'])
-			{
-				require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/xajax.inc.php');
-
-				$xajax =& new xajax($GLOBALS['egw']->link('/xajax.php'), 'xajax_', $GLOBALS['egw']->translation->charset());
-				$xajax->waitCursorOff();
-				$xajax->registerFunction("doXMLHTTP");
-
-				$java_script .= $xajax->getJavascript($GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/js/');
-			}
-
-			/* this flag is for all javascript code that has to be put before other jscode. 
-			Think of conf vars etc...  (pim@lingewoud.nl) */
-			if (isset($GLOBALS['egw_info']['flags']['java_script_thirst']))
-			{
-				$java_script .= $GLOBALS['egw_info']['flags']['java_script_thirst'] . "\n";
-			}
-			
-			if(@is_object($GLOBALS['egw']->js))
-			{
-				$java_script .= $GLOBALS['egw']->js->get_script_links();
-			}
-
-			if(@isset($_GET['menuaction']))
-			{
-				list($app,$class,$method) = explode('.',$_GET['menuaction']);
-				if(is_array($GLOBALS[$class]->public_functions) &&
-					$GLOBALS[$class]->public_functions['java_script'])
-				{
-					$java_script .= $GLOBALS[$class]->java_script();
-				}
-			}
-			if (isset($GLOBALS['egw_info']['flags']['java_script']))
-			{
-				$java_script .= $GLOBALS['egw_info']['flags']['java_script'] . "\n";
-			}
-			return $java_script;
+			return $GLOBALS['egw']->framework->_get_js();
 		}
 
 		/**
 		* Returns on(Un)Load attributes from js class
 		*
-		*@author Dave Hall - skwashd at egroupware.org
-		*@returns string body attributes
+		* @deprecated use framework::_get_js()
+		* @returns string body attributes
 		*/
 		function get_body_attribs()
 		{
-			if(@is_object($GLOBALS['egw']->js))
-			{
-				return $GLOBALS['egw']->js->get_body_attribs();
-			}
-			else
-			{
-				return '';
-			}
+			return $GLOBALS['egw']->framework->_get_body_attribs();
 		}
 
 		function hex2bin($data)

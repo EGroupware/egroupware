@@ -277,7 +277,6 @@ body {
 
 #divAppIconBar
 {
-	/*margin-top: 15px;*/
 	background-color:silver;
 	border:solid 1px #9c9c9c;
 	background-image: url(../images/background-icon-bar.png); 
@@ -293,9 +292,9 @@ body {
 #divStatusBar
 {
 	background-color:white;
-	height:15px;
-	padding-left:10px;
-	margin-top: 13px;
+	height:18px;
+	padding-left:3px;
+	margin-top: 10px;
 }
 
 #tdSidebox
@@ -375,12 +374,6 @@ body {
 	border-top: #9c9c9c 2px solid; 
 	border-left: #9c9c9c 2px solid; 
 	border-bottom: #cccccc 1px solid
-}
-
-#admin_info
-{
-	position:relative;
-	text-align:right;
 }
 
 #divGenTime,#divPoweredBy 
