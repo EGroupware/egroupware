@@ -148,7 +148,7 @@
 
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
-	new ypSlideOutMenu("menu1", "left", 19, 109, 160, 300,'right');
+	new ypSlideOutMenu("menu1", "down", 19, 122, 160, 300,'right');
 </script>
 <div id="menu1Container">
 	<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
