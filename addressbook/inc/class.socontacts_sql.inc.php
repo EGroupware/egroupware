@@ -268,13 +268,32 @@ class socontacts_sql extends so_sql
 		if ($search_customfields)	// search the custom-fields
 		{
 			$join .= $this->extra_join;
-			if (is_string($only_keys)) $only_keys = 'DISTINCT '.str_replace(array('contact_id','contact_owner'),
-				array($this->table_name.'.contact_id',$this->table_name.'.contact_owner'),$only_keys);
 			
-			// only return the egw_addressbook columns, to not generate dublicates by the left join
-			// and to not return the NULL for contact_{id|owner} of not found custom fields!
-			if (is_bool($only_keys)) $only_keys = 'DISTINCT '.$this->table_name.'.*';
-				
+			switch(gettype($only_keys))
+			{
+				case 'boolean':
+					// only return the egw_addressbook columns, to not generate dublicates by the left join
+					// and to not return the NULL for contact_{id|owner} of not found custom fields!
+					$only_keys = 'DISTINCT '.$this->table_name.'.'.($only_keys ? 'contact_id' : '*');
+					break;
+				case 'string':
+					$only_keys = explode(',',$only_keys);
+					// fall through
+				case 'array':
+					foreach($only_keys as $key => $val)
+					{
+						switch($key)
+						{
+							case 'id': case 'contact_id':
+								$only_keys[$key] = $this->table_name.'.contact_id';
+								break;
+							case 'owner': case 'contact_owner':
+								$only_keys[$key] = $this->table_name.'.contact_owner';
+								break;
+						}
+					}
+					break;
+			}
 			if (isset($filter['owner']))
 			{
 				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
@@ -302,5 +321,24 @@ class socontacts_sql extends so_sql
 			$cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
 		}
 		return '('.implode(' OR ',$cat_filter).')';
+	}
+	
+	/**
+	 * Change the ownership of contacts owned by a given account
+	 *
+	 * @param int $account_id account-id of the old owner
+	 * @param int $new_owner account-id of the new owner
+	 */
+	function change_owner($account_id,$new_owner)
+	{
+		if (!$new_owner)	// otherwise we would create an account (contact_owner==0)
+		{
+			die("socontacts_sql::change_owner($account_id,$new_owner) new owner must not be 0");
+		}
+		$this->db->update($this->table_name,array(
+			'contact_owner' => $new_owner,
+		),array(
+			'contact_owner' => $account_id,
+		),__LINE__,__FILE__);
 	}
 }

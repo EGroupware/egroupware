@@ -1137,4 +1137,15 @@ class so_ldap
 			$ldapContact['c'] = array();
 		}		
 	}
+
+	/**
+	 * Change the ownership of contacts owned by a given account
+	 *
+	 * @param int $account_id account-id of the old owner
+	 * @param int $new_owner account-id of the new owner
+	 */
+	function change_owner($account_id,$new_owner)
+	{
+		error_log("so_ldap::change_owner($account_id,$new_owner) not yet implemented");
+	}
 }

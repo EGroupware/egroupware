@@ -766,6 +766,25 @@ class bocontacts extends socontacts
 				'menuaction' => 'addressbook.uicontacts.view'
 			),
 			'view_id' => 'contact_id',
+			'add' => array(
+				'menuaction' => 'addressbook.uicontacts.edit'
+			),
+			'add_app'    => 'link_app',
+			'add_id'     => 'link_id',	
+			'add_popup'  => '850x440',
+		);
+	}
+
+	/**
+	 * Register contacts as calendar resources (items which can be sheduled by the calendar)
+	 *
+	 * @param array $args hook-params (not used)
+	 * @return array
+	 */
+	function calendar_resources($args)
+	{
+		return array(	
+			'type' => 'c',// one char type-identifiy for this resources
 		);
 	}
 

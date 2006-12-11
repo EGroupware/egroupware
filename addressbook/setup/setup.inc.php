@@ -37,6 +37,7 @@ $setup_info['addressbook']['hooks']['settings'] = 'addressbook.contacts_admin_pr
 $setup_info['addressbook']['hooks'][] = 'home';
 $setup_info['addressbook']['hooks']['deleteaccount'] = 'addressbook.bocontacts.deleteaccount';
 $setup_info['addressbook']['hooks']['search_link'] = 'addressbook.bocontacts.search_link';
+$setup_info['addressbook']['hooks']['calendar_resources'] = 'addressbook.bocontacts.calendar_resources';
 $setup_info['addressbook']['hooks']['edit_user']    = 'addressbook.contacts_admin_prefs.edit_user';
 $setup_info['addressbook']['hooks'][] = 'config';
 

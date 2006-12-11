@@ -3,7 +3,7 @@
 <overlay>
 	<template id="addressbook.index.left" template="" lang="" group="0" version="1.3.001">
 		<menulist class="bold">
-			<menupopup data="" rows="1" cols="1" id="org_view" no_lang="1" statustext="Select a view" onchange="1" options="All contacts"/>
+			<menupopup rows="1" cols="1" id="org_view" no_lang="1" statustext="Select a view" onchange="1" options="All contacts"/>
 		</menulist>
 	</template>
 	<template id="addressbook.index.right" template="" lang="" group="0" version="1.3.001">
@@ -47,7 +47,7 @@
 							<row>
 								<nextmatch-sortheader id="org_name" label="Organisation" span="all"/>
 							</row>
-							<row disabled="!@order=/^(org_name|n_fileas)$/">
+							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode)$/">
 								<nextmatch-sortheader id="n_family" label="Name"/>
 								<nextmatch-sortheader id="n_given" label="Firstname" class="leftPad5"/>
 							</row>
@@ -57,7 +57,11 @@
 						</rows>
 					</grid>
 					<description value="Photo"/>
-					<description value="Business address"/>
+					<vbox options="0,0">
+						<description value="Business address"/>
+						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
+						<nextmatch-sortheader id="adr_one_postalcode" label="zip code"/>
+					</vbox>
 					<description value="Home address"/>
 					<vbox options="0,0">
 						<description id="tel_work" value="Business phone"/>

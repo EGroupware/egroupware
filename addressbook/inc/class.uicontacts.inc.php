@@ -616,10 +616,14 @@ class uicontacts extends bocontacts
 				case 'n_fileas':
 					$order = "n_fileas!='' DESC,n_fileas $sort";
 					break;
+				case 'adr_one_postalcode':
+					$order = "adr_one_postalcode!='' DESC,adr_one_postalcode $sort,org_name $sort,n_family $sort,n_given $sort";
+					break;
 			}
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
-				$query['col_filter'][] = $query['order'].' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
+				$query['col_filter'][] = ($query['order']=='adr_one_postalcode' ? 'org_name' : $query['order']).
+					' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
 			}
 			$wildcard = '%';
 			$op = 'OR';
@@ -665,6 +669,7 @@ class uicontacts extends bocontacts
 
 			switch($order)
 			{
+				case 'adr_one_postalcode':
 				case 'org_name':
 					$row['line1'] = $row['org_name'];
 					$row['line2'] = $row['n_family'].($given ? ', '.$given : '');
@@ -781,7 +786,7 @@ class uicontacts extends bocontacts
 		}
 		if ($query['searchletter'])
 		{
-			$order = $order == 'org_name' ? lang('company name') : ($order == 'n_given' ? lang('first name') : lang('last name'));
+			$order = $order == 'n_given' ? lang('first name') : ($order == 'n_family' ? lang('last name') : lang('Organisation'));
 			$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("%1 starts with '%2'",$order,$query['searchletter']);
 		}
 		if ($query['search'])
@@ -1061,6 +1066,19 @@ class uicontacts extends bocontacts
 			{
 				$content['link_to']['to_id'] = $contact_id;
 			}
+			// automatic link new entries to entries specified in the url
+			if (!$contact_id && isset($_REQUEST['link_app']) && isset($_REQUEST['link_id']) && !is_array($content['link_to']['to_id']))
+			{
+				$link_ids = is_array($_REQUEST['link_id']) ? $_REQUEST['link_id'] : array($_REQUEST['link_id']);
+				foreach(is_array($_REQUEST['link_app']) ? $_REQUEST['link_app'] : array($_REQUEST['link_app']) as $n => $link_app)
+				{
+					$link_id = $link_ids[$n];
+					if (preg_match('/^[a-z_0-9-]+:[:a-z_0-9-]+$/i',$link_app.':'.$link_id))	// gard against XSS
+					{
+						$this->link->link('addressbook',$content['link_to']['to_id'],$link_app,$link_id);
+					}
+				}
+			}
 		}
 		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
@@ -1115,7 +1133,7 @@ class uicontacts extends bocontacts
 			'to_app' => 'addressbook',
 			'to_id'  => $content['link_to']['to_id'],
 		);
-		$content['photo'] = $this->photo_src($content['id'],$content['jpegphoto'],'template');
+		$content['photo'] = $this->photo_src($content['id'],$content['jpegphoto'],'photo');
 
 		if ($content['private']) $content['owner'] .= 'p';
 
@@ -1279,6 +1297,9 @@ $readonlys['button[vcard]'] = true;
 				$this->tmpl->set_cell_attribute($name,'no_lang',true);
 			}
 		}
+		// set id for automatic linking via quick add
+		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
+		
 		$this->tmpl->exec('addressbook.uicontacts.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 		
 		$GLOBALS['egw']->hooks->process(array(
