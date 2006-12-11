@@ -356,15 +356,15 @@ body {
 
 #divStatusBar
 {
-	/*background-color:white;*/
+	/*background-color:#bdbdbd;*/
 	position: relative;
 	top:0px
 	left:0px;
-	height:18px;
+	height:23px;
 	vertical-align:bottom;
 	border: 0px solid black;
 	padding-left:186px;
-	padding-top:0px;
+	padding-top:6px;
 	/*margin-top: 18px;*/
 }
 
