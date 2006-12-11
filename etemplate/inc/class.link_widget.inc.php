@@ -204,13 +204,13 @@
 
 			case 'link-add':
 				$apps = $this->link->app_list($type == 'link-add' ? 'add' : '');
-				if (!$apps)	// cant do an add without apps or already created entry
+				if (!$apps || !$value['to_id'] || is_array($value['to_id']))	// cant do an add without apps or already created entry
 				{
 					$cell = $tmpl->empty_cell();
 					return;
 				}
 				asort($apps);	// sort them alphabetic
-				$value['options-app'] = array();
+				$value['options-add_app'] = array();
 				foreach($apps as $app => $label)
 				{
 					$link = $GLOBALS['egw']->link('/index.php',$this->link->add($app,$value['to_app'],$value['to_id'])+
@@ -224,7 +224,9 @@
 					{
 						$action = "location.href = '$link';";
 					}
-					$value['options-app'][$action] = $label;
+					$value['options-add_app'][$action] = $label;
+					// modify add_app default to the action used as value
+					if (isset($value['add_app']) && $app == $value['add_app']) $value['add_app'] = $action;
 				}
 				$tpl =& new etemplate('etemplate.link_widget.add');
 				break;
