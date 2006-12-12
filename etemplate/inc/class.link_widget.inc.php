@@ -203,7 +203,7 @@
 				return True;
 
 			case 'link-add':
-				$apps = $this->link->app_list($type == 'link-add' ? 'add' : '');
+				$apps = $this->link->app_list($type == 'link-add' ? 'add_app' : 'query');
 				if (!$apps || !$value['to_id'] || is_array($value['to_id']))	// cant do an add without apps or already created entry
 				{
 					$cell = $tmpl->empty_cell();
@@ -264,7 +264,7 @@
 						$extension_data = $value;
 					}
 					$value = array_merge($extension_data,$value);
-					$value['options-app'] = $this->link->app_list();
+					$value['options-app'] = $this->link->app_list('query');
 					asort($value['options-app']);	// sort them alphabetic
 
 					$tpl =& new etemplate('etemplate.link_widget.search');
@@ -380,7 +380,7 @@
 				{
 					$tpl->set_cell_attribute('app','type','select');
 					$tpl->set_cell_attribute('app','no_lang',true);
-					$apps = $this->link->app_list();
+					$apps = $this->link->app_list('query');
 					asort($apps);	// sort them alphabetic
 					foreach($apps as $app => $label)
 					{
@@ -391,7 +391,7 @@
 				break;
 				
 			case 'link-apps':
-				$apps = $this->link->app_list($cell['size']);
+				$apps = $this->link->app_list($cell['size'] ? $cell['size'] : 'query');
 				if (!$apps)	// cant do an add without apps or already created entry
 				{
 					$cell = $tmpl->empty_cell();
