@@ -46,6 +46,12 @@ class bolink extends solink
 			),
 			'view_id' => 'project_id'
 		),
+		'felamimail' => array(
+			'add' => array(
+				'menuaction' => 'felamimail.uicompose.compose',
+			),
+			'add_popup' => '700x750',
+		),
 /*
 		'email' => array(
 			'view' => array(
