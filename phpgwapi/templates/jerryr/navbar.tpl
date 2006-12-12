@@ -10,7 +10,7 @@
 		</ul>
 	</div>
 	<div id="divAppIconBar">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0" style="padding-top: 0px">
+		<table class="appIconTbl" width="100%" border="0" cellspacing="0" cellpadding="0" >
 			<tr>
 				<td width="180"></td>
 				<td valign="bottom">
@@ -23,9 +23,7 @@
 						</tr>
 					</table>
 				</td>
-
 {app_extra_icons_icon}
-
 			</tr>
 		</table>
 	</div>
@@ -174,7 +172,7 @@
 
 
 <!-- BEGIN app_extra_icons_icon -->
-	<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">
+	<td width="26" valign="top" align="center" style="padding-top:13px;">
 		<a title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
 	</td>
 <!-- END app_extra_icons_icon -->
