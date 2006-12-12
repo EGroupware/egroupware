@@ -331,6 +331,15 @@ body {
 	padding:0px;
 }
 
+.appIconTbl
+{
+	padding:0px;
+	background-image: url(../images/rtbump.png);
+	background-repeat: no-repeat;
+	background-position: top right;
+	vertical-align: top;
+}
+
 .iconBack
 {
 	background-image: url(../images/iconBackBlue.png);
