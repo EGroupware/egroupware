@@ -93,9 +93,9 @@
 		<!-- Applicationbox Column -->
 		<td id="tdAppbox" valign="top" {remove_padding}>
 			<div id="divAppboxHeader">{current_app_title}</div>
-				<div id="divAppbox">
-					<table width="100%" cellpadding="0" cellspacing="0">
-					<tr><td>
+			<div id="divAppbox">
+				<table width="100%" cellpadding="0" cellspacing="0">
+				<tr><td>
 <!-- END navbar_footer -->
 
 
