@@ -263,16 +263,58 @@ a.textSidebox
 	height:1px;
 }
 
+.menuOneBox
+{
+	position: relative;
+	left: 0;
+	text-align: left;
+	/*background-color: #9f9f9f;*/
+	background-image: url(../images/shadowAlpha.png);
+}
+
 #extraIcons
 {
-	background-color:#eeeeee;
-	border:solid 1px #7e7e7e;
+	background-color:#fbf8f1;
+	border:solid 1px #17202b;
+	position: relative;
+	left: -4px;
+	top: -4px;
+}
+
+.extraIconsHeader
+{
+        text-align:center;
+        background-image:url(../images/menuTitle.png);
+        color:#17202b;
+        height: 18px;
+        font-weight:bold;
+        font-size:12px;
+}
+
+.extraIconsRowIcon
+{
+	border-right: 1px solid #9f9f9f;
+	background-color: #a7c4db;
+	width: 20px;
+	padding: 1px;
 }
 
 .extraIconsRow
 {
-	border:solid 1px #dddddd;
-	padding:2px;
+        border-top:solid 1px #9f9f9f;
+        padding:1px;
+	padding-left: 3px;
+        font-size: 10px;
+	background-color: #fbf8f1;
+}
+
+.extraIconsRow:hover
+{
+        border-top:solid 1px #9f9f9f;
+        padding:1px;
+	padding-left: 3px;
+        font-size: 10px;
+	background-color: #ede6d8;
 }
 
 body {
