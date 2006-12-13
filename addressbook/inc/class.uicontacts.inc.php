@@ -335,7 +335,7 @@ class uicontacts extends bocontacts
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name)
 	{
-		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n";
+		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
 		$success = $failed = 0;
 		
 		if ($use_all)
@@ -351,7 +351,7 @@ class uicontacts extends bocontacts
 		{
 			if (substr($id,0,9) == 'org_name:')
 			{
-				if (count($checked) == 1)
+				if (count($checked) == 1 && !count($org_contacts))
 				{
 					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
 				}
@@ -364,7 +364,7 @@ class uicontacts extends bocontacts
 			}		
 		}
 		if ($org_contacts) $checked = array_unique($checked ? array_merge($checked,$org_contacts) : $org_contacts);
-		//_debug_array($checked); return false;
+		//_debug_array($checked); exit;
 
 		switch($action)
 		{
