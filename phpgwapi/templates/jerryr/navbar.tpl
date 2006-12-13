@@ -146,13 +146,13 @@
 
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
-	new ypSlideOutMenu("menu1", "down", 19, 122, 160, 300,'right');
+	new ypSlideOutMenu("menu1", "down", 45, 5, 188, 300,'right');
 </script>
 <div id="menu1Container">
-	<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
+	<div id="menu1Content" class="menuOneBox">
 		<div id="extraIcons">
 			<table cellspacing="0" cellpadding="0" border="0" width="100%">
-			<tr><td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd; padding:1px;">
+			<tr class="extraIconsHeader"><td colspan="2" nowrap="nowrap" align="right">
 				<a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
 			</td></tr>
 {app_extra_icons}
@@ -165,7 +165,7 @@
 
 <!-- BEGIN app_extra_block -->
 				<tr>
-					<td class="extraIconsRow"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" width="16" border="0" /></a></td>
+					<td class="extraIconsRowIcon"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" width="16" border="0" /></a></td>
 					<td align="left" class="extraIconsRow"><a href="{url}" {target}>{title}</a></td>
 				</tr>
 <!-- END app_extra_block -->
