@@ -143,12 +143,5 @@ document.login_form.login.focus();
 </div>
 </div>
 </div>
-<div style="bottom:10px;left:10px;position:absolute;visibility:hidden;">
-<img src="phpgwapi/templates/{template_set}/images/valid-html401.png" border="0" alt="Valid HTML 4.01">
-<img src="phpgwapi/templates/{template_set}/images/vcss.png" border="0" alt="Valid CSS">
-</div>
-<div id="divPoweredBy" align="center">
-<br/>
-<a href="http://www.egroupware.org" target="_blank">eGroupWare</a> {version}</div>
 </body>
 </html>
