@@ -172,6 +172,10 @@ class bocal
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('calendar');
 
+		foreach($this->verbose_status as $status => $text)
+		{
+			$this->verbose_status[$status] = lang($text);
+		}
 		if (!is_array($this->resources = $GLOBALS['egw']->session->appsession('resources','calendar')))
 		{
 			$this->resources = array();
@@ -1352,39 +1356,46 @@ class bocal
 	* Converts participants array of an event into array of (readable) participant-names with status
 	*
 	* @param array $event event-data
-	* @param boolean $long_status=false should the long/verbose status or only the one letter shortcut be used
+	* @param boolean $long_status=false should the long/verbose status or an icon be use
 	* @param boolean $show_group_invitation=false show group-invitations (status == 'G') or not (default)
 	* @return array with id / names with status pairs
 	*/
-	function participants($event,$long_status=true,$show_group_invitation=false)
+	function participants($event,$long_status=false,$show_group_invitation=false)
 	{
- 		//_debug_array($event);
- 		$names = array();
+		//_debug_array($event);
+		$names = array();
 		foreach($event['participants'] as $id => $status)
 		{
 			if ($status == 'G' && !$show_group_invitation) continue;	// dont show group-invitation
 
-			$status = $this->verbose_status[$status];
-			if($status == "Accepted")
-			{
-			   $status = $GLOBALS['egw']->html->image('calendar','agt_action_success',lang($status));
-			}
-			else if($status == "Rejected")
-			{
-			   $status = $GLOBALS['egw']->html->image('calendar','agt_action_fail',lang($status));
-			}
-			else if($status == "Tentative")
-			{
-			   $status = $GLOBALS['egw']->html->image('calendar','tentative',lang($status));
-			}  
-			else if($status == "No Response")
-			{
-			   $status = $GLOBALS['egw']->html->image('calendar','cnr-pending',lang($status));
-			}
-
 			if (!$long_status)
 			{
-			   $status = substr($status,0,1);
+				if (!is_object($GLOBALS['egw']->html))
+				{
+					$GLOBALS['egw']->html =& CreateObject('phpgwapi.html');
+				}
+				switch($status)
+				{
+					case 'A':	// accepted
+						$status = $GLOBALS['egw']->html->image('calendar','agt_action_success',lang($status));
+						break;
+					case 'R':	// rejected
+						$status = $GLOBALS['egw']->html->image('calendar','agt_action_fail',lang($status));
+						break;
+					case 'T':	// tentative
+						$status = $GLOBALS['egw']->html->image('calendar','tentative',lang($status));
+						break;
+					case 'U':	// no response = unknown
+						$status = $GLOBALS['egw']->html->image('calendar','cnr-pending',lang($status));
+						break;
+					case 'G':	// group invitation
+						// Todo: Image, seems not to be used
+						break;
+				}
+			}
+			else
+			{
+				$status = $this->verbose_status[$status];
 			}
 			$names[$id] = $this->participant_name($id).' '.$status;
 		}
