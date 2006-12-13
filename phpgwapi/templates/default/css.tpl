@@ -1,18 +1,23 @@
 <style type="text/css">
-<!--
-	a { text-decoration:none; color: {link}; }
-	a:active{ text-decoration:none; color: {alink}; }
-	a:hover{ text-decoration:underline; color: {alink}; }
-	a:visted{ text-decoration:none; color: {link}; }
-	body { margin-top: 0px; margin-right: 0px; margin-left: 0px; font-family: {font}; }
-	.row_on { color: {row_text}; background-color: {row_on}; }
-	.row_off { color: {row_text}; background-color: {row_off}; }
+
+	.row_on { color: {row_text}; background-color: #F1F1F1; }
+	.row_off { color: {row_text}; background-color: #ffffff; }
 	.th { color: {th_text}; background-color: {th_bg}; }
-	.narrow_column { width: 6em; }
-	.tablink { color: #000000; }
+	.narrow_column { width: 1%; white-space: nowrap; }
 	@media screen {	.onlyPrint { display: none; } }
 	@media print {	.noPrint { display: none; } }
 	{app_css}
--->
+
+#dhtmltooltip
+{
+	position: absolute;
+	width: 150px;
+	border: 1px solid #ff7a0a;
+	padding: 2px;
+    background-color:#f9f400;
+	visibility: hidden;
+	z-index: 100;
+}
+
 </style>
 {css_file}

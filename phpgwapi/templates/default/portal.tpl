@@ -1,19 +1,32 @@
 <!-- BEGIN portal_box -->
 <p>
-<table border="{outer_border}" cellpadding="0" cellspacing="0" width="{outer_width}" bordercolor="{outer_bordercolor}" bgcolor="{outer_bgcolor}">
+<div style="border: #9c9c9c 1px solid;">
+<table border="0" cellpadding="0" cellspacing="0" width="{outer_width}"> 
  <tr nowrap align="center">
-  <td align="center" background="{header_background_image}">{title}</td>{portal_controls}
+  <td align="left">
+	<div class="divSideboxHeader" style="height: 15px; padding-top: 0px">
+	<table border="0" cellpadding="1" cellspacing="0" width="{outer_width}">
+	  <tr>
+		<td align="left">&nbsp;<strong>{title}</strong></td>{portal_controls}
+	  </tr>
+	</table>
+	</div>
+  </td>
  </tr>
  <tr>
   <td colspan="2">
-   <table border="1" cellpadding="0" cellspacing="0" width="{inner_width}" bgcolor="{inner_bgcolor}">
+   <table border="0" cellpadding="0" cellspacing="0" width="{inner_width}" bgcolor="#eeeeee">
     {row}
    </table>
   </td>
  </tr>
 </table>
+</div>
 </p>
 <!-- END portal_box -->
+
+
+
 <!-- BEGIN portal_row -->
     <tr>
 	  <td>
@@ -21,21 +34,37 @@
 	  </td>
     </tr>
 <!-- END portal_row -->
+
+
+
 <!-- BEGIN portal_listbox_header -->
-     <td>
-      <ul>
+	<tr>
+	 <td>
+	  <ul>
 <!-- END portal_listbox_header -->
+
+
+
 <!-- BEGIN portal_listbox_link -->
 <li><a href="{link}">{text}</a></li>
 <!-- END portal_listbox_link -->
+
+
+
 <!-- BEGIN portal_listbox_footer -->
-      </ul>
-     </td>
+	  </ul>
+	 </td>
+	</tr>
 <!-- END portal_listbox_footer -->
+
+
+
 <!-- BEGIN portal_control -->
-  <td valign="middle" align="right" nowrap background="{header_background_image}">{control_link}
-  </td>
+  <td valign="middle" align="right" nowrap="nowrap">{control_link}</td>
 <!-- END portal_control -->
+
+
+
 <!-- BEGIN link_field -->
    {link_field_data}
 <!-- END link_field -->

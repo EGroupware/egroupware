@@ -1,11 +1,10 @@
 <!-- BEGIN nextmatchs -->
  <table width="{table_width}" border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0" cols="5">
   <tr>   {left}
-   <td align="center" bgcolor="{th_bg}" valign="top" width="92%">{cats_search_filter_data}</td>   {right}
+   <td align="center" bgcolor="{th_bg}" valign="top" width="92%">{cats_search_filter_data}</td>{right}
   </tr>
  </table>
-
-<br>
+<br/>
 
 <!-- END nextmatchs -->
 
@@ -25,7 +24,7 @@
 	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
 	<tr>
 		<td align="{align}">
-			<input type="image" src="{img}" border="{border}" title="{label}" width="12" height="12" name="start" value="{start}">
+			<input type="image" src="{img}" border="{border}" title="{label}" name="start" value="{start}">
 		</td>
 	</tr>
 	</table>
@@ -43,9 +42,7 @@
 <td width="2%" align="{align}" valign="top">
 	<table border="0" bgcolor="{th_bg}" cellspacing="0" cellpadding="0">
 	<tr>
-		<td align="{align}">
-			<img src="{img}" border="{border}" width="12" height="12" title="{label}">
-		</td>
+		<td align="{align}"><img src="{img}" border="{border}" title="{label}" hspace="2" /></td>
 	</tr>
 	</table>
 </td>
@@ -71,9 +68,9 @@
      <form method="POST" action="{form_action}" name="filter">
       {hidden}
       <tr>
-		<td>{search}</td>
-		<td>&nbsp;</td>
-		<td>{filter}</td>
+      		<td>{search}</td>
+      		<td>&nbsp;</td>
+      		<td>{filter}</td>
       </tr>
      </form>
     </table>
@@ -84,11 +81,11 @@
      <form method="POST" action="{form_action}" name="filter">
       {hidden}
       <tr>
-		{cats}
-		<td>&nbsp;</td>
-		<td>{search}</td>
-		<td>&nbsp;&nbsp;</td>
-		<td>{filter}</td>
+      		{cats}
+      		<td>&nbsp;</td>
+      		<td>{search}</td>
+      		<td>&nbsp;&nbsp;</td>
+      		<td>{filter}</td>
       </tr>
      </form>
     </table>

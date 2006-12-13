@@ -1,67 +1,154 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
-<!-- BEGIN login_form -->
 <head>
-
 <meta http-equiv="Content-Type" content="text/html; charset={charset}" />
-<meta name="AUTHOR" content="dGroupWare http://www.eGroupWare.org" />
-<meta name="description" content="{website_title} login screen, working environment powered by eGroupWare" />
+<meta name="author" content="eGroupWare http://www.egroupware.org" />
+<meta name="description" content="eGroupWare login screen" />
 <meta name="ROBOTS" content="NOINDEX, NOFOLLOW" />
-<meta name="keywords" content="{website_title} login screen, eGroupWare, groupware, groupware suite" />
+<meta name="keywords" content="eGroupWare login screen" />
+<link rel="stylesheet" href="phpgwapi/templates/{template_set}/css/idots.css" type="text/css" />
+<link rel="icon" href="phpgwapi/templates/idots/images/favicon.ico" type="image/x-ico" />
+<link rel="shortcut icon" href="phpgwapi/templates/idots/images/favicon.ico" />
+<title>{website_title} - Login</title>
+<style type="text/css">
 
-<title>{website_title} - {lang_login}</title>
+#divMain
+{
+	height:85%;
+}
+
+</style>
+
+		<!-- this solves the internet explorer png-transparency bug, but only for ie 5.5 and higher --> 
+		<!--[if gte ie 5.5000]>
+		<script src="./phpgwapi/templates/idots/js/pngfix.js" type=text/javascript>
+		</script>
+		<![endif]-->
+
 </head>
+<body>
+<div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" alt="{logo_title}" title="{logo_title}"/></a></div>
 
-<body bgcolor="#{bg_color}">
-<a href="{logo_url}"><img src="{logo_file}" alt="{logo_title}" title="{logo_title}" border="0"></a>
+<div id="divMain"style= "background-repeat:no-repeat;background-position: center center;background-image:url(./phpgwapi/templates/idots/images/login-background.jpg)">
+	<div id="divAppIconBar">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="180"></td>
+				<td>
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<td width="100%"><img src="./phpgwapi/templates/idots/images/spacer.gif" width="1" height="68" alt="spacer" /></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+<br/>
+<!--</div>-->
+<div id="containerDiv" >
+<div id="centerBox">
+<div align="center">{lang_message}</div>
+<div align="center">{cd}</div>
 <p>&nbsp;</p>
-<center>{lang_message}</center>
-<p>&nbsp;</p>
+<form name="login_form" method="post" action="{login_url}">
+	<table class="divLoginbox" cellspacing="0" cellpadding="0" border="0" align="center">
+	<tr> 
+		<td class="divLoginboxHeader" style="border-bottom: #9c9c9c 1px solid;" align="center">{website_title}</td>
+	</tr>
+	<tr > 
+		<td class="divSideboxEntry">
 
-<table bgcolor="#000000" border="0" cellpadding="0" cellspacing="0" width="40%" align="center">
- <tr>
-  <td>
-   <table border="0" width="100%" bgcolor="#486591" cellpadding="2" cellspacing="1">
-    <tr bgcolor="#{bg_color_title}">
-     <td align="LEFT" valign="MIDDLE">
-      <font color="#FEFEFE">&nbsp;{website_title}</font>
-     </td>
-    </tr>
-    <tr bgcolor="#e6e6e6">
-     <td valign="BASELINE">
+		<table cellspacing="3" cellpadding="0" width="100%" border="0">
+		<tr>
+<td colspan="4" align="center">
+&nbsp;
+</td>
+</tr>
+		<tr>
+			<td colspan="3">
+				<input type="hidden" name="passwd_type" value="text">
+				<input type="hidden" name="account_type" value="u">
+			</td>
+			<td rowspan="4">
+				<img src="phpgwapi/templates/{template_set}/images/password.png" />
+			</td>
+		</tr>
+<!-- BEGIN language_select -->
+		<tr>
+			<td align="right">{lang_language}:&nbsp;</td>
+			<td align="left" colspan="2">{select_language}</td>
+		</tr>
+<!-- END language_select -->
+<!-- BEGIN domain_selection -->
+			{select_domain}
+			<!--<tr>
+			<td align="right" tablindex="1">{lang_select_domain}:&nbsp;</td>
+			<td align="left">{select_domain}</td>
+			<td align="left"></td>
+			</tr>-->
+<!-- END domain_selection -->
+<!-- BEGIN remember_me_selection -->
+		<tr>
+			<td align="right">{lang_remember_me}:&nbsp;</td>
+			<td align="left" colspan="2">{select_remember_me}</td>
+		</tr>
+<!-- END remember_me_selection -->
 
-		<form name="login" method="post" action="{login_url}" {autocomplete}>
-		<input type="hidden" name="passwd_type" value="text">
-		<input type="hidden" name="account type" value="u">
-			<table border="0" align="CENTER" bgcolor="#486591" width="100%" cellpadding="0" cellspacing="0">
-				<tr bgcolor="#e6e6e6">
-					<td colspan="3" align="CENTER">{cd}</td>
-				</tr>
-				<tr bgcolor="#e6e6e6">
-					<td align="RIGHT"><font color="#000000">{lang_username}:&nbsp;</font></td>
-					<td><input name="login" value="{cookie}"></td>
-					<td>{select_domain}</td>
-				</tr>
-				<tr bgcolor="#e6e6e6">
-					<td align="RIGHT"><font color="#000000">{lang_password}:&nbsp;</font></td>
-					<td><input name="passwd" type="password"></td>
-					<td>&nbsp;</td>
-				</tr>
-				<tr bgcolor="#e6e6e6">
-					<td colspan="3" align="CENTER"><input type="submit" value="{lang_login}" name="submitit"></td>
-				</tr>
-				<tr bgcolor="#e6e6e6">
-					<td colspan="3" align="right"><font color="#000000" size="-1">eGroupWare {version}</font></td>
-				</tr>
-			</table>
-		</form>
-     
-     </td>
-    </tr>
-   </table>
-  </td>
- </tr>
+			<tr>
+			<td align="right" tablindex="1">{lang_username}:&nbsp;</td>
+			<td align="left"><input name="login" value="{cookie}" style="width: 150px; border: 1px solid silver;"></td>
+			<td align="left"></td>
+		</tr>
+		<tr>
+			<td align="right">{lang_password}:&nbsp;</td>
+			<td align="left"><input name="passwd" type="password" onChange="this.form.submit()" style="width: 150px; border: 1px solid silver;"></td>
+		</tr>
+		<tr>
+			<td align="right">&nbsp;</td>
+			<td align="left" style="margin-top:5px;">
+				<input type="submit" value="{lang_login}" name="submitit" style="width:100px">
+			</td>
+		</tr>
+<!-- BEGIN registration -->
+	<tr>
+	<td colspan="3">
+	<table width=100%>
+	<tr>
+		<td>{lostpassword_link}</td>
+		<td>{lostid_link}</td>
+	</tr>
+	<tr><td colspan=2 align="center">{register_link}</td></tr>
+	</table>
+	</td>
+	</tr>
+<!-- END registration -->
+		</table>
+
+	</td>
+</tr>
 </table>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</form>
+<script language="javascript1.2" type="text/javascript">
+<!--
+// position cursor in top form field
+document.login_form.login.focus();
+//-->
+</script>
 
-<!-- END login_form -->
+
+</div>
+</div>
+</div>
+<div style="bottom:10px;left:10px;position:absolute;visibility:hidden;">
+<img src="phpgwapi/templates/{template_set}/images/valid-html401.png" border="0" alt="Valid HTML 4.01">
+<img src="phpgwapi/templates/{template_set}/images/vcss.png" border="0" alt="Valid CSS">
+</div>
+<div id="divPoweredBy" align="center">
+<br/>
+<a href="http://www.egroupware.org" target="_blank">eGroupWare</a> {version}</div>
+</body>
 </html>
