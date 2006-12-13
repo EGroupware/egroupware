@@ -646,10 +646,6 @@ class uical
 			'<option value="0">'.lang('All categories').'</option>'.
 		$this->cats->formatted_list('select','all',$this->cat_id,'True'));
 
-		// we need a form for the select-boxes => insert it in the first selectbox
-		$file[$n]['text'] = $this->html->form(False,$base_hidden_vars,'/index.php',array('menuaction' => $_GET['menuaction'])) .
-			$file[$n]['text'];
-
 		// Filter all or hideprivate
 		$file[] = $this->_select_box('Filter','filter',
 			'<option value="all"'.($this->filter=='all'?' selected="selected"':'').'>'.lang('No filter').'</option>'."\n".
@@ -742,7 +738,6 @@ function load_cal(url,id) {
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
-		echo "</form>\n";
 		
 		// resources menu hooks
  		foreach ($this->bo->resources as $resource)
