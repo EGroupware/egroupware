@@ -1377,25 +1377,26 @@ class bocal
 				switch($status)
 				{
 					case 'A':	// accepted
-						$status = $GLOBALS['egw']->html->image('calendar','agt_action_success',lang($status));
+						$status = $GLOBALS['egw']->html->image('calendar','agt_action_success',$this->verbose_status[$status]);
 						break;
 					case 'R':	// rejected
-						$status = $GLOBALS['egw']->html->image('calendar','agt_action_fail',lang($status));
+						$status = $GLOBALS['egw']->html->image('calendar','agt_action_fail',$this->verbose_status[$status]);
 						break;
 					case 'T':	// tentative
-						$status = $GLOBALS['egw']->html->image('calendar','tentative',lang($status));
+						$status = $GLOBALS['egw']->html->image('calendar','tentative',$this->verbose_status[$status]);
 						break;
 					case 'U':	// no response = unknown
-						$status = $GLOBALS['egw']->html->image('calendar','cnr-pending',lang($status));
+						$status = $GLOBALS['egw']->html->image('calendar','cnr-pending',$this->verbose_status[$status]);
 						break;
 					case 'G':	// group invitation
 						// Todo: Image, seems not to be used
+						$status = '('.$this->verbose_status[$status].')';
 						break;
 				}
 			}
 			else
 			{
-				$status = $this->verbose_status[$status];
+				$status = '('.$this->verbose_status[$status].')';
 			}
 			$names[$id] = $this->participant_name($id).' '.$status;
 		}
