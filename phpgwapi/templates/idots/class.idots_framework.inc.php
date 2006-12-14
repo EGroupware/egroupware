@@ -46,8 +46,6 @@ class idots_framework extends egw_framework
 	function idots_framework($template='idots')
 	{
 		$this->egw_framework($template);		// call the constructor of the extended class
-
-		$this->tpl =& new Template(EGW_TEMPLATE_DIR);
 	}
 
 	/**
@@ -64,6 +62,9 @@ class idots_framework extends egw_framework
 		$content = ob_get_contents();
 		ob_end_clean();
 
+		// the instanciation of the template has to be here and not in the constructor,
+		// as the old Template class has problems if restored from the session (php-restore)
+		$this->tpl =& new Template(EGW_TEMPLATE_DIR);
 		$this->tpl->set_file(array('_head' => 'head.tpl'));
 		$this->tpl->set_block('_head','head');
 		

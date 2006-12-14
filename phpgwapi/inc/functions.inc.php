@@ -74,9 +74,9 @@
 				foreach($_SESSION['egw_included_files'] as $file)
 				{
 					//echo "<p>about to include $file</p>\n";
-					if (basename($file) == 'navbar.inc.php') break;	// the rest is not needed and makes only problems
-
 					include_once($file);
+
+					if (basename($file) == 'class.egw_framework.inc.php') break;	// the rest is not needed and makes only problems
 				}
 				$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
 				
