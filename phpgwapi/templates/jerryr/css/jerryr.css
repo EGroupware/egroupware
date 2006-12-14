@@ -286,9 +286,8 @@ a.textSidebox
         text-align:center;
         background-image:url(../images/menuTitle.png);
         color:#17202b;
-        height: 18px;
-        font-weight:bold;
-        font-size:12px;
+        font-weight:normal;
+        font-size:10px;
 }
 
 .extraIconsRowIcon
