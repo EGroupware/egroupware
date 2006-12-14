@@ -84,7 +84,7 @@
 		{
 			//			error_reporting(8);
 			$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
-			
+
 			$this->dateformat=$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
 			$this->now = date('Y-m-d');
@@ -708,13 +708,14 @@
 					# File size
 					if($this->prefs['size'])
 					{
-						$tmp_arr=array(
-							'string'	=> $files['directory'] . '/' . $files['name'],
-							'relatives'	=> array(RELATIVE_NONE)
-						);
-						if($files['mime_type'] != 'Directory') $tmp_arr['checksubdirs'] = false;
-
-						$size = $this->bo->vfs->get_size($tmp_arr);
+						// KL to fetch the size of the object here is just WRONG, since the array may be already sorted by size
+						//$tmp_arr=array(
+						//	'string'	=> $files['directory'] . '/' . $files['name'],
+						//	'relatives'	=> array(RELATIVE_NONE)
+						//;
+						//if($files['mime_type'] != 'Directory') $tmp_arr['checksubdirs'] = false;
+						//$size = $this->bo->vfs->get_size($tmp_arr);
+						$size = $files['size'];
 
 						$col_data=$this->bo->borkb($size);
 
@@ -749,7 +750,9 @@
 					# Owner name
 					if($this->prefs['owner'])
 					{
-						$this->t->set_var('col_data',$GLOBALS['egw']->accounts->id2name($files['owner_id']));
+						// KL to fetch the name of the object here is just WRONG, since the array may be already sorted by id
+						//$this->t->set_var('col_data',$GLOBALS['egw']->accounts->id2name($files['owner_id']));
+						$this->t->set_var('col_data',$files['owner_name']);
 						$this->t->parse('columns','column',True);
 					}
 
@@ -759,7 +762,9 @@
 						$this->html_table_col_begin();
 						if($files['createdby_id'])
 						{
-							$col_data=$GLOBALS['egw']->accounts->id2name($files['createdby_id']);
+							// KL to fetch the name of the object here is just WRONG, since the array may be already sorted by id
+							//$col_data=$GLOBALS['egw']->accounts->id2name($files['createdby_id']);
+							$col_data=$files['createdby_name'];
 						}
 						else $col_data='';
 
@@ -772,7 +777,9 @@
 					{
 						if($files['modifiedby_id'])
 						{
-							$col_data=$GLOBALS['egw']->accounts->id2name($files['modifiedby_id']);
+							// KL to fetch the name of the object here is just WRONG, since the array may be already sorted by id
+							//$col_data=$GLOBALS['egw']->accounts->id2name($files['modifiedby_id']);
+							$col_data=$files['modifiedby_name'];
 						}
 						else $col_data='';
 						$this->t->set_var('col_data',$col_data);
@@ -882,20 +889,11 @@
 				{
 					$this->bo->vfs->mkdir(array('string' => $this->bo->homedir, 'relatives' => array(RELATIVE_NONE)));
 				}
-
-				$ls_array = $this->bo->vfs->ls(array(
-					'string' => $this->bo->homedir,
-					'relatives' => array(RELATIVE_NONE),
-					'checksubdirs' => False,
-					'nofiles' => True
-				));
-				$this->files_array[] = $ls_array[0];
-				$this->numoffiles++;
-
 				reset($this->readable_groups);
+				// create the directorys of the readableGroups if they do not exist
 				while(list($num, $group_array) = each($this->readable_groups))
 				{
-					# If the group doesn't have access to this app, we don't show it
+					# If the group doesn't have access to this app, we don't show it, and do not appkly any action here
 					if(!$this->groups_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
 					{
 						continue;
@@ -908,52 +906,124 @@
 							'string' => $this->bo->fakebase.'/'.$group_array['account_name'],
 							'relatives' => array(RELATIVE_NONE)
 						));
-
 						// FIXME we just created a fresh group dir so we know there nothing in it so we have to remove all existing content
-
 						$this->bo->vfs->override_acl = 0;
-
 						$this->bo->vfs->set_attributes(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'attributes' => array('owner_id' => $group_array['account_id'],'createdby_id' => $group_array['account_id'])));
 					}
-
-					$ls_array = $this->bo->vfs->ls(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'checksubdirs' => False,'nofiles' => True));
-
-					$this->files_array[] = $ls_array[0];
-
-					$this->numoffiles++;
 				}
 			}
-			else
-			{
-				$ls_array = $this->bo->vfs->ls(array(
-					'string' => $this->path,
-					'relatives'	=> array(RELATIVE_NONE),
-					'checksubdirs' => False,
-					'nofiles'	=> False,
-					'orderby'	=> $this->sortby
-				));
 
-				if($phpwh_debug)
-				{
-					echo '# of files found in "'.$this->path.'" : '.count($ls_array).'<br>'."\n";
-				}
-
-				while(list($num, $file_array) = each($ls_array))
-				{
-					$this->numoffiles++;
-					$this->files_array[] = $file_array;
-					if($phpwh_debug)
+            // read the list of the existing directorys/files
+            $ls_array = $this->bo->vfs->ls(array(
+                'string' => $this->path,
+                'relatives' => array(RELATIVE_NONE),
+                'checksubdirs' => false,
+                'nofiles'   => false,
+                'orderby'   => $this->sortby
+            ));
+            $heimatverz=explode('/',$this->bo->homedir);
+            // process the list: check if we are allowed to read it, get the real size, and count the files/dirs
+            while(list($num, $file_array) = each($ls_array))
+            {
+                if($this->path == $this->bo->fakebase)
+                {
+					if ($file_array['name'] && (array_key_exists($file_array['name'],$this->readable_groups) || $this->bo->fakebase.'/'.$file_array['name']  == $this->bo->homedir || $file_array['name'] == $heimatverz[2]))
 					{
-						echo 'Filename: '.$file_array['name'].'<br>'."\n";
+						if(!$this->groups_applications[$file_array['name']][$this->bo->appname]['enabled'] && $this->bo->fakebase.'/'.$file_array['name']  != $this->bo->homedir && $file_array['name'] != $heimatverz[2])
+						{
+							continue;
+						}
 					}
+                    if ($file_array['name'] && !array_key_exists($file_array['name'],$this->readable_groups) && !($this->bo->fakebase.'/'.$file_array['name']  == $this->bo->homedir || $file_array['name'] == $heimatverz[2]))
+                    {
+                        continue;
+                    }
 				}
-			}
+				// get additional info, which was not retrieved meeting our needs -> size, ids
+                if($this->prefs['size'])
+                {
+                    //KL get the real size of the object
+                    $tmp_arr=array(
+                        'string'    => $file_array['directory'] . '/' . $file_array['name'],
+                        'relatives' => array(RELATIVE_NONE)
+                    );
+                    if($file_array['mime_type'] != 'Directory') $tmp_arr['checksubdirs'] = false;
+                    $file_array['size']=$this->bo->vfs->get_size($tmp_arr);
+                    // KL got the real size
+                }
+                if($this->prefs['owner'])
+                {
+                    $file_array['owner_name']=$GLOBALS['egw']->accounts->id2name($file_array['owner_id']);
+                }
 
-			if(!is_array($this->files_array))
+                # Creator name
+                if($this->prefs['createdby_id'])
+                {
+                    if($file_array['createdby_id'])
+                    {
+                        //$col_data=$GLOBALS['egw']->accounts->id2name($files['createdby_lid']);
+                        $file_array['createdby_name']=$GLOBALS['egw']->accounts->id2name($file_array['createdby_id']);
+                    }
+                    else
+                    {
+                        $file_array['createdby_name']='';
+                    }
+                }
+
+                # Modified by name
+                if($this->prefs['modifiedby_id'])
+                {
+                    if($file_array['modifiedby_id'])
+                    {
+                        $file_array['modifiedby_name']=$GLOBALS['egw']->accounts->id2name($file_array['modifiedby_id']);
+                    }
+                    else
+                    {
+                        $file_array['modifiedby_name']='';
+                    }
+                }
+				// got additional info
+                $this->numoffiles++;
+                $this->files_array[] = $file_array;
+                if($phpwh_debug)
+                {
+                    echo 'Filename: '.$file_array['name'].'<br>'."\n";
+                }
+            }
+
+
+			if( !is_array($this->files_array) )
 			{
 				$this->files_array = array();
 			}
-			// end file count
+			else
+			{
+				// KL sorting by multisort, if sort-param is set.
+				if ($this->sortby)
+				{
+					$mysorting=$this->sortby;
+					if ($mysorting=='owner')
+					{
+						$mysorting='owner_name';
+					}
+					elseif ($mysorting=='createdby_id')
+					{
+						$mysorting='createdby_name';
+					}
+					elseif($mysorting=='modifiedby_id')
+					{
+						$mysorting='modifiedby_name';
+					}
+					foreach ($this->files_array as $key => $row) {
+					   $file[$key]  = $row[$mysorting];
+					}
+
+					// cast and sort file as container of the sort-key-column ascending to sort
+					//  $files_array (as last Param), by the common key
+					array_multisort(array_map('strtolower',$file), SORT_ASC,  $this->files_array);
+				}
+				// KL sorting done
+			}
 		}
 
 		function toolbar($type)
