@@ -60,10 +60,10 @@
 
 <!-- BEGIN sidebox_hide_header -->
 	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, 103, 160, 200)
+		new ypSlideOutMenu("menu2", "right", 0, 24, 160, 200)
 	</script>
 
-	<div id="sideboxdragarea" style="position:absolute;left:0px;top:113px">
+	<div id="sideboxdragarea" style="position:absolute;left:0px;top:34px; z-index: 52;">
 		<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" onmouseover="//ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
