@@ -151,8 +151,8 @@
 <div id="menu1Container">
 	<div id="menu1Content" class="menuOneBox">
 		<div id="extraIcons">
-			<table cellspacing="0" cellpadding="0" border="0" width="100%">
-			<tr class="extraIconsHeader"><td colspan="2" nowrap="nowrap" align="right">
+			<table class="extraIconsHeader" cellspacing="0" cellpadding="0" border="0" width="100%">
+			<tr><td colspan="2" nowrap="nowrap" align="right">
 				<a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
 			</td></tr>
 {app_extra_icons}
