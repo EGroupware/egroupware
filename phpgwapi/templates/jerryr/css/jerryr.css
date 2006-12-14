@@ -78,7 +78,6 @@ a:hover,a:active
 
 body 
 {
-	/*background-image:url(../images/body-background.png);*/
 	background-color:#9f9f9f;
 	padding:9px;
 	margin:9px;
@@ -99,39 +98,38 @@ img
 input,button,select
 {
 	border: solid 1px #bbbbbb;
-	color: black;
+	color: #17202b;
 }
 
 input[type=submit],input[type=button],input[type=reset],button,.egwbutton
 
 {
-/*	color:white;*/
 	background-color:#c5c5c5;
-	border:  outset 1px #dcdad5;
-	/*background-color:#b9d5e3;*/
-	background-color:#f6efe0;
-	/*border:  outset 1px #b9d5e3;*/
-	border: solid 1px #e2d4b2;
+	border:  1px solid #dddddd;
+	background-color:#fbf8f1;
+	background-image: url(../images/butInactive.png);
+	border: solid 1px #7e94a5;
 	margin:  1px;
 	padding: 1px;
 	cursor:  pointer; 
-	/*color:  #004e7d;*/
 	color: #17202b;
-/*	cursor:  hand; */
 }
 
 input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
 {
 	background-color:#88b4e1;
-	border:  outset 1px #b9d5e3;
+	background-image: url(../images/butHover.png);
+	border: 1px solid #bd9300;
 	color:  #006699;
-	color:  #ffffff;
+	color:  #17202b;
 }
 
 input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
 
 {
-	border:  inset 1px #bbbbbb;
+	background-image: url(../images/butActive.png);
+	border: 1 solid #7e94a5;
+	color: #17202b;
 }
 
 input.egwbutton
@@ -144,15 +142,14 @@ input.egwbutton
 	padding: 1px;
 	cursor:  pointer; 
 	color:  #004e7d;
-/*	cursor:  hand; */
 }
 
 input.egwbutton:hover
 {
-   background-color:#94bfd4;
-   border:  outset 1px #b9d5e3;
-   color:  #006699;
-   color:  #004e7d;
+	background-color:#94bfd4;
+	border:  outset 1px #b9d5e3;
+	color:  #006699;
+	color:  #004e7d;
 
 }
 input.egwbutton:active
@@ -163,7 +160,6 @@ input.egwbutton:active
 input[type=image]
 {
 	cursor: pointer; 
-/*	cursor: hand; */
 	border: 0;
 }
 
@@ -201,8 +197,6 @@ a.divSideboxEntry, .divSideboxEntry
 a.appTitles,.appTitles
 {
 	height:25px;
-	/*padding-top:2px;*/
-	/*padding-bottom:2px;*/
 }
 
 a.textSidebox
@@ -214,14 +208,11 @@ a.textSidebox
 {
 	height:18px;
 	padding-left: 2px;
-	/*padding-top:2px;*/
-	/*padding-bottom:2px;*/
 	border-top: solid #9f9f9f 1px;
 }
 
 .textSideboxHover
 {
-	/*background-image: url(../images/appTitleBar.png);*/
 	background-color: #ede6d8;
 	background-repeat: repeat-x;
 	border-top: 1px solid #9f9f9f;
@@ -229,25 +220,25 @@ a.textSidebox
 	font-size: 10px;
 }
 
-.textSideboxHover:first-letter {
-        text-transform:uppercase;
+.textSideboxHover:first-letter
+{
+	text-transform:uppercase;
 }
 
 
 .textSideboxSpacer
 {
-        height:18px;
-        padding-left: 0px;
-        /*padding-top:2px;*/
-        /*padding-bottom:2px;*/
-        border-top: solid #9f9f9f 1px;
+	height:18px;
+	padding-left: 0px;
+	border-top: solid #9f9f9f 1px;
 }
 
 
 /* 
  ** make the sidebox entries consistently start with a capital letter 
  */
-.textSidebox:first-letter {
+.textSidebox:first-letter
+{
 	text-transform:uppercase;
 }
 
@@ -268,7 +259,6 @@ a.textSidebox
 	position: relative;
 	left: 0;
 	text-align: left;
-	/*background-color: #9f9f9f;*/
 	background-image: url(../images/shadowAlpha.png);
 }
 
@@ -363,11 +353,6 @@ body {
 
 #divAppIconBar
 {
-	/*background-color:#fbf8f1;*/
-	/*border-left: 1px solid #9f9f9f;*/
-	/*border-right: 1px solid #9f9f9f;*/
-	/*background-image: url(../images/iconBarBack.png);*/ 
-	background-repeat: repeat-x;
 	height: 57px;
 	padding:0px;
 }
@@ -406,28 +391,23 @@ body {
 
 #divStatusBar
 {
-	/*background-color:#bdbdbd;*/
 	position: relative;
 	top:0px
 	left:0px;
 	height:23px;
 	vertical-align:bottom;
 	border: 0px solid black;
-	/*padding-left:186px;*/
 	padding-top:10px;
-	/*margin-top: 18px;*/
 }
 
 #tdSidebox
 {
 	width:170px;
-	/*background-color:white;*/
 	overflow:visible;
 }
 
 #tdAppbox
 {
-	/*background-color:white;*/
 	padding-left:5px;
 	width: 100%;
 }
