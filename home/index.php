@@ -24,7 +24,8 @@
 			'currentapp'              => 'home',
 			'enable_network_class'    => False,
 			'enable_contacts_class'   => False,
-			'enable_nextmatchs_class' => False
+			'enable_nextmatchs_class' => False,
+			'include_xajax'		  => True,
 		)
 	);
 
