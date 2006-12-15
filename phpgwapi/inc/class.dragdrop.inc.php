@@ -10,6 +10,8 @@
  * @version $Id: class.dragdrop.inc.php 22783 2006-11-02 13:52:24Z jaytraxx $ 
  */
 
+require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.browser.inc.php');
+
 /**
  * General object containing the draggables and droppables
  *
@@ -20,7 +22,6 @@
  */
 class dragdrop
 {
-
 	/**
 	 * draggable Objects
 	 * 
@@ -48,6 +49,13 @@ class dragdrop
 	 * @var array
 	 */
 	var $actionScripts;
+
+	/**
+	 * enables class for all browsers - use this for testing still not validated browsers
+	 * 
+	 * @var boolean
+	 */
+	var $browserTestMode = false;
 	
 	function dragdrop()
 	{
@@ -57,15 +65,15 @@ class dragdrop
 	 * adds a Draggable javascript object
 	 *
 	 * @param string $name unique html id of the object
-	 * @param mixed $value=false optional value of the object - readable by the drop ActionScript
+	 * @param array $values=false optional associative array with values of the object
 	 * @param string $dragAction=false ActionScript executed while item is dragged e.g. calendar.myscript.mydrag
 	 * @param string $dropAction=false ActionScript executed when item is dropped e.g. calendar.myscript.mydrop
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function addDraggable($name,$value = false,$dragAction = false,$dropAction = false)
+	function addDraggable($name,$values = false,$dragAction = false,$dropAction = false)
 	{
 		if(!$this->checkUnique($name)) { return false; }
-			$this->draggables[] = array('name'=>$name,'value'=>$value,'dragAction'=>$this->registerActionScript($dragAction),'dropAction'=>$this->registerActionScript($dropAction));
+			$this->draggables[] = array('name'=>$name,'values'=>$values,'dragAction'=>$this->registerActionScript($dragAction),'dropAction'=>$this->registerActionScript($dropAction));
 		return true;
 	}
 
@@ -73,13 +81,13 @@ class dragdrop
 	 * adds a Droppable javascript object
 	 *
 	 * @param string $name unique html id of the object
-	 * @param mixed $value value of the object - readable by the drop ActionScript
+	 * @param array $values=false optional associative array with values of the object
  	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function addDroppable($name,$value = false)
+	function addDroppable($name,$values = false)
 	{
 		if(!$this->checkUnique($name)) { return false; }
-			$this->droppables[] = array('name'=>$name,'value'=>$value);
+			$this->droppables[] = array('name'=>$name,'values'=>$values);
 		return true;
 	}
 
@@ -90,8 +98,20 @@ class dragdrop
 	 */
 	function setJSCode()
 	{
+		// check that dragdrop is enabled by prefs and that we have a supported browser
+		if(	!$GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'] ||
+			!$this->validateBrowser()
+		)
+		{
+			return false;
+		}
+
 		// this function can only be run once, so we check that at the beginning
-		if($this->setCodeDone) { return false; }
+		if($this->setCodeDone)
+		{
+			error_log('phpgwapi.dragdrop::setJSCode called more than once - aborting');
+			return false;
+		}
 		
 		$GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- BEGIN JavaScript for wz_dragdrop.js -->\n";
 
@@ -138,7 +158,16 @@ class dragdrop
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript">'."\n";
 			foreach($this->draggables as $i=>$element)
 			{
-				if($element['value']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.value = "'.$element['value'].'";'."\n"; }
+				if(is_array($element['values']))
+				{
+					foreach($element['values'] as $val_name=>$val_value)
+					{
+						if($val_value)
+						{
+							$GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.my_'.$val_name.' = "'.$val_value.'";'."\n";
+						}
+					}
+				}
 				if($element['dragAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDragFunc('.$element['dragAction'].');'."\n"; }
 				if($element['dropAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDropFunc('.$element['dropAction'].');'."\n"; }
 			}
@@ -151,7 +180,16 @@ class dragdrop
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript">'."\n";
 			foreach($this->droppables as $i=>$element)
 			{
-				if($element['value']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.value = "'.$element['value'].'";'."\n"; }
+				if(is_array($element['values']))
+				{
+					foreach($element['values'] as $val_name=>$val_value)
+					{
+						if($val_value)
+						{
+							$GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.my_'.$val_name.' = "'.$val_value.'";'."\n";
+						}
+					}
+				}
 				$GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDraggable(false);'."\n";
 			}
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
@@ -194,6 +232,33 @@ class dragdrop
 		}
 
 		return true;
+	}
+
+	/**
+	 * checks if the browser is validated to work with the dragdrop class
+	 * used to enable/disable this class for the clients browser
+	 *
+	 * @return boolean true if browser is validated, otherwise false
+	*/
+	function validateBrowser()
+	{
+		$clientBrowser = new browser();
+
+		if($this->browserTestMode)
+		{
+			error_log('dragdrop::validateBrowser, agent: ' . $clientBrowser->get_agent());
+		}
+ 
+		foreach(array('MOZILLA') as $id=>$validatedBrowser)
+		{
+			if($this->browserTestMode || $clientBrowser->get_agent() == $validatedBrowser)
+			{
+				return true;
+			}
+			
+			return false;
+		}
+			
 	}
 
 	/**
