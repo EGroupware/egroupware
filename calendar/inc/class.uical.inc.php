@@ -233,6 +233,7 @@ class uical
 	 */
 	function do_header()
 	{
+		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		$GLOBALS['egw']->common->egw_header();
 		
 		if ($_GET['msg']) echo '<p class="redItalic" align="center">'.$this->html->htmlspecialchars($_GET['msg'])."</p>\n";

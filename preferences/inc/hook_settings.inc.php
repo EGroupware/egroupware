@@ -230,5 +230,14 @@
 			'help'   => 'Should this help messages shown up always, when you enter the preferences or only on request.',
 			'xmlrpc' => False,
 			'admin'  => False
+		),
+		'enable_dragdrop' => array(
+			'type'   => 'check',
+			'label'  => 'Enable drag and drop functionality (experimental)',
+			'name'   => 'enable_dragdrop',
+			'help'   => 'Enables or disables drag and drop functions in all applications. If the browser does not support '.
+				    'drag and drop, it will be disabled automatically. This feature is experimental at the moment.',
+			'xmlrpc' => False,
+			'admin'  => False
 		)
 	);

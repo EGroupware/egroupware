@@ -13,6 +13,7 @@
 /* $Id$ */
 
 include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
+include_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/class.dragdrop.inc.php');
 
 /**
  * Class to generate the calendar views and the necesary widgets
@@ -91,6 +92,13 @@ class uiviews extends uical
 	var $use_time_grid=true;
 	
 	/**
+	 * Dragdrop Object
+	 *
+	 * @var object $dragdrop;
+	 */
+	var $dragdrop;
+ 
+	/**
 	 * Can we display the whole day in a timeGrid of the size of the workday and just scroll to workday start
 	 *
 	 * @var boolean $scroll_to_wdstart;
@@ -138,6 +146,7 @@ class uiviews extends uical
 		$this->holidays = $this->bo->read_holidays($this->year);
 		
 		$this->check_owners_access();
+		$this->dragdrop = new dragdrop();
 	}
 	
 	/**
@@ -320,6 +329,10 @@ class uiviews extends uical
 		
 			echo $content;
 		}
+
+		// make wz_dragdrop elements work
+		$this->dragdrop->setJSCode();
+
 		return $content;
 	}
 
@@ -442,6 +455,10 @@ class uiviews extends uical
 			
 			echo $content;
 		}
+
+		// make wz_dragdrop elements work
+		$this->dragdrop->setJSCode();
+
 		return $content;
 	}
 
@@ -514,10 +531,17 @@ class uiviews extends uical
 			{
 				echo $cols[0];
 			}
+			// make wz_dragdrop elements work
+			$this->dragdrop->setJSCode();
 		}
 		else
 		{
-			return $this->timeGridWidget($this->bo->search($this->search_params),$this->cal_prefs['interval'],300);
+			$content = $this->timeGridWidget($this->bo->search($this->search_params),$this->cal_prefs['interval'],300);
+			
+			// make wz_dragdrop elements work
+			$this->dragdrop->setJSCode();
+
+			return $content;
 		}
 	}
 
@@ -791,6 +815,7 @@ class uiviews extends uical
 			}
 			$html .= "</script>\n";
 		}
+
 		return $html;
 	}
 
@@ -880,6 +905,16 @@ class uiviews extends uical
 
 		if ($this->use_time_grid)
 		{
+			// drag and drop: check if the current user has EDIT permissions on the grid
+			if($owner)
+			{
+				$dropPermission = $this->bo->check_perms(EGW_ACL_EDIT,0,$owner);
+			}
+			else
+			{
+				$dropPermission = true;
+			}
+
 			// adding divs to click on for each row / time-span
 			for($t = $this->scroll_to_wdstart ? 0 : $this->wd_start,$i = 1+$this->extraRows;
 				$t <= $this->wd_end || $this->scroll_to_wdstart && $t < 24*60;
@@ -888,20 +923,35 @@ class uiviews extends uical
 				$linkData = array(
 					'menuaction'	=>'calendar.uiforms.edit',
 					'date'		=> $day_ymd,
-					'hour'		=> floor($t / 60),
-					'minute'	=> floor($t % 60),
+					'hour'		=> sprintf("%02d",floor($t / 60)),
+					'minute'	=> sprintf("%02d",floor($t % 60)),
 				);
 				if ($owner) $linkData['owner'] = $owner;
+
+				$droppableDateTime = $linkData['date'] . "T" . $linkData['hour'] . $linkData['minute'];
+				$droppableID='drop_'.$droppableDateTime.'_O'.$owner;
 				
-				$html .= $indent."\t".'<div style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
+				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
 					'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";
+				
+				if($dropPermission)
+				{
+					$this->dragdrop->addDroppable(
+						$droppableID,
+						array(
+							'datetime'=>$droppableDateTime,
+							'owner'=>$owner ? $owner : $this->user,
+						)
+					);
+				}
 			}
 		}
 		// displaying all event columns of the day
 		foreach($eventCols as $n => $eventCol)
 		{
 			$html .= $this->eventColWidget($eventCol,!$n ? 0 : 60-10*(count($eventCols)-$n),
-				count($eventCols) == 1 ? 100 : (!$n ? 80 : 50),$indent."\t");
+				count($eventCols) == 1 ? 100 : (!$n ? 80 : 50),$indent."\t",
+				$owner ? $owner : $this->user);
 		}
 		$html .= $indent."</div>\n";	// calDayCol
 
@@ -968,8 +1018,9 @@ class uiviews extends uical
 	 * @param int $left start of the widget
 	 * @param int $width width of the widget
 	 * @param string $indent string for correct indention
+	 * @param int $owner owner of the eventCol
 	 */
-	function eventColWidget($events,$left,$width,$indent)
+	function eventColWidget($events,$left,$width,$indent,$owner)
 	{
 		if ($this->debug > 1 || $this->debug==='eventColWidget') $this->bo->debug_message('uiviews::eventColWidget(%1,left=%2,width=%3,)',False,$events,$left,$width);
 
@@ -977,7 +1028,7 @@ class uiviews extends uical
 			(!$this->use_time_grid ? ' top: '.$this->rowHeight.'%;' : '').'">'."\n";
 		foreach($events as $event)
 		{
-			$html .= $this->eventWidget($event,$width,$indent."\t");
+			$html .= $this->eventWidget($event,$width,$indent."\t",$owner);
 		}
 		$html .= $indent."</div>\n";
 
@@ -992,11 +1043,12 @@ class uiviews extends uical
 	 * @param $event array with the data of event to show
 	 * @param $width int width of the widget
 	 * @param string $indent string for correct indention
+	 * @param int $owner owner of the calendar the event is in
 	 * @param boolean $return_array=false should an array with keys(tooltip,popup,html) be returned or the complete widget as string
 	 * @param string $block='event_widget' template used the render the widget
 	 * @return string/array 
 	 */
-	function eventWidget($event,$width,$indent,$return_array=false,$block='event_widget')
+	function eventWidget($event,$width,$indent,$owner,$return_array=false,$block='event_widget')
 	{
 		if ($this->debug > 1 || $this->debug==='eventWidget') $this->bo->debug_message('uiviews::eventWidget(%1,width=%2)',False,$event,$width);
 
@@ -1159,10 +1211,39 @@ class uiviews extends uical
 		{
 			$style = 'position: relative; margin-top: 3px;';
 		}
-		return $indent.'<div class="calEvent'.($is_private ? 'Private' : '').
-			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.';"'.
+
+		$draggableID = 'drag_'.$event['id'].'_O'.$event['owner'].'_C'.$owner;
+
+		$html = $indent.'<div id="'.$draggableID.'" class="calEvent'.($is_private ? 'Private' : '').
+			'" style="'.$style.' border-color: '.$headerbgcolor.'; background: '.$background.'; z-index: 20;"'.
 			$popup.' '.$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)).
-			'>'."\n".$ie_fix.$html.$indent."</div>\n";
+			'>'."\n".$ie_fix.$html."\n".
+			$indent."</div>"."\n";
+
+		// ATM we do not support whole day events or recurring events for dragdrop
+		if (	$this->use_time_grid && 
+			$this->bo->check_perms(EGW_ACL_EDIT,$event['id']) &&
+			!$event['whole_day_on_top'] &&
+			!$event['whole_day'] &&
+			!$event['recur_type']
+		)
+		{
+			// register event as draggable
+			$this->dragdrop->addDraggable(
+					$draggableID,
+					array(
+						'eventId'=>$event['id'],
+						'eventOwner'=>$event['owner'],
+						'calendarOwner'=>$owner,
+						'errorImage'=>addslashes($this->html->image('phpgwapi','dialog_error',false,'style="width: 16px;"')),
+						'loaderImage'=>addslashes($this->html->image('phpgwapi','ajax-loader')),
+					),
+					'calendar.dragDropFunctions.dragEvent',
+					'calendar.dragDropFunctions.dropEvent'
+			);
+		}
+
+		return $html;
 	}
 
 	function add_nonempty($content,$label,$one_per_line=False,$space = True)
@@ -1781,11 +1862,18 @@ class uiviews extends uical
 			{
 				$start = $this->bo->date2array($event['start']);
 				$end = $this->bo->date2array($event['end']);
-				if(!$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59 && $event['non_blocking'])
+				if(!$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59)
 				{
+					if($event['non_blocking'])
+					{
 						$dayEvents[$day][$num]['whole_day_on_top']=true;
 						$this->whole_day_positions[$num]=($this->rowHeight*($num+2));
 						$extraRowsToAdd++;
+					}
+					else
+					{
+						$dayEvents[$day][$num]['whole_day']=true;
+					}
 				}
 			}
 			// check after every day if we have to increase $this->extraRows
