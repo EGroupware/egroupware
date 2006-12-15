@@ -74,7 +74,7 @@
 				'start' => 'start with',
 				'exact' => 'exact',
 			);
-			
+
 			if ($GLOBALS['egw']->acl->check('group_access',1,'admin'))
 			{
 				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/admin/index.php'));
@@ -88,7 +88,7 @@
 				//if(eregi('^[a-z_0-9]+$',$_REQUEST['query']))
 					$GLOBALS['query'] = $_REQUEST['query'];
 			}
-			
+
 			if(isset($_POST['start']))
 			{
 				$start = (int)$_POST['start'];
@@ -117,7 +117,7 @@
 					$sort = 'ASC';
 					break;
 			}
-			
+
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			if(!@is_object($GLOBALS['egw']->js))
@@ -226,7 +226,7 @@
 
 				}
 			}
-			
+
 			$link_data += array(
 				'order'      => $order,
 				'sort'       => $sort,
@@ -259,7 +259,7 @@
 				'class'  => $_REQUEST['query_type'] != 'start' || !in_array($GLOBALS['query'],$letters) ? 'letter_box_active' : 'letter_box',
 			));
 			$p->fp('letter_search_cells','letter_search',True);
-			
+
 			$var = Array(
 				'new_action'    => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.add_group'),
 				'search_action' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups')
@@ -606,7 +606,7 @@
 				$this->list_users();
 				return False;
 			}
-			
+
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);
 			if(!@is_object($GLOBALS['egw']->js))
@@ -660,7 +660,7 @@
 					'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
 				);
 			}
-			
+
 		}
 
 
@@ -679,7 +679,7 @@
 			$accountid = $account_id;
 			settype($account_id,'integer');
 			$account_id = ($_GET['account_id'] ? $_GET['account_id'] : (int)$accountid);
-			
+
 			// todo
 			// not needed if i use the same file for new groups too
 			if (! $account_id)
@@ -719,11 +719,11 @@
 					'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
 				);
 			}
-			
+
 			// NDEE210804
 			// added for different way of handling ldap entries inside account manager
 			// we show this only, if accounts are stored in ldap
-/* just doublicated EMailAdmin functionality 
+/* just doublicated EMailAdmin functionality
 			if ($GLOBALS['egw_info']['server']['account_repository'] == "ldap")
 			{
 				$GLOBALS['menuData'][] = array(
@@ -734,8 +734,8 @@
 			}
 */
 			//NDEE
-			
-			
+
+
 		}
 
 		function edit_user($cd='',$account_id='')
@@ -753,7 +753,7 @@
 			$accountid = $account_id;
 			settype($account_id,'integer');
 			$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
-			
+
 			// todo
 			// not needed if i use the same file for new users too
 			if (! $account_id)
@@ -888,9 +888,9 @@
 			$availableApps = $GLOBALS['egw_info']['apps'];
 			@asort($availableApps);
 			@reset($availableApps);
-			foreach($availableApps as $app => $data) 
+			foreach($availableApps as $app => $data)
 			{
-				if ($data['enabled'] && $data['status'] != 2) 
+				if ($data['enabled'] && $data['status'] != 2)
 				{
 					$perm_display[$i]['appName'] = $app;
 					$perm_display[$i]['title']   = $data['title'];
@@ -950,7 +950,7 @@
 			$accountid = $account_id;
 			settype($account_id,'integer');
 			$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
-			
+
 			// todo
 			// not needed if i use the same file for new groups too
 			if (! $account_id)
@@ -985,7 +985,7 @@
 			$p->set_file(Array('edit' => 'group_form.tpl'));
 			$p->set_block('edit','select');
 			$p->set_block('edit','popwin');
-//fix from Maanus 280105			
+//fix from Maanus 280105
 			$accounts =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 
 			if (!is_object($GLOBALS['egw']->uiaccountsel))
@@ -1047,7 +1047,7 @@
 			$perm_html = '<td width="35%">'.lang('Application').'</td><td width="15%">'.lang('enabled').' / '.lang('ACL').'</td>';
 			$perm_html = '<tr class="th">'.
 				$perm_html.$perm_html."</tr>\n";
-			
+
 			$tr_color = $GLOBALS['egw_info']['theme']['row_off'];
 			for ($i=0;$i < count($perm_display);$i++)
 			{
@@ -1087,7 +1087,7 @@
 		function create_edit_user($_account_id,$_userData='',$_errors='')
 		{
 			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-	
+
 			$jscal =& CreateObject('phpgwapi.jscalendar');
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
@@ -1097,7 +1097,7 @@
 				$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 			}
 			$GLOBALS['egw']->js->validate_file('jscode','openwindow','admin');
-			
+
 			$GLOBALS['egw']->common->egw_header();
 
 			$t =& CreateObject('phpgwapi.Template',EGW_APP_TPL);
@@ -1116,9 +1116,9 @@
 			$t->set_block('account','form_buttons_','form_buttons_');
 			$t->set_block('account','link_row','link_row');
 
-			$theme = $GLOBALS['egw_info']['user']['preferences']['common']['theme'];			
+			$theme = $GLOBALS['egw_info']['user']['preferences']['common']['theme'];
 			$t->set_var('icon_create_edit', '<img src="'. $GLOBALS['egw_info']['server']['webserver_url'] .'/admin/templates/'.$theme.'/images/useradm.gif">');
-			
+
 			//print_debug('Type : '.gettype($_userData).'<br>_userData(size) = "'.$_userData.'"('.strlen($_userData).')');
 			if (is_array($_userData))
 			{
@@ -1275,6 +1275,27 @@
 			$t->set_var($var);
 			$t->parse('password_fields','form_passwordinfo',True);
 
+			// prepare the allGroups array for use with the checkbox-multiselect use
+			$allGroupsBuff=array();
+			while (list($key,$value) = each($allGroups))
+			{
+				$allGroupsBuff[$value['account_lid']]=$value['account_id'];
+			}
+			// sort alphabetical
+			ksort($allGroupsBuff);
+			$allGroupsSorted=array();
+			while (list($key,$value) = each($allGroupsBuff))
+			{
+				$allGroupsSorted[$value]=$key;
+			}
+			//prepare the userGroups Array for use with the checkbox-multiselect use -> selarray
+			$selarray=array();
+			while (list($key,$value) = each($userGroups))
+			{
+				array_push($selarray,$value['account_id']);
+			}
+			$t->set_var('groups_select','<div id="groupselector">' .$GLOBALS['egw']->html->checkbox_multiselect('account_groups[]',$selarray,$allGroupsSorted,true,'',min(3+count($allGroupsSorted),10),' style="width: 300px; text-align:left" ').'</div>');
+			/* KL 20061211 removed
 			$groups_select		= '';
 			$primary_group_select	= '';
 			reset($allGroups);
@@ -1284,9 +1305,9 @@
 				$groups_select .= '<input type="checkbox"  name="account_groups[]" value="' . $value['account_id'] . '"';
 				for ($i=0; $i<count($userGroups); $i++)
 				{
-					/* print  
-					"Los1:".$userData["account_id"].$userGroups[$i]['account_id']." :  
-					".$value['account_id']."<br>"; */
+					// print
+					//"Los1:".$userData["account_id"].$userGroups[$i]['account_id']." :
+					//".$value['account_id']."<br>";
 					if (@$userGroups[$i]['account_id'] ==  $value['account_id'])
 					{
 						$groups_select .= ' checked';
@@ -1294,7 +1315,7 @@
 				}
 				$groups_select .= '>' . $value['account_lid'] . "<br/>\n";
 			}
-
+			*/
 
 			if (!$userData['account_primary_group'])
 			{
@@ -1330,7 +1351,7 @@
 				}
 				$checked = (@$userData['account_permissions'][$app] || @$db_perms[$app]) && $_account_id ? ' checked="1"' : '';
 				$part[$i&1] = sprintf('<td>%s</td><td><input type="checkbox" name="account_permissions[%s]" value="True"%s>',
-					$data['title'],$app,$checked).	
+					$data['title'],$app,$checked).
 					($this->apps_with_acl[$app] && $_account_id?'<a href="'.$GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app='.$app.'&owner='.$_account_id)
 					. '"><img src="'.$GLOBALS['egw']->common->image('phpgwapi','edit').'" border="0" hspace="3" align="absmiddle" title="'
 					. lang('Grant Access').'"></a>':'&nbsp;').'</td>';
@@ -1348,12 +1369,13 @@
 			}
 
 			$var = Array(
-				'groups_select'
-				=> '<div id="groupselector">' .  
-				"\n".$groups_select. '</div>' . "\n",
+				// KL 20061211 groups_select is already set
+				//'groups_select'
+				//=> '<div id="groupselector">' .
+				//"\n".$groups_select. '</div>' . "\n",
 				'primary_group_select'
-				=> '<select  
-				name="account_primary_group">'."\n".$primary_group_select.'</ 
+				=> '<select
+				name="account_primary_group">'."\n".$primary_group_select.'</
 				select>'."\n",
 				'permissions_list'
 							 			=> $appRightsOutput,
@@ -1365,9 +1387,9 @@
 			$var = Array(
 				'groups_select'
 					=> '<select name="account_groups[]" multiple>'."\n".$groups_select.'</select>'."\n",
-				'primary_group_select'    
+				'primary_group_select'
 					=> '<select name="account_primary_group">'."\n".$primary_group_select.'</select>'."\n",
-				'permissions_list' 
+				'permissions_list'
 					=> $appRightsOutput,
 				'lang_app' => lang('application'),
 				'lang_acl' => lang('enabled').' / '.lang('ACL'),
@@ -1400,7 +1422,7 @@
 			}
 			return $response->getXML();
 		}
-	
+
 		function edit_group_managers($group_info,$_errors='')
 		{
 			if ($GLOBALS['egw']->acl->check('group_access',16,'admin'))
