@@ -42,6 +42,12 @@ class uicontacts extends bocontacts
 	var $org_views;
 
 	var $config;
+	/**
+	 * Name(s) of the tabs in the edit dialog
+	 *
+	 * @var string
+	 */
+	var $tabs = 'general|cats|home|details|links|custom';
 
 	function uicontacts($contact_app='addressbook')
 	{
@@ -886,8 +892,6 @@ class uicontacts extends bocontacts
 	*/
 	function edit($content=null)
 	{
-		$tabs = 'general|cats|home|details|links|custom';
-
 		if (!is_object($this->link))
 		{
 			if (!is_object($GLOBALS['egw']->link))
@@ -1103,8 +1107,8 @@ class uicontacts extends bocontacts
 			$readonlys[$field] = true;
 		}
 		// disable not needed tabs
-		$readonlys[$tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
-		$readonlys[$tabs]['custom'] = !$this->customfields;		
+		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
+		$readonlys[$this->tabs]['custom'] = !$this->customfields;		
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->is_admin($content))
 		{
@@ -1385,7 +1389,10 @@ $readonlys['button[vcard]'] = true;
 		$readonlys['fileas_type'] = true;
 		$readonlys['creator'] = true;
 		$readonlys['button'] = true;
-		$readonlys['personal|organisation|home|details|links']['links'] = true;
+		// disable not needed tabs
+		$readonlys[$this->tabs]['cats'] = !($content['cat_tab'] = $this->config['cat_tab']);
+		$readonlys[$this->tabs]['custom'] = !$this->customfields;		
+		$readonlys[$this->tabs]['links'] = true;
 		$content['hidebuttons'] = true;
 		$content['no_tid'] = true;
 		$content['disable_change_org'] = true;
