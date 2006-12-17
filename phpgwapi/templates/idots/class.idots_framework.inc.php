@@ -69,8 +69,10 @@ class idots_framework extends egw_framework
 		$this->tpl->set_block('_head','head');
 		
 		$this->tpl->set_var($this->_get_header());
-		
+
 		$content .= $this->tpl->fp('out','head');
+		
+		$this->sidebox_content = '';	// need to be emptied here, as the object get's stored in the session 
 		
 		return $content;
 	}
@@ -85,7 +87,6 @@ class idots_framework extends egw_framework
 		// the navbar
 		$this->tpl->set_file(array('navbar' => 'navbar.tpl'));
 			
-		$this->tpl->set_block('navbar','navbar_header','navbar_header');
 		$this->tpl->set_block('navbar','extra_blocks_header','extra_block_header');
 		$this->tpl->set_block('navbar','extra_block_row','extra_block_row');
 		$this->tpl->set_block('navbar','extra_block_row_raw','extra_block_row_raw');
@@ -96,10 +97,15 @@ class idots_framework extends egw_framework
 		$this->tpl->set_block('navbar','sidebox_hide_footer','sidebox_hide_footer');
 		$this->tpl->set_block('navbar','appbox','appbox');
 		$this->tpl->set_block('navbar','navbar_footer','navbar_footer');
-		$this->tpl->set_block('navbar','app_icon_block','app_icon_block');
-		$this->tpl->set_block('navbar','app_title_block','app_title_block');
-		$this->tpl->set_block('navbar','app_extra_block','app_extra_block');
-		$this->tpl->set_block('navbar','upper_tab_block','upper_tab_block');
+		
+		$this->tpl->set_block('navbar','upper_tab_block','upper_tabs');
+		$this->tpl->set_block('navbar','app_icon_block','app_icons');
+		$this->tpl->set_block('navbar','app_title_block','app_titles');
+		$this->tpl->set_block('navbar','app_extra_block','app_extra_icons');
+		$this->tpl->set_block('navbar','app_extra_icons_div');
+		$this->tpl->set_block('navbar','app_extra_icons_icon');
+
+		$this->tpl->set_block('navbar','navbar_header','navbar_header');
 
 		$apps = $this->_get_navbar_apps();
 		$vars = $this->_get_navbar($apps);
@@ -262,17 +268,21 @@ class idots_framework extends egw_framework
 				}
 				else // generate extra icon layer shows icons and/or text
 				{
-					if($i == $max_icons)
-					{
-						$var['lang_close'] = lang('Close');
-						$var['lang_show_more_apps'] = lang('show_more_apps');
-						$this->tpl->set_block('navbar','app_extra_icons_div','app_extra_icons_div');
-						$this->tpl->set_block('navbar','app_extra_icons_icon','app_extra_icons_icon');
-					}
 					$this->tpl->fp('app_extra_icons','app_extra_block',true);
 				}
 				$i++;
 			}
+		}
+		// settings for the extra icons dif
+		if ($i < $max_icons)	// no extra icon div
+		{
+			$this->tpl->set_var('app_extra_icons_div','');
+			$this->tpl->set_var('app_extra_icons_icon','');
+		}
+		else
+		{
+			$var['lang_close'] = lang('Close');
+			$var['lang_show_more_apps'] = lang('show_more_apps');
 		}
 		if ($GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] != 'no' && 
 			$GLOBALS['egw_info']['user']['userid'] != 'anonymous')

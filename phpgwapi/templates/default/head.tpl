@@ -4,7 +4,7 @@
 		<title>{website_title}</title>
 		<meta http-equiv="content-type" content="text/html; charset={charset}" />
 		<meta name="keywords" content="eGroupWare" />
-		<meta name="description" content="eGroupware" />
+		<meta name="description" content="eGroupWare" />
 		<meta name="keywords" content="eGroupWare" />
 		<meta name="copyright" content="eGroupWare http://www.egroupware.org (c) 2006" />
 		<meta name="language" content="{lang_code}" />
@@ -17,7 +17,10 @@
 		{slider_effects}
 		{simple_show_hide}
 		{pngfix}
-		{css}
+		<style type="text/css">
+			{app_css}
+		</style>
+		{css_file}
 		{java_script}
 	</head>
 	<!-- we don't need body tags anymore, do we?) we do!!! onload!! LK -->

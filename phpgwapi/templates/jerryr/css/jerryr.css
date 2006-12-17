@@ -431,50 +431,6 @@ body {
 	border-right:solid 1px #17202b;
 }
 
-
-
-/*
-	this must move to the filemanager app
-*/
-
-#fmStatusBar
-{
-	margin-left:4px;
-	margin-bottom:3px;
-}
-
-.fmButton
-{
-	background-repeat: no-repeat;
-	background-image:url(../images/buttonbackground.png);
-	width:28px;
-	height:28px;
-}
-
-#fmLocation
-{
-	position:relative;
-	margin-bottom:3px;
-	height:27px;
-}
-
-#fmMenu
-{
-	position:relative;
-}
-
-#fmFileWindow
-{
-	background-color:#ffffff;
-	margin-left:4px;
-	padding:5px;
-	position:relative;
-	border-right: #cccccc 1px solid; 
-	border-top: #9c9c9c 2px solid; 
-	border-left: #9c9c9c 2px solid; 
-	border-bottom: #cccccc 1px solid
-}
-
 #admin_info
 {
 	position:relative;
@@ -487,4 +443,42 @@ body {
 	bottom:4px;
 	text-align:center;
 	width:99%;
+}
+
+/*
+	Table formatting
+*/
+.th { 
+	color: black; background-color: #D3DCE3; 
+}
+.row_on { 
+	color: black; 
+	background-color: #F1F1F1; 
+}
+.row_off { 
+	color: black; 
+	background-color: #ffffff; 
+}
+.narrow_column { width: 1%; white-space: nowrap; }
+
+/*
+	Printing
+*/
+@media screen {	.onlyPrint { display: none; } }
+@media print {	.noPrint { display: none; } }
+
+/*
+	Portal_box as used in home
+*/
+.portal_box {
+	border: #9c9c9c 1px solid;
+}
+
+.portal_box table {
+	border: 1px solid black;
+}
+
+.portal_box_header {
+	height: 15px; 
+	padding-top: 0px;
 }

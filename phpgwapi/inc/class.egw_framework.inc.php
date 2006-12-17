@@ -140,7 +140,6 @@ class egw_framework
 	{
 		$var = Array(
 			'img_root'       => $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images',
-			'table_bg_color' => $GLOBALS['egw_info']['theme']['navbar_bg'],
 			'version'        => $GLOBALS['egw_info']['server']['versions']['phpgwapi']
 		);
 		if($GLOBALS['egw_info']['user']['preferences']['common']['show_generation_time'])
@@ -200,24 +199,6 @@ class egw_framework
 		// get used language code
 		$lang_code = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 	
-		$bodyheader = ' bgcolor="' . $GLOBALS['egw_info']['theme']['bg_color'] . '" alink="'
-			. $GLOBALS['egw_info']['theme']['alink'] . '" link="' . $GLOBALS['egw_info']['theme']['link'] . '" vlink="'
-			. $GLOBALS['egw_info']['theme']['vlink'] . '"';
-	
-		if(!$GLOBALS['egw_info']['server']['htmlcompliant'])
-		{
-			$bodyheader .= '';
-		}
-	
-		#_debug_array($GLOBALS['egw_info']['user']['preferences']['common']);
-		$theme_css = '/phpgwapi/templates/'.$this->template.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
-		if(!file_exists(EGW_SERVER_ROOT.$theme_css))
-		{
-			$theme_css = '/phpgwapi/templates/'.$this->template.'/css/'.$this->template.'.css';
-		}
-		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . $theme_css;
-		$print_css = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/print.css';
-	
 		//pngfix defaults to yes
 		if(!$GLOBALS['egw_info']['user']['preferences']['common']['disable_pngfix'])
 		{
@@ -254,7 +235,7 @@ class egw_framework
 	
 		if($app!='wiki') $robots ='<meta name="robots" content="none" />';
 		
-		return array(
+		return $this->_get_css()+array(
 			'img_icon'      	=> EGW_IMAGES_DIR . '/favicon.ico',
 			'img_shortcut'  	=> EGW_IMAGES_DIR . '/favicon.ico',
 			'pngfix'        	=> $pngfix,
@@ -262,13 +243,9 @@ class egw_framework
 			'simple_show_hide'	=> $simple_show_hide,
 			'lang_code'			=> $lang_code,
 			'charset'       	=> $GLOBALS['egw']->translation->charset(),
-			'font_family'   	=> $GLOBALS['egw_info']['theme']['font'],
 			'website_title' 	=> strip_tags($GLOBALS['egw_info']['server']['site_title']. ($app ? " [$app]" : '')),
-			'body_tags'     	=> $bodyheader .' '. $GLOBALS['egw']->common->get_body_attribs(),
-			'theme_css'     	=> $theme_css,
-			'print_css'     	=> $print_css,
-			'css'           	=> $GLOBALS['egw']->common->get_css(),
-			'java_script'   	=> $GLOBALS['egw']->common->get_java_script(),
+			'body_tags'     	=> $this->_get_body_attribs(),
+			'java_script'   	=> $this->_get_js(),
 			'meta_robots'		=> $robots,
 			'dir_code'			=> lang('language_direction_rtl') != 'rtl' ? '' : ' dir="rtl"',
 		);
@@ -284,7 +261,6 @@ class egw_framework
 	function _get_navbar($apps)
 	{
 		$var['img_root'] = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images';
-		$var['table_bg_color'] = $GLOBALS['egw_info']['theme']['navbar_bg'];
 
 		if(isset($GLOBALS['egw_info']['flags']['app_header']))
 		{
@@ -491,18 +467,17 @@ class egw_framework
 	/**
 	 * Used by template headers for including CSS in the header
 	 *
-	 * This first loads up the basic global CSS definitions, which support
-	 * the selected user theme colors.  Next we load up the app CSS.  This is
-	 * all merged into the selected theme's css.tpl file.
-	 *
+	 * 'app_css'   - css styles from a) the menuaction's css-method and b) the $GLOBALS['egw_info']['flags']['css']
+	 * 'file_css'  - link tag of the app.css file of the current app
+	 * 'theme_css' - url of the theme css file
+	 * 'print_css' - url of the print css file
+	 * 
 	 * @internal PHP5 protected
 	 * @author Dave Hall (*based* on verdilak? css inclusion code)
+	 * @return array with keys 'app_css' from the css method of the menuaction-class and 'file_css' (app.css file of the application)
 	 */
 	function _get_css()
 	{
-		$tpl =& CreateObject('phpgwapi.Template', common::get_tpl_dir('phpgwapi'));
-		$tpl->set_file('css', 'css.tpl');
-		$tpl->set_var($GLOBALS['egw_info']['theme']);
 		$app_css = '';
 		if(isset($_GET['menuaction']))
 		{
@@ -517,32 +492,46 @@ class egw_framework
 		{
 			$app_css .= $GLOBALS['egw_info']['flags']['css'];
 		}
-		$tpl->set_var('app_css', $app_css);
 
 		// search for app specific css file
 		if(@isset($GLOBALS['egw_info']['flags']['currentapp']))
 		{
 			$appname = $GLOBALS['egw_info']['flags']['currentapp'];
 
-			if(file_exists(EGW_SERVER_ROOT . SEP . $appname . SEP
-				. 'templates' . SEP . $GLOBALS['egw_info']['server']['template_set']
-				. SEP . 'app.css')
-			)
+			$css_file = '/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/app.css';
+			if (!file_exists(EGW_SERVER_ROOT.$css_file))
 			{
-				$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['egw_info']['server']['webserver_url']
-					. "/$appname/templates/".$GLOBALS['egw_info']['server']['template_set']
-					. "/app.css".'" type=text/css rel=StyleSheet>');
+				$css_file = '/'.$appname.'/templates/default/app.css';
+				
+				if (!file_exists(EGW_SERVER_ROOT.$css_file)) $css_file = '';
 			}
-			elseif(file_exists(EGW_SERVER_ROOT . SEP . $appname . SEP
-				. 'templates' . SEP . 'default'
-				. SEP . 'app.css')
-			)
+			if($css_file)
 			{
-				$tpl->set_var('css_file', '<LINK href="'.$GLOBALS['egw_info']['server']['webserver_url']
-				."/$appname/templates/default/app.css".'" type=text/css rel=StyleSheet>');
+				$css_file = '<LINK href="'.$GLOBALS['egw_info']['server']['webserver_url'].
+					$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type=text/css rel=StyleSheet>';
 			}
 		}
-		return $tpl->subst('css');
+		#_debug_array($GLOBALS['egw_info']['user']['preferences']['common']);
+		$theme_css = '/phpgwapi/templates/'.$this->template.'/css/'.$GLOBALS['egw_info']['user']['preferences']['common']['theme'].'.css';
+		if(!file_exists(EGW_SERVER_ROOT.$theme_css))
+		{
+			$theme_css = '/phpgwapi/templates/'.$this->template.'/css/'.$this->template.'.css';
+		}
+		$theme_css = $GLOBALS['egw_info']['server']['webserver_url'] . $theme_css .'?'.filemtime(EGW_SERVER_ROOT.$theme_css);
+
+		$print_css = '/phpgwapi/templates/'.$this->template.'/print.css';
+		if(!file_exists(EGW_SERVER_ROOT.$theme_css))
+		{
+			$print_css = '/phpgwapi/templates/idots/print.css';
+		}
+		$print_css = $GLOBALS['egw_info']['server']['webserver_url'] . $print_css .'?'.filemtime(EGW_SERVER_ROOT.$print_css);
+	
+		return array(
+			'app_css'   => $app_css,
+			'css_file'  => $css_file,
+			'theme_css' => $theme_css,
+			'print_css' => $print_css,
+		);
 	}
 
 	/**

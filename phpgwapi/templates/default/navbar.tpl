@@ -1,12 +1,37 @@
 <!-- BEGIN navbar_header -->
 <div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="eGroupWare"/></a></div>
 
-{app_extra_icons_div}
+<!-- BEGIN app_extra_icons_div -->
+<script language="javascript">
+	new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,'right');
+</script>
+<div id="menu1Container">
+	<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
+		<div id="extraIcons">
+			<table cellspacing="0" cellpadding="0" border="0" width="100%">
+				<tr>
+					<td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd; padding:1px;">
+						<a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
+					</td>
+				</tr>
+<!-- BEGIN app_extra_block -->
+				<tr>
+					<td class="extraIconsRow"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" width="16" border="0" /></a></td>
+					<td align="left" class="extraIconsRow"><a href="{url}" {target}>{title}</a></td>
+				</tr>
+<!-- END app_extra_block -->
+			</table>
+		</div>
+	</div>
+</div>
+<!-- END app_extra_icons_div -->
 
 <div id="divMain">
 	<div id="divUpperTabs">
 		<ul>
-{upper_tabs}
+<!-- BEGIN upper_tab_block -->
+			<li><a href="{url}">{title}</a></li>
+<!-- END upper_tab_block -->
 		</ul>
 	</div>
 	<div id="divAppIconBar">
@@ -16,14 +41,22 @@
 				<td valign="bottom">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
-{app_icons}
+<!-- BEGIN app_icon_block -->
+							<td width="{tdwidth}%" align="center" style="text-align:center"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" border="0" /></a></td>
+<!-- END app_icon_block -->
+<!-- BEGIN app_extra_icons_icon -->
+							<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">
+								<a title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
+							</td>
+<!-- END app_extra_icons_icon -->
 						</tr>
 						<tr>
-{app_titles}
+<!-- BEGIN app_title_block -->
+							<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="{url}" {target}>{title}</a></td>
+<!-- END app_title_block -->
 						</tr>
 					</table>
 				</td>
-{app_extra_icons_icon}
 			</tr>
 		</table>
 	</div>
@@ -33,21 +66,6 @@
 		<td width="33%"  align="right" id="quick_add">{quick_add}</td>
 	</tr></table></div>
 <!-- END navbar_header -->
-
-
-<!-- BEGIN upper_tab_block -->
-			<li><a href="{url}">{title}</a></li>
-<!-- END upper_tab_block -->
-
-
-<!-- BEGIN app_icon_block -->
-							<td width="{tdwidth}%" align="center" style="text-align:center"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" border="0" /></a></td>
-<!-- END app_icon_block -->
-
-
-<!-- BEGIN app_title_block -->
-							<td align="center" valign="top" class="appTitles" style="text-align:center"><a href="{url}" {target}>{title}</a></td>
-<!-- END app_title_block -->
 
 
 <!-- BEGIN appbox -->	
@@ -108,15 +126,6 @@
 <!-- END extra_blocks_header -->
 
 
-<!-- BEGIN extra_blocks_footer -->
-		</table>	
-	</div>
-</div>
-
-<div class="sideboxSpace"></div>
-<!-- END extra_blocks_footer -->
-
-
 <!-- BEGIN extra_block_row -->
 		<tr class="divSideboxEntry">
 			<td width="20" align="center" valign="middle" class="textSidebox">{icon_or_star}</td><td class="textSidebox"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
@@ -145,37 +154,16 @@
 <!-- END extra_block_spacer -->
 
 
-<!-- BEGIN app_extra_icons_div -->
-<script language="javascript">
-	new ypSlideOutMenu("menu1", "down", 10, 114, 160, 200,'right');
-</script>
-<div id="menu1Container">
-	<div id="menu1Content" style="position: relative; left: 0; text-align: left;">
-		<div id="extraIcons">
-			<table cellspacing="0" cellpadding="0" border="0" width="100%">
-				<tr>
-					<td colspan="2" nowrap="nowrap" align="right" style="background-color:#dddddd; padding:1px;">
-						<a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
-					</td>
-				</tr>
-{app_extra_icons}
-			</table>
-		</div>
+<!-- BEGIN extra_blocks_footer -->
+		</table>	
 	</div>
 </div>
-<!-- END app_extra_icons_div -->
+
+<div class="sideboxSpace"></div>
+<!-- END extra_blocks_footer -->
 
 
-<!-- BEGIN app_extra_block -->
-				<tr>
-					<td class="extraIconsRow"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" width="16" border="0" /></a></td>
-					<td align="left" class="extraIconsRow"><a href="{url}" {target}>{title}</a></td>
-				</tr>
-<!-- END app_extra_block -->
 
 
-<!-- BEGIN app_extra_icons_icon -->
-	<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">
-		<a title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
-	</td>
-<!-- END app_extra_icons_icon -->
+
+
