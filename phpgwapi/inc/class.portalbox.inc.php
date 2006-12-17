@@ -72,6 +72,7 @@
 			if ($var=='' || !isset($this->$var))
 			{
 				echo 'Programming Error: '.$this->getvar('classname').'->getvar('.$var.')!<br>'."\n";
+				echo function_backtrace(1);
 				$GLOBALS['phpgw']->common->phpgw_exit();
 			}
 			//echo "Var = ".$var."<br>\n";
@@ -109,14 +110,9 @@
 			$this->p->set_block('PORTAL','link_field','link_field');
 
 			$var = Array(
-				'outer_border'	=> $this->getvar('outerborderwidth'),
 				'outer_width'	=> $this->getvar('width'),
-				'outer_bordercolor'	=> $this->getvar('outerbordercolor'),
-				'outer_bgcolor'	=> $this->getvar('titlebgcolor'),
 				'title'	=> $this->getvar('title'),
 				'inner_width'	=> $this->getvar('width'),
-				'inner_bgcolor'	=> $this->getvar('innerbgcolor'),
-				'header_background_image'	=> $this->getvar('header_background_image'),
 				'control_link'	=> ''
 			);
 			$this->p->set_var($var);

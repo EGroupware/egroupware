@@ -1,21 +1,19 @@
 <!-- BEGIN portal_box -->
 <p>
-<div style="border: #9c9c9c 1px solid;">
+<div class="portal_box">
 <table border="0" cellpadding="0" cellspacing="0" width="{outer_width}"> 
  <tr nowrap align="center">
   <td align="left">
-	<div class="divSideboxHeader" style="height: 15px; padding-top: 0px">
-	<table border="0" cellpadding="1" cellspacing="0" width="{outer_width}">
+	<table class="portal_box_header" border="0" cellpadding="1" cellspacing="0">
 	  <tr>
 		<td align="left">&nbsp;<strong>{title}</strong></td>{portal_controls}
 	  </tr>
 	</table>
-	</div>
   </td>
  </tr>
  <tr>
   <td colspan="2">
-   <table border="0" cellpadding="0" cellspacing="0" width="{inner_width}" bgcolor="#eeeeee">
+   <table border="0" cellpadding="0" cellspacing="0">
     {row}
    </table>
   </td>
