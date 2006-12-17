@@ -335,7 +335,7 @@
 		 *
 		 * @return mixed false if no sessiondata and $this->sitemgr, else the returnvalue of exec of the method-calls
 		 */
-		function process_exec($etemplate_exec_id = null, $submit_button = null, $exec = null )
+		function process_exec($etemplate_exec_id = null, $submit_button = null, $exec = null, $type = 'regular' )
 		{
 			if(!$etemplate_exec_id) $etemplate_exec_id = $_POST['etemplate_exec_id'];
 			if(!$submit_button) $submit_button = $_POST['submit_button'];
@@ -371,7 +371,7 @@
 			{
 				$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 			}
-			$this->process_show($content,$session_data['to_process'],'exec');
+			$this->process_show($content,$session_data['to_process'],'exec',$type);
 
 			$GLOBALS['egw_info']['etemplate']['loop'] |= !$this->canceled && $this->button_pressed &&
 				$this->validation_errors($session_data['ignore_validation']);	// set by process_show
@@ -1650,9 +1650,10 @@
 		 * @param array $content $_POST[$cname], on return the adjusted content
 		 * @param array $to_process list of widgets/form-fields to process
 		 * @param string $cname basename of our returnt content (same as in call to show)
+		 * @param string $type type of request
 		 * @return int number of validation errors (the adjusted content is returned by the var-param &$content !)
 		 */
-		function process_show(&$content,$to_process,$cname='')
+		function process_show(&$content,$to_process,$cname='', $type = 'regular')
 		{
 			if (!isset($content) || !is_array($content) || !is_array($to_process))
 			{
@@ -1683,8 +1684,9 @@
 					$attr = array();
 				}
 				$value = $this->get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
+				// The comment below does only aplay to normal posts, not for xajax. Files are not supported anyway by xajax atm.
 				// not checked checboxes are not returned in HTML and file is in $_FILES and not in $content_in
-				if($value === false && !in_array($type,array('checkbox','file'))) continue;
+				if($value === false && $type == 'xajaxResponse' /*!in_array($type,array('checkbox','file'))*/) continue;
 				
 				if (isset($attr['blur']) && $attr['blur'] == $value)
 				{
