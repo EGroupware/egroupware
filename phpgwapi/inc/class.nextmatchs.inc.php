@@ -610,14 +610,18 @@
 			{
 				$currentcolor = @$GLOBALS['tr_color'];
 			}
-
-			if ($currentcolor == $GLOBALS['egw_info']['theme']['row_on'])
+			// this is for old apps relying on the old themes
+			$row_on_color = '" class="row_on';
+			$row_off_color = '" class="row_off';
+			if ($currentcolor == $row_on_color)
 			{
-				$GLOBALS['tr_color'] = $GLOBALS['egw_info']['theme'][$class='row_off'];
+				$GLOBALS['tr_color'] = $row_off_color;
+				$class='row_off';
 			}
 			else
 			{
-				$GLOBALS['tr_color'] = $GLOBALS['egw_info']['theme'][$class='row_on'];
+				$GLOBALS['tr_color'] = $row_on_color;
+				$class='row_on';
 			}
 
 			return $do_class ? $class : $GLOBALS['tr_color'];
