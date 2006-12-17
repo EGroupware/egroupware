@@ -9,7 +9,7 @@
  </tr>
 
 <!-- BEGIN list -->
- <tr bgcolor="{th_bg}">
+ <tr class="th">
   <td colspan="2"><b>{list_header}</b></td>
  </tr>
 {rows}
