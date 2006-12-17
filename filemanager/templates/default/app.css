@@ -1,0 +1,41 @@
+/*
+	CSS for the filemanager
+*/
+
+#fmStatusBar
+{
+	margin-left:4px;
+	margin-bottom:3px;
+}
+
+.fmButton
+{
+	background-repeat: no-repeat;
+	background-image:url(../images/buttonbackground.png);
+	width:28px;
+	height:28px;
+}
+
+#fmLocation
+{
+	position:relative;
+	margin-bottom:3px;
+	height:27px;
+}
+
+#fmMenu
+{
+	position:relative;
+}
+
+#fmFileWindow
+{
+	background-color:#ffffff;
+	margin-left:4px;
+	padding:5px;
+	position:relative;
+	border-right: #cccccc 1px solid; 
+	border-top: #9c9c9c 2px solid; 
+	border-left: #9c9c9c 2px solid; 
+	border-bottom: #cccccc 1px solid
+}
