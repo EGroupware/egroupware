@@ -119,15 +119,16 @@
 		 * @var array $capabilities, defaults will be changed be method set_capabilities($ado_driver,$db_version)
 		 */
 		var $capabilities = array(
-			'sub_queries'      => true,	// will be set to false for mysql < 4.1
-			'union'            => true, // will be set to false for mysql < 4.0
+			'sub_queries'      => true,		// will be set to false for mysql < 4.1
+			'union'            => true, 	// will be set to false for mysql < 4.0
 			'outer_join'       => false,	// does the DB has an outer join, will be set eg. for postgres
-			'distinct_on_text' => true,	// is the DB able to use DISTINCT with a text or blob column
-			'like_on_text'     => true,	// is the DB able to use LIKE with text columns
+			'distinct_on_text' => true,		// is the DB able to use DISTINCT with a text or blob column
+			'like_on_text'     => true,		// is the DB able to use LIKE with text columns
 			'name_case'        => 'upper',	// case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
 			'client_encoding'  => false,	// db uses a changeable clientencoding
-			'order_on_text'    => true,	// is the DB able to order by a given text column, boolean or
-		);								// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
+			'case_insensitive_like' => 'LIKE',	// case insensitive version of like, eg. ILIKE for postgres
+			'order_on_text'    => true,		// is the DB able to order by a given text column, boolean or
+		);									// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
 
 		var $prepared_sql = array();	// sql is the index
 
@@ -341,6 +342,7 @@
 					$this->capabilities['name_case'] = 'lower';
 					$this->capabilities['client_encoding'] = (float) $db_version >= 7.4;
 					$this->capabilities['outer_join'] = true;
+					$this->capabilities['case_insensitive_like'] = 'ILIKE';
 					break;
 
 				case 'mssql':

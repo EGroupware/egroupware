@@ -628,8 +628,8 @@ class uicontacts extends bocontacts
 			}
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
-				$query['col_filter'][] = ($query['order']=='adr_one_postalcode' ? 'org_name' : $query['order']).
-					' LIKE '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
+				$query['col_filter'][] = ($query['order'] == 'adr_one_postalcode' ? 'org_name' : $query['order']).' '.
+					$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
 			}
 			$wildcard = '%';
 			$op = 'OR';
