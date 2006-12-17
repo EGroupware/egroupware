@@ -155,8 +155,6 @@
 					'/class.'.$class.'.inc.php');
 				$this->framework =& new $class;
 
-				$this->load_theme_info();
-
 				$this->check_app_rights();
 
 				$this->load_optional_classes();
@@ -334,48 +332,19 @@
 			{
 				// This will need to use ACL in the future
 				if (!$GLOBALS['egw_info']['user']['apps'][$GLOBALS['egw_info']['flags']['currentapp']] ||
-				($GLOBALS['egw_info']['flags']['admin_only'] && !$GLOBALS['egw_info']['user']['apps']['admin']))
+					($GLOBALS['egw_info']['flags']['admin_only'] && !$GLOBALS['egw_info']['user']['apps']['admin']))
 				{
 					$this->common->egw_header();
 					if ($GLOBALS['egw_info']['flags']['nonavbar'])
 					{
 						echo parse_navbar();
 					}
-
+					error_log('Permission denied, attempted to access '.$GLOBALS['egw_info']['flags']['currentapp']);
 					$this->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['egw_info']['flags']['currentapp']));
 
 					echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
 					$this->common->egw_exit(True);
 				}
-			}
-		}
-
-		/**
-		 * Load old theme info into egw_info[theme]
-		 *
-		 * @deprecated all theming should be done via CSS files of the template
-		 */
-		function load_theme_info()
-		{
-			global $phpgw_info;		// this is necesary as the included theme-files use $phpgw_info !!!
-
-			// at the moment we still need the theme files, hopefully they are gone soon in favor of CSS
-			if(@file_exists(EGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.theme'))
-			{
-				include($file = EGW_SERVER_ROOT . '/phpgwapi/themes/' . $GLOBALS['egw_info']['user']['preferences']['common']['theme'] . '.theme');
-			}
-			elseif(@file_exists(EGW_SERVER_ROOT . '/phpgwapi/themes/default.theme'))
-			{
-				include($file = EGW_SERVER_ROOT . '/phpgwapi/themes/default.theme');
-			}
-			else
-			{
-				// Hope we don't get to this point.  Better then the user seeing a
-				// complety back screen and not know whats going on
-				echo '<body bgcolor="FFFFFF">';
-				$this->log->write(array('text'=>'F-Abort, No themes found'));
-
-				exit;
 			}
 		}
 
