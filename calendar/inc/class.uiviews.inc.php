@@ -1834,9 +1834,10 @@ class uiviews extends uical
 		$event['start_m'] = ($event['start'] - $day_start) / 60;
 		$event['end_m'] = round(($event['end'] - $day_start) / 60);
 		$event['multiday'] = true;
+		unset($event['whole_day_on_top']);
 
-		$data = $this->eventWidget($event,200,$indent,true,'planner_event');
-		
+		$data = $this->eventWidget($event,200,$indent,$this->owner,true,'planner_event');
+
 		$left = $this->_planner_pos($event['start'],$start,$end);
 		$width = $this->_planner_pos($event['end'],$start,$end) - $left;
 		$color = $data['color'] ? $data['color'] : 'gray';
