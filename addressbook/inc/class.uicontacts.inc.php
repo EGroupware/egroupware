@@ -342,7 +342,7 @@ class uicontacts extends bocontacts
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name)
 	{
-echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
+		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
 		$success = $failed = 0;
 		
 		if ($use_all)
@@ -1068,7 +1068,7 @@ echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all
 					$GLOBALS['egw_info']['user']['account_firstname'],$GLOBALS['egw_info']['user']['account_lastname']),
 					$content['id']));
 				// create a new contact with the content of the old
-				foreach(array('id','modified','modifier') as $key) unset($content[$key]);
+				foreach(array('id','modified','modifier','account_id') as $key) unset($content[$key]);
 				$content['owner'] = $this->prefs['add_default'] ? $this->prefs['add_default'] : $this->user;
 				$content['creator'] = $this->user;
 				$content['created'] = $this->now_su;
