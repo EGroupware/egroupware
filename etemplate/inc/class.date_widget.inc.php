@@ -322,7 +322,7 @@
 			$readonly = $readonlys || $cell['readonly'];
 			list($data_format,$input_format,$hours_per_day,$empty_not_0,$short_labels) = explode(',',$cell['size']);
 			if (!$hours_per_day) $hours_per_day = 8; // workday is 8 hours
-			if (($percent_allowed = strstr($input_format,'%') !== false))
+			if (($percent_allowed = strpos($input_format,'%') !== false))
 			{
 				$input_format = str_replace('%','',$input_format);
 			}
@@ -357,11 +357,11 @@
 			$cell_name = $cell['name'];
 			$cell['name'] .= '[value]';
 			
-			if (strstr($input_format,'m') && $value && $value < 60)
+			if (strpos($input_format,'m') !== false && $value && $value < 60)
 			{
 				$unit = 'm';
 			}
-			elseif (strstr($input_format,'d') && $value >= 60*$hours_per_day)
+			elseif (strpos($input_format,'d') !== false && $value >= 60*$hours_per_day)
 			{
 				$unit = 'd';
 			}
@@ -380,9 +380,9 @@
 				$tpl->no_onclick = true;
 				
 				$selbox =& $tpl->empty_cell('select',$cell_name.'[unit]');
-				if (strstr($input_format,'m')) $selbox['sel_options']['m'] = $short_labels ? 'm' : 'minutes';
-				if (strstr($input_format,'h')) $selbox['sel_options']['h'] = $short_labels ? 'h' : 'hours';
-				if (strstr($input_format,'d')) $selbox['sel_options']['d'] = $short_labels ? 'd' : 'days';
+				if (strpos($input_format,'m') !== false) $selbox['sel_options']['m'] = $short_labels ? 'm' : 'minutes';
+				if (strpos($input_format,'h') !== false) $selbox['sel_options']['h'] = $short_labels ? 'h' : 'hours';
+				if (strpos($input_format,'d') !== false) $selbox['sel_options']['d'] = $short_labels ? 'd' : 'days';
 				if ($cell['tabindex']) $selbox['tabindex'] = $cell['tabindex'];
 				
 				$tpl->data[0] = array();
@@ -534,7 +534,7 @@
 				{
 					for ($n = 0,$str = ''; $n < strlen($data_format); ++$n)
 					{
-						if (strstr('YmdHi',$c = $data_format[$n]))
+						if (strpos('YmdHi',$c = $data_format[$n]) !== false)
 						{
 							$str .= sprintf($c=='Y'?'%04d':'%02d',$value[$c]);
 						}
