@@ -615,15 +615,15 @@ class xajax
 			for ($i = 0; $i < sizeof($aArgs); $i++)
 			{
 				// If magic quotes is on, then we need to strip the slashes from the args
-				if (get_magic_quotes_gpc() == 1 && is_string($aArgs[$i])) {
-				
+				if (get_magic_quotes_gpc() == 1 && is_string($aArgs[$i])) 
+				{
 					$aArgs[$i] = stripslashes($aArgs[$i]);
 				}
-				if (stristr($aArgs[$i],"<xjxobj>") != false)
+				if (@stripos($aArgs[$i],"<xjxobj>") !== false)
 				{
 					$aArgs[$i] = $this->_xmlToArray("xjxobj",$aArgs[$i]);	
 				}
-				else if (stristr($aArgs[$i],"<xjxquery>") != false)
+				else if (@stripos($aArgs[$i],"<xjxquery>") !== false)
 				{
 					$aArgs[$i] = $this->_xmlToArray("xjxquery",$aArgs[$i]);	
 				}
@@ -1064,32 +1064,32 @@ class xajax
 		
 		if ($rootTag == "xjxobj")
 		{
-			while(!stristr($this->aObjArray[$this->iPos],"</xjxobj>"))
+			while(@stripos($this->aObjArray[$this->iPos],"</xjxobj>") === false)
 			{
 				$this->iPos++;
-				if(stristr($this->aObjArray[$this->iPos],"<e>"))
+				if(@stripos($this->aObjArray[$this->iPos],"<e>") !== false)
 				{
 					$key = "";
 					$value = null;
 						
 					$this->iPos++;
-					while(!stristr($this->aObjArray[$this->iPos],"</e>"))
+					while(@stripos($this->aObjArray[$this->iPos],"</e>") === false)
 					{
-						if(stristr($this->aObjArray[$this->iPos],"<k>"))
+						if(@stripos($this->aObjArray[$this->iPos],"<k>") !== false)
 						{
 							$this->iPos++;
-							while(!stristr($this->aObjArray[$this->iPos],"</k>"))
+							while(@stripos($this->aObjArray[$this->iPos],"</k>") === false)
 							{
 								$key .= $this->aObjArray[$this->iPos];
 								$this->iPos++;
 							}
 						}
-						if(stristr($this->aObjArray[$this->iPos],"<v>"))
+						if(@stripos($this->aObjArray[$this->iPos],"<v>") !== false)
 						{
 							$this->iPos++;
-							while(!stristr($this->aObjArray[$this->iPos],"</v>"))
+							while(@stripos($this->aObjArray[$this->iPos],"</v>") === false)
 							{
-								if(stristr($this->aObjArray[$this->iPos],"<xjxobj>"))
+								if(@stripos($this->aObjArray[$this->iPos],"<xjxobj>") !== false)
 								{
 									$value = $this->_parseObjXml("xjxobj");
 									$this->iPos++;
@@ -1117,9 +1117,9 @@ class xajax
 		{
 			$sQuery = "";
 			$this->iPos++;
-			while(!stristr($this->aObjArray[$this->iPos],"</xjxquery>"))
+			while(@stripos($this->aObjArray[$this->iPos],"</xjxquery>") === false)
 			{
-				if (stristr($this->aObjArray[$this->iPos],"<q>") || stristr($this->aObjArray[$this->iPos],"</q>"))
+				if (@stripos($this->aObjArray[$this->iPos],"<q>") !== false || @stripos($this->aObjArray[$this->iPos],"</q>") !== false)
 				{
 					$this->iPos++;
 					continue;
@@ -1241,4 +1241,13 @@ function xajaxErrorHandler($errno, $errstr, $errfile, $errline)
 	$GLOBALS['xajaxErrorHandlerText'] .= "\n----\n[$errTypeStr] $errstr\nerror in line $errline of file $errfile";
 }
 
-?>
+if (!function_exists('stripos')) 
+{
+	/**
+	 * stripos for php < 5
+	 */
+	function stripos($str,$needle,$offset=0)
+	{
+		return strpos(strtolower($str),strtolower($needle),$offset);
+	}
+}
