@@ -76,7 +76,7 @@
 						<rows>
 							<row>
 								<description value="Name"/>
-								<textbox rows="1" cols="3" id="n_fn" no_lang="1" onclick="set_style_by_class('table','editname','display','inline');" size="36" span="2" class="cursorHand"/>
+								<textbox rows="1" cols="3" id="n_fn" no_lang="1" onclick="set_style_by_class('table','editname','display','inline');" size="36" span="2" class="cursorHand" readonly="true"/>
 							</row>
 							<row>
 								<description/>
@@ -226,12 +226,17 @@
 					<description value="Categories"/>
 					<listbox type="select-cat" id="cat_id" rows="3" options=",width:99%"/>
 				</row>
-				<row valign="top">
+				<row class="row_off" valign="top">
 					<image src="edit"/>
 					<description value="Notes"/>
 					<textbox multiline="true" rows="6" cols="50" id="note"/>
 				</row>
-				<row valign="top">
+				<row class="row_on" disabled="@disable_change_org">
+					<image src="check"/>
+					<description/>
+					<checkbox label="change all organisation members" id="change_org" span="all" statustext="Apply changes to all members, whose fields have the same previous content"/>
+				</row>
+				<row class="row_off" valign="top">
 					<image src="gear"/>
 					<menulist>
 						<menupopup type="select-account" readonly="true" label="Created"/>
@@ -243,7 +248,7 @@
 						<date-time id="created" class="leftPad5" readonly="true"/>
 					</hbox>
 				</row>
-				<row>
+				<row class="row_on">
 					<description/>
 					<description value="Last modified"/>
 					<hbox readonly="true" options="0,0">

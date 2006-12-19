@@ -403,12 +403,18 @@ class bocontacts extends socontacts
 		{
 			$contact = array($contact);
 		}
+		if (!is_object($GLOBALS['egw']->link))
+		{
+			require_once(EGW_API_INC.'/class.bolink.inc.php');
+			$GLOBALS['egw']->link =& new bolink();
+		}
 		foreach($contact as $c)
 		{
 			$id = is_array($c) ? $c['id'] : $c;
 
 			if ($this->check_perms(EGW_ACL_DELETE,$c) && parent::delete($id))
 			{
+				$GLOBALS['egw']->link->unlink(0,'addressbook',$id);
 				$GLOBALS['egw']->contenthistory->updateTimeStamp('contacts', $id, 'delete', time());
 			}
 			else
@@ -812,5 +818,95 @@ class bocontacts extends socontacts
 		// just force a new registration of the addressbook hooks
 		include(EGW_INCLUDE_ROOT.'/addressbook/setup/setup.inc.php');
 		$GLOBALS['egw']->hooks->register_hooks('addressbook',$setup_info['addressbook']['hooks']);
+	}
+	
+	/**
+	 * Merges some given addresses into the first one and delete the others
+	 * 
+	 * If one of the other addresses is an account, everything is merged into the account.
+	 * If two accounts are in $ids, the function fails (returns false).
+	 *
+	 * @param array $ids contact-id's to merge
+	 * @return int number of successful merged contacts, false on a fatal error (eg. cant merge two accounts)
+	 */
+	function merge($ids)
+	{
+		$this->error = false;
+		foreach(self::search(array('id'=>$ids),false) as $contact)	// $this->search calls the extended search from ui!
+		{
+			if ($contact['account_id'])
+			{
+				if (!is_null($account))
+				{
+					echo $this->error = 'Can not merge more then one account!';
+					return false;	// we dont deal with two accounts! 
+				}
+				$account = $contact;
+				continue;
+			}
+			$pos = array_search($contact['id'],$ids);
+			$contacts[$pos] = $contact;
+		}
+		if (!is_null($account))	// we found an account, so we merge the contacts into it
+		{
+			$target = $account;
+			unset($account);
+		}
+		else					// we found no account, so we merge all but the first into the first
+		{
+			$target = $contacts[0];
+			unset($contacts[0]);
+		}
+		if (!$this->check_perms(EGW_ACL_EDIT,$target))
+		{
+			echo $this->error = 'No edit permission for the target contact!';
+			return 0;
+		}
+		foreach($contacts as $contact)
+		{
+			foreach($contact as $name => $value)
+			{
+				if (!$value) continue;
+
+				switch($name)
+				{
+					case 'id':
+					case 'tid':
+					case 'owner':
+					case 'private':
+						break;	// ignored
+
+					case 'cat_id':	// cats are all merged together
+						if (!is_array($target['cat_id'])) $target['cat_id'] = $target['cat_id'] ? explode(',',$target['cat_id']) : array();
+						$target['cat_id'] = array_unique(array_merge($target['cat_id'],is_array($value)?$value:explode(',',$value)));
+						break;
+						
+					default:
+						if (!$target[$name]) $target[$name] = $value;
+						break;
+				}
+			}
+		}
+		if (!$this->save($target)) return 0;
+		
+		if (!is_object($GLOBALS['egw']->link))
+		{
+			require_once(EGW_API_INC.'/class.bolink.inc.php');
+			$GLOBALS['egw']->link =& new bolink();
+		}
+		$success = 1;
+		foreach($contacts as $contact)
+		{
+			if (!$this->check_perms(EGW_ACL_DELETE,$contact))
+			{
+				continue;
+			}
+			foreach($GLOBALS['egw']->link->get_links('addressbook',$contact['id']) as $data)
+			{
+				$GLOBALS['egw']->link->link('addressbook',$target['id'],$data['app'],$data['id'],$data['remark'],$target['owner']);
+			}
+			if ($this->delete($contact['id'])) $success++;
+		}
+		return $success;
 	}
 }

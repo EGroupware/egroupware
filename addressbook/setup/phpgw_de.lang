@@ -184,6 +184,8 @@ list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
 load vcard	addressbook	de	VCard laden
 locations	addressbook	de	Standorte
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
+merged	addressbook	en	vereinigt
+merge into first or account, deletes all other!	addressbook	en	Vereinige im ersten oder Benutzerkonto, löscht alle anderen!
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 migration finished	addressbook	de	Migration beendet

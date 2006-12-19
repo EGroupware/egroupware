@@ -184,6 +184,8 @@ list all customfields	addressbook	en	List all customfields
 load vcard	addressbook	en	Load VCard
 locations	addressbook	en	locations
 mark records as private	addressbook	en	Mark records as private
+merged	addressbook	en	merged
+merge into first or account, deletes all other!	addressbook	en	Merge into first or account, deletes all other!
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
 migration finished	addressbook	en	Migration finished

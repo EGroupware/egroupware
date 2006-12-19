@@ -202,6 +202,7 @@ class uicontacts extends bocontacts
 			'delete' => lang('Delete'),
 			'csv'    => lang('Export as CSV'), 
 			'vcard'  => lang('Export as VCard'), // ToDo: move this to importexport framework
+			'merge'  => lang('Merge into first or account, deletes all other!'),
 		);
 		if ($GLOBALS['egw_info']['user']['apps']['infolog'])
 		{
@@ -341,7 +342,7 @@ class uicontacts extends bocontacts
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name)
 	{
-		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
+echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
 		$success = $failed = 0;
 		
 		if ($use_all)
@@ -412,6 +413,13 @@ class uicontacts extends bocontacts
 					'action_id' => implode(',',$checked),
 					'action_title' => count($checked) > 1 ? lang('selected contacts') : '',
 				));
+				break;
+				
+			case 'merge':
+				$success = $this->merge($checked,$error_msg);
+				$failed = count($checked) - (int)$success;
+				$action_msg = lang('merged');
+				$checked = array();	// to not start the single actions
 				break;
 		}
 		foreach($checked as $id)
@@ -1019,7 +1027,7 @@ class uicontacts extends bocontacts
 						require_once(EGW_API_INC.'/class.country.inc.php');
 						$GLOBALS['egw']->country =& new country;
 					}
-					$content['adr_one_countryname'] = $content['adr_two_countryname'] = 
+					$content['adr_one_countryname'] = 
 						$GLOBALS['egw']->country->get_full_name($GLOBALS['egw_info']['user']['preferences']['common']['country']);
 				}
 				if (isset($_GET['owner']) && $_GET['owner'] !== '')
@@ -1339,6 +1347,12 @@ $readonlys['button[vcard]'] = true;
 		return 'mailto:' . $email;
 	}
 
+	/**
+	 * Extended search
+	 *
+	 * @param array $_content
+	 * @return string
+	 */
 	function search($_content=array())
 	{
 		if(!empty($_content)) {
