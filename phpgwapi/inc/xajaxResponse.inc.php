@@ -253,7 +253,7 @@ class xajaxResponse
 		//we need to parse the query part so that the values are rawurlencode()'ed
 		//can't just use parse_url() cos we could be dealing with a relative URL which
 		//  parse_url() can't deal with.
-		$queryStart = strpos($sURL, '?', strrpos($sURL, '/'));
+		$queryStart = strpos($sURL, '?', @strrpos($sURL, '/'));
 		if ($queryStart !== FALSE)
 		{
 			$queryStart++;
@@ -539,7 +539,7 @@ class xajaxResponse
 		$xml = "<cmd";
 		foreach($aAttributes as $sAttribute => $sValue)
 			$xml .= " $sAttribute=\"$sValue\"";
-		if ($sData !== null && !stristr($sData,'<![CDATA['))
+		if ($sData !== null && !@stristr($sData,'<![CDATA['))
 			$xml .= "><![CDATA[$sData]]></cmd>";
 		else if ($sData !== null)
 			$xml .= ">$sData</cmd>";
