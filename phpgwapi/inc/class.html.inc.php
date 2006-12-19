@@ -704,7 +704,7 @@ class html
 		{
 			$label = lang($label);
 		}
-		if (($accesskey = strstr($label,'&')) && $accesskey[1] != ' ' &&
+		if (($accesskey = @strstr($label,'&')) && $accesskey[1] != ' ' &&
 			(($pos = strpos($accesskey,';')) === false || $pos > 5))
 		{
 			$label_u = str_replace('&'.$accesskey[1],'<u>'.$accesskey[1].'</u>',$label);
@@ -914,7 +914,7 @@ class html
 		}
 		return '<div class="onlyPrint">'.$title.'</div><div class="noPrint" title="'.$title.'" '.$options.
 			' style="height: '.$height.'; width: '.$width.'; border: 1px solid black; padding: 1px; text-align: left;'.
-			(stristr($options,'onclick="') ? ' cursor: pointer;' : '').'">'."\n\t".
+			(@stristr($options,'onclick="') ? ' cursor: pointer;' : '').'">'."\n\t".
 			'<div style="height: '.$height.'; width: '.$percent.'%; background: '.$color.';"></div>'."\n</div>\n";
 	}
 
