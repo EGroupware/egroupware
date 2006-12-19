@@ -669,7 +669,7 @@
 					// can only be set via source at the moment
 					if (strlen($cell['onclick']) > 1 && $cell['type'] != 'button')
 					{
-						$row_data[".$col"] .= ' onclick="'.$cell['onclick'].'"' .
+						$row_data[".$col"] .= ' onclick="'.$this->js_pseudo_funcs($cell['onclick'],$cname).'"' .
 							($cell['id'] ? ' id="'.$cell['id'].'"' : '');
 					}
 					$colspan = $span == 'all' ? $this->cols-$c : 0+$span;
@@ -1396,7 +1396,7 @@
 							// can only be set via source at the moment
 							if (strlen($cell[$n]['onclick']) > 1 && $cell[$n]['type'] != 'button')
 							{
-								$rows[$box_row]['.'.$box_col] .= ' onclick="'.$cell[$n]['onclick'].'"'.
+								$rows[$box_row]['.'.$box_col] .= ' onclick="'.$this->js_pseudo_funcs($cell[$n]['onclick'],$cname).'"'.
 									($cell[$n]['id'] ? ' id="'.$cell[$n]['id'].'"' : '');
 							}
 							// allow to set further attributes in the tablecell, beside the class
