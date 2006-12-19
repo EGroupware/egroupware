@@ -1275,18 +1275,29 @@
 			$t->set_var($var);
 			$t->parse('password_fields','form_passwordinfo',True);
 
+			// set primary group to default, if there is no primary group set; this may fail, if no group "Default" exists
+			if (!$userData['account_primary_group'])
+			{
+				$userData['account_primary_group'] = @$userGroups[0]['account_id'] ? @$userGroups[0]['account_id'] : $account->name2id('Default');
+			}
 			// prepare the allGroups array for use with the checkbox-multiselect use
 			$allGroupsBuff=array();
 			while (list($key,$value) = each($allGroups))
 			{
-				$allGroupsBuff[$value['account_lid']]=$value['account_id'];
+				$allGroupsBuff[strtolower($value['account_lid'])]=$value;
 			}
 			// sort alphabetical
 			ksort($allGroupsBuff);
 			$allGroupsSorted=array();
 			while (list($key,$value) = each($allGroupsBuff))
 			{
-				$allGroupsSorted[$value]=$key;
+				$allGroupsSorted[$value['account_id']]=$value['account_lid'];
+				$primary_group_select .= '<option value="' . $value['account_id'] . '"';
+				if ($value['account_id'] == $userData['account_primary_group'])
+				{
+					$primary_group_select .= ' selected="1"';
+				}
+				$primary_group_select .= '>' . $value['account_lid'] . '</option>'."\n";
 			}
 			//prepare the userGroups Array for use with the checkbox-multiselect use -> selarray
 			$selarray=array();
@@ -1295,44 +1306,6 @@
 				array_push($selarray,$value['account_id']);
 			}
 			$t->set_var('groups_select','<div id="groupselector">' .$GLOBALS['egw']->html->checkbox_multiselect('account_groups[]',$selarray,$allGroupsSorted,true,'',min(3+count($allGroupsSorted),10),' style="width: 300px; text-align:left" ').'</div>');
-			/* KL 20061211 removed
-			$groups_select		= '';
-			$primary_group_select	= '';
-			reset($allGroups);
-
-			while (list($key,$value) = each($allGroups))
-			{
-				$groups_select .= '<input type="checkbox"  name="account_groups[]" value="' . $value['account_id'] . '"';
-				for ($i=0; $i<count($userGroups); $i++)
-				{
-					// print
-					//"Los1:".$userData["account_id"].$userGroups[$i]['account_id']." :
-					//".$value['account_id']."<br>";
-					if (@$userGroups[$i]['account_id'] ==  $value['account_id'])
-					{
-						$groups_select .= ' checked';
-					}
-				}
-				$groups_select .= '>' . $value['account_lid'] . "<br/>\n";
-			}
-			*/
-
-			if (!$userData['account_primary_group'])
-			{
-				$userData['account_primary_group'] = @$userGroups[0]['account_id'] ? @$userGroups[0]['account_id'] : $account->name2id('Default');
-			}
-			foreach($allGroups as $key => $value)
-			{
-#				print "<br>$key =>";
-#				_debug_array($userGroups);
-				$primary_group_select .= '<option value="' . $value['account_id'] . '"';
-				#print $value['account_id'].''.$value['account_primary_group']
-				if ($value['account_id'] == $userData['account_primary_group'])
-				{
-					$primary_group_select .= ' selected="1"';
-				}
-				$primary_group_select .= '>' . $value['account_lid'] . '</option>'."\n";
-			}
 
 			/* create list of available apps */
 			$apps =& CreateObject('phpgwapi.applications',$_account_id);
