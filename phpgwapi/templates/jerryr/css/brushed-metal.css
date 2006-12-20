@@ -24,7 +24,7 @@ select
 a:link,a:visited
 {
 	cursor:pointer;
-	color: #727f8a; 
+	color: #103f64;
 	text-decoration: none;
 }
 
@@ -60,8 +60,8 @@ a:hover,a:active
 body 
 {
 	background-color:#9f9f9f;
-	padding:9px;
-	margin:9px;
+	padding:0px;
+	margin:0px;
 }
 
 form
@@ -88,28 +88,28 @@ input[type=submit],input[type=button],input[type=reset],button,.egwbutton
 	background-color:#c5c5c5;
 	border:  1px solid #dddddd;
 	background-color:#fbf8f1;
-	background-image: url(../images/butInactive.png);
-	border: solid 1px #7e94a5;
+	background-image: url(../images/butInactive-bm.png);
+	border: solid 1px black;
 	margin:  1px;
 	padding: 1px;
 	cursor:  pointer; 
-	color: #17202b;
+	color: white;
 }
 
 input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
 {
 	background-color:#88b4e1;
-	background-image: url(../images/butHover.png);
-	border: 1px solid #bd9300;
-	color:  #17202b;
+	background-image: url(../images/butHover-bm.png);
+	border: 1px solid #007205;
+	color:  white;
 }
 
 input[type=submit]:active,input[type=button]:active,input[type=reset]:active,button:active,.egwbutton:active
 
 {
-	background-image: url(../images/butActive.png);
-	border: 1 solid #7e94a5;
-	color: #17202b;
+	background-image: url(../images/butActive-bm.png);
+	border: 1 solid #a21616;
+	color: white;
 }
 
 input.egwbutton
@@ -158,7 +158,7 @@ input[type=image]
 {
 	position:relative;
 	width: 370px; 
-	border: #9f9f9f 1px solid; 
+	border: #9f9f9f 1px solid;
 }
 
 .divSidebox 
@@ -174,25 +174,31 @@ input[type=image]
 .textSideboxStar
 {
 	font-size:90%;
-	background-color: #a7c4db;
+	background-color: #a43434;
 	border-right: 1px solid #9f9f9f;
 }
 
 .divSideboxHeader,.divLoginboxHeader 
 {
 	text-align:center;
-	background-image:url(../images/menuTitle.png);
-	color:#17202b;
-	height: 18px;
+	background-image:url(../images/menuTitle-bm.png);
+	color:white;
+	height: 23px;
 	font-weight:bold;
 	font-size:12px;
+	position: relative;
+        left: -4px;
+        top: -4px;
+	border-top: 2px solid white;
+	border-left: 2px solid white;
+	border-right: 2px solid white;
 }
 
 a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
 	height:18px;
-	background-color:#fbf8f1;
+	background-color:#f6efe0;
 	border-top: 1px solid #9f9f9f;
 }
 
@@ -237,16 +243,20 @@ a.textSidebox
 
 .slideoutBack
 {
-        background-color:white;
-        border: #17202b 1px solid;
-        padding:10px;
+	background-color:white;
+	border: #17202b 1px solid;
+	padding:10px;
+	background-image:url(../images/bmback.jpg);
 }
 
 .sideboxDrop
 {
 position: relative;
-        left: 0px;
-        top: 0px;
+        left: -4px;
+        top: -4px;
+	border-bottom: 2px solid white;
+	border-left: 2px solid white;
+	border-right: 2px solid white;
 }
 
 .textSidebox:first-letter
@@ -293,7 +303,7 @@ position: relative;
 #extraIcons
 {
 	background-color:#fbf8f1;
-	border:solid 1px #17202b;
+	border:solid 2px white;
 	position: relative;
 	left: -4px;
 	top: -4px;
@@ -302,16 +312,17 @@ position: relative;
 .extraIconsHeader
 {
         text-align:center;
-        background-image:url(../images/menuTitle.png);
+        background-image:url(../images/menuTitle-bm.png);
         color:#17202b;
         font-weight:normal;
         font-size:10px;
+	height: 23px;
 }
 
 .extraIconsRowIcon
 {
 	border-right: 1px solid #9f9f9f;
-	background-color: #a7c4db;
+	background-color: #a43434;
 	width: 20px;
 	padding: 1px;
 }
@@ -344,18 +355,18 @@ body {
 
 #divMain
 {
-	background-image:url(../images/divmain-background.jpg);
-	background-repeat:no-repeat;
+	background-image:url(../images/bmback.jpg);
 	background-color:white;
 	padding:9px;
-	border:solid 1px #17202b;
+	margin: 0px;
+	border-bottom: 2px solid white;
 }
 
 #divLogo
 {
 	position:absolute;
-	left:37px;
-	top:38px;
+	left:17px;
+	top:2px;
 	z-index:51;
 }
 
@@ -383,47 +394,59 @@ body {
 	border-bottom: 0px;
 }
 
-
 /*
 	App Icon Bar ***BEGIN***
 */
 
+.divAppIconBlock /* this allows the icons and text to be positioned via absolute and requires the iconspacer div */
+{
+	border-top: 1px solid white;
+	padding: 0px;
+	position:absolute;
+	top:0px;
+	left:0px;
+	z-index:49;
+}
+
 #divAppIconBar
 {
 	height: 57px;
-	padding:1px;
+	position: relative;
+	top: 0px;
+	left: 0px;
 }
 
 .iconBackFirstCell
 {
-        background-image: url(../images/firstcell.png);
-	background-repeat: no-repeat;
+        background-image: url(../images/firstcell-bm.png);
+        background-repeat: no-repeat;
 }
 
 .appIconTbl
 {
 	padding:0px;
-	background-image: url(../images/rtbump.png);
-	background-repeat: no-repeat;
-	background-position: top right;
+	background-image: url(../images/iconBack-bm.png);
+	background-repeat: repeat-x;
 	vertical-align: top;
 	color: white;
 }
 
 .iconBack
 {
-	background-image: url(../images/iconBackBlue.png);
-	border-right: 1px solid #9f9f9f;
-	border-bottom: 1px solid #9f9f9f;
-	border-top: 1px solid #9f9f9f;
+	background-image: url(../images/iconBack-bm.png);
+	border-right: 1px solid white;
 }
 
 .iconBackHover
 {
-	background-image: url(../images/iconBackYellow.png);
-	border-right: 1px solid #9f9f9f;
-        border-bottom: 1px solid #9f9f9f;
-        border-top: 1px solid #9f9f9f;
+	background-image: url(../images/iconBackHover-bm.png);
+	border-right: 1px solid white;
+}
+
+.appIconSpacer
+{
+	height:38px;
+	background-color: white;
 }
 
 #divAppTextBar
@@ -443,7 +466,7 @@ body {
 	height:23px;
 	vertical-align:bottom;
 	border: 0px solid black;
-	padding-top:10px;
+	padding-top:0px;
 }
 
 /*
@@ -458,23 +481,26 @@ body {
 
 #divAppboxHeader
 {
-	line-height:18px;
+	background-image:url(../images/appTitleBar-bm.png);
+	height:23px;
 	font-size:12px;
-	font-weight:bold;
-	background-image:url(../images/appTitleBar.png);
-	height:18px;
+	color: white;
 	text-align:center;
 	padding-bottom:0px;
-	border:solid 1px #17202b;
+	border-top:solid 2px white;
+	border-left:solid 2px white;
+	border-right:solid 2px white;
+	border-bottom:solid 2px white;
 }
 
 #divAppbox
 {
+	background-image:url(../images/bmback2.jpg);
 	background-color:#fbf8f1;
 	padding:5px;
-	border-bottom:solid 1px #17202b;
-	border-left:solid 1px #17202b;
-	border-right:solid 1px #17202b;
+	border-bottom:solid 2px white;
+	border-left:solid 2px white;
+	border-right:solid 2px white;
 }
 
 /*
@@ -496,40 +522,41 @@ body {
 }
 
 /*
-	Table formatting
+        Table formatting
 */
-.th { 
-	color: black; background-color: #f9f4e2;
-	background-image: url(../images/hilitetest.png); 
+.th {
+        color: black; background-color: #d9d9d9;
+	background-image: url(../images/hilitetest-bm.png);
 }
-.row_on { 
-	color: black; 
-	background-color: #eae1cd; 
+.row_on {
+        color: black;
+        background-color: #F1F1F1;
 }
-.row_off { 
-	color: black; 
-	background-color: #fbf9f2; 
+.row_off {
+        color: black;
+        background-color: #ffffff;
 }
 .narrow_column { width: 1%; white-space: nowrap; }
 
 /*
-	Printing
+        Printing
 */
-@media screen {	.onlyPrint { display: none; } }
-@media print {	.noPrint { display: none; } }
+@media screen { .onlyPrint { display: none; } }
+@media print {  .noPrint { display: none; } }
 
 /*
-	Portal_box as used in home
+        Portal_box as used in home
 */
 .portal_box {
-	border: #9c9c9c 1px solid;
+        border: #9c9c9c 1px solid;
 }
 
 .portal_box table {
-	border: 1px solid black;
+        border: 1px solid black;
 }
 
 .portal_box_header {
-	height: 15px; 
-	padding-top: 0px;
+        height: 15px;
+        padding-top: 0px;
 }
+
