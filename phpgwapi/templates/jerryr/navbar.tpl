@@ -3,16 +3,21 @@
 
 {app_extra_icons_div}
 
+<div class="appIconSpacer"></div>
+
 <div id="divMain">
 	<div id="divUpperTabs">
 		<ul>
 {upper_tabs}
 		</ul>
 	</div>
+
+<div class="divAppIconBlock">
+
 	<div id="divAppIconBar">
 		<table class="appIconTbl" width="100%" border="0" cellspacing="0" cellpadding="0" >
 			<tr>
-				<td width="180"></td>
+				<td width="85" class="iconBackFirstCell"></td>
 				<td valign="bottom">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
@@ -27,6 +32,9 @@
 			</tr>
 		</table>
 	</div>
+
+</div>
+
 	<div id="divStatusBar"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
 		<td width="33%" align="left" id="user_info">{user_info}</td>
 		<td align="center" id="admin_info">{current_users}</td>
@@ -60,10 +68,10 @@
 
 <!-- BEGIN sidebox_hide_header -->
 	<script language="javascript">
-		new ypSlideOutMenu("menu2", "right", 0, 24, 160, 200)
+		new ypSlideOutMenu("menu2", "right", 0, 28, 160, 200)
 	</script>
 
-	<div id="sideboxdragarea" style="position:absolute;left:0px;top:34px; z-index: 52;">
+	<div id="sideboxdragarea" style="position:absolute;left:0px;top:38px; z-index: 52;">
 		<a href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu2')" onmouseover="//ypSlideOutMenu.showMenu('menu2')" title="{lang_show_menu}"><img src="{img_root}/dragarea_right.png" /></a>
 	</div>
 
@@ -71,7 +79,7 @@
 		<div id="menu2Content" style="position: relative; left: 0; text-align: left;">
 			<table cellspacing="0" cellpadding="0">
 				<tr><td>
-					<div style="background-color:#ffffff;border: #17202b 1px solid;padding:5px;">
+					<div class="slideoutBack">
 <!-- END sidebox_hide_header -->
 
 
@@ -101,9 +109,10 @@
 
 <!-- BEGIN extra_blocks_header -->
 <div class="divSidebox">
+<div class="menuOneBox">
 	<div class="divSideboxHeader"><span>{lang_title}</span></div>
 	<div>
-		<table width="100%" cellspacing="0" cellpadding="0">
+		<table class="sideboxDrop" width="100%" cellspacing="0" cellpadding="0">
 <!-- END extra_blocks_header -->
 
 
@@ -111,14 +120,14 @@
 		</table>	
 	</div>
 </div>
-
+</div>
 <div class="sideboxSpace"></div>
 <!-- END extra_blocks_footer -->
 
 
 <!-- BEGIN extra_block_row -->
 		<tr class="divSideboxEntry">
-			<td width="20" align="center" valign="middle" class="textSideboxStar">{icon_or_star}</td><td class="textSidebox" onmouseover="this.className='textSideboxHover'" onmouseout="this.className='textSidebox'"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
+			<td width="20" align="center" valign="middle" class="textSideboxStar"></td><td class="textSidebox" onmouseover="this.className='textSideboxHover'" onmouseout="this.className='textSidebox'"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
 		</tr>
 <!-- END extra_block_row -->
 
@@ -132,14 +141,14 @@
 
 <!-- BEGIN extra_block_row_no_link -->
 		<tr class="divSideboxEntry">
-			<td width="20" align="center" valign="middle" class="textSideboxStar">{icon_or_star}</td><td class="textSideboxSpacer">{lang_item}</td>
+			<td width="20" align="center" valign="middle" class="textSideboxStar"></td><td class="textSideboxSpacer">{lang_item}</td>
 		</tr>
 <!-- END extra_block_row_no_link -->
 
 
 <!-- BEGIN extra_block_spacer -->
 		<tr class="divSideboxEntry">
-			<td width="20" align="center" valign="middle" class="textSideboxStar">{icon_or_star}</td><td height="8" class="textSideboxSpacer">&nbsp;</td>
+			<td width="20" align="center" valign="middle" class="textSideboxStar"></td><td height="8" class="textSideboxSpacer">&nbsp;</td>
 		</tr>
 <!-- END extra_block_spacer -->
 
@@ -151,8 +160,8 @@
 <div id="menu1Container">
 	<div id="menu1Content" class="menuOneBox">
 		<div id="extraIcons">
-			<table class="extraIconsHeader" cellspacing="0" cellpadding="0" border="0" width="100%">
-			<tr><td colspan="2" nowrap="nowrap" align="right">
+			<table cellspacing="0" cellpadding="0" border="0" width="100%">
+			<tr><td colspan="2" class="extraIconsHeader" nowrap="nowrap" align="right">
 				<a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
 			</td></tr>
 {app_extra_icons}
@@ -172,7 +181,7 @@
 
 
 <!-- BEGIN app_extra_icons_icon -->
-	<td width="26" valign="top" align="center" style="padding-top:13px;">
+	<td width="32" valign="top" align="center" style="padding-top:13px;">
 		<a title="{lang_show_more_apps}" href="#" {show_menu_event}="ypSlideOutMenu.showMenu('menu1')"><img src="{img_root}/extra_icons.png" border="0" /></a>
 	</td>
 <!-- END app_extra_icons_icon -->
