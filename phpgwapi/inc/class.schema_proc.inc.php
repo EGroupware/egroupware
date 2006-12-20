@@ -553,7 +553,7 @@
 					// identify the sequence name, ADOdb uses a different name or it might be renamed
 					$columns = $this->dict->MetaColumns($sTableName);
 					$seq_name = 'seq_'.$sTableName;
-					if (preg_match("/nextval\('([^']+)'::text\)/",$columns[strtoupper($sColumnName)]->default_value,$matches)) 
+					if (preg_match("/nextval\('([^']+)'::(text|regclass)\)/",$columns[strtoupper($sColumnName)]->default_value,$matches)) 
 					{
 						$seq_name = $matches[1];
 					}
