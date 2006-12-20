@@ -36,6 +36,12 @@ class idots_framework extends egw_framework
 	 * @var Template
 	 */
 	var $tpl;
+	/**
+	 * true if $this->navbar() was called
+	 *
+	 * @var boolean
+	 */
+	var $navbar_done;
 
 	/**
 	 * Constructor
@@ -84,6 +90,8 @@ class idots_framework extends egw_framework
 	 */
 	function navbar()
 	{
+		$this->navbar_done = true;
+
 		// the navbar
 		$this->tpl->set_file(array('navbar' => 'navbar.tpl'));
 			
@@ -315,7 +323,7 @@ class idots_framework extends egw_framework
 	{
 		static $footer_done;
 		if ($footer_done++) return;	// prevent multiple footers, not sure we still need this (RalfBecker)
-		
+
 		if (!isset($GLOBALS['egw_info']['flags']['nofooter']) || !$GLOBALS['egw_info']['flags']['nofooter'])
 		{
 			// get the (depricated) application footer
@@ -336,11 +344,15 @@ class idots_framework extends egw_framework
 
 			// do the template sets footer, former parse_navbar_end function
 			// this closes the application area AND renders the closing body- and html-tag
-			if (!isset($GLOBALS['egw_info']['flags']['nonavbar']) || !$GLOBALS['egw_info']['flags']['nonavbar'])
+			if ($this->navbar_done)
 			{
 				$this->tpl->set_file(array('footer' => 'footer.tpl'));
 				$this->tpl->set_var($this->_get_footer());
 				$content .= $this->tpl->fp('out','footer');
+			}
+			elseif (!isset($GLOBALS['egw_info']['flags']['noheader']) || !$GLOBALS['egw_info']['flags']['noheader'])
+			{
+				$content .= "</body>\n</html>\n";	// close body and html tag, eg. for popups
 			}
 			if (DEBUG_TIMER)
 			{
