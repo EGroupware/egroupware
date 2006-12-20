@@ -79,16 +79,25 @@
 		 * Constructor of schema-processor
 		 *
 		 * @param string $dbms type of the database: 'mysql','pgsql','mssql','sapdb'
+		 * @param object $db=null database class, if null we use $GLOBALS['egw']->db
 		 */
-		function schema_proc($dbms=False)
+		function schema_proc($dbms=False,$db=null)
 		{
-			$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
-			$this->m_odb->connect();
+		    if(is_object($db))
+			{
+		 	  $this->m_odb = $db; 
+			  $this->adodb = &$this->m_odb->Link_ID;
+		    }
+		    else
+		    {
+				$this->m_odb = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
+				$this->adodb = &$GLOBALS['egw']->ADOdb;
+		    }
+		    $this->m_odb->connect();
 			$this->capabilities =& $this->m_odb->capabilities;
 
 			$this->sType = $dbms ? $dmbs : $this->m_odb->Type;
 
-			$this->adodb = &$GLOBALS['egw']->ADOdb;
 			$this->dict = NewDataDictionary($this->adodb);
 
 			// enable the debuging in ADOdb's datadictionary if the debug-level is greater then 1

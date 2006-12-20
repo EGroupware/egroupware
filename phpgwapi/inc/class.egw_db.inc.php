@@ -283,7 +283,10 @@
 					{
 						$this->ServerInfo = $this->Link_ID->ServerInfo();
 						$this->set_capabilities($type,$this->ServerInfo['version']);
-						$Ok = $this->Link_ID->SelectDB($Database);
+						if($Database)
+						{
+						   $Ok = $this->Link_ID->SelectDB($Database);
+						}
 					}
 					if (!$Ok)
 					{
