@@ -201,7 +201,7 @@
 					{
 						foreach($val as $k => $v)
 						{
-							if (!is_array($v) && strstr($val,'$$') !== False)
+							if (!is_array($v) && strstr($v,'$$') !== False)
 							{
 								$this->data[$app][$key][$k] = $this->parse_notify($v);
 							}
