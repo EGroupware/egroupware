@@ -401,11 +401,13 @@ body {
 .divAppIconBlock /* this allows the icons and text to be positioned via absolute and requires the iconspacer div */
 {
 	border-top: 1px solid white;
+	background-image: url(../images/SpacerBack.jpg);
+	background-repeat: repeat-x;
 	padding: 0px;
 	position:absolute;
 	top:0px;
 	left:0px;
-	z-index:49;
+	z-index:40;
 }
 
 #divAppIconBar
