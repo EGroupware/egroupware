@@ -101,12 +101,12 @@
 		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 		{
 			$eGW_remember = explode('::::',stripslashes($_COOKIE['eGW_remember']));
-
+			
 			if($eGW_remember[0] && $eGW_remember[1] && $eGW_remember[2])
 			{
-				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember[1];
-				$_SERVER['PHP_AUTH_PW'] = $passwd = $eGW_remember[2];
-				$passwd_type = $eGW_remember[3];
+				$_SERVER['PHP_AUTH_USER'] = $login = $eGW_remember[0];
+				$_SERVER['PHP_AUTH_PW'] = $passwd = $eGW_remember[1];
+				$passwd_type = $eGW_remember[2];
 				$submit = True;
 			}
 		}
