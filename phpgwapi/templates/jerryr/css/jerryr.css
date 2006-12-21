@@ -398,6 +398,7 @@ body {
 {
         background-image: url(../images/firstcell.png);
 	background-repeat: no-repeat;
+	height: 58px;
 }
 
 .appIconTbl

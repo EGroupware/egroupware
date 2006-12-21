@@ -422,6 +422,7 @@ body {
 {
         background-image: url(../images/firstcell-bm.png);
         background-repeat: no-repeat;
+	height:58px;
 }
 
 .appIconTbl
@@ -447,7 +448,7 @@ body {
 
 .appIconSpacer
 {
-	height:38px;
+	height:43px;
 	background-color: white;
 }
 
