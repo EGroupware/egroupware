@@ -18,7 +18,7 @@
 		<table class="appIconTbl" width="100%" border="0" cellspacing="0" cellpadding="0" >
 			<tr>
 				<td width="85" class="iconBackFirstCell"></td>
-				<td valign="bottom">
+				<td valign="top">
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 {app_icons}
