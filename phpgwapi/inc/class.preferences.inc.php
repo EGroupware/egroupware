@@ -193,7 +193,7 @@
 			{
 				foreach($data as $key => $val)
 				{
-					if (!is_array($val) && strstr($val,'$$') !== False)
+					if (!is_array($val) && strpos($val,'$$') !== False)
 					{
 						$this->data[$app][$key] = $this->parse_notify($val);
 					}
@@ -201,7 +201,7 @@
 					{
 						foreach($val as $k => $v)
 						{
-							if (!is_array($v) && strstr($v,'$$') !== False)
+							if (!is_array($v) && strpos($v,'$$') !== False)
 							{
 								$this->data[$app][$key][$k] = $this->parse_notify($v);
 							}
@@ -826,7 +826,7 @@
 				return $email;
 			}
 			$prefs_email_address = $GLOBALS['egw']->accounts->id2name($account_id);
-			if (strstr($prefs_email_address,'@') === False)
+			if (strpos($prefs_email_address,'@') === False)
 			{
 				$prefs_email_address .= '@' . $GLOBALS['egw_info']['server']['mail_suffix'];
 			}
