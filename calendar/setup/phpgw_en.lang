@@ -8,6 +8,7 @@ accepted	calendar	en	Accepted
 access denied to the calendar of %1 !!!	calendar	en	Access denied to the calendar of %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	en	Action that caused the notify: Added, Canceled, Accepted, Rejected, ...
 actions	calendar	en	Actions
+actions...	calendar	en	Actions...
 add alarm	calendar	en	Add alarm
 added	calendar	en	Added
 after current date	calendar	en	After current date
@@ -47,7 +48,7 @@ copy of:	calendar	en	Copy of:
 copy this event	calendar	en	Copy this event
 countries	calendar	en	Countries
 country	calendar	en	Country
-create an exception at this recuring event	calendar	en	Create an exception at this recuring event
+create an exception for the given date	calendar	en	Create an exception for the given date
 create new links	calendar	en	Create new links
 csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV-Fieldname
@@ -102,6 +103,7 @@ event saved	calendar	en	Event saved
 event will occupy the whole day	calendar	en	Event will occupy the whole day
 exception	calendar	en	Exception
 exceptions	calendar	en	Exceptions
+execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
 export	calendar	en	Export
 extended	calendar	en	Extended
@@ -213,6 +215,7 @@ previous	calendar	en	previous
 private and global public	calendar	en	private and global public
 private and group public	calendar	en	private and group public
 private only	calendar	en	Private Only
+quantity	calendar	en	Quantity
 re-edit event	calendar	en	Re-Edit event
 receive email updates	calendar	en	Receive email updates
 receive summary of appointments	calendar	en	Receive summary of appointments
@@ -283,6 +286,7 @@ two weeks	calendar	en	two weeks
 updated	calendar	en	Updated
 use end date	calendar	en	use end date
 use the selected time and close the popup	calendar	en	use the selected time and close the popup
+user or group	calendar	en	User or group
 view this event	calendar	en	View this event
 views with fixed time intervals	calendar	en	Views with fixed time intervals
 wed	calendar	en	Wed

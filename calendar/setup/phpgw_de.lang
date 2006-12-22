@@ -8,6 +8,7 @@ accepted	calendar	de	Zugesagt
 access denied to the calendar of %1 !!!	calendar	de	Zugriff zum Kalender von %1 verweigert !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	de	Aktion die die Benachrichtigung verursacht hat: Zugefügt, Storniert, Zugesagt, Abgesagt
 actions	calendar	de	Befehle
+actions...	calendar	de	Befehle...
 add alarm	calendar	de	Alarm zufügen
 added	calendar	de	Neuer Termin
 after current date	calendar	de	Nach dem aktuellen Datum
@@ -47,7 +48,7 @@ copy of:	calendar	de	Kopie von:
 copy this event	calendar	de	Kopiert diesen Termin
 countries	calendar	de	Länder
 country	calendar	de	Land
-create an exception at this recuring event	calendar	de	Erzeugt eine Ausnahme an diesem wiederholenden Termin
+create an exception for the given date	calendar	de	Erzeugt eine Ausnahme am angegebenen Datum
 create new links	calendar	de	Neue Verknüpfung erstellen
 csv	calendar	de	CSV
 csv-fieldname	calendar	de	CSV-Feldname
@@ -102,6 +103,7 @@ event saved	calendar	de	Termin gespeichert
 event will occupy the whole day	calendar	de	Termin nimmt den ganzen Tag ein
 exception	calendar	de	Ausnahme
 exceptions	calendar	de	Ausnahmen
+execute a further action for this entry	calendar	de	Führ einen weiteren Befehlt für diesen Eintrag aus
 existing links	calendar	de	Bestehende Verknüpfungen
 export	calendar	de	Exportieren
 extended	calendar	de	Erweitert
@@ -213,6 +215,7 @@ previous	calendar	de	vorherig
 private and global public	calendar	de	Privat und Global öffentlich
 private and group public	calendar	de	Privat und Gruppen öffentlich
 private only	calendar	de	nur private
+quantity	calendar	de	Menge
 re-edit event	calendar	de	Event erneut bearbeiten
 receive email updates	calendar	de	Empfange E-Mail updates
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
@@ -283,6 +286,7 @@ two weeks	calendar	de	zwei Wochen
 updated	calendar	de	Aktualisiert
 use end date	calendar	de	Enddatum benutzen
 use the selected time and close the popup	calendar	de	benutzt die ausgewählte Zeit und schließt das Popup
+user or group	calendar	de	Benutzer oder Gruppe
 view this event	calendar	de	Diesen Termin anzeigen
 views with fixed time intervals	calendar	de	Ansichten mit festen Zeitintervallen
 wed	calendar	de	Mi
