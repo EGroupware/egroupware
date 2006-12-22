@@ -625,7 +625,8 @@
 				$data = array ();
 			}
 
-			if (substr ($data['string'], 0, 1) == "\\" || strstr ($data['string'], "..") || strstr ($data['string'], "\\..") || strstr ($data['string'], ".\\."))
+			if (substr ($data['string'], 0, 1) == '\\' || strpos($data['string'], '..') !== false || 
+				strpos($data['string'], '\\..') !== false || strpos($data['string'], '.\\.') !== false)
 			{
 				return False;
 			}

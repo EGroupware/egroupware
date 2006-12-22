@@ -1730,8 +1730,8 @@
 			}
 
 			/* We don't allow /'s in dir names, of course */
-			if (strstr ($p->fake_name,'/'))
-			{//echo "strstr('$p->fake_name','/')";
+			if (strpos ($p->fake_name,'/') !== false)
+			{
 				return False;
 			}
 
