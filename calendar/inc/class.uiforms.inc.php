@@ -36,7 +36,6 @@ class uiforms extends uical
 	var $public_functions = array(
 		'freetimesearch'  => True,
 		'edit' => true,
-		'view' => true,
 		'export' => true,
 		'import' => true,
 	);
@@ -55,6 +54,13 @@ class uiforms extends uical
 	var $durations = array();
 	
 	/**
+	 * Name of the tabs used in edit
+	 *
+	 * @var string
+	 */
+	var $tabs = 'general|description|participants|recurrence|custom|links|alarms';
+	
+	/**
 	 * Constructor
 	 */
 	function uiforms()
@@ -69,14 +75,6 @@ class uiforms extends uical
 		}
 	}
 	
-	/**
-	 * View a calendar event
-	 */
-	function view()
-	{
-		return $this->edit(null,array('view' => true));
-	}
-
 	/**
 	 * Create a default event (adding a new event) by evaluating certain _GET vars
 	 *
@@ -158,12 +156,12 @@ class uiforms extends uical
 	 */
 	function process_edit($content)
 	{
-		//echo "content submitted="; _debug_array($content);
 		list($button) = @each($content['button']);
-		unset($content['button']);
+		if (!$button && $content['action']) $button = $content['action'];	// action selectbox
+		unset($content['button']); unset($content['action']);
 
-		$view = $content['view'] && $button != 'edit' && $button != 'exception';
-		if ($view && $button == 'vcal')
+		$view = $content['view'];
+		if ($button == 'ical')
 		{
 			$msg = $this->export($content['id'],true);
 		}
@@ -214,37 +212,8 @@ class uiforms extends uical
 		{
 			// no conversation necessary, event is already in the right format
 		}
-		elseif (isset($content['participants']) && !(isset($content['view']) && $content['view']))	// convert content => event
+		elseif (isset($content['participants']))	// convert content => event
 		{
-			//echo "participants="; _debug_array($content['participants']);
-			$event['participants'] = $event['participant_types'] = array();
-			foreach($content['participants'] as $app => $participants)
-			{
-				if (!$participants) continue;
-
-				$type = 'u';
-				foreach($this->bo->resources as $t => $data)
-				{
-					if ($data['app'] == $app)
-					{
-						$type = $t;
-						break;
-					}
-				}
-				foreach(is_array($participants) ? $participants : explode(',',$participants) as $id)
-				{
-					if (is_array($id)) continue;	// ignore the status
-					list($id,$quantity) = explode(':',$id);
-					$event['participants'][$type == 'u' ? (int) $id : $type.$id] = $event['participant_types'][$type][$id] = 
-						// for existing participants use their old status (dont change it)
-						(isset($content['participant_types'][$type][$id]) ? $content['participant_types'][$type][$id]{0} : 
-						// for new participants check if they have a 'new_status' resource-methode to determine the status
-						(isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 
-						// if not use 'A'=accepted for the current user and 'U' otherwise
-						($type == 'u' && $id == $this->bo->user ? 'A' : 'U'))).((int) $quantity > 1 ? (int)$quantity : '');
-						// ToDo: move this logic into bocal
-				}
-			}
 			if ($content['whole_day'])
 			{
 				$event['start'] = $this->bo->date2array($event['start']);
@@ -260,73 +229,109 @@ class uiforms extends uical
 			{
 				$event['recur_data'] = 1 << (int)date('w',$event['start']);
 			}
-		}
-		else	// status change view
-		{
-			foreach($event['participants'] as $name => $data)
+			$event['participants'] = $event['participant_types'] = array();
+			foreach($content['participants'] as $key => $data)
 			{
-				if (!is_array($data)) continue;
-
-				$type = 'u';
-				foreach($this->bo->resources as $t => $d)
+				switch($key)
 				{
-					if ($d['app'] == $name)
-					{
-						$type = $t;
-						break;
-					}
-				}
-				// checking for status changes
-				foreach($data[$name.'_status'] as $uid => $status)
-				{
-					list($uid,$quantity) = explode(':',$uid);
-					//echo "checking $type: $uid $status against old ".$event['participant_types'][$type][$uid]."<br />\n";
-					if ($event['participant_types'][$type][$uid]{0} != $status{0})	// status changed by user
-					{
-						if ($this->bo->set_status($event['id'],$type,$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE ? $event['start'] : 0))
+					case 'add':
+						if (!$content['participants']['account'] && !$content['participants']['resource'])
 						{
-							$event['participants'][$type == 'u' ? (int) $uid : $type.$uid] = 
-								$event['participant_types'][$type][$uid] = $status.$quantity;
-							// refreshing the calendar-view with the changed participant-status
-							$msg = lang('Status changed');
-							if (!$preserv['no_popup'])
+							$msg = lang('You need to select an account, contact or resource first!');
+						}
+						// fall-through
+					case 'delete':		// handled in default
+					case 'quantity':	// handled in new_resource
+					case 'cal_resources':
+						$uid = false;
+						break;
+
+					case 'resource':
+						list($app,$id) = explode(':',$data);
+						foreach($this->bo->resources as $type => $data) if ($data['app'] == $app) break;
+						$uid = $this->bo->resources[$type]['app'] == $app ? $type.$id : false;
+						// check if new entry is no contact or no account
+						if ($app != 'addressbook' || !($data = $GLOBALS['egw']->accounts->name2id($id,'person_id')))
+						{
+							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
+							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
+							break;
+						}
+						// fall-through for accounts entered as contact
+					case 'account':
+						$id = $uid = $data;
+						$type = 'u';
+						$quantity = 1;
+						$status = $uid == $this->bo->user ? 'A' : 'U';
+						break;
+						
+						
+					default:		// existing participant row
+						foreach(array('uid','status','quantity') as $name)
+						{
+							$$name = $data[$name];
+						}
+						if ($content['participants']['delete'][$uid])
+						{
+							$uid = false;	// entry has been deleted
+						}
+						else
+						{
+							if (is_numeric($uid))
 							{
-								$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
-									'menuaction' => $content['referer'],
-									'msg' => $msg,
-								))).'\';';
+								$id = $uid; 
+								$type = 'u';
+							}
+							else
+							{
+								$id = substr($uid,1); 
+								$type = $uid{0};
+							}
+							if ($data['old_status'] != $status)
+							{
+								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE ? $event['start'] : 0))
+								{
+									// refreshing the calendar-view with the changed participant-status
+									$msg = lang('Status changed');
+									if (!$preserv['no_popup'])
+									{
+										$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
+											'menuaction' => $content['referer'],
+											'msg' => $msg,
+										))).'\';';
+									}
+								}
 							}
 						}
-					}
+						break;
 				}
-				unset($event['participants'][$name]);	// unset the status-changes from the event
+				if (!$uid || !$status || $status == 'G') continue;	// empty, deleted, group-invitation --> ignore
+
+				$event['participants'][$uid] = $event['participant_types'][$type][$id] = 
+					$status.((int) $quantity > 1 ? (int)$quantity : '');
 			}
 		}
 		$preserv = array(
 			'view'        => $view,
 			'edit_single' => $content['edit_single'],
+			'actual_date' => $content['actual_date'],
 			'referer'     => $content['referer'],
 			'no_popup'    => $content['no_popup'],
+			$this->tabs   => $content[$this->tabs],
 		);
-		switch($button)
+		switch((string)$button)
 		{
 		case 'exception':	// create an exception in a recuring event
-			$preserv['edit_single'] = $content['start'];
+			$event['end'] += $content['actual_date'] - $event['start'];
+			$event['start'] = $preserv['edit_single'] = $preserv['actual_date'];
 			$event['recur_type'] = MCAL_RECUR_NONE;
 			foreach(array('recur_enddate','recur_interval','recur_exception','recur_data') as $name)
 			{
 				unset($event[$name]);
 			}
+			$msg = lang('Exception created - you can now edit or delete it');
 			break;
 
-		case 'edit':
-			if ($content['recur_type'] != MCAL_RECUR_NONE)
-			{
-				// need to reload start and end of the serie
-				$event = $this->bo->read($event['id'],0);
-			}
-			break;
-				
 		case 'copy':	// create new event with copied content, some content need to be unset to make a "new" event
 			unset($event['id']);
 			unset($event['uid']);
@@ -347,10 +352,16 @@ class uiforms extends uical
 			$button = $event['button_was'];	// save or apply
 			unset($event['button_was']);
 			// fall through
+		case 'mail':
 		case 'save':
 		case 'apply':
 			if ($event['id'] && !$this->bo->check_perms(EGW_ACL_EDIT,$event)) 
 			{ 
+				if ($button == 'mail')	// just mail without edit-rights is ok
+				{
+					$js = $this->custom_mail($event,false);
+					break;
+				}
 				$msg = lang('Permission denied'); 
 				break; 
 			}
@@ -414,10 +425,9 @@ class uiforms extends uical
 					'msg' => $msg,
 				))).'\';';
 
-				if ($content['custom_mail'])
+				if ($button == 'mail')
 				{
 					$js = $this->custom_mail($event,!$content['id'])."\n".$js;	// first open the new window and then update the view
-					unset($event['custom_mail']);
 				}
 			}
 			else
@@ -486,7 +496,7 @@ class uiforms extends uical
 			}
 			break;
 		}
-		if (in_array($button,array('cancel','save','delete','delete_series')))
+		if (in_array($button,array('cancel','save','delete')))
 		{
 			if ($content['no_popup'])
 			{
@@ -514,12 +524,26 @@ class uiforms extends uical
 		$to = array();
 		foreach($event['participants'] as $uid => $status)
 		{
-			if (is_numeric($uid) && $uid != $this->user && $status != 'R' && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
+			if ($status == 'R' || $uid == $this->user) continue;
+			
+			if (is_numeric($uid) && $GLOBALS['egw']->accounts->get_type($uid) == 'u')
 			{
 				$GLOBALS['egw']->accounts->get_account_name($uid,$lid,$firstname,$lastname);
 				 
 				$to[] = $firstname.' '.$lastname.
 					' <'.$GLOBALS['egw']->accounts->id2name($uid,'account_email').'>';
+			}
+			if ($uid{0} == 'c' )
+			{
+				if (!is_object($GLOBALS['egw']->contacts))
+				{
+					require_once(EGW_API_INC.'/class.contacts.inc.php');
+					$GLOBALS['egw']->contacts = new contacts();
+				}
+				if (($contact = $GLOBALS['egw']->contacts->read(substr($uid,1))) && ($contact['email'] || $contact['email_home']))
+				{
+					$to[] = $contact['n_fn'].' <'.($contact['email']?$contact['email']:$contact['email_home']).'>';
+				}
 			}
 		}
 		list($subject,$body) = $this->bo->get_update_message($event,$added ? MSG_ADDED : MSG_MODIFIED);	// update-message is in TZ of the user
@@ -562,22 +586,25 @@ class uiforms extends uical
 	function edit($event=null,$preserv=null,$msg='',$js = 'window.focus();',$link_to_id='')
 	{
 		$etpl =& CreateObject('etemplate.etemplate','calendar.edit');
-		
 		$sel_options = array(
-			'recur_type'      => &$this->bo->recur_types,
-			'accounts_status' => $this->bo->verbose_status,
-			'owner'           => array(),
-			'duration'        => $this->durations,
+			'recur_type' => &$this->bo->recur_types,
+			'status'     => $this->bo->verbose_status,
+			'duration'   => $this->durations,
+			'action'     => array(
+				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
+				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
+				'mail' => array('label' => 'Mail participants', 'title' => 'compose a mail to all participants after the event is saved'),
+			),
 		);
+		unset($sel_options['status']['G']);
 		if (!is_array($event))
 		{
 			$preserv = array(
 				'no_popup' => isset($_GET['no_popup']),
 				'referer'  => preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] : $this->view_menuaction,
-				'view'     => $preserv['view'],
 			);
 			$cal_id = (int) $_GET['cal_id'];
-			
+
 			if (!$cal_id || $cal_id && !($event = $this->bo->read($cal_id,$_GET['date'])) || !$this->bo->check_perms(EGW_ACL_READ,$event))
 			{
 				if ($cal_id) 
@@ -588,13 +615,19 @@ class uiforms extends uical
 					}
 					else
 					{
-						$GLOBALS['egw']->common->egw_header();
-						parse_navbar();
-						echo '<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n";
+						$GLOBALS['egw']->framework->render('<p class="redItalic" align="center">'.lang('Permission denied')."</p>\n",null,true);
 						$GLOBALS['egw']->common->egw_exit();
 					}
 				}
 				$event =& $this->default_add_event();
+			}
+			else
+			{
+				$preserv['actual_date'] = $event['start'];		// remember the date clicked
+				if ($event['recur_type'] != MCAL_RECUR_NONE)
+				{
+					$event = $this->bo->read($cal_id,0,true);	// recuring event --> read the series
+				}
 			}
 			// check if the event is the whole day
 			$start = $this->bo->date2array($event['start']);
@@ -616,13 +649,14 @@ class uiforms extends uical
 				'to_app' => 'calendar',
 			),
 			'edit_single' => $preserv['edit_single'],	// need to be in content too, as it is used in the template
+			$this->tabs   => $preserv[$this->tabs],
 			'view' => $view,
 		));
-		$content['participants'] = array();
-
 		$content['duration'] = $content['end'] - $content['start'];
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
 
+		$row = 2;
+		$readonlys = $content['participants'] = $preserv['participants'] = array();
 		foreach($event['participant_types'] as $type => $participants)
 		{
 			$name = 'accounts';
@@ -632,43 +666,49 @@ class uiforms extends uical
 			}
 			foreach($participants as $id => $status)
 			{
-				$content['participants'][$name][] = $id . (substr($status,1) > 1 ? (':'.substr($status,1)) : '');
-			}
-
-			if ($view)
-			{
-				$stati =& $content['participants'][$name][$name.'_status'];
-				$stati = $participants;
+				$uid = $type == 'u' ? $id : $type.$id;
+				$preserv['participants'][$row] = $content['participants'][$row] = array(
+					'app'      => $name == 'accounts' ? ($GLOBALS['egw']->accounts->get_type($id) == 'g' ? 'Group' : 'User') : $name,
+					'uid'      => $uid,
+					'status'   => $status{0},
+					'old_status' => $status{0},
+					'quantity' => substr($status,1),
+				);
+				$readonlys[$row.'[quantity]'] = $type == 'u' || !isset($this->bo->resources[$type]['max_quantity']);
+				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
+				$readonlys["delete[$uid]"] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
+				$content['participants'][$row++]['title'] = $name == 'accounts' ? 
+					$GLOBALS['egw']->common->grab_owner_name($id) : $this->link->title($name,$id);
+					
 				// enumerate group-invitations, so people can accept/reject them
-				if ($name == 'accounts')
+				if ($name == 'accounts' && $GLOBALS['egw']->accounts->get_type($id) == 'g' &&
+					($members = $GLOBALS['egw']->accounts->members($id,true)))
 				{
-					foreach($participants as $id => $status)
+					$sel_options['status']['G'] = lang('Select one');
+					foreach($members as $member)
 					{
-						if ($GLOBALS['egw']->accounts->get_type($id) == 'g' &&
-							($members = $GLOBALS['egw']->accounts->member($id)))
+						if (!isset($participants[$member]) && $this->bo->check_perms(EGW_ACL_EDIT,0,$member))
 						{
-							$sel_options['accounts_status']['G'] = lang('Select one');
-							foreach($members as $member)
-							{
-								if (!isset($stati[$member['account_id']]) && $this->bo->check_perms(EGW_ACL_EDIT,0,$member['account_id']))
-								{
-									$stati[$member['account_id']] = 'G';	// status for invitation via membership in group
-									$content['participants'][$name][] = $member['account_id'];
-								}
-							}
+							$preserv['participants'][$row] = $content['participants'][$row] = array(
+								'app'      => 'Group invitation',
+								'uid'      => $member,
+								'status'   => 'G',
+							);
+							$readonlys[$row.'[quantity]'] = $readonlys["delete[$member]"] = true;
+							$content['participants'][$row++]['title'] = $GLOBALS['egw']->common->grab_owner_name($member);
 						}
 					}
 				}
-				foreach($stati as $id => $status)
-				{
-					$readonlys[$name.'_status['.$id.']'] = !$this->bo->check_perms(EGW_ACL_EDIT,0,($type != 'u' ? $type : '').$id);
-				}
 			}
+			// resouces / apps we shedule, atm. resources and addressbook
+			$content['participants']['cal_resources'] = '';
+			foreach($this->bo->resources as $data) $content['participants']['cal_resources'] .= ','.$data['app'];
 		}
+		$content['participants']['status_date'] = $preserv['actual_date'];
 // 		echo '$content[participants]'; _debug_array($content['participants']);
 // 		echo '$content[participant_types]'; _debug_array($content['participant_types']);
 // 		_debug_array($sel_options);
-		$preserv = array_merge($preserv,$view ? $event : $content);
+		$preserv = array_merge($preserv,$content);
 
 		if ($event['alarm'])
 		{
@@ -707,7 +747,9 @@ class uiforms extends uical
 				if ($key != 'alarm') $readonlys[$key] = true;
 			}
 			// we need to unset the tab itself, as this would make all content (incl. the change-status selects) readonly
-			unset($readonlys['general|description|participants|recurrence|custom|links|alarms']);
+			unset($readonlys[$this->tabs]);
+			// participants are handled individual
+			unset($readonlys['participants']);
 
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['freetime'] = true;
 			$readonlys['link_to'] = $readonlys['customfields'] = true;
@@ -715,11 +757,10 @@ class uiforms extends uical
 			
 			if ($event['recur_type'] != MCAL_RECUR_NONE)
 			{
-				$etpl->set_cell_attribute('button[edit]','help','Edit this series of recuring events');	
-				$etpl->set_cell_attribute('button[delete]','help','Delete this series of recuring events');
 				$onclick =& $etpl->get_cell_attribute('button[delete]','onclick');
 				$onclick = str_replace('Delete this event','Delete this series of recuring events',$onclick);
 			}
+			$content['participants']['no_add'] = true;
 		}
 		else
 		{
@@ -731,22 +772,24 @@ class uiforms extends uical
 			// the call to set_style_by_class has to be in onload, to make sure the function and the element is already created
 			$GLOBALS['egw']->js->set_onload("set_style_by_class('table','end_hide','visibility','".($content['duration'] && isset($sel_options['duration'][$content['duration']]) ? 'hidden' : 'visible')."');");
 
-			$readonlys['button[copy]'] = $readonlys['button[vcal]'] = true;
-			unset($preserv['participants']);	// otherwise deleted participants are still reported
 			$readonlys['recur_exception'] = !count($content['recur_exception']);	// otherwise we get a delete button
 		}
 		// disabling the custom fields tab, if there are none
-		$readonlys['general|description|participants|recurrence|custom|links|alarms'] = array(
+		$readonlys[$this->tabs] = array(
 			'custom' => !count($this->bo->config['customfields']),
 			'participants' => $this->accountsel->account_selection == 'none',
 		);
-		if ($view || !isset($GLOBALS['egw_info']['user']['apps']['felamimail']))
+		if (!isset($GLOBALS['egw_info']['user']['apps']['felamimail']))	// no mail without mail-app
 		{
-			$etpl->disable_cells('custom_mail');
+			unset($sel_options['action']['mail']);
 		}
-		if (!($readonlys['button[exception]'] = $readonlys['button[edit]'] = !$view || !$this->bo->check_perms(EGW_ACL_EDIT,$event)))
+		if (!$event['id'])	// no ical export for new (not saved) events
 		{
-			$readonlys['button[exception]'] = $event['recur_type'] == MCAL_RECUR_NONE;
+			$readonlys['action'] = true;
+		}
+		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE))
+		{
+			$content['exception_label'] = $this->bo->long_date($preserv['actual_date']);
 		}
 		$readonlys['button[delete]'] = !$event['id'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
@@ -766,10 +809,6 @@ class uiforms extends uical
 		{
 			$etpl->set_cell_attribute('button[new_alarm]','type','checkbox');	
 		}
-		foreach($this->bo->resources as $res_data)
-		{
-			$sel_options[$res_data['app'].'_status'] =& $this->bo->verbose_status;
-		}
 		if ($preserv['no_popup'])
 		{
 			$etpl->set_cell_attribute('button[cancel]','onclick','');
@@ -778,8 +817,8 @@ class uiforms extends uical
 		//echo "preserv="; _debug_array($preserv);
  		//echo "readonlys="; _debug_array($readonlys);
  		//echo "sel_options="; _debug_array($sel_options);
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . ($event['id'] ? ($view ? lang('View') : 
-			($content['edit_single'] ? lang('Edit exception') : lang('Edit'))) : lang('Add'));
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . (!$event['id'] ? lang('Add') : ($view ? lang('View') : 
+			($content['edit_single'] ? lang('Create exception') : ($content['recur_type'] ? lang('Edit series') : lang('Edit')))));
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n$js\n</script>\n";
 		$etpl->exec('calendar.uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
 	}

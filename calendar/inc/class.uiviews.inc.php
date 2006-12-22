@@ -434,7 +434,7 @@ class uiviews extends uical
 		$users = $this->search_params['users'];
 		if (!is_array($users)) $users = array($users);
 		
-		if (count($users) == 1 || count($users) > 3)	// for more then 3 users, show all in one row
+		if (count($users) == 1 || count($users) > 5)	// for more then 3 users, show all in one row
 		{
 			$content =& $this->timeGridWidget($this->tagWholeDayOnTop($this->bo->search($search_params)),$this->cal_prefs['interval']);
 		}
@@ -1175,7 +1175,7 @@ class uiviews extends uical
 		$tpl->set_var('tooltip',$this->html->tooltip($tooltip,False,array('BorderWidth'=>0,'Padding'=>0)));
 		$html = $tpl->fp('out',$block);
 
-		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.uiforms.view','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
+		$view_link = $GLOBALS['egw']->link('/index.php',array('menuaction'=>'calendar.uiforms.edit','cal_id'=>$event['id'],'date'=>$this->bo->date2string($event['start'])));
 		$popup = $is_private ? '' : ' onclick="'.$this->popup($view_link).'; return false;"';
 		
 		if ($return_array)

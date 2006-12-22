@@ -123,7 +123,6 @@ class bocal
 		MCAL_M_SATURDAY  => 'Saturday',
 		MCAL_M_SUNDAY    => 'Sunday',
 	);
-	var $so,$datetime;
 	/**
 	 * @var array $resources registered scheduling resources of the calendar (gets chached in the session for performance reasons)
 	 */
@@ -138,6 +137,18 @@ class bocal
 	 * @var array $cached_holidays holidays plus birthdays (gets cached in the session for performance reasons)
 	 */
 	var $cached_holidays;
+	/**
+	 * Instance of the socal class
+	 *
+	 * @var socal
+	 */
+	var $so;
+	/**
+	 * Instance of the datetime class
+	 *
+	 * @var egw_datetime
+	 */
+	var $datetime;
 
 	/**
 	 * Constructor
@@ -589,14 +600,14 @@ class bocal
 	{
 		if ($date) $date = $this->date2ts($date);
 
-		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format)))
+		if ($ignore_acl || is_array($ids) || ($return = $this->check_perms(EGW_ACL_READ,$ids,0,$date_format,$date)))
 		{
 			if (is_array($ids) || !isset($this->cached_event['id']) || $this->cached_event['id'] != $ids || 
 				$this->cached_event_date_format != $date_format ||
-				!is_null($date) && $this->cached_event['start'] < $date && $this->cached_event['recur_type'] != MCAL_RECUR_NONE)
+				$this->cached_event['recur_type'] != MCAL_RECUR_NONE && !is_null($date) && (!$date || $this->cached_event['start'] < $date))
 			{
 				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0);
-				
+
 				if ($events)
 				{
 					$this->db2data($events,$date_format);
@@ -880,10 +891,11 @@ class bocal
 	 * @param int $needed necessary ACL right: EGW_ACL_{READ|EDIT|DELETE}
 	 * @param mixed $event event as array or the event-id or 0 for a general check
 	 * @param int $other uid to check (if event==0) or 0 to check against $this->user
-	 * @param string $date_format='ts' date-formats: 'ts'=timestamp, 'array'=array, 'string'=iso8601 string for xmlrpc
+	 * @param string $date_format='ts' date-format used for reading: 'ts'=timestamp, 'array'=array, 'string'=iso8601 string for xmlrpc
+	 * @param mixed $date_to_read=null date used for reading, internal param for the caching
 	 * @return boolean true permission granted, false for permission denied or null if event not found
 	 */
-	function check_perms($needed,$event=0,$other=0,$date_format='ts')
+	function check_perms($needed,$event=0,$other=0,$date_format='ts',$date_to_read=null)
 	{
 		$event_in = $event;
 		if ($other && !is_numeric($other))
@@ -900,7 +912,7 @@ class bocal
 		{
 			if (!is_array($event))
 			{
-				$event = $this->read($event,null,True,$date_format);	// = no ACL check !!!
+				$event = $this->read($event,$date_to_read,True,$date_format);	// = no ACL check !!!
 			}
 			if (!is_array($event))
 			{
@@ -1155,8 +1167,8 @@ class bocal
 		static $acl2string = array(
 			0               => 'ACL-UNKNOWN',
 			EGW_ACL_READ    => 'ACL_READ',
-			EGW_ACL_WRITE   => 'ACL_WRITE',
 			EGW_ACL_ADD     => 'ACL_ADD',
+			EGW_ACL_EDIT    => 'ACL_EDIT',
 			EGW_ACL_DELETE  => 'ACL_DELETE',
 			EGW_ACL_PRIVATE => 'ACL_PRIVATE',
 		);
@@ -1176,7 +1188,7 @@ class bocal
 						if (substr($param,0,strlen(ACL_TYPE_IDENTIFER))== ACL_TYPE_IDENTIFER)
 						{
 							$param = (int) substr($param,strlen(ACL_TYPE_IDENTIFER));
-							$param = isset($acl2string[$param]) ? $acl2string[$param] : $acl2string[0];
+							$param = (isset($acl2string[$param]) ? $acl2string[$param] : $acl2string[0])." ($param)";
 						}
 						else
 						{
@@ -1341,8 +1353,14 @@ class bocal
 		{
 			if (!is_numeric($id))
 			{
-				$res_info = $this->resource_info($id);
+/*				$res_info = $this->resource_info($id);
 				$id2lid[$id] = $res_info && isset($res_info['name']) ? $res_info['name'] : "resource($id)";
+*/
+				if (!is_object($GLOBALS['egw']->link))
+				{
+					$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
+				}
+				$id2lid[$id] = $GLOBALS['egw']->link->title($this->resources[$id{0}]['app'],substr($id,1));
 			}
 			else
 			{
@@ -1653,7 +1671,7 @@ class bocal
 			'query' => 'calendar.bocal.link_query',
 			'title' => 'calendar.bocal.link_title',
 			'view'  => array(
-				'menuaction' => 'calendar.uiforms.view',
+				'menuaction' => 'calendar.uiforms.edit',
 			),
 			'view_id'    => 'cal_id',
 			'view_popup' => '750x400',

@@ -723,24 +723,50 @@ class bocalupdate extends bocal
 	}
 	
 	/**
+	 * Check if the current user has the necessary ACL rights to change the status of $uid
+	 * 
+	 * For contacts we use edit rights of the owner of the event (aka. edit rights of the event).
+	 *
+	 * @param int/string $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
+	 * @param array/int $event event array or id of the event
+	 * @return boolean
+	 */
+	function check_status_perms($uid,$event)
+	{
+		if ($uid{0} == 'c')	// for contact we use the owner of the event
+		{
+			if (!is_array($event) && !($event = $this->read($event))) return false;
+
+			return $this->check_perms(EGW_ACL_EDIT,0,$event['owner']);
+		}
+		if (!is_numeric($uid))	// this is eg. for resources (r123)
+		{
+			$resource = $this->resource_info($uid);
+
+			return EGW_ACL_EDIT & $resource['rights'];
+		}
+		// regular user and groups
+		return $this->check_perms(EGW_ACL_EDIT,0,$uid);
+	}
+
+	/**
 	 * set the status of one participant for a given recurrence or for all recurrences since now (includes recur_date=0)
 	 *
-	 * @param int $cal_id
-	 * @param char $user_type 'u' regular user
-	 * @param int $user_id
+	 * @param int/array $event event-array or id of the event
+	 * @param string/int $uid account_id or 1-char type-identifer plus id (eg. c15 for addressbook entry #15)
 	 * @param int/char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date=0 date to change, or 0 = all since now
 	 * @return int number of changed recurrences
 	 */
-	function set_status($cal_id,$user_type,$user_id,$status,$recur_date=0)
+	function set_status($event,$uid,$status,$recur_date=0)
 	{
-		//echo "<p>bocalupdate::set_status($cal_id,$user_type,$user_id,$status,$recur_date)</p>\n";
-		if (!$cal_id || $user_type == 'u' && !$this->check_perms(EGW_ACL_EDIT,0,$user_id))
-			// ToDo: check for bookingpermission of resources !!!
+		$cal_id = is_array($event) ? $event['id'] : $event;
+		//echo "<p>bocalupdate::set_status($cal_id,$uid,$status,$recur_date)</p>\n";
+		if (!$cal_id || !$this->check_status_perms($uid,$event))
 		{
 			return false;
 		}
-		if (($Ok = $this->so->set_status($cal_id,$user_type,$user_id,$status,$recur_date ? $this->date2ts($recur_date,true) : 0)))
+		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid{0},is_numeric($uid)?$uid:substr($uid,1),$status,$recur_date ? $this->date2ts($recur_date,true) : 0)))
 		{
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('calendar',$cal_id,'modify',time());
 
@@ -751,7 +777,7 @@ class bocalupdate extends bocal
 			);
 			if (isset($status2msg[$status]))
 			{
-				$event = $this->read($cal_id);
+				if (!is_array($event)) $event = $this->read($cal_id);
 				$this->send_update($status2msg[$status],$event['participants'],$event);
 			}
 		}
