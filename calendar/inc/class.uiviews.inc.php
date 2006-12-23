@@ -1239,7 +1239,8 @@ class uiviews extends uical
 						'loaderImage'=>addslashes($this->html->image('phpgwapi','ajax-loader')),
 					),
 					'calendar.dragDropFunctions.dragEvent',
-					'calendar.dragDropFunctions.dropEvent'
+					'calendar.dragDropFunctions.dropEvent',
+					'top center 2'
 			);
 		}
 

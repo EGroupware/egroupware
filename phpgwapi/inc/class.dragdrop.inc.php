@@ -68,12 +68,13 @@ class dragdrop
 	 * @param array $values=false optional associative array with values of the object
 	 * @param string $dragAction=false ActionScript executed while item is dragged e.g. calendar.myscript.mydrag
 	 * @param string $dropAction=false ActionScript executed when item is dropped e.g. calendar.myscript.mydrop
+	 * @param string $focus=false position of the focus for underlying objects, something like 'top left 5' or 'center center 0'
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function addDraggable($name,$values = false,$dragAction = false,$dropAction = false)
+	function addDraggable($name,$values = false,$dragAction = false,$dropAction = false,$focus = false)
 	{
 		if(!$this->checkUnique($name)) { return false; }
-			$this->draggables[] = array('name'=>$name,'values'=>$values,'dragAction'=>$this->registerActionScript($dragAction),'dropAction'=>$this->registerActionScript($dropAction));
+			$this->draggables[] = array('name'=>$name,'values'=>$values,'dragAction'=>$this->registerActionScript($dragAction),'dropAction'=>$this->registerActionScript($dropAction),'focus'=>$this->addApostrophes($focus));
 		return true;
 	}
 
@@ -170,6 +171,7 @@ class dragdrop
 				}
 				if($element['dragAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDragFunc('.$element['dragAction'].');'."\n"; }
 				if($element['dropAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDropFunc('.$element['dropAction'].');'."\n"; }
+				if($element['focus']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setFocus('.$element['focus'].');'."\n"; }
 			}
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
 		}
@@ -291,6 +293,26 @@ class dragdrop
 	
 		$this->actionScripts[] = array('script' => $script,'file' => $browserFile);
 		return $functionname;
+	}
+
+	/**
+	 * adds apostrophes to each value in a space separated string
+	 *
+	 * @param string $val space separated values
+	 * @return string comma separated values in apostrophes if $val is true, otherwise false
+	*/
+	function addApostrophes($val=false)
+	{
+		if($val)
+		{
+			foreach(explode(' ',$val) as $id=>$value)
+			{
+				$apostropheVal[] = '"'.$value.'"';
+			}
+			return implode(',',$apostropheVal);
+		}
+
+		return false;
 	}
 
 }
