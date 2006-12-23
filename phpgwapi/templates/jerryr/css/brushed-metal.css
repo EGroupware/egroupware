@@ -149,7 +149,7 @@ input[type=image]
 
 #tdSidebox
 {
-	width:170px;
+	width:204px;
 	overflow:visible;
 }
 
@@ -158,12 +158,13 @@ input[type=image]
 {
 	position:relative;
 	width: 370px; 
-	border: #9f9f9f 1px solid;
+	border-right: #9f9f9f 0px solid;
 }
 
 .divSidebox 
 {
 	width: 188px; 
+	border: 0px solid #9f9f9f;
 }
 
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
@@ -174,37 +175,39 @@ input[type=image]
 .textSideboxStar
 {
 	font-size:90%;
-	background-color: #a43434;
-	border-right: 1px solid #9f9f9f;
+	background-color: #e1e1e1;
+	border-right: 0px solid #9f9f9f;
+	border-left: 0px solid #9f9f9f;
 }
 
 .divSideboxHeader,.divLoginboxHeader 
 {
 	text-align:center;
-	background-image:url(../images/menuTitle-bm.png);
-	color:white;
-	height: 23px;
+	background-image:url(../images/menuTitle-bm.png);	
+	color:#666666;
+	height: 22px;
 	font-weight:bold;
 	font-size:12px;
 	position: relative;
-        left: -4px;
-        top: -4px;
-	border-top: 2px solid white;
-	border-left: 2px solid white;
-	border-right: 2px solid white;
+        left: 0px;
+        top: 0px;
+	border-top: 0px solid #9f9f9f;
+	border-left: 0px solid #9f9f9f;
+	border-right: 0px solid #9f9f9f;
 }
 
 a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
 	height:18px;
-	background-color:#f6efe0;
-	border-top: 1px solid #9f9f9f;
+	background-color:#ffffff;
+	border-left: 0px solid #9f9f9f;
 }
 
 a.appTitles,.appTitles
 {
 	height:25px;
+	border-left: 0px solid #9f9f9f;
 }
 
 a.textSidebox
@@ -216,14 +219,13 @@ a.textSidebox
 {
 	height:18px;
 	padding-left: 2px;
-	border-top: solid #9f9f9f 1px;
+	border-top: solid #9f9f9f 0px;
 }
 
 .textSideboxHover
 {
-	background-color: #ede6d8;
-	background-repeat: repeat-x;
-	border-top: 1px solid #9f9f9f;
+	background-color: #e1e1e1;
+	border-top: 0px solid #9f9f9f;
 	padding-left: 2px;	
 	font-size: 10px;
 }
@@ -238,7 +240,7 @@ a.textSidebox
 {
 	height:18px;
 	padding-left: 0px;
-	border-top: solid #9f9f9f 1px;
+	border-left: solid #9f9f9f 0px;
 }
 
 .slideoutBack
@@ -252,11 +254,11 @@ a.textSidebox
 .sideboxDrop
 {
 position: relative;
-        left: -4px;
-        top: -4px;
-	border-bottom: 2px solid white;
-	border-left: 2px solid white;
-	border-right: 2px solid white;
+        left: 0px;
+        top: 0px;
+	border-bottom: 0px solid white;
+	border-left: 1px solid #9f9f9f;
+	border-right: 1px solid white;
 }
 
 .textSidebox:first-letter
@@ -266,7 +268,8 @@ position: relative;
 
 .sideboxSpace
 {
-	height:9px;
+	height:22px;
+	background-image: url(../images/botspacer.png);
 }
 
 /*
@@ -292,6 +295,14 @@ position: relative;
 	background-image: url(../images/shadowAlpha.png);
 }
 
+.menuOneBoxTwo
+{
+        position: relative;
+        left: 0;
+        text-align: left;
+}
+
+
 /*
 	Drop Shadow ***END***
 */
@@ -302,8 +313,9 @@ position: relative;
 
 #extraIcons
 {
+	background-image: url(../images/bmback.jpg);
 	background-color:#fbf8f1;
-	border:solid 2px white;
+	border:solid 2px #9f9f9f;
 	position: relative;
 	left: -4px;
 	top: -4px;
@@ -321,28 +333,30 @@ position: relative;
 
 .extraIconsRowIcon
 {
-	border-right: 1px solid #9f9f9f;
-	background-color: #a43434;
+	border-right: 0px solid #9f9f9f;
+	background-color: #d1d1d1;
 	width: 20px;
 	padding: 1px;
 }
 
 .extraIconsRow
 {
-        border-top:solid 1px #9f9f9f;
+        border-top:solid 0px #9f9f9f;
         padding:1px;
 	padding-left: 3px;
         font-size: 10px;
 	background-color: #fbf8f1;
+	background-image:url(../images/bmback2.jpg);
 }
 
 .extraIconsRow:hover
 {
-        border-top:solid 1px #9f9f9f;
+        border-top:solid 0px #9f9f9f;
         padding:1px;
 	padding-left: 3px;
         font-size: 10px;
 	background-color: #ede6d8;
+	background-image:url(../images/bmback.jpg);
 }
 
 /*
@@ -484,26 +498,28 @@ body {
 
 #divAppboxHeader
 {
-	background-image:url(../images/appTitleBar-bm.png);
-	height:23px;
+	background-image:url(../images/menuTitle-bm.png);
+	height:22px;
+	padding-top: 0px;
 	font-size:12px;
-	color: white;
+	font-weight: bold;
+	color: #666666;
 	text-align:center;
 	padding-bottom:0px;
-	border-top:solid 2px white;
-	border-left:solid 2px white;
-	border-right:solid 2px white;
-	border-bottom:solid 2px white;
+	border-top:solid 0px #9f9f9f;
+	border-left:solid 0px #9f9f9f;
+	border-right:solid 0px #9f9f9f;
+	border-bottom:solid 0px #9f9f9f;
 }
 
 #divAppbox
 {
 	background-image:url(../images/bmback2.jpg);
-	background-color:#fbf8f1;
+	background-color:#ffffff;
 	padding:5px;
-	border-bottom:solid 2px white;
-	border-left:solid 2px white;
-	border-right:solid 2px white;
+	border-bottom:solid 3px white;
+	border-left:solid 1px #9f9f9f;
+	border-right:solid 1px white;
 }
 
 /*
