@@ -109,7 +109,7 @@
 
 <!-- BEGIN extra_blocks_header -->
 <div class="divSidebox">
-<div class="menuOneBox">
+<div class="menuOneBoxTwo">
 	<div class="divSideboxHeader"><span>{lang_title}</span></div>
 	<div>
 		<table class="sideboxDrop" width="100%" cellspacing="0" cellpadding="0">
