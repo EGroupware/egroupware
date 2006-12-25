@@ -500,16 +500,19 @@
 		* Set a cookie
 		*
 		* @param string $cookiename name of cookie to be set
-		* @param string $cookievalue value to be used, if unset cookie is cleared (optional)
-		* @param int $cookietime when cookie should expire, 0 for session only (optional)
+		* @param string $cookievalue='' value to be used, if unset cookie is cleared (optional)
+		* @param int $cookietime=0 when cookie should expire, 0 for session only (optional)
+		* @param string $cookiepath=null optional path (eg. '/') if the eGW install-dir should not be used
 		*/
-		function egw_setcookie($cookiename,$cookievalue='',$cookietime=0)
+		function egw_setcookie($cookiename,$cookievalue='',$cookietime=0,$cookiepath=null)
 		{
 			if (!$this->cookie_domain || !$this->cookie_path)
 			{
 				$this->egw_set_cookiedomain();
 			}
-			setcookie($cookiename,$cookievalue,$cookietime,$this->cookie_path,$this->cookie_domain);
+			if (is_null($cookiepath)) $cookiepath = $this->cookie_path;
+
+			setcookie($cookiename,$cookievalue,$cookietime,$cookiepath,$this->cookie_domain);
 		}
 
 		/**
