@@ -199,7 +199,6 @@
 			return $s;
 		}
 
-		// return a array of installed languages
 		/**
 		 * return an array of installed languages
 		 *
@@ -216,9 +215,6 @@
 			return $installedLanguages;
 		}
 
-		// return the preferred language of the users
-		// it's using HTTP_ACCEPT_LANGUAGE (send from the users browser)
-		// and ...(to find out which languages are installed)
 		/**
 		 * return the preferred langugae of the users
 		 *
@@ -232,7 +228,6 @@
 			$supportedLanguages = $this->getInstalledLanguages();
 
 			// find usersupported language
-//			while (list($key,$value) = each($userLanguages))
 			foreach($userLanguages as $key => $value)
 			{
 				// remove everything behind '-' example: de-de
@@ -419,12 +414,12 @@
 				$firstname = $GLOBALS['egw_info']['user']['firstname'];
 				$lastname  = $GLOBALS['egw_info']['user']['lastname'];
 			}
-
+			$is_group = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g';
+			
 			if (empty($firstname)) $firstname = $lid;
-			if (empty($lastname))
+			if (empty($lastname) || $is_group)
 			{
-				$lastname  = $GLOBALS['egw']->accounts->get_type($accountid ? $accountid : $lid) == 'g' ?
-					lang('Group') : lang('User');
+				$lastname  = $is_group ? lang('Group') : lang('User');
 			}
 			$display = $GLOBALS['egw_info']['user']['preferences']['common']['account_display'];
 
