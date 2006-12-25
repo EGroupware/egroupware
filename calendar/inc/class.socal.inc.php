@@ -829,7 +829,7 @@ ORDER BY cal_user_type, cal_usre_id
 	 * set the status of one participant for a given recurrence or for all recurrences since now (includes recur_date=0)
 	 *
 	 * @param int $cal_id
-	 * @param char $user_type 'u' regular user
+	 * @param char $user_type 'u' regular user, 'r' resource, 'c' contact
 	 * @param int $user_id
 	 * @param int/char $status numeric status (defines) or 1-char code: 'R', 'U', 'T' or 'A'
 	 * @param int $recur_date=0 date to change, or 0 = all since now
