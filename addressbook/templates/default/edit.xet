@@ -76,7 +76,7 @@
 						<rows>
 							<row>
 								<description value="Name"/>
-								<textbox rows="1" cols="3" id="n_fn" no_lang="1" onclick="set_style_by_class('table','editname','display','inline'); document.getElementById(form::name('n_prefix')).focus();" size="36" span="2" class="cursorHand" readonly="true"/>
+								<textbox rows="1" cols="3" id="n_fn" no_lang="1" onclick="set_style_by_class('table','editname','display','inline'); document.getElementById(form::name('n_prefix')).focus();" size="-36" span="2" class="cursorHand" readonly="true"/>
 							</row>
 							<row>
 								<description/>
