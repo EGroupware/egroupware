@@ -954,14 +954,15 @@
 				case 'passwd' :
 				case 'text':		// size: [length][,maxLength[,preg]]
 					$cell_opts = explode(',',$cell_options,3);
-					if ($readonly && !$cell_opts[0])
+					if ($readonly && (int)$cell_opts[0] >= 0)
 					{
 						$html .= strlen($value) ? $this->html->bold($this->html->htmlspecialchars($value)) : '';
 					}
 					else
 					{
+						if ($cell_opts[0] < 0) $cell_opts[0] = abs($cell_opts[0]);
 						$html .= $this->html->input($form_name,$value,$type == 'passwd' ? 'password' : '',
-							$options.$this->html->formatOptions($cell_options,'SIZE,MAXLENGTH'));
+							$options.$this->html->formatOptions($cell_opts,'SIZE,MAXLENGTH'));
 
 						if (!$readonly)
 						{
