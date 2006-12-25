@@ -72,7 +72,6 @@ a:hover,a:active
 body 
 {
 	background-image:url(../images/body-background.png);
-	padding:3px;
 }
 
 form
@@ -234,13 +233,15 @@ a.textSidebox
 
 body {
 	padding: 0px;
+	margin: 0px;
 }
 
-#divMain
+#divMain,#loginMainDiv
 {
-	background-color:white;
-	padding:9px;
-	border:solid 1px #7e7e7e;
+	background-color: white;
+	padding: 8px;
+	margin: 8px;
+	border: solid 1px #7e7e7e;
 }
 
 #divLogo
@@ -375,4 +376,31 @@ body {
 .portal_box_header {
 	height: 15px; 
 	padding-top: 0px;
+}
+
+/*
+	Login page
+*/
+#loginMainDiv {
+	padding-top: 24px;
+	height: 640px;	/* 95% does not work */
+	position: relative;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-image: url(../images/login-background.jpg);
+}
+#loginScreenMessage {
+	text-align: center;
+	padding: 10px;
+}
+#loginCdMessage {
+	text-align: center;
+	padding-bottom: 10px;
+	color: red;
+	font-style: italic;
+}
+.divLoginboxHeader {
+	text-align: center;
+	border: #9c9c9c 1px solid;	/* does NOT work */
+	padding: 0px;
 }

@@ -1,14 +1,6 @@
 
 <!-- BEGIN form -->
-<body bgcolor="#ffffff">
-<a href="http://www.egroupware.org"><img src="phpgwapi/templates/idots/images/logo.png" alt="eGroupWare" border="0"></a>
+<a href="http://www.egroupware.org"><img src="phpgwapi/templates/idots/images/logo.png" alt="eGroupWare" border="0" /></a>
 
-<table border="0" width="100%">
- <tr>
-  <td align="center">
-    {deny_msg}
-  </td>
- </tr>
-</table>
-
+<h1 style="text-align: center;">{deny_msg}</h1>
 <!-- END form -->

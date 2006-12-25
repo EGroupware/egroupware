@@ -131,6 +131,27 @@ class egw_framework
 	}
 	
 	/**
+	 * displays a login screen
+	 *
+	 * @string $extra_vars for login url
+	 * @return string
+	 */
+	function login_screen($extra_vars)
+	{
+		die('virtual, need to be reimplemented in the template!!!');
+	}
+	
+	/**
+	 * displays a login denied message
+	 *
+	 * @return string
+	 */
+	function denylogin_screen()
+	{
+		die('virtual, need to be reimplemented in the template!!!');
+	}
+	
+	/**
 	 * Get footer as array to eg. set as vars for a template (from idots' head.inc.php)
 	 *
 	 * @internal PHP5 protected

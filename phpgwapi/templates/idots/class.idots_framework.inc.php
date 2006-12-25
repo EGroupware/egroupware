@@ -197,6 +197,190 @@ class idots_framework extends egw_framework
 	}
 	
 	/**
+	 * displays a login screen
+	 *
+	 * @param string $extra_vars for login url
+	 */
+	function login_screen($extra_vars)
+	{
+		$tmpl =& new Template($GLOBALS['egw_info']['server']['template_dir']);
+		if (!is_object($GLOBALS['egw']->html))
+		{
+			require_once(EGW_API_INC.'/class.html.inc.php');
+			$GLOBALS['egw']->html = new html;
+		}
+		$tmpl->set_file(array('login_form' => 'login.tpl'));
+		
+		$tmpl->set_var('lang_message',$GLOBALS['loginscreenmessage']);
+		
+		$last_loginid = $_COOKIE['last_loginid'];
+		
+		if($GLOBALS['egw_info']['server']['show_domain_selectbox'])
+		{
+			foreach($GLOBALS['egw_domain'] as $domain => $data)
+			{
+				$domains[$domain] = $domain;
+			}
+			$tmpl->set_var(array(
+				'lang_domain'   => lang('domain'),
+				'select_domain' => $GLOBALS['egw']->html->select('logindomain',$_COOKIE['last_domain'],$domains,true),
+			));
+		}
+		else
+		{
+			/* trick to make domain section disapear */
+			$tmpl->set_var('domain_selection',$GLOBALS['egw_info']['user']['domain'] ? 
+				$GLOBALS['egw']->html->input_hidden('logindomain',$GLOBALS['egw_info']['user']['domain']) : '');
+
+			if($last_loginid !== '')
+			{
+				reset($GLOBALS['egw_domain']);
+				list($default_domain) = each($GLOBALS['egw_domain']);
+				
+				if($_COOKIE['last_domain'] != $default_domain && !empty($_COOKIE['last_domain']))
+				{
+					$last_loginid .= '@' . $_COOKIE['last_domain'];
+				}
+			}
+		}
+		
+		require_once(EGW_API_INC.'/class.config.inc.php');
+		$cnf_reg =& new config('registration');
+		$cnf_reg->read_repository();
+		$config_reg = $cnf_reg->config_data;
+		unset($cnf_reg);
+
+		if($config_reg['enable_registration'] == 'True')
+		{
+			if ($config_reg['register_link'] == 'True')
+			{
+				$reg_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','lang_code='.$_GET['lang']). '">'.lang('Not a user yet? Register now').'</a><br/>';
+			}
+			if ($config_reg['lostpassword_link'] == 'True')
+			{
+				$lostpw_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.uireg.lostpw_step1_ask_login&lang_code='.$_GET['lang']). '">'.lang('Lost password').'</a><br/>';
+			}
+			if ($config_reg['lostid_link'] == 'True')
+			{
+				$lostid_link='&nbsp;<a href="'. $GLOBALS['egw']->link('/registration/index.php','menuaction=registration.uireg.lostid_step1_ask_email&lang_code='.$_GET['lang']). '">'.lang('Lost Login Id').'</a><br/>';
+			}
+			
+			/* if at least one option of "registration" is activated display the registration section */
+			if($config_reg['register_link'] == 'True' || $config_reg['lostpassword_link'] == 'True' || $config_reg['lostid_link'] == 'True')
+			{
+				$tmpl->set_var(array(
+					'register_link'     => $reg_link,
+					'lostpassword_link' => $lostpw_link,
+					'lostid_link'       => $lostid_link,
+				));
+			}
+			else
+			{
+				/* trick to make registration section disapear */
+				$tmpl->set_block('login_form','registration');
+				$tmpl->set_var('registration','');
+			}
+		}
+		
+		$tmpl->set_var('login_url', $GLOBALS['egw_info']['server']['webserver_url'] . '/login.php' . $extra_vars);
+		$tmpl->set_var('version',$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+		$tmpl->set_var('cd',check_logoutcode($_GET['cd']));
+		$tmpl->set_var('cookie',$last_loginid);
+		
+		$tmpl->set_var('lang_username',lang('username'));
+		$tmpl->set_var('lang_password',lang('password'));
+		$tmpl->set_var('lang_login',lang('login'));
+		
+		$tmpl->set_var('website_title', $GLOBALS['egw_info']['server']['site_title']);
+		$tmpl->set_var('template_set',$this->template);
+		
+		if (substr($GLOBALS['egw_info']['server']['login_logo_file'],0,4) == 'http')
+		{
+			$var['logo_file'] = $GLOBALS['egw_info']['server']['login_logo_file'];
+		}
+		else
+		{
+			$var['logo_file'] = $GLOBALS['egw']->common->image('phpgwapi',$GLOBALS['egw_info']['server']['login_logo_file']?$GLOBALS['egw_info']['server']['login_logo_file']:'logo');
+		}
+		$var['logo_url'] = $GLOBALS['egw_info']['server']['login_logo_url']?$GLOBALS['egw_info']['server']['login_logo_url']:'http://www.eGroupWare.org';
+		if (substr($var['logo_url'],0,4) != 'http')
+		{
+			$var['logo_url'] = 'http://'.$var['logo_url'];
+		}
+		$var['logo_title'] = $GLOBALS['egw_info']['server']['login_logo_title']?$GLOBALS['egw_info']['server']['login_logo_title']:'www.eGroupWare.org';
+		$tmpl->set_var($var);
+		
+		/* language section if activated in site config */
+		if (@$GLOBALS['egw_info']['server']['login_show_language_selection'])
+		{
+			$tmpl->set_var(array(
+				'lang_language' => lang('Language'),
+				'select_language' => $GLOBALS['egw']->html->select('lang',$GLOBALS['egw_info']['user']['preferences']['common']['lang'],
+					$GLOBALS['egw']->translation->get_installed_langs(),true),
+			));
+		}
+		else
+		{
+			$tmpl->set_block('login_form','language_select');
+			$tmpl->set_var('language_select','');
+		}
+		
+		/********************************************************\
+		* Check if authentification via cookies is allowed       *
+		* and place a time selectbox, how long cookie is valid   *
+		\********************************************************/
+		
+		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
+		{
+			$tmpl->set_block('login_form','remember_me_selection');
+			$tmpl->set_var('lang_remember_me',lang('Remember me'));
+			$tmpl->set_var('select_remember_me',$GLOBALS['egw']->html->select('remember_me', 'forever', array(
+				false => lang('not'),
+				'1hour' => lang('1 Hour'),
+				'1day' => lang('1 Day'),
+				'1week'=> lang('1 Week'),
+				'1month' => lang('1 Month'),
+				'forever' => lang('Forever'),
+			),true));
+		}
+		else
+		{
+			/* trick to make remember_me section disapear */
+			$tmpl->set_block('login_form','remember_me_selection');
+			$tmpl->set_var('remember_me_selection','');
+		}
+		$tmpl->set_var('autocomplete', ($GLOBALS['egw_info']['server']['autocomplete_login'] ? 'autocomplete="off"' : ''));
+		
+		if (!is_object($GLOBALS['egw']->js))
+		{
+			require_once(EGW_API_INC.'/class.javascript.inc.php');
+			$GLOBALS['egw']->js = new javascript();
+		}
+		$GLOBALS['egw']->js->set_onload('document.login_form.login.focus();');
+		
+		$this->render($tmpl->fp('loginout','login_form'),false,false);
+	}
+	
+	/**
+	 * displays a login denied message
+	 */
+	function denylogin_screen()
+	{
+		$tmpl =& new Template($GLOBALS['egw_info']['server']['template_dir']);
+		
+		$tmpl->set_file(array(
+			'login_form' => 'login_denylogin.tpl'
+		));
+		
+		$tmpl->set_var(array(
+			'template_set' => 'default',
+			'deny_msg'     => lang('Oops! You caught us in the middle of system maintainance.').
+				'<br />'.lang('Please, check back with us shortly.'),
+		));
+		$this->render($tmpl->fp('loginout','login_form'),false,false);
+	}	
+	
+	/**
 	 * Get navbar as array to eg. set as vars for a template (from idots' navbar.inc.php)
 	 * 
 	 * Reimplemented so set the vars for the navbar itself (uses $this->tpl and the blocks a and b)
@@ -220,7 +404,8 @@ class idots_framework extends egw_framework
 
 		if($GLOBALS['egw_info']['user']['userid'] == 'anonymous')
 		{
-			$cnf_reg =& CreateObject('phpgwapi.config','registration');
+			require_once(EGW_API_INC.'/class.config.inc.php');
+			$cnf_reg =& new config('registration');
 			$cnf_reg->read_repository();
 			$config_reg = $cnf_reg->config_data;
 			unset($cnf_reg);
