@@ -1357,7 +1357,8 @@ class uiviews extends uical
 			{
 				foreach($event['participants'] as $sort => $status)
 				{
-					if (isset($sort2label[$sort]))
+					// only show if participant has not rejected or user wants to see rejections
+					if (isset($sort2label[$sort]) && ($status != 'R' || $this->bo->cal_prefs['show_rejected']))
 					{
 						$rows[$sort][] =& $events[$key];
 					}
