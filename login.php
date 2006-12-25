@@ -19,7 +19,6 @@
 		'disable_Template_class'  => True,
 		'login'                   => True,
 		'currentapp'              => 'login',
-		'noheader'                => True
 	));
 
 	if(file_exists('./header.inc.php'))
@@ -35,26 +34,25 @@
 	{
 		Header('Location: setup/index.php');
 		exit;
-	 }
+	}
 	$GLOBALS['egw_info']['server']['template_dir'] = EGW_SERVER_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['login_template_set'];
-	$tmpl = CreateObject('phpgwapi.Template', $GLOBALS['egw_info']['server']['template_dir']);
 	
 	// read the images from the login-template-set, not the (maybe not even set) users template-set
 	$GLOBALS['egw_info']['user']['preferences']['common']['template_set'] = $GLOBALS['egw_info']['login_template_set'];
 
-	if(is_file($GLOBALS['egw_info']['server']['template_dir'].'/login.inc.php'))
+	$class = $GLOBALS['egw_info']['login_template_set'].'_framework';
+	if(!file_exists($framework = $GLOBALS['egw_info']['server']['template_dir'].'/class.'.$class.'.inc.php'))
 	{
-	   include($GLOBALS['egw_info']['server']['template_dir'].'/login.inc.php');
+		$framework = EGW_SERVER_ROOT . '/phpgwapi/templates/idots/class.'.($class='idots_framework').'.inc.php';
 	}
-	else
-	{
-	   include(EGW_SERVER_ROOT . '/phpgwapi/templates/idots/login.inc.php');
-	}
+	require_once($framework);
+	$GLOBALS['egw']->framework = new $class($GLOBALS['egw_info']['login_template_set']);
+	unset($framework); unset($class);
 
 	// This is used for system downtime, to prevent new logins.
 	if($GLOBALS['egw_info']['server']['deny_all_logins'])
 	{
-	   login_parse_denylogin();
+	   echo $GLOBALS['egw']->framework->denylogin_screen();
 	   exit;
 	}
 
@@ -158,7 +156,7 @@
 	   if(getenv('REQUEST_METHOD') != 'POST' && $_SERVER['REQUEST_METHOD'] != 'POST' &&
 	   !isset($_SERVER['PHP_AUTH_USER']) && !isset($_SERVER['SSL_CLIENT_S_DN']))
 	   {
-		  $GLOBALS['egw']->session->egw_setcookie('eGW_remember');
+		  $GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 		  $GLOBALS['egw']->redirect($GLOBALS['egw']->link('/login.php','cd=5'));
 	   }
 		#if(!isset($_COOKIE['eGroupWareLoginTime']))
@@ -200,7 +198,7 @@
 
 		if(!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			$GLOBALS['egw']->session->egw_setcookie('eGW_remember');
+			$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 			$GLOBALS['egw']->redirect($GLOBALS['egw_info']['server']['webserver_url'] . '/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
 		}
 		else
@@ -231,7 +229,7 @@
 					'login' => $login,
 					'passwd' => $passwd,
 					'passwd_type' => $passwd_type)),
-					$remember_time);
+					$remember_time,'/');	// make the cookie valid for the whole site (incl. sitemgr) and not only the eGW install-dir
 			}
 
 			if ($_POST['lang'] && preg_match('/^[a-z]{2}(-[a-z]{2}){0,1}$/',$_POST['lang']) &&
@@ -322,7 +320,7 @@
 		   // for now store login message in globals so it is available for the login.inc.php
 		   $GLOBALS['loginscreenmessage']=stripslashes(lang('loginscreen_message'));
 		}
-	 }
+	}
 
 	foreach($_GET as $name => $value)
 	{
@@ -337,11 +335,4 @@
 		$extra_vars = '?' . substr($extra_vars,1);
 	}
 
-	/********************************************************\
-	* Check is the registration app is installed, activated  *
-	* And if the register link must be placed                *
-	\********************************************************/
-
-	parse_login_screen($extra_vars);
-
-?>
+	$GLOBALS['egw']->framework->login_screen($extra_vars);
