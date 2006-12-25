@@ -154,7 +154,7 @@
 				$this->acl();
 			}
 			$acl_acc_list = $GLOBALS['egw']->accounts->memberships($this->account_id,true);
- 			array_unshift($acl_acc_list,$this->account_id); 
+ 			@array_unshift($acl_acc_list,$this->account_id); 
 			$this->db->select($this->table_name,'*',array('acl_account' => $acl_acc_list ),__LINE__,__FILE__); 
  
 			$this->data = Array();
