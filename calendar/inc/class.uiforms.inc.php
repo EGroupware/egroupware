@@ -342,6 +342,8 @@ class uiforms extends uical
 			unset($event['modified']);
 			unset($event['modifier']);
 			$event['owner'] = !(int)$this->owner || !$this->bo->check_perms(EGW_ACL_ADD,0,$this->owner) ? $this->user : $this->owner;
+			$event['participants'] = array($event['owner']=>'A');
+			$event['participant_types'] = array('u'=>$event['participants']);
 			$preserv['view'] = $preserv['edit_single'] = false;
 			$msg = lang('Event copied - the copy can now be edited');
 			$event['title'] = lang('Copy of:').' '.$event['title'];
