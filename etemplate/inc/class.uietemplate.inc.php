@@ -981,7 +981,7 @@
 				case 'textarea':	// Multiline Text Input, size: [rows][,cols]
 					if ($readonly && !$cell_options)
 					{
-						$html .= '<pre style="margin-top: 0px;">'.$this->html->htmlspecialchars($value)."</pre>\n";
+						$html .= '<div>'.nl2br($this->html->htmlspecialchars($value))."</div>\n";
 					}
 					else
 					{
