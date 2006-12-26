@@ -200,6 +200,7 @@ last	etemplate	sk	Posledné
 left	etemplate	sk	Vµavo
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	sk	då¾ka pre char+varchar, presnos» celoèís: 2, 4, 8 a pláv.èiar: 4, 8
 link	etemplate	sk	Odkaz
+linkapps	etemplate	sk	Aplikácia odkazu
 linkentry	etemplate	sk	Záznam o odkaze
 linklist	etemplate	sk	Zoznam odkazov
 linkstring	etemplate	sk	Re»azec odkazu

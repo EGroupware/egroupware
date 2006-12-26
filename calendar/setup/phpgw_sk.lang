@@ -131,6 +131,7 @@ group public only	calendar	sk	Prístupné iba pre skupinu
 groupmember(s) %1 not included, because you have no access.	calendar	sk	Èlenovia skupiny %1 neboli zahrnutí, preto¾e nemáte prístup.
 h	calendar	sk	h
 here is your requested alarm.	calendar	sk	Vami vy¾iadaná pripomienka.
+hide private infos	calendar	sk	Skry» súkromné informácie
 high priority	calendar	sk	vysoká priorita
 holiday	calendar	sk	Sviatky
 holiday management	calendar	sk	Správa sviatkov

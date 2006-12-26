@@ -15,10 +15,11 @@ description can not exceed 255 characters in length !	preferences	ru	Описание не
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	ru	Какой временной формат вы предпочитаете 24 часовой или 12 часовой.
 enter your new password	preferences	ru	Введите новый пароль
 help off	preferences	ru	Убрать подсказки
-how should phpgroupware display dates for you.	preferences	ru	Как eGroupware будет отображать дату
+how should egroupware display dates for you.	preferences	ru	Как eGroupWare должен отображать дату.
 icons and text	preferences	ru	Иконки и текст
 icons only	preferences	ru	только иконки
 language	preferences	ru	Язык
+please, select a new theme	preferences	ru	Выберите новую тему
 re-enter your password	preferences	ru	Введите пароль еще раз
 show navigation bar as	preferences	ru	Отображать строку навигации как
 text only	preferences	ru	Только текст
@@ -26,6 +27,6 @@ the two passwords are not the same	preferences	ru	Два пароля не одинаковы
 this server is located in the %1 timezone	preferences	ru	Данный сервер расположен во временной зоне %1
 time format	preferences	ru	Формат времени
 use default	preferences	ru	использовать по умолчанию
-which currency symbol or name should be used in phpgroupware.	preferences	ru	Какой символ или название валюты должно использоваться в eGroupWare.
 you must enter a password	preferences	ru	Вы должны ввести пароль
+your current theme is: %1	preferences	ru	Ваша текущая тема: %1
 your preferences	preferences	ru	Ваши Настройки

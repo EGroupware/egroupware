@@ -263,6 +263,7 @@ startrecord	infolog	sl	Začetni zapis
 status	infolog	sl	Status
 status ...	infolog	sl	Status ...
 sub	infolog	sl	Podrejeni
+sub-entries become subs of the parent or main entries, if there's no parent	infolog	sl	Podrejeni vnosi postanejo podrejeni staršu ali glavnemu vnosu, če ni starša
 subject	infolog	sl	Predmet
 task	infolog	sl	Opravila
 test import (show importable records <u>only</u> in browser)	infolog	sl	Test uvoza (pokaži pomemebmne zapise <u>samo</u> v brskalniku)

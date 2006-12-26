@@ -170,6 +170,7 @@ cook islands	common	pt-br	ILHAS COOK
 copy	common	pt-br	Copiar
 copy table row	tinymce	pt-br	Copiar linha da tabela
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	pt-br	Copiar/Recortar/Colar não está disponível no Mozilla e Firefox.\nVocê quer mais informações a respeito?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	pt-br	Copiar/Recortar/Colar não está disponível no Mozilla e Firefox.\nVocê quer mais informações a respeito?
 costa rica	common	pt-br	COSTA RICA
 cote d ivoire	common	pt-br	COTE D IVOIRE
 could not contact server. operation timed out!	common	pt-br	Tentativa de contactar servidor falhou. Tempo limite de operação estourou.
@@ -497,9 +498,9 @@ new main category	common	pt-br	Nova categoria principal
 new value	common	pt-br	Novo Valor
 new zealand	common	pt-br	NOVA ZELÂNDIA
 next	common	pt-br	Próximo
-next month (hold for menu)	jscalendar	pt-br	Próximo Mês (congele para o menú)
+next month (hold for menu)	jscalendar	pt-br	Próximo Mês
 next page	common	pt-br	Próxima página
-next year (hold for menu)	jscalendar	pt-br	Próximo Ano (congele para o menú)
+next year (hold for menu)	jscalendar	pt-br	Próximo Ano
 nicaragua	common	pt-br	NICARAGUA
 niger	common	pt-br	NIGER
 nigeria	common	pt-br	NIGERIA
@@ -605,8 +606,8 @@ powered by egroupware version %1	common	pt-br	Atualizado pela <a href="http://ww
 powered by phpgroupware version %1	common	pt-br	Desenvolvido por eGroupWare versão %1
 preferences	common	pt-br	Preferências
 preferences for the idots template set	common	pt-br	Preferências para o modelo de layout Idots
-prev. month (hold for menu)	jscalendar	pt-br	Mês anterior (congele para o menú)
-prev. year (hold for menu)	jscalendar	pt-br	Ano anterior (congele para o menú)
+prev. month (hold for menu)	jscalendar	pt-br	Mês anterior
+prev. year (hold for menu)	jscalendar	pt-br	Ano anterior
 preview	tinymce	pt-br	Visualizar
 previous page	common	pt-br	Página anterior
 primary style-sheet:	common	pt-br	Estilho de folha primário:
@@ -828,6 +829,7 @@ virgin islands, british	common	pt-br	ILHAS VIRGENS (ING)
 virgin islands, u.s.	common	pt-br	ILHAS VIRGENS (EUA)
 wallis and futuna	common	pt-br	WALLIS E FUTUNA
 warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	pt-br	Cuidado!\n Renomear ou mover pastas e arquivos invalidará links em seus documentos. Continuar?
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	pt-br	Cuidado!\n Renomear ou mover pastas e arquivos invalidará links em seus documentos. Continuar?
 wednesday	common	pt-br	Quarta
 welcome	common	pt-br	Bem Vindo
 western sahara	common	pt-br	WESTERN SAHARA
@@ -860,7 +862,7 @@ your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível 
 your message has been sent	common	pt-br	Sua mensagem foi enviada.
 your search returned %1 matchs	common	pt-br	Sua pesquisa retornou %1 ocorrências
 your search returned 1 match	common	pt-br	Sua pesquisa retornou 1 ocorrência
-your session could not be verified.	login	pt-br	Sua sessão expirou
+your session could not be verified.	login	pt-br	Sua sessão não pôde ser verificada
 your settings have been updated	common	pt-br	Suas preferências foram atualizadas
 yugoslavia	common	pt-br	IUGOSLÁVIA
 zambia	common	pt-br	ZÂMBIA

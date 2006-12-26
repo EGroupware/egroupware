@@ -55,6 +55,7 @@ business zip code	addressbook	pt-br	CEP
 calendar uri	addressbook	pt-br	URI do Agenda
 can be changed via setup >> configuration	admin	pt-br	Pode ser alterado via Setup >> Configuração
 car phone	addressbook	pt-br	Telefone no veículo
+categories, notes, ...	addressbook	pt-br	Categorias, Notas, ...
 cell phone	addressbook	pt-br	Telefone celular
 change all organisation members	addressbook	pt-br	Alterar todos os membros da organização
 charset for the csv export	addressbook	pt-br	Códificação de caracteres para a exportação CSV
@@ -139,11 +140,13 @@ fieldseparator	addressbook	pt-br	Separador de campos
 for read only ldap	admin	pt-br	para LDAP somente leitura
 freebusy uri	addressbook	pt-br	URI para disponbilidade
 full name	addressbook	pt-br	Nome Completo
+general	addressbook	pt-br	Geral
 geo	addressbook	pt-br	GEO
 global categories	addressbook	pt-br	Categorias Globais
 grant addressbook access	common	pt-br	Permitir acesso aos Contatos
 group %1	addressbook	pt-br	Grupo %1
 home address	addressbook	pt-br	Endereço residencial
+home address, birthday, ...	addressbook	pt-br	Endereço residencial, Aniversário, ...
 home city	addressbook	pt-br	Cidade
 home country	addressbook	pt-br	País
 home email	addressbook	pt-br	E-mail pessoal
@@ -174,12 +177,15 @@ ldap host for contacts	admin	pt-br	servidor LDAP para contatos
 ldap settings for contacts	admin	pt-br	Configurações LDAP para contatos
 ldif	addressbook	pt-br	LDIF
 line 2	addressbook	pt-br	Linha 2
+link title for contacts show	addressbook	pt-br	Título link para exibição dos contatos
 links	addressbook	pt-br	Links
 list all categories	addressbook	pt-br	Listar todas as categorias
 list all customfields	addressbook	pt-br	Listas todos os campos personalizados
 load vcard	addressbook	pt-br	Carregar VCard
 locations	addressbook	pt-br	Localizações
 mark records as private	addressbook	pt-br	Marcar registos como particulares
+merge into first or account, deletes all other!	addressbook	pt-br	Mesclar na primeira conta, deletar o restante!
+merged	addressbook	pt-br	mesclado
 message phone	addressbook	pt-br	Telefone para recado
 middle name	addressbook	pt-br	Nome do meio
 migration finished	addressbook	pt-br	Migração concluída
@@ -190,6 +196,7 @@ modem phone	addressbook	pt-br	Telefone de Dados (Modem)
 more ...	addressbook	pt-br	Mais...
 moved	addressbook	pt-br	movido
 multiple vcard	addressbook	pt-br	Múltiplo VCard
+name, address	addressbook	pt-br	Nome, Endereço
 no vcard	addressbook	pt-br	Nenhum VCard
 number	addressbook	pt-br	Número
 number of records to read (%1)	addressbook	pt-br	Número de registros a ler (%1)
@@ -264,6 +271,7 @@ type	addressbook	pt-br	Tipo
 update a single entry by passing the fields.	addressbook	pt-br	Atualizar uma única entrada informando os campos
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
 url to link telephone numbers to (use %1 for the number)	admin	pt-br	URL para linkar números de telefones (usar %1 para o número)
+use an extra category tab?	addressbook	pt-br	Usar uma tab extra para categoria ?
 use country list	addressbook	pt-br	Usar lista de países
 use setup for a full account-migration	admin	pt-br	usar setup para uma migração de contas completa
 used for links and for the own sorting of the list	addressbook	pt-br	usado para links e para a ordem própria da lista

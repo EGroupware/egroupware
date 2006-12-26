@@ -131,6 +131,7 @@ group public only	calendar	nl	Alleen group publiek
 groupmember(s) %1 not included, because you have no access.	calendar	nl	Groepslid(-leden) %1 niet meegenomen omdat je geen toegang hebt.
 h	calendar	nl	h
 here is your requested alarm.	calendar	nl	Hier is uw verzochte alarm.
+hide private infos	calendar	nl	Privé informatie verbergen
 high priority	calendar	nl	hoge prioriteit
 holiday	calendar	nl	Vakantie
 holiday management	calendar	nl	Feestdagenbeheer
@@ -176,7 +177,6 @@ no filter	calendar	nl	Geen filter
 no matches found	calendar	nl	Geen resultaten gevonden
 no response	calendar	nl	Niet gereageerd
 non blocking	calendar	nl	niet blokkerend
-not	calendar	nl	niet
 notification messages for added events	calendar	nl	Notificatieberichten voor toegevoegde afspraken
 notification messages for canceled events	calendar	nl	Notificatieberichten voor geannuleerde afspraken
 notification messages for disinvited participants	calendar	nl	Notificatieberichten voor deelnemers waarvan de uitnodiging is ingetrokken
@@ -249,7 +249,6 @@ show list of upcoming events	calendar	nl	Lijst weergeven van toekomstige afsprak
 show this month	calendar	nl	toon deze maand
 show this week	calendar	nl	toon deze week
 single event	calendar	nl	enkele afspraak
-site configuration	calendar	nl	site configuratie
 start	calendar	nl	Begin
 start date/time	calendar	nl	Begindatum/ -tijd
 startdate / -time	calendar	nl	Begindatum / -tijd

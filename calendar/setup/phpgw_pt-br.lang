@@ -131,6 +131,7 @@ group public only	calendar	pt-br	Grupo público somente
 groupmember(s) %1 not included, because you have no access.	calendar	pt-br	Membro(s) %1 não incluído(s), pois você não tem acesso.
 h	calendar	pt-br	h
 here is your requested alarm.	calendar	pt-br	Aqui está o alarme solicitado
+hide private infos	calendar	pt-br	Ocultar informações privadas
 high priority	calendar	pt-br	Alta prioridade
 holiday	calendar	pt-br	Feriado
 holiday management	calendar	pt-br	Gerenciamento de Feriados

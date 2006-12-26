@@ -177,6 +177,7 @@ height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@da
 height of the table in % or pixels for the table-tag and (optional) div	etemplate	nl	Hoogte van de tabel in % of pixels voor de table-tag en (optionele) div
 height, disabled	etemplate	nl	Hoogte, uitgeschakeld
 help	etemplate	nl	Help
+history log	etemplate	nl	Historie log
 horizontal rule	etemplate	nl	Horizontale lijn
 hour	etemplate	nl	Uur
 hours	etemplate	nl	uren
@@ -212,6 +213,7 @@ last	etemplate	nl	Laatste
 left	etemplate	nl	Links
 length for char+varchar, precisions int: 2, 4, 8 and float: 4, 8	etemplate	nl	lengte voor char+varchar, precisie integer 2,4,8 en decimalen 4,8
 link	etemplate	nl	Link
+linkapps	etemplate	nl	Linktoepassingen
 linkentry	etemplate	nl	Linkitem
 linklist	etemplate	nl	Linklijst
 linkstring	etemplate	nl	LinkString

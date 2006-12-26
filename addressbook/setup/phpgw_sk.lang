@@ -53,6 +53,7 @@ business zip code	addressbook	sk	PSÈ
 calendar uri	addressbook	sk	URI Kalendára
 can be changed via setup >> configuration	admin	sk	Dá sa zmeni» cez Setup -> Konfigurácia
 car phone	addressbook	sk	Telefón do auta
+categories, notes, ...	addressbook	sk	Kategórie, Poznámky,...
 cell phone	addressbook	sk	Mobil
 change all organisation members	addressbook	sk	zmeni» v¹etkých èlenov organizácie
 charset for the csv export	addressbook	sk	Znaková sada pre export CSV
@@ -136,11 +137,13 @@ fieldseparator	addressbook	sk	Oddeµovaè polí
 for read only ldap	admin	sk	pre LDAP iba na èítanie
 freebusy uri	addressbook	sk	URI pre zaneprázdnenos»
 full name	addressbook	sk	Celé meno
+general	addressbook	sk	Základné
 geo	addressbook	sk	GEO
 global categories	addressbook	sk	Globálne kategórie
 grant addressbook access	common	sk	Deleguj práva pre pøístup k Adresáru
 group %1	addressbook	sk	Skupina %1
 home address	addressbook	sk	Adresa -domov
+home address, birthday, ...	addressbook	sk	Adresa domov, sviatky,...
 home city	addressbook	sk	Mesto - domov
 home country	addressbook	sk	Krajina - domov
 home email	addressbook	sk	E-mail - domov
@@ -188,6 +191,7 @@ modem phone	addressbook	sk	Èíslo na modem
 more ...	addressbook	sk	Viac ...
 moved	addressbook	sk	Presunuté
 multiple vcard	addressbook	sk	Viacero vizitiek VCard
+name, address	addressbook	sk	Meno, Adresa
 no vcard	addressbook	sk	®iadna vizitka
 number	addressbook	sk	Èíslo
 number of records to read (%1)	addressbook	sk	Poèet záznamov k naèítaniu (%1)
@@ -261,6 +265,7 @@ type	addressbook	sk	Typ
 update a single entry by passing the fields.	addressbook	sk	Zmeni» jednotlivý záznam zadaním polo¾iek.
 upload or delete the photo	addressbook	sk	Nahra» alebo vymaza» túto fotku
 url to link telephone numbers to (use %1 for the number)	admin	sk	URL na vytvorenie odkazu na telefónne èísla (pou¾ite %1 pre èíslo)
+use an extra category tab?	addressbook	sk	Pou¾i» extra kartu kategórie?
 use country list	addressbook	sk	Pou¾i» zoznam krajín
 use setup for a full account-migration	admin	sk	Pre plnú migráciu úètov pou¾ite Setup
 used for links and for the own sorting of the list	addressbook	sk	Pou¾íva sa pre odkazy a vlastné spôsoby triedenia zoznamu

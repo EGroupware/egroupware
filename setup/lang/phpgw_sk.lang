@@ -253,6 +253,7 @@ header password	setup	sk	Heslo pre hlavièky
 header username	setup	sk	Pou¾ívateµské meno pre hlavièky
 header.inc.php successful written.	setup	sk	header.inc.php bol úspe¹ne zapísaný
 historylog removed	setup	sk	Záznam histórie odstránený
+host information	setup	sk	Informácie o stroji
 host/ip domain controler	setup	sk	Názov/IP radièa domény
 hostname/ip of database server	setup	sk	Názov/IP databázového servera
 hour (0-24)	setup	sk	hodina (0-24)
@@ -490,6 +491,7 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	sk	súbor
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sk	Prvým krokom pri in¹talácii eGroupWare je kontrola, èi va¹e prostredie obsahuje v¹etky nevyhnutné nastavenia pre správny chod aplikácie.
 the following applications need to be upgraded:	setup	sk	Nasledovné aplikácie potrebujú aktualizáciu:
+the function %1 is needed from: %2.	setup	sk	Funkcia %1 je vy¾adovaná od: %2.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	Roz¹írenie mbstring je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	mbstring.func_overload = 7 je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the session extension is needed to use php sessions (db-sessions work without).	setup	sk	Roz¹írenie sedenia je potrebné pre pou¾itie php sedení (db sedenia fungujú aj bez neho).

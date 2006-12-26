@@ -148,6 +148,7 @@ contacting server...	common	sk	Pripájam sa na Server...
 copy	common	sk	Kopírova»
 copy table row	tinymce	sk	Kopírova» riadok tabuµky
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	sk	Funkcie Kopírova»/Vystrihnú»/Vlo¾i» nie sú dostupné v prehliadaèoch Mozilla (vrátane Firefox).\nChcete sa o tomto probléme dozvedie» viac?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	sk	Funkcie Kopírova»/Vystrihnú»/Vlo¾i» nie sú dostupné v prehliadaèoch Mozilla (vrátane Firefox).\nChcete sa o tomto probléme dozvedie» viac?
 could not contact server. operation timed out!	common	sk	Nedá sa pripoji» na server. Èas operácie vypr¹al!
 create	common	sk	Vytvori»
 created by	common	sk	Vytvoril
@@ -364,6 +365,7 @@ korea, democratic peoples republic of	common	sk	KÓREJSKÁ ¥UDOVODEMOKRATICKÁ REPU
 korea, republic of	common	sk	KÓREJSKÁ REPUBLIKA
 kuwait	common	sk	KUVAJT
 language	common	sk	Jazyk
+language_direction_rtl	common	sk	orientácia_jazyka_sprava_doµava
 last name	common	sk	Priezvisko
 last name of the user, eg. "%1"	common	sk	priezvisko pou¾ívateµa, napr. "%1"
 last page	common	sk	posledná stránka
@@ -724,6 +726,7 @@ vertical alignment	tinymce	sk	Zvislé zarovnanie
 viet nam	common	sk	VIETNAM
 view	common	sk	Zobrazi»
 warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	sk	Pozor!\n Premenovanie alebo presun prieèinkov a súborov poru¹í existujúce odkazy vo va¹ich dokumentoch. Pokraèova»?
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	sk	Pozor!\n Premenovanie alebo presun prieèinkov a súborov poru¹í existujúce odkazy vo va¹ich dokumentoch. Pokraèova»?
 wednesday	common	sk	Streda
 welcome	common	sk	Vitajte
 what color should all the blank space on the desktop have	common	sk	Akú farbu má ma» v¹etok prázdny priestor na desktope

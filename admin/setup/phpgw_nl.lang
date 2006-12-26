@@ -174,7 +174,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	nl
 enter the background color for the login page	admin	nl	Voer de achtergrondkleur in voor de loginpagina
 enter the background color for the site title	admin	nl	Voer de achtergrondkleur in voor de websitetitel
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	nl	Voer het volledige pad in voor tijdelijke bestanden.<br />Bijv.: /tmp of C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	nl	Voer het volledige pad in voor tijdelijke bestanden.<br />Bijv.: /tmp of C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br />Bijv.: /files of D:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	nl	Voer het volledige pad in voor gebruikers- en groepsbestanden.<br />Bijv.: /files of D:\FILES
 enter the hostname of the machine on which this server is running	admin	nl	Voer de hostnaam van de machine in waar deze server op draait
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	nl	Voer de locatie in van eGroupWare's URL.<br />Bijv.: http://www.domein.com/egroupware of /egroupware<br /><b>Gebruik geen afsluitend slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	nl	Voer de zoekstring in. Laat dit veld leeg om alles weer te geven en druk opnieuw op de VERZENDKNOP
