@@ -10,7 +10,7 @@
 </td>
 
 <table border="0" width="95%" align="center">
- <tr bgcolor="{th_bg}">
+ <tr class="th">
   <td>{sort_loginid}</td>
   <td>{sort_ip}</td>
   <td>{sort_login_time}</td>
