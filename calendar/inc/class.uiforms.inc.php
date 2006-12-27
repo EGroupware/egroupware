@@ -908,22 +908,15 @@ class uiforms extends uical
 				'recur_type'   => $edit_content['recur_type'],
 				'participants' => array(),
 			);
-			foreach($edit_content['participants'] as $app => $ids)
+			foreach($edit_content['participants'] as $key => $data)
 			{
-				if ($app == 'accounts')
+				if (is_numeric($key) && !$edit_content['participants']['delete'][$data['uid']])
 				{
-					$content['participants'] += $ids;
+					$content['participants'][] = $data['uid'];
 				}
-				elseif ($ids)
+				elseif ($key == 'account' && $data)
 				{
-					foreach($this->bo->resources as $type => $data)
-					{
-						if ($data['app'] == $app) break;
-					}
-					foreach($ids as $id)
-					{
-						$content['participants'][] = $type . $id;
-					}
+					$content['participants'][] = $data;
 				}
 			}
 			// default search parameters
