@@ -36,7 +36,15 @@
 </div>
 
 	<div id="divStatusBar"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-		<td width="33%" align="left" id="user_info">{user_info}</td>
+		<td width="33%">
+			<table cellpadding=0 cellspacing=0>
+				<tr>
+					<td class="userinfolt"></td>
+					<td id="user_info" class="userinfomid">{user_info}</td>
+					<td class="userinfort"></td>
+				</tr>
+			</table>
+		</td>
 		<td align="center" id="admin_info">{current_users}</td>
 		<td width="33%"  align="right" id="quick_add">{quick_add}</td>
 	</tr></table></div>
@@ -161,10 +169,11 @@
 	<div id="menu1Content" class="menuOneBox">
 		<div id="extraIcons">
 			<table cellspacing="0" cellpadding="0" border="0" width="100%">
+			{app_extra_icons}
 			<tr><td colspan="2" class="extraIconsHeader" nowrap="nowrap" align="right">
-				<a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/close.png"/></a>
-			</td></tr>
-{app_extra_icons}
+                                <a href="#" {show_menu_event}="ypSlideOutMenu.hide('menu1')" title="{lang_close}"><img style="" border="0" src="{img_root}/up.button.png"/></a>
+                        </td></tr>
+
 			</table>
 		</div>
 	</div>
