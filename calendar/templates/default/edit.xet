@@ -72,13 +72,6 @@
 				<column/>
 			</columns>
 			<rows>
-				<row class="th">
-					<description value="Type"/>
-					<description value="Participants"/>
-					<description value="Quantity"/>
-					<description value="Status"/>
-					<description value="Delete"/>
-				</row>
 				<row class="row" disabled="@no_add">
 					<description value="New"/>
 					<vbox options="0,0">
@@ -91,12 +84,19 @@
 					<button label="Add" id="add"/>
 					<description/>
 				</row>
+				<row class="th">
+					<description value="Type"/>
+					<description value="Participants"/>
+					<description value="Quantity"/>
+					<description value="Status"/>
+					<description value="Delete"/>
+				</row>
 				<row valign="top">
 					<description id="${row}[app]"/>
 					<description rows="1" cols="2" id="${row}[title]" no_lang="1"/>
 					<int id="${row}[quantity]" options="1,,3"/>
 					<menulist>
-						<menupopup id="${row}[status]" no_lang="1"/>
+						<menupopup id="${row}[status]" no_lang="1" onchange="1"/>
 					</menulist>
 					<checkbox rows="1" cols="2" id="delete[$row_cont[uid]]" align="center"/>
 				</row>
