@@ -315,7 +315,7 @@ position: relative;
 {
 	background-image: url(../images/bmback.jpg);
 	background-color:#fbf8f1;
-	border:solid 2px #9f9f9f;
+	border:solid 1px #666666;
 	position: relative;
 	left: -4px;
 	top: -4px;
@@ -325,7 +325,7 @@ position: relative;
 {
         text-align:center;
         background-image:url(../images/menuTitle-bm.png);
-        color:#17202b;
+	color:#e1e1e1;
         font-weight:normal;
         font-size:10px;
 	height: 23px;
@@ -334,7 +334,7 @@ position: relative;
 .extraIconsRowIcon
 {
 	border-right: 0px solid #9f9f9f;
-	background-color: #d1d1d1;
+	background-color: #e1e1e1;
 	width: 20px;
 	padding: 1px;
 }
@@ -345,8 +345,8 @@ position: relative;
         padding:1px;
 	padding-left: 3px;
         font-size: 10px;
-	background-color: #fbf8f1;
-	background-image:url(../images/bmback2.jpg);
+	background-color: white;
+	/*background-image:url(../images/bmback2.jpg);*/
 }
 
 .extraIconsRow:hover
@@ -355,8 +355,8 @@ position: relative;
         padding:1px;
 	padding-left: 3px;
         font-size: 10px;
-	background-color: #ede6d8;
-	background-image:url(../images/bmback.jpg);
+	background-color: #e1e1e1;
+	/*background-image:url(../images/bmback.jpg);*/
 }
 
 /*
@@ -480,11 +480,32 @@ body {
 	position: relative;
 	top:0px
 	left:0px;
-	height:23px;
+	height:36px;
 	vertical-align:bottom;
 	border: 0px solid black;
 	padding-top:0px;
 }
+
+.userinfolt
+{
+	background-image: url(../images/userbacklt-bm.png);
+	width: 20px;
+	height: 36px;
+}
+
+.userinfomid
+{
+	background-image: url(../images/userback-bm.png);
+	background-repeat: repeat-x;
+	color: #666666;
+}
+
+.userinfort
+{
+        background-image: url(../images/userbackrt-bm.png);
+        width: 20px;
+}
+
 
 /*
 	Appbox ***BEGIN***

@@ -306,6 +306,7 @@ position: relative;
         color:#17202b;
         font-weight:normal;
         font-size:10px;
+	height: 18px;
 }
 
 .extraIconsRowIcon
@@ -441,11 +442,32 @@ body {
 	position: relative;
 	top:0px
 	left:0px;
-	height:23px;
+	height:30px;
 	vertical-align:bottom;
 	border: 0px solid black;
 	padding-top:10px;
 }
+
+.userinfolt
+{
+        background-image: url(../images/userbacklt.png);
+        width: 20px;
+        height: 25px;
+}
+
+.userinfomid
+{
+        background-image: url(../images/userback.png);
+        background-repeat: repeat-x;
+        color: #000000;
+}
+
+.userinfort
+{
+        background-image: url(../images/userbackrt.png);
+        width: 20px;
+}
+
 
 /*
 	Appbox ***BEGIN***
