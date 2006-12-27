@@ -864,7 +864,7 @@ class uiforms extends uical
 			{
 				if ($app == 'accounts')
 				{
-					$content['participants'] += $ids;
+					$content['participants'] += (array)$ids;
 				}
 				elseif ($ids)
 				{
@@ -872,7 +872,7 @@ class uiforms extends uical
 					{
 						if ($data['app'] == $app) break;
 					}
-					foreach($ids as $id)
+					foreach((array)$ids as $id)
 					{
 						$content['participants'][] = $type . $id;
 					}
