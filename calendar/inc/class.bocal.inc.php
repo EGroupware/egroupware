@@ -922,7 +922,7 @@ class bocal
 			//
 			foreach($event['participants'] as $uid => $accept)
 			{
-				if ($uid == $user || $uid < 0 && in_array($user,$GLOBALS['egw']->accounts->members($uid,true))) 
+				if ($uid == $user || $uid < 0 && in_array($user,$this->accounts_members($uid,true))) 
 				{
 					// if we are a participant, we have an implicite READ and PRIVAT grant
 					$grants |= EGW_ACL_READ | EGW_ACL_PRIVATE;
@@ -956,6 +956,24 @@ class bocal
 			$this->debug_message('bocal::check_perms(%1,%2,%3)=%4',True,ACL_TYPE_IDENTIFER.$needed,$event,$other,$access);
 		}
 		return $access;
+	}
+	
+	/**
+	 * From the accounts class in trunk: Get all members of the group $account_id
+	 *
+	 * @param int/string $accountid='' numeric account-id or alphanum. account-lid, 
+	 *	default account of the user of this session
+	 * @param boolean $just_id=false return just an array of id's and not id => lid pairs, default false
+	 * @return array with account_id ($just_id) or account_id => account_lid pairs (!$just_id)
+	 */
+	function accounts_members($account_id,$just_id=false)
+	{
+		$members = array();
+		foreach($GLOBALS['egw']->accounts->member($account_id) as $data)
+		{
+			$members[$data['account_id']] = $data['account_lid'];
+		}
+		return $just_id ? array_keys($members) : $members;
 	}
 
 	/**
