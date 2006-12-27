@@ -229,6 +229,7 @@ class idots_framework extends egw_framework
 		else
 		{
 			/* trick to make domain section disapear */
+			$tmpl->set_block('login_form','domain_selection');
 			$tmpl->set_var('domain_selection',$GLOBALS['egw_info']['user']['domain'] ? 
 				$GLOBALS['egw']->html->input_hidden('logindomain',$GLOBALS['egw_info']['user']['domain']) : '');
 
