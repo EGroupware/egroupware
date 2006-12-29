@@ -13,7 +13,7 @@
 /* $Id$ */
 
 include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
-include_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/class.dragdrop.inc.php');
+require_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/class.dragdrop.inc.php');
 
 /**
  * Class to generate the calendar views and the necesary widgets
@@ -36,28 +36,28 @@ class uiviews extends uical
 	/**
 	 * integer level or string function- or widget-name
 	 * 
-	 * @var mixed $debug 
+	 * @var mixed
 	 */
 	var $debug=false;
 
 	/**
 	 * minimum width for an event
 	 * 
-	 * @var int $eventCol_min_width
+	 * @var int
 	 */
 	var $eventCol_min_width = 80;
 	
 	/**
 	 * extra rows above and below the workday
 	 * 
-	 * @var int $extraRows 
+	 * @var int
 	 */
 	var $extraRows = 2;
 
 	/**
 	 * extra rows original (save original value even if it gets changed in the class)
 	 * 
-	 * @var int $extraRowsOriginal
+	 * @var int
 	 */
 	var $extraRowsOriginal;
 
@@ -66,49 +66,49 @@ class uiviews extends uical
 	/**
 	 * how many rows per day get displayed, gets set be the timeGridWidget
 	 * 
-	 * @var int $rowsToDisplay 
+	 * @var int
 	 */
 	var $rowsToDisplay;
 
 	/**
 	 * height in percent of one row, gets set be the timeGridWidget
 	 * 
-	 * @var int $rowHeight
+	 * @var int
 	 */
 	var $rowHeight;
 	
 	/**
 	 * standard params for calling bocal::search for all views, set by the constructor
 	 * 
-	 * @var array $search_params
+	 * @var array
 	 */
 	var $search_params;
 	
 	/**
 	 * should we use a time grid, can be set for week- and month-view to false by the cal_pref no_time_grid
 	 * 
-	 * @var boolean $use_time_grid=true 
+	 * @var boolean
 	 */
 	var $use_time_grid=true;
 	
 	/**
 	 * Dragdrop Object
 	 *
-	 * @var object $dragdrop;
+	 * @var dragdrop;
 	 */
 	var $dragdrop;
  
 	/**
 	 * Can we display the whole day in a timeGrid of the size of the workday and just scroll to workday start
 	 *
-	 * @var boolean $scroll_to_wdstart;
+	 * @var boolean
 	 */
 	var $scroll_to_wdstart=false;
 	
 	/**
 	 * counter for the current whole day event of a single day
 	 *
-	 * @var int $wholeDayPosCounter;
+	 * @var int
 	 */
 	var $wholeDayPosCounter=1;
 
@@ -146,6 +146,10 @@ class uiviews extends uical
 		$this->holidays = $this->bo->read_holidays($this->year);
 		
 		$this->check_owners_access();
+
+		// ToDo jaytraxx: 
+		// we should check if dragdrop is enabled and instanciate the dragdrop class only then
+		// as long as drag&drop is only used in calendar, we should move the preference to the calendar (at the end!)
 		$this->dragdrop = new dragdrop();
 	}
 	
@@ -1221,8 +1225,8 @@ class uiviews extends uical
 			$indent."</div>"."\n";
 
 		// ATM we do not support whole day events or recurring events for dragdrop
-		if (	$this->use_time_grid && 
-			$this->bo->check_perms(EGW_ACL_EDIT,$event['id']) &&
+		if ($this->use_time_grid && 
+			$this->bo->check_perms(EGW_ACL_EDIT,$event) &&
 			!$event['whole_day_on_top'] &&
 			!$event['whole_day'] &&
 			!$event['recur_type']
