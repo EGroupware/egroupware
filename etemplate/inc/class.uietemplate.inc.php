@@ -810,7 +810,7 @@
 			{
 				$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' && $cell['size'] && strpos($cell['size'],',')===false)
+			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' &&  strpos($cell['size'],',')===false)
 			{
 				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
