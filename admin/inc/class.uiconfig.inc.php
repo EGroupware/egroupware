@@ -45,7 +45,7 @@
 
 			if(get_magic_quotes_gpc() && is_array($_POST['newsettings']))
 			{
-				$_POST['newsettings'] = array_map("stripslashes", $_POST['newsettings']);
+				$_POST['newsettings'] = $this->array_stripslashes($_POST['newsettings']);
 			}
 			
 			switch($_GET['appname'])
@@ -249,6 +249,25 @@
 			$t->set_var('lang_submit', $GLOBALS['egw']->acl->check('site_config_access',2,'admin') ? lang('Cancel') : lang('Save'));
 			$t->set_var('lang_cancel', lang('Cancel'));
 			$t->pfp('out','footer');
+		}
+
+		/**
+		 * applies stripslashes recursivly on each element of an array
+		 * 
+		 * @param array &$var 
+		 * @return array
+		 */
+		function array_stripslashes($var)
+		{
+			if (!is_array($var))
+			{
+				return stripslashes($var);
+			}
+			foreach($var as $key => $val)
+			{
+				$var[$key] = is_array($val) ? $this->array_stripslashes($val) : stripslashes($val);
+			}
+			return $var;
 		}
 	}
 ?>
