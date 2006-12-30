@@ -34,7 +34,7 @@ if ($argc <= 1 || in_array($argv[1],array('-v','--help')) || $argv[1] == '--acco
 $lines = file($file);
 foreach($lines as $l => $line)
 {
-	$lines[$l] = trim($line);
+	$lines[$l] = rtrim($line);
 }
 
 $group2account = '/cn=[^,]+,ou=groups/ou=accounts/';
