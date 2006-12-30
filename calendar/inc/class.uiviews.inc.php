@@ -94,7 +94,7 @@ class uiviews extends uical
 	/**
 	 * Dragdrop Object
 	 *
-	 * @var dragdrop;
+	 * @var object;
 	 */
 	var $dragdrop;
  
@@ -147,10 +147,13 @@ class uiviews extends uical
 		
 		$this->check_owners_access();
 
-		// ToDo jaytraxx: 
-		// we should check if dragdrop is enabled and instanciate the dragdrop class only then
-		// as long as drag&drop is only used in calendar, we should move the preference to the calendar (at the end!)
-		$this->dragdrop = new dragdrop();
+		if($GLOBALS['egw_info']['user']['preferences']['common']['enable_dragdrop'])
+		{
+			$this->dragdrop = new dragdrop();
+			// if the object would auto-disable itself unset object
+			// to avoid unneccesary dragdrop calls later
+			if(!$this->dragdrop->validateBrowser()) { $this->dragdrop = false; }
+		}
 	}
 	
 	/**
@@ -335,7 +338,7 @@ class uiviews extends uical
 		}
 
 		// make wz_dragdrop elements work
-		$this->dragdrop->setJSCode();
+		if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 
 		return $content;
 	}
@@ -461,7 +464,7 @@ class uiviews extends uical
 		}
 
 		// make wz_dragdrop elements work
-		$this->dragdrop->setJSCode();
+		if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 
 		return $content;
 	}
@@ -536,14 +539,14 @@ class uiviews extends uical
 				echo $cols[0];
 			}
 			// make wz_dragdrop elements work
-			$this->dragdrop->setJSCode();
+			if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 		}
 		else
 		{
 			$content = $this->timeGridWidget($this->bo->search($this->search_params),$this->cal_prefs['interval'],300);
 			
 			// make wz_dragdrop elements work
-			$this->dragdrop->setJSCode();
+			if(is_object($this->dragdrop)) { $this->dragdrop->setJSCode(); }
 
 			return $content;
 		}
@@ -910,15 +913,17 @@ class uiviews extends uical
 		if ($this->use_time_grid)
 		{
 			// drag and drop: check if the current user has EDIT permissions on the grid
-			if($owner)
+			if(is_object($this->dragdrop))
 			{
-				$dropPermission = $this->bo->check_perms(EGW_ACL_EDIT,0,$owner);
+				if($owner)
+				{
+					$dropPermission = $this->bo->check_perms(EGW_ACL_EDIT,0,$owner);
+				}
+				else
+				{
+					$dropPermission = true;
+				}
 			}
-			else
-			{
-				$dropPermission = true;
-			}
-
 			// adding divs to click on for each row / time-span
 			for($t = $this->scroll_to_wdstart ? 0 : $this->wd_start,$i = 1+$this->extraRows;
 				$t <= $this->wd_end || $this->scroll_to_wdstart && $t < 24*60;
@@ -938,7 +943,7 @@ class uiviews extends uical
 				$html .= $indent."\t".'<div id="' . $droppableID . '" style="height:'. $this->rowHeight .'%; top: '. $i*$this->rowHeight .
 					'%;" class="calAddEvent" onclick="'.$this->popup($GLOBALS['egw']->link('/index.php',$linkData)).';return false;"></div>'."\n";
 				
-				if($dropPermission)
+				if(is_object($this->dragdrop) && $dropPermission)
 				{
 					$this->dragdrop->addDroppable(
 						$droppableID,
@@ -1225,7 +1230,8 @@ class uiviews extends uical
 			$indent."</div>"."\n";
 
 		// ATM we do not support whole day events or recurring events for dragdrop
-		if ($this->use_time_grid && 
+		if (	is_object($this->dragdrop) &&
+			$this->use_time_grid &&
 			$this->bo->check_perms(EGW_ACL_EDIT,$event) &&
 			!$event['whole_day_on_top'] &&
 			!$event['whole_day'] &&
