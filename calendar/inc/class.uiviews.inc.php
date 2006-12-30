@@ -94,7 +94,7 @@ class uiviews extends uical
 	/**
 	 * Dragdrop Object
 	 *
-	 * @var object;
+	 * @var dragdrop;
 	 */
 	var $dragdrop;
  
