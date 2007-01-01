@@ -14,7 +14,6 @@
 	$run_by_webserver = !!$_SERVER['PHP_SELF'];
 	$is_windows = strtoupper(substr(PHP_OS,0,3)) == 'WIN';
 
-
 	if ($run_by_webserver)
 	{
 		$GLOBALS['egw_info'] = array(
@@ -223,51 +222,128 @@
 	{
 		global $passed_icon, $error_icon;
 
-		$version_ok = (float) phpversion() >= $args['value'];
+		$version_ok = version_compare(phpversion(),$args['value']) >= 0;
 
 		echo '<div>'.($version_ok ? $passed_icon : $error_icon).' <span'.($version_ok ? '' : ' class="setup_error"').'>'.
 			lang('Checking required PHP version %1 (recommended %2)',$args['verbose_value'],$args['recommended']).': '.
 			phpversion().' ==> '.($version_ok ? lang('True') : lang('False'))."</span></div>\n";
 	}
 
+	/**
+	 * quering the pear registry to find out which pear packages and versions are installed
+	 *
+	 * @return array with package-name => version pairs, eg. array('Log' => '1.9.8','PEAR' => '1.4.11')
+	 */
+	function get_installed_pear_packages()
+	{
+		$pear_config = '';	// use the system default
+		// fix for SuSE having the pear.conf only for cli, will fail with open_basedir - no idea what to do then
+		if (@is_dir('/etc/php5/apache2') && !file_exists('/etc/php5/apache2/pear.conf') && @file_exists('/etc/php5/cli/pear.conf'))
+		{
+			$pear_config = '/etc/php5/cli/pear.conf';
+		}
+		@require_once 'PEAR/Config.php';
+		
+		if (!class_exists('PEAR_Config')) return false;
+		
+		$config = new PEAR_Config('',$pear_config);
+		//echo "<pre>config = ".print_r($config,true)."</pre>\n";  
+		     
+		$channel = $config->get('default_channel');
+		//echo "<pre>channel = ".print_r($channel,true)."</pre>\n";       
+		
+		$reg = &$config->getRegistry();
+		//echo "<pre>reg = ".print_r($reg,true)."</pre>\n";       
+		            
+		$installed = $reg->packageInfo(null,null,$channel);
+		//echo "<pre>installed =".print_r($installed,true)."</pre>\n";
+		$packages = array();    
+		foreach($installed as $package)
+		{
+			$name = isset($package['package']) ? $package['package'] : $package['name'];
+			$version = $package['version'];
+			if (is_array($version)) $version = $version['release'];
+			
+			$packages[$name] = $version;
+		//	echo "<p>$name: ".print_r($package['version'],true)."</p>\n";
+		}
+		ksort($packages);
+		
+		return $packages;
+	}
+	
 	function pear_check($package,$args)
 	{
 		global $passed_icon, $warning_icon;
 		static $pear_available = null;
+		static $pear_packages = null;
 		
-		if (is_null($pear_available))
-		{
-			$pear_available = @include('PEAR.php');
+		$min_version = isset($args['version']) ? $args['version'] : null;
 
-			if (!class_exists('PEAR')) $pear_available = false;
-		
-			echo '<div>'.($pear_available ? $passed_icon : $warning_icon).' <span'.($pear_available ? '' : ' class="setup_warning"').'>'.
-				lang('Checking PEAR%1 is installed','').': '.($pear_available ? lang('True') : lang('False'))."</span></div>\n";
-		}
-		if ($pear_available && $package)
+		if (is_null($pear_packages))
 		{
-			$file = str_replace('_','/',$package).'.php';
-			$available = @include($file);
-
-			if (!class_exists($package)) $available = false;
-			
-			echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
-				lang('Checking PEAR%1 is installed','::'.$package).': '.($available ? lang('True') : lang('False'))."</span></div>\n";
+			$pear_packages = get_installed_pear_packages();
 		}
-		$available = $pear_available && (!$package || $available);
+		// check if egw-pear is availible and packages is included
+		if ($package && is_dir('../egw-pear') && file_exists('../egw-pear/'.str_replace('_','/',$package).'.php'))
+		{
+			$available = true;
+			$version_availible = '999.egw-pear';
+		}
+		// packages found in the pear registry --> use that info
+		elseif ($pear_packages)
+		{
+			$pear_available = true;
+			// check if package is installed
+			if ($package && isset($pear_packages[$package])) $available = true;
+			// check if it's the right version
+			$version_availible = $pear_packages[$package ? $package : 'PEAR'];
+		}
+		else	// use the old checks as fallback
+		{
+			if (is_null($pear_available))
+			{
+				$pear_available = @include('PEAR.php');
 	
-		if (!$available)
+				if (!class_exists('PEAR')) $pear_available = false;
+			}
+			if ($pear_available && $package)
+			{
+				$file = str_replace('_','/',$package).'.php';
+				$available = @include($file);
+	
+				if (!class_exists($package)) $available = false;
+			}
+		}
+		// is the right version availible
+		$available = $pear_available && (!$package || $available) && (!$min_version || version_compare($min_version,$version_availible) <= 0);
+		
+		echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
+			lang('Checking PEAR%1 is installed',($package?'::'.$package:'').($min_version?" ($min_version)":'')).': '.
+			($available ? ($version_availible ? $version_availible : lang('True')) : lang('False'))."</span></div>\n";		
+
+		if (!$available)	// give further info only if not availible
 		{
 			echo '<div class="setup_info">' . lang('PEAR%1 is needed by: %2.',$package ? '::'.$package : '',
 				is_array($args['from']) ? implode(', ',$args['from']) : $args['from']);
-			if ($package)
-			{
-				echo ' '.lang('You can install it by running:').' pear install '.$package;
-			}
-			else
+				
+			if (!$pear_available)
 			{
 				echo ' '.lang('PEAR (%1) is a PHP repository and is usually in a package called %2.',
 					'<a href="http://pear.php.net" target="_blank">pear.php.net</a>','php-pear');
+			}
+			elseif ($min_version && !$version_availible)
+			{
+				echo ' '.lang('We could not determine the version of %1, please make sure it is at least %2',$package,$min_version);
+			}
+			elseif ($min_version && version_compare($min_version,$version_availible) > 0)
+			{
+				echo ' '.lang('Your installed version of %1 is %2, required is at least %3, please run: ',
+					$package,$version_availible,$min_version).' pear update '.$package;
+			}
+			elseif ($package)
+			{
+				echo ' '.lang('You can install it by running:').' pear install '.$package;
 			}
 			echo "</div>";
 		}
