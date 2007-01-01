@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
 %define egwversion 1.2
-%define packaging 104
+%define packaging 106
 %define epoch 1
 %define httpdroot  /var/www/html
 %define httpdconfd  /etc/httpd/conf.d
@@ -633,6 +633,12 @@ ln -s sitemgr/sitemgr-link
 %config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 
 %changelog
+* Mon Nov 13 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-106
+- various bugfixes
+
+* Thu Oct 19 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-105
+- bugfix release to prevent exploit by php serialize bug
+
 * Sat Jul 17 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-104
 - bugfix release
 
