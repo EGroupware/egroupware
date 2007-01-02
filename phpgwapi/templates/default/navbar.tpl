@@ -90,7 +90,7 @@
 		<div id="menu2Content" style="position: relative; left: 0; text-align: left;">
 			<table cellspacing="0" cellpadding="0">
 				<tr><td>
-					<div style="background-color:#ffffff;border: #9c9c9c 1px solid;padding:5px;">
+					<div style="background-color:#ffffff;border: #9c9c9c 1px solid;padding:5px;width:203px;">
 <!-- END sidebox_hide_header -->
 
 
