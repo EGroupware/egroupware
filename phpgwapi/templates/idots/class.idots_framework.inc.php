@@ -14,6 +14,7 @@
 
 require_once(EGW_API_INC.'/class.egw_framework.inc.php');
 require_once(EGW_API_INC.'/class.Template.inc.php');
+require_once(EGW_API_INC.'/class.dragdrop.inc.php');
 
 /**
  * eGW idots template
@@ -90,6 +91,9 @@ class idots_framework extends egw_framework
 	 */
 	function navbar()
 	{
+	    $this->tplsav2 = CreateObject('phpgwapi.tplsavant2');
+		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
+
 		$this->navbar_done = true;
 
 		// the navbar
@@ -158,15 +162,52 @@ class idots_framework extends egw_framework
 		}
 		else
 		{
-			$var['menu_link'] = '';
-			$var['sideboxcolstart'] = '<td id="tdSidebox" valign="top">';
-			$var['remove_padding'] = '';
-			$this->tpl->set_var($var);
-			$content .= $this->tpl->parse('out','appbox');
+		   $GLOBALS['phpgw']->preferences->read_repository();
 
-			$content .= $this->sidebox_content;
-			
-			$var['sideboxcolend'] = '</td>';
+		   $prefs = array();
+
+		   if ($GLOBALS['egw_info']['user']['preferences']['common'])
+		   {
+			  $sideboxwidth = $GLOBALS['egw_info']['user']['preferences']['common']['idotssideboxwidth'];
+		   }
+		   if(intval($sideboxwidth)<1)
+		   {
+			  $sideboxwidth = 203;
+		   }
+
+		   $var['menu_link'] = '';
+
+		   $var['sideboxcolstart'] = '<td id="tdSidebox" valign="top"><div id="thesideboxcolumn" style="width:'.$sideboxwidth.'px">';
+				 $var['sideboxcolstart'] .= '<div style="width:13px;height:13px;right:1px;top:1px;position:absolute;z-index:9999;" id="sideresize">
+					<img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/default/images'.'/resize.png" alt="resize"/>
+
+				 </div>';
+				 $var['remove_padding'] = '';
+				 $this->tpl->set_var($var);
+				 $content .= $this->tpl->parse('out','appbox');
+
+				 $content .= $this->sidebox_content;
+
+				 $var['sideboxcolend'] = '</div></td>';
+
+		   // Add DHTML for resizing sidebox menu
+		   // include wz_dragdrop once
+		   if(!$GLOBALS['egw_info']['flags']['wz_dragdrop_included'])
+		   {
+			  $GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- BEGIN JavaScript for wz_dragdrop.js -->\n";
+			  $GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_dragdrop/wz_dragdrop.js"></script>'."\n";
+			  $GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = True;
+		   }
+
+		   require_once(EGW_API_INC.'/xajax.inc.php');
+		   $xajax = new xajax($GLOBALS['egw_info']['server']['webserver_url']."/phpgwapi/templates/idots/ajaxStorePrefs.php");
+		   $xajax->registerFunction("storeEGWPref");
+
+		   $this->tplsav2->assign('sideboxwidth', $sideboxwidth);
+		   $this->tplsav2->assign('xajaxobj',&$xajax);
+		   $this->tplsav2->assign('xajaxincdir',$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js');
+
+		   $GLOBALS['egw_info']['flags']['need_footer'] .= $this->tplsav2->fetch('sidebox_dhtml.tpl.php');
 		}
 
 		$this->tpl->set_var($var);
@@ -559,17 +600,18 @@ class idots_framework extends egw_framework
 	 */
 	function sidebox($appname,$menu_title,$file)
 	{
-		if(!$appname || ($appname==$GLOBALS['egw_info']['flags']['currentapp'] && $file))
-		{
-			$this->tpl->set_var('lang_title',$menu_title);
-			$this->sidebox_content .= $this->tpl->fp('out','extra_blocks_header');
 
-			foreach($file as $text => $url)
-			{
-				$this->sidebox_content .= $this->_sidebox_menu_item($url,$text);
-			}
-			$this->sidebox_content .= $this->tpl->parse('out','extra_blocks_footer');
-		}
+	   if(!$appname || ($appname==$GLOBALS['egw_info']['flags']['currentapp'] && $file))
+	   {
+		  $this->tpl->set_var('lang_title',$menu_title);
+		  $this->sidebox_content .= $this->tpl->fp('out','extra_blocks_header');
+
+		  foreach($file as $text => $url)
+		  {
+			 $this->sidebox_content .= $this->_sidebox_menu_item($url,$text);
+		  }
+		  $this->sidebox_content .= $this->tpl->parse('out','extra_blocks_footer');
+	   }
 	}
 
 	/**

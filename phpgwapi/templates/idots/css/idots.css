@@ -153,8 +153,13 @@ input[type=image]
 	border: 0;
 }
 
-.divLoginbox,.divSidebox 
+#thesideboxcolumn
+{
+	width: 177px; 
+	position:relative;
+}
 
+.divLoginbox
 {
 	position:relative;
 	width: 370px; 
@@ -163,7 +168,8 @@ input[type=image]
 
 .divSidebox 
 {
-	width: 177px; 
+   position:relative;
+   border: #9c9c9c 1px solid; 
 }
 
 .divSideboxHeader,.divLoginboxHeader 
