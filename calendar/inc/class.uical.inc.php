@@ -727,15 +727,6 @@ function load_cal(url,id) {
 			);
 		}				
 */
-		// we need to set the sidebox-width a bit wider, as idots.css sets it to 147, to small for the jscal
-		// setting it to auto, uses the smallest possible size, but IE kills the jscal if the width is set to auto !!!
-		$width = 203;
-		echo '<style>
-.divSidebox
-{
-	width: '.($this->html->user_agent == 'msie' ? $width.'px' : 'auto; max-width: '.$width.'px;').';
-}
-</style>'."\n";
 		$appname = 'calendar';
 		$menu_title = lang('Calendar Menu');
 		display_sidebox($appname,$menu_title,$file);
