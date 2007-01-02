@@ -203,9 +203,8 @@ class uilist extends uical
 		$rows = array();
 		foreach((array) $this->bo->search($search_params) as $event)
 		{
-			$readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
+			$readonlys['view['.$event['id'].']'] = !($readonlys['edit['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_EDIT,$event));
 			$readonlys['delete['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_DELETE,$event);
-			$readonlys['view['.$event['id'].']'] = !$this->bo->check_perms(EGW_ACL_READ,$event);
 
 			$event['parts'] = implode(",\n",$this->bo->participants($event));
 			$event['recure'] = $this->bo->recure2string($event);
