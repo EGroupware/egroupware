@@ -1173,13 +1173,17 @@ class html
 	* @param string $_leafImage='' default image of a leaf-node, ''=default of foldertree, set it eg. 'folderClosed.gif' to show leafs as folders
 	* @param boolean/string $_onCheckHandler=false string with handler-name to display a checkbox for each folder, or false (default)
 	* @param string $delimiter='/' path-delimiter, default /
+	* @param mixed $folderImageDir=null string path to the tree menu images, null uses default path
 	*
 	* @return string the html code, to be added into the template
 	*/
-	function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$_divId='foldertree',$_divClass='',$_leafImage='',$_onCheckHandler=false,$delimiter='/')
+	function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$_divId='foldertree',$_divClass='',$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null)
 	{
-		$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
-		
+	   if(is_null($folderImageDir))
+	   {
+		  $folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
+	   }
+
 		$html = $this->div("\n",'id="'.$_divId.'"',$_divClass);
 
 		static $tree_initialised=false;
