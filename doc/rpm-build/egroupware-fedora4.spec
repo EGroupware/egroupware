@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define egwversion 1.2
-%define packaging 106
+%define egwversion 1.2.106
+%define packaging 2
 %define epoch 1
 %define httpdroot  /var/www/html
 %define httpdconfd  /etc/httpd/conf.d
@@ -76,7 +76,7 @@ Buildarch: noarch
 AutoReqProv: no
                                                                                                                              
 Vendor: eGroupWare
-Packager: Lars Kneschke <l.kneschke@metaways.de>
+Packager: Ralf Becker <RalfBecker@outdoor-training.de>
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. 
@@ -633,6 +633,10 @@ ln -s sitemgr/sitemgr-link
 %config %attr(0640,apache,apache) /var/lib/egroupware/header.inc.php
 
 %changelog
+* Wed Jan 03 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.2.106-2
+- more PHP5.2 fixes
+- added display_errors off to etc/apache2/conf.d/egroupware.conf
+
 * Mon Nov 13 2006 Lars Kneschke <l.kneschke@metaways.de> 1.2-106
 - various bugfixes
 
