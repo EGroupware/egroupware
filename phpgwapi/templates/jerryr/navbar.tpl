@@ -36,7 +36,7 @@
 </div>
 
 	<div id="divStatusBar"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-		<td width="33%">
+		<td align="left" width="33%">
 			<table cellpadding=0 cellspacing=0>
 				<tr>
 					<td class="userinfolt"></td>
@@ -57,7 +57,7 @@
 
 
 <!-- BEGIN app_icon_block -->
-							<td width="{tdwidth}%" align="center" class="iconBack" onmouseover="this.className='iconBackHover'" onmouseout="this.className='iconBack'"><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" border="0" /></a></td>
+							<td width="{tdwidth}%" align="center" class="iconBack" onmouseover="this.className='iconBackHover'" onmouseout="this.className='iconBack'" ><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" border="0" /></a></td>
 <!-- END app_icon_block -->
 
 
@@ -68,7 +68,7 @@
 
 <!-- BEGIN appbox -->	
 	<div id="divSubContainer">
-		<table width="100%" cellspacing="0" cellpadding="0">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0">
 		<tr>
 		<!-- Sidebox Column -->
 {sideboxcolstart}
@@ -108,18 +108,36 @@
 
 		<!-- Applicationbox Column -->
 		<td id="tdAppbox" valign="top" {remove_padding}>
-			<div id="divAppboxHeader">{current_app_title}</div>
-			<div id="divAppbox">
-				<table width="100%" cellpadding="0" cellspacing="0">
-				<tr><td>
-<!-- END navbar_footer -->
 
+			<div id="divAppboxHeader">
+				<table width="100%" align="center" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td class="appBoxHeadLt"></td>
+						<td class="appBoxHeadMid" nowrap>&nbsp;{current_app_title}&nbsp;</td>
+						<td class="appBoxHeadRt"></td>
+					</tr>
+				</table>
+			</div>
+
+			<div id="divAppbox">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0">
+				<tr><td>
+
+<!-- END navbar_footer -->
 
 <!-- BEGIN extra_blocks_header -->
 <div class="divSidebox">
 <div class="menuOneBoxTwo">
-	<div class="divSideboxHeader"><span>{lang_title}</span></div>
-	<div>
+	<div class="divSideboxHeader">
+		<table class="menuHeadMid" cellpadding="0" cellspacing="0" border="0">
+        		<tr>
+                		<td class="menuHeadLt"></td>
+                		<td nowrap>{lang_title}</td>
+                		<td class="menuHeadRt"></td>
+        		</tr>
+		</table>
+	</div>
+<div>
 		<table class="sideboxDrop" width="100%" cellspacing="0" cellpadding="0">
 <!-- END extra_blocks_header -->
 
@@ -129,13 +147,24 @@
 	</div>
 </div>
 </div>
-<div class="sideboxSpace"></div>
+<div class="sideboxSpace">
+<table class="menuBotMid" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                                <td class="menuBotLt"></td>
+                                <td nowrap>&nbsp;</td>
+                                <td class="menuBotRt"></td>
+                        </tr>
+                </table>
+
+
+</div>
+
 <!-- END extra_blocks_footer -->
 
 
 <!-- BEGIN extra_block_row -->
 		<tr class="divSideboxEntry">
-			<td width="20" align="center" valign="middle" class="textSideboxStar"></td><td class="textSidebox" onmouseover="this.className='textSideboxHover'" onmouseout="this.className='textSidebox'"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
+			<td class="textSideboxStar"></td><td class="textSidebox" onmouseover="this.className='textSideboxHover'" onmouseout="this.className='textSidebox'"><a class="textSidebox" href="{item_link}"{target}>{lang_item}</a></td>
 		</tr>
 <!-- END extra_block_row -->
 
@@ -159,7 +188,6 @@
 			<td width="20" align="center" valign="middle" class="textSideboxStar"></td><td height="8" class="textSideboxSpacer">&nbsp;</td>
 		</tr>
 <!-- END extra_block_spacer -->
-
 
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
