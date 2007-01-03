@@ -1361,6 +1361,8 @@ class uiviews extends uical
 		{
 			$sort2label = $this->_get_planner_users();
 		}
+		if (!is_array($events)) $events = array();
+
 		foreach($events as $key => $event)
 		{
 			if ($by_cat === false)	// planner by user
