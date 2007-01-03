@@ -3,6 +3,12 @@
 	allowed attributes: font-family,font-size,color,font-weight
 */
 
+.divappbot
+{
+	bottom: 0px;
+	width: 100%;
+}
+
 body,td
 {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -78,7 +84,7 @@ img
 
 input,button,select
 {
-	border: solid 1px #bbbbbb;
+	border: solid 1px #9f9f9f;
 	color: #17202b;
 }
 
@@ -86,14 +92,14 @@ input[type=submit],input[type=button],input[type=reset],button,.egwbutton
 
 {
 	background-color:#c5c5c5;
-	border:  1px solid #dddddd;
+	border:  0px solid #dddddd;
 	background-color:#fbf8f1;
 	background-image: url(../images/butInactive-bm.png);
-	border: solid 1px black;
-	margin:  1px;
-	padding: 1px;
+	border: solid 1px #9f9f9f;
+	margin:  0px;
+	padding: 0px;
 	cursor:  pointer; 
-	color: white;
+	color: #666666;
 }
 
 input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button:hover,.egwbutton:hover
@@ -101,6 +107,7 @@ input[type=submit]:hover,input[type=button]:hover,input[type=reset]:hover,button
 	background-color:#88b4e1;
 	background-image: url(../images/butHover-bm.png);
 	border: 1px solid #007205;
+	padding: 0px;
 	color:  white;
 }
 
@@ -109,7 +116,7 @@ input[type=submit]:active,input[type=button]:active,input[type=reset]:active,but
 {
 	background-image: url(../images/butActive-bm.png);
 	border: 1 solid #a21616;
-	color: white;
+	color: #257900;
 }
 
 input.egwbutton
@@ -147,14 +154,19 @@ input[type=image]
 	Sidebox - Loginbox Style ***BEGIN***
 */
 
+#thesideboxcolumn
+{
+        width: 203px;
+        position:relative;
+}
+
 #tdSidebox
 {
-	width:204px;
+	/*width:204px;*/
 	overflow:visible;
 }
 
-.divLoginbox,.divSidebox 
-
+.divLoginbox
 {
 	position:relative;
 	width: 370px; 
@@ -163,8 +175,11 @@ input[type=image]
 
 .divSidebox 
 {
-	width: 188px; 
+	/*width: 188px;*/
+	position: relative; 
 	border: 0px solid #9f9f9f;
+	/*background-image: url(../images/bmback2.jpg);*/
+	background-color: white;
 }
 
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
@@ -174,33 +189,83 @@ input[type=image]
 
 .textSideboxStar
 {
+	width: 20px;
 	font-size:90%;
-	background-color: #e1e1e1;
-	border-right: 0px solid #9f9f9f;
+	/*background-image: url(../images/rowoff-bm.png);*/
+	/*background-color: white:*/
+	border-top:1px solid #e1e1e1;
+	border-right: 1px solid #e1e1e1;
 	border-left: 0px solid #9f9f9f;
 }
 
 .divSideboxHeader,.divLoginboxHeader 
 {
 	text-align:center;
-	background-image:url(../images/menuTitle-bm.png);	
-	color:#666666;
-	height: 22px;
+	/*background-image:url(../images/menuTitle-bm.png);*/	
+	color: #666666;
+	height: 23px;
 	font-weight:bold;
 	font-size:12px;
 	position: relative;
         left: 0px;
         top: 0px;
+	padding:0px;
 	border-top: 0px solid #9f9f9f;
 	border-left: 0px solid #9f9f9f;
 	border-right: 0px solid #9f9f9f;
 }
 
+.menuHeadLt
+{
+        background-image:url(../images/menuTitleLt-bm.png);
+        padding:0px;
+        width: 24px;
+        height:23px;
+}
+.menuHeadMid
+{
+        background-image:url(../images/menuTitleMid-bm.png);
+ 	width: 100%;
+	line-height:23px;
+}
+
+.menuHeadRt
+{
+        background-image:url(../images/menuTitleRt-bm.png);
+        width:24px;
+        padding:0px;
+        height: 23px;
+}
+
+.menuBotLt
+{
+        background-image:url(../images/menuBotLt-bm.png);
+        padding:0px;
+        width: 20px;
+        height:18px;
+}
+.menuBotMid
+{
+        background-image:url(../images/menuBotMid-bm.png);
+        width: 100%;
+        line-height:18px;
+}
+
+.menuBotRt
+{
+        background-image:url(../images/menuBotRt-bm.png);
+        width:20px;
+        padding:0px;
+        height: 18px;
+}
+
+
 a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
 	height:18px;
-	background-color:#ffffff;
+	/*background-image:url(../images/bmback2.jpg);*/
+	/*background-color:#ffffff;*/
 	border-left: 0px solid #9f9f9f;
 }
 
@@ -219,13 +284,17 @@ a.textSidebox
 {
 	height:18px;
 	padding-left: 2px;
-	border-top: solid #9f9f9f 0px;
+	border-top: 1px solid #e1e1e1;
 }
 
 .textSideboxHover
 {
-	background-color: #e1e1e1;
-	border-top: 0px solid #9f9f9f;
+	/*background-image: url(../images/arrow-rt-grey.png);*/
+	/*background-repeat: no-repeat;*/
+	/*background-position: top right;*/
+	background-color: white;
+	height: 18x;
+	border-top: 1px solid #e1e1e1;
 	padding-left: 2px;	
 	font-size: 10px;
 }
@@ -238,9 +307,10 @@ a.textSidebox
 
 .textSideboxSpacer
 {
-	height:18px;
+	height:19px;
 	padding-left: 0px;
 	border-left: solid #9f9f9f 0px;
+	border-top: 1px solid #e1e1e1;
 }
 
 .slideoutBack
@@ -249,6 +319,7 @@ a.textSidebox
 	border: #17202b 1px solid;
 	padding:10px;
 	background-image:url(../images/bmback.jpg);
+	width: 203px;
 }
 
 .sideboxDrop
@@ -258,7 +329,7 @@ position: relative;
         top: 0px;
 	border-bottom: 0px solid white;
 	border-left: 1px solid #9f9f9f;
-	border-right: 1px solid white;
+	border-right: 1px solid #9f9f9f;
 }
 
 .textSidebox:first-letter
@@ -268,8 +339,8 @@ position: relative;
 
 .sideboxSpace
 {
-	height:22px;
-	background-image: url(../images/botspacer.png);
+	height:29px;
+	/*background-image: url(../images/botspacer.png);*/
 }
 
 /*
@@ -341,7 +412,8 @@ position: relative;
 
 .extraIconsRow
 {
-        border-top:solid 0px #9f9f9f;
+        border-top: 1px solid #e1e1e1;
+	height: 19px;
         padding:1px;
 	padding-left: 3px;
         font-size: 10px;
@@ -351,7 +423,7 @@ position: relative;
 
 .extraIconsRow:hover
 {
-        border-top:solid 0px #9f9f9f;
+        border-top: 1px solid #e1e1e1;
         padding:1px;
 	padding-left: 3px;
         font-size: 10px;
@@ -370,7 +442,7 @@ body {
 #divMain
 {
 	background-image:url(../images/bmback.jpg);
-	background-color:white;
+	background-color: #646464;
 	padding:9px;
 	margin: 0px;
 	border-bottom: 2px solid white;
@@ -380,7 +452,7 @@ body {
 {
 	position:absolute;
 	left:17px;
-	top:2px;
+	top:5px;
 	z-index:51;
 }
 
@@ -414,8 +486,8 @@ body {
 
 .divAppIconBlock /* this allows the icons and text to be positioned via absolute and requires the iconspacer div */
 {
-	border-top: 1px solid white;
-	background-image: url(../images/SpacerBack.jpg);
+	border-top: 0px solid #efefef;
+	/*background-image: url(../images/hilitetest-bm.png);*/
 	background-repeat: repeat-x;
 	padding: 0px;
 	position:absolute;
@@ -426,7 +498,7 @@ body {
 
 #divAppIconBar
 {
-	height: 57px;
+	height: 58px;
 	position: relative;
 	top: 0px;
 	left: 0px;
@@ -434,7 +506,7 @@ body {
 
 .iconBackFirstCell
 {
-        background-image: url(../images/firstcell-bm.png);
+        /*background-image: url(../images/firstcell-bm.png);*/
         background-repeat: no-repeat;
 	height:58px;
 }
@@ -442,28 +514,34 @@ body {
 .appIconTbl
 {
 	padding:0px;
-	background-image: url(../images/iconBack-bm.png);
-	background-repeat: repeat-x;
+	background-image: url(../images/bmback2.jpg);
+	/*background-repeat: repeat-x;*/
 	vertical-align: top;
+	border-bottom: 1px solid #9f9f9f;
 	color: white;
 }
 
 .iconBack
 {
-	background-image: url(../images/iconBack-bm.png);
-	border-right: 1px solid white;
+	/*background-image: url(../images/iconBack-bm.png);*/
+	border-right: 0px solid #bfbfbf;
+	border-left: 0px solid white;
+	height: 44px;
 }
 
 .iconBackHover
 {
-	background-image: url(../images/iconBackHover-bm.png);
-	border-right: 1px solid white;
+	background-image: url(../images/pointer.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	border-right: 0px solid #bfbfbf;
+	border-left: 0px solid white;
 }
 
 .appIconSpacer
 {
-	height:43px;
-	background-color: white;
+	height:44px;
+	background-color: #ffffff;
 }
 
 #divAppTextBar
@@ -480,17 +558,17 @@ body {
 	position: relative;
 	top:0px
 	left:0px;
-	height:36px;
+	height:32px;
 	vertical-align:bottom;
 	border: 0px solid black;
-	padding-top:0px;
+	padding-top:12px;
 }
 
 .userinfolt
 {
 	background-image: url(../images/userbacklt-bm.png);
-	width: 20px;
-	height: 36px;
+	width: 22px;
+	height: 22px;
 }
 
 .userinfomid
@@ -498,12 +576,13 @@ body {
 	background-image: url(../images/userback-bm.png);
 	background-repeat: repeat-x;
 	color: #666666;
+	white-space: nowrap; 
 }
 
 .userinfort
 {
         background-image: url(../images/userbackrt-bm.png);
-        width: 20px;
+        width: 22px;
 }
 
 
@@ -513,34 +592,59 @@ body {
 
 #tdAppbox
 {
-	padding-left:5px;
+	padding-left:9px;
 	width: 100%;
+	border: 0px solid red;
 }
 
 #divAppboxHeader
 {
 	background-image:url(../images/menuTitle-bm.png);
-	height:22px;
+	height:24px;
 	padding-top: 0px;
-	font-size:12px;
+	font-size:14px;
 	font-weight: bold;
 	color: #666666;
 	text-align:center;
-	padding-bottom:0px;
+	padding:0px;
 	border-top:solid 0px #9f9f9f;
 	border-left:solid 0px #9f9f9f;
 	border-right:solid 0px #9f9f9f;
-	border-bottom:solid 0px #9f9f9f;
 }
+
+.appBoxHeadLt
+{
+        background-image:url(../images/abhlt.png);
+	/*background-image:url(../images/menuTitleLt-bm.png);*/
+	padding:0px;
+	width: 24px;
+	height:24px;
+}
+.appBoxHeadMid
+{
+        background-image:url(../images/abhmid.png);
+	/*background-image:url(../images/menuTitleMid-bm.png);*/
+	padding:0px;
+	line-height:24px;
+}
+.appBoxHeadRt
+{
+        background-image:url(../images/abhrt.png);
+	/*background-image:url(../images/menuTitleRt-bm.png);*/
+	width:24px;
+	padding:0px;
+	height: 24;
+}
+
 
 #divAppbox
 {
 	background-image:url(../images/bmback2.jpg);
 	background-color:#ffffff;
-	padding:5px;
-	border-bottom:solid 3px white;
+	padding:9px;
+	border-bottom:solid 0px #9f9f9f;
 	border-left:solid 1px #9f9f9f;
-	border-right:solid 1px white;
+	border-right:solid 1px #9f9f9f;
 }
 
 /*
@@ -571,10 +675,12 @@ body {
 .row_on {
         color: black;
         background-color: #F1F1F1;
+	background-image: url(../images/rowon-bm.png);
 }
 .row_off {
         color: black;
         background-color: #ffffff;
+	background-image: url(../images/rowoff-bm.png);
 }
 .narrow_column { width: 1%; white-space: nowrap; }
 

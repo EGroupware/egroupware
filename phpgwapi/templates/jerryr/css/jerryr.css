@@ -153,7 +153,13 @@ input[type=image]
 	overflow:visible;
 }
 
-.divLoginbox,.divSidebox 
+#thesideboxcolumn
+{
+        width: 177px;
+        position:relative;
+}
+
+.divLoginbox 
 
 {
 	position:relative;
@@ -163,7 +169,8 @@ input[type=image]
 
 .divSidebox 
 {
-	width: 188px; 
+	position: relative;
+	border: 1px solid #9f9f9f; 
 }
 
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
@@ -176,6 +183,7 @@ input[type=image]
 	font-size:90%;
 	background-color: #a7c4db;
 	border-right: 1px solid #9f9f9f;
+	width: 20px;
 }
 
 .divSideboxHeader,.divLoginboxHeader 
@@ -187,6 +195,26 @@ input[type=image]
 	font-weight:bold;
 	font-size:12px;
 }
+
+.menuHeadLt
+{
+        padding:0px;
+        width: 24px;
+        height:18px;
+}
+.menuHeadMid
+{
+        padding:0px;
+        margin-left: auto;
+	margin-right: auto;
+}
+.menuHeadRt
+{
+        width:24px;
+        padding:0px;
+        height: 18px;
+}
+
 
 a.divSideboxEntry, .divSideboxEntry
 {
@@ -237,9 +265,12 @@ a.textSidebox
 
 .slideoutBack
 {
+	background-image: url(../images/divmain-background.jpg);
+	background-repeat: no-repeat;
         background-color:white;
         border: #17202b 1px solid;
         padding:10px;
+	width: 203px;
 }
 
 .sideboxDrop
