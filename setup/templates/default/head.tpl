@@ -114,7 +114,7 @@
 			<tr>
 				<!-- sidebox column -->
 				<td id="tdSidebox" valign="top">
-					
+					<div id="thesideboxcolumn" style="width:203px">
 					
 					<div class="divSidebox">
 						<div class="divSideboxHeader"><span>{main_menu}</span></div>
@@ -148,6 +148,7 @@
 					</div>
 					<div class="sideboxSpace"></div>
 
+					</div>
 				</td>
 				<!-- end sidebox column -->
 
