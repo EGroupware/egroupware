@@ -52,7 +52,9 @@ class idots_framework extends egw_framework
 	 */
 	function idots_framework($template='idots')
 	{
-		$this->egw_framework($template);		// call the constructor of the extended class
+
+	   $GLOBALS['egw_info']['flags']['include_xajax'] = True;
+	   $this->egw_framework($template);		// call the constructor of the extended class
 	}
 
 	/**
@@ -180,7 +182,6 @@ class idots_framework extends egw_framework
 		   $var['sideboxcolstart'] = '<td id="tdSidebox" valign="top"><div id="thesideboxcolumn" style="width:'.$sideboxwidth.'px">';
 				 $var['sideboxcolstart'] .= '<div style="width:13px;height:13px;right:1px;top:1px;position:absolute;z-index:9999;" id="sideresize">
 					<img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/default/images'.'/resize.png" alt="resize"/>
-
 				 </div>';
 				 $var['remove_padding'] = '';
 				 $this->tpl->set_var($var);
@@ -199,13 +200,7 @@ class idots_framework extends egw_framework
 			  $GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = True;
 		   }
 
-		   require_once(EGW_API_INC.'/xajax.inc.php');
-		   $xajax = new xajax($GLOBALS['egw_info']['server']['webserver_url']."/phpgwapi/templates/idots/ajaxStorePrefs.php");
-		   $xajax->registerFunction("storeEGWPref");
-
 		   $this->tplsav2->assign('sideboxwidth', $sideboxwidth);
-		   $this->tplsav2->assign('xajaxobj',&$xajax);
-		   $this->tplsav2->assign('xajaxincdir',$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js');
 
 		   $GLOBALS['egw_info']['flags']['need_footer'] .= $this->tplsav2->fetch('sidebox_dhtml.tpl.php');
 		}

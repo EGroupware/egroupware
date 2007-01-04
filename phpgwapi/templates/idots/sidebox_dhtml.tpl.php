@@ -1,5 +1,4 @@
 <!-- Savant template - sidebox dhtml -->
-<?php $this->xajaxobj->printJavascript($this->xajaxincdir); ?>
 <script language="JavaScript" type="text/javascript">SET_DHTML("thesideboxcolumn"+NO_DRAG)</script>
 <script language="JavaScript" type="text/javascript">ADD_DHTML("sideresize"+CURSOR_W_RESIZE+MAXOFFBOTTOM+0+MAXOFFTOP+0+MAXOFFLEFT+1000+MAXOFFRIGHT+1000)</script>
 <script language="JavaScript" type="text/javascript">
@@ -17,6 +16,6 @@
 
    function my_DropFunc()
    {
-		 xajax_storeEGWPref('common','idotssideboxwidth',mainbox.w);
+		 xajax_doXMLHTTP("preferences.ajaxpreferences.storeEGWPref","common","idotssideboxwidth",mainbox.w);
    }
 </script>
