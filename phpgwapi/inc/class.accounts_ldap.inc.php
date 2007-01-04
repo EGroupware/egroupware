@@ -621,6 +621,7 @@ class accounts_backend
 		{
 			$query = ldap::quote(strtolower($param['query']));
 	
+			$accounts = array();
 			if($param['type'] != 'groups')
 			{
 				$filter = "(&(objectclass=posixaccount)";
@@ -727,20 +728,13 @@ class accounts_backend
 		}
 		//echo "<p>accounts_backend::search() found $this->total: ".microtime()."</p>\n";
 		// return only the wanted accounts
-		if (is_array($sortedAccounts))
+		reset($sortedAccounts);
+		if(is_numeric($start) && is_numeric($offset))
 		{
-			reset($sortedAccounts);
-			if(is_numeric($start) && is_numeric($offset))
-			{
-				$account_search[$serial]['total'] = $this->total;
-				return $account_search[$serial]['data'] = array_slice($sortedAccounts, $start, $offset);
-			}
-			else
-			{
-				return $sortedAccounts;
-			}
+			$account_search[$serial]['total'] = $this->total;
+			return $account_search[$serial]['data'] = array_slice($sortedAccounts, $start, $offset);
 		}
-		return False;
+		return $sortedAccounts;
 	}
 
 	/**
