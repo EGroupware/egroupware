@@ -85,10 +85,20 @@
 				}
 				$GLOBALS['egw'] = unserialize($_SESSION['egw_object_cache']);
 				
-				$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
+				if (is_object($GLOBALS['egw']))
+				{
+					$GLOBALS['egw']->wakeup2();	// adapt the restored egw-object/enviroment to this request (eg. changed current app)
 	
-				//printf("<p style=\"position: absolute; right: 0px; top: 0px;\">egw-enviroment restored in %d ms</p>\n",1000*(perfgetmicrotime()-$GLOBALS['egw_info']['flags']['page_start_time']));
-				if (is_object($GLOBALS['egw']->translation)) return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
+					//printf("<p style=\"position: absolute; right: 0px; top: 0px;\">egw-enviroment restored in %d ms</p>\n",1000*(perfgetmicrotime()-$GLOBALS['egw_info']['flags']['page_start_time']));
+					if (is_object($GLOBALS['egw']->translation)) return;	// exit this file, as the rest of the file creates a new egw-object and -enviroment
+				}
+				// egw object could NOT be restored from the session, create a new one
+				unset($GLOBALS['egw']);
+				$GLOBALS['egw_info'] = array('flags'=>$GLOBALS['egw_info']['flags']);
+				unset($GLOBALS['egw_info']['flags']['restored_from_session']);
+				unset($_SESSION['egw_info_cache']);
+				unset($_SESSION['egw_included_files']);
+				unset($_SESSION['egw_object_cache']);
 			}
 			//echo "<p>could not restore egw_info and the egw-object!!!</p>\n";
 		}
