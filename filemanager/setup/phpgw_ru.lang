@@ -1,49 +1,115 @@
+%1 already exists as a file	filemanager	ru	%1 уже существует как файл
 application	filemanager	ru	Приложение
+back to file manager	filemanager	ru	Вернуться в управление файлами
+cancel editing %1 without saving	filemanager	ru	Прервать редактирование %1 без сохранения
+cannot create directory because it begins or ends in a space	filemanager	ru	Невозможно создать директорию, т.к. она начинается или заканчивается in a space
+cannot replace %1 because it is a directory	filemanager	ru	Невозможно заменить %1, т.к. это - каталог
+command sucessfully run	filemanager	ru	Команда успешно выполняется
 comment	filemanager	ru	Комментарий
+comments cannot contain "%1"	filemanager	ru	Комментарии не могут содержать "%1"
+copied %1 to %2	filemanager	ru	%1 скопирован в %2
 copy to	filemanager	ru	Копировать В
 copy to:	filemanager	ru	Копировать в:
+could not copy %1 to %2	filemanager	ru	Невозможно скопировать %1 в %2
+could not copy file because no destination directory is given	filemanager	ru	Невозможно скопировать файл, т.к. не указан каталог назначения
+could not create %1	filemanager	ru	Невозможно создать %1
+could not create directory %1	filemanager	ru	Невозможно создать каталог %1
+could not delete %1	filemanager	ru	Невозможно удалить %1
+could not move %1 to %2	filemanager	ru	Невозможно переместить %1 в %2
+could not move file because no destination directory is given	filemanager	ru	Невозможно переместить файл, т.к. не указан каталог назначения
+could not rename %1 to %2	filemanager	ru	Невозможно переименовать %1
+could not save %1	filemanager	ru	Невозможно сохранить %1
 create file	filemanager	ru	Создать файл
 create folder	filemanager	ru	Создать папку
+created	filemanager	ru	Создан
+created %1	filemanager	ru	%1 создан
+created %1,%2	filemanager	ru	Созданы %1, %2
+created by	filemanager	ru	Создан
+created directory %1	filemanager	ru	Создан каталог %1
 date	filemanager	ru	Дата
+default number of upload fields to show	filemanager	ru	Количество полей выгрузки по умолчанию, которое надо отобразить
 delete	filemanager	ru	Удалить
+deleted %1	filemanager	ru	%1 удален
+directory	filemanager	ru	Каталог
+directory %1 already exists	filemanager	ru	Каталог %1 уже существует
+directory %1 does not exist	filemanager	ru	Каталог %1 не существует
+directory names cannot contain "%1"	filemanager	ru	Имена каталогов не могут содержать "%1"
 display attributes	filemanager	ru	Отображаемые атрибуты
 download	filemanager	ru	Скачать
 edit	filemanager	ru	Редактировать
 edit comments	filemanager	ru	Редактировать комментарии
+error running command	filemanager	ru	Ошибка при выполнении команды
+execute	filemanager	ru	Выполнить
+failed to create directory	filemanager	ru	ошибка создания каталога
+fake base dir did not exist, egroupware created a new one.	filemanager	ru	Поддельный Базовый Каталог не существует, eGroupWare создал его.
 file	filemanager	ru	Файл
+file %1 already exists. please edit it or delete it first.	filemanager	ru	Файл %1 уже существует. Пожалуйста - измените или удалите его сначала.
+file %1 could not be created.	filemanager	ru	Файл %1 не может быть создан
 file name	filemanager	ru	Имя Файла
-filemanager	common	ru	Менеджер Файлов
-filemanager preferences	filemanager	ru	Настройки Менеджера Файлов
+file names cannot contain "%1"	filemanager	ru	Имена файлов не могут содержать "%1"
+file names cannot contain \ or /	filemanager	ru	Имена файлов не могут содержать \ или /
+filemanager	common	ru	Управление Файлами
+filemanager preferences	filemanager	ru	Настройки Управления Файлами
 files	filemanager	ru	Файлы
 files in this directory	filemanager	ru	Файлы в данной директории
 folder	filemanager	ru	Папка
 folder up	filemanager	ru	На уровень вверх
 go home	filemanager	ru	в домашний каталог
+go to	filemanager	ru	Перейти
+go to %1	filemanager	ru	Перейти в %1
+go to your home directory	filemanager	ru	Перейти в домашний каталог
+go to:	filemanager	ru	Перейти:
 go up	filemanager	ru	вверх
 home	filemanager	ru	Домашний каталог
 location	filemanager	ru	Расположение
+locked	filemanager	ru	Заблокировано
 mime type	filemanager	ru	MIME Тип
+modified	filemanager	ru	Изменено
+modified by	filemanager	ru	Изменено
 move to	filemanager	ru	Переместить В
 move to:	filemanager	ru	Переместить в:
-no files in this directory.	filemanager	ru	В этой директории нет файлов.
+moved %1 to %2	filemanager	ru	%1 перемещен в %2
+no files in this directory.	filemanager	ru	В этом каталоге нет файлов.
+no version history for this file/directory	filemanager	ru	Нет истории версий для этого файла/каталога
+operation	filemanager	ru	Действие
 other settings	filemanager	ru	Другие Настройки
 owner	filemanager	ru	Владелец
-quick jump to	filemanager	ru	Быстрый переход
+please select a file to delete.	filemanager	ru	Пожалуйста, выберите файл для удаления
+preview %1	filemanager	ru	Предварительный просмотр %1
+preview of %1	filemanager	ru	Предварительный просмотр %1
+quick jump to	filemanager	ru	Быстрый переход в
 reload	filemanager	ru	обновить
 rename	filemanager	ru	Переименовать
+renamed %1 to %2	filemanager	ru	%1 переименован в %2
+replaced %1	filemanager	ru	%1 замещен
+save %1	filemanager	ru	Сохранить %1
+save %1, and go back to file listing	filemanager	ru	Сохранить %1 и вернуться в список файлов
+save all	filemanager	ru	Сохранить все
 save changes	filemanager	ru	Сохранить изменения
+saved %1	filemanager	ru	Сохранено %1
+show	filemanager	ru	Показать
 show ..	filemanager	ru	Показывать ..
+show .files	filemanager	ru	Показывать .files
+show command line (experimental. dangerous.)	filemanager	ru	Показать командную строку (ЭСПЕРИМЕНТАЛЬНО. ОПАСНО.)
+show help	filemanager	ru	Показать помощь
 size	filemanager	ru	Размер
 sort by:	filemanager	ru	Сортировать по:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	ru	Будущий менеджер файлов, сейчас - ТОЛЬКО ДЛЯ ЦЕЛЕЙ ТЕСТИРОВАНИЯ, пожалуйста, высылайте отчеты об ошибках
 total files	filemanager	ru	Всего файлов
+unknown mime-type defaults to text/plain when viewing	filemanager	ru	Значения по умолчанию для неизвестного MIME типа для простого текста при просмотре
+unused space	filemanager	ru	Неиспользованное пространство
+up	filemanager	ru	Вверх
 update	filemanager	ru	Обновить
-upload	filemanager	ru	Загрузить
-upload fields	filemanager	ru	поля  загрузки
-upload files	filemanager	ru	Загрузить файлы
+updated comment for %1	filemanager	ru	Обновлен комментарий к %1
+upload	filemanager	ru	Выгрузить
+upload fields	filemanager	ru	поля выгрузки
+upload files	filemanager	ru	Выгрузить файлы
+use new experimental filemanager?	filemanager	ru	Использовать новый эспериментальный Менеджер Файлов?
 used space	filemanager	ru	Место на диске
 users	filemanager	ru	Пользователи
 version	filemanager	ru	Версия
 view documents in new window	filemanager	ru	Отображать документ в новом окне
 view documents on server (if available)	filemanager	ru	Просматривать документ на сервере (если возможно)
+who	filemanager	ru	Кто
 you do not have access to %1	filemanager	ru	У вас нет прав доступа к %1
-your home dir did not exist, egroupware created a new one.	filemanager	ru	Ваша домашняя директория не существует, eGroupWare создаст новую.
+your home dir did not exist, egroupware created a new one.	filemanager	ru	Ваш домашний каталог не существует, eGroupWare создаст новый.

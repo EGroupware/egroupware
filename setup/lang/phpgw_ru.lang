@@ -1,34 +1,205 @@
-%1 does not exist !!!	setup	ru	%1 не  существует
-add a domain	setup	ru	Добавить домен
+%1 does not exist !!!	setup	ru	%1 не  существует !!!
+%1 is %2%3 !!!	setup	ru	%1 это %2%3 !!!
+(searching accounts and changing passwords)	setup	ru	(поиск экаунтов и смена паролей
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	ru	Не обновляйте базу данных с помощью via setup
+*** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	ru	*** Сделайте изменения вручную в вашем php.ini
+00 (disable)	setup	ru	00 (отключить/рекомендовано)
+13 (ntp)	setup	ru	13 (ntp)
+80 (http)	setup	ru	80 (http)
+accounts existing	setup	ru	Экаунты существующие
+actions	setup	ru	Действия
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	ru	Добавить автоматически созданных пользователей для этой группы
+add new database instance (egw domain)	setup	ru	Добавьте новую операцию в базу данных
 additional settings	setup	ru	Дополнительные установки
 admin first name	setup	ru	Имя администратора
 admin last name	setup	ru	Фамилия Администратора
 admin password	setup	ru	Пароль администратора
 admin password to header manager	setup	ru	Пароль администратора к header файлу
+admin username	setup	ru	Имя администратора
+admins	setup	ru	Администраторы
 all applications	setup	ru	все приложения
+all languages (incl. not listed ones)	setup	ru	все языки
 all users	setup	ru	Все пользователи
+allow authentication via cookie	setup	ru	Разрешить идентификация
+allow password migration	setup	ru	Разрешить перемещение паролей
+allowed migration types (comma-separated)	setup	ru	Разрешить типы перемещений
+analysis	setup	ru	Анализ
+and reload your webserver, so the above changes take effect !!!	setup	ru	И перезагрузите свой web сервер,чтобы изменения вступили в силу
+app details	setup	ru	Описание приложения
+app install/remove/upgrade	setup	ru	Установка приложения/удаление/обновление
+app process	setup	ru	Процесс приложения
+application data	setup	ru	Данныен приложения
+application list	setup	ru	Список приложений
+application management	setup	ru	Управление приложениями
+application name and status	setup	ru	Название и состояние приложения
+application name and status information	setup	ru	информация о названии состоянии приложения
+application title	setup	ru	Заголовок приложения
+application: %1, file: %2, line: "%3"	setup	ru	Приложение: %1,файл: %2,линия: "%3"
 are you sure you want to delete your existing tables and data?	setup	ru	Вы уверены, что хотите удалить все существующие таблицы и данные?
 are you sure?	setup	ru	ВЫ УВЕРЕНЫ?
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	ru	По вашему запросу, данный скрипт попытается обновить ваши старые приложения до текущей версии
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	ru	По вашему запросу, данный скрипт попытается обновить старые таблицы и перевести их в новый формат
 authentication / accounts	setup	ru	Авторизация / Учетные записи
+available version	setup	ru	Доступная версия
+back to the previous screen	setup	ru	Вернуться к предыдущему
+back to user login	setup	ru	Назад к логину пользователя
+back's up your db now, this might take a view minutes	setup	ru	создайте резервную копию базы данных,это может занять несколько минут
+backup '%1' deleted	setup	ru	резервная копия '%1' удалена
+backup '%1' renamed to '%2'	setup	ru	резервная копия '%1' переименованная в '%2'
+backup '%1' restored	setup	ru	резервная копия '%1' восстановлена
+backup and restore	setup	ru	создать резервную копию и восстановить
+backup failed	setup	ru	ошибка при создании резервной копии
+backup finished	setup	ru	создание резервной копии завершено
+backup now	setup	ru	создать резервную копию сейчас
+backup sets	setup	ru	резервная копия устанавливается
+backup started, this might take a view minutes ...	setup	ru	резервная копия запущена,это может занять несколько минут
+because it depends upon	setup	ru	потому что зависит от
+because it is not a user application, or access is controlled via acl	setup	ru	потому что это не пользовательское приложения
+because it was manually disabled	setup	ru	т.к. отключено вручную
+because of a failed upgrade or install	setup	ru	т.к. произошла ошибка обновления или установки
+because of a failed upgrade, or the database is newer than the installed version of this app	setup	ru	т.к. произошла ошибка обновления,или база данных новее,чем установленнаяч версия данного приложения
+cancel	setup	ru	Отменить
 change system-charset	setup	ru	Изменить кодировку
 charset	setup	ru	koi8-r
 charset to convert to	setup	ru	Конвертировать в кодировку
 check installation	setup	ru	Проверка установки
+check ip address of all sessions	setup	ru	проверить ipадрес всех сессий
+checking extension %1 is loaded or loadable	setup	ru	Проверка расширений %1 загружена или загружаема
+checking for gd support...	setup	ru	Проверка GD поддержки
+checking pear%1 is installed	setup	ru	Проверка PEAR %! установлена
 checking php.ini	setup	ru	Проверка php.ini
+checking required php version %1 (recommended %2)	setup	ru	Проверка запрошенной PHP версии %1 (рекомендовано %2)
 checking the egroupware installation	setup	ru	Проверка установки eGroupWare
+click here	setup	ru	Кликните здесь
 click here to re-run the installation tests	setup	ru	Кликните здесь для повторной проверки установки
 completed	setup	ru	Готово
 config password	setup	ru	Пароль конфигурации
+config username	setup	ru	Имя конфигурации
+configuration	setup	ru	Конфигурация
+configuration completed	setup	ru	Конфигурация завершена
+configuration password	setup	ru	Пароль конфигурации
+configuration user	setup	ru	Конфигурация пользователя
+configure now	setup	ru	Сконфигурировать сейчас
+confirm to delete this backup?	setup	ru	Подтвердите удаление резервной копии
+contain	setup	ru	содержит
+continue	setup	ru	Продолжить
+continue to the header admin	setup	ru	Продолжить к Header Admin
+convert	setup	ru	Конвертируйте
+could not open header.inc.php for writing!	setup	ru	Невозможно открыть header.inc.php для работы
+country selection	setup	ru	Выбор страны
+create	setup	ru	Создать
+create a backup before upgrading the db	setup	ru	создать резервную копию базы данных перед обновлением
 create your header.inc.php	setup	ru	Создайте файл your header.inc.php
 created	setup	ru	создан
+created header.inc.php!	setup	ru	header.inc.php сознана!
+creating tables	setup	ru	Создание таблиц
+current system-charset	setup	ru	Теущий набор символов
+current system-charset is %1.	setup	ru	Теущий набор символов %1
 current version	setup	ru	Текущая версия
+currently installed languages: %1 <br />	setup	ru	Установленные языки: %1
+database instance (egw domain)	setup	ru	Операция базы данных
+database successfully converted from '%1' to '%2'	setup	ru	База данных успешно  переделана из %1 в %2
+datebase	setup	ru	База данных
+day	setup	ru	день
+day of week<br />(0-6, 0=sunday)	setup	ru	день недели
+db backup and restore	setup	ru	База данных резервнач копия и восстановление
+db host	setup	ru	База данных хост
+db name	setup	ru	База данных имя
+db password	setup	ru	База данных пароль
+db port	setup	ru	База данных порт
+db root password	setup	ru	База данных пароль
+db root username	setup	ru	База данных имя пользователя
+db type	setup	ru	База данных тип
+db user	setup	ru	База данных пользователь
+default	setup	ru	рекомендовано по умолчанию
+delete	setup	ru	Удалить
+delete all my tables and data	setup	ru	Удалить все мои таблицы и содержимое
+delete all old languages and install new ones	setup	ru	Удалить старые языки и установить новые
+deleting tables	setup	ru	Удаление таблиц
+demo server setup	setup	ru	Демо версия установки сервера
+deny access	setup	ru	Отсменить доступ
+details for admin account	setup	ru	Описание администраторского экаунта
+does not exist	setup	ru	не существует
+domain	setup	ru	Преобладание
+domain name	setup	ru	Преобладающее название
+dont touch my data	setup	ru	Не использовать мои данные
 download	setup	ru	Скачать
+edit current configuration	setup	ru	редактировать текущую конфигурацию
+edit your existing header.inc.php	setup	ru	Редактировать вашу существующий
 edit your header.inc.php	setup	ru	Редактировать  header.inc.php
+egroupware administration manual	setup	ru	Ручное управление eGroupWare
+enable ldap version 3	setup	ru	включить версию 3 LDAP
+enable mcrypt	setup	ru	Включить MCrypt
+enter the site password for peer servers	setup	ru	Введите пароль для равноправных пользователей
+enter the site username for peer servers	setup	ru	Введите название сайта для равноправных пользователей
+enter the title for your site	setup	ru	Введите заголовок для вашего сайта
+enter your default ftp server	setup	ru	Введите ваш FTP сервер по умолчанию
+enter your http proxy server	setup	ru	Введите ваш HTTP прокси сервер
+enter your http proxy server password	setup	ru	Введите ваш HTTP пароль прокси сервера
+enter your http proxy server port	setup	ru	Введите ваш HTTP порт прокси сервера
+enter your http proxy server username	setup	ru	Введите ваш HTTP имя пользователя прокси сервера
+error in admin-creation !!!	setup	ru	Ошибка при создании админа !!!
+error in group-creation !!!	setup	ru	Ошибка при создании группы
+export egroupware accounts from sql to ldap	setup	ru	Экспорт экаунтов из SQL  в LDAP
+export has been completed!  you will need to set the user passwords manually.	setup	ru	Экспорт завершен.Введите пароль вручную
+export sql users to ldap	setup	ru	Экспорт пользователей
+false	setup	ru	Ошибка
+file	setup	ru	ФАЙЛ
+file type, size, version, etc.	setup	ru	тип файла,размер,версия,и т.д.
+filename	setup	ru	имя файла
+filesystem	setup	ru	система файлов
+for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	ru	Для новой установки выбирете импорт.превратить существующие SQL экаунты В LDAP , выбирете экспорт
+go back	setup	ru	Вернуться
+go to	setup	ru	Перейти к
+grant access	setup	ru	Обширный доступ
+header admin login	setup	ru	Логин Header Admin
+header password	setup	ru	Пароль Header
+header username	setup	ru	Имя пользователя Header
+historylog removed	setup	ru	Журнал истории удален
+host information	setup	ru	Информация о  хосте
+hostname/ip of database server	setup	ru	Имя хоста/ IP адрес базы данных сервера
+hour (0-24)	setup	ru	часы(0-24)
+however, the application is otherwise installed	setup	ru	однаок, приложение установлено
+however, the application may still work	setup	ru	однако,приложение может работать
+if using ads (active directory) authentication	setup	ru	используя ADS идентификацию
+if using ldap	setup	ru	используя LDAP
+if using ldap, do you want to manage homedirectory and loginshell attributes?	setup	ru	используя LDAP,вы хотите управлять домашними директориями и loginshell атрибутами
+if you did not receive any errors, your applications have been	setup	ru	Если вы не получили уведомлений об ошибках,ваше приложение успешно
+if you did not receive any errors, your tables have been	setup	ru	Если вы не получили уведомлений об ошибках,ваши таблицы успешны
+if you running this the first time, don't forget to manualy %1 !!!	setup	ru	Работая с этим в первый раз,не забудьте вручную %1 !!!
+if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	ru	Если вы используете языки того же набора,вам не нужно устанавливать систему наборов языков
+image type selection order	setup	ru	порядок выбора типов изображений
+import has been completed!	setup	ru	Импорт завершен
+import ldap users/groups	setup	ru	Импорт ldap пользователей/групп
+importing old settings into the new format....	setup	ru	Импортирование новых установок в новый формат
+install	setup	ru	Установить
 install all	setup	ru	Установить все
+install applications	setup	ru	Установить приложения
+install backup	setup	ru	Установить резервную копию
 install language	setup	ru	Установить язык
+installed	setup	ru	установлено
+instructions for creating the database in %1:	setup	ru	Инструкции по созданию базы данных в %1
+invalid ip address	setup	ru	Неверный ipадрес
+invalid mcrypt algorithm/mode combination	setup	ru	Неверный Mcrypt Algorithm/комбинация типов
 invalid password	setup	ru	Неправильный пароль
+is broken	setup	ru	не работает
+is disabled	setup	ru	отключен
+ldap account import/export	setup	ru	LDAP экаунт импорт/экспорт
+ldap accounts configuration	setup	ru	LDAP конфигурация экаунта
+ldap accounts context	setup	ru	LDAP контекст
+ldap config	setup	ru	LDAP конфигурация
+ldap default shell (e.g. /bin/bash)	setup	ru	LDAP оболочка по умолчанию
+ldap encryption type	setup	ru	LDAP шифрование типов
+ldap export	setup	ru	LDAP экспорт
+ldap export users	setup	ru	LDAP пользователи экспорта
+ldap groups context	setup	ru	LDAP групповой контекст
+ldap host	setup	ru	LDAP хост
+ldap import	setup	ru	LDAP импорт
+ldap import users	setup	ru	LDAP пользоватли импорта
+ldap modify	setup	ru	LDAP модификация
+ldap root password	setup	ru	LDAP пароль
+ldap rootdn	setup	ru	LDAP корневой dn
+ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	ru	LDAP поисковые фильтры для экаунтов
 never	setup	ru	никогда
 no	setup	ru	Нет
 really uninstall all applications	setup	ru	Действительно деинсталировать все приложения?

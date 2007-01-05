@@ -144,6 +144,7 @@ global categories	addressbook	zh-tw	全域類別
 grant addressbook access	common	zh-tw	允許存取通訊錄
 group %1	addressbook	zh-tw	群組 %1
 home address	addressbook	zh-tw	住家住址
+home address, birthday, ...	addressbook	zh-tw	住家住址、生日、...
 home city	addressbook	zh-tw	縣/市
 home country	addressbook	zh-tw	國家/地區
 home email	addressbook	zh-tw	電子郵件
@@ -181,6 +182,8 @@ list all customfields	addressbook	zh-tw	列出所有自訂欄位
 load vcard	addressbook	zh-tw	讀取名片檔
 locations	addressbook	zh-tw	位置
 mark records as private	addressbook	zh-tw	標示為私人記錄
+merge into first or account, deletes all other!	addressbook	zh-tw	合併到第一個或是帳號，刪除其他的！
+merged	addressbook	zh-tw	合併了
 message phone	addressbook	zh-tw	留言電話
 middle name	addressbook	zh-tw	中間欄位
 migration finished	addressbook	zh-tw	轉換完成
@@ -191,6 +194,7 @@ modem phone	addressbook	zh-tw	撥接電話
 more ...	addressbook	zh-tw	詳細 ...
 moved	addressbook	zh-tw	移動了
 multiple vcard	addressbook	zh-tw	多重名片檔
+name, address	addressbook	zh-tw	名稱,住址
 no vcard	addressbook	zh-tw	沒有VCard
 number	addressbook	zh-tw	數字
 number of records to read (%1)	addressbook	zh-tw	讀取記錄號碼(%1)
@@ -265,6 +269,7 @@ type	addressbook	zh-tw	類型
 update a single entry by passing the fields.	addressbook	zh-tw	從欄位更新一筆資料。
 upload or delete the photo	addressbook	zh-tw	上傳或是刪除照片
 url to link telephone numbers to (use %1 for the number)	admin	zh-tw	要引用電話號碼的網址（使用 %1 來替代號碼）
+use an extra category tab?	addressbook	zh-tw	使用附加類別標籤？
 use country list	addressbook	zh-tw	使用國家清單
 use setup for a full account-migration	admin	zh-tw	使用安裝程式來完整轉換帳號
 used for links and for the own sorting of the list	addressbook	zh-tw	用在連結以及自訂排序清單

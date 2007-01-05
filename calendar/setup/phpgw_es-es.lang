@@ -8,6 +8,7 @@ accepted	calendar	es-es	Aceptado
 access denied to the calendar of %1 !!!	calendar	es-es	¡Acceso denegado al calendario de %1!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	es-es	Acción que causó la notificación: Añadido, Cancelado, Aceptado, Rechazado, ...
 actions	calendar	es-es	Acciones
+actions...	calendar	es-es	Acciones...
 add alarm	calendar	es-es	Añadir alarma
 added	calendar	es-es	Añadido
 after current date	calendar	es-es	Después de la fecha actual
@@ -47,7 +48,7 @@ copy of:	calendar	es-es	Copia de:
 copy this event	calendar	es-es	Copiar este evento
 countries	calendar	es-es	Paises
 country	calendar	es-es	País
-create an exception at this recuring event	calendar	es-es	Crear una excepción en este evento recurrente
+create an exception for the given date	calendar	es-es	Crear una excepción para la fecha indicada
 create new links	calendar	es-es	Crear enlaces nuevos
 csv	calendar	es-es	CSV
 csv-fieldname	calendar	es-es	CSV - Nombre del campo
@@ -102,6 +103,7 @@ event saved	calendar	es-es	Evento guardado
 event will occupy the whole day	calendar	es-es	El evento ocupará todo el día
 exception	calendar	es-es	Excepción
 exceptions	calendar	es-es	Excepciones
+execute a further action for this entry	calendar	es-es	Ejecutar una acción más para esta entrada
 existing links	calendar	es-es	Enlaces existentes
 export	calendar	es-es	Exportar
 extended	calendar	es-es	Extendido
@@ -213,6 +215,7 @@ previous	calendar	es-es	anterior
 private and global public	calendar	es-es	Privado y público global
 private and group public	calendar	es-es	Privado y público global
 private only	calendar	es-es	Privado solamente
+quantity	calendar	es-es	Cantidad
 re-edit event	calendar	es-es	Volver a editar evento
 receive email updates	calendar	es-es	Recibir actualizaciones de correo
 receive summary of appointments	calendar	es-es	Recibir resumen de las citas
@@ -283,6 +286,7 @@ two weeks	calendar	es-es	dos semanas
 updated	calendar	es-es	Actualizado
 use end date	calendar	es-es	Usar fecha final
 use the selected time and close the popup	calendar	es-es	usar la hora seleccionada y cerrar la ventana
+user or group	calendar	es-es	Usuario o grupo
 view this event	calendar	es-es	Ver este evento
 views with fixed time intervals	calendar	es-es	Vistas con intervalos de tiempo fijos
 wed	calendar	es-es	Mié

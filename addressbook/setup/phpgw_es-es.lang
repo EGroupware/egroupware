@@ -55,6 +55,7 @@ business zip code	addressbook	es-es	Código postal del trabajo
 calendar uri	addressbook	es-es	URI del calendario
 can be changed via setup >> configuration	admin	es-es	Puede modificarse desde Instalación -> Configuración
 car phone	addressbook	es-es	Teléfono del coche
+categories, notes, ...	addressbook	es-es	Categorías, Notas, ...
 cell phone	addressbook	es-es	Teléfono móvil
 change all organisation members	addressbook	es-es	cambiar todos los miembros de la organización
 charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
@@ -139,11 +140,13 @@ fieldseparator	addressbook	es-es	Separador de campos
 for read only ldap	admin	es-es	para LDAP de sólo lectura
 freebusy uri	addressbook	es-es	URI para disponibilidad
 full name	addressbook	es-es	Nombre completo
+general	addressbook	es-es	General
 geo	addressbook	es-es	GEO
 global categories	addressbook	es-es	Categorías globales
 grant addressbook access	common	es-es	Conceder acceso a la libreta de direcciones
 group %1	addressbook	es-es	Grupo %1
 home address	addressbook	es-es	Domicilio particular
+home address, birthday, ...	addressbook	es-es	Domicilio particular, Cumpleaños, ...
 home city	addressbook	es-es	Ciudad de residencia
 home country	addressbook	es-es	País de residencia
 home email	addressbook	es-es	Correo electrónico personal
@@ -181,6 +184,8 @@ list all customfields	addressbook	es-es	Lista de todos los campos personalizados
 load vcard	addressbook	es-es	Cargar VCard
 locations	addressbook	es-es	ubicaciones
 mark records as private	addressbook	es-es	Marcar registros como privados
+merge into first or account, deletes all other!	addressbook	es-es	¡Mezclar en el primero o cuenta, borra todos los demás!
+merged	addressbook	es-es	Mezclado
 message phone	addressbook	es-es	Teléfono de mensajes
 middle name	addressbook	es-es	Segundo nombre
 migration finished	addressbook	es-es	Migración finalizada
@@ -191,6 +196,7 @@ modem phone	addressbook	es-es	Teléfono módem
 more ...	addressbook	es-es	Más...
 moved	addressbook	es-es	movido
 multiple vcard	addressbook	es-es	VCard múltiple
+name, address	addressbook	es-es	Nombre, Dirección
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
@@ -265,6 +271,7 @@ type	addressbook	es-es	Tipo
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos
 upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
 url to link telephone numbers to (use %1 for the number)	admin	es-es	URL para vincular números de teléfono (use %1 para el número)
+use an extra category tab?	addressbook	es-es	¿Usar una pestaña extra para categorías?
 use country list	addressbook	es-es	Utilizar lista de países
 use setup for a full account-migration	admin	es-es	Use la instalación para una migración completa de las cuentas
 used for links and for the own sorting of the list	addressbook	es-es	utilizado para los enlaces y para el orden propio de la lista
