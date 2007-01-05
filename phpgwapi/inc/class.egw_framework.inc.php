@@ -108,9 +108,7 @@ class egw_framework
 	 * @return string with html
 	 */
 	function topmenu()
-	{
-		die('virtual, need to be reimplemented in the template!!!');		
-	}
+	{}
 
 	/**
 	 * Returns the html from the body-tag til the main application area (incl. opening div tag)
