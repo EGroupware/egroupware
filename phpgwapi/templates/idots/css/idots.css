@@ -255,7 +255,32 @@ body {
 	position:absolute;
 	left:30px;
 	top:15px;
-	z-index:51;
+	z-index:999;
+}
+
+#topmenu
+{
+	background-color: #0081c1;
+	background-image: url(../images/bgtopmenu2.png);
+	color:#006699;
+	border-top: solid 2px #7e7e7e;
+	border-bottom: solid #5793ff 1px;
+	height:20px;
+	padding-top:4px ;
+	line-height:16px;
+}
+#topmenu a
+{
+	color:#006699;
+}
+
+#topmenu_items
+{
+	float:left;
+}
+#topmenu_info
+{
+	float:right;
 }
 
 #divUpperTabs

@@ -1094,9 +1094,13 @@
 			
 			if (!$GLOBALS['egw_info']['flags']['nonavbar'])
 			{
-				echo $GLOBALS['egw']->framework->navbar();
+			   if($GLOBALS['egw_info']['user']['preferences']['common']['show_top_menu'] == 'yes')
+			   {
+				  echo $GLOBALS['egw']->framework->topmenu();
+			   }
+			   echo $GLOBALS['egw']->framework->navbar();
 			}
-		}
+		 }
 
 		/**
 		 * load the eGW footer

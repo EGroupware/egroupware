@@ -81,19 +81,33 @@ class egw_framework
 		
 		if (!isset($GLOBALS['egw_info']['flags']['nonavbar']) || !$GLOBALS['egw_info']['flags']['nonavbar'])
 		{
-			echo $this->navbar();
+		   if($GLOBALS['egw_info']['user']['preferences']['common']['show_top_menu'] == 'yes')
+		   {
+			  echo $this->topmenu();
+		   }
+		   echo $this->navbar();
 		}
 		echo $content;
-		
+
 		echo $this->footer();
-	}
-	
+	 }
+
 	/**
 	 * Returns the html-header incl. the opening body tag
 	 *
 	 * @return string with html
 	 */
 	function header()
+	{
+		die('virtual, need to be reimplemented in the template!!!');		
+	}
+
+	/**
+	 * Returns the html for the top menu  
+	 * 
+	 * @return string with html
+	 */
+	function topmenu()
 	{
 		die('virtual, need to be reimplemented in the template!!!');		
 	}
@@ -301,10 +315,8 @@ class egw_framework
 		// quick add selectbox
 		$var['quick_add'] = $this->_get_quick_add();
 
-		$now = time();
-		$var['user_info'] = '<b>'.$GLOBALS['egw']->common->display_fullname() .'</b>'. ' - '
-			. lang($GLOBALS['egw']->common->show_date($now,'l')) . ' '
-			. $GLOBALS['egw']->common->show_date($now,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+		$var['user_info'] = $this->_user_time_info();
+		
 
 		if($GLOBALS['egw_info']['user']['lastpasswd_change'] == 0)
 		{
@@ -340,7 +352,23 @@ class egw_framework
 		
 		return $var;
 	}
-	
+
+	/**
+	* Returns html with user and time
+	* 
+	* @access protected
+	* @return void
+	*/
+	function _user_time_info()
+	{
+	   $now = time();
+	   $user_info = '<b>'.$GLOBALS['egw']->common->display_fullname() .'</b>'. ' - '
+	   . lang($GLOBALS['egw']->common->show_date($now,'l')) . ' '
+	   . $GLOBALS['egw']->common->show_date($now,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
+
+	   return $user_info;
+	}
+
 	/**
 	 * Prepare the quick add selectbox
 	 *

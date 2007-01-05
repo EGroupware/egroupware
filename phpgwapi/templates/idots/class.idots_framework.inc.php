@@ -55,6 +55,9 @@ class idots_framework extends egw_framework
 
 	   $GLOBALS['egw_info']['flags']['include_xajax'] = True;
 	   $this->egw_framework($template);		// call the constructor of the extended class
+
+	   $this->tplsav2 = CreateObject('phpgwapi.tplsavant2');
+	   $this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
 	}
 
 	/**
@@ -93,9 +96,6 @@ class idots_framework extends egw_framework
 	 */
 	function navbar()
 	{
-	    $this->tplsav2 = CreateObject('phpgwapi.tplsavant2');
-		$this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
-
 		$this->navbar_done = true;
 
 		// the navbar
@@ -128,81 +128,92 @@ class idots_framework extends egw_framework
 		$content = $this->tpl->fp('out','navbar_header');
 
 		// general (app-unspecific) sidebox menu
-		$menu_title = lang('General Menu');
-
-		$file['Home'] = $apps['home']['url'];
-		if($GLOBALS['egw_info']['user']['apps']['preferences'])
+		if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_sideboxmenu']!='no')
 		{
-			$file['Preferences'] = $apps['preferences']['url'];
+		   $menu_title = lang('General Menu');
+
+		   $file['Home'] = $apps['home']['url'];
+		   if($GLOBALS['egw_info']['user']['apps']['preferences'])
+		   {
+			  $file['Preferences'] = $apps['preferences']['url'];
+		   }
+		   $file += array(
+			  array(
+				 'text'    => lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']),
+				 'no_lang' => True,
+				 'link'    => $apps['about']['url']
+			  ),
+			  $GLOBALS['egw_info']['user']['userid'] != 'anonymous' ? 'Logout' : 'Login' =>$apps['logout']['url']
+		   );
+		   $this->sidebox('',$menu_title,$file);
 		}
-		$file += array(
-			array(
-				'text'    => lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']),
-				'no_lang' => True,
-				'link'    => $apps['about']['url']
-			),
-			$GLOBALS['egw_info']['user']['userid'] != 'anonymous' ? 'Logout' : 'Login' =>$apps['logout']['url']
-		);
-		$this->sidebox('',$menu_title,$file);
+		
 		$GLOBALS['egw']->hooks->single('sidebox_menu',$GLOBALS['egw_info']['flags']['currentapp']);
-
-		if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox'])
+		
+		if($this->sidebox_content)
 		{
-			$this->tpl->set_var('lang_show_menu',lang('show menu'));
-			$content .= $this->tpl->parse('out','sidebox_hide_header');
+		   if($GLOBALS['egw_info']['user']['preferences']['common']['auto_hide_sidebox'])
+		   {
+			  $this->tpl->set_var('lang_show_menu',lang('show menu'));
+			  $content .= $this->tpl->parse('out','sidebox_hide_header');
 
-			$content .= $this->sidebox_content;	// content from calls to $this->sidebox
-			
-			$content .= $this->tpl->parse('out','sidebox_hide_footer');
+			  $content .= $this->sidebox_content;	// content from calls to $this->sidebox
 
-			$var['sideboxcolstart']='';
+			  $content .= $this->tpl->parse('out','sidebox_hide_footer');
 
-			$this->tpl->set_var($var);
-			$content .= $this->tpl->parse('out','appbox');
-			$var['remove_padding'] = 'style="padding-left:0px;"';
-			$var['sideboxcolend'] = '';
+			  $var['sideboxcolstart']='';
+
+			  $this->tpl->set_var($var);
+			  $content .= $this->tpl->parse('out','appbox');
+			  $var['remove_padding'] = 'style="padding-left:0px;"';
+			  $var['sideboxcolend'] = '';
+		   }
+		   else
+		   {
+			  $GLOBALS['phpgw']->preferences->read_repository();
+
+			  $prefs = array();
+
+			  if ($GLOBALS['egw_info']['user']['preferences']['common'])
+			  {
+				 $sideboxwidth = $GLOBALS['egw_info']['user']['preferences']['common']['idotssideboxwidth'];
+			  }
+			  if(intval($sideboxwidth)<1)
+			  {
+				 $sideboxwidth = 203;
+			  }
+
+			  $var['menu_link'] = '';
+
+			  $var['sideboxcolstart'] = '<td id="tdSidebox" valign="top"><div id="thesideboxcolumn" style="width:'.$sideboxwidth.'px">';
+					$var['sideboxcolstart'] .= '<div style="width:13px;height:13px;right:1px;top:1px;position:absolute;z-index:9999;" id="sideresize">
+					   <img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/default/images'.'/resize.png" alt="resize"/>
+					</div>';
+					$var['remove_padding'] = '';
+					$this->tpl->set_var($var);
+					$content .= $this->tpl->parse('out','appbox');
+
+					$content .= $this->sidebox_content;
+
+					$var['sideboxcolend'] = '</div></td>';
+
+			  // Add DHTML for resizing sidebox menu
+			  // include wz_dragdrop once
+			  if(!$GLOBALS['egw_info']['flags']['wz_dragdrop_included'])
+			  {
+				 $GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- BEGIN JavaScript for wz_dragdrop.js -->\n";
+				 $GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_dragdrop/wz_dragdrop.js"></script>'."\n";
+				 $GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = True;
+			  }
+
+			  $this->tplsav2->assign('sideboxwidth', $sideboxwidth);
+
+			  $GLOBALS['egw_info']['flags']['need_footer'] .= $this->tplsav2->fetch('sidebox_dhtml.tpl.php');
+		   }
 		}
 		else
 		{
-		   $GLOBALS['phpgw']->preferences->read_repository();
-
-		   $prefs = array();
-
-		   if ($GLOBALS['egw_info']['user']['preferences']['common'])
-		   {
-			  $sideboxwidth = $GLOBALS['egw_info']['user']['preferences']['common']['idotssideboxwidth'];
-		   }
-		   if(intval($sideboxwidth)<1)
-		   {
-			  $sideboxwidth = 203;
-		   }
-
-		   $var['menu_link'] = '';
-
-		   $var['sideboxcolstart'] = '<td id="tdSidebox" valign="top"><div id="thesideboxcolumn" style="width:'.$sideboxwidth.'px">';
-				 $var['sideboxcolstart'] .= '<div style="width:13px;height:13px;right:1px;top:1px;position:absolute;z-index:9999;" id="sideresize">
-					<img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/default/images'.'/resize.png" alt="resize"/>
-				 </div>';
-				 $var['remove_padding'] = '';
-				 $this->tpl->set_var($var);
-				 $content .= $this->tpl->parse('out','appbox');
-
-				 $content .= $this->sidebox_content;
-
-				 $var['sideboxcolend'] = '</div></td>';
-
-		   // Add DHTML for resizing sidebox menu
-		   // include wz_dragdrop once
-		   if(!$GLOBALS['egw_info']['flags']['wz_dragdrop_included'])
-		   {
-			  $GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- BEGIN JavaScript for wz_dragdrop.js -->\n";
-			  $GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_dragdrop/wz_dragdrop.js"></script>'."\n";
-			  $GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = True;
-		   }
-
-		   $this->tplsav2->assign('sideboxwidth', $sideboxwidth);
-
-		   $GLOBALS['egw_info']['flags']['need_footer'] .= $this->tplsav2->fetch('sidebox_dhtml.tpl.php');
+		   $var['sideboxcolend']='';		   
 		}
 
 		$this->tpl->set_var($var);
@@ -428,7 +439,13 @@ class idots_framework extends egw_framework
 	 */
 	function _get_navbar($apps)
 	{
-		$var = parent::_get_navbar($apps);
+	   $var = parent::_get_navbar($apps);
+
+	   if($GLOBALS['egw_info']['user']['preferences']['common']['show_top_menu'] == 'yes')
+	   {
+		$var['quick_add'] = '';
+		  $var['user_info']='';
+	   }
 
 		if($GLOBALS['egw_info']['user']['preferences']['common']['click_or_onmouseover'] == 'onmouseover')
 		{
@@ -535,6 +552,66 @@ class idots_framework extends egw_framework
 		return $var;
 	}
 
+	/**
+	* Add menu items to the topmenu template class to be displayed 
+	 * 
+	 * @param string $app application name
+	 * @param mixed $alt_label string with alternative menu item label default value = null 
+	 * @access protected
+	 * @return void
+	 */
+	function _add_topmenu_item($app,$alt_label=null)
+	{
+	   $_item['url'] = $this->apps[$app]['url'];
+	   $_item['label'] = ($alt_label?$alt_label:$this->apps[$app]['title']);
+	   $this->tplsav2->menuitems[$app] = $_item;
+	   $this->tplsav2->icon_or_star = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png';
+	}
+
+	/**
+	 * Add info items to the topmenu template class to be displayed 
+	 * 
+	 * @param string $content html of item
+	 * @access protected
+	 * @return void
+	 */
+	function _add_topmenu_info_item($content)
+	{
+	   $this->tplsav2->menuinfoitems[] = $content;
+	}
+
+	/**
+	* Display the string with html of the topmenu if its enabled
+	 * 
+	 * @return void
+	 */
+	function topmenu()
+	{
+	   $this->tplsav2->menuitems = array();
+	   $this->tplsav2->menuinfoitems = array();
+
+	   $this->apps = $this->_get_navbar_apps();
+	   
+	   $this->_add_topmenu_item('home');
+
+	   /*if($GLOBALS['egw_info']['user']['apps']['manual'])
+	   {
+		  $this->_add_topmenu_item('manual');
+	   }
+	   */
+	   if($GLOBALS['egw_info']['user']['apps']['preferences'])
+	   {
+		  $this->_add_topmenu_item('preferences');
+	   }
+
+	   $this->_add_topmenu_item('about',lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
+	   $this->_add_topmenu_item('logout');
+
+	   $this->_add_topmenu_info_item($this->_user_time_info());
+	   $this->_add_topmenu_info_item($this->_get_quick_add());
+
+	   $this->tplsav2->display('topmenu.tpl.php');
+	}
 
 	/**
 	 * Returns the html from the closing div of the main application area to the closing html-tag
@@ -595,7 +672,6 @@ class idots_framework extends egw_framework
 	 */
 	function sidebox($appname,$menu_title,$file)
 	{
-
 	   if(!$appname || ($appname==$GLOBALS['egw_info']['flags']['currentapp'] && $file))
 	   {
 		  $this->tpl->set_var('lang_title',$menu_title);
