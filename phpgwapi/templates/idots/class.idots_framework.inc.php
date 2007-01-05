@@ -15,6 +15,7 @@
 require_once(EGW_API_INC.'/class.egw_framework.inc.php');
 require_once(EGW_API_INC.'/class.Template.inc.php');
 require_once(EGW_API_INC.'/class.dragdrop.inc.php');
+require_once(EGW_API_INC.'/class.tplsavant2.inc.php');
 
 /**
  * eGW idots template
@@ -56,7 +57,7 @@ class idots_framework extends egw_framework
 	   $GLOBALS['egw_info']['flags']['include_xajax'] = True;
 	   $this->egw_framework($template);		// call the constructor of the extended class
 
-	   $this->tplsav2 = CreateObject('phpgwapi.tplsavant2');
+	   $this->tplsav2 =& new tplsavant2();
 	   $this->tplsav2->set_tpl_path(EGW_SERVER_ROOT.SEP.'phpgwapi'.SEP.'templates'.SEP.'idots');
 	}
 
