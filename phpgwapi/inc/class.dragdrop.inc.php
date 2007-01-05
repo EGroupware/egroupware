@@ -120,7 +120,7 @@ class dragdrop
 		if(!$GLOBALS['egw_info']['flags']['wz_dragdrop_included'])
 		{
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_dragdrop/wz_dragdrop.js"></script>'."\n";
-			$GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = True;
+			$GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = true;
 		}
 		
 		// include actionScripts
@@ -128,7 +128,7 @@ class dragdrop
 		{
 			foreach($this->actionScripts as $i => $actionScript)
 			{
-				$GLOBALS['egw_info']['flags']['need_footer'] .= "<script language='JavaScript' type='text/javascript' src='".$actionScript['file']."'></script>\n";
+				$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$actionScript['file'].'"></script>'."\n";
 			}
 		}
 		
@@ -137,20 +137,22 @@ class dragdrop
 		{
 			foreach($this->draggables as $i=>$element)
 			{
-				$element_names_array[] = "\"".$element['name']."\"";
+				$element_names_array[] = '"'.$element['name'].'"+CURSOR_HAND+TRANSPARENT+SCROLL';
 			}
 		}
 		if(is_array($this->droppables))
 		{
 			foreach($this->droppables as $i=>$element)
 			{
-				$element_names_array[] = "\"".$element['name']."\"";
+				$element_names_array[] = '"'.$element['name'].'"';
 			}
 		}
 		if(is_array($element_names_array))
 		{
-			$element_names=implode(",",$element_names_array);
-			$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript">SET_DHTML(SCROLL,TRANSPARENT,CURSOR_HAND,'.$element_names.');</script>'."\n";
+			$element_names=implode(',',$element_names_array);
+			$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript">'."\n";
+			$GLOBALS['egw_info']['flags']['need_footer'] .= $this->DHTMLcommand().'('.$element_names.')'."\n";
+			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
 		}
 		
 		// set special params for draggable elements
@@ -313,6 +315,24 @@ class dragdrop
 		}
 
 		return false;
+	}
+
+	/**
+	 * evaluate the right DHTML command for adding DHTML objects
+	 *
+	 * @return string 'SET_DHTML' or 'ADD_DHTML'
+	*/
+	function DHTMLcommand()
+	{
+		if(!$GLOBALS['egw_info']['flags']['wz_dragdrop_runonce_SET_DHTML'])
+		{
+			$GLOBALS['egw_info']['flags']['wz_dragdrop_runonce_SET_DHTML'] = true;
+			return 'SET_DHTML';
+		}
+		else
+		{
+			return 'ADD_DHTML';
+		}
 	}
 
 }

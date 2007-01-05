@@ -1360,11 +1360,14 @@ function SET_DHTML()
 	window.onunload = dd.finlz;
 	dd.setDwnHdl(PICK);
 }
-function ADD_DHTML(d_o) // layers only!
+function ADD_DHTML() // layers only!
 {
-	d_o = new DDObj(d_o);
-	dd.addElt(d_o);
-	dd.addProps(d_o);
+	var d_a = arguments, d_o, d_i = d_a.length; while(d_i--)
+	{
+		d_o = new DDObj(d_a[d_i]);
+		dd.addElt(d_o);
+		dd.addProps(d_o);	
+	}
 	dd.mkWzDom();
 }
 
