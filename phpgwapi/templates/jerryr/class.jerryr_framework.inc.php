@@ -29,4 +29,7 @@ class jerryr_framework extends idots_framework
 	{
 		$this->idots_framework($template);
 	}
+
+	function topmenu()
+	{}
 }
