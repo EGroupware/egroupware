@@ -35,6 +35,13 @@ class dragdrop
 	 * @var array
 	 */
 	var $droppables;
+
+	/**
+	 * custom DHTML Objects
+	 * 
+	 * @var array
+	 */
+	var $customs;
 	
 	/**
 	 * ensures that function setJSCode is only run once
@@ -62,7 +69,7 @@ class dragdrop
 	}
 
 	/**
-	 * adds a Draggable javascript object
+	 * adds a Draggable DHTML object
 	 *
 	 * @param string $name unique html id of the object
 	 * @param array $values=false optional associative array with values of the object
@@ -74,12 +81,12 @@ class dragdrop
 	function addDraggable($name,$values = false,$dragAction = false,$dropAction = false,$focus = false)
 	{
 		if(!$this->checkUnique($name)) { return false; }
-			$this->draggables[] = array('name'=>$name,'values'=>$values,'dragAction'=>$this->registerActionScript($dragAction),'dropAction'=>$this->registerActionScript($dropAction),'focus'=>$this->addApostrophes($focus));
+		$this->draggables[] = array('name'=>$name,'values'=>$values,'dragAction'=>$this->registerActionScript($dragAction),'dropAction'=>$this->registerActionScript($dropAction),'focus'=>$this->addApostrophes($focus));
 		return true;
 	}
 
 	/**
-	 * adds a Droppable javascript object
+	 * adds a Droppable DHTML object
 	 *
 	 * @param string $name unique html id of the object
 	 * @param array $values=false optional associative array with values of the object
@@ -88,7 +95,26 @@ class dragdrop
 	function addDroppable($name,$values = false)
 	{
 		if(!$this->checkUnique($name)) { return false; }
-			$this->droppables[] = array('name'=>$name,'values'=>$values);
+		$this->droppables[] = array('name'=>$name,'values'=>$values);
+		return true;
+	}
+
+	/**
+	 * adds a Custom DHTML object
+	 *
+	 * @param string $name unique html id of the object
+	 * @param array $commands=false optional array with commands for the object,
+	 *		e.g. CURSOR_HAND or NO_DRAG like described on walter zorns homepage
+	 *		http://www.walterzorn.com
+	 * @param array $values=false optional associative array with values of the object
+	 * @param string $dragAction=false ActionScript executed while item is dragged e.g. calendar.myscript.mydrag
+	 * @param string $dropAction=false ActionScript executed when item is dropped e.g. calendar.myscript.mydrop
+ 	 * @return boolean true if all actions succeded, false otherwise
+	 */
+	function addCustom($name,$commands = false,$values = false,$dragAction = false,$dropAction = false)
+	{
+		if(!$this->checkUnique($name)) { return false; }
+		$this->customs[] = array('name'=>$name,'commands'=>$commands,'values'=>$values,'dragAction'=>$this->registerActionScript($dragAction),'dropAction'=>$this->registerActionScript($dropAction));
 		return true;
 	}
 
@@ -132,7 +158,7 @@ class dragdrop
 			}
 		}
 		
-		// register all dragdrop elements to wz_dragdrop
+		// register all elements to wz_dragdrop
 		if(is_array($this->draggables))
 		{
 			foreach($this->draggables as $i=>$element)
@@ -145,6 +171,13 @@ class dragdrop
 			foreach($this->droppables as $i=>$element)
 			{
 				$element_names_array[] = '"'.$element['name'].'"';
+			}
+		}
+		if(is_array($this->customs))
+		{
+			foreach($this->customs as $i=>$element)
+			{
+				$element_names_array[] = '"'.$element['name'].'"+'.implode('+',$element['commands']);
 			}
 		}
 		if(is_array($element_names_array))
@@ -199,13 +232,35 @@ class dragdrop
 			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
 		}
 
+		// set special params for custom elements
+		if(is_array($this->customs))
+		{
+			$GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript">'."\n";
+			foreach($this->customs as $i=>$element)
+			{
+				if(is_array($element['values']))
+				{
+					foreach($element['values'] as $val_name=>$val_value)
+					{
+						if($val_value)
+						{
+							$GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.my_'.$val_name.' = "'.$val_value.'";'."\n";
+						}
+					}
+				}
+				if($element['dragAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDragFunc('.$element['dragAction'].');'."\n"; }
+				if($element['dropAction']) { $GLOBALS['egw_info']['flags']['need_footer'] .= 'dd.elements.'.$element['name'].'.setDropFunc('.$element['dropAction'].');'."\n"; }
+			}
+			$GLOBALS['egw_info']['flags']['need_footer'] .= '</script>'."\n";
+		}
+
 		$GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- END JavaScript for wz_dragdrop.js -->\n";
 		return $this->setCodeDone = true;	
 	}
 
 	
 	/**
-	 * checks if the given name of an object is unique in all draggable AND droppable objects
+	 * checks if the given name of an object is unique in all draggable,droppable and custom objects
 	 *
 	 * @param string $name unique html id of the object
 	 * @return boolean true if $name is unique, otherwise false
@@ -218,7 +273,7 @@ class dragdrop
 			{
 				if($element['name'] == $name)
 				{
-					error_log("class.dragdrop.inc.php::addDraggable duplicate name for object '".$name."'");
+					error_log('class.dragdrop.inc.php: duplicate name for object "'.$name.'"');
 					return false;
 				}
 			}
@@ -229,7 +284,18 @@ class dragdrop
 			{
 				if($element['name'] == $name)
 				{
-					error_log("class.dragdrop.inc.php::addDraggable duplicate name for object '".$name."'");
+					error_log('class.dragdrop.inc.php: duplicate name for object "'.$name.'"');
+					return false;
+				}
+			}
+		}
+		if(is_array($this->customs))
+		{
+			foreach($this->customs as $i=>$element)
+			{
+				if($element['name'] == $name)
+				{
+					error_log('class.dragdrop.inc.php: duplicate name for object "'.$name.'"');
 					return false;
 				}
 			}
@@ -275,7 +341,7 @@ class dragdrop
 	function registerActionScript($script)
 	{
 		list($appname,$scriptname,$functionname) = explode('.',$script);
-		$script = $appname.".".$scriptname;
+		$script = $appname.'.'.$scriptname;
 		$serverFile = EGW_INCLUDE_ROOT.'/'.$appname.'/js/'.$scriptname.'.js';
 		$browserFile = $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/js/'.$scriptname.'.js';
 	
