@@ -159,6 +159,17 @@ input[type=image]
 	position:relative;
 }
 
+#sideresize
+{
+	background-image:url(../images/resize.png);
+	width:13px;
+	height:13px;
+	right:1px;
+	top:1px;
+	position:absolute;
+	z-index:9999;
+}
+
 .divLoginbox
 {
 	position:relative;
