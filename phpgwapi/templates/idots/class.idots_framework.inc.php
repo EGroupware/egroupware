@@ -187,9 +187,7 @@ class idots_framework extends egw_framework
 			  $var['menu_link'] = '';
 
 			  $var['sideboxcolstart'] = '<td id="tdSidebox" valign="top"><div id="thesideboxcolumn" style="width:'.$sideboxwidth.'px">';
-					$var['sideboxcolstart'] .= '<div style="width:13px;height:13px;right:1px;top:1px;position:absolute;z-index:9999;" id="sideresize">
-					   <img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/default/images'.'/resize.png" alt="resize"/>
-					</div>';
+					$var['sideboxcolstart'] .= '<div id="sideresize"></div>';
 					$var['remove_padding'] = '';
 					$this->tpl->set_var($var);
 					$content .= $this->tpl->parse('out','appbox');
