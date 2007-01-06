@@ -160,6 +160,17 @@ input[type=image]
         position:relative;
 }
 
+#sideresize
+{
+        background-image:url(../images/resize-bm.png);
+        width:16px;
+        height:100px;
+        right:-18px;
+        top:0px;
+        position:absolute;
+        z-index:9999;
+}
+
 #tdSidebox
 {
 	/*width:204px;*/

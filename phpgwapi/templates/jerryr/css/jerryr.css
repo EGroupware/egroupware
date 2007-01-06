@@ -159,6 +159,17 @@ input[type=image]
         position:relative;
 }
 
+#sideresize
+{
+        background-image:url(../images/resize.png);
+        width:10px;
+        height:100px;
+        right:-12px;
+        top:0px;
+        position:absolute;
+        z-index:9999;
+}
+
 .divLoginbox 
 
 {
@@ -287,7 +298,7 @@ position: relative;
 
 .sideboxSpace
 {
-	height:9px;
+	height:11px;
 }
 
 /*
@@ -506,7 +517,7 @@ body {
 
 #tdAppbox
 {
-	padding-left:5px;
+	padding-left:11px;
 	width: 100%;
 }
 
