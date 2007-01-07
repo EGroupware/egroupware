@@ -717,3 +717,11 @@ body {
         padding-top: 0px;
 }
 
+/*
+        Preferences tabs
+*/
+.tablink
+{
+        white-space: nowrap;
+}
+
