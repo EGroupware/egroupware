@@ -581,7 +581,9 @@
 				}
 				$pos = &$pos[$idx];
 			}
-			return isset($pos[$last_idx]);
+			// was return isset($pos[$last_idx]);
+			// array_key_exists also returns true for keys with value null, which fixes some problems with autorepeating rows
+			return is_array($pos) && array_key_exists($last_idx,$pos);
 		}
 
 		/**
