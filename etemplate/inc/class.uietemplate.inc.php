@@ -602,9 +602,9 @@
 				{
 					$cl = $this->expand_name($cl,0,$r,$content['.c'],$content['.row'],$content);
 				}
-				if ($cl == 'nmr' || $cl == 'row')
+				if ($cl == 'nmr' || substr($cl,0,3) == 'row')	// allow to have further classes behind row
 				{
-					$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on'); // alternate color
+					$cl = 'row_'.($nmr_alternate++ & 1 ? 'off' : 'on').substr($cl,3); // alternate color
 				}
 				$cl = isset($this->class_conf[$cl]) ? $this->class_conf[$cl] : $cl;
 				$rows[".$row"] .= $this->html->formatOptions($cl,'class');
@@ -938,16 +938,16 @@
 					list($extra_link,$extra_link_target,$extra_link_popup,$extra_link_title) = explode(',',$cell_options);
 					$html .= $value;
 					break;
-				case 'int':		// size: [min],[max],[len],[precission (only float)]
+				case 'int':		// size: [min],[max],[len],[precission/sprint format]
 				case 'float':
 					list($min,$max,$cell_options,$pre) = explode(',',$cell_options);
 					if ($cell_options == '' && !$readonly)
 					{
 						$cell_options = $cell['type'] == 'int' ? 5 : 8;
 					}
-					if ($type == 'float' && $value && $pre)
+					if (($type == 'float' || !is_numeric($pre)) && $value && $pre)
 					{
-						$value = round($value,$pre);
+						$value = is_numeric($pre) ? round($value,$pre) : sprintf($pre,$value);
 					}
 					$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
 					// fall-through
