@@ -258,6 +258,7 @@ class so_sql
 	 * initializes data with the content of key
 	 *
 	 * @param array $keys array with keys in form internalName => value
+	 * @return array internal data after init
 	 */
 	function init($keys=array())
 	{
@@ -266,6 +267,8 @@ class so_sql
 		$this->db2data();
 
 		$this->data_merge($keys);
+		
+		return $this->data;
 	}
 
 	/**
@@ -275,7 +278,7 @@ class so_sql
 	 * @param string/array $extra_cols string or array of strings to be added to the SELECT, eg. "count(*) as num"
 	 * @param string $join sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
 	 * @return array/boolean data if row could be retrived else False
-	*/
+	 */
 	function read($keys,$extra_cols='',$join='')
 	{
 		if (!is_array($keys))
