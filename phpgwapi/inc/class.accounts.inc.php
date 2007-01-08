@@ -143,8 +143,8 @@ class accounts extends accounts_backend
 	 * @param $param['type'] string/int 'accounts', 'groups', 'owngroups' (groups the user is a member of), 'both'
 	 *	or integer group-id for a list of members of that group
 	 * @param $param['start'] int first account to return (returns offset or max_matches entries) or all if not set
-	 * @param $param['sort'] string column to sort after, default account_lid if unset
-	 * @param $param['order'] string 'ASC' or 'DESC', default 'DESC' if not set
+	 * @param $param['order'] string column to sort after, default account_lid if unset
+	 * @param $param['sort'] string 'ASC' or 'DESC', default 'DESC' if not set
 	 * @param $param['query'] string to search for, no search if unset or empty
 	 * @param $param['query_type'] string:
 	 *	'all'   - query all fields for containing $param[query]
@@ -825,6 +825,7 @@ class accounts extends accounts_backend
 			'type'       => $_type,
 			'start'      => $start,
 			'order'      => $order,
+			'sort'       => $sort,
 			'query'      => $query,
 			'offset'     => $offset,
 			'query_type' => $query_type ,
