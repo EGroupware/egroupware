@@ -606,4 +606,6 @@ body {
 .tablink
 {
 	white-space: nowrap;
+	padding-left: 15px;
+	padding-right: 15px;
 }
