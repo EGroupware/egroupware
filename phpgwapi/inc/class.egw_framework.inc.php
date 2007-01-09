@@ -81,10 +81,6 @@ class egw_framework
 		
 		if (!isset($GLOBALS['egw_info']['flags']['nonavbar']) || !$GLOBALS['egw_info']['flags']['nonavbar'])
 		{
-		   if($GLOBALS['egw_info']['user']['preferences']['common']['show_top_menu'] == 'yes')
-		   {
-			  echo $this->topmenu();
-		   }
 		   echo $this->navbar();
 		}
 		echo $content;
@@ -101,14 +97,6 @@ class egw_framework
 	{
 		die('virtual, need to be reimplemented in the template!!!');		
 	}
-
-	/**
-	 * Returns the html for the top menu  
-	 * 
-	 * @return string with html
-	 */
-	function topmenu()
-	{}
 
 	/**
 	 * Returns the html from the body-tag til the main application area (incl. opening div tag)
@@ -713,4 +701,6 @@ if (!function_exists('display_sidebox'))
 	{
 		$GLOBALS['egw']->framework->sidebox($appname,$menu_title,$file);
 	}
-}
+ }
+
+

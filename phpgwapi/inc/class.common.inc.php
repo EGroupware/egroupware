@@ -1094,10 +1094,6 @@
 			
 			if (!$GLOBALS['egw_info']['flags']['nonavbar'])
 			{
-			   if($GLOBALS['egw_info']['user']['preferences']['common']['show_top_menu'] == 'yes')
-			   {
-				  echo $GLOBALS['egw']->framework->topmenu();
-			   }
 			   echo $GLOBALS['egw']->framework->navbar();
 			}
 		 }
