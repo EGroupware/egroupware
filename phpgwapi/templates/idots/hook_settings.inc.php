@@ -11,6 +11,10 @@
 
    /* $Id$ */
 
+   $top_menu = array(
+	  'topmenu' => lang('Show as Topmenu'),
+	  'sidebox' => lang('Show in sidebox')
+   );
    $yes_no = array(
 	  'yes' => lang('yes'),
 	  'no'  => lang('no')
@@ -27,21 +31,12 @@
 		 'xmlrpc' => False,
 		 'admin'  => False
 	  ),
-	  'show_top_menu' => array(
+	  'show_general_menu' => array(
 		 'type'   => 'select',
-		 'label'  => 'Show egroupware top menu?',
-		 'name'   => 'show_top_menu',
-		 'values' => $yes_no,
-		 'help'   => 'When you say yes a top menu is rendered.',
-		 'xmlrpc' => False,
-		 'admin'  => False
-	  ),
-	  'show_general_sideboxmenu' => array(
-		 'type'   => 'select',
-		 'label'  => 'Show general sidebox menu?',
-		 'name'   => 'show_general_sideboxmenu',
-		 'values' => $yes_no,
-		 'help'   => 'When you say yes the first sidebox is contains general egroupware items.',
+		 'label'  => 'How to show the general eGroupWare menu ?',
+		 'name'   => 'show_general_menu',
+		 'values' => $top_menu,
+		 'help'   => 'Where and how will the egroupware links like preferences, about and logout be displayed.',
 		 'xmlrpc' => False,
 		 'admin'  => False
 	  ),
