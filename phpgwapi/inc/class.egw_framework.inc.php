@@ -290,14 +290,11 @@ class egw_framework
 		else
 		{
 			$var['current_app_title']=$apps[$GLOBALS['egw_info']['flags']['currentapp']]['title'];
-		}
+		 }
+
 		// current users for admins
-		if(isset($apps['admin']) && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
-		{
-			$var['current_users'] = '<a href="'
-			. $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">'
-			. lang('Current users') . ': ' . $GLOBALS['egw']->session->total() . '</a>';
-		}
+			   $var['current_users'] = $this->_current_users();
+		
 		// quick add selectbox
 		$var['quick_add'] = $this->_get_quick_add();
 
@@ -353,6 +350,15 @@ class egw_framework
 	   . $GLOBALS['egw']->common->show_date($now,$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']);
 
 	   return $user_info;
+	}
+
+	function _current_users()
+	{
+	   if( $GLOBALS['egw_info']['user']['apps']['admin'] && $GLOBALS['egw_info']['user']['preferences']['common']['show_currentusers'])
+	   {
+		  $current_users = '<a href="' . $GLOBALS['egw']->link('/index.php','menuaction=admin.uicurrentsessions.list_sessions') . '">' . lang('Current users') . ': ' . $GLOBALS['egw']->session->total() . '</a>'; 
+		  return $current_users;
+	   }
 	}
 
 	/**
