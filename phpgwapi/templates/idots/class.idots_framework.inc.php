@@ -460,6 +460,7 @@
 
 		 if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox')
 		 {
+			$var['current_users'] = '';
 			$var['quick_add'] = '';
 			$var['user_info']='';
 		 }
@@ -627,6 +628,7 @@
 		 $this->tplsav2->assign('info_icons',$this->topmenu_icon_arr);
 
 		 $this->_add_topmenu_info_item($this->_user_time_info());
+		 $this->_add_topmenu_info_item($this->_current_users());
 		 $this->_add_topmenu_info_item($this->_get_quick_add());
 
 		 $this->tplsav2->display('topmenu.tpl.php');

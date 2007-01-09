@@ -41,7 +41,7 @@
 <div id="topmenu">
    <div id="topmenu_items">
 	  <?php foreach($this->menuitems as $mitems):?>
-	  <div style="padding:0px 10px 0px 10px;position:relative;float:left;"><img src="<?=$this->icon_or_star?>" />&nbsp;<a href="<?=$mitems['url']?>"><?=$mitems['label']?></a></div>
+	  <div style="padding:0px 0px 0px 10px;position:relative;float:left;"><img src="<?=$this->icon_or_star?>" />&nbsp;<a href="<?=$mitems['url']?>"><?=$mitems['label']?></a></div>
 	  <?php endforeach?>
    </div>
 
@@ -63,7 +63,4 @@
 	  setInterval("shiftOpacity('<?=$iicon['id']?>', 500)",1500);
 	  <?php endif?>
 	  <?php endforeach?>
-
-   //shiftOpacity('blinkimg', 500);
-
 </script>
