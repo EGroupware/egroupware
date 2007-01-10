@@ -446,3 +446,13 @@ body {
 	border: #9c9c9c 1px solid;	/* does NOT work */
 	padding: 0px;
 }
+
+/*
+Preferences tabs
+*/
+.tablink {
+	white-space: nowrap;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+			    
