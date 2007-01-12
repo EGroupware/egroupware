@@ -344,15 +344,12 @@ class html
 	{
 		// the following compares strict as strings, to archive: '0' == 0 != ''
 		// the first non-strict search via array_search, is for performance reasons, to not always search the whole array with php
-		if (($found = ($key = array_search($value,$selected)) !== false) && !$value)
+		if (($found = ($key = array_search($value,$selected)) !== false) && (string) $value !== (string) $selected[$key])
 		{
-			if ((string) $value !== (string) $selected[$key])
+			$found = false;
+			foreach($selected as $sel)
 			{
-				$found = false;
-				foreach($selected as $sel)
-				{
-					if ($found = ((string) $value === (string) $selected[$key])) break;
-				}
+				if ($found = (((string) $value) === ((string) $selected[$key]))) break;
 			}
 		}
 		return '<option value="'.$this->htmlspecialchars($value).'"'.($found  ? ' selected="selected"' : '') .
@@ -723,7 +720,7 @@ class html
 			return $this->input($name,$label,$image != '' ? 'image' : 'submit',$options.$image);
 		}
 		return '<button type="submit" name="'.$name.'" value="'.$label.'" '.$options.' />'.
-			($image != '' ? "<img$image $this->prefered_img_title=\"$label\"> " : '').
+			($image != '' ? /*$this->image($app,$image,$label,$options)*/"<img$image $this->prefered_img_title=\"$label\"> " : '').
 			($image == '' || $accesskey ? $label_u : '').'</button>';
 	}
 
@@ -985,6 +982,19 @@ class html
 		if ($title)
 		{
 			$options .= " $this->prefered_img_title=\"".$this->htmlspecialchars($title).'"';
+		}
+		if ($this->user_agent == 'msie' && $this->ua_version >= 5.5 && substr($url,-4) == '.png')
+		{
+			$extra_styles = "display: inline-block; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$url',sizingMethod='image'); width: 1px; height: 1px;";
+			if (strstr($options,'style="'))
+			{
+				$options = str_replace('style="','style="'.$extra_styles);
+			}
+			else
+			{
+				$options .= ' style="'.$extra_styles.'"';
+			}
+			return "<span $options></span>";
 		}
 		return "<img src=\"$url\" $options />";
 	}
