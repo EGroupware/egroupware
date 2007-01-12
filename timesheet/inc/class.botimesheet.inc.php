@@ -483,7 +483,7 @@ class botimesheet extends so_sql
 	 * Is called as hook to participate in the linking
 	 *
 	 * @param int/array $entry int ts_id or array with timesheet entry
-	 * @param string/boolean string with title, null if timesheet not found, false if no perms to view it
+	 * @return string/boolean string with title, null if timesheet not found, false if no perms to view it
 	 */
 	function link_title( $entry )
 	{

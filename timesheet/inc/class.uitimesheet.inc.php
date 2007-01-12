@@ -249,6 +249,9 @@ class uitimesheet extends botimesheet
 		{
 			$links = $this->link->get_links(TIMESHEET_APP,$this->data['ts_id'],'projectmanager');
 		}
+		// make all linked projects availible for the pm-pricelist widget, to be able to choose prices from all
+		$content['all_pm_ids'] = array_values($links);
+
 		$preserv['old_pm_id'] = array_shift($links);
 		if (!isset($this->data['pm_id']) && $preserv['old_pm_id']) $content['pm_id'] = $preserv['old_pm_id'];
 
