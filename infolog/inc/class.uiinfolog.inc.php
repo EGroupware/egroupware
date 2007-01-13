@@ -1163,7 +1163,7 @@ class uiinfolog
 				}
 			}
 			
-			$body = ExecMethod2('felamimail.bocompose.convertHTMLToText',$_body);
+			$body = strip_tags($_body);
 			$this->edit($this->bo->import_mail(
 				implode(',',$_to_emailAddress),$_subject,$body,$attachments,''
 			));
@@ -1175,12 +1175,12 @@ class uiinfolog
 			$bopreferences =& CreateObject('felamimail.bopreferences');
 			$bofelamimail->openConnection();
 			
-			$headers = $bofelamimail->getMessageHeader($mailbox,$uid);
+			$headers = $bofelamimail->getMessageHeader($uid);
 			$bodyParts = $bofelamimail->getMessageBody($uid,'');
 			$attachments = $bofelamimail->getMessageAttachments($uid);
 			
-			if (isset($headers->senderaddress)) $mailaddress = $bofelamimail->decode_header($headers->senderaddress);
-			elseif (isset($headers->fromaddress)) $mailaddress = $bofelamimail->decode_header($headers->fromaddress);
+			if (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
+			elseif (isset($headers['SENDER'])) $mailaddress = $bofelamimail->decode_header($headers['SENDER']);
 
 			$subject = $bofelamimail->decode_header($headers->Subject);
 			
@@ -1188,7 +1188,7 @@ class uiinfolog
 			{
 				// add line breaks to $bodyParts
 				$newBody  = $GLOBALS['egw']->translation->convert($bodyParts[$i]['body'], $bodyParts[$i]['charSet']);
-				$newBody  = ExecMethod2('felamimail.bocompose.convertHTMLToText',$newBody);
+				$newBody = strip_tags($newBody);
 				$newBody  = explode("\n",$newBody);
 				// create it new, with good line breaks
 				reset($newBody);
