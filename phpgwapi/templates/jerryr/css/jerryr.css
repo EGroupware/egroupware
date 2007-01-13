@@ -187,7 +187,6 @@ input[type=image]
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
 {
 	font-size:90%;
-	white-space: nowrap;
 }
 
 .textSideboxStar
