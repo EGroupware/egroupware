@@ -196,6 +196,7 @@ input[type=image]
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
 {
 	font-size:90%;
+	white-space: nowrap;
 }
 
 .textSideboxStar
@@ -463,8 +464,33 @@ body {
 {
 	position:absolute;
 	left:17px;
-	top:5px;
-	z-index:51;
+	top:28px;
+	z-index:999;
+}
+
+#topmenu
+{
+        background-color: #0081c1;
+        background-image: url(../images/hilitetest-bm.png);
+        color:#006699;
+        border-top: 1px solid #9f9f9f;
+        border-bottom: 1px solid #9f9f9f;
+	height:24px;
+	line-height:20px;
+	padding-top: 4px;
+}
+#topmenu a
+{
+        color:#006699;
+}
+
+#topmenu_items
+{
+        float:left;
+}
+#topmenu_info
+{
+        float:right;
 }
 
 #divUpperTabs
@@ -498,10 +524,9 @@ body {
 .divAppIconBlock /* this allows the icons and text to be positioned via absolute and requires the iconspacer div */
 {
 	border-top: 0px solid #efefef;
-	/*background-image: url(../images/hilitetest-bm.png);*/
 	background-repeat: repeat-x;
 	padding: 0px;
-	position:absolute;
+	position:relative;
 	top:0px;
 	left:0px;
 	z-index:40;
@@ -509,7 +534,8 @@ body {
 
 #divAppIconBar
 {
-	height: 58px;
+	height: 60px;
+	background-image: url(../images/iconbar-bm.png);
 	position: relative;
 	top: 0px;
 	left: 0px;
@@ -517,47 +543,45 @@ body {
 
 .iconBackFirstCell
 {
-        /*background-image: url(../images/firstcell-bm.png);*/
+        background-image: url(../images/firstcell-bm.png);
         background-repeat: no-repeat;
-	height:58px;
+	height:60px;
 }
 
 .appIconTbl
 {
 	padding:0px;
-	background-image: url(../images/bmback2.jpg);
-	/*background-repeat: repeat-x;*/
+	background-image: url(../images/rtbump-bm.png);
+	background-repeat: no-repeat;
+	background-position: top right;
 	vertical-align: top;
-	border-bottom: 1px solid #9f9f9f;
 	color: white;
 }
 
 .iconBack
 {
-	/*background-image: url(../images/iconBack-bm.png);*/
+	/*background-image: url(../images/iconbar-bm.png);*/
 	border-right: 0px solid #bfbfbf;
-	border-left: 0px solid white;
-	height: 44px;
+	border-top: 1px solid #9f9f9f;
+	height: 38px;
 }
 
 .iconBackHover
 {
-	background-image: url(../images/pointer.png);
-	background-position: center center;
-	background-repeat: no-repeat;
-	border-right: 0px solid #bfbfbf;
+	border-top: 1px solid #9f9f9f;
 	border-left: 0px solid white;
 }
 
 .appIconSpacer
 {
-	height:44px;
+	height:0px;
 	background-color: #ffffff;
 }
 
 #divAppTextBar
 {
 	/*background-color:white;*/
+	white-space: nowrap;
 }
 
 /*
@@ -569,33 +593,11 @@ body {
 	position: relative;
 	top:0px
 	left:0px;
-	height:32px;
+	height:22px;
 	vertical-align:bottom;
 	border: 0px solid black;
-	padding-top:12px;
+	padding-top:0px;
 }
-
-.userinfolt
-{
-	background-image: url(../images/userbacklt-bm.png);
-	width: 22px;
-	height: 22px;
-}
-
-.userinfomid
-{
-	background-image: url(../images/userback-bm.png);
-	background-repeat: repeat-x;
-	color: #666666;
-	white-space: nowrap; 
-}
-
-.userinfort
-{
-        background-image: url(../images/userbackrt-bm.png);
-        width: 22px;
-}
-
 
 /*
 	Appbox ***BEGIN***

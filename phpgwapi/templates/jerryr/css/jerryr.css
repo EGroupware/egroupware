@@ -187,6 +187,7 @@ input[type=image]
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
 {
 	font-size:90%;
+	white-space: nowrap;
 }
 
 .textSideboxStar
@@ -397,10 +398,39 @@ body {
 #divLogo
 {
 	position:absolute;
-	left:37px;
-	top:38px;
-	z-index:51;
+	left:27px;
+	top:28px;
+	z-index:999;
 }
+
+#topmenu
+{
+        background-color: #0081c1;
+        background-image: url(../images/hilitetest.png);
+        color:#006699;
+        border-top: solid 1px #17202b;
+	border-right: 1px solid #17202b;
+	border-left: 1px solid #17202b;
+        border-bottom: solid #5793ff 0px;
+        height:24px;
+        padding-top:4px ;
+        
+}
+#topmenu a
+{
+        color:#006699;
+}
+
+#topmenu_items
+{	
+        float:left;
+}
+
+#topmenu_info
+{
+        float:right;
+}
+
 
 #divUpperTabs
 {
