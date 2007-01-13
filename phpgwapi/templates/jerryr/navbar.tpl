@@ -5,7 +5,7 @@
 	new ypSlideOutMenu("menu1", "down", 45, 5, 188, 300,'right');
 </script>
 
-<div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="eGroupWare"/></a></div>
+<div style="position:relative"><div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="eGroupWare"/></a></div></div>
 
 <div id="menu1Container">
 	<div id="menu1Content" class="menuOneBox">
@@ -68,18 +68,10 @@
 
 	</div>
 	<div id="divStatusBar"><table width="100%" cellspacing="0" cellpadding="0" border="0"><tr>
-		<td align="left" width="33%">
-                        <table cellpadding=0 cellspacing=0>
-                                <tr>
-                                        <td class="userinfolt"></td>
-                                        <td id="user_info" class="userinfomid">{user_info}</td>
-                                        <td class="userinfort"></td>
-                                </tr>
-                        </table>
-                </td>
-		<td align="center" id="admin_info">{current_users}</td>
-		<td width="33%"  align="right" id="quick_add">{quick_add}</td>
-	</tr></table></div>
+                <td width="33%" align="left" id="user_info">{user_info}</td>
+                <td align="center" id="admin_info">{current_users}</td>
+                <td width="33%"  align="right" id="quick_add">{quick_add}</td>
+        </tr></table></div>
 <!-- END navbar_header -->
 
 
