@@ -124,11 +124,11 @@
 				{
 					switch($mdy[$n])
 					{
-						case 'Y': $value['Y'] = $dat; break;
-						case 'm': $value['m'] = $dat; break;
-						case 'd': $value['d'] = $dat; break;
-						case 'H': $value['H'] = $dat; break;
-						case 'i': $value['i'] = $dat; break;
+						case 'Y': $value['Y'] = (int) $dat; break;
+						case 'm': $value['m'] = (int) $dat; break;
+						case 'd': $value['d'] = (int) $dat; break;
+						case 'H': $value['H'] = (int) $dat; break;
+						case 'i': $value['i'] = (int) $dat; break;
 					}
 				}
 			}
@@ -138,12 +138,12 @@
 				if (substr($type,-4) == 'only') $value -= adodb_date('Z',0);
 
 				$value = array(
-					'Y' => adodb_date('Y',$value),
-					'm' => adodb_date('m',$value),
+					'Y' => (int) adodb_date('Y',$value),
+					'm' => (int) adodb_date('m',$value),
 					'M' => substr(lang(adodb_date('F',$value)),0,3),
-					'd' => adodb_date('d',$value),
-					'H' => adodb_date('H',$value),
-					'i' => adodb_date('i',$value)
+					'd' => (int) adodb_date('d',$value),
+					'H' => (int) adodb_date('H',$value),
+					'i' => (int) adodb_date('i',$value)
 				);
 			}
 			$time_0h0 = !(int)$value['H'] && !(int)$value['i'];
