@@ -1174,6 +1174,7 @@ class uiinfolog
 			$bofelamimail =& CreateObject('felamimail.bofelamimail',$GLOBALS['egw']->translation->charset());
 			$bopreferences =& CreateObject('felamimail.bopreferences');
 			$bofelamimail->openConnection();
+			$bofelamimail->reopen($mailbox);
 			
 			$headers = $bofelamimail->getMessageHeader($uid);
 			$bodyParts = $bofelamimail->getMessageBody($uid,'');
@@ -1181,8 +1182,8 @@ class uiinfolog
 			
 			if (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
 			elseif (isset($headers['SENDER'])) $mailaddress = $bofelamimail->decode_header($headers['SENDER']);
-
-			$subject = $bofelamimail->decode_header($headers->Subject);
+			
+			$subject = $bofelamimail->decode_header($headers['SUBJECT']);
 			
 			for($i=0; $i<count($bodyParts); $i++)
 			{
