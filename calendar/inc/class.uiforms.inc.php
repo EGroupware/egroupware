@@ -438,6 +438,16 @@ class uiforms extends uical
 			}
 			break;
 			
+		case 'cancel':
+			if($content['cancel_needs_refresh'])
+			{
+				$js = 'opener.location.href=\''.addslashes($GLOBALS['egw']->link('/index.php',array(
+					'menuaction' => $content['referer'],
+					'msg' => $msg,
+				))).'\';';
+			}
+			break;
+
 		case 'delete':
 			if ($this->bo->delete($event['id'],(int)$content['edit_single']))
 			{
@@ -631,6 +641,9 @@ class uiforms extends uical
 					$event = $this->bo->read($cal_id,0,true);	// recuring event --> read the series
 				}
 			}
+			// set new start and end if given by $_GET
+			if(isset($_GET['start'])) { $event['start'] = $_GET['start']; }
+			if(isset($_GET['end'])) { $event['end'] = $_GET['end']; }
 			// check if the event is the whole day
 			$start = $this->bo->date2array($event['start']);
 			$end = $this->bo->date2array($event['end']);
@@ -822,7 +835,20 @@ class uiforms extends uical
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . (!$event['id'] ? lang('Add') : ($view ? lang('View') : 
 			($content['edit_single'] ? lang('Create exception') : ($content['recur_type'] ? lang('Edit series') : lang('Edit')))));
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>\n$js\n</script>\n";
-		$etpl->exec('calendar.uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
+		
+		$content['cancel_needs_refresh'] = (bool)$_GET['cancel_needs_refresh'];
+		
+		// non_interactive==true from $_GET calls immediate save action without displaying the edit form
+		if(isset($_GET['non_interactive']) && (bool)$_GET['non_interactive'] === true)
+		{
+			unset($_GET['non_interactive']);	// prevent process_exec <--> edit loops
+			$content['button']['save'] = true;
+			$this->process_edit($content);
+		}
+		else
+		{
+			$etpl->exec('calendar.uiforms.process_edit',$content,$sel_options,$readonlys,$preserv,$preserv['no_popup'] ? 0 : 2);
+		}
 	}
 
 	/**

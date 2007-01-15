@@ -55,12 +55,26 @@ class ajaxcalendar {
 		$event['start'] = $this->calendar->date2ts($targetDateTime);
 		$event['end'] = $event['start']+$duration;
 		
-		$result=$this->calendar->update($event);
-		//Todo: handle the result !!!
-	
+		$conflicts=$this->calendar->update($event);
+
 		$response =& new xajaxResponse();
-		$response->addRedirect($PHP_SELF);
-	
+		if(!is_array($conflicts))
+		{
+			$response->addRedirect($PHP_SELF);
+		}
+		else
+		{
+			$response->addScriptCall(
+				'egw_openWindowCentered2',
+				'http://localhost/egroupware/index.php?menuaction=calendar.uiforms.edit
+					&cal_id='.$event['id']
+					.'&start='.$event['start']
+					.'&end='.$event['end']
+					.'&non_interactive=true'
+					.'&cancel_needs_refresh=true',
+				'',750,410);
+		}
+
 		return $response->getXML();
 	}
 }
