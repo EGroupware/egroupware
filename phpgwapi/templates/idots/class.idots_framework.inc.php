@@ -152,12 +152,19 @@
 			{
 			   $file['Preferences'] = $apps['preferences']['url'];
 			}
+            if($GLOBALS['egw_info']['user']['apps']['manual'] && $apps['manual'])
+            {
+                $file['manual'] = array('text' => 'manual',
+                                    'no_lang' => false,
+                                    'target' => $apps['manual']['target'],
+                                    'link' => $apps['manual']['url']);
+            }
 			$file += array(
-			   array(
+			   /*array(
 				  'text'    => lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']),
 				  'no_lang' => True,
 				  'link'    => $apps['about']['url']
-			   ),
+			   ),*/
 			   $GLOBALS['egw_info']['user']['userid'] != 'anonymous' ? 'Logout' : 'Login' =>$apps['logout']['url']
 			);
 			$this->sidebox('',$menu_title,$file);
@@ -514,7 +521,7 @@
 		 // not shown in the navbar
 		 foreach($apps as $app => $app_data)
 		 {
-			if ($app != 'preferences' && $app != 'about' && $app != 'logout' &&
+			if ($app != 'preferences' && $app != 'about' && $app != 'logout' && $app != 'manual' &&
 			($app != 'home' || $GLOBALS['egw_info']['user']['preferences']['common']['start_and_logout_icons'] != 'no'))
 			{
 			   $this->tpl->set_var($app_data);
@@ -575,12 +582,14 @@
 	  * 
 	  * @param string $app application name
 	  * @param mixed $alt_label string with alternative menu item label default value = null 
+	  * @param string $urlextra string with alternate additional code inside <a>-tag
 	  * @access protected
 	  * @return void
 	  */
 	  function _add_topmenu_item($app,$alt_label=null)
 	  {
 		 $_item['url'] = $this->apps[$app]['url'];
+		 $_item['urlextra'] = $this->apps[$app]['target'];
 		 $_item['label'] = ($alt_label?$alt_label:$this->apps[$app]['title']);
 		 $this->tplsav2->menuitems[$app] = $_item;
 		 $this->tplsav2->icon_or_star = $GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png';
@@ -612,17 +621,17 @@
 
 		 $this->_add_topmenu_item('home');
 
-		 /*if($GLOBALS['egw_info']['user']['apps']['manual'])
-		 {
-			$this->_add_topmenu_item('manual');
-		 }
-		 */
 		 if($GLOBALS['egw_info']['user']['apps']['preferences'])
 		 {
 			$this->_add_topmenu_item('preferences');
 		 }
 
-		 $this->_add_topmenu_item('about',lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
+		 if($GLOBALS['egw_info']['user']['apps']['manual'] && $this->apps['manual'])
+         {
+            $this->_add_topmenu_item('manual');
+         }
+
+		 //$this->_add_topmenu_item('about',lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
 		 $this->_add_topmenu_item('logout');
 		
 		 $this->tplsav2->assign('info_icons',$this->topmenu_icon_arr);
@@ -769,7 +778,11 @@ function _sidebox_menu_item($item_link='',$item_text='')
 	  $var['item_link'] = $item_link['link'];
 	  if ($item_link['target'])
 	  {
-		 $var['target'] = ' target="' . $item_link['target'] . '"';
+		 if (strstr($item_link['target'], 'target=')) {
+            $var['target'] = $item_link['target'];
+         } else {
+            $var['target'] = ' target="' . $item_link['target'] . '"';
+         }
 	  }
    }
    else

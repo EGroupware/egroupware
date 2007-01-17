@@ -169,7 +169,7 @@ class egw_framework
 
 			$var['page_generation_time'] = '<div id="divGenTime"><br/><span>'.lang('Page was generated in %1 seconds',$totaltime).'</span></div>';
 		}
-		$var['powered_by'] = lang('Powered by eGroupWare version %1',$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+		$var['powered_by'] = lang('Powered by').' <a href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/about.php">eGroupWare</a> '.lang('version').' '.$GLOBALS['egw_info']['server']['versions']['phpgwapi'];
 		$var['activate_tooltips'] = '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_tooltip/wz_tooltip.js" type="text/javascript"></script>';
 		
 		return $var;
