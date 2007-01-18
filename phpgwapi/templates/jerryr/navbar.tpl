@@ -47,7 +47,7 @@
 					<table width="100%" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 <!-- BEGIN app_icon_block -->
-							<td width="{tdwidth}%" align="center" class="iconBack" onmouseover="this.className='iconBackHover'" onmouseout="this.className='iconBack'" ><a href="{url}" {target}><img src="{icon}" alt="{title}" title="{title}" border="0" /></a></td>
+							<td width="{tdwidth}%" align="center" class="iconBack" onmouseover="this.className='iconBackHover'" onmouseout="this.className='iconBack'" onclick="location.href='{url}'"><img src="{icon}" alt="{title}" title="{title}" border="0" /></td>
 <!-- END app_icon_block -->
 <!-- BEGIN app_extra_icons_icon -->
 							<td width="26" valign="top" align="right" style="padding-right:3px; padding-top:20px;">

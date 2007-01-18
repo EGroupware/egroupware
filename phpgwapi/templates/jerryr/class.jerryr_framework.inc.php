@@ -49,8 +49,11 @@ class jerryr_framework extends idots_framework
                  {
                         $this->_add_topmenu_item('preferences');
                  }
-
-                 $this->_add_topmenu_item('about',lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
+		if($GLOBALS['egw_info']['user']['apps']['manual'] && $this->apps['manual'])
+		{
+			$this->_add_topmenu_item('manual');
+		}
+                 //$this->_add_topmenu_item('about',lang('About %1',$GLOBALS['egw_info']['apps'][$GLOBALS['egw_info']['flags']['currentapp']]['title']));
                  $this->_add_topmenu_item('logout');
 
                  $this->tplsav2->assign('info_icons',$this->topmenu_icon_arr);
