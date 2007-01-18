@@ -997,11 +997,16 @@
 					}
 					break;
 				case 'htmlarea':	// Multiline formatted Text Input, size: [inline styles for the widget][,plugins (comma-sep.)]
-					list($styles,$plugins) = explode(',',$cell_options,2);
-					if (!$styles) $styles = 'width: 100%; min-width: 500px; height: 300px;';	// default HTMLarea style in html-class
+					list($mode,$height,$width,$toolbar,$baseref) = explode(',',$cell_options);
 					if (!$readonly)
 					{
-						$html .= $this->html->tinymce($form_name,$value,$styles,$plugins);
+						$mode = $mode ? $mode : 'simple';
+						$height = $height ? $height : '400px';
+						$width = $width ? $width : '100%';
+						$fckoptions = array(
+							'toolbar_expanded' => $toolbar,
+						);
+						$html .= $this->html->fckEditor($form_name,$value,$mode,$fckoptions,$height,$width,$baseref);
 						
 						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] =  array(
 							'type'      => $cell['type'],
@@ -1010,7 +1015,7 @@
 					}
 					else
 					{
-						$html .= $this->html->div($this->html->activate_links($value),'style="overflow: auto; border: thin inset black;'.$styles.'"');
+						$html .= $this->html->div($this->html->activate_links($value),'style="overflow: auto; border: thin inset black; width='. $width. '; height='. $height. '"');
 					}
 					break;
 				case 'checkbox':
