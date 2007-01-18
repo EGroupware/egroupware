@@ -419,7 +419,7 @@ class html
 	 * Checks if HTMLarea (or an other richtext editor) is availible for the used browser
 	 *
 	 * @return boolean
-	 */
+	 
 	function htmlarea_availible()
 	{
 		switch($this->user_agent)
@@ -429,30 +429,31 @@ class html
 			case 'mozilla':
 				return $this->ua_version >= 1.3;
 			default:
-				return true;//False;
+				return False;
 		}
-	}
+	}*/
 
 	/**
-	 * compability function for former used htmlarea. Please use function tinymce now!
+	 * compability function for former used htmlarea. Please use function fckeditor now!
 	 *
 	 * creates a textarea inputfield for the htmlarea js-widget (returns the necessary html and js)
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
-		if (!$plugins) $plugins = 'ColorChooser,FontChooser,ContexMenu,TableOperations';
-		return  $this->tinymce($name,$content,$style,$plugins,$base_href);
+		return $this->fckEditor($name, $content, 'extended', array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
 	}
 
+	
+	
 	/**
 	* init the tinymce js-widget by adding the js file in the head of the page
 	*
 	* Please note: it need to be called before the call to phpgw_header() !!!
 	*
-	*/
+	
 	function init_tinymce()
 	{
-	   /* do stuff once */
+	   // do stuff once
 	   if (!is_object($GLOBALS['egw']->js))
 	   {
 		  $GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
@@ -462,7 +463,7 @@ class html
 	   {
 		  $GLOBALS['egw']->js->validate_file('tiny_mce','tiny_mce');
 	   }
-	}
+	}*/
 
 	/**
 	* creates a textarea inputfield for the tinymce js-widget (returns the necessary html and js)
@@ -479,7 +480,7 @@ class html
 	* @return string the necessary html for the textarea
 	* @todo make wrapper for backwards compatibility with htmlarea
 	* @todo enable all features from htmlarea
-	*/
+	
 	function tinymce($name,$content='',$style='',$init_options='',$base_href='')
 	{
 		if (!$style)
@@ -491,7 +492,7 @@ class html
 			return $this->textarea($name,$content,'style="'.$style.'"');
 		}
 
-		/* do stuff once */
+		// do stuff once
 		$this->init_tinymce();
 
 		if(strpos($init_options,':') === false)
@@ -550,7 +551,7 @@ class html
 			$init_options = $init. ','. $tab1a. '",'. $tab2a. '",'. $tab3a. '",'. $plugs. '",'. $eve. '"';
 		}
 		
-		/* do again and again */
+		// do again and again
 		return '<script language="javascript" type="text/javascript">
 			tinyMCE.init({
 			 mode : "exact",
@@ -566,7 +567,7 @@ class html
 			<textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">'.
 			@htmlspecialchars($content, ENT_QUOTES, $this->charset) 
 			.'</textarea>';
-	}
+	}*/
 
 	/**
 	* this function is a wrapper for fckEditor to create some reuseable layouts
@@ -671,7 +672,7 @@ class html
 	* @param string $style='' initial css for the style attribute
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
-	*/
+	
 	function tinymceQuick($_name, $_mode, $_content='', $_style='', $base_href='') {
 		switch($_mode) {
 			case 'ascii':
@@ -709,7 +710,7 @@ class html
 				return $this->tinymce($_name, $_content,$_style, $init_options='',$_base_href);
 				break;
 		}
-	}
+	}*/
 
 	/**
 	 * represents html's input tag
