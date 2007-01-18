@@ -573,6 +573,7 @@ body {
 	background-position: 90% 100%;
 	border-top: 1px solid #9f9f9f;
 	border-left: 0px solid white;
+	cursor: pointer;
 }
 
 .appIconSpacer
