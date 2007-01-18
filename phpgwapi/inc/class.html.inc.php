@@ -569,6 +569,66 @@ class html
 	}
 
 	/**
+	* this function is a wrapper for fckEditor to create some reuseable layouts
+	*
+	* @param string $_name name and id of the input-field
+	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''	
+	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
+	* @param array  $_options (toolbar_expanded true/false)
+	* @param string $_height='400px'
+	* @param string $_width='100%'
+	* @param string $base_href='' if passed activates the browser for image at absolute path passed
+	* @return string the necessary html for the textarea
+	*/
+	function fckEditor($_name, $_content='', $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href) {
+		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
+
+		$oFCKeditor = new FCKeditor($_name) ;
+		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
+		$oFCKeditor->Value	= $_content;
+		$oFCKeditor->Width	= $_width ;
+		$oFCKeditor->Height	= $_height ;
+		$oFCKeditor->Config['LinkBrowser'] = 'false';
+		$oFCKeditor->Config['FlashBrowser'] = 'false';
+		$oFCKeditor->Config['LinkUpload'] = 'false';
+		
+		// Activate the browser and config upload pathimage dir ($_base_href/images) if passed (absolute path)
+		if ($_base_href)
+		{
+			// Only images for now
+			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=images&Connector=connectors/php/connector.php';
+		}
+		else
+		{
+			$oFCKeditor->Config['ImageBrowser'] = 'false';
+		}
+		// By default the editor start expanded
+		if ($_options['toolbar_expanded'] == 'false')
+		{
+			$oFCKeditor->Config['ToolbarStartExpanded'] = $_options['toolbar_expanded'];
+		}
+		 
+		switch($_mode) {
+			case 'ascii':
+				return "<textarea name=\"$_name\" style=\"width:".$_width."; height:".$_height."; border:0px;\">$_content</textarea>";
+				break;
+			case 'simple':
+				$oFCKeditor->ToolbarSet = 'egw_simple';
+				return $oFCKeditor->CreateHTML() ;
+				break;
+			case 'extended':
+				$oFCKeditor->ToolbarSet = 'egw_extended';
+				return $oFCKeditor->CreateHTML() ;
+				break;
+			case 'advanced':
+				$oFCKeditor->ToolbarSet = 'egw_advanced';
+				return $oFCKeditor->CreateHTML() ;
+				break;						
+		}
+
+	}
+
+	/**
 	* this function is a wrapper for tinymce to create some reuseable layouts
 	*
 	* Please note: if you did not run init_tinymce already you this function need to be called before the call to phpgw_header() !!!

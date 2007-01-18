@@ -68,7 +68,7 @@ function DoResponse()
 	$sCurrentFolder	= $_GET['CurrentFolder'] ;
 
 	// Check if it is an allowed type.
-	if ( !in_array( $sResourceType, array('File','Image','Flash','Media') ) )
+	if ( !in_array( $sResourceType, array('File','images','Flash','Media') ) )
 		return ;
 
 	// Check the current folder syntax (must begin and start with a slash).
