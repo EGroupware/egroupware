@@ -1,0 +1,12 @@
+Changes made to fckeditor to work properly on egroupware
+ - fckconfig.js
+    - Added egw_* toolbars
+ - /editor/filemanager/browser/default/connectors/php/connector.php
+    - Change hardcoded image dir from Image -> images (to respect the actual behavior in sitemgr)
+ - editor/filemanager/browser/default/frmresourcetype.html
+    - Again change Image -> images
+ - editor/filemanager/browser/default/connectors/php/config.php
+    - Commented hardcoded Userdir path
+    - Enable the browser
+ - editor/filemanager/upload/php/config.php
+    - Commented hardcoded Userdir path (is disabled by default)
