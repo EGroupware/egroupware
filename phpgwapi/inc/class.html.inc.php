@@ -419,7 +419,7 @@ class html
 	 * Checks if HTMLarea (or an other richtext editor) is availible for the used browser
 	 *
 	 * @return boolean
-	 
+	 */
 	function htmlarea_availible()
 	{
 		switch($this->user_agent)
@@ -431,7 +431,7 @@ class html
 			default:
 				return False;
 		}
-	}*/
+	}
 
 	/**
 	 * compability function for former used htmlarea. Please use function fckeditor now!
