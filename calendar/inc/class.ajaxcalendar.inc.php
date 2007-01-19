@@ -66,7 +66,7 @@ class ajaxcalendar {
 		{
 			$response->addScriptCall(
 				'egw_openWindowCentered2',
-				'http://localhost/egroupware/index.php?menuaction=calendar.uiforms.edit
+				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.uiforms.edit
 					&cal_id='.$event['id']
 					.'&start='.$event['start']
 					.'&end='.$event['end']
