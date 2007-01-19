@@ -440,6 +440,10 @@ class html
 	 */
 	function htmlarea($name,$content='',$style='',$base_href='',$plugins='',$custom_toolbar='',$set_width_height_in_config=false)
 	{
+		if (!$this->htmlarea_availible())
+		{
+			return $this->textarea($name,$content,'style="'.$style.'"');
+		}
 		return $this->fckEditor($name, $content, 'extended', array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
 	}
 
@@ -582,6 +586,10 @@ class html
 	* @return string the necessary html for the textarea
 	*/
 	function fckEditor($_name, $_content='', $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href) {
+		if (!$this->htmlarea_availible())
+		{
+			return $this->textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';"');
+		}
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
 
 		$oFCKeditor = new FCKeditor($_name) ;
