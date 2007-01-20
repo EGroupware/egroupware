@@ -810,7 +810,7 @@
 			{
 				$cell['size'] = $this->expand_name($cell['size'],$show_c,$show_row,$content['.c'],$content['.row'],$content);
 			}
-			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && $cell['type'] == 'button' &&  strpos($cell['size'],',')===false)
+			if ($cell['disabled'] && $readonlys[$name] !== false || $readonly && ($cell['type'] == 'button' || $cell['type'] == 'buttononly') &&  strpos($cell['size'],',')===false)
 			{
 				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
@@ -889,7 +889,7 @@
 					{
 						$onFocus .= "self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;";
 						$onBlur  .= "self.status=''; return true;";
-						if ($cell['type'] == 'button' || $cell['type'] == 'file')	// for button additionally when mouse over button
+						if ($cell['type'] == 'button' || $cell['type'] == 'buttononly' || $cell['type'] == 'file')	// for button additionally when mouse over button
 						{
 							$options .= " onMouseOver=\"self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;\"";
 							$options .= " onMouseOut=\"self.status=''; return true;\"";
@@ -900,7 +900,7 @@
 				{
 					$options .= " onFocus=\"$onFocus\" onBlur=\"$onBlur\"";
 				}
-				if ($cell['onchange'] && $cell['type'] != 'button')
+				if ($cell['onchange'] && !($cell['type'] == 'button' || $cell['type'] == 'buttononly'))
 				{
 					if (strchr($cell['onchange'],'$') || $cell['onchange']{0} == '@')
 					{
@@ -913,6 +913,7 @@
 			{
 				$options = 'id="'.($cell['id'] ? $cell['id'] : $form_name).'" '.$options;
 			}
+$html .= '<!-- hudel '.$type.' -->';
 			switch ($type)
 			{
 				case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
@@ -1085,6 +1086,7 @@
 					}
 					break;
 				case 'button':
+				case 'buttononly':
 				case 'cancel':	// cancel button
 					list($app) = explode('.',$this->name);
 					list($img,$ro_img) = explode(',',$cell_options);
@@ -1120,7 +1122,7 @@
 							$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').$cell['onchange'];
 						}
 						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$onclick,
-							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app) :
+							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app,(($type=='buttononly') ? 'button' : 'submit')) :
 							$this->html->image($app,$ro_img);
 					}
 					$extra_label = False;
@@ -1400,7 +1402,7 @@
 								$sub_cell_has_align = true;
 							}
 							// can only be set via source at the moment
-							if (strlen($cell[$n]['onclick']) > 1 && $cell[$n]['type'] != 'button')
+							if (strlen($cell[$n]['onclick']) > 1 && !($cell[$n]['type'] == 'button' || $cell[$n]['type'] == 'buttononly'))
 							{
 								$rows[$box_row]['.'.$box_col] .= ' onclick="'.$this->js_pseudo_funcs($cell[$n]['onclick'],$cname).'"'.
 									($cell[$n]['id'] ? ' id="'.$cell[$n]['id'].'"' : '');
@@ -1577,7 +1579,7 @@
 			{
 				$handler = str_replace('%p',$this->no_onclick ? $this->onclick_proxy : $this->name.':'.$this->version.':'.$path,
 					$this->onclick_handler);
-				if ($type == 'button' || !$label)	// add something to click on
+				if ($type == 'button' || $type == 'buttononly' || !$label)	// add something to click on
 				{
 					$html = (substr($html,-1) == "\n" ? substr($html,0,-1) : $html).'&nbsp;';
 				}

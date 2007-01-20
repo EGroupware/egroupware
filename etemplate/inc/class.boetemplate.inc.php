@@ -35,6 +35,7 @@
 			'checkbox'=> 'Checkbox',
 			'radio'	=> 'Radiobutton',	// Radiobutton (size = value if checked)
 			'button'=> 'Submitbutton',
+			'buttononly' => 'Button',	// input type="button"
 			'hrule'	=> 'Horizontal Rule',
 			'template' => 'Template',	// $cell['name'] contains template-name, $cell['size'] index into $content,$cname,$readonlys
 			'image'	=> 'Image',			// label = url, name=link or method, help=alt or title
