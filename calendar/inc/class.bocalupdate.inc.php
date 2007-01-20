@@ -125,7 +125,8 @@ class bocalupdate extends bocal
 		}
 		// check if user has the permission to update / create the event
 		if (!$ignore_acl && ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
-			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])))
+			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner'])) && 
+			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
 			return false;
 		}
@@ -682,7 +683,8 @@ class bocalupdate extends bocal
 	{
 		// check if user has the permission to update / create the event
 		if ($event['id'] && !$this->check_perms(EGW_ACL_EDIT,$event['id']) ||
-			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']))
+			!$event['id'] && !$this->check_perms(EGW_ACL_EDIT,0,$event['owner']) &&
+			!$this->check_perms(EGW_ACL_ADD,0,$event['owner']))
 		{
 			return false;
 		}
