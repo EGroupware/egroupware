@@ -738,7 +738,7 @@ class html
 	}
 
 	/**
-	 * represents html's button (input type submit or image)
+	 * represents html's button (input type submit or input type button or image)
 	 *
 	 * @param string $name name
 	 * @param string $label label of the button
@@ -747,9 +747,10 @@ class html
 	 * @param string $options attributes for the tag, default ''=none
 	 * @param string $image to show instead of the label, default ''=none
 	 * @param string $app app to search the image in
+	 * @param string $buttontype which type of html button (button|submit), default ='submit'
 	 * @return string html
 	 */
-	function submit_button($name,$label,$onClick='',$no_lang=false,$options='',$image='',$app='phpgwapi')
+	function submit_button($name,$label,$onClick='',$no_lang=false,$options='',$image='',$app='phpgwapi', $buttontype='submit')
 	{
 		// workaround for idots and IE button problem (wrong cursor-image)
 		if ($this->user_agent == 'msie')
@@ -786,9 +787,9 @@ class html
 
 		// <button> is not working in all cases if ($this->user_agent == 'mozilla' && $this->ua_version < 5 || $image)
 		{
-			return $this->input($name,$label,$image != '' ? 'image' : 'submit',$options.$image);
+			return $this->input($name,$label,$image != '' ? 'image' : $buttontype,$options.$image);
 		}
-		return '<button type="submit" name="'.$name.'" value="'.$label.'" '.$options.' />'.
+		return '<button type="'.$buttontype.'" name="'.$name.'" value="'.$label.'" '.$options.' />'.
 			($image != '' ? /*$this->image($app,$image,$label,$options)*/"<img$image $this->prefered_img_title=\"$label\"> " : '').
 			($image == '' || $accesskey ? $label_u : '').'</button>';
 	}
