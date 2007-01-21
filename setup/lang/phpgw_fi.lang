@@ -1,3 +1,6 @@
+%1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	fi	%1 '%2' EI ole olemassa tai Wep-palvelimella ei ole lukuoikeutta siihen tai se ei sisällä eGroupWare asennusta!
+%1 already exists in %2.	setup	fi	%1 on jo olemassa %2:ssa.
+%1 created in %2.	setup	fi	%1 luotu %2:n
 %1 does not exist !!!	setup	fi	%1 ei ole !!!
 %1 is %2%3 !!!	setup	fi	%1 on %2%3 !!!
 (searching accounts and changing passwords)	setup	fi	(etsitään tunnuksia ja vaihdetaan salasanoja)
@@ -6,10 +9,8 @@
 00 (disable)	setup	fi	00 (ei käytössä / suositus)
 13 (ntp)	setup	fi	13 (ntp)
 80 (http)	setup	fi	80 (http)
-<b>this will create 1 admin account and 3 demo accounts</b><br />the username/passwords are: demo/guest, demo2/guest and demo3/guest.	setup	fi	<b>Luodaan 1 ylläpito- ja 3 demotunnusta.</b><br />Käyttäjätunnukset ovat: demo/guest, demo2/guest ja demo3/guest.
 accounts existing	setup	fi	Käyttäjätunnuksia on olemassa
 actions	setup	fi	Toimenpiteet
-add a domain	setup	fi	Lisää toimialue
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fi	Lisää automaattisesti luodut käyttäjätunnukset tähän ryhmään (käytetään ryhmää 'default', jos et määrittele)
 additional settings	setup	fi	Lisäasetukset
 admin first name	setup	fi	Ylläpitäjän etunimi
@@ -50,7 +51,6 @@ auto-created user accounts expire	setup	fi	Automaattisesti luotujen tilien vanhe
 available version	setup	fi	Käytettävissä oleva versio
 back to the previous screen	setup	fi	Takaisin edelliselle sivulle
 back to user login	setup	fi	Kirjaudu sisään
-backupwarn	setup	fi	Suosittelemme, että <u>varmuuskopioit</u> taulujen tiedot, jotta voit tarvittaessa palauttaa ne.<br /><strong>Automaattiset skriptit voivat tuhota dataa.</strong><br /><em>Varmuuskopioi, ennen kuin jatkat!</em>
 because an application it depends upon was upgraded	setup	fi	koska sovellus, josta se riippuu, on päivitetty
 because it depends upon	setup	fi	koska se riippuu sovelluksesta
 because it is not a user application, or access is controlled via acl	setup	fi	koska se ei ole käyttäjien sovellus, tai sen käyttöä hallitaan acl:n avulla
@@ -61,7 +61,6 @@ because of a failed upgrade, or the database is newer than the installed version
 because the enable flag for this app is set to 0, or is undefined	setup	fi	koska tämän sovelluksen käyttömääritys on 0 tai määrittelemätön
 bottom	setup	fi	alas
 cancel	setup	fi	Peruuta
-cannot create the header.inc.php due to file permission restrictions.<br /> instead you can %1 the file.	setup	fi	Tiedostoa header.inc.php ei voitu luoda käyttöoikeuksista johtuen.<br /> Voit %1 tiedoston
 change system-charset	setup	fi	Muuta järjestelmän merkistöä
 charset	setup	fi	ISO-8859-15
 charset to convert to	setup	fi	Merkistö, johon konvertoidaan
@@ -69,7 +68,6 @@ check can only be performed, if called via a webserver, as the user-id/-name of 
 check installation	setup	fi	Tarkista asennus
 check ip address of all sessions	setup	fi	tarkista istuntojen ip-osoitteet
 checking extension %1 is loaded or loadable	setup	fi	Tarkistetaan, että laajennus %1 on ladattu tai ladattavissa
-checking file-permissions of %1 for %2: %3	setup	fi	Tarkistetaan tiedoston %1 käyttöoikeudet, %2: %3
 checking for gd support...	setup	fi	Tarkistetaan GD-tuki...
 checking php.ini	setup	fi	Tarkistetaan tiedostoa php.ini
 checking the egroupware installation	setup	fi	eGroupWaren asennuksen tarkistus
@@ -102,7 +100,6 @@ created	setup	fi	luotu
 created header.inc.php!	setup	fi	Luotiin header.inc.php!
 creating tables	setup	fi	Luodaan tauluja
 current system-charset	setup	fi	Nykyinen järjestelmän merkistö
-current system-charset is %1, click %2here%3 to change it.	setup	fi	Järjestelmän merkistö on %1, napsauta %2tästä%3, jos haluat muuttaa sitä.
 current version	setup	fi	Nykyinen versio
 currently installed languages: %1 <br />	setup	fi	Asennetut kielet: %1 <br />
 database successfully converted from '%1' to '%2'	setup	fi	Tietokanta on konvertoitu versiosta '%1' versioon '%2'
@@ -140,14 +137,15 @@ edit your existing header.inc.php	setup	fi	Muokka header.inc.php-tiedostoa
 edit your header.inc.php	setup	fi	Muokkaa header.inc.php-tiedostoa
 egroupware administration manual	setup	fi	eGroupWaren ylläpidon ohje
 enable for extra debug-messages	setup	fi	näytä tarkemmat debuggausviestit
-enable ldap version 3	setup	fi	Ota LDAP 3 -tuki käyttöön
 enable mcrypt	setup	fi	Ota MCrypt käyttöön
 enter some random text for app session encryption	setup	fi	Anna hieman satunnaisia merkkejä sovellusistunnon salaukseen
 enter some random text for app_session <br />encryption (requires mcrypt)	setup	fi	Anna hieman satunnaisia merkkejä sovellusistunnon <br />salaukseen (tarvitaan mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.<br />Esimerkkejä: /tmp, C:\TEMP
+enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fi	Anna väliaikaisten tiedostojen absoluuttinen polku.<br />Esimerkkejä: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br />Esimerkkejä: /files, E:\FILES
+enter the full path for users and group files.<br />examples: /files, e:files	setup	fi	Anna käyttäjien ja ryhmien tiedostojen absoluuttinen polku.<br />Esimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	setup	fi	Anna tämän palvelimen koneennimi
-enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fi	Anna eGroupWaren URL.<br />Esimerkki: http://www.yritys.com/egroupware &nbsp; tai &nbsp; /egroupware<br />(<b>ei kauttaviivaa loppuun</b>)
+enter the location of egroupware's url.<br />example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br /><b>no trailing slash</b>	setup	fi	Anna eGroupWaren URL.<br />Esimerkki: http://www.yritys.com/egroupware   tai   /egroupware<br />(<b>ei kauttaviivaa loppuun</b>)
 enter the site password for peer servers	setup	fi	Anna peer-palvelinten site-salasana
 enter the site username for peer servers	setup	fi	Anna peer-palvelinten site-tunnus
 enter the title for your site	setup	fi	Anna sivustosi otsikko
@@ -158,13 +156,9 @@ enter your http proxy server port	setup	fi	Määrittele HTTP-välityspalvelimen por
 enter your http proxy server username	setup	fi	Määrittele HTTP-välityspalvelimen käyttäjätunnus
 error in admin-creation !!!	setup	fi	Virhe pääkäyttäjän luonnissa !!!
 error in group-creation !!!	setup	fi	Virhe ryhmän luonnissa !!!
-export egroupware accounts from sql to ldap	setup	fi	Vie eGroupWaren käyttäjätunnukset LDAPiin
-export has been completed!  you will need to set the user passwords manually.	setup	fi	Vienti on valmis!  Määrittele käyttäjien salasanat käsin.
-export sql users to ldap	setup	fi	Vie SQL-käyttäjätunnukset LDAPiin
 false	setup	fi	Ei
 file	setup	fi	TIEDOSTO
 file type, size, version, etc.	setup	fi	tiedoston tyyppi, koko, versio jne.
-for a new install, select import.  to convert existing sql accounts to ldap, select export	setup	fi	Jos asennat uutta asennusta, valitse tuonti. Jos haluat konvertoida olemassaolevia SQL-tilejä LDAP-hakemistopalveluun, valitse vienti.
 force selectbox	setup	fi	Näytä valintaruutu
 found existing configuration file. loading settings from the file...	setup	fi	Löydettiin konfiguraatiotiedosto. Ladataan asetuksia tiedostosta...
 go back	setup	fi	Takaisin
@@ -191,11 +185,8 @@ if you did not receive any errors, your tables have been	setup	fi	Jos et nähnyt 
 if you running this the first time, don't forget to manualy %1 !!!	setup	fi	Jos ajat ensimmästä kertaa, muista suorittaa %1 !!!
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	fi	Jos käytät samaa merkistöä käyttäviä kieliä (esim. länsieurooppalaisia), järjestelmän merkistöä ei tarvitse määritellä.
 image type selection order	setup	fi	Kuvien valintajärjestys
-import accounts from ldap to the egroupware accounts table (for a new install using sql accounts)	setup	fi	Tuo käyttäjätilit LDAP-palvelusta eGroupWaren accounts-tauluun (uusi asennus, jossa käytetään SQL-tilejä)
 import has been completed!	setup	fi	Tuonti on valmis!
-import ldap users/groups	setup	fi	Tuo LDAP käyttäjät/ryhmät
 importing old settings into the new format....	setup	fi	Tuodaan vanhat asetukset uuteen formaattiin....
-include root (this should be the same as server root unless you know what you are doing)	setup	fi	Include-juuri (Tämän pitäisi olla sama kuin Server Root)
 include_path need to contain "." - the current directory	setup	fi	include_path-määrityksessä on oltava "." - nykyinen hakemisto
 install	setup	fi	Asenna
 install all	setup	fi	Asenna kaikki
@@ -207,20 +198,15 @@ invalid ip address	setup	fi	Virheellinen IP-osoite
 invalid password	setup	fi	Virheellinen salasana
 is broken	setup	fi	on rikki
 is disabled	setup	fi	on pois käytöstä
-ldap account import/export	setup	fi	LDAP-tuonti/vienti
 ldap accounts configuration	setup	fi	LDAP-asetukset
 ldap accounts context	setup	fi	LDAP-tilien konteksti
 ldap config	setup	fi	LDAP-asetukset
 ldap default homedirectory prefix (e.g. /home for /home/username)	setup	fi	LDAP-kotihakemistojen oletusetuliite (esim. /home, jolloin kotihakemistoksi tulee /home/käyttäjätunnus)
 ldap default shell (e.g. /bin/bash)	setup	fi	LDAP-oletusshell (esim. /bin/bash)
 ldap encryption type	setup	fi	LDAP-salauksen tyyppi
-ldap export	setup	fi	LDAP-vienti
-ldap export users	setup	fi	Käyttäjien LDAP-vienti
 ldap groups context	setup	fi	LDAP-ryhmien konteksti
 ldap host	setup	fi	LDAP-palvelin
 ldap import	setup	fi	LDAP-tuonti
-ldap import users	setup	fi	Käyttäjien LDAP-tuonti
-ldap modify	setup	fi	LDAP-muokkaus
 ldap root password	setup	fi	LDAP-pääkäyttäjän salasana
 ldap rootdn	setup	fi	LDAP-rootdn
 ldap search filter for accounts, default: "(uid=%user)", %domain=egw-domain	setup	fi	LDAP hakusuodin tunnuksille, oletus: "(uid=%user)", %domain=eGW-toimialue
@@ -242,7 +228,6 @@ memory_limit is set to less than 16m: some applications of egroupware need more 
 minimum account id (e.g. 500 or 100, etc.)	setup	fi	Käyttäjätunnisteen minimiarvo (esim. 500 tai 100, jne.)
 modifications have been completed!	setup	fi	Muutokset on suoritettu loppuun!
 modify	setup	fi	Muokkaa
-modify an existing ldap account store for use with egroupware (for a new install using ldap accounts)	setup	fi	Muokkaa olemassaolevaa LDAP-hakemistoa siten, että se toimii eGroupWaressa (uusi LDAP-asennus)
 multi-language support setup	setup	fi	Kielituen asennus
 name of database	setup	fi	Tietokannan nimi
 name of db user egroupware uses to connect	setup	fi	Tietokantakäyttäjä, jota eGroupWare käyttää
@@ -251,11 +236,7 @@ new	setup	fi	Uusi
 no	setup	fi	Ei
 no accounts existing	setup	fi	Käyttäjätilejä ei ole
 no algorithms available	setup	fi	algoritmeja ei ole käytettävissä
-no microsoft sql server support found. disabling	setup	fi	Microsoft SQL Server -tukea ei ole. Otetaan pois käytöstä
 no modes available	setup	fi	ei käytettävissä olevaa tilaa
-no mysql support found. disabling	setup	fi	Ei MySQL-tukea. Otetaan pois käytöstä
-no oracle-db support found. disabling	setup	fi	Ei Oracle-DB -tukea. Otetaan pois käytöstä
-no postgresql support found. disabling	setup	fi	Ei PostgreSQL-tukea. Otetaan pois käytöstä
 no xml support found. disabling	setup	fi	Ei XML-tukea. Otetaan pois käytöstä
 not	setup	fi	ei
 not all mcrypt algorithms and modes work with egroupware. if you experience problems try switching it off.	setup	fi	Kaikki MCrypt-algoritmit eivät toimi eGroupWaressa. Jos kohtaat ongelmia, ota MCrypt-tuki pois käytöstä.
@@ -275,7 +256,6 @@ or	setup	fi	tai
 or %1continue to the header admin%2	setup	fi	tai %1jatka Header-ylläpitoon%2
 or http://webdav.domain.com (webdav)	setup	fi	tai http://webdav.toimialue.com (WebDAV)
 or we can attempt to create the database for you:	setup	fi	Tai voimme yrittää tehdä tietokannan:
-password needed for configuration	setup	fi	Konfigurointiin tarvitaan salasana
 password of db user	setup	fi	Tietokannan käyttäjän salasana
 passwords did not match, please re-enter	setup	fi	Salasanat eivät ole samoja, yritä uudelleen
 path information	setup	fi	Polkumääritykset
@@ -327,7 +307,6 @@ select to download file	setup	fi	Valitse ladataksesi tiedoston
 select where you want to store/retrieve file contents	setup	fi	Valitse, minne haluat tallentaa tiedostojen sisällön
 select where you want to store/retrieve filesystem information	setup	fi	Valitse, minne haluat tallentaa tiedostojen tiedot
 select where you want to store/retrieve user accounts	setup	fi	Valitse, mihin tallennat käyttäjätunnusten tiedot
-select which group(s) will be exported (group membership will be maintained)	setup	fi	Valitse vietävä/vietävät ryhmät (ryhmien jäsenyydet säilytetään
 select which group(s) will be imported (group membership will be maintained)	setup	fi	Valitse tuotava/tuotavat ryhmät (ryhmien jäsenyydet säilytetään
 select which group(s) will be modified (group membership will be maintained)	setup	fi	Valitse muokattava/muokattavat ryhmät (ryhmien jäsenyydet säilytetään
 select which languages you would like to use	setup	fi	Valitse käytettävät kielet
@@ -347,7 +326,6 @@ set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you 
 setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fi	Jos määrittelet järjestelmän merkistöksi utf-8 (unicode), voit säilyttää dataa eri merkistöjen kielillä.
 settings	setup	fi	Asetukset
 setup	setup	fi	Asennus
-setup demo accounts in ldap	setup	fi	Tee demotunnukset LDAP-hakemistoon
 setup main menu	setup	fi	Asennuksen päävalikko
 setup the database	setup	fi	Asenna tietokanta
 setup/config admin login	setup	fi	Asennuksen ja ylläpidon sisäänkirjautuminen
@@ -373,7 +351,6 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	fi	tiedosto
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fi	eGroupWaren asennuksen ensimmäisessä vaiheess tarkistetaan, että järjestelmässäsi on tarpeeliset asetukset kunnossa.
 the following applications need to be upgraded:	setup	fi	Nämä sovellukset on päivitettävä:
-the imap extension is needed by the two email apps (even if you use email with pop3 as protocoll).	setup	fi	Imap-laajennus tarvitaan molempien sähköpostisovellusten käytössä (vaikka käyttäisit pop3-sähköpostia).
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fi	mbstring-laajennusta tarvitaan utf-8 tai muitten monibittisten merkistöjen täyteen tukeen.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	fi	Asetus mbstring.func_overload = 7 vaaditaan unicode- (utf-8) tukea varten.
 the table definition was correct, and the tables were installed	setup	fi	Taulumääritykset ovat kunnossa, ja taulut on asennettu
@@ -384,9 +361,6 @@ this has to be outside the webservers document-root!!!	setup	fi	Hakemiston on ol
 this might take a while, please wait ...	setup	fi	Voi kestää hetken, odota ...
 this program will convert your database to a new system-charset.	setup	fi	Tämä ohjelma muuntaa tietokantasi uuteen merkistöön.
 this program will help you upgrade or install different languages for egroupware	setup	fi	Päivitä tai asenna eGroupWaren kieliä
-this section will help you export users and groups from egroupware's account tables into your ldap tree	setup	fi	Tässä osassa voit viedä eGroupWaren käyttäjät ja ryhmät LDAP-hakemistopalveluun
-this section will help you import users and groups from your ldap tree into egroupware's account tables	setup	fi	Tässä osassa voit tuoda LDAP-hakemistopalvelusta käyttäjät ja ryhmät eGroupWareen
-this section will help you setup your ldap accounts for use with egroupware	setup	fi	Tässä osassa voit määritellä LDAP-käyttäjätunnukset eGroupWaren käyttöön
 this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fi	Tämän pitäisi olla noin 30 tavua pitkä.<br />Huom: oletusarvo on luotu satunnaisesti.
 this stage is completed<br />	setup	fi	Tämä vaihe on valmis<br />
 to a version it does not know about	setup	fi	versioon jota se ei tunne
@@ -419,7 +393,6 @@ we can proceed	setup	fi	Voidaan jatkaa
 we will automatically update your tables/records to %1	setup	fi	Taulut/tietueet päivitetään versioon %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	fi	Seuraavaksi ajetaan muutamia testejä, joiden suorittaminen voi viedä joitakin minuutteja. Napsauta allaolevaa linkkiä jatkaaksesi.
 welcome to the egroupware installation	setup	fi	Tervetuloa eGroupWaren asennukseen
-what type of sessions management do you want to use (php4 session management may perform better)?	setup	fi	Mitä istunnonhallinnan tyyppiä haluat käyttää (PHP4-istunnonhallinta on joskus nopeampi)?
 which database type do you want to use with egroupware?	setup	fi	Mitä tietokantatyyppiä käytät?
 world readable	setup	fi	kaikkien luettavissa
 world writable	setup	fi	kaikkien kirjoitettavissa
@@ -427,19 +400,10 @@ would you like egroupware to cache the phpgw info array ?	setup	fi	Haluatko, ett
 would you like egroupware to check for a new version<br />when admins login ?	setup	fi	Haluatko, että eGroupWare tarkistaa onko uusia versioita julkaistu, kun pääkäyttäjä sisäänkirjautuu?
 would you like to show each application's upgrade status ?	setup	fi	Haluatko näyttää kunkin sovelluksen päivitystilan?
 writable by the webserver	setup	fi	www-palvelimen kirjoitettavissa
-write config	setup	fi	Tallenna asetukset
 yes	setup	fi	Kyllä
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fi	Käytät eGroupWaren esibetaversiota.<br />Näitä versioita ei tueta enää, ja niitä ei voi päivittää asennuksessa.<br />Päivitä versioon 0.9.10 (viimeisin versio, joka tukee esibetaversioita) <br />ja päivitä sitten nykyiseen versioon.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fi	Käytät vanhaa PHP-versiota.<br />On suositeltavaa päivittää PHP uudempaan versioon.<br />Vanhat PHP-versiot eivät toimi oikein.<br />Päivitä vähintään versioon %1.
 you appear to be running version %1 of egroupware	setup	fi	Ajat eGroupWaren versiota %1
-you appear to be using php earlier than 4.1.0. egroupware now requires 4.1.0 or later	setup	fi	PHP:n versio on vanhempi kuin 4.1.0. eGroupWare tarvitsee version 4.1.0 tai uudemman.
-you appear to be using php3. disabling php4 sessions support	setup	fi	Käytät PHP3:ää. Ei käytetä PHP4-istuntoja
-you appear to be using php4. enabling php4 sessions support	setup	fi	Käytät PHP4:ää. Käytetään PHP4-istuntoja
-you appear to have microsoft sql server support enabled	setup	fi	Microsoft SQL Server -tuki on käytössä
-you appear to have mysql support enabled	setup	fi	MySQL on käytettävissä
-you appear to have oracle support enabled	setup	fi	Oracle on käytettävissä
-you appear to have oracle v8 (oci) support enabled	setup	fi	Oracle V8 (OCI) on käytettävissä
-you appear to have postgresql support enabled	setup	fi	PostgreSQL on käytettävissä
 you appear to have xml support enabled	setup	fi	XML on käytettävissä
 you are ready for this stage, but this stage is not yet written.<br />	setup	fi	Olet valmis tätä vaihetta varten, mutta tätä vaihetta ei ole vielä kirjoitettu.<br />
 you didn't enter a config password for domain %1	setup	fi	Et määritellyt konfiguraatiosalasanaa toimialueelle %1
@@ -453,7 +417,6 @@ you must enter a username for the admin	setup	fi	Anna ylläpidon käyttäjätunnus
 you need to add some domains to your header.inc.php.	setup	fi	Määrittele toimialueita header.inc.php-tiedostoon.
 you need to select your current charset!	setup	fi	Määrittele nykyinen merkistö!
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	fi	Se täytyy poistaa ja asentaa uudelleen, tai korjata käsin
-you will need to load the proper schema into your ldap server - see phpgwapi/doc/ldap/readme	setup	fi	Lataa skeema LDAP-palvelimelle, katso  <a href="../phpgwapi/doc/ldap/README" target="_blank">phpgwapi/doc/ldap/README</a>
 you're using an old configuration file format...	setup	fi	Käytät vanhaa konfiguraatiotiedostomuotoa...
 you're using an old header.inc.php version...	setup	fi	Käytät vanhaa header.inc.php-versiota...
 your applications are current	setup	fi	Sovellukset ovat ajan tasalla
@@ -465,6 +428,4 @@ your header.inc.php needs upgrading.	setup	fi	header.inc.php-tiedosto on päivite
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	fi	Tiedosto header.inc.php on päivitettävä.<br /><blink><b class="msg">VAROITUS!</b></blink><br /><b>TEE VARMUUSKOPIOT!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	fi	Käyttämäsi PHP ei tue GD-kirjastoa. Gantt -karttojen näyttö Projektien hallinnassa tarvitsee GD-kirjaston versio 1.8 tai uudempi.
 your tables are current	setup	fi	Tietokantataulut ovat ajan tasalla
-your tables may be altered and you may lose data	setup	fi	Tietokantataulujen rakennetta muutetaan. Voit menettää tietoja.
 your tables will be dropped and you will lose data	setup	fi	Tietokantataulut poistetaan, ja menetät tietoja !!
-
