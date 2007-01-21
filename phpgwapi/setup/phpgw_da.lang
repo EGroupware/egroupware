@@ -50,6 +50,8 @@ all	common	da	Alle
 all fields	common	da	alle felter
 all occurrences of the search string was replaced.	tinymce	da	Alle forekomster af søge strengen er ændrede.
 alphabet	common	da	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z
+alternate style-sheet:	common	da	Alternativt style-sheet
+alternative image	tinymce	da	Alternativt image
 american samoa	common	da	Amerikansk Samoa
 andorra	common	da	Andorra
 angola	common	da	Angola
@@ -74,6 +76,8 @@ autosave default category	common	da	Autogem Standard Kategori
 azerbaijan	common	da	Azerbaijan
 back	common	da	Tilbage
 back to user login	common	da	Tilbage til bruger login
+background color:	common	da	Baggrunds farve:
+backupdir '%1' is not writeable by the webserver	common	da	Web server kan ikke skrive i backup folder '%1'
 bad login or password	common	da	Forkert brugernavn eller password
 bahamas	common	da	Bahamas
 bahrain	common	da	Bahrain
@@ -120,6 +124,7 @@ cc	common	da	CC
 cellpadding	tinymce	da	Cellemargen
 cellspacing	tinymce	da	Afstand mellem celler
 center	tinymce	da	Midt i
+centered	common	da	Centreret
 central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
 change	common	da	Ændre
@@ -163,6 +168,7 @@ copy/cut/paste is not available in mozilla and firefox.\ndo you want more inform
 copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
 costa rica	common	da	Costa Rica
 cote d ivoire	common	da	Elfenbenskysten
+could not contact server. operation timed out!	common	da	Kan ikke kontakte server. Operationen fik time-out!
 create	common	da	Opret
 created by	common	da	Lavet af
 croatia	common	da	Kroatien
@@ -181,6 +187,8 @@ datetime port.<br>if using port 13, please set firewall rules appropriately befo
 december	common	da	December
 default	tinymce	da	Standard
 default category	common	da	Standard Kategori
+default height for the windows	common	da	Standard højde for vinduer
+default width for the windows	common	da	Standard bredde for vinduer
 delete	common	da	Slet
 delete row	common	da	Slet række
 denmark	common	da	Danmark
@@ -188,20 +196,29 @@ description	common	da	Beskrivelse
 detail	common	da	Detalje
 details	common	da	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
+direction	tinymce	da	Retning
+direction left to right	common	da	Retning venstre til højre
+direction right to left	tinymce	da	Retning højre til venstre
+directory	tinymce	da	Folder
 disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
 disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
 disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktiver kørsel af fejlfindingsscript for Internet Explorer 5.5 eller nyere for at vise det transparente i PNG billeder?
 disabled	common	da	Slået fra
+display %s first	jscalendar	da	Vis %s først
 djibouti	common	da	Djibouti
 do you also want to delete all subcategories ?	common	da	Ønsker du at slette alle underkategorierne?
 do you want to use the wysiwyg mode for this textarea?	tinymce	da	Vil du bruge WYSIWYG mode til dette textområde?
+doctype:	common	da	Dokument type:
+document properties	common	da	Dokument egenskaber
+document title:	common	da	Dokument titel:
 domain	common	da	Domæne
 domain name for mail-address, eg. "%1"	common	da	domænenavn til e-mail adresser, f.eks "%1"
 domestic	common	da	Indenrigs
 dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
 done	common	da	Udført
+down	tinymce	da	Nedad
 drag to move	jscalendar	da	Træk for at flytte
 e-mail	common	da	E-mail
 east timor	common	da	Øst Timor
@@ -230,12 +247,18 @@ error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %
 error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2
 estonia	common	da	Estland
 ethiopia	common	da	Etiopien
+exact	common	da	nøjagtig
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	da	Kan ikke kontakte server eller ugyldigt svar fra server. Prøv at logge ind igen. Kontakt administrator i tilfælde af fejl.
 falkland islands (malvinas)	common	da	Falklands Øerne
 faroe islands	common	da	Færøerne
 fax number	common	da	Fax nummer
 february	common	da	Februar
 fields	common	da	Felter
 fiji	common	da	Fiji
+file already exists. file was not uploaded.	tinymce	da	Filen eksisterer allerede. Filen blev ikke uploaded.
+file exceeds the size limit	tinymce	da	Filen fylder for meget
+file not found.	tinymce	da	Kan ikke finde filen.
+file was not uploaded.	tinymce	da	Filen blev ikke uploaded.
 files	common	da	Filer
 filter	common	da	Filter
 finland	common	da	Finland

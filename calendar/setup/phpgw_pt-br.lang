@@ -8,6 +8,7 @@ accepted	calendar	pt-br	Aceito
 access denied to the calendar of %1 !!!	calendar	pt-br	Acesso negado à agenda de %1
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	pt-br	Ação que provocou a notificação: (Adicionada, Cancelada, Aceita, Rejeitada, ...)
 actions	calendar	pt-br	Ações
+actions...	calendar	pt-br	Ações...
 add alarm	calendar	pt-br	Adicionar aviso
 added	calendar	pt-br	Adicionado
 after current date	calendar	pt-br	Após data atual
@@ -47,7 +48,7 @@ copy of:	calendar	pt-br	Copiar para:
 copy this event	calendar	pt-br	Copiar este evento
 countries	calendar	pt-br	Países
 country	calendar	pt-br	País
-create an exception at this recuring event	calendar	pt-br	Criar uma exceção para este evento recorrente
+create an exception for the given date	calendar	pt-br	Criar uma exceção para a data informada
 create new links	calendar	pt-br	Criar novos links
 csv	calendar	pt-br	CSV
 csv-fieldname	calendar	pt-br	CVS-Nome do Campo
@@ -102,6 +103,7 @@ event saved	calendar	pt-br	Evento salvo
 event will occupy the whole day	calendar	pt-br	Evento irá ocupar todo o dia
 exception	calendar	pt-br	Exceção
 exceptions	calendar	pt-br	Exceções
+execute a further action for this entry	calendar	pt-br	Executar uma outra ação para este registro
 existing links	calendar	pt-br	Links existentes
 export	calendar	pt-br	Exportar
 extended	calendar	pt-br	Extendido
@@ -213,6 +215,7 @@ previous	calendar	pt-br	anterior
 private and global public	calendar	pt-br	Particular e público globalmente
 private and group public	calendar	pt-br	Particular e público ao grupo
 private only	calendar	pt-br	Particular somente
+quantity	calendar	pt-br	Quantidade
 re-edit event	calendar	pt-br	Reeditar evento
 receive email updates	calendar	pt-br	Receber atualizações via correio eletrônico
 receive summary of appointments	calendar	pt-br	Receber sumário dos compromissos
@@ -283,6 +286,7 @@ two weeks	calendar	pt-br	duas semanas
 updated	calendar	pt-br	Atualizado
 use end date	calendar	pt-br	Usar data de término
 use the selected time and close the popup	calendar	pt-br	Usar o horário selecionado e fechar a janela
+user or group	calendar	pt-br	Usuário ou Grupo
 view this event	calendar	pt-br	Exibir este evento
 views with fixed time intervals	calendar	pt-br	Exibir com tempo de intervalo fixo
 wed	calendar	pt-br	Qua

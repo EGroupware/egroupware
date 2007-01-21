@@ -28,7 +28,7 @@ created by	filemanager	sl	Ustvaril
 created directory %1	filemanager	sl	Ustvarjena mapa %1
 date	filemanager	sl	Datum
 default number of upload fields to show	filemanager	sl	Privzeto število prikazanih polj za prenos
-delete	filemanager	sl	Briši
+delete	filemanager	sl	Izbriši
 deleted %1	filemanager	sl	Izbrisano %1
 directory	filemanager	sl	Mapa
 directory %1 already exists	filemanager	sl	Mapa %1 že obstaja
@@ -40,7 +40,7 @@ edit	filemanager	sl	Uredi
 edit comments	filemanager	sl	Uredi komentarje
 error running command	filemanager	sl	Napaka pri izvajanju ukaza
 execute	filemanager	sl	Izvedi
-failed to create directory	filemanager	sl	napaka pri ustvarjanju mape
+failed to create directory	filemanager	sl	Napaka pri ustvarjanju mape
 fake base dir did not exist, egroupware created a new one.	filemanager	sl	Navidezna mapa še ni obstajala, zato je bila ustvarjena nova.
 file	filemanager	sl	Datoteka
 file %1 already exists. please edit it or delete it first.	filemanager	sl	Datoteka %1 že obstaja. Prosim, če uredite obstoječo različico, ali pa jo izbrišete.
@@ -103,7 +103,7 @@ up	filemanager	sl	Navzgor
 update	filemanager	sl	Posodobi
 updated comment for %1	filemanager	sl	Komentar za %1 je bil posodobljen
 upload	filemanager	sl	Prenesi
-upload fields	filemanager	sl	polja za prenos
+upload fields	filemanager	sl	Polja za prenos
 upload files	filemanager	sl	Prenesi datoteke
 use new experimental filemanager?	filemanager	sl	Uporabljam nov, poskusni Upravljalec datotek?
 used space	filemanager	sl	Uporabljen prostor

@@ -33,19 +33,23 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	da	Administrator navn
 administration	admin	da	Administration
 admins	admin	da	Administratore
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en konto låses (Standart 3)?
-after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standart 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en konto låses (Standard 3)?
+after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	da	Efter hvor mange usuccesfulde forsøg på login, skal en IP låses (Standard 3)?
 all records and account information will be lost!	admin	da	Alle posteringer og konto infomationer vil gå tabt!
 all users	admin	da	Alle brugere
 allow anonymous access to this app	admin	da	Tillad anonym adgang til denne applikation
+alternate email address	admin	da	alternativ email adresse
 anonymous user	admin	da	Anonym bruger
 anonymous user (not shown in list sessions)	admin	da	Anonym bruger (ikke vist i session loggen)
+anonymous user does not exist!	admin	da	Anonym bruger eksisterer ikke!
+anonymous user has no run-rights for the application!	admin	da	Anonym bruger har IKKE udførelses rettigheder for applikationen!
 appearance	admin	da	Udseende
-application	admin	da	Appilkation
+application	admin	da	Applikation
 application name	admin	da	Applikation navn
-application title	admin	da	Appilkation titel
-applications	admin	da	Appilkationer
-applications list	admin	da	Appilkation liste
+application title	admin	da	Applikation titel
+applications	admin	da	Applikationer
+applications list	admin	da	Applikation liste
+applies the changes	admin	da	udfør ændringerne
 are you sure you want to delete the application %1 ?	admin	da	Er du sikker på du vil slette applikationen %1?
 are you sure you want to delete this account ?	admin	da	Er du sikker på du vil slette denne konto?
 are you sure you want to delete this application ?	admin	da	Er du sikker på du vil slette denne applikation?
@@ -55,7 +59,7 @@ are you sure you want to delete this group ?	admin	da	Er du sikker på du vil sle
 are you sure you want to delete this server?	admin	da	Er du sikker på du vil slette denne server?
 are you sure you want to kill this session ?	admin	da	Er du sikker på du vil afbryde denne session?
 async services last executed	admin	da	Async services sidst eksekveret
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	da	Prøv at bruge korrekt mimetype til FTP i stedet for standart 'application/octet-stream'
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	da	Prøv at bruge korrekt mimetype for FTP i stedet for standard 'application/octet-stream'
 back to the list	admin	da	tilbage til listen
 bi-directional	admin	da	bi-directional
 bottom	admin	da	bunden
@@ -75,9 +79,9 @@ crontab only (recomended)	admin	da	kun crontab (anbefalet)
 data	admin	da	Data
 day	admin	da	Dag
 day of week<br>(0-6, 0=sun)	admin	da	Ugedag<br>(0-6, 0=Søn)
-default	admin	da	Standart
-default file system space per user	admin	da	Standart system plads pr bruger
-default file system space per user/group ?	admin	da	Standart system plads pr bruger/gruppe?
+default	admin	da	Standard
+default file system space per user	admin	da	Standard system plads pr bruger
+default file system space per user/group ?	admin	da	Standard system plads pr bruger/gruppe?
 deinstall crontab	admin	da	Afinstallere crontab
 delete account	admin	da	Slet konto
 delete all records	admin	da	Slet alle posteringer
@@ -136,9 +140,9 @@ enter the background color for the site title	admin	da	Indtast baggrundsfarven f
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.<br>Eksempel: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	da	Indtast den fuldstændige sti til midlertidige filer.<br>Eksempel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	da	Indtast den fuldstændige sti til brugere og gruppe filer.<br>Eksempel: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	da	Indtast den fuldstændige sti til brugere og grupper.<br>Eksempel: /tmp, C:\TEMP
 enter the hostname of the machine on which this server is running	admin	da	Indtast hostnavnet for computeren på hvor denne serveren kører
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast placeringen af eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware &nbsp; eller &nbsp; /egroupware<br><b>Ingen efterfølgende skråstreg</b>
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	da	Indtast placeringen af eGroupWare's URL.<br>Eksempel: http://www.domæne.dk/egroupware   eller   /egroupware<br><b>Ingen efterfølgende skråstreg</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	da	Indtast søg streng. For at vise alt, tøm dette felt og tryk SEND knappen igen
 enter the site password for peer servers	admin	da	Indtast site adgangskoden for peer serverene
 enter the site username for peer servers	admin	da	Indtast site brugernavnet for peer serverene
@@ -146,9 +150,12 @@ enter the title for your site	admin	da	Indtast titlen for dit site
 enter the title of your logo	admin	da	Indtast title for dit logo
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	da	Indtast stien eller filnavnet (i phpgwapi/templates/default/images) på dit logo
 enter the url where your logo should link to	admin	da	Indtast stien hvor dit logo skal linke til
-enter your default ftp server	admin	da	Indtast din standart FTP server
+enter your default ftp server	admin	da	Indtast din standard FTP server
+enter your default mail domain ( from: user@domain )	admin	da	Indtast dit standard domæne navn (fra: bruger@domæne)
 enter your http proxy server	admin	da	Indtast din HTTP proxy server
 enter your http proxy server port	admin	da	Indtast din HTTP proxy server port
+enter your smtp server hostname or ip address	admin	da	Indtast SMTP-server navn
+enter your smtp server port	admin	da	Indtast SMTP-server port
 error canceling timer, maybe there's none set !!!	admin	da	Fejl ved annullering af timer, måske er den ikke sat!!!
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	da	Fejl ved indstillingen af timeren, forkert syntaks eller måske kører den allerede!!!
 error: %1 not found or other error !!!	admin	da	Fejl: %1 ikke fundet eller en anden fejl!!!
@@ -170,8 +177,8 @@ hide php information	admin	da	gem php information
 home directory	admin	da	Hjemme mappe
 host information	admin	da	Host information
 hour<br>(0-23)	admin	da	Timer<br>(0-23)
-how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	da	Hvor mange dage skal en notits blive i adgangsloggen, før den slettes (standart 90)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standart 30)?
+how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	da	Hvor mange dage skal en notits blive i adgangsloggen, før den slettes (standard 90)?
+how many minutes should an account or ip be blocked (default 30) ?	admin	da	Hvor mange minutter skal en konto eller IP låses (standard 30)?
 if no acl records for user or any group the user is a member of	admin	da	Hvis ingen ACL journal for en bruger eller gruppe som brugeren er medlem af
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	da	Hvis LDAP bruges, vil du håndtere hjemmemapper og loginshells atributter?
 inbound	admin	da	indkommende
@@ -189,8 +196,8 @@ last login	admin	da	Sidste login
 last login from	admin	da	Sidste login fra
 last time read	admin	da	Sidst læst
 ldap accounts context	admin	da	LDAP kontoer contekst
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	da	LDAP standart hjemmebibliotek præfiks (f.eks. /home for /home/brugernavn)
-ldap default shell (e.g. /bin/bash)	admin	da	LDAP standart shell (f.eks. /bin/bash)
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	da	LDAP standard hjemmebibliotek præfiks (f.eks. /home for /home/brugernavn)
+ldap default shell (e.g. /bin/bash)	admin	da	LDAP standard shell (f.eks. /bin/bash)
 ldap encryption type	admin	da	LDAP krypterings type
 ldap groups context	admin	da	LDAP gruppe contekst
 ldap host	admin	da	LDAP host
@@ -207,6 +214,7 @@ login screen	admin	da	Login skærm
 login shell	admin	da	Login shell
 login time	admin	da	Login tid
 loginid	admin	da	LoginID
+mail settings	admin	da	Post indstillinger
 main screen message	admin	da	Startside besked
 manager	admin	da	Håndtering
 maximum account id (e.g. 65535 or 1000000)	admin	da	Maksimum konto id (f.eks. 65535 eller 10000000)
@@ -285,7 +293,7 @@ sorry, the above users are still a member of the group %1	admin	da	Beklager, ove
 sorry, the follow users are still a member of the group %1	admin	da	Beklager, følgende brugere er stadig medlem af gruppen %1
 sort the entries	admin	da	sorter resultaterne
 ssl	admin	da	ssl
-standard	admin	da	standart
+standard	admin	da	standard
 start testjob!	admin	da	Start TestJob!
 submit changes	admin	da	Gem ændringerne
 submit the search string	admin	da	Send søgningen
@@ -307,8 +315,8 @@ they must be removed before you can continue	admin	da	De skal fjernes før du kan
 this application is current	admin	da	Applikationen er den nyeste version
 this application requires an upgrade	admin	da	Denne applikation brhøver en opgradering
 this category is currently being used by applications as a parent category	admin	da	Denne kategori er brugt af en anden applikation, som en hovedkategori.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	da	Timeout for applikation session data i sekunder (standart 86400 = 1 dag)
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	da	Timeout for sessioner i sekunder (standart 14400 = 4 timer)
+timeout for application session data in seconds (default 86400 = 1 day)	admin	da	Timeout for applikation session data i sekunder (standard 86400 = 1 dag)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	da	Timeout for sessioner i sekunder (standard 14400 = 4 timer)
 times	admin	da	Gange
 top	admin	da	top
 total records	admin	da	Total posteringer
@@ -318,7 +326,7 @@ use cookies to pass sessionid	admin	da	Brug cookies som sessionid
 use pure html compliant code (not fully working yet)	admin	da	Brug ren HTML godkendt kode (virker ikke 100% endnu)
 use theme	admin	da	Brug tema
 user accounts	admin	da	Bruger kontoer
-user data	admin	da	Bruger data
+user data	common	da	Bruger data
 user groups	admin	da	Bruger grupper
 userdata	admin	da	brugerdata
 users choice	admin	da	Brugerens valg
@@ -330,9 +338,9 @@ view sessions	admin	da	Vis sessioner
 view this user	admin	da	Vis denne bruger
 view user account	admin	da	Vis bruger konto
 who would you like to transfer all records owned by the deleted user to?	admin	da	Hvem vil du overføre ALLE posteringer ejet af den slettede bruger til?
+would you like egroupware to cache the egw info array ?	admin	da	Vil du have eGroupWare til at cache egw info array?
 would you like egroupware to check for a new version<br>when admins login ?	admin	da	Vil du have eGroupWare til at kikke efter nyere versioner<br>når adminstratorer logget ind?
 would you like egroupware to check for new application versions when admins login ?	admin	da	Vil du have eGroupWare til at kikke efter nyere applikations versioner når administratoren logger ind?
-would you like egroupware to cache the egw info array ?	admin	da	Vil du have eGroupWare til at cache egw info array?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	da	Vil du automatisk indlæse nye sprogfiler (under login)?
 would you like to show each application's upgrade status ?	admin	da	Vil du gerne have vist hver applikations opgraderings status?
 xml-rpc	admin	da	XML-RPC
@@ -346,7 +354,3 @@ you must enter an application name.	admin	da	Du skal indtaste et applikations na
 you must enter an application title.	admin	da	Du skal indtaste en applikations titel
 you must select a file type	admin	da	Du skal vælge en type
 you will need to remove the subcategories before you can delete this category	admin	da	Du blive nød til at fjerne underkategorierne for du kan slette denne kategori!
-enter your default mail domain ( from: user@domain )	admin	da	Indtast dit standard domæne navn (fra: bruger@domæne)
-enter your smtp server hostname or ip address	admin	da	Indtast SMTP-server navn
-enter your smtp server port	admin	da	Indtast SMTP-server port
-mail settings	admin	da	Post indstillinger

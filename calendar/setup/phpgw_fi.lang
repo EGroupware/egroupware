@@ -5,8 +5,10 @@
 a non blocking event will not conflict with other events	calendar	fi	Joustava tapahtuma ei aiheita päällekkäisyyttä muiden tapahtumien kanssa
 accept or reject an invitation	calendar	fi	Hyväksy tai kieltäydy kutsusta
 accepted	calendar	fi	Hyväksytty
+access denied to the calendar of %1 !!!	calendar	fi	Pääsy %1 kalenteriin kielletty !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	fi	Toimenpide, joka aiheutti huomautuksen: lisätty, peruutettu, poistettu, hylätty ...
 actions	calendar	fi	Toimenpiteet
+actions...	calendar	fi	Toimenpiteet...
 add alarm	calendar	fi	Lisää hälytys
 added	calendar	fi	Lisätty
 after current date	calendar	fi	Nykyisen päivän jälkeen
@@ -33,6 +35,7 @@ busy	calendar	fi	varattu
 by	calendar	fi	henkilö:
 calendar event	calendar	fi	Kalenteritapahtuma
 calendar holiday management	admin	fi	Kalenterin lomien ylläpito
+calendar menu	calendar	fi	Kalenterin valikko
 calendar preferences	calendar	fi	Kalenterin oletusasetukset
 calendar settings	admin	fi	Kalenterin asetukset
 calendar-fieldname	calendar	fi	Kalenteri - kentän nimi
@@ -45,7 +48,6 @@ copy of:	calendar	fi	Kopio kohteesta:
 copy this event	calendar	fi	Kopioi tämä tapahtuma
 countries	calendar	fi	Maat
 country	calendar	fi	Maa
-create an exception at this recuring event	calendar	fi	Tee poikkeus tässä toistuvien tapahtumien sarjassa
 create new links	calendar	fi	Luo uusia linkkejä
 csv	calendar	fi	CSV
 csv-fieldname	calendar	fi	CSV-kentän nimi
@@ -61,7 +63,6 @@ default calendar filter	calendar	fi	Kalenterin oletussuodin
 default calendar view	calendar	fi	Kalenterin oletusnäkymä
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	fi	Uusien tapahtumien oletuspituus. Pituus annetaan minuutteina, eli 60 tarkoittaa tuntia.
 default week view	calendar	fi	Oletus viikkonäkymä
-defines the size in minutes of the lines in the day view.	calendar	fi	Määrittelee päivänäkymän viivojen koon minuutteina.
 delete series	calendar	fi	Poista sarjat
 delete this alarm	calendar	fi	Poista tämä hälytys
 delete this event	calendar	fi	Poista tämä tapahtuma
@@ -113,6 +114,7 @@ for	calendar	fi	kenelle:
 format of event updates	calendar	fi	Tapahtumien päivitysmuoto
 forward half a month	calendar	fi	Eteenpäin puoli kuukautta
 forward one month	calendar	fi	Eteenpäin kuukausi
+four days view	calendar	fi	4 päivän näkymä
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	fi	Vapaa/varattu: Tuntematon käyttäjä '%1', väärä salasana tai tiedosto ei ole saatavilla kirjautumattomalle käyttäjille !!!
 freetime search	calendar	fi	Vapaan ajan haku
 fri	calendar	fi	Pe
@@ -121,15 +123,19 @@ fullname of person to notify	calendar	fi	Huomautettavan henkilön koko nimi
 general	calendar	fi	Yleiset
 global public and group public	calendar	fi	Yleiset julkiset ja ryhmän julkiset
 global public only	calendar	fi	Vain yleiset julkiset
+group invitation	calendar	fi	Ryhmän kutsuminen
 group planner	calendar	fi	Ryhmäsuunnittelu
 group public only	calendar	fi	Vain ryhmän julkinen
+h	calendar	fi	t
 here is your requested alarm.	calendar	fi	Tässä on pyytämäsi hälytys.
+hide private infos	calendar	fi	Piiloita yksityiset tiedot
 high priority	calendar	fi	tärkeä
 holiday	calendar	fi	Loma
 holiday management	calendar	fi	Lomien hallinta
 holidays	calendar	fi	Lomat
 hours	calendar	fi	tuntia
 how far to search (from startdate)	calendar	fi	kuinka kaukaa haetaan (alkaen aloituspäivästä)
+how many minutes should each interval last?	calendar	fi	Kuinka monen minuutin välillä
 ical	calendar	fi	iCal-kalenteri
 ical / rfc2445	calendar	fi	iCal / rfc2445
 ical export	calendar	fi	Vie iCal-kalenteri
@@ -140,16 +146,16 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	fi	Jos et aseta tänne salasanaa, on tieto saatavilla kaikille jotka tietävät osoitteen!!!
 ignore conflict	calendar	fi	Ohita päällekkäisyys
 import	calendar	fi	Tuo
-import csv-file	calendar	fi	Tuo CSV-tiedosto
+import csv-file	common	fi	Tuo CSV-tiedosto
 interval	calendar	fi	Jakso
-intervals in day view	calendar	fi	Jaksot päivänäkymässä
 invalid email-address "%1" for user %2	calendar	fi	Virheellinen sähköpostiosoite "%1" käyttäjälle %2
-last	calendar	fi	viimeinen
+last	calendar	fi	Viimeinen
 lastname of person to notify	calendar	fi	Huomautettavan henkilön sukunimi
+length of the time interval	calendar	fi	Aikavälin pituus
 link to view the event	calendar	fi	Tapahtuman näyttämisen linkki
 links	calendar	fi	Linkit
 links, attachments	calendar	fi	Linkit, Liitteet
-listview	calendar	fi	listanäkymä
+listview	calendar	fi	Listanäkymä
 location	calendar	fi	Sijainti
 location to autoload from	admin	fi	Automaattisen latauksen osoite
 location, start- and endtimes, ...	calendar	fi	Paikka, Aloitus -ja lopetusajat, ...
@@ -204,6 +210,7 @@ previous	calendar	fi	edellinen
 private and global public	calendar	fi	Yksityinen ja yleisesti julkinen
 private and group public	calendar	fi	Yksityinen ja ryhmän julkinen
 private only	calendar	fi	Vain yksityinen
+quantity	calendar	fi	Määrä
 re-edit event	calendar	fi	Muokkaa tapahtumaa
 receive email updates	calendar	fi	Vastaanota päivityksiä sähköpostilla
 receive summary of appointments	calendar	fi	Vastaanota tapaamisten yhteenveto
@@ -274,7 +281,9 @@ two weeks	calendar	fi	kaksi viikkoa
 updated	calendar	fi	Päivittänyt
 use end date	calendar	fi	Käytä loppumispäivää
 use the selected time and close the popup	calendar	fi	käytä valittua aikaa ja sulje ikkuna
+user or group	calendar	fi	Käyttäjä tai ryhmä
 view this event	calendar	fi	Katsele tätä tapahtumaa
+views with fixed time intervals	calendar	fi	Näytä korjatut aikavälit
 wed	calendar	fi	Ke
 week	calendar	fi	Viikko
 weekday starts on	calendar	fi	Viikonpäivä alkaa kello
