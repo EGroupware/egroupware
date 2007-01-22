@@ -843,7 +843,7 @@ class uiforms extends uical
 		{
 			unset($_GET['non_interactive']);	// prevent process_exec <--> edit loops
 			$content['button']['save'] = true;
-			$this->process_edit($content);
+			$this->process_edit(array_merge($content,$preserv));
 		}
 		else
 		{
