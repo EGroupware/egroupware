@@ -1,9 +1,9 @@
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
 %1 is not executable by the webserver !!!	common	pt-br	%1 não é executável pelo servidor web !!!
-%1 manual	common	pt-br	%1 manual
+%1 manual	common	pt-br	manual de %1
 %1 start	common	pt-br	%1 iniciar
 %1choose an other directory%2<br />or make %3 writeable by webserver	common	pt-br	%1Escolha outro diretório%2<br/> ou dê ao servidor web permissão de escrita em %3
-%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é uma suíte de colaboração multi-usuário escrita em %3PHP%4.
+%1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	pt-br	%1eGroupWare%2 é um software de colaboração multi-usuário escrito em %3PHP%4.
 (shift-)click or drag to change value	jscalendar	pt-br	(Shift-) Clique ou arraste para alterar o valor
 - click on any of the time parts to increase it	jscalendar	pt-br	- Clique sobre as horas para alterá-las
 - hold mouse button on any of the above buttons for faster selection.	jscalendar	pt-br	- Segure mouse clicado e use o comando seta acima para avançar mais rápido
@@ -109,7 +109,7 @@ brunei darussalam	common	pt-br	BRUNEI DARUSSALAM
 bulgaria	common	pt-br	BULGÁRIA
 burkina faso	common	pt-br	BURKINA FASO
 burundi	common	pt-br	BURUNDI
-calendar	common	pt-br	Agenda de Eventos
+calendar	common	pt-br	Agenda
 cambodia	common	pt-br	CAMBODIA
 cameroon	common	pt-br	CAMARÕES
 canada	common	pt-br	CANADÁ
@@ -579,7 +579,7 @@ paste table row before	tinymce	pt-br	Colar linha de tabela antes
 path not found.	tinymce	pt-br	Caminho não encontrado
 path to user and group files has to be outside of the webservers document-root!!!	common	pt-br	O caminho para usuários e grupos deve ser FORA do servidor da extranet.!!!
 pattern for search in addressbook	common	pt-br	Padrão para pesquisa em Contatos
-pattern for search in calendar	common	pt-br	Padrão para pesquisa na Agenda de Eventos
+pattern for search in calendar	common	pt-br	Padrão para pesquisa na Agenda
 pattern for search in projects	common	pt-br	Padrão para pesquisa em Projetos
 permissions to the files/users directory	common	pt-br	Permissões do diretório para os arquivos/usuários
 personal	common	pt-br	Pessoal
