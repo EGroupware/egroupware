@@ -48,6 +48,7 @@
 	 * 	'rows'           =>		//  O content set by callback
 	 * 	'total'          =>		//  O the total number of entries
 	 * 	'sel_options'    =>		//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options
+	 *  'return'         =>     // IO allows to return something from the get_rows function if $query is a var-param!
 	 * );
 	 * @package etemplate
 	 * @subpackage extensions
@@ -223,8 +224,14 @@
 			}
 			else
 			{
-				$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
-				
+				if (is_array($readonlys))
+				{
+					$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+				}
+				else
+				{
+					$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys);
+				}
 				// allow the get_rows function to override / set sel_options
 				if (isset($value['rows']['sel_options']) && is_array($value['rows']['sel_options']))
 				{
@@ -393,6 +400,7 @@
 			$old_value = $extension_data;
 
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
+			$value['return'] = $old_value['return'];
 
 			if (is_array($value['bottom']))			// we have a second bottom-bar
 			{
