@@ -47,7 +47,13 @@
 
    <div id="topmenu_info">
 	  <?php foreach($this->info_icons as $iicon):?>
-	  <div style="padding:0px 10px 0px 0px;position:relative;float:left;"><a href="<?=$iicon['link']?>"><img id="<?=$iicon['id']?>" src="<?=$iicon['image']?>" <?=$iicon['tooltip']?>/></a></div>
+	  <div style="padding:0px 10px 0px 0px;position:relative;float:left;">
+		 <?php if(trim($iicon['link'])):?>
+		 <a href="<?=$iicon['link']?>"><img id="<?=$iicon['id']?>" src="<?=$iicon['image']?>" <?=$iicon['tooltip']?>/></a>
+		 <?php else:?>
+		 <img id="<?=$iicon['id']?>" src="<?=$iicon['image']?>" <?=$iicon['tooltip']?>/>
+		 <?php endif?>
+	  </div>
 	  <?php endforeach?>
 
 	  <?php foreach($this->menuinfoitems as $mitems):?>

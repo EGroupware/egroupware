@@ -254,15 +254,10 @@
 		 }
 
 		 // hook after navbar
-		 // ToDo: change it to return the content!
-
-		 if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] == 'sidebox')
-		 {
-			ob_start();
-			$GLOBALS['egw']->hooks->process('after_navbar');
-			$content .= ob_get_contents();
-			ob_end_clean();
-		 }
+		 ob_start();
+		 $GLOBALS['egw']->hooks->process('after_navbar');
+		 $content .= ob_get_contents();
+		 ob_end_clean();
 
 		 return $content;
 	  }
