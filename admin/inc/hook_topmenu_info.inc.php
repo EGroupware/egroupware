@@ -3,7 +3,7 @@
 * eGroupWare - Admin                                                       *
 * http://www.egroupware.org                                                *
 * This application written by Miles Lott <milos@groupwhere.org>            *
-* 04/27/2005	Fixed by Olivier TITECA-BEAUPORT <oliviert@maphilo.com>	   *
+* This file is ported to the topmenu hook by Pim Snel pim@lingewoud.nl     *
 * --------------------------------------------                             *
 *  This program is free software; you can redistribute it and/or modify it *
 *  under the terms of the GNU General Public License as published by the   *
@@ -11,18 +11,10 @@
 *  option) any later version.                                              *
 \**************************************************************************/
 
-/* $Id$ */
+/* $Id: hook_after_navbar.inc.php 20071 2005-12-01 20:21:16Z ralfbecker $ */
 
 /* Check currentapp and API upgrade status */
-//if$GLOBALS['egw_info']['user']['preferences']['common']);
-//=
-//itemplate_set
-
-if( $GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] == 'sidebox' &&
-    $GLOBALS['egw_info']['flags']['currentapp'] != 'home' &&
-	$GLOBALS['egw_info']['flags']['currentapp'] != 'welcome' &&
-	(isset($GLOBALS['egw_info']['server']['checkappversions']) &&
-	$GLOBALS['egw_info']['server']['checkappversions']))
+if(	(isset($GLOBALS['egw_info']['server']['checkappversions']) && $GLOBALS['egw_info']['server']['checkappversions']))
 {
 	if((isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
 		$GLOBALS['egw_info']['user']['apps']['admin']) ||
@@ -53,35 +45,20 @@ if( $GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] =
 						$_returnhtml[$app_name] = lang('This application requires an upgrade') . ": \n <br />" . lang('Please run setup to become current') . '.' . "\n";
 					}
 				}
-				else
-				{
-					if($app_name == 'phpgwapi' )
-					{
-						$_returnhtml[$app_name] = lang('The API is current');
-					}
-					else
-					{
-						$_returnhtml[$app_name] = lang('This application is current') . "\n";
-					}
-				}
 				unset($_file_version);
-			}
-			else
-			{
-				// if setup.inc.php do not exist for the app, we assume that the app is current
-				if($app_name == 'phpgwapi' )
-				{
-					$_returnhtml[$app_name] = lang('The API is current');
-				}
-				else
-				{
-					$_returnhtml[$app_name] = lang('This application is current') . "\n";
-				}
 			}
 			unset($_db_version);
 			unset($_versionfile);
 		}
-		echo '<p style="text-align: center;">'.implode('<br />',$_returnhtml)."</p>\n";
+
+		if(count($_returnhtml)>0)
+		{
+		   $icon_newmsg = $GLOBALS['egw']->common->image('admin','navbar18');
+		   //$link_inbox = $GLOBALS['egw']->link('/index.php','menuaction=messenger.uimessenger.inbox');
+		   $lang_msg = '<p style="text-align: center;">'.implode('<br />',$_returnhtml)."</p>\n";
+
+		   $GLOBALS['egw']->framework->topmenu_info_icon('admin_new_msg',$icon_newmsg,'',true,$lang_msg);
+		}
 
 		unset($_returnhtml);
 		unset($_html);
