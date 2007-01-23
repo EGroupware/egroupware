@@ -56,8 +56,8 @@ class vcaladdressbook extends bocontacts
 		if(!($entry = $this->read($_id))) {
 			return false;
 		}
-		foreach($this->supportedFields as $vcardField => $databaseFields)
-		{
+		
+		foreach($this->supportedFields as $vcardField => $databaseFields) {
 			$options = array();
 			$value = '';
 			foreach($databaseFields as $databaseField) {
@@ -70,8 +70,7 @@ class vcaladdressbook extends bocontacts
 			// remove the last ;
 			$value = substr($value, 0, -1);
 
-			switch($vcardField)
-			{
+			switch($vcardField) {
 				// TODO handle multiple categories
 				case 'CATEGORIES':
 					$catData = ExecMethod('phpgwapi.categories.return_single',$value);
@@ -101,6 +100,7 @@ class vcaladdressbook extends bocontacts
 			if(preg_match('/([\177-\377])/',$value)) {
 				$options['CHARSET'] = 'UTF-8';
 			}
+			
 			$vCard->setParameter($vcardField, $options);
 		}
 
@@ -118,7 +118,23 @@ class vcaladdressbook extends bocontacts
 		unset($contact['private']);
 		unset($contact['note']);
 		unset($contact['n_fn']);
+		unset($contact['email']);
+		unset($contact['email_home']);
+		unset($contact['url']);
+		unset($contact['url_home']);
 		
+		// some clients cut the values, because they do not support the same length of data like eGW
+		// at least the first 10 characters must match
+		$maybeCuttedFields = array('org_unit', 'org_name','title');
+		foreach($maybeCuttedFields as $fieldName) {
+			if(!empty($contact[$fieldName]) && strlen($contact[$fieldName]) > 10) {
+				$contact[$fieldName] .= '*';
+			}
+		}
+		
+		error_log(print_r($contact, true));
+		
+		#if($foundContacts = parent::search($contact, true, '', '', '%')) {
 		if($foundContacts = parent::search($contact)) {
 			return $foundContacts[0]['id'];
 		}
@@ -334,6 +350,10 @@ class vcaladdressbook extends bocontacts
 			case 'synthesis ag':
 				switch(strtolower($_productName))
 				{
+					case 'sysync client pocketpc pro':
+						$this->supportedFields = $defaultFields[1];
+						#$this->supportedFields['PHOTO'] = array('jpegphoto');
+						break;
 					default:
 						$this->supportedFields = $defaultFields[0];
 						break;
@@ -366,9 +386,11 @@ class vcaladdressbook extends bocontacts
 		require_once(EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php');
 
 		$vCard = Horde_iCalendar::newComponent('vcard', $container);
+		
+		// Unfold any folded lines.
+		$vCardUnfolded = preg_replace ('/(\r|\n)+ /', ' ', $_vcard);
 
-		if(!$vCard->parsevCalendar($_vcard,'VCARD'))
-		{
+		if(!$vCard->parsevCalendar($vCardUnfolded, 'VCARD')) {
 			return False;
 		}
 		$vcardValues = $vCard->getAllAttributes();
@@ -495,7 +517,9 @@ class vcaladdressbook extends bocontacts
 						switch($fieldName)
 						{
 							case 'bday':
-								$contact[$fieldName] = date('Y-m-d', $vcardValues[$vcardKey]['values'][$fieldKey]);
+								if(!empty($vcardValues[$vcardKey]['values'][$fieldKey])) {
+									$contact[$fieldName] = date('Y-m-d', $vcardValues[$vcardKey]['values'][$fieldKey]);
+								}
 								break;
 								
 							case 'private':
@@ -503,25 +527,21 @@ class vcaladdressbook extends bocontacts
 								break;
 								
 							case 'cat_id':
-								if (!is_object($this->cat))
-								{
-									if (!is_object($GLOBALS['egw']->categories))
-									{
+								if (!is_object($this->cat)) {
+									if (!is_object($GLOBALS['egw']->categories)) {
 										$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'addressbook');
 									}
 									$this->cat =& $GLOBALS['egw']->categories;
 								}
-								foreach(explode(',',$vcardValues[$vcardKey]['values'][$fieldKey]) as $cat_name)
-								{
-									if (!($cat_id = $this->cat->name2id($cat_name)))
-									{
+								foreach(explode(',',$vcardValues[$vcardKey]['values'][$fieldKey]) as $cat_name) {
+									if (!($cat_id = $this->cat->name2id($cat_name))) {
 										$cat_id = $this->cat->add( array('name' => $cat_name, 'descr' => $cat_name ));
 									}
 									$contact[$fieldName] = $cat_id;
 								}
 								break;
 							default:
-								$contact[$fieldName] = $vcardValues[$vcardKey]['values'][$fieldKey];
+								$contact[$fieldName] = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
 								break;
 						}
 					}
