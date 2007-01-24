@@ -1105,7 +1105,9 @@
 		 */
 		function egw_footer()
 		{
-			echo $GLOBALS['egw']->framework->footer();
+			if(is_object($GLOBALS['egw']->framework)) {
+				echo $GLOBALS['egw']->framework->footer();
+			}
 		}
 
 		/**
