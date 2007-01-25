@@ -41,7 +41,7 @@
 <div id="topmenu">
    <div id="topmenu_items">
 	  <?php foreach($this->menuitems as $mitems):?>
-	  <div style="padding:0px 0px 0px 10px;position:relative;float:left;"><img src="<?=$this->icon_or_star?>" />&nbsp;<a href="<?=$mitems['url']?>"<?=$mitems['urlextra']?>><?=$mitems['label']?></a></div>
+	  <div style="padding:0px 0px 0px 10px;position:relative;float:left;"><img src="<?php print $this->icon_or_star?>" />&nbsp;<a href="<?php print $mitems['url']?>"<?php print $mitems['urlextra']?>><?php print $mitems['label']?></a></div>
 	  <?php endforeach?>
    </div>
 
@@ -49,15 +49,15 @@
 	  <?php foreach($this->info_icons as $iicon):?>
 	  <div style="padding:0px 10px 0px 0px;position:relative;float:left;">
 		 <?php if(trim($iicon['link'])):?>
-		 <a href="<?=$iicon['link']?>"><img id="<?=$iicon['id']?>" src="<?=$iicon['image']?>" <?=$iicon['tooltip']?>/></a>
+		 <a href="<?php print $iicon['link']?>"><img id="<?php print $iicon['id']?>" src="<?php print $iicon['image']?>" <?php print $iicon['tooltip']?>/></a>
 		 <?php else:?>
-		 <img id="<?=$iicon['id']?>" src="<?=$iicon['image']?>" <?=$iicon['tooltip']?>/>
+		 <img id="<?php print $iicon['id']?>" src="<?php print $iicon['image']?>" <?php print $iicon['tooltip']?>/>
 		 <?php endif?>
 	  </div>
 	  <?php endforeach?>
 
 	  <?php foreach($this->menuinfoitems as $mitems):?>
-	  <div style="padding:0px 10px 0px 0px;position:relative;float:left;"><?=$mitems?></div>
+	  <div style="padding:0px 10px 0px 0px;position:relative;float:left;"><?php print $mitems?></div>
 	  <?php endforeach?>
    </div>
    <div style="clear:both;"></div>
@@ -66,7 +66,7 @@
 <script language="JavaScript" type="text/javascript">
 	  <?php foreach($this->info_icons as $iicon):?>
 	  <?php if($iicon['blink']):?>
-	  setInterval("shiftOpacity('<?=$iicon['id']?>', 500)",1500);
+	  setInterval("shiftOpacity('<?php print $iicon['id']?>', 500)",1500);
 	  <?php endif?>
 	  <?php endforeach?>
 </script>
