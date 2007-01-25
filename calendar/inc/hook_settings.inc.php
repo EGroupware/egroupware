@@ -28,7 +28,7 @@
 		'listview'     => lang('Listview'),
 	);
 	$grid_views = array(
-		'' => lang('all'),
+		'all' => lang('all'),
 		'day_week' => lang('Dayview').', '.lang('Four days view').' &amp; '.lang('Weekview'),
 		'day4' => lang('Dayview').' &amp; '.lang('Four days view'),
 		'day' => lang('Dayview'),
