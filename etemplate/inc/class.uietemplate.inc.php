@@ -913,7 +913,7 @@
 			{
 				$options = 'id="'.($cell['id'] ? $cell['id'] : $form_name).'" '.$options;
 			}
-$html .= '<!-- hudel '.$type.' -->';
+
 			switch ($type)
 			{
 				case 'label':	//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
