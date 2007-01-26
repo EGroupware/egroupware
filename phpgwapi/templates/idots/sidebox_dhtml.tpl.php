@@ -15,7 +15,7 @@ $GLOBALS['egw_info']['flags']['wz_dragdrop_runonce_SET_DHTML'] = true;
    {
 		 if (dd.obj == rt)
 		 {
-			   mainbox.resizeTo(rt.x-rtxstart+<?=$this->sideboxwidth?>, mainbox.h);
+			   mainbox.resizeTo(rt.x-rtxstart+<?php print $this->sideboxwidth?>, mainbox.h);
 		 }
    } 
 
