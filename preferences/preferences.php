@@ -24,7 +24,7 @@
 	function create_section($title)
 	{
 		$GLOBALS['settings'][] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'title'  => $title,
 			'type'   => 'section'
@@ -34,7 +34,7 @@
 	function create_subsection($title)
 	{
 		$GLOBALS['settings'][] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'title'  => $title,
 			'type'   => 'subsection'
@@ -44,7 +44,7 @@
 	function create_input_box($label,$name,$help='',$default='',$size='',$maxsize='',$type='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'input'
 		);
@@ -60,7 +60,7 @@
 	function create_password_box($label,$name,$help='',$size='',$maxsize='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'password'
 		);
@@ -76,7 +76,7 @@
 	function create_text_area($label,$name,$rows,$cols,$help='',$default='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'text'
 		);
@@ -92,7 +92,7 @@
 	function create_select_box($label,$name,$values,$help='',$default='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'select'
 		);
@@ -108,7 +108,7 @@
 	function create_check_box($label,$name,$help='',$default='',$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'check'
 		);
@@ -124,7 +124,7 @@
 	function create_notify($label,$name,$rows,$cols,$help='',$default='',$values='',$subst_help=True,$run_lang=True)
 	{
 		$GLOBALS['settings'][$name] = array(
-			'admin'  => True,	// admin is controlled by the old-format hook_settings file itself
+			'admin'  => False,	// admin is controlled by the old-format hook_settings file itself
 			'xmlrpc' => True,	// make everything availible via xmlrpc
 			'type'   => 'notify'
 		);
