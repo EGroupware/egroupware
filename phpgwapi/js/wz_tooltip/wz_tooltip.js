@@ -36,13 +36,13 @@ see http://www.gnu.org/copyleft/lesser.html
 
 ////////////////  GLOBAL TOOPTIP CONFIGURATION  /////////////////////
 var ttAbove       = false;        // tooltip above mousepointer? Alternative: true
-var ttBgColor     = "#e6ecff";
+var ttBgColor     = "lightyellow";
 var ttBgImg       = "";           // path to background image;
-var ttBorderColor = "#003399";
+var ttBorderColor = "#606060";
 var ttBorderWidth = 1;
 var ttClickClose  = false;
 var ttDelay       = 500;          // time span until tooltip shows up [milliseconds]
-var ttFontColor   = "#000066";
+var ttFontColor   = "#000000";
 var ttFontFace    = "arial,helvetica,sans-serif";
 var ttFontSize    = "11px";
 var ttFontWeight  = "normal";     // alternative: "bold";
@@ -58,7 +58,7 @@ var ttSticky      = false;        // do NOT hide tooltip on mouseout? Alternativ
 var ttTemp        = 0;            // time span after which the tooltip disappears; 0 (zero) means "infinite timespan"
 var ttTextAlign   = "left";
 var ttTitleColor  = "#ffffff";    // color of caption text
-var ttWidth       = 300;
+var ttWidth       = "auto";
 ////////////////////  END OF TOOLTIP CONFIG  ////////////////////////
 
 
