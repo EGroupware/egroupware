@@ -401,7 +401,8 @@
 				{
 //					$new_root = str_replace($GLOBALS['phpgw_info']['server']['template_set'],'default',$root);
 //					$new_root = substr($root, 0, strrpos($root, $GLOBALS['phpgw_info']['server']['template_set'])).'default';
-					$new_root = substr($root, 0, strlen($root) - strlen($GLOBALS['phpgw_info']['server']['template_set'])) . 'default';
+//					$new_root = substr($root, 0, strlen($root) - strlen($GLOBALS['phpgw_info']['server']['template_set'])) . 'default';
+					$new_root = dirname($root) . DIRECTORY_SEPARATOR . 'default';
 					$new_filename = $this->filename(str_replace($root.'/','',$new_filename),$new_root,2);
 				}
 			}
