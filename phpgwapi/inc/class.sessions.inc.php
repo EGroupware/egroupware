@@ -1331,7 +1331,7 @@
 			# when synchronizing using syncml, we already have php4 based session started
 			# and we are currently not allowed to change the sessionid later
 			# to solve this problem, we simply return the current session_id
-			if(basename($_SERVER["REQUEST_URI"]) == 'rpc.php' && session_id() != '') {
+			if(basename($_SERVER['SCRIPT_FILENAME']) == 'rpc.php' && session_id() != '') {
 				return session_id();
 			}
 			

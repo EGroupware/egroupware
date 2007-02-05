@@ -906,7 +906,7 @@ class accounts_backend
 		// do that group is a groupOfNames?
 		if (is_null($groupOfNames)) $groupOfNames = $this->id2name($gid,'groupOfNames');
 		
-		$to_write = array();
+		$to_write = array('memberuid' => array());
 		foreach((array)$members as $key => $member)
 		{
 			if (is_numeric($member)) $member = $this->id2name($member);
