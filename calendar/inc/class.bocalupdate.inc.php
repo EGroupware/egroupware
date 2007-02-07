@@ -780,6 +780,7 @@ class bocalupdate extends bocal
 			if (isset($status2msg[$status]))
 			{
 				if (!is_array($event)) $event = $this->read($cal_id);
+				if (isset($recur_date)) $event = $this->read($event['id'],$recur_date); //re-read the actually edited recurring event
 				$this->send_update($status2msg[$status],$event['participants'],$event);
 			}
 		}

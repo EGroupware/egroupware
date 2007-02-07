@@ -289,7 +289,7 @@ class uiforms extends uical
 							}
 							if ($data['old_status'] != $status)
 							{
-								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE ? $event['start'] : 0))
+								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status
 									$msg = lang('Status changed');
