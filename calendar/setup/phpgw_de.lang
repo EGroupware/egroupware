@@ -59,10 +59,10 @@ days	calendar	de	Tage
 days of the week for a weekly repeated event	calendar	de	Wochentage für wöchentlich wiederholten Termin
 days repeated	calendar	de	wiederholte Tage
 dayview	calendar	de	Tagesansicht
-default appointment length (in minutes)	calendar	de	Standardlänge eines neuen Kalendareintrags (in Minuten)
+default appointment length (in minutes)	calendar	de	Standardlänge eines neuen Kalendereintrags (in Minuten)
 default calendar filter	calendar	de	Standard-Filter des Kalenders
 default calendar view	calendar	de	Standard-Ansicht des Kalenders
-default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendareinträgen. Die Länge ist in Minuten, zb. 60 für 1 Stunde.
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	de	Vorgabe für die Länge von neuen Kalendereinträgen. Die Länge ist in Minuten, zb. 60 für 1 Stunde.
 default week view	calendar	de	Vorgabe Wochenansicht
 delete series	calendar	de	Serie löschen
 delete this alarm	calendar	de	Diesen Alarm löschen
@@ -72,7 +72,7 @@ delete this series of recuring events	calendar	de	Diese Serie von wiederholenden
 disinvited	calendar	de	Ausgeladen
 display status of events	calendar	de	Status von Terminen anzeigen
 displayed view	calendar	de	Ansicht
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalendar-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	de	Zeigt Ihre Standard-Kalender-Ansicht auf der Startseite angezeigt werden (die Seite die sich nach dem Login öffnet oder wenn Sie auf Home klicken)?
 do you want a weekview with or without weekend?	calendar	de	Wollen Sie eine Wochenansicht mit oder ohne Wochenende?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	de	Wollen Sie über neue oder geänderte Termine benachrichtigt werden? Sie werden nie über eigene Änderungen benachrichtig.<br>Sie können die Benachrichtigungen auf verschiedene Änderungen begrenzen. Jede Zeile enthält die Benachrichtigungen der darüberliegenden. Alle Änderungen umfasst den Title, die Beschreibung, Teilnehmer, aber keine Antworten der Teilnehmer. Wenn der Ersteller eines Event irgendeine Benachrichtigung will, erhält er automatisch auch die Antworten der Teilnehmer, wie Zusagen und Absagen.
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	de	Möchten Sie eine regelmäßige Zusammenfassung Ihrer Termine via E-Mail erhalten?<br>Die Zusammenfassung wird täglich (jeden Morgen), oder für eine wöchentliche Zusammenfassung Montags an Ihre standard E-Mail Adresse gesendet.<br> Die Benachrichtigung wird nur versendet wenn Sie am nächsten Tag oder in der nächsten Woche auch einen Termin haben.
@@ -107,7 +107,7 @@ execute a further action for this entry	calendar	de	Führ einen weiteren Befehlt 
 existing links	calendar	de	Bestehende Verknüpfungen
 export	calendar	de	Exportieren
 extended	calendar	de	Erweitert
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	de	Erweiterte Benachrichtigungen enthälten immer die kompletten Termindetails. iCal's können von vielen anderen Kalendarprogrammen importiert werden.
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	de	Erweiterte Benachrichtigungen enthälten immer die kompletten Termindetails. iCal's können von vielen anderen Kalenderprogrammen importiert werden.
 fieldseparator	calendar	de	Feldtrenner
 filename	calendar	de	Dateiname
 filename of the download	calendar	de	Name der herunterzuladenden Datei
