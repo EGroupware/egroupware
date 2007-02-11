@@ -94,7 +94,7 @@ class notification_popup implements iface_notification {
 				$user_sessions[] = $session['session_id'];
 			}
 		}
-		if ( empty($user_sessions) ) throw new Exception("Notice: User isn't online. Can't send notification via popup");
+		if ( empty($user_sessions) ) throw new Exception("Notice: User $this->account isn't online. Can't send notification via popup");
 		$this->save( $_message, $user_sessions );
 	}
 	

@@ -97,7 +97,7 @@ final class notification {
 				}
 				catch (Exception $exception) {
 					$send_succseed--;
-					echo $exception->getMessage(), "\n";
+					//echo $exception->getMessage(), "\n";
 				}
 			}
 			
