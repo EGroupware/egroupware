@@ -76,7 +76,7 @@
 		}
 		if ($check_in_docroot)
 		{
-			$docroots = array(EGW_SERVER_ROOT,$_SERVER['DOCUMENT_ROOT']);
+			$docroots = array(realpath(EGW_SERVER_ROOT),realpath($_SERVER['DOCUMENT_ROOT']));
 			$dir = realpath($dir);
 	
 			foreach ($docroots as $docroot)
