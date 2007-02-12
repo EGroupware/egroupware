@@ -217,15 +217,6 @@
 
 					 $var['sideboxcolend'] = '</div></td>';
 
-			   // Add DHTML for resizing sidebox menu
-			   // include wz_dragdrop once
-			   if(!$GLOBALS['egw_info']['flags']['wz_dragdrop_included'])
-			   {
-				  $GLOBALS['egw_info']['flags']['need_footer'] .= "<!-- BEGIN JavaScript for wz_dragdrop.js -->\n";
-				  $GLOBALS['egw_info']['flags']['need_footer'] .= '<script language="JavaScript" type="text/javascript" src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/wz_dragdrop/wz_dragdrop.js"></script>'."\n";
-				  $GLOBALS['egw_info']['flags']['wz_dragdrop_included'] = True;
-			   }
-
 			   $this->tplsav2->assign('sideboxwidth', $sideboxwidth);
 
 			   $GLOBALS['egw_info']['flags']['need_footer'] .= $this->tplsav2->fetch('sidebox_dhtml.tpl.php');
