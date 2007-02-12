@@ -108,7 +108,7 @@ input[type=submit]:active,input[type=button]:active,input[type=reset]:active,but
 
 {
 	background-image: url(../images/butActive.png);
-	border: 1 solid #7e94a5;
+	border: 1px solid #7e94a5;
 	color: #17202b;
 }
 
@@ -510,7 +510,7 @@ body {
 #divStatusBar
 {
 	position: relative;
-	top:0px
+	top:0px;
 	left:0px;
 	height:30px;
 	vertical-align:bottom;
