@@ -324,6 +324,15 @@ class so_sql
 
 			return False;
 		}
+		if ($join)	// Prefix the columns with the table-name, as they might exist in the join
+		{
+			foreach($query as $col => $val)
+			{
+				if (is_int($col) || strstr($join,$col) === false) continue;
+				$query[] = $this->db->expression($this->table_name,$this->table_name.'.',array($col=>$val));
+				unset($query[$col]);
+			}
+		}
 		$this->db->select($this->table_name,'*'.($extra_cols?','.(is_array($extra_cols)?implode(',',$extra_cols):$extra_cols):''),
 			$query,__LINE__,__FILE__,False,'',False,0,$join);
 
@@ -785,6 +794,7 @@ class so_sql
 			{
 				$criteria[$col] = $query['search'];
 			}
+_debug_array($criteria);
 		}
 		$rows = (array) $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
 			'','%',false,'OR',(int)$query['start'],$query['col_filter'],$join,$need_full_no_count);
