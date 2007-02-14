@@ -140,7 +140,6 @@
 				$value = array(
 					'Y' => (int) adodb_date('Y',$value),
 					'm' => (int) adodb_date('m',$value),
-					'M' => substr(lang(adodb_date('F',$value)),0,3),
 					'd' => (int) adodb_date('d',$value),
 					'H' => (int) adodb_date('H',$value),
 					'i' => (int) adodb_date('i',$value)
@@ -162,10 +161,14 @@
 			{
 				$format += $timeformat;
 			}
+			if ($value['m'] && strchr($this->dateformat,'M') !== false)
+			{
+				$value['M'] = substr(lang(adodb_date('F',$value['m'])),0,3);
+			}
 			if ($readonly)	// is readonly
 			{
 				if ($value['H'] === '') unset($value['a']);	// no am/pm if no hour set
-
+				
 				$sep = array(
 					1 => $this->dateformat[1],
 					2 => $this->dateformat[1],
@@ -180,7 +183,8 @@
 						{
 							$str = lang(adodb_date('l',adodb_mktime(12,0,0,$value['m'],$value['d'],$value['Y']))).' ';
 						}
-						$str .= ($str != '' ? $sep[$n] : '') . $value[$format[$n]];
+						$str .= ($str != '' ? $sep[$n] : '') . 
+							(is_numeric($value[$format[$n]]) ? sprintf('%02d',$value[$format[$n]]) : $value[$format[$n]]);
 					}
 					if ($type == 'date-houronly') ++$n;	// no minutes
 				}
