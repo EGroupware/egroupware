@@ -20,10 +20,10 @@
 			'currentapp' => 'home',
 			'noapi' => True
 	));
-	include ('./inc/functions.inc.php');
+	include('./inc/functions.inc.php');
 
 	// Check header and authentication
-	if (!$GLOBALS['egw_setup']->auth('Config'))
+	if(!$GLOBALS['egw_setup']->auth('Config'))
 	{
 		Header('Location: index.php');
 		exit;
@@ -59,11 +59,11 @@
 	function parsedep($depends,$main=True)
 	{
 		$depstring = '(';
-		while (list($a,$b) = each ($depends))
+		foreach($depends as $a => $b)
 		{
-			while (list($c,$d) = each($b))
+			foreach($b as $c => $d)
 			{
-				if (is_array($d))
+				if(is_array($d))
 				{
 					$depstring .= $c . ': ' .implode(',',$d) . '; ';
 					$depver[] = $d;
@@ -76,7 +76,7 @@
 			}
 		}
 		$depstring .= ')';
-		if ($main)
+		if($main)
 		{
 			return $depstring;
 		}
@@ -99,13 +99,13 @@
 	//var_dump($GLOBALS['setup_info']);exit;
 	@ksort($GLOBALS['setup_info']);
 
-	if (get_var('cancel',Array('POST')))
+	if(get_var('cancel',Array('POST')))
 	{
 		Header('Location: index.php');
 		exit;
 	}
 
-	$GLOBALS['egw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$GLOBALS['egw_setup']['ConfigDomain']);
+	$GLOBALS['egw_setup']->html->show_header(lang("Developers' Table Schema Toy"),False,'config',$GLOBALS['egw_setup']->ConfigDomain);
 
 	if(get_var('submit',Array('POST')))
 	{
@@ -116,7 +116,7 @@
 		$install = get_var('install','POST');
 		$version = get_var('version','POST');
 
-		while (list($appname,$key) = @each($install))
+		foreach($install as $appname => $key)
 		{
 			$terror = array();
 			$terror[$appname]['name'] = $appname;
@@ -131,10 +131,10 @@
 			$terror[$appname]['tables'] = array();
 
 			// Reset tables field to baseline table names
-			if (file_exists($appdir.'tables_baseline.inc.php'))
+			if(file_exists($appdir.'tables_baseline.inc.php'))
 			{
 				include($appdir.'tables_baseline.inc.php');
-				while(list($table,$null) = @each($phpgw_baseline))
+				foreach($phpgw_baseline as $table => $null)
 				{
 					$terror[$appname]['tables'][] = $table;
 					echo '<br />Adding app table: ' . $table;
@@ -178,14 +178,13 @@
 		$GLOBALS['setup_tpl']->set_var('description',lang('App details') . ':');
 		$GLOBALS['setup_tpl']->pparse('out','header');
 
-		while (list($key,$val) = each($GLOBALS['setup_info'][$detail]))
+		foreach($GLOBALS['setup_info'][$detail] as $key => $val)
 		{
-			if ($i) { $i = 0; }
-			else    { $i = 1; }
+			$i = $i ? 0 : 1;
 
 			//if(!$val) { $val = 'none'; }
 
-			if ($key == 'tables')
+			if($key == 'tables')
 			{
 				if(is_array($val))
 				{
@@ -193,9 +192,18 @@
 					$val = implode(',',$val);
 				}
 			}
-			if ($key == 'hooks')   { $val = implode(',',$val); }
-			if ($key == 'depends') { $val = parsedep($val); }
-			if (is_array($val))    { $val = implode(',',$val); }
+			if($key == 'hooks')
+			{
+				$val = implode(',',$val);
+			}
+			if($key == 'depends')
+			{
+				$val = parsedep($val);
+			}
+			if(is_array($val))
+			{
+				$val = implode(',',$val);
+			}
 
 			$GLOBALS['setup_tpl']->set_var('bg_color',$bgcolor[$i]);
 			$GLOBALS['setup_tpl']->set_var('name',$key);
@@ -221,50 +229,42 @@
 		$GLOBALS['setup_tpl']->set_var('app_install',lang('Process'));
 		$GLOBALS['setup_tpl']->pparse('out','app_header');
 
-		@reset ($GLOBALS['setup_info']);
-		while (list ($key, $value) = each ($GLOBALS['setup_info']))
+		foreach($GLOBALS['setup_info'] as $key => $value)
 		{
 			unset($test);
-			if (file_exists(EGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php'))
+			if(file_exists(EGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php'))
 			{
 				include(EGW_SERVER_ROOT . '/' . $value['name'] . '/setup/tables_update.inc.php');
-			}
 
-			if (is_array($test))
-			{
-				reset($test);
-			}
-
-			$s = '<option value="">&nbsp;</option>';
-			while (is_array($test) && list(,$versionnumber) = each($test))
-			{
-				$s .= '<option value="' . $versionnumber . '">' . $versionnumber . '</option>';
-			}
-			$GLOBALS['setup_tpl']->set_var('select_version',$s);
-
-			if ($value['name'])
-			{
-				if ($i)
+				if(is_array($test))
 				{
-					$i = 0;
+					reset($test);
 				}
-				else
+
+				$s = '<option value="">&nbsp;</option>';
+				while(is_array($test) && list(,$versionnumber) = each($test))
 				{
-					$i = 1;
+					$s .= '<option value="' . $versionnumber . '">' . $versionnumber . '</option>';
 				}
-				$GLOBALS['setup_tpl']->set_var('apptitle',$value['title']);
-				$GLOBALS['setup_tpl']->set_var('currentver',$value['currentver']);
-				$GLOBALS['setup_tpl']->set_var('bg_color',$bgcolor[$i]);
+				$GLOBALS['setup_tpl']->set_var('select_version',$s);
 
-				$GLOBALS['setup_tpl']->set_var('instimg','completed.png');
-				$GLOBALS['setup_tpl']->set_var('instalt',lang('Completed'));
-				$GLOBALS['setup_tpl']->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']" />');
-				$status = lang('OK') . ' - ' . $value['status'];
+				if($value['name'])
+				{
+					$i = $i ? 0 : 1;
+					$GLOBALS['setup_tpl']->set_var('apptitle',$value['title']);
+					$GLOBALS['setup_tpl']->set_var('currentver',$value['currentver']);
+					$GLOBALS['setup_tpl']->set_var('bg_color',$bgcolor[$i]);
 
-				$GLOBALS['setup_tpl']->set_var('appinfo',$value['name'] . '-' . $status);
-				$GLOBALS['setup_tpl']->set_var('appname',$value['name']);
+					$GLOBALS['setup_tpl']->set_var('instimg','completed.png');
+					$GLOBALS['setup_tpl']->set_var('instalt',lang('Completed'));
+					$GLOBALS['setup_tpl']->set_var('install','<input type="checkbox" name="install[' . $value['name'] . ']" />');
+					$status = lang('OK') . ' - ' . $value['status'];
 
-				$GLOBALS['setup_tpl']->pparse('out','apps',True);
+					$GLOBALS['setup_tpl']->set_var('appinfo',$value['name'] . '-' . $status);
+					$GLOBALS['setup_tpl']->set_var('appname',$value['name']);
+
+					$GLOBALS['setup_tpl']->pparse('out','apps',True);
+				}
 			}
 		}
 	}
