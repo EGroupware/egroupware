@@ -794,7 +794,6 @@ class so_sql
 			{
 				$criteria[$col] = $query['search'];
 			}
-_debug_array($criteria);
 		}
 		$rows = (array) $this->search($criteria,false,$query['order']?$query['order'].' '.$query['sort']:'',
 			'','%',false,'OR',(int)$query['start'],$query['col_filter'],$join,$need_full_no_count);
