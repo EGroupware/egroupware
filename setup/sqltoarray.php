@@ -31,7 +31,13 @@
 	$tpl_root = $GLOBALS['egw_setup']->html->setup_tpl_dir('setup');
 	$setup_tpl = CreateObject('setup.Template',$tpl_root);
 
-	$apps = get_var('apps','GET');
+	$cancel   = get_var('cancel',Array('GET','POST'));
+	if($cancel)
+	{
+		Header('Location: applications.php');
+		exit;
+	}
+	$apps     = get_var('apps',Array('GET','POST'));
 	$download = get_var('download',Array('GET','POST'));
 	$submit   = get_var('submit',Array('GET','POST'));
 	$showall  = get_var('showall',Array('GET','POST'));
@@ -80,23 +86,23 @@
 
 		list($arr,$pk,$fk,$ix,$uc) = $GLOBALS['egw_setup']->process->sql_to_array($table);
 		$GLOBALS['setup_tpl']->set_var('arr',$arr);
-		
+
 		foreach(array('pk','fk','ix','uc') as $kind)
 		{
 			$GLOBALS['setup_tpl']->set_var($kind.'s',_arr2str($$kind));
 		}
 	}
-	
+
 	function _arr2str($arr)
 	{
-		if (!is_array($arr)) return $arr;
-		
+		if(!is_array($arr)) return $arr;
+
 		$str = '';
 		foreach($arr as $key => $val)
 		{
-			if ($str) $str .= ',';
+			if($str) $str .= ',';
 
-			if (!is_int($key))
+			if(!is_int($key))
 			{
 				$str .= "'$key' => ";
 			}
@@ -120,13 +126,13 @@
 		}
 		else
 		{
-			$url = $GLOBALS['apps'] ? 'applications.php' : 'sqltoarray.php';
+//			$url = $GLOBALS['appname'] ? 'applications.php' : 'sqltoarray.php';
 			$GLOBALS['setup_tpl']->set_var('appname',$appname);
 			$GLOBALS['setup_tpl']->set_var('lang_download',lang('Download'));
 			$GLOBALS['setup_tpl']->set_var('lang_cancel',lang('Cancel'));
 			$GLOBALS['setup_tpl']->set_var('showall',$showall);
 			$GLOBALS['setup_tpl']->set_var('apps',$apps);
-			$GLOBALS['setup_tpl']->set_var('action_url',$url);
+			$GLOBALS['setup_tpl']->set_var('action_url','sqltoarray.php');
 			$GLOBALS['setup_tpl']->pfp('out',$template);
 		}
 		return $string;
@@ -176,7 +182,7 @@
 
 			if(!$setup_info[$appname]['tables'])
 			{
-				$f = PHPGW_SERVER_ROOT . '/' . $appname . '/setup/setup.inc.php';
+				$f = EGW_SERVER_ROOT . '/' . $appname . '/setup/setup.inc.php';
 				if(file_exists($f))
 				{
 					include($f);
@@ -225,10 +231,10 @@
 		$setup_tpl->set_var('select_to_download_file',lang('Select to download file'));
 		$setup_tpl->pfp('out','appheader');
 
-		$d = dir(PHPGW_SERVER_ROOT);
+		$d = dir(EGW_SERVER_ROOT);
 		while($entry = $d->read())
 		{
-			$f = PHPGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
+			$f = EGW_SERVER_ROOT . '/' . $entry . '/setup/setup.inc.php';
 			if(file_exists($f))
 			{
 				include($f);
