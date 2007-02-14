@@ -445,15 +445,32 @@
 			}
 			if(function_exists('iconv'))
 			{
-			if($from=='EUC-CN') $from='gb18030';
-			// the above is to workaround patch #962307
-			// if using EUC-CN, for iconv it strickly follow GB2312 and fail 
-			// in an email on the first Traditional/Japanese/Korean character, 
-			// but in reality when people send mails in GB2312, UMA mostly use 
-			// extended GB13000/GB18030 which allow T/Jap/Korean characters.
-				if (($data = iconv($from,$to,$data)))
-				{
-					return $data;
+				// iconv can not convert from/to utf7-imap
+				if ($to == 'utf7-imap' && function_exists(imap_utf7_encode)) {
+					$convertedData = iconv($from, 'iso-8859-1', $ata);
+					$convertedData = imap_utf7_encode($convertedData);
+					
+					return $convertedData;
+				}
+
+				if ($from == 'utf7-imap' && function_exists(imap_utf7_decode)) {
+					$convertedData = imap_utf7_decode($data);
+					$convertedData = iconv('iso-8859-1', $to, $convertedData);
+
+					return $convertedData;
+				}
+
+				// the following is to workaround patch #962307
+				// if using EUC-CN, for iconv it strickly follow GB2312 and fail 
+				// in an email on the first Traditional/Japanese/Korean character, 
+				// but in reality when people send mails in GB2312, UMA mostly use 
+				// extended GB13000/GB18030 which allow T/Jap/Korean characters.
+				if($from=='EUC-CN') {
+					$from='gb18030';
+				}
+
+				if (($convertedData = iconv($from,$to,$data))) {
+					return $convertedData;
 				}
 			}
 			#die("<p>Can't convert from charset '$from' to '$to' without the <b>mbstring extension</b> !!!</p>");
