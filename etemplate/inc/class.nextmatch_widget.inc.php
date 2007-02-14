@@ -224,14 +224,9 @@
 			}
 			else
 			{
-				if (is_array($readonlys))
-				{
-					$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
-				}
-				else
-				{
-					$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys);
-				}
+				if (!is_array($readonlys)) $readonlys = array();
+				$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+
 				// allow the get_rows function to override / set sel_options
 				if (isset($value['rows']['sel_options']) && is_array($value['rows']['sel_options']))
 				{
