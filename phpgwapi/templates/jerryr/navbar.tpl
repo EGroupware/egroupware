@@ -1,11 +1,10 @@
 <!-- BEGIN navbar_header -->
+<div style="position:relative"><div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="eGroupWare"/></a></div></div>
 
 <!-- BEGIN app_extra_icons_div -->
 <script language="javascript">
 	new ypSlideOutMenu("menu1", "down", 45, 5, 188, 300,'right');
 </script>
-
-<div style="position:relative"><div id="divLogo"><a href="{logo_url}" target="_blank"><img src="{logo_file}" border="0" title="{logo_title}" alt="eGroupWare"/></a></div></div>
 
 <div id="menu1Container">
 	<div id="menu1Content" class="menuOneBox">
