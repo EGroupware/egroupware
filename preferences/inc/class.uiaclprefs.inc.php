@@ -249,7 +249,7 @@
 				{
 					$this->display_row($tr_class,'u_',$data['account_id'],$GLOBALS['egw']->common->display_fullname($data['account_lid'],$data['account_firstname'],$data['account_lastname']),$no_privat_grants,$memberships);
 				}
-				$processed[] = $uid;
+				$processed[] = $data['account_id'];
 			}
 
 			$extra_parms = array(
