@@ -1,6 +1,8 @@
 function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or higher.
 {
-	for(var i=0; i<document.images.length; i++)
+	var numberOfImages = document.images.length;
+
+	for(var i=0; i<numberOfImages; i++)
 	{
 		var img = document.images[i]
 		var imgName = img.src.toUpperCase()
@@ -25,8 +27,10 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or high
 			strNewHTML += " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
 			strNewHTML += "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
 			strNewHTML += "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>"
-			img.outerHTML = strNewHTML
-			i = i-1
+			if(img.className != 'sideboxstar') {
+				img.outerHTML = strNewHTML
+				i = i-1
+			}
 		}
 	}
 }

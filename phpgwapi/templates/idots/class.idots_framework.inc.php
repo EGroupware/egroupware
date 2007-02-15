@@ -751,7 +751,7 @@ function _sidebox_menu_item($item_link='',$item_text='')
 	  return;
    }
 
-   $var['icon_or_star']='<img src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
+   $var['icon_or_star']='<img class="sideboxstar" src="'.$GLOBALS['egw_info']['server']['webserver_url'] . '/phpgwapi/templates/'.$this->template.'/images'.'/orange-ball.png" width="9" height="9" alt="ball"/>';
    $var['target'] = '';
    if(is_array($item_link))
    {
