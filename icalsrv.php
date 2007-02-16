@@ -123,15 +123,15 @@
 	// Ok! We have a session and access to icalsrv!
 
 	// now set the variables that will control the working mode of icalvircal
-	// the defines are in the egwical_resourcehandler sourcefile
-	require_once EGW_SERVER_ROOT. '/egwical/inc/class.egwical_resourcehandler.inc.php' ;
+	// the defines are in the icalsrv_resourcehandler sourcefile
+	require_once EGW_SERVER_ROOT. '/icalsrv/inc/class.icalsrv_resourcehandler.inc.php' ;
 
 	/** uid  mapping export  configuration switch
 	* @var int
 	* Parameter that determines, a the time of export from Egw (aka dowload by client), how 
 	* ical elements (like VEVENT's) get their uid fields filled, from data in
 	* the related Egroupware element.
-	* See further in @ref secuidmapping in the egwical_resourcehandler documentation.
+	* See further in @ref secuidmapping in the icalsrv_resourcehandler documentation.
 	*/
 	$uid_export_mode = UMM_ID2UID;
 
@@ -140,7 +140,7 @@
 	* Parameter that determines, at the time of import into Egw (aka publish by client), how
 	* ical elements (like VEVENT's) will find, based on their uid fields,  related egw
 	* elements, that are then updated with the ical info.
-	* See further in @ref secuidmapping in the egwical_resourcehandler documentation.
+	* See further in @ref secuidmapping in the icalsrv_resourcehandler documentation.
 	*/
 	$uid_import_mode = UMM_UID2ID;
 
@@ -327,7 +327,7 @@
 	// build a virtual calendar with ical facilities from the found vircal
 	// array_storage data
 	$icalvc =& CreateObject('icalsrv.icalvircal');
-	if(! $icalvc->fromArray($vircal_arstore))
+	if(!$icalvc->fromArray($vircal_arstore))
 	{
 		error_log('icalsrv.php: ' . $cnmsg . ' couldnot restore from repository.' );
 		fail_exit($cnmsg . ' internal problem ' , '403');
@@ -395,7 +395,7 @@
 		//so exit if pw parameter is not valid
 		if((!isset($_GET['password']))	||
 			(!$icalvc->pw !== $_GET['password']))
-			{
+		{
 			error_log('icalsrv.php:' . $cnmsg . ' demands extra password parameter');
 			fail_exit($cnmsg . ' demands extra password parameter', '403');
 		}
@@ -422,7 +422,7 @@
 		// check if importing in not owned calendars is disabled
 		if($reqvircal_owner_id
 			&& ($GLOBALS['egw_info']['user']['account_id'] !== $reqvircal_owner_id))
-			{
+		{
 			if($disable_nonowner_import)
 			{
 				error_log('icalsrv.php: importing in non owner calendars currently disabled');
@@ -477,7 +477,7 @@
 		// *** GET (or POST?) Request so do an export
 		$logmsg = 'EXPORTING';
 		// derive a ProductType from our http Agent and set it in icalvc
-		$icalvc->deviceType = egwical_resourcehandler::httpUserAgent2deviceType($reqagent);
+		$icalvc->deviceType = icalsrv_resourcehandler::httpUserAgent2deviceType($reqagent);
 
 		// export the data from the virtual calendar
 		$vcalstr = $icalvc->export_vcal();
@@ -496,7 +496,7 @@
 
 		if($logdir) log_ical($logmsg,"export",$vcalstr);
 		// handle response ...
-		$content_type = egwical_resourcehandler::deviceType2contentType($icalvc->deviceType);
+		$content_type = icalsrv_resourcehandler::deviceType2contentType($icalvc->deviceType);
 		if($content_type)
 		{
 			header($content_type);
@@ -519,6 +519,8 @@
 		// return http error $errno can this be done this way?
 		header('HTTP/1.1 '. $errno . ' ' . $msg);
 		#  header('HTTP/1.1 403 ' . $msg);
+		ob_flush();
+		flush();
 		$GLOBALS['egw']->common->egw_exit();
 	}
 
