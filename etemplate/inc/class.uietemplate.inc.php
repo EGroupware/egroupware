@@ -314,7 +314,8 @@
 				if ($cname) $name = preg_replace('/^'.$cname.'\[([^\]]+)\](.*)$/','\\1\\2',$name);
 
 				// treat $ignoare_validation only as regular expression, if it starts with a slash
-				if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) || $ignore_validation != $name)
+				if ($ignore_validation[0] == '/' && !preg_match($ignore_validation,$name) || 
+					$ignore_validation[0] != '/' && $ignore_validation != $name)
 				{
 					//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') name='$name' ($error) not ignored!!!</p>\n";
 					return true;
