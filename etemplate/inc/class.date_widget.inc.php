@@ -177,7 +177,7 @@
 				);
 				for ($str='',$n = substr($type,-4) == 'only' ? 3 : 0; $n < count($format); ++$n)
 				{
-					if ($value[$format[$n]])
+					if ((string) $value[$format[$n]] !== '')
 					{
 						if (!$n && $options & 16 )
 						{
