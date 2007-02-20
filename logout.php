@@ -48,7 +48,7 @@
 			));
 		}
 	}
-	$GLOBALS['egw']->session->egw_setcookie('eGW_remember');
+	$GLOBALS['egw']->session->egw_setcookie('eGW_remember','',0,'/');
 	$GLOBALS['egw']->session->egw_setcookie('sessionid');
 	$GLOBALS['egw']->session->egw_setcookie('kp3');
 	$GLOBALS['egw']->session->egw_setcookie('domain');
