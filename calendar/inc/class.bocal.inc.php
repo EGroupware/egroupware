@@ -372,7 +372,16 @@ class bocal
 			}
 			if (!$this->check_perms(EGW_ACL_READ,$event) || (!$event['public'] && $filter == 'hideprivate'))
 			{
-				$this->clear_private_infos($events[$id],$users);
+				if($params['query'])
+				{
+					unset($events[$id]);
+					$this->total--;
+					continue;
+				}
+				else
+				{
+					$this->clear_private_infos($events[$id],$users);
+				}
 			}
 		}
 
