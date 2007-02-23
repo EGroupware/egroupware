@@ -23,7 +23,8 @@ function GetUrlFromPath( $resourceType, $folderPath )
 	if ( $resourceType == '' )
 		return RemoveFromEnd( $GLOBALS["UserFilesPath"], '/' ) . $folderPath ;
 	else
-		return $GLOBALS["UserFilesPath"] . $resourceType . $folderPath ;
+		//INTEGRATION return $GLOBALS["UserFilesPath"] . $resourceType . $folderPath ;
+		return $GLOBALS["UserFilesPath"] . RemoveFromStart( $folderPath, '/' ) ;
 }
 
 function RemoveExtension( $fileName )
@@ -34,7 +35,8 @@ function RemoveExtension( $fileName )
 function ServerMapFolder( $resourceType, $folderPath )
 {
 	// Get the resource type directory.
-	$sResourceTypePath = $GLOBALS["UserFilesDirectory"] . $resourceType . '/' ;
+	//INTEGRATION $sResourceTypePath = $GLOBALS["UserFilesDirectory"] . $resourceType . '/' ;
+	$sResourceTypePath = $GLOBALS["UserFilesDirectory"] . '/' ;
 
 	// Ensure that the directory exists.
 	CreateServerFolder( $sResourceTypePath ) ;
