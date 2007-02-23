@@ -698,4 +698,12 @@
 		}
 		return $GLOBALS['setup_info']['addressbook']['currentver'] = '1.3.015';
 	}
+
+	$test[] = '1.3.015';
+	function phpgwapi_upgrade1_3_015()
+	{
+		# 1.4 Beta 2
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.016';
+	}
+
 ?>
