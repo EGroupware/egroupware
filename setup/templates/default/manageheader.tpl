@@ -98,8 +98,8 @@ function setDefaultDBPort(selectBox,portField)
 							<tr>
 								<td><strong>{lang_domselect}</strong><br />
 									<select name="setting[show_domain_selectbox]">
-										<option value="True"{domain_selectbox_yes}>{lang_Yes}</option>
-										<option value="False"{domain_selectbox_no}>{lang_No}</option>
+										<option value="True"{show_domain_selectbox_yes}>{lang_Yes}</option>
+										<option value="False"{show_domain_selectbox_no}>{lang_No}</option>
 								</select></td>
 								<td>{lang_domselect_descr}</td>
 							</tr>
