@@ -97,9 +97,13 @@ class bo_resources
 			{
 				$readonlys["new_acc[$resource[res_id]]"] = true;
 			}
-			if (!$resource['bookable'] /* && calender-acl viewable */)
+			if (!$resource['bookable'])
 			{
 				$readonlys["bookable[$resource[res_id]]"] = true;
+				$readonlys["calendar[$resource[res_id]]"] = true;
+			}
+			if(!$this->acl->is_permitted($resource['cat_id'],EGW_ACL_CALREAD))
+			{
 				$readonlys["calendar[$resource[res_id]]"] = true;
 			}
 			if (!$resource['buyable'])
