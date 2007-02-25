@@ -100,7 +100,7 @@ class ui_resources
 		$content['nm']['header_left']	= 'resources.resource_select.header';
 		$content['nm']['get_rows'] 	= 'resources.bo_resources.get_rows';
 		$content['nm']['no_filter'] 	= False;
-		$content['nm']['filter_label']	= 'Category';
+		$content['nm']['filter_label']	= lang('Category');
 		$content['nm']['filter_help']	= lang('Select a category'); // is this used???
 		$content['nm']['no_filter2']	= true;
 		$content['nm']['filter_no_lang'] = true;
