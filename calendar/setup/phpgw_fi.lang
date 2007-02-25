@@ -72,8 +72,8 @@ disinvited	calendar	fi	Kutsu peruttu
 display status of events	calendar	fi	Näytä tapahtumien tila
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	fi	Näyttää kalenterin oletusnäkymän aloitussivulla (sivu, joka näytetään kun kirjaudut eGroupWareen tai napsautat Koti-kuvaketta)?
 do you want a weekview with or without weekend?	calendar	fi	Haluatko viikkonäkymän viikonlopun kanssa vai ilman?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	fi	Haluatko, että sinua huomautetaan uusista tai muuttuneista tapahtumista?<br>Voit rajoittaa huomautukset vain jonkin tyyppisiin muutoksiin. Jokaisella tietueella on mahdolliset huomatuksen syyt yläpuolellaan. Kaikki muutokset tarkoittavat muutoksia otsikossa, kuvauksessa ja osanottajissa. Muutoksista osanottajien vastauksissa ei ilmoiteta. Jos tapahtuman omistaja on pyytänyt huomautuksia, hän saa osanottajien vastaukset (hyväksymiset tai hylkäykset).
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fi	Haluatko vastaanottaa säännöllisen yhteenvedon tapaamisistasi sähköpostilla?<br>Yhteenveto lähetetään sähköpostiosoitteeseesi joka aamu, tai maanantaina jos kyseessä on viikottainen yhteenveto.<br>Yhteenveto lähetetään vain, jos  sinulla on tapaamisia kyseisenä päivänä tai kyseisellä viikolla.
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	fi	Haluatko, että sinua huomautetaan uusista tai muuttuneista tapahtumista?<br>Voit rajoittaa huomautukset vain jonkin tyyppisiin muutoksiin. Jokaisella tietueella on mahdolliset huomautuksen syyt yläpuolellaan. Kaikki muutokset tarkoittavat muutoksia otsikossa, kuvauksessa ja osanottajissa. Muutoksista osanottajien vastauksissa ei ilmoiteta. Jos tapahtuman omistaja on pyytänyt huomautuksia, hän saa osanottajien vastaukset (hyväksymiset tai hylkäykset).
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fi	Haluatko vastaanottaa säännöllisen yhteenvedon tapaamisistasi sähköpostilla?<br>Yhteenveto lähetetään sähköpostiosoitteeseesi joka aamu, tai maanantaina jos kyseessä on viikoittainen yhteenveto.<br>Yhteenveto lähetetään vain, jos  sinulla on tapaamisia kyseisenä päivänä tai kyseisellä viikolla.
 do you wish to autoload calendar holidays files dynamically?	admin	fi	Haluatko ladata kalenteritiedostot automaattisesti?
 download	calendar	fi	Lataa
 download this event as ical	calendar	fi	Lataa tämä tapahtuma iCal-kalenterina
@@ -126,6 +126,7 @@ global public only	calendar	fi	Vain yleiset julkiset
 group invitation	calendar	fi	Ryhmän kutsuminen
 group planner	calendar	fi	Ryhmäsuunnittelu
 group public only	calendar	fi	Vain ryhmän julkinen
+groupmember(s) %1 not included, because you have no access.	calendar	fi	Ryhmänjäsen(et) %1 eivät näy, koska sinulla ei ole pääsyoikeuksia
 h	calendar	fi	t
 here is your requested alarm.	calendar	fi	Tässä on pyytämäsi hälytys.
 hide private infos	calendar	fi	Piiloita yksityiset tiedot
@@ -158,9 +159,9 @@ links, attachments	calendar	fi	Linkit, Liitteet
 listview	calendar	fi	Listanäkymä
 location	calendar	fi	Sijainti
 location to autoload from	admin	fi	Automaattisen latauksen osoite
-location, start- and endtimes, ...	calendar	fi	Paikka, Aloitus -ja lopetusajat, ...
+location, start- and endtimes, ...	calendar	fi	Paikka, aloitus -ja lopetusajat, ...
 mail all participants	calendar	fi	Lähetä kaikille osallistujille
-make freebusy information available to not loged in persons?	calendar	fi	Mahdollista kirjautumattoman henkilön saada vapaa/varattu tieto?
+make freebusy information available to not loged in persons?	calendar	fi	Mahdollista kirjautumattoman henkilön saada vapaa / varattu tieto?
 minutes	calendar	fi	minuuttia
 modified	calendar	fi	Muokattu
 mon	calendar	fi	Ma
@@ -202,7 +203,7 @@ participants, resources, ...	calendar	fi	Osallistujat, Resurssit, ...
 password for not loged in users to your freebusy information?	calendar	fi	Kirjautumattomien käyttäjien salasana varattu/vapaa -tietoon?
 people holiday	calendar	fi	loma
 permission denied	calendar	fi	Ei käyttöoikeutta
-planner by category	calendar	fi	Luokan suunnittelunäkymä
+planner by category	calendar	fi	Kategorian suunnittelunäkymä
 planner by user	calendar	fi	Käyttäjän suunnittelunäkymä
 please note: you can configure the field assignments after you uploaded the file.	calendar	fi	Huom: Voit asettaa kentän tehtäviä sen JÄLKEEN kun olet ladannut tiedoston.
 preselected group for entering the planner	calendar	fi	Ryhmäsuunnittelun esivalittu ryhmä
@@ -261,7 +262,7 @@ test import (show importable records <u>only</u> in browser)	calendar	fi	Testaa 
 this day is shown as first day in the week or month view.	calendar	fi	Tämä päivä näytetään viikon tai kuukausinäkymän ensimmäisenä päivänä
 this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	fi	Tämä määrittelee päivänäkymän päättymisajan. Tämän ajan jälkeiset tapahtumat näytetään päivänäkymän alla.
 this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	fi	Tämä määrittelee päivänäkymän aloitusajan. Tapahtumat ennen tätä aikaa näytetään päivänäkymän yläpuolella.<br>Tätä aikaa käytetään myös uusien tapahtumien oletus aloitusaikana.
-this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fi	This group that is preselected when you enter the planner. You can change it in the planner anytime you want.
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	fi	Tämä ryhmä on esivalittuna kun teet suunnitelmaa. Voit vaihtaa sitä koska tahansa.
 this message is sent for canceled or deleted events.	calendar	fi	Tämä viesti lähetetään perutuille tai poistetuille tapahtumille.
 this message is sent for modified or moved events.	calendar	fi	Tämä viesti lähetetään muokatuille tai siirretyille tapahtumille.
 this message is sent to disinvited participants.	calendar	fi	Tämä viesti lähetetään osallistujille joiden kutsu on peruttu

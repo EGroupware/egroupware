@@ -1,17 +1,17 @@
 %1 already exists as a file	filemanager	sv	%1 finns redan som fil
 application	filemanager	sv	Applikation
-back to file manager	filemanager	sv	Tillbaka till Filhanteraren
-cancel editing %1 without saving	filemanager	sv	Avbryt redigering av %1 utan att spara
+back to file manager	filemanager	sv	Tillbaks till Filhanteraren
+cancel editing %1 without saving	filemanager	sv	Avbryt ändring av %1 utan att spara
 cannot create directory because it begins or ends in a space	filemanager	sv	Kan inte skapa katalog eftersom namnet börjar eller slutar med ett mellanslag
 cannot replace %1 because it is a directory	filemanager	sv	Kan inte ersätta %1 eftersom det är en katalog
 command sucessfully run	filemanager	sv	Kommandot lyckades
-comment	filemanager	sv	Kommentera
+comment	filemanager	sv	Kommentar
 comments cannot contain "%1"	filemanager	sv	Kommentarer kan inte innehålla "%1"
 copied %1 to %2	filemanager	sv	Kopierade %1 till %2
 copy to	filemanager	sv	Kopiera
 copy to:	filemanager	sv	Kopiera till:
-could not copy %1 to %2	filemanager	sv	Kan inte kopiera %1 till %2
-could not copy file because no destination directory is given	filemanager	sv	Kan inte kopiera filen eftersom målkatalog saknas
+could not copy %1 to %2	filemanager	sv	Kunde inte kopiera %1 till %2
+could not copy file because no destination directory is given	filemanager	sv	Kunde inte kopiera filen eftersom målkatalog saknas
 could not create %1	filemanager	sv	Kunde inte skapa %1
 could not create directory %1	filemanager	sv	Kunde inte skapa katalogen %1
 could not delete %1	filemanager	sv	Kunde inte radera %1
@@ -33,25 +33,26 @@ deleted %1	filemanager	sv	Raderade %1
 directory	filemanager	sv	Katalog
 directory %1 already exists	filemanager	sv	Katalogen %1 finns redan
 directory %1 does not exist	filemanager	sv	Katalogen %1 finns inte
-directory names cannot contain "%1"	filemanager	sv	Katalognamn kan inte innehålla %1
+directory names cannot contain "%1"	filemanager	sv	Katalognamn kan inte innehålla "%1"
 display attributes	filemanager	sv	Visa attribut
 download	filemanager	sv	Ladda ned
 edit	filemanager	sv	Ändra
-edit comments	filemanager	sv	Ändra kommentarer
-error running command	filemanager	sv	Fel vid exekvering av kommando
+edit comments	filemanager	sv	Ändra kommentar
+error running command	filemanager	sv	Kunde inte exekvera kommandot
 execute	filemanager	sv	Exekvera
-failed to create directory	filemanager	sv	Misslyckades att skapa katalog
+failed to create directory	filemanager	sv	Kunde inte skapa katalog
 fake base dir did not exist, egroupware created a new one.	filemanager	sv	Fejkad baskatalog existerade inte, eGroupware skapade en ny
 file	filemanager	sv	Fil
-file %1 already exists. please edit it or delete it first.	filemanager	sv	Fil %1 existerar redan. Var vänlig ändra den eller ta bort den först
+file %1 already exists. please edit it or delete it first.	filemanager	sv	Fil %1 finns redan. Var vänlig ändra den eller ta bort den först
 file %1 could not be created.	filemanager	sv	Fil % kunde inte skapas
 file name	filemanager	sv	Filnamn
+file names cannot contain  or /	filemanager	sv	Filnamn kan inte innehålla \ eller /
 file names cannot contain "%1"	filemanager	sv	Filnamn kan inte innehålla "%1"
 file names cannot contain \ or /	filemanager	sv	Filnamn kan inte innehålla \ eller /
 filemanager	common	sv	Filhanterare
 filemanager preferences	filemanager	sv	Filhanterare alternativ
 files	filemanager	sv	Filer
-files in this directory	filemanager	sv	Filer i katalogen
+files in this directory	filemanager	sv	Objekt i katalogen
 folder	filemanager	sv	Katalog
 folder up	filemanager	sv	Upp ett steg
 go home	filemanager	sv	Gå hem
@@ -66,11 +67,11 @@ locked	filemanager	sv	Låst
 mime type	filemanager	sv	MIME-typ
 modified	filemanager	sv	Ändrad
 modified by	filemanager	sv	Ändrad av
-move to	filemanager	sv	Flytta Till
+move to	filemanager	sv	Flytta
 move to:	filemanager	sv	Flytta till:
 moved %1 to %2	filemanager	sv	Flyttade %1 till %2
-no files in this directory.	filemanager	sv	Inga filer i denna katalog
-no version history for this file/directory	filemanager	sv	Ingen versionhistorik för denna fil/katalog
+no files in this directory.	filemanager	sv	Inga filer i katalogen
+no version history for this file/directory	filemanager	sv	Ingen versionshistorik för filen/katalogen
 operation	filemanager	sv	Åtgärd
 other settings	filemanager	sv	Övriga alternativ
 owner	filemanager	sv	Ägare
@@ -80,7 +81,7 @@ preview of %1	filemanager	sv	Förhandsgransking av %1
 quick jump to	filemanager	sv	Hoppa till
 reload	filemanager	sv	Ladda om
 rename	filemanager	sv	Byt namn
-renamed %1 to %2	filemanager	sv	Bytte namn från %1 till %2
+renamed %1 to %2	filemanager	sv	Döpte om %1 till %2
 replaced %1	filemanager	sv	Ersatte %2
 save %1	filemanager	sv	Spara %1
 save %1, and go back to file listing	filemanager	sv	Spara %1 och gå tillbaka till fillistan
@@ -89,12 +90,12 @@ save changes	filemanager	sv	Spara ändringar
 saved %1	filemanager	sv	Sparade %1
 show	filemanager	sv	Visa
 show ..	filemanager	sv	Visa ..
-show .files	filemanager	sv	Visa .filer
+show .files	filemanager	sv	Visa . filer
 show command line (experimental. dangerous.)	filemanager	sv	Visa kommandorad (EXPERIMENTELLT, FARLIGT)
 show help	filemanager	sv	Visa hjälp
 size	filemanager	sv	Storlek
-sort by:	filemanager	sv	Sortera efter:
-the future filemanager, now for testing purposes only, please send bugreports	filemanager	sv	Den framtida filhanteraren, Enbart för tester. Skicka gärna buggrapporter
+sort by:	filemanager	sv	Sortera enligt:
+the future filemanager, now for testing purposes only, please send bugreports	filemanager	sv	Den framtida filhanteraren, enbart för tester. Skicka gärna buggrapporter
 total files	filemanager	sv	Totalt antal filer
 unknown mime-type defaults to text/plain when viewing	filemanager	sv	Okända MIME-typer visas som text/plain
 unused space	filemanager	sv	Ledigt utrymme

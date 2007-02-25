@@ -17,7 +17,7 @@ add a single entry by passing the fields.	addressbook	sk	Pridaj záznam zadaním p
 add custom field	addressbook	sk	Pridaj pou¾ívateµskú polo¾ku
 address book	common	sk	Adresár
 address book - vcard in	addressbook	sk	Adresár - VCard v
-address book - view	addressbook	sk	Adresár - pohµed
+address book - view	addressbook	sk	Adresár - pohµad
 address line 2	addressbook	sk	Adresa riadok 2
 address type	addressbook	sk	Typ adresy
 addressbook	common	sk	Adresár
@@ -35,21 +35,21 @@ apply changes to all members, whose fields have the same previous content	addres
 apply the action on the whole query, not only the shown contacts!!!	addressbook	sk	Vykona» akciu na celom dopyte, NIE iba na zobrazených kontaktoch!!!
 are you shure you want to delete this contact?	addressbook	sk	Naozaj chcete zmaza» tento kontakt?
 are you sure you want to delete this field?	addressbook	sk	Naozaj mám zmaza» túto polo¾ku?
-assistent	addressbook	sk	Pomocník
+assistent	addressbook	sk	Asistent
 assistent phone	addressbook	sk	Telefón asistenta
 birthday	common	sk	Narodeniny
 birthdays	common	sk	Narodeniny
 blank	addressbook	sk	Prázdne
 business	common	sk	Zamestnanie
-business address	addressbook	sk	Adresa do zamestnania
-business city	addressbook	sk	Mesto
-business country	addressbook	sk	Krajina
-business email	addressbook	sk	E-mail do zamestnania
-business fax	addressbook	sk	Fax do zamestnania
-business phone	addressbook	sk	Telefón do zamestnania
-business state	addressbook	sk	©tát
-business street	addressbook	sk	Ulica
-business zip code	addressbook	sk	PSÈ
+business address	addressbook	sk	Zamestnanie - Adresa
+business city	addressbook	sk	Zamestnanie - Mesto
+business country	addressbook	sk	Zamestnanie - Krajina
+business email	addressbook	sk	Zamestnanie - E-mail
+business fax	addressbook	sk	Zamestnanie - Fax
+business phone	addressbook	sk	Zamestnanie - Telefón
+business state	addressbook	sk	Zamestnanie - ©tát
+business street	addressbook	sk	Zamestnanie - Ulica
+business zip code	addressbook	sk	Zamestnanie - PSÈ
 calendar uri	addressbook	sk	URI Kalendára
 can be changed via setup >> configuration	admin	sk	Dá sa zmeni» cez Setup -> Konfigurácia
 car phone	addressbook	sk	Telefón do auta
@@ -63,15 +63,15 @@ choose an icon for this contact type	admin	sk	Zvoµte ikonu pre tento typ kontakt
 chosse an etemplate for this contact type	admin	sk	Zvoµte e©ablónu pre tento typ kontaktu
 city	common	sk	Mesto
 company	common	sk	Spoloènos»
-company name	addressbook	sk	Firma
+company name	addressbook	sk	Názov firmy
 configuration	common	sk	Nastavenia
 contact	common	sk	Kontakt
 contact application	admin	sk	Kontakty
 contact copied	addressbook	sk	Kontakt skopírovaný
-contact deleted	addressbook	sk	Kontakty vymazané
+contact deleted	addressbook	sk	Kontakt vymazaný
 contact id	addressbook	sk	ID kontaktu
 contact saved	addressbook	sk	Kontakt bol ulo¾ený
-contact settings	admin	sk	Nastavenia kontaktov
+contact settings	admin	sk	Nastavenia Kontaktov
 contacts and account contact-data to ldap	admin	sk	kontakty a kontaktné údaje úètu do LDAP
 contacts to ldap	admin	sk	kontakty do LDAP
 contacts to ldap, account contact-data to sql	admin	sk	kontakty do LDAP, kontaktné údaje úètu do SQL
@@ -109,7 +109,7 @@ edit custom fields	admin	sk	Oprav vlastné polo¾ky
 edit extra account-data in the addressbook	admin	sk	Upravi» extra dáta úètu v Adresári
 edit phonenumbers -	addressbook	sk	Upravi» telefónne èísla -
 email & internet	addressbook	sk	Email & Internet
-empty for all	addressbook	sk	Prázdne znamená v¹etko
+empty for all	addressbook	sk	Prázdne znamená: v¹etko
 enable an extra private addressbook	addressbook	sk	Zapnú» extra súkromný adresár
 enter the path to the exported file here	addressbook	sk	Zadajte cestu k exportovanému súboru
 error deleting the contact !!!	addressbook	sk	Chyba pri mazaní kontaktu !!!
@@ -140,17 +140,17 @@ full name	addressbook	sk	Celé meno
 general	addressbook	sk	Základné
 geo	addressbook	sk	GEO
 global categories	addressbook	sk	Globálne kategórie
-grant addressbook access	common	sk	Deleguj práva pre pøístup k Adresáru
+grant addressbook access	common	sk	Deleguj práva pre prístup k Adresáru
 group %1	addressbook	sk	Skupina %1
-home address	addressbook	sk	Adresa -domov
+home address	addressbook	sk	Domov - Adresa
 home address, birthday, ...	addressbook	sk	Adresa domov, sviatky,...
-home city	addressbook	sk	Mesto - domov
-home country	addressbook	sk	Krajina - domov
-home email	addressbook	sk	E-mail - domov
-home phone	addressbook	sk	Telefón - domov
-home state	addressbook	sk	©tát - domov
-home street	addressbook	sk	Ulica -domov
-home zip code	addressbook	sk	PSÈ - domov
+home city	addressbook	sk	Domov - Mesto
+home country	addressbook	sk	Domov - Krajina
+home email	addressbook	sk	Domov - E-mail
+home phone	addressbook	sk	Domov - Telefón
+home state	addressbook	sk	Domov - ©tát
+home street	addressbook	sk	Domov - Ulica
+home zip code	addressbook	sk	Domov - PSÈ
 icon	addressbook	sk	Ikona
 if accounts are already in ldap	admin	sk	ak sú úèty u¾ v LDAP
 import	addressbook	sk	Import
@@ -180,13 +180,14 @@ list all categories	addressbook	sk	Zoznam v¹etkých kategórií
 list all customfields	addressbook	sk	Zobrazi» v¹etky pou¾ívateµské polo¾ky
 load vcard	addressbook	sk	Nahra» vizitku VCard
 locations	addressbook	sk	Umiestnenia
-mark records as private	addressbook	sk	Oznaèi» záznam ako súkromý
+mark records as private	addressbook	sk	Oznaèi» záznamy ako súkromé
+merged	addressbook	sk	Zlúèené
 message phone	addressbook	sk	Telefón pre správy
 middle name	addressbook	sk	Prostredné meno
 migration finished	addressbook	sk	Migrácia je dokonèená.
 migration to ldap	admin	sk	Migrácia do LDAP
 mobile	addressbook	sk	Mobil
-mobile phone	addressbook	sk	Mobil
+mobile phone	addressbook	sk	Mobilný telefón
 modem phone	addressbook	sk	Èíslo na modem
 more ...	addressbook	sk	Viac ...
 moved	addressbook	sk	Presunuté
@@ -201,7 +202,7 @@ organisation	addressbook	sk	Organizácia
 organisations	addressbook	sk	Organizácie
 organisations by departments	addressbook	sk	Organizácie podµa oddelení
 organisations by location	addressbook	sk	Organizácie podµa umiestnenia
-other number	addressbook	sk	Telefón - ostatné
+other number	addressbook	sk	Iné èíslo
 other phone	addressbook	sk	Iný telefón
 own sorting	addressbook	sk	Vlastné triedenie
 pager	common	sk	Pager
@@ -245,6 +246,7 @@ show birthday reminders on main screen	addressbook	sk	Pripomína» narodeniny na h
 show infolog entries for this organisation	addressbook	sk	Zobrazi» polo¾ky Záznamníka pre túto organizáciu
 show the contacts of this organisation	addressbook	sk	Zobrazi» kontakty v tejto organizácii
 size of popup (wxh, eg.400x300, if a popup should be used)	admin	sk	Veµkos» vyskakovacieho okna (DxV, napr. 400x300, ak sa má pou¾íva» vyskakovacie okno)
+start	admin	sk	Zaèiatok
 startrecord	addressbook	sk	Prvý záznam
 state	common	sk	©tát
 street	common	sk	Ulica
@@ -277,7 +279,7 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	sk	POZOR: V¹etky kontakty budú zmazané!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sk	Èo sa má v iných aplikáciách zobrazi» na mieste odkazu na adresár. Prázdne hodnoty sa vynechajú. Ak zmeníte toto nastavenie, musíte sa znovu prihlási»!
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	sk	Kedy má zoznam kontaktov zobrazova» tento ståpec. "Iba ak je tam nejaký obsah" skryje ståpec v prípade, ak v zobrazení nie je nejaký obsah.
-which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sk	Ktorý adresár sa má pou¾i» keï pridávate nový kontakt A nemáte právo prida» ho do aktuálneho adresára.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sk	Ktorý adresár sa má pou¾i», keï pridávate nový kontakt A PRITOM nemáte právo prida» ho do aktuálneho adresára.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu pou¾íva» pri exporte do CSV. Predvolená je tá, ktorá je pou¾ívaná ako znaková sada v tejto in¹talácii eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sk	Ktoré polo¾ky sa majú exportova». "V¹etky" znamená ka¾dé pole ulo¾ené v Adresári, vrátane pou¾ívateµských polo¾iek. Pracovná alebo domáca adresa obsahuje iba meno, firmu a vybrané adresy.
 whole query	addressbook	sk	Celý dopyt

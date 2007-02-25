@@ -15,7 +15,7 @@ after current date	calendar	es-es	Después de la fecha actual
 alarm	calendar	es-es	Alarma
 alarm added	calendar	es-es	Se ha añadido una alarma
 alarm deleted	calendar	es-es	Se ha borrado una alarma
-alarm for %1 at %2 in %3	calendar	es-es	Alarma para %1 en %2 in %3
+alarm for %1 at %2 in %3	calendar	es-es	Alarma para %1 en %2 en %3
 alarm management	calendar	es-es	Gestión de alarmas
 alarms	calendar	es-es	Alarmas
 all categories	calendar	es-es	Todas las categorías
@@ -37,7 +37,7 @@ calendar event	calendar	es-es	Evento de calendario
 calendar holiday management	admin	es-es	Gestión de días festivos
 calendar menu	calendar	es-es	Menú de calendario
 calendar preferences	calendar	es-es	Preferencias - Calendario
-calendar settings	admin	es-es	Preferencias de calendario
+calendar settings	admin	es-es	Preferencias del calendario
 calendar-fieldname	calendar	es-es	Calendario - Nombre de campo
 can't add alarms in the past !!!	calendar	es-es	¡¡No se pueden añadir alarmas en el pasado!!
 canceled	calendar	es-es	Cancelado
@@ -119,7 +119,7 @@ format of event updates	calendar	es-es	Formato de las actualizaciones de eventos
 forward half a month	calendar	es-es	medio mes hacia adelante
 forward one month	calendar	es-es	un mes hacia adelante
 four days view	calendar	es-es	vista de cuatro días
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	es-es	libre-ocupado: Usuario desconocido "%1", contraseña incorrecta o no está disponible
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	es-es	Disponibilidad: Usuario desconocido "%1", contraseña incorrecta o no está disponible
 freetime search	calendar	es-es	Buscar en el tiempo libre
 fri	calendar	es-es	Vie
 full description	calendar	es-es	Descripción completa
@@ -204,7 +204,7 @@ overlap holiday	calendar	es-es	solapar festivo
 participants	calendar	es-es	Participantes
 participants disinvited from an event	calendar	es-es	Participantes que dejan de ser invitados de un evento
 participants, resources, ...	calendar	es-es	Participantes, recursos
-password for not loged in users to your freebusy information?	calendar	es-es	¿Contraseña para los usuarios sin sesión para la información libre-ocupado?
+password for not loged in users to your freebusy information?	calendar	es-es	¿Contraseña para los usuarios sin sesión para la información de disponibilidad?
 people holiday	calendar	es-es	festivo para la gente
 permission denied	calendar	es-es	Permiso denegado
 planner by category	calendar	es-es	Planificador por categorías

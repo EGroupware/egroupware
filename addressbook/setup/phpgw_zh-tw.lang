@@ -55,6 +55,7 @@ business zip code	addressbook	zh-tw	郵遞區號
 calendar uri	addressbook	zh-tw	行事曆網址
 can be changed via setup >> configuration	admin	zh-tw	可以透過 安裝 >> 設定 調整
 car phone	addressbook	zh-tw	車用電話
+categories, notes, ...	addressbook	zh-tw	類別、記事、...
 cell phone	addressbook	zh-tw	行動電話
 change all organisation members	addressbook	zh-tw	修改所有組織成員
 charset for the csv export	addressbook	zh-tw	CSV 檔案匯出編碼
@@ -139,6 +140,7 @@ fieldseparator	addressbook	zh-tw	欄位分隔
 for read only ldap	admin	zh-tw	唯讀的LDAP
 freebusy uri	addressbook	zh-tw	行程狀態網址
 full name	addressbook	zh-tw	全名
+general	addressbook	zh-tw	一般
 geo	addressbook	zh-tw	GEO
 global categories	addressbook	zh-tw	全域類別
 grant addressbook access	common	zh-tw	允許存取通訊錄
@@ -279,7 +281,9 @@ vcards require a last name entry.	addressbook	zh-tw	名片檔需要姓氏資料�
 view linked infolog entries	addressbook	zh-tw	檢視連結的記事資料
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh-tw	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
 warning: all contacts found will be deleted!	addressbook	zh-tw	警告：找到的所有聯絡人都會被刪除！
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	zh-tw	在其他程式連結到通訊錄的顯示文字，空白會被忽略，任何的修正必須在重新登入後才會套用！
 when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	zh-tw	什麼時候聯絡人清單該顯示那個欄位，'只在有內容時' 隱藏欄位，其他表示有內容可以檢視。
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	zh-tw	新增聯絡人時要選擇哪個通訊錄，目前的通訊錄您沒有新增權限。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	zh-tw	要匯出哪些欄位，全部代表儲存在通訊錄的每一個欄位，包含自訂欄位；公司或住家住址只包含姓名、公司與選擇的住址。
 whole query	addressbook	zh-tw	整個查詢

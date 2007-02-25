@@ -8,6 +8,7 @@ accepted	calendar	zh-tw	已接受
 access denied to the calendar of %1 !!!	calendar	zh-tw	您沒有權限存取 %1 的行事曆！
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	zh-tw	需要提醒的操作：新增、取消、接受、拒絕、...
 actions	calendar	zh-tw	動作
+actions...	calendar	zh-tw	動作...
 add alarm	calendar	zh-tw	新增警示
 added	calendar	zh-tw	新增日期
 after current date	calendar	zh-tw	在今天以後
@@ -47,7 +48,7 @@ copy of:	calendar	zh-tw	複製：
 copy this event	calendar	zh-tw	複製這個事件
 countries	calendar	zh-tw	國家
 country	calendar	zh-tw	國家
-create an exception at this recuring event	calendar	zh-tw	在這個循環事件建立例外
+create an exception for the given date	calendar	zh-tw	在指定日期建立一個例外
 create new links	calendar	zh-tw	建立新連結
 csv	calendar	zh-tw	CSV
 csv-fieldname	calendar	zh-tw	CSV-欄位名稱
@@ -102,6 +103,7 @@ event saved	calendar	zh-tw	事件儲存了
 event will occupy the whole day	calendar	zh-tw	這是全天事件
 exception	calendar	zh-tw	例外
 exceptions	calendar	zh-tw	例外
+execute a further action for this entry	calendar	zh-tw	在這筆資料執行其他操作
 existing links	calendar	zh-tw	已經存在的連結
 export	calendar	zh-tw	匯出
 extended	calendar	zh-tw	延伸的
@@ -213,6 +215,7 @@ previous	calendar	zh-tw	上一個
 private and global public	calendar	zh-tw	私人及全區公用
 private and group public	calendar	zh-tw	私人及群組公用
 private only	calendar	zh-tw	私人
+quantity	calendar	zh-tw	數量
 re-edit event	calendar	zh-tw	重新編輯約會
 receive email updates	calendar	zh-tw	接收更新郵件提醒
 receive summary of appointments	calendar	zh-tw	接收約會概要
@@ -283,6 +286,7 @@ two weeks	calendar	zh-tw	兩週
 updated	calendar	zh-tw	更新日期
 use end date	calendar	zh-tw	有結束日期
 use the selected time and close the popup	calendar	zh-tw	使用指定的時間並且關閉彈出視窗
+user or group	calendar	zh-tw	使用者或群組
 view this event	calendar	zh-tw	檢視這個事件
 views with fixed time intervals	calendar	zh-tw	以固定時間間隔檢視
 wed	calendar	zh-tw	三

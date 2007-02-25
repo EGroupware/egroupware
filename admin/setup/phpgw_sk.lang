@@ -1,6 +1,6 @@
 %1 - %2 of %3 user accounts	admin	sk	%1 - %2 z %3 pou¾ívateµských úètov
 %1 - %2 of %3 user groups	admin	sk	%1 - %2 z %3 pou¾ívateµských skupín
-%1 acl records of not (longer) existing accounts deleted.	admin	sk	%1 ACL záznamy u¾ neexistujúcich úètov zmazané.
+%1 acl records of not (longer) existing accounts deleted.	admin	sk	Boli zmazané ACL záznamy u¾ neexistujúcich úètov. Poèet zmazaných záznamov: %1.
 %1 not found or not executable !!!	admin	sk	%1 sa nena¹iel alebo nie je spustiteµný !!!
 (default no, leave it off if you dont use it)	admin	sk	(zvyèajne Nie, ak to nepou¾ívate, nechajte prázdne)
 (stored password will not be shown here)	admin	sk	(Ulo¾ené heslá sa tu nezobrazia)
@@ -174,7 +174,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	sk
 enter the background color for the login page	admin	sk	Zadajte farbu pozadia prihlasovacej stránky
 enter the background color for the site title	admin	sk	Zadajte farbu pozadia nadpisu stránky
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	sk	Zadajte úplnú cestu pre doèasné súbory.<br>Príklady: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	sk	Zadajte úplnú cestu pre doèasné súbory.<br>Príklady: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	sk	Zadajte úplnú cestu pre súbory pou¾ívateµov a skupiny.<br>Príklady: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	sk	Zadajte úplnú cestu pre súbory pou¾ívateµov a skupiny.<br>Príklady: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	sk	Zadajte hostname stroja na ktorom be¾í tento server
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sk	Zadajte umiestnenie URL pre eGroupWare.<br>Príklad: http://www.domain.com/egroupware   alebo   /egroupware<br><b>Bez ukonèovacieho lomítka</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	sk	Zadajte re»azec pre vyhµadávanie. Pre zobrazenie v¹etkých záznamov, vyèistite toto pole a stlaète znovu tlaèítko ODO©LI

@@ -5,10 +5,12 @@
 a non blocking event will not conflict with other events	calendar	sv	En ej blockerande händelse påverkar inte andra händelser.
 accept or reject an invitation	calendar	sv	Acceptera eller avvisa inbjudan
 accepted	calendar	sv	Accepterat
+access denied to the calendar of %1 !!!	calendar	sv	Åtkomst nekas till %1 kalender
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sv	Händelse som orsakade meddelandet: Tillagd, Avbruten, Accepterade, Avvisade ....
 actions	calendar	sv	Åtgärder
+actions...	calendar	sv	Åtgärder
 add alarm	calendar	sv	Skapa larm
-added	calendar	sv	Tillagd
+added	calendar	sv	Skapad
 after current date	calendar	sv	Efter dagens datum
 alarm	calendar	sv	Larm
 alarm added	calendar	sv	Larm skapat
@@ -33,6 +35,7 @@ busy	calendar	sv	Upptagen
 by	calendar	sv	av
 calendar event	calendar	sv	Kalender händelse
 calendar holiday management	admin	sv	Kalender helgdagar
+calendar menu	calendar	sv	Kalender meny
 calendar preferences	calendar	sv	Kalender alternativ
 calendar settings	admin	sv	Kalender alternativ
 calendar-fieldname	calendar	sv	Kalender fältnamn
@@ -45,7 +48,7 @@ copy of:	calendar	sv	Kopia av:
 copy this event	calendar	sv	Kopiera händelsen
 countries	calendar	sv	Länder
 country	calendar	sv	Land
-create an exception at this recuring event	calendar	sv	Skapa ett undantag för denna återkommande händelse
+create an exception for the given date	calendar	sv	Skapa ett undantag för givet datum
 create new links	calendar	sv	Skapa nya länkar
 csv	calendar	sv	CSV
 csv-fieldname	calendar	sv	CSV Fältnamn
@@ -61,7 +64,6 @@ default calendar filter	calendar	sv	Kalenderns standard filter
 default calendar view	calendar	sv	Kalenderns standard vy
 default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	sv	Nya händelsers standard längd i minuter, ex. 60 för 1 timme.
 default week view	calendar	sv	Standard veckovy
-defines the size in minutes of the lines in the day view.	calendar	sv	Definierar i minuter storleken på raderna i dags vy
 delete series	calendar	sv	Radera serie
 delete this alarm	calendar	sv	Radera larmet
 delete this event	calendar	sv	Radera händelsen
@@ -69,10 +71,11 @@ delete this exception	calendar	sv	Radera undantaget
 delete this series of recuring events	calendar	sv	Radera återkommande händelse
 disinvited	calendar	sv	Avbokad
 display status of events	calendar	sv	Visa händelse status
+displayed view	calendar	sv	vy
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	sv	Visa din standard kalender på Startsidan (den sida du kommer till efter inloggningen eller när du klickar på Startsida ikonen)?
 do you want a weekview with or without weekend?	calendar	sv	Vill du se veckovy med eller utan veckoslut?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sv	Vill du mottaga meddelande om nya eller ändrade möten? Du får bekräftelse på dina egna ändringar.<br>Du kan begränsa meddelandena till vissa ändringar. Varje objekt inkluderar alla meddelande typer listade ovan den. Alla ändringar inkluderar titel ändring, beskrivning, deltagare men inte deltagares svar. Om ägaren till en händelse begär meddelande får han/hon deltagarnas svar som accepterar eller tackar nej till.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sv	Vill du få regelbunden summering av dina möten via e-post?<br>Summeringen skickas till din standard e-post adress på morgonen eller på måndagar för vecko summering.<br>Skickas bara när du har planerade händelser för dagen eller veckan.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sv	Vill du få regelbunden summering av dina möten via e-post?<br>Summeringen skickas till din standard e-postadress på morgonen eller på måndagar för vecko summering.<br>Skickas bara när du har planerade händelser för dagen eller veckan.
 do you wish to autoload calendar holidays files dynamically?	admin	sv	Vill du autoladda kalenderns helgdagar dynamiskt?
 download	calendar	sv	Ladda ner
 download this event as ical	calendar	sv	Ladda ner händelsen som iCAL
@@ -100,6 +103,7 @@ event saved	calendar	sv	Händelsen sparad
 event will occupy the whole day	calendar	sv	Heldags aktivitet
 exception	calendar	sv	Undantag
 exceptions	calendar	sv	Undantag
+execute a further action for this entry	calendar	sv	Utför fler åtgärder för posten
 existing links	calendar	sv	Nuvarande länkar
 export	calendar	sv	Export
 extended	calendar	sv	Utökad
@@ -110,26 +114,33 @@ filename of the download	calendar	sv	Filnamn för nerladdning
 find free timeslots where the selected participants are availible for the given timespan	calendar	sv	Hitta en tid då valda deltagare är tillgängliga
 firstname of person to notify	calendar	sv	Förnamn på person att meddela
 for	calendar	sv	för
+for which views should calendar show distinct lines with a fixed time interval.	calendar	sv	För vilka vyer ska kalendern visa tydliga rader med fast tids intervall.
 format of event updates	calendar	sv	Format på händelse uppdateringar
 forward half a month	calendar	sv	Fram halv månad
 forward one month	calendar	sv	Fram en månad
+four days view	calendar	sv	Fyra dagars vy
 freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sv	Freebusy: Okänd användare '%1', fel lösenord eller inte tillgänglig för oinloggade användare
 freetime search	calendar	sv	Tillgänglighetssökning
 fri	calendar	sv	Fre
 full description	calendar	sv	Fullständig beskrivning
 fullname of person to notify	calendar	sv	Fullständigt namn på person att meddela
-general	calendar	sv	Allmän
-global public and group public	calendar	sv	Globalt och grupp publik
-global public only	calendar	sv	Endast globalt publik
+general	calendar	sv	Allmänt
+global public and group public	calendar	sv	Global och grupp åtkomst
+global public only	calendar	sv	Endast global åtkomst
+group invitation	calendar	sv	Grupp bokning
 group planner	calendar	sv	Grupp planerare
-group public only	calendar	sv	Endast grupp publik
+group public only	calendar	sv	Endast grupp åtkomst
+groupmember(s) %1 not included, because you have no access.	calendar	sv	Gruppmedlem %1 inkluderas inte då du saknasr behörighet.
+h	calendar	sv	t
 here is your requested alarm.	calendar	sv	Begärt larm
+hide private infos	calendar	sv	Göm privat information
 high priority	calendar	sv	Hög prioritet
 holiday	calendar	sv	Helgsdag
 holiday management	calendar	sv	Helgdags hantering
 holidays	calendar	sv	Helgdagar
 hours	calendar	sv	Timmar
 how far to search (from startdate)	calendar	sv	Sökdjup (från startdatum)
+how many minutes should each interval last?	calendar	sv	Hur många minuter ska en intervall vara
 ical	calendar	sv	iCal
 ical / rfc2445	calendar	sv	iCal / rfc2445
 ical export	calendar	sv	iCal export
@@ -140,12 +151,12 @@ if checked holidays falling on a weekend, are taken on the monday after.	calenda
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sv	Om du inte sätter ett lösenord här, är informationen tillgänglig för alla som kan hitta sidan!!
 ignore conflict	calendar	sv	Ignorera schema konflikt
 import	calendar	sv	Import
-import csv-file	calendar	sv	Importera CSV fil
+import csv-file	common	sv	Importera CSV fil
 interval	calendar	sv	Intervall
-intervals in day view	calendar	sv	Intervall i Dag vy
-invalid email-address "%1" for user %2	calendar	sv	Ogiltig e-post adress "%1" för användare %2
+invalid email-address "%1" for user %2	calendar	sv	Ogiltig e-postadress "%1" för användare %2
 last	calendar	sv	Senaste
 lastname of person to notify	calendar	sv	Efternamn på person att meddela
+length of the time interval	calendar	sv	Tidsintervall längd
 link to view the event	calendar	sv	Länk till händelse
 links	calendar	sv	Länkar
 links, attachments	calendar	sv	Länkar, bilagor
@@ -154,7 +165,7 @@ location	calendar	sv	Plats
 location to autoload from	admin	sv	Hämtplats
 location, start- and endtimes, ...	calendar	sv	Plats, start- och slut tid
 mail all participants	calendar	sv	Skicka e-post till alla deltagare
-make freebusy information available to not loged in persons?	calendar	sv	Gör tillgänglighetsinformation åtkomlig för icke inloggade personer också?
+make freebusy information available to not loged in persons?	calendar	sv	Gör freebusy åtkomlig för oinloggade personer också?
 minutes	calendar	sv	Minuter
 modified	calendar	sv	Ändrad
 mon	calendar	sv	Mån
@@ -201,11 +212,12 @@ planner by user	calendar	sv	Planerare enl. användare
 please note: you can configure the field assignments after you uploaded the file.	calendar	sv	Anmärkning: Du kan konfigurera fält tilldelning efter du laddat upp filen.
 preselected group for entering the planner	calendar	sv	Förvald grupp för åtkomst till Planeraren
 previous	calendar	sv	Föregende
-private and global public	calendar	sv	Privat och globalt publik
-private and group public	calendar	sv	Privat och grupp publik
-private only	calendar	sv	Endast privata
-re-edit event	calendar	sv	Redigera händelse
-receive email updates	calendar	sv	Mottag e-post uppdateringar
+private and global public	calendar	sv	Privat och global åtkomst
+private and group public	calendar	sv	Privat och grupp åtkomst
+private only	calendar	sv	Endast privat
+quantity	calendar	sv	Antal
+re-edit event	calendar	sv	Ändra händelse
+receive email updates	calendar	sv	Mottag e-postuppdateringar
 receive summary of appointments	calendar	sv	Mottag summering av möten
 recurrence	calendar	sv	Upprepning
 recurring event	calendar	sv	Återkommande händelse
@@ -224,15 +236,15 @@ sat	calendar	sv	Lör
 saves the changes made	calendar	sv	Spara ändringar
 saves the event ignoring the conflict	calendar	sv	Spara händelsen och ignorera konflikt
 scheduling conflict	calendar	sv	Schema konflikt
-select a %1	calendar	sv	välj %1
-select a time	calendar	sv	välj en tid
+select a %1	calendar	sv	Välj %1
+select a time	calendar	sv	Välj en tid
 select resources	calendar	sv	Välj resurser
 select who should get the alarm	calendar	sv	Välja mottagare av larm
 set a year only for one-time / non-regular holidays.	calendar	sv	Sätt år endast för engångs/oregelbundna helgdagar
 set new events to private	calendar	sv	Sätt nya händelser som privata
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sv	Ska inbjudningar du tackat nej till ändå visas i kalendern?<br>Du kan bara ändra dig och senare acceptera om de fortfarande står kvar.
 should new events created as private by default ?	calendar	sv	Ska nya händelser skapas som standard privat?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sv	Ska oinloggade användare kunna se din Freebussy information? Du kan sätta ett extra lösenord som skiljer sig från ditt normala för att skydda den. Freebusy informationen är i iCal format och inkluderar endast tider när du är upptagen. Den visa inte händelsenamn, beskrivning eller plats. URL till din Freebusy information är %1
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sv	Ska oinloggade användare kunna se din Freebusy information? Du kan sätta ett extra lösenord som skiljer sig från ditt normala för att skydda den. Freebusy informationen är i iCal format och inkluderar endast tider när du är upptagen. Den visa inte händelsenamn, beskrivning eller plats. URL till din Freebusy information är %1
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sv	Ska händelse-deltagarnas status (accepterar, tackar nej till osv) visas efter varje deltagares namn?
 show default view on main screen	calendar	sv	Visa standard vy på Startsidan?
 show invitations you rejected	calendar	sv	Visa inbjudningar du tackat nej till?
@@ -274,7 +286,9 @@ two weeks	calendar	sv	Två veckor
 updated	calendar	sv	Uppdaterad
 use end date	calendar	sv	Använd Slutdatum
 use the selected time and close the popup	calendar	sv	Använd vald tid och stäng dialogen
+user or group	calendar	sv	Användare eller grupp
 view this event	calendar	sv	Visa händelsen
+views with fixed time intervals	calendar	sv	Vyer med fast tidsintervall
 wed	calendar	sv	Ons
 week	calendar	sv	Vecka
 weekday starts on	calendar	sv	Veckodag börjar
@@ -287,7 +301,7 @@ weekview without weekend	calendar	sv	Vecka utan veckoslut
 which events do you want to see when you enter the calendar.	calendar	sv	Vilka händelser vill du se när du öppnar kalendern?
 which of calendar view do you want to see, when you start calendar ?	calendar	sv	Vilken vy vill du se när du öppnar kalendern?
 whole day	calendar	sv	Heldag
-wk	calendar	sv	arb
+wk	calendar	sv	Arb
 work day ends on	calendar	sv	Arbetsdag slutar
 work day starts on	calendar	sv	Arbetsdag börjar
 yearly	calendar	sv	Årlig

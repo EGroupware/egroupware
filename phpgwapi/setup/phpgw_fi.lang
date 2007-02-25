@@ -117,11 +117,12 @@ cancel	common	fi	Peruuta
 cannot replace %1 because it is a directory	common	fi	Ei voida korvata %1 koska se on hakemisto
 cant open '%1' for %2	common	fi	Ei voida avata '%1' %2
 cape verde	common	fi	CAP VERDE
-categories	common	fi	Luokat
-categories for	common	fi	luokat kohteelle
-category	common	fi	Luokka
-category %1 has been added !	common	fi	Luokka %1 on lisätty!
-category %1 has been updated !	common	fi	Luokka %1 on päivitetty!
+caption	common	fi	Otsikko
+categories	common	fi	Kategoriat
+categories for	common	fi	kategoriat kohteelle
+category	common	fi	Kategoria
+category %1 has been added !	common	fi	Kategoria %1 on lisätty!
+category %1 has been updated !	common	fi	Kategoria %1 on päivitetty!
 cayman islands	common	fi	CAYMANSAARET
 cc	common	fi	Kopio
 cellpadding	tinymce	fi	Solun reunan ja sisällön väli
@@ -131,7 +132,7 @@ centered	common	fi	keskitetty
 central african republic	common	fi	KESKI-AFRIKAN TASAVALTA
 chad	common	fi	TSAD
 change	common	fi	Muuta
-charset	common	fi	merkistö iso-8859-15
+charset	common	fi	iso-8859-15
 check installation	common	fi	Tarkista asennus
 check now	common	fi	Tarkista nyt
 chile	common	fi	CHILE
@@ -153,6 +154,7 @@ click	common	fi	Napsauta
 click or mouse over to show menus	common	fi	Napsauta tai näytä valikot kun osoitetaan hiirellä
 click or mouse over to show menus?	common	fi	Napsauta tai näytä valikot kun osoitetaan hiirellä?
 close	common	fi	Sulje
+close sidebox	common	fi	Sulje reunavalikko
 cocos (keeling) islands	common	fi	KOOKOSSAARET (KEELING)
 colombia	common	fi	KOLUMBIA
 columns	tinymce	fi	Sarakkeet
@@ -160,20 +162,20 @@ comment	tinymce	fi	kommentti
 common preferences	common	fi	Yleiset säädöt
 comoros	common	fi	KOMORIT
 company	common	fi	Yhtiö
-configuration problem	tinymce	fi	Asetus ongelma
+configuration problem	tinymce	fi	Konfiguraatio ongelma
 congo	common	fi	KONGO
 congo, the democratic republic of the	common	fi	KONGON DEMOKRAATTINEN KANSANTASAVALTA
 contacting server...	common	fi	Otetaan yhteyttä palvelimeen...
 cook islands	common	fi	COOKSAARET
-copy	common	fi	Copy
-copy table row	tinymce	fi	Copy table row
+copy	common	fi	kopioi
+copy table row	tinymce	fi	Kopioi taulun rivi
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fi	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	fi	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	fi	Kopioi / Leikkaa / Liitä toiminnot eivät ole käytettävissä Mozilla ja Firefox selaimilla.\n Haluatko lisätietoa tästä ongelmasta?
 costa rica	common	fi	COSTA RICA
 cote d ivoire	common	fi	NORSUNLUURANNIKKO
 could not contact server. operation timed out!	common	fi	Palvelimeen ei saatu yhteyttä. Pyyntö aikakatkaistiin!
 create	common	fi	Luo
-created by	common	fi	Tehnyt
+created by	common	fi	Luonut
 croatia	common	fi	KROATIA
 cuba	common	fi	KUUBA
 currency	common	fi	Valuutta
@@ -193,22 +195,26 @@ default category	common	fi	Oletuskategoria
 default height for the windows	common	fi	Ikkunan oletuskorkeus
 default width for the windows	common	fi	Ikkunan oletusleveys
 delete	common	fi	Poista
-delete row	common	fi	Posita rivi
+delete row	common	fi	Poista rivi
 denmark	common	fi	TANSKA
 description	common	fi	Kuvaus
 detail	common	fi	Yksityiskohta
 details	common	fi	Yksityiskohdat
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Ota Internet Explorer 5.5 ja uudempien png-bugin korjausskripti pois käytöstä?
+direction	tinymce	fi	Suunta
+direction left to right	common	fi	Suunta vasemmalta oikealle
+direction right to left	tinymce	fi	Suunta oikealta vasemmalle
 directory	tinymce	fi	Hakemisto
 disable internet explorer png-image-bugfix	common	fi	Ota Internet Explorerin png-bugin korjausskripti pois käytöstä
 disable slider effects	common	fi	Ota liukuefektit pois käytöstä
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fi	Ota valikoiden näyttämisen ja piilottamisen liukuefekti pois käytöstä? Operan ja Konquerorin käyttäjät haluavat tämän yleensä pois.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Estä korjausskripti joka mahdollistaa PNG kuvien läpinäkyväntausta käytön Internet Explorer 5.5 ja uudemmissa selaimissa?
 disabled	common	fi	Ei käytössä
 display %s first	jscalendar	fi	Näytä %s ensimmäistä
 djibouti	common	fi	DJIBOUTI
 do you also want to delete all subcategories ?	common	fi	Haluatko poistaa myös aliluokat?
 do you want to use the wysiwyg mode for this textarea?	tinymce	fi	Haluatko käyttää WYSIWYG moodia tähän tekstialueeseen?
-doctype:	common	fi	DOCTYPE:
+doctype:	common	fi	Dokumentin muoto:
 document properties	common	fi	Asiakirjan ominaisuudet
 document title:	common	fi	Asiakirjan nimi:
 domain	common	fi	Toimialue
@@ -217,20 +223,22 @@ domestic	common	fi	Kotimainen
 dominica	common	fi	DOMINICA
 dominican republic	common	fi	DOMINIKAANINEN TASAVALTA
 done	common	fi	Valmis
+down	tinymce	fi	Alas
 drag to move	jscalendar	fi	Vedä siirtääksesi
 e-mail	common	fi	Sähköposti
 east timor	common	fi	ITÄTIMORI
 ecuador	common	fi	ECUADOR
 edit	common	fi	Muokkaa
-edit %1 category for	common	fi	Muokkaa %1 luokkaa
-edit categories	common	fi	Muokkaa luokkia
-edit category	common	fi	Muokkaa luokkaa
+edit %1 category for	common	fi	Muokkaa %1 kategoriaa
+edit categories	common	fi	Muokkaa kategorioita
+edit category	common	fi	Muokkaa kategoriaa
 egroupware api version %1	common	fi	eGroupWare API versio %1
 egroupware: login blocked for user '%1', ip %2	common	fi	eGroupWare: Käyttäjän '%1' pääsy estetty, IP %2
 egypt	common	fi	EGYPTI
 el salvador	common	fi	EL SALVADOR
 email	common	fi	Sähköposti
 email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. "%1"
+emotions	tinymce	fi	Hymiöt
 enabled	common	fi	Käytössä
 end date	common	fi	Loppumispäivä
 end time	common	fi	Loppumisaika
@@ -246,20 +254,46 @@ error renaming %1 %2 directory	common	fi	Virhe nimettäessä hakemistoa uudelleen 
 estonia	common	fi	VIRO
 ethiopia	common	fi	ETIOPIA
 exact	common	fi	täsmällinen
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fi	Yhteys palvelimeen epäonnistui, yritä uudestaan. Ota yhteyttä ylläpitäjään mikäli ongelma toistuu.
 falkland islands (malvinas)	common	fi	FALKLANDSAARET (MALVINAS)
 faroe islands	common	fi	FÄRSAARET
 fax number	common	fi	faksinumero
 february	common	fi	Helmikuu
 fields	common	fi	Kentät
 fiji	common	fi	FIDJI
+file already exists. file was not uploaded.	tinymce	fi	Tiedosto on jo olemassa. Tiedostoa ei ladattu.
+file exceeds the size limit	tinymce	fi	Tiedostonkoko ylittää sallitut rajoitukset
+file manager	tinymce	fi	Tiedostonhallinta
+file not found.	tinymce	fi	Tiedostoa ei löydy.
+file was not uploaded.	tinymce	fi	Tiedostoa ei ladattu.
+file with specified new name already exists. file was not renamed/moved.	tinymce	fi	Tämän niminen tiedosto on jo olemassa, tiedosta ei uudelleen nimetty / siirretty.
+file(s)	tinymce	fi	tiedosto(t)
+file:	tinymce	fi	Tiedosto:
 files	common	fi	Tiedostot
+files with this extension are not allowed.	tinymce	fi	Tiedostot joilla on tämä tiedostopääte, ovat kiellettyjä
 filter	common	fi	Suodin
+find	tinymce	fi	Etsi
+find again	tinymce	fi	Etsi uudestaan
+find what	tinymce	fi	Mistä löytyy
+find&nbsp;next	tinymce	fi	Etsi seuraava
+find/replace	tinymce	fi	Etsi / Korvaa
 finland	common	fi	SUOMI
 first name	common	fi	Etunimi
 first name of the user, eg. "%1"	common	fi	käyttäjän etunimi, esim. "%1"
 first page	common	fi	Ensimmäinen sivu
 firstname	common	fi	Etunimi
 fixme!	common	fi	KORJAA MINUT!
+flash files	tinymce	fi	Flash tiedostot
+flash properties	tinymce	fi	Flash asetukset
+flash-file (.swf)	tinymce	fi	Flash tiedosto (.swf)
+folder	tinymce	fi	Kansio
+folder already exists.	common	fi	Kansio on jo olemassa
+folder name missing.	tinymce	fi	Kansion nimi puuttuu
+folder not found.	tinymce	fi	Kansiota ei löydy.
+folder with specified new name already exists. folder was not renamed/moved.	tinymce	fi	Tämän niminen kansio on jo olemassa, kansiota ei uudelleen nimetty / siirretty.
+folder(s)	tinymce	fi	kansio(t)
+for mouse out	tinymce	fi	kun hiiri ei ole päällä
+for mouse over	tinymce	fi	kun hiiri on päällä
 force selectbox	common	fi	Näytä valintaluettelo
 france	common	fi	RANSKA
 french guiana	common	fi	RANSKAN GUANA
@@ -268,6 +302,7 @@ french southern territories	common	fi	RANSKAN ETELÄISET SIIRTOMAAT
 friday	common	fi	Perjantai
 ftp	common	fi	FTP
 fullname	common	fi	Koko nimi
+fullscreen mode	common	fi	Kokonäytön asetus
 gabon	common	fi	GABON
 gambia	common	fi	GAMBIA
 general menu	common	fi	Päävalikko
@@ -312,22 +347,35 @@ hong kong	common	fi	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	fi	Kuinka monta kuvaketta näytetään navigaatiopalkissa. Loput kuvakkeet saa näkyviin oikeasta reunasta avautuvasta alasvetovalikosta.
 hungary	common	fi	UNKARI
 iceland	common	fi	ISLANTI
+iespell not detected. click ok to go to download page.	common	fi	ieSpell:ä ei havaittu, paina Ok siirtyäksesi lataussivulle
+if the clock is enabled would you like it to update it every second or every minute?	common	fi	Jos kello on käytössä, päivitetäänkö se sekunnin vai minuutin välein?
+if there are some images in the background folder you can choose the one you would like to see.	common	fi	Jos taustakuvahakemistossa on kuvia, voit valita mitä kuvaa haluat käyttää.
 image description	tinymce	fi	Kuvan selite
+image title	tinymce	fi	Kuvan nimi
 image url	common	fi	Kuvan URL
 indent	tinymce	fi	Sisennys
 india	common	fi	INTIA
 indonesia	common	fi	INDONEESIA
 insert	tinymce	fi	Lisää
+insert 'return false'	common	fi	Lisää 'return false'
+insert / edit flash movie	tinymce	fi	Lisää / muokkaa Flash
+insert / edit horizontale rule	tinymce	fi	Lissää / muokkaa vaakasuoraa viivaa
 insert all %1 addresses of the %2 contacts in %3	common	fi	Lisää kaikki %1 osoitetta %2 yhteystiedosta kohteeseen %3
 insert column after	common	fi	Lisää sarake jälkeen
 insert column before	common	fi	Lisää sarake edelle
+insert date	tinymce	fi	Lisää päivämäärä
+insert emotion	tinymce	fi	Lisää hymiö
+insert file	tinymce	fi	Lisää tiedosto
+insert link to file	tinymce	fi	Lisää linkki tiedostoon
 insert row after	common	fi	Lisää rivi jälkeen
 insert row before	common	fi	Lisää rivi edelle
+insert time	tinymce	fi	Lisää kellonaika
 insert/edit image	tinymce	fi	Lisää/muokkaa kuvaa
 insert/edit link	tinymce	fi	Lisää/muokkaa linkkiä
 insert/modify table	tinymce	fi	Lisää/muokkaa taulua
 inserts a new table	tinymce	fi	Lisää uusi taulu
 international	common	fi	Kansainvälinen
+invalid filename	common	fi	Virheellinen tiedostonnimi
 invalid ip address	common	fi	Virheellinen IP-osoite
 invalid password	common	fi	Virheellinen salasana
 iran, islamic republic of	common	fi	IRANIN ISLAMILAINEN TASAVALTA
@@ -337,11 +385,13 @@ israel	common	fi	ISRAEL
 it has been more then %1 days since you changed your password	common	fi	Olet vaihtanut salasanasi viimeksi %1 päivää sitten
 it is recommended that you run setup to upgrade your tables to the current version	common	fi	On suositeltavaa päivittää tietokannan taulut nykyiseen versioon.
 italic	common	fi	Kursivoi
+italic.gif	common	fi	italic.gif
 italy	common	fi	ITALIA
 jamaica	common	fi	JAMAIKA
 january	common	fi	Tammikuu
 japan	common	fi	JAPANI
 jordan	common	fi	JORDANIA
+js-popup	tinymce	fi	JS-Popup
 july	common	fi	Heinäkuu
 jun	common	fi	Kes
 june	common	fi	Kesäkuu
@@ -358,12 +408,14 @@ korea, republic of	common	fi	KOREAN TASAVALTA
 kuwait	common	fi	KUWAIT
 kyrgyzstan	common	fi	KIRGISTAN
 language	common	fi	Kieli
+language_direction_rtl	common	fi	language_direction_rtl
 lao peoples democratic republic	common	fi	LAON DEMOKRAATTINEN KANSANTASAVALTA
 last name	common	fi	Sukunimi
 last name of the user, eg. "%1"	common	fi	käyttäjän sukunimi, esim. "%1"
 last page	common	fi	Viimeinen sivu
 lastname	common	fi	Sukunimi
 latvia	common	fi	LATVIA
+ldap-mgr	common	fi	LDAP hallinta
 lebanon	common	fi	LIBANON
 left	common	fi	Vasen
 lesotho	common	fi	LESOTHO
@@ -371,9 +423,12 @@ liberia	common	fi	LIBERIA
 libyan arab jamahiriya	common	fi	LIBYAN ARAB JAMAHIRIYA
 license	common	fi	Lisenssi
 liechtenstein	common	fi	LICHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fi	Rivi %1: '%2'<br><b>csv tiedot eivät täsmää taulukon laskettuihin sarakkeisiin %3 ==> ohita</b>
 link url	tinymce	fi	Linkin URL
 list	common	fi	Luettelo
-lithuania	common	fi	LIETTIA
+list members	common	fi	Lista jäsenistä
+lithuania	common	fi	LIETTUIA
+loading files	tinymce	fi	Ladataan tiedostoja
 local	common	fi	Paikallinen
 login	common	fi	Kirjaudu
 loginid	common	fi	Sisäänkirjautumistunnus
@@ -385,9 +440,10 @@ macau	common	fi	MACAU
 macedonia, the former yugoslav republic of	common	fi	MAKEDONIA, ENTINEN JUGOSLAVIAN TASAVALTA
 madagascar	common	fi	MADAGASCAR
 mail domain, eg. "%1"	common	fi	sähköpostin toimialue, esim. "%1"
-main category	common	fi	Pääluokka
+main category	common	fi	Pääkategoria
 main screen	common	fi	Päänäyttö
 maintainer	common	fi	Ylläpitäjä
+make window resizable	tinymce	fi	Tee ikkunankoosta muokattava
 malawi	common	fi	MALAWI
 malaysia	common	fi	MALESIA
 maldives	common	fi	MALEDIIVIT
@@ -396,6 +452,7 @@ malta	common	fi	MALTA
 march	common	fi	Maaliskuu
 marshall islands	common	fi	MARSHALL-SAARET
 martinique	common	fi	MARTINIQUE
+match case	tinymce	fi	Huomioi kirjankoko
 mauritania	common	fi	MAURITANIA
 mauritius	common	fi	MAURITIUS
 max number of icons in navbar	common	fi	Navigaatiopalkin kuvakkeiden maksimimäärä
@@ -407,12 +464,15 @@ merge table cells	tinymce	fi	Merge table cells
 message	common	fi	Viesti
 mexico	common	fi	MEKSIKO
 micronesia, federated states of	common	fi	MIKRONESIAN LIITTOVALTIO
+minute	common	fi	minuutti
+mkdir failed.	tinymce	fi	hakemiston luonti epäonnistui
 moldova, republic of	common	fi	MOLDOVAN TASAVALTA
 monaco	common	fi	MONACO
 monday	common	fi	Maanantai
 mongolia	common	fi	MONGOLIA
 montserrat	common	fi	MONTSERRAT
 morocco	common	fi	MAROKKO
+move	tinymce	fi	Siirrä
 mozambique	common	fi	MOSAMBIK
 myanmar	common	fi	MYANMAR
 name	common	fi	Nimi
@@ -425,6 +485,11 @@ netherlands antilles	common	fi	ALANKOMAIDEN ANTILLIT
 never	common	fi	Ei koskaan
 new caledonia	common	fi	UUSI KALEDONIA
 new entry added sucessfully	common	fi	Uusi tietue lisätty
+new file name missing!	tinymce	fi	Uusi tiedoston nimi puuttuu!
+new file name:	tinymce	fi	Uusi tiedoston nimi
+new folder	tinymce	fi	Uusi kansio
+new folder name missing!	tinymce	fi	Uusi kansion nimi puuttuu!
+new folder name:	tinymce	fi	Uusi kansion nimi
 new main category	common	fi	Uusi pääluokka
 new value	common	fi	Uusi arvo
 new zealand	common	fi	UUSI SEELANTI
@@ -438,7 +503,15 @@ nigeria	common	fi	NIGERIA
 niue	common	fi	NIUE
 no	common	fi	Ei
 no entries found, try again ...	common	fi	ei tietueita, yritä uudelleen ...
+no files...	tinymce	fi	Ei tiedostoja
 no history for this record	common	fi	Tällä tietueella ei ole historiatietoja
+no permission to create folder.	tinymce	fi	Ei lupaa luoka kansiota.
+no permission to delete file.	tinymce	fi	Ei lupaa poistaa tiedostoa.
+no permission to move files and folders.	tinymce	fi	Ei lupaa siirtää tiedostoja ja kansioita.
+no permission to rename files and folders.	tinymce	fi	Ei lupaa nimetä tiedostoja ja kansioita uudelleen.
+no permission to upload.	tinymce	fi	Ei lupaa ladata.
+no savant2 template directories were found in:	common	fi	Savant2 mallipohjan hakemistoa ei löydy:
+no shadow	tinymce	fi	Ei varjostusta
 no subject	common	fi	Ei aihetta
 none	common	fi	Ei mitään
 norfolk island	common	fi	NORFOLKSAARET
@@ -449,6 +522,7 @@ not assigned	common	fi	ei osoitettu
 note	common	fi	Muistiinpano
 notes	common	fi	Muistiinpanot
 notify window	common	fi	Huomautusikkuna
+notify your administrator to correct this situation	common	fi	Ilmoita tästä ylläpitäjälle jotta tilanne voidaan korjata
 november	common	fi	Marraskuu
 october	common	fi	Lokakuu
 ok	common	fi	OK
@@ -456,33 +530,49 @@ old value	common	fi	Vanha arvo
 oman	common	fi	OMAN
 on *nix systems please type: %1	common	fi	*nix-järjestelmissä voit kirjoittaa: %1
 on mouse over	common	fi	Hiiri osoittaa
+only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	fi	Vain tiedostopäätteelliset tiedostot ovat sallittuja, esim. "kuva.jpg".
 only private	common	fi	vain yksityiset
 only yours	common	fi	vain omat
+open file in new window	tinymce	fi	Avaa tiedosto uuteen ikkunaan
+open in new window	tinymce	fi	Avaa uusi ikkuna
+open in parent window / frame	tinymce	fi	Avaa nykyiseen ikkunaan / kehykseen
+open in the window	tinymce	fi	Avaa ikkunaan
+open in this window / frame	tinymce	fi	Avaa tähän ikkunaan / kehykseen
+open in top frame (replaces all frames)	tinymce	fi	Avaa pääkehykseen (korvaa kaikki kehykset)
 open link in a new window	tinymce	fi	Avaa linkki uudessa ikkunassa
 open link in the same window	tinymce	fi	Avaa linkki samassa ikkunassa
 open notify window	common	fi	Avaa huomautusikkuna
 open popup window	common	fi	Avaa ponnahdusikkuna
+open sidebox	common	fi	Avaa reunavalikko
 ordered list	common	fi	Numeroitu lista
 original	common	fi	Alkuperäinen
 other	common	fi	Muu
-outdent	tinymce	fi	Poista sisennyt
+outdent	tinymce	fi	Poista sisennys
 overview	common	fi	Yleiskuva
 owner	common	fi	Omistaja
 page	common	fi	Sivu
 page was generated in %1 seconds	common	fi	Sivun luominen kesti %1 sekuntia
 pakistan	common	fi	PAKISTAN
 palau	common	fi	PALAU
-palestinian territory, occupied	common	fi	PALESTIINAN MIEHITETYT ALUEET
+palestinian territory, occupied	common	fi	PALESTIINA
 panama	common	fi	PANAMA
 papua new guinea	common	fi	PAPUA UUSI GUINEA
 paraguay	common	fi	PARAGUAY
 parcel	common	fi	Parcel
-parent category	common	fi	Yläluokka
+parent category	common	fi	Yläkategoria
 password	common	fi	Salasana
 password could not be changed	common	fi	Salasanaa ei voitu muuttaa
 password has been updated	common	fi	Salasana on päivitetty
-paste table row after	tinymce	fi	Paste table row after
-paste table row before	tinymce	fi	Paste table row before
+password must contain at least %1 lowercase letters	common	fi	Salasanassa pitää olla vähintään %1 pientä kirjainta
+password must contain at least %1 numbers	common	fi	Salasanassa pitää olla vähintään %1 numeroa
+password must contain at least %1 special characters	common	fi	Salasanassa pitää olla vähintään %1 erikoismerkkiä
+password must contain at least %1 uppercase letters	common	fi	Salasanassa pitää olla vähintään %1 isoa kirjainta
+password must have at least %1 characters	common	fi	Salasanassa pitää olla vähintään %1 merkkiä
+paste as plain text	tinymce	fi	Liitä pelkkänä tekstinä
+paste from word	tinymce	fi	Liitä Word:sta
+paste table row after	tinymce	fi	Liitä taulun rivi jälkeen
+paste table row before	tinymce	fi	Liitä taulun rivi ennen
+path not found.	tinymce	fi	Polkua ei löytynyt
 path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen asiakirjajuuren ulkopuolella!!!
 pattern for search in addressbook	common	fi	Osoitekirjasta etsittävä merkkijono
 pattern for search in calendar	common	fi	Kalenterista etsittävä merkkijono
@@ -492,46 +582,62 @@ personal	common	fi	Henkilökohtainen
 peru	common	fi	PERU
 philippines	common	fi	FILIPPIINIT
 phone number	common	fi	puhelinnumero
+phpgwapi	common	fi	eGroupWare API
 pitcairn	common	fi	PITCAIRN
 please %1 by hand	common	fi	Suorita %1 käsin
 please enter a name	common	fi	Anna nimi!
+please enter the caption text	tinymce	fi	Anna otsikkoteksti
+please insert a name for the target or choose another option.	tinymce	fi	Lisää kohteelle nimi tai valitse toinen toiminto
 please run setup to become current	common	fi	Aja asennus nykyiseen
 please select	common	fi	Valitse
 please set your global preferences	common	fi	Määrittele yleiset asetukset!
 please set your preferences for this application	common	fi	Määrittele tämän sovelluksen asetukset!
 please wait...	common	fi	Odota hetki...
 poland	common	fi	PUOLA
+popup url	tinymce	fi	Popup URL
 portugal	common	fi	PORTUGALI
+position (x/y)	tinymce	fi	Sijainti (X/Y)
 postal	common	fi	Posti
-powered by egroupware version %1	common	fi	Tämä on eGroupWare versio %1
-powered by phpgroupware version %1	common	fi	Tämä on <a href="http://www.egroupware.org">eGroupWare</a> versio %1
+powered by egroupware version %1	common	fi	Tämä on <a href="http://www.egroupware.org">eGroupWare</a> versio %1
+powered by phpgroupware version %1	common	fi	Tämä on eGroupWare versio %1
 preferences	common	fi	Asetukset
 preferences for the idots template set	common	fi	idots-mallipohjan asetukset
 prev. month (hold for menu)	jscalendar	fi	Edellinen kuukausi (odota, niin näet valikon)
 prev. year (hold for menu)	jscalendar	fi	Edellinen vuosi (odota, niin näet valikon)
+preview	tinymce	fi	Esikatselu
 previous page	common	fi	Edelliselle sivu
 primary style-sheet:	common	fi	Ensisijainen tyylisivu:
 print	common	fi	Tulosta
 priority	common	fi	Tärkeys
 private	common	fi	Yksityinen
+programs	common	fi	Ohjelmat
 project	common	fi	Projekti
 public	common	fi	julkinen
 puerto rico	common	fi	PUERTO RICO
 qatar	common	fi	QATAR
 read	common	fi	Lue
 read this list of methods.	common	fi	Lue metodien luettelo.
+reading	common	fi	luetaan
 redo	tinymce	fi	Suorita uudelleen
+refresh	tinymce	fi	Päivitä
 reject	common	fi	Hylkää
 remove col	tinymce	fi	Poista sarake
 remove selected accounts	common	fi	poista valitut käyttäjätunnukset
+remove shortcut	common	fi	Poista pikakuvake
 rename	common	fi	Nimeä uudelleen
+rename failed	tinymce	fi	Uudelleen nimeäminen epäonnistui
+replace	common	fi	Korvaa
+replace with	common	fi	Korvataan merkkijonolla:
+replace&nbsp;all	tinymce	fi	Korvaa kaikki
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fi	Palauttaa täyden käyttäjäluettelon järjestelmästä. Varoitus: palautus voi olla aika suuri
 returns an array of todo items	common	fi	Palauttaa tehtävien taulukon
 returns struct of users application access	common	fi	Palauttaa käyttäjien oikeudet sovelluksiin
 reunion	common	fi	REUNION
 right	common	fi	Oikea
+rmdir failed.	tinymce	fi	Hakemiston poistaminen epäonnistui
 romania	common	fi	ROMANIA
 rows	tinymce	fi	Rivit
+run spell checking	tinymce	fi	Suorita oikoluku
 russian federation	common	fi	VENÄJÄN FEDERAATIO
 rwanda	common	fi	RUANDA
 saint helena	common	fi	SAINT HELENA
@@ -544,18 +650,25 @@ san marino	common	fi	SAN MARINO
 sao tome and principe	common	fi	SAO TOME JA PRINCIPE
 saturday	common	fi	Lauantai
 saudi arabia	common	fi	SAUDI ARABIA
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	fi	Savant2 versio eroaa Savant2 wrapperista.<br>Tämä versio: %1 </br>Savantin versio: %2
 save	common	fi	Tallenna
 search	common	fi	Etsi
 search %1 '%2'	common	fi	Etsi %1 '%2'
 search or select accounts	common	fi	Etsi tai valitse käyttäjätunnukset
+search or select multiple accounts	common	fi	Etsi tai valitse useita käyttäjätunnuksia
+second	common	fi	toinen
 section	common	fi	Osio
 select	common	fi	Valitse
+select all	tinymce	fi	Valitse kaikki
 select all %1 %2 for %3	common	fi	Valitse kaikki %1 %2 for %3
-select category	common	fi	Valitse luokka
+select category	common	fi	Valitse kategoria
 select date	common	fi	Valitse päivämäärä
 select group	common	fi	Valitse ryhmä
 select home email address	common	fi	Valitse kotisähköpostiosoite
+select multiple accounts	common	fi	Valitse useita käyttäjätunnuksia
 select one	common	fi	Valitse yksi
+select the default height for the application windows	common	fi	Valitse sovellusikkunan oletuskorkeus
+select the default width for the application windows	common	fi	Valitse sovellusikkunan oletusleveys
 select user	common	fi	Valitse käyttäjä
 select work email address	common	fi	Valitse työsähköpostiosoite
 selection	common	fi	Valinta
@@ -563,21 +676,34 @@ send	common	fi	Lähetä
 senegal	common	fi	SENEGAL
 september	common	fi	Syyskuu
 server %1 has been added	common	fi	Palvelin %1 on lisätty
+server answered. processing response...	common	fi	Palvelin vastaa, prosessoidaan vastausta...
+server contacted. waiting for response...	common	fi	Yhdistetään palvelimeen, odotetaan vastausta...
 server name	common	fi	Palvelimen nimi
 session has been killed	common	fi	Istunto on poistettu
 setup	common	fi	Asennus
 setup main menu	common	fi	Asennuksen päävalikko
 seychelles	common	fi	SEYCHELLIT
 show all	common	fi	näytä kaikki
-show all categorys	common	fi	Näytä kaikki luokat
+show all categorys	common	fi	Näytä kaikki kategoriat
+show clock?	common	fi	Näytä kello?
+show home and logout button in main application bar?	common	fi	Näytä etusivu- ja kirjautumispainike päävalikossa?
+show locationbar	tinymce	fi	Näytä locationbar
+show logo's on the desktop.	common	fi	Näytä logo työpöydällä
 show menu	common	fi	näytä valikko
+show menubar	tinymce	fi	Näytä päävalikko
 show page generation time	common	fi	Näytä sivun tekemiseen kulunut aika
 show page generation time on the bottom of the page?	common	fi	Näytä sivun tekemiseen kulunut aika sivun alareunassa?
+show page generation time?	common	fi	Näytä kauanko sivua luotiin?
+show scrollbars	tinymce	fi	Näytä scrollbarit
+show statusbar	tinymce	fi	Näytä statusbar
+show the logo's of egroupware and x-desktop on the desktop.	common	fi	Näytä eGroupWaren ja X-Desktopin logot työpöydällä
+show toolbars	tinymce	fi	Näytä toolbar
 show_more_apps	common	fi	show_more_apps
 showing %1	common	fi	näytetään %1
 showing %1 - %2 of %3	common	fi	näytetään %1 - %2 of %3
 sierra leone	common	fi	SIERRA LEONE
 singapore	common	fi	SINGAPORE
+size	tinymce	fi	Koko
 slovakia	common	fi	SLOVAKIA
 slovenia	common	fi	SLOVENIA
 solomon islands	common	fi	SALOMONSAARET
@@ -591,7 +717,9 @@ sri lanka	common	fi	SRI LANKA
 start date	common	fi	Alkupäivä
 start time	common	fi	Alkuaika
 start with	common	fi	alkaa
+starting up...	common	fi	Aloitetaan
 status	common	fi	Tila
+stretched	common	fi	venytetty
 striketrough	tinymce	fi	Yliviivaa
 subject	common	fi	Aihe
 submit	common	fi	Lähetä
@@ -604,10 +732,10 @@ swaziland	common	fi	SWAZIMAA
 sweden	common	fi	RUOTSI
 switzerland	common	fi	SVEITSI
 syrian arab republic	common	fi	SYYRIAN ARABITASAVALTA
-table cell properties	tinymce	fi	Table cell properties
-table properties	common	fi	Table properties
-table row properties	tinymce	fi	Table row properties
-taiwan	common	fi	TAIWAN/TAIPEI
+table cell properties	tinymce	fi	Taulukon solujen ominaisuudet
+table properties	common	fi	Taulukon ominaisuudet
+table row properties	tinymce	fi	Taulukon rivien ominaisuudet
+taiwan	common	fi	TAIWAN / TAIPEI
 tajikistan	common	fi	TAJIKISTAN
 tanzania, united republic of	common	fi	TANSANIAN YHDISTYNYT TASAVALTA
 target	tinymce	fi	Kohde
@@ -617,10 +745,14 @@ the api is current	common	fi	API on ajan tasalla
 the api requires an upgrade	common	fi	API tarvitsee päivityksen
 the following applications require upgrades	common	fi	Seuraavat sovellukset tarvitsevat päivityksen
 the mail server returned	common	fi	Sähköpostipalvelin palautti
+the search has been compleated. the search string could not be found.	tinymce	fi	Haku on päättynyt, etsittyä merkkijonoa ei löydetty.
 this application is current	common	fi	Tämä sovellus on ajan tasalla
 this application requires an upgrade	common	fi	Tämä sovellus tarvitsee päivityksen
+this is just a template button	tinymce	fi	Tämä on mallipohja painike
+this is just a template popup	tinymce	fi	Tämä on mallipohja popup
 this name has been used already	common	fi	Nimi on jo käytössä!
 thursday	common	fi	Torstai
+tiled	common	fi	pinottu
 time	common	fi	Aika
 time selection:	jscalendar	fi	Ajan valinta:
 time zone	common	fi	Aikavyöhyke
@@ -632,12 +764,14 @@ to go back to the msg list, click <a href= %1 >here</a>	common	fi	To siirtyäkses
 today	common	fi	Tänään
 todays date, eg. "%1"	common	fi	tämä päivämäärä, esim. "%1"
 toggle first day of week	jscalendar	fi	Vaihda viikon alkupäivää
+toggle fullscreen mode	tinymce	fi	Vaihda kokonäytön käyttöön
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjälle '%2', %3 IP-osoitteesta %4
 top	common	fi	Top
 total	common	fi	Yhteensä
+transparant bg for the icons?	common	fi	Ikoneilla on läpinäkyvä taustaväri?
 trinidad and tobago	common	fi	TRINIDAD JA TOBAGO
 tuesday	common	fi	Tiistai
 tunisia	common	fi	TUNISIA
@@ -645,9 +779,11 @@ turkey	common	fi	TURKKI
 turkmenistan	common	fi	TURKMENISTAN
 turks and caicos islands	common	fi	TURKS JA CAICOSSAARET
 tuvalu	common	fi	TUVALU
+type	common	fi	Muoto
 uganda	common	fi	UGANDA
 ukraine	common	fi	UKRAINA
 underline	common	fi	Alleviivaa
+underline.gif	common	fi	underline.gif
 undo	tinymce	fi	Peruuta
 united arab emirates	common	fi	YHDISTYNEET ARABIEMIRAATIT
 united kingdom	common	fi	YHDISTYNYT KUNINGASKUNTA
@@ -655,14 +791,22 @@ united states	common	fi	YHDYSVALLAT
 united states minor outlying islands	common	fi	YHDYSVALTOJEN SAARIOSAVALTIOT
 unknown	common	fi	Tuntematon
 unlink	tinymce	fi	Poista linkki
+unlink failed.	tinymce	fi	Linkin poistaminen epäonnistui
 unordered list	tinymce	fi	Numeroimaton lista
+up	tinymce	fi	Ylös
 update	common	fi	Lisää
+update the clock per minute or per second	common	fi	Päivitetään kello minuutin tai sekunnin välein
+upload	common	fi	Lataa
+upload directory does not exist, or is not writeable by webserver	common	fi	Lataus hakemistoa ei löydy tai palvelin ei voi kirjoittaa sinne.
+uploading...	tinymce	fi	Ladataan...
 url	common	fi	URL
 uruguay	common	fi	URUGUAY
 use button to search for	common	fi	käytä painiketta etsiäksesi
 use button to search for address	common	fi	käytä painiketta etsiäksesi osoitteita
 use button to search for calendarevent	common	fi	käytä painiketta etsiäksesi kalenteritapahtumaa
 use button to search for project	common	fi	käytä painiketta etsiäksesi projektia
+use ctrl and/or shift to select multiple items.	tinymce	fi	Käytä Ctrl ja / tai Shift painikkeita valitaksesi useita kohteita.
+use ctrl+v on your keyboard to paste the text into the window.	tinymce	fi	Paina CTRL + V liittääksesi tekstiä ikkunaan
 user	common	fi	Käyttäjä
 user accounts	common	fi	käyttäjätilit
 user groups	common	fi	käyttäjäryhmät
@@ -679,13 +823,17 @@ view	common	fi	Näytä
 virgin islands, british	common	fi	NEITSYSTSAARET, BRITTILÄISET
 virgin islands, u.s.	common	fi	NEITSYTSAARET, U.S.
 wallis and futuna	common	fi	WALLIS JA FUTUNA
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	fi	Varoitus!\n Kansion uudelleen nimeäminen tai siirtäminen voi rikkoa nykyisten dokumenttien linkitykset. Haluatko varmasti jatkaa?
 wednesday	common	fi	Keskiviikko
 welcome	common	fi	Tervetuloa
 western sahara	common	fi	LÄNSISAHARA
 which groups	common	fi	mitkä ryhmät
 width	common	fi	Leveys
+window name	tinymce	fi	Ikkunan nimi
 wk	jscalendar	fi	vk
 work email	common	fi	työsähköposti
+would you like to display the page generation time at the bottom of every window?	common	fi	Näytetään sivun alalaidassa kuinka kauan sivua luotiin?
+writing	common	fi	kirjoitetaan
 written by:	common	fi	Kirjoittanut:
 year	common	fi	Vuosi
 yemen	common	fi	JEMEN
@@ -699,6 +847,7 @@ you have not entered participants	common	fi	Et ole määritellyt osallistujia
 you have selected an invalid date	common	fi	Olet valinnut virheellisen päivämäärän!
 you have selected an invalid main category	common	fi	Olet valinnut virheellisen pääluokan!
 you have successfully logged out	common	fi	Olet kirjautunut ulos
+you must enter the url	tinymce	fi	Sinun pitää antaa URL
 you need to add the webserver user '%1' to the group '%2'.	common	fi	Lisää www-palvelimen käyttäjä '%1' ryhmään '%2'.
 your message could <b>not</b> be sent!<br>	common	fi	Viestiä <b>ei</b> voitu lähettää!<br>
 your message has been sent	common	fi	Viesti on lähetetty
@@ -709,3 +858,4 @@ your settings have been updated	common	fi	Asetukset päivitetty
 yugoslavia	common	fi	JUGOSLAVIA
 zambia	common	fi	ZAMBIA
 zimbabwe	common	fi	ZIMBABWE
+zoom	common	fi	Zoomaa

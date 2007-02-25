@@ -107,6 +107,7 @@ check ip address of all sessions	setup	sk	Skontrolova» IP adresu v¹etkých sedení
 checking extension %1 is loaded or loadable	setup	sk	Kontrola - roz¹írenie %1 je nahraté alebo dostupné
 checking file-permissions of %1 for %2 %3: %4	setup	sk	Kontrolujem prístupové práva %1 pre %2 %3: %4
 checking for gd support...	setup	sk	Zis»ujem podporu GD...
+checking function %1 exists	setup	sk	Kontrolná funkcia %1 existuje
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	sk	Zis»ujem, èi php.ini setting session.save_path='%1' je zapisovateµné webserverom
 checking pear%1 is installed	setup	sk	Zis»ujem prítomnos» PEAR%1
 checking php.ini	setup	sk	Kontrolujem php.ini

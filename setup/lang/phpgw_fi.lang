@@ -3,16 +3,25 @@
 %1 created in %2.	setup	fi	%1 luotu %2:n
 %1 does not exist !!!	setup	fi	%1 ei ole !!!
 %1 is %2%3 !!!	setup	fi	%1 on %2%3 !!!
+%1, %2 or %3 the configuration file.	setup	fi	%1, %2 tai %3 konfigurointitiedostossa.
+'%1' is not allowed as %2. arguments of option %3 !!!	setup	fi	'%1' ei ole sallittu jos %2 asetuksen muuttujalla %3 !!!
 (searching accounts and changing passwords)	setup	fi	(etsit‰‰n tunnuksia ja vaihdetaan salasanoja)
 *** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fi	*** ƒl‰ p‰ivit‰ tietokantaa asennuksen kautta, koska p‰ivitysaika saattaa ylitt‰‰ max_execution_time-m‰‰rityksen, jolloin tietokanta j‰‰ toimimattomaan tilaan (data menetet‰‰n) !!!
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fi	*** Muokkaa php.ini-tiedostoa k‰sin (tiedosto on Linuxissa yleens‰ hakemistossa /etc) voidaksesi k‰ytt‰‰ eGW:n kaikkia ominaisuuksia !!!
 00 (disable)	setup	fi	00 (ei k‰ytˆss‰ / suositus)
 13 (ntp)	setup	fi	13 (ntp)
 80 (http)	setup	fi	80 (http)
+<b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	fi	<b>k‰ytett‰v‰ merkistˆ</b>(K‰yt‰ utf-8 jos aiot k‰ytt‰‰ kieli‰ jotka tarvitsevat eri merkistˆj‰):
+[header-password],[header-user],[new-password],[new-user]	setup	fi	[header-password],[header-user],[new-password],[new-user]
+access denied: wrong username or password for manage-header !!!	setup	fi	P‰‰sy estetty: V‰‰r‰ k‰ytt‰j‰tunnus tai salasana manage-header osioon !!!
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	fi	P‰‰sy estetty: V‰‰r‰ k‰ytt‰j‰tunnus tai salasana toimialueen '%1(%2)' konfigurointitiedostoon !!!
 accounts existing	setup	fi	K‰ytt‰j‰tunnuksia on olemassa
 actions	setup	fi	Toimenpiteet
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fi	Lis‰‰ automaattisesti luodut k‰ytt‰j‰tunnukset t‰h‰n ryhm‰‰n (k‰ytet‰‰n ryhm‰‰ 'default', jos et m‰‰rittele)
+add new database instance (egw domain)	setup	fi	Lis‰‰ uusi tietokanta instanssi (EGW domain)
 additional settings	setup	fi	Lis‰asetukset
+admin account successful created.	setup	fi	Yll‰pit‰j‰tunnus luotu onnistuneesti
+admin email address	setup	fi	Yll‰pit‰j‰n s‰hkˆpostiosoite
 admin first name	setup	fi	Yll‰pit‰j‰n etunimi
 admin last name	setup	fi	Yll‰pit‰j‰n sukunimi
 admin password	setup	fi	Yll‰pit‰j‰n salasana
@@ -20,11 +29,15 @@ admin password to header manager	setup	fi	Header-yll‰pidon salasana
 admin user for header manager	setup	fi	Header-yll‰pidon k‰ytt‰j‰tunnus
 admin username	setup	fi	Yll‰pit‰j‰n k‰ytt‰j‰tunnus
 admins	setup	fi	Yll‰pit‰j‰t
-after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fi	Kun olet hakenut tiedoston, tallenna se nimell‰ header.inc.php, ja napsauta "Jatka".
+after backing up your tables first.	setup	fi	Varmuuskopioidaan taulusi ensin
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fi	Kun olet hakenut tiedoston, tallenna se nimell‰ header.inc.php, ja paina "Jatka".
 all applications	setup	fi	kaikki sovellukset
 all core tables and the admin and preferences applications	setup	fi	kaikki runkotaulut ja yll‰pito- sek‰ asetussovellus
+all languages (incl. not listed ones)	setup	fi	kaikki kielet (sis‰lt‰‰ myˆs luettelossa olemattomat)
 all users	setup	fi	Kaikki k‰ytt‰j‰t
+allow authentication via cookie	setup	fi	Salli k‰ytt‰j‰tunnistus ev‰steist‰
 analysis	setup	fi	Analyysi
+and is up to date	setup	fi	on p‰ivitetty
 and reload your webserver, so the above changes take effect !!!	setup	fi	ja k‰ynnist‰ www-palvelin uudellen, jotta asetukset tulevat k‰yttˆˆn !!!
 app details	setup	fi	Sovelluksen tiedot
 app install/remove/upgrade	setup	fi	Sovelluksen asennus/poistaminen/p‰ivitys
@@ -36,9 +49,10 @@ application name and status	setup	fi	Sovelluksen nimi ja tila
 application name and status information	setup	fi	Sovelluksen nimi ja tila
 application title	setup	fi	Sovelluksen otsikko
 application: %1, file: %2, line: "%3"	setup	fi	Sovellus: %1, Tiedosto: %2, Rivi: "%3"
-are you sure you want to delete your existing tables and data?	setup	fi	Haluatko varmasti poistaa olemassaolevat taulut ja datan?
+are you sure you want to delete your existing tables and data?	setup	fi	Haluatko varmasti poistaa olemassa olevat taulut ja datan?
 are you sure?	setup	fi	OLETKO VARMA?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	fi	Luodaan tietokanta ja m‰‰ritell‰‰n tietokannan k‰yttˆoikeudet.
+at your request, this script is going to attempt to install a previous backup	setup	fi	Pyynnˆst‰si t‰m‰ skripti yritt‰‰ asentaa edellisen varmuuskopion.
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	fi	Luodaan runkotaulut ja asennetaan yll‰pito- sek‰ asetussovellus.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	fi	Yritet‰‰n p‰ivitt‰‰ vanhat sovellukset nykyisiin versioihin
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	fi	Yritet‰‰n p‰ivitt‰‰ vanhat tietokannan taulut uuteen muotoon
@@ -47,10 +61,22 @@ at your request, this script is going to take the evil action of uninstalling al
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	fi	Yrit‰ k‰ytt‰‰ oikeaa mime-tyyppi‰  'application/octet-stream'-oletuksen sijaan
 authentication / accounts	setup	fi	K‰ytt‰j‰tunnistus / k‰ytt‰j‰tunnukset
 auto create account records for authenticated users	setup	fi	Luo tunnistettujen k‰ytt‰jien tietueet automaattisesti
+auto login anonymous user	setup	fi	Kirjaudu automaattisesti anonyymin‰ k‰ytt‰j‰n‰
 auto-created user accounts expire	setup	fi	Automaattisesti luotujen tilien vanhenemisaika
 available version	setup	fi	K‰ytett‰viss‰ oleva versio
 back to the previous screen	setup	fi	Takaisin edelliselle sivulle
 back to user login	setup	fi	Kirjaudu sis‰‰n
+back's up your db now, this might take a few minutes	setup	fi	Varmuuskopioidaan tietokantaasi, t‰m‰ voi kest‰‰ muutaman minuutin.
+backup '%1' deleted	setup	fi	varmuuskopio '%1' poistettu
+backup '%1' renamed to '%2'	setup	fi	varmuuskopio '%1' nimetty '%2'
+backup '%1' restored	setup	fi	varmuuskopio '%1' palautettu
+backup and restore	setup	fi	varmuuskopiointi ja palautus
+backup failed	setup	fi	Varmuuskopiointi ep‰onnistui
+backup finished	setup	fi	Varmuuskopiointi p‰‰ttynyt
+backup now	setup	fi	Varmuuskopio nyt
+backup sets	setup	fi	Varmuuskopion asetukset
+backup skipped!	setup	fi	Varmuuskopiointi ohitettu
+backup started, this might take a few minutes ...	setup	fi	Varmuuskopiointi aloitettu, se voi kest‰‰ useita minuutteja...
 because an application it depends upon was upgraded	setup	fi	koska sovellus, josta se riippuu, on p‰ivitetty
 because it depends upon	setup	fi	koska se riippuu sovelluksesta
 because it is not a user application, or access is controlled via acl	setup	fi	koska se ei ole k‰ytt‰jien sovellus, tai sen k‰yttˆ‰ hallitaan acl:n avulla
@@ -64,24 +90,34 @@ cancel	setup	fi	Peruuta
 change system-charset	setup	fi	Muuta j‰rjestelm‰n merkistˆ‰
 charset	setup	fi	ISO-8859-15
 charset to convert to	setup	fi	Merkistˆ, johon konvertoidaan
+charsets used by the different languages	setup	fi	nerkistˆ‰ k‰ytet‰‰n eri kieliss‰
 check can only be performed, if called via a webserver, as the user-id/-name of the webserver is not known.	setup	fi	Tarkistus voidaan suorittaa vain web-palvelimen kautta kutsuttaessa, koska palvelimen k‰ytt‰j‰tunnusta ei tiedet‰.
 check installation	setup	fi	Tarkista asennus
 check ip address of all sessions	setup	fi	tarkista istuntojen ip-osoitteet
 checking extension %1 is loaded or loadable	setup	fi	Tarkistetaan, ett‰ laajennus %1 on ladattu tai ladattavissa
+checking file-permissions of %1 for %2 %3: %4	setup	fi	Tarkistetaan tiedostojen oikeudet %1 %2 %3: %4
 checking for gd support...	setup	fi	Tarkistetaan GD-tuki...
+checking function %1 exists	setup	fi	Tarkistetaan fuction %1 olemassaolo
+checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	fi	Tarkistetaan ett‰ php.ini asetuksissa session.save_path='%1' on palvelimen kirjoitettavissa.
+checking pear%1 is installed	setup	fi	Tarkistetaan onko PEAR%1 asennettu
 checking php.ini	setup	fi	Tarkistetaan tiedostoa php.ini
+checking required php version %1 (recommended %2)	setup	fi	Tarkistetaan tarvittava PHP versio %1 (suositellaan %2)
 checking the egroupware installation	setup	fi	eGroupWaren asennuksen tarkistus
 click <a href="index.php">here</a> to return to setup.	setup	fi	Napsauta <a href="index.php">t‰st‰</a> palataksesi asennukseen.
 click here	setup	fi	Napsauta t‰st‰
 click here to re-run the installation tests	setup	fi	Napsauta t‰h‰n, jos haluat ajaa asennustestin uudelleen
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	fi	pilkulla erotetut ip-numerot tai palvelimen nimet, oletuksena p‰‰sy kaikkialle.
 completed	setup	fi	Valmis
 config password	setup	fi	Konfiguraation salasana
 config username	setup	fi	Konfiguraation k‰ytt‰j‰tunnus
 configuration	setup	fi	Konfiguraatio
+configuration changed.	setup	fi	Konfiguraatiota muokattu
 configuration completed	setup	fi	Konfiguraatio valmis
+configuration errors:	setup	fi	Konfiguraatiossa virheit‰:
 configuration password	setup	fi	Konfiguraation salasana
 configuration user	setup	fi	Konfiguraation k‰ytt‰j‰tunnus
 configure now	setup	fi	Konfiguroi nyt
+confirm to delete this backup?	setup	fi	Vahvista varmuuskopion poistaminen
 contain	setup	fi	sis‰lt‰‰
 continue	setup	fi	Jatka
 continue to the header admin	setup	fi	Jatka Header-yll‰pitoon
@@ -89,6 +125,7 @@ convert	setup	fi	Konvertoi
 could not open header.inc.php for writing!	setup	fi	Tiedostoa header.inc.php ei voi kirjoittaa!
 country selection	setup	fi	Maan valinta
 create	setup	fi	Luo
+create a backup before upgrading the db	setup	fi	luo varmuuskopio ennen tietokannan p‰ivitt‰mist‰
 create admin account	setup	fi	Luo yll‰pit‰j‰n tunnus
 create database	setup	fi	Luo tietokanta
 create demo accounts	setup	fi	Luo demotunnukset
@@ -128,7 +165,10 @@ developers' table schema toy	setup	fi	Sovelluskehitt‰jien taulukkoskeeman lelu
 did not find any valid db support!	setup	fi	Mit‰‰n tietokantatukea ei lˆytynyt!
 do you want persistent connections (higher performance, but consumes more resources)	setup	fi	Haluatko k‰ytt‰‰ pysyvi‰ yhteyksi‰ (parempi suorituskyky, mutta kuluttaa enemm‰n resursseja)
 do you want to manage homedirectory and loginshell attributes?	setup	fi	Haluatko hallita kotihakemistoja ja shell-attribuutteja?
+does not exist	setup	fi	ei lˆydy
 domain	setup	fi	Toimialue
+domain '%1' does not exist !!!	setup	fi	Toimialuetta '%1' ei lˆydy !!!
+domain name	setup	fi	Toimialueen nimi
 domain select box on login	setup	fi	Toimialueen valinta sis‰‰nkirjautumissivulla
 dont touch my data	setup	fi	ƒl‰ koske dataan
 download	setup	fi	Lataa
@@ -192,12 +232,14 @@ install	setup	fi	Asenna
 install all	setup	fi	Asenna kaikki
 install applications	setup	fi	Sovellusten asennus
 install language	setup	fi	Asenna kieli
+installation finished	setup	fi	Asennus on p‰‰ttynyt
 installed	setup	fi	asennettu
 instructions for creating the database in %1:	setup	fi	Tietokannan luonnin ohjeet kohteessa %1:
 invalid ip address	setup	fi	Virheellinen IP-osoite
 invalid password	setup	fi	Virheellinen salasana
 is broken	setup	fi	on rikki
 is disabled	setup	fi	on pois k‰ytˆst‰
+languages updated.	setup	fi	Kielipaketit p‰ivitetty.
 ldap accounts configuration	setup	fi	LDAP-asetukset
 ldap accounts context	setup	fi	LDAP-tilien konteksti
 ldap config	setup	fi	LDAP-asetukset
@@ -226,8 +268,11 @@ mcrypt settings (requires mcrypt php extension)	setup	fi	Mcrypt-asetukset (tarvi
 mcrypt version	setup	fi	MCrypt-versio
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fi	memory_limit-asetus on alle 16M: jotkin sovellukset tarvitsevat muistia enemm‰n kuin PHP:n oletus 8m, voit odottaa ongelmia.
 minimum account id (e.g. 500 or 100, etc.)	setup	fi	K‰ytt‰j‰tunnisteen minimiarvo (esim. 500 tai 100, jne.)
+minute	setup	fi	minuutti
+missing or uncomplete mailserver configuration	setup	fi	Postipalvelimen asetukset puuttuvat tai ovat vajaat
 modifications have been completed!	setup	fi	Muutokset on suoritettu loppuun!
 modify	setup	fi	Muokkaa
+month	setup	fi	kuukausi
 multi-language support setup	setup	fi	Kielituen asennus
 name of database	setup	fi	Tietokannan nimi
 name of db user egroupware uses to connect	setup	fi	Tietokantak‰ytt‰j‰, jota eGroupWare k‰ytt‰‰
@@ -271,6 +316,7 @@ please login	setup	fi	Kirjaudu sis‰‰n
 please login to egroupware and run the admin application for additional site configuration	setup	fi	Kirjaudu eGroupWareen, ja m‰‰rittele asetukset yll‰pitosovelluksessa
 please make the following change in your php.ini	setup	fi	Muuta seuraavat asetukset php.ini-tiedostossa
 please wait...	setup	fi	Odota hetki...
+pop/imap mail server hostname or ip address	setup	fi	POP/IMAP postipalvelimen nimi tai IP osoite
 possible reasons	setup	fi	Mahdolliset syyt
 possible solutions	setup	fi	Mahdolliset ratkaisut
 post-install dependency failure	setup	fi	Riippuvuusongelma
@@ -330,6 +376,7 @@ setup main menu	setup	fi	Asennuksen p‰‰valikko
 setup the database	setup	fi	Asenna tietokanta
 setup/config admin login	setup	fi	Asennuksen ja yll‰pidon sis‰‰nkirjautuminen
 show 'powered by' logo on	setup	fi	N‰yt‰ 'powered by' logo
+size	setup	fi	Koko
 some or all of its tables are missing	setup	fi	Jotkin tai kaikki sen sovellukset puuttuvat
 sql encryption type	setup	fi	SQL-salasanojen salaustapa (oletus - md5)
 start the postmaster	setup	fi	K‰ynnist‰ postmaster
@@ -375,12 +422,15 @@ two weeks	setup	fi	kaksi viikkoa
 uninstall	setup	fi	poista asennus
 uninstall all applications	setup	fi	Poista kaikki sovellukset
 uninstalled	setup	fi	ei asennettu
+update finished.	setup	fi	P‰ivitys p‰‰ttynyt
 upgrade	setup	fi	P‰ivit‰
 upgrade all	setup	fi	P‰ivit‰ kaikki
 upgraded	setup	fi	p‰ivitetty
 upgrading tables	setup	fi	P‰ivitet‰‰ tauluja
+upload backup	setup	fi	lataa varmuuskopio
 use cookies to pass sessionid	setup	fi	V‰lit‰ istunnon tunniste ev‰steess‰
 use pure html compliant code (not fully working yet)	setup	fi	K‰yt‰ t‰ysin HTML-yhteensopivaa koodia (ei toimi t‰ysin viel‰)
+user	setup	fi	K‰ytt‰j‰
 user account prefix	setup	fi	K‰ytt‰j‰tunnuksen etuliite
 usernames are casesensitive	setup	fi	K‰ytt‰j‰tunnukset ovat merkkikokoherkki‰
 users choice	setup	fi	K‰ytt‰j‰n valinta
@@ -400,7 +450,10 @@ would you like egroupware to cache the phpgw info array ?	setup	fi	Haluatko, ett
 would you like egroupware to check for a new version<br />when admins login ?	setup	fi	Haluatko, ett‰ eGroupWare tarkistaa onko uusia versioita julkaistu, kun p‰‰k‰ytt‰j‰ sis‰‰nkirjautuu?
 would you like to show each application's upgrade status ?	setup	fi	Haluatko n‰ytt‰‰ kunkin sovelluksen p‰ivitystilan?
 writable by the webserver	setup	fi	www-palvelimen kirjoitettavissa
+write	setup	fi	Kirjoita
+year	setup	fi	Vuosi
 yes	setup	fi	Kyll‰
+yes, with lowercase usernames	setup	fi	Kyll‰, pienell‰ kirjoitetut k‰ytt‰j‰tunnukset
 you appear to be running a pre-beta version of egroupware.<br />these versions are no longer supported, and there is no upgrade path for them in setup.<br /> you may wish to first upgrade to 0.9.10 (the last version to support pre-beta upgrades) <br />and then upgrade from there with the current version.	setup	fi	K‰yt‰t eGroupWaren esibetaversiota.<br />N‰it‰ versioita ei tueta en‰‰, ja niit‰ ei voi p‰ivitt‰‰ asennuksessa.<br />P‰ivit‰ versioon 0.9.10 (viimeisin versio, joka tukee esibetaversioita) <br />ja p‰ivit‰ sitten nykyiseen versioon.
 you appear to be running an old version of php <br />it its recommend that you upgrade to a new version. <br />older version of php might not run egroupware correctly, if at all. <br /><br />please upgrade to at least version %1	setup	fi	K‰yt‰t vanhaa PHP-versiota.<br />On suositeltavaa p‰ivitt‰‰ PHP uudempaan versioon.<br />Vanhat PHP-versiot eiv‰t toimi oikein.<br />P‰ivit‰ v‰hint‰‰n versioon %1.
 you appear to be running version %1 of egroupware	setup	fi	Ajat eGroupWaren versiota %1

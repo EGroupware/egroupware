@@ -2,34 +2,52 @@
 2 years ago	timesheet	sv	2 år tidigare
 3 years ago	timesheet	sv	3 år tidigare
 actions	timesheet	sv	Åtgärder
+all projects	timesheet	sv	Alla projekt
+both: allow to use projectmanager and free project-names	admin	sv	Både: tillåt användandet av Projekt Hantering och egna projekt namn
 by	timesheet	sv	av
 create new links	timesheet	sv	Skapa ny länk
+creating new entry	timesheet	sv	Skapar ny post
 delete this entry	timesheet	sv	Radera posten
 edit this entry	timesheet	sv	Ändra post
 empty if identical to duration	timesheet	sv	Tom om identisk med varaktighet
+end	timesheet	sv	Slutet
 entry deleted	timesheet	sv	Posten raderad
 entry saved	timesheet	sv	Posten sparad
 error deleting the entry!!!	timesheet	sv	Fel uppstod vid radering av posten!
 error saving the entry!!!	timesheet	sv	Fel uppstod vid sparandet av posten!
 existing links	timesheet	sv	Nuvarande länkar
+field must not be empty !!!	timesheet	sv	Fältet får inte vara tomt!
+full: use only projectmanager	admin	sv	Helt: använd bara Projekthantering
 general	timesheet	sv	Allmänt
 last modified	timesheet	sv	Senast ändrad
 last month	timesheet	sv	Förra månaden
 last week	timesheet	sv	Förra veckan
 last year	timesheet	sv	Förra året
+leave it empty for a full week	timesheet	sv	Lämna tomt för hel vecka
 links	timesheet	sv	Länkar
 no details	timesheet	sv	Inga detaljer
+no project	timesheet	sv	Inga projekt
+none: use only free project-names	admin	sv	Ingen: använd bara egna projekt namn
+or endtime	timesheet	sv	eller Slutdatum
 permission denied!!!	timesheet	sv	Åtkomst nekad!
 price	timesheet	sv	Pris
+projectmanager integration	admin	sv	Projekt Hanterare integration
 quantity	timesheet	sv	Antal
 save & new	timesheet	sv	Spara och skapa ny
 saves the changes made	timesheet	sv	Spara ändringar
 saves this entry and add a new one	timesheet	sv	Spara och skapa ny
+select a price	timesheet	sv	Välj pris
+select a project	timesheet	sv	Välj projekt
+start	timesheet	sv	Påbörja
+starttime	timesheet	sv	Startdatum
+starttime has to be before endtime !!!	timesheet	sv	Startdatum måste vara före slutdatum!
+sum %1:	timesheet	sv	Summa %1:
 this month	timesheet	sv	Denna månad
 this week	timesheet	sv	Denna vecka
 this year	timesheet	sv	Detta år
 timesheet	common	sv	Tidhantering
 unitprice	timesheet	sv	Pris per antal
 view this entry	timesheet	sv	Visa posten
+week	timesheet	sv	Vecka
 yesterday	timesheet	sv	Igår
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sv	Ditt data är inte uppdaterat (%1 mot %2), var god och kör %3installationen%4 och uppdatera databasen.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sv	Din databas är inte uppdaterat (%1 mot %2), var god och kör %3installationen%4 för att uppdatera databasen.

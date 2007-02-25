@@ -31,6 +31,7 @@ am	etemplate	fi	am
 an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	fi	indeksoitu sarake nopeuttaa kyselyjen k‰yttˆ‰ sarakkeessa (maksaa tilaa levyll‰ !!!)
 application	etemplate	fi	Sovellus
 application name needed to write a langfile or dump the etemplates !!!	etemplate	fi	Sovelluksen nimi tarvitsee kirjoittaa kielitiedostoon tai vedostaa asiakirjamallit !!!
+applies the changes made	etemplate	fi	hyv‰ksyt‰‰n tehdyt muutokset
 attach	etemplate	fi	Liit‰
 attach file	etemplate	fi	liit‰ tiedosto
 border	etemplate	fi	reunaviiva
@@ -54,10 +55,14 @@ click here to attach the file	etemplate	fi	Paina t‰st‰ liitt‰‰ksesi tiedoston
 click here to create the link	etemplate	fi	Paina t‰st‰ luodaksesi linkin
 click here to start the search	etemplate	fi	Paina t‰st‰ aloittaaksesi etsimisen
 click here to upload the file	etemplate	fi	Paina t‰st‰ ladataksesi tiedoston
+clickable path	etemplate	fi	klikattava polku
+closes the window without saving the changes	etemplate	fi	sulje ikkuna tallentamatta muutoksia
 column...	etemplate	fi	Sarake...
 columnname	etemplate	fi	Sarakkeen nimi
 comment	etemplate	fi	Kommentti
 confirm	etemplate	fi	vahvista
+confirmation message or custom javascript (returning true or false)	etemplate	fi	vahvistus viesti tai oma javascripti (palauttaa true tai false)
+confirmation necesary or custom java-script	etemplate	fi	vahvistus tai oma javaskripti on v‰ltt‰m‰tˆn
 contact fields	etemplate	fi	Yhteystieto kent‰t
 contains	etemplate	fi	sis‰lt‰‰
 create a new table for the application	etemplate	fi	Luo uusi taulukko sovellukselle
@@ -65,6 +70,9 @@ creates an english ('en') langfile from label and helptexts (for application in 
 css class for the table-tag	etemplate	fi	CSS luokka taulukko merkille
 css properties	etemplate	fi	CSS asetukset
 css-styles	etemplate	fi	CSS tyylit
+custom	etemplate	fi	omat
+custom fields	etemplate	fi	Omat kent‰t
+custom javascript for onchange	etemplate	fi	Oma javascripti kohtaan onChange
 cut	etemplate	fi	Leikkaa
 date+time	etemplate	fi	P‰iv‰m‰‰r‰ ja aika
 datum	etemplate	fi	P‰iv‰ys
@@ -87,6 +95,7 @@ deletes this index	etemplate	fi	Poistaa t‰m‰n indeksin
 discard changes	etemplate	fi	h‰vitt‰‰ muutokset
 do you want to save the changes you made in table %s?	etemplate	fi	Haluatko tallentaa muutokset jotka teit taulukkoon %s?
 documentation	etemplate	fi	Dokumentointi
+doesn't matter	etemplate	fi	Ei v‰li‰
 drop a table - this can not be undone	etemplate	fi	Poista tietokannan taulu - t‰t‰ EI voi peruuttaa
 drop table	etemplate	fi	Poista tietokannan taulu
 duration	etemplate	fi	Kest‰‰
@@ -129,6 +138,7 @@ go to the next page of entries	etemplate	fi	mene seuraavan sivun merkintˆihin
 go to the previous page of entries	etemplate	fi	mene edellisen sivun merkintˆihin
 hbox	etemplate	fi	HBox
 height	etemplate	fi	Korkeus
+height of row (in % or pixel)	etemplate	fi	rivin korkeus (% tai pikselein‰)
 height, disabled	etemplate	fi	Pituus, Passivoitu
 help	etemplate	fi	Ohjeet
 history log	etemplate	fi	Historia loki
@@ -158,6 +168,7 @@ lang	etemplate	fi	Kieli
 last	etemplate	fi	Viimeinen
 left	etemplate	fi	Vasen
 link	etemplate	fi	Linkki
+linkapps	etemplate	fi	Linkki sovellukseen
 linklist	etemplate	fi	Linkkiluettelo
 linkto	etemplate	fi	Linkitt‰‰
 load this template into the editor	etemplate	fi	lataa asiakirjamalli muokattavaksi
@@ -180,6 +191,8 @@ nothing	etemplate	fi	ei mit‰‰n
 nothing found - try again !!!	etemplate	fi	Mit‰‰n ei lˆydetty - yrit‰ uudelleen !!!
 nothing in clipboard to paste !!!	etemplate	fi	Leikepˆyd‰ll‰ ei ole mit‰‰n liitett‰v‰‰ !!!
 nothing matched search criteria !!!	etemplate	fi	Mik‰‰n ei ole yhteensopiva haun kriteerien kanssa !!!
+onchange	etemplate	fi	onChange
+onclick	etemplate	fi	onClick
 only an other version found !!!	etemplate	fi	vain toinen versio lˆydetty !!!
 open the online help.	etemplate	fi	Avaa Online-tuki
 options	etemplate	fi	Asetukset
@@ -200,6 +213,7 @@ read a single entry by passing the id and fieldlist.	etemplate	fi	lue yksitt‰ine
 read etemplate from database (for the keys above)	etemplate	fi	lue asiakirjamalli tietokannasta (avaimet yl‰puolella)
 readonly	etemplate	fi	vain luku
 remove row (can not be undone!!!)	etemplate	fi	Siirr‰ rivi (ei voi olla tekem‰tt‰ !!!)
+remove this link (not the entry itself)	etemplate	fi	Poista t‰m‰ linkki (ei poista itse merkint‰‰)
 returns savely, without deleting	etemplate	fi	Palauta s‰‰st‰en, ILMAN poistamista
 right	etemplate	fi	Oikea
 row...	etemplate	fi	Rivi...
@@ -209,6 +223,9 @@ saves changes to tables_current.inc.php	etemplate	fi	tallenna muutokset taulukko
 scale	etemplate	fi	Skaalaa
 search	etemplate	fi	Etsi
 select a category	etemplate	fi	valitse kategoria
+select a primary contact, to show in the list	etemplate	fi	Valitse ensisijainen yhteystieto, n‰ytet‰‰n listalla
+select access	etemplate	fi	Valitse p‰‰sy
+select account	etemplate	fi	Valitse asiakas
 select an app first !!!	etemplate	fi	Valitse sovellus ensin !!!
 select an app to search in	etemplate	fi	Valitse sovellus etsimiseen
 select an application	etemplate	fi	Valitse sovellus
@@ -229,6 +246,7 @@ select percentage	etemplate	fi	Valitse prosenssi
 select priority	etemplate	fi	Valitse ensisijaisuus
 select state	etemplate	fi	Valitse tila
 select this etemplate to delete it	etemplate	fi	valitse asiakirjamalli poistaaksesi sen
+select which accounts to show	etemplate	fi	valitse mitk‰ asiakkaat n‰ytet‰‰n
 select which values to show	etemplate	fi	valitse mitk‰ arvot n‰ytet‰‰n
 select year	etemplate	fi	valitse vuosi
 selectbox	etemplate	fi	valintalaatikko
@@ -238,10 +256,15 @@ show (no save)	etemplate	fi	N‰yt‰ (ei tallenna)
 show values	etemplate	fi	N‰yt‰ arvot
 showing	etemplate	fi	n‰kyviss‰
 spacing	etemplate	fi	Riviv‰li
+span	etemplate	fi	Span
+span, class	etemplate	fi	Span, Class
 stack	etemplate	fi	Pino
 start a new search, cancel this link	etemplate	fi	aloita uusi haku, peruuta t‰m‰ yhteys
 submit form	etemplate	fi	l‰het‰ lomake
 submitbutton	etemplate	fi	L‰het‰-painike
+swap	etemplate	fi	vaihda
+swap with next column	etemplate	fi	vaihda seuraavaa sarakkeeseen
+swap with next row	etemplate	fi	vaihda seuraavaa riviin
 table unchanged, no write necessary !!!	etemplate	fi	Taulukkoa ei ole muutettu joten  kirjoittaminen ei ole tarpeellinen !!!
 tablename	etemplate	fi	Taulukon nimi
 tabs	etemplate	fi	sarkaimet
@@ -265,6 +288,7 @@ unlink	etemplate	fi	Poistaa linkki
 update a single entry by passing the fields.	etemplate	fi	P‰ivit‰ yksitt‰inen tietue ohittaen kent‰t.
 update from version '%s' to	etemplate	fi	P‰ivit‰ versiosta %s versioon
 upload	etemplate	fi	Lataa
+valign	etemplate	fi	vAlign
 value	etemplate	fi	Arvo
 value has to be at least '%1' !!!	etemplate	fi	Arvo pit‰‰ olla ainakin %1 !!!
 value has to be at maximum '%1' !!!	etemplate	fi	Arvo pit‰‰ olla maksimissaan %1 !!!
@@ -275,6 +299,8 @@ view this linked entry in its application	etemplate	fi	n‰yt‰ linkitetty tietue s
 weekend	etemplate	fi	viikonloppu
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	fi	mit‰ tapahtuu ylimenev‰n osan kanssa:n‰kyv‰(oletus), piilotettu,vieritt‰‰,auto(selaustoiminto toteutetaan)
 width	etemplate	fi	leveys
+width of column (in % or pixel)	etemplate	fi	sarakkeen leveys (% tai pikselein‰)
+width, disabled	etemplate	fi	Leveys, estetty
 working days	etemplate	fi	tyˆp‰iv‰t
 write langfile	etemplate	fi	kirjoita kielitiedosto
 write tables	etemplate	fi	Kirjoita taulukko

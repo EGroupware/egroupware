@@ -170,6 +170,7 @@ cook islands	common	zh-tw	COOK ISLANDS
 copy	common	zh-tw	複製
 copy table row	tinymce	zh-tw	複製表格列
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	zh-tw	在Mozilla與Firefox不支援複製/剪下/貼上。\n您是否要取得這個問題的詳細資訊？
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	zh-tw	在Mozilla與Firefox不支援複製/剪下/貼上。\n您是否要取得這個問題的詳細資訊？
 costa rica	common	zh-tw	COSTA RICA
 cote d ivoire	common	zh-tw	COTE D IVOIRE
 could not contact server. operation timed out!	common	zh-tw	無法連線伺服器，連線逾時！
@@ -226,7 +227,7 @@ down	tinymce	zh-tw	下
 drag to move	jscalendar	zh-tw	拖曳移動
 e-mail	common	zh-tw	電子郵件
 east timor	common	zh-tw	EAST TIMOR
-ecuador	common	zh-tw	ECUADOR
+ecuador	common	zh-tw	厄瓜多爾
 edit	common	zh-tw	編輯
 edit %1 category for	common	zh-tw	編輯分類 %1 給
 edit categories	common	zh-tw	編輯分類
@@ -246,13 +247,13 @@ enter the location of egroupware's url.<br>example: http://www.domain.com/egroup
 entry has been deleted sucessfully	common	zh-tw	資料已成功移除
 entry updated sucessfully	common	zh-tw	資料已成功更新
 equatorial guinea	common	zh-tw	EQUATORIAL GUINEA
-eritrea	common	zh-tw	ERITREA
+eritrea	common	zh-tw	厄立特里亞
 error	common	zh-tw	錯誤
 error creating %1 %2 directory	common	zh-tw	無法建立目錄 %1 %2
 error deleting %1 %2 directory	common	zh-tw	無法移除目錄 %1 %2
 error renaming %1 %2 directory	common	zh-tw	無法更名目錄 %1 %2
-estonia	common	zh-tw	ESTONIA
-ethiopia	common	zh-tw	ETHIOPIA
+estonia	common	zh-tw	愛沙尼亞
+ethiopia	common	zh-tw	衣索比亞
 exact	common	zh-tw	解開
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	zh-tw	無法連線伺服器或是伺服器回應訊息有誤，請重試或是聯繫管理員。
 falkland islands (malvinas)	common	zh-tw	FALKLAND ISLANDS (MALVINAS)
@@ -296,8 +297,8 @@ for mouse out	tinymce	zh-tw	滑鼠游標移開時
 for mouse over	tinymce	zh-tw	滑鼠游標移過時
 force selectbox	common	zh-tw	強制使用選取方塊
 france	common	zh-tw	法國
-french guiana	common	zh-tw	FRENCH GUIANA
-french polynesia	common	zh-tw	FRENCH POLYNESIA
+french guiana	common	zh-tw	法國奎亞那
+french polynesia	common	zh-tw	法國玻里尼西亞
 french southern territories	common	zh-tw	FRENCH SOUTHERN TERRITORIES
 friday	common	zh-tw	星期五
 ftp	common	zh-tw	FTP
@@ -317,7 +318,7 @@ go today	jscalendar	zh-tw	回到今天
 grant access	common	zh-tw	存取權限開放
 greece	common	zh-tw	希臘
 greenland	common	zh-tw	格陵蘭
-grenada	common	zh-tw	GRENADA
+grenada	common	zh-tw	格瑞那達
 group	common	zh-tw	群組
 group access	common	zh-tw	群組存取
 group has been added	common	zh-tw	群組已經新增
@@ -328,8 +329,8 @@ group public	common	zh-tw	群組共用
 groups	common	zh-tw	群組
 groups with permission for %1	common	zh-tw	群組具有 %1 的權限
 groups without permission for %1	common	zh-tw	群組不具有 %1 的權限
-guadeloupe	common	zh-tw	GUADELOUPE
-guam	common	zh-tw	GUAM
+guadeloupe	common	zh-tw	哥德洛普
+guam	common	zh-tw	關島
 guatemala	common	zh-tw	GUATEMALA
 guinea	common	zh-tw	GUINEA
 guinea-bissau	common	zh-tw	GUINEA-BISSAU
@@ -623,7 +624,6 @@ read this list of methods.	common	zh-tw	讀取這個方法的列表
 reading	common	zh-tw	閱讀中
 redo	tinymce	zh-tw	重做
 refresh	tinymce	zh-tw	重新整理
-register	common	zh-tw	註冊
 reject	common	zh-tw	拒絕
 remove col	tinymce	zh-tw	移除欄位
 remove selected accounts	common	zh-tw	移除選取的帳號
@@ -823,12 +823,13 @@ vanuatu	common	zh-tw	VANUATU
 venezuela	common	zh-tw	VENEZUELA
 version	common	zh-tw	版本
 vertical alignment	tinymce	zh-tw	垂直對齊
-viet nam	common	zh-tw	VIET NAM
+viet nam	common	zh-tw	越南
 view	common	zh-tw	檢視
 virgin islands, british	common	zh-tw	英屬威京群島
-virgin islands, u.s.	common	zh-tw	VIRGIN ISLANDS, U.S.
+virgin islands, u.s.	common	zh-tw	美屬威京群島
 wallis and futuna	common	zh-tw	WALLIS AND FUTUNA
 warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	zh-tw	警告！\n修改/移動資料夾與檔案會造成文件中的連結失效，確定繼續？
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	zh-tw	警告！\n修改/移動資料夾與檔案會造成文件中的連結失效，確定繼續？
 wednesday	common	zh-tw	星期三
 welcome	common	zh-tw	歡迎光臨
 western sahara	common	zh-tw	WESTERN SAHARA

@@ -1,5 +1,8 @@
-%1 email addresses inserted	common	sv	%1 e-post adresser tillagda
+%1 email addresses inserted	common	sv	%1 e-postadresser tillagda
 %1 is not executable by the webserver !!!	common	sv	%1 är inte exekverbar av webbservern!
+%1 manual	common	sv	%1 manual
+%1 start	common	sv	%1 start
+%1choose an other directory%2<br />or make %3 writeable by webserver	common	sv	%1Välj en annan katalog%2<br/> eller gör %3 skrivbar för webbservern
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	sv	%1eGroupWare%2 är en webbaserad grupp-programvara skriven i %3PHP%4.
 (shift-)click or drag to change value	jscalendar	sv	(Shift)-klicka eller dra för att ändra värde
 - click on any of the time parts to increase it	jscalendar	sv	- Klicka på någon av tids intervallerna för att utöka
@@ -13,8 +16,10 @@
 3 number of chars for day-shortcut	jscalendar	sv	3 tecken för dag genväg
 3 number of chars for month-shortcut	jscalendar	sv	3 tecken för månad genväg
 80 (http)	admin	sv	80 (http)
+a editor instance must be focused before using this command.	tinymce	sv	Flytta markören till en textyta innan du använder detta kommando.
 about	common	sv	Om
 about %1	common	sv	Om %1
+about egroupware	common	sv	Om eGroupware
 about the calendar	jscalendar	sv	Om Kalendern
 access	common	sv	Åtkomst
 access not permitted	common	sv	Åtkomst nekad
@@ -28,6 +33,7 @@ active	common	sv	Aktiv
 add	common	sv	Lägg till
 add %1 category for	common	sv	Lägg till %1 kategori för
 add category	common	sv	Lägg till kategori
+add shortcut	common	sv	Lägg till genväg
 add sub	common	sv	Lägg till under
 addressbook	common	sv	Adressbok
 admin	common	sv	Admin
@@ -35,16 +41,24 @@ administration	common	sv	Administration
 afghanistan	common	sv	AFGHANISTAN
 albania	common	sv	ALBANIEN
 algeria	common	sv	ALGERIET
+align center	tinymce	sv	Centrera
+align full	tinymce	sv	Kantjustera
+align left	tinymce	sv	Vänsterjustera
+align right	tinymce	sv	Högerjustera
+alignment	tinymce	sv	Justering
 all	common	sv	Alla
 all fields	common	sv	Alla fält
+all occurrences of the search string was replaced.	tinymce	sv	Alla träffar på söksträngen ersattes
 alphabet	common	sv	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
 alternate style-sheet:	common	sv	Alternerande style-sheet:
+alternative image	tinymce	sv	Alternativ bild
 american samoa	common	sv	AMERIKANSKA SAMOA
 andorra	common	sv	ANDORRA
 angola	common	sv	ANGOLA
 anguilla	common	sv	ANGUILLA
 antarctica	common	sv	ANTARKTIS
 antigua and barbuda	common	sv	ANTIGUA OCH BARBUDA
+application	common	sv	Applikation
 apply	common	sv	Utför
 april	common	sv	April
 are you sure you want to delete these entries ?	common	sv	Vill du verkligen radera dessa poster?
@@ -56,14 +70,17 @@ august	common	sv	Augusti
 australia	common	sv	AUSTRALIEN
 austria	common	sv	ÖSTERIKE
 author	common	sv	Författare
-autohide sidebox menus	common	sv	Autogöm Sidebox menyer
-automatically hide the sidebox menus?	common	sv	Göm automatiskt Sidebox menyer?
+autohide sidebox menu's	common	sv	Autogöm Länkboxen
+autohide sidebox menus	common	sv	Autogöm Länkboxen
+automatically hide the sidebox menu's?	common	sv	Göm automatiskt Länkboxens menyer?
+automatically hide the sidebox menus?	common	sv	Göm automatiskt Länkboxens menyer?
 autosave default category	common	sv	Autospara standard kategori
 azerbaijan	common	sv	AZERBAIJAN
 back	common	sv	Tillbaks
 back to user login	common	sv	Tillbaks till inloggningen
 background color:	common	sv	Bakgrundsfärg:
-bad login or password	common	sv	Ogiltigt login eller lösenord
+backupdir '%1' is not writeable by the webserver	common	sv	Backup katalogen %1 är inte skrivbar av webbservern
+bad login or password	common	sv	Ogiltigt användarnamn eller lösenord
 bahamas	common	sv	BAHAMAS
 bahrain	common	sv	BAHRAIN
 bangladesh	common	sv	BANGLADESH
@@ -74,11 +91,16 @@ belgium	common	sv	BELGIEN
 belize	common	sv	BELIZE
 benin	common	sv	BENIN
 bermuda	common	sv	BERMUDA
+bg color	tinymce	sv	Bakgrundsfärg
 bhutan	common	sv	BHUTAN
 blocked, too many attempts	common	sv	Spärrad pga för många försök
+bold	common	sv	Fet
 bolivia	common	sv	BOLIVIEN
+border	common	sv	Rambredd
+border color	tinymce	sv	Ramfärg
 bosnia and herzegovina	common	sv	BOSNIEN OCH HERZEGOVINA
 botswana	common	sv	BOTSWANA
+bottom	common	sv	Nederst
 bouvet island	common	sv	BOUVET ISLAND
 brazil	common	sv	BRASILIEN
 british indian ocean territory	common	sv	BRITISH INDIAN OCEAN TERRITORY
@@ -91,14 +113,21 @@ cambodia	common	sv	CAMBODJA
 cameroon	common	sv	CAMERUN
 canada	common	sv	KANADA
 cancel	common	sv	Avbryt
+cannot replace %1 because it is a directory	common	sv	Kan inte ersätta %1 eftersom det är en katalog
+cant open '%1' for %2	common	sv	Kan inte öppna '%1' åt %2
 cape verde	common	sv	KAP VERDE
+caption	common	sv	Överskrift
 categories	common	sv	Kategorier
 categories for	common	sv	Kategorier för
 category	common	sv	Kategori
 category %1 has been added !	common	sv	Kategori %1 tillagd
 category %1 has been updated !	common	sv	Kategori %1 uppdaterad
-cayman islands	common	sv	CAYMAN ÖARNA
+cayman islands	common	sv	CAYMANÖARNA
 cc	common	sv	Cc
+cellpadding	tinymce	sv	Cell utfyllnad
+cellspacing	tinymce	sv	Cell mellanrum
+center	tinymce	sv	Center
+centered	common	sv	Centrerat
 central african republic	common	sv	CENTRAL AFRIKANSKA REPUBLIKEN
 chad	common	sv	TCHAD
 change	common	sv	Ändra
@@ -107,27 +136,43 @@ check installation	common	sv	Kontrollera installationen
 check now	common	sv	Kontrollera nu
 chile	common	sv	CHILE
 china	common	sv	KINA
+choose a background color	common	sv	Välj bakgrundsfärg
+choose a background color for the icons	common	sv	Välj bakgrundsfärg för ikonen
+choose a background image.	common	sv	Välj bakgrundsbild
+choose a background style.	common	sv	Välj bakgrundsstil
+choose a text color for the icons	common	sv	Välj text till ikonen
+choose directory to move selected folders and files to.	tinymce	sv	Välj katalog att flytta valda kataloger och filer till
 choose the category	common	sv	Välj kategori
 choose the parent category	common	sv	Välj huvudkategori
-christmas island	common	sv	CHRISTMAS ISLAND
+christmas island	common	sv	JULÖN
+class	tinymce	sv	Stil
+cleanup messy code	tinymce	sv	Rensa skräpkod
 clear	common	sv	Rensa
 clear form	common	sv	Rensa formulär
 click	common	sv	Klicka
 click or mouse over to show menus	common	sv	Klicka eller håll musen över för att se menyer
 click or mouse over to show menus?	common	sv	Klicka eller håll musen över för att se menyer
 close	common	sv	Stäng
-cocos (keeling) islands	common	sv	COCOS (KEELING) ISLANDS
+close sidebox	common	sv	Stäng Länkbox
+cocos (keeling) islands	common	sv	KOKOSÖARNA
 colombia	common	sv	COLOMBIA
-comoros	common	sv	COMOROS
+columns	tinymce	sv	Kolumner
+comment	tinymce	sv	Kommentar
+common preferences	common	sv	Allmäna inställningar
+comoros	common	sv	KOMORERNA
 company	common	sv	Företag
-config password	common	sv	Konfig lösenord
-config username	common	sv	Konfig användare
-congo	common	sv	KONGO
-congo, the democratic republic of the	common	sv	CONGO, THE DEMOCRATIC REPUBLIC OF THE
-cook islands	common	sv	COOK ISLANDS
+configuration problem	tinymce	sv	Inställningsproblem
+congo	common	sv	KONGO, REPUBLIKEN
+congo, the democratic republic of the	common	sv	KONGO, DEMOKRATISKA REPUBLIKEN
+contacting server...	common	sv	Kontaktar server ...
+cook islands	common	sv	COOKÖARNA
 copy	common	sv	Kopiera
+copy table row	tinymce	sv	Kopiera tabellrad
+copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	sv	Klipput/Kopiera/Klistra fungerar inte Mozilla och Firefox. Vill du veta mer om detta?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	sv	Klipput/Kopiera/Klistra fungerar inte Mozilla och Firefox. Vill du veta mer om detta?
 costa rica	common	sv	COSTA RICA
-cote d ivoire	common	sv	COTE D IVOIRE
+cote d ivoire	common	sv	ELFENBENSKUSTEN
+could not contact server. operation timed out!	common	sv	Kunde inte kontakta server.
 create	common	sv	Skapa
 created by	common	sv	Skapad av
 croatia	common	sv	KROATIEN
@@ -135,91 +180,134 @@ cuba	common	sv	KUBA
 currency	common	sv	Valuta
 current	common	sv	Aktuell
 current users	common	sv	Aktuella användare
+cut table row	tinymce	sv	Klipp ut tabell rad
 cyprus	common	sv	CYPERN
 czech republic	common	sv	TJEKISKA REPUBLIKEN
 date	common	sv	Datum
 date due	common	sv	Förfallodatum
+date modified	tinymce	sv	Ändringsdatum
 date selection:	jscalendar	sv	Datum val:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	sv	Datumtid port.<br>Om port 13, uppdatera brandväggen rätt innan du skickar med denna sida.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	sv	December
+default	tinymce	sv	Standard
 default category	common	sv	Standard kategori
+default height for the windows	common	sv	Standard hjöd för fönstret
+default width for the windows	common	sv	Standard bredd för fönstret
 delete	common	sv	Radera
+delete row	common	sv	Radera rad
 denmark	common	sv	DANMARK
 description	common	sv	Beskrivning
 detail	common	sv	Detalj
 details	common	sv	Detaljer
-diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Avaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
+diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
+direction	tinymce	sv	Riktning
+direction left to right	common	sv	Riktning från vänster till höger
+direction right to left	tinymce	sv	Riktning från höger till vänster
+directory	tinymce	sv	Katalog
 disable internet explorer png-image-bugfix	common	sv	Inaktivera Internet Explorer png-bild-bugfix
 disable slider effects	common	sv	Inaktivera animerade effekter
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sv	Inaktivera animerade effekter vid visning eller vid täckta menyer på sidan? Opera och Konqueror användare väljer troligen detta.
+disable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sv	Inaktivera exekveringen av bugfix skript för IExplorer 5.5 och högre för att visa transparanta png-bilder?
 disabled	common	sv	Inaktiverad
 display %s first	jscalendar	sv	Visa % första
 djibouti	common	sv	DJIBOUTI
 do you also want to delete all subcategories ?	common	sv	Vill du även radera alla underkategorier
-doctype:	common	sv	Dokument typ
+do you want to use the wysiwyg mode for this textarea?	tinymce	sv	Vill du använda WYSIWYG-editorn för textfältet?
+doctype:	common	sv	Dokumenttyp:
 document properties	common	sv	Dokument alternativ
-document title:	common	sv	Dokument titel
+document title:	common	sv	Dokument rubrik
 domain	common	sv	Domän
-domain name for mail-address, eg. "%1"	common	sv	E-post adressens domän, ex. "%1"
+domain name for mail-address, eg. "%1"	common	sv	E-postadressens domän, ex. "%1"
 domestic	common	sv	Inrikes
 dominica	common	sv	DOMINICA
 dominican republic	common	sv	DOMINIKANSKA REPUBLIKEN
 done	common	sv	Färdig
+down	tinymce	sv	Neråt
 drag to move	jscalendar	sv	Dra för att flytta
 e-mail	common	sv	E-post
 east timor	common	sv	ÖSTRA TIMOR
 ecuador	common	sv	ECUADOR
-edit	common	sv	Redigera
-edit %1 category for	common	sv	Redigera %1 kategori för
-edit categories	common	sv	Redigera kategorier
-edit category	common	sv	Redigera kategori
+edit	common	sv	Ändra
+edit %1 category for	common	sv	Ändra %1 kategori för
+edit categories	common	sv	Ändra kategorier
+edit category	common	sv	Ändra kategori
 egroupware api version %1	common	sv	eGroupWare API version %1
 egroupware: login blocked for user '%1', ip %2	common	sv	eGroupWare: inloggning spärrad för '%1', IP %2
 egypt	common	sv	EGYPTEN
 el salvador	common	sv	EL SALVADOR
 email	common	sv	E-post
-email-address of the user, eg. "%1"	common	sv	Användarens e-post adress, ex. "%1"
+email-address of the user, eg. "%1"	common	sv	Användarens e-postadress, ex. "%1"
+emotions	tinymce	sv	Känslor
+en	common	sv	en
 enabled	common	sv	Aktiverad
 end date	common	sv	Slutdatum
-end time	common	sv	Slut tid
+end time	common	sv	Sluttid
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	sv	Ange sökväg till eGroupWare's URL.<br>Example: http://www.domain.com/egroupware   eller   /egroupware<br><b>Utan efterföljande snedstreck</b>
 entry has been deleted sucessfully	common	sv	Post raderad
 entry updated sucessfully	common	sv	Post uppdaterad
-equatorial guinea	common	sv	EQUATORIAL GUINEA
+equatorial guinea	common	sv	EKVATORIALGUINEA
 eritrea	common	sv	ERITREA
 error	common	sv	Fel
 error creating %1 %2 directory	common	sv	Fel vid skapande av %1 %2 katalog
 error deleting %1 %2 directory	common	sv	Fel vid radering av %1 %2 katalog
-error renaming %1 %2 directory	common	sv	Fel vid byte av namn på %1 %2 katalog
+error renaming %1 %2 directory	common	sv	Fel vid namnbyte på %1 %2 katalog
 estonia	common	sv	ESTLAND
 ethiopia	common	sv	ETIOPIEN
 exact	common	sv	Exakt
-falkland islands (malvinas)	common	sv	FALKLAND ÖARNA
-faroe islands	common	sv	FAROE ÖARNA
+failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sv	Kunde inte kontakta server eller felaktigt svar. Försökt att uppdatera igen eller kontakta administratör om felet kvarstår.
+falkland islands (malvinas)	common	sv	FALKLANDSÖARNA
+faroe islands	common	sv	FÄRÖARNA
 fax number	common	sv	Faxnummer
 february	common	sv	Februari
 fields	common	sv	Fält
-fiji	common	sv	FUJI
+fiji	common	sv	FIJI
+file already exists. file was not uploaded.	tinymce	sv	Filen finns redan och laddades därför inte upp.
+file exceeds the size limit	tinymce	sv	Filen är större än tillåtet
+file manager	tinymce	sv	Filhanterare
+file not found.	tinymce	sv	Filen hittades inte.
+file was not uploaded.	tinymce	sv	Filen laddades inte upp.
+file with specified new name already exists. file was not renamed/moved.	tinymce	sv	En fil med samma namn finns redan och kunde därför inte flyttas/byta namn.
+file(s)	tinymce	sv	Fil(er)
+file:	tinymce	sv	Fil:
 files	common	sv	Filer
+files with this extension are not allowed.	tinymce	sv	Filer med denna ändelse tillåts inte.
 filter	common	sv	Filter
+find	tinymce	sv	Sök
+find again	tinymce	sv	Ny sökning
+find what	tinymce	sv	Sök efter
+find&nbsp;next	tinymce	sv	Sök nästa
+find/replace	tinymce	sv	Sök/ersätt
 finland	common	sv	FINLAND
 first name	common	sv	Förnamn
 first name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
 first page	common	sv	Första sidan
 firstname	common	sv	Förnamn
 fixme!	common	sv	FIXAMIG!!!!
-force selectbox	common	sv	Tvinga SelectBox
+flash files	tinymce	sv	Flashfiler
+flash properties	tinymce	sv	Flash egenskaper
+flash-file (.swf)	tinymce	sv	Flashfilm (.swf)
+folder	tinymce	sv	Katalog
+folder already exists.	common	sv	Katalogen finns redan
+folder name missing.	tinymce	sv	Katalognamn saknas
+folder not found.	tinymce	sv	Katalogen saknas
+folder with specified new name already exists. folder was not renamed/moved.	tinymce	sv	En katalog med samma namn finns redan och kunde därför inte flyttas/byta namn.
+folder(s)	tinymce	sv	Katalog(er)
+for mouse out	tinymce	sv	när pekaren är utanför
+for mouse over	tinymce	sv	när pekaren är över
+force selectbox	common	sv	Tvinga Valruta
 france	common	sv	FRANKRIKE
-french guiana	common	sv	FRANSKA GUIANA
+french guiana	common	sv	FRANSKA GUYANA
 french polynesia	common	sv	FRANSKA POLYNESIEN
 french southern territories	common	sv	FRANSKA SÖDRA TERRITORIERNA
 friday	common	sv	Fredag
 ftp	common	sv	FTP
 fullname	common	sv	Fullständigt namn
+fullscreen mode	common	sv	Helskärm
 gabon	common	sv	GABON
 gambia	common	sv	GAMBIA
-general menu	common	sv	Allmän Meny
+general menu	common	sv	Allmän meny
 georgia	common	sv	GEORGIEN
+german	common	sv	Tysk
 germany	common	sv	TYSKLAND
 ghana	common	sv	GHANA
 gibraltar	common	sv	GIBRALTAR
@@ -235,7 +323,7 @@ group access	common	sv	Gruppåtkomst
 group has been added	common	sv	Grupp tillagd
 group has been deleted	common	sv	Grupp raderad
 group has been updated	common	sv	Grupp uppdaterad
-group name	common	sv	Grupp namn
+group name	common	sv	Gruppnamn
 group public	common	sv	Grupp publik
 groups	common	sv	Grupper
 groups with permission for %1	common	sv	Grupper med åtkomst till %1
@@ -247,7 +335,8 @@ guinea	common	sv	GUINEA
 guinea-bissau	common	sv	GUINEA-BISSAU
 guyana	common	sv	GUYANA
 haiti	common	sv	HAITI
-heard island and mcdonald islands	common	sv	HEARD ISLAND OCH MCDONALD ÖARNA
+heard island and mcdonald islands	common	sv	HEARD- OCH MCDONALDSÖARNA
+height	common	sv	Höjd
 help	common	sv	Hjälp
 high	common	sv	Hög
 highest	common	sv	Högsta
@@ -256,13 +345,38 @@ home	common	sv	Hem
 home email	common	sv	Hem e-post
 honduras	common	sv	HONDURAS
 hong kong	common	sv	HONG KONG
-how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sv	Hur många ikoner ska visas i navigerings listen (överst på sidan). Ikoner utöver dessa visas i rull listen som hämtas via ikonen längst till höger.
+how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	sv	Hur många ikoner ska visas i Navigeringslisten (överst på sidan). Ikoner utöver dessa visas i Länkboxen som hämtas via ikonen längst till höger.
 hungary	common	sv	UNGERN
 iceland	common	sv	ISLAND
+iespell not detected. click ok to go to download page.	common	sv	ieSpell hittades inte. Klicka OK för att gå till nerladdnings sidan.
+if the clock is enabled would you like it to update it every second or every minute?	common	sv	Vill du att klockan uppdateras varje sekund eller minut om den aktiveras?
+if there are some images in the background folder you can choose the one you would like to see.	common	sv	Om det finns bilder i bakgrundskatalogen, kan du välja den du vill se.
+image description	tinymce	sv	Bildbeskrivning
+image title	tinymce	sv	Bildrubrik
+image url	common	sv	Bild URL
+indent	tinymce	sv	Indrag
 india	common	sv	INDIEN
 indonesia	common	sv	INDONESIEN
+insert	tinymce	sv	Infoga
+insert 'return false'	common	sv	Infoga 'return false'
+insert / edit flash movie	tinymce	sv	Infoga/ändra Flash film
+insert / edit horizontale rule	tinymce	sv	Infoga/ändra horisontell linje
 insert all %1 addresses of the %2 contacts in %3	common	sv	Infoga alla %1 adresser för %2 kontakterna i %3
+insert column after	common	sv	Infoga kolumn efter
+insert column before	common	sv	Infoga kolumn före
+insert date	tinymce	sv	Infoga datum
+insert emotion	tinymce	sv	Infoga känsla
+insert file	tinymce	sv	Bifoga fil
+insert link to file	tinymce	sv	Infoga länk till fil
+insert row after	common	sv	Infoga rad efter
+insert row before	common	sv	Infoga rad före
+insert time	tinymce	sv	Infoga tid
+insert/edit image	tinymce	sv	Infoga/ändra bild
+insert/edit link	tinymce	sv	Infoga/ändra länk
+insert/modify table	tinymce	sv	Infoga/ändra tabell
+inserts a new table	tinymce	sv	Skapar ny tabell
 international	common	sv	Internationell
+invalid filename	common	sv	Ogiltigt filnamn
 invalid ip address	common	sv	Ogiltig IP adress
 invalid password	common	sv	Ogiltigt lösenord
 iran, islamic republic of	common	sv	IRAN
@@ -272,11 +386,13 @@ israel	common	sv	ISRAEL
 it has been more then %1 days since you changed your password	common	sv	Det är mer än %1 dagar sedan du ändrade ditt lösenord
 it is recommended that you run setup to upgrade your tables to the current version	common	sv	Det rekomenderas att du kör installationen för att uppgradera dina tabeller till aktuell version.
 italic	common	sv	Kursiv
+italic.gif	common	sv	italic.gif
 italy	common	sv	ITALIEN
 jamaica	common	sv	JAMAICA
 january	common	sv	Januari
 japan	common	sv	JAPAN
 jordan	common	sv	JORDANIEN
+js-popup	tinymce	sv	JS-Popup
 july	common	sv	Juli
 jun	common	sv	Jun
 june	common	sv	Juni
@@ -285,30 +401,36 @@ justify full	common	sv	Marginaljustera
 justify left	common	sv	Vänsterjustera
 justify right	common	sv	Högerjustera
 kazakstan	common	sv	KAZAKSTAN
+keep linebreaks	tinymce	sv	Spara radbrytningar
 kenya	common	sv	KENYA
 keywords	common	sv	Nyckelord
 kiribati	common	sv	KIRIBATI
 korea, democratic peoples republic of	common	sv	KOREA, NORD
 korea, republic of	common	sv	KOREA, SYD
 kuwait	common	sv	KUWAIT
-kyrgyzstan	common	sv	KYRGYZSTAN
+kyrgyzstan	common	sv	KIRGIZISTAN
 language	common	sv	Språk
+language_direction_rtl	common	sv	language_direction_rtl
 lao peoples democratic republic	common	sv	LAOS
 last name	common	sv	Efternamn
 last name of the user, eg. "%1"	common	sv	Användarens efternamn, ex. "%1"
 last page	common	sv	Sista sidan
 lastname	common	sv	Efternamn
 latvia	common	sv	LETTLAND
-ldap-mgr	common	sv	LDAP-Hanterare
+ldap-mgr	common	sv	LDAP hanterare
 lebanon	common	sv	LIBANON
+left	common	sv	Vänster
 lesotho	common	sv	LESOTHO
 liberia	common	sv	LIBERIA
 libyan arab jamahiriya	common	sv	LIBYEN
 license	common	sv	Licens
 liechtenstein	common	sv	LIECHTENSTEIN
+line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	sv	Rad %1: '%2'<br><b>CSV data motsvarar inte antalet kolumner i tabellen %3 ==> ignoreras</b>
+link url	tinymce	sv	Länkens URL
 list	common	sv	Lista
 list members	common	sv	Lista medlemmar
 lithuania	common	sv	LITAUEN
+loading files	tinymce	sv	Laddar filer
 local	common	sv	Lokal
 login	common	sv	Inloggning
 loginid	common	sv	Inloggnings ID
@@ -319,46 +441,58 @@ luxembourg	common	sv	LUXEMBOURG
 macau	common	sv	MACAU
 macedonia, the former yugoslav republic of	common	sv	MAKEDONIEN
 madagascar	common	sv	MADAGASKAR
-mail domain, eg. "%1"	common	sv	E-post domän, ex. "%1"
+mail domain, eg. "%1"	common	sv	E-postdomän, ex. "%1"
 main category	common	sv	Huvudkategori
 main screen	common	sv	Startsidan
 maintainer	common	sv	Underhåll
+make window resizable	tinymce	sv	Gör fönstret skalbart
 malawi	common	sv	MALAWI
 malaysia	common	sv	MALAYSIA
 maldives	common	sv	MALDIVERNA
 mali	common	sv	MALI
 malta	common	sv	MALTA
 march	common	sv	Mars
-marshall islands	common	sv	MARSHALL ÖARNA
+marshall islands	common	sv	MARSHALLÖARNA
 martinique	common	sv	MARTINIQUE
+match case	tinymce	sv	Bokstavsberoende
 mauritania	common	sv	MAURITANIA
 mauritius	common	sv	MAURITIUS
-max number of icons in navbar	common	sv	Max antal ikoner i navigerings listen
+max number of icons in navbar	common	sv	Max antal ikoner i navigeringslisten
 may	common	sv	Maj
 mayotte	common	sv	MAYOTTE
 medium	common	sv	Medium
 menu	common	sv	Meny
+merge table cells	tinymce	sv	Migrera tabellceller
 message	common	sv	Meddelande
 mexico	common	sv	MEXICO
 micronesia, federated states of	common	sv	MIKRONESIEN
+minute	common	sv	Minut
+mkdir failed.	tinymce	sv	Misslyckades skapa katalog
 moldova, republic of	common	sv	MOLDOVIEN
 monaco	common	sv	MONACO
 monday	common	sv	Måndag
 mongolia	common	sv	MONGOLIEN
 montserrat	common	sv	MONTSERRAT
 morocco	common	sv	MAROCKO
+move	tinymce	sv	Flytta
 mozambique	common	sv	MOZAMBIQUE
+multiple	common	sv	Flera
 myanmar	common	sv	MYANMAR
 name	common	sv	Namn
 name of the user, eg. "%1"	common	sv	Användarens förnamn, ex. "%1"
 namibia	common	sv	NAMIBIA
 nauru	common	sv	NAURU
 nepal	common	sv	NEPAL
-netherlands	common	sv	HOLLAND
-netherlands antilles	common	sv	NETHERLANDS ANTILLERNA
+netherlands	common	sv	NEDERLÄNDERNA
+netherlands antilles	common	sv	NEDERLÄNDSKA ANTILLERNA
 never	common	sv	Aldrig
 new caledonia	common	sv	NYA KALEDONIEN
 new entry added sucessfully	common	sv	Ny post tillagd
+new file name missing!	tinymce	sv	Nya filens namn saknas!
+new file name:	tinymce	sv	Filnamn:
+new folder	tinymce	sv	Ny katalog
+new folder name missing!	tinymce	sv	Nya katalogens namn saknas!
+new folder name:	tinymce	sv	Katalognamn:
 new main category	common	sv	Ny huvudkategori
 new value	common	sv	Nytt värde
 new zealand	common	sv	NYA ZEELAND
@@ -371,38 +505,59 @@ niger	common	sv	NIGER
 nigeria	common	sv	NIGERIA
 niue	common	sv	NIUE
 no	common	sv	Nej
-no entries found, try again ...	common	sv	Inga poster funna, försök igen ...
-no history for this record	common	sv	Ingen historik för denna post
-no subject	common	sv	Ingen rubrik
+no entries found, try again ...	common	sv	Inga poster hittades, försök igen ...
+no files...	tinymce	sv	Inga filer ...
+no history for this record	common	sv	Ingen historik för posten
+no permission to create folder.	tinymce	sv	Saknar rättigheter att skapa katalog
+no permission to delete file.	tinymce	sv	Saknar rättigheter att radera fil
+no permission to move files and folders.	tinymce	sv	Saknar rättigheter att flytta filer och kataloger
+no permission to rename files and folders.	tinymce	sv	Saknar rättigheter att döpa om filer och kataloger
+no permission to upload.	tinymce	sv	Saknar rättigheter att ladda upp
+no savant2 template directories were found in:	common	sv	Ingen Savant2 mall katalog hittades i:
+no shadow	tinymce	sv	Ingen skugga
+no subject	common	sv	Inget ämne
 none	common	sv	Ingen
-norfolk island	common	sv	NORFOLK ISLAND
+norfolk island	common	sv	NORFOLKÖN
 normal	common	sv	Normal
-northern mariana islands	common	sv	NORTHERN MARIANA ISLANDS
+northern mariana islands	common	sv	NORDMARIANERNA
 norway	common	sv	NORGE
 not assigned	common	sv	Inte tilldelad
 note	common	sv	Anteckning
 notes	common	sv	Anteckningar
 notify window	common	sv	Meddelande fönster
+notify your administrator to correct this situation	common	sv	Meddela administratör om problemet.
 november	common	sv	November
 october	common	sv	Oktober
 ok	common	sv	Ok
 old value	common	sv	Gammalt värde
 oman	common	sv	OMAN
 on *nix systems please type: %1	common	sv	På *nix system skriv: %1
-on mouse over	common	sv	Vid mus överföring
+on mouse over	common	sv	När pekaren förs över
+only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	sv	Endast filer med ändelser tillåts, .ex. "imagefile.jpg".
 only private	common	sv	Endast privata
 only yours	common	sv	Endast dina
+open file in new window	tinymce	sv	Öppna fil i nytt fönster
+open in new window	tinymce	sv	Öppna i ett nytt fönster
+open in parent window / frame	tinymce	sv	Öppna i ovanliggande fönster/ram
+open in the window	tinymce	sv	Öppna i ett specifikt fönster
+open in this window / frame	tinymce	sv	Öppna i samma fönster/ram
+open in top frame (replaces all frames)	tinymce	sv	Öppna i övre ramen (ersätter alla ramar)
+open link in a new window	tinymce	sv	Öppna länken i ett nytt fönster
+open link in the same window	tinymce	sv	Öppna länken i samma fönster
 open notify window	common	sv	Öppna meddelande fönster
 open popup window	common	sv	Öppna popup fönster
+open sidebox	common	sv	Öppna Länkboxen
+ordered list	common	sv	Numrerad lista
 original	common	sv	Orginal
 other	common	sv	Övriga
+outdent	tinymce	sv	Utdrag
 overview	common	sv	Översikt
 owner	common	sv	Ägare
 page	common	sv	Sida
 page was generated in %1 seconds	common	sv	Sidan genererades på %1 sekunder
 pakistan	common	sv	PAKISTAN
 palau	common	sv	PALAU
-palestinian territory, occupied	common	sv	PALESTINIAN TERRITORY, OCCUPIED
+palestinian territory, occupied	common	sv	PALESTINA
 panama	common	sv	PANAMA
 papua new guinea	common	sv	PAPUA NYA GUINEA
 paraguay	common	sv	PARAGUAY
@@ -411,55 +566,85 @@ parent category	common	sv	Huvudkategori
 password	common	sv	Lösenord
 password could not be changed	common	sv	Lösenordet kunde inte ändras
 password has been updated	common	sv	Lösenordet uppdaterat
+password must contain at least %1 lowercase letters	common	sv	Lösenordet måste innehålla åtminstone %1 små bokstäver
+password must contain at least %1 numbers	common	sv	Lösenordet måste innehålla åtminstone %1 siffror
+password must contain at least %1 special characters	common	sv	Lösenordet måste innehålla åtminstone %1 special tecken
+password must contain at least %1 uppercase letters	common	sv	Lösenordet måste innehålla åtminstone %1 stora bokstäver
+password must have at least %1 characters	common	sv	Lösenordet måste innehålla åtminstone %1 tecken
+paste as plain text	tinymce	sv	Kopiera som text
+paste from word	tinymce	sv	Kopiera från Word
+paste table row after	tinymce	sv	Klistra in tabell rad efter
+paste table row before	tinymce	sv	Klistra in tabell rad före
+path not found.	tinymce	sv	Sökväg saknas
 path to user and group files has to be outside of the webservers document-root!!!	common	sv	Sökvägen till användar- och gruppfiler måste vara utanför webbserverns dokument root!
 pattern for search in addressbook	common	sv	Sökmönster i Adressboken
 pattern for search in calendar	common	sv	Sökmönster i Kalendern
 pattern for search in projects	common	sv	Sökmönster i Projekt
 permissions to the files/users directory	common	sv	Rättigheter på filer/användar bibliotek
-personal	common	sv	Person
+personal	common	sv	Personligt
 peru	common	sv	PERU
 philippines	common	sv	FILIPINERNA
 phone number	common	sv	Telefonnummer
-pitcairn	common	sv	PITCAIRN
+phpgwapi	common	sv	eGroupWare API
+pitcairn	common	sv	PITCAIRNÖARNA
 please %1 by hand	common	sv	Var god och %1 för hand
 please enter a name	common	sv	Ange ett namn
+please enter the caption text	tinymce	sv	Ange överskrift
+please insert a name for the target or choose another option.	tinymce	sv	Var god skriv ett namn för fönstret eller välj ett annat val.
 please run setup to become current	common	sv	Kör installationen för att uppdatera
 please select	common	sv	Välj
 please set your global preferences	common	sv	Gör dina globala inställningar
 please set your preferences for this application	common	sv	Gör dina inställningar för applikationen
 please wait...	common	sv	Var god vänta ...
 poland	common	sv	POLEN
+popup url	tinymce	sv	Popup URL
 portugal	common	sv	PORTUGAL
+position (x/y)	tinymce	sv	Position (X/Y)
 postal	common	sv	Post adress
 powered by egroupware version %1	common	sv	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
 powered by phpgroupware version %1	common	sv	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
 preferences	common	sv	Alternativ
-preferences for the idots template set	common	sv	Idots template alternativ
+preferences for the idots template set	common	sv	Idots mall alternativ
 prev. month (hold for menu)	jscalendar	sv	Föreg. månad (håll för meny)
 prev. year (hold for menu)	jscalendar	sv	Föreg. år (håll för meny)
+preview	tinymce	sv	Förhandsgranska
 previous page	common	sv	Föregående sida
 primary style-sheet:	common	sv	Primär Style sheet
 print	common	sv	Skriv ut
 priority	common	sv	Prioritet
 private	common	sv	Privat
+programs	common	sv	Program
 project	common	sv	Projekt
 public	common	sv	Publik
 puerto rico	common	sv	PUERTO RICO
-qatar	common	sv	QATAR
+qatar	common	sv	QUATAR
 read	common	sv	Läs
 read this list of methods.	common	sv	Läs lista på metoder
+reading	common	sv	Läser
+redo	tinymce	sv	Gör om
+refresh	tinymce	sv	Uppdatera
 reject	common	sv	Avvisa
+remove col	tinymce	sv	Radera kolumn
 remove selected accounts	common	sv	Radera valda konton
+remove shortcut	common	sv	Radera genväg
 rename	common	sv	Byt namn
+rename failed	tinymce	sv	Namnbyte misslyckades
+replace	common	sv	Ersätt
+replace with	common	sv	Ersätt med
+replace&nbsp;all	tinymce	sv	Ersätt alla
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	sv	Returnerar en fullständig lista på konton. Varning: Den kan vara tämligen stor
 returns an array of todo items	common	sv	Returnera en lista på Uppgifter
-returns struct of users application access	common	sv	Returnerar struktur på användares applikations användning
+returns struct of users application access	common	sv	Returnerar struktur på användares applikationsanvändning
 reunion	common	sv	REUNION
+right	common	sv	Höger
+rmdir failed.	tinymce	sv	Katalog radering misslyckades
 romania	common	sv	RUMÄNIEN
+rows	tinymce	sv	Rader
+run spell checking	tinymce	sv	Kör rättstavningskontroll
 russian federation	common	sv	RYSKA FEDERATIONEN
 rwanda	common	sv	RWANDA
 saint helena	common	sv	SAINT HELENA
-saint kitts and nevis	common	sv	SAINT KITTS AND NEVIS
+saint kitts and nevis	common	sv	SAINT KITTS OCH NEVIS
 saint lucia	common	sv	SAINT LUCIA
 saint pierre and miquelon	common	sv	SAINT PIERRE OCH MIQUELON
 saint vincent and the grenadines	common	sv	SAINT VINCENT OCH GRENADINERNA
@@ -468,56 +653,78 @@ san marino	common	sv	SAN MARINO
 sao tome and principe	common	sv	SAO TOME OCH PRINCIPE
 saturday	common	sv	Lördag
 saudi arabia	common	sv	SAUDI ARABIEN
+savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants version: %2	common	sv	Savant2 version skiljer sig mot Savant2 wrapper. <br/>Denna version: %1 <br/>Savants version: %2
 save	common	sv	Spara
 search	common	sv	Sök
 search %1 '%2'	common	sv	Sök %1 '%2'
 search or select accounts	common	sv	Sök eller välj konton
-search or select multiple accounts	common	sv	sök eller välj multipla konton
+search or select multiple accounts	common	sv	Sök eller välj flera konton
+second	common	sv	Sekund
 section	common	sv	Avsnitt
 select	common	sv	Välj
+select all	tinymce	sv	Select All
 select all %1 %2 for %3	common	sv	Välj alla %1 %2 för %3
 select category	common	sv	Välj kategori
 select date	common	sv	Välj datum
 select group	common	sv	Välj grupp
-select home email address	common	sv	Välj hem e-post adress
-select multiple accounts	common	sv	välj multipla konton
+select home email address	common	sv	Välj hem e-postadress
+select multiple accounts	common	sv	Välj flera konton
 select one	common	sv	Välj en
+select the default height for the application windows	common	sv	Välj standard höjd för applikationsfönstret
+select the default width for the application windows	common	sv	Välj standard bredd för applikationsfönstret
 select user	common	sv	Välj användare
-select work email address	common	sv	Välj arbete e-post adress
+select work email address	common	sv	Välj Företagets e-postadres
 selection	common	sv	Val
 send	common	sv	Skicka
 senegal	common	sv	SENEGAL
 september	common	sv	September
 server %1 has been added	common	sv	Server %1 tillagd
+server answered. processing response...	common	sv	Servern svarade. Behandlar svaret ...
+server contacted. waiting for response...	common	sv	Servern kontaktad. Väntar på svar ...
 server name	common	sv	Server namn
-session has been killed	common	sv	Sessionen terminerad
+session has been killed	common	sv	Sessionen avslutad
 setup	common	sv	Installation
 setup main menu	common	sv	Installations Meny
 seychelles	common	sv	SEYCHELLERNA
 show all	common	sv	Visa alla
 show all categorys	common	sv	Visa alla kategorier
+show clock?	common	sv	Visa klockan?
+show home and logout button in main application bar?	common	sv	Visa Hem- och utloggnings knappen i navigeringslisten?
+show locationbar	tinymce	sv	Visa navigeringslisten
+show logo's on the desktop.	common	sv	Visa logotyp på skrivbordet
 show menu	common	sv	Visa meny
-show page generation time	common	sv	Visa sidans genererings tid
+show menubar	tinymce	sv	Visa meny
+show page generation time	common	sv	Visa sidans genereringstid
 show page generation time on the bottom of the page?	common	sv	Visa sidans genererings tid längst ner på sidan?
+show page generation time?	common	sv	Visa sidans genereringstid?
+show scrollbars	tinymce	sv	Visa rullisten
+show statusbar	tinymce	sv	Visa statuslisten
+show the logo's of egroupware and x-desktop on the desktop.	common	sv	Visa eGroupware och x-desktop logotypen på skrivbordet
+show toolbars	tinymce	sv	Visa vertygslisten
 show_more_apps	common	sv	Visa fler applikationer
 showing %1	common	sv	Visar %1
 showing %1 - %2 of %3	common	sv	Visar %1 - %2 av %3
 sierra leone	common	sv	SIERRA LEONE
 singapore	common	sv	SINGAPORE
+size	tinymce	sv	Storlek
 slovakia	common	sv	SLOVAKIEN
 slovenia	common	sv	SLOVENIEN
-solomon islands	common	sv	SOLOMON ÖARNA
+solomon islands	common	sv	SALOMONÖARNA
 somalia	common	sv	SOMALIEN
-sorry, your login has expired	login	sv	Beklagar, din inloggning har upphört
+sorry, your login has expired	login	sv	Beklagar, din inloggning har förfallit
 south africa	common	sv	SYD AFRIKA
-south georgia and the south sandwich islands	common	sv	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
+south georgia and the south sandwich islands	common	sv	SYDGEORGIEN OCH SYDSANDWICHÖARNA
 spain	common	sv	SPANIEN
+split table cells	tinymce	sv	Dela upp tabellceller
 sri lanka	common	sv	SRI LANKA
 start date	common	sv	Startdatum
-start time	common	sv	Start tid
+start time	common	sv	Starttid
 start with	common	sv	Börja med
-status	common	sv	Läge
-subject	common	sv	Rubrik
+starting up...	common	sv	Startar ...
+status	common	sv	Status
+stretched	common	sv	Utsträckt
+striketrough	tinymce	sv	Genomstruken
+subject	common	sv	Ämne
 submit	common	sv	Utför
 substitutions and their meanings:	common	sv	Substitutioner och dess mening:
 sudan	common	sv	SUDAN
@@ -528,56 +735,81 @@ swaziland	common	sv	SWAZILAND
 sweden	common	sv	SVERIGE
 switzerland	common	sv	SCHWEIZ
 syrian arab republic	common	sv	SYRIEN
+table cell properties	tinymce	sv	Tabellcell inställningar
+table properties	common	sv	Tabell egenskaper
+table row properties	tinymce	sv	Tabellrad inställningar
 taiwan	common	sv	TAIWAN/TAIPEI
 tajikistan	common	sv	TAJIKISTAN
 tanzania, united republic of	common	sv	TANZANIA
+target	tinymce	sv	Fönster
 text color:	common	sv	Textfärg
 thailand	common	sv	THAILAND
 the api is current	common	sv	API är senast tillgängliga
 the api requires an upgrade	common	sv	API behöver uppgradering
 the following applications require upgrades	common	sv	Följande applikationer behöver uppgraderas
-the mail server returned	common	sv	E-post servern returnerade
+the mail server returned	common	sv	E-postservern returnerade
+the search has been compleated. the search string could not be found.	tinymce	sv	Sökningen är slutförd. Söksträngen kunde inte hittas.
 this application is current	common	sv	Applikationen är senast tillgängliga
 this application requires an upgrade	common	sv	Applikationen behöver uppgraderas
+this is just a template button	tinymce	sv	Detta är endast en mall för knapp
+this is just a template popup	tinymce	sv	Detta är endast en mall för popup
 this name has been used already	common	sv	Namnet är redan upptaget
 thursday	common	sv	Torsdag
+tiled	common	sv	Vinklad
 time	common	sv	Tid
-time selection:	jscalendar	sv	Tids intervall:
+time selection:	jscalendar	sv	Tidsintervall:
 time zone	common	sv	Tidzon
-time zone offset	common	sv	Tids förskjutning
-title	common	sv	Titel
+time zone offset	common	sv	Tidsförskjutning
+title	common	sv	Rubrik
 to	common	sv	Till
-to correct this error for the future you will need to properly set the	common	sv	För att framöver undvika detta problem måste du sätta
-to go back to the msg list, click <a href= %1 >here</a>	common	sv	Klicka <a href="%1">här</a> för att komma tillbaks till meddelande listan
+to correct this error for the future you will need to properly set the	common	sv	För att undvika problemet framöver måste du sätta
+to go back to the msg list, click <a href= %1 >here</a>	common	sv	Klicka <a href="%1">här</a> för att komma tillbaks till meddelandelistan
 today	common	sv	Idag
 todays date, eg. "%1"	common	sv	Dagens datum, ex. "%1"
 toggle first day of week	jscalendar	sv	Visa veckans första dag
+toggle fullscreen mode	tinymce	sv	Visa helskärm
 togo	common	sv	TOGO
-tokelau	common	sv	TOKELAU
+tokelau	common	sv	TOKELAUÖARNA
 tonga	common	sv	TONGA
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sv	För många misslyckade inloggnings försök: %1 för användare '%2', %3 med IP %4
-total	common	sv	Totalt
+top	common	sv	Överst
+total	common	sv	Summa
+transparant bg for the icons?	common	sv	Transparent bakgrund för ikoner?
 trinidad and tobago	common	sv	TRINIDAD OCH TOBAGO
 tuesday	common	sv	Tisdag
 tunisia	common	sv	TUNISIEN
 turkey	common	sv	TURKIET
 turkmenistan	common	sv	TURKMENISTAN
-turks and caicos islands	common	sv	TURKS AND CAICOS ISLANDS
+turks and caicos islands	common	sv	TURKS- OCH CAICOSÖARNA
 tuvalu	common	sv	TUVALU
+type	common	sv	Typ
 uganda	common	sv	UGANDA
 ukraine	common	sv	UKRAINA
+underline	common	sv	Understruken
+underline.gif	common	sv	underline.gif
+undo	tinymce	sv	Ångra
 united arab emirates	common	sv	FÖRENTA ARAB EMIRATEN
-united kingdom	common	sv	STOR BRITANIEN
+united kingdom	common	sv	STORBRITANIEN
 united states	common	sv	U.S.A
-united states minor outlying islands	common	sv	UNITED STATES MINOR OUTLYING ISLANDS
+united states minor outlying islands	common	sv	FÖRENTA STATERNAS MINDRE ÖAR I OCEANIEN OCH VÄSTINDIEN
 unknown	common	sv	Okänd
+unlink	tinymce	sv	Ta bort länk
+unlink failed.	tinymce	sv	Länk borttagning misslyckades
+unordered list	tinymce	sv	Punktlista
+up	tinymce	sv	Uppåt
 update	common	sv	Uppdatera
+update the clock per minute or per second	common	sv	Uppdatera klockan per minut eller sekund
+upload	common	sv	Ladda upp
+upload directory does not exist, or is not writeable by webserver	common	sv	Uppladdningskatalogen finns inte eller är inte skrivbar av webbservern
+uploading...	tinymce	sv	Laddar upp ...
 url	common	sv	URL
 uruguay	common	sv	URUGUAI
-use button to search for	common	sv	använd knappen för att söka
-use button to search for address	common	sv	använd knappen för att söka adresser
-use button to search for calendarevent	common	sv	använd knappen för att söka kalender händelser
-use button to search for project	common	sv	använd knappen för att söka projekt
+use button to search for	common	sv	Använd knappen för att söka
+use button to search for address	common	sv	Använd knappen för att söka adresser
+use button to search for calendarevent	common	sv	Använd knappen för att söka kalender händelser
+use button to search for project	common	sv	Använd knappen för att söka projekt
+use ctrl and/or shift to select multiple items.	tinymce	sv	Använd Ctrl och/eller Shift för att välja flera
+use ctrl+v on your keyboard to paste the text into the window.	tinymce	sv	Anv&auml;nd CTRL+V p&aring; ditt tangentbord f&ouml;r att klistra in i detta f&ouml;nster.
 user	common	sv	Användare
 user accounts	common	sv	Användarkonto
 user groups	common	sv	Användargrupp
@@ -588,194 +820,48 @@ uzbekistan	common	sv	UZBEKISTAN
 vanuatu	common	sv	VANUATU
 venezuela	common	sv	VENEZUELA
 version	common	sv	Version
+vertical alignment	tinymce	sv	Vertikal justering
 viet nam	common	sv	VIETNAM
 view	common	sv	Visa
-virgin islands, british	common	sv	VIRGIN ISLANDS, BRITTISKA
-virgin islands, u.s.	common	sv	VIRGIN ISLANDS, U.S.A
+virgin islands, british	common	sv	JUNGFRUÖARNA, BRITTISKA
+virgin islands, u.s.	common	sv	JUNGFRUÖARNA, U.S.A
 wallis and futuna	common	sv	WALLIS OCH FUTUNA
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	sv	Varning!\n Att byta namn eller att flytta kataloger och filer kan brta länkar i dina dokument. Vill du fortsätta?
 wednesday	common	sv	Onsdag
 welcome	common	sv	Välkommen
 western sahara	common	sv	VÄSTRA SAHARA
+what color should all the blank space on the desktop have	common	sv	Vilken färg ska alla blanka utrymmen på skrivbordet ha
+what style would you like the image to have?	common	sv	Vilken stil vill du att bilden ska ha?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sv	Om du svara ja kommer Hem- och utloggningsknappen att visas i navigeringslisten.
 which groups	common	sv	Vilka grupper
+width	common	sv	Bredd
+window name	tinymce	sv	Fönstrets namn
 wk	jscalendar	sv	v.
 work email	common	sv	Arbete e-post
+would you like to display the page generation time at the bottom of every window?	common	sv	Vill du visa sidans genereringstid nederst på varje sida?
+writing	common	sv	Skriver
 written by:	common	sv	Skriven av:
 year	common	sv	År
 yemen	common	sv	YEMEN
 yes	common	sv	Ja
 you are required to change your password during your first login	common	sv	Du måste byta lösenord vid första inloggningen
-you are running a newer version of phpgroupware than your database is setup for	common	sv	Du använder en nyare version av phpGroupWare än din databas är konfigurerad för.
 you have been successfully logged out	login	sv	Du är utloggad
-you have not entered a title	common	sv	Titel saknas
+you have not entered a title	common	sv	Rubriken saknas
 you have not entered a valid date	common	sv	Ogiltigt datum
 you have not entered a valid time of day	common	sv	Ogiltig tid
 you have not entered participants	common	sv	Deltagare saknas
 you have selected an invalid date	common	sv	Ogiltigt datum
 you have selected an invalid main category	common	sv	Ogiltig huvudkategori
 you have successfully logged out	common	sv	Du är utloggad
+you must enter the url	tinymce	sv	Du måste ange URL
 you need to add the webserver user '%1' to the group '%2'.	common	sv	Du behöver lägga till webbserver användare '%1' till gruppen '%2'.
 your message could <b>not</b> be sent!<br>	common	sv	Meddelandet <b>inte</b> skickat<br>
 your message has been sent	common	sv	Meddelandet skickat
 your search returned %1 matchs	common	sv	Sökning gav %1 träffar
 your search returned 1 match	common	sv	Sökning gav 1 träff
 your session could not be verified.	login	sv	Din session kunde inte verifieras
-your settings have been updated	common	sv	Inställningar uppdaterade
+your settings have been updated	common	sv	Inställningarna uppdaterade
 yugoslavia	common	sv	YOGOSLAVIEN
 zambia	common	sv	ZAMBIA
 zimbabwe	common	sv	ZIMBABWE
-bold	tinymce	sv	Fet
-italic	tinymce	sv	Kursiv
-underline	tinymce	sv	Understruken
-striketrough	tinymce	sv	Genomstruken
-align left	tinymce	sv	V&auml;nsterjustera
-align center	tinymce	sv	Centrera
-align right	tinymce	sv	H&ouml;gerjustera
-align full	tinymce	sv	Kantjustera
-unordered list	tinymce	sv	Punktlista
-ordered list	tinymce	sv	Nummerlista
-outdent	tinymce	sv	Utdrag
-indent	tinymce	sv	Indrag
-undo	tinymce	sv	&Aring;ngra
-redo	tinymce	sv	G&ouml;r om
-insert/edit link	tinymce	sv	Skapa l&auml;nk
-unlink	tinymce	sv	Ta bort l&auml;nk
-insert/edit image	tinymce	sv	Skapa/redigera bild
-cleanup messy code	tinymce	sv	Rensa skr&auml;pkod
-a editor instance must be focused before using this command.	tinymce	sv	Flytta mark&ouml;ren till en textyta innan du anv&auml;nder detta kommando.
-do you want to use the wysiwyg mode for this textarea?	tinymce	sv	Vill du anv&auml;nda WYSIWYG-editorn f&ouml;r detta textf&auml;lt?
-insert/edit link	tinymce	sv	Skapa/redigera l&auml;nk
-insert	tinymce	sv	Skapa
-update	tinymce	sv	Uppdatera
-cancel	tinymce	sv	Avbryt
-link url	tinymce	sv	L&auml;nkens URL
-target	tinymce	sv	F&ouml;nster
-open link in the same window	tinymce	sv	&Ouml;ppna l&auml;nken i samma f&ouml;nster
-open link in a new window	tinymce	sv	&Ouml;ppna l&auml;nken i ett nytt f&ouml;nster
-insert/edit image	tinymce	sv	Skapa/redigera bild
-image url	tinymce	sv	Bildens URL
-image description	tinymce	sv	Bildens beskrivning
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	sv	Klipput/Kopiera/Klistra fungerar inte Mozilla och Firefox. Vill du veta mer om detta?
-bold	tinymce	sv	Fet
-italic	tinymce	sv	Kursiv
-underline	tinymce	sv	Understruken
-striketrough	tinymce	sv	Genomstruken
-align left	tinymce	sv	V&auml;nsterjustera
-align center	tinymce	sv	Centrera
-align right	tinymce	sv	H&ouml;gerjustera
-align full	tinymce	sv	Kantjustera
-unordered list	tinymce	sv	Punktlista
-ordered list	tinymce	sv	Nummerlista
-outdent	tinymce	sv	Utdrag
-indent	tinymce	sv	Indrag
-undo	tinymce	sv	&Aring;ngra
-redo	tinymce	sv	G&ouml;r om
-insert/edit link	tinymce	sv	Skapa l&auml;nk
-unlink	tinymce	sv	Ta bort l&auml;nk
-insert/edit image	tinymce	sv	Skapa/redigera bild
-cleanup messy code	tinymce	sv	Rensa skr&auml;pkod
-a editor instance must be focused before using this command.	tinymce	sv	Flytta mark&ouml;ren till en textyta innan du anv&auml;nder detta kommando.
-do you want to use the wysiwyg mode for this textarea?	tinymce	sv	Vill du anv&auml;nda WYSIWYG-editorn f&ouml;r detta textf&auml;lt?
-insert/edit link	tinymce	sv	Skapa/redigera l&auml;nk
-insert	tinymce	sv	Skapa
-update	tinymce	sv	Uppdatera
-cancel	tinymce	sv	Avbryt
-link url	tinymce	sv	L&auml;nkens URL
-target	tinymce	sv	F&ouml;nster
-open link in the same window	tinymce	sv	&Ouml;ppna l&auml;nken i samma f&ouml;nster
-open link in a new window	tinymce	sv	&Ouml;ppna l&auml;nken i ett nytt f&ouml;nster
-insert/edit image	tinymce	sv	Skapa/redigera bild
-image url	tinymce	sv	Bildens URL
-image description	tinymce	sv	Bildens beskrivning
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	sv	Klipput/Kopiera/Klistra fungerar inte Mozilla och Firefox. Vill du veta mer om detta?
-no shadow	tinymce	sv	Ingen skugga
-image title	tinymce	sv	Bildentitel
-for mouse over	tinymce	sv	n&auml;r pekaren &auml;r &ouml;ver
-for mouse out	tinymce	sv	n&auml;r pekaren &auml;r utanf&ouml;r
-open in this window / frame	tinymce	sv	&Ouml;ppna i samma f&ouml;nster / ram
-open in parent window / frame	tinymce	sv	&Ouml;ppna i underliggande f&ouml;nster / ram
-open in top frame (replaces all frames)	tinymce	sv	&Ouml;ppna i toppramen (ers&auml;tter alla ramar)
-open in new window	tinymce	sv	&Ouml;ppna i ett nytt f&ouml;nster
-open in the window	tinymce	sv	&Ouml;ppna i ett specifikt f&ouml;nster
-js-popup	tinymce	sv	JS-Popup
-popup url	tinymce	sv	Popup URL
-window name	tinymce	sv	F&ouml;nstrets namn
-show scrollbars	tinymce	sv	Visa scrollbars
-show statusbar	tinymce	sv	Visa statusbar
-show toolbars	tinymce	sv	Visa toolbars
-show menubar	tinymce	sv	Visa menubar
-show locationbar	tinymce	sv	Visa locationbar
-make window resizable	tinymce	sv	G&ouml;r f&ouml;nstret skalbart
-size	tinymce	sv	Storlek
-position (x/y)	tinymce	sv	Position (X/Y)
-please insert a name for the target or choose another option.	tinymce	sv	Var god skriv ett namn för fönstret eller välj ett annat val.
-direction right to left	tinymce	sv	Riktning fr&aring;n h&ouml;ger till v&auml;nster
-insert emotion	tinymce	sv	Klistra in känsla
-emotions	tinymce	sv	Känslor
-flash-file (.swf)	tinymce	sv	Flash-film (.swf)
-size	tinymce	sv	Storlek
-flash files	tinymce	sv	Flash-filer
-flash properties	tinymce	sv	Flash egenskaper
-run spell checking	tinymce	sv	Kör rättstavningskontroll
-insert date	tinymce	sv	Klistra in datum
-insert time	tinymce	sv	Klistra in tid
-use ctrl+v on your keyboard to paste the text into the window.	tinymce	sv	Anv&auml;nd CTRL+V p&aring; ditt tangentbord f&ouml;r att klistra in i detta f&ouml;nster.
-keep linebreaks	tinymce	sv	Spara radbrytningar
-use ctrl+v on your keyboard to paste the text into the window.	tinymce	sv	Anv&auml;nd CTRL+V p&aring; ditt tangentbord f&ouml;r att klistra in i detta f&ouml;nster.
-select all	tinymce	sv	Select All
-preview	tinymce	sv	Förhandsgranska
-print	tinymce	sv	Skriv ut
-find	tinymce	sv	Sök
-find again	tinymce	sv	Sök igen
-find/replace	tinymce	sv	Sök/Ersätt
-the search has been compleated. the search string could not be found.	tinymce	sv	Sökningen är slutförd. Söksträngen kunde inte hittas.
-find	tinymce	sv	Sök
-find/replace	tinymce	sv	Sök/Ersätt
-all occurrences of the search string was replaced.	tinymce	sv	Alla träffar på söksträngen ersattes
-find what	tinymce	sv	Sök på
-replace with	tinymce	sv	Ersätt med
-direction	tinymce	sv	Sökriktning
-up	tinymce	sv	Uppåt
-down	tinymce	sv	Neråt
-match case	tinymce	sv	Matcha gemener/VERSALER
-find&nbsp;next	tinymce	sv	Sök&nbsp;nästa
-replace	tinymce	sv	Ersätt
-replace&nbsp;all	tinymce	sv	Ersätt&nbsp;alla
-cancel	tinymce	sv	Avbryt
-inserts a new table	tinymce	sv	Skapa ny tabell
-insert row before	tinymce	sv	Skapa rad f&ouml;re
-insert row after	tinymce	sv	Skapa rad efter
-delete row	tinymce	sv	Ta bort rad
-insert column before	tinymce	sv	Skapa kolumn f&ouml;re
-insert column after	tinymce	sv	Skapa kolumn efter
-remove col	tinymce	sv	Ta bort kolumn
-insert/modify table	tinymce	sv	Skapa/Redigera tabell
-width	tinymce	sv	Bredd
-height	tinymce	sv	H&ouml;jd
-columns	tinymce	sv	Kolumner
-rows	tinymce	sv	Rader
-cellspacing	tinymce	sv	Cellmellanrum
-cellpadding	tinymce	sv	Cellutfyllnad
-border	tinymce	sv	Rambredd
-alignment	tinymce	sv	Justering
-default	tinymce	sv	Ingen
-left	tinymce	sv	V&auml;nster
-right	tinymce	sv	H&ouml;ger
-center	tinymce	sv	Mitten
-class	tinymce	sv	Stil
-table row properties	tinymce	sv	Tabellradsinst&auml;llningar
-table cell properties	tinymce	sv	Tabellcellsinst&auml;llningar
-table row properties	tinymce	sv	Tabellradsinst&auml;llningar
-table cell properties	tinymce	sv	Tabellcellsinst&auml;llningar
-vertical alignment	tinymce	sv	Vertikal justering
-top	tinymce	sv	Toppen
-bottom	tinymce	sv	Botten
-table properties	tinymce	sv	Tabell egenskaper
-border color	tinymce	sv	Ramf&auml;rg
-bg color	tinymce	sv	Bakgrundsfärd
-merge table cells	tinymce	sv	Sammanfoga tabell celler
-split table cells	tinymce	sv	Delaupp tabell celler
-merge table cells	tinymce	sv	Sammanfoga tabell celler
-cut table row	tinymce	sv	Klipput tabell rad
-copy table row	tinymce	sv	Kopiera tabell rad
-paste table row before	tinymce	sv	Klistra in tabell rad f&ouml;re
-paste table row after	tinymce	sv	Klistra in tabell rad efter
+zoom	common	sv	Zooma

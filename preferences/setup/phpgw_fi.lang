@@ -10,20 +10,20 @@ change a user password by passing the old and new passwords.  returns true on su
 change your password	preferences	fi	Vaihda salasana
 change your profile	preferences	fi	Vaihda profiili
 change your settings	preferences	fi	Muuta asetuksia
-click to select a color	preferences	fi	Napsauta valitaksesi v‰rin
+click to select a color	preferences	fi	Paina valitaksesi v‰rin
 color	preferences	fi	V‰ri
 country	preferences	fi	Maa
 date format	preferences	fi	P‰iv‰m‰‰r‰n muoto
 default	preferences	fi	oletus
 default application	preferences	fi	Oletussovellus
 default preferences	preferences	fi	Oletusasetukset
-delete categories	preferences	fi	Poista luokat
+delete categories	preferences	fi	Poista kategoriat
 description can not exceed 255 characters in length !	preferences	fi	Kuvauksen pituus ei saa ylitt‰‰ 255:‰ merkki‰!
 do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	fi	Haluatko n‰ytt‰‰ kellonajan 24 tunnin muodossa, vai n‰ytt‰‰ 12 tuntia ja am/pm -lyhenteen?
 edit custom fields	preferences	fi	muokkaa omia kentti‰
 enter your new password	preferences	fi	Anna uusi salasana
 enter your old password	preferences	fi	Anna vanha salasana
-error: there was a problem finding the preference file for %1 in %2	preferences	fi	Virhe: Kohteelle %1 ei l?ytynyt asetustiedostoa kohteesta %2
+error: there was a problem finding the preference file for %1 in %2	preferences	fi	Virhe: Kohteelle %1 ei lˆytynyt asetustiedostoa kohteesta %2
 failed to change password.  please contact your administrator.	preferences	fi	Salasanan vaihto ei onnistunut. Ota yhteys p‰‰k‰ytt‰j‰‰n.
 forced preferences	preferences	fi	Pakotetut asetukset
 help off	preferences	fi	Piilota ohjeet
@@ -42,11 +42,13 @@ language	preferences	fi	Kieli
 max matches per page	preferences	fi	Osumien maksimim‰‰r‰ sivulla
 max number of icons in navbar	preferences	fi	Kuvakkeiden maksimim‰‰r‰ navigaatiopalkissa
 no default	preferences	fi	Ei oletusta
+no user-selection at all	common	fi	Ei ollenkaan k‰ytt‰j‰valintaa
 note: this feature does *not* change your email password. this will	preferences	fi	Huom: t‰m‰ asetus EI muuta s‰hkˆpostin salasanaa. S‰hkˆpostin salasana on vaihdetaan muuta kautta.
 note: this feature does *not* change your email password. this will need to be done manually.	preferences	fi	Huom! T‰m‰ asetus EI muuta s‰hkˆpostin salasanaa. S‰hkˆpostin salasana on vaihdetaan muuta kautta.
 please, select a new theme	preferences	fi	Valitse uusi teema
 popup with search	preferences	fi	Haun ponnahdusikkuna
 re-enter your password	preferences	fi	Kirjoita salasana uudelleen
+read prefs for the specified application.	preferences	fi	Lukuoikeudet tiettyyn sovellukseen
 select different theme	preferences	fi	Valitse toinen teema
 select one	preferences	fi	Valitse
 select the language of texts and messages within egroupware.<br>some languages may not contain all messages, in that case you will see an english message.	preferences	fi	Valitse kieli jota eGroupWare k‰ytt‰‰.<br>Osa kielist‰ ei ole t‰ysin k‰‰nnettyj‰, k‰‰nt‰m‰ttˆm‰t kohdat n‰kyv‰t silloin englanniksi.
@@ -62,16 +64,19 @@ show number of current users	preferences	fi	N‰yt‰ k‰ytt‰jien m‰‰r‰
 show text on navigation icons	preferences	fi	N‰yt‰ teksti navigaatiokuvakkeissa
 show_more_apps	common	fi	N‰yt‰ lis‰‰ sovelluksia
 text only	preferences	fi	Vain teksti
+the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fi	Oletus sovellus k‰ynnistyy kun kirjaudut eGroupWareen tai painat etusivu ikonia.<br>Sinulla voi olla enemm‰n kuin yksi sovellus etusivullasi, jollet m‰‰rittele tietty‰ sovellusta t‰h‰n (pit‰‰ s‰‰t‰ asetukset sovelluskohtaisesti).
 the old password is not correct	preferences	fi	Vanha salasana ei ole oikein
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fi	Valintaruutu n‰ytt‰‰ kaikki k‰ytett‰viss‰ olevat k‰ytt‰j‰t (saattaa hidastaa j‰rjestelm‰‰, jos k‰ytt‰ji‰ on paljon). K‰ytt‰ji‰ ja ryhmi‰ voidaan etsi‰ ponnahdusikkunassa.
+the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	fi	Kaksi viimeist‰ vaihtoehtoa rajoittava n‰kyvyytt‰ k‰ytt‰jille. Niit‰ EI tule asettaa yll‰pit‰jille.
 the two passwords are not the same	preferences	fi	Salasanat eiv‰t ole samoja
-theme (colors/fonts) selection	preferences	fi	Teeman (v‰rit/fontit) valinta
+theme (colors/fonts) selection	preferences	fi	Teeman (v‰rit / fontit) valinta
 this server is located in the %1 timezone	preferences	fi	Palvelin on aikavyˆhykkeell‰ %1
 time format	preferences	fi	Ajan muoto
 use default	preferences	fi	K‰yt‰ oletusta
 users choice	preferences	fi	K‰ytt‰j‰n valinta
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fi	Jos kyll‰, niin Koti ja Poistu -kuvakkeet n‰ytet‰‰n sovellusten kuvakkeiden joukossa.
 which currency symbol or name should be used in egroupware.	preferences	fi	Mit‰ rahayksikkˆ‰ eGroupWare k‰ytt‰‰.
+write prefs for the specified application.	preferences	fi	Kirjoitusoikeudet tiettyyn sovellukseen.
 you can show the applications as icons only, icons with app-name or both.	preferences	fi	Voit n‰ytt‰‰ sovellukset kuvakkeina, sovelluksen nimell‰ tai molemmilla.
 you do not have permission to set acl's in this mode!	preferences	fi	Et voi m‰‰ritell‰ ACL-oikeuksia t‰ss‰ tilassa!
 you must enter a password	preferences	fi	Anna salasana

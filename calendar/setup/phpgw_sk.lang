@@ -1,13 +1,14 @@
 %1 %2 in %3	calendar	sk	%1 %2 v %3
 %1 records imported	calendar	sk	Naimportovaných %1 záznamov
 %1 records read (not yet imported, you may go back and uncheck test import)	calendar	sk	naèítalo sa %1 záznamov (zatiaµ neboli naimportované, vra»te sa a ODznaète Test importu)
-<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sk	<b>Upozornenie:</b>Kalendár pou¾íva sviatky príslu¹né k Va¹ej krajine, ktorá je nastavená na %1. Mô¾ete ju zmeni» vo va¹om %2.<br />Sviatky sa %3 automaticky in¹talujú z %4. Mô¾ete to zmeni» v %5.
-a non blocking event will not conflict with other events	calendar	sk	neblokujúca udalos» nebude v konflikte s ostatnými udalos»ami
+<b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	sk	<b>Upozornenie:</b>V Kalendári sa pou¾ívajú sviatky, ktoré platia vo Va¹ej krajine. Tá je nastavená na %1. Mô¾ete ju zmeni» vo va¹om %2.<br />Sviatky sa %3 automaticky in¹talujú z %4. Mô¾ete to zmeni» v %5.
+a non blocking event will not conflict with other events	calendar	sk	Neblokujúca udalos» nebude v konflikte s ostatnými udalos»ami
 accept or reject an invitation	calendar	sk	Prija» alebo odmietnu» pozvanie
 accepted	calendar	sk	Prijal
 access denied to the calendar of %1 !!!	calendar	sk	Prístup odopretý ku kalendáru patriacemu %1 !!!
 action that caused the notify: added, canceled, accepted, rejected, ...	calendar	sk	Zmena, ktorá vyvolala upozornenie: Nové, Zru¹ené, Prijaté, Odmietnuté, ...
 actions	calendar	sk	Akcie
+actions...	calendar	sk	Akcie...
 add alarm	calendar	sk	Pridaj pripomienku
 added	calendar	sk	Pridané
 after current date	calendar	sk	Po súèasnom dátume
@@ -42,12 +43,12 @@ can't add alarms in the past !!!	calendar	sk	Pripomienky sa nedajú zadáva» do mi
 canceled	calendar	sk	Zru¹ené
 charset of file	calendar	sk	Znaková sada súboru
 close the window	calendar	sk	Zavrie» okno
-compose a mail to all participants after the event is saved	calendar	sk	napísa» email v¹etkým úèastníkom po ulo¾ení udalosti
+compose a mail to all participants after the event is saved	calendar	sk	po ulo¾ení udalosti napísa» email v¹etkým úèastníkom
 copy of:	calendar	sk	Kópia (èoho):
 copy this event	calendar	sk	Kopírova» udalos»
 countries	calendar	sk	Krajiny
 country	calendar	sk	Krajina
-create an exception at this recuring event	calendar	sk	Vytvori» výnimku pre túto pravidelnú udalos»
+create an exception for the given date	calendar	sk	Vytvori» výnimku pre zadaný dátum
 create new links	calendar	sk	Vytvori» nové odkazy
 csv	calendar	sk	CSV
 csv-fieldname	calendar	sk	Pole v CVS
@@ -72,9 +73,9 @@ disinvited	calendar	sk	Zru¹ená pozvánka
 display status of events	calendar	sk	Zobrazi» stav udalostí
 displayed view	calendar	sk	zobrazený pohµad
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	sk	Zobrazi» predvolený kalendár na úvodnej stránke (tej, ktorá sa zobrazuje hneï po prihlásení do eGroupWare)?
-do you want a weekview with or without weekend?	calendar	sk	®eláte si tý¾denný pohµad s alebo bez víkendu?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sk	Chcete dostáva» správy upovedomujúce o nových èi zmenených udalostiach? Budete informovaní aj o zmenách ktoré sami urobíte.<br>Upovedomenia mô¾ete obmedzi» aj na urèité typy zmien. Ka¾dý prvok obsahuje zároveò v¹etky predo¹lé upovedomenia. V¹etky zmeny zahàòajú zmeny titulku, opisu, úèastníkov, ale nie odpovede úèastníkov. Ak vlastník udalosti ¾iada akékoµvek správy o zmenách, dostane v¾dy aj odozvy úèastníkov, napríklad prijatia a odmietnutia.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sk	Chcete dostáva» emailom pravidelný súhrn va¹ich schôdzok?<br>Súhrn sa bude posiela» na va¹u be¾nú adresu ka¾dé ráno, prípadne v pondelok pre tý¾denný súhrn.<br>Posiela sa len vtedy, ak nejaké schôdzky na daný deò alebo tý¾deò plánované.
+do you want a weekview with or without weekend?	calendar	sk	®eláte si tý¾denný pohµad s víkendom alebo bez?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	sk	Chcete dostáva» správy, ktoré Vás upovedomia o nových alebo zmenených udalostiach? Budete informovaní aj o zmenách ktoré sami urobíte.<br>Upovedomenia sa dajú aj obmedzi» na urèité typy zmien. Ka¾dý prvok obsahuje zároveò v¹etky predo¹lé upovedomenia. V¹etky zmeny zahàòajú zmeny titulku, opisu, úèastníkov, ale nie odpovede úèastníkov. Ak vlastník udalosti ¾iada akékoµvek správy o zmenách, dostane v¾dy aj odozvy úèastníkov, napríklad prijatia a odmietnutia.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	sk	Chcete dostáva» emailom pravidelný súhrn va¹ich schôdzok?<br>Súhrn sa bude posiela» na va¹u be¾nú adresu ka¾dé ráno, prípadne v pondelok pre tý¾denný súhrn.<br>Posiela sa len vtedy, ak máte plánované nejaké schôdzky na daný deò alebo tý¾deò.
 do you wish to autoload calendar holidays files dynamically?	admin	sk	Mám automaticky nahráva» súbory sviatkov?
 download	calendar	sk	Stiahnu»
 download this event as ical	calendar	sk	Stiahnu» túto udalos» ako iCal
@@ -102,10 +103,11 @@ event saved	calendar	sk	Udalos» ulo¾ená
 event will occupy the whole day	calendar	sk	Udalos» zaberie celý deò
 exception	calendar	sk	Výnimka
 exceptions	calendar	sk	Výnimky
+execute a further action for this entry	calendar	sk	Vykona» ïal¹iu akciu pre tento záznam
 existing links	calendar	sk	Existujúce odkazy
 export	calendar	sk	Export
 extended	calendar	sk	Roz¹írený
-extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sk	Roz¹írený formát v¾dy obsahuje v¹etky podrobnosti o udalosti. Formát iCal sa dá importova» do niektorých ïal¹ích kalendáønych aplikácií.
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sk	Roz¹írený formát obsahuje v¹etky podrobnosti o udalosti. Formát iCal sa dá importova» do niektorých ïal¹ích kalendárnych aplikácií.
 fieldseparator	calendar	sk	Oddelovaè polo¾iek
 filename	calendar	sk	Názov súboru
 filename of the download	calendar	sk	Názov súboru na stiahnutie
@@ -117,7 +119,7 @@ format of event updates	calendar	sk	Formát správy o zmenách
 forward half a month	calendar	sk	dopredu o polovicu mesiaca
 forward one month	calendar	sk	dopredu o mesiac
 four days view	calendar	sk	©tvordenný pohµad
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sk	Informácie o zaneprázdnení nie sú povolené neprihláseným pou¾ívateµom: po¾ívateµ '%1' je neznámý alebo zadal chybné heslo !!!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	sk	Informácie o zaneprázdnení nie sú povolené neprihláseným pou¾ívateµom! Po¾ívateµ '%1' je neznámý alebo zadal chybné heslo !!!
 freetime search	calendar	sk	Vyhµadanie voµného èasu
 fri	calendar	sk	Pi
 full description	calendar	sk	Opis
@@ -145,7 +147,7 @@ ical export	calendar	sk	Export iCal
 ical file	calendar	sk	Súbor iCal
 ical import	calendar	sk	Import iCal
 ical successful imported	calendar	sk	iCal úspe¹ne naimportovaný
-if checked holidays falling on a weekend, are taken on the monday after.	calendar	sk	Ak za¹krtnete toto pole a sviatok pripadne na víkend, automaticky se presunie na nasledujúcí pondelok.
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	sk	Ak za¹krtnete toto pole a sviatok pripadne na víkend, automaticky se presunie na nasledujúci pondelok.
 if you dont set a password here, the information is available to everyone, who knows the url!!!	calendar	sk	Ak tu nezadáte heslo, informácia sa sprístupní ka¾dému kto pozná URL!!!
 ignore conflict	calendar	sk	Ignoruj konflikt
 import	calendar	sk	Import
@@ -202,7 +204,7 @@ overlap holiday	calendar	sk	prekry» sviatky
 participants	calendar	sk	Úèastníci
 participants disinvited from an event	calendar	sk	Pre úèastníkov je pozvánka zru¹ená
 participants, resources, ...	calendar	sk	Úèastníci, Zdroje,...
-password for not loged in users to your freebusy information?	calendar	sk	Prístupové heslo k informáciám o zaneprázdnení pre neprihlásené osoby
+password for not loged in users to your freebusy information?	calendar	sk	Prístupové heslo k informáciám o zaneprázdnení pre neprihlásené osoby..?
 people holiday	calendar	sk	osobná dovolenka
 permission denied	calendar	sk	Prístup odopretý
 planner by category	calendar	sk	Plánovaè - podµa kategórie
@@ -213,6 +215,7 @@ previous	calendar	sk	Predchádzajúca
 private and global public	calendar	sk	Súkromné i verejnì prístupné
 private and group public	calendar	sk	Prístupné súkromne i pre skupinu
 private only	calendar	sk	Iba súkromne
+quantity	calendar	sk	Mno¾stvo
 re-edit event	calendar	sk	Znovu uprav
 receive email updates	calendar	sk	Dostáva» informácie elektronickou po¹tou?
 receive summary of appointments	calendar	sk	Dostáva» súhrn udalostí
@@ -220,7 +223,7 @@ recurrence	calendar	sk	Pravidelné opakovanie
 recurring event	calendar	sk	Opakujúca se udalos»
 rejected	calendar	sk	Odmietol
 repeat days	calendar	sk	Opakované dni
-repeat the event until which date (empty means unlimited)	calendar	sk	opakova» udalos» a¾ dokedy (prázdne znamená bez obmedzenia)
+repeat the event until which date (empty means unlimited)	calendar	sk	a¾ dokedy sa má udalos» opakova» (prázdne znamená bez obmedzenia)
 repeat type	calendar	sk	Druh opakovania
 repeating event information	calendar	sk	Informácie o opakovaní udalosti
 repeating interval, eg. 2 to repeat every second week	calendar	sk	Interval opakovania, napr. 2 pre opakovanie ka¾dý druhý tý¾deò
@@ -241,8 +244,8 @@ set a year only for one-time / non-regular holidays.	calendar	sk	Rok nastavte ib
 set new events to private	calendar	sk	Nastav nové udalosti ako súkromné
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sk	Majú se odmietnuté pozvánky stále zobrazova» v kalendári?<br>Mô¾ete ich prija» neskôr (napríklad keï sa vyrie¹i konflikt plánovania), ale len ak sú stále zobrazené vo va¹om kalendári!
 should new events created as private by default ?	calendar	sk	Majú sa nové udalosti be¾ne vytvára» ako súkromné?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sk	Mô¾u neprihlásené osoby vidie» informácie o Va¹am zaneprázdnení èi voµnom èase? Mô¾ete si nastavi» aj dodatoèné heslo, odli¹né od Va¹eho be¾ného hesla, k ochrane týchto údajov. Tieto  údaje sú vo formáte iCal a obsahujú iba èasy va¹ej zaneprázdnenosti, bez zbytoèných podrobností ako napr. názvov udalostí, opisov alebo miest. Odkaz na tieto informácie je %1.
-should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sk	Má se za jménem u¾ivatele zobrazovat jeho vztah k události (pøijmul, odmítnul, ...)?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sk	Chcete, aby informácie o Va¹om zaneprázdnení èi voµnom èase boli dostupné aj pre neprihlásené osoby? Ak chcete tieto údaje chráni», mô¾ete si nastavi» aj dodatoèné heslo, odli¹né od Va¹eho be¾ného hesla. Údaje sú vo formáte iCal a obsahujú iba èasy va¹ej zaneprázdnenosti, bez zbytoèných podrobností ako napr. názvov udalostí, opisov alebo miest. Odkaz na tieto informácie je %1.
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sk	Má se za menom pou¾ívateµa zobrazova» jeho vz»ah k udalosti (prijal, odmietol, ...)?
 show default view on main screen	calendar	sk	Zobraz predvolený pohµad na hlavnej stránke
 show invitations you rejected	calendar	sk	Zobraz odmietnuté pozvánky
 show list of upcoming events	calendar	sk	Zobraz zoznam nadchádzajúcich udalostí
@@ -261,15 +264,15 @@ sun	calendar	sk	Ne
 tentative	calendar	sk	Predbe¾ne prijal
 test import (show importable records <u>only</u> in browser)	calendar	sk	Otestova» import (importované záznamy sa zobrazia <u>len</u> v prehliadaèi)
 this day is shown as first day in the week or month view.	calendar	sk	Tento deò sa zobrazuje ako prvý v tý¾dennom èi mesaènom pohµade.
-this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sk	Touto hodinou sa konèí denný pohµad. Udalosti po tejto hodine se zobrazia za denným pohµadem.
-this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sk	Touto hodinou sa zaèína denný pohµad. Udalosti pred touto hodinou se zobrazia pred denným pohµadem.<br>Zároveò sa táto hodina pou¾ije ako východzia pre nové udalosti.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	sk	Touto hodinou sa konèí denný pohµad. Udalosti po tejto hodine se zobrazia a¾ za denným pohµadom.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	sk	Touto hodinou sa zaèína denný pohµad. Udalosti pred touto hodinou se zobrazia pred denným pohµadom.<br>Zároveò sa táto hodina pou¾ije ako východzia pre nové udalosti.
 this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	sk	Táto skupina bude automaticky vybratá pri vstupe do plánovaèa. V plánovaèi ju mô¾ete zmeni» podµa µubovôle.
 this message is sent for canceled or deleted events.	calendar	sk	Táto správa se posiela pri zru¹ení èi zmazaní udalostí.
 this message is sent for modified or moved events.	calendar	sk	Táto správa sa posiela pri zmene èi presune udalostí.
 this message is sent to disinvited participants.	calendar	sk	Táto správa sa posiela úèastníkom pri zru¹ení pozvánky.
-this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sk	Táto správa sa posiela v¹etkým úèastníkom Va¹eho stretnutia, ktorí po¾iadali o správy o nových udalostiach<br>Mô¾ete pou¾i» rôzné premenné, ktoré budú nahradené skutoènými údajmi o udalosti.<br>Prvý riadok je predmet správy.
-this message is sent when you accept, tentative accept or reject an event.	calendar	sk	Táto správa se posiela keï prijmete, predbe¾ne prijmete èi odmietnete udalos» (stretnutie).
-this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sk	Táto správa se posiela keï je nastavená pripomienka nejakej udalosti. Uveïte v¹etky údaje ktoré mô¾ete potrebova».
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	sk	Táto správa sa posiela v¹etkým úèastníkom Va¹eho stretnutia, ktorí po¾iadali o zasielanie upovedomení o nových udalostiach<br>Mô¾ete pou¾i» rôzné premenné, ktoré budú nahradené skutoènými údajmi o udalosti.<br>Prvý riadok je predmet správy.
+this message is sent when you accept, tentative accept or reject an event.	calendar	sk	Táto správa se posiela vtedy, keï prijmete, predbe¾ne prijmete èi odmietnete udalos» (stretnutie).
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	sk	Táto správa se posiela vtedy, keï je nastavená pripomienka nejakej udalosti. Uveïte v¹etky údaje ktoré mô¾ete potrebova».
 three month	calendar	sk	tri mesiace
 thu	calendar	sk	©t
 til	calendar	sk	do
@@ -283,6 +286,7 @@ two weeks	calendar	sk	dva tý¾dne
 updated	calendar	sk	Aktualizované
 use end date	calendar	sk	pou¾i» koncový dátum
 use the selected time and close the popup	calendar	sk	Pou¾i» zvolený èas a zavrie» okno
+user or group	calendar	sk	Pou¾ívateµ alebo skupina
 view this event	calendar	sk	Zobrazi» túto udalos»
 views with fixed time intervals	calendar	sk	Pohµady s pevnými intervalmi zobrazenia
 wed	calendar	sk	St
@@ -302,12 +306,12 @@ work day ends on	calendar	sk	Pracovný deò konèí o
 work day starts on	calendar	sk	Pracovný deò zaèína o
 yearly	calendar	sk	Roène
 yearview	calendar	sk	Roèný pohµad
-you can either set a year or a occurence, not both !!!	calendar	sk	Mô¾ete zada» buï rok alebo výskyt, ale nie obidvoje !!!
+you can either set a year or a occurence, not both !!!	calendar	sk	Mô¾ete zada» buï rok, alebo výskyt, ale nie obidvoje !!!
 you can only set a year or a occurence !!!	calendar	sk	Mô¾ete zada» buï rok alebo výskyt, ale nie obidvoje !!!
 you do not have permission to read this record!	calendar	sk	Nemáte právo èíta» tento záznam!
 you have a meeting scheduled for %1	calendar	sk	Máte naplánované stretnutie na %1
 you have been disinvited from the meeting at %1	calendar	sk	Va¹e pozvanie na stretnutie o %1 bolo zru¹ené
 you need to select an ical file first	calendar	sk	Najprv treba vybra» súbor iCal.
 you need to set either a day or a occurence !!!	calendar	sk	Musíte nastavi» buï deò alebo výskyt !!!
-your meeting scheduled for %1 has been canceled	calendar	sk	Stretnutie plánovavané na %1 bolo zru¹ené
-your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sk	Stretnutie plánované na %1 bolo prelo¾ené na %2
+your meeting scheduled for %1 has been canceled	calendar	sk	Stretnutie plánované na %1 bolo zru¹ené
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	sk	Stretnutie, pôvodne plánované na %1, bolo prelo¾ené na %2.

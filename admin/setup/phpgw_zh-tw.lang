@@ -174,7 +174,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	zh
 enter the background color for the login page	admin	zh-tw	請輸入登入頁面的背景顏色
 enter the background color for the site title	admin	zh-tw	輸入網站標題的背景顏色
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	zh-tw	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	zh-tw	輸入暫存檔案存放的完整路徑：<br>﹝如：/tmp、C:\TEMP﹞
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	zh-tw	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
+enter the full path for users and group files.<br>examples: /files, e:files	admin	zh-tw	輸入使用者或群組檔案存放的完整路徑：<br>﹝如：/files、E:\FILES﹞
 enter the hostname of the machine on which this server is running	admin	zh-tw	輸入這個伺服器主機的主機名稱
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	zh-tw	輸入 egroupWare 的網頁位址 URL：<br>如：http://www.domain.com/egroupware  或  /egroupware<br><b>結尾無斜線</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	zh-tw	輸入搜尋的字串，如果要顯示所有事件，保持空白並且再次按下送出
@@ -422,7 +424,6 @@ view this user	admin	zh-tw	查看該使用者
 view user account	admin	zh-tw	瀏覽使用者帳號
 who would you like to transfer all records owned by the deleted user to?	admin	zh-tw	您希望將被移除使用者的資料轉移給誰？
 would you like egroupware to cache the egw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 egw 資訊嗎？
-would you like egroupware to cache the phpgw info array ?	admin	zh-tw	您希望 eGroupWare 暫存 phpgw 資訊嗎？
 would you like egroupware to check for a new version<br>when admins login ?	admin	zh-tw	您希望 egroupWare 自動於管理者登入時檢查是否有最新版本？
 would you like egroupware to check for new application versions when admins login ?	admin	zh-tw	您希望egroupWare在每次管理者登入時檢查新版的應用程式嗎？
 would you like to automaticaly load new langfiles (at login-time) ?	admin	zh-tw	您想要自動讀取新的語言檔案嗎(登入時)？
