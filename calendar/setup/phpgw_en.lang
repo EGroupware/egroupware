@@ -114,6 +114,8 @@ filename of the download	calendar	en	Filename of the download
 find free timeslots where the selected participants are availible for the given timespan	calendar	en	Find free timeslots where the selected participants are availible for the given timespan
 firstname of person to notify	calendar	en	Firstname of person to notify
 for	calendar	en	for
+for all future events	calendar	en	For all future events
+for this event	calendar	en	For this event
 for which views should calendar show distinct lines with a fixed time interval.	calendar	en	For which views should calendar show distinct lines with a fixed time interval.
 format of event updates	calendar	en	Format of event updates
 forward half a month	calendar	en	forward half a month
@@ -259,6 +261,7 @@ startdate and -time of the search	calendar	en	Startdate and -time of the search
 startdate of the export	calendar	en	Startdate of the export
 startrecord	calendar	en	Startrecord
 status changed	calendar	en	Status changed
+status recurrence	calendar	en	Status recurrence
 submit to repository	calendar	en	Submit to Repository
 sun	calendar	en	Sun
 tentative	calendar	en	Tentative
