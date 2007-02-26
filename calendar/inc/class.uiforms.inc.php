@@ -267,7 +267,7 @@ class uiforms extends uical
 						
 						
 					default:		// existing participant row
-						foreach(array('uid','status','quantity') as $name)
+						foreach(array('uid','status','status_recurrence','quantity') as $name)
 						{
 							$$name = $data[$name];
 						}
@@ -289,7 +289,7 @@ class uiforms extends uical
 							}
 							if ($data['old_status'] != $status)
 							{
-								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE ? $content['participants']['status_date'] : 0))
+								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE && $status_recurrence != 'A' ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status
 									$msg = lang('Status changed');
@@ -607,6 +607,7 @@ class uiforms extends uical
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
 				'mail' => array('label' => 'Mail participants', 'title' => 'compose a mail to all participants after the event is saved'),
 			),
+			'status_recurrence' => array('' => 'for this event', 'A' => 'for all future events'),
 		);
 		unset($sel_options['status']['G']);
 		if (!is_array($event))
@@ -638,7 +639,8 @@ class uiforms extends uical
 				$preserv['actual_date'] = $event['start'];		// remember the date clicked
 				if ($event['recur_type'] != MCAL_RECUR_NONE)
 				{
-					$event = $this->bo->read($cal_id,0,true);	// recuring event --> read the series
+					$participants = array('participants' => $event['participants'], 'participant_types' => $event['participant_types']); // preserv participants of this event
+					$event = array_merge($this->bo->read($cal_id,0,true), $participants);	// recuring event --> read the series + concatenate with participants of the selected recurrence
 				}
 			}
 			// set new start and end if given by $_GET
@@ -690,7 +692,7 @@ class uiforms extends uical
 					'quantity' => substr($status,1),
 				);
 				$readonlys[$row.'[quantity]'] = $type == 'u' || !isset($this->bo->resources[$type]['max_quantity']);
-				$readonlys[$row.'[status]'] = !$this->bo->check_status_perms($uid,$event);
+				$readonlys[$row.'[status]'] = $readonlys[$row.'[status_recurrence]'] = !$this->bo->check_status_perms($uid,$event);
 				$readonlys["delete[$uid]"] = !$this->bo->check_perms(EGW_ACL_EDIT,$event);
 				$content['participants'][$row++]['title'] = $name == 'accounts' ? 
 					$GLOBALS['egw']->common->grab_owner_name($id) : $this->link->title($name,$id);
@@ -720,9 +722,7 @@ class uiforms extends uical
 			foreach($this->bo->resources as $data) $content['participants']['cal_resources'] .= ','.$data['app'];
 		}
 		$content['participants']['status_date'] = $preserv['actual_date'];
-// 		echo '$content[participants]'; _debug_array($content['participants']);
-// 		echo '$content[participant_types]'; _debug_array($content['participant_types']);
-// 		_debug_array($sel_options);
+		$content['participants']['hide_status_recurrence'] = $event['recur_type'] == MCAL_RECUR_NONE;
 		$preserv = array_merge($preserv,$content);
 
 		if ($event['alarm'])
