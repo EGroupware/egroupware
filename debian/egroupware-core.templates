@@ -1,0 +1,47 @@
+Template: egroupware/configuration/note
+Type: note
+_Description: eGroupWare core package configuration note
+ The eGroupWare core package configuration will only prompt you for the
+ administrator name and password.  To complete the initialization, point
+ your browser to the eGroupWare setup, normally at
+ .
+ http(s)://${site}/egroupware/setup/
+ .
+ There you can continue the configuration, initialize the database, and
+ register installed eGroupWare applications.
+
+Template: egroupware/webserver
+Type: multiselect
+_Choices: Apache 2, Apache, Apache SSL, Apache Perl
+Default: Apache 2
+_Description: Web server for eGroupWare:
+ Choose here which web server you want to configure eGroupWare for.
+ eGroupWare supports any web server that supports PHP, but this
+ configuration process only supports some Apache variants.  Feel free to
+ submit any hint or patch that would help in the setup of other web
+ servers.
+
+Template: egroupware/header/user
+Type: string
+Default: admin
+_Description: Header admin user name:
+ The header admin user can change various global configuration settings
+ and add eGroupWare domains via a provided web interface.  You must
+ choose a name for that user.
+
+Template: egroupware/header/password
+Type: password
+_Description: Header admin password:
+ You must choose a password for the header admin user.
+
+Template: egroupware/header/password/confirm
+Type: password
+_Description: Confirm the header admin password:
+ Please enter the header admin password again.  If the password you enter
+ here does not match the previously entered one, you will be asked to
+ enter it again.
+
+Template: egroupware/header/password/mismatch
+Type: text
+_Description: Passwords did not match.
+ The header admin passwords you entered did not match.  Please try again.

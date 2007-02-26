@@ -1,0 +1,157 @@
+#
+#    Translators, if you are not familiar with the PO format, gettext
+#    documentation is worth reading, especially sections dedicated to
+#    this format, e.g. by running:
+#         info -n '(gettext)PO Files'
+#         info -n '(gettext)Header Entry'
+#
+#    Some information specific to po-debconf are available at
+#            /usr/share/doc/po-debconf/README-trans
+#         or http://www.debian.org/intl/l10n/po-debconf/README-trans
+#
+#    Developers do not need to manually edit POT or PO files.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: egroupware 1.0.00.005-1.dfsg-2\n"
+"Report-Msgid-Bugs-To: petere@debian.org\n"
+"POT-Creation-Date: 2006-08-18 21:34+0200\n"
+"PO-Revision-Date: 2004-10-22 14:19+0900\n"
+"Last-Translator: Hideki Yamane <henrich@samba.gr.jp>\n"
+"Language-Team: Japanese <debian-japanese@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid "eGroupWare core package configuration note"
+msgstr "eGroupWare コアパッケージ設定上の注意点"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid ""
+"The eGroupWare core package configuration will only prompt you for the "
+"administrator name and password.  To complete the initialization, point your "
+"browser to the eGroupWare setup, normally at"
+msgstr ""
+"eGroupWare コアパッケージの設定では、管理者名とパスワードのみを要求します。初"
+"期設定を完了するには、ブラウザを使って、eGroupWare の設定ページを参照してくだ"
+"さい。"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid "http(s)://${site}/egroupware/setup/"
+msgstr "http(s)://${site}/egroupware/setup/"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid ""
+"There you can continue the configuration, initialize the database, and "
+"register installed eGroupWare applications."
+msgstr ""
+"ここで設定を続行し、データベースを初期化して、インストールした eGroupWare の"
+"アプリケーションを登録できます。"
+
+#. Type: multiselect
+#. Choices
+#: ../egroupware-core.templates:2001
+msgid "Apache 2, Apache, Apache SSL, Apache Perl"
+msgstr "Apache 2, Apache, Apache SSL, Apache Perl"
+
+#. Type: multiselect
+#. Description
+#: ../egroupware-core.templates:2002
+msgid "Web server for eGroupWare:"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../egroupware-core.templates:2002
+#, fuzzy
+msgid ""
+"Choose here which web server you want to configure eGroupWare for. "
+"eGroupWare supports any web server that supports PHP, but this configuration "
+"process only supports some Apache variants.  Feel free to submit any hint or "
+"patch that would help in the setup of other web servers."
+msgstr ""
+"eGroupWare は PHP 4 をサポートしている web サーバであれば、どのサーバであって"
+"もサポートしていますが、この設定プロセスでは Apache 系のみをサポートしていま"
+"す。他の web サーバの設定を手助けしてくれるヒントやパッチなどがあれば、ご自由"
+"にどうぞ。"
+
+#. Type: string
+#. Description
+#: ../egroupware-core.templates:3001
+#, fuzzy
+msgid "Header admin user name:"
+msgstr "header admin のユーザ名を入力してください:"
+
+#. Type: string
+#. Description
+#: ../egroupware-core.templates:3001
+msgid ""
+"The header admin user can change various global configuration settings and "
+"add eGroupWare domains via a provided web interface.  You must choose a name "
+"for that user."
+msgstr ""
+"header admin ユーザは、全般にわたる様々な設定を変更し、web インターフェイスを"
+"介して eGroupWare ドメインを追加できます。このユーザの名前を選ばなければなり"
+"ません。"
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:4001
+#, fuzzy
+msgid "Header admin password:"
+msgstr "header admin のパスワードを入力してください:"
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:4001
+msgid "You must choose a password for the header admin user."
+msgstr "header admin ユーザ向けのパスワードを設定する必要があります。"
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:5001
+#, fuzzy
+msgid "Confirm the header admin password:"
+msgstr "header admin のパスワードを入力してください:"
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:5001
+msgid ""
+"Please enter the header admin password again.  If the password you enter "
+"here does not match the previously entered one, you will be asked to enter "
+"it again."
+msgstr ""
+"もう一度 header admin のパスワードを入力してください。パスワードが先ほど入れ"
+"たものと一致しない場合、もう一度入力を要求されます。"
+
+#. Type: text
+#. Description
+#: ../egroupware-core.templates:6001
+msgid "Passwords did not match."
+msgstr "パスワードが一致しません。"
+
+#. Type: text
+#. Description
+#: ../egroupware-core.templates:6001
+msgid ""
+"The header admin passwords you entered did not match.  Please try again."
+msgstr ""
+"入力された header admin のパスワードが一致しません。もう一度入力してくださ"
+"い。"
+
+#~ msgid "Which web server do you want to configure eGroupWare for?"
+#~ msgstr "どの web サーバ向けに eGroupWare を設定しますか?"
+
+#~ msgid "Enter the header admin password again:"
+#~ msgstr "もう一度 header admin のパスワードを入力してください:"

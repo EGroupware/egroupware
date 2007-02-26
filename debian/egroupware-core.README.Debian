@@ -1,0 +1,148 @@
+eGroupWare for Debian
+=====================
+
+Table of Contents
+-----------------
+
+- General
+- Security Advisory
+- Preparation Steps for PostgreSQL
+- Preparation Steps for MySQL
+- LDAP Setup
+
+
+General
+-------
+
+It is highly recommended that eGroupWare only be accessible through
+SSL (https).  This will protect the transmission of your users'
+passwords and personal data.  Users of Apache 1 can achieve that by
+configuring eGroupWare only for Apache-SSL.  For users of Apache 2, it
+may be necessary to explicitly disable access to eGroupWare without
+SSL, for example with the following configuration in the respective
+virtual host definition:
+
+<Directory /usr/share/egroupware>
+    Order deny,allow
+    Deny from all
+</Directory>
+
+The URL for the eGroupWare installation is of the form
+<http(s)://yourhostname/egroupware/>.  You can change this and some
+other web-related settings in /etc/egroupware/apache.conf.  But you
+first need to do some setup, so read on ...
+
+Please log in to the web-based eGroupWare setup tool after installing
+or upgrading the eGroupWare packages.  The URL is of the form
+<http(s)://yourhostname/egroupware/setup/>.  If this is your first
+installation, you should first prepare the database management system
+of your choice and optionally an LDAP server as outlined below.  The
+connection parameters for the database and optionally the LDAP server
+must later be entered in the setup tool.
+
+Also log in to the web-based setup tool before uninstalling eGroupWare
+application packages to unregister those applications.  The Debian
+package management system cannot do that automatically.  If you forget
+that, you will have leftovers from the uninstalled applications in the
+database.  (If you forget, you can reinstall the package, unregister
+the application, and remove it again.)
+
+The eGroupWare Debian package does not clear out or drop the database
+when the package is purged.  You need to do that yourself.
+
+
+Security Advisory
+-----------------
+
+eGroupWare stores the database password in plain text in
+/var/lib/egroupware/header.inc.php.  This file is readable by the user
+www-data, which means that every user that can execute user-defined
+scripts (PHP, CGI, etc.) running as the web server user www-data can
+read this file and steal all your eGroupWare data.  Therefore you
+should do at least one of the following:
+
+- Don't allow any untrusted users on your machine.
+
+- Don't allow any untrusted users to run their own PHP, CGI, etc.
+
+- Make sure all the user-defined content is run as a different user,
+  for example using suEXEC.
+
+Alternatively, you may want to run eGroupWare as a separate user or in
+a separate Apache instance altogether, but this is nontrivial to set
+up and not supported by this package (yet).  Suggestions are welcome.
+
+
+Preparation Steps for PostgreSQL
+--------------------------------
+
+The PostgreSQL database system can be on a remote host, of course.
+Substitute the appropriate IP addresses below.
+
+Create a user and database for eGroupWare:
+
+# su - postgres
+$ createuser -A -D -P egroupware
+[enter a password for the user when prompted]
+$ createdb egroupware
+
+You need to configure PostgreSQL to allow connections from the web
+server.  This is not allowed by default.  Add a line like this to
+/etc/postgresql/x.y/foo/pg_hba.conf (where "x.y" is the version number
+such as "8.1", and "foo" is the name of the cluster instance such as
+"main"), most simply before all other records:
+
+host  egroupware  egroupware  127.0.0.1  255.255.255.255  md5
+
+(This allows any OS user from 127.0.0.1 to connect to the PostgreSQL
+database "egroupware" as PostgreSQL user "egroupware" if they can
+supply a valid password.)
+
+If you are using PostgreSQL 7.4, you need to allow TCP/IP access to the
+database server by setting the parameter tcpip_socket to true in
+postgresql.conf.  In 8.0 and later, the parameter is called
+listen_addresses and the default is sufficient.
+
+After having made these changes, run
+
+# /etc/init.d/postgresql-x.y reload
+
+More information about PostgreSQL client authentication can be found
+in the file
+/usr/share/doc/postgresql-doc-x.y/html/client-authentication.html in
+the package postgresql-doc-x.y.
+
+
+Preparation Steps for MySQL
+---------------------------
+
+Set up a database for eGroupWare and grant user access:
+
+$ mysql -u root
+mysql> CREATE DATABASE egroupware;
+mysql> GRANT ALL ON egroupware.* TO 'egroupware'@'localhost' IDENTIFIED BY "password";
+
+If the MySQL server is on a remote host, substitute the name of the
+host of the web server for localhost in the statement above.
+Additionally, the option bind-address in /etc/mysql/my.cnf may need to
+be changed to accept connections from remote hosts.
+
+
+LDAP Setup
+----------
+
+To be able to store eGroupWare user or addressbook data in an LDAP
+server (not required; you can use an SQL database):
+
+1. Install the package egroupware-ldap on the machine hosting the LDAP
+   server (only OpenLDAP 2.x is supported), and follow the
+   instructions in its /usr/share/doc/egroupware-ldap/README.Debian.
+   This prepares the LDAP server for eGroupWare data.
+
+2. Follow the instructions in
+   /usr/share/doc/egroupware-core/setup/README.ldap.gz once you are in
+   the domain configuration phase.  This tells eGroupWare to use the
+   LDAP server.
+
+
+ -- Peter Eisentraut <petere@debian.org>, August 2006

@@ -1,0 +1,29 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## ldap doc patch by Peter Eisentraut <petere@debian.org>
+##
+## DP: changes the links for the LDAP setup documentation for the Debian package
+
+@DPATCH@
+diff -urNad egroupware-1.0.0.007-2.dfsg/setup/doc/README.ldap /tmp/dpep.dqhdzb/egroupware-1.0.0.007-2.dfsg/setup/doc/README.ldap
+--- egroupware-1.0.0.007-2.dfsg/setup/doc/README.ldap	2005-04-19 13:26:23.000000000 +0200
++++ /tmp/dpep.dqhdzb/egroupware-1.0.0.007-2.dfsg/setup/doc/README.ldap	2005-04-21 11:46:06.373528232 +0200
+@@ -31,7 +31,8 @@
+   the account usernames and other data will be copied to our SQL accounts table.
+ 
+ 2. If you want to store account information in an existing LDAP tree:
+-  a. Install the LDAP schema per directions in phpgwapi/doc/ldap/README.
++  a. Install the LDAP schema per directions in 
++     /usr/share/doc/egroupware-ldap/README.Debian (package egroupware-ldap).
+   b. Configure eGroupWare to use LDAP auth and LDAP accounts (Step 2)
+   c. Configure a valid LDAP host, LDAP accounts context, and LDAP groups context,
+      LDAP rootdn, and LDAP root password.  The rootdn/rootpw can match what is setup
+@@ -49,7 +50,8 @@
+ 	 and attributes to existing LDAP entries.
+ 
+ 3. If you want to store account information in a new LDAP tree only for eGroupWare:
+-  a. Install the LDAP schema per directions in phpgwapi/doc/ldap/README.
++  a. Install the LDAP schema per directions in
++     /usr/share/doc/egroupware-ldap/README.Debian (package egroupware-ldap).
+   b. Configure eGroupWare to use LDAP auth and LDAP accounts (Step 2)
+   c. Configure a valid LDAP host, LDAP accounts context, and LDAP groups context,
+      LDAP rootdn, and LDAP root password.  The rootdn/rootpw can match what is setup

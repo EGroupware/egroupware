@@ -1,0 +1,17 @@
+To-do list for the eGroupWare Debian package
+============================================
+
+- When the (slightly patched) adodb in egroupware is in sync with the
+  released upstream version and the Debian package, we should symlink
+  egroupware to the adodb package installation instead of installing
+  our own.
+
+- It would be nice to only install the necessary subset of the files
+  web accessible.  The rest, for example the include files, templates,
+  and language files should be installed hidden from the web user.  The
+  settings PHPGW_SERVER_ROOT and PHPGW_INCLUDE_ROOT probably go in that
+  direction, but they are currently applied inconsistently throughout
+  the source code.
+
+
+Last changed: 2004-11-07

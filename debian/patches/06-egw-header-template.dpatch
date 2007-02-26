@@ -1,0 +1,33 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## header template by Peter Eisentraut <petere@debian.org>
+##
+## DP: allows the minimally filled in header template to be used as default
+
+@DPATCH@
+diff -urNad egroupware-1.2-1.dfsg~/header.inc.php.template egroupware-1.2-1.dfsg/header.inc.php.template
+--- egroupware-1.2-1.dfsg~/header.inc.php.template	2006-04-18 13:11:48.000000000 +0200
++++ egroupware-1.2-1.dfsg/header.inc.php.template	2006-04-18 13:16:57.000000000 +0200
+@@ -36,7 +36,7 @@
+ 	$GLOBALS['egw_info']['server']['header_admin_password'] = '{HEADER_ADMIN_PASSWORD}';
+ 	$GLOBALS['egw_info']['server']['setup_acl'] = '{SETUP_ACL}';
+ 
+-	/* eGroupWare domain-specific db settings */{domains}
++	/* eGroupWare domain-specific db settings *///{domains}
+ 	/*
+ 	** If you want to have your domains in a select box, change to True
+ 	** If not, users will have to login as user@domain
+@@ -119,7 +119,7 @@
+ 	/*
+ 	  Leave off the final php closing tag, some editors will add
+ 	  a \n or space after which will mess up cookies later on
+-	*/<!-- BEGIN domain -->
++	*//*<!-- BEGIN domain -->
+ 	$GLOBALS['egw_domain']['{DB_DOMAIN}'] = array(
+ 		'db_host' => '{DB_HOST}',
+ 		'db_port' => '{DB_PORT}',
+@@ -133,4 +133,4 @@
+ 		'config_passwd' => '{CONFIG_PASS}'
+ 	);
+ 
+-<!-- END domain -->
++<!-- END domain -->*/

@@ -1,0 +1,48 @@
+#! /bin/sh
+
+set -e
+
+
+webserver_soft_reload() {
+	if command -v invoke-rc.d >/dev/null 2>&1; then
+		invoke-rc.d "$1" force-reload || :
+	else
+		[ -x /etc/init.d/"$1" ] && /etc/init.d/"$1" force-reload || :
+	fi
+}
+
+
+if [ "$1" = remove ]; then
+	rm -rf /var/lib/egroupware/sessions/
+
+	. /usr/share/debconf/confmodule
+	db_get "egroupware/webserver" || true
+	save_IFS=$IFS
+	IFS=','
+	for i in $RET; do
+		case $i in
+			*"Apache")	webservers="$webservers apache" ;;
+			*"Apache SSL")	webservers="$webservers apache-ssl" ;;
+			*"Apache Perl")	webservers="$webservers apache-perl" ;;
+			*"Apache 2")	webservers="$webservers apache2" ;;
+		esac
+	done
+	IFS=$save_IFS
+
+	for server in $webservers; do
+		rm -f /etc/$server/conf.d/egroupware
+		webserver_soft_reload $server
+	done
+fi
+
+
+if [ "$1" = purge ]; then
+	rm -rf /var/lib/egroupware/
+	rm -rf /etc/egroupware/
+fi
+
+
+#DEBHELPER#
+
+
+db_stop 2>/dev/null || :

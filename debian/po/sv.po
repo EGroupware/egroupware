@@ -1,0 +1,140 @@
+# Translators, if you are not familiar with the PO format, gettext
+# documentation is worth reading, especially sections dedicated to
+# this format, e.g. by running:
+# info -n '(gettext)PO Files'
+# info -n '(gettext)Header Entry'
+# Some information specific to po-debconf are available at
+# /usr/share/doc/po-debconf/README-trans
+# or http://www.debian.org/intl/l10n/po-debconf/README-trans
+# Developers do not need to manually edit POT or PO files.
+# , fuzzy
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: egroupware 1.0.0.009.dfsg-3-1\n"
+"Report-Msgid-Bugs-To: petere@debian.org\n"
+"POT-Creation-Date: 2006-08-18 21:34+0200\n"
+"PO-Revision-Date: 2006-08-18 23:45+0200\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid "eGroupWare core package configuration note"
+msgstr "Konfigurationsnotiser för eGroupWare kärnpaket"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid ""
+"The eGroupWare core package configuration will only prompt you for the "
+"administrator name and password.  To complete the initialization, point your "
+"browser to the eGroupWare setup, normally at"
+msgstr ""
+"Konfigurationen för eGroupWare kärnpaket kommer bara att fråga dig efter "
+"administratörens namn och lösenord.  För att färdigställa konfigureringen, "
+"peka din webläsare till eGroupWare's inställningssida, normalt hittad på:"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid "http(s)://${site}/egroupware/setup/"
+msgstr "http(s)://${site}/egroupware/setup/"
+
+#. Type: note
+#. Description
+#: ../egroupware-core.templates:1001
+msgid ""
+"There you can continue the configuration, initialize the database, and "
+"register installed eGroupWare applications."
+msgstr ""
+"Där kan du fortsätta med konfigurationen, förbereda databasen och registrera "
+"installerade applikationer för eGroupWare."
+
+#. Type: multiselect
+#. Choices
+#: ../egroupware-core.templates:2001
+msgid "Apache 2, Apache, Apache SSL, Apache Perl"
+msgstr "Apache 2, Apache, Apache SSL, Apache Perl"
+
+#. Type: multiselect
+#. Description
+#: ../egroupware-core.templates:2002
+msgid "Web server for eGroupWare:"
+msgstr "Webserver för eGroupWare:"
+
+#. Type: multiselect
+#. Description
+#: ../egroupware-core.templates:2002
+msgid ""
+"Choose here which web server you want to configure eGroupWare for. "
+"eGroupWare supports any web server that supports PHP, but this configuration "
+"process only supports some Apache variants.  Feel free to submit any hint or "
+"patch that would help in the setup of other web servers."
+msgstr "Välja här vilken webserver du vill konfigurera eGroupWare för.  eGroupWare har stöd för alla webservrar som har stöd för PHP men denna konfigurationsprocess har bara stöd för några varianter av Apache.  Känn dig fri att skicka in tips eller patchar som kan hjälpa till med konfigurationer för andra webservrar."
+
+#. Type: string
+#. Description
+#: ../egroupware-core.templates:3001
+msgid "Header admin user name:"
+msgstr "Namnet på huvudadministratören:"
+
+#. Type: string
+#. Description
+#: ../egroupware-core.templates:3001
+msgid ""
+"The header admin user can change various global configuration settings and "
+"add eGroupWare domains via a provided web interface.  You must choose a name "
+"for that user."
+msgstr ""
+"Huvudadministratören kan ändra olika globala konfigurationsinställningar och "
+"lägga till domäner i eGroupWare via ett webgränssnitt.  Du måste välja ett "
+"namn för den användaren."
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:4001
+msgid "Header admin password:"
+msgstr "Lösenordet för huvudadministratören:"
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:4001
+msgid "You must choose a password for the header admin user."
+msgstr "Du måste ange ett lösenord för huvudadministratören."
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:5001
+msgid "Confirm the header admin password:"
+msgstr "Lösenordet för huvudadministratören igen:"
+
+#. Type: password
+#. Description
+#: ../egroupware-core.templates:5001
+msgid ""
+"Please enter the header admin password again.  If the password you enter "
+"here does not match the previously entered one, you will be asked to enter "
+"it again."
+msgstr ""
+"Ange lösenordet för huvudadministratören igen.  Om lösenordet du anger här "
+"inte stämmer med det tidigare inmatade lösenordet kommer du få frågan att "
+"mata in det igen."
+
+#. Type: text
+#. Description
+#: ../egroupware-core.templates:6001
+msgid "Passwords did not match."
+msgstr "Lösenorden stämde inte överens."
+
+#. Type: text
+#. Description
+#: ../egroupware-core.templates:6001
+msgid ""
+"The header admin passwords you entered did not match.  Please try again."
+msgstr "Lösenordet för huvudadministratören stämde inte.  Försök igen."

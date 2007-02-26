@@ -1,0 +1,94 @@
+This package was debianized by Peter Eisentraut <petere@debian.org> on
+Sat, 13 Mar 2004 21:51:38 +0100; heavily based on the debianization work
+for the package phpgroupware.
+
+This package was downloaded from http://www.egroupware.org/.
+
+Upstream authors:
+
+  eGroupware developers
+  <http://www.egroupware/developers>
+  <egroupware-developers@lists.sourceforge.net>
+
+  Lars Kneschke <lkneschke@linux-at-work.de>
+
+
+Copyright:
+
+  This program is free software; you can redistribute it and/or modify it
+  under the terms of the GNU General Public License as published by the
+  Free Software Foundation; either version 2 of the License, or (at your
+  option) any later version.
+ 
+On Debian systems, the complete text of the GNU GPL can be found in the
+file /usr/share/common-licenses/GPL.
+
+
+The following copyright notice applies to
+/usr/share/egroupware/felamimail/inc/class.htmlfilter.inc.php:
+
+  Copyright (c) 2002 by Duke University
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+
+The following copyright notice applies to
+/usr/share/egroupware/felamimail/inc/class.{Script,SieveSession}.inc.php:
+
+  SMARTSIEVE - SIEVE SCRIPT MANAGER
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Copyright 2002 Stephen Grier <stephengrier@users.sourceforge.net>
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+
+
+The following copyright notice applies to
+/usr/share/egroupware/felamimail/inc/class.uidisplay.inc.php:
+
+  copyright notice for the functions highlightQuotes and _countQuoteChars
+  Copyright 1999-2003 Jon Parise <jon@horde.org>
+
+  See the enclosed file COPYING for license information (LGPL). If you
+  did not receive this file, see http://www.fsf.org/copyleft/lgpl.html.
+
+On Debian systems, the complete text of the GNU LGPL can be found in the
+file /usr/share/common-licenses/LGPL.
+
+
+The following copyright notice applies to
+/usr/share/egroupware/felamimail/inc/class.uiwidgets.inc.php:
+
+  Copyright (c) 2004, Lars Kneschke
+  All rights reserved.
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are
+  met:
+
+  * Redistributions of source code must retain the above copyright
+  notice, this list of conditions and the following disclaimer.
+  * Redistributions in binary form must reproduce the above copyright
+  notice, this list of conditions and the following disclaimer in the
+  documentation and/or other materials provided with the distribution.
+  * Neither the name of the FeLaMiMail organization nor the names of
+  its contributors may be used to endorse or promote products derived
+  from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+  TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+  PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
