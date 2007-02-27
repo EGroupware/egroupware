@@ -254,7 +254,17 @@ class uicontacts extends bocontacts
 	 * @param string $msg=null	message to show	
 	 */
 	function emailpopup($content=null,$msg=null)
-	{		
+	{	
+		switch($_POST['exec']['nm']['to']) {
+			case 'to':
+			case 'bcc':
+			case 'cc':
+				$to = $_POST['exec']['nm']['to'];
+				break;
+			default:
+				$to = 'to';
+		}
+		
 		if ($_GET['compat'])	// 1.2 felamimail or old email
 		{
 			$handler = "if (opener.document.doit[to].value != '')
@@ -274,18 +284,19 @@ class uicontacts extends bocontacts
 		
 	function addEmail(email)
 	{
-		var to = 'to';
-		if (document.getElementById('exec[nm][to][cc]').checked == true) 
-		{
-			to = 'cc';
-		}
-		else
-		{
-			if (document.getElementById('exec[nm][to][bcc]').checked == true)
-			{
-				to = 'bcc';
-			}
-		}
+		var to = '$to';
+		// this does not work, as always to is selected after page reload
+		//if (document.getElementById('exec[nm][to][cc]').checked == true) 
+		//{
+		//	to = 'cc';
+		//}
+		//else
+		//{
+		//	if (document.getElementById('exec[nm][to][bcc]').checked == true)
+		//	{
+		//		to = 'bcc';
+		//	}
+		//}
 		//alert(to+': '+email);
 		$handler;
 	}	
