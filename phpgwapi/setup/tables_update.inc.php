@@ -706,4 +706,10 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.016';
 	}
 
+	$test[] = '1.3.016';
+	function phpgwapi_upgrade1_3_016()
+	{
+		# 1.4 Beta 3
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.017';
+	}
 ?>
