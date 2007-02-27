@@ -1058,7 +1058,7 @@ class html
 			$extra_styles = "display: inline-block; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$url',sizingMethod='image'); width: 1px; height: 1px;";
 			if (strstr($options,'style="'))
 			{
-				$options = str_replace('style="','style="'.$extra_styles);
+				$options = str_replace('style="','style="'.$extra_styles, $options);
 			}
 			else
 			{
