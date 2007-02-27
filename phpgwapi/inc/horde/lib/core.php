@@ -21,7 +21,7 @@ ini_set('magic_quotes_runtime', 0);
  * include_path, you must add an ini_set() call here to add their location to
  * the include_path. */
 // ini_set('include_path', dirname(__FILE__) . PATH_SEPARATOR . ini_get('include_path'));
-set_include_path(dirname(__FILE__). '/../../horde/' . PATH_SEPARATOR . get_include_path());
+set_include_path(dirname(__FILE__). '/../../horde/' . PATH_SEPARATOR . dirname(__FILE__). '/../../../../egw-pear/' . PATH_SEPARATOR . get_include_path());
 
 /* PEAR base class. */
 include_once 'PEAR.php';
