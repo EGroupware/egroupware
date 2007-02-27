@@ -56,41 +56,31 @@
 		 */
 		function translation($warnings = False)
 		{
-			for ($i = 1; $i <= 9; $i++)
-			{
+			for ($i = 1; $i <= 9; $i++) {
 				$this->placeholders[] = '%'.$i;
 			}
 			$this->db = is_object($GLOBALS['egw']->db) ? $GLOBALS['egw']->db : $GLOBALS['egw_setup']->db;
 			if (is_object($this->db)) $this->db->set_app('phpgwapi');
 
-			if (!isset($GLOBALS['egw_setup']))
-			{
+			if (!isset($GLOBALS['egw_setup'])) {
 				$this->system_charset = @$GLOBALS['egw_info']['server']['system_charset'];
-			}
-			else
-			{
+			} else {
 				$this->system_charset =& $GLOBALS['egw_setup']->system_charset;
 			}
-			// load multi-byte-string-extension if needed, and set its internal encodeing to your system_charset
-			if ($this->system_charset && substr($this->system_charset,0,9) != 'iso-8859-1')
-			{
-				if ($this->mbstring = extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX))
-				{
+
+			if (extension_loaded('mbstring') || @dl(PHP_SHLIB_PREFIX.'mbstring.'.PHP_SHLIB_SUFFIX)) {
+				$this->mbstring = true;
+				if(!empty($this->system_charset)) {
 					ini_set('mbstring.internal_encoding',$this->system_charset);
-					if (ini_get('mbstring.func_overload') < 7)
-					{
-						if ($warnings)
-						{
-							echo "<p>Warning: Please set <b>mbstring.func_overload = 7</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
-						}
+				}
+				if (ini_get('mbstring.func_overload') < 7) {
+					if ($warnings) {
+						echo "<p>Warning: Please set <b>mbstring.func_overload = 7</b> in your php.ini for useing <b>$this->system_charset</b> as your charset !!!</p>\n";
 					}
 				}
-				else
-				{
-					if ($warnings)
-					{
-						echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset, we are defaulting to <b>iconv</b> for now !!!</p>\n";
-					}
+			} else {
+				if ($warnings) {
+					echo "<p>Warning: Please get and/or enable the <b>mbstring extension</b> in your php.ini for useing <b>$this->system_charset</b> as your charset, we are defaulting to <b>iconv</b> for now !!!</p>\n";
 				}
 			}
 		}
