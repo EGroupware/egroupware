@@ -73,7 +73,7 @@ Description: eGroupWare developer tools
 
 Package: egroupware-emailadmin
 Architecture: all
-Depends: egroupware-core (= ${Source-Version})
+Depends: egroupware-core (= ${Source-Version}), egroupware-egw-pear (= ${Source-Version})
 Description: eGroupWare E-mail user administration application
  ${commondesc}
  .
