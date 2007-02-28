@@ -1,8 +1,6 @@
 function correctPNG() // correctly handle PNG transparency in Win IE 5.5 or higher.
 {
-	var numberOfImages = document.images.length;
-
-	for(var i=0; i<numberOfImages; i++)
+	for(var i=0; i<document.images.length; i++)
 	{
 		var img = document.images[i]
 		var imgName = img.src.toUpperCase()

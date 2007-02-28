@@ -1056,7 +1056,7 @@ class html
 		if ($this->user_agent == 'msie' && $this->ua_version >= 5.5 && substr($url,-4) == '.png')
 		{
 			$extra_styles = "display: inline-block; filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$url',sizingMethod='image'); width: 1px; height: 1px;";
-			if (strstr($options,'style="'))
+			if (false!==strpos($options,'style="'))
 			{
 				$options = str_replace('style="','style="'.$extra_styles, $options);
 			}
