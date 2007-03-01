@@ -128,14 +128,13 @@
 						
 					case 'category':
 						if(!empty($value)) {
-							$isAdmin = $GLOBALS['egw']->acl->check('run',1,'admin');
-							$egwCategories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'calendar');
-							$categories = explode('; ',$value);
-							$cat_id = '';
+							$egwCategories =& CreateObject('phpgwapi.categories', $GLOBALS['egw_info']['user']['account_id'], 'calendar');
+							$categories = explode(';',$value);
 							foreach($categories as $categorieName) {
+								$cat_id = false;
 								$categorieName = trim($categorieName);
-								if(!($cat_id = $egwCategories->name2id($categorieName)) && $isAdmin) {
-									$cat_id = $egwCategories->add(array('name' => $categorieName, 'descr' => $categorieName));
+								if(!($cat_id = $egwCategories->name2id($categorieName))) {
+									$cat_id = $egwCategories->add(array('name' => $categorieName, 'descr' => lang('added by synchronisation')));
 								}
 								if($cat_id) {
 									if(!empty($finalEvent[$key])) $finalEvent[$key] .= ',';
