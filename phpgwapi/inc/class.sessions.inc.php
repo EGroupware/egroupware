@@ -561,7 +561,8 @@
 			{
 				$GLOBALS['egw']->ADOdb = null;
 				$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
-				// reset the db
+				// reset the db all other phpgwapi data
+				$GLOBALS['egw_info']['server'] = array();
 				$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$this->account_domain]['db_host'];
 				$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$this->account_domain]['db_port'];
 				$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$this->account_domain]['db_name'];
