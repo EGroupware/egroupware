@@ -137,13 +137,15 @@ class sifaddressbook extends bocontacts
 				case 'cat_id':
 					if(!empty($value)) {
 						$isAdmin = $GLOBALS['egw']->acl->check('run',1,'admin');
-						$egwCategories =& CreateObject('phpgwapi.categories',$GLOBALS['egw_info']['user']['account_id'],'addressbook');
-						$categories = explode('; ',$value);
-						$cat_id = '';
+						$egwCategories =& CreateObject('phpgwapi.categories', $GLOBALS['egw_info']['user']['account_id'], 'addressbook');
+						$categories = explode(';',$value);
+						// add missing categories as personal categories as needed
 						foreach($categories as $categorieName) {
+							$cat_id = false;
 							$categorieName = trim($categorieName);
-							if(!($cat_id = $egwCategories->name2id($categorieName)) && $isAdmin) {
-								$cat_id = $egwCategories->add(array('name' => $categorieName, 'descr' => $categorieName));
+							if(!($cat_id = $egwCategories->name2id($categorieName))) {
+								$cat_id = $egwCategories->add(array('name' => $categorieName, 'descr' => lang('added by synchronisation')));
+								error_log("added $cat_id => $categorieName");
 							}
 							if($cat_id) {
 								if(!empty($finalContact[$key])) $finalContact[$key] .= ',';

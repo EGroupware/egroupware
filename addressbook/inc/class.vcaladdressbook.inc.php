@@ -132,7 +132,7 @@ class vcaladdressbook extends bocontacts
 			}
 		}
 		
-		error_log(print_r($contact, true));
+		//error_log(print_r($contact, true));
 		
 		#if($foundContacts = parent::search($contact, true, '', '', '%')) {
 		if($foundContacts = parent::search($contact)) {
