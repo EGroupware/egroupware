@@ -169,13 +169,13 @@ class socal
 		}
 		else	// adjust the given recurance to the real time, it can be a date without time(!)
 		{
-			// check if the start read is the the first (default) entry of the recuring events, then it's recur_date is 0!!!
-			$this->db->select($this->dates_table,'MIN(cal_start) AS cal_start',array('cal_id' => $ids),__LINE__,__FILE__);
-			$first = $this->db->row(true);
-			$recur_date = $first['cal_start'] == $events[$ids]['start'] ? 0 : $events[$ids]['start'];
-
-			if ($recur_date) $events[$ids]['recur_date'] = $recur_date;	// remember it, maybe we need it later, duno now
+			if ($recur_date)
+			{
+				// also remember recur_date, maybe we need it later, duno now
+				$recur_date = $events[$ids]['recur_date'] = $events[$ids]['start'];
+			}
 		}
+
 		// participants, if a recur_date give, we read that recurance, else the one users from the default entry with recur_date=0
 		$this->db->select($this->user_table,'*',array(
 			'cal_id'      => $ids,
