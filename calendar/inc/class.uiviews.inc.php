@@ -431,6 +431,19 @@ class uiviews extends uical
 			$this->last = $this->first + $days * DAY_s - 1;
 			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
 		}
+		// add navigation for previous and next
+		// prev. week
+		$GLOBALS['egw_info']['flags']['app_header'] = $this->html->a_href($this->html->image('phpgwpai','first',lang('previous'),$options=' alt="<<"'),array(
+			'menuaction' => $this->view_menuaction,
+			'date'       => date('Ymd',$this->first-$days*DAY_s),
+			)) . ' &nbsp; <b>'.$GLOBALS['egw_info']['flags']['app_header'];
+		// next week
+		$GLOBALS['egw_info']['flags']['app_header'] .= '</b> &nbsp; '.$this->html->a_href($this->html->image('phpgwpai','last',lang('next'),$options=' alt=">>"'),array(
+			'menuaction' => $this->view_menuaction,
+			'date'       => date('Ymd',$this->last+$days*DAY_s),
+			));
+
+			$class = $class == 'row_on' ? 'th' : 'row_on';
 		//echo "<p>weekdaystarts='".$this->cal_prefs['weekdaystarts']."', get_weekday_start($this->year,$this->month,$this->day)=".date('l Y-m-d',$wd_start).", first=".date('l Y-m-d',$this->first)."</p>\n";
 
 		$search_params = array(
