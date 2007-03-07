@@ -86,15 +86,6 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
-		'show_times' => array(
-			'type'   => 'select',
-			'label'  => 'Show times',
-			'name'   => 'show_times',
-			'values' => $show_details,
-			'help'   => 'Show a column for used and planned times in the list.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
 		'show_percent' => array(
 			'type'   => 'select',
 			'label'  => 'Show status and percent done separate',
@@ -110,15 +101,6 @@
 			'name'   => 'show_id',
 			'values' => $show_details,
 			'help'   => 'Should the Infolog list show a unique numerical Id, which can be used eg. as ticket Id.',
-			'xmlrpc' => True,
-			'admin'  => False
-		),
-		'show_modified' => array(
-			'type'   => 'select',
-			'label'  => 'Show last modified',
-			'name'   => 'show_modified',
-			'values' => $show_details,
-			'help'   => 'Should the Infolog list show the column "last modified".',
 			'xmlrpc' => True,
 			'admin'  => False
 		),

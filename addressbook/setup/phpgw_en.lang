@@ -104,6 +104,7 @@ do you want a private addressbook, which can not be viewed by users, you grant a
 do your really want to delete this contact?	addressbook	en	Do your really want to delete this contact?
 doesn't matter	addressbook	en	doesn't matter
 domestic	addressbook	en	Domestic
+don't hide empty columns	addressbook	en	Don't hide empty columns
 download	addressbook	en	Download
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 download this contact as vcard file	addressbook	en	download this contact as vCard file
@@ -184,8 +185,8 @@ list all customfields	addressbook	en	List all customfields
 load vcard	addressbook	en	Load VCard
 locations	addressbook	en	locations
 mark records as private	addressbook	en	Mark records as private
-merged	addressbook	en	merged
 merge into first or account, deletes all other!	addressbook	en	Merge into first or account, deletes all other!
+merged	addressbook	en	merged
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
 migration finished	addressbook	en	Migration finished
@@ -200,7 +201,6 @@ name, address	addressbook	en	Name, Address
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
-only if there is content	addressbook	en	only if there is content
 options for type	admin	en	Options for type
 organisation	addressbook	en	organisation
 organisations	addressbook	en	Organisations
@@ -244,8 +244,8 @@ select the type of conversion	addressbook	en	Select the type of conversion
 select the type of conversion:	addressbook	en	Select the type of conversion:
 select where you want to store / retrieve contacts	admin	en	Select where you want to store / retrieve contacts
 selected contacts	addressbook	en	selected contacts
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	en	Should the columns photo and home address always be displayed, even if they are empty.
 show	addressbook	en	Show
-show a column for %1	addressbook	en	Show a column for %1
 show birthday reminders on main screen	addressbook	en	Show birthday reminders on main screen
 show infolog entries for this organisation	addressbook	en	Show InfoLog entries for this organisation
 show the contacts of this organisation	addressbook	en	Show the contacts of this organisation
@@ -282,7 +282,6 @@ view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
-when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	en	When should the contacts list display that colum. "Only if there is content" hides the column, unless there is some content in the view.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	en	Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.

@@ -526,7 +526,7 @@ class uitimesheet extends botimesheet
 				$row['titleClass'] = 'titleDetails';
 			}
 		}
-		$rows['no_cats'] = !$have_cats;
+		if (!$have_cats || $query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
 		$rows['no_owner_col'] = $query['no_owner_col'];
 		if ($query['filter'])

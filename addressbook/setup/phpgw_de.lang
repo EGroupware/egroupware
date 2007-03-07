@@ -104,6 +104,7 @@ do you want a private addressbook, which can not be viewed by users, you grant a
 do your really want to delete this contact?	addressbook	de	Wollen sie diesen Kontakt wirklich löschen?
 doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
+don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
 download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
 download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
@@ -184,8 +185,8 @@ list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
 load vcard	addressbook	de	VCard laden
 locations	addressbook	de	Standorte
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
-merged	addressbook	en	vereinigt
-merge into first or account, deletes all other!	addressbook	en	Vereinige im ersten oder Benutzerkonto, löscht alle anderen!
+merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen!
+merged	addressbook	de	vereinigt
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 migration finished	addressbook	de	Migration beendet
@@ -200,7 +201,6 @@ name, address	addressbook	de	Name, Adresse
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
-only if there is content	addressbook	de	nur wenn etwas angezeigt wird
 options for type	admin	de	Optionen für Typ
 organisation	addressbook	de	Organisation
 organisations	addressbook	de	Organisationen
@@ -244,8 +244,8 @@ select the type of conversion	addressbook	de	Typ der Umwandlung auswählen
 select the type of conversion:	addressbook	de	Typ der Umwandlung auswählen:
 select where you want to store / retrieve contacts	admin	de	Auswählen wo Sie Adressen speichern wollen
 selected contacts	addressbook	de	ausgewählte Kontakte
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	de	Sollen die Spalten Foto und Privatadresse immer angezeigt werden, auch wenn sie leer sind.
 show	addressbook	de	Anzeigen
-show a column for %1	addressbook	de	Zeige eine %1 Spalte
 show birthday reminders on main screen	addressbook	de	Geburtstagserinnerungen auf der Startseite anzeigen
 show infolog entries for this organisation	addressbook	de	InfoLog Einträge dieser Organisation anzeigen
 show the contacts of this organisation	addressbook	de	Kontakte dieser Organisation anzeigen
@@ -282,7 +282,6 @@ view linked infolog entries	addressbook	de	Verknüpfte InfoLog Einträge anzeigen
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
-when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	de	Wann soll die Adressliste diese Spalte anzeigen. "Nur wenn etwas angezeigt wird" blendet die Spalte aus, wenn Sie in dieser Anzeige leer wäre.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzfügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. Alle bedeutet jedes Feld das im Adressbuch gespeichert ist einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.

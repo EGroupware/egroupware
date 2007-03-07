@@ -16,12 +16,14 @@
 			<columns>
 				<column/>
 				<column/>
+				<column/>
 				<column width="60" disabled="@no_photo"/>
 				<column/>
-				<column disabled="!@show_home"/>
+				<column disabled="@no_home"/>
 				<column/>
 				<column/>
 				<column disabled="@no_customfields"/>
+				<column/>
 				<column width="90"/>
 			</columns>
 			<rows>
@@ -47,7 +49,7 @@
 							<row>
 								<nextmatch-sortheader id="org_name" label="Organisation" span="all"/>
 							</row>
-							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode)$/">
+							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created)$/">
 								<nextmatch-sortheader id="n_family" label="Name"/>
 								<nextmatch-sortheader id="n_given" label="Firstname" class="leftPad5"/>
 							</row>
@@ -56,33 +58,41 @@
 							</row>
 						</rows>
 					</grid>
-					<description value="Photo"/>
+					<nextmatch-header label="Category" id="cat_id"/>
+					<nextmatch-header label="Photo" id="photo"/>
 					<vbox options="0,0">
-						<description value="Business address"/>
+						<nextmatch-header label="Business address" id="business"/>
 						<nextmatch-customfilter id="adr_one_countryname" options="select-country,Country,1" class="countrySelect"/>
 						<nextmatch-sortheader id="adr_one_postalcode" label="zip code"/>
 					</vbox>
-					<description value="Home address"/>
+					<nextmatch-header label="Home address" id="home"/>
 					<vbox options="0,0">
-						<description id="tel_work" value="Business phone"/>
-						<description value="Mobile phone" id="tel_cell"/>
-						<description id="tel_home" value="Home phone"/>
+						<nextmatch-header id="tel_work" label="Business phone"/>
+						<nextmatch-header label="Mobile phone" id="tel_cell"/>
+						<nextmatch-header id="tel_home" label="Home phone"/>
 					</vbox>
 					<vbox options="0,0">
-						<description id="url" value="Url"/>
-						<description value="Business email" id="email"/>
-						<description id="email_home" value="Home email"/>
+						<nextmatch-header id="url" label="Url"/>
+						<nextmatch-header label="Business email" id="email"/>
+						<nextmatch-header id="email_home" label="Home email"/>
 					</vbox>
-					<grid spacing="0" padding="0">
-						<columns>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<description no_lang="1" id="customfields[$row][label]"/>
-							</row>
-						</rows>
-					</grid>
+					<vbox options="0,0">
+						<nextmatch-header id="customfields" options="Custom fields"/>
+						<grid spacing="0" padding="0">
+							<columns>
+								<column/>
+							</columns>
+							<rows>
+								<row>
+									<description no_lang="1" id="customfields[$row][label]"/>
+								</row>
+							</rows>
+						</grid>
+					</vbox>
+					<vbox options="0,0">
+						<nextmatch-sortheader id="contact_created" label="Created"/>
+						<nextmatch-sortheader id="contact_modified" label="Last modified"/>
+					</vbox>
 					<hbox align="center" class="noPrint">
 						<description value="Actions" align="center"/>
 						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
@@ -97,6 +107,9 @@
 						<description id="${row}[title]" no_lang="1"/>
 						<description id="${row}[first_org]" no_lang="1"/>
 					</vbox>
+					<menulist>
+						<menupopup type="select-cat" options="1" id="${row}[cat_id]" readonly="true"/>
+					</menulist>
 					<image src="${row}[photo]"/>
 					<vbox options="0,0">
 						<description id="${row}[adr_one_countryname]" no_lang="1"/>
@@ -127,16 +140,26 @@
 						<description options=",@${row}[email_link],,,_blank,$row_cont[email_popup]" class="fixedHeight" id="${row}[email]" no_lang="1"/>
 						<description options=",@${row}[email_home_link],,,_blank,$row_cont[email_home_popup]" class="fixedHeight" id="${row}[email_home]" no_lang="1"/>
 					</vbox>
-					<grid height="48" border="0" spacing="0" padding="0" overflow="auto">
+					<grid height="48" border="0" spacing="0" padding="0" overflow="auto" id="${row}[customfields]">
 						<columns>
 							<column/>
 						</columns>
 						<rows>
 							<row>
-								<description class="fixedHeight" id="$row" no_lang="1"/>
+								<description class="fixedHeight" no_lang="1" id="$row"/>
 							</row>
 						</rows>
 					</grid>
+					<vbox options="0,0">
+						<date-time id="${row}[created]" readonly="true" class="noWrap"/>
+						<menulist>
+							<menupopup type="select-account" id="${row}[creator]" readonly="true"/>
+						</menulist>
+						<date-time id="${row}[modified]" readonly="true" class="noBreak"/>
+						<menulist>
+							<menupopup type="select-account" id="${row}[modifier]" readonly="true"/>
+						</menulist>
+					</vbox>
 					<hbox options="0" class="noPrint" orient="0">
 						<image options="addressbook.uicontacts.view&amp;contact_id=$row_cont[id]" label="View" src="view"/>
 						<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>

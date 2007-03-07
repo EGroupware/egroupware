@@ -161,6 +161,7 @@ class uicontacts extends bocontacts
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
 				'do_email'       => $do_email,
+				'default_cols'   => '!cat_id,contact_created_contact_modified',
 			);
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
@@ -644,6 +645,10 @@ class uicontacts extends bocontacts
 				case 'adr_one_postalcode':
 					$order = "adr_one_postalcode!='' DESC,adr_one_postalcode $sort,org_name $sort,n_family $sort,n_given $sort";
 					break;
+				case 'contact_modified':
+				case 'contact_created':
+					$order = "$query[order] IS NULL,$query[order] $sort,org_name $sort,n_family $sort,n_given $sort";
+					break;
 			}
 			if ($query['searchletter'])	// only show contacts if the order-criteria starts with the given letter
 			{
@@ -694,7 +699,7 @@ class uicontacts extends bocontacts
 
 			switch($order)
 			{
-				case 'adr_one_postalcode':
+				default:	// postalcode, created, modified, ...
 				case 'org_name':
 					$row['line1'] = $row['org_name'];
 					$row['line2'] = $row['n_family'].($given ? ', '.$given : '');
@@ -772,12 +777,15 @@ class uicontacts extends bocontacts
 				}
 			}
 		}
-		// disable photo column, if view contains no photo(s)
-		if (!$photos || $this->prefs['photo_column'] == 'never') $rows['no_photo'] = '1';
+		if (!$this->prefs['no_auto_hide'])
+		{
+			// disable photo column, if view contains no photo(s)
+			if (!$photos) $rows['no_photo'] = true;
+			// disable homeaddress column, if we have no homeaddress(es)
+			if (!$homeaddress) $rows['no_home'] = true;
+		}
 		// disable customfields column, if we have no customefield(s)
-		if (!$customfields || $this->prefs['custom_column'] == 'never') $rows['no_customfields'] = '1';
-		// disable homeaddress column, if we have no homeaddress(es)
-		if ($homeaddress && !$this->prefs['home_column'] || $this->prefs['home_column'] == 'always') $rows['show_home'] = '1';
+		if (!$customfields) $rows['no_customfields'] = true;
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];

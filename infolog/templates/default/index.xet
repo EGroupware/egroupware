@@ -13,13 +13,13 @@
 			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
-	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.3.002">
+	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.3.003">
 		<grid>
 			<columns>
 				<column width="2%"/>
 				<column/>
 				<column width="120"/>
-				<column disabled="@no_times"/>
+				<column disabled="@no_info_used_time_info_planned_time"/>
 				<column width="8%" disabled="@no_users"/>
 				<column width="12%" disabled="@no_modified"/>
 				<column width="3%" disabled="@no_actions"/>
@@ -112,7 +112,7 @@
 				<column width="2%"/>
 				<column/>
 				<column width="120"/>
-				<column disabled="@no_times"/>
+				<column/>
 				<column width="8%" disabled="@no_users"/>
 				<column width="12%" disabled="@no_modified"/>
 				<column width="3%" disabled="@no_actions"/>
@@ -175,7 +175,7 @@
 							<description class="$row_cont[sub_class]" no_lang="1" id="${row}[info_subject]"/>
 							<description no_lang="1" align="right" id="{$row}[info_number]" class="infoId"/>
 						</hbox>
-						<description options=",,1" no_lang="1" id="${row}[info_des]"/>
+						<description no_lang="1" id="${row}[info_des]" options=",,1"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
 					<vbox options="0,0,1" rows="3" cols="1">

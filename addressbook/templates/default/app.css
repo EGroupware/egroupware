@@ -70,3 +70,6 @@
 .space{
    width: 80px;
 }
+.noWrap{
+  white-space: nowrap;
+}

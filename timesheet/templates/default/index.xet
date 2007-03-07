@@ -20,7 +20,7 @@
 			<columns>
 				<column width="15%"/>
 				<column width="50%"/>
-				<column disabled="@no_cats"/>
+				<column disabled="@no_cat_id"/>
 				<column/>
 				<column/>
 				<column/>
@@ -47,7 +47,7 @@
 							</row>
 						</rows>
 					</grid>
-					<nextmatch-sortheader label="Category" id="cat_id"/>
+					<nextmatch-header label="Category" id="cat_id"/>
 					<vbox>
 						<nextmatch-sortheader label="Duration" id="ts_duration"/>
 						<date-duration id="duration" options=",h,,,1" readonly="true"/>

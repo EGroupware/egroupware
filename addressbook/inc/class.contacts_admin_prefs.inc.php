@@ -149,28 +149,14 @@ class contacts_admin_prefs
 			'xmlrpc' => True,
 			'admin'  => False,
 		);
-		$column_display_options = array(
-			''       => lang('only if there is content'),
-			'always' => lang('always'),
-			'never'  => lang('never'),
+		$GLOBALS['settings']['no_auto_hide'] = array(
+			'type'   => 'check',
+			'label'  => 'Don\'t hide empty columns',
+			'name'   => 'no_auto_hide',
+			'help'   => 'Should the columns photo and home address always be displayed, even if they are empty.',
+			'xmlrpc' => True,
+			'admin'  => false,
 		);
-		foreach(array(
-			'photo_column' => lang('Photo'),
-			'home_column'  => lang('Home address'),
-			'custom_colum' => lang('custom fields'),
-		) as $name => $label)
-		{
-			$GLOBALS['settings'][$name] = array(
-				'type'   => 'select',
-				'label'  => lang('Show a column for %1',$label),
-				'run_lang' => -1,
-				'name'   => $name,
-				'values' => $column_display_options,
-				'help'   => 'When should the contacts list display that colum. "Only if there is content" hides the column, unless there is some content in the view.',
-				'xmlrpc' => True,
-				'admin'  => false,
-			);
-		}
 		// CSV Export
 		$GLOBALS['settings']['csv_fields'] = array(
 			'type'   => 'select',

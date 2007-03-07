@@ -313,6 +313,17 @@ class uiinfolog
 			$ids = array( );
 		}
 		$details = $query['filter2'] == 'all';
+		// add a '-details' to the name of the columnselection pref
+		if ($details)
+		{
+			$query['columnselection_pref'] = (is_object($query['template'])?$query['template']->name:'infolog.index.rows').'-details';
+			$query['default_cols'] = '!cat_id,info_used_time_info_planned_time,info_id';
+		}
+		else
+		{
+			unset($query['columnselection_pref']);	// it might be set
+			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_id';
+		}
 		$readonlys = $rows = array();
 		foreach($ids as $id => $info)
 		{
@@ -324,13 +335,17 @@ class uiinfolog
 			}
 			$rows[] = $info;
 		}
+		if ($query['cat_id']) $rows['no_cat_id'] = true;
 		if ($query['no_actions']) $rows['no_actions'] = true;
-		$rows['no_modified'] = !$this->prefs['show_modified'] || $this->prefs['show_modified'] == 2 && !$details;
-		$rows['no_times'] = !$this->prefs['show_times'] || $this->prefs['show_times'] == 2 && !$details;
 		$rows['no_timesheet'] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 		$rows['duration_format'] = ','.$this->duration_format.',,1';
-		$rows['no_users'] = $GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
-			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
+		if ($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'] == 'none' &&
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			$rows['no_info_owner_info_responsible'] = true;
+			// dont show owner, responsible in the columnselection
+			$query['options-selectcols']['info_owner'] = $query['options-selectcols']['info_responsible'] = false;
+		}
 		//echo "<p>readonlys = "; _debug_array($readonlys);
 		//echo "rows=<pre>".print_r($rows,True)."</pre>\n";
 		
@@ -482,7 +497,6 @@ class uiinfolog
 					break;
 				}
 				$values['main'][1] = $this->get_info($action_id,$readonlys['main']);
-				$values['main']['no_times'] = !$this->prefs['show_times'];
 				break;
 		}
 		$readonlys['cancel'] = $action != 'sp';
@@ -498,6 +512,15 @@ class uiinfolog
 			'all'            => 'details',
 		);
 		if(!isset($values['nm']['filter2'])) $values['nm']['filter2'] = $this->prefs['show_links'];
+		// disable columns for main entry as set in the pref for details or no details
+		if ($action == 'sp')
+		{
+			$pref = 'nextmatch-infolog.index.rows'.($values['nm']['filter2']=='all'?'-details':'');
+			foreach(array('info_used_time_info_planned_time','info_datemodified','info_owner_info_responsible') as $name)
+			{
+				$values['main']['no_'.$name] = strstr($this->prefs[$pref],$name) === false;
+			}
+		}
 		$values['nm']['header_right'] = 'infolog.index.header_right';
 		if ($extra_app_header)
 		{

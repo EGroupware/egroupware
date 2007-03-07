@@ -9,26 +9,15 @@
 				<column/>
 				<column/>
 				<column/>
-				<column disabled="@no_customfields"/>
 				<column width="90"/>
 			</columns>
 			<rows>
 				<row class="th">
 					<description/>
-					<description value="#" align="center"/>
+					<nextmatch-header label="#" align="center" id="number"/>
 					<nextmatch-sortheader id="org_name" label="Organisation"/>
-					<description value="department"/>
+					<nextmatch-header label="Department" id="org_unit"/>
 					<description value="Business address"/>
-					<grid spacing="0" padding="0">
-						<columns>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<description no_lang="1" id="customfields[$row][label]"/>
-							</row>
-						</rows>
-					</grid>
 					<hbox align="center" class="noPrint">
 						<description value="Actions" align="center"/>
 						<button image="check" label="Check all" id="check_all" statustext="Check all" onclick="toggle_all(this.form,form::name('checked[]')); return false;" needed="1" align="right"/>
@@ -48,16 +37,6 @@
 						<description no_lang="1" id="${row}[adr_one_street]"/>
 						<description id="${row}[adr_one_street2]" no_lang="1"/>
 					</vbox>
-					<grid height="60" spacing="0" padding="0" overflow="auto">
-						<columns>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<description class="fixedHeight" id="$row" no_lang="1"/>
-							</row>
-						</rows>
-					</grid>
 					<hbox options="0" class="noPrint" orient="0">
 						<button image="view" label="View" id="view[$row_cont[id]]" statustext="Show the contacts of this organisation"/>
 						<button image="new" label="Add" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;org=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="add[$row_cont[id]]" statustext="Add a contact to this organisation"/>
