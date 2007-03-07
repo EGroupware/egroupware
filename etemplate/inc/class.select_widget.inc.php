@@ -460,6 +460,7 @@
 			if (!is_array($acc))
 			{
 				$data = $GLOBALS['egw']->accounts->get_account_data($id);
+				if (!isset($data[$id])) return '#'.$id;
 				foreach(array('type','lid','firstname','lastname') as $name)
 				{
 					$acc['account_'.$name] = $data[$id][$name];

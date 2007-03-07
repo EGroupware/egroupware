@@ -133,6 +133,7 @@
 		 * accessing the array it can by the index or the key of an array element.
 		 * To make it short and clear, use "Row$row" or "$col$row" not "$row" or "$row$col" !!!
 		 *
+		 * @static 
 		 * @param sring $name the name to expand
 		 * @param int $c is the column index starting with 0 (if you have row-headers, data-cells start at 1)
 		 * @param int $row is the row number starting with 0 (if you have col-headers, data-cells start at 1)
@@ -155,6 +156,7 @@
 				{
 					$cont = array();
 				}
+				if (!is_numeric($c)) $c = boetemplate::chrs2num($c);
 				$col = $this->num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
 				$col_ = $this->num2chrs($c_-1);
 				$row_cont = $cont[$row];
@@ -164,7 +166,7 @@
 			}
 			if ($is_index_in_content)
 			{
-				$name = $this->get_array($cont,substr($name,1));
+				$name = boetemplate::get_array($cont,substr($name,1));
 			}
 			return $name;
 		}
@@ -385,67 +387,84 @@
 		/**
 		 * set one or more attibutes for row $n
 		 *
-		 * @deprecated as it uses this->data
 		 * @param int $n numerical row-number starting with 1 (!)
 		 * @param string $height percent or pixel or '' for no height
 		 * @param string $class name of css class (without the leading '.') or '' for no class
 		 * @param string $valign alignment (top,middle,bottom) or '' for none
 		 * @param boolean $disabled True or expression or False to disable or enable the row (Only the number 0 means dont change the attribute !!!)
+		 * @param string $path='/0' default is the first widget in the tree of children
+		 * @return false if $path is no grid or array(height,class,valign,disabled) otherwise
 		 */
-		function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0)
+		function set_row_attributes($n,$height=0,$class=0,$valign=0,$disabled=0,$path='/0')
 		{
-			list($old_height,$old_disabled) = explode(',',$this->data[0]["h$n"]);
+			$grid =& $this->get_widget_by_path($path);
+			if (is_null($grid) || $grid['type'] != 'grid') return false;
+			$grid_attr =& $grid['data'][0];
+
+			list($old_height,$old_disabled) = explode(',',$grid_attr["h$n"]);
 			$disabled = $disabled !== 0 ? $disabled : $old_disabled;
-			$this->data[0]["h$n"] = ($height !== 0 ? $height : $old_height).
+			$grid_attr["h$n"] = ($height !== 0 ? $height : $old_height).
 				($disabled ? ','.$disabled : '');
-			list($old_class,$old_valign) = explode(',',$this->data[0]["c$n"]);
+			list($old_class,$old_valign) = explode(',',$grid_attr["c$n"]);
 			$valign = $valign !== 0 ? $valign : $old_valign;
-			$this->data[0]["c$n"] = ($class !== 0 ? $class : $old_class).
+			$grid_attr["c$n"] = ($class !== 0 ? $class : $old_class).
 				($valign ? ','.$valign : '');
+				
+			list($height,$disabled) = explode(',',$grid_attr["h$n"]);
+			list($class,$valign) = explode(',',$grid_attr["c$n"]);
+			return array($height,$class,$valign,$disabled);
 		}
 
 		/**
 		 * disables row $n
 		 *
-		 * @deprecated as it uses this->data
 		 * @param int $n numerical row-number starting with 1 (!)
 		 * @param boolean $enable=false can be used to re-enable a row if set to True
+		 * @param string $path='/0' default is the first widget in the tree of children
 		 */
-		function disable_row($n,$enable=False)
+		function disable_row($n,$enable=False,$path='/0')
 		{
-			$this->set_row_attributes($n,0,0,0,!$enable);
+			$this->set_row_attributes($n,0,0,0,!$enable,$path);
 		}
 
 		/**
 		 * set one or more attibutes for column $c
 		 *
-		 * @deprecated as it uses this->data
 		 * @param int/string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
 		 * @param string $width percent or pixel or '' for no height
 		 * @param mixed $disabled=0 True or expression or False to disable or enable the column (Only the number 0 means dont change the attribute !!!)
+		 * @param string $path='/0' default is the first widget in the tree of children
+		 * @return false if $path specifies no grid or array(width,disabled) otherwise
 		 */
-		function set_column_attributes($c,$width=0,$disabled=0)
+		function set_column_attributes($c,$width=0,$disabled=0,$path='/0')
 		{
 			if (is_numeric($c))
 			{
 				$c = $this->num2chrs($c);
 			}
-			list($old_width,$old_disabled) = explode(',',$this->data[0][$c]);
+			$grid =& $this->get_widget_by_path($path);
+			if (is_null($grid) || $grid['type'] != 'grid') return false;
+			$grid_attr =& $grid['data'][0];
+			
+			list($old_width,$old_disabled) = explode(',',$grid_attr[$c]);
 			$disabled = $disabled !== 0 ? $disabled : $old_disabled;
-			$this->data[0][$c] = ($width !== 0 ? $width : $old_width).
+			$grid_attr[$c] = ($width !== 0 ? $width : $old_width).
 				($disabled ? ','.$disabled : '');
+				
+			//echo "set_column_attributes('$c',,'$path'): ".$grid_attr[$c]."</p>\n"; _debug_array($grid_attr);
+			return explode(',',$grid_attr[$c]);
 		}
 
 		/**
 		 * disables column $c
 		 *
-		 * @deprecated as it uses this->data
 		 * @param int/string $c numerical column-number starting with 0 (!), or the char-code starting with 'A'
 		 * @param boolean $enable can be used to re-enable a column if set to True
-		*/
-		function disable_column($c,$enable=False)
+		 * @param string $path='/0' default is the first widget in the tree of children
+		 */
+		function disable_column($c,$enable=False,$path='/0')
 		{
-			$this->set_column_attributes($c,0,!$enable);
+			$this->set_column_attributes($c,0,!$enable,$path);
 		}
 
 		/**
@@ -726,6 +745,7 @@
 			}
 			$path = implode('/',$path_parts);
 			if ($path == '/' || $path === '') return $this->children;
+			if (count($path_parts) == 2) return $this->children[$path_parts[1]];
 
 			return $this->widget_tree_walk('get_widget_by_path_helper',$path);
 		}

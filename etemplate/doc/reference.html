@@ -834,6 +834,10 @@ $content[$id] = array(		<span>// I = value set by the app, 0 = value on return /
 	'rows'           =>	<span>//  O content set by callback</span>
 	'total'          =>	<span>//  O the total number of entries</span>
 	'sel_options'    =>	<span>//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options</span>
+	'no_columnselection' => <span>// I  turns off the columnselection completly, turned on by default</span>
+	'columnselection-pref' => <span>// I  name of the preference (plus 'nextmatch-' prefix), default = template-name</span>
+	'default_cols'   => <span>// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns</span>
+	'options-selectcols' => <span>// I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.</span>
 );
 
 <span>/*
@@ -910,7 +914,7 @@ function index($content = 0)
 		&lt;nextmatch type="nextmatch-accountfilter" id="col-name"/>
 	</td>
 	<td>no</td>
-	<td>nextmatch-<br />sortheader<p>nextmatch-<br />filterheader<p>nextmatch-<br />customfilter<p>nextmatch-<br />accountfilter</td>
+	<td>nextmatch-<br />sortheader<p>nextmatch-<br />filterheader<p>nextmatch-<br />customfilter<p>nextmatch-<br />accountfilter<p>nextmatch-<br />header</td>
 	<td>
 		These widget are an optional part of the nextmatch widget.<p>
 		<b>nextmatch-sortheader</b><br />
@@ -918,18 +922,23 @@ function index($content = 0)
 		to order the lines of the nextmatch after a certain column. The column-name is given as <b>name</b> (xml:id) the
 		<b>label</b> is show as a link of button (no javascript). One can specify a default sorting: <b>options</b>={DESC|ASC} (default=ASC), 
 		to be used when the header is clicked for the first time. Consecutive click on the header change the sorting
-		direction, indicated by a little up- or down-arrow.<p>
+		direction, indicated by a little up- or down-arrow. As a second comma-separated parameter one can specify an extra
+		label for the column-selection.<p>
 		<b>nextmatch-filterheader</b><br />
 		Widget to allow to show only certain row, which match a selected filter-value. The column-name is given as <b>name</b>
 		(xml:id), the options of the displayed selectbox need to be set as for an ordinary selectbox (eg. in the options
 		parameter to the uietemplate::exec function). If no extra-label is given in options, lang('all') will be used for
-		the empty value, which means no filter activ. An (optional) <b>label</b> can be given.<p>
+		the empty value, which means no filter activ. An (optional) <b>label</b> can be given and is also used for the column-selection.<p>
 		<b>nextmatch-customfilter</b><br />
 		The custom filterheader allows to use other (select-)widgets to filter by them. They have to be specified as the first
 		parameter in the comma-separated options attribute. In all other aspects it is identical to the filterheader.<p>
 		<b>nextmatch-accountfilter</b><br />
 		The Accountfilter allows to select users (via the prefered user-selection-method) to filter by them. 
 		It's identical to a <b>nextmatch-customfilter</b> with options="select-account".<p>
+		<b>nextmatch-header</b><br />
+		Just a header-label for a nextmatch column. It names the column for the column for the column-selection (in difference to the label).
+		The name is used to hide the column (with a 'no_' prefix) and as the name for the preference.
+		A different label for the column-selection preference can be specified via the option field.<p>
 		<i><u>Note</u>:</i> All four widgets interoperate with the nextmatch-widget which passes the set values as part if
 		the query-parameter to its get_rows function, they are <u>not</u> returned in the rows sub-array.
 	</td>

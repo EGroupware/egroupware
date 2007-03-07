@@ -143,6 +143,27 @@
 		}
 
 		/**
+		 * generates column-names from index: 'A', 'B', ..., 'AA', 'AB', ..., 'ZZ' (not more!)
+		 *
+		 * @static
+		 * @param string $chrs column letter to generate name from 'A' => 1
+		 * @return int the index
+		 */
+		function chrs2num($chrs)
+		{
+			$min = ord('A');
+			$max = ord('Z') - $min + 1;
+			
+			$num = 1+ord($chrs{0})-$min;
+			if (strlen($chrs) > 1)
+			{
+				$num *= 1 + $max - $min;
+				$num += 1+ord($chrs{1})-$min;
+			}
+			return $num;
+		}
+
+		/**
 		 * constructor for a new / empty cell/widget
 		 *
 		 * nothing fancy so far
@@ -906,7 +927,7 @@
 				foreach ($this->db_cols as $db_col => $name)
 				{
 					// escape only backslashes and single quotes (in that order)
-					$str .= "'$name' => '".str_replace(array('\\','\''),array('\\\\','\\\''),$this->db->f($db_col))."',";
+					$str .= "'$name' => '".str_replace(array('\\','\'',"\r"),array('\\\\','\\\'',''),$this->db->f($db_col))."',";
 				}
 				$str .= ");\n\n";
 				fwrite($f,$str);
@@ -1148,6 +1169,8 @@
 		 *
 		 * Only some widgets have a sub-tree of children: *box, grid, template, ...
 		 * For them we call tree_walk($widget,$func,$extra) instead of func direct
+		 * 
+		 * Please note: as call_user_func_array does not return references, methods ($func is an array) can not either!!!
 		 *
 		 * @param string/array $func function to use or array($obj,'method')
 		 * @param mixed &$extra extra parameter passed to function
@@ -1168,7 +1191,11 @@
 				{
 					$result =& $this->tree_walk($child,$func,$extra,$path.$c);
 				}
-				else 
+				elseif (is_array($func))
+				{
+					$result =& call_user_func_array($func,array(&$child,&$extra,$path.$c));
+				}
+				else
 				{
 					$result =& $func($child,$extra,$path.$c);
 				}
@@ -1201,7 +1228,14 @@
 				echo "<p><b>boetemplate::tree_walk</b>(, ".print_r($func,true).", ".print_r($extra,true).", ".print_r($opts,true).") func is not callable !!!<br>".function_backtrace()."</p>";
 				return false;
 			}
-			$result =& $func($widget,$extra,$path);
+			if(is_array($func))
+			{
+				$result =& call_user_func_array($func,array(&$widget,&$extra,$path));
+			}
+			else
+			{
+				$result =& $func($widget,$extra,$path);
+			}
 			if (!is_null($result) || is_array($extra) && isset($extra['__RETURN__NOW__']) || 
 				!isset($this->widgets_with_children[$widget['type']]))
 			{
@@ -1220,6 +1254,10 @@
 						if (isset($this->widgets_with_children[$child['type']]))
 						{
 							$result =& $this->tree_walk($child,$func,$extra,$path.'/'.$n);
+						}
+						elseif(is_array($func))
+						{
+							$result =& call_user_func_array($func,array(&$child,&$extra,$path.'/'.$n));
 						}
 						else
 						{
@@ -1243,6 +1281,10 @@
 							if (isset($this->widgets_with_children[$child['type']]))
 							{
 								$result =& $this->tree_walk($child,$func,$extra,$path.'/'.$r.$c);
+							}
+							elseif(is_array($func))
+							{
+								$result =& call_user_func_array($func,array(&$child,&$extra,$path.'/'.$r.$c));
 							}
 							else
 							{

@@ -20,8 +20,18 @@
 	class editor
 	{
 		var $debug;
-		var $etemplate; // eTemplate we edit
-		var $editor;	// editor eTemplate
+		/**
+		 * eTemplate we edit
+		 *
+		 * @var etemplate
+		 */
+		var $etemplate;
+		/**
+		 * editor eTemplate
+		 *
+		 * @var etemplate
+		 */
+		var $editor;
 		var $aligns = array(
 			'' => 'Left',
 			'right' => 'Right',

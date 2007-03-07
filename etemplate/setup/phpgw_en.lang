@@ -16,6 +16,7 @@
 a pattern to be searched for	etemplate	en	a pattern to be searched for
 accesskey	etemplate	en	Accesskey
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	en	Accesskeys can also be specified with an & in the label (eg. &Name)
+account contactdata	etemplate	en	Account contactdata
 add a new column (after the existing ones)	etemplate	en	Add a new column (after the existing ones)
 add a new entry of the selected application	etemplate	en	Add a new entry of the selected application
 add a new multi-column index	etemplate	en	Add a new multi-column index
@@ -35,6 +36,7 @@ application	etemplate	en	Application
 application name needed to write a langfile or dump the etemplates !!!	etemplate	en	Application name needed to write a langfile or dump the eTemplates !!!
 applies the changes made	etemplate	en	applies the changes made
 applies the changes to the given version of the template	etemplate	en	applies the changes to the given version of the template
+as default	etemplate	en	as default
 attach	etemplate	en	Attach
 attach file	etemplate	en	attach file
 baseline	etemplate	en	Baseline
@@ -73,6 +75,8 @@ comment	etemplate	en	Comment
 confirm	etemplate	en	confirm
 confirmation message or custom javascript (returning true or false)	etemplate	en	confirmation message or custom javascript (returning true or false)
 confirmation necesary or custom java-script	etemplate	en	confirmation necesary or custom java-script
+contact	etemplate	en	Contact
+contact field to show	etemplate	en	Contact field to show
 contact fields	etemplate	en	Contact fields
 contains	etemplate	en	contains
 create a new table for the application	etemplate	en	Create a new table for the application
@@ -153,6 +157,7 @@ exchange this two columns	etemplate	en	exchange this two columns
 export the loaded etemplate into a xml-file	etemplate	en	export the loaded eTemplate into a xml-file
 export xml	etemplate	en	Export XML
 extensions loaded:	etemplate	en	Extensions loaded:
+field	etemplate	en	Field
 field must not be empty !!!	etemplate	en	Field must not be empty !!!
 file	etemplate	en	File
 file contains more than one etemplate, last one is shown !!!	etemplate	en	File contains more than one eTemplate, last one is shown !!!
@@ -237,6 +242,7 @@ nextmatch	etemplate	en	Nextmatch
 nextmatch accountfilter	etemplate	en	Nextmatch Accountfilter
 nextmatch custom filterheader	etemplate	en	Nextmatch Custom Filterheader
 nextmatch filterheader	etemplate	en	Nextmatch Filterheader
+nextmatch header	etemplate	en	Nextmatch Header
 nextmatch sortheader	etemplate	en	Nextmatch Sortheader
 no column to swap with !!!	etemplate	en	no column to swap with !!!
 no file	etemplate	en	no file
@@ -280,6 +286,7 @@ remove this link (not the entry itself)	etemplate	en	Remove this link (not the e
 returns savely, without deleting	etemplate	en	returns savely, WITHOUT deleting
 right	etemplate	en	Right
 row...	etemplate	en	Row...
+save selected columns as default preference for all users.	etemplate	en	Save selected columns as default preference for all users.
 save the changes made and close the window	etemplate	en	Save the changes made and close the window
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	en	save the eTemplate under the above keys (name, ...), change them for a SaveAs
 saves changes to tables_current.inc.php	etemplate	en	saves changes to tables_current.inc.php
@@ -298,19 +305,23 @@ select an application, (*) = uninstalled	etemplate	en	Select an application, (*)
 select an entry to link with	etemplate	en	Select an entry to link with
 select an table of the application	etemplate	en	Select an table of the application
 select application	etemplate	en	Select Application
+select application to search	etemplate	en	Select application to search
 select category	etemplate	en	Select Category
+select columns	etemplate	en	Select columns
 select country	etemplate	en	Select Country
 select day	etemplate	en	Select Day
 select day of week	etemplate	en	select day of week
 select entry	etemplate	en	Select entry
 select hour	etemplate	en	Select hour
 select if content of field should not be translated (label gets always translated)	etemplate	en	select if content of field should not be translated (label gets always translated)
+select language	etemplate	en	Select Language
 select month	etemplate	en	Select Month
 select number	etemplate	en	Select Number
 select one ...	etemplate	en	Select One ...
 select percentage	etemplate	en	Select Percentage
 select priority	etemplate	en	Select Priority
 select state	etemplate	en	Select State
+select the columns to display in the list	etemplate	en	Select the columns to display in the list
 select the indexed columns in their desired order	etemplate	en	Select the indexed columns in their desired order
 select this etemplate to delete it	etemplate	en	select this eTemplate to delete it
 select which accounts to show	etemplate	en	select which accounts to show

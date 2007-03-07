@@ -211,6 +211,18 @@
 				if (!@$GLOBALS['egw_info']['etemplate']['hooked'] && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
 				{
 					$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
+/*
+					if ($GLOBALS['egw_info']['flags']['currentapp'] != 'etemplate')
+					{
+						$css_file = '/etemplate/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/app.css';
+						if (!file_exists(EGW_SERVER_ROOT.$css_file))
+						{
+							$css_file = '/etemplate/templates/default/app.css';
+						}
+						$GLOBALS['egw_info']['flags']['css'] .= '@import('.$GLOBALS['egw_info']['server']['webserver_url'].
+							$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).");\n";
+					}
+*/
 					$GLOBALS['egw']->common->egw_header();
 				}
 				elseif (!isset($GLOBALS['egw_info']['etemplate']['content']))
@@ -1285,7 +1297,7 @@
 					if ($multiple && !is_array($value)) $value = explode(',',$value);
 					if ($readonly || $cell['noprint'])
 					{
-						foreach($multiple ? $value : array($value) as $val)
+						foreach($multiple || is_array($value) ? $value : array($value) as $val)
 						{
 							if (is_array($sels[$val]))
 							{
@@ -1321,7 +1333,7 @@
 						if ($multiple && is_numeric($multiple))	// eg. "3+" would give a regular multiselectbox
 						{
 							$html .= $this->html->checkbox_multiselect($form_name.($multiple > 1 ? '[]' : ''),$value,$sels,
-								$cell['no_lang'],$options,$multiple,true,$extraStyleMultiselect);
+								$cell['no_lang'],$options,$multiple,$multiple{0}!=='0',$extraStyleMultiselect);
 						}
 						else
 						{
@@ -1429,10 +1441,10 @@
 					if ($box_anz > 1 && $orient)	// a single cell is NOT placed into a table
 					{
 						$html = $this->html->table($rows,$this->html->formatOptions($cell_options,',,cellpadding,cellspacing').
-							$this->html->formatOptions($class,'class').
-							($type != 'groupbox' && $cell['name'] ? ' id="'.$form_name.'"' : '').
+							($type != 'groupbox' ? $this->html->formatOptions($class,'class').
+								($cell['name'] ? ' id="'.$form_name.'"' : '') : '').
 							($cell['align'] && $orient != 'horizontal' || $sub_cell_has_align ? ' width="100%"' : ''));	// alignment only works if table has full width
-						$class = '';	// otherwise we create an extra div
+						if ($type != 'groupbox') $class = '';	// otherwise we create an extra div
 					}
 					// put the class of the box-cell, into the the class of this cell
 					elseif ($box_item_class && $box_anz == 1)
@@ -1445,7 +1457,9 @@
 						{
 							$label = lang($label);
 						}
-						$html = $this->html->fieldset($html,$label,$cell['name'] ? ' id="'.$form_name.'"' : '');
+						$html = $this->html->fieldset($html,$label,($cell['name'] ? ' id="'.$form_name.'"' : '').
+							($class ? ' class="'.$class.'"' : ''));
+						$class = '';	// otherwise we create an extra div
 					}
 					elseif (!$orient)
 					{

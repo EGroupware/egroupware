@@ -313,6 +313,7 @@
 		{
 			$xul_grid =& new xmlnode('grid');
 			$this->set_attributes($xul_grid,'width,height,border,class,spacing,padding,overflow',$grid['size']);
+			$this->set_attributes($xul_grid,'id',$grid['name']);
 
 			$xul_columns =& new xmlnode('columns');
 			$xul_rows =& new xmlnode('rows');
@@ -385,7 +386,7 @@
 			if ($etempl->style != '')
 			{
 				$styles =& new xmlnode('styles');
-				$styles->set_value($etempl->style);
+				$styles->set_value(str_replace("\r",'',$etempl->style));
 				$template->add_node($styles);
 			}
 			$this->xul_overlay->add_node($template);

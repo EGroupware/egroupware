@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.3.001">
+	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.3.002">
 		<grid width="100%" spacing="0" padding="5">
 			<columns>
 				<column width="1%"/>
@@ -14,9 +14,10 @@
 				<column/>
 				<column width="1%"/>
 				<column width="1%"/>
+				<column/>
 			</columns>
 			<rows>
-				<row class="th">
+				<row class="th" disabled="@no_columnselection">
 					<button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
 					<button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
 					<menulist>
@@ -35,6 +36,18 @@
 					</menulist>
 					<button image="right.gif" ro_image="right-grey.gif" label="Right" id="right" statustext="go to the next page of entries"/>
 					<button image="last.gif" ro_image="last-grey.gif" label="Last" id="last" statustext="go to the last entry"/>
+					<box class="selectcols">
+						<button image="selectcols" label="Select columns" statustext="Select the columns to display in the list" onclick="document.getElementById(form::name('colselection')).style.display=document.getElementById(form::name('colselection')).style.display=='block' ? 'none' : 'block'; return false;"/>
+						<groupbox class="colselection" id="colselection">
+							<caption label="Select columns"/>
+							<listbox rows="012" id="selectcols" statustext="Select the columns to display in the list" no_lang="1"/>
+							<hbox>
+								<button label="Save" id="savecols"/>
+								<button id="cancel" label="Cancel" onclick="document.getElementById(form::name('colselection')).style.display='none'; return false;"/>
+								<checkbox id="default_prefs" label="as default" statustext="Save selected columns as default preference for all users."/>
+							</hbox>
+						</groupbox>
+					</box>
 				</row>
 			</rows>
 		</grid>
@@ -91,6 +104,16 @@
 .lettersearch_active,.lettersearch:hover {
 	border: 1px solid black;
 	background-color: #E8F0F0;
+}
+.selectcols {
+	position: relative;
+}
+.colselection {
+	background-color: white;
+	position: absolute;
+	right: 0px;
+	top: 16px;
+	display: none;
 }
 
 		</styles>

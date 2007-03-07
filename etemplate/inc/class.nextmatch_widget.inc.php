@@ -75,6 +75,7 @@
 			'nextmatch-filterheader'  => 'Nextmatch Filterheader',
 			'nextmatch-accountfilter' => 'Nextmatch Accountfilter',
 			'nextmatch-customfilter'  => 'Nextmatch Custom Filterheader',
+			'nextmatch-header'        => 'Nextmatch Header',
 		);
 
 		/**
@@ -88,7 +89,9 @@
 
 		/**
 		 * returns last part of a form-name
-		 * @internal 
+		 * 
+		 * @internal
+		 * @return string 
 		 */
 		function last_part($name)
 		{
@@ -106,7 +109,7 @@
 		 * @param array &$cell array with the widget, can be modified for ui-independent widgets 
 		 * @param array &$readonlys names of widgets as key, to be made readonly
 		 * @param mixed &$extension_data data the extension can store persisten between pre- and post-process
-		 * @param object &$tmpl reference to the template we belong too
+		 * @param etemplate &$tmpl reference to the template we belong too
 		 * @return boolean true if extra label is allowed, false otherwise
 		 */
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
@@ -120,8 +123,12 @@
 			);
 			switch ($cell['type'])
 			{
+				case 'nextmatch-header':
+					$cell['type'] = 'label';
+					return true;	// false = no extra label
+
 				case 'nextmatch-sortheader':	// Option: default sort: ASC(default) or DESC
-					$extension_data['default_sort'] = preg_match('/^(ASC|DESC)$/i',$cell['size']) ? strtoupper($cell['size']) : 'ASC';
+					$extension_data['default_sort'] = $cell['size']&&preg_match('/^(ASC|DESC)/i',$cell['size'],$matches) ? strtoupper($matches[1]) : 'ASC';
 					$cell['type'] = 'button';
 					$cell['onchange'] = True;
 					if (!$cell['help'])
@@ -134,7 +141,7 @@
 						unset($cell[1]['align']);
 						$cell[2] = $tmpl->empty_cell('image',$nm_global['sort'] != 'DESC' ? 'down' : 'up');
 						$cell['type'] = 'hbox';
-						$cell['size'] = '2,0,0';
+						$cell['size'] = '2,,0,0';
 						$class = 'activ_sortcolumn';
 						$cell['name'] = $cell['label'] = '';
 					}
@@ -218,6 +225,11 @@
 			{
 				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = $value['num_rows'];
 			}				
+			if (!$value['no_columnselection'])
+			{
+				// presetting the options for selectcols empty, so the get_rows function can set it
+				$value['options-selectcols'] = array();
+			}
 			if (!is_object($obj) || !method_exists($obj,$method))
 			{
 				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
@@ -333,6 +345,60 @@
 				$cell['obj'] = &$nextmatch;
 				$cell['name'] = $nextmatch->name;
 			}
+			// preset everything for the column selection
+			if (!$value['no_columnselection'])
+			{
+				// fetching column-names & -labels from the template
+				$this->_cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows']);
+				//_debug_array($name2col);
+				//_debug_array($value['options-selectcols']);
+				// getting the selected colums from the prefs (or if not set a given default or all)
+				$name = is_object($value['template']) ? $value['template']->name : $value['template'];
+				list($app) = explode('.',$name);
+				if (isset($value['columnselection_pref'])) $name = $value['columnselection_pref'];
+				if (!($value['selectcols'] = $GLOBALS['egw_info']['user']['preferences'][$app]['nextmatch-'.$name]))
+				{
+					$value['selectcols'] = array_keys($value['options-selectcols']);
+					if (isset($value['default_cols']))
+					{
+						if ($value['default_cols']{0} == '!')
+						{
+							$value['selectcols'] = array_diff($value['selectcols'],explode(',',substr($value['default_cols'],1)));
+						}
+						else
+						{
+							$value['selectcols'] = $value['default_cols'];
+						}
+					}
+				}
+				if (!is_array($value['selectcols'])) $value['selectcols'] = explode(',',$value['selectcols']);
+				foreach(array_keys($value['options-selectcols']) as $name)
+				{
+					// set 'no_'.$col for each column-name to true, if the column is not selected 
+					// (and the value is not set be the get_rows function / programmer!) 
+					if (!isset($value['rows']['no_'.$name])) $value['rows']['no_'.$name] = !in_array($name,$value['selectcols']);
+					// setting '@no_'.$name as disabled attr for each column, that has only a single nextmatch-header
+					if (is_object($value['template']))
+					{
+						$col = $name2col[$name];
+						list(,$disabled) = $value['template']->set_column_attributes($col);
+						//echo "<p>$col: $name: $disabled</p>\n";
+						if (!isset($disabled)) $value['template']->set_column_attributes($col,0,'@no_'.$name);
+					}
+				}
+				//_debug_array($value);
+				if (is_object($nextmatch))
+				{
+					$size =& $nextmatch->get_cell_attribute('selectcols','size');
+					if ($size > count($value['options-selectcols'])) $size = '0'.count($value['options-selectcols']);
+					if (!$GLOBALS['egw_info']['user']['apps']['admin'])
+					{
+						$nextmatch->disable_cells('default_prefs');
+					}
+				}
+				// should reset on each submit
+				unset($value['default_prefs']);
+			}
 			$cell['type'] = 'template';
 			$cell['label'] = $cell['help'] = '';
 
@@ -346,6 +412,99 @@
 			$value['bottom'] = $value;	// copy the values for the bottom-bar
 
 			return False;	// NO extra Label
+		}
+		
+		/**
+		 * Extract the column names and labels from the template
+		 *
+		 * @param etemplate &$tmpl
+		 * @param array &$cols here we add the column-name/-label
+		 * @param array &$name2col
+		 * @param array $content nextmatch content, to be able to resolve labels with @name
+		 */
+		function _cols_from_tpl(&$tmpl,&$cols,&$name2col,&$content)
+		{
+			//_debug_array($cols); 
+			// fetching column-names & -labels from the template
+			$cols['__content__'] =& $content;
+			$tmpl->widget_tree_walk(array($this,'_cols_from_tpl_walker'),$cols);
+			unset($cols['__content__']);
+			$name2col = $cols['name2col']; unset($cols['name2col']);
+			//_debug_array($cols); 
+			foreach($cols as $name => $label)
+			{
+				if (!$label) unset($cols[$name]);
+			}
+			//_debug_array($cols); 
+			//_debug_array($name2col);
+			// now we check if a column of the grid has more then one header
+			$col2names = array();
+			foreach($name2col as $name => $col)
+			{
+				if ($name != $col) $col2names[$col][] = $name;
+			}
+			//_debug_array($col2names);
+			$cols2 = $cols;
+			$cols = array();
+			foreach($cols2 as $name => $label)
+			{
+				$col = $name;
+				// and replace the column letter then with the name concatinated by an underscore
+				if (is_array($col2names[$name]))
+				{
+					$name = implode('_',$col2names[$name]);
+					$name2col[$name] = $col;
+				}
+				$cols[$name] = $label;
+			}
+			//_debug_array($cols); 
+		}
+
+		/**
+		 * Extract the column names and labels from the template (callback for etemplate::widget_tree_walk())
+		 *
+		 * @param array &$widget
+		 * @param array &$cols here we add the column-name/-label
+		 * @param string $path
+		 */
+		function _cols_from_tpl_walker(&$widget,&$cols,$path)
+		{
+			list($type,$subtype) = explode('-',$widget['type']);
+			if ($type != 'nextmatch' || !$subtype || !$widget['name'] || $widget['disabled'])
+			{
+				return;
+			}
+			$options = explode(',',$widget['size']);
+			if (!($label = $widget['label']) || in_array($subtype,array('header','sortheader')) && $options[1])
+			{
+				if (in_array($subtype,array('customfilter','sortheader'))) $subtype = array_shift($options);
+
+				$label = $options[0];
+			}
+			list(,,$col,$sub) = explode('/',$path);
+			$row = (int)$col;
+			$col = substr($col,$row > 9 ? 2 : 1);
+			if (($label{0} == '@' || strchr($lable,'$') !== false) && is_array($cols['__content__']))
+			{
+				$label = etemplate::expand_name($label,$col,$row,'','',$cols['__content__']);
+			}
+			if (!isset($cols[$widget['name']]) && $label)
+			{
+				$label = substr($label,-3) == '...' ? lang(substr($label,0,-3)) : lang($label);
+				
+				if (!$sub)
+				{
+					$cols[$widget['name']] = $label;
+				}
+				elseif (strstr($cols[$col],$label) === false)
+				{
+					$cols[$col] .= ($cols[$col] ? ', ' : '').$label;
+					$cols['name2col'][$col] = $col;
+				}
+			}
+			$cols['name2col'][$widget['name']] = $col;
+			
+			//echo "<p>$path: $widget[name] $label</p>\n";
 		}
 
 		/**
@@ -373,7 +532,7 @@
 			{
 				case 'nextmatch':
 					break;
-
+					
 				case 'nextmatch-sortheader':
 					if ($value_in)
 					{
@@ -391,6 +550,9 @@
 						$nm_global['filter'][$this->last_part($name)] = $value_in;
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
+					
+				case 'nextmatch-header':
+					return False;	// nothing to report
 			}
 			$old_value = $extension_data;
 
@@ -415,6 +577,11 @@
 					{
 						$value[$name] = $value['bottom'][$name];
 					}
+				}
+				if ($value['bottom']['savecols'])
+				{
+					$value['selectcols'] = $value['bottom']['selectcols'];
+					$value['default_prefs'] = $value['bottom']['default_prefs'];
 				}
 				unset($value['bottom']);
 			}
@@ -499,6 +666,17 @@
 			{
 				list($value['searchletter']) = @each($value['searchletter']);
 				if ($value['searchletter'] === 'all') $value['searchletter'] = false;
+				$loop = True;
+			}
+			if ($value['savecols'])
+			{
+				$name = is_object($extension_data['template']) ? $extension_data['template']->name : $extension_data['template'];
+				list($app) = explode('.',$name);
+				if (isset($extension_data['columnselection_pref'])) $name = $extension_data['columnselection_pref'];
+				$pref = !$GLOBALS['egw_info']['user']['apps']['admin'] && $value['default_prefs'] ? 'default' : 'user';
+				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->add($app,'nextmatch-'.$name,is_array($value['selectcols']) ? 
+					implode(',',$value['selectcols']) : $value['selectcols'],$pref);
+				$GLOBALS['egw']->preferences->save_repository(false,$pref);
 				$loop = True;
 			}
 			return True;

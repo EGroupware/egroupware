@@ -16,6 +16,7 @@
 a pattern to be searched for	etemplate	de	ein Muster nach dem gesucht werden soll
 accesskey	etemplate	de	Tastaturkürzel
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	de	Ein Tastaturkürzel kann auch über ein & in der Beschriftung angegeben werden
+account contactdata	etemplate	de	Kontaktdaten eines Benutzers
 add a new column (after the existing ones)	etemplate	de	Neue Spalte hinzufügen (hinter den bestehenden)
 add a new entry of the selected application	etemplate	de	Einen neuen Eintrag der ausgewählten Anwendung hinzufügen
 add a new multi-column index	etemplate	de	Fügt einen mehrspaltigen Index hinzu
@@ -35,6 +36,7 @@ application	etemplate	de	Anwendung
 application name needed to write a langfile or dump the etemplates !!!	etemplate	de	Name der Anwendung benötigt um eine Sprachdatei oder eTemplate-Distibutionsdate zu schreiben !!!
 applies the changes made	etemplate	de	übernimmt die Änderungen
 applies the changes to the given version of the template	etemplate	de	übernimmt die Änderungen in die angegebene Version des Templates
+as default	etemplate	de	als Vorgabe
 attach	etemplate	de	Anhängen
 attach file	etemplate	de	Datei anhängen
 baseline	etemplate	de	Grundlinie
@@ -73,6 +75,8 @@ comment	etemplate	de	Kommentar
 confirm	etemplate	de	bestätigen
 confirmation message or custom javascript (returning true or false)	etemplate	de	Bestätigungsmeldung oder spezielles Javascript (true oder false zurücklieferned)
 confirmation necesary or custom java-script	etemplate	de	Bestätigung notwendig oder spezielles Javascript
+contact	etemplate	de	Kontakt
+contact field to show	etemplate	de	Kontaktfeld zum Anzeigen
 contact fields	etemplate	de	Kontaktfelder
 contains	etemplate	de	enthalten
 create a new table for the application	etemplate	de	Neue Tabelle für die Anwendung anlegen
@@ -153,6 +157,7 @@ exchange this two columns	etemplate	de	diese beiden Spalten austauschen
 export the loaded etemplate into a xml-file	etemplate	de	das geladene eTemplate als XML Datei (.xet) exportieren
 export xml	etemplate	de	XML Export
 extensions loaded:	etemplate	de	Erweiterungen geladen:
+field	etemplate	de	Feld
 field must not be empty !!!	etemplate	de	Das Feld darf nicht leer sein !!!
 file	etemplate	de	Datei
 file contains more than one etemplate, last one is shown !!!	etemplate	de	Datei enthält mehr als ein eTemplate, das letzte wird angezeigt !!!
@@ -237,6 +242,7 @@ nextmatch	etemplate	de	Nextmatch
 nextmatch accountfilter	etemplate	de	Nextmatch Benutzerfilter
 nextmatch custom filterheader	etemplate	de	Nextmatch freier Filterkopf
 nextmatch filterheader	etemplate	de	Nextmatch Filterkopf
+nextmatch header	etemplate	de	Nextmatch Spaltenkopf
 nextmatch sortheader	etemplate	de	Nextmatch Sortierkopf
 no column to swap with !!!	etemplate	de	Keine Spalte um damit zu tauschen !!!
 no file	etemplate	de	keine Datei
@@ -280,6 +286,7 @@ remove this link (not the entry itself)	etemplate	de	entfernt diese Verknüpfung 
 returns savely, without deleting	etemplate	de	Abbruch, OHNE zu löschen
 right	etemplate	de	Rechts
 row...	etemplate	de	Zeile...
+save selected columns as default preference for all users.	etemplate	de	Speichert die ausgewählten Spalten als Vorgabe für alle Benutzer.
 save the changes made and close the window	etemplate	de	speichert die Änderungen uns schließt das Fenster
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	de	Speichert das eTemplate unter den obigen Schlüsseln (name, ...), ändern für ein Speichern unter
 saves changes to tables_current.inc.php	etemplate	de	speichert die Änderungen in tables_current.inc.php
@@ -298,19 +305,23 @@ select an application, (*) = uninstalled	etemplate	de	Anwendung auswählen, (*) =
 select an entry to link with	etemplate	de	Eintrag zum Verküpfen auswählen
 select an table of the application	etemplate	de	Tabelle der Anwendung auswählen
 select application	etemplate	de	Anwendung auswählen
+select application to search	etemplate	de	Anwendung zum Suchen auswählen
 select category	etemplate	de	Kategorie auswählen
+select columns	etemplate	de	Spalten auswählen
 select country	etemplate	de	Land auswählen
 select day	etemplate	de	Tag auswählen
 select day of week	etemplate	de	Wochentag auswählen
 select entry	etemplate	de	Eintrag auswählen
 select hour	etemplate	de	Stunde auswählen
 select if content of field should not be translated (label gets always translated)	etemplate	de	abhaken wenn Inhalt des Feldes nicht übersetzt werden soll (Beschriftung wird immer übersetzt)
+select language	etemplate	de	Sprache auswählen
 select month	etemplate	de	Monat auswählen
 select number	etemplate	de	Zahl auswählen
 select one ...	etemplate	de	Eine auswählen ...
 select percentage	etemplate	de	Prozente auswählen
 select priority	etemplate	de	Priorität auswählen
 select state	etemplate	de	US-State auswählen
+select the columns to display in the list	etemplate	de	Wählen Sie die Spalten aus, die in der Liste angezeigt werden sollen
 select the indexed columns in their desired order	etemplate	de	Zu indizierende Spalten in der gewünchten Reihenfolge auswählen
 select this etemplate to delete it	etemplate	de	dieses eTemplate zum Löschen auswählen
 select which accounts to show	etemplate	de	Benutzer zum Anzeigen auswählen
