@@ -19,6 +19,15 @@
 </select>
 </td>
 </tr>
+<tr class="row_on">
+<td>{lang_timesheet_viewtype}:</td>
+<td>
+<select name="newsettings[ts_viewtype]">
+<option value="normal"{selected_ts_viewtype_normal}>{lang_viewtype_normal}</option>
+<option value="short"{selected_ts_viewtype_short}>{lang_viewtype_short}</option>
+</select>
+</td>
+</tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->
