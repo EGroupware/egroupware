@@ -74,6 +74,9 @@ class ts_admin_prefs_sidebox_hooks
 					'menuaction' => 'admin.uicategories.index',
 					'appname'    => $appname,
 					'global_cats'=> True)),
+				'Custom fields'  => $GLOBALS['egw']->link('/index.php',array(
+					'menuaction' => 'timesheet.uicustomfields.edit',
+					'appname'    => $appname)),		
 			);
 			if ($location == 'admin')
 			{

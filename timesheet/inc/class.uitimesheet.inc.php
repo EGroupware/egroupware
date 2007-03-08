@@ -24,12 +24,19 @@ class uitimesheet extends botimesheet
 		'index' => true,
 	);
 	/**
-	 * ProjectManager integraion: 'none', 'full' or default null
+	 * ProjectManager integration: 'none', 'full' or default null
 	 *
 	 * @var string
 	 */
 	var $pm_integration;
 
+	/**
+	 * TimeSheet view type: 'short' or 'normal'
+	 *
+	 * @var string
+	 */	
+	var $ts_viewtype;
+	
 	function uitimesheet()
 	{
 		$this->botimesheet();
@@ -37,6 +44,11 @@ class uitimesheet extends botimesheet
 		$config =& CreateObject('phpgwapi.config',TIMESHEET_APP);
 		$config->read_repository();
 		$this->pm_integration = $config->config_data['pm_integration'];
+		$this->ts_viewtype = $config->config_data['ts_viewtype'];
+
+		// our javascript
+		// to be moved in a seperate file if rewrite is over
+		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
 	}
 
 	function view()
@@ -46,7 +58,7 @@ class uitimesheet extends botimesheet
 	
 	function edit($content = null,$view = false)
 	{
-		$tabs = 'general|notes|links';
+		$tabs = 'general|notes|links|customfields';
 		$etpl =& new etemplate('timesheet.edit');
 
 		if (!is_array($content))
@@ -294,6 +306,11 @@ class uitimesheet extends botimesheet
 			$etpl->set_cell_attribute('pm_id','disabled',true);
 			$etpl->set_cell_attribute('pl_id','disabled',true);
 		}		
+
+		if($this->ts_viewtype == 'short') {
+			$content['ts_viewtype'] = /*$readonlys[$tabs]['links'] =*/ $readonlys[$tabs]['notes'] = true;
+		}
+						
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.edit',$content,array(
 			'ts_owner' => $edit_grants,
 		),$readonlys,$preserv,2);
@@ -320,8 +337,10 @@ class uitimesheet extends botimesheet
 	 * @param array &$query
 	 * @param array &$rows returned rows/cups
 	 * @param array &$readonlys eg. to disable buttons based on acl
+	 * @param boolean $id_only=false if true only return (via $rows) an array of contact-ids, dont save state to session
+	 * @return int total number of contacts matching the selection
 	 */
-	function get_rows(&$query_in,&$rows,&$readonlys)
+	function get_rows(&$query_in,&$rows,&$readonlys,$id_only=false)
 	{
 		$this->show_sums = false;
 		if ($query_in['filter'])
@@ -370,7 +389,8 @@ class uitimesheet extends botimesheet
 		// PM project filter for the PM integration
 		if ((string)$query['col_filter']['pm_id'] != '')
 		{
-			$query['col_filter']['ts_id'] = $this->link->get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
+			//$query['col_filter']['ts_id'] = $this->link->get_links('projectmanager',$query['col_filter']['pm_id'],'timesheet');
+			$query['col_filter']['ts_id'] = $this->get_ts_links($query['col_filter']['pm_id']);
 			if (!$query['col_filter']['ts_id']) $query['col_filter']['ts_id'] = 0;
 		}
 		unset($query['col_filter']['pm_id']);
@@ -458,6 +478,15 @@ class uitimesheet extends botimesheet
 		}
 		$total = parent::get_rows($query,$rows,$readonlys);
 		
+		if ($id_only)
+		{
+			foreach($rows as $n => $row)
+			{
+				$rows[$n] = $row['ts_id'];
+			}
+			return $this->total;	// no need to set other fields or $readonlys
+		}
+
 		unset($query['col_filter'][0]);
 		
 		$readonlys = array();
@@ -536,6 +565,10 @@ class uitimesheet extends botimesheet
 		}
 		$rows['pm_integration'] = $this->pm_integration;
 
+		if($this->ts_viewtype == 'short') {
+			$rows['ts_viewtype'] = true;
+		}
+		
 		return $total;		
 	}
 
@@ -604,4 +637,21 @@ class uitimesheet extends botimesheet
 		}
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.index',$content,$sel_options,$readonlys,$preserv);
 	}
+
+
+
+	function js()
+	{
+		return '<script LANGUAGE="JavaScript">
+
+		function timesheet_export()
+		{
+			egw_openWindowCentered(
+				"'. $GLOBALS['egw']->link('/index.php','menuaction=importexport.uiexport.export_dialog&appname=timesheet&selection=use_all') . '",
+				"Export",400,400);
+			return false;
+		}
+		</script>';
+	}
+
 }

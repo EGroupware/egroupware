@@ -30,6 +30,14 @@ class botimesheet extends so_sql
 	 * @var array
 	 */
 	var $config = array();
+
+
+	/**
+	 * Timesheets config data
+	 *
+	 * @var array
+	 */
+	var $config_data = array();
 	/**
 	 * Timestaps that need to be adjusted to user-time on reading or saving
 	 * 
@@ -100,14 +108,21 @@ class botimesheet extends so_sql
 	 */
 	var $show_sums;
 
+	var $customfields;
+
 	function botimesheet()
 	{
 		$this->so_sql(TIMESHEET_APP,'egw_timesheet');
 
-		$config =& CreateObject('phpgwapi.config',TIMESHEET_APP);
-		$config->read_repository();
-		$this->config =& $config->config_data;
-		unset($config);
+		$this->config =& CreateObject('phpgwapi.config',TIMESHEET_APP);
+		$this->config->read_repository();
+		$this->config_data =& $this->config->config_data;
+		//unset($config);
+
+		if (isset($this->config_data['customfields']) && is_array($this->config_data['customfields']))
+		{
+			$this->customfields = $this->config_data['customfields'];
+		}
 
 		if (!is_object($GLOBALS['egw']->datetime))
 		{
@@ -361,7 +376,32 @@ class botimesheet extends so_sql
 		{
 			return $ret;	// no read rights, or entry not found
 		}
+
+		//assign custom fields
+		foreach($this->customfields as $name => $value) {
+			$row = $this->read_extra($name);
+			$this->data['#'.$name] = $row['ts_extra_value'];
+		}
+
 		return $this->data;
+	}
+
+	/**
+	 * reads a timesheet extra entry of the current timesheet dataset
+	 *
+	 * @param int $name => name of the current timesheet extra entry
+	 * @param int $value => value of the current timesheet extra entry
+	 * @return array of resultset
+	 */
+	function read_extra($name='',$value='')
+	{
+		strlen($value) > 0 ? $where = ' and ts_extra_value ='.$this->db->quote($value) : '';
+		strlen($name) > 0 ? $where .= ' and ts_extra_name ='.$this->db->quote($name) : '';
+
+		$this->db->select('egw_timesheet_extra', 'ts_extra_name, ts_extra_value',$query,__LINE__,__FILE__,False,'',False,0,'where ts_id='.$this->data['ts_id'].$where);
+		$row = $this->db->row(true);
+
+		return $row;
 	}
 	
 	/**
@@ -389,10 +429,49 @@ class botimesheet extends so_sql
 		}
 		if (!($err = parent::save()))
 		{
+			//saves data of custom fields in timesheet_extra
+			$this->save_extra();
+
 			// notify the link-class about the update, as other apps may be subscribt to it
 			$this->link->notify_update(TIMESHEET_APP,$this->data['ts_id'],$this->data);
 		}
 		return $err;
+	}
+
+	/**
+	 * saves a timesheet extra entry based one the "custom fields" settings
+	 *
+	 * @param boolean  $updateNames => if true "change timesheet extra name", otherwise update existing datasets or insert new ones
+	 * @param boolean  $oldname => original name of the timesheet extra entry
+	 * @param boolean  $name => new name of the timesheet extra entry
+	 * @return int true on success else false
+	 */
+	function save_extra($updateNames=False,$oldname='',$name='')
+	{
+		if($updateNames) {
+			$keys = array('ts_extra_name' => $oldname);
+			$fieldAssign = array('ts_extra_name' => $name);
+			$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__);
+			return true;
+		}
+		else {
+			foreach($this->customfields as $namecf => $valuecf) {
+				//if entry not exist => insert
+				if(!$this->read_extra($namecf)) {
+					$fieldAssign = array('ts_id' => $this->data['ts_id'],'ts_extra_name' => $namecf,'ts_extra_value' => $this->data['#'.$namecf]);
+					$this->db->insert('egw_timesheet_extra',$fieldAssign,false,__LINE__,__FILE__);
+				}
+				//otherwise update existing dataset
+				else {
+					$keys = array('ts_extra_name' => $namecf, 'ts_id' => $this->data['ts_id']);
+					$fieldAssign = array('ts_extra_value' => $this->data['#'.$namecf]);
+					$this->db->update('egw_timesheet_extra',$fieldAssign,$keys,__LINE__,__FILE__);
+				}
+			}
+			return true;
+		}
+
+		return false;
 	}
 	
 	/**
@@ -416,10 +495,33 @@ class botimesheet extends so_sql
 		}
 		if (($ret = parent::delete($keys)) && $ts_id)
 		{
+			//delete custom fields entries
+			$this->delete_extra($ts_id);
+
 			// delete all links to timesheet entry $ts_id
 			$this->link->unlink(0,TIMESHEET_APP,$ts_id);
 		}
 		return $ret;
+	}
+
+
+	/**
+	 * deletes a timesheet extra entry identified by $ts_id and/or $ts_exra_name
+	 *
+	 * @param int $ts_id => number of timesheet
+	 * @param string ts_extra_name => certain custom field name
+	 * @return int false if an error
+	 */
+	function delete_extra($ts_id='',$ts_extra_name='')
+	{
+		strlen($ts_id) > 0 ? $where['ts_id'] = $ts_id : '';
+		strlen($ts_extra_name) > 0 ? $where['ts_extra_name'] = $ts_extra_name : '';
+
+		if(count($where) > 0) {
+			return $this->db->delete('egw_timesheet_extra', $where,__LINE__,__FILE__);
+		}
+
+		return false;
 	}
 
 	/**
@@ -577,5 +679,60 @@ class botimesheet extends so_sql
 			);
 		}
 		return $rows;
+	}
+
+	/**
+	 * updates the project titles in the timesheet application (called whenever a project name is changed in the project manager)
+	 *
+	 * Todo: implement via notification
+	 *
+	 * @param string $oldtitle => the origin title of the project
+	 * @param string $newtitle => the new title of the project
+	 * @return boolean true for success, false for invalid parameters
+	 */
+	 function update_ts_project($oldtitle='', $newtitle='')
+	 {
+		if(strlen($oldtitle) > 0 && strlen($newtitle) > 0) {
+			$keys = array('ts_project' => $oldtitle);
+			$fieldAssign = array('ts_project' => $newtitle,'ts_title' => $newtitle);
+			$this->db->update('egw_timesheet',$fieldAssign,$keys,__LINE__,__FILE__);
+
+			return true;
+		}
+
+		return false;
+	 }
+
+	/**
+	 * returns array with relation link_id and ts_id (necessary for project-selection)
+	 *
+	 * @param int $pm_id ID of selected project
+	 * @return array containing link_id and ts_id
+	 */	
+	function get_ts_links($pm_id=0) {
+		$tslist = array();		
+		if(strlen($pm_id) > 0) {
+			if(isset($GLOBALS['egw_info']['user']['apps']['projectmanager'])) {	
+				$bo_pm = CreateObject('projectmanager.boprojectmanager');
+				$childs = $bo_pm->children($pm_id);
+				$childs[] = $pm_id;
+				$pmChilds = implode(",",$childs);
+				$this->db->select(	'egw_links','link_id, link_id1',$query,
+							__LINE__,__FILE__,False,
+							'',False,0,
+							'JOIN egw_pm_projects ON (pm_id = link_id2)
+							 WHERE 
+								link_app1 = \'timesheet\' AND
+								link_app2 = \'projectmanager\' AND
+								link_id2 IN ('.$pmChilds.')');
+					
+				while($row = $this->db->row(true)) {
+					$tslist[$row['link_id']] = $row['link_id1'];
+				}
+					
+			}
+
+		} 
+		return $tslist;
 	}
 }
