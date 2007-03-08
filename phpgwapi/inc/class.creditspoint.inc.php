@@ -104,4 +104,16 @@
 			return $link;
 		 }
 	  }
+	  
+	  function refund($uniqid)
+	  {
+		 if($this->useCP)
+		 {
+			return $this->cpapi->refund($uniqid);
+		 }
+		 else
+		 {
+			return $link;
+		 }
+	  }
    }
