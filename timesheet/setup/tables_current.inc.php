@@ -32,5 +32,16 @@
 			'fk' => array(),
 			'ix' => array('ts_project','ts_owner'),
 			'uc' => array()
+		),
+		'egw_timesheet_extra' => array(
+			'fd' => array(
+				'ts_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'ts_extra_name' => array('type' => 'varchar','precision' => '32','nullable' => False),
+				'ts_extra_value' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '')
+			),
+			'pk' => array('ts_id','ts_extra_name'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
 	);

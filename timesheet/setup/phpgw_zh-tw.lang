@@ -39,7 +39,6 @@ select a price	timesheet	zh-tw	選擇價格
 select a project	timesheet	zh-tw	選擇專案
 start	timesheet	zh-tw	開始
 starttime	timesheet	zh-tw	開始時間
-starttime has to be before endtime !!!	timesheet	zh-tw	開始時間必須在結束時間之前！
 sum %1:	timesheet	zh-tw	%1 小計：
 this month	timesheet	zh-tw	這個月
 this week	timesheet	zh-tw	這星期

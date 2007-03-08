@@ -22,3 +22,23 @@
 
 		return $GLOBALS['setup_info']['timesheet']['currentver'] = '0.2.001';
 	}
+
+	$test[] = '0.2.001';
+	function timesheet_upgrade0_2_001()
+	{
+		$GLOBALS['egw_setup']->oProc->CreateTable('egw_timesheet_extra',array(
+			'fd' => array(
+				'ts_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'ts_extra_name' => array('type' => 'varchar','precision' => '32','nullable' => False),
+				'ts_extra_value' => array('type' => 'varchar','precision' => '255','nullable' => False,'default' => '')
+			),
+			'pk' => array('ts_id','ts_extra_name'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+
+		$GLOBALS['setup_info']['timesheet']['currentver'] = '0.2.002';
+		return $GLOBALS['setup_info']['timesheet']['currentver'];
+	}
