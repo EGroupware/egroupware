@@ -13,8 +13,7 @@
 	class uiaccounts
 	{
 		//(regis) maybe some of them should be deleted?
-		var $public_functions = array
-		(
+		var $public_functions = array(
 			'list_groups'		=> True,
 			'list_users'		=> True,
 			'add_group'			=> True,
@@ -27,7 +26,7 @@
 			'view_user'			=> True,
 			'edit_group_hook' => True,
 			'edit_view_user_hook' => True,
-			'group_manager'		=> True,
+			'group_manager'		=> True
 		);
 
 		var $bo;
@@ -48,7 +47,7 @@
 			'inv'         => True,
 			'phpbrain'    => True,
 			'projectmanager' => True,
-			'timesheet'   => true,
+			'timesheet'   => True
 		);
 
 		function uiaccounts()
@@ -56,6 +55,11 @@
 			$this->bo =& CreateObject('admin.boaccounts');
 			$this->nextmatchs =& CreateObject('phpgwapi.nextmatchs');
 			@set_time_limit(300);
+			/* Moved from bo class */
+			if (get_magic_quotes_gpc())		// deal with magic_quotes_gpc On
+			{
+				$_POST = $this->array_stripslashes($_POST);
+			}
 		}
 
 		function row_action($action,$type,$account_id)
@@ -72,7 +76,7 @@
 				'all' => 'all fields',
 				'lid' => 'LoginID',
 				'start' => 'start with',
-				'exact' => 'exact',
+				'exact' => 'exact'
 			);
 
 			if ($GLOBALS['egw']->acl->check('group_access',1,'admin'))
@@ -145,7 +149,7 @@
 				'start' => $start,
 				'sort' => $sort,
 				'order' => $order,
-				'query_type' => $_REQUEST['query_type'],
+				'query_type' => $_REQUEST['query_type']
 			);
 			//_debug_array($search_param);
 			if (!$GLOBALS['egw']->acl->check('account_access',2,'admin'))
@@ -223,13 +227,12 @@
 					}
 
 					$p->fp('rows','row',True);
-
 				}
 			}
 
 			$link_data += array(
 				'order'      => $order,
-				'sort'       => $sort,
+				'sort'       => $sort
 			);
 			$p->set_var(array(
 				'query' => $GLOBALS['egw']->html->htmlspecialchars($GLOBALS['query']),
@@ -497,13 +500,44 @@
 				return False;
 			}
 
-			$group_info = Array(
-				'account_id'   => $_GET['account_id'],
-				'account_name' => '',
-				'account_user' => Array(),
-				'account_apps' => Array()
+			if($_POST['edit'])
+			{
+				$group_permissions = ($_POST['account_apps']?$_POST['account_apps']:Array());
+				$account_apps = Array();
+				foreach($group_permissions as $key => $value)
+				{
+					if($value)
+					{
+						$account_apps[$key] = True;
+					}
+				}
+				@reset($account_apps);
+
+				$group_info = Array(
+					'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
+					'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
+					'account_user' => $_POST['account_user'],
+					'account_apps' => $account_apps,
+					'account_email' => $_POST['account_email']
 				);
-			$this->create_edit_group($group_info);
+				$errors = $this->bo->add_group($group_info);
+				if(is_array($errors))
+				{
+					$this->create_edit_group($group_info,$errors);
+					$GLOBALS['egw']->common->egw_exit();
+				}
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+			}
+			else
+			{
+				$group_info = Array(
+					'account_id'   => $_GET['account_id'],
+					'account_name' => '',
+					'account_user' => Array(),
+					'account_apps' => Array()
+				);
+				$this->create_edit_group($group_info);
+			}
 		}
 
 		function add_user()
@@ -511,6 +545,51 @@
 			if ($GLOBALS['egw']->acl->check('account_access',4,'admin'))
 			{
 				$this->list_users();
+			}
+
+			if($_POST['submit'])
+			{
+				if(!($email = $_POST['account_email']))
+				{
+					$email = $GLOBALS['egw']->common->email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
+				}
+				$userData = array(
+					'account_type'          => 'u',
+					'account_lid'           => $accountPrefix . $_POST['account_lid'],
+					'account_firstname'     => $_POST['account_firstname'],
+					'account_lastname'      => $_POST['account_lastname'],
+					'account_passwd'        => $_POST['account_passwd'],
+					'status'                => ($_POST['account_status'] ? 'A' : ''),
+					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
+					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
+					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
+					'account_primary_group' => $_POST['account_primary_group'],
+					'account_passwd_2'      => $_POST['account_passwd_2'],
+					'account_groups'        => $_POST['account_groups'],
+					'anonymous'             => $_POST['anonymous'],
+					'changepassword'        => $_POST['changepassword'],
+					'account_permissions'   => $_POST['account_permissions'],
+					'homedirectory'         => $_POST['homedirectory'],
+					'loginshell'            => $_POST['loginshell'],
+					'account_expires_never' => $_POST['never_expires'],
+					'account_email'         => $email
+					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
+				);
+
+				/* when does the account expire */
+				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
+				{
+					$jscal =& CreateObject('phpgwapi.jscalendar',False);
+					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
+				}
+
+				$errors = $this->bo->add_user($userData);
+				if(is_array($errors))
+				{
+					$this->create_edit_user($userData,$errors);
+					$GLOBALS['egw']->common->egw_exit();
+				}
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
 			}
 			else
 			{
@@ -524,10 +603,9 @@
 			{
 				if ($_POST['yes'])
 				{
-					$this->bo->delete_group();
+					$this->bo->delete_group($_POST['account_id']);
 				}
-				$this->list_groups();
-				return False;
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
 			}
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
@@ -603,8 +681,12 @@
 		{
 			if ($GLOBALS['egw']->acl->check('account_access',32,'admin') || $GLOBALS['egw_info']['user']['account_id'] == $_GET['account_id'])
 			{
-				$this->list_users();
-				return False;
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
+			}
+			if($_POST['delete_account'])
+			{
+				$this->bo->delete_user($_POST['account_id'],$_POST['new_owner']);
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
 			}
 
 			unset($GLOBALS['egw_info']['flags']['noheader']);
@@ -623,7 +705,7 @@
 				)
 			);
 			$var = Array(
-				'form_action' => $GLOBALS['egw']->link('/index.php','menuaction=admin.boaccounts.delete_user'),
+				'form_action' => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.delete_user'),
 				'account_id'  => $_GET['account_id']
 			);
 
@@ -660,42 +742,70 @@
 					'extradata'   => 'menuaction=admin.uiaclmanager.list_apps'
 				);
 			}
-
 		}
-
 
 		function edit_group($cd='',$account_id='')
 		{
 			if ($GLOBALS['egw']->acl->check('group_access',16,'admin'))
 			{
-				$this->list_groups();
-				return False;
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
 			}
 
-			$cdid = $cd;
-			settype($cd,'integer');
-			$cd = ($_GET['cd']?$_GET['cd']:(int)$cdid);
-
-			$accountid = $account_id;
-			settype($account_id,'integer');
-			$account_id = ($_GET['account_id'] ? $_GET['account_id'] : (int)$accountid);
-
-			// todo
-			// not needed if i use the same file for new groups too
-			if (! $account_id)
+			if($_POST['edit'])
 			{
-				$this->list_groups();
+				$group_permissions = ($_POST['account_apps']?$_POST['account_apps']:Array());
+				$account_apps = Array();
+				foreach($group_permissions as $key => $value)
+				{
+					if($value)
+					{
+						$account_apps[$key] = True;
+					}
+				}
+				@reset($account_apps);
+	
+				$group_info = Array(
+					'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
+					'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
+					'account_user' => $_POST['account_user'],
+					'account_apps' => $account_apps,
+					'account_email' => $_POST['account_email']
+				);
+				$errors = $this->bo->edit_group($group_info);
+				if(is_array($errors))
+				{
+					$this->create_edit_group($group_info,$errors);
+					$GLOBALS['egw']->common->egw_exit();
+				}
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
 			}
 			else
 			{
-				$group_info = Array(
-					'account_id'   => (int)$_GET['account_id'],
-					'account_name' => $GLOBALS['egw']->accounts->id2name($_GET['account_id']),
-					'account_user' => $GLOBALS['egw']->accounts->members($_GET['account_id']),
-					'account_apps' => $this->bo->load_group_apps($_GET['account_id'])
-				);
+				$cdid = $cd;
+				settype($cd,'integer');
+				$cd = ($_GET['cd']?$_GET['cd']:(int)$cdid);
 
-				$this->create_edit_group($group_info);
+				$accountid = $account_id;
+				settype($account_id,'integer');
+				$account_id = ($_GET['account_id'] ? $_GET['account_id'] : (int)$accountid);
+
+				// todo
+				// not needed if i use the same file for new groups too
+				if (! $account_id)
+				{
+					$this->list_groups();
+				}
+				else
+				{
+					$group_info = Array(
+						'account_id'   => (int)$_GET['account_id'],
+						'account_name' => $GLOBALS['egw']->accounts->id2name($_GET['account_id']),
+						'account_user' => $GLOBALS['egw']->accounts->members($_GET['account_id']),
+						'account_apps' => $this->bo->load_group_apps($_GET['account_id'])
+					);
+
+					$this->create_edit_group($group_info);
+				}
 			}
 		}
 
@@ -711,7 +821,7 @@
 			}
 			// not sure if this realy belongs here, or only in edit_user
 			if ($_GET['account_id'] && 	// can't set it on add
-					!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+				!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
 			{
 				$GLOBALS['menuData'][] = array(
 					'description' => 'ACL Rights',
@@ -734,36 +844,106 @@
 			}
 */
 			//NDEE
-
-
 		}
 
 		function edit_user($cd='',$account_id='')
 		{
-			if ($GLOBALS['egw']->acl->check('account_access',16,'admin'))
+			if($GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
 				$this->list_users();
 				return False;
 			}
 
-			$cdid = $cd;
-			settype($cd,'integer');
-			$cd = ($_GET['cd']?$_GET['cd']:(int)$cdid);
-
-			$accountid = $account_id;
-			settype($account_id,'integer');
-			$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
-
-			// todo
-			// not needed if i use the same file for new users too
-			if (! $account_id)
+			if($_POST['submit'])
 			{
-				$this->list_users();
-				return False;
+				if(!($email = $_POST['account_email']))
+				{
+					$email = $GLOBALS['egw']->common->email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
+				}
+				$userData = array(
+					'account_lid'           => $accountPrefix.$_POST['account_lid'],
+					'account_firstname'     => $_POST['account_firstname'],
+					'account_lastname'      => $_POST['account_lastname'],
+					'account_passwd'        => $_POST['account_passwd'],
+					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
+					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
+					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
+					'account_passwd_2'      => $_POST['account_passwd_2'],
+					'account_groups'        => $_POST['account_groups'],
+					'account_primary_group'	=> $_POST['account_primary_group'],
+					'anonymous'             => $_POST['anonymous'],
+					'changepassword'        => $_POST['changepassword'],
+					'account_permissions'   => $_POST['account_permissions'],
+					'homedirectory'         => $_POST['homedirectory'],
+					'loginshell'            => $_POST['loginshell'],
+					'account_expires_never' => $_POST['never_expires'],
+					'account_email'         => $email,
+					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
+				);
+				if($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
+				{
+					$userData['account_groups'][] = (int)$userData['account_primary_group'];
+				}
+				if($_POST['expires'] !== '' && !$_POST['never_expires'])
+				{
+					$jscal =& CreateObject('phpgwapi.jscalendar',False);
+					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
+				}
+				$errors = $this->bo->add_user($userData);
+				if(!@is_array($errors))
+				{
+					// check if would create a menu
+					// if we do, we can't return to the users list, because
+					// there are also some other plugins
+					if(!ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'))
+					{
+						if($userData['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
+						{
+							$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
+								'menuaction' => 'admin.uiaccounts.list_users'
+							));
+						}
+//						ExecMethod('admin.uiaccounts.list_users');
+						//return False;
+					}
+					else
+					{
+						if($userData['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
+						{
+							$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
+								'menuaction' => 'admin.uiaccounts.edit_user',
+								'account_id' => $_GET['account_id']
+							));
+						}
+					}
+//					$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
+				}
+				else
+				{
+					$this->create_edit_user($userData['account_id'],$userData,$errors);
+				}
 			}
 			else
 			{
-				$this->create_edit_user($account_id);
+				$cdid = $cd;
+				settype($cd,'integer');
+				$cd = ($_GET['cd']?$_GET['cd']:(int)$cdid);
+
+				$accountid = $account_id;
+				settype($account_id,'integer');
+				$account_id = (int)($_GET['account_id'] ? $_GET['account_id'] : $accountid);
+
+				// todo
+				// not needed if i use the same file for new users too
+				if(!$account_id)
+				{
+					$this->list_users();
+					return False;
+				}
+				else
+				{
+					$this->create_edit_user($account_id);
+				}
 			}
 		}
 
@@ -995,7 +1175,7 @@
 			$p->set_var('accounts',$GLOBALS['egw']->uiaccountsel->selection('account_user[]','admin_uiaccounts_user',$group_info['account_user'],'accounts',min(3+count($group_info['account_user']),10),false,'style="width: 300px;"'));
 
 			$var = Array(
-				'form_action'       => $GLOBALS['egw']->link('/index.php','menuaction=admin.boaccounts.'.($group_info['account_id']?'edit':'add').'_group'),
+				'form_action'       => $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.'.($group_info['account_id']?'edit':'add').'_group'),
 				'hidden_vars'       => '<input type="hidden" name="account_id" value="' . $group_info['account_id'] . '">',
 				'lang_group_name'   => lang('group name'),
 				'group_name_value'  => $group_info['account_name'],
@@ -1081,7 +1261,6 @@
 			$p->set_var('select','');
 			$p->set_var('popwin','');
 			$p->pfp('out','edit');
-
 		}
 
 		function create_edit_user($_account_id,$_userData='',$_errors='')
@@ -1159,7 +1338,7 @@
 				}
 				$allGroups = $account->get_list('groups');
 			}
-			$page_params['menuaction'] = 'admin.boaccounts.'.($_account_id?'edit':'add').'_user';
+			$page_params['menuaction'] = 'admin.uiaccounts.'.($_account_id?'edit':'add').'_user';
 			if($_account_id)
 			{
 				$page_params['account_id']  = $_account_id;
@@ -1192,7 +1371,8 @@
 			$t->set_var($var);
 			$t->parse('form_buttons','form_buttons_',True);
 
-			if ($GLOBALS['egw_info']['server']['ldap_extra_attributes']) {
+			if ($GLOBALS['egw_info']['server']['ldap_extra_attributes'])
+			{
 				$lang_homedir = lang('home directory');
 				$lang_shell = lang('login shell');
 				$homedirectory = '<input name="homedirectory" value="'. ($_account_id?$userData['homedirectory']:$GLOBALS['egw_info']['server']['ldap_account_home'].$account_lid).'">';
@@ -1260,7 +1440,7 @@
 				'account_passwd'    => $userData['account_passwd'],
 				'account_passwd_2'  => $userData['account_passwd_2'],
 				'account_file_space' => $account_file_space,
-				'account_id'        => (int) $userData['account_id'],
+				'account_id'        => (int) $userData['account_id']
 			);
 
 			if($userData['expires'] == -1)
@@ -1350,8 +1530,7 @@
 				=> '<select
 				name="account_primary_group">'."\n".$primary_group_select.'</
 				select>'."\n",
-				'permissions_list'
-							 			=> $appRightsOutput,
+				'permissions_list' => $appRightsOutput,
 				'lang_app' => lang('application'),
 				'lang_acl' => lang('enabled').' / '.lang('ACL'),
 				);
@@ -1440,7 +1619,7 @@
 			$var['lang_group'] = lang('Group');
 			$var['group_name'] = $group_info['account_name'];
 			$var['tr_color1'] = $GLOBALS['egw_info']['user']['theme']['row_on'];
-			$var['form_action'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.boaccounts.set_group_managers');
+			$var['form_action'] = $GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.set_group_managers');
 			$var['hidden'] = '<input type="hidden" name="account_id" value="'.$group_info['account_id'].'">';
 			$var['lang_select_managers'] = lang('Select Group Managers');
 			$var['group_members'] = '<select name="managers[]" size="'.(count($account_list)<5?count($account_list):5).'" multiple>'.$user_list.'</select>';
@@ -1452,6 +1631,53 @@
 			$t->set_var('rows',ExecMethod('admin.uimenuclass.createHTMLCode','edit_group'));
 
 			$t->pfp('out','form');
+		}
+
+		function set_group_managers()
+		{
+			if($GLOBALS['egw']->acl->check('group_access',16,'admin') || $_POST['cancel'])
+			{
+				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+				$GLOBALS['egw']->common->egw_exit();
+			}
+			elseif($_POST['submit'])
+			{
+				$acl =& CreateObject('phpgwapi.acl',(int)$_POST['account_id']);
+
+				$users = $GLOBALS['egw']->accounts->member($_POST['account_id']);
+				@reset($users);
+				while($managers && list($key,$user) = each($users))
+				{
+					$acl->add_repository('phpgw_group',(int)$_POST['account_id'],$user['account_id'],1);
+				}
+				$managers = $_POST['managers'];
+				@reset($managers);
+				while($managers && list($key,$manager) = each($managers))
+				{
+					$acl->add_repository('phpgw_group',(int)$_POST['account_id'],$manager,(1 + EGW_ACL_GROUP_MANAGERS));
+				}
+			}
+			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
+			$GLOBALS['egw']->common->egw_exit();
+		}
+
+		/**
+		 * applies stripslashes recursively on each element of an array
+		 *
+		 * @param array &$var
+		 * @return array
+		 */
+		function array_stripslashes($var)
+		{
+			if(!is_array($var))
+			{
+				return stripslashes($var);
+			}
+			foreach($var as $key => $val)
+			{
+				$var[$key] = is_array($val) ? $this->array_stripslashes($val) : stripslashes($val);
+			}
+			return $var;
 		}
 	}
 ?>

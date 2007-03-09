@@ -20,8 +20,7 @@
 			'delete_group' => True,
 			'delete_user'  => True,
 			'edit_group'   => True,
-			'edit_user'    => True,
-			'set_group_managers'	=> True
+			'edit_user'    => True
 		);
 
 		var $xml_functions = array();
@@ -36,83 +35,21 @@
 		function boaccounts()
 		{
 			$this->so =& CreateObject('admin.soaccounts');
-			
-			if (get_magic_quotes_gpc())		// deal with magic_quotes_gpc On
-			{
-				$_POST = $this->array_stripslashes($_POST);
-			}
 		}
 
-		/**
-		 * applies stripslashes recursivly on each element of an array
-		 * 
-		 * @param array &$var 
-		 * @return array
-		 */
-		function array_stripslashes($var)
+		function delete_group($account_id='')
 		{
-			if (!is_array($var))
+			if(!$account_id || $GLOBALS['egw']->acl->check('group_access',32,'admin'))
 			{
-				return stripslashes($var);
-			}
-			foreach($var as $key => $val)
-			{
-				$var[$key] = is_array($val) ? $this->array_stripslashes($val) : stripslashes($val);
-			}
-			return $var;
-		}
-
-		function DONTlist_methods($_type='xmlrpc')
-		{
-			/*
-				This handles introspection or discovery by the logged in client,
-				in which case the input might be an array.  The server always calls
-				this function to fill the server dispatch map using a string.
-			*/
-			if (is_array($_type))
-			{
-				$_type = $_type['type'] ? $_type['type'] : $_type[0];
-			}
-			switch($_type)
-			{
-				case 'xmlrpc':
-					$xml_functions = array(
-						'rpc_add_user' => array(
-							'function'  => 'rpc_add_user',
-							'signature' => array(array(xmlrpcStruct,xmlrpcStruct)),
-							'docstring' => lang('Add a new account.')
-						),
-						'list_methods' => array(
-							'function'  => 'list_methods',
-							'signature' => array(array(xmlrpcStruct,xmlrpcString)),
-							'docstring' => lang('Read this list of methods.')
-						)
-					);
-					return $xml_functions;
-					break;
-				case 'soap':
-					return $this->soap_functions;
-					break;
-				default:
-					return array();
-					break;
-			}
-		}
-
-		function delete_group()
-		{
-			if (!@isset($_POST['account_id']) || !@$_POST['account_id'] || $GLOBALS['egw']->acl->check('group_access',32,'admin'))
-			{
-				ExecMethod('admin.uiaccounts.list_groups');
 				return False;
 			}
-			
-			$account_id = (int)$_POST['account_id'];
+
+			$account_id = (int)$account_id;
 
 			// delete all acl (and memberships) of group
 			$GLOBALS['egw']->acl->delete_account($account_id);
 
-			if (! @rmdir($GLOBALS['egw_info']['server']['files_dir'].SEP.'groups'.SEP.$GLOBALS['egw']->accounts->id2name($account_id)))
+			if(!@rmdir($GLOBALS['egw_info']['server']['files_dir'].SEP.'groups'.SEP.$GLOBALS['egw']->accounts->id2name($account_id)))
 			{
 				$cd = 38;
 			}
@@ -123,81 +60,59 @@
 
 			$GLOBALS['egw']->accounts->delete($account_id);
 
-			Header('Location: '.$GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-			$GLOBALS['egw']->common->egw_exit();
+			return True;
 		}
 
-		function delete_user()
+		function delete_user($account_id='',$new_owner='')
 		{
-			if (isset($_POST['cancel']) || $GLOBALS['egw']->acl->check('account_access',32,'admin'))
+			if(!$account_id || $GLOBALS['egw']->acl->check('account_access',32,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_users');
-				return False;
-			}
-			elseif($_POST['delete_account'])
-			{
-				$accountid = $_POST['account_id'];
-				settype($account_id,'integer');
-				$account_id = get_account_id($accountid);
-				// make this information also in hook available
-				$lid = $GLOBALS['egw']->accounts->id2name($account_id);
-
-				$GLOBALS['hook_values'] = array(
-					'account_id'  => $account_id,
-					'account_lid' => $lid,
-					'new_owner'   => (int)$_POST['new_owner'],
-					'location'    => 'deleteaccount',
-				);
-				// first all other apps, then preferences and admin
-				foreach(array_merge(array_diff(array_keys($GLOBALS['egw_info']['apps']),array('preferences','admin')),array('preferences','admin')) as $app)
-				{
-					$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
-				}
-
-				$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'users' . SEP;
-
-				if (! @rmdir($basedir . $lid))
-				{
-					$cd = 34;
-				}
-				else
-				{
-					$cd = 29;
-				}
-
-				ExecMethod('admin.uiaccounts.list_users');
-				return False;
-			}
-		}
-
-		function add_group()
-		{
-			if ($GLOBALS['egw']->acl->check('group_access',4,'admin'))
-			{
-				ExecMethod('admin.uiaccounts.list_groups');
 				return False;
 			}
 
-			$group_permissions = ($_POST['account_apps']?$_POST['account_apps']:Array());
-			$account_apps = Array();
-			@reset($group_permissions);
-			while(list($key,$value) = each($group_permissions))
-			{
-				if($value)
-				{
-					$account_apps[$key] = True;
-				}
-			}
-			@reset($account_apps);
+			$accountid = (int)$account_id;
+			$account_id = get_account_id($accountid);
+			// make this information also available in the hook 
+			$lid = $GLOBALS['egw']->accounts->id2name($account_id);
 
-			$group_info = Array(
-				'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
-				'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
-				'account_user' => $_POST['account_user'],
-				'account_apps' => $account_apps
+			$GLOBALS['hook_values'] = array(
+				'account_id'  => $account_id,
+				'account_lid' => $lid,
+				'new_owner'   => (int)$new_owner,
+				'location'    => 'deleteaccount'
 			);
+			// first all other apps, then preferences and admin
+			foreach(array_merge(array_diff(array_keys($GLOBALS['egw_info']['apps']),array('preferences','admin')),array('preferences','admin')) as $app)
+			{
+				$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
+			}
 
-			$this->validate_group($group_info);
+			$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'users' . SEP;
+
+			if(!@rmdir($basedir . $lid))
+			{
+				$cd = 34;
+			}
+			else
+			{
+				$cd = 29;
+			}
+
+			return True;
+		}
+
+		function add_group($group_info)
+		{
+			if($GLOBALS['egw']->acl->check('group_access',4,'admin'))
+			{
+				return False;
+			}
+
+			$errors = $this->validate_group($group_info);
+			if(count($errors))
+			{
+				return $errors;
+			}
 
 			$group =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$group->acct_type = 'g';
@@ -210,11 +125,13 @@
 				'account_status'    => 'A',
 				'account_expires'   => -1,
 //				'account_file_space' => $account_file_space_number . "-" . $account_file_space_type,
-				'account_email' => $_POST['account_email'],
+				'account_email'     => $group_info['account_email'],
+				'account_members'   => $group_info['account_user']
 			);
 			$group_info['account_id'] = $group->create($account_info);
-			// do the following only if we got an id - the create succided
-			if ($group_info['account_id'])
+
+			// do the following only if we got an id - the create succeeded
+			if($group_info['account_id'])
 			{
 				$group->set_members($group_info['account_user'],$group_info['account_id']);
 
@@ -227,144 +144,89 @@
 					$new_apps[] = $app;
 				}
 				$apps->save_repository();
-	
+
 				$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
 				$cd = 31;
 				umask(000);
-				if (! @mkdir ($basedir . $group_info['account_name'], 0707))
+				if(!@mkdir($basedir . $group_info['account_name'], 0707))
 				{
 					$cd = 37;
 				}
+				return True;
 			}
-			ExecMethod('admin.uiaccounts.list_groups');
-			
+
 			return False;
 		}
 
-		function add_user()
+		function add_user($userData)
 		{
-			if ($GLOBALS['egw']->acl->check('account_access',4,'admin'))
+			if($GLOBALS['egw']->acl->check('account_access',4,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
-			
+
 			$accountPrefix = '';
 			if(isset($GLOBALS['egw_info']['server']['account_prefix']))
 			{
 				$accountPrefix = $GLOBALS['egw_info']['server']['account_prefix'];
 			}
-
-			if ($_POST['submit'])
+			if($accountPrefix)
 			{
-				if (!($email = $_POST['account_email']))
-				{
-					$email = $GLOBALS['egw']->common->email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
-				}
-				$userData = array(
-					'account_type'          => 'u',
-					'account_lid'           => $accountPrefix.$_POST['account_lid'],
-					'account_firstname'     => $_POST['account_firstname'],
-					'account_lastname'      => $_POST['account_lastname'],
-					'account_passwd'        => $_POST['account_passwd'],
-					'status'                => ($_POST['account_status'] ? 'A' : ''),
-					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
-					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
-					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
-					'account_primary_group'	=> $_POST['account_primary_group'],
-					'account_passwd_2'      => $_POST['account_passwd_2'],
-					'account_groups'        => $_POST['account_groups'],
-					'anonymous'             => $_POST['anonymous'],
-					'changepassword'        => $_POST['changepassword'],
-					'account_permissions'   => $_POST['account_permissions'],
-					'homedirectory'         => $_POST['homedirectory'],
-					'loginshell'            => $_POST['loginshell'],
-					'account_expires_never' => $_POST['never_expires'],
-					'account_email'         => $email,
-					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
-				);
-				
-				// add the primary group, to the users other groups, if not already added
-				if(is_array($userData['account_groups']))
-				{
-					if(!in_array($userData['account_primary_group'],$userData['account_groups']))
-					{
-						$userData['account_groups'][] = (int)$userData['account_primary_group'];
-					}
-				}
-				else
-				{
-					$userData['account_groups'] = array((int)$userData['account_primary_group']);
-				}
-				
-				// when does the account expire
-				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
-				{
-					$jscal =& CreateObject('phpgwapi.jscalendar',False);
-					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
-				}
-				
-				// do we have all needed data??
-				if (!($errors = $this->validate_user($userData)) &&
-					($userData['account_id'] = $account_id = $this->so->add_user($userData)))	// no error in the creation
-				{
-					if ($userData['anonymous']) 
-					{
-						$GLOBALS['egw']->acl->add_repository('phpgwapi','anonymous',$account_id,1);
-					}
-					else
-					{
-						$GLOBALS['egw']->acl->delete_repository('phpgwapi','anonymous',$account_id);
-					}
-					// make this information for the hooks available
-					$GLOBALS['hook_values'] = $userData + array('new_passwd' => $userData['account_passwd']);
-					$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-						'location' => 'addaccount'
-					),False,True);	// called for every app now, not only enabled ones
+				$userData['account_lid'] = $accountPrefix . $userData['account_lid'];
+			}
 
-					ExecMethod('admin.uiaccounts.list_users');
-					return False;
-				}
-				else
+			// add the primary group, to the users other groups, if not already added
+			if(is_array($userData['account_groups']))
+			{
+				if(!in_array($userData['account_primary_group'],$userData['account_groups']))
 				{
-					$ui =& CreateObject('admin.uiaccounts');
-					$ui->create_edit_user($userData['account_id'],$userData,$errors);
+					$userData['account_groups'][] = (int)$userData['account_primary_group'];
 				}
 			}
 			else
 			{
-				ExecMethod('admin.uiaccounts.list_users');
-				return False;
+				$userData['account_groups'] = array((int)$userData['account_primary_group']);
 			}
+
+			// do we have all needed data??
+			if(!($errors = $this->validate_user($userData)) &&
+				($userData['account_id'] = $account_id = $this->so->add_user($userData)))	// no error in the creation
+			{
+				if($userData['anonymous'])
+				{
+					$GLOBALS['egw']->acl->add_repository('phpgwapi','anonymous',$account_id,1);
+				}
+				else
+				{
+					$GLOBALS['egw']->acl->delete_repository('phpgwapi','anonymous',$account_id);
+				}
+				// make this information for the hooks available
+				$GLOBALS['hook_values'] = $userData + array('new_passwd' => $userData['account_passwd']);
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'addaccount'
+				),False,True);	// called for every app now, not only enabled ones
+
+				return True;
+			}
+			else
+			{
+				return $errors;
+			}
+			return False;
 		}
 
-		function edit_group()
+		function edit_group($group_info)
 		{
-			if ($GLOBALS['egw']->acl->check('group_access',16,'admin'))
+			if($GLOBALS['egw']->acl->check('group_access',16,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_groups');
 				return False;
 			}
 
-			$group_permissions = ($_POST['account_apps']?$_POST['account_apps']:Array());
-			$account_apps = Array();
-			@reset($group_permissions);
-			while(list($key,$value) = each($group_permissions))
+			$errors = $this->validate_group($group_info);
+			if(count($errors))
 			{
-				if($value)
-				{
-					$account_apps[$key] = True;
-				}
+				return $errors;
 			}
-			@reset($account_apps);
-
-			$group_info = Array(
-				'account_id'   => ($_POST['account_id']?(int)$_POST['account_id']:0),
-				'account_name' => ($_POST['account_name']?$_POST['account_name']:''),
-				'account_user' => $_POST['account_user'],
-				'account_apps' => $account_apps,
-			);
-			$this->validate_group($group_info);
 
 			$group =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$old_group_info = $group->read_repository();
@@ -395,7 +257,7 @@
 				$group->data['firstname'] = $group_info['account_name'];
 
 				$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
-				if (! @rename($basedir . $old_group_info['account_lid'], $basedir . $group_info['account_name']))
+				if(!@rename($basedir . $old_group_info['account_lid'], $basedir . $group_info['account_name']))
 				{
 					$cd = 39;
 				}
@@ -413,142 +275,52 @@
 
 			// This is down here so we are sure to catch the acl changes
 			// for LDAP to update the memberuid attribute
-			$group->data['account_email'] = $_POST['account_email'];
+			$group->data['account_email'] = $group_info['account_email'];
 			$group->save_repository();
-			
+
 			$GLOBALS['hook_values'] = $group_info;
 			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 				'location' => 'editgroup'
 			),False,True);  // called for every app now, not only enabled ones)
 
-			ExecMethod('admin.uiaccounts.list_groups');
-			return False;
+			return True;
 		}
 
-		function edit_user()
+		function edit_user($userData)
 		{
-			if ($GLOBALS['egw']->acl->check('account_access',16,'admin'))
+			if($GLOBALS['egw']->acl->check('account_access',16,'admin'))
 			{
-				ExecMethod('admin.uiaccounts.list_users');
 				return False;
 			}
-			
+
 			$accountPrefix = '';
 			if(isset($GLOBALS['egw_info']['server']['account_prefix']))
 			{
 				$accountPrefix = $GLOBALS['egw_info']['server']['account_prefix'];
 			}
 
-			if ($_POST['submit'])
+			$errors = $this->validate_user($userData);
+			if(@is_array($errors))
 			{
-				if (!($email = $_POST['account_email']))
-				{
-					$email = $GLOBALS['egw']->common->email_address($_POST['account_firstname'],$_POST['account_lastname'],$_POST['account_lid']);
-				}
-				$userData = array(
-					'account_lid'           => $accountPrefix.$_POST['account_lid'],
-					'account_firstname'     => $_POST['account_firstname'],
-					'account_lastname'      => $_POST['account_lastname'],
-					'account_passwd'        => $_POST['account_passwd'],
-					'account_status'        => ($_POST['account_status'] ? 'A' : ''),
-					'old_loginid'           => ($_GET['old_loginid']?rawurldecode($_GET['old_loginid']):''),
-					'account_id'            => ($_GET['account_id']?$_GET['account_id']:0),
-					'account_passwd_2'      => $_POST['account_passwd_2'],
-					'account_groups'        => $_POST['account_groups'],
-					'account_primary_group'	=> $_POST['account_primary_group'],
-					'anonymous'             => $_POST['anonymous'],
-					'changepassword'        => $_POST['changepassword'],
-					'account_permissions'   => $_POST['account_permissions'],
-					'homedirectory'         => $_POST['homedirectory'],
-					'loginshell'            => $_POST['loginshell'],
-					'account_expires_never' => $_POST['never_expires'],
-					'account_email'         => $email,
-					/* 'file_space' => $_POST['account_file_space_number'] . "-" . $_POST['account_file_space_type'] */
-				);
-				if ($userData['account_primary_group'] && (!isset($userData['account_groups']) || !in_array($userData['account_primary_group'],$userData['account_groups'])))
-				{
-					$userData['account_groups'][] = (int)$userData['account_primary_group'];
-				}
-				if ($_POST['expires'] !== '' && !$_POST['never_expires'])
-				{
-					$jscal =& CreateObject('phpgwapi.jscalendar',False);
-					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
-				}
-				if (!($errors = $this->validate_user($userData)))
-				{
-					$this->save_user($userData);
-					$GLOBALS['hook_values'] = $userData;
-					$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
-						'location' => 'editaccount'
-					),False,True);	// called for every app now, not only enabled ones)
+				return $errors;
+			}
+			else
+			{
+				$this->save_user($userData);
+				$GLOBALS['hook_values'] = $userData;
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'editaccount'
+				),False,True);	// called for every app now, not only enabled ones)
 
-					// check if would create a menu
-					// if we do, we can't return to the users list, because
-					// there are also some other plugins
-					if (!ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'))
-					{
-						if ($userData['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
-						{
-							$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
-								'menuaction' => 'admin.uiaccounts.list_users',
-							));
-						}
-						ExecMethod('admin.uiaccounts.list_users');
-						return False;
-					}
-					else
-					{
-						if ($userData['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
-						{
-							$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
-								'menuaction' => 'admin.uiaccounts.edit_user',
-								'account_id' => $_GET['account_id'],
-							));
-						}
-						ExecMethod('admin.uiaccounts.edit_user',$_GET['account_id']);
-						return False;
-					}
-				}
-				else
-				{
-					$ui =& CreateObject('admin.uiaccounts');
-					$ui->create_edit_user($userData['account_id'],$userData,$errors);
-				}
+				return True;
 			}
-		}
-
-		function set_group_managers()
-		{
-			if($GLOBALS['egw']->acl->check('group_access',16,'admin') || $_POST['cancel'])
-			{
-				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-				$GLOBALS['egw']->common->egw_exit();
-			}
-			elseif($_POST['submit'])
-			{
-				$acl =& CreateObject('phpgwapi.acl',(int)$_POST['account_id']);
-				
-				$users = $GLOBALS['egw']->accounts->member($_POST['account_id']);
-				@reset($users);
-				while($managers && list($key,$user) = each($users))
-				{
-					$acl->add_repository('phpgw_group',(int)$_POST['account_id'],$user['account_id'],1);
-				}
-				$managers = $_POST['managers'];
-				@reset($managers);
-				while($managers && list($key,$manager) = each($managers))
-				{
-					$acl->add_repository('phpgw_group',(int)$_POST['account_id'],$manager,(1 + EGW_ACL_GROUP_MANAGERS));
-				}
-			}
-			$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_groups'));
-			$GLOBALS['egw']->common->egw_exit();
+			return True;
 		}
 
 		function validate_group($group_info)
 		{
 			$errors = Array();
-			
+
 			$group =& CreateObject('phpgwapi.accounts',$group_info['account_id'],'g');
 			$group->read_repository();
 
@@ -556,26 +328,29 @@
 			{
 				$errors[] = lang('You must enter a group name.');
 			}
+			/* For LDAP */
+			if(!$group_info['account_user'])
+			{
+				$errors[] = lang('You must select at least one group member.');
+			}
 
 			if($group_info['account_name'] != $group->id2name($group_info['account_id']))
 			{
-				if ($group->exists($group_info['account_name']))
+				if($group->exists($group_info['account_name']))
 				{
 					$errors[] = lang('Sorry, that group name has already been taken.');
 				}
 			}
 
 		/*
-			if (preg_match ("/\D/", $account_file_space_number))
+			if(preg_match("/\D/", $account_file_space_number))
 			{
-				$errors[] = lang ('File space must be an integer');
+				$errors[] = lang('File space must be an integer');
 			}
 		*/
 			if(count($errors))
 			{
-				$ui =& CreateObject('admin.uiaccounts');
-				$ui->create_edit_group($group_info,$errors);
-				$GLOBALS['egw']->common->egw_exit();
+				return $errors;
 			}
 		}
 
@@ -587,30 +362,30 @@
 		{
 			$totalerrors = 0;
 
-			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' && 
+			if($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
 				(!$_userData['account_lastname'] && !$_userData['lastname']))
 			{
 				$error[$totalerrors] = lang('You must enter a lastname');
 				$totalerrors++;
 			}
 
-			if (!$_userData['account_lid'])
+			if(!$_userData['account_lid'])
 			{
 				$error[$totalerrors] = lang('You must enter a loginid');
 				$totalerrors++;
 			}
-			
+
 			if(!in_array($_userData['account_primary_group'],$_userData['account_groups']))
 			{
 				$error[$totalerrors] = lang('The groups must include the primary group');
 				$totalerrors++;
 			}
-			
-			if ($_userData['old_loginid'] != $_userData['account_lid']) 
+
+			if($_userData['old_loginid'] != $_userData['account_lid'])
 			{
-				 if ($GLOBALS['egw']->accounts->exists($_userData['account_lid']))
+				 if($GLOBALS['egw']->accounts->exists($_userData['account_lid']))
 				{
-					 if ($GLOBALS['egw']->accounts->exists($_userData['account_lid']) && $GLOBALS['egw']->accounts->get_type($_userData['account_lid'])=='g')
+					 if($GLOBALS['egw']->accounts->exists($_userData['account_lid']) && $GLOBALS['egw']->accounts->get_type($_userData['account_lid'])=='g')
 					 {
 						$error[$totalerrors] = lang('There already is a group with this name. Userid\'s can not have the same name as a groupid');
 					 }
@@ -622,22 +397,22 @@
 				}
 			}
 
-			if ($_userData['account_passwd'] || $_userData['account_passwd_2']) 
+			if($_userData['account_passwd'] || $_userData['account_passwd_2'])
 			{
-				if ($_userData['account_passwd'] != $_userData['account_passwd_2']) 
+				if($_userData['account_passwd'] != $_userData['account_passwd_2'])
 				{
 					$error[$totalerrors] = lang('The two passwords are not the same');
 					$totalerrors++;
 				}
 			}
 
-			if (!count($_userData['account_permissions']) && !count($_userData['account_groups'])) 
+			if(!count($_userData['account_permissions']) && !count($_userData['account_groups']))
 			{
 				$error[$totalerrors] = lang('You must add at least 1 permission or group to this account');
 				$totalerrors++;
 			}
 
-			if ($_userData['account_expires_month'] || $_userData['account_expires_day'] || $_userData['account_expires_year'] || $_userData['account_expires_never'])
+			if($_userData['account_expires_month'] || $_userData['account_expires_day'] || $_userData['account_expires_year'] || $_userData['account_expires_never'])
 			{
 				if($_userData['account_expires_never'])
 				{
@@ -646,7 +421,7 @@
 				}
 				else
 				{
-					if (! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
+					if(! checkdate($_userData['account_expires_month'],$_userData['account_expires_day'],$_userData['account_expires_year']))
 					{
 						$error[$totalerrors] = lang('You have entered an invalid expiration date');
 						$totalerrors++;
@@ -665,17 +440,17 @@
 			}
 
 		/*
-			$check_account_file_space = explode ('-', $_userData['file_space']);
-			if (preg_match ("/\D/", $check_account_file_space[0]))
+			$check_account_file_space = explode('-', $_userData['file_space']);
+			if(preg_match("/\D/", $check_account_file_space[0]))
 			{
-				$error[$totalerrors] = lang ('File space must be an integer');
+				$error[$totalerrors] = lang('File space must be an integer');
 				$totalerrors++;
 			}
 		*/
 
-			if ($totalerrors == 0)
+			if($totalerrors == 0)
 			{
-				return FALSE;
+				return False;
 			}
 			else
 			{
@@ -689,10 +464,10 @@
 			$account =& CreateObject('phpgwapi.accounts',$_userData['account_id'],'u');
 			$account->update_data($_userData);
 			$account->save_repository();
-			
+
 			$account->set_memberships($_userData['account_groups'],$_userData['account_id']);
-			
-			if ($_userData['account_passwd'])
+
+			if($_userData['account_passwd'])
 			{
 				$auth =& CreateObject('phpgwapi.auth');
 				$auth->change_password($old_passwd, $_userData['account_passwd'], $_userData['account_id']);
@@ -706,11 +481,11 @@
 			}
 
 			$apps =& CreateObject('phpgwapi.applications',(int)$_userData['account_id']);
-			if ($_userData['account_permissions'])
+			if($_userData['account_permissions'])
 			{
-				foreach($_userData['account_permissions'] as $app => $enabled) 
+				foreach($_userData['account_permissions'] as $app => $enabled)
 				{
-					if($enabled) 
+					if($enabled)
 					{
 						$apps->add($app);
 					}
@@ -719,7 +494,7 @@
 			$apps->save_repository();
 
 			$acl =& CreateObject('phpgwapi.acl',$_userData['account_id']);
-			if ($_userData['anonymous']) 
+			if($_userData['anonymous'])
 			{
 				$acl->add_repository('phpgwapi','anonymous',$_userData['account_id'],1);
 			}
@@ -727,7 +502,7 @@
 			{
 				$acl->delete_repository('phpgwapi','anonymous',$_userData['account_id']);
 			}
-			if (!$_userData['changepassword']) 
+			if(!$_userData['changepassword'])
 			{
 				$GLOBALS['egw']->acl->add_repository('preferences','nopasswordchange',$_userData['account_id'],1);
 			}
@@ -750,7 +525,7 @@
 				$group_user = $temp_user;
 			}
 			$account_user = Array();
-			while (list($key,$user) = each($group_user))
+			while(list($key,$user) = each($group_user))
 			{
 				$account_user[$user] = ' selected';
 			}
@@ -777,7 +552,7 @@
 		{
 			exit;
 
-			if (!$errors = $this->validate_user($data))
+			if(!$errors = $this->validate_user($data))
 			{
 				$result = $this->so->add_user($data);
 			}
