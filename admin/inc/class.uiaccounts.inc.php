@@ -26,7 +26,8 @@
 			'view_user'			=> True,
 			'edit_group_hook' => True,
 			'edit_view_user_hook' => True,
-			'group_manager'		=> True
+			'group_manager'		=> True,
+			'set_group_managers' => True
 		);
 
 		var $bo;
