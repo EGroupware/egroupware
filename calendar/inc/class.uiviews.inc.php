@@ -1,27 +1,31 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Calendar - Views and Widgets                                *
-* http://www.egroupware.org                                                *
-* Written and (c) 2004/5 by Ralf Becker <RalfBecker@outdoor-training.de>   *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - Calendar's views and widgets
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
 require_once(EGW_INCLUDE_ROOT . '/phpgwapi/inc/class.dragdrop.inc.php');
 
 /**
  * Class to generate the calendar views and the necesary widgets
+ * 
+ * The listview is in a separate class uilist!
  *
- * @package calendar
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004/5 by RalfBecker-At-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * The new UI, BO and SO classes have a strikt definition, in which time-zone they operate:
+ *  UI only operates in user-time, so there have to be no conversation at all !!!
+ *  BO's functions take and return user-time only (!), they convert internaly everything to servertime, because
+ *  SO operates only on server-time
+ *
+ * The state of the UI elements is managed in the uical class, which all UI classes extend.
+ *
+ * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
  */
 class uiviews extends uical
 {
@@ -1405,8 +1409,12 @@ class uiviews extends uical
 		// display a plannerRowWidget for each row (user or category)
 		foreach($sort2label as $sort => $label)
 		{
-			if (!isset($rows[$sort])) continue;		// dont show empty categories (user-rows get all initialised
-
+			if (!isset($rows[$sort]) && (!$this->cal_prefs['planner_show_empty_rows'] ||
+				$by_cat === false && $this->cal_prefs['planner_show_empty_rows'] == 'cat' ||
+				$by_cat !== false && $this->cal_prefs['planner_show_empty_rows'] == 'user'))
+			{
+				continue;		// dont show empty categories or user rows
+			}
 			$class = $class == 'row_on' ? 'row_off' : 'row_on';
 			$content .= $this->plannerRowWidget(isset($rows[$sort]) ? $rows[$sort] : array(),$start,$end,$label,$class,$indent."\t");
 		}

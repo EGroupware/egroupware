@@ -223,6 +223,20 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
+		'planner_show_empty_rows' => array(
+			'type'   => 'select',
+			'label'  => 'Show empty rows in Planner',
+			'name'   => 'planner_show_empty_rows',
+			'values' => array(
+				'' => lang('no'),
+				'user' => lang('Planner by user'),
+				'cat'  => lang('Planner by category'),
+				'both' => lang('All'),
+			),
+			'help'   => 'Should the planner display an empty row for users or categories without any appointment.',
+			'xmlrpc' => True,
+			'admin'  => False
+		),
 		'default_private' => array(
 			'type'  => 'check',
 			'label' => 'Set new events to private',
@@ -326,7 +340,6 @@
 			'xmlrpc' => True,
 			'admin'  => False
 		),
-// disabled free/busy stuff til it gets rewritten with new Horde iCal classes -- RalfBecker 2006/03/03
 		'freebusy' => array(
 			'type'  => 'check',
 			'label' => 'Make freebusy information available to not loged in persons?',
