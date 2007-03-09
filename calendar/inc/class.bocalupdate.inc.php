@@ -1,16 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Calendar's buisness-object: access + update                 *
-* http://www.egroupware.org                                                *
-* Written and (c) 2005 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - Calendar's buisness-object - access + update
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-7 by RalfBecker-At-outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
 
@@ -39,11 +37,6 @@ define('MSG_DISINVITE',7);
  * Nor does it store the state of any UI-elements (eg. cat-id selectbox). All this is the task of the UI class(es) !!!
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
- *
- * @package calendar
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2005 by RalfBecker-At-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
 class bocalupdate extends bocal

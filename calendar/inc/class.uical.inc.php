@@ -1,16 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Calendar - shared base-class of all calendar UI classes     *
-* http://www.egroupware.org                                                *
-* Written and (c) 2004/5 by Ralf Becker <RalfBecker@outdoor-training.de>   *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - Calendar's shared base-class of all UI classes
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 /**
  * Shared base-class of all calendar UserInterface classes
@@ -23,11 +21,6 @@
  *  SO operates only on server-time
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
- *
- * @package calendar
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004/5 by RalfBecker-At-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class uical
 {
@@ -277,6 +270,7 @@ class uical
 			'sortby'     => 'category',
 			'planner_days'=> 0,	// full month
 			'view'       => $this->bo->cal_prefs['defaultcalendar'],
+			'listview_days'=> '',	// no range
 		) as $state => $default)
 		{
 			if (isset($set_states[$state]))
@@ -370,7 +364,7 @@ class uical
 		}
 		$this->view_menuaction = $this->view == 'listview' ? 'calendar.uilist.listview' : 'calendar.uiviews.'.$this->view;
 
-		if ($this->debug > 0 || $this->debug == 'menage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
+		if ($this->debug > 0 || $this->debug == 'manage_states') $this->bo->debug_message('uical::manage_states(%1) session was %2, states now %3',True,$set_states,$states_session,$states);
 		// save the states in the session
 		$GLOBALS['egw']->session->appsession('session_data','calendar',$states);
 	}
@@ -617,19 +611,19 @@ class uical
 			'week'  => 'calendar.uiviews.week',
 			'month' => 'calendar.uiviews.month') as $view => $menuaction)
 		{
-			if ($this->view == 'planner')	
+			if ($this->view == 'planner' || $this->view == 'listview')	
 			{
 				switch($view)
 				{
-					case 'day':   $link_vars['planner_days'] = 1; break;
-					case 'week':  $link_vars['planner_days'] = $this->cal_prefs['days_in_weekview'] == 5 ? 5 : 7; break;
-					case 'month': $link_vars['planner_days'] = 0; break;
+					case 'day':   $link_vars[$this->view.'_days'] = $this->view == 'planner' ? 1 : ''; break;
+					case 'week':  $link_vars[$this->view.'_days'] = $this->cal_prefs['days_in_weekview'] == 5 ? 5 : 7; break;
+					case 'month': $link_vars[$this->view.'_days'] = 0; break;
 				}
 				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the planner
 			}
-			elseif ($this->view == 'listview' || $view == 'day' && $this->view == 'day4')
+			elseif ($view == 'day' && $this->view == 'day4')
 			{
-				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the listview
+				$link_vars['menuaction'] = $this->view_menuaction;	// stay in the day-view
 			}
 			else
 			{

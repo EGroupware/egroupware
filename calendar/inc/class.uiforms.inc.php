@@ -1,16 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Calendar - forms of the UserInterface                       *
-* http://www.egroupware.org                                                *
-* Written and (c) 2004/5 by Ralf Becker <RalfBecker@outdoor-training.de>   *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - Calendar's forms of the UserInterface
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2004-7 by RalfBecker-At-outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
 
@@ -25,11 +23,6 @@ include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
  * The state of the UI elements is managed in the uical class, which all UI classes extend.
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
- *
- * @package calendar
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004/5 by RalfBecker-At-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class uiforms extends uical
 {
