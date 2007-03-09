@@ -1,16 +1,14 @@
 <?php
-/**************************************************************************\
-* eGroupWare - Calendar - Listview and Search                             *
-* http://www.egroupware.org                                                *
-* Written and (c) 2005 by Ralf Becker <RalfBecker@outdoor-training.de>     *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare - Calendar's Listview and Search
+ *
+ * @link http://www.egroupware.org
+ * @package calendar
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2005-7 by RalfBecker-At-outdoor-training.de
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
 
@@ -25,11 +23,6 @@ include_once(EGW_INCLUDE_ROOT . '/calendar/inc/class.uical.inc.php');
  * The state of the UI elements is managed in the uical class, which all UI classes extend.
  *
  * All permanent debug messages of the calendar-code should done via the debug-message method of the bocal class !!!
- *
- * @package calendar
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2004/5 by RalfBecker-At-outdoor-training.de
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 class uilist extends uical
 {
@@ -37,9 +30,22 @@ class uilist extends uical
 		'listview'  => True,
 	);
 	/**
-	 * @var $debug mixed integer level or string function- or widget-name
+	 * integer level or string function- or widget-name
+	 * 
+	 * @var mixed
 	 */
 	var $debug=false;
+	/**
+	 * Filternames
+	 * 
+	 * @var array
+	 */
+	var $date_filters = array(
+		'after'  => 'After current date',
+		'before' => 'Before current date',
+		'all'    => 'All events',
+		'custom' => 'Selected range',
+	);
 
 	/**
 	 * Constructor
@@ -54,11 +60,10 @@ class uilist extends uical
 			// for a single owner we add it's name to the app-header
 			(count(explode(',',$this->owner)) == 1 ? ': '.$this->bo->participant_name($this->owner) : '');
 		
-		$this->date_filters = array(
-			'after'  => lang('After current date'),
-			'before' => lang('Before current date'),
-			'all'    => lang('All events'),
-		);
+		foreach($this->date_filters as $name => $label)
+		{
+			$this->date_filters[$name] = lang($label);
+		}
 		
 		$this->check_owners_access();
 	}
@@ -118,6 +123,9 @@ class uilist extends uical
 				'filter'         => 'after',
 				'order'          =>	'cal_start',// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',// IO direction of the sort: 'ASC' or 'DESC'
+				'default_cols'   => '!week,cat_id,pm_id',
+				'filter_onchange' => "set_style_by_class('*','custom_hide','visibility',this.value == 'custom' ? 'visible' : 'hidden'); if (this.value != 'custom') this.form.submit();",
+				'header_left'    => 'calendar.list.dates',
 			);
 		}
 		if (isset($_REQUEST['keywords']))	// new search => set filters so every match is shown
@@ -161,6 +169,27 @@ class uilist extends uical
 	function get_rows(&$params,&$rows,&$readonlys)
 	{
 		//echo "uilist::get_rows() params="; _debug_array($params);
+		if (isset($_GET['listview_days']) && is_numeric($_GET['listview_days']))
+		{
+			$params['filter'] = 'fixed';
+		}
+		if ($params['filter'] == 'custom')
+		{
+			if (!$params['startdate'] && !$params['enddate'])
+			{
+				$params['filter'] = 'all';
+			}
+			elseif (!$params['startdate'])
+			{
+				$params['filter'] = 'before';
+				$this->manage_states(array('date' => $this->bo->date2string($params['enddate'])));
+			}
+			elseif (!$params['enddate'])
+			{
+				$params['filter'] = 'after';
+				$this->manage_states(array('date' => $this->bo->date2string($params['startdate'])));
+			}
+		}
 		$old_params = $GLOBALS['egw']->session->appsession('calendar_list','calendar');
 		if ($old_params['filter'] && $old_params['filter'] != $params['filter'])	// filter changed => order accordingly
 		{
@@ -186,11 +215,55 @@ class uilist extends uical
 				break;
 			case 'before':
 				$search_params['end'] = $this->date;
+				$label = lang('Before %1',$this->bo->long_date($this->date));
 				break;
+			case 'custom':
+				if (!is_object($GLOBALS['egw']->js))
+				{
+					$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+				}
+				$GLOBALS['egw']->js->set_onload("set_style_by_class('*','custom_hide','visibility','visible');");
+				$this->first = $search_params['start'] = $params['startdate'];
+				$this->last  = $search_params['end'] = $params['enddate'];
+				$label = $this->bo->long_date($this->first,$this->last);
+				break;
+			case 'fixed':
+				if ($this->listview_days == 5 || $this->listview_days == 7)	// weekview
+				{
+					$this->first = $this->datetime->get_weekday_start($this->year,$this->month,$this->day);
+					$this->last = $this->bo->date2array($this->first);
+					$this->last['day'] += (int) $this->planner_days - 1;
+					$this->last['hour'] = 23; $this->last['minute'] = $this->last['sec'] = 59;
+					unset($this->last['raw']);
+					$this->last = $this->bo->date2ts($this->last);
+					$this->date_filters['fixed'] = $label = lang('Week').' '.adodb_date('W',$this->first).': '.$this->bo->long_date($this->first,$this->last);
+					$search_params['start'] = $this->first;
+					$search_params['end'] = $this->last;
+					break;
+				}
+				elseif ((string)$this->listview_days === '0')	// monthview
+				{
+					$this->first = $this->bo->date2array($this->date);
+					$this->first['day'] = 1;
+					unset($this->first['raw']);
+					$this->last = $this->first;
+					$this->last['month'] += 1;
+					$this->first = $this->bo->date2ts($this->first);
+					$this->last = $this->bo->date2ts($this->last);
+					$this->last--;
+					$this->date_filters['fixed'] = $label = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
+					break;
+				}
+				// fall through to after given date
 			case 'after':
 			default:
+				$label = lang('After %1',$this->bo->long_date($this->date));
 				$search_params['start'] = $this->date;
 				break;
+		}
+		if ($label)
+		{
+			$GLOBALS['egw_info']['flags']['app_header'] .= ': '.$label;
 		}
 		if ((int) $params['col_filter']['participant'])
 		{
@@ -212,6 +285,16 @@ class uilist extends uical
 			if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
 			if (empty($event['location'])) $event['location'] = ' ';	// no location screws the owner horz. alignment
 			$rows[] = $event;
+		}
+		$params['options-selectcols']['week'] = lang('Week');
+		if (substr($this->cal_prefs['nextmatch-calendar.list.rows'],0,4) == 'week')
+		{
+			$rows['format'] = '32';	// prefix date with week-number
+		}
+		if ($this->cat_id) $rows['no_cat_id'] = true;
+		if (!$GLOBALS['egw_info']['user']['apps']['projectmanager'])
+		{
+			$params['options-selectcols']['pm_id'] = false;
 		}
 		//_debug_array($rows);
 		return $this->bo->total;
