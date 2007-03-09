@@ -211,7 +211,7 @@
 				if (!@$GLOBALS['egw_info']['etemplate']['hooked'] && (int) $output_mode != 1 && (int) $output_mode != -1)	// not just returning the html
 				{
 					$GLOBALS['egw_info']['flags']['java_script'] .= $this->include_java_script(2);
-/*
+
 					if ($GLOBALS['egw_info']['flags']['currentapp'] != 'etemplate')
 					{
 						$css_file = '/etemplate/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/app.css';
@@ -219,10 +219,10 @@
 						{
 							$css_file = '/etemplate/templates/default/app.css';
 						}
-						$GLOBALS['egw_info']['flags']['css'] .= '@import('.$GLOBALS['egw_info']['server']['webserver_url'].
-							$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).");\n";
+						$GLOBALS['egw_info']['flags']['css'] .= "\n\t\t</style>\n\t\t".'<link href="'.$GLOBALS['egw_info']['server']['webserver_url'].
+							$css_file.'?'.filemtime(EGW_SERVER_ROOT.$css_file).'" type="text/css" rel="StyleSheet" />'."\n\t\t<style>\n\t\t\t";
 					}
-*/
+
 					$GLOBALS['egw']->common->egw_header();
 				}
 				elseif (!isset($GLOBALS['egw_info']['etemplate']['content']))

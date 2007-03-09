@@ -119,11 +119,11 @@
 				$tcell =& $tab_widget->empty_cell();
 				if ($value == $name)
 				{
-					$tcell['span'] = ',etemplate_tab_active th';
+					$tcell['span'] = ',etemplate_tab_active';
 				}
 				else
 				{
-					$tcell['span'] = ',etemplate_tab row_on';
+					$tcell['span'] = ',etemplate_tab';
 				}
 				if ($dom_enabled)
 				{

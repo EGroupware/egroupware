@@ -1,14 +1,44 @@
-/* $Id$ */
-.redItalic { color: red; font-style: italic; }
-.gray { color: gray; }
+/**
+ * eGroupWare - CSS Styles used by eTemplate widgets
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$
+ */
 
-/* Styles of the eT editor */
-.clickWidgetToEdit { cursor: pointer; display: inline; }
-.clickWidgetToEdit:hover { background-color: pink; }
+/*
+ * a few generic styles used in most eT apps
+ */
+.redItalic,.message { 
+	color: red; 
+	font-style: italic; 
+}
+.gray { 
+	color: gray; 
+}
 
-/* Styles of the nextmatch widget */
-.activ_sortcolumn { font-weight: bold; }
-.inactiv_sortcolumn { font-weight: normal; }
+/*
+ * Styles of the eT editor 
+ */
+.clickWidgetToEdit { 
+	cursor: pointer; 
+	display: inline; 
+}
+.clickWidgetToEdit:hover { 
+	background-color: pink; 
+}
+
+/*
+ * Styles of the nextmatch widget 
+ */
+.activ_sortcolumn { 
+	font-weight: bold; 
+}
+.inactiv_sortcolumn { 
+	font-weight: normal; 
+}
 .lettersearch,.lettersearch_active {
 	background-color: #D3DCE3;
 	width: 25px;
@@ -33,4 +63,29 @@
 	right: 0px;
 	top: 16px;
 	display: none;
+}
+
+/*
+ * Styles for the tab widget
+ */
+.etemplate_tab,.etemplate_tab_active { 
+	border-style:solid; 
+	border-width:1px 1px 0px; 
+	border-color:black; 
+	padding:3px; 
+	padding-left: 6px; 
+	padding-right: 6px; 
+	width: 60px; 
+	white-space: nowrap;
+}
+.etemplate_tab { 
+	cursor: pointer; 
+	background-color: #E8F0F0;
+}
+.etemplate_tab_active { 
+	border-width:2px 2px 0px; 
+	background-color: #D3DCE3;
+}
+.tab_body { 
+	border: black solid 2px; 
 }

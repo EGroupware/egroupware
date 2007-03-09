@@ -87,35 +87,5 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
-			.activ_sortcolumn { font-weight: bold; }
-.inactiv_sortcolumn { font-weight: normal; }
-.lettersearch,.lettersearch_active {
-	background-color: #D3DCE3;
-	width: 25px;
-	border: 1px solid #D3DCE3;
-	text-align: center;
-	cursor: pointer;
-}
-.lettersearch_active {
-	font-weight: bold;
-	background-color: #E8F0F0;
-}
-.lettersearch_active,.lettersearch:hover {
-	border: 1px solid black;
-	background-color: #E8F0F0;
-}
-.selectcols {
-	position: relative;
-}
-.colselection {
-	background-color: white;
-	position: absolute;
-	right: 0px;
-	top: 16px;
-	display: none;
-}
-
-		</styles>
 	</template>
 </overlay>

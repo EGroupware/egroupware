@@ -41,12 +41,15 @@ class sitemgr_module extends Module // the Module class get automatic included b
 		list($app) = explode('.',$this->etemplate_method);
 		$GLOBALS['egw']->translation->add_app($app);
 		
-		$css = '';
-		if (file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
+		$css = "<style type=\"text/css\">\n<!--\n@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
+			"/etemplate/templates/default/app.css);\n";
+
+		if ($app != 'etemplate' && file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
 		{
-			$css = "<style type=\"text/css\">\n<!--\n@import url(".
-				$GLOBALS['egw_info']['server']['webserver_url'].'/'.$app."/templates/default/app.css);\n-->\n</style>";
+			$css .= "@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
+				'/'.$app."/templates/default/app.css);\n";
 		}
+		$css .= "-->\n</style>\n";
 		$ret = false;
 		if($_POST['etemplate_exec_id'])
 		{
