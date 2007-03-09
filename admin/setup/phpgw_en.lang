@@ -431,6 +431,7 @@ you have entered an invalid expiration date	admin	en	You have entered an invalid
 you have to enter a name, to create a new field!!!	admin	en	You have to enter a name, to create a new field!!!
 you have to enter a name, to create a new type!!!	admin	en	You have to enter a name, to create a new type!!!
 you must add at least 1 permission or group to this account	admin	en	You must add at least 1 permission or group to this account
+you must select at least one group member	admin	en	You must select at least one group member.
 you must enter a group name.	admin	en	You must enter a group name.
 you must enter a lastname	admin	en	You must enter a lastname
 you must enter a loginid	admin	en	You must enter a loginid
