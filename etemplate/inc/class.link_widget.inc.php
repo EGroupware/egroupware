@@ -38,6 +38,8 @@
 	 *   'link_label'   => // I  string label for the link button, default 'Link'
 	 *  // optional only for the link-add widget
 	 *   'extra'        => // I  array with extra parameters, eg. array('cat_id' => 15)
+	 *  // optional for link-string:
+	 *   'only_app'     => // I  string with appname, eg. 'projectmananager' to list only linked projects
 	 * );
 	 *</code>
 	 *
@@ -173,9 +175,24 @@
 
 			case 'link-string':
 				$str = '';
-				if ($values['to_id'] && $values['to_app'])
+				if ($value && !is_array($value) && $cell['size'])
 				{
-					$values = $this->link->get_links($values['to_app'],$values['to_id']);
+					$value = array('to_id' => $value);
+					list($value['to_app'],$value['only_app']) = explode(',',$cell['size']);
+				}
+				if ($value['to_id'] && $value['to_app'])
+				{
+					$value = $this->link->get_links($value['to_app'],$value['to_id'],$only_app = $value['only_app']);
+					if ($only_app)
+					{
+						foreach($value as $key => $id)
+						{
+							$value[$key] = array(
+								'id'  => $id,
+								'app' => $only_app,
+							);
+						}
+					}
 				}
 				if (is_array($value))
 				{
