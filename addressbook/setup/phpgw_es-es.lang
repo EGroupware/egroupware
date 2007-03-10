@@ -104,6 +104,7 @@ do you want a private addressbook, which can not be viewed by users, you grant a
 do your really want to delete this contact?	addressbook	es-es	¿Realmente desea borrar este contacto?
 doesn't matter	addressbook	es-es	no importa
 domestic	addressbook	es-es	Doméstico
+don't hide empty columns	addressbook	es-es	No ocultar las columnas vacías
 download	addressbook	es-es	Descargar
 download export file (uncheck to debug output in browser)	addressbook	es-es	Descargar fichero exportado (desmarcar para depurar la salida en el navegador)
 download this contact as vcard file	addressbook	es-es	descargar este contacto como fichero vCard
@@ -200,7 +201,6 @@ name, address	addressbook	es-es	Nombre, Dirección
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
-only if there is content	addressbook	es-es	sólo si hay contenido
 options for type	admin	es-es	Opciones para el tipo
 organisation	addressbook	es-es	organización
 organisations	addressbook	es-es	Organizaciones
@@ -244,8 +244,8 @@ select the type of conversion	addressbook	es-es	Seleccione el tipo de conversión
 select the type of conversion:	addressbook	es-es	Seleccione el tipo de conversión:
 select where you want to store / retrieve contacts	admin	es-es	Seleccione dónde desea almacenar o recuperar contactos
 selected contacts	addressbook	es-es	Contactos seleccionados
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	es-es	¿Mostrar las columnas de foto y domicilio particular, incluso si están vacías?
 show	addressbook	es-es	Mostrar
-show a column for %1	addressbook	es-es	Mostrar una columna para %1
 show birthday reminders on main screen	addressbook	es-es	Mostrar recordatorios de cumpleaños en la pantalla principal
 show infolog entries for this organisation	addressbook	es-es	Mostrar las entradas del Registro de notas y tareas para esta organización
 show the contacts of this organisation	addressbook	es-es	Mostrar los contactos de esta organización
@@ -282,7 +282,6 @@ view linked infolog entries	addressbook	es-es	Ver las entradas del Registro que 
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! ¡LDAP es valido sólo si no está usando contactos para almacenar las cuentas!
 warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	es-es	Qué deben mostrar los enlaces a la libreta de direcciones en otras aplicaciones. Los valores vacíos se ignorarán. Es necesario volver a iniciar la sesión si se cambia esta opción.
-when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	es-es	Cuándo debe la lista de contactos mostrar esa columna. "Sólo si hay contenido" oculta la columna, a menos que haya algún contenido en la vista.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	es-es	Qué libreta de direcciones debe seleccionarse al añadir un contacto Y cuando no haya permiso de añadir en la libreta de direcciones actual.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	es-es	Qué campos deben exportarse. Indicar todos significa que cada campo almacenado en la libreta de direcciones, incluyendo los personalizados. La dirección del trabajo o particular sólo contiene el nombre, la empresa y la dirección seleccionada.

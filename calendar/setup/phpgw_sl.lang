@@ -114,6 +114,8 @@ filename of the download	calendar	sl	Ime datoteke za prenos
 find free timeslots where the selected participants are availible for the given timespan	calendar	sl	Najdi prost termin, kjer so vsi udeleženci prosti
 firstname of person to notify	calendar	sl	Ime osebe, ki jo obveščamo
 for	calendar	sl	Za
+for all future events	calendar	sl	Za vse prihajajoče dogodke
+for this event	calendar	sl	Za ta dogodek
 for which views should calendar show distinct lines with a fixed time interval.	calendar	sl	Za katere poglede naj Koledar prikaže različne vrstice s stalnim časovnim intervalom?
 format of event updates	calendar	sl	Format popravkov dogodka
 forward half a month	calendar	sl	Naprej pol meseca
@@ -259,6 +261,7 @@ startdate and -time of the search	calendar	sl	Začetni datum in -čas iskanja
 startdate of the export	calendar	sl	Začetni datum izvoza
 startrecord	calendar	sl	Začetni zapis
 status changed	calendar	sl	Status spremenjen
+status recurrence	calendar	sl	Ponavljanje statusa
 submit to repository	calendar	sl	Pošlji v zbirko
 sun	calendar	sl	Ned
 tentative	calendar	sl	Preizkušen

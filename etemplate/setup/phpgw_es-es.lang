@@ -16,6 +16,7 @@
 a pattern to be searched for	etemplate	es-es	un patrón de búsqueda
 accesskey	etemplate	es-es	Tecla rápida
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	es-es	Las teclas rápidas se pueden especificar también poniendo & en la etiqueta (p. ej. &Nombre)
+account contactdata	etemplate	es-es	Datos de contacto de la cuenta
 add a new column (after the existing ones)	etemplate	es-es	Añadir una columna nueva (detrás de las existentes)
 add a new entry of the selected application	etemplate	es-es	Añadir una entrada nueva de la aplicación seleccionada
 add a new multi-column index	etemplate	es-es	Añadir un nuevo índice multicolumna
@@ -35,6 +36,7 @@ application	etemplate	es-es	Aplicación
 application name needed to write a langfile or dump the etemplates !!!	etemplate	es-es	Se necesita el nombre de la aplicación para escribir un fichero de idioma o volcar las plantillas
 applies the changes made	etemplate	es-es	aplica los cambios realizados
 applies the changes to the given version of the template	etemplate	es-es	aplica los cambios a la versión dada de la plantilla
+as default	etemplate	es-es	como predeterminado
 attach	etemplate	es-es	Adjuntar
 attach file	etemplate	es-es	Adjuntar fichero
 baseline	etemplate	es-es	Línea base
@@ -73,6 +75,8 @@ comment	etemplate	es-es	Comentario
 confirm	etemplate	es-es	confirmar
 confirmation message or custom javascript (returning true or false)	etemplate	es-es	mensaje de confirmación o javascript personalizado (devolviendo 'true' o 'false')
 confirmation necesary or custom java-script	etemplate	es-es	confirmación necesaria o javascript personalizado
+contact	etemplate	es-es	Contacto
+contact field to show	etemplate	es-es	Campo del contacto a mostrar
 contact fields	etemplate	es-es	Campos de contacto
 contains	etemplate	es-es	contiene
 create a new table for the application	etemplate	es-es	Crear una tabla nueva para la aplicación
@@ -153,6 +157,7 @@ exchange this two columns	etemplate	es-es	Intercambiar estas dos columnas
 export the loaded etemplate into a xml-file	etemplate	es-es	Exportar la plantilla cargada en un fichero xml
 export xml	etemplate	es-es	Exportar XML
 extensions loaded:	etemplate	es-es	Extensiones cargadas:
+field	etemplate	es-es	Campo
 field must not be empty !!!	etemplate	es-es	¡¡¡El campo no debe estar vacío!!!
 file	etemplate	es-es	Fichero
 file contains more than one etemplate, last one is shown !!!	etemplate	es-es	El fichero contiene más de una plantilla. Sólo se mostrará la última.
@@ -237,6 +242,7 @@ nextmatch	etemplate	es-es	Control 'Nextmach' (Siguiente coincidencia)
 nextmatch accountfilter	etemplate	es-es	Nextmatch con filtro de cuentas
 nextmatch custom filterheader	etemplate	es-es	Filtro de cabecera personalizado para nextmatch
 nextmatch filterheader	etemplate	es-es	Nextmatch con filtro de cabeceras
+nextmatch header	etemplate	es-es	Encabezado de control Nextmatch
 nextmatch sortheader	etemplate	es-es	Cabecera de orden de siguiente coincidencia
 no column to swap with !!!	etemplate	es-es	¡No hay columna con la que intercambiar!
 no file	etemplate	es-es	sin fichero
@@ -280,6 +286,7 @@ remove this link (not the entry itself)	etemplate	es-es	Borrar este enlace (no l
 returns savely, without deleting	etemplate	es-es	Vuelve de forma segura, SIN borrar
 right	etemplate	es-es	Derecha
 row...	etemplate	es-es	Fila...
+save selected columns as default preference for all users.	etemplate	es-es	Guardar las columnas seleccionadas como preferencia predeterminada para todos los usuarios.
 save the changes made and close the window	etemplate	es-es	Guardar los cambios realizados y cerrar la ventana
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	es-es	Guardar la plantilla bajo las claves de arriba (nombre, etc). Cámbielas para Guardar como.
 saves changes to tables_current.inc.php	etemplate	es-es	Guarda los cambios en el fichero tables_current.inc.php
@@ -298,19 +305,23 @@ select an application, (*) = uninstalled	etemplate	es-es	Seleccionar una aplicac
 select an entry to link with	etemplate	es-es	Seleccionar una entrada para enlazar
 select an table of the application	etemplate	es-es	Seleccione una tabla de la aplicación
 select application	etemplate	es-es	Seleccionar aplicación
+select application to search	etemplate	es-es	Seleccionar aplicación para buscar
 select category	etemplate	es-es	Seleccionar categoría
+select columns	etemplate	es-es	Seleccionar columnas
 select country	etemplate	es-es	Seleccionar país
 select day	etemplate	es-es	Seleccionar día
 select day of week	etemplate	es-es	Seleccionar día de la semana
 select entry	etemplate	es-es	Seleccionar entrada
 select hour	etemplate	es-es	Seleccionar hora del día
 select if content of field should not be translated (label gets always translated)	etemplate	es-es	Seleccione si el contenido del campo no debe traducirse (la etiqueta siempre se traduce)
+select language	etemplate	es-es	Seleccionar idioma
 select month	etemplate	es-es	Seleccionar mes
 select number	etemplate	es-es	Seleccionar número
 select one ...	etemplate	es-es	Seleccionar uno...
 select percentage	etemplate	es-es	Seleccionar porcentaje
 select priority	etemplate	es-es	Seleccionar prioridad
 select state	etemplate	es-es	Seleccionar estado
+select the columns to display in the list	etemplate	es-es	Seleccionar columnas a mostrar en la lista
 select the indexed columns in their desired order	etemplate	es-es	Seleccionar las columnas indexadas en su orden deseado
 select this etemplate to delete it	etemplate	es-es	Seleccionar esta plantilla para borrarla
 select which accounts to show	etemplate	es-es	seleccionar las cuentas a mostrar
