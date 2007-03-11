@@ -102,7 +102,7 @@ duration	infolog	es-es	Duración
 each value is a line like <id>[=<label>]	infolog	es-es	cada valor es una línea como <id>[=<etiqueta>]
 edit	infolog	es-es	Editar
 edit or create categories for ingolog	infolog	es-es	Editar o crear categorías para el Registro
-edit rights (full edit rights incl. making someone else responsible!)	infolog	es-es	editar derechos (editar todos los derechos, incluyendo hacer a alguien responsable)
+edit rights (full edit rights incl. making someone else responsible!)	infolog	es-es	Derechos de edición (editar todos los derechos, incluyendo hacer a alguien responsable)
 edit status	infolog	es-es	Editar estado
 edit the entry	infolog	es-es	Editar la entrada
 edit this entry	infolog	es-es	Editar esta entrada
@@ -125,7 +125,7 @@ from	infolog	es-es	De
 general	infolog	es-es	General
 high	infolog	es-es	alta
 id	infolog	es-es	Id
-if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no está puesta, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
+if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	es-es	Si no hay valor inicial, la línea con los filtros de búsqueda y filtros está oculta para menos entradas que "máx. por página" (como se definió en las preferencias comunes).
 import	infolog	es-es	Importar
 import next set	infolog	es-es	importar juego siguiente
 info log	common	es-es	Registro de notas y tareas
@@ -210,7 +210,7 @@ project settings: price, times	infolog	es-es	Configuración del proyecto: precio,
 re:	infolog	es-es	Re:
 read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
 read rights (default)	infolog	es-es	derecho de lectura (predeterminado)
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expr. reg. para IPs locales<br>p. ej. ^192\.168\.1\.
+reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IPS locales<br>p. ej. ^192\.168\.1\.
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
 responsible	infolog	es-es	Responsable
@@ -289,7 +289,7 @@ upcoming	infolog	es-es	próxima
 urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 used time	infolog	es-es	tiempo utilizado
-valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el lado del cliente<br>p. ej. \\servidor\recurso o e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el cliente<br>p. ej. \\servidor\recurso o e:\
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs
