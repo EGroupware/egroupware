@@ -99,6 +99,12 @@ class boinfolog
 	 * @var array
 	 */
 	var $customfields=array();
+	/**
+	 * Group owners for certain types read from the infolog config                      
+	 *
+	 * @var array
+	 */
+	var $group_owners=array();
 	
 	/**
 	 * Constructor Infolog BO
@@ -145,8 +151,6 @@ class boinfolog
 				'done' => 'done'
 		));
 
-		$this->so =& new soinfolog();
-
 		if (!is_object($GLOBALS['egw']->link) && $instanciate_link)
 		{
 			$GLOBALS['egw']->link =& CreateObject('phpgwapi.bolink');
@@ -185,6 +189,9 @@ class boinfolog
 				if (($val = lang($key)) != $key.'*') $this->enums['type'][$key] = lang($key);
 			}
 			natcasesort($this->enums['type']);
+			
+			if ($this->config->config_data['group_owners']) $this->group_owners = $this->config->config_data['group_owners'];
+
 			if (isset($this->config->config_data['customfields']) && is_array($this->config->config_data['customfields']))
 			{
 				if (!($this->customfields = $this->config->config_data['customfields'])) $this->customfields = array();
@@ -219,6 +226,9 @@ class boinfolog
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
 		$this->tz_offset_s = 60*60*$this->tz_offset;
 		$this->user_time_now = time() + $this->tz_offset_s;
+
+		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
+		$this->so =& new soinfolog($this->grants);
 
 		// are we called via xmlrpc?
 		$this->xmlrpc = is_object($GLOBALS['server']) && $GLOBALS['server']->last_method;
@@ -558,7 +568,15 @@ class boinfolog
 				$values['info_subject'] = $this->subject_from_des($values['info_des']);
 			}
 		}
-		if (!$values['info_id'] && !$values['info_owner'])
+		if (isset($this->group_owners[$values['info_type']]))
+		{
+			$values['info_owner'] = $this->group_owners[$values['info_type']];
+			if (!($this->grants[$this->group_owners[$values['info_type']]] & EGW_ACL_EDIT))
+			{
+				return false;	// no edit rights from the group-owner
+			}
+		}
+		elseif (!$values['info_id'] && !$values['info_owner'] || $GLOBALS['egw']->accounts->get_type($values['info_owner']) == 'g')
 		{
 			$values['info_owner'] = $this->so->user;
 		}

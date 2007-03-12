@@ -123,8 +123,10 @@ finish	infolog	de	wenn erledigt
 for which types should this field be used	infolog	de	für welche Typen soll dieses Feld benutzt werden
 from	infolog	de	Von
 general	infolog	de	Allgemein
+group owner for	infolog	de	Gruppeneigentümer für
 high	infolog	de	hoch
 id	infolog	de	Id
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allg. Einstellungen definiert).
 import	infolog	de	Import
 import next set	infolog	de	Nächsten Satz importieren
@@ -292,6 +294,7 @@ urgent	infolog	de	Dringend
 used time	infolog	de	benötigte Zeit
 valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
+valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen

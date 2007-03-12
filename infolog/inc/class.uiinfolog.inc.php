@@ -941,6 +941,42 @@ class uiinfolog
 				$content['info_type'] = 'note';
 			}
 		}
+		// group owners
+		$types = $this->bo->enums['type'];
+		if ($this->bo->group_owners)
+		{
+			// remove types owned by groups the user has no edit grant (current type is made readonly)
+			foreach($this->bo->group_owners as $type => $group)
+			{
+				if (!($this->bo->grants[$group] & EGW_ACL_EDIT))
+				{
+					if ($type == $content['info_type'])
+					{
+						//echo "<p>setting type to r/o as user has no edit rights from group #$group</p>\n";
+						$readonlys['info_type'] = true;
+					}
+					else
+					{
+						unset($types[$type]);
+					}
+				}
+			}
+			// set group as owner if type has a group-owner set
+			if (isset($this->bo->group_owners[$content['info_type']]))
+			{
+				$content['info_owner'] = $this->bo->group_owners[$content['info_type']];
+				// Dont allow to change the type, if user has no delete rights from the group-owner
+				if ($info_id && !($this->bo->grants[$content['info_owner']] & EGW_ACL_DELETE))
+				{
+					//echo "<p>setting type to r/o as user has no delete rights from group #$group</p>\n";
+					$readonlys['info_type'] = true;
+				}
+			}
+			elseif($GLOBALS['egw']->accounts->get_type($content['info_owner']) == 'g')
+			{
+				$content['info_owner'] = $this->user;
+			}
+		}
 		// for implizit edit of responsible user make all fields readonly, but status and percent
 		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && $this->bo->is_responsible($content))
 		{
@@ -984,7 +1020,8 @@ class uiinfolog
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']);
 
 		$content['duration_format'] = $this->duration_format;
-		
+		if ($this->prefs['show_id']) $content['info_number'] = $info_id;
+
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
 		if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
 
@@ -993,7 +1030,7 @@ class uiinfolog
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
 		//echo "<p>uiinfolog.edit(info_id='$info_id',action='$action',action_id='$action_id') readonlys="; print_r($readonlys); echo ", content = "; _debug_array($content);
 		$this->tmpl->exec('infolog.uiinfolog.edit',$content,array(
-			'info_type'     => $this->bo->enums['type'],
+			'info_type'     => $types,
 			'info_priority' => $this->bo->enums['priority'],
 			'info_confirm'  => $this->bo->enums['confirm'],
 			'info_status'   => $this->bo->status[$content['info_type']]
@@ -1016,6 +1053,8 @@ class uiinfolog
 			'info_price'    => $content['info_price'],
 			'info_used_time' => $content['info_used_time'],
 			'info_planned_time' => $content['info_planned_time'],
+			// preserve the type in case it's readonly (no delete rights from group owner)
+			'info_type'     => $content['info_type'],
 		),$no_popup ? 0 : 2);
 	}
 

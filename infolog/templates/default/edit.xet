@@ -140,9 +140,12 @@
 				</row>
 				<row class="th" height="28">
 					<description value="Type" options=",,,info_type"/>
-					<menulist span="all">
-						<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" no_lang="1"/>
-					</menulist>
+					<hbox span="all" options="0,0">
+						<menulist>
+							<menupopup id="info_type" onchange="1" statustext="Type of the log-entry: Note, Phonecall or ToDo" no_lang="1"/>
+						</menulist>
+						<int id="info_number" class="infoId" readonly="true"/>
+					</hbox>
 				</row>
 				<row class="row">
 					<description value="Category" options=",,,info_cat"/>

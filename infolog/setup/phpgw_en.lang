@@ -123,8 +123,10 @@ finish	infolog	en	finish
 for which types should this field be used	infolog	en	for which types should this field be used
 from	infolog	en	From
 general	infolog	en	General
+group owner for	infolog	en	Group owner for
 high	infolog	en	high
 id	infolog	en	Id
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).
 import	infolog	en	Import
 import next set	infolog	en	import next set

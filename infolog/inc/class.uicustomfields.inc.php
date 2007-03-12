@@ -49,6 +49,12 @@ class uicustomfields
 	 * @var config
 	 */
 	var $config;
+	/**
+	 * Group owners for certain types read from the infolog config                      
+	 *
+	 * @var array
+	 */
+	var $group_owners;
 
 	function uicustomfields( )
 	{
@@ -58,6 +64,7 @@ class uicustomfields
 		$this->status = &$this->bo->status;
 		$this->config = &$this->bo->config;
 		$this->fields = &$this->bo->customfields;
+		$this->group_owners =& $this->bo->group_owners;
 		
 		$GLOBALS['egw']->translation->add_app('etemplate');
 		foreach($this->cf_types as $name => $label) $this->cf_types[$name] = lang($label);
@@ -159,6 +166,8 @@ class uicustomfields
 		}
 		$content['fields'][++$n] = array('type2'=>'','order' => 10 * $n);	// new line for create
 		$readonlys['fields']["delete[]"] = True;
+		
+		$content['group_owner'] = $this->group_owners[$content['type2']];
 
 		//echo '<p>uicustomfields.edit(content = <pre style="text-align: left;">'; print_r($content); echo "</pre>\n";
 		//echo 'readonlys = <pre style="text-align: left;">'; print_r($readonlys); echo "</pre>\n";
@@ -316,7 +325,15 @@ class uicustomfields
 	{
 		$this->update_status($content);
 		$this->update_fields($content);
-
+		
+		if ($content['group_owner'])
+		{
+			$this->group_owners[$content['type2']] = $content['group_owner'];
+		}
+		else
+		{
+			unset($this->group_owners[$content['type2']]);
+		}
 		// save changes to repository
 		$this->save_repository();
 	}
@@ -371,6 +388,8 @@ class uicustomfields
 		$this->config->value('status',$this->status);
 		//echo '<p>uicustomfields::save_repository() \$this->fields=<pre style="text-aling: left;">'; print_r($this->fields); echo "</pre>\n";
 		$this->config->value('customfields',$this->fields);
+		
+		$this->config->value('group_owners',$this->group_owners);
 
 		$this->config->save_repository();
 	}

@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="infolog.customfields.status" template="" lang="" group="0" version="1.2.001">
-		<grid>
+		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column/>
 				<column/>
@@ -81,7 +81,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.customfields" template="" lang="" group="0" version="1.3.001">
+	<template id="infolog.customfields" template="" lang="" group="0" version="1.3.002">
 		<grid>
 			<columns>
 				<column/>
@@ -113,6 +113,14 @@
 				</row>
 				<row>
 					<template content="fields" span="all" id="infolog.customfields.fields"/>
+				</row>
+				<row>
+					<hbox options="0,0" span="all">
+						<description class="header" value="Group owner for" id="type2"/>
+						<menulist class="lpadding5">
+							<menupopup type="select-account" options="None,groups" id="group_owner" statustext="If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!"/>
+						</menulist>
+					</hbox>
 				</row>
 				<row>
 					<hbox span="all">

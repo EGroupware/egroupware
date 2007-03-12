@@ -73,22 +73,23 @@ class soinfolog 				// DB-Layer
 	 * @var int
 	 */
 	var $tz_offset;
-
+	
 	/**
-	 * constructor
+	 * Constructor
+	 *
+	 * @param array $grants
+	 * @return soinfolog
 	 */
-	function soinfolog( $info_id = 0)
+	function soinfolog( &$grants )
 	{
 		$this->db     = clone($GLOBALS['egw']->db);
 		$this->db->set_app('infolog');
-		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog');
+		$this->grants =& $grants;
 		$this->user   = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->links =& new solink();
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-
-		$this->read( $info_id );
 	}
 
 	/**
