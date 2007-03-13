@@ -20,10 +20,15 @@ if($GLOBALS['egw_info']['user']['preferences']['calendar']['mainscreen_showevent
 	
 	if ($GLOBALS['egw_info']['user']['preferences']['calendar']['defaultcalendar'] == 'listview')
 	{
+		if (!file_exists(EGW_SERVER_ROOT.($et_css_file ='/etemplate/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/app.css')))
+		{
+			$et_css_file = '/etemplate/templates/default/app.css';
+		}
 		$content =& ExecMethod('calendar.uilist.home');
 	}
 	else
 	{
+		unset($et_css_file);
 		$content =& ExecMethod('calendar.uiviews.home');
 	}
 	$portalbox =& CreateObject('phpgwapi.listbox',array(
@@ -52,12 +57,19 @@ if($GLOBALS['egw_info']['user']['preferences']['calendar']['mainscreen_showevent
 	echo '
 <!-- BEGIN Calendar info -->
 <style type="text/css">
-<!--
+<!--';
+	if ($et_css_file)	// listview
+	{
+		echo '
+@import url('.$GLOBALS['egw_info']['server']['webserver_url'].$et_css_file.');';
+	}
+	echo '
 @import url('.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.');
 -->
 </style>
 '.$portalbox->draw($content)."\n".'<!-- END Calendar info -->'."\n";
 	
+	unset($css_file); unset($et_css_file);
 	unset($key);
 	unset($app_id);
 	unset($content); 
