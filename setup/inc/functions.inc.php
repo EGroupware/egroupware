@@ -154,11 +154,14 @@
 		{
 			if($data['available'] && !empty($data['lang']))
 			{
-				$selected = '';
 				$short = substr($data['lang'],0,2);
-				if ($short == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
+				if ($short == $ConfigLang || $data['lang'] == $ConfigLang || empty($ConfigLang) && $short == substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2))
 				{
-					$selected = ' selected="selected"';
+					$selected = ' selected';
+				}
+				else
+				{
+					$selected = '';
 				}
 				$select .= '<option value="' . $data['lang'] . '"' . $selected . '>' . $data['descr'] . '</option>' . "\n";
 			}

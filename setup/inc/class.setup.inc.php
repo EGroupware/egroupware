@@ -175,6 +175,7 @@
 		{
 			#phpinfo();
 			$FormLogout = get_var('FormLogout',  array('GET','POST'));
+			$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
 			if(!$FormLogout)
 			{
 				$ConfigLogin  = get_var('ConfigLogin', array('POST'));
@@ -188,7 +189,6 @@
 				$ConfigPW     = get_var('ConfigPW',    array('POST','COOKIE'));
 				$HeaderUser   = get_var('HeaderUser',  array('POST','COOKIE'));
 				$HeaderPW     = get_var('HeaderPW',    array('POST','COOKIE'));
-				$ConfigLang   = get_var('ConfigLang',  array('POST','COOKIE'));
 
 				/* Setup defaults to aid in header upgrade to version 1.26.
 				 * This was the first version to include the following values.
@@ -215,7 +215,7 @@
 					$this->set_cookie('ConfigUser','',$expire,'/');
 					$this->set_cookie('ConfigPW','',$expire,'/');
 					$this->set_cookie('ConfigDomain','',$expire,'/');
-					$this->set_cookie('ConfigLang','',$expire,'/');
+//					$this->set_cookie('ConfigLang','',$expire,'/');
 					$GLOBALS['egw_info']['setup']['LastDomain'] = $_COOKIE['ConfigDomain'];
 					$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = lang('You have successfully logged out');
 					$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = '';
@@ -225,7 +225,7 @@
 					$expire = time() - 86400;
 					$this->set_cookie('HeaderUser','',$expire,'/');
 					$this->set_cookie('HeaderPW','',$expire,'/');
-					$this->set_cookie('ConfigLang','',$expire,'/');
+//					$this->set_cookie('ConfigLang','',$expire,'/');
 					$GLOBALS['egw_info']['setup']['HeaderLoginMSG'] = lang('You have successfully logged out');
 					$GLOBALS['egw_info']['setup']['ConfigLoginMSG'] = '';
 					return False;
@@ -920,6 +920,7 @@
 					'account_primary_group' => $primary_group_id,
 					'account_expires'   => -1,
 					'account_email'     => $email,
+					'account_members'   => ''
 				);
 				if (!($accountid = $GLOBALS['egw']->accounts->save($account)))
 				{
@@ -970,7 +971,7 @@
 			$accounts = $GLOBALS['egw']->accounts->search(array(
 				'type'   => 'accounts',
 				'start'  => 0,
-				'offset' => 2,	// we only need to check 2 accounts, if we just check for not anonymous
+				'offset' => 2	// we only need to check 2 accounts, if we just check for not anonymous
 			));
 			
 			if (!$accounts || !is_array($accounts) || !count($accounts))
@@ -1020,7 +1021,7 @@
 				$this->db->delete($this->acl_table,array(
 					'acl_appname'  => $app,
 					'acl_location' => $location,
-					'acl_account'  => $account,
+					'acl_account'  => $account
 				),__LINE__,__FILE__);
 
 				if ((int) $rights)
