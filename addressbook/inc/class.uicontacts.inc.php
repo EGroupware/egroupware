@@ -392,7 +392,7 @@ class uicontacts extends bocontacts
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
 	{
-		echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
+		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
 		$success = $failed = 0;
 		
 		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
