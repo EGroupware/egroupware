@@ -25,7 +25,7 @@
 
 		if (in_array($showevents,array('1','2'))) $showevents = 'own-open-today';
 		$html = $infolog->index(array('nm' => array('filter' => $showevents)),'','',0,False,True);
-		$title = lang('InfoLog').' - '.lang($infolog->filters['own-open-today']);
+		$title = lang('InfoLog').' - '.lang($infolog->filters[$showevents]);
 		unset($infolog);
 
 		$portalbox =& CreateObject('phpgwapi.listbox',array(
@@ -43,6 +43,10 @@
 		}
 		$portalbox->data = $data;
 
+		if (!file_exists(EGW_SERVER_ROOT.($et_css_file ='/etemplate/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/app.css')))
+		{
+			$et_css_file = '/etemplate/templates/default/app.css';
+		}
 		if (!file_exists(EGW_SERVER_ROOT.($css_file ='/infolog/templates/'.$GLOBALS['egw_info']['user']['preferences']['common']['template_set'].'/app.css')))
 		{
 			$css_file = '/infolog/templates/default/app.css';
@@ -51,11 +55,13 @@
 <!-- BEGIN InfoLog info -->
 <style type="text/css">
 <!--
+	@import url('.$GLOBALS['egw_info']['server']['webserver_url'].$et_css_file.');
 	@import url('.$GLOBALS['egw_info']['server']['webserver_url'].$css_file.');
 -->
 </style>
 '.			$portalbox->draw($html)."\n<!-- END InfoLog info -->\n";
 
+		unset($css_file); unset($et_css_file);
 		unset($portalbox);
 		unset($html);
 		$GLOBALS['egw_info']['flags']['currentapp'] = $save_app;
