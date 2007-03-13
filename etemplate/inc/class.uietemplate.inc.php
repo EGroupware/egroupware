@@ -45,30 +45,47 @@
 		 *
 		 * @var html
 		 */
-		var $html;	/* instance of html-class */
+		var $html;
 		var $xslt = false;	/* do we run in the xslt framework (true) or the regular eGW one (false) */
 		var $class_conf = array('nmh' => 'th','nmr0' => 'row_on','nmr1' => 'row_off');
 		var $public_functions = array('process_exec' => True);
 		/**
-		 * @var int $innerWidth inner width of browser window
+		 * Inner width of browser window
+		 * 
+		 * @var int
 		 */
 		var $innerWidth;
 		/**
-		 * @var array $content reference to the content-param of the last call to show, for extensions to use
+		 * Reference to the content-param of the last call to show, for extensions to use
+		 * 
+		 * @var array
 		 */
 		var $content;
 		/**
-		 * @var array $sel_options reference to the sel_options-param of the last call to show, for extensions to use
+		 * Reference to the sel_options-param of the last call to show, for extensions to use
+		 * 
+		 * @var array
 		 */
 		var $sel_options;
 		/**
-		 * @var string $name_form name of the currently processed etemplate, reference to $GLOBALS['egw_info']['etemplate']['name_form']
+		 * Name of the currently processed etemplate, reference to $GLOBALS['egw_info']['etemplate']['name_form']
+		 * 
+		 * @var string
 		 */
 		var $name_form;
 		/**
-		 * @var array $name_forms used form-names in this request, reference to $GLOBALS['egw_info']['etemplate']['name_forms']
+		 * Used form-names in this request, reference to $GLOBALS['egw_info']['etemplate']['name_forms']
+		 * 
+		 * @var array
 		 */
 		var $name_forms;
+		/**
+		 * Basename of the variables (content) in $_POST and id's, usually 'exec', 
+		 * if there's not more then one eTemplate on the page (then it will be exec, exec2, exec3, ...
+		 *
+		 * @var string
+		 */
+		var $name_vars='exec';
 
 		/**
 		 * constructor of etemplate class, reads an eTemplate if $name is given
@@ -175,23 +192,34 @@
 			}
 			$id = $this->appsession_id();
 			
+			// initialise $GLOBALS['egw_info']['etemplate'], in case there are multiple eTemplates on a page
+			$GLOBALS['egw_info']['etemplate'] = array(
+				'name_forms' => $GLOBALS['egw_info']['etemplate']['name_forms'],
+				'validation_errors' => $GLOBALS['egw_info']['etemplate']['validation_errors'],
+			);
+			$this->name_form =& $GLOBALS['egw_info']['etemplate']['name_form'];
+			$this->name_forms =& $GLOBALS['egw_info']['etemplate']['name_forms'];
+			if (!is_array($this->name_forms)) $this->name_forms = array();
+
 			// use different form-names to allows multiple eTemplates in one page, eg. addressbook-view
 			$this->name_form = 'eTemplate';
 			if (in_array($this->name_form,$this->name_forms))
 			{
-				$this->name_form .= count($this->name_forms);
+				$this->name_form .= 1+count($this->name_forms);
+				$this->name_vars .= 1+count($this->name_forms);
 			}
 			$this->name_forms[] = $this->name_form;
-
+			
 			$GLOBALS['egw_info']['etemplate']['output_mode'] = $output_mode;	// let extensions "know" they are run eg. in a popup
 			$GLOBALS['egw_info']['etemplate']['form_options'] = '';	// might be set in show
 			$GLOBALS['egw_info']['etemplate']['to_process'] = array();
+			
 			$html = $this->html->form($this->include_java_script(1).
 					$this->html->input_hidden(array(
 						'submit_button' => '',
 						'innerWidth'    => '',
 					),'',False).
-					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,'exec'),array(
+					$this->show($this->complete_array_merge($content,$changes),$sel_options,$readonlys,$this->name_vars),array(
 						'etemplate_exec_id' => $id
 					),$this->sitemgr ? '' : '/etemplate/process_exec.php?menuaction='.$method,
 					'',$this->name_form,$GLOBALS['egw_info']['etemplate']['form_options'].
@@ -301,6 +329,7 @@
 				'session_used' => 0,
 				'ignore_validation' => $ignore_validation,
 				'method' => $method,
+				'name_vars' => $this->name_vars,
 			),$id);
 
 			if ($this->sitemgr || (int) $output_mode == 1 || (int) $output_mode == -1)	// return html
@@ -313,11 +342,12 @@
 		 * Check if we have not ignored validation errors
 		 *
 		 * @param string $ignore_validation='' if not empty regular expression for validation-errors to ignore
-		 * @param string $cname='exec' name-prefix, which need to be ignored
+		 * @param string $cname=null name-prefix, which need to be ignored, default $this->name_vars
 		 * @return boolean true if there are not ignored validation errors, false otherwise
 		 */
-		function validation_errors($ignore_validation='',$cname='exec')
+		function validation_errors($ignore_validation='',$cname=null)
 		{
+			if (is_null($cname)) $cname = $this->name_vars;
 			//echo "<p>uietemplate::validation_errors('$ignore_validation','$cname') validation_error="; _debug_array($GLOBALS['egw_info']['etemplate']['validation_errors']);
 			if (!$ignore_validation) return count($GLOBALS['egw_info']['etemplate']['validation_errors']) > 0;
 
@@ -366,11 +396,12 @@
 				// this prevents an empty screen, if the sessiondata gets lost somehow
 				$this->location(array('menuaction' => $_GET['menuaction']));
 			}
+			$this->name_vars = $session_data['name_vars'];
 			if (isset($submit_button) && !empty($submit_button))
 			{
 				$this->set_array($exec,$submit_button,'pressed');
 			}
-			$content = $exec['exec'];
+			$content = $exec[$this->name_vars];
 			if (!is_array($content))
 			{
 				$content = array();
@@ -385,7 +416,7 @@
 			{
 				$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 			}
-			$this->process_show($content,$session_data['to_process'],'exec',$type);
+			$this->process_show($content,$session_data['to_process'],$this->name_vars,$type);
 
 			$GLOBALS['egw_info']['etemplate']['loop'] |= !$this->canceled && $this->button_pressed &&
 				$this->validation_errors($session_data['ignore_validation']);	// set by process_show
@@ -457,14 +488,15 @@
 			{
 				return false;
 			}
+			$this->name_vars = $session_data['name_vars'];
 			$GLOBALS['egw_info']['etemplate']['extension_data'] = $session_data['extension_data'];
 
-			$content = $_GET['exec'];
+			$content = $_GET[$this->name_vars];
 			if (!is_array($content))
 			{
 				$content = array();
 			}
-			$this->process_show($content,$session_data['to_process'],'exec');
+			$this->process_show($content,$session_data['to_process'],$this->name_vars);
 
 			return $this->complete_array_merge($session_data['preserv'],$content);
 		}
@@ -1811,9 +1843,9 @@
 						{
 							foreach(is_array($value) ? $value : array($value) as $val)
 							{
-								if (!($attr['multiple'] && is_null($val)) && !in_array($val,$attr['allowed']))
+								if (!($attr['multiple'] && !$val) && !in_array($val,$attr['allowed']))
 								{
-									$this->validation_errors($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",$attr['allowed'])),'');
+									$this->set_validation_error($form_name,lang("'%1' is NOT allowed ('%2')!",$val,implode("','",$attr['allowed'])),'');
 									$value = '';
 									break;
 								}
@@ -1879,10 +1911,12 @@
 		 *
 		 * @param string $name (complete) name of the widget causing the error
 		 * @param string $error error-message already translated
-		 * @param string $cname='exec' set it to '', if the name is already a form-name
+		 * @param string $cname=null set it to '', if the name is already a form-name, defaults to $this->name_vars
 		 */
-		function set_validation_error($name,$error,$cname='exec')
+		function set_validation_error($name,$error,$cname=null)
 		{
+			if (is_null($cname)) $cname = $this->name_vars;
+			//echo "<p>etemplate::set_validation_error('$name','$error','$cname');</p>\n";
 			if ($cname) $name = $this->form_name($cname,$name);
 			
 			if ($GLOBALS['egw_info']['etemplate']['validation_errors'][$name])
