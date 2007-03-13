@@ -102,18 +102,18 @@ class uicontacts extends bocontacts
 			}
 			if ($content['action'] !== '')
 			{
-				if (!count($content['nm']['rows']['checked']) && !$content['use_all'])
+				if (!count($content['nm']['rows']['checked']) && !$content['use_all'] && $content['action'] != 'delete_list')
 				{
 					$msg = lang('You need to select some contacts first');
 				}
 				else
 				{
 					if ($this->action($content['action'],$content['nm']['rows']['checked'],$content['use_all'],
-						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index'))
+						$success,$failed,$action_msg,$content['do_email'] ? 'email' : 'index',$msg))
 					{
 						$msg .= lang('%1 contact(s) %2',$success,$action_msg);
 					}
-					else
+					elseif(is_null($msg))
 					{
 						$msg .= lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed);
 					}
@@ -131,6 +131,17 @@ class uicontacts extends bocontacts
 			else
 			{
 				$org_view = $content['nm']['org_view'];
+			}
+		}
+		elseif($_GET['add_list'])
+		{
+			if (($list = $this->add_list($_GET['add_list'],$_GET['owner']?$_GET['owner']:$this->user)))
+			{
+				$msg = lang('List created');
+			}
+			else
+			{
+				$msg = lang('List creation failed, no rights!');
 			}
 		}
 		$preserv = array(
@@ -162,12 +173,28 @@ class uicontacts extends bocontacts
 				'lettersearch'   => true,
 				'do_email'       => $do_email,
 				'default_cols'   => '!cat_id,contact_created_contact_modified',
+				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 			);
+			// if the backend supports distribution lists
+			if (($sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
+				'' => lang('Distribution lists').'...',
+				'add' => lang('Add a new list').'...',
+			))) !== false)
+			{
+				$content['nm']['no_filter2'] = false;
+			}
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
+		}
+		if (!$content['nm']['no_filter2'] && !isset($sel_options['filter2']))
+		{
+			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
+				'' => lang('Distribution lists').'...',
+				'add' => lang('Add a new list').'...',
+			));
 		}
 		if ($do_email)
 		{
@@ -183,13 +210,11 @@ class uicontacts extends bocontacts
 		{
 			$content['nm']['header_left'] = 'addressbook.index.left';
 		}
-		$sel_options = array(
-			'filter' => $this->get_addressbooks(EGW_ACL_READ,lang('All')),
-			'to' => array(
-				'to'  => 'To',
-				'cc'  => 'Cc',
-				'bcc' => 'Bcc',
-			),
+		$sel_options['filter'] = $this->get_addressbooks(EGW_ACL_READ,lang('All'));
+		$sel_options['to'] = array(
+			'to'  => 'To',
+			'cc'  => 'Cc',
+			'bcc' => 'Bcc',
 		);
 		$sel_options['action'] = array();
 		if ($do_email)
@@ -209,7 +234,20 @@ class uicontacts extends bocontacts
 		{
 			$sel_options['action']['infolog'] = lang('View linked InfoLog entries');
 		}
-		$sel_options['action'] += $this->get_addressbooks(EGW_ACL_ADD);
+		//$sel_options['action'] += $this->get_addressbooks(EGW_ACL_ADD);
+		foreach($this->get_addressbooks(EGW_ACL_ADD) as $uid => $label)
+		{
+			$sel_options['action'][$uid] = lang('Move to addressbook:').' '.$label;
+		}
+		if (($add_lists = $this->get_lists(EGW_ACL_EDIT)))	// do we have distribution lists?
+		{
+			foreach ($add_lists as $list_id => $label)
+			{
+				$sel_options['action']['to_list_'.$list_id] = lang('Add to distribution list:').' '.$label;
+			}
+			$sel_options['action']['remove_from_list'] = lang('Remove selected contacts from distribution list');
+			$sel_options['action']['delete_list'] = lang('Delete selected distribution list!');
+		}
 
 		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 		
@@ -352,25 +390,29 @@ class uicontacts extends bocontacts
 	 * @param string $session_name 'index' or 'email' depending if we are in the main list or the popup
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
-	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name)
+	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
 	{
-		//echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
+		echo "<p>uicontacts::action('$action',".print_r($checked,true).','.(int)$use_all.",...)</p>\n"; 
 		$success = $failed = 0;
 		
-		if ($use_all)
+		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
 		{
 			// get the whole selection
 			$query = $GLOBALS['egw']->session->appsession($session_name,'addressbook');
-			$query['num_rows'] = -1;	// all
-			$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+			
+			if ($use_all)
+			{
+				$query['num_rows'] = -1;	// all
+				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
+			}
 		}
 		// replace org_name:* id's with all id's of that org
 		$org_contacts = array();
-		foreach($checked as $n => $id)
+		foreach((array)$checked as $n => $id)
 		{
 			if (substr($id,0,9) == 'org_name:')
 			{
-				if (count($checked) == 1 && !count($org_contacts))
+				if (count($checked) == 1 && !count($org_contacts) && $action == 'infolog')
 				{
 					return $this->infolog_org_view($id);	// uses the org-name, instead of 'selected contacts'
 				}
@@ -378,13 +420,19 @@ class uicontacts extends bocontacts
 				$query = $GLOBALS['egw']->session->appsession($session_name,'addressbook');
 				$query['num_rows'] = -1;	// all
 				$query['org_view'] = $id;
+				unset($query['filter2']);
 				$this->get_rows($query,$extra,$readonlys,true);	// true = only return the id's
 				if ($extra[0]) $org_contacts = array_merge($org_contacts,$extra);
 			}		
 		}
 		if ($org_contacts) $checked = array_unique($checked ? array_merge($checked,$org_contacts) : $org_contacts);
 		//_debug_array($checked); exit;
-
+		
+		if (substr($action,0,7) == 'to_list')
+		{
+			$to_list = (int)substr($action,8);
+			$action = 'to_list';
+		}
 		switch($action)
 		{
 			case 'csv':
@@ -433,6 +481,23 @@ class uicontacts extends bocontacts
 				$action_msg = lang('merged');
 				$checked = array();	// to not start the single actions
 				break;
+
+			case 'delete_list':
+				if (!$query['filter2'])
+				{
+					$msg = lang('You need to select a distribution list');
+				}
+				elseif($this->delete_list($query['filter2']) === false)
+				{
+					$msg = lang('Insufficent rights to delete this list!');
+				}
+				else
+				{
+					$msg = lang('Distribution list deleted');
+					unset($query['filter2']);
+					$GLOBALS['egw']->session->appsession($session_name,'addressbook',$query);
+				}
+				return false;					
 		}
 		foreach($checked as $id)
 		{
@@ -471,6 +536,32 @@ class uicontacts extends bocontacts
 
 						$GLOBALS['egw']->js->set_onload("addEmail('".addslashes(
 							$contact['n_fn'] ? $contact['n_fn'].' <'.$contact[$action].'>' : $contact[$action])."');");
+					}
+					break;
+					
+				case 'remove_from_list':
+					$action_msg = lang('removed from distribution list');
+					if (!$query['filter2'])
+					{
+						$msg = lang('You need to select a distribution list');
+						return false;
+					}
+					else
+					{
+						$Ok = $this->remove_from_list($id,$query['filter2']) !== false;
+					}
+					break;
+					
+				case 'to_list':
+					$action_msg = lang('added to distribution list');
+					if (!$to_list)
+					{
+						$msg = lang('You need to select a distribution list');
+						return false;
+					}
+					else
+					{
+						$Ok = $this->add2list($id,$to_list) !== false;
 					}
 					break;
 
@@ -601,8 +692,19 @@ class uicontacts extends bocontacts
 				$query['col_filter']['private'] = substr($query['filter'],-1) == 'p' ? 1 : 0;
 			}
 		}
+		if ((int)$query['filter2'])	// not no distribution list
+		{
+			$query['col_filter']['list'] = (string) (int) $query['filter2'];
+		}
+		else
+		{
+			unset($query['col_filter']['list']);
+		}
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
+			unset($query['col_filter']['list']);	// does not work together
+			$query['no_filter2'] = true;			// switch the distribution list selection off
+
 			$query['template'] = 'addressbook.index.org_rows';
 
 			if ($query['order'] != 'org_name')
@@ -1558,6 +1660,18 @@ $readonlys['button[vcard]'] = true;
 			action.value="";
 			use_all.checked = false;
 			return false;  
+		}
+		
+		function add_new_list(owner)
+		{
+			var name = window.prompt("'.lang('Name for the distribution list').'");
+			if (name)
+			{
+				document.location.href = "'.$GLOBALS['egw']->link('/index.php',array(
+					'menuaction'=>'addressbook.uicontacts.index',
+					'add_list'=>'',
+				)).'"+encodeURIComponent(name)+"&owner="+owner;
+			}
 		}
 		</script>';
 	}

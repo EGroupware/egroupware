@@ -523,5 +523,30 @@
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
+		),
+		'egw_addressbook_lists' => array(
+			'fd' => array(
+				'list_id' => array('type' => 'auto','nullable' => False),
+				'list_name' => array('type' => 'varchar','precision' => '80','nullable' => False),
+				'list_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'list_created' => array('type' => 'int','precision' => '8'),
+				'list_creator' => array('type' => 'int','precision' => '4')
+			),
+			'pk' => array('list_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array(array('list_owner','list_name'))
+		),
+		'egw_addressbook2list' => array(
+			'fd' => array(
+				'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'list_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'list_added' => array('type' => 'int','precision' => '8'),
+				'list_added_by' => array('type' => 'int','precision' => '4')
+			),
+			'pk' => array('ab_id','list_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
 		)
 	);

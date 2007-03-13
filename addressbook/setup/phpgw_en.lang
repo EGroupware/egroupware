@@ -14,8 +14,11 @@ actions	addressbook	en	Actions
 add %1	addressbook	en	Add %1
 add a contact to this organisation	addressbook	en	Add a contact to this organisation
 add a new contact	addressbook	en	Add a new contact
+add a new list	addressbook	en	Add a new list
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add custom field	addressbook	en	Add Custom Field
+add to distribution list:	addressbook	en	Add to distribution list:
+added to distribution list	addressbook	en	added to distribution list
 additional information about using ldap as contact repository	admin	en	Additional information about using LDAP as contact repository
 address book	common	en	Address Book
 address book - vcard in	addressbook	en	Address book - VCard in
@@ -93,6 +96,7 @@ debug output in browser	addressbook	en	Debug output in browser
 default addressbook for adding contacts	addressbook	en	Default addressbook for adding contacts
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
+delete selected distribution list!	addressbook	en	Delete selected distribution list!
 delete this contact	addressbook	en	Delete this contact
 delete this organisation including all its contacts	addressbook	en	Delete this organisation including ALL its contacts
 deleted	addressbook	en	deleted
@@ -100,6 +104,8 @@ deletes the photo	addressbook	en	Deletes the photo
 department	common	en	Department
 departments	addressbook	en	departments
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Displays a remider for birthdays on the startpage (page you get when you enter eGroupWare or click on the homepage icon).
+distribution list deleted	addressbook	en	Distribution list deleted
+distribution lists	addressbook	en	Distribution lists
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	en	Do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?
 do your really want to delete this contact?	addressbook	en	Do your really want to delete this contact?
 doesn't matter	addressbook	en	doesn't matter
@@ -169,6 +175,7 @@ import next set	addressbook	en	Import next set
 import_instructions	addressbook	en	In Netscape, open the Addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in LDIF format.<p>Or, in Outlook, select your Contacts folder, select <b>Import and Export...</b> from the <b>File</b> menu and export your contacts into a comma separated text (CSV) file.  <p>Or, in Palm Desktop 4.0 or greater, visit your addressbook and select <b>Export</b> from the <b>File</b> menu.  The file exported will be in VCard format.
 in %1 days (%2) is %3's birthday.	addressbook	en	In %1 days (%2) is %3's birthday.
 income	addressbook	en	Income
+insufficent rights to delete this list!	addressbook	en	Insufficent rights to delete this list!
 international	addressbook	en	International
 label	addressbook	en	Label
 last modified	addressbook	en	last modified
@@ -182,6 +189,8 @@ link title for contacts show	addressbook	en	Link title for contacts show
 links	addressbook	en	Links
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all customfields
+list created	addressbook	en	List created
+list creation failed, no rights!	addressbook	en	List creation failed, no rights!
 load vcard	addressbook	en	Load VCard
 locations	addressbook	en	locations
 mark records as private	addressbook	en	Mark records as private
@@ -195,8 +204,10 @@ mobile	addressbook	en	Mobile
 mobile phone	addressbook	en	Mobile Phone
 modem phone	addressbook	en	Modem Phone
 more ...	addressbook	en	More ...
+move to addressbook:	addressbook	en	Move to addressbook:
 moved	addressbook	en	moved
 multiple vcard	addressbook	en	Multiple VCard
+name for the distribution list	addressbook	en	Name for the distribution list
 name, address	addressbook	en	Name, Address
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
@@ -229,6 +240,8 @@ read a single entry by passing the id and fieldlist.	addressbook	en	Read a singl
 read only	addressbook	en	read only
 record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
+remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list
+removed from distribution list	addressbook	en	removed from distribution list
 role	addressbook	en	Role
 room	addressbook	en	Room
 search for '%1'	addressbook	en	Search for '%1'
@@ -299,6 +312,7 @@ you are not permittet to view this contact	addressbook	en	you are not permittet 
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	en	You can only use LDAP as contact repository if the accounts are stored in LDAP too!
 you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
+you need to select a distribution list	addressbook	en	You need to select a distribution list
 you need to select some contacts first	addressbook	en	You need to select some contacts first
 zip code	common	en	ZIP Code
 zip_note	addressbook	en	<p><b>Note:</b> The file may be a zip file collection of .csv, .vcf, or .ldif files.  However, do not mix file types per import.

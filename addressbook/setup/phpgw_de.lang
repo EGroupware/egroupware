@@ -14,8 +14,11 @@ actions	addressbook	de	Befehle
 add %1	addressbook	de	%1 hinzufügen
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
+add a new list	addressbook	de	Neuen Verteiler hinzfügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
+add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
+added to distribution list	addressbook	de	hinzugefügt zum Verteiler
 additional information about using ldap as contact repository	admin	de	Zusätzliche Information über die Nutzung von LDAP zum Speichern der Kontakte
 address book	common	de	Adressbuch
 address book - vcard in	addressbook	de	Adressbuch - VCard in
@@ -93,6 +96,7 @@ debug output in browser	addressbook	de	Debugausgaben in Browser
 default addressbook for adding contacts	addressbook	de	Vorgabe Adressbuch beim Hinzufügen von Kontakten
 default filter	addressbook	de	Standardfilter
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
+delete selected distribution list!	addressbook	de	Löscht die ausgewählten Verteilerliste!
 delete this contact	addressbook	de	Diesen Kontakt löschen
 delete this organisation including all its contacts	addressbook	de	Diese Organisation einschließlich ALLER Kontakte löschen
 deleted	addressbook	de	gelöscht
@@ -100,6 +104,8 @@ deletes the photo	addressbook	de	Löscht das Foto
 department	common	de	Abteilung
 departments	addressbook	de	Abteilungen
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie eGroupWare betreten oder auf das Startseiten Icon (Haus) klicken.
+distribution list deleted	addressbook	de	Verteiler gelöscht
+distribution lists	addressbook	de	Verteilerlisten
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	de	Wollen Sie ein privates Adressbuch, dass nicht von Benutzern einsehbar ist, denen Sie Zugriff auf Ihr persönliches Adressbuch gegeben haben?
 do your really want to delete this contact?	addressbook	de	Wollen sie diesen Kontakt wirklich löschen?
 doesn't matter	addressbook	de	egal
@@ -169,6 +175,7 @@ import next set	addressbook	de	Nächsten Satz importieren
 import_instructions	addressbook	de	In Netscape, öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Formaz exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im VCard-Format exportiert.
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
+insufficent rights to delete this list!	addressbook	de	Keine Rechte diese Liste zu löschen!
 international	addressbook	de	International
 label	addressbook	de	Adressetikett
 last modified	addressbook	de	Letzte Änderung
@@ -182,6 +189,8 @@ link title for contacts show	addressbook	de	Titel der Verknüpfung für Kontakte z
 links	addressbook	de	Verknüpfungen
 list all categories	addressbook	de	Liste alle Kategorien
 list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
+list created	addressbook	de	Verteiler erzeugt
+list creation failed, no rights!	addressbook	de	Verteiler erzeugen fehlgeschlagen, keine Rechte!
 load vcard	addressbook	de	VCard laden
 locations	addressbook	de	Standorte
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
@@ -195,8 +204,10 @@ mobile	addressbook	de	Mobil
 mobile phone	addressbook	de	Mobiltelefon
 modem phone	addressbook	de	Modem
 more ...	addressbook	de	Mehr ...
+move to addressbook:	addressbook	de	Verschiebe ins Adressbuch:
 moved	addressbook	de	verschoben
 multiple vcard	addressbook	de	Mehrere VCards
+name for the distribution list	addressbook	de	Name für die Verteilerliste
 name, address	addressbook	de	Name, Adresse
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
@@ -229,6 +240,8 @@ read a single entry by passing the id and fieldlist.	addressbook	de	Liest einen 
 read only	addressbook	de	nur lesend
 record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
+remove selected contacts from distribution list	addressbook	de	Ausgewählte Kontakte vom Verteiler löschen
+removed from distribution list	addressbook	de	vom Verteiler gelöscht
 role	addressbook	de	Funktion
 room	addressbook	de	Raum
 search for '%1'	addressbook	de	Suche nach '%1'
@@ -299,6 +312,7 @@ you are not permittet to view this contact	addressbook	de	Sie haben nicht die Be
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	de	Sie können LDAP nur dann zum Speichern von Kontakten verwenden, wenn die Benutzerkonten auch in LDAP gespeichert sind!
 you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswählen (*.vcf)
 you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
+you need to select a distribution list	addressbook	de	Sie müssen eine Verteilerliste auswählen
 you need to select some contacts first	addressbook	de	Sie müssen zuerst Kontakte auswählen
 zip code	common	de	PLZ
 zip_note	addressbook	de	<p><b>Notiz:</b>Die Datei kann ein zip Archiv sein, bestehend aus .csv, .vcf oder .ldif Dateien. Sie dürfen die Dateitypen pro Import nicht mischen!

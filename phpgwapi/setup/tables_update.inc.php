@@ -712,4 +712,45 @@
 		# 1.4 Beta 3
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.017';
 	}
+
+
+	$test[] = '1.3.017';
+	function phpgwapi_upgrade1_3_017()
+	{
+		$GLOBALS['egw_setup']->oProc->CreateTable('egw_addressbook_lists',array(
+			'fd' => array(
+				'list_id' => array('type' => 'auto','nullable' => False),
+				'list_name' => array('type' => 'varchar','precision' => '80','nullable' => False),
+				'list_owner' => array('type' => 'int','precision' => '4','nullable' => False),
+				'list_created' => array('type' => 'int','precision' => '8'),
+				'list_creator' => array('type' => 'int','precision' => '4')
+			),
+			'pk' => array('list_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array(array('list_owner','list_name'))
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.018';
+	}
+
+
+	$test[] = '1.3.018';
+	function phpgwapi_upgrade1_3_018()
+	{
+		$GLOBALS['egw_setup']->oProc->CreateTable('egw_addressbook2list',array(
+			'fd' => array(
+				'contact_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'list_id' => array('type' => 'int','precision' => '4','nullable' => False),
+				'list_added' => array('type' => 'int','precision' => '8'),
+				'list_added_by' => array('type' => 'int','precision' => '4')
+			),
+			'pk' => array('contact_id','list_id'),
+			'fk' => array(),
+			'ix' => array(),
+			'uc' => array()
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.019';
+	}
 ?>

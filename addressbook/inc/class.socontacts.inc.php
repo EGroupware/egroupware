@@ -349,6 +349,9 @@ class socontacts
 			// delete customfields, can return 0 if there are no customfields
 			$this->soextra->delete(array($this->extra_id => $contact));
 			
+			// delete from distribution list(s)
+			$this->remove_from_list($contact);
+
 			if ($this->contact_repository == 'sql-ldap')
 			{
 				if ($contact['account_id'])
@@ -781,5 +784,107 @@ class socontacts
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Get the availible distribution lists for a user
+	 *
+	 * @param int $required=EGW_ACL_READ required rights on the list
+	 * @param string $extra_labels=null first labels if given (already translated)
+	 * @return array with id => label pairs or false if backend does not support lists
+	 */ 
+	function get_lists($required=EGW_ACL_READ,$extra_labels=null)
+	{
+		if (!method_exists($this->somain,'get_lists')) return false;
+		
+		$uids = array();
+		foreach($this->grants as $uid => $rights)
+		{
+			if ($rights & $required)
+			{
+				$uids[] = $uid;
+			}
+		}
+		$lists = is_array($extra_labels) ? $extra_labels : array();
+
+		foreach($this->somain->get_lists($uids) as $list_id => $data)
+		{
+			$lists[$list_id] = $data['list_name'];
+			if ($data['list_owner'] != $this->user)
+			{
+				$lists[$list_id] .= ' ('.$GLOBALS['egw']->common->grab_owner_name($data['list_owner']).')';
+			}
+		}
+		//echo "<p>socontacts_sql::get_lists($required,'$extra_label')</p>\n"; _debug_array($lists);
+		return $lists;
+	}
+
+	/**
+	 * Adds a distribution list
+	 *
+	 * @param string $name list-name
+	 * @param int $owner user- or group-id
+	 * @param array $contacts=array() contacts to add
+	 * @return list_id or false on error
+	 */
+	function add_list($name,$owner,$contacts=array())
+	{
+		if (!method_exists($this->somain,'add_list')) return false;
+		
+		return $this->somain->add_list($name,$owner,$contacts);
+	}
+	
+	/**
+	 * Adds one contact to a distribution list
+	 *
+	 * @param int $contact contact_id
+	 * @param int $list list-id
+	 * @return false on error
+	 */
+	function add2list($contact,$list)
+	{
+		if (!method_exists($this->somain,'add2list')) return false;
+		
+		return $this->somain->add2list($contact,$list);
+	}
+	
+	/**
+	 * Removes one contact from distribution list(s)
+	 *
+	 * @param int $contact contact_id
+	 * @param int $list=null list-id or null to remove from all lists
+	 * @return false on error
+	 */
+	function remove_from_list($contact,$list=null)
+	{
+		if (!method_exists($this->somain,'remove_from_list')) return false;
+		
+		return $this->somain->remove_from_list($contact,$list);
+	}
+
+	/**
+	 * Deletes a distribution list (incl. it's members)
+	 *
+	 * @param int/array $list list_id(s)
+	 * @return number of members deleted or false if list does not exist
+	 */
+	function delete_list($list)
+	{
+		if (!method_exists($this->somain,'delete_list')) return false;
+		
+		return $this->somain->delete_list($list);
+	}
+	
+	/**
+	 * Read data of a distribution list
+	 *
+	 * @param int $list list_id
+	 * @return array of data or false if list does not exist
+	 */
+	function read_list($list)
+	{
+		if (!method_exists($this->somain,'read_list')) return false;
+		
+		return $this->somain->read_list($list);		
 	}
 }

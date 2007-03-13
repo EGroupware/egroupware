@@ -40,6 +40,19 @@ class socontacts_sql extends so_sql
 	 */
 	var $contacts_id='id';
 
+	/**
+	 * Name of the table for distribution lists
+	 *
+	 * @var string
+	 */
+	var $lists_table = 'egw_addressbook_lists';
+	/**
+	 * Name of the table with the members (contacts) of the distribution lists
+	 *
+	 * @var string
+	 */
+	var $ab2list_table = 'egw_addressbook2list';
+	
 	function socontacts_sql()
 	{
 		$this->so_sql('phpgwapi','egw_addressbook',null,'contact_');	// calling the constructor of the extended class
@@ -300,6 +313,11 @@ class socontacts_sql extends so_sql
 				unset($filter['owner']);
 			}
 		}
+		if (isset($filter['list']))
+		{
+			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND list_id=".(int)$filter['list'];
+			unset($filter['list']);
+		}
 		return parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 	}
 	
@@ -341,4 +359,123 @@ class socontacts_sql extends so_sql
 			'contact_owner' => $account_id,
 		),__LINE__,__FILE__);
 	}
+	
+	/**
+	 * Get the availible distribution lists for givens users and groups
+	 *
+	 * @param array $uids user or group id's
+	 * @return array with list_id => array(list_id,list_name,list_owner,...) pairs
+	 */ 
+	function get_lists($uids)
+	{
+		$user = $GLOBALS['egw_info']['user']['account_id'];
+		$this->db->select($this->lists_table,'*',array('list_owner'=>$uids),__LINE__,__FILE__,
+			false,'ORDER BY list_owner!='.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name');
+			
+		$lists = array();
+		while(($row = $this->db->row(true)))
+		{
+			$lists[$row['list_id']] = $row;
+		}
+		//echo "<p>socontacts_sql::get_lists(".print_r($uids,true).")</p>\n"; _debug_array($lists);
+		return $lists;
+	}
+	
+	/**
+	 * Adds a distribution list
+	 *
+	 * @param string $name list-name
+	 * @param int $owner user- or group-id
+	 * @param array $contacts=array() contacts to add
+	 * @return list_id or false on error
+	 */
+	function add_list($name,$owner,$contacts=array())
+	{
+		if (!$name || !(int)$owner) return false;
+
+		if (!$this->db->insert($this->lists_table,array(
+			'list_name' => $name,
+			'list_owner' => $owner,
+			'list_created' => time(),
+			'list_creator' => $GLOBALS['egw_info']['user']['account_id'],
+		),array(),__LINE__,__FILE__)) return false;
+		
+		if ((int)($list_id = $this->db->get_last_insert_id($this->lists_table,'list_id')) && $contacts)
+		{
+			foreach($contacts as $contact)
+			{
+				$this->add2list($list_id,$contact);
+			}
+		}
+		return $list_id;
+	}
+	
+	/**
+	 * Adds one contact to a distribution list
+	 *
+	 * @param int $contact contact_id
+	 * @param int $list list-id
+	 * @return false on error
+	 */
+	function add2list($contact,$list)
+	{
+		if (!(int)$list || !(int)$contact) return false;
+
+		return $this->db->insert($this->ab2list_table,array(
+			'contact_id' => $contact,
+			'list_id' => $list,
+			'list_added' => time(),
+			'list_added_by' => $GLOBALS['egw_info']['user']['account_id'],
+		),array(),__LINE__,__FILE__);
+	}
+	
+	/**
+	 * Removes one contact from distribution list(s)
+	 *
+	 * @param int $contact contact_id
+	 * @param int $list=null list-id or null to remove from all lists
+	 * @return false on error
+	 */
+	function remove_from_list($contact,$list=null)
+	{
+		if (!(int)$list && !is_null($list) || !(int)$contact) return false;
+		
+		$where = array(
+			'contact_id' => $contact,
+		);
+		if (!is_null($list)) $where['list_id'] = $list;
+
+		return $this->db->delete($this->ab2list_table,$where,__LINE__,__FILE__);
+	}
+	
+	/**
+	 * Deletes a distribution list (incl. it's members)
+	 *
+	 * @param int/array $list list_id(s)
+	 * @return number of members deleted or false if list does not exist
+	 */
+	function delete_list($list)
+	{
+		if (!$this->db->delete($this->lists_table,array('list_id' => $list),__LINE__,__FILE__)) return false;
+		
+		$this->db->delete($this->ab2list_table,array('list_id' => $list),__LINE__,__FILE__);
+		
+		return $this->db->affected_rows();		
+	}
+	
+	
+	/**
+	 * Read data of a distribution list
+	 *
+	 * @param int $list list_id
+	 * @return array of data or false if list does not exist
+	 */
+	function read_list($list)
+	{
+		if (!$list) return false;
+		
+		$this->db->select($this->lists_table,'*',array('list_id'=>$list),__LINE__,__FILE__);
+		
+		return $this->db->row(true);
+	}	
 }

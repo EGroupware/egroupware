@@ -909,4 +909,92 @@ class bocontacts extends socontacts
 		}
 		return $success;
 	}
+	
+	/**
+	 * Check if user has required rights for a list or list-owner
+	 *
+	 * @param int $list
+	 * @param int $required
+	 * @param int $owner=null
+	 * @return boolean
+	 */
+	function check_list($list,$required,$owner=null)
+	{
+		if ($list && ($list_data = $this->read_list($list)))
+		{			
+			$owner = $list_data['list_owner'];
+		}
+		return !!($this->grants[$owner] & $required);
+	}
+	
+	/**
+	 * Adds a distribution list
+	 *
+	 * @param string $name list-name
+	 * @param int $owner user- or group-id
+	 * @param array $contacts=array() contacts to add
+	 * @return list_id or false on error
+	 */
+	function add_list($name,$owner,$contacts=array())
+	{
+		if (!$this->check_list(null,EGW_ACL_ADD,$owner)) return false;
+		
+		return parent::add_list($name,$owner,$contacts);
+	}
+	
+	/**
+	 * Adds one contact to a distribution list
+	 *
+	 * @param int $contact contact_id
+	 * @param int $list list-id
+	 * @return false on error
+	 */
+	function add2list($contact,$list)
+	{
+		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
+		
+		return parent::add2list($contact,$list);
+	}
+	
+	/**
+	 * Removes one contact from distribution list(s)
+	 *
+	 * @param int $contact contact_id
+	 * @param int $list list-id
+	 * @return false on error
+	 */
+	function remove_from_list($contact,$list)
+	{
+		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
+		
+		return parent::remove_from_list($contact,$list);
+	}
+
+	/**
+	 * Deletes a distribution list (incl. it's members)
+	 *
+	 * @param int/array $list list_id(s)
+	 * @return number of members deleted or false if list does not exist
+	 */
+	function delete_list($list)
+	{
+		if (!$this->ceck_list($list,EGW_ACL_DELETE)) return false;
+		
+		return parent::delete_list($list);
+	}
+	
+	/**
+	 * Read data of a distribution list
+	 *
+	 * @param int $list list_id
+	 * @return array of data or false if list does not exist
+	 */
+	function read_list($list)
+	{
+		static $cache;
+		
+		if (isset($cache[$list])) return $cache[$list];
+		
+		return $cache[$list] = parent::read_list($list);		
+	}	
 }
