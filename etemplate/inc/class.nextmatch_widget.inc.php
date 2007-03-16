@@ -429,7 +429,7 @@
 			$cols['__content__'] =& $content;
 			$tmpl->widget_tree_walk(array($this,'_cols_from_tpl_walker'),$cols);
 			unset($cols['__content__']);
-			$name2col = $cols['name2col']; unset($cols['name2col']);
+			$name2col = $cols['name2col'] ? $cols['name2col'] : array(); unset($cols['name2col']);
 			//_debug_array($cols); 
 			foreach($cols as $name => $label)
 			{
