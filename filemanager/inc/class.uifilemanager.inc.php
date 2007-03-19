@@ -30,7 +30,6 @@
 		var $lesspath;
 		var $readable_groups;
 		var $files_array;
-		var $dirs_options;
 		var $numoffiles;
 		var $dispsep;
 
@@ -639,8 +638,7 @@
 					}
 
 					# Checkboxes
-					//if(!$this->rename_x && !$this->edit_comments_x && $this->path != $this->bo->fakebase && $this->path != '/')
-					if(!$this->rename_x && !$this->edit_comments_x && $this->path != '/')
+					if(!$this->rename_x && !$this->edit_comments_x && $this->path != $this->bo->fakebase && $this->path != '/')
 					{
 						$cbox='<input type="checkbox" name="fileman['.$i.']" value="'.$files['name'].'">';
 						$this->t->set_var('actions',$cbox);
@@ -1064,8 +1062,8 @@
 					//$toolbar.='<input id="fmInputLocation" type="text" size="20" disabled="disabled" name="location" value="'.$this->disppath.'"/>&nbsp;';
 					$current_option='<option>'.$this->disppath.'</option>';
 					// selectbox for change/move/and copy to
-					$this->dirs_options=$this->all_other_directories_options();
-					$toolbar.='<select name="cdtodir" onChange="document.formfm.changedir.value=\'true\';document.formfm.submit()">'.$current_option.$this->dirs_options.'</select>
+					$dirs_options=$this->all_other_directories_options();
+					$toolbar.='<select name="cdtodir" onChange="document.formfm.changedir.value=\'true\';document.formfm.submit()">'.$current_option.$dirs_options.'</select>
 					<input type="hidden" name="changedir" value="false"></td>
 					';
 					$toolbar.=$this->inputImage('goto','goto',lang('Quick jump to'));
@@ -1118,19 +1116,6 @@
 						}
 						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 					}
-					else
-					{
-						if ($this->path = $this->bo->fakebase)
-						{
-							$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
-							$toolbar.='
-							<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
-							if(!$this->rename_x)
-							{
-								$toolbar.=$this->inputImage('edit_comments','edit_comments',lang('Edit comments'));
-							}
-						}
-					}
 
 					//	$toolbar.='</tr></table>';
 					if(!$this->rename_x && !$this->edit_comments_x)
@@ -1141,8 +1126,8 @@
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
-							if(!($this->dirs_options)) $this->dirs_options=$this->all_other_directories_options();
-							$toolbar3.='<td><select name="todir">'.$this->dirs_options.'</select></td>';
+							$dirs_options=$this->all_other_directories_options();
+							$toolbar3.='<td><select name="todir">'.$dirs_options.'</select></td>';
 
 							$toolbar3.=$this->inputImage('copy_to','copy_to',lang('Copy to'));
 							$toolbar3.=$this->inputImage('move_to','move_to',lang('Move to'));
@@ -1773,7 +1758,6 @@
 		{
 			if($this->file) //FIXME
 			{
-				$mime_type='unknown';
 				$ls_array = $this->bo->vfs->ls(array(
 					'string'	=> $this->path.'/'.$this->file,//FIXME
 					'relatives'	=> array(RELATIVE_ALL),
@@ -1785,28 +1769,19 @@
 				{
 					$mime_type = $ls_array[0]['mime_type'];
 				}
-                                else
-                                {
-                                        list($_first,$_ext) = split("\.",$this->file);
-                                        $mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
-                                }
-				// check if the prefs are set for viewing unknown extensions as text/plain and
-				// check if the mime_type is unknown, empty or not found (application/octet)
-				// or check if the mimetype contains text, 
-				// THEN set the mime_type text/plain
-				if(($this->prefs['viewtextplain'] && ($mime_type=='' or $mime_type=='unknown' or $mime_type=='application/octet-stream')) or strpos($mime_type, 'text/')!==false)
-                                {
+				elseif($this->prefs['viewtextplain'])
+				{
+					$mime_type = 'text/plain';
+				}
+				else
+				{
+					list($_first,$_ext) = split("\.",$this->file);
+					$mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
+				}
+				$viewable = array('','text/plain','text/csv','text/html','text/text');
 
-                                        $mime_type = 'text/plain';
-                                }
-				
-				// we want to define pdfs and text files as viewable
-				$viewable = array('','text/plain','text/csv','text/html','text/text','application/pdf');
-				// we want to view pdfs and text files within the browser
 				if(in_array($mime_type,$viewable) && !$_GET['download'])
 				{
-					// if you add attachment; to the Content-disposition between disposition and filename
-					// you get a download dialog even for viewable files 
 					header('Content-type: ' . $mime_type);
 					header('Content-disposition: filename="' . $this->file . '"');//FIXME
 					Header("Pragma: public");
@@ -1841,92 +1816,77 @@
 		}
 
 		//give back an array with all directories except current and dirs that are not accessable
-                function all_other_directories_options()
-                {
-                        # First we get the directories in their home directory
-                        $dirs = array();
-                        $dirs[] = array('directory' => $this->bo->fakebase, 'name' => $this->bo->userinfo['account_lid']);
+		function all_other_directories_options()
+		{
+			# First we get the directories in their home directory
+			$dirs = array();
+			$dirs[] = array('directory' => $this->bo->fakebase, 'name' => $this->bo->userinfo['account_lid']);
 
-                        $tmp_arr=array(
-                                'string'        => $this->bo->homedir,
-                                'relatives'     => array(RELATIVE_NONE),
-                                'checksubdirs'  => True,
-                                'mime_type'     => 'Directory'
-                        );
+			$tmp_arr=array(
+				'string'	=> $this->bo->homedir,
+				'relatives'	=> array(RELATIVE_NONE),
+				'checksubdirs'	=> True,
+				'mime_type'	=> 'Directory'
+			);
 
-                        $ls_array = $this->bo->vfs->ls($tmp_arr);
+			$ls_array = $this->bo->vfs->ls($tmp_arr);
 
-                        while(list($num, $dir) = each($ls_array))
-                        {
-                                $dirs[] = $dir;
-                        }
-
-
-                        # Then we get the directories in their readable groups' home directories
-                        reset($this->readable_groups);
-                        while(list($num, $group_array) = each($this->readable_groups))
-                        {
-                                # Don't list directories for groups that don't have access
-                                if(!$this->groups_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
-                                {
-                                        continue;
-                                }
-
-                                $dirs[] = array('directory' => $this->bo->fakebase, 'name' => $group_array['account_name']);
-
-                                $tmp_arr=array(
-                                        'string'        => $this->bo->fakebase.'/'.$group_array['account_name'],
-                                        'relatives'     => array(RELATIVE_NONE),
-                                        'checksubdirs'  => True,
-                                        'mime_type'     => 'Directory'
-                                );
-
-                                $ls_array = $this->bo->vfs->ls($tmp_arr);
-                                while(list($num, $dir) = each($ls_array))
-                                {
-                                        $dirs[] = $dir;
-                                }
-                        }
-
-                        reset($dirs);
-			// key for the sorted array
-			$i=0;
-
-                        while(list($num, $dir) = each($dirs))
-                        {
-                                if(!$dir['directory'])
-                                {
-                                        continue;
-                                }
-
-                                # So we don't display //
-                                if($dir['directory'] != '/')
-                                {
-                                        $dir['directory'] .= '/';
-                                }
-
-                                # No point in displaying the current directory, or a directory that doesn't exist
-                                if((($dir['directory'] . $dir['name']) != $this->path) && $this->bo->vfs->file_exists(array('string' => $dir['directory'] . $dir['name'],'relatives' => array(RELATIVE_NONE))))
-                                {
-                                        //FIXME replace the html_form_option function
-                                        //$options .= $this->html_form_option($dir['directory'] . $dir['name'], $dir['directory'] . $dir['name']);
-					// set the content of the sorted array
-					$i++;
-					$dirs_sorted[$i]=$dir['directory'] . $dir['name'];
-                                }
-                        }
-			// sort the directory optionlist
-			natcasesort($dirs_sorted);
-
-			// set the optionlist
-			foreach ($dirs_sorted as $key => $row) {
-					//FIXME replace the html_form_option function
-					//$options .= $this->html_form_option($dir['directory'] . $dir['name'], $dir['directory'] . $dir['name']);
-					$options .= $this->html_form_option($row, $row);
+			while(list($num, $dir) = each($ls_array))
+			{
+				$dirs[] = $dir;
 			}
 
-                        return $options;
-                }
+
+			# Then we get the directories in their readable groups' home directories
+			reset($this->readable_groups);
+			while(list($num, $group_array) = each($this->readable_groups))
+			{
+				# Don't list directories for groups that don't have access
+				if(!$this->groups_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
+				{
+					continue;
+				}
+
+				$dirs[] = array('directory' => $this->bo->fakebase, 'name' => $group_array['account_name']);
+
+				$tmp_arr=array(
+					'string'	=> $this->bo->fakebase.'/'.$group_array['account_name'],
+					'relatives'	=> array(RELATIVE_NONE),
+					'checksubdirs'	=> True,
+					'mime_type'	=> 'Directory'
+				);
+
+				$ls_array = $this->bo->vfs->ls($tmp_arr);
+				while(list($num, $dir) = each($ls_array))
+				{
+					$dirs[] = $dir;
+				}
+			}
+
+			reset($dirs);
+			while(list($num, $dir) = each($dirs))
+			{
+				if(!$dir['directory'])
+				{
+					continue;
+				}
+
+				# So we don't display //
+				if($dir['directory'] != '/')
+				{
+					$dir['directory'] .= '/';
+				}
+
+				# No point in displaying the current directory, or a directory that doesn't exist
+				if((($dir['directory'] . $dir['name']) != $this->path) && $this->bo->vfs->file_exists(array('string' => $dir['directory'] . $dir['name'],'relatives' => array(RELATIVE_NONE))))
+				{
+					//FIXME replace the html_form_option function
+					$options .= $this->html_form_option($dir['directory'] . $dir['name'], $dir['directory'] . $dir['name']);
+				}
+			}
+
+			return $options;
+		}
 
 		/* seek icon for mimetype else return an unknown icon */
 		function mime_icon($mime_type, $size=16)
