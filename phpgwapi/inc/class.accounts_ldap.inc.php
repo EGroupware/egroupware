@@ -298,6 +298,11 @@ class accounts_backend
 			}
 			$data['account_type'] = 'u';
 		}
+		
+		// remove memberuid when adding a group
+		if(!$old && is_array($to_write['memberuid']) && empty($to_write['memberuid'])) {
+			unset($to_write['memberuid']);
+		}
 		//echo "<p>ldap_".($old ? 'modify' : 'add')."(,$dn,".print_r($to_write,true).")</p>\n";
 		// modifying or adding the entry
 		if ($old && !@ldap_modify($this->ds,$dn,$to_write) ||
