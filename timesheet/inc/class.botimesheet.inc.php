@@ -108,7 +108,7 @@ class botimesheet extends so_sql
 	 */
 	var $show_sums;
 
-	var $customfields;
+	var $customfields=array();
 
 	function botimesheet()
 	{
