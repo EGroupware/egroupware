@@ -90,13 +90,21 @@
 		}
 		if($GLOBALS['egw_info']['user']['preferences']['common']['default_app'] && !$hasupdates)
 		{
-			$GLOBALS['egw']->redirect_link('/'.$GLOBALS['egw_info']['user']['preferences']['common']['default_app'].'/index.php');
+		   /** Test if our default app is available else open about.php */
+		   if(is_file('./'.$GLOBALS['egw_info']['user']['preferences']['common']['default_app'].'/index.php'))
+		   {
+			  $GLOBALS['egw']->redirect_link('/'.$GLOBALS['egw_info']['user']['preferences']['common']['default_app'].'/index.php');
+		   }
+		   else
+		   {
+			  $GLOBALS['egw']->redirect_link('/about.php');
+		   }
 		}
 		else
 		{
-			$GLOBALS['egw']->redirect_link('/home/index.php');
+		   $GLOBALS['egw']->redirect_link('/home/index.php');
 		}
-	}
+	 }
 
 	if($windowed && $_GET['cd'] == 'yes')
 	{

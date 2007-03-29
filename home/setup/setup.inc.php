@@ -18,7 +18,7 @@
 	$setup_info['home']['app_order'] = 1;
 	$setup_info['home']['enable']    = 1;
 
-	$setup_info['home']['author'] = 'Edo van Bruggen';
+	$setup_info['home']['author'] = 'eGroupWare Core Team';
 	$setup_info['home']['license']  = 'GPL';
 	$setup_info['home']['description'] = 'Displays eGroupWare\' homepage';
 	$setup_info['home']['maintainer'] = array(
