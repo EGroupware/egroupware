@@ -79,13 +79,14 @@
 		 }
 	  }
 
-
-	  /*!
-	  @function set_tpl_path
-	  @abstract sets the preferred and fallback template search paths  
-	  @return void
-	  */
-	  function set_tpl_path($man_dir=false)
+	  /**
+	   * set_tpl_path sets the preferred and fallback template search paths  
+	   * 
+	   * @param string $man_dir custom manual given template path in filesystem
+	   * @access public
+	   * @return void
+	   */
+	  function set_tpl_path($man_dir=null)
 	  {
 		 $preferred_dir=$this->get_tpl_dir(); 
 		 $fallback_dir=$this->get_tpl_dir(true); 
@@ -110,17 +111,17 @@
 			{
 			   $this->addPath('template',$man_dir);
 			}
-
 		 }
-
 	  }
 
-	  /*!
-	  @function get_tpl_dir
-	  @abstract get template dir of an application
-	  @param $fallback if true the default fallback template dir is returned
-	  @param $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
-	  */
+	  /**
+	   * get_tpl_dir get template dir of an application
+	   * 
+	   * @param bool $fallback if true the default fallback template dir is returned
+	   * @param string $appname appication name optional can be derived from $GLOBALS['egw_info']['flags']['currentapp'];
+	   * @access public
+	   * @return void
+	   */
 	  function get_tpl_dir($fallback=false,$appname = '')
 	  {
 		 if (! $appname)

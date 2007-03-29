@@ -43,6 +43,13 @@
 		var $config_table = 'egw_config';
 
 		/**
+		* tplsav2  savant2 templating object
+		 * 
+		 * @var object 
+		 */
+		var $tplsav2;
+
+		/**
 		 * Constructor: Instantiates the sub-classes
 		 *
 		 * @author RalfBecker@outdoor-training.de
@@ -328,6 +335,8 @@
 		 */
 		function check_app_rights()
 		{
+			$this->tplsav2 = CreateObject('phpgwapi.tplsavant2');
+
 			if ($GLOBALS['egw_info']['flags']['currentapp'] != 'about')
 			{
 				// This will need to use ACL in the future
@@ -341,8 +350,9 @@
 					}
 					error_log('Permission denied, attempted to access '.$GLOBALS['egw_info']['flags']['currentapp']);
 					$this->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['egw_info']['flags']['currentapp']));
-
-					echo '<p><center><b>'.lang('Access not permitted').'</b></center>';
+					$this->tplsav2->assign('currentapp',$GLOBALS['egw_info']['flags']['currentapp']);
+					$this->tplsav2->set_tpl_path($this->tplsav2->get_tpl_dir(false,'phpgwapi'));
+					$this->tplsav2->display('appl_access_not_permitted.tpl.php');
 					$this->common->egw_exit(True);
 				}
 			}
