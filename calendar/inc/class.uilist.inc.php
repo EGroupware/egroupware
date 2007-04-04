@@ -252,6 +252,8 @@ class uilist extends uical
 					$this->last = $this->bo->date2ts($this->last);
 					$this->last--;
 					$this->date_filters['fixed'] = $label = lang(adodb_date('F',$this->bo->date2ts($this->date))).' '.$this->year;
+					$search_params['start'] = $this->first;
+					$search_params['end'] = $this->last;
 					break;
 				}
 				// fall through to after given date
