@@ -11,6 +11,7 @@ actions	calendar	zh-tw	動作
 actions...	calendar	zh-tw	動作...
 add alarm	calendar	zh-tw	新增警示
 added	calendar	zh-tw	新增日期
+after %1	calendar	zh-tw	在%1以後
 after current date	calendar	zh-tw	在今天以後
 alarm	calendar	zh-tw	警告
 alarm added	calendar	zh-tw	警告新增了
@@ -28,6 +29,7 @@ are you sure you want to delete this country ?	calendar	zh-tw	您確定要移除
 are you sure you want to delete this holiday ?	calendar	zh-tw	您確定要移除這個假日嗎？
 back half a month	calendar	zh-tw	前半個月
 back one month	calendar	zh-tw	上個月
+before %1	calendar	zh-tw	在%1之前
 before current date	calendar	zh-tw	在今天之前
 before the event	calendar	zh-tw	事件之前
 birthday	calendar	zh-tw	生日
@@ -114,6 +116,8 @@ filename of the download	calendar	zh-tw	要下載的檔案名稱
 find free timeslots where the selected participants are availible for the given timespan	calendar	zh-tw	在指定的期間找尋選擇的參與人都有空的時間區塊
 firstname of person to notify	calendar	zh-tw	需要通知的人名
 for	calendar	zh-tw	給
+for all future events	calendar	zh-tw	適用所有未來事件
+for this event	calendar	zh-tw	只適用這個事件
 for which views should calendar show distinct lines with a fixed time interval.	calendar	zh-tw	透過什麼模式檢視時行事曆要以固定時間間隔顯示分隔線。
 format of event updates	calendar	zh-tw	事件更新的格式
 forward half a month	calendar	zh-tw	下半個月
@@ -240,13 +244,16 @@ select a %1	calendar	zh-tw	選了一個 %1
 select a time	calendar	zh-tw	選擇一個時間
 select resources	calendar	zh-tw	選擇資源
 select who should get the alarm	calendar	zh-tw	選擇誰應該被通知
+selected range	calendar	zh-tw	選擇的範圍
 set a year only for one-time / non-regular holidays.	calendar	zh-tw	設定只有特定年會發生的假日
 set new events to private	calendar	zh-tw	設定新事件為私人的
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	zh-tw	您已經拒絕的邀請還要顯示在您的行事曆中嗎？<br>如果它仍然顯示在您的行事曆中，您可以在事後接受(例如原本有牴觸的行程已經取消)它。
 should new events created as private by default ?	calendar	zh-tw	預設新增的事件是私人的？
 should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	zh-tw	沒有登入的使用者能否知道您現在是有空或是忙碌？您可以設定額外的密碼(不是自己登入的密碼)來避免其他未經授權的人瀏覽。有空或是忙碌的資訊是 iCal 格式，而且只會讓瀏覽的人看到有無行程，他們無法進一步取得行程的詳細資料，像是事件名稱、描述或是地點等。連結到這個功能的網址是  %1 。
+should the planner display an empty row for users or categories without any appointment.	calendar	zh-tw	規劃圖中，沒有任何約會的使用者或類別是否要顯示空的資料列。
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	zh-tw	在每個參與者名稱的後面需要顯示該參與者的狀態(接受、拒絕、...)嗎？
 show default view on main screen	calendar	zh-tw	在主要畫面顯示預設瀏覽
+show empty rows in planner	calendar	zh-tw	在規劃圖顯示空白列
 show invitations you rejected	calendar	zh-tw	顯示您已經拒絕的邀請
 show list of upcoming events	calendar	zh-tw	顯示即將到來的行程
 show this month	calendar	zh-tw	顯示這個月
@@ -259,6 +266,7 @@ startdate and -time of the search	calendar	zh-tw	搜尋的開始日期 / 時間
 startdate of the export	calendar	zh-tw	匯出資料的開始日期
 startrecord	calendar	zh-tw	開始紀錄
 status changed	calendar	zh-tw	狀態異動了
+status recurrence	calendar	zh-tw	重複狀態
 submit to repository	calendar	zh-tw	送出到儲藏庫中
 sun	calendar	zh-tw	日
 tentative	calendar	zh-tw	暫定

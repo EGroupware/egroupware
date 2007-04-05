@@ -174,7 +174,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	pt
 enter the background color for the login page	admin	pt-br	Digite a cor de fundo para a página de login
 enter the background color for the site title	admin	pt-br	Digite a cor de fundo para o título do site
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pt-br	Digite o caminho completo para arquivos temporários.<br>Exemplos: /tmp, C:TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	pt-br	Digite o caminho completo para arquivos de usuários e grupos.<br>Exemplos: /files, E:FILES
 enter the hostname of the machine on which this server is running	admin	pt-br	Digite o nome da máquina em que este servidor está sendo executado
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Digite a URL do eGroupWare.<br>Exemplo: http://www.domain.com/egroupware   ou   /egroupware<br><b>Sem a barra final</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pt-br	Entre com a expressão de busca. Para mostrar todas as entradas, deixe este campo em branco e pressione ENVIAR novamente
@@ -422,7 +424,6 @@ view this user	admin	pt-br	exibir este usuário
 view user account	admin	pt-br	exibir conta de usuário
 who would you like to transfer all records owned by the deleted user to?	admin	pt-br	Para quem você deseja transferir todas as entradas do usuário removido?
 would you like egroupware to cache the egw info array ?	admin	pt-br	Deseja que o eGroupWare faça cache do vetor de informações egw ?
-would you like egroupware to cache the phpgw info array ?	admin	pt-br	Deseja que o eGroupWare faça cache do vetor de informação phpgw ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	pt-br	Deseja que o eGroupWare verifique se há nova versão<br>quando administradores estejam acessando o sistema ?
 would you like egroupware to check for new application versions when admins login ?	admin	pt-br	Deseja que o eGroupware verifique automaticamente novas versões de aplicativos quando administradores estiverem conectados?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pt-br	Deseja que novos arquivos de localização sejam carragados automaticamente (ao entrar)
@@ -438,5 +439,6 @@ you must enter a loginid	admin	pt-br	Você deve digitar um código
 you must enter an application name and title.	admin	pt-br	Você deve digitar um nome e um título para aplicação.
 you must enter an application name.	admin	pt-br	Você deve digitar um nome para a aplicação.
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
-you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo
+you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo.
+you must select at least one group member	admin	pt-br	Você deve selecionar ao menos um membro.
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as subcategorias antes de remover esta categoria !

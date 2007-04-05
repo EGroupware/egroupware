@@ -14,8 +14,11 @@ actions	addressbook	zh-tw	動作
 add %1	addressbook	zh-tw	新增 %1
 add a contact to this organisation	addressbook	zh-tw	新增一個聯絡人到這個組織
 add a new contact	addressbook	zh-tw	新增聯絡人
+add a new list	addressbook	zh-tw	新增一個清單
 add a single entry by passing the fields.	addressbook	zh-tw	從欄位中新增一筆資料。
 add custom field	addressbook	zh-tw	新增自訂欄位
+add to distribution list:	addressbook	zh-tw	新增到分配清單：
+added to distribution list	addressbook	zh-tw	新增到分配清單
 additional information about using ldap as contact repository	admin	zh-tw	關於將 LDAP 當作聯絡人資料庫的其他資訊
 address book	common	zh-tw	通訊錄
 address book - vcard in	addressbook	zh-tw	通訊錄 - VCard匯入
@@ -93,6 +96,7 @@ debug output in browser	addressbook	zh-tw	從瀏覽器輸入錯誤訊息
 default addressbook for adding contacts	addressbook	zh-tw	新增聯絡人時的預設通訊錄
 default filter	addressbook	zh-tw	預設過濾器
 delete a single entry by passing the id.	addressbook	zh-tw	從id刪除一筆資料。
+delete selected distribution list!	addressbook	zh-tw	刪除選擇的分配清單！
 delete this contact	addressbook	zh-tw	刪除這個聯絡人
 delete this organisation including all its contacts	addressbook	zh-tw	刪除這個組織以及所有相關聯絡人
 deleted	addressbook	zh-tw	刪除了
@@ -100,10 +104,13 @@ deletes the photo	addressbook	zh-tw	刪除照片
 department	common	zh-tw	部門
 departments	addressbook	zh-tw	部門
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	zh-tw	在首頁顯示生日提醒（也就是當您登入 eGroupWare 或是點選首頁圖示出現的頁面）
+distribution list deleted	addressbook	zh-tw	分配清單刪除了
+distribution lists	addressbook	zh-tw	分配清單
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	zh-tw	您是否需要私人通訊錄，也就是其他人無法檢視的、只有您能夠存取的個人通訊錄？
 do your really want to delete this contact?	addressbook	zh-tw	您確定要刪除這個聯絡人？
 doesn't matter	addressbook	zh-tw	沒關係
 domestic	addressbook	zh-tw	國內
+don't hide empty columns	addressbook	zh-tw	不隱藏空白欄位
 download	addressbook	zh-tw	下載
 download export file (uncheck to debug output in browser)	addressbook	zh-tw	下載匯出的檔案(取消選取可以先在瀏覽器檢視輸出的資料)
 download this contact as vcard file	addressbook	zh-tw	以 vCard 格式下載這個聯絡人資料
@@ -168,6 +175,7 @@ import next set	addressbook	zh-tw	匯入下一個
 import_instructions	addressbook	zh-tw	Netscape，開啟通訊錄並且從<b>檔案</b>功能選擇<b>匯出</b>，匯出的檔案是LDIF格式。Outlook，選擇聯絡人資料夾，從<b>檔案</b>功能選擇<b>匯入與匯出...</b>來匯出聯絡人資料成為逗點分隔(CSV)檔案。
 in %1 days (%2) is %3's birthday.	addressbook	zh-tw	再 %1 天 (%2) 就是 %3 的生日。
 income	addressbook	zh-tw	收入
+insufficent rights to delete this list!	addressbook	zh-tw	沒有刪除這個清單的權限！
 international	addressbook	zh-tw	國際
 label	addressbook	zh-tw	概述
 last modified	addressbook	zh-tw	最後更新
@@ -181,6 +189,8 @@ link title for contacts show	addressbook	zh-tw	顯示聯絡人的連結標題
 links	addressbook	zh-tw	連結
 list all categories	addressbook	zh-tw	列出所有類別
 list all customfields	addressbook	zh-tw	列出所有自訂欄位
+list created	addressbook	zh-tw	清單建立日期
+list creation failed, no rights!	addressbook	zh-tw	建立清單失敗，沒有權限！
 load vcard	addressbook	zh-tw	讀取名片檔
 locations	addressbook	zh-tw	位置
 mark records as private	addressbook	zh-tw	標示為私人記錄
@@ -194,13 +204,14 @@ mobile	addressbook	zh-tw	行動電話
 mobile phone	addressbook	zh-tw	行動電話
 modem phone	addressbook	zh-tw	撥接電話
 more ...	addressbook	zh-tw	詳細 ...
+move to addressbook:	addressbook	zh-tw	移動到通訊錄：
 moved	addressbook	zh-tw	移動了
 multiple vcard	addressbook	zh-tw	多重名片檔
+name for the distribution list	addressbook	zh-tw	分配清單的名稱
 name, address	addressbook	zh-tw	名稱,住址
 no vcard	addressbook	zh-tw	沒有VCard
 number	addressbook	zh-tw	數字
 number of records to read (%1)	addressbook	zh-tw	讀取記錄號碼(%1)
-only if there is content	addressbook	zh-tw	只在有內容時
 options for type	admin	zh-tw	類型選項
 organisation	addressbook	zh-tw	組織
 organisations	addressbook	zh-tw	組織
@@ -229,6 +240,8 @@ read a single entry by passing the id and fieldlist.	addressbook	zh-tw	從id及�
 read only	addressbook	zh-tw	唯讀
 record access	addressbook	zh-tw	記錄存取
 record owner	addressbook	zh-tw	記錄擁有者
+remove selected contacts from distribution list	addressbook	zh-tw	從分配清單移除選擇的聯絡人
+removed from distribution list	addressbook	zh-tw	從分配清單移除了
 role	addressbook	zh-tw	角色
 room	addressbook	zh-tw	辦公室
 search for '%1'	addressbook	zh-tw	搜尋 '%1'
@@ -244,8 +257,8 @@ select the type of conversion	addressbook	zh-tw	選擇轉換的格式
 select the type of conversion:	addressbook	zh-tw	選擇轉換的格式：
 select where you want to store / retrieve contacts	admin	zh-tw	選擇您希望儲存、取得聯絡人的位置
 selected contacts	addressbook	zh-tw	選擇的聯絡人
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	zh-tw	照片與家中住址的欄位是否要一直顯示，即使是空白。
 show	addressbook	zh-tw	顯示
-show a column for %1	addressbook	zh-tw	顯示 %1 的欄位
 show birthday reminders on main screen	addressbook	zh-tw	在主畫面顯示生日提示
 show infolog entries for this organisation	addressbook	zh-tw	顯示這個組織的相關記事
 show the contacts of this organisation	addressbook	zh-tw	顯示這個組織的聯絡人
@@ -282,7 +295,6 @@ view linked infolog entries	addressbook	zh-tw	檢視連結的記事資料
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh-tw	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
 warning: all contacts found will be deleted!	addressbook	zh-tw	警告：找到的所有聯絡人都會被刪除！
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	zh-tw	在其他程式連結到通訊錄的顯示文字，空白會被忽略，任何的修正必須在重新登入後才會套用！
-when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	zh-tw	什麼時候聯絡人清單該顯示那個欄位，'只在有內容時' 隱藏欄位，其他表示有內容可以檢視。
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	zh-tw	新增聯絡人時要選擇哪個通訊錄，目前的通訊錄您沒有新增權限。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	zh-tw	要匯出哪些欄位，全部代表儲存在通訊錄的每一個欄位，包含自訂欄位；公司或住家住址只包含姓名、公司與選擇的住址。
@@ -300,6 +312,7 @@ you are not permittet to view this contact	addressbook	zh-tw	您沒有權限檢�
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	zh-tw	如果帳號資料也儲存在 LDAP 資料庫，您只能夠使用 LDAP 作為聯絡人資料庫。
 you must select a vcard. (*.vcf)	addressbook	zh-tw	您必須選取一個名片檔 (*.vcf)
 you must select at least 1 column to display	addressbook	zh-tw	您必須至少選取一個欄位才能顯示
+you need to select a distribution list	addressbook	zh-tw	您必須選擇一個分配清單
 you need to select some contacts first	addressbook	zh-tw	您必須先選擇一些聯絡人
 zip code	common	zh-tw	郵遞區號
 zip_note	addressbook	zh-tw	<p><b>注意：</b> 壓縮檔案可能包含 .csv, .vcf, 或 .ldif 格式，請不要在同一次的匯入工作中混用不同的檔案格式！

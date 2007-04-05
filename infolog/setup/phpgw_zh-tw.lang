@@ -123,8 +123,10 @@ finish	infolog	zh-tw	完成
 for which types should this field be used	infolog	zh-tw	這個欄位使用什麼格式
 from	infolog	zh-tw	從
 general	infolog	zh-tw	一般
+group owner for	infolog	zh-tw	群組擁有者
 high	infolog	zh-tw	高
 id	infolog	zh-tw	ID
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	zh-tw	如果一個類型有群組擁有者，所有該類型的資料將會屬於指定的群組而非建立的使用者！
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	zh-tw	如果沒有設定，在資料數量少於"每頁顯示資料數量上限"（在您的一般設定中）時會隱藏過濾與搜尋功能。
 import	infolog	zh-tw	匯入
 import next set	infolog	zh-tw	匯入下一組

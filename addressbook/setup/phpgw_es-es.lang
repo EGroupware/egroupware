@@ -93,6 +93,7 @@ debug output in browser	addressbook	es-es	Depurar salida en el navegador
 default addressbook for adding contacts	addressbook	es-es	Libreta de direcciones predeterminada para añadir contactos
 default filter	addressbook	es-es	Filtro predeterminado
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
+delete selected distribution list!	addressbook	es-es	Borrar la lista de distribución seleccionada
 delete this contact	addressbook	es-es	Borrar este contacto
 delete this organisation including all its contacts	addressbook	es-es	Borrar esta organización, incluyendo TODOS sus contactos
 deleted	addressbook	es-es	borrado
@@ -100,6 +101,8 @@ deletes the photo	addressbook	es-es	Borra la foto
 department	common	es-es	Departamento
 departments	addressbook	es-es	departamentos
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	es-es	Muestra un recordatorio para los cumpleaños en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio).
+distribution list deleted	addressbook	es-es	Lista de distribución borrada
+distribution lists	addressbook	es-es	Listas de distribución
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	es-es	¿Desea una libreta de direcciones privada, que no pueden ver otros usuarios (a menos que conceda acceso a su libreta de direcciones personal)?
 do your really want to delete this contact?	addressbook	es-es	¿Realmente desea borrar este contacto?
 doesn't matter	addressbook	es-es	no importa
@@ -169,6 +172,7 @@ import next set	addressbook	es-es	Importar el registro siguiente
 import_instructions	addressbook	es-es	Si usa Mozilla o Netscape, abra la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato LDIF.<p>O, en Outlook, seleccione su carpeta de contactos, luego, en el menú<b>Fichero</b>, <b>Importar y Exportar</b> para guardarlos en un fichero separado por comas (CSV).<p>O, en Palm Desktop 4.0 o superior, visite la libreta de direcciones y seleccione <b>Exportar</b> desde el menú <b>Archivo</b>. El fichero exportado estará en formato VCard.
 in %1 days (%2) is %3's birthday.	addressbook	es-es	En %1 días (%2) es el cumpleaños de %3.
 income	addressbook	es-es	Ingresos
+insufficent rights to delete this list!	addressbook	es-es	No tiene privilegios suficientes para borrar esta lista
 international	addressbook	es-es	Internacional
 label	addressbook	es-es	Etiqueta
 last modified	addressbook	es-es	última modificación
@@ -182,6 +186,8 @@ link title for contacts show	addressbook	es-es	Título del enlace para mostrar co
 links	addressbook	es-es	Enlaces
 list all categories	addressbook	es-es	Lista de todas las categorías
 list all customfields	addressbook	es-es	Lista de todos los campos personalizados
+list created	addressbook	es-es	Se ha creado la lista
+list creation failed, no rights!	addressbook	es-es	Falló la creación de lista. No tiene privilegios suficientes.
 load vcard	addressbook	es-es	Cargar VCard
 locations	addressbook	es-es	ubicaciones
 mark records as private	addressbook	es-es	Marcar registros como privados
@@ -195,8 +201,10 @@ mobile	addressbook	es-es	Móvil
 mobile phone	addressbook	es-es	Teléfono móvil
 modem phone	addressbook	es-es	Teléfono módem
 more ...	addressbook	es-es	Más...
+move to addressbook:	addressbook	es-es	Mover a la libreta de direcciones:
 moved	addressbook	es-es	movido
 multiple vcard	addressbook	es-es	VCard múltiple
+name for the distribution list	addressbook	es-es	Nombre para la lista de distribución
 name, address	addressbook	es-es	Nombre, Dirección
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número
@@ -229,6 +237,8 @@ read a single entry by passing the id and fieldlist.	addressbook	es-es	Leer una 
 read only	addressbook	es-es	sólo lectura
 record access	addressbook	es-es	Acceso al registro
 record owner	addressbook	es-es	Propietario del registro
+remove selected contacts from distribution list	addressbook	es-es	Eliminar los contactos seleccionados de la lista de distribución
+removed from distribution list	addressbook	es-es	eliminados de la lista de distribución
 role	addressbook	es-es	Rol
 room	addressbook	es-es	Habitación
 search for '%1'	addressbook	es-es	Buscar '%1'
@@ -299,6 +309,7 @@ you are not permittet to view this contact	addressbook	es-es	No tiene permiso pa
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	es-es	¡Sólo puede usar LDAP como repositorio de contactos si las cuentas también están almacenadas en LDAP!
 you must select a vcard. (*.vcf)	addressbook	es-es	Debe seleccionar una tarjeta (*.vcf)
 you must select at least 1 column to display	addressbook	es-es	Debe seleccionar al menos una columna para mostrar
+you need to select a distribution list	addressbook	es-es	Necesita seleccionar una lista de distribución
 you need to select some contacts first	addressbook	es-es	Necesita seleccionar antes algunos contactos
 zip code	common	es-es	Código postal
 zip_note	addressbook	es-es	<p><b>Nota:</b> El fichero puede ser un fichero zip conteniendo ficheros .csv, .vcf o .ldif. Sin embargo, no mezcle los tipos cada vez que importe.

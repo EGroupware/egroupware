@@ -16,6 +16,7 @@
 a pattern to be searched for	etemplate	pt-br	um padrão a ser procurado
 accesskey	etemplate	pt-br	Tecla de atalho
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	pt-br	Teclas de atalho também pode ser especificadas com um '&' no rótulo (exemplo: &Nome).
+account contactdata	etemplate	pt-br	Dados do contato
 add a new column (after the existing ones)	etemplate	pt-br	Adicionar uma nova coluna (após as existentes)
 add a new entry of the selected application	etemplate	pt-br	Adicionar um novo registro do aplicativo selecionado
 add a new multi-column index	etemplate	pt-br	Adicionar um index de novas multi-colunas
@@ -35,6 +36,7 @@ application	etemplate	pt-br	Aplicativo
 application name needed to write a langfile or dump the etemplates !!!	etemplate	pt-br	É preciso o nome da aplicação para escrever um arquivo de idioma ou copiar o eModelo!!!
 applies the changes made	etemplate	pt-br	Aplicar as alterações realizadas
 applies the changes to the given version of the template	etemplate	pt-br	Aplicar as alterações para a versão do modelo informado
+as default	etemplate	pt-br	como padrão
 attach	etemplate	pt-br	anexo
 attach file	etemplate	pt-br	arquivo anexo
 baseline	etemplate	pt-br	Linha base
@@ -73,6 +75,8 @@ comment	etemplate	pt-br	Comentário
 confirm	etemplate	pt-br	Confirmar
 confirmation message or custom javascript (returning true or false)	etemplate	pt-br	Mensagem de confirmação ou javascript personalizado (retornando verdadeiro ou falso).
 confirmation necesary or custom java-script	etemplate	pt-br	Confirmação necessária ou javascript personalizado.
+contact	etemplate	pt-br	Contato
+contact field to show	etemplate	pt-br	Campo do contato a ser exibido
 contact fields	etemplate	pt-br	Campos de contatos
 contains	etemplate	pt-br	contém
 create a new table for the application	etemplate	pt-br	Criar uma nova tabela para aplicação
@@ -153,6 +157,7 @@ exchange this two columns	etemplate	pt-br	troque estas duas colunas
 export the loaded etemplate into a xml-file	etemplate	pt-br	exportar o eModelo carregado para um arquivo xml
 export xml	etemplate	pt-br	Exportar XML
 extensions loaded:	etemplate	pt-br	Extensões carregadas:
+field	etemplate	pt-br	Campo
 field must not be empty !!!	etemplate	pt-br	O campo não pode estar vazio!!!
 file	etemplate	pt-br	Arquivo
 file contains more than one etemplate, last one is shown !!!	etemplate	pt-br	O arquivo contém mais do que um eModelo, o último será mostrado!!!
@@ -237,6 +242,7 @@ nextmatch	etemplate	pt-br	Próximo campo
 nextmatch accountfilter	etemplate	pt-br	Próximo campo - Filtrar contas
 nextmatch custom filterheader	etemplate	pt-br	Próximo campo - Cabeçalho personalizado
 nextmatch filterheader	etemplate	pt-br	Próximo campo - Filtrar cabeçalho
+nextmatch header	etemplate	pt-br	Próximo campo - Cabeçalho
 nextmatch sortheader	etemplate	pt-br	Próximo campo - Classificar cabeçalho
 no column to swap with !!!	etemplate	pt-br	sem coluna para trocar !!!
 no file	etemplate	pt-br	sem arquivo
@@ -280,6 +286,7 @@ remove this link (not the entry itself)	etemplate	pt-br	Remover este link (não a
 returns savely, without deleting	etemplate	pt-br	retornar ao documento salvo, SEM apagar
 right	etemplate	pt-br	Direita
 row...	etemplate	pt-br	Linha...
+save selected columns as default preference for all users.	etemplate	pt-br	Salvar colunas selecionadas como padrão para todos os usuários.
 save the changes made and close the window	etemplate	pt-br	Salvar as alterações feitas e fechar a janela
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	pt-br	salvar o eModelo sobre as chaves (nome, ...), alterando e salvando como
 saves changes to tables_current.inc.php	etemplate	pt-br	salvar alterações para o arquivo tables_current.inc.php
@@ -298,19 +305,23 @@ select an application, (*) = uninstalled	etemplate	pt-br	Selecione uma aplicação
 select an entry to link with	etemplate	pt-br	Selecione um registro a ser linkado
 select an table of the application	etemplate	pt-br	Selecione uma tabela para a aplicação
 select application	etemplate	pt-br	Selecione a Aplicação
+select application to search	etemplate	pt-br	Selecione uma aplicação para pesquisar
 select category	etemplate	pt-br	Selecione a Categoria
+select columns	etemplate	pt-br	Selecione colunas
 select country	etemplate	pt-br	Selecione o País
 select day	etemplate	pt-br	Selecione o Dia
 select day of week	etemplate	pt-br	Selecione o dia da semana
 select entry	etemplate	pt-br	Selecionar entrada
 select hour	etemplate	pt-br	Selecionar hora
 select if content of field should not be translated (label gets always translated)	etemplate	pt-br	selecione o conteúdo do campo caso o índice não seja traduzido (a etiqueta inicia sempre traduzida)
+select language	etemplate	pt-br	Selecione idioma
 select month	etemplate	pt-br	Selecione o Mês
 select number	etemplate	pt-br	Selecione o Número
 select one ...	etemplate	pt-br	Selecione Um ...
 select percentage	etemplate	pt-br	Selecione a Porcentagem
 select priority	etemplate	pt-br	Selecione a Prioridade
 select state	etemplate	pt-br	Selecione o Estado
+select the columns to display in the list	etemplate	pt-br	Selecione as colunas a serem exibidas na lista
 select the indexed columns in their desired order	etemplate	pt-br	Selecione a coluna indexada na ordem desejada
 select this etemplate to delete it	etemplate	pt-br	selecione este eModelo para removê-lo
 select which accounts to show	etemplate	pt-br	Selecione qual conta exibir

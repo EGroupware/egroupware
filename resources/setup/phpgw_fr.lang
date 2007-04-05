@@ -18,15 +18,15 @@ category:	resources	fr	Catégorie:
 check all	resources	fr	Vérifier tous
 choose categories admin	resources	fr	choisisser les catégories admin
 clear selection	resources	fr	vider la selection
-configure access permissions	resources	fr	Configurer Les droits d'accès
+configure access permissions	admin	fr	Configurer Les droits d'accès
 create new accessory for this resource	resources	fr	Créer de nouveaux accessoires pour cette ressource
 create new links	resources	fr	Créer de nouveaux liens
 delete selected resources	resources	fr	Supprimer les ressources selectionnées
 delete this entry	resources	fr	Supprimer cette entrée
 description (short)	resources	fr	Description (courte)
 direct booking permissions	resources	fr	Permissions directes de réservation
-don't use vfs (this will need a symlink --> see readme)	resources	fr	N'employez pas les vfs (ceci aura besoin d'un lien symbolique -->voir le README)
-edit this entry	resources	fr	Éditez cette entrée
+don't use vfs (this will need a symlink --> see readme)	resources	fr	N'employez vfs (ceci nécessitera un lien symbolique --> voir README)
+edit this entry	resources	fr	Modifier cette entrée
 existing links	resources	fr	Liens existants
 general	resources	fr	Générale
 general informations about resource	resources	fr	Informations générales au sujet des ressources
@@ -46,17 +46,17 @@ is resource buyable?	resources	fr	Peut on acheter les ressources?
 is this resource bookable?	resources	fr	Peut on réserver cette ressource?
 is this resource buyable?	resources	fr	Peut on acheter cette ressource?
 links	resources	fr	Liens
-location	resources	fr	Lieu
-location of resource	resources	fr	lieu de la ressource
-location:	resources	fr	Lieu:
+location	resources	fr	Emplacement
+location of resource	resources	fr	Emplacementde la ressource
+location:	resources	fr	Emplacement:
 name of resource	resources	fr	Nom de ressource
 name:	resources	fr	Nom:
 no description available	resources	fr	aucune description disponible
-no resources selected	resources	fr	Aucunes ressources choisies
-notify your administrator to correct this situation	resources	fr	Informez votre administrateur de corriger cette situation
+no resources selected	resources	fr	Aucunes ressource choisies
+notify your administrator to correct this situation	resources	fr	Informez votre administrateur afin qu'il corrige cette situation
 picture	resources	fr	Image
-picture source	resources	fr	source d'image
-picture type is not supported, sorry!	resources	fr	type d'image non supporté, désolé!
+picture source	resources	fr	source de l'image
+picture type is not supported, sorry!	resources	fr	Type d'image non supporté, désolé!
 pictures or resource	resources	fr	Images ou ressource
 planer	resources	fr	planificateur
 prizeing information for booking or buying	resources	fr	Information de Prix  pour la réservation ou les achats
@@ -66,37 +66,36 @@ quantity:	resources	fr	Quantité:
 read calendar permissions	resources	fr	Lire les permissions de calendrier
 read permissions	resources	fr	Permissions de lecture
 related links	resources	fr	Liens relatifs
-resources	common	fr	ressources
-resources list	resources	fr	liste de ressources
+resources	common	fr	Ressources
+resources list	resources	fr	Liste des ressources
 responsible:	resources	fr	Responsable:
-saves entry and exits	resources	fr	Sauver et quitter
+saves entry and exits	resources	fr	Enregistrer et quitter
 select a category	resources	fr	Choisissez une catégorie
 select resource	resources	fr	Choisissez la ressource
-select resources	resources	fr	Choisissez les ressources
+select resources	common	fr	Choisissez les ressources
 select/deselect all	resources	fr	Tout cocher/décocher
 short description	resources	fr	Description courte
 short description of resource	resources	fr	Description courte de ressource
 show calendar of resource	resources	fr	Montrez le calendrier de la ressource
 something went wrong by deleting resource	resources	fr	Quelque chose a mal tourné en supprimant la ressource
-something went wrong by saving resource	resources	fr	Quelque chose a mal tourné en sauvant la ressource
+something went wrong by saving resource	resources	fr	Quelque chose a mal tourné en enregistrant  la ressource
 storage inforation	resources	fr	Information de stockage
 storage information	resources	fr	Information de stockage
 storage information:	resources	fr	Information de stockage:
 the calendar of this resource	resources	fr	Le calendrier de cette ressource
-this module displays the resources app	resources	fr	Ce module montre les ressources app
-use general resources icon	resources	fr	Utilisez  l'icône de la catégorie
-use own picture	resources	fr	Utilisez  sa propre image
+this module displays the resources app	resources	fr	Ce module montre l'application ressources
+use general resources icon	resources	fr	Utilisez  l'icône de la ressource générale
+use own picture	resources	fr	Utilisez  votre propre propre image
 use the category's icon	resources	fr	Utilisez l'icône de la catégorie
-useable	resources	fr	Utilisable
+useable	resources	fr	utilisable
 useable:	resources	fr	Utilisable:
 view accessories for this resource	resources	fr	Voir les accessoires pour cette ressource
 view this entry	resources	fr	Voir cette entrée
 web-page of resource	resources	fr	Page web de la ressource
 web-site for this resource	resources	fr	Site web de cette ressource
-where to find this resource?	resources	fr	Ou trouver cette ressource
+where to find this resource?	resources	fr	Ou trouver cette ressource?
 which category does this resource belong to?	resources	fr	À quelle catégorie cette ressource appartient-elle?
 write permissions	resources	fr	Permissions d'écriture
-you are not permitted to delete this reource!	resources	fr	Vous n'êtes pas autorisés à supprimer cette ressource!
 you are not permitted to edit this reource!	resources	fr	Vous n'êtes pas autorisés à modifier cette ressource!
 you are not permitted to get information about this resource!	resources	fr	Vous n'êtes pas autorisés à obtenir des informations sur cette ressource!
 you chose more resources than available	resources	fr	Vous avez choisi plus de ressources que disponibles

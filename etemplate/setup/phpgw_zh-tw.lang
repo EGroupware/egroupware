@@ -16,6 +16,7 @@
 a pattern to be searched for	etemplate	zh-tw	搜尋條件
 accesskey	etemplate	zh-tw	存取鍵值
 accesskeys can also be specified with an & in the label (eg. &name)	etemplate	zh-tw	存取鍵值也可以在標籤中包含一個 & （例如 &Name）
+account contactdata	etemplate	zh-tw	新增聯絡人資料
 add a new column (after the existing ones)	etemplate	zh-tw	新增欄位(在已存在的之後)
 add a new entry of the selected application	etemplate	zh-tw	在選擇的應用程式中新增一筆資料
 add a new multi-column index	etemplate	zh-tw	新增多欄索引
@@ -35,6 +36,7 @@ application	etemplate	zh-tw	應用程式
 application name needed to write a langfile or dump the etemplates !!!	etemplate	zh-tw	應用程式需要有語言檔或是將樣板匯出！
 applies the changes made	etemplate	zh-tw	儲存異動
 applies the changes to the given version of the template	etemplate	zh-tw	在這個樣板的指定版本儲存異動
+as default	etemplate	zh-tw	如同預設
 attach	etemplate	zh-tw	附加
 attach file	etemplate	zh-tw	附加檔案
 baseline	etemplate	zh-tw	基線
@@ -73,6 +75,8 @@ comment	etemplate	zh-tw	備註
 confirm	etemplate	zh-tw	確認
 confirmation message or custom javascript (returning true or false)	etemplate	zh-tw	確認訊息或是自訂的 javascript （傳回 true 或 false）
 confirmation necesary or custom java-script	etemplate	zh-tw	需要確認或自訂的 javascript
+contact	etemplate	zh-tw	聯絡人
+contact field to show	etemplate	zh-tw	要顯示的聯絡人欄位
 contact fields	etemplate	zh-tw	聯絡人欄位
 contains	etemplate	zh-tw	包含
 create a new table for the application	etemplate	zh-tw	為這個應用程式建立一個新的表格
@@ -153,6 +157,7 @@ exchange this two columns	etemplate	zh-tw	交換這兩個欄位
 export the loaded etemplate into a xml-file	etemplate	zh-tw	將讀取的樣板匯出成XML檔案
 export xml	etemplate	zh-tw	匯出XML
 extensions loaded:	etemplate	zh-tw	已讀取外掛：
+field	etemplate	zh-tw	欄位
 field must not be empty !!!	etemplate	zh-tw	欄位不能空白！
 file	etemplate	zh-tw	檔案
 file contains more than one etemplate, last one is shown !!!	etemplate	zh-tw	檔案包含多個樣板，只顯示最後一筆！
@@ -237,6 +242,7 @@ nextmatch	etemplate	zh-tw	下一個
 nextmatch accountfilter	etemplate	zh-tw	下一個符合的帳號規則
 nextmatch custom filterheader	etemplate	zh-tw	下一個符合的自訂規則頁首
 nextmatch filterheader	etemplate	zh-tw	下一個條件頁首
+nextmatch header	etemplate	zh-tw	下一個頁首
 nextmatch sortheader	etemplate	zh-tw	下一個分類頁首
 no column to swap with !!!	etemplate	zh-tw	沒有可以切換的欄位！
 no file	etemplate	zh-tw	沒有檔案
@@ -280,6 +286,7 @@ remove this link (not the entry itself)	etemplate	zh-tw	移除這個連結(不�
 returns savely, without deleting	etemplate	zh-tw	回上頁，不儲存
 right	etemplate	zh-tw	正確
 row...	etemplate	zh-tw	資料列...
+save selected columns as default preference for all users.	etemplate	zh-tw	儲存選擇的欄位為所有使用者的預設值。
 save the changes made and close the window	etemplate	zh-tw	儲存異動並且關閉視窗
 save the etemplate under the above keys (name, ...), change them for a saveas	etemplate	zh-tw	以上面的鍵值(name,...)儲存樣板，另存到其他位置
 saves changes to tables_current.inc.php	etemplate	zh-tw	儲存到tables_current.inc.php
@@ -298,19 +305,23 @@ select an application, (*) = uninstalled	etemplate	zh-tw	應用程式，(*)表�
 select an entry to link with	etemplate	zh-tw	選擇要連結的事件
 select an table of the application	etemplate	zh-tw	選擇一個應用程式的資料表
 select application	etemplate	zh-tw	應用程式
+select application to search	etemplate	zh-tw	選擇要搜尋的應用程式
 select category	etemplate	zh-tw	類別
+select columns	etemplate	zh-tw	選擇欄位
 select country	etemplate	zh-tw	國家
 select day	etemplate	zh-tw	日期
 select day of week	etemplate	zh-tw	選一週的一天
 select entry	etemplate	zh-tw	選擇資料
 select hour	etemplate	zh-tw	選擇時數
 select if content of field should not be translated (label gets always translated)	etemplate	zh-tw	如果內容或儲存格不希望被翻譯(標籤都是會被翻譯的)
+select language	etemplate	zh-tw	選擇語言
 select month	etemplate	zh-tw	月份
 select number	etemplate	zh-tw	數字
 select one ...	etemplate	zh-tw	選擇一個...
 select percentage	etemplate	zh-tw	選擇比率
 select priority	etemplate	zh-tw	選擇優先次序
 select state	etemplate	zh-tw	選擇狀態
+select the columns to display in the list	etemplate	zh-tw	選擇清單中要顯示的欄位
 select the indexed columns in their desired order	etemplate	zh-tw	在他們預期的順序中選擇索引欄位
 select this etemplate to delete it	etemplate	zh-tw	選擇刪除這個樣板
 select which accounts to show	etemplate	zh-tw	選擇要顯示的帳號

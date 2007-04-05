@@ -14,8 +14,11 @@ actions	addressbook	sl	Dejanja
 add %1	addressbook	sl	Dodaj %1
 add a contact to this organisation	addressbook	sl	Dodaj kontakt v to organizacijo
 add a new contact	addressbook	sl	Dodaj nov kontakt
+add a new list	addressbook	sl	Dodaj nov seznam
 add a single entry by passing the fields.	addressbook	sl	Dodaj  zapis z vnosom polj.
 add custom field	addressbook	sl	Dodaj polje
+add to distribution list:	addressbook	sl	Dodaj v distribucijski seznam:
+added to distribution list	addressbook	sl	Dodano v distribucijski seznam
 additional information about using ldap as contact repository	admin	sl	Dodatne informacije o uporabi LDAP kot repozitorija za kontakte
 address book	common	sl	Adresar
 address book - vcard in	addressbook	sl	Adresar - VCard
@@ -92,7 +95,8 @@ custom fields	addressbook	sl	Lastna polja
 debug output in browser	addressbook	sl	Preglej izpis v brskalniku
 default addressbook for adding contacts	addressbook	sl	Privzeti adresar za dodajanje stikov
 default filter	addressbook	sl	Privzeti filter
-delete a single entry by passing the id.	addressbook	sl	Zbriši zapis s podano šifro
+delete a single entry by passing the id.	addressbook	sl	Izbriši zapis s podano šifro
+delete selected distribution list!	addressbook	sl	Izbriši izbrane distribucijske sezname!
 delete this contact	addressbook	sl	Izbriši ta stik
 delete this organisation including all its contacts	addressbook	sl	Izbriši to organizacijo, vključno z VSEMI kontakti
 deleted	addressbook	sl	Zbrisano
@@ -100,10 +104,13 @@ deletes the photo	addressbook	sl	Zbriše sliko
 department	common	sl	Oddelek
 departments	addressbook	sl	Oddelki
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sl	Prikaži opomnik za rojstne dneve na začetni strani (stran, ki se prikaže, ko vstopite v eGroupWare ali ko kliknete ikono Domov)
+distribution list deleted	addressbook	sl	Distribucijske seznam izbrisan
+distribution lists	addressbook	sl	Distribucijski seznami
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	sl	Ali želite zasebni adresar, ki ni viden uporabnikom, ki jim ne dovolite dostopa?
 do your really want to delete this contact?	addressbook	sl	Res želite zbrisati ta stik?
 doesn't matter	addressbook	sl	Ni pomembno
 domestic	addressbook	sl	Domači
+don't hide empty columns	addressbook	sl	Ne skrij praznih stolpcev
 download	addressbook	sl	Prenos
 download export file (uncheck to debug output in browser)	addressbook	sl	Prenos izvožene datoteke (Odznači za izpis v brskalniku)
 download this contact as vcard file	addressbook	sl	Prenesite ta stik kot datoteko vCard
@@ -168,6 +175,7 @@ import next set	addressbook	sl	Uvozi naslednji niz
 import_instructions	addressbook	sl	V Netscapu odprite adresar in izberite <b>Export</b> v meniju <b>File</b>. Izvožena datoteka bo v obliki LDIF.<p>V Outlooku izberite mapo Stiki (Contacts), izberite <b>Uvoz/izvoz (Import/Export)</b> v meniju <b>Datoteka (File)</b>. Izvožena datoteka bo v obliki CSV.
 in %1 days (%2) is %3's birthday.	addressbook	sl	V %1 dneh (%2) je rojstni dan %3.
 income	addressbook	sl	Priliv
+insufficent rights to delete this list!	addressbook	sl	Nimate dovolj pravic za brisanje tega seznama!
 international	addressbook	sl	Mednarodni
 label	addressbook	sl	Značilnosti
 last modified	addressbook	sl	Nazadnje spremenjeno
@@ -181,6 +189,8 @@ link title for contacts show	addressbook	sl	Prikaži naslov stika kot povezavo
 links	addressbook	sl	Povezave
 list all categories	addressbook	sl	Izpis vseh kategorij
 list all customfields	addressbook	sl	Izpis vseh lastnih polj
+list created	addressbook	sl	Seznam ustvarjen
+list creation failed, no rights!	addressbook	sl	Napak pri ustvarjanju seznama - nimate pravic!
 load vcard	addressbook	sl	Naloži VCard
 locations	addressbook	sl	Lokacije
 mark records as private	addressbook	sl	Označi zapise kot zasebne
@@ -194,13 +204,14 @@ mobile	addressbook	sl	Mobilni
 mobile phone	addressbook	sl	GSM
 modem phone	addressbook	sl	Modem
 more ...	addressbook	sl	Več ...
+move to addressbook:	addressbook	sl	Premakni v adresar:
 moved	addressbook	sl	Premaknjeno
 multiple vcard	addressbook	sl	Več VCard zapisov
+name for the distribution list	addressbook	sl	Ime za distribucijski seznam
 name, address	addressbook	sl	Ime, naslov
 no vcard	addressbook	sl	Ni VCard zapisov
 number	addressbook	sl	Število
 number of records to read (%1)	addressbook	sl	Število zapisov za branje (%1)
-only if there is content	addressbook	sl	Samo, če je vsebina
 options for type	admin	sl	Možnosti za vrsto
 organisation	addressbook	sl	Organizacija
 organisations	addressbook	sl	Organizacije
@@ -229,6 +240,8 @@ read a single entry by passing the id and fieldlist.	addressbook	sl	Preberi zapi
 read only	addressbook	sl	Samo za branje
 record access	addressbook	sl	Dostop do zapisa
 record owner	addressbook	sl	Lastnik zapisa
+remove selected contacts from distribution list	addressbook	sl	Odstrani izbrane kontakte iz distribucijskega seznama
+removed from distribution list	addressbook	sl	Odstranjeno iz distribucijskega seznama
 role	addressbook	sl	Vloga
 room	addressbook	sl	Soba
 search for '%1'	addressbook	sl	Išči '%1'
@@ -244,8 +257,8 @@ select the type of conversion	addressbook	sl	Izberite tip pretvorbe
 select the type of conversion:	addressbook	sl	Izberite tip pretvorbe:
 select where you want to store / retrieve contacts	admin	sl	Izberite kje želite shranjevati / sprejemati stike
 selected contacts	addressbook	sl	Izbrani stiki
+should the columns photo and home address always be displayed, even if they are empty.	addressbook	sl	Naj bosta stolpca za sliko in domači naslov prikazana vedno, četudi sta prazna?
 show	addressbook	sl	Prikaži
-show a column for %1	addressbook	sl	Prikaži stolpec za %1
 show birthday reminders on main screen	addressbook	sl	Prikaži opomnike rojstnih dni v glavnem oknu
 show infolog entries for this organisation	addressbook	sl	Prikaži vnose InfoDnevnika za to organizacijo
 show the contacts of this organisation	addressbook	sl	Prikaži kontakte za to organizacijo
@@ -282,7 +295,6 @@ view linked infolog entries	addressbook	sl	Poglej povezane vnose InfoDnevnika
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate stikov za skladiščenje računov!
 warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najdeni stiki bodo zbrisani!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v deugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
-when should the contacts list display that colum. "only if there is content" hides the column, unless there is some content in the view.	addressbook	sl	Kdaj naj seznam kontaktov prikaže ta stolpec. "Samo, če je vsebina" skrije stolpec, če nima vrednosti.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sl	Kateri adresar naj se izbere pri dodajanju stika IN nimate pravic dodajanja v trenutni adresar.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sl	Katera polja naj se izvozijo. "Vse" pomeni, da se bodo izvozila vsa polja, shranjena v adresarju, tudi lastna. Službeni ali domači naslov vsebujejo samo ime, podjetje in izbrani naslov.
@@ -300,6 +312,7 @@ you are not permittet to view this contact	addressbook	sl	Nimate dovoljenja pogl
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	sl	LDAP lahko uporabite za shranjevanje stikov samo, če LDAP uporabite tudi za shranjevanje računov!
 you must select a vcard. (*.vcf)	addressbook	sl	Izbrati morate VCard. (*.vcf)
 you must select at least 1 column to display	addressbook	sl	Izbrati morate najmanj 1 stolpec za prikaz
+you need to select a distribution list	addressbook	sl	Izbrati morate distribucijski seznam
 you need to select some contacts first	addressbook	sl	Najprej morate izbrati nekaj stikov
 zip code	common	sl	Poštna številka
 zip_note	addressbook	sl	<p><b>Opozorilo:</b> Datoteka je lahko arhiv .csv, .vcf, or .ldif datotek. Ne mešajte datotečnih tipov ob uvozu.

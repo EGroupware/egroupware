@@ -123,8 +123,10 @@ finish	infolog	pt-br	finalizar
 for which types should this field be used	infolog	pt-br	para quais tipos este campo deve ser utilizado
 from	infolog	pt-br	De
 general	infolog	pt-br	Geral
+group owner for	infolog	pt-br	Grupo-proprietário para
 high	infolog	pt-br	alta
 id	infolog	pt-br	Id
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	pt-br	Se um tipo tem um grupo-proprietário, todas as entradas deste tipo terão como dono o grupo informado e não o usuário que as criou.
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	pt-br	Se não informado, a linha com Pesquisa e Filtros ficará oculta para menos registros que "número máximo de registro por página" (definido em suas preferências).
 import	infolog	pt-br	Importar
 import next set	infolog	pt-br	importar o próximo  conjunto
