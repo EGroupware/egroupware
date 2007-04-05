@@ -196,6 +196,7 @@
 			$GLOBALS['egw_info']['etemplate'] = array(
 				'name_forms' => $GLOBALS['egw_info']['etemplate']['name_forms'],
 				'validation_errors' => $GLOBALS['egw_info']['etemplate']['validation_errors'],
+				'hooked' => $GLOBALS['egw_info']['etemplate']['hooked'],
 			);
 			$this->name_form =& $GLOBALS['egw_info']['etemplate']['name_form'];
 			$this->name_forms =& $GLOBALS['egw_info']['etemplate']['name_forms'];
