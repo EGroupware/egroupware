@@ -282,7 +282,7 @@
 						case 'Birthday':
 							if(!empty($value)) {
 								$dateParts = explode('/',$value);
-								$value = sprintf('%04-d%02-d%02',$dateParts[2],$dateParts[0],$dateParts[1]);
+								$value = sprintf('%04d-%02d-%02d',$dateParts[2],$dateParts[0],$dateParts[1]);
 							}
 							$sifContact .= "<$sifField>$value</$sifField>";
 							break;
