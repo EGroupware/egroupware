@@ -173,7 +173,7 @@
 						$cell['no_lang'] = True;
 						foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
 						{
-							if ($id) $cell['sel_options'][$id] = $GLOBALS['egw']->strip_html($GLOBALS['egw']->categories->id2name($id));
+							if ($id) $cell['sel_options'][$id] = stripslashes($GLOBALS['egw']->categories->id2name($id));
 						}
 						break;
 					}
@@ -187,7 +187,7 @@
 					}
 					foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 					{
-						$s = str_repeat('&nbsp;',$cat['level']) . $GLOBALS['egw']->strip_html($cat['name']);
+						$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
 						if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 						{
