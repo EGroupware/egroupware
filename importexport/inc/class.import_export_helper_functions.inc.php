@@ -153,6 +153,7 @@ class import_export_helper_functions
 	 * @todo replace this function with a function dealing with reg expressions!
 	 */
 	public static function conversion( $_record,  $_conversion ) {
+		if (empty( $_conversion ) ) return $_record;
 		
 		$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in conversion
 		$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
@@ -183,6 +184,7 @@ class import_export_helper_functions
 				//unset($_conversion[$record_idx] );
 			}
 			
+			$val = $record_value;
 			if(!empty($_conversion[$record_idx]))
 			{
 				//$conv_record = $_conversion[$record_idx];

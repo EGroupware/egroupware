@@ -19,11 +19,6 @@ require_once('class.import_export_helper_functions.inc.php');
  * This a an abstract implementation of interface iface_import_record
  * An record is e.g. a single address or or single event.
  * No mater where the records come from, at the end the get_record method comes out
- * @todo whipe out the bool returns and use exeptions instead!!!
- * @todo do we realy need the stepping? otherwise we also could deal with stream resources.
- * The advantage of resources is, that we don't need to struggle whth stream options!
- * @todo just checked out iterators, but not shure if we can use it.
- * they iterate over public functions and not over datastructures :-(
  */
 class import_csv implements iface_import_record { //, Iterator {
 
@@ -38,6 +33,18 @@ class import_csv implements iface_import_record { //, Iterator {
 	 */
 	
 	 /*** Attributes: ***/
+	
+	/**
+	 * array with field mapping in form column number => new_field_name
+	 * @access public
+	 */
+	public $mapping = array();
+
+	/**
+	 * array with conversions to be done in form: new_field_name => conversion_string
+	 * @access public
+	 */
+	public $conversion = array();
 
 	/**
 	 * array holding the current record
@@ -59,31 +66,11 @@ class import_csv implements iface_import_record { //, Iterator {
 	protected $num_of_records = 0;
 	
 	/**
-	 * array with field mapping in form column number => new_field_name
-	 * @access protected
-	 */
-	protected $mapping = array();
-
-	/**
-	 * array with conversions to be done in form: new_field_name => conversion_string
-	 * @access protected
-	 */
-	protected $conversion = array();
-
-	/**
 	 * csv resource
 	 * @access private
 	 */
 	private $resource;
 
-	/**
-	 * holds the string of the resource
-	 * needed e.g. to reopen resource
-	 * @var string
-	 * @access private
-	 */
-	private $csv_resourcename = '';
-	
 	/**
 	 * fieldseperator for csv file
 	 * @access private
@@ -99,19 +86,15 @@ class import_csv implements iface_import_record { //, Iterator {
 	private $csv_charset;
 	
 	/**
-	 * Opens resource, returns false if something fails
-	 *
 	 * @param string _resource resource containing data. May be each valid php-stream
 	 * @param array _options options for the resource array with keys: charset and fieldsep
-	 * @return bool
 	 * @access public
 	 */
 	public function __construct( $_resource,  $_options = array() ) {
-		$this->csv_resourcename = $_resource;
+		$this->resource = $_resource;
 		$this->csv_fieldsep = $_options['fieldsep'];
 		$this->csv_charset = $_options['charset'];
-		
-		//return $this->open_resource();
+		return;
 	} // end of member function __construct
 
 	/**
@@ -121,20 +104,28 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * @access public
 	 */
 	public function __destruct( ) {
-		//$this->close_resource();
 	} // end of member function __destruct
 
 	/**
 	 * Returns array with the record found at position and updates the position
 	 *
 	 * @param mixed _position may be: {current|first|last|next|previous|somenumber}
-	 * @return array
+	 * @return mixed array with data / false if no furtor records
 	 * @access public
 	 */
 	public function get_record( $_position = 'next' ) {
-		$this->get_raw_record( $_position );
-		$this->do_fieldmapping();
-		$this->do_conversions();
+		if ($this->get_raw_record( $_position ) === false) {
+			return false;
+		}
+		
+		if ( !empty( $this->mapping ) ) {
+			$this->do_fieldmapping();
+		}
+		
+		if ( !empty( $this->conversion ) ) {
+			$this->do_conversions();
+		}
+		
 		return $this->record;
 	} // end of member function get_record
 	
@@ -149,13 +140,13 @@ class import_csv implements iface_import_record { //, Iterator {
 		switch ($_position) {
 			case 'current' :
 				if ($this->current_position == 0) {
-					return false;
+					return;
 				}
 				break;
 			case 'first' :
 				if (!$this->current_position == 0) {
-					$this->close_resource();
-					$this->open_resource();
+					$this->current_position = 0;
+					rewind($this->resource);
 				}
 				
 			case 'next' :
@@ -164,17 +155,16 @@ class import_csv implements iface_import_record { //, Iterator {
 					return false;
 				}
 				$this->current_position++;
-				$this->record = $csv_data;
-				//$this->record = $GLOBALS['egw']->translation->convert($csv_data, $this->csv_charset);
+				$this->record = $GLOBALS['egw']->translation->convert($csv_data, $this->csv_charset);
 				break;
 				
 			case 'previous' :
 				if ($this->current_position < 2) {
-					return false;
+					throw new Exception('Error: There is no previous record!');
 				}
 				$final_position = --$this->current_position;
-				$this->close_resource();
-				$this->open_resource();
+				$this->current_position = 0;
+				rewind($this->resource);
 				while ($this->current_position !== $final_position) {
 					$this->get_raw_record();
 				}
@@ -185,20 +175,22 @@ class import_csv implements iface_import_record { //, Iterator {
 				break;
 				
 			default: //somenumber
-				if (!is_int($_position)) return false;
+				if (!is_int($_position)) {
+					throw new Exception('Error: $position must be one of {current|first|last|next|previous} or an integer value');
+				}
 				if ($_position == $this->current_position) {
 					break;
 				}
 				elseif ($_position < $this->current_position) {
-					$this->close_resource();
-					$this->open_resource();
+					$this->current_position = 0;
+					rewind($this->resource);
 				}
 				while ($this->current_position !== $_position) {
 					$this->get_raw_record();
 				}
 				break;				
 		}
-		return true;
+		return;
 	} // end of member function get_raw_record
 
 	/**
@@ -238,12 +230,12 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * @access protected
 	 */
 	protected function do_fieldmapping( ) {
+		$record = $this->record;
+		$this->record = array();
 		foreach ($this->mapping as $cvs_idx => $new_idx) {
-			$record = $this->record;
-			$this->record = array();
 			$this->record[$new_idx] = $record[$cvs_idx];
-			return true;
 		}
+		return;
 	} // end of member function do_fieldmapping
 
 	/**
@@ -255,45 +247,10 @@ class import_csv implements iface_import_record { //, Iterator {
 	protected function do_conversions( ) {
 		if ( $record = import_export_helper_functions::conversion( $this->record, $this->conversion )) {
 			$this->record = $record;
-			return true;
+			return;
 		}
-		else return false;
+		throw new Exception('Error: Could not applay conversions to record');
 	} // end of member function do_conversions
-
-
-	/**
-	 * opens the csv resource (php-stream)
-	 *
-	 * @param string _resource resource containing data. May be each valid php-stream
-	 * @param array _options options for the resource array with keys: charset and fieldsep
-	 * @return 
-	 * @access private
-	 */
-	private function open_resource() {
-		if ( !is_readable ( $this->csv_resourcename )) {
-			error_log('error: file '. $this->csv_resourcename .' is not readable by webserver '.__FILE__.__LINE__);
-			return false;
-		}
-		
-		$this->resource = fopen ($this->csv_resourcename, 'rb');
-		
-		if (!is_resource($this->resource)) {
-			// some error handling
-			return false;
-		}
-		$this->current_position = 0;
-		return true;
-	} // end of member function open_resource
-
-	/**
-	 * closes the csv resource (php-stream)
-	 *
-	 * @return bool
-	 * @access private
-	 */
-	private function close_resource() {
-		return fclose( $this->resource );
-	} // end of member function close_resource
-
+	
 } // end of import_csv
 ?>
