@@ -41,7 +41,9 @@
 <div id="topmenu">
    <div id="topmenu_items">
 	  <?php foreach($this->menuitems as $mitems):?>
+	  <?php if($mitems['url'] && $mitems['label']):?>
 	  <div style="padding:0px 0px 0px 10px;position:relative;float:left;"><img src="<?php print $this->icon_or_star?>" />&nbsp;<a href="<?php print $mitems['url']?>"<?php print $mitems['urlextra']?>><?php print $mitems['label']?></a></div>
+	  <?php endif?>
 	  <?php endforeach?>
    </div>
 
