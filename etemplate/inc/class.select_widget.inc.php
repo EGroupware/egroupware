@@ -237,7 +237,7 @@
 					}
 					foreach((array)$categories->return_sorted_array(0,False,'','','',!$type) as $cat)
 					{
-						$s = str_repeat('&nbsp;',$cat['level']) . $GLOBALS['egw']->strip_html($cat['name']);
+						$s = str_repeat('&nbsp;',$cat['level']) . stripslashes($cat['name']);
 
 						if ($cat['app_name'] == 'phpgw' || $cat['owner'] == '-1')
 						{
