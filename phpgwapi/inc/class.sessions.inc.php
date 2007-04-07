@@ -557,12 +557,20 @@
 			$now = time();
 
 			/* This is to ensure that we authenticate to the correct domain (might not be default) */
-			if($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
+			// if no domain is given we use the default domain, so we dont need to re-create everything
+			if (!$GLOBALS['egw_info']['user']['domain'] && $this->account_domain == $GLOBALS['egw_info']['server']['default_domain'])
+			{
+				$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
+			}
+			elseif($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 			{
 				$GLOBALS['egw']->ADOdb = null;
 				$GLOBALS['egw_info']['user']['domain'] = $this->account_domain;
-				// reset the db all other phpgwapi data
-				$GLOBALS['egw_info']['server'] = array();
+				// reset the db and all other (non-header!) egw_info/server data
+				$GLOBALS['egw_info']['server'] = array(
+					'sessions_type'  => $GLOBALS['egw_info']['server']['sessions_type'],
+					'default_domain' => $GLOBALS['egw_info']['server']['default_domain'],
+				);
 				$GLOBALS['egw_info']['server']['db_host'] = $GLOBALS['egw_domain'][$this->account_domain]['db_host'];
 				$GLOBALS['egw_info']['server']['db_port'] = $GLOBALS['egw_domain'][$this->account_domain]['db_port'];
 				$GLOBALS['egw_info']['server']['db_name'] = $GLOBALS['egw_domain'][$this->account_domain]['db_name'];
