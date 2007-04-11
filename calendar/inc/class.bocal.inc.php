@@ -741,7 +741,7 @@ class bocal
 				$this->add_adjusted_event($events,$event,$search_date_ymd);
 				continue;
 			}
-			$freq = $event['recur_interval'];
+			$freq = $event['recur_interval'] ? $event['recur_interval'] : 1;
 			$type = $event['recur_type'];
 			switch($type)
 			{
@@ -1551,7 +1551,7 @@ class bocal
 					$str_extra[] = lang('days repeated').': '.implode(', ',$repeat_days);
 				}
 			}
-			if($event['recur_interval'])
+			if($event['recur_interval'] > 1)
 			{
 				$str_extra[] = lang('Interval').': '.$event['recur_interval'];
 			}
