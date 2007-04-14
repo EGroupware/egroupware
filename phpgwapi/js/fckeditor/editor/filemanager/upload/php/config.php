@@ -25,7 +25,7 @@
 global $Config ;
 
 // SECURITY: You must explicitelly enable this "uploader".
-$Config['Enabled'] = false ;
+$Config['Enabled'] = true ;
 
 // Set if the file type must be considere in the target path.
 // Ex: /userfiles/image/ or /userfiles/file/
