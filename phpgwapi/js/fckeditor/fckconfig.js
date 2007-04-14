@@ -113,32 +113,40 @@ FCKConfig.ToolbarSets["Basic"] = [
 ] ;
 
 FCKConfig.ToolbarSets["egw_simple"] = [
-	['Bold','Italic','Underline','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','-','UnorderedList','OrderedList','Outdent','Indent','Undo','Redo'],
+	['Bold','Italic','Underline'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['UnorderedList','OrderedList','Outdent','Indent','Undo','Redo'],
+	['FitWindow'],
 	'/',
 	['FontFormat','FontName','FontSize'],
 	['TextColor','BGColor']
 ] ;
 
 FCKConfig.ToolbarSets["egw_extended"] = [
-	['Bold','Italic','Underline','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','-','UnorderedList','OrderedList','Outdent','Indent','Undo','Redo'],
+	['Bold','Italic','Underline'],
+	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['UnorderedList','OrderedList','Outdent','Indent','Undo','Redo'],
+	['Link','Unlink','Anchor'],
+	['Find','Replace'],
+	['FitWindow','Image','Table'],
 	'/',
 	['FontFormat','FontName','FontSize'],
-	['FitWindow','TextColor','BGColor']
+	['TextColor','BGColor']
 ] ;
 
 FCKConfig.ToolbarSets["egw_advanced"] = [
 	['Source','DocProps','-','Save','NewPage','Preview','-','Templates'],
-	['Cut','Copy','Paste','PasteText','PasteWord','-','Print','SpellCheck'],
+	['Cut','Copy','Paste','PasteText','PasteWord','-','Print'/*,'SpellCheck'*/],
 	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 	'/',
 	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
-	['OrderedList','UnorderedList','-','Outdent','Indent'],
 	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['UnorderedList','OrderedList','-','Outdent','Indent'],
 	['Link','Unlink','Anchor'],
-	['TextColor','BGColor','About'],
-	['Image','Flash','Table','Rule','Smiley','SpecialChar','PageBreak'], //,'UniversalKey'
+	['FitWindow','Image',/*'Flash',*/'Table','Rule',/*'Smiley',*/'SpecialChar','PageBreak'], //,'UniversalKey'
 	'/',
-	['FitWindow','Style','FontFormat','FontName','FontSize']
+	['Style','FontFormat','FontName','FontSize'],
+	['TextColor','BGColor']
 ] ;
 
 FCKConfig.EnterMode = 'p' ;			// p | div | br
@@ -208,8 +216,8 @@ FCKConfig.CleanWordKeepsStructure = false ;
 // inline when creating the editor instance. In that cases you must set the
 // values of LinkBrowserURL, ImageBrowserURL and so on.
 // Custom implementations should just ignore it.
-var _FileBrowserLanguage	= 'asp' ;	// asp | aspx | cfm | lasso | perl | php | py
-var _QuickUploadLanguage	= 'asp' ;	// asp | aspx | cfm | lasso | php
+var _FileBrowserLanguage	= 'php' ;	// asp | aspx | cfm | lasso | perl | php | py
+var _QuickUploadLanguage	= 'php' ;	// asp | aspx | cfm | lasso | php
 
 
 // Don't care about the following line. It just calculates the correct connector
