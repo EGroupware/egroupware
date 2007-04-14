@@ -577,7 +577,7 @@ class html
 	* this function is a wrapper for fckEditor to create some reuseable layouts
 	*
 	* @param string $_name name and id of the input-field
-	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''	
+	* @param string $_content of the tinymce (will be run through htmlspecialchars !!!), default ''	
 	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
 	* @param array  $_options (toolbar_expanded true/false)
 	* @param string $_height='400px'
@@ -585,8 +585,9 @@ class html
 	* @param string $base_href='' if passed activates the browser for image at absolute path passed
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditor($_name, $_content='', $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href) {
-		if (!$this->htmlarea_availible())
+	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href) 
+	{
+		if (!$this->htmlarea_availible() || $_mode == 'ascii')
 		{
 			return $this->textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';"');
 		}
@@ -597,19 +598,19 @@ class html
 		$oFCKeditor->Value	= $_content;
 		$oFCKeditor->Width	= $_width ;
 		$oFCKeditor->Height	= $_height ;
-		$oFCKeditor->Config['LinkBrowser'] = 'false';
-		$oFCKeditor->Config['FlashBrowser'] = 'false';
-		$oFCKeditor->Config['LinkUpload'] = 'false';
 		
-		// Activate the browser and config upload pathimage dir ($_base_href/images) if passed (absolute path)
-		if ($_base_href)
+		// by default switch all browsers and uploads off
+		$oFCKeditor->Config['LinkBrowser'] = $oFCKeditor->Config['LinkUpload'] = false;
+		$oFCKeditor->Config['FlashBrowser'] = $oFCKeditor->Config['FlashUpload'] = false;
+		$oFCKeditor->Config['ImageBrowser'] = $oFCKeditor->Config['ImageUpload'] = false;
+		
+		// Activate the image browser+upload, if $_base_href exists and is browsable by the webserver
+		if ($_base_href && is_dir($_SERVER['DOCUMENT_ROOT'].$_base_href) && file_exists($_SERVER['DOCUMENT_ROOT'].$_base_href.'/.'))
 		{
 			// Only images for now
 			$oFCKeditor->Config['ImageBrowserURL'] = $oFCKeditor->BasePath.'editor/filemanager/browser/default/browser.html?ServerPath='.$_base_href.'&Type=images&Connector=connectors/php/connector.php';
-		}
-		else
-		{
-			$oFCKeditor->Config['ImageBrowser'] = 'false';
+			$oFCKeditor->Config['ImageBrowser'] = true;
+			$oFCKeditor->Config['ImageUpload'] = is_writable($_SERVER['DOCUMENT_ROOT'].$_base_href);
 		}
 		// By default the editor start expanded
 		if ($_options['toolbar_expanded'] == 'false')
@@ -618,23 +619,20 @@ class html
 		}
 		 
 		switch($_mode) {
-			case 'ascii':
-				return "<textarea name=\"$_name\" style=\"width:".$_width."; height:".$_height."; border:0px;\">$_content</textarea>";
-				break;
 			case 'simple':
 				$oFCKeditor->ToolbarSet = 'egw_simple';
-				return $oFCKeditor->CreateHTML() ;
 				break;
+
+			default:
 			case 'extended':
 				$oFCKeditor->ToolbarSet = 'egw_extended';
-				return $oFCKeditor->CreateHTML() ;
 				break;
+
 			case 'advanced':
 				$oFCKeditor->ToolbarSet = 'egw_advanced';
-				return $oFCKeditor->CreateHTML() ;
 				break;						
 		}
-
+		return /*"toolbarset='$oFCKeditor->ToolbarSet'<pre>".print_r($oFCKeditor->Config,true)."</pre>\n".*/ $oFCKeditor->CreateHTML();
 	}
 
 	/**
@@ -649,7 +647,8 @@ class html
 	* @param string $base_href=''
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') {
+	function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%') 
+	{
 		include_once(EGW_INCLUDE_ROOT."/phpgwapi/js/fckeditor/fckeditor.php");
 
 		$oFCKeditor		= new FCKeditor($_name) ;
@@ -1355,5 +1354,23 @@ class html
 		$html .= "</script>\n";
 		
 		return $html;
+	}
+	
+	/**
+	 * html-class singleton, return a referenze to the global instanciated html object in $GLOBALS['egw']->html
+	 *
+	 * Please use that static method in all new code, instead of instanciating an own html object:
+	 * 	$my_html =& html::singleton();
+	 * 
+	 * @static 
+	 * @return html
+	 */
+	function &singleton()
+	{
+		if (!is_object($GLOBALS['egw']->html))
+		{
+			$GLOBALS['egw']->html = new html;
+		}
+		return $GLOBALS['egw']->html;
 	}
 }
