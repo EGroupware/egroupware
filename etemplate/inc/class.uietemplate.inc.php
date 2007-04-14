@@ -1044,7 +1044,7 @@
 						);
 					}
 					break;
-				case 'htmlarea':	// Multiline formatted Text Input, size: [inline styles for the widget][,plugins (comma-sep.)]
+				case 'htmlarea':	// Multiline formatted Text Input, size: {simple|extended|advanced},height,width,toolbar-expanded,upload-path
 					list($mode,$height,$width,$toolbar,$baseref) = explode(',',$cell_options);
 					if (!$readonly)
 					{
