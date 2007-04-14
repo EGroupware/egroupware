@@ -53,6 +53,7 @@ alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
 alternative image	tinymce	en	Alternative image
 american samoa	common	en	AMERICAN SAMOA
+an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the webserver readable directory enables the image browser and upload.
 andorra	common	en	ANDORRA
 angola	common	en	ANGOLA
 anguilla	common	en	ANGUILLA
@@ -79,7 +80,6 @@ azerbaijan	common	en	AZERBAIJAN
 back	common	en	Back
 back to user login	common	en	Back to user login
 background color:	common	en	Background color:
-backupdir '%1' is not writeable by the webserver	common	en	backupdir '%1' is not writeable by the webserver
 bad login or password	common	en	Bad login or password
 bahamas	common	en	BAHAMAS
 bahrain	common	en	BAHRAIN
@@ -95,7 +95,6 @@ bg color	tinymce	en	Bg color
 bhutan	common	en	BHUTAN
 blocked, too many attempts	common	en	Blocked, too many attempts
 bold	common	en	Bold
-bold.gif	common	en	bold.gif
 bolivia	common	en	BOLIVIA
 border	common	en	Border
 border color	tinymce	en	Border color
@@ -204,6 +203,7 @@ direction	tinymce	en	Direction
 direction left to right	common	en	Direction left to right
 direction right to left	tinymce	en	Direction right to left
 directory	tinymce	en	Directory
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the webserver or is not relative to the document root!
 disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png-image-bugfix
 disable slider effects	common	en	Disable slider effects
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	en	Disable the animated slider effects when showing or hiding menus in the page? Opera and Konqueror users will probably must want this.
@@ -238,7 +238,6 @@ el salvador	common	en	EL SALVADOR
 email	common	en	E-Mail
 email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1"
 emotions	tinymce	en	Emotions
-en	common	en	en
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
@@ -253,11 +252,13 @@ error deleting %1 %2 directory	common	en	Error deleting %1 %2 directory
 error renaming %1 %2 directory	common	en	Error renaming %1 %2 directory
 estonia	common	en	ESTONIA
 ethiopia	common	en	ETHIOPIA
+everything	common	en	Everything
 exact	common	en	exact
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	en	Failed to Contact Server or Invalid Response from Server. Try to relogin. Contact Admin in case of faliure.
 falkland islands (malvinas)	common	en	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	en	FAROE ISLANDS
 fax number	common	en	fax number
+features of the editor?	common	en	Features of the editor?
 february	common	en	February
 fields	common	en	Fields
 fiji	common	en	FIJI
@@ -352,13 +353,13 @@ iespell not detected. click ok to go to download page.	common	en	ieSpell not det
 if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute?
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
 image description	tinymce	en	Image description
+image directory relative to document root (use / !), example:	common	en	Image directory relative to document root (use / !), example:
 image title	tinymce	en	Image title
 image url	common	en	Image URL
 indent	tinymce	en	Indent
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
 insert	tinymce	en	Insert
-insert 'return false'	common	en	insert 'return false'
 insert / edit flash movie	tinymce	en	Insert / edit Flash Movie
 insert / edit horizontale rule	tinymce	en	Insert / edit Horizontale Rule
 insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 addresses of the %2 contacts in %3
@@ -386,7 +387,6 @@ israel	common	en	ISRAEL
 it has been more then %1 days since you changed your password	common	en	It has been more then %1 days since you changed your password
 it is recommended that you run setup to upgrade your tables to the current version	common	en	It is recommended that you run setup to upgrade your tables to the current version.
 italic	common	en	Italic
-italic.gif	common	en	italic.gif
 italy	common	en	ITALY
 jamaica	common	en	JAMAICA
 january	common	en	January
@@ -577,9 +577,6 @@ paste table row after	tinymce	en	Paste table row after
 paste table row before	tinymce	en	Paste table row before
 path not found.	tinymce	en	Path not found.
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
-pattern for search in addressbook	common	en	Pattern for Search in Addressbook
-pattern for search in calendar	common	en	Pattern for Search in Calendar
-pattern for search in projects	common	en	Pattern for Search in Projects
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
 peru	common	en	PERU
@@ -601,8 +598,8 @@ popup url	tinymce	en	Popup URL
 portugal	common	en	PORTUGAL
 position (x/y)	tinymce	en	Position (X/Y)
 postal	common	en	Postal
+powered by	common	en	Powered by
 powered by egroupware version %1	common	en	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
-powered by phpgroupware version %1	common	en	Powered by phpGroupWare version %1
 preferences	common	en	Preferences
 preferences for the idots template set	common	en	Preferences for the idots template set
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
@@ -623,6 +620,7 @@ read this list of methods.	common	en	Read this list of methods.
 reading	common	en	reading
 redo	tinymce	en	Redo
 refresh	tinymce	en	Refresh
+regular	common	en	Regular
 reject	common	en	Reject
 remove col	tinymce	en	Remove col
 remove selected accounts	common	en	remove selected accounts
@@ -705,6 +703,7 @@ show_more_apps	common	en	show_more_apps
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 sierra leone	common	en	SIERRA LEONE
+simple	common	en	Simple
 singapore	common	en	SINGAPORE
 size	tinymce	en	Size
 slovakia	common	en	SLOVAKIA
@@ -786,7 +785,6 @@ type	common	en	Type
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
 underline	common	en	Underline
-underline.gif	common	en	underline.gif
 undo	tinymce	en	Undo
 united arab emirates	common	en	UNITED ARAB EMIRATES
 united kingdom	common	en	UNITED KINGDOM
@@ -801,6 +799,7 @@ update	common	en	Update
 update the clock per minute or per second	common	en	Update the clock per minute or per second
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writeable by webserver
+upload requires the directory to be writable by the webserver!	common	en	Upload requires the directory to be writable by the webserver!
 uploading...	tinymce	en	Uploading...
 url	common	en	URL
 uruguay	common	en	URUGUAY
@@ -846,6 +845,7 @@ year	common	en	Year
 yemen	common	en	YEMEN
 yes	common	en	Yes
 you are required to change your password during your first login	common	en	You are required to change your password during your first login
+you can customize how many icons and toolbars the editor shows.	common	en	You can customize how many icons and toolbars the editor shows.
 you have been successfully logged out	login	en	You have been successfully logged out
 you have not entered a title	common	en	You have not entered a title
 you have not entered a valid date	common	en	You have not entered a valid date
