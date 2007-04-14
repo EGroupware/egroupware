@@ -99,7 +99,7 @@
 				'size'  => 'image,ro_image'
 			),
 			'htmlarea' => array(
-				'size' => 'style,plugins',
+				'size' => 'mode,height,width,toolbar,base_href',
 			),
 		);
 		/**
