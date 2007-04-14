@@ -1,22 +1,26 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 
 """
-FCKeditor - The text editor for internet
-Copyright (C) 2003-2006 Frederico Caldeira Knabben
+FCKeditor - The text editor for Internet - http://www.fckeditor.net
+Copyright (C) 2003-2007 Frederico Caldeira Knabben
 
-Licensed under the terms of the GNU Lesser General Public License:
-		http://www.opensource.org/licenses/lgpl-license.php
+== BEGIN LICENSE ==
 
-For further information visit:
-		http://www.fckeditor.net/
+Licensed under the terms of any of the following licenses at your
+choice:
 
-"Support Open Source software. What about a donation today?"
+ - GNU General Public License Version 2 or later (the "GPL")
+   http://www.gnu.org/licenses/gpl.html
 
-File Name: sample01.py
-	Sample page.
+ - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+   http://www.gnu.org/licenses/lgpl.html
 
-File Authors:
-		Andrew Liu (andrew@liuholdings.com)
+ - Mozilla Public License Version 1.1 or later (the "MPL")
+   http://www.mozilla.org/MPL/MPL-1.1.html
+
+== END LICENSE ==
+
+Sample page.
 """
 
 import cgi
@@ -40,14 +44,14 @@ print """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 	</head>
 	<body>
 		<h1>FCKeditor - Python - Sample 1</h1>
-		This sample displays a normal HTML form with an FCKeditor with full features 
+		This sample displays a normal HTML form with an FCKeditor with full features
 		enabled.
 		<hr>
 		<form action="sampleposteddata.py" method="post" target="_blank">
 """
 
 # This is the real work
-try: 
+try:
 	sBasePath = os.environ.get("SCRIPT_NAME")
 	sBasePath = sBasePath[0:sBasePath.find("_samples")]
 
