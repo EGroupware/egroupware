@@ -160,7 +160,7 @@
 				$class = $GLOBALS['egw_info']['server']['template_set'].'_framework';
 				require_once(EGW_INCLUDE_ROOT . '/phpgwapi/templates/' . $GLOBALS['egw_info']['server']['template_set'].
 					'/class.'.$class.'.inc.php');
-				$this->framework =& new $class;
+				$this->framework = new $class;		// =& removed because of problems with php4, does not matter with php5 anyway!
 
 				$this->check_app_rights();
 
@@ -335,8 +335,6 @@
 		 */
 		function check_app_rights()
 		{
-			$this->tplsav2 = CreateObject('phpgwapi.tplsavant2');
-
 			if ($GLOBALS['egw_info']['flags']['currentapp'] != 'about')
 			{
 				// This will need to use ACL in the future
@@ -350,6 +348,8 @@
 					}
 					error_log('Permission denied, attempted to access '.$GLOBALS['egw_info']['flags']['currentapp']);
 					$this->log->write(array('text'=>'W-Permissions, Attempted to access %1','p1'=>$GLOBALS['egw_info']['flags']['currentapp']));
+					
+					$this->tplsav2 = CreateObject('phpgwapi.tplsavant2');	// create it only when neccessary
 					$this->tplsav2->assign('currentapp',$GLOBALS['egw_info']['flags']['currentapp']);
 					$this->tplsav2->set_tpl_path($this->tplsav2->get_tpl_dir(false,'phpgwapi'));
 					$this->tplsav2->display('appl_access_not_permitted.tpl.php');
