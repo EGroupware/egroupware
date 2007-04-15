@@ -1,0 +1,68 @@
+﻿add profile	emailadmin	zt	新增基本資料
+admin dn	emailadmin	zt	管理 dn
+admin password	emailadmin	zt	管理密碼
+admin username	emailadmin	zt	管理帳號
+advanced options	emailadmin	zt	進階選項
+alternate email address	emailadmin	zt	替代郵件位址
+cyrus imap server	emailadmin	zt	Cyrus IMAP伺服器
+cyrus imap server administration	emailadmin	zt	Cyrus IMAP伺服器管理
+default	emailadmin	zt	預設
+deliver extern	emailadmin	zt	傳送到外部
+do you really want to delete this profile	emailadmin	zt	您確定要刪除這個資料
+domainname	emailadmin	zt	網域名稱
+edit email settings	emailadmin	zt	編輯郵件設定
+email account active	emailadmin	zt	郵件帳號啟用
+email address	emailadmin	zt	郵件位址
+enable cyrus imap server administration	emailadmin	zt	啟用Cyrus IMAP伺服器管理
+enable sieve	emailadmin	zt	啟用Sieve
+enter your default mail domain (from: user@domain)	emailadmin	zt	輸入您的預設郵件網域(小老鼠後面所有字：帳號@網域)
+forward also to	emailadmin	zt	同時轉寄到
+forward email's to	emailadmin	zt	轉寄信件到
+forward only	emailadmin	zt	轉寄
+imap admin password	admin	zt	IMAP管理者密碼
+imap admin user	admin	zt	IMAP管理者帳號
+imap c-client version < 2001	emailadmin	zt	IMAP C-終端的版本小於2001
+imap server hostname or ip address	emailadmin	zt	IMAP伺服器的主機名稱或是IP位址
+imap server logintyp	emailadmin	zt	IMAP伺服器登入類型
+imap server port	emailadmin	zt	IMAP伺服器連接埠
+imap/pop3 server name	emailadmin	zt	IMAP/POP3伺服器名稱
+in mbyte	emailadmin	zt	以MB顯示
+ldap basedn	emailadmin	zt	LDAP basedn
+ldap server	emailadmin	zt	LDAP 伺服器
+ldap server accounts dn	emailadmin	zt	LDAP 伺服器帳號 DN
+ldap server admin dn	emailadmin	zt	LDAP 伺服器管理者 DN
+ldap server admin password	emailadmin	zt	LDAP 伺服器管理者密碼
+ldap server hostname or ip address	emailadmin	zt	LDAP 伺服器主機名稱或是IP位址
+ldap settings	emailadmin	zt	LDAP 設定
+leave empty for no quota	emailadmin	zt	不填入任何資料表示無限制
+mail settings	admin	zt	郵件設定
+name of organisation	emailadmin	zt	組織名稱
+no alternate email address	emailadmin	zt	沒有可替換的郵件位址
+no forwarding email address	emailadmin	zt	沒有轉寄郵件位址
+pop3 server hostname or ip address	emailadmin	zt	POP3伺服器主機名稱或是IP位址
+pop3 server port	emailadmin	zt	POP3伺服器連接埠
+postfix with ldap	emailadmin	zt	使用LDAP與 Postfix
+profile list	emailadmin	zt	資料清單
+profile name	emailadmin	zt	資料名稱
+qmaildotmode	emailadmin	zt	qmaildotmode
+qouta size in mbyte	emailadmin	zt	配額(MB)
+quota settings	emailadmin	zt	配額設定
+remove	emailadmin	zt	移除
+select type of imap/pop3 server	emailadmin	zt	選擇IMAP/POP3伺服器的格式
+select type of smtp server	emailadmin	zt	選擇SMTP伺服器的格式
+sieve server hostname or ip address	emailadmin	zt	Sieve伺服器主機名稱或是IP位址
+sieve server port	emailadmin	zt	Sieve伺服器連接埠
+sieve settings	emailadmin	zt	Sieve設定
+smtp server name	emailadmin	zt	SMTP伺服器名稱
+smtp-server hostname or ip address	emailadmin	zt	SMTP伺服器主機名稱或是IP位址
+smtp-server port	emailadmin	zt	SMTP伺服器連接埠
+standard	emailadmin	zt	標準
+standard imap server	emailadmin	zt	標準IMAP伺服器
+standard pop3 server	emailadmin	zt	標準POP3伺服器
+standard smtp-server	emailadmin	zt	標準SMTP伺服器
+use ldap defaults	emailadmin	zt	使用LDAP預設值
+use smtp auth	emailadmin	zt	使用SMTP認證
+use tls authentication	emailadmin	zt	使用TLS認證
+use tls encryption	emailadmin	zt	使用TLS加密
+users can define their own emailaccounts	emailadmin	zt	使用者可以自行定義郵件帳號
+virtual mail manager	emailadmin	zt	虛擬郵件管理者

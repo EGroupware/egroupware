@@ -1,0 +1,10 @@
+add profile	emailadmin	pl	Dodaj profil
+alternate email address	emailadmin	pl	alternatywny adres email
+email address	emailadmin	pl	adres email
+imap/pop3 server name	emailadmin	pl	Nazwa serwera IMAP/POP3
+ldap server	emailadmin	pl	Serwer LDAP
+ldap settings	emailadmin	pl	Ustawienia LDAP
+profile name	emailadmin	pl	Nazwa Profilu
+qouta size in mbyte	emailadmin	pl	rozmiar quoty w megabajtach
+quota settings	emailadmin	pl	ustawnienia quoty
+standard	emailadmin	pl	Standard
