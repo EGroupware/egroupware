@@ -396,7 +396,14 @@ class socontacts_sql extends so_sql
 	function add_list($name,$owner,$contacts=array())
 	{
 		if (!$name || !(int)$owner) return false;
-
+		
+		if ($this->db->select($this->lists_table,'list_id',array(
+			'list_name' => $name,
+			'list_owner' => $owner,
+		),__LINE__,__FILE__) && $this->db->next_record())
+		{
+			return $this->db->f('list_id');	// return existing list-id
+		}
 		if (!$this->db->insert($this->lists_table,array(
 			'list_name' => $name,
 			'list_owner' => $owner,
