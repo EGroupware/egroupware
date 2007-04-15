@@ -40,7 +40,7 @@ interface iface_export_record
 	 * @return bool
 	 * @access public
 	 */
-	public function __construct( $_handle,  $_charset, array $_options );
+	public function __construct( $_handle,  $_charset, array $_options=array() );
 	
 	/**
 	 * exports a record into resource of handle

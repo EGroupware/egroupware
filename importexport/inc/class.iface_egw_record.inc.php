@@ -33,7 +33,7 @@ interface iface_egw_record
 	 *
 	 * @param string $_identifier
 	 */
-	public function __construct( $_identifier );
+	public function __construct( $_identifier='' );
 	
 	/**
 	 * magic method to set attributes of record
