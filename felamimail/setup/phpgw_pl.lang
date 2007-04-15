@@ -1,0 +1,267 @@
+(no subject)	felamimail	pl	(bez tematu)
+(only cc/bcc)	felamimail	pl	(tylko DW/UDW)
+(unknown sender)	felamimail	pl	(nieznany nadawca)
+activate	felamimail	pl	Aktywuj
+activate script	felamimail	pl	aktywuj skrypt
+add	felamimail	pl	Dodaj
+add address	felamimail	pl	Dodaj adres
+add script	felamimail	pl	Dodaj skrypt
+add to %1	felamimail	pl	Dodaj do %1
+add to address book	felamimail	pl	Dodaj do ksi±¿ki adresowej
+add to addressbook	felamimail	pl	dodaj do ksi±¿ki adresowej
+additional info	felamimail	pl	Informacje dodatkowe
+address book	felamimail	pl	Ksi±¿ka adresowa
+address book search	felamimail	pl	Przeszukiwanie ksi±¿ki adresowej
+after message body	felamimail	pl	Za tre¶ci± wiadomo¶ci
+all address books	felamimail	pl	Wszystkie ksi±¿ki adresowe
+all folders	felamimail	pl	Wszystkie foldery
+always show html emails	felamimail	pl	Zawsze pokazuj maile napisane w HTML
+as a subfolder of	felamimail	pl	jako podfolder w
+attachments	felamimail	pl	Za³±czniki
+back to folder	felamimail	pl	Wróæ do folderu
+bcc	felamimail	pl	UDW
+before headers	felamimail	pl	Przed nag³ówkiem
+between headers and message body	felamimail	pl	Pomiêdzy nag³ówkiem a tre¶ci±
+cc	felamimail	pl	DW
+change folder	felamimail	pl	Zmieñ folder
+click here to return to %1	felamimail	pl	Kliknij tutaj aby wróciæ do %1
+close all	felamimail	pl	zamknij wszystko
+close this page	felamimail	pl	zamknij tê stronê
+close window	felamimail	pl	Zamknij okno
+color	felamimail	pl	Kolor
+compose	felamimail	pl	Utwórz
+compress folder	felamimail	pl	Kompaktuj folder
+configuration	felamimail	pl	Konfiguracja
+contains	felamimail	pl	zawiera
+create	felamimail	pl	Stwórz
+create folder	felamimail	pl	Tworzenie folderu
+create sent	felamimail	pl	Stwórz Wys³ane
+create subfolder	felamimail	pl	Stwórzy podfolder
+create trash	felamimail	pl	Stwórz Kosz
+created folder successfully!	felamimail	pl	Utworzono folder pomy¶lnie!
+dark blue	felamimail	pl	Ciemno Niebieski
+dark cyan	felamimail	pl	Ciemny Cyan
+dark gray	felamimail	pl	Ciemny Szary
+dark green	felamimail	pl	Ciemny Zielony
+dark magenta	felamimail	pl	Ciemny Magenta
+dark yellow	felamimail	pl	Ciemny ¯ó³ty
+date(newest first)	felamimail	pl	Data (od najnowszych)
+date(oldest first)	felamimail	pl	Data (od najstarszych)
+deactivate script	felamimail	pl	deaktywuj skrypt
+default sorting order	felamimail	pl	Domy¶lny porz±dek sortowania
+delete all	felamimail	pl	kasuj wszystko
+delete folder	felamimail	pl	Usuñ folder
+delete selected	felamimail	pl	Usuñ zaznaczone
+delete selected messages	felamimail	pl	skasuj wybrane wiadomo¶ci
+deleted	felamimail	pl	skasowany
+disable	felamimail	pl	Wy³±cz
+display message in new window	felamimail	pl	Wy¶wietl wiadomo¶æ w nowym oknie
+display preferences	felamimail	pl	Wy¶wietl preferencje
+do it!	felamimail	pl	zrób to!
+do not use sent	felamimail	pl	Nie u¿ywaj Wys³anych
+do not use trash	felamimail	pl	Nie u¿ywaj Kosza
+does not contain	felamimail	pl	nie zawiera
+don't use sent	felamimail	pl	Nie u¿ywaj Wys³anych
+don't use trash	felamimail	pl	Nie u¿ywaj Kosza
+don\'t use sent	felamimail	pl	Nie u¿ywaj wys³ane
+don\'t use trash	felamimail	pl	Nie u¿ywaj kosza
+down	felamimail	pl	w dó³
+e-mail	felamimail	pl	E-mail
+e-mail address	felamimail	pl	Adres e-mail
+e-mail folders	felamimail	pl	Foldery e-mail
+edit filter	felamimail	pl	Edytuj filtr
+edit selected	felamimail	pl	Edytuj wybrane
+email account name	felamimail	pl	Nazwa konta
+email address	felamimail	pl	Adres e-mail
+email password	felamimail	pl	Has³o
+email signature	felamimail	pl	Sygnaturka
+empty trash	felamimail	pl	opró¿nij kosz
+enable	felamimail	pl	w³±cz
+enter your imap mail server hostname or ip address	admin	pl	Podaj nazwê hosta lub IP serwera IMAP
+enter your sieve server hostname or ip address	admin	pl	Podaj nazwê hosta lub IP serwera SIEVE
+enter your sieve server port	admin	pl	Podaj port serwera SIEVE
+enter your smtp server hostname or ip address	admin	pl	Podaj nazwê hosta lub IP serwera SMTP
+enter your smtp server port	admin	pl	Podaj port serwera SMTP
+error	felamimail	pl	B£¡D
+error connecting to imap serv	felamimail	pl	B³±d ³±czenia z serwerem IMAP
+error opening	felamimail	pl	B³±d podczas otwierania
+felamimail	common	pl	FelaMiMail
+files	felamimail	pl	pliki
+first name	felamimail	pl	Imiê
+folder name	felamimail	pl	Nazwa foldera
+folder path	felamimail	pl	¦cie¿ka foldera
+folder preferences	felamimail	pl	Preferencje folderów
+folder settings	felamimail	pl	Ustawienia foldera
+folder status	felamimail	pl	Status foldera
+folderlist	felamimail	pl	Lista folderów
+foldername	felamimail	pl	Nazwa foldera
+folders	felamimail	pl	Foldery
+folders created successfully!	felamimail	pl	Pomy¶lnie utworzono folder
+forward	felamimail	pl	Prze¶lij dalej
+from	felamimail	pl	Od
+from(a->z)	felamimail	pl	Od (A->Z)
+from(z->a)	felamimail	pl	Od (Z->A)
+full name	felamimail	pl	Pe³na nazwa
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	pl	Aby dowiedzieæ siê wiêcej o Squirrelmail, zajrzyj na <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>.<br>
+help	felamimail	pl	Pomoc
+hide header	felamimail	pl	ukryj nag³ówek
+html	felamimail	pl	HTML
+icons and text	felamimail	pl	Ikony i tekst
+icons only	felamimail	pl	Tylko ikony
+identifying name	felamimail	pl	Nazwa identyfikatora
+if applicable	felamimail	pl	je¶li wybrano
+imap	felamimail	pl	IMAP
+imap server	felamimail	pl	Serwer IMAP
+imap server address	felamimail	pl	Adres serwera IMAP
+imap server type	felamimail	pl	Typ serwera IMAP
+imaps encryption only	felamimail	pl	Tylko szyfrowanie IMAPS
+in	felamimail	pl	w
+in order for squirrelmail to provide the full set of options you need to create the special folders listed below.  just click the check box and hit the create button.	felamimail	pl	Aby SquirrelMail udostepni³ pe³ny zestaw opcji, muszisz stworzyæ foldery specjalne wymienione poni¿ej. Zaznacz pola wyboru i kliknij przycisk Utwórz.
+in the center	felamimail	pl	w ¶rodku
+index order	felamimail	pl	Porz±dek indeksu
+info	felamimail	pl	Info
+invaild user name or password	felamimail	pl	Niepoprawne has³o lub nazwa u¿ytkownika
+invalid user name or password	felamimail	pl	Z³a nazwa u¿ytkownika lub has³o
+javascript	felamimail	pl	JavaScript
+language	felamimail	pl	Jêzyk
+last name	felamimail	pl	Nazwisko
+less	felamimail	pl	mniej
+let this folder contain subfolders	felamimail	pl	Zezwól na podfoldery w tym folderze
+light blue	felamimail	pl	Jasny Niebieski
+light cyan	felamimail	pl	Jasny Cyan
+light gray	felamimail	pl	Jasny Szary
+light green	felamimail	pl	Jasny Zielony
+light magenta	felamimail	pl	Jasny Magenta
+light yellow	felamimail	pl	Jasny ¯ó³ty
+location of buttons when composing	felamimail	pl	Po³o¿enie przycisków przy pisaniu maila
+location of folder list	felamimail	pl	Po³o¿enie listy folderów
+mail folder(uw-maildir)	felamimail	pl	Katalog poczty (uw-maildir)
+mail server	felamimail	pl	Serwer pocztowy
+mail server type	felamimail	pl	Typ serwera pocztowego
+mail settings	felamimail	pl	Ustawienia poczty
+manage folders	felamimail	pl	Zarz±dzanie folderami
+manage sieve	felamimail	pl	Zarz±dzaj skryptami Sieve
+mark as deleted	felamimail	pl	Zaznacz jako usuniet±
+mark messages as	felamimail	pl	Zaznacz wybrane wiadomo¶ci jako
+mark selected as read	felamimail	pl	Zaznacz wybrane wiadomo¶ci jako przeczytane
+mark selected as unread	felamimail	pl	Zaznacz wybrane wiadomo¶ci jako nieprzeczytane
+match	felamimail	pl	Zgodne
+message highlighting	felamimail	pl	Pod¶wietlanie wiadomo¶ci
+message list	felamimail	pl	Lista wiadomo¶ci
+messages	felamimail	pl	wiadomo¶ci
+minute	felamimail	pl	Minuta
+minutes	felamimail	pl	Minuty
+more	felamimail	pl	wiêcej
+move	felamimail	pl	przenie¶
+move messages	felamimail	pl	przenie¶ wiadomo¶ci
+move selected to	felamimail	pl	przenie¶ wiadomo¶ci do
+move to trash	felamimail	pl	przenie¶ do kosza
+must be unique	felamimail	pl	Musi byæ unikalny
+name	felamimail	pl	Nazwa
+never display html emails	felamimail	pl	Nigdy nie wy¶wietlaj emaili HTML
+new	felamimail	pl	Nowe
+new filter	felamimail	pl	Nowy filtr
+next	felamimail	pl	Nastêpny
+next message	felamimail	pl	nastêpna wiadomo¶æ
+no folders found	felamimail	pl	Nie znaleziono folderów
+no highlighting is defined	felamimail	pl	Nie zdefiniowano pod¶wietleñ
+no messages were selected.	felamimail	pl	Nie wybrano ¿adnej wiadomo¶ci
+non-standard	felamimail	pl	Niestandardowe
+open all	felamimail	pl	otwórzy wszystkie
+options	felamimail	pl	Opcje
+organization	felamimail	pl	instytucja
+organization name	admin	pl	Nazwa instutucji
+other:	felamimail	pl	Inne
+participants	felamimail	pl	Uczestnicy
+personal information	felamimail	pl	Informacje osobiste
+preference file, %1, does not exist. log out, and log back in to create a default preference file.	felamimail	pl	Plik preferencji, %1, nie istnieje. Wyloguj siê i zaloguj ponownie aby stworzyæ domy¶lny plik preferencji.
+previous	felamimail	pl	Poprzedni
+previous message	felamimail	pl	poprzednia wiadomo¶æ
+print it	felamimail	pl	wydrukuj to
+print this page	felamimail	pl	wydrukuj tê stronê
+recent	felamimail	pl	ostatnie
+refresh folder list	felamimail	pl	od¶wie¿ listê folderów
+refresh page	felamimail	pl	Od¶wie¿ stronê
+refresh time in minutes	felamimail	pl	Czas od¶wie¿ania w minutach
+remove	felamimail	pl	usuñ
+remove immediately	felamimail	pl	usuñ natychmiast
+rename	felamimail	pl	Zmiana nazwy
+rename a folder	felamimail	pl	Zmiana nazwy foldera
+rename folder	felamimail	pl	Zmieñ nazwê foldera
+renamed successfully!	felamimail	pl	Pomy¶lnie zmieniono nazwê
+reply	felamimail	pl	Odpowiedz
+reply all	felamimail	pl	Odpowiedz wszystkim
+reply to	felamimail	pl	Odpowiedz
+replyto	felamimail	pl	Odpowiedz
+return	felamimail	pl	Powrót
+return to options page	felamimail	pl	Powrót do strony konfiguracji
+rule	felamimail	pl	Regu³a
+running squirrelmail version %1 (c) 1999-2000.	felamimail	pl	Uruchomiona wersja SquirrelMail %1 (c) 1999-2000.
+save	felamimail	pl	Zapisz
+search	felamimail	pl	Szukaj
+search for	felamimail	pl	Szukaj dla
+seconds	felamimail	pl	Sekundy
+select	felamimail	pl	Wybierz
+select all	felamimail	pl	Wybierz wszystko
+select emailprofile	felamimail	pl	Wybierz profil email
+select home email address	felamimail	pl	Wybierz domowy adres email
+select work email address	felamimail	pl	Wybierz s³u¿bowy adres e-meil
+select your mail server type	admin	pl	Wybierz typ serwera email
+send	felamimail	pl	Wy¶lij
+sent folder	felamimail	pl	Folder Wys³ane
+server respond	felamimail	pl	Odpowied¼ serwera
+show header	felamimail	pl	poka¿ nag³ówek
+show new messages on main screen	felamimail	pl	Wy¶wietlaæ nowe wiadomo¶ci na stronie g³ównej?
+sieve settings	admin	pl	Ustawienia Sieve
+signature	felamimail	pl	Sygnaturka
+simply click the target-folder	felamimail	pl	Kliknij folder docelowy
+size	felamimail	pl	Wielko¶æ
+size of editor window	felamimail	pl	Wielko¶æ okna edytora
+size(...->0)	felamimail	pl	Rozmiar (...->0)
+size(0->...)	felamimail	pl	Rozmiar (0->...)
+small view	felamimail	pl	widok uproszczony
+smtp settings	admin	pl	Ustawienia SMTP
+some or all of the help documents are not present!	felamimail	pl	Brakuje jednego lub kilku dokumentów pomocy!
+source	felamimail	pl	¬ród³o
+special folder options	felamimail	pl	Opcje specjalne folderów
+squirrelmail	felamimail	pl	Squirrelmail
+subject	felamimail	pl	Temat
+subject(a->z)	felamimail	pl	Temat (A->Z)
+subject(z->a)	felamimail	pl	Temat (Z->A)
+submit	felamimail	pl	Wy¶lij
+subscribe	felamimail	pl	Subskrybuj
+successfully saved display preferences!	felamimail	pl	Pomy¶lnie zapisano preferencje wy¶wietlania!
+successfully saved folder preferences!	felamimail	pl	Pomy¶lnie zapisano preferencje folderów!
+successfully saved personal information!	felamimail	pl	Pomy¶lnie zapisano preferencje informacje osobiste!
+table of contents	felamimail	pl	Spis tre¶ci
+text only	felamimail	pl	Tylko tekst
+the connection to the imap server failed!!	felamimail	pl	Nieudane po³±czenie z serwerem SMTP!!
+the help has not been translated to %1.  it will be displayed in english instead.	felamimail	pl	Pomoc nie zosta³a przet³umaczona na %1. Zamiast tego zostanie wy¶wietlona wersja angielska.
+these settings change the way your folders are displayed and manipulated.	felamimail	pl	Te ustawnienia pozwalaj± na zarz±dzanie folderami i zmieniaj± sposób ich wy¶wietlania.
+this folder is empty	felamimail	pl	TEN FOLDER JEST PUSTY
+this php has no imap support compiled in!!	felamimail	pl	PHP nie ma skompilowanej obs³ugi IMAP!!
+to	felamimail	pl	Do
+to the left	felamimail	pl	po lewej
+to the right	felamimail	pl	po prawej
+translation location	felamimail	pl	Po³o¿enie t³umaczenia
+translation preferences	felamimail	pl	Preferencje t³umaczenia
+translation server	felamimail	pl	Serwer t³umaczeñ
+trash folder	felamimail	pl	Folder Kosz
+type	felamimail	pl	typ
+unknown error	felamimail	pl	Nieznany b³±d
+unknown sender	felamimail	pl	Nieznany nadawca
+unread	felamimail	pl	nieprzeczytane
+unselect all	felamimail	pl	Odznacz wszystko
+up	felamimail	pl	w górê
+use a signature	felamimail	pl	U¿yj sygnaturki
+use a signature?	felamimail	pl	U¿yæ sygnaturki?
+use custom settings	felamimail	pl	U¿yj ustawieñ u¿ytkownika
+view full header	felamimail	pl	Poka¿ pe³ny nag³ówek
+view message	felamimail	pl	Poka¿ wiadomo¶æ
+when deleting messages	felamimail	pl	Gdy usuwasz wiadomo¶æ
+white	felamimail	pl	Bia³y
+width of folder list	felamimail	pl	Szeroko¶æ listy folderów
+wrap incoming text at	felamimail	pl	Szeroko¶æ zawijania werszy
+you can only edit one address at the time	felamimail	pl	Mo¿esz edytowaæ tylko jeden adres jednocze¶nie
+you must login first.	felamimail	pl	Musisz siê najpierw zalogowaæ
+1	felamimail	pl	1

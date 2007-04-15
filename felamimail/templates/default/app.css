@@ -1,0 +1,502 @@
+th.activetab
+{
+	color:#000000;
+	background-color:#D3DCE3;
+	border-top : 1px solid Silver;
+	border-left : 1px solid Silver;
+	border-right : 1px solid Silver;
+}
+
+th.inactivetab
+{
+	color:#000000;
+	background-color:#E8F0F0;
+	border-bottom : 1px solid Silver;
+}
+			
+.td_left 
+{
+   border-left : 1px solid Gray; 
+   border-top : 1px solid Gray; 
+}
+
+.input_text {
+	border : 1px solid Silver;
+}
+
+.td_right 
+{ 
+  border-right : 1px solid Gray; 
+  border-top : 1px solid Gray; 
+}
+
+.text_small { font-size: 10px; }
+.text_small_bold { font-size: 10px; font-weight : bold; }
+			
+div.activetab{ display:inline; }
+div.inactivetab{ display:none; }
+
+.quoted1 { color:#660066; }
+.quoted2 { color:#007777; }
+.quoted3 { color:#990000; }
+.quoted4 { color:#000099; }
+.quoted5 { color:#bb6600; }
+
+
+TR.header_row_ {
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	font-weight : bold;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_ {
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+	font-weight : bold;
+}
+
+TR.header_row_D {
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	color: silver;
+	text-decoration : line-through;
+	background : White;
+	white-space: nowrap;
+}
+	
+A.header_row_D {
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+	color: silver;
+	text-decoration : line-through;
+	font-weight : bold;
+}
+
+TR.header_row_F {
+	color: red;
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	font-weight : bold;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_F {
+	color: red;
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+	font-weight : bold;
+}
+	
+
+TR.header_row_FS {
+	color: red;
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_FS {
+	color: red;
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+}
+TR.header_row_R {
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	font-weight : bold;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_R {
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+	font-weight : bold;
+}
+
+TR.header_row_S {
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_S {
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TR.header_row_DS, TR.header_row_ADS
+{
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	color: silver;
+	text-decoration : line-through;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_DS, A.header_row_ADS
+{
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+	color: silver;
+	text-decoration : line-through;
+}
+	
+TR.header_row_RS
+{
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_RS
+{
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+}
+
+TR.header_row_AS,TR.header_row_RAS
+{
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_AS, A.header_row_RAS
+{
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+}
+
+TR.header_row_FAS,  TR.header_row_FS
+{
+	color: red;
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	background : White;
+	white-space: nowrap;
+}
+
+A.header_row_FAS, A.header_row_FS
+{
+	color: red;
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+}
+
+.subjectBold
+{
+	FONT-SIZE: 12px;
+	font-weight : bold;
+	font-family : Arial;
+}
+
+.subject
+{
+	FONT-SIZE: 12px;
+	font-family : Arial;
+}
+
+.body
+{
+	FONT-SIZE: 12px;
+	font-family : Arial;
+}
+
+TR.sieveRowActive
+{
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	background : White;
+}
+
+A.sieveRowActive
+{
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;
+}
+
+TR.sieveRowInActive
+{
+	FONT-SIZE: 11px;
+	height : 20px;
+	padding: 0;
+	background : White;
+	color: Silver;
+}
+
+A.sieveRowInActive
+{
+	FONT-SIZE: 11px;
+	height : 14px;
+	padding: 0;	
+	color: Silver;
+}
+
+
+.dtree {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #666;
+	white-space: nowrap;
+}
+.dtree img {
+	border: 0px;
+	vertical-align: middle;
+}
+.dtree a {
+	color: #333;
+	text-decoration: none;
+}
+.dtree a.node, .dtree a.nodeSel {
+	white-space: nowrap;
+	padding: 1px 2px 1px 2px;
+}
+.dtree a.node:hover, .dtree a.nodeSel:hover {
+	color: #333;
+	text-decoration: underline;
+}
+.dtree a.nodeSel {
+	background-color: #c0d2ec;
+}
+.dtree .clip {
+	overflow: hidden;
+}
+
+tr.navbarBackground {
+	background-color:#dddddd;
+}
+
+div.parentDIV { 
+	background-color:#dddddd;
+	position: relative;
+	top: 0px;
+	left: 0px;
+}
+
+div.navButton { 
+	background-color:#dddddd;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid #dddddd 1px;
+	position: relative;
+}
+
+div.navButton:hover, div.navButtonHover { 
+	background-color:#eeeeee;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid white 1px;
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+	position: relative;
+}
+
+div.navButton:active, div.navButtonActive { 
+	background-color:#dddddd;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid white 1px;
+	border-left: solid black 1px;
+	border-top: solid black 1px;
+	position: relative;
+}
+
+div.navSeparator { 
+	background-color:#dddddd;
+	float:left;
+	padding: 0px;
+	margin: 2px;
+	border: solid silver 1px;
+	height:24px;
+	position: relative;
+}
+
+div.inactiveResultRow {
+	background-color: white;
+	text-align: left;
+}
+
+div.activeResultRow {
+	background-color: silver;
+	text-align: left;
+}
+
+div.resultBoxHidden {
+	width: 450px; 
+	position: absolute; 
+	display: none; 
+}
+
+div.resultBoxVisible {
+	border: solid 1px black;
+	width: 450px; 
+	position: absolute; 
+	display: block; 
+	background: white;
+}
+
+button.menuButton {
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid #dddddd 1px;
+	position: relative;
+	height: 25px;
+	width: 26px;
+	background-color:#dddddd;
+}
+
+button.menuButton:hover {
+	background-color:#eeeeee;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid white 1px;
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+	position: relative;
+	height: 25px;
+	width: 26px;
+}
+
+button.menuButton:active { 
+	background-color:#dddddd;
+	float:left;
+	padding: 2px;
+	margin: 2px;
+	border: solid white 1px;
+	border-left: solid black 1px;
+	border-top: solid black 1px;
+	position: relative;
+}
+
+fieldset.bordertop {
+	border-left:0px;
+	border-right:0px;
+	border-bottom:0px;
+	border-top:1px solid silver;
+}
+
+TD.mainscreenRow {
+	border-bottom:1px solid #CCCCEE;
+}
+
+DIV.divButton {
+	width:16px;
+	height:16px;
+	border: 0px solid red;
+	background-repeat:no-repeat;
+	background-position: center center;
+}
+
+#navbarDIV {
+	position:absolute;
+	top:0px;
+	height:30px;
+	left:0px;
+	right:0px;
+	border: solid white 1px;
+	border-right: solid black 1px;
+	border-bottom: solid black 1px;
+}
+
+#subjectDIV {
+	position:absolute; 
+	background-color:#ffffff; 
+	top:32px; 
+	height:20px; 
+	width:100%; 
+	font-weight:bold; 
+	text-align:left; 
+	line-height:20px;
+}
+
+#headerDIV {
+	position:absolute; 
+	background-color:#efefdf; 
+	top:52px; 
+	height:80px; 
+	left:0px; 
+	right:0px; 
+	border-top: 1px solid silver; 
+	border-bottom: 1px solid silver; 
+	overflow:hidden;
+}
+
+.bodyDIV {
+	position:absolute; 
+	background-color:white; 
+	top:134px; 
+	bottom:0px; 
+	width:100%; 
+	border-top: 1px solid #efefdf;
+}
+
+.bodyDIVAttachment {
+	bottom:80px; 
+}
+
+#messageIFRAME {
+	width:100%;
+	border:0px solid black; 
+	height:100%;
+}
+
+#attachmentDIV {
+	position:absolute; 
+	background-color:#efefdf; 
+	bottom:0px; 
+	height:80px; 
+	width:100%; 
+	border-top: 1px solid silver; 
+	overflow:auto;
+}
+

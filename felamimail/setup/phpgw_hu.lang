@@ -1,0 +1,107 @@
+(no subject)	felamimail	hu	(nincs tárgy)
+(only cc/bcc)	felamimail	hu	(csak CC/BCC)
+(unknown sender)	felamimail	hu	(ismeretlen feladó)
+activate	felamimail	hu	Aktivál
+activate script	felamimail	hu	szkript aktiválás
+add acl	felamimail	hu	ACL hozzáadása
+add address	felamimail	hu	Cím hozzáadása
+add rule	felamimail	hu	Szabály hozzáadása
+add script	felamimail	hu	Szkript hozzáadása
+add to %1	felamimail	hu	Add hozzá ehhez: %1
+add to address book	felamimail	hu	Címjegyzékhez hozzáad
+add to addressbook	felamimail	hu	címjegyzékhez hozzáad
+adding file to message. please wait!	felamimail	hu	Fájl hozzáadása az üzenethez. Kérem várjon.
+additional info	felamimail	hu	További információ
+address book	felamimail	hu	Címjegyzék
+address book search	felamimail	hu	Címjegyzékben keresés
+after message body	felamimail	hu	Üzenetrész után
+all address books	felamimail	hu	Összes címjegyzék
+all folders	felamimail	hu	Összes mappa
+all of	felamimail	hu	összes innnen
+allways a new window	felamimail	hu	mindig új ablak
+always show html emails	felamimail	hu	Mindig jelenítse meg a HTML üzenetet
+and	felamimail	hu	és
+any of	felamimail	hu	bármennyi
+anyone	felamimail	hu	bárki
+as a subfolder of	felamimail	hu	mint almappa innen
+attachments	felamimail	hu	Mellékletek
+authentication required	felamimail	hu	azonosítás szükséges
+auto refresh folder list	felamimail	hu	Automatikus mappafrissítések
+back to folder	felamimail	hu	Vissza a mappába
+bad login name or password.	felamimail	hu	Rossz belépési név vagy jelszó.
+bad or malformed request. server responded: %s	felamimail	hu	Rossz vagy hibás kérés. Server válasza: %s
+bad request: %s	felamimail	hu	Rossz kérés: %s
+bcc	felamimail	hu	BCC
+before headers	felamimail	hu	Fejlécek elõtt
+between headers and message body	felamimail	hu	Feljécek és üzenet között
+body part	felamimail	hu	test rész
+can't connect to inbox!!	felamimail	hu	nem tudok csatlakozni az INBOX-hoz!!!
+cc	felamimail	hu	CC
+change folder	felamimail	hu	Mappa változtatása
+close all	felamimail	hu	összes bezárása
+close this page	felamimail	hu	lap bezárása
+close window	felamimail	hu	Ablak bezárása
+color	felamimail	hu	Szín
+compose	felamimail	hu	Szerkeszt
+compress folder	felamimail	hu	Mappa tömörítése
+condition	felamimail	hu	feltétel
+configuration	felamimail	hu	Konfiguráció
+connection dropped by imap server.	felamimail	hu	A kapcsolatot az IMAP szerver eldobta.
+contains	felamimail	hu	tartalmaz
+create	felamimail	hu	Létrehoz
+create folder	felamimail	hu	Mappát létrehoz
+create sent	felamimail	hu	'Elküldött' mappát létrehoz
+create subfolder	felamimail	hu	Almappát létrehoz
+create trash	felamimail	hu	'Szemetest' létrehoz
+created folder successfully!	felamimail	hu	Mappa létrehozása sikeres.
+dark blue	felamimail	hu	Sötétkék
+dark cyan	felamimail	hu	Sötétcián
+dark gray	felamimail	hu	Sötétszürke
+dark green	felamimail	hu	Sötétzöld
+dark yellow	felamimail	hu	Sötétsárga
+date(newest first)	felamimail	hu	Dátum (újak elsõnek)
+date(oldest first)	felamimail	hu	Dátum (régiek elsõnek)
+days	felamimail	hu	napok
+deactivate script	felamimail	hu	szkript deaktiválása
+default sorting order	felamimail	hu	Alapértelmezett rendezési sor
+delete all	felamimail	hu	összes törlése
+delete folder	felamimail	hu	Mappa törlése
+delete script	felamimail	hu	szkript törlése
+delete selected	felamimail	hu	Kijelölt törlése
+delete selected messages	felamimail	hu	Kijelölt üzenetek törlése
+deleted	felamimail	hu	törölve
+deleted folder successfully!	felamimail	hu	Mappa törlése sikeres.
+deleting messages	felamimail	hu	üzenetek törlése
+disable	felamimail	hu	Letilt
+discard	felamimail	hu	elvet
+discard message	felamimail	hu	üzenet elvetése
+display message in new window	felamimail	hu	Üzenet megjelenítése új ablakban
+display messages in multiple windows	felamimail	hu	üzenetek megjelenítése több ablakban
+display of html emails	felamimail	hu	HTML email-ek megjelenítése
+display only when no plain text is available	felamimail	hu	Csak akkor jelenítse meg, ha nincs egyszerû szöveg
+display preferences	felamimail	hu	Beállítások megjelenítése
+do it!	felamimail	hu	csináld!
+do not use sent	felamimail	hu	Ne használd az 'Elküldött' mappát
+do not use trash	felamimail	hu	Ne használd az 'Szemetes' mappát
+down	felamimail	hu	le
+download	felamimail	hu	Letöltés
+e-mail	felamimail	hu	E-Mail
+e-mail address	felamimail	hu	E-Mail cím
+e-mail folders	felamimail	hu	E-Mail mappa
+edit filter	felamimail	hu	Szûrõ szerkesztése
+edit rule	felamimail	hu	szabály szerkesztése
+edit selected	felamimail	hu	Kijelölt szerkesztése
+email address	felamimail	hu	E-Mail cím
+email signature	felamimail	hu	E-Mail aláírás
+emailaddress	felamimail	hu	E-Mail cím
+empty trash	felamimail	hu	Szemetes ürítése
+enable	felamimail	hu	engedélyez
+encrypted connection	felamimail	hu	titkosított kapcsolat
+error	felamimail	hu	Hiba
+every	felamimail	hu	minden
+every %1 days	felamimail	hu	minden %1 napon
+felamimail	common	hu	FelaMiMail
+files	felamimail	hu	fájlok
+folderlist	felamimail	hu	Mappa lista
+foldername	felamimail	hu	Mappa név
+folders	felamimail	hu	Mappák

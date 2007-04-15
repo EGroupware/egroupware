@@ -1,0 +1,812 @@
+%1 %2 in %3	calendar	hr	%1 %2 u %3
+%1 matches found	calendar	hr	Prona�.eno %1 podataka koji ispunjavaju kriterij
+%1 records imported	calendar	hr	Podataka %1 uneseno
+%1 records read (not yet imported, you may go %2back%3 and uncheck test import)	admin	hr	%1 zapisa pročitano (još nije uvezeno, možete se %2vratiti%3 i odznačiti Testiraj Uvoz)
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	hr	%1 podataka pročitano (još nije uneseno, možete se vratiti i deselektirati testno unošenje)
+(e.g. 1969)	admin	hr	(npr. 1969)
+(for weekly)	calendar	hr	(Za tjedno ponavljanje)
+(i/v)cal	calendar	hr	(i/v)Cal
+(no subject)	felamimail	hr	(nema teme)
+(only cc/bcc)	felamimail	hr	(samo Cc/Bcc)
+(unknown sender)	felamimail	hr	(nepoznat pošaljioc)
+1 match found	calendar	hr	Prona�.en 1 zapis????????
+<b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	admin	hr	<b>Nema konverzijskog tipa &lt;nema&gt; nemogu locirati.</b>  Molim vas izaberite vrstu konverzije s liste
+@-eval() is only availible to admins!!!	admin	hr	@-eval() je dostupan samo administratorima!!!
+a	calendar	hr	a
+accept	calendar	hr	Prihvati
+accepted	calendar	hr	Prihva�.eno
+action that caused the notify: added, canceled, accepted, rejected, ...	calendar	hr	Akcija čija je posljedica poruka: Dodano, Prekinuto, Primljeno, Odbijeno, ...
+actions	admin	hr	Akcije
+activate	felamimail	hr	Aktiviraj
+activate script	felamimail	hr	aktiviraj skriptu
+add a single entry by passing the fields.	calendar	hr	Dodaj jedan unos proslije�.uju�.i polja
+add address	felamimail	hr	Dodaj adresu
+add alarm	calendar	hr	Dodaj alarm
+add contact	calendar	hr	Dodaj kontakt
+add custom field	admin	hr	Dodaj proizvoljno polje
+add or update a single entry by passing the fields.	calendar	hr	Dodaj ili obnovi jedan unos proslije�.uju�.i polja.
+add rule	felamimail	hr	Dodaj pravilo
+add script	felamimail	hr	Dodaj skriptu
+add to %1	felamimail	hr	Dodaj k %1
+add to address book	felamimail	hr	Dodaj u adresar
+add to addressbook	felamimail	hr	dodaj u adrersar
+added	calendar	hr	Dodano
+additional info	felamimail	hr	Dodatne informacije
+address book	felamimail	hr	Adresar
+address book - vcard in	admin	hr	Adresar - VCard in
+address book - view	admin	hr	Adresar - pregled
+address book search	felamimail	hr	Pretraživanje adresara
+address line 2	admin	hr	Adresa Linija 2
+address line 3	admin	hr	Adresa Linija 3
+address type	admin	hr	Tip Adrese
+addressbook	common	hr	Adresar
+addressbook preferences	admin	hr	Postavke Adresara
+addressbook-fieldname	admin	hr	Adresar-Naziv polja
+addvcard	admin	hr	Dodaj VCard
+after message body	felamimail	hr	Nakon poruke
+alarm	calendar	hr	Alarm
+alarm for %1 at %2 in %3	calendar	hr	Alarm za %1 pri %2 u %3
+alarm management	calendar	hr	Upravljanje alarmom
+alarm-management	calendar	hr	Upravljanje-alarmom
+alarms	calendar	hr	Alarmi
+all address books	felamimail	hr	svi adresari
+all day	calendar	hr	Cijeli dan
+all folders	felamimail	hr	Sve mape
+alt. csv import	admin	hr	Alt. CSV Uvoz
+always show html emails	felamimail	hr	Uvijek prikaži HTML e-mailove
+anyone	felamimail	hr	svi
+are you sure you want to delete this country ?	calendar	hr	Da li ste sigurni da želite obrisati ovu zemlju?
+are you sure you want to delete this field?	admin	hr	Da li ste sigurni da želite obrisati ovo polje?
+are you sure you want to delete this holiday ?	calendar	hr	Da li ste sigurni da želite obrisati ovaj praznik?
+are you sure\nyou want to\ndelete these alarms?	calendar	hr	Da li ste sigurni da želite obrisati ovaj alarm?
+are you sure\nyou want to\ndelete this entry ?	calendar	hr	Da li ste sigurni da želite obrisati ovaj podatak?
+are you sure\nyou want to\ndelete this entry ?\n\nthis will delete\nthis entry for all users.	calendar	hr	Jeste li sigurni da želite obrisati ovaj zapis ?\n\nOvaj zapis �.e biti obrisan za sve korisnike.
+are you sure\nyou want to\ndelete this single occurence ?\n\nthis will delete\nthis entry for all users.	calendar	hr	Da li ste sigurni da želite obrisati occurence ?\n\nOvaj zapis �.e biti obrisan za sve korisnike.
+as a subfolder of	felamimail	hr	kao podmapa od
+attachments	felamimail	hr	Privitci
+auto refresh folder list	felamimail	hr	Automatsko obnavljavljanje liste mapa
+back to folder	felamimail	hr	Povratak u mapu
+bad reque	felamimail	hr	Nepravilno ponavljanje reda
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	hr	U ovisnosti o danim uvjetima, ulazne poruke mogu imati različite podloge u listi poruka. Ovime lakše razlikujete od koga ste dobili poruke, posebno ukoliko ste na nekoj mail listi.
+bbs phone	admin	hr	BBS Telefon
+bcc	felamimail	hr	BCC
+before headers	felamimail	hr	Prije zaglavlja
+before the event	calendar	hr	prije obveze
+between headers and message body	felamimail	hr	Između zaglavlja i teksta poruke
+birthday	common	hr	Datum Ro�.enja
+birthdays	common	hr	Ro�.endani
+blank	admin	hr	Prazno
+body part	felamimail	hr	body part
+brief description	calendar	hr	Kratki opis
+business	calendar	hr	Poslovno
+business address type	admin	hr	Vrsta Poslovne Adrese
+business city	admin	hr	Tvrtka - Grad
+business country	admin	hr	Tvrtka - Država
+business email	admin	hr	Tvrtka - E-mail
+business email type	admin	hr	Tvrtka - Vrsta e-maila
+business fax	admin	hr	Tvrtka - Fax
+business phone	admin	hr	Tvrtka - Broj telefona
+business state	admin	hr	Tvrtka - Županija
+business street	admin	hr	Tvrtka - Ulica
+business zip code	admin	hr	Tvrtka - Poštanski broj
+calendar	common	hr	Kalendar
+calendar - [iv]cal importer	calendar	hr	Calendar - [iv]Cal Importer
+calendar - add	calendar	hr	Kalendar - Dodaj
+calendar - edit	calendar	hr	Kalendar - Obrada
+calendar event	calendar	hr	Kalendarska obveza
+calendar holiday management	admin	hr	ure�.ivanje kalendarskih praznika
+calendar preferences	calendar	hr	Postavke kalendara
+calendar settings	admin	hr	Postavke kalendara
+calendar-fieldname	calendar	hr	Kalendar - Ime polja
+can't connect to inbox!!	felamimail	hr	nemogu se spojiti sa INBOX!!
+canceled	calendar	hr	Otkazano
+car phone	admin	hr	Telefon u Automobilu
+cc	felamimail	hr	CC
+cell phone	admin	hr	Mobilni telefon
+change all events for $params['old_owner'] to $params['new_owner'].	calendar	hr	Promijeni sve obveze od $params['old_owner'] u $params['new_owner'].
+change folder	felamimail	hr	Promijeni mapu
+change status	calendar	hr	Status promjene
+charset of file	calendar	hr	Charset of file
+checkbox	felamimail	hr	selektiraj
+city	common	hr	Grad
+click %1here%2 to return to the calendar.	calendar	hr	Pritisnite %1ovdje%2 za povratak u kalendar.
+click here to log back in.	felamimail	hr	Ponovni prijavak
+click here to return to %1	felamimail	hr	Povratak na %1
+close all	felamimail	hr	zatvori sve
+close this page	felamimail	hr	zatvori ovu stranicu
+close window	felamimail	hr	Zatvori prozor
+color	felamimail	hr	Boja
+company	common	hr	Tvrtka
+company name	common	hr	Naziv tvrtke
+compose	felamimail	hr	Pisanje nove poruke
+compress folder	felamimail	hr	Smanjii mapu
+configuration	felamimail	hr	Konfiguracija
+contact	common	hr	Kontakt
+contact application	admin	hr	Aplikacija kontakta
+contact settings	admin	hr	Podešenja kontakta
+contains	felamimail	hr	sadrži
+copied by %1, from record #%2.	admin	hr	Kopirao %1, iz zapisa #%2.
+countries	calendar	hr	Zemlje
+country	calendar	hr	Zemlja
+create	felamimail	hr	Napravi
+create folder	felamimail	hr	Napravi mapu
+create sent	felamimail	hr	Napravi poslano
+create subfolder	felamimail	hr	Napravi podmapu
+create trash	felamimail	hr	Napravi smeće
+created by	calendar	hr	Napravio
+created folder successfully!	felamimail	hr	Mapa uspješno napravljena
+csv-fieldname	calendar	hr	CSV-Ime polja
+csv-filename	calendar	hr	CSV-Ime datoteke
+custom	admin	hr	Proizvoljno
+custom fields	calendar	hr	Proizvoljna polja
+custom fields and sorting	common	hr	Proizvoljna polja i sortiranje
+daily	calendar	hr	Dnevno
+daily matrix view	calendar	hr	Dnevni matrični pregled
+dark blue	felamimail	hr	Tamno plavo
+dark cyan	felamimail	hr	Tamno cijan
+dark gray	felamimail	hr	Tamno sivo
+dark green	felamimail	hr	Tamno zeleno
+dark magenta	felamimail	hr	Tamno magenta
+dark yellow	felamimail	hr	Tamno žuto
+date(newest first)	felamimail	hr	po datumu (noviji prvo)
+date(oldest first)	felamimail	hr	po datumu (stariji prvo)
+days	calendar	hr	dana
+days repeated	calendar	hr	dana ponavljano
+dayview	calendar	hr	Dnevni pregled
+deactivate script	felamimail	hr	deaktiviraj skriptu
+debug output in browser	admin	hr	Prikaz poruka o izlaznim greškama unutar pretraživača
+default appointment length (in minutes)	calendar	hr	Početno vrijeme obveze (u minutama)
+default calendar filter	calendar	hr	Početna vrijednost kalendarskog filtra
+default calendar view	calendar	hr	Početni izgled kalendara
+default filter	admin	hr	Osnovni Filter
+default length of newly created events. the length is in minutes, eg. 60 for 1 hour.	calendar	hr	Početno postavljeno trajanje novostvorenih obveza. Trajanje je u minutama, tj. 60 za 1 sat
+default sorting order	felamimail	hr	Početno postavljen redoslijed sortiranja
+defines the size in minutes of the lines in the day view.	calendar	hr	Definira veličinu u minutama linija u dnevnom pregledu.
+delete a single entry by passing the id.	calendar	hr	Obriši jedan unos proslije�.uju�.i polja
+delete all	felamimail	hr	obriši sve
+delete an entire users calendar.	calendar	hr	Obriši korisnikov cijelokupni kalendar.
+delete folder	felamimail	hr	Obriši mapu
+delete selected	felamimail	hr	Obriši izabrano
+delete selected contacts	calendar	hr	Obriši izabrane kontakte
+delete selected messages	felamimail	hr	obriši izabrane poruke
+delete series	calendar	hr	Obriši serije
+delete single	calendar	hr	Obriši jedan
+deleted	felamimail	hr	obrisano
+deleted folder successfully!	felamimail	hr	Uspješno obrisana mapa
+department	common	hr	Odjel
+description	calendar	hr	Opis
+disable	felamimail	hr	Onemogući
+disabled	calendar	hr	Onesposobljeno
+display interval in day view	calendar	hr	Prikaži interval u dnevnom izgledu
+display message in new window	felamimail	hr	Prikaži poruku u novom prozoru
+display mini calendars when printing	calendar	hr	Prikaži smanjene kalendare prilikom ispisa
+display of html emails	felamimail	hr	Prikaz HTML emailova
+display only when no plain text is available	felamimail	hr	Prikaži samo u neprisutnosti običnog teksta
+display preferences	felamimail	hr	Prikaži postavke
+display status of events	calendar	hr	Prikaži status obveza
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	hr	Prikazuje vaš početno postavljen izgled kalendara na početnoj stranici (stranica koja se učita kada otvorite eGroupware ili kliknete na ikonu za početnu stranicu)?
+do it!	felamimail	hr	Učini to!!
+do not use sent	felamimail	hr	Ne upotrebljavaj mapu Poslano
+do not use trash	felamimail	hr	Ne upotrebljavaj mapu Smeće
+do you really want to delete the '%1' folder?	felamimail	hr	Da li zaista želite obrsati mapu: '%1'?
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	hr	Da li želite biti obaviješteni o novim ili promijenjenim obvezama? Biti �.e te obaviješteni o promijenama kada ih sami napravite.<br>Obavijesti možete ograničiti na samo o odre�.ene promjene. Svaka obavijest uključuje doga�.aje nabrojene gore. Sve promjene uključuju promjene naslova, opisa, sudionika, ali ne i odgovor sudionika. Ukoliko je vlasnik obveze zahtijevao neku obavijest, uvijek �.e dobiti sudionikov odgovor poput prihvata ali i odbijanja.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	hr	Da li želite primati redoviti sažetak vaših obveza na vaš e-mail?<br>Sažetak �.e biti poslan na vašu e-mail adresu ujutro toga dana ili u ponedjeljak za tjedne sažetke.<br>Sažetak �.e biti poslan samo ako imate obvezu taj dan ili tjedan.
+do you wish to autoload calendar holidays files dynamically?	admin	hr	Da li želite dinamičko automatizirano punjenje datoteka za praznike?
+does not contain	felamimail	hr	ne sadrži
+does not match	felamimail	hr	nema podudarnosti
+does not match regexp	felamimail	hr	nema podudarnosti regexp
+domestic	admin	hr	Doma�.i
+don't use sent	felamimail	hr	Ne upotrebljavaj Pošiljanje
+don't use trash	felamimail	hr	Ne upotrebljavaj Smeće
+down	felamimail	hr	dolje
+download	felamimail	hr	Prenesi sa poslužitelja
+download export file (uncheck to debug output in browser)	admin	hr	Preuzmi sa poslužitelja izvezenu datoteku (Odznači za prikaz poruka o izlaznim greškama unutar pretraživača)
+download this as a file	felamimail	hr	Prenesi sa poslužitelja kao datoteku
+duration	calendar	hr	Trajanje
+e-mail	felamimail	hr	E-Mail
+e-mail address	felamimail	hr	E-Mail adresa
+e-mail folders	felamimail	hr	E-Mail mapa
+edit custom field	admin	hr	Uredi proizvoljno polje
+edit custom fields	admin	hr	Uredi proizvoljna polja
+edit filter	felamimail	hr	Uredi filter
+edit rule	felamimail	hr	uredi pravilo
+edit selected	felamimail	hr	Uredi izabrano
+edit series	calendar	hr	Uredi serije
+edit single	calendar	hr	Uredi pojedinačan
+email address	felamimail	hr	E-Mail adresa
+email notification	calendar	hr	Obavijesti putem e-maila
+email notification for %1	calendar	hr	Obavijesti o Emailu za %1
+email signature	felamimail	hr	Email potpis
+empty for all	calendar	hr	isprazni za sve
+empty trash	felamimail	hr	isprazni Smeće
+enable	felamimail	hr	omogući
+enabled	calendar	hr	Omogu�.eno
+end date/time	calendar	hr	Datum/Vrijeme kraja
+enddate	calendar	hr	Datum kraja
+ends	calendar	hr	Završava
+enter output filename: ( .vcs appended )	calendar	hr	Unesite ime izlazne datoteke: ( .vcs nastavak )
+enter the path to the exported file here	admin	hr	Unesi stazu do izvezene datoteke
+enter your default mail domain ( from: user@domain )	admin	hr	Unesite vašu početno postavljenu domenu za poruke (format: korisnik@domena)
+enter your imap mail server hostname or ip address	admin	hr	Unesite ime vašeg IMAP poslužitelja ili IP adresu
+enter your sieve server hostname or ip address	admin	hr	Unesite ime vašeg SIEVE poslužitelja ili IP adresu
+enter your sieve server port	admin	hr	Unesite port vašeg SIEVE poslužitelja
+enter your smtp server hostname or ip address	admin	hr	Unesite ime vašeg SMTP poslužitelja ili IP adresu
+enter your smtp server port	admin	hr	Unesite port vašeg SMTP poslužitelja
+error	felamimail	hr	GREŠKA
+error connecting to imap serv	felamimail	hr	Greška prilikom spajanja na IMAP poslužitelj
+error opening	felamimail	hr	Greška prilikom otvaranja
+event details follow	calendar	hr	Slijede detalji obveze
+exceptions	calendar	hr	Iznimke
+export	calendar	hr	Export
+export a list of entries in ical format.	calendar	hr	Export a list of entries in iCal format.
+export contacts	admin	hr	Izvezi Kontakte
+export file name	admin	hr	Izvezi Datoteku
+export from addressbook	admin	hr	Izvezi iz Adresara
+expunge	felamimail	hr	Izbriši
+extended	calendar	hr	Produži
+extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	hr	Prošireni updates uvijek uključuju potpune detalje o obvezama. iCal-ove datoteke mogu uvezesti i odre�.ene kalendarske aplikacije.
+external participants	calendar	hr	Vanjski sudionici
+extra	admin	hr	Ekstra
+failed sending message to '%1' #%2 subject='%3', sender='%4' !!!	calendar	hr	Nisam uspio poslati poruku za '%1' #%2 subject='%3', sender='%4' !!!
+fax	admin	hr	Fax
+fax number	common	hr	Fax - Broj
+felamimail	common	hr	FelaMiMail
+field %1 has been added !	admin	hr	Polje %1 je dodano !
+field %1 has been updated !	admin	hr	Polje %1 ažurirano !
+field name	admin	hr	Ime Polja
+fields to show in address list	admin	hr	Polja za prikazati u listi adresa
+fieldseparator	calendar	hr	Razmaknica polja
+file into	felamimail	hr	informacije o datoteci
+files	felamimail	hr	datoteke
+filter active	felamimail	hr	aktivni filtri
+filter name	felamimail	hr	Ime filtra
+first name	felamimail	hr	Ime
+firstname of person to notify	calendar	hr	Ime osobe za obavijestiti
+flagged	felamimail	hr	flagged
+flags	felamimail	hr	Flags
+folder acl	felamimail	hr	acl mapa
+folder name	felamimail	hr	Ime mape
+folder path	felamimail	hr	Folder Path
+folder preferences	felamimail	hr	Postavke mape
+folder settings	felamimail	hr	Postavke mape
+folder status	felamimail	hr	Status mape
+folderlist	felamimail	hr	Lista mapa
+foldername	felamimail	hr	Ime mape
+folders	felamimail	hr	Mape
+folders created successfully!	felamimail	hr	Mape napravljene uspješno!
+follow	felamimail	hr	prati
+for mail to be send - not functional yet	felamimail	hr	Slanje pošte još nije u funkciji
+for received mail	felamimail	hr	Za primljenu poštu
+format of event updates	calendar	hr	Ažuriranje formata ili doga�.aja
+forward	felamimail	hr	Proslijedi
+found	felamimail	hr	Pronađeno
+fr	calendar	hr	P
+free/busy	calendar	hr	Obveze
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	hr	Obveze: Nepoznat korisnik '%1', pogrešna zaporka ili nije dostupno neprijavljenim korisnicima !!!
+frequency	calendar	hr	Frekvencija / Učestalost
+fri	felamimail	hr	Pet
+from	felamimail	hr	Pošaljitelj
+from(a->z)	felamimail	hr	po pošaljitelju (silazno A->Z)
+from(z->a)	felamimail	hr	po pošaljitelju (uzlazno Z->A)
+full description	calendar	hr	Puni opis
+full name	felamimail	hr	Puno ime
+fullname of person to notify	calendar	hr	Puno ime osobe za obavijestiti
+generate printer-friendly version	calendar	hr	Verzija za ispis
+geo	admin	hr	GEO
+global categories	calendar	hr	Globalne kategorije
+global public and group public	calendar	hr	Global Public and group public
+global public only	calendar	hr	Samo javno globalno
+go!	calendar	hr	Kreni!
+grant addressbook access	common	hr	Dozvole Pristupa Adresaru
+grant calendar access	common	hr	Dozvoli pristup kalendaru
+group planner	calendar	hr	Grupni planer
+group public only	calendar	hr	Samo javna grupa
+have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	hr	Pogledajte <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> da bi naučili nešto više o Squirrelmail.<br>
+header lines	felamimail	hr	Linije zaglavlja
+here is your requested alarm.	calendar	hr	Ovo je vaš zahtijevani alarm
+hide header	felamimail	hr	sakrij zaglavlje
+high priority	calendar	hr	Visoki prioritet
+holiday	calendar	hr	Praznik
+holiday management	calendar	hr	Ure�.ivanje praznika
+holiday-management	calendar	hr	Upravljanje praznicima
+holidays	calendar	hr	Praznici
+home address type	admin	hr	Vrsta doma�.e adrese
+home city	admin	hr	Osobno - Grad
+home country	admin	hr	Osobno - Država
+home email	admin	hr	Osobno - Email
+home email type	admin	hr	Osobno - vrsat Email
+home phone	admin	hr	Osobno - Telefon
+home state	admin	hr	Osobno - Županija
+home street	admin	hr	Osobno - Ulica
+home zip code	admin	hr	Osobno - Poštanski broj
+hours	calendar	hr	sati
+html	felamimail	hr	HTML
+i participate	calendar	hr	Sudjelujem
+ical / rfc2445	calendar	hr	iCal / rfc2445
+icons and text	felamimail	hr	Ikone i tekst
+icons only	felamimail	hr	Samo ikone
+identifying name	felamimail	hr	Ime za prepoznavanje
+if	felamimail	hr	AKO
+if checked holidays falling on a weekend, are taken on the monday after.	calendar	hr	ukoliko izabrani, praznici koji padaju na subotu ili nedjelju, primjenjuju se na slijede�.i ponedjeljak.
+if you dont set a password here, the information is availible to everyone, who knows the url!!!	calendar	hr	Ukoliko tu ne postavite zaporku, ova informacija je dostupna svima koji poznaju URL!!!
+ignore conflict	calendar	hr	Zanemari sukob
+illegal folder name.  please select a different name.	felamimail	hr	Nažalost nemožete koristiti unešeno ime. Molimo vas unesite drugo ime za mapu.
+imap	felamimail	hr	IMAP
+imap server	felamimail	hr	IMAP Poslužitelj
+imap server address	felamimail	hr	IMAP Adresa poslužitelja
+imap server type	felamimail	hr	IMAP vrsta poslužitelja
+imaps authentication	felamimail	hr	IMAPS provjera valjnanosti
+imaps encryption only	felamimail	hr	Samo IMAPS enkripcija
+import	calendar	hr	Uvezi
+import contacts	admin	hr	Uvezi Kontakte
+import csv-file	common	hr	Uvezi CSV-File
+import csv-file into addressbook	admin	hr	Uvezi CSV-Datoteku u Adresar
+import file	admin	hr	Uvezi Datoteku
+import from ldif, csv, or vcard	admin	hr	Uvezi iz LDIF, CSV, ili VCard
+import from outlook	admin	hr	Uvezi iz Outlook
+import next set	admin	hr	Uvezi slijede�.i set
+import_instructions	admin	hr	U Netscape, otvori Adresar i izaberi <b>Export</b> iz <b>File</b> menija.  Izvezena datoteka biti �.e u LDIF formatu.<p>Ili, u Outlook, izaberite vaš Contacts mapu, izaberite <b>Import and Export...</b> iz <b>File</b> menija i izvezite vaše kontakte u tekst razmaknut zarezom (comma separated text (CSV)) datoteku.  <p>Ili, u Palm Desktop 4.0 ili više, izaberite vaš adresar i izaberite <b>Export</b> iz <b>File</b> menija.  Izvezena datoteka biti �.e u VCard formatu.
+in	felamimail	hr	u
+in order for squirrelmail to provide the full set of options you need to create the special folders listed below.  just click the check box and hit the create button.	felamimail	hr	Kako bi SquirelMail ponudio sve mogućnosti morate ispod napraviti posebnu listu mapa. Samo označite i izaberite "napravi".
+in the center	felamimail	hr	u centru
+index order	felamimail	hr	Redoslijed indeksa
+info	felamimail	hr	Informacije
+international	admin	hr	Me�.unarodni
+interval	calendar	hr	Interval
+intervals in day view	calendar	hr	intervali u dnevnom pregledu
+intervals per day in planner view	calendar	hr	intervali po danu u planerskom preledu
+invalid entry id.	calendar	hr	Nevaže�.i unos indetiteta
+invalid user name or password	felamimail	hr	Nevaljani korisnik ili zaporka
+isdn phone	admin	hr	ISDN Telefon
+javascript	felamimail	hr	JavaScript
+label	admin	hr	LAbela
+language	felamimail	hr	Jezik
+last	calendar	hr	poslijednji
+last name	felamimail	hr	Prezime
+lastname of person to notify	calendar	hr	Prezime osobe za obavijestiti
+ldap context for contacts	admin	hr	LDAP kontekst za kontakte
+ldap host for contacts	admin	hr	LDAP poslužitelj za kontakte
+ldap root dn for contacts	admin	hr	LDAP root dn for contacts
+ldap root pw for contacts	admin	hr	LDAP root pw for contacts
+ldif	admin	hr	LDIF
+left	felamimail	hr	Lijevo
+length shown<br>(emtpy for full length)	calendar	hr	Pruikazana dužina<br>(Ostavite prazno za punu dužinu)
+length<br>(<= 255)	calendar	hr	Dužina<br>(<= 255)
+less	felamimail	hr	manje
+let this folder contain subfolders	felamimail	hr	Ova mapa smije sadržavati podmape
+light blue	felamimail	hr	Svijetlo plavo
+light cyan	felamimail	hr	Svijetlo cijan
+light gray	felamimail	hr	Svijetlo sivo
+light green	felamimail	hr	Svijetlo zeleno
+light magenta	felamimail	hr	Svijetlo magenta
+light yellow	felamimail	hr	Svijetlo žuto
+line 2	admin	hr	Linija 2
+link	calendar	hr	Link
+link to view the event	calendar	hr	Link to view the event
+list all	felamimail	hr	Prikaži sve
+list all categories.	calendar	hr	Prikaži sve kategorije.
+load [iv]cal	calendar	hr	Unesi [iv]Cal
+location	calendar	hr	Lokacija
+location of buttons when composing	felamimail	hr	Lokacija buttons prilikom pisanja poruke
+location of folder list	felamimail	hr	Lokacija liste mapa
+location to autoload from	admin	hr	Lokacija za automatsko unošenje forme
+mail server login type	admin	hr	Vrsta prijave mail poslužitelja
+mail settings	felamimail	hr	Postavke pošte
+mainmessage	felamimail	hr	glavna poruka
+make freebusy information availible to not loged in persons?	calendar	hr	Omogu�.i pristup informacijama o obvezama korisnicima koji nisu prijavljeni
+manage folders	felamimail	hr	Uređivanje mapa
+manage sieve	felamimail	hr	Uređivanje Sieve skripti
+mark as deleted	felamimail	hr	Označi obrisanim
+mark messages as	felamimail	hr	Označi izabranu poruku kao
+mark records as private	admin	hr	Označi podatak kao privatan
+mark selected as flagged	felamimail	hr	Označi izabrano kao flagged
+mark selected as read	felamimail	hr	Označi izabrano pročitanim
+mark selected as unflagged	felamimail	hr	Označi izabrano kao unflagged
+mark selected as unread	felamimail	hr	Označi izabrano nepročitanim
+match	felamimail	hr	Pronađi podudarnosti
+matches	felamimail	hr	podudarnosti
+matches regexp	felamimail	hr	podudara se sa regexp
+matrixview	calendar	hr	Matrični pregled
+medium gray	felamimail	hr	Srednje sivo
+message	felamimail	hr	Poruka
+message highlighting	felamimail	hr	Istaknuto u poruci
+message list	felamimail	hr	Lista poruka
+message phone	admin	hr	Telefon za poruke
+messages	felamimail	hr	poruke
+middle name	admin	hr	Srednje Ime
+minute	felamimail	hr	Minuta
+minutes	felamimail	hr	Minute
+mo	calendar	hr	P
+mobile	admin	hr	Mobilni
+mobile phone	admin	hr	Mobilni Telefon
+modem phone	admin	hr	Modemski Telefon
+modified	calendar	hr	Promijenjeno
+modify list of external participants	calendar	hr	Promijeni listu vanjskih sudionika
+mon	felamimail	hr	Pon
+month	calendar	hr	Mjesec
+monthly	calendar	hr	Mjesečno
+monthly (by date)	calendar	hr	Mjesečno (po datumima)
+monthly (by day)	calendar	hr	Mjesečno (po danima)
+monthview	calendar	hr	Mjesečni pregled
+more	felamimail	hr	još (više)
+move	felamimail	hr	premjesti
+move messages	felamimail	hr	premjesti poruku
+move selected to	felamimail	hr	premjesti izabrano u
+move to trash	felamimail	hr	Premjesti u Smeće
+must be unique	felamimail	hr	Mora biti jedinstven
+name	felamimail	hr	Ime
+never display html emails	felamimail	hr	Nikad ne prikaži HTML emailove
+new	common	hr	Novo
+new entry	calendar	hr	Novi unos
+new filter	felamimail	hr	Novi filter
+new name must not exist and not be empty!!!	calendar	hr	Novo ime ne smije ve�. postojati i ne smije biti prazno!!!
+next	felamimail	hr	Slijedeće
+next message	felamimail	hr	slijedeća poruka
+nickname	felamimail	hr	Nadimak
+no filter	felamimail	hr	Nema filtera
+no folders found	felamimail	hr	Nisam našao mapu(e)
+no folders were found to subscribe to!	felamimail	hr	Nisam našao mape za pretplatu!
+no folders were found to unsubscribe from!	felamimail	hr	Nisam našao mape za odjaviti pretplatu!
+no highlighting is defined	felamimail	hr	Nije definirano ništa za istaknuti u poruci
+no matches found	calendar	hr	Nemogu na�.i podudarnosti
+no messages were selected.	felamimail	hr	Niste izabrali nijednu poruku
+no next message	felamimail	hr	Nema više slijedećih poruka
+no notification	felamimail	hr	Bez obavijesti
+no personal address book is defined. contact administrator.	felamimail	hr	Ne postoji osobni adresar. Kontaktirajte vašeg administratora.
+no persons matching your search was found	felamimail	hr	Nisam našao osobe koje se podudaraju sa vašom pretragom
+no previous message	felamimail	hr	Nema više prethodnih poruka
+no response	calendar	hr	Nema odgovora
+no valid emailprofile selected!!	felamimail	hr	Izabrani profil nije važeći!!
+no vcard	admin	hr	Bez VCard
+none	felamimail	hr	nikakav
+notification messages for added events	calendar	hr	Obavještavaju�.a poruka o dodanim obvezama
+notification messages for canceled events	calendar	hr	Obavještavaju�.a poruka o otkazanim obvezama
+notification messages for modified events	calendar	hr	Obavještavaju�.a poruka o promijenjenim obvezama
+notification messages for your alarms	calendar	hr	Obavještavaju�.a poruka o vašim alarmima
+notification messages for your responses	calendar	hr	Obavještavaju�.a poruka o vašim odgovorima
+number of intervals per day in planner view	calendar	hr	Broj intervala po danu u pogledu planera
+number of messages to index	felamimail	hr	Proj poruka za indeksirati
+number of months	calendar	hr	Broj mjeseci
+number of records to read (%1)	calendar	hr	Broj zapisa za pročitati (%1)
+observance rule	calendar	hr	Pravilo nadgledanja
+occurence	calendar	hr	Učestalost
+old startdate	calendar	hr	Stari datum početka
+olddate	calendar	hr	Stari datum
+on %1 %2 %3 your meeting request for %4	calendar	hr	On %1 %2 %3 your meeting request for %4
+on all changes	calendar	hr	Za bilo koju promjenu
+on all modification, but responses	calendar	hr	Za sve promjene, ali i odgovore
+on any time change too	calendar	hr	Za bilo koju promjenu vremena
+on behalf of	felamimail	hr	u ime
+on invitation / cancelation only	calendar	hr	Samo za poziv / otkaz
+on participant responses too	calendar	hr	Prlikomi odgovora sudionika
+on time change of more than 4 hours too	calendar	hr	Prlikomi promjeei vremena više od 4 sata
+only inbox	felamimail	hr	Samo INBOX
+only unseen	felamimail	hr	Samo neviđene
+open all	felamimail	hr	otvori sve
+open todo's:	calendar	hr	Open To Do Items:
+options	felamimail	hr	Opcije
+order	calendar	hr	Naredba
+organisation	felamimail	hr	organizacija
+organization	felamimail	hr	organization
+organization name	admin	hr	Ime organizacije
+oth	felamimail	hr	Oth
+other number	admin	hr	Drugi broj
+other phone	admin	hr	Drugi telefon
+overlap holiday	calendar	hr	overlap holiday
+pager	common	hr	Pager
+parcel	admin	hr	paketski
+participant	calendar	hr	Sudionik
+participants	felamimail	hr	Sudionici
+participates	calendar	hr	Sudjeluje
+password for not loged in users to your freebusy information?	calendar	hr	Zaporka za neprijavljene korisnike za vaše informacije o obvezama?
+people holiday	calendar	hr	državni praznik
+permission denied	calendar	hr	Uskra�.ena dozvola
+personal information	felamimail	hr	Osobne informacije
+phone number	common	hr	Broj Telefona
+phone numbers	common	hr	Brojevi Telefona
+planner	calendar	hr	Planer
+planner by category	calendar	hr	Planer po kategoriji
+planner by user	calendar	hr	Planer po korisniku
+please confirm,accept,reject or examine changes in the corresponding entry in your calendar	calendar	hr	Molimo vas potvrdite, prihvatite, odbijte ili pregledajte promjene u odgovaraju�.em unosu u vašem kalendaru
+please enter a filename !!!	calendar	hr	Molimo vas unesite ime datoteke!!!
+please enter a name for that field !	admin	hr	Molim vas unesite naziv za to polje !
+postal	common	hr	Poštanski
+posting	felamimail	hr	posting
+pref	admin	hr	pref
+preference file %1 not found. exiting abnormally	felamimail	hr	Datoteka o postavkama %1 nije nađena. ------------------
+preference file, %1, does not exist. log out, and log back in to create a default preference file.	felamimail	hr	Datoteka o postavkama, %1, ne postoji. Odjavite se i ponovo prijavite radi stvaranja početne datoteke postavki.
+prefix	admin	hr	Prefiks
+preselected group for entering the planner	calendar	hr	Predizabrana grupa za unos planera
+previous	felamimail	hr	Prijašnja
+previous message	felamimail	hr	prijašnja poruka
+print calendars in black & white	calendar	hr	Ispis crno bijelog kalendara
+print it	felamimail	hr	ispiši
+print the mini calendars	calendar	hr	Ispis smanjenih kalendara
+print this page	felamimail	hr	ispiši ovu stanicu
+printer friendly	calendar	hr	Verzija za ispis
+privat	calendar	hr	Privatno
+private and global public	calendar	hr	Private and Global Public
+private and group public	calendar	hr	Private and Group Public
+private only	calendar	hr	Samo privatno
+public key	admin	hr	Javni ključ
+purge	felamimail	hr	izbriši
+quicksearch	felamimail	hr	Brza pretraga
+re-edit event	calendar	hr	Ponovo uredi obvezu
+read	felamimail	hr	pročitaj
+read a list of entries.	calendar	hr	Pročitaj listu svih unosa
+read a single entry by passing the id and fieldlist.	calendar	hr	Pročitaj jedan zapis proslije�.uju�.i šifru i listu polja
+read da	felamimail	hr	Pročitaj da
+read this list of methods.	calendar	hr	Pročitaj listu metoda
+reading	felamimail	hr	čitam
+reason giv	felamimail	hr	Razlog Giv
+receive email updates	calendar	hr	Receive email updates
+receive extra information in event mails	calendar	hr	Receive extra information in event mails
+receive summary of appointments	calendar	hr	Primi sažetak obveza
+recent	felamimail	hr	nedavni
+record access	admin	hr	Pristup Podacima
+record owner	admin	hr	Vlasnik Podataka
+recurring event	calendar	hr	ponavljaju�.a obveza
+refresh	calendar	hr	Obnovi
+refresh folder list	felamimail	hr	obnovi listu mapa
+refresh page	felamimail	hr	Obnovi stranicu
+refresh time in minutes	felamimail	hr	Obnovi vrijeme u minutama
+reinstate	calendar	hr	Ponovi postavi
+rejected	calendar	hr	Odbijeno
+remove	felamimail	hr	makni
+remove immediately	felamimail	hr	Obriši odmah
+rename	felamimail	hr	Preimenuj
+rename a folder	felamimail	hr	Preimenuj mapu
+rename folder	felamimail	hr	Preimenuj mapu
+renamed successfully!	felamimail	hr	Uspješno preimenovano
+repeat day	calendar	hr	Ponovi na dan
+repeat end date	calendar	hr	Krajnji datum ponavljanja
+repeat type	calendar	hr	Tip ponavljanja
+repeating event information	calendar	hr	Informacije o ponavljaju�.oj obvezi
+repetition	calendar	hr	Ponavljanje
+repetitiondetails (or empty)	calendar	hr	Detalji ponavljanja (ili prazno)
+replied	felamimail	hr	odgovoreno
+reply	felamimail	hr	Odgovori
+reply all	felamimail	hr	Odgovori svima
+reply to	felamimail	hr	Odgovori
+replyto	felamimail	hr	Odgovori
+reset	calendar	hr	Postavi ponovo
+retrieve contacts	admin	hr	Ispravi kontakte
+return	felamimail	hr	Povratak
+return to options page	felamimail	hr	Povratak na stranicu opcija
+right	felamimail	hr	Desno
+rule	felamimail	hr	Pravilo
+running squirrelmail version %1 (c) 1999-2000.	felamimail	hr	Pokrećem SquirrelMail verziju %1 (c) 1999-2000.
+sa	calendar	hr	Su
+same window - not functional yet	felamimail	hr	Isti prozor - još nije u funkciji
+sat	felamimail	hr	Sub
+save	felamimail	hr	Spremi
+scheduling conflict	calendar	hr	Sukob u rasporedu
+search	felamimail	hr	Potraga
+search for	felamimail	hr	Traži
+search results	calendar	hr	Rezultat pretrage
+seconds	felamimail	hr	Sekunde
+select	felamimail	hr	Izaberite
+select all	felamimail	hr	Izaberite sve
+select emailprofile	felamimail	hr	Izabertei e-mail profil
+select home email address	felamimail	hr	Izaberite kućnu e-mail adresu
+select the type of conversion	admin	hr	Izaberite vrstu konverzije
+select the type of conversion:	admin	hr	Izaberite vrstu konverzije:
+select where you want to store	admin	hr	Izaberite gdje želite spremiti
+select work email address	felamimail	hr	Izaberite poslovnu e-mail adresu
+select your mail server type	admin	hr	Izaberte vrstu mail poslužitelja
+selected contacts (%1)	calendar	hr	Izabrani kontakti (%1)
+send	felamimail	hr	Pošalji
+send updates via email	common	hr	Send updates via EMail
+send/receive updates via email	calendar	hr	Send/Receive updates via EMail
+sent fold	felamimail	hr	Pošalji mapa
+sent folder	felamimail	hr	Mapa poslano
+server respond	felamimail	hr	Odgovor poslužitelja
+set a year only for one-time / non-regular holidays.	calendar	hr	Set a Year only for one-time / non-regular holidays.
+set new events to private	calendar	hr	Postavi nove doga�.aju u privatno
+should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	hr	Da li �.e pozivi koje ste odbili i dalje biti prikazani u vašem kalendaru?<br>Možete ih prihvatiti kasnije (tj. kada su sukobi u rasporedu riješeni), ako su još uvijek prikazani u vašem kalendaru!
+should new events created as private by default ?	calendar	hr	Trebaju li se nove obvezei postaviti kao privatne?
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	hr	Da li želite da neprijavljenji korisnici vide informacije o vašim obvezama? Možete dodati još jednu dodatnu zaporku, različitu od vaše uobičajne zaporke, radi zaštite vaših informacija. Informacije o vašim obvezama su u iCal formatu i uključuju samo vremena kada ste zauzeti. Ne uključuje ime doga�.aja, opis ili lokaciju. URL informacija o vašim obvezama je: %1.
+should the mini calendars by printed / displayed in the printer friendly views ?	calendar	hr	Da li �.e se smanjeni kalendari ispisati / prikazati u verziji za ispis?
+should the printer friendly view be in black & white or in color (as in normal view)?	calendar	hr	Da li �.e se verzija za ispis prikazati crno-bijelo ili u boji?
+should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	hr	Da li bi se status sudionika obveze (prihva�.en, odbijen, ...) trebao prikazati nakon imena sudionika u zagradama?
+show birthday reminders on main screen	admin	hr	Pokaži ro�.endanske podsjetnike na glavnom ekranu
+show day view on main screen	calendar	hr	Prikaži dnevni prikaz na glavnom ekranu
+show default view on main screen	calendar	hr	Prikaži početno postavljeni prikaz na glavnom ekranu
+show header	felamimail	hr	prikaži zaglavlje
+show high priority events on main screen	calendar	hr	Prikaži obveze visokog prioriteta na glavnom ekranu
+show invitations you rejected	calendar	hr	Prikaži odbijene pozive
+show list of upcoming events	calendar	hr	Prikaži listu dolaze�.ih obvezama
+show new messages on main screen	felamimail	hr	Prikaži novu poruku na glavnom ekranu
+sieve settings	admin	hr	Postavke Sieve
+signature	felamimail	hr	Potpis
+simply click the target-folder	felamimail	hr	Samo izaberite ciljanu mapu
+single event	calendar	hr	jedna obveza
+site configuration	felamimail	hr	Konfiguracija stranice
+size	felamimail	hr	Veličina
+size of editor window	felamimail	hr	Veličina prozora za uređivanje
+size(...->0)	felamimail	hr	po veličini (silazno ...->0)
+size(0->...)	felamimail	hr	po veličini (uzlazno 0->...)
+small view	felamimail	hr	smanji pogled
+smtp settings	admin	hr	Postavke SMTP
+some or all of the help documents are not present!	felamimail	hr	Nedostaju neke ili sve datoteke za pomoć!
+sorry, the owner has just deleted this event	calendar	hr	Žao mi je, vlasnik je upravo obrisao ovu obvezu
+sorry, this event does not exist	calendar	hr	Nažalost, ova obveza ne postoji
+sorry, this event does not have exceptions defined	calendar	hr	Žao mi je, ova obveza nema definirane iznimke
+sort by	calendar	hr	Poredaj po
+source	felamimail	hr	Izvor
+special folder options	felamimail	hr	Posebne mogućnosti sa mapama
+specifies the the number of intervals shown in the planner view.	calendar	hr	Specificira broj intervala prikazanih u pregledu planera.
+squirrelmail	felamimail	hr	Squirrelmail
+start date/time	calendar	hr	Datum/vrijeme početka
+start- and enddates	calendar	hr	Početni i krajnji datumi
+startdate	calendar	hr	Datum početka
+startrecord	calendar	hr	Početak zapisa
+state	common	hr	Županija
+street	common	hr	Ulica
+su	calendar	hr	Ne
+subject	felamimail	hr	Tema
+subject(a->z)	felamimail	hr	po temi (silazno A->Z)
+subject(z->a)	felamimail	hr	po temi (uzlazno Z->A)
+submit	felamimail	hr	Pošalji
+submit to repository	calendar	hr	Submit to Repository
+subscribe	felamimail	hr	Pretplata
+subscribed	felamimail	hr	Pretplaćen
+subscribed successfully!	felamimail	hr	Uspješno ste pretplaćeni!
+successfully imported %1 records into your addressbook.	admin	hr	Uspješno uneseno %1 zapis(a) u vaš Adresar.
+successfully saved display preferences!	felamimail	hr	Uspješno spremljene postavke prikaza!
+successfully saved folder preferences!	felamimail	hr	Uspješno spremljene postavke mapa!
+successfully saved personal information!	felamimail	hr	Uspješno spremljene osobne informacije!
+suffix	admin	hr	Sufiks
+sun	felamimail	hr	Ned
+switch current folder to	felamimail	hr	promijeni trenutnu mapu u
+table of contents	felamimail	hr	Tabela sadržaja
+tentative	calendar	hr	Probni
+test import (show importable records <u>only</u> in browser)	calendar	hr	Test Import (show importable records <u>only</u> in browser)
+text	calendar	hr	Tekst
+text only	felamimail	hr	Samo tekst
+th	calendar	hr	�.
+that field name has been used already !	admin	hr	Ovaj naziv polja je ve�. u upotrebi !
+the connection to the imap server failed!!	felamimail	hr	Neuspjelo spajanje na IMAP poslužitelja!!
+the following conflicts with the suggested time:<ul>%1</ul>	calendar	hr	Slijede�.e se koosi sa predloženim vremenom:<ul>%1</ul>
+the help has not been translated to %1.  it will be displayed in english instead.	felamimail	hr	Pomoć nije prevedena na %1. Biti će prikazana na engleskom.
+the index order is the order that the columns are arranged in the message index.  you can add, remove, and move columns around to customize them to fit your needs.	felamimail	hr	Indeks redoslijeda je redoslijed rasporeda kolona u indeksu poruka. Možete dodati, maknuti, i pomaknuti kolumne po vlastitom nahođenju
+the order of the message index can be rearanged and changed to contain the headers in any order you want.	felamimail	hr	Redoslijed indeksa poruka se može promijeniti tako da sadrži zaglavlja u redoslijedu kakvim vi želite.
+the user %1 is not participating in this event!	calendar	hr	Korisnik %1 ne sudjeluje o ovoj obvezi!
+theme	felamimail	hr	Tema
+then	felamimail	hr	TADA
+there was an error trying to connect to your news server.<br>please contact your admin to check the news servername, username or password.	calendar	hr	Dogodila se greška prilikom spajanja na vašeg poslužitelja vijesti.<br>Molimo vas kontaktirajte vašeg administratora, radi provjere imena posljužitelja, korisničkog imena i zaporke.
+these settings change the way your folders are displayed and manipulated.	felamimail	hr	Ovim postavkama mijenjate način na koji se prikazuju vaše mape i kako ih uređujete.
+this contains personal information about yourself such as your name, your email address, etc.	felamimail	hr	Ovdije su sdržane vaše osobne informacije poput imena, e-maila, i sl.
+this day is shown as first day in the week or month view.	calendar	hr	Ovaj dan je prikazan kao prvi dan u tjednu u mjesečnom pregledu.
+this defines the end of your dayview. events after this time, are shown below the dayview.	calendar	hr	Ovdje odre�.ujete kraj vašeg dnevnog pregleda. Obveze koje su poslije ovog vremena prikazane su ispod vašeg dnevnog pregleda.
+this defines the start of your dayview. events before this time, are shown above the dayview.<br>this time is also used as a default starttime for new events.	calendar	hr	Ovdje odre�.ujete početak vašeg dnevnog pregleda. Obveze prije ovog vremena su prikazane iznad vašeg dnevnog pregleda.<br>Ovo vrijeme se tako�.er koristi kao početna vrijednost početka novih obveza.
+this folder is empty	felamimail	hr	OVA MAPA JE PRAZNA
+this group that is preselected when you enter the planner. you can change it in the planner anytime you want.	calendar	hr	Ova grupa je predizabrana kada u�.ete u planer. Možete je promijeniti u planeru kad god ho�.ete.
+this is mostly caused by a not or wrongly configured smtp server. notify your administrator.	calendar	hr	Uzrok ovoga je vjerovatno nepodešen ili loše podešen SMTP server. Obavijestite vašeg administratora.
+this message is sent for canceled or deleted events.	calendar	hr	Ova poruka je poslana za otkazane ili obrisane obveze.
+this message is sent for modified or moved events.	calendar	hr	Ova poruka je poslana za promijenjene ili pomaknute obveze.
+this message is sent to every participant of events you own, who has requested notifcations about new events.<br>you can use certain variables which get substituted with the data of the event. the first line is the subject of the email.	calendar	hr	Ova poruka je poslana svim sudionicima u obvezama koje posjedujete, a koji zahtijevaju poruku o novim doga�.ajima.<br>Možete upotrijebiti odre�.ene varijable koje su zamijenjene sa podacima o obvezi. Prva linija je tema e-mail poruke.
+this message is sent when you accept, tentative accept or reject an event.	calendar	hr	Ova poruka se šalje kada prihvatite, probno prihvatite ili odbijete neku obvezu.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	hr	Ova poruka se šalje kada postavite alarm za odre�.ene obveze. Uključite sve informacije koje bi mogli zatrebati.
+this month	calendar	hr	Ovog mjeseca
+this person's first name was not in the address book.	admin	hr	Ime ove osobe nije u Adresaru.
+this person's last name was not in the address book.	admin	hr	Prezime ove osobe nije u Adresaru.
+this php has no imap support compiled in!!	felamimail	hr	Ovaj PHP nema ugrađenu podršku za IMAP!!
+this port is based on squirrelmail, which is a standalone imap client.<br>	felamimail	hr	Ovaj port se bazira na Squirrelmail-u, koji je samostalni klijent za IMAP.<br>
+this week	calendar	hr	Ovog tjedna
+this year	calendar	hr	Ove godine
+thu	felamimail	hr	Čet
+title	calendar	hr	Naslov
+title of the event	calendar	hr	Ime obveze
+title-row	calendar	hr	Title-row
+to	felamimail	hr	Za
+to many might exceed your execution-time-limit	calendar	hr	to many might exceed your execution-time-limit
+to the left	felamimail	hr	prema lijevo
+to the right	felamimail	hr	prema desno
+to-firstname	calendar	hr	Prema - Imenu
+to-fullname	calendar	hr	Prema - Imenu i prezimenu
+to-lastname	calendar	hr	Prema - Prezimenu
+today	calendar	hr	Danas
+today is %1's birthday!	common	hr	Danas je  %1's ro�.endan!
+tomorrow is %1's birthday.	common	hr	Sutra je %1's ro�.endan.
+top	felamimail	hr	Vrh
+translation	calendar	hr	Prijevod
+translation location	felamimail	hr	Lokacija prijevoda
+translation preferences	felamimail	hr	Postavke prijevoda
+translation server	felamimail	hr	Poslužitelj prijevoda
+trash fold	felamimail	hr	Mapa Smeće
+trash folder	felamimail	hr	Mapa Smeće
+tu	calendar	hr	U
+tue	felamimail	hr	Uto
+type	felamimail	hr	vrsta (tip)
+unable to list addresses from %1	felamimail	hr	Nemogu prikazati adrese iz %1
+unflagged	felamimail	hr	unflagged
+unknown err	felamimail	hr	Nepoznata greška
+unknown error	felamimail	hr	Nepoznata greška
+unknown sender	felamimail	hr	Pošiljatelj nepoznat
+unknown user or password incorrect.	felamimail	hr	Nepoznat korisnik ili nevažeća zaporka.
+unread	common	hr	nepročitano
+unseen	felamimail	hr	Neviđeno
+unseen and total	felamimail	hr	Neviđeno i ukupno
+unseen message notification	felamimail	hr	Obavijest o neviđenim porukama
+unseen message notification type	felamimail	hr	Vrsta obavijesti o neviđenim porukama
+unselect all	felamimail	hr	Odizaberi sve
+unsubscribe	felamimail	hr	Odpretplata
+unsubscribed	felamimail	hr	Odpretplaćen
+unsubscribed successfully!	felamimail	hr	Uspiješan prekid pretplate!
+up	felamimail	hr	gore
+update a single entry by passing the fields.	calendar	hr	Update a single entry by passing the fields.
+update address	felamimail	hr	Obnovi adresu
+updated	calendar	hr	Updated
+use a signature	felamimail	hr	Upotrijebi potpis
+use a signature?	felamimail	hr	Upotrijebi potpis?
+use addresses	felamimail	hr	Upotrijebi adresu
+use country list	admin	hr	Upotrijebi listu zemalja
+use custom settings	felamimail	hr	Upotrijebi prilagođene postavke
+use end date	calendar	hr	Upotrijebi krajnji datum
+use javascript or html addressbook?	felamimail	hr	Upotrijebi Javascript ili HTML adresar?
+use smtp auth	admin	hr	Upotrijebi SMTP autorizaciju
+users can define their own emailaccounts	admin	hr	Korisnici mogu sami definirati svoje e-mail račune
+vcard	common	hr	VCard
+vcards require a first name entry.	admin	hr	VCard zahtijevaju unos imena
+vcards require a last name entry.	admin	hr	Vcard zahtijevaju unos prezimena
+video phone	admin	hr	Video telefon
+view full header	felamimail	hr	Prikaži cijelo zaglavlje
+view message	felamimail	hr	Prikaži poruku
+view this entry	calendar	hr	Prikaži ovaj unos
+viewing full header	felamimail	hr	Prikazujem cijelo zaglavlje
+viewing message	felamimail	hr	Prikazujem poruku
+viewing messages	felamimail	hr	Prikazujem poruku
+voice phone	admin	hr	Glasovni telefon
+warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	hr	UPOZORENJE!! LDAP je valjan samo ako NE upotrebljavate kontakte za spremanje korisničkih računa!
+we	calendar	hr	S
+wed	felamimail	hr	Sri
+week	calendar	hr	Tjedan
+weekday starts on	calendar	hr	Početak radnog tjedna
+weekly	calendar	hr	Tjedno
+weekview	calendar	hr	Tjedni pregled
+welcome to %1's webmail system	felamimail	hr	Dobrodošli u  %1-ov  WebMail sustav
+when creating new events default set to private	calendar	hr	Prilikom stvaranja novih obveza početno postavi na privatno
+when deleting messages	felamimail	hr	Prilikom brisanja poruka
+which events do you want to see when you enter the calendar.	calendar	hr	Koje obveze želite vidjeti kada otvorite kalendar.
+which of calendar view do you want to see, when you start calendar ?	calendar	hr	Koji kalendarski pregled želite imati kada pokrenete kalendar ?
+white	felamimail	hr	Zapiši
+width of folder list	felamimail	hr	Širina liste mapa
+work day ends on	calendar	hr	Radni dan završava u
+work day starts on	calendar	hr	Radni dan počinje u
+work phone	admin	hr	Telefon na poslu
+workdayends	calendar	hr	Kraj radnog tjedna
+wrap incoming text at	felamimail	hr	Omotaj ulazni tekst pri
+writing	felamimail	hr	zapisujem
+wrote	felamimail	hr	zapisano (zapisao je)
+yearly	calendar	hr	Godišnje
+yearview	calendar	hr	Godišnji pregled
+you can change the way that squirrelmail looks and displays information to you, such as the colors, the language, and other settings.	felamimail	hr	Možete promijeniti način na koji SquirelMail izgleda i prikazuje informacije poput boje, jezika ili drugih postavki.
+you can either set a year or a occurence, not both !!!	calendar	hr	You can either set a Year or a Occurence, not both !!!
+you can only edit one address at the time	felamimail	hr	Možete urediti samo jednu adresu istovremeno.
+you can only set a year or a occurence !!!	calendar	hr	You can only set a year or a occurence !!!
+you do not have permission to add alarms to this event !!!	calendar	hr	Nemate dozvolu za dodavanje alarma na ovu obvezu !!!
+you do not have permission to delete this alarm !!!	calendar	hr	Nemate dozvolu za brisanje ovog alarma !!!
+you do not have permission to enable/disable this alarm !!!	calendar	hr	Nemate dozvolu za aktiviranje/deaktiviranje ovog alarma!!!!
+you do not have permission to read this record!	calendar	hr	Nemate dozvolu čitanja ovog zapisa
+you have %1 high priority events on your calendar today.	common	hr	Danas imate %1 obveza visokog prioriteta.
+you have 1 high priority event on your calendar today.	common	hr	Danas imate 1 obvezu visokog proioriteta.
+you have a meeting scheduled for %1	calendar	hr	Imate sastanak na rasporedu za %1
+you have not entered a title	calendar	hr	Nist unijeli ime
+you have not entered a valid date	calendar	hr	Niste unijeli važe�.i datum
+you have not entered a valid time of day	calendar	hr	Niste unijeli važe�.e vrijeme dana
+you have not entered participants	calendar	hr	Niste unijeli sudionike
+you must enter one or more search keywords	calendar	hr	Morate unijeti bar jednu ili više ključnih riječi za pretraživanje
+you must login first.	felamimail	hr	Morate se prvo prijaviti.
+you must select a [iv]cal. (*.[iv]cs)	calendar	hr	Morate izabrati [iv]Cal. (*.[iv]cs)
+you must select a vcard. (*.vcf)	admin	hr	Morate izabrati vcard. (*.vcf)
+you must select at least 1 column to display	admin	hr	Morate izabrati bar 1 kolumnu za prikazati
+you need a valid user and password to access this page!	felamimail	hr	Trebate biti važeći korisnik ili imati važeću zaporku za pristup ovim stranicama!
+you need to set either a day or a occurence !!!	calendar	hr	You need to set either a day or a occurence !!!
+your meeting scheduled for %1 has been canceled	calendar	hr	Vaš sastanak na rasporedu za %1 je otkazan
+your meeting that had been scheduled for %1 has been rescheduled to %2	calendar	hr	Vaš sastanak zakazan za %1 je premiješten na %2
+your search failed with the following error(s)	felamimail	hr	Neuspjela pretraga sa slijedečom(im) greškom(ama)
+your suggested time of <b> %1 - %2 </b> conflicts with the following existing calendar entries:	calendar	hr	Vaše predloženo vrijeme od<B> %1 - %2 </B> je u sukobu sa postoje�.im obvezama u kalendaru
+zip code	common	hr	Poštanski Broj
+zip_note	admin	hr	<p><b>Obavijest:</b> Datoteka može biti zip kolekcija .csv, .vcf, ili .ldif datoteka.  Ipak, nemojte miješati vrste datoteka po uvozu.
+1	felamimail	hr	1
