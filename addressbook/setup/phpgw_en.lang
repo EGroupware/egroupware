@@ -18,6 +18,7 @@ add a new list	addressbook	en	Add a new list
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
 add custom field	addressbook	en	Add Custom Field
 add to distribution list:	addressbook	en	Add to distribution list:
+added by synchronisation	addressbook	en	added by synchronisation
 added to distribution list	addressbook	en	added to distribution list
 additional information about using ldap as contact repository	admin	en	Additional information about using LDAP as contact repository
 address book	common	en	Address Book
@@ -26,6 +27,7 @@ address book - view	addressbook	en	Address book - view
 address line 2	addressbook	en	Address Line 2
 address type	addressbook	en	Address Type
 addressbook	common	en	Addressbook
+addressbook csv export	addressbook	en	Addressbook CSV export
 addressbook menu	addressbook	en	Addressbook menu
 addressbook preferences	addressbook	en	Addressbook preferences
 addressbook the contact should be saved to	addressbook	en	Addressbook the contact should be saved to
@@ -133,6 +135,7 @@ export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
 export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	addressbook	en	Exports contacts from your Addressbook into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you	can also choose other seperators.
 extra	addressbook	en	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	failed to change %1 organisation member(s) (insufficent rights) !!!
 fax	addressbook	en	Fax
@@ -152,6 +155,8 @@ geo	addressbook	en	GEO
 global categories	addressbook	en	Global Categories
 grant addressbook access	common	en	Grant Addressbook Access
 group %1	addressbook	en	Group %1
+hide accounts from addressbook	addressbook	en	Hide accounts from addressbook
+hides accounts completly from the adressbook for non administrators!	addressbook	en	Hides accounts completly from the adressbook for non administrators!
 home address	addressbook	en	Home address
 home address, birthday, ...	addressbook	en	Home address, Birthday, ...
 home city	addressbook	en	Home City

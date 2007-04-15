@@ -18,6 +18,7 @@ add a new list	addressbook	de	Neuen Verteiler hinzfügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
+added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation
 added to distribution list	addressbook	de	hinzugefügt zum Verteiler
 additional information about using ldap as contact repository	admin	de	Zusätzliche Information über die Nutzung von LDAP zum Speichern der Kontakte
 address book	common	de	Adressbuch
@@ -26,6 +27,7 @@ address book - view	addressbook	de	Adressbuch - Anzeigen
 address line 2	addressbook	de	Adresszeile 2
 address type	addressbook	de	Adresstyp
 addressbook	common	de	Adressbuch
+addressbook csv export	addressbook	de	Adressbuch CSV Export
 addressbook menu	addressbook	de	Adressbuch Menü
 addressbook preferences	addressbook	de	Adressbuch Einstellungen
 addressbook the contact should be saved to	addressbook	de	Adressbuch in das der Kontakt gespeichert werden soll
@@ -133,6 +135,7 @@ export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
 export selection	addressbook	de	Auswahl exportieren
 exported	addressbook	de	exportiert
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
 extra	addressbook	de	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte) !!!
 fax	addressbook	de	Telefax
@@ -152,6 +155,8 @@ geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
 group %1	addressbook	de	Gruppe %1
+hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
+hides accounts completly from the adressbook for non administrators!	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch für nicht Administratoren!
 home address	addressbook	de	Privatadresse
 home address, birthday, ...	addressbook	de	Privatadresse, Geburtstag, ...
 home city	addressbook	de	Stadt privat

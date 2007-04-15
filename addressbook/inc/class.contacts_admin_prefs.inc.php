@@ -207,6 +207,16 @@ class contacts_admin_prefs
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
+		//show accounts in listing
+		$GLOBALS['settings']['hide_accounts'] = array(
+			'type'   => 'check',
+			'label'  => 'Hide accounts from addressbook',
+			'name'   => 'hide_accounts',
+			'help'   => 'Hides accounts completly from the adressbook for non administrators!',
+			'xmlrpc' => True,
+			'admin'  => false,
+		);
+
 		return true;	// otherwise prefs say it cant find the file ;-)
 	}
 
