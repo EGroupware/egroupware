@@ -13,8 +13,8 @@
  * @version $Id$
  * @todo check if user wants notifications via egw popup!
  */
-$GLOBALS['egw']->translation->add_app('notifications');
 if (!$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup']) {
+	$GLOBALS['egw']->translation->add_app('notifications');
 	echo '<script src="'. $GLOBALS['egw_info']['server']['webserver_url']. '/notifications/js/notificationajaxpopup.js'. '" type="text/javascript"></script>';
 	echo '<script type="text/javascript">notificationwindow_init();</script>';
 	echo '
