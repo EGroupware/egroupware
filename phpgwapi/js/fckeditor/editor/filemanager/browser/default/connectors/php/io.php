@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
@@ -40,7 +40,7 @@ function ServerMapFolder( $resourceType, $folderPath )
 {
 	// Get the resource type directory.
 	//INTEGRATION $sResourceTypePath = $GLOBALS["UserFilesDirectory"] . $resourceType . '/' ;
-	$sResourceTypePath = $GLOBALS["UserFilesDirectory"] . '/' ;
+	$sResourceTypePath = $GLOBALS["UserFilesDirectory"];
 
 	// Ensure that the directory exists.
 	CreateServerFolder( $sResourceTypePath ) ;
@@ -93,6 +93,9 @@ function CreateServerFolder( $folderPath )
 
 function GetRootPath()
 {
+	//INTEGRATION: alogrithm below does not work if eGW is installed outside the docroot
+	return $_SERVER['DOCUMENT_ROOT'];
+
 	$sRealPath = realpath( './' ) ;
 
 	$sSelfPath = $_SERVER['PHP_SELF'] ;

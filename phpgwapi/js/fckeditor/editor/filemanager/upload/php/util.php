@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
  * Copyright (C) 2003-2007 Frederico Caldeira Knabben
@@ -29,6 +29,9 @@ function RemoveExtension( $fileName )
 
 function GetRootPath()
 {
+	//INTEGRATION: alogrithm below does not work if eGW is installed outside the docroot
+	return $_SERVER['DOCUMENT_ROOT'];
+
 	$sRealPath = realpath( './' ) ;
 
 	$sSelfPath = $_SERVER['PHP_SELF'] ;
