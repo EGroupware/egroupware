@@ -1045,6 +1045,7 @@ class uicontacts extends bocontacts
 						$content['upload_photo']['tmp_name'] != 'none')
 					{
 						$content['jpegphoto'] = $this->resize_photo($content['upload_photo']);
+						unset($content['upload_photo']);
 					}
 					$links = false;
 					if (!$content['id'] && is_array($content['link_to']['to_id']))
