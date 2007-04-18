@@ -1169,11 +1169,11 @@
 							$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').$cell['onchange'];
 						}
 						$html .= !$readonly ? $this->html->submit_button($form_name,$label,$onclick,
-							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app,(($type=='buttononly') ? 'button' : 'submit')) :
+							strlen($label) <= 1 || $cell['no_lang'],$options,$img,$app,$type == 'buttononly' ? 'button' : 'submit') :
 							$this->html->image($app,$ro_img);
 					}
 					$extra_label = False;
-					if (!$readonly)
+					if (!$readonly && $type != 'buttononly')	// input button, are never submitted back!
 					{
 						$GLOBALS['egw_info']['etemplate']['to_process'][$form_name] = $cell['type'];
 						if (strtolower($name) == 'cancel')
