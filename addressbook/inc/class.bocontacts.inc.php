@@ -978,7 +978,7 @@ class bocontacts extends socontacts
 	 */
 	function delete_list($list)
 	{
-		if (!$this->ceck_list($list,EGW_ACL_DELETE)) return false;
+		if (!$this->check_list($list,EGW_ACL_DELETE)) return false;
 		
 		return parent::delete_list($list);
 	}
