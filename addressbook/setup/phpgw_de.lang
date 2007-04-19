@@ -135,7 +135,7 @@ export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
 export selection	addressbook	de	Auswahl exportieren
 exported	addressbook	de	exportiert
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
 extra	addressbook	de	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte) !!!
 fax	addressbook	de	Telefax

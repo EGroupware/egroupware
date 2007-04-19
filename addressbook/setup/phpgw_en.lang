@@ -135,7 +135,7 @@ export file name	addressbook	en	Export file name
 export from addressbook	addressbook	en	Export from Addressbook
 export selection	addressbook	en	Export selection
 exported	addressbook	en	exported
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	addressbook	en	Exports contacts from your Addressbook into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you	can also choose other seperators.
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	en	Exports contacts from your Addressbook into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.
 extra	addressbook	en	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	en	failed to change %1 organisation member(s) (insufficent rights) !!!
 fax	addressbook	en	Fax
