@@ -27,7 +27,7 @@ adding, editing or deleting an egroupware domain / database instance:	setup	de	H
 additional options and there defaults (in brackets)	setup	de	Zusätzliche Optionen und ihre Vorgaben (in Klammer)
 additional settings	setup	de	Zusätzliche Einstellungen
 admin account successful created.	setup	de	Admin Benutzer erfolgreich angelegt
-admin email address	setup	de	Admin Emailadresse
+admin email address	setup	de	Admin E-Mail-Adresse
 admin first name	setup	de	Admin Vorname
 admin last name	setup	de	Admin Nachname
 admin password	setup	de	Admin Passwort
@@ -150,7 +150,7 @@ create the empty database and grant user permissions -	setup	de	Leere Datenbank 
 create your header.inc.php	setup	de	Datei header.inc.php anlegen
 created	setup	de	erzeugt
 created header.inc.php!	setup	de	header.inc.php erzeugt!
-creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	de	anlegen eines Administrator Benutzers: Domain(default),[Konfigurationsbenutzer(admin)],Passwort,Benutzername,Passwort,[Vorname],[Nachname],[Email Adresse]
+creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	de	anlegen eines Administrator Benutzers: Domain(default),[Konfigurationsbenutzer(admin)],Passwort,Benutzername,Passwort,[Vorname],[Nachname],[E-Mail-Adresse]
 creating tables	setup	de	Erstelle Tabellen
 creation of %1 in %2 failed !!!	setup	de	Anlegen von %1 in %2 fehlgeschlagen !!!
 current configuration:	setup	de	Aktuelle Konfiguration:

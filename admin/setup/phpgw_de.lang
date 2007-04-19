@@ -41,11 +41,11 @@ admins	admin	de	Administatoren
 advanced options	admin	de	erweiterte Optionen
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Versuchen sich anzumelden, soll ein Benutzerkonto gesperrt werden (Vorgabe 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	de	Nach wievielen erfolglosen Versuchen sich anzumelden soll eine IP-Adresse gesperrt werden (Vorgabe 3)?
-aliases	admin	de	Email-Alias
+aliases	admin	de	E-Mail-Alias
 all records and account information will be lost!	admin	de	Alle Datens&auml;tze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
-alternate email address	admin	de	Alternative Emailadresse
+alternate email address	admin	de	Alternative E-Mail-Adresse
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei Sitzungen anzeigen nicht angezeigt)
 anonymous user does not exist!	admin	de	Anonymer Benutzer existiert NICHT!
@@ -70,7 +70,7 @@ asynchronous timed services	admin	de	Asynchroner zeitgesteuerter Dienst
 asyncservices not yet installed or other error (%1) !!!	admin	de	Asynchroner Dienst is noch nicht installiert oder ein anderer Fehler ist aufgetreten (%1) !!!
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	de	Soll versucht werden den richtigen MINE-typ für FTP zu verwenden, statt dem Vorgabewert "application/octet-stream"
 attribute accountstatus explained	admin	de	Dies betrifft das Attribut <b>-accountStatus-</b> aus dem QMAIL Schema
-attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als Emailadresse innerhalb eGW verwendet.
+attribute mail explained	admin	de	Dies betrifft das Attribut <b><i>-mail-</i></b> aus dem CORE Schema. Dieses Attribut darf nicht leer sein und wird gleichzeitig als E-Mail-Adresse innerhalb eGW verwendet.
 attribute mailalternateaddress explained	admin	de	Dies betrifft das Attribut <b>-mailAlternateAddress-</b> aus dem QMAIL Schema. Das experimentelle Schema verwendet dies auch als Alias für mailLocalAddress.
 attribute mailforwardingaddress explained	admin	de	Dies betrifft das Attribut <b>-mailForwardingAddress-</b> aus dem QMAIL Schema. Darf nicht leer sein. Der Begriff mailRoutingAddress wurde hierfür früher als Alias verwendet.
 authentication / accounts	admin	de	Benutzerauthentifizierung/Benutzerkonten
@@ -148,7 +148,7 @@ each value is a line like <id>[=<label>]	admin	de	jeder Wert ist ein Zeile <id>[
 each value is a line like id[=label]	admin	de	jeder Wert ist eine Zeile id[=label]
 edit account	admin	de	Benutzerkonto bearbeiten
 edit application	admin	de	Anwendung bearbeiten
-edit email settings	admin	de	Email Einstellungen bearbeiten
+edit email settings	admin	de	E-Mail-Einstellungen bearbeiten
 edit global category	admin	de	Globale Kategorie bearbeiten
 edit global category for %1	admin	de	Globale Kategorie für %1 bearbeiten
 edit group	admin	de	Gruppe bearbeiten
@@ -162,8 +162,8 @@ edit this group	admin	de	Diese Gruppe bearbeiten
 edit this user	admin	de	Diesen Benutzer bearbeiten
 edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
-email account active	admin	de	Emailkonto aktiv
-email address	admin	de	Email-Adresse
+email account active	admin	de	E-Mail-Konto aktiv
+email address	admin	de	E-Mail-Adresse
 enable debug-messages	admin	de	Debug-Meldungen einschalten
 enable the soap service	admin	de	soap Service einschalten
 enable the xmlrpc service	admin	de	xmlrpc Service einschalten
@@ -185,7 +185,7 @@ enter the title of your logo	admin	de	Titel Ihres Logos
 enter the url or filename (in phpgwapi/templates/default/images) of your logo	admin	de	URL oder Dateiname (in phpgwapi/templates/default/images) Ihres Logos
 enter the url where your logo should link to	admin	de	URL mit der das Logo verlinkt werden soll
 enter your default ftp server	admin	de	Standard-FTP-Server
-enter your default mail domain ( from: user@domain )	admin	de	Standard EMail-Domain (Von: benutzer@domain)
+enter your default mail domain ( from: user@domain )	admin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 enter your http proxy server	admin	de	HTTP-Proxy-Server
 enter your http proxy server port	admin	de	HTTP-Proxy-Server-Port
 enter your smtp server hostname or ip address	admin	de	SMTP-Server Hostname oder IP-Adresse
@@ -205,7 +205,7 @@ for the times above	admin	de	für die darüber angegebenen Zeiten
 for the times below (empty values count as '*', all empty = every minute)	admin	de	für die darunter angegebenen Zeiten (leere Felder zählen als "*", alles leer = jede Minute)
 force selectbox	admin	de	Auswahl erzwingen
 forward also to	admin	de	Zusätzlich weiterleiten an
-forward emails to	admin	de	Emails weiterleiten an
+forward emails to	admin	de	E-Mails weiterleiten an
 forward only	admin	de	Nur weiterleiten
 global categories	common	de	Globale Kategorien
 group ?	admin	de	Gruppe ?
@@ -221,7 +221,7 @@ host information	admin	de	Host-Information
 hour<br>(0-23)	admin	de	Stunde<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	de	Wie viele Tage sollen Einträge im Zugangsprotokoll bleiben, bevor sie gelöscht werden (Vorgabe 90)?
 how many minutes should an account or ip be blocked (default 30) ?	admin	de	Wie viele Minuten soll ein Benutzerkonto oder eine IP gesperrt werden (Vorgabe 30)?
-how should email addresses for new users be constructed?	admin	de	In welchem Format sollen EMail Adressen von neuen Benutzern erzeugt werden?
+how should email addresses for new users be constructed?	admin	de	In welchem Format sollen E-Mail-Adressen von neuen Benutzern erzeugt werden?
 icon	admin	de	Icon
 idle	admin	de	im Leerlauf
 if no acl records for user or any group the user is a member of	admin	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder oder eine Gruppe der er angehört gibt
@@ -264,8 +264,8 @@ login screen	admin	de	Login-Seite
 login shell	admin	de	Login-Komandointerpreter (Login-Shell)
 login time	admin	de	Login-Zeit
 loginid	admin	de	Login-ID
-mail settings	admin	de	EMail Einstellungen
-main email-address	admin	de	Stamm-Emailadresse
+mail settings	admin	de	E-Mail-Einstellungen
+main email-address	admin	de	Stamm-E-Mail-Adresse
 main screen message	admin	de	Nachricht der Startseite
 manager	admin	de	Manager
 max length of the input [, length of the inputfield (optional)]	admin	de	maximale länge für die Ausgabe [. länge des Feldes (optional)]

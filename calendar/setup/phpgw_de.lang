@@ -157,7 +157,7 @@ ignore conflict	calendar	de	Konflikt ignorieren
 import	calendar	de	Importieren
 import csv-file	common	de	CSV-Datei importieren
 interval	calendar	de	Intervall
-invalid email-address "%1" for user %2	calendar	de	Ungültige Email-Adresse "%1" für Benutzer %2
+invalid email-address "%1" for user %2	calendar	de	Ungültige E-Mail-Adresse "%1" für Benutzer %2
 last	calendar	de	letzte
 lastname of person to notify	calendar	de	Nachname der zu benachrichtigenden Person
 length of the time interval	calendar	de	Länge des Zeitintervals
@@ -221,7 +221,7 @@ private and group public	calendar	de	Privat und Gruppen öffentlich
 private only	calendar	de	nur private
 quantity	calendar	de	Menge
 re-edit event	calendar	de	Event erneut bearbeiten
-receive email updates	calendar	de	Empfange E-Mail updates
+receive email updates	calendar	de	Empfange E-Mail-Updates
 receive summary of appointments	calendar	de	Zusammenfassung der Termine erhalten
 recurrence	calendar	de	Wiederholung
 recurring event	calendar	de	Wiederholender Termin

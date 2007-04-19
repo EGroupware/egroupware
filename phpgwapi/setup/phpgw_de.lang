@@ -1,4 +1,4 @@
-%1 email addresses inserted	common	de	%1 Email Adressen eingefügt
+%1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt
 %1 is not executable by the webserver !!!	common	de	%1 ist nicht ausführbar durch den Webserver !!!
 %1egroupware%2 is a multi-user, web-based groupware suite written in %3php%4.	common	de	%1eGroupWare%2 ist eine, in %3PHP%4 programmierte, webbasierende, mehrbenutzer Groupware Suite.
 (shift-)click or drag to change value	jscalendar	de	(Shift-) Klicken oder drücken  um den Wert zu ändern
@@ -218,7 +218,7 @@ egroupware: login blocked for user '%1', ip %2	common	de	eGroupWare: Anmelden ge
 egypt	common	de	ÄGYPTEN
 el salvador	common	de	EL SALVADOR
 email	common	de	E-Mail
-email-address of the user, eg. "%1"	common	de	E-Mail Adresse des Benutzers, zB. "%1"
+email-address of the user, eg. "%1"	common	de	E-Mail-Adresse des Benutzers, z.B. "%1"
 emotions	tinymce	de	Emotion
 enabled	common	de	Verfügbar
 end date	common	de	Enddatum
@@ -322,7 +322,7 @@ high	common	de	Hoch
 highest	common	de	Höchste
 holy see (vatican city state)	common	de	VATICAN
 home	common	de	Home
-home email	common	de	private Email
+home email	common	de	private E-Mail
 honduras	common	de	HONDURAS
 hong kong	common	de	HONG KONG
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	de	Wie viele Icons sollen in der Navigation angezeigt werden (die obere Nabigation). Weitere Applikationen werden über ein Auswahlmenü angeboten. Das Auswahlmenü kann über das rechte Icon geöffnet werden
@@ -628,11 +628,11 @@ select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
 select category	common	de	Kategorie auswählen
 select date	common	de	Datum auswählen
 select group	common	de	Gruppe auswählen
-select home email address	common	de	private Email-Adresse auswählen
+select home email address	common	de	private E-Mail-Adresse auswählen
 select multiple accounts	common	de	mehrere Benutzer auswählen
 select one	common	de	Eine(n) auswählen
 select user	common	de	Benutzer auswählen
-select work email address	common	de	geschäftl. Email-Addresse auswählen
+select work email address	common	de	geschäftl. E-Mail-Addresse auswählen
 selection	common	de	Auswahl
 send	common	de	Abschicken
 senegal	common	de	SENEGAL
@@ -698,7 +698,7 @@ thailand	common	de	THAILAND
 the api is current	common	de	Die API ist aktuell
 the api requires an upgrade	common	de	Die API benötigt eine Aktualisierung
 the following applications require upgrades	common	de	Die folgenden Anwendungen benötigen eine Aktualisierung
-the mail server returned	common	de	Der EMailserver liefert zurück
+the mail server returned	common	de	Der E-Mail-Server liefert zurück
 the search has been compleated. the search string could not be found.	tinymce	de	Die Suche wurde abgeschlossen. Das Suchwort wurde nicht gefunden.
 this application is current	common	de	Diese Anwendung ist aktuell
 this application requires an upgrade	common	de	Diese Anwendung benötigt eine Aktualisierung
@@ -782,7 +782,7 @@ which groups	common	de	Welche Gruppen
 width	common	de	Breite
 window name	tinymce	de	Fenster Name
 wk	jscalendar	de	KW
-work email	common	de	geschäftliche Email
+work email	common	de	geschäftliche E-Mail
 written by:	common	de	Geschrieben von:
 year	common	de	Jahr
 yemen	common	de	YEMEN
