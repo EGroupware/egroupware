@@ -1430,7 +1430,7 @@
 				}
 
 				/* TODO is this right or should it be a single $ ? */
-				if($$this->newfile_or_dir[strlen($this->newfile_or_dir)-1] == ' ' || $this->newfile_or_dir[0] == ' ')
+				if($this->newfile_or_dir[strlen($this->newfile_or_dir)-1] == ' ' || $this->newfile_or_dir[0] == ' ')
 				{
 					$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('Cannot create directory because it begins or ends in a space')));
 				}
