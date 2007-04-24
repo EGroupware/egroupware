@@ -448,8 +448,7 @@ class egw_framework
 				if ($data['status'] == 4)
 				{
 					$apps[$app]['target'] = ' target="'.$app.'" onClick="'."if (this != '') { window.open(this+'".
-						(strstr($apps[$app]['url'],'?') || 
-						ini_get('session.use_trans_sid') && substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4' ?'&':'?').
+						(strstr($apps[$app]['url'],'?') ? '&' : '?').
 						"referer='+encodeURI(location),this.target,'width=800,height=600,scrollbars=yes,resizable=yes'); return false; } else { return true; }".'"';
 				}
 				elseif(isset($GLOBALS['egw_info']['flags']['navbar_target']) && $GLOBALS['egw_info']['flags']['navbar_target'])
