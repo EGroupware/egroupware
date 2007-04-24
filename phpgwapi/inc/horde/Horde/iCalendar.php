@@ -779,8 +779,9 @@ class Horde_iCalendar {
                 break;
 
             // Recurrence fields.
-            case 'EXRULE':
             case 'RRULE':
+                break;
+            case 'EXRULE':
 
 	    //Text Fields
 	    case 'SUMMARY':
