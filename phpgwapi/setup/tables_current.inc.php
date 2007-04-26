@@ -544,7 +544,7 @@
 				'list_added' => array('type' => 'int','precision' => '8'),
 				'list_added_by' => array('type' => 'int','precision' => '4')
 			),
-			'pk' => array('ab_id','list_id'),
+			'pk' => array('contact_id','list_id'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()
