@@ -484,7 +484,8 @@ class uiinfolog
 						}
 						break;
 					case 'close':
-						return $this->close($do_id,$called_as,$do == 'close_subs');
+						$this->close($do_id,$called_as);
+						break;
 					case 'sp':
 						return $this->edit(0,'sp',$do_id,'',$called_as);
 					case 'view':
@@ -591,7 +592,7 @@ class uiinfolog
 				}
 			}
 		}
-		return $referer ? $this->tmpl->location($referer) : $this->index();
+		if ($referer) $this->tmpl->location($referer);
 	}
 
 	function delete($values=0,$referer='',$called_by='')
