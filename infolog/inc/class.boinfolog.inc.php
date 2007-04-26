@@ -183,13 +183,6 @@ class boinfolog
 				$this->enums['type'] += $this->config->config_data['types'];
 				//echo "types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
 			}
-			// sort types by there translation
-			foreach($this->enums['type'] as $key => $val)
-			{
-				if (($val = lang($key)) != $key.'*') $this->enums['type'][$key] = lang($key);
-			}
-			natcasesort($this->enums['type']);
-			
 			if ($this->config->config_data['group_owners']) $this->group_owners = $this->config->config_data['group_owners'];
 
 			if (isset($this->config->config_data['customfields']) && is_array($this->config->config_data['customfields']))
@@ -221,6 +214,13 @@ class boinfolog
 				$this->implicit_rights = 'edit';
 			}
 		}
+		// sort types by there translation
+		foreach($this->enums['type'] as $key => $val)
+		{
+			if (($val = lang($key)) != $key.'*') $this->enums['type'][$key] = lang($key);
+		}
+		natcasesort($this->enums['type']);
+
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
