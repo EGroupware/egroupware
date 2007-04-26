@@ -1241,7 +1241,7 @@ class uiinfolog
 			$bofelamimail->reopen($mailbox);
 			
 			$headers = $bofelamimail->getMessageHeader($uid);
-			$bodyParts = $bofelamimail->getMessageBody($uid,'');
+			$bodyParts = $bofelamimail->getMessageBody($uid,'text/plain');
 			$attachments = $bofelamimail->getMessageAttachments($uid);
 			
 			if (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);
