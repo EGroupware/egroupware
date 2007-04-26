@@ -507,7 +507,10 @@ class boinfolog
 			{
 				$responsible =& $values['info_responsible'];
 			}
-			$status_only = in_array($this->user, $responsible);	// responsible has implicit right to change status
+			if (!($status_only = in_array($this->user, $responsible)))	// responsible has implicit right to change status
+			{
+				$status_only = !!array_intersect($responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
+			}
 		}
 		if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
 		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
