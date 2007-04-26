@@ -150,16 +150,16 @@ class html
 			$content);
 
 		//  First match things beginning with http:// (or other protocols)
-		$Protocol = '(http|ftp|https):\/\/';
-		$Domain = '([\w]+.[\w]+)';
+		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
+		$Domain = '([\w-]+\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
 
-		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3</a>", $result );
+		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
 
 		//  Now match things beginning with www.
 		$NotHTTP = '(?<!:\/\/)';
-		$Domain = 'www(.[\w]+)';
+		$Domain = 'www(\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . '/i';
 
