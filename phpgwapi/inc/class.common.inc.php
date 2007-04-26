@@ -844,7 +844,7 @@
 
 			$imagedir            = EGW_SERVER_ROOT . '/'.$appname.'/templates/'.$GLOBALS['egw_info']['server']['template_set'].'/images';
 			$imagedir_default    = EGW_SERVER_ROOT . '/'.$appname.'/templates/idots/images';
-			$imagedir_olddefault = EGW_SERVER_ROOT . '/'.$appname.'/images';
+			$imagedir_olddefault = EGW_SERVER_ROOT . '/'.$appname.'/templates/default/images';
 
 			if ($this->is_image_dir ($imagedir))
 			{
@@ -856,7 +856,7 @@
 			}
 			elseif ($this->is_image_dir ($imagedir_olddefault))
 			{
-				return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/images';
+				return $GLOBALS['egw_info']['server']['webserver_url'].'/'.$appname.'/templates/default/images';
 			}
 			else
 			{
