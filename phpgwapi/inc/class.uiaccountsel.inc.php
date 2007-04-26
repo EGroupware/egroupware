@@ -258,7 +258,7 @@ class uiaccountsel extends accounts
 		if ($extra_label)
 		{
 			//in php5 this put's the extra-label at the end: $select = array($extra_label) + $select;
-			$select2 = array($extra_label);
+			$select2 = array('' => $extra_label);
 			$select2 += $select;
 			$select =& $select2; unset($select2);
 		}
