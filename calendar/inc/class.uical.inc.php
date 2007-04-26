@@ -156,6 +156,8 @@ class uical
 		}
 		$this->common_prefs	= &$GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs	= &$GLOBALS['egw_info']['user']['preferences']['calendar'];
+		$this->bo->check_set_default_prefs();
+
 		$this->wd_start		= 60*$this->cal_prefs['workdaystarts'];
 		$this->wd_end		= 60*$this->cal_prefs['workdayends'];
 		$this->interval_m	= $this->cal_prefs['interval'];

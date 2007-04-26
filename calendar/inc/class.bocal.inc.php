@@ -166,7 +166,6 @@ class bocal
 		}
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
-		$this->check_set_default_prefs();
 
 		$this->tz_offset_s = $this->datetime->tz_offset;
 
