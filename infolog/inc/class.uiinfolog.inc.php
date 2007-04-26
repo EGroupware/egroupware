@@ -469,6 +469,19 @@ class uiinfolog
 						return $this->edit($do_id,$action,$action_id,'',$called_as);
 					case 'delete':
 						if (!($values['msg'] = $this->delete($do_id,$called_as,$called_as ? '' : 'index'))) return;
+						// did we deleted the entries, whos subentries we are showing?
+						if ($action == 'sp' && $action_id == $do_id)
+						{
+							// redirect to our referer or reset the subentry view
+							if (!$called_as && $own_referer)
+							{
+								$this->tmpl->location($own_referer);	// eg. redirect back to calendar
+							}
+							else
+							{
+								unset($action_id); unset($action);
+							}
+						}
 						break;
 					case 'close':
 						return $this->close($do_id,$called_as,$do == 'close_subs');
