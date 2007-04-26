@@ -335,10 +335,7 @@ class bo_resources
 		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR','',$filter);
 		foreach($data as $num => $resource)
 		{
-			if($num != 0)
-			{
-				$list[$resource['res_id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
-			}
+			$list[$resource['res_id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
 		}
 		return $list;
 	}
