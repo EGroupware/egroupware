@@ -890,7 +890,8 @@
 					$jscal =& CreateObject('phpgwapi.jscalendar',False);
 					$userData += $jscal->input2date($_POST['expires'],False,'account_expires_day','account_expires_month','account_expires_year');
 				}
-				$errors = $this->bo->add_user($userData);
+				$errors = $this->bo->edit_user($userData);
+
 				if(!@is_array($errors))
 				{
 					// check if would create a menu
@@ -898,14 +899,9 @@
 					// there are also some other plugins
 					if(!ExecMethod('admin.uimenuclass.createHTMLCode','edit_user'))
 					{
-						if($userData['account_id'] == $GLOBALS['egw_info']['user']['account_id'])
-						{
-							$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
-								'menuaction' => 'admin.uiaccounts.list_users'
-							));
-						}
-//						ExecMethod('admin.uiaccounts.list_users');
-						//return False;
+						$GLOBALS['egw']->redirect_link('/index.php',array(	// without redirect changes happen only in the next page-view!
+							'menuaction' => 'admin.uiaccounts.list_users'
+						));
 					}
 					else
 					{
@@ -916,8 +912,8 @@
 								'account_id' => $_GET['account_id']
 							));
 						}
+						$this->create_edit_user($userData['account_id']);
 					}
-//					$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
 				}
 				else
 				{
