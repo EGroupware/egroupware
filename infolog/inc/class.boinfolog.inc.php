@@ -559,7 +559,7 @@ class boinfolog
 			{
 				$values['info_status'] = 'done';
 			}
-			if (count($values['info_responsible']) && $values['info_status'] == 'offer')
+			if ($values['info_responsible'] && $values['info_status'] == 'offer')
 			{
 				$values['info_status'] = 'not-started';   // have to match if not finished
 			}
