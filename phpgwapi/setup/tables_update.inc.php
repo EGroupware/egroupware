@@ -298,7 +298,7 @@
 				'n_suffix' => array('type' => 'varchar','precision' => '64'),
 				'n_fn' => array('type' => 'varchar','precision' => '128'),
 				'n_fileas' => array('type' => 'varchar','precision' => '255'),
-				'contact_bday' => array('type' => 'varchar','precision' => '10'),
+				'contact_bday' => array('type' => 'varchar','precision' => '12'),
 				'org_name' => array('type' => 'varchar','precision' => '64'),
 				'org_unit' => array('type' => 'varchar','precision' => '64'),
 				'contact_title' => array('type' => 'varchar','precision' => '64'),
@@ -752,5 +752,17 @@
 		));
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.019';
+	}
+
+
+	$test[] = '1.3.019';
+	function phpgwapi_upgrade1_3_019()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_addressbook','contact_bday',array(
+			'type' => 'varchar',
+			'precision' => '12'
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.020';
 	}
 ?>
