@@ -151,7 +151,7 @@ class uiaccountsel extends accounts
 			case 'groupmembers':
 				if ($account_sel == 'primary_group')
 				{
-					$memberships = array($GLOBALS['egw']->accounts->data['account_primary_group']);
+					$memberships = array($GLOBALS['egw_info']['user']['account_primary_group']);
 				}
 				else
 				{
