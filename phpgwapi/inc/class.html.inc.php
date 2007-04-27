@@ -585,7 +585,7 @@ class html
 	* @param string $base_href='' if passed activates the browser for image at absolute path passed
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href) 
+	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='') 
 	{
 		if (!$this->htmlarea_availible() || $_mode == 'ascii')
 		{
