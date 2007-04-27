@@ -763,7 +763,8 @@ class bocal
 					}
 					break;
 				case MCAL_RECUR_WEEKLY:
-					if (floor(($search_beg_day - $event_start_daybegin_ts)/WEEK_s) % $freq)
+					// we use round(,1) to deal with changing daylight saving
+					if (floor(round(($search_beg_day - $event_start_daybegin_ts)/WEEK_s,1)) % $freq)
 					{
 						continue;
 					}
