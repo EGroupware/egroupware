@@ -765,4 +765,17 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.020';
 	}
+
+
+	$test[] = '1.3.020';
+	function phpgwapi_upgrade1_3_020()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_links','link_lastmod',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False
+		));
+
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.021';
+	}
 ?>
