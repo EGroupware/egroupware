@@ -166,7 +166,7 @@ function do_change_account_id($args)
 			'egw_applications'   => false,
 			'egw_app_sessions'   => 'loginid',
 			'egw_async'          => 'async_account_id',
-			'egw_categories'     => 'cat_owner',
+			'egw_categories'     => array(array('cat_owner','cat_owner > 0')),	// -1 are global cats, not cats from group 1!
 			'egw_config'         => false,
 			'egw_history_log'    => 'history_owner',
 			'egw_hooks'          => false,
@@ -285,6 +285,8 @@ function do_change_account_id($args)
 		// MyDMS	ToDo!!!
 		// VFS2		ToDo!!!
 	);
+	
+	if (count($args) < 4) usage();	// 4 means at least user,pw,from1,to1
 	
 	$ids2change = array();
 	for($n = 2; $n < count($args); $n += 2)
