@@ -210,7 +210,7 @@
 			}
 			$Ok = False;
 			$pat = $org_idx;
-			while (!$Ok && ($pat = strpos($pat,'$') !== false))
+			while (!$Ok && ($pat = @strstr($pat,'$')))
 			{
 				$pat = substr($pat,$pat[1] == '{' ? 2 : 1);
 
