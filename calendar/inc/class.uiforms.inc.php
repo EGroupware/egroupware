@@ -123,7 +123,7 @@ class uiforms extends uical
 				$participants[$uid] = $participant_types[$uid{0}][$id] = ($res_data['new_status'] ? ExecMethod($res_data['new_status'],$id) : 'U').
 					((int) $quantity > 1 ? (int)$quantity : '');
 				// if new_status == 'x', resource is not bookable
-				if(strstr($participant_types[$uid{0}][$id],'x')) 
+				if(strpos($participant_types[$uid{0}][$id],'x') !== false) 
 				{
 					unset($participant_types[$uid{0}][$id]);
 					unset($participants[$uid]);

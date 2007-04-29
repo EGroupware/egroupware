@@ -549,7 +549,7 @@
 										}
 										break;
 									case 'MONTHLY':
-										$vcardData['recur_type'] = strstr($recurence,'BYDAY') ? 
+										$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ? 
 											MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
 										break;										
 
@@ -1000,7 +1000,7 @@
 										}
 										break;
 									case 'MONTHLY':
-										$vcardData['recur_type'] = strstr($recurence,'BYDAY') ? 
+										$vcardData['recur_type'] = strpos($recurence,'BYDAY') !== false ? 
 											MCAL_RECUR_MONTHLY_WDAY : MCAL_RECUR_MONTHLY_MDAY;
 										break;										
 

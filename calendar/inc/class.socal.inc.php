@@ -520,7 +520,7 @@ ORDER BY cal_user_type, cal_usre_id
 				return false;
 			}
 			// new event (without uid) or new created referencing event => create new uid
-			if (!$event['cal_uid'] || $event['cal_reference'] && strstr($event['cal_uid'],'cal-'.$event['calreference'].'-'))
+			if (!$event['cal_uid'] || $event['cal_reference'] && strpos($event['cal_uid'],'cal-'.$event['calreference'].'-') !== false)
 			{
 				$event['cal_uid'] = $GLOBALS['egw']->common->generate_uid('calendar',$cal_id);
 				$this->db->update($this->cal_table,array('cal_uid' => $event['cal_uid']),array('cal_id' => $cal_id),__LINE__,__FILE__);

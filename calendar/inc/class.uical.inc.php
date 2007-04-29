@@ -439,7 +439,7 @@ class uical
 	{
 		if ($baseurl)	// we append the value to the baseurl
 		{
-			$baseurl .= strstr($baseurl,'?') === False ? '?' : '&';
+			$baseurl .= strpos($baseurl,'?') === False ? '?' : '&';
 			$onchange="location='$baseurl'+this.value;";
 		}
 		else			// we add $name=value to the actual location

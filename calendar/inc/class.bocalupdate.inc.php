@@ -541,7 +541,7 @@ class bocalupdate extends bocal
 				$details['to-fullname'] = $GLOBALS['egw']->common->display_fullname('',$details['to-firstname'],$details['to-lastname']);
 
 				$to = $GLOBALS['egw']->accounts->id2name($userid,'account_email');
-				if (!$to || !strstr($to,'@'))
+				if (!$to || strpos($to,'@') === false)
 				{
 					// ToDo: give an error-message
 					echo '<p>'.lang('Invalid email-address "%1" for user %2',$to,$GLOBALS['egw']->common->grab_owner_name($userid))."</p>\n";
