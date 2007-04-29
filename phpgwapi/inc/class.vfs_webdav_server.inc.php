@@ -1,32 +1,33 @@
 <?php
 /**
- * FileManger - WebDAV access
+ * eGroupWare API: VFS - WebDAV access
  *
  * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
  * 
  * @link http://www.egroupware.org
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @package filemanger
+ * @package api
+ * @subpackage vfs
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @version $Id: class.boetemplate.inc.php 21437 2006-04-24 20:42:42Z ralfbecker $
+ * @version $Id$
  */
 
 require_once('HTTP/WebDAV/Server.php');
+require_once(EGW_API_INC.'/class.vfs_home.inc.php');
 
 /**
  * FileManger - WebDAV access
  *
  * Using the PEAR HTTP/WebDAV/Server class (which need to be installed!)
- * 
- * @package filemanger
- * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
-
 class vfs_webdav_server extends HTTP_WebDAV_Server
 {
+	/**
+	 * instance of the vfs class
+	 *
+	 * @var vfs_home
+	 */
 	var $vfs;
 
 	var $dav_powered_by = 'eGroupWare WebDAV server';
@@ -46,7 +47,7 @@ class vfs_webdav_server extends HTTP_WebDAV_Server
 
 		parent::HTTP_WebDAV_Server();
 		
-		$this->vfs =& CreateObject('phpgwapi.vfs');
+		$this->vfs =& new vfs_home;
 	}
 	
 	/**
