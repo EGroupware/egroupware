@@ -49,14 +49,14 @@
 			// delete all acl (and memberships) of group
 			$GLOBALS['egw']->acl->delete_account($account_id);
 
-			if(!@rmdir($GLOBALS['egw_info']['server']['files_dir'].SEP.'groups'.SEP.$GLOBALS['egw']->accounts->id2name($account_id)))
-			{
-				$cd = 38;
-			}
-			else
-			{
-				$cd = 32;
-			}
+			// make this information also available in the hook 
+			$lid = $GLOBALS['egw']->accounts->id2name($account_id);
+
+			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values'] = array(
+				'account_id'  => $account_id,
+				'account_name' => $lid,
+				'location'    => 'deletegroup'
+			),False,True);  // called for every app now, not only enabled ones)
 
 			$GLOBALS['egw']->accounts->delete($account_id);
 
@@ -86,18 +86,6 @@
 			{
 				$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
 			}
-
-			$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'users' . SEP;
-
-			if(!@rmdir($basedir . $lid))
-			{
-				$cd = 34;
-			}
-			else
-			{
-				$cd = 29;
-			}
-
 			return True;
 		}
 
@@ -145,13 +133,11 @@
 				}
 				$apps->save_repository();
 
-				$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
-				$cd = 31;
-				umask(000);
-				if(!@mkdir($basedir . $group_info['account_name'], 0707))
-				{
-					$cd = 37;
-				}
+				$GLOBALS['hook_values'] = $group_info;
+				$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+					'location' => 'addgroup'
+				),False,True);  // called for every app now, not only enabled ones)
+
 				return True;
 			}
 
@@ -250,35 +236,16 @@
 			}
 			$apps->save_repository();
 
-			// Set new account_lid, if needed
-			if($group_info['account_name'] && $old_group_info['account_lid'] <> $group_info['account_name'])
-			{
-				$group->data['account_lid'] = $group_info['account_name'];
-				$group->data['firstname'] = $group_info['account_name'];
-
-				$basedir = $GLOBALS['egw_info']['server']['files_dir'] . SEP . 'groups' . SEP;
-				if(!@rename($basedir . $old_group_info['account_lid'], $basedir . $group_info['account_name']))
-				{
-					$cd = 39;
-				}
-				else
-				{
-					$cd = 33;
-				}
-			}
-			else
-			{
-				$cd = 33;
-			}
-
 			$group->set_members($group_info['account_user'],$group_info['account_id']);
+
+			$GLOBALS['hook_values'] = $group_info;
+			$GLOBALS['hook_values']['old_name'] = $group->id2name($group_info['account_id']);
 
 			// This is down here so we are sure to catch the acl changes
 			// for LDAP to update the memberuid attribute
 			$group->data['account_email'] = $group_info['account_email'];
 			$group->save_repository();
 
-			$GLOBALS['hook_values'] = $group_info;
 			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
 				'location' => 'editgroup'
 			),False,True);  // called for every app now, not only enabled ones)
