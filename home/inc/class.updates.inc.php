@@ -51,7 +51,7 @@
 				$lines = $GLOBALS['egw']->network->gethttpsocketfile('http://www.egroupware.org/currentversion');
 				for($i=0; $i<count($lines); $i++)
 				{
-					if(strstr($lines[$i],'currentversion'))
+					if(strpos($lines[$i],'currentversion') !== false)
 					{
 						$line_found = explode(':',chop($lines[$i]));
 					}
