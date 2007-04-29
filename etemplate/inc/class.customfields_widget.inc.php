@@ -61,7 +61,7 @@
 			foreach($this->customfields as $name => $field)
 			{
 				// check if the customfield get's displayed for type $value, we can have multiple comma-separated types now
-				if (!empty($field['type2']) && !strstr(','.$field['type2'].',',','.$value.','))
+				if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$value.',') === false)
 				{
 					continue;	// not for our content type
 				}

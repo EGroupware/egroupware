@@ -928,7 +928,7 @@
 					{
 						$help = lang($help);
 					}
-					if (($use_tooltip_for_help = strstr($help,'<') && strip_tags($help) != $help))	// helptext is html => use a tooltip
+					if (($use_tooltip_for_help = strpos($help,'<') !== false && strip_tags($help) != $help))	// helptext is html => use a tooltip
 					{
 						$options .= $this->html->tooltip($help);
 					}
