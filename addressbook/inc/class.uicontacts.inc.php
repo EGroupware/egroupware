@@ -530,7 +530,7 @@ class uicontacts extends bocontacts
 				case 'email':
 				case 'email_home':
 					$action_msg = lang('%1 added',$action=='email'?lang('Business email') : lang('Home email'));
-					if (($Ok = !!($contact = $this->read($id)) && strstr($contact[$action],'@')))
+					if (($Ok = !!($contact = $this->read($id)) && strpos($contact[$action],'@') !== false))
 					{
 						if(!@is_object($GLOBALS['egw']->js)) $GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 
@@ -1450,7 +1450,7 @@ $readonlys['button[vcard]'] = true;
 	 */
 	function email2link($email)
 	{
-		if (!strstr($email,'@')) return '';
+		if (strpos($email,'@') == false) return '';
 
 		if($GLOBALS['egw_info']['user']['apps']['felamimail'])
 		{

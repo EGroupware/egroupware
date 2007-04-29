@@ -236,7 +236,7 @@ class bocontacts extends socontacts
 		if (is_null($type)) $type = $contact['fileas_type'];
 		if (!$type) $type = $this->fileas_types[0];
 		
-		if (strstr($type,'n_fn')) $contact['n_fn'] = $this->fullname($contact);
+		if (strpos($type,'n_fn') !== false) $contact['n_fn'] = $this->fullname($contact);
 		
 		$fileas = str_replace(array('n_prefix','n_given','n_middle','n_family','n_suffix','n_fn','org_name','org_unit','adr_one_locality'),
 			array($contact['n_prefix'],$contact['n_given'],$contact['n_middle'],$contact['n_family'],$contact['n_suffix'],
