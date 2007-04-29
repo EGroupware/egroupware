@@ -769,7 +769,7 @@
 				}
 				else	// add the tables array
 				{
-					if (strstr($fnew,'?>'))	// remove a closeing tag
+					if (strpos($fnew,'?>') !== false)	// remove a closeing tag
 					{
 						$fnew = str_replace('?>','',$fnew);
 					}
