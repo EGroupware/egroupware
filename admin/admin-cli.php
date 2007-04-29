@@ -254,6 +254,12 @@ function do_change_account_id($args)
 			'egw_syncmldevinfo'     => false,
 			'egw_syncmlsummary'     => false,
 		),
+		'tracker' => array(
+			'egw_tracker'           => array('tr_assigned','tr_creator','tr_modifier'),
+			'egw_tracker_bounties'  => array('bounty_creator','bounty_confirmer'),
+			'egw_tracker_replies'   => array('reply_creator'),
+			'egw_tracker_votes'     => array('vote_uid'),
+		),
 		'timesheet' => array(
 			'egw_timesheet'      => array('ts_owner','ts_modifier'),
 			'egw_timesheet_extra'=> false,
