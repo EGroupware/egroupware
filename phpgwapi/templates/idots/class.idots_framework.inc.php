@@ -39,6 +39,12 @@
 	  */
 	  var $tpl;
 	  /**
+	   * Instance of the Savant template class
+	   *
+	   * @var tplsavant2
+	   */
+	  var $tplsav2;
+	  /**
 	  * true if $this->navbar() was called
 	  *
 	  * @var boolean
@@ -107,7 +113,7 @@
 		 if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] != 'sidebox')
 		 {
 			$GLOBALS['egw']->hooks->process('topmenu_info');
-			echo $this->topmenu();
+			$content = $this->topmenu();
 		 }
 
 		 $this->navbar_done = true;
@@ -139,7 +145,7 @@
 		 $vars = $this->_get_navbar($apps);
 
 		 $this->tpl->set_var($vars);
-		 $content = $this->tpl->fp('out','navbar_header');
+		 $content .= $this->tpl->fp('out','navbar_header');
 
 		 // general (app-unspecific) sidebox menu
 		 if($GLOBALS['egw_info']['user']['preferences']['common']['show_general_menu'] == 'sidebox')
@@ -532,7 +538,7 @@
 			}
 		 }
 		 // settings for the extra icons dif
-		 if ($i < $max_icons)	// no extra icon div
+		 if ($i <= $max_icons)	// no extra icon div
 		 {
 			$this->tpl->set_var('app_extra_icons_div','');
 			$this->tpl->set_var('app_extra_icons_icon','');
@@ -626,7 +632,7 @@
 		 $this->_add_topmenu_info_item($this->_current_users());
 		 $this->_add_topmenu_info_item($this->_get_quick_add());
 
-		 $this->tplsav2->display('topmenu.tpl.php');
+		 return $this->tplsav2->fetch('topmenu.tpl.php');
 	  }
 
 	  /**
