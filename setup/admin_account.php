@@ -10,7 +10,7 @@
  * @version $Id$
  */
 
-	if (!strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
+	if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') === false)
 	{
 		$GLOBALS['egw_info'] = array(
 			'flags' => array(
@@ -114,7 +114,7 @@
 		
 		if (!$defaultgroupid || !$admingroupid)
 		{
-			if (strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
+			if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') !== false)
 			{
 				return 42; //lang('Error in group-creation !!!');	// dont exit on setup-cli
 			}
@@ -201,7 +201,7 @@
 		$accountid = $GLOBALS['egw_setup']->add_account($username,$fname,$lname,$passwd,'Admins',True,$email);
 		if (!$accountid)
 		{
-			if (strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
+			if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') !== false)
 			{
 				return 41; //lang('Error in admin-creation !!!');	// dont exit on setup-cli
 			}
@@ -214,7 +214,7 @@
 
 		$GLOBALS['egw_setup']->db->transaction_commit();
 
-		if (!strstr($_SERVER['PHP_SELF'],'setup-cli.php'))
+		if (strpos($_SERVER['PHP_SELF'],'setup-cli.php') === false)
 		{
 			Header('Location: index.php');
 		}

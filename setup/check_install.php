@@ -465,7 +465,7 @@
 
 		// add a ../ for non-absolute pathes
 		$rel_name = $name;
-		if (substr($name,0,3) != '../' && $name{0} != '/' && $name{0} != '\\' && strstr($name,':') === false)
+		if (substr($name,0,3) != '../' && $name{0} != '/' && $name{0} != '\\' && strpos($name,':') === false)
 		{
 			$name = '../'.$name;
 		}
