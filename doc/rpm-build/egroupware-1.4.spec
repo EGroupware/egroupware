@@ -687,5 +687,8 @@ ln -s sitemgr/sitemgr-link
 
 
 %changelog
+* Mon Apr 30 2007 Lars Kneschke <l.kneschke@metaways.de> 1.3-021
+- eGroupWare 1.4 Beta 5
+
 * Mon Apr 16 2007 Lars Kneschke <l.kneschke@metaways.de> 1.3-019
 - eGroupWare 1.4 Beta 4
