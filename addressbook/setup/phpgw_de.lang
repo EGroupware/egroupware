@@ -156,7 +156,7 @@ global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
 group %1	addressbook	de	Gruppe %1
 hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
-hides accounts completly from the adressbook for non administrators!	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch für nicht Administratoren!
+hides accounts completly from the adressbook.	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch.
 home address	addressbook	de	Privatadresse
 home address, birthday, ...	addressbook	de	Privatadresse, Geburtstag, ...
 home city	addressbook	de	Stadt privat

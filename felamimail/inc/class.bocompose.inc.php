@@ -610,12 +610,11 @@
 			$_mailObject->PluginDir = EGW_SERVER_ROOT."/phpgwapi/inc/";
 
 			$_mailObject->IsSMTP();
+			$_mailObject->CharSet	= $this->displayCharset;
 			$_mailObject->From 	= $_identity->emailAddress;
-			#$_mailObject->FromName = $bofelamimail->encodeHeader($_identity->realName,'q');
 			$_mailObject->FromName = $_mailObject->EncodeHeader($_identity->realName);
 			$_mailObject->Priority = $_formData['priority'];
 			$_mailObject->Encoding = 'quoted-printable';
-			$_mailObject->CharSet	= $this->displayCharset;
 			$_mailObject->AddCustomHeader('X-Mailer: FeLaMiMail');
 			if(isset($this->sessionData['in-reply-to'])) {
 				$_mailObject->AddCustomHeader('In-Reply-To: '. $this->sessionData['in-reply-to']);
