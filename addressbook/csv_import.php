@@ -416,11 +416,6 @@
 				}
 				if(!$_POST['debug'] && !$empty)	// dont import empty contacts
 				{
-					if ($values['email'] && ($existing = $GLOBALS['egw']->contacts->search(array('email'=>$values['email']),false)) &&
-						count($existing) == 1)
-					{
-						$values = array_merge($existing[0],$values);
-					}
 					$GLOBALS['egw']->contacts->save($values);
 					//echo "<p>adding: ".print_r($values,true)."</p>\n";
 				}
