@@ -101,7 +101,7 @@ binary-indep: build install
 	dh_compress -i
 	dh_fixperms -i
 	dh_installdeb -i
-	gawk '/^[^#].*$$/ { ORS="\0" ;  print "-V" $$0 }' < debian/substvars | xargs -0 dh_gencontrol -i -- -Vegw:Modules=`for x in $(MODULES); do echo -n "egroupware-$$x," ; done`
+	gawk '/^[^#].*$$/ { ORS="\0" ;  print "-V" $$0 }' < debian/substvars | xargs -0 dh_gencontrol -i -- -Vegw:Modules=`for x in $(MODULES); do echo -n "egroupware-$$x(=\\$${Source-Version})," ; done`
 	dh_md5sums -i
 	dh_builddeb -i
 
