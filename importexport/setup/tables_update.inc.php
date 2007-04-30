@@ -26,7 +26,6 @@
 	$test[] = '0.003';
 	function importexport_upgrade0_003()
 	{
-
-		return $GLOBALS['setup_info']['importexport']['currentver'] = '0.003';
+		return $GLOBALS['setup_info']['importexport']['currentver'] = '1.4';
 	}
 ?>

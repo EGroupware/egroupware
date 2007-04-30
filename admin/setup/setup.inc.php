@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['admin']['name']      = 'admin';
-	$setup_info['admin']['version']   = '1.2';
+	$setup_info['admin']['version']   = '1.4';
 	$setup_info['admin']['app_order'] = 1;
 	$setup_info['admin']['tables']    = '';
 	$setup_info['admin']['enable']    = 1;
@@ -49,6 +49,10 @@
 	/* Dependencies for this app to work */
 	$setup_info['admin']['depends'][] = array(
 		'appname' => 'phpgwapi',
-		'versions' => Array('1.0.0','1.0.1','1.2','1.3')
+		'versions' => Array('1.3','1.4','1.5')
+	);
+	$setup_info['admin']['depends'][] = array(
+		'appname' => 'etemplate',
+		'versions' => Array('1.3','1.4','1.5')
 	);
 ?>

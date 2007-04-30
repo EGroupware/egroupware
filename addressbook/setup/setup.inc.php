@@ -10,7 +10,7 @@
 /* Basic information about this app */
 $setup_info['addressbook']['name']      = 'addressbook';
 $setup_info['addressbook']['title']     = 'Addressbook';
-$setup_info['addressbook']['version']   = '1.3.002';
+$setup_info['addressbook']['version']   = '1.4';
 $setup_info['addressbook']['app_order'] = 4;
 $setup_info['addressbook']['enable']    = 1;
 
@@ -44,11 +44,11 @@ $setup_info['addressbook']['hooks'][] = 'config';
 /* Dependencies for this app to work */
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'phpgwapi',
-	'versions' => Array('1.3','1.4')
+	'versions' => Array('1.3','1.4','1.5')
 );
 $setup_info['addressbook']['depends'][] = array(
 	'appname' => 'etemplate',
-	'versions' => Array('1.2','1.3','1.4')
+	'versions' => Array('1.3','1.4','1.5')
 );
 
 // installation checks for addresbook

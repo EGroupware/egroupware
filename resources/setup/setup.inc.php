@@ -13,7 +13,7 @@
 	
 	$setup_info['resources']['name']	= 'resources';
 	$setup_info['resources']['title']	= 'Resources';
-	$setup_info['resources']['version']	= '1.2';
+	$setup_info['resources']['version']	= '1.4';
 	$setup_info['resources']['app_order']	= 5;
 	$setup_info['resources']['tables']	= array('egw_resources','egw_resources_extra');
 	$setup_info['resources']['enable']	= 1;
@@ -37,13 +37,13 @@
 
 	$setup_info['resources']['depends'][]	= array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('1.0.1','1.2','1.3')
+		 'versions' => Array('1.3','1.4','1.5')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause eTemplates is not in the api yet
 		 'appname' => 'etemplate',
-		 'versions' => Array('1.0.1','1.2','1.3')
+		 'versions' => Array('1.3','1.4','1.5')
 	);
 	$setup_info['resources']['depends'][]	= array( // cause of vfs psuedoprotocol is not fully in the api yet
 		 'appname' => 'filemanager',
-		 'versions' => Array('1.0.0','1.0.1','1.2')
+		 'versions' => Array('1.3','1.4','1.5')
 	);

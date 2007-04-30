@@ -286,4 +286,10 @@
 	{
 		return $GLOBALS['setup_info']['resources']['currentver'] = '1.2';
 	}
+	
+	$test[] = '1.2';
+	function resources_upgrade1_2()
+	{
+		return $GLOBALS['setup_info']['resources']['currentver'] = '1.4';
+	}
 ?>
