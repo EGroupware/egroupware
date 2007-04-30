@@ -131,7 +131,7 @@
 	if (isset($_POST['login']))	// on login
 	{
 		$GLOBALS['login'] = $_POST['login'];
-		if (strstr($GLOBALS['login'],'@') === False || count($GLOBALS['egw_domain']) == 1)
+		if (strpos($GLOBALS['login'],'@') === False || count($GLOBALS['egw_domain']) == 1)
 		{
 			$GLOBALS['login'] .= '@' . get_var('logindomain',array('POST'),$GLOBALS['egw_info']['server']['default_domain']);
 		}
