@@ -212,7 +212,7 @@ class contacts_admin_prefs
 			'type'   => 'check',
 			'label'  => 'Hide accounts from addressbook',
 			'name'   => 'hide_accounts',
-			'help'   => 'Hides accounts completly from the adressbook for non administrators!',
+			'help'   => 'Hides accounts completly from the adressbook.',
 			'xmlrpc' => True,
 			'admin'  => false,
 		);

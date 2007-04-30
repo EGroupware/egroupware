@@ -156,7 +156,7 @@ global categories	addressbook	en	Global Categories
 grant addressbook access	common	en	Grant Addressbook Access
 group %1	addressbook	en	Group %1
 hide accounts from addressbook	addressbook	en	Hide accounts from addressbook
-hides accounts completly from the adressbook for non administrators!	addressbook	en	Hides accounts completly from the adressbook for non administrators!
+hides accounts completly from the adressbook.	addressbook	en	Hides accounts completly from the adressbook.
 home address	addressbook	en	Home address
 home address, birthday, ...	addressbook	en	Home address, Birthday, ...
 home city	addressbook	en	Home City

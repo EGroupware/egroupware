@@ -700,6 +700,10 @@ class uicontacts extends bocontacts
 		{
 			unset($query['col_filter']['list']);
 		}
+		if ($GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		{
+			$query['col_filter']['account_id'] = null;
+		}
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
 			unset($query['col_filter']['list']);	// does not work together
@@ -992,7 +996,7 @@ class uicontacts extends bocontacts
 				$addressbooks[$uid] = lang('Group %1',$GLOBALS['egw']->accounts->id2name($uid));
 			}
 		}
-		if ($this->grants[0] & $required)
+		if (($this->grants[0] & $required) && !$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
 		{
 			$addressbooks[0] = lang('Accounts');
 		}

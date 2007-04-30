@@ -236,8 +236,7 @@ class socontacts
 		// add grants for accounts: if account_selection not in ('none','groupmembers'): everyone has read access, 
 		// if he has not set the hide_accounts preference
 		// ToDo: be more specific for 'groupmembers', they should be able to see the groupmembers
-		if (!in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'],array('none','groupmembers')) &&
-			!$GLOBALS['egw_info']['user']['preferences']['addressbook']['hide_accounts'])
+		if (!in_array($GLOBALS['egw_info']['user']['preferences']['common']['account_selection'],array('none','groupmembers')))
 		{
 			$this->grants[0] = EGW_ACL_READ;
 		}
