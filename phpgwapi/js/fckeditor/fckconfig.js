@@ -150,7 +150,7 @@ FCKConfig.ToolbarSets["egw_advanced"] = [
 ] ;
 
 FCKConfig.EnterMode = 'br' ;			// p | div | br
-FCKConfig.ShiftEnterMode = 'br' ;	// p | div | br
+FCKConfig.ShiftEnterMode = 'p' ;	// p | div | br
 
 FCKConfig.Keystrokes = [
 	[ CTRL + 65 /*A*/, true ],
