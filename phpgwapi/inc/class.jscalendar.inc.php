@@ -215,7 +215,7 @@ Calendar.setup(
 							$fields[$n] = $i;
 							break;
 						}
-						if (strstr($long_name,$fields[$n]) == $long_name)	// partcial match => multibyte saver
+						if (@strstr($long_name,$fields[$n]) == $long_name)	// partcial match => multibyte saver
 						{
 							$partcial_match = $i;
 						}

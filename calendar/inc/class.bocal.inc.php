@@ -166,7 +166,6 @@ class bocal
 		}
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
-		$this->check_set_default_prefs();
 
 		$this->tz_offset_s = $this->datetime->tz_offset;
 
@@ -764,7 +763,8 @@ class bocal
 					}
 					break;
 				case MCAL_RECUR_WEEKLY:
-					if (floor(($search_beg_day - $event_start_daybegin_ts)/WEEK_s) % $freq)
+					// we use round(,1) to deal with changing daylight saving
+					if (floor(round(($search_beg_day - $event_start_daybegin_ts)/WEEK_s,1)) % $freq)
 					{
 						continue;
 					}

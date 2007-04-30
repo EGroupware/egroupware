@@ -34,9 +34,6 @@
 
 		function bofilemanager()
 		{
-			$this->so =& CreateObject('filemanager.sofilemanager');
-			$this->so->db_init();
-
 			$this->vfs =& CreateObject('phpgwapi.vfs');
 
 			error_reporting(4);

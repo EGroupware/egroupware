@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['infolog']['name']      = 'infolog';
-	$setup_info['infolog']['version']   = '1.3.001';
+	$setup_info['infolog']['version']   = '1.4';
 	$setup_info['infolog']['app_order'] = 5;
 	$setup_info['infolog']['tables']    = array('egw_infolog','egw_infolog_extra');
 	$setup_info['infolog']['enable']    = 1;
@@ -65,11 +65,11 @@
 	/* Dependencies for this app to work */
 	$setup_info['infolog']['depends'][] = array(
 		'appname' => 'phpgwapi',
-		'versions' => Array('1.0.1','1.2','1.3')
+		'versions' => Array('1.3','1.4','1.5')
 	);
 	$setup_info['infolog']['depends'][] = array(
 		'appname' => 'etemplate',
-		'versions' => Array('1.0.0','1.0.1','1.2','1.3')
+		'versions' => Array('1.3','1.4','1.5')
 	);
 
 

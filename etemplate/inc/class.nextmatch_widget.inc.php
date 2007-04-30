@@ -496,7 +496,7 @@
 				{
 					$cols[$widget['name']] = $label;
 				}
-				elseif (strstr($cols[$col],$label) === false)
+				elseif (strpos($cols[$col],$label) === false)
 				{
 					$cols[$col] .= ($cols[$col] ? ', ' : '').$label;
 					$cols['name2col'][$col] = $col;

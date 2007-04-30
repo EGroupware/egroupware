@@ -304,8 +304,8 @@
 
 			if($this->data_type != 'node')
 			{	
-				$found_at = strstr($this->data,'PHP_SERIALIZED_OBJECT&:');
-				if($found_at != False)
+				$found_at = strpos($this->data,'PHP_SERIALIZED_OBJECT&:');
+				if($found_at !== False)
 				{
 					return unserialize(str_replace ('PHP_SERIALIZED_OBJECT&:', '', $this->data));
 				}
@@ -359,8 +359,8 @@
 			$retval['attributes'] = $this->attributes;
 			if($this->data_type != 'node')
 			{	
-				$found_at = strstr($this->data,'PHP_SERIALIZED_OBJECT&:');
-				if($found_at != False)
+				$found_at = strpos($this->data,'PHP_SERIALIZED_OBJECT&:');
+				if($found_at !== False)
 				{
 					$retval['value'] = unserialize(str_replace ('PHP_SERIALIZED_OBJECT&:', '', $this->data));
 				}

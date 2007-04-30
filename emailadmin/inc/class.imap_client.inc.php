@@ -380,7 +380,7 @@ class imap_client {
 
         case 'NO':
             /* Ignore this error from M$ exchange, it is not fatal (aka bug). */
-            if (strstr($message[$tag], 'command resulted in') === false) {
+            if (strpos($message[$tag], 'command resulted in') === false) {
                 return PEAR::raiseError(sprintf(lang("Could not complete request. Reason Given: %s"), $message[$tag]), 'horde.error', null, null, $response[$tag]);
             }
             break;

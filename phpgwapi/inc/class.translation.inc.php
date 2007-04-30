@@ -349,7 +349,7 @@
 				{
 					$data = &$this->charsets[$charset = strtolower($this->db->f('charset'))];
 					$lang = $this->langs[$this->db->f('lang')].' ('.$this->db->f('lang').')';
-					if ($distinct || strstr($data,$lang) === false)
+					if ($distinct || strpos($data,$lang) === false)
 					{
 						$data .= ($data ? ', ' : $charset.': ').$lang;
 					}						

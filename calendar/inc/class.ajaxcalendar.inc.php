@@ -24,11 +24,14 @@ require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
 class ajaxcalendar {
 	
 	/**
-	 * @var object $calendar object to handle events
+	 * calendar object to handle events
+	 * 
+	 * @var bocalupdate
 	 */
 	var $calendar;
 
-	function ajaxcalendar() {
+	function ajaxcalendar() 
+	{
 		$this->calendar = new bocalupdate;
 	}
 	

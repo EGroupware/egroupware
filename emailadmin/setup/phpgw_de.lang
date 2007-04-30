@@ -5,7 +5,7 @@ admin dn	emailadmin	de	Admin DN
 admin password	emailadmin	de	Admin Passwort
 admin username	emailadmin	de	Administrator Benutzername
 advanced options	emailadmin	de	erweiterte Einstellungen
-alternate email address	emailadmin	de	zusätzliche EMailadressen
+alternate email address	emailadmin	de	zusätzliche E-Mail-Adressen
 any application	emailadmin	de	jede Anwendung
 any group	emailadmin	de	jede Gruppe
 bad login name or password.	emailadmin	de	Falscher Benutzername oder Passwort.
@@ -13,7 +13,7 @@ bad or malformed request. server responded: %s	emailadmin	de	Falsche oder ungült
 bad request: %s	emailadmin	de	Falsche Anfrage: %s
 can be used by application	emailadmin	de	Kann von folgender Anwendung verwendet werden
 can be used by group	emailadmin	de	Kann von folgender Gruppe verwendet werden
-connection dropped by imap server.	emailadmin	de	Verbindung von IMAP Server beendet.
+connection dropped by imap server.	emailadmin	de	Verbindung von IMAP-Server beendet.
 could not complete request. reason given: %s	emailadmin	de	Konnte Anfrage nicht beenden. Grund: %s
 could not open secure connection to the imap server. %s : %s.	emailadmin	de	Konnte keine sichere Verbindung zum IMAP Server aufbauen. %s: %s.
 cram-md5 or digest-md5 requires the auth_sasl package to be installed.	emailadmin	de	CRAM-MD5 oder DIGEST-MD5 erforder das das Auth_SASL Packet instaliert ist.
@@ -23,19 +23,19 @@ default	emailadmin	de	Vorgabe
 deliver extern	emailadmin	de	extern ausliefern
 do you really want to delete this profile	emailadmin	de	Wollen Sie dieses Profil wirklich löschen
 domainname	emailadmin	de	Domänenname
-edit email settings	emailadmin	de	EMail Einstellungen
-email account active	emailadmin	de	EMailkonto aktiv
-email address	emailadmin	de	EMailadresse
-email settings	common	de	EMailkonto
+edit email settings	emailadmin	de	E-Mail-Einstellungen
+email account active	emailadmin	de	E-Mail-Konto aktiv
+email address	emailadmin	de	E-Mail-Adresse
+email settings	common	de	E-Mail-Konto
 emailadmin	emailadmin	de	EMailAdmin
 enable cyrus imap server administration	emailadmin	de	Cyrus IMAP-Server Administration aktivieren
 enable sieve	emailadmin	de	Sieve aktivieren
 encryption settings	emailadmin	de	Verschlüsselungseinstellungen
-enter your default mail domain (from: user@domain)	emailadmin	de	Standard EMail-Domain (Von: benutzer@domain)
+enter your default mail domain (from: user@domain)	emailadmin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 error connecting to imap server. %s : %s.	emailadmin	de	Fehler beim Verbinden mit dem IMAP Server. %s : %s.
 error connecting to imap server: [%s] %s.	emailadmin	de	Fehler beim Verbinden mit dem IMAP Server. [%s] %s.
 forward also to	emailadmin	de	zusätzlich weiterleiten
-forward email's to	emailadmin	de	EMail's weiterleiten an
+forward email's to	emailadmin	de	E-Mails weiterleiten an
 forward only	emailadmin	de	nur weiterleiten
 global options	emailadmin	de	Globale Optionen
 if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	de	Wenn Sie SSL oder TLS benutzern, müssen Sie die openssl PHP Erweiterung geladen haben.
@@ -53,17 +53,17 @@ ldap basedn	emailadmin	de	LDAP BaseDN
 ldap server	emailadmin	de	LDAP Server
 ldap server accounts dn	emailadmin	de	LDAP-Server Benutzerkonten DN
 ldap server admin dn	emailadmin	de	LDAP-Server Administrator DN
-ldap server admin password	emailadmin	de	LDAP-Server Administrator Passwort
+ldap server admin password	emailadmin	de	LDAP-Server Administrator-Passwort
 ldap server hostname or ip address	emailadmin	de	LDAP-Server Hostname oder IP-Adresse
-ldap settings	emailadmin	de	LDAP Einstellungen
+ldap settings	emailadmin	de	LDAP-Einstellungen
 leave empty for no quota	emailadmin	de	leer lassen um Quota zu deaktivieren
-mail settings	admin	de	Mail Einstellungen
+mail settings	admin	de	E-Mail-Einstellungen
 name of organisation	emailadmin	de	Name der Organisation
-no alternate email address	emailadmin	de	keine zusätzlichen EMailadressen
+no alternate email address	emailadmin	de	keine zusätzlichen E-Mail-Adressen
 no encryption	emailadmin	de	keine Verschlüsselung
 no forwarding email address	emailadmin	de	keine Weiterleitungsadresse definiert
 no message returned.	emailadmin	de	Keine Nachricht zurückgeliefert.
-no supported imap authentication method could be found.	emailadmin	de	Keine unterstützte IMAP Authentifizierungsmethode gefunden.
+no supported imap authentication method could be found.	emailadmin	de	Keine unterstützte IMAP-Authentifizierungsmethode gefunden.
 order	emailadmin	de	Reihenfolge
 organisation	emailadmin	de	Organisation
 plesk can't rename users --> request ignored	emailadmin	de	Plesk kann keine Benutzer umbenennen --> Anforderung ignoriert
@@ -83,7 +83,7 @@ quota settings	emailadmin	de	Quota Einstellungen
 remove	emailadmin	de	Entfernen
 select type of imap/pop3 server	emailadmin	de	IMAP/POP3-Server Typ auswählen
 select type of smtp server	emailadmin	de	SMTP-Server Typ auswählen
-server settings	emailadmin	de	Server Einstellungen
+server settings	emailadmin	de	Server-Einstellungen
 sieve server hostname or ip address	emailadmin	de	Sieve-Server Hostname oder IP-Adresse
 sieve server port	emailadmin	de	Sieve-Server Port
 sieve settings	emailadmin	de	Sieve Einstellungen

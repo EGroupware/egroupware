@@ -195,4 +195,11 @@
 
 		return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.2.002';
 	}
+
+
+	$test[] = '1.2.002';
+	function emailadmin_upgrade1_2_002()
+	{
+		return $GLOBALS['setup_info']['emailadmin']['currentver'] = '1.4';
+	}
 ?>

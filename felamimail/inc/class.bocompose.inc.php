@@ -860,7 +860,7 @@
 				$uiinfolog->import_mail(
 					$this->sessionData['to'],
 					$this->sessionData['subject'],
-					$this->sessionData['body'],
+					$this->convertHTMLToText($this->sessionData['body']),
 					$this->sessionData['attachments']
 				);
 			}

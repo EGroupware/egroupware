@@ -89,13 +89,13 @@
 			$tab_widget =& new etemplate('etemplate.tab_widget');
 			$tab_widget->no_onclick = true;
 	
-			if ($value && !strstr($value,'.'))
+			if ($value && strpos($value,'.') === false)
 			{
 				$value = $tmpl->name . '.' . $value;
 			}
 			foreach($names as $k => $name)
 			{
-				if (!strstr($name,'.'))
+				if (strpos($name,'.') === false)
 				{
 					$name = $names[$k] = $tmpl->name . '.' . $name;
 				}
@@ -112,7 +112,7 @@
 
 			foreach($names as $k => $name)
 			{
-				if (!strstr($name,'.'))
+				if (strpos($name,'.') === false)
 				{
 					$name = $names[$k] = $tmpl->name . '.' . $name;
 				}

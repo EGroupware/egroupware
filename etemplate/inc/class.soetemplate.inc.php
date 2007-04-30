@@ -972,7 +972,7 @@
 			{
 				if (($keys['name'] != $last['name'] ||		// write only newest version
 					 $keys['template'] != $last['template']) &&
-					 !strstr($keys['name'],'test'))
+					 strpos($keys['name'],'test') === false)
 				{
 					$tpl->read($keys);
 					$to_trans += $tpl->getToTranslate();
@@ -1340,7 +1340,7 @@
 			foreach($strings as $str)
 			{
 				if (strlen($str) > 1 && $str{0} != '@' && $str{0} != '$' && 
-					strstr($str,'$row') === false && strstr($str,'$cont') === false)
+					strpos($str,'$row') === false && strpos($str,'$cont') === false)
 				{
 					$to_trans[trim(strtolower($str))] = $str;
 				}

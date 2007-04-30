@@ -110,7 +110,7 @@ empty for all	infolog	de	leer für alle
 enddate	infolog	de	Fällig am
 enddate can not be before startdate	infolog	de	Das Fälligkeitsdatum kann nicht vor dem Startdatum liegen
 enter a custom contact, leave empty if linked entry should be used	infolog	de	benutzerdefinierter Kontakt, leer lassen um die Daten der Verknüpfung zu verwenden
-enter a custom phone/email, leave empty if linked entry should be used	infolog	de	benutzerdefinierte Telefonnumer/Emailadresse, leer lassen um die Daten der Verknüpfung zu verwenden
+enter a custom phone/email, leave empty if linked entry should be used	infolog	de	benutzerdefinierte Telefonnumer/E-Mail-Adresse, leer lassen um die Daten der Verknüpfung zu verwenden
 enter a textual description of the log-entry	infolog	de	geben Sie eine textliche Beschreibung des Eintrags ein
 enter the query pattern	infolog	de	geben Sie ein Suchmuster ein
 entry and all files	infolog	de	Eintrag und alle Dateien
@@ -200,7 +200,7 @@ pattern for search in projects	infolog	de	Muster für Suche des Projekts
 percent completed	infolog	de	Prozent erledigt
 permission denied	infolog	de	Zugriff verweigert
 phone	infolog	de	Anruf
-phone/email	infolog	de	Telefon/Email
+phone/email	infolog	de	Telefon/E-Mail
 phonecall	infolog	de	Telefonanruf
 planned	infolog	de	geplant
 planned time	infolog	de	geplante Zeit

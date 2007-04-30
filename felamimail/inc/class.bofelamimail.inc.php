@@ -1269,6 +1269,11 @@
 			foreach((array)$headersNew as $headerObject) {
 				#if($count == 0) _debug_array($headerObject);
 				$uid = $headerObject['UID'];
+				
+				// make dates like "Mon, 23 Apr 2007 10:11:06 UT" working with strtotime
+				if(substr($headerObject['DATE'],-2) === 'UT') {
+					$headerObject['DATE'] .= 'C';
+				}
 
 				$retValue['header'][$sortOrder[$uid]]['subject']	= $this->decode_header($headerObject['SUBJECT']);
 				$retValue['header'][$sortOrder[$uid]]['size'] 		= $headerObject['SIZE'];

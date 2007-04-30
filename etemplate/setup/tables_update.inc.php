@@ -92,4 +92,18 @@
 		$GLOBALS['setup_info']['etemplate']['currentver'] = '1.2';
 		return $GLOBALS['setup_info']['etemplate']['currentver'];
 	}
+
+
+	$test[] = '1.2';
+	function etemplate_upgrade1_2()
+	{
+		$GLOBALS['egw_setup']->oProc->AlterColumn('egw_etemplate','et_modified',array(
+			'type' => 'int',
+			'precision' => '8',
+			'nullable' => False,
+			'default' => '0'
+		));
+
+		return $GLOBALS['setup_info']['etemplate']['currentver'] = '1.4';
+	}
 ?>

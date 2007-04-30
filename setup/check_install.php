@@ -252,6 +252,8 @@
 		$channel = $config->get('default_channel');
 		//echo "<pre>channel = ".print_r($channel,true)."</pre>\n";       
 		
+		if (!method_exists($config,'getRegistry')) return false;	// PEAR version to old
+
 		$reg = &$config->getRegistry();
 		//echo "<pre>reg = ".print_r($reg,true)."</pre>\n";       
 		            
@@ -463,7 +465,7 @@
 
 		// add a ../ for non-absolute pathes
 		$rel_name = $name;
-		if (substr($name,0,3) != '../' && $name{0} != '/' && $name{0} != '\\' && strstr($name,':') === false)
+		if (substr($name,0,3) != '../' && $name{0} != '/' && $name{0} != '\\' && strpos($name,':') === false)
 		{
 			$name = '../'.$name;
 		}

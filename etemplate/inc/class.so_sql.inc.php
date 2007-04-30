@@ -328,7 +328,7 @@ class so_sql
 		{
 			foreach($query as $col => $val)
 			{
-				if (is_int($col) || strstr($join,$col) === false) continue;
+				if (is_int($col) || strpos($join,$col) === false) continue;
 				$query[] = $this->db->expression($this->table_name,$this->table_name.'.',array($col=>$val));
 				unset($query[$col]);
 			}

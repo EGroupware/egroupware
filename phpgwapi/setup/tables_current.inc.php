@@ -437,7 +437,7 @@
 				'link_app2' => array('type' => 'varchar','precision' => '25','nullable' => False),
 				'link_id2' => array('type' => 'varchar','precision' => '50','nullable' => False),
 				'link_remark' => array('type' => 'varchar','precision' => '100'),
-				'link_lastmod' => array('type' => 'int','precision' => '4','nullable' => False),
+				'link_lastmod' => array('type' => 'int','precision' => '8','nullable' => False),
 				'link_owner' => array('type' => 'int','precision' => '4','nullable' => False)
 			),
 			'pk' => array('link_id'),
@@ -459,7 +459,7 @@
 				'n_suffix' => array('type' => 'varchar','precision' => '64'),
 				'n_fn' => array('type' => 'varchar','precision' => '128'),
 				'n_fileas' => array('type' => 'varchar','precision' => '255'),
-				'contact_bday' => array('type' => 'varchar','precision' => '10'),
+				'contact_bday' => array('type' => 'varchar','precision' => '12'),
 				'org_name' => array('type' => 'varchar','precision' => '64'),
 				'org_unit' => array('type' => 'varchar','precision' => '64'),
 				'contact_title' => array('type' => 'varchar','precision' => '64'),
@@ -544,7 +544,7 @@
 				'list_added' => array('type' => 'int','precision' => '8'),
 				'list_added_by' => array('type' => 'int','precision' => '4')
 			),
-			'pk' => array('ab_id','list_id'),
+			'pk' => array('contact_id','list_id'),
 			'fk' => array(),
 			'ix' => array(),
 			'uc' => array()

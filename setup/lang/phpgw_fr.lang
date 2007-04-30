@@ -6,7 +6,7 @@
 %1, %2 or %3 the configuration file.	setup	fr	%1, %2 ou le fichier de configuration %3.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	fr	'%1' n'est pas autorisé en tant que %2ème argument de l'option %3 !!!
 (searching accounts and changing passwords)	setup	fr	(recherche des comptes et modification des mots de passe)
-*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fr	*** Ne mettez PAS à jour votre base de données via l'installeur, car elle pourrait être pertubée par l'option "max_execution_time", qui laisserait votre base de donnée dans un état irrécupérable (vos données seraient perdues)
+*** do not update your database via setup, as the update might be interrupted by the max_execution_time, which leaves your db in an unrecoverable state (your data is lost) !!!	setup	fr	*** Ne mettez PAS à jour votre base de données via le setup, car elle pourrait être pertubée par l'option "max_execution_time", qui laisserait votre base de donnée dans un état irrécupérable (vos données seraient perdues)
 *** you have to do the changes manualy in your php.ini (usualy in /etc on linux) in order to get egw fully working !!!	setup	fr	*** Vous devez faire ce changement manuellement dans votre configuration PHP (php.ini, généralement stocké dans /etc sous Linux) pour utiliser eGroupWare convenablement.
 00 (disable)	setup	fr	00 (désactivé / recommandé)
 13 (ntp)	setup	fr	13 (ntp)
@@ -16,14 +16,14 @@
 access denied: wrong username or password for manage-header !!!	setup	fr	Accès refusé: nom d'utilisateur ou mot de passe incorrect pour manage-header !!!
 access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	fr	Accès refusé: nom d'utilisateur ou mot de passe incorrect pour configurer le domaine '%1(%2)' !!!
 account repository need to be set to the one you migrate to!	setup	fr	Le dépôt de comptes utilisateurs doit être positionné sur celui vers lequel vous migrez!
-account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	fr	account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|True}],[allow cookie auth{ (default)|True}]
+account repository{sql(default) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (default)|true}],[allow cookie auth{ (default)|true}]	setup	fr	account repository{sql(par défaut) | ldap},[authentication{sql | ldap | mail | ads | http | ...}],[sql encrypttion{md5 | blowfish_crypt | md5_crypt | crypt}],[check save password{ (par défaut)|True}],[allow cookie auth{ (par défaut)|True}]
 accounts existing	setup	fr	Comptes déjà créés
 actions	setup	fr	Actions
 activate safe password check	setup	fr	Activer la vérification de la sécurité des mots de passe
-add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-créés à ce groupe ('Default' sera tenté si ceci est vide.)
+add auto-created users to this group ('default' will be attempted if this is empty.)	setup	fr	Ajouter les utilisateurs auto-créés à ce groupe ('Par défaut' sera tenté si ceci est vide.)
 add new database instance (egw domain)	setup	fr	Ajouter une nouvelle instance de base de données (domaine eGW)
-add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	fr	ajouter ou modifier un domaine: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
-adding, editing or deleting an egroupware domain / database instance:	setup	fr	Ajouter, modifier ou effacer un domaine / instance base de données eGroupWare
+add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	fr	ajouter ou modifier un domaine: [domain-name(par défaut)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(hôte local)],[db-port(spécifique base de données)],[config-user(comme En-tête)],[config-passwd(comme En-tête)]
+adding, editing or deleting an egroupware domain / database instance:	setup	fr	Ajouter, modifier ou supprimer un domaine / instance base de données eGroupWare
 additional options and there defaults (in brackets)	setup	fr	Options supplémentaires et leurs valeurs par défaut (entre parenthèses)
 additional settings	setup	fr	Réglages supplémentaires
 admin account successful created.	setup	fr	Compte administrateur créé avec succès.
@@ -31,14 +31,14 @@ admin email address	setup	fr	Adresse email administrateur
 admin first name	setup	fr	Prénom de l'administrateur
 admin last name	setup	fr	Nom de l'adminstrateur
 admin password	setup	fr	Mot de passe du compte administrateur
-admin password to header manager	setup	fr	Mot de passe administrateur pour le gestionnaire d'entête
+admin password to header manager	setup	fr	Mot de passe administrateur pour le gestionnaire d'En-tête
 admin user for header manager	setup	fr	Identifiant administrateur pour le gestionnaire d'entête
 admin username	setup	fr	Identifiant de l'administrateur (login)
 admins	setup	fr	Admins
 after backing up your tables first.	setup	fr	Après avoir sauvegardé vos tables auparavant
-after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fr	Après avoir récupéré le fichier, mettez-le en place comme le fichier header.inc.php.   Puis, cliquez sur "continue".
+after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	fr	Après avoir récupéré le fichier, mettez-le en place en tant que header.inc.php. Ensuite cliquez sur "Continuer".
 all applications	setup	fr	toutes les applications
-all core tables and the admin and preferences applications	setup	fr	Toutes les tables de base et les applications admin et preferences
+all core tables and the admin and preferences applications	setup	fr	Toutes les tables de base et les applications Admin et Préférences
 all exit codes of the command line interface	setup	fr	tous les codes de retour de l'interface ligne de commande
 all languages (incl. not listed ones)	setup	fr	toutes les langues (aussi celles non listées)
 all users	setup	fr	Tous les utilisateurs
@@ -80,21 +80,21 @@ back's up your db now, this might take a few minutes	setup	fr	sauvegarde votre b
 backup '%1' deleted	setup	fr	sauvegarde '%1' supprimée
 backup '%1' renamed to '%2'	setup	fr	sauvegarde '%1' renommée en '%2'
 backup '%1' restored	setup	fr	sauvegarde '%1' récupérée
-backup and restore	setup	fr	sauvegarde et récupération
+backup and restore	setup	fr	Sauvegarde et récupération
 backup failed	setup	fr	La sauvegarde a échoué
 backup finished	setup	fr	la sauvegarde est terminée
 backup now	setup	fr	sauvegarder maintenant
 backup sets	setup	fr	jeux de sauvegardes
-backup skipped!	setup	fr	Sauvegarde évitée!
+backup skipped!	setup	fr	Sauvegarde omise!
 backup started, this might take a few minutes ...	setup	fr	la sauvegarde a démarré, ceci peut prendre quelques minutes
-because an application it depends upon was upgraded	setup	fr	parce-qu'une application de laquelle il dépend a été mise à jour
+because an application it depends upon was upgraded	setup	fr	car une application dont laquelle il dépend a été mise à jour
 because it depends upon	setup	fr	car cela dépend de
-because it is not a user application, or access is controlled via acl	setup	fr	Parce-que ce n'est pas une application utilisateur, ou l'accès est contrôlé par ACL
-because it requires manual table installation, <br />or the table definition was incorrect	setup	fr	Parce-que ça nécessite une installation manuelle de table, <br />ou la définition de la table était incorrecte
+because it is not a user application, or access is controlled via acl	setup	fr	car ce n'est pas une application utilisateur, ou l'accès est contrôlé par ACL
+because it requires manual table installation, <br />or the table definition was incorrect	setup	fr	car cela nécessite une installation manuelle de table, <br />ou la définition de la table était incorrecte
 because it was manually disabled	setup	fr	car cela a été désactivé manuellement
 because of a failed upgrade or install	setup	fr	A cause d'une mise à jour ou d'une installation défectueuse
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	fr	A cause d'une mise à jour défectueuse, ou la base de données est plus récente que celle de la version installée de cette app
-because the enable flag for this app is set to 0, or is undefined	setup	fr	Parce-que le flag d'activation de cette application est sur 0, ou est indéfini
+because the enable flag for this app is set to 0, or is undefined	setup	fr	car le témoin d'activation de cette application est sur 0 ou indéfini
 bottom	setup	fr	Bas
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	fr	Mais nous vous <u>recommandons fortement de sauvegarder</u> vos tables au cas où le script endommagerait vos données.<br /><strong>Ces scripts automatiques peuvent facilement endommager vos données.</strong>
 cancel	setup	fr	Abandon
@@ -116,10 +116,10 @@ checking php.ini	setup	fr	Vérification de php.ini
 checking required php version %1 (recommended %2)	setup	fr	Vérification version PHP %1 requise (%2 recommandée)
 checking the egroupware installation	setup	fr	Vérification de l'installation eGroupWare
 checks egroupware's installed, it's versions and necessary upgrads (return values see --exit-codes)	setup	fr	vérification de l'installation d'eGroupWare, sa version et ses mises à jour requises (pour les valeurs de retour voir --exit-codes)
-click <a href="index.php">here</a> to return to setup.	setup	fr	cliquez <a href="index.php">ici</a> pour revenir à l'installeur.
+click <a href="index.php">here</a> to return to setup.	setup	fr	cliquez <a href="index.php">ici</a> pour revenir au setup.
 click here	setup	fr	Cliquez ici
 click here to re-run the installation tests	setup	fr	Cliquez ici pour rédemarrer la procédure de vérification
-comma separated ip-addresses or host-names, default access to setup from everywhere	setup	fr	liste des adresses IP ou hostnames, par défaut accès à installeur depuis partout
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	fr	liste des adresses IP ou noms d'hôtes, par défaut accès au setup depuis partout
 completed	setup	fr	Complété
 config password	setup	fr	Mot de passe
 config username	setup	fr	Identifiant
@@ -139,7 +139,7 @@ convert backup to charset selected above	setup	fr	Convertir la sauvegarde au jeu
 could not open header.inc.php for writing!	setup	fr	Impossible d'ouvrir le fichier header.inc.php pour écriture!
 country selection	setup	fr	Sélection du pays
 create	setup	fr	Créer
-create a backup before upgrading the db	setup	fr	créer une sauvegarde avant de mettre à jour la base de données
+create a backup before upgrading the db	setup	fr	Créer une sauvegarde avant de mettre à jour la base de données
 create admin account	setup	fr	Création du compte Administrateur
 create database	setup	fr	Créer la base de données
 create demo accounts	setup	fr	Créer les comptes de démonstration
@@ -150,7 +150,7 @@ create the empty database and grant user permissions -	setup	fr	Créer une base d
 create your header.inc.php	setup	fr	Créer votre fichier header.inc.php
 created	setup	fr	Créé
 created header.inc.php!	setup	fr	Créé header.inc.php!
-creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	fr	créée un utilisateur adminstrateur: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]
+creates an admin user: domain(default),[config user(admin)],password,username,password,[first name],[last name],[email]	setup	fr	créée un utilisateur adminstrateur: domain(par défaut),[config user(admin)],password,username,password,[first name],[last name],[email]
 creating tables	setup	fr	Création de tables en cours
 creation of %1 in %2 failed !!!	setup	fr	La création de %1 dans %2 a échoué !!!
 current configuration:	setup	fr	Configuration actuelle:
@@ -197,9 +197,9 @@ domain	setup	fr	Domaine
 domain '%1' does not exist !!!	setup	fr	Le domaine '%1' n'existe PAS !!!
 domain name	setup	fr	Nom du domaine
 domain select box on login	setup	fr	Boîte de sélection de domaine à la connexion
-domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	fr	domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-YYYYMMDDHHii)]
-domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	fr	domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]
-domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	fr	domain(default),[config user(admin)],password,[name=value,...] sets config values beside:
+domain(all),[config user(admin)],password,[file-name(default: backup-dir/db_backup-yyyymmddhhii)]	setup	fr	domain(tous),[config user(admin)],password,[file-name(par défaut: backup-dir/db_backup-YYYYMMDDHHii)]
+domain(default),[config user(admin)],password,[backup to install],[charset(default depends on language)]	setup	fr	domain(par défaut),[config user(admin)],password,[backup to install],[charset(default depends on language)]
+domain(default),[config user(admin)],password,[name=value,...] sets config values beside:	setup	fr	domain(par défaut),[config user(admin)],password,[nom=valeur,...] définit les valeurs de configuration suivantes:
 domain-name	setup	fr	nom de domaine
 dont touch my data	setup	fr	Ne pas toucher à mes données
 download	setup	fr	Télécharger
@@ -210,17 +210,17 @@ eg. /egroupware or http://domain.com/egroupware, default: %1	setup	fr	c'est-à-di
 egroupware administration manual	setup	fr	Manuel d'Administration eGroupWare
 egroupware api needs a database (schema) update from version %1 to %2!	setup	fr	l'API eGroupWare a besoin d'une mis à jour de la base de données (schéma) de la version %1 vers %2!
 egroupware api version %1 found.	setup	fr	API eGroupWare version %1 trouvée.
-egroupware configuration file (header.inc.php) does not exist.	setup	fr	aucun fichier de configuration eGroupWare (header.inc.php).
+egroupware configuration file (header.inc.php) does not exist.	setup	fr	le fichier de configuration eGroupWare (header.inc.php) m'existe PAS.
 egroupware configuration file (header.inc.php) version %1 exists%2	setup	fr	un fichier de configuration eGroupWare (header.inc.php) version %1 existe%2
 egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	fr	un fichier de configuration eGroupWare (header.inc.php) existe déjà, vous devez utiliser --edit-header ou le supprimer auparavant!
 egroupware domain/instance %1(%2):	setup	fr	domaine/instance eGroupWare %1(%2):
 egroupware is already installed!	setup	fr	eGroupWare est déjà installé!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	fr	les sources eGroupWare dans '%1' sont incomplètes, le fichier '%2' manque !!!
-emailadmin profile updated:	setup	fr	profile EMailAdmin mis à jour:
+emailadmin profile updated:	setup	fr	profil EMailAdmin mis à jour:
 enable for extra debug-messages	setup	fr	Activer pour les messages de déboguage supplémentaires
 enable mcrypt	setup	fr	Activer MCrypt
-enter some random text for app session encryption	setup	fr	Entrez du texte au hasard pour le chiffrement des sessions applicatives
-enter some random text for app_session <br />encryption (requires mcrypt)	setup	fr	Entrez du texte au hasard pour le <br />chiffrement app_session (nécessite mcrypt)
+enter some random text for app session encryption	setup	fr	Entrez du texte aléatoirement pour le chiffrement des sessions applicatives
+enter some random text for app_session <br />encryption (requires mcrypt)	setup	fr	Entrez du texte aléatoirement pour le <br />chiffrement app_session (nécessite mcrypt)
 enter the full path for temporary files.<br />examples: /tmp, c:\temp	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br />Exemples: /tmp, C:\TEMP
 enter the full path for temporary files.<br />examples: /tmp, c:temp	setup	fr	Entrez le chemin complet pour les fichiers temporaires.<br />Exemples: /tmp, C:\TEMP
 enter the full path for users and group files.<br />examples: /files, e:\files	setup	fr	Entrez le chemin complet pour les fichiers d'utilisateurs et de groupes.<br />Exemples: /files, E:\FILES
@@ -257,16 +257,16 @@ group	setup	fr	groupe
 group memberships will be migrated too.	setup	fr	Les adhésions aux groupes seront migrées aussi
 has a version mismatch	setup	fr	contient une différence de version
 header admin login	setup	fr	Connexion à l'entête d'Administration
-header password	setup	fr	Mot de passe entête
-header username	setup	fr	Identifiant entôte
+header password	setup	fr	Mot de passe En-tête
+header username	setup	fr	Identifiant En-tête
 header-password[,header-user(admin)]	setup	fr	header-password[,header-user(admin)]
 header.inc.php successful written.	setup	fr	header.inc.php écrit ok.
 historylog removed	setup	fr	Historique effacé
-hooks deregistered	setup	fr	dépendances désenregistrées
-hooks registered	setup	fr	dépendances enregistrées
+hooks deregistered	setup	fr	dépendances désinscrites
+hooks registered	setup	fr	dépendances inscrites
 host information	setup	fr	Informations d'hôte
 host,[smtp port],[smtp user],[smtp password]	setup	fr	host,[smtp port],[smtp user],[smtp password]
-host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	fr	host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]
+host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add domain for mailserver login}]	setup	fr	host,{imap | pop3 | imaps | pop3s},[domain],[{standard(par défaut)|vmailmgr = ajouter un domaine pour la connexion au serveur de messagerie}]
 host/ip domain controler	setup	fr	Hôte/IP du contrôleur de Domaine
 hostname/ip of database server	setup	fr	Nom de machine/IP du serveur de base de données
 hour (0-24)	setup	fr	heure (0-24)
@@ -309,7 +309,7 @@ languages updated.	setup	fr	Langues mises à jour.
 ldap accounts configuration	setup	fr	Configuration des comptes LDAP
 ldap accounts context	setup	fr	Contexte des comptes LDAP
 ldap config	setup	fr	Configuration LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	setup	fr	Préfixe par défaut du répertoire maison LDAP (p.e. /home pour /home/utilisateur)
+ldap default homedirectory prefix (e.g. /home for /home/username)	setup	fr	Préfixe par défaut du répertoire d'accueil LDAP (p.e. /home pour /home/utilisateur)
 ldap default shell (e.g. /bin/bash)	setup	fr	Shell LDAP par défaut (p.e. /bin/bash)
 ldap encryption type	setup	fr	Type de cryptage LDAP
 ldap groups context	setup	fr	Contexte des groupes LDAP
@@ -440,18 +440,18 @@ restore failed	setup	fr	La récupération a échoué
 restore finished	setup	fr	la récupération est terminée
 restore started, this might take a few minutes ...	setup	fr	la récupération a démarré, ceci peut prendre quelques minutes ...
 restoring a backup will delete/replace all content in your database. are you sure?	setup	fr	Récupérer une sauvegarde effacera/remplacera tout le contenu de votre base de données. Etes-vous sûr?
-return to setup	setup	fr	Revenir à la page de l'installateur
+return to setup	setup	fr	Revenir à la page de setup
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	fr	exécutez une mise à jour du schéma de la base de données (si nécessaire): domain(all),[config user(admin)],password
 run installation tests	setup	fr	Démarrage de la procédure de vérification...
 safe_mode is turned on, which is generaly a good thing as it makes your install more secure.	setup	fr	l'option safe_mode (mode sécurisé) est actif, ceci est en général une bonne chose et rend votre installation plus sécurisée.
-sample configuration not found. using built in defaults	setup	fr	Configuration exemple introuvable. Utilissation des valeurs par défaut prédéfinies
+sample configuration not found. using built in defaults	setup	fr	Configuration exemple introuvable. Utilisation des valeurs par défaut prédéfinies
 save	setup	fr	Enregistrer
 save this text as contents of your header.inc.php	setup	fr	Enregistrer ce texte comme le contenu de votre fichier header.inc.php
 schedule	setup	fr	planification
 scheduled backups	setup	fr	sauvegardes planifiées
 select an app, enter a target version, then submit to process to that version.<br />if you do not enter a version, only the baseline tables will be installed for the app.<br /><blink>this will drop all of the apps' tables first!</blink>	setup	fr	Choisissez une application, entrez une version de destination, puis soumettez pour transformer vers cette version.<br />Si vous n'entrez pas de version, seules les tables de base pour cette application seront installées.<br /><blink>CETTE MANIPULATION VA D'ABORD EFFACER TOUTES LES TABLES DE DONNEES DES APPLICATIONS!</blink>
 select one...	setup	fr	sélectionnez un...
-select the default applications to which your users will have access	setup	fr	Choisisseez les applications par défaut auxquelles vos utilisaturs auront accès
+select the default applications to which your users will have access	setup	fr	Choisisseez les applications par défaut auxquelles vos utilisateurs auront accès
 select the desired action(s) from the available choices	setup	fr	Choisissez la(les) action(s) désirée(s) dans les choix possibles
 select to download file	setup	fr	Choisissez pour downloader le fichier
 select where you want to store/retrieve file contents	setup	fr	Choisissez où vous voulez stocker/récupérer les contenus de fichiers
@@ -473,8 +473,8 @@ selectbox	setup	fr	Boîte de sélection
 server root	setup	fr	Racine serveur
 sessions type	setup	fr	Type de Sessions
 set	setup	fr	définir
-set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fr	Mettez ceci sur "ancien" pour les versions < 2.4, sinon la version exacte de mcrypt que vous utilisez.
-setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractère en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.
+set this to "old" for versions &lt; 2.4, otherwise the exact mcrypt version you use.	setup	fr	Mettez ceci sur "old" pour les versions < 2.4, sinon la version exacte de mcrypt que vous utilisez.
+setting the system-charset to utf-8 (unicode) allows the coexistens of data from languages of different charsets.	setup	fr	Définir le jeu de caractères en UTF8 permet la co-existence de données provenant de jeu de caractères des différentes langues.
 settings	setup	fr	Réglages
 setup	setup	fr	Installation
 setup main menu	setup	fr	Menu principal de configuration
@@ -511,7 +511,7 @@ tcp port number of database server	setup	fr	numéro de port du serveur de base de
 text entry	setup	fr	Zone de Texte
 the %1 extension is needed from: %2.	setup	fr	L'extension %1 est requise par : %2.
 the %1 extension is needed, if you plan to use a %2 database.	setup	fr	L'extension %1 est nécessaire si vous décidez d'utiliser la base de donnée %2<br />
-the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fr	Le type de base de données (db_type) figurant dans les valeurs par défaut (%1) n'est pas supporté sur ce serveur. J'utilise le premier type supporté.
+the db_type in defaults (%1) is not supported on this server. using first supported type.	setup	fr	Le type de base de données (db_type) des valeurs par défaut (%1) n'est pas supporté sur ce serveur. Utilisation du premier type supporté.
 the file	setup	fr	le fichier
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	fr	La première étape lors de l'installation d'eGroupWare est la vérification de votre environnement système.
 the following applications need to be upgraded:	setup	fr	L'application suivante a besoin d'une mise à jour:
@@ -530,7 +530,7 @@ this might take a while, please wait ...	setup	fr	Cela peu prendre un certain te
 this program lets you backup your database, schedule a backup or restore it.	setup	fr	Ce programme vous permet de sauvegarder votre base de données, planifier une sauvegarde ou la récupérer.
 this program will convert your database to a new system-charset.	setup	fr	Ce programme va convertir les informations de votre base de données vers le nouveau jeu de caractère.
 this program will help you upgrade or install different languages for egroupware	setup	fr	Ce programme va vous aider à mettre à jour ou installer des langues différentes dans eGroupWare
-this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br />Note: la valeur par défaut a été générée au hasard.
+this should be around 30 bytes in length.<br />note: the default has been randomly generated.	setup	fr	Ceci devrait faire environ 30 octets de long.<br />Note: la valeur par défaut a été générée aléatoirement.
 this stage is completed<br />	setup	fr	Cette étape est complétée<br />
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	fr	Ceci va créer un premier utilisateur eGroupWare ou réinitialiser le mot de passe et les droits administrateur d'un utilisateur existant
 to a version it does not know about	setup	fr	vers une version qu'il ne connaît pas
@@ -546,11 +546,11 @@ try to configure your php to support one of the above mentioned dbms, or install
 two weeks	setup	fr	deux semaines
 unfortunally some php/apache packages have problems with it (apache dies and you cant login anymore).	setup	fr	Malheureusement quelques paquetages PHP/Apache ont des problèmes avec (Apache meurt et vous ne pouvez plus vous connecter)
 uninstall	setup	fr	désinstaller
-uninstall all applications	setup	fr	désinstaller toutes les applications
+uninstall all applications	setup	fr	Désinstaller toutes les applications
 uninstalled	setup	fr	désinstallé
 unknown option '%1' !!!	setup	fr	Option '%1' inconnue !!!
 update finished.	setup	fr	Mise à jour terminée.
-upgrade	setup	fr	Metre à jour
+upgrade	setup	fr	Mettre à jour
 upgrade all	setup	fr	Mettre tout à jour
 upgraded	setup	fr	mis à jour
 upgrading tables	setup	fr	Mise à jour des Tables
@@ -562,8 +562,8 @@ use --create-header to create the configuration file (--usage gives more options
 use --install to install egroupware.	setup	fr	Utilisez --install pour installer eGroupWare.
 use --update to do so.	setup	fr	Utilisez --update pour le faire.
 use cookies to pass sessionid	setup	fr	Utiliser les cookies pour passer l'ID de session
-use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	fr	utiliser mcrypt pour chiffre les données de session: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]
-use persistent db connections: {on(default) | off}	setup	fr	utiliser des connexions base de données persistentes: {on(default) | off}
+use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(default randomly generated)],[mcrypt-version]	setup	fr	utiliser mcrypt pour chiffrer les données de session: {off(par défaut) | on},[mcrypt-init-vector(par défaut généré aléatoirement)],[mcrypt-version]
+use persistent db connections: {on(default) | off}	setup	fr	utiliser des connexions base de données persistentes: {on(par défaut) | off}
 use pure html compliant code (not fully working yet)	setup	fr	Utiliser du code HTML entièrement standard (ne fonctionne pas encore complètement)
 user	setup	fr	utilisateur
 user account prefix	setup	fr	Préfixe des comptes utilisateurs
@@ -629,12 +629,12 @@ your database is not working!	setup	fr	Votre base de données ne fonctionne pas!
 your database is working, but you dont have any applications installed	setup	fr	Votre base de données fonctionne, mais vous n'avez pas d'application installée
 your egroupware api is current	setup	fr	Votre API eGroupWare est à jour
 your files directory '%1' %2	setup	fr	Votre répertoire de fichiers '%1' %2
-your header admin password is not set. please set it now!	setup	fr	Votre mot de passe d'administration d'entête n'est PAS configuré. SVP configurez-le maintenant!
+your header admin password is not set. please set it now!	setup	fr	Votre mot de passe d'administration d'En-tête n'est PAS configuré. Veuillez le configurer maintenant!
 your header.inc.php needs upgrading.	setup	fr	Votre fichier header.inc.php a besoin d'une mise à jour.
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	fr	Votre fichier header.inc.php a besoin d'une mise à jour.<br /><blink><b class="msg">ATTENTION!</b></blink><br /><b>FAITES DES SAUVEGARDES!</b>
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	fr	Votre installation de PHP n'a pas de support GD approprié. <br/>Vous avez besoin de la bibliothèque gd supérieure ou égale à la version 1.8 pour voir les diagrammes de Gantt dans les Projets.
 your tables are current	setup	fr	Vos tables sont à jour
 your tables will be dropped and you will lose data	setup	fr	Vos tables seront supprimées et vous allez perdre des données !!
 your temporary directory '%1' %2	setup	fr	Votre répertoire temporaire '%1' %2
-{db | php(default) | php-restore}	setup	fr	{db | php(default) | php-restore}
-{off(default) | on}	setup	fr	{off(default) | on}
+{db | php(default) | php-restore}	setup	fr	{db | php(par défaut) | php-restore}
+{off(default) | on}	setup	fr	{off(par défaut) | on}

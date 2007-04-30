@@ -298,7 +298,7 @@
 					return false;
 				}
 				$charset = split("[\t\n ]+",$lines[0]);		// give a bit flexibility in the syntax AND remove the lineend (\n)
-				if (strstr($charset[0],'charset') && $charset[1])
+				if (strpos($charset[0],'charset') !== false && $charset[1])
 				{
 					$lines = $GLOBALS['egw']->translation->convert($lines,$charset[1]);
 				}

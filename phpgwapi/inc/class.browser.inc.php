@@ -76,23 +76,23 @@
 			/*
 				Determine platform
 			*/
-			if(strstr($HTTP_USER_AGENT,'Win'))
+			if(strpos($HTTP_USER_AGENT,'Win') !== false)
 			{
 				$this->BROWSER_PLATFORM='Win';
 			}
-			elseif(strstr($HTTP_USER_AGENT,'Mac'))
+			elseif(strpos($HTTP_USER_AGENT,'Mac') !== false)
 			{
 				$this->BROWSER_PLATFORM='Mac';
 			}
-			elseif(strstr($HTTP_USER_AGENT,'Linux'))
+			elseif(strpos($HTTP_USER_AGENT,'Linux') !== false)
 			{
 				$this->BROWSER_PLATFORM='Linux';
 			}
-			elseif(strstr($HTTP_USER_AGENT,'Unix'))
+			elseif(strpos($HTTP_USER_AGENT,'Unix') !== false)
 			{
 				$this->BROWSER_PLATFORM='Unix';
 			}
-			elseif(strstr($HTTP_USER_AGENT,'Beos'))
+			elseif(strpos($HTTP_USER_AGENT,'Beos') !== false)
 			{
 				$this->BROWSER_PLATFORM='Beos';
 			}

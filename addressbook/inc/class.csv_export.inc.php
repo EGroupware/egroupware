@@ -80,7 +80,7 @@ class csv_export
 		foreach($fields as $field => $label)
 		{
 			$value = $data[$field];
-			if (strstr($value,$this->separator) !== false || strstr($value,"\n") !== false || strstr($value,"\r") !== false)
+			if (strpos($value,$this->separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
 			{
 				$value = '"'.str_replace(array('\\','"'),array('\\\\','\\"'),$value).'"';
 			}

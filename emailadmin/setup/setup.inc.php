@@ -14,7 +14,7 @@
 
 	$setup_info['emailadmin']['name']      = 'emailadmin';
 	$setup_info['emailadmin']['title']     = 'EMailAdmin';
-	$setup_info['emailadmin']['version']   = '1.2.002';
+	$setup_info['emailadmin']['version']   = '1.4';
 	$setup_info['emailadmin']['app_order'] = 10;
 	$setup_info['emailadmin']['enable']    = 2;
 
@@ -38,11 +38,11 @@
 	/* Dependencies for this app to work */
 	$setup_info['emailadmin']['depends'][] = array(
 		'appname'  => 'phpgwapi',
-		'versions' => Array('1.0.0','1.0.1','1.2','1.3','1.4')
+		'versions' => Array('1.3','1.4','1.5')
 	);
 	$setup_info['felamimail']['depends'][] = array(
 		'appname'  => 'egw-pear',
-		'versions' => Array('1.4.000')
+		'versions' => Array('1.4.000','1.5')
 	);
 	// installation checks for felamimail
 	$setup_info['emailadmin']['check_install'] = array(

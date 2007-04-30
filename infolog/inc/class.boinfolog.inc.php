@@ -183,13 +183,6 @@ class boinfolog
 				$this->enums['type'] += $this->config->config_data['types'];
 				//echo "types:<pre>"; print_r($this->enums['type']); echo "</pre>\n";
 			}
-			// sort types by there translation
-			foreach($this->enums['type'] as $key => $val)
-			{
-				if (($val = lang($key)) != $key.'*') $this->enums['type'][$key] = lang($key);
-			}
-			natcasesort($this->enums['type']);
-			
 			if ($this->config->config_data['group_owners']) $this->group_owners = $this->config->config_data['group_owners'];
 
 			if (isset($this->config->config_data['customfields']) && is_array($this->config->config_data['customfields']))
@@ -221,6 +214,13 @@ class boinfolog
 				$this->implicit_rights = 'edit';
 			}
 		}
+		// sort types by there translation
+		foreach($this->enums['type'] as $key => $val)
+		{
+			if (($val = lang($key)) != $key.'*') $this->enums['type'][$key] = lang($key);
+		}
+		natcasesort($this->enums['type']);
+
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
 		$this->tz_offset = $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
@@ -507,7 +507,10 @@ class boinfolog
 			{
 				$responsible =& $values['info_responsible'];
 			}
-			$status_only = in_array($this->user, $responsible);	// responsible has implicit right to change status
+			if (!($status_only = in_array($this->user, $responsible)))	// responsible has implicit right to change status
+			{
+				$status_only = !!array_intersect($responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
+			}
 		}
 		if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
 		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
@@ -559,7 +562,7 @@ class boinfolog
 			{
 				$values['info_status'] = 'done';
 			}
-			if (count($values['info_responsible']) && $values['info_status'] == 'offer')
+			if ($values['info_responsible'] && $values['info_status'] == 'offer')
 			{
 				$values['info_status'] = 'not-started';   // have to match if not finished
 			}

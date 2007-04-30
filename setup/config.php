@@ -174,7 +174,7 @@
 			case 'value':
 				$newval = str_replace(' ','_',$newval);
 				/* Don't show passwords in the form */
-				if(strstr($value,'passwd') || strstr($value,'password') || strstr($value,'root_pw'))
+				if(strpos($value,'passwd') !== false || strpos($value,'password') !== false || strpos($value,'root_pw') !== false)
 				{
 					$t->set_var($value,'');
 				}

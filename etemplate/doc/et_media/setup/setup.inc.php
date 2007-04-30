@@ -14,7 +14,7 @@
 
 	$setup_info['et_media']['name']      = 'et_media';
 	$setup_info['et_media']['title']     = 'eT-Media';
-	$setup_info['et_media']['version']   = '1.2';
+	$setup_info['et_media']['version']   = '1.4';
 	$setup_info['et_media']['app_order'] = 100;     // at the end
 	$setup_info['et_media']['tables']    = array('egw_et_media');
 	$setup_info['et_media']['enable']    = 1;
@@ -34,9 +34,9 @@
 	/* Dependencies for this app to work */
 	$setup_info['et_media']['depends'][] = array(
 				'appname' => 'phpgwapi',
-				'versions' => Array('1.2','1.3','1.4')
+				'versions' => Array('1.2','1.3','1.4','1.5')
 	);
 	$setup_info['et_media']['depends'][] = array(
 				'appname' => 'etemplate',
-				'versions' => Array('1.2','1.3','1.4')
+				'versions' => Array('1.2','1.3','1.4','1.5')
 	);

@@ -84,6 +84,7 @@ creates an english ('en') langfile from label and helptexts (for application in 
 css class for the table-tag	etemplate	fr	Classe CSS pour le tag de la table
 css properties	etemplate	fr	propriétés CSS
 css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	fr	Nom de la classe CSS pour cette ligne, préréglé: 'nmh' = entête prochaine correspondance, 'nmr' = alterne la ligne prochaine correspondance, 'nmr0'+'nmr1' lignes prochaines correspondances
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	fr	nom de la classe CSS pour cette ligne, préréglé: 'th' = en-tête, 'row' = ligne alternante, 'row_off'+'row_on' lignes
 css-styles	etemplate	fr	Styles CSS
 custom	etemplate	fr	personnalisé
 custom fields	etemplate	fr	champs personnalisé

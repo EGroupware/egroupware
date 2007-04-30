@@ -418,4 +418,11 @@
 
 		return $GLOBALS['setup_info']['felamimail']['currentver'] = '1.3.006';
 	}
+
+
+	$test[] = '1.3.006';
+	function felamimail_upgrade1_3_006()
+	{
+		return $GLOBALS['setup_info']['felamimail']['currentver'] = '1.4';
+	}
 ?>

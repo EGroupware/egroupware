@@ -815,7 +815,7 @@ function _set_value(&$arr,$index,$name,$value)
 	{
 		$var =& $var[$name];
 	}
-	$var = strstr($name,'passw') ? md5($value) : $value;
+	$var = strpos($name,'passw') !== false ? md5($value) : $value;
 }
 
 /**

@@ -150,16 +150,16 @@ class html
 			$content);
 
 		//  First match things beginning with http:// (or other protocols)
-		$Protocol = '(http|ftp|https):\/\/';
-		$Domain = '([\w]+.[\w]+)';
+		$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';	// only http:// gets removed, other protocolls are shown
+		$Domain = '([\w-]+\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&;:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $Protocol . $Domain . $Subdir . '/i';
 
-		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3</a>", $result );
+		$result = preg_replace( $Expr, "<a href=\"$0\" target=\"_blank\">$2$3$4</a>", $result );
 
 		//  Now match things beginning with www.
 		$NotHTTP = '(?<!:\/\/)';
-		$Domain = 'www(.[\w]+)';
+		$Domain = 'www(\.[\w-.]+)';
 		$Subdir = '([\w\-\.,@?^=%&:\/~\+#]*[\w\-\@?^=%&\/~\+#])?';
 		$Expr = '/' . $NotAnchor . $NotHTTP . $Domain . $Subdir . '/i';
 
@@ -585,7 +585,7 @@ class html
 	* @param string $base_href='' if passed activates the browser for image at absolute path passed
 	* @return string the necessary html for the textarea
 	*/
-	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href) 
+	function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'), $_height='400px', $_width='100%',$_base_href='') 
 	{
 		if (!$this->htmlarea_availible() || $_mode == 'ascii')
 		{

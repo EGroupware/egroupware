@@ -469,9 +469,23 @@ class uiinfolog
 						return $this->edit($do_id,$action,$action_id,'',$called_as);
 					case 'delete':
 						if (!($values['msg'] = $this->delete($do_id,$called_as,$called_as ? '' : 'index'))) return;
+						// did we deleted the entries, whos subentries we are showing?
+						if ($action == 'sp' && $action_id == $do_id)
+						{
+							// redirect to our referer or reset the subentry view
+							if (!$called_as && $own_referer)
+							{
+								$this->tmpl->location($own_referer);	// eg. redirect back to calendar
+							}
+							else
+							{
+								unset($action_id); unset($action);
+							}
+						}
 						break;
 					case 'close':
-						return $this->close($do_id,$called_as,$do == 'close_subs');
+						$this->close($do_id,$called_as);
+						break;
 					case 'sp':
 						return $this->edit(0,'sp',$do_id,'',$called_as);
 					case 'view':
@@ -578,7 +592,7 @@ class uiinfolog
 				}
 			}
 		}
-		return $referer ? $this->tmpl->location($referer) : $this->index();
+		if ($referer) $this->tmpl->location($referer);
 	}
 
 	function delete($values=0,$referer='',$called_by='')
@@ -658,11 +672,11 @@ class uiinfolog
 		{
 			//echo "uiinfolog::edit: content="; _debug_array($content);
 			$info_id   = $content['info_id'];
-			$action    = $content['action'];
-			$action_id = $content['action_id'];
-			$referer   = $content['referer'];
-			$no_popup  = $content['no_popup'];
-			$caller    = $content['caller'];
+			$action    = $content['action'];    unset($content['action']);
+			$action_id = $content['action_id']; unset($content['action_id']);
+			$referer   = $content['referer'];   unset($content['referer']);
+			$no_popup  = $content['no_popup'];  unset($content['no_popup']);
+			$caller    = $content['caller'];    unset($content['caller']);
 			
 			// convert custom from to 0 or 1, it's unset if not checked, which starts the detection
 			$content['info_custom_from'] = (int)$content['info_custom_from'];
@@ -977,6 +991,7 @@ class uiinfolog
 				$content['info_owner'] = $this->user;
 			}
 		}
+		$preserv = $content;
 		// for implizit edit of responsible user make all fields readonly, but status and percent
 		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && $this->bo->is_responsible($content))
 		{
@@ -985,6 +1000,7 @@ class uiinfolog
 			{
 				$readonlys[$name] = true;
 			}
+			unset($readonlys[$tabs]);
 			// need to set all customfields extra, as they are not set if empty
 			foreach($this->bo->customfields as $name => $value)
 			{
@@ -1034,27 +1050,13 @@ class uiinfolog
 			'info_priority' => $this->bo->enums['priority'],
 			'info_confirm'  => $this->bo->enums['confirm'],
 			'info_status'   => $this->bo->status[$content['info_type']]
-		),$readonlys,array(	// preserved values
+		),$readonlys,$preserv+array(	// preserved values
 			'info_id'       => $info_id,
-			'info_id_parent'=> $content['info_id_parent'],
-			'info_link_id'  => $content['info_link_id'],
-			'info_owner'    => $content['info_owner'],
-			'info_datemodified' => $content['info_datemodified'],
-			'info_modifier' => $content['info_modifier'],
 			'action'        => $action,
 			'action_id'     => $action_id,
 			'referer'       => $referer,
 			'no_popup'      => $no_popup,
-			'link_to'       => array('to_id' => $content['link_to']['to_id']),	// in case tab gets not viewed
-			'blur_title'    => $content['blur_title'],
 			'old_pm_id'     => $old_pm_id,
-			// preserv project fields, in case project tab is disabled, but user has rights to edit the entry
-			'pl_id'         => $content['pl_id'],
-			'info_price'    => $content['info_price'],
-			'info_used_time' => $content['info_used_time'],
-			'info_planned_time' => $content['info_planned_time'],
-			// preserve the type in case it's readonly (no delete rights from group owner)
-			'info_type'     => $content['info_type'],
 		),$no_popup ? 0 : 2);
 	}
 
@@ -1195,7 +1197,7 @@ class uiinfolog
 	 * 2. with $_GET['uid] = someuid (we come from display mail)
 	 * 
 	 * @author Cornelius Weiss <nelius@cwtech.de>
-	 * @param unknown_type $_to_emailAddress
+	 * @param string $_to_emailAddress
 	 * @param string $_subject
 	 * @param string $_body
 	 * @param array $_attachments
@@ -1239,7 +1241,7 @@ class uiinfolog
 			$bofelamimail->reopen($mailbox);
 			
 			$headers = $bofelamimail->getMessageHeader($uid);
-			$bodyParts = $bofelamimail->getMessageBody($uid,'');
+			$bodyParts = $bofelamimail->getMessageBody($uid,'text/plain');
 			$attachments = $bofelamimail->getMessageAttachments($uid);
 			
 			if (isset($headers['FROM'])) $mailaddress = $bofelamimail->decode_header($headers['FROM']);

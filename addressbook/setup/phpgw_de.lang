@@ -120,7 +120,7 @@ edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 edit extra account-data in the addressbook	admin	de	Zusätzliche Benutzerdaten im Adressbuch bearbeiten.
 edit phonenumbers -	addressbook	de	Telefonnummern bearbeiten
-email & internet	addressbook	de	Email & Internet
+email & internet	addressbook	de	E-Mail & Internet
 empty for all	addressbook	de	leer für alle
 enable an extra private addressbook	addressbook	de	Privates Adressbuch einschalten
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
@@ -135,7 +135,7 @@ export file name	addressbook	de	Dateiname zum Exportieren
 export from addressbook	addressbook	de	Export vom Adressbuch
 export selection	addressbook	de	Auswahl exportieren
 exported	addressbook	de	exportiert
-exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you	can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Exportiert Kontakte vom Adressbuch in eine CSV Datei. CSV bedeutet 'Komma getrennte Werte'. Im Optionen Reiter können Sie aber auch ein anderes Trennzeichen wählen.
 extra	addressbook	de	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	de	%1 Mitglied(er) der Organisation nicht geändert (fehlende Rechte) !!!
 fax	addressbook	de	Telefax

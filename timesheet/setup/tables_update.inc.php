@@ -38,7 +38,11 @@
 			'uc' => array()
 		));
 
+		return $GLOBALS['setup_info']['timesheet']['currentver'] = '0.2.002';
+	}
 
-		$GLOBALS['setup_info']['timesheet']['currentver'] = '0.2.002';
-		return $GLOBALS['setup_info']['timesheet']['currentver'];
+	$test[] = '0.2.002';
+	function timesheet_upgrade0_2_002()
+	{
+		return $GLOBALS['setup_info']['timesheet']['currentver'] = '1.4';
 	}

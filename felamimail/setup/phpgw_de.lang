@@ -19,8 +19,8 @@ all address books	felamimail	de	Alle Adressbücher
 all folders	felamimail	de	Alle Ordner
 all of	felamimail	de	mit allen
 allow images from external sources in html emails	felamimail	de	Erlaube Bilder von externen Quellen in HTML emails
-allways a new window	felamimail	de	jede Mail in einem neuen Fenster
-always show html emails	felamimail	de	HTML Emails mmer anzeigen
+allways a new window	felamimail	de	jede E-Mail in einem neuen Fenster
+always show html emails	felamimail	de	HTML-E-Mails immer anzeigen
 and	felamimail	de	und
 any of	felamimail	de	mit einem
 any status	felamimail	de	Alle Stati
@@ -50,7 +50,7 @@ close all	felamimail	de	Schließe alle
 close this page	felamimail	de	Diese Seite schließen
 close window	felamimail	de	Fenster schließen
 color	felamimail	de	Farbe
-compose	felamimail	de	EMail schreiben
+compose	felamimail	de	E-Mail schreiben
 compress folder	felamimail	de	Ordner komprimieren
 condition	felamimail	de	Bedingung
 configuration	felamimail	de	Konfiguration
@@ -90,10 +90,10 @@ discard	felamimail	de	verwerfen
 discard message	felamimail	de	Nachricht verwerfen
 display message in new window	felamimail	de	Nachricht in neuem Fenster anzeigen
 display messages in multiple windows	felamimail	de	Nachrichten in mehreren Fenstern anzeigen
-display of html emails	felamimail	de	HTML EMails anzeigen
+display of html emails	felamimail	de	HTML-E-Mails anzeigen
 display only when no plain text is available	felamimail	de	nur anzeigen wenn kein Plain Text vorhanden ist
 display preferences	felamimail	de	Anzeige Einstellungen
-displaying html messages is disabled	felamimail	de	Die Anzeige von HTML EMails ist deaktiviert.
+displaying html messages is disabled	felamimail	de	Die Anzeige von HTML-E-Mails ist deaktiviert.
 do it!	felamimail	de	Mach es!
 do not use sent	felamimail	de	Gesendete Objekte (Sent) nicht verwenden
 do not use trash	felamimail	de	Gelöschte Objekte (Trash) nicht verwenden
@@ -104,7 +104,7 @@ does not contain	felamimail	de	enthält nicht
 does not match	felamimail	de	trifft nicht zu
 does not match regexp	felamimail	de	trift nicht zu regulärer Ausdruck
 don't use draft folder	felamimail	de	keine Vorlagen Ordner verwenden
-don't use sent	felamimail	de	Keinen gesendenten EMail speichern
+don't use sent	felamimail	de	Keinen gesendeten E-Mails speichern
 don't use trash	felamimail	de	Keinen Mülleimer verwenden
 down	felamimail	de	runter
 download	felamimail	de	Speichern
@@ -113,15 +113,15 @@ draft folder	felamimail	de	Vorlagen Ordner
 e-mail	felamimail	de	E-Mail
 e-mail address	felamimail	de	E-Mailadresse
 e-mail folders	felamimail	de	E-Mail Ordner
-edit email forwarding address	felamimail	de	Bearbeiten der EMailweiterleitung
+edit email forwarding address	felamimail	de	Bearbeiten der E-Mail-Weiterleitung
 edit filter	felamimail	de	Filter bearbeiten
 edit rule	felamimail	de	Regel bearbeiten
 edit selected	felamimail	de	Ausgewählte bearbeiten
 edit vacation settings	felamimail	de	Abwesenheitsnotiz bearbeiten
-email address	felamimail	de	EMailadresse
+email address	felamimail	de	E-Mail-Adresse
 email forwarding address	felamimail	de	Zieladresse
-email signature	felamimail	de	EMail Signatur
-emailaddress	felamimail	de	EMailadresse
+email signature	felamimail	de	E-Mail-Signatur
+emailaddress	felamimail	de	E-Mail-Adresse
 empty trash	felamimail	de	Trash-Ordner leeren
 enable	felamimail	de	Aktivieren
 encrypted connection	felamimail	de	verschlüsselte Verbindung
@@ -184,7 +184,7 @@ identifying name	felamimail	de	Identifizierender Name
 identity	felamimail	de	Identität
 if	felamimail	de	Wenn
 if from contains	felamimail	de	wenn Von enthält
-if mail header	felamimail	de	wenn EMail Header enthält
+if mail header	felamimail	de	wenn E-Mail-Header enthält
 if message size	felamimail	de	wenn Nachrichtengröße
 if subject contains	felamimail	de	wenn Betreff enthält
 if to contains	felamimail	de	wenn An enthält
@@ -210,7 +210,7 @@ javascript	felamimail	de	JavaScript
 jumping to end	felamimail	de	springe zum Ende
 jumping to start	felamimail	de	springe zum Anfang
 keep a copy of the message in your inbox	felamimail	de	eine Kopie der Nachricht in der INBOX behalten
-keep local copy of email	felamimail	de	Kopie der EMail behalten
+keep local copy of email	felamimail	de	Kopie der E-Mail behalten
 kilobytes	felamimail	de	Kilobytes
 language	felamimail	de	Sprache
 last name	felamimail	de	Nachname
@@ -220,12 +220,12 @@ less than	felamimail	de	kleiner als
 light gray	felamimail	de	Hellgrau
 list all	felamimail	de	Alle anzeigen
 loading	felamimail	de	lade
-location of buttons when composing	felamimail	de	Ort der Knöpfe beim EMail schreiben
+location of buttons when composing	felamimail	de	Ort der Knöpfe beim E-Mail schreiben
 mail server login type	admin	de	Typ der Mailserver Anmeldung
-mail settings	felamimail	de	EMail Einstellungen
+mail settings	felamimail	de	E-Mail-Einstellungen
 mainmessage	felamimail	de	Hauptnachricht
-manage emailaccounts	preferences	de	EMailkonten verwalten
-manage emailfilter / vacation	preferences	de	Verwalten der EMailfilter und Abwesenheitsnotiz
+manage emailaccounts	felamimail	de	E-Mail-Konten verwalten
+manage emailfilter / vacation	preferences	de	Verwalten der E-Mail-Filter und Abwesenheitsnotiz
 manage folders	common	de	Ordner verwalten
 manage sieve	common	de	Sieve Scripte verwalten
 manage signatures	felamimail	de	Signaturen verwalten
@@ -267,7 +267,7 @@ no messages were selected.	felamimail	de	Es wurde keine NAchricht ausgewählt
 no plain text part found	felamimail	de	Kein Text Teil gefunden.
 no previous message	felamimail	de	Keine vorherige Nachricht vorhanden
 no supported imap authentication method could be found.	felamimail	de	Keine unterstützte IMAP Authentifizierungsmethode gefunden.
-no valid emailprofile selected!!	felamimail	de	Sie haben kein gültiges Email Profil ausgewählt!
+no valid emailprofile selected!!	felamimail	de	Sie haben kein gültiges E-Mail-Profil ausgewählt!
 none	felamimail	de	kein
 on behalf of	felamimail	de	im Auftrag von
 one address is not valid	felamimail	de	Eine Adresse ist ungültig
@@ -290,7 +290,7 @@ port	felamimail	de	Port
 posting	felamimail	de	sende
 previous	felamimail	de	vorherige
 previous message	felamimail	de	vorherige Nachricht
-print it	felamimail	de	EMail drucken
+print it	felamimail	de	E-Mail drucken
 print this page	felamimail	de	Diese Seite drucken
 quicksearch	felamimail	de	Schnellsuche
 read	felamimail	de	gelesen
@@ -311,7 +311,7 @@ reply all	felamimail	de	allen Antworten
 reply to	felamimail	de	Antwort an
 replyto	felamimail	de	Antwort an
 respond	felamimail	de	Antworte
-respond to mail sent to	felamimail	de	Anworte auf EMails die gesendet werden an
+respond to mail sent to	felamimail	de	Antworte auf E-Mails die gesendet werden an
 return	felamimail	de	Zurück
 return to options page	felamimail	de	zurück zu Einstellungen
 right	felamimail	de	Rechts
@@ -329,11 +329,11 @@ search	felamimail	de	Suchen
 search for	felamimail	de	Suchen nach
 select	felamimail	de	Auswählen
 select all	felamimail	de	alle auswählen
-select emailprofile	felamimail	de	EMailprofil auswählen
+select emailprofile	felamimail	de	E-Mail-Profil auswählen
 select folder	felamimail	de	Ordner auswählen
 select your mail server type	admin	de	Wählen Sie den Typ des Mailservers
 send	felamimail	de	Senden
-send a reject message	felamimail	de	Ablehnungsemail senden
+send a reject message	felamimail	de	Ablehnungs-E-Mail senden
 sent folder	felamimail	de	Ordner für gesendete Nachrichten
 server supports mailfilter(sieve)	felamimail	de	Server unterstützt Mailfilter(Sieve)
 show header	felamimail	de	Kopfzeilen anzeigen
@@ -395,7 +395,7 @@ unsubscribed successfully!	felamimail	de	Erfolgreich abbestellt
 up	felamimail	de	hoch
 updating message status	felamimail	de	aktualisiere Nachrichtenstatus
 updating view	felamimail	de	aktualisiere Ansicht
-use <a href="%1">emailadmin</a> to create profiles	felamimail	de	benutzen Sie <a href="%1">EmailAdmin</a> um Profile zu erstellen
+use <a href="%1">emailadmin</a> to create profiles	felamimail	de	benutzen Sie <a href="%1">EMailAdmin</a> um Profile zu erstellen
 use a signature	felamimail	de	Signatur benutzen
 use a signature?	felamimail	de	Eine Signatur benutzen?
 use addresses	felamimail	de	Adresse benutzen

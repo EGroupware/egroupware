@@ -198,7 +198,7 @@
 			$vars = $this->template->get_undefined('row_colspan');
 			foreach($vars as $var)
 			{
-				if(strstr($var,'lang_'))
+				if(strpos($var,'lang_') !== false)
 				{
 					$value = str_replace('lang_','',$var);
 					$value = str_replace('_',' ',$value);

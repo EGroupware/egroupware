@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['phpgwapi']['name']      = 'phpgwapi';
 	$setup_info['phpgwapi']['title']     = 'eGroupWare API';
-	$setup_info['phpgwapi']['version']   = '1.3.019';
+	$setup_info['phpgwapi']['version']   = '1.3.021';
 	$setup_info['phpgwapi']['versions']['current_header'] = '1.28';
 	$setup_info['phpgwapi']['enable']    = 3;
 	$setup_info['phpgwapi']['app_order'] = 1;
@@ -54,6 +54,14 @@
 	$setup_info['phpgwapi']['tables'][]  = 'egw_addressbook_lists';
 	$setup_info['phpgwapi']['tables'][]  = 'egw_addressbook2list';
 
+	// hooks used by vfs_home to manage user- and group-directories
+	$setup_info['phpgwapi']['hooks']['addaccount']		= 'phpgwapi.vfs_home.addAccount';
+	$setup_info['phpgwapi']['hooks']['deleteaccount']	= 'phpgwapi.vfs_home.deleteAccount';
+	$setup_info['phpgwapi']['hooks']['editaccount']		= 'phpgwapi.vfs_home.editAccount';
+	$setup_info['phpgwapi']['hooks']['addgroup']		= 'phpgwapi.vfs_home.addGroup';
+	$setup_info['phpgwapi']['hooks']['deletegroup']		= 'phpgwapi.vfs_home.deleteGroup';
+	$setup_info['phpgwapi']['hooks']['editgroup']		= 'phpgwapi.vfs_home.editGroup';
+	
 	/* Basic information about this app */
 	$setup_info['notifywindow']['name']      = 'notifywindow';
 	$setup_info['notifywindow']['title']     = 'Notify Window';
@@ -62,4 +70,6 @@
 	$setup_info['notifywindow']['app_order'] = 1;
 	$setup_info['notifywindow']['tables']    = '';
 	$setup_info['notifywindow']['hooks'][]   = 'home';
+
+
 

@@ -12,7 +12,7 @@
 	/* $Id$ */
 
 	$setup_info['calendar']['name']    = 'calendar';
-	$setup_info['calendar']['version'] = '1.3.001';
+	$setup_info['calendar']['version'] = '1.4';
 	$setup_info['calendar']['app_order'] = 3;
 	$setup_info['calendar']['enable']  = 1;
 
@@ -46,11 +46,11 @@
 	/* Dependencies for this app to work */
 	$setup_info['calendar']['depends'][] = array(
 		 'appname' => 'phpgwapi',
-		 'versions' => Array('1.0.0','1.0.1','1.2','1.3')
+		 'versions' => Array('1.3','1.4','1.5')
 	);
 	$setup_info['calendar']['depends'][] = array(
 		 'appname' => 'etemplate',
-		 'versions' => Array('1.0.0','1.0.1','1.2','1.3')
+		 'versions' => Array('1.3','1.4','1.5')
 	);
 	
 	// installation checks for calendar

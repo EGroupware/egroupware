@@ -12,6 +12,10 @@
 - use the %1, %2 buttons to select month	jscalendar	pt-br	- Use os botões %1, %2 para selecionar o mês
 - use the %1, %2 buttons to select year	jscalendar	pt-br	- Use os botões %1, %2 para selecionar o ano
 00 (disable)	admin	pt-br	00 (desabilitado)
+1 day	common	pt-br	1 Dia
+1 hour	common	pt-br	1 Hora
+1 month	common	pt-br	1 Mês
+1 week	common	pt-br	1 Semana
 13 (ntp)	admin	pt-br	13 (ntp)
 3 number of chars for day-shortcut	jscalendar	pt-br	3 números para atalho-dia
 3 number of chars for month-shortcut	jscalendar	pt-br	3 números para atalho-mês
@@ -21,6 +25,7 @@ about	common	pt-br	Sobre
 about %1	common	pt-br	Sobre %1
 about egroupware	common	pt-br	Sobre eGroupWare
 about the calendar	jscalendar	pt-br	Sobre a Agenda
+about this editor	common	pt-br	Sobre este editor
 access	common	pt-br	Acesso
 access not permitted	common	pt-br	Acesso não permitido
 account has been created	common	pt-br	A conta foi criada
@@ -78,6 +83,7 @@ autosave default category	common	pt-br	Salvar automaticamente categoria padrão
 azerbaijan	common	pt-br	AZERBAIJÃO
 back	common	pt-br	Voltar
 back to user login	common	pt-br	Voltar a tela de login
+background color	common	pt-br	Cor de Fundo
 background color:	common	pt-br	Cor de fundo:
 backupdir '%1' is not writeable by the webserver	common	pt-br	O servidor web não tem permissão de escrita no diretório de backup '%1'
 bad login or password	common	pt-br	Login ou senha incorretos
@@ -153,6 +159,7 @@ clear form	common	pt-br	Limpar Formulário
 click	common	pt-br	Clique
 click or mouse over to show menus	common	pt-br	Clique ou passe o mouse sobre os menús
 click or mouse over to show menus?	common	pt-br	Clicar ou passar o mouse sobre os menús?
+click this image on the navbar: %1	common	pt-br	Clique nesta imagem na barra de navegação: %1
 close	common	pt-br	Fechar
 close sidebox	common	pt-br	Fechar caixa lateral
 cocos (keeling) islands	common	pt-br	COCOS (KEELING) ISLANDS
@@ -168,6 +175,7 @@ congo, the democratic republic of the	common	pt-br	REPÚBLICA DEMOCRÁTICA DO CONG
 contacting server...	common	pt-br	Contactando servidor...
 cook islands	common	pt-br	ILHAS COOK
 copy	common	pt-br	Copiar
+copy selection	common	pt-br	Copiar seleção
 copy table row	tinymce	pt-br	Copiar linha da tabela
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	pt-br	Copiar/Recortar/Colar não está disponível no Mozilla e Firefox.\nVocê quer mais informações a respeito?
 copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	pt-br	Copiar/Recortar/Colar não está disponível no Mozilla e Firefox.\nVocê quer mais informações a respeito?
@@ -180,7 +188,9 @@ croatia	common	pt-br	CROÁCIA
 cuba	common	pt-br	CUBA
 currency	common	pt-br	Moeda
 current	common	pt-br	Atualizado
+current style	common	pt-br	Estilo atual
 current users	common	pt-br	Usuários ativos
+cut selection	common	pt-br	Recortar seleção
 cut table row	tinymce	pt-br	Recortar linha da tabela
 cyprus	common	pt-br	CHIPRE
 czech republic	common	pt-br	REPÚBLICA CHECA
@@ -190,6 +200,7 @@ date modified	tinymce	pt-br	Data modificada
 date selection:	jscalendar	pt-br	Seleção da data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	pt-br	Porta da Data e hora.<br>Quando usar a porta 13, por favor configure os filtros do firewall antes de submeter as alterações.<br>(Porta: 13 / Host: 129.6.15.28)
 december	common	pt-br	Dezembro
+decrease indent	common	pt-br	Diminuir recuo
 default	tinymce	pt-br	Padrão
 default category	common	pt-br	Categoria padrão
 default height for the windows	common	pt-br	Altura padrão para as janelas
@@ -243,6 +254,7 @@ en	common	pt-br	en
 enabled	common	pt-br	Habilitado
 end date	common	pt-br	Data do término
 end time	common	pt-br	Hora do término
+enlarge editor	common	pt-br	Aumentar editor
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pt-br	Informe a localização da Extranet em um URL .<br>Exemplo: http://www.seudomínio.com.br/extranet   ou   /extranet<br><b>Não finalize com uma BARRA</b>
 entry has been deleted sucessfully	common	pt-br	Entrada removida com sucesso
 entry updated sucessfully	common	pt-br	Entrada atualizada com sucesso
@@ -293,9 +305,11 @@ folder name missing.	tinymce	pt-br	Nome da pasta faltando.
 folder not found.	tinymce	pt-br	Pasta não encontrada.
 folder with specified new name already exists. folder was not renamed/moved.	tinymce	pt-br	Uma pasta com o novo nome informado já existe. A pasta não foi renomeada/movida.
 folder(s)	tinymce	pt-br	pasta(s)
+font color	common	pt-br	Cor da Fonte
 for mouse out	tinymce	pt-br	para mouse fora
 for mouse over	tinymce	pt-br	para mouse por cima
 force selectbox	common	pt-br	Forçar caixa de seleção
+forever	common	pt-br	Para sempre
 france	common	pt-br	FRANÇA
 french guiana	common	pt-br	GUIANA FRANCESA
 french polynesia	common	pt-br	FRANÇA POLYNÉSIA
@@ -339,6 +353,7 @@ haiti	common	pt-br	HAITI
 heard island and mcdonald islands	common	pt-br	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	pt-br	Altura
 help	common	pt-br	Ajuda
+help using editor	common	pt-br	Ajuda para usar o editor
 high	common	pt-br	Alto
 highest	common	pt-br	Mais alto
 holy see (vatican city state)	common	pt-br	VATICANO
@@ -346,7 +361,9 @@ home	common	pt-br	Página Inicial
 home email	common	pt-br	E-mail residencial
 honduras	common	pt-br	HONDURAS
 hong kong	common	pt-br	HONG KONG
+horizontal rule	common	pt-br	Régua Horizontal
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	pt-br	Quantos ícones devem ser mostrados na barra de navegação (ao topo da página). Ícones adicionais serão colocados em um recurso adicional em forma de menú suspenso à direita da barra de navegação.
+how to show the general egroupware menu ?	common	pt-br	Como exibir o menu geral do eGroupWare ?
 hungary	common	pt-br	HUNGRIA
 iceland	common	pt-br	ISLÂNDIA
 iespell not detected. click ok to go to download page.	common	pt-br	ieSpell não detectado. Clique Ok para ir para a página de download.
@@ -355,6 +372,7 @@ if there are some images in the background folder you can choose the one you wou
 image description	tinymce	pt-br	Descrição da imagem
 image title	tinymce	pt-br	Título da imagem
 image url	common	pt-br	URL da imagem
+increase indent	common	pt-br	Aumentar recuo
 indent	tinymce	pt-br	Recúo para dentro
 india	common	pt-br	INDIA
 indonesia	common	pt-br	INDONESIA
@@ -368,10 +386,13 @@ insert column before	common	pt-br	Inserir coluna antes
 insert date	tinymce	pt-br	Inserir data
 insert emotion	tinymce	pt-br	Inserir emoção
 insert file	tinymce	pt-br	Inserir arquivo
+insert image	common	pt-br	Inserir imagem
 insert link to file	tinymce	pt-br	Inserir link para arquivo
 insert row after	common	pt-br	Inserir linha depois
 insert row before	common	pt-br	Inserir linha antes
+insert table	common	pt-br	Inserir tabela
 insert time	tinymce	pt-br	Inserir horário
+insert web link	common	pt-br	Inserir link para web
 insert/edit image	tinymce	pt-br	Inserir/Editar imagem
 insert/edit link	tinymce	pt-br	Inserir/Editar link
 insert/modify table	tinymce	pt-br	Inserir/Modificar tabela
@@ -522,6 +543,8 @@ norfolk island	common	pt-br	ILHAS NORFOLK
 normal	common	pt-br	Normal
 northern mariana islands	common	pt-br	NORTHERN MARIANA ISLANDS
 norway	common	pt-br	NORUEGA
+not	common	pt-br	não
+not a user yet? register now	common	pt-br	Ainda não é um usuário? Registre-se agora
 not assigned	common	pt-br	Não atribuído
 note	common	pt-br	Nota
 notes	common	pt-br	Notas
@@ -537,6 +560,7 @@ on mouse over	common	pt-br	Passar o mouse
 only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	pt-br	Somente arquivos com extensões são permitidos, por exemplo: "imagem.jpg"
 only private	common	pt-br	Apenas particular
 only yours	common	pt-br	somente as suas
+oops! you caught us in the middle of system maintainance.	common	pt-br	Oops! Você nos pegou no meio de uma manutenção de sistema.
 open file in new window	tinymce	pt-br	Abrir arquivo em uma nova janela
 open in new window	tinymce	pt-br	Abrir em uma nova janela
 open in parent window / frame	tinymce	pt-br	Abrir na janela / frame pai
@@ -573,9 +597,11 @@ password must contain at least %1 special characters	common	pt-br	Senha deve ter
 password must contain at least %1 uppercase letters	common	pt-br	Senha deve ter ao menos %1 caractere(s) maiúsculo(s)
 password must have at least %1 characters	common	pt-br	Senha deve ter ao menos %1 caractere(s)
 paste as plain text	tinymce	pt-br	Colar como texto plano
+paste from clipboard	common	pt-br	Colar da área de transferência
 paste from word	tinymce	pt-br	Colar do Word
 paste table row after	tinymce	pt-br	Colar linha de tabela depois
 paste table row before	tinymce	pt-br	Colar linha de tabela antes
+path	common	pt-br	Caminho
 path not found.	tinymce	pt-br	Caminho não encontrado
 path to user and group files has to be outside of the webservers document-root!!!	common	pt-br	O caminho para usuários e grupos deve ser FORA do servidor da extranet.!!!
 pattern for search in addressbook	common	pt-br	Padrão para pesquisa em Contatos
@@ -597,11 +623,13 @@ please select	common	pt-br	Por favor selecione
 please set your global preferences	common	pt-br	Por favor configure suas preferências gerais
 please set your preferences for this application	common	pt-br	Configure suas preferências para este aplicativo
 please wait...	common	pt-br	Aguarde...
+please, check back with us shortly.	common	pt-br	Por favor, volte a nos contactar mais tarde.
 poland	common	pt-br	POLÔNIA
 popup url	tinymce	pt-br	URL Popup
 portugal	common	pt-br	PORTUGAL
 position (x/y)	tinymce	pt-br	Posição (X/Y)
 postal	common	pt-br	CEP
+powered by	common	pt-br	Desenvolvido por
 powered by egroupware version %1	common	pt-br	Atualizado pela <a href="http://www.egroupware.com.br" target="_blank">eGW-BR</a> sobre a plataforma eGW versão %1
 powered by phpgroupware version %1	common	pt-br	Desenvolvido por eGroupWare versão %1
 preferences	common	pt-br	Preferências
@@ -623,8 +651,11 @@ read	common	pt-br	Leitura
 read this list of methods.	common	pt-br	Leia a lista de métodos.
 reading	common	pt-br	Lendo
 redo	tinymce	pt-br	Refazer
+redoes your last action	common	pt-br	Repetir sua última ação
 refresh	tinymce	pt-br	Atualizar
+register	common	pt-br	Registrar
 reject	common	pt-br	Rejeitar
+remember me	common	pt-br	Lembre-se de mim
 remove col	tinymce	pt-br	Remover coluna
 remove selected accounts	common	pt-br	apagar contas selecionadas
 remove shortcut	common	pt-br	Remover tecla de atalho
@@ -689,8 +720,10 @@ setup main menu	common	pt-br	Menu principal de configurações
 seychelles	common	pt-br	SEYCHELLES
 show all	common	pt-br	Exibir tudo
 show all categorys	common	pt-br	Mostrar todas as Categorias
+show as topmenu	common	pt-br	Exibir como menu superior
 show clock?	common	pt-br	Exibir relógio
 show home and logout button in main application bar?	common	pt-br	Exibir Página Inicial e Desconectar na barra de aplicativos principais?
+show in sidebox	common	pt-br	Exibir como menu lateral
 show locationbar	tinymce	pt-br	Exibir local da barra
 show logo's on the desktop.	common	pt-br	Exibir logotipo na tela.
 show menu	common	pt-br	Mostrar menu
@@ -727,9 +760,11 @@ stretched	common	pt-br	esticado
 striketrough	tinymce	pt-br	Batida completamente
 subject	common	pt-br	Assunto
 submit	common	pt-br	Enviar
+subscript	common	pt-br	Subscrito
 substitutions and their meanings:	common	pt-br	Substituições e seus efeitos:
 sudan	common	pt-br	SUDÃO
 sunday	common	pt-br	Domingo
+superscript	common	pt-br	Sobrescrito
 suriname	common	pt-br	SURINAME
 svalbard and jan mayen	common	pt-br	SVALBARD AND JAN MAYEN
 swaziland	common	pt-br	SUAZILÂNDIA
@@ -769,6 +804,7 @@ today	common	pt-br	Hoje
 todays date, eg. "%1"	common	pt-br	Data de hoje, ex. "%1"
 toggle first day of week	jscalendar	pt-br	Utilizar como primeiro dia da semana
 toggle fullscreen mode	tinymce	pt-br	Alterar para modo tela cheia
+toggle html source	common	pt-br	Alterar para fonte HTML
 togo	common	pt-br	TOGO
 tokelau	common	pt-br	TOKELAU
 tonga	common	pt-br	TONGA
@@ -789,6 +825,7 @@ ukraine	common	pt-br	UCRÂNIA
 underline	common	pt-br	Sublinhado
 underline.gif	common	pt-br	underline.gif
 undo	tinymce	pt-br	Desfazer
+undoes your last action	common	pt-br	Desfazer sua última ação
 united arab emirates	common	pt-br	EMIRADOS ÁRABES UNIDOS
 united kingdom	common	pt-br	INGLATERRA
 united states	common	pt-br	ESTADOS UNIDOS
@@ -836,6 +873,7 @@ western sahara	common	pt-br	WESTERN SAHARA
 what color should all the blank space on the desktop have	common	pt-br	Que cor todo espaço em branco deve ter na tela?
 what style would you like the image to have?	common	pt-br	Que estilo você quer que a imagem tenha?
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
+where and how will the egroupware links like preferences, about and logout be displayed.	common	pt-br	Onde e como links como Preferências, Sobre e Desconectar serão exibidos ?
 which groups	common	pt-br	Qual grupo
 width	common	pt-br	Largura
 window name	tinymce	pt-br	Nome da janela
@@ -847,6 +885,7 @@ written by:	common	pt-br	Escrito por:
 year	common	pt-br	Ano
 yemen	common	pt-br	YEMEN
 yes	common	pt-br	Sim
+you are in text mode.  use the [<>] button to switch back to wysiwig.	common	pt-br	Você está em MODO TEXTO. Use o botão [<>] para alternar para WYSIWIG.
 you are required to change your password during your first login	common	pt-br	Você foi solicitado a alterar a sua senha na primeira sessão.
 you have been successfully logged out	login	pt-br	Você foi desconectado com sucesso
 you have not entered a title	common	pt-br	Você não informou um título
@@ -858,6 +897,7 @@ you have selected an invalid main category	common	pt-br	Você selecionou uma cate
 you have successfully logged out	common	pt-br	Você encerrou a sessão corretamente.
 you must enter the url	tinymce	pt-br	Você precisa informar a URL
 you need to add the webserver user '%1' to the group '%2'.	common	pt-br	Você precisa adicionar o usuário webserver '%1' ao grupo '%2'.
+you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pt-br	Você tentou abrir a aplicação: %1, mas você não tem permissão para acessá-la.
 your message could <b>not</b> be sent!<br>	common	pt-br	<b>Não</b> foi possível enviar sua mensagem!<br>
 your message has been sent	common	pt-br	Sua mensagem foi enviada.
 your search returned %1 matchs	common	pt-br	Sua pesquisa retornou %1 ocorrências

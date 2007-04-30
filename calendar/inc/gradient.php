@@ -69,7 +69,10 @@ for ($l = 0; $l < $length; $l += $dist)
 	}
 }
 
-session_cache_limiter('public');	// allow caching
+// allow caching for 7 days
+header('Cache-Control: public');
+header('Expires: ' . gmdate('D, d M Y H:i:s', time()+7*24*60*60) . ' GMT');
+
 if (function_exists('imagegif'))
 {
 	header("Content-type: image/gif");

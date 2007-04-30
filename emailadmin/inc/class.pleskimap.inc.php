@@ -361,7 +361,7 @@ class pleskimap extends defaultimap
 			// we dont set passwords shorten then 5 chars, as it only give an error in plesk
 			if (!is_null($password) && $password)
 			{
-				if (strlen($password) < 5 || strstr($password,$account_lid))
+				if (strlen($password) < 5 || strpos($password,$account_lid) !== false)
 				{
 					$this->error = lang('Plesk requires passwords to have at least 5 characters and not contain the account-name --> password NOT set!!!');
 				}
@@ -429,7 +429,7 @@ class pleskimap extends defaultimap
 		{
 			$line = trim(fgets($fp));
 			list($name,$value) = split(': *',$line,2);
-			if (!is_null($value) && !strstr($name,'An error occured') && $name)
+			if (!is_null($value) && strpos($name,'An error occured') === false && $name)
 			{
 				$values[$name] = $value;
 			}

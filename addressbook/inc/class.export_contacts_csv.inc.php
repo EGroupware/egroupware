@@ -68,7 +68,7 @@ class export_contacts_csv implements iface_export_plugin {
 	 * @return string descriprion
 	 */
 	public static function get_description() {
-		return lang("Exports contacts from your Addressbook into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you	can also choose other seperators.");
+		return lang("Exports contacts from your Addressbook into a CSV File. CSV means 'Comma Seperated Values'. However in the options Tab you can also choose other seperators.");
 	}
 	
 	/**

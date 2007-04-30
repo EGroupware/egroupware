@@ -113,7 +113,7 @@
 
 			// make categories called via sidebox menu of an app, to behave like a part of that app
 			$referer = $GLOBALS['egw']->common->get_referer('/preferences/index.php');
-			if (!strstr($referer,'menuaction=preferences.uicategories'))
+			if (strpos($referer,'menuaction=preferences.uicategories') === false)
 			{
 				$this->referer = $referer;
 			}

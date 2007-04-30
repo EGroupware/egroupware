@@ -123,8 +123,10 @@ finish	infolog	sl	Konec
 for which types should this field be used	infolog	sl	Za ketere tipe naj bo to polje uporabljeno
 from	infolog	sl	Od
 general	infolog	sl	Splošno
+group owner for	infolog	sl	Skupinski lastnik za
 high	infolog	sl	Visoko
 id	infolog	sl	Šifra
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sl	Če ima vrsta skupinskega lastnika, bo lastnik vseh vnosov te vrste dana skupina in NE uporabnik, ki jo je ustvaril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sl	Če ni nastavljen, je vrstica za iskanje in filtriranje skrita za manj vnosov kakor "maksimalno število zadetkov na stran" (kakor je definirano v vaših nastavitvah.
 import	infolog	sl	Uvoz
 import next set	infolog	sl	Uvozi naslednji niz

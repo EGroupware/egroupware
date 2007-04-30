@@ -623,7 +623,7 @@ class botimesheet extends so_sql
 		$result = array();
 		foreach((array) $this->search($criteria,false,'','','%',false,'OR') as $ts )
 		{
-			$result[$ts['ts_id']] = $this->link_title($ts);
+			if ($ts) $result[$ts['ts_id']] = $this->link_title($ts);
 		}
 		return $result;
 	}
