@@ -149,7 +149,7 @@ FCKConfig.ToolbarSets["egw_advanced"] = [
 	['TextColor','BGColor']
 ] ;
 
-FCKConfig.EnterMode = 'p' ;			// p | div | br
+FCKConfig.EnterMode = 'br' ;			// p | div | br
 FCKConfig.ShiftEnterMode = 'br' ;	// p | div | br
 
 FCKConfig.Keystrokes = [
