@@ -3310,8 +3310,7 @@ class XML
     function prestr ( $string, $delimiter )
     {
         // Return the substring.
-		return substr($string, 0, strlen($string) - strlen(strstr($string,
-            "$delimiter")));
+		return substr($string, 0, strlen($string) - strlen(@strstr($string,$delimiter)));
 	}
     
     /**

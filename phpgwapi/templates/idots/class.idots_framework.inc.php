@@ -770,7 +770,7 @@ function _sidebox_menu_item($item_link='',$item_text='')
 	  $var['item_link'] = $item_link['link'];
 	  if ($item_link['target'])
 	  {
-		 if (strstr($item_link['target'], 'target=')) {
+		 if (strpos($item_link['target'], 'target=') !== false) {
             $var['target'] = $item_link['target'];
          } else {
             $var['target'] = ' target="' . $item_link['target'] . '"';

@@ -183,7 +183,7 @@
 
 					foreach($time as $t)
 					{
-						if (strstr($t,'-') !== False && strstr($t,'/') === False)
+						if (strpos($t,'-') !== False && strpos($t,'/') === False)
 						{
 							list($min,$max) = $arr = explode('-',$t);
 							
@@ -638,7 +638,7 @@
 							$times['error'] .= $line;
 						}
 					} 
-					elseif (strstr($line,$this->cronline) !== False)
+					elseif (strpos($line,$this->cronline) !== False)
 					{
 						$cron_units = array('min','hour','day','month','dow');
 						foreach($cron_units as $n => $u)

@@ -300,7 +300,7 @@ class bolink extends solink
 	{
 		if (is_array($id))
 		{
-			if (!strstr($app_link_id,':')) $app_link_id = $this->temp_link_id($app2,$id2);	// create link_id of temporary link, if not given
+			if (strpos($app_link_id,':') === false) $app_link_id = $this->temp_link_id($app2,$id2);	// create link_id of temporary link, if not given
 			
 			if (isset($id[$app_link_id]) && is_array($id[$app_link_id]))	// check for unlinked-marker
 			{
@@ -697,7 +697,7 @@ class bolink extends solink
 			@reset($this->link_pathes);
 			while ((list($valid,$trans) = @each($this->link_pathes)) && !$tfname)
 			{  // check case-insensitive for WIN etc.
-				$check = $valid[0] == '\\' || strstr(':',$valid) ? 'eregi' : 'ereg';
+				$check = $valid[0] == '\\' || strpos(':',$valid) !== false ? 'eregi' : 'ereg';
 				$valid2 = str_replace('\\','/',$valid);
 				//echo "<p>attach_file: ereg('".$this->send_file_ips[$valid]."', '$file[ip]')=".ereg($this->send_file_ips[$valid],$file['ip'])."</p>\n";
 				if ($check('^('.$valid2.')(.*)$',$file['path'],$parts) &&
@@ -870,7 +870,7 @@ class bolink extends solink
 	 */
 	function is_win_path($path)
 	{
-		return $path[0] == '\\' || strstr($path,':');
+		return $path{0} == '\\' || $path{1} == ':';
 	}
 
 	/**

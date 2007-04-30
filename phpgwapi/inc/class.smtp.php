@@ -317,7 +317,7 @@ class SMTP
         # headers.
         $field = substr($lines[0],0,strpos($lines[0],":"));
         $in_headers = false;
-        if(!empty($field) && !strstr($field," ")) {
+        if(!empty($field) && strpos($field," ") === false) {
             $in_headers = true;
         }
 

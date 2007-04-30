@@ -777,7 +777,7 @@
 				while ($f = readdir($d))
 				{
 					$ext = strtolower(strrchr($f,'.'));
-					if (($ext == '.gif' || $ext == '.png') && strstr($f,'navbar') === False)
+					if (($ext == '.gif' || $ext == '.png') && strpos($f,'navbar') === False)
 					{
 						return True;
 					}

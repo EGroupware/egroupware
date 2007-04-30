@@ -185,7 +185,7 @@
 		function gethttpsocketfile($file,$user='',$passwd='',$string=False)
 		{
 			$server = str_replace('http://','',$file);
-			$file = strstr($server,'/');
+			$file = @strstr($server,'/');
 			$server = str_replace($file,'',$server);
 
 			//allows for access to http-auth pages - added by Dave Hall <dave.hall@mbox.com.au>
