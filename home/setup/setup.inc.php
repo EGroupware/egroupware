@@ -14,7 +14,7 @@
 	/* Basic information about this app */
 	$setup_info['home']['name']      = 'home';
 	$setup_info['home']['title']     = 'Home';
-	$setup_info['home']['version']   = '1.2';
+	$setup_info['home']['version']   = '1.4';
 	$setup_info['home']['app_order'] = 1;
 	$setup_info['home']['enable']    = 1;
 
