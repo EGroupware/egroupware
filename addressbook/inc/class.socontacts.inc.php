@@ -670,6 +670,8 @@ class socontacts
 	 */
 	function &get_backend($contact_id=null,$owner=null)
 	{
+		if ($owner === '') $owner = null;
+
 		if ($this->contact_repository != $this->account_repository && is_object($this->so_accounts) &&
 			(!is_null($owner) && !$owner || !is_null($contact_id) &&
 			($this->contact_repository == 'sql' && !is_numeric($contact_id) ||
@@ -887,5 +889,18 @@ class socontacts
 		if (!method_exists($this->somain,'read_list')) return false;
 		
 		return $this->somain->read_list($list);		
+	}
+	
+	/**
+	 * Check if distribution lists are availible for a given addressbook
+	 *
+	 * @param int/string $owner '' means all lists, which uses the main addressbook
+	 * @return boolean
+	 */
+	function lists_available($owner)
+	{
+		$backend =& $this->get_backend(null,$owner);
+		
+		return method_exists($backend,'read_list');
 	}
 }

@@ -168,6 +168,7 @@ class uicontacts extends bocontacts
 				'filter'         =>	'',	// =All	// IO filter, if not 'no_filter' => True
 				'filter_no_lang' => True,		// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'     => True,		// I  disable the 2. filter (params are the same as for filter)
+				'filter2_label'  =>	lang('Distribution lists'),			// IO filter2, if not 'no_filter2' => True
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
@@ -176,13 +177,10 @@ class uicontacts extends bocontacts
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 			);
 			// if the backend supports distribution lists
-			if (($sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
-				'' => lang('Distribution lists').'...',
+			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
+				'' => lang('none'),
 				'add' => lang('Add a new list').'...',
-			))) !== false)
-			{
-				$content['nm']['no_filter2'] = false;
-			}
+			));
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
 			{
@@ -704,6 +702,9 @@ class uicontacts extends bocontacts
 		{
 			$query['col_filter']['account_id'] = null;
 		}
+		// enable/disable distribution lists depending on backend
+		$query['no_filter2'] = !$this->lists_available($query['filter']);
+		
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
 			unset($query['col_filter']['list']);	// does not work together
