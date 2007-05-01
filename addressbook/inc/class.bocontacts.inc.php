@@ -963,9 +963,9 @@ class bocontacts extends socontacts
 	 * @param int $list list-id
 	 * @return false on error
 	 */
-	function remove_from_list($contact,$list)
+	function remove_from_list($contact,$list=null)
 	{
-		if (!$this->check_list($list,EGW_ACL_EDIT)) return false;
+		if ($list && !$this->check_list($list,EGW_ACL_EDIT)) return false;
 		
 		return parent::remove_from_list($contact,$list);
 	}
