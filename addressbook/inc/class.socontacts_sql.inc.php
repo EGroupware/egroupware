@@ -432,6 +432,13 @@ class socontacts_sql extends so_sql
 	{
 		if (!(int)$list || !(int)$contact) return false;
 
+		if ($this->db->select($this->ab2list_table,'list_id',array(
+			'contact_id' => $contact,
+			'list_id' => $list,
+		),__LINE__,__FILE__) && $this->db->next_record())
+		{
+			return true;	// no need to insert it, would give sql error
+		}
 		return $this->db->insert($this->ab2list_table,array(
 			'contact_id' => $contact,
 			'list_id' => $list,
