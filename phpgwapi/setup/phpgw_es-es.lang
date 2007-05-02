@@ -16,7 +16,7 @@
 3 number of chars for day-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del día
 3 number of chars for month-shortcut	jscalendar	es-es	3 caracteres para la abreviatura del mes
 80 (http)	admin	es-es	80 (http)
-a editor instance must be focused before using this command.	tinymce	es-es	Una instanacia del editor debe ser enfocada antes de usar este comando.
+a editor instance must be focused before using this command.	tinymce	es-es	Una instancia del editor debe tener el foco antes de usar este comando.
 about	common	es-es	Acerca de
 about %1	common	es-es	Acerca de %1
 about egroupware	common	es-es	Acerca de eGroupware
@@ -53,6 +53,7 @@ alphabet	common	es-es	a,b,c,d,e,f,g,h,i,j,k,l,ll,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	es-es	Hola de estilo alternativa:
 alternative image	tinymce	es-es	Imagen alternatia
 american samoa	common	es-es	AMERICAN SAMOA
+an existing and by the webserver readable directory enables the image browser and upload.	common	es-es	Un directorio existente Y donde el servidor web pueda leer activa el navegar por imágenes, y también subirlas al servidor.
 andorra	common	es-es	ANDORRA
 angola	common	es-es	ANGOLA
 anguilla	common	es-es	ANGUILLA
@@ -62,7 +63,7 @@ application	common	es-es	Aplicación
 apply	common	es-es	Aplicar
 april	common	es-es	Abril
 are you sure you want to delete these entries ?	common	es-es	¿Seguro que desea borrar estas entradas?
-are you sure you want to delete this entry ?	common	es-es	¿Está seguro de querer borrar esta entrada ?
+are you sure you want to delete this entry ?	common	es-es	¿Está seguro de querer borrar esta entrada?
 argentina	common	es-es	ARGENTINA
 armenia	common	es-es	ARMENIA
 aruba	common	es-es	ARUBA
@@ -79,23 +80,21 @@ azerbaijan	common	es-es	AZERBAIJAN
 back	common	es-es	Atrás
 back to user login	common	es-es	Volver al inicio de sesión del usuario
 background color:	common	es-es	Color de fondo:
-backupdir '%1' is not writeable by the webserver	common	es-es	El servidor web no puede escribir en el directorio de la copia de seguridad '%1'
 bad login or password	common	es-es	Nombre de usuario o contraseña incorrectas
 bahamas	common	es-es	BAHAMAS
 bahrain	common	es-es	BAHRAIN
 bangladesh	common	es-es	BANGLADESH
 barbados	common	es-es	BARBADOS
-bcc	common	es-es	CCo
+bcc	common	es-es	Cco
 belarus	common	es-es	BELARUS
-belgium	common	es-es	BELGIUM
+belgium	common	es-es	BELGICA
 belize	common	es-es	BELIZE
 benin	common	es-es	BENIN
-bermuda	common	es-es	BERMUDA
-bg color	tinymce	es-es	Bg color
+bermuda	common	es-es	BERMUDAS
+bg color	tinymce	es-es	Color de fondo
 bhutan	common	es-es	BHUTAN
 blocked, too many attempts	common	es-es	Bloqueado, demasiados intentos
 bold	common	es-es	Negrita
-bold.gif	common	es-es	bold.gif
 bolivia	common	es-es	BOLIVIA
 border	common	es-es	Borde
 border color	tinymce	es-es	Border color
@@ -170,6 +169,7 @@ cook islands	common	es-es	COOK ISLANDS
 copy	common	es-es	Copiar
 copy table row	tinymce	es-es	Copiar fila de la tabla
 copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	es-es	Copiar, cortar y pegar no están disponibles en Mozilla y Firefox.\n¿Desea más información acerca de este problema?
+copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	es-es	Copiar, cortar y pegar no están disponibles en Mozilla y Firefox.\n¿Desea más información acerca de este problema?
 costa rica	common	es-es	COSTA RICA
 cote d ivoire	common	es-es	COSTA DE MARFIL
 could not contact server. operation timed out!	common	es-es	No se pudo conectar con el servidor. La operación superó el tiempo límite de espera
@@ -181,8 +181,8 @@ currency	common	es-es	Cambio
 current	common	es-es	Actual
 current users	common	es-es	Usuarios actuales
 cut table row	tinymce	es-es	Cortar fila de la tabla
-cyprus	common	es-es	CYPRUS
-czech republic	common	es-es	CZECH REPUBLIC
+cyprus	common	es-es	CHIPRE
+czech republic	common	es-es	REPUBLICA CHECHA
 date	common	es-es	Fecha
 date due	common	es-es	Fecha límite
 date modified	tinymce	es-es	Fecha de modificación
@@ -204,6 +204,7 @@ direction	tinymce	es-es	Dirección
 direction left to right	common	es-es	Dirección de izquierda a derecha
 direction right to left	tinymce	es-es	Dirección de derecha a izquierda
 directory	tinymce	es-es	Directorio
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	es-es	¡El directorio no existe, el servidor web no lo puede leer o no es relativo a la raíz de los documentos!
 disable internet explorer png-image-bugfix	common	es-es	Desactivar el parche de IE para ver imágenes PNG
 disable slider effects	common	es-es	Desactivar efectos deslizantes
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	es-es	¿Desactivar los efectos deslizantes animados al mostrar u ocultar menús en la página? Los usuarios de Opera y Konqueror probablemente querrán esto.
@@ -252,11 +253,13 @@ error deleting %1 %2 directory	common	es-es	Error eliminando el directorio %1 %2
 error renaming %1 %2 directory	common	es-es	Error renombrando el directorio %1 %2
 estonia	common	es-es	ESTONIA
 ethiopia	common	es-es	ETIOPIA
+everything	common	es-es	Todo
 exact	common	es-es	exacto
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	es-es	No se pudo conectar con el servidor, o se obtuvo una respuesta no válida. Intente volver a iniciar la sesión. Póngase en contacto con el administrador en caso de fallo.
 falkland islands (malvinas)	common	es-es	MALVINAS
 faroe islands	common	es-es	ISLAS FEROE
 fax number	common	es-es	Fax
+features of the editor?	common	es-es	¿Características del editor?
 february	common	es-es	Febrero
 fields	common	es-es	Campos
 fiji	common	es-es	FIJI
@@ -276,7 +279,7 @@ find again	tinymce	es-es	Volver a buscar
 find what	tinymce	es-es	Buscar lo que
 find&nbsp;next	tinymce	es-es	Buscar siguiente
 find/replace	tinymce	es-es	Buscar/sustituir
-finland	common	es-es	FINLAND
+finland	common	es-es	FINLANDIA
 first name	common	es-es	Nombre de pila
 first name of the user, eg. "%1"	common	es-es	Nombre de pila del usuario, ej "%1"
 first page	common	es-es	Primera página
@@ -327,7 +330,7 @@ group public	common	es-es	Grupo público
 groups	common	es-es	Grupos
 groups with permission for %1	common	es-es	Grupos con permiso para %1
 groups without permission for %1	common	es-es	Grupos sin permiso para %1
-guadeloupe	common	es-es	GUADALOUPE
+guadeloupe	common	es-es	GUADALUPE
 guam	common	es-es	GUAM
 guatemala	common	es-es	GUATEMALA
 guinea	common	es-es	GUINEA
@@ -339,7 +342,7 @@ height	common	es-es	Altura
 help	common	es-es	Ayuda
 high	common	es-es	Alta
 highest	common	es-es	La más alta
-holy see (vatican city state)	common	es-es	HOLY SEE (VATICAN CITY STATE)
+holy see (vatican city state)	common	es-es	HOLY SEE (VATICANO)
 home	common	es-es	Inicio
 home email	common	es-es	correo electrónico particular
 honduras	common	es-es	HONDURAS
@@ -351,13 +354,13 @@ iespell not detected. click ok to go to download page.	common	es-es	No se detect
 if the clock is enabled would you like it to update it every second or every minute?	common	es-es	Si el reloj está activado, ¿desea actualizarlo cada segundo o cada minuto?
 if there are some images in the background folder you can choose the one you would like to see.	common	es-es	Si hay algunas imágenes en la carpeta de fondo, puede elegir la que desea ver.
 image description	tinymce	es-es	Descripcion de la imagen
+image directory relative to document root (use / !), example:	common	es-es	Directorio de imágenes relativo a la raíz de los documentos (use / !). Ejemplo:
 image title	tinymce	es-es	Título de la imagen
 image url	common	es-es	URL de la imagen
 indent	tinymce	es-es	Aumentar sangria
 india	common	es-es	INDIA
 indonesia	common	es-es	INDONESIA
 insert	tinymce	es-es	Insertar
-insert 'return false'	common	es-es	insertar 'return false'
 insert / edit flash movie	tinymce	es-es	Insertar / editar película Flash
 insert / edit horizontale rule	tinymce	es-es	Insertar / editar línea horzontal
 insert all %1 addresses of the %2 contacts in %3	common	es-es	Inserte todas las direcciones %1 de los contactos de %2 en %3
@@ -385,7 +388,6 @@ israel	common	es-es	ISRAEL
 it has been more then %1 days since you changed your password	common	es-es	Hace más de %1 días que cambió su contraseña
 it is recommended that you run setup to upgrade your tables to the current version	common	es-es	Se recomienda que ejecute la instalación para actualizar las tablas a la versión actual
 italic	common	es-es	Cursiva
-italic.gif	common	es-es	italic.gif
 italy	common	es-es	ITALIA
 jamaica	common	es-es	JAMAICA
 january	common	es-es	Enero
@@ -438,7 +440,7 @@ low	common	es-es	Baja
 lowest	common	es-es	La más baja
 luxembourg	common	es-es	LUXEMBURGO
 macau	common	es-es	MACAU
-macedonia, the former yugoslav republic of	common	es-es	MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF
+macedonia, the former yugoslav republic of	common	es-es	Macedonia
 madagascar	common	es-es	MADAGASCAR
 mail domain, eg. "%1"	common	es-es	dominio de correo, p.ej. "%1"
 main category	common	es-es	Categoria principal
@@ -471,6 +473,7 @@ moldova, republic of	common	es-es	MOLDOVA, REPUBLIC OF
 monaco	common	es-es	MONACO
 monday	common	es-es	Lunes
 mongolia	common	es-es	MONGOLIA
+montenegro	common	es-es	Montenegro
 montserrat	common	es-es	MONTSERRAT
 morocco	common	es-es	MARRUECOS
 move	tinymce	es-es	Mover
@@ -519,7 +522,7 @@ none	common	es-es	Ninguno
 norfolk island	common	es-es	NORFOLK ISLAND
 normal	common	es-es	Normal
 northern mariana islands	common	es-es	NORTHERN MARIANA ISLANDS
-norway	common	es-es	NORWAY
+norway	common	es-es	NORUEGA
 not assigned	common	es-es	sin asignar
 note	common	es-es	Nota
 notes	common	es-es	Notas
@@ -576,9 +579,6 @@ paste table row after	tinymce	es-es	Pegar la fila de la tabla después
 paste table row before	tinymce	es-es	Pegar la fila de la tabla antes
 path not found.	tinymce	es-es	No se encontró la ruta
 path to user and group files has to be outside of the webservers document-root!!!	common	es-es	¡¡La ruta a los ficheros de usuario y grupos DEBE ESTAR FUERA de la raíz de los documentos del servidor web!!
-pattern for search in addressbook	common	es-es	Patrón de búsqueda para la libreta de direcciones
-pattern for search in calendar	common	es-es	Patrón de búsqueda para el calendario
-pattern for search in projects	common	es-es	Patrón de búsqueda para proyectos
 permissions to the files/users directory	common	es-es	permisos a los directorios de archivos/usuarios
 personal	common	es-es	Personal
 peru	common	es-es	PERU
@@ -600,8 +600,8 @@ popup url	tinymce	es-es	URL de la ventana emergente
 portugal	common	es-es	PORTUGAL
 position (x/y)	tinymce	es-es	Posición (X/Y)
 postal	common	es-es	Postal
+powered by	common	es-es	Proporcionado por
 powered by egroupware version %1	common	es-es	Proporcionado por <a href="http://www.egroupware.org">eGroupWare</a> versión %1
-powered by phpgroupware version %1	common	es-es	Diseñado con eGroupWare versión %1
 preferences	common	es-es	Preferencias
 preferences for the idots template set	common	es-es	Preferencias para las plantillas de idots
 prev. month (hold for menu)	jscalendar	es-es	Mes anterior (mantener para menú)
@@ -622,6 +622,7 @@ read this list of methods.	common	es-es	Leer esta lista de métodos
 reading	common	es-es	leyendo
 redo	tinymce	es-es	Rehacer
 refresh	tinymce	es-es	Refrescar
+regular	common	es-es	Regular
 reject	common	es-es	Rechazar
 remove col	tinymce	es-es	Eliminar una columna
 remove selected accounts	common	es-es	borrar las cuentas seleccionadas
@@ -677,6 +678,7 @@ selection	common	es-es	Selección
 send	common	es-es	Enviar
 senegal	common	es-es	SENEGAL
 september	common	es-es	Septiembre
+serbia	common	es-es	Serbia
 server %1 has been added	common	es-es	El servidor %1 ha sido añadido
 server answered. processing response...	common	es-es	El servidor ha respondido. Procesando la respuesta...
 server contacted. waiting for response...	common	es-es	Se ha conectado con el servidor. Esperando la respuesta...
@@ -704,6 +706,7 @@ show_more_apps	common	es-es	mostrar más aplicaciones
 showing %1	common	es-es	mostrando %1
 showing %1 - %2 of %3	common	es-es	mostrando %1 - %2 de %3
 sierra leone	common	es-es	SIERRA LEONA
+simple	common	es-es	Simple
 singapore	common	es-es	SINGAPUR
 size	tinymce	es-es	Tamaño
 slovakia	common	es-es	ESLOVAQUIA
@@ -785,7 +788,6 @@ type	common	es-es	Tipo
 uganda	common	es-es	UGANDA
 ukraine	common	es-es	UCRANIA
 underline	common	es-es	Subrayado
-underline.gif	common	es-es	underline.gif
 undo	tinymce	es-es	Deshacer
 united arab emirates	common	es-es	EMIRATOS ARABES UNIDOS
 united kingdom	common	es-es	REINO UNIDO
@@ -800,6 +802,7 @@ update	common	es-es	Insertar
 update the clock per minute or per second	common	es-es	Actualizar el reloj por minuto o por segundo
 upload	common	es-es	Subir a un servidor
 upload directory does not exist, or is not writeable by webserver	common	es-es	El directorio para subir archivos no existe o no tiene permisos de escritura para el servidor web
+upload requires the directory to be writable by the webserver!	common	es-es	¡La subida de ficheros requiere que el servidor web pueda escribir en el directorio!
 uploading...	tinymce	es-es	Subiendo...
 url	common	es-es	URL
 uruguay	common	es-es	URUGUAY
@@ -827,6 +830,7 @@ virgin islands, british	common	es-es	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	es-es	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	es-es	WALLIS AND FUTUNA
 warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	es-es	Aviso:\n renombrar o mover ficheros y carpetas romperá los enlaces existentes en sus documentos. ¿Desea continuar?
+warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	es-es	Aviso:\n renombrar o mover ficheros y carpetas romperá los enlaces existentes en sus documentos. ¿Desea continuar?
 wednesday	common	es-es	Miércoles
 welcome	common	es-es	Página principal
 western sahara	common	es-es	SAHARA OCCIDENTAL
@@ -845,6 +849,7 @@ year	common	es-es	Año
 yemen	common	es-es	YEMEN
 yes	common	es-es	Sí
 you are required to change your password during your first login	common	es-es	Es necesario que cambie la contraseña durante su primer inicio de sesión.
+you can customize how many icons and toolbars the editor shows.	common	es-es	Puede personalizar el número de iconos y barras de herramientas que muestra el editor.
 you have been successfully logged out	login	es-es	Usted ha salido correctamente
 you have not entered a title	common	es-es	No ha introducido un título
 you have not entered a valid date	common	es-es	No ha introducido una fecha válida
@@ -861,7 +866,6 @@ your search returned %1 matchs	common	es-es	su búsqueda devolvió %1 resultados
 your search returned 1 match	common	es-es	su búsqueda devolvió 1 resultado
 your session could not be verified.	login	es-es	Su sesión no pudo ser verificada.
 your settings have been updated	common	es-es	Sus preferencias fueron actualizadas
-yugoslavia	common	es-es	YUGOSLAVIA
 zambia	common	es-es	ZAMBIA
 zimbabwe	common	es-es	ZIMBAWE
 zoom	common	es-es	Escala
