@@ -16,7 +16,6 @@
 3 number of chars for day-shortcut	jscalendar	en	3 number of chars for day-shortcut
 3 number of chars for month-shortcut	jscalendar	en	3 number of chars for month-shortcut
 80 (http)	admin	en	80 (http)
-a editor instance must be focused before using this command.	tinymce	en	A editor instance must be focused before using this command.
 about	common	en	About
 about %1	common	en	About %1
 about egroupware	common	en	About eGroupware
@@ -41,17 +40,10 @@ administration	common	en	Administration
 afghanistan	common	en	AFGHANISTAN
 albania	common	en	ALBANIA
 algeria	common	en	ALGERIA
-align center	tinymce	en	Align center
-align full	tinymce	en	Align full
-align left	tinymce	en	Align left
-align right	tinymce	en	Align right
-alignment	tinymce	en	Alignment
 all	common	en	All
 all fields	common	en	all fields
-all occurrences of the search string was replaced.	tinymce	en	All occurrences of the search string was replaced.
 alphabet	common	en	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	en	Alternate style-sheet:
-alternative image	tinymce	en	Alternative image
 american samoa	common	en	AMERICAN SAMOA
 an existing and by the webserver readable directory enables the image browser and upload.	common	en	An existing AND by the webserver readable directory enables the image browser and upload.
 andorra	common	en	ANDORRA
@@ -91,13 +83,11 @@ belgium	common	en	BELGIUM
 belize	common	en	BELIZE
 benin	common	en	BENIN
 bermuda	common	en	BERMUDA
-bg color	tinymce	en	Bg color
 bhutan	common	en	BHUTAN
 blocked, too many attempts	common	en	Blocked, too many attempts
 bold	common	en	Bold
 bolivia	common	en	BOLIVIA
 border	common	en	Border
-border color	tinymce	en	Border color
 bosnia and herzegovina	common	en	BOSNIA AND HERZEGOVINA
 botswana	common	en	BOTSWANA
 bottom	common	en	Bottom
@@ -124,9 +114,6 @@ category %1 has been added !	common	en	Category %1 has been added !
 category %1 has been updated !	common	en	Category %1 has been updated !
 cayman islands	common	en	CAYMAN ISLANDS
 cc	common	en	Cc
-cellpadding	tinymce	en	Cellpadding
-cellspacing	tinymce	en	Cellspacing
-center	tinymce	en	Center
 centered	common	en	centered
 central african republic	common	en	CENTRAL AFRICAN REPUBLIC
 chad	common	en	CHAD
@@ -141,12 +128,9 @@ choose a background color for the icons	common	en	Choose a background color for 
 choose a background image.	common	en	Choose a background image.
 choose a background style.	common	en	Choose a background style.
 choose a text color for the icons	common	en	Choose a text color for the icons
-choose directory to move selected folders and files to.	tinymce	en	Choose directory to move selected folders and files to.
 choose the category	common	en	Choose the category
 choose the parent category	common	en	Choose the parent category
 christmas island	common	en	CHRISTMAS ISLAND
-class	tinymce	en	Class
-cleanup messy code	tinymce	en	Cleanup messy code
 clear	common	en	Clear
 clear form	common	en	Clear Form
 click	common	en	Click
@@ -156,19 +140,14 @@ close	common	en	Close
 close sidebox	common	en	Close sidebox
 cocos (keeling) islands	common	en	COCOS (KEELING) ISLANDS
 colombia	common	en	COLOMBIA
-columns	tinymce	en	Columns
-comment	tinymce	en	Comment
 common preferences	common	en	Common preferences
 comoros	common	en	COMOROS
 company	common	en	Company
-configuration problem	tinymce	en	Configuration problem
 congo	common	en	CONGO
 congo, the democratic republic of the	common	en	CONGO, THE DEMOCRATIC REPUBLIC OF THE
 contacting server...	common	en	Contacting Server...
 cook islands	common	en	COOK ISLANDS
 copy	common	en	Copy
-copy table row	tinymce	en	Copy table row
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	en	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
 costa rica	common	en	COSTA RICA
 cote d ivoire	common	en	COTE D IVOIRE
 could not contact server. operation timed out!	common	en	Could not contact server. Operation Timed Out!
@@ -179,16 +158,13 @@ cuba	common	en	CUBA
 currency	common	en	Currency
 current	common	en	Current
 current users	common	en	Current users
-cut table row	tinymce	en	Cut table row
 cyprus	common	en	CYPRUS
 czech republic	common	en	CZECH REPUBLIC
 date	common	en	Date
 date due	common	en	Date Due
-date modified	tinymce	en	Date Modified
 date selection:	jscalendar	en	Date selection:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	en	Datetime port.<br>If using port 13, please set firewall rules appropriately before submitting this page.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	en	December
-default	tinymce	en	Default
 default category	common	en	Default Category
 default height for the windows	common	en	Default height for the windows
 default width for the windows	common	en	Default width for the windows
@@ -199,10 +175,7 @@ description	common	en	Description
 detail	common	en	Detail
 details	common	en	Details
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	en	Diable the execution a bugfixscript for Internet Explorer 5.5 and higher to show transparency in PNG-images?
-direction	tinymce	en	Direction
 direction left to right	common	en	Direction left to right
-direction right to left	tinymce	en	Direction right to left
-directory	tinymce	en	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	en	Directory does not exist, is not readable by the webserver or is not relative to the document root!
 disable internet explorer png-image-bugfix	common	en	Disable Internet Explorer png-image-bugfix
 disable slider effects	common	en	Disable slider effects
@@ -212,7 +185,6 @@ disabled	common	en	Disabled
 display %s first	jscalendar	en	Display %s first
 djibouti	common	en	DJIBOUTI
 do you also want to delete all subcategories ?	common	en	Do you also want to delete all subcategories ?
-do you want to use the wysiwyg mode for this textarea?	tinymce	en	Do you want to use the WYSIWYG mode for this textarea?
 doctype:	common	en	DOCTYPE:
 document properties	common	en	Document properties
 document title:	common	en	Document title:
@@ -222,7 +194,6 @@ domestic	common	en	Domestic
 dominica	common	en	DOMINICA
 dominican republic	common	en	DOMINICAN REPUBLIC
 done	common	en	Done
-down	tinymce	en	Down
 drag to move	jscalendar	en	Drag to move
 e-mail	common	en	E-Mail
 east timor	common	en	EAST TIMOR
@@ -237,7 +208,6 @@ egypt	common	en	EGYPT
 el salvador	common	en	EL SALVADOR
 email	common	en	E-Mail
 email-address of the user, eg. "%1"	common	en	email-address of the user, eg. "%1"
-emotions	tinymce	en	Emotions
 enabled	common	en	Enabled
 end date	common	en	End date
 end time	common	en	End time
@@ -262,39 +232,15 @@ features of the editor?	common	en	Features of the editor?
 february	common	en	February
 fields	common	en	Fields
 fiji	common	en	FIJI
-file already exists. file was not uploaded.	tinymce	en	File already exists. File was not uploaded.
-file exceeds the size limit	tinymce	en	File exceeds the size limit
-file manager	tinymce	en	File manager
-file not found.	tinymce	en	File not found.
-file was not uploaded.	tinymce	en	File was not uploaded.
-file with specified new name already exists. file was not renamed/moved.	tinymce	en	File with specified new name already exists. File was not renamed/moved.
-file(s)	tinymce	en	file(s)
-file:	tinymce	en	File:
 files	common	en	Files
-files with this extension are not allowed.	tinymce	en	Files with this extension are not allowed.
 filter	common	en	Filter
-find	tinymce	en	Find
-find again	tinymce	en	Find again
-find what	tinymce	en	Find what
-find&nbsp;next	tinymce	en	Find&nbsp;next
-find/replace	tinymce	en	Find/Replace
 finland	common	en	FINLAND
 first name	common	en	First name
 first name of the user, eg. "%1"	common	en	first name of the user, eg. "%1"
 first page	common	en	First page
 firstname	common	en	Firstname
 fixme!	common	en	FIXME!
-flash files	tinymce	en	Flash files
-flash properties	tinymce	en	Flash properties
-flash-file (.swf)	tinymce	en	Flash-File (.swf)
-folder	tinymce	en	Folder
 folder already exists.	common	en	Folder already exists.
-folder name missing.	tinymce	en	Folder name missing.
-folder not found.	tinymce	en	Folder not found.
-folder with specified new name already exists. folder was not renamed/moved.	tinymce	en	Folder with specified new name already exists. Folder was not renamed/moved.
-folder(s)	tinymce	en	folder(s)
-for mouse out	tinymce	en	for mouse out
-for mouse over	tinymce	en	for mouse over
 force selectbox	common	en	Force SelectBox
 france	common	en	FRANCE
 french guiana	common	en	FRENCH GUIANA
@@ -352,30 +298,15 @@ iceland	common	en	ICELAND
 iespell not detected. click ok to go to download page.	common	en	ieSpell not detected. Click OK to go to download page.
 if the clock is enabled would you like it to update it every second or every minute?	common	en	If the clock is enabled would you like it to update it every second or every minute?
 if there are some images in the background folder you can choose the one you would like to see.	common	en	If there are some images in the background folder you can choose the one you would like to see.
-image description	tinymce	en	Image description
 image directory relative to document root (use / !), example:	common	en	Image directory relative to document root (use / !), example:
-image title	tinymce	en	Image title
 image url	common	en	Image URL
-indent	tinymce	en	Indent
 india	common	en	INDIA
 indonesia	common	en	INDONESIA
-insert	tinymce	en	Insert
-insert / edit flash movie	tinymce	en	Insert / edit Flash Movie
-insert / edit horizontale rule	tinymce	en	Insert / edit Horizontale Rule
 insert all %1 addresses of the %2 contacts in %3	common	en	Insert all %1 addresses of the %2 contacts in %3
 insert column after	common	en	Insert column after
 insert column before	common	en	Insert column before
-insert date	tinymce	en	Insert date
-insert emotion	tinymce	en	Insert emotion
-insert file	tinymce	en	Insert File
-insert link to file	tinymce	en	Insert link to file
 insert row after	common	en	Insert row after
 insert row before	common	en	Insert row before
-insert time	tinymce	en	Insert time
-insert/edit image	tinymce	en	Insert/edit image
-insert/edit link	tinymce	en	Insert/edit link
-insert/modify table	tinymce	en	Insert/Modify table
-inserts a new table	tinymce	en	Inserts a new table
 international	common	en	International
 invalid filename	common	en	Invalid filename
 invalid ip address	common	en	Invalid IP address
@@ -392,7 +323,6 @@ jamaica	common	en	JAMAICA
 january	common	en	January
 japan	common	en	JAPAN
 jordan	common	en	JORDAN
-js-popup	tinymce	en	JS-Popup
 july	common	en	July
 jun	common	en	Jun
 june	common	en	June
@@ -401,7 +331,6 @@ justify full	common	en	Justify Full
 justify left	common	en	Justify Left
 justify right	common	en	Justify Right
 kazakstan	common	en	KAZAKSTAN
-keep linebreaks	tinymce	en	Keep linebreaks
 kenya	common	en	KENYA
 keywords	common	en	Keywords
 kiribati	common	en	KIRIBATI
@@ -426,11 +355,9 @@ libyan arab jamahiriya	common	en	LIBYAN ARAB JAMAHIRIYA
 license	common	en	License
 liechtenstein	common	en	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	en	Line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>
-link url	tinymce	en	Link URL
 list	common	en	List
 list members	common	en	List members
 lithuania	common	en	LITHUANIA
-loading files	tinymce	en	Loading files
 local	common	en	Local
 login	common	en	Login
 loginid	common	en	LoginID
@@ -445,7 +372,6 @@ mail domain, eg. "%1"	common	en	mail domain, eg. "%1"
 main category	common	en	Main category
 main screen	common	en	Main screen
 maintainer	common	en	Maintainer
-make window resizable	tinymce	en	Make window resizable
 malawi	common	en	MALAWI
 malaysia	common	en	MALAYSIA
 maldives	common	en	MALDIVES
@@ -454,7 +380,6 @@ malta	common	en	MALTA
 march	common	en	March
 marshall islands	common	en	MARSHALL ISLANDS
 martinique	common	en	MARTINIQUE
-match case	tinymce	en	Match case
 mauritania	common	en	MAURITANIA
 mauritius	common	en	MAURITIUS
 max number of icons in navbar	common	en	Max number of icons in navbar
@@ -462,12 +387,10 @@ may	common	en	May
 mayotte	common	en	MAYOTTE
 medium	common	en	Medium
 menu	common	en	Menu
-merge table cells	tinymce	en	Merge table cells
 message	common	en	Message
 mexico	common	en	MEXICO
 micronesia, federated states of	common	en	MICRONESIA, FEDERATED STATES OF
 minute	common	en	minute
-mkdir failed.	tinymce	en	Mkdir failed.
 moldova, republic of	common	en	MOLDOVA, REPUBLIC OF
 monaco	common	en	MONACO
 monday	common	en	Monday
@@ -475,7 +398,6 @@ mongolia	common	en	MONGOLIA
 montenegro	common	en	MONTENEGRO
 montserrat	common	en	MONTSERRAT
 morocco	common	en	MOROCCO
-move	tinymce	en	Move
 mozambique	common	en	MOZAMBIQUE
 multiple	common	en	multiple
 myanmar	common	en	MYANMAR
@@ -489,11 +411,6 @@ netherlands antilles	common	en	NETHERLANDS ANTILLES
 never	common	en	Never
 new caledonia	common	en	NEW CALEDONIA
 new entry added sucessfully	common	en	New entry added sucessfully
-new file name missing!	tinymce	en	New file name missing!
-new file name:	tinymce	en	New file name:
-new folder	tinymce	en	New folder
-new folder name missing!	tinymce	en	New folder name missing!
-new folder name:	tinymce	en	New folder name:
 new main category	common	en	New main category
 new value	common	en	New Value
 new zealand	common	en	NEW ZEALAND
@@ -507,15 +424,8 @@ nigeria	common	en	NIGERIA
 niue	common	en	NIUE
 no	common	en	No
 no entries found, try again ...	common	en	no entries found, try again ...
-no files...	tinymce	en	No files...
 no history for this record	common	en	No history for this record
-no permission to create folder.	tinymce	en	No permission to create folder.
-no permission to delete file.	tinymce	en	No permission to delete file.
-no permission to move files and folders.	tinymce	en	No permission to move files and folders.
-no permission to rename files and folders.	tinymce	en	No permission to rename files and folders.
-no permission to upload.	tinymce	en	No permission to upload.
 no savant2 template directories were found in:	common	en	No Savant2 template directories were found in:
-no shadow	tinymce	en	No shadow
 no subject	common	en	No Subject
 none	common	en	None
 norfolk island	common	en	NORFOLK ISLAND
@@ -534,24 +444,14 @@ old value	common	en	Old Value
 oman	common	en	OMAN
 on *nix systems please type: %1	common	en	On *nix systems please type: %1
 on mouse over	common	en	On Mouse Over
-only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	en	Only files with extensions are permited, e.g. "imagefile.jpg".
 only private	common	en	only private
 only yours	common	en	only yours
-open file in new window	tinymce	en	Open file in new window
-open in new window	tinymce	en	Open in new window
-open in parent window / frame	tinymce	en	Open in parent window / frame
-open in the window	tinymce	en	Open in the window
-open in this window / frame	tinymce	en	Open in this window / frame
-open in top frame (replaces all frames)	tinymce	en	Open in top frame (replaces all frames)
-open link in a new window	tinymce	en	Open link in a new window
-open link in the same window	tinymce	en	Open link in the same window
 open notify window	common	en	Open notify window
 open popup window	common	en	Open popup window
 open sidebox	common	en	Open sidebox
 ordered list	common	en	Ordered List
 original	common	en	Original
 other	common	en	Other
-outdent	tinymce	en	Outdent
 overview	common	en	Overview
 owner	common	en	Owner
 page	common	en	Page
@@ -572,11 +472,6 @@ password must contain at least %1 numbers	common	en	Password must contain at lea
 password must contain at least %1 special characters	common	en	Password must contain at least %1 special characters
 password must contain at least %1 uppercase letters	common	en	Password must contain at least %1 uppercase letters
 password must have at least %1 characters	common	en	Password must have at least %1 characters
-paste as plain text	tinymce	en	Paste as Plain Text
-paste from word	tinymce	en	Paste from Word
-paste table row after	tinymce	en	Paste table row after
-paste table row before	tinymce	en	Paste table row before
-path not found.	tinymce	en	Path not found.
 path to user and group files has to be outside of the webservers document-root!!!	common	en	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 permissions to the files/users directory	common	en	permissions to the files/users directory
 personal	common	en	Personal
@@ -587,17 +482,13 @@ phpgwapi	common	en	eGroupWare API
 pitcairn	common	en	PITCAIRN
 please %1 by hand	common	en	Please %1 by hand
 please enter a name	common	en	Please enter a name !
-please enter the caption text	tinymce	en	Please enter the caption text
-please insert a name for the target or choose another option.	tinymce	en	Please insert a name for the target or choose another option.
 please run setup to become current	common	en	Please run setup to become current
 please select	common	en	Please Select
 please set your global preferences	common	en	Please set your global preferences !
 please set your preferences for this application	common	en	Please set your preferences for this application !
 please wait...	common	en	Please Wait...
 poland	common	en	POLAND
-popup url	tinymce	en	Popup URL
 portugal	common	en	PORTUGAL
-position (x/y)	tinymce	en	Position (X/Y)
 postal	common	en	Postal
 powered by	common	en	Powered by
 powered by egroupware version %1	common	en	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
@@ -605,7 +496,6 @@ preferences	common	en	Preferences
 preferences for the idots template set	common	en	Preferences for the idots template set
 prev. month (hold for menu)	jscalendar	en	Prev. month (hold for menu)
 prev. year (hold for menu)	jscalendar	en	Prev. year (hold for menu)
-preview	tinymce	en	Preview
 previous page	common	en	Previous page
 primary style-sheet:	common	en	Primary style-sheet:
 print	common	en	Print
@@ -619,27 +509,19 @@ qatar	common	en	QATAR
 read	common	en	Read
 read this list of methods.	common	en	Read this list of methods.
 reading	common	en	reading
-redo	tinymce	en	Redo
-refresh	tinymce	en	Refresh
 regular	common	en	Regular
 reject	common	en	Reject
-remove col	tinymce	en	Remove col
 remove selected accounts	common	en	remove selected accounts
 remove shortcut	common	en	Remove Shortcut
 rename	common	en	Rename
-rename failed	tinymce	en	Rename failed
 replace	common	en	Replace
 replace with	common	en	Replace with
-replace&nbsp;all	tinymce	en	Replace&nbsp;all
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	en	Returns a full list of accounts on the system.  Warning: This is return can be quite large
 returns an array of todo items	common	en	Returns an array of todo items
 returns struct of users application access	common	en	Returns struct of users application access
 reunion	common	en	REUNION
 right	common	en	Right
-rmdir failed.	tinymce	en	Rmdir failed.
 romania	common	en	ROMANIA
-rows	tinymce	en	Rows
-run spell checking	tinymce	en	Run spell checking
 russian federation	common	en	RUSSIAN FEDERATION
 rwanda	common	en	RWANDA
 saint helena	common	en	SAINT HELENA
@@ -661,7 +543,6 @@ search or select multiple accounts	common	en	search or select multiple accounts
 second	common	en	second
 section	common	en	Section
 select	common	en	Select
-select all	tinymce	en	Select All
 select all %1 %2 for %3	common	en	Select all %1 %2 for %3
 select category	common	en	Select Category
 select date	common	en	Select date
@@ -690,24 +571,18 @@ show all	common	en	show all
 show all categorys	common	en	Show all categorys
 show clock?	common	en	Show clock?
 show home and logout button in main application bar?	common	en	Show home and logout button in main application bar?
-show locationbar	tinymce	en	Show locationbar
 show logo's on the desktop.	common	en	Show logo's on the desktop.
 show menu	common	en	show menu
-show menubar	tinymce	en	Show menubar
 show page generation time	common	en	Show page generation time
 show page generation time on the bottom of the page?	common	en	Show page generation time on the bottom of the page?
 show page generation time?	common	en	Show page generation time?
-show scrollbars	tinymce	en	Show scrollbars
-show statusbar	tinymce	en	Show statusbar
 show the logo's of egroupware and x-desktop on the desktop.	common	en	Show the logo's of eGroupware and x-desktop on the desktop.
-show toolbars	tinymce	en	Show toolbars
 show_more_apps	common	en	show_more_apps
 showing %1	common	en	showing %1
 showing %1 - %2 of %3	common	en	showing %1 - %2 of %3
 sierra leone	common	en	SIERRA LEONE
 simple	common	en	Simple
 singapore	common	en	SINGAPORE
-size	tinymce	en	Size
 slovakia	common	en	SLOVAKIA
 slovenia	common	en	SLOVENIA
 solomon islands	common	en	SOLOMON ISLANDS
@@ -716,7 +591,6 @@ sorry, your login has expired	login	en	Sorry, your login has expired
 south africa	common	en	SOUTH AFRICA
 south georgia and the south sandwich islands	common	en	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
 spain	common	en	SPAIN
-split table cells	tinymce	en	Split table cells
 sri lanka	common	en	SRI LANKA
 start date	common	en	Start date
 start time	common	en	Start time
@@ -724,7 +598,6 @@ start with	common	en	start with
 starting up...	common	en	Starting Up...
 status	common	en	Status
 stretched	common	en	stretched
-striketrough	tinymce	en	Striketrough
 subject	common	en	Subject
 submit	common	en	Submit
 substitutions and their meanings:	common	en	Substitutions and their meanings:
@@ -736,24 +609,18 @@ swaziland	common	en	SWAZILAND
 sweden	common	en	SWEDEN
 switzerland	common	en	SWITZERLAND
 syrian arab republic	common	en	SYRIAN ARAB REPUBLIC
-table cell properties	tinymce	en	Table cell properties
 table properties	common	en	Table properties
-table row properties	tinymce	en	Table row properties
 taiwan	common	en	TAIWAN/TAIPEI
 tajikistan	common	en	TAJIKISTAN
 tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
-target	tinymce	en	Target
 text color:	common	en	Text color:
 thailand	common	en	THAILAND
 the api is current	common	en	The API is current
 the api requires an upgrade	common	en	The API requires an upgrade
 the following applications require upgrades	common	en	The following applications require upgrades
 the mail server returned	common	en	The mail server returned
-the search has been compleated. the search string could not be found.	tinymce	en	The search has been compleated. The search string could not be found.
 this application is current	common	en	This application is current
 this application requires an upgrade	common	en	This application requires an upgrade
-this is just a template button	tinymce	en	This is just a template button
-this is just a template popup	tinymce	en	This is just a template popup
 this name has been used already	common	en	This name has been used already !
 thursday	common	en	Thursday
 tiled	common	en	tiled
@@ -768,7 +635,6 @@ to go back to the msg list, click <a href= %1 >here</a>	common	en	To go back to 
 today	common	en	Today
 todays date, eg. "%1"	common	en	todays date, eg. "%1"
 toggle first day of week	jscalendar	en	Toggle first day of week
-toggle fullscreen mode	tinymce	en	Toggle fullscreen mode
 togo	common	en	TOGO
 tokelau	common	en	TOKELAU
 tonga	common	en	TONGA
@@ -787,30 +653,22 @@ type	common	en	Type
 uganda	common	en	UGANDA
 ukraine	common	en	UKRAINE
 underline	common	en	Underline
-undo	tinymce	en	Undo
 united arab emirates	common	en	UNITED ARAB EMIRATES
 united kingdom	common	en	UNITED KINGDOM
 united states	common	en	UNITED STATES
 united states minor outlying islands	common	en	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	en	Unknown
-unlink	tinymce	en	Unlink
-unlink failed.	tinymce	en	Unlink failed.
-unordered list	tinymce	en	Unordered list
-up	tinymce	en	Up
 update	common	en	Update
 update the clock per minute or per second	common	en	Update the clock per minute or per second
 upload	common	en	Upload
 upload directory does not exist, or is not writeable by webserver	common	en	Upload directory does not exist, or is not writeable by webserver
 upload requires the directory to be writable by the webserver!	common	en	Upload requires the directory to be writable by the webserver!
-uploading...	tinymce	en	Uploading...
 url	common	en	URL
 uruguay	common	en	URUGUAY
 use button to search for	common	en	use Button to search for
 use button to search for address	common	en	use Button to search for Address
 use button to search for calendarevent	common	en	use Button to search for Calendarevent
 use button to search for project	common	en	use Button to search for Project
-use ctrl and/or shift to select multiple items.	tinymce	en	Use Ctrl and/or Shift to select multiple items.
-use ctrl+v on your keyboard to paste the text into the window.	tinymce	en	Use CTRL+V on your keyboard to paste the text into the window.
 user	common	en	User
 user accounts	common	en	user accounts
 user groups	common	en	user groups
@@ -822,13 +680,11 @@ uzbekistan	common	en	UZBEKISTAN
 vanuatu	common	en	VANUATU
 venezuela	common	en	VENEZUELA
 version	common	en	Version
-vertical alignment	tinymce	en	Vertical alignment
 viet nam	common	en	VIET NAM
 view	common	en	View
 virgin islands, british	common	en	VIRGIN ISLANDS, BRITISH
 virgin islands, u.s.	common	en	VIRGIN ISLANDS, U.S.
 wallis and futuna	common	en	WALLIS AND FUTUNA
-warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	en	Warning!\n Renaming or moving folders and files will break existing links in your documents. Continue?
 wednesday	common	en	Wednesday
 welcome	common	en	Welcome
 western sahara	common	en	WESTERN SAHARA
@@ -837,7 +693,6 @@ what style would you like the image to have?	common	en	What style would you like
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	When you say yes the home and logout buttons are presented as applications in the main top applcation bar.
 which groups	common	en	Which groups
 width	common	en	Width
-window name	tinymce	en	Window name
 wk	jscalendar	en	wk
 work email	common	en	work email
 would you like to display the page generation time at the bottom of every window?	common	en	Would you like to display the page generation time at the bottom of every window?
@@ -856,7 +711,6 @@ you have not entered participants	common	en	You have not entered participants
 you have selected an invalid date	common	en	You have selected an invalid date !
 you have selected an invalid main category	common	en	You have selected an invalid main category !
 you have successfully logged out	common	en	You have successfully logged out
-you must enter the url	tinymce	en	You must enter the URL
 you need to add the webserver user '%1' to the group '%2'.	common	en	You need to add the webserver user '%1' to the group '%2'.
 your message could <b>not</b> be sent!<br>	common	en	Your message could <b>not</b> be sent!<br>
 your message has been sent	common	en	Your message has been sent

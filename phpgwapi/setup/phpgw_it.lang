@@ -16,7 +16,6 @@
 3 number of chars for day-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Giorno
 3 number of chars for month-shortcut	jscalendar	it	3 numeri di caratteri per la scorciatoia Mese
 80 (http)	admin	it	80 (http)
-a editor instance must be focused before using this command.	tinymce	it	Un'istanza dell'editor deve essere focalizzata prima di utilizzare questo comando.
 about	common	it	Info
 about %1	common	it	Info su %1
 about egroupware	common	it	Info su eGroupware
@@ -41,17 +40,10 @@ administration	common	it	Amministrazione
 afghanistan	common	it	AFGHANISTAN
 albania	common	it	ALBANIA
 algeria	common	it	ALGERIA
-align center	tinymce	it	Allinea centrato
-align full	tinymce	it	Giustifica
-align left	tinymce	it	Allinea a sinistra
-align right	tinymce	it	Allinea a destra
-alignment	tinymce	it	Allineamento
 all	common	it	Tutto
 all fields	common	it	tutti i campi
-all occurrences of the search string was replaced.	tinymce	it	Tutte le occorrenze della stringa di ricerca sono state sostituite.
 alphabet	common	it	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	it	Foglio di stile alternativo:
-alternative image	tinymce	it	Immagine alternativa
 american samoa	common	it	SAMOA AMERICANA
 andorra	common	it	ANDORRA
 angola	common	it	ANGOLA
@@ -91,14 +83,12 @@ belgium	common	it	BELGIO
 belize	common	it	BELIZE
 benin	common	it	BENIN
 bermuda	common	it	BERMUDA
-bg color	tinymce	it	Colore Sfondo
 bhutan	common	it	BHUTAN
 blocked, too many attempts	common	it	Bloccato, troppi tentativi
 bold	common	it	Grassetto
 bold.gif	common	it	bold.gif
 bolivia	common	it	BOLIVIA
 border	common	it	Bordo
-border color	tinymce	it	Colore Bordo
 bosnia and herzegovina	common	it	BOSNIA E HERZEGOVINA
 botswana	common	it	BOTSWANA
 bottom	common	it	Bottom
@@ -125,9 +115,6 @@ category %1 has been added !	common	it	La categoria %1 è stata aggiunta!
 category %1 has been updated !	common	it	La categoria %1 è stata aggiornata!
 cayman islands	common	it	ISOLE CAYMAN
 cc	common	it	Cc
-cellpadding	tinymce	it	Cellpadding
-cellspacing	tinymce	it	Cellspacing
-center	tinymce	it	Centro
 centered	common	it	centrato
 central african republic	common	it	REPUBBLICA CENTRO AFRICANA
 chad	common	it	CHAD
@@ -142,12 +129,9 @@ choose a background color for the icons	common	it	Scegli un colore di sfondo per
 choose a background image.	common	it	Scegli un'immagine di sfondo
 choose a background style.	common	it	Scegli un stile per lo sfondo
 choose a text color for the icons	common	it	Scegli un colore per il testo delle icone
-choose directory to move selected folders and files to.	tinymce	it	Scegli la directory in cui spostare le cartelle e i file selezionati.
 choose the category	common	it	Scegli la categoria
 choose the parent category	common	it	Scegli la categoria superiore
 christmas island	common	it	ISOLA DI NATALE
-class	tinymce	it	Classe
-cleanup messy code	tinymce	it	Pulisci il  codice
 clear	common	it	Pulisci
 clear form	common	it	Svuota il modulo
 click	common	it	Clicca
@@ -157,20 +141,14 @@ close	common	it	Chiudi
 close sidebox	common	it	Chiudi riquadro laterale
 cocos (keeling) islands	common	it	ISOLE COCOS (KEELING)
 colombia	common	it	COLOMBIA
-columns	tinymce	it	Colonne
-comment	tinymce	it	Commento
 common preferences	common	it	Preferenze generiche
 comoros	common	it	COMORE
 company	common	it	Azienda
-configuration problem	tinymce	it	Problema di configurazione
 congo	common	it	CONGO
 congo, the democratic republic of the	common	it	CONGO, REPUBBLICA DEMOCRATICA DEL
 contacting server...	common	it	Sto contattando il Server...
 cook islands	common	it	ISOLE COOK
 copy	common	it	Copia
-copy table row	tinymce	it	Copy table row
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	it	Copia/Taglia/Incolla non sono disponibili in Mozilla e Firefox.\nVuoi ulteriori informazioni  al riguardo?
-copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	it	Copia/Taglia/Incolla non sono disponibili in Mozilla e Firefox.\nVuoi ulteriori informazioni  al riguardo?
 costa rica	common	it	COSTA RICA
 cote d ivoire	common	it	COSTA D'AVORIO
 could not contact server. operation timed out!	common	it	Impossibile contattare il server. Operazione fuori tempo massimo!
@@ -181,16 +159,13 @@ cuba	common	it	CUBA
 currency	common	it	Valuta
 current	common	it	Attuale
 current users	common	it	Utenti attuali
-cut table row	tinymce	it	Cut table row
 cyprus	common	it	CIPRO
 czech republic	common	it	REPUBBLICA CECA
 date	common	it	Data
 date due	common	it	Data richiesta
-date modified	tinymce	it	Data modifica
 date selection:	jscalendar	it	Selezione data:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	it	Porta data e ora.<br>Se utilizzi la porta 13, imposta correttamente il firewall prima di confermare questa pagina.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	it	Dicembre
-default	tinymce	it	Default
 default category	common	it	Categoria Predefinita
 default height for the windows	common	it	Altezza predefinita per le finestre
 default width for the windows	common	it	Larghezza predefinita per le finestre
@@ -201,10 +176,7 @@ description	common	it	Descrizione
 detail	common	it	Dettaglio
 details	common	it	Dettagli
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	it	Disabilita lo script per sistemare il bug di Internet Explorer 5.5 and superiore nella visualizzazione delle trasparenze nelle immagini PNG?
-direction	tinymce	it	Direzione
 direction left to right	common	it	Direzione da sinistra a destra
-direction right to left	tinymce	it	Direzione da destra a sinistra
-directory	tinymce	it	Directory
 disable internet explorer png-image-bugfix	common	it	Disabilita il png-image-bugfix di Internet Explorer
 disable slider effects	common	it	Disabilita l'effetto effects slider
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	it	Disabilita gli effetti animati mentre vengono mostrati o nascosti i menù sulla pagina? Gli utenti di Opera e Konqueror probabilmente vorranno così.
@@ -213,7 +185,6 @@ disabled	common	it	Disabilitato
 display %s first	jscalendar	it	Mostra prima %1
 djibouti	common	it	DJIBOUTI
 do you also want to delete all subcategories ?	common	it	Vuoi anche cancellare tutte le sotto-categorie?
-do you want to use the wysiwyg mode for this textarea?	tinymce	it	Vuoi usare la modalit\u00E0 WYSIWYG per questa textarea?
 doctype:	common	it	TIPO DOCUMENTO:
 document properties	common	it	Proprietà documento
 document title:	common	it	Titolo documento:
@@ -223,7 +194,6 @@ domestic	common	it	Domestico
 dominica	common	it	DOMINICA
 dominican republic	common	it	REPUBBLICA DOMINICANA
 done	common	it	Finito
-down	tinymce	it	Giù
 drag to move	jscalendar	it	Trascina per spostare
 e-mail	common	it	E-Mail
 east timor	common	it	TIMOR EST
@@ -238,7 +208,6 @@ egypt	common	it	EGITTO
 el salvador	common	it	EL SALVADOR
 email	common	it	E-Mail
 email-address of the user, eg. "%1"	common	it	Indirizzo e-mail per l'utente, es. "%1"
-emotions	tinymce	it	Emoticon
 en	common	it	en
 enabled	common	it	Abilitato
 end date	common	it	Data Fine
@@ -262,39 +231,15 @@ fax number	common	it	numero di fax
 february	common	it	Febbraio
 fields	common	it	Campi
 fiji	common	it	FIJI
-file already exists. file was not uploaded.	tinymce	it	Il file esiste già. Il file non è stato caricato.
-file exceeds the size limit	tinymce	it	Il file eccede le dimensioni limite.
-file manager	tinymce	it	Gestione File
-file not found.	tinymce	it	File non trovato.
-file was not uploaded.	tinymce	it	Il file non è stato caricato.
-file with specified new name already exists. file was not renamed/moved.	tinymce	it	Un file con il nuovo nome specificato esiste già. Il file non è stato rinominato/spostato.
-file(s)	tinymce	it	file
-file:	tinymce	it	File:
 files	common	it	File
-files with this extension are not allowed.	tinymce	it	File con questa estensione non sono permessi.
 filter	common	it	Filtro
-find	tinymce	it	Trova
-find again	tinymce	it	Trova ancora
-find what	tinymce	it	Cosa trovare
-find&nbsp;next	tinymce	it	Trova successivo
-find/replace	tinymce	it	Trova/Sostituisci
 finland	common	it	FINLANDIA
 first name	common	it	Nome
 first name of the user, eg. "%1"	common	it	Nome dell'utente, es. "%1"
 first page	common	it	Prima pagina
 firstname	common	it	Nome
 fixme!	common	it	CORREGGIMI !
-flash files	tinymce	it	File Flash
-flash properties	tinymce	it	Proprietà Flash
-flash-file (.swf)	tinymce	it	File-Flash (.swf)
-folder	tinymce	it	Cartella
 folder already exists.	common	it	La cartella esiste già.
-folder name missing.	tinymce	it	Nome cartella mancante.
-folder not found.	tinymce	it	Cartella non trovata.
-folder with specified new name already exists. folder was not renamed/moved.	tinymce	it	Una cartella con il nome specificato esiste già. La cartella non è stata rinominata/spostata.
-folder(s)	tinymce	it	cartella/e
-for mouse out	tinymce	it	per mouse out
-for mouse over	tinymce	it	per mouse over
 force selectbox	common	it	Forza Casella di Selezione
 france	common	it	FRANCIA
 french guiana	common	it	GUIANA FRANCESE
@@ -352,30 +297,15 @@ iceland	common	it	ISLANDA
 iespell not detected. click ok to go to download page.	common	it	ieSpell non trovato. Clicca OK per andare alla pagina di download.
 if the clock is enabled would you like it to update it every second or every minute?	common	it	Se l'orologio è abilitato, vuoi che si aggiorni ogni secondo oppure ogni minuto?
 if there are some images in the background folder you can choose the one you would like to see.	common	it	Se ci sono diverse immagini nella cartella sfondi, puoi scegliere quale vuoi vedere.
-image description	tinymce	it	Descrizione immagine
-image title	tinymce	it	Titolo immagine
 image url	common	it	URL immagine
-indent	tinymce	it	Indenta
 india	common	it	INDIA
 indonesia	common	it	INDONESIA
-insert	tinymce	it	Inserisci
 insert 'return false'	common	it	inserisci 'return false'
-insert / edit flash movie	tinymce	it	Inserisci / modifica Filmato Flash
-insert / edit horizontale rule	tinymce	it	Inserisci / modifica Righello Orizzontale
 insert all %1 addresses of the %2 contacts in %3	common	it	Inseriti tutti i %1 indirizzi dei %2 contatti in %3
 insert column after	common	it	Inserisci colonna dopo
 insert column before	common	it	Inserisci colonna prima
-insert date	tinymce	it	Inserisci data
-insert emotion	tinymce	it	Inserisci una emoticon
-insert file	tinymce	it	Inserisci File
-insert link to file	tinymce	it	Inserisci link a file
 insert row after	common	it	Inserisci una riga dopo
 insert row before	common	it	Inserisci una riga prima
-insert time	tinymce	it	Inserisci ora
-insert/edit image	tinymce	it	Inserisci/modifica immagine
-insert/edit link	tinymce	it	Inserisci/modifica link
-insert/modify table	tinymce	it	Inserisci/modifica tabella
-inserts a new table	tinymce	it	Inserisci una nuova tabella
 international	common	it	Internazionale
 invalid filename	common	it	Nome file non valido
 invalid ip address	common	it	Indirizzo IP errato
@@ -393,7 +323,6 @@ jamaica	common	it	GIAMAICA
 january	common	it	Gennaio
 japan	common	it	GIAPPONE
 jordan	common	it	GIORDANIA
-js-popup	tinymce	it	JS-Popup
 july	common	it	Luglio
 jun	common	it	Giu
 june	common	it	Giugno
@@ -402,7 +331,6 @@ justify full	common	it	Giustificato
 justify left	common	it	Allinea a Sinistra
 justify right	common	it	Allinea a Destra
 kazakstan	common	it	KAZAKISTAN
-keep linebreaks	tinymce	it	Mantieni interruzioni di linea
 kenya	common	it	KENIA
 keywords	common	it	Keywords
 kiribati	common	it	KIRIBATI
@@ -427,11 +355,9 @@ libyan arab jamahiriya	common	it	LIBIAN ARAB JAMAHIRIYA
 license	common	it	Licenza
 liechtenstein	common	it	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	it	Linea %1: '%2'<br><b>dati csv non corrisponde al numero colonne della tabella %3 ==> ignorato</b>
-link url	tinymce	it	Link URL
 list	common	it	Lista
 list members	common	it	Elenco membri
 lithuania	common	it	LITUANIA
-loading files	tinymce	it	Caricamento file
 local	common	it	Locale
 login	common	it	Login
 loginid	common	it	LoginID
@@ -446,7 +372,6 @@ mail domain, eg. "%1"	common	it	dominio e-mail, es. "%1"
 main category	common	it	Categoria principale
 main screen	common	it	Schermata principale
 maintainer	common	it	Manutentore
-make window resizable	tinymce	it	Rendi finestra ridimensionabile
 malawi	common	it	MALAWI
 malaysia	common	it	MALESIA
 maldives	common	it	MALDIVE
@@ -455,7 +380,6 @@ malta	common	it	MALTA
 march	common	it	Marzo
 marshall islands	common	it	ISOLE MARSHALL
 martinique	common	it	MARTINICA
-match case	tinymce	it	Match case
 mauritania	common	it	MAURITANIA
 mauritius	common	it	MAURITIUS
 max number of icons in navbar	common	it	Numero massimo di icone della barra di navigazione
@@ -463,19 +387,16 @@ may	common	it	Maggio
 mayotte	common	it	MAYOTTE
 medium	common	it	Medio
 menu	common	it	Menù
-merge table cells	tinymce	it	Merge table cells
 message	common	it	Messaggio
 mexico	common	it	MESSICO
 micronesia, federated states of	common	it	MICRONESIA, STATI FEDERATI DELLA
 minute	common	it	minuto
-mkdir failed.	tinymce	it	Mkdir fallito.
 moldova, republic of	common	it	MOLDAVIA, REPUBBLICA DELLA
 monaco	common	it	MONACO
 monday	common	it	Lunedì
 mongolia	common	it	MONGOLIA
 montserrat	common	it	MONTSERRAT
 morocco	common	it	MAROCCO
-move	tinymce	it	Sposta
 mozambique	common	it	MOZAMBICO
 multiple	common	it	multiplo
 myanmar	common	it	MYANMAR
@@ -489,11 +410,6 @@ netherlands antilles	common	it	ANTILLE OLANDESI
 never	common	it	Mai
 new caledonia	common	it	NUOVA CALEDONIA
 new entry added sucessfully	common	it	Nuova voce aggiunto con successo
-new file name missing!	tinymce	it	Nome nuovo file mancante!
-new file name:	tinymce	it	Nome nuovo file:
-new folder	tinymce	it	Nuova cartella
-new folder name missing!	tinymce	it	Nome nuova cartella mancante!
-new folder name:	tinymce	it	Nome nuova cartella:
 new main category	common	it	Nuova categoria principale
 new value	common	it	Nuovo Valore
 new zealand	common	it	NUOVA ZELANDA
@@ -507,15 +423,8 @@ nigeria	common	it	NIGERIA
 niue	common	it	NIUE
 no	common	it	No
 no entries found, try again ...	common	it	nessuna voce trovata, prova ancora ...
-no files...	tinymce	it	Nessun file...
 no history for this record	common	it	Nessuna history per questo record
-no permission to create folder.	tinymce	it	Non è permesso creare cartelle.
-no permission to delete file.	tinymce	it	Non è permesso cancellare file.
-no permission to move files and folders.	tinymce	it	Non è permesso spostare file e cartelle.
-no permission to rename files and folders.	tinymce	it	Non è permesso rinominare file e cartelle
-no permission to upload.	tinymce	it	Non è permesso l'upload.
 no savant2 template directories were found in:	common	it	Nessuna directory template Savant2 trovata in:
-no shadow	tinymce	it	Nessuna ombra
 no subject	common	it	Nessun Oggetto
 none	common	it	Nessuno
 norfolk island	common	it	ISOLE NORFOLK
@@ -534,23 +443,14 @@ old value	common	it	Vecchio Valore
 oman	common	it	OMAN
 on *nix systems please type: %1	common	it	Sui sistemi *nix prego digita: %1
 on mouse over	common	it	Al passaggio del mouse
-only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	it	Sono permessi solo file con estensione, es. "immagine.jpg".
 only private	common	it	solo privati
 only yours	common	it	solo personali
-open file in new window	tinymce	it	Apri file in nuova finestra
-open in new window	tinymce	it	Apri in nuova finestra
-open in parent window / frame	tinymce	it	Apri in finestra / frame superiore
-open in the window	tinymce	it	Apri nella finestra
-open in this window / frame	tinymce	it	Apri in questa finestra / riquadro
-open link in a new window	tinymce	it	Apri il link in una nuova finestra
-open link in the same window	tinymce	it	Apri il link nella stessa finestra
 open notify window	common	it	Apri finestra di Notifica
 open popup window	common	it	Apri finestra popup
 open sidebox	common	it	Apri riquadro laterale
 ordered list	common	it	Lista ordinata
 original	common	it	Originale
 other	common	it	Altro
-outdent	tinymce	it	Rientra
 overview	common	it	Panoramica
 owner	common	it	Proprietario
 page	common	it	Pagina
@@ -571,11 +471,6 @@ password must contain at least %1 numbers	common	it	La Password deve contenere a
 password must contain at least %1 special characters	common	it	La Password deve contenere almeno %1 caratteri speciali
 password must contain at least %1 uppercase letters	common	it	La Password deve contenere almeno %1 lettere maiuscole
 password must have at least %1 characters	common	it	La Password deve avere almeno %1 caratteri
-paste as plain text	tinymce	it	Incolla come Testo Semplice
-paste from word	tinymce	it	Incolla da Word
-paste table row after	tinymce	it	Paste table row after
-paste table row before	tinymce	it	Paste table row before
-path not found.	tinymce	it	Percorso non trovato
 path to user and group files has to be outside of the webservers document-root!!!	common	it	Il percorso per i files degli utenti e dei gruppi DEVE ESSERE ESTERNO alla document-root del webserver!!!
 permissions to the files/users directory	common	it	permessi per la directory dei files/utenti
 personal	common	it	Personale
@@ -586,23 +481,19 @@ phpgwapi	common	it	API eGroupWare
 pitcairn	common	it	PITCAIRN
 please %1 by hand	common	it	Per favore %1 a mano
 please enter a name	common	it	Per favore inserisci un nome!
-please enter the caption text	tinymce	it	Per favore inserisci testo didascalia
 please run setup to become current	common	it	Per favore esegui setup per aggiornare
 please select	common	it	Per favore Seleziona
 please set your global preferences	common	it	Per favore imposta le preferenze globali !
 please set your preferences for this application	common	it	Per favore imposta le tue preferenze per questa applicazione !
 please wait...	common	it	Attendere per Favore...
 poland	common	it	POLONIA
-popup url	tinymce	it	URL Popup
 portugal	common	it	PORTOGALLO
-position (x/y)	tinymce	it	Posizione (X/Y)
 postal	common	it	Postale
 powered by egroupware version %1	common	it	Creato con <a href="http://www.egroupware.org">eGroupWare</a> versione %1
 preferences	common	it	Preferenze
 preferences for the idots template set	common	it	Preferenze per il template idots
 prev. month (hold for menu)	jscalendar	it	Mese precedente (premi per menu)
 prev. year (hold for menu)	jscalendar	it	Anno precedente (premi per menu)
-preview	tinymce	it	Anteprima
 previous page	common	it	Pagina precedente
 primary style-sheet:	common	it	Foglio di stile primario:
 print	common	it	Stampa
@@ -616,26 +507,18 @@ qatar	common	it	QATAR
 read	common	it	Leggi
 read this list of methods.	common	it	Leggi questo elenco di metodi.
 reading	common	it	leggendo
-redo	tinymce	it	Ripeti
-refresh	tinymce	it	Aggiorna
 reject	common	it	Rifiuta
-remove col	tinymce	it	Rimuovi colonna
 remove selected accounts	common	it	rimuovi gli account selezionati
 remove shortcut	common	it	Rimuovi scorciatoie
 rename	common	it	Rinomina
-rename failed	tinymce	it	Rinomina fallita
 replace	common	it	Sostituisci
 replace with	common	it	Stostituisci con
-replace&nbsp;all	tinymce	it	Sostituisci tutto
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	it	Restituisce la lista degli account di sistema.  Attenzione: La lista può essere molto grande
 returns an array of todo items	common	it	Restituisce un elenco delle cose da fare
 returns struct of users application access	common	it	Restituisce la struttura degli accessi alle applicazioni
 reunion	common	it	REUNION
 right	common	it	Destra
-rmdir failed.	tinymce	it	Rmdir fallito.
 romania	common	it	ROMANIA
-rows	tinymce	it	Righe
-run spell checking	tinymce	it	Avvia il controllo ortografico
 russian federation	common	it	FEDERAZIONE RUSSA
 rwanda	common	it	RUANDA
 saint helena	common	it	SANT'ELENA
@@ -656,7 +539,6 @@ search or select multiple accounts	common	it	cerca o seleziona account multipli
 second	common	it	secondo
 section	common	it	Sezione
 select	common	it	Seleziona
-select all	tinymce	it	Seleziona Tutto
 select all %1 %2 for %3	common	it	Seleziona tutti %1 %2 per %3
 select category	common	it	Selezione categoria
 select date	common	it	Selezione data
@@ -682,23 +564,17 @@ show all	common	it	visualizza tutto
 show all categorys	common	it	Visualizza tutte le categorie
 show clock?	common	it	Mostrare orologio?
 show home and logout button in main application bar?	common	it	Mostrare i pulsanti Home e Logout nella barra applicazioni principale?
-show locationbar	tinymce	it	Mostra barra luogo
 show logo's on the desktop.	common	it	Mostra logo sul desktop
 show menu	common	it	visualizza menu
-show menubar	tinymce	it	Mostra barra menù
 show page generation time	common	it	Visualizza il tempo di generazione della pagina
 show page generation time on the bottom of the page?	common	it	Visualizza il tempo di generazione in fondo alla pagina?
 show page generation time?	common	it	Mostrare tempo generazione pagina?
-show scrollbars	tinymce	it	Mostra barre di scorrimento
-show statusbar	tinymce	it	Mostra barra di stato
 show the logo's of egroupware and x-desktop on the desktop.	common	it	Mostra il logo di eGroupware e di x-desktop sul desktop.
-show toolbars	tinymce	it	Mostra barre strumenti
 show_more_apps	common	it	show_more_apps
 showing %1	common	it	visualizzati %1
 showing %1 - %2 of %3	common	it	visualizzati da %1 a %2 di %3
 sierra leone	common	it	SIERRA LEONE
 singapore	common	it	SINGAPORE
-size	tinymce	it	Dimensione
 slovakia	common	it	SLOVACCHIA
 slovenia	common	it	SLOVENIA
 solomon islands	common	it	ISOLE DI SOLOMONE
@@ -707,7 +583,6 @@ sorry, your login has expired	login	it	Spiacente, il tuo login è scaduto
 south africa	common	it	SUD AFRICA
 south georgia and the south sandwich islands	common	it	SUD GEORGIA E LE ISOLE SUD SANDWICH
 spain	common	it	SPAGNA
-split table cells	tinymce	it	Split table cells
 sri lanka	common	it	SRI LANKA
 start date	common	it	Data Inizio
 start time	common	it	Ora Inizio
@@ -715,7 +590,6 @@ start with	common	it	Inizia con
 starting up...	common	it	Inizializzazione...
 status	common	it	Status
 stretched	common	it	adattato
-striketrough	tinymce	it	Barrato
 subject	common	it	Oggetto
 submit	common	it	Invia
 substitutions and their meanings:	common	it	Sostituzioni e loro significati:
@@ -727,24 +601,18 @@ swaziland	common	it	SWAZILAND
 sweden	common	it	SVEZIA
 switzerland	common	it	SVIZZERA
 syrian arab republic	common	it	REPUBBLICA ARABA SIRIANA
-table cell properties	tinymce	it	Table cell properties
 table properties	common	it	Table properties
-table row properties	tinymce	it	Table row properties
 taiwan	common	it	TAIWAN/TAIPEI
 tajikistan	common	it	TAJIKISTAN
 tanzania, united republic of	common	it	TANZANIA, REPUBBLICA UNITA DELLA
-target	tinymce	it	Target
 text color:	common	it	Colore testo
 thailand	common	it	TAILANDIA
 the api is current	common	it	L'API è aggiornata
 the api requires an upgrade	common	it	L'API necessita di un aggiornamento
 the following applications require upgrades	common	it	Le seguenti applicazioni richiedono un aggiornamento
 the mail server returned	common	it	Il mail server ha risposto
-the search has been compleated. the search string could not be found.	tinymce	it	La ricerca è stata completata. La stringa di ricerca non è stata trovata.
 this application is current	common	it	Questa applicazione è aggiornata
 this application requires an upgrade	common	it	Questa applicazione richiede un aggiornamento
-this is just a template button	tinymce	it	Questo è solo un bottone template
-this is just a template popup	tinymce	it	Questo è solo un popup template
 this name has been used already	common	it	Questo nome è già stato usato!
 thursday	common	it	Giovedì
 tiled	common	it	tiled
@@ -759,7 +627,6 @@ to go back to the msg list, click <a href= %1 >here</a>	common	it	Per tornare al
 today	common	it	Oggi
 todays date, eg. "%1"	common	it	Data di oggi, es. "%1"
 toggle first day of week	jscalendar	it	Togli il primo giorno della settimana
-toggle fullscreen mode	tinymce	it	Attiva/disattiva modalità schermo inetro
 togo	common	it	TOGO
 tokelau	common	it	TOKELAU
 tonga	common	it	TONGA
@@ -779,28 +646,20 @@ uganda	common	it	UGANDA
 ukraine	common	it	UCRAINA
 underline	common	it	Sottolineato
 underline.gif	common	it	underline.gif
-undo	tinymce	it	Annulla
 united arab emirates	common	it	EMIRATI ARABI UNITI
 united kingdom	common	it	REGNO UNITO
 united states	common	it	STATI UNITI
 united states minor outlying islands	common	it	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	it	Sconosciuto
-unlink	tinymce	it	Elimina link
-unlink failed.	tinymce	it	Scollegamento fallito.
-unordered list	tinymce	it	Lista non ordinata
-up	tinymce	it	Su
 update	common	it	Aggiorna
 update the clock per minute or per second	common	it	Aggiorna l'orologio ogni minuto o ogni secondo
 upload	common	it	Carica
-uploading...	tinymce	it	Caricamento...
 url	common	it	URL
 uruguay	common	it	URUGUAY
 use button to search for	common	it	usa il Pulsante per cercare
 use button to search for address	common	it	usa il Pulsante per cercare l'Indirizzo
 use button to search for calendarevent	common	it	usa il Pulsante per cercare un Evento in Agenda
 use button to search for project	common	it	usa il Pulsante per cercare un Progetto
-use ctrl and/or shift to select multiple items.	tinymce	it	Usa Ctrl e/o Shift per selezionare più oggetti.
-use ctrl+v on your keyboard to paste the text into the window.	tinymce	it	Usa CTRL+V sulla tastiera per incollare il testo nella finestra.
 user	common	it	Utente
 user accounts	common	it	account utente
 user groups	common	it	gruppi utente
@@ -811,7 +670,6 @@ uzbekistan	common	it	UZBEKISTAN
 vanuatu	common	it	VANUATU
 venezuela	common	it	VENEZUELA
 version	common	it	Versione
-vertical alignment	tinymce	it	Vertical alignment
 viet nam	common	it	VIET NAM
 view	common	it	Visualizza
 virgin islands, british	common	it	ISOLE VERGINI, GRAN BRETAGNA
@@ -823,7 +681,6 @@ western sahara	common	it	SAHARA OCCIDENTALE
 what style would you like the image to have?	common	it	Che stile vuoi che abbia l'immagine?
 which groups	common	it	Quali gruppi
 width	common	it	Larghezza
-window name	tinymce	it	Nome finestra
 wk	jscalendar	it	set
 work email	common	it	e-mail ufficio
 writing	common	it	scrittura
@@ -840,7 +697,6 @@ you have not entered participants	common	it	Non hai inserito i partecipanti
 you have selected an invalid date	common	it	Hai selezionato una data non valida!
 you have selected an invalid main category	common	it	Hai selezionato una categoria principale non valida!
 you have successfully logged out	common	it	Ti sei disconesso con successo
-you must enter the url	tinymce	it	Devi inserire l'URL
 you need to add the webserver user '%1' to the group '%2'.	common	it	Devi aggiungere l'utente '%1' del webserver al gruppo '%2'.
 your message could <b>not</b> be sent!<br>	common	it	Il tuo messaggio <b>non</b> può essere inviato!<br>
 your message has been sent	common	it	Il tuo messaggio è stato inviato

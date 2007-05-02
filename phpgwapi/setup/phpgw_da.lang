@@ -16,7 +16,6 @@
 3 number of chars for day-shortcut	jscalendar	da	3 antal tegn for dag-forkortelse
 3 number of chars for month-shortcut	jscalendar	da	3 antal tegn for måneds-forkortelse
 80 (http)	admin	da	80 (http)
-a editor instance must be focused before using this command.	tinymce	da	Der skal sættes fokus på sessionen, før man kan bruge denne kommando
 about	common	da	Om
 about %1	common	da	Om %1
 about egroupware	common	da	Om eGroupWare
@@ -41,17 +40,10 @@ administration	common	da	Administration
 afghanistan	common	da	Afghanistan
 albania	common	da	Albanien
 algeria	common	da	Algeriet
-align center	tinymce	da	Centrer
-align full	tinymce	da	Lige margin
-align left	tinymce	da	Venstrestil
-align right	tinymce	da	Højrestil
-alignment	tinymce	da	Justering
 all	common	da	Alle
 all fields	common	da	alle felter
-all occurrences of the search string was replaced.	tinymce	da	Alle forekomster af søge strengen er ændrede.
 alphabet	common	da	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,w,x,y,z
 alternate style-sheet:	common	da	Alternativt style-sheet
-alternative image	tinymce	da	Alternativt image
 american samoa	common	da	Amerikansk Samoa
 andorra	common	da	Andorra
 angola	common	da	Angola
@@ -89,13 +81,11 @@ belgium	common	da	Belgien
 belize	common	da	Belize
 benin	common	da	Benin
 bermuda	common	da	Bermuda
-bg color	tinymce	da	Bg color
 bhutan	common	da	Bhutan
 blocked, too many attempts	common	da	Afvist, for mange forsøg
 bold	common	da	Fed
 bolivia	common	da	Bolivia
 border	common	da	Kant
-border color	tinymce	da	Border color
 bosnia and herzegovina	common	da	Bosnien og Herzegovina
 botswana	common	da	Botswana
 bottom	common	da	Bottom
@@ -121,9 +111,6 @@ category %1 has been added !	common	da	Kategorien %1 er blevet tilføjet!
 category %1 has been updated !	common	da	Kategorien %1 er blevet opdateret!
 cayman islands	common	da	Cayman Øerne
 cc	common	da	CC
-cellpadding	tinymce	da	Cellemargen
-cellspacing	tinymce	da	Afstand mellem celler
-center	tinymce	da	Midt i
 centered	common	da	Centreret
 central african republic	common	da	Centralafrikanske Republik
 chad	common	da	Chad
@@ -138,12 +125,9 @@ choose a background color for the icons	common	da	Vælg en baggrundsfarve for iko
 choose a background image.	common	da	Vælg et baggrundsbillede.
 choose a background style.	common	da	Vælg en baggrundsstil.
 choose a text color for the icons	common	da	Vælg ikonernes tekstfarve
-choose directory to move selected folders and files to.	tinymce	da	Vælg folder hvortil de valgte foldere og filer skal flyttes.
 choose the category	common	da	Vælg kategorien
 choose the parent category	common	da	Vælg ovenstående kategori
 christmas island	common	da	Juleøen
-class	tinymce	da	Klasse
-cleanup messy code	tinymce	da	Ryd op i koden
 clear	common	da	Slet
 clear form	common	da	Slet formular
 click	common	da	Klik
@@ -152,20 +136,14 @@ click or mouse over to show menus?	common	da	Klik eller før musen over til sidem
 close	common	da	Luk
 cocos (keeling) islands	common	da	Cocos (Keeling) øerne
 colombia	common	da	Columbia
-columns	tinymce	da	Kolonner
-comment	tinymce	da	Kommentar
 common preferences	common	da	Fælles præferencer
 comoros	common	da	Comoros
 company	common	da	Firma
-configuration problem	tinymce	da	Konfigurations problem
 congo	common	da	Congo
 congo, the democratic republic of the	common	da	Congo, Den Demokratiske Republik
 contacting server...	common	da	Kontakter server...
 cook islands	common	da	Cook øerne
 copy	common	da	Kopiér
-copy table row	tinymce	da	Copy table row
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
-copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	da	Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?
 costa rica	common	da	Costa Rica
 cote d ivoire	common	da	Elfenbenskysten
 could not contact server. operation timed out!	common	da	Kan ikke kontakte server. Operationen fik time-out!
@@ -176,16 +154,13 @@ cuba	common	da	Cuba
 currency	common	da	Valutaenhed
 current	common	da	Nuværende
 current users	common	da	Nuværende antal brugere
-cut table row	tinymce	da	Cut table row
 cyprus	common	da	Cupern
 czech republic	common	da	Tjekkiet
 date	common	da	Dato
 date due	common	da	Skal være færdig
-date modified	tinymce	da	Dato ændret
 date selection:	jscalendar	da	Dato valg:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	da	Daytime port.<br>Hvis port 13 bruges, åben venligst din firewall før denne side gemmes.<br>(Port: 13 / Host: 129.6.15.28)
 december	common	da	December
-default	tinymce	da	Standard
 default category	common	da	Standard Kategori
 default height for the windows	common	da	Standard højde for vinduer
 default width for the windows	common	da	Standard bredde for vinduer
@@ -196,10 +171,7 @@ description	common	da	Beskrivelse
 detail	common	da	Detalje
 details	common	da	Detaljer
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	da	Deaktivere udførelsen af bugfixscripts for Internet Explorer 5.5 og nyere, for visning af gennemsigtige PNG-billeder?
-direction	tinymce	da	Retning
 direction left to right	common	da	Retning venstre til højre
-direction right to left	tinymce	da	Retning højre til venstre
-directory	tinymce	da	Folder
 disable internet explorer png-image-bugfix	common	da	Deaktiver Internet Explorer PNG-image-bugfix?
 disable slider effects	common	da	Deaktiver glide-effekter?
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	da	Deaktiver den animerede effekt når sidenmenuen gemmes og vises på siden? Opera og Konqueror brugere vil sandsynligvis vælge ja her.
@@ -208,7 +180,6 @@ disabled	common	da	Slået fra
 display %s first	jscalendar	da	Vis %s først
 djibouti	common	da	Djibouti
 do you also want to delete all subcategories ?	common	da	Ønsker du at slette alle underkategorierne?
-do you want to use the wysiwyg mode for this textarea?	tinymce	da	Vil du bruge WYSIWYG mode til dette textområde?
 doctype:	common	da	Dokument type:
 document properties	common	da	Dokument egenskaber
 document title:	common	da	Dokument titel:
@@ -218,7 +189,6 @@ domestic	common	da	Indenrigs
 dominica	common	da	Dominica
 dominican republic	common	da	Dominikanske Republik
 done	common	da	Udført
-down	tinymce	da	Nedad
 drag to move	jscalendar	da	Træk for at flytte
 e-mail	common	da	E-mail
 east timor	common	da	Øst Timor
@@ -255,10 +225,6 @@ fax number	common	da	Fax nummer
 february	common	da	Februar
 fields	common	da	Felter
 fiji	common	da	Fiji
-file already exists. file was not uploaded.	tinymce	da	Filen eksisterer allerede. Filen blev ikke uploaded.
-file exceeds the size limit	tinymce	da	Filen fylder for meget
-file not found.	tinymce	da	Kan ikke finde filen.
-file was not uploaded.	tinymce	da	Filen blev ikke uploaded.
 files	common	da	Filer
 filter	common	da	Filter
 finland	common	da	Finland
@@ -319,21 +285,14 @@ hong kong	common	da	Hong Kong
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	da	Hvor mange ikoner skal der vises i navigations bjælken (øverst på siden). Evt. overskydende ikoner vil være tilgængelig i en slags pulldown menu, ved at trykke på ikonet helt til højre i navigations bjælken.
 hungary	common	da	Ungarn
 iceland	common	da	Island
-image description	tinymce	da	Alternativ tekst
 image url	common	da	Billedets adresse
-indent	tinymce	da	Ryk til højre
 india	common	da	Indien
 indonesia	common	da	Indonesien
-insert	tinymce	da	Indsæt
 insert all %1 addresses of the %2 contacts in %3	common	da	Indsæt alle %1 adresserne fra %2 kontakterne i %3
 insert column after	common	da	Indslt kolonne efter
 insert column before	common	da	Indsæt kolonne foran
 insert row after	common	da	Indsæt række efter
 insert row before	common	da	Indsæt række foran
-insert/edit image	tinymce	da	Indsæt / rediger billede
-insert/edit link	tinymce	da	Indsæt eller rediger link
-insert/modify table	tinymce	da	Indsæt/rediger tabel
-inserts a new table	tinymce	da	Indsætter en ny tabel
 international	common	da	International
 invalid ip address	common	da	Ugyldig IP
 invalid password	common	da	Ugyldig adgangskode
@@ -373,7 +332,6 @@ liberia	common	da	Liberia
 libyan arab jamahiriya	common	da	Libyen
 license	common	da	Licens
 liechtenstein	common	da	Liechenstein
-link url	tinymce	da	Linkadresse
 list	common	da	Liste
 lithuania	common	da	Lithuania
 local	common	da	Lokal
@@ -405,7 +363,6 @@ may	common	da	Maj
 mayotte	common	da	Mayotte
 medium	common	da	Medium
 menu	common	da	Menu
-merge table cells	tinymce	da	Merge table cells
 message	common	da	Besked
 mexico	common	da	Mexico
 micronesia, federated states of	common	da	Mikronesien, Den Føderale Stat
@@ -460,14 +417,11 @@ on *nix systems please type: %1	common	da	På *nix systemer skriver Du: %1
 on mouse over	common	da	Ved mus over
 only private	common	da	kun private
 only yours	common	da	Kun Din
-open link in a new window	tinymce	da	Luk linket op i et nyt vindue
-open link in the same window	tinymce	da	Luk linket op i samme vindue
 open notify window	common	da	Åben Notificer Vindue
 open popup window	common	da	åben popup vindue
 ordered list	common	da	Nummerliste
 original	common	da	Original
 other	common	da	Anden
-outdent	tinymce	da	Ryk til venstre
 overview	common	da	Oversigt
 owner	common	da	Ejer
 page was generated in %1 seconds	common	da	Siden var genereret på %1 sekunder
@@ -482,8 +436,6 @@ parent category	common	da	Ovenstående Kategori
 password	common	da	Adgangskode
 password could not be changed	common	da	Adgangskoden kunne ikke ændres
 password has been updated	common	da	Password er opdateret
-paste table row after	tinymce	da	Paste table row after
-paste table row before	tinymce	da	Paste table row before
 path to user and group files has to be outside of the webservers document-root!!!	common	da	Sti til bruger og gruppe filer SKAL VÆRE UDEN FOR webserverens dokument-rod!!!
 pattern for search in addressbook	common	da	Mønster for søg i Adressebog
 pattern for search in calendar	common	da	Mønster for søg i Kalender
@@ -519,9 +471,7 @@ puerto rico	common	da	Puerto Rico
 qatar	common	da	Qatar
 read	common	da	Læs
 read this list of methods.	common	da	Læs denne liste over metoder
-redo	tinymce	da	Gør igen
 reject	common	da	Afvis
-remove col	tinymce	da	Fjern kolonne
 rename	common	da	Omdøb
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	da	Returnere en fuld liste over alle brugere på systemet. Advarsel: Den kan være ret stor
 returns an array of todo items	common	da	Returnere et array af opgaver
@@ -529,7 +479,6 @@ returns struct of users application access	common	da	Returnere en struct af brug
 reunion	common	da	Reunion
 right	common	da	Højre
 romania	common	da	Romanien
-rows	tinymce	da	Rækker
 russian federation	common	da	Rusland
 rwanda	common	da	Rwanda
 saint helena	common	da	Sankt Helena
@@ -581,12 +530,10 @@ sorry, your login has expired	login	da	Desværre, Din session er udløbet
 south africa	common	da	Syd Afrika
 south georgia and the south sandwich islands	common	da	Syd Georgien og De Sydlige Sandwich Øer
 spain	common	da	Spanien
-split table cells	tinymce	da	Split table cells
 sri lanka	common	da	Sri Lanka
 start date	common	da	Startdato
 start time	common	da	Starttid
 status	common	da	Status
-striketrough	tinymce	da	Gennemstreg
 subject	common	da	Emne
 submit	common	da	Send
 sudan	common	da	Sudan
@@ -597,13 +544,10 @@ swaziland	common	da	Swaziland
 sweden	common	da	Sverige
 switzerland	common	da	Schweiz
 syrian arab republic	common	da	Syrien, Den Arabiske Republik
-table cell properties	tinymce	da	Table cell properties
 table properties	common	da	Table properties
-table row properties	tinymce	da	Table row properties
 taiwan	common	da	Taiwan/Taipei
 tajikistan	common	da	Tajikistan
 tanzania, united republic of	common	da	Tanzania, Den forenede Republik
-target	tinymce	da	Target
 thailand	common	da	Thailand
 the api is current	common	da	APIen er up-to-date
 the api requires an upgrade	common	da	APIen skal opdateres
@@ -640,14 +584,11 @@ tuvalu	common	da	Tuvalu
 uganda	common	da	Uganda
 ukraine	common	da	Ukraine
 underline	common	da	Understreg
-undo	tinymce	da	Fortryd
 united arab emirates	common	da	Forenede Arabiske Emirater
 united kingdom	common	da	England
 united states	common	da	USA
 united states minor outlying islands	common	da	USA Mindre omkringliggende øer
 unknown	common	da	Ukendt
-unlink	tinymce	da	Fjern link
-unordered list	tinymce	da	Bulletliste
 update	common	da	Opdater
 url	common	da	URL
 uruguay	common	da	Uruguay
@@ -665,7 +606,6 @@ uzbekistan	common	da	Uzbekistan
 vanuatu	common	da	Vanuatu
 venezuela	common	da	Venezuela
 version	common	da	Version
-vertical alignment	tinymce	da	Vertical alignment
 viet nam	common	da	Viet Nam
 view	common	da	Se
 virgin islands, british	common	da	Jomfru Øer, De Britiske

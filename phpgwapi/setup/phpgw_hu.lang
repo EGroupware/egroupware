@@ -13,7 +13,6 @@
 3 number of chars for day-shortcut	jscalendar	hu	3 karakteres nap rövidítés
 3 number of chars for month-shortcut	jscalendar	hu	3 karakteres hónap rövidítés
 80 (http)	admin	hu	80 (http)
-a editor instance must be focused before using this command.	tinymce	hu	A szerkeszteni kívánt területet ki kell jelölni ezen funkció használata elõtt.
 about	common	hu	Névjegy
 about %1	common	hu	%1 névjegye
 about egroupware	common	hu	eGroupware névjegye
@@ -37,17 +36,10 @@ administration	common	hu	Adminisztráció
 afghanistan	common	hu	Afganisztán
 albania	common	hu	Albánia
 algeria	common	hu	Algéria
-align center	tinymce	hu	Középre igazítás
-align full	tinymce	hu	Sorkizárt
-align left	tinymce	hu	Balra igazítás
-align right	tinymce	hu	Jobbra igazítás
-alignment	tinymce	hu	Igazítás
 all	common	hu	Összes
 all fields	common	hu	Összes mezõ
-all occurrences of the search string was replaced.	tinymce	hu	A keresett szöveg minden elõrfordulása cserélve.
 alphabet	common	hu	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	hu	Stíluslap változtatása
-alternative image	tinymce	hu	Alternatív kép
 american samoa	common	hu	Amerikai Szamoa
 andorra	common	hu	Andorra
 angola	common	hu	Angola
@@ -87,14 +79,12 @@ belgium	common	hu	Belgium
 belize	common	hu	Belize
 benin	common	hu	Benin
 bermuda	common	hu	Bermuda
-bg color	tinymce	hu	Háttérszín
 bhutan	common	hu	Bhután
 blocked, too many attempts	common	hu	Túl sok próbálkozás, blokkolva!
 bold	common	hu	Félkövér
 bold.gif	common	hu	Félkövér.gif
 bolivia	common	hu	Bolívia
 border	common	hu	Keret
-border color	tinymce	hu	Keretszín
 bosnia and herzegovina	common	hu	Bosznia Hercegovina
 botswana	common	hu	Botswana
 bottom	common	hu	Alul
@@ -121,9 +111,6 @@ category %1 has been added !	common	hu	%1 kategória hozzáadva!
 category %1 has been updated !	common	hu	%1 kategória frissítve!
 cayman islands	common	hu	Kajmán-szigetek
 cc	common	hu	Cc
-cellpadding	tinymce	hu	Cella helykitöltés
-cellspacing	tinymce	hu	Cellák helykitöltése
-center	tinymce	hu	Középre
 centered	common	hu	Középre zárt
 central african republic	common	hu	Közép-Afrikai Köztársaság
 chad	common	hu	Csád
@@ -138,12 +125,9 @@ choose a background color for the icons	common	hu	Ikon háttérszínének kiválasztá
 choose a background image.	common	hu	Háttérkép kiválasztása
 choose a background style.	common	hu	Háttér stílus kiválasztása
 choose a text color for the icons	common	hu	Ikon szövegszín kiválasztása
-choose directory to move selected folders and files to.	tinymce	hu	Célkönyvtár kiválasztása a kijelölt mappák és állományok mozgatásához.
 choose the category	common	hu	Kategória választás
 choose the parent category	common	hu	Szülõ kategória választás
 christmas island	common	hu	Karácsony szigetek
-class	tinymce	hu	Osztály
-cleanup messy code	tinymce	hu	Kódtisztítás
 clear	common	hu	Töröl
 clear form	common	hu	Lap törlése
 click	common	hu	Kattintás
@@ -153,19 +137,14 @@ close	common	hu	Bezár
 close sidebox	common	hu	Oldalmenü bezárása
 cocos (keeling) islands	common	hu	Kókusz (Keeling)-szigetek
 colombia	common	hu	Kolumbia
-columns	tinymce	hu	Oszlopok
-comment	tinymce	hu	Megjegyzés
 common preferences	common	hu	Általános beállítások
 comoros	common	hu	Comore-szigetek
 company	common	hu	Társaság
-configuration problem	tinymce	hu	Konfigurációs probléma
 congo	common	hu	Kongó
 congo, the democratic republic of the	common	hu	Kongó (Kongói Köztársaság)
 contacting server...	common	hu	Csatlakozás szerverhez...
 cook islands	common	hu	Cook-szigetek
 copy	common	hu	Másol
-copy table row	tinymce	hu	Táblázat sorának másolása
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	hu	Másolás/Kivágás/Beillesztés nem elérhetõ alapértelmezésként a Mozilla és Firefox böngészõkben.\nSzeretne többet tudni errõl?
 costa rica	common	hu	Costa Rica
 cote d ivoire	common	hu	Elefántcsontpart
 could not contact server. operation timed out!	common	hu	Szerverhez csatlakozás nem sikerült. Idõtúllépés.
@@ -176,16 +155,13 @@ cuba	common	hu	Kuba
 currency	common	hu	Pénznem
 current	common	hu	Aktuális
 current users	common	hu	Aktuális felhasználók
-cut table row	tinymce	hu	Táblázat sorának kivágása
 cyprus	common	hu	Ciprus
 czech republic	common	hu	Cseh Köztársaság
 date	common	hu	Dátum
 date due	common	hu	Határidõ
-date modified	tinymce	hu	Dátum módosítva
 date selection:	jscalendar	hu	Dátum kiválasztás:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	hu	Idõszerver port.<br>A 13-as port használatához a tûzfalat ki kell nyitni, mielõtt ez az oldal elküldésre kerülne.<br>
 december	common	hu	December
-default	tinymce	hu	Alapértelmezett
 default category	common	hu	Alapértelmezett kategória
 delete	common	hu	Töröl
 delete row	common	hu	Sor törlése
@@ -194,10 +170,7 @@ description	common	hu	Leírás
 detail	common	hu	Részlet
 details	common	hu	Részletek
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	hu	Letiltja az Internet Explorer 5.5+ böngészõk esetén a PNG típusú képek átlátszóságának kezelését javító szkript futtatását? (Javaslat: Firefox böngészõ használata)
-direction	tinymce	hu	Irány
 direction left to right	common	hu	Balról jobbra irány
-direction right to left	tinymce	hu	Jobbról balra irány
-directory	tinymce	hu	Könyvtár
 disable internet explorer png-image-bugfix	common	hu	Internet Explorer png-image-bugfix tiltása
 disable slider effects	common	hu	Csúsztatás tiltása
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	hu	Letiltja az oldalon található menük animált be- és kiúsztatását? Opera és Konqueror felhasználók valószínûleg hasznát veszik ennek.
@@ -205,7 +178,6 @@ disabled	common	hu	Letiltva
 display %s first	jscalendar	hu	Elõször mutasd ezt %1
 djibouti	common	hu	Dzsibuti
 do you also want to delete all subcategories ?	common	hu	Az alkategóriákat is törölni szeretné?
-do you want to use the wysiwyg mode for this textarea?	tinymce	hu	WYSIWYG mód bekapcsolása erre a szövegterületre?
 doctype:	common	hu	Doctype:
 document properties	common	hu	Dokumentum jellemzõk
 document title:	common	hu	Dokumentum címe:
@@ -215,7 +187,6 @@ domestic	common	hu	Belföldi
 dominica	common	hu	Dominika
 dominican republic	common	hu	Dominikai Köztársaság
 done	common	hu	Kész
-down	tinymce	hu	Le
 drag to move	jscalendar	hu	Ragadja meg mozgatáshoz
 e-mail	common	hu	E-Mail
 east timor	common	hu	Kelet Timor
@@ -230,7 +201,6 @@ egypt	common	hu	Egyiptom
 el salvador	common	hu	Salvador
 email	common	hu	E-Mail
 email-address of the user, eg. "%1"	common	hu	felhasználó email címe, pl. "%1"
-emotions	tinymce	hu	Érzelmek
 enabled	common	hu	Engedélyezve
 end date	common	hu	Befejezés dátuma
 end time	common	hu	Befejezés ideje
@@ -252,38 +222,14 @@ fax number	common	hu	faxszám
 february	common	hu	Február
 fields	common	hu	Mezõk
 fiji	common	hu	Fidzsi
-file already exists. file was not uploaded.	tinymce	hu	A fájl már létezik. A fájl feltöltése nem törént meg.
-file exceeds the size limit	tinymce	hu	A fájl mérete meghaladja a beállított mérethatárt.
-file manager	tinymce	hu	Fájlkezelõ
-file not found.	tinymce	hu	Fájl nem található.
-file was not uploaded.	tinymce	hu	Fájl feltöltés nem történt meg.
-file with specified new name already exists. file was not renamed/moved.	tinymce	hu	Ilyen nevû állomány már létezik. Az állomány átnevezése/mozgatása nem sikerült.
-file(s)	tinymce	hu	fájl(ok)
-file:	tinymce	hu	Fájl:
 files	common	hu	Fájlok
-files with this extension are not allowed.	tinymce	hu	Ilyen kiterjesztésû fájlok nem engedélyezettek.
 filter	common	hu	Szûrõ
-find	tinymce	hu	Keres
-find again	tinymce	hu	Keresés újra
-find what	tinymce	hu	Mit keres
-find&nbsp;next	tinymce	hu	Következõ keresése
-find/replace	tinymce	hu	Keres/Cserél
 finland	common	hu	Finnország
 first name	common	hu	Keresztnév
 first name of the user, eg. "%1"	common	hu	A felhasználó keresztneve, pl. "%1"
 first page	common	hu	Elsõ oldal
 firstname	common	hu	Keresztnév
 fixme!	common	hu	FIXME!
-flash files	tinymce	hu	Flash fájlok
-flash properties	tinymce	hu	Flash tulajdonságok
-flash-file (.swf)	tinymce	hu	Flash fájl (.swf)
-folder	tinymce	hu	Mappa
-folder name missing.	tinymce	hu	Mappanév hiányzik.
-folder not found.	tinymce	hu	Mappa nem található.
-folder with specified new name already exists. folder was not renamed/moved.	tinymce	hu	Ilyen nevû mappa már létezik. A mappa átnevezése/mozgatása nem sikerült.
-folder(s)	tinymce	hu	mappák
-for mouse out	tinymce	hu	egérkurzor elhagy
-for mouse over	tinymce	hu	egérkurzor felette
 force selectbox	common	hu	Erõltetett selectbox
 france	common	hu	Francaország
 french guiana	common	hu	Francia Guinea
@@ -337,29 +283,14 @@ hong kong	common	hu	Hong Kong
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	common	hu	A felsõ menüsoron látható ikonok maximális száma. A többi alkalmazás ikonja a menüsor jobb oldalán található ikonra kattintva érhetõ el.
 hungary	common	hu	Magyarország
 iceland	common	hu	Izland
-image description	tinymce	hu	Képleírás
-image title	tinymce	hu	Kép címe
 image url	common	hu	Kép URL
-indent	tinymce	hu	Behúzás jobbra
 india	common	hu	India
 indonesia	common	hu	Indonézia
-insert	tinymce	hu	Beillesztés
-insert / edit flash movie	tinymce	hu	Flash mozi beillesztése / szerkesztése
-insert / edit horizontale rule	tinymce	hu	Vízszintes elválasztó beszúrása / szerkesztése
 insert all %1 addresses of the %2 contacts in %3	common	hu	A %2 kapcsolat összes %1 címének beillesztése ide %3
 insert column after	common	hu	Oszlop szúrása utána
 insert column before	common	hu	Oszlop beszúrása elé
-insert date	tinymce	hu	Dátum beszúrása
-insert emotion	tinymce	hu	Érzelmi ikon beszúrása
-insert file	tinymce	hu	Fájl beillesztése
-insert link to file	tinymce	hu	Fájlra hivatkozás beillesztése
 insert row after	common	hu	Sor beszúrása utána
 insert row before	common	hu	Sor beszúrása elé
-insert time	tinymce	hu	Idõpont beszúrása
-insert/edit image	tinymce	hu	Kép beillesztése/szerkesztése
-insert/edit link	tinymce	hu	Link beillesztése/szerkesztése
-insert/modify table	tinymce	hu	Tábla beillesztése/módosítása
-inserts a new table	tinymce	hu	Új táblázat beillesztése
 international	common	hu	Nemzetközi
 invalid ip address	common	hu	Érvénytelen IP cím
 invalid password	common	hu	Érvénytelen jelszó
@@ -375,7 +306,6 @@ jamaica	common	hu	Jamaika
 january	common	hu	Január
 japan	common	hu	Japán
 jordan	common	hu	Jordánia
-js-popup	tinymce	hu	JavaScript felbukkanó
 july	common	hu	Július
 jun	common	hu	Jún
 june	common	hu	Június
@@ -384,7 +314,6 @@ justify full	common	hu	Sor kitöltése
 justify left	common	hu	Balra  zárt
 justify right	common	hu	Jobbra zárt
 kazakstan	common	hu	Kazahsztán
-keep linebreaks	tinymce	hu	Sortörések megtartása
 kenya	common	hu	Kenya
 keywords	common	hu	Kulcsszavak
 kiribati	common	hu	Kiribati
@@ -406,11 +335,9 @@ liberia	common	hu	Libéria
 libyan arab jamahiriya	common	hu	Líbia
 license	common	hu	Licensz
 liechtenstein	common	hu	Liechtenstein
-link url	tinymce	hu	Link URL
 list	common	hu	Lista
 list members	common	hu	Listatagok
 lithuania	common	hu	Litvánia
-loading files	tinymce	hu	Fájlok betöltése
 local	common	hu	Helyi
 login	common	hu	Belépés
 loginid	common	hu	Belépési azonosító
@@ -425,7 +352,6 @@ mail domain, eg. "%1"	common	hu	email tartomány, pl. "%1"
 main category	common	hu	Fõ kategória
 main screen	common	hu	Fõképernyõ
 maintainer	common	hu	Karbantartó
-make window resizable	tinymce	hu	Változtatható méretû ablak
 malawi	common	hu	Malawi
 malaysia	common	hu	Malajzia
 maldives	common	hu	Maldív-szigetek
@@ -434,7 +360,6 @@ malta	common	hu	Málta
 march	common	hu	Március
 marshall islands	common	hu	Marshall-szigetek
 martinique	common	hu	Martinique
-match case	tinymce	hu	Pontos egyezés
 mauritania	common	hu	Mauritania
 mauritius	common	hu	Mauritius
 max number of icons in navbar	common	hu	Ikonok  maximális száma a menüsoron
@@ -442,18 +367,15 @@ may	common	hu	Május
 mayotte	common	hu	Mayotte
 medium	common	hu	Közepes
 menu	common	hu	Menü
-merge table cells	tinymce	hu	Táblázat celláinak egyesítése
 message	common	hu	Üzenet
 mexico	common	hu	Mexikó
 micronesia, federated states of	common	hu	Mikronézia
-mkdir failed.	tinymce	hu	Könyvtár létrehozás sikertelen.
 moldova, republic of	common	hu	Moldova
 monaco	common	hu	Monaco
 monday	common	hu	Hétfõ
 mongolia	common	hu	Mongólia
 montserrat	common	hu	Montserrat
 morocco	common	hu	Marokkó
-move	tinymce	hu	Mozgat
 mozambique	common	hu	Mozambik
 myanmar	common	hu	Mianmar (Burma)
 name	common	hu	Név
@@ -466,11 +388,6 @@ netherlands antilles	common	hu	Holland Antillák
 never	common	hu	Soha
 new caledonia	common	hu	Újkaledónia
 new entry added sucessfully	common	hu	Új bejegyzés hozzáadva
-new file name missing!	tinymce	hu	Új fájlnév hiányzik!
-new file name:	tinymce	hu	Új fájlnév:
-new folder	tinymce	hu	Új mappa
-new folder name missing!	tinymce	hu	Új mappanév hiányzik!
-new folder name:	tinymce	hu	Új mappa neve:
 new main category	common	hu	Új fõkategória
 new value	common	hu	Új érték
 new zealand	common	hu	Újzéland
@@ -484,14 +401,7 @@ nigeria	common	hu	Nigéria
 niue	common	hu	Niue
 no	common	hu	Nem
 no entries found, try again ...	common	hu	nem található bejegyzés, próbálja újra
-no files...	tinymce	hu	Nincsenek fájlok...
 no history for this record	common	hu	Ehhez a rekordhoz nem tartoznak elõzmények
-no permission to create folder.	tinymce	hu	Nincs jogosultsága könyvtárat létrehozni!
-no permission to delete file.	tinymce	hu	Nincs jogosultsága fájlt törölni!
-no permission to move files and folders.	tinymce	hu	Nincs jogosultsága könyvtárat vagy fájlt átmozgatni!
-no permission to rename files and folders.	tinymce	hu	Nincs jogosultsága könyvtárat vagy fájlt átnevezni!
-no permission to upload.	tinymce	hu	Nincs jogosultsága feltölteni.
-no shadow	tinymce	hu	Nincs árnyék
 no subject	common	hu	Nincs  tárgy
 none	common	hu	Nincs
 norfolk island	common	hu	Norfolk szigetek
@@ -509,23 +419,13 @@ old value	common	hu	Régi érték
 oman	common	hu	Omán
 on *nix systems please type: %1	common	hu	*nix rendszereken üsse be: %1
 on mouse over	common	hu	Egérkurzor felette
-only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	hu	Csak kiterjesztéssel rendelkezõ állományok engedélyezettek, pl. "kompromittáló_képfájl.jpg"
 only private	common	hu	csak privát
 only yours	common	hu	csak sajátot
-open file in new window	tinymce	hu	Fájl megnyitás új ablakban
-open in new window	tinymce	hu	Megnyitás új ablakban
-open in parent window / frame	tinymce	hu	Megnyitás szülõ ablakban/keretben
-open in the window	tinymce	hu	Megnyitás az ablakban
-open in this window / frame	tinymce	hu	Megnyitás ebben az ablakban/keretben
-open in top frame (replaces all frames)	tinymce	hu	Megnyitás a legfelsõ keretben (minden keret cserélõdik)
-open link in a new window	tinymce	hu	Hivatkozás megnyitása új ablakban
-open link in the same window	tinymce	hu	Hivatkozás megnyitása azonos ablakban
 open notify window	common	hu	Értesítõ ablak megnyitása
 open popup window	common	hu	Felugró ablak megnyitása
 ordered list	common	hu	Számozott lista
 original	common	hu	Eredeti
 other	common	hu	Más
-outdent	tinymce	hu	Behúzás balra
 overview	common	hu	Áttekintés
 owner	common	hu	Tulajdonos
 page	common	hu	Oldal
@@ -541,11 +441,6 @@ parent category	common	hu	Szülõ kategória
 password	common	hu	Jelszó
 password could not be changed	common	hu	Jelszó nem módosítható
 password has been updated	common	hu	Jelszó módosítva
-paste as plain text	tinymce	hu	Beilleszt mint egyszerû szöveg
-paste from word	tinymce	hu	Beilleszt a Word-bõl
-paste table row after	tinymce	hu	Táblázat sort beilleszt utána
-paste table row before	tinymce	hu	Táblázat sort beilleszt elé
-path not found.	tinymce	hu	Útvonal nem található.
 path to user and group files has to be outside of the webservers document-root!!!	common	hu	A felhasználói és csoport állományokat tartalmazó könyvtár útvonala KÍVÜL KELL ESSEN a webszerver által használt könyvtáron!!! Pl. a /var/docroot lehet a /var/www/localhost/httpdocs/docroot helyett.
 permissions to the files/users directory	common	hu	a files/users könyvtár jogai
 personal	common	hu	Személyes
@@ -556,24 +451,19 @@ phpgwapi	common	hu	eGroupWare API
 pitcairn	common	hu	Pitcairn-szigetek
 please %1 by hand	common	hu	Kérem %1 kézzel
 please enter a name	common	hu	Kérem adjon meg egy nevet!
-please enter the caption text	tinymce	hu	Kérem adja meg a feliratot
-please insert a name for the target or choose another option.	tinymce	hu	A cél nevének megadása vagy másik opció választáa.
 please run setup to become current	common	hu	Kérem futtassa a setup-ot hogy a változás érvényre jusson.
 please select	common	hu	Kérem válasszon
 please set your global preferences	common	hu	Kérem állítsa be a globális tulajdonságait!
 please set your preferences for this application	common	hu	Kérem állítsa be személyes beállításait ehhez az alkalmazáshoz!
 please wait...	common	hu	Kérem várjon és figyelje a homokórát a szemközti falon...
 poland	common	hu	Lengyelország
-popup url	tinymce	hu	Popup URL
 portugal	common	hu	Portugália
-position (x/y)	tinymce	hu	Pozíció (X/Y)
 postal	common	hu	Postai
 powered by egroupware version %1	common	hu	Powered by <a href="http://www.egroupware.org">eGroupWare</a> version %1
 preferences	common	hu	Tulajdonságok
 preferences for the idots template set	common	hu	Idots sablon beállításai
 prev. month (hold for menu)	jscalendar	hu	Elõzõ hónap
 prev. year (hold for menu)	jscalendar	hu	Elõzõ év
-preview	tinymce	hu	Elõnézet
 previous page	common	hu	Elõzõ oldal
 primary style-sheet:	common	hu	Elsõdleges stíluslap
 print	common	hu	Nyomtat
@@ -584,24 +474,16 @@ public	common	hu	nyilvános
 puerto rico	common	hu	Puerto Rico
 read	common	hu	Olvas
 read this list of methods.	common	hu	Eljárás lista olvasása.
-redo	tinymce	hu	Ismétlés
-refresh	tinymce	hu	Frissít
 reject	common	hu	Visszautasít
-remove col	tinymce	hu	Oszlop eltávolítása
 remove selected accounts	common	hu	kiválasztott hozzáférések törlése
 rename	common	hu	Átnevez
-rename failed	tinymce	hu	Átnevezés sikertelen
 replace	common	hu	Csere
 replace with	common	hu	Csere a következõre:
-replace&nbsp;all	tinymce	hu	Mindet cserél
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	hu	A rendszeren található összes felhasználói fiók listája. Figyelem: Ez igazán nagy is lehet.
 returns an array of todo items	common	hu	Tennivalók listáját adja vissza egy tömbben
 reunion	common	hu	Réunion
 right	common	hu	Jobbra
-rmdir failed.	tinymce	hu	Könyvtár törlés sikertelen.
 romania	common	hu	Románia
-rows	tinymce	hu	Sorok
-run spell checking	tinymce	hu	Helyesírásellenõrzés futtatása
 russian federation	common	hu	Orosz föderáció
 rwanda	common	hu	Ruanda
 saint helena	common	hu	Szent Ilona
@@ -621,7 +503,6 @@ search or select accounts	common	hu	Felhasználói fiókok keresése vagy kiválasztá
 search or select multiple accounts	common	hu	többszörös felhasználói fiók keresése vagy kiválasztása
 section	common	hu	Bekezdés
 select	common	hu	Kiválaszt
-select all	tinymce	hu	Mindet kiválaszt
 select all %1 %2 for %3	common	hu	Mindet kiválaszt %1 %2 innen %3
 select category	common	hu	Kategória választás
 select date	common	hu	dátum választás
@@ -643,20 +524,14 @@ setup main menu	common	hu	Beállítás fõmenü
 seychelles	common	hu	Seychelle-szigetek
 show all	common	hu	mindet megmutat
 show all categorys	common	hu	Összes kategória mutatása
-show locationbar	tinymce	hu	Hely mutatása
 show menu	common	hu	menü mutatása
-show menubar	tinymce	hu	Menü eszköztár mutatása
 show page generation time	common	hu	Oldal generálási idõ mutatása
 show page generation time on the bottom of the page?	common	hu	Mutassa az oldal generálására fordított idõt az oldal alján?
-show scrollbars	tinymce	hu	Görgetõsáv mutatása
-show statusbar	tinymce	hu	Státuszsor mutatása
-show toolbars	tinymce	hu	Eszközsor mutatása
 show_more_apps	common	hu	Több alkalmazás mutatása
 showing %1	common	hu	%1 listázva
 showing %1 - %2 of %3	common	hu	listázva %1 - %2, össz: %3
 sierra leone	common	hu	Sierra Leone
 singapore	common	hu	Szingapúr
-size	tinymce	hu	Méret
 slovakia	common	hu	Szlovákia
 slovenia	common	hu	Szlovénia
 solomon islands	common	hu	Salamon szigetek
@@ -665,13 +540,11 @@ sorry, your login has expired	login	hu	A hozzáférése lejárt
 south africa	common	hu	Dél Afrika
 south georgia and the south sandwich islands	common	hu	Déli-Georgia és Déli-Sandwich-szigetek
 spain	common	hu	Spanyolország
-split table cells	tinymce	hu	Cella felosztása
 sri lanka	common	hu	Sri Lanka
 start date	common	hu	Kezdés dátuma
 start time	common	hu	Kezdés idõpontja
 start with	common	hu	Kezdés (start with)
 status	common	hu	Állapot
-striketrough	tinymce	hu	Áthúzott
 subject	common	hu	Tárgy
 submit	common	hu	Elküld
 substitutions and their meanings:	common	hu	Behelyettesítések és jelentésük
@@ -683,24 +556,18 @@ swaziland	common	hu	Szváziföld
 sweden	common	hu	Svédország
 switzerland	common	hu	Svájc
 syrian arab republic	common	hu	Szíria
-table cell properties	tinymce	hu	Cella tulajdonságok
 table properties	common	hu	Táblázat tulajdonságok
-table row properties	tinymce	hu	Táblasor tulajdonságok
 taiwan	common	hu	Taiwan
 tajikistan	common	hu	Tadzsikisztán
 tanzania, united republic of	common	hu	Tanzánia
-target	tinymce	hu	Cél
 text color:	common	hu	Szöveg szín:
 thailand	common	hu	Thaiföld
 the api is current	common	hu	Az API aktuális, nincs szükség frissítésre
 the api requires an upgrade	common	hu	Az API frissítést igényel !!!
 the following applications require upgrades	common	hu	A következõ alkalmazásokat frissíteni kell
 the mail server returned	common	hu	A levelezõszerver visszatért (Jedi attached ;)
-the search has been compleated. the search string could not be found.	tinymce	hu	A keresés befejezõdött. A keresett szöveg nem található.
 this application is current	common	hu	Az alkalmazás friss
 this application requires an upgrade	common	hu	Az alkalmazás frissítést kíván
-this is just a template button	tinymce	hu	Ez csak egy sablon gomb
-this is just a template popup	tinymce	hu	Ez csak egy sablon felugró ablak
 this name has been used already	common	hu	Ez a név már használatban van!
 thursday	common	hu	Csütörtök
 time	common	hu	Idõ
@@ -713,7 +580,6 @@ to go back to the msg list, click <a href= %1 >here</a>	common	hu	Az üzenet list
 today	common	hu	Mai nap
 todays date, eg. "%1"	common	hu	mai dátum, pl. "%1"
 toggle first day of week	jscalendar	hu	Hét elsõ napjának rögzítése
-toggle fullscreen mode	tinymce	hu	Teljes képernyõs mód
 togo	common	hu	Togo
 tokelau	common	hu	Tokelau
 tonga	common	hu	Tonga
@@ -731,27 +597,19 @@ type	common	hu	Típus
 uganda	common	hu	Uganda
 ukraine	common	hu	Ukrajna
 underline	common	hu	Aláhúzott
-undo	tinymce	hu	Visszavonás
 united arab emirates	common	hu	Egyesült Arab Emirátus
 united kingdom	common	hu	Egyesült Királyság
 united states	common	hu	Egyesült Államok
 united states minor outlying islands	common	hu	Amerikai Egyesült Államok Külsõ Szigetei
 unknown	common	hu	Ismeretlen
-unlink	tinymce	hu	Hivatkozás törlése
-unlink failed.	tinymce	hu	Hivatkozás törlése sikertelen
-unordered list	tinymce	hu	Felsorolás (nem rendezett)
-up	tinymce	hu	Fel
 update	common	hu	Frissít
 upload	common	hu	Feltöltés
-uploading...	tinymce	hu	Feltöltés folyamatban...
 url	common	hu	URL
 uruguay	common	hu	Uruguay
 use button to search for	common	hu	használja a gombot a kereséshez
 use button to search for address	common	hu	használja a gombot címkereséshez
 use button to search for calendarevent	common	hu	használja a gombot naptárbejegyzés kereséshez
 use button to search for project	common	hu	használja a gombot projekt kereséshez
-use ctrl and/or shift to select multiple items.	tinymce	hu	Használja a Ctrl és/vagy Shift gombokat a többszörös kijelöléshez.
-use ctrl+v on your keyboard to paste the text into the window.	tinymce	hu	Szöveg ablakba másolása CTRL+V használatával.
 user	common	hu	Felhasználó
 user accounts	common	hu	felhasználói hozzáférések
 user groups	common	hu	felhasználói csoportok
@@ -763,19 +621,16 @@ uzbekistan	common	hu	Üzbegisztán
 vanuatu	common	hu	Vanuatu
 venezuela	common	hu	Venezuella
 version	common	hu	Verzió
-vertical alignment	tinymce	hu	Függõleges igazítás
 viet nam	common	hu	Vietnám
 view	common	hu	Megtekint
 virgin islands, british	common	hu	Angol Szûz-szigetek
 virgin islands, u.s.	common	hu	Amerikai Szûz-szigetek
 wallis and futuna	common	hu	Wallis és Futuna
-warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	hu	Figyelem!\n A könyvtárak és állományok átnevezése vagy mozgatása tönkreteszi a már meglévõ, más helyekrõl történõ rá való hivatkozásokat. Folytatni akarja?
 wednesday	common	hu	Szerda
 welcome	common	hu	Üdvözlet (welcome)
 western sahara	common	hu	Nyugat-Szahara
 which groups	common	hu	melyik csoport
 width	common	hu	Szélesség
-window name	tinymce	hu	Ablak név
 wk	jscalendar	hu	hét
 work email	common	hu	munkahelyi email
 written by:	common	hu	Írta:
@@ -791,7 +646,6 @@ you have not entered participants	common	hu	Nem adott meg résztvevõket
 you have selected an invalid date	common	hu	Érvénytelen dátumot választott!
 you have selected an invalid main category	common	hu	Érvénytelen fõkategóriát választott!
 you have successfully logged out	common	hu	Sikeresen kijelentkezett a rendszerbõl
-you must enter the url	tinymce	hu	Meg kell adnia egy URL-t
 you need to add the webserver user '%1' to the group '%2'.	common	hu	A webszerver felhasználót '%1' hozzá kell adni a '%2' csoporthoz.
 your message could <b>not</b> be sent!<br>	common	hu	Az üzenet <b>nem<b> került elküldésre!<br>
 your message has been sent	common	hu	Üzenet elküldve

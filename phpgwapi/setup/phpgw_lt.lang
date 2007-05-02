@@ -32,7 +32,6 @@ bhutan	common	lt	BUTANAS
 blocked, too many attempts	common	lt	Užblokuota, per daug bandymų
 bolivia	common	lt	BOLIVIJA
 border	common	lt	Rėmelis
-border color	tinymce	lt	Rėmelio spalva
 brazil	common	lt	BRAZILIJA
 bulgaria	common	lt	BULGARIJA
 calendar	common	lt	Kalendorius
@@ -46,15 +45,12 @@ charset	common	lt	utf-8
 chile	common	lt	ČILĖ
 china	common	lt	KINIJA
 colombia	common	lt	KOLUMBIJA
-columns	tinymce	lt	Stulpeliai
-comment	tinymce	lt	Komentaras
 croatia	common	lt	KROATIJA
 cuba	common	lt	KUBA
 currency	common	lt	Valiuta
 cyprus	common	lt	KIPRAS
 czech republic	common	lt	ČEKIJA
 date	common	lt	Data
-date modified	tinymce	lt	Modifikavimo data
 date selection:	jscalendar	lt	Datos išrinkimas:
 december	common	lt	Gruodis
 default category	common	lt	Numatyta kategorija
@@ -80,17 +76,8 @@ estonia	common	lt	ESTIJA
 ethiopia	common	lt	ETIOPIJA
 fax number	common	lt	fakso numeris
 february	common	lt	Vasaris
-file already exists. file was not uploaded.	tinymce	lt	Failas jau egzistuoja. Failas nebuvo įkeltas.
-file not found.	tinymce	lt	Failas nerastas.
-file was not uploaded.	tinymce	lt	Failas neįkeltas.
-file with specified new name already exists. file was not renamed/moved.	tinymce	lt	Failas nurodytu vardu jau egzistuoja. Failas nepervadintas/neperkeltas.
-file(s)	tinymce	lt	failas(-ai)
-file:	tinymce	lt	Failas:
 files	common	lt	Failai
 filter	common	lt	Filtras
-find	tinymce	lt	Ieškoti
-find again	tinymce	lt	Ieškoti vėl
-find&nbsp;next	tinymce	lt	Ieškoti toliau
 finland	common	lt	SUOMIJA
 first name	common	lt	Vardas
 first name of the user, eg. "%1"	common	lt	Naudotojo vardas, pvz., "%1"
@@ -108,8 +95,6 @@ hungary	common	lt	VENGRIJA
 iceland	common	lt	ISLANDIJA
 india	common	lt	INDIJA
 indonesia	common	lt	INDONEZIJA
-insert	tinymce	lt	Įterpti
-insert date	tinymce	lt	Įterpti datą
 iran, islamic republic of	common	lt	IRANAS
 iraq	common	lt	IRAKAS
 ireland	common	lt	AIRIJA
@@ -169,7 +154,6 @@ phpgwapi	common	lt	eGroupWare API
 poland	common	lt	LENKIJA
 portugal	common	lt	PORTUGALIJA
 postal	common	lt	Pašto kodas
-preview	tinymce	lt	Peržiūra
 print	common	lt	Spausdinti
 project	common	lt	Projektas
 qatar	common	lt	KATARAS
