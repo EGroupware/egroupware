@@ -35,6 +35,8 @@ how many of the resources are useable?	resources	fi	Kuinka moni resurssi on käyt
 how many of them are useable?	resources	fi	Kuinka moni niistä on käytettävissä?
 how many of this resource are usable	resources	fi	Kuinka moni näistä resursseista on käytettävissä
 how many of this resource exists	resources	fi	Kuinka monta näistä resursseista on olemassa
+implies booking permission	resources	fi	vaikuttaa varausoikeuksiin
+implies read permission	resources	fi	vaikuttaa lukuoikeuksiin
 information about storage	resources	fi	Varaston tiedot
 informations about the location of resource	resources	fi	Resurssin sijainnin tiedot
 inventory number	resources	fi	Varastosaldo

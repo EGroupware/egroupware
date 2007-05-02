@@ -3,7 +3,7 @@
 3 years ago	timesheet	fi	3 vuotta sitten
 actions	timesheet	fi	Toiminnot
 all projects	timesheet	fi	Kaikki projektit
-both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinan ja vapaiden projektinimien käyttö
+both: allow to use projectmanager and free project-names	admin	fi	Molemmat: salli projektinhallinnan ja vapaiden projektinimien käyttö
 create new links	timesheet	fi	Luo uusi linkki
 creating new entry	timesheet	fi	Luo uusi merkintä
 delete this entry	timesheet	fi	poista tämä merkintä
@@ -48,4 +48,4 @@ unitprice	timesheet	fi	Yksikköhinta
 view this entry	timesheet	fi	Näytä tämä merkintä
 week	timesheet	fi	Viikko
 yesterday	timesheet	fi	Eilen
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fi	Tietokantasi EI ole ajantasalla %1 vs. %2), suorita %3setup%4 päivittääksesi tietokantasi
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	fi	Tietokantasi EI ole ajan tasalla %1 vs. %2), suorita %3setup%4 päivittääksesi tietokantasi.

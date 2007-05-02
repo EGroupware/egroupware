@@ -14,8 +14,12 @@ actions	addressbook	es-es	Acciones
 add %1	addressbook	es-es	Añadir %1
 add a contact to this organisation	addressbook	es-es	Añadir un contacto a esta organización
 add a new contact	addressbook	es-es	Añadir un contacto nuevo
+add a new list	addressbook	es-es	Añadir una lista nueva
 add a single entry by passing the fields.	addressbook	es-es	Añadir una entrada simple pasando los campos
 add custom field	addressbook	es-es	Añadir campo personalizado
+add to distribution list:	addressbook	es-es	Añadir a la lista de distribución:
+added by synchronisation	addressbook	es-es	Añadido por sincronización
+added to distribution list	addressbook	es-es	Añadido a la lista de distribución
 additional information about using ldap as contact repository	admin	es-es	Información adicional acerca del uso de LDAP como repositorio de contactos
 address book	common	es-es	Libreta de direcciones
 address book - vcard in	addressbook	es-es	Libreta de direcciones - entrada de tarjeta de visita
@@ -23,6 +27,7 @@ address book - view	addressbook	es-es	Libreta de direcciones - ver
 address line 2	addressbook	es-es	Línea 2 de la dirección
 address type	addressbook	es-es	Tipo de dirección
 addressbook	common	es-es	Libreta de direcciones
+addressbook csv export	addressbook	es-es	Exportar a CSV la libreta de direcciones
 addressbook menu	addressbook	es-es	Menú de la libreta de direcciones
 addressbook preferences	addressbook	es-es	Preferencias de la libreta de direcciones
 addressbook the contact should be saved to	addressbook	es-es	Libreta de direcciones en la que guardar el contacto
@@ -130,6 +135,7 @@ export file name	addressbook	es-es	Nombre del fichero a exportar
 export from addressbook	addressbook	es-es	Exportar de la libreta de direcciones
 export selection	addressbook	es-es	Exportar la selección
 exported	addressbook	es-es	exportada
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	es-es	Exporta los contactos de su libreta de direcciones en un fichero CSV. CSV significa 'Comma Separated Values' (valores separados por comas). Sin embargo, en la pestaña de opciones se pueden elegir otros separadores.
 extra	addressbook	es-es	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	es-es	Fallo al cambiar %1 miembros de la organización ¡No tiene privilegios suficientes!
 fax	addressbook	es-es	Fax
@@ -149,6 +155,8 @@ geo	addressbook	es-es	GEO
 global categories	addressbook	es-es	Categorías globales
 grant addressbook access	common	es-es	Conceder acceso a la libreta de direcciones
 group %1	addressbook	es-es	Grupo %1
+hide accounts from addressbook	addressbook	es-es	Ocultar las cuentas de la libreta de direcciones
+hides accounts completly from the adressbook.	addressbook	es-es	Oculta completamente las cuentas de la libreta de direcciones
 home address	addressbook	es-es	Domicilio particular
 home address, birthday, ...	addressbook	es-es	Domicilio particular, Cumpleaños, ...
 home city	addressbook	es-es	Ciudad de residencia

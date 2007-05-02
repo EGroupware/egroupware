@@ -18,6 +18,7 @@ add a new list	addressbook	pt-br	Adicionar uma nova lista
 add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os campos.
 add custom field	addressbook	pt-br	Adicionar campo personalizado
 add to distribution list:	addressbook	pt-br	Adicionar a uma lista de distribuição
+added by synchronisation	addressbook	pt-br	adicionado por sincronização
 added to distribution list	addressbook	pt-br	adicionado a uma lista de distribuição
 additional information about using ldap as contact repository	admin	pt-br	Informação adicional sobre usar LDAP como respositório de contas
 address book	common	pt-br	Contatos
@@ -26,6 +27,7 @@ address book - view	addressbook	pt-br	Contatos - Exibir
 address line 2	addressbook	pt-br	Endereço Linha 2
 address type	addressbook	pt-br	Tipo de endereço
 addressbook	common	pt-br	Contatos
+addressbook csv export	addressbook	pt-br	Exportar Contatos em CSV
 addressbook menu	addressbook	pt-br	Menu dos Contatos
 addressbook preferences	addressbook	pt-br	Preferências de Contatos
 addressbook the contact should be saved to	addressbook	pt-br	Contatos em que o contato deverá ser salvo
@@ -133,6 +135,7 @@ export file name	addressbook	pt-br	Exportar arquivo
 export from addressbook	addressbook	pt-br	Exportar dos Contatos
 export selection	addressbook	pt-br	Exportar seleção
 exported	addressbook	pt-br	exportado
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	pt-br	Exporta seus contatos em um arquivo CSV. CSV significa 'Comma Seperated Values' (Valores Separados por Vírgula). No entando na guia Opções você também pode escolher outros separadores.
 extra	addressbook	pt-br	Extra
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	pt-br	Falha ao alterar %1 membro(s) da organização (direitos insuficientes) !!!
 fax	addressbook	pt-br	Fax
@@ -152,6 +155,8 @@ geo	addressbook	pt-br	GEO
 global categories	addressbook	pt-br	Categorias Globais
 grant addressbook access	common	pt-br	Permitir acesso aos Contatos
 group %1	addressbook	pt-br	Grupo %1
+hide accounts from addressbook	addressbook	pt-br	Ocultar contas dos Contatos
+hides accounts completly from the adressbook for non administrators!	addressbook	pt-br	Ocultar completamente contas dos Contatos para um não-administrador!
 home address	addressbook	pt-br	Endereço residencial
 home address, birthday, ...	addressbook	pt-br	Endereço residencial, Aniversário, ...
 home city	addressbook	pt-br	Cidade
