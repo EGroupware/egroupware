@@ -78,6 +78,8 @@ class so_ldap
 	
 	/**
 	 * maps between diverse ldap schema and the eGW internal names
+	 * 
+	 * The ldap attribute names have to be lowercase!!!
 	 *
 	 * @var array
 	 */
@@ -110,7 +112,7 @@ class so_ldap
 			'jpegphoto'		=> 'jpegphoto',
 			'n_fileas'		=> 'displayname',
 			'label'			=> 'postaladdress',
-			'pubkey'		=> 'userSMIMECertificate',
+			'pubkey'		=> 'usersmimecertificate',
 		),
 
 		#displayName
