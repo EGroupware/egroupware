@@ -876,6 +876,9 @@ class uicontacts extends bocontacts
 					}
 				}
 			}
+			// hide region for address format 'postcode_city'
+			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
+			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
 		}
 		if (!$this->prefs['no_auto_hide'])
 		{
@@ -1212,6 +1215,10 @@ class uicontacts extends bocontacts
 				}
 			}
 		}
+		// how to display addresses
+		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
+		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
+		
 		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);

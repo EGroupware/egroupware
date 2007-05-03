@@ -207,7 +207,18 @@ class contacts_admin_prefs
 			'xmlrpc' => True,
 			'admin'  => false,
 		);
-		//show accounts in listing
+		$GLOBALS['settings']['addr_format'] = array(
+			'type'   => 'select',
+			'label'  => 'Default address format',
+			'name'   => 'addr_format',
+			'values' => array(
+				'postcode_city' => lang('zip code').' '.lang('City'),
+				'city_state_postcode' => lang('City').' '.lang('State').' '.lang('zip code'),
+			),		
+			'help'   => 'Which address format should the addressbook use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.',
+			'xmlrpc' => True,
+			'admin'  => false,
+		);
 		$GLOBALS['settings']['hide_accounts'] = array(
 			'type'   => 'check',
 			'label'  => 'Hide accounts from addressbook',

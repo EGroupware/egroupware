@@ -95,6 +95,7 @@ csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
 custom fields	addressbook	de	Benutzerdefinierte Felder
 debug output in browser	addressbook	de	Debugausgaben in Browser
+default address format	addressbook	de	Vorgabe für Format der Adresse
 default addressbook for adding contacts	addressbook	de	Vorgabe Adressbuch beim Hinzufügen von Kontakten
 default filter	addressbook	de	Standardfilter
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
@@ -300,6 +301,7 @@ view linked infolog entries	addressbook	de	Verknüpfte InfoLog Einträge anzeigen
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhänig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzfügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. Alle bedeutet jedes Feld das im Adressbuch gespeichert ist einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.

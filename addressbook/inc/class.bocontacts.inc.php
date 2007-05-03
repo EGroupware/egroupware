@@ -996,5 +996,41 @@ class bocontacts extends socontacts
 		if (isset($cache[$list])) return $cache[$list];
 		
 		return $cache[$list] = parent::read_list($list);		
-	}	
+	}
+	
+	/**
+	 * Get the address-format of a country
+	 *
+	 * ToDo: this is far from being complete ;-)
+	 * Mail me (RalfBecker-AT-outdoor-training.de) if you want your nation added or add it yourself.
+	 * 
+	 * @param string $country
+	 * @return string 'city_state_postcode' (eg. US) or 'postcode_city' (eg. DE)
+	 */
+	function addr_format_by_country($country)
+	{
+		if (!is_object($GLOBALS['egw']->country))
+		{
+			require_once(EGW_API_INC.'/class.country.inc.php');
+			$GLOBALS['egw']->country =& new country;
+		}
+		$code = $GLOBALS['egw']->country->country_code($country);
+
+		switch($code)
+		{
+			case 'US':
+			case 'CA':
+				$adr_format = 'city_state_postcode';
+				break;
+				
+			case 'DE':
+				$adr_format = 'postcode_city';
+				break;
+				
+			default:
+				$adr_format = $this->prefs['addr_format'] ? $this->prefs['addr_format'] : 'postcode_city';
+		}
+		//echo "<p>bocontacts::addr_format_by_country('$country'='$code') = '$adr_format'</p>\n";
+		return $adr_format;
+	}
 }
