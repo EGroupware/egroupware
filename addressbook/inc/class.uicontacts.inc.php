@@ -557,7 +557,7 @@ class uicontacts extends bocontacts
 					break;
 
 				default:	// move to an other addressbook
-					if (!is_numeric($action) || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
+					if (!(int)$action || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
 					{
 						return false;
 					}
