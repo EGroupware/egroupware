@@ -176,23 +176,16 @@ class uicontacts extends bocontacts
 				'default_cols'   => '!cat_id,contact_created_contact_modified',
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 			);
-			// if the backend supports distribution lists
-			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
-				'' => lang('none'),
-				'add' => lang('Add a new list').'...',
-			));
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
-		if (!$content['nm']['no_filter2'] && !isset($sel_options['filter2']))
+		if ($this->lists_available())
 		{
-			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
-				'' => lang('Distribution lists').'...',
-				'add' => lang('Add a new list').'...',
-			));
+			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array('' => lang('none')));
+			$sel_options['filter2']['add'] = lang('Add a new list').'...';	// put it at the end
 		}
 		if ($do_email)
 		{
