@@ -176,7 +176,7 @@ class so_ldap
 			'freebusy_uri'	=> 'freeBusyuri',
 			'calendar_uri'	=> 'calendaruri',
 			'tel_other'		=> 'otherphone',
-			'tel_cell_private' => 'callbackPhone',	// not the best choice, but better then nothing
+			'tel_cell_private' => 'callbackphone',	// not the best choice, but better then nothing
 		),
 		// additional schema can be added here, including special functions 
 		
