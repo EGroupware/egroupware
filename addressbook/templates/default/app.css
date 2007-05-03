@@ -12,7 +12,6 @@
 }
 .photo img {
   width: 60px;
-  min-height: 80px;
   cursor: hand;
 }
 .uploadphoto{ 
