@@ -890,7 +890,7 @@ class so_ldap
 	 */
 	function _ldap2ts($date)
 	{
-		return mktime(substr($date,8,2),substr($date,10,2),substr($date,12,2), 
+		return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2), 
 			substr($date,4,2),substr($date,6,2),substr($date,0,4));
 	}
 	
