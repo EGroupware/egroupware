@@ -267,9 +267,9 @@
 			{
 				$holiday = $this->bo->read_entry($this->bo->id);
 			}
-			if ($this->locale)
+			if ($this->bo->locale)
 			{
-				$holiday['locale'] = $this->locale;
+				$holiday['locale'] = $this->bo->locale;
 			}
 			unset($GLOBALS['egw_info']['flags']['noheader']);
 			unset($GLOBALS['egw_info']['flags']['nonavbar']);

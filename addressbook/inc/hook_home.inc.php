@@ -18,10 +18,10 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 	include_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
 	$contacts =& new bocontacts();
 	
-	$month_start = date('*-m-*',$contacts->now_su-$days*24*3600);
+	$month_start = date('*-m-*',$contacts->now_su);
 	$bdays =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family');
-	
-	if (($month_end = date('*-m-*',$contacts->now_su)) != $month_start)
+
+	if (($month_end = date('*-m-*',$contacts->now_su+$days*24*3600)) != $month_start)
 	{
 		if (($bdays2 =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family')))
 		{
@@ -64,6 +64,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 			{
 				if(substr($contact['bday'],-6) == $day)
 				{
+					if (!$ab_lang_loaded++) $GLOBALS['egw']->translation->add_app('addressbook');
 					switch($n)
 					{
 						case 0: 
@@ -81,7 +82,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 					}
 					$portalbox->data[] = array(
 						'text' => $text,
-						'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiaddressbook.view&ab_id=' . $contact['id'])
+						'link' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uicontacts.view&contact_id=' . $contact['id'])
 					);
 				}
 			}

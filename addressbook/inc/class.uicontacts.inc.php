@@ -168,6 +168,7 @@ class uicontacts extends bocontacts
 				'filter'         =>	'',	// =All	// IO filter, if not 'no_filter' => True
 				'filter_no_lang' => True,		// I  set no_lang for filter (=dont translate the options)
 				'no_filter2'     => True,		// I  disable the 2. filter (params are the same as for filter)
+				'filter2_label'  =>	lang('Distribution lists'),			// IO filter2, if not 'no_filter2' => True
 				'filter2'        =>	'',			// IO filter2, if not 'no_filter2' => True
 				'filter2_no_lang'=> True,		// I  set no_lang for filter2 (=dont translate the options)
 				'lettersearch'   => true,
@@ -175,26 +176,16 @@ class uicontacts extends bocontacts
 				'default_cols'   => '!cat_id,contact_created_contact_modified',
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
 			);
-			// if the backend supports distribution lists
-			if (($sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
-				'' => lang('Distribution lists').'...',
-				'add' => lang('Add a new list').'...',
-			))) !== false)
-			{
-				$content['nm']['no_filter2'] = false;
-			}
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
 		}
-		if (!$content['nm']['no_filter2'] && !isset($sel_options['filter2']))
+		if ($this->lists_available())
 		{
-			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array(
-				'' => lang('Distribution lists').'...',
-				'add' => lang('Add a new list').'...',
-			));
+			$sel_options['filter2'] = $this->get_lists(EGW_ACL_READ,array('' => lang('none')));
+			$sel_options['filter2']['add'] = lang('Add a new list').'...';	// put it at the end
 		}
 		if ($do_email)
 		{
@@ -566,7 +557,7 @@ class uicontacts extends bocontacts
 					break;
 
 				default:	// move to an other addressbook
-					if (!is_numeric($action) || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
+					if (!(int)$action || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
 					{
 						return false;
 					}
@@ -704,6 +695,9 @@ class uicontacts extends bocontacts
 		{
 			$query['col_filter']['account_id'] = null;
 		}
+		// enable/disable distribution lists depending on backend
+		$query['no_filter2'] = !$this->lists_available($query['filter']);
+		
 		if (isset($this->org_views[(string) $query['org_view']]))	// we have an org view
 		{
 			unset($query['col_filter']['list']);	// does not work together
@@ -882,6 +876,9 @@ class uicontacts extends bocontacts
 					}
 				}
 			}
+			// hide region for address format 'postcode_city'
+			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
+			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
 		}
 		if (!$this->prefs['no_auto_hide'])
 		{
@@ -1218,6 +1215,10 @@ class uicontacts extends bocontacts
 				}
 			}
 		}
+		// how to display addresses
+		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
+		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
+		
 		$content['disable_change_org'] = $view || !$content['org_name'];
 		//_debug_array($content);
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);

@@ -22,7 +22,6 @@ _image properties...	htmlarea-ContextMenu	ru	_Свойства Изображения...
 _modify link...	htmlarea-ContextMenu	ru	_Изменить Ссылку...
 _remove link...	htmlarea-ContextMenu	ru	_Удалить Ссылку...
 _table properties...	htmlarea-ContextMenu	ru	_Свойства Таблицы...
-a editor instance must be focused before using this command.	tinymce	ru	Вы должны перейти в область редактора перед использованием этой команды.
 about	common	ru	О программе
 about %1	common	ru	О %1
 about egroupware	common	ru	Об eGroupware
@@ -49,18 +48,11 @@ afghanistan	common	ru	Афганистан
 albania	common	ru	Албания
 algeria	common	ru	Алжир
 align	htmlarea-TableOperations	ru	Выровнять
-align center	tinymce	ru	Выровнять по центру
-align full	tinymce	ru	Выровнять по ширине
-align left	tinymce	ru	Выровнять по левому краю
-align right	tinymce	ru	Выровнять по правому краю
-alignment	tinymce	ru	Выравнивание
 all	common	ru	Все
 all fields	common	ru	все поля
 all four sides	htmlarea-TableOperations	ru	Все четыре стороны
-all occurrences of the search string was replaced.	tinymce	ru	Все найденные совпадения были заменены.
 alphabet	common	ru	а,б,в,г,д,е,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я
 alternate style-sheet:	common	ru	Альтернативная таблица стилей:
-alternative image	tinymce	ru	Альтернативный рисунок
 american samoa	common	ru	Американское Самоа
 andorra	common	ru	Андорра
 angola	common	ru	Ангола
@@ -103,14 +95,12 @@ belgium	common	ru	Бельгия
 belize	common	ru	Белиз
 benin	common	ru	Бенин
 bermuda	common	ru	Бермудские острова
-bg color	tinymce	ru	Фон. цвет
 bhutan	common	ru	Бутан
 blocked, too many attempts	common	ru	Заблокировано, слишком много попыток
 bold	common	ru	Полужирный
 bold.gif	common	ru	bold.gif
 bolivia	common	ru	Боливия
 border	common	ru	Граница
-border color	tinymce	ru	Цвет границы
 borders	htmlarea-TableOperations	ru	Границы
 bosnia and herzegovina	common	ru	Босния и Герцеговина
 botswana	common	ru	Ботсвана
@@ -141,9 +131,6 @@ category %1 has been updated !	common	ru	Категория %1 обновлена!
 cayman islands	common	ru	Каймановы острова
 cc	common	ru	Копия (Cc)
 cell properties	htmlarea-TableOperations	ru	Свойства ячейки
-cellpadding	tinymce	ru	Набивка ячейки
-cellspacing	tinymce	ru	Разгонка ячейки
-center	tinymce	ru	Центр
 centered	common	ru	по центру
 central african republic	common	ru	Центральноафриканская Республика
 chad	common	ru	Чад
@@ -160,13 +147,10 @@ choose a background color for the icons	common	ru	Выбрать цвет фона для пиктогра
 choose a background image.	common	ru	Выбрать фоновое изображение.
 choose a background style.	common	ru	Выбрать стиль фона.
 choose a text color for the icons	common	ru	Выбрать цвет текста для пиктограмм
-choose directory to move selected folders and files to.	tinymce	ru	Выберите каталог, в который надо переместить выделенные папки и файлы.
 choose list style type (for ordered lists)	htmlarea-ListType	ru	Выберите стиль списка (для сортированных списков)
 choose the category	common	ru	Выберите категорию
 choose the parent category	common	ru	Выберите родительскую категорию
 christmas island	common	ru	О-в Рождества
-class	tinymce	ru	Класс
-cleanup messy code	tinymce	ru	Очистка кода
 clear	common	ru	Очистить
 clear form	common	ru	Очистить Форму
 click	common	ru	Щелкнуть
@@ -178,20 +162,15 @@ cocos (keeling) islands	common	ru	Кокосовые О-ва
 collapsed borders	htmlarea-TableOperations	ru	Свернутые границы
 colombia	common	ru	Колумбия
 color	htmlarea-TableOperations	ru	Цвет
-columns	tinymce	ru	Столбцы
-comment	tinymce	ru	Комментарий
 common preferences	common	ru	Общие предпочтения
 comoros	common	ru	Коморские О-ва
 company	common	ru	Организация
-configuration problem	tinymce	ru	Проблемы конфигурации
 congo	common	ru	Конго
 congo, the democratic republic of the	common	ru	Демократическая р-ка Конго
 contacting server...	common	ru	Соединение с Сервером...
 cook islands	common	ru	О-ва Кука
 copy	common	ru	Копировать
 copy selection	htmlarea	ru	Копировать выбранное
-copy table row	tinymce	ru	Копировать строку таблицы
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	ru	Копировать/Вырезать/Вставить недоступно в Mozilla и Firefox.\nХотите получить больше информацию по этому вопросу?
 costa rica	common	ru	Коста-Рика
 cote d ivoire	common	ru	Кот'д'Ивуар
 could not contact server. operation timed out!	common	ru	Невозможно соединиться с сервером. Прервано по таймауту!
@@ -207,19 +186,16 @@ current url is	htmlarea-ContextMenu	ru	Текущий URL:
 current users	common	ru	Текущие пользователи
 cut	htmlarea-ContextMenu	ru	Вырезать
 cut selection	htmlarea	ru	Вырезать выбранное
-cut table row	tinymce	ru	Вырезать строку таблицы
 cyprus	common	ru	Кипр
 czech republic	common	ru	Чехия
 date	common	ru	Дата
 date due	common	ru	Дата до
-date modified	tinymce	ru	Дата изменения
 date selection:	jscalendar	ru	Выбор даты:
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	ru	Порт протокола точного времени (ntp).<br>Если используется порт 13, пожалуйста установите правила брендмауэра перед запуском этой страницы.<br>(Port: 13 / Host: 129.6.15.28)
 de_lete column	htmlarea-ContextMenu	ru	Удалить столбец
 december	common	ru	Декабрь
 decimal numbers	htmlarea-ListType	ru	Десятичные числа
 decrease indent	htmlarea	ru	Уменьшить отступ
-default	tinymce	ru	По умолчанию
 default category	common	ru	Категория по умолчанию
 default height for the windows	common	ru	Высота окна по умолчанию
 default width for the windows	common	ru	Ширина окна по умолчанию
@@ -235,10 +211,7 @@ detail	common	ru	Подробность
 details	common	ru	Подробности
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	ru	Отключить обработку ошибок для Internet Explorer версии 5.5 и выше для показа прозрачности в PNG-картинках?
 dictionary	htmlarea-SpellChecker	ru	Словарь
-direction	tinymce	ru	Направление
 direction left to right	common	ru	Направление слева направо
-direction right to left	tinymce	ru	Направление справа налево
-directory	tinymce	ru	Каталог
 disable internet explorer png-image-bugfix	common	ru	Отключить обработку ошибок png для Internet Explorer
 disable slider effects	common	ru	Отключить эффекты выползания
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	ru	Отключить эффекты анимации выпадающих меню на странице? Пользователи Opera и Konqueror возможно захотят это сделать.
@@ -247,7 +220,6 @@ disabled	common	ru	Отключено
 display %s first	jscalendar	ru	Вначале отображать %s
 djibouti	common	ru	Джибути
 do you also want to delete all subcategories ?	common	ru	Хотите удалить также и все подкатегории?
-do you want to use the wysiwyg mode for this textarea?	tinymce	ru	Хотите ли Вы использовать режим WYSIWYG для области текста?
 doctype:	common	ru	Тип документа:
 document properties	common	ru	Свойства документа
 document title:	common	ru	Заголовок документа:
@@ -257,7 +229,6 @@ domestic	common	ru	Домашний
 dominica	common	ru	Доминика
 dominican republic	common	ru	Доминиканская республика
 done	common	ru	Готово
-down	tinymce	ru	Вниз
 drag to move	jscalendar	ru	Перетащите
 e-mail	common	ru	E-mail
 east timor	common	ru	Восточный Тимор
@@ -273,7 +244,6 @@ el salvador	common	ru	Сальвадор
 element...	htmlarea-ContextMenu	ru	Элемент...
 email	common	ru	E-Mail
 email-address of the user, eg. "%1"	common	ru	Почтовый адрес для пользователя, напр. "%1"
-emotions	tinymce	ru	Эмоции
 en	common	ru	en
 enabled	common	ru	Включено
 end date	common	ru	Дата окончания
@@ -299,22 +269,8 @@ february	common	ru	Февраль
 fg color	htmlarea-TableOperations	ru	Цвет переднего плана
 fields	common	ru	Поля
 fiji	common	ru	Фиджи
-file already exists. file was not uploaded.	tinymce	ru	Файл уже существует. Файл не был выгружен.
-file exceeds the size limit	tinymce	ru	Превышен предельный размер файла
-file manager	tinymce	ru	Менеджер файлов
-file not found.	tinymce	ru	Файл не найден.
-file was not uploaded.	tinymce	ru	Файл не был выгружен.
-file with specified new name already exists. file was not renamed/moved.	tinymce	ru	Файл с указанным именем уже существует. Файл не будет переименован / перемещен.
-file(s)	tinymce	ru	файл(ы)
-file:	tinymce	ru	Файл:
 files	common	ru	Файлы
-files with this extension are not allowed.	tinymce	ru	Файлы с таким расширением не разрешены.
 filter	common	ru	Фильтр
-find	tinymce	ru	Найти
-find again	tinymce	ru	Повторить поиск
-find what	tinymce	ru	Что ищем
-find&nbsp;next	tinymce	ru	Искать далее
-find/replace	tinymce	ru	Найти / заменить
 finished list of mispelled words	htmlarea-SpellChecker	ru	Список закончен
 finland	common	ru	Финляндия
 first name	common	ru	Имя
@@ -322,19 +278,9 @@ first name of the user, eg. "%1"	common	ru	Имя пользователя, напр. "%1"
 first page	common	ru	Первая страница
 firstname	common	ru	Имя
 fixme!	common	ru	Исправить!
-flash files	tinymce	ru	Flash файлы
-flash properties	tinymce	ru	Свойства Flash
-flash-file (.swf)	tinymce	ru	Файл Flash (.swf)
 float	htmlarea-TableOperations	ru	Плавающий
-folder	tinymce	ru	Каталог
 folder already exists.	common	ru	Каталог уже существует.
-folder name missing.	tinymce	ru	Отсутствует имя каталога.
-folder not found.	tinymce	ru	Каталог не найден.
-folder with specified new name already exists. folder was not renamed/moved.	tinymce	ru	Каталог с указанным именем уже существует. Каталог не будет переименован / перемещен.
-folder(s)	tinymce	ru	Каталог(и)
 font color	htmlarea	ru	Цвет шрифта
-for mouse out	tinymce	ru	для не наведеного курсора
-for mouse over	tinymce	ru	для наведеного курсора
 force selectbox	common	ru	Принудительно Список выбора
 frames	htmlarea-TableOperations	ru	Рамки
 france	common	ru	Франция
@@ -406,18 +352,12 @@ if the clock is enabled would you like it to update it every second or every min
 if there are some images in the background folder you can choose the one you would like to see.	common	ru	Если в папке имеются изображения, Вы можете выбрать нужное для просмотра
 ignore	htmlarea-SpellChecker	ru	Игнорировать
 ignore all	htmlarea-SpellChecker	ru	Игнорировать все
-image description	tinymce	ru	Описание изображения
-image title	tinymce	ru	Заголовок изображения
 image url	common	ru	Ссылка на изображение
 in_sert row after	htmlarea-ContextMenu	ru	Вставить строку после
 increase indent	htmlarea	ru	Увеличить отступ
-indent	tinymce	ru	Отступ
 india	common	ru	Индия
 indonesia	common	ru	Индонезия
-insert	tinymce	ru	Вставить
 insert 'return false'	common	ru	вставить 'return false'
-insert / edit flash movie	tinymce	ru	Вставиить / редактировать Flash Movie
-insert / edit horizontale rule	tinymce	ru	Вставить / редактировать горизонтальную линию
 insert _column before	htmlarea-ContextMenu	ru	Вставить столбец перед
 insert a new column after the current one	htmlarea-ContextMenu	ru	Вставить новый столбец после текущего
 insert a new column before the current one	htmlarea-ContextMenu	ru	Вставить новый столбец перед текущим
@@ -429,20 +369,11 @@ insert cell after	htmlarea-TableOperations	ru	Вставить ячейку после
 insert cell before	htmlarea-TableOperations	ru	Вставить ячейку перед
 insert column after	common	ru	Вставить столбец после
 insert column before	common	ru	Вставить столбец перед
-insert date	tinymce	ru	Вставить дату
-insert emotion	tinymce	ru	Вставить эмоцию
-insert file	tinymce	ru	Вставить Файл
 insert image	htmlarea	ru	Вставить Рисунок
-insert link to file	tinymce	ru	Вставить ссылку на файл
 insert row after	common	ru	Вставить строку после
 insert row before	common	ru	Вставить строку перед
 insert table	htmlarea	ru	Вставить Таблицу
-insert time	tinymce	ru	Вставить время
 insert web link	htmlarea	ru	Вставить WEB-ссылку
-insert/edit image	tinymce	ru	Вставить/изменить изображение
-insert/edit link	tinymce	ru	Вставить/изменить ссылку
-insert/modify table	tinymce	ru	Вставить/изменить таблицу
-inserts a new table	tinymce	ru	Вставить новую таблицу
 international	common	ru	Международный
 invalid filename	common	ru	Неправильное имя файла
 invalid ip address	common	ru	Неправильный IP-адрес
@@ -460,7 +391,6 @@ jamaica	common	ru	Ямайка
 january	common	ru	Январь
 japan	common	ru	Япония
 jordan	common	ru	Иордания
-js-popup	tinymce	ru	JS-Popup
 july	common	ru	Июль
 jun	common	ru	Чон (корея)
 june	common	ru	Июнь
@@ -470,7 +400,6 @@ justify full	common	ru	Выровнять по ширине
 justify left	common	ru	Выровнять по левому краю
 justify right	common	ru	Выровнять по правому краю
 kazakstan	common	ru	Казахстан
-keep linebreaks	tinymce	ru	Сохранять перенос текста
 kenya	common	ru	Кения
 keywords	common	ru	Ключевые слова
 kiribati	common	ru	Кирибати
@@ -497,11 +426,9 @@ license	common	ru	Лицензия
 liechtenstein	common	ru	Лихтенштейн
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	ru	Строка %1: '%2'<br><b>данных CSV не соответствует количеству столбцов таблицы %3 ==> игнорируется</b>
 link points to:	htmlarea-ContextMenu	ru	Ссылка на:
-link url	tinymce	ru	Ссылка
 list	common	ru	Список
 list members	common	ru	Список участников
 lithuania	common	ru	Литва
-loading files	tinymce	ru	Загрузка файлов
 local	common	ru	Локальный
 login	common	ru	Вход
 loginid	common	ru	LoginID
@@ -520,7 +447,6 @@ main category	common	ru	Основная категория
 main screen	common	ru	Главный экран
 maintainer	common	ru	Ответственный
 make lin_k...	htmlarea-ContextMenu	ru	Сделать ссылку
-make window resizable	tinymce	ru	Сделать окно с изменяемым размером
 malawi	common	ru	Малави
 malaysia	common	ru	Малазия
 maldives	common	ru	Мальдивские о-ва
@@ -530,7 +456,6 @@ march	common	ru	Март
 margin	htmlarea-TableOperations	ru	Поле
 marshall islands	common	ru	Маршалловы о-ва
 martinique	common	ru	Мартиника
-match case	tinymce	ru	Регистр совпадает
 mauritania	common	ru	Мавритания
 mauritius	common	ru	Маврикий
 max number of icons in navbar	common	ru	Макс. количество пиктограмм в панели навигации
@@ -539,13 +464,11 @@ mayotte	common	ru	О-в Мейот
 medium	common	ru	Средний
 menu	common	ru	Меню
 merge cells	htmlarea-TableOperations	ru	Слияние ячеек
-merge table cells	tinymce	ru	Слияние ячеек таблицы
 message	common	ru	Сообщение
 mexico	common	ru	Мексика
 micronesia, federated states of	common	ru	Микронезия
 middle	htmlarea-TableOperations	ru	Средний
 minute	common	ru	минута
-mkdir failed.	tinymce	ru	Ошибка создания каталога
 modify url	htmlarea-ContextMenu	ru	Изменить ссылку
 moldova, republic of	common	ru	Республика Молдова
 monaco	common	ru	Монако
@@ -553,7 +476,6 @@ monday	common	ru	Понедельник
 mongolia	common	ru	Монголия
 montserrat	common	ru	Монтсеррат
 morocco	common	ru	Марокко
-move	tinymce	ru	Переместить
 mozambique	common	ru	Мозамбик
 multiple	common	ru	умножьте
 myanmar	common	ru	Мьянма
@@ -567,11 +489,6 @@ netherlands antilles	common	ru	Нидерландские Антильские острова
 never	common	ru	Никогда
 new caledonia	common	ru	Новая Каледония
 new entry added sucessfully	common	ru	Новая запись успешно добавлена
-new file name missing!	tinymce	ru	Отсутствет новое имя файла!
-new file name:	tinymce	ru	Новое имя файла:
-new folder	tinymce	ru	Новая папка
-new folder name missing!	tinymce	ru	отсутствует новое имя папки!
-new folder name:	tinymce	ru	Новое имя папки:
 new main category	common	ru	Новая основная категория
 new value	common	ru	Новое Значение
 new zealand	common	ru	Новая Зеландия
@@ -585,17 +502,10 @@ nigeria	common	ru	Нигерия
 niue	common	ru	Ниуэ
 no	common	ru	Нет
 no entries found, try again ...	common	ru	записей не найдено, попробуйте еще ...
-no files...	tinymce	ru	Нет файлов...
 no history for this record	common	ru	Нет истории для этой записи
 no mispelled words found with the selected dictionary.	htmlarea-SpellChecker	ru	слова не найдемы в выбранном словаре
-no permission to create folder.	tinymce	ru	Нет прав для создания папки.
-no permission to delete file.	tinymce	ru	Нет прав для удаления файла.
-no permission to move files and folders.	tinymce	ru	Нет прав для перемещения файлов или папок.
-no permission to rename files and folders.	tinymce	ru	Нет прав для переименования файлов или папок.
-no permission to upload.	tinymce	ru	Нет прав для выгрузки.
 no rules	htmlarea-TableOperations	ru	Нет правил
 no savant2 template directories were found in:	common	ru	Каталог с шаблонами Savant2 не найден в:
-no shadow	tinymce	ru	Без тени
 no sides	htmlarea-TableOperations	ru	Нет сторон
 no subject	common	ru	Нет темы
 none	common	ru	Ничего
@@ -615,17 +525,8 @@ old value	common	ru	Старое значение
 oman	common	ru	Оман
 on *nix systems please type: %1	common	ru	В xNIX-системах пожалуйста наберите %1
 on mouse over	common	ru	При наведенном курсоре
-only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	ru	Разрешаются только файлы с расширениями, например "imagefile.jpg".
 only private	common	ru	только личные
 only yours	common	ru	только Ваши
-open file in new window	tinymce	ru	Открыть файл в новом окне
-open in new window	tinymce	ru	Открыть в новом окне
-open in parent window / frame	tinymce	ru	Открыть в родительском окне / рамке
-open in the window	tinymce	ru	Открыть в окне
-open in this window / frame	tinymce	ru	Открыть в этом окне / рамке
-open in top frame (replaces all frames)	tinymce	ru	Открыть в главной рамке (заменяет все рамки)
-open link in a new window	tinymce	ru	Открыть ссылку в новом окне
-open link in the same window	tinymce	ru	Открыть ссылку в том же окне
 open notify window	common	ru	Открыть окно извещения
 open popup window	common	ru	Открыть всплывающее окно
 open sidebox	common	ru	Открыть боковое меню
@@ -634,7 +535,6 @@ ordered list	common	ru	Нумерованный список
 original	common	ru	Оригинал
 original word	htmlarea-SpellChecker	ru	Исходный вариант
 other	common	ru	Другие
-outdent	tinymce	ru	Уменьшить отступ
 overview	common	ru	Просмотр
 owner	common	ru	Владелец
 padding	htmlarea-TableOperations	ru	Набивка
@@ -657,13 +557,8 @@ password must contain at least %1 special charactars	common	ru	Пароль должен сод
 password must contain at least %1 uppercase letters	common	ru	Пароль должен содержать не менее %1 прописных букв
 password must have at least %1 characters	common	ru	Пароль должен иметь не менее %1 символов
 paste	htmlarea-ContextMenu	ru	Вставить
-paste as plain text	tinymce	ru	Вставить как ASCII-текст
 paste from clipboard	htmlarea	ru	Вставить из буфера обмена
-paste from word	tinymce	ru	Вставить из Word
-paste table row after	tinymce	ru	Вставить строку таблицы после
-paste table row before	tinymce	ru	Вставить строку таблицы перед
 path	htmlarea	ru	Путь
-path not found.	tinymce	ru	Путь не найден.
 path to user and group files has to be outside of the webservers document-root!!!	common	ru	Путь к файлам пользователя и группы ДОЛЖЕН НАХОДИТЬСЯ ВНЕ главного каталога Веб-сервера (document-root)!!!
 pattern for search in addressbook	common	ru	Маска для поиска в адресной книге
 pattern for search in calendar	common	ru	Маска для поиска в Календаре
@@ -683,8 +578,6 @@ please confirm that you want to open this link	htmlarea-SpellChecker	ru	Пожалуйс
 please confirm that you want to remove this element:	htmlarea-ContextMenu	ru	Пожалуйста подтвердите, что Вы хотите удалить этот элемент:
 please confirm that you want to unlink this element.	htmlarea-ContextMenu	ru	Пожалуйста подтвердите, что Вы хотите расцепить этот элемент.
 please enter a name	common	ru	Пожалуйста введите имя !
-please enter the caption text	tinymce	ru	Пожалуйста, введите текст заголовка
-please insert a name for the target or choose another option.	tinymce	ru	Пожалуйста вставьте имя адресата или выберите другую опцию.
 please run setup to become current	common	ru	Пожалуйста, запустите обновление.
 please select	common	ru	Пожалуйста Выберите
 please set your global preferences	common	ru	Пожалуйста установите Ваши общие предпочтения!
@@ -694,9 +587,7 @@ please wait...	common	ru	Пожалуйста подождите...
 please wait: changing dictionary to	htmlarea-SpellChecker	ru	Пожалуйста, подождите: смена словаря на
 pliz weit ;-)	htmlarea-SpellChecker	ru	Пожалуйста, подождите
 poland	common	ru	Польша
-popup url	tinymce	ru	Всплывающая ссылка (URL)
 portugal	common	ru	Португалия
-position (x/y)	tinymce	ru	Позиция (X/Y)
 postal	common	ru	Почтовый
 powered by egroupware version %1	common	ru	Под управлением <a href="http://www.egroupware.org">eGroupWare</a> версии %1
 powered by phpgroupware version %1	common	ru	Под управлением phpGroupWare версии %1
@@ -704,7 +595,6 @@ preferences	common	ru	Предпочтения
 preferences for the idots template set	common	ru	Предпочтения для набора тем idots
 prev. month (hold for menu)	jscalendar	ru	Предыдущий месяц
 prev. year (hold for menu)	jscalendar	ru	Предыдущий год
-preview	tinymce	ru	Предварительный просмотр
 previous page	common	ru	Предыдущая страница
 primary style-sheet:	common	ru	Основная таблица стилей:
 print	common	ru	Печать
@@ -719,37 +609,29 @@ re-check	htmlarea-SpellChecker	ru	Проверить заново
 read	common	ru	Читать
 read this list of methods.	common	ru	Читать этот список методов
 reading	common	ru	чтение
-redo	tinymce	ru	Возобновить
 redoes your last action	htmlarea	ru	Возобновляет Ваше последнее действие
-refresh	tinymce	ru	Обновить
 reject	common	ru	Отклонить
-remove col	tinymce	ru	Удалить столбец
 remove selected accounts	common	ru	Удалить выбранные учетные записи
 remove shortcut	common	ru	Удалить Сокращение
 remove the	htmlarea-ContextMenu	ru	Удалить
 remove this node from the document	htmlarea-ContextMenu	ru	Удалить этот узел из документа
 rename	common	ru	Переименовать
-rename failed	tinymce	ru	Ошибка переименования
 replace	common	ru	Замена
 replace all	htmlarea-SpellChecker	ru	Заменить все
 replace with	common	ru	Заменить на
-replace&nbsp;all	tinymce	ru	Заменить все
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	ru	Показать список учетных записей пользователей в системе. ВНИМАНИЕ: Список может быть весьма большим.
 returns an array of todo items	common	ru	Возвращает массив Заданий
 returns struct of users application access	common	ru	Возвращает структуру доступа пользователей к приложениям
 reunion	common	ru	О-в Реунион
 revert	htmlarea-SpellChecker	ru	Откат
 right	common	ru	Правый
-rmdir failed.	tinymce	ru	Ошибка удаления каталога
 ro_w properties...	htmlarea-ContextMenu	ru	Свойства Строки...
 romania	common	ru	Румыния
 row properties	htmlarea-TableOperations	ru	Свойства Строки
-rows	tinymce	ru	Строки
 rules	htmlarea-TableOperations	ru	Линейки
 rules will appear between all rows and columns	htmlarea-TableOperations	ru	Линейки появятся между всеми строками и столбцами
 rules will appear between columns only	htmlarea-TableOperations	ru	Линейки появятся только между столбцами
 rules will appear between rows only	htmlarea-TableOperations	ru	Линейки появятся только между строками
-run spell checking	tinymce	ru	Проверить правописание
 russian federation	common	ru	Российская Федерация
 rwanda	common	ru	Руанда
 saint helena	common	ru	Остров Святой Елены
@@ -771,7 +653,6 @@ search or select multiple accounts	common	ru	поиск или выбор множества учетных з
 second	common	ru	секунд
 section	common	ru	Секция
 select	common	ru	Выбрать
-select all	tinymce	ru	Выбрать все
 select all %1 %2 for %3	common	ru	Выберите все %1 %2 для %3
 select category	common	ru	Выберите Категорию
 select date	common	ru	Выберите дату
@@ -799,27 +680,21 @@ show all	common	ru	показать все
 show all categorys	common	ru	Показать все категории
 show clock?	common	ru	Показать часы?
 show home and logout button in main application bar?	common	ru	Показывать кнопки "Домой" и "Выход" на главной панели приложений?
-show locationbar	tinymce	ru	Показать адресную панель
 show logo's on the desktop.	common	ru	Показать логотипы на рабочем столе.
 show menu	common	ru	показать меню
-show menubar	tinymce	ru	Показать панель меню
 show page generation time	common	ru	Показать время генерации страницы
 show page generation time on the bottom of the page?	common	ru	Показать время генерации страницы внизу страницы?
 show page generation time?	common	ru	Отображать время генерации страницы?
-show scrollbars	tinymce	ru	Показать линейки прокрутки
-show statusbar	tinymce	ru	Показать строку состояния
 show the image properties dialog	htmlarea-ContextMenu	ru	Показать диалог свойств изображения
 show the logo's of egroupware and x-desktop on the desktop.	common	ru	Показать логотипы eGroupware и Х-desktop на рабочем столе.
 show the table cell properties dialog	htmlarea-ContextMenu	ru	Показать диалог свойств ячейки
 show the table properties dialog	htmlarea-ContextMenu	ru	Показать диалог свойств таблицы
 show the table row properties dialog	htmlarea-ContextMenu	ru	Показать диалог свойств строки
-show toolbars	tinymce	ru	Показать панели инструментов
 show_more_apps	common	ru	показать_больше_приложений
 showing %1	common	ru	показ %1
 showing %1 - %2 of %3	common	ru	показ %1 - %2 из %3
 sierra leone	common	ru	Сьерра Леоне
 singapore	common	ru	Сингапур
-size	tinymce	ru	Размер
 slovakia	common	ru	Словакия
 slovenia	common	ru	Словения
 solomon islands	common	ru	Соломоновы о-ва
@@ -835,7 +710,6 @@ spell-check	htmlarea-SpellChecker	ru	Правописание
 split cell	htmlarea-TableOperations	ru	Разбить ячейку
 split column	htmlarea-TableOperations	ru	Разбить столбец
 split row	htmlarea-TableOperations	ru	Разбить строку
-split table cells	tinymce	ru	Разбить ячейки таблицы
 sri lanka	common	ru	Шри-Ланка
 start date	common	ru	Дата начала
 start time	common	ru	Время начала
@@ -844,7 +718,6 @@ starting up...	common	ru	Запуск...
 status	common	ru	Статус
 stretched	common	ru	растянутый
 strikethrough	htmlarea	ru	Зачеркивание
-striketrough	tinymce	ru	Зачеркивание
 style [css]	htmlarea-TableOperations	ru	Стиль [CSS]
 subject	common	ru	Тема
 submit	common	ru	Послать
@@ -861,13 +734,10 @@ swaziland	common	ru	Свазиленд
 sweden	common	ru	Швеция
 switzerland	common	ru	Швейцария
 syrian arab republic	common	ru	Сирия
-table cell properties	tinymce	ru	Свойства ячейки таблицы
 table properties	common	ru	Свойства таблицы
-table row properties	tinymce	ru	Свойства строки таблицы
 taiwan	common	ru	Тайвань
 tajikistan	common	ru	Таджикистан
 tanzania, united republic of	common	ru	Танзания
-target	tinymce	ru	Открыть в...
 text align	htmlarea-TableOperations	ru	Выровнивание текста
 text color:	common	ru	Цвет текста:
 thailand	common	ru	Таиланд
@@ -879,13 +749,10 @@ the left-hand side only	htmlarea-TableOperations	ru	Только слева
 the mail server returned	common	ru	Почтовый сервер возвращен
 the right and left sides only	htmlarea-TableOperations	ru	Только справа и слева
 the right-hand side only	htmlarea-TableOperations	ru	Только справа
-the search has been compleated. the search string could not be found.	tinymce	ru	Поиск завершен. Искомое значение не найдено.
 the top and bottom sides only	htmlarea-TableOperations	ru	Только сверху и снизу
 the top side only	htmlarea-TableOperations	ru	Только сверху
 this application is current	common	ru	Обновление не требуется
 this application requires an upgrade	common	ru	Приложение требует обновления
-this is just a template button	tinymce	ru	Это - только кнопка шаблона
-this is just a template popup	tinymce	ru	Это - только всплывающее меню шаблона
 this name has been used already	common	ru	Это имя уже используется !
 this will drop changes and quit spell checker.  please confirm.	htmlarea-SpellChecker	ru	Отмена внесенных изменений и выход из словаря. Подтвердите.
 thursday	common	ru	Четверг
@@ -901,7 +768,6 @@ to go back to the msg list, click <a href= %1 >here</a>	common	ru	Для возврата к
 today	common	ru	Сегодня
 todays date, eg. "%1"	common	ru	Сегодняшняя дата, напр. "%1"
 toggle first day of week	jscalendar	ru	Изменить первый день недели
-toggle fullscreen mode	tinymce	ru	Выбрать полноэкранный режим
 toggle html source	htmlarea	ru	Показать HTML код
 togo	common	ru	Того
 tokelau	common	ru	Токелау
@@ -922,25 +788,19 @@ uganda	common	ru	Уганда
 ukraine	common	ru	Украина
 underline	common	ru	Подчеркивание
 underline.gif	common	ru	подчеркивание.gif
-undo	tinymce	ru	Отмена
 undoes your last action	htmlarea	ru	Отменяет Ваше последнее действие
 united arab emirates	common	ru	ОАЭ
 united kingdom	common	ru	Англия
 united states	common	ru	США
 united states minor outlying islands	common	ru	Удаленные острова под юрисдикцией США
 unknown	common	ru	Неизвестный
-unlink	tinymce	ru	Отцепить ссылку
-unlink failed.	tinymce	ru	Ссылка не удалена.
 unlink the current element	htmlarea-ContextMenu	ru	Отцепить ссылку текущего элемента
-unordered list	tinymce	ru	Ненумерованный список
 unset color	htmlarea-TableOperations	ru	Удалить цвет
-up	tinymce	ru	Вверх
 update	common	ru	Изменить
 update the clock per minute or per second	common	ru	Обновлять показания часов ежеминутно или ежесекундно
 upload	common	ru	Выгрузить
 upload directory does not exist, or is not writeable by webserver	common	ru	Каталог выгрузки не существует, или Веб-сервер не имеет достаточных полномочий для записи
 upload image	htmlarea-UploadImage	ru	Выгрузить изображение
-uploading...	tinymce	ru	Выгрузка
 upper latin letters	htmlarea-ListType	ru	Прописные латинские буквы
 upper roman numbers	htmlarea-ListType	ru	Прописные римские цифры
 url	common	ru	Ссылка (URL)
@@ -949,8 +809,6 @@ use button to search for	common	ru	используйте Кнопку для поиска
 use button to search for address	common	ru	используйте Кнопку для поиска Адреса
 use button to search for calendarevent	common	ru	используйте Кнопку для поиска События в Календаре
 use button to search for project	common	ru	используйте Кнопку для поиска Проекта
-use ctrl and/or shift to select multiple items.	tinymce	ru	Используйте Ctrl и/или Shift для выделения нескольких объектов
-use ctrl+v on your keyboard to paste the text into the window.	tinymce	ru	Используйте сочетание клавиш CTRL+V клавиатуры для вставки текста в окно
 user	common	ru	Пользователь
 user accounts	common	ru	учетные записи пользователей
 user groups	common	ru	группы пользователей
@@ -963,13 +821,11 @@ vanuatu	common	ru	Ванату
 venezuela	common	ru	Венесуэлла
 version	common	ru	Версия
 vertical align	htmlarea-TableOperations	ru	Выравнивание по вертикали
-vertical alignment	tinymce	ru	Выравнивание по вертикали
 viet nam	common	ru	Вьетнам
 view	common	ru	Просмотреть
 virgin islands, british	common	ru	Виргинские острова (Британская территория)
 virgin islands, u.s.	common	ru	Виргинские острова (территория США)
 wallis and futuna	common	ru	О-ва Уоллис и Футуна
-warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	ru	ВНИМАНИЕ!\n Переименование или перемещение файлов и папок сделает ссылки в Ваших документах недействительными. Продолжить?
 wednesday	common	ru	Среда
 welcome	common	ru	Добро пожаловать
 western sahara	common	ru	Западная Сахара
@@ -978,7 +834,6 @@ what style would you like the image to have?	common	ru	Выберите стиль отображени
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
 which groups	common	ru	Какие группы
 width	common	ru	Ширина
-window name	tinymce	ru	Заголовок окна
 wk	jscalendar	ru	нед.
 work email	common	ru	рабочий e-mail
 would you like to display the page generation time at the bottom of every window?	common	ru	Отображать время генерации страницы в нижней части окна?
@@ -997,7 +852,6 @@ you have not entered participants	common	ru	Вы не ввели участников
 you have selected an invalid date	common	ru	Вы выбрали неправильную дату !
 you have selected an invalid main category	common	ru	Вы выбрали неправильный основную категорию !
 you have successfully logged out	common	ru	Вы успешно вышли
-you must enter the url	tinymce	ru	Введите URL (адрес страницы)
 you need to add the webserver user '%1' to the group '%2'.	common	ru	Вам необходимо добавить пользователя Веб-сервера '%1' в группу '%2'.
 your message could <b>not</b> be sent!<br>	common	ru	Ваше сообщение <b>не может</b> быть отправлено !<br>
 your message has been sent	common	ru	Ваше сообщение отправлено

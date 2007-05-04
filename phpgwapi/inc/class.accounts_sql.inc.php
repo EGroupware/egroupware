@@ -320,6 +320,7 @@ class accounts_backend
 	 */
 	function get_list($_type='both', $start = null,$sort = '', $order = '', $query = '', $offset = null, $query_type='')
 	{
+		//echo "<p>accounts_sql($_type,$start,$sort,$order,$query,$offset,$query_type)</p>\n";
 		if (!is_object($GLOBALS['egw']->contacts))
 		{
 			$GLOBALS['egw']->contacts =& CreateObject('phpgwapi.contacts');
@@ -329,7 +330,7 @@ class accounts_backend
 			'account_lastname'  => 'n_family',
 			'account_email'     => 'contact_email',
 		);
-		if (isset($order2contact[$order])) $order = $account2contact[$order];
+		if (isset($order2contact[$order])) $order = $order2contact[$order];
 		if ($sort) $order .= ' '.$sort;
 		
 		switch($_type)

@@ -10,6 +10,7 @@ application/rtf			rtf
 application/smil		smi smil
 application/vnd.mif		mif
 application/vnd.ms-excel	xls
+application/wordperfect	wpd	wp51	wp61 
 application/x-bcpio		bcpio
 application/x-cdlink		vcd
 application/x-chess-pgn		pgn

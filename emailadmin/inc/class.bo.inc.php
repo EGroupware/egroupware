@@ -593,11 +593,14 @@
 				'mail_suffix' => 'defaultDomain',
 				'smtp_server' => 'smtpServer',
 				'smpt_port' => 'smtpPort',
+				'smtp_auth_user' => 'ea_smtp_auth_username',
+				'smtp_auth_passwd' => 'ea_smtp_auth_password',
 			) as $setup_name => $ea_name_data)
 			{
 				if (!is_array($ea_name_data))
 				{
 					$profile[$ea_name_data] = $settings[$setup_name];
+					if ($setup_name == 'smtp_auth_user') $profile['stmpAuth'] = !empty($settings['smtp_auth_user']);
 				}
 				else
 				{
@@ -644,7 +647,10 @@
 					'defaultDomain' => 'mail_suffix',
 					'smtpServer'    => 'smtp_server',
 					'smtpPort'      => 'smpt_port',
-				) as $ea_name => $config_name)
+				)+($all['smtpAuth'] ? array(
+					'ea_smtp_auth_username' => 'smtp_auth_user',
+					'ea_smtp_auth_password' => 'smtp_auth_passwd',
+				) : array()) as $ea_name => $config_name)
 				{
 					if (isset($all[$ea_name]))
 					{

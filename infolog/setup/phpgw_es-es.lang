@@ -212,7 +212,6 @@ project settings: price, times	infolog	es-es	Configuración del proyecto: precio,
 re:	infolog	es-es	Re:
 read one record by passing its id.	infolog	es-es	Leer un registro pasando su id.
 read rights (default)	infolog	es-es	derecho de lectura (predeterminado)
-reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	es-es	expresión regular para IP's locales<br>p. ej. ^192\.168\.1\.
 remark	infolog	es-es	Comentario
 remove this link (not the entry itself)	infolog	es-es	Eliminar este enlace (no la entrada en sí)
 responsible	infolog	es-es	Responsable
@@ -291,7 +290,7 @@ upcoming	infolog	es-es	próxima
 urgency	infolog	es-es	Urgencia
 urgent	infolog	es-es	urgente
 used time	infolog	es-es	tiempo utilizado
-valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el lado del cliente<br>p. ej. \\servidor\recurso o e:\
+valid path on clientside<br>eg. \servershare or e:	infolog	es-es	ruta válida en el lado del cliente<br>p. ej. //servidor/recurso o e:
 values for selectbox	infolog	es-es	Valores para lista desplegable
 view all subs of this entry	infolog	es-es	Ver todos los subs de esta entrada
 view other subs	infolog	es-es	ver otros subs

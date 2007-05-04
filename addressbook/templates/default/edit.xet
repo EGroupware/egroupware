@@ -48,12 +48,12 @@
 				</row>
 				<row>
 					<description/>
-					<button label="Ok" onclick="set_style_by_class('table','editname','display','none'); document.getElementById(form::name('title')).focus(); return false;"/>
+					<button label="Ok" onclick="set_style_by_class('table','editname','display','none'); if(document.getElementById(form::name('title'))){document.getElementById(form::name('title')).focus();} return false;"/>
 				</row>
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.3.004">
+	<template id="addressbook.edit.general" template="" lang="" group="0" version="1.3.005">
 		<grid height="258">
 			<columns>
 				<column/>
@@ -115,7 +115,7 @@
 					<description/>
 					<textbox size="45" maxlength="64" id="adr_one_street2" statustext="address line 2"/>
 				</row>
-				<row>
+				<row disabled="@addr_format=city_state_postcode">
 					<description/>
 					<description value="city" options=",,,adr_one_locality"/>
 					<hbox options="0,0">
@@ -123,7 +123,7 @@
 						<textbox size="35" maxlength="64" id="adr_one_locality" statustext="City" class="leftPad5"/>
 					</hbox>
 				</row>
-				<row>
+				<row disabled="@addr_format=city_state_postcode">
 					<description/>
 					<description value="country" options=",,,adr_one_countryname"/>
 					<hbox options="0,0">
@@ -132,6 +132,22 @@
 						</menulist>
 						<textbox class="leftPad5" size="19" maxlength="64" id="adr_one_region" statustext="State"/>
 					</hbox>
+				</row>
+				<row disabled="!@addr_format=city_state_postcode">
+					<description/>
+					<description value="City"/>
+					<hbox options="0,0">
+						<textbox size="30" maxlength="64" id="adr_one_locality" statustext="City"/>
+						<textbox class="leftPad5" size="3" maxlength="64" id="adr_one_region" statustext="State"/>
+						<textbox size="5" maxlength="64" id="adr_one_postalcode" statustext="ZIP Code" class="leftPad5"/>
+					</hbox>
+				</row>
+				<row disabled="!@addr_format=city_state_postcode">
+					<description/>
+					<description value="country" options=",,,adr_one_countryname"/>
+					<menulist>
+						<menupopup type="select-country" options="Select one,1" id="adr_one_countryname"/>
+					</menulist>
 				</row>
 				<row valign="bottom" height="25">
 					<image src="private.png"/>
@@ -159,7 +175,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.3.002">
+	<template id="addressbook.edit.home" template="" lang="" group="0" version="1.3.003">
 		<grid height="258">
 			<columns>
 				<column/>
@@ -177,7 +193,7 @@
 					<description options=",,,adr_two_street2"/>
 					<textbox size="45" maxlength="64" id="adr_two_street2" statustext="address line 2"/>
 				</row>
-				<row>
+				<row disabled="@addr_format2=city_state_postcode">
 					<description/>
 					<description value="city" options=",,,adr_two_locality"/>
 					<hbox options="0,0">
@@ -185,7 +201,7 @@
 						<textbox size="35" maxlength="64" id="adr_two_locality" statustext="City" class="leftPad5"/>
 					</hbox>
 				</row>
-				<row>
+				<row disabled="@addr_format2=city_state_postcode">
 					<description/>
 					<description value="country" options=",,,adr_two_countryname"/>
 					<hbox options="0,0">
@@ -194,6 +210,22 @@
 						</menulist>
 						<textbox class="leftPad5" size="19" maxlength="64" id="adr_two_region" statustext="State"/>
 					</hbox>
+				</row>
+				<row disabled="!@addr_format2=city_state_postcode">
+					<description/>
+					<description value="city" options=",,,adr_two_locality"/>
+					<hbox options="0,0">
+						<textbox size="30" maxlength="64" id="adr_two_locality" statustext="City"/>
+						<textbox class="leftPad5" size="3" maxlength="64" id="adr_two_region" statustext="State"/>
+						<textbox size="5" maxlength="64" id="adr_two_postalcode" statustext="ZIP Code" class="leftPad5"/>
+					</hbox>
+				</row>
+				<row disabled="!@addr_format2=city_state_postcode">
+					<description/>
+					<description value="Country"/>
+					<menulist>
+						<menupopup type="select-country" options="Select one,1" id="adr_two_countryname"/>
+					</menulist>
 				</row>
 				<row height="30">
 					<image src="gear"/>

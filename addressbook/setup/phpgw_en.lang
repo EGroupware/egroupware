@@ -95,6 +95,7 @@ csv-filename	addressbook	en	CSV-Filename
 custom	addressbook	en	Custom
 custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
+default address format	addressbook	en	Default address format
 default addressbook for adding contacts	addressbook	en	Default addressbook for adding contacts
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
@@ -300,6 +301,7 @@ view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Which address format should the addressbook use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	en	Which fields should be exported. All means every field stored in the addressbook incl. the custom fields. The business or home address only contains name, company and the selected address.

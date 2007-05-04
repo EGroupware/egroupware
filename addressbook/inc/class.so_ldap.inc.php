@@ -78,6 +78,8 @@ class so_ldap
 	
 	/**
 	 * maps between diverse ldap schema and the eGW internal names
+	 * 
+	 * The ldap attribute names have to be lowercase!!!
 	 *
 	 * @var array
 	 */
@@ -110,7 +112,7 @@ class so_ldap
 			'jpegphoto'		=> 'jpegphoto',
 			'n_fileas'		=> 'displayname',
 			'label'			=> 'postaladdress',
-			'pubkey'		=> 'userSMIMECertificate',
+			'pubkey'		=> 'usersmimecertificate',
 		),
 
 		#displayName
@@ -174,7 +176,7 @@ class so_ldap
 			'freebusy_uri'	=> 'freeBusyuri',
 			'calendar_uri'	=> 'calendaruri',
 			'tel_other'		=> 'otherphone',
-			'tel_cell_private' => 'callbackPhone',	// not the best choice, but better then nothing
+			'tel_cell_private' => 'callbackphone',	// not the best choice, but better then nothing
 		),
 		// additional schema can be added here, including special functions 
 		
@@ -888,7 +890,7 @@ class so_ldap
 	 */
 	function _ldap2ts($date)
 	{
-		return mktime(substr($date,8,2),substr($date,10,2),substr($date,12,2), 
+		return gmmktime(substr($date,8,2),substr($date,10,2),substr($date,12,2), 
 			substr($date,4,2),substr($date,6,2),substr($date,0,4));
 	}
 	

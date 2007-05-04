@@ -1146,7 +1146,8 @@
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
 						$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
-							(($cell['onchange'] == 1 || $img) ? "return submitit($this->name_form,'$form_name');" : $cell['onchange']).'; return false;';
+							(((string)$cell['onchange'] === '1' || $img && !$onclick) ? 
+							"return submitit($this->name_form,'$form_name');" : $cell['onchange']).'; return false;';
 						
 						if (!$this->html->netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 						{
@@ -1649,11 +1650,10 @@
 		 */
 		function js_pseudo_funcs($on,$cname)
 		{
-			if (preg_match("/egw::link\\('([^']+)','([^']+)'\\)/",$on,$matches))
-			{
+			if (preg_match("/egw::link\\('([^']+)','(.+?)'\\)/",$on,$matches))	// the ? alters the expression to shortest match
+			{                                                                 	// this way we can correctly parse ' in the 2. argument
 				$url = $GLOBALS['egw']->link($matches[1],$matches[2]);
 				$on = str_replace($matches[0],'\''.$url.'\'',$on);
-				//$on = preg_replace('/egw::link\(\'([^\']+)\',\'([^\']+)\'\)/','\''.$url.'\'',$on);
 			}
 			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches))
 			{

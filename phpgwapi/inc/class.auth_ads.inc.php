@@ -80,11 +80,9 @@
 						return false;
 					}
 				}
-
-				$account =& CreateObject('phpgwapi.accounts',$username,'u');
-				if ($account->account_id)
+				if (($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')))
 				{
-					return true;
+					return $GLOBALS['egw']->accounts->id2name($id,'account_status') == 'A';
 				}
 				if ($GLOBALS['egw_info']['server']['auto_create_acct'])
 				{

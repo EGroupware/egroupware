@@ -41,20 +41,21 @@ class sitemgr_module extends Module // the Module class get automatic included b
 		list($app) = explode('.',$this->etemplate_method);
 		$GLOBALS['egw']->translation->add_app($app);
 		
-		$css = "<style type=\"text/css\">\n<!--\n@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
+		$extra = "<style type=\"text/css\">\n<!--\n@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
 			"/etemplate/templates/default/app.css);\n";
 
 		if ($app != 'etemplate' && file_exists(EGW_SERVER_ROOT.'/'.$app.'/templates/default/app.css'))
 		{
-			$css .= "@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
+			$extra .= "@import url(".$GLOBALS['egw_info']['server']['webserver_url'].
 				'/'.$app."/templates/default/app.css);\n";
 		}
-		$css .= "-->\n</style>\n";
+		$extra .= "-->\n</style>\n";
+		$extra .= '<script src="'.$GLOBALS['egw_info']['server']['webserver_url'].'/etemplate/js/etemplate.js" type="text/javascript"></script>'."\n";
 		$ret = false;
 		if($_POST['etemplate_exec_id'])
 		{
 			$ret = ExecMethod('etemplate.etemplate.process_exec');
 		}
-		return $css.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments['arg1'],$arguments['arg2'],$arguments['arg3']));
+		return $extra.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments['arg1'],$arguments['arg2'],$arguments['arg3']));
 	}
 }

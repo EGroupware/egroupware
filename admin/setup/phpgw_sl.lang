@@ -440,4 +440,5 @@ you must enter an application name and title.	admin	sl	Vnesti morate ime in nazi
 you must enter an application name.	admin	sl	Vnesti morate ime aplikacije.
 you must enter an application title.	admin	sl	Vnesti morate naslov aplikacije.
 you must select a file type	admin	sl	Izbrati morate tip datoteke
+you must select at least one group member	admin	sl	Izbrati morate najmanj enega člana skupine.
 you will need to remove the subcategories before you can delete this category	admin	sl	Preden lahko izbrišete to kategorijo, morate izbrisati vse podkategorije!

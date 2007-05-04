@@ -20,7 +20,6 @@
 3 number of chars for day-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci jour
 3 number of chars for month-shortcut	jscalendar	fr	3 nombre de caractères pour le raccourci mois
 80 (http)	admin	fr	80 (http)
-a editor instance must be focused before using this command.	tinymce	fr	Une instance de l'éditeur doit être désignée avant d'utiliser cette commande.
 about	common	fr	A propos de
 about %1	common	fr	A propos de %1
 about egroupware	common	fr	A propos d'eGroupware
@@ -46,17 +45,10 @@ administration	common	fr	Administration
 afghanistan	common	fr	AFGHANISTAN
 albania	common	fr	ALBANIE
 algeria	common	fr	ALGERIE
-align center	tinymce	fr	Aligner au centre
-align full	tinymce	fr	Justifier
-align left	tinymce	fr	Aligner à gauche
-align right	tinymce	fr	Aligner à droite
-alignment	tinymce	fr	Alignement
 all	common	fr	Tout
 all fields	common	fr	tous les champs
-all occurrences of the search string was replaced.	tinymce	fr	Toutes les occurences de la chaîne ont été remplacées.
 alphabet	common	fr	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	fr	Feuille de style alternative:
-alternative image	tinymce	fr	Image alternative
 american samoa	common	fr	SAMOA AMERICAINES
 andorra	common	fr	ANDORRE
 angola	common	fr	ANGOLA
@@ -97,14 +89,12 @@ belgium	common	fr	BELGIQUE
 belize	common	fr	BELIZE
 benin	common	fr	BENIN
 bermuda	common	fr	BERMUDES
-bg color	tinymce	fr	Bg color
 bhutan	common	fr	BOUTAN
 blocked, too many attempts	common	fr	Accès refusé car trop de tentatives infructueuses
 bold	common	fr	Gras
 bold.gif	common	fr	bold_fr.gif
 bolivia	common	fr	BOLIVIE
 border	common	fr	Bordure
-border color	tinymce	fr	Border color
 bosnia and herzegovina	common	fr	BOSNIE HERZEGOVINE
 botswana	common	fr	BOTSWANA
 bottom	common	fr	Bas
@@ -132,9 +122,6 @@ category %1 has been added !	common	fr	La catégorie %1 a été ajoutée !
 category %1 has been updated !	common	fr	La catégorie %1 a été mise à jour !
 cayman islands	common	fr	ILES CAIMAN
 cc	common	fr	Cc
-cellpadding	tinymce	fr	Remplissage des cellules
-cellspacing	tinymce	fr	Espacement des cellules
-center	tinymce	fr	Centrer
 centered	common	fr	centré
 central african republic	common	fr	REPUBLIQUE DE CENTRAFRIQUE
 chad	common	fr	TCHAD
@@ -149,12 +136,9 @@ choose a background color for the icons	common	fr	Choisissez une couleur de fond
 choose a background image.	common	fr	Choisissez une image de fond
 choose a background style.	common	fr	Choisissez un style de fond
 choose a text color for the icons	common	fr	Choisissez une couleur de texte pour les icônes
-choose directory to move selected folders and files to.	tinymce	fr	Choisissez un répertoire pour y déplacer les fichiers et dossiers sélectionnés
 choose the category	common	fr	Choisir la catégorie
 choose the parent category	common	fr	Choisir la catégorie parent
 christmas island	common	fr	ILE NOEL
-class	tinymce	fr	Classe CSS
-cleanup messy code	tinymce	fr	Nettoyer le code
 clear	common	fr	Effacer
 clear form	common	fr	Effacer le formulaire
 click	common	fr	Cliquer
@@ -165,21 +149,15 @@ close	common	fr	Fermer
 close sidebox	common	fr	Fermer la barre de menu latérale
 cocos (keeling) islands	common	fr	ILES COCOS (KEELING)
 colombia	common	fr	COLOMBIE
-columns	tinymce	fr	Colonnes
-comment	tinymce	fr	Commentaire
 common preferences	common	fr	Préférences communes
 comoros	common	fr	COMORRES
 company	common	fr	Société
-configuration problem	tinymce	fr	Problème de configuration
 congo	common	fr	CONGO
 congo, the democratic republic of the	common	fr	CONGO, REPUBLIQUE DEMOCRATIQUE DU
 contacting server...	common	fr	Connexion au serveur...
 cook islands	common	fr	ILES COOK
 copy	common	fr	Copier
 copy selection	common	fr	Copier la sélection
-copy table row	tinymce	fr	Copier ligne
-copy/cut/paste is not available in mozilla and firefox.\ndo you want more information about this issue?	tinymce	fr	Copier/Couper/Coller non disponible dans Mozilla et Firefox.\nVoulez-vous plus d'informations sur ce problème?
-copy/cut/paste is not available in mozilla and firefox.ndo you want more information about this issue?	tinymce	fr	Copier/Couper/Coller non disponible dans Mozilla et Firefox.\nVoulez-vous plus d'informations sur ce problème?
 costa rica	common	fr	COSTA RICA
 cote d ivoire	common	fr	COTE D IVOIRE
 could not contact server. operation timed out!	common	fr	Impossible de connecter au serveur. Le délai d'attente est dépassé!
@@ -192,17 +170,14 @@ current	common	fr	Courant
 current style	common	fr	Style actuel
 current users	common	fr	Utilisateurs connectés
 cut selection	common	fr	Couper la sélection
-cut table row	tinymce	fr	Couper ligne
 cyprus	common	fr	CHYPRE
 czech republic	common	fr	REPUBLIQUE TCHEQUE
 date	common	fr	Date
 date due	common	fr	Date butoire
-date modified	tinymce	fr	Date modifiée
 date selection:	jscalendar	fr	Sélection de la date :
 datetime port.<br>if using port 13, please set firewall rules appropriately before submitting this page.<br>(port: 13 / host: 129.6.15.28)	admin	fr	Port Datetime.<br>Si vous utilisez le port 13, adaptez svp les règles de votre pare-feu avant de soumettre cette page.<br>(Port: 13 / Hôte: 129.6.15.28)
 december	common	fr	Décembre
 decrease indent	common	fr	Réduire l'indentation
-default	tinymce	fr	Défaut
 default category	common	fr	Catégorie par défaut
 default height for the windows	common	fr	Hauteur par défaut de la fenêtre
 default width for the windows	common	fr	Largeur par défaut de la fenêtre
@@ -213,10 +188,7 @@ description	common	fr	Description
 detail	common	fr	Détail
 details	common	fr	Détails
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fr	Désactiver l'exécution d'un script correcteur pour Internet Explorer 5.5 et plus récent pour montrer la transparence des images PNG?
-direction	tinymce	fr	Direction
 direction left to right	common	fr	Direction de gauche à droite
-direction right to left	tinymce	fr	Direction de droite à gauche
-directory	tinymce	fr	Répertoire
 disable internet explorer png-image-bugfix	common	fr	Désactiver png-image-bugfix d'Internet Explorer
 disable slider effects	common	fr	Désactiver les effets de glisse
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fr	Désactiver les effets de glisse animés lors de l´affichage ou le masquage des menus de la page? Les utilisateurs d'Opera et Konqueror devraient sûrement en avoir besoin.
@@ -225,7 +197,6 @@ disabled	common	fr	Désactivé
 display %s first	jscalendar	fr	Affiche %s en premier
 djibouti	common	fr	DJIBOUTI
 do you also want to delete all subcategories ?	common	fr	Voulez vous également supprimer toutes les sous-catégories ?
-do you want to use the wysiwyg mode for this textarea?	tinymce	fr	Voulez-vous utiliser le mode WYSIWYG pour cette zone de texte (textarea) ?
 doctype:	common	fr	Type de document
 document properties	common	fr	Propriétés du document
 document title:	common	fr	Titre du document:
@@ -235,7 +206,6 @@ domestic	common	fr	Intérieur
 dominica	common	fr	DOMINIQUE
 dominican republic	common	fr	REPUBLIQUE DOMINICAINE
 done	common	fr	Fait
-down	tinymce	fr	Bas
 drag to move	jscalendar	fr	Glisser pour le déplacer
 e-mail	common	fr	email
 east timor	common	fr	TIMOR EST
@@ -250,7 +220,6 @@ egypt	common	fr	EGYPTE
 el salvador	common	fr	SALVADOR
 email	common	fr	E-mail
 email-address of the user, eg. "%1"	common	fr	Adresse e-mail de l'utilisateur, p.ex. "%1"
-emotions	tinymce	fr	Emoticônes
 en	common	fr	en
 enabled	common	fr	Activé
 end date	common	fr	Date de fin
@@ -275,40 +244,16 @@ fax number	common	fr	Numéro de fax
 february	common	fr	Février
 fields	common	fr	Champs
 fiji	common	fr	FIDJI
-file already exists. file was not uploaded.	tinymce	fr	Le fichier existe déjà. Le fichier n'a pas été déposé.
-file exceeds the size limit	tinymce	fr	Le fichier excède la taille limite
-file manager	tinymce	fr	Gestionnaire de fichiers
-file not found.	tinymce	fr	Fichier non trouvé.
-file was not uploaded.	tinymce	fr	Le fichier n'a pas été déposé.
-file with specified new name already exists. file was not renamed/moved.	tinymce	fr	Il existe déjà un fichier à ce nom. Le fichier n'a pas été renommé/déplacé.
-file(s)	tinymce	fr	fichier(s)
-file:	tinymce	fr	Fichier:
 files	common	fr	Fichiers
-files with this extension are not allowed.	tinymce	fr	Les fichiers portant cette extension ne sont pas autorisés.
 filter	common	fr	Filtrer
-find	tinymce	fr	Trouver
-find again	tinymce	fr	Trouver encore
-find what	tinymce	fr	Trouver quoi
-find&nbsp;next	tinymce	fr	Trouver le prochain
-find/replace	tinymce	fr	Trouver/Remplacer
 finland	common	fr	FINLANDE
 first name	common	fr	Prénom
 first name of the user, eg. "%1"	common	fr	Prénom de l'utilisateur, p.ex. "%1"
 first page	common	fr	Première page
 firstname	common	fr	Prénom
 fixme!	common	fr	CORRIGEZ-MOI!
-flash files	tinymce	fr	Fichiers Flash
-flash properties	tinymce	fr	Propriétés Flash
-flash-file (.swf)	tinymce	fr	Fichier Flash (.swf)
-folder	tinymce	fr	Dossier
 folder already exists.	common	fr	Le dossier existe déjà.
-folder name missing.	tinymce	fr	Nom de dossier manquant.
-folder not found.	tinymce	fr	Dossier introuvable.
-folder with specified new name already exists. folder was not renamed/moved.	tinymce	fr	Il existe déjà un dossier à ce nom. Le dossier n'a pas été renommé/déplacé.
-folder(s)	tinymce	fr	Dossier(s)
 font color	common	fr	Couleur de la Police
-for mouse out	tinymce	fr	Pour la souris en dehors
-for mouse over	tinymce	fr	Pour la souris au dessus
 force selectbox	common	fr	Forcer la boîte de sélection
 forever	common	fr	Toujours
 france	common	fr	FRANCE
@@ -370,34 +315,19 @@ iceland	common	fr	ISLANDE
 iespell not detected. click ok to go to download page.	common	fr	ieSpell non détecté. Cliquez sur Ok pour aller à la page de téléchargement.
 if the clock is enabled would you like it to update it every second or every minute?	common	fr	Si l'horloge est activée voulez-vous la mettre à jour toutes les secondes ou toutes les minutes?
 if there are some images in the background folder you can choose the one you would like to see.	common	fr	S'il y a des images dans le dossier d'arrière-plan vous pouvez choisir celle que vous voulez voir.
-image description	tinymce	fr	Description de l'image
-image title	tinymce	fr	Titre de l'image
 image url	common	fr	URL de l'Image
 increase indent	common	fr	Augmenter le retrait
-indent	tinymce	fr	Retrait
 india	common	fr	INDE
 indonesia	common	fr	INDONESIE
-insert	tinymce	fr	Insertion
 insert 'return false'	common	fr	Insérer 'return false'
-insert / edit flash movie	tinymce	fr	Insérer / modifier Vidéo Flash
-insert / edit horizontale rule	tinymce	fr	Insérer / modifier Règle Horizontale
 insert all %1 addresses of the %2 contacts in %3	common	fr	Insérer toutes les %1 adresses des %2 contacts de %3
 insert column after	common	fr	Insérer  une colonne après
 insert column before	common	fr	Insérer une colonne avant
-insert date	tinymce	fr	Insérer  la date
-insert emotion	tinymce	fr	Insérer une émoticône
-insert file	tinymce	fr	Insérer un fichier
 insert image	common	fr	Insérer une image
-insert link to file	tinymce	fr	Insérer un lien vers un fichier
 insert row after	common	fr	Insérer une ligne après
 insert row before	common	fr	Insérer une ligne avant
 insert table	common	fr	Insérer une table
-insert time	tinymce	fr	Insérer l'heure
 insert web link	common	fr	Insérer un lien web
-insert/edit image	tinymce	fr	Insérer/modifier une image
-insert/edit link	tinymce	fr	Insérer/modifier un lien
-insert/modify table	tinymce	fr	Insérer/modifier le tableau
-inserts a new table	tinymce	fr	Insère un nouveau tableau
 international	common	fr	International
 invalid filename	common	fr	Nom de fichier invalide
 invalid ip address	common	fr	Adresse IP invalide
@@ -415,7 +345,6 @@ jamaica	common	fr	JAMAIQUE
 january	common	fr	Janvier
 japan	common	fr	JAPON
 jordan	common	fr	JORDANIE
-js-popup	tinymce	fr	JS-Popup
 july	common	fr	Juillet
 jun	common	fr	Jun
 june	common	fr	Juin
@@ -424,7 +353,6 @@ justify full	common	fr	Justifier
 justify left	common	fr	Aligner à Gauche
 justify right	common	fr	Aligner à Droite
 kazakstan	common	fr	KAZAKSTAN
-keep linebreaks	tinymce	fr	Conserver les coupures de ligne
 kenya	common	fr	KENYA
 keywords	common	fr	Mots-clés
 kiribati	common	fr	KIRIBATI
@@ -449,11 +377,9 @@ libyan arab jamahiriya	common	fr	LIBYE
 license	common	fr	Licence
 liechtenstein	common	fr	LIECHTENSTEIN
 line %1: '%2'<br><b>csv data does not match column-count of table %3 ==> ignored</b>	common	fr	Ligne %1: '%2'<br><b>Les données csv ne correspondent pas au nombre de colonnes de la table %3 ==> ignoré</b>
-link url	tinymce	fr	Lien URL
 list	common	fr	Liste
 list members	common	fr	Liste les membres
 lithuania	common	fr	LITHUANIE
-loading files	tinymce	fr	Chargement des fichiers
 local	common	fr	Local
 login	common	fr	Login
 loginid	common	fr	LoginID
@@ -470,7 +396,6 @@ mail domain, eg. "%1"	common	fr	Domaine email, p.ex. "%1"
 main category	common	fr	Catégorie principale
 main screen	common	fr	Ecran principal
 maintainer	common	fr	Mainteneur
-make window resizable	tinymce	fr	Rendre la fenêtre redimensionnable
 malawi	common	fr	MALAWI
 malaysia	common	fr	MALAYSIE
 maldives	common	fr	MALDIVES
@@ -479,7 +404,6 @@ malta	common	fr	MALTE
 march	common	fr	Mars
 marshall islands	common	fr	ILES MARSHALL
 martinique	common	fr	MARTINIQUE
-match case	tinymce	fr	Respecter la casse
 mauritania	common	fr	MAURITANIE
 mauritius	common	fr	ILES MAURICE
 max number of icons in navbar	common	fr	Nombre maximum d'icônes dans la barre de navigation
@@ -487,19 +411,16 @@ may	common	fr	Mai
 mayotte	common	fr	MAYOTTE
 medium	common	fr	Moyen
 menu	common	fr	Menu
-merge table cells	tinymce	fr	Fusionner les cellules
 message	common	fr	Message
 mexico	common	fr	MEXIQUE
 micronesia, federated states of	common	fr	MICRONESIA, ETATS FEDERES DE
 minute	common	fr	minute
-mkdir failed.	tinymce	fr	Mkdir a échoué.
 moldova, republic of	common	fr	MOLDAVIE, REPUBLIQUE DE
 monaco	common	fr	MONACO
 monday	common	fr	Lundi
 mongolia	common	fr	MONGOLIE
 montserrat	common	fr	MONTSERRAT
 morocco	common	fr	MAROC
-move	tinymce	fr	Déplacer
 mozambique	common	fr	MOZAMBIQUE
 multiple	common	fr	multiple
 myanmar	common	fr	MYANMAR
@@ -513,11 +434,6 @@ netherlands antilles	common	fr	ANTILLES HOLLANDAISES
 never	common	fr	Jamais
 new caledonia	common	fr	NOUVELLE CALEDONIE
 new entry added sucessfully	common	fr	Nouvelle entrée ajoutée avec succès
-new file name missing!	tinymce	fr	Il manque le nouveau nom du fichier!
-new file name:	tinymce	fr	Nouveau nom de fichier:
-new folder	tinymce	fr	Nouveau dossier
-new folder name missing!	tinymce	fr	Il manque le nouveau nom du dossier!
-new folder name:	tinymce	fr	Nouveau nom de dossier:
 new main category	common	fr	Nouvelle catégorie principale
 new value	common	fr	Nouvelle valeur
 new zealand	common	fr	NOUVELLE ZELANDE
@@ -531,15 +447,8 @@ nigeria	common	fr	NIGERIA
 niue	common	fr	NIUE
 no	common	fr	Non
 no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
-no files...	tinymce	fr	Aucun fichier...
 no history for this record	common	fr	Pas d'historique pour cet enregistrement
-no permission to create folder.	tinymce	fr	Vous n'êtes pas autorisé à créer un dossier.
-no permission to delete file.	tinymce	fr	Vous n'êtes pas autorisé à  supprimer un fichier.
-no permission to move files and folders.	tinymce	fr	Vous n'êtes pas autorisé à  déplacer des fichiers ou dossiers.
-no permission to rename files and folders.	tinymce	fr	Vous n'êtes pas autorisé à  renommer des fichiers ou dossiers.
-no permission to upload.	tinymce	fr	Vous n'êtes pas autorisé à déposer (upload).
 no savant2 template directories were found in:	common	fr	Pas de  dossier modèle Savant2 n'a été trouvé dans:
-no shadow	tinymce	fr	Sans ombre
 no subject	common	fr	Sans objet
 none	common	fr	Aucun
 norfolk island	common	fr	ILE NORFOLK
@@ -560,25 +469,15 @@ old value	common	fr	Ancienne valeur
 oman	common	fr	OMAN
 on *nix systems please type: %1	common	fr	Sur les systèmes *nix SVP tapez: %1
 on mouse over	common	fr	Sur le relâchement du clic de la souris
-only files with extensions are permited, e.g. "imagefile.jpg".	tinymce	fr	Seuls les fichiers avec des extensions sont permis, ex: "fichier_image.jpg".
 only private	common	fr	seulement privés
 only yours	common	fr	seulement les vôtres
 oops! you caught us in the middle of system maintainance.	common	fr	Oups! Vous êtes arrivé en pleine maintenance système.
-open file in new window	tinymce	fr	Ouvrir le fichier dans une nouvelle fenêtre
-open in new window	tinymce	fr	Ouvrir dans la fenêtre
-open in parent window / frame	tinymce	fr	Ouvrir dans fenêtre / cadre parent
-open in the window	tinymce	fr	Ouvrir dans la fenêtre
-open in this window / frame	tinymce	fr	Ouvrir dans fenêtre / cadre
-open in top frame (replaces all frames)	tinymce	fr	Ouvrir dans le cadre supérieur (remplace tous les cadres)
-open link in a new window	tinymce	fr	Ouvrir le lien dans une nouvelle fenêtre
-open link in the same window	tinymce	fr	Ouvrir le lien dans la même fenêtre
 open notify window	common	fr	Ouvrir une fenêtre de notification
 open popup window	common	fr	Ouvrir une fenêtre de popup
 open sidebox	common	fr	Ouvrir la barre de menu latérale
 ordered list	common	fr	Liste ordonnées (numéros)
 original	common	fr	Original
 other	common	fr	Autre
-outdent	tinymce	fr	Diminuer le retrait
 overview	common	fr	Vue d'ensemble
 owner	common	fr	Propriétaire
 page	common	fr	Page
@@ -599,13 +498,8 @@ password must contain at least %1 numbers	common	fr	Le mot de passe doit conteni
 password must contain at least %1 special characters	common	fr	Le mot de passe doit contenir au moins %1 caractères spéciaux
 password must contain at least %1 uppercase letters	common	fr	Le mot de passe doit contenir au moins %1 caractères majuscules
 password must have at least %1 characters	common	fr	Le mot de passe doit contenir au moins %1 caractères
-paste as plain text	tinymce	fr	Coller en tant que texte simple
 paste from clipboard	common	fr	Coller depuis le presse-papiers
-paste from word	tinymce	fr	Coller depuis Word
-paste table row after	tinymce	fr	Coller ligne après
-paste table row before	tinymce	fr	Coller ligne avant
 path	common	fr	Chemin
-path not found.	tinymce	fr	Chemin non trouvé.
 path to user and group files has to be outside of the webservers document-root!!!	common	fr	Le chemin vers les fichiers des utilisateurs et groupes DOIT ETRE EN DEHORS de la racine des documents du serveur web!!!
 pattern for search in addressbook	common	fr	Chaîne à rechercher dans le carnet d'adresses
 pattern for search in calendar	common	fr	Chaîne à rechercher dans le calendrier
@@ -619,8 +513,6 @@ phpgwapi	common	fr	API eGroupWare
 pitcairn	common	fr	PITCAIRN
 please %1 by hand	common	fr	Veuillez %1 à la main
 please enter a name	common	fr	Veuillez saisir un nom !
-please enter the caption text	tinymce	fr	Veuillez saisir le texte de la légende
-please insert a name for the target or choose another option.	tinymce	fr	Veuillez insérer un nom pour la cible ou choisir une autre option.
 please run setup to become current	common	fr	Veuillez exécuter le setup pour vous mettre à jour
 please select	common	fr	Veuillez sélectionner
 please set your global preferences	common	fr	Veuillez définir vos préférences globales !
@@ -628,9 +520,7 @@ please set your preferences for this application	common	fr	Veuillez définir vos 
 please wait...	common	fr	Veuillez patienter...
 please, check back with us shortly.	common	fr	Veuillez revenir bientôt afin de vérifier avec nous.
 poland	common	fr	POLOGNE
-popup url	tinymce	fr	URL de la Popup
 portugal	common	fr	PORTUGAL
-position (x/y)	tinymce	fr	Position (X/Y)
 postal	common	fr	Code postal
 powered by	common	fr	Motorisé par
 powered by egroupware version %1	common	fr	Motorisé par <a href="http://www.egroupware.org">eGroupWare</a> version %1
@@ -639,7 +529,6 @@ preferences	common	fr	Préférences
 preferences for the idots template set	common	fr	Préférences pour l´application du modèle idots
 prev. month (hold for menu)	jscalendar	fr	Mois précédent (maintenir pour le menu)
 prev. year (hold for menu)	jscalendar	fr	Année précédente (maintenir pour le menu)
-preview	tinymce	fr	Prévisualisation
 previous page	common	fr	Page précédente
 primary style-sheet:	common	fr	Feuille de style primaire:
 print	common	fr	Imprimer
@@ -653,29 +542,21 @@ qatar	common	fr	QATAR
 read	common	fr	Lire
 read this list of methods.	common	fr	Lisez cette liste de méthodes.
 reading	common	fr	Lecture
-redo	tinymce	fr	Refaire
 redoes your last action	common	fr	Refait votre dernière action
-refresh	tinymce	fr	Rafraîchir
 register	common	fr	S'enregistrer
 reject	common	fr	Rejeter
 remember me	common	fr	Se souvenir de moi
-remove col	tinymce	fr	Supprimer la colonne
 remove selected accounts	common	fr	supprimer les comptes sélectionnés
 remove shortcut	common	fr	Supprimer le raccourci
 rename	common	fr	Renommer
-rename failed	tinymce	fr	Le renommage a échoué
 replace	common	fr	Remplacer
 replace with	common	fr	Remplacer par
-replace&nbsp;all	tinymce	fr	Remplacer tout
 returns a full list of accounts on the system.  warning: this is return can be quite large	common	fr	Retourne une liste complète des comptes sur le système. Attention: ceci peut être très long
 returns an array of todo items	common	fr	Retourne une liste d'actions à effectuer
 returns struct of users application access	common	fr	Retourne une structure d'accès aux applications des utilisateurs
 reunion	common	fr	REUNION
 right	common	fr	Droit
-rmdir failed.	tinymce	fr	Rmdir a échoué.
 romania	common	fr	ROUMANIE
-rows	tinymce	fr	Lignes
-run spell checking	tinymce	fr	Contrôler l'orthographe
 russian federation	common	fr	FEDERATION DE RUSSIE
 rwanda	common	fr	RWANDA
 saint helena	common	fr	SAINTE HELENE
@@ -697,7 +578,6 @@ search or select multiple accounts	common	fr	Chercher ou sélectionner des compte
 second	common	fr	seconde
 section	common	fr	Section
 select	common	fr	Sélectionner
-select all	tinymce	fr	Sélectionner tout
 select all %1 %2 for %3	common	fr	Sélectionner tous les %11 %2 pour %3
 select category	common	fr	Sélectionner la catégorie
 select date	common	fr	Sélectionner la date
@@ -727,23 +607,17 @@ show as topmenu	common	fr	Afficher en tant que menu supérieur
 show clock?	common	fr	Afficher l'horloge?
 show home and logout button in main application bar?	common	fr	Afficher les boutons Accueil et Déconnexion dans la barre d'application principale?
 show in sidebox	common	fr	Afficher dans la barre de menu latérale
-show locationbar	tinymce	fr	Afficher la barre d'adresse
 show logo's on the desktop.	common	fr	Afficher le logo sur le bureau?
 show menu	common	fr	Afficher le menu
-show menubar	tinymce	fr	Afficher la barre du menu
 show page generation time	common	fr	Afficher le temps de génération de la page
 show page generation time on the bottom of the page?	common	fr	Afficher le temps de génération de page au fond de la page?
 show page generation time?	common	fr	Afficher le temps de génération de la page?
-show scrollbars	tinymce	fr	Afficher la barre de défilement
-show statusbar	tinymce	fr	Afficher la barre de statut
 show the logo's of egroupware and x-desktop on the desktop.	common	fr	Afficher les logos d'eGroupware et x-desktop sur le bureau?
-show toolbars	tinymce	fr	Afficher la barre d'outils
 show_more_apps	common	fr	Voir plus d'applications
 showing %1	common	fr	Montre %1
 showing %1 - %2 of %3	common	fr	Montre %1 - %2 de %3
 sierra leone	common	fr	SIERRA LEONE
 singapore	common	fr	SINGAPOUR
-size	tinymce	fr	Taille
 slovakia	common	fr	SLOVAQUIE
 slovenia	common	fr	SLOVENIE
 solomon islands	common	fr	ILES SALOMON
@@ -752,7 +626,6 @@ sorry, your login has expired	login	fr	Désolé, votre login a expiré
 south africa	common	fr	AFRIQUE DU SUD
 south georgia and the south sandwich islands	common	fr	GEORGIE DU SUD ET LES ILES SANDWICH DU SUD
 spain	common	fr	ESPAGNE
-split table cells	tinymce	fr	Fractionner des cellules
 sri lanka	common	fr	SRI LANKA
 start date	common	fr	Date de début
 start time	common	fr	Heure de début
@@ -761,7 +634,6 @@ starting up...	common	fr	Démarrage...
 status	common	fr	Etat
 stretched	common	fr	étiré
 strikethrough	common	fr	Barré
-striketrough	tinymce	fr	Barré
 subject	common	fr	Objet
 submit	common	fr	Envoyer
 subscript	common	fr	Indice
@@ -775,24 +647,18 @@ swaziland	common	fr	SWAZILAND
 sweden	common	fr	SUEDE
 switzerland	common	fr	SUISSE
 syrian arab republic	common	fr	SYRIE
-table cell properties	tinymce	fr	Propriétés de la cellule
 table properties	common	fr	Propriétés du tableau
-table row properties	tinymce	fr	Propriétés de la ligne
 taiwan	common	fr	TAIWAN/TAIPEI
 tajikistan	common	fr	TAJIKISTAN
 tanzania, united republic of	common	fr	TANZANIE, REPUBLIQUE DE
-target	tinymce	fr	Cible
 text color:	common	fr	Couleur du Texte:
 thailand	common	fr	THAILANDE
 the api is current	common	fr	L'API est à jour
 the api requires an upgrade	common	fr	L'API nécessite une mise à jour
 the following applications require upgrades	common	fr	Les applications suivantes nécessitent une mise à jour
 the mail server returned	common	fr	Le serveur email a renvoyé
-the search has been compleated. the search string could not be found.	tinymce	fr	Votre recherche est terminée. La chaîne recherchée est introuvable.
 this application is current	common	fr	Cette application est à jour
 this application requires an upgrade	common	fr	Cette application nécessite une mise à jour
-this is just a template button	tinymce	fr	C'est juste un modèle de boutton
-this is just a template popup	tinymce	fr	C'est juste un modèle de popup
 this name has been used already	common	fr	Ce nom est déjà utilisé !
 thursday	common	fr	Jeudi
 tiled	common	fr	mosaïque
@@ -807,7 +673,6 @@ to go back to the msg list, click <a href= %1 >here</a>	common	fr	Pour revenir à
 today	common	fr	Aujourd'hui
 todays date, eg. "%1"	common	fr	date d'aujourd'hui, p.ex. "%1"
 toggle first day of week	jscalendar	fr	Voir le premier jour de la semaine
-toggle fullscreen mode	tinymce	fr	Basculer en plein écran
 toggle html source	common	fr	Basculer en code HTML source
 togo	common	fr	TOGO
 tokelau	common	fr	TOKELAU
@@ -828,30 +693,22 @@ uganda	common	fr	OUGANDA
 ukraine	common	fr	UKRAINE
 underline	common	fr	Souligné
 underline.gif	common	fr	underline.gif
-undo	tinymce	fr	Défaire
 undoes your last action	common	fr	Annule votre dernière action
 united arab emirates	common	fr	EMIRATS ARABES UNIS
 united kingdom	common	fr	ROYAUME UNI
 united states	common	fr	ETATS-UNIS
 united states minor outlying islands	common	fr	ILES MINEURES RELIEES AUX ETATS-UNIS
 unknown	common	fr	Inconnu
-unlink	tinymce	fr	Enlever le lien
-unlink failed.	tinymce	fr	Le retrait du lien échoué.
-unordered list	tinymce	fr	Liste (puces)
-up	tinymce	fr	Haut
 update	common	fr	Mettre à jour
 update the clock per minute or per second	common	fr	Mettre à jour l'horloge par minutes ou secondes
 upload	common	fr	Déposer
 upload directory does not exist, or is not writeable by webserver	common	fr	Le répertoire de dépôt n'existe pas ou le serveur web ne peut pas y écrire
-uploading...	tinymce	fr	Dépôt en cours...
 url	common	fr	Url
 uruguay	common	fr	URUGUAY
 use button to search for	common	fr	Utilisez le bouton pour rechercher
 use button to search for address	common	fr	Utilisez le bouton pour rechercher une adresse
 use button to search for calendarevent	common	fr	Utilisez le bouton pour rechercher un événement
 use button to search for project	common	fr	Utilisez le bouton pour rechercher un projet
-use ctrl and/or shift to select multiple items.	tinymce	fr	Utilisez Ctrl et/ou Maj pour sélectionner plusieurs éléments.
-use ctrl+v on your keyboard to paste the text into the window.	tinymce	fr	Utilisez CTRL+V sur votre clavier pour coller le texte dans la fenêtre.
 user	common	fr	Utilisateur
 user accounts	common	fr	Comptes utilisateurs
 user groups	common	fr	Groupes utilisateurs
@@ -863,14 +720,11 @@ uzbekistan	common	fr	UZBEKISTAN
 vanuatu	common	fr	VANUATU
 venezuela	common	fr	VENEZUELA
 version	common	fr	version
-vertical alignment	tinymce	fr	Alignement vertical
 viet nam	common	fr	VIETNAM
 view	common	fr	Voir
 virgin islands, british	common	fr	ILES VIERGES ANGLAISES
 virgin islands, u.s.	common	fr	ILES VIERGES AMERICAINES
 wallis and futuna	common	fr	WALLIS ET FUTUNA
-warning!\n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	fr	Attention!\n Renommer ou déplacer des fichiers ou des dossiers va casser d'éventuels liens existants dans vos documents. Continuer?
-warning!n renaming or moving folders and files will break existing links in your documents. continue?	tinymce	fr	Attention!\n Renommer ou déplacer des fichiers ou des dossiers va rompre d'éventuels liens existants dans vos documents. Continuer?
 wednesday	common	fr	Mercredi
 welcome	common	fr	Bienvenue
 western sahara	common	fr	SAHARA OUEST
@@ -880,7 +734,6 @@ when you say yes the home and logout buttons are presented as applications in th
 where and how will the egroupware links like preferences, about and logout be displayed.	common	fr	Ou et comment seront affichés les liens comme Préférences, A propos de et Déconnexion.
 which groups	common	fr	Quels groupes
 width	common	fr	Largeur
-window name	tinymce	fr	Nom de la fenêtre
 wk	jscalendar	fr	Sem.
 work email	common	fr	email professionnel
 would you like to display the page generation time at the bottom of every window?	common	fr	Voulez-vous voir apparaître le temps de génération en bas de chaque fenêtre?
@@ -899,7 +752,6 @@ you have not entered participants	common	fr	Vous n'avez pas entré de participant
 you have selected an invalid date	common	fr	Vous avez sélectionné une date invalide !
 you have selected an invalid main category	common	fr	Vous avez sélectionné une catégorie principale invalide !
 you have successfully logged out	common	fr	Vous vous êtes correctement déconnecté
-you must enter the url	tinymce	fr	Vous devez entrer une URL
 you need to add the webserver user '%1' to the group '%2'.	common	fr	Vous devez ajouter l'utilisateur du serveur web '%1' au groupe '%2'.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	fr	Vous avez tenté d'ouvrir l'application eGroupWare: %1, mais vous n'avez aucune permission d'y accéder.
 your message could <b>not</b> be sent!<br>	common	fr	Votre message n'a <b>pas</b> pu être envoyé!<br>
