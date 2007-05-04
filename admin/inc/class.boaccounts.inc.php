@@ -244,6 +244,7 @@
 			// This is down here so we are sure to catch the acl changes
 			// for LDAP to update the memberuid attribute
 			$group->data['account_email'] = $group_info['account_email'];
+			$group->data['account_lid']   = $group_info['account_name'];
 			$group->save_repository();
 
 			$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
