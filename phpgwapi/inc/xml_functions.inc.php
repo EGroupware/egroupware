@@ -191,42 +191,20 @@
 	* into their equivalent 'charset entity'. Charset entities enumerated this way
 	* are independent of the charset encoding used to transmit them, and all XML
 	* parsers are bound to understand them.
+	* 
+	* @author Eugene Pivnev
 	*/
 	function xmlrpc_encode_entities($data)
 	{
-		$length = strlen($data);
-		$escapeddata = "";
-		for($position = 0; $position < $length; $position++)
-		{
-			$character = substr($data, $position, 1);
-			$code = Ord($character);
-			switch($code)
-			{
-				case 34:
-					$character = "&quot;";
-					break;
-				case 38:
-					$character = "&amp;";
-					break;
-				case 39:
-					$character = "&apos;";
-					break;
-				case 60:
-					$character = "&lt;";
-					break;
-				case 62:
-					$character = "&gt;";
-					break;
-				default:
-					if($code < 32 || $code > 159)
-					{
-						$character = ("&#".strval($code).";");
-					}
-					break;
-			}
-			$escapeddata .= $character;
+		$convmap = array(0, 0x1F, 0, 0xFFFF, 0x80, 0xFFFF, 0, 0xFFFF);
+		$encoding = $GLOBALS['egw']->translation->system_charset;
+		mb_regex_encoding($encoding);
+		$pattern = array('<', '>', '"', '\'');
+		$replacement = array('&lt;', '&gt;', '&quot;', '&#39;');
+		for ($i=0; $i<sizeof($pattern); $i++) {
+			$data = mb_ereg_replace($pattern[$i], $replacement[$i], $data);
 		}
-		return $escapeddata;
+		return mb_encode_numericentity($data, $convmap, $encoding);
 	}
 
 	function xmlrpc_entity_decode($string)
