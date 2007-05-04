@@ -68,7 +68,7 @@ class bo_resources
 		$order_by = $query['order'] ? $query['order'].' '. $query['sort'] : '';
 		$start = (int)$query['start'];
 		
-		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
+		$rows = $this->so->search($criteria,$read_onlys,$order_by,'','%',$empty=False,$op='OR',$start,$filter,$join='',$need_full_no_count=false);
 		$nr = $this->so->total;
 		
 		// we are called to serve bookable resources (e.g. calendar-dialog)
