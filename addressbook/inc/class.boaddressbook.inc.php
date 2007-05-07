@@ -10,7 +10,7 @@
  * @package addressbook
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.bocontacts.inc.php 23785 2007-05-03 08:17:31Z ralfbecker $ 
+ * @version $Id$ 
  */
 
 require_once(EGW_API_INC.'/class.contacts.inc.php');
