@@ -467,7 +467,7 @@ class uiforms extends uical
 				$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
 				$alarm = array(
 					'offset' => $offset,
-					'time'   => $content['start'] - $offset,
+					'time'   => ($content['actual_date'] ? $content['actual_date'] : $content['start']) - $offset,
 					'all'    => !$content['new_alarm']['owner'],
 					'owner'  => $content['new_alarm']['owner'] ? $content['new_alarm']['owner'] : $this->user,
 				);
