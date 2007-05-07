@@ -681,7 +681,7 @@ function load_cal(url,id) {
 </script>
 ".
 				$this->accountsel->selection('owner','uical_select_owner',$accounts,'calendar+',count($accounts) > 1 ? 4 : 1,False,
-					' style="width: '.(count($accounts) > 1 && $this->common_prefs['account_selection']=='selectbox' ? 185 : 165).'px;"'.
+					' style="width: '.(count($accounts) > 1 && in_array($this->common_prefs['account_selection'],array('selectbox','groupmembers')) ? '100%' : '165px').';"'.
 					' title="'.lang('select a %1',lang('user')).'" onchange="load_cal(\''.
 					$GLOBALS['egw']->link('/index.php',array(
 						'menuaction' => $this->view_menuaction,

@@ -7,22 +7,8 @@
 	{
 		openerSelectBox = opener.document.getElementById(id);
 
-		if (multiple && openerSelectBox) {
-			select = '';
-			for(i=0; i < openerSelectBox.length; i++) {
-				with (openerSelectBox.options[i]) {
-					if (selected || openerSelectBox.selectedIndex == i) {
-						select += (value.slice(0,1)==',' ? '' : ',')+value;
-					}
-				}
-			}
-			select += (select ? ',' : '')+value;
-			opener.addOption(id,label,value,0);
-			opener.addOption(id,'{lang_multiple}',select,0);
-		}
-		else {
-			opener.addOption(id,label,value,!multiple);
-		}
+		opener.addOption(id,label,value,!multiple);
+
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
 		if (selectBox) {
 			for (i=0; i < selectBox.length; i++) {
@@ -60,7 +46,7 @@
 		selectBox = document.getElementById('uiaccountsel_popup_selection');
 		for (i=0; i < openerSelectBox.length; i++) {
 			with (openerSelectBox.options[i]) {
-				if (selected && value.slice(0,1) != ',') {
+				if (selected && value != '') {
 					selectBox.options[selectBox.length] =  new Option(text,value);
 				}
 			}

@@ -538,8 +538,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	en	Save
 search	common	en	Search
 search %1 '%2'	common	en	Search %1 '%2'
-search or select accounts	common	en	Search or select accounts
-search or select multiple accounts	common	en	search or select multiple accounts
+search accounts	common	en	Search accounts
 second	common	en	second
 section	common	en	Section
 select	common	en	Select

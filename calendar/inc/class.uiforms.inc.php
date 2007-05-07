@@ -232,11 +232,11 @@ class uiforms extends uical
 						{
 							$msg = lang('You need to select an account, contact or resource first!');
 						}
-						// fall-through
+						break;
+
 					case 'delete':		// handled in default
 					case 'quantity':	// handled in new_resource
 					case 'cal_resources':
-						$uid = false;
 						break;
 
 					case 'resource':
@@ -252,13 +252,13 @@ class uiforms extends uical
 						}
 						// fall-through for accounts entered as contact
 					case 'account':
-						$id = $uid = $data;
-						$type = 'u';
-						$quantity = 1;
-						$status = $uid == $this->bo->user ? 'A' : 'U';
+						foreach(is_array($data) ? $data : explode(',',$data) as $uid)
+						{
+							if ($uid) $event['participants'][$uid] = $event['participant_types']['u'][$uid] = 
+								$uid == $this->bo->user ? 'A' : 'U';
+						}
 						break;
-						
-						
+
 					default:		// existing participant row
 						foreach(array('uid','status','status_recurrence','quantity') as $name)
 						{
@@ -282,7 +282,7 @@ class uiforms extends uical
 							}
 							if ($data['old_status'] != $status)
 							{
-								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE && $status_recurrence != 'A' ? $content['participants']['status_date'] : 0))
+								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE && !$status_recurrence ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status
 									$msg = lang('Status changed');
@@ -295,13 +295,14 @@ class uiforms extends uical
 									}
 								}
 							}
+							if ($uid && $status != 'G')
+							{
+								$event['participants'][$uid] = $event['participant_types'][$type][$id] = 
+									$status.((int) $quantity > 1 ? (int)$quantity : '');
+							}
 						}
 						break;
 				}
-				if (!$uid || !$status || $status == 'G') continue;	// empty, deleted, group-invitation --> ignore
-
-				$event['participants'][$uid] = $event['participant_types'][$type][$id] = 
-					$status.((int) $quantity > 1 ? (int)$quantity : '');
 			}
 		}
 		$preserv = array(

@@ -82,7 +82,8 @@ class uiaccountsel extends accounts
 	 * @param array/int $selected user-id or array of user-id's which are already selected
 	 * @param string $use 'accounts', 'groups', 'owngroups', 'both' or app-name for all accounts with run-rights.
 	 *	If an '+' is appended to the app-name, one can also select groups with run-rights for that app.
-	 * @param int $lines number of lines for multiselection or 0 for a single selection
+	 * @param int $lines > 1 number of lines for multiselection, 0 for a single selection, 
+	 * 	< 0 or 1(=-4) single selection which can be switched to a multiselection by js abs($lines) is size
 	 *	(in that case accounts should be an int or contain only 1 user-id)
 	 * @param int/array $not user-id or array of user-id's not to display in selection, default False = display all
 	 * @param string $options additional options (e.g. style)
@@ -96,8 +97,13 @@ class uiaccountsel extends accounts
 	 */
 	function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False,$nohtml=false)
 	{
-		//echo "<p align=right>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',$lines,$not,'$options','$onchange',".print_r($select,True).") account_selection=$this->account_selection</p>\n";
-		
+		//echo "<p align=right>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',rows=$lines,$not,'$options','$onchange',".print_r($select,True).") account_selection=$this->account_selection</p>\n";
+		$multi_size=4;
+		if ($lines < 0)
+		{
+			$multi_size = abs($lines);
+			$lines = 1;
+		}
 		if ($this->account_selection == 'none')	// dont show user-selection at all!
 		{
 			return $this->html->input_hidden($name,$selected);
@@ -237,7 +243,7 @@ class uiaccountsel extends accounts
 		));
 		$popup_options = 'width=600,height=400,toolbar=no,scrollbars=yes,resizable=yes';
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
-		if ($lines <= 1 && $use != 'groups' && $use != 'owngroups' && $account_sel != 'groupmembers' && $account_sel != 'selectbox')
+		if ($lines <= 1 && $this->account_selection == 'popup' || !$lines && $this->account_selection == 'primary_group')
 		{
 			if (!$lines)
 			{
@@ -273,17 +279,29 @@ class uiaccountsel extends accounts
 		//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
 		$html = $this->html->select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
 
-		if ($lines > 0 && ($this->account_selection == 'popup' || $this->account_selection == 'primary_group'))
+		if ($lines > 0 && $this->account_selection == 'popup' || $lines > 1 && $this->account_selection == 'primary_group')
 		{
-			$html .= $this->html->submit_button('search','Search',"window.open('$link','uiaccountsel','$popup_options'); return false;",false,
-				' title="'.$this->html->htmlspecialchars($lines > 1 ? lang('search or select accounts') : lang('search or select multiple accounts')).'"',
-				'users','phpgwapi');
+			$js = "window.open('$link','uiaccountsel','$popup_options'); return false;";
+			$html .= $this->html->submit_button('search','Search accounts',$js,false,
+				' title="'.$this->html->htmlspecialchars(lang('Search accounts')).'"','search','phpgwapi');
 			$need_js_popup = True;
 		}
-		if ($lines == 1 && $this->account_selection == 'selectbox')
+		elseif ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group')
 		{
-			$html .= '<a href="#" onclick="'."if (selectBox = document.getElementById('$element_id')) { selectBox.size=4; selectBox.multiple=true; } return false;".'">'.
-				$this->html->image('phpgwapi','users',lang('select multiple accounts')).'</a>';
+			$js = "if (selectBox = document.getElementById('$element_id')) if (!selectBox.multiple) {selectBox.size=$multi_size; selectBox.multiple=true; if (selectBox.options[0].value=='') selectBox.options[0] = null;";
+			if (!in_array($this->account_selection,array('groupmembers','selectbox')))	// no popup!
+			{
+				$js .= " this.src='".$GLOBALS['egw']->common->image('phpgwapi','search')."'; this.title='".
+					$this->html->htmlspecialchars(lang('Search accounts'))."';} else {window.open('$link','uiaccountsel','$popup_options');";
+				$need_js_popup = True;
+			}
+			else
+			{
+				$js .= " this.style.display='none'; selectBox.style.width='100%';";
+			}
+			$js .= "} return false;";
+			$html .= $this->html->submit_button('search','Select multiple accounts',$js,false,
+				' title="'.$this->html->htmlspecialchars(lang('Select multiple accounts')).'"','users','phpgwapi');
 		}
 		if($need_js_popup && !$GLOBALS['egw_info']['flags']['uiaccountsel']['addOption_installed'])
 		{
@@ -293,20 +311,17 @@ function addOption(id,label,value,do_onchange)
 	selectBox = document.getElementById(id);
 	for (i=0; i < selectBox.length; i++) {
 './/		check existing entries if they're already there and only select them in that case
-'			if (selectBox.options[i].value == value) {
-			selectBox.options[i].selected = true;
-			break;
-		}
-'.//		check existing entries for an entry starting with a comma, marking a not yet finished multiple selection
-'			else if (value.slice(0,1) == "," && selectBox.options[i].value.slice(0,1) == ",") {
-			selectBox.options[i].value = value;
-			selectBox.options[i].text = "'.lang('multiple').'";
-			selectBox.options[i].title = label;
+'		if (selectBox.options[i].value == value) {
 			selectBox.options[i].selected = true;
 			break;
 		}
 	}
 	if (i >= selectBox.length) {
+		if (!do_onchange) {
+			if (selectBox.length && selectBox.options[0].value=="") selectBox.options[0] = null;
+			selectBox.multiple=true;
+			selectBox.size='.$multi_size.';
+		}
 		selectBox.options[selectBox.length] = new Option(label,value,false,true);
 	}
 	if (selectBox.onchange && do_onchange) selectBox.onchange();

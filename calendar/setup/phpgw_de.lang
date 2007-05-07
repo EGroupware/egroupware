@@ -22,6 +22,7 @@ alarms	calendar	de	Alarme
 all categories	calendar	de	Alle Kategorien
 all day	calendar	de	ganztägig
 all events	calendar	de	Alle Termine
+all future	calendar	de	Alle zukünftigen
 all participants	calendar	de	Alle Teilnehmer
 allows to edit the event again	calendar	de	Erlaubt den Termin erneut zu bearbeiten
 apply the changes	calendar	de	Übernimmt die Änderungen
@@ -116,8 +117,6 @@ filename of the download	calendar	de	Name der herunterzuladenden Datei
 find free timeslots where the selected participants are availible for the given timespan	calendar	de	Such freie Zeitslots an denen die ausgewählten Teilnehmer für die gegebene Zeitspanne verfügbar sind
 firstname of person to notify	calendar	de	Vorname der zu benachrichtigenden Person
 for	calendar	de	für
-for all future events	calendar	de	Für alle künftigen Termine
-for this event	calendar	de	Für diesen Termin
 for which views should calendar show distinct lines with a fixed time interval.	calendar	de	Für welche Ansichten soll der Kalender einzelne Zeilen mit festen Zeitintervallen anzeigen.
 format of event updates	calendar	de	Format der Benachrichtigungen
 forward half a month	calendar	de	einen halben Monat weiter
@@ -266,7 +265,6 @@ startdate and -time of the search	calendar	de	Startdatum und -zeit der Suche
 startdate of the export	calendar	de	Startdatum des Exports
 startrecord	calendar	de	Startdatensatz
 status changed	calendar	de	Status geändert
-status recurrence	calendar	de	Statuswiederholung
 submit to repository	calendar	de	Übertragen zu eGroupWare.org
 sun	calendar	de	So
 tentative	calendar	de	Vorläufige Zusage

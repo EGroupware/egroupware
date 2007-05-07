@@ -500,8 +500,7 @@ saudi arabia	common	de	SAUDI ARABIEN
 save	common	de	Speichern
 search	common	de	Suchen
 search %1 '%2'	common	de	Suche %1 '%2'
-search or select accounts	common	de	Suchen und auswählen von Benutzern
-search or select multiple accounts	common	de	Suchen und auswählen von mehreren Benutzern
+search accounts	common	de	Benutzer suchen
 section	common	de	Sektion
 select	common	de	Auswählen
 select all %1 %2 for %3	common	de	Alles auswählen %1 %2 von %3
@@ -657,6 +656,5 @@ your search returned %1 matchs	common	de	Ihre Suche ergab %1 Treffer
 your search returned 1 match	common	de	Ihre Suche ergab einen Treffer
 your session could not be verified.	login	de	Ihre Sitzung konnte nicht verifiziert werden.
 your settings have been updated	common	de	Ihre Einstellungen wurden aktualisiert
-yugoslavia	common	de	JUGOSLAVIEN
 zambia	common	de	ZAMBIA
 zimbabwe	common	de	ZIMBABWE
