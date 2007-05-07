@@ -680,7 +680,8 @@
 
 		function delete_user()
 		{
-			if ($GLOBALS['egw']->acl->check('account_access',32,'admin') || $GLOBALS['egw_info']['user']['account_id'] == $_GET['account_id'])
+			if ($GLOBALS['egw']->acl->check('account_access',32,'admin') || $GLOBALS['egw_info']['user']['account_id'] == $_GET['account_id'] ||
+				$_POST['cancel'])
 			{
 				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
 			}
