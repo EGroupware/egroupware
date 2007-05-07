@@ -598,7 +598,7 @@ class uiforms extends uical
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
-				'mail' => array('label' => 'Mail participants', 'title' => 'compose a mail to all participants after the event is saved'),
+				'mail' => array('label' => 'Mail all participants', 'title' => 'compose a mail to all participants after the event is saved'),
 			),
 			'status_recurrence' => array('' => 'for this event', 'A' => 'for all future events'),
 		);
@@ -801,13 +801,17 @@ class uiforms extends uical
 		}
 		$readonlys['button[delete]'] = !$event['id'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
-		if ($event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
+		if (!$event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{
 			$sel_options['owner'][0] = lang('All participants');
 		}
+		if (isset($event['participant_types']['u'][$this->user]))
+		{
+			$sel_options['owner'][$this->user] = $this->bo->participant_name($this->user);
+		}
 		foreach((array) $event['participant_types']['u'] as $uid => $status)
 		{
-			if ($status != 'R' && $this->bo->check_perms(EGW_ACL_EDIT,0,$uid))
+			if ($uid != $this->user && $status != 'R' && $this->bo->check_perms(EGW_ACL_EDIT,0,$uid))
 			{
 				$sel_options['owner'][$uid] = $this->bo->participant_name($uid);
 			}
