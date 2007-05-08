@@ -51,6 +51,9 @@ switch($action)
 		
 	case '--change-account-id':
 		return do_change_account_id($arg0s);
+		
+	case '--check-acl';
+		return do_check_acl();
 
 	default:
 		usage($action);
@@ -100,7 +103,26 @@ function usage($action=null,$ret=0)
 	echo "	Deletes a user from eGroupWare. It's data can be moved to an other user or it get deleted too.\n";
 	echo "--change-account-id admin-account[@domain],admin-password,from1,to1[...,fromN,toN]\n";
 	echo "	Changes one or more account_id's in the database (make a backup before!).\n";
+	echo "--check-acl admin-account[@domain],admin-password\n";
+	echo "	Deletes ACL entries of not longer existing accounts (make a database backup before!).\n";
 	exit;	
+}
+
+function do_check_acl()
+{
+	$deleted = 0;
+	if (($all_accounts = $GLOBALS['egw']->accounts->search(array('type'=>'both'))))
+	{
+		$ids = array();
+		foreach($all_accounts as $account)
+		{
+			$ids[] = $account['account_id'];
+		}
+		// does not work for LDAP! $ids = array_keys($all_accounts);
+		$GLOBALS['egw']->db->query("DELETE FROM egw_acl WHERE acl_account NOT IN (".implode(',',$ids).") OR acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$ids)."')",__LINE__,__FILE__);
+		$deleted = $GLOBALS['egw']->db->affected_rows();
+	}
+	echo "\n$deleted ACL records of not (longer) existing accounts deleted.\n\n";
 }
 
 /**
