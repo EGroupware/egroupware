@@ -712,7 +712,8 @@
 
 				foreach($new as $k => $v)
 				{
-					if (!is_array($v) || !isset($old[$k]))
+					if (!is_array($v) || !isset($old[$k]) || 	// no array or a new array
+						isset($v[0]) && isset($v[count($v)-1]))	// or no associative array, eg. selecting multiple accounts
 					{
 						$old[$k] = $v;
 					}
