@@ -281,7 +281,7 @@
 						}
 						else
 						{
-							echo '<div id="divMain">'."\n";
+							echo '<div id="popupMainDiv">'."\n";
 							if ($GLOBALS['egw_info']['user']['apps']['manual'])	// adding a manual icon to every popup
 							{
 								$manual =& new etemplate('etemplate.popup.manual');
