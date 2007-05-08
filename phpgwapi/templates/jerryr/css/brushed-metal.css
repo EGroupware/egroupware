@@ -156,24 +156,23 @@ input[type=image]
 
 #thesideboxcolumn
 {
-        width: 203px;
-        position:relative;
+	width: 203px;
+	position:relative;
 }
 
 #sideresize
 {
-        background-image:url(../images/resize-bm.png);
-        width:16px;
-        height:100px;
-        right:-18px;
-        top:0px;
-        position:absolute;
-        z-index:9999;
+	background-image:url(../images/resize-bm.png);
+	width:16px;
+	height:100px;
+	right:-18px;
+	top:0px;
+	position:absolute;
+	z-index:9999;
 }
 
 #tdSidebox
 {
-	/*width:204px;*/
 	overflow:visible;
 }
 
@@ -186,25 +185,20 @@ input[type=image]
 
 .divSidebox 
 {
-	/*width: 188px;*/
 	position: relative; 
 	border: 0px solid #9f9f9f;
-	/*background-image: url(../images/bmback2.jpg);*/
 	background-color: white;
 }
 
 .divLoginboxHeader,.divSideboxHeader,a.appTitles,.appTitles,a.textSidebox,.textSidebox,#fmStatusBar
 {
 	font-size:90%;
-	white-space: nowrap;
 }
 
 .textSideboxStar
 {
 	width: 20px;
 	font-size:90%;
-	/*background-image: url(../images/rowoff-bm.png);*/
-	/*background-color: white:*/
 	border-top:1px solid #e1e1e1;
 	border-right: 1px solid #e1e1e1;
 	border-left: 0px solid #9f9f9f;
@@ -213,14 +207,13 @@ input[type=image]
 .divSideboxHeader,.divLoginboxHeader 
 {
 	text-align:center;
-	/*background-image:url(../images/menuTitle-bm.png);*/	
 	color: #666666;
 	height: 23px;
 	font-weight:bold;
 	font-size:12px;
 	position: relative;
-        left: 0px;
-        top: 0px;
+	left: 0px;
+	top: 0px;
 	padding:0px;
 	border-top: 0px solid #9f9f9f;
 	border-left: 0px solid #9f9f9f;
@@ -229,46 +222,46 @@ input[type=image]
 
 .menuHeadLt
 {
-        background-image:url(../images/menuTitleLt-bm.png);
-        padding:0px;
-        width: 24px;
-        height:23px;
+	background-image:url(../images/menuTitleLt-bm.png);
+	padding:0px;
+	width: 24px;
+	height:23px;
 }
 .menuHeadMid
 {
-        background-image:url(../images/menuTitleMid-bm.png);
- 	width: 100%;
+	background-image:url(../images/menuTitleMid-bm.png);
+	width: 100%;
 	line-height:23px;
 }
 
 .menuHeadRt
 {
-        background-image:url(../images/menuTitleRt-bm.png);
-        width:24px;
-        padding:0px;
-        height: 23px;
+	background-image:url(../images/menuTitleRt-bm.png);
+	width:24px;
+	padding:0px;
+	height: 23px;
 }
 
 .menuBotLt
 {
-        background-image:url(../images/menuBotLt-bm.png);
-        padding:0px;
-        width: 20px;
-        height:18px;
+	background-image:url(../images/menuBotLt-bm.png);
+	padding:0px;
+	width: 20px;
+	height:18px;
 }
 .menuBotMid
 {
-        background-image:url(../images/menuBotMid-bm.png);
-        width: 100%;
-        line-height:18px;
+	background-image:url(../images/menuBotMid-bm.png);
+	width: 100%;
+	line-height:18px;
 }
 
 .menuBotRt
 {
-        background-image:url(../images/menuBotRt-bm.png);
-        width:20px;
-        padding:0px;
-        height: 18px;
+	background-image:url(../images/menuBotRt-bm.png);
+	width:20px;
+	padding:0px;
+	height: 18px;
 }
 
 
@@ -276,8 +269,6 @@ a.divSideboxEntry, .divSideboxEntry
 {
 	text-align:left;
 	height:18px;
-	/*background-image:url(../images/bmback2.jpg);*/
-	/*background-color:#ffffff;*/
 	border-left: 0px solid #9f9f9f;
 }
 
@@ -301,9 +292,6 @@ a.textSidebox
 
 .textSideboxHover
 {
-	/*background-image: url(../images/arrow-rt-grey.png);*/
-	/*background-repeat: no-repeat;*/
-	/*background-position: top right;*/
 	background-color: white;
 	height: 18px;
 	border-top: 1px solid #e1e1e1;
@@ -336,9 +324,9 @@ a.textSidebox
 
 .sideboxDrop
 {
-position: relative;
-        left: 0px;
-        top: 0px;
+	position: relative;
+	left: 0px;
+	top: 0px;
 	border-bottom: 0px solid white;
 	border-left: 1px solid #9f9f9f;
 	border-right: 1px solid #9f9f9f;
@@ -352,7 +340,6 @@ position: relative;
 .sideboxSpace
 {
 	height:29px;
-	/*background-image: url(../images/botspacer.png);*/
 }
 
 /*
@@ -380,9 +367,9 @@ position: relative;
 
 .menuOneBoxTwo
 {
-        position: relative;
-        left: 0;
-        text-align: left;
+	position: relative;
+	left: 0;
+	text-align: left;
 }
 
 
@@ -406,11 +393,11 @@ position: relative;
 
 .extraIconsHeader
 {
-        text-align:center;
-        background-image:url(../images/menuTitle-bm.png);
+	text-align:center;
+	background-image:url(../images/menuTitle-bm.png);
 	color:#e1e1e1;
-        font-weight:normal;
-        font-size:10px;
+	font-weight:normal;
+	font-size:10px;
 	height: 23px;
 }
 
@@ -424,23 +411,21 @@ position: relative;
 
 .extraIconsRow
 {
-        border-top: 1px solid #e1e1e1;
+	border-top: 1px solid #e1e1e1;
 	height: 19px;
-        padding:1px;
+	padding:1px;
 	padding-left: 3px;
-        font-size: 10px;
+	font-size: 10px;
 	background-color: white;
-	/*background-image:url(../images/bmback2.jpg);*/
 }
 
 .extraIconsRow:hover
 {
-        border-top: 1px solid #e1e1e1;
-        padding:1px;
+	border-top: 1px solid #e1e1e1;
+	padding:1px;
 	padding-left: 3px;
-        font-size: 10px;
+	font-size: 10px;
 	background-color: #e1e1e1;
-	/*background-image:url(../images/bmback.jpg);*/
 }
 
 /*
@@ -451,13 +436,17 @@ body {
 	padding: 0px;
 }
 
-#divMain
+#divMain,#popupMainDiv
 {
 	background-image:url(../images/bmback.jpg);
 	background-color: #646464;
 	padding:9px;
 	margin: 0px;
-	border-bottom: 2px solid white;
+}
+
+#popupMainDiv
+{
+	margin: 9px;
 }
 
 #divLogo
@@ -470,27 +459,27 @@ body {
 
 #topmenu
 {
-        background-color: #0081c1;
-        background-image: url(../images/hilitetest-bm.png);
-        color:#006699;
-        border-top: 1px solid #9f9f9f;
-        border-bottom: 1px solid #9f9f9f;
+	background-color: #0081c1;
+	background-image: url(../images/hilitetest-bm.png);
+	color:#006699;
+	border-top: 1px solid #9f9f9f;
+	border-bottom: 1px solid #9f9f9f;
 	height:24px;
 	line-height:20px;
 	padding-top: 4px;
 }
 #topmenu a
 {
-        color:#006699;
+	color:#006699;
 }
 
 #topmenu_items
 {
-        float:left;
+	float:left;
 }
 #topmenu_info
 {
-        float:right;
+	float:right;
 }
 
 #divUpperTabs
@@ -543,8 +532,8 @@ body {
 
 .iconBackFirstCell
 {
-        background-image: url(../images/firstcell-bm.png);
-        background-repeat: no-repeat;
+	background-image: url(../images/firstcell-bm.png);
+	background-repeat: no-repeat;
 	height:60px;
 }
 
@@ -560,7 +549,6 @@ body {
 
 .iconBack
 {
-	/*background-image: url(../images/iconbar-bm.png);*/
 	border-right: 0px solid #bfbfbf;
 	border-top: 1px solid #9f9f9f;
 	height: 38px;
@@ -584,7 +572,6 @@ body {
 
 #divAppTextBar
 {
-	/*background-color:white;*/
 	white-space: nowrap;
 }
 
@@ -631,23 +618,20 @@ body {
 
 .appBoxHeadLt
 {
-        background-image:url(../images/abhlt.png);
-	/*background-image:url(../images/menuTitleLt-bm.png);*/
+	background-image:url(../images/abhlt.png);
 	padding:0px;
 	width: 24px;
 	height:24px;
 }
 .appBoxHeadMid
 {
-        background-image:url(../images/abhmid.png);
-	/*background-image:url(../images/menuTitleMid-bm.png);*/
+	background-image:url(../images/abhmid.png);
 	padding:0px;
 	line-height:24px;
 }
 .appBoxHeadRt
 {
-        background-image:url(../images/abhrt.png);
-	/*background-image:url(../images/menuTitleRt-bm.png);*/
+	background-image:url(../images/abhrt.png);
 	width:24px;
 	padding:0px;
 	height: 24px;
@@ -690,13 +674,13 @@ body {
 	background-image: url(../images/hilitetest-bm.png);
 }
 .row_on {
-        color: black;
-        background-color: #F1F1F1;
+	color: black;
+	background-color: #F1F1F1;
 	background-image: url(../images/rowon-bm.png);
 }
 .row_off {
-        color: black;
-        background-color: #ffffff;
+	color: black;
+	background-color: #ffffff;
 	background-image: url(../images/rowoff-bm.png);
 }
 .narrow_column { width: 1%; white-space: nowrap; }
@@ -711,16 +695,16 @@ body {
         Portal_box as used in home
 */
 .portal_box {
-        border: #9c9c9c 1px solid;
+	border: #9c9c9c 1px solid;
 }
 
 .portal_box table {
-        border: 1px solid black;
+	border: 1px solid black;
 }
 
 .portal_box_header {
-        height: 15px;
-        padding-top: 0px;
+	height: 15px;
+	padding-top: 0px;
 }
 
 /*
@@ -728,8 +712,8 @@ body {
 */
 .tablink
 {
-        white-space: nowrap;
+	white-space: nowrap;
 	padding-left: 15px;
-        padding-right: 15px;
+	padding-right: 15px;
 }
 

@@ -34,7 +34,9 @@ table {
 
 /* nextmatch/list rows */
 tr.row_on,tr.row_off{
-	border-bottom: thin black dashed;
+	border-bottom: thin gray dotted;
+	padding-top: 0px; margin-top:0px;
+	padding-bottom: 0px; margin-bottom: 0px;
 }
 
 /* nextmatch/list headers */
