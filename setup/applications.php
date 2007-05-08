@@ -305,6 +305,15 @@
 			echo '<br />';
 			echo lang('You should either uninstall and then reinstall it, or attempt manual repairs') . '.';
 		}
+		elseif(get_var('deleted',Array('GET')))
+		{
+			echo '"' . $app_title . '" ' . lang('is broken') . ' ';
+			echo lang('because its sources are missing') . '!';
+			echo '<br />';
+			echo lang('However the tables are still in the database') . '.';
+			echo '<br />';
+			echo lang('You should either install the sources or uninstall it, to get rid of the tables') . '.';
+		}
 		elseif (!$version)
 		{
 			if($setup_info[$resolve]['enabled'])
@@ -486,9 +495,18 @@
 						$setup_tpl->set_var('instalt',lang('Not Completed'));
 						$setup_tpl->set_var('install','&nbsp;');
 						$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
-						$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']" />');
-						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&version=True">' . lang('Possible Solutions') . '</a>');
-						$status = lang('Version Mismatch') . ' - ' . $value['status'];
+						if ($value['version'] == 'deleted')
+						{
+							$setup_tpl->set_var('upgrade','&nbsp;');
+							$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&deleted=True">' . lang('Possible Solutions') . '</a>');
+							$status = lang('Sources deleted/missing') . ' - ' . $value['status'];
+						}
+						else
+						{
+							$setup_tpl->set_var('upgrade','<input type="checkbox" name="upgrade[' . $value['name'] . ']" />');
+							$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '&version=True">' . lang('Possible Solutions') . '</a>');
+							$status = lang('Version Mismatch') . ' - ' . $value['status'];
+						}
 						break;
 					case 'D':
 						$setup_tpl->set_var('bg_color','FFCCCC');
@@ -497,9 +515,17 @@
 						$setup_tpl->set_var('instimg','dep.png');
 						$setup_tpl->set_var('instalt',lang('Dependency Failure'));
 						$setup_tpl->set_var('install','&nbsp;');
-						$setup_tpl->set_var('remove','&nbsp;');
+						if ($values['currentver'])
+						{
+							$setup_tpl->set_var('remove',$key == 'phpgwapi' ? '&nbsp;' : '<input type="checkbox" name="remove[' . $value['name'] . ']" />');
+							$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '">' . lang('Possible Solutions') . '</a>');
+						}
+						else
+						{
+							$setup_tpl->set_var('remove','&nbsp;');	
+							$setup_tpl->set_var('resolution','&nbsp;');
+						}
 						$setup_tpl->set_var('upgrade','&nbsp;');
-						$setup_tpl->set_var('resolution','<a href="applications.php?resolve=' . $value['name'] . '">' . lang('Possible Solutions') . '</a>');
 						$status = lang('Dependency Failure') . ':' . $depstring . $value['status'];
 						break;
 					case 'P':

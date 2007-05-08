@@ -49,8 +49,17 @@
 					$GLOBALS['egw_setup']->db->select($GLOBALS['egw_setup']->applications_table,'*',false,__LINE__,__FILE__);
 					while(@$GLOBALS['egw_setup']->db->next_record())
 					{
-						$setup_info[$GLOBALS['egw_setup']->db->f('app_name')]['currentver'] = $GLOBALS['egw_setup']->db->f('app_version');
-						$setup_info[$GLOBALS['egw_setup']->db->f('app_name')]['enabled'] = $GLOBALS['egw_setup']->db->f('app_enabled');
+						$app = $GLOBALS['egw_setup']->db->f('app_name');
+						if (!isset($setup_info[$app]))	// app source no longer there
+						{
+							$setup_info[$app] = array(
+								'name' => $app,
+								'tables' => $GLOBALS['egw_setup']->db->f('app_tables'),
+								'version' => 'deleted',
+							);
+						}
+						$setup_info[$app]['currentver'] = $GLOBALS['egw_setup']->db->f('app_version');
+						$setup_info[$app]['enabled'] = $GLOBALS['egw_setup']->db->f('app_enabled');
 					}
 					/* This is to catch old setup installs that did not have phpgwapi listed as an app */
 					$tmp = @$setup_info['phpgwapi']['version']; /* save the file version */

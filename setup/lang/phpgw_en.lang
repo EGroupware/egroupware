@@ -92,6 +92,7 @@ because it depends upon	setup	en	because it depends upon
 because it is not a user application, or access is controlled via acl	setup	en	because it is not a user application, or access is controlled via acl
 because it requires manual table installation, <br />or the table definition was incorrect	setup	en	because it requires manual table installation, <br />or the table definition was incorrect
 because it was manually disabled	setup	en	because it was manually disabled
+because its sources are missing	setup	en	because its sources are missing
 because of a failed upgrade or install	setup	en	because of a failed upgrade or install
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	en	because of a failed upgrade, or the database is newer than the installed version of this app
 because the enable flag for this app is set to 0, or is undefined	setup	en	because the enable flag for this app is set to 0, or is undefined
@@ -268,6 +269,7 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	en	Host/IP Domain controler
 hostname/ip of database server	setup	en	Hostname/IP of database server
 hour (0-24)	setup	en	hour (0-24)
+however the tables are still in the database	setup	en	However the tables are still in the database
 however, the application is otherwise installed	setup	en	However, the application is otherwise installed
 however, the application may still work	setup	en	However, the application may still work
 if no acl records for user or any group the user is a member of	setup	en	If no ACL records for user or any group the user is a member of
@@ -486,6 +488,7 @@ skip the installation tests (not recommended)	setup	en	Skip the installation tes
 smtp server hostname or ip address	setup	en	SMTP server hostname or IP address
 smtp server port	setup	en	SMTP server port
 some or all of its tables are missing	setup	en	Some or all of its tables are missing
+sources deleted/missing	setup	en	Sources deleted/missing
 sql encryption type	setup	en	SQL encryption type for passwords (default - md5)
 standard (login-name identical to egroupware user-name)	setup	en	standard (login-name identical to eGroupWare user-name)
 standard mailserver settings (used for mail authentication too)	setup	en	Standard mailserver settings (used for Mail authentication too)
@@ -577,6 +580,7 @@ view	setup	en	View
 virtual mail manager (login-name includes domain)	setup	en	Virtual mail manager (login-name includes domain)
 warning!	setup	en	Warning!
 we can proceed	setup	en	We can proceed
+we could not determine the version of %1, please make sure it is at least %2	setup	en	We could not determine the version of %1, please make sure it is at least %2
 we will automatically update your tables/records to %1	setup	en	We will automatically update your tables/records to %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	en	We will now run a series of tests, which may take a few minutes.  Click the link below to proceed.
 welcome to the egroupware installation	setup	en	Welcome to the eGroupWare Installation
@@ -616,6 +620,7 @@ you need to configure egroupware:	setup	en	You need to configure eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	en	You need to fix the above errors, before the configuration file header.inc.php can be written!
 you need to save the settings you made here first!	setup	en	You need to save the settings you made here first!
 you need to select your current charset!	setup	en	You need to select your current charset!
+you should either install the sources or uninstall it, to get rid of the tables	setup	en	You should either install the sources or uninstall it, to get rid of the tables
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	en	You should either uninstall and then reinstall it, or attempt manual repairs
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	en	You will NOT be able to log into eGroupWare using PHP sessions: "session could not be verified" !!!
 you're using an old configuration file format...	setup	en	You're using an old configuration file format...
@@ -630,6 +635,7 @@ your files directory '%1' %2	setup	en	Your files directory '%1' %2
 your header admin password is not set. please set it now!	setup	en	Your header admin password is NOT set. Please set it now!
 your header.inc.php needs upgrading.	setup	en	Your header.inc.php needs upgrading.
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	en	Your header.inc.php needs upgrading.<br /><blink><b class="msg">WARNING!</b></blink><br /><b>MAKE BACKUPS!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	en	Your installed version of %1 is %2, required is at least %3, please run:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	en	Your PHP installation does not have appropriate GD support. You need gd library version 1.8 or newer to see Gantt charts in projects.
 your tables are current	setup	en	Your tables are current
 your tables will be dropped and you will lose data	setup	en	Your tables will be dropped and you will lose data !!
