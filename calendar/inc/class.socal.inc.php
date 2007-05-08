@@ -68,8 +68,16 @@ class socal
 
 	/**
 	 * internal copy of the global db-object
+	 * 
+	 * @var egw_db
 	 */
 	var $db;
+	/**
+	 * instance of the async object
+	 *
+	 * @var asyncservice
+	 */
+	var $async;
 
 	/**
 	 * Constructor of the socal class
@@ -1087,6 +1095,23 @@ ORDER BY cal_user_type, cal_usre_id
 		else
 		{
 			$this->db->update($this->cal_table,array('cal_owner' => $new_user),array('cal_owner' => $old_user),__LINE__,__FILE__);
+			// delete participation of old user, if new user is already a participant
+			$this->db->select($this->user_table,'cal_id',array(		// MySQL does NOT allow to run this as delete!
+				'cal_user_type' => 'u',
+				'cal_user_id' => $old_user,
+				"cal_id IN (SELECT cal_id FROM $this->user_table other WHERE other.cal_id=cal_id AND other.cal_user_id=".(int)$new_user." AND cal_user_type='u')",
+			),__LINE__,__FILE__);
+			$ids = array();
+			while(($row = $this->db->row(true)))
+			{
+				$ids[] = $row['cal_id'];
+			}
+			if ($ids) $this->db->delete($this->user_table,array(
+				'cal_user_type' => 'u',
+				'cal_user_id' => $old_user,
+				'cal_id' => $ids,
+			),__LINE__,__FILE__);
+			// now change participant in the rest to contain new user instead of old user
 			$this->db->update($this->user_table,array('cal_user_id' => $new_user),array('cal_user_type' => 'u','cal_user_id' => $old_user),__LINE__,__FILE__);
 		}
 	}

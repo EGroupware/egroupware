@@ -6,7 +6,7 @@
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @package addressbook
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
- * @version $Id: class.bocontacts.inc.php 21831 2006-06-14 16:53:14Z ralfbecker $ 
+ * @version $Id$ 
  */
  
 function contact_repositories($config)

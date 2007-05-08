@@ -2,8 +2,11 @@
 2 years ago	timesheet	pl	2 lata temu
 3 years ago	timesheet	pl	2 lata temu
 actions	timesheet	pl	Dzia³ania
+all projects	timesheet	pl	Wszystkie projekty
+both: allow to use projectmanager and free project-names	admin	pl	Czê¶ciowa: zezwalaj na u¿ywanie Menad¿era Projektów jak równie¿ dowolnych nazw projektów
 by	timesheet	pl	przez
 create new links	timesheet	pl	Utwórz nowe odsy³acze
+creating new entry	timesheet	pl	Tworzenie nowego wpisu
 delete this entry	timesheet	pl	Usuñ ten wpis
 edit this entry	timesheet	pl	Edytuj ten wpis
 empty if identical to duration	timesheet	pl	pusty jesli identyczny jak czas trwania
@@ -13,6 +16,7 @@ entry saved	timesheet	pl	Wpis zachowany
 error deleting the entry!!!	timesheet	pl	B³±d przy usuwaniu wpisu !!!
 error saving the entry!!!	timesheet	pl	B³±d przy zachowywaniu wpisu !!!
 existing links	timesheet	pl	Istniej±ce odsy³acze
+full: use only projectmanager	admin	pl	Pe³na: zezwalaj tylko na nazwy z Menad¿era Projektów
 general	timesheet	pl	Ogólnie
 last modified	timesheet	pl	Ostatnio zmodyfikowany
 last month	timesheet	pl	Ostatni miesi±c
@@ -21,8 +25,12 @@ last year	timesheet	pl	Ostatni rok
 leave it empty for a full week	timesheet	pl	Pozostaw pusty na ca³y tydzieñ
 links	timesheet	pl	Odsy³acze
 no details	timesheet	pl	bez szczegó³ów
+no project	timesheet	pl	¯aden projekt
+none: use only free project-names	admin	pl	¯adna: u¿ywaj nazw niezale¿nych od Menad¿era Projektów
+or endtime	timesheet	pl	lub czas zakoñczenia
 permission denied!!!	timesheet	pl	Dostêp zabroniony !!!
 price	timesheet	pl	Cena
+projectmanager integration	admin	pl	Integracja z Menad¿erem projektów
 quantity	timesheet	pl	Ilo¶æ
 save & new	timesheet	pl	Zapisz & Nowy
 saves the changes made	timesheet	pl	Zapisz poczynione zmiany
@@ -30,6 +38,8 @@ saves this entry and add a new one	timesheet	pl	Zachowaj ten wpis i dodaj nowy
 select a price	timesheet	pl	Wybierz cen±
 select a project	timesheet	pl	Wybierz projekt
 start	timesheet	pl	Pocz±tek
+starttime	timesheet	pl	Czas rozpoczêcia
+starttime has to be before endtime !!!	timesheet	pl	Czas rozpoczêcia musi byæ wcze¶niejszy ni¿ czas zakoñczenia!
 sum %1:	timesheet	pl	Suma %1:
 this month	timesheet	pl	Bie¿±cy miesi±c
 this week	timesheet	pl	Bie¿±cy tydzieñ

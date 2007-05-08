@@ -92,6 +92,7 @@ because it depends upon	setup	de	weil es abhängt von
 because it is not a user application, or access is controlled via acl	setup	de	weil es keine Benutzer-Anwendung ist, oder der Zugriff über ACL kontrolliert wird
 because it requires manual table installation, <br />or the table definition was incorrect	setup	de	weil es manuelle Installation der Tabelle erfordert, <br />oder die Tabellen-definition war nicht korrekt
 because it was manually disabled	setup	de	weil es manuell ausgeschaltet wurde
+because its sources are missing	setup	de	weil die Quelldateien fehlen
 because of a failed upgrade or install	setup	de	weil eine Aktualisierung oder eine Installation fehlgeschlug
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	de	weil eine Aktualisierung fehlschlug, oder die Datenbank ist neuer als die installierte Version dieser Applikation
 because the enable flag for this app is set to 0, or is undefined	setup	de	weil der verfügbar-Eintrag für diese Applikation auf 0 gesetzt oder undefiniert ist
@@ -270,6 +271,7 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	de	Hostname / IP des Domain Controler
 hostname/ip of database server	setup	de	Hostname/IP des Datenbank-Servers
 hour (0-24)	setup	de	Stunde (0-24)
+however the tables are still in the database	setup	de	Wie auch immer, die Tabellen sind noch immer in der Datenbank
 however, the application is otherwise installed	setup	de	Wie auch immer, die Anwendung ist ansonsten installiert
 however, the application may still work	setup	de	Wie auch immer, die Anwendung mag denoch funktionieren
 if no acl records for user or any group the user is a member of	setup	de	Wenn es keinen ACL-Eintrag für einen Benutzer oder eine Gruppe, der er angehört gibt
@@ -488,6 +490,7 @@ skip the installation tests (not recommended)	setup	de	Installationstests übersp
 smtp server hostname or ip address	setup	de	SMTP Server Hostname oder IP Adresse
 smtp server port	setup	de	SMTP Server Port
 some or all of its tables are missing	setup	de	Einige oder alle Tabellen fehlen
+sources deleted/missing	setup	de	Quellen gelöscht/fehlen
 sql encryption type	setup	de	SQL-Verschlüsselungstyp für das Passwort (Vorgabe MD5)
 standard (login-name identical to egroupware user-name)	setup	de	Standard (Loginname identisch zu eGroupWare Benutzername)
 standard mailserver settings (used for mail authentication too)	setup	de	Standard Mailserver Einstellungen (werden auch für die Mail Authentifizierung benutzt)
@@ -579,6 +582,7 @@ view	setup	de	Anzeigen
 virtual mail manager (login-name includes domain)	setup	de	Virtual Mail Manager (Loginname enthalten Domain)
 warning!	setup	de	Warnung!
 we can proceed	setup	de	Wir können fortfahren
+we could not determine the version of %1, please make sure it is at least %2	setup	de	Wir konnten die Version von %1 nicht ermitteln, bitte stellen Sie sicher das sie mindestens %2 ist.
 we will automatically update your tables/records to %1	setup	de	Wir werden Ihre Tabellen/Einträge automatisch zu %1 aktualisieren
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	de	Wir werden jetzt eine Serie von Tests durchführen. Das kann ein paar Minuten dauern. Klicken sie auf den folgenden Link um Fortzufahren.
 welcome to the egroupware installation	setup	de	Herzlich willkommen zur eGroupWare Installation
@@ -618,6 +622,7 @@ you need to configure egroupware:	setup	de	Sie müssen eGroupWare konfigurieren:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	de	Sie müssen die obigen Fehler beheben, bevor die Konfigurationsdatei header.inc.php gespeichert werden kann!
 you need to save the settings you made here first!	setup	de	Sie müssen die hier vorgenommenen Einstellungen zuerst speichern!
 you need to select your current charset!	setup	de	Sie müssen Ihren aktuellen Zeichensatz auswählen!
+you should either install the sources or uninstall it, to get rid of the tables	setup	de	Sie sollten entweder die Quellen installieren oder die Anwendung deinstallieren, um die Tabellen los zu werden.
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	de	Sie sollten entweder de- und neuinstallieren, oder manuelle Reparaturen versuchen
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	de	Sie werden sich NICHT mit PHP Sitzungen in die eGroupWare einlogen: "Ihre Sitzung konnte nicht verifiziert werden" !!!
 you're using an old configuration file format...	setup	de	Sie verwenden ein altes Format der Konfigurationsdatei ...
@@ -632,6 +637,7 @@ your files directory '%1' %2	setup	de	Ihr Dateiverzeichnis '%1' %2
 your header admin password is not set. please set it now!	setup	de	Ihr Headerverwaltungspasswort wurde NICHT gesetzt. Bitte setzen Sie es jetzt!
 your header.inc.php needs upgrading.	setup	de	Ihre header.inc.php muss aktualisiert werden.
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	de	Ihre header.inc.php muss aktualisiert werden.<br /><blink><b class="msg">WARNUNG!</b></blink><br /><b>MACHEN SIE EINE SICHERUNG!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	de	Ihre installierte Version von %1 ist %2, benötigt wir mindestens %3, bitte führen Sie folgenden Befehl aus:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	de	Ihre PHP Installation hat nicht die benötigte GD Unterstützung. Die Anwendung Projekte benötigen die GD Bibliothek in der Version 1.8 um Gantcharts anzeigen zu können.
 your tables are current	setup	de	Ihre Tabellen sind aktuell
 your tables will be dropped and you will lose data	setup	de	Ihre Tabellen werden gelöscht werden und Sie werden alle Daten verlieren!

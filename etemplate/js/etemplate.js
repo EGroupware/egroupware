@@ -1,15 +1,13 @@
-/**************************************************************************\
-* eGroupWare - EditableTemplates - javascript support functions            *
-* http://www.egroupware.org                                                *
-* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-* --------------------------------------------                             *
-*  This program is free software; you can redistribute it and/or modify it *
-*  under the terms of the GNU General Public License as published by the   *
-*  Free Software Foundation; either version 2 of the License, or (at your  *
-*  option) any later version.                                              *
-\**************************************************************************/
-
-/* $Id$ */
+/**
+ * eGroupWare eTemplate Extension - AJAX Select Widget
+ *
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package etemplate
+ * @subpackage api
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker@outdoor-training.de>
+ * @version $Id$ 
+ */
 
 function submitit(form,name)
 {
@@ -70,6 +68,20 @@ function activate_tab(tab,all_tabs,name)
 		}
 		document.getElementById(t).style.display = t == tab ? 'inline' : 'none';
 		document.getElementById(t+'-tab').className = 'etemplate_tab'+(t == tab ? '_active th' : ' row_on');
+	}
+	// activate FCK in newly activated tab for Gecko browsers
+	if (!document.all)
+	{
+		var t = document.getElementById(tab);
+		var inputs = t.getElementsByTagName('input');
+		for (i = 0; i < inputs.length;i++) {
+	    	editor = FCKeditorAPI.GetInstance(inputs[i].name);
+	    	if (editor && editor.EditorDocument && editor.EditMode == FCK_EDITMODE_WYSIWYG) {
+	    		editor.SwitchEditMode();
+	      		editor.SwitchEditMode();
+	      		break;
+	    	}
+		}
 	}
 	if (name) {
 		set_element(document.eTemplate,name,tab);

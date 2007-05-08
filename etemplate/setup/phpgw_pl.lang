@@ -1,0 +1,269 @@
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	pl	%1 (z czego %2 nowych) Komunikatów zapisanych dla Aplikacji '%3' i Jêzyków '%4'
+%1 etemplates deleted	etemplate	pl	Usuniêto %1 e-Szablonów
+%1 etemplates for application '%2' dumped to '%3'	etemplate	pl	Zrzucono %1 e-Szablonów dla aplikacji '%2' do '%3'
+%1 etemplates found	etemplate	pl	Znaleziono %1 e-Szablonów
+%1 matches on search criteria	etemplate	pl	%1 spe³niaj±cych kryteria wyszukiwania
+%1 new etemplates imported for application '%2'	etemplate	pl	Zaimportowano %1 nowych e-Szablonów dla aplikacji '%2'
+%s disabled	etemplate	pl	%s wy³±czono
+%s needed	etemplate	pl	%s wymagane
+%s notranslation	etemplate	pl	%s bez t³umaczenia
+%s onchange	etemplate	pl	%s onChange (JS)
+%s readonly	etemplate	pl	%s tylko do odczytu
+'%1' has an invalid format !!!	etemplate	pl	'%1' jest w nieprawid³owym formacie!
+'%1' is not a valid date !!!	etemplate	pl	'%1' nie jest dat± w poprawnym formacie!
+'%1' is not a valid floatingpoint number !!!	etemplate	pl	'%1' nie jest poprawn± liczb± zmiennoprzecinkow±!
+'%1' is not a valid integer !!!	etemplate	pl	'%1' nie jest poprawn± liczb± ca³kowit±!
+a pattern to be searched for	etemplate	pl	wzorzec do wyszukania
+accesskey	etemplate	pl	Klawisz dostêpu
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	pl	Klawisz dostêpu mo¿e byæ równie¿ okre¶lony przez znak '&' w etykiecie (np. &Nazwa)
+account contactdata	etemplate	pl	Dane kontakowe dla konta
+add a new column (after the existing ones)	etemplate	pl	Dodaj now± kolumnê (za istniej±cymi)
+add a new entry of the selected application	etemplate	pl	Dodaj nowy wpis dla wybranej aplikacji
+add a new multi-column index	etemplate	pl	Dodaj nowy indeks wielokolumnowy
+add column	etemplate	pl	Dodaj kolumnê
+add index	etemplate	pl	Dodaj indeks
+add new	etemplate	pl	Dodaj nowy
+add table	etemplate	pl	Dodaj tablicê
+advanced search	etemplate	pl	Wyszukiwanie zaawansowane
+align	etemplate	pl	Wyrównanie
+alignment of label and input-field in table-cell	etemplate	pl	wyrównanie etykiety i pola wprowadzania w komórce tabeli
+alignment of the v/hbox containing table-cell	etemplate	pl	wyrównanie V/H Box, który zawiera komórkê tabeli
+all days	etemplate	pl	wszystkie dni
+all operations save the template!	etemplate	pl	wszystkie operacje prowadz± do zapisu wzorca
+am	etemplate	pl	przed po³udniem
+an indexed column speeds up querys using that column (cost space on the disk !!!)	etemplate	pl	kolumna indeksowana przyspiesza wyszukiwanie na tej kolumnie (zabiera przestrzeñ dyskow±!)
+application	etemplate	pl	Aplikacja
+application name needed to write a langfile or dump the etemplates !!!	etemplate	pl	Nazwa aplikacji, potrzebna w celu zapisania pliku jêzykowego lub zrzucenia e-Szablonów!
+applies the changes made	etemplate	pl	zatwierdza wykonane zmiany
+applies the changes to the given version of the template	etemplate	pl	zatwierdza wykonane zmiany dla podanej wersji szablonu
+as default	etemplate	pl	jako domy¶lny
+attach	etemplate	pl	Do³±cz
+attach file	etemplate	pl	do³±cz plik
+border	etemplate	pl	Ramka
+cancel	etemplate	pl	Anuluj
+cant delete the only column of a grid !!!	etemplate	pl	Nie mo¿na usun±æ jedynej kolumny z siatki!
+cant delete the only row in a grid !!!	etemplate	pl	Nie mo¿na usun±æ jedynego wiersza z siatki!
+category	etemplate	pl	Kategoria
+cells	etemplate	pl	Komórki
+center	etemplate	pl	Wy¶rodkowanie
+changed	etemplate	pl	Zmieniono
+class	etemplate	pl	Klasa
+class, valign	etemplate	pl	klasa, w pionie
+click here to attach the file	etemplate	pl	kliknij tutaj, aby do³±czyæ plik
+click here to create the link	etemplate	pl	kliknij tutaj, aby stworzyæ odno¶nik
+click here to start the search	etemplate	pl	kliknij tutaj, aby rozpocz±æ wyszukiwanie
+click here to upload the file	etemplate	pl	kliknij tutaj, aby przes³aæ plik
+click to order after that criteria	etemplate	pl	kliknij, aby uporz±dkowaæ dane wed³ug tego kryterium
+closes the window without saving the changes	etemplate	pl	zamyka okno bez zachowywania zmian
+column...	etemplate	pl	Kolumna...
+columnname	etemplate	pl	Nazwa kolumny
+comment	etemplate	pl	Komentarz
+confirm	etemplate	pl	zatwierd¼
+contact	etemplate	pl	Kontakt
+contact field to show	etemplate	pl	Pole kontaktu do wy¶wietlenia
+contact fields	etemplate	pl	Pola kontaktu
+contains	etemplate	pl	zawiera
+create a new table for the application	etemplate	pl	Tworzy now± tabelê dla aplikacji
+css class for the table-tag	etemplate	pl	klasa CSS dla znacznika tablicy
+css properties	etemplate	pl	ustawienia CSS
+css-styles	etemplate	pl	style CSS
+custom	etemplate	pl	niestandardowy
+custom fields	etemplate	pl	pola niestandardowe
+custom javascript for onchange	etemplate	pl	niestandardowy kod JS dla zdarzenia onChange
+cut	etemplate	pl	Wytnij
+date+time	etemplate	pl	Data+Czas
+datum	etemplate	pl	Data
+day	etemplate	pl	Dzieñ
+days	etemplate	pl	dni
+db ensures that every row has a unique value in that column	etemplate	pl	DBMS (baza danych) zapewnia, ¿e ka¿dy wiersz bêdzie posiada³ unikaln± warto¶æ w tej kolumnie
+db-tools	etemplate	pl	Narzêdzia bazodanowe
+default	etemplate	pl	Domy¶lnie
+delete a single entry by passing the id.	etemplate	pl	Usuñ jeden wpis wed³ug podanego id.
+delete column	etemplate	pl	Usuñ kolumnê
+delete index	etemplate	pl	Usuñ indeks
+delete the spezified etemplate	etemplate	pl	Usuñ wskazny e-Szablon
+delete this column	etemplate	pl	usuñ t± kolumnê
+delete this etemplate	etemplate	pl	usuñ ten e-Szablon
+delete this file	etemplate	pl	Usuñ ten plik
+delete this row	etemplate	pl	Usuñ ten wierwsz
+delete whole column (can not be undone!!!)	etemplate	pl	Usuñ ca³± kolumnê (nie mo¿na cofn±æ!)
+deletes this column	etemplate	pl	Usuñ t± kolumnê
+deletes this index	etemplate	pl	Usuñ ten indeks
+discard changes	etemplate	pl	porzuæ zmiany
+documentation	etemplate	pl	Dokumentacja
+doesn't matter	etemplate	pl	bez znaczenia
+drop a table - this can not be undone	etemplate	pl	Usuñ tabelê - czynno¶æ nie mo¿e byæ cofniêta!
+drop table	etemplate	pl	Usuñ tabelê
+dump4setup	etemplate	pl	ZrzuæDoSetup
+duration	etemplate	pl	Czas trwania
+edit	etemplate	pl	Edytuj
+edit the etemplate spez. above	etemplate	pl	Edytuj e-Szablon wskazany powy¿ej
+edit...	etemplate	pl	Edytuj...
+editable templates - db-tools	etemplate	pl	Edytor Szablonów - narzêdzia bazodanowe
+editable templates - delete template	etemplate	pl	Edytor Szablonów - usuñ szablon
+editable templates - editor	etemplate	pl	Edytor Szablonów - edytor
+editable templates - search	etemplate	pl	Edytor Szablonów - wyszukiwanie
+editable templates - show template	etemplate	pl	Edytor Szablonów - poka¿ szablon
+enable javascript onchange submit	etemplate	pl	aktywuj przes³anie formularza poprzez JS na onChange
+enter a search pattern	etemplate	pl	Podaje wzorzec wyszukiwania
+enter filename to upload and attach, use [browse...] to search for it	etemplate	pl	Podaj nazwê pliku do za³adowania i do³±czenia, u¿yj [Przegl±daj...] aby go wyszukaæ
+enter the new version number here (> old_version), empty for no update-file	etemplate	pl	Podaj nowy numer wersji (musi byæ wiêkszy ni¿ aktualny), pusta warto¶æ je¿eli nie chcesz aktualizowaæ pliku
+enter the new version number here (has to be > old_version)	etemplate	pl	Podaj nowy numer wersji (musi byæ wiêkszy ni¿ aktualny)
+entry saved	etemplate	pl	Wpis zachowany
+error: template not found !!!	etemplate	pl	B³±d: wzorzec nie znaleziony!
+error: webserver is not allowed to write into '%1' !!!	etemplate	pl	B³±d: demon serwera WWW nie mo¿e zapisywaæ do katalogu '%1'!
+error: while saving !!!	etemplate	pl	B³±d: podczas zapisywania!
+error: writing file (no write-permission for the webserver) !!!	etemplate	pl	B³±d: zapisywanie pliku nie powiod³o siê (brak uprawnieñ zapisu dla serwera WWW)!
+etemplate	common	pl	e-Szablon
+etemplate '%1' imported, use save to put it in the database	etemplate	pl	e-Szablon '%1' zaimportowano, u¿yj 'Zapisz' aby umie¶ciæ go w bazie danych
+etemplate '%1' written to '%2'	etemplate	pl	e-Szablon '%1' zapisano do '%2'
+etemplate editor	etemplate	pl	e-Szablon - edytor
+etemplate reference	etemplate	pl	e-Szablon - informator
+etemplate tutorial	etemplate	pl	e-Szablon - samouczek
+exchange this row with the one above	etemplate	pl	zamieñ ten wiersz z jego poprzednikiem
+exchange this two columns	etemplate	pl	zamieñ te dwie kolumny
+export the loaded etemplate into a xml-file	etemplate	pl	eksportuj za³adowany e-Szablon do pliku XML
+export xml	etemplate	pl	Eksportuj do XML
+extensions loaded:	etemplate	pl	Za³adowano rozszerzenia:
+field	etemplate	pl	Pole
+field must not be empty !!!	etemplate	pl	Powy¿sze pole nie mo¿e byæ puste!
+file	etemplate	pl	Plik
+file contains more than one etemplate, last one is shown !!!	etemplate	pl	Plik zawiera wiêcej ni¿ jeden e-Szablon - pokazany jest ostatni z nich!
+file writen	etemplate	pl	Plik zosta³ zapisany
+floating point	etemplate	pl	Liczba zmiennoprzecinkowa
+foreign key	etemplate	pl	Klucz obcy
+formatted text (html)	etemplate	pl	Tekst sformatowany (HTML)
+go to the first entry	etemplate	pl	id¼ do pierwszego wpisu
+go to the last entry	etemplate	pl	id¼ do ostatniego wpisu
+go to the next page of entries	etemplate	pl	id¼ do nastêpnej strony wpisów
+go to the previous page of entries	etemplate	pl	id¼ do poprzedniej strony wpisów
+grid	etemplate	pl	Siatka
+grid column attributes	etemplate	pl	Atrybuty kolumn siatki
+grid row attributes	etemplate	pl	Atrybuty wierszy siatki
+height	etemplate	pl	Wysoko¶æ
+height, disabled	etemplate	pl	Wysoko¶æ, wy³±czono
+help	etemplate	pl	Pomoc
+hour	etemplate	pl	Godzina
+hours	etemplate	pl	godziny
+how many entries should the list show	etemplate	pl	Jak du¿o wpisów powinna pokazywaæ lista
+html	etemplate	pl	HTML
+image	etemplate	pl	Obrazek
+import	etemplate	pl	Importuj
+import an etemplate from a xml-file	etemplate	pl	Importuj e-Szablon z pliku XML
+import table-definitions from existing db-table	etemplate	pl	Importuj definicjê tabel z istniej±cych tabel bazy danych
+import xml	etemplate	pl	Importuj z XML
+increment version to not overwrite the existing template	etemplate	pl	powiêksz numer wersji, aby nie nadpisaæ istniej±cego szablonu
+indexed	etemplate	pl	Indeksowana
+indexoptions	etemplate	pl	Opcje indeksu
+insert a column before	etemplate	pl	wstaw kolumnê przed
+insert a column behind	etemplate	pl	wstaw kolumnê po
+insert a row above	etemplate	pl	wstaw wiersz przed
+insert a row below	etemplate	pl	wstaw wierwsz po
+insert a widget before	etemplate	pl	wstaw element przed
+insert a widget behind	etemplate	pl	wstaw element po
+insert new column behind this one	etemplate	pl	wstaw now± kolumnê za bie¿±c±
+insert new column in front of all	etemplate	pl	wstaw now± kolumnê na pocz±tku
+insert new row after this one	etemplate	pl	wstaw nowy wiersz za bie¿±cym
+insert new row in front of first line	etemplate	pl	wstaw nowy wiersz na pocz±tku
+integer	etemplate	pl	Liczba ca³kowita
+key	etemplate	pl	Klucz
+label	etemplate	pl	Etykieta
+lang	etemplate	pl	Jêzyk
+last	etemplate	pl	Ostatni
+link	etemplate	pl	Odno¶nik
+load this template into the editor	etemplate	pl	za³aduj ten szablon do edytora
+middle	etemplate	pl	Wy¶rodkowany
+minute	etemplate	pl	Minuta
+minutes	etemplate	pl	minuty
+month	etemplate	pl	miesi±c
+multicolumn indices	etemplate	pl	Indeksy wielokolumnowe
+name	etemplate	pl	Nazwa
+name of other table where column is a key from	etemplate	pl	nazwa innej tabeli, w której kolumna jest kluczem
+name of table to add	etemplate	pl	Nazwa tabeli do dodania
+name of the etemplate, should be in form application.function[.subtemplate]	etemplate	pl	nazwa e-Szablonu powinna byæ w formie: application.function[.subTemplate]
+new search	etemplate	pl	Nowe wyszukiwanie
+new table created	etemplate	pl	Utworzono now± tabelê
+newer version '%1' exists !!!	etemplate	pl	nowsza wersja '%1' istnieje!
+no filename given or selected via browse...	etemplate	pl	nie podano nazwy pliku i nie wybrano jej
+not null	etemplate	pl	NOT NULL
+nothing	etemplate	pl	nic
+nothing found - try again !!!	etemplate	pl	Nic nie znaleziono - spróbuj ponownie.
+nothing in clipboard to paste !!!	etemplate	pl	Schowek pusty - nie mo¿na wkleiæ.
+nothing matched search criteria !!!	etemplate	pl	Brak elementów spe³niaj±cych kryteria.
+of	etemplate	pl	z
+onchange	etemplate	pl	onChange (JS)
+onclick	etemplate	pl	onClick (JS)
+options	etemplate	pl	Opcje
+order to navigating by tab key through the form	etemplate	pl	Porz±dek nawigacji klawiszem 'TAB' w formularzu
+overflow	etemplate	pl	Przepe³nienie
+padding	etemplate	pl	Wype³nienie
+parent is a '%1' !!!	etemplate	pl	nadrzêdny jest '%1'!
+paste	etemplate	pl	Wklej
+path	etemplate	pl	¦cie¿ka
+please enter table-name first !!!	etemplate	pl	Proszê wpierw wprowadziæ nazwê tabeli!
+pm	etemplate	pl	po po³udniu
+popup	etemplate	pl	Okno pop-up
+precision	etemplate	pl	Dok³adno¶æ (d³ugo¶æ)
+primary key	etemplate	pl	Klucz g³ówny
+primary key for the table, gets automaticaly indexed	etemplate	pl	Klucz g³ówny dla tabeli, zostaje automatycznie indeksowany
+read	etemplate	pl	Odczytaj
+read a list of entries.	etemplate	pl	Odczytaj lstê wpisów.
+read a single entry by passing the id and fieldlist.	etemplate	pl	Odczytaj pojedynczy wpis, podaj±c ID oraz listê pól
+read etemplate from database (for the keys above)	etemplate	pl	odczytaj e-Szablon z bazy danych (dla powy¿szych kluczy)
+readonly	etemplate	pl	tylko do odczytu
+remove row (can not be undone!!!)	etemplate	pl	usuñ wiersz (nie mo¿na cofn±æ!)
+remove this link (not the entry itself)	etemplate	pl	usuñ ten odno¶nik (ale nie wpis)
+row...	etemplate	pl	Wiersz...
+save selected columns as default preference for all users.	etemplate	pl	Zachowaj wybrane kolumny w formie domy¶lnej preferencji dla wszystkich u¿ytkowników.
+save the changes made and close the window	etemplate	pl	Zachowuje zmiany i zamyka okno
+scale	etemplate	pl	Skala
+select a primary contact, to show in the list	etemplate	pl	Wybierz podstawowy kontakt, który bêdzie pokazywany na li¶cie
+select access	etemplate	pl	Wybierz rodzaj dostêpu
+select account	etemplate	pl	Wybierz konto
+select day of week	etemplate	pl	wybierz dzieñ tygodnia
+select language	etemplate	pl	Wybierz jêzyk
+select priority	etemplate	pl	Wybierz priorytet
+select which accounts to show	etemplate	pl	wybierz konta, które maj± byæ pokazane
+select which values to show	etemplate	pl	wybierz warto¶ci, które maj± byæ pokazane
+select year	etemplate	pl	Wybierz rok
+should the form be submitted or any custom javascript be executed	etemplate	pl	Czy formularz powinien byæ przes³any czy bêdzie wykonywany kod JavaScript?
+show	etemplate	pl	Poka¿
+show (no save)	etemplate	pl	Poka¿ (bez zapisu)
+show values	etemplate	pl	Poka¿ warto¶ci
+showing	etemplate	pl	Wy¶wietlono
+submit form	etemplate	pl	prze¶lij formularz
+submitbutton	etemplate	pl	Przycisk przes³ania formularza
+swap	etemplate	pl	zamieñ
+swap widget with next one	etemplate	pl	zamieñ obiekt z kolejnym
+swap with next column	etemplate	pl	zamieñ z nastêpn± kolumn±
+swap with next row	etemplate	pl	zamieñ z nastêpnym wierszem
+switch to a parent widget	etemplate	pl	skocz to obiektu nadrzêdnego
+switch to an other widgets of that container	etemplate	pl	skocz do innych obiektów z tego kontenera
+tabindex	etemplate	pl	Indeks porz±dku (TAB)
+table unchanged, no write necessary !!!	etemplate	pl	Tabale nie zosta³a zmieniona, zapis nie jest wymagany!
+tablename	etemplate	pl	Nazwa tabeli
+tabs	etemplate	pl	Zak³adki
+template	etemplate	pl	Szablon
+template deleted	etemplate	pl	Szablon usuniêto
+template saved	etemplate	pl	Szablon zapisano
+time	etemplate	pl	Czas
+to start the db-tools	etemplate	pl	aby uruchomiæ narzêdzie bazodanowe
+to start the etemplate editor	etemplate	pl	aby uruchomiæ edytor e-Szablonów
+to start the search	etemplate	pl	aby uruchomiæ wyszukiwanie
+today	etemplate	pl	Dzisiaj
+type of the column	etemplate	pl	typ kolumny
+unique	etemplate	pl	Unikalna
+valign	etemplate	pl	w pionie
+value	etemplate	pl	Warto¶æ
+value has to be at least '%1' !!!	etemplate	pl	Warto¶æ musi byæ przynajmniej '%1'!
+value has to be at maximum '%1' !!!	etemplate	pl	Warto¶æ musi byæ co najwy¿ej '%1'!
+version	etemplate	pl	Wersja
+weekend	etemplate	pl	weekend
+widget copied into clipboard	etemplate	pl	Obiekt skopiowano do schowka
+width	etemplate	pl	Szeroko¶æ
+width of column (in % or pixel)	etemplate	pl	szeroko¶æ kolumny (w procentach lub pikselach)
+working days	etemplate	pl	dni robocze
+write langfile	etemplate	pl	Zapisz plik jêzyka
+write tables	etemplate	pl	Zapisz tabele
+xslt template	etemplate	pl	Szablon XSLT
+year	etemplate	pl	Rok

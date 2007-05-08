@@ -164,7 +164,18 @@
 			}
 			if ($value['m'] && strchr($this->dateformat,'M') !== false)
 			{
-				$value['M'] = substr(lang(adodb_date('F',$value['m'])),0,3);
+				static $month = array('','January','February','March','April','Mai','June','July','August','September','October','November','December');
+				static $substr;
+				if (is_null($substr)) $substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
+				static $chars_shortcut;
+				if (is_null($chars_shortcut)) $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
+				
+				$value['M'] = lang(substr($month[$value['m']],0,3));	// check if we have a translation of the short-cut
+				if ($substr($value['M'],-1) == '*')	// if not generate one by truncating the translation of the long name
+				{
+					$value['M'] = $chars_shortcut > 0 ? $substr(lang($month[$value['m']]),0,$chars_shortcut) : 
+						$substr(lang($month[$value['m']]),$chars_shortcut);
+				}
 			}
 			if ($readonly)	// is readonly
 			{

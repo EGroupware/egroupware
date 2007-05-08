@@ -232,11 +232,11 @@ class uiforms extends uical
 						{
 							$msg = lang('You need to select an account, contact or resource first!');
 						}
-						// fall-through
+						break;
+
 					case 'delete':		// handled in default
 					case 'quantity':	// handled in new_resource
 					case 'cal_resources':
-						$uid = false;
 						break;
 
 					case 'resource':
@@ -248,17 +248,19 @@ class uiforms extends uical
 						{
 							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
+							if ($uid) $event['participants'][$uid] = $event['participant_types'][$type][$id] = 
+								$status.((int) $quantity > 1 ? (int)$quantity : '');
 							break;
 						}
 						// fall-through for accounts entered as contact
 					case 'account':
-						$id = $uid = $data;
-						$type = 'u';
-						$quantity = 1;
-						$status = $uid == $this->bo->user ? 'A' : 'U';
+						foreach(is_array($data) ? $data : explode(',',$data) as $uid)
+						{
+							if ($uid) $event['participants'][$uid] = $event['participant_types']['u'][$uid] = 
+								$uid == $this->bo->user ? 'A' : 'U';
+						}
 						break;
-						
-						
+
 					default:		// existing participant row
 						foreach(array('uid','status','status_recurrence','quantity') as $name)
 						{
@@ -282,7 +284,7 @@ class uiforms extends uical
 							}
 							if ($data['old_status'] != $status)
 							{
-								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE && $status_recurrence != 'A' ? $content['participants']['status_date'] : 0))
+								if ($this->bo->set_status($event['id'],$uid,$status,$event['recur_type'] != MCAL_RECUR_NONE && !$status_recurrence ? $content['participants']['status_date'] : 0))
 								{
 									// refreshing the calendar-view with the changed participant-status
 									$msg = lang('Status changed');
@@ -295,13 +297,14 @@ class uiforms extends uical
 									}
 								}
 							}
+							if ($uid && $status != 'G')
+							{
+								$event['participants'][$uid] = $event['participant_types'][$type][$id] = 
+									$status.((int) $quantity > 1 ? (int)$quantity : '');
+							}
 						}
 						break;
 				}
-				if (!$uid || !$status || $status == 'G') continue;	// empty, deleted, group-invitation --> ignore
-
-				$event['participants'][$uid] = $event['participant_types'][$type][$id] = 
-					$status.((int) $quantity > 1 ? (int)$quantity : '');
 			}
 		}
 		$preserv = array(
@@ -467,7 +470,7 @@ class uiforms extends uical
 				$offset = DAY_s * $content['new_alarm']['days'] + HOUR_s * $content['new_alarm']['hours'] + 60 * $content['new_alarm']['mins'];
 				$alarm = array(
 					'offset' => $offset,
-					'time'   => $content['start'] - $offset,
+					'time'   => ($content['actual_date'] ? $content['actual_date'] : $content['start']) - $offset,
 					'all'    => !$content['new_alarm']['owner'],
 					'owner'  => $content['new_alarm']['owner'] ? $content['new_alarm']['owner'] : $this->user,
 				);
@@ -598,7 +601,7 @@ class uiforms extends uical
 			'action'     => array(
 				'copy' => array('label' => 'Copy', 'title' => 'Copy this event'),
 				'ical' => array('label' => 'Export', 'title' => 'Download this event as iCal'),
-				'mail' => array('label' => 'Mail participants', 'title' => 'compose a mail to all participants after the event is saved'),
+				'mail' => array('label' => 'Mail all participants', 'title' => 'compose a mail to all participants after the event is saved'),
 			),
 			'status_recurrence' => array('' => 'for this event', 'A' => 'for all future events'),
 		);
@@ -801,13 +804,17 @@ class uiforms extends uical
 		}
 		$readonlys['button[delete]'] = !$event['id'] || !$this->bo->check_perms(EGW_ACL_DELETE,$event);
 
-		if ($event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
+		if (!$event['id'] || $this->bo->check_perms(EGW_ACL_EDIT,$event))	// new event or edit rights to the event ==> allow to add alarm for all users
 		{
 			$sel_options['owner'][0] = lang('All participants');
 		}
+		if (isset($event['participant_types']['u'][$this->user]))
+		{
+			$sel_options['owner'][$this->user] = $this->bo->participant_name($this->user);
+		}
 		foreach((array) $event['participant_types']['u'] as $uid => $status)
 		{
-			if ($status != 'R' && $this->bo->check_perms(EGW_ACL_EDIT,0,$uid))
+			if ($uid != $this->user && $status != 'R' && $this->bo->check_perms(EGW_ACL_EDIT,0,$uid))
 			{
 				$sel_options['owner'][$uid] = $this->bo->participant_name($uid);
 			}

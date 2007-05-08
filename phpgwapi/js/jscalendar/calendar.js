@@ -61,6 +61,8 @@ Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
 			ar[--i] = Calendar._DN[i].substr(0, Calendar._SDN_len);
 		}
 		Calendar._SDN = ar;
+	}
+	if (typeof Calendar._SMN == "undefined") {
 		// table of short month names
 		if (typeof Calendar._SMN_len == "undefined")
 			Calendar._SMN_len = 3;
@@ -1438,7 +1440,8 @@ Calendar.prototype.parseDate = function (str, fmt) {
 	var y = 0;
 	var m = -1;
 	var d = 0;
-	var a = str.split(/\W+/);
+//	var a = str.split(/\W+/); does not work with multibyte chars, eg. german umlauts under utf-8
+	var a = str.split(/[./-]/);
 	if (!fmt) {
 		fmt = this.dateFormat;
 	}

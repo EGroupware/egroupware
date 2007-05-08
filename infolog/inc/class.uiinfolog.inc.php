@@ -386,7 +386,7 @@ class uiinfolog
 		elseif ($own_referer === '')
 		{
 			$own_referer = $GLOBALS['egw']->common->get_referer();
-			if (strstr($own_referer,'menuaction=infolog.uiinfolog.edit'))
+			if (strpos($own_referer,'menuaction=infolog.uiinfolog.edit') !== false)
 			{
 				$own_referer = $GLOBALS['egw']->session->appsession('own_session','infolog');
 			}
@@ -532,7 +532,7 @@ class uiinfolog
 			$pref = 'nextmatch-infolog.index.rows'.($values['nm']['filter2']=='all'?'-details':'');
 			foreach(array('info_used_time_info_planned_time','info_datemodified','info_owner_info_responsible') as $name)
 			{
-				$values['main']['no_'.$name] = strstr($this->prefs[$pref],$name) === false;
+				$values['main']['no_'.$name] = strpos($this->prefs[$pref],$name) === false;
 			}
 		}
 		$values['nm']['header_right'] = 'infolog.index.header_right';
@@ -764,7 +764,7 @@ class uiinfolog
 						$this->link->link('infolog',$info_id,$content['link_to']['to_id']);
 						$content['link_to']['to_id'] = $info_id;
 					}
-					if ($info_link_id && strstr($info_link_id,':') !== false)	// updating info_link_id if necessary
+					if ($info_link_id && strpos($info_link_id,':') !== false)	// updating info_link_id if necessary
 					{
 						list($app,$id) = explode(':',$info_link_id);
 						$link = $this->link->get_link('infolog',$info_id,$app,$id);

@@ -711,6 +711,8 @@ class uicontacts extends bocontacts
 				$query['order'] = 'org_name';
 			}
 			$rows = parent::organisations($query);
+			
+			$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualAddressbookIndexOrga');
 		}
 		else	// contacts view
 		{

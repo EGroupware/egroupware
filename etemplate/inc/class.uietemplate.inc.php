@@ -1146,8 +1146,8 @@
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
 						$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
-							(((string)$cell['onchange'] === '1' || $img && !$onclick) ? 
-							"return submitit($this->name_form,'$form_name');" : $cell['onchange']).'; return false;';
+							(((string)$cell['onchange'] === '1' || $img) ? 
+							"return submitit($this->name_form,'".addslashes($form_name)."');" : $cell['onchange']).'; return false;';
 						
 						if (!$this->html->netscape4 && substr($img,-1) == '%' && is_numeric($percent = substr($img,0,-1)))
 						{

@@ -255,11 +255,13 @@ foreach($day2int as $name => $n)
 
 Calendar._SDN = new Array
 (<?php // short day names
+static $substr;
+if(is_null($substr)) $substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
 $chars_shortcut = (int) lang('3 number of chars for day-shortcut');		// < 0 to take the chars from the end
 foreach($day2int as $name => $n)
 {
-	echo "\n \"".($chars_shortcut > 0 ? substr(lang($name),0,$chars_shortcut) : 
-		substr(lang($name),$chars_shortcut)).'"'.($n < 6 ? ',' : '');
+	echo "\n \"".($chars_shortcut > 0 ? $substr(lang($name),0,$chars_shortcut) : 
+		$substr(lang($name),$chars_shortcut)).'"'.($n < 6 ? ',' : '');
 }
 ?>);
 Calendar._SDN_len = <?php echo abs((int) lang('3 number of chars for day-shortcut')); ?>;
@@ -276,13 +278,13 @@ foreach($monthnames as $n => $name)
 Calendar._SMN = new Array
 (<?php // short month names
 $monthnames = array('January','February','March','April','May','June','July','August','September','October','November','December');
+$chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 foreach($monthnames as $n => $name)
 {
 	$short = lang(substr($name,0,3));	// test if our lang-file have a translation for the english short with 3 chars
-	if (substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
+	if ($substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
 	{
-        $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
-        $short = $chars_shortcut > 0 ? substr(lang($name),0,$chars_shortcut) : substr(lang($name),$chars_shortcut);
+        $short = $chars_shortcut > 0 ? $substr(lang($name),0,$chars_shortcut) : $substr(lang($name),$chars_shortcut);
 	}
 	echo "\n \"".$short.'"'.($n < 11 ? ',' : '');
 }
