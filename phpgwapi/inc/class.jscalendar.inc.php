@@ -83,10 +83,16 @@ class jscalendar
 			$date = adodb_date($this->dateformat,$ts = adodb_mktime(12,0,0,$month,$day,$year));
 			if (strpos($this->dateformat,'M') !== false)
 			{
+				static $substr;
+				if (is_null($substr)) $substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
+				static $chars_shortcut;
+				if (is_null($chars_shortcut)) $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
+
 				$short = lang(adodb_date('M',$ts));	// check if we have a translation of the short-cut
-				if (substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
+				if ($substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
 				{
-					$short = substr(lang(adodb_date('F',$ts)),0,(int) lang('3 number of chars for month-shortcut'));
+					$short = $chars_shortcut > 0 ? $substr(lang(adodb_date('F',$ts)),0,$chars_shortcut) : 
+						$substr(lang(adodb_date('F',$ts)),$chars_shortcut);
 				}
 				$date = str_replace(adodb_date('M',$ts),$short,$date);
 			}
