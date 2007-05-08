@@ -883,9 +883,10 @@
 					!$GLOBALS['egw']->accounts->ds)
 				{
 					printf("<b>Error: Error connecting to LDAP server %s!</b><br>",$GLOBALS['egw_info']['server']['ldap_host']);
-					exit;
+					return false;
 				}
 			}
+			return true;
 		}
 
 		/**
@@ -966,7 +967,7 @@
 		 */
 		function accounts_exist()
 		{
-			$this->setup_account_object();
+			if (!$this->setup_account_object()) return false;
 
 			$accounts = $GLOBALS['egw']->accounts->search(array(
 				'type'   => 'accounts',

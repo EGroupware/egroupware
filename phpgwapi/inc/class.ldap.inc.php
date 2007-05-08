@@ -136,7 +136,7 @@
 
 			if(!isset($this->ldapServerInfo[$host])) {
 				//error_log("no ldap server info found");
-				$ldapbind = ldap_bind($this->ds, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']);
+				$ldapbind = @ldap_bind($this->ds, $GLOBALS['egw_info']['server']['ldap_root_dn'], $GLOBALS['egw_info']['server']['ldap_root_pw']);
 
 				$filter='(objectclass=*)';
 				$justthese = array('structuralObjectClass','namingContexts','supportedLDAPVersion','subschemaSubentry');
@@ -208,14 +208,13 @@
 				$ldapServerInfo = $this->ldapServerInfo[$host];
 			}
 
-			if(!ldap_bind($this->ds, $dn, $passwd)) {
+			if(!@ldap_bind($this->ds, $dn, $passwd)) {
 				if(is_object($GLOBALS['egw']->log)) {
 					$GLOBALS['egw']->log->message('F-Abort, Failed binding to LDAP server');
 					$GLOBALS['egw']->log->commit();
 				}
 
-				printf("<b>Error: Can't bind to LDAP server: %s!</b><br>",$dn);
-				echo function_backtrace(1);
+				printf("<b>Error: Can't bind to LDAP server: %s!</b> %s<br />",$dn,function_backtrace(1));
 				return False;
 			}
 
