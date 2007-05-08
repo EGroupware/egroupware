@@ -248,6 +248,8 @@ class uiforms extends uical
 						{
 							$status = isset($this->bo->resources[$type]['new_status']) ? ExecMethod($this->bo->resources[$type]['new_status'],$id) : 'U';
 							$quantity = $content['participants']['quantity'] ? $content['participants']['quantity'] : 1;
+							if ($uid) $event['participants'][$uid] = $event['participant_types'][$type][$id] = 
+								$status.((int) $quantity > 1 ? (int)$quantity : '');
 							break;
 						}
 						// fall-through for accounts entered as contact
