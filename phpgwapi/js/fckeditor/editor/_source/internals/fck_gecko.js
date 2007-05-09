@@ -60,8 +60,10 @@ FCK.InitializeBehaviors = function()
 	this.EditorDocument.addEventListener( 'dblclick', this._DblClickListener, true ) ;
 
 	// Reset the context menu.
-	FCK.ContextMenu._InnerContextMenu.SetMouseClickWindow( FCK.EditorWindow ) ;
-	FCK.ContextMenu._InnerContextMenu.AttachToElement( FCK.EditorDocument ) ;
+	if ( FCKConfig.ContextMenu != null ) {
+		FCK.ContextMenu._InnerContextMenu.SetMouseClickWindow( FCK.EditorWindow ) ;
+		FCK.ContextMenu._InnerContextMenu.AttachToElement( FCK.EditorDocument ) ;
+	}
 }
 
 FCK.MakeEditable = function()

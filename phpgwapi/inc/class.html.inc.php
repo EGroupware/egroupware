@@ -621,6 +621,7 @@ class html
 		switch($_mode) {
 			case 'simple':
 				$oFCKeditor->ToolbarSet = 'egw_simple';
+				$oFCKeditor->Config['ContextMenu'] = false;
 				break;
 
 			default:
@@ -661,6 +662,7 @@ class html
 				return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";
 				break;
 			case 'simple':
+				$oFCKeditor->Config['ContextMenu'] = false;
 				$oFCKeditor->ToolbarSet = 'egw_simple';
 				return $oFCKeditor->CreateHTML() ;
 				break;
