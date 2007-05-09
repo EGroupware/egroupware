@@ -323,7 +323,7 @@ class botimesheet extends so_sql
 		
 		if ($only_summary) return $this->summary;
 
-		if ($this->show_sums && strstr($order_by,'ts_start') && 	// sums only make sense if ordered by ts_start
+		if ($this->show_sums && strpos($order_by,'ts_start') !== false && 	// sums only make sense if ordered by ts_start
 			$this->db->capabilities['union'] && ($from_unixtime_ts_start = $this->db->from_unixtime('ts_start')))
 		{
 			$sum_sql = array(
