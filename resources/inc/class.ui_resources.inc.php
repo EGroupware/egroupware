@@ -219,8 +219,8 @@ class ui_resources
 			if ($res_id > 0)
 			{
 				$content = $this->bo->read($res_id);
-				$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
-				$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
+				$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
+				$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
 				$content['link_to'] = array(
 					'to_id' => $res_id,
 					'to_app' => 'resources'
@@ -310,8 +310,8 @@ class ui_resources
 
 		$content = array('res_id' => $res_id);
 		$content = $this->bo->read($res_id);
-		$content['gen_src_list'] = strstr($content['picture_src'],'.') ? $content['picture_src'] : false;
-		$content['picture_src'] = strstr($content['picture_src'],'.') ? 'gen_src' : $content['picture_src'];
+		$content['gen_src_list'] = strpos($content['picture_src'],'.') !== false ? $content['picture_src'] : false;
+		$content['picture_src'] = strpos($content['picture_src'],'.') !== false ? 'gen_src' : $content['picture_src'];
 		$content['link_to'] = array(
 				'to_id' => $res_id,
 				'to_app' => 'resources'
