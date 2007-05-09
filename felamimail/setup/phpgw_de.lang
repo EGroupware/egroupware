@@ -145,7 +145,7 @@ file into	felamimail	de	verschiebe nach
 files	felamimail	de	Dateien
 filter active	felamimail	de	Filter aktiv
 filter name	felamimail	de	Filtername
-filter rules	preferences	de	Filter Regeln
+filter rules	common	de	Filter Regeln
 first name	felamimail	de	Vorname
 flagged	felamimail	de	wichtig
 flags	felamimail	de	Markierungen
@@ -224,7 +224,7 @@ location of buttons when composing	felamimail	de	Ort der Knöpfe beim E-Mail schr
 mail server login type	admin	de	Typ der Mailserver Anmeldung
 mail settings	felamimail	de	E-Mail-Einstellungen
 mainmessage	felamimail	de	Hauptnachricht
-manage emailaccounts	felamimail	de	E-Mail-Konten verwalten
+manage emailaccounts	preferences	de	E-Mail-Konten verwalten
 manage emailfilter / vacation	preferences	de	Verwalten der E-Mail-Filter und Abwesenheitsnotiz
 manage folders	common	de	Ordner verwalten
 manage sieve	common	de	Sieve Scripte verwalten
@@ -403,7 +403,7 @@ use custom settings	felamimail	de	benutze angepaßte Einstellungen
 use regular expressions	felamimail	de	reguläre Ausdrücke verwenden
 use smtp auth	admin	de	SMTP Auth benutzen
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
-vacation notice	preferences	de	Abwesenheitsnotiz
+vacation notice	common	de	Abwesenheitsnotiz
 vacation notice is active	felamimail	de	Abwesenheitsnotiz ist aktiv
 validate certificate	felamimail	de	Zertifikat überprüfen
 view full header	felamimail	de	alle Kopfzeilen anzeigen

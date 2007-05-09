@@ -101,7 +101,8 @@ LoadScript( 'lang/' + FCKLanguageManager.ActiveLanguage.Code + '.js' ) ;
 	<script type="text/javascript">
 
 // Initialize the editing area context menu.
-FCK_ContextMenu_Init() ;
+if ( FCKConfig.ContextMenu != null )
+  FCK_ContextMenu_Init() ;
 
 FCKPlugins.Load() ;
 

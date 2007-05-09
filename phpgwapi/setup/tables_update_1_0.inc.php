@@ -151,7 +151,7 @@
 			),
 			'pk' => array('vfs_file_id'),
 			'fk' => array(),
-			'ix' => array(array('vfs_directory','vfs_name','vfs_mime_type')),
+			'ix' => array(array('vfs_directory','vfs_name')),
 			'uc' => array()
 		));
 

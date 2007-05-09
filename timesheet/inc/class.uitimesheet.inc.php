@@ -86,7 +86,7 @@ class uitimesheet extends botimesheet
 				);
 			}
 			$referer = preg_match('/menuaction=([^&]+)/',$_SERVER['HTTP_REFERER'],$matches) ? $matches[1] : 
-				(strstr($_SERVER['HTTP_REFERER'],'/infolog/index.php') ? 'infolog.uiinfolog.index' : TIMESHEET_APP.'.uitimesheet.index');
+				(strpos($_SERVER['HTTP_REFERER'],'/infolog/index.php') !== false ? 'infolog.uiinfolog.index' : TIMESHEET_APP.'.uitimesheet.index');
 		}
 		else
 		{
@@ -635,6 +635,9 @@ class uitimesheet extends botimesheet
 			if (!is_array($projects)) $projects = array();
 			$sel_options['ts_project'] = $projects + array(lang('No project'));
 		}
+		// dont show [Export] button if app is not availible to the user or we are on php4
+		$readonlys['export'] = !$GLOBALS['egw_info']['user']['apps']['importexport'] || (int) phpversion() < 5;
+
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.index',$content,$sel_options,$readonlys,$preserv);
 	}
 

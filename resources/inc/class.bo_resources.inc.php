@@ -492,7 +492,7 @@ class bo_resources
 			case 'gen_src':
 			default :
 				$picture = $GLOBALS['egw_info']['server']['webserver_url'].$this->resource_icons;
-				$picture .= strstr($src,'.') ? $src : 'generic.png';
+				$picture .= strpos($src,'.') !== false ? $src : 'generic.png';
 		}
 		return $picture;
 	}

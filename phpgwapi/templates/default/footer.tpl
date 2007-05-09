@@ -7,7 +7,7 @@
 </div>
 </div>
 {page_generation_time}	
-<div id="divPoweredBy"><br/><span>{powered_by}</span></div>	
+<div id="divPoweredBy">{powered_by}</div>	
 <!-- enable wz_tooltips -->
 {activate_tooltips}
 </body>

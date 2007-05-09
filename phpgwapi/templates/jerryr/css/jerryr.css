@@ -60,8 +60,8 @@ a:hover,a:active
 body 
 {
 	background-color:#9f9f9f;
-	padding:9px;
-	margin:9px;
+	padding: 0px;
+	margin: 0px;
 }
 
 form
@@ -155,19 +155,19 @@ input[type=image]
 
 #thesideboxcolumn
 {
-        width: 177px;
-        position:relative;
+    width: 177px;
+    position:relative;
 }
 
 #sideresize
 {
-        background-image:url(../images/resize.png);
-        width:10px;
-        height:100px;
-        right:-12px;
-        top:0px;
-        position:absolute;
-        z-index:9999;
+    background-image:url(../images/resize.png);
+    width:10px;
+    height:100px;
+    right:-12px;
+    top:0px;
+    position:absolute;
+    z-index:9999;
 }
 
 .divLoginbox 
@@ -202,28 +202,28 @@ input[type=image]
 	text-align:center;
 	background-image:url(../images/menuTitle.png);
 	color:#17202b;
-	height: 18px;
+	/*height: 18px;*/
 	font-weight:bold;
 	font-size:12px;
 }
 
 .menuHeadLt
 {
-        padding:0px;
-        width: 24px;
-        height:18px;
+    padding:0px;
+    width: 24px;
+    height:18px;
 }
 .menuHeadMid
 {
-        padding:0px;
-        margin-left: auto;
+    padding:0px;
+    margin-left: auto;
 	margin-right: auto;
 }
 .menuHeadRt
 {
-        width:24px;
-        padding:0px;
-        height: 18px;
+    width:24px;
+    padding:0px;
+    height: 18px;
 }
 
 
@@ -247,7 +247,6 @@ a.textSidebox
 
 .textSidebox
 {
-	height:18px;
 	padding-left: 2px;
 	border-top: solid #9f9f9f 1px;
 }
@@ -278,17 +277,17 @@ a.textSidebox
 {
 	background-image: url(../images/divmain-background.jpg);
 	background-repeat: no-repeat;
-        background-color:white;
-        border: #17202b 1px solid;
-        padding:10px;
+    background-color:white;
+    border: #17202b 1px solid;
+    padding:10px;
 	width: 203px;
 }
 
 .sideboxDrop
 {
-position: relative;
-        left: 0px;
-        top: 0px;
+	position: relative;
+	left: 0px;
+	top: 0px;
 }
 
 .textSidebox:first-letter
@@ -343,11 +342,11 @@ position: relative;
 
 .extraIconsHeader
 {
-        text-align:center;
-        background-image:url(../images/menuTitle.png);
-        color:#17202b;
-        font-weight:normal;
-        font-size:10px;
+    text-align:center;
+    background-image:url(../images/menuTitle.png);
+    color:#17202b;
+    font-weight:normal;
+    font-size:10px;
 	height: 18px;
 }
 
@@ -370,10 +369,10 @@ position: relative;
 
 .extraIconsRow:hover
 {
-        border-top:solid 1px #9f9f9f;
-        padding:1px;
+	border-top:solid 1px #9f9f9f;
+	padding:1px;
 	padding-left: 3px;
-        font-size: 10px;
+	font-size: 10px;
 	background-color: #ede6d8;
 }
 
@@ -385,12 +384,13 @@ body {
 	padding: 0px;
 }
 
-#divMain
+#divMain,#popupMainDiv
 {
 	background-image:url(../images/divmain-background.jpg);
 	background-repeat:no-repeat;
 	background-color:white;
 	padding:9px;
+	padding-top: 0px;	/* CHANGED RALF */
 	border:solid 1px #17202b;
 }
 
@@ -398,36 +398,42 @@ body {
 {
 	position:absolute;
 	left:27px;
-	top:28px;
+	top:20px;
 	z-index:999;
+}
+
+#popupMainDiv
+{
+	padding:9px;
+	margin: 9px;
 }
 
 #topmenu
 {
-        background-color: #0081c1;
-        background-image: url(../images/hilitetest.png);
-        color:#006699;
-        border-top: solid 1px #17202b;
+	background-color: #0081c1;
+	background-image: url(../images/hilitetest.png);
+	color:#006699;
+	border-top: solid 1px #17202b;
 	border-right: 1px solid #17202b;
 	border-left: 1px solid #17202b;
-        border-bottom: solid #5793ff 0px;
-        height:24px;
-        padding-top:4px ;
+	border-bottom: solid #5793ff 0px;
+	height:24px;
+	padding-top:4px ;
         
 }
 #topmenu a
 {
-        color:#006699;
+	color:#006699;
 }
 
 #topmenu_items
 {	
-        float:left;
+	float:left;
 }
 
 #topmenu_info
 {
-        float:right;
+	float:right;
 }
 
 
@@ -468,7 +474,7 @@ body {
 
 .iconBackFirstCell
 {
-        background-image: url(../images/firstcell.png);
+	background-image: url(../images/firstcell.png);
 	background-repeat: no-repeat;
 	height: 58px;
 }
@@ -500,7 +506,6 @@ body {
 
 #divAppTextBar
 {
-	/*background-color:white;*/
 }
 
 /*
@@ -512,7 +517,6 @@ body {
 	position: relative;
 	top:0px;
 	left:0px;
-	height:30px;
 	vertical-align:bottom;
 	border: 0px solid black;
 	padding-top:10px;
@@ -520,22 +524,22 @@ body {
 
 .userinfolt
 {
-        background-image: url(../images/userbacklt.png);
-        width: 20px;
-        height: 25px;
+	background-image: url(../images/userbacklt.png);
+	width: 20px;
+	height: 25px;
 }
 
 .userinfomid
 {
-        background-image: url(../images/userback.png);
-        background-repeat: repeat-x;
-        color: #000000;
+	background-image: url(../images/userback.png);
+	background-repeat: repeat-x;
+	color: #000000;
 }
 
 .userinfort
 {
-        background-image: url(../images/userbackrt.png);
-        width: 20px;
+	background-image: url(../images/userbackrt.png);
+	width: 20px;
 }
 
 

@@ -127,7 +127,8 @@ FCK.InitializeBehaviors = function( dontReturn )
 	this.EditorDocument.body.attachEvent( 'onpaste', Doc_OnPaste ) ;
 
 	// Reset the context menu.
-	FCK.ContextMenu._InnerContextMenu.AttachToElement( FCK.EditorDocument.body ) ;
+	if ( FCKConfig.ContextMenu != null )
+		FCK.ContextMenu._InnerContextMenu.AttachToElement( FCK.EditorDocument.body ) ;
 
 	// Build the "TAB" key replacement (if necessary).
 	if ( FCKConfig.TabSpaces > 0 )
