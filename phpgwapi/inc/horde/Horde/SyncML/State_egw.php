@@ -227,7 +227,7 @@ class EGW_SyncML_State extends Horde_SyncML_State
 			return FALSE;
 		}
                 
-                if(strstr($this->_locName,'@') === False)
+                if(strpos($this->_locName,'@') === False)
                 {
                 	$this->_locName .= '@'.$GLOBALS['egw_info']['server']['default_domain'];
                 }
