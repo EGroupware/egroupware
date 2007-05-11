@@ -124,7 +124,7 @@
 			'type'   => 'check',
 			'label'  => 'Should the calendar show custom types too',
 			'name'   => 'cal_show_custom',
-			'help'   => 'Do you want to see custome InfoLog types in the calendar?',
+			'help'   => 'Do you want to see custom InfoLog types in the calendar?',
 			'xmlrpc' => True,
 			'admin'  => False
 		);
