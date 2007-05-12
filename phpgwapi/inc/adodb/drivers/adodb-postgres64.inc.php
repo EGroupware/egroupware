@@ -165,7 +165,7 @@ a different OID if a database must be reloaded. */
 				$cols = $this->MetaColumns($table);
 				$fld = $cols[strtoupper($column)];
 				if ($fld->primary_key && $fld->has_default && 
-					preg_match("/nextval\('([^']+)'::text\)/",$fld->default_value,$matches)) {
+					preg_match("/nextval\('([^']+)'::(text|regclass)\)/",$fld->default_value,$matches)) {
 					$ret = $this->GetOne($sql='SELECT currval('.$this->qstr($matches[1]).')');
 				}
 			}
