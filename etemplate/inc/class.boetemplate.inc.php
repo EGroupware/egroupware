@@ -157,8 +157,8 @@
 					$cont = array();
 				}
 				if (!is_numeric($c)) $c = boetemplate::chrs2num($c);
-				$col = $this->num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
-				$col_ = $this->num2chrs($c_-1);
+				$col = boetemplate::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
+				$col_ = boetemplate::num2chrs($c_-1);
 				$row_cont = $cont[$row];
 				$col_row_cont = $cont[$col.$row];
 
