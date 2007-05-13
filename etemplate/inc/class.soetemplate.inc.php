@@ -1174,16 +1174,16 @@
 		 *
 		 * @param string/array $func function to use or array($obj,'method')
 		 * @param mixed &$extra extra parameter passed to function
+		 * @param string $path='/' start-path
 		 * @return mixed return-value of func or null if nothing returned at all
 		 */
-		function &widget_tree_walk($func,&$extra)
+		function &widget_tree_walk($func,&$extra,$path='/')
 		{
 			if (!is_callable($func))
 			{
 				echo "<p><b>boetemplate($this->name)::widget_tree_walk</b>(".print_r($func,true).", ".print_r($extra,true).", ".print_r($opts,true).") func is not callable !!!<br>".function_backtrace()."</p>";
 				return false;
 			}
-			$path = '/';
 			foreach($this->children as $c => $nul)
 			{
 				$child = &$this->children[$c];
@@ -1304,7 +1304,7 @@
 					}
 					if (!is_object($widget['obj'])) break;	// cant descent into template
 					
-					$result =& $widget['obj']->widget_tree_walk($func,$extra);
+					$result =& $widget['obj']->widget_tree_walk($func,$extra,$path.'/');
 					break;
 			}
 			return $result;
