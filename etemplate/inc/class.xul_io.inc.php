@@ -428,7 +428,7 @@
 		 *
 		 * @param object &$etempl eTemplate object to set
 		 * @param string $data the XML 
-		 * @param array/string array with names of imported templates or error-message
+		 * @return array/string array with names of imported templates or error-message
 		 */
 		function import(&$etempl,$data)
 		{
@@ -498,9 +498,8 @@
 						switch ($type)
 						{
 							case 'close':
-								if (!count($parents) || $parent['.is_root'])	// templ import complet => save it
+								if (!count($parents))	// templ import complet => save it
 								{
-									unset($parent['.is_root']);
 									unset($parent); $parents = array();
 									$etempl->fix_old_template_format(); 	// set the depricated compat vars
 									// save tmpl to the cache, as the file may contain more then one tmpl
@@ -525,7 +524,7 @@
 								{
 									$etempl->init($attr);
 									$etempl->children = array();	// init adds one grid by default
-									$parent = &$etempl->children;
+									$parent = &$etempl;				// parent is the template-object itself!
 								}
 								if ($tag == 'grid')
 								{
@@ -541,7 +540,6 @@
 										'rows' => 0,
 										'size' => $size,
 									);
-									if ($is_root) $grid['.is_root'] = true;	// we need to remember we have no template as parent 
 									soetemplate::add_child($parent,$grid);
 									$parents[count($parents)] = &$parent;
 									$parent = &$grid;

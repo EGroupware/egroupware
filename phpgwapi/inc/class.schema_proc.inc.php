@@ -32,46 +32,66 @@
 		 */
 		var $m_oTranslator;
 		/**
-		 * @var egw_db-object $m_odb db-object
+		 * egw_db-object
+		 * 
+		 * @var egw_db
 		 */
 		var $m_odb;
 		/**
-		 * @var adodb-object $adodb reference to the global ADOdb object
+		 * reference to the global ADOdb object
+		 * 
+		 * @var ADOConnection
 		 */
 		var $adodb;
 		/**
-		 * @var datadictionary-object $dict adodb's datadictionary object for the used db-type
+		 * adodb's datadictionary object for the used db-type
+		 * 
+		 * @var ADODB_DataDict
 		 */
 		var $dict;
 		/**
-		 * @var $debug=0 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
+		 * Debuglevel: 0=Off, 1=some, eg. primary function calls, 2=lots incl. the SQL used
+		 * 
+		 * @var int
 		 */
 		var $debug = 0;
 		/**
-		 * @var array $max_index_length db => max. length of indexes pairs (if there is a considerable low limit for a db)
+		 * Arry with db => max. length of indexes pairs (if there is a considerable low limit for a db)
+		 * 
+		 * @var array
 		 */
 		var $max_index_length=array(
 			'sapdb' => 32,
 			'oracle' => 30,
 		);
 		/**
-		 * @var string $sType type of the database, set by the the constructor
+		 * type of the database, set by the the constructor: 'mysql','pgsql','mssql','sapdb'
+		 * 
+		 * @var string
 		 */
 		var $sType;
 		/**
-		 *	@var int $max_varchar_length maximum length of a varchar column, everything above get converted to text
+		 *	maximum length of a varchar column, everything above get converted to text
+		 * 
+		 *	@var int
 		 */
 		var $max_varchar_length = 255;
 		/**
-		 * @var string $system_charset system-charset if set
+		 * system-charset if set
+		 * 
+		 * @var string
 		 */
 		var $system_charset;
 		/**
-		 * @var array $capabilities reference to the array of the db-class
+		 * reference to the capabilities array of the db-class
+		 * 
+		 * @var array
 		 */
 		var $capabilities;
 		/**
-		 * @var int $pgsql_old_seq preserve value of old sequences in PostgreSQL
+		 * preserve value of old sequences in PostgreSQL
+		 * 
+		 * @var int
 		 */
 		var $pgsql_old_seq;
 
@@ -80,6 +100,7 @@
 		 *
 		 * @param string $dbms type of the database: 'mysql','pgsql','mssql','sapdb'
 		 * @param object $db=null database class, if null we use $GLOBALS['egw']->db
+		 * @return schema_proc
 		 */
 		function schema_proc($dbms=False,$db=null)
 		{
@@ -501,7 +522,7 @@
 			if (!is_array($options)) $options = $options ? array($options) : array();
 			if ($bUnique) $options[] = 'UNIQUE';
 
-			$aSql = $this->dict->CreateIndexSQL($name,$sTableName,$aColumnNames,$options);
+			$aSql = $this->dict->CreateIndexSQL($sIdxName,$sTableName,$aColumnNames,$options);
 
 			return $this->ExecuteSQLArray($aSql,2,'CreateIndexSQL(%1,%2,%3,%4) sql=%5',False,$name,$sTableName,$aColumnNames,$options,$aSql);
 		}
@@ -518,6 +539,7 @@
 			if (is_array($aColumnNames)) 
 			{
 				$indexes = $this->dict->MetaIndexes($sTableName);
+
 				if ($indexes === False)
 				{
 					// if MetaIndexes is not availible for the DB, we try the name the index was created with
@@ -605,12 +627,25 @@
 				elseif (isset($old_table_def['fd'][$name]))	// existing column, use its value => column-name in query
 				{
 					$value = $name;
-					// this is eg. necessary to change a varchar into an int column under postgres
-					if ($this->sType == 'pgsql' &&
-						in_array($old_table_def['fd'][$name]['type'],array('char','varchar','text','blob')) &&
-						in_array($data['type'],array('int','decimal')))
+
+					if ($this->sType == 'pgsql')			// some postgres specific code
 					{
-						$value = "to_number($name,'S9999999999999D99')";
+						// this is eg. necessary to change a varchar into an int column under postgres
+						if (in_array($old_table_def['fd'][$name]['type'],array('char','varchar','text','blob')) &&
+							in_array($data['type'],array('int','decimal')))
+						{
+							$value = "to_number($name,'S9999999999999D99')";
+						}
+						// blobs cant be casted to text
+						elseif($old_table_def['fd'][$name]['type'] == 'blob' && $data['type'] == 'text')
+						{
+							$value = "ENCODE($value,'escape')";
+						}
+						// cast everything which is a different type
+						elseif($old_table_def['fd'][$name]['type'] != $data['type'] && ($type_translated = $this->TranslateType($data['type'])))
+						{
+							$value = "CAST($value AS $type_translated)";
+						}
 					}
 				}
 				else	// new column => use default value or NULL
@@ -622,13 +657,13 @@
 					else
 					{
 						$value = $this->m_odb->quote(isset($data['default']) ? $data['default'] : '',$data['type']);
-						if ($this->sType == 'pgsql')
+					}
+					if ($this->sType == 'pgsql')
+					{
+						// fix for postgres error "no '<' operator for type 'unknown'"
+						if(($type_translated = $this->TranslateType($data['type'])))
 						{
-							// fix for postgres error "no '<' operator for type 'unknown'"
-							if(($type_translated = $this->TranslateType($data['type'])))
-							{
-								$value = "CAST($value AS $type_translated)";
-							}
+							$value = "CAST($value AS $type_translated)";
 						}
 					}
 				}
@@ -1188,6 +1223,10 @@
 				}
 				if ($column->has_default)
 				{
+					if (preg_match("/^'(.*)'::.*$/",$column->default_value,$matches))	// postgres
+					{
+						$column->default_value = $matches[1];
+					}
 					$definition['fd'][$name]['default'] = $column->default_value;
 				}
 				if ($column->not_null) 
@@ -1234,7 +1273,7 @@
 			}
 			if ($this->debug > 2) $this->debug_message("schema_proc::GetTableDefintion: MetaIndexes(%1) = %2",False,$sTableName,$indexes);
 			if ($this->debug > 1) $this->debug_message("schema_proc::GetTableDefintion(%1) = %2",False,$sTableName,$definition);
-			
+
 			return $definition;
 		}
 

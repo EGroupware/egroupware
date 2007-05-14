@@ -164,7 +164,7 @@
 			}
 			if ($value['m'] && strchr($this->dateformat,'M') !== false)
 			{
-				static $month = array('','January','February','March','April','Mai','June','July','August','September','October','November','December');
+				static $month = array('','January','February','March','April','May','June','July','August','September','October','November','December');
 				static $substr;
 				if (is_null($substr)) $substr = function_exists('mb_substr') ? 'mb_substr' : 'substr';
 				static $chars_shortcut;

@@ -1264,7 +1264,7 @@ class uiinfolog
 					$bodyAppend = $bofelamimail->wordwrap($value,75,"\n");
 					$message .= $bodyAppend;
 				}
-			}				
+			}
 
 			if (is_array($attachments))
 			{
@@ -1288,7 +1288,7 @@ class uiinfolog
 				$subject,
 				$message,
 				$attachments,
-				strtotime($headers->date)
+				strtotime($headers['DATE'])
 			));
 		}
 		$GLOBALS['egw']->common->egw_header();

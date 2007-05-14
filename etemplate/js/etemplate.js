@@ -72,16 +72,19 @@ function activate_tab(tab,all_tabs,name)
 	// activate FCK in newly activated tab for Gecko browsers
 	if (!document.all)
 	{
-		var t = document.getElementById(tab);
-		var inputs = t.getElementsByTagName('input');
-		for (i = 0; i < inputs.length;i++) {
-	    	editor = FCKeditorAPI.GetInstance(inputs[i].name);
-	    	if (editor && editor.EditorDocument && editor.EditMode == FCK_EDITMODE_WYSIWYG) {
-	    		editor.SwitchEditMode();
-	      		editor.SwitchEditMode();
-	      		break;
-	    	}
+		try {
+			var t = document.getElementById(tab);
+			var inputs = t.getElementsByTagName('input');
+			for (i = 0; i < inputs.length;i++) {
+		    	editor = FCKeditorAPI.GetInstance(inputs[i].name);
+		    	if (editor && editor.EditorDocument && editor.EditMode == FCK_EDITMODE_WYSIWYG) {
+		    		editor.SwitchEditMode();
+		      		editor.SwitchEditMode();
+		      		break;
+		    	}
+			}
 		}
+		catch(e) { }	// ignore the error if FCKeditorAPI is not loaded
 	}
 	if (name) {
 		set_element(document.eTemplate,name,tab);

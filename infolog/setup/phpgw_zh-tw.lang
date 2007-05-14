@@ -94,7 +94,7 @@ description	infolog	zh-tw	描述
 determines the order the fields are displayed	infolog	zh-tw	決定顯示的順序與欄位
 disables a status without deleting it	infolog	zh-tw	停用一個狀態而不是刪除
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	zh-tw	您希望做再次的確認在：同意，工作完成或是兩者都要
-do you want to see custome infolog types in the calendar?	infolog	zh-tw	您是否希望在行事曆中檢視記事本的類型？
+do you want to see custom infolog types in the calendar?	infolog	zh-tw	您是否希望在行事曆中檢視記事本的類型？
 don't show infolog	infolog	zh-tw	不要顯示記事本
 done	infolog	zh-tw	完成
 download	infolog	zh-tw	下載

@@ -346,10 +346,9 @@
 				$cell['name'] = $nextmatch->name;
 			}
 			// preset everything for the column selection
-			if (!$value['no_columnselection'])
+			if (!$value['no_columnselection'] &&	// fetching column-names & -labels from the template
+				$this->_cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows']))
 			{
-				// fetching column-names & -labels from the template
-				$this->_cols_from_tpl($value['template'],$value['options-selectcols'],$name2col,$value['rows']);
 				//_debug_array($name2col);
 				//_debug_array($value['options-selectcols']);
 				// getting the selected colums from the prefs (or if not set a given default or all)
@@ -421,6 +420,7 @@
 		 * @param array &$cols here we add the column-name/-label
 		 * @param array &$name2col
 		 * @param array $content nextmatch content, to be able to resolve labels with @name
+		 * @return int columns found, count($cols)
 		 */
 		function _cols_from_tpl(&$tmpl,&$cols,&$name2col,&$content)
 		{
@@ -429,7 +429,7 @@
 			$cols['__content__'] =& $content;
 			$tmpl->widget_tree_walk(array($this,'_cols_from_tpl_walker'),$cols);
 			unset($cols['__content__']);
-			$name2col = $cols['name2col'] ? $cols['name2col'] : array(); unset($cols['name2col']);
+			$name2col = is_array($cols['name2col']) ? $cols['name2col'] : array(); unset($cols['name2col']);
 			//_debug_array($cols); 
 			foreach($cols as $name => $label)
 			{
@@ -457,7 +457,8 @@
 				}
 				$cols[$name] = $label;
 			}
-			//_debug_array($cols); 
+			//_debug_array($cols);
+			return count($cols);
 		}
 
 		/**
