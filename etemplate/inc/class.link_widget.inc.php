@@ -113,6 +113,7 @@
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
 			$extension_data['type'] = $type = $cell['type'];
+			$extension_data['needed'] = $cell['needed'];
 			$help = $cell['help'] ? ($value['help'] ? $value['help'] : $cell['help']) : lang('view this linked entry in its application');
 
 			if (($type == 'link-to' || $type == 'link-add') && ($cell['readonly'] || $readonlys))
@@ -458,10 +459,20 @@
 			switch($extension_data['type'])
 			{
 				case 'link-entry':
+					if (!$value_in['id'] && $extension_data['needed'])
+					{
+						$tmpl->set_validation_error($name,lang('Field must not be empty !!!'),'');
+						return true;
+					}
 					$value = $extension_data['app'] ? $value_in['id'] : $value['app'].':'.$value_in['id'];
 					return !!$value_in['id'];
 					
 				case 'link-apps':
+					if (!$value_in && $extension_data['needed'])
+					{
+						$tmpl->set_validation_error($name,lang('Field must not be empty !!!'),'');
+						return true;
+					}
 					$value = $value_in;
 					return !!$value;
 			}
