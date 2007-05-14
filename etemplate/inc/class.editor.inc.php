@@ -320,7 +320,7 @@
 				$msg = $ok ? lang('Template saved') : lang('Error: while saving !!!');
 				if ($ok) unset($preserv['import']);
 			}
-			elseif (isset($_GET['name']) || isset($content['name']))
+			elseif (!$content['import_xml'] && (isset($_GET['name']) || isset($content['name'])))
 			{
 				if ($_GET['name'])
 				{
