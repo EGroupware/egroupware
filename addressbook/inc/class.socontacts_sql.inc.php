@@ -276,6 +276,11 @@ class socontacts_sql extends so_sql
 					$criteria[] = $this->db->expression($this->extra_table,'(',array('contact_name'=>substr($col,1),'contact_value'=>$val),')');
 					$search_customfields = true;
 				}
+				elseif($col == 'cat_id')	// search in comma-sep. cat-column
+				{
+					$criteria = array_merge($criteria,$this->_cat_search($val));
+					unset($criteria[$col]);
+				}
 			}
 		}
 		if ($search_customfields)	// search the custom-fields
@@ -343,6 +348,23 @@ class socontacts_sql extends so_sql
 			$cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
 		}
 		return '('.implode(' OR ',$cat_filter).')';
+	}
+	
+	/**
+	 * fix cat_id criteria to search in comma-separated multiple cats
+	 * 
+	 * @internal 
+	 * @param int/array $cats
+	 * @return array of sql-strings to be OR'ed or AND'ed together
+	 */
+	function _cat_search($cats)
+	{
+		$cat_filter = array();
+		foreach(is_array($cats) ? $cats : array($cats) as $cat)
+		{
+			if (is_numeric($cat)) $cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
+		}
+		return $cat_filter;
 	}
 	
 	/**
