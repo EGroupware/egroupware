@@ -778,4 +778,11 @@
 
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.021';
 	}
+
+	$test[] = '1.3.021';
+	function phpgwapi_upgrade1_3_021()
+	{
+		# 1.4 Beta RC 1
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.022';
+	}
 ?>
