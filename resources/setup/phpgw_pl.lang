@@ -18,13 +18,14 @@ category:	resources	pl	Kategoria
 check all	resources	pl	Zaznacz wszysto
 choose categories admin	resources	pl	wybierz kategorie administratora
 clear selection	resources	pl	odhacz wybrane elementy
-configure access permissions	resources	pl	Konfiguruj Prawa Dostêpu
+configure access permissions	admin	pl	Konfiguruj Prawa Dostêpu
 create new accessory for this resource	resources	pl	Utwórz nowe akcesoriu dla tego zasobu
 create new links	resources	pl	Utwórz nowe odsy³acze
 delete selected resources	resources	pl	usuñ wybrane zasoby
 delete this entry	resources	pl	Usuñ ten wpis
 description (short)	resources	pl	Opis (krótki)
 direct booking permissions	resources	pl	Pozwolenie na bezpo¶redni± rezerwacje
+don't use vfs (this will need a symlink --> see readme)	resources	pl	Nie u¿ywaj 'VFS' (to bêdzie wymagaæ odno¶ników symbolicznych --> patrz README)
 edit this entry	resources	pl	Edytuj ten wpis
 existing links	resources	pl	Istniej±ce odsy³acze
 general	resources	pl	Ogólnie
@@ -34,6 +35,8 @@ how many of the resources are useable?	resources	pl	jaka ilo¶æ zasobów jest do u
 how many of them are useable?	resources	pl	Ile z nich jest do u¿ytku?
 how many of this resource are usable	resources	pl	Jaka ilo¶æ tego zasobu jest do u¿ytku?
 how many of this resource exists	resources	pl	Jaka ilo¶æ tego zasobu istnieje
+implies booking permission	resources	pl	implikuje prawa rezerwacji
+implies read permission	resources	pl	implikuje prawa odczytu
 information about storage	resources	pl	Informacje o przechowywaniu
 informations about the location of resource	resources	pl	Informacje o lokalizacji zsobu
 inventory number	resources	pl	Numer inwentarza
@@ -56,6 +59,7 @@ picture source	resources	pl	¼ród³o obrazu
 picture type is not supported, sorry!	resources	pl	Ten rodzaj obrazu nie jest wspierany, przykro nam!
 pictures or resource	resources	pl	Obrazy zasobu
 planer	resources	pl	planer
+prizeing information for booking or buying	resources	pl	Informacje na temat ceny wynajmu lub zakupu
 quantity	resources	pl	Ilo¶æ
 quantity of resource	resources	pl	Ilo¶æ zasobu
 quantity:	resources	pl	Ilo¶æ

@@ -45,6 +45,7 @@ all fields	common	zh-tw	所有欄位
 alphabet	common	zh-tw	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
 alternate style-sheet:	common	zh-tw	替換的樣式表：
 american samoa	common	zh-tw	AMERICAN SAMOA
+an existing and by the webserver readable directory enables the image browser and upload.	common	zh-tw	一個已經存在而且網頁伺服器可以讀取的資料夾可以啟用圖片瀏覽器以及上傳功能。
 andorra	common	zh-tw	安道爾
 angola	common	zh-tw	安哥拉
 anguilla	common	zh-tw	安圭拉
@@ -71,7 +72,6 @@ azerbaijan	common	zh-tw	亞賽拜然
 back	common	zh-tw	上一頁
 back to user login	common	zh-tw	回到首頁
 background color:	common	zh-tw	背景顏色：
-backupdir '%1' is not writeable by the webserver	common	zh-tw	網頁伺服器無法寫入備份資料夾 '%1'
 bad login or password	common	zh-tw	錯誤的使用者代碼或密碼
 bahamas	common	zh-tw	巴哈馬
 bahrain	common	zh-tw	巴林
@@ -86,7 +86,6 @@ bermuda	common	zh-tw	百慕達
 bhutan	common	zh-tw	不丹
 blocked, too many attempts	common	zh-tw	被鎖定了，嘗試太多次
 bold	common	zh-tw	粗體
-bold.gif	common	zh-tw	bold.gif
 bolivia	common	zh-tw	玻利維亞
 border	common	zh-tw	框線
 bosnia and herzegovina	common	zh-tw	BOSNIA AND HERZEGOVINA
@@ -177,6 +176,7 @@ detail	common	zh-tw	詳細
 details	common	zh-tw	詳細
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	zh-tw	在PNG圖檔中停用IE 5.5或更新版本的修正來顯示透明效果
 direction left to right	common	zh-tw	方向由左至右
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	zh-tw	資料夾不存在、網頁伺服器無法讀取或是路徑並非相對於網頁根目錄！
 disable internet explorer png-image-bugfix	common	zh-tw	停用 IE png-image-bugfix
 disable slider effects	common	zh-tw	停用切換效果
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	zh-tw	在顯示或是隱藏選單的時候停用動態切換效果？Opera 與 Konqueror 的使用者可能必須這麼做。
@@ -208,7 +208,6 @@ egypt	common	zh-tw	埃及
 el salvador	common	zh-tw	EL SALVADOR
 email	common	zh-tw	電子郵件
 email-address of the user, eg. "%1"	common	zh-tw	使用者的電子郵件, 例： "%1"
-en	common	zh-tw	zh-tw
 enabled	common	zh-tw	啟用
 end date	common	zh-tw	結束日期
 end time	common	zh-tw	結束時間
@@ -223,11 +222,13 @@ error deleting %1 %2 directory	common	zh-tw	無法移除目錄 %1 %2
 error renaming %1 %2 directory	common	zh-tw	無法更名目錄 %1 %2
 estonia	common	zh-tw	愛沙尼亞
 ethiopia	common	zh-tw	衣索比亞
+everything	common	zh-tw	全部
 exact	common	zh-tw	解開
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	zh-tw	無法連線伺服器或是伺服器回應訊息有誤，請重試或是聯繫管理員。
 falkland islands (malvinas)	common	zh-tw	FALKLAND ISLANDS (MALVINAS)
 faroe islands	common	zh-tw	FAROE ISLANDS
 fax number	common	zh-tw	傳真號碼
+features of the editor?	common	zh-tw	編輯器的功能？
 february	common	zh-tw	二月
 fields	common	zh-tw	欄位
 fiji	common	zh-tw	裴濟
@@ -297,10 +298,10 @@ iceland	common	zh-tw	冰島
 iespell not detected. click ok to go to download page.	common	zh-tw	找不到 ieSpell ，點選是來前往下載頁面。
 if the clock is enabled would you like it to update it every second or every minute?	common	zh-tw	如果使用時鐘，更新的頻率是每秒還是每分？
 if there are some images in the background folder you can choose the one you would like to see.	common	zh-tw	如果背景資料夾中有一些圖片，您可以選擇希望使用的一個。
+image directory relative to document root (use / !), example:	common	zh-tw	相對於文件根目錄的圖片資料夾（使用 / !），例如：
 image url	common	zh-tw	圖片網址
 india	common	zh-tw	印度
 indonesia	common	zh-tw	印尼
-insert 'return false'	common	zh-tw	插入'return false'
 insert all %1 addresses of the %2 contacts in %3	common	zh-tw	在 %3 插入 %1 的 %2 筆聯絡人位址
 insert column after	common	zh-tw	欄位插在後面
 insert column before	common	zh-tw	欄位插在前面
@@ -317,7 +318,6 @@ israel	common	zh-tw	以色列
 it has been more then %1 days since you changed your password	common	zh-tw	距離您上次更改密碼已經 %1 天了
 it is recommended that you run setup to upgrade your tables to the current version	common	zh-tw	建議您執行設定程式將資料表升級至目前的版本。
 italic	common	zh-tw	斜體
-italic.gif	common	zh-tw	italic.gif
 italy	common	zh-tw	義大利
 jamaica	common	zh-tw	牙買加
 january	common	zh-tw	一月
@@ -395,6 +395,7 @@ moldova, republic of	common	zh-tw	MOLDOVA, REPUBLIC OF
 monaco	common	zh-tw	MONACO
 monday	common	zh-tw	星期一
 mongolia	common	zh-tw	MONGOLIA
+montenegro	common	zh-tw	MONTENEGRO
 montserrat	common	zh-tw	MONTSERRAT
 morocco	common	zh-tw	MOROCCO
 mozambique	common	zh-tw	MOZAMBIQUE
@@ -472,9 +473,6 @@ password must contain at least %1 special characters	common	zh-tw	密碼必須�
 password must contain at least %1 uppercase letters	common	zh-tw	密碼必須包含至少 %1 個大寫英文字母
 password must have at least %1 characters	common	zh-tw	密碼必須包含至少 %1 個字元
 path to user and group files has to be outside of the webservers document-root!!!	common	zh-tw	使用者與群組的檔案路徑必須要在網站伺服器的網頁跟目錄之外！
-pattern for search in addressbook	common	zh-tw	通訊錄的搜尋規則
-pattern for search in calendar	common	zh-tw	行事曆的搜尋規則
-pattern for search in projects	common	zh-tw	專案的搜尋規則
 permissions to the files/users directory	common	zh-tw	檔案/使用者資料夾的權限
 personal	common	zh-tw	個人
 peru	common	zh-tw	祕魯
@@ -492,8 +490,8 @@ please wait...	common	zh-tw	請等待...
 poland	common	zh-tw	波瀾
 portugal	common	zh-tw	PORTUGAL
 postal	common	zh-tw	郵遞區號
+powered by	common	zh-tw	系統提供
 powered by egroupware version %1	common	zh-tw	系統為 <a href="http://www.egroupware.org">eGroupWare</a> 版本 %1
-powered by phpgroupware version %1	common	zh-tw	Powered by phpGroupWare version %1
 preferences	common	zh-tw	喜好設定
 preferences for the idots template set	common	zh-tw	idots樣板的設定
 prev. month (hold for menu)	jscalendar	zh-tw	上一個月(按住滑鼠鍵)
@@ -511,6 +509,7 @@ qatar	common	zh-tw	QATAR
 read	common	zh-tw	讀取
 read this list of methods.	common	zh-tw	讀取這個方法的列表
 reading	common	zh-tw	閱讀中
+regular	common	zh-tw	規則
 reject	common	zh-tw	拒絕
 remove selected accounts	common	zh-tw	移除選取的帳號
 remove shortcut	common	zh-tw	移除快速鍵
@@ -559,6 +558,7 @@ selection	common	zh-tw	選擇
 send	common	zh-tw	送出
 senegal	common	zh-tw	SENEGAL
 september	common	zh-tw	九月
+serbia	common	zh-tw	瑟比雅
 server %1 has been added	common	zh-tw	伺服器 %1 已經完成新增
 server answered. processing response...	common	zh-tw	伺服器回應了，處理回應中...
 server contacted. waiting for response...	common	zh-tw	伺服器連上了，等待回應中...
@@ -581,15 +581,16 @@ show_more_apps	common	zh-tw	show_more_apps
 showing %1	common	zh-tw	顯示 %1
 showing %1 - %2 of %3	common	zh-tw	顯示 %1 - %2 之 %3
 sierra leone	common	zh-tw	SIERRA LEONE
-singapore	common	zh-tw	SINGAPORE
-slovakia	common	zh-tw	SLOVAKIA
-slovenia	common	zh-tw	SLOVENIA
+simple	common	zh-tw	簡單
+singapore	common	zh-tw	新加坡
+slovakia	common	zh-tw	斯洛伐克
+slovenia	common	zh-tw	斯洛法尼亞
 solomon islands	common	zh-tw	SOLOMON ISLANDS
-somalia	common	zh-tw	SOMALIA
+somalia	common	zh-tw	索馬利亞
 sorry, your login has expired	login	zh-tw	抱歉，您的帳號已經過期
 south africa	common	zh-tw	SOUTH AFRICA
 south georgia and the south sandwich islands	common	zh-tw	SOUTH GEORGIA AND THE SOUTH SANDWICH ISLANDS
-spain	common	zh-tw	SPAIN
+spain	common	zh-tw	西班牙
 sri lanka	common	zh-tw	SRI LANKA
 start date	common	zh-tw	開始日期
 start time	common	zh-tw	開始時間
@@ -600,12 +601,12 @@ stretched	common	zh-tw	樹狀
 subject	common	zh-tw	主題
 submit	common	zh-tw	送出
 substitutions and their meanings:	common	zh-tw	替代項目與他們的意義：
-sudan	common	zh-tw	SUDAN
+sudan	common	zh-tw	蘇丹
 sunday	common	zh-tw	星期日
 suriname	common	zh-tw	SURINAME
 svalbard and jan mayen	common	zh-tw	SVALBARD AND JAN MAYEN
 swaziland	common	zh-tw	SWAZILAND
-sweden	common	zh-tw	SWEDEN
+sweden	common	zh-tw	瑞典
 switzerland	common	zh-tw	SWITZERLAND
 syrian arab republic	common	zh-tw	SYRIAN ARAB REPUBLIC
 table properties	common	zh-tw	表格屬性
@@ -652,7 +653,6 @@ type	common	zh-tw	類型
 uganda	common	zh-tw	UGANDA
 ukraine	common	zh-tw	UKRAINE
 underline	common	zh-tw	底線
-underline.gif	common	zh-tw	underline.gif
 united arab emirates	common	zh-tw	UNITED ARAB EMIRATES
 united kingdom	common	zh-tw	UNITED KINGDOM
 united states	common	zh-tw	UNITED STATES
@@ -662,6 +662,7 @@ update	common	zh-tw	更新
 update the clock per minute or per second	common	zh-tw	更新時鐘頻率為每秒或是每分
 upload	common	zh-tw	上傳
 upload directory does not exist, or is not writeable by webserver	common	zh-tw	上傳資料夾不存在，或是網頁伺服器無法寫入
+upload requires the directory to be writable by the webserver!	common	zh-tw	上傳功能需要網頁伺服器能夠寫入這個資料夾！
 url	common	zh-tw	網址
 uruguay	common	zh-tw	URUGUAY
 use button to search for	common	zh-tw	使用按鈕搜尋
@@ -701,6 +702,7 @@ year	common	zh-tw	年
 yemen	common	zh-tw	葉門
 yes	common	zh-tw	是
 you are required to change your password during your first login	common	zh-tw	您必須在第一次登入時修改您的密碼
+you can customize how many icons and toolbars the editor shows.	common	zh-tw	您可以自訂編輯器要顯示的圖示與工具列。
 you have been successfully logged out	login	zh-tw	您已經成功登出。
 you have not entered a title	common	zh-tw	您尚未輸入標題
 you have not entered a valid date	common	zh-tw	您尚未輸入正確的日期
@@ -716,7 +718,6 @@ your search returned %1 matchs	common	zh-tw	搜尋到 %1 筆資料
 your search returned 1 match	common	zh-tw	搜尋到 1 筆資料
 your session could not be verified.	login	zh-tw	您的連線不合法。
 your settings have been updated	common	zh-tw	您的設定已經更新。
-yugoslavia	common	zh-tw	南斯拉夫
 zambia	common	zh-tw	尚比亞
 zimbabwe	common	zh-tw	辛巴威
 zoom	common	zh-tw	放大

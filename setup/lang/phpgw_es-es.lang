@@ -92,6 +92,7 @@ because it depends upon	setup	es-es	porque depende de
 because it is not a user application, or access is controlled via acl	setup	es-es	porque no es una aplicación de usuario, o el acceso está controlado por ACL
 because it requires manual table installation, <br />or the table definition was incorrect	setup	es-es	porque requiere de instalación manual de las tablas,<br /> o la definición de la tabla fue incorrecta
 because it was manually disabled	setup	es-es	porque se desactivó manualmente
+because its sources are missing	setup	es-es	porque falta su código fuente
 because of a failed upgrade or install	setup	es-es	porque ocurrió un fallo al actualizar o instalar
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	es-es	porque falló la actualización, o la base de datos es más reciente que la versión instalada de esta aplicación
 because the enable flag for this app is set to 0, or is undefined	setup	es-es	porque el indicador de "habilitada" de esta aplicación está a 0, o no está definido
@@ -270,6 +271,7 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	es-es	Servidor/IP del controlador de dominio
 hostname/ip of database server	setup	es-es	Nombre del servidor o dirección IP del servidor de la base de datos
 hour (0-24)	setup	es-es	hora (0-24)
+however the tables are still in the database	setup	es-es	Sin embargo, las tablas todavía están en la base de datos
 however, the application is otherwise installed	setup	es-es	De todas formas, la aplicación fué instalada
 however, the application may still work	setup	es-es	Sin embargo, puede que la aplicación todavía funcione
 if no acl records for user or any group the user is a member of	setup	es-es	Si no hay registros ACL ni grupo para el usuario, entonces es miembro de
@@ -488,6 +490,7 @@ skip the installation tests (not recommended)	setup	es-es	Omitir las pruebas de 
 smtp server hostname or ip address	setup	es-es	Nombre del servidor SMTP o dirección IP
 smtp server port	setup	es-es	Puerto del servidor SMTP
 some or all of its tables are missing	setup	es-es	Algunas o todas de sus tablas no se encuentran
+sources deleted/missing	setup	es-es	El código fuente falta o ha sido borrado
 sql encryption type	setup	es-es	Tipo de cifrado SQL para contraseñas (predeterminado - md5)
 standard (login-name identical to egroupware user-name)	setup	es-es	estándar (el usuario es idéntico al de eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	es-es	Configuración del servidor de correo estándar (también se usa para identificación de correo)
@@ -579,6 +582,7 @@ view	setup	es-es	Ver
 virtual mail manager (login-name includes domain)	setup	es-es	Gestor de correo virtual (el nombre de usuario incluye el dominio)
 warning!	setup	es-es	¡Aviso!
 we can proceed	setup	es-es	Podemos proceder
+we could not determine the version of %1, please make sure it is at least %2	setup	es-es	No se ha podido determinar la versión de %1. Por favor, asegúrese de es al menos %2
 we will automatically update your tables/records to %1	setup	es-es	Actualizaremos automáticamente sus tablas/registros a %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	es-es	Ahora se ejecutarán una serie de pruebas, que pueden durar unos pocos minutos. Pulse el enlace de debajo para proceder.
 welcome to the egroupware installation	setup	es-es	Bienvenido a la instalación de eGroupWare
@@ -618,6 +622,7 @@ you need to configure egroupware:	setup	es-es	Necesita configurar eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	es-es	¡Necesita corregir los errores de arriba, antes de que se pueda escribir el fichero de configuración header.inc.php!
 you need to save the settings you made here first!	setup	es-es	¡Necesita guardar la configuración que ha hecho primero!
 you need to select your current charset!	setup	es-es	¡Necesita seleccionar el juego de caracteres!
+you should either install the sources or uninstall it, to get rid of the tables	setup	es-es	Tiene que instalar el código fuente o desinstalarlo para deshacerse de las tablas
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	es-es	Usted puede desinstalarla y volverla a instalar, o puede intentar una reparación manual
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	es-es	¡¡NO podrá iniciar sesión en eGroupWare usando sesiones PHP: "la sesión no se pudo verificar"!!
 you're using an old configuration file format...	setup	es-es	Está usando un fichero de configuración con formato antiguo
@@ -632,6 +637,7 @@ your files directory '%1' %2	setup	es-es	Su directorio de ficheros '%1' %2
 your header admin password is not set. please set it now!	setup	es-es	La contraseña de administrador de cabeceras no está configurada. Por favor, ponga una ahora.
 your header.inc.php needs upgrading.	setup	es-es	Su header.inc.php necesita actualización
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	es-es	Su header.inc.php necesita actualización.<br /><blink><b class="msg">¡ATENCION!</b></blink><br /><b>¡HAGA COPIAS DE SEGURIDAD!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	es-es	La versión instalada de %1 es %2. Se requiere al menos %2, por lo que por favor, ejecute:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	es-es	Su instalación de PHP no tiene el soporte apropiado de GD. Necesita la versión 1.8 de la librería gd o superior para ver diagramas de Gantt en los proyectos.
 your tables are current	setup	es-es	Sus tablas están actualizadas
 your tables will be dropped and you will lose data	setup	es-es	¡¡Sus tablas serán eliminadas y usted perderá la información que hubiese en ellas!!

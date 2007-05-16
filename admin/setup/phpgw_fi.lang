@@ -1,8 +1,11 @@
 %1 - %2 of %3 user accounts	admin	fi	%1 - %2 / %3 käyttäjätunnusta
 %1 - %2 of %3 user groups	admin	fi	%1 - %2 / %3 käyttäjäryhmää
+%1 acl records of not (longer) existing accounts deleted.	admin	fi	%1 ACL tietuetta ei (enää) löydy, käyttäjätili poistettu.
 %1 not found or not executable !!!	admin	fi	%1 ei löydy tai ei voida suorittaa !!!
+(default no, leave it off if you dont use it)	admin	fi	(Oletuksena ei, jätä tyhjäksi jollet halua käyttää sitä)
 (stored password will not be shown here)	admin	fi	(Tallennettua salasanaa ei näytetä)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	fi	(Käytä <br><a href="setup/" target="setup">Setup</a> [Manage Applications] asentaaksesi uusia sovelluksia !!!)
+-  type	admin	fi	- muoto
 accesslog and bruteforce defense	admin	fi	Käyttöloki ja suoja käyttäjätunnusten arvuuttelulle
 account active	admin	fi	Tunnus aktiivinen
 account has been created	common	fi	Tunnus luotu
@@ -46,7 +49,7 @@ alternate email address	admin	fi	vaihtoehtoinen sähköpostiosoite
 anonymous user	admin	fi	Anonyymi käyttäjä
 anonymous user (not shown in list sessions)	admin	fi	Anonyymi käyttäjä (ei näytetä kirjautuneiden luettelossa)
 anonymous user does not exist!	admin	fi	Anonyymiä käyttäjää EI ole olemassa
-anonymous user has no run-rights for the application!	admin	fi	Anonyymillä käyttäjällä EI ole suoritusoikeuksia tähän sovellukseen
+anonymous user has no run-rights for the application!	admin	fi	Anonyymillä käyttäjällä EI ole suoritusoikeuksia tähän sovellukseen!
 appearance	admin	fi	Ulkoasu
 application	admin	fi	Sovellus
 application name	admin	fi	Sovelluksen nimi
@@ -65,7 +68,7 @@ are you sure you want to kill this session ?	admin	fi	Haluatko keskeyttää tämän 
 async services last executed	admin	fi	Ajastetut palvelut suoritettu viimeksi
 asynchronous timed services	admin	fi	Ajastetut palvelut
 asyncservices not yet installed or other error (%1) !!!	admin	fi	asyncservices ei ole asennettu tai muu virhe (%1) !!!
-attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fi	Yritä käytä oikeaa mime-tyyppiä FTP siirrossa oletuksen'application/octet-stream' sijasta
+attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	admin	fi	Yritä käytä oikeaa mime-tyyppiä FTP siirrossa oletuksen 'application/octet-stream' sijasta
 authentication / accounts	admin	fi	Käyttäjäntunnistus / Käyttäjätunnukset
 auto create account records for authenticated users	admin	fi	Luo tunnus automaattisesti tunnistetuille käyttäjille
 back to the list	admin	fi	takaisin luetteloon
@@ -127,19 +130,22 @@ deny access to site configuration	admin	fi	Estä pääsy palvelun asetuksiin
 deny access to user accounts	admin	fi	Estä pääsy käyttäjätunnuksiin
 deny all users access to grant other users access to their entries ?	admin	fi	Estä kaikilta käyttäjiltä tietojensa julkistaminen?
 description can not exceed 255 characters in length !	admin	fi	Kuvaus
+determines the order the fields are displayed	admin	fi	havannoi järjestyksen jossa kentät näytetään
 disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaattinen täyttö" ei käytössä
 disable wysiwyg-editor	admin	fi	älä käytä WYSIWYG-toimitinta
 disabled (not recomended)	admin	fi	ei käytössä (ei suositella)
 display	admin	fi	Näytä
 do not delete the category and return back to the list	admin	fi	luokkaa EI poisteta ja palataan luetteloon
-do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa myös yleiset alaluokat?
-do you want to delete all global subcategories ?	admin	fi	Haluatko poistaa kaikki yleiset alaluokat?
-do you want to move all global subcategories one level down ?	admin	fi	Haluatlp siirtää kaikkia yleisia alaluokkia tason verran alemmas?
+do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa myös yleiset alakategoriat?
+do you want to delete all global subcategories ?	admin	fi	Haluatko poistaa kaikki yleiset alakategoriat?
+do you want to move all global subcategories one level down ?	admin	fi	Haluatko siirtää kaikkia yleisiä alakategorioita tason verran alemmas?
+each value is a line like <id>[=<label>]	admin	fi	jokainen arvo on rivillä kuten <id>[=<label>]
+each value is a line like id[=label]	admin	fi	jokainen arvo on rivillä kuten id[=label]
 edit account	admin	fi	Muokkaa tunnusta
 edit application	admin	fi	Muokkaa sovellusta
 edit email settings	admin	fi	muokka sähköpostin asetuksia
-edit global category	admin	fi	Muokkaa yleistä luokkaa
-edit global category for %1	admin	fi	Muokkaa yleistä luokkaa %1:lle
+edit global category	admin	fi	Muokkaa yleistä kategoriaa
+edit global category for %1	admin	fi	Muokkaa yleistä kategoriaa %1:lle
 edit group	admin	fi	Muokkaa ryhmää
 edit group acl's	admin	fi	muokkaa ryhmän ACL:ää
 edit login screen message	admin	fi	Muokkaa kirjautumisnäytön viestiä
@@ -158,12 +164,12 @@ enable the soap service	admin	fi	Salli SOAP palvelut
 enable the xmlrpc service	admin	fi	Salli XMLRPC palvelut
 enabled - hidden from navbar	admin	fi	Käytössä - Ei näy työkalupalkissa
 enabled - popup window	admin	fi	Käytössä - Ponnahdusikkuna
-enter a description for the category	admin	fi	anna luokan kuvaus
+enter a description for the category	admin	fi	anna kategorian kuvaus
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi	Anna hieman satunnaisia merkkejä alustaaksesi app_session <br>salauksen (vaatii mcrypt)
 enter the background color for the login page	admin	fi	Anna kirjautumisnäytön taustaväri
 enter the background color for the site title	admin	fi	Anna sivuston otsikon taustaväri
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna absoluuttinen polku väliaikaistiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna absoluuttinen polku väliaikaisille tiedostoille.<br>Esimerkkejä: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	fi	Anna absoluuttinen polku käyttäjien ja ryhmien tiedostoille.<br>Esimerkkejä: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen isäntänimi (hostname)
@@ -198,7 +204,7 @@ force selectbox	admin	fi	Pakota valitsemaan
 forward also to	admin	fi	Välitä eteenpäin myös
 forward emails to	admin	fi	Eteenpäin välitetyt sähköpostit
 forward only	admin	fi	Välitä vain eteenpäin
-global categories	common	fi	Yleiset luokat
+global categories	common	fi	Yleiset kategoriat
 group ?	admin	fi	ryhmä ?
 group has been added	common	fi	Ryhmä lisätty
 group has been deleted	common	fi	Ryhmä poistettu
@@ -219,7 +225,7 @@ if no acl records for user or any group the user is a member of	admin	fi	Jos käy
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	fi	Jos käytät LDAP-hakemistoa, haluatko hallita kotihakemistoja ja shellejä?
 in mbyte	admin	fi	Megoina
 inbound	admin	fi	tuleva
-install crontab	admin	fi	Asenna crontav
+install crontab	admin	fi	Asenna crontab
 installed applications	common	fi	Asennetut sovellukset
 installed crontab	admin	fi	Asennettu crontab
 interface	admin	fi	Käyttöliittymä
@@ -240,8 +246,9 @@ ldap groups context	admin	fi	LDAP -ryhmien konteksti
 ldap host	admin	fi	LDAP palvelin
 ldap root password	admin	fi	LDAP root salasana
 ldap rootdn	admin	fi	LDAP rootdn
-leave the category untouched and return back to the list	admin	fi	älä muuta luokkaa ja palaa luetteloon
-leave the group untouched and return back to the list	admin	fi	Älä muuta ryhmää ja palaa luetteloon
+leave empty for no quota	admin	fi	jätä tyhjäksi jollei rajoituksia ole
+leave the category untouched and return back to the list	admin	fi	palaa luetteloon muuttamatta kategoriaa
+leave the group untouched and return back to the list	admin	fi	palaa luetteloon muuttamatta ryhmää
 leaves without saveing	admin	fi	poistu tallentamatta
 length<br>rows	admin	fi	Pituus<br>Rivit
 list config settings	admin	fi	Näytä asetukset
@@ -257,7 +264,7 @@ mail settings	admin	fi	Asetukset
 main email-address	admin	fi	Pääsähköpostiosoite
 main screen message	admin	fi	Päänäytön viesti
 manager	admin	fi	Hallinnoija
-max length of the input [, length of the inputfield (optional)]	admin	fi	max sisällön pituus [,sisältökentä pituus (valinnainen)]
+max length of the input [, length of the inputfield (optional)]	admin	fi	max sisällön pituus [,sisältökenttä pituus (valinnainen)]
 maximum account id (e.g. 65535 or 1000000)	admin	fi	Suurin tunnus-id (esim. 65535 tai 1000000)
 maximum entries in click path history	admin	fi	Navigointihistorian koko
 message has been updated	admin	fi	viesti päivitetty
@@ -301,6 +308,8 @@ please select	admin	fi	Valitse
 postfix with ldap	admin	fi	Postfix ja LDAP
 preferences	admin	fi	Asetukset
 primary group	admin	fi	ensisijainen ryhmä
+quota settings	admin	fi	Rajoituksen asetukset
+quota size in mbyte	admin	fi	Rajoituksen koko Mb:nä
 re-enter password	admin	fi	Salasana uudestaan
 read this list of methods.	admin	fi	Lue tämä metodien lista
 register application hooks	admin	fi	Rekisteröi sovelluskoukut
@@ -309,6 +318,7 @@ remove all users from this group	admin	fi	Poista käyttäjät ryhmästä
 remove all users from this group ?	admin	fi	Poista käyttäjät ryhmästä ?
 return to admin mainscreen	admin	fi	takaisin hallinnan päänäyttöön
 return to view account	admin	fi	Palaa tunnuksen tietoihin
+route all mails to	admin	fi	Reititä kaikki viestit
 run asynchronous services	admin	fi	Suorita ajastetut palvelut
 save the category	admin	fi	tallenna luokka
 save the category and return back to the list	admin	fi	tallenna luokka ja palaa luetteloon
@@ -355,6 +365,7 @@ standard smtp-server	admin	fi	standardi SMTP palvelin
 start testjob!	admin	fi	Käynnistä TestiTyö!
 submit changes	admin	fi	Lähetä muutokset
 submit the search string	admin	fi	Hae merkkijonoa
+subtype	admin	fi	Alamuoto
 template selection	admin	fi	Pohjan valinta
 text entry	admin	fi	Tekstille
 that application name already exists.	admin	fi	Sovelluksen nimi on jo käytössä.
@@ -367,6 +378,7 @@ the api requires an upgrade	admin	fi	API vaatii päivityksen
 the groups must include the primary group	admin	fi	Ensisijainen ryhmä on valittava
 the login and password can not be the same	admin	fi	Käyttäjätunnus ja salasana eivät voi olla samat
 the loginid can not be more then 8 characters	admin	fi	Käyttäjätunnus voi olla vain 8 merkkiä pitkä
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	fi	nimeä käytetään sisäisesti (<= 20 merkkiä), muuttaminen voi hävittää olemassa olevia tietoja
 the testjob sends you a mail everytime it is called.	admin	fi	TestiTyö lähettää sinulle sähköpostiviestin aina kun se ajetaan.
 the text displayed to the user	admin	fi	teksti näytetään käyttäjälle
 the two passwords are not the same	admin	fi	Salasanat eivät täsmää
@@ -420,4 +432,5 @@ you must enter an application name and title.	admin	fi	Anna sovelluksen nimi ja 
 you must enter an application name.	admin	fi	Anna sovelluksen nimi.
 you must enter an application title.	admin	fi	Anna sovelluksen otsikko.
 you must select a file type	admin	fi	Anna tiedostotyyppi
-you will need to remove the subcategories before you can delete this category	admin	fi	Aliluokat on poistettava ennen kuin voit poistaa luokan!
+you must select at least one group member	admin	fi	Valitse vähintää yksi ryhmän jäsen.
+you will need to remove the subcategories before you can delete this category	admin	fi	Alikategoriat on poistettava ennen kuin voit poistaa luokan!

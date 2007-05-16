@@ -95,6 +95,7 @@ csv-filename	addressbook	es-es	Archivo CSV
 custom	addressbook	es-es	Personalizado
 custom fields	addressbook	es-es	Campos personalizados
 debug output in browser	addressbook	es-es	Depurar salida en el navegador
+default address format	addressbook	es-es	Formato predeterminado de las drecciones
 default addressbook for adding contacts	addressbook	es-es	Libreta de direcciones predeterminada para añadir contactos
 default filter	addressbook	es-es	Filtro predeterminado
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
@@ -300,6 +301,7 @@ view linked infolog entries	addressbook	es-es	Ver las entradas del Registro que 
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! ¡LDAP es valido sólo si no está usando contactos para almacenar las cuentas!
 warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	es-es	Qué deben mostrar los enlaces a la libreta de direcciones en otras aplicaciones. Los valores vacíos se ignorarán. Es necesario volver a iniciar la sesión si se cambia esta opción.
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	es-es	Qué formato de dirección debe usar la libreta de direcciones para países de los que no conoce el formato de las direcciones. Si se conoce el formato de las direcciones, se usa independientemente de lo indicado en esta opción
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	es-es	Qué libreta de direcciones debe seleccionarse al añadir un contacto Y cuando no haya permiso de añadir en la libreta de direcciones actual.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	es-es	Qué campos deben exportarse. Indicar todos significa que cada campo almacenado en la libreta de direcciones, incluyendo los personalizados. La dirección del trabajo o particular sólo contiene el nombre, la empresa y la dirección seleccionada.

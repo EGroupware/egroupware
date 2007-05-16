@@ -1,7 +1,7 @@
 %1 - %2 of %3 user accounts	admin	pl	%1 - %2 z %3 kont u¿tkowników
 %1 - %2 of %3 user groups	admin	pl	%1 / %2 z %3 grup u¿ytkowników
 %1 acl records of not (longer) existing accounts deleted.	admin	pl	Prawa dostêpu %1 nie istniej±cego (ju¿) u¿ytkownika zosta³y usuniête.
-%1 not found or not executable !!!	admin	pl	Nie znaleziono %1 lub %1 nie wykonalny
+%1 not found or not executable !!!	admin	pl	Nie znaleziono %1 lub %1 nie jest wykonywalny
 (default no, leave it off if you dont use it)	admin	pl	(standardowo nie, pozostaw wy³±czone, je¶li nie u¿ywasz)
 (stored password will not be shown here)	admin	pl	(Przechowywane has³o nie bdzie tutaj wy¶wietlane)
 (to install new applications use<br><a href="setup/" target="setup">setup</a> [manage applications] !!!)	admin	pl	(Aby zainstalowaæ nowe aplikacje, u¿yj<br><a href="setup/" target="setup">Setup</a> [Zarz±dzaj aplikacjami] !!!)
@@ -25,7 +25,7 @@ add a subcategory	admin	pl	dodaj podkategorie
 add a user	admin	pl	dodaj u¿ytkownika
 add account	admin	pl	Dodaj konto
 add application	admin	pl	Dodaj aplikacjê
-add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pl	Dodaj automatyczne tworzonych u¿ytkowników do tej grupy (jezeli puste, bêdzie u¿yta <i>Domy¶lna</i>.)
+add auto-created users to this group ('default' will be attempted if this is empty.)	admin	pl	Dodaj automatyczne tworzonych u¿ytkowników do tej grupy (je¿eli puste, bêdzie u¿yta <i>Domy¶lna</i>.)
 add global category	admin	pl	Dodaj kategoriê globaln±
 add global category for %1	admin	pl	Dodaj globaln± kategoriê dla %1
 add group	admin	pl	Dodaj grupê u¿ytkowników
@@ -33,13 +33,13 @@ add new account	admin	pl	Dodaj nowe konto
 add new application	admin	pl	Dodaj now± aplikacjê
 add peer server	admin	pl	Dodaj serwer równorzêdny
 add sub-category	admin	pl	Dodaj podkategoriê
-admin email	admin	pl	E-mail administratora
-admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pl	Lista adresów pocztowych administratorów (oddzielonych przecinkiem), których nale¿y zawiadamiaæ o blokowaniu kont/adresów (zawiadomienia s± wy³±czone, je¶eli pole jest puste)
+admin email	admin	pl	e-mail administratora
+admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	pl	Lista adresów pocztowych administratorów (oddzielonych przecinkiem), których nale¿y zawiadamiaæ o blokowaniu kont/adresów (zawiadomienia s± wy³±czone, je¿eli pole jest puste)
 admin name	admin	pl	Nazwisko administratora
 administration	admin	pl	Administracja
 admins	admin	pl	Administratorzy
 advanced options	admin	pl	opcje dodatkowe
-after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania si? do systemu blokowa? dost?p do konta (domy?lnie 3)?
+after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania siê do systemu blokowaæ dostêp do konta (domy¶lnie 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	pl	Po jakiej liczbie nieudanych prób zalogowania siê do systemu blokowaæ dostêp z tego adresu IP (domy¶lnie 3)?
 aliases	admin	pl	Aliasy
 all records and account information will be lost!	admin	pl	Wszystkie rekordy i informacje konta zostan± usuniête!
@@ -57,7 +57,7 @@ application title	admin	pl	Tytu³ aplikacji
 applications	admin	pl	Aplikacje
 applications list	admin	pl	Lista aplikacji
 applies the changes	admin	pl	zapisuje zmiany
-are you sure you want to delete the application %1 ?	admin	pl	Napewno usun tê aplikacjê ?
+are you sure you want to delete the application %1 ?	admin	pl	Na pewno usun±æ tê aplikacjê ?
 are you sure you want to delete this account ?	admin	pl	Na pewno chcesz usun±æ to konto?
 are you sure you want to delete this application ?	admin	pl	Na pewno chcesz usun±æ tê aplikacjê?
 are you sure you want to delete this category ?	common	pl	Na pewno chcesz usun±æ tê kategoriê?
@@ -86,7 +86,7 @@ categories list	admin	pl	Lista kategorii
 category %1 has been saved !	admin	pl	Kategoria %1 zosta³a zapisana
 category list	admin	pl	Lista kategorii
 change acl rights	admin	pl	zmiana prawa dostêpu (ACL)
-change config settings	admin	pl	Zmiana ustawie?
+change config settings	admin	pl	Zmiana ustawieñ
 change main screen message	admin	pl	Zmiana komunikatu na stronie g³ównej
 check ip address of all sessions	admin	pl	sprawdzanie adresu IP dla ka¿dej sesji
 check items to <b>%1</b> to %2 for %3	admin	pl	sprawd¼ pozycje do <b>%1</b> do %2 dla %3
@@ -104,7 +104,7 @@ day of week<br>(0-6, 0=sun)	admin	pl	Dzieñ tygodnia<br>(0-6,0=nied)
 db backup and restore	admin	pl	Kopie zapasowe bazy danych
 default	admin	pl	Domy¶lne
 default file system space per user	admin	pl	Domy¶lny rozmiar plików na u¿ytkownika
-default file system space per user/group ?	admin	pl	Domy¶lny rozmiar plików na u¿ytkownika/grup? ?
+default file system space per user/group ?	admin	pl	Domy¶lny rozmiar plików na u¿ytkownika/grupê?
 deinstall crontab	admin	pl	Odinstaluj crontab
 delete account	admin	pl	Usuñ konto u¿ytkownika
 delete all records	admin	pl	Usuñ wszystkie rekordy
@@ -114,11 +114,11 @@ delete group	admin	pl	Usuñ grupê
 delete peer server	admin	pl	Skasuj server równorzêdny
 delete the category	admin	pl	usuñ kategoriê
 delete the group	admin	pl	usuñ grupê
-delete this category	admin	pl	usu tê kategoriê
+delete this category	admin	pl	usuñ tê kategoriê
 delete this group	admin	pl	usuñ tê grupê
 delete this user	admin	pl	usuñ tego u¿ytkownika
 deletes this field	admin	pl	usuwa to pole
-deliver extern	admin	pl	dostarczaj gdzieindziej
+deliver extern	admin	pl	dostarczaj gdzie indziej
 deny access to access log	admin	pl	Odmów dostêpu do dziennika dostêpu
 deny access to application registery	admin	pl	Odmów dostêpu do rejestru aplikacji
 deny access to applications	admin	pl	Odmów dostêpu do aplikacji
@@ -220,12 +220,12 @@ home directory	admin	pl	Katalog domowy
 host information	admin	pl	Informacja o stacji roboczej
 hour<br>(0-23)	admin	pl	Godzina<br>(0-23)
 how many days should entries stay in the access log, before they get deleted (default 90) ?	admin	pl	Ile dni wpisy powinny pozostawaæ w dzienniku dostêpu, zanim zostan± wykasowane (domy¶lnie 90)?
-how many minutes should an account or ip be blocked (default 30) ?	admin	pl	Na ile minut powininno byæ blokowane konto u¿ytkownika lub adres IP stacji roboczej (domy¶lnie 30)?
+how many minutes should an account or ip be blocked (default 30) ?	admin	pl	Na ile minut powinno byæ blokowane konto u¿ytkownika lub adres IP stacji roboczej (domy¶lnie 30)?
 how should email addresses for new users be constructed?	admin	pl	Jak tworzyæ adresy mailowe dla nowych u¿ytkowników?
 icon	admin	pl	Ikonka
 idle	admin	pl	Czas ja³owy
 if no acl records for user or any group the user is a member of	admin	pl	Je¶li brak uprawnieñ dostêpu (ACL) dla u¿ytkownika lub jakiejkolwiek grupy, której u¿ytkownik jest cz³onkiem
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pl	Je¿eli u¿ywasz LDAP, czy chciaby¶ administrowaæ katalogiem domowym i atrybutami pow³oki?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	pl	Je¿eli u¿ywasz LDAP, czy chcia³by¶ administrowaæ katalogiem domowym i atrybutami pow³oki?
 in mbyte	admin	pl	w megabajtach
 inbound	admin	pl	do wewn±trz
 initial	admin	pl	Pocz±tkowe
@@ -243,7 +243,7 @@ last login	admin	pl	Ostatnie logowanie
 last login from	admin	pl	Ostatnie logowanie z
 last time read	admin	pl	Data ostatniego odczytu
 ldap accounts context	admin	pl	Kontekst kont u¿ytkowników w LDAP
-ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pl	Domy¶lny prefix katalogu domowego w LDAP (np. /home dla /home/uzytkownik)
+ldap default homedirectory prefix (e.g. /home for /home/username)	admin	pl	Domy¶lny prefix katalogu domowego w LDAP (np. /home dla /home/u¿ytkownik)
 ldap default shell (e.g. /bin/bash)	admin	pl	Domy¶lna pow³oka w LDAP (np. /bin/bash)
 ldap encryption type	admin	pl	Typ szyfrowania u¿yty w LDAP
 ldap groups context	admin	pl	Kontekst grup LDAP
@@ -291,7 +291,7 @@ no modes available	admin	pl	brak trybów
 no permission to add groups	admin	pl	brak uprawnieñ do dodania grupy
 no permission to add users	admin	pl	brak uprawnieñ do dodania u¿ytkownika
 no permission to create groups	admin	pl	brak uprawnieñ do tworzenia grup
-note: ssl available only if php is compiled with curl support	admin	pl	Uwaga: tryb SSL dostêpny wy³±cznie je¿eli instalacja PHP zawiera modu³ curl.
+note: ssl available only if php is compiled with curl support	admin	pl	Uwaga: tryb SSL dostêpny wy³±cznie je¿eli instalacja PHP zawiera modu³ 'curl'.
 number of row for a multiline inputfield or line of a multi-select-box	admin	pl	ilo¶æ linii dla danych obszaru tekstu albo ilo¶æ linii dla listy wielokrotnego wyboru
 order	admin	pl	Porz±dek
 outbound	admin	pl	na zewn±trz
@@ -349,7 +349,7 @@ server type(mode)	admin	pl	Typ serwera (tryb)
 server url	admin	pl	Adres URL serwera
 server username	admin	pl	Nazwa u¿ytkownika na serwerze
 set preference values.	admin	pl	Ustaw warto¶ci preferencji
-should the login page include a language selectbox (useful for demo-sites) ?	admin	pl	Czy strona zalogowania powinna zawiera box z wyborem jzyka (przydatne dla serwerów demo) ?
+should the login page include a language selectbox (useful for demo-sites) ?	admin	pl	Czy strona zalogowania powinna zawiera box z wyborem jêzyka (przydatne dla serwerów demo) ?
 show 'powered by' logo on	admin	pl	Wy¶wietl logo 'powered by'
 show access log	admin	pl	Wy¶wietl dziennik dostêpów
 show current action	admin	pl	Poka¿ bie¿±c± akcjê
@@ -403,7 +403,7 @@ trust level	admin	pl	Poziom zaufania
 trust relationship	admin	pl	Relacja zaufania (bezpieñczestwa)
 type '%1' already exists !!!	admin	pl	typ '%1' ju¿ istnieje !!!
 type of customfield	admin	pl	Typ pola u¿ytkownika
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pl	Pod windowsem musisz zainstalowaæ asyncservice %1rêcznie%2 albo u¿ywaæ trybu 'powrotu'. 'Powrót' oznacza sprawdznie i - je¶li konieczne startowanie - czynno¶ci po ka¿dym pokazaniu strony.
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	pl	Pod Windows musisz zainstalowaæ asyncservice %1rêcznie%2 albo u¿ywaæ trybu 'powrotu'. 'Powrót' oznacza sprawdzanie i - je¶li konieczne startowanie - czynno¶ci po ka¿dym pokazaniu strony.
 use cookies to pass sessionid	admin	pl	U¿ywaj ciasteczek do przekazywania identyfikatora sesji
 use pure html compliant code (not fully working yet)	admin	pl	U¿ywaj kodu zgodnego z czystym HTML (nie dzia³a w pe³ni)
 use theme	admin	pl	U¿ywaj tematu
@@ -421,9 +421,9 @@ view sessions	admin	pl	Poka¿ sesje
 view this user	admin	pl	wy¶wietl u¿ytkownika
 view user account	admin	pl	Wy¶wietl konto u¿ytkownika
 who would you like to transfer all records owned by the deleted user to?	admin	pl	Kto powinien przej±æ wszystkie rekordy usuwanego u¿ytkownika?
-would you like egroupware to cache the egw info array ?	admin	pl	Czy przechowywaæ tablicê informacyjn± eGroupware w pamiêci ?
+would you like egroupware to cache the egw info array ?	admin	pl	Czy przechowywaæ tablicê informacyjn± eGroupWare w pamiêci ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	pl	Chcesz sprawdza czy s nowe wersje<br>gdy zaloguje si administrator?
-would you like egroupware to check for new application versions when admins login ?	admin	pl	Czy eGroupware powinien sprawdzaæ czy pojawi³y siê nowe wersjê aplikacji<br>przy ka¿dym logowaniu administratorów ?
+would you like egroupware to check for new application versions when admins login ?	admin	pl	Czy eGroupWare powinien sprawdzaæ czy pojawi³y siê nowe wersjê aplikacji<br>przy ka¿dym logowaniu administratorów ?
 would you like to automaticaly load new langfiles (at login-time) ?	admin	pl	Czy przy logowaniu automatycznie ³adowaæ nowe wersje plików jêzykowych do bazy ?
 would you like to show each application's upgrade status ?	admin	pl	Chcesz wy¶wietlaæ status aktualizacji dla ka¿dej aplikacji?
 xml-rpc	admin	pl	XML-RPC
@@ -438,4 +438,5 @@ you must enter an application name and title.	admin	pl	Musisz podaæ nazwê i tytu
 you must enter an application name.	admin	pl	Musisz podaæ nazwê aplikacji
 you must enter an application title.	admin	pl	Musisz podaæ tytu³ aplikacji
 you must select a file type	admin	pl	Musisz wybraæ typ pliku
-you will need to remove the subcategories before you can delete this category	admin	pl	Nale¿y usun±æ podkategorie przed skasowaniem tej kategorii !
+you must select at least one group member	admin	pl	Musisz wybraæ przynajmniej jednego cz³onka grupy.
+you will need to remove the subcategories before you can delete this category	admin	pl	Nale¿y usun±æ kategorie podrzêdne przed skasowaniem tej kategorii !

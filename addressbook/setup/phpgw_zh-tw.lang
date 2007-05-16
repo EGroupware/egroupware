@@ -18,6 +18,7 @@ add a new list	addressbook	zh-tw	新增一個清單
 add a single entry by passing the fields.	addressbook	zh-tw	從欄位中新增一筆資料。
 add custom field	addressbook	zh-tw	新增自訂欄位
 add to distribution list:	addressbook	zh-tw	新增到分配清單：
+added by synchronisation	addressbook	zh-tw	同步後新增
 added to distribution list	addressbook	zh-tw	新增到分配清單
 additional information about using ldap as contact repository	admin	zh-tw	關於將 LDAP 當作聯絡人資料庫的其他資訊
 address book	common	zh-tw	通訊錄
@@ -26,6 +27,7 @@ address book - view	addressbook	zh-tw	通訊錄 - 檢視
 address line 2	addressbook	zh-tw	住址 2
 address type	addressbook	zh-tw	住址類型
 addressbook	common	zh-tw	通訊錄
+addressbook csv export	addressbook	zh-tw	匯出 CSV 格式通訊錄
 addressbook menu	addressbook	zh-tw	通訊錄選單
 addressbook preferences	addressbook	zh-tw	通訊錄設定
 addressbook the contact should be saved to	addressbook	zh-tw	通訊錄聯絡人儲存位置
@@ -133,6 +135,7 @@ export file name	addressbook	zh-tw	匯出檔名
 export from addressbook	addressbook	zh-tw	從通訊錄匯出
 export selection	addressbook	zh-tw	匯出選擇的項目
 exported	addressbook	zh-tw	匯出了
+exports contacts from your addressbook into a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	zh-tw	從通訊錄匯出聯絡人資料成一個 CSV 檔案， CSV 意思是逗點分隔數值，不過您可以在過程中選擇希望使用的分隔字元。
 extra	addressbook	zh-tw	其他
 failed to change %1 organisation member(s) (insufficent rights) !!!	addressbook	zh-tw	變更 %1 組織成員時發生錯誤（沒有權限）！
 fax	addressbook	zh-tw	傳真
@@ -152,6 +155,8 @@ geo	addressbook	zh-tw	GEO
 global categories	addressbook	zh-tw	全域類別
 grant addressbook access	common	zh-tw	允許存取通訊錄
 group %1	addressbook	zh-tw	群組 %1
+hide accounts from addressbook	addressbook	zh-tw	從通訊錄中隱藏帳號
+hides accounts completly from the adressbook.	addressbook	zh-tw	從通訊錄中完整隱藏帳號
 home address	addressbook	zh-tw	住家住址
 home address, birthday, ...	addressbook	zh-tw	住家住址、生日、...
 home city	addressbook	zh-tw	縣/市

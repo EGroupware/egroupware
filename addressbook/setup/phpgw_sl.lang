@@ -95,6 +95,7 @@ csv-filename	addressbook	sl	CSV-Ime datoteke
 custom	addressbook	sl	Lasten
 custom fields	addressbook	sl	Lastna polja
 debug output in browser	addressbook	sl	Preglej izpis v brskalniku
+default address format	addressbook	sl	Privzeta oblika naslovov
 default addressbook for adding contacts	addressbook	sl	Privzeti adresar za dodajanje stikov
 default filter	addressbook	sl	Privzeti filter
 delete a single entry by passing the id.	addressbook	sl	Izbriši zapis s podano šifro
@@ -299,7 +300,8 @@ vcards require a last name entry.	addressbook	sl	VCards zahteva vpis priimka.
 view linked infolog entries	addressbook	sl	Poglej povezane vnose InfoDnevnika
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate stikov za skladiščenje računov!
 warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najdeni stiki bodo zbrisani!
-what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v deugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
+what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v drugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	sl	Katero obliko naslova naj Adresar uporabi za države, za katere ne pozna oblike. Če je oblika naslova znana, ta nastavitev nima vpliva.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sl	Kateri adresar naj se izbere pri dodajanju stika IN nimate pravic dodajanja v trenutni adresar.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v eGroupWare.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	sl	Katera polja naj se izvozijo. "Vse" pomeni, da se bodo izvozila vsa polja, shranjena v adresarju, tudi lastna. Službeni ali domači naslov vsebujejo samo ime, podjetje in izbrani naslov.

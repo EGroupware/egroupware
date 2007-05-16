@@ -123,8 +123,10 @@ finish	infolog	sk	Koniec
 for which types should this field be used	infolog	sk	Pre ktoré typy sa má pou¾i» táto polo¾ka
 from	infolog	sk	Od
 general	infolog	sk	Hlavné
+group owner for	infolog	sk	Skupinový vlastník pre
 high	infolog	sk	Vysoká
 id	infolog	sk	ID
+if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sk	Ak tento typ má skupinového vlastníka, v¹etky záznamy tohto typu bude vlastni» zadaná skupina a NIE pou¾ívateµ, ktorý záznam vytvoril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sk	Ak nenastavené, riadok vyhµadávania a filtrov je skrytý pre menej záznamov ne¾ "maximálny poèet záznamov zobrazených na stránke" (ako je definované v be¾ných nastaveniach).
 import	infolog	sk	Import
 import next set	infolog	sk	Importova» ïal¹iu sadu

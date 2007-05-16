@@ -45,6 +45,7 @@ all fields	common	fi	kaikki kentät
 alphabet	common	fi	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,å,ä,ö
 alternate style-sheet:	common	fi	Vaihtoehtoinen tyylisivu:
 american samoa	common	fi	AMERIKAN SAMOA
+an existing and by the webserver readable directory enables the image browser and upload.	common	fi	Olemassa oleva JA palvelimen lukuoikeudet omaava hakemisto sallii kuvien selaamisen ja lataamisen.
 andorra	common	fi	ANDORRA
 angola	common	fi	ANGOLA
 anguilla	common	fi	ANGUILLA
@@ -71,7 +72,6 @@ azerbaijan	common	fi	AZERBAIJAN
 back	common	fi	Takaisin
 back to user login	common	fi	Kirjaudu sisään
 background color:	common	fi	Taustaväri:
-backupdir '%1' is not writeable by the webserver	common	fi	Web palvelimella ei ole kirjoitusoikeutta varmuuskopio hakemistoon '%1'
 bad login or password	common	fi	Tunnus tai salasana ei kelpaa
 bahamas	common	fi	BAHAMA
 bahrain	common	fi	BAHRAIN
@@ -86,7 +86,6 @@ bermuda	common	fi	BERMUDA
 bhutan	common	fi	BHUTAN
 blocked, too many attempts	common	fi	Pääsy estetty, liian monta yritystä
 bold	common	fi	Lihavoi
-bold.gif	common	fi	bold.gif
 bolivia	common	fi	BOLIVIA
 border	common	fi	Reuna
 bosnia and herzegovina	common	fi	BOSNIA AND HERZEGOVINA
@@ -177,6 +176,7 @@ detail	common	fi	Yksityiskohta
 details	common	fi	Yksityiskohdat
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	fi	Ota Internet Explorer 5.5 ja uudempien png-bugin korjausskripti pois käytöstä?
 direction left to right	common	fi	Suunta vasemmalta oikealle
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fi	Hakemistoa ei ole, siihen ei ole lukuoikeuksia tai se ei ole suhteellinen dokumentin juurihakemisto
 disable internet explorer png-image-bugfix	common	fi	Ota Internet Explorerin png-bugin korjausskripti pois käytöstä
 disable slider effects	common	fi	Ota liukuefektit pois käytöstä
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	fi	Ota valikoiden näyttämisen ja piilottamisen liukuefekti pois käytöstä? Operan ja Konquerorin käyttäjät haluavat tämän yleensä pois.
@@ -211,7 +211,7 @@ email-address of the user, eg. "%1"	common	fi	Käyttäjän sähköpostiosoite, esim. 
 enabled	common	fi	Käytössä
 end date	common	fi	Loppumispäivä
 end time	common	fi	Loppumisaika
-enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWaren URL.<br>Esimerkki: http://www.yritys.com/egroupware   tai   /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
+enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	fi	Anna eGroupWaren URL.<br>Esimerkki: http://www.yritys.com/egroupware  tai  /egroupware<br>(<b>ei kauttaviivaa loppuun</b>)
 entry has been deleted sucessfully	common	fi	Kohde poistettu
 entry updated sucessfully	common	fi	Kohde päivitetty
 equatorial guinea	common	fi	PÄIVÄNTASAAJAN GUINEA
@@ -222,11 +222,13 @@ error deleting %1 %2 directory	common	fi	Virhe poistettaessa hakemistoa %1 %2
 error renaming %1 %2 directory	common	fi	Virhe nimettäessä hakemistoa uudelleen %1 %2
 estonia	common	fi	VIRO
 ethiopia	common	fi	ETIOPIA
+everything	common	fi	Kaikki
 exact	common	fi	täsmällinen
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	fi	Yhteys palvelimeen epäonnistui, yritä uudestaan. Ota yhteyttä ylläpitäjään mikäli ongelma toistuu.
 falkland islands (malvinas)	common	fi	FALKLANDSAARET (MALVINAS)
 faroe islands	common	fi	FÄRSAARET
 fax number	common	fi	faksinumero
+features of the editor?	common	fi	Editorin ominaisuudet?
 february	common	fi	Helmikuu
 fields	common	fi	Kentät
 fiji	common	fi	FIDJI
@@ -252,6 +254,7 @@ gabon	common	fi	GABON
 gambia	common	fi	GAMBIA
 general menu	common	fi	Päävalikko
 georgia	common	fi	GEORGIA
+german	common	fi	Saksaksi
 germany	common	fi	SAKSA
 ghana	common	fi	GHANA
 gibraltar	common	fi	GIBRALTAR
@@ -295,10 +298,10 @@ iceland	common	fi	ISLANTI
 iespell not detected. click ok to go to download page.	common	fi	ieSpell:ä ei havaittu, paina Ok siirtyäksesi lataussivulle
 if the clock is enabled would you like it to update it every second or every minute?	common	fi	Jos kello on käytössä, päivitetäänkö se sekunnin vai minuutin välein?
 if there are some images in the background folder you can choose the one you would like to see.	common	fi	Jos taustakuvahakemistossa on kuvia, voit valita mitä kuvaa haluat käyttää.
+image directory relative to document root (use / !), example:	common	fi	Kuvahakemiston  suhteellinen dokumentin juurihakemisto (use / !), esimerkiksi:
 image url	common	fi	Kuvan URL
 india	common	fi	INTIA
 indonesia	common	fi	INDONEESIA
-insert 'return false'	common	fi	Lisää 'return false'
 insert all %1 addresses of the %2 contacts in %3	common	fi	Lisää kaikki %1 osoitetta %2 yhteystiedosta kohteeseen %3
 insert column after	common	fi	Lisää sarake jälkeen
 insert column before	common	fi	Lisää sarake edelle
@@ -315,7 +318,6 @@ israel	common	fi	ISRAEL
 it has been more then %1 days since you changed your password	common	fi	Olet vaihtanut salasanasi viimeksi %1 päivää sitten
 it is recommended that you run setup to upgrade your tables to the current version	common	fi	On suositeltavaa päivittää tietokannan taulut nykyiseen versioon.
 italic	common	fi	Kursivoi
-italic.gif	common	fi	italic.gif
 italy	common	fi	ITALIA
 jamaica	common	fi	JAMAIKA
 january	common	fi	Tammikuu
@@ -393,9 +395,11 @@ moldova, republic of	common	fi	MOLDOVAN TASAVALTA
 monaco	common	fi	MONACO
 monday	common	fi	Maanantai
 mongolia	common	fi	MONGOLIA
+montenegro	common	fi	MONTENEGRO
 montserrat	common	fi	MONTSERRAT
 morocco	common	fi	MAROKKO
 mozambique	common	fi	MOSAMBIK
+multiple	common	fi	monella
 myanmar	common	fi	MYANMAR
 name	common	fi	Nimi
 name of the user, eg. "%1"	common	fi	Käyttäjän nimi, esim. "%1"
@@ -469,9 +473,6 @@ password must contain at least %1 special characters	common	fi	Salasanassa pitää
 password must contain at least %1 uppercase letters	common	fi	Salasanassa pitää olla vähintään %1 isoa kirjainta
 password must have at least %1 characters	common	fi	Salasanassa pitää olla vähintään %1 merkkiä
 path to user and group files has to be outside of the webservers document-root!!!	common	fi	Käyttäjä- ja ryhmätiedostojen TÄYTYY OLLA www-palvelimen asiakirjajuuren ulkopuolella!!!
-pattern for search in addressbook	common	fi	Osoitekirjasta etsittävä merkkijono
-pattern for search in calendar	common	fi	Kalenterista etsittävä merkkijono
-pattern for search in projects	common	fi	Projekteista etsittävä merkkijono
 permissions to the files/users directory	common	fi	tiedostojen/käyttäjien hakemiston käyttöoikeudet
 personal	common	fi	Henkilökohtainen
 peru	common	fi	PERU
@@ -489,8 +490,8 @@ please wait...	common	fi	Odota hetki...
 poland	common	fi	PUOLA
 portugal	common	fi	PORTUGALI
 postal	common	fi	Posti
+powered by	common	fi	Kehittänyt
 powered by egroupware version %1	common	fi	Tämä on <a href="http://www.egroupware.org">eGroupWare</a> versio %1
-powered by phpgroupware version %1	common	fi	Tämä on eGroupWare versio %1
 preferences	common	fi	Asetukset
 preferences for the idots template set	common	fi	idots-mallipohjan asetukset
 prev. month (hold for menu)	jscalendar	fi	Edellinen kuukausi (odota, niin näet valikon)
@@ -508,6 +509,7 @@ qatar	common	fi	QATAR
 read	common	fi	Lue
 read this list of methods.	common	fi	Lue metodien luettelo.
 reading	common	fi	luetaan
+regular	common	fi	Tavallinen
 reject	common	fi	Hylkää
 remove selected accounts	common	fi	poista valitut käyttäjätunnukset
 remove shortcut	common	fi	Poista pikakuvake
@@ -536,8 +538,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	fi	Tallenna
 search	common	fi	Etsi
 search %1 '%2'	common	fi	Etsi %1 '%2'
-search or select accounts	common	fi	Etsi tai valitse käyttäjätunnukset
-search or select multiple accounts	common	fi	Etsi tai valitse useita käyttäjätunnuksia
+search accounts	common	fi	Etsi käyttäjätilejä
 second	common	fi	toinen
 section	common	fi	Osio
 select	common	fi	Valitse
@@ -556,6 +557,7 @@ selection	common	fi	Valinta
 send	common	fi	Lähetä
 senegal	common	fi	SENEGAL
 september	common	fi	Syyskuu
+serbia	common	fi	Serbia
 server %1 has been added	common	fi	Palvelin %1 on lisätty
 server answered. processing response...	common	fi	Palvelin vastaa, prosessoidaan vastausta...
 server contacted. waiting for response...	common	fi	Yhdistetään palvelimeen, odotetaan vastausta...
@@ -578,6 +580,7 @@ show_more_apps	common	fi	show_more_apps
 showing %1	common	fi	näytetään %1
 showing %1 - %2 of %3	common	fi	näytetään %1 - %2 of %3
 sierra leone	common	fi	SIERRA LEONE
+simple	common	fi	Yksinkertainen
 singapore	common	fi	SINGAPORE
 slovakia	common	fi	SLOVAKIA
 slovenia	common	fi	SLOVENIA
@@ -627,14 +630,14 @@ time zone offset	common	fi	Aikaero
 title	common	fi	Otsikko
 to	common	fi	Kenelle
 to correct this error for the future you will need to properly set the	common	fi	Korjataksesi tämän virheen jatkossa sinun täytyy määritellä
-to go back to the msg list, click <a href= %1 >here</a>	common	fi	To siirtyäksesi takaisin viestien luetteloon napsauta <a href="%1">tästä</a>
+to go back to the msg list, click <a href= %1 >here</a>	common	fi	Siirtyäksesi takaisin viestiluetteloon napsauta <a href="%1">tästä</a>
 today	common	fi	Tänään
 todays date, eg. "%1"	common	fi	tämä päivämäärä, esim. "%1"
 toggle first day of week	jscalendar	fi	Vaihda viikon alkupäivää
 togo	common	fi	TOGO
 tokelau	common	fi	TOKELAU
 tonga	common	fi	TONGA
-too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjälle '%2', %3 IP-osoitteesta %4
+too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	fi	Liian monta epäonnistunutta sisäänkirjautumista: %1 käyttäjällä '%2', %3 IP-osoitteesta %4
 top	common	fi	Top
 total	common	fi	Yhteensä
 transparant bg for the icons?	common	fi	Ikoneilla on läpinäkyvä taustaväri?
@@ -649,7 +652,6 @@ type	common	fi	Muoto
 uganda	common	fi	UGANDA
 ukraine	common	fi	UKRAINA
 underline	common	fi	Alleviivaa
-underline.gif	common	fi	underline.gif
 united arab emirates	common	fi	YHDISTYNEET ARABIEMIRAATIT
 united kingdom	common	fi	YHDISTYNYT KUNINGASKUNTA
 united states	common	fi	YHDYSVALLAT
@@ -659,6 +661,7 @@ update	common	fi	Lisää
 update the clock per minute or per second	common	fi	Päivitetään kello minuutin tai sekunnin välein
 upload	common	fi	Lataa
 upload directory does not exist, or is not writeable by webserver	common	fi	Lataus hakemistoa ei löydy tai palvelin ei voi kirjoittaa sinne.
+upload requires the directory to be writable by the webserver!	common	fi	Lataaminen edellyttää hakemistolta kirjoitusoikeuksia!
 url	common	fi	URL
 uruguay	common	fi	URUGUAY
 use button to search for	common	fi	käytä painiketta etsiäksesi
@@ -683,6 +686,9 @@ wallis and futuna	common	fi	WALLIS JA FUTUNA
 wednesday	common	fi	Keskiviikko
 welcome	common	fi	Tervetuloa
 western sahara	common	fi	LÄNSISAHARA
+what color should all the blank space on the desktop have	common	fi	Minkä värisinä kaikki työpöydän tyhjät kohdat näytetään
+what style would you like the image to have?	common	fi	Minkä tyylin haluat kuvaan?
+when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fi	Kun vastaat Kylä, kotisivu- ja uloskirjautumispainike näkyvät yläreunan valikossa, kuten sovellukset.
 which groups	common	fi	mitkä ryhmät
 width	common	fi	Leveys
 wk	jscalendar	fi	vk
@@ -694,6 +700,7 @@ year	common	fi	Vuosi
 yemen	common	fi	JEMEN
 yes	common	fi	Kyllä
 you are required to change your password during your first login	common	fi	Salasanasi on vaihdettava ensimmäisen sisäänkirjautumisen yhteydessä.
+you can customize how many icons and toolbars the editor shows.	common	fi	Voit määritellä montako ikonia ja työkaluriviä editoria näyttää.
 you have been successfully logged out	login	fi	Olet kirjautunut ulos
 you have not entered a title	common	fi	Et antanut otsikkoa
 you have not entered a valid date	common	fi	Olet määritellyt virheellisen päivämäärän
@@ -709,7 +716,6 @@ your search returned %1 matchs	common	fi	haku palautti %1 osumaa
 your search returned 1 match	common	fi	haku palautti yhden osuman
 your session could not be verified.	login	fi	Istuntoasi ei voitu varmentaa.
 your settings have been updated	common	fi	Asetukset päivitetty
-yugoslavia	common	fi	JUGOSLAVIA
 zambia	common	fi	ZAMBIA
 zimbabwe	common	fi	ZIMBABWE
 zoom	common	fi	Zoomaa

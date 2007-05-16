@@ -22,6 +22,7 @@ alarms	calendar	es-es	Alarmas
 all categories	calendar	es-es	Todas las categorías
 all day	calendar	es-es	Todo el día
 all events	calendar	es-es	Todos los eventos
+all future	calendar	es-es	Todos los futuros
 all participants	calendar	es-es	Todos los participantes
 allows to edit the event again	calendar	es-es	Permite volver a editar el evento
 apply the changes	calendar	es-es	Aplicar los cambios
@@ -116,8 +117,6 @@ filename of the download	calendar	es-es	Nombre de fichero de la descarga
 find free timeslots where the selected participants are availible for the given timespan	calendar	es-es	Buscar márgenes de tiempo libres donde los participantes seleccionados estén disponibles para las horas indicadas
 firstname of person to notify	calendar	es-es	Nombre de pila de la persona a notificar
 for	calendar	es-es	para
-for all future events	calendar	es-es	Para todos los eventos futuros
-for this event	calendar	es-es	Para este evento
 for which views should calendar show distinct lines with a fixed time interval.	calendar	es-es	Para qué vistas debe mostrar el calendario distintas líneas con un intervalo fijo de tiempo.
 format of event updates	calendar	es-es	Formato de las actualizaciones de eventos
 forward half a month	calendar	es-es	medio mes hacia adelante
@@ -266,7 +265,6 @@ startdate and -time of the search	calendar	es-es	Fecha de inicio y -hora de la b
 startdate of the export	calendar	es-es	Fecha de inicio de la exportación
 startrecord	calendar	es-es	Registro inicial
 status changed	calendar	es-es	Estado modificado
-status recurrence	calendar	es-es	Recurrencia del estado
 submit to repository	calendar	es-es	Enviar al repositorio
 sun	calendar	es-es	Dom
 tentative	calendar	es-es	Provisional

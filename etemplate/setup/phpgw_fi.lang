@@ -32,6 +32,8 @@ an indexed column speeds up querys using that column (cost space on the disk !!!
 application	etemplate	fi	Sovellus
 application name needed to write a langfile or dump the etemplates !!!	etemplate	fi	Sovelluksen nimi tarvitsee kirjoittaa kielitiedostoon tai vedostaa asiakirjamallit !!!
 applies the changes made	etemplate	fi	hyv‰ksyt‰‰n tehdyt muutokset
+applies the changes to the given version of the template	etemplate	fi	hyv‰ksy muutokset annetun version pohjaan
+as default	etemplate	fi	oletuksena
 attach	etemplate	fi	Liit‰
 attach file	etemplate	fi	liit‰ tiedosto
 border	etemplate	fi	reunaviiva
@@ -63,6 +65,8 @@ comment	etemplate	fi	Kommentti
 confirm	etemplate	fi	vahvista
 confirmation message or custom javascript (returning true or false)	etemplate	fi	vahvistus viesti tai oma javascripti (palauttaa true tai false)
 confirmation necesary or custom java-script	etemplate	fi	vahvistus tai oma javaskripti on v‰ltt‰m‰tˆn
+contact	etemplate	fi	Yhteystiedot
+contact field to show	etemplate	fi	N‰yt‰ yhteystieto kentt‰
 contact fields	etemplate	fi	Yhteystieto kent‰t
 contains	etemplate	fi	sis‰lt‰‰
 create a new table for the application	etemplate	fi	Luo uusi taulukko sovellukselle
@@ -106,6 +110,8 @@ editable templates - delete template	etemplate	fi	Muokattavat sivupohjat - Poist
 editable templates - editor	etemplate	fi	Muokattavat sivupohjat - Muokkaus
 editable templates - search	etemplate	fi	Muokattavat sivupohjat - Haku
 editable templates - show template	etemplate	fi	Muokattavat sivupohjat - N‰yt‰ sivupohja
+enable javascript onchange submit	etemplate	fi	salli JavaScript onChange l‰hetys
+enter filename to upload and attach, use [browse...] to search for it	etemplate	fi	Anna ladattavan ja liitett‰v‰n tiedoston nimi, k‰yt‰ [Selaa...] lˆyt‰‰ksesi tiedosto
 enter the new version number here (> old_version), empty for no update-file	etemplate	fi	Kirjoita uusi versio numero t‰h‰n (>vanha_versio) tyhj‰ jos ei ole p‰ivitett‰v‰‰ tiedostoa
 enter the new version number here (has to be > old_version)	etemplate	fi	kirjoita uusi versio numero t‰h‰n (t‰ytyy olla > vanha_versio)
 entry saved	etemplate	fi	tietue tallennettu
@@ -123,6 +129,7 @@ exchange this two columns	etemplate	fi	vaihda
 export the loaded etemplate into a xml-file	etemplate	fi	vie ladattu Asiakirjamalli xml-tiedostoksi
 export xml	etemplate	fi	Vie XML-tiedostoon
 extensions loaded:	etemplate	fi	Ladatut laajennukset:
+field	etemplate	fi	Kentt‰
 field must not be empty !!!	etemplate	fi	Kentt‰ ei saa olla tyhj‰ !!!
 file	etemplate	fi	Tiedosto
 file contains more than one etemplate, last one is shown !!!	etemplate	fi	Tiedosto sis‰lt‰‰ enemm‰n kuin yhden asiakirjamallin , viimeisin n‰ytet‰‰n !!!
@@ -157,6 +164,8 @@ insert a column before	etemplate	fi	lis‰‰ sarake ennen
 insert a column behind	etemplate	fi	lis‰‰ sarake j‰lkeen
 insert a row above	etemplate	fi	lis‰‰ rivi ennen
 insert a row below	etemplate	fi	lis‰‰ rivi j‰lkeen
+insert a widget before	etemplate	fi	lis‰‰ widget ennen
+insert a widget behind	etemplate	fi	lis‰‰ widget j‰lkeen
 insert new column behind this one	etemplate	fi	Lis‰‰ uusi sarake valitun taakse
 insert new column in front of all	etemplate	fi	lis‰‰ uusi sarake kaikkien eteen
 insert new row after this one	etemplate	fi	lis‰‰ uusi rivi valitun j‰lkeen
@@ -184,8 +193,10 @@ name of the etemplate, should be in form application.function[.subtemplate]	etem
 new search	etemplate	fi	Uusi etsint‰
 new table created	etemplate	fi	Uusi taulukon nimi
 newer version '%1' exists !!!	etemplate	fi	uudempi versio %1 havaittu !!!
+no column to swap with !!!	etemplate	fi	ei saraketta johon voisi vaihtaa !!!
 no file	etemplate	fi	ei tiedostoa
 no filename given or selected via browse...	etemplate	fi	tiedostonime‰ ei annettu tai valittu Selaa... -valinnan kautta
+no row to swap with !!!	etemplate	fi	ei rivi‰ johon voisi vaihtaa !!!
 not null	etemplate	fi	EI NULL
 nothing	etemplate	fi	ei mit‰‰n
 nothing found - try again !!!	etemplate	fi	Mit‰‰n ei lˆydetty - yrit‰ uudelleen !!!
@@ -198,6 +209,7 @@ open the online help.	etemplate	fi	Avaa Online-tuki
 options	etemplate	fi	Asetukset
 overflow	etemplate	fi	ylivuoto
 padding	etemplate	fi	T‰ytt‰‰
+parent is a '%1' !!!	etemplate	fi	'%1' on is‰nt‰ !!!
 paste	etemplate	fi	Liit‰
 path	etemplate	fi	Polku
 please enter table-name first !!!	etemplate	fi	Kirjoita ensin taulukon nimi !!!
@@ -233,18 +245,22 @@ select an application, (*) = uninstalled	etemplate	fi	Valitse sovellus, (*) = ei
 select an entry to link with	etemplate	fi	Valitse tietue linkkiin
 select an table of the application	etemplate	fi	Valitse sovelluksen taulukko
 select application	etemplate	fi	Valitse sovellus
+select application to search	etemplate	fi	Valitse etsitt‰v‰ sovellus
 select category	etemplate	fi	Valitse ryhm‰
+select columns	etemplate	fi	Valitse sarakkeet
 select country	etemplate	fi	Valitse maa
 select day	etemplate	fi	Valitse p‰iv‰
 select day of week	etemplate	fi	Valitse viikon p‰iv‰
 select hour	etemplate	fi	Valitse tunti
 select if content of field should not be translated (label gets always translated)	etemplate	fi	valitse jos kent‰n sis‰ltˆ ei pit‰isi olla k‰‰nnetty (otsikko saadaan yleens‰ k‰‰nnetty‰)
+select language	etemplate	fi	Valitse kieli
 select month	etemplate	fi	Valitse kuukausi
 select number	etemplate	fi	Valitse numero
 select one ...	etemplate	fi	Valitse yksi...
 select percentage	etemplate	fi	Valitse prosenssi
 select priority	etemplate	fi	Valitse ensisijaisuus
 select state	etemplate	fi	Valitse tila
+select the columns to display in the list	etemplate	fi	Valitse sarakkeet jotka n‰ytet‰‰ listalla
 select this etemplate to delete it	etemplate	fi	valitse asiakirjamalli poistaaksesi sen
 select which accounts to show	etemplate	fi	valitse mitk‰ asiakkaat n‰ytet‰‰n
 select which values to show	etemplate	fi	valitse mitk‰ arvot n‰ytet‰‰n
@@ -263,8 +279,10 @@ start a new search, cancel this link	etemplate	fi	aloita uusi haku, peruuta t‰m‰
 submit form	etemplate	fi	l‰het‰ lomake
 submitbutton	etemplate	fi	L‰het‰-painike
 swap	etemplate	fi	vaihda
+swap widget with next one	etemplate	fi	vaihda widget seuraavaan
 swap with next column	etemplate	fi	vaihda seuraavaa sarakkeeseen
 swap with next row	etemplate	fi	vaihda seuraavaa riviin
+switch to a parent widget	etemplate	fi	vaihda is‰nt‰ widget
 table unchanged, no write necessary !!!	etemplate	fi	Taulukkoa ei ole muutettu joten  kirjoittaminen ei ole tarpeellinen !!!
 tablename	etemplate	fi	Taulukon nimi
 tabs	etemplate	fi	sarkaimet
@@ -298,10 +316,12 @@ view this etemplate	etemplate	fi	N‰yt‰ t‰m‰ eMallipohja
 view this linked entry in its application	etemplate	fi	n‰yt‰ linkitetty tietue sen sovelluksessa
 weekend	etemplate	fi	viikonloppu
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	fi	mit‰ tapahtuu ylimenev‰n osan kanssa:n‰kyv‰(oletus), piilotettu,vieritt‰‰,auto(selaustoiminto toteutetaan)
+widget copied into clipboard	etemplate	fi	widget kopioitu leikepˆyd‰lle
 width	etemplate	fi	leveys
 width of column (in % or pixel)	etemplate	fi	sarakkeen leveys (% tai pikselein‰)
 width, disabled	etemplate	fi	Leveys, estetty
 working days	etemplate	fi	tyˆp‰iv‰t
+write <app>/setup/tables_current.inc.php	etemplate	fi	Kirjoita <app>/setup/tables_current.inc.php
 write langfile	etemplate	fi	kirjoita kielitiedosto
 write tables	etemplate	fi	Kirjoita taulukko
 xml-file to import	etemplate	fi	tuotava xml-tiedosto
