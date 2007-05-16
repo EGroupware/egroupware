@@ -1527,6 +1527,17 @@ $readonlys['button[vcard]'] = true;
 			'%'		=> lang('contains'),
 			false	=> lang('exact'),
 		);
+		if ($this->customfields)
+		{
+			foreach($this->customfields as $name => $data)
+			{
+				if ($data['type'] == 'select')
+				{
+					if (!isset($content['#'.$name])) $content['#'.$name] = '';
+					if(!isset($data['values'][''])) $sel_options['#'.$name][''] = lang('Select one');
+				}
+			}
+		}
 		// configure edit template as search dialog
 		$readonlys['change_photo'] = true;
 		$readonlys['fileas_type'] = true;

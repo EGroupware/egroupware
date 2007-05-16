@@ -1655,26 +1655,30 @@
 				$url = $GLOBALS['egw']->link($matches[1],$matches[2]);
 				$on = str_replace($matches[0],'\''.$url.'\'',$on);
 			}
-			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches))
-			{
-				foreach($matches[1] as $n => $matche_name)
-				{
+			
+			if (preg_match_all("/form::name\\('([^']+)'\\)/",$on,$matches)) {
+				foreach($matches[1] as $n => $matche_name) {
 					$matches[1][$n] = '\''.$this->form_name($cname,$matche_name).'\'';
 				}
 				$on = str_replace($matches[0],$matches[1],$on);
 			}
-			if (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches))
-			{
+			
+			if (preg_match('/confirm\(["\']{1}(.*)["\']{1}\)/',$on,$matches)) {
 				$question = lang($matches[1]).(substr($matches[1],-1) != '?' ? '?' : '');	// add ? if not there, saves extra phrase
 				$on = str_replace($matches[0],'confirm(\''.addslashes($question).'\')',$on);
 				//$on = preg_replace('/confirm\(["\']{1}(.*)["\']{1}\)/','confirm(\''.addslashes($question).'\')',$on);
 			}
+			
+			if (preg_match("/window.open\('(.*)','(.*)','dependent=yes,width=(.*),height=(.*),scrollbars=yes,status=(.*)'\)/",$on,$matches)) {
+				$on = str_replace($matches[0], "egw_openWindowCentered2('{$matches[1]}', '{$matches[2]}', '{$matches[3]}', '{$matches[4]}', '{$matches[5]}')", $on);
+			}
+			
 			// replace xajax calls to code in widgets, with the "etemplate" handler,
 			// this allows to call widgets with the current app, otherwise everyone would need etemplate run rights
-			if (strpos($on,"xajax_doXMLHTTP('etemplate.")!==false)
-			{
+			if (strpos($on,"xajax_doXMLHTTP('etemplate.")!==false) {
 				$on = preg_replace("/^xajax_doXMLHTTP\('etemplate\.([a-z]+_widget\.[a-zA-Z0-9_]+)\'/",'xajax_doXMLHTTP(\''.$GLOBALS['egw_info']['flags']['currentapp'].'.\\1.etemplate\'',$on);
 			}
+			
 			return $on;
 		}
 

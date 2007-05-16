@@ -980,20 +980,23 @@
 			$currentPassword = $this->Password;
 			$currentDatabase = $this->Database;
 
-			$extra = array();
+			$sqls = array();
 			$set_charset = '';
 			switch ($this->Type)
 			{
 				case 'pgsql':
 					$meta_db = 'template1';
+					$sqls[] = "CREATE DATABASE $currentDatabase";
 					break;
 				case 'mysql':
+					$create = "CREATE DATABASE `$currentDatabase`";
 					if ($charset && isset($this->Link_ID->charset2mysql[$charset]) && (float) $this->ServerInfo['version'] >= 4.1)
 					{
-						$set_charset = ' DEFAULT CHARACTER SET '.$this->Link_ID->charset2mysql[$charset].';';
+						$create .= ' DEFAULT CHARACTER SET '.$this->Link_ID->charset2mysql[$charset].';';
 					}
+					$sqls[] = $create;
+					$sqls[] = "GRANT ALL ON `$currentDatabase`.* TO $currentUser@localhost IDENTIFIED BY ".$this->quote($currentPassword);
 					$meta_db = 'mysql';
-					$extra[] = "GRANT ALL ON $currentDatabase.* TO $currentUser@localhost IDENTIFIED BY '$currentPassword'";
 					break;
 				default:
 					echo "<p>db::create_database(user='$adminname',\$pw) not yet implemented for DB-type '$this->Type'</p>\n";
@@ -1006,10 +1009,9 @@
 				$this->Database = $meta_db;
 			}
 			$this->disconnect();
-			$this->query('CREATE DATABASE '.$currentDatabase.$set_charset);
-			foreach($extra as $sql)
+			foreach($sqls as $sql)
 			{
-				$this->query($sql);
+				$this->query($sql,__LINE__,__FILE__);
 			}
 			$this->disconnect();
 

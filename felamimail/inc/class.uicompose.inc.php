@@ -118,8 +118,15 @@
 			$sessionData = $this->bocompose->getSessionData();
 			if (is_array($_GET['preset']))
 			{
-				$this->bocompose->addAttachment(array_merge($sessionData,$_GET['preset']));
-				$sessionData = $this->bocompose->getSessionData();
+				if ($_GET['preset']['file'] && is_readable($_GET['preset']['file']))
+				{
+					$this->bocompose->addAttachment(array_merge($sessionData,$_GET['preset']));
+					$sessionData = $this->bocompose->getSessionData();
+				}
+				foreach(array('to','cc','bcc','subject','body') as $name)
+				{
+					if ($_GET['preset'][$name]) $sessionData[$name] = $_GET['preset'][$name];
+				}
 			}
 			$preferences = ExecMethod('felamimail.bopreferences.getPreferences');
 			#_debug_array($preferences);

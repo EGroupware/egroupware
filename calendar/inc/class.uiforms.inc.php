@@ -567,7 +567,7 @@ class uiforms extends uical
 		}
 		$vars = array(
 			'menuaction'      => 'felamimail.uicompose.compose',
-			'preset[to]'      => implode(', ',$to),
+			'preset[to]'      => $to,
 			'preset[subject]' => $subject,
 			'preset[body]'    => $body,
 			'preset[name]'    => 'event.ics',
