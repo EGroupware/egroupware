@@ -120,6 +120,17 @@
 				$date = split('[- /.:,]',$value);
 				//echo "date=<pre>"; print_r($date); echo "</pre>";
 				$mdy  = split('[- /.:,]',$data_format);
+				
+				if (count($mdy) == 1)	// no seperators, eg. YmdHi
+				{
+					for($n = $i = 0; $n < strlen($data_format); ++$n)
+					{
+						$mdy[$n] = $data_format{$n};
+						$len = $data_format{$n} == 'Y' ? 4 : 2;
+						$date[$n] = substr($value,$i,$len);
+						$i += $len;
+					}
+				}
 				$value = array();
 				foreach ($date as $n => $dat)
 				{
