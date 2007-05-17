@@ -136,6 +136,12 @@
 							));
 						}
 						break;
+					case 'date':
+					case 'date-time':
+						$input = &$tpl->new_cell($n,$field['type'],'',$this->prefix.$name,array(
+							'size' => $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s'),
+						));
+						break;
 					case 'link-entry':
 					default :	// link-entry to given app
 						$input = &$tpl->new_cell($n,'link-entry','',$this->prefix.$name,array(
