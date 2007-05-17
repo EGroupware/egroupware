@@ -35,22 +35,7 @@
      </select>
     </td>
    </tr>
-<!--
-   <tr class="row_on">
-    <td>{lang_Would_you_like_eGroupWare_to_cache_the_phpgw_info_array_?}:</td>
-    <td>
-     <select name="newsettings[cache_phpgw_info]">
-      <option value="">{lang_No}</option>
-      <option value="True"{selected_cache_phpgw_info_True}>{lang_Yes}</option>
-     </select>
-    </td>
-   </tr>
 
-   <tr class="row_off">
-    <td>{lang_Maximum_entries_in_click_path_history}:</td>
-    <td><input size="8" name="newsettings[max_history]" value="{value_max_history}"></td>
-   </tr>
--->
    <tr class="row_on">
     <td>{lang_Would_you_like_to_automaticaly_load_new_langfiles_(at_login-time)_?}:</td>
     <td>
@@ -98,17 +83,7 @@
     <td>{lang_Enter_the_title_for_your_site}:</td>
     <td><input name="newsettings[site_title]" value="{value_site_title}"></td>
    </tr>
-<!-- This is not used / working at the moment, RalfBecker 21.03.2004
-   <tr class="row_off">
-    <td>{lang_Enter_the_background_color_for_the_site_title}:</td>
-    <td>#<input name="newsettings[login_bg_color_title]" value="{value_login_bg_color_title}"></td>
-   </tr>
 
-   <tr class="row_on">
-    <td>{lang_Enter_the_background_color_for_the_login_page}:</td>
-    <td>#<input name="newsettings[login_bg_color]" value="{value_login_bg_color}"></td>
-   </tr>
--->
    <tr class="row_off">
     <td>{lang_Enter_the_URL_or_filename_(in_phpgwapi/templates/default/images)_of_your_logo}:</td>
     <td><input name="newsettings[login_logo_file]" value="{value_login_logo_file}"></td>
@@ -125,11 +100,11 @@
    </tr>
 
    <tr class="row_on">
-    <td>{lang_Show_'powered_by'_logo_on}:</td>
+    <td>{lang_Show_an_asterisk_(*)_to_mark_untranslated_strings}:</td>
     <td>
-     <select name="newsettings[showpoweredbyon]">
-      <option value="bottom" {selected_showpoweredbyon_bottom}>{lang_bottom}</option>
-      <option value="top" {selected_showpoweredbyon_top}>{lang_top}</option>
+     <select name="newsettings[markuntranslated]">
+      <option value="">{lang_No}</option>
+      <option value="yes" {selected_markuntranslated_yes}>{lang_Yes}</option>
      </select>
     </td>
    </tr>
@@ -142,18 +117,35 @@
     <td>{lang_Use_cookies_to_pass_sessionid}:</td>
     <td>
      <select name="newsettings[usecookies]">
+      <option value="True"{selected_usecookies_True}>{lang_Yes} - {lang_more_secure}</option>
       <option value="">{lang_No}</option>
-      <option value="True"{selected_usecookies_True}>{lang_Yes}</option>
      </select>
     </td>
    </tr>
 
    <tr class="row_off">
-    <td>{lang_check_ip_address_of_all_sessions}:</td>
+    <td>{lang_Cookie_path_(allows_multiple_eGW_sessions_with_different_directories,_has_problemes_with_SiteMgr!)}:</td>
+    <td>
+     <select name="newsettings[cookiepath]">
+      <option value="">{lang_Document_root_(default)}</option>
+      <option value="egroupware"{selected_cookiepath_egroupware}>{lang_eGroupWare_directory}</option>
+     </select>
+    </td>
+   </tr>
+
+   <tr class="row_on">
+    <td>{lang_Cookie_domain_(default_empty_means_use_full_domain_name,_for_SiteMgr_eg._".domain.com"_allows_to_use_the_same_cookie_for_egw.domain.com_and_www.domain.com)}:</td>
+    <td>
+     <input name="newsettings[cookiedomain]" value="{value_cookiedomain}" />
+    </td>
+   </tr>
+
+   <tr class="row_off">
+    <td>{lang_check_ip_address_of_all_sessions} ({lang_switch_it_off,_if_users_are_randomly_thrown_out}: "{lang_Your_session_could_not_be_verified.}")</td>
     <td>
      <select name="newsettings[sessions_checkip]">
+      <option value="True"{selected_sessions_checkip_True}>{lang_Yes} - {lang_more_secure}</option>
       <option value="">{lang_No}</option>
-      <option value="True"{selected_sessions_checkip_True}>{lang_Yes}</option>
      </select>
     </td>
    </tr>
@@ -218,7 +210,7 @@
      <input name="newsettings[admin_mails]" value="{value_admin_mails}" size="40">
     </td>
    </tr>
-
+<!-- not used at the moment RalfBecker 2007/05/17
    <tr class="row_on">
     <td>{lang_Disable_"auto_completion"_of_the_login_form_}:</td>
     <td>
@@ -228,8 +220,8 @@
        </select>
     </td>
    </tr>
-
-   <tr class="row_off">
+-->
+   <tr class="row_on">
     <td>{lang_Enable_the_xmlrpc_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
     <td>
       <select name="newsettings[xmlrpc_enabled]">
@@ -239,7 +231,7 @@
     </td>
    </tr>
 
-   <tr class="row_on">
+   <tr class="row_off">
     <td>{lang_Enable_the_soap_service} {lang_(default_No,_leave_it_off_if_you_dont_use_it)}:</td>
     <td>
       <select name="newsettings[soap_enabled]">

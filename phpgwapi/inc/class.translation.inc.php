@@ -49,7 +49,18 @@
 		var $lang_table = 'egw_lang';
 		var $languages_table = 'egw_languages';
 		var $config_table = 'egw_config';
+		/**
+		 * Instance of the db-class
+		 *
+		 * @var egw_db
+		 */
 		var $db;
+		/**
+		 * Mark untranslated strings with an asterisk (*), values '' or 'yes'
+		 *
+		 * @var string
+		 */
+		var $markunstranslated;
 
 		/**
 		 * Constructor, sets up a copy of the db-object, gets the system-charset and tries to load the mbstring extension
@@ -145,6 +156,8 @@
 				$this->add_app('common');
 			}
 			$this->add_app($GLOBALS['egw_info']['flags']['currentapp']);
+			
+			$this->markunstranslated = $GLOBALS['egw_info']['server']['markuntranslated'];
 		}
 
 		/**
@@ -161,7 +174,8 @@
 			{
 				$this->init();
 			}
-			$ret = $key.$not_found;	// save key if we dont find a translation
+			$ret = $key;				// save key if we dont find a translation
+			if ($not_found && $this->markunstranslated) $ret .= $not_found;
 
 			if (isset($this->lang_arr[$key]))
 			{

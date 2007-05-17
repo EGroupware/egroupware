@@ -440,5 +440,6 @@ you must enter an application name and title.	admin	pt-br	Você deve digitar um n
 you must enter an application name.	admin	pt-br	Você deve digitar um nome para a aplicação.
 you must enter an application title.	admin	pt-br	Você deve digitar um título para a aplicação.
 you must select a file type	admin	pt-br	Você deve selecionar um tipo de arquivo.
-you must select at least one group member	admin	pt-br	Você deve selecionar ao menos um membro.
+you must select at least one group member.	admin	pt-br	Você deve selecionar ao menos um membro.
 you will need to remove the subcategories before you can delete this category	admin	pt-br	Você deverá remover as subcategorias antes de remover esta categoria !
+your session could not be verified.	admin	pt-br	Sua sessão não pôde ser verificada

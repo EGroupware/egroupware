@@ -438,5 +438,6 @@ you must enter an application name and title.	admin	pl	Musisz podaæ nazwê i tytu
 you must enter an application name.	admin	pl	Musisz podaæ nazwê aplikacji
 you must enter an application title.	admin	pl	Musisz podaæ tytu³ aplikacji
 you must select a file type	admin	pl	Musisz wybraæ typ pliku
-you must select at least one group member	admin	pl	Musisz wybraæ przynajmniej jednego cz³onka grupy.
+your session could not be verified.	admin	pl	Nie mo¿na zweryfikowaæ sesji.
+you must select at least one group member.	admin	pl	Musisz wybraæ przynajmniej jednego cz³onka grupy.
 you will need to remove the subcategories before you can delete this category	admin	pl	Nale¿y usun±æ kategorie podrzêdne przed skasowaniem tej kategorii !

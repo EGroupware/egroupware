@@ -437,3 +437,4 @@ you must enter an application name.	admin	pt	É necessário atribuir um nome à apl
 you must enter an application title.	admin	pt	É necessário atribuir um título à aplicação.
 you must select a file type	admin	pt	É necessário seleccionar um tipo de ficheiro
 you will need to remove the subcategories before you can delete this category	admin	pt	É necessário remover as subcategorias para poder eliminar esta categoria !
+your session could not be verified.	admin	pt	A sua sessão expirou

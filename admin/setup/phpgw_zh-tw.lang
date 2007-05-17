@@ -440,5 +440,6 @@ you must enter an application name and title.	admin	zh-tw	您必須輸入應用�
 you must enter an application name.	admin	zh-tw	您必須輸入應用程式名稱
 you must enter an application title.	admin	zh-tw	您必須輸入應用程式標題
 you must select a file type	admin	zh-tw	您必須選擇一種檔案型態。
-you must select at least one group member	admin	zh-tw	您必須選擇至少一個群組成員。
+you must select at least one group member.	admin	zh-tw	您必須選擇至少一個群組成員。
 you will need to remove the subcategories before you can delete this category	admin	zh-tw	您必須在刪除這個類別前刪除所有的子類別！
+your session could not be verified.	admin	zh-tw	您的連線不合法。

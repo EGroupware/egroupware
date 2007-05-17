@@ -440,5 +440,6 @@ you must enter an application name and title.	admin	fr	Vous devez entrer un nom 
 you must enter an application name.	admin	fr	Vous devez entrer un nom d'application.
 you must enter an application title.	admin	fr	Vous devez entrer un titre d'application.
 you must select a file type	admin	fr	Vous devez choisir un type de fichier
-you must select at least one group member	admin	fr	Vous devez sélectionner au moins un membre de groupe.
+you must select at least one group member.	admin	fr	Vous devez sélectionner au moins un membre de groupe.
 you will need to remove the subcategories before you can delete this category	admin	fr	Vous allez devoir enlever les sous-catégories avant de pouvoir effacer cette catégorie !
+your session could not be verified.	admin	fr	Votre session n'a pas pu être vérifiée.

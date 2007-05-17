@@ -399,3 +399,4 @@ you must enter an application name.	admin	no	Du må registrere et programnavn
 you must enter an application title.	admin	no	Du må registrere et programtittel
 you must select a file type	admin	no	Du må velge en filtype
 you will need to remove the subcategories before you can delete this category	admin	no	Du må først fjerne underkategorier før du kan slette denne kategorien!
+your session could not be verified.	admin	no	Din sesjon kunne ikke bekreftes
