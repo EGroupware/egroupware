@@ -196,43 +196,21 @@
 	*/
 	function xmlrpc_encode_entities($data)
 	{
-		$convmap = array(0, 0x1F, 0, 0xFFFF, 0x80, 0xFFFF, 0, 0xFFFF);
-		$encoding = $GLOBALS['egw']->translation->system_charset;
-		mb_regex_encoding($encoding);
-		$pattern = array('<', '>', '"', '\'');
-		$replacement = array('&lt;', '&gt;', '&quot;', '&#39;');
-		for ($i=0; $i<sizeof($pattern); $i++) {
-			$data = mb_ereg_replace($pattern[$i], $replacement[$i], $data);
-		}
-		return mb_encode_numericentity($data, $convmap, $encoding);
+		return htmlspecialchars($data,ENT_QUOTES,$GLOBALS['egw']->translation->system_charset ? 
+			$GLOBALS['egw']->translation->system_charset : 'latin1');
+	}
+
+	if (!function_exists('htmlspecialchars_decode'))	// php < 5.1
+	{
+	    function htmlspecialchars_decode($text,$quote_style=ENT_COMPAT)
+	    {
+	        return strtr($text, array_flip(get_html_translation_table(HTML_SPECIALCHARS,$quote_style)));
+	    }
 	}
 
 	function xmlrpc_entity_decode($string)
 	{
-		$top = split('&', $string);
-		$op  = '';
-		$i   = 0;
-		while($i<sizeof($top))
-		{
-			if (ereg("^([#a-zA-Z0-9]+);", $top[$i], $regs))
-			{
-				$op .= ereg_replace("^[#a-zA-Z0-9]+;",
-					xmlrpc_lookup_entity($regs[1]), $top[$i]);
-			}
-			else
-			{
-				if ($i == 0)
-				{
-					$op = $top[$i];
-				}
-				else
-				{
-					$op .= '&' . $top[$i];
-				}
-			}
-			$i++;
-		}
-		return $op;
+		return htmlspecialchars_decode($data,ENT_QUOTES);
 	}
 
 	function xmlrpc_lookup_entity($ent)
