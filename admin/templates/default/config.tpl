@@ -118,7 +118,7 @@
     <td>
      <select name="newsettings[usecookies]">
       <option value="True"{selected_usecookies_True}>{lang_Yes} - {lang_more_secure}</option>
-      <option value="">{lang_No}</option>
+      <option value=""{selected_usecookies_}>{lang_No}</option>
      </select>
     </td>
    </tr>
@@ -145,7 +145,7 @@
     <td>
      <select name="newsettings[sessions_checkip]">
       <option value="True"{selected_sessions_checkip_True}>{lang_Yes} - {lang_more_secure}</option>
-      <option value="">{lang_No}</option>
+      <option value=""{selected_sessions_checkip_}>{lang_No}</option>
      </select>
     </td>
    </tr>
