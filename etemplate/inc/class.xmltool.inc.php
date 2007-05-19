@@ -166,7 +166,7 @@
 
 		function import_var($name, $value,$is_root=False,$export_xml=False)
 		{
-			echo "<p>import_var: this->indentstring='$this->indentstring'</p>\n";
+			//echo "<p>import_var: this->indentstring='$this->indentstring'</p>\n";
 			$node =& new xmltool('node',$name,$this->indentstring);
 			switch (gettype($value))
 			{
