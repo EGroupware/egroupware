@@ -305,10 +305,9 @@ function do_change_account_id($args)
 			'phpgw_kb_urls'      => false,
 		),
 		'polls' => array(
-			'phpgw_polls_data'   => false,
-			'phpgw_polls_desc'   => false,
-			'phpgw_polls_settings' => false,
-			'phpgw_polls_user'   => 'user_id',
+			'egw_polls'         => false,
+			'egw_polls_answers' => false,
+			'egw_polls_votes'   => 'vote_uid',
 		),
 		// MyDMS	ToDo!!!
 		// VFS2		ToDo!!!
