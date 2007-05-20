@@ -193,9 +193,11 @@ class boaddressbook
 				$data = array_diff($data,array('',null));	
 
 				// translate birthday to a iso8601 date
-				if(isset($data['bday']))
+				if(isset($data['bday']) && $data['bday'])
 				{
+					$y = $m = $d = null;
 					list($y,$m,$d) = explode('-',$data['bday']);
+					if (is_null($d)) list($m,$d,$y) = explode('/',$data['bday']);
 					$data['bday'] = $GLOBALS['server']->date2iso8601(array('year'=>$y,'month'=>$m,'mday'=>$d));
 				}
 				// translate timestamps
