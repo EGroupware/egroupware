@@ -435,10 +435,8 @@ class accounts extends accounts_backend
 	{
 		if (!($data = $this->read($account_id))) return false;
 		
+		//echo "<p>accounts::id2name($account_id,$which)='{$data[$which]}'";
 		return $data[$which];
-		
-		$this->setup_cache();
-		$id_list = &$this->cache['id_list'];
 	}
 
 	/**
