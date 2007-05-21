@@ -702,7 +702,7 @@ class so_ldap
 		$filters = '';
 		foreach($filter as $key => $value)
 		{
-			if ($key != 'cat_id' && !$value) continue;
+			if ($key != 'cat_id' && $key != 'account_id' && !$value) continue;
 
 			switch((string) $key)
 			{
@@ -710,6 +710,18 @@ class so_ldap
 				case 'tid':		// ignored
 					break;
 					
+				case 'account_id':
+					if (is_null($value))
+					{
+						$filters .= '(!(uidNumber=*))';
+					}
+					elseif ($value)
+					{
+						$filters .= '(uidNumber='.ldap::quote($value).')';
+						
+					}
+					break;
+
 				case 'cat_id':
 					if (is_null($value))
 					{
