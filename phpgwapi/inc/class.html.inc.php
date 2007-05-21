@@ -447,132 +447,6 @@ class html
 		return $this->fckEditor($name, $content, 'extended', array('toolbar_expanded' =>'true'), '400px', '100%', $base_href);
 	}
 
-	
-	
-	/**
-	* init the tinymce js-widget by adding the js file in the head of the page
-	*
-	* Please note: it need to be called before the call to phpgw_header() !!!
-	*
-	
-	function init_tinymce()
-	{
-	   // do stuff once
-	   if (!is_object($GLOBALS['egw']->js))
-	   {
-		  $GLOBALS['egw']->js = CreateObject('phpgwapi.javascript');
-	   }
-
-	   if (strpos($GLOBALS['egw_info']['flags']['java_script'],'tinyMCE')===false)
-	   {
-		  $GLOBALS['egw']->js->validate_file('tiny_mce','tiny_mce');
-	   }
-	}*/
-
-	/**
-	* creates a textarea inputfield for the tinymce js-widget (returns the necessary html and js)
-	*
-	* Please note: if you did not run init_tinymce already you this function need to be called before the call to phpgw_header() !!!
-	*
-	* @param string $name name and id of the input-field
-	* @param string $content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
-	* @param string $style='' initial css for the style attribute
-	* @param string $init_options='', see http://tinymce.moxiecode.com/ for all init options. mode and elements are allready set.
-	*                                 to make things more easy, you also can just provide a comma seperated list here with the options you need.
-	*                                 Supportet are: 'TableOperations','ContextMenu','ColorChooser'
-	* @param string $base_href=''
-	* @return string the necessary html for the textarea
-	* @todo make wrapper for backwards compatibility with htmlarea
-	* @todo enable all features from htmlarea
-	
-	function tinymce($name,$content='',$style='',$init_options='',$base_href='')
-	{
-		if (!$style)
-		{
-			$style = 'width:100%; min-width:500px; height:300px;';
-		}
-		if (!$this->htmlarea_availible())
-		{
-			return $this->textarea($name,$content,'style="'.$style.'"');
-		}
-
-		// do stuff once
-		$this->init_tinymce();
-
-		if(strpos($init_options,':') === false)
-		{
-			$init = 'theme : "advanced", theme_advanced_toolbar_location : "top", theme_advanced_toolbar_align : "left"';
-			$tab1a = 'theme_advanced_buttons1_add : "';
-			$tab2a = 'theme_advanced_buttons2_add : "';
-			$tab3a = 'theme_advanced_buttons3_add : "separator,fullscreen';
-			$plugs = 'plugins : "paste,fullscreen,advimage,advlink';
-			$eve = 'extended_valid_elements : "a[name|href|target|title|onclick], img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name],font[*]';
-			if($init_options)
-			{
-				foreach(explode(',',$init_options) as $plugin)
-				{
-					switch($plugin)
-					{
-						case 'TableOperations' :
-							$plugs .= ',table';
-							$tab3a .= ',separator,tablecontrols';
-							break;
-						case 'ContextMenu' :
-							$plugs .= ',contextmenu';
-							break;
-						case 'ColorChooser' :
-							$tab3a .= ',separator,forecolor,backcolor';
-							break;
-						case 'FontChooser' :
-							$tab1a .= ',fontselect,fontsizeselect';
-							$init .= ',theme_advanced_disable : "styleselect"';
-							break;
-						case 'FileManager' :
-							$plugs .= ',filemanager';
-							$tab3a .= ',separator,filemanager';
-							break;
-						case 'SearchReplace' :
-							$plugs .= ',searchreplace';
-							$tab1a .= ',separator,search,replace';
-							break;
-						case 'InsertDateTime' :
-							$plugs .= ',insertdatetime';
-							$tab2a .= ',separator,insertdate,inserttime';
-							break;
-						default:
-							if(strpos($plugin,'=')!==false)
-							{
-								$init .= ','. str_replace('=',':',$plugin);
-							}
-					}
-				}
-			}
-			if($base_href)
-			{
-				$init .= ',document_base_url : "'. $base_href. '", relative_urls : true';
-			}
-
-			$init_options = $init. ','. $tab1a. '",'. $tab2a. '",'. $tab3a. '",'. $plugs. '",'. $eve. '"';
-		}
-		
-		// do again and again
-		return '<script language="javascript" type="text/javascript">
-			tinyMCE.init({
-			 mode : "exact",
-			 relative_urls : false,
- 			 language: "'.$GLOBALS['egw_info']['user']['preferences']['common']['lang'].'",
-			 plugin_insertdate_dateFormat : "'.str_replace(array('Y','m','M','d'),array('%Y','%m','%b','%d'),$GLOBALS['egw_info']['user']['preferences']['common']['dateformat']).' ",
-			 plugin_insertdate_timeFormat : "'.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? '%I:%M %p' : '%H:%M').' ",
-			 elements : "'.$name.'",
-			 '.$init_options.'
-			});
-			</script>
-
-			<textarea id="'.$name.'" name="'.$name.'" style="'.$style.'">'.
-			@htmlspecialchars($content, ENT_QUOTES, $this->charset) 
-			.'</textarea>';
-	}*/
-
 	/**
 	* this function is a wrapper for fckEditor to create some reuseable layouts
 	*
@@ -596,8 +470,8 @@ class html
 		$oFCKeditor = new FCKeditor($_name) ;
 		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
 		$oFCKeditor->Value	= $_content;
-		$oFCKeditor->Width	= $_width ;
-		$oFCKeditor->Height	= $_height ;
+		$oFCKeditor->Width	= str_replace('px','',$_width);	// FCK adds px if width contains no %
+		$oFCKeditor->Height	= str_replace('px','',$_height);
 		
 		// by default switch all browsers and uploads off
 		$oFCKeditor->Config['LinkBrowser'] = $oFCKeditor->Config['LinkUpload'] = false;
@@ -633,7 +507,7 @@ class html
 				$oFCKeditor->ToolbarSet = 'egw_advanced';
 				break;						
 		}
-		return /*"toolbarset='$oFCKeditor->ToolbarSet'<pre>".print_r($oFCKeditor->Config,true)."</pre>\n".*/ $oFCKeditor->CreateHTML();
+		return $oFCKeditor->CreateHTML();
 	}
 
 	/**
@@ -655,8 +529,8 @@ class html
 		$oFCKeditor		= new FCKeditor($_name) ;
 		$oFCKeditor->BasePath	= $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/fckeditor/' ;
 		$oFCKeditor->Value	= $_content;
-		$oFCKeditor->Width	= $_width ;
-		$oFCKeditor->Height	= $_height ;
+		$oFCKeditor->Width	= str_replace('px','',$_width);		// FCK adds px if width contains no %
+		$oFCKeditor->Height	= str_replace('px','',$_height);
 		switch($_mode) {
 			case 'ascii':
 				return "<textarea name=\"$_name\" style=\"width:100%; height:400px; border:0px;\">$_content</textarea>";
@@ -670,57 +544,6 @@ class html
 
 	}
 	
-	/**
-	* this function is a wrapper for tinymce to create some reuseable layouts
-	*
-	* Please note: if you did not run init_tinymce already you this function need to be called before the call to phpgw_header() !!!
-	*
-	* @param string $_name name and id of the input-field
-	* @param string $_mode display mode of the tinymce editor can be: simple, extended or advanced
-	* @param string $_content='' of the tinymce (will be run through htmlspecialchars !!!), default ''
-	* @param string $style='' initial css for the style attribute
-	* @param string $base_href=''
-	* @return string the necessary html for the textarea
-	
-	function tinymceQuick($_name, $_mode, $_content='', $_style='', $base_href='') {
-		switch($_mode) {
-			case 'ascii':
-				$init_options='theme : "advanced",
-					theme_advanced_toolbar_location : "top", 
-					theme_advanced_toolbar_align : "left",
-					theme_advanced_buttons1 : "",
-					theme_advanced_buttons2 : "",
-					theme_advanced_buttons3 : "",
-					valid_elements : "br"';
-
-				return $this->tinymce($_name, $_content, $_style, $init_options, $_base_href);
-				break;
-			
-			case 'simple':
-				$init_options='theme : "advanced",
-					theme_advanced_toolbar_location : "top", 
-					theme_advanced_toolbar_align : "left",
-					theme_advanced_buttons1 : "bold,italic,underline,separator,justifyleft,justifycenter,justifyright,justifyfull,separator,bullist,numlist,outdent,indent,undo,redo,separator,forecolor",
-					theme_advanced_buttons2 : "",
-					theme_advanced_buttons3 : "",
-					valid_elements : "strong/b[class],em/i[class],strike[class],u[class],p[dir|class|align],ol,ul,li,br,\
-					sub,sup,blockquote[dir|style],pre[class|align],address[class|align],hr,font[color]"';
-
-				return $this->tinymce($_name, $_content, $_style, $init_options, $_base_href);
-				break;
-			
-			case 'extended':
-				$init_options='';
-				return $this->tinymce($_name, $_content,$_style, $init_options='',$_base_href);
-				break;
-			
-			case 'advanced':
-				$init_options='';
-				return $this->tinymce($_name, $_content,$_style, $init_options='',$_base_href);
-				break;
-		}
-	}*/
-
 	/**
 	 * represents html's input tag
 	 *
