@@ -1,16 +1,13 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - InfoLog Preferences                                         *
-	* http://www.eGroupWare.org                                                *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License, or (at your  *
-	*  option) any later version.                                              *
-	\**************************************************************************/
-
-	/* $Id$ */
+/**
+ * InfoLog - Preferences
+ *
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @package infolog
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$
+ */
 
 	/* Setup some values to fill the array of this app's settings below */
 	$ui =& CreateObject('infolog.uiinfolog');	// need some labels from

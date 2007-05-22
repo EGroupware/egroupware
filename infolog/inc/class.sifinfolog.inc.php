@@ -1,15 +1,14 @@
 <?php
-	/**************************************************************************\
-	* eGroupWare - iCalendar Parser                                            *
-	* http://www.egroupware.org                                                *
-	* Written by Lars Kneschke <lkneschke@egroupware.org>                      *
-	* --------------------------------------------                             *
-	*  This program is free software; you can redistribute it and/or modify it *
-	*  under the terms of the GNU General Public License as published by the   *
-	*  Free Software Foundation; either version 2 of the License.              *
-	\**************************************************************************/
-
-	/* $Id$ */
+/**
+ * InfoLog -  SIF Parser
+ *
+ * @link http://www.egroupware.org
+ * @author Lars Kneschke <lkneschke@egroupware.org>
+ * @package infolog
+ * @subpackage syncml
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @version $Id$ 
+ */
 
 	require_once PHPGW_SERVER_ROOT.'/infolog/inc/class.boinfolog.inc.php';
 	require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
