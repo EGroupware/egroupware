@@ -88,8 +88,8 @@ class jscalendar
 				static $chars_shortcut;
 				if (is_null($chars_shortcut)) $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 
-				$short = lang(adodb_date('M',$ts));	// check if we have a translation of the short-cut
-				if ($substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
+				$short = lang($m = adodb_date('M',$ts));	// check if we have a translation of the short-cut
+				if ($short == $m || $substr($short,-1) == '*')	// if not generate one by truncating the translation of the long name
 				{
 					$short = $chars_shortcut > 0 ? $substr(lang(adodb_date('F',$ts)),0,$chars_shortcut) : 
 						$substr(lang(adodb_date('F',$ts)),$chars_shortcut);

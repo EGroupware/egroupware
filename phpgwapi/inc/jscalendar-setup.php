@@ -281,8 +281,8 @@ $monthnames = array('January','February','March','April','May','June','July','Au
 $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 foreach($monthnames as $n => $name)
 {
-	$short = lang(substr($name,0,3));	// test if our lang-file have a translation for the english short with 3 chars
-	if ($substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
+	$short = lang($m = substr($name,0,3));	// test if our lang-file have a translation for the english short with 3 chars
+	if ($short == $m || $substr($short,-1) == '*')		// else create one by truncating the full translation to x chars
 	{
         $short = $chars_shortcut > 0 ? $substr(lang($name),0,$chars_shortcut) : $substr(lang($name),$chars_shortcut);
 	}
