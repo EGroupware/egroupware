@@ -350,6 +350,7 @@ class uicontacts extends bocontacts
 		$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 		$query['num_rows'] = -1;	// all
 		$query['org_view'] = $org;
+		$query['searchletter'] = '';
 		$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 
 		if (count($checked) > 1)	// use a nicely formatted org-name as title in infolog
