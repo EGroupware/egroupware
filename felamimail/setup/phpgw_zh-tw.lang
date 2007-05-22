@@ -18,6 +18,7 @@ after message body	felamimail	zh-tw	在訊息內容之後
 all address books	felamimail	zh-tw	所有通訊錄
 all folders	felamimail	zh-tw	所有資料夾
 all of	felamimail	zh-tw	所有的
+allow images from external sources in html emails	felamimail	zh-tw	在 HTML 郵件中允許來自外部的圖片
 allways a new window	felamimail	zh-tw	都開啟一個新視窗
 always show html emails	felamimail	zh-tw	都用HTML顯示郵件
 and	felamimail	zh-tw	且
@@ -144,7 +145,7 @@ file into	felamimail	zh-tw	檔案插入
 files	felamimail	zh-tw	檔案
 filter active	felamimail	zh-tw	規則啟用中
 filter name	felamimail	zh-tw	規則名稱
-filter rules	felamimail	zh-tw	過濾規則
+filter rules	preferences	zh-tw	過濾規則
 first name	felamimail	zh-tw	名
 flagged	felamimail	zh-tw	被標示
 flags	felamimail	zh-tw	標示
@@ -223,7 +224,7 @@ location of buttons when composing	felamimail	zh-tw	建立按鈕時的位置
 mail server login type	admin	zh-tw	郵件伺服器登入種類
 mail settings	felamimail	zh-tw	郵件設定
 mainmessage	felamimail	zh-tw	郵件主體
-manage emailaccounts	felamimail	zh-tw	管理郵件帳號
+manage emailaccounts	preferences	zh-tw	管理郵件帳號
 manage emailfilter / vacation	preferences	zh-tw	管理郵件規則/假期
 manage folders	common	zh-tw	管理資料夾
 manage sieve	common	zh-tw	管理Sieve程式
@@ -334,6 +335,7 @@ select your mail server type	admin	zh-tw	選擇您的郵件伺服器種類
 send	felamimail	zh-tw	送出
 send a reject message	felamimail	zh-tw	寄送一個拒絕信件
 sent folder	felamimail	zh-tw	寄件備份
+server supports mailfilter(sieve)	felamimail	zh-tw	伺服器支援郵件規則(sieve)
 show header	felamimail	zh-tw	顯示標頭
 show new messages on main screen	felamimail	zh-tw	在主要畫面顯示新訊息
 sieve script name	felamimail	zh-tw	sieve 程式名稱
@@ -401,7 +403,7 @@ use custom settings	felamimail	zh-tw	使用個人設定
 use regular expressions	felamimail	zh-tw	使用樣式比對
 use smtp auth	admin	zh-tw	使用SMTP認證
 users can define their own emailaccounts	admin	zh-tw	使用者可以自行定義郵件帳號
-vacation notice	felamimail	zh-tw	假期提醒
+vacation notice	preferences	zh-tw	假期提醒
 vacation notice is active	felamimail	zh-tw	假期提醒功能啟用中
 validate certificate	felamimail	zh-tw	驗證
 view full header	felamimail	zh-tw	顯示完整標頭

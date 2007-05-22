@@ -908,10 +908,15 @@ class uiviews extends uical
 		$ts = $this->bo->date2ts((string)$day_ymd);
 		$title = !is_bool($short_title) ? $short_title :
 			($short_title ? lang(adodb_date('l',$ts)).' '.adodb_date('d.',$ts) : $this->bo->long_date($ts,0,false,true));
+		
 		$day_view = array(
 			'menuaction' => 'calendar.uiviews.day',
 			'date' => $day_ymd,
 		);
+		$this->_day_class_holiday($day_ymd,$class,$holidays);
+		// the weekday and date
+		if (!$short_title && $holidays) $title .= ': '.$holidays;
+
 		if ($short_title === true)
 		{
 			$title = $this->html->a_href($title,$day_view,'',
@@ -925,10 +930,8 @@ class uiviews extends uical
 			$day_view['date'] = $this->bo->date2string($ts += 48*HOUR_s);
 			$title .= ' &nbsp; '.$this->html->a_href($this->html->image('phpgwapi','right',$this->bo->long_date($ts)),$day_view);
 		}
-		$this->_day_class_holiday($day_ymd,$class,$holidays);
-		// the weekday and date
 		$html .= $indent."\t".'<div style="height: '. $this->rowHeight .'%;" class="calDayColHeader '.$class.'"'.($holidays ? ' title="'.$holidays.'"':'').'>'.
-			$title.(!$short_title && $holidays ? ': '.$holidays : '')."</div>\n";
+			$title."</div>\n";
 
 		if ($this->use_time_grid)
 		{

@@ -92,6 +92,8 @@ check ip address of all sessions	admin	de	IP-Adresse für alle Sessions überprüfe
 check items to <b>%1</b> to %2 for %3	admin	de	Durch Abhaken %3 in %2 <b>%1</b>
 click to select a color	admin	de	Anclicken um eine Farbe auszuwählen
 color	admin	de	Farbe
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie Domain (Vorgabe leer bedeutet den kompletten Domainnamen, für SiteMgr erlaubt zB. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	de	Cookie Pfad (erlaubt mehrere eGW Sitzungen mit unterschiedlichen Verzeichnissen, hat Probleme mit SiteMgr!)
 country selection	admin	de	Länderauswahl
 create group	admin	de	Erstelle Gruppe
 creates a new field	admin	de	erstellt ein neues Feld
@@ -144,6 +146,7 @@ do not delete the category and return back to the list	admin	de	Kategorie NICHT 
 do you also want to delete all global subcategories ?	admin	de	wollen Sie auch alle globalen Unterkategorien l&ouml;schen?
 do you want to delete all global subcategories ?	admin	de	Möchten Sie alle Globale Unterkategorien löschen?
 do you want to move all global subcategories one level down ?	admin	de	Wollen sie alle globalen Unterkategorien eine Ebene nach unten verschieben?
+document root (default)	admin	de	Wurzelverzeichnis des Webservers (Vorgabe)
 each value is a line like <id>[=<label>]	admin	de	jeder Wert ist ein Zeile <id>[=<label>]
 each value is a line like id[=label]	admin	de	jeder Wert ist eine Zeile id[=label]
 edit account	admin	de	Benutzerkonto bearbeiten
@@ -162,6 +165,7 @@ edit this group	admin	de	Diese Gruppe bearbeiten
 edit this user	admin	de	Diesen Benutzer bearbeiten
 edit user	admin	de	Benutzer bearbeiten
 edit user account	admin	de	Benutzerkonto bearbeiten
+egroupware directory	admin	de	eGroupWare Verzeichnis
 email account active	admin	de	E-Mail-Konto aktiv
 email address	admin	de	E-Mail-Adresse
 enable debug-messages	admin	de	Debug-Meldungen einschalten
@@ -174,7 +178,9 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	de
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Titel der Installation
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.<br>Beispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
+enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppendateien.<br>Beispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur eGroupWare-Installation.<br>Beispiel: http://www.domain.com/egroupware   or   /egroupware<br><b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen, geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf nochmal
@@ -277,6 +283,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	de	Minimum für Benutzer ID (z.B
 minute	admin	de	Minute
 mode	admin	de	Modus
 month	admin	de	Monat
+more secure	admin	de	sicherer
 name must not be empty !!!	admin	de	Name darf nicht leer sein !!!
 new group name	admin	de	Neuer Gruppenname
 new name	admin	de	neuer Name
@@ -352,6 +359,7 @@ set preference values.	admin	de	Einstellungswert wurde geändert
 should the login page include a language selectbox (useful for demo-sites) ?	admin	de	Soll die Anmeldeseite eine Sprachauswahl beinhalten (nützlich für Demosites) ?
 show 'powered by' logo on	admin	de	Zeige "powered by" Logo
 show access log	admin	de	Zugangsprotokoll anzeigen
+show an asterisk (*) to mark untranslated strings	admin	de	Zeige einen Stern (*) um nicht übersetzte Texte zu markieren
 show current action	admin	de	aktuelle Aktion anzeigen
 show error log	admin	de	Fehlerprotokoll anzeigen
 show phpinfo()	admin	de	phpinfo() anzeigen
@@ -372,6 +380,7 @@ start testjob!	admin	de	Testjob starten!
 submit changes	admin	de	Änderungen speichern
 submit the search string	admin	de	Geben Sie Ihren Suchbegriff ein
 subtype	admin	de	Untertyp
+switch it off, if users are randomly thrown out	admin	de	schalten Sie es aus, wenn Benutzer immer wieder zufällig rausgeworfen werden
 template selection	admin	de	Auswahl der Benutzeroberfläche
 text entry	admin	de	Texteingabe
 that application name already exists.	admin	de	Diesen Anwendungsname gibt es bereits.
@@ -438,4 +447,6 @@ you must enter an application name and title.	admin	de	Sie müssen der Anwendung 
 you must enter an application name.	admin	de	Sie müssen der Anwendung einen Namen geben.
 you must enter an application title.	admin	de	Sie müssen der Anwendung einen Titel geben.
 you must select a file type	admin	de	Sie müssen einen Dateityp auswählen
+you must select at least one group member.	admin	de	Sie müssen mindestens ein Gruppenmitglied auswählen.
 you will need to remove the subcategories before you can delete this category	admin	de	Sie müssen erst die Unterkategorien löschen bevor Sie diese Kategorie löschen können!
+your session could not be verified.	admin	de	Ihre Sitzung konnte nicht verifiziert werden.

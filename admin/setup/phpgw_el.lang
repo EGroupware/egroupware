@@ -361,3 +361,4 @@ enter your default mail domain ( from: user@domain )	admin	el	Εισαγωγή του προκα
 enter your smtp server hostname or ip address	admin	el	Εισάγωγή του ονόματος ή του IP του SMTP server
 enter your smtp server port	admin	el	Εισάγωγή του SMTP server port
 mail settings	admin	el	
+your session could not be verified.	admin	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί

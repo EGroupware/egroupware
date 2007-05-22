@@ -18,6 +18,7 @@ after message body	felamimail	fi	Viestin jälkeen
 all address books	felamimail	fi	Kaikki osoitekirjat
 all folders	felamimail	fi	Kaikki kansiot
 all of	felamimail	fi	kaikki
+allow images from external sources in html emails	felamimail	fi	Salli kuvien linkitys ulkopuolisiin lähteisiin käytettäessä HTML muotoiltuja viestejä
 allways a new window	felamimail	fi	Aina uusi ikkuna
 always show html emails	felamimail	fi	Näytä aina HTML sähköpostit
 and	felamimail	fi	ja
@@ -144,7 +145,7 @@ file into	felamimail	fi	tiedosto
 files	felamimail	fi	tiedostot
 filter active	felamimail	fi	Aktivoi suodatin
 filter name	felamimail	fi	Suodattimen nimi
-filter rules	felamimail	fi	Suodattimen säännöt
+filter rules	common	fi	Suodattimen säännöt
 first name	felamimail	fi	Etunimi
 flagged	felamimail	fi	merkitty
 flags	felamimail	fi	Merkit
@@ -193,7 +194,7 @@ imap	felamimail	fi	IMAP
 imap server	felamimail	fi	IMAP palvelin
 imap server address	felamimail	fi	IMAP palvelimen osoite
 imap server closed the connection.	felamimail	fi	IMAP palvelin katkaisi yhteyden.
-imap server closed the connection. server responded: %s	felamimail	fi	IMAP palvelin katkaisi yhteyden. Serveri palauttaa: %s
+imap server closed the connection. server responded: %s	felamimail	fi	IMAP palvelin katkaisi yhteyden. Palvelin palauttaa: %s
 imap server password	felamimail	fi	IMAP palvelimen salasana
 imap server type	felamimail	fi	IMAP palvelin tyyppi
 imap server username	felamimail	fi	IMAP palvelimen käyttäjätunnus
@@ -223,7 +224,7 @@ location of buttons when composing	felamimail	fi	Painikkeiden sijainti kirjoitet
 mail server login type	admin	fi	Postipalvelimen kirjautumistyyppi
 mail settings	felamimail	fi	Viestien asetukset
 mainmessage	felamimail	fi	pääviesti
-manage emailaccounts	felamimail	fi	Hallitse sähköpostitilejä
+manage emailaccounts	preferences	fi	Hallitse sähköpostitilejä
 manage emailfilter / vacation	preferences	fi	Hallitse sähköpostisuodatinta / Lomaa
 manage folders	common	fi	Kansioiden hallinta
 manage sieve	common	fi	Hallitse SIEVE skriptejä
@@ -402,7 +403,7 @@ use custom settings	felamimail	fi	Käytä muokattuja asetuksia
 use regular expressions	felamimail	fi	Käytä tavanomaisia ilmaisuja
 use smtp auth	admin	fi	Käytä SMTP tunnistusta
 users can define their own emailaccounts	admin	fi	Käyttäjät voivat määritellä omat sähköposti tunnuksensa
-vacation notice	felamimail	fi	Lomavastaaja
+vacation notice	common	fi	Lomavastaaja
 vacation notice is active	felamimail	fi	Lomavastaaja on käytössä
 validate certificate	felamimail	fi	kelvollinen sertifikaatti
 view full header	felamimail	fi	Näytä kaikki otsikkotiedot

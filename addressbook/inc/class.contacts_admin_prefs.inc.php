@@ -163,7 +163,7 @@ class contacts_admin_prefs
 			'label'  => 'Fields for the CSV export',
 			'name'   => 'csv_fields',
 			'values' => array(
-				'' => lang('All'),
+				'all'      => lang('All'),
 				'business' => lang('Business address'),
 				'home'     => lang('Home address'),
 			),	

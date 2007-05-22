@@ -363,3 +363,4 @@ you must enter an application name.	admin	lv	Jums jāievada aplikācijas nosauku
 you must enter an application title.	admin	lv	Jums jāievada aplikācijas virsraksts
 you must select a file type	admin	lv	Jums jāizvēlas faila tips
 you will need to remove the subcategories before you can delete this category	admin	lv	Tev vajadzēs izdzēst apakšgrpu pirms tu varēsi izdzēst šo kategoriju!
+your session could not be verified.	admin	lv	Nevarēju Jūs pārbaudīt. Mēģiniet pēc 30sek. vēlreiz.

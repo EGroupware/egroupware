@@ -475,9 +475,16 @@
 		*/
 		function egw_set_cookiedomain()
 		{
-			// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
-			$this->cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
-
+			if ($GLOBALS['egw_info']['server']['cookiedomain'])
+			{
+				// Admin set domain, eg. .domain.com to allow egw.domain.com and www.domain.com
+				$this->cookie_domain = $GLOBALS['egw_info']['server']['cookiedomain'];
+			}
+			else
+			{
+				// Use HTTP_X_FORWARDED_HOST if set, which is the case behind a none-transparent proxy
+				$this->cookie_domain = isset($_SERVER['HTTP_X_FORWARDED_HOST']) ?  $_SERVER['HTTP_X_FORWARDED_HOST'] : $_SERVER['HTTP_HOST'];
+			}
 			// remove port from HTTP_HOST
 			if (preg_match("/^(.*):(.*)$/",$this->cookie_domain,$arr))
 			{
@@ -492,6 +499,16 @@
 
 			$url_parts = parse_url($GLOBALS['egw_info']['server']['webserver_url']);
 			if (!($this->cookie_path = $url_parts['path'])) $this->cookie_path = '/';
+			// if the cookiepath should be / and it's not, delete evtl. existing cookies and set '/'
+			if (!$GLOBALS['egw_info']['server']['cookiepath'] && $this->cookie_path != '/')
+			{
+				foreach(array('sessionid','kp3','domain','last_domain','last_loginid') as $name)
+				{
+					setcookie($name,false,0,$this->cookie_path,$this->cookie_domain);
+				}
+				$this->cookie_path = '/';
+			}
+			//echo "<p>cookie_path='$this->cookie_path', cookie_domain='$this->cookie_domain'</p>\n";
 
 			$this->set_cookie_params($this->cookie_domain,$this->cookie_path);	// for php4 sessions necessary
 		}

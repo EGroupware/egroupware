@@ -378,3 +378,4 @@ you must enter an application name.	admin	ko	응용프로그램 이름을 입력해야 합니다
 you must enter an application title.	admin	ko	응용프로그램 제목을 입력해야 합니다
 you must select a file type	admin	ko	파일 타입을 선택해야 합니다.
 you will need to remove the subcategories before you can delete this category	admin	ko	이 카테고리를 삭제하기 전에 하위카테고리를 삭제해야 합니다!
+your session could not be verified.	admin	ko	세션이 검증되지 않았습니다

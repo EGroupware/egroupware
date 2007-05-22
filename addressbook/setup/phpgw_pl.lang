@@ -95,6 +95,7 @@ csv-filename	addressbook	pl	Nazwa pliku CSV
 custom	addressbook	pl	U¿ytkownika
 custom fields	addressbook	pl	Pola u¿ytkownika
 debug output in browser	addressbook	pl	Debuguj wynik w przegl±darce
+default address format	addressbook	pl	Domy¶lny format adresu
 default addressbook for adding contacts	addressbook	pl	Domy¶lna ksi±¿ka adresowa przy dodawaniu kontaktów
 default filter	addressbook	pl	Filtr domy¶lny
 delete a single entry by passing the id.	addressbook	pl	Usuñ jeden wpis wed³ug podanego id.
@@ -250,7 +251,7 @@ removed from distribution list	addressbook	pl	usuniêto z listy dystrybucyjnej
 role	addressbook	pl	Pozycja
 room	addressbook	pl	Pokój
 search for '%1'	addressbook	pl	Szukaj '%1'
-select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pl	Wybierz zdjêcie w fomacjie jpeg. Bêdzie zmniejszone do 60 pikseli.
+select a portrait format jpeg photo. it will be resized to 60 pixel width.	addressbook	pl	Wybierz zdjêcie w formacie JPEG. Bêdzie zmniejszone do szeroko¶ci 60 pikseli.
 select a view	addressbook	pl	Wybierz wygl±d
 select addressbook type	addressbook	pl	Wybierz typ ksi±¿ki adresowej
 select all	addressbook	pl	Zaznacz wszystkie
@@ -300,9 +301,10 @@ view linked infolog entries	addressbook	pl	Poka¿ wpisy do InfoLog jako link
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	pl	UWAGA!! Mo¿na u¿ywaæ LDAP tylko kiedy NIE u¿ywa siê kontaktów do przechowywania kont!
 warning: all contacts found will be deleted!	addressbook	pl	UWAGA: Wszystkie znalezione kontakty zostan± skasowane!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	pl	Jak± tre¶æ powinny mieæ odno¶niki do ksi±¿ki adresowej widocznie w innych aplikacjach? Puste warto¶ci zostan± pominiête. Musisz na nowo siê zalogowaæ, je¿eli zmienisz to ustawienie.
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	pl	Jaki format adresu powinien byæ u¿ywany przez ksi±¿kê adresow± dla pañstw, które nie maj± okre¶lonego formatu adresu? Je¿eli format dla danego pañstwa jest ustalony, ma pierwszeñstwo przed powy¿szym.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	pl	Która ksi±¿ka adresowa powinna byæ wybrana przy dodawaniu kontaktu, je¿eli nie masz praw zapisu do BIE¯¡CEJ ksi±¿ki adresowej?
-which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków u¿yæ przy eksporcie do CSV? Zestaw "systemowy domy¶lny" jest zestawem wybrany w tej instalacji eGroupWare.
-which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	pl	Które pola powinny byæ wyeksportowane? "Wszystkie", czyli ka¿de pole ksi±¿ki adresowej, równie¿ pola w³asne u¿ytkowników. Tryb adresu "biznes" oraz "domowy" zawiera tylko: nazwê, przedsiêbiorstwo oraz wybrany rodzaj adresu.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków u¿yæ przy eksporcie do CSV? Zestaw 'systemowy domy¶lny' jest zestawem wybrany w tej instalacji eGroupWare.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	pl	Które pola powinny byæ wyeksportowane? 'Wszystkie', czyli ka¿de pole ksi±¿ki adresowej, równie¿ pola w³asne u¿ytkowników. Tryb adresu 'biznes' oraz 'domowy' zawiera tylko: nazwê, przedsiêbiorstwo oraz wybrany rodzaj adresu.
 whole query	addressbook	pl	Ca³e zapytanie
 work phone	addressbook	pl	Telefon do pracy
 write (update or add) a single entry by passing the fields.	addressbook	pl	Zapisz (aktualizuj lub dodaj) pojedynczy wpis poprzez podanie zawarto¶ci pól.

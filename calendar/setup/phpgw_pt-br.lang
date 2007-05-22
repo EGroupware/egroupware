@@ -22,6 +22,7 @@ alarms	calendar	pt-br	Alarmes
 all categories	calendar	pt-br	Todas as categorias
 all day	calendar	pt-br	Todo o dia
 all events	calendar	pt-br	Todos os eventos
+all future	calendar	pt-br	Todos futuros
 all participants	calendar	pt-br	Todos os participantes
 allows to edit the event again	calendar	pt-br	Permite editar o evento novamente
 apply the changes	calendar	pt-br	aplicar as alterações
@@ -116,8 +117,6 @@ filename of the download	calendar	pt-br	Nome do arquivo do download
 find free timeslots where the selected participants are availible for the given timespan	calendar	pt-br	Encontrar horário onde os participantes selecionados estão disponíveis
 firstname of person to notify	calendar	pt-br	Primeiro nome da pessoa a ser notificada
 for	calendar	pt-br	para
-for all future events	calendar	pt-br	Para todos os eventos futuros
-for this event	calendar	pt-br	Para este evento
 for which views should calendar show distinct lines with a fixed time interval.	calendar	pt-br	Para cada visualização a Agenda deverá exibir linhas distintas com intervalos de tempo fixos.
 format of event updates	calendar	pt-br	Formato de atualizção de eventos
 forward half a month	calendar	pt-br	avançar metade de um mês
@@ -266,7 +265,6 @@ startdate and -time of the search	calendar	pt-br	Início e horário para pesquisar
 startdate of the export	calendar	pt-br	Data Inicial da exportação
 startrecord	calendar	pt-br	Registro inicial
 status changed	calendar	pt-br	Status alterado
-status recurrence	calendar	pt-br	Status da recorrência
 submit to repository	calendar	pt-br	Enviar para o repositório
 sun	calendar	pt-br	Dom
 tentative	calendar	pt-br	Tentativa

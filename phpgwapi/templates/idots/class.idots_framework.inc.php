@@ -725,17 +725,17 @@
 */
 function sidebox($appname,$menu_title,$file)
 {
-   if(!$appname || ($appname==$GLOBALS['egw_info']['flags']['currentapp'] && $file))
-   {
-	  $this->tpl->set_var('lang_title',$menu_title);
-	  $this->sidebox_content .= $this->tpl->fp('out','extra_blocks_header');
-
-	  foreach($file as $text => $url)
-	  {
-		 $this->sidebox_content .= $this->_sidebox_menu_item($url,$text);
-	  }
-	  $this->sidebox_content .= $this->tpl->parse('out','extra_blocks_footer');
-   }
+	if((!$appname || ($appname==$GLOBALS['egw_info']['flags']['currentapp'] && $file)) && is_object($this->tpl))
+	{
+		$this->tpl->set_var('lang_title',$menu_title);
+		$this->sidebox_content .= $this->tpl->fp('out','extra_blocks_header');
+		
+		foreach($file as $text => $url)
+		{
+			$this->sidebox_content .= $this->_sidebox_menu_item($url,$text);
+		}
+		$this->sidebox_content .= $this->tpl->parse('out','extra_blocks_footer');
+	}
 }
 
 /**

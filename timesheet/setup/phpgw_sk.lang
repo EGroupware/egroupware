@@ -4,18 +4,19 @@
 actions	timesheet	sk	Akcie
 all projects	timesheet	sk	V¹etky projekty
 both: allow to use projectmanager and free project-names	admin	sk	Obidvoje: povoli» pou¾ívanie Projektovníka a voµné názvy projektov
+by	timesheet	sk	(kým)
 create new links	timesheet	sk	Vytvori» nové odkazy
-creating new entry	timesheet	sk	vytvára sa nový záznam
-delete this entry	timesheet	sk	zmaza» tento záznam
-edit this entry	timesheet	sk	Uprav tento záznam
-empty if identical to duration	timesheet	sk	prázdne ak sa zhoduje då¾ka trvania
+creating new entry	timesheet	sk	vytvára sa nová polo¾ka
+delete this entry	timesheet	sk	odstráni» túto polo¾ku
+edit this entry	timesheet	sk	Upravi» túto polo¾ku
+empty if identical to duration	timesheet	sk	prázdne, ak sa zhoduje då¾ka trvania
 end	timesheet	sk	Koniec
-entry deleted	timesheet	sk	Záznam vymazaný
-entry saved	timesheet	sk	Záznam ulo¾ený
-error deleting the entry!!!	timesheet	sk	Chyba pri mazaní záznamu !!!
-error saving the entry!!!	timesheet	sk	Chyba pri ukladaní záznamu !!!
+entry deleted	timesheet	sk	Polo¾ka bola odstránená
+entry saved	timesheet	sk	Polo¾ka bola ulo¾ená
+error deleting the entry!!!	timesheet	sk	Chyba pri odstraòovaní polo¾ky!!!
+error saving the entry!!!	timesheet	sk	Chyba pri ukladaní polo¾ky!!!
 existing links	timesheet	sk	Existujúce odkazy
-full: use only projectmanager	admin	sk	Plné: opu¾i» iba Projektovník
+full: use only projectmanager	admin	sk	Plné: pou¾i» iba Projektovník
 general	timesheet	sk	Hlavné
 last modified	timesheet	sk	Naposledy upravené
 last month	timesheet	sk	Posledný mesiac
@@ -27,13 +28,13 @@ no details	timesheet	sk	¾iadne podrobnosti
 no project	timesheet	sk	®iadny projekt
 none: use only free project-names	admin	sk	®iadne: pou¾i» iba voµné názvy projektov
 or endtime	timesheet	sk	alebo Èas skonèenia
-permission denied!!!	timesheet	sk	Prístup bol odopretý !!!
+permission denied!!!	timesheet	sk	Prístup bol odmietnutý !!!
 price	timesheet	sk	Cena
 projectmanager integration	admin	sk	integrácia s Projektovníkom
 quantity	timesheet	sk	Mno¾stvo
 save & new	timesheet	sk	Ulo¾i» & Nové
 saves the changes made	timesheet	sk	Ulo¾í vykonané zmeny
-saves this entry and add a new one	timesheet	sk	Ulo¾í tento záznam a pridá nový
+saves this entry and add a new one	timesheet	sk	Ulo¾í túto polo¾ku a pridá novú
 select a price	timesheet	sk	Vyberte cenu
 select a project	timesheet	sk	Vyberte projekt
 start	timesheet	sk	Zaèiatok
@@ -45,7 +46,7 @@ this week	timesheet	sk	Tento tý¾deò
 this year	timesheet	sk	Tento rok
 timesheet	common	sk	Harmonogram
 unitprice	timesheet	sk	Jednotková cena
-view this entry	timesheet	sk	Zobrazi» záznam
+view this entry	timesheet	sk	Zobrazi» polo¾ku
 week	timesheet	sk	Tý¾deò
 yesterday	timesheet	sk	Vèera
 your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	sk	Va¹a databáza NIE je aktuálna (%1 oproti %2), prosím spustite %3setup%4 kvôli aktualizácii va¹ej databázy.

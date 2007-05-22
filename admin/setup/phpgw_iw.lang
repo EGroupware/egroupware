@@ -785,3 +785,4 @@ your php installation does not have appropriate gd support. you need gd library 
 your tables are current	setup	iw	הטבלאות שלך מעודכנות
 your tables may be altered and you may lose data	setup	iw	יתכן שישתנו הטבלאות שלך ויתכן שתאבד מידע
 your tables will be dropped and you will lose data	setup	iw	!! הטבלאות שלך ייופלו ותאבד מידע
+your session could not be verified.	admin	iw	.לא הצלחתי לשחזר את המושב

@@ -29,6 +29,8 @@ class uicustomfields
 		'select'   => 'Selectbox',
 		'radio'    => 'Radiobutton',
 		'checkbox' => 'Checkbox',
+		'date'     => 'Date',
+		'date-time'=> 'Date+Time',
 		'link-entry' => 'Select entry',
 	);
 	/**

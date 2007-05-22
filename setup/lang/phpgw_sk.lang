@@ -1,6 +1,6 @@
 %1 '%2' does not exist, is not readable by the webserver or contains no egroupware installation!	setup	sk	%1 '%2' NEexistuje, je neèitateµné webserverom alebo neobsahuje in¹taláciu eGroupWare!
 %1 already exists in %2.	setup	sk	%1 u¾ existuje v %2.
-%1 created in %2.	setup	sk	%1 vytvorené v %2.
+%1 created in %2.	setup	sk	%1 bolo vytvorené v %2.
 %1 does not exist !!!	setup	sk	%1 neexistuje !!!
 %1 is %2%3 !!!	setup	sk	%1 je %2%3 !!!
 %1, %2 or %3 the configuration file.	setup	sk	%1, %2 alebo %3 konfiguraèný súbor.
@@ -12,20 +12,20 @@
 13 (ntp)	setup	sk	13 (ntp)
 80 (http)	setup	sk	80 (http)
 <b>charset to use</b> (use utf-8 if you plan to use languages with different charsets):	setup	sk	<b>Akú znakovú sadu pou¾i»</b> (ak plánujete pou¾íva» jazyky s rozliènými znakovými sadami, zvoµte utf-8)
-access denied: wrong username or password for manage-header !!!	setup	sk	Prístup odopretý: chybné pou¾ívateµské meno alebo heslo pre správu hlavièiek!!!
-access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sk	Prístup odopretý: chybné pou¾ívateµské meno alebo heslo pre konfiguráciu domény '%1(%2)' !!!
-account repository need to be set to the one you migrate to!	setup	sk	Repozitár úètov musí by» nastavený na jeden z tých, do ktorých migrujete!
+access denied: wrong username or password for manage-header !!!	setup	sk	Prístup bol odmietnutý: chybné pou¾ívateµské meno alebo heslo pre správu hlavièiek!!!
+access denied: wrong username or password to configure the domain '%1(%2)' !!!	setup	sk	Prístup bol odmietnutý: chybné pou¾ívateµské meno alebo heslo pre konfiguráciu domény '%1(%2)' !!!
+account repository need to be set to the one you migrate to!	setup	sk	Zdroj úètov musí by» nastavený na jeden z tých, do ktorých migrujete!
 accounts existing	setup	sk	Existujúce úèty
 actions	setup	sk	Akcie
 activate safe password check	setup	sk	Aktivova» voµbu ukladania hesla
 add auto-created users to this group ('default' will be attempted if this is empty.)	setup	sk	Automaticky vytvorených pou¾ívateµov priradi» do tejto skupiny (ak prázdne, pou¾ije sa 'Predvolená').
 add new database instance (egw domain)	setup	sk	Prida» novú databázovú in¹tanciu (eGW domain)
 add or edit a domain: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]	setup	sk	prida» alebo upravi» doménu: [domain-name(default)],[db-name(egroupware)],[db-user(egroupware)],db-password,[db-type(mysql)],[db-host(localhost)],[db-port(db specific)],[config-user(as header)],[config-passwd(as header)]
-adding, editing or deleting an egroupware domain / database instance:	setup	sk	Pridanie, úprava alebo vymazanie domény eGroupWare / databázovej in¹tancie:
-additional options and there defaults (in brackets)	setup	sk	Prídavné voµby a tam predvolené (v hranatých zátvorkách)
+adding, editing or deleting an egroupware domain / database instance:	setup	sk	Pridanie, úprava alebo odstránenie domény eGroupWare / databázovej in¹tancie:
+additional options and there defaults (in brackets)	setup	sk	Prídavné mo¾nosti a tam predvolené (v hranatých zátvorkách)
 additional settings	setup	sk	Ïal¹ie nastavenia
 admin account successful created.	setup	sk	Správcovský úèet bol úspe¹ne vytvorený.
-admin email address	setup	sk	Správcova emailová adresa
+admin email address	setup	sk	Správcova E-mailová adresa
 admin first name	setup	sk	Správcovo krstné meno
 admin last name	setup	sk	Správcovo priezvisko
 admin password	setup	sk	Správcovo heslo
@@ -33,50 +33,50 @@ admin password to header manager	setup	sk	Správcovo heslo do Správy hlavièiek
 admin user for header manager	setup	sk	Správcov pou¾ívateµský úèet do Správy hlavièiek
 admin username	setup	sk	Správcovo pou¾ívateµské meno
 admins	setup	sk	Správcovia
-after backing up your tables first.	setup	sk	A¾ po zazálohovaní va¹ich tabuliek (databáz).
+after backing up your tables first.	setup	sk	A¾ po zálohovaní Va¹ich tabuliek (databáz).
 after retrieving the file, put it into place as the header.inc.php.  then, click "continue".	setup	sk	Po získaní súboru, ulo¾te ho na miesto header.inc.php a kliknite na "pokraèova»".
 all applications	setup	sk	v¹etky aplikácie
 all core tables and the admin and preferences applications	setup	sk	v¹etky základné tabuµky a správcovské a nastavovacie aplikácie
 all exit codes of the command line interface	setup	sk	v¹etky návratové kódy rozhrania príkazového riadku
 all languages (incl. not listed ones)	setup	sk	v¹etky jazyky (vrátane neuvedených)
 all users	setup	sk	V¹etci pou¾ívatelia
-allow authentication via cookie	setup	sk	Povoli» autentifikáciu pomocou cookie
+allow authentication via cookie	setup	sk	Povoli» overovanie pomocou cookie
 allow password migration	setup	sk	Povoli» migráciu hesiel
 allowed migration types (comma-separated)	setup	sk	Povolené typy migrácie (oddelené èiarkou)
 alternatively domains can be accessed by logging in with <i>username@domain</i>.	setup	sk	Alternatívne, k doménam sa dá pristupova» aj prihlásením pomocou <i>pou¾ívateµ@doména</i>
 analysis	setup	sk	Analýza
 and is up to date	setup	sk	a je aktuálne
 and reload your webserver, so the above changes take effect !!!	setup	sk	A reloadnite si webserver, aby sa horeuvedené zmeny naozaj uplatnili!!!
-app details	setup	sk	Detaily aplikácie
+app details	setup	sk	Podrobnosti aplikácie
 app install/remove/upgrade	setup	sk	Aplikácia: In¹talácia/Odstránenie/Aktualizácia
 app process	setup	sk	Proces aplikácie
-application data	setup	sk	Dáta aplikácie
+application data	setup	sk	Údaje aplikácie
 application list	setup	sk	Zoznam aplikácií
 application management	setup	sk	Správa aplikácií
 application name and status	setup	sk	Názov a stav aplikácie
 application name and status information	setup	sk	Názov aplikácie a informácia o stave
 application title	setup	sk	Titulok aplikácie
 application: %1, file: %2, line: "%3"	setup	sk	Aplikácia: %1, Súbor: %2, Riadok: "%3"
-are you sure you want to delete your existing tables and data?	setup	sk	Naozaj chcete zmaza» va¹e súèasné tabuµky a dáta?
+are you sure you want to delete your existing tables and data?	setup	sk	Naozaj chcete odstráni» va¹e súèasné tabuµky a dáta?
 are you sure?	setup	sk	STE SI ISTÍ?
 at your request, this script is going to attempt to create the database and assign the db user rights to it	setup	sk	Na va¹u ¾iados», skript sa pokúsi vytvori» databázu a priradi» prístupové práva k nej pou¾ívateµovi db.
-at your request, this script is going to attempt to install a previous backup	setup	sk	Na va¹u ¾iados» sa teraz skript pokúsi nain¹talova» predchádzajúcu zálohu
+at your request, this script is going to attempt to install a previous backup	setup	sk	Na va¹u ¾iados» sa teraz skript pokúsi nain¹talova» predchádzajúcu zálohu.
 at your request, this script is going to attempt to install the core tables and the admin and preferences applications for you	setup	sk	Na va¹u ¾iados», skript sa pokúsi nain¹talova» základné tabuµky a správcovské a nastavovacie aplikácie.
 at your request, this script is going to attempt to upgrade your old applications to the current versions	setup	sk	Na va¹u ¾iados», skript sa pokúsi aktualizova» va¹e staré aplikácie na nov¹ie verzie
 at your request, this script is going to attempt to upgrade your old tables to the new format	setup	sk	Na va¹u ¾iados», skript sa pokúsi aktualizova» va¹e staré tabuµky na nový formát
-at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	sk	Na va¹u ¾iados», skript vykoná de¹truktívnu akciu: zma¾e existujúce tabuµky a vytvorí ich v novom formáte
-at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	sk	Na va¹u ¾iados», skript vykoná de¹truktívnu akciu: odin¹taluje v¹etky aplikácie, èo zma¾e v¹etky existujúce tabuµky a dáta
+at your request, this script is going to take the evil action of deleting your existing tables and re-creating them in the new format	setup	sk	Na va¹u ¾iados», skript vykoná de¹truktívnu akciu: odstráni existujúce tabuµky a vytvorí ich v novom formáte
+at your request, this script is going to take the evil action of uninstalling all your apps, which deletes your existing tables and data	setup	sk	Na va¹u ¾iados», skript vykoná de¹truktívnu akciu: odin¹taluje v¹etky aplikácie, èo odstráni v¹etky existujúce tabuµky a dáta
 attempt to use correct mimetype for ftp instead of default 'application/octet-stream'	setup	sk	Pokúsi» sa pou¾íva» správny MIME typ pre FTP namieste predvoleného 'application/octet-stream'
-authentication / accounts	setup	sk	Autentifikácie / Úèty
-auto create account records for authenticated users	setup	sk	Automaticky vytvori» úètové záznamy pre autentifikovaných pou¾ívateµov
+authentication / accounts	setup	sk	Overovanie / Úèty
+auto create account records for authenticated users	setup	sk	Automaticky vytvori» úètové záznamy pre overených pou¾ívateµov
 auto login anonymous user	setup	sk	Automaticky prihlási» anonymného pou¾ívateµa
 auto-created user accounts expire	setup	sk	Automaticky vytvorený pou¾ívateµský úèet vypr¹í
 available version	setup	sk	Dostupná verzia
 back to the previous screen	setup	sk	Naspä» na predchádzajúcu stránku
 back to user login	setup	sk	Naspä» na prihlásenie pou¾ívateµa
 back's up your db now, this might take a few minutes	setup	sk	vykoná okam¾itú zálohu va¹ej databázy, potrvá to zopár minút
-backup '%1' deleted	setup	sk	záloha '%1' zmazaná
-backup '%1' renamed to '%2'	setup	sk	záloha '%1' premenovaná na '%2'
+backup '%1' deleted	setup	sk	záloha '%1' bola odstránená
+backup '%1' renamed to '%2'	setup	sk	záloha '%1' bola premenovaná na '%2'
 backup '%1' restored	setup	sk	záloha '%1' obnovená
 backup and restore	setup	sk	zálohy a obnova
 backup failed	setup	sk	Zálohovanie sa nepodarilo
@@ -90,6 +90,7 @@ because it depends upon	setup	sk	preto¾e závisí na
 because it is not a user application, or access is controlled via acl	setup	sk	preto¾e nie je pou¾ívateµskou aplikáciou, alebo je prístup kontrolovaný cez ACL
 because it requires manual table installation, <br />or the table definition was incorrect	setup	sk	preto¾e vy¾aduje ruènú in¹taláciu tabuliek, <br />alebo je tabuµka chybne definovaná
 because it was manually disabled	setup	sk	preto¾e bola manuálne vypnutá
+because its sources are missing	setup	sk	preto¾e jej zdroje chýbajú
 because of a failed upgrade or install	setup	sk	preto¾e aktualizácia alebo in¹talácia zlyhala
 because of a failed upgrade, or the database is newer than the installed version of this app	setup	sk	preto¾e aktualizácia zlyhala, alebo je databáza nov¹ia ne¾ nain¹talovaná verzia aplikácie
 because the enable flag for this app is set to 0, or is undefined	setup	sk	preto¾e príznak zapnutia pre túto aplikáciu je nastavený na 0 alebo nie je nastavený vôbec
@@ -117,18 +118,18 @@ checks egroupware's installed, it's versions and necessary upgrads (return value
 click <a href="index.php">here</a> to return to setup.	setup	sk	kliknite <a href="index.php">sem</a> pre návrat do In¹talátora.
 click here	setup	sk	Kliknite sem
 click here to re-run the installation tests	setup	sk	Kliknite sem pre znovuspustenie in¹talaèných testov
-comma separated ip-addresses or host-names, default access to setup from everywhere	setup	sk	èiarkou oddelené ip-adresy alebo host-names, predvolene je prístup k setup odhocikiaµ
+comma separated ip-addresses or host-names, default access to setup from everywhere	setup	sk	èiarkou oddelené ip-adresy alebo host-names, predvolene je povolený prístup k aplikácii setup odkiaµkoµvek
 completed	setup	sk	Hotovo
 config password	setup	sk	Heslo pre Konfiguráciu
 config username	setup	sk	Pou¾ívateµské meno pre Konfiguráciu
 configuration	setup	sk	Konfigurácia
-configuration changed.	setup	sk	Konfigurácia zmenená.
+configuration changed.	setup	sk	Konfigurácia bola zmenená.
 configuration completed	setup	sk	Konfigurácia - hotovo
 configuration errors:	setup	sk	Konfiguraèné chyby:
 configuration password	setup	sk	Heslo pre Konfiguráciu
 configuration user	setup	sk	Pou¾ívateµské meno pre Konfiguráciu
 configure now	setup	sk	Konfiguruj teraz
-confirm to delete this backup?	setup	sk	Naozaj zmaza» túto zálohu?
+confirm to delete this backup?	setup	sk	Naozaj odstráni» túto zálohu?
 contain	setup	sk	obsahuje
 continue	setup	sk	Pokraèova»
 continue to the header admin	setup	sk	Pokraèova» k Správcovi hlavièiek
@@ -165,6 +166,7 @@ datetime port.<br />if using port 13, please set firewall rules appropriately be
 day	setup	sk	deò
 day of week<br />(0-6, 0=sunday)	setup	sk	deò v tý¾dni<br />(0-6, 0=nedeµa)
 db backup and restore	setup	sk	DB zálohy a obnova
+db host	setup	sk	DB stroj
 db name	setup	sk	DB názov
 db password	setup	sk	DB heslo
 db port	setup	sk	DB port
@@ -176,9 +178,9 @@ default	setup	sk	odporúèaná predvolená hodnota
 default file system space per user/group ?	setup	sk	Predvolený priestor v súborovom systéme na pou¾ívateµa/skupinu?
 delete	setup	sk	Zmaza»
 delete all existing sql accounts, groups, acls and preferences (normally not necessary)?	setup	sk	Zmaza» v¹etky existujúce SQL úèty, skupiny, ACL (prístupové práva) a nastavenia? Zväè¹a to nie je nevyhnutné.
-delete all my tables and data	setup	sk	Zma¾ v¹etky moje tabuµky a dáta
-delete all old languages and install new ones	setup	sk	Zma¾ v¹etky staré jazyky a nain¹taluj nové
-deleting tables	setup	sk	Ma¾em tabuµky
+delete all my tables and data	setup	sk	Odstráò v¹etky moje tabuµky a dáta
+delete all old languages and install new ones	setup	sk	Odstráò v¹etky staré jazyky a nain¹taluj nové
+deleting tables	setup	sk	Odstraòujem tabuµky
 demo server setup	setup	sk	Nastavenie testovacieho (demo) servera
 deny access	setup	sk	Zaká¾ prístup
 deny all users access to grant other users access to their entries ?	setup	sk	Zakáza» v¹etkým pou¾ívateµom mo¾nos», aby pridelili právo iným pou¾ívateµom pre vstup do svojich záznamov?
@@ -205,7 +207,7 @@ egroupware api needs a database (schema) update from version %1 to %2!	setup	sk	
 egroupware api version %1 found.	setup	sk	Na¹lo sa eGroupWare API verzie %1.
 egroupware configuration file (header.inc.php) does not exist.	setup	sk	konfiguraèný súbor eGroupWare (header.inc.php) NEexistuje.
 egroupware configuration file (header.inc.php) version %1 exists%2	setup	sk	konfiguraèný súbor eGroupWare (header.inc.php) verzie %1 existuje%2.
-egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sk	konfiguraèný súbor eGroupWare (header.inc.php) u¾ existuje, musíte pou¾i» --edit-header alebo ho najskôr zmaza»!
+egroupware configuration file header.inc.php already exists, you need to use --edit-header or delete it first!	setup	sk	konfiguraèný súbor eGroupWare (header.inc.php) u¾ existuje, musíte pou¾i» --edit-header alebo ho najskôr odstráni»!
 egroupware domain/instance %1(%2):	setup	sk	eGroupWare doména/in¹tancia %1(%2):
 egroupware is already installed!	setup	sk	eGroupWare je u¾ nain¹talovaný!
 egroupware sources in '%1' are not complete, file '%2' missing !!!	setup	sk	Zdroje eGroupWare v '%1' sú neúplné, súbor '%2' chýba !!!
@@ -236,11 +238,11 @@ failed writing configuration file header.inc.php, check the permissions !!!	setu
 false	setup	sk	NIE
 file	setup	sk	Súbor
 file type, size, version, etc.	setup	sk	typ súboru, veµkos», verzia, atï.
-file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	sk	Nahrávanie súborov je vypnuté: NEmô¾ete pou¾íva» ¾iadneho správcu súborov, ani prilo¾i» súbory v niektorých aplikáciách!
+file uploads are switched off: you can not use any of the filemanagers, nor can you attach files in several applications!	setup	sk	Odovzdávanie súborov je vypnuté: NEmô¾ete pou¾íva» ¾iadneho správcu súborov, ani prilo¾i» súbory v niektorých aplikáciách!
 filename	setup	sk	názov súboru
 filesystem	setup	sk	Súborový systém
 force selectbox	setup	sk	Vynú» menu pre výber
-found existing configuration file. loading settings from the file...	setup	sk	Na¹iel som existujúci konfiguraèný súbor. Nahrávam z neho nastavenia...
+found existing configuration file. loading settings from the file...	setup	sk	Na¹iel som existujúci konfiguraèný súbor. Naèítavam z neho nastavenia...
 give admin access to all installed apps	setup	sk	Da» správcovi prístup ku v¹etkým nain¹talovaným aplikáciám
 gives further options	setup	sk	dáva ïal¹ie mo¾nosti
 go back	setup	sk	Naspä»
@@ -311,7 +313,7 @@ logout	setup	sk	Odhlásenie
 mail domain (for virtual mail manager)	setup	sk	Po¹tová doména (pre virtuálneho emailového mana¾éra)
 mail server login type	setup	sk	Typ prihlásenia po¹tového servera
 mail server protocol	setup	sk	Protokol po¹tového servera
-make sure that your database is created and the account permissions are set	setup	sk	Uistite sa, ¾e va¹a databáza je u¾ vytvorená a prístupové práva úètov nastavené
+make sure that your database is created and the account permissions are set	setup	sk	Uistite sa, ¾e va¹a databáza je u¾ vytvorená a prístupové oprávnenia úètov nastavené
 manage applications	setup	sk	Správa aplikácií
 manage languages	setup	sk	Správa jazykov
 manual / help	setup	sk	Manuál / pomocník
@@ -324,7 +326,7 @@ mcrypt mode (default cbc)	setup	sk	MCrypt re¾im (predvolený CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sk	Nastavenia MCrypt (vy¾aduje mcrypt PHP roz¹írenie)
 mcrypt version	setup	sk	Verzia MCrypt
 memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sk	pamä»ový limit je nastavený na menej ne¾ 16M; niektoré aplikácie v eGroupWare potrebujú viac ne¾ odporúèaných 8M, okrem výnimoèných zlyhaní
-migration between egroupware account repositories	setup	sk	Migrácia medzi repozitármi eGroupWare úètov
+migration between egroupware account repositories	setup	sk	Migrácia medzi zdrojmi eGroupWare úètov
 minimum account id (e.g. 500 or 100, etc.)	setup	sk	Najmen¹ie ID úètu (napr. 500 alebo 100, atï.)
 minute	setup	sk	minúta
 missing or uncomplete mailserver configuration	setup	sk	Chýbajúce alebo neúplné nastavenie po¹tového servera
@@ -366,10 +368,10 @@ or %1continue to the header admin%2	setup	sk	alebo %1Pokraèova» k Správcovi hlav
 or http://webdav.domain.com (webdav)	setup	sk	alebo http://webdav.domain.com (WebDAV)
 or we can attempt to create the database for you:	setup	sk	Alebo sa mô¾em pokúsi» vytvori» va¹u databázu:
 or you can install a previous backup.	setup	sk	Alebo mô¾ete nain¹talova» predchádzajúcu zálohu
-password for smtp-authentication	setup	sk	Heslo pre SMTP autentifikáciu
+password for smtp-authentication	setup	sk	Heslo pre SMTP overovanie
 password needed for domain configuration.	setup	sk	Heslo potrebné pre konfiguráciu domény
 password of db user	setup	sk	Heslo db pou¾ívateµa
-passwords did not match, please re-enter	setup	sk	Heslá nesedia, prosím zadajte znovu
+passwords did not match, please re-enter	setup	sk	Heslá sa nezhodujú, prosím zadajte znovu
 path (not url!) to your egroupware installation.	setup	sk	Cesta (nie URL!) k va¹ej in¹talácii eGroupWare.
 path information	setup	sk	Informácia o ceste
 path of egroupware install directory (default auto-detected)	setup	sk	cesta k in¹talaènému adresáru eGroupWare (predvolené: autodetekcia)
@@ -395,7 +397,7 @@ possible solutions	setup	sk	Mo¾né rie¹enia
 post-install dependency failure	setup	sk	Poin¹talaèné zlyhanie závislostí
 postgres: leave it empty to use the prefered unix domain sockets instead of a tcp/ip connection	setup	sk	Postgres: Ak ponecháte prázdne, pou¾ijú sa uprednostnené unix domain socket-y namiesto tcp/ip spojenia
 potential problem	setup	sk	Mo¾ný problém
-preferences	setup	sk	Nastavenia
+preferences	setup	sk	Predvoµby
 problem resolution	setup	sk	Vysvetlenie problému
 process	setup	sk	Proces
 re-check my database	setup	sk	Znovu skontrolova» databázu
@@ -418,7 +420,7 @@ restore	setup	sk	Obnovi»
 restore failed	setup	sk	Obnova sa nepodarila
 restore finished	setup	sk	obnova dokonèená
 restore started, this might take a few minutes ...	setup	sk	obnova sa zaèala, potrvá to zopár minút...
-restoring a backup will delete/replace all content in your database. are you sure?	setup	sk	Obnova zo zálohy zma¾e/prepí¹e celý obsah databázy. Ste si istí?
+restoring a backup will delete/replace all content in your database. are you sure?	setup	sk	Obnova zo zálohy odstráni/prepí¹e celý obsah databázy. Ste si istí?
 return to setup	setup	sk	Návrat do In¹talátora
 run a database schema update (if necessary): domain(all),[config user(admin)],password	setup	sk	Spusti» aktualizácie databázovej schémy, ak je nevyhnutné: domain(all),[config user(admin)],password
 run installation tests	setup	sk	Vykona» in¹talaèné testy
@@ -441,12 +443,12 @@ select which group(s) will be imported (group membership will be maintained)	set
 select which group(s) will be modified (group membership will be maintained)	setup	sk	Vyberte, ktorá skupina/skupiny sa upraví/ia (èlenstvo v skupine sa zachová)
 select which languages you would like to use	setup	sk	Vyberte, ktoré jazyky budete pou¾íva»
 select which method of upgrade you would like to do	setup	sk	Vyberte, ktorou metódou chcete aktualizova»
-select which type of authentication you are using	setup	sk	Vyberte, aký typ autentifikácie pou¾ívate
+select which type of authentication you are using	setup	sk	Vyberte, aký typ overovania pou¾ívate
 select which user(s) will also have admin privileges	setup	sk	Vyberte ïal¹ích pou¾ívateµov, ktorí majú dosta» správcovské oprávnenia
-select which user(s) will be exported	setup	sk	Vyberte, ktorý/í pou¾ívateµ/lia sa vyexportuje/ú
-select which user(s) will be imported	setup	sk	Vyberte, ktorý/í pou¾ívateµ/lia sa naimportuje/ú
-select which user(s) will be modified	setup	sk	Vyberte, ktorý/í pou¾ívateµ/lia sa upraví/ia
-select which user(s) will have admin privileges	setup	sk	Vyberte, ktorý/í pou¾ívateµ/lia dostane/ú správcovské oprávnenia
+select which user(s) will be exported	setup	sk	Vyberte, ktorí pou¾ívatelia sa vyexportujú
+select which user(s) will be imported	setup	sk	Vyberte, ktorí pou¾ívatelia sa naimportujú
+select which user(s) will be modified	setup	sk	Vyberte, ktorí pou¾ívatelia sa upravia
+select which user(s) will have admin privileges	setup	sk	Vyberte, ktorí pou¾ívatelia dostanú správcovské oprávnenia
 select your old version	setup	sk	Vyberte va¹u starú verziu
 selectbox	setup	sk	Výberové menu
 sessions type	setup	sk	Typ sedenia
@@ -467,7 +469,7 @@ smtp server port	setup	sk	Port servera SMTP
 some or all of its tables are missing	setup	sk	Chýbajú niektoré alebo v¹etky jeho tabuµky
 sql encryption type	setup	sk	Typ SQL kryptovania pre heslá (predvolené - md5)
 standard (login-name identical to egroupware user-name)	setup	sk	¹tandardné (prihlasovacie meno toto¾né s pou¾ívateµským menom eGroupWare)
-standard mailserver settings (used for mail authentication too)	setup	sk	Nastavenia predvoleného po¹tového servera (pou¾ité aj pre Mailovú autentifikáciu)
+standard mailserver settings (used for mail authentication too)	setup	sk	Nastavenia predvoleného po¹tového servera (pou¾ité aj pre Mailové overovanie)
 start the postmaster	setup	sk	Spusti» postmastera
 start updating languages %1 ...	setup	sk	Spusti» aktualizáciu jazykov %1 ...
 start updating the database ...	setup	sk	Spusti» aktualizáciu databázy ...
@@ -478,7 +480,7 @@ step %1 - configuration	setup	sk	Krok %1 - Konfigurácia
 step %1 - db backup and restore	setup	sk	Krok %1 - Zálohovanie a obnova Databázy
 step %1 - language management	setup	sk	Krok %1 - Správa jazykov
 step %1 - simple application management	setup	sk	Krok %1 - Jednoduchá správa aplikácií
-succesfully uploaded file %1	setup	sk	úspe¹ne nahratý súbor %1
+succesfully uploaded file %1	setup	sk	úspe¹ne odovzdaný súbor %1
 table change messages	setup	sk	Správy pri zmene tabuliek
 tables dropped	setup	sk	tabuµky zahodené
 tables installed, unless there are errors printed above	setup	sk	tabuµky nain¹talované, ak len nevidno nejaké chybové hlásenia
@@ -510,8 +512,8 @@ this should be around 30 bytes in length.<br />note: the default has been random
 this stage is completed<br />	setup	sk	Táto fáza je dokonèená<br />
 this will create a first user in egroupware or reset password and admin rights of an exiting user	setup	sk	Týmto sa vytvorí prvý pou¾ívateµ v eGroupWare, alebo znovunastaví heslo a administrátorské práva existujúceho pou¾ívateµa.
 to a version it does not know about	setup	sk	na verziu ktorú nepozná
-to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sk	pre povolenie autentifikácie hesiel, pridajte nasledujúci riadok do pg_hba.conf (nad v¹etkými ostatnými) A re¹tartujte postgres:
-to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	sk	Pre zmenu znakovej sady: zazálohujte si databázu, odin¹talujte v¹etky aplikácie a prein¹talujte zálohu so zapnutou voµbou "konvertova» zálohu na vybranú znakovú sadu".
+to allow password authentification add the following line to your pg_hba.conf (above all others) and restart postgres:	setup	sk	Ak chcete povoli» overovania hesiel, pridajte nasledujúci riadok do pg_hba.conf (nad v¹etkými ostatnými) A re¹tartujte postgres:
+to change the charset: back up your database, deinstall all applications and re-install the backup with "convert backup to charset selected" checked.	setup	sk	Ak chcete zmeni» znakovú sadu: zazálohujte si databázu, odin¹talujte v¹etky aplikácie a prein¹talujte zálohu so zapnutou voµbou "konvertova» zálohu na vybranú znakovú sadu".
 to setup 1 admin account and 3 demo accounts.	setup	sk	pre vytvorenie 1 správcovského a 3 testovacích (demo) úètov
 top	setup	sk	vrch
 translations added	setup	sk	Preklady pridané
@@ -542,6 +544,7 @@ use mcrypt to crypt session-data: {off(default) | on},[mcrypt-init-vector(defaul
 use persistent db connections: {on(default) | off}	setup	sk	pou¾i» trvalé pripojenie k db: {zapnú»(predvolené) | vypnú»}
 use pure html compliant code (not fully working yet)	setup	sk	Pou¾íva» èistý HTML kód (zatiaµ nie je plne funkèné)
 user	setup	sk	Pou¾ívateµ
+user account prefix	setup	sk	Predpona pou¾ívateµského úètu
 user for smtp-authentication (leave it empty if no auth required)	setup	sk	Pou¾ívateµ pre SMTP-autentifikáciu (ak netreba, nechajte prázdne)
 usernames are casesensitive	setup	sk	Pou¾ívateµské mená sú citlivé na veµkos» písma
 users choice	setup	sk	Pou¾ívateµská voµba
@@ -554,6 +557,7 @@ view	setup	sk	Zobrazi»
 virtual mail manager (login-name includes domain)	setup	sk	Virtuálny emailový mana¾ér (prihlasovacie meno obsahuje doménu)
 warning!	setup	sk	Varovanie!
 we can proceed	setup	sk	Mô¾eme prikroèi»
+we could not determine the version of %1, please make sure it is at least %2	setup	sk	Nedoká¾eme urèi» verziu %1, prosím skontrolujte, ¾e je aspoò %2
 we will automatically update your tables/records to %1	setup	sk	Automaticky vykonáme aktualizáciu va¹ich tabuliek/záznamov na %1,
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	sk	Teraz spustíme sériu testov, èo mô¾e trva» zopár minút. Pre pokraèovanie kliknite na ni¾¹ieuvedený odkaz.
 welcome to the egroupware installation	setup	sk	Vitajte v In¹talátore eGroupWare
@@ -593,6 +597,7 @@ you need to configure egroupware:	setup	sk	Musíte konfigurova» eGroupWare:
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	sk	Uvedené chyby musíte opravi», a¾ potom sa zapí¹e súbor header.inc.php !
 you need to save the settings you made here first!	setup	sk	Musíte najprv ulo¾i» zmeny, ktoré ste vykonali!
 you need to select your current charset!	setup	sk	Treba zada» va¹u súèasnú znakovú sadu!
+you should either install the sources or uninstall it, to get rid of the tables	setup	sk	Musíte najprv nain¹talova» zdroje alebo odin¹talova», aby ste sa zbavili tabuliek
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	sk	mali by ste buï odin¹talova» a potom znovu nain¹talova», alebo sa pokúsi» o ruèné opravy
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	sk	NEBUDETE schopní prihlási» sa do eGroupWare pomocou PHP sedení: "sedenie sa nedá overi»" !!!
 you're using an old configuration file format...	setup	sk	Pou¾ívate starý formát konfiguraèného súboru...
@@ -607,6 +612,7 @@ your files directory '%1' %2	setup	sk	Vá¹ adresár pre súbory '%1' %2
 your header admin password is not set. please set it now!	setup	sk	Heslo Správcu hlavièiek NIE JE nastavené. Prosím nastavte ho teraz!
 your header.inc.php needs upgrading.	setup	sk	Vá¹ header.inc.php potrebuje aktualizáciu.
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	sk	Vá¹ header.inc.php potrebuje aktualizáciu.<br /><blink><b class="msg">POZOR!</b></blink><br /><b>NAJPRV UROBTE ZÁLOHY!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	sk	Máte nain¹talovanú verziu %2 programu %1, av¹ak potrebná je aspoò verzia %3. Prosím spustite:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	sk	Va¹a in¹talácia PHP nemá patriènú podporu pre GD. Potrebujete kni¾nicu gd verzie aspoò 1.8, aby ste mohli pou¾íva» Gantt grafy v projektoch.
 your tables are current	setup	sk	Va¹e tabuµky sú aktuálne
 your tables will be dropped and you will lose data	setup	sk	Va¹e tabuµky budú zahodené a stratíte dáta!

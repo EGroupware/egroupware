@@ -145,7 +145,7 @@ file into	felamimail	es-es	Información del fichero
 files	felamimail	es-es	Ficheros
 filter active	felamimail	es-es	Filtro activo
 filter name	felamimail	es-es	Nombre del filtro
-filter rules	preferences	es-es	reglas de filtrado
+filter rules	common	es-es	reglas de filtrado
 first name	felamimail	es-es	Nombre de pila
 flagged	felamimail	es-es	marcado
 flags	felamimail	es-es	Marcas
@@ -403,7 +403,7 @@ use custom settings	felamimail	es-es	Usar opciones personalizadas
 use regular expressions	felamimail	es-es	usar expresiones regulares
 use smtp auth	admin	es-es	Usar identificación SMTP
 users can define their own emailaccounts	admin	es-es	Los usuarios pueden definir sus propias cuentas de correo
-vacation notice	preferences	es-es	aviso de vacaciones
+vacation notice	common	es-es	aviso de vacaciones
 vacation notice is active	felamimail	es-es	El aviso de vacaciones está activo
 validate certificate	felamimail	es-es	validar certificado
 view full header	felamimail	es-es	Ver la cabecera completa

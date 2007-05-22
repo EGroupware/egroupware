@@ -274,3 +274,4 @@ view this user	admin	hu	felhasználó megtekintése
 xml-rpc	admin	hu	XML-RPC
 you must enter an application name and title.	admin	hu	Kötelezõ megadni az alkalmazás nevét és címét!
 you must select a file type	admin	hu	Kötelezõ fájltípust választani
+your session could not be verified.	admin	hu	A hozzáférése nem ellenõrizhetõ.

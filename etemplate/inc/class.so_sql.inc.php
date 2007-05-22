@@ -680,7 +680,7 @@ class so_sql
 				}
 				elseif (!$need_full_no_count && (!$join || stripos($join,'LEFT JOIN')!==false))
 				{
-					$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__);
+					$this->db->select($this->table_name,'COUNT(*)',$query,__LINE__,__FILE__,false,'',false,0,$join);
 					$this->total = $this->db->next_record() ? (int) $this->db->f(0) : false;
 				}
 				else	// cant do a count, have to run the query without limit

@@ -371,3 +371,4 @@ enter your default mail domain ( from: user@domain )	admin	zh	输入默认邮件
 enter your smtp server hostname or ip address	admin	zh	输入SMTP服务器的主机名或IP地址
 enter your smtp server port	admin	zh	输入SMTP服务器的端口号
 mail settings	admin	zh	邮件配置
+your session could not be verified.	admin	zh	本次会话无法校验.

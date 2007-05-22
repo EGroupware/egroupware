@@ -203,3 +203,4 @@ enter your default mail domain ( from: user@domain )	admin	ja	メールドメイン名 (
 enter your smtp server hostname or ip address	admin	ja	SMTP サーバ名または IP アドレス
 enter your smtp server port	admin	ja	SMTP ポート番号
 mail settings	admin	ja	電子メール設定
+your session could not be verified.	admin	ja	Your session could not be verified.

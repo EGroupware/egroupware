@@ -1,6 +1,6 @@
 %1 %2 in %3	calendar	pl	%1 %2 w %3
 %1 records imported	calendar	pl	Zaimportowano %1 rekordów
-%1 records read (not yet imported, you may go back and uncheck test import)	calendar	pl	Wczytano %1 rekordów (jeszcze nie zaimportowano; mo¿esz siê cofn±c i odznaczyæ Import Testowy)
+%1 records read (not yet imported, you may go back and uncheck test import)	calendar	pl	Wczytano %1 rekordów (jeszcze nie zaimportowano; mo¿esz siê cofn±æ i odznaczyæ Import Testowy)
 <b>please note</b>: the calendar use the holidays of your country, which is set to %1. you can change it in your %2.<br />holidays are %3 automatic installed from %4. you can changed it in %5.	calendar	pl	<b>Zauwa¿</b>: Kalendarz u¿ywa listy dni ¶wi±tecznych dla Twojego kraju, tj. dla %1. Mo¿esz zmieniæ to zachowanie w Twoim %2.<br />Dni ¶wi±teczne s± %3 automatycznie instalowane z %4. Mo¿esz zmieniæ to w %5.
 a non blocking event will not conflict with other events	calendar	pl	Termin nie blokuj±cy nie bêdzie w konflikcie z innymi terminami kalendarza
 accept or reject an invitation	calendar	pl	Zaakeptuj lub odrzuæ zaproszenie
@@ -22,6 +22,7 @@ alarms	calendar	pl	Alarmy
 all categories	calendar	pl	Wszystkie kategorie
 all day	calendar	pl	Wszystkie dni
 all events	calendar	pl	Wszystkie terminy
+all future	calendar	pl	Wszystkie przysz³e
 all participants	calendar	pl	Wszyscy uczestnicy
 allows to edit the event again	calendar	pl	Pozwala edytowaæ termin ponownie
 apply the changes	calendar	pl	zastosuj zmiany
@@ -74,10 +75,10 @@ delete this series of recuring events	calendar	pl	Usuñ seriê terminów powtarzany
 disinvited	calendar	pl	Zaproszenie cofniêto
 display status of events	calendar	pl	Wy¶wietl status zdarzeñ
 displayed view	calendar	pl	bie¿±cy widok
-displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	pl	Pokazywaæ Twój kalendarz na stronie g³ównej (stronie, któr± widzisz po zalogowaniu siê do eGW lub po klikniêciu na ikonê strony domowej - homepage)?
+displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	pl	Pokazywaæ Twój kalendarz na stronie g³ównej (stronie, któr± widzisz po zalogowaniu siê do eGroupWare lub po klikniêciu na ikonê strony domowej)?
 do you want a weekview with or without weekend?	calendar	pl	Czy widok tygodniowy powinien zawieraæ weekend?
-do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	pl	Czy chcesz byæ powiadamiany o nowych lub zmienionych spotkaniach? Bêdziesz powiadamiany o zmianach któe sam zrobisz.<br>Mo¿esz ograniczyæ powiadomienia tylko do niektórych zmian. Ka¿da pozycja zawiera wszystkie powiadomienia wymienione powy¿ej. <i>Wszystkie zmiany</i> zawieraj± zmiany nazwy, opisu, uczestników, ale nie same odpowiedzi uczestników. Je¿eli w³a¶ciciel zdarzenia wybierze powiadomienia dowolne, bêdzie otrzymywa³ równie¿ odpowiedzi uczestników, takie jak akceptacje czy odrzucenia.
-do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pl	Czy chcesz otrzymywaæ mailem regularne podsumowania swoich spotkañ?<br>Podsumowanie jest wysy³ane na Twój adres email codziennie rano, lub w poniedzia³ki dla podsumowañ tygodniowych.<br>Podsumowanie jest wysy³ane tylko je¿eli masz zaplanowane jakie¶ spotkania w danym dniu lub tygodniu.
+do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	pl	Czy chcesz byæ powiadamiany o nowych lub zmienionych spotkaniach? Bêdziesz powiadamiany o zmianach które sam zrobisz.<br>Mo¿esz ograniczyæ powiadomienia tylko do niektórych zmian. Ka¿da pozycja zawiera wszystkie powiadomienia wymienione powy¿ej. <i>Wszystkie zmiany</i> zawieraj± zmiany nazwy, opisu, uczestników, ale nie same odpowiedzi uczestników. Je¿eli w³a¶ciciel zdarzenia wybierze powiadomienia dowolne, bêdzie otrzymywa³ równie¿ odpowiedzi uczestników, takie jak akceptacje czy odrzucenia.
+do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	pl	Czy chcesz otrzymywaæ mailem regularne podsumowania swoich spotkañ?<br>Podsumowanie jest wysy³ane na Twój adres e-mail codziennie rano, lub w poniedzia³ki dla podsumowañ tygodniowych.<br>Podsumowanie jest wysy³ane tylko je¿eli masz zaplanowane jakie¶ spotkania w danym dniu lub tygodniu.
 do you wish to autoload calendar holidays files dynamically?	admin	pl	Czy chcesz automatycznie ³adowaæ do kalendarza listê ¶wi±t?
 download	calendar	pl	¦ci±gnij
 download this event as ical	calendar	pl	¦ci±gnij zdarzenia w formacie iCal
@@ -116,8 +117,6 @@ filename of the download	calendar	pl	Nazwa pliku do ¶ci±gniêcia
 find free timeslots where the selected participants are availible for the given timespan	calendar	pl	Wyszukaj wolne przedzia³y czasu, dla których wybrani uczestnicy s± dostêpni przez okre¶lony okres
 firstname of person to notify	calendar	pl	Imiê osoby do powiadomienia
 for	calendar	pl	dla
-for all future events	calendar	pl	Dla wszystkich przysz³ych terminów
-for this event	calendar	pl	Dla tego terminu
 for which views should calendar show distinct lines with a fixed time interval.	calendar	pl	Które widoki kalendarza powinny zawieraæ poziomie linie, reprezentuj±ce siatkê godzin?
 format of event updates	calendar	pl	Format uaktualnieñ wydarzeñ
 forward half a month	calendar	pl	naprzód o pó³ miesi±ca
@@ -265,7 +264,6 @@ startdate and -time of the search	calendar	pl	Data/czas rozpoczêcia przy wyszukw
 startdate of the export	calendar	pl	Data pocz±tkowa dla eksportu
 startrecord	calendar	pl	Pierwszy wpis
 status changed	calendar	pl	Status zosta³ zmieniony
-status recurrence	calendar	pl	Status powtarzania
 submit to repository	calendar	pl	Wy¶lij do repozytorium
 sun	calendar	pl	Nie
 tentative	calendar	pl	Niezobowi±zuj±cy
