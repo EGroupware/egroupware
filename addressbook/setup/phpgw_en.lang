@@ -167,6 +167,7 @@ home phone	addressbook	en	Home Phone
 home state	addressbook	en	Home State
 home street	addressbook	en	Home Street
 home zip code	addressbook	en	Home ZIP Code
+how many contacts should non-admins be able to export (empty = no limit)	admin	en	How many contacts should non-admins be able to export (empty = no limit)
 icon	addressbook	en	Icon
 if accounts are already in ldap	admin	en	if accounts are already in LDAP
 import	addressbook	en	Import

@@ -41,6 +41,11 @@ class uicontacts extends bocontacts
 	var $private_addressbook = false;
 	var $org_views;
 
+	/**
+	 * Addressbook configuration (stored as phpgwapi = general server config)
+	 *
+	 * @var array
+	 */
 	var $config;
 	/**
 	 * Name(s) of the tabs in the edit dialog
@@ -393,6 +398,7 @@ class uicontacts extends bocontacts
 			
 			if ($use_all)
 			{
+				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
 				$query['num_rows'] = -1;	// all
 				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 			}
@@ -423,6 +429,14 @@ class uicontacts extends bocontacts
 		{
 			$to_list = (int)substr($action,8);
 			$action = 'to_list';
+		}
+		// Security: stop non-admins to export more then the configured number of contacts
+		if (in_array($action,array('csv','vcard')) && (int)$this->config['contact_export_limit'] && 
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']) && count($checked) > $this->config['contact_export_limit'])
+		{
+			$action_msg = lang('exported');
+			$failed = count($checked);
+			return false;
 		}
 		switch($action)
 		{
@@ -766,7 +780,7 @@ class uicontacts extends bocontacts
 				$wildcard = $query['advanced_search']['meth_select'];
 				unset($query['advanced_search']['meth_select']);
 			}
-			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],false,
+			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 			
 			// do we need the custom fields

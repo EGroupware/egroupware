@@ -167,6 +167,7 @@ home phone	addressbook	de	Tel. privat
 home state	addressbook	de	Bundesland privat
 home street	addressbook	de	Straße privat
 home zip code	addressbook	de	PLZ privat
+how many contacts should non-admins be able to export (empty = no limit)	admin	de	Wieviele Kontakte sollen nicht-Adminstratoren exportieren können (leer = keine Begrenzung)
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
 import	addressbook	de	Import
@@ -289,7 +290,7 @@ translation	addressbook	de	Übersetzung
 type	addressbook	de	Typ
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
-url to link telephone numbers to (use %1 for the number)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (%1 für die Nummber verwenden)
+url to link telephone numbers to (use %1 for the number)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (%1 als Platzhalter für die Nummer verwenden)
 use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?
 use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden

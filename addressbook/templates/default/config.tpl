@@ -46,6 +46,10 @@
      </select>
     </td>
    </tr>
+   <tr class="row_off">
+    <td>&nbsp;<b>{lang_Security}</b>: {lang_How_many_contacts_should_non-admins_be_able_to_export_(empty_=_no_limit)}:</td>
+    <td><input name="newsettings[contact_export_limit]" value="{value_contact_export_limit}" size="5"></td>
+   </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Contact_repository}</b></td>
    </tr>
