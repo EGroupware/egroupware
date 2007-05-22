@@ -1596,7 +1596,9 @@ $readonlys['button[vcard]'] = true;
 	}
 	
 	/**
-	 * returns link to call the given phonenumer
+	 * returns link to call the given phonenumber
+	 * 
+	 * replaces '%1' with the phonenumber to call, '%u' with the user's account_lid and '%t' with his work-phone-number
 	 *
 	 * @param string $number phone number
 	 * @param string &$link returns the link
@@ -1606,7 +1608,14 @@ $readonlys['button[vcard]'] = true;
 	{
 		if (!$number || !$this->config['call_link']) return false;
 
-		$link = str_replace('%1',urlencode($number),$this->config['call_link']);
+		static $userphone;
+		if (is_null($userphone))
+		{
+			$user = $this->read('account_id:'.$GLOBALS['egw_info']['user']['account_id']);
+			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
+		}
+		$link = str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
+			$this->config['call_link']);
 	}
 
 	function js()

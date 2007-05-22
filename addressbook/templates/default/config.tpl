@@ -14,7 +14,7 @@
     <td colspan="2">&nbsp;<b>{lang_Telephony_integration}</b></td>
    </tr>
    <tr class="row_on">
-    <td>&nbsp;{lang_URL_to_link_telephone_numbers_to_(use_%1_for_the_number)}:</td>
+    <td>&nbsp;{lang_URL_to_link_telephone_numbers_to_(use_%1_=_number_to_call,_%u_=_account_name,_%t_=_account_phone)}:</td>
     <td><input name="newsettings[call_link]" value="{value_call_link}" size="40"></td>
    </tr>
    <tr class="row_off">

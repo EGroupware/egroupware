@@ -290,7 +290,7 @@ translation	addressbook	en	Translation
 type	addressbook	en	Type
 update a single entry by passing the fields.	addressbook	en	Update a single entry by passing the fields.
 upload or delete the photo	addressbook	en	Upload or delete the photo
-url to link telephone numbers to (use %1 for the number)	admin	en	URL to link telephone numbers to (use %1 for the number)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	en	URL to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)
 use an extra category tab?	addressbook	en	Use an extra category tab?
 use country list	addressbook	en	Use Country List
 use setup for a full account-migration	admin	en	use setup for a full account-migration

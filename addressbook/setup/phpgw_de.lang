@@ -14,7 +14,7 @@ actions	addressbook	de	Befehle
 add %1	addressbook	de	%1 hinzufügen
 add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organisation hinzufügen
 add a new contact	addressbook	de	Neuen Kontakt anlegen
-add a new list	addressbook	de	Neuen Verteiler hinzfügen
+add a new list	addressbook	de	Neuen Verteiler hinzufügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
@@ -290,7 +290,7 @@ translation	addressbook	de	Übersetzung
 type	addressbook	de	Typ
 update a single entry by passing the fields.	addressbook	de	Aktualisiert einen einzelnen Eintrag durch Übergabe seiner Felder.
 upload or delete the photo	addressbook	de	Foto hochladen oder löschen
-url to link telephone numbers to (use %1 for the number)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (%1 als Platzhalter für die Nummer verwenden)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	de	URL mit denen Telefonnummern verlinkt werden sollen (verwenden Sie %1 = anzurufende Nummer, %u = Benutzernamen, %t = Telefon des Benutzers)
 use an extra category tab?	addressbook	de	Separaten Reiter für Kategorien verwenden?
 use country list	addressbook	de	Länderliste benutzen
 use setup for a full account-migration	admin	de	für eine komplette Benutzer Migration setup verwenden
@@ -303,7 +303,7 @@ warning!! ldap is valid only if you are not using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhänig von dieser Einstellung benutzt.
-which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzfügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzufügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	de	Welche Felder sollen exportiert werden. Alle bedeutet jedes Feld das im Adressbuch gespeichert ist einschl. der benutzerdefinierten Felder. Die Geschäfts- oder Privatadresse enthält nur Name, Firma und die ausgewählte Adresse.
 whole query	addressbook	de	gesamte Abfrage
