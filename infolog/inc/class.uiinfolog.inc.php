@@ -179,7 +179,7 @@ class uiinfolog
 		$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
 		$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
 		$readonlys['view[0]'] = True;	// no parent
-		$readonlys["timesheet[$id]"] = !$this->prefs['show_times'] || !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
+		$readonlys["timesheet[$id]"] = !isset($GLOBALS['egw_info']['user']['apps']['timesheet']);
 
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 
@@ -321,9 +321,12 @@ class uiinfolog
 		}
 		else
 		{
-			unset($query['columnselection_pref']);	// it might be set
+			$query['columnselection_pref'] = 'infolog.index.rows';
 			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_id';
 		}
+		// set old show_times pref, that get_info calculates the cumulated time of the timesheets
+		$this->prefs['show_times'] = strpos($this->prefs['nextmatch-'.$query['columnselection_pref']],'info_used_time_info_planned_time') !== false;
+
 		$readonlys = $rows = array();
 		foreach($ids as $id => $info)
 		{

@@ -1255,17 +1255,24 @@
 					$url = str_replace ( 'http:', 'https:', $url);
 				}
 			}
+			$vars = array();
+			// add session params if not using cookies
+			if (!$GLOBALS['egw_info']['server']['usecookies'])
+			{
+				$vars['sessionid'] = $this->sessionid;
+				$vars['kp3'] = $this->kp3;
+				$vars['domain'] = $this->account_domain;
+			}
 			
 			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
 			list($url,$othervars) = explode('?',$url);
 			if ($extravars && is_array($extravars))
 			{
-				$vars = $extravars;
+				$vars += $extravars;
 				$extravars = $othervars;
 			}
 			else
 			{
-				$vars = array();
 				if ($othervars) $extravars .= '&'.$othervars;
 			} 
 
@@ -1284,14 +1291,6 @@
 						$vars[$var] = $val;
 					}
 				}
-			}
-
-			// add session params if not using cookies
-			if (!$GLOBALS['egw_info']['server']['usecookies'])
-			{
-				$vars['sessionid'] = $this->sessionid;
-				$vars['kp3'] = $this->kp3;
-				$vars['domain'] = $this->account_domain;
 			}
 
 			// if there are vars, we add them urlencoded to the url

@@ -40,10 +40,10 @@
 	{
 		$format .= 'H:i';
 	}
-	for($i = -23; $i<24; $i++)
+	for($i = -23.5; $i < 24.0; $i += 0.5)
 	{
-		$t = time() + $i * 60*60;
-		$tz_offset[$i] = $i . ' ' . lang('hours').': ' . date($format,$t);
+		$t = time() + round($i * 3600);
+		$tz_offset[(string)$i] = sprintf('%3.1lf',$i) . ' ' . lang('hours').': ' . date($format,$t);
 	}
 
 	$date_formats = array(

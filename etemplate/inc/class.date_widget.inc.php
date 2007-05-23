@@ -181,8 +181,8 @@
 				static $chars_shortcut;
 				if (is_null($chars_shortcut)) $chars_shortcut = (int)lang('3 number of chars for month-shortcut');	// < 0 to take the chars from the end
 				
-				$value['M'] = lang(substr($month[$value['m']],0,3));	// check if we have a translation of the short-cut
-				if ($substr($value['M'],-1) == '*')	// if not generate one by truncating the translation of the long name
+				$value['M'] = lang($m = substr($month[$value['m']],0,3));	// check if we have a translation of the short-cut
+				if ($value['M'] == $m || $substr($value['M'],-1) == '*')	// if not generate one by truncating the translation of the long name
 				{
 					$value['M'] = $chars_shortcut > 0 ? $substr(lang($month[$value['m']]),0,$chars_shortcut) : 
 						$substr(lang($month[$value['m']]),$chars_shortcut);

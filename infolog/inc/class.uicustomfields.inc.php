@@ -1,6 +1,6 @@
 <?php
 /**
- * InfoLog - Custome fields
+ * InfoLog - Custom fields
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>

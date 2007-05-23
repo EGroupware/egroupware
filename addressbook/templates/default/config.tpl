@@ -14,7 +14,7 @@
     <td colspan="2">&nbsp;<b>{lang_Telephony_integration}</b></td>
    </tr>
    <tr class="row_on">
-    <td>&nbsp;{lang_URL_to_link_telephone_numbers_to_(use_%1_for_the_number)}:</td>
+    <td>&nbsp;{lang_URL_to_link_telephone_numbers_to_(use_%1_=_number_to_call,_%u_=_account_name,_%t_=_account_phone)}:</td>
     <td><input name="newsettings[call_link]" value="{value_call_link}" size="40"></td>
    </tr>
    <tr class="row_off">
@@ -45,6 +45,10 @@
       <option value="True"{selected_cat_tab_True}>{lang_Yes}</option>
      </select>
     </td>
+   </tr>
+   <tr class="row_off">
+    <td>&nbsp;<b>{lang_Security}</b>: {lang_How_many_contacts_should_non-admins_be_able_to_export_(empty_=_no_limit)}:</td>
+    <td><input name="newsettings[contact_export_limit]" value="{value_contact_export_limit}" size="5"></td>
    </tr>
    <tr class="th">
     <td colspan="2">&nbsp;<b>{lang_Contact_repository}</b></td>

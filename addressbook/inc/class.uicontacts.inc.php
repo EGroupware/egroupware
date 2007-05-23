@@ -41,6 +41,11 @@ class uicontacts extends bocontacts
 	var $private_addressbook = false;
 	var $org_views;
 
+	/**
+	 * Addressbook configuration (stored as phpgwapi = general server config)
+	 *
+	 * @var array
+	 */
 	var $config;
 	/**
 	 * Name(s) of the tabs in the edit dialog
@@ -345,6 +350,7 @@ class uicontacts extends bocontacts
 		$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 		$query['num_rows'] = -1;	// all
 		$query['org_view'] = $org;
+		$query['searchletter'] = '';
 		$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 
 		if (count($checked) > 1)	// use a nicely formatted org-name as title in infolog
@@ -393,6 +399,7 @@ class uicontacts extends bocontacts
 			
 			if ($use_all)
 			{
+				@set_time_limit(0);			// switch off the execution time limit, as it's for big selections to small
 				$query['num_rows'] = -1;	// all
 				$this->get_rows($query,$checked,$readonlys,true);	// true = only return the id's
 			}
@@ -423,6 +430,14 @@ class uicontacts extends bocontacts
 		{
 			$to_list = (int)substr($action,8);
 			$action = 'to_list';
+		}
+		// Security: stop non-admins to export more then the configured number of contacts
+		if (in_array($action,array('csv','vcard')) && (int)$this->config['contact_export_limit'] && 
+			!isset($GLOBALS['egw_info']['user']['apps']['admin']) && count($checked) > $this->config['contact_export_limit'])
+		{
+			$action_msg = lang('exported');
+			$failed = count($checked);
+			return false;
 		}
 		switch($action)
 		{
@@ -766,7 +781,7 @@ class uicontacts extends bocontacts
 				$wildcard = $query['advanced_search']['meth_select'];
 				unset($query['advanced_search']['meth_select']);
 			}
-			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],false,
+			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
 			
 			// do we need the custom fields
@@ -1582,7 +1597,9 @@ $readonlys['button[vcard]'] = true;
 	}
 	
 	/**
-	 * returns link to call the given phonenumer
+	 * returns link to call the given phonenumber
+	 * 
+	 * replaces '%1' with the phonenumber to call, '%u' with the user's account_lid and '%t' with his work-phone-number
 	 *
 	 * @param string $number phone number
 	 * @param string &$link returns the link
@@ -1592,7 +1609,14 @@ $readonlys['button[vcard]'] = true;
 	{
 		if (!$number || !$this->config['call_link']) return false;
 
-		$link = str_replace('%1',urlencode($number),$this->config['call_link']);
+		static $userphone;
+		if (is_null($userphone))
+		{
+			$user = $this->read('account_id:'.$GLOBALS['egw_info']['user']['account_id']);
+			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
+		}
+		$link = str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
+			$this->config['call_link']);
 	}
 
 	function js()
