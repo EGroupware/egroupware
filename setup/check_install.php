@@ -372,7 +372,7 @@
 			if (!isset($args['warning']))
 			{
 				$args['warning'] = lang('The %1 extension is needed from: %2.',$name,
-					is_array($args['from'] ? implode(', ',$args['from']) : $args['from']));
+					is_array($args['from']) ? implode(', ',$args['from']) : $args['from']);
 			}
 			echo "<div class='setup_info'>".$args['warning'].'</div>';
 		}
