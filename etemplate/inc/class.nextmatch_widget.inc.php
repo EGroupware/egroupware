@@ -178,9 +178,6 @@
 					$extension_data['old_value'] = $value = $nm_global['col_filter'][$this->last_part($name)];
 					return True;
 			}
-			if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
-			if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
-
 			// presetting the selectboxes with their default values, to NOT loop, because post-process thinks they changed
 			if (!isset($value['cat_id'])) $value['cat_id'] = '';
 			if (!isset($value['search'])) $value['search'] = '';
@@ -192,6 +189,12 @@
 					if (!is_string($value[$f])) $value[$f] = (string) $value[$f];
 				}
 			}
+			// save values in persistent extension_data to be able use it in post_process
+			$extension_data += $value;
+
+			if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
+			if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
+
 			list($app,$class,$method) = explode('.',$value['get_rows']);
 			if ($app && $class)
 			{
@@ -400,9 +403,6 @@
 			}
 			$cell['type'] = 'template';
 			$cell['label'] = $cell['help'] = '';
-
-			// save values in persistent extension_data to be able use it in post_process
-			$extension_data += $value;
 
 			foreach(array('sort','order','col_filter') as $n)	// save them for the sortheader
 			{
