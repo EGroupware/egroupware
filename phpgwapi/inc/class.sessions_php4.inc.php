@@ -68,13 +68,12 @@
 		/**
 		* Create a new session id, called by session::create()
 		* 
-		* Reimplemented to tell the php-sessions to use the id
+		* Reimplemented to use php session-id
 		*
 		* @return string a new session id
 		*/
 		function new_session_id()
 		{
-			session_id(parent::new_session_id()); 
 			session_start();
 
 			return session_id();
