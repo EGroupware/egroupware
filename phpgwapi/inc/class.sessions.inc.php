@@ -13,9 +13,7 @@
 	* @license LGPL
 	* @version $Id$
 	*/
-error_log('>>>>>>>>>> eGW-trunk '.$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']);
-error_log('_COOKIE='.print_r($_COOKIE,true));
-error_log('_POST='.print_r($_POST,true));
+
 	/**
 	* eGW's Session Management
 	*
@@ -168,7 +166,7 @@ error_log('_POST='.print_r($_POST,true));
 		 *
 		 * @var boolean
 		 */
-		var $errorlog_debug = true;
+		var $errorlog_debug = false;
 
 		/**
 		* Constructor just loads up some defaults from cookies
@@ -543,7 +541,9 @@ error_log('_POST='.print_r($_POST,true));
 				$this->egw_set_cookiedomain();
 			}
 			if (is_null($cookiepath)) $cookiepath = $this->cookie_path;
-error_log("setcookie($cookiename,$cookievalue,$cookietime,$cookiepath,$this->cookie_domain)");
+
+			if ($this->errorlog_debug) error_log("setcookie($cookiename,$cookievalue,$cookietime,$cookiepath,$this->cookie_domain)");
+
 			setcookie($cookiename,$cookievalue,$cookietime,$cookiepath,$this->cookie_domain);
 		}
 
