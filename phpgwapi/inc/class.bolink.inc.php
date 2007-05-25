@@ -257,16 +257,26 @@ class bolink extends solink
 					$only_app = substr(1,$only_app);
 				}
 				end($id);
-				while ($link = current($id))
-				{
-					if (!is_array($link) ||		// check for unlink-marker
-					    $only_app && $not_only == ($link['app'] == $only_app))
+				foreach (array_reverse($id) as $link) {
+					if (is_array($link)  // check for unlink-marker
+					&&  !($only_app && $not_only == ($link['app'] == $only_app)))
 					{
-						continue;
+						$ids[$link['link_id']] = $only_app ? $link['id'] : $link;
 					}
-					$ids[$link['link_id']] = $only_app ? $link['id'] : $link;
-					prev($id);
 				}
+				# the old version of the foreach from above
+				# left here for reference. can be deleted later
+				#
+				#while ($link = current($id))
+				#{
+				#	if (!is_array($link) ||		// check for unlink-marker
+				#	    $only_app && $not_only == ($link['app'] == $only_app))
+				#	{
+				#		continue;
+				#	}
+				#	$ids[$link['link_id']] = $only_app ? $link['id'] : $link;
+				#	prev($id);
+				#}
 			}
 			return $ids;
 		}

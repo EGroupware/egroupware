@@ -135,6 +135,11 @@ class uitimesheet extends botimesheet
 						$etpl->set_validation_error('ts_quantity',lang('Starttime has to be before endtime !!!'));
 					}
 					if (!$this->data['ts_project']) $this->data['ts_project'] = $this->data['ts_project_blur'];
+					// set ts_title to ts_project if short viewtype (title is not editable) 
+					if($this->ts_viewtype == 'short') 
+					{
+						$this->data['ts_title'] = $this->data['ts_project'];							
+					}
 					if (!$this->data['ts_title']) $this->data['ts_title'] = $this->data['ts_title_blur'];
 					if (!$this->data['ts_title'])
 					{
@@ -263,18 +268,25 @@ class uitimesheet extends botimesheet
 		}
 		// make all linked projects availible for the pm-pricelist widget, to be able to choose prices from all
 		$content['all_pm_ids'] = array_values($links);
-
-		$preserv['old_pm_id'] = array_shift($links);
-		if (!isset($this->data['pm_id']) && $preserv['old_pm_id']) $content['pm_id'] = $preserv['old_pm_id'];
-
+        
+		// set old id, pm selector (for later removal)
+		if (count($links) > 0) {  
+			$preserv['old_pm_id'] = array_shift($links);
+		}
+		if ($preserv['old_pm_id'] == '') {
+			$preserv['old_pm_id'] = $content['pm_id']; 
+		}
+		if (!isset($this->data['pm_id']) && $preserv['old_pm_id']) {
+			$content['pm_id'] = $preserv['old_pm_id'];
+		}
 		if ($content['pm_id'])
 		{
 			$preserv['ts_project_blur'] = $content['ts_project_blur'] = $this->link->title('projectmanager',$content['pm_id']);
 		}
-      	if ($this->pm_integration == 'full')
-        {
-            $preserv['ts_project'] = $preserv['ts_project_blur'];
-        }
+	      	if ($this->pm_integration == 'full')
+	        {
+	            $preserv['ts_project'] = $preserv['ts_project_blur'];
+	        }
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
 
 		$readonlys = array(

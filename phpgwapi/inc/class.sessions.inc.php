@@ -160,6 +160,13 @@
 		* @var array
 		*/
 		var $egw_domains;
+		
+		/**
+		 * Write debug messages about session verification to the error_log
+		 *
+		 * @var boolean
+		 */
+		var $errorlog_debug = false;
 
 		/**
 		* Constructor just loads up some defaults from cookies
@@ -310,6 +317,7 @@
 			*/
 			if ($session['session_dla'] <= (time() - $GLOBALS['egw_info']['server']['sessions_timeout']))
 			{
+				if ($this->errorlog_debug) error_log("*** session::verify('$sessionid') session timed out");
 				$this->destroy($sessionid,$kp3);
 				return False;
 			}
@@ -338,6 +346,7 @@
 			$this->account_id = $GLOBALS['egw']->accounts->name2id($this->account_lid,'account_lid','u');
 			if (!$this->account_id)
 			{
+				if ($this->errorlog_debug) error_log("*** session::verify($sessionid) !accounts::name2id('$this->account_lid')");
 				return False;
 			}
 
@@ -355,6 +364,7 @@
 
 			if ($this->user['expires'] != -1 && $this->user['expires'] < time())
 			{
+				if ($this->errorlog_debug) error_log("*** session::verify($sessionid) accounts is expired");
 				if(is_object($GLOBALS['egw']->log))
 				{
 					$GLOBALS['egw']->log->message(array(
@@ -377,6 +387,7 @@
 			}
 			if ($this->account_domain != $GLOBALS['egw_info']['user']['domain'])
 			{
+				if ($this->errorlog_debug) error_log("*** session::verify($sessionid) wrong domain");
 				if(is_object($GLOBALS['egw']->log))
 				{
 					$GLOBALS['egw']->log->message(array(
@@ -393,6 +404,7 @@
 
 			if (@$GLOBALS['egw_info']['server']['sessions_checkip'])
 			{
+				if ($this->errorlog_debug) error_log("*** session::verify($sessionid) wrong IP");
 				if((PHP_OS != 'Windows') && (PHP_OS != 'WINNT') &&
 					(!$GLOBALS['egw_info']['user']['session_ip'] || $GLOBALS['egw_info']['user']['session_ip'] != $this->getuser_ip())
 				)
@@ -422,6 +434,7 @@
 			}
 			if (! $this->account_lid)
 			{
+				if ($this->errorlog_debug) error_log("*** session::verify($sessionid) !account_lid");
 				if(is_object($GLOBALS['egw']->log))
 				{
 					// This needs some better wording
@@ -439,17 +452,19 @@
 			$_current_app=$GLOBALS['egw_info']['flags']['currentapp'];
 			if($this->session_flags=='A' && !$GLOBALS['egw_info']['user']['apps'][$_current_app])
 			{
-			   $this->destroy($sessionid,$kp3);
-
-			   /* Overwrite Cookie with empty user. For 2 weeks */
-			   $this->egw_setcookie('sessionid','');
-			   $this->egw_setcookie('kp3','');
-			   $this->egw_setcookie('domain','');
-			   $this->egw_setcookie('last_domain','');
-			   $this->egw_setcookie('last_loginid', ''); 
-
-			   return False;
+				if ($this->errorlog_debug) error_log("*** session::verify($sessionid) anon user entering not allowed app");
+				$this->destroy($sessionid,$kp3);
+				
+				/* Overwrite Cookie with empty user. For 2 weeks */
+				$this->egw_setcookie('sessionid','');
+				$this->egw_setcookie('kp3','');
+				$this->egw_setcookie('domain','');
+				$this->egw_setcookie('last_domain','');
+				$this->egw_setcookie('last_loginid', ''); 
+				
+				return False;
 			}
+			if ($this->errorlog_debug) error_log("--> session::verify($sessionid) SUCCESS");
 
 			return True;
 		}
@@ -497,16 +512,14 @@
 			}
 			print_debug('COOKIE_DOMAIN',$this->cookie_domain,'api');
 
-			$url_parts = parse_url($GLOBALS['egw_info']['server']['webserver_url']);
-			if (!($this->cookie_path = $url_parts['path'])) $this->cookie_path = '/';
-			// if the cookiepath should be / and it's not, delete evtl. existing cookies and set '/'
-			if (!$GLOBALS['egw_info']['server']['cookiepath'] && $this->cookie_path != '/')
+			if (!$GLOBALS['egw_info']['server']['cookiepath'])
 			{
-				foreach(array('sessionid','kp3','domain','last_domain','last_loginid') as $name)
-				{
-					setcookie($name,false,0,$this->cookie_path,$this->cookie_domain);
-				}
 				$this->cookie_path = '/';
+			}
+			else
+			{
+				$url_parts = parse_url($GLOBALS['egw_info']['server']['webserver_url']);
+				if (!($this->cookie_path = $url_parts['path']) ) $this->cookie_path = '/';
 			}
 			//echo "<p>cookie_path='$this->cookie_path', cookie_domain='$this->cookie_domain'</p>\n";
 
@@ -528,6 +541,8 @@
 				$this->egw_set_cookiedomain();
 			}
 			if (is_null($cookiepath)) $cookiepath = $this->cookie_path;
+
+			if ($this->errorlog_debug) error_log("setcookie($cookiename,$cookievalue,$cookietime,$cookiepath,$this->cookie_domain)");
 
 			setcookie($cookiename,$cookievalue,$cookietime,$cookiepath,$this->cookie_domain);
 		}
