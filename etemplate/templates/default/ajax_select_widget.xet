@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+<overlay>
+	<template id="etemplate.ajax_select_widget" template="" lang="" group="0" version="">
+		<grid>
+			<columns>
+				<column/>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<textbox id="search"/>
+					<textbox id="value" class="select_value"/>
+				</row>
+			</rows>
+		</grid>
+		<styles>
+			.select_value {
+  display: none;
+}
+
+.resultBox {
+  background-color: white;
+}
+
+.resultBox div:hover {
+  background-color: #D3DCE3;
+}
+		</styles>
+	</template>
+</overlay>

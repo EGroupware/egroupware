@@ -4,15 +4,15 @@
 *	Javascript file for AJAX select widget
 *	
 *	@author Nathan Gray <nathangray@sourceforge.net>
-*	
+*
 *	@param widget_id the id of the ajax_select_widget
 *	@param onchange function to call if the value of the select widget is changed
 *	@param options the query object containing callback and settings
-*
-*	@license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
-*	@package etemplate
-*	@subpackage extensions
-*	@link http://www.egroupware.org
+*	
+*   @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+*   @package etemplate
+*   @subpackage extensions
+*   @link http://www.egroupware.org
 *
 *   @version $Id$
 */
@@ -44,8 +44,7 @@ function ajax_select_widget_setup(widget_id, onchange, options) {
 
 	var widget = document.getElementById(widget_id + '[search]');
 	if(widget) {
-		widget.form.disableautocomplete = true;
-		widget.form.autocomplete = 'off';
+		widget.setAttribute('autocomplete', 'off');
 
 		if(widget.addEventListener) {
 			widget.addEventListener('keyup', change, true);
@@ -118,7 +117,7 @@ function change(e, value) {
 			selects[i].style.visibility = 'hidden';
 		}
 	}
-	xajax_doXMLHTTP("etemplate.ajax_select_widget.change", id, value, set_id, query);
+	xajax_doXMLHTTP("etemplate.ajax_select_widget.ajax_search.etemplate", id, value, set_id, query);
 }
 
 
