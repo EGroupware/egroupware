@@ -416,7 +416,7 @@ class socontacts_sql extends so_sql
 	 * @param string $name list-name
 	 * @param int $owner user- or group-id
 	 * @param array $contacts=array() contacts to add
-	 * @return list_id or false on error
+	 * @return int/boolean integer list_id, true if the list already exists or false on error
 	 */
 	function add_list($name,$owner,$contacts=array())
 	{
@@ -427,7 +427,7 @@ class socontacts_sql extends so_sql
 			'list_owner' => $owner,
 		),__LINE__,__FILE__) && $this->db->next_record())
 		{
-			return $this->db->f('list_id');	// return existing list-id
+			return true;	// return existing list-id
 		}
 		if (!$this->db->insert($this->lists_table,array(
 			'list_name' => $name,

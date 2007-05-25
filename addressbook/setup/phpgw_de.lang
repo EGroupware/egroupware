@@ -16,6 +16,7 @@ add a contact to this organisation	addressbook	de	Einen Kontakt zu dieser Organi
 add a new contact	addressbook	de	Neuen Kontakt anlegen
 add a new list	addressbook	de	Neuen Verteiler hinzufügen
 add a single entry by passing the fields.	addressbook	de	Hinzufügen eines einzelnen Eintrags durch Übergeben der Felder.
+add business email of whole distribution list?	addressbook	de	E-Mail geschäftl. der kompletten Liste hinzufügen?
 add custom field	addressbook	de	Benutzerdefiniertes Feld hinzufügen
 add to distribution list:	addressbook	de	Hinzufügen zu Verteiler:
 added by synchronisation	addressbook	de	Hinzugefügt über die Synchronisation
