@@ -145,7 +145,10 @@ class socontacts_sql extends so_sql
 		else	// by adr_one_location or org_unit
 		{
 			// org total for more then one $by
-			$append = "GROUP BY org_name HAVING {$by}_count > 1 ORDER BY org_name $sort";
+			$by_expr = $by == 'org_unit_count' ? "COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END)" : 
+				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END)";
+//			$append = "GROUP BY org_name HAVING {$by}_count > 1 ORDER BY org_name $sort";
+			$append = "GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort";
 			parent::search($param['search'],array('org_name'),$append,array(
 				"NULL AS $by",
 				'COUNT(org_name) AS org_count',
@@ -292,7 +295,7 @@ class socontacts_sql extends so_sql
 				case 'boolean':
 					// only return the egw_addressbook columns, to not generate dublicates by the left join
 					// and to not return the NULL for contact_{id|owner} of not found custom fields!
-					$only_keys = 'DISTINCT '.$this->table_name.'.'.($only_keys ? 'contact_id' : '*');
+					$only_keys = 'DISTINCT '.$this->table_name.'.'.($only_keys ? 'contact_id AS contact_id' : '*');
 					break;
 				case 'string':
 					$only_keys = explode(',',$only_keys);
