@@ -469,9 +469,10 @@ class ADODB_mysql extends ADOConnection {
 	// parameters use PostgreSQL convention, not MySQL
 	function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs=0)
 	{
-		$offsetStr =($offset>=0) ? "$offset," : '';
 		// jason judge, see http://phplens.com/lens/lensforum/msgs.php?id=9220
 		if ($nrows < 0) $nrows = '18446744073709551615'; 
+
+		$offsetStr = (($offset>=0) ? (int)$offset.',' : '').(int)$nrows;
 
 		//if the sql ends by a 'for update' it should be AFTER the LIMIT
 		$FORUPDATE = '';
@@ -485,9 +486,9 @@ class ADODB_mysql extends ADOConnection {
 		}
 
 		if ($secs)
-			$rs =& $this->CacheExecute($secs,$sql." LIMIT $offsetStr$nrows $FORUPDATE",$inputarr);
+			$rs =& $this->CacheExecute($secs,$sql.' LIMIT '.$offsetStr.' '.$FORUPDATE,$inputarr);
 		else
-			$rs =& $this->Execute($sql." LIMIT $offsetStr$nrows $FORUPDATE",$inputarr);
+			$rs =& $this->Execute($sql.' LIMIT '.$offsetStr.' '.$FORUPDATE,$inputarr);
 		return $rs;
 	}
 	
