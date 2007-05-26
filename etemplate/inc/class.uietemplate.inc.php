@@ -311,7 +311,7 @@
 					$GLOBALS['egw']->xslttpl->set_var('phpgw',array('body_data' => $html));
 				}
 			}
-			$this->save_appsession($this->as_array(2) + array(
+			$this->save_appsession($sess = $this->as_array(2) + array(
 				'readonlys' => $readonlys,
 				'content' => $content,
 				'changes' => $changes,
@@ -322,6 +322,7 @@
 				'java_script' => $GLOBALS['egw_info']['etemplate']['java_script'],
 				'java_script_from_flags' => $GLOBALS['egw_info']['flags']['java_script'],
 				'java_script_body_tags' => $GLOBALS['egw']->js->body,
+				'include_xajax' => $GLOBALS['egw_info']['flags']['include_xajax'],
 				'dom_enabled' => $GLOBALS['egw_info']['etemplate']['dom_enabled'],
 				'hooked' => $hooked != '' ? $hooked : $GLOBALS['egw_info']['etemplate']['hook_content'],
 				'hook_app' => $hooked ? $GLOBALS['egw_info']['flags']['currentapp'] : $GLOBALS['egw_info']['etemplate']['hook_app'],
@@ -332,7 +333,27 @@
 				'method' => $method,
 				'name_vars' => $this->name_vars,
 			),$id);
-
+/*
+echo "<p><b>total size session data = ".($total=strlen(serialize($sess)))."</b></p>\n";
+echo "<p>shares bigger then 1.0% percent of it:</p>\n";
+foreach($sess as $key => $val)
+{
+	$len = strlen(is_array($val) ? serialize($val) : $val);
+	$len .= ' ('.sprintf('%2.1lf',($percent = 100.0 * $len / $total)).'%)';
+	if ($percent < 1.0) continue;
+	echo "<p><b>$key</b>: strlen(\$val)=$len</p>\n";
+	if (is_array($val) && $len > 2000)
+	{
+		foreach($val as $k => $v)
+		{
+			$l = strlen(is_array($v) ? serialize($v) : $v);
+			$l .= ' ('.sprintf('%2.1lf',($p = 100.0 * $l / $total)).'%)';
+			if ($p < 1.0) continue;
+			echo "<p>&nbsp;- {$key}[$k]: strlen(\$v)=$l</p>\n";
+		}
+	}
+}
+*/
 			if ($this->sitemgr || (int) $output_mode == 1 || (int) $output_mode == -1)	// return html
 			{
 				return $html;
@@ -441,6 +462,8 @@
 						$GLOBALS['egw']->xslttpl->set_var('phpgw',array('body_data' => $session_data['hooked']));
 					}
 				}
+				if($session_data['include_xajax']) $GLOBALS['egw_info']['flags']['include_xajax'] = true;
+
 				if (!empty($session_data['app_header']))
 				{
 					$GLOBALS['egw_info']['flags']['app_header'] = $session_data['app_header'];

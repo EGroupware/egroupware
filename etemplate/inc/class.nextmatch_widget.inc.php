@@ -209,7 +209,7 @@
 			}
 			if (!isset($value['cat_app'])) $value['cat_app'] = $app;	// if no cat_app set, use the app from the get_rows func
 
-			$max = $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			$max = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			$row_options = array();
 			foreach(array(5,12,25,50,100,200,500,999) as $n)
 			{
@@ -226,7 +226,7 @@
 			if (!isset($value['num_rows'])) $value['num_rows'] = $max;
 			if ($value['num_rows'] != $max)
 			{
-				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = $value['num_rows'];
+				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = (int)$value['num_rows'];
 			}				
 			if (!$value['no_columnselection'])
 			{
@@ -590,7 +590,8 @@
 			{
 				$loop = true;	// num_rows changed
 			}
-			$max = $value['num_rows'] ? $value['num_rows'] : $GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			$value['num_rows'] = (int) $value['num_rows'];
+			$max = $value['num_rows'] ? $value['num_rows'] : (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
 			
 			
 			if(strpos($value['search'],'xjxquery')) {

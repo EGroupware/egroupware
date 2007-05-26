@@ -395,7 +395,7 @@
 			$rows = array(
 				lang('description'),
 				lang('smtp server name'),
-				lang('imap/pop3 server name'),
+				lang('imap server name'),
 				lang('application'),
 				lang('group'),
 				lang('delete'),
@@ -556,7 +556,7 @@
 			$this->t->set_var('lang_LDAP_server_base_dn',lang('LDAP server accounts DN'));
 			$this->t->set_var('lang_use_LDAP_defaults',lang('use LDAP defaults'));
 			$this->t->set_var('lang_LDAP_settings',lang('LDAP settings'));
-			$this->t->set_var('lang_select_type_of_imap/pop3_server',lang('select type of IMAP/POP3 server'));
+			$this->t->set_var('lang_select_type_of_imap/pop3_server',lang('select type of IMAP server'));
 			$this->t->set_var('lang_pop3_server_hostname_or_IP_address',lang('POP3 server hostname or ip address'));
 			$this->t->set_var('lang_pop3_server_port',lang('POP3 server port'));
 			$this->t->set_var('lang_imap_server_hostname_or_IP_address',lang('IMAP server hostname or ip address'));

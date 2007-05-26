@@ -105,7 +105,7 @@
 			);
 
 			$this->IMAPServerType = array(
-				'1' 	=> array(
+/*				'1' 	=> array(
 					'fieldNames'	=> array(
 						'imapServer',
 						'imapPort',
@@ -118,7 +118,7 @@
 					'description'	=> 'standard POP3 server',
 					'protocol'	=> 'pop3',
 					'classname'	=> 'defaultpop'
-				),
+				),*/
 				'2' 	=> array(
 					'fieldNames'	=> array(
 						'imapServer',
@@ -578,7 +578,7 @@
 						'imapPort' => 993,
 						'imapTLSEncryption' => 'yes',
 					),
-					'pop3' => array(
+/*					'pop3' => array(
 						'imapType' => 1,
 						'imapPort' => 110,
 						'imapTLSEncryption' => 0,
@@ -587,7 +587,7 @@
 						'imapType' => 1,
 						'imapPort' => 995,
 						'imapTLSEncryption' => '1',
-					),
+					),*/
 				),
 				'mail_login_type' => 'imapLoginType',
 				'mail_suffix' => 'defaultDomain',

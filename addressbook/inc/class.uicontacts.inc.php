@@ -80,8 +80,10 @@ class uicontacts extends bocontacts
 
 		// our javascript
 		// to be moved in a seperate file if rewrite is over
-		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
-		
+		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'add_new_list') === false)
+		{
+			$GLOBALS['egw_info']['flags']['java_script'].= $this->js();
+		}
 		$this->config =& $GLOBALS['egw_info']['server'];
 	}
 	
@@ -140,7 +142,12 @@ class uicontacts extends bocontacts
 		}
 		elseif($_GET['add_list'])
 		{
-			if (($list = $this->add_list($_GET['add_list'],$_GET['owner']?$_GET['owner']:$this->user)))
+			$list = $this->add_list($_GET['add_list'],$_GET['owner']?$_GET['owner']:$this->user);
+			if ($list === true)
+			{
+				$msg = lang('List already exists!');
+			}
+			elseif ($list)
 			{
 				$msg = lang('List created');
 			}
@@ -152,6 +159,7 @@ class uicontacts extends bocontacts
 		$preserv = array(
 			'do_email' => $do_email,
 		);
+		$to = $content['nm']['to'];
 		$content = array(
 			'msg' => $msg ? $msg : $_GET['msg'],
 		);
@@ -180,7 +188,14 @@ class uicontacts extends bocontacts
 				'do_email'       => $do_email,
 				'default_cols'   => '!cat_id,contact_created_contact_modified',
 				'filter2_onchange' => "if(this.value=='add') { add_new_list(document.getElementById(form::name('filter')).value); this.value='';} else this.form.submit();",
+				'manual' => $do_email ? ' ' : false,	// space for the manual icon
 			);
+			if ($do_email)
+			{
+				$content['nm']['filter2_onchange'] = str_replace('this.form.submit();',
+					"{ if (this.value && confirm('Add business email of whole distribution list?')) add_whole_list(this.value); else this.form.submit(); }",
+					$content['nm']['filter2_onchange']);
+			}
 			// use the state of the last session stored in the user prefs
 			if (($state = @unserialize($this->prefs[$do_email ? 'email_state' : 'index_state'])))
 			{
@@ -199,6 +214,10 @@ class uicontacts extends bocontacts
 				$content['nm']['to'] = 'to';
 				$content['nm']['search'] = '@';
 			}
+			else
+			{
+				$content['nm']['to'] = $to;
+			}
 			$content['nm']['header_left'] = 'addressbook.email.left';
 		}
 		// Organisation stuff is not (yet) availible with ldap
@@ -215,6 +234,7 @@ class uicontacts extends bocontacts
 		$sel_options['action'] = array();
 		if ($do_email)
 		{
+			$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 			$sel_options['action'] = array(
 				'email' => lang('Add %1',lang('business email')),
 				'email_home' => lang('Add %1',lang('home email')),
@@ -290,53 +310,43 @@ class uicontacts extends bocontacts
 	 */
 	function emailpopup($content=null,$msg=null)
 	{	
-		switch($_POST['exec']['nm']['to']) {
-			case 'to':
-			case 'bcc':
-			case 'cc':
-				$to = $_POST['exec']['nm']['to'];
-				break;
-			default:
-				$to = 'to';
-		}
-		
-		if ($_GET['compat'])	// 1.2 felamimail or old email
+		if (strpos($GLOBALS['egw_info']['flags']['java_script'],'addEmail') === false)
 		{
-			$handler = "if (opener.document.doit[to].value != '')
+			if ($_GET['compat'])	// 1.2 felamimail or old email
+			{
+				$handler = "if (opener.document.doit[to].value != '')
 		{
 			opener.document.doit[to].value += ',';
 		}
 		opener.document.doit[to].value += email";
-		}
-		else	// 1.3+ felamimail
-		{
-			$handler = 'opener.addEmail(to,email)';
-		}
-			
-		$GLOBALS['egw_info']['flags']['java_script'] .= "
+			}
+			else	// 1.3+ felamimail
+			{
+				$handler = 'opener.addEmail(to,email)';
+			}
+			$GLOBALS['egw_info']['flags']['java_script'].= "
 <script>
 	window.focus();
 		
 	function addEmail(email)
 	{
-		var to = '$to';
-		// this does not work, as always to is selected after page reload
-		//if (document.getElementById('exec[nm][to][cc]').checked == true) 
-		//{
-		//	to = 'cc';
-		//}
-		//else
-		//{
-		//	if (document.getElementById('exec[nm][to][bcc]').checked == true)
-		//	{
-		//		to = 'bcc';
-		//	}
-		//}
-		//alert(to+': '+email);
+		var to = 'to';
+		if (document.getElementById('exec[nm][to][cc]').checked == true) 
+		{
+			to = 'cc';
+		}
+		else
+		{
+			if (document.getElementById('exec[nm][to][bcc]').checked == true)
+			{
+				to = 'bcc';
+			}
+		}
 		$handler;
-	}	
+	}
 </script>
 ";
+		}
 		return $this->index($content,$msg,true);
 	}
 	
@@ -375,6 +385,34 @@ class uicontacts extends bocontacts
 		));
 	}
 	
+	function ajax_add_whole_list($list)
+	{
+		$query = $GLOBALS['egw']->session->appsession('email','addressbook');
+		$query['filter2'] = (int)$list;
+		$action_msg = lang('%1 added',lang('Business email'));
+		$this->action('email',array(),true,$success,$failed,$action_msg,$query,$msg);
+
+		$response =& new xajaxResponse();
+
+		if ($success) $response->addScript($GLOBALS['egw']->js->body['onLoad']);
+
+		// close window only if no errors AND something added
+		if ($failed || !$success)
+		{
+			if (!$msg) $msg = $failed ? lang('%1 contact(s) %2, %3 failed because of insufficent rights !!!',$success,$action_msg,$failed) :
+				lang('%1 contact(s) %2',$success,$action_msg);
+
+			$response->addScript("alert('".addslashes($msg)."')");
+			// reset the filter
+			$response->addScript("document.getElementById('exec[nm][filter2]').value='';");
+		}
+		else
+		{
+			$response->addScript('window.close();');
+		}
+		return $response->getXML();
+	}
+	
 	/**
 	 * apply an action to multiple contacts
 	 *
@@ -384,7 +422,7 @@ class uicontacts extends bocontacts
 	 * @param int &$success number of succeded actions
 	 * @param int &$failed number of failed actions (not enought permissions)
 	 * @param string &$action_msg translated verb for the actions, to be used in a message like %1 contacts 'deleted'
-	 * @param string $session_name 'index' or 'email' depending if we are in the main list or the popup
+	 * @param string/array $session_name 'index' or 'email', or array with session-data depending if we are in the main list or the popup
 	 * @return boolean true if all actions succeded, false otherwise
 	 */
 	function action($action,$checked,$use_all,&$success,&$failed,&$action_msg,$session_name,&$msg)
@@ -395,7 +433,7 @@ class uicontacts extends bocontacts
 		if ($use_all || in_array($action,array('remove_from_list','delete_list')))
 		{
 			// get the whole selection
-			$query = $GLOBALS['egw']->session->appsession($session_name,'addressbook');
+			$query = is_array($session_name) ? $session_name : $GLOBALS['egw']->session->appsession($session_name,'addressbook');
 			
 			if ($use_all)
 			{
@@ -1519,7 +1557,6 @@ $readonlys['button[vcard]'] = true;
 			
 		}
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-		$GLOBALS['egw_info']['flags']['java_script'] .= $this->js();
 		$GLOBALS['egw_info']['flags']['java_script'] .= "<script>window.focus()</script>";
 		$GLOBALS['egw_info']['etemplate']['advanced_search'] = true;
 		
@@ -1681,6 +1718,11 @@ $readonlys['button[vcard]'] = true;
 			xajax_doXMLHTTP("addressbook.uicontacts.ajax_setFileasOptions",prefix,given,middle,family,suffix,org);
 		}
 		
+		function add_whole_list(list)
+		{
+			xajax_doXMLHTTP("addressbook.uicontacts.ajax_add_whole_list",list);
+		}
+		
 		function setOptions(options_str)
 		{
 			var options = options_str.split("\\\\b");
@@ -1711,7 +1753,7 @@ $readonlys['button[vcard]'] = true;
 			if (name)
 			{
 				document.location.href = "'.$GLOBALS['egw']->link('/index.php',array(
-					'menuaction'=>'addressbook.uicontacts.index',
+					'menuaction'=>$_GET['menuaction'],//'addressbook.uicontacts.index',
 					'add_list'=>'',
 				)).'"+encodeURIComponent(name)+"&owner="+owner;
 			}

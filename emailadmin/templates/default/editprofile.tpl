@@ -6,7 +6,7 @@
 	<tr>
 		<th width="33%" id="tab1" class="activetab" onclick="javascript:tab.display(1);"><a href="#" tabindex="1" accesskey="1" onfocus="tab.display(1);" onclick="tab.display(1); return(false);">Global</a></th>
 		<th width="33%" id="tab2" class="activetab" onclick="javascript:tab.display(2);"><a href="#" tabindex="2" accesskey="2" onfocus="tab.display(2);" onclick="tab.display(2); return(false);">SMTP</a></th>
-		<th width="33%" id="tab3" class="activetab" onclick="javascript:tab.display(3);"><a href="#" tabindex="3" accesskey="3" onfocus="tab.display(3);" onclick="tab.display(3); return(false);">POP3/IMAP</a></th>
+		<th width="33%" id="tab3" class="activetab" onclick="javascript:tab.display(3);"><a href="#" tabindex="3" accesskey="3" onfocus="tab.display(3);" onclick="tab.display(3); return(false);">IMAP</a></th>
 <!--		<th id="tab4" class="activetab" onclick="javascript:tab.display(4);"><a href="#" tabindex="4" accesskey="4" onfocus="tab.display(4);" onclick="tab.display(4); return(false);">extern</a></th> -->
 	</tr>
 </table>

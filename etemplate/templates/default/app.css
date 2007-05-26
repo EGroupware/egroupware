@@ -89,3 +89,13 @@
 .tab_body { 
 	border: black solid 2px; 
 }
+
+.nextmatch_header { 
+	border: 1px solid black; 
+}
+.nextmatch_header select {
+	width: 140px;
+}
+.nm_num_rows select {
+	width: 40px;
+}

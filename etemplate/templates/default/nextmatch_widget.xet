@@ -2,7 +2,7 @@
 <!-- $Id$ -->
 <overlay>
 	<template id="etemplate.nextmatch_widget.nm_row" template="" lang="" group="0" version="1.3.002">
-		<grid width="100%" spacing="0" padding="5">
+		<grid width="100%" spacing="0" padding="3">
 			<columns>
 				<column width="1%"/>
 				<column width="1%"/>
@@ -21,17 +21,17 @@
 					<button image="first.gif" ro_image="first-grey.gif" label="First" id="first" statustext="go to the first entry"/>
 					<button image="left.gif" ro_image="left-grey.gif" label="Left" id="left" statustext="go to the previous page of entries"/>
 					<menulist>
-						<menupopup type="select-cat" options="-1,,,$cont[cat_app]" label="Category" id="cat_id" onchange="1" statustext="select a Category"/>
+						<menupopup type="select-cat" options="-1,,,$cont[cat_app]" label="Category" id="cat_id" onchange="1" statustext="select a Category" align="center"/>
 					</menulist>
 					<menulist>
 						<menupopup label="@filter_label" align="center" id="filter" onchange="@filter_onchange" statustext="@filter_help"/>
 					</menulist>
 					<menulist>
-						<menupopup label="@filter2_label" align="right" id="filter2" onchange="@filter2_onchange" statustext="@filter2_help"/>
+						<menupopup label="@filter2_label" align="center" id="filter2" onchange="@filter2_onchange" statustext="@filter2_help"/>
 					</menulist>
-					<textbox align="right" id="search" onchange="1" statustext="a pattern to be searched for"/>
+					<textbox align="right" id="search" onchange="1" statustext="a pattern to be searched for" size="12"/>
 					<button label="Search" id="start_search" statustext="to start the search"/>
-					<menulist>
+					<menulist class="nm_num_rows">
 						<menupopup id="num_rows" no_lang="1" onchange="1" statustext="How many entries should the list show"/>
 					</menulist>
 					<button image="right.gif" ro_image="right-grey.gif" label="Right" id="right" statustext="go to the next page of entries"/>
@@ -51,9 +51,6 @@
 				</row>
 			</rows>
 		</grid>
-		<styles>
-			.thinBorder { border: 1px solid black; }
-		</styles>
 	</template>
 	<template id="etemplate.nextmatch_widget" template="" lang="" group="0" version="1.3.001">
 		<grid width="100%">

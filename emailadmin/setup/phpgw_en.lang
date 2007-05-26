@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	en	Cyrus IMAP Server
 cyrus imap server administration	emailadmin	en	Cyrus IMAP server administration
 default	emailadmin	en	default
 deliver extern	emailadmin	en	deliver extern
+do not validate certificate	emailadmin	en	do not validate certificate
 do you really want to delete this profile	emailadmin	en	Do you really want to delete this Profile
 domainname	emailadmin	en	Domainname
 edit email settings	emailadmin	en	Edit email settings
@@ -30,6 +31,7 @@ email settings	common	en	Email settings
 emailadmin	emailadmin	en	EMailAdmin
 enable cyrus imap server administration	emailadmin	en	enable Cyrus IMAP server administration
 enable sieve	emailadmin	en	Enable Sieve
+encrypted connection	emailadmin	en	encrypted connection
 encryption settings	emailadmin	en	Encryption settings
 enter your default mail domain (from: user@domain)	emailadmin	en	Enter your default mail domain (from: user@domain)
 error connecting to imap server. %s : %s.	emailadmin	en	Error connecting to IMAP server. %s : %s.
@@ -46,6 +48,7 @@ imap server closed the connection.	emailadmin	en	IMAP server closed the connecti
 imap server closed the connection. server responded: %s	emailadmin	en	IMAP Server closed the connection. Server Responded: %s
 imap server hostname or ip address	emailadmin	en	IMAP server hostname or ip address
 imap server logintyp	emailadmin	en	IMAP server login type
+imap server name	emailadmin	en	imap server name
 imap server port	emailadmin	en	IMAP server port
 imap/pop3 server name	emailadmin	en	IMAP/POP3 server name
 in mbyte	emailadmin	en	in MByte
@@ -81,6 +84,7 @@ qmaildotmode	emailadmin	en	qmaildotmode
 qouta size in mbyte	emailadmin	en	Qouta size in MByte
 quota settings	emailadmin	en	Quota settings
 remove	emailadmin	en	Remove
+select type of imap server	emailadmin	en	select type of IMAP server
 select type of imap/pop3 server	emailadmin	en	Select type of IMAP/POP3 server
 select type of smtp server	emailadmin	en	Select type of SMTP Server
 server settings	emailadmin	en	Server settings

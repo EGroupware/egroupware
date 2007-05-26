@@ -35,12 +35,12 @@ class ADODB_postgres7 extends ADODB_postgres64 {
 	// which makes obsolete the LIMIT limit,offset syntax
 	 function &SelectLimit($sql,$nrows=-1,$offset=-1,$inputarr=false,$secs2cache=0) 
 	 {
-		 $offsetStr = ($offset >= 0) ? " OFFSET $offset" : '';
-		 $limitStr  = ($nrows >= 0)  ? " LIMIT $nrows" : '';
+		 $offsetStr = ($offset >= 0) ? ' OFFSET '.(int)$offset : '';
+		 $limitStr  = ($nrows >= 0)  ? ' LIMIT '.(int)$nrows : '';
 		 if ($secs2cache)
-		  	$rs =& $this->CacheExecute($secs2cache,$sql."$limitStr$offsetStr",$inputarr);
+		  	$rs =& $this->CacheExecute($secs2cache,$sql.$limitStr.$offsetStr,$inputarr);
 		 else
-		  	$rs =& $this->Execute($sql."$limitStr$offsetStr",$inputarr);
+		  	$rs =& $this->Execute($sql.$limitStr.$offsetStr,$inputarr);
 		
 		return $rs;
 	 }

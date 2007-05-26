@@ -16,6 +16,7 @@ add a contact to this organisation	addressbook	en	Add a contact to this organisa
 add a new contact	addressbook	en	Add a new contact
 add a new list	addressbook	en	Add a new list
 add a single entry by passing the fields.	addressbook	en	Add a single entry by passing the fields.
+add business email of whole distribution list?	addressbook	en	Add business email of whole distribution list?
 add custom field	addressbook	en	Add Custom Field
 add to distribution list:	addressbook	en	Add to distribution list:
 added by synchronisation	addressbook	en	added by synchronisation
@@ -196,6 +197,7 @@ link title for contacts show	addressbook	en	Link title for contacts show
 links	addressbook	en	Links
 list all categories	addressbook	en	List all categories
 list all customfields	addressbook	en	List all customfields
+list already exists!	addressbook	en	List already exists!
 list created	addressbook	en	List created
 list creation failed, no rights!	addressbook	en	List creation failed, no rights!
 load vcard	addressbook	en	Load VCard

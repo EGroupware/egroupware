@@ -10,7 +10,7 @@
 	 * @version $Id$
 	 */
 
-	/**
+    /**
 	 * AJAX Select Widget
 	 *
 	 * Using AJAX, this widget allows a type-ahead find similar to a ComboBox, where as the user enters information,
@@ -25,9 +25,12 @@
 	{
 		var $public_functions = array(
 			'pre_process' => True,
-			'post_process' => True
+			'post_process' => True,
+			'ajax_search'	=>	True,
 		);
 		var $human_name = 'AJAX Select';	// this is the name for the editor
+
+		private $debug = false;
 
 		function ajax_select_widget($ui='')
 		{
@@ -59,7 +62,21 @@
 		*/
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			//echo "<p>ajax_select_widget::pre_process('$name',$value," . print_r($cell, true) . "," . print_r($extension_data, true) . ")</p>\n";
+			if($this->debug) {
+				echo __METHOD__ . '<br />';
+				printf("Name:%20s<br />", $name);
+				echo 'Value:';
+				_debug_array($value);
+				echo 'Cell:';
+				_debug_array($cell);
+
+				echo 'Readonlys:';
+				_debug_array($readonlys);
+
+				echo 'Extension_data:';
+				_debug_array($extension_data);
+
+			}
 
 			// Get Options
 			if(!is_array($cell['size'])) {
@@ -69,7 +86,9 @@
 					$options['id_field'],
 					$options['template'],
 					$options['filter'], 
-					$options['filter2']
+					$options['filter2'],
+					$options['link'],
+					$options['icon']
 				) = explode(',', $cell['size']);
 			} else {
 				$options = $cell['size'];
@@ -128,6 +147,21 @@
 			$widget =& new etemplate('etemplate.ajax_select_widget');
 			$widget->no_onclick = True;
 
+			// Link if readonly & link is set
+			$search =& $widget->get_widget_by_name('search');
+			if(($cell['readonly'] || $readonlys['search']) && $options['link']) {
+				$search['type'] = 'label';
+				$search['no_lang'] = 1;
+				$search['size'] = ',' . $options['link'];
+			} else {
+				$search['type'] = 'text';
+				$search['size'] = '';
+			}
+
+			// Icon
+			$icon =& $widget->get_widget_by_path('/0/1A');
+			$icon['name'] = $options['icon'];
+			
 			$cell['obj'] = &$widget;
 
 			// Save options for post_processing
@@ -173,27 +207,29 @@
 
 						if($count == 1) {
 							$value = $results[0][$extension_data['id_field']];
-							echo 'Match found';
 							return true;
-						} else {
+						} elseif ($count > 1) {
 							$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = lang("More than 1 match for '%1'",$value_in['search']);
 							$loop = true;
 							return false;
+						} else {
+							$value = $value_in['search'];
+							return true;
 						}
 					}
 				}
 			} elseif (!$value_in['value'] && !$value_in['search']) {
 				$value = null;
-				$loop = $extension_data['required'];
+				$loop = $GLOBALS['egw_info']['etemplate']['loop'] || $extension_data['required'];
 				return !$extension_data['required'];
 			} else {
 				$value = $value_in['value'];
-				$loop = false;
+				$loop = $GLOBALS['egw_info']['etemplate']['loop'] ||  false;
 				return true;
 			}
 		}
 
-		function change($id, $value, $set_id, $query) {
+		function ajax_search($id, $value, $set_id, $query) {
 			$base_id = substr($id, 0, strrpos($id, '['));
 			$result_id = ($set_id ? $set_id : $base_id . '[results]');
 			$response = new xajaxResponse();
@@ -233,8 +269,7 @@
 				if(!$query['template'] || $query['template'] == 'etemplate.ajax_select_widget.row') {
 					$query['template'] = 'etemplate.ajax_select_widget.row';
 				}
-				foreach($result_list as $key => $nul) {
-					$row =& $result_list[$key];	// $key => &$row is php5!
+				foreach($result_list as $key => &$row) {
 					if(!is_array($row)) {
 						continue;
 					}

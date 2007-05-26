@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	de	Cyrus IMAP-Server
 cyrus imap server administration	emailadmin	de	Cyrus IMAP-Server Administration
 default	emailadmin	de	Vorgabe
 deliver extern	emailadmin	de	extern ausliefern
+do not validate certificate	emailadmin	de	Zertifikat nicht überprüfen
 do you really want to delete this profile	emailadmin	de	Wollen Sie dieses Profil wirklich löschen
 domainname	emailadmin	de	Domänenname
 edit email settings	emailadmin	de	E-Mail-Einstellungen
@@ -30,6 +31,7 @@ email settings	common	de	E-Mail-Konto
 emailadmin	emailadmin	de	EMailAdmin
 enable cyrus imap server administration	emailadmin	de	Cyrus IMAP-Server Administration aktivieren
 enable sieve	emailadmin	de	Sieve aktivieren
+encrypted connection	emailadmin	de	verschlüsselte Verbindung
 encryption settings	emailadmin	de	Verschlüsselungseinstellungen
 enter your default mail domain (from: user@domain)	emailadmin	de	Standard E-Mail-Domain (Von: benutzer@domain)
 error connecting to imap server. %s : %s.	emailadmin	de	Fehler beim Verbinden mit dem IMAP Server. %s : %s.
@@ -46,6 +48,7 @@ imap server closed the connection.	emailadmin	de	IMAP Server hat die Verbindung 
 imap server closed the connection. server responded: %s	emailadmin	de	IMAP Server hat die Verbindung beendet. Server Antwort: %s
 imap server hostname or ip address	emailadmin	de	IMAP-Server Hostname oder IP-Adresse
 imap server logintyp	emailadmin	de	IMAP-Server Loginverfahren
+imap server name	emailadmin	de	IMAP-Server Name
 imap server port	emailadmin	de	IMAP-Server Port
 imap/pop3 server name	emailadmin	de	IMAP/POP3-Server Name
 in mbyte	emailadmin	de	in MByte
@@ -81,6 +84,7 @@ qmaildotmode	emailadmin	de	qmaildotmode
 qouta size in mbyte	emailadmin	de	Quota Größe in MByte
 quota settings	emailadmin	de	Quota Einstellungen
 remove	emailadmin	de	Entfernen
+select type of imap server	emailadmin	de	IMAP-Server Typ auswählen
 select type of imap/pop3 server	emailadmin	de	IMAP/POP3-Server Typ auswählen
 select type of smtp server	emailadmin	de	SMTP-Server Typ auswählen
 server settings	emailadmin	de	Server-Einstellungen
