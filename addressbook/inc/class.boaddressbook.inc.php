@@ -179,16 +179,30 @@ class boaddressbook
 	 * 
 	 * @internal 
 	 * @param array $datas array of contact arrays
+	 * @param boolean $read_customfields=false should the customfields be read, default no (contacts::read() does it already)
 	 * @return array
 	 */
-	function data2xmlrpc($datas)
+	function data2xmlrpc($datas,$read_customfields=false)
 	{
 		if(is_array($datas))
 		{
+			if ($read_customfields)
+			{
+				$ids = array();
+				foreach($datas as $data)
+				{
+					$ids[] = $data['id'];
+				}
+				$customfields = $this->contacts->read_customfields($ids);
+			}
 			foreach($datas as $n => $nul)
 			{
 				$data =& $datas[$n];	// $n => &$data is php5 ;-)
-
+				
+				if ($customfields && isset($customfields[$data['id']]))
+				{
+					$data += $customfields[$data['id']];
+				}
 				// remove empty or null elements, they dont need to be transfered
 				$data = array_diff($data,array('',null));	
 
@@ -212,6 +226,11 @@ class boaddressbook
 				if(isset($data['cat_id']))
 				{
 					$data['cat_id'] = $GLOBALS['server']->cats2xmlrpc(explode(',',$data['cat_id']));
+				}
+				// replacing the fieldname in tel_prefer with the actual number, if it exists and is non-empty
+				if (substr($data['tel_prefer'],0,4) === 'tel_' && $data[$data['tel_prefer']])
+				{
+					$data['tel_prefer'] = $data[$data['tel_prefer']];
 				}
 				// translate fieldnames if required
 				foreach($this->mapping as $from => $to)
@@ -286,6 +305,20 @@ class boaddressbook
 			$cats = $GLOBALS['server']->xmlrpc2cats($data['cat_id']);
 			$data['cat_id'] = count($cats) > 1 ? ','.implode(',',$cats).',' : (int)$cats[0];
 		}
+		// replacing the number in tel_prefer with the fieldname, if it matches a phone-number, otherwise keep it's content as is
+		if ($data['tel_prefer'])
+		{
+			$prefer = $data['tel_prefer'];
+			unset($data['tel_prefer']);
+			if (($key = array_search($prefer,$data)) !== false && substr($key,0,4) === 'tel_')
+			{
+				$data['tel_prefer'] = $key;
+			}
+			else
+			{
+				$data['tel_prefer'] = $prefer;
+			}
+		}
 		return $data;
 	}
 
@@ -303,11 +336,14 @@ class boaddressbook
 	 * @param string $param['sort']='' sorting: ASC or DESC
 	 * @param string $param['order']='' column to order, default ('') n_family,n_given,email ASC
 	 * @param int $param['lastmod']=-1 return only values modified after given timestamp, default (-1) return all
-	 * @param string $param['cquery='' return only entries starting with given character, default ('') all
+	 * @param string $param['cquery']='' return only entries starting with given character, default ('') all
+	 * @param string $param['customfields']=true return the customfields too, default yes
 	 * @return array of contacts
 	 */
 	function search($param)
 	{
+		$read_customfields = !isset($param['customfields']) || $param['customfields'];
+		
 		return $this->data2xmlrpc($this->contacts->old_read(
 			(int) $param['start'],
 			(int) $param['limit'],
@@ -318,11 +354,11 @@ class boaddressbook
 			$param['order'],
 			$param['lastmod'] ? $param['lastmod'] : -1,
 			$param['cquery']
-		));
+		),$read_customfields);
 	}
 
 	/**
-	 * Read one contract
+	 * Read one contact
 	 *
 	 * @param mixed $id $id, $id[0] or $id['id'] contains the id of the contact
 	 * @return array contact

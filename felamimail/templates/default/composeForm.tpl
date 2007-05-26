@@ -5,7 +5,7 @@
 	var composeID			="{compose_id}";
 
 	var activityImagePath		= '{ajax-loader}';
-
+	var fm_compose_langNoAddressSet	= '{lang_no_address_set}';
 
 	self.focus();
   
@@ -203,12 +203,8 @@
 			<button type="button" onclick="fm_compose_selectFolder();" title="{lang_select_folder}" style="border: solid #aaaaaa 1px; border-right: solid black 1px; border-bottom: solid black 1px; font-size:9px; font-weight:bold; height:15px; width:20px; line-height:14px; text-align:center; cursor: pointer;">...</button>
 		</span>
 	</td>
-	<td align="left" valign="bottom" sstyle="width:455px;">
-		<input class="input_text" onkeypress="return disabledKeyCodes(disabledKeys1);" autocomplete="off" type=text style="width:99%;" name="address[]" value="{address}" onfocus="initResultBox(this)" onblur="stopCapturingEvents()">
-	</td>
-	<td style="width:25px;" valign="bottom">
-		<div class="divButton" style="background-image: url({img_clear_left});" onclick="deleteTableRow(this);" title="{lang_remove}"></div>
-	</td>
+	<td align="left" valign="bottom"><input class="input_text" onkeypress="return disabledKeyCodes(disabledKeys1);" autocomplete="off" type=text style="width:99%;" name="address[]" value="{address}" onfocus="initResultBox(this)" onblur="stopCapturingEvents()"></td>
+	<td style="width:25px;" valign="bottom"><div class="divButton" style="background-image: url({img_clear_left});" onclick="deleteTableRow(this);" title="{lang_remove}"></div></td>
 </tr>
 <!-- END destination_row -->
 

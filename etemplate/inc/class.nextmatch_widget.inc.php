@@ -267,6 +267,9 @@
 			{
 				$value['template'] =& new etemplate($value['template'],$tmpl->as_array());
 			}
+			$extension_data['template'] = $value['template']->name;	// used for the column-selection, and might be set in get_rows()
+			$extension_data['columnselection_pref'] = $value['columnselection_pref'];
+
 			if ($total < 1 && $value['template']->rows > 1)
 			{
 				$value['template']->data[0]['h'.$value['template']->rows] .= ',1';	// disable the last data row

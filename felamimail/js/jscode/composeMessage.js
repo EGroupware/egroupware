@@ -548,3 +548,21 @@ function fm_blink_currentInputField() {
 	window.setTimeout("currentInputField.style.border = '1px solid #666666'", 200);
 	window.setTimeout("currentInputField.style.border = ''", 450);
 }
+
+function fm_compose_sendEMail() {
+	var addressTable = document.getElementById('addressRows').rows;
+	var addressSet = false;
+	
+	for (i=0; i<addressTable.length; i++) {
+		if(addressTable.item(i).cells[2].firstChild.value != '') {
+			addressSet = true;
+		}
+	}
+	
+	if(addressSet == true) {
+		document.doit.submit();
+	} else {
+		alert(fm_compose_langNoAddressSet);
+	}
+}
+ 

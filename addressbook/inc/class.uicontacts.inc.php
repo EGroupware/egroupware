@@ -710,7 +710,7 @@ class uicontacts extends bocontacts
 				'col_filter' => array('tid' => $query['col_filter']['tid']),
 				'org_view'   => $query['org_view'],
 			));
-			if ($state != $this->prefs['index_state'])
+			if ($state != $this->prefs[$do_email ? 'email_state' : 'index_state'])
 			{
 				$GLOBALS['egw']->preferences->add('addressbook',$do_email ? 'email_state' : 'index_state',$state);
 				// save prefs, but do NOT invalid the cache (unnecessary)
@@ -821,9 +821,11 @@ class uicontacts extends bocontacts
 			}
 			$rows = parent::search($query['advanced_search'] ? $query['advanced_search'] : $query['search'],$id_only,
 				$order,'',$wildcard,false,$op,array((int)$query['start'],(int) $query['num_rows']),$query['col_filter']);
-			
-			// do we need the custom fields
-			if (!$id_only && $this->prefs['custom_colum'] != 'never' && $rows && $this->customfields)
+
+			// do we need to read the custom fields, depends on the column is enabled and customfields exist
+			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
+			if ($columselection) $columselection = explode(',',$columselection);
+			if (!$id_only && (!$columselection || in_array('customfields',$columselection)) && $rows && $this->customfields)
 			{
 				foreach((array) $rows as $n => $val)
 				{
@@ -943,7 +945,7 @@ class uicontacts extends bocontacts
 			if (!$homeaddress) $rows['no_home'] = true;
 		}
 		// disable customfields column, if we have no customefield(s)
-		if (!$customfields) $rows['no_customfields'] = true;
+		if (!$this->customfields || !$this->prefs['no_auto_hide'] && !$customfields) $rows['no_customfields'] = true;
 
 		$rows['order'] = $order;
 		$rows['call_popup'] = $this->config['call_popup'];
