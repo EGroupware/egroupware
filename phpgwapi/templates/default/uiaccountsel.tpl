@@ -100,7 +100,7 @@
 <div id="divMain">
 <table border="0" width="100%">
 	<tr>
-		<td width="20%" rowspan="3">{accountsel_icon}</td>
+		<td width="25%" rowspan="3">{accountsel_icon}</td>
 		<td align="right" colspan="5">
 			<form method="POST" action="{search_action}">
 				{query_type}
@@ -127,8 +127,8 @@
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
 	<tr>
-		<td valign="top" width="20%">
-			<table border="0" width="100%" cellpadding="2" cellspacing="2">
+		<td valign="top" width="25%">
+			<table border="0" width="100%" cellpadding="0" cellspacing="2">
 				<tr>
 					<td class="th" colspan="2" align="center"><b>{lang_groups}</b></td>
 				</tr>
@@ -149,7 +149,7 @@
 				<tr class="{tr_color}">
 					<td><a href="{link_user_group}" title="{lang_list_members}">{name_user_group}</a></td>
 					<td align="center">
-						<input type="image" src="{img}" onclick="{onclick}; return false;" title="{lang_select_group}">
+						<input type="image" src="{img}" style="width: 16px;" onclick="{onclick}; return false;" title="{lang_select_group}">
 					</td>
 				</tr>
 <!-- END group_cal -->
@@ -184,7 +184,7 @@
 			</table>
 		</td>
 		<td valign="top">
-			<table border="0" width="100%" cellpadding="2" cellspacing="2">
+			<table border="0" width="100%" cellpadding="0" cellspacing="2">
 				<tr class="th">
 					<td width="100%" class="th" align="center" colspan="4"><b>{lang_accounts}</b></td>
 				</tr>
@@ -202,7 +202,7 @@
 		<td>{firstname}</td>
 		<td>{lastname}</td>
 		<td align="center">
-			<input type="image" src="{img}" onclick="{onclick}; return false;" title="{lang_select_user}">
+			<input type="image" src="{img}" style="width: 16px;" onclick="{onclick}; return false;" title="{lang_select_user}">
 		</td>
 	</tr>
 

@@ -42,7 +42,7 @@ class Net_IMAP extends Net_IMAPProtocol {
     function Net_IMAP($host = 'localhost', $port = 143, $enableSTARTTLS = true)
     {
         $this->Net_IMAPProtocol();
-        $ret = $this->connect( $host , $port, $disableSTARTTLS);
+        $ret = $this->connect( $host , $port, $enableSTARTTLS);
     }
 
 
@@ -1358,7 +1358,6 @@ class Net_IMAP extends Net_IMAPProtocol {
         if( PEAR::isError( $ret = $this->cmdList($reference, $mailbox) ) ){
             return $ret;
         }
-
         if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
             return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
         }
@@ -1369,7 +1368,7 @@ class Net_IMAP extends Net_IMAPProtocol {
             //If the folder has the \NoSelect atribute we don't put in the list
             // it solves a bug in wu-imap that crash the IMAP server if we select that mailbox
                 if( isset($mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"]) ){
-                    if( !in_array('\NoSelect',$mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"]) ){
+                    #if( !in_array('\NoSelect',$mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"]) ){
                         if( $returnAttributes){
                             $ret_aux[]=array(   'MAILBOX' => $mbox["EXT"]["LIST"]["MAILBOX_NAME"],
                                                 'ATTRIBUTES' => $mbox["EXT"]["LIST"]["NAME_ATTRIBUTES"] ,
@@ -1377,7 +1376,7 @@ class Net_IMAP extends Net_IMAPProtocol {
                         }else{
                             $ret_aux[]=$mbox["EXT"]["LIST"]["MAILBOX_NAME"];
                         }
-                    }
+                    #}
                 }
             }
         }

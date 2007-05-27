@@ -830,45 +830,37 @@
 			#_debug_array($folders);
 
 			$nameSpace = $this->icServer->getNameSpaces();
+			#_debug_array($nameSpace);
 
-			// uw imap does not return the attribute of a folder, when requesting subscribed folders only
 			if(isset($nameSpace['#mh/'])) {
-				$mailboxString = $this->icServer->getMailboxString();
-				// detected uw-imap! the most worst imap server ever!!!!
-				// we support only the personal namespace on uwimap
-				$foldersNameSpace['personal']['subscribed'] = imap_getsubscribed($this->mbox, $mailboxString, $icServer->mailboxPrefix.'/*');
-
-				foreach($foldersNameSpace['personal']['subscribed'] as $id => $folderInfo) {
-					$shortName = preg_replace("/{.*}/",'',$folderInfo->name);
-					$mailBoxInfo = imap_getmailboxes($this->mbox,$mailboxString, $shortName);
-					if(is_a($mailBoxInfo[0], 'stdClass')) {
-						$foldersNameSpace['personal']['subscribed'][$id] = $mailBoxInfo[0];
-					}
-				}
-				
-				if(!$_subscribedOnly) {
-					$foldersNameSpace['personal']['all'] = imap_getmailboxes($this->mbox, $mailboxString, $icServer->mailboxPrefix.'/*');
-				}
-				$foldersNameSpace['personal']['prefix'] = '';
-				$foldersNameSpace['personal']['delimiter'] = '/';
-				
-				$isUWIMAP = TRUE;
-				
+				// removed the uwimap code
+				// but we need to reintroduce him later
+				// uw imap does not return the attribute of a folder, when requesting subscribed folders only
+				// dovecot has the same problem too
 			} else { 
 				foreach($nameSpace as $type => $singleNameSpace) {
-					$foldersNameSpace[$type]['prefix'] = $singleNameSpace[0]['name'];
+					if($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('Mail')) {
+						// uw-imap server with mailbox prefix or dovecot maybe
+						$foldersNameSpace[$type]['prefix'] = 'Mail';
+					} elseif($type == 'personal' && ($singleNameSpace[2]['name'] == '#mh/' || count($nameSpace) == 1) && $this->icServer->mailboxExist('mail')) {
+						// uw-imap server with mailbox prefix or dovecot maybe
+						$foldersNameSpace[$type]['prefix'] = 'mail';
+					} else {
+						$foldersNameSpace[$type]['prefix'] = $singleNameSpace[0]['name'];
+					}
+
 					$foldersNameSpace[$type]['delimiter'] = $delimiter;
 
 					if(is_array($singleNameSpace[0])) {
 						// fetch and sort the subscribed folders
-						$subscribedMailboxes = $this->icServer->listsubscribedMailboxes($singleNameSpace[0]['name']);
+						$subscribedMailboxes = $this->icServer->listsubscribedMailboxes($foldersNameSpace[$type]['prefix']);
 						if( PEAR::isError($subscribedMailboxes) ) {
 							continue;
 						}
 						$foldersNameSpace[$type]['subscribed'] = $subscribedMailboxes;
 						sort($foldersNameSpace[$type]['subscribed']);
 						// fetch and sort all folders
-						$foldersNameSpace[$type]['all'] = $this->icServer->getMailboxes($singleNameSpace[0]['name']);
+						$foldersNameSpace[$type]['all'] = $this->icServer->getMailboxes($foldersNameSpace[$type]['prefix']);
 						sort($foldersNameSpace[$type]['all']);
 					}
 
@@ -885,13 +877,14 @@
 							$folderPrefix = $personalPrefix;
 						}
 					}
-
 					foreach(array('Drafts', 'Junk', 'Sent', 'Trash', 'Templates') as $personalFolderName) {
 						$folderName = (!empty($personalPrefix)) ? $folderPrefix.$personalFolderName : $personalFolderName;
 						if(!is_array($foldersNameSpace['personal']['all']) || !in_array($folderName, $foldersNameSpace['personal']['all'])) {
 							if($this->createFolder('', $folderName, true)) {
 								$foldersNameSpace['personal']['all'][] = $folderName;
 								$foldersNameSpace['personal']['subscribed'][] = $folderName;
+							} else {
+							#	print "FOLDERNAME failed: $folderName<br>";
 							}
 						}
 					}
