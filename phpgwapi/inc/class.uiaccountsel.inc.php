@@ -97,7 +97,7 @@ class uiaccountsel extends accounts
 	 */
 	function selection($name,$element_id,$selected,$use='accounts',$lines=0,$not=False,$options='',$onchange='',$select=False,$nohtml=false)
 	{
-		//echo "<p align=right>uiaccountsel::selection('$name',".print_r($selected,True).",'$use',rows=$lines,$not,'$options','$onchange',".print_r($select,True).") account_selection=$this->account_selection</p>\n";
+		//echo "<p align=right>uiaccountsel::selection('$name','$element_id',".print_r($selected,True).",'$use',rows=$lines,$not,'$options','$onchange',".print_r($select,True).") account_selection=$this->account_selection</p>\n";
 		$multi_size=4;
 		if ($lines < 0)
 		{
@@ -138,6 +138,7 @@ class uiaccountsel extends accounts
 				// fall-through
 
 			case 'owngroups':
+				$only_groups = true;
 				$account_sel = 'selectbox';	// groups always use only the selectbox
 				break;
 		}
@@ -243,7 +244,7 @@ class uiaccountsel extends accounts
 		));
 		$popup_options = 'width=600,height=400,toolbar=no,scrollbars=yes,resizable=yes';
 		$app = $GLOBALS['egw_info']['flags']['currentapp'];
-		if ($lines <= 1 && $this->account_selection == 'popup' || !$lines && $this->account_selection == 'primary_group')
+		if (!$only_groups && ($lines <= 1 && $this->account_selection == 'popup' || !$lines && $this->account_selection == 'primary_group'))
 		{
 			if (!$lines)
 			{
@@ -279,14 +280,14 @@ class uiaccountsel extends accounts
 		//echo "<p>html::select('$name',".print_r($selected,True).",".print_r($select,True).",True,'$options')</p>\n";
 		$html = $this->html->select($name,$selected,$select,True,$options.' id="'.$element_id.'"',$lines > 1 ? $lines : 0);
 
-		if ($lines > 0 && $this->account_selection == 'popup' || $lines > 1 && $this->account_selection == 'primary_group')
+		if (!$only_groups && ($lines > 0 && $this->account_selection == 'popup' || $lines > 1 && $this->account_selection == 'primary_group'))
 		{
 			$js = "window.open('$link','uiaccountsel','$popup_options'); return false;";
 			$html .= $this->html->submit_button('search','Search accounts',$js,false,
 				' title="'.$this->html->htmlspecialchars(lang('Search accounts')).'"','search','phpgwapi');
 			$need_js_popup = True;
 		}
-		elseif ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group')
+		elseif (!$only_groups && ($lines == 1 || $lines > 0 && $this->account_selection == 'primary_group'))
 		{
 			$js = "if (selectBox = document.getElementById('$element_id')) if (!selectBox.multiple) {selectBox.size=$multi_size; selectBox.multiple=true; if (selectBox.options[0].value=='') selectBox.options[0] = null;";
 			if (!in_array($this->account_selection,array('groupmembers','selectbox')))	// no popup!
