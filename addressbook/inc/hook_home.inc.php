@@ -23,7 +23,7 @@ if ($GLOBALS['egw_info']['user']['apps']['addressbook'] &&
 
 	if (($month_end = date('*-m-*',$contacts->now_su+$days*24*3600)) != $month_start)
 	{
-		if (($bdays2 =& $contacts->search(array('bday' => $month_start),array('id','n_family','n_given','bday'),'n_given,n_family')))
+		if (($bdays2 =& $contacts->search(array('bday' => $month_end),array('id','n_family','n_given','bday'),'n_given,n_family')))
 		{
 			$bdays = !$bdays ? $bdays2 : array_merge($bdays,$bdays2);
 		}
