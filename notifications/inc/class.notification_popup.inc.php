@@ -68,10 +68,12 @@ class notification_popup implements iface_notification {
 		// If we are called from class notification account and prefs are objects.
 		// otherwise we have to fetch this objects for current user.
 		if (!is_object($_account)) {
-			$account_id = $GLOBALS['egw_info']['user']['account_id'];
-			$this->account = $GLOBALS['egw']->accounts->get_account_data($account_id);
-			$this->account[$account_id]['id'] = $account_id;
-			$this->account = (object)$this->account[$account_id];
+			$_account = (object) $GLOBALS['egw']->accounts->read($_account);
+			$_account->id =& $_account->account_id;
+//			$account_id = $GLOBALS['egw_info']['user']['account_id'];
+//			$this->account = $GLOBALS['egw']->accounts->get_account_data($account_id);
+//			$this->account[$account_id]['id'] = $account_id;
+//			$this->account = (object)$this->account[$account_id];
 		}
 		else {
 			$this->account = $_account;
@@ -94,7 +96,7 @@ class notification_popup implements iface_notification {
 				$user_sessions[] = $session['session_id'];
 			}
 		}
-		if ( empty($user_sessions) ) throw new Exception("Notice: User $this->account isn't online. Can't send notification via popup");
+		if ( empty($user_sessions) ) throw new Exception("Notice: User #{$this->account->id} isn't online. Can't send notification via popup");
 		$this->save( $_message, $user_sessions );
 	}
 	

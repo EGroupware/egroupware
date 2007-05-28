@@ -105,6 +105,12 @@ class boinfolog
 	 * @var array
 	 */
 	var $group_owners=array();
+	/**
+	 * Current user
+	 *
+	 * @var int
+	 */
+	var $user;
 	
 	/**
 	 * Constructor Infolog BO
@@ -606,10 +612,10 @@ class boinfolog
 		{
 			if ($to_write[$time]) $to_write[$time] -= $this->tz_offset_s;
 		}
-		// if we have links in customfields, we need to get the old values, to be able to remove changed links
-		if ($this->has_customfields($values['info_type'],true) && $values['info_id'])
+		// we need to get the old values to update the links in customfields and for the tracking
+		if ($values['info_id'])
 		{
-			$old = $this->read($values['info_id']);
+			$old = $this->read($values['info_id'],false);
 		}
 		if(($info_id = $this->so->write($to_write,$check_modified)))
 		{
@@ -640,6 +646,14 @@ class boinfolog
 
 			// notify the link-class about the update, as other apps may be subscribt to it
 			$this->link->notify_update('infolog',$info_id,$values);
+			
+			// send email notifications and do the history logging
+			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
+			if (!is_object($this->tracking))
+			{
+				$this->tracking =& new infolog_tracking($this);
+			}
+			$this->tracking->track($values,$old,$this->user);
 		}
 		if ($info_from_set) $values['info_from'] = '';
 

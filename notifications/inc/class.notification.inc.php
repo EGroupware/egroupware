@@ -126,3 +126,25 @@ final class notification {
 	}
 
 }
+
+/**
+ * Small helper function to just send a message
+ *
+ * @param array $receivers
+ * @param string $message
+ * @return Exception
+ */
+function notify(array $receivers,$message)
+{
+	$notification = new notification();
+	$notification->set_receivers($receivers);
+	$notification->set_message($message);
+	try{
+		$notification->send();
+	}
+	catch(Exception $exception) {
+		error_log("notify(array($user),'$message'".$exception->getMessage());
+		return $exception;
+	}
+	return null;
+}
