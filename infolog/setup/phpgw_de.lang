@@ -25,7 +25,7 @@ add a new note	infolog	de	eine neue Notiz anlegen
 add a new phonecall	infolog	de	einen neuen Telefonanruf anlegen
 add a new sub-task, -note, -call to this entry	infolog	de	einen neuen Unterauftrag, -notiz, -anruf zu diesem Eintrag anlegen
 add a new todo	infolog	de	einen neuen Auftrag anlegen
-add file	infolog	de	Datei zufügen
+add file	infolog	de	Datei hinzufügen
 add sub	infolog	de	neuen Untereintrag anlegen
 add timesheet entry	infolog	de	Stundenzettel Eintrag hinzfügen
 add:	infolog	de	Hinzufügen:
@@ -219,7 +219,7 @@ remove this link (not the entry itself)	infolog	de	Diese Verknüpfung lösen (nich
 responsible	infolog	de	verantwortlich
 responsible open	infolog	de	verantwortlich offen
 responsible overdue	infolog	de	verantwortlich überfällig
-responsible upcoming	infolog	de	verantwortlich zufünftig
+responsible upcoming	infolog	de	verantwortlich zukünftig
 responsible user, priority	infolog	de	Verantwortlicher, Priorität
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen.
 rights for the responsible	infolog	de	Rechte für den Verantwortlichen
@@ -294,7 +294,6 @@ urgent	infolog	de	Dringend
 used time	infolog	de	benötigte Zeit
 valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
