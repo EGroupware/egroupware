@@ -201,7 +201,10 @@ class boaddressbook
 				
 				if ($customfields && isset($customfields[$data['id']]))
 				{
-					$data += $customfields[$data['id']];
+					foreach($customfields[$data['id']] as $name => $value)
+					{
+						$data['#'.$name] = $value;
+					}
 				}
 				// remove empty or null elements, they dont need to be transfered
 				$data = array_diff($data,array('',null));	
