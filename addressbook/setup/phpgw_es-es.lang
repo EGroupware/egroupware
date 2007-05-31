@@ -16,6 +16,7 @@ add a contact to this organisation	addressbook	es-es	Añadir un contacto a esta o
 add a new contact	addressbook	es-es	Añadir un contacto nuevo
 add a new list	addressbook	es-es	Añadir una lista nueva
 add a single entry by passing the fields.	addressbook	es-es	Añadir una entrada simple pasando los campos
+add business email of whole distribution list?	addressbook	es-es	¿Añadir el correo electrónico de la empresa de toda la lista de distribución?
 add custom field	addressbook	es-es	Añadir campo personalizado
 add to distribution list:	addressbook	es-es	Añadir a la lista de distribución:
 added by synchronisation	addressbook	es-es	Añadido por sincronización
@@ -167,6 +168,7 @@ home phone	addressbook	es-es	Teléfono particular
 home state	addressbook	es-es	Provincia de residencia
 home street	addressbook	es-es	Domicilio personal
 home zip code	addressbook	es-es	Código postal
+how many contacts should non-admins be able to export (empty = no limit)	admin	es-es	¿Cuántos contactos deben los no administradores ser capaces de exportar (vacío=sin límite)?
 icon	addressbook	es-es	Icono
 if accounts are already in ldap	admin	es-es	si las cuentas ya están en LDAP
 import	addressbook	es-es	Importar
@@ -195,6 +197,7 @@ link title for contacts show	addressbook	es-es	Título del enlace para mostrar co
 links	addressbook	es-es	Enlaces
 list all categories	addressbook	es-es	Lista de todas las categorías
 list all customfields	addressbook	es-es	Lista de todos los campos personalizados
+list already exists!	addressbook	es-es	¡La lista ya existe!
 list created	addressbook	es-es	Se ha creado la lista
 list creation failed, no rights!	addressbook	es-es	Falló la creación de lista. No tiene privilegios suficientes.
 load vcard	addressbook	es-es	Cargar VCard
@@ -289,7 +292,7 @@ translation	addressbook	es-es	Traducción
 type	addressbook	es-es	Tipo
 update a single entry by passing the fields.	addressbook	es-es	Actualizar una única entrada pasando los campos
 upload or delete the photo	addressbook	es-es	Copiar al servidor o borrar la foto
-url to link telephone numbers to (use %1 for the number)	admin	es-es	URL para vincular números de teléfono (use %1 para el número)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	es-es	URL a la que enlazar los números de teléfono (use %1 = número para llamar, %u = nombre de la cuenta, %t = teléfono de la cuenta)
 use an extra category tab?	addressbook	es-es	¿Usar una pestaña extra para categorías?
 use country list	addressbook	es-es	Utilizar lista de países
 use setup for a full account-migration	admin	es-es	Use la instalación para una migración completa de las cuentas

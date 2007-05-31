@@ -671,6 +671,7 @@ use button to search for project	common	fi	käytä painiketta etsiäksesi projektia
 user	common	fi	Käyttäjä
 user accounts	common	fi	käyttäjätilit
 user groups	common	fi	käyttäjäryhmät
+user openinstance	common	fi	Käyttäjän avoininstanssi
 username	common	fi	Käyttäjänimi
 users	common	fi	käyttäjät
 users choice	common	fi	Käyttäjän valinta

@@ -53,20 +53,21 @@ name of resource	resources	fi	Resurssin nimi
 name:	resources	fi	Nimi:
 no description available	resources	fi	kuvausta ei ole saatavilla
 no resources selected	resources	fi	Resursseja ei ole valittu
-notify your administrator to correct this situation	resources	fi	Ilmoita t‰st‰ yll‰pit‰j‰ll‰ jotta tilanne korjataan
+notify your administrator to correct this situation	resources	fi	Ilmoita t‰st‰ yll‰pit‰j‰lle jotta tilanne korjataan
 picture	resources	fi	Kuva
 picture source	resources	fi	Kuvan l‰hde
 picture type is not supported, sorry!	resources	fi	Kuvan tyyppi‰ ei tueta.
 pictures or resource	resources	fi	Kuvat tai resurssit
 prizeing information for booking or buying	resources	fi	Hinnasto varausta tai ostamista varten
 quantity	resources	fi	M‰‰r‰
-quantity of resource	resources	fi	Resurssin m‰‰r‰
+quantity of resource	resources	fi	Resurssien m‰‰r‰
 quantity:	resources	fi	M‰‰r‰:
 read calendar permissions	resources	fi	Kalenterin lukuoikeudet
 read permissions	resources	fi	Lukuoikeudet
 related links	resources	fi	Liittyv‰t linkit
 resources	common	fi	Resurssit
 resources list	resources	fi	Resurssilista
+responsible:	resources	fi	Vastuussa:
 saves entry and exits	resources	fi	Tallenna merkint‰ ja poistu
 select a category	resources	fi	Valitse kategoria
 select resource	resources	fi	Valitse resurssi

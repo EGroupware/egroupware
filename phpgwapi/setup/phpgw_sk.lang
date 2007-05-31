@@ -1,4 +1,4 @@
-%1 email addresses inserted	common	sk	vlo¾ených %1 emailových adries
+%1 email addresses inserted	common	sk	vlo¾ených bolo %1 E-mailových adries
 %1 is not executable by the webserver !!!	common	sk	%1 sa na webserveri nedá spusti»!!!
 %1 manual	common	sk	%1 manuál
 %1 start	common	sk	%1 ¹tart
@@ -43,6 +43,7 @@ algeria	common	sk	AL®ÍRSKO
 all	common	sk	V¹etko
 all fields	common	sk	v¹etky polia
 alphabet	common	sk	a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
+an existing and by the webserver readable directory enables the image browser and upload.	common	sk	Adresár, ktorý existuje a je èitateµný webserverom, umo¾òuje prehliadanie a odovzdávanie obrázkov.
 andorra	common	sk	ANDORA
 angola	common	sk	ANGOLA
 application	common	sk	Aplikácia
@@ -179,7 +180,7 @@ egroupware api version %1	common	sk	eGroupWare API verzia %1
 egroupware: login blocked for user '%1', ip %2	common	sk	eGroupWare: prihlasovanie zablokované pre pou¾ívateµa '%1', IP %2
 egypt	common	sk	EGYPT
 email	common	sk	E-Mail
-email-address of the user, eg. "%1"	common	sk	emailová adresa pou¾ívateµa, napr. "%1"
+email-address of the user, eg. "%1"	common	sk	E-mailová adresa pou¾ívateµa, napr. "%1"
 enabled	common	sk	Povolené
 end date	common	sk	Dátum ukonèenia
 end time	common	sk	Èas ukonèenia
@@ -441,6 +442,7 @@ public	common	sk	Verejné
 read	common	sk	Èíta»
 read this list of methods.	common	sk	Èítaj tento zoznam metód.
 reading	common	sk	Naèítavam
+regular	common	sk	Regulárne
 reject	common	sk	Odmietnu»
 remove selected accounts	common	sk	Odstráni» vybrané úèty
 remove shortcut	common	sk	Odstráni» skratku
@@ -470,13 +472,13 @@ select all %1 %2 for %3	common	sk	Vyberte v¹etky %1 %2 pre %3
 select category	common	sk	Vyberte kategóriu
 select date	common	sk	Vyberte dátum
 select group	common	sk	Vyberte skupinu
-select home email address	common	sk	Vyberte domácu emailovú adresu
+select home email address	common	sk	Vyberte domácu E-mailovú adresu
 select multiple accounts	common	sk	Vyberte viacero úètov
 select one	common	sk	Vyberte
 select the default height for the application windows	common	sk	Vyberte predvolenú vý¹ku okien aplikácií
 select the default width for the application windows	common	sk	Vyberte predvolenú ¹írku okien aplikácií
 select user	common	sk	Vyberte pou¾ívateµa
-select work email address	common	sk	Vyberte pracovnú emailovú adresu
+select work email address	common	sk	Vyberte pracovnú E-mailovú adresu
 selection	common	sk	Výber
 send	common	sk	Odosla»
 september	common	sk	September
@@ -499,8 +501,8 @@ show page generation time on the bottom of the page?	common	sk	Ukáza» èas genero
 show page generation time?	common	sk	Ukáza» èas generovania stránky?
 show the logo's of egroupware and x-desktop on the desktop.	common	sk	Zobrazova» na desktope logá eGroupWare a x-desktopu.
 show_more_apps	common	sk	ukáza» viacero aplikácií
-showing %1	common	sk	zobrazené %1
-showing %1 - %2 of %3	common	sk	zobrazené %1 - %2 z %3
+showing %1	common	sk	zobrazujem %1
+showing %1 - %2 of %3	common	sk	zobrazenujem %1 - %2 z %3
 simple	common	sk	Jednoduché
 singapore	common	sk	SINGAPUR
 slovakia	common	sk	SLOVENSKO
@@ -542,7 +544,7 @@ time	common	sk	Èas
 time selection:	jscalendar	sk	Výber èasu
 time zone	common	sk	Èasová zóna
 time zone offset	common	sk	Rozdiel èasovej zóny
-title	common	sk	Titul
+title	common	sk	Názov
 to	common	sk	Komu
 to correct this error for the future you will need to properly set the	common	sk	= Aby sa chyba neobjavovala v budúcnosti, musíte správne nastavi»
 to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">Naspä» na zoznam správ</a>
@@ -551,7 +553,7 @@ todays date, eg. "%1"	common	sk	dne¹ný dátum, napr. "%1"
 toggle first day of week	jscalendar	sk	Urèi» prvý deò tý¾dòa
 too many unsucessful attempts to login: %1 for the user '%2', %3 for the ip %4	common	sk	Príli¹ veµa neúspe¹ných pokusov o prihlásenie: %1 na pou¾ívateµa '%2', %3 na IP %4
 top	common	sk	Vrch
-total	common	sk	Spolu
+total	common	sk	celkovo
 transparant bg for the icons?	common	sk	Priesvitné pozadie ikon?
 tuesday	common	sk	Utorok
 tunisia	common	sk	TUNIS
@@ -581,7 +583,7 @@ user groups	common	sk	pou¾ívateµské skupiny
 user openinstance	common	sk	Pou¾ívateµova otvorená in¹tancia
 username	common	sk	Pou¾ívateµské meno
 users	common	sk	pou¾ívatelia
-users choice	common	sk	Pou¾ívateµská Ponuka
+users choice	common	sk	Pou¾ívateµská Voµba
 uzbekistan	common	sk	UZBEKISTAN
 venezuela	common	sk	VENEZUELA
 version	common	sk	Verzia

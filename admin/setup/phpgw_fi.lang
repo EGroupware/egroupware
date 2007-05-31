@@ -18,21 +18,21 @@ acl manager	admin	fi	ACL -hallinta
 acl rights	common	fi	ACL Oikeudet
 action	admin	fi	Toimenpide
 activate wysiwyg-editor	admin	fi	k‰yt‰ WYSIWYG-toimitinta
-add a category	admin	fi	lis‰‰ luokka
+add a category	admin	fi	lis‰‰ kategoria
 add a group	admin	fi	lis‰‰ ryhm‰
 add a new account.	admin	fi	Uusi tunnus.
-add a subcategory	admin	fi	lis‰‰ aliluokka
+add a subcategory	admin	fi	lis‰‰ alikategoria
 add a user	admin	fi	lis‰‰ k‰ytt‰j‰
 add account	admin	fi	Lis‰‰ tunnus
 add application	admin	fi	Lis‰‰ sovellus
 add auto-created users to this group ('default' will be attempted if this is empty.)	admin	fi	Lis‰‰ automaattisesti luodut k‰ytt‰j‰t ryhm‰‰n (k‰ytet‰‰n ryhm‰‰ 'Default' jollei t‰ss‰ toisi m‰‰ritell‰.)
-add global category	admin	fi	Lis‰‰ yleinen luokka
-add global category for %1	admin	fi	Lis‰‰ yleinen luokka %1:lle
+add global category	admin	fi	Lis‰‰ yleinen kategoria
+add global category for %1	admin	fi	Lis‰‰ yleinen kategoria %1:lle
 add group	admin	fi	Lis‰‰ ryhm‰
 add new account	admin	fi	Uusi tunnus
 add new application	admin	fi	Uusi sovellus
 add peer server	admin	fi	Lis‰‰ rinnakkaispalvelin
-add sub-category	admin	fi	Lis‰‰ aliluokka
+add sub-category	admin	fi	Lis‰‰ alikaterogia
 admin email	admin	fi	S‰hkˆpostin hallinta
 admin email addresses (comma-separated) to be notified about the blocking (empty for no notify)	admin	fi	Yll‰pit‰j‰n s‰hkˆpostiosoitteet (pilkulla erotettu luettelo), joihin ilmoitetaan osoitteen lukitsemisesta (j‰t‰ tyhj‰ksi, jos ei ilmoiteta)
 admin name	admin	fi	Yll‰pit‰j‰n nimi
@@ -79,7 +79,7 @@ calculate next run	admin	fi	Laske seuraava suoritusaika
 can change password	admin	fi	Voi vaihtaa salasanaa
 cancel testjob!	admin	fi	Peruuta TestiTyˆ!
 categories list	admin	fi	Luokat
-category %1 has been saved !	admin	fi	Luokka %1 on tallennettu !
+category %1 has been saved !	admin	fi	Kategoria %1 on tallennettu !
 category list	admin	fi	Luokat -luettelo
 change acl rights	admin	fi	muuta ACL -oikeuksia
 change config settings	admin	fi	Muuta asetuksia
@@ -88,6 +88,7 @@ check ip address of all sessions	admin	fi	tarkista IP-osoite kaikille istunnoill
 check items to <b>%1</b> to %2 for %3	admin	fi	Tarkista kohteet <b>%1</b> %2 kohdasta %3
 click to select a color	admin	fi	Napsauta valitaksesi v‰rin
 color	admin	fi	V‰ri
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	fi	Ev‰steiden polku (mahdollistaa useiden eGW ev‰steiden k‰ytˆn eri hakemistoista, voi aiheuttaa ongelmia Sivuston hallinta-modulissa)
 country selection	admin	fi	Maan valinta
 create group	admin	fi	Uusi ryhm‰
 creates a new field	admin	fi	Luodaan uusi kentt‰
@@ -105,12 +106,12 @@ deinstall crontab	admin	fi	Poista crontab
 delete account	admin	fi	Poista tunnus
 delete all records	admin	fi	Poista kaikki tietueet
 delete application	admin	fi	Poista sovellus
-delete category	admin	fi	Poista luokka
+delete category	admin	fi	Poista kategoria
 delete group	admin	fi	Poista ryhm‰
 delete peer server	admin	fi	Poista rinnakkaispalvelin
-delete the category	admin	fi	poista luokka
+delete the category	admin	fi	poista kategoria
 delete the group	admin	fi	poista ryhm‰
-delete this category	admin	fi	poista t‰m‰ luokka
+delete this category	admin	fi	poista t‰m‰ kategoria
 delete this group	admin	fi	poista t‰m‰ ryhm‰
 delete this user	admin	fi	poista t‰m‰ k‰ytt‰j‰
 deletes this field	admin	fi	poistaa t‰m‰n kent‰n
@@ -121,7 +122,7 @@ deny access to asynchronous timed services	admin	fi	Est‰ p‰‰sy ajastettuihin pal
 deny access to current sessions	admin	fi	Est‰ p‰‰sy nykyisiin istuntoihin
 deny access to db backup and restore	admin	fi	Est‰ p‰‰sy tietokannan varmuuskopiointiin ja palautukseen
 deny access to error log	admin	fi	Est‰ p‰‰sy virhelokiin
-deny access to global categories	admin	fi	Est‰ p‰‰sy yleisiin luokkiin
+deny access to global categories	admin	fi	Est‰ p‰‰sy yleisiin kategorioihin
 deny access to groups	admin	fi	Est‰ p‰‰sy ryhmiin
 deny access to mainscreen message	admin	fi	Est‰ p‰‰sy p‰‰n‰ytˆn viestiin
 deny access to peer servers	admin	fi	Est‰ p‰‰sy rinnakkaispalvelimille
@@ -135,10 +136,11 @@ disable "auto completion" of the login form	admin	fi	Kirjautumisikkunan "automaa
 disable wysiwyg-editor	admin	fi	‰l‰ k‰yt‰ WYSIWYG-toimitinta
 disabled (not recomended)	admin	fi	ei k‰ytˆss‰ (ei suositella)
 display	admin	fi	N‰yt‰
-do not delete the category and return back to the list	admin	fi	luokkaa EI poisteta ja palataan luetteloon
+do not delete the category and return back to the list	admin	fi	kategoriaa EI poisteta ja palataan luetteloon
 do you also want to delete all global subcategories ?	admin	fi	Haluatko poistaa myˆs yleiset alakategoriat?
 do you want to delete all global subcategories ?	admin	fi	Haluatko poistaa kaikki yleiset alakategoriat?
 do you want to move all global subcategories one level down ?	admin	fi	Haluatko siirt‰‰ kaikkia yleisi‰ alakategorioita tason verran alemmas?
+document root (default)	admin	fi	Tiedostojen juurihakemisto (oletus)
 each value is a line like <id>[=<label>]	admin	fi	jokainen arvo on rivill‰ kuten <id>[=<label>]
 each value is a line like id[=label]	admin	fi	jokainen arvo on rivill‰ kuten id[=label]
 edit account	admin	fi	Muokkaa tunnusta
@@ -152,11 +154,12 @@ edit login screen message	admin	fi	Muokkaa kirjautumisn‰ytˆn viesti‰
 edit main screen message	admin	fi	Muokkaa p‰‰n‰ytˆn viesti‰
 edit peer server	admin	fi	Muokkaa rinnakkaispalvelinta
 edit table format	admin	fi	Muokkaa taulukon muotoa
-edit this category	admin	fi	muokkaa t‰t‰ luokkaa
+edit this category	admin	fi	muokkaa t‰t‰ kategoriaa
 edit this group	admin	fi	muokkaa t‰t‰ ryhm‰‰
 edit this user	admin	fi	muokkaa t‰t‰ k‰ytt‰j‰‰
 edit user	admin	fi	muokkaa k‰ytt‰j‰‰
 edit user account	admin	fi	Muokkaa k‰ytt‰j‰tunnusta
+egroupware directory	admin	fi	eGroupWare hakemisto
 email account active	admin	fi	S‰hkˆpostilin aktivointi
 email address	admin	fi	S‰hkˆpostiosoite
 enable debug-messages	admin	fi	N‰yt‰ virheenj‰ljitysviestit
@@ -169,7 +172,7 @@ enter some random text for app_session <br>encryption (requires mcrypt)	admin	fi
 enter the background color for the login page	admin	fi	Anna kirjautumisn‰ytˆn taustav‰ri
 enter the background color for the site title	admin	fi	Anna sivuston otsikon taustav‰ri
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	fi	Anna absoluuttinen polku v‰liaikaistiedostoille.<br>Esimerkkej‰: /tmp, C:\TEMP
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna absoluuttinen polku v‰liaikaisille tiedostoille.<br>Esimerkkej‰: /tmp, C:\TEMP
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	fi	Anna absoluuttinen polku v‰liaikaistiedostoille.<br>Esimerkkej‰: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	fi	Anna absoluuttinen polku k‰ytt‰jien ja ryhmien tiedostoille.<br>Esimerkkej‰: /files, E:\FILES
 enter the full path for users and group files.<br>examples: /files, e:files	admin	fi	Anna absoluuttinen polku k‰ytt‰jien ja ryhmien tiedostoille.<br>Esimerkkej‰: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	fi	Anna palvelimen is‰nt‰nimi (hostname)
@@ -273,6 +276,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	fi	Pienin tunnus-id (esim. 100 
 minute	admin	fi	Minuutti
 mode	admin	fi	Tila
 month	admin	fi	Kuukausi
+more secure	admin	fi	lis‰‰ turvallisuutta
 name must not be empty !!!	admin	fi	Nimi ei saa olla tyhj‰ !!!
 new group name	admin	fi	Uuden ryhm‰n nimi
 new name	admin	fi	uusi nimi
@@ -308,6 +312,7 @@ please select	admin	fi	Valitse
 postfix with ldap	admin	fi	Postfix ja LDAP
 preferences	admin	fi	Asetukset
 primary group	admin	fi	ensisijainen ryhm‰
+qmaildotmode	admin	fi	qmaildotmode
 quota settings	admin	fi	Rajoituksen asetukset
 quota size in mbyte	admin	fi	Rajoituksen koko Mb:n‰
 re-enter password	admin	fi	Salasana uudestaan
@@ -320,11 +325,11 @@ return to admin mainscreen	admin	fi	takaisin hallinnan p‰‰n‰yttˆˆn
 return to view account	admin	fi	Palaa tunnuksen tietoihin
 route all mails to	admin	fi	Reitit‰ kaikki viestit
 run asynchronous services	admin	fi	Suorita ajastetut palvelut
-save the category	admin	fi	tallenna luokka
-save the category and return back to the list	admin	fi	tallenna luokka ja palaa luetteloon
+save the category	admin	fi	tallenna kategoria
+save the category and return back to the list	admin	fi	tallenna kategoria ja palaa luetteloon
 saves the changes made and leaves	admin	fi	Tallenna muutokset ja poistu
 search accounts	admin	fi	Etsi tunnuksia
-search categories	admin	fi	Etsi luokkia
+search categories	admin	fi	Etsi kategoroita
 search groups	admin	fi	Etsi ryhmi‰
 search peer servers	admin	fi	Etsi rinnakkaispalvelimia
 security	admin	fi	Tietoturva
@@ -346,6 +351,7 @@ set preference values.	admin	fi	Tee asetukset.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	fi	N‰ytet‰‰nkˆ kirjautumisn‰ytˆll‰ kielien valintalista (k‰yt‰nnˆllinen esittelyj‰ varten) ?
 show 'powered by' logo on	admin	fi	'T‰m‰ on' -logon paikka
 show access log	admin	fi	N‰yt‰ k‰yttˆloki
+show an asterisk (*) to mark untranslated strings	admin	fi	N‰yt‰ t‰hti (*) merkki k‰‰nt‰m‰ttˆn osion kohdalla
 show current action	admin	fi	N‰yt‰ viimeisin toimi
 show error log	admin	fi	N‰yt‰ virheloki
 show phpinfo()	admin	fi	N‰yt‰ phpinfo()
@@ -387,7 +393,7 @@ there already is a group with this name. userid's can not have the same name as 
 they must be removed before you can continue	admin	fi	Ne on poistettava ennen kuin voit jatkaa
 this application is current	admin	fi	Sovellus on ajan tasalla
 this application requires an upgrade	admin	fi	Sovellus vaatii p‰ivityksen
-this category is currently being used by applications as a parent category	admin	fi	Sovellus k‰ytt‰‰ t‰t‰ luokkaa yl‰luokkana.
+this category is currently being used by applications as a parent category	admin	fi	Sovellus k‰ytt‰‰ t‰t‰ kategoriaa yl‰kategoriana.
 timeout for application session data in seconds (default 86400 = 1 day)	admin	fi	Kuinka monta sekuntia sovelluksen tilatietoa s‰ilytet‰‰n (oletus: 86400 = 1 vrk)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	fi	Kuinka monta sekuntia on istunnon aikakatkaisu (oletus: 14400 = 4 tuntia)
 times	admin	fi	Ajat
@@ -409,7 +415,7 @@ userdata	admin	fi	k‰ytt‰j‰n data
 users choice	admin	fi	K‰ytt‰j‰ valitsee
 view access log	admin	fi	N‰yt‰ k‰yttˆloki
 view account	admin	fi	N‰yt‰ tunnus
-view category	admin	fi	N‰yt‰ luokka
+view category	admin	fi	N‰yt‰ kategoria
 view error log	admin	fi	N‰yt‰ virheloki
 view sessions	admin	fi	N‰yt‰ istunnot
 view this user	admin	fi	n‰yt‰ t‰m‰ k‰ytt‰j‰
@@ -432,6 +438,6 @@ you must enter an application name and title.	admin	fi	Anna sovelluksen nimi ja 
 you must enter an application name.	admin	fi	Anna sovelluksen nimi.
 you must enter an application title.	admin	fi	Anna sovelluksen otsikko.
 you must select a file type	admin	fi	Anna tiedostotyyppi
-your session could not be verified.	admin	fi	Istuntoasi ei voitu varmentaa.
 you must select at least one group member.	admin	fi	Valitse v‰hint‰‰ yksi ryhm‰n j‰sen.
 you will need to remove the subcategories before you can delete this category	admin	fi	Alikategoriat on poistettava ennen kuin voit poistaa luokan!
+your session could not be verified.	admin	fi	Istuntoasi ei voitu varmentaa.

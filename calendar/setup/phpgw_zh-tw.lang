@@ -22,6 +22,7 @@ alarms	calendar	zh-tw	警告
 all categories	calendar	zh-tw	所有類別
 all day	calendar	zh-tw	所有日期
 all events	calendar	zh-tw	所有事件
+all future	calendar	zh-tw	所有未來的
 all participants	calendar	zh-tw	所有參與人
 allows to edit the event again	calendar	zh-tw	允許再一次編輯事件
 apply the changes	calendar	zh-tw	儲存異動
@@ -116,8 +117,6 @@ filename of the download	calendar	zh-tw	要下載的檔案名稱
 find free timeslots where the selected participants are availible for the given timespan	calendar	zh-tw	在指定的期間找尋選擇的參與人都有空的時間區塊
 firstname of person to notify	calendar	zh-tw	需要通知的人名
 for	calendar	zh-tw	給
-for all future events	calendar	zh-tw	適用所有未來事件
-for this event	calendar	zh-tw	只適用這個事件
 for which views should calendar show distinct lines with a fixed time interval.	calendar	zh-tw	透過什麼模式檢視時行事曆要以固定時間間隔顯示分隔線。
 format of event updates	calendar	zh-tw	事件更新的格式
 forward half a month	calendar	zh-tw	下半個月
@@ -266,7 +265,6 @@ startdate and -time of the search	calendar	zh-tw	搜尋的開始日期 / 時間
 startdate of the export	calendar	zh-tw	匯出資料的開始日期
 startrecord	calendar	zh-tw	開始紀錄
 status changed	calendar	zh-tw	狀態異動了
-status recurrence	calendar	zh-tw	重複狀態
 submit to repository	calendar	zh-tw	送出到儲藏庫中
 sun	calendar	zh-tw	日
 tentative	calendar	zh-tw	暫定

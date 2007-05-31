@@ -260,6 +260,7 @@ host information	setup	sk	Informácie o stroji
 host/ip domain controler	setup	sk	Názov/IP radièa domény
 hostname/ip of database server	setup	sk	Názov/IP databázového servera
 hour (0-24)	setup	sk	hodina (0-24)
+however the tables are still in the database	setup	sk	Av¹ak tabuµky sú stále prítomné v databáze
 however, the application is otherwise installed	setup	sk	Av¹ak aplikácia je ináè nain¹talovaná
 however, the application may still work	setup	sk	Av¹ak aplikácia mo¾no stále funguje
 if no acl records for user or any group the user is a member of	setup	sk	Ak pre pou¾ívateµa neexistujú ACL záznamy, pou¾ívateµom je èlenom
@@ -380,6 +381,7 @@ path to various directories: have to exist and be writeable by the webserver	set
 pear (%1) is a php repository and is usually in a package called %2.	setup	sk	PEAR (%1) je PHP repozitár a zvyèajne sa nachádza v balíku s názvom %2.
 pear%1 is needed by: %2.	setup	sk	%2 vy¾aduje PEAR%1.
 persistent connections	setup	sk	Trvalé spojenia
+php plus restore	setup	sk	PHP plus restore
 php plus restore gives by far the best performance, as it stores the egw enviroment completly in the session.	setup	sk	PHP plus restore dáva ïaleko najlep¹í výkon, keï¾e ukladá kompletné prostredie eGW v rámci sedenia.
 please check for sql scripts within the application's directory	setup	sk	Prosím porozhliadnite sa po sql skriptoch vnútri adresára aplikácie
 please check read/write permissions on directories, or back up and use another option.	setup	sk	Prosím skontrolujte prístupové práva pre èítanie/zápis do adresárov, alebo sa vrá»te a pou¾ite inú voµbu.
@@ -467,6 +469,7 @@ skip the installation tests (not recommended)	setup	sk	Preskoèi» in¹talaèné test
 smtp server hostname or ip address	setup	sk	Názov (hostname) alebo IP adresa SMTP servera
 smtp server port	setup	sk	Port servera SMTP
 some or all of its tables are missing	setup	sk	Chýbajú niektoré alebo v¹etky jeho tabuµky
+sources deleted/missing	setup	sk	Chýbajúce alebo odstránené zdroje
 sql encryption type	setup	sk	Typ SQL kryptovania pre heslá (predvolené - md5)
 standard (login-name identical to egroupware user-name)	setup	sk	¹tandardné (prihlasovacie meno toto¾né s pou¾ívateµským menom eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	sk	Nastavenia predvoleného po¹tového servera (pou¾ité aj pre Mailové overovanie)
@@ -495,6 +498,7 @@ the file	setup	sk	súbor
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	sk	Prvým krokom pri in¹talácii eGroupWare je kontrola, èi va¹e prostredie obsahuje v¹etky nevyhnutné nastavenia pre správny chod aplikácie.
 the following applications need to be upgraded:	setup	sk	Nasledovné aplikácie potrebujú aktualizáciu:
 the function %1 is needed from: %2.	setup	sk	Funkcia %1 je vy¾adovaná od: %2.
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	sk	Funkcia imagecreatefromjpeg je zabezpeèená roz¹írením gd (kompilovaným s podporou jpeg!). Je potrebná pre odosielanie fotiek ku kontaktom.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	Roz¹írenie mbstring je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	sk	mbstring.func_overload = 7 je potrebné pre plnú podporu unicode (utf-8) alebo iných viacbajtových znakových sád.
 the session extension is needed to use php sessions (db-sessions work without).	setup	sk	Roz¹írenie sedenia je potrebné pre pou¾itie php sedení (db sedenia fungujú aj bez neho).

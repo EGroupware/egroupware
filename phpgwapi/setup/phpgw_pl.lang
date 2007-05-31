@@ -491,7 +491,7 @@ poland	common	pl	POLSKA
 portugal	common	pl	PORTUGALIA
 postal	common	pl	Pocztowy
 powered by	common	pl	Dzia³a w oparciu o
-powered by egroupware version %1	common	pl	Dzia³a na <a href="http://www.egroupware.org">eGroupWare</a> wersja %1
+powered by egroupware version %1	common	pl	Dzia³a w oparciu <a href="http://www.egroupware.org">eGroupWare</a> wersja %1
 preferences	common	pl	Ustawienia
 preferences for the idots template set	common	pl	Preferencje dla template-u idots
 prev. month (hold for menu)	jscalendar	pl	Poprz. miesi±c (zatrzymaj aby pokazaæ menu)
@@ -537,8 +537,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	pl	Zachowaj
 search	common	pl	Szukaj
 search %1 '%2'	common	pl	Wyszukaj %1 '%2'
-search or select accounts	common	pl	Wyszukaj lub wybierz konta
-search or select multiple accounts	common	pl	Wyszukaj lub wybierz wiele kont
+search accounts	common	pl	Wyszukaj konta
 second	common	pl	sekunda
 section	common	pl	Sekcja
 select	common	pl	Wybierz

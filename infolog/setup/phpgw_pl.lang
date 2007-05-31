@@ -94,12 +94,12 @@ description	infolog	pl	Opis
 determines the order the fields are displayed	infolog	pl	okre¶la kolejno¶æ wy¶wietlania pól
 disables a status without deleting it	infolog	pl	wy³±cza status bez kasowania go
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	pl	czy chcesz potwierdzenia osoby odpowiedzialnej do: akceptacji, zakoñczenia zadania lub obydwu?
-do you want to see custome infolog types in the calendar?	infolog	pl	Czy chcesz ogl±daæ niestandardowe typy Dziennika CRM w kalendarzu?
+do you want to see custom infolog types in the calendar?	infolog	pl	Czy chcesz ogl±daæ niestandardowe wpisy CRM Dziennik w kalendarzu?
 don't show infolog	infolog	pl	NIE pokazuj InfoLog
 done	infolog	pl	wykonano
 download	infolog	pl	Pobierz
 duration	infolog	pl	Czas trwania
-each value is a line like <id>[=<label>]	infolog	pl	ka¿da warto¶c jest lini±, jak <id>[=<nazwa>]
+each value is a line like <id>[=<label>]	infolog	pl	ka¿da warto¶æ jest lini±, jak <id>[=<nazwa>]
 edit	infolog	pl	Edycja
 edit or create categories for ingolog	infolog	pl	Edytuj lub twórzy kategorie dla CRM Dziennik
 edit rights (full edit rights incl. making someone else responsible!)	infolog	pl	edytuj uprawnienia (pe³ne prawa edycji zawieraj± m.in. prawo wyznaczenia innej osoby odpowiedzialnej!)
@@ -220,6 +220,7 @@ responsible	infolog	pl	oddelegowane na Ciebie - wszystkie
 responsible open	infolog	pl	oddelegowane na Ciebie - otwarte
 responsible overdue	infolog	pl	oddelegowane na Ciebie - zaleg³e
 responsible upcoming	infolog	pl	oddelegowane na Ciebie - nadchodz±ce
+responsible user, priority	infolog	pl	osoba odpowiedzialna, priorytet
 returns a list / search for records.	infolog	pl	Pokazuje listê wyszukanych rekordów
 rights for the responsible	infolog	pl	Uprawnienia do osoby odpowiedzialnej
 save	infolog	pl	Zapisz
@@ -271,7 +272,7 @@ test import (show importable records <u>only</u> in browser)	infolog	pl	Import t
 the name used internaly (<= 10 chars), changeing it makes existing data unavailible	infolog	pl	nazwa u¿yta wewnêtrznie (<= 10 znaków), zmiana spowoduje niedostêpno¶æ istniej±cych danych
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	infolog	pl	nazwa u¿yta wewnêtrznie (<= 20 znaków), zmiana spowoduje niedostêpno¶æ istniej±cych danych
 the text displayed to the user	infolog	pl	tekst wy¶wietlany u¿ytkownikowi
-this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pl	Ten filtr jest domy¶lnie u¿ywany przez CRM Dziennik po wej¶ciu do aplikacji. Filtry ograniczaj± ilo¶æ wpisów w bie¿±cym widoku. Dostepne filtry pokazuj± tylko zakoñczone, wci±¿ otwarte lub nadchodz±ce wydarzenia, Twoje lub wszystkich u¿ytkowników.
+this is the filter infolog uses when you enter the application. filters limit the entries to show in the actual view. there are filters to show only finished, still open or futures entries of yourself or all users.	infolog	pl	Ten filtr jest domy¶lnie u¿ywany przez CRM Dziennik po wej¶ciu do aplikacji. Filtry ograniczaj± ilo¶æ wpisów w bie¿±cym widoku. Dostêpne filtry pokazuj± tylko zakoñczone, wci±¿ otwarte lub nadchodz±ce wydarzenia, Twoje lub wszystkich u¿ytkowników.
 til when should the todo or phonecall be finished	infolog	pl	do kiedy powinno byæ zakoñczone Dadanie lub Rozmowa tel.
 times	infolog	pl	Terminy
 to many might exceed your execution-time-limit	infolog	pl	zbyt wiele mo¿e spowodowaæ przekroczenie czasu wykonywania

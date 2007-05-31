@@ -21,9 +21,9 @@ clear selection	resources	sk	Zru¹i» výber
 configure access permissions	admin	sk	Nastavi» prístupové práva
 create new accessory for this resource	resources	sk	Vytvori» novú kategóriu pre tento zdroj
 create new links	resources	sk	Vytvori» nové odkazy
-delete selected resources	resources	sk	Zmaza» vybrané zdroje
-delete this entry	resources	sk	Zmaza» tento záznam
-description (short)	resources	sk	Opis (struèný)
+delete selected resources	resources	sk	Odstráni» vybrané zdroje
+delete this entry	resources	sk	Odstráni» túto polo¾ku
+description (short)	resources	sk	Popis (struèný)
 direct booking permissions	resources	sk	Priame rezervaèné práva
 don't use vfs (this will need a symlink --> see readme)	resources	sk	Nepou¾íva» vfs (bude potrebný symlink --> preèítajte si README)
 edit this entry	resources	sk	Uprav tento záznam
@@ -51,33 +51,33 @@ location of resource	resources	sk	Umiestnenie zdroja
 location:	resources	sk	Umiestnenie:
 name of resource	resources	sk	Názov zdroja:
 name:	resources	sk	Názov:
-no description available	resources	sk	®iadny opis sa nena¹iel
-no resources selected	resources	sk	Nie sú oznaèené ¾iadne zdroje
+no description available	resources	sk	®iadny popis sa nena¹iel
+no resources selected	resources	sk	Nie sú vybrané ¾iadne zdroje
 notify your administrator to correct this situation	resources	sk	Upozornite svojho správcu, nech napraví vzniknutú situáciu
 picture	resources	sk	Obrázok
 picture source	resources	sk	Zdroj obrázka
-picture type is not supported, sorry!	resources	sk	Tento typ obrázka nie je podporovaný, sorry!
+picture type is not supported, sorry!	resources	sk	Je mi µúto, tento typ obrázka nie je podporovaný!
 pictures or resource	resources	sk	Obrázky zdroja
-planer	resources	sk	Zlánovaè
+planer	resources	sk	Plánovaè
 prizeing information for booking or buying	resources	sk	Cenník rezervácií a nákupov
 quantity	resources	sk	Mno¾stvo
 quantity of resource	resources	sk	Poèet kusov zdroja
 quantity:	resources	sk	Mno¾stvo:
-read calendar permissions	resources	sk	Právo prezera» Kalendár
+read calendar permissions	resources	sk	Právo èíta» Kalendár
 read permissions	resources	sk	Právo na èítanie
 related links	resources	sk	Súvisiace odkazy
 resources	common	sk	Zdroje
 resources list	resources	sk	Zoznam zdrojov
 responsible:	resources	sk	Zodpovedný:
-saves entry and exits	resources	sk	Ulo¾í záznam a skonèí
+saves entry and exits	resources	sk	Ulo¾í polo¾ku a skonèí
 select a category	resources	sk	Vyberte kategóriu
 select resource	resources	sk	Vyberte zdroj
 select resources	common	sk	Vyberte zdroje
-select/deselect all	resources	sk	V¹etko oznaèi»/zru¹i» oznaèenie
-short description	resources	sk	Struèný opis
-short description of resource	resources	sk	Zobrazi» opis zdroja
+select/deselect all	resources	sk	Vybra» v¹etko / zru¹i» výber
+short description	resources	sk	Struèný popis
+short description of resource	resources	sk	Zobrazi» popis zdroja
 show calendar of resource	resources	sk	Zobrazi» kalendár zdroja
-something went wrong by deleting resource	resources	sk	Poèas mazania zdroja sa nieèo nepodarilo
+something went wrong by deleting resource	resources	sk	Poèas odstraòovania zdroja sa nieèo nepodarilo
 something went wrong by saving resource	resources	sk	Poèas ukladania zdroja sa nieèo nepodarilo
 storage inforation	resources	sk	Informácie o sklade
 storage information	resources	sk	Informácie o sklade
@@ -90,7 +90,7 @@ use the category's icon	resources	sk	Pou¾i» ikonu kategórie
 useable	resources	sk	Pou¾iteµné
 useable:	resources	sk	Pou¾iteµné:
 view accessories for this resource	resources	sk	Zobrazi» príslu¹enstvo k tomuto zdroju
-view this entry	resources	sk	Zobrazi» záznam
+view this entry	resources	sk	Zobrazi» polo¾ku
 web-page of resource	resources	sk	Webstránka zdroja
 web-site for this resource	resources	sk	Webstránka tohto zdroja
 where to find this resource?	resources	sk	Kde sa dá nájs» tento zdroj

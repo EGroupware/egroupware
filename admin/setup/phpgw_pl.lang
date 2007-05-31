@@ -173,8 +173,8 @@ enter a description for the category	admin	pl	wpisz opis tej kategorii
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	pl	Wpisz trochê losowego tekstu dla zakodowania<br>app_session (wymaga mcrypt)
 enter the background color for the login page	admin	pl	Podaj kolor t³a strony logowania
 enter the background color for the site title	admin	pl	Wpisz kolor t³a tytu³u portalu
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pl	Podaj pe³n± ¶cie¿kê do katalogu dla plików tymczasowych.<br>Na przyk³ad: /tmp, C:TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	pl	Podaj pe³n± ¶cie¿kê do plików uy¿tkowników i grup.<br>Na przykad: /files, E:FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pl	Podaj pe³n± ¶cie¿kê do plików tymczasowych/<br />Przyk³ady: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	pl	Podaj pe³n± ¶cie¿kê do plików katalogów i grup.<br />Przyk³ady: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	pl	Podaj nazwê komputera, na którym jest uruchomiony serwer
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj URL do twojego portalu eGroupWare.<br>Na przykad: http://www.twojadomena.com.pl/egroupware   or  /egroupware<br><b>Bez koñcz±cego slash-a (,,/'')</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pl	Wpisz szukany ci±g znaków. Aby pokazaæ wszystkie wpisy, wyczy¶æ to pole i kliknij ponownie  przycisk SZUKAJ.
@@ -191,7 +191,7 @@ enter your http proxy server port	admin	pl	Domy¶lny port serwera HTTP proxy
 enter your smtp server hostname or ip address	admin	pl	Podaj nazwê hosta serwera SMTP lub adres IP
 enter your smtp server port	admin	pl	Podaj port serwera SMTP
 error canceling timer, maybe there's none set !!!	admin	pl	B³±d podczas wyl±czania timera, mo¿e ¿aden nie jest ustawiony !!!!
-error setting timer, wrong syntax or maybe there's one already running !!!	admin	pl	B³±d ustwiania timera - b³êdna sk³adnia lub mo¿e jaki¶ ju¿ jest uruchomiony!!!
+error setting timer, wrong syntax or maybe there's one already running !!!	admin	pl	B³±d ustawiania timera - b³êdna sk³adnia lub mo¿e jaki¶ ju¿ jest uruchomiony!!!
 error! no appname found	admin	pl	B³±d! Brak nazwy aplikacji
 error: %1 not found or other error !!!	admin	pl	B³±d: %1 nie znaleziony lub inny b³±d !!!
 expires	admin	pl	Wa¿ne do
@@ -202,7 +202,7 @@ file space	admin	pl	Objêto¶æ pliku
 file space must be an integer	admin	pl	Objêto¶æ pliku musi byæ liczb± ca³kowit±
 find and register all application hooks	admin	pl	Znajd¼ i zarejestruj wszystkie uchwyty aplikacji
 for the times above	admin	pl	dla terminów podanych
-for the times below (empty values count as '*', all empty = every minute)	admin	pl	dla czsów podanych poni¿ej (pusta warto¶æ liczona jako '*', wszystkie puste = co minutê)
+for the times below (empty values count as '*', all empty = every minute)	admin	pl	dla czasów podanych poni¿ej (pusta warto¶æ liczona jako '*', wszystkie puste = co minutê)
 force selectbox	admin	pl	U¿ywaj zawsze pola wyboru
 forward also to	admin	pl	prze¶lij tak¿e do
 forward emails to	admin	pl	prze¶lij maile dalej do
@@ -277,6 +277,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	pl	Minimalny ID konta (np:500 l
 minute	admin	pl	Minuta
 mode	admin	pl	Tryb
 month	admin	pl	Miesi±c
+more secure	admin	pl	bardziej bezpieczne
 name must not be empty !!!	admin	pl	Nie mo¿e byæ puste !!!
 new group name	admin	pl	Nowa nazwa grupy
 new name	admin	pl	nowa nazwa
@@ -352,6 +353,7 @@ set preference values.	admin	pl	Ustaw warto¶ci preferencji
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pl	Czy strona zalogowania powinna zawiera box z wyborem jêzyka (przydatne dla serwerów demo) ?
 show 'powered by' logo on	admin	pl	Wy¶wietl logo 'powered by'
 show access log	admin	pl	Wy¶wietl dziennik dostêpów
+show an asterisk (*) to mark untranslated strings	admin	pl	Pokazuj gwiazdkê (*) aby oznaczaæ nieprzet³umaczone frazy
 show current action	admin	pl	Poka¿ bie¿±c± akcjê
 show error log	admin	pl	W¶ywietl dziennik b³êdów
 show phpinfo()	admin	pl	Wy¶wietl phpinfo()
@@ -384,7 +386,7 @@ the api requires an upgrade	admin	pl	Wersja API wymaga aktualizacji
 the groups must include the primary group	admin	pl	Lista grup musi zawieraæ grupê podstawow±
 the login and password can not be the same	admin	pl	Nazwa logowania i has³o nie mog± byæ identyczne
 the loginid can not be more then 8 characters	admin	pl	Identyfikator logowania (loginid) nie mo¿e by d³u¿szy ni¿ 8 znaków
-the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pl	ta nazwa jest wykorzystywana wewnêtrznie (<=20 liter), zmienienie jej spowoduje blokownanie dostêpu do danych
+the name used internaly (<= 20 chars), changeing it makes existing data unavailible	admin	pl	ta nazwa jest wykorzystywana wewnêtrznie (<=20 liter), zmienienie jej spowoduje blokowanie dostêpu do danych
 the testjob sends you a mail everytime it is called.	admin	pl	Testjob wy¶le Ci maila za ka¿dym razem, kiedy jest wykonywany.
 the text displayed to the user	admin	pl	Tekst wy¶wietlany dla u¿ytkownika
 the two passwords are not the same	admin	pl	Oba has³a nie s± identyczne
@@ -438,6 +440,6 @@ you must enter an application name and title.	admin	pl	Musisz podaæ nazwê i tytu
 you must enter an application name.	admin	pl	Musisz podaæ nazwê aplikacji
 you must enter an application title.	admin	pl	Musisz podaæ tytu³ aplikacji
 you must select a file type	admin	pl	Musisz wybraæ typ pliku
-your session could not be verified.	admin	pl	Nie mo¿na zweryfikowaæ sesji.
 you must select at least one group member.	admin	pl	Musisz wybraæ przynajmniej jednego cz³onka grupy.
 you will need to remove the subcategories before you can delete this category	admin	pl	Nale¿y usun±æ kategorie podrzêdne przed skasowaniem tej kategorii !
+your session could not be verified.	admin	pl	Nie mo¿na zweryfikowaæ sesji.

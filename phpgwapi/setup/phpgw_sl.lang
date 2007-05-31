@@ -45,6 +45,7 @@ all fields	common	sl	vsa polja
 alphabet	common	sl	a,b,c,č,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,š,t,u,v,w,x,y,z,ž
 alternate style-sheet:	common	sl	Nadomestna (CSS) predloga
 american samoa	common	sl	AMERIŠKA SAMOA
+an existing and by the webserver readable directory enables the image browser and upload.	common	sl	Obstoječa IN s strani spletnega strežnika berljiva mapa omogoča brskanje in nalaganje slik.
 andorra	common	sl	ANDORA
 angola	common	sl	ANGOLA
 anguilla	common	sl	ANGVILA
@@ -71,7 +72,6 @@ azerbaijan	common	sl	AZARBEJDŽAN
 back	common	sl	Nazaj
 back to user login	common	sl	Nazaj na prijavno okno
 background color:	common	sl	Barva ozadja:
-backupdir '%1' is not writeable by the webserver	common	sl	Spletni strežnik ne more pisati v arhivsko mapo '%1'
 bad login or password	common	sl	Napačno uporabniško ime in/ali geslo
 bahamas	common	sl	BAHAMI
 bahrain	common	sl	BAHRAIN
@@ -86,7 +86,6 @@ bermuda	common	sl	BERMUDI
 bhutan	common	sl	BUTAN
 blocked, too many attempts	common	sl	Zaklenjeno: preveč poskusov.
 bold	common	sl	Krepko
-bold.gif	common	sl	bold.gif
 bolivia	common	sl	BOLIVIJA
 border	common	sl	Rob
 bosnia and herzegovina	common	sl	BOSNA IN HERCEGOVINA
@@ -177,6 +176,7 @@ detail	common	sl	Podrobnost
 details	common	sl	Podrobnosti
 diable the execution a bugfixscript for internet explorer 5.5 and higher to show transparency in png-images?	common	sl	Onemogoči izvajanje skripte, ki popravi hrošča pri prikazu transparentnih PNG slik v Microsoft Internet Explorerju 5.5 in višjih?
 direction left to right	common	sl	Smer levo proti desni
+directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sl	Mapa ne obstaja, ni berljiva s strani spletnega strežnika ali ni podana relativno na koren dokumentov (document root)!
 disable internet explorer png-image-bugfix	common	sl	Onemogoči popravek PNG hrošča v IE?
 disable slider effects	common	sl	Onemogoči učinek drsnika
 disable the animated slider effects when showing or hiding menus in the page? opera and konqueror users will probably must want this.	common	sl	Onemogoči animirane učinke drsnika ob prikazu menija ob strani? Uporabniki Opere in Konquererja bodo verjetno hoteli to možnost.
@@ -208,7 +208,6 @@ egypt	common	sl	EGIPT
 el salvador	common	sl	SALVADOR
 email	common	sl	E-pošta
 email-address of the user, eg. "%1"	common	sl	E-naslov uporabnika, npr. "%1"
-en	common	sl	en
 enabled	common	sl	Omogočeno
 end date	common	sl	Končni datum
 end time	common	sl	Končni čas
@@ -223,11 +222,13 @@ error deleting %1 %2 directory	common	sl	Napaka pri brisanju %1 %2 mape
 error renaming %1 %2 directory	common	sl	Napaka ob preimenovanju %1 %2 mape
 estonia	common	sl	ESTONIJA
 ethiopia	common	sl	ETIOPIJA
+everything	common	sl	Vse
 exact	common	sl	Natančno
 failed to contact server or invalid response from server. try to relogin. contact admin in case of faliure.	common	sl	Povezava s strežnikom ni uspela oz. strežnik je javil napačen odgovor. Poskusite se ponovno prijaviti. Če vam ne uspe, kontaktirajte skrbnika.
 falkland islands (malvinas)	common	sl	FALKLANDSKO OTOČJE
 faroe islands	common	sl	FERSKO OTOČJE
 fax number	common	sl	Faks
+features of the editor?	common	sl	Zmožnosti urejevalnika?
 february	common	sl	Februar
 fields	common	sl	Polja
 fiji	common	sl	FIDŽI
@@ -297,10 +298,10 @@ iceland	common	sl	ISLANDIJA
 iespell not detected. click ok to go to download page.	common	sl	ieSpell ni bil zaznan. Kliknite V redu za obisk spletne strani za prenos.
 if the clock is enabled would you like it to update it every second or every minute?	common	sl	Če je ura omogočena, bi jo radi posodobili vsako sekundo ali vsako minutu?
 if there are some images in the background folder you can choose the one you would like to see.	common	sl	Če so v mapi kakšne slike, lahko izberete tisto, ki jo želite videti.
+image directory relative to document root (use / !), example:	common	sl	Mapa slik, relativno na koren dokumentov (document root, uporabite /!). Primer:
 image url	common	sl	URL podobe
 india	common	sl	INDIJA
 indonesia	common	sl	INDONEZIJA
-insert 'return false'	common	sl	Vstavi 'return false'
 insert all %1 addresses of the %2 contacts in %3	common	sl	Vstavi vseh %1 naslovov iz %2 kontaktov v %3
 insert column after	common	sl	Vstavi stolpec za izbranim
 insert column before	common	sl	Vstavi stolpec pred izbranim
@@ -317,7 +318,6 @@ israel	common	sl	IZRAEL
 it has been more then %1 days since you changed your password	common	sl	Od zadnje menjave gesla je preteklo že več kot %1 dni.
 it is recommended that you run setup to upgrade your tables to the current version	common	sl	Priporočamo, da poženete namestitev za nadgradnjo tabel na najnovejšo različico.
 italic	common	sl	Ležeče
-italic.gif	common	sl	italic.gif
 italy	common	sl	ITALIJA
 jamaica	common	sl	JAMAJKA
 january	common	sl	Januar
@@ -395,6 +395,7 @@ moldova, republic of	common	sl	MOLDAVIJA
 monaco	common	sl	MONAKO
 monday	common	sl	Ponedeljek
 mongolia	common	sl	MONGOLIJA
+montenegro	common	sl	ČRNA GORA
 montserrat	common	sl	MONSERRAT
 morocco	common	sl	MAROKO
 mozambique	common	sl	MOZAMBIK
@@ -472,9 +473,6 @@ password must contain at least %1 special characters	common	sl	Geslo mora vsebov
 password must contain at least %1 uppercase letters	common	sl	Geslo mora vsebovati najmanj %1 velikih črk
 password must have at least %1 characters	common	sl	Geslo mora imeti najmanj %1 znakov
 path to user and group files has to be outside of the webservers document-root!!!	common	sl	Pot do uporabniških in skupinskih datotek NE SME BITI podrejena korenski mapi spletišča.
-pattern for search in addressbook	common	sl	Vzorec za iskanje v adresarju
-pattern for search in calendar	common	sl	Vzorec za iskanje v koledarju
-pattern for search in projects	common	sl	Vzorec za iskanje med projektih
 permissions to the files/users directory	common	sl	Dovoljenja do mape datotek/uporabnikov
 personal	common	sl	Zasebno
 peru	common	sl	PERU
@@ -492,8 +490,8 @@ please wait...	common	sl	Prosimo, počakajte...
 poland	common	sl	POLJSKA
 portugal	common	sl	PORTUGALSKA
 postal	common	sl	Poštno
+powered by	common	sl	Teče na
 powered by egroupware version %1	common	sl	Teče na <a href="http://www.egroupware.org">eGroupware</a> različica %1
-powered by phpgroupware version %1	common	sl	Teče na phpGroupWare različica %1
 preferences	common	sl	Nastavitve
 preferences for the idots template set	common	sl	Nastavitve predloge idots
 prev. month (hold for menu)	jscalendar	sl	Prejšnji mesec (držite tipko za meni)
@@ -511,6 +509,7 @@ qatar	common	sl	KATAR
 read	common	sl	Preberi
 read this list of methods.	common	sl	Preberi ta seznam postopkov
 reading	common	sl	Branje
+regular	common	sl	Občasno
 reject	common	sl	Zavrni
 remove selected accounts	common	sl	Odstrani izbrane račune
 remove shortcut	common	sl	Odstrani bližnjico
@@ -539,8 +538,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	sl	Shrani
 search	common	sl	Išči
 search %1 '%2'	common	sl	Išči %1 '%2'
-search or select accounts	common	sl	Išči ali izberi uporabniške račune
-search or select multiple accounts	common	sl	Išči ali izberi več računov hkrati
+search accounts	common	sl	Išči po računih
 second	common	sl	Sekunda
 section	common	sl	Odsek
 select	common	sl	Izberi
@@ -559,6 +557,7 @@ selection	common	sl	Izbor
 send	common	sl	Pošlji
 senegal	common	sl	SENEGAL
 september	common	sl	September
+serbia	common	sl	Srbija
 server %1 has been added	common	sl	Dodan je bil strežnik %1.
 server answered. processing response...	common	sl	Strežnik je odgovoril. Obdelujem odgovor ...
 server contacted. waiting for response...	common	sl	Povezava s strežnikom je bila vzpostavljena. Čakam na odgovor ...
@@ -581,6 +580,7 @@ show_more_apps	common	sl	Prikaži več aplikacij
 showing %1	common	sl	Prikazanih %1
 showing %1 - %2 of %3	common	sl	Prikazani %1 - %2 od %3
 sierra leone	common	sl	SIERRA LEONE
+simple	common	sl	Preprosto
 singapore	common	sl	SINGAPUR
 slovakia	common	sl	SLOVAŠKA
 slovenia	common	sl	SLOVENIJA
@@ -652,7 +652,6 @@ type	common	sl	Vrsta
 uganda	common	sl	UGANDA
 ukraine	common	sl	UKRAJINA
 underline	common	sl	Podčrtano
-underline.gif	common	sl	underline.gif
 united arab emirates	common	sl	ZDRUŽENI ARABSKI EMIRATI
 united kingdom	common	sl	VELIKA BRITANIJA
 united states	common	sl	ZDRUŽENE DRŽAVE
@@ -662,6 +661,7 @@ update	common	sl	Obnovi
 update the clock per minute or per second	common	sl	Posodobi uro vsako minuto ali vsako sekundo
 upload	common	sl	Naloži
 upload directory does not exist, or is not writeable by webserver	common	sl	Mapa za prenos ne obstaja ali pa ni zapisljiva s strani spletnega strežnika
+upload requires the directory to be writable by the webserver!	common	sl	Prenos zahteva, da je mapa zapisljiva s streni spletnega strežnika!
 url	common	sl	URL
 uruguay	common	sl	URUGVAJ
 use button to search for	common	sl	Uporabi gumb za iskanje
@@ -700,6 +700,7 @@ year	common	sl	Leto
 yemen	common	sl	JEMEN
 yes	common	sl	Da
 you are required to change your password during your first login	common	sl	Ob prvi prijavi morate zamenjati geslo!
+you can customize how many icons and toolbars the editor shows.	common	sl	Prilagodite lahko koliko ikon in orodnih vrstic naj prikaže urejevalnik.
 you have been successfully logged out	login	sl	Bili ste uspešno odjavljeni.
 you have not entered a title	common	sl	Niste vnesli naziva
 you have not entered a valid date	common	sl	Niste vnesli veljavnega datuma
@@ -715,7 +716,6 @@ your search returned %1 matchs	common	sl	Najdenih %1 zadetkov
 your search returned 1 match	common	sl	Najden 1 zadetek
 your session could not be verified.	login	sl	Vaša seja ne more biti preverjena.
 your settings have been updated	common	sl	Vaše nastavitve so bile posodobljene
-yugoslavia	common	sl	JUGOSLAVIJA
 zambia	common	sl	ZAMBIJA
 zimbabwe	common	sl	ZIMBABVE
 zoom	common	sl	Zoom

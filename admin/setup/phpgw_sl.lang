@@ -92,6 +92,8 @@ check ip address of all sessions	admin	sl	Preveri naslov IP vseh sej
 check items to <b>%1</b> to %2 for %3	admin	sl	Preveri elemente do <b>%1</b> do %2 za %3
 click to select a color	admin	sl	Izbira barve
 color	admin	sl	Barva
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	sl	Domena za piškotke (privzeto je prazno, kar pomeni, da bo uporabljeno celotno ime domene. Za SiteMgr ".domena.si" dovoli uporabo istega piškotka za domeno www.domena.si in za egw.domena.si)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	sl	Pot za piškotke (dovoljeno je več sej eGW z različnimi mapami ampak se znajo pojaviti problemi s SiteMgr!)
 country selection	admin	sl	Izbor države
 create group	admin	sl	Ustvari skupino
 creates a new field	admin	sl	Ustvari novo polje
@@ -144,6 +146,7 @@ do not delete the category and return back to the list	admin	sl	<B>Ne</B> izbri�
 do you also want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi vse globalne podkategorije?
 do you want to delete all global subcategories ?	admin	sl	Ali želite izbrisati tudi globalne vse podkategorije?
 do you want to move all global subcategories one level down ?	admin	sl	Ali želite premakniti vse globalne podkategorije nivo niže?
+document root (default)	admin	sl	Koren dokumentov (Document root) (privzeto)
 each value is a line like <id>[=<label>]	admin	sl	vsaka vrednost je vrstica oblike <id>[=<oznaka>]
 each value is a line like id[=label]	admin	sl	Vsaka vrednost je vrstica oblike id[=oznaka]
 edit account	admin	sl	Urejanje računa
@@ -162,6 +165,7 @@ edit this group	admin	sl	Uredi to skupino
 edit this user	admin	sl	Uredi tega uporabnika
 edit user	admin	sl	Uredi uporabnika
 edit user account	admin	sl	Uredi uporabniški račun
+egroupware directory	admin	sl	Mapa eGroupWare
 email account active	admin	sl	E-poštni račun je aktiven
 email address	admin	sl	E-poštni naslov
 enable debug-messages	admin	sl	Omogoči sporočila za iskanje napak
@@ -270,7 +274,7 @@ mail settings	admin	sl	E-poštne nastavitve
 main email-address	admin	sl	Glavni E-naslov
 main screen message	admin	sl	Sporočilo osnovnega zaslona
 manager	admin	sl	Upravitelj
-max length of the input [, length of the inputfield (optional)]	admin	sl	Največja dolžina vnosa [, dolžina vosnega polja (opcijsko)]
+max length of the input [, length of the inputfield (optional)]	admin	sl	Največja dolžina vnosa [, dolžina vnosnega polja (opcijsko)]
 maximum account id (e.g. 65535 or 1000000)	admin	sl	Najvišji ID računa (npr. 65535 ali 1000000)
 maximum entries in click path history	admin	sl	Največ vnosov v zgodovino klikanja
 message has been updated	admin	sl	sporočilo je bilo spremenjeno
@@ -279,6 +283,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	sl	Najnižji ID računa (npr. 1
 minute	admin	sl	Minute
 mode	admin	sl	Način
 month	admin	sl	Mesec
+more secure	admin	sl	Bolj varno
 name must not be empty !!!	admin	sl	Ime ne sme biti prazno!
 new group name	admin	sl	Ime nove skupine
 new name	admin	sl	Novo ime
@@ -354,6 +359,7 @@ set preference values.	admin	sl	Vnesite vrednosti nastavitev.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	sl	Ali naj vstopna stran vsebuje možnost izbire jezika (uporabno za demo-strani) ?
 show 'powered by' logo on	admin	sl	Pokaži 'teče na' logotip na
 show access log	admin	sl	Pokaži evidenco dostopov
+show an asterisk (*) to mark untranslated strings	admin	sl	Pokaži zvezdico (*) za označitev neprevedenih nizov
 show current action	admin	sl	Pokaži trenutno dejanje
 show error log	admin	sl	Pokaži seznam napak
 show phpinfo()	admin	sl	Pokaži phpinfo() informacije
@@ -374,6 +380,7 @@ start testjob!	admin	sl	Poženi testno nalogo (TestJob)!
 submit changes	admin	sl	Shrani spremembe
 submit the search string	admin	sl	Pošlji iskalni niz
 subtype	admin	sl	Podtip
+switch it off, if users are randomly thrown out	admin	sl	Izključite, če se uporabnike izloči naključno
 template selection	admin	sl	Izbor predloge
 text entry	admin	sl	Besedilni vnos
 that application name already exists.	admin	sl	Aplikacija s tem imenom že obstaja.
@@ -411,7 +418,7 @@ use pure html compliant code (not fully working yet)	admin	sl	Uporabi HTML velja
 use theme	admin	sl	Uporabi temo
 user accounts	admin	sl	Uporabniški računi
 user data	common	sl	Podatki o uporabniku
-user for smtp-authentication (leave it empty if no auth required)	admin	sl	Uporabniško ime za SMTP avtentikacijo (pustite prazno, če ni zahtevana)
+user for smtp-authentication (leave it empty if no auth required)	admin	sl	Uporabniško ime za avtentikacijo SMTP (pustite prazno, če ni zahtevana)
 user groups	admin	sl	Uporabniške skupine
 userdata	admin	sl	Podatki o uporabniku
 users choice	admin	sl	Uporabnikova izbira
