@@ -13,7 +13,7 @@ function notificationwindow_init() {
 }
 
 function notificationwindow_setTimeout() {
-	window.setTimeout("notificationwindow_refresh();", 10000);
+	window.setTimeout("notificationwindow_refresh();", 60000);
 }
 function notificationwindow_refresh() {
 	xajax_doXMLHTTP("notifications.notification_popup.ajax_get_notifications");
