@@ -288,7 +288,7 @@ class bo_tracking
 
 		if (!include_once(EGW_INCLUDE_ROOT. '/notifications/inc/class.notification.inc.php')) return false;
 
-		return is_null(notify(array($user),$message));	// return the exeception on error
+		return is_null(notification::notify(array($user),$message));	// return the exeception on error
 	}
 
 	/**
