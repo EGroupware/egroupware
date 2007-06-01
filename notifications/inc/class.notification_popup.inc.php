@@ -68,12 +68,8 @@ class notification_popup implements iface_notification {
 		// If we are called from class notification account and prefs are objects.
 		// otherwise we have to fetch this objects for current user.
 		if (!is_object($_account)) {
-			$_account = (object) $GLOBALS['egw']->accounts->read($_account);
-			$_account->id =& $_account->account_id;
-//			$account_id = $GLOBALS['egw_info']['user']['account_id'];
-//			$this->account = $GLOBALS['egw']->accounts->get_account_data($account_id);
-//			$this->account[$account_id]['id'] = $account_id;
-//			$this->account = (object)$this->account[$account_id];
+			$this->account = (object) $GLOBALS['egw']->accounts->read($_account);
+			$this->account->id =& $this->account->account_id;
 		}
 		else {
 			$this->account = $_account;

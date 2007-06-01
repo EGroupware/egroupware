@@ -125,26 +125,26 @@ final class notification {
 		return $this->receivers;
 	}
 
-}
-
-/**
- * Small helper function to just send a message
- *
- * @param array $receivers
- * @param string $message
- * @return Exception
- */
-function notify(array $receivers,$message)
-{
-	$notification = new notification();
-	$notification->set_receivers($receivers);
-	$notification->set_message($message);
-	try{
-		$notification->send();
+	/**
+	 * Small helper function to just send a message
+	 *
+	 * @abstract To stay php4 compatible for the 1.4 release we don't
+	 * throw exeptions here. This behaviour will change after 1.4!
+	 * @param array $receivers
+	 * @param string $message
+	 * @return string
+	 */
+	public static function notify( array $_receivers, $_message ) {
+		$notification = new notification();
+		$notification->set_receivers( $_receivers );
+		$notification->set_message( $_message );
+		try{
+			$notification->send();
+		}
+		catch(Exception $exception) {
+			return $exception->getMessage();
+		}
+		return null;
 	}
-	catch(Exception $exception) {
-		error_log("notify(array($user),'$message'".$exception->getMessage());
-		return $exception;
-	}
-	return null;
+	
 }
