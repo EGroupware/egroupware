@@ -81,6 +81,13 @@
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
 	}
 							 
+ 	$test[] = '1.2.107';
+        function phpgwapi_upgrade1_2_107()
+	{
+		// 1.2.107 security update
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.3.004';
+	}
+							 
 	// updates in HEAD / 1.3
 	$test[] = '1.3.001';
 	function phpgwapi_upgrade1_3_001()
