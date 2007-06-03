@@ -1785,20 +1785,21 @@
 				{
 					$mime_type = $ls_array[0]['mime_type'];
 				}
-                                else
-                                {
-                                        list($_first,$_ext) = split("\.",$this->file);
-                                        $mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
-                                }
+                else
+                {
+					$parts = explode('.',$this->file);
+					$_ext = array_pop($parts);
+					$mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
+                }
 				// check if the prefs are set for viewing unknown extensions as text/plain and
 				// check if the mime_type is unknown, empty or not found (application/octet)
 				// or check if the mimetype contains text, 
 				// THEN set the mime_type text/plain
 				if(($this->prefs['viewtextplain'] && ($mime_type=='' or $mime_type=='unknown' or $mime_type=='application/octet-stream')) or strpos($mime_type, 'text/')!==false)
-                                {
-
-                                        $mime_type = 'text/plain';
-                                }
+				{
+				
+					$mime_type = 'text/plain';
+				}
 				
 				// we want to define pdfs and text files as viewable
 				$viewable = array('','text/plain','text/csv','text/html','text/text','application/pdf');
