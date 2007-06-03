@@ -92,6 +92,8 @@ check ip address of all sessions	admin	pl	sprawdzanie adresu IP dla ka¿dej sesji
 check items to <b>%1</b> to %2 for %3	admin	pl	sprawd¼ pozycje do <b>%1</b> do %2 dla %3
 click to select a color	admin	pl	Kliknij aby wybraæ kolor
 color	admin	pl	Kolor
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pl	Domena dla ciasteczek (pusta warto¶æ oznacza pe³n± nazwê domeny, dla aplikacji SiteMgr przyk³adowo '.domena.pl' pozwoli u¿ywaæ tego samego ciasteczka dla domen egw.domena.pl oraz www.domena.pl)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pl	¦cie¿ka ciasteczka (pozwala na wiele równoleg³ych sesji eGW do ró¿nych podkatalogów, generuje problemy z aplikacj± SiteMgr!)
 country selection	admin	pl	Wybór kraju
 create group	admin	pl	Stwórz grupê
 creates a new field	admin	pl	utwórz nowe pole
@@ -144,6 +146,7 @@ do not delete the category and return back to the list	admin	pl	NIE usuwaj tej k
 do you also want to delete all global subcategories ?	admin	pl	Czy chcesz usun±æ tak¿e wszystkie globalne podkategorie?
 do you want to delete all global subcategories ?	admin	pl	Czy chcesz usun±æ wszystkie globalne podkategorie?
 do you want to move all global subcategories one level down ?	admin	pl	Czy przenie¶æ wszystkie podkategorie o jeden poziom w dó³?
+document root (default)	admin	pl	Katalog g³ówny serwera WWW (domy¶lnie)
 each value is a line like <id>[=<label>]	admin	pl	ka¿da warto¶æ jest lini± jak <id>[=<label>]
 each value is a line like id[=label]	admin	pl	ka¿da warto¶æ jest lini± jak <id>[=label]
 edit account	admin	pl	Edytuj konto u¿ytkownika
@@ -162,6 +165,7 @@ edit this group	admin	pl	edytuj tê grupê
 edit this user	admin	pl	edytuj tego u¿ytkownika
 edit user	admin	pl	edytuj u¿ytkownika
 edit user account	admin	pl	Edycja konta u¿ytkownika
+egroupware directory	admin	pl	Katalog eGroupWare
 email account active	admin	pl	konto poczty aktywne
 email address	admin	pl	adres email
 enable debug-messages	admin	pl	Wy¶wietlaj komunikaty trybu debug
@@ -173,8 +177,8 @@ enter a description for the category	admin	pl	wpisz opis tej kategorii
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	pl	Wpisz trochê losowego tekstu dla zakodowania<br>app_session (wymaga mcrypt)
 enter the background color for the login page	admin	pl	Podaj kolor t³a strony logowania
 enter the background color for the site title	admin	pl	Wpisz kolor t³a tytu³u portalu
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pl	Podaj pe³n± ¶cie¿kê do plików tymczasowych/<br />Przyk³ady: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	pl	Podaj pe³n± ¶cie¿kê do plików katalogów i grup.<br />Przyk³ady: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	pl	Podaj pe³n± ¶cie¿kê do plików tymczasowych.<br />Przyk³ady: /tmp, C:\TEMP
+enter the full path for users and group files.<br>examples: /files, e:files	admin	pl	Podaj pe³n± ¶cie¿kê do plików u¿ytkowników i grup.<br />Przyk³ady: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	pl	Podaj nazwê komputera, na którym jest uruchomiony serwer
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	pl	Podaj URL do twojego portalu eGroupWare.<br>Na przykad: http://www.twojadomena.com.pl/egroupware   or  /egroupware<br><b>Bez koñcz±cego slash-a (,,/'')</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	pl	Wpisz szukany ci±g znaków. Aby pokazaæ wszystkie wpisy, wyczy¶æ to pole i kliknij ponownie  przycisk SZUKAJ.
@@ -374,6 +378,7 @@ start testjob!	admin	pl	Uruchom Testjob
 submit changes	admin	pl	Zatwierd¼ zmiany
 submit the search string	admin	pl	Wy¶lij tekst zapytania
 subtype	admin	pl	Pod-typ
+switch it off, if users are randomly thrown out	admin	pl	wy³±cz to, je¿eli u¿ytkownicy s± wyrzucani losowo
 template selection	admin	pl	Wybór szablonu
 text entry	admin	pl	Wpisywanie tekstu
 that application name already exists.	admin	pl	Podana nazwa aplikacji ju¿ istnieje

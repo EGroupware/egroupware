@@ -239,8 +239,8 @@ group has been updated	common	sk	Skupina bola aktualizovaná
 group name	common	sk	názov skupiny
 group public	common	sk	Verejný pre skupiny
 groups	common	sk	Skupiny
-groups with permission for %1	common	sk	Skupiny s prístupom k %1
-groups without permission for %1	common	sk	Skupiny bez prístupu k %1
+groups with permission for %1	common	sk	Skupiny, kde máte prístup ku %1
+groups without permission for %1	common	sk	Skupiny, kde nemáte prístup ku %1
 guatemala	common	sk	GUATEMALA
 guinea	common	sk	GUINEA
 haiti	common	sk	HAITI
