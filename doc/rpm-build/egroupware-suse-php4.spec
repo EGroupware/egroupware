@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define egwversion 1.2.106
-%define packaging 2
+%define egwversion 1.2.107
+%define packaging 1
 %define epoch 1
 %define httpdroot /srv/www/htdocs
 %define httpdconfd /etc/apache2/conf.d
@@ -784,6 +784,10 @@ ln -s sitemgr/sitemgr-link
 %{prefix}/%{egwdirname}/%{workflow}
 
 %changelog
+* Sun Jun 03 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.2.107-1
+- security fixes for problems in wz_tooltips and ADOdb as reported by 
+  Janosch Machowinski <scotch@tzi.de>
+
 * Wed Jan 03 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.2.106-2
 - more PHP5.2 fixes
 - added display_errors off to etc/apache2/conf.d/egroupware.conf
