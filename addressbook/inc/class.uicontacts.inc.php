@@ -1489,6 +1489,7 @@ class uicontacts extends bocontacts
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['change_photo'] = true;
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
+		$content['disable_change_org'] = true;
 // ToDo: fix vCard export
 $readonlys['button[vcard]'] = true;
 
@@ -1543,7 +1544,7 @@ $readonlys['button[vcard]'] = true;
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
 
 		$this->tmpl->exec('addressbook.uicontacts.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
-		
+
 		$GLOBALS['egw']->hooks->process(array(
 			'location' => 'addressbook_view',
 			'ab_id'    => $content['id']
