@@ -20,11 +20,11 @@
 </td>
 </tr>
 <tr class="row_on">
-<td>{lang_timesheet_viewtype}:</td>
+<td>{lang_Mode}:</td>
 <td>
 <select name="newsettings[ts_viewtype]">
-<option value="normal"{selected_ts_viewtype_normal}>{lang_viewtype_normal}</option>
-<option value="short"{selected_ts_viewtype_short}>{lang_viewtype_short}</option>
+<option value="normal"{selected_ts_viewtype_normal}>{lang_Regular}</option>
+<option value="short"{selected_ts_viewtype_short}>{lang_Simple}</option>
 </select>
 </td>
 </tr>
