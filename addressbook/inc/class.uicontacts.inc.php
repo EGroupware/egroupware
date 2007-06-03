@@ -1304,10 +1304,7 @@ class uicontacts extends bocontacts
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->is_admin($content))
 		{
-			foreach($this->get_fields('supported',$content['id'],$content['owner']) as $field)
-			{
-				if (!$this->own_account_acl || !in_array($field,$this->own_account_acl)) $readonlys[$field] = true;
-			}
+			$this->_set_readonlys_for_own_account_acl($readonlys,$id);
 		}
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
@@ -1339,6 +1336,51 @@ class uicontacts extends bocontacts
 		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$content, 2);
 	}
 	
+	/**
+	 * Set the readonlys for non-admins editing their own account
+	 *
+	 * @param array &$readonlys
+	 * @param int $id
+	 */
+	function _set_readonlys_for_own_account_acl(&$readonlys,$id)
+	{
+		// regular fields depending on the backend
+		foreach($this->get_fields('supported',$id,0) as $field)
+		{
+			if (!$this->own_account_acl || !in_array($field,$this->own_account_acl))
+			{
+				$readonlys[$field] = true;
+				switch($field)
+				{
+					case 'tel_work': 
+					case 'tel_cell': 
+					case 'tel_home': 
+						$readonlys[$field.'2'] = true;
+						break;
+					case 'n_fileas':
+						$readonlys['fileas_type'] = true;
+						break;
+				}
+			}
+		}
+		// custom fields
+		if ($this->customfields)
+		{
+			foreach($this->customfields as $name => $data)
+			{
+				if (!$this->own_account_acl || !in_array('#'.$name,$this->own_account_acl))
+				{
+					$readonlys['#'.$name] = true;
+				}
+			}
+		}
+		// links
+		if (!$this->own_account_acl || !in_array('link_to',$this->own_account_acl))
+		{
+			$readonlys['link_to'] = true;
+		}
+	}
+			
 	function ajax_setFileasOptions($n_prefix,$n_given,$n_middle,$n_family,$n_suffix,$org_name)
 	{
 		$names = array(

@@ -41,9 +41,11 @@ function own_account_acl($config)
 			$fields[$field] = $label;
 		}
 	}
+	$fields['link_to'] = 'Links';
+
 	if ($config['account_repository'] != 'ldap')	// no custom-fields in ldap
 	{
-		$custom =& CreateObject('admin.customfields',$contact_app);
+		$custom =& CreateObject('admin.customfields','addressbook');
 		foreach($custom->get_customfields() as $name => $data)
 		{
 			$fields['#'.$name] = $data['label'];
