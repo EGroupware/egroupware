@@ -147,10 +147,10 @@ class socontacts_sql extends so_sql
 			// org total for more then one $by
 			$by_expr = $by == 'org_unit_count' ? "COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END)" : 
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END)";
-//			$append = "GROUP BY org_name HAVING {$by}_count > 1 ORDER BY org_name $sort";
 			$append = "GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort";
 			parent::search($param['search'],array('org_name'),$append,array(
 				"NULL AS $by",
+				'1 AS is_main',
 				'COUNT(org_name) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
@@ -159,11 +159,12 @@ class socontacts_sql extends so_sql
 			$append = "GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort";
 			parent::search($param['search'],array('org_name'),$append,array(
 				"CASE WHEN $by IS NULL THEN '' ELSE $by END AS $by",
+				'0 AS is_main',
 				'COUNT(org_name) AS org_count',
 				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
 			),'%',false,'OR','UNION',$filter);
-			$append = "ORDER BY org_name $sort,CASE WHEN $by IS NULL THEN 1 ELSE 2 END,$by $sort";
+			$append = "ORDER BY org_name $sort,is_main DESC,$by $sort";
 		}
 		$rows = parent::search($param['search'],array('org_name'),$append,$extra,'%',false,'OR',
 			array($param['start'],$param['num_rows']),$filter);
