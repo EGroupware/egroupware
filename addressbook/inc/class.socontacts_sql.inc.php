@@ -290,7 +290,14 @@ class socontacts_sql extends so_sql
 		if ($search_customfields)	// search the custom-fields
 		{
 			$join .= $this->extra_join;
-			
+		}
+		if (isset($filter['list']))
+		{
+			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND list_id=".(int)$filter['list'];
+			unset($filter['list']);
+		}
+		if ($join)
+		{
 			switch(gettype($only_keys))
 			{
 				case 'boolean':
@@ -321,11 +328,6 @@ class socontacts_sql extends so_sql
 				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
 				unset($filter['owner']);
 			}
-		}
-		if (isset($filter['list']))
-		{
-			$join .= " JOIN $this->ab2list_table ON $this->table_name.contact_id=$this->ab2list_table.contact_id AND list_id=".(int)$filter['list'];
-			unset($filter['list']);
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 		
