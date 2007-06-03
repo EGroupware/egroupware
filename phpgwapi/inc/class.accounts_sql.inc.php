@@ -382,7 +382,7 @@ class accounts_backend
 			}
 		}
 		$accounts = array();
-		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,'account_lid,account_type',
+		if (($contacts =& $GLOBALS['egw']->contacts->search($criteria,false,$order,"account_lid,account_type,$this->table.account_id",
 			$wildcard,false,'OR',$offset ? array($start,$offset) : is_null($start) ? false : $start,
 			$filter,$this->contacts_join)))
 		{
