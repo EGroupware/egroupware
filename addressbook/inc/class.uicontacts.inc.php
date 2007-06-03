@@ -781,24 +781,24 @@ class uicontacts extends bocontacts
 			}
 			// translate the select order to the really used over all 3 columns
 			$sort = $query['sort'];
-			switch($query['order'])		// "xxx!='' DESC" sorts contacts with empty order-criteria always at the end
+			switch($query['order'])		// "xxx<>'' DESC" sorts contacts with empty order-criteria always at the end
 			{							// we don't exclude them, as the total would otherwise depend on the order-criteria
 				case 'org_name':
-					$order = "org_name!='' DESC,org_name $sort,n_family $sort,n_given $sort";
+					$order = "org_name<>'' DESC,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				default:
 					$query['order'] = 'n_family';
 				case 'n_family':
-					$order = "n_family!='' DESC,n_family $sort,n_given $sort,org_name $sort";
+					$order = "n_family<>'' DESC,n_family $sort,n_given $sort,org_name $sort";
 					break;
 				case 'n_given':
-					$order = "n_given!='' DESC,n_given $sort,n_family $sort,org_name $sort";
+					$order = "n_given<>'' DESC,n_given $sort,n_family $sort,org_name $sort";
 					break;
 				case 'n_fileas':
-					$order = "n_fileas!='' DESC,n_fileas $sort";
+					$order = "n_fileas<>'' DESC,n_fileas $sort";
 					break;
 				case 'adr_one_postalcode':
-					$order = "adr_one_postalcode!='' DESC,adr_one_postalcode $sort,org_name $sort,n_family $sort,n_given $sort";
+					$order = "adr_one_postalcode<>'' DESC,adr_one_postalcode $sort,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				case 'contact_modified':
 				case 'contact_created':
