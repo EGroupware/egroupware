@@ -98,7 +98,7 @@
 				case 'sapdb': 
 				case 'maxdb':
 					//$this->system_tables = '/^(sql_cursor.*|session_roles|activeconfiguration|cachestatistics|commandcachestatistics|commandstatistics|datastatistics|datavolumes|hotstandbycomponent|hotstandbygroup|instance|logvolumes|machineconfiguration|machineutilization|memoryallocatorstatistics|memoryholders|omslocks|optimizerinformation|sessions|snapshots|spinlockstatistics|version)$/i';
-					$this->egw_tables = '/^(egw_|phpgw_)/i';
+					$this->egw_tables = '/^(egw_|phpgw_|g2_)/i';
 					break;
 			}
 		}
@@ -302,6 +302,10 @@
 					}
 					$arr[$key] = str_replace(BACKSLASH_TOKEN,'\\',str_replace(array('\\\\','\\n','\\r','\\"'),array(BACKSLASH_TOKEN,"\n","\r",'"'),substr($field,1,-1)));
 				}
+				elseif ($keys && (strlen($field) > 64 || !is_numeric($field) && $field != 'NULL'))
+				{
+					$arr[$key] = base64_decode($field);
+				}
 				else
 				{
 					$arr[$key] = $field == 'NULL' ? NULL : $field;
@@ -329,6 +333,9 @@
 					case 'decimal':
 					case 'date':
 					case 'timestamp':
+						break;
+					case 'blob':
+						$data = base64_encode($data);
 						break;
 					default:
 						$data = '"'.str_replace(array('\\',"\n","\r",'"'),array('\\\\','\\n','\\r','\\"'),$data).'"';
