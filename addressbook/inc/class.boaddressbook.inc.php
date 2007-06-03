@@ -166,6 +166,8 @@ class boaddressbook
 					'jpegphoto' => false,	// gives errors in KAddressbook, maybe the encoding is wrong
 					'photo' => false,		// is uncomplete anyway
 					'private' => 'access',	// special handling necessary
+					'adr_one_type' => "'Work'",	// defines how KAddresbook labels the address
+					'adr_two_type' => "'Home'",
 				);
 				break;
 				
@@ -249,7 +251,11 @@ class boaddressbook
 							break;
 							
 						default:
-							if(isset($data[$from]))
+							if ($to{0} == "'")	// constant value enclosed in single quotes
+							{
+								$data[$from] = substr($to,1,-1);
+							}
+							elseif(isset($data[$from]))
 							{
 								if ($to) $data[$to] =& $data[$from]; 
 								unset($data[$from]);
