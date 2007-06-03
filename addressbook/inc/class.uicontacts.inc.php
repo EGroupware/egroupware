@@ -1005,7 +1005,7 @@ class uicontacts extends bocontacts
 			$icon = 'accounts';
 			$label = lang('accounts');
 		}
-		elseif ($row['private'])
+		elseif ($private)
 		{
 			$icon = 'private';
 			$label = lang('private');
@@ -1493,9 +1493,13 @@ $readonlys['button[vcard]'] = true;
 				$this->tmpl->set_cell_attribute($name,'no_lang',true);
 			}
 		}
+		if ($this->private_addressbook && $content['private'] && $content['owner'] == $this->user)
+		{
+			$content['owner'] .= 'p';
+		}
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
-		
+
 		$this->tmpl->exec('addressbook.uicontacts.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
 		
 		$GLOBALS['egw']->hooks->process(array(
