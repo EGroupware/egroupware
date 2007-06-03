@@ -415,23 +415,25 @@ class bo_tracking
 	/**
 	 * Get sender address
 	 * 
+	 * The default implementation prefers depending on the prefer_user_as_sender class-var the user over
+	 * what is returned by get_config('sender'). 
+	 * 
 	 * @param array $data
 	 * @param array $old
 	 * @return string
 	 */
 	function get_sender($data,$old)
 	{
-		if ($this->prefer_user_as_sender && $this->user && ($email = $GLOBALS['egw']->accounts->id2name($this->user,'account_email')))
+		$sender = $this->get_config('sender',$data,$old);
+		
+		if (($this->prefer_user_as_sender || !$sender) && $this->user && 
+			($email = $GLOBALS['egw']->accounts->id2name($this->user,'account_email')))
 		{
 			$name = $GLOBALS['egw']->accounts->id2name($this->user,'account_fullname');
 			
 			return $name ? $name.' <'.$email.'>' : $email;
 		}
-		if (($sender = $this->get_config('sender',$data,$old)))
-		{
-			return $sender;
-		}
-		return 'eGroupWare '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'];
+		return $sender ? $sender : 'eGroupWare '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'];
 	}
 
 	/**
