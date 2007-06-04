@@ -35,12 +35,14 @@ SVNURL="http://svn.egroupware.org/egroupware/branches/1.4/"
 #SVNREVISION="23465"
 # 1.4 BETA 5
 #SVNREVISION="23743"
+# 1.4.001 final
+#SVNREVISION="24012"
 
 SPECFILE="egroupware-1.4.spec"
 SOURCEFILES="egroupware_fedora.tar.bz2 egroupware_suse.tar.bz2 manageheader.php.patch class.uiasyncservice.inc.php.patch"
 
 #CONTRIB="jinn workflow messenger egwical icalsrv gallery"
-CONTRIB="egwical icalsrv gallery"
+CONTRIB="icalsrv gallery"
 EXTRAPACKAGES="egw-pear $CONTRIB"
 for p in $EXTRAPACKAGES
 do
@@ -84,7 +86,7 @@ then
 	fi
 	
 	cd egroupware
-	for CONTRIBMODULE in $CONTRIB egwical icalsrv; do
+	for CONTRIBMODULE in $CONTRIB; do
 		if [ -z "$CONTRIB_SVNREVISION" ]; then
 			svn checkout $SVNURL"$CONTRIBMODULE"
 		else

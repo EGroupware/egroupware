@@ -1,7 +1,7 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
-%define egwversion 1.3
-%define packaging 021
+%define egwversion 1.4
+%define packaging 001
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
@@ -14,7 +14,14 @@
 	%define httpdconfd /etc/httpd/conf.d
 	%define osversion %{?fedora_version}
 	%define source5 egroupware_fedora.tar.bz2
-	%define distribution Fedora Core %{?suse_version}
+	%define distribution Fedora Core %{?fedora_version}
+%endif
+%if 0%{?mandriva_version}
+	%define httpdroot /var/www/html
+	%define httpdconfd /etc/httpd/conf.d
+	%define osversion %{?mandriva_version}
+	%define source5 egroupware_fedora.tar.bz2
+	%define distribution Madriva %{?mandriva_version}
 %endif
 
 %define addressbook addressbook
@@ -23,7 +30,6 @@
 %define developer_tools developer_tools
 %define egw-pear egw-pear
 %define emailadmin emailadmin
-%define egwical egwical
 %define felamimail felamimail
 %define filemanager filemanager
 %define gallery gallery
@@ -59,13 +65,13 @@ URL: http://www.egroupware.org/
 Source0: %{packagename}-%{egwversion}.%{packaging}.tar.bz2
 Source1: %{packagename}-egw-pear-%{egwversion}.%{packaging}.tar.bz2
 Source2: %{packagename}-icalsrv-%{egwversion}.%{packaging}.tar.bz2
-Source3: %{packagename}-egwical-%{egwversion}.%{packaging}.tar.bz2
+#Source3: %{packagename}-egwical-%{egwversion}.%{packaging}.tar.bz2
 Source4: %{packagename}-gallery-%{egwversion}.%{packaging}.tar.bz2
 Source5: %{?source5}
 #Patch0: manageheader.php.patch
 #Patch1: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: php5 php5-mbstring php5-imap php5-gd apache2-mod_php5 php5-pear cron
+Requires: php5 php5-mbstring php5-imap php5-gd apache2-mod_php5 php5-pear cron %{packagename}-egw-pear = %{egwversion}.%{packaging}
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
 Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{infolog} %{packagename}-%{manual} %{packagename}-%{mydms} %{packagename}-%{news_admin} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
                                                                                                                              
@@ -75,6 +81,7 @@ AutoReqProv: no
                                                                                                                              
 Vendor: eGroupWare
 Packager: Lars Kneschke <l.kneschke@metaways.de>
+Packager: Ralf Becker <RalfBecker@outdoor-training.de>
 
 %description
 eGroupWare is a web-based groupware suite written in PHP. 
@@ -84,7 +91,7 @@ This package provides the eGroupWare default applications:
 egroupware core with: admin, api, docs, etemplate, prefereces and setup, 
 addressbook, bookmarks, calendar, translation-tools, emailadmin, felamimail, 
 filemanager, infolog, manual, mydms, news admin, knowledgebase, polls, 
-projectmanager, resources, sambaadmin, sitemgr, syncml, timesheet, wiki, workflow
+projectmanager, resources, sambaadmin, sitemgr, syncml, timesheet, tracker, wiki
 
 It also provides an API for developing additional applications. 
 
@@ -164,14 +171,14 @@ Requires: egw-core = %{egwversion}.%{packaging}, %{packagename}-egw-pear = %{egw
 %description %{emailadmin}
 EmailAdmin allow to maintain User email accounts 
 
-%package %{egwical}
-Version: %{egwversion}.%{packaging}
-Summary: The eGroupWare %{egwical} application
-Group: Web/Database
-AutoReqProv: no
-Requires: egw-core = %{egwversion}.%{packaging} 
-%description %{egwical}
-This is the %{egwical} app for eGroupWare.
+#%package %{egwical}
+#Version: %{egwversion}.%{packaging}
+#Summary: The eGroupWare %{egwical} application
+#Group: Web/Database
+#AutoReqProv: no
+#Requires: egw-core = %{egwversion}.%{packaging} 
+#%description %{egwical}
+#This is the %{egwical} app for eGroupWare.
 
 %package %{felamimail}
 Version: %{egwversion}.%{packaging}
@@ -181,7 +188,7 @@ Conflicts: %{packagename}
 AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}, %{packagename}-%{emailadmin} = %{egwversion}.%{packaging}, %{packagename}-egw-pear = %{egwversion}.%{packaging}
 %description %{felamimail}
-The %{felamimail} Email Reader is a other Email application for eGroupWare.
+The Email application for eGroupWare.
 
 %package %{filemanager}
 Version: %{egwversion}.%{packaging}
@@ -201,7 +208,7 @@ Conflicts: %{packagename}
 AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}, egw-pear = %{egwversion}.%{packaging}
 %description %{gallery}
-This is the %{gallery} app for eGroupWare.
+An embedded Gallery2 for eGroupWare.
 
 #%package %{headlines}
 #Version: %{egwversion}.%{packaging}
@@ -415,7 +422,7 @@ This is the %{wiki} app for eGroupWare.
 %setup0 -c -n %{egwdirname}
 %setup1 -T -D -a 1 -n %{egwdirname}
 %setup2 -T -D -a 2 -n %{egwdirname}
-%setup3 -T -D -a 3 -n %{egwdirname}
+#%setup3 -T -D -a 3 -n %{egwdirname}
 %setup4 -T -D -a 4 -n %{egwdirname}
 %setup5 -T -D -a 5 -n %{egwdirname}
 #%patch0 -p 0
@@ -589,9 +596,9 @@ ln -s sitemgr/sitemgr-link
 %defattr(-,root,root)
 %{prefix}/%{egwdirname}/%{emailadmin}
 
-%files %{egwical}
-%defattr(-,root,root)
-%{prefix}/%{egwdirname}/%{egwical}
+#%files %{egwical}
+#%defattr(-,root,root)
+#%{prefix}/%{egwdirname}/%{egwical}
 
 %files %{felamimail}
 %defattr(-,root,root)
@@ -687,8 +694,11 @@ ln -s sitemgr/sitemgr-link
 
 
 %changelog
-* Mon Apr 30 2007 Lars Kneschke <l.kneschke@metaways.de> 1.3-021
-- eGroupWare 1.4 Beta 5
+* Mon Jun 4 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.001
+- final eGroupWare 1.4 release
 
-* Mon Apr 16 2007 Lars Kneschke <l.kneschke@metaways.de> 1.3-019
-- eGroupWare 1.4 Beta 4
+* Mon May 28 2007 Lars Kneschke <l.kneschke@metaways.de> 1.3.023
+- eGroupWare 1.4 RC 2
+
+* Mon Apr 30 2007 Lars Kneschke <l.kneschke@metaways.de> 1.3.019
+- eGroupWare 1.4 Beta 5
