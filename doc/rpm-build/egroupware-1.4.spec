@@ -80,7 +80,7 @@ Buildarch: noarch
 AutoReqProv: no
                                                                                                                              
 Vendor: eGroupWare
-Packager: Lars Kneschke <l.kneschke@metaways.de>
+#Packager: Lars Kneschke <l.kneschke@metaways.de>
 Packager: Ralf Becker <RalfBecker@outdoor-training.de>
 
 %description
@@ -479,6 +479,7 @@ ln -s sitemgr/sitemgr-link
 %{prefix}/%{egwdirname}/xajax.php
 %{prefix}/%{egwdirname}/xmlrpc.php
 %{prefix}/%{egwdirname}/icalsrv.php
+%{prefix}/%{egwdirname}/svn-helper.php
 %{prefix}/%{egwdirname}/admin
 %{prefix}/%{egwdirname}/doc
 %{prefix}/%{egwdirname}/etemplate
