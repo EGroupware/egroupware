@@ -86,7 +86,7 @@ bottom	setup	pl	U do³u
 but we <u>highly recommend backing up</u> your tables in case the script causes damage to your data.<br /><strong>these automated scripts can easily destroy your data.</strong>	setup	pl	jednak¿e <u>gor±co zachêcamy do wykonania kopii zapasowej</u> tabel bazy danych na wypadek gdyby skrypt spowodowa³ uszkodzenie danych. <br /><strong>Automatyczne skrypty mog± ³atwo doprowadziæ do uszkodzenia bazy danych.</strong>
 cancel	setup	pl	Anuluj
 change system-charset	setup	pl	Zmieñ systemowy zestaw znaków
-charset	setup	pl	zestaw znaków
+charset	setup	pl	ISO-8859-2
 charset to convert to	setup	pl	Wykonaj kowersjê na zestaw znaków
 charsets used by the different languages	setup	pl	zestaw znaków u¿ywany przez ró¿ne jêzyki
 check installation	setup	pl	Sprawd¼ instalacjê
