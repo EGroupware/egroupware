@@ -33,12 +33,17 @@ back to folder	felamimail	pl	Wróæ do folderu
 bad login name or password.	felamimail	pl	Z³a nazwa u¿ytkownika lub has³o
 bad or malformed request. server responded: %s	felamimail	pl	Nieprawid³owe lub ¼le skonstruowane ¿±dane. Serwer odpowiedzia³: %s
 bad request: %s	felamimail	pl	Nieprawid³owe ¿±danie: %s
+based upon given criteria, incoming messages can have different background colors in the message list.  this helps to easily distinguish who the messages are from, especially for mailing lists.	felamimail	pl	Zgodnie ze wskazanymi dyspozycjami, wiadomo¶ci przychodz±ce bêd± mia³y odpowiednie t³o wiadomo¶ci na li¶cie. Pozwala to ³atwo odró¿niæ nadawców wiadomo¶ci, szczególnie gdy s± to listy mailingowe.
 bcc	felamimail	pl	UDW
 before headers	felamimail	pl	Przed nag³ówkiem
 between headers and message body	felamimail	pl	Pomiêdzy nag³ówkiem a tre¶ci±
+body part	felamimail	pl	tre¶æ wiadomo¶ci
+can't connect to inbox!!	felamimail	pl	nie mo¿na pod³±czyæ siê do INBOX!
 cc	felamimail	pl	DW
 change folder	felamimail	pl	Zmieñ folder
+check message against next rule also	felamimail	pl	sprawd¼ równie¿ kolejnê regu³ê
 clear search	felamimail	pl	wyczy¶æ wyszukiwanie
+click here to log back in.	felamimail	pl	Kliknij aby zalogowaæ siê ponownie
 click here to return to %1	felamimail	pl	Kliknij tutaj aby wróciæ do %1
 close all	felamimail	pl	zamknij wszystko
 close this page	felamimail	pl	zamknij tê stronê
@@ -51,6 +56,8 @@ configuration	felamimail	pl	Konfiguracja
 connection dropped by imap server.	felamimail	pl	Po³±czenie zerwane przez serwer IMAP
 contains	felamimail	pl	zawiera
 could not complete request. reason given: %s	felamimail	pl	Nie uda³o siê zrealizowaæ ¿±dania. Powód: %s
+could not open secure connection to the imap server. %s : %s.	felamimail	pl	Nie uda³o siê nawi±zaæ bezpiecznego po³±czenia
+cram-md5 or digest-md5 requires the auth_sasl package to be installed.	felamimail	pl	CRAM-MD5 lub DIGEST-MD5 wymagaj± obecno¶ci pakietu Auth_SASL.
 create	felamimail	pl	Stwórz
 create folder	felamimail	pl	Tworzenie folderu
 create sent	felamimail	pl	Stwórz Wys³ane
@@ -91,6 +98,7 @@ do not use sent	felamimail	pl	Nie u¿ywaj Wys³anych
 do not use trash	felamimail	pl	Nie u¿ywaj Kosza
 do not validate certificate	felamimail	pl	nie sprawdzaj poprawno¶ci certyfikatu
 do you really want to delete the '%1' folder?	felamimail	pl	Czy na pewno chcesz usun±æ folder '%1'?
+do you really want to delete the selected signatures?	felamimail	pl	Czy na pewno chcesz usun±æ wybrane podpisy?
 does not contain	felamimail	pl	nie zawiera
 does not match	felamimail	pl	nie pasuje
 does not match regexp	felamimail	pl	nie pasuje do wzorca
@@ -104,12 +112,15 @@ draft folder	felamimail	pl	folder szkiców
 e-mail	felamimail	pl	E-mail
 e-mail address	felamimail	pl	Adres e-mail
 e-mail folders	felamimail	pl	Foldery e-mail
+edit email forwarding address	felamimail	pl	edytuj adres e-mail przekazywania wiadomo¶ci
 edit filter	felamimail	pl	Edytuj filtr
 edit rule	felamimail	pl	edytuj regu³ê
 edit selected	felamimail	pl	Edytuj wybrane
 edit vacation settings	felamimail	pl	edytuj ustawienia autorespondera
 email address	felamimail	pl	Adres e-mail
+email forwarding address	felamimail	pl	adres e-mail przekazywania wiadomo¶ci
 email signature	felamimail	pl	Sygnaturka
+emailaddress	felamimail	pl	adres_email
 empty trash	felamimail	pl	opró¿nij kosz
 enable	felamimail	pl	w³±cz
 encrypted connection	felamimail	pl	po³±czenie szyfrowane
@@ -124,13 +135,16 @@ error connecting to imap serv	felamimail	pl	B³±d ³±czenia z serwerem IMAP
 error connecting to imap server. %s : %s.	felamimail	pl	B³±d po³±czenia do serwera IMAP. %s : %s
 error connecting to imap server: [%s] %s.	felamimail	pl	B³±d po³±czenia do serwera IMAP. [%s]  %s
 error opening	felamimail	pl	B³±d podczas otwierania
+every	felamimail	pl	co
+every %1 days	felamimail	pl	co %1 dni
 expunge	felamimail	pl	Opró¿nij
 extended	felamimail	pl	rozszerzone
 felamimail	common	pl	FelaMiMail
+file into	felamimail	pl	informacja o pliku
 files	felamimail	pl	pliki
 filter active	felamimail	pl	filtr jest aktywny
 filter name	felamimail	pl	nazwa filtra
-filter rules	preferences	pl	regu³y filtra
+filter rules	common	pl	regu³y filtra
 first name	felamimail	pl	Imiê
 flagged	felamimail	pl	oflagowano
 flags	felamimail	pl	flagi
@@ -145,14 +159,19 @@ foldername	felamimail	pl	Nazwa foldera
 folders	felamimail	pl	Foldery
 folders created successfully!	felamimail	pl	Pomy¶lnie utworzono folder
 follow	felamimail	pl	odpowiedz
+for mail to be send - not functional yet	felamimail	pl	Dla wiadomo¶ci przygtowanych do wys³ania - jeszcze nie dzia³a ;-)
+for received mail	felamimail	pl	Dla wiadomo¶ci otrzymanych
 forward	felamimail	pl	Prze¶lij dalej
 forward to	felamimail	pl	Prze¶lij do
 forward to address	felamimail	pl	Prze¶lij na adres
+forwarding	felamimail	pl	Przekazywanie
+found	felamimail	pl	Znaleziono
 fri	felamimail	pl	Pi±
 from	felamimail	pl	Od
 from(a->z)	felamimail	pl	Od (A->Z)
 from(z->a)	felamimail	pl	Od (Z->A)
 full name	felamimail	pl	Pe³na nazwa
+greater than	felamimail	pl	wiêksze ni¿
 have a look at <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a> to learn more about squirrelmail.<br>	felamimail	pl	Aby dowiedzieæ siê wiêcej o Squirrelmail, zajrzyj na <a href="http://www.felamimail.org" target="_new">www.felamimail.org</a>.<br>
 header lines	felamimail	pl	Linie nag³ówka
 hide header	felamimail	pl	ukryj nag³ówek
@@ -162,15 +181,23 @@ icons and text	felamimail	pl	Ikony i tekst
 icons only	felamimail	pl	Tylko ikony
 identifying name	felamimail	pl	Nazwa identyfikatora
 identity	felamimail	pl	to¿samo¶æ
+if	felamimail	pl	JE¯ELI
 if from contains	felamimail	pl	je¿eli pole 'From:" zawiera
+if mail header	felamimail	pl	je¿eli nag³ówek wiadomo¶ci
 if message size	felamimail	pl	je¿eli rozmiar wiadomo¶ci
 if subject contains	felamimail	pl	je¿eli pole "Temat" zawiera
+if to contains	felamimail	pl	je¿eli pole "Adresat" zawiera
+if using ssl or tls, you must have the php openssl extension loaded.	felamimail	pl	Je¿eli korzystasz z SSL lub TLS, musisz mieæ do³±czone rozszerzenie OpenSSL do PHP.
+illegal folder name.  please select a different name.	felamimail	pl	Nazwa folderu nie jest poprawna. Proszê wybraæ inn± nazwê.
 imap	felamimail	pl	IMAP
 imap server	felamimail	pl	Serwer IMAP
 imap server address	felamimail	pl	Adres serwera IMAP
 imap server closed the connection.	felamimail	pl	Serwer IMAP zakoñczy³ po³±czenie.
 imap server closed the connection. server responded: %s	felamimail	pl	Serwer IMAP zakoñczy³ po³±czenie. Serwer zwróci³: %s
+imap server password	felamimail	pl	has³o do serwera IMAP
 imap server type	felamimail	pl	Typ serwera IMAP
+imap server username	felamimail	pl	nazwa u¿ytkownika do serwera IMAP
+imaps authentication	felamimail	pl	Autentykacja IMAPS
 imaps encryption only	felamimail	pl	Tylko szyfrowanie IMAPS
 in	felamimail	pl	w
 inbox	felamimail	pl	ODEBRANE
@@ -189,10 +216,14 @@ last name	felamimail	pl	Nazwisko
 less	felamimail	pl	mniej
 less than	felamimail	pl	mniej ni¿
 light gray	felamimail	pl	Jasny Szary
+list all	felamimail	pl	Poka¿ wszystko
 loading	felamimail	pl	³adowanie
 location of buttons when composing	felamimail	pl	Po³o¿enie przycisków przy pisaniu maila
 mail server login type	admin	pl	Typ logowania do serwera poczty
 mail settings	felamimail	pl	Ustawienia poczty
+mainmessage	felamimail	pl	tre¶æ_wiadomo¶ci
+manage emailaccounts	preferences	pl	Zarz±dzaj kontami pocztowymi
+manage emailfilter / vacation	preferences	pl	Zarz±dzaj filtrem pocztym / powiadomieniami
 manage folders	common	pl	Zarz±dzanie folderami
 manage sieve	common	pl	Zarz±dzaj skryptami Sieve
 manage signatures	felamimail	pl	Zarz±dzaj sygnaturkami
@@ -203,6 +234,8 @@ mark selected as read	felamimail	pl	Zaznacz wybrane wiadomo¶ci jako przeczytane
 mark selected as unflagged	felamimail	pl	Zaznacz wybrane jako nie oflagowane
 mark selected as unread	felamimail	pl	Zaznacz wybrane wiadomo¶ci jako nieprzeczytane
 match	felamimail	pl	Zgodne
+matches	felamimail	pl	pasuje do
+matches regexp	felamimail	pl	pasuje do wyra¿enia regularnego
 max uploadsize	felamimail	pl	limit ³adowania danych
 message highlighting	felamimail	pl	Pod¶wietlanie wiadomo¶ci
 message list	felamimail	pl	Lista wiadomo¶ci
@@ -219,14 +252,26 @@ new	common	pl	Nowe
 new filter	felamimail	pl	Nowy filtr
 next	felamimail	pl	Nastêpny
 next message	felamimail	pl	nastêpna wiadomo¶æ
+no active imap server found!!	felamimail	pl	Nie znaleziono aktywnego serwera IMAP!
 no encryption	felamimail	pl	brak szyfrowania
 no filter	felamimail	pl	Brak filtra
 no folders found	felamimail	pl	Nie znaleziono folderów
+no folders were found to subscribe to!	felamimail	pl	Nie znaleziono folderów do aktywowania subskrypcji!
+no folders were found to unsubscribe from!	felamimail	pl	Nie znaleziono folderów do anulowania subskrypcji!
 no highlighting is defined	felamimail	pl	Nie zdefiniowano pod¶wietleñ
 no message returned.	felamimail	pl	Nie otrzymano wiadomo¶ci.
+no messages found...	felamimail	pl	nie znaleziono wiadomo¶ci...
 no messages were selected.	felamimail	pl	Nie wybrano ¿adnej wiadomo¶ci
+no plain text part found	felamimail	pl	brak czê¶ci 'czystym' tekstem
+no previous message	felamimail	pl	brak poprzedniej wiadomo¶ci
+no supported imap authentication method could be found.	felamimail	pl	Nie znaleziono obs³ugiwanej metody autentykacji IMAP.
+no valid emailprofile selected!!	felamimail	pl	Nie wybrano poprawnego profilu e-mail.
 none	felamimail	pl	¯aden
+on behalf of	felamimail	pl	w imieniu
+one address is not valid	felamimail	pl	Jeden adres nie jest poprawny
 only inbox	felamimail	pl	Tylko ODEBRANE
+only one window	felamimail	pl	tylko jedno okno
+only unseen	felamimail	pl	tylko nie przeczytane
 open all	felamimail	pl	otwórzy wszystkie
 options	felamimail	pl	Opcje
 or	felamimail	pl	lub
@@ -236,15 +281,20 @@ organization name	admin	pl	Nazwa instutucji
 outgoing mail server(smtp)	felamimail	pl	serwer poczty wychodz±cej (SMTP)
 participants	felamimail	pl	Uczestnicy
 personal information	felamimail	pl	Informacje osobiste
+please select a address	felamimail	pl	Proszê wybraæ adres
+please select the number of days to wait between responses	felamimail	pl	Wybierz, ile dni czekaæ miêdzy odpowiedziami
+please supply the message to send with auto-responses	felamimail	pl	Proszê wprowadziæ wiadomo¶æ przesy³an± w automatycznych odpowiedziach
 previous	felamimail	pl	Poprzedni
 previous message	felamimail	pl	poprzednia wiadomo¶æ
 print it	felamimail	pl	wydrukuj to
 print this page	felamimail	pl	wydrukuj tê stronê
+quicksearch	felamimail	pl	Szybkie wyszukiwanie
 read	felamimail	pl	Odczytaj
 reading	felamimail	pl	odczytywanie
 receive notification	felamimail	pl	Odebrano powiadomienie
 recent	felamimail	pl	ostatnie
 refresh time in minutes	felamimail	pl	Czas od¶wie¿ania w minutach
+reject with	felamimail	pl	odrzuæ z
 remove	felamimail	pl	usuñ
 remove immediately	felamimail	pl	usuñ natychmiast
 rename	felamimail	pl	Zmiana nazwy
@@ -257,11 +307,19 @@ reply all	felamimail	pl	Odpowiedz wszystkim
 reply to	felamimail	pl	Odpowiedz
 replyto	felamimail	pl	Odpowiedz
 respond	felamimail	pl	Odpowied¼
+respond to mail sent to	felamimail	pl	odpowiedz na mail wys³any do
 return	felamimail	pl	Powrót
 return to options page	felamimail	pl	Powrót do strony konfiguracji
+row order style	felamimail	pl	styl porz±dku wierszy
 rule	felamimail	pl	Regu³a
 sat	felamimail	pl	Sob
 save	felamimail	pl	Zapisz
+save as draft	felamimail	pl	zapisz jako szkic
+save as infolog	felamimail	pl	zapisz jako zadanie Dziennika CRM
+save changes	felamimail	pl	zachowaj zmiany
+save message to disk	felamimail	pl	zachowaj wiadomo¶æ na dysku
+script name	felamimail	pl	nazwa skryptu
+script status	felamimail	pl	status skryptu
 search	felamimail	pl	Szukaj
 search for	felamimail	pl	Szukaj dla
 select	felamimail	pl	Wybierz
@@ -270,9 +328,12 @@ select emailprofile	felamimail	pl	Wybierz profil email
 select folder	felamimail	pl	Wybierz folder
 select your mail server type	admin	pl	Wybierz typ serwera email
 send	felamimail	pl	Wy¶lij
+send a reject message	felamimail	pl	ode¶lij wiadomo¶æ odrzucaj±c±
 sent folder	felamimail	pl	Folder Wys³ane
+server supports mailfilter(sieve)	felamimail	pl	serwer posiada filtr poczy (sieve - sito)
 show header	felamimail	pl	poka¿ nag³ówek
 show new messages on main screen	felamimail	pl	Wy¶wietlaæ nowe wiadomo¶ci na stronie g³ównej?
+sieve script name	felamimail	pl	Nazwa skryptu sita ('sieve')
 sieve settings	admin	pl	Ustawienia Sieve
 signature	felamimail	pl	Sygnaturka
 simply click the target-folder	felamimail	pl	Kliknij folder docelowy
@@ -281,6 +342,8 @@ size	felamimail	pl	Wielko¶æ
 size of editor window	felamimail	pl	Wielko¶æ okna edytora
 size(...->0)	felamimail	pl	Rozmiar (...->0)
 size(0->...)	felamimail	pl	Rozmiar (0->...)
+skipping forward	felamimail	pl	omija kolejn±
+skipping previous	felamimail	pl	omija poprzedni±
 small view	felamimail	pl	widok uproszczony
 smtp settings	admin	pl	Ustawienia SMTP
 subject	felamimail	pl	Temat
@@ -288,10 +351,14 @@ subject(a->z)	felamimail	pl	Temat (A->Z)
 subject(z->a)	felamimail	pl	Temat (Z->A)
 submit	felamimail	pl	Wy¶lij
 subscribe	felamimail	pl	Subskrybuj
+subscribed	felamimail	pl	Uruchomiono subskrypcjê
+subscribed successfully!	felamimail	pl	Uruchomiono subskrypcjê poprawnie!
 sun	felamimail	pl	Nie
 table of contents	felamimail	pl	Spis tre¶ci
 text only	felamimail	pl	Tylko tekst
 the connection to the imap server failed!!	felamimail	pl	Nieudane po³±czenie z serwerem SMTP!!
+the mimeparser can not parse this message.	felamimail	pl	Nie uda³o siê przetworzyæ zawarto¶ci MIME tej wiadomo¶ci
+then	felamimail	pl	WTEDY
 this folder is empty	felamimail	pl	TEN FOLDER JEST PUSTY
 this php has no imap support compiled in!!	felamimail	pl	PHP nie ma skompilowanej obs³ugi IMAP!!
 thu	felamimail	pl	Czw
@@ -302,21 +369,43 @@ trash fold	felamimail	pl	Folder Kosza
 trash folder	felamimail	pl	Folder Kosza
 tue	felamimail	pl	Wto
 type	felamimail	pl	typ
+unexpected response from server to authenticate command.	felamimail	pl	Niespodziewana odpowied¼ z serwera na polecenie AUTHENTICATE
+unexpected response from server to digest-md5 response.	felamimail	pl	Niespodziewana odpowied¼ z serwera na polecenie Digest-MD5
 unexpected response from server to login command.	felamimail	pl	Niespodziewana odpowied¼ serwera na polecenie LOGIN.
+unflagged	felamimail	pl	nie oflagowano
+unknown err	felamimail	pl	Nieznany b³±d
 unknown error	felamimail	pl	Nieznany b³±d
 unknown sender	felamimail	pl	Nieznany nadawca
+unknown user or password incorrect.	felamimail	pl	U¿ytkownik nieznany lub has³o niezgodne.
 unread	common	pl	nieprzeczytane
+unseen	felamimail	pl	nieprzeczytane (nie pobrane)
 unselect all	felamimail	pl	Odznacz wszystko
+unsubscribe	felamimail	pl	Anuluj subskrypcjê
+unsubscribed	felamimail	pl	Anulowano subskrypcjê
+unsubscribed successfully!	felamimail	pl	Anulowano subskrypcjê poprawnie!
 up	felamimail	pl	w górê
+updating message status	felamimail	pl	aktualizujê status wiadomo¶ci
+updating view	felamimail	pl	aktualizujê widok
 use a signature	felamimail	pl	U¿yj sygnaturki
 use a signature?	felamimail	pl	U¿yæ sygnaturki?
+use addresses	felamimail	pl	u¿yj adresów
 use custom settings	felamimail	pl	U¿yj ustawieñ u¿ytkownika
+use regular expressions	felamimail	pl	u¿yj wyra¿eñ regularnych
 use smtp auth	admin	pl	Skorzystaj z autentykacji SMTP
 users can define their own emailaccounts	admin	pl	U¿ytkownicy mog± definiowaæ swoje w³asne konta poczty elektronicznej
+vacation notice	common	pl	powiadomienie urlopowe
+vacation notice is active	felamimail	pl	Powiadomienie urlopowe jest aktywne
 validate certificate	felamimail	pl	sprawd¼ poprawno¶æ certyfikatu
 view full header	felamimail	pl	Poka¿ pe³ny nag³ówek
+view header lines	felamimail	pl	poka¿ linie nag³ówka
 view message	felamimail	pl	Poka¿ wiadomo¶æ
+viewing full header	felamimail	pl	Pokazuje ca³y nag³ówek
+viewing message	felamimail	pl	Pokazuje wiadomo¶æ
+viewing messages	felamimail	pl	Pokazuje wiadomo¶ci
 wed	felamimail	pl	¦ro
 when deleting messages	felamimail	pl	Gdy usuwasz wiadomo¶æ
+with message	felamimail	pl	z wiadomo¶ci±
+with message "%1"	felamimail	pl	z wiadomo¶ci± '%1'
 wrap incoming text at	felamimail	pl	Szeroko¶æ zawijania werszy
 writing	felamimail	pl	zapisywanie
+wrote	felamimail	pl	zapisano

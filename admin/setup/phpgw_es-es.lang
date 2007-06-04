@@ -92,6 +92,8 @@ check ip address of all sessions	admin	es-es	Comprobar  la IP de todas las sesio
 check items to <b>%1</b> to %2 for %3	admin	es-es	Comprobar elementos a <b>%1</b> a %2 para %3
 click to select a color	admin	es-es	Pulse para seleccionar un color
 color	admin	es-es	Color
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	es-es	Dominio de la cookie (vacío significa usar el nombre del dominio completo, para el Administrador de sitios web, p. ej. "dominio.com" permite usar la misma cookie para egw.dominio.com y www.dominio.com)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	es-es	Ruta de la cookie (permite múltiples sesiones de egw con distintos directorios, pero ¡tiene problemas con el Administrador de sitios web!)
 country selection	admin	es-es	Selección de país
 create group	admin	es-es	Crear grupo
 creates a new field	admin	es-es	crea un campo nuevo
@@ -144,6 +146,7 @@ do not delete the category and return back to the list	admin	es-es	NO borrar la 
 do you also want to delete all global subcategories ?	admin	es-es	¿Desea eliminar también todas las subcategorías globales?
 do you want to delete all global subcategories ?	admin	es-es	¿Desea borrar todas las subcategorías globales?
 do you want to move all global subcategories one level down ?	admin	es-es	¿Desea mover todas las subcategorías globales un nivel hacia abajo?
+document root (default)	admin	es-es	Raíz de los documentos (Document root) (predeterminado)
 each value is a line like <id>[=<label>]	admin	es-es	cada valor es una línea como <id>[=<etiqueta>]
 each value is a line like id[=label]	admin	es-es	cada valor es una línea como id[=label]
 edit account	admin	es-es	Editar cuenta
@@ -162,6 +165,7 @@ edit this group	admin	es-es	editar este grupo
 edit this user	admin	es-es	editar este usuario
 edit user	admin	es-es	editar usuario
 edit user account	admin	es-es	Editar cuenta de usuario
+egroupware directory	admin	es-es	Directorio de eGroupWare
 email account active	admin	es-es	cuenta de correo activa
 email address	admin	es-es	dirección de correo electrónico
 enable debug-messages	admin	es-es	Activar mensajes de depuración
@@ -279,6 +283,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	es-es	Id mínimo de cuenta (ej. 
 minute	admin	es-es	Minuto
 mode	admin	es-es	Modo
 month	admin	es-es	Mes
+more secure	admin	es-es	más seguro
 name must not be empty !!!	admin	es-es	El nombre no debe estar vacío
 new group name	admin	es-es	Nuevo nombre de grupo
 new name	admin	es-es	nuevo nombre
@@ -354,6 +359,7 @@ set preference values.	admin	es-es	Establecer valores para las preferencias
 should the login page include a language selectbox (useful for demo-sites) ?	admin	es-es	¿Debe incluir la página de inicio de sesión un cuadro de selección de idioma (útil para sitios de demostración)?
 show 'powered by' logo on	admin	es-es	Mostrar logo de 'Diseñado con' en
 show access log	admin	es-es	Mostrar registro de acceso
+show an asterisk (*) to mark untranslated strings	admin	es-es	Mostrar un asterisco (*) para marcar las cadenas sin traducir
 show current action	admin	es-es	Mostrar acción actual
 show error log	admin	es-es	Mostrar registro de errores
 show phpinfo()	admin	es-es	Mostrar phpinfo()
@@ -374,6 +380,7 @@ start testjob!	admin	es-es	Iniciar el trabajo de prueba
 submit changes	admin	es-es	Enviar cambios
 submit the search string	admin	es-es	Enviar la cadena de búsqueda
 subtype	admin	es-es	Subtipo
+switch it off, if users are randomly thrown out	admin	es-es	Desactivarlo si a los usuarios se les cierra la sesión aleatoriamente
 template selection	admin	es-es	Selección de plantilla
 text entry	admin	es-es	Entrada de texto
 that application name already exists.	admin	es-es	Ese nombre de aplicación ya existe.

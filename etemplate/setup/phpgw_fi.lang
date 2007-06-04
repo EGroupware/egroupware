@@ -15,6 +15,8 @@
 '%1' is not a valid integer !!!	etemplate	fi	%1 ei ole kokonaisluku !!!
 a pattern to be searched for	etemplate	fi	kaavaa etsitään
 accesskey	etemplate	fi	Pääsyavain
+accesskeys can also be specified with an & in the label (eg. &name)	etemplate	fi	Pääsyavaimet voidaan myös määritellä & merkeillä otsikossa (esim. &nimi)
+account contactdata	etemplate	fi	Tilin yhteystieto
 add a new column (after the existing ones)	etemplate	fi	Lisää uusi sarake (käytössä olevan jälkeen)
 add a new entry of the selected application	etemplate	fi	Lisää uusi pääsy valittuun sovellukseen
 add a new multi-column index	etemplate	fi	Lisää uusi monisarakkeen indeksi
@@ -25,6 +27,7 @@ add table	etemplate	fi	Lisää taulukko
 advanced search	etemplate	fi	Kehittynyt haku
 align	etemplate	fi	Tasaa
 alignment of label and input-field in table-cell	etemplate	fi	otsikon ja syöttökentän tasaus taulukon solussa
+alignment of the v/hbox containing table-cell	etemplate	fi	Sisennys V/HBox:ssaa sisältäen taulukon solun
 all days	etemplate	fi	kaikki päivät
 all operations save the template!	etemplate	fi	kaikki tapahtumat tallentavat mallipohjan!
 am	etemplate	fi	am
@@ -43,9 +46,10 @@ box	etemplate	fi	Valintalaatikko
 box...	etemplate	fi	Valintalaatikko...
 can not have special sql-value null	etemplate	fi	ei voi olla arvoltaan SQL erityinen tyhjämerkki
 cancel	etemplate	fi	Peruuta
-category	etemplate	fi	Ryhmä
-cellpadding for the table-tag	etemplate	fi	Solun täyttäminen taulukon merkinnälle
+category	etemplate	fi	Kategoria
+cellpadding for the table-tag	etemplate	fi	Cellpadding table tagissa
 cells	etemplate	fi	Solut
+cellspacing for the table-tag	etemplate	fi	Cellspacing table tagissa
 center	etemplate	fi	Asettaa keskelle
 changed	etemplate	fi	Muokattu
 check if content should only be displayed but not altered (the content is not send back then!)	etemplate	fi	valitse jos sisällön tulisi olla vain nähtävillä mutta ei vaihdettavissa (sisältöä ei lähetetä takaisin silloin)
@@ -73,6 +77,8 @@ create a new table for the application	etemplate	fi	Luo uusi taulukko sovellukse
 creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	fi	Luodaan englanninkielinen ('en') kielitiedosto otsikosta ja ohjetekstit
 css class for the table-tag	etemplate	fi	CSS luokka taulukko merkille
 css properties	etemplate	fi	CSS asetukset
+css-class name for this row, preset: 'nmh' = nextmatch header, 'nmr' = alternating nm row, 'nmr0'+'nmr1' nm rows	etemplate	fi	CSS-luokan nimi tällä rivillä, esiasetukset: 'nmh' = NextMatch header, 'nmr' = alternating NM row, 'nmr0'+'nmr1' NM rows
+css-class name for this row, preset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows	etemplate	fi	CSS-luokan nimi tällä rivillä, esiasetukset: 'th' = header, 'row' = alternating row, 'row_off'+'row_on' rows
 css-styles	etemplate	fi	CSS tyylit
 custom	etemplate	fi	omat
 custom fields	etemplate	fi	Omat kentät
@@ -83,6 +89,7 @@ datum	etemplate	fi	Päiväys
 day	etemplate	fi	Päivä
 days	etemplate	fi	päivää
 db ensures that every row has a unique value in that column	etemplate	fi	DB varmistaa että jokaisella rivillä on ainutlaatuinen arvo sarakkeensa
+db-specific index options (comma-sep.), eg. mysql(fulltext) or mysql(100) for the indexed length of a col	etemplate	fi	Tietokantakohtaiset asetukset (pilkulla erotettuna), esim. mysql(FULLTEXT) tai mysql(100) määrittelevät sarakkeen pituuden.
 db-tools	etemplate	fi	Tietokanta -työkalut
 default	etemplate	fi	Oletus
 delete a single entry by passing the id.	etemplate	fi	Poista yksittainen tietue ohittaen id.
@@ -102,15 +109,20 @@ documentation	etemplate	fi	Dokumentointi
 doesn't matter	etemplate	fi	Ei väliä
 drop a table - this can not be undone	etemplate	fi	Poista tietokannan taulu - tätä EI voi peruuttaa
 drop table	etemplate	fi	Poista tietokannan taulu
+dump4setup	etemplate	fi	Dump4Setup
 duration	etemplate	fi	Kestää
 edit	etemplate	fi	Muokkaa
+edit embeded css styles or of the applications app.css file	etemplate	fi	muokkaa upotettua CSS tyyliä tai sovelluksen app.css tiedostoa
 edit...	etemplate	fi	Muokkaa...
 editable templates - db-tools	etemplate	fi	Muokattavat sivupohjat - Tietokantatyökalut
 editable templates - delete template	etemplate	fi	Muokattavat sivupohjat - Poista sivupohja
 editable templates - editor	etemplate	fi	Muokattavat sivupohjat - Muokkaus
 editable templates - search	etemplate	fi	Muokattavat sivupohjat - Haku
 editable templates - show template	etemplate	fi	Muokattavat sivupohjat - Näytä sivupohja
+embeded css styles, eg. '.red { background: red; }' (note the '.' before the class-name) or '@import url(...)' (class names are global for the whole page!)	etemplate	fi	upotetut CSS tyylit, esim. .red { background: red; }' (huomaa '.' ennen luokan nimeä) tai '@import url(...)' (luokan nimi on globaali koko sivulla!)
 enable javascript onchange submit	etemplate	fi	salli JavaScript onChange lähetys
+enter '' for an empty default, nothing mean no default	etemplate	fi	syötä '' määritelläksesi tyhjä arvo, tyhjä tarkoittaa ettei oletusarvoa ole.
+enter a search pattern	etemplate	fi	Syötä haun kaava
 enter filename to upload and attach, use [browse...] to search for it	etemplate	fi	Anna ladattavan ja liitettävän tiedoston nimi, käytä [Selaa...] löytääksesi tiedosto
 enter the new version number here (> old_version), empty for no update-file	etemplate	fi	Kirjoita uusi versio numero tähän (>vanha_versio) tyhjä jos ei ole päivitettävää tiedostoa
 enter the new version number here (has to be > old_version)	etemplate	fi	kirjoita uusi versio numero tähän (täytyy olla > vanha_versio)
@@ -146,12 +158,15 @@ go to the previous page of entries	etemplate	fi	mene edellisen sivun merkintöihi
 hbox	etemplate	fi	HBox
 height	etemplate	fi	Korkeus
 height of row (in % or pixel)	etemplate	fi	rivin korkeus (% tai pikseleinä)
-height, disabled	etemplate	fi	Pituus, Passivoitu
+height of row (in % or pixel), disable row: [! = not]<value>[=<check>] eg: '!@data' disable row if content of data is empty	etemplate	fi	rivin korkeus (% tai pikseleinä), disable row: [! = not]<value>[=<check>] esim: '!@data' piiloita rivi jos sillä ei ole sisältöä.
+height of the table in % or pixels for the table-tag and (optional) div	etemplate	fi	Taulukon korkeus % tai pikseleinä table tagissa ja (vaihtoehtoisesti) div tagissa.
+height, disabled	etemplate	fi	Pituus estetty
 help	etemplate	fi	Ohjeet
 history log	etemplate	fi	Historia loki
 horizontal rule	etemplate	fi	Vaakasuuntainen viiva
 hour	etemplate	fi	Tunti
 hours	etemplate	fi	tuntia
+how many entries should the list show	etemplate	fi	Kuinka monta merkintää näytetään listalla
 html	etemplate	fi	Html
 image	etemplate	fi	Kuva
 import	etemplate	fi	Tuo
@@ -251,6 +266,7 @@ select columns	etemplate	fi	Valitse sarakkeet
 select country	etemplate	fi	Valitse maa
 select day	etemplate	fi	Valitse päivä
 select day of week	etemplate	fi	Valitse viikon päivä
+select entry	etemplate	fi	Valitse merkintä
 select hour	etemplate	fi	Valitse tunti
 select if content of field should not be translated (label gets always translated)	etemplate	fi	valitse jos kentän sisältö ei pitäisi olla käännetty (otsikko saadaan yleensä käännettyä)
 select language	etemplate	fi	Valitse kieli
@@ -312,13 +328,16 @@ value has to be at least '%1' !!!	etemplate	fi	Arvo pitää olla ainakin %1 !!!
 value has to be at maximum '%1' !!!	etemplate	fi	Arvo pitää olla maksimissaan %1 !!!
 vbox	etemplate	fi	VBox
 version	etemplate	fi	Versio
+vertical alignment of row	etemplate	fi	rivin pystysuuntainen tasaus
 view this etemplate	etemplate	fi	Näytä tämä eMallipohja
 view this linked entry in its application	etemplate	fi	näytä linkitetty tietue sen sovelluksessa
 weekend	etemplate	fi	viikonloppu
 what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	etemplate	fi	mitä tapahtuu ylimenevän osan kanssa:näkyvä(oletus), piilotettu,vierittää,auto(selaustoiminto toteutetaan)
 widget copied into clipboard	etemplate	fi	widget kopioitu leikepöydälle
 width	etemplate	fi	leveys
+width of col (in % or pixel), disable col: [! = not]<value>[=<check>] eg: '!@data' disable col if content of data is empty	etemplate	fi	sarakkeen leveys (% tai pikseleinä), disable col: [! = not]<value>[=<check>] eg: '!@data' piiloita sarake jos sisältöä ei ole
 width of column (in % or pixel)	etemplate	fi	sarakkeen leveys (% tai pikseleinä)
+width of the table in % or pixels for the table-tag and (optional) div	etemplate	fi	Taulukon leveys % tai pikseleinä table tagissa tai (vaihtoehtoisesti) div tagissa.
 width, disabled	etemplate	fi	Leveys, estetty
 working days	etemplate	fi	työpäivät
 write <app>/setup/tables_current.inc.php	etemplate	fi	Kirjoita <app>/setup/tables_current.inc.php

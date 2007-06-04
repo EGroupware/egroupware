@@ -167,6 +167,7 @@ home phone	addressbook	pl	Telefon domowy
 home state	addressbook	pl	Wojewdztwo
 home street	addressbook	pl	Ulica
 home zip code	addressbook	pl	Kod pocztowy
+how many contacts should non-admins be able to export (empty = no limit)	admin	pl	Jak du¿± paczkê kontaktów mog± eksportowaæ nie-administratorzy (puste oznacza brak limitu)
 icon	addressbook	pl	Ikonka
 if accounts are already in ldap	admin	pl	je¶li konta s± ju¿ w LDAPie
 import	addressbook	pl	Importuj
@@ -289,7 +290,7 @@ translation	addressbook	pl	T³umaczenie
 type	addressbook	pl	typ
 update a single entry by passing the fields.	addressbook	pl	Aktualizuj pojedyñczy wpis poprzez podawanie warto¶ci pól.
 upload or delete the photo	addressbook	pl	Za³aduj lub usuñ zdjêcie
-url to link telephone numbers to (use %1 for the number)	admin	pl	Rodzaj odno¶nika URL dla numerów telefonów (u¿yj %1 jako numer)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pl	Odno¶nik URL do numerów telefonów (u¿yj %1 zamiast numeru telefonu, %2 zamiast nazwy konta, %3 zamiast numeru telefonu konta)
 use an extra category tab?	addressbook	pl	U¿ywaæ specjalnej zak³adki kategorii?
 use country list	addressbook	pl	U¿yj listy krajów
 use setup for a full account-migration	admin	pl	u¿yj (/setup) w celu pe³nej migracji kont

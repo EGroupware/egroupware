@@ -95,6 +95,7 @@ csv-filename	addressbook	zh-tw	CSV檔名
 custom	addressbook	zh-tw	自訂
 custom fields	addressbook	zh-tw	自訂欄位
 debug output in browser	addressbook	zh-tw	從瀏覽器輸入錯誤訊息
+default address format	addressbook	zh-tw	預設住址格式
 default addressbook for adding contacts	addressbook	zh-tw	新增聯絡人時的預設通訊錄
 default filter	addressbook	zh-tw	預設過濾器
 delete a single entry by passing the id.	addressbook	zh-tw	從id刪除一筆資料。
@@ -166,6 +167,7 @@ home phone	addressbook	zh-tw	電話
 home state	addressbook	zh-tw	省/市
 home street	addressbook	zh-tw	地址
 home zip code	addressbook	zh-tw	郵遞區號
+how many contacts should non-admins be able to export (empty = no limit)	admin	zh-tw	非管理員可以匯出的聯絡人數量（空白表示不限制）
 icon	addressbook	zh-tw	圖示
 if accounts are already in ldap	admin	zh-tw	如果帳號已經存在於 LDAP
 import	addressbook	zh-tw	匯入
@@ -288,7 +290,6 @@ translation	addressbook	zh-tw	轉換
 type	addressbook	zh-tw	類型
 update a single entry by passing the fields.	addressbook	zh-tw	從欄位更新一筆資料。
 upload or delete the photo	addressbook	zh-tw	上傳或是刪除照片
-url to link telephone numbers to (use %1 for the number)	admin	zh-tw	要引用電話號碼的網址（使用 %1 來替代號碼）
 use an extra category tab?	addressbook	zh-tw	使用附加類別標籤？
 use country list	addressbook	zh-tw	使用國家清單
 use setup for a full account-migration	admin	zh-tw	使用安裝程式來完整轉換帳號
@@ -300,6 +301,7 @@ view linked infolog entries	addressbook	zh-tw	檢視連結的記事資料
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	zh-tw	注意！！只有當您沒有將聯絡人作為帳號儲存時LDAP才會生效！
 warning: all contacts found will be deleted!	addressbook	zh-tw	警告：找到的所有聯絡人都會被刪除！
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	zh-tw	在其他程式連結到通訊錄的顯示文字，空白會被忽略，任何的修正必須在重新登入後才會套用！
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	zh-tw	通訊錄在不清楚住址格式的國家要使用的住址格式，如果已經知道，它會使用獨立的設定。
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	zh-tw	新增聯絡人時要選擇哪個通訊錄，目前的通訊錄您沒有新增權限。
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。
 which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	zh-tw	要匯出哪些欄位，全部代表儲存在通訊錄的每一個欄位，包含自訂欄位；公司或住家住址只包含姓名、公司與選擇的住址。

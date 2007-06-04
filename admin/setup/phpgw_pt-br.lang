@@ -92,6 +92,8 @@ check ip address of all sessions	admin	pt-br	Verificar endereço IP de todas sess
 check items to <b>%1</b> to %2 for %3	admin	pt-br	Marcar itens de <b> %1</b> a %2 para %3
 click to select a color	admin	pt-br	Clique para selecionar uma cor
 color	admin	pt-br	Cor
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	pt-br	Cookie domínio (o padrão vazio significa usar o nome completo do domínio, por exemplo: para SiteMgr ".dominio.com.br" permite usar o mesmo domínio para egw.dominio.com.br e www.dominio.com.br)
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	pt-br	Cookie caminho (permite múltiplas sessões eGW com diferentes diretórios, mas tem problemas com SiteMgr!)
 country selection	admin	pt-br	Seleção de País
 create group	admin	pt-br	Criar Grupo
 creates a new field	admin	pt-br	criar um novo campo
@@ -144,6 +146,7 @@ do not delete the category and return back to the list	admin	pt-br	NÃO remova es
 do you also want to delete all global subcategories ?	admin	pt-br	Deseja também remover todas subcategorias globais ?
 do you want to delete all global subcategories ?	admin	pt-br	Deseja remover todas subcategorias globais ?
 do you want to move all global subcategories one level down ?	admin	pt-br	Deseja mover todas as subcategorias globais para um nível abaixo?
+document root (default)	admin	pt-br	Pasta raiz (padrão)
 each value is a line like <id>[=<label>]	admin	pt-br	cada valor é uma linha como <id>[=<label>]
 each value is a line like id[=label]	admin	pt-br	cada valor é uma linha como id[=label]
 edit account	admin	pt-br	Editar conta
@@ -162,6 +165,7 @@ edit this group	admin	pt-br	editar este grupo
 edit this user	admin	pt-br	editar este usuário
 edit user	admin	pt-br	editar usuário
 edit user account	admin	pt-br	Editar conta de usuário
+egroupware directory	admin	pt-br	Diretório eGroupWare
 email account active	admin	pt-br	conta de e-mail ativa
 email address	admin	pt-br	e-mail
 enable debug-messages	admin	pt-br	Habilitar menssagens de depuração
@@ -279,6 +283,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	pt-br	id mínimo para contas (Ex
 minute	admin	pt-br	Minuto
 mode	admin	pt-br	Modo
 month	admin	pt-br	Mês
+more secure	admin	pt-br	mais securo
 name must not be empty !!!	admin	pt-br	Nome não pode estar vazio !!!
 new group name	admin	pt-br	Nome do novo Grupo
 new name	admin	pt-br	novo nome
@@ -354,6 +359,7 @@ set preference values.	admin	pt-br	Definir preferências.
 should the login page include a language selectbox (useful for demo-sites) ?	admin	pt-br	A tela de conexão deve incluír uma caixa de seleção de idioma? (útil para sites de demonstração)
 show 'powered by' logo on	admin	pt-br	Área para exibição de 'powered by eGroupWare'
 show access log	admin	pt-br	Exibir registros de acessos
+show an asterisk (*) to mark untranslated strings	admin	pt-br	Exibe um asterisco (*) para marcar as frases não traduzidas
 show current action	admin	pt-br	Exibir ação corrente
 show error log	admin	pt-br	Exibir registro de erros
 show phpinfo()	admin	pt-br	Exibir phpinfo()
@@ -374,6 +380,7 @@ start testjob!	admin	pt-br	Iniciar TestJob!
 submit changes	admin	pt-br	Enviar alterações
 submit the search string	admin	pt-br	Enviar expressão de busca
 subtype	admin	pt-br	Sub tipo
+switch it off, if users are randomly thrown out	admin	pt-br	desabilite, se usuários estiverem, aleatoriamente, sendo desconectados
 template selection	admin	pt-br	Seleção de modelos
 text entry	admin	pt-br	Entrada de texto
 that application name already exists.	admin	pt-br	Este nome de aplicativo já existe.

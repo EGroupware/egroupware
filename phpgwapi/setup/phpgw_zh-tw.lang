@@ -538,8 +538,7 @@ savant2 version differs from savant2 wrapper. <br/>this version: %1 <br/>savants
 save	common	zh-tw	儲存
 search	common	zh-tw	搜尋
 search %1 '%2'	common	zh-tw	搜尋 %1 '%2'
-search or select accounts	common	zh-tw	搜尋或是選擇帳號
-search or select multiple accounts	common	zh-tw	搜尋或是選擇多個帳號
+search accounts	common	zh-tw	搜尋帳號
 second	common	zh-tw	秒
 section	common	zh-tw	選擇
 select	common	zh-tw	選擇

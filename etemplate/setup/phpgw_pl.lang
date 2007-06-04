@@ -41,12 +41,15 @@ attach	etemplate	pl	Do³±cz
 attach file	etemplate	pl	do³±cz plik
 border	etemplate	pl	Ramka
 cancel	etemplate	pl	Anuluj
+cant delete a single widget from a grid !!!	etemplate	pl	nie mo¿na usun±æ pojedynczego obiektu z siatki!
 cant delete the only column of a grid !!!	etemplate	pl	Nie mo¿na usun±æ jedynej kolumny z siatki!
 cant delete the only row in a grid !!!	etemplate	pl	Nie mo¿na usun±æ jedynego wiersza z siatki!
 category	etemplate	pl	Kategoria
 cells	etemplate	pl	Komórki
 center	etemplate	pl	Wy¶rodkowanie
 changed	etemplate	pl	Zmieniono
+check if content should only be displayed but not altered (the content is not send back then!)	etemplate	pl	zaznacz, je¿eli zawarto¶æ ma byæ wy¶wietlana, ale nie zmieniana (nie jest wtedy odsy³ana z powrotem do przegl±darki)
+check if field has to be filled by user	etemplate	pl	zaznacz, je¿eli pole musi byæ wype³nione przez u¿ytkownika
 class	etemplate	pl	Klasa
 class, valign	etemplate	pl	klasa, w pionie
 click here to attach the file	etemplate	pl	kliknij tutaj, aby do³±czyæ plik
@@ -54,16 +57,20 @@ click here to create the link	etemplate	pl	kliknij tutaj, aby stworzyæ odno¶nik
 click here to start the search	etemplate	pl	kliknij tutaj, aby rozpocz±æ wyszukiwanie
 click here to upload the file	etemplate	pl	kliknij tutaj, aby przes³aæ plik
 click to order after that criteria	etemplate	pl	kliknij, aby uporz±dkowaæ dane wed³ug tego kryterium
+clickable path	etemplate	pl	¶cie¿ka mo¿liwa do klikniêcia
 closes the window without saving the changes	etemplate	pl	zamyka okno bez zachowywania zmian
 column...	etemplate	pl	Kolumna...
 columnname	etemplate	pl	Nazwa kolumny
 comment	etemplate	pl	Komentarz
 confirm	etemplate	pl	zatwierd¼
+confirmation message or custom javascript (returning true or false)	etemplate	pl	wiadomo¶æ potwierdzenia lub w³asny skrypt JS (zwracaj±cy 'true' lub 'false')
+confirmation necesary or custom java-script	etemplate	pl	potwierdzenie konieczne lub skrypt JS
 contact	etemplate	pl	Kontakt
 contact field to show	etemplate	pl	Pole kontaktu do wy¶wietlenia
 contact fields	etemplate	pl	Pola kontaktu
 contains	etemplate	pl	zawiera
 create a new table for the application	etemplate	pl	Tworzy now± tabelê dla aplikacji
+creates an english ('en') langfile from label and helptexts (for application in name)	etemplate	pl	tworzy angielski plik jêzykowy ('en') z etykiet i tekstów pomocy (dla aplikacji z pola 'Name')
 css class for the table-tag	etemplate	pl	klasa CSS dla znacznika tablicy
 css properties	etemplate	pl	ustawienia CSS
 css-styles	etemplate	pl	style CSS
@@ -87,9 +94,11 @@ delete this etemplate	etemplate	pl	usuñ ten e-Szablon
 delete this file	etemplate	pl	Usuñ ten plik
 delete this row	etemplate	pl	Usuñ ten wierwsz
 delete whole column (can not be undone!!!)	etemplate	pl	Usuñ ca³± kolumnê (nie mo¿na cofn±æ!)
+deletes the etemplate spez. above	etemplate	pl	Usuwa e-Szablon wskazany powy¿ej
 deletes this column	etemplate	pl	Usuñ t± kolumnê
 deletes this index	etemplate	pl	Usuñ ten indeks
 discard changes	etemplate	pl	porzuæ zmiany
+do you want to save the changes you made in table %s?	etemplate	pl	Czy chcesz zachowaæ zmiany wykonane w tablicy %s?
 documentation	etemplate	pl	Dokumentacja
 doesn't matter	etemplate	pl	bez znaczenia
 drop a table - this can not be undone	etemplate	pl	Usuñ tabelê - czynno¶æ nie mo¿e byæ cofniêta!
@@ -105,6 +114,7 @@ editable templates - editor	etemplate	pl	Edytor Szablonów - edytor
 editable templates - search	etemplate	pl	Edytor Szablonów - wyszukiwanie
 editable templates - show template	etemplate	pl	Edytor Szablonów - poka¿ szablon
 enable javascript onchange submit	etemplate	pl	aktywuj przes³anie formularza poprzez JS na onChange
+enter '' for an empty default, nothing mean no default	etemplate	pl	wprowad¼ ci±g '' dla pustej warto¶ci domy¶lnej, je¿eli nic nie wpiszesz
 enter a search pattern	etemplate	pl	Podaje wzorzec wyszukiwania
 enter filename to upload and attach, use [browse...] to search for it	etemplate	pl	Podaj nazwê pliku do za³adowania i do³±czenia, u¿yj [Przegl±daj...] aby go wyszukaæ
 enter the new version number here (> old_version), empty for no update-file	etemplate	pl	Podaj nowy numer wersji (musi byæ wiêkszy ni¿ aktualny), pusta warto¶æ je¿eli nie chcesz aktualizowaæ pliku
@@ -147,6 +157,7 @@ hour	etemplate	pl	Godzina
 hours	etemplate	pl	godziny
 how many entries should the list show	etemplate	pl	Jak du¿o wpisów powinna pokazywaæ lista
 html	etemplate	pl	HTML
+if field is disabled an empty table-cell is displayed, for (temporal) removement of a field/cell	etemplate	pl	je¿eli pole jest wy³±czone, pojawia siê pusta komórka tabeli - dla (tymczasowego) usuniêcia pola lub komórki
 image	etemplate	pl	Obrazek
 import	etemplate	pl	Importuj
 import an etemplate from a xml-file	etemplate	pl	Importuj e-Szablon z pliku XML
@@ -193,6 +204,7 @@ nothing matched search criteria !!!	etemplate	pl	Brak elementów spe³niaj±cych kr
 of	etemplate	pl	z
 onchange	etemplate	pl	onChange (JS)
 onclick	etemplate	pl	onClick (JS)
+optional note about the link	etemplate	pl	opcjonalna notatka zwi±zana z odno¶nikiem
 options	etemplate	pl	Opcje
 order to navigating by tab key through the form	etemplate	pl	Porz±dek nawigacji klawiszem 'TAB' w formularzu
 overflow	etemplate	pl	Przepe³nienie
@@ -262,8 +274,10 @@ weekend	etemplate	pl	weekend
 widget copied into clipboard	etemplate	pl	Obiekt skopiowano do schowka
 width	etemplate	pl	Szeroko¶æ
 width of column (in % or pixel)	etemplate	pl	szeroko¶æ kolumny (w procentach lub pikselach)
+width, disabled	etemplate	pl	Szeroko¶æ, Wy³±czono
 working days	etemplate	pl	dni robocze
 write langfile	etemplate	pl	Zapisz plik jêzyka
 write tables	etemplate	pl	Zapisz tabele
+xml-file to import	etemplate	pl	plik xml do zaimportowania
 xslt template	etemplate	pl	Szablon XSLT
 year	etemplate	pl	Rok

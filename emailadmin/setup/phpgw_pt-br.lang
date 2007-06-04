@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	pt-br	Servidor Cyrus IMAP
 cyrus imap server administration	emailadmin	pt-br	Administração do Servidor Cyrus IMAP
 default	emailadmin	pt-br	padrão
 deliver extern	emailadmin	pt-br	entrega externa
+do not validate certificate	emailadmin	pt-br	não validar certificado
 do you really want to delete this profile	emailadmin	pt-br	Tem certeza que deseja remover esse perfil?
 domainname	emailadmin	pt-br	nome do domínio
 edit email settings	emailadmin	pt-br	editar configurações de e-mail
@@ -30,6 +31,7 @@ email settings	common	pt-br	Configurações do E-mail
 emailadmin	emailadmin	pt-br	Administração do E-Mail
 enable cyrus imap server administration	emailadmin	pt-br	habilitar administração do Servidor Cyrus IMAP
 enable sieve	emailadmin	pt-br	habilitar Sieve
+encrypted connection	emailadmin	pt-br	conexão criptografada
 encryption settings	emailadmin	pt-br	configurações de criptografia
 enter your default mail domain (from: user@domain)	emailadmin	pt-br	Entre com o domínio de e-mail padrão (de: usuario@dominio)
 error connecting to imap server. %s : %s.	emailadmin	pt-br	Erro conectando ao servidor IMAP. %s : %s.
@@ -46,6 +48,7 @@ imap server closed the connection.	emailadmin	pt-br	O servidor IMAP fechou a con
 imap server closed the connection. server responded: %s	emailadmin	pt-br	O servidor IMAP fechou a conexão. Resposta do servidor: %s
 imap server hostname or ip address	emailadmin	pt-br	Nome ou IP do servidor IMAP
 imap server logintyp	emailadmin	pt-br	Tipo de login do servidor IMAP
+imap server name	emailadmin	pt-br	nome do servidor imap
 imap server port	emailadmin	pt-br	Porta do servidor IMAP
 imap/pop3 server name	emailadmin	pt-br	Nome do servidor IMAP/POP3
 in mbyte	emailadmin	pt-br	em Mbytes
@@ -81,6 +84,7 @@ qmaildotmode	emailadmin	pt-br	modo dos arquivos qmail (.qmail)
 qouta size in mbyte	emailadmin	pt-br	tamanho da quota em MBytes
 quota settings	emailadmin	pt-br	configurações de quota
 remove	emailadmin	pt-br	remover
+select type of imap server	emailadmin	pt-br	selecione o tipo de servidor IMAP
 select type of imap/pop3 server	emailadmin	pt-br	Selecione o tipo de servidor IMAP/POP3
 select type of smtp server	emailadmin	pt-br	Selecione o tipo de servidor SMTP
 server settings	emailadmin	pt-br	configurações do servidor

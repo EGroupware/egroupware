@@ -67,7 +67,7 @@
 			
 			#$this->t->set_var('profile_name',$profileList[0]['description']);
 			$this->t->set_var('smtpActiveTab','1');
-			$this->t->set_var('imapActiveTab','1');
+			$this->t->set_var('imapActiveTab','2');	// IMAP
 			$this->t->set_var('application_select_box', $GLOBALS['egw']->html->select('globalsettings[ea_appname]','',$applications, true, "style='width: 250px;'"));
 			$this->t->set_var('group_select_box', $GLOBALS['egw']->html->select('globalsettings[ea_group]','',$allGroups, true, "style='width: 250px;'"));
 			
@@ -83,10 +83,13 @@
 			);
 			$this->t->set_var('back_url',$GLOBALS['egw']->link('/index.php',$linkData));
 
-			foreach($this->boemailadmin->getSMTPServerTypes() as $key => $value)
-			{
-				$this->t->set_var("lang_smtp_option_$key",$value);
-			};
+			$this->t->set_var('smtptype',$GLOBALS['egw']->html->select(
+				'smtpsettings[smtpType]',
+				$profileData['smtpType'], 
+				$this->boemailadmin->getSMTPServerTypes(),
+				true,
+				'style="width: 250px;" id="smtpselector" onchange="smtp.display(this.value);"'
+			));
 						
 			foreach($this->boemailadmin->getIMAPServerTypes() as $key => $value) {
 				$imapServerTypes[$key] = $value['description'];
@@ -96,7 +99,8 @@
 				'', 
 				$imapServerTypes, 
 				false, 
-				"style='width: 250px;' id='imapselector' onchange='imap.display(this.value); ea_setIMAPDefaults(this.value);'"
+				// stupid tabs javascript assumes value=position in selectbox, here's a littel workaround ;-)
+				"style='width: 250px;' id='imapselector' onchange='var v=this.value; imap.display(this.value); this.value=v; ea_setIMAPDefaults(this.value);'"
 			);
 			$this->t->set_var('imaptype', $selectFrom);
 
@@ -235,7 +239,7 @@
 						$this->t->set_var('checked_'. $key .'_'. $value,'checked="1"');
 						break;
 					case 'imapTLSAuthentication':
-						if($value == '1') {
+						if(!$value) {
 							$this->t->set_var('selected_'.$key,'checked="1"');
 						}
 						break;
@@ -295,7 +299,8 @@
 				$profileData['imapType'], 
 				$imapServerTypes, 
 				true, 
-				"style='width: 250px;' id='imapselector' onchange='imap.display(this.value);'"
+				// stupid tabs javascript assumes value=position in selectbox, here's a littel workaround ;-)
+				"style='width: 250px;' id='imapselector' onchange='var v = this.value; imap.display(this.value); this.value=v;'"
 			);
 			$this->t->set_var('imaptype', $selectFrom);
 						
@@ -506,7 +511,7 @@
 			foreach($this->boemailadmin->getFieldNames($imapType,'imap') as $key) {
 				switch($key) {
 					case 'imapTLSAuthentication':
-						$imapSettings[$key] = $_POST['imapsettings'][$imapType][$key] != 'dontvalidate';
+						$imapSettings[$key] = !isset($_POST['imapsettings'][$imapType][$key]);
 						break;
 					default:
 						$imapSettings[$key] = $_POST['imapsettings'][$imapType][$key];

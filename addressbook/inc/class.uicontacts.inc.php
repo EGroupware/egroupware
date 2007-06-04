@@ -781,24 +781,24 @@ class uicontacts extends bocontacts
 			}
 			// translate the select order to the really used over all 3 columns
 			$sort = $query['sort'];
-			switch($query['order'])		// "xxx!='' DESC" sorts contacts with empty order-criteria always at the end
+			switch($query['order'])		// "xxx<>'' DESC" sorts contacts with empty order-criteria always at the end
 			{							// we don't exclude them, as the total would otherwise depend on the order-criteria
 				case 'org_name':
-					$order = "org_name!='' DESC,org_name $sort,n_family $sort,n_given $sort";
+					$order = "org_name<>'' DESC,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				default:
 					$query['order'] = 'n_family';
 				case 'n_family':
-					$order = "n_family!='' DESC,n_family $sort,n_given $sort,org_name $sort";
+					$order = "n_family<>'' DESC,n_family $sort,n_given $sort,org_name $sort";
 					break;
 				case 'n_given':
-					$order = "n_given!='' DESC,n_given $sort,n_family $sort,org_name $sort";
+					$order = "n_given<>'' DESC,n_given $sort,n_family $sort,org_name $sort";
 					break;
 				case 'n_fileas':
-					$order = "n_fileas!='' DESC,n_fileas $sort";
+					$order = "n_fileas<>'' DESC,n_fileas $sort";
 					break;
 				case 'adr_one_postalcode':
-					$order = "adr_one_postalcode!='' DESC,adr_one_postalcode $sort,org_name $sort,n_family $sort,n_given $sort";
+					$order = "adr_one_postalcode<>'' DESC,adr_one_postalcode $sort,org_name $sort,n_family $sort,n_given $sort";
 					break;
 				case 'contact_modified':
 				case 'contact_created':
@@ -1005,7 +1005,7 @@ class uicontacts extends bocontacts
 			$icon = 'accounts';
 			$label = lang('accounts');
 		}
-		elseif ($row['private'])
+		elseif ($private)
 		{
 			$icon = 'private';
 			$label = lang('private');
@@ -1304,10 +1304,7 @@ class uicontacts extends bocontacts
 		// for editing the own account (by a non-admin), enable only the fields allowed via the "own_account_acl"
 		if (!$content['owner'] && !$this->is_admin($content))
 		{
-			foreach($this->get_fields('supported',$content['id'],$content['owner']) as $field)
-			{
-				if (!$this->own_account_acl || !in_array($field,$this->own_account_acl)) $readonlys[$field] = true;
-			}
+			$this->_set_readonlys_for_own_account_acl($readonlys,$id);
 		}
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
 		$sel_options['tz'] = $tz;
@@ -1339,6 +1336,51 @@ class uicontacts extends bocontacts
 		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$content, 2);
 	}
 	
+	/**
+	 * Set the readonlys for non-admins editing their own account
+	 *
+	 * @param array &$readonlys
+	 * @param int $id
+	 */
+	function _set_readonlys_for_own_account_acl(&$readonlys,$id)
+	{
+		// regular fields depending on the backend
+		foreach($this->get_fields('supported',$id,0) as $field)
+		{
+			if (!$this->own_account_acl || !in_array($field,$this->own_account_acl))
+			{
+				$readonlys[$field] = true;
+				switch($field)
+				{
+					case 'tel_work': 
+					case 'tel_cell': 
+					case 'tel_home': 
+						$readonlys[$field.'2'] = true;
+						break;
+					case 'n_fileas':
+						$readonlys['fileas_type'] = true;
+						break;
+				}
+			}
+		}
+		// custom fields
+		if ($this->customfields)
+		{
+			foreach($this->customfields as $name => $data)
+			{
+				if (!$this->own_account_acl || !in_array('#'.$name,$this->own_account_acl))
+				{
+					$readonlys['#'.$name] = true;
+				}
+			}
+		}
+		// links
+		if (!$this->own_account_acl || !in_array('link_to',$this->own_account_acl))
+		{
+			$readonlys['link_to'] = true;
+		}
+	}
+			
 	function ajax_setFileasOptions($n_prefix,$n_given,$n_middle,$n_family,$n_suffix,$org_name)
 	{
 		$names = array(
@@ -1447,6 +1489,7 @@ class uicontacts extends bocontacts
 		$readonlys['button[save]'] = $readonlys['button[apply]'] = $readonlys['change_photo'] = true;
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(EGW_ACL_DELETE,$content);
 		$readonlys['button[edit]'] = !$this->check_perms(EGW_ACL_EDIT,$content);
+		$content['disable_change_org'] = true;
 // ToDo: fix vCard export
 $readonlys['button[vcard]'] = true;
 
@@ -1493,11 +1536,15 @@ $readonlys['button[vcard]'] = true;
 				$this->tmpl->set_cell_attribute($name,'no_lang',true);
 			}
 		}
+		if ($this->private_addressbook && $content['private'] && $content['owner'] == $this->user)
+		{
+			$content['owner'] .= 'p';
+		}
 		// set id for automatic linking via quick add
 		$GLOBALS['egw_info']['flags']['currentid'] = $content['id'];
-		
+
 		$this->tmpl->exec('addressbook.uicontacts.view',$content,$sel_options,$readonlys,array('id' => $content['id']));
-		
+
 		$GLOBALS['egw']->hooks->process(array(
 			'location' => 'addressbook_view',
 			'ab_id'    => $content['id']

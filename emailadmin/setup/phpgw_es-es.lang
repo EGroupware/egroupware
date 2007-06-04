@@ -30,6 +30,7 @@ email settings	common	es-es	Configuración del correo electrónico
 emailadmin	emailadmin	es-es	Administración del correo electrónico
 enable cyrus imap server administration	emailadmin	es-es	activar administración del servidor Cyrus IMAP
 enable sieve	emailadmin	es-es	activar Sieve
+encrypted connection	emailadmin	es-es	conexión cifrada
 encryption settings	emailadmin	es-es	configuración del cifrado
 enter your default mail domain (from: user@domain)	emailadmin	es-es	introduzca el dominio predeterminado (de usuario@dominio)
 error connecting to imap server. %s : %s.	emailadmin	es-es	Error al conectar con el servidor IMAP. %s: %s.
@@ -46,6 +47,7 @@ imap server closed the connection.	emailadmin	es-es	El servidor IMAP cerró la co
 imap server closed the connection. server responded: %s	emailadmin	es-es	El servidor IMAP cerró la conexión. El servidor respondió: %s
 imap server hostname or ip address	emailadmin	es-es	Servidor IMAP o dirección IP
 imap server logintyp	emailadmin	es-es	Tipo de sesión del servidor IMAP
+imap server name	emailadmin	es-es	Nombre del servidor IMAP
 imap server port	emailadmin	es-es	Puerto del servidor IMAP
 imap/pop3 server name	emailadmin	es-es	Nombre del servidor POP/IMAP
 in mbyte	emailadmin	es-es	en MBytes
@@ -81,6 +83,7 @@ qmaildotmode	emailadmin	es-es	Modo de punto de qmail
 qouta size in mbyte	emailadmin	es-es	Tamaño de la cuota en MBytes
 quota settings	emailadmin	es-es	Configuración de las cuotas
 remove	emailadmin	es-es	borrar
+select type of imap server	emailadmin	es-es	Seleccione el tipo de servidor IMAP
 select type of imap/pop3 server	emailadmin	es-es	Seleccione el tipo de servidor IMAP/POP3
 select type of smtp server	emailadmin	es-es	Seleccione el tipo de servidor SMTP
 server settings	emailadmin	es-es	configuración del servidor

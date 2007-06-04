@@ -358,6 +358,7 @@ class so_ldap
 				'(|(entryUUID='.ldap::quote($contactUID).')(uid='.ldap::quote($contactUID).'))', $attributes)) &&
 			($oldContactInfo = ldap_get_entries($this->ds, $result)) && $oldContactInfo['count'])
 		{
+			unset($oldContactInfo[0]['objectclass']['count']);
 			foreach($oldContactInfo[0]['objectclass'] as $objectclass)
 			{
 				$oldObjectclasses[]	= strtolower($objectclass);
@@ -431,7 +432,7 @@ class so_ldap
 			{
 				if (!@ldap_mod_add($this->ds, $dn, array('objectClass' => $ldapContact['objectClass']))) 
 				{
-					if(ldap_errno($this->ds) == 69) 
+					if(in_array(ldap_errno($this->ds),array(69,20))) 
 					{
 						// need to modify structural objectclass
 						$needRecreation = true;

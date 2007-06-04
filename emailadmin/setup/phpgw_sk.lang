@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	sk	Cyrus IMAP Server
 cyrus imap server administration	emailadmin	sk	Správa servera Cyrus IMAP
 default	emailadmin	sk	predvolené
 deliver extern	emailadmin	sk	doruèi» extern
+do not validate certificate	emailadmin	sk	neoveri» certifikát
 do you really want to delete this profile	emailadmin	sk	Naozaj chcete odstráni» tento Profil
 domainname	emailadmin	sk	názov domény
 edit email settings	emailadmin	sk	upravi» nastavenia E-mailu
@@ -30,6 +31,7 @@ email settings	common	sk	Nastavenia E-mailu
 emailadmin	emailadmin	sk	EMailAdmin
 enable cyrus imap server administration	emailadmin	sk	zapnú» správu servera Cyrus IMAP
 enable sieve	emailadmin	sk	zapnú» Sieve
+encrypted connection	emailadmin	sk	¹ifrované spojenie
 encryption settings	emailadmin	sk	nastavenia ¹ifrovania
 enter your default mail domain (from: user@domain)	emailadmin	sk	Zadajte va¹u predvolenú doménu (z tvaru: user@domain)
 error connecting to imap server. %s : %s.	emailadmin	sk	Chyba poèas pripájania k IMAP serveru. %s : %s.
@@ -46,6 +48,7 @@ imap server closed the connection.	emailadmin	sk	IMAP server ukonèil spojenie.
 imap server closed the connection. server responded: %s	emailadmin	sk	IMAP server ukonèil spojenie. Odpoveï servera: %s
 imap server hostname or ip address	emailadmin	sk	názov (hostname) alebo IP adresa IMAP servera
 imap server logintyp	emailadmin	sk	typ prihlásenia IMAP servera
+imap server name	emailadmin	sk	názov IMAP servera
 imap server port	emailadmin	sk	port IMAP servera
 imap/pop3 server name	emailadmin	sk	názov IMAP/POP3 servera
 in mbyte	emailadmin	sk	v Megabajtoch
@@ -81,6 +84,7 @@ qmaildotmode	emailadmin	sk	qmail bodkový re¾im
 qouta size in mbyte	emailadmin	sk	Neµkos» kvóty v Megabajtoch
 quota settings	emailadmin	sk	Nastavenia kvóty
 remove	emailadmin	sk	Odstráni»
+select type of imap server	emailadmin	sk	Vyberte typ IMAP servera
 select type of imap/pop3 server	emailadmin	sk	Vyberte typ IMAP/POP3 servera
 select type of smtp server	emailadmin	sk	Vyberte typ SMTP servera
 server settings	emailadmin	sk	Nastavenia servera

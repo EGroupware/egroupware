@@ -270,23 +270,22 @@ class uitimesheet extends botimesheet
 		$content['all_pm_ids'] = array_values($links);
         
 		// set old id, pm selector (for later removal)
-		if (count($links) > 0) {  
+		if (count($links) > 0) 
+		{  
 			$preserv['old_pm_id'] = array_shift($links);
 		}
-		if ($preserv['old_pm_id'] == '') {
-			$preserv['old_pm_id'] = $content['pm_id']; 
-		}
-		if (!isset($this->data['pm_id']) && $preserv['old_pm_id']) {
+		if (!isset($this->data['pm_id']) && $preserv['old_pm_id']) 
+		{
 			$content['pm_id'] = $preserv['old_pm_id'];
 		}
 		if ($content['pm_id'])
 		{
 			$preserv['ts_project_blur'] = $content['ts_project_blur'] = $this->link->title('projectmanager',$content['pm_id']);
 		}
-	      	if ($this->pm_integration == 'full')
-	        {
-	            $preserv['ts_project'] = $preserv['ts_project_blur'];
-	        }
+		if ($this->pm_integration == 'full')
+		{
+			$preserv['ts_project'] = $preserv['ts_project_blur'];
+		}
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
 
 		$readonlys = array(
@@ -319,9 +318,11 @@ class uitimesheet extends botimesheet
 			$etpl->set_cell_attribute('pl_id','disabled',true);
 		}		
 
-		if($this->ts_viewtype == 'short') {
-			$content['ts_viewtype'] = /*$readonlys[$tabs]['links'] =*/ $readonlys[$tabs]['notes'] = true;
+		if($this->ts_viewtype == 'short') 
+		{
+			$content['ts_viewtype'] = $readonlys[$tabs]['notes'] = true;
 		}
+		if (!$this->customfields) $readonlys[$tabs]['customfields'] = true;	// suppress tab if there are not customfields
 						
 		return $etpl->exec(TIMESHEET_APP.'.uitimesheet.edit',$content,array(
 			'ts_owner' => $edit_grants,

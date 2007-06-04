@@ -59,9 +59,6 @@ class contacts_admin_prefs
 					'no_lang' => true,
 					'link' => false
 				),
-// Disabled til they are working again
-//				'import contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.import'),
-//				'export contacts' => $GLOBALS['egw']->link('/index.php','menuaction=addressbook.uiXport.export'),
 				'CSV-Import'      => $GLOBALS['egw']->link('/addressbook/csv_import.php')
 			);
 			display_sidebox($appname,lang('Addressbook menu'),$file);

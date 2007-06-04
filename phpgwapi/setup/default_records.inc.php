@@ -40,7 +40,7 @@ foreach(array(
 	'el' => 'Greek',
 	'en' => 'English / US',
 	'eo' => 'Esperanto',
-	'es-es' => 'Espa&ntilde;ol',
+	'es-es' => 'EspaÃ±ol',
 	'et' => 'Estonian',
 	'eu' => 'Basque',
 	'fa' => 'Persian',

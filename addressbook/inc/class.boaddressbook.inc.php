@@ -166,6 +166,8 @@ class boaddressbook
 					'jpegphoto' => false,	// gives errors in KAddressbook, maybe the encoding is wrong
 					'photo' => false,		// is uncomplete anyway
 					'private' => 'access',	// special handling necessary
+					'adr_one_type' => "'Work'",	// defines how KAddresbook labels the address
+					'adr_two_type' => "'Home'",
 				);
 				break;
 				
@@ -201,7 +203,10 @@ class boaddressbook
 				
 				if ($customfields && isset($customfields[$data['id']]))
 				{
-					$data += $customfields[$data['id']];
+					foreach($customfields[$data['id']] as $name => $value)
+					{
+						$data['#'.$name] = $value;
+					}
 				}
 				// remove empty or null elements, they dont need to be transfered
 				$data = array_diff($data,array('',null));	
@@ -246,7 +251,11 @@ class boaddressbook
 							break;
 							
 						default:
-							if(isset($data[$from]))
+							if ($to{0} == "'")	// constant value enclosed in single quotes
+							{
+								$data[$from] = substr($to,1,-1);
+							}
+							elseif(isset($data[$from]))
 							{
 								if ($to) $data[$to] =& $data[$from]; 
 								unset($data[$from]);

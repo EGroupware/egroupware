@@ -16,6 +16,7 @@ add a contact to this organisation	addressbook	sk	Prida» kontakt k tejto organiz
 add a new contact	addressbook	sk	Prida» nový kontakt
 add a new list	addressbook	sk	Prida» nový zoznam
 add a single entry by passing the fields.	addressbook	sk	Prida» záznam pomocou zadania polí.
+add business email of whole distribution list?	addressbook	sk	Prida» Zamestnanie - Email celého distribuèného zoznamu
 add custom field	addressbook	sk	Prida» pou¾ívateµskú polo¾ku
 add to distribution list:	addressbook	sk	Prida» do distribuèného zoznamu:
 added by synchronisation	addressbook	sk	Pridané cez synchronizáciu
@@ -32,7 +33,7 @@ addressbook menu	addressbook	sk	Menu Adresára
 addressbook preferences	addressbook	sk	Predvoµby Adresára
 addressbook the contact should be saved to	addressbook	sk	Adresár -tento kontakt ulo¾i» do
 addressbook-fieldname	addressbook	sk	Pole adresára
-addvcard	addressbook	sk	Pridaj vizitku VCard
+addvcard	addressbook	sk	Prida» vizitku VCard
 advanced search	addressbook	sk	Pokroèilé hµadanie
 all contacts	addressbook	sk	V¹etky kontakty
 allow users to maintain their own account-data	admin	sk	Povoli» pou¾ívateµom, aby spravovali údaje svojich vlastných pou¾ívateµských úètov
@@ -73,13 +74,13 @@ company	common	sk	Spoloènos»
 company name	addressbook	sk	Názov firmy
 configuration	common	sk	Konfigurácia
 contact	common	sk	Kontakt
-contact application	admin	sk	Kontakty
+contact application	admin	sk	Aplikácia kontaktov
 contact copied	addressbook	sk	Kontakt bol skopírovaný
 contact deleted	addressbook	sk	Kontakt bol odstránený
 contact id	addressbook	sk	ID kontaktu
 contact repository	admin	sk	Zdroj kontaktov
 contact saved	addressbook	sk	Kontakt bol ulo¾ený
-contact settings	admin	sk	Nastavenia Kontaktov
+contact settings	admin	sk	Nastavenia kontaktu
 contacts and account contact-data to ldap	admin	sk	kontakty a kontaktné údaje úètu do LDAP
 contacts to ldap	admin	sk	kontakty do LDAP
 contacts to ldap, account contact-data to sql	admin	sk	kontakty do LDAP, kontaktné údaje úètu do SQL
@@ -131,7 +132,7 @@ existing links	addressbook	sk	Existujúce odkazy
 export	addressbook	sk	Export
 export as csv	addressbook	sk	Exportova» ako CSV
 export as vcard	addressbook	sk	Exportova» ako vizitku VCard
-export contacts	addressbook	sk	Export kontaktov
+export contacts	addressbook	sk	Exportova» kontakty
 export file name	addressbook	sk	Názov súboru pre export
 export from addressbook	addressbook	sk	Export z Adresára
 export selection	addressbook	sk	Exportova» výber
@@ -167,10 +168,11 @@ home phone	addressbook	sk	Domov - Telefón
 home state	addressbook	sk	Domov - ©tát
 home street	addressbook	sk	Domov - Ulica
 home zip code	addressbook	sk	Domov - PSÈ
+how many contacts should non-admins be able to export (empty = no limit)	admin	sk	Koµko kontaktov mô¾e exportova» pou¾ívateµ, ktorý nie je správcom (prázdne = bez obmedzení)
 icon	addressbook	sk	Ikona
 if accounts are already in ldap	admin	sk	ak sú úèty u¾ v LDAP
 import	addressbook	sk	Import
-import contacts	addressbook	sk	Importuj kontakty
+import contacts	addressbook	sk	Importova» kontakty
 import csv-file into addressbook	addressbook	sk	Importovat CSV súbor do Adresára
 import file	addressbook	sk	Importuj súbor
 import from	addressbook	sk	Import z
@@ -195,6 +197,7 @@ link title for contacts show	addressbook	sk	Názov odkazu pre zobrazenie kontakto
 links	addressbook	sk	Odkazy
 list all categories	addressbook	sk	Zoznam v¹etkých kategórií
 list all customfields	addressbook	sk	Zobrazi» v¹etky pou¾ívateµské polo¾ky
+list already exists!	addressbook	sk	Zoznam u¾ existuje!
 list created	addressbook	sk	Zoznam bol vytvorený
 list creation failed, no rights!	addressbook	sk	Nepodarilo sa vytvori» zoznam, nemáte práva!
 load vcard	addressbook	sk	Nahra» vizitku VCard
@@ -289,7 +292,7 @@ translation	addressbook	sk	Preklad
 type	addressbook	sk	Typ
 update a single entry by passing the fields.	addressbook	sk	Aktualizova» jednotlivý záznam podµa zadaných polí
 upload or delete the photo	addressbook	sk	Nahra» alebo vymaza» túto fotku
-url to link telephone numbers to (use %1 for the number)	admin	sk	URL na vytvorenie odkazu na telefónne èísla (pou¾ite %1 pre èíslo)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	sk	URL adresa, na ktorú sa majú odkáza» telefónne èísla (pou¾ite %1 = volané èíslo, %u = názov úètu, %t = telefónne èíslo úètu)
 use an extra category tab?	addressbook	sk	Pou¾i» extra kartu kategórie?
 use country list	addressbook	sk	Pou¾i» zoznam krajín
 use setup for a full account-migration	admin	sk	Pre plnú migráciu úètov pou¾ite Setup

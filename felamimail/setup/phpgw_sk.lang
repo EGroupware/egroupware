@@ -19,7 +19,7 @@ all address books	felamimail	sk	V¹etky Adresáre
 all folders	felamimail	sk	V¹etky prieèinky
 all of	felamimail	sk	v¹etko z
 allow images from external sources in html emails	felamimail	sk	Povoli» v HTML E-mailoch obrázky z externých zdrojov
-allways a new window	felamimail	sk	v¾dy nové okno
+allways a new window	felamimail	sk	V¾dy nové okno
 always show html emails	felamimail	sk	V¾dy zobrazi» HTML správy
 and	felamimail	sk	a
 any of	felamimail	sk	ktorýkoµvek z
@@ -122,8 +122,8 @@ email address	felamimail	sk	E-mailová adresa
 email forwarding address	felamimail	sk	preposielacia adresa E-mailu
 email signature	felamimail	sk	E-mailový podpis
 emailaddress	felamimail	sk	E-mailová adresa
-empty trash	felamimail	sk	vyprázdni» odpadkový kô¹
-enable	felamimail	sk	zapnú»
+empty trash	felamimail	sk	Vyprázdni» Odpadkový kô¹
+enable	felamimail	sk	Zapnú»
 encrypted connection	felamimail	sk	¹ifrované spojenie
 enter your default mail domain ( from: user@domain )	admin	sk	Zada» predvolenú po¹tovú doménu (Z tvaru: pou¾ívateµ@doména)
 enter your imap mail server hostname or ip address	admin	sk	Zadajte názov (hostname) alebo IP vá¹ho IMAP servera
@@ -272,7 +272,7 @@ none	felamimail	sk	¾iadne
 on behalf of	felamimail	sk	pre koho
 one address is not valid	felamimail	sk	Jedna adresa je neplatná
 only inbox	felamimail	sk	Iba Doruèená po¹ta
-only one window	felamimail	sk	iba jedno okno
+only one window	felamimail	sk	Iba jedno okno
 only unseen	felamimail	sk	Iba nepreèítané
 open all	felamimail	sk	otvori» v¹etko
 options	felamimail	sk	Voµby
@@ -413,7 +413,7 @@ viewing full header	felamimail	sk	Zobrazujem celú hlavièku
 viewing message	felamimail	sk	Zobrazujem správu
 viewing messages	felamimail	sk	Zobrazujem správy
 wed	felamimail	sk	Str
-when deleting messages	felamimail	sk	Poèas odstraòovania správ
+when deleting messages	felamimail	sk	Ako odstraòova» správy
 with message	felamimail	sk	so správou
 with message "%1"	felamimail	sk	so správou "%1"
 wrap incoming text at	felamimail	sk	Zarovna» príchodzí text:

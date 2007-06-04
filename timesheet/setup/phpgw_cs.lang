@@ -1,44 +1,52 @@
-2 month ago	timesheet	cs	2 mìsíce zpìt
-2 years ago	timesheet	cs	2 roky zpìt
-3 years ago	timesheet	cs	3 roky zpìt
+2 month ago	timesheet	cs	Pøed 2 mìsíci
+2 years ago	timesheet	cs	Pøed 2 roky
+3 years ago	timesheet	cs	Pøed 3 roky
 actions	timesheet	cs	Akce
-by	timesheet	cs	kým
+all projects	timesheet	cs	V¹echny projekty
+both: allow to use projectmanager and free project-names	admin	cs	Obojí: povolit pou¾ití Správce projektù i libovolných názvù projektù
+by	timesheet	cs	od
 create new links	timesheet	cs	Vytvoøit nové odkazy
+creating new entry	timesheet	cs	vytváøím nový záznam
 delete this entry	timesheet	cs	Smazat tento záznam
-edit this entry	timesheet	cs	Upravit tento záznam
-empty if identical to duration	timesheet	cs	prázdné pokud se shoduje s trváním
+edit this entry	timesheet	cs	Editovat tento záznam
+empty if identical to duration	timesheet	cs	prázdné pokud se shoduje s délkou trvání
 end	timesheet	cs	Konec
 entry deleted	timesheet	cs	Záznam smazán
 entry saved	timesheet	cs	Záznam ulo¾en
-error deleting the entry!!!	timesheet	cs	Chyba mazání záznamu!!!
-error saving the entry!!!	timesheet	cs	Chyba ukládání záznamu!!!
-existing links	timesheet	cs	Existující odkazy
-general	timesheet	cs	Hlavní
-last modified	timesheet	cs	Naposledy upraveno
-last month	timesheet	cs	Poslední mìsíc
-last week	timesheet	cs	Poslední týden
-last year	timesheet	cs	Poslední rok
-leave it empty for a full week	timesheet	cs	Nechte prázdné pro celý týden
+error deleting the entry!!!	timesheet	cs	Chyba pøi mazání záznamu!!!
+error saving the entry!!!	timesheet	cs	Chyba pøi ukládání záznamu!!!
+existing links	timesheet	cs	Stávající odkazy
+full: use only projectmanager	admin	cs	Plné: pou¾ít jen Správce projektù
+general	timesheet	cs	Obecné
+last modified	timesheet	cs	Naposledy zmìnìno
+last month	timesheet	cs	Minulý mìsíc
+last week	timesheet	cs	Minulý týden
+last year	timesheet	cs	Minulý rok
+leave it empty for a full week	timesheet	cs	Ponechte prázdné pro celý týden
 links	timesheet	cs	Odkazy
-no details	timesheet	cs	¾ádné detaily
-permission denied!!!	timesheet	cs	Pøístup odepøen
+no details	timesheet	cs	Bez detailù
+no project	timesheet	cs	®ádný projekt
+none: use only free project-names	admin	cs	®ádný: pou¾ívat jen libovolné názvy projektù
+or endtime	timesheet	cs	nebo Koncový èas
+permission denied!!!	timesheet	cs	Pøístup zamítnut!!!
 price	timesheet	cs	Cena
+projectmanager integration	admin	cs	Integrace se Správcem projektù
 quantity	timesheet	cs	Mno¾ství
-save & new	timesheet	cs	Ulo¾it & Nový
-saves the changes made	timesheet	cs	Ulo¾it provedené zmìny
-saves this entry and add a new one	timesheet	cs	Ulo¾it tento záznam a pøidat nový
-select a price	timesheet	cs	Zvolte cenu
-select a project	timesheet	cs	Zvolte projekt
+save & new	timesheet	cs	Ulo¾it a Nový
+saves the changes made	timesheet	cs	Ulo¾í provedené zmìny
+saves this entry and add a new one	timesheet	cs	Ulo¾í aktuální záznam a pøidá nový
+select a price	timesheet	cs	Vybrat cenu
+select a project	timesheet	cs	Vybrat projekt
 start	timesheet	cs	Zaèátek
-sum %1:	timesheet	cs	Suma %1:
+starttime	timesheet	cs	Poèáteèní èas
+starttime has to be before endtime !!!	timesheet	cs	Poèáteèní èas musí pøedcházet èasu ukonèení !!!
+sum %1:	timesheet	cs	Souèet %1:
 this month	timesheet	cs	Tento mìsíc
 this week	timesheet	cs	Tento týden
 this year	timesheet	cs	Tento rok
-timesheet	common	cs	Rozvrh
-unitprice	timesheet	cs	Cena za jednotku
-view this entry	timesheet	cs	Ukázat tento záznam
+timesheet	common	cs	Harmonogram
+unitprice	timesheet	cs	Jednotková cena
+view this entry	timesheet	cs	Zobrazit tento záznam
 week	timesheet	cs	Týden
 yesterday	timesheet	cs	Vèera
-your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	cs	Your database is NOT up to date (%1 vs. %2), please run %3setup%4 to update your database.
-Your database is NOT up to date (%1 vs. %2), please run %3setup%4 to update your database.
-Va¹e databáze není aktuální (%1 vs. %2), spus»te prosím %3setup%4 pro aktualizaci va¹í databáze.
+your database is not up to date (%1 vs. %2), please run %3setup%4 to update your database.	timesheet	cs	Va¹e databáze NENÍ aktuální (%1 vs. %2), spus»te prosím %3setup%4 a zaktualizujte Va¹í databázi.

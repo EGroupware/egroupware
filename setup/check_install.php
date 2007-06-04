@@ -242,7 +242,7 @@
 		{
 			$pear_config = '/etc/php5/cli/pear.conf';
 		}
-		@require_once 'PEAR/Config.php';
+		@include_once 'PEAR/Config.php';
 		
 		if (!class_exists('PEAR_Config')) return false;
 		

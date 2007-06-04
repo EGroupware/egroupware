@@ -16,6 +16,7 @@ add a contact to this organisation	addressbook	fi	Lis‰‰ yhteystieto t‰h‰n organi
 add a new contact	addressbook	fi	Lis‰‰ uusi yhteystieto
 add a new list	addressbook	fi	Lis‰‰ uusi lista
 add a single entry by passing the fields.	addressbook	fi	Lis‰‰ yksitt‰inen tietue antamalla kent‰t.
+add business email of whole distribution list?	addressbook	fi	Lis‰‰ tyˆs‰hkˆpostiosoite koko jakelulistalle
 add custom field	addressbook	fi	Lis‰‰ oma kentt‰
 add to distribution list:	addressbook	fi	Lis‰‰ jakelulista
 added by synchronisation	addressbook	fi	lis‰tty synckronoinnin yhteydess‰
@@ -80,6 +81,7 @@ contact id	addressbook	fi	Yhteystiedon ID
 contact repository	admin	fi	Yhteystietojen varasto
 contact saved	addressbook	fi	Kontakti tallennettu
 contact settings	admin	fi	Yhteystiedot - asetukset
+contacts and account contact-data to ldap	admin	fi	yhteystiedot ja k‰ytt‰j‰tilien yhteystiedot LDAP:sta
 contacts to ldap	admin	fi	yhteystiedot LDAP:sta
 contacts to ldap, account contact-data to sql	admin	fi	Yhteystiedot LDAP:ssa, k‰ytt‰j‰tilien yhteysttiedot SQL:ss‰
 contains	addressbook	fi	sis‰lt‰‰
@@ -166,6 +168,7 @@ home phone	addressbook	fi	Puhelin
 home state	addressbook	fi	L‰‰ni
 home street	addressbook	fi	Katuosoite
 home zip code	addressbook	fi	Postinumero
+how many contacts should non-admins be able to export (empty = no limit)	admin	fi	Kuinka monta yhteystietoa muut kuin p‰‰k‰ytt‰j‰t voivat vied‰ kerralla (j‰t‰ tyhj‰ksi jollet halua rajoituksia)
 icon	addressbook	fi	Kuvake
 if accounts are already in ldap	admin	fi	jos k‰ytt‰j‰tili on jo LDAP:ssa
 import	addressbook	fi	Tuonti
@@ -182,7 +185,7 @@ in %1 days (%2) is %3's birthday.	addressbook	fi	%1 p‰iv‰‰ (%2) on %3:n syntym‰p
 income	addressbook	fi	Tulossa
 insufficent rights to delete this list!	addressbook	fi	Puuttelliset oikeudet listan poistamiseksi!
 international	addressbook	fi	Kansainv‰linen
-label	addressbook	fi	Label
+label	addressbook	fi	Nimikentt‰
 last modified	addressbook	fi	Viimeksi muokattu
 last modified by	addressbook	fi	viimeksi muokannut
 ldap context for contacts	admin	fi	LDAP-konteksti
@@ -194,6 +197,7 @@ link title for contacts show	addressbook	fi	Linkit‰ otsikko n‰ytt‰m‰‰ yhteystiet
 links	addressbook	fi	Linkit
 list all categories	addressbook	fi	N‰yt‰ kaikki kategoriat
 list all customfields	addressbook	fi	N‰yt‰ kaikki omat kent‰t
+list already exists!	addressbook	fi	Lista on jo olemassa
 list created	addressbook	fi	Lista luotu
 list creation failed, no rights!	addressbook	fi	Listan luonti ep‰onnistu, ei riitt‰v‰sti oikeuksia!
 load vcard	addressbook	fi	Lataa VCard
@@ -215,6 +219,7 @@ name, address	addressbook	fi	Nimi, osoite
 no vcard	addressbook	fi	Ei VCard
 number	addressbook	fi	Numero
 number of records to read (%1)	addressbook	fi	Luettavien tietueiden m‰‰r‰ (%1)
+options for type	admin	fi	Option muoto
 organisation	addressbook	fi	Organisaatio
 organisations	addressbook	fi	Organisaatiot
 organisations by departments	addressbook	fi	Organisaatiot osastoittain
@@ -232,6 +237,7 @@ please enter a name for that field !	addressbook	fi	Anna kent‰n nimi!
 please select only one category	addressbook	fi	Valitse kategoria
 postal	common	fi	Postal
 pref	addressbook	fi	etuliite
+preferred phone	addressbook	fi	ensisijainen puhelin
 prefix	addressbook	fi	Etuliite
 public key	addressbook	fi	Julkinen avain
 publish into groups:	addressbook	fi	Julkaise ryhmiss‰
@@ -253,6 +259,7 @@ select all	addressbook	fi	Valitse kaikki
 select an action or addressbook to move to	addressbook	fi	Valitse toiminto tai osoitekirja siirrett‰v‰ksi
 select migration type	admin	fi	Valitse sulautus tapa
 select multiple contacts for a further action	addressbook	fi	Suorita valituille yhteystiedoille seuraava toiminto
+select phone number as prefered way of contact	addressbook	fi	valitse puhelinnumero ensisijaiseksi yhteydenotto tavaksi yhteystiedolle
 select the type of conversion	addressbook	fi	Valitse muunnoksen tyyppi
 select the type of conversion:	addressbook	fi	Valitse muunnoksen tyyppi:
 select where you want to store / retrieve contacts	admin	fi	Valitse minne varastoit / mist‰ palautat yhteystiedot
@@ -270,6 +277,7 @@ street	common	fi	Katuosoite
 successfully imported %1 records into your addressbook.	addressbook	fi	Tuotiin %1 tietuetta osoitekirjaan.
 suffix	addressbook	fi	J‰lkiliite
 tel home	addressbook	fi	Kotipuhelin
+telephony integration	admin	fi	Puhelinintegrointi
 test import (show importable records <u>only</u> in browser)	addressbook	fi	Testaa tuontia (n‰yt‰ tuotavat tietueet <u>vain</u> selaimessa)
 that field name has been used already !	addressbook	fi	Kent‰n nimi on jo k‰ytˆss‰!
 this person's first name was not in the address book.	addressbook	fi	Etunime‰ ei ole osoitekirjassa.
@@ -282,14 +290,20 @@ translation	addressbook	fi	K‰‰nnˆs
 type	addressbook	fi	Muoto
 update a single entry by passing the fields.	addressbook	fi	P‰ivit‰ yksitt‰ist‰ tietuetta antamalla kent‰t.
 upload or delete the photo	addressbook	fi	Lataa tai poista kuva
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	fi	URL linkki puhelinnumeroon (k‰yt‰ %1 = soitettava numero, %u = k‰ytt‰j‰n nimi, %t = k‰ytt‰j‰n puhelin)
 use an extra category tab?	addressbook	fi	K‰yt‰ ylim‰‰r‰ist‰ kategoria v‰lilehte‰
 use country list	addressbook	fi	K‰yt‰ maaluetteloa
+used for links and for the own sorting of the list	addressbook	fi	k‰yt‰ linkeiss‰ ja omassa lajittelu listassa
 vcard	common	fi	VCard
 vcards require a first name entry.	addressbook	fi	VCard vaatii etunimen.
 vcards require a last name entry.	addressbook	fi	VCard vaatii sukunimen.
 view linked infolog entries	addressbook	fi	N‰yt‰ linkitetyt Infologin merkinn‰t
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	fi	VAROITUS!! LDAP soveltuu vain jos sit‰ ei k‰ytet‰ k‰ytt‰j‰tunnusten tallentamiseen!
 warning: all contacts found will be deleted!	addressbook	fi	VAROITUS: Kaikki lˆytyneet osoitteet poistetaan!
+which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	fi	Mit‰ osoitteen muotoa osoitekirja k‰ytt‰‰ maista joiden osoitemuoto on tuntematon. Jos maan osoitemuoto on tiedossa, se k‰ytt‰‰ sit‰ riippumatta asetuksesta.
+which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	fi	Mik‰ osoitekirja on valittuna kun lis‰t‰‰n yhteystietoja JA sinulla ei ole oikeuksia lis‰t‰ merkintˆj‰ nykyiseen kalenteriin.
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fi	Mit‰ merkistˆkoodausta k‰ytet‰‰n CSV vienniss‰. J‰rjestelm‰n oletus on merkistˆkoodaus joka m‰‰riteltiin asennuksen yhteydess‰.
+which fields should be exported. all means every field stored in the addressbook incl. the custom fields. the business or home address only contains name, company and the selected address.	addressbook	fi	Mitk‰ kent‰t voidaan vied‰. Kaikki tarkoittaa jokaista kentt‰‰ jotka osoitekirjasta lˆytyy, sis‰lt‰en asiakastiedot. Liiketoiminta tai kotiosoite sis‰lt‰v‰t vain nimen, yrityksen ja valitut osoitekent‰t.
 whole query	addressbook	fi	koko kysely
 work phone	addressbook	fi	Tyˆpuhelin
 yes, for the next three days	addressbook	fi	Kyll‰, seuraavan 3 p‰iv‰n ajalta

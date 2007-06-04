@@ -230,7 +230,7 @@
 				<row height="30">
 					<image src="gear"/>
 					<description options=",,,bday" value="Birthday"/>
-					<hbox id="bday" options="0,0">
+					<hbox options="0,0">
 						<date options="Y-m-d" id="bday"/>
 						<menulist>
 							<menupopup id="tz" no_lang="1" label="Timezone" align="right"/>

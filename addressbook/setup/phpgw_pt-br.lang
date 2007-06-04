@@ -16,6 +16,7 @@ add a contact to this organisation	addressbook	pt-br	Adicionar um contato para e
 add a new contact	addressbook	pt-br	Adicionar um novo contato
 add a new list	addressbook	pt-br	Adicionar uma nova lista
 add a single entry by passing the fields.	addressbook	pt-br	Adicionar uma única entrada informando  os campos.
+add business email of whole distribution list?	addressbook	pt-br	Adicionar e-mail comercial para uma lista de distribuição inteira ?
 add custom field	addressbook	pt-br	Adicionar campo personalizado
 add to distribution list:	addressbook	pt-br	Adicionar a uma lista de distribuição
 added by synchronisation	addressbook	pt-br	adicionado por sincronização
@@ -167,6 +168,7 @@ home phone	addressbook	pt-br	Telefone residencial
 home state	addressbook	pt-br	Estado
 home street	addressbook	pt-br	Rua, Av, Trav., etc.
 home zip code	addressbook	pt-br	CEP
+how many contacts should non-admins be able to export (empty = no limit)	admin	pt-br	Quantos contatos não-administradores são capazes de exportar (vazio = sem limite)
 icon	addressbook	pt-br	Ícone
 if accounts are already in ldap	admin	pt-br	se as contas já estiverem em LDAP
 import	addressbook	pt-br	Importar
@@ -195,6 +197,7 @@ link title for contacts show	addressbook	pt-br	Título link para exibição dos con
 links	addressbook	pt-br	Links
 list all categories	addressbook	pt-br	Listar todas as categorias
 list all customfields	addressbook	pt-br	Listas todos os campos personalizados
+list already exists!	addressbook	pt-br	Lista já existe!
 list created	addressbook	pt-br	Lista criada
 list creation failed, no rights!	addressbook	pt-br	Criação da lista falhou. Sem direitos suficientes!
 load vcard	addressbook	pt-br	Carregar VCard
@@ -289,7 +292,7 @@ translation	addressbook	pt-br	Tradução
 type	addressbook	pt-br	Tipo
 update a single entry by passing the fields.	addressbook	pt-br	Atualizar uma única entrada informando os campos
 upload or delete the photo	addressbook	pt-br	Carregar ou remover a foto
-url to link telephone numbers to (use %1 for the number)	admin	pt-br	URL para linkar números de telefones (usar %1 para o número)
+url to link telephone numbers to (use %1 = number to call, %u = account name, %t = account phone)	admin	pt-br	URL para linkar números de telefones (use %1 = número a ser chamado, %u = nome da conta, %t = número do telefone)
 use an extra category tab?	addressbook	pt-br	Usar uma tab extra para categoria ?
 use country list	addressbook	pt-br	Usar lista de países
 use setup for a full account-migration	admin	pt-br	usar setup para uma migração de contas completa

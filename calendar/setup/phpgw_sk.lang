@@ -58,7 +58,7 @@ csv-fieldname	calendar	sk	Pole v CSV
 csv-filename	calendar	sk	CSV súbor
 custom fields	common	sk	Vlastné polia
 daily	calendar	sk	Denne
-days	calendar	sk	dni
+days	calendar	sk	dní
 days of the week for a weekly repeated event	calendar	sk	Dni v tý¾dni pre tý¾denne sa opakujúce udalosti
 days repeated	calendar	sk	dní sa opakuje
 dayview	calendar	sk	Denný pohµad
@@ -109,7 +109,7 @@ exceptions	calendar	sk	Výnimky
 execute a further action for this entry	calendar	sk	Vykona» ïal¹iu akciu pre tento záznam
 existing links	calendar	sk	Existujúce odkazy
 export	calendar	sk	Export
-extended	calendar	sk	Roz¹írený
+extended	calendar	sk	Roz¹írené
 extended updates always include the complete event-details. ical's can be imported by certain other calendar-applications.	calendar	sk	Roz¹írený formát obsahuje v¹etky podrobnosti o udalosti. Formát iCal sa dá importova» do niektorých ïal¹ích kalendárnych aplikácií.
 fieldseparator	calendar	sk	Oddeµovaè polí
 filename	calendar	sk	Názov súboru
@@ -163,13 +163,13 @@ length of the time interval	calendar	sk	Då¾ka èasového intervalu
 link to view the event	calendar	sk	Odkaz na zobrazenie udalosti
 links	calendar	sk	Odkazy
 links, attachments	calendar	sk	Odkazy, prílohy
-listview	calendar	sk	zobrazenie zoznamu
+listview	calendar	sk	Zoznam udalostí
 location	calendar	sk	Umiestnenie
 location to autoload from	admin	sk	Umiestnenie zdroja pre automatické nahrávanie
 location, start- and endtimes, ...	calendar	sk	Umiestnenie, èasy zaèiatku a konca,...
-mail all participants	calendar	sk	obosla» v¹etkých úèastníkov
+mail all participants	calendar	sk	Obosla» v¹etkých úèastníkov
 make freebusy information available to not loged in persons?	calendar	sk	Sprístupni» informácie o zaneprázdnení v¹etkým, aj neprihláseným osobám?
-minutes	calendar	sk	Minút
+minutes	calendar	sk	minút
 modified	calendar	sk	Zmenené
 mon	calendar	sk	Po
 monthly	calendar	sk	Mesaène
@@ -193,16 +193,16 @@ observance rule	calendar	sk	Pravidlo zachovania
 occurence	calendar	sk	Výskyt
 old startdate	calendar	sk	Starý dátum zaèiatku
 on %1 %2 %3 your meeting request for %4	calendar	sk	%1 %2 %3 va¹a po¾iadavka na stretnutie pre %4
-on all modification, but responses	calendar	sk	pri v¹etkých zmenách okrem odpovedí
-on any time change too	calendar	sk	aj pri akejkoµvek zmene èasu
-on invitation / cancelation only	calendar	sk	len pri pozvaní / zru¹ení
-on participant responses too	calendar	sk	aj pri odpovediach
-on time change of more than 4 hours too	calendar	sk	aj pri zmene èasu o viac ne¾ 4 hodiny
+on all modification, but responses	calendar	sk	Pri v¹etkých zmenách okrem odpovedí
+on any time change too	calendar	sk	Aj pri akejkoµvek zmene èasu
+on invitation / cancelation only	calendar	sk	Len pri pozvaní / zru¹ení
+on participant responses too	calendar	sk	Aj pri odpovediach úèastníkov
+on time change of more than 4 hours too	calendar	sk	Aj pri zmene èasu o viac ne¾ 4 hodiny
 one month	calendar	sk	jeden mesiac
 one week	calendar	sk	jeden tý¾deò
 one year	calendar	sk	jeden rok
 only the initial date of that recuring event is checked!	calendar	sk	Kontroluje sa iba úvodný dátum tejto pravidelnej udalosti!
-open todo's:	calendar	sk	Otvori» Úlohy:
+open todo's:	calendar	sk	Otvorené Úlohy:
 overlap holiday	calendar	sk	prekry» sviatky
 participants	calendar	sk	Úèastníci
 participants disinvited from an event	calendar	sk	Pre úèastníkov je pozvánka zru¹ená

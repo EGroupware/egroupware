@@ -92,6 +92,8 @@ check ip address of all sessions	admin	zh-tw	檢查所有連線的網路位址
 check items to <b>%1</b> to %2 for %3	admin	zh-tw	檢查%3的項目 <b>%1</b> 到 %2
 click to select a color	admin	zh-tw	選一個顏色
 color	admin	zh-tw	顏色
+cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	zh-tw	Cookie 網域（預設空白表示使用完整網域名稱於 SiteMgr，例如 ".domain.com" 允許 egw.domain.com 與 www.domain.com 使用同樣的 cookie。
+cookie path (allows multiple egw sessions with different directories, has problemes with sitemgr!)	admin	zh-tw	Cookie 路徑（允許多個 eGW 連線在不同的資料夾中， SiteMgr 中會出現問題！）
 country selection	admin	zh-tw	選擇國家
 create group	admin	zh-tw	新增群組
 creates a new field	admin	zh-tw	建立新欄位
@@ -144,6 +146,7 @@ do not delete the category and return back to the list	admin	zh-tw	不要刪除�
 do you also want to delete all global subcategories ?	admin	zh-tw	您確定要移除所有的全區子分類嗎？
 do you want to delete all global subcategories ?	admin	zh-tw	您確定要刪除全域子類別
 do you want to move all global subcategories one level down ?	admin	zh-tw	您要將所有的子類別向下移一個階層？
+document root (default)	admin	zh-tw	文件根目錄（預設）
 each value is a line like <id>[=<label>]	admin	zh-tw	每個數值是一行像是 <id>[=<label>] 這樣的文字
 each value is a line like id[=label]	admin	zh-tw	每個數值是一行像是 id[=label] 這樣的文字
 edit account	admin	zh-tw	編輯帳號
@@ -162,6 +165,7 @@ edit this group	admin	zh-tw	編輯這個群組
 edit this user	admin	zh-tw	編輯這個使用者
 edit user	admin	zh-tw	編輯使用者
 edit user account	admin	zh-tw	編輯使用者帳號
+egroupware directory	admin	zh-tw	eGroupWare 資料夾
 email account active	admin	zh-tw	郵件帳號啟用
 email address	admin	zh-tw	郵件位址
 enable debug-messages	admin	zh-tw	顯示偵錯訊息
@@ -279,6 +283,7 @@ minimum account id (e.g. 500 or 100, etc.)	admin	zh-tw	使用者帳號編碼最�
 minute	admin	zh-tw	分
 mode	admin	zh-tw	模式
 month	admin	zh-tw	月
+more secure	admin	zh-tw	更安全
 name must not be empty !!!	admin	zh-tw	名稱不能空白！
 new group name	admin	zh-tw	新的群組名稱
 new name	admin	zh-tw	新名稱
@@ -354,6 +359,7 @@ set preference values.	admin	zh-tw	設定偏好值
 should the login page include a language selectbox (useful for demo-sites) ?	admin	zh-tw	登入畫面要不要包含語言選單(利於展示)？
 show 'powered by' logo on	admin	zh-tw	顯示「powered by」圖示位置
 show access log	admin	zh-tw	顯示存取紀錄
+show an asterisk (*) to mark untranslated strings	admin	zh-tw	在未翻譯字串顯示星號 (*)
 show current action	admin	zh-tw	顯示現在動作
 show error log	admin	zh-tw	顯示錯誤紀錄
 show phpinfo()	admin	zh-tw	顯示PHP資訊
@@ -374,6 +380,7 @@ start testjob!	admin	zh-tw	啟動測試任務!
 submit changes	admin	zh-tw	送出更新資料
 submit the search string	admin	zh-tw	送出搜尋字串
 subtype	admin	zh-tw	副類型
+switch it off, if users are randomly thrown out	admin	zh-tw	如果使用者不定時被登出，請將它關閉
 template selection	admin	zh-tw	選擇畫面配置
 text entry	admin	zh-tw	文字資料
 that application name already exists.	admin	zh-tw	應用程式名稱已經存在

@@ -6,6 +6,8 @@ function initAll() {
 	tab.init();
 	smtp.init();
 	imap.init();
+	var imapType = document.getElementsByName("imapsettings[imapType]")[0];
+	var v=imapType.value; imap.display(imapType.value); imapType.value=v; 
 }
 
 function ea_setIMAPDefaults(_imapType) {

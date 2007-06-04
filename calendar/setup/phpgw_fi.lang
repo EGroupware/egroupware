@@ -74,11 +74,12 @@ delete this exception	calendar	fi	Poista tämä poikkeus
 delete this series of recuring events	calendar	fi	Poista tämä toistuvien tapahtumien sarja
 disinvited	calendar	fi	Kutsu peruttu
 display status of events	calendar	fi	Näytä tapahtumien tila
+displayed view	calendar	fi	valittu näkymä
 displays your default calendar view on the startpage (page you get when you enter egroupware or click on the homepage icon)?	calendar	fi	Näyttää kalenterin oletusnäkymän aloitussivulla (sivu, joka näytetään kun kirjaudut eGroupWareen tai napsautat Koti-kuvaketta)?
 do you want a weekview with or without weekend?	calendar	fi	Haluatko viikkonäkymän viikonlopun kanssa vai ilman?
 do you want to be notified about new or changed appointments? you be notified about changes you make yourself.<br>you can limit the notifications to certain changes only. each item includes all the notification listed above it. all modifications include changes of title, description, participants, but no participant responses. if the owner of an event requested any notifcations, he will always get the participant responses like acceptions and rejections too.	calendar	fi	Haluatko, että sinua huomautetaan uusista tai muuttuneista tapahtumista?<br>Voit rajoittaa huomautukset vain jonkin tyyppisiin muutoksiin. Jokaisella tietueella on mahdolliset huomautuksen syyt yläpuolellaan. Kaikki muutokset tarkoittavat muutoksia otsikossa, kuvauksessa ja osanottajissa. Muutoksista osanottajien vastauksissa ei ilmoiteta. Jos tapahtuman omistaja on pyytänyt huomautuksia, hän saa osanottajien vastaukset (hyväksymiset tai hylkäykset).
 do you want to receive a regulary summary of your appointsments via email?<br>the summary is sent to your standard email-address on the morning of that day or on monday for weekly summarys.<br>it is only sent when you have any appointments on that day or week.	calendar	fi	Haluatko vastaanottaa säännöllisen yhteenvedon tapaamisistasi sähköpostilla?<br>Yhteenveto lähetetään sähköpostiosoitteeseesi joka aamu, tai maanantaina jos kyseessä on viikoittainen yhteenveto.<br>Yhteenveto lähetetään vain, jos  sinulla on tapaamisia kyseisenä päivänä tai kyseisellä viikolla.
-do you wish to autoload calendar holidays files dynamically?	admin	fi	Haluatko ladata kalenteritiedostot automaattisesti?
+do you wish to autoload calendar holidays files dynamically?	admin	fi	Haluatko ladata kalenterin juhlapäivät-tiedostot automaattisesti?
 download	calendar	fi	Lataa
 download this event as ical	calendar	fi	Lataa tämä tapahtuma iCal-kalenterina
 duration of the meeting	calendar	fi	Tapaamisen kesto
@@ -119,7 +120,7 @@ format of event updates	calendar	fi	Tapahtumien päivitysmuoto
 forward half a month	calendar	fi	Eteenpäin puoli kuukautta
 forward one month	calendar	fi	Eteenpäin kuukausi
 four days view	calendar	fi	4 päivän näkymä
-freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	fi	Vapaa/varattu: Tuntematon käyttäjä '%1', väärä salasana tai tiedosto ei ole saatavilla kirjautumattomalle käyttäjille !!!
+freebusy: unknow user '%1', wrong password or not availible to not loged in users !!!	calendar	fi	Vapaat ajat: Tuntematon käyttäjä '%1', väärä salasana tai tiedosto ei ole saatavilla kirjautumattomalle käyttäjille !!!
 freetime search	calendar	fi	Vapaan ajan haku
 fri	calendar	fi	Pe
 full description	calendar	fi	Koko kuvaus
@@ -245,7 +246,7 @@ set a year only for one-time / non-regular holidays.	calendar	fi	Määrittele vain
 set new events to private	calendar	fi	Määrittele uudet tapahtumat yksityisiksi
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	fi	Säilytetäänkö hylätyt kutsut kalenterissa?<br>Voit hyväksyä kutsun myöhemmin (esim. päällekkäisyyden poistuttua), jos tapahtuma on kalenterissasi!
 should new events created as private by default ?	calendar	fi	Luodaanko uudet tapahtumat oletuksena yksityisenä?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	fi	Should not loged in persons be able to see your freebusy information? You can set an extra password, different from your normal password, to protect this informations. The freebusy information is in iCal format and only include the times when you are busy. It does not include the event-name, description or locations. The URL to your freebusy information is %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	fi	Voivatko kirjautumattomat käyttäjät nähdä vapaat aikasi? Voit asettaa ylimääräisen salasanan (eri kun normaali salasanasi) suojaamaan tietoja. Vapaat ajat ovat iCal muodossa ja näyttävät vain ajat jolloin olet varattu. Se ei näytä tapahtuman nimeä, kuvasta tai sijaintia. Vapaat ajat URL on %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	fi	Näytetäänkö suunnittelunäkymässä tyhjät rivit käyttäjillä tai kategorioilla joilla ei ole tapahtumia.
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	fi	Näytetäänkö osallistujien tila osallistujan nimen jälkeen?
 show default view on main screen	calendar	fi	Näytä oletusnäkymä päänäytöllä
