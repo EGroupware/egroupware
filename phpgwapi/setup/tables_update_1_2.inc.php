@@ -9,14 +9,7 @@
 	*  option) any later version.                                              *
 	\**************************************************************************/
 
-	// $Id: tables_update.inc.php 24006 2007-06-03 21:04:54Z ralfbecker $
-
-	/* Include older eGroupWare update support */
-	include('tables_update_0_9_9.inc.php');
-	include('tables_update_0_9_10.inc.php');
-	include('tables_update_0_9_12.inc.php');
-	include('tables_update_0_9_14.inc.php');
-	include('tables_update_1_0.inc.php');
+	// $Id$
 
 	// updates from the stable 1.2 branch
 	$test[] = '1.2.007';
