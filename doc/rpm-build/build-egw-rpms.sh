@@ -35,12 +35,14 @@ SVNURL="http://svn.egroupware.org/egroupware/branches/1.4/"
 #SVNREVISION="23465"
 # 1.4 BETA 5
 #SVNREVISION="23743"
+# 1.4.001 final
+#SVNREVISION="24012"
 
 SPECFILE="egroupware-1.4.spec"
 SOURCEFILES="egroupware_fedora.tar.bz2 egroupware_suse.tar.bz2 manageheader.php.patch class.uiasyncservice.inc.php.patch"
 
 #CONTRIB="jinn workflow messenger egwical icalsrv gallery"
-CONTRIB="egwical icalsrv gallery"
+CONTRIB="icalsrv gallery"
 EXTRAPACKAGES="egw-pear $CONTRIB"
 for p in $EXTRAPACKAGES
 do
@@ -84,7 +86,7 @@ then
 	fi
 	
 	cd egroupware
-	for CONTRIBMODULE in $CONTRIB egwical icalsrv; do
+	for CONTRIBMODULE in $CONTRIB; do
 		if [ -z "$CONTRIB_SVNREVISION" ]; then
 			svn checkout $SVNURL"$CONTRIBMODULE"
 		else
@@ -163,42 +165,57 @@ echo "done"										>> $LOGFILE 2>&1
 
 echo "Building tar.gz, tar.bz and zip archives finnished"				>> $LOGFILE 2>&1
 
+# we are no longer building extra signed source files, only a singed md5sum file
+#
+# echo "Create the md5sum file for tar.gz, tar.bz, zip ($MD5SUM)"				>> $LOGFILE 2>&1
+# echo "Build signed source files"			    				>> $LOGFILE 2>&1
+# echo "---------------------------------------"              				>> $LOGFILE 2>&1
+# 
+# FILENAMES="eGroupWare"
+# for FILENAME in $EXTRAPACKAGES; do
+# 	FILENAMES="$FILENAMES eGroupWare-$FILENAME"
+# done
+# 
+# echo "FILENAMES: $FILENAMES"
+# 
+# for EXTENSION in -svn.tar.bz2 -svn.tar.gz -svn.zip .tar.bz2 .tar.gz .zip; do
+# 	for f in $FILENAMES; do
+# 		PACKAGENAME=$f-$VERSION.$PACKAGING$EXTENSION
+# 		echo "md5sum from file $PACKAGENAME is:"  	   						>> $MD5SUM  
+# 		md5sum $SRCDIR/$PACKAGENAME | cut -f1 -d' ' 						>> $MD5SUM  2>&1
+# 		echo "---------------------------------------"         			   	>> $MD5SUM  2>&1
+# 		echo " "						    								>> $MD5SUM  2>&1
+# 
+# 		echo "Build signed source files"			    					>> $LOGFILE 2>&1
+# 		rm -f $SRCDIR/$PACKAGENAME.gpg			 							>> $LOGFILE 2>&1
+# 		gpg --local-user packager@egroupware.org -s $SRCDIR/$PACKAGENAME 	>> $LOGFILE 2>&1
+# 	done
+# done
+# echo "------------------------------------------"              			>> $LOGFILE 2>&1
+# echo "End Build md5sum of tar.gz, tar.bz, zip"              				>> $LOGFILE 2>&1
+# echo "End build of signed of tar.gz, tar.bz, zip"           				>> $LOGFILE 2>&1
+# echo "------------------------------------------"              			>> $LOGFILE 2>&1
+
+echo "------------------------------------------"              				>> $LOGFILE 2>&1
 echo "Create the md5sum file for tar.gz, tar.bz, zip ($MD5SUM)"				>> $LOGFILE 2>&1
-echo "Build signed source files"			    				>> $LOGFILE 2>&1
-echo "---------------------------------------"              				>> $LOGFILE 2>&1
-
-FILENAMES="eGroupWare"
-for FILENAME in $EXTRAPACKAGES; do
-	FILENAMES="$FILENAMES eGroupWare-$FILENAME"
-done
-
-echo "FILENAMES: $FILENAMES"
-
-for EXTENSION in -svn.tar.bz2 -svn.tar.gz -svn.zip .tar.bz2 .tar.gz .zip; do
-	for f in $FILENAMES; do
-		PACKAGENAME=$f-$VERSION.$PACKAGING$EXTENSION
-		echo "md5sum from file $PACKAGENAME is:"  	   				>> $MD5SUM  
-		md5sum $SRCDIR/$PACKAGENAME | cut -f1 -d' ' 					>> $MD5SUM  2>&1
-		echo "---------------------------------------"         			    	>> $MD5SUM  2>&1
-		echo " "						    			>> $MD5SUM  2>&1
-
-		echo "Build signed source files"			    			>> $LOGFILE 2>&1
-		rm -f $SRCDIR/$PACKAGENAME.gpg			 				>> $LOGFILE 2>&1
-		gpg --local-user packager@egroupware.org -s $SRCDIR/$PACKAGENAME 		>> $LOGFILE 2>&1
-	done
-done
-echo "------------------------------------------"              				>> $LOGFILE 2>&1
-echo "End Build md5sum of tar.gz, tar.bz, zip"              				>> $LOGFILE 2>&1
-echo "End build of signed of tar.gz, tar.bz, zip"           				>> $LOGFILE 2>&1
 echo "------------------------------------------"              				>> $LOGFILE 2>&1
 
-echo "sign the md5sum file"								>> $LOGFILE 2>&1
-rm -f $MD5SUM.asc									>> $LOGFILE 2>&1
+# cleaner md5sum file, the old one gave me a headache ;-)
+cd $SRCDIR
+for f in eGroupWare-$VERSION.$PACKAGING.*
+do
+	md5sum $f >> $MD5SUM 2>&1
+done
+
+echo "sign the md5sum file"													>> $LOGFILE 2>&1
+rm -f $MD5SUM.asc															>> $LOGFILE 2>&1
 gpg --local-user packager@egroupware.org --clearsign $MD5SUM				>> $LOGFILE 2>&1
-echo "---------------------------------------"              				>> $LOGFILE 2>&1
 
-echo "delete the original md5sum file"							>> $LOGFILE 2>&1
-rm -rf $MD5SUM			  	 						>> $LOGFILE 2>&1
-echo "---------------------------------------"              				>> $LOGFILE 2>&1
+echo "delete the original md5sum file"										>> $LOGFILE 2>&1
+rm -rf $MD5SUM			  	 												>> $LOGFILE 2>&1
 
-echo "Building of $PACKAGENAME $VERSION finnished"					>> $LOGFILE 2>&1
+echo "------------------------------------------"              				>> $LOGFILE 2>&1
+echo "End Create md5sum of tar.gz, tar.bz, zip"              				>> $LOGFILE 2>&1
+echo "------------------------------------------"              				>> $LOGFILE 2>&1
+
+echo "Building of $PACKAGENAME $VERSION finnished"							>> $LOGFILE 2>&1
