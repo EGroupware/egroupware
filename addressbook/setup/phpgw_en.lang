@@ -5,6 +5,7 @@
 %1 records imported	addressbook	en	%1 records imported
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
 %1 starts with '%2'	addressbook	en	%1 starts with '%2'
+%s please calculate the result	addressbook	en	%s please calculate the result
 (e.g. 1969)	addressbook	en	(e.g. 1969)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	en	<b>No conversion type &lt;none&gt; could be located.</b>  Please choose a conversion type from the list
 @-eval() is only availible to admins!!!	addressbook	en	@-eval() is only availible to admins!!!
@@ -77,10 +78,12 @@ contact	common	en	Contact
 contact application	admin	en	Contact application
 contact copied	addressbook	en	Contact copied
 contact deleted	addressbook	en	Contact deleted
+contact fields to show	addressbook	en	Contact fields to show
 contact id	addressbook	en	Contact ID
 contact repository	admin	en	Contact repository
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
+contactform	addressbook	en	Contactform
 contacts and account contact-data to ldap	admin	en	contacts and account contact-data to LDAP
 contacts to ldap	admin	en	contacts to LDAP
 contacts to ldap, account contact-data to sql	admin	en	contacts to LDAP, account contact-data to SQL
@@ -205,6 +208,7 @@ locations	addressbook	en	locations
 mark records as private	addressbook	en	Mark records as private
 merge into first or account, deletes all other!	addressbook	en	Merge into first or account, deletes all other!
 merged	addressbook	en	merged
+message after submitting the form	addressbook	en	Message after submitting the form
 message phone	addressbook	en	Message Phone
 middle name	addressbook	en	Middle Name
 migration finished	addressbook	en	Migration finished
@@ -251,6 +255,7 @@ record access	addressbook	en	Record Access
 record owner	addressbook	en	Record owner
 remove selected contacts from distribution list	addressbook	en	Remove selected contacts from distribution list
 removed from distribution list	addressbook	en	removed from distribution list
+required fields *	addressbook	en	required fields *
 role	addressbook	en	Role
 room	addressbook	en	Room
 search for '%1'	addressbook	en	Search for '%1'
@@ -281,7 +286,12 @@ suffix	addressbook	en	Suffix
 tel home	addressbook	en	tel home
 telephony integration	admin	en	Telephony integration
 test import (show importable records <u>only</u> in browser)	addressbook	en	Test Import (show importable records <u>only</u> in browser)
+thank you for contacting us.	addressbook	en	Thank you for contacting us.
 that field name has been used already !	addressbook	en	That field name has been used already !
+the anonymous user has probably no add rights for this addressbook.	addressbook	en	The anonymous user has probably no add rights for this addressbook.
+the anonymous user needs add rights for it!	addressbook	en	The anonymous user needs add rights for it!
+there was an error saving your data :-(	addressbook	en	There was an error saving your data :-(
+this module displays a contactform, that stores direct into the addressbook.	addressbook	en	This module displays a contactform, that stores direct into the addressbook.
 this person's first name was not in the address book.	addressbook	en	This person's first name was not in the address book.
 this person's last name was not in the address book.	addressbook	en	This person's last name was not in the address book.
 timezone	addressbook	en	Timezone
@@ -300,6 +310,7 @@ used for links and for the own sorting of the list	addressbook	en	used for links
 vcard	common	en	VCard
 vcards require a first name entry.	addressbook	en	VCards require a first name entry.
 vcards require a last name entry.	addressbook	en	Vcards require a last name entry.
+verification	addressbook	en	Verification
 view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
@@ -311,6 +322,7 @@ which fields should be exported. all means every field stored in the addressbook
 whole query	addressbook	en	whole query
 work phone	addressbook	en	Work Phone
 write (update or add) a single entry by passing the fields.	addressbook	en	Write (update or add) a single entry by passing the fields.
+wrong - try again ...	addressbook	en	Wrong - try again ...
 yes, for the next three days	addressbook	en	Yes, for the next three days
 yes, for the next two weeks	addressbook	en	Yes, for the next two weeks
 yes, for the next week	addressbook	en	Yes, for the next week

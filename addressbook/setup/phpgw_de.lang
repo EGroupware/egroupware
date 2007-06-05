@@ -5,6 +5,7 @@
 %1 records imported	addressbook	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	addressbook	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test-Import auschalten)
 %1 starts with '%2'	addressbook	de	%1 beginnt mit '%2'
+%s please calculate the result	addressbook	de	%s Bitte berechnen Sie das Ergebnis
 (e.g. 1969)	addressbook	de	(z.B. 1966)
 <b>no conversion type &lt;none&gt; could be located.</b>  please choose a conversion type from the list	addressbook	de	<b>Kein Übersetzungstyp <none> konnte gefunden werden.</b> Bitte wählen Sie einen Übersetzungstyp aus der Liste
 @-eval() is only availible to admins!!!	addressbook	de	@-eval() ist nur verfügbar für Administratoren!!!
@@ -77,10 +78,12 @@ contact	common	de	Kontakt
 contact application	admin	de	Kontakt Anwendung
 contact copied	addressbook	de	Kontakt kopiert
 contact deleted	addressbook	de	Kontakt gelöscht
+contact fields to show	addressbook	de	Kontaktfelder die angezeigt werden sollen
 contact id	addressbook	de	Kontakt ID
 contact repository	admin	de	Speicherort Kontakte
 contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
+contactform	addressbook	de	Kontaktformular
 contacts and account contact-data to ldap	admin	de	Kontakte und Kontaktdaten der Benutzer nach LDAP
 contacts to ldap	admin	de	Kontakte nach LDAP
 contacts to ldap, account contact-data to sql	admin	de	Kontakte nach LDAP, Kontaktdaten der Benutzer nach SQL
@@ -197,6 +200,7 @@ link title for contacts show	addressbook	de	Titel der Verknüpfung für Kontakte z
 links	addressbook	de	Verknüpfungen
 list all categories	addressbook	de	Liste alle Kategorien
 list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
+list already exists!	addressbook	de	Die Liste existiert bereits!
 list created	addressbook	de	Verteiler erzeugt
 list creation failed, no rights!	addressbook	de	Verteiler erzeugen fehlgeschlagen, keine Rechte!
 load vcard	addressbook	de	VCard laden
@@ -204,6 +208,7 @@ locations	addressbook	de	Standorte
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen!
 merged	addressbook	de	vereinigt
+message after submitting the form	addressbook	de	Nachricht nach dem Abschicken des Formulars
 message phone	addressbook	de	Anrufbeantworter
 middle name	addressbook	de	Zweiter Vorname
 migration finished	addressbook	de	Migration beendet
@@ -250,6 +255,7 @@ record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
 remove selected contacts from distribution list	addressbook	de	Ausgewählte Kontakte vom Verteiler löschen
 removed from distribution list	addressbook	de	vom Verteiler gelöscht
+required fields *	addressbook	de	unbedingt auszufüllende Felder *
 role	addressbook	de	Funktion
 room	addressbook	de	Raum
 search for '%1'	addressbook	de	Suche nach '%1'
@@ -280,7 +286,12 @@ suffix	addressbook	de	Zusatz
 tel home	addressbook	de	Telefon privat
 telephony integration	admin	de	Telefonie Integration
 test import (show importable records <u>only</u> in browser)	addressbook	de	Test-Import (zeigt importierbare Datensätze <u>nur</u> im Browser an)
+thank you for contacting us.	addressbook	de	Danke das Sie uns kontaktierten.
 that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt!
+the anonymous user has probably no add rights for this addressbook.	addressbook	de	Der anonyme Benutzer hat vermutlich keine Hinzufügen Rechte für diese Adressbuch.
+the anonymous user needs add rights for it!	addressbook	de	Der anonyme Benutzer benötigt Hinzufügen Rechte dafür!
+there was an error saving your data :-(	addressbook	de	Beim Speichern ihrer Daten ist ein Fehler aufgetreten :-(
+this module displays a contactform, that stores direct into the addressbook.	addressbook	de	Diese Module ist ein Kontaktformular, das direkt in das Adressbuch speichert.
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.
 this person's last name was not in the address book.	addressbook	de	Der Nachname dieser Person ist nicht im Adressbuch.
 timezone	addressbook	de	Zeitzone
@@ -299,6 +310,7 @@ used for links and for the own sorting of the list	addressbook	de	wird für Verkü
 vcard	common	de	VCard
 vcards require a first name entry.	addressbook	de	VCards benötigen einen Vornamen.
 vcards require a last name entry.	addressbook	de	VCards benötigen einen Nachnamen.
+verification	addressbook	de	Verifikation
 view linked infolog entries	addressbook	de	Verknüpfte InfoLog Einträge anzeigen
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
@@ -310,6 +322,7 @@ which fields should be exported. all means every field stored in the addressbook
 whole query	addressbook	de	gesamte Abfrage
 work phone	addressbook	de	Tel dienstl.
 write (update or add) a single entry by passing the fields.	addressbook	de	Schreibt (aktualiseren oder zufügen) eines einzelnen Eintrags durch Übergabe der Felder
+wrong - try again ...	addressbook	de	Falsch - nochmal versuchen ...
 yes, for the next three days	addressbook	de	Ja, für die nächsten drei Tage
 yes, for the next two weeks	addressbook	de	Ja, für die nächsten zwei Wochen
 yes, for the next week	addressbook	de	Ja, für die nächste Woche
