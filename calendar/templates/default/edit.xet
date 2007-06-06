@@ -1,52 +1,59 @@
 <?xml version="1.0"?>
 <!-- $Id$ -->
 <overlay>
-	<template id="calendar.edit.general" template="" lang="" group="0" version="1.3.002">
-		<grid width="100%" height="200">
-			<columns>
-				<column width="95"/>
-				<column width="50%"/>
-				<column/>
-			</columns>
-			<rows>
-				<row class="row">
-					<description options=",,,start" value="Start"/>
-					<date-time id="start" needed="1"/>
-					<checkbox id="whole_day" label="whole day" statustext="Event will occupy the whole day" options=",, ,disable"/>
-				</row>
-				<row class="row">
-					<description options=",,,duration" value="Duration"/>
-					<hbox options="0,0">
-						<menulist>
-							<menupopup id="duration" options="Use end date" no_lang="1" statustext="Duration of the meeting" onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;"/>
-						</menulist>
-						<date-time id="end" class="end_hide"/>
-					</hbox>
-					<button label="Freetime search" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.freetimesearch')+values2url(this.form,'start,end,duration,participants,recur_type,whole_day'),'ft_search','dependent=yes,width=700,height=500,scrollbars=yes,status=yes'); return false;"/>
-				</row>
-				<row class="row">
-					<description options=",,,location" value="Location"/>
-					<textbox size="80" maxlength="255" id="location" span="all"/>
-				</row>
-				<row class="row" valign="top" height="60">
-					<description options=",,,category" value="Category"/>
-					<listbox type="select-cat" rows="3" id="category" span="all"/>
-				</row>
-				<row class="row">
-					<description options=",,,priority" value="Priority"/>
-					<hbox options="0,0" span="all">
+	<template id="calendar.edit.general" template="" lang="" group="0" version="1.4.002">
+		<hbox options="0,0">
+			<grid width="100%" height="200">
+				<columns>
+					<column width="95"/>
+					<column/>
+				</columns>
+				<rows>
+					<row class="row">
+						<description width="95" options=",,,start" value="Start"/>
+						<hbox options="0,0">
+							<date-time needed="1" id="start"/>
+							<checkbox label="whole day" id="whole_day" options=",, ,disable" statustext="Event will occupy the whole day" align="center"/>
+						</hbox>
+					</row>
+					<row class="row">
+						<description width="0" options=",,,duration" value="Duration"/>
+						<hbox options="0,0">
+							<menulist>
+								<menupopup no_lang="1" onchange="set_style_by_class('table','end_hide','visibility',this.value == '' ? 'visible' : 'hidden'); if (this.value == '') document.getElementById(form::name('end[str]')).value = document.getElementById(form::name('start[str]')).value;" id="duration" options="Use end date" statustext="Duration of the meeting"/>
+							</menulist>
+							<date-time id="end" class="end_hide"/>
+						</hbox>
+					</row>
+					<row>
+						<description/>
+						<buttononly label="Freetime search" onclick="window.open(egw::link('/index.php','menuaction=calendar.uiforms.freetimesearch')+values2url(this.form,'start,end,duration,participants,recur_type,whole_day'),'ft_search','dependent=yes,width=700,height=500,scrollbars=yes,status=yes'); return false;" width="0" id="freetime" statustext="Find free timeslots where the selected participants are availible for the given timespan"/>
+					</row>
+					<row class="row">
+						<description options=",,,location" value="Location" width="0"/>
+						<textbox size="60" maxlength="255" id="location"/>
+					</row>
+					<row class="row_off">
+						<description options=",,,priority" value="Priority" width="0"/>
 						<menulist>
 							<menupopup type="select-priority" id="priority"/>
 						</menulist>
-						<checkbox label="non blocking" statustext="A non blocking event will not conflict with other events" id="non_blocking" options=",, ,disable"/>
-					</hbox>
-				</row>
-				<row class="row">
-					<description options=",,,public" value="Private"/>
-					<checkbox options="0,1" id="public" span="all"/>
-				</row>
-			</rows>
-		</grid>
+					</row>
+					<row class="row">
+						<description value="Options" width="0"/>
+						<checkbox id="non_blocking" options=",, ,disable" statustext="A non blocking event will not conflict with other events" label="non blocking"/>
+					</row>
+					<row class="row">
+						<description/>
+						<checkbox id="public" options="0,1" label="Private"/>
+					</row>
+				</rows>
+			</grid>
+			<vbox class="row_on" align="right" options="0,0">
+				<description options=",,,category" value="Categories" class="row_on"/>
+				<listbox type="select-cat" id="category" rows="9"/>
+			</vbox>
+		</hbox>
 	</template>
 	<template id="calendar.edit.description" template="" lang="" group="0" version="1.0.1.001">
 		<grid width="100%" height="200">
