@@ -56,6 +56,6 @@ class sitemgr_module extends Module // the Module class get automatic included b
 		{
 			$ret = ExecMethod('etemplate.etemplate.process_exec');
 		}
-		return $extra.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments['arg1'],$arguments['arg2'],$arguments['arg3']));
+		return $extra.($ret ? $ret : ExecMethod2($this->etemplate_method,null,$arguments['arg1'],$arguments['arg2'],$arguments['arg3'],$arguments['arg4'],$arguments['arg5'],$arguments['arg6']));
 	}
 }
