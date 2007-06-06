@@ -22,15 +22,18 @@ class addressbook_contactform
 	 * Shows the contactform and stores the submitted data
 	 *
 	 * @param array $content=null submitted eTemplate content
-	 * @param int $addressbook
-	 * @param array $fields
-	 * @param string $msg
+	 * @param int $addressbook=null int owner-id of addressbook to save contacts too
+	 * @param array $fields=null field-names to show
+	 * @param string $msg=null message to show after submitting the form
+	 * @param string $email=null comma-separated email addresses
+	 * @param string $tpl_name=null custom etemplate to use
+	 * @param string $subject=null subject for email
 	 * @return string html content
 	 */
-	function display($content=null,$addressbook=null,$fields=null,$msg=null)
+	function display($content=null,$addressbook=null,$fields=null,$msg=null,$email=null,$tpl_name=null,$subject=null)
 	{
 		//echo "<p>addressbook_contactform::display($content,$addressbook,".print_r($fields,true).",$msg)</p>\n";
-		$tpl = new etemplate('addressbook.contactform');
+		$tpl = new etemplate($tpl_name ? $tpl_name : 'addressbook.contactform');
 
 		if (is_array($content))
 		{
@@ -40,13 +43,19 @@ class addressbook_contactform
 			}
 			elseif ($content['submitit'])
 			{
+				require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
+				$contact = new bocontacts();
 				if ($content['owner'])	// save the contact in the addressbook
 				{
-					$content['addressbook'] = $addressbook;
-					require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.bocontacts.inc.php');
-					$contact = new bocontacts();
+					if ($content['email_contactform'])	// only necessary as long addressbook is not doing this itself
+					{
+						require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_tracking.inc.php');
+						$tracking = new addressbook_tracking($contact);
+					}
 					if ($contact->save($content))
 					{
+						$tracking->do_notifications($content,null);	// only necessary as long addressbook is not doing this itself
+
 						return '<p align="center">'.$content['msg'].'</p>';
 					}
 					else
@@ -55,9 +64,22 @@ class addressbook_contactform
 							lang('The anonymous user has probably no add rights for this addressbook.').'</p>';
 					}
 				}
-				else	// todo email
+				else	// this is only called, if we send only email and dont save it
 				{
-					return 'email not yet implemented!';
+					if ($contact['email_contactform'])
+					{
+						require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_tracking.inc.php');
+						$tracking = new addressbook_tracking($contact);
+					}
+					if ($tracking->do_notifications($content,null))
+					{
+						return '<p align="center">'.$content['msg'].'</p>';						
+					}
+					else
+					{
+						return '<p align="center">'.lang('There was an error saving your data :-(').'<br />'.
+							lang('Either the configured email addesses are wrong or the mail configuration.').'</p>';						
+					}
 				}
 			}
 		}
@@ -65,6 +87,9 @@ class addressbook_contactform
 		{
 			$preserv['owner'] = $addressbook;
 			$preserv['msg'] = $msg;
+			$preserv['is_contactform'] = true;
+			$preserv['email_contactform'] = $email;
+			$preserv['subject_contactform'] = $subject;
 			if (!$fields) $fields = array('org_name','n_fn','email','tel_work','url','note','captcha');
 			$custom = 1;
 			foreach($fields as $name)

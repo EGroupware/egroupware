@@ -80,6 +80,7 @@ contact copied	addressbook	en	Contact copied
 contact deleted	addressbook	en	Contact deleted
 contact fields to show	addressbook	en	Contact fields to show
 contact id	addressbook	en	Contact ID
+contact modified by %1 at %2	addressbook	en	Contact modified by %1 at %2
 contact repository	admin	en	Contact repository
 contact saved	addressbook	en	Contact saved
 contact settings	admin	en	Contact Settings
@@ -97,6 +98,7 @@ credit	addressbook	en	Credit
 csv-fieldname	addressbook	en	CSV-Fieldname
 csv-filename	addressbook	en	CSV-Filename
 custom	addressbook	en	Custom
+custom etemplate for the contactform	addressbook	en	Custom eTemplate for the contactform
 custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
 default address format	addressbook	en	Default address format
@@ -125,7 +127,9 @@ edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
 edit extra account-data in the addressbook	admin	en	Edit extra account-data in the addressbook
 edit phonenumbers -	addressbook	en	Edit Phonenumbers -
+either the configured email addesses are wrong or the mail configuration.	addressbook	en	Either the configured email addesses are wrong or the mail configuration.
 email & internet	addressbook	en	Email & Internet
+email addresses (comma separated) to send the contact data	addressbook	en	Email addresses (comma separated) to send the contact data
 empty for all	addressbook	en	empty for all
 enable an extra private addressbook	addressbook	en	Enable an extra private addressbook
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
@@ -222,6 +226,7 @@ moved	addressbook	en	moved
 multiple vcard	addressbook	en	Multiple VCard
 name for the distribution list	addressbook	en	Name for the distribution list
 name, address	addressbook	en	Name, Address
+new contact submitted by %1 at %2	addressbook	en	New contact submitted by %1 at %2
 no vcard	addressbook	en	No VCard
 number	addressbook	en	Number
 number of records to read (%1)	addressbook	en	Number of records to read (%1)
@@ -281,6 +286,7 @@ start	admin	en	Start
 startrecord	addressbook	en	Startrecord
 state	common	en	State
 street	common	en	Street
+subject for email	addressbook	en	Subject for email
 successfully imported %1 records into your addressbook.	addressbook	en	Successfully imported %1 record(s) into your addressbook.
 suffix	addressbook	en	Suffix
 tel home	addressbook	en	tel home
@@ -332,6 +338,7 @@ you are not permittet to delete this contact	addressbook	en	You are not permitte
 you are not permittet to edit this contact	addressbook	en	You are not permittet to edit this contact
 you are not permittet to view this contact	addressbook	en	you are not permittet to view this contact
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	en	You can only use LDAP as contact repository if the accounts are stored in LDAP too!
+you can respond by visiting:	addressbook	en	To view it visit:
 you must select a vcard. (*.vcf)	addressbook	en	You must select a vcard. (*.vcf)
 you must select at least 1 column to display	addressbook	en	You must select at least 1 column to display
 you need to select a distribution list	addressbook	en	You need to select a distribution list

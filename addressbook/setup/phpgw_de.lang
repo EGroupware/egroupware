@@ -80,6 +80,7 @@ contact copied	addressbook	de	Kontakt kopiert
 contact deleted	addressbook	de	Kontakt gelöscht
 contact fields to show	addressbook	de	Kontaktfelder die angezeigt werden sollen
 contact id	addressbook	de	Kontakt ID
+contact modified by %1 at %2	addressbook	de	Kontakt geändert von %1 am %2
 contact repository	admin	de	Speicherort Kontakte
 contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
@@ -97,6 +98,7 @@ credit	addressbook	de	Darlehen
 csv-fieldname	addressbook	de	CSV-Feldname
 csv-filename	addressbook	de	CSV-Dateiname
 custom	addressbook	de	Benutzerdefiniert
+custom etemplate for the contactform	addressbook	de	Eigenes eTemplate für das Kontaktformular
 custom fields	addressbook	de	Benutzerdefinierte Felder
 debug output in browser	addressbook	de	Debugausgaben in Browser
 default address format	addressbook	de	Vorgabe für Format der Adresse
@@ -125,7 +127,9 @@ edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 edit extra account-data in the addressbook	admin	de	Zusätzliche Benutzerdaten im Adressbuch bearbeiten.
 edit phonenumbers -	addressbook	de	Telefonnummern bearbeiten
+either the configured email addesses are wrong or the mail configuration.	addressbook	de	Entweder die konfigurierte Email Adresse ist falsch oder die Mail Konfiguration.
 email & internet	addressbook	de	E-Mail & Internet
+email addresses (comma separated) to send the contact data	addressbook	de	Email Adressen (Komma getrennt) zum Senden der Kontaktdaten
 empty for all	addressbook	de	leer für alle
 enable an extra private addressbook	addressbook	de	Privates Adressbuch einschalten
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
@@ -222,6 +226,7 @@ moved	addressbook	de	verschoben
 multiple vcard	addressbook	de	Mehrere VCards
 name for the distribution list	addressbook	de	Name für die Verteilerliste
 name, address	addressbook	de	Name, Adresse
+new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
 no vcard	addressbook	de	Keine VCard
 number	addressbook	de	Nummer
 number of records to read (%1)	addressbook	de	Anzahl der einzulesenden Datensätze (%1)
@@ -281,6 +286,7 @@ start	admin	de	Starten
 startrecord	addressbook	de	Startdatensatz
 state	common	de	Bundesland
 street	common	de	Straße
+subject for email	addressbook	de	Betreff der Email
 successfully imported %1 records into your addressbook.	addressbook	de	%1 Kontakte wurden erfolgreich in Ihr Adressbuch importiert
 suffix	addressbook	de	Zusatz
 tel home	addressbook	de	Telefon privat
@@ -332,6 +338,7 @@ you are not permittet to delete this contact	addressbook	de	Sie haben nicht die 
 you are not permittet to edit this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu bearbeiten
 you are not permittet to view this contact	addressbook	de	Sie haben nicht die Berechtigung diesen Kontakt zu betrachen
 you can only use ldap as contact repository if the accounts are stored in ldap too!	admin	de	Sie können LDAP nur dann zum Speichern von Kontakten verwenden, wenn die Benutzerkonten auch in LDAP gespeichert sind!
+you can respond by visiting:	addressbook	de	Link zum Anzeigen:
 you must select a vcard. (*.vcf)	addressbook	de	Sie müssen eine VCard auswählen (*.vcf)
 you must select at least 1 column to display	addressbook	de	Sie müssen mindestens eine Spalte zum Anzeigen auswählen
 you need to select a distribution list	addressbook	de	Sie müssen eine Verteilerliste auswählen

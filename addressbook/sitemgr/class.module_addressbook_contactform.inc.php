@@ -79,6 +79,17 @@ class module_addressbook_contactform extends sitemgr_module
 					'' => lang('None'),
 				)+$uicontacts->get_addressbooks(EGW_ACL_ADD)	// add to not show the accounts!
 			),
+			'arg4' => array(
+				'type' => 'textfield', 
+				'label' => lang('Email addresses (comma separated) to send the contact data'),
+				'params' => array('size' => 80),
+			),
+			'arg6' => array(
+				'type' => 'textfield', 
+				'label' => lang('Subject for email'),
+				'params' => array('size' => 80),
+				'default' => lang('Contactform'),
+			),
 			'arg2' => array(
 				'type' => 'select', 
 				'label' => lang('Contact fields to show'),
@@ -92,6 +103,12 @@ class module_addressbook_contactform extends sitemgr_module
 				'label' => lang('Message after submitting the form'),
 				'params' => array('size' => 80),
 				'default' => lang('Thank you for contacting us.'),
+			),
+			'arg5' => array(
+				'type' => 'textfield', 
+				'label' => lang('Custom eTemplate for the contactform'),
+				'params' => array('size' => 40),
+				'default' => 'addressbook.contactform',
 			),
 		);		
 		return parent::get_user_interface();

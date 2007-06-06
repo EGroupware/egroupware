@@ -306,7 +306,7 @@ class bo_tracking
 	{
 		if (!$email) return false;
 		
-		//echo "<p>botracker::send_notification(,'$email',$user_or_lang)</p>\n";
+		//echo "<p>bo_trackering::send_notification(,'$email',$user_or_lang)</p>\n";
 		//echo "old"; _debug_array($old);
 		//echo "data"; _debug_array($data);
 		
@@ -366,7 +366,7 @@ class bo_tracking
 		}
 		$send->AddCustomHeader("X-eGroupWare-type: {$this->app}update");
 
-		$sender = $this->get_sender($user,$data,$old);
+		$sender = $this->get_sender($data,$old);
 		if (preg_match('/^(.+) *<(.+)>/',$sender,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as sender
 		{
 			$send->From = $matches[2];
@@ -380,7 +380,7 @@ class bo_tracking
 		$send->Subject = $this->get_subject($data,$old);
 
 		$send->Body = $this->get_body($html_email,$data,$old);
-		
+
 		foreach($this->get_attachments($data,$old) as $attachment)
 		{
 			if (isset($attachment['content']))
@@ -393,6 +393,7 @@ class bo_tracking
 			}
 		}
 
+		//echo "<p>bo_trackering::send_notification(): sending <pre>".print_r($send,true)."</pre>\n";
 		if (!$send->Send())
 		{
 			$this->errors[] = lang('Error while notifying %1: %2',$email,$send->ErrorInfo);
@@ -418,6 +419,7 @@ class bo_tracking
 	 * The default implementation prefers depending on the prefer_user_as_sender class-var the user over
 	 * what is returned by get_config('sender'). 
 	 * 
+	 * @param int $user account_lid of user
 	 * @param array $data
 	 * @param array $old
 	 * @return string
@@ -425,15 +427,21 @@ class bo_tracking
 	function get_sender($data,$old)
 	{
 		$sender = $this->get_config('sender',$data,$old);
-		
+		//echo "<p>bo_tracking::get_sender() get_config('sender',...)='".htmlspecialchars($sender)."'</p>\n";
+
 		if (($this->prefer_user_as_sender || !$sender) && $this->user && 
 			($email = $GLOBALS['egw']->accounts->id2name($this->user,'account_email')))
 		{
 			$name = $GLOBALS['egw']->accounts->id2name($this->user,'account_fullname');
 			
-			return $name ? $name.' <'.$email.'>' : $email;
+			$sender = $name ? $name.' <'.$email.'>' : $email;
 		}
-		return $sender ? $sender : 'eGroupWare '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'];
+		elseif(!$sender)
+		{
+			$sender = 'eGroupWare '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'].'>';
+		}
+		//echo "<p>bo_tracking::get_sender()='".htmlspecialchars($sender)."'</p>\n";
+		return $sender;
 	}
 
 	/**
@@ -528,7 +536,7 @@ class bo_tracking
 		foreach($this->get_details($data) as $name => $detail)
 		{
 			$modified = $old && $data[$name] != $old[$name];
-			if ($modified) error_log("data[$name]='{$data[$name]}', old[$name]='{$old[$name]}' --> modified=".(int)$modified);
+			//if ($modified) error_log("data[$name]='{$data[$name]}', old[$name]='{$old[$name]}' --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 			
 			$body .= $this->format_line($html_email,$detail['type'],$modified,
