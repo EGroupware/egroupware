@@ -111,35 +111,11 @@
 					<textbox id="@customfield[1]" span="4" needed="1" size="64"/>
 					<description class="redItalic" value="*"/>
 				</row>
-				<row disabled="!@show[custom2]">
-					<image src="gear"/>
+				<row>
+					<description/>
 					<description value="@customlabel[2]"/>
-					<textbox id="@customfield[2]" span="4" needed="1" size="64"/>
-					<description class="redItalic" value="*"/>
-				</row>
-				<row disabled="!@show[custom3]">
-					<image src="gear"/>
-					<description value="@customlabel[3]"/>
-					<textbox id="@customfield[3]" span="4" needed="1" size="64"/>
-					<description class="redItalic" value="*"/>
-				</row>
-				<row disabled="!@show[custom4]">
-					<image src="gear"/>
-					<description value="@customlabel[4]"/>
-					<textbox id="@customfield[4]" span="4" needed="1" size="64"/>
-					<description />
-				</row>
-				<row disabled="!@show[custom5]">
-					<image src="gear"/>
-					<description value="@customlabel[5]"/>
-					<textbox id="@customfield[5]" span="4" needed="1" size="64"/>
-					<description />
-				</row>
-				<row disabled="!@show[custom6]">
-					<image src="gear"/>
-					<description value="@customlabel[6]"/>
-					<textbox id="@customfield[6]" span="4" needed="1" size="64"/>
-					<description class="redItalic" value="*"/>
+					<textbox id="@customfield[2]" span="4" size="64"/>
+					<description/>
 				</row>
 				<row disabled="!@show[sep4]">
 					<hrule span="all"/>
