@@ -96,7 +96,7 @@ class module_addressbook_contactform extends sitemgr_module
 				'multiple' => true,
 				'options' => $fields,
 				'default' => $default,
-				'params' => array('size' => 15),
+				'params' => array('size' => 9),
 			),
 			'arg3' => array(
 				'type' => 'textfield', 
