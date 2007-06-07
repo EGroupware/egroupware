@@ -326,7 +326,7 @@ class html
 		if ($style && substr($style,-1) != ';') $style .= '; ';
 		if (strpos($style,'height')===false) $style .= 'height: '.(1.7*$multiple).'em; ';
 		if (strpos($style,'width')===false)  $style .= 'width: '.(4+$max_len*($max_len < 15 ? 0.65 : 0.55)).'em; ';
-		$style .= 'background-color: white; overflow: auto; border: lightgray 2px inset;';
+		$style .= 'background-color: white; overflow: auto; border: lightgray 2px inset; text-align: left;';
 
 		return $this->div($html,$options,'',$style);
 	}
