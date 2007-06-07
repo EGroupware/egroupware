@@ -8,7 +8,7 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id$
+ * @version $Id: class.egw_addressbook_record.inc.php 22827 2006-11-10 15:35:35Z nelius_weiss $
  */
 
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_egw_record.inc.php');
