@@ -11,7 +11,6 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @version $Id$
- * @todo check if user wants notifications via egw popup!
  */
 if (!$GLOBALS['egw_info']['user']['preferences']['notifications']['disable_ajaxpopup']) {
 	$GLOBALS['egw']->translation->add_app('notifications');
