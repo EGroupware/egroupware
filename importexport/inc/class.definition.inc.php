@@ -33,7 +33,7 @@ class definition implements iface_egw_record {
 		'plugin' => 'string',
 		'type' => 'string',
 		'allowed_users' => 'array',
-		'options' => 'array',
+		'plugin_options' => 'array',
 		'owner' => 'int',
 		'description' => 'string',
 	);
@@ -80,15 +80,13 @@ class definition implements iface_egw_record {
 		if (is_string($_identifier) && strlen($_identifier) > 3) $_identifier = $this->name2identifier($_identifier);
 		
 		if ((int)$_identifier != 0) {
-			$this->so_sql->read(array('definition_id' => $_identifier));
-			if (empty($this->so_sql->data)) {
+			$this->definition = $this->so_sql->read(array('definition_id' => $_identifier));
+			if ( empty( $this->definition ) ) {
 				throw new Exception('Error: No such definition with identifier :"'.$_identifier.'"!');
 			}
-			if (!(in_array($this->user,$this->get_allowed_users()) ||	$this->get_owner() == $this->user || $this->is_admin)) {
+			if ( !( in_array( $this->user, $this->get_allowed_users() ) || $this->definition['owner'] == $this->user || $this->is_admin)) {
 				throw new Exception('Error: User "'.$this->user.'" is not permitted to get definition with identifier "'.$_identifier.'"!');
-				$this->definition = $this->so_sql->data;
 			}
-			$this->definition = $this->so_sql->data;
 		}
 	}
 	
@@ -98,7 +96,7 @@ class definition implements iface_egw_record {
 	 * @param string $_name
 	 * @return int
 	 */
-	private function name2identifier($_name) {
+	private function name2identifier( $_name ) {
 		$identifiers = $this->so_sql->search(array('name' => $_name),true);
 		if (isset($identifiers[1])) {
 			throw new Exception('Error: Definition: "'.$_name. '" is not unique! Can\'t convert to identifier');
@@ -113,7 +111,7 @@ class definition implements iface_egw_record {
 		switch ($_attribute_name) {
 			case 'allowed_users' :
 				return $this->get_allowed_users();
-			case 'options' :
+			case 'plugin_options' :
 				return $this->get_options();
 			default :
 				return $this->definition[$_attribute_name];
@@ -127,7 +125,7 @@ class definition implements iface_egw_record {
 		switch ($_attribute_name) {
 			case 'allowed_users' :
 				return $this->set_allowed_users($_data);
-			case 'options' :
+			case 'plugin_options' :
 				return $this->set_options($_data);
 			default :
 				$this->definition[$_attribute_name] = $_data;
@@ -149,7 +147,7 @@ class definition implements iface_egw_record {
 	 *
 	 * @param array $_allowed_users
 	 */
-	private function set_allowed_users($_allowed_users) {
+	private function set_allowed_users( $_allowed_users ) {
 		$this->definition['allowed_users'] = implode(',',(array)$_allowed_users);
 	}
 	
@@ -159,12 +157,7 @@ class definition implements iface_egw_record {
 	 * @return array
 	 */
 	private function get_options() {
-		// oh compat funct to be removed!
-		if(array_key_exists('plugin_options',$this->definition)) {
-			$this->definition['options'] = $this->definition['plugin_options'];
-			unset($this->definition['plugin_options']);
-		}
-		return unserialize($this->definition['options']);
+		return unserialize($this->definition['plugin_options']);
 	}
 	
 	/**
@@ -172,8 +165,8 @@ class definition implements iface_egw_record {
 	 *
 	 * @param array $options
 	 */
-	private function set_options(array $_options) {
-		$this->definition['options'] = serialize($_options);
+	private function set_options(array $_plugin_options) {
+		$this->definition['plugin_options'] = serialize( $_plugin_options );
 	}
 	
 	/**
@@ -187,7 +180,7 @@ class definition implements iface_egw_record {
 	public function get_record_array() {
 		$definition = $this->definition;
 		$definition['allowed_users'] = $this->get_allowed_users();
-		$definition['options'] = $this->get_options();
+		$definition['plugin_options'] = $this->get_options();
 		return $definition;
 	}
 	
@@ -205,8 +198,20 @@ class definition implements iface_egw_record {
 	 *
 	 * @return void
 	 */
-	public function set_record(array $_record) {
-		$this->definition = $_record;
+	public function set_record( array $_record ) {
+		$this->definition = array_intersect_key( $_record, $this->attributes );
+		
+		// anything which is not an attribute is perhaps a plugin_option.
+		// If not, it gets whiped out on save time.
+		foreach ( $_record as $attribute => $value) {
+			if ( !array_key_exists( $attribute, $this->attributes ) ) {
+				$this->definition['plugin_options'][$attribute] = $value;
+			}
+		}
+		
+		// convert plugin_options into internal representation
+		$this->set_allowed_users($this->definition['allowed_users']);
+		$this->set_options($this->definition['plugin_options']);
 	}
 	
 	/**
@@ -225,11 +230,13 @@ class definition implements iface_egw_record {
 	 * @return string identifier
 	 */
 	public function save ( $_dst_identifier ) {
-		if ($owner = $this->get_owner() && $owner != $this->user && !$this->is_admin) {
-			throw ('Error: User '. $this->user. ' is not allowed to save this definition!');
+		if ( strlen($this->definition['name']) < 3 ) {
+			throw new Exception('Error: Can\'t save definition, no valid name given!');
 		}
-		if ($this->so_sql->save($_dst_identifier)) {
-			throw('Error: so_sql was not able to save definition: '.$this->get_identifier());
+		
+		$this->so_sql->data = $this->definition;
+		if ($this->so_sql->save( array( 'definition_id' => $_dst_identifier ))) {
+			throw new Exception('Error: so_sql was not able to save definition: '.$this->get_identifier());
 		}
 		return $this->definition['definition_id'];
 	}

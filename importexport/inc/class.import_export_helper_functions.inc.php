@@ -16,14 +16,7 @@
  * class import_export_helper_functions (only static methods)
  * use import_export_helper_functions::method
  */
-class import_export_helper_functions
-{
-
-	/** Aggregations: */
-
-	/** Compositions: */
-
-	/*** Attributes: ***/
+class import_export_helper_functions {
 
 	/**
 	 * nothing to construct here, only static functions!
@@ -236,13 +229,13 @@ class import_export_helper_functions
 	 * @param string $_appname {<appname> | all}
 	 * @return array(<appname> => array( <type> => array(<plugin> => <title>)))
 	 */
-	public static function get_plugins($_appname, $_type){
+	public static function get_plugins( $_appname = 'all', $_type = 'all' ) {
 		$appnames = $_appname == 'all' ? array_keys($GLOBALS['egw_info']['apps']) : (array)$_appname;
-		$types = $_types == 'all' ? array('import','export') : (array)$_type;
+		$types = $_type == 'all' ? array('import','export') : (array)$_type;
 		$plugins = array();
 		
 		foreach ($appnames as $appname) {
-			$appdir = EGW_INCLUDE_ROOT. "/$appname/inc";
+			$appdir = EGW_INCLUDE_ROOT. "/$appname/importexport";
 			if(!is_dir($appdir)) continue;
 			$d = dir($appdir);
 			
@@ -250,9 +243,9 @@ class import_export_helper_functions
 			while (false !== ($entry = $d->read())) {
 				list( ,$classname, ,$extension) = explode('.',$entry);
 				$file = $appdir. '/'. $entry;
-
+				
 				foreach ($types as $type) {
-					if(!is_file($file) || substr($classname,0,7) != $type.'_' || $extension != 'php') continue;
+					if( !is_file($file) || substr($classname,0,7) != $type.'_' || $extension != 'php' ) continue;
 					require_once($file);
 					
 					try {
@@ -269,6 +262,7 @@ class import_export_helper_functions
 			}
 			$d->close();
 		}
+		//error_log(__CLASS__.__FUNCTION__.print_r($plugins,true));
 		return $plugins;	
 	}
 	
@@ -282,5 +276,8 @@ class import_export_helper_functions
 		return array_keys(self::get_plugins('all',$_type));
 	}
 
+	public static function guess_filetype( $_file ) {
+		
+	}
 } // end of import_export_helper_functions
 ?>

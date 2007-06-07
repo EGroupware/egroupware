@@ -13,11 +13,6 @@
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.uietemplate.inc.php');
 require_once('class.bodefinitions.inc.php');
 
-if (!defined('IMPORTEXPORT_APP'))
-{
-	define('IMPORTEXPORT_APP','importexport');
-}
-
 /**
  * Userinterface to define {im|ex}ports
  *
@@ -26,6 +21,8 @@ if (!defined('IMPORTEXPORT_APP'))
 class uidefinitions 
 {
 	const _debug = true;
+	
+	const _appname = 'importexport';
 	
 	public $public_functions = array(
 		'edit' => true,
@@ -59,8 +56,8 @@ class uidefinitions
 	{
 		// we cant deal with notice and warnings, as we are on ajax!
 		error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-		$GLOBALS['egw']->translation->add_app(IMPORTEXPORT_APP);
-		$GLOBALS['egw_info']['flags']['currentapp'] = IMPORTEXPORT_APP;
+		$GLOBALS['egw']->translation->add_app(self::_appname);
+		$GLOBALS['egw_info']['flags']['currentapp'] = self::_appname;
 
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
 		if(!@is_object($GLOBALS['egw']->js))
@@ -68,7 +65,7 @@ class uidefinitions
 			$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
 		}
 		$this->etpl =& new etemplate();
-		$this->clock = $GLOBALS['egw']->html->image(IMPORTEXPORT_APP,'clock');
+		$this->clock = $GLOBALS['egw']->html->image(self::_appname,'clock');
 		$this->steps = array(
 			'wizzard_step10' => lang('Choose an application'),
 			'wizzard_step20' => lang('Choose a plugin'),
@@ -77,7 +74,7 @@ class uidefinitions
 			'wizzard_finish' => '',
 		);
 		//register plugins (depricated)
-		$this->plugins = bodefinitions::plugins();
+		//$this->plugins = bodefinitions::plugins();
 	}
 	
 	/**
@@ -107,7 +104,7 @@ class uidefinitions
 					case 'export_selected' :
 						$mime_type = ($GLOBALS['egw']->html->user_agent == 'msie' || $GLOBALS['egw']->html->user_agent == 'opera') ?
 							'application/octetstream' : 'application/octet-stream';
-						$name = 'importexport.definition';
+						$name = 'importexport_definition.xml';
 						header('Content-Type: ' . $mime_type);
 						header('Content-Disposition: attachment; filename="'.$name.'"');
 						echo $bodefinitions->export($selected);
@@ -120,7 +117,7 @@ class uidefinitions
 			}
 			
 		}
-		$etpl =& new etemplate(IMPORTEXPORT_APP.'.definition_index');
+		$etpl =& new etemplate(self::_appname.'.definition_index');
 		
 		// we need an offset because of autocontinued rows in etemplate ...
 		$definitions = array('row0');
@@ -131,7 +128,7 @@ class uidefinitions
 			unset($definition);
 		}
 		$content = $definitions;
-		return $etpl->exec(IMPORTEXPORT_APP.'.uidefinitions.index',$content,array(),$readonlys,$preserv);
+		return $etpl->exec(self::_appname.'.uidefinitions.index',$content,array(),$readonlys,$preserv);
 	}
 	
 	function edit()
@@ -203,7 +200,7 @@ class uidefinitions
 				$this->wizzard_content_template = $this->$next_step($content,$sel_options,$readonlys,$preserv);
 			}
 
-			$html = $this->etpl->exec(IMPORTEXPORT_APP.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
+			$html = $this->etpl->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
 		}
 		else
 		{
@@ -216,7 +213,7 @@ class uidefinitions
 				unset ($content['edit']);
 				
 			$this->wizzard_content_template = $this->wizzard_step10($content, $sel_options, $readonlys, $preserv);
-			$html = $this->etpl->exec(IMPORTEXPORT_APP.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
+			$html = $this->etpl->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
 		}
 
 		if(class_exists('xajaxResponse'))
@@ -254,7 +251,7 @@ class uidefinitions
 			if ($GLOBALS['egw_info']['user']['apps']['manual'])
 			{
 				$manual =& new etemplate('etemplate.popup.manual');
-				echo $manual->exec(IMPORTEXPORT_APP.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
+				echo $manual->exec(self::_appname.'.uidefinitions.wizzard',$content,$sel_options,$readonlys,$preserv,1);
 				unset($manual);
 			}
 
@@ -448,14 +445,14 @@ class uidefinitions
 		$bodefinitions = new bodefinitions();
 		if (is_array($content))
 		{
-			$bodefinitions->import($content['import_file']);
+			$bodefinitions->import($content['import_file']['tmp_name']);
 			// TODO make redirect here!
 			return $this->index();
 		}
 		else 
 		{
-			$etpl =& new etemplate(IMPORTEXPORT_APP.'.import_definition');
-			return $etpl->exec(IMPORTEXPORT_APP.'.uidefinitions.import_definition',$content,array(),$readonlys,$preserv);
+			$etpl =& new etemplate(self::_appname.'.import_definition');
+			return $etpl->exec(self::_appname.'.uidefinitions.import_definition',$content,array(),$readonlys,$preserv);
 		}
 	}
 }

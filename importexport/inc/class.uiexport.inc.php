@@ -57,10 +57,11 @@ class uiexport {
 		if(empty($_content)) {
 			$et = new etemplate(self::_appname. '.export_dialog');
 			$_appname = $_GET['appname'];
-			$_definition =$_GET['definition'];
+			$_definition =$_GET['definition'] = 'expert';
 			$_plugin = $_GET['plugin']; // NOTE: definition _must_ be 'expert' if for plugin to be used!
 			$_selection = $_GET['selection'];
-
+			
+			error_log(__FILE__.__FUNCTION__. '::$_GET[\'appname\']='. $_appname. ',$_GET[\'definition\']='. $_definition. ',$_GET[\'plugin\']='.$_plugin. ',$_GET[\'selection\']='.$_selection);
 			// if appname is given and valid, list available definitions (if no definition is given)
 			if (!empty($_appname) && $GLOBALS['egw']->acl->check('run',1,$_appname)) {
 				$content['appname'] = $_appname;
@@ -84,7 +85,7 @@ class uiexport {
 				unset($definitions);
 				$sel_options['definition']['expert'] = lang('Expert options');
 				
-				if(isset($_definition) && array_key_exists($_definition,$sel_options[$_definition])) {
+				if(isset($_definition) && array_key_exists($_definition,$sel_options)) {
 					$content['definition'] = $_definition;
 				}
 				else {
@@ -101,6 +102,7 @@ class uiexport {
 					if(isset($_plugin) && array_key_exists($_plugin,$sel_options['plugin'])) {
 						$content['plugin'] = $_plugin;
 						$selected_plugin = $_plugin;
+						error_log('hallo');
 					}
 					else {
 						$plugins_classnames = array_keys($plugins);
@@ -181,19 +183,19 @@ class uiexport {
 				$definition = new definition($_content['definition']);
 			}
 			
-			if (isset($definition->options['selection'])) {
-				//$definition->options		= parse(...)
+			if (isset($definition->plugin_options['selection'])) {
+				//$definition->plugin_options		= parse(...)
 			}
 			else {
-				$definition->options = array_merge(
-					$definition->options,
+				$definition->plugin_options = array_merge(
+					$definition->plugin_options,
 					array('selection' => $_content['selection'])
 				);
 			}
 			
 			$tmpfname = tempnam('/tmp','export');
 			$file = fopen($tmpfname, "w+");
-			if (! $charset = $definition->options['charset']) {
+			if (! $charset = $definition->plugin_options['charset']) {
 				$charset = $GLOBALS['egw']->translation->charset();
 			}
 			$plugin_object = new $definition->plugin;
@@ -234,6 +236,7 @@ class uiexport {
 			//nothing else expected!
 			throw new Exception('Error: unexpected submit in export_dialog!');
 		}
+		//error_log(print_r($content,true));
 		return $et->exec(self::_appname. '.uiexport.export_dialog',$content,$sel_options,$readonlys,$preserv,2);
 	}
 	

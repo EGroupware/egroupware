@@ -24,15 +24,9 @@ class import_csv implements iface_import_record { //, Iterator {
 
 	const csv_max_linelength = 8000;
 	
-	/** Aggregations: */
-
-	/** Compositions: */
-	
 	/**
 	 * @static import_export_helper_functions
 	 */
-	
-	 /*** Attributes: ***/
 	
 	/**
 	 * array with field mapping in form column number => new_field_name
@@ -235,7 +229,7 @@ class import_csv implements iface_import_record { //, Iterator {
 		foreach ($this->mapping as $cvs_idx => $new_idx) {
 			$this->record[$new_idx] = $record[$cvs_idx];
 		}
-		return;
+		return true;
 	} // end of member function do_fieldmapping
 
 	/**

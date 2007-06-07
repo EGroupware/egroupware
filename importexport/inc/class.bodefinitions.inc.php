@@ -11,6 +11,7 @@
  */
 
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
+require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.arrayxml.inc.php');
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 /** bo to define {im|ex}ports
@@ -41,6 +42,14 @@ class bodefinitions {
 		}
 	}
 	
+	/**
+	 * gets definitions as raw data. 
+	 * well, we need a god idea for egw_record pools...
+	 * its not a god idea to make a definition object of each 
+	 * at the moment, as each defintion holds an so_sql instance.
+	 *
+	 * @return array
+	 */
 	public function get_definitions() {
 		return $this->definitions;
 	}
@@ -48,11 +57,11 @@ class bodefinitions {
 	/**
 	 * reads a definition from database
 	 *
+	 * @deprecated see class.definition.inc.php
 	 * @param mixed &$definition
 	 * @return bool success or not
 	 */
-	public function read(&$definition)
-	{
+	public function read(&$definition) {
 		if(is_int($definition)) $definition = array('definition_id' => $definition);
 		elseif(is_string($definition)) $definition = array('name' => $definition);
 		if(!$definition = $this->so_sql->read($definition)) return false;
@@ -61,45 +70,14 @@ class bodefinitions {
 		return true;
 	}
 	
-	public function save($content)
-	{
-		$plugin = $content['plugin'];
-		if (!$plugin) return false;
-		
-		$definition = array_intersect_key($content,array_flip($this->so_sql->db_cols));
-		
-		if(is_object($this->plugin) && $this->plugin->plugin_info['plugin'] == $plugin)
-		{
-			$plugin_options = array_intersect_key($content,array_flip($this->plugin->plugin_options));
-		}
-		else 
-		{
-			// we come eg. from definition import
-			$file = EGW_SERVER_ROOT . SEP . $definition['application'] . SEP . 'inc' . SEP . 'importexport'. SEP . 'class.'.$definition['plugin'].'.inc.php';	
-			if (is_file($file))
-			{
-				@include_once($file);
-				$obj = new $plugin;
-				$plugin_options = array_intersect_key($content,array_flip($obj->plugin_options));
-				unset($obj);
-			}
-			else 
-			{
-				foreach ($this->so_sql->db_cols as $col) unset($content[$col]);
-				$plugin_options = $content;
-
-			}
-		}
-		$definition['plugin_options'] = serialize($plugin_options);
-		$this->so_sql->data = $definition;
-		//print_r($definition);
-		return $this->so_sql->save();
-	}
-	
-	public function delete($keys)
-	{
+	/**
+	 * deletes a defintion
+	 *
+	 * @param array $keys
+	 */
+	public function delete($keys) {
 		$this->so_sql->delete(array('definition_id' => $keys));
-		// clear private cach
+		// clear private cache
 		foreach ($keys as $key) {
 			unset($this->definitions[array_search($key,$this->definitions)]);
 		}
@@ -127,36 +105,6 @@ class bodefinitions {
 	}
 	
 	/**
-	 * searches and registers plugins from all apps
-	 *
-	 * @deprecated see import_export_helperfunctions::get_plugins
-	 * @return array $info info about existing plugins
-	 */
-	static public function plugins()
-	{
-		if (!key_exists('apps',$GLOBALS['egw_info'])) return false;
-		foreach (array_keys($GLOBALS['egw_info']['apps']) as $appname)
-		{			
-			$dir = EGW_INCLUDE_ROOT . "/$appname/inc";
-			if(!$d = @opendir($dir)) continue;
-			while (false !== ($file = readdir($d))) 
-			{
-				//echo $file."\n";
-				$pnparts = explode('.',$file);
-				if(!is_file($file = "$dir/$file") || substr($pnparts[1],0,7) != 'wizzard' || $pnparts[count($pnparts)-1] != 'php') continue;
-				$plugin_classname = $pnparts[1];
-				include_once($file);
-				if (!is_object($GLOBALS['egw']->$plugin_classname))
-					$GLOBALS['egw']->$plugin_classname = new $plugin_classname;
-				$info[$appname][$GLOBALS['egw']->$plugin_classname->plugin_info['plugin']] = $GLOBALS['egw']->$plugin_classname->plugin_info;
-			}
-			closedir($d);
-		}
-		return $info;
-	}
-
-
-	/**
 	 * exports definitions
 	 *
 	 * @param array $keys to export
@@ -169,43 +117,55 @@ class bodefinitions {
 			'entries' => count($keys),
 		));
 		
-		foreach ($keys as $definition_id)
-		{
-			$definition = array('definition_id' => $definition_id);
-			$this->read($definition);
-			unset($definition['definition_id']);
-			$export_data[$definition['name']] = $definition;
+		$export_data['definitions'] = array();
+		foreach ($keys as $definition_id) {
+			$definition = new definition( $definition_id );
+			$export_data['definitions'][$definition->name] = $definition->get_record_array();
+			unset($export_data['definitions'][$definition->name]['definition_id']);
+			unset($definition);
 		}
-		/* This is no fun as import -> export cycle in xmltools results in different datas :-(
-		$xml =& CreateObject('etemplate.xmltool','root');
-		$xml->import_var('importexport.definitions', $export_data);
-		$xml_data = $xml->export_xml();
 		
-		we export serialised arrays in the meantime
-		*/
-		return serialize($export_data);
+		
+		$xml = new arrayxml();
+		return $xml->array2xml($export_data, 'importExportDefinitions');
 	}
 	
-	public function import($import_file)
+	/**
+	 * imports definitions from file
+	 *
+	 * @param string $import_file
+	 * @throws Exeption
+	 * @return void
+	 */
+	public static function import( $_import_file )
 	{
-		// read given file and check if its a valid definition
-		if (!is_file($import_file['tmp_name'])) return false;
-		$f = fopen($import_file['tmp_name'],'r');
-		$data = fread($f,100000);
-		fclose($f);
-		if (($data = unserialize($data)) === false) return false;
-		$metainfo = $data['metainfo'];
-		unset($data['metainfo']);
+		if ( !is_file( $_import_file ) ) {
+			throw new Exception("'$_import_file' is not a valid file" );
+		}
+		
+		$data = arrayxml::xml2array( file_get_contents( $_import_file ) );
+		
+		$metainfo = $data['importExportDefinitions']['metainfo'];
+		$definitions = $data['importExportDefinitions']['definitions'];
+		unset ( $data );
 		
 		// convert charset into internal used charset
-		$data = $GLOBALS['egw']->translation->convert($data,$metainfo['charset'],$GLOBALS['egw']->translation->charset());
+		$definitions = $GLOBALS['egw']->translation->convert( 
+			$definitions,
+			$metainfo['charset'],
+			$GLOBALS['egw']->translation->charset()
+		);
 		
 		// save definition(s) into internal table
-		foreach ($data as $name => $definition)
+		foreach ( $definitions as $name => $definition_data )
 		{
-			$this->save($definition);
+			$definition = new definition( $definition_data['name'] );
+			$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
+			
+			$definition->set_record( $definition_data );
+			$definition->save( $definition_id );
 		}
 	}
-
+	
 }
 
