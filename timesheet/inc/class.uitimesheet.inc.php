@@ -196,6 +196,8 @@ class uitimesheet extends botimesheet
 						{
 							unset($this->data[$name]);
 						}
+						// save the selected project, to delete the project-link, if the user changes the project
+						$this->data['old_pm_id'] = $this->data['pm_id'];
 						break;
 					}
 					// fall-through for save
@@ -256,6 +258,7 @@ class uitimesheet extends botimesheet
 							$links[] = $link_id;
 							break;
 						case 'infolog':
+							// a preserved title blur is only set for other (non-project) links, it stays with Save&New!
 							$preserv['ts_title_blur'] = $this->link->title('infolog',$link_id);
 							break;
 					}
@@ -286,7 +289,9 @@ class uitimesheet extends botimesheet
 		{
 			$preserv['ts_project'] = $preserv['ts_project_blur'];
 		}
-		$content['ts_title_blur'] = $preserv['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
+		// the actual title-blur is either the preserved title blur (if we are called from infolog entry),
+		// or the preserved project-blur comming from the current selected project
+		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $preserv['ts_project_blur'];
 
 		$readonlys = array(
 			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(EGW_ACL_DELETE),
