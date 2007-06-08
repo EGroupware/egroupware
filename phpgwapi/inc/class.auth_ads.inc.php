@@ -48,8 +48,8 @@
 			ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
 			ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
 
-			/* Login with the LDAP Admin. User to find the User DN.  */
-			if(!@ldap_bind($ldap,$username.'@'.$GLOBALS['egw_info']['server']['ads_domain'],$passwd))
+			// bind with username@ads_domain, only if a non-empty password given, in case anonymous search is enabled
+			if(empty($passwd) || !@ldap_bind($ldap,$username.'@'.$GLOBALS['egw_info']['server']['ads_domain'],$passwd))
 			{
 				//echo "<p>Cant bind with '$username@".$GLOBALS['egw_info']['server']['ads_domain']."' with PW '$passwd' !!!</p>\n";
 				return False;
