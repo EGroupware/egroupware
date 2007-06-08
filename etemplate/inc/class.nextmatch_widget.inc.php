@@ -209,7 +209,7 @@
 			}
 			if (!isset($value['cat_app'])) $value['cat_app'] = $app;	// if no cat_app set, use the app from the get_rows func
 
-			$max = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
+			if (!($max = (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'])) $max = 15;
 			$row_options = array();
 			foreach(array(5,12,25,50,100,200,500,999) as $n)
 			{
@@ -593,9 +593,9 @@
 			{
 				$loop = true;	// num_rows changed
 			}
-			$value['num_rows'] = (int) $value['num_rows'];
+			// num_rows: use old value in extension data, if $value['num_rows'] is not set because nm-header is not shown
+			$value['num_rows'] = isset($value['num_rows']) ? (int) $value['num_rows'] : (int) $extension_data['num_rows'];
 			$max = $value['num_rows'] ? $value['num_rows'] : (int)$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'];
-			
 			
 			if(strpos($value['search'],'xjxquery')) {
 				// We deal with advancedsearch
