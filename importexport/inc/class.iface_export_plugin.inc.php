@@ -39,9 +39,10 @@ interface iface_export_plugin {
 	/**
 	 * exports entries according to given definition object.
 	 *
+	 * @param stream $_stream
 	 * @param definition $_definition
 	 */
-	public static function export($_stream, $_charset, definition $_definition);
+	public function export($_stream, definition $_definition);
 	
 	/**
 	 * returns translated name of plugin
@@ -76,14 +77,14 @@ interface iface_export_plugin {
 	 * 		preserv		=> array,
 	 * )
 	 */
-	public static function get_options_etpl();
+	public function get_options_etpl();
 	
 	/**
 	 * returns etemplate name for slectors of this plugin
 	 *
 	 * @return string etemplate name
 	 */
-	public static function get_selectors_etpl();
+	public function get_selectors_etpl();
 
 } // end of iface_export_plugin
 ?>

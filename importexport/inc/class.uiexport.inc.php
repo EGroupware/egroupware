@@ -199,7 +199,7 @@ class uiexport {
 				$charset = $GLOBALS['egw']->translation->charset();
 			}
 			$plugin_object = new $definition->plugin;
-			$plugin_object->export($file, $charset, $definition);
+			$plugin_object->export( $file, $definition );
 
 			if($_content['export'] == 'pressed') {
 				fclose($file);
@@ -224,9 +224,16 @@ class uiexport {
 
 				fclose($file);
 				unlink($tmpfname);
-				$preview = $GLOBALS['egw']->translation->convert($preview,'iso-8859-1','utf-8');
+				
+				// NOTE: $definition->plugin_options['charset'] may not be set, 
+				// but it's the best guess atm.
+				$preview = $GLOBALS['egw']->translation->convert( $preview,
+					$definition->plugin_options['charset'],
+					$GLOBALS['egw']->translation->charset()
+				);
+				
 				$response->addAssign('exec[preview-box]','innerHTML',$preview);
-				$response->addAssign('divPoweredBy','style.display','none');
+				//$response->addAssign('divPoweredBy','style.display','none');
 				$response->addAssign('exec[preview-box]','style.display','inline');
 				$response->addAssign('exec[preview-box-buttons]','style.display','inline');
 				

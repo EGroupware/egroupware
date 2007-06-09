@@ -11,7 +11,8 @@
  */
 
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_egw_record.inc.php');
-require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
+require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.arrayxml.inc.php');
+require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.so_sql.inc.php');
 
 /**
  * class definition
@@ -39,30 +40,22 @@ class definition implements iface_egw_record {
 	);
 	
 	/**
-	 * holds so_sql object
-	 *
-	 * @var so_sql
+	 * @var so_sql holds so_sql object
 	 */
 	private $so_sql;
 	
 	/**
-	 * internal representation of definition
-	 *
-	 * @var unknown_type
+	 * @var array internal representation of definition
 	 */
 	private $definition = array();
 	
 	/**
-	 * holds current user
-	 *
-	 * @var int
+	 * @var int holds current user
 	 */
 	private $user;
 	
 	/**
-	 * is current user an admin?
-	 *
-	 * @var bool
+	 * @var bool is current user an admin?
 	 */
 	private $is_admin;
 	
@@ -157,7 +150,8 @@ class definition implements iface_egw_record {
 	 * @return array
 	 */
 	private function get_options() {
-		return unserialize($this->definition['plugin_options']);
+		$options_data = arrayxml::xml2array( $this->definition['plugin_options'] );
+		return $options_data['plugin_options'];
 	}
 	
 	/**
@@ -166,7 +160,7 @@ class definition implements iface_egw_record {
 	 * @param array $options
 	 */
 	private function set_options(array $_plugin_options) {
-		$this->definition['plugin_options'] = serialize( $_plugin_options );
+		$this->definition['plugin_options'] = arrayxml::array2xml( $_plugin_options, 'plugin_options' );
 	}
 	
 	/**

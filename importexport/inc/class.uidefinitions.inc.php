@@ -128,7 +128,7 @@ class uidefinitions
 			unset($definition);
 		}
 		$content = $definitions;
-		return $etpl->exec(self::_appname.'.uidefinitions.index',$content,array(),$readonlys,$preserv);
+		return $etpl->exec( self::_appname.'.uidefinitions.index', $content, array(), $readonlys, $preserv );
 	}
 	
 	function edit()

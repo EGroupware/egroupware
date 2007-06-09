@@ -25,7 +25,6 @@ class arrayxml {
 	/**
 	 * converts a php array to an xml string
 	 *
-	 * @static 
 	 * @param mixed $_data
 	 * @param string $_name
 	 * @param DOMElement $_node
@@ -72,7 +71,6 @@ class arrayxml {
 	/**
 	 * converts XML string into php array
 	 *
-	 * @static 
 	 * @param string $_xml
 	 * @return array
 	 */
@@ -98,10 +96,10 @@ class arrayxml {
 			} else {
 				switch ( $type ) {
 					case 'boolean' :
-						$value = utf8_decode($nc->nodeValue) == 'FALSE' ? false : true;
+						$value = $nc->nodeValue == 'FALSE' ? false : true;
 						break;
 					default :
-						$value = utf8_decode($nc->nodeValue);
+						$value = $nc->nodeValue;
 				}
 				$xml_array[$name] = $value;
 			} 

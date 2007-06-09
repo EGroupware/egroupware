@@ -15,7 +15,6 @@
 	$usage = "usage:
 			--definition <name of definition>
 			--file <name of file>
-			--charset <charset>
 			--user <eGW username>
 			--password <password for user>
 			--domain <domain name> \n";
@@ -48,7 +47,6 @@
 	$long_opts = array( 
 	   'definition=', 
 	   'file=',
-	   'charset=',
 	   'user=',
 	   'password=',
 	   'domain='
@@ -73,9 +71,6 @@
 			case '--file' :
 				$file = $option[1];
 				break;
-			case '--charset' :
-				$charset = $option[1];
-				break;
 			case '--definition' :
 				$definition = $option[1];
 				break;
@@ -96,10 +91,6 @@
 	// check file
 	if ( !$user || !$password ) {	
 		fwrite(STDERR,'importexport_cli: You have to supply a username / password'."\n".$usage); 
-		exit(INVALID_OPTION); 
-	}
-	if ( !$charset ) {	
-		fwrite(STDERR,'importexport_cli: You have to supply a valid charset'."\n".$usage); 
 		exit(INVALID_OPTION); 
 	}
 	
@@ -153,7 +144,7 @@
 	$type = $definition->type;
 	
 	$resource = fopen( $file, 'r' );
-	$po->$type( $resource, $charset, $definition );
+	$po->$type( $resource, $definition );
 
 	$GLOBALS['egw']->common->phpgw_exit();
 	

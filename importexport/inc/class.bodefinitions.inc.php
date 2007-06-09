@@ -12,6 +12,7 @@
 
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.definition.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.arrayxml.inc.php');
+require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.import_export_helper_functions.inc.php');
 require_once(EGW_INCLUDE_ROOT.'/etemplate/inc/class.so_sql.inc.php');
 
 /** bo to define {im|ex}ports
@@ -24,11 +25,13 @@ class bodefinitions {
 	const _defintion_talbe = 'egw_importexport_definitions';
 	
 	/**
-	 * holds so_sql
-	 *
-	 * @var so_sql
+	 * @var so_sql holds so_sql
 	 */
 	private $so_sql;
+	
+	/**
+	 * @var array hold definitions
+	 */
 	private $definitions;
 	
 	public function __construct($_query=false)
@@ -43,11 +46,8 @@ class bodefinitions {
 	}
 	
 	/**
-	 * gets definitions as raw data. 
-	 * well, we need a god idea for egw_record pools...
-	 * its not a god idea to make a definition object of each 
-	 * at the moment, as each defintion holds an so_sql instance.
-	 *
+	 * gets array of definition ids
+	 * 
 	 * @return array
 	 */
 	public function get_definitions() {
@@ -121,6 +121,14 @@ class bodefinitions {
 		foreach ($keys as $definition_id) {
 			$definition = new definition( $definition_id );
 			$export_data['definitions'][$definition->name] = $definition->get_record_array();
+			$export_data['definitions'][$definition->name]['allowed_users'] = 
+				import_export_helper_functions::account_id2name( 
+					$export_data['definitions'][$definition->name]['allowed_users'] 
+				);
+			$export_data['definitions'][$definition->name]['owner'] = 
+				import_export_helper_functions::account_id2name( 
+					$export_data['definitions'][$definition->name]['owner'] 
+				);
 			unset($export_data['definitions'][$definition->name]['definition_id']);
 			unset($definition);
 		}
@@ -159,6 +167,10 @@ class bodefinitions {
 		// save definition(s) into internal table
 		foreach ( $definitions as $name => $definition_data )
 		{
+			// convert allowed_user
+			$definition_data['allowed_users'] = import_export_helper_functions::account_name2id( $definition_data['allowed_users'] );
+			$definition_data['owner'] = import_export_helper_functions::account_name2id( $definition_data['owner'] );
+			
 			$definition = new definition( $definition_data['name'] );
 			$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
 			

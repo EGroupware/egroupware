@@ -29,9 +29,10 @@ interface iface_import_plugin {
 	/**
 	 * imports entries according to given definition object.
 	 *
+	 * @param stram $_stram
 	 * @param definition $_definition
 	 */
-	public function import($_stream, $_charset, definition $_definition);
+	public function import( $_stream, definition $_definition );
 	
 	/**
 	 * returns translated name of plugin
