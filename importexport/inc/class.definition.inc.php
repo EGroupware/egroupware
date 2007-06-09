@@ -80,6 +80,8 @@ class definition implements iface_egw_record {
 			if ( !( in_array( $this->user, $this->get_allowed_users() ) || $this->definition['owner'] == $this->user || $this->is_admin)) {
 				throw new Exception('Error: User "'.$this->user.'" is not permitted to get definition with identifier "'.$_identifier.'"!');
 			}
+			$options_data = arrayxml::xml2array( $this->definition['plugin_options'] );
+			$this->definition['plugin_options'] = $options_data['root'];
 		}
 	}
 	
@@ -150,8 +152,7 @@ class definition implements iface_egw_record {
 	 * @return array
 	 */
 	private function get_options() {
-		$options_data = arrayxml::xml2array( $this->definition['plugin_options'] );
-		return $options_data['plugin_options'];
+		return $this->definition['plugin_options'];
 	}
 	
 	/**
@@ -160,7 +161,7 @@ class definition implements iface_egw_record {
 	 * @param array $options
 	 */
 	private function set_options(array $_plugin_options) {
-		$this->definition['plugin_options'] = arrayxml::array2xml( $_plugin_options, 'plugin_options' );
+		$this->definition['plugin_options'] = $_plugin_options;
 	}
 	
 	/**
@@ -204,8 +205,8 @@ class definition implements iface_egw_record {
 		}
 		
 		// convert plugin_options into internal representation
-		$this->set_allowed_users($this->definition['allowed_users']);
-		$this->set_options($this->definition['plugin_options']);
+		$this->set_allowed_users( $this->definition['allowed_users'] );
+		$this->set_options( $this->definition['plugin_options'] );
 	}
 	
 	/**
@@ -229,9 +230,11 @@ class definition implements iface_egw_record {
 		}
 		
 		$this->so_sql->data = $this->definition;
+		$this->so_sql->data['plugin_options'] = arrayxml::array2xml( $this->definition['plugin_options'] );
 		if ($this->so_sql->save( array( 'definition_id' => $_dst_identifier ))) {
 			throw new Exception('Error: so_sql was not able to save definition: '.$this->get_identifier());
 		}
+		
 		return $this->definition['definition_id'];
 	}
 	
