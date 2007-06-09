@@ -244,8 +244,7 @@ class soinfolog 				// DB-Layer
 
 		if ($filter == 'user' && $f_user > 0)
 		{
-			$filtermethod = " (info_owner=$f_user AND info_responsible=0 OR $filtermethod AND ".$this->responsible_filter($f_user).
-				" AND $filtermethod)";
+			$filtermethod .= " AND (info_owner=$f_user AND info_responsible=0 OR ".$this->responsible_filter($f_user).')';
 		}
 		//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
 
