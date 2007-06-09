@@ -12,9 +12,11 @@
       <entry type="string" name="plugin">export_contacts_csv</entry>
       <entry type="string" name="type">export</entry>
       <entry type="array" name="allowed_users">
-        <entry type="string" name="0">-1</entry>
+        <entry type="string" name="0">Default</entry>
       </entry>
       <entry type="array" name="plugin_options">
+        <entry type="boolean" name="begin_with_fieldnames">TRUE</entry>
+        <entry type="string" name="charset">iso-8859-15</entry>
         <entry type="array" name="mapping">
           <entry type="string" name="title">Tehtävänimike</entry>
           <entry type="string" name="n_given">Etunimi</entry>
@@ -51,7 +53,7 @@
           <entry type="string" name="Notes">Muistilaput</entry>
         </entry>
       </entry>
-      <entry type="string" name="owner">0</entry>
+      <entry type="string" name="owner">admin</entry>
       <entry type="NULL" name="description"/>
     </entry>
   </entry>

@@ -20,15 +20,12 @@ require_once(EGW_INCLUDE_ROOT.'/importexport/inc/class.import_csv.inc.php');
 class import_contacts_csv implements iface_import_plugin  {
 	
 	private static $plugin_options = array(
-		'fieldsep', 		//char
-		'charset', 			//string
-		'addressbook', 		//char
-		'owner', 			// comma seperated list of int
-		'csv_fields',		// array( $csv_col_num => csv_field_name)
+		'fieldsep', 		// char
+		'charset', 			// string
+		'contact_owner', 	// int
+		'field_conversion', // array( $csv_col_num => conversion)
 		'field_mapping',	// array( $csv_col_num => adb_filed)
-		'field_translation', // array( $csv_col_num => translation)
 		'has_header_line', 	//bool
-		'max',				// int
 		'conditions',		/* => array containing condition arrays: 
 				'type' => 0, // exists
 				'string' => '#kundennummer',
@@ -46,7 +43,7 @@ class import_contacts_csv implements iface_import_plugin  {
 	/**
 	 * actions wich could be done to data entries
 	 */
-	private static $actions = array( 'none', 'update', 'insert', 'delte', );
+	private static $actions = array( 'none', 'update', 'insert', 'delete', );
 	
 	/**
 	 * conditions for actions
@@ -73,7 +70,7 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @param string $_charset
 	 * @param definition $_definition
 	 */
-	public function import( $_stream, $_charset, definition $_definition ) {
+	public function import( $_stream, definition $_definition ) {
 		$import_csv = new import_csv( $_stream, array(
 			'fieldsep' => $_definition->plugin_options['fieldsep'],
 			'charset' => $_definition->plugin_options['charset'],
@@ -82,23 +79,22 @@ class import_contacts_csv implements iface_import_plugin  {
 		// fetch the addressbook bo
 		$this->bocontacts = CreateObject('addressbook.bocontacts');
 		
-		// set FieldMapping. Throw away empty / not assigned entrys
-		$import_csv->mapping = array_diff($_definition->plugin_options['field_mapping'],array(''));
+		// set FieldMapping.
+		$import_csv->mapping = $_definition->plugin_options['field_mapping'];
 		
-		// renamed from translation to conversion
-		$import_csv->conversion = $_definition->plugin_options['field_conversion'] ? 
-			$_definition->plugin_options['field_conversion'] : 
-			$_definition->plugin_options['field_translation'];
+		// set FieldConversion
+		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
 		
 		//check if file has a header line
 		if ($_definition->plugin_options['has_header_line']) {
 			$record = $import_csv->get_record();
 		}
 		
-		// TODO: Throw away spechial chars ?
-		// TODO: check conversion:
-		// - is not existing cat created?
-		// - usermapping?
+		// set contactOwner
+		if ( isset( $_definition->plugin_options['contact_owner'] ) 
+			&& abs( $_definition->plugin_options['contact_owner'] > 0 ) ) {
+				$record['contact_owner'] = $_definition->plugin_options['contact_owner'];
+		}
 		
 		while ( $record = $import_csv->get_record() ) {
 
@@ -136,7 +132,7 @@ class import_contacts_csv implements iface_import_plugin  {
 				}
 			} else {
 				// unconditional insert
-				$this->action( 'insert', $values );
+				$this->action( 'insert', $record );
 			}
 		}
 	}
@@ -149,7 +145,6 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @return bool success or not
 	 */
 	private function action ( $_action, $_data ) {
-		print_r($_data);
 		switch ($_action) {
 			case 'none' :
 				return true;
