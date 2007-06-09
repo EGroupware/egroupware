@@ -217,7 +217,7 @@ function set_style_by_class(t,c,p,v)
 
 function xajax_eT_wrapper(obj) {
 	if (typeof(obj) == 'object') {
-		set_style_by_class('div','popupManual','display','none');
+		set_style_by_class('div','popupManual noPrint','display','none');
 		set_style_by_class('div','ajax-loader','display','inline');
 		obj.form.submit_button.value = obj.name;
 		var menuaction = obj.form.action.replace(/.+menuaction=/,'');
@@ -225,7 +225,7 @@ function xajax_eT_wrapper(obj) {
 	}
 	else {
 		set_style_by_class('div','ajax-loader','display','none');
-		set_style_by_class('div','popupManual','display','inline');
+		set_style_by_class('div','popupManual noPrint','display','inline');
 	}
 }
 
