@@ -140,10 +140,15 @@ class uitimesheet extends botimesheet
 					{
 						$this->data['ts_title'] = $this->data['ts_project'];							
 					}
-					if (!$this->data['ts_title']) $this->data['ts_title'] = $this->data['ts_title_blur'];
 					if (!$this->data['ts_title'])
 					{
-						$etpl->set_validation_error('ts_title',lang('Field must not be empty !!!'));
+						$this->data['ts_title'] = $this->data['ts_title_blur'] ? 
+							$this->data['ts_title_blur'] : $this->data['ts_project_blur'];
+
+						if (!$this->data['ts_title'])
+						{
+							$etpl->set_validation_error('ts_title',lang('Field must not be empty !!!'));
+						}
 					}
 					if ($etpl->validation_errors()) break;	// the user need to fix the error, before we can save the entry
 
