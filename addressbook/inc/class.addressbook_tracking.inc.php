@@ -70,6 +70,8 @@ class addressbook_tracking extends bo_tracking
 	 */
 	function addressbook_tracking(&$bocontacts)
 	{
+		$this->bo_tracking();	// calling the constructor of the extended class
+
 		$this->contacts =& $bocontacts;
 	}
 	
