@@ -178,13 +178,15 @@ class soinfolog 				// DB-Layer
 	/**
 	 * generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
 	 *
-	 * @param $filter: none|all - list all entrys user have rights to see<br>
-	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!), my = entries the user is responsible for 
+	 * @param string $filter: none|all - list all entrys user have rights to see<br>
+	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!), 
+	 *  responsible|my = entries the user is responsible for 
+	 *  delegated = entries the user delegated to someone else
 	 * @return string the necesary sql
 	 */
 	function aclFilter($filter = False)
 	{
-		preg_match('/(my|own|privat|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
+		preg_match('/(my|responsible|delegated|own|privat|all|none|user)([0-9]*)/',$filter_was=$filter,$vars);
 		$filter = $vars[1];
 		$f_user   = intval($vars[2]);
 
@@ -193,61 +195,67 @@ class soinfolog 				// DB-Layer
 			return $this->acl_filter[$filter.$f_user];  // used cached filter if found
 		}
 
-		if (is_array($this->grants))
-		{
-			foreach($this->grants as $user => $grant)
-			{
-				// echo "<p>grants: user=$user, grant=$grant</p>";
-				if ($grant & (EGW_ACL_READ|EGW_ACL_EDIT))
-				{
-					$public_user_list[] = $user;
-				}
-				if ($grant & EGW_ACL_PRIVATE)
-				{
-					$private_user_list[] = $user;
-				}
-			}
-			if (count($private_user_list))
-			{
-				$has_private_access = 'info_owner IN ('.implode(',',$private_user_list).')';
-			}
-		}
 		$filtermethod = " (info_owner=$this->user"; // user has all rights
 		
-		if ($filter == 'my')
+		if ($filter == 'my' || $filter == 'responsible')
 		{
 			$filtermethod .= " AND info_responsible='0'";
 		}
-		// implicit read-rights for responsible user
-		$filtermethod .= " OR (".$this->responsible_filter($this->user)." AND info_access='public')";
-
-		// private: own entries plus the one user is responsible for
-		if ($filter == 'private' || $filter == 'own')
+		if ($filter == 'delegated')
 		{
-			$filtermethod .= " OR (".$this->responsible_filter($this->user).
-				($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
-					" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
-			                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
+			$filtermethod .= " AND info_responsible<>'0')";
 		}
-		elseif ($filter != 'my')      				// none --> all entrys user has rights to see
+		else
 		{
-			if ($has_private_access)
+			if (is_array($this->grants))
 			{
-				$filtermethod .= " OR $has_private_access";
+				foreach($this->grants as $user => $grant)
+				{
+					// echo "<p>grants: user=$user, grant=$grant</p>";
+					if ($grant & (EGW_ACL_READ|EGW_ACL_EDIT))
+					{
+						$public_user_list[] = $user;
+					}
+					if ($grant & EGW_ACL_PRIVATE)
+					{
+						$private_user_list[] = $user;
+					}
+				}
+				if (count($private_user_list))
+				{
+					$has_private_access = 'info_owner IN ('.implode(',',$private_user_list).')';
+				}
 			}
-			if (count($public_user_list))
-			{
-				$filtermethod .= " OR (info_access='public' AND info_owner IN(" . implode(',',$public_user_list) . '))';
-			}
-		}
-		$filtermethod .= ') ';
+			// implicit read-rights for responsible user
+			$filtermethod .= " OR (".$this->responsible_filter($this->user)." AND info_access='public')";
 
-		if ($filter == 'user' && $f_user > 0)
-		{
-			$filtermethod .= " AND (info_owner=$f_user AND info_responsible=0 OR ".$this->responsible_filter($f_user).')';
+			// private: own entries plus the one user is responsible for
+			if ($filter == 'private' || $filter == 'own')
+			{
+				$filtermethod .= " OR (".$this->responsible_filter($this->user).
+					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
+						" OR info_status = 'offer' AND info_owner IN(" . implode(',',$public_user_list) . ')' : '').")".
+				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
+			}
+			elseif ($filter != 'my' && $filter != 'responsible')	// none --> all entrys user has rights to see
+			{
+				if ($has_private_access)
+				{
+					$filtermethod .= " OR $has_private_access";
+				}
+				if (count($public_user_list))
+				{
+					$filtermethod .= " OR (info_access='public' AND info_owner IN(" . implode(',',$public_user_list) . '))';
+				}
+			}
+			$filtermethod .= ') ';
+	
+			if ($filter == 'user' && $f_user > 0)
+			{
+				$filtermethod .= " AND (info_owner=$f_user AND info_responsible=0 OR ".$this->responsible_filter($f_user).')';
+			}
 		}
 		//echo "<p>aclFilter(filter='$filter_was',user='$user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
-
 		return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
 	}
 
@@ -274,15 +282,17 @@ class soinfolog 				// DB-Layer
 	/**
 	 * generate sql to filter based on the start- and enddate of the log-entry
 	 *
-	 * @param $filter upcoming = startdate is in the future<br>
-	 * 	today startdate < tomorrow<br>
-	 * 	overdue enddate < tomorrow<br>
+	 * @param string $filter upcoming = startdate is in the future
+	 * 	today: startdate < tomorrow
+	 * 	overdue: enddate < tomorrow
+	 *  date: today <= startdate && startdate < tomorrow
+	 *  enddate: today <= enddate && enddate < tomorrow
 	 * 	limitYYYY/MM/DD not older or open 
 	 * @return string the necesary sql
 	 */
 	function dateFilter($filter = '')
 	{
-		preg_match('/(upcoming|today|overdue|date)([-\\/.0-9]*)/',$filter,$vars);
+		preg_match('/(upcoming|today|overdue|date|enddate)([-\\/.0-9]*)/',$filter,$vars);
 		$filter = $vars[1];
 
 		if (isset($vars[2]) && !empty($vars[2]) && ($date = split('[-/.]',$vars[2])))
@@ -309,6 +319,12 @@ class soinfolog 				// DB-Layer
 					return '';
 				}
 				return " AND ($today <= info_startdate AND info_startdate < $tomorrow)";
+			case 'enddate':
+				if (!$today || !$tomorrow)
+				{
+					return '';
+				}
+				return " AND ($today <= info_enddate AND info_enddate < $tomorrow)";
 			case 'limit':
 				return " AND (info_modified >= '$today' OR NOT (info_status IN ('done','billed','cancelled')))";
 		}
@@ -704,5 +720,47 @@ class soinfolog 				// DB-Layer
 			$query['start'] = $query['total'] = 0;
 		}
 		return $ids;
+	}
+	
+	/**
+	 * Query infolog for users with open entries, either own or responsible, with start or end within 4 days
+	 * 
+	 * This functions tries to minimize the users really checked with the complete filters, as creating a
+	 * user enviroment and running the specific check costs ...
+	 *
+	 * @return array with acount_id's groups get resolved to there memebers
+	 */
+	function users_with_open_entries()
+	{
+		$users = array();
+		
+		$this->db->select($this->info_table,'DISTINCT info_owner',array(
+			str_replace(' AND ','',$this->statusFilter('open')),
+			'(ABS(info_startdate-'.time().')<'.(4*24*60*60).' OR '.	// start_day within 4 days
+			'ABS(info_enddate-'.time().')<'.(4*24*60*60).')',		// end_day within 4 days
+		),__LINE__,__FILE__);
+		while ($this->db->next_record())
+		{
+			$users[] = $this->db->f(0);
+		}
+		$this->db->select($this->info_table,'DISTINCT info_responsible',str_replace(' AND ','',$this->statusFilter('open')),__LINE__,__FILE__);
+		while ($this->db->next_record())
+		{
+			foreach(explode(',',$this->db->f(0)) as $responsible)
+			{
+				if ($GLOBALS['egw']->accounts->get_type($responsible) == 'g')
+				{
+					$responsible = $GLOBALS['egw']->accounts->members($responsible,true);
+				}
+				if ($responsible)
+				{
+					foreach(is_array($responsible) ? $responsible : array($responsible) as $user)
+					{
+						if ($user && !in_array($user,$users)) $users[] = $user;
+					}
+				}
+			}
+		}
+		return $users;
 	}
 }

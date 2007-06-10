@@ -44,11 +44,12 @@ $setup_info['infolog']['note'] =
 	expressions and direct calls to php-functions (e.g. to link the phone calls 
 	(again) to the addressbook entrys).</p>
 	<p><b>More information</b> about InfoLog and the current development-status can be found on the
-	<a href="http://www.egroupware.org/infolog" target="_blank">InfoLog page on our Website</a>.</p>';
+	<a href="http://www.egroupware.org/wiki/infolog" target="_blank">InfoLog page on our Website</a>.</p>';
 
 /* The hooks this app includes, needed for hooks registration */
 $setup_info['infolog']['hooks']['preferences'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
 $setup_info['infolog']['hooks'][] = 'settings';
+$setup_info['infolog']['hooks']['verify_settings'] = 'infolog.admin_prefs_sidebox_hooks.verify_settings';
 $setup_info['infolog']['hooks']['admin'] = 'infolog.admin_prefs_sidebox_hooks.all_hooks';
 $setup_info['infolog']['hooks'][] = 'deleteaccount';
 $setup_info['infolog']['hooks'][] = 'home';

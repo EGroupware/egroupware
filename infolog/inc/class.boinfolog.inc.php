@@ -1164,4 +1164,85 @@ class boinfolog
 		}
 		return $icons;
 	}
+	
+	/**
+	 * Send all async infolog notification
+	 *
+	 * Called via the async service job 'infolog-async-notification'
+	 */
+	function async_notification()
+	{
+		if (!($users = $this->so->users_with_open_entries()))
+		{
+			return;
+		}
+		error_log("boinfolog::async_notification() users with open entries: ".implode(', ',$users));
+		
+		$save_account_id = $GLOBALS['egw_info']['user']['account_id'];
+		$save_prefs      = $GLOBALS['egw_info']['user']['preferences'];
+		foreach($users as $user)
+		{
+			if (!($email = $GLOBALS['egw']->accounts->id2name($user,'account_email'))) continue;
+			// create the enviroment for $user
+			$this->user = $GLOBALS['egw_info']['user']['account_id'] = $user;
+			$GLOBALS['egw']->preferences->preferences($user);
+			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
+			$GLOBALS['egw']->acl->acl($user);
+			$GLOBALS['egw']->acl->read_repository();
+			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
+			$this->so =& new soinfolog($this->grants);	// so caches it's filters
+			
+			$notified_info_ids = array();
+			foreach(array(
+				'notify_due_responsible'   => 'open-responsible-enddate',
+				'notify_due_delegated'     => 'open-delegated-enddate',
+				'notify_start_responsible' => 'open-responsible-date',
+				'notify_start_delegated'   => 'open-delegated-date',
+			) as $pref => $filter)
+			{
+				if (!($pref_value = $GLOBALS['egw_info']['user']['preferences']['infolog'][$pref])) continue;
+				
+				$filter .= date('Y-m-d',time()+24*60*60*(int)$pref_value);
+				error_log("boinfolog::async_notification() checking with filter '$filter' ($pref_value) for user $user ($email)");
+				
+				$params = array('filter' => $filter);
+				foreach($this->so->search($params) as $info)
+				{
+					// check if we already send a notification for that infolog entry, eg. starting and due on same day
+					if (in_array($info['info_id'],$notified_info_ids)) continue;
+					
+					if (is_null($tracking) || $tracking->user != $user)
+					{
+						require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
+						$tracking = new infolog_tracking($this);
+					}
+					switch($pref)
+					{
+						case 'notify_due_responsible':
+							$info['message'] = lang('%1 you are responsible for is due at %2',$this->enums['type'][$info['info_type']],
+								$tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+							break;
+						case 'notify_due_delegated':
+							$info['message'] = lang('%1 you delegated is due at %2',$this->enums['type'][$info['info_type']],
+								$tracking->datetime($info['info_enddate']-$this->tz_offset_s,false));
+							break;
+						case 'notify_start_responsible':
+							$info['message'] = lang('%1 you are responsible for is starting at %2',$this->enums['type'][$info['info_type']],
+								$tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+							break;
+						case 'notify_start_delegated':
+							$info['message'] = lang('%1 you delegated is starting at %2',$this->enums['type'][$info['info_type']],
+								$tracking->datetime($info['info_startdate']-$this->tz_offset_s,null));
+							break;
+					}
+					error_log("notifiying $user($email) about $info[info_subject]: $info[message]");
+					$tracking->send_notification($info,null,$email,$user,$pref);
+					
+					$notified_info_ids[] = $info['info_id'];
+				}
+			}
+		}
+		$GLOBALS['egw_info']['user']['account_id']  = $save_account_id;
+		$GLOBALS['egw_info']['user']['preferences'] = $save_prefs;
+	}
 }

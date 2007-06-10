@@ -85,6 +85,8 @@ class infolog_tracking extends bo_tracking
 	 */
 	function infolog_tracking(&$boinfolog)
 	{
+		$this->bo_tracking();	// calling the constructor of the extended class
+	
 		$this->infolog =& $boinfolog;
 	}
 	
@@ -136,6 +138,8 @@ class infolog_tracking extends bo_tracking
 	 */
 	function get_message($data,$old)
 	{
+		if ($data['message']) return $data['message'];	// async notification
+
 		if (!$data['info_datemodified'] || !$old)
 		{
 			return lang('New %1 created by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
@@ -184,8 +188,8 @@ class infolog_tracking extends bo_tracking
 			'info_percent'   => (int)$data['info_percent'].'%',
 			'info_datecompleted' => $data['info_datecomplete'] ? $this->datetime($data['info_datecompleted']-$this->infolog->tz_offset_s) : '',
 			'info_location'  => $data['info_location'],
-			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate']-$this->infolog->tz_offset_s) : '',
-			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate']-$this->infolog->tz_offset_s) : '',
+			'info_startdate' => $data['info_startdate'] ? $this->datetime($data['info_startdate']-$this->infolog->tz_offset_s,null) : '',
+			'info_enddate'   => $data['info_enddate'] ? $this->datetime($data['info_enddate']-$this->infolog->tz_offset_s,false) : '',
 			'info_responsible' => implode(', ',$responsible),
 			'info_subject'   => $data['info_subject'],
 		) as $name => $value)

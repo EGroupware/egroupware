@@ -21,7 +21,7 @@ $have_custom_fields = count($ui->bo->customfields) > 0;
 unset($ui);
 
 // migrage old filter-pref 1,2 to the filter one 'own-open-today'
-if (in_array($GLOBALS['egw']->preferences->{$GLOBALS['type']}['homeShowEvents'],array('1','2')))
+if (isset($GLOBALS['type']) && in_array($GLOBALS['egw']->preferences->{$GLOBALS['type']}['homeShowEvents'],array('1','2')))
 {
 	$GLOBALS['egw']->preferences->add('infolog','homeShowEvents','own-open-today',$GLOBALS['type']);
 	$GLOBALS['egw']->preferences->save_repository();
@@ -136,7 +136,7 @@ $GLOBALS['settings']['notify_creator'] = array(
 	'type'   => 'check',
 	'label'  => 'Receive notifications about own items',
 	'name'   => 'notify_creator',
-	'help'   => 'Do you want a notification mail, if items you created get updated?',
+	'help'   => 'Do you want a notification, if items you created get updated?',
 	'xmlrpc' => True,
 	'admin'  => False,
 );
@@ -144,10 +144,57 @@ $GLOBALS['settings']['notify_assigned'] = array(
 	'type'   => 'check',
 	'label'  => 'Receive notifications about items assigned to you',
 	'name'   => 'notify_assigned',
-	'help'   => 'Do you want a notification mails, if items get assigned to you or assigned items get updated?',
+	'help'   => 'Do you want a notification, if items get assigned to you or assigned items get updated?',
 	'xmlrpc' => True,
 	'admin'  => False,
 );
+
+// to add options for more then 3 days back or in advance, you need to update soinfolog::users_with_open_entries()!
+$options = array(
+	'0'   => lang('No'),
+	'-1d' => lang('one day after'),
+	'0d'  => lang('same day'),
+	'1d'  => lang('one day in advance'),
+	'2d'  => lang('%1 days in advance',2),
+	'3d'  => lang('%1 days in advance',3),
+);
+$GLOBALS['settings']['notify_due_delegated'] = array(
+	'type'   => 'select',
+	'label'  => 'Receive notifications about due entries you delegated',
+	'name'   => 'notify_due_delegated',
+	'help'   => 'Do you want a notification, if items you delegated are due?',
+	'values' => $options,
+	'xmlrpc' => True,
+	'admin'  => False,
+);
+$GLOBALS['settings']['notify_due_responsible'] = array(
+	'type'   => 'select',
+	'label'  => 'Receive notifications about due entries you are responsible for',
+	'name'   => 'notify_due_responsible',
+	'help'   => 'Do you want a notification, if items you are responsible for are due?',
+	'values' => $options,
+	'xmlrpc' => True,
+	'admin'  => False,
+);
+$GLOBALS['settings']['notify_start_delegated'] = array(
+	'type'   => 'select',
+	'label'  => 'Receive notifications about starting entries you delegated',
+	'name'   => 'notify_start_delegated',
+	'help'   => 'Do you want a notification, if items you delegated are about to start?',
+	'values' => $options,
+	'xmlrpc' => True,
+	'admin'  => False,
+);
+$GLOBALS['settings']['notify_start_responsible'] = array(
+	'type'   => 'select',
+	'label'  => 'Receive notifications about starting entries you are responsible for',
+	'name'   => 'notify_start_responsible',
+	'help'   => 'Do you want a notification, if items you are responsible for are about to start?',
+	'values' => $options,
+	'xmlrpc' => True,
+	'admin'  => False,
+);
+
 $GLOBALS['settings']['notify_html'] = array(
 	'type'   => 'check',
 	'label'  => 'Receive notifications as html-mails',

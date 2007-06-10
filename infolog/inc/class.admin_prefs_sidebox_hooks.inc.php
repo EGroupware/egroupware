@@ -76,4 +76,28 @@ class admin_prefs_sidebox_hooks
 			}
 		}
 	}
+	
+	/**
+	 * Verification hook called if settings / preferences get stored
+	 * 
+	 * Installs a task to send async infolog notifications at 2h everyday
+	 *
+	 * @param array $data
+	 */
+	function verify_settings($data)
+	{
+		if ($data['prefs']['notify_due_delegated'] || $data['prefs']['notify_due_responsible'] ||
+			$data['prefs']['notify_start_delegated'] || $data['prefs']['notify_start_responsible'])
+		{
+			require_once(EGW_API_INC.'/class.asyncservice.inc.php');
+			
+			$async =& new asyncservice();
+			//$async->cancel_timer('infolog-async-notification');
+			
+			if (!$async->read('infolog-async-notification'))
+			{
+				$async->set_timer(array('hour' => 2),'infolog-async-notification','infolog.boinfolog.async_notification',null);
+			}
+		}
+	}
 }

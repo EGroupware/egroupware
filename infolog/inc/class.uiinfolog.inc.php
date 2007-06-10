@@ -90,19 +90,23 @@ class uiinfolog
 			'offer'     => 'offer.gif',     'offer_alt'     => 'offer' )
 	);
 	var $filters = array(
-		'none'             =>	'no Filter',
-		'done'             =>	'done',
-		'my'               =>	'responsible',
-		'my-open-today'    =>	'responsible open',
-		'my-open-overdue'  =>	'responsible overdue',
-		'my-upcoming'      =>	'responsible upcoming',
-		'own'              =>	'own',
-		'own-open-today'   =>	'own open',
-		'own-open-overdue' =>	'own overdue',
-		'own-upcoming'     =>	'own upcoming',
-		'open-today'       =>	'open',
-		'open-overdue'     =>	'overdue',
-		'upcoming'         =>	'upcoming'
+		'none'                     => 'no Filter',
+		'done'                     => 'done',
+		'responsible'              => 'responsible',
+		'responsible-open-today'   => 'responsible open',
+		'responsible-open-overdue' => 'responsible overdue',
+		'responsible-upcoming'     => 'responsible upcoming',
+		'delegated'                => 'delegated',
+		'delegated-open-today'     => 'delegated open',
+		'delegated-open-overdue'   => 'delegated overdue',
+		'delegated-upcoming'       => 'delegated upcomming',
+		'own'                      => 'own',
+		'own-open-today'           => 'own open',
+		'own-open-overdue'         => 'own overdue',
+		'own-upcoming'             => 'own upcoming',
+		'open-today'               => 'open',
+		'open-overdue'             => 'overdue',
+		'upcoming'                 => 'upcoming',
 	);
 	var $messages = array(
 		'edit'    => 'InfoLog - Edit',
@@ -138,6 +142,24 @@ class uiinfolog
 			$this->duration_format = str_replace(',','',$pm_config->config_data['duration_units']).','.$pm_config->config_data['hours_per_workday'];
 			unset($pm_config);
 		}
+		/* these are just for testing of the notifications
+		for($i = -1; $i <= 3; ++$i)
+		{
+			$this->filters['delegated-open-enddate'.date('Y-m-d',time()+$i*24*60*60)] = "delegated due in $i day(s)";
+		}
+		for($i = -1; $i <= 3; ++$i)
+		{
+			$this->filters['responsible-open-enddate'.date('Y-m-d',time()+$i*24*60*60)] = "responsible due in $i day(s)";
+		}
+		for($i = -1; $i <= 3; ++$i)
+		{
+			$this->filters['delegated-open-date'.date('Y-m-d',time()+$i*24*60*60)] = "delegated starting in $i day(s)";
+		}
+		for($i = -1; $i <= 3; ++$i)
+		{
+			$this->filters['responsible-open-date'.date('Y-m-d',time()+$i*24*60*60)] = "responsible starting in $i day(s)";
+		}
+		*/
 		$GLOBALS['uiinfolog'] =& $this;	// make ourself availible for ExecMethod of get_rows function
 	}
 
