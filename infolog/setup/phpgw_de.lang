@@ -87,6 +87,10 @@ dates, status, access	infolog	de	Daten, Status, Zugriff
 days	infolog	de	Tage
 default filter for infolog	infolog	de	Standard-Filter für InfoLog
 default status for a new log entry	infolog	de	Vorgabe für den Status eines neuen Eintrags
+delegated	infolog	de	delegiert
+delegated open	infolog	de	delegiert offen
+delegated overdue	infolog	de	delegiert überfällig
+delegated upcomming	infolog	de	delegiert zukünftig
 delegation	infolog	de	Delegation
 delete	infolog	de	Löschen
 delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert durch seine id löschen.

@@ -87,6 +87,10 @@ dates, status, access	infolog	en	Dates, Status, Access
 days	infolog	en	days
 default filter for infolog	infolog	en	Default Filter for InfoLog
 default status for a new log entry	infolog	en	default status for a new log entry
+delegated	infolog	en	delegated
+delegated open	infolog	en	delegated open
+delegated overdue	infolog	en	delegated overdue
+delegated upcomming	infolog	en	delegated upcomming
 delegation	infolog	en	Delegation
 delete	infolog	en	Delete
 delete one record by passing its id.	infolog	en	Delete one record by passing its id.
