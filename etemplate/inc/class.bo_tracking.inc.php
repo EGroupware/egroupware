@@ -11,6 +11,8 @@
  * @version $Id$ 
  */
 
+require_once(EGW_API_INC.'/class.html.inc.php');
+
 /**
  * Abstract base class for trackering:
  *  - logging all modifications of an entry
@@ -69,6 +71,14 @@ class bo_tracking
 	 * @var boolean
 	 */
 	var $prefer_user_as_sender = true;
+	/**
+	 * Should the current user be email-notified (about change he made himself)
+	 * 
+	 * Popup notifications are never send to the current user!
+	 *
+	 * @var boolean
+	 */
+	var $notify_current_user = false;
 	
 	/**
 	 * Array with error-messages if track($data,$old) returns false
@@ -111,6 +121,22 @@ class bo_tracking
 	 * @var int
 	 */
 	var $tz_offset_s;
+	/**
+	 * Reference to the html class
+	 *
+	 * @var html
+	 */
+	var $html;
+	
+	/**
+	 * Constructor
+	 *
+	 * @return bo_tracking
+	 */
+	function bo_tracking()
+	{
+		$this->html =& html::singleton();
+	}
 
 	/**
 	 * Get a config value, which can depend on $data and $old
@@ -194,6 +220,12 @@ class bo_tracking
 	function do_notifications($data,$old)
 	{
 		$this->errors = $email_sent = array();
+
+		if (!$this->notify_current_user)		// should we notify the current user about his own changes
+		{
+			//error_log("do_notificaton() adding user=$this->user to email_sent, to not notify him");
+			$email_sent[] = $GLOBALS['egw']->accounts->id2name($this->user,'account_email');
+		}
 
 		// entry creator
 		if ($this->creator_field && ($email = $GLOBALS['egw']->accounts->id2name($data[$this->creator_field],'account_email')) &&
@@ -293,8 +325,9 @@ class bo_tracking
 
 	/**
 	 * Sending a notification to the given email-address
+	 * 
+	 * Called by track() or externally for sending async notifications
 	 *
-	 * @internal use only track($data,$old,$user)
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param string $email address to send the notification to
@@ -323,8 +356,6 @@ class bo_tracking
 			{
 				return false;	// no notification requested
 			}
-			// notification via notification app.
-			$this->popup_notification($user_or_lang,$this->get_subject($data,$old));
 		}
 		else
 		{
@@ -332,15 +363,16 @@ class bo_tracking
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->default;
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $user_or_lang;
 		}
-		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
-			($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] != 12 ? 'H:i' : 'h:i a');
-		$this->tz_offset_s = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-
 		if ($lang != $GLOBALS['egw']->translation->userlang)	// load the right language if needed
 		{
 			$GLOBALS['egw']->translation->init();
 		}
-
+		// send popup notification
+		if (is_numeric($user_or_lang) && $this->user != $user_or_lang)	// no popup for own actions
+		{
+			//die('sending popup notification'.$this->html->htmlspecialchars($this->get_popup_message($data,$old)));
+			$this->popup_notification($user_or_lang,$this->get_popup_message($data,$old));
+		}
 		// PHPMailer aka send-class, seems not to be able to send more then one mail, IF we need to authenticate to the SMTP server
 		// There for the object is newly created for ever mail, 'til this get fixed in PHPMailer.
 		//if(!is_object($GLOBALS['egw']->send))
@@ -403,14 +435,23 @@ class bo_tracking
 	}
 	
 	/**
-	 * Return date+time formatted for the currently notified user (send_notification)
+	 * Return date+time formatted for the currently notified user (prefs in $GLOBALS['egw_info']['user']['preferences'])
 	 *
 	 * @param int $timestamp
+	 * @param boolean $do_time=true true=allways (default), false=never print the time, null=print time if != 00:00
 	 * @return string
 	 */
-	function datetime($timestamp)
+	function datetime($timestamp,$do_time=true)
 	{
-		return date($this->datetime_format,$timestamp+$this->tz_offset_s);
+		if (is_null($do_time))
+		{
+			$do_time = date('H:i',$timestamp+$this->tz_offset_s) != '00:00';
+		}
+		$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+		if ($do_time) $format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] != 12 ? 'H:i' : 'h:i a');
+
+		//error_log("bo_tracking::datetime($timestamp,$do_time)=date('$format',$timestamp+$this->tz_offset_s)='".date($format,$timestamp+$this->tz_offset_s).'\')');
+		return date($format,$timestamp+3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
 	}
 	
 	/**
@@ -484,9 +525,10 @@ class bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
-	 * @return string
+	 * @param string $allow_popup=false if true return array(link,popup-size) incl. session info an evtl. partial url (no host-part)
+	 * @return string/array string with link (!$allow_popup) or array(link,popup-size), popup size is something like '640x480'
 	 */
-	function get_link($data,$old)
+	function get_link($data,$old,$allow_popup=false)
 	{
 		if (($link = $this->get_config('link',$data,$old)))
 		{
@@ -497,16 +539,22 @@ class bo_tracking
 		}
 		elseif (($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])))
 		{
-			$link = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$GLOBALS['egw']->link('/index.php',$view));
-			
-			if ($link{0} == '/')
-			{
-				$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
-					($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
-			}
-			if ($GLOBALS['egw']->link->is_popup($this->app,'view')) $link .= '&nopopup=1';
+			$link = $GLOBALS['egw']->link('/index.php',$view);
+			$popup = $GLOBALS['egw']->link->is_popup($this->app,'view');
 		}
-		return $link;
+		if ($link{0} == '/')
+		{
+			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
+		}
+		if (!$allow_popup)
+		{
+			// remove the session-id in the notification mail!
+			$link = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$link);
+			
+			if ($popup) $link .= '&nopopup=1';
+		}
+		return $allow_popup ? array($link,$popup) : $link;
 	}
 	
 	/**
@@ -535,7 +583,9 @@ class bo_tracking
 		}
 		foreach($this->get_details($data) as $name => $detail)
 		{
-			$modified = $old && $data[$name] != $old[$name];
+			// if there's no old entry, the entry is not modified by definition
+			// if both values are '', 0 or null, we count them as equal too
+			$modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
 			//if ($modified) error_log("data[$name]='{$data[$name]}', old[$name]='{$old[$name]}' --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 			
@@ -566,6 +616,8 @@ class bo_tracking
 		
 		if ($html_mail)
 		{
+			$line = $this->html->htmlspecialchars($line);	// XSS
+
 			$color = $modified ? 'red' : false;
 			$size  = 'small';
 			$bold = false;
@@ -599,16 +651,23 @@ class bo_tracking
 		else	// text-mail
 		{
 			if ($type == 'reply') $content = str_repeat('-',64)."\n"; 
+
 			if ($modified) $content .= '> ';
 		}
 		$content .= $line;
-		
+
 		if ($link)
 		{
 			$content .= ' ';
-			if ($html_mail) $content .= '<a href="'.$link.'" target="_blank">';
-			$content .= $link;
-			if ($html_mail) $content .= '</a>';
+			
+			if ($html_mail)
+			{
+				$content .= $this->html->a_href($link,$link,'','target="_blank"');
+			}
+			else
+			{
+				$content .= $link;
+			}
 		}
 		if ($html_mail) $content .= '</td></tr>';
 		
@@ -627,5 +686,38 @@ class bo_tracking
 	function get_attachments($data,$old)
 	{
 		return array();
+	}
+
+	/**
+	 * Get the message for the popup
+	 * 
+	 * Default implementation uses get_subject() with get_link() and get_message() as an extra line
+	 *
+	 * @param array $data
+	 * @param array $old
+	 * @return string
+	 */
+	function get_popup_message($data,$old)
+	{
+		$message = $this->html->htmlspecialchars($this->get_subject($data,$old));
+		
+		if ((list($link,$popup) = $this->get_link($data,$old,true)))
+		{
+			if ($popup)
+			{
+				list($width,$height) = explode('x',$popup);
+				$options = 'onclick="egw_openWindowCentered2(this.href,\'_blank\', \''.$width.'\', \''.$height.'\', \'yes\'); return false;"';
+			}
+			else
+			{
+				$options = 'target="_blank"';
+			}
+			$message = $this->html->a_href($this->html->htmlspecialchars($message),$link,'',$options);
+		}
+		if (($extra = $this->get_message($data,$old)))
+		{
+			$message .= '<br />'.$this->html->htmlspecialchars($extra);
+		}
+		return $message;
 	}
 }
