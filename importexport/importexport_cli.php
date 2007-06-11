@@ -19,8 +19,7 @@
 			--password <password for user>
 			--domain <domain name> \n";
 	
-	if (php_sapi_name() != 'cli')
-	{
+	if (php_sapi_name() != 'cli') {
 		die('This script only runs form command line');
 	}
 	
@@ -67,10 +66,8 @@
 	}
 	
 	$domain = 'default';
-	foreach ($options[0] as $option)
-	{
-		switch ($option[0])
-		{
+	foreach ($options[0] as $option) {
+		switch ($option[0]) {
 			case '--file' :
 				$file = $option[1];
 				break;
@@ -92,8 +89,7 @@
 		}
 	}
 	// check file
-	if (!$user || !$password)
-	{
+	if ( !$user || !$password ) {	
 		fwrite(STDERR,'importexport_cli: You have to supply a username / password'."\n".$usage); 
 		exit(INVALID_OPTION); 
 	}
@@ -134,7 +130,7 @@
 		exit(INVALID_OPTION); 
 	}
 
-	require_once('./inc/class.definition.inc.php');
+	require_once('inc/class.definition.inc.php');
 	try {
 		$definition = new definition($definition);
 	}
@@ -142,12 +138,14 @@
 		fwrite(STDERR,"importexport_cli: ". $e->getMessage(). "\n"); 
 		exit(INVALID_OPTION);
 	}
-
-	require_once("$path_to_egroupware/$definition->application/inc/class.$definition->plugin.inc.php");
+	
+	require_once("$path_to_egroupware/$definition->application/importexport/class.$definition->plugin.inc.php");
 	$po = new $definition->plugin;
 	$type = $definition->type;
-	$po->$type($definition,array('file' => $file));
 	
+	$resource = fopen( $file, 'r' );
+	$po->$type( $resource, $definition );
+
 	$GLOBALS['egw']->common->phpgw_exit();
 	
 	function import_export_access(&$account)

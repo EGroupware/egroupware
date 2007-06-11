@@ -26,28 +26,20 @@
  */
 interface iface_export_record
 {
-
-	/** Aggregations: */
-
-	/** Compositions: */
-
 	/**
 	 * constructor
 	 *
-	 * @param object _handle resource where records are exported to.
-	 * @param string _charset charset the records are exported to.
-	 * @param array _options options for specific backends
+	 * @param stream $_stream resource where records are exported to.
+	 * @param array $_options options for specific backends
 	 * @return bool
-	 * @access public
 	 */
-	public function __construct( $_handle,  $_charset, array $_options=array() );
+	public function __construct( $_stream, array $_options );
 	
 	/**
 	 * exports a record into resource of handle
 	 *
 	 * @param object of interface egw_record _record
 	 * @return bool
-	 * @access public
 	 */
 	public function export_record( iface_egw_record $_record );
 
@@ -55,7 +47,6 @@ interface iface_export_record
 	 * Retruns total number of exported records.
 	 *
 	 * @return int
-	 * @access public
 	 */
 	public function get_num_of_records( );
 
@@ -63,7 +54,6 @@ interface iface_export_record
 	 * destructor
 	 *
 	 * @return 
-	 * @access public
 	 */
 	public function __destruct( );
 

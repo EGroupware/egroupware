@@ -24,57 +24,43 @@ require_once(EGW_INCLUDE_ROOT. '/phpgwapi/inc/class.translation.inc.php');
  */
 class export_csv implements iface_export_record
 {
-
-	/** Aggregations: */
-
-	/** Compositions: */
-
 	/**
-	 * array with field mapping in form egw_field_name => exported_field_name
-	 * @var array
+	 * @var array array with field mapping in form egw_field_name => exported_field_name
 	 */
 	protected  $mapping = array();
 
 	/**
-	 * array with conversions to be done in form: egw_field_name => conversion_string
-	 * @var array
+	 * @var array array with conversions to be done in form: egw_field_name => conversion_string
 	 */
 	protected  $conversion = array();
 	
 	/**
-	 * array holding the current record
-	 * @access protected
+	 * @var array holding the current record
 	 */
 	protected $record = array();
 	
 	/**
-	 * holds (charset) translation object
-	 * @var object
+	 * @var translation holds (charset) translation object
 	 */
 	protected $translation;
 	
 	/**
-	 * charset of csv file
-	 * @var string
+	 * @var string charset of csv file
 	 */
 	protected $csv_charset;
 	
 	/**
-	 * holds number of exported records
-	 * @var unknown_type
+	 * @var int holds number of exported records
 	 */
 	protected $num_of_records = 0;
 	
 	/**
-	 * stream resource of csv file
-	 * @var resource
+	 * @var stream stream resource of csv file
 	 */
 	protected  $handle;
 	
 	/**
-	 * csv specific options
-	 *
-	 * @var array
+	 * @var array csv specific options
 	 */
 	protected $csv_options = array(
 		'delimiter' => ';',
@@ -84,21 +70,19 @@ class export_csv implements iface_export_record
 	/**
 	 * constructor
 	 *
-	 * @param object _handle resource where records are exported to.
-	 * @param string _charset charset the records are exported to.
+	 * @param stram $_stream resource where records are exported to.
 	 * @param array _options options for specific backends
 	 * @return bool
-	 * @access public
 	 */
-	public function __construct( $_handle,  $_charset, array $_options=array() ) {
+	public function __construct( $_stream, $_options ) {
 		if (!is_object($GLOBALS['egw']->translation)) {
 			$GLOBALS['egw']->translation = new translation();
 		}
 		$this->translation = &$GLOBALS['egw']->translation;
-		$this->handle = $_handle;
-		$this->csv_charset = $_charset;
-		if (!empty($_options)) {
-			$this->csv_options = array_merge($this->csv_options,$_options);
+		$this->handle = $_stream;
+		$this->csv_charset = $_options['charset'] ? $_options['charset'] : 'utf-8';
+		if ( !empty( $_options ) ) {
+			$this->csv_options = array_merge( $this->csv_options, $_options );
 		}
 	}
 	
@@ -111,9 +95,7 @@ class export_csv implements iface_export_record
 		if ($this->num_of_records > 0) {
 			throw new Exception('Error: Field mapping can\'t be set during ongoing export!');
 		}
-		foreach ($_mapping as $egw_filed => $csv_field) {
-			$this->mapping[$egw_filed] = $this->translation->convert($csv_field, $this->translation->charset(), $this->csv_charset);
-		}
+		$this->mapping = $_mapping;
 	}
 	
 	/**
@@ -131,45 +113,42 @@ class export_csv implements iface_export_record
 	 *
 	 * @param iface_egw_record record
 	 * @return bool
-	 * @access public
 	 */
 	public function export_record( iface_egw_record $_record ) {
-		$record_data = $_record->get_record_array();
+		$this->record = $_record->get_record_array();
 		
-		if (empty($this->mapping)) {
-			$this->mapping = array_combine(array_keys($record_data),array_keys($record_data));
-		}
-		
-		// just for debug...
-		$this->mapping = $this->translation->convert($this->mapping, 'utf-8', 'iso-8859-1');//$this->translation->charset());
-		
-		if ($this->num_of_records == 0 && $this->csv_options['begin_with_fieldnames'] && !empty($this->mapping)) {
-			fputcsv($this->handle,array_values($this->mapping),$this->csv_options['delimiter'],$this->csv_options['enclosure']);
+		// begin with fieldnames ?
+		if ($this->num_of_records == 0 && $this->csv_options['begin_with_fieldnames'] ) {
+			$mapping = ! empty( $this->mapping ) ? $this->mapping : array_keys ( $this->record );
+			$mapping = $this->translation->convert( $mapping, $this->translation->charset(), $this->csv_charset );
+			fputcsv( $this->handle ,$mapping ,$this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		}
 		
 		// do conversions
-		if ($this->conversion[$egw_field]) {
-			$record_data[$egw_field] = import_export_helper_functions::conversion($record_data,$this->conversion);
+		if ( !empty( $this->conversion )) {
+			$this->record = import_export_helper_functions::conversion( $this->record, $this->conversion );
+		}
+		
+		// do fieldmapping
+		if ( !empty( $this->mapping ) ) {
+			$record_data = $this->record;
+			$this->record = array();
+			foreach ($this->mapping as $egw_field => $csv_field) {
+				$this->record[$csv_field] = $record_data[$egw_field];
+			}
 		}
 		
 		// do charset translation
-		$record_data = $this->translation->convert($record_data, $this->translation->charset(), $this->csv_charset);
+		$this->record = $this->translation->convert( $this->record, $this->translation->charset(), $this->csv_charset );
 		
-		// do fieldmapping
-		foreach ($this->mapping as $egw_field => $csv_field) {
-			$this->record[$csv_field] = $record_data[$egw_field];
-		}
-		
-		$this->fputcsv($this->handle,$this->record,$this->csv_options['delimiter'],$this->csv_options['enclosure']);
+		$this->fputcsv( $this->handle, $this->record, $this->csv_options['delimiter'], $this->csv_options['enclosure'] );
 		$this->num_of_records++;
-		$this->record = array();
 	}
 
 	/**
 	 * Retruns total number of exported records.
 	 *
 	 * @return int
-	 * @access public
 	 */
 	public function get_num_of_records() {
 		return $this->num_of_records;
@@ -179,7 +158,6 @@ class export_csv implements iface_export_record
 	 * destructor
 	 *
 	 * @return 
-	 * @access public
 	 */
 	public function __destruct() {
 		

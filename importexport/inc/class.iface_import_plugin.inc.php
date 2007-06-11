@@ -7,15 +7,15 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id$
+ * @version $Id:$
  */
 
 /**
- * class iface_export_plugin
- * This a the abstract interface for an export plugin of importexport
+ * class iface_import_plugin
+ * This a the abstract interface for an import plugin of importexport
  * 
  * You need to implement this class in 
- * EGW_INCLUDE_ROOT/appname/inc/importexport/class.export_<type>.inc.php
+ * EGW_INCLUDE_ROOT/appname/inc/importexport/class.import_<type>.inc.php
  * to attend the importexport framwork with your export.
  * 
  * NOTE: This is an easy interface, cause plugins live in theire own 
@@ -23,26 +23,16 @@
  * working on that definition.
  * So this interface just garanties the interaction with userinterfaces. It
  * has nothing to do with datatypes.
- * 
- * JS:
- * required function in opener:
- * 
- * 
- * // returns array of identifiers
- * // NOTE: identifiers need to b
- * get_selection(); 
- *
- * get_selector();  //returns array 
  */
-interface iface_export_plugin {
+interface iface_import_plugin {
 	
 	/**
-	 * exports entries according to given definition object.
+	 * imports entries according to given definition object.
 	 *
-	 * @param stream $_stream
+	 * @param stram $_stram
 	 * @param definition $_definition
 	 */
-	public function export($_stream, definition $_definition);
+	public function import( $_stream, definition $_definition );
 	
 	/**
 	 * returns translated name of plugin
@@ -59,9 +49,9 @@ interface iface_export_plugin {
 	public static function get_description();
 	
 	/**
-	 * retruns file suffix for exported file (e.g. csv)
+	 * retruns file suffix(s) plugin can handle (e.g. csv)
 	 *
-	 * @return string suffix
+	 * @return string suffix (comma seperated)
 	 */
 	public static function get_filesuffix();
 	

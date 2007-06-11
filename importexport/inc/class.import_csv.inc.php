@@ -19,55 +19,40 @@ require_once('class.import_export_helper_functions.inc.php');
  * This a an abstract implementation of interface iface_import_record
  * An record is e.g. a single address or or single event.
  * No mater where the records come from, at the end the get_record method comes out
+ * @todo Throw away spechial chars and trim() entries ?
+ * @todo Check for XSS like userinput! (see common_functions)
  */
 class import_csv implements iface_import_record { //, Iterator {
 
 	const csv_max_linelength = 8000;
 	
-	/** Aggregations: */
-
-	/** Compositions: */
-	
 	/**
-	 * @static import_export_helper_functions
-	 */
-	
-	 /*** Attributes: ***/
-	
-	/**
-	 * array with field mapping in form column number => new_field_name
-	 * @access public
+	 * @var array array with field mapping in form column number => new_field_name
 	 */
 	public $mapping = array();
 
 	/**
-	 * array with conversions to be done in form: new_field_name => conversion_string
-	 * @access public
+	 * @var array with conversions to be done in form: new_field_name => conversion_string
 	 */
 	public $conversion = array();
 
 	/**
-	 * array holding the current record
-	 * @access protected
+	 * @var array holding the current record
 	 */
 	protected $record = array();
 
 	/**
-	 * current position counter
-	 * @access protected
+	 * @var int current position counter
 	 */
 	protected $current_position = 0;
 
 	/**
-	 * holds total number of records
-	 * @access private
-	 * @var int
+	 * @var int holds total number of records
 	 */
 	protected $num_of_records = 0;
 	
 	/**
-	 * csv resource
-	 * @access private
+	 * @var stream
 	 */
 	private $resource;
 
@@ -79,18 +64,16 @@ class import_csv implements iface_import_record { //, Iterator {
 	private $csv_fieldsep;
 	
 	/**
-	 * charset of csv file
-	 * @var string
-	 * @access privat
+	 * 
+	 * @var string charset of csv file
 	 */
 	private $csv_charset;
 	
 	/**
-	 * @param string _resource resource containing data. May be each valid php-stream
-	 * @param array _options options for the resource array with keys: charset and fieldsep
-	 * @access public
+	 * @param string $_resource resource containing data. May be each valid php-stream
+	 * @param array $_options options for the resource array with keys: charset and fieldsep
 	 */
-	public function __construct( $_resource,  $_options = array() ) {
+	public function __construct( $_resource,  $_options ) {
 		$this->resource = $_resource;
 		$this->csv_fieldsep = $_options['fieldsep'];
 		$this->csv_charset = $_options['charset'];
@@ -99,9 +82,6 @@ class import_csv implements iface_import_record { //, Iterator {
 
 	/**
 	 * cleanup
-	 *
-	 * @return 
-	 * @access public
 	 */
 	public function __destruct( ) {
 	} // end of member function __destruct
@@ -111,19 +91,18 @@ class import_csv implements iface_import_record { //, Iterator {
 	 *
 	 * @param mixed _position may be: {current|first|last|next|previous|somenumber}
 	 * @return mixed array with data / false if no furtor records
-	 * @access public
 	 */
 	public function get_record( $_position = 'next' ) {
 		if ($this->get_raw_record( $_position ) === false) {
 			return false;
 		}
 		
-		if ( !empty( $this->mapping ) ) {
-			$this->do_fieldmapping();
-		}
-		
 		if ( !empty( $this->conversion ) ) {
 			$this->do_conversions();
+		}
+		
+		if ( !empty( $this->mapping ) ) {
+			$this->do_fieldmapping();
 		}
 		
 		return $this->record;
@@ -197,7 +176,6 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * Retruns total number of records for the open resource.
 	 *
 	 * @return int
-	 * @access public
 	 */
 	public function get_num_of_records( ) {
 		if ($this->num_of_records > 0) {
@@ -214,7 +192,6 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * Returns pointer of current position
 	 *
 	 * @return int
-	 * @access public
 	 */
 	public function get_current_position( ) {
 		
@@ -227,7 +204,6 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * does fieldmapping according to $this->mapping
 	 *
 	 * @return 
-	 * @access protected
 	 */
 	protected function do_fieldmapping( ) {
 		$record = $this->record;
@@ -235,14 +211,13 @@ class import_csv implements iface_import_record { //, Iterator {
 		foreach ($this->mapping as $cvs_idx => $new_idx) {
 			$this->record[$new_idx] = $record[$cvs_idx];
 		}
-		return;
+		return true;
 	} // end of member function do_fieldmapping
 
 	/**
 	 * does conversions according to $this->conversion
 	 *
 	 * @return bool
-	 * @access protected
 	 */
 	protected function do_conversions( ) {
 		if ( $record = import_export_helper_functions::conversion( $this->record, $this->conversion )) {

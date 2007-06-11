@@ -20,26 +20,19 @@
  */
 interface iface_import_record
 {
-
-	/** Aggregations: */
-
-	/** Compositions: */
-
 	/**
 	 * Opens resource, returns false if something fails
 	 *
-	 * @param string _resource resource containing data. Differs according to the implementations
-	 * @param array _options options for the resource
+	 * @param stream $_stream resource containing data. Differs according to the implementations
+	 * @param array $_options options for specific backends
 	 * @return bool
-	 * @access public
 	 */
-	public function __construct( $_resource,  $_options );
+	public function __construct( $_stream, array $_options );
 
 	/**
 	 * cleanup
 	 *
 	 * @return 
-	 * @access public
 	 */
 	public function __destruct( );
 
@@ -48,7 +41,6 @@ interface iface_import_record
 	 *
 	 * @param string _position may be: {first|last|next|previous|somenumber}
 	 * @return bool
-	 * @access public
 	 */
 	public function get_record( $_position = 'next' );
 
@@ -56,7 +48,6 @@ interface iface_import_record
 	 * Retruns total number of records for the open resource.
 	 *
 	 * @return int
-	 * @access public
 	 */
 	public function get_num_of_records( );
 
@@ -64,7 +55,6 @@ interface iface_import_record
 	 * Returns pointer of current position
 	 *
 	 * @return int
-	 * @access public
 	 */
 	public function get_current_position( );
 
