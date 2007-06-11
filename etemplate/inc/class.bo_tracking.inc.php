@@ -238,6 +238,7 @@ class bo_tracking
 		// assigned / responsible users
 		if ($this->assigned_field)
 		{
+			//error_log("bo_tracking::do_notifications() data[$this->assigned_field]=".print_r($data[$this->assigned_field],true).", old[$this->assigned_field]=".print_r($old[$this->assigned_field],true));
 			$assignees = $old_assignees = array();
 			if ($data[$this->assigned_field])	// current assignments
 			{
@@ -251,6 +252,7 @@ class bo_tracking
 			}
 			foreach(array_unique(array_merge($assignees,$old_assignees)) as $assignee)
 			{
+				//error_log("bo_tracking::do_notifications() assignee=$assignee, type=".$GLOBALS['egw']->accounts->get_type($assignee).", email=".$GLOBALS['egw']->accounts->id2name($assignee,'account_email'));
 				if (!$assignee) continue;
 
 				// item assignee is a user
@@ -258,7 +260,7 @@ class bo_tracking
 				{
 					if (($email = $GLOBALS['egw']->accounts->id2name($assignee,'account_email')) && !in_array($email, $email_sent))
 					{
-						$this->send_notification($old,$email,$data['tr_assigned'],'notify_assigned');
+						$this->send_notification($data,$old,$email,$data['tr_assigned'],'notify_assigned');
 						$email_sent[] = $email;	
 					}
 				}
@@ -268,7 +270,7 @@ class bo_tracking
 					{
 						if ($email = $GLOBALS['egw']->accounts->id2name($u,'account_email') && !in_array($email, $email_sent))
 						{
-							$this->send_notification($old,$email,$u,'notify_assigned');
+							$this->send_notification($data,$old,$email,$u,'notify_assigned');
 							$email_sent[] = $email;
 						}
 					}
@@ -337,11 +339,8 @@ class bo_tracking
 	 */
 	function send_notification($data,$old,$email,$user_or_lang,$check=null)
 	{
+		//error_log("bo_trackering::send_notification(,,'$email',$user_or_lang,$check)");
 		if (!$email) return false;
-		
-		//echo "<p>bo_trackering::send_notification(,'$email',$user_or_lang)</p>\n";
-		//echo "old"; _debug_array($old);
-		//echo "data"; _debug_array($data);
 		
 		if (!$this->save_prefs) $this->save_prefs = $GLOBALS['egw_info']['user'];
 		
