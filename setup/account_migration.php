@@ -97,6 +97,11 @@ if (!$_POST['migrate'])
 	// fetch the complete data (search reads not everything), plus the members(hips)
 	foreach($accounts as $account_id => $account)
 	{
+		if ($account_id != $account['account_id'])      // not all backends have as key the account_id
+		{
+			unset($accounts[$account_id]);
+			$account_id = $account['account_id'];
+		}
 		$accounts[$account_id] = $GLOBALS['egw']->accounts->read($account_id);
 
 		if ($account['account_type'] == 'g')
