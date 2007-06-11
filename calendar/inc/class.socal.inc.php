@@ -812,13 +812,12 @@ ORDER BY cal_user_type, cal_usre_id
 				{
 					$this->db->insert($this->user_table,array(
 						'cal_status'	  => $status !== true ? $status{0} : 'U',
-						'cal_quantity'	=> substr($status,1) ? substr($status,1) : 1,
-						'cal_recur_date' => $recur_date,
-						),array(
-						'cal_id'	=> $cal_id,
+						'cal_quantity'	  => substr($status,1) ? substr($status,1) : 1,
+					),array(
+						'cal_id'	      => $cal_id,
+						'cal_recur_date'  => $recur_date,
 						'cal_user_type'   => $type,
 						'cal_user_id' 	  => $id,
-
 					),__LINE__,__FILE__);
 				}
 			}
