@@ -36,16 +36,12 @@
 			'addressbook' => True,
 			'todo'        => True,
 			'calendar'    => True,
-			'notes'       => True,
 			'projects'    => True,
-			'phonelog'    => True,
 			'infolog'     => True,
 			'filemanager' => True,
 			'tts'         => True,
 			'bookmarks'   => True,
 			'img'         => True,
-			'netsaint'    => True,
-			'inv'         => True,
 			'phpbrain'    => True,
 			'projectmanager' => True,
 			'timesheet'   => True
@@ -60,6 +56,11 @@
 			if (get_magic_quotes_gpc())		// deal with magic_quotes_gpc On
 			{
 				$_POST = $this->array_stripslashes($_POST);
+			}
+			// remove ACL from addressbook, if contacts-backend is LDAP, as the ACL can not be modified there
+			if ($GLOBALS['egw_info']['server']['contact_repository'] == 'ldap')
+			{
+				unset($this->apps_with_acl['addressbook']);
 			}
 		}
 
