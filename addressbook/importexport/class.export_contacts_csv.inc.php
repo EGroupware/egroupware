@@ -8,13 +8,13 @@
  * @link http://www.egroupware.org
  * @author Cornelius Weiss <nelius@cwtech.de>
  * @copyright Cornelius Weiss <nelius@cwtech.de>
- * @version $Id$
+ * @version $Id: $
  */
 
 require_once(EGW_INCLUDE_ROOT. '/etemplate/inc/class.etemplate.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.export_csv.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/importexport/inc/class.iface_export_plugin.inc.php');
-require_once(EGW_INCLUDE_ROOT. '/addressbook/inc/class.egw_addressbook_record.inc.php');
+require_once(EGW_INCLUDE_ROOT. '/addressbook/importexport/class.egw_addressbook_record.inc.php');
 require_once(EGW_INCLUDE_ROOT. '/addressbook/inc/class.uicontacts.inc.php');
 
 /**
@@ -27,8 +27,8 @@ class export_contacts_csv implements iface_export_plugin {
 	 *
 	 * @param egw_record $_definition
 	 */
-	public static function export( $_stream, $_charset, definition $_definition) {
-		$options = $_definition->options;
+	public function export( $_stream, definition $_definition) {
+		$options = $_definition->plugin_options;
 		
 		$uicontacts = new uicontacts();
 		$selection = array();
@@ -41,8 +41,8 @@ class export_contacts_csv implements iface_export_plugin {
 			$selection = explode(',',$options['selection']);
 		}
 		
-		$options['begin_with_fieldnames'] = true;
-		$export_object = new export_csv($_stream, $charset, (array)$options);
+		$export_object = new export_csv($_stream, (array)$options);
+		$export_object->set_mapping($options['mapping']);
 		
 		// $options['selection'] is array of identifiers as this plugin doesn't
 		// support other selectors atm.
@@ -86,7 +86,7 @@ class export_contacts_csv implements iface_export_plugin {
 	 * 
 	 * @return string html
 	 */
-	public static function get_options_etpl() {
+	public function get_options_etpl() {
 		return 'addressbook.export_csv_options';
 	}
 	
@@ -94,7 +94,7 @@ class export_contacts_csv implements iface_export_plugin {
 	 * returns slectors of this plugin via xajax
 	 *
 	 */
-	public static function get_selectors_etpl() {
+	public function get_selectors_etpl() {
 		return '<b>Selectors:</b>';
 	}
 }
