@@ -30,8 +30,16 @@
 		'menuaction'    => 'felamimail.uicompose.compose'
 	);
 
-	$file = Array(
-		'Compose' => "javascript:openComposeWindow('".$GLOBALS['egw']->link('/index.php',$linkData)."');",
+	$file = array(
+                array(
+                        'text' => '<a class="textSidebox" href="'.htmlspecialchars($GLOBALS['egw']->link('/index.php',
+                        			  array(
+                        			  	'menuaction' => 'felamimail.uicompose.compose',
+                        			  )
+		                        )).'" target="_blank" onclick="egw_openWindowCentered(\''.$GLOBALS['egw']->link('/index.php',$linkData).'\',\''.lang('compose').'\',700,750); return false;">'.lang('compose'),
+                        'no_lang' => true,
+                    ),
+
 	);
 
 	if($preferences->preferences['deleteOptions'] == 'move_to_trash')
