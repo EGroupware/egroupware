@@ -11,6 +11,7 @@ actions	calendar	en	Actions
 actions...	calendar	en	Actions...
 add alarm	calendar	en	Add alarm
 added	calendar	en	Added
+added by synchronisation	calendar	en	added by synchronisation
 after %1	calendar	en	After %1
 after current date	calendar	en	After current date
 alarm	calendar	en	Alarm
@@ -52,6 +53,7 @@ copy this event	calendar	en	Copy this event
 countries	calendar	en	Countries
 country	calendar	en	Country
 create an exception for the given date	calendar	en	Create an exception for the given date
+create exception	calendar	en	Create exception
 create new links	calendar	en	Create new links
 csv	calendar	en	CSV
 csv-fieldname	calendar	en	CSV-Fieldname
@@ -105,6 +107,7 @@ event details follow	calendar	en	Event Details follow
 event saved	calendar	en	Event saved
 event will occupy the whole day	calendar	en	Event will occupy the whole day
 exception	calendar	en	Exception
+exception created - you can now edit or delete it	calendar	en	Exception created - you can now edit or delete it
 exceptions	calendar	en	Exceptions
 execute a further action for this entry	calendar	en	Execute a further action for this entry
 existing links	calendar	en	Existing links
@@ -317,6 +320,7 @@ you can only set a year or a occurence !!!	calendar	en	You can only set a year o
 you do not have permission to read this record!	calendar	en	You do not have permission to read this record!
 you have a meeting scheduled for %1	calendar	en	You have a meeting scheduled for %1
 you have been disinvited from the meeting at %1	calendar	en	You have been disinvited from the meeting at %1
+you need to select an account, contact or resource first!	calendar	en	You need to select an account, contact or resource first!
 you need to select an ical file first	calendar	en	You need to select an iCal file first
 you need to set either a day or a occurence !!!	calendar	en	You need to set either a day or a occurence !!!
 your meeting scheduled for %1 has been canceled	calendar	en	Your meeting scheduled for %1 has been canceled
