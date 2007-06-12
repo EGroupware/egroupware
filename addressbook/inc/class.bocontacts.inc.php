@@ -1001,8 +1001,10 @@ class bocontacts extends socontacts
 	/**
 	 * Get the address-format of a country
 	 *
-	 * ToDo: this is far from being complete ;-)
-	 * Mail me (RalfBecker-AT-outdoor-training.de) if you want your nation added or add it yourself.
+	 * This is a good reference where I got nearly all information, thanks to mikaelarhelger-AT-gmail.com
+	 * http://www.bitboost.com/ref/international-address-formats.html
+	 * 
+	 * Mail me (RalfBecker-AT-outdoor-training.de) if you want your nation added or fixed.
 	 * 
 	 * @param string $country
 	 * @return string 'city_state_postcode' (eg. US) or 'postcode_city' (eg. DE)
@@ -1018,12 +1020,50 @@ class bocontacts extends socontacts
 
 		switch($code)
 		{
-			case 'US':
+			case 'AU':
 			case 'CA':
+			case 'GB':	// not exactly right, postcode is in separate line
+			case 'HK':	// not exactly right, they have no postcode
+			case 'IN':
+			case 'ID':
+			case 'IE':	// not exactly right, they have no postcode
+			case 'JP':	// not exactly right
+			case 'KR':
+			case 'LV':
+			case 'NZ':
+			case 'TW':
+			case 'SA':	// not exactly right, postcode is in separate line
+			case 'SG':
+			case 'US':
 				$adr_format = 'city_state_postcode';
 				break;
 				
+			case 'AR':
+			case 'AT':
+			case 'BE':
+			case 'CH':
+			case 'CZ':
+			case 'DK':
+			case 'EE':
+			case 'ES':
+			case 'FI':
+			case 'FR':
 			case 'DE':
+			case 'GL':
+			case 'IS':
+			case 'IL':
+			case 'IT':
+			case 'LT':
+			case 'LU':
+			case 'MY':
+			case 'MX':
+			case 'NL':
+			case 'NO':
+			case 'PL':
+			case 'PT':
+			case 'RO':
+			case 'RU':
+			case 'SE':
 				$adr_format = 'postcode_city';
 				break;
 				
