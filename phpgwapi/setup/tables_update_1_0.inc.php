@@ -977,6 +977,8 @@
 			// adding the old name, as the rename might have not been done (api upgrades run befor app ones)
 			array('phpgw_wiki_pages','wiki_readable',true),
 			array('phpgw_wiki_pages','wiki_writable',true),
+			array('phpgw_wiki_pages','readable',true),
+			array('phpgw_wiki_pages','writable',true),
 			array('egw_vfs','vfs_owner_id'),
 			array('egw_vfs','vfs_createdby_id'),
 		) as $data)
