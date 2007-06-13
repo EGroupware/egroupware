@@ -49,7 +49,7 @@
 				'account_type'   => 'u',
 			),__LINE__,__FILE__);
 			
-			if (!$this->db->next_record() || $GLOBALS['egw_info']['server']['case_sensitive_username'] && $db->f('account_lid') != $username)
+			if (!$this->db->next_record() || $GLOBALS['egw_info']['server']['case_sensitive_username'] && $this->db->f('account_lid') != $username)
 			{
 				return false;
 			}
