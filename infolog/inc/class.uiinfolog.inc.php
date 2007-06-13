@@ -142,6 +142,10 @@ class uiinfolog
 			$this->duration_format = str_replace(',','',$pm_config->config_data['duration_units']).','.$pm_config->config_data['hours_per_workday'];
 			unset($pm_config);
 		}
+		if ($this->bo->history)
+		{
+			$this->filters['deleted'] = 'deleted';
+		}
 		/* these are just for testing of the notifications
 		for($i = -1; $i <= 3; ++$i)
 		{
@@ -196,7 +200,8 @@ class uiinfolog
 		$readonlys["close[$id]"] = $done || ($readonlys["edit_status[$id]"] = 
 			!($this->bo->check_access($info,EGW_ACL_EDIT) || $this->bo->is_responsible($info)));
 		$readonlys["edit_status[$id]"] = $readonlys["edit_percent[$id]"] = 
-			!$this->bo->check_access($info,EGW_ACL_EDIT) && !$this->bo->is_responsible($info);
+			!$this->bo->check_access($info,EGW_ACL_EDIT) && !$this->bo->is_responsible($info) && 
+			!$this->bo->check_access($info,EGW_ACL_UNDELETE);	// undelete is handled like status edit
 		$readonlys["delete[$id]"] = !$this->bo->check_access($info,EGW_ACL_DELETE);
 		$readonlys["sp[$id]"] = !$this->bo->check_access($info,EGW_ACL_ADD);
 		$readonlys["view[$id]"] = $info['info_anz_subs'] < 1;
@@ -237,7 +242,8 @@ class uiinfolog
 			}
 		}
 		$info['info_type_label'] = $this->bo->enums['type'][$info['info_type']];
-		$info['info_status_label'] = $this->bo->status[$info['info_type']][$info['info_status']];
+		$info['info_status_label'] = isset($this->bo->status[$info['info_type']][$info['info_status']]) ? 
+			$this->bo->status[$info['info_type']][$info['info_status']] : $info['info_status'];
 		
 		if (!$this->prefs['show_percent'] || $this->prefs['show_percent'] == 2 && !$details)
 		{
@@ -691,7 +697,7 @@ class uiinfolog
 	 */
 	function edit($content = null,$action = '',$action_id=0,$type='',$referer='')
 	{
-		$tabs = 'description|links|delegation|project|customfields';
+		$tabs = 'description|links|delegation|project|customfields|history';
 
 		if (is_array($content))
 		{
@@ -722,9 +728,10 @@ class uiinfolog
 					{
 						$old = $this->bo->read($info_id);
 						$status_only = $this->bo->is_responsible($old);
+						$undelete = $this->bo->check_access($old,EGW_ACL_UNDELETE);
 					}
 				}
-				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only))
+				if (($button == 'save' || $button == 'apply') && (!$info_id || $edit_acl || $status_only || $undelete))
 				{
 					if ($content['info_contact'])
 					{
@@ -912,7 +919,9 @@ class uiinfolog
 			}
 			else
 			{
-				if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && !$this->bo->is_responsible($content))
+				if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && 
+					!($undelete = $this->bo->check_access($info_id,EGW_ACL_UNDELETE)) &&
+					!$this->bo->is_responsible($content))
 				{
 					if ($no_popup)
 					{
@@ -1018,7 +1027,7 @@ class uiinfolog
 		}
 		$preserv = $content;
 		// for implizit edit of responsible user make all fields readonly, but status and percent
-		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && $this->bo->is_responsible($content))
+		if ($info_id && !$this->bo->check_access($info_id,EGW_ACL_EDIT) && $this->bo->is_responsible($content) && !$undelete)
 		{
 			$content['status_only'] = !in_array('link_to',$this->bo->responsible_edit);
 			foreach(array_diff(array_merge(array_keys($content),array('pm_id')),$this->bo->responsible_edit) as $name)
@@ -1032,6 +1041,9 @@ class uiinfolog
 				$readonlys['#'.$name] = true;
 			}
 		}
+		// ToDo: use the old status before the delete
+		if ($undelete) $content['info_status'] = $this->bo->status['defaults'][$content['info_type']];
+
 		$content['hide_from_css'] = $content['info_custom_from'] ? '' : 'hideFrom';
 
 		if (!($readonlys['button[delete]'] = !$info_id || !$this->bo->check_access($info_id,EGW_ACL_DELETE)))
@@ -1051,7 +1063,7 @@ class uiinfolog
 		}
 		else
 		{
-			$readonlys[$tabs] = array('customfields' => true);
+			$readonlys[$tabs]['customfields'] = true;
 		}
 		if (!isset($GLOBALS['egw_info']['user']['apps']['projectmanager']))
 		{
@@ -1066,6 +1078,44 @@ class uiinfolog
 		$old_pm_id = is_array($pm_links) ? array_shift($pm_links) : $content['old_pm_id'];
 		if (!isset($content['pm_id']) && $old_pm_id) $content['pm_id'] = $old_pm_id;
 
+		if ($info_id && $this->bo->history)
+		{
+			$content['history'] = array(
+				'id'  => $info_id,
+				'app' => 'infolog',
+				'status-widgets' => array(
+					'Ty' => $types,
+					//'Li',	// info_link_id
+					'Ca' => 'select-cat',
+					'Pr' => $this->bo->enums['priority'],
+					'Ow' => 'select-account',
+					//'Ac',	//	info_access: private||public 
+					'St' => $this->bo->status[$content['info_type']]+array('deleted' => 'deleted'),
+					'Pe' => 'select-percent',
+					'Co' => 'date-time',
+					'st' => 'date-time',
+					'En' => 'date',
+					'Re' => 'select-account',
+					// PM fields, ToDo: access control!!!
+					'pT' => 'date-duration',
+					'uT' => 'date-duration',
+//					'pL' => 'projectmanager-pricelist',
+					'pr' => 'float',
+				),
+			);
+			$history_stati = array();
+			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
+			$tracking = new infolog_tracking($this);
+			foreach($tracking->field2history as $field => $history)
+			{
+				$history_stati[$history] = $tracking->field2label[$field];
+			}
+			unset($tracking);
+		}
+		else
+		{
+			$readonlys[$tabs]['history'] = true;
+		}
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.
 			($content['status_only'] ? lang('Edit Status') : lang('Edit'));
 		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => ($info_id ? 'ManualInfologEdit' : 'ManualInfologAdd'));
@@ -1074,7 +1124,8 @@ class uiinfolog
 			'info_type'     => $types,
 			'info_priority' => $this->bo->enums['priority'],
 			'info_confirm'  => $this->bo->enums['confirm'],
-			'info_status'   => $this->bo->status[$content['info_type']]
+			'info_status'   => $this->bo->status[$content['info_type']],
+			'status'        => $history_stati,
 		),$readonlys,$preserv+array(	// preserved values
 			'info_id'       => $info_id,
 			'action'        => $action,
@@ -1110,6 +1161,33 @@ class uiinfolog
 		return $icon ? $this->html->image('infolog',$icon,lang($alt),'border=0') : lang($alt);
 	}
 
+	/**
+	 * stripping slashes from an array
+	 *
+	 * @static 
+	 * @param array $arr
+	 * @return array
+	 */
+	function array_stripslashes($arr)
+	{
+		foreach($arr as $key => $val)
+		{
+			if (is_array($val))
+			{
+				$arr[$key] = self::array_stripslashes($var);
+			}
+			else
+			{
+				$arr[$key] = stripslashes($val);
+			}
+		}
+		return $arr;
+	}
+
+	/**
+	 * Infolog's site configuration
+	 *
+	 */
 	function admin( )
 	{
 		$fields = array(
@@ -1126,41 +1204,43 @@ class uiinfolog
 		);
 		if($_POST['save'] || $_POST['apply'])
 		{
-			$this->link_pathes = $this->bo->send_file_ips = array();
+			if (get_magic_quotes_gpc())
+			{
+				$_POST = self::array_stripslashes($_POST);
+			}
+			$this->bo->config->config_data['link_pathes'] = $this->bo->link_pathes = array();
+			$this->bo->config->config_data['send_file_ips'] = $this->bo->send_file_ips = array();
 
 			$valid = get_var('valid',Array('POST'));
 			$trans = get_var('trans',Array('POST'));
 			$ip = get_var('ip',Array('POST'));
-			while(list($key,$val) = each($valid))
+			foreach($valid as $key => $val)
 			{
-				if($val = stripslashes($val))
+				if($val)
 				{
-					$this->link_pathes[$val]   = stripslashes($trans[$key]);
-					$this->bo->send_file_ips[$val] = stripslashes($ip[$key]);
+					$this->bo->config->config_data['link_pathes'][$val] = $this->bo->link_pathes[$val] = $trans[$key];
+					$this->bo->config->config_data['send_file_ips'][$val] = $this->bo->send_file_ips[$val] = $ip[$key];
 				}
 			}
 			$this->bo->responsible_edit = array('info_status','info_percent','info_datecompleted');
+
 			if ($_POST['responsible_edit']) 
 			{
 				$extra = array_intersect($_POST['responsible_edit'],array_keys($fields));
-				$this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
+				$this->bo->config->config_data['responsible_edit'] = $this->bo->responsible_edit = array_merge($this->bo->responsible_edit,$extra);
 			}
-			$this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
+			$this->bo->config->config_data['implicit_rights'] = $this->bo->implicit_rights = $_POST['implicit_rights'] == 'edit' ? 'edit' : 'read';
+			
+			$this->bo->config->config_data['history'] = $this->bo->history = $_POST['history'];
 
-			$this->bo->config->config_data += array(	// only "adding" the changed items, to not delete other config like custom fields
-				'link_pathes' => $this->link_pathes,
-				'send_file_ips' => $this->bo->send_file_ips,
-				'implicit_rights' => $this->bo->implicit_rights,
-				'responsible_edit' => is_array($extra) ? implode(',',$extra) : $extra,
-			);
 			$this->bo->config->save_repository(True);
 		}
 		if($_POST['cancel'] || $_POST['save'])
 		{
-			$GLOBALS['egw']->redirect_link('/admin/index.php');
+			$GLOBALS['egw']->redirect_link('/infolog/index.php');
 		}
 
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Configuration');
+		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Site configuration');
 		$GLOBALS['egw']->common->egw_header();
 
 		$GLOBALS['egw']->template->set_file(array('info_admin_t' => 'admin.tpl'));
@@ -1183,16 +1263,24 @@ class uiinfolog
 			'cancel_button' => $this->html->submit_button('cancel','Cancel'),
 			'lang_valid'  => lang('valid path on clientside<br>eg. \\\\Server\\Share or e:\\'),
 			'lang_trans'  => lang('path on (web-)serverside<br>eg. /var/samba/Share'),
-			'lang_ip'     => lang('reg. expr. for local IP\'s<br>eg. ^192\\.168\\.1\\.')
+			'lang_ip'     => lang('reg. expr. for local IP\'s<br>eg. ^192\\.168\\.1\\.'),
+			'lang_history'=> lang('History logging'),
+			'lang_history2'=> lang('History logging and deleting of items'),
+			'history'     => $this->html->select('history',$this->bo->history,array(
+				'' => lang('No'),
+				'history' => lang('Yes, with purging of deleted items possible'),
+				'history_admin_delete' => lang('Yes, only admins can purge deleted items'),
+				'history_no_delete' => lang('Yes, noone can purge deleted items'),
+			))
 		));
 
 		if (!is_array($this->bo->send_file_ips))
 		{
-			$this->bo->send_file_ips = $this->link_pathes = array();
+			$this->bo->send_file_ips = $this->bo->link_pathes = array();
 		}
-		$i = 0; @reset($this->link_pathes);
+		$i = 0; @reset($this->bo->link_pathes);
 		do {
-			list($valid,$trans) = @each($this->link_pathes);
+			list($valid,$trans) = @each($this->bo->link_pathes);
 			$GLOBALS['egw']->template->set_var(array(
 				'tr_color'  => $i & 1 ? 'row_off' : 'row_on',
 				'num'       => $i+1,
@@ -1320,23 +1408,6 @@ class uiinfolog
 		echo "<script> window.close(); alert('Error: no mail (Mailbox / UID) given!');</script>";
 		$GLOBALS['egw']->common->egw_exit();
 		exit;
-	}
-	
-	/**
-	 * writes langfile with all templates and messages registered here
-	 *
-	 * called via [write Langfile] in the etemplate-editor or as http://domain/egroupware/index.php?menuaction=infolog.uiinfolog.writeLangFile
-	 */
-	function writeLangFile()
-	{
-		$extra = $this->messages + $this->filters;
-		$enums = $this->bo->enums + $this->bo->status;
-		unset($enums['defaults']);
-		foreach($enums as $key => $msg_arr)
-		{
-			$extra += $msg_arr;
-		}
-		return $this->tmpl->writeLangFile('infolog','en',$extra);
 	}
 	
 	/**

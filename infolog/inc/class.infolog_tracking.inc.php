@@ -46,7 +46,33 @@ class infolog_tracking extends bo_tracking
 	 *
 	 * @var array
 	 */
-	var $field2history = array();
+	var $field2history = array(
+		'info_type'          => 'Ty',
+		'info_from'          => 'Fr',
+		'info_addr'          => 'Ad',
+		'info_link_id'       => 'Li',
+		'info_cat'           => 'Ca',
+		'info_priority'      => 'Pr',
+		'info_owner'         => 'Ow',
+		'info_access'        => 'Ac',
+		'info_status'        => 'St',
+		'info_percent'       => 'Pe',
+		'info_datecompleted' => 'Co',
+		'info_location'      => 'Lo',
+		'info_startdate'     => 'st',
+		'info_enddate'       => 'En',
+		'info_responsible'   => 'Re',
+		'info_subject'       => 'Su',
+		'info_des'           => 'De',
+		'info_location'      => 'Lo',
+		// PM fields
+		'info_planned_time'  => 'pT',
+		'info_used_time'     => 'uT',
+		'pl_id'              => 'pL',
+		'info_price'         => 'pr',
+		// all custom fields together
+		'custom'             => '#c',
+	);
 	/**
 	 * Translate field-names to labels
 	 *
@@ -56,9 +82,11 @@ class infolog_tracking extends bo_tracking
 		'info_type'      => 'Type',
 		'info_from'      => 'Contact',
 		'info_addr'      => 'Phone/Email',
+		'info_link_id'   => 'primary link',
 		'info_cat'       => 'Category',
 		'info_priority'  => 'Priority',
 		'info_owner'     => 'Owner',
+		'info_access'    => 'Access',
 		'info_status'    => 'Status',
 		'info_percent'   => 'Completed',
 		'info_datecompleted' => 'Date completed',
@@ -67,6 +95,14 @@ class infolog_tracking extends bo_tracking
 		'info_enddate'   => 'Enddate',
 		'info_responsible' => 'Responsible',
 		'info_subject'   => 'Subject',
+		'info_des'       => 'Description',
+		// PM fields
+		'info_planned_time'  => 'planned time',
+		'info_used_time'     => 'used time',
+		'pl_id'              => 'pricelist',
+		'info_price'         => 'price',
+		// custom fields
+		'custom'             => 'custom fields'
 	);
 
 	/**
@@ -91,29 +127,6 @@ class infolog_tracking extends bo_tracking
 	}
 	
 	/**
-	 * Tracks the changes in one entry $data, by comparing it with the last version in $old
-	 * 
-	 * Reimplemented to fix some fields, who otherwise allways show up as modified
-	 *
-	 * @param array $data current entry
-	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param int $user=null user who made the changes, default to current user
-	 * @return int/boolean false on error, integer number of changes logged or true for new entries ($old == null)
-	 */
-	function track($data,$old=null,$user=null)
-	{
-		if ($old)
-		{
-			foreach($this->infolog->timestamps as $name)
-			{
-				if (!$old[$name]) $old[$name] = '';
-			}
-		}
-		return parent::track($data,$old,$user);
-	}
-	
-	
-	/**
 	 * Get a notification-config value
 	 *
 	 * @param string $what
@@ -130,20 +143,52 @@ class infolog_tracking extends bo_tracking
 	}
 	
 	/**
+	 * Get the subject for a given entry
+	 * 
+	 * Reimpleneted to use a New|deleted|modified prefix.
+	 *
+	 * @param array $data
+	 * @param array $old
+	 * @return string
+	 */
+	function get_subject($data,$old)
+	{
+		if (!$old || $old['info_status'] == 'deleted')
+		{
+			$prefix = lang('New %1',lang($this->infolog->enums['type'][$data['info_type']]));
+		}
+		elseif($data['info_status'] == 'deleted')
+		{
+			$prefix = lang('%1 deleted',lang($this->infolog->enums['type'][$data['info_type']]));
+		}
+		else
+		{
+			$prefix = lang('%1 modified',lang($this->infolog->enums['type'][$data['info_type']]));
+		}
+		return $prefix.': '.$data['info_subject'];
+	}
+
+	/**
 	 * Get the modified / new message (1. line of mail body) for a given entry, can be reimplemented
 	 * 
 	 * @param array $data
 	 * @param array $old
-	 * @return array/string array(message,user-id,timestamp-in-servertime) or string
+	 * @return string
 	 */
 	function get_message($data,$old)
 	{
 		if ($data['message']) return $data['message'];	// async notification
 
-		if (!$data['info_datemodified'] || !$old)
+		if (!$old || $old['info_status'] == 'deleted')
 		{
 			return lang('New %1 created by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
 				$GLOBALS['egw']->common->grab_owner_name($this->infolog->user),$this->datetime(time()));
+		}
+		elseif($data['info_status'] == 'deleted')
+		{
+			return lang('%1 deleted by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
+				$GLOBALS['egw']->common->grab_owner_name($data['info_modifier']),
+				$this->datetime($data['info_datemodified']-$this->infolog->tz_offset_s));
 		}
 		return lang('%1 modified by %2 at %3',lang($this->infolog->enums['type'][$data['info_type']]),
 			$GLOBALS['egw']->common->grab_owner_name($data['info_modifier']),
@@ -184,7 +229,7 @@ class infolog_tracking extends bo_tracking
 			'info_cat'       => $data['info_cat'] ? $GLOBALS['egw']->categories->id2name($data['info_cat']) : '',
 			'info_priority'  => lang($this->infolog->enums['priority'][$data['info_priority']]),
 			'info_owner'     => $GLOBALS['egw']->common->grab_owner_name($data['info_owner']),
-			'info_status'    => lang($this->infolog->status[$data['info_type']][$data['info_status']]),
+			'info_status'    => lang($data['info_status']=='deleted'?'deleted':$this->infolog->status[$data['info_type']][$data['info_status']]),
 			'info_percent'   => (int)$data['info_percent'].'%',
 			'info_datecompleted' => $data['info_datecomplete'] ? $this->datetime($data['info_datecompleted']-$this->infolog->tz_offset_s) : '',
 			'info_location'  => $data['info_location'],
@@ -209,7 +254,7 @@ class infolog_tracking extends bo_tracking
 		{
 			foreach($this->infolog->customfields as $name => $field)
 			{
-				if ($field['type2'] && $field['type2'] != $data['info_type']) continue;	// different type
+				if ($field['type2'] && !in_array($data['info_type'],explode(',',$field['type2']))) continue;	// different type
 				
 				if (!$header_done)
 				{
@@ -219,12 +264,35 @@ class infolog_tracking extends bo_tracking
 					);
 					$header_done = true;
 				}
-				$details[$name] = array(
+				$details['#'.$name] = array(
 					'label' => $field['label'],
 					'value' => $data['#'.$name],
 				);
 			}
 		}
 		return $details;
+	}
+	
+	/**
+	 * Save changes to the history log
+	 *
+	 * Reimplemented to store all customfields in a single field, as the history-log has only 2-char field-ids
+	 * 
+	 * @param array $data current entry
+	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param int number of log-entries made
+	 */
+	function save_history($data,$old)
+	{
+		$data_custom = $old_custom = array();
+		foreach($this->infolog->customfields as $name => $custom)
+		{
+			if (isset($data['#'.$name]) && (string)$data['#'.$name]!=='') $data_custom[] = $custom['label'].': '.$data['#'.$name];
+			if (isset($old['#'.$name]) && (string)$old['#'.$name]!=='') $old_custom[] = $custom['label'].': '.$old['#'.$name];
+		}
+		$data['custom'] = implode("\n",$data_custom);
+		$old['custom'] = implode("\n",$old_custom);
+		
+		return parent::save_history($data,$old);
 	}
 }

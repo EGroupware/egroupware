@@ -12,6 +12,8 @@
 	
 include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.soinfolog.inc.php');
 
+define('EGW_ACL_UNDELETE',EGW_ACL_CUSTOM_1);	// undelete right
+
 /**
  * This class is the BO-layer of InfoLog, it also handles xmlrpc requests
  */
@@ -32,7 +34,7 @@ class boinfolog
 	var $link;
 	var $vfs;
 	var $vfs_basedir='/infolog';
-	var $valid_pathes = array();
+	var $link_pathes = array();
 	var $send_file_ips = array();
 
 	var $xmlrpc_methods = array();
@@ -111,6 +113,18 @@ class boinfolog
 	 * @var int
 	 */
 	var $user;
+	/**
+	 * History loggin: ''=no, 'history'=history & delete allowed, 'history_admin_delete', 'history_no_delete'
+	 *
+	 * @var string
+	 */
+	var $history;
+	/**
+	 * Instance of infolog_tracking, only instaciated if needed!
+	 *
+	 * @var infolog_tracking
+	 */
+	var $tracking;
 	
 	/**
 	 * Constructor Infolog BO
@@ -151,11 +165,11 @@ class boinfolog
 				'billed' => 'billed' ),			// -->  DONE
 			'note' => array(
 				'ongoing' => 'ongoing',			// iCal has no status on notes
-				'done' => 'done'),
+				'done' => 'done' ),
 			'email' => array(
 				'ongoing' => 'ongoing',			// iCal has no status on notes
-				'done' => 'done'
-		));
+				'done' => 'done' ),
+		);
 
 		if (!is_object($GLOBALS['egw']->link) && $instanciate_link)
 		{
@@ -211,14 +225,15 @@ class boinfolog
 				}
 				if ($save_config) $this->config->save_repository();
 			}
-			if (count(explode(',',$this->config->config_data['responsible_edit'])))
+			if (is_array($this->config->config_data['responsible_edit']))
 			{
-				$this->responsible_edit = array_merge($this->responsible_edit,explode(',',$this->config->config_data['responsible_edit']));
+				$this->responsible_edit = array_merge($this->responsible_edit,$this->config->config_data['responsible_edit']);
 			}
 			if ($this->config->config_data['implicit_rights'] == 'edit')
 			{
 				$this->implicit_rights = 'edit';
 			}
+			$this->history = $this->config->config_data['history'];
 		}
 		// sort types by there translation
 		foreach($this->enums['type'] as $key => $val)
@@ -304,6 +319,33 @@ class boinfolog
 		if (isset($cache[$info_id][$required_rights]))
 		{
 			return $cache[$info_id][$required_rights];
+		}
+		// handle delete for the various history modes
+		if ($this->history)
+		{
+			if (!is_array($info) && !($info = $this->so->read($info_id))) return false;
+			
+			if ($info['info_status'] == 'deleted' && 
+				($required_rights == EGW_ACL_EDIT ||		// no edit rights for deleted entries
+				 $required_rights == EGW_ACL_ADD  ||		// no add rights for deleted entries
+				 $required_rights == EGW_ACL_DELETE && ($this->history == 'history_no_delete' || // no delete at all!
+				 $this->history == 'history_admin_delete' && !isset($GLOBALS['egw_info']['user']['apps']['admin']))))	// delete only for admins
+			{
+				return $cache[$info_id][$required_rights] = false;
+			}
+			if ($required_rights == EGW_ACL_UNDELETE)
+			{
+				if ($info['info_status'] != 'deleted')
+				{
+					return $cache[$info_id][$required_rights] = false;	// can only undelete deleted items
+				}
+				// undelete requires edit rights 
+				return $cache[$info_id][$required_rights] = $this->so->check_access( $info,EGW_ACL_EDIT,$this->implicit_rights == 'edit' );
+			}
+		}
+		elseif ($required_rights == EGW_ACL_UNDELETE)
+		{
+			return $cache[$info_id][$required_rights] = false;
 		}
 		return $cache[$info_id][$required_rights] = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit' );
 	}
@@ -467,18 +509,59 @@ class boinfolog
 			}
 			return False;
 		}
-
-		$this->link->unlink(0,'infolog',$info_id);
-
-		$info = $this->read($info_id);
-
-		$this->so->delete($info_id,$delete_children,$new_parent);
+		// check if we have children and delete or re-parent them
+		if (($children = $this->so->get_children($info_id)))
+		{
+			foreach($children as $id => $owner)
+			{
+				if ($delete_children && $this->so->grants[$owner] & EGW_ACL_DELETE)
+				{
+					$this->delete($id,$delete_children,$new_parent);	// call ourself recursive to delete the child
+				}
+				else	// dont delete or no rights to delete the child --> re-parent it
+				{
+					$this->so->write(array(
+						'info_id' => $id,
+						'info_parent_id' => $new_parent,
+					));
+				}
+			}
+		}
+		if (!($info = $this->read($info_id))) return false;			// should not happen
 		
-		$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
-		
+		$deleted = $info;
+		$deleted['info_status'] = 'deleted';
+		$deleted['info_datemodified'] = time();
+		$deleted['info_modifier'] = $this->user;
+
+		// if we have history switched on and not an already deleted item --> set only status deleted
+		if ($this->history && $info['info_status'] != 'deleted')
+		{
+			if ($info['info_status'] == 'deleted') return false;	// entry already deleted
+
+			$this->so->write($deleted);
+		}
+		else
+		{
+			$this->so->delete($info_id,false);	// we delete the children via bo to get all notifications!
+		}
+		if ($info['info_status'] != 'deleted')	// dont notify of final purge of already deleted items
+		{
+			$this->link->unlink(0,'infolog',$info_id);
+	
+			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
+			
+			// send email notifications and do the history logging
+			require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_tracking.inc.php');
+			if (!is_object($this->tracking))
+			{
+				$this->tracking =& new infolog_tracking($this);
+			}
+			$this->tracking->track($deleted,$info,$this->user);
+		}
 		return True;
 	}
-
+	
 	/**
 	* writes the given $values to InfoLog, a new entry gets created if info_id is not set or 0
 	*
@@ -517,6 +600,10 @@ class boinfolog
 			{
 				$status_only = !!array_intersect($responsible,array_keys($GLOBALS['egw']->accounts->memberships($this->user)));
 			}
+			if (!$status_only && $values['info_status'] != 'deleted')
+			{
+				$status_only = $undelete = $this->check_access($values['info_id'],EGW_ACL_UNDELETE);
+			}
 		}
 		if ($values['info_id'] && !$this->check_access($values['info_id'],EGW_ACL_EDIT) && !$status_only ||
 		    !$values['info_id'] && $values['info_id_parent'] && !$this->check_access($values['info_id_parent'],EGW_ACL_ADD))
@@ -531,7 +618,7 @@ class boinfolog
 		{
 			$values = $this->xmlrpc2data($values);
 		}
-		if ($status_only)	// make sure only status gets writen
+		if ($status_only && !$undelete)	// make sure only status gets writen
 		{
 			$set_completed = !$values['info_datecompleted'] &&	// set date completed of finished job, only if its not already set 
 				(in_array($values['info_status'],array('done','billed','cancelled')) || (int)$values['info_percent'] == 100);
@@ -606,7 +693,7 @@ class boinfolog
 			$values['info_modifier'] = $this->so->user;
 		}
 		$to_write = $values;
-		if ($status_only) $values = array_merge($backup_values,$values);
+		if ($status_only && !$undelete) $values = array_merge($backup_values,$values);
 		// convert user- to system-time
 		foreach($this->timestamps as $time)
 		{
@@ -623,7 +710,7 @@ class boinfolog
 			{
 				$values = $this->read($info_id);
 			}
-			if($values['info_id'])
+			if($values['info_id'] && $old['info_status'] != 'deleted')
 			{
 				// update
 				$GLOBALS['egw']->contenthistory->updateTimeStamp(
@@ -640,7 +727,11 @@ class boinfolog
 				);
 			}
 			$values['info_id'] = $info_id;
-			
+
+			if (!is_array($values['info_responsible']))		// this should not happen, bug it does ;-)
+			{
+				$values['info_responsible'] = $values['info_responsible'] ? explode(',',$values['info_responsible']) : array();
+			}
 			// create (and remove) links in custom fields
 			$this->update_customfield_links($values,$old);
 

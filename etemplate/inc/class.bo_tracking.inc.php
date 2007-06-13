@@ -195,14 +195,16 @@ class bo_tracking
 		$changes = 0;
 		foreach($this->field2history as $name => $status)
 		{
-			if ($old[$name] != $data[$name])
+			if ($old[$name] != $data[$name] && !(!$old[$name] && !$data[$name]))
 			{
 				if (!is_object($this->historylog))
 				{
 					require_once(EGW_API_INC.'/class.historylog.inc.php');
 					$this->historylog =& new historylog($this->app);
 				}
-				$this->historylog->add($status,$data[$this->id_field],$data[$name],$old[$name]);
+				$this->historylog->add($status,$data[$this->id_field],
+					is_array($data[$name]) ? implode(',',$data[$name]) : $data[$name],
+					is_array($old[$name]) ? implode(',',$old[$name]) : $old[$name]);
 				++$changes;
 			}
 		}
@@ -536,10 +538,18 @@ class bo_tracking
 				$link .= '&'.$this->id_field.'='.$data[$this->id_field];
 			}
 		}
-		elseif (($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])))
+		else
 		{
-			$link = $GLOBALS['egw']->link('/index.php',$view);
-			$popup = $GLOBALS['egw']->link->is_popup($this->app,'view');
+			if (!is_object($GLOBALS['egw']->link))
+			{
+				require_once(EGW_API_INC.'/class.bolink.inc.php');
+				$GLOBALS['egw']->link =& new bolink();
+			}
+			if (($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])))
+			{
+				$link = $GLOBALS['egw']->link('/index.php',$view);
+				$popup = $GLOBALS['egw']->link->is_popup($this->app,'view');
+			}
 		}
 		if ($link{0} == '/')
 		{
@@ -585,7 +595,7 @@ class bo_tracking
 			// if there's no old entry, the entry is not modified by definition
 			// if both values are '', 0 or null, we count them as equal too
 			$modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
-			//if ($modified) error_log("data[$name]='{$data[$name]}', old[$name]='{$old[$name]}' --> modified=".(int)$modified);
+			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 			
 			$body .= $this->format_line($html_email,$detail['type'],$modified,

@@ -1,4 +1,7 @@
 %1 days in advance	infolog	en	%1 days in advance
+%1 deleted	infolog	en	%1 deleted
+%1 deleted by %2 at %3	infolog	en	%1 deleted by %2 at %3
+%1 modified	infolog	en	%1 modified
 %1 modified by %2 at %3	infolog	en	%1 modified by %2 at %3
 %1 records imported	infolog	en	%1 records imported
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	en	%1 records read (not yet imported, you may go %2back%3 and uncheck Test Import)
@@ -97,6 +100,7 @@ delete one record by passing its id.	infolog	en	Delete one record by passing its
 delete the entry	infolog	en	Delete the entry
 delete this entry	infolog	en	delete this entry
 delete this entry and all listed sub-entries	infolog	en	Delete this entry and all listed sub-entries
+deleted	infolog	en	deleted
 deletes the selected typ	infolog	en	deletes the selected type
 deletes this field	infolog	en	deletes this field
 deletes this status	infolog	en	deletes this status
@@ -142,6 +146,8 @@ from	infolog	en	From
 general	infolog	en	General
 group owner for	infolog	en	Group owner for
 high	infolog	en	high
+history logging	infolog	en	History logging
+history logging and deleting of items	infolog	en	History logging and deleting of items
 id	infolog	en	Id
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	en	If a type has a group owner, all entries of that type will be owned by the given group and NOT the user who created it!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	en	If not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).
@@ -181,6 +187,7 @@ max length of the input [, length of the inputfield (optional)]	infolog	en	max l
 name must not be empty !!!	infolog	en	Name must not be empty !!!
 name of new type to create	infolog	en	name of new type to create
 never hide search and filters	infolog	en	Never hide search and filters
+new %1	infolog	en	New %1
 new %1 created by %2 at %3	infolog	en	New %1 created by %2 at %3
 new name	infolog	en	new name
 new search	infolog	en	New search
@@ -334,6 +341,9 @@ will-call	infolog	en	will call
 write (add or update) a record by passing its fields.	infolog	en	Write (add or update) a record by passing its fields.
 yes - delete	infolog	en	Yes - Delete
 yes - delete including sub-entries	infolog	en	Yes - Delete including sub-entries
+yes, noone can purge deleted items	infolog	en	Yes, noone can purge deleted items
+yes, only admins can purge deleted items	infolog	en	Yes, only admins can purge deleted items
+yes, with purging of deleted items possible	infolog	en	Yes, with purging of deleted items possible
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
 you have entered an invalid ending date	infolog	en	You have entered an invalid due date
 you have entered an invalid starting date	infolog	en	You have entered an invalid starting date

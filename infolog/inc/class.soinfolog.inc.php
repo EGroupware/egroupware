@@ -262,21 +262,24 @@ class soinfolog 				// DB-Layer
 	/**
 	 * generate sql to filter based on the status of the log-entry
 	 *
-	 * @param $filter done = done or billed, open = not ()done or billed), offer = offer
+	 * @param string $filter done = done or billed, open = not (done, billed, cancelled or deleted), offer = offer
+	 * @param boolean $prefix_and=true if true prefix the fileter with ' AND '
 	 * @return string the necesary sql
 	 */
-	function statusFilter($filter = '')
+	function statusFilter($filter = '',$prefix_and=true)
 	{
-		preg_match('/(done|open|offer)/',$filter,$vars);
+		preg_match('/(done|open|offer|deleted)/',$filter,$vars);
 		$filter = $vars[1];
 
 		switch ($filter)
 		{
-			case 'done':	return " AND info_status IN ('done','billed','cancelled')";
-			case 'open':	return " AND NOT (info_status IN ('done','billed','cancelled'))";
-			case 'offer':	return " AND info_status = 'offer'";
+			case 'done':	$filter = "info_status IN ('done','billed','cancelled')"; break;
+			case 'open':	$filter = "NOT (info_status IN ('done','billed','cancelled','deleted'))"; break;
+			case 'offer':	$filter = "info_status = 'offer'";    break;
+			case 'deleted': $filter = "info_status = 'deleted'";  break;
+			default:        $filter = "info_status <> 'deleted'"; break;
 		}
-		return '';
+		return ($prefix_and ? ' AND ' : '').$filter;
 	}
 
 	/**
@@ -444,6 +447,26 @@ class soinfolog 				// DB-Layer
 		// set parent_id to $new_parent or 0 for all not deleted children
 		$this->db->update($this->info_table,array('info_id_parent'=>$new_parent),array('info_id_parent'=>$info_id),__LINE__,__FILE__);
 	}
+	
+	/**
+	 * Return array with children of $info_id as info_id => info_owner pairs
+	 *
+	 * @param int $info_id
+	 * @return array with info_id => info_owner pairs
+	 */
+	function get_children($info_id)
+	{
+		$this->db->select($this->info_table,'info_id,info_owner',array(
+			'info_id_parent'	=> $info_id,
+		),__LINE__,__FILE__);
+		
+		$children = array();
+		while (($row = $this->db->row(true)))
+		{
+			$children[$row['info_id']] = $row['info_owner'];
+		}
+		return $children;
+	}
 
 	/**
 	 * changes or deletes entries with a spezified owner (for hook_delete_account)
@@ -466,6 +489,7 @@ class soinfolog 				// DB-Layer
 		{
 			$this->db->update($this->info_table,array('info_owner'=>$new_owner),array('info_owner'=>$owner),__LINE__,__FILE__);
 		}
+		// ToDo: does not work with multiple owners!!!
 		$this->db->update($this->info_table,array('info_responsible'=>$new_owner),array('info_responsible'=>$owner),__LINE__,__FILE__);
 	}
 
@@ -560,7 +584,7 @@ class soinfolog 				// DB-Layer
 		//echo "<p>anzSubs($info_id) = ".$this->db->f(0)." ($sql)</p>\n";
 		return $this->db->f(0);
 	}
-
+	
 	/**
 	 * searches InfoLog for a certain pattern in $query
 	 *
@@ -743,7 +767,7 @@ class soinfolog 				// DB-Layer
 		{
 			$users[] = $this->db->f(0);
 		}
-		$this->db->select($this->info_table,'DISTINCT info_responsible',str_replace(' AND ','',$this->statusFilter('open')),__LINE__,__FILE__);
+		$this->db->select($this->info_table,'DISTINCT info_responsible',$this->statusFilter('open',false),__LINE__,__FILE__);
 		while ($this->db->next_record())
 		{
 			foreach(explode(',',$this->db->f(0)) as $responsible)

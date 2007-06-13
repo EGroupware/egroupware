@@ -1,4 +1,7 @@
 %1 days in advance	infolog	de	%1 Tage im Vorraus
+%1 deleted	infolog	de	%1 gelöscht
+%1 deleted by %2 at %3	infolog	de	%1 wurde von %2 am %3 gelöscht
+%1 modified	infolog	de	%1 geändert
 %1 modified by %2 at %3	infolog	de	%1 wurde von %2 am %3 geändert
 %1 records imported	infolog	de	%1 Datensätze importiert
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	de	%1 Datensätze gelesen (noch nicht importiert, sie können %2zurück%3 gehen und Test Import ausschalten)
@@ -97,6 +100,7 @@ delete one record by passing its id.	infolog	de	Einen Datensatz spezifiziert dur
 delete the entry	infolog	de	Eintrag löschen
 delete this entry	infolog	de	diesen Eintrag löschen
 delete this entry and all listed sub-entries	infolog	de	Diesen Eintrag und all aufgelisteten Untereinträge löschen
+deleted	infolog	de	gelöscht
 deletes the selected typ	infolog	de	löscht den ausgewählten Typ
 deletes this field	infolog	de	löscht dieses Feld
 deletes this status	infolog	de	löscht diesen Status
@@ -142,6 +146,8 @@ from	infolog	de	Von
 general	infolog	de	Allgemein
 group owner for	infolog	de	Gruppeneigentümer für
 high	infolog	de	hoch
+history logging	infolog	de	Protokollierung der Historie
+history logging and deleting of items	infolog	de	Protokollierung der Historie und löschen von Einträgen
 id	infolog	de	Id
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	de	Wenn ein Typ einen Gruppeneigentümer hat, gehören alle Einträge dieses Typs der angegebenen Gruppe und NICHT dem Benutzer der sie angelegt hat!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	de	Falls nicht gesetzt, wird die Suche und die Filter ausgeblendet für weniger Einträge als "maximale Treffer pro Seite" (in ihren allg. Einstellungen definiert).
@@ -181,6 +187,7 @@ max length of the input [, length of the inputfield (optional)]	infolog	de	max. 
 name must not be empty !!!	infolog	de	Name darf nicht leer sein !!!
 name of new type to create	infolog	de	Name des neu anzulegenden Types
 never hide search and filters	infolog	de	Suche und Filter niemals ausblenden
+new %1	infolog	de	Neue %1
 new %1 created by %2 at %3	infolog	de	Neue %1 wurde von %2 am %3 angelegt
 new name	infolog	de	neuer name
 new search	infolog	de	Neue Suche
@@ -322,7 +329,6 @@ urgent	infolog	de	Dringend
 used time	infolog	de	benötigte Zeit
 valid path on clientside<br>eg. \\server\share or e:\	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 valid path on clientside<br>eg. \servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
-valid path on clientside<br>eg. servershare or e:	infolog	de	gültiger Pfad clientseitig<br>zB. \\Server\Share oder e:\
 values for selectbox	infolog	de	Werte für die Auswahlbox
 view all subs of this entry	infolog	de	alle Untereinträge dieses Eintrag anzeigen
 view other subs	infolog	de	andere Untereinträge anzeigen
@@ -337,6 +343,9 @@ will-call	infolog	de	ruft zurück
 write (add or update) a record by passing its fields.	infolog	de	Schreiben (zufügen oder aktualisieren) eines Datensatzes durch Angabe seiner Felder.
 yes - delete	infolog	de	Ja - Löschen
 yes - delete including sub-entries	infolog	de	Ja - Löschen einschließlich Untereinträge
+yes, noone can purge deleted items	infolog	de	Ja, niemand darf gelöschte Einträge bereinigen
+yes, only admins can purge deleted items	infolog	de	Ja, nur Admins dürfen gelöschte Einträge bereinigen
+yes, with purging of deleted items possible	infolog	de	Ja, jeder darf gelöschte Einträge bereinigen
 you can't delete one of the stock types !!!	infolog	de	Sie können keinen der Standardtypen löschen!!!
 you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Fälligkeitsdatum eingegeben
 you have entered an invalid starting date	infolog	de	Sie haben ein ungültiges Startdatum eingegeben
