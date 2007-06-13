@@ -491,6 +491,8 @@ class html
 		{
 			$oFCKeditor->Config['ToolbarStartExpanded'] = $_options['toolbar_expanded'];
 		}
+		// switching the encoding as html entities off, as we correctly handle charsets and it messes up the wiki totally
+		$oFCKeditor->Config['ProcessHTMLEntities'] = false;
 		 
 		switch($_mode) {
 			case 'simple':
