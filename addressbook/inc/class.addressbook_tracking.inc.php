@@ -142,7 +142,7 @@ class addressbook_tracking extends bo_tracking
 		{
 			$prefix = ($data['subject_contactform'] ? $data['subject_contactform'] : lang('Contactform')).': ';
 		}
-		return $prefix.parent::get_subject($data,$old);
+		return $prefix.$this->contacts->link_title($data);
 	}
 	
 	/**
@@ -162,7 +162,7 @@ class addressbook_tracking extends bo_tracking
 			switch($name)
 			{
 				case 'n_prefix': case 'n_given': case 'n_middle': case 'n_family': case 'n_suffix':	// already in n_fn
-				case 'tid':
+				case 'n_fileas': case 'id': case 'tid':
 					break;
 				case 'created': case 'modified':
 					$details[$name] = array(
@@ -212,6 +212,18 @@ class addressbook_tracking extends bo_tracking
 						'value' => $data[$name],
 					);
 					break;
+			}
+		}
+		if ($this->contacts->customfields)
+		{
+			foreach($this->contacts->customfields as $name => $custom)
+			{
+				if (!$data['#'.$name]) continue;
+
+				$details['#'.$name] = array(
+					'label' => $custom['label'],
+					'value' => $data['#'.$name],
+				);
 			}
 		}
 		return $details;

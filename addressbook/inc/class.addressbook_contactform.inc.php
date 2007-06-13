@@ -54,6 +54,8 @@ class addressbook_contactform
 					}
 					if ($contact->save($content))
 					{
+						unset($content['modified']); unset($content['modifier']);	// not interesting for new entries
+
 						$tracking->do_notifications($content,null);	// only necessary as long addressbook is not doing this itself
 
 						return '<p align="center">'.$content['msg'].'</p>';
