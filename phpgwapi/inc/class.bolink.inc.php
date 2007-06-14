@@ -357,7 +357,7 @@ class bolink extends solink
 	 * @param $link_id link-id to remove if > 0
 	 * @param string $app='' appname of first endpoint
 	 * @param string/array &$id='' id in $app or array with links, if 1. entry not yet created
-	 * @param string $app2='' app of second endpoint
+	 * @param string $app2='' app of second endpoint, or !file (other !app are not yet supported!)
 	 * @param string $id2='' id in $app2
 	 * @return the number of links deleted
 	 */
@@ -381,12 +381,12 @@ class bolink extends solink
 		}
 		if (!is_array($id))
 		{
-			if (!$link_id && !$app2 && !$id2)
+			if (!$link_id && !$app2 && !$id2 && $app2 != '!'.$this->vfs_appname)
 			{
 				$this->delete_attached($app,$id);	// deleting all attachments
 				unset($this->title_cache[$app.':'.$id]);
 			}
-			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2,$id2);
+			$deleted =& solink::unlink($link_id,$app,$id,$owner,$app2 != '!'.$this->vfs_appname ? $app2 : '',$id2);
 			
 			// only notify on real links, not the one cached for writing or fileattachments
 			$this->notify_unlink($deleted);

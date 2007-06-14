@@ -540,15 +540,17 @@ class boinfolog
 			if ($info['info_status'] == 'deleted') return false;	// entry already deleted
 
 			$this->so->write($deleted);
+
+			$this->link->unlink(0,'infolog',$info_id,'','!file');	// keep the file attachments, only delete the rest
 		}
 		else
 		{
 			$this->so->delete($info_id,false);	// we delete the children via bo to get all notifications!
+			
+			$this->link->unlink(0,'infolog',$info_id);
 		}
 		if ($info['info_status'] != 'deleted')	// dont notify of final purge of already deleted items
 		{
-			$this->link->unlink(0,'infolog',$info_id);
-	
 			$GLOBALS['egw']->contenthistory->updateTimeStamp('infolog_'.$info['info_type'], $info_id, 'delete', time());
 			
 			// send email notifications and do the history logging
