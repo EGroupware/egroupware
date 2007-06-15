@@ -273,7 +273,7 @@ class accounts_backend
 	{
 		if (!($uids = $GLOBALS['egw']->acl->get_ids_for_location($account_id, 1, 'phpgw_group')))
 		{
-			return False;
+			return array();
 		}
 		$members = array();
 		foreach ($uids as $uid)
