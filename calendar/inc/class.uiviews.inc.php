@@ -295,7 +295,7 @@ class uiviews extends uical
 	{
 		if ($this->debug > 0) $this->bo->debug_message('uiviews::month(weeks=%1) date=%2',True,$weeks,$this->date);
 
-		$this->use_time_grid = $this->cal_prefs['use_time_grid'] == 'all';	// all views
+		$this->use_time_grid = !$this->cal_prefs['use_time_grid'] || $this->cal_prefs['use_time_grid'] == 'all';	// all views
 
 		if ($weeks)
 		{
