@@ -1441,9 +1441,18 @@ Calendar.prototype.parseDate = function (str, fmt) {
 	var m = -1;
 	var d = 0;
 //	var a = str.split(/\W+/); does not work with multibyte chars, eg. german umlauts under utf-8
-	var a = str.split(/[./-]/);
+//	var a = str.split(/[./-]/); does not work with old javascript
+	var a;
+	a=str.split(/\//);
+	if (a[0]==str) {
+			a=str.split(/-/);
+	}
+	if (a[0]==str) {
+			a=str.split(/\./);
+	}
+
 	if (!fmt) {
-		fmt = this.dateFormat;
+			fmt = this.dateFormat;
 	}
 	var b = fmt.match(/%./g);
 	var i = 0, j = 0;
