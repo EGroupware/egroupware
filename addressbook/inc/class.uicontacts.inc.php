@@ -1331,8 +1331,13 @@ class uicontacts extends bocontacts
 		if ($content['private']) $content['owner'] .= 'p';
 
 		$GLOBALS['egw_info']['flags']['include_xajax'] = true;
-
-		$this->tmpl->read($this->content_types[$content['tid']]['options']['template']);
+		
+		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template']))
+		{
+			$content['msg']  = lang('WARNING: Template "%1" not found, using default template instead.', $this->content_types[$content['tid']]['options']['template'])."\n";
+			$content['msg'] .= lang('Please update the templatename in your customfields section!');
+			$this->tmpl->read('addressbook.edit');
+		}
 		return $this->tmpl->exec('addressbook.uicontacts.edit',$content,$sel_options,$readonlys,$content, 2);
 	}
 	
@@ -1510,13 +1515,12 @@ $readonlys['button[vcard]'] = true;
 		{
 			$content['no_tid'] = true;
 		}
-/* Conny: what's that?
-		foreach(explode(',',$content['published_groups']) as $id)
+		if (!$this->tmpl->read($this->content_types[$content['tid']]['options']['template']))
 		{
-			$sel_options['published_groups'][$id] = $GLOBALS['egw']->accounts->id2name($id);
+			$content['msg']  = lang('WARNING: Template "%1" not found, using default template instead.', $this->content_types[$content['tid']]['options']['template'])."\n";
+			$content['msg'] .= lang('Please update the templatename in your customfields section!');
+			$this->tmpl->read('addressbook.edit');
 		}
-*/
-		$this->tmpl->read($this->content_types[$content['tid']]['options']['template']);
 		foreach(array('email','email_home','url','url_home') as $name)
 		{
 			if ($content[$name] )
