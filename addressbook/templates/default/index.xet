@@ -10,12 +10,11 @@
 		<hbox>
 			<buttononly id="search" label="Advanced search" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.search'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;"/>
 			<buttononly id="add" label="Add" statustext="Add a new contact" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" class="rightPadAdd"/>
+			<description id="manual" class="rightPadAdd"/>
 		</hbox>
-		<styles>
-			.rightPadAdd { padding-right: 40px; }
-		</styles>
+		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.3.002">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.4.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -167,6 +166,7 @@
 						</menulist>
 					</vbox>
 					<hbox options="0" class="noPrint" orient="0">
+						<button id="document[$row_cont[id]]" image="new" label="Insert in document"/>
 						<image options="addressbook.uicontacts.view&amp;contact_id=$row_cont[id]" label="View" src="view"/>
 						<button image="edit" label="Edit" onclick="window.open(egw::link('/index.php','menuaction=addressbook.uicontacts.edit&amp;contact_id=$row_cont[id]'),'_blank','dependent=yes,width=850,height=440,scrollbars=yes,status=yes'); return false;" id="edit[$row_cont[id]]"/>
 						<button id="delete[$row_cont[id]]" image="delete" label="Delete" statustext="Delete this contact" onclick="return confirm('Delete this contact');"/>

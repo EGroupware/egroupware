@@ -46,6 +46,7 @@ are you shure you want to delete this contact?	addressbook	de	Diesen Kontakt lös
 are you sure you want to delete this field?	addressbook	de	Sind Sie sicher, dass Sie dieses Feld löschen wollen?
 assistent	addressbook	de	Assistent
 assistent phone	addressbook	de	Telefon Assistent
+at the moment the following document-types are supported:	addressbook	de	Im Moment werden die folgenden Dokumenttypen unterstützt:
 birthday	common	de	Geburtstag
 birthdays	common	de	Geburtstage
 blank	addressbook	de	Leer
@@ -59,6 +60,7 @@ business phone	addressbook	de	Tel. geschäftl.
 business state	addressbook	de	Bundesland geschäftl.
 business street	addressbook	de	Straße geschäftl.
 business zip code	addressbook	de	PLZ geschäftl.
+calendar fields:	addressbook	de	Kalender Felder:
 calendar uri	addressbook	de	Kalender URI
 can be changed via setup >> configuration	admin	de	Kann über Setup >> Konfiguration geändert werden
 car phone	addressbook	de	Autotelefon
@@ -69,6 +71,8 @@ charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
 charset of file	addressbook	de	Zeichensatz der Datei
 check all	addressbook	de	Alle auswählen
 choose an icon for this contact type	admin	de	Wählen Sie ein Icon für diesen Kontakt Typ
+choose owner of imported data	addressbook	de	Wählen Sie den Besitzer der importierten Daten
+choose seperator and charset	addressbook	de	Wählen Sie ein Trennzeichen und den Zeichensatz
 chosse an etemplate for this contact type	admin	de	Wählen Sie ein eTemplate für diesen Kontakt Typ
 city	common	de	Stadt
 company	common	de	Firma
@@ -79,8 +83,10 @@ contact application	admin	de	Kontakt Anwendung
 contact copied	addressbook	de	Kontakt kopiert
 contact deleted	addressbook	de	Kontakt gelöscht
 contact fields to show	addressbook	de	Kontaktfelder die angezeigt werden sollen
+contact fields:	addressbook	de	Kontaktfelder:
 contact id	addressbook	de	Kontakt ID
 contact modified by %1 at %2	addressbook	de	Kontakt geändert von %1 am %2
+contact not found!	addressbook	de	Kontakt nicht gefunden!
 contact repository	admin	de	Speicherort Kontakte
 contact saved	addressbook	de	Kontakt gespeichert
 contact settings	admin	de	Kontakt Einstellungen
@@ -117,6 +123,7 @@ distribution list deleted	addressbook	de	Verteiler gelöscht
 distribution lists	addressbook	de	Verteilerlisten
 do you want a private addressbook, which can not be viewed by users, you grant access to your personal addressbook?	addressbook	de	Wollen Sie ein privates Adressbuch, dass nicht von Benutzern einsehbar ist, denen Sie Zugriff auf Ihr persönliches Adressbuch gegeben haben?
 do your really want to delete this contact?	addressbook	de	Wollen sie diesen Kontakt wirklich löschen?
+document '%1' does not exist or is not readable for you!	addressbook	de	Dokument '%1' existiert nicht oder ist für Sie nicht lesbar!
 doesn't matter	addressbook	de	egal
 domestic	addressbook	de	Wohnung
 don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
@@ -160,6 +167,7 @@ for read only ldap	admin	de	für nur lesendes LDAP
 freebusy uri	addressbook	de	Freebusy URI
 full name	addressbook	de	vollständiger Name
 general	addressbook	de	Allgemein
+general fields:	addressbook	de	Allgemeine Felder:
 geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
@@ -178,6 +186,8 @@ home zip code	addressbook	de	PLZ privat
 how many contacts should non-admins be able to export (empty = no limit)	admin	de	Wieviele Kontakte sollen nicht-Adminstratoren exportieren können (leer = keine Begrenzung)
 icon	addressbook	de	Icon
 if accounts are already in ldap	admin	de	wenn die Benutzer bereits im LDAP sind
+if you specify a directory (full vfs path) here, addressbook displays an action for each document. that action allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Verzeichnis (kompletter VFS Pfad) angeben, zeigt das Adressbuch einen Befehl für jedes Dokument darin. Diese Befehler erlauben das angegebene Dokumnet mit Kontaktdaten eingefügt herunterzuladen.
+if you specify a document (full vfs path) here, addressbook displays an extra document icon for each address. that icon allows to download the specified document with the contact data inserted.	addressbook	de	Wenn Sie hier ein Dokument (kompletter VFS Pfad) angeben, zeigt das Adressbuch ein extranes Dokument Icon. Diese Icon erlaubt das Dokumnet mit Kontaktdaten eingefügt herunterzuladen.
 import	addressbook	de	Import
 import contacts	addressbook	de	Kontakte importieren
 import csv-file into addressbook	addressbook	de	Import CSV-Datei ins Adressbuch
@@ -188,8 +198,10 @@ import from outlook	addressbook	de	Aus Outlook importieren
 import multiple vcard	addressbook	de	Import mehrere VCards
 import next set	addressbook	de	Nächsten Satz importieren
 import_instructions	addressbook	de	In Netscape, öffnen Sie das Adressbuch und wählen Sie <b>Exportieren</b> aus dem Datei Menü aus. Die Dateien werden im LDIF Formaz exportiert.<p> In Outlook wählen Sie den Ordner Kontakte aus, wählen Sie <b>Importieren und Exportieren...</p> aus dem <b>Datei</b> Menü aus und Exportieren Sie die Kontakte als eine CSV Datei.<p> In Palm Desktop 4.0 oder größer, öffnen Sie Ihr Adressbuch und wählen Sie <b>Export</b> aus dem Datei-Menü aus. Die Datei wird im VCard-Format exportiert.
+imports contacts into your addressbook from a csv file. csv means 'comma seperated values'. however in the options tab you can also choose other seperators.	addressbook	de	Importiert Kontakte aus einer CSV Datei in Ihr Adressbuch. CSV bedeutet Komma getrennte Werte. Sie können in dem Reiter Einstellungen auch ein anderes Trennzeichen wählen.
 in %1 days (%2) is %3's birthday.	addressbook	de	In %1 Tagen (%2) ist der Geburtstag von %3.
 income	addressbook	de	Einkommen
+insert in document	addressbook	de	Einfügen in Dokument
 insufficent rights to delete this list!	addressbook	de	Keine Rechte diese Liste zu löschen!
 international	addressbook	de	International
 label	addressbook	de	Adressetikett
@@ -207,8 +219,10 @@ list all customfields	addressbook	de	Liste alle benutzerdefinierten Felder
 list already exists!	addressbook	de	Die Liste existiert bereits!
 list created	addressbook	de	Verteiler erzeugt
 list creation failed, no rights!	addressbook	de	Verteiler erzeugen fehlgeschlagen, keine Rechte!
+load sample file	addressbook	de	Beispieldatei laden
 load vcard	addressbook	de	VCard laden
 locations	addressbook	de	Standorte
+manage mapping	addressbook	de	Zuordnungen verwalten
 mark records as private	addressbook	de	Eintrag als Privat kennzeichnen
 merge into first or account, deletes all other!	addressbook	de	Vereinige im ersten oder Benutzerkonto, löscht alle anderen!
 merged	addressbook	de	vereinigt
@@ -225,6 +239,7 @@ move to addressbook:	addressbook	de	Verschiebe ins Adressbuch:
 moved	addressbook	de	verschoben
 multiple vcard	addressbook	de	Mehrere VCards
 name for the distribution list	addressbook	de	Name für die Verteilerliste
+name of current user, all other contact fields are valid too	addressbook	de	Name des aktuellen Benutzers, auch alle anderen Kontaktfelder sind erlaubt
 name, address	addressbook	de	Name, Adresse
 new contact submitted by %1 at %2	addressbook	de	Neuer Kontakt eingetragen von %1 am %2
 no vcard	addressbook	de	Keine VCard
@@ -261,6 +276,7 @@ record access	addressbook	de	Zugriffsrechte
 record owner	addressbook	de	Datensatzeigentümer
 remove selected contacts from distribution list	addressbook	de	Ausgewählte Kontakte vom Verteiler löschen
 removed from distribution list	addressbook	de	vom Verteiler gelöscht
+replacements for inserting contacts into documents	addressbook	de	Platzhalter für das Einfügen von Kontakten in Dokumente
 required fields *	addressbook	de	unbedingt auszufüllende Felder *
 role	addressbook	de	Funktion
 room	addressbook	de	Raum
@@ -297,6 +313,7 @@ thank you for contacting us.	addressbook	de	Danke das Sie uns kontaktierten.
 that field name has been used already !	addressbook	de	Dieser Feldname wird bereits benutzt!
 the anonymous user has probably no add rights for this addressbook.	addressbook	de	Der anonyme Benutzer hat vermutlich keine Hinzufügen Rechte für diese Adressbuch.
 the anonymous user needs add rights for it!	addressbook	de	Der anonyme Benutzer benötigt Hinzufügen Rechte dafür!
+the document can contain placeholder like $$n_fn$$, to be replaced with the contact data (%1full list of placeholder names%2).	addressbook	de	Das Dokument kann Platzhalter wie $$n_fn$$ enthalten, die mit den Kontaktdaten ersetzt werden (%1komplette Liste der Platzhalter%2).
 there was an error saving your data :-(	addressbook	de	Beim Speichern ihrer Daten ist ein Fehler aufgetreten :-(
 this module displays a contactform, that stores direct into the addressbook.	addressbook	de	Diese Module ist ein Kontaktformular, das direkt in das Adressbuch speichert.
 this person's first name was not in the address book.	addressbook	de	Der Vorname dieser Person ist nicht im Adressbuch.

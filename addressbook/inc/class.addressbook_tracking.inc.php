@@ -4,7 +4,7 @@
  *
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @package tracker
+ * @package addressbook
  * @copyright (c) 2007 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$ 
@@ -218,8 +218,14 @@ class addressbook_tracking extends bo_tracking
 		{
 			foreach($this->contacts->customfields as $name => $custom)
 			{
-				if (!$data['#'.$name]) continue;
-
+				if (!$header_done)
+				{
+					$details['custom'] = array(
+						'value' => lang('Custom fields').':',
+						'type'  => 'reply',
+					);
+					$header_done = true;
+				}
 				$details['#'.$name] = array(
 					'label' => $custom['label'],
 					'value' => $data['#'.$name],

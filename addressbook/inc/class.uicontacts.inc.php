@@ -107,6 +107,12 @@ class uicontacts extends bocontacts
 				$content['action'] = 'delete';
 				$content['nm']['rows']['checked'] = array($id);
 			}
+			if (isset($content['nm']['rows']['document']))	// handle insert in default document button like an action
+			{
+				list($id) = @each($content['nm']['rows']['document']);
+				$content['action'] = 'document';
+				$content['nm']['rows']['checked'] = array($id);
+			}
 			if ($content['action'] !== '')
 			{
 				if (!count($content['nm']['rows']['checked']) && !$content['use_all'] && $content['action'] != 'delete_list')
@@ -264,7 +270,10 @@ class uicontacts extends bocontacts
 			$sel_options['action']['remove_from_list'] = lang('Remove selected contacts from distribution list');
 			$sel_options['action']['delete_list'] = lang('Delete selected distribution list!');
 		}
-
+		if ($this->prefs['document_dir'])
+		{
+			$sel_options['action'] += $this->get_document_actions();
+		}
 		if (!array_key_exists('importexport',$GLOBALS['egw_info']['user']['apps'])) unset($sel_options['action']['export']);
 		
 		// dont show tid-selection if we have only one content_type
@@ -469,6 +478,11 @@ class uicontacts extends bocontacts
 			$to_list = (int)substr($action,8);
 			$action = 'to_list';
 		}
+		if (substr($action,0,9) == 'document-')
+		{
+			$document = substr($action,10);
+			$action = 'document';
+		}
 		// Security: stop non-admins to export more then the configured number of contacts
 		if (in_array($action,array('csv','vcard')) && (int)$this->config['contact_export_limit'] && 
 			!isset($GLOBALS['egw_info']['user']['apps']['admin']) && count($checked) > $this->config['contact_export_limit'])
@@ -541,7 +555,11 @@ class uicontacts extends bocontacts
 					unset($query['filter2']);
 					$GLOBALS['egw']->session->appsession($session_name,'addressbook',$query);
 				}
-				return false;					
+				return false;
+			
+			case 'document':
+				$msg = $this->download_document($checked,$document);
+				return false;
 		}
 		foreach($checked as $id)
 		{
@@ -608,7 +626,7 @@ class uicontacts extends bocontacts
 						$Ok = $this->add2list($id,$to_list) !== false;
 					}
 					break;
-
+					
 				default:	// move to an other addressbook
 					if (!(int)$action || !($this->grants[(string) (int) $action] & EGW_ACL_EDIT))	// might be ADD in the future
 					{
@@ -933,6 +951,8 @@ class uicontacts extends bocontacts
 					}
 				}
 			}
+			$readonlys["document[$row[id]]"] = !$this->prefs['default_document'];
+
 			// hide region for address format 'postcode_city'
 			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
 			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
@@ -1830,6 +1850,71 @@ $readonlys['button[vcard]'] = true;
 			echo '<p style="margin-top: 20px;"><b>'.lang('Migration finished')."</b></p>\n";
 		}
 		$GLOBALS['egw']->common->egw_footer();
+	}
+	
+	/**
+	 * Download a document with inserted contact(s)
+	 *
+	 * @param array $ids contact-ids
+	 * @param string $document vfs-path of document
+	 * @return string error-message or error, otherwise the function does NOT return!
+	 */
+	function download_document($ids,$document='')
+	{
+		if (!$document) $document = $this->prefs['default_document'];
+		
+		require_once(EGW_API_INC.'/class.vfs.inc.php');
+		$vfs =& new vfs();
+		if (!$document || $document != $this->prefs['default_document'] && 
+				substr($document,0,1+strlen($this->prefs['document_dir'])) != $this->prefs['document_dir'].'/' ||
+			!$vfs->acl_check(array(
+				'string' => $document,
+				'relatives' => RELATIVE_ROOT,
+				'operation' => EGW_ACL_READ,
+				'must_exist' => true,
+			)))
+		{
+			return lang("Document '%1' does not exist or is not readable for you!");
+		}
+		require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_merge.inc.php');
+		$document_merge =& new addressbook_merge();
+
+		return $document_merge->download($document,$ids);
+	}
+	
+	/**
+	 * Returning document actions / files from the document_dir
+	 *
+	 * @return array
+	 */
+	function get_document_actions()
+	{
+		if (!$this->prefs['document_dir']) return array();
+		
+		if (!is_array($actions = $GLOBALS['egw']->session->appsession('document_actions','addressbook')))
+		{
+			require_once(EGW_API_INC.'/class.vfs.inc.php');
+			$vfs =& new vfs;
+			
+			$actions = array();
+			if (($files = $vfs->ls(array(
+				'string' => $this->prefs['document_dir'],
+				'relatives' => RELATIVE_ROOT,
+			))))
+			{
+				foreach($files as $file)
+				{
+					// return only the mime-types we support
+					if ($file['mime_type'] != 'application/rtf' && substr($file['mime_type'],0,5) != 'text/') continue;
+					// As browsers not always return the right mime_type, you could use a negative list instead
+					//if ($file['mime_type'] == 'Directory' || substr($file['mime_type'],0,6) == 'image/') continue;
+
+					$actions['document-'.$file['directory'].'/'.$file['name']] = lang('Insert in document').': '.$file['name'];
+				}
+			}
+			$GLOBALS['egw']->session->appsession('document_actions','addressbook',$actions);
+		}
+		return $actions;
 	}
 }
 
