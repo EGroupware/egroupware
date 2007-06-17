@@ -246,6 +246,7 @@ phone numbers	common	en	Phone Numbers
 photo	addressbook	en	Photo
 please enter a name for that field !	addressbook	en	Please enter a name for that field !
 please select only one category	addressbook	en	Please select only one category
+please update the templatename in your customfields section!	addressbook	en	Please update the templatename in your customfields section!
 postal	common	en	Postal
 pref	addressbook	en	pref
 preferred phone	addressbook	en	preferred phone
@@ -320,6 +321,7 @@ verification	addressbook	en	Verification
 view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
+warning: template "%1" not found, using default template instead.	addressbook	en	WARNING: Template "%1" not found, using default template instead.
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Which address format should the addressbook use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.
