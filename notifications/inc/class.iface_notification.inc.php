@@ -25,6 +25,8 @@ interface iface_notification {
 	/**
 	 * sends notification
 	 *
+	 * @abstract NOTE, $_message contains some html-tags (<p><a><b><br>)
+	 * implementing class needs to handle them somehow.
 	 * @param string $_message
 	 */
 	public function send( $_message );

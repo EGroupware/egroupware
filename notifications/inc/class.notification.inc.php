@@ -43,6 +43,10 @@ final class notification {
 	
 	/**
 	 * sets notification message
+	 * @abstract $message accepts html tags: <p><a><b><br>.
+	 * NOTE: There is no XSS prevention in notifications framework! 
+	 * You have to filter userinputs yourseve (e.g. htmlspechialchars() )
+	 * 
 	 * @param string &$message
 	 */
 	public function set_message($_message) {

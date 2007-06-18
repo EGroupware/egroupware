@@ -116,10 +116,10 @@ class notification_popup implements iface_notification {
 			while ($notification = $this->db->row(true)) {
 				switch (self::_window ) {
 					case 'div' :
-						$message .= nl2br($notification['message']). '<br>';
+						$message .= '<p>'. nl2br($notification['message']). '</p>';
 						break;
 					case 'alert' :
-						$message .= $notification['message']. "\n";
+						$message .= ".\n". $notification['message']. "\n";
 						break;
 				}
 			}
