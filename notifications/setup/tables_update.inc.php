@@ -22,4 +22,11 @@
 
 		return $GLOBALS['setup_info']['notifications']['currentver'] = '0.6';
 	}
+
+
+	$test[] = '0.6';
+	function notifications_upgrade0_6()
+	{
+		return $GLOBALS['setup_info']['notifications']['currentver'] = '1.4';
+	}
 ?>

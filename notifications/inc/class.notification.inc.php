@@ -43,6 +43,10 @@ final class notification {
 	
 	/**
 	 * sets notification message
+	 * @abstract $message accepts html tags: <p><a><b><br>.
+	 * NOTE: There is no XSS prevention in notifications framework! 
+	 * You have to filter userinputs yourseve (e.g. htmlspechialchars() )
+	 * 
 	 * @param string &$message
 	 */
 	public function set_message($_message) {
@@ -125,4 +129,26 @@ final class notification {
 		return $this->receivers;
 	}
 
+	/**
+	 * Small helper function to just send a message
+	 *
+	 * @abstract To stay php4 compatible for the 1.4 release we don't
+	 * throw exeptions here. This behaviour will change after 1.4!
+	 * @param array $receivers
+	 * @param string $message
+	 * @return string
+	 */
+	public static function notify( array $_receivers, $_message ) {
+		$notification = new notification();
+		$notification->set_receivers( $_receivers );
+		$notification->set_message( $_message );
+		try{
+			$notification->send();
+		}
+		catch(Exception $exception) {
+			return $exception->getMessage();
+		}
+		return null;
+	}
+	
 }

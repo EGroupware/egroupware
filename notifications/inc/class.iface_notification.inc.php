@@ -20,11 +20,13 @@ interface iface_notification {
 	 * @param object $_account
 	 * @param object $_preferences
 	 */
-	public function __construct( $_account, $_preferences );
+	public function __construct( $_account=false, $_preferences=false );
 	
 	/**
 	 * sends notification
 	 *
+	 * @abstract NOTE, $_message contains some html-tags (<p><a><b><br>)
+	 * implementing class needs to handle them somehow.
 	 * @param string $_message
 	 */
 	public function send( $_message );
