@@ -85,6 +85,11 @@ class addressbook_merge	// extends bo_merge
 				case 'cat_id':
 					if ($value)
 					{
+						if (!is_object($GLOBALS['egw']->cats))
+						{
+							require_once(EGW_API_INC.'/class.categories.inc.php');
+							$GLOBALS['egw']->cats =& new categories;
+						}
 						$cats = array();
 						foreach(is_array($value) ? $value : explode(',',$value) as $cat_id)
 						{
@@ -148,7 +153,7 @@ class addressbook_merge	// extends bo_merge
 				'relatives' => RELATIVE_ROOT,
 			))))
 		{
-			$err = lang("Document '%1' does not exist or is not readable for you!");
+			$err = lang("Document '%1' does not exist or is not readable for you!",$document);
 			return false;
 		}
 		// generate replacements

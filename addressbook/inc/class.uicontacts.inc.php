@@ -1874,7 +1874,7 @@ $readonlys['button[vcard]'] = true;
 				'must_exist' => true,
 			)))
 		{
-			return lang("Document '%1' does not exist or is not readable for you!");
+			return lang("Document '%1' does not exist or is not readable for you!",$document);
 		}
 		require_once(EGW_INCLUDE_ROOT.'/addressbook/inc/class.addressbook_merge.inc.php');
 		$document_merge =& new addressbook_merge();
