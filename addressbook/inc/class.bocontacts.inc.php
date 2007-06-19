@@ -791,7 +791,34 @@ class bocontacts extends socontacts
 	{
 		return array(	
 			'type' => 'c',// one char type-identifiy for this resources
+			'info' => 'addressbook.bocontacts.calendar_info',// info method, returns array with id, type & name for a given id
 		);
+	}
+	
+	/**
+	 * returns info about contacts for calender
+	 *
+	 * @param int/array $ids single contact-id or array of id's
+	 * @return array 
+	 */
+	function calendar_info($ids)
+	{
+		if (!$ids) return null;
+		
+		$data = array();
+		foreach(!is_array($ids) ? array($ids) : $ids as $id)
+		{
+			if (!($contact = $this->read($id))) continue;
+			
+			$data[] = array(
+				'res_id' => $id,
+				'email' => $contact['email'] ? $contact['email'] : $contact['email_home'],
+				'rights' => EGW_ACL_READ_FOR_PARTICIPANTS,
+				'name' => $this->link_title($contact),
+			);
+		}
+		//echo "<p>calendar_info(".print_r($ids,true).")="; _debug_array($data);
+		return $data;
 	}
 
 	/**

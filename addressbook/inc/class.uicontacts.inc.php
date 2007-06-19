@@ -480,7 +480,7 @@ class uicontacts extends bocontacts
 		}
 		if (substr($action,0,9) == 'document-')
 		{
-			$document = substr($action,10);
+			$document = substr($action,9);
 			$action = 'document';
 		}
 		// Security: stop non-admins to export more then the configured number of contacts

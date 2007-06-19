@@ -95,7 +95,7 @@ class addressbook_merge	// extends bo_merge
 						{
 							$cats[] = $GLOBALS['egw']->cats->id2name($cat_id);
 						}
-						$value = explode(', ',$cats);
+						$value = implode(', ',$cats);
 					}
 					break;
 				case 'jpegphoto':	// returning a link might make more sense then the binary photo
@@ -112,8 +112,14 @@ class addressbook_merge	// extends bo_merge
 						$value = $contact[$value];
 					}
 					break;
+				case 'account_id':
+					if ($value)
+					{
+						$replacements['$$'.($prefix ? $prefix.'/':'').'account_lid$$'] = $GLOBALS['egw']->accounts->id2name($value);
+					}
+					break;
 			}
-			if ($name != 'photo') $replacements[($prefix ? $prefix.'[':'').'$$'.$name.'$$'.($prefix ? ']':'')] = $value;
+			if ($name != 'photo') $replacements['$$'.($prefix ? $prefix.'/':'').$name.'$$'] = $value;
 		}
 		return $replacements;
 	}
@@ -128,7 +134,42 @@ class addressbook_merge	// extends bo_merge
 	 */
 	function calendar_replacements($id)
 	{
-		return array();
+		require_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocalupdate.inc.php');
+		$calendar =& new bocalupdate();
+		
+		$replacements = array(); $n = 1;
+		foreach($calendar->search(array(
+			'start' => $calendar->now_su,
+			'users' => 'c'.$id,
+			'offset' => 0,
+			'num_rows' => 20,
+			'order' => 'cal_start',
+		)) as $event)
+		{
+			foreach($calendar->event2array($event) as $name => $data)
+			{
+				if (substr($name,-4) == 'date') $name = substr($name,0,-4);
+				$replacements['$$calendar/'.$n.'/'.$name.'$$'] = is_array($data['data']) ? implode(', ',$data['data']) : $data['data'];
+			}
+			foreach(array('start','end') as $what)
+			{
+				foreach(array(
+					'date' => $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
+					'day'  => 'l',
+					'time' => $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i',
+				) as $name => $format)
+				{
+					$value = date($format,$event[$what]);
+					if ($format == 'l') $value = lang($value);
+					$replacements['$$calendar/'.$n.'/'.$what.$name.'$$'] = $value;
+				}
+			}
+			$duration = ($event['end'] - $event['start'])/60;
+			$replacements['$$calendar/'.$n.'/duration$$'] = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
+
+			++$n;
+		}
+		return $replacements;
 	}
 
 	/**
@@ -162,17 +203,27 @@ class addressbook_merge	// extends bo_merge
 			$err = lang('Contact not found!');
 			return false;
 		}
-		if (strpos($content,'$$user[') !== null)
+		if (strpos($content,'$$user/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($GLOBALS['egw_info']['user']['account_id'],'person_id')))
 		{
-			$replacements += $this->contact_replacements('account_id:'.$GLOBALS['egw_info']['user']['account_id'],'user');
+			$replacements += $this->contact_replacements($user,'user');
 		}
-		if (strpos($content,'$$calendar[') !== null)
+		if (strpos($content,'$$calendar/') !== null)
 		{
 			$replacements += $this->calendar_replacements($id);
 		}
 		$replacements['$$date$$'] = date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],time()+$this->contacts->tz_offset_s);
-
-		return str_replace(array_keys($replacements),array_values($replacements),$content);
+		
+		if ($this->contacts->prefs['csv_charset'])	// if we have an export-charset defined, use it here to
+		{
+			$replacements = $GLOBALS['egw']->translation->convert($replacements,$GLOBALS['egw']->translation->charset(),$this->contacts->prefs['csv_charset']);
+		}
+		$content = str_replace(array_keys($replacements),array_values($replacements),$content);
+		
+		if (strpos($content,'$$calendar/') !== null)	// remove not existing event-replacements
+		{
+			$content = preg_replace('/\$\$calendar\/[0-9]+\/[a-z_]+\$\$/','',$content);
+		}
+		return $content;
 	}
 	
 	/**
@@ -230,19 +281,42 @@ class addressbook_merge	// extends bo_merge
 		echo '<tr><td colspan="4"><h3>'.lang('General fields:')."</h3></td></tr>";
 		foreach(array(
 			'date' => lang('Date'),
-			'user[n_fn]' => lang('Name of current user, all other contact fields are valid too'),
-			'user[account_lid]' => lang('Username'),
+			'user/n_fn' => lang('Name of current user, all other contact fields are valid too'),
+			'user/account_lid' => lang('Username'),
 		) as $name => $label)
 		{
 			echo '<tr><td>$$'.$name.'$$</td><td colspan="3">'.$label."</td></tr>\n";
 		}
-
-		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')."</h3></td></tr>";
+		$GLOBALS['egw']->translation->add_app('calendar');
+		echo '<tr><td colspan="4"><h3>'.lang('Calendar fields:')." # = 1, 2, ..., 20</h3></td></tr>";
 		foreach(array(
+			'title' => lang('Title'),
+			'description' => lang('Description'),
+			'participants' => lang('Participants'),
+			'category' => lang('Location'),
+			'start'    => lang('Start').': '.lang('Date').'+'.lang('Time'),
+			'startday' => lang('Start').': '.lang('Weekday'),
+			'startdate'=> lang('Start').': '.lang('Date'),
+			'starttime'=> lang('Start').': '.lang('Time'),
+			'end'      => lang('End').': '.lang('Date').'+'.lang('Time'),
+			'endday'   => lang('End').': '.lang('Weekday'),
+			'enddate'  => lang('End').': '.lang('Date'),
+			'endtime'  => lang('End').': '.lang('Time'),
+			'duration' => lang('Duration'),
+			'owner'    => lang('Owner'),
+			'priority' => lang('Priority'),
+			'updated'  => lang('Updated'),
+			'recur_type' => lang('Repetition'),
+			'access'   => lang('Access').': '.lang('public').', '.lang('private'),
 		) as $name => $label)
 		{
+			if (in_array($name,array('start','end')) && $n&1)		// main values, which should be in the first column
+			{
+				echo "</tr>\n";
+				$n++;
+			}
 			if (!($n&1)) echo '<tr>';
-			echo '<td>$$'.$name.'$$</td><td>'.$label.'</td>';
+			echo '<td>$$calendar/#/'.$name.'$$</td><td>'.$label.'</td>';
 			if ($n&1) echo "</tr>\n";
 			$n++;
 		}
