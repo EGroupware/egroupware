@@ -75,7 +75,7 @@
 					return false;
 				}
 				if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap' &&
-					isset($allValues[0]['shawdowexpire']) && $allValues[0]['shawdowexpire'][0]*24*3600 < time())
+					isset($allValues[0]['shadowexpire']) && $allValues[0]['shadowexpire'][0]*24*3600 < time())
 				{
 					return false;	// account is expired
 				}
