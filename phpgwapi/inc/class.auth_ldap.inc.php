@@ -38,10 +38,6 @@
 		 */
 		function authenticate($username, $passwd)
 		{
-			if (ereg('[()|&=*,<>!~]',$username))
-			{
-				return False;
-			}
 			// allow non-ascii in username & password
 			$username = $GLOBALS['egw']->translation->convert($username,$GLOBALS['egw']->translation->charset(),'utf-8');
 			$passwd = $GLOBALS['egw']->translation->convert($passwd,$GLOBALS['egw']->translation->charset(),'utf-8');
@@ -62,7 +58,7 @@
 			$attributes	= array('uid','dn','givenName','sn','mail','uidNumber','gidNumber','shadowExpire');
 
 			$filter = $GLOBALS['egw_info']['server']['ldap_search_filter'] ? $GLOBALS['egw_info']['server']['ldap_search_filter'] : '(uid=%user)';
-			$filter = str_replace(array('%user','%domain'),array($username,$GLOBALS['egw_info']['user']['domain']),$filter);
+			$filter = str_replace(array('%user','%domain'),array(ldap::quote($username),$GLOBALS['egw_info']['user']['domain']),$filter);
 
 			if ($GLOBALS['egw_info']['server']['account_repository'] == 'ldap')
 			{
@@ -84,16 +80,10 @@
 					return false;	// account is expired
 				}
 				$userDN = $allValues[0]['dn'];
-				/*
-				generate a bogus password to pass if the user doesn't give us one
-				this gets around systems that are anonymous search enabled
-				*/
-				if (empty($passwd))
-				{
-					$passwd = crypt(microtime());
-				}
+
 				// try to bind as the user with user suplied password
-				if (@ldap_bind($ldap, $userDN, $passwd))
+				// only if a non-empty password given, in case anonymous search is enabled
+				if (!empty($passwd) && @ldap_bind($ldap, $userDN, $passwd))
 				{
 					if ($GLOBALS['egw_info']['server']['account_repository'] != 'ldap')
 					{
@@ -106,12 +96,13 @@
 								'sn'        => 'lastname',
 								'uidnumber' => 'account_id',
 								'mail'      => 'email',
-								'gidnumber' => 'primary_group',
 							) as $ldap_name => $acct_name)
 							{
 								$GLOBALS['auto_create_acct'][$acct_name] =
 									$GLOBALS['egw']->translation->convert($allValues[0][$ldap_name][0],'utf-8');
 							}
+							// our group-ids are negative
+							$GLOBALS['auto_create_acct']['primary_group'] = -$allValues[0]['gidnumber'][0];
 							return True;
 						}
 						return ($id = $GLOBALS['egw']->accounts->name2id($username,'account_lid','u')) &&

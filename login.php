@@ -84,6 +84,11 @@
 
 	/* Program starts here */
 
+	// some apache mod_auth_* modules use REMOTE_USER instead of PHP_AUTH_USER, thanks to Sylvain Beucler
+	if ($GLOBALS['egw_info']['server']['auth_type'] == 'http' && !isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['REMOTE_USER']))
+	{
+        	$_SERVER['PHP_AUTH_USER'] = $_SERVER['REMOTE_USER'];
+	}
 	if($GLOBALS['egw_info']['server']['auth_type'] == 'http' && isset($_SERVER['PHP_AUTH_USER']))
 	{
 		$submit = True;
@@ -93,12 +98,12 @@
 	}
 	else
 	{
-		$passwd = $_POST['passwd'];
+		$passwd = get_magic_quotes_gpc() ? stripslashes($_POST['passwd']) : $_POST['passwd'];
 		$passwd_type = $_POST['passwd_type'];
 
 		if($GLOBALS['egw_info']['server']['allow_cookie_auth'])
 		{
-			$eGW_remember = explode('::::',stripslashes($_COOKIE['eGW_remember']));
+			$eGW_remember = explode('::::',get_magic_quotes_gpc() ? stripslashes($_COOKIE['eGW_remember']) : $_COOKIE['eGW_remember']);
 			
 			if($eGW_remember[0] && $eGW_remember[1] && $eGW_remember[2])
 			{
