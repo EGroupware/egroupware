@@ -270,7 +270,7 @@ class bo_tracking
 				{
 					foreach($GLOBALS['egw']->accounts->members($assignee,true) as $u)
 					{
-						if ($email = $GLOBALS['egw']->accounts->id2name($u,'account_email') && !in_array($email, $email_sent))
+						if (($email = $GLOBALS['egw']->accounts->id2name($u,'account_email')) && !in_array($email, $email_sent))
 						{
 							$this->send_notification($data,$old,$email,$u,'notify_assigned');
 							$email_sent[] = $email;
