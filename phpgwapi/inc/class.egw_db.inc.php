@@ -127,6 +127,7 @@
 			'name_case'        => 'upper',	// case of returned column- and table-names: upper, lower(pgSql), preserv(MySQL)
 			'client_encoding'  => false,	// db uses a changeable clientencoding
 			'case_insensitive_like' => 'LIKE',	// case insensitive version of like, eg. ILIKE for postgres
+			'require_truncate_varchar' => false,// DB requires varchar columns to be truncated to the max. size (eg. Postgres)
 			'order_on_text'    => true,		// is the DB able to order by a given text column, boolean or
 		);									// string for sprintf for a cast (eg. 'CAST(%s AS varchar)')
 
@@ -346,6 +347,7 @@
 					$this->capabilities['client_encoding'] = (float) $db_version >= 7.4;
 					$this->capabilities['outer_join'] = true;
 					$this->capabilities['case_insensitive_like'] = 'ILIKE';
+					$this->capabilities['require_truncate_varchar'] = true;
 					break;
 
 				case 'mssql':
@@ -1141,11 +1143,12 @@
 		* Int and Auto types are casted to int: quote('1','int') === 1, quote('','int') === 0, quote('Hello','int') === 0
 		*
 		* @param mixed $value the value to be escaped
-		* @param string/boolean $type string the type of the db-column, default False === varchar
-		* @param boolean $not_null is column NOT NULL, default true, else php null values are written as SQL NULL
+		* @param string/boolean $type=false string the type of the db-column, default False === varchar
+		* @param boolean $not_null=true is column NOT NULL, default true, else php null values are written as SQL NULL
+		* @param int $length=null length of the varchar column, to truncate it if the database requires it (eg. Postgres)
 		* @return string escaped sting
 		*/
-		function quote($value,$type=False,$not_null=true)
+		function quote($value,$type=False,$not_null=true,$length=null)
 		{
 			if ($this->Debug) echo "<p>db::quote(".(is_null($value)?'NULL':"'$value'").",'$type','$not_null')</p>\n";
 
@@ -1188,6 +1191,10 @@
 				case 'timestamp':
 					return $this->Link_ID->DBTimeStamp($value);
 			}
+			if (!is_null($length) && strlen($value) > $length)
+			{
+				$value = substr($value,0,$length);
+			}
 			return $this->Link_ID->qstr($value);
 		}
 
@@ -1225,6 +1232,9 @@
 			}
 			if ($this->Debug) echo "<p>db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre>\n";
 
+			// do we need to truncate varchars to their max length (INSERT and UPDATE on Postgres)
+			$truncate_varchar = $glue == ',' && $this->capabilities['require_truncate_varchar'];
+
 			$keys = $values = array();
 			foreach($array as $key => $data)
 			{
@@ -1240,7 +1250,11 @@
 					}
 					$column_type = is_array($column_definitions) ? @$column_definitions[$key]['type'] : False;
 					$not_null = is_array($column_definitions) && isset($column_definitions[$key]['nullable']) ? !$column_definitions[$key]['nullable'] : false;
-
+					
+					if ($truncate_varchar)
+					{
+						$maxlength = $column_definitions[$key]['type'] == 'varchar' ? $column_definitions[$key]['precision'] : null;
+					}
 					if (is_array($data))
 					{
 						$or_null = '';
@@ -1252,7 +1266,7 @@
 								unset($data[$k]);
 								continue;
 							}
-							$data[$k] = $this->quote($v,$column_type,$not_null);
+							$data[$k] = $this->quote($v,$column_type,$not_null,$maxlength);
 						}
 						$values[] = ($or_null?'(':'').(!count($data) ? '' :
 							($use_key===True ? $this->name_quote($key).' IN ' : '') .
@@ -1268,7 +1282,7 @@
 					}
 					else
 					{
-						$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type,$not_null);
+						$values[] = ($use_key===True ? $this->name_quote($key) . '=' : '') . $this->quote($data,$column_type,$not_null,$maxlength);
 					}
 				}
 			}
