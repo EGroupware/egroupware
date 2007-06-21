@@ -136,22 +136,22 @@
 		fwrite(STDERR,"importexport_cli: ". $file. ' is not readable'."\n"); 
 		exit(INVALID_OPTION); 
 	}
-
+	
 	require_once('inc/class.definition.inc.php');
-	try {
-		$definition = new definition($definition);
-	}
-	catch (Exception $e) {
-		fwrite(STDERR,"importexport_cli: ". $e->getMessage(). "\n"); 
+	$definition = new definition($definition);
+	if( $definition->get_identifier() < 1 ) {
+		fwrite(STDERR,"importexport_cli: Definition not found! \n"); 
 		exit(INVALID_OPTION);
 	}
 	
 	$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
 	
+	$definition->plugin_options['dry_run'] = $dryrun;
+	$type = $definition->type;
+	
+	
 	require_once("$path_to_egroupware/$definition->application/importexport/class.$definition->plugin.inc.php");
 	$po = new $definition->plugin;
-	$po->plugin_options['dry-run'] = true; 
-	$type = $definition->type;
 	
 	$resource = fopen( $file, 'r' );
 	$po->$type( $resource, $definition );

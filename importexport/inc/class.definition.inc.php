@@ -217,7 +217,7 @@ class definition implements iface_egw_record {
 	/**
 	 * gets identifier of this record
 	 *
-	 * @return string identifier of this record
+	 * @return int identifier of this record
 	 */
 	public function get_identifier() {
 		return $this->definition['definition_id'];

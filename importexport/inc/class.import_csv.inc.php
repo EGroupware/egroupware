@@ -209,6 +209,7 @@ class import_csv implements iface_import_record { //, Iterator {
 		$record = $this->record;
 		$this->record = array();
 		foreach ($this->mapping as $cvs_idx => $new_idx) {
+			if( $new_idx == '' ) continue;
 			$this->record[$new_idx] = $record[$cvs_idx];
 		}
 		return true;

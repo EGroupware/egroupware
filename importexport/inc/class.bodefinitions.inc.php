@@ -55,22 +55,6 @@ class bodefinitions {
 	}
 	
 	/**
-	 * reads a definition from database
-	 *
-	 * @deprecated see class.definition.inc.php
-	 * @param mixed &$definition
-	 * @return bool success or not
-	 */
-	public function read(&$definition) {
-		if(is_int($definition)) $definition = array('definition_id' => $definition);
-		elseif(is_string($definition)) $definition = array('name' => $definition);
-		if(!$definition = $this->so_sql->read($definition)) return false;
-		$definition += (array)unserialize($definition['plugin_options']);
-		unset($definition['plugin_options']);
-		return true;
-	}
-	
-	/**
 	 * deletes a defintion
 	 *
 	 * @param array $keys
