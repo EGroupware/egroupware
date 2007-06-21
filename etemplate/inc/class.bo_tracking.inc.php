@@ -11,6 +11,8 @@
  * @version $Id$ 
  */
 
+require_once(EGW_API_INC.'/class.html.inc.php');
+
 /**
  * Abstract base class for trackering:
  *  - logging all modifications of an entry
@@ -69,6 +71,14 @@ class bo_tracking
 	 * @var boolean
 	 */
 	var $prefer_user_as_sender = true;
+	/**
+	 * Should the current user be email-notified (about change he made himself)
+	 * 
+	 * Popup notifications are never send to the current user!
+	 *
+	 * @var boolean
+	 */
+	var $notify_current_user = false;
 	
 	/**
 	 * Array with error-messages if track($data,$old) returns false
@@ -111,6 +121,22 @@ class bo_tracking
 	 * @var int
 	 */
 	var $tz_offset_s;
+	/**
+	 * Reference to the html class
+	 *
+	 * @var html
+	 */
+	var $html;
+	
+	/**
+	 * Constructor
+	 *
+	 * @return bo_tracking
+	 */
+	function bo_tracking()
+	{
+		$this->html =& html::singleton();
+	}
 
 	/**
 	 * Get a config value, which can depend on $data and $old
@@ -137,19 +163,21 @@ class bo_tracking
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param int $user=null user who made the changes, default to current user
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return int/boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
-	function track($data,$old=null,$user=null)
+	function track($data,$old=null,$user=null,$deleted=null)
 	{
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
 		$changes = true;
 
-		if ($old)
+		if ($old && $this->field2history)
 		{
-			$changes = $this->save_history($data,$old);
+			$changes = $this->save_history($data,$old,$deleted);
 		}
-		if (!$this->do_notifications($data,$old))
+		// do not run do_notifications if we have no changes
+		if ($changes && !$this->do_notifications($data,$old,$deleted))
 		{
 			$changes = false;
 		}
@@ -162,21 +190,24 @@ class bo_tracking
 	 * @internal use only track($data,$old)
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param int number of log-entries made
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @return int number of log-entries made
 	 */
-	function save_history($data,$old)
+	function save_history($data,$old,$deleted=null)
 	{
 		$changes = 0;
 		foreach($this->field2history as $name => $status)
 		{
-			if ($old[$name] != $data[$name])
+			if ($old[$name] != $data[$name] && !(!$old[$name] && !$data[$name]))
 			{
 				if (!is_object($this->historylog))
 				{
 					require_once(EGW_API_INC.'/class.historylog.inc.php');
 					$this->historylog =& new historylog($this->app);
 				}
-				$this->historylog->add($status,$data[$this->id_field],$data[$name],$old[$name]);
+				$this->historylog->add($status,$data[$this->id_field],
+					is_array($data[$name]) ? implode(',',$data[$name]) : $data[$name],
+					is_array($old[$name]) ? implode(',',$old[$name]) : $old[$name]);
 				++$changes;
 			}
 		}
@@ -189,11 +220,18 @@ class bo_tracking
 	 * @internal use only track($data,$old,$user)
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return boolean true on success, false on error (error messages are in $this->errors)
 	 */
-	function do_notifications($data,$old)
+	function do_notifications($data,$old,$deleted=null)
 	{
 		$this->errors = $email_sent = array();
+
+		if (!$this->notify_current_user)		// should we notify the current user about his own changes
+		{
+			//error_log("do_notificaton() adding user=$this->user to email_sent, to not notify him");
+			$email_sent[] = $GLOBALS['egw']->accounts->id2name($this->user,'account_email');
+		}
 
 		// entry creator
 		if ($this->creator_field && ($email = $GLOBALS['egw']->accounts->id2name($data[$this->creator_field],'account_email')) &&
@@ -206,6 +244,7 @@ class bo_tracking
 		// assigned / responsible users
 		if ($this->assigned_field)
 		{
+			//error_log("bo_tracking::do_notifications() data[$this->assigned_field]=".print_r($data[$this->assigned_field],true).", old[$this->assigned_field]=".print_r($old[$this->assigned_field],true));
 			$assignees = $old_assignees = array();
 			if ($data[$this->assigned_field])	// current assignments
 			{
@@ -219,6 +258,7 @@ class bo_tracking
 			}
 			foreach(array_unique(array_merge($assignees,$old_assignees)) as $assignee)
 			{
+				//error_log("bo_tracking::do_notifications() assignee=$assignee, type=".$GLOBALS['egw']->accounts->get_type($assignee).", email=".$GLOBALS['egw']->accounts->id2name($assignee,'account_email'));
 				if (!$assignee) continue;
 
 				// item assignee is a user
@@ -226,7 +266,8 @@ class bo_tracking
 				{
 					if (($email = $GLOBALS['egw']->accounts->id2name($assignee,'account_email')) && !in_array($email, $email_sent))
 					{
-						$this->send_notification($old,$email,$data['tr_assigned'],'notify_assigned');
+						$this->send_notification($data,$old,$email,$assignee,'notify_assigned',
+							in_array($assignee,$assignees) !== in_array($assignee,$old_assignees) || $deleted);	// assignment changed
 						$email_sent[] = $email;	
 					}
 				}
@@ -234,9 +275,10 @@ class bo_tracking
 				{
 					foreach($GLOBALS['egw']->accounts->members($assignee,true) as $u)
 					{
-						if ($email = $GLOBALS['egw']->accounts->id2name($u,'account_email') && !in_array($email, $email_sent))
+						if (($email = $GLOBALS['egw']->accounts->id2name($u,'account_email')) && !in_array($email, $email_sent))
 						{
-							$this->send_notification($old,$email,$u,'notify_assigned');
+							$this->send_notification($data,$old,$email,$u,'notify_assigned',
+								in_array($u,$assignees) !== in_array($u,$old_assignees) || $deleted);	// assignment changed
 							$email_sent[] = $email;
 						}
 					}
@@ -293,22 +335,21 @@ class bo_tracking
 
 	/**
 	 * Sending a notification to the given email-address
+	 * 
+	 * Called by track() or externally for sending async notifications
 	 *
-	 * @internal use only track($data,$old,$user)
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param string $email address to send the notification to
 	 * @param string $user_or_lang='en' user-id or 2 char lang-code for a non-system user
 	 * @param string $check=null pref. to check if a notification is wanted
+	 * @param boolean $assignment_changed=true the assignment of the user $user_or_lang changed
 	 * @return boolean true on success or false on error (error-message is in $this->errors)
 	 */
-	function send_notification($data,$old,$email,$user_or_lang,$check=null)
+	function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true)
 	{
+		//error_log("bo_trackering::send_notification(,,'$email',$user_or_lang,$check)");
 		if (!$email) return false;
-		
-		//echo "<p>botracker::send_notification(,'$email',$user_or_lang)</p>\n";
-		//echo "old"; _debug_array($old);
-		//echo "data"; _debug_array($data);
 		
 		if (!$this->save_prefs) $this->save_prefs = $GLOBALS['egw_info']['user'];
 		
@@ -319,12 +360,15 @@ class bo_tracking
 				$GLOBALS['egw']->preferences->preferences($user_or_lang);
 				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 			}
-			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$this->check2pref ? $this->check2pref[$check] : $check])
+			if ($check && $this->check2pref) $check = $this->check2pref[$check];
+			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check])
 			{
 				return false;	// no notification requested
 			}
-			// notification via notification app.
-			$this->popup_notification($user_or_lang,$this->get_subject($data,$old));
+			if ($check && $GLOBALS['egw_info']['user']['preferences'][$this->app][$check] === 'assignment' && !$assignment_changed)
+			{
+				return false;	// only notification about changed assignment requested
+			}
 		}
 		else
 		{
@@ -332,15 +376,16 @@ class bo_tracking
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->default;
 			$GLOBALS['egw_info']['user']['preferences']['common']['lang'] = $user_or_lang;
 		}
-		$this->datetime_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'].' '.
-			($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] != 12 ? 'H:i' : 'h:i a');
-		$this->tz_offset_s = 3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset'];
-
 		if ($lang != $GLOBALS['egw']->translation->userlang)	// load the right language if needed
 		{
 			$GLOBALS['egw']->translation->init();
 		}
-
+		// send popup notification
+		if (is_numeric($user_or_lang) && $this->user != $user_or_lang)	// no popup for own actions
+		{
+			//die('sending popup notification'.$this->html->htmlspecialchars($this->get_popup_message($data,$old)));
+			$this->popup_notification($user_or_lang,$this->get_popup_message($data,$old));
+		}
 		// PHPMailer aka send-class, seems not to be able to send more then one mail, IF we need to authenticate to the SMTP server
 		// There for the object is newly created for ever mail, 'til this get fixed in PHPMailer.
 		//if(!is_object($GLOBALS['egw']->send))
@@ -366,7 +411,7 @@ class bo_tracking
 		}
 		$send->AddCustomHeader("X-eGroupWare-type: {$this->app}update");
 
-		$sender = $this->get_sender($user,$data,$old);
+		$sender = $this->get_sender($data,$old);
 		if (preg_match('/^(.+) *<(.+)>/',$sender,$matches))	// allow to use eg. "Ralf Becker <ralf@egw.org>" as sender
 		{
 			$send->From = $matches[2];
@@ -380,7 +425,7 @@ class bo_tracking
 		$send->Subject = $this->get_subject($data,$old);
 
 		$send->Body = $this->get_body($html_email,$data,$old);
-		
+
 		foreach($this->get_attachments($data,$old) as $attachment)
 		{
 			if (isset($attachment['content']))
@@ -393,6 +438,7 @@ class bo_tracking
 			}
 		}
 
+		//echo "<p>bo_trackering::send_notification(): sending <pre>".print_r($send,true)."</pre>\n";
 		if (!$send->Send())
 		{
 			$this->errors[] = lang('Error while notifying %1: %2',$email,$send->ErrorInfo);
@@ -402,14 +448,23 @@ class bo_tracking
 	}
 	
 	/**
-	 * Return date+time formatted for the currently notified user (send_notification)
+	 * Return date+time formatted for the currently notified user (prefs in $GLOBALS['egw_info']['user']['preferences'])
 	 *
 	 * @param int $timestamp
+	 * @param boolean $do_time=true true=allways (default), false=never print the time, null=print time if != 00:00
 	 * @return string
 	 */
-	function datetime($timestamp)
+	function datetime($timestamp,$do_time=true)
 	{
-		return date($this->datetime_format,$timestamp+$this->tz_offset_s);
+		if (is_null($do_time))
+		{
+			$do_time = date('H:i',$timestamp+$this->tz_offset_s) != '00:00';
+		}
+		$format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+		if ($do_time) $format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] != 12 ? 'H:i' : 'h:i a');
+
+		//error_log("bo_tracking::datetime($timestamp,$do_time)=date('$format',$timestamp+$this->tz_offset_s)='".date($format,$timestamp+$this->tz_offset_s).'\')');
+		return date($format,$timestamp+3600 * $GLOBALS['egw_info']['user']['preferences']['common']['tz_offset']);
 	}
 	
 	/**
@@ -418,6 +473,7 @@ class bo_tracking
 	 * The default implementation prefers depending on the prefer_user_as_sender class-var the user over
 	 * what is returned by get_config('sender'). 
 	 * 
+	 * @param int $user account_lid of user
 	 * @param array $data
 	 * @param array $old
 	 * @return string
@@ -425,15 +481,21 @@ class bo_tracking
 	function get_sender($data,$old)
 	{
 		$sender = $this->get_config('sender',$data,$old);
-		
+		//echo "<p>bo_tracking::get_sender() get_config('sender',...)='".htmlspecialchars($sender)."'</p>\n";
+
 		if (($this->prefer_user_as_sender || !$sender) && $this->user && 
 			($email = $GLOBALS['egw']->accounts->id2name($this->user,'account_email')))
 		{
 			$name = $GLOBALS['egw']->accounts->id2name($this->user,'account_fullname');
 			
-			return $name ? $name.' <'.$email.'>' : $email;
+			$sender = $name ? $name.' <'.$email.'>' : $email;
 		}
-		return $sender ? $sender : 'eGroupWare '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'];
+		elseif(!$sender)
+		{
+			$sender = 'eGroupWare '.lang($this->app).' <noreply@'.$GLOBALS['egw_info']['server']['mail_suffix'].'>';
+		}
+		//echo "<p>bo_tracking::get_sender()='".htmlspecialchars($sender)."'</p>\n";
+		return $sender;
 	}
 
 	/**
@@ -476,9 +538,10 @@ class bo_tracking
 	 *
 	 * @param array $data
 	 * @param array $old
-	 * @return string
+	 * @param string $allow_popup=false if true return array(link,popup-size) incl. session info an evtl. partial url (no host-part)
+	 * @return string/array string with link (!$allow_popup) or array(link,popup-size), popup size is something like '640x480'
 	 */
-	function get_link($data,$old)
+	function get_link($data,$old,$allow_popup=false)
 	{
 		if (($link = $this->get_config('link',$data,$old)))
 		{
@@ -487,18 +550,32 @@ class bo_tracking
 				$link .= '&'.$this->id_field.'='.$data[$this->id_field];
 			}
 		}
-		elseif (($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])))
+		else
 		{
-			$link = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$GLOBALS['egw']->link('/index.php',$view));
-			
-			if ($link{0} == '/')
+			if (!is_object($GLOBALS['egw']->link))
 			{
-				$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
-					($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
+				require_once(EGW_API_INC.'/class.bolink.inc.php');
+				$GLOBALS['egw']->link =& new bolink();
 			}
-			if ($GLOBALS['egw']->link->is_popup($this->app,'view')) $link .= '&nopopup=1';
+			if (($view = $GLOBALS['egw']->link->view($this->app,$data[$this->id_field])))
+			{
+				$link = $GLOBALS['egw']->link('/index.php',$view);
+				$popup = $GLOBALS['egw']->link->is_popup($this->app,'view');
+			}
 		}
-		return $link;
+		if ($link{0} == '/')
+		{
+			$link = ($_SERVER['HTTPS'] || $GLOBALS['egw_info']['server']['enforce_ssl'] ? 'https://' : 'http://').
+				($GLOBALS['egw_info']['server']['hostname'] ? $GLOBALS['egw_info']['server']['hostname'] : $_SERVER['HTTP_HOST']).$link;
+		}
+		if (!$allow_popup)
+		{
+			// remove the session-id in the notification mail!
+			$link = preg_replace('/(sessionid|kp3|domain)=[^&]+&?/','',$link);
+			
+			if ($popup) $link .= '&nopopup=1';
+		}
+		return $allow_popup ? array($link,$popup) : $link;
 	}
 	
 	/**
@@ -527,8 +604,10 @@ class bo_tracking
 		}
 		foreach($this->get_details($data) as $name => $detail)
 		{
-			$modified = $old && $data[$name] != $old[$name];
-			if ($modified) error_log("data[$name]='{$data[$name]}', old[$name]='{$old[$name]}' --> modified=".(int)$modified);
+			// if there's no old entry, the entry is not modified by definition
+			// if both values are '', 0 or null, we count them as equal too
+			$modified = $old && $data[$name] != $old[$name] && !(!$data[$name] && !$old[$name]);
+			//if ($modified) error_log("data[$name]=".print_r($data[$name],true).", old[$name]=".print_r($old[$name],true)." --> modified=".(int)$modified);
 			if (empty($detail['value']) && !$modified) continue;	// skip unchanged, empty values
 			
 			$body .= $this->format_line($html_email,$detail['type'],$modified,
@@ -558,8 +637,10 @@ class bo_tracking
 		
 		if ($html_mail)
 		{
+			$line = $this->html->htmlspecialchars($line);	// XSS
+
 			$color = $modified ? 'red' : false;
-			$size  = 'small';
+			$size  = $html_mail == 'medium' ? 'medium' : 'small';
 			$bold = false;
 			$background = '#FFFFF1';
 			switch($type)
@@ -582,7 +663,7 @@ class bo_tracking
 					$background = '#F1F1F1';					
 					break;
 				default:
-					$size = 'x-small';
+					$size = $size == 'small' ? 'x-small' : 'small';
 			}
 			$style = ($bold ? 'font-weight:bold;' : '').($size ? 'font-size:'.$size.';' : '').($color?'color:'.$color:'');
 			
@@ -591,16 +672,23 @@ class bo_tracking
 		else	// text-mail
 		{
 			if ($type == 'reply') $content = str_repeat('-',64)."\n"; 
+
 			if ($modified) $content .= '> ';
 		}
 		$content .= $line;
-		
+
 		if ($link)
 		{
 			$content .= ' ';
-			if ($html_mail) $content .= '<a href="'.$link.'" target="_blank">';
-			$content .= $link;
-			if ($html_mail) $content .= '</a>';
+			
+			if ($html_mail)
+			{
+				$content .= $this->html->a_href($link,$link,'','target="_blank"');
+			}
+			else
+			{
+				$content .= $link;
+			}
 		}
 		if ($html_mail) $content .= '</td></tr>';
 		
@@ -619,5 +707,38 @@ class bo_tracking
 	function get_attachments($data,$old)
 	{
 		return array();
+	}
+
+	/**
+	 * Get the message for the popup
+	 * 
+	 * Default implementation uses get_subject() with get_link() and get_message() as an extra line
+	 *
+	 * @param array $data
+	 * @param array $old
+	 * @return string
+	 */
+	function get_popup_message($data,$old)
+	{
+		$message = $this->html->htmlspecialchars($this->get_subject($data,$old));
+		
+		if ((list($link,$popup) = $this->get_link($data,$old,true)))
+		{
+			if ($popup)
+			{
+				list($width,$height) = explode('x',$popup);
+				$options = 'onclick="egw_openWindowCentered2(this.href,\'_blank\', \''.$width.'\', \''.$height.'\', \'yes\'); return false;"';
+			}
+			else
+			{
+				$options = 'target="_blank"';
+			}
+			$message = $this->html->a_href($this->html->htmlspecialchars($message),$link,'',$options);
+		}
+		if (($extra = $this->get_message($data,$old)))
+		{
+			$message .= '<br />'.$this->html->htmlspecialchars($extra);
+		}
+		return $message;
 	}
 }

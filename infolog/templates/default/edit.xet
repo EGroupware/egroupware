@@ -126,7 +126,19 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.edit" template="" lang="" group="0" version="1.3.001">
+	<template id="infolog.edit.history" template="" lang="" group="0" version="1.3.002">
+		<grid width="100%" height="250" overflow="auto">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row valign="top">
+					<historylog id="history"/>
+				</row>
+			</rows>
+		</grid>
+	</template>
+	<template id="infolog.edit" template="" lang="" group="0" version="1.3.002">
 		<grid width="100%">
 			<columns>
 				<column width="103"/>
@@ -180,6 +192,7 @@
 							<tab label="Delegation" statustext="responsible user, priority"/>
 							<tab label="Projectmanager" statustext="Project settings: price, times"/>
 							<tab label="Customfields" statustext="Custom fields"/>
+							<tab label="History" statustext="Change history"/>
 						</tabs>
 						<tabpanels>
 							<template id="infolog.edit.description"/>
@@ -187,6 +200,7 @@
 							<template id="infolog.edit.delegation"/>
 							<template id="infolog.edit.project"/>
 							<template id="infolog.edit.customfields"/>
+							<template id="infolog.edit.history"/>
 						</tabpanels>
 					</tabbox>
 				</row>
