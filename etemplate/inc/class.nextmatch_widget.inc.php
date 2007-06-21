@@ -77,6 +77,12 @@
 			'nextmatch-customfilter'  => 'Nextmatch Custom Filterheader',
 			'nextmatch-header'        => 'Nextmatch Header',
 		);
+		/**
+		 * Turn on debug messages (mostly in post_process)
+		 *
+		 * @var boolean
+		 */
+		var $debug = false;
 
 		/**
 		 * Constructor of the extension
@@ -223,7 +229,7 @@
 			}
 			$value['options-num_rows'] =& $row_options;
 
-			if (!isset($value['num_rows'])) $value['num_rows'] = $max;
+			if (!isset($value['num_rows'])) $extension_data['num_rows'] = $value['num_rows'] = $max;
 			if ($value['num_rows'] != $max)
 			{
 				$GLOBALS['egw_info']['user']['preferences']['common']['maxmatchs'] = $max = (int)$value['num_rows'];
@@ -240,7 +246,7 @@
 			else
 			{
 				if (!is_array($readonlys)) $readonlys = array();
-				$total = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
+				$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
 
 				// allow the get_rows function to override / set sel_options
 				if (isset($value['rows']['sel_options']) && is_array($value['rows']['sel_options']))
@@ -252,7 +258,7 @@
 			if ($method && $total && $value['start'] >= $total)
 			{
 				$value['start'] = 0;
-				$total = $obj->$method($value,$value['rows'],$readonlys['rows']);
+				$total = $extension_data['total'] = $value['total'] = $obj->$method($value,$value['rows'],$readonlys['rows']);
 			}
 			if (is_array($value['rows'][0]))	// fixed 0 based arrays
 			{
@@ -531,7 +537,9 @@
 		function post_process($name,&$value,&$extension_data,&$loop,&$tmpl,$value_in)
 		{
 			$nm_global = &$GLOBALS['egw_info']['etemplate']['nextmatch'];
-			//echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in=".print_r($value_in,true).",order='$nm_global[order]'): value = "; _debug_array($value);
+
+			if ($this->debug) { echo "<p>nextmatch_widget.post_process(type='$extension_data[type]', name='$name',value_in=".print_r($value_in,true).",order='$nm_global[order]'): value = "; _debug_array($value); }
+
 			switch($extension_data['type'])
 			{
 				case 'nextmatch':
@@ -550,7 +558,7 @@
 				case 'nextmatch-filterheader':
 					if ((string)$value_in != (string)$extension_data['old_value'])
 					{
-						//echo "<p>setting nm_global[filter][".$this->last_part($name)."]='$value_in' (was '$extension_data[old_value]')</p>\n";
+						if ($this->debug) echo "<p>setting nm_global[filter][".$this->last_part($name)."]='$value_in' (was '$extension_data[old_value]')</p>\n";
 						$nm_global['filter'][$this->last_part($name)] = $value_in;
 					}
 					return False;	// dont report value back, as it's in the wrong location (rows)
@@ -559,6 +567,7 @@
 					return False;	// nothing to report
 			}
 			$old_value = $extension_data;
+			if ($this->debug) { echo "old_value="; _debug_array($old_value); }
 
 			$value['start'] = $old_value['start'];	// need to be set, to be reported back
 			$value['return'] = $old_value['return'];
@@ -570,7 +579,7 @@
 				{
 					if (isset($value['bottom'][$name]) && $value[$name] == $old_value[$name])
 					{
-						//echo "value[$name] overwritten by bottom-value[$name]='".$value['bottom'][$name]."', old_value[$name]='".$old_value[$name]."'<br>\n";
+						if ($this->debug) echo "value[$name] overwritten by bottom-value[$name]='".$value['bottom'][$name]."', old_value[$name]='".$old_value[$name]."'<br>\n";
 						$value[$name] = $value['bottom'][$name];
 					}
 				}
@@ -591,6 +600,7 @@
 			}
 			if (isset($old_value['num_rows']) && !is_null($value['num_rows']) && $value['num_rows'] != $old_value['num_rows'])
 			{
+				if ($this->debug) echo "<p>nextmatch_widget::post_process() num_rows changed {$old_value['num_rows']} --> {$value['num_rows']} ==> looping</p>\n";
 				$loop = true;	// num_rows changed
 			}
 			// num_rows: use old value in extension data, if $value['num_rows'] is not set because nm-header is not shown
@@ -616,10 +626,13 @@
 				isset($value['filter']) && $value['filter'] != $old_value['filter'] ||
 				isset($value['filter2']) && $value['filter2'] != $old_value['filter2'])
 			{
-				//echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
-				//echo "new filter --> loop</p>";
-				//echo "value ="; _debug_array($value);
-				//echo "old_value ="; _debug_array($old_value);
+				if ($this->debug)
+				{
+					echo "<p>search='$old_value[search]'->'$value[search]', filter='$old_value[filter]'->'$value[filter]', filter2='$old_value[filter2]'->'$value[filter2]'<br>";
+					echo "new filter --> loop</p>";
+					echo "value ="; _debug_array($value);
+					echo "old_value ="; _debug_array($old_value);
+				}
 				$loop = True;
 			}
 			elseif ($value['first'] || $value['left'] && $old_value['start'] < $max)
@@ -657,7 +670,7 @@
 				{
 					$value['sort'] = $old_value['sort'] != 'DESC' ? 'DESC' : 'ASC';
 				}
-				//echo "<p>old_value=$old_value[order]/$old_value[sort] ==> $value[order]/$value[sort]</p>\n";
+				if ($this->debug) echo "<p>old_value=$old_value[order]/$old_value[sort] ==> $value[order]/$value[sort]</p>\n";
 				$loop = True;
 			}
 			elseif ($nm_global['filter'])
