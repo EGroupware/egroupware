@@ -62,11 +62,9 @@ class import_contacts_csv implements iface_import_plugin  {
 	private $bocontacts;
 	
 	/**
-	 * constructor of import_contacts_csv
-	 *
-	public function __construct() {
-		$this->bocontacts = CreateObject('addressbook.bocontacts');
-	}*/
+	 * @var bool
+	 */
+	private $dry_run = false;
 	
 	/**
 	 * imports entries according to given definition object.
@@ -79,6 +77,9 @@ class import_contacts_csv implements iface_import_plugin  {
 			'fieldsep' => $_definition->plugin_options['fieldsep'],
 			'charset' => $_definition->plugin_options['charset'],
 		));
+		
+		// dry run?
+		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false; 
 		
 		// fetch the addressbook bo
 		$this->bocontacts = CreateObject('addressbook.bocontacts');
@@ -100,7 +101,6 @@ class import_contacts_csv implements iface_import_plugin  {
 				$record['contact_owner'] = $_definition->plugin_options['contact_owner'];
 		}
 		
-		// 
 		while ( $record = $import_csv->get_record() ) {
 
 			// don't import empty contacts
@@ -129,7 +129,7 @@ class import_contacts_csv implements iface_import_plugin  {
 									$this->action(  $action['action'], $record );
 								}
 							} else {
-								$action = $condition['true'];
+								$action = $condition['false'];
 								$this->action( $action['action'], $record );
 							}
 							break;
@@ -161,7 +161,11 @@ class import_contacts_csv implements iface_import_plugin  {
 				return true;
 			case 'update' :
 			case 'insert' :
-				return $this->bocontacts->save( $_data );
+				if ( $this->dry_run ) {
+					print_r($_data);
+				} else {
+					return $this->bocontacts->save( $_data );
+				}
 			case 'delete' :
 		}
 	}
