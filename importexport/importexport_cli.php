@@ -13,11 +13,13 @@
 	$path_to_egroupware = realpath(dirname(__FILE__).'/..');
 	
 	$usage = "usage:
-			--definition <name of definition>
-			--file <name of file>
-			--user <eGW username>
-			--password <password for user>
-			--domain <domain name> \n";
+			--definition <name of definition>    Name of definition
+			--file <name of file>                File to import / for export
+			--user <eGW username>                eGroupWare username for action
+			--password <password for user>       users password
+			--domain <domain name>               eGroupWare domain
+			--dry-run                            no real action, just console output
+			\n";
 	
 	if (php_sapi_name() != 'cli') {
 		die('This script only runs form command line');
@@ -49,7 +51,8 @@
 	   'file=',
 	   'user=',
 	   'password=',
-	   'domain='
+	   'domain=',
+	   'dry-run',
 	   ); 
 	
 	// Convert the arguments to options - check for the first argument 
@@ -66,6 +69,7 @@
 	}
 	
 	$domain = 'default';
+	$dryrun = false;
 	foreach ($options[0] as $option) {
 		switch ($option[0]) {
 			case '--file' :
@@ -82,6 +86,9 @@
 				break;
 			case '--password' :
 				$password = $option[1];
+				break;
+			case '--dry-run' :
+				$dryrun = true;
 				break;
 			default : 
 				fwrite (STDERR,$usage."\n");
@@ -139,8 +146,11 @@
 		exit(INVALID_OPTION);
 	}
 	
+	$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
+	
 	require_once("$path_to_egroupware/$definition->application/importexport/class.$definition->plugin.inc.php");
 	$po = new $definition->plugin;
+	$po->plugin_options['dry-run'] = true; 
 	$type = $definition->type;
 	
 	$resource = fopen( $file, 'r' );
