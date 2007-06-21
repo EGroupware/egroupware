@@ -22,8 +22,12 @@
    <td colspan="3">{lang_responsible_edit}</td>
    <td>{responsible_edit}</td>
   </tr>
+  <tr class="th">
+   <td colspan="4"><b>{lang_history}</b></td>
+  </tr>
   <tr class="row_off">
-   <td colspan="4">&nbsp;</td>
+   <td colspan="3">{lang_history2}</td>
+   <td>{history}</td>
   </tr>
   <tr class="th">
    <td colspan="4">{text}</td>
