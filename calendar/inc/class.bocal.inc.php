@@ -22,6 +22,12 @@ define('DAY_s',24*HOUR_s);
 define('WEEK_s',7*DAY_s);
 
 /**
+ * Gives read access to the calendar, but all events the user is not participating are private!
+ * Used be the addressbook.
+ */
+define('EGW_ACL_READ_FOR_PARTICIPANTS',EGW_ACL_CUSTOM_1);
+
+/**
  * Class to access all calendar data
  *
  * For updating calendar data look at the bocalupdate class, which extends this class.
@@ -271,7 +277,7 @@ class bocal
 		$users = array();
 		foreach($params['users'] as $user)
 		{
-			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ,0,$user))
+			if ($params['ignore_acl'] || $this->check_perms(EGW_ACL_READ|EGW_ACL_READ_FOR_PARTICIPANTS,0,$user))
 			{
 				if ($user && !in_array($user,$users))	// already added?
 				{
