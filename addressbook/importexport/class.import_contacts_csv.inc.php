@@ -27,10 +27,14 @@ class import_contacts_csv implements iface_import_plugin  {
 		'field_mapping',	// array( $csv_col_num => adb_filed)
 		'has_header_line', 	//bool
 		'conditions',		/* => array containing condition arrays: 
-				'type' => 0, // exists
+				'type' => exists, // exists
 				'string' => '#kundennummer',
 				'true' => array(
 					'action' => update,
+					'options' => array (
+						update_cats' => 'add'	// string {override|add} overides record 
+					),						// with cat(s) from csv OR add the cat from
+											// csv file to exeisting cat(s) of record
 					'last' => true,
 				),
 				'false' => array(
@@ -96,6 +100,7 @@ class import_contacts_csv implements iface_import_plugin  {
 				$record['contact_owner'] = $_definition->plugin_options['contact_owner'];
 		}
 		
+		// 
 		while ( $record = $import_csv->get_record() ) {
 
 			// don't import empty contacts
@@ -106,15 +111,21 @@ class import_contacts_csv implements iface_import_plugin  {
 					switch ( $condition['type'] ) {
 						// exists
 						case 'exists' :
-							$contacts = $this->bocontacts->search(array(
-								$condition['string'] => $record[$condition['string']],
-							),true);
+							$contacts = $this->bocontacts->search(
+								array( $condition['string'] => $record[$condition['string']],),
+								$condition['true']['options']['update_cats'] == 'add' ? false : true
+							);
 							
 							if ( is_array( $contacts ) && count( array_keys( $contacts ) >= 1 ) ) {
 								// apply action to all contacts matching this exists condition
 								$action = $condition['true'];
 								foreach ( (array)$contacts as $contact ) {
 									$record['id'] = $contact['id'];
+									if ( $condition['true']['options']['update_cats'] == 'add' ) {
+										if ( !is_array( $contact['cat_id'] ) ) $contact['cat_id'] = explode( ',', $contact['cat_id'] );
+										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
+										$record['cat_id'] = implode( ',', array_unique( array_merge( $record['cat_id'], $contact['cat_id'] ) ) );
+									}
 									$this->action(  $action['action'], $record );
 								}
 							} else {
