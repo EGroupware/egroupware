@@ -32,9 +32,25 @@ or alternativly edit my.ldif by hand:
 
 Please note:
 -----------
-You can use nis2rfc2307bis.php on newer SuSE distros too, to get groupOfNames and the member
-attributes set, without editing & saving each group in Admin >> Manage groups. 
-
+a)	You can use nis2rfc2307bis.php on newer SuSE distros too, to get groupOfNames and the member
+	attributes set, without editing & saving each group in Admin >> Manage groups. 
+	
+b)	Newer openLDAP servers already have uidNumber and gidNumber hardcoded. You have to comment out
+	the definition of them in the rfc2307bis.schema file:
+	
+# disable to accomodate for newer openLDAP servers, which have these values hardcoded
+#attributetype ( 1.3.6.1.1.1.1.0 NAME 'uidNumber'
+#  DESC 'An integer uniquely identifying a user in an administrative domain'
+#  EQUALITY integerMatch
+#  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+#  SINGLE-VALUE )
+#
+#attributetype ( 1.3.6.1.1.1.1.1 NAME 'gidNumber'
+#  DESC 'An integer uniquely identifying a group in an
+#        administrative domain'
+#  EQUALITY integerMatch
+#  SYNTAX 1.3.6.1.4.1.1466.115.121.1.27
+#  SINGLE-VALUE )
 
 eGroupWare detects if it can use groupOfNames together with posixGroup and fills the member attribute,
 if you edit the group or changes the members.
