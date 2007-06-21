@@ -559,7 +559,7 @@ class boinfolog
 			{
 				$this->tracking =& new infolog_tracking($this);
 			}
-			$this->tracking->track($deleted,$info,$this->user);
+			$this->tracking->track($deleted,$info,$this->user,true);
 		}
 		return True;
 	}
@@ -746,7 +746,7 @@ class boinfolog
 			{
 				$this->tracking =& new infolog_tracking($this);
 			}
-			$this->tracking->track($values,$old,$this->user);
+			$this->tracking->track($values,$old,$this->user,$values['info_status'] == 'deleted' || $old['info_status'] == 'deleted');
 		}
 		if ($info_from_set) $values['info_from'] = '';
 

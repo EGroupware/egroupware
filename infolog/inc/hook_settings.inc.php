@@ -141,10 +141,15 @@ $GLOBALS['settings']['notify_creator'] = array(
 	'admin'  => False,
 );
 $GLOBALS['settings']['notify_assigned'] = array(
-	'type'   => 'check',
+	'type'   => 'select',
 	'label'  => 'Receive notifications about items assigned to you',
 	'name'   => 'notify_assigned',
 	'help'   => 'Do you want a notification, if items get assigned to you or assigned items get updated?',
+	'values' => array(
+		'0' => lang('No'),
+		'1' => lang('Yes'),
+		'assignment' => lang('Only if I get assigned or removed'),
+	),
 	'xmlrpc' => True,
 	'admin'  => False,
 );
@@ -196,10 +201,15 @@ $GLOBALS['settings']['notify_start_responsible'] = array(
 );
 
 $GLOBALS['settings']['notify_html'] = array(
-	'type'   => 'check',
+	'type'   => 'select',
 	'label'  => 'Receive notifications as html-mails',
 	'name'   => 'notify_html',
 	'help'   => 'Do you want to receive notifications as html-mails or plain text?',
+	'values' => array(
+		'0'  => lang('No'),
+		'1'  => lang('Yes'),
+		'medium' => lang('Yes, with larger fontsize'),
+	),
 	'xmlrpc' => True,
 	'admin'  => False,
 );

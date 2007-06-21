@@ -210,6 +210,7 @@ one day after	infolog	en	one day after
 one day in advance	infolog	en	one day in advance
 ongoing	infolog	en	ongoing
 only for details	infolog	en	Only for details
+only if i get assigned or removed	infolog	en	Only if I get assigned or removed
 only the attachments	infolog	en	only the attachments
 only the links	infolog	en	only the links
 open	infolog	en	open
@@ -343,6 +344,7 @@ yes - delete	infolog	en	Yes - Delete
 yes - delete including sub-entries	infolog	en	Yes - Delete including sub-entries
 yes, noone can purge deleted items	infolog	en	Yes, noone can purge deleted items
 yes, only admins can purge deleted items	infolog	en	Yes, only admins can purge deleted items
+yes, with larger fontsize	infolog	en	Yes, with larger fontsize
 yes, with purging of deleted items possible	infolog	en	Yes, with purging of deleted items possible
 you can't delete one of the stock types !!!	infolog	en	You can't delete one of the stock types !!!
 you have entered an invalid ending date	infolog	en	You have entered an invalid due date

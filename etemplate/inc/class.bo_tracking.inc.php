@@ -163,19 +163,21 @@ class bo_tracking
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
 	 * @param int $user=null user who made the changes, default to current user
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return int/boolean false on error, integer number of changes logged or true for new entries ($old == null)
 	 */
-	function track($data,$old=null,$user=null)
+	function track($data,$old=null,$user=null,$deleted=null)
 	{
 		$this->user = !is_null($user) ? $user : $GLOBALS['egw_info']['user']['account_id'];
 
 		$changes = true;
 
-		if ($old)
+		if ($old && $this->field2history)
 		{
-			$changes = $this->save_history($data,$old);
+			$changes = $this->save_history($data,$old,$deleted);
 		}
-		if (!$this->do_notifications($data,$old))
+		// do not run do_notifications if we have no changes
+		if ($changes && !$this->do_notifications($data,$old,$deleted))
 		{
 			$changes = false;
 		}
@@ -188,9 +190,10 @@ class bo_tracking
 	 * @internal use only track($data,$old)
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
-	 * @param int number of log-entries made
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
+	 * @return int number of log-entries made
 	 */
-	function save_history($data,$old)
+	function save_history($data,$old,$deleted=null)
 	{
 		$changes = 0;
 		foreach($this->field2history as $name => $status)
@@ -217,9 +220,10 @@ class bo_tracking
 	 * @internal use only track($data,$old,$user)
 	 * @param array $data current entry
 	 * @param array $old=null old/last state of the entry or null for a new entry
+	 * @param boolean $deleted=null can be set to true to let the tracking know the item got deleted or undelted
 	 * @return boolean true on success, false on error (error messages are in $this->errors)
 	 */
-	function do_notifications($data,$old)
+	function do_notifications($data,$old,$deleted=null)
 	{
 		$this->errors = $email_sent = array();
 
@@ -262,7 +266,8 @@ class bo_tracking
 				{
 					if (($email = $GLOBALS['egw']->accounts->id2name($assignee,'account_email')) && !in_array($email, $email_sent))
 					{
-						$this->send_notification($data,$old,$email,$data['tr_assigned'],'notify_assigned');
+						$this->send_notification($data,$old,$email,$assignee,'notify_assigned',
+							in_array($assignee,$assignees) !== in_array($assignee,$old_assignees) || $deleted);	// assignment changed
 						$email_sent[] = $email;	
 					}
 				}
@@ -272,7 +277,8 @@ class bo_tracking
 					{
 						if (($email = $GLOBALS['egw']->accounts->id2name($u,'account_email')) && !in_array($email, $email_sent))
 						{
-							$this->send_notification($data,$old,$email,$u,'notify_assigned');
+							$this->send_notification($data,$old,$email,$u,'notify_assigned',
+								in_array($u,$assignees) !== in_array($u,$old_assignees) || $deleted);	// assignment changed
 							$email_sent[] = $email;
 						}
 					}
@@ -337,9 +343,10 @@ class bo_tracking
 	 * @param string $email address to send the notification to
 	 * @param string $user_or_lang='en' user-id or 2 char lang-code for a non-system user
 	 * @param string $check=null pref. to check if a notification is wanted
+	 * @param boolean $assignment_changed=true the assignment of the user $user_or_lang changed
 	 * @return boolean true on success or false on error (error-message is in $this->errors)
 	 */
-	function send_notification($data,$old,$email,$user_or_lang,$check=null)
+	function send_notification($data,$old,$email,$user_or_lang,$check=null,$assignment_changed=true)
 	{
 		//error_log("bo_trackering::send_notification(,,'$email',$user_or_lang,$check)");
 		if (!$email) return false;
@@ -353,9 +360,14 @@ class bo_tracking
 				$GLOBALS['egw']->preferences->preferences($user_or_lang);
 				$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 			}
-			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$this->check2pref ? $this->check2pref[$check] : $check])
+			if ($check && $this->check2pref) $check = $this->check2pref[$check];
+			if ($check && !$GLOBALS['egw_info']['user']['preferences'][$this->app][$check])
 			{
 				return false;	// no notification requested
+			}
+			if ($check && $GLOBALS['egw_info']['user']['preferences'][$this->app][$check] === 'assignment' && !$assignment_changed)
+			{
+				return false;	// only notification about changed assignment requested
 			}
 		}
 		else
@@ -628,7 +640,7 @@ class bo_tracking
 			$line = $this->html->htmlspecialchars($line);	// XSS
 
 			$color = $modified ? 'red' : false;
-			$size  = 'small';
+			$size  = $html_mail == 'medium' ? 'medium' : 'small';
 			$bold = false;
 			$background = '#FFFFF1';
 			switch($type)
@@ -651,7 +663,7 @@ class bo_tracking
 					$background = '#F1F1F1';					
 					break;
 				default:
-					$size = 'x-small';
+					$size = $size == 'small' ? 'x-small' : 'small';
 			}
 			$style = ($bold ? 'font-weight:bold;' : '').($size ? 'font-size:'.$size.';' : '').($color?'color:'.$color:'');
 			

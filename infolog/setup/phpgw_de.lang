@@ -210,6 +210,7 @@ one day after	infolog	de	am nächsten Tag
 one day in advance	infolog	de	am Vortag
 ongoing	infolog	de	in Arbeit
 only for details	infolog	de	Nur bei Details
+only if i get assigned or removed	infolog	de	Nur wenn ich zugewiesen oder entfernt werde
 only the attachments	infolog	de	nur die Anhänge
 only the links	infolog	de	nur die Verknüpfungen
 open	infolog	de	offen
@@ -345,6 +346,7 @@ yes - delete	infolog	de	Ja - Löschen
 yes - delete including sub-entries	infolog	de	Ja - Löschen einschließlich Untereinträge
 yes, noone can purge deleted items	infolog	de	Ja, niemand darf gelöschte Einträge bereinigen
 yes, only admins can purge deleted items	infolog	de	Ja, nur Admins dürfen gelöschte Einträge bereinigen
+yes, with larger fontsize	infolog	de	Ja, mit einer größeren Schrift
 yes, with purging of deleted items possible	infolog	de	Ja, jeder darf gelöschte Einträge bereinigen
 you can't delete one of the stock types !!!	infolog	de	Sie können keinen der Standardtypen löschen!!!
 you have entered an invalid ending date	infolog	de	Sie haben ein ungültiges Fälligkeitsdatum eingegeben
