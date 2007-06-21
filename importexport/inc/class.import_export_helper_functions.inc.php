@@ -15,7 +15,7 @@
  * use import_export_helper_functions::method
  */
 class import_export_helper_functions {
-
+	
 	/**
 	 * nothing to construct here, only static functions!
 	 */
@@ -77,21 +77,22 @@ class import_export_helper_functions {
 	 * @return mixed comma seperated list or array with cat_ids
 	 */
 	public static function cat_name2id( $_cat_names ) {
-		$cats = &CreateObject( 'phpgwapi.categories' );
-		$cats->app_name = 'phpgw';
+		$cats = CreateObject( 'phpgwapi.categories' );
+		$cats->app_name = $GLOBALS['egw_info']['flags']['currentapp'];
 		
 		$cat_names = is_array( $_cat_names ) ? $_cat_names : explode( ',', $_cat_names );
-		
 		foreach ( $cat_names as $cat_name ) {
-			if ( $cat_id = $cats->name2id( addslashes( $cat_name ))) { }
-			else $cat_id = $cats->add( array( 
-				'name' => $cat_name, 
-				'access' => 'public', 
-				'descr' => $cat_name. ' ('. lang('Automatically created by importexport'). ')'
-			));
+			
+			if ( ( $cat_id = $cats->name2id( $cat_name ) ) == 0 ) {
+				$cat_id = $cats->add( array( 
+					'name' => $cat_name, 
+					'access' => 'public', 
+					'descr' => $cat_name. ' ('. lang('Automatically created by importexport'). ')'
+				));
+			}
 			$cat_ids[] = $cat_id;
 		}
-		return $_cat_names ? $cat_ids : implode( ',', $cat_ids );
+		return is_array( $_cat_names ) ? $cat_ids : implode( ',', $cat_ids );
 		
 	} // end of member function category_name2id
 
