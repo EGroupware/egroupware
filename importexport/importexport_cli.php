@@ -139,6 +139,8 @@
 		exit(INVALID_OPTION);
 	}
 	
+	$GLOBALS['egw_info']['flags']['currentapp'] = $definition->application;
+	
 	require_once("$path_to_egroupware/$definition->application/importexport/class.$definition->plugin.inc.php");
 	$po = new $definition->plugin;
 	$type = $definition->type;
