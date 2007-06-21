@@ -147,8 +147,9 @@ class bodefinitions {
 	 */
 	public static function import( $_import_file )
 	{
+		$translation = CreateObject('phpgwapi.translation');
 		if ( !is_file( $_import_file ) ) {
-			throw new Exception("'$_import_file' is not a valid file" );
+			throw new Exception("'$_import_file' does not exist or is not readable" );
 		}
 		
 		$data = arrayxml::xml2array( file_get_contents( $_import_file ) );
@@ -158,10 +159,10 @@ class bodefinitions {
 		unset ( $data );
 		
 		// convert charset into internal used charset
-		$definitions = $GLOBALS['egw']->translation->convert( 
+		$definitions = $translation->convert( 
 			$definitions,
 			$metainfo['charset'],
-			$GLOBALS['egw']->translation->charset()
+			$translation->charset()
 		);
 		
 		// save definition(s) into internal table
@@ -170,7 +171,7 @@ class bodefinitions {
 			// convert allowed_user
 			$definition_data['allowed_users'] = import_export_helper_functions::account_name2id( $definition_data['allowed_users'] );
 			$definition_data['owner'] = import_export_helper_functions::account_name2id( $definition_data['owner'] );
-			
+		
 			$definition = new definition( $definition_data['name'] );
 			$definition_id = $definition->get_identifier() ? $definition->get_identifier() : NULL;
 			

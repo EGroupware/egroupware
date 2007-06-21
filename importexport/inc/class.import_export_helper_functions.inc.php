@@ -33,7 +33,7 @@ class import_export_helper_functions {
 				$account_ids[] = $account_id;
 			}
 		}
-		return is_array( $_account_lids ) ? $account_ids : implode( ',', $account_ids );
+		return is_array( $_account_lids ) ? $account_ids : implode( ',', (array)$account_ids );
 		
 	} // end of member function account_lid2id
 
@@ -50,7 +50,7 @@ class import_export_helper_functions {
 				$account_lids[] = $account_lid;
 			}
 		}
-		return is_array( $_account_id ) ? $account_lids : implode( ',', $account_lids );
+		return is_array( $_account_id ) ? $account_lids : implode( ',', (array)$account_lids );
 	} // end of member function account_id2lid
 	
 	/**
@@ -66,7 +66,7 @@ class import_export_helper_functions {
 		foreach ( $cat_ids as $cat_id ) {
 			$cat_names[] = $cats->id2name( (int)$cat_id );
 		}
-		return is_array( $_cat_ids ) ? $cat_names : implode(',',$cat_names);
+		return is_array( $_cat_ids ) ? $cat_names : implode(',',(array)$cat_names);
 	} // end of member function category_id2name
 
 	/**
@@ -92,7 +92,7 @@ class import_export_helper_functions {
 			}
 			$cat_ids[] = $cat_id;
 		}
-		return is_array( $_cat_names ) ? $cat_ids : implode( ',', $cat_ids );
+		return is_array( $_cat_names ) ? $cat_ids : implode( ',', (array)$cat_ids );
 		
 	} // end of member function category_name2id
 

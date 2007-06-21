@@ -97,7 +97,9 @@ class definition implements iface_egw_record {
 			throw new Exception('Error: Definition: "'.$_name. '" is not unique! Can\'t convert to identifier');
 		}
 		if ( empty( $identifiers[0] ) ) {
-			throw new Exception('Error: No such definition :"'.$_name.'"!');
+			// not a good idea, till we don't have different exceptions so far
+			// throw new Exception('Error: No such definition :"'.$_name.'"!');
+			$identifiers = array( array( 'definition_id' => 0 ) );
 		}
 		return $identifiers[0]['definition_id'];
 	}
