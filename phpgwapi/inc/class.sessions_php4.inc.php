@@ -223,7 +223,7 @@
 
 			while (($file = readdir($dir)))
 			{
-				if (filesize($path.'/'.$file) >= $max_session_size) continue;
+				if ($file{0} == '.' || filesize($path.'/'.$file) >= $max_session_size) continue;
 
 				if (substr($file,0,5) != 'sess_' || $session_cache[$file] === false)
 				{
