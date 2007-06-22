@@ -859,7 +859,7 @@ class bocontacts extends socontacts
 	function merge($ids)
 	{
 		$this->error = false;
-		foreach(self::search(array('id'=>$ids),false) as $contact)	// $this->search calls the extended search from ui!
+		foreach(parent::search(array('id'=>$ids),false) as $contact)	// $this->search calls the extended search from ui!
 		{
 			if ($contact['account_id'])
 			{
