@@ -14,7 +14,8 @@ if((int)$GLOBALS['hook_values']['account_id'] > 0)
 {
 	require_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.soinfolog.inc.php');
 
-	$info =& new soinfolog;
+	$grants = array();
+	$info =& new soinfolog($grants);
 
 	$info->change_delete_owner((int)$GLOBALS['hook_values']['account_id'],(int)$_POST['new_owner']);
 
