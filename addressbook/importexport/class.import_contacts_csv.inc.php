@@ -23,18 +23,17 @@ class import_contacts_csv implements iface_import_plugin  {
 		'fieldsep', 		// char
 		'charset', 			// string
 		'contact_owner', 	// int
+		'update_cats', 			// string {override|add} overides record 
+								// with cat(s) from csv OR add the cat from
+								// csv file to exeisting cat(s) of record
+		'num_header_lines', // int number of header lines
 		'field_conversion', // array( $csv_col_num => conversion)
 		'field_mapping',	// array( $csv_col_num => adb_filed)
-		'has_header_line', 	//bool
 		'conditions',		/* => array containing condition arrays: 
 				'type' => exists, // exists
 				'string' => '#kundennummer',
 				'true' => array(
 					'action' => update,
-					'options' => array (
-						update_cats' => 'add'	// string {override|add} overides record 
-					),						// with cat(s) from csv OR add the cat from
-											// csv file to exeisting cat(s) of record
 					'last' => true,
 				),
 				'false' => array(
@@ -57,6 +56,11 @@ class import_contacts_csv implements iface_import_plugin  {
 	private static $conditions = array( 'exists', 'greater', 'greater or equal', );
 	
 	/**
+	 * @var definition
+	 */
+	private $definition;
+	
+	/**
 	 * @var bocontacts
 	 */
 	private $bocontacts;
@@ -65,6 +69,16 @@ class import_contacts_csv implements iface_import_plugin  {
 	 * @var bool
 	 */
 	private $dry_run = false;
+	
+	/**
+	 * @var bool is current user admin?
+	 */
+	private $is_admin = false;
+	
+	/**
+	 * @var int
+	 */
+	private $user = null;
 	
 	/**
 	 * imports entries according to given definition object.
@@ -78,6 +92,12 @@ class import_contacts_csv implements iface_import_plugin  {
 			'charset' => $_definition->plugin_options['charset'],
 		));
 		
+		$this->definition = $_definition;
+		
+		// user, is admin ?
+		$this->is_admin = isset( $GLOBALS['egw_info']['user']['apps']['admin'] ) && $GLOBALS['egw_info']['user']['apps']['admin'];
+		$this->user = $GLOBALS['egw_info']['user']['account_id'];
+		
 		// dry run?
 		$this->dry_run = isset( $_definition->plugin_options['dry_run'] ) ? $_definition->plugin_options['dry_run'] :  false; 
 		
@@ -90,22 +110,24 @@ class import_contacts_csv implements iface_import_plugin  {
 		// set FieldConversion
 		$import_csv->conversion = $_definition->plugin_options['field_conversion'];
 		
-		//check if file has a header line
-		if ($_definition->plugin_options['has_header_line']) {
-			$record = $import_csv->get_record();
+		//check if file has a header lines
+		if ( isset( $_definition->plugin_options['num_header_lines'] ) ) {
+			$import_csv->skip_records($_definition->plugin_options['num_header_lines']);
 		}
 		
-		// set contactOwner
-		if ( isset( $_definition->plugin_options['contact_owner'] ) 
-			&& abs( $_definition->plugin_options['contact_owner'] > 0 ) ) {
-				$record['contact_owner'] = $_definition->plugin_options['contact_owner'];
-		}
+		// set eventOwner
+		$_definition->plugin_options['contact_owner'] = isset( $_definition->plugin_options['contact_owner'] ) ? 
+			$_definition->plugin_options['contact_owner'] : $this->user;
 		
 		while ( $record = $import_csv->get_record() ) {
 
 			// don't import empty contacts
 			if( count( array_unique( $record ) ) < 2 ) continue;
-
+			
+			if ( $_definition->plugin_options['contact_owner'] != -1 ) {
+				$record['contact_owner'] = $_definition->plugin_options['contact_owner'];
+			} else unset( $record['contact_owner'] );
+			
 			if ( $_definition->plugin_options['conditions'] ) {
 				foreach ( $_definition->plugin_options['conditions'] as $condition ) {
 					switch ( $condition['type'] ) {
@@ -113,7 +135,7 @@ class import_contacts_csv implements iface_import_plugin  {
 						case 'exists' :
 							$contacts = $this->bocontacts->search(
 								array( $condition['string'] => $record[$condition['string']],),
-								$condition['true']['options']['update_cats'] == 'add' ? false : true
+								$_definition->plugin_options['update_cats'] == 'add' ? false : true
 							);
 							
 							if ( is_array( $contacts ) && count( array_keys( $contacts ) >= 1 ) ) {
@@ -121,7 +143,7 @@ class import_contacts_csv implements iface_import_plugin  {
 								$action = $condition['true'];
 								foreach ( (array)$contacts as $contact ) {
 									$record['id'] = $contact['id'];
-									if ( $condition['true']['options']['update_cats'] == 'add' ) {
+									if ( $_definition->plugin_options['update_cats'] == 'add' ) {
 										if ( !is_array( $contact['cat_id'] ) ) $contact['cat_id'] = explode( ',', $contact['cat_id'] );
 										if ( !is_array( $record['cat_id'] ) ) $record['cat_id'] = explode( ',', $record['cat_id'] );
 										$record['cat_id'] = implode( ',', array_unique( array_merge( $record['cat_id'], $contact['cat_id'] ) ) );
