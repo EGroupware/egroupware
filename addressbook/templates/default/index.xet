@@ -128,7 +128,7 @@
 						<description id="${row}[adr_two_countryname]" no_lang="1"/>
 						<hbox options="0,0">
 							<description no_lang="1" id="${row}[adr_two_locality]"/>
-							<description no_lang="1" id="${row}[adr_two_region]"/>
+							<description no_lang="1" id="${row}[adr_two_region]" class="leftPad5"/>
 							<description id="${row}[adr_two_postalcode]" class="leftPad5" value=" " no_lang="1"/>
 						</hbox>
 						<description no_lang="1" id="${row}[adr_two_street]"/>
