@@ -1518,6 +1518,10 @@ class uicontacts extends bocontacts
 // ToDo: fix vCard export
 $readonlys['button[vcard]'] = true;
 
+		// how to display addresses
+		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
+		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
+		
 		$sel_options['fileas_type'][$content['fileas_type']] = $this->fileas($content);
 		$sel_options['owner'] = $this->get_addressbooks();
 		for($i = -23; $i<=23; $i++) $tz[$i] = ($i > 0 ? '+' : '').$i;
