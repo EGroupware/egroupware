@@ -21,6 +21,50 @@ class import_export_helper_functions {
 	 */
 	
 	/**
+	 * Converts a custom time string to to unix timestamp
+	 * The format of the time string is given by the argument $_format 
+	 * which takes the same parameters as the php date() function.
+	 *
+	 * @abstract supportet formatstrings: d,m,y,Y,H,h,i,O,a,A
+	 * If timestring is empty, php strtotime is used.
+	 * @param string $_string time string to convert
+	 * @param string $_format format of time string e.g.: d.m.Y H:i
+	 */
+	public static function custom_strtotime( $_string, $_format='' ) {
+		if ( empty( $_format ) ) return strtotime( $_string );
+		$fparams = explode( ',', chunk_split( $_format, 1, ',' ) );
+		$spos = 0;
+		foreach ( $fparams as $fparam ) {
+			
+			switch ( $fparam ) {
+				case 'd': (int)$day = substr( $_string, $spos, 2 ); $spos += 2; break;
+				case 'm': (int)$mon = substr( $_string, $spos, 2 ); $spos += 2; break;
+				case 'y': (int)$year = substr( $_string, $spos, 2 ); $spos += 2; break;
+				case 'Y': (int)$year = substr( $_string, $spos, 4 ); $spos += 4; break;
+				case 'H': (int)$hour = substr( $_string, $spos, 2 ); $spos += 2; break;
+				case 'h': (int)$hour = substr( $_string, $spos, 2 ); $spos += 2; break;
+				case 'i': (int)$min =  substr( $_string, $spos, 2 ); $spos += 2; break;
+				case 'O': (int)$offset = $year = substr( $_string, $spos, 5 ); $spos += 5; break;
+				case 'a': (int)$hour = $fparam == 'am' ? $hour : $hour + 12; break;
+				case 'A': (int)$hour = $fparam == 'AM' ? $hour : $hour + 12; break;
+				default: $spos++; // seperator
+			}
+		}
+		
+		print_debug("hour:$hour; min:$min; sec:$sec; mon:$mon; day:$day; year:$year;\n");
+		$timestamp = mktime($hour, $min, $sec, $mon, $day, $year, 0);
+		
+		// offset given?
+		if ( isset( $offset ) && strlen( $offset == 5 ) ) {
+			$operator = $offset{0};
+			$ohour = 60 * 60 * (int)substr( $offset, 1, 2 );
+			$omin = 60 * (int)substr( $offset, 3, 2 );
+			if ( $operator == '+' ) $timestamp += $ohour + $omin;
+			else $timestamp -= $ohour + $omin;
+		}
+		return $timestamp;
+	}
+	/**
 	 * converts accound_lid to account_id
 	 *
 	 * @param mixed $_account_lid comma seperated list or array with lids
@@ -168,7 +212,7 @@ class import_export_helper_functions {
 						);
 					}
 					
-					$val = preg_replace_callback( "/(cat|account)\(([^)]+)\)/i", array( self, 'c2_dispatcher') , $val );
+					$val = preg_replace_callback( "/(cat|account|strtotime)\(([^)]+)\)/i", array( self, 'c2_dispatcher') , $val );
 				}
 			}
 			$values[$idx] = $val;
@@ -187,8 +231,14 @@ class import_export_helper_functions {
 		$action = &$_matches[1]; // cat or account ...
 		$data = &$_matches[2];   // datas for action
 		
-		$method = (string)$action. ( is_int( $data ) ? '_id2name' : '_name2id' );
-		return self::$method( $data );
+		switch ( $action ) {
+			case 'strtotime' :
+				list( $string, $format ) = explode( ',', $data );
+				return self::custom_strtotime( trim( $string ), trim( $format ) );
+			default :
+				$method = (string)$action. ( is_int( $data ) ? '_id2name' : '_name2id' );
+				return self::$method( $data );
+		}
 	}
 	
 	/**
