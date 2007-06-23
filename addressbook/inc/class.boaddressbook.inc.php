@@ -380,7 +380,7 @@ class boaddressbook
 
 		if($data !== false)	// permission denied
 		{
-			$data = array($this->data2xmlrpc($data));
+			$data = $this->data2xmlrpc(array($data));
 			
 			return $data[0];
 		}
