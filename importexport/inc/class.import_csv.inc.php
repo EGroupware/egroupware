@@ -93,9 +93,13 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * @return mixed array with data / false if no furtor records
 	 */
 	public function get_record( $_position = 'next' ) {
+		
 		if ($this->get_raw_record( $_position ) === false) {
 			return false;
 		}
+		
+		// skip empty records
+		if( count( array_unique( $this->record ) ) < 2 ) return $this->get_record( $_position );
 		
 		if ( !empty( $this->conversion ) ) {
 			$this->do_conversions();
@@ -108,6 +112,16 @@ class import_csv implements iface_import_record { //, Iterator {
 		return $this->record;
 	} // end of member function get_record
 	
+	/**
+	 * Skips $_numToSkip of records from current position on
+	 *
+	 * @param int $_numToSkip
+	 */
+	public function skip_records( $_numToSkip ) {
+		while ( (int)$_numToSkip-- !== 0 ) {
+			fgetcsv( $this->resource, self::csv_max_linelength, $this->csv_fieldsep);
+		}
+	}
 	
 	/**
 	 * updates $this->record
