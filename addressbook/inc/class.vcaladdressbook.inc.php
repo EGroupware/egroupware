@@ -103,6 +103,17 @@ class vcaladdressbook extends bocontacts
 			
 			$vCard->setParameter($vcardField, $options);
 		}
+		// add the full name of the contact; this is a required field
+		$value = $GLOBALS['egw']->translation->convert($entry['n_fn'], $sysCharSet, 'utf-8');
+		$vCard->setAttribute('FN', $value);
+		$options = array();
+		if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value)) {
+			$options['ENCODING'] = 'QUOTED-PRINTABLE';
+		}
+		if(preg_match('/([\177-\377])/',$value)) {
+			$options['CHARSET'] = 'UTF-8';
+		}
+		$vCard->setParameter('FN', $options);
 
 		$result = $vCard->exportvCalendar();
 
@@ -289,9 +300,39 @@ class vcaladdressbook extends bocontacts
 			'URL;WORK'	=> array('url'),
 			'URL;HOME'	=> array('url_home'),
 		);
+
+		$defaultFields[6] = array(
+			'ADR;WORK'	=> array('','','adr_one_street','adr_one_locality','adr_one_region',
+							'adr_one_postalcode','adr_one_countryname'),
+			'ADR;HOME'	=> array('','','adr_two_street','adr_two_locality','adr_two_region',
+							'adr_two_postalcode','adr_two_countryname'),
+			'EMAIL' 	=> array('email'),
+			'EMAIL;HOME' 	=> array('email_home'),
+			'N'		=> array('n_family','n_given','','',''),
+			'NOTE'		=> array('note'),
+			'ORG'		=> array('org_name','org_unit'),
+			'TEL;CELL'	=> array('tel_cell'),
+			'TEL;HOME;FAX'	=> array('tel_fax'),
+			'TEL;HOME;VOICE' => array('tel_home'),
+			'TEL;PAGER' 	=> array('tel_pager'),
+			'TEL;WORK;VOICE' => array('tel_work'),
+			'TITLE'		=> array('title'),
+			'URL;WORK'	=> array('url'),
+			'URL'		=> array('url_home'),
+		);
 		//error_log("Client: $_productManufacturer $_productName");
 		switch(strtolower($_productManufacturer))
 		{
+			case 'funambol':
+				switch(strtolower($_productName))
+				{
+					case 'fmz-thunderbird-plugin':
+					default:
+						$this->supportedFields = $defaultFields[6];
+						break;
+				}
+				break;
+
 			case 'nexthaus corporation':
 				switch(strtolower($_productName))
 				{
