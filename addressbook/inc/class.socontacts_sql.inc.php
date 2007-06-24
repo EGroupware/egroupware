@@ -328,6 +328,12 @@ class socontacts_sql extends so_sql
 				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
 				unset($filter['owner']);
 			}
+			// postgres requires that expressions in order by appear in the columns of a distinct select
+			if ($this->db->Type != 'mysql' && preg_match("/(\w+<>'')/",$order_by,$matches))
+			{
+				if (!is_array($extra_cols))	$extra_cols = $extra_cols ? explode(',',$extra_cols) : array();
+				$extra_cols[] = $matches[1];
+			}
 		}
 		$rows =& parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,$start,$filter,$join,$need_full_no_count);
 		
