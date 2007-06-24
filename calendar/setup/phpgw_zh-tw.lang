@@ -11,6 +11,7 @@ actions	calendar	zh-tw	動作
 actions...	calendar	zh-tw	動作...
 add alarm	calendar	zh-tw	新增警示
 added	calendar	zh-tw	新增日期
+added by synchronisation	calendar	zh-tw	同步後新增
 after %1	calendar	zh-tw	在%1以後
 after current date	calendar	zh-tw	在今天以後
 alarm	calendar	zh-tw	警告
@@ -52,6 +53,7 @@ copy this event	calendar	zh-tw	複製這個事件
 countries	calendar	zh-tw	國家
 country	calendar	zh-tw	國家
 create an exception for the given date	calendar	zh-tw	在指定日期建立一個例外
+create exception	calendar	zh-tw	建立例外
 create new links	calendar	zh-tw	建立新連結
 csv	calendar	zh-tw	CSV
 csv-fieldname	calendar	zh-tw	CSV-欄位名稱
@@ -105,6 +107,7 @@ event details follow	calendar	zh-tw	事件細節
 event saved	calendar	zh-tw	事件儲存了
 event will occupy the whole day	calendar	zh-tw	這是全天事件
 exception	calendar	zh-tw	例外
+exception created - you can now edit or delete it	calendar	zh-tw	例外建立了，您現在可以編輯或刪除
 exceptions	calendar	zh-tw	例外
 execute a further action for this entry	calendar	zh-tw	在這筆資料執行其他操作
 existing links	calendar	zh-tw	已經存在的連結
@@ -317,6 +320,7 @@ you can only set a year or a occurence !!!	calendar	zh-tw	您只可以設定一�
 you do not have permission to read this record!	calendar	zh-tw	您沒有讀取這個紀錄的權限！
 you have a meeting scheduled for %1	calendar	zh-tw	您跟%1有個行程
 you have been disinvited from the meeting at %1	calendar	zh-tw	您已經取消了 %1 的會議
+you need to select an account, contact or resource first!	calendar	zh-tw	您必須先選擇一個帳號、聯絡人或是資源！
 you need to select an ical file first	calendar	zh-tw	您必須先選擇一個 iCal 檔案
 you need to set either a day or a occurence !!!	calendar	zh-tw	您必須設定一個日期或是一個期間！
 your meeting scheduled for %1 has been canceled	calendar	zh-tw	您與%1的行程已經取消了
