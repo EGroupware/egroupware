@@ -25,7 +25,7 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 	var $_deviceInfo;
 	
 	function endElement($uri, $element) {
-		#Horde::logMessage('SyncML: put endelement ' . $element . ' stack ' . $this->_xmlStack, __FILE__, __LINE__, PEAR_LOG_DEBUG);
+		#Horde::logMessage('SyncML: put endelement ' . $element . ' chars ' . $this->_chars, __FILE__, __LINE__, PEAR_LOG_DEBUG);
 		
 		switch ($this->_xmlStack) {
 			case 5:
@@ -40,7 +40,18 @@ class Horde_SyncML_Command_Results extends Horde_SyncML_Command {
 						break;
 						
 					case 'DevID':
-						$this->_deviceInfo['deviceID']		= trim($this->_chars);
+						switch(trim($this->_chars)) {
+							case 'fmz-thunderbird-plugin':
+								$this->_deviceInfo['deviceID']		= trim($this->_chars);
+								$this->_deviceInfo['manufacturer']	= 'funambol';
+								$this->_deviceInfo['model']		= trim($this->_chars);
+								break;
+								
+							default:
+								$this->_deviceInfo['deviceID']		= trim($this->_chars);
+								break;
+							
+						}
 						break;
 						
 					case 'DevTyp':
