@@ -90,6 +90,7 @@ class uitimesheet extends botimesheet
 		}
 		else
 		{
+			//echo "<p>ts_start=$content[ts_start], start_time=$content[start_time], end_time=$content[end_time], ts_duration=$content[ts_duration], ts_quantity=$content[ts_quantity]</p>\n";
 			// we only need 2 out of 3 values from start-, end-time or duration (the date in ts_start is always required!)
 			if ($content['start_time'])		// start-time specified
 			{
@@ -130,10 +131,11 @@ class uitimesheet extends botimesheet
 					{
 						$etpl->set_validation_error('ts_quantity',lang('Field must not be empty !!!'));
 					}
-					if ($this->data['ts_quantity'] < 0)
+					if ($this->data['ts_duration'] < 0)	// for layout purpose we show the error behind the quantity field
 					{
 						$etpl->set_validation_error('ts_quantity',lang('Starttime has to be before endtime !!!'));
 					}
+					//echo "<p>ts_start=$content[ts_start], start_time=$content[start_time], end_time=$content[end_time], ts_duration=$content[ts_duration], ts_quantity=$content[ts_quantity]</p>\n";
 					if (!$this->data['ts_project']) $this->data['ts_project'] = $this->data['ts_project_blur'];
 					// set ts_title to ts_project if short viewtype (title is not editable) 
 					if($this->ts_viewtype == 'short') 
