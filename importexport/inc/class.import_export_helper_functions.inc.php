@@ -174,14 +174,15 @@ class import_export_helper_functions {
 	 */
 	public static function conversion( $_record,  $_conversion, &$_cclass = null ) {
 		if (empty( $_conversion ) ) return $_record;
-		$values = $_record;
 		
 		$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in conversion
 		$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
 		$CPre = '|['; $CPos = ']'; // |[_record-idx] is expanded to the corespondig value
+		$TPre = '|T{'; $TPos = '}'; // |{_record-idx} is trimmed
+		$CntlPre = '|TC{';		   // Filter all cntl-chars \x01-\x1f and trim
+		$CntlnCLPre  = '|TCnCL{';   // Like |C{ but allowes CR and LF
 		
 		foreach ( $_conversion as $idx => $conversion_string ) {
-			
 			if ( empty( $conversion_string ) ) continue;
 			
 			// fetch patterns ($rvalues)
@@ -194,7 +195,7 @@ class import_export_helper_functions {
 				$rvalues[$pattern] = $replace;	// replace two with only one, added by the form
 			}
 			
-			// conversion list may be longer than $_record (no_csv)
+			// conversion list may be longer than $_record aka (no_csv)
 			$val = array_key_exists( $idx, $_record ) ? $_record[$idx] : '';
 
 			foreach ( $rvalues as $pattern => $replace ) {
@@ -215,9 +216,12 @@ class import_export_helper_functions {
 					$val = preg_replace_callback( "/(cat|account|strtotime)\(([^)]+)\)/i", array( self, 'c2_dispatcher') , $val );
 				}
 			}
-			$values[$idx] = $val;
+			// clean each field
+			$val = preg_replace_callback("/(\|T\{|\|TC\{|\|TCnCL\{)(.*)\}/", array( self, 'strclean'), $val );
+			
+			$_record[$idx] = $val;
 		}
-		return $values;
+		return $_record;
 	} // end of member function conversion
 	
 	/**
@@ -238,6 +242,17 @@ class import_export_helper_functions {
 			default :
 				$method = (string)$action. ( is_int( $data ) ? '_id2name' : '_name2id' );
 				return self::$method( $data );
+		}
+	}
+	
+	private static function strclean( $_matches ) {
+		//print_r($_matches);
+		switch( $_matches[1] ) {
+			case '|T{' : return trim( $_matches[2] );
+			case '|TC{' : return trim( preg_replace( '/[\x01-\x1F]+/', '', $_matches[2] ) );
+			case '|TCnCL{' : return trim( preg_replace( '/[\x01-\x09\x11\x12\x14-\x1F]+/', '', $_matches[2] ) );	
+			default:
+				throw new Exception('Error in conversion string! "'. substr( $_matches[1], 0, -1 ). '" is not valid!');
 		}
 	}
 	
