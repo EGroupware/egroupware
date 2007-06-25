@@ -639,10 +639,10 @@ class uicontacts extends bocontacts
 						{
 							$Ok = false;
 						}
-						elseif ($contact['owner'] != $action)	// no need to change
+						elseif ($contact['owner'] != (int)$action || $contact['private'] != (int)(substr($action,-1) == 'p'))
 						{
 							$contact['owner'] = (int) $action;
-							$contact['private'] = 0;
+							$contact['private'] = (int)(substr($action,-1) == 'p');
 							$Ok = $this->save($contact);
 						}
 					}
