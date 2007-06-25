@@ -442,6 +442,7 @@ class bocontacts extends socontacts
 				if (($old = $this->read($contact['id'])))	// --> try reading the old entry and set it from there
 				{
 					$contact['owner'] = $old['owner'];
+					$contact['private'] = $old['private'];
 				}
 				else	// entry not found --> create a new one
 				{
@@ -449,8 +450,11 @@ class bocontacts extends socontacts
 				}
 			}
 		}
-		if (!$isUpdate) {
-			if (!isset($contact['owner'])) $contact['owner'] = $this->user;	// write to users personal addressbook
+		if (!$isUpdate) 
+		{
+			// if no owner/addressbook set use the setting of the add_default prefs (if set, otherwise the users personal addressbook)
+			if (!isset($contact['owner'])) $contact['owner'] = (int)$this->prefs['add_default'] ? (int)$this->prefs['add_default'] : $this->user;
+			if (!isset($contact['private'])) $contact['private'] = (int)(substr($this->prefs['add_default'],-1) == 'p');
 			$contact['creator'] = $this->user;
 			$contact['created'] = $this->now_su;
 			
