@@ -327,7 +327,7 @@
 			}
 		}
 		// is the right version availible
-		$available = $pear_available && (!$package || $available) && (!$min_version || version_compare($min_version,$version_available) <= 0);
+		$available = (@$available || $pear_available && !$package) && (!$min_version || version_compare($min_version,$version_available) <= 0);
 		echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
 			lang('Checking PEAR%1 is installed',($package?'::'.$package:'').($min_version?" ($min_version)":'')).': '.
 			($available ? ($version_available ? $version_available : lang('True')) : lang('False'))."</span></div>\n";		
