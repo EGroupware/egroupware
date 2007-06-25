@@ -117,6 +117,7 @@ class Horde_SyncML_Command_Sync_ContentSyncElement extends Horde_SyncML_Command_
                 $output->startElement($state->getURI(), 'Source', $attrs);
                 $output->startElement($state->getURI(), 'LocURI', $attrs);
                 $chars = substr($this->_locURI,0,39);
+                $state->setUIDMapping($this->_locURI, $chars);
                 $output->characters($chars);
                 $output->endElement($state->getURI(), 'LocURI');
                 $output->endElement($state->getURI(), 'Source');

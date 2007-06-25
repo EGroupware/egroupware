@@ -203,6 +203,11 @@ class Horde_SyncML_State {
 	// stores if we already requested the deviceinfo
 	var $_devinfoRequested = false;
 
+	/* 
+	 * store the mappings of egw uids to client uids
+	 */
+	var $_uidMappings	= array();
+	
     /**
      * Creates a new instance of Horde_SyncML_State.
      */
@@ -216,6 +221,24 @@ class Horde_SyncML_State {
         }
 
         $this->isAuthorized = false;
+    }
+    
+    /**
+     * store the sent global uid
+     */
+    function setUIDMapping($_realEgwUid, $_sentEgwUid) {
+    	$this->_uidMappings[$_sentEgwUid] = $_realEgwUid;
+    }
+
+    /**
+     * retrieve the real egw uid for a given send uid
+     */
+    function getUIDMapping($_sentEgwUid) {
+    	if(isset($this->_uidMappings[$_sentEgwUid])) {
+    		return $this->_uidMappings[$_sentEgwUid];
+	}
+	
+	return false;
     }
 
     /**
