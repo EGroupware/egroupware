@@ -4,7 +4,12 @@ include_once dirname(__FILE__).'/State.php';
 
 class EGW_SyncML_State extends Horde_SyncML_State
 {
-	var $table_devinfo = 'egw_syncmldevinfo';
+	var $table_devinfo	= 'egw_syncmldevinfo';
+	
+	/* 
+	 * store the mappings of egw uids to client uids
+	 */
+	var $uidMappings	= array();
 	
     /**
      * Returns the timestamp (if set) of the last change to the
@@ -323,22 +328,28 @@ class EGW_SyncML_State extends Horde_SyncML_State
      * have different syncs with different devices.  If an entry
      * already exists, it is overwritten.
      */
-    function setUID($type, $locid, $guid, $ts=0)
+    function setUID($type, $locid, $_guid, $ts=0)
     {
+    	#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+    	#Horde::logMessage("SyncML: setUID ". $this->getUIDMapping($guid), __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	// fix $guid, it maybe was to long for some devices
     	// format is appname-id-systemid
-    	$guidParts = explode('-',$guid);
-    	if(count($guidParts) == 3)
-    	{
-    		$guid = $GLOBALS['egw']->common->generate_uid($guidParts[0],$guidParts[1]);
-    	}
+    	#$guidParts = explode('-',$guid);
+    	#if(count($guidParts) == 3) {
+    	#	$guid = $GLOBALS['egw']->common->generate_uid($guidParts[0],$guidParts[1]);
+    	#}
     	
-    	if($ts == 0)
-    	{
+    	$guid = $this->getUIDMapping($_guid);
+    	if($guid === false) {
+    	    Horde::logMessage("SyncML: setUID $type, $locid, $guid something went wrong!!! Mapping not found.", __FILE__, __LINE__, PEAR_LOG_INFO);
+    	    return false;
+    	}
+    	Horde::logMessage("SyncML: setUID $_guid => $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+    	if($ts == 0) {
     		$ts = time();
     	}
     	
-	#Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ".count($guidParts), __FILE__, __LINE__, PEAR_LOG_DEBUG);
+	Horde::logMessage("SyncML: setUID $type, $locid, $guid, $ts ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
 
     	$db = clone($GLOBALS['egw']->db);
     	

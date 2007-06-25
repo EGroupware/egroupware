@@ -484,7 +484,7 @@ class Horde_SyncML_SyncMLBody extends Horde_SyncML_ContentHandler {
             $state = & $_SESSION['SyncML.state'];
 
             // <SyncML><SyncBody><[Command]>
-		Horde::logMessage('SyncML['. session_id() ."]:    found command    $element         ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
+            #Horde::logMessage('SyncML['. session_id() ."]:    found command    $element         ", __FILE__, __LINE__, PEAR_LOG_DEBUG);
             $this->_currentCommand = Horde_SyncML_Command::factory($element);
             $this->_currentCommand->startElement($uri, $element, $attrs);
 
