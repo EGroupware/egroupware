@@ -23,6 +23,12 @@ class bo_resources
 	var $thumbs_dir = '/resources/pictures/thumbs/';
 	var $resource_icons = '/resources/templates/default/images/resource_icons/';
 	var $debug = 0;
+	/**
+	 * Instance of resources so object
+	 *
+	 * @var so_resources
+	 */
+	var $so;
 	
 	function bo_resources()
 	{
@@ -332,7 +338,7 @@ class bo_resources
 			'cat_id' => array_flip((array)$this->acl->get_cats(EGW_ACL_READ)),
 			//'accessory_of' => '-1'
 		);
-		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR','',$filter);
+		$data = $this->so->search($criteria,$only_keys,$order_by='',$extra_cols='',$wildcard='%',$empty,$op='OR',false,$filter);
 		foreach($data as $num => $resource)
 		{
 			$list[$resource['res_id']] = $resource['name']. ($resource['short_description'] ? ', ['.$resource['short_description'].']':'');
