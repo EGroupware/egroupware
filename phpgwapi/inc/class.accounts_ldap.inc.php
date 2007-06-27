@@ -399,7 +399,7 @@ class accounts_backend
 	 */
 	function _read_group($account_id)
 	{
-		$sri = ldap_search($this->ds, $this->group_context, 'gidnumber=' . abs($account_id),
+		$sri = ldap_search($this->ds, $this->group_context,'(&(objectClass=posixGroup)(gidnumber=' . abs($account_id).'))',
 			array('dn','gidnumber','cn','objectclass','mail'));
 		
 		$data = ldap_get_entries($this->ds, $sri);
@@ -443,7 +443,7 @@ class accounts_backend
 	 */
 	function _read_user($account_id)
 	{
-		$sri = ldap_search($this->ds, $this->user_context, 'uidnumber=' . (int)$account_id,
+		$sri = ldap_search($this->ds, $this->user_context, '(&(objectclass=posixAccount)(uidnumber=' . (int)$account_id.'))',
 			array('dn','uidnumber','uid','gidnumber','givenname','sn','cn','mail','userpassword',
 			'shadowexpire','shadowlastchange','homedirectory','loginshell'));
 		
