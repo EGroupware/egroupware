@@ -32,12 +32,16 @@ class export_contacts_csv implements iface_export_plugin {
 		
 		$uicontacts = new uicontacts();
 		$selection = array();
-		if ($options['selection'] == 'use_all') { 
+		if ($options['selection'] == 'use_all') {
+			// uicontacts selection with checkbox 'use_all' 
 			$query = $GLOBALS['egw']->session->appsession('index','addressbook');
 			$query['num_rows'] = -1;	// all
 			$uicontacts->get_rows($query,$selection,$readonlys,true);	// true = only return the id's
 		}
-		else {
+		elseif ( $options['selection'] == 'all_contacts' ) {
+			$selection = ExecMethod('addressbook.bocontacts.search',array());
+			//$uicontacts->get_rows($query,$selection,$readonlys,true);
+		} else {
 			$selection = explode(',',$options['selection']);
 		}
 		
