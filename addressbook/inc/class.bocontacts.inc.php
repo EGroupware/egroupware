@@ -54,6 +54,7 @@ class bocontacts extends socontacts
 		'n_prefix n_family: org_name',
 		'n_fn: org_name',
 		'org_name',
+		'org_name - org_unit',
 		'n_given n_family',
 		'n_prefix n_family',
 		'n_family, n_given',
