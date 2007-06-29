@@ -269,7 +269,7 @@
 				if(!$query['template'] || $query['template'] == 'etemplate.ajax_select_widget.row') {
 					$query['template'] = 'etemplate.ajax_select_widget.row';
 				}
-				foreach($result_list as $key => &$row) {
+				foreach($result_list as $key => $row) {
 					if(!is_array($row)) {
 						continue;
 					}
