@@ -30,7 +30,7 @@
 		);
 		var $human_name = 'AJAX Select';	// this is the name for the editor
 
-		private $debug = false;
+		var $debug = false;
 
 		function ajax_select_widget($ui='')
 		{
