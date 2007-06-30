@@ -111,6 +111,34 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		return false;
 	}
 
+	/**
+ 	 * returns GUIDs of all client items
+ 	 */
+	function _getClientItems($type)
+	{
+		$mapID = $this->_locName . $this->_sourceURI . $type;
+		
+		$db = clone($GLOBALS['egw']->db);
+    	
+    	$cols = array('map_guid');
+    	
+    	$where = array
+    	(
+    		'map_id'	=> $mapID,
+    		'map_expired'	=> 0,
+    	);
+    	
+    	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
+    	
+    	$guids = array();
+    	while($db->next_record())
+    	{
+    		$guids[] = $db->f('map_guid');
+    	}
+    	
+    	return empty($guids) ? false : $guids;
+	}
+
     /**
      * Retrieves the Horde server guid (like
      * kronolith:0d1b415fc124d3427722e95f0e926b75) for a given client
