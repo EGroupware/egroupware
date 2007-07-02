@@ -366,11 +366,14 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	#if(count($guidParts) == 3) {
     	#	$guid = $GLOBALS['egw']->common->generate_uid($guidParts[0],$guidParts[1]);
     	#}
-    	
+
+    	// problem: entries created from client, come here with the (long) server guid, 
+    	// but getUIDMapping does not know them and can not map server-guid <--> client guid
     	$guid = $this->getUIDMapping($_guid);
     	if($guid === false) {
     	    Horde::logMessage("SyncML: setUID $type, $locid, $guid something went wrong!!! Mapping not found.", __FILE__, __LINE__, PEAR_LOG_INFO);
-    	    return false;
+    	    $guid = $_guid;
+    	    //return false;
     	}
     	Horde::logMessage("SyncML: setUID $_guid => $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	if($ts == 0) {
