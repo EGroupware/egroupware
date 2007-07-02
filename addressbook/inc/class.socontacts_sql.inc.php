@@ -365,7 +365,12 @@ class socontacts_sql extends so_sql
 		{
 			$cat_filter[] = $this->db->concat("','",cat_id,"','")." $not LIKE '%,$cat,%'";
 		}
-		return '('.implode(' OR ',$cat_filter).')';
+		$cfilter = '('.implode(' OR ',$cat_filter).')';
+		if(!empty($not))
+		{
+			$cfilter = "( $cfilter OR cat_id IS NULL )";
+		}
+		return $cfilter;
 	}
 	
 	/**
