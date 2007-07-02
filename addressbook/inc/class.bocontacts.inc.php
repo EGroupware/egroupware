@@ -443,7 +443,10 @@ class bocontacts extends socontacts
 				if (($old = $this->read($contact['id'])))	// --> try reading the old entry and set it from there
 				{
 					$contact['owner'] = $old['owner'];
-					$contact['private'] = $old['private'];
+					if(!isset($contact['private']))
+					{
+						$contact['private'] = $old['private'];
+					}
 				}
 				else	// entry not found --> create a new one
 				{

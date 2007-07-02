@@ -555,7 +555,7 @@ class vcaladdressbook extends bocontacts
 								break;
 								
 							case 'private':
-								$contact[$fieldName] = (int) $vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE';
+								(int)$contact[$fieldName] = $vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE';
 								break;
 								
 							case 'cat_id':
@@ -586,7 +586,6 @@ class vcaladdressbook extends bocontacts
 		}
 		
 		$contact['n_fn']  = trim($contact['n_given'].' '.$contact['n_family']);
-		
 		return $contact;
 	}
 	
