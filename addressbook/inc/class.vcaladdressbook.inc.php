@@ -572,6 +572,10 @@ class vcaladdressbook extends bocontacts
 									$contact[$fieldName] = $cat_id;
 								}
 								break;
+							case 'note':
+								// note may contain ','s but maybe this needs to be fixed in vcard parser...
+								$contact[$fieldName] = trim($vcardValues[$vcardKey]['value']);
+								break;
 							default:
 								$contact[$fieldName] = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
 								break;
