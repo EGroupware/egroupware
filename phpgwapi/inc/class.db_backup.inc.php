@@ -302,7 +302,7 @@
 					}
 					$arr[$key] = str_replace(BACKSLASH_TOKEN,'\\',str_replace(array('\\\\','\\n','\\r','\\"'),array(BACKSLASH_TOKEN,"\n","\r",'"'),substr($field,1,-1)));
 				}
-				elseif ($keys && (strlen($field) > 64 || !is_numeric($field) && $field != 'NULL'))
+				elseif ($keys && strlen($field) > 24)
 				{
 					$arr[$key] = base64_decode($field);
 				}
