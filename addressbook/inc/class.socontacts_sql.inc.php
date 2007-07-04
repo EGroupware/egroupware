@@ -243,11 +243,17 @@ class socontacts_sql extends so_sql
 		$owner = isset($filter['owner']) ? $filter['owner'] : (isset($criteria['owner']) ? $criteria['owner'] : null);
 
 		// fix cat_id filter to search in comma-separated multiple cats and return subcats
-		if ((int)$filter['cat_id'])
+		if (($cats = $filter['cat_id']))
 		{
-			$filter[] = $this->_cat_filter($filter['cat_id']);
+			if ($filter['cat_id']{0} == '!')
+			{
+				$filter['cat_id'] = substr($filter['cat_id'],1);
+				$not = 'NOT';
+			}
+			$filter[] = $this->_cat_filter((int)$filter['cat_id'],$not);
 			unset($filter['cat_id']);
 		}
+		
 		// add filter for read ACL in sql, if user is NOT the owner of the addressbook
 		if (isset($this->grants) && !(isset($filter['owner']) && $filter['owner'] == $GLOBALS['egw_info']['user']['account_id']))
 		{
@@ -349,7 +355,7 @@ class socontacts_sql extends so_sql
 	 * @param int $cat_id
 	 * @return string sql to filter by given cat
 	 */
-	function _cat_filter($cat_id)
+	function _cat_filter($cat_id, $not='')
 	{
 		if (!is_object($GLOBALS['egw']->categories))
 		{
@@ -357,9 +363,14 @@ class socontacts_sql extends so_sql
 		}
 		foreach($GLOBALS['egw']->categories->return_all_children((int)$cat_id) as $cat)
 		{
-			$cat_filter[] = $this->db->concat("','",cat_id,"','")." LIKE '%,$cat,%'";
+			$cat_filter[] = $this->db->concat("','",cat_id,"','")." $not LIKE '%,$cat,%'";
 		}
-		return '('.implode(' OR ',$cat_filter).')';
+		$cfilter = '('.implode(' OR ',$cat_filter).')';
+		if(!empty($not))
+		{
+			$cfilter = "( $cfilter OR cat_id IS NULL )";
+		}
+		return $cfilter;
 	}
 	
 	/**

@@ -15,6 +15,7 @@ require_once EGW_SERVER_ROOT.'/phpgwapi/inc/horde/Horde/iCalendar.php';
 
 class vcaladdressbook extends bocontacts
 {
+	
 	/**
 	* import a vard into addressbook
 	* 
@@ -91,7 +92,8 @@ class vcaladdressbook extends bocontacts
 			}
 			
 			// don't add the entry if it contains only ';'
-			if(strlen(str_replace(';','',$value)) != 0) {
+			// exeptions for mendatory fields 
+			if( ( strlen(str_replace(';','',$value)) != 0 ) || in_array($vcardField,array('FN','ORG','N')) ) {
 				$vCard->setAttribute($vcardField, $value);
 			}
 			if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value)) {
@@ -103,18 +105,7 @@ class vcaladdressbook extends bocontacts
 			
 			$vCard->setParameter($vcardField, $options);
 		}
-		// add the full name of the contact; this is a required field
-		$value = $GLOBALS['egw']->translation->convert($entry['n_fn'], $sysCharSet, 'utf-8');
-		$vCard->setAttribute('FN', $value);
-		$options = array();
-		if(preg_match('/([\000-\012\015\016\020-\037\075])/',$value)) {
-			$options['ENCODING'] = 'QUOTED-PRINTABLE';
-		}
-		if(preg_match('/([\177-\377])/',$value)) {
-			$options['CHARSET'] = 'UTF-8';
-		}
-		$vCard->setParameter('FN', $options);
-
+		
 		$result = $vCard->exportvCalendar();
 
 		return $result;
@@ -564,7 +555,7 @@ class vcaladdressbook extends bocontacts
 								break;
 								
 							case 'private':
-								$contact[$fieldName] = (int) $vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE';
+								(int)$contact[$fieldName] = $vcardValues[$vcardKey]['values'][$fieldKey] == 'PRIVATE';
 								break;
 								
 							case 'cat_id':
@@ -581,6 +572,10 @@ class vcaladdressbook extends bocontacts
 									$contact[$fieldName] = $cat_id;
 								}
 								break;
+							case 'note':
+								// note may contain ','s but maybe this needs to be fixed in vcard parser...
+								$contact[$fieldName] = trim($vcardValues[$vcardKey]['value']);
+								break;
 							default:
 								$contact[$fieldName] = trim($vcardValues[$vcardKey]['values'][$fieldKey]);
 								break;
@@ -591,7 +586,6 @@ class vcaladdressbook extends bocontacts
 		}
 		
 		$contact['n_fn']  = trim($contact['n_given'].' '.$contact['n_family']);
-		
 		return $contact;
 	}
 	
