@@ -137,7 +137,8 @@ class Horde_SyncML_Command_Map extends Horde_SyncML_Command {
                     Horde::logMessage("SyncML: creating Map for source=" .
                                       $this->_mapSource . " and target=" . $this->_mapTarget, __FILE__, __LINE__, PEAR_LOG_DEBUG);
                     // Overwrite existing data by removing it first:
-                    $r = $state->setUID($this->_targetLocURI, $this->_mapSource, $this->_mapTarget);
+                    $ts = $state->getServerAnchorNext($this->_targetLocURI);
+                    $r = $state->setUID($this->_targetLocURI, $this->_mapSource, $this->_mapTarget, $ts);
                     if (is_a($r, 'PEAR_Error')) {
                         Horde::logMessage('SyncML: PEAR Error: ' . $r->getMessage(), __FILE__, __LINE__, PEAR_LOG_ERR);
                         return false;

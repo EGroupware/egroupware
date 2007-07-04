@@ -111,6 +111,34 @@ class EGW_SyncML_State extends Horde_SyncML_State
 		return false;
 	}
 
+	/**
+ 	 * returns GUIDs of all client items
+ 	 */
+	function _getClientItems($type)
+	{
+		$mapID = $this->_locName . $this->_sourceURI . $type;
+		
+		$db = clone($GLOBALS['egw']->db);
+    	
+    	$cols = array('map_guid');
+    	
+    	$where = array
+    	(
+    		'map_id'	=> $mapID,
+    		'map_expired'	=> 0,
+    	);
+    	
+    	$db->select('egw_contentmap', $cols, $where, __LINE__, __FILE__, false, '', 'syncml');
+    	
+    	$guids = array();
+    	while($db->next_record())
+    	{
+    		$guids[] = $db->f('map_guid');
+    	}
+    	
+    	return empty($guids) ? false : $guids;
+	}
+
     /**
      * Retrieves the Horde server guid (like
      * kronolith:0d1b415fc124d3427722e95f0e926b75) for a given client
@@ -338,11 +366,14 @@ class EGW_SyncML_State extends Horde_SyncML_State
     	#if(count($guidParts) == 3) {
     	#	$guid = $GLOBALS['egw']->common->generate_uid($guidParts[0],$guidParts[1]);
     	#}
-    	
+
+    	// problem: entries created from client, come here with the (long) server guid, 
+    	// but getUIDMapping does not know them and can not map server-guid <--> client guid
     	$guid = $this->getUIDMapping($_guid);
     	if($guid === false) {
     	    Horde::logMessage("SyncML: setUID $type, $locid, $guid something went wrong!!! Mapping not found.", __FILE__, __LINE__, PEAR_LOG_INFO);
-    	    return false;
+    	    $guid = $_guid;
+    	    //return false;
     	}
     	Horde::logMessage("SyncML: setUID $_guid => $guid", __FILE__, __LINE__, PEAR_LOG_DEBUG);
     	if($ts == 0) {
