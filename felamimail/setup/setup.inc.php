@@ -54,24 +54,24 @@
 	$setup_info['felamimail']['check_install'] = array(
 		'' => array(
 			'func' => 'pear_check',
-			'from' => 'FeLaMiMail',
 		),
 # get's provided by egw-pear temporarly
 		'Net_Sieve' => array(
 			'func' => 'pear_check',
-			'from' => 'FeLaMiMail',
 		),
 		'Net_IMAP' => array(
 			'func' => 'pear_check',
-			'from' => 'FeLaMiMail',
 		),
 		'Auth_SASL' => array(
 			'func' => 'pear_check',
-			'from' => 'FeLaMiMail',
 		),
 		'imap' => array(
 			'func' => 'extension_check',
-			'from' => 'FeLaMiMail',
+		),
+		'magic_quotes_gpc' => array(
+			'func' => 'php_ini_check',
+			'value' => 0,
+			'verbose_value' => 'Off',
 		),
 	);	
 
