@@ -83,7 +83,7 @@ class etemplate_request
 	 */
 	static function read($id)
 	{
-		if (!($data = $GLOBALS['egw']->session->request($id,'etemplate')))
+		if (!($data = $GLOBALS['egw']->session->appsession($id,'etemplate')))
 		{
 			return false;	// request not found
 		}
@@ -184,7 +184,7 @@ class etemplate_request
 	}
 
 	/**
-	 * saves content,readonlys,template-keys, ... via eGW's app_session function
+	 * saves content,readonlys,template-keys, ... via eGW's appsession function
 	 *
 	 * As a user may open several windows with the same content/template wie generate a location-id from microtime
 	 * which is used as location for request to descriminate between the different windows. This location-id
@@ -193,11 +193,11 @@ class etemplate_request
 	 */
 	function __destruct()
 	{
-		if ($this->data_modified) $GLOBALS['egw']->session->app_session($this->id,'etemplate',$this->data);
+		if ($this->data_modified) $GLOBALS['egw']->session->appsession($this->id,'etemplate',$this->data);
 
 		if (substr($GLOBALS['egw_info']['server']['sessions_type'],0,4) == 'php4' && !$this->garbage_collection_done)
 		{
-			$this->php4_request_garbage_collection();
+			$this->_php4_request_garbage_collection();
 		}
 	}
 
@@ -211,8 +211,8 @@ class etemplate_request
 	private function _php4_request_garbage_collection()
 	{
 		// now we are on php4 sessions and do a bit of garbage collection
-		$app_sessions =& $_SESSION[EGW_SESSION_VAR]['app_sessions']['etemplate'];
-		$session_used =& $app_sessions['session_used'];
+		$appsessions =& $_SESSION[EGW_SESSION_VAR]['appsessions']['etemplate'];
+		$session_used =& $appsessions['session_used'];
 		
 		if ($this->id)
 		{
@@ -221,24 +221,24 @@ class etemplate_request
 		}
 		$this->garbage_collection_done = true;
 
-		if (count($app_sessions) < 20) return;	// we dont need to care
+		if (count($appsessions) < 20) return;	// we dont need to care
 
 		list($msec,$sec) = explode(' ',microtime());
 		$now = 	100 * $sec + (int)(100 * $msec);	// gives precision of 1/100 sec
 
-		foreach(array_keys($app_sessions) as $id)
+		foreach(array_keys($appsessions) as $id)
 		{
 			list(,$time) = explode(':',$id);
 			
 			if (!$time) continue;	// other data, no session
 			
-			//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".strlen($app_sessions[$id])."<br>\n";
+			//echo ++$n.') '.$id.': '.(($now-$time)/100.0)."secs old, used=".$session_used[$id].", size=".strlen($appsessions[$id])."<br>\n";
 
 			if ($session_used[$id] == 1 && $time < $now - 10*6000 || // session used and older then 10min
 				$time < $now - 60*6000)	// session not used and older then 1h
 			{
 				//echo "<p>boetemplate::php4_session_garbage_collection('$id_used'): unsetting session '$id' (now=$now)</p>\n";
-				unset($app_sessions[$id]);
+				unset($appsessions[$id]);
 				unset($session_used[$id]);
 			}
 		}
