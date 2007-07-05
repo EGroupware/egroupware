@@ -41,10 +41,6 @@ class historylog_widget
 //		'historylog-helper' => '',
 	);
 	
-	function customfields_widget($ui)
-	{
-	}
-
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
 		$status_widgets =& $GLOBALS['egw_info']['flags']['etemplate']['historylog-helper'];
