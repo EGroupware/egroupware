@@ -383,11 +383,11 @@
 						$format = '%0'.strlen($type3).'d';
 					}
 					$type3 = !$type3 ? 1 : intval($type3);			// decrement
-					if (($type < $type2) != ($type3 > 0))
+					if (($type <= $type2) != ($type3 > 0))
 					{
 						$type3 = -$type3;	// void infinite loop
 					}
-					for ($i=0,$n=$type; $n <= $type2 && $i <= 100; $n += $type3)
+					for ($i=0,$n=$type; $n <= $type2 && $i <= 100; $n += $type3,++$i)
 					{
 						$cell['sel_options'][$n] = sprintf($format,$n);
 					}
