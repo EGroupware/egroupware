@@ -191,13 +191,17 @@
 				$GLOBALS['egw']->translation->add_app('etemplate');	// some extensions have own texts
 			}
 			$id = $this->appsession_id();
-			
+//echo "<p>unsetting existing egw_info[etemplate] which had keys=".implode(',',array_keys($GLOBALS['egw_info']['etemplate']))."</p>\n";
 			// initialise $GLOBALS['egw_info']['etemplate'], in case there are multiple eTemplates on a page
 			$GLOBALS['egw_info']['etemplate'] = array(
 				'name_forms' => $GLOBALS['egw_info']['etemplate']['name_forms'],
 				'validation_errors' => $GLOBALS['egw_info']['etemplate']['validation_errors'],
 				'hooked' => $GLOBALS['egw_info']['etemplate']['hooked'],
+				'content' => $GLOBALS['egw_info']['etemplate']['content'],
+				'hook_content' => $GLOBALS['egw_info']['etemplate']['hook_content'],
+				'hook_app' => $GLOBALS['egw_info']['etemplate']['hook_app'],
 			);
+//echo "<p>hooked=".(int)!!$GLOBALS['egw_info']['etemplate']['hooked'].", content=".(int)!!$GLOBALS['egw_info']['etemplate']['content'].", hook_content=".(int)!!$GLOBALS['egw_info']['etemplate']['hook_content'].", hook_app={$GLOBALS['egw_info']['etemplate']['hook_app']}</p>\n";
 			$this->name_form =& $GLOBALS['egw_info']['etemplate']['name_form'];
 			$this->name_forms =& $GLOBALS['egw_info']['etemplate']['name_forms'];
 			if (!is_array($this->name_forms)) $this->name_forms = array();
@@ -324,7 +328,7 @@
 				'java_script_body_tags' => $GLOBALS['egw']->js->body,
 				'include_xajax' => $GLOBALS['egw_info']['flags']['include_xajax'],
 				'dom_enabled' => $GLOBALS['egw_info']['etemplate']['dom_enabled'],
-				'hooked' => $hooked != '' ? $hooked : $GLOBALS['egw_info']['etemplate']['hook_content'],
+				'hooked' => $hooked ? $hooked : $GLOBALS['egw_info']['etemplate']['hook_content'],
 				'hook_app' => $hooked ? $GLOBALS['egw_info']['flags']['currentapp'] : $GLOBALS['egw_info']['etemplate']['hook_app'],
 				'app_header' => $GLOBALS['egw_info']['flags']['app_header'],
 				'output_mode' => $output_mode != -1 ? $output_mode : 0,
@@ -333,6 +337,8 @@
 				'method' => $method,
 				'name_vars' => $this->name_vars,
 			),$id);
+//echo "<p>hooked=".(int)!!$hooked.", content=".(int)!!$GLOBALS['egw_info']['etemplate']['content'].", hook_content=".(int)!!$GLOBALS['egw_info']['etemplate']['hook_content'].", hook_app={$GLOBALS['egw_info']['etemplate']['hook_app']}</p>\n";
+//echo "<p>session: "; foreach($sess as $key => $val) echo "$key=$val, "; echo "</p>\n";
 /*
 echo "<p><b>total size session data = ".($total=strlen(serialize($sess)))."</b></p>\n";
 echo "<p>shares bigger then 1.0% percent of it:</p>\n";
@@ -736,10 +742,14 @@ foreach($sess as $key => $val)
 						unset($row_data[$col]);	// omit empty/disabled cells if only one row
 						continue;
 					}
-					// can only be set via source at the moment
-					if (strlen($cell['onclick']) > 1 && $cell['type'] != 'button')
+					if (strlen($cell['onclick']) > 1 && !in_array($cell['type'],array('button','buttononly')))
 					{
-						$row_data[".$col"] .= ' onclick="'.$this->js_pseudo_funcs($cell['onclick'],$cname).'"' .
+						$onclick = $cell['onclick'];
+						if (strpos($onclick,'$') !== false || $onclick{0} == '@')
+						{
+							$onclick = $this->expand_name($onclick,$c,$r,$content['.c'],$content['.row'],$content);
+						}
+						$row_data[".$col"] .= ' onclick="'.$this->js_pseudo_funcs($onclick,$cname).'"' .
 							($cell['id'] ? ' id="'.$cell['id'].'"' : '');
 					}
 					$colspan = $span == 'all' ? $this->cols-$c : 0+$span;
@@ -885,7 +895,7 @@ foreach($sess as $key => $val)
 				if ($this->rows == 1) {
 					return '';	// if only one row omit cell
 				}
-				$cell = $this->empty_cell(); // show nothing
+				$cell = $this->empty_cell('label','',array('span' => $cell['span'])); // show nothing (keep the css class!)
 				$value = '';
 			}
 			$extra_label = True;
@@ -1719,7 +1729,7 @@ foreach($sess as $key => $val)
 			}
 			foreach($var as $key => $val)
 			{
-				$var[$key] = is_array($val) ? $this->array_stripslashes($val) : stripslashes($val);
+				$var[$key] = is_array($val) ? etemplate::array_stripslashes($val) : stripslashes($val);
 			}
 			return $var;
 		}
@@ -1751,7 +1761,7 @@ foreach($sess as $key => $val)
 			$content = array();
 			if (get_magic_quotes_gpc())
 			{
-				$content_in = $this->array_stripslashes($content_in);
+				$content_in = etemplate::array_stripslashes($content_in);
 			}
 			$GLOBALS['egw_info']['etemplate']['validation_errors'] = array();
 			$this->canceled = $this->button_pressed = False;
@@ -1767,7 +1777,7 @@ foreach($sess as $key => $val)
 				{
 					$attr = array();
 				}
-				$value = $this->get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
+				$value = etemplate::get_array($content_in,$form_name,True,$GLOBALS['egw_info']['flags']['currentapp'] == 'etemplate' ? false : true );
 				// The comment below does only aplay to normal posts, not for xajax. Files are not supported anyway by xajax atm.
 				// not checked checboxes are not returned in HTML and file is in $_FILES and not in $content_in
 				if($value === false && $type == 'xajaxResponse' /*!in_array($type,array('checkbox','file'))*/) continue;
@@ -1781,7 +1791,7 @@ foreach($sess as $key => $val)
 				switch ($type)
 				{
 					case 'ext':
-						$_cont = &$this->get_array($content,$form_name,True);
+						$_cont = &etemplate::get_array($content,$form_name,True);
 						if (!$this->extensionPostProcess($sub,$form_name,$_cont,$value))
 						{
 							//echo "\n<p><b>unsetting content[$form_name] !!!</b></p>\n";
@@ -1791,7 +1801,7 @@ foreach($sess as $key => $val)
 						// $form_name of $content, but under some circumstances a set/changed $_cont
 						// does not result in a change in $content -- RalfBecker 2004/09/18
 						// seems to depend on the number of (not existing) dimensions of the array -- -- RalfBecker 2005/04/06
-						elseif (!$this->isset_array($content,$form_name))
+						elseif (!etemplate::isset_array($content,$form_name))
 						{
 							//echo "<p>setting content[$form_name]='$_cont' because is was unset !!!</p>\n";
 							$this->set_array($content,$form_name,$_cont);
