@@ -201,14 +201,14 @@ class so_sql
 		}
 		foreach($this->db_cols as $db_col => $col)
 		{
-			if (isset($new[$col]))
+			if (array_key_exists($col,$new))
 			{
 				$this->data[$col] = $new[$col];
 			}
 		}
 		foreach($this->non_db_cols as $db_col => $col)
 		{
-			if (isset($new[$col]))
+			if (array_key_exists($col,$new))
 			{
 				$this->data[$col] = $new[$col];
 			}
@@ -446,6 +446,40 @@ class so_sql
 		return $this->db->Errno;
 	}
 
+	/**
+	 * Update only the given fields, if the primary key is not given, it will be taken from $this->data
+	 * 
+	 * @param array $fields
+	 * @param boolean $merge=true if true $fields will be merged with $this->data (after update!), otherwise $this->data will be just $fields
+	 * @return int 0 on success, errno != 0 otherwise
+	 */
+	function update($fields,$merge=true)
+	{
+		if ($merge) $backup_data = $this->data ? $this->data : array();
+
+		if ($this->autoinc_id && !isset($fields[$this->autoinc_id]) ||
+			$this->db_key_cols && count(array_intersect(array_keys($this->db_key_cols),array_keys($fields)) != count($this->db_key_cols)))
+		{
+			foreach($this->db_key_cols as $col => $name)
+			{
+				if (!isset($fields[$name]))
+				{
+					$fields[$name] = $this->data[$name];
+				}
+			}
+		}
+		$this->init($fields);
+
+		$ret = $this->save();
+		
+		if ($merge)
+		{
+			$this->init($backup_data);
+			$this->data_merge($fields);
+		}
+		return $ret;
+	}
+	
 	/**
 	 * deletes row representing keys in internal data or the supplied $keys if != null
 	 *
