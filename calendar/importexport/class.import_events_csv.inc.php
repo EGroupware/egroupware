@@ -28,6 +28,7 @@ class import_events_csv implements iface_import_plugin  {
 								// with cat(s) from csv OR add the cat from
 								// csv file to exeisting cat(s) of record
 		'num_header_lines',		// int number of header lines
+		'trash_users_records',	// trashes all events of events owner before import
 		'field_conversion', 	// array( $csv_col_num => conversion)
 		'field_mapping',		// array( $csv_col_num => adb_filed)
 		'conditions',			/* => array containing condition arrays: 
@@ -93,7 +94,7 @@ class import_events_csv implements iface_import_plugin  {
 		));
 		
 		$this->definition = $_definition;
-		
+
 		// user, is admin ?
 		$this->is_admin = isset( $GLOBALS['egw_info']['user']['apps']['admin'] ) && $GLOBALS['egw_info']['user']['apps']['admin'];
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
@@ -118,6 +119,18 @@ class import_events_csv implements iface_import_plugin  {
 		// set eventOwner
 		$_definition->plugin_options['events_owner'] = isset( $_definition->plugin_options['events_owner'] ) ? 
 			$_definition->plugin_options['events_owner'] : $this->user;
+		
+		// trash_users_records ?
+		if ( $_definition->plugin_options['trash_users_records'] === true ) {
+			if ( !$_definition->plugin_options['dry_run'] ) {
+				$socal = CreateObject( 'calendar.socal' );
+				$socal->change_delete_user( $_definition->plugin_options['events_owner'], false );
+				unset( $socal );
+			} else {
+				$lid = $GLOBALS['egw']->accounts->id2name( $_definition->plugin_options['events_owner'] );
+				echo "Attension: All Events of '$lid' would be deleted!\n";
+			}
+		}
 		
 		while ( $record = $import_csv->get_record() ) {
 
