@@ -25,7 +25,7 @@ class import_export_helper_functions {
 	 * The format of the time string is given by the argument $_format 
 	 * which takes the same parameters as the php date() function.
 	 *
-	 * @abstract supportet formatstrings: d,m,y,Y,H,h,i,O,a,A
+	 * @abstract supportet formatstrings: d,m,y,Y,H,h,i,s,O,a,A
 	 * If timestring is empty, php strtotime is used.
 	 * @param string $_string time string to convert
 	 * @param string $_format format of time string e.g.: d.m.Y H:i
@@ -44,6 +44,7 @@ class import_export_helper_functions {
 				case 'H': (int)$hour = substr( $_string, $spos, 2 ); $spos += 2; break;
 				case 'h': (int)$hour = substr( $_string, $spos, 2 ); $spos += 2; break;
 				case 'i': (int)$min =  substr( $_string, $spos, 2 ); $spos += 2; break;
+				case 's': (int)$sec =  substr( $_string, $spos, 2 ); $spos += 2; break;
 				case 'O': (int)$offset = $year = substr( $_string, $spos, 5 ); $spos += 5; break;
 				case 'a': (int)$hour = $fparam == 'am' ? $hour : $hour + 12; break;
 				case 'A': (int)$hour = $fparam == 'AM' ? $hour : $hour + 12; break;
