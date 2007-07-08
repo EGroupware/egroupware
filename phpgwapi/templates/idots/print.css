@@ -19,6 +19,9 @@
 	border: none;
 	text-align: left;
 }
+#divAppboxHeader {
+	background: none;
+}
 
 /* all tables */
 table {
