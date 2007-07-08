@@ -38,7 +38,7 @@ admin email addresses (comma-separated) to be notified about the blocking (empty
 admin name	admin	sk	Meno správcu
 administration	admin	sk	Správa
 admins	admin	sk	Správcovia
-advanced options	admin	sk	Pokroèilé mo¾nosti
+advanced options	admin	sk	Roz¹írené mo¾nosti
 after how many unsuccessful attempts to login, an account should be blocked (default 3) ?	admin	sk	Po koµkých neúspe¹ných pokusoch o prihlásenie sa má úèet zablokova» (predvolené: 3)?
 after how many unsuccessful attempts to login, an ip should be blocked (default 3) ?	admin	sk	Po koµkých neúspe¹ných pokusoch o prihlásenie sa má IP zablokova» (predvolené: 3)?
 aliases	admin	sk	Aliasy
@@ -242,7 +242,7 @@ interface	admin	sk	Rozhranie
 ip	admin	sk	IP
 jobs	admin	sk	Úlohy
 kill	admin	sk	Ukonèi»
-kill session	admin	sk	Ukonèi» sedenie
+kill session	admin	sk	Ukonèi» reláciu
 last %1 logins	admin	sk	Ostatné %1 prihlásenia
 last %1 logins for %2	admin	sk	Ostatné %1 prihlásenia pre %2
 last login	admin	sk	posledné prihlásenie
@@ -256,7 +256,7 @@ leave the group untouched and return back to the list	admin	sk	Necha» skupinu be
 leaves without saveing	admin	sk	odís» bez ulo¾enia
 length<br>rows	admin	sk	Då¾ka/<br>Riadkov
 list config settings	admin	sk	Zobrazi» voµby nastavení
-list current sessions	admin	sk	Zobrazi» aktuálne sedenia
+list current sessions	admin	sk	Zobrazi» aktuálne relácie
 list of current users	admin	sk	zoznam aktuálnych pou¾ívateµov
 login history	common	sk	História prihlásení
 login message	admin	sk	Text správy prihlásenia
@@ -356,7 +356,7 @@ show an asterisk (*) to mark untranslated strings	admin	sk	Pou¾i» hviezdièku (*)
 show current action	admin	sk	Zobrazi» aktuálnu akciu
 show error log	admin	sk	Zobrazi» záznamy o chybách
 show phpinfo()	admin	sk	Zobrazi» phpinfo()
-show session ip address	admin	sk	Zobrazi» IP adresu sedenia
+show session ip address	admin	sk	Zobrazi» IP adresu relácie
 site	admin	sk	Stránka
 site configuration	common	sk	Nastavenia stránky
 soap	admin	sk	SOAP
@@ -406,7 +406,7 @@ trust relationship	admin	sk	Vz»ah dôvery
 type '%1' already exists !!!	admin	sk	typ '%1' u¾ existuje !!!
 type of customfield	admin	sk	Typ vlastného poµa
 under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	sk	Pod windows musíte asyncslu¾by nain¹talova» %1manuálne%2 alebo pou¾i» fallback re¾im. Fallback znamená, ¾e úlohy sú skontrolované iba po jednotlivých zobrazeniach stránky !!!
-use cookies to pass sessionid	admin	sk	Pou¾i» cookies na odovzdanie ID sedenia
+use cookies to pass sessionid	admin	sk	Pou¾i» cookies na odovzdanie ID relácie
 use pure html compliant code (not fully working yet)	admin	sk	Pou¾i» èistý HTML kód (zatiaµ nie je plne funkèné)
 use theme	admin	sk	Pou¾i» tému
 user accounts	admin	sk	Pou¾ívateµské úèty
@@ -419,7 +419,7 @@ view access log	admin	sk	Zobrazi» prístupové záznamy
 view account	admin	sk	Zobrazi» úèet
 view category	admin	sk	Zobrazi» kategóriu
 view error log	admin	sk	Zobrazi» záznam o chybách
-view sessions	admin	sk	Zobrazi» sedenia
+view sessions	admin	sk	Zobrazi» relácie
 view this user	admin	sk	zobrazi» tohto pou¾ívateµa
 view user account	admin	sk	Zobrazi» pou¾ívateµský úèet
 who would you like to transfer all records owned by the deleted user to?	admin	sk	Na koho by ste chceli prenies» V©ETKY záznamy odstráneného pou¾ívateµa?
@@ -442,4 +442,4 @@ you must enter an application title.	admin	sk	Musíte zada» titulok aplikácie.
 you must select a file type	admin	sk	Musíte zada» typ súboru
 you must select at least one group member.	admin	sk	Musíte zada» aspoò jedného èlena skupiny.
 you will need to remove the subcategories before you can delete this category	admin	sk	Ne¾ odstránite túto kategóriu, musíte odstráni» v¹etky podkategórie!
-your session could not be verified.	admin	sk	Va¹e sedenie nie je platné.
+your session could not be verified.	admin	sk	Va¹a relácia nie je platná.
