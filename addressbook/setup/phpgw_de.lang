@@ -109,6 +109,7 @@ custom fields	addressbook	de	Benutzerdefinierte Felder
 debug output in browser	addressbook	de	Debugausgaben in Browser
 default address format	addressbook	de	Vorgabe für Format der Adresse
 default addressbook for adding contacts	addressbook	de	Vorgabe Adressbuch beim Hinzufügen von Kontakten
+default document to insert contacts	addressbook	de	Standarddokument zum Einfügen von Kontakten
 default filter	addressbook	de	Standardfilter
 delete a single entry by passing the id.	addressbook	de	Löscht einen einzelnen Eintrag durch Übergabe seiner ID.
 delete selected distribution list!	addressbook	de	Löscht die ausgewählten Verteilerliste!
@@ -118,6 +119,7 @@ deleted	addressbook	de	gelöscht
 deletes the photo	addressbook	de	Löscht das Foto
 department	common	de	Abteilung
 departments	addressbook	de	Abteilungen
+directory with documents to insert contacts	addressbook	de	Verzeichnis mit Dokumenten zum Einfügen von Kontakten
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	de	Zeigt auf der Startseite eine Geburtstags Erinnerung an. Die Startseite ist die Seite die Sie sehen, wenn Sie eGroupWare betreten oder auf das Startseiten Icon (Haus) klicken.
 distribution list deleted	addressbook	de	Verteiler gelöscht
 distribution lists	addressbook	de	Verteilerlisten
@@ -130,6 +132,7 @@ don't hide empty columns	addressbook	de	Leere Spalten nicht ausblenden
 download	addressbook	de	Herunterladen
 download export file (uncheck to debug output in browser)	addressbook	de	Download Export-Datei (zur Vorschau im Browser Ankreuzfeld frei lassen)
 download this contact as vcard file	addressbook	de	Diese Adresse als vCard Datei herunterladen
+duration	addressbook	de	Dauer
 edit custom field	addressbook	de	Benutzerdefiniertes Feld bearbeiten
 edit custom fields	admin	de	Benutzerdefinierte Felder bearbeiten
 edit extra account-data in the addressbook	admin	de	Zusätzliche Benutzerdaten im Adressbuch bearbeiten.
@@ -139,6 +142,7 @@ email & internet	addressbook	de	E-Mail & Internet
 email addresses (comma separated) to send the contact data	addressbook	de	Email Adressen (Komma getrennt) zum Senden der Kontaktdaten
 empty for all	addressbook	de	leer für alle
 enable an extra private addressbook	addressbook	de	Privates Adressbuch einschalten
+end	addressbook	de	Ende
 enter the path to the exported file here	addressbook	de	Bitte geben Sie den Pfad für die exportierte Datei an
 error deleting the contact !!!	addressbook	de	Fehler beim Löschen des Kontakts !!!
 error saving the contact !!!	addressbook	de	Fehler beim Speichern des Kontakts !!!
@@ -172,6 +176,7 @@ geo	addressbook	de	GEO
 global categories	addressbook	de	Globale Kategorien
 grant addressbook access	common	de	Berechtigungen
 group %1	addressbook	de	Gruppe %1
+h	addressbook	de	h
 hide accounts from addressbook	addressbook	de	Benutzer im Adressbuch ausblenden
 hides accounts completly from the adressbook.	addressbook	de	Entfernt die Benutzer komplett aus dem Adressbuch.
 home address	addressbook	de	Privatadresse
@@ -339,6 +344,7 @@ view linked infolog entries	addressbook	de	Verknüpfte InfoLog Einträge anzeigen
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	de	WARNUNG!! LDAP darf nur verwendet werden, wenn sie die Benutzerkonten nicht im Adressbuch speichern!
 warning: all contacts found will be deleted!	addressbook	de	WARNUNG: Alle gefundenen Kontakte werden gelöscht!
 warning: template "%1" not found, using default template instead.	addressbook	de	WARNUNG: Template "%1" nicht gefunden, das Standard-Template wird stattdessen benutzt.
+weekday	addressbook	de	Wochentag
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	de	Was sollen Verknüpfungen zum Adressbuch in anderen Anwendungen anzeigen. Leere Werte werden ausgelassen. Sie müssen sich neu anmelden, wenn Sie hier eine Änderung vornehmen!
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	de	Welches Format soll das Adressbuch für Adressen verwenden deren landesübliches Adressformat unbekannt ist. Wenn das Adressformat eines Landes dem Adressbuch bekannt ist, wird das unabhänig von dieser Einstellung benutzt.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	de	Welches Adressbuch soll ausgewählt sein beim Hinzufügen von Kontakten, wenn Sie keine Hinzufügen Rechte zum aktuellen Adressbuch haben.

@@ -107,8 +107,10 @@ custom	addressbook	en	Custom
 custom etemplate for the contactform	addressbook	en	Custom eTemplate for the contactform
 custom fields	addressbook	en	Custom Fields
 debug output in browser	addressbook	en	Debug output in browser
+default	addressbook	en	default
 default address format	addressbook	en	Default address format
 default addressbook for adding contacts	addressbook	en	Default addressbook for adding contacts
+default document to insert contacts	addressbook	en	Default document to insert contacts
 default filter	addressbook	en	Default Filter
 delete a single entry by passing the id.	addressbook	en	Delete a single entry by passing the id.
 delete selected distribution list!	addressbook	en	Delete selected distribution list!
@@ -118,6 +120,7 @@ deleted	addressbook	en	deleted
 deletes the photo	addressbook	en	Deletes the photo
 department	common	en	Department
 departments	addressbook	en	departments
+directory with documents to insert contacts	addressbook	en	Directory with documents to insert contacts
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	en	Displays a remider for birthdays on the startpage (page you get when you enter eGroupWare or click on the homepage icon).
 distribution list deleted	addressbook	en	Distribution list deleted
 distribution lists	addressbook	en	Distribution lists
@@ -130,6 +133,7 @@ don't hide empty columns	addressbook	en	Don't hide empty columns
 download	addressbook	en	Download
 download export file (uncheck to debug output in browser)	addressbook	en	Download export file (Uncheck to debug output in browser)
 download this contact as vcard file	addressbook	en	download this contact as vCard file
+duration	addressbook	en	Duration
 edit custom field	addressbook	en	Edit Custom Field
 edit custom fields	admin	en	Edit Custom Fields
 edit extra account-data in the addressbook	admin	en	Edit extra account-data in the addressbook
@@ -139,6 +143,7 @@ email & internet	addressbook	en	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	en	Email addresses (comma separated) to send the contact data
 empty for all	addressbook	en	empty for all
 enable an extra private addressbook	addressbook	en	Enable an extra private addressbook
+end	addressbook	en	End
 enter the path to the exported file here	addressbook	en	Enter the path to the exported file here
 error deleting the contact !!!	addressbook	en	Error deleting the contact !!!
 error saving the contact !!!	addressbook	en	Error saving the contact !!!
@@ -172,6 +177,7 @@ geo	addressbook	en	GEO
 global categories	addressbook	en	Global Categories
 grant addressbook access	common	en	Grant Addressbook Access
 group %1	addressbook	en	Group %1
+h	addressbook	en	h
 hide accounts from addressbook	addressbook	en	Hide accounts from addressbook
 hides accounts completly from the adressbook.	addressbook	en	Hides accounts completly from the adressbook.
 home address	addressbook	en	Home address
@@ -339,6 +345,7 @@ view linked infolog entries	addressbook	en	View linked InfoLog entries
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	en	WARNING!! LDAP is valid only if you are NOT using contacts for accounts storage!
 warning: all contacts found will be deleted!	addressbook	en	WARNING: All contacts found will be deleted!
 warning: template "%1" not found, using default template instead.	addressbook	en	WARNING: Template "%1" not found, using default template instead.
+weekday	addressbook	en	Weekday
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	en	What should links to the addressbook display in other applications. Empty values will be left out. You need to log in anew, if you change this setting!
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	en	Which address format should the addressbook use for countries it does not know the address format. If the address format of a country is known, it uses it independent of this setting.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	en	Which addressbook should be selected when adding a contact AND you have no add rights to the current addressbook.
