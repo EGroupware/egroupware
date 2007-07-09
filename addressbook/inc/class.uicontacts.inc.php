@@ -1909,7 +1909,9 @@ $readonlys['button[vcard]'] = true;
 				foreach($files as $file)
 				{
 					// return only the mime-types we support
-					if ($file['mime_type'] != 'application/rtf' && substr($file['mime_type'],0,5) != 'text/') continue;
+					if (!($file['mime_type'] == 'application/rtf' || 
+						$file['mime_type'] == 'application/msword' && !strcasecmp(substr($file['name'],-4),'.rtf') ||
+						substr($file['mime_type'],0,5) == 'text/')) continue;
 					// As browsers not always return the right mime_type, you could use a negative list instead
 					//if ($file['mime_type'] == 'Directory' || substr($file['mime_type'],0,6) == 'image/') continue;
 
