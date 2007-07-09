@@ -293,7 +293,7 @@ class addressbook_merge	// extends bo_merge
 			'title' => lang('Title'),
 			'description' => lang('Description'),
 			'participants' => lang('Participants'),
-			'category' => lang('Location'),
+			'location' => lang('Location'),
 			'start'    => lang('Start').': '.lang('Date').'+'.lang('Time'),
 			'startday' => lang('Start').': '.lang('Weekday'),
 			'startdate'=> lang('Start').': '.lang('Date'),
@@ -303,11 +303,12 @@ class addressbook_merge	// extends bo_merge
 			'enddate'  => lang('End').': '.lang('Date'),
 			'endtime'  => lang('End').': '.lang('Time'),
 			'duration' => lang('Duration'),
-			'owner'    => lang('Owner'),
+			'category' => lang('Category'),
 			'priority' => lang('Priority'),
 			'updated'  => lang('Updated'),
 			'recur_type' => lang('Repetition'),
 			'access'   => lang('Access').': '.lang('public').', '.lang('private'),
+			'owner'    => lang('Owner'),
 		) as $name => $label)
 		{
 			if (in_array($name,array('start','end')) && $n&1)		// main values, which should be in the first column
