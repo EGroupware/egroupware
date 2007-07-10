@@ -237,6 +237,7 @@
 			$this->t->set_var('addressbookImage',$GLOBALS['egw']->common->image('phpgwapi/templates/phpgw_website','users'));
 			$this->t->set_var('infologImage',$GLOBALS['egw']->html->image('felamimail','to_infolog',lang('Save as infolog'),'width="17px" height="17px" valign="middle"' ));
 			$this->t->set_var('lang_save_as_infolog',lang('Save as infolog'));
+			$this->t->set_var('lang_no_recipient',lang('No recipient address given!'));
 			$this->t->pparse("out","header");
 			
 

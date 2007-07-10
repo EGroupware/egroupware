@@ -18,10 +18,23 @@
 	function attach_window(url) {
 		awin = window.open(url,"attach","width=500,height=400,toolbar=no,resizable=yes");
 	}
+	
+	function check_sender()
+	{
+		var tos = document.getElementsByName('address[]');
+		for(i=0; i < tos.length; ++i) {
+			if (tos[i].value != '') break;
+		}
+		if (i >= tos.length) {
+			alert('{lang_no_recipient}');
+			return false;
+		}
+		return true;
+	}
 </script>
 
 <center>
-<form method="post" name="doit" action="{link_action}" ENCTYPE="multipart/form-data">
+<form method="post" name="doit" action="{link_action}" ENCTYPE="multipart/form-data" onsubmit="return check_sender();">
 <input type="hidden" id="saveAsDraft" name="saveAsDraft" value="0">
 <TABLE WIDTH="100%" CELLPADDING="1" CELLSPACING="0" style="border: solid #aaaaaa 1px; border-right: solid black 1px; border-bottom: solid black 1px;">
 	<tr class="navbarBackground">
