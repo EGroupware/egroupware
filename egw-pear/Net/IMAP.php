@@ -637,7 +637,7 @@ class Net_IMAP extends Net_IMAPProtocol {
               $_mimeParts = array(0 => $part);
             } else {
               $part->partID = $_partID;
-              $_mimeParts = array($_partID => $part);
+              $_mimeParts[$_partID] = $part;
             }
             
             return;
