@@ -448,10 +448,12 @@
 				$this->t->set_var('size',lang('size'));
 				$this->t->set_var('url_img_save',$GLOBALS['egw']->html->image('felamimail','fileexport', lang('save')));
 				#$this->t->parse('attachment_rows','attachment_row_bold',True);
+
 				foreach ($attachments as $key => $value)
 				{
 					$this->t->set_var('row_color',$this->rowColor[($key+1)%2]);
-					$this->t->set_var('filename',@htmlentities($value['name'], ENT_QUOTES, $this->displayCharset));
+					$this->t->set_var('filename',$value['name'] ? @htmlentities($value['name'], ENT_QUOTES, $this->displayCharset) :
+						lang('(no subject)'));
 					$this->t->set_var('mimetype',$value['mimeType']);
 					$this->t->set_var('size',$value['size']);
 					$this->t->set_var('attachment_number',$key);
