@@ -28,6 +28,15 @@
 </select>
 </td>
 </tr>
+<tr class="row_on">
+<td>{lang_Show_a_quantity_sum_(eg._to_sum_up_negative_overtime)}:</td>
+<td>
+<select name="newsettings[quantity_sum]">
+<option value="">{lang_No}</option>
+<option value="true"{selected_quantity_sum_true}>{lang_Yes}</option>
+</select>
+</td>
+</tr>
 <!-- END body -->
 
 <!-- BEGIN footer -->

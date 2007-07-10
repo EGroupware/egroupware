@@ -37,6 +37,7 @@ saves the changes made	timesheet	en	Saves the changes made
 saves this entry and add a new one	timesheet	en	Saves this entry and add a new one
 select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
+show a quantity sum (eg. to sum up negative overtime)	admin	en	Show a quantity sum (eg. to sum up negative overtime)
 start	timesheet	en	Start
 starttime	timesheet	en	Starttime
 starttime has to be before endtime !!!	timesheet	en	Starttime has to be before endtime !!!
