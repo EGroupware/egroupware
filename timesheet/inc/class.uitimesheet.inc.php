@@ -543,7 +543,8 @@ class uitimesheet extends botimesheet
 						$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
 						break;
 				}	
-				$row['ts_start'] = $row['ts_quantity'] = $row['ts_unitprice'] = '';
+				$row['ts_start'] = $row['ts_unitprice'] = '';
+				if (!$this->quantity_sum) $row['ts_quantity'] = '';
 				$row['class'] = 'th';
 				$row['titleClass'] = 'titleSum';
 				continue;
@@ -585,8 +586,7 @@ class uitimesheet extends botimesheet
 		$rows['no_owner_col'] = $query['no_owner_col'];
 		if ($query['filter'])
 		{
-			$rows['duration'] = $this->summary['duration'];
-			$rows['price'] = $this->summary['price'];
+			$rows += $this->summary;
 		}
 		$rows['pm_integration'] = $this->pm_integration;
 

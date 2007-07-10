@@ -39,6 +39,12 @@ class botimesheet extends so_sql
 	 */
 	var $config_data = array();
 	/**
+	 * Should we show a quantity sum, makes only sense if we sum up identical units (can be used to sum up negative (over-)time)
+	 *
+	 * @var boolean
+	 */
+	var $quantity_sum=false;
+	/**
 	 * Timestaps that need to be adjusted to user-time on reading or saving
 	 * 
 	 * @var array
@@ -109,7 +115,7 @@ class botimesheet extends so_sql
 	var $show_sums;
 
 	var $customfields=array();
-
+	
 	function botimesheet()
 	{
 		$this->so_sql(TIMESHEET_APP,'egw_timesheet');
@@ -117,7 +123,7 @@ class botimesheet extends so_sql
 		$this->config =& CreateObject('phpgwapi.config',TIMESHEET_APP);
 		$this->config->read_repository();
 		$this->config_data =& $this->config->config_data;
-		//unset($config);
+		$this->quantity_sum = $this->config_data['quantity_sum'] == 'true';
 
 		if (isset($this->config_data['customfields']) && is_array($this->config_data['customfields']))
 		{
@@ -317,7 +323,8 @@ class botimesheet extends so_sql
 			$this->summary = array();
 			return array();
 		}
-		$this->summary = parent::search($criteria,"SUM(ts_duration) AS duration,SUM($total_sql) AS price",
+		$this->summary = parent::search($criteria,"SUM(ts_duration) AS duration,SUM($total_sql) AS price".
+			($this->quantity_sum ? ",SUM(ts_quantity) AS quantity" : ''),
 			'','',$wildcard,$empty,$op,false,$filter,$join);
 		$this->summary = $this->summary[0];
 		
@@ -351,7 +358,8 @@ class botimesheet extends so_sql
 				$union_order[] = 'is_sum_'.$type;
 				$sum_extra_cols[$type]{0} = '1';
 				// the $type sum
-				parent::search($criteria,$sum_ts_id[$type].",'','','',MIN(ts_start),SUM(ts_duration) AS ts_duration,0,0,NULL,0,0,0,0,SUM($total_sql) AS ts_total",
+				parent::search($criteria,$sum_ts_id[$type].",'','','',MIN(ts_start),SUM(ts_duration) AS ts_duration,".
+					($this->quantity_sum ? "SUM(ts_quantity) AS ts_quantity" : '0').",0,NULL,0,0,0,0,SUM($total_sql) AS ts_total",
 					'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
 				$sum_extra_cols[$type]{0} = '0';
 			}

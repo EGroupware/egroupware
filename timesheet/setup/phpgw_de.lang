@@ -37,6 +37,7 @@ saves the changes made	timesheet	de	Speichert die Änderungen
 saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fügt einen neuen hinzu
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
+show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengensumme (z.B. um negative Überstunden zu summieren)
 start	timesheet	de	Start
 starttime	timesheet	de	Startzeit
 starttime has to be before endtime !!!	timesheet	de	Startzeit muss vor der Endzeit liegen !!!
