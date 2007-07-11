@@ -19,21 +19,6 @@ class uicustomfields
 		'edit' => True
 	);
 	/**
-	 * Customfield types, without the link app-names
-	 *
-	 * @var array
-	 */
-	var $cf_types = array(
-		'text'     => 'Text',
-		'label'    => 'Label',
-		'select'   => 'Selectbox',
-		'radio'    => 'Radiobutton',
-		'checkbox' => 'Checkbox',
-		'date'     => 'Date',
-		'date-time'=> 'Date+Time',
-		'link-entry' => 'Select entry',
-	);
-	/**
 	 * Instance of the infolog BO class
 	 *
 	 * @var boinfolog
@@ -67,12 +52,6 @@ class uicustomfields
 		$this->config = &$this->bo->config;
 		$this->fields = &$this->bo->customfields;
 		$this->group_owners =& $this->bo->group_owners;
-		
-		$GLOBALS['egw']->translation->add_app('etemplate');
-		foreach($this->cf_types as $name => $label) $this->cf_types[$name] = lang($label);
-		$link_types = $this->bo->link->app_list();
-		ksort($link_types);
-		foreach($link_types as $name => $label) $this->cf_types[$name] = '- '.$label;
 	}
 
 	/**
@@ -176,7 +155,6 @@ class uicustomfields
 		$this->tmpl->read('infolog.customfields');
 		$this->tmpl->exec('infolog.uicustomfields.edit',$content,array(
 			'type2'     => $this->types,
-			'type'      => $this->cf_types,
 		),$readonlys,array(
 			'status' => $preserv_status,
 			'fields' => $preserv_fields,

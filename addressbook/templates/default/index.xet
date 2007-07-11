@@ -14,7 +14,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.4.001">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.4.002">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -145,16 +145,7 @@
 						<description options=",@${row}[email_link],,,_blank,$row_cont[email_popup]" class="fixedHeight" id="${row}[email]" no_lang="1"/>
 						<description options=",@${row}[email_home_link],,,_blank,$row_cont[email_home_popup]" class="fixedHeight" id="${row}[email_home]" no_lang="1"/>
 					</vbox>
-					<grid height="48" border="0" spacing="0" padding="0" overflow="auto" id="${row}[customfields]">
-						<columns>
-							<column/>
-						</columns>
-						<rows>
-							<row>
-								<description class="fixedHeight" no_lang="1" id="$row"/>
-							</row>
-						</rows>
-					</grid>
+					<customfields-list rows="1" cols="1" id="$row" class="customfields"/>
 					<vbox options="0,0">
 						<date-time id="${row}[created]" readonly="true" class="noWrap"/>
 						<menulist>

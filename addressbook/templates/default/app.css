@@ -72,3 +72,9 @@ fieldset.emailGroup {
 .noWrap{
   white-space: nowrap;
 }
+.customfields{
+}
+.customfields td{
+  white-space: nowrap;
+  line-height: 12px;
+}

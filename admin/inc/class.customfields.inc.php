@@ -32,25 +32,6 @@
 		var $appname;
 		
 		/**
-		* Allowd types of customfields
-		* 
-		* The additionally allowed app-names from the link-class, will be add by the edit-method only,
-		* as the link-class has to be called, which can NOT be instanciated by the constructor, as 
-		* we get a loop in the instanciation.
-		* 
-		* @var array
-		*/
-		var $cf_types = array(
-			'text'     => 'Text',
-			'label'    => 'Label',
-			'select'   => 'Selectbox',
-			'radio'    => 'Radiobutton',
-			'checkbox' => 'Checkbox',
-			'date'     => 'Date',
-			'date-time'=> 'Date+Time',
-			'link-entry' => 'Select entry',
-		);
-		/**
 		* userdefiened types e.g. type of infolog
 		* 
 		* @var array
@@ -64,7 +45,6 @@
 
 		function customfields($appname='')
 		{
-// 			$this->tmpl =& CreateObject('etemplate.etemplate');
 			$this->config =& CreateObject('phpgwapi.config',$this->appname=$appname);
 			if ($appname)
 			{
@@ -204,12 +184,6 @@
 			$sel_options = array(
 				'type2' => $this->types2 + array('tmpl' => 'template'),
 			);
-			$GLOBALS['egw']->translation->add_app('etemplate');
-			foreach($this->cf_types as $name => $label) $sel_options['type'][$name] = lang($label);
-			$link_types = ExecMethod('phpgwapi.bolink.app_list','');
-			ksort($link_types);
-			foreach($link_types as $name => $label) $sel_options['type'][$name] = '- '.$label;
-
 			$this->tmpl->exec('admin.customfields.edit',$content,$sel_options,$readonlys,array(
 				'fields' => $preserv_fields,
 				'appname' => $this->appname,
