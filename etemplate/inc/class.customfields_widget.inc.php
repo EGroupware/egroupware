@@ -23,8 +23,33 @@
 		var $public_functions = array(
 			'pre_process' => True,
 		);
-		var $human_name = 'custom fields';
+		var $human_name = array(
+			'customfields' => 'custom fields',
+			'customfields-types' => 'custom field types',
+			'customfields-list'  => 'custom field list',
+		);
 		
+		/**
+		* Allowd types of customfields
+		* 
+		* The additionally allowed app-names from the link-class, will be add by the edit-method only,
+		* as the link-class has to be called, which can NOT be instanciated by the constructor, as 
+		* we get a loop in the instanciation.
+		* 
+		* @var array
+		*/
+		var $cf_types = array(
+			'text'     => 'Text',
+			'label'    => 'Label',
+			'select'   => 'Selectbox',
+			'radio'    => 'Radiobutton',
+			'checkbox' => 'Checkbox',
+			'date'     => 'Date',
+			'date-time'=> 'Date+Time',
+			'select-account' => 'Select account',
+			'link-entry' => 'Select entry',		// should be last type, as the individual apps get added behind
+		);
+
 		/**
 		* @var $prefix string Prefix for every custiomfield name returned in $content (# for general (admin) customfields)
 		*/
@@ -38,7 +63,7 @@
 			$config = $this->config->read_repository();
 			//merge old config_name in egw_config table
 			$config_name = isset($config['customfields']) ? 'customfields' : 'custom_fields';
-			$this->customfields = $config[$config_name];
+			$this->customfields = $config[$config_name] ? $config[$config_name] : array('test'=>array('type'=>'label'));
 			$this->types = $config['types'];
 			$this->advanced_search = $GLOBALS['egw_info']['etemplate']['advanced_search'];
 
@@ -46,29 +71,58 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
-			$readonly = $cell['readonly'] || $readonlys[$name];
+			switch($type = $cell['type'])
+			{
+				case 'customfields-types':
+					$cell['type'] = 'select';
+					foreach($this->cf_types as $name => $label) $cell['sel_options'][$name] = lang($label);
+					$link_types = ExecMethod('phpgwapi.bolink.app_list','');
+					ksort($link_types);
+					foreach($link_types as $name => $label) $cell['sel_options'][$name] = '- '.$label;
+					$cell['no_lang'] = true;
+					return true;
+
+				case 'customfields-list':
+					foreach(array_reverse($this->customfields) as $name => $field)
+					{
+						if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$value.',') === false) continue;	// not for our content type
+						if (isset($value[$this->prefix.$name]) && $value[$this->prefix.$name] !== '') break;
+						$stop_at_field = $name;
+					}
+					break;
+			}
+			$readonly = $cell['readonly'] || $readonlys[$name] || $type == 'customfields-list';
 
 			if(!is_array($this->customfields))
 			{
 				$cell['type'] = 'label';
 				return True;
 			}
+			// making the cell an empty grid
+			$cell['type'] = 'grid';
+			$cell['data'] = array(array());
+			$cell['rows'] = $cell['cols'] = 0;
 			
-			$tpl =& new etemplate;
-			$tpl->init('*** generated custom fields','','',0,'',0,0);	// make an empty template
-			
-			//echo '<pre style="text-align: left;">'; print_r($value); echo "</pre>\n";
+			$n = 1;
 			foreach($this->customfields as $name => $field)
 			{
+				if ($stop_at_field && $name == $stop_at_field) break;	// no further row necessary
+
 				// check if the customfield get's displayed for type $value, we can have multiple comma-separated types now
 				if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$value.',') === false)
 				{
 					continue;	// not for our content type
 				}
-				$row_class = 'row';
-				$label = &$tpl->new_cell(++$n,'label',$field['label'],'',array(
-					'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0
-				));
+				$new_row = null; etemplate::add_child($cell,$new_row);
+
+				if ($type != 'customfields-list')
+				{
+					$row_class = 'row';
+					etemplate::add_child($cell,$label =& etemplate::empty_cell('label','',array(
+						'label' => $field['label'],
+						'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0
+					)));
+				}
 				switch ((string)$field['type'])
 				{
 					case 'select' :
@@ -80,41 +134,39 @@
 								$field['values'][$key] = $val;
 							}
 						}
-						$input = &$tpl->new_cell($n,'hbox');
-						if($this->advanced_search)
-						{
-							$not = &$tpl->add_child($input, $check = &$tpl->empty_cell('checkbox','!'.$this->prefix.$name,array(
-								'label' => 'NOT',
-								'no_lang'     => True
-							)));
-							unset($not);
-							unset($check);
-						}
-						$select = &$tpl->add_child($input, $item = &$tpl->empty_cell('select',$this->prefix.$name,array(
+						$input =& etemplate::empty_cell('select',$this->prefix.$name,array(
 							'sel_options' => $field['values'],
 							'size'        => $field['rows'],
-							'no_lang'     => True
-						)));
-						unset($select);
-						unset($item);
+							'no_lang'     => True								
+						));
+						if($this->advanced_search)
+						{
+							$select =& $input; unset($input);
+							$input =& etemplate::empty_cell('hbox');
+							etemplate::add_child($input, $select); unset($select);
+							etemplate::add_child($input, etemplate::empty_cell('select',$this->prefix.$name,array(
+								'sel_options' => $field['values'],
+								'size'        => $field['rows'],
+								'no_lang'     => True
+							)));
+						}
 						break;
 					case 'label' :
 						$label['span'] = 'all';
-						$tpl->new_cell($n);		// is needed even if its over-span-ed
 						$row_class = 'th';
 						break;
 					case 'checkbox' :
-						$input = &$tpl->new_cell($n,'checkbox','',$this->prefix.$name);
+						$input =& etemplate::empty_cell('checkbox',$this->prefix.$name);
 						break;
 					case 'radio' :
-						$input = &$tpl->new_cell($n,'groupbox','','','');
+						$input =& etemplate::empty_cell('groupbox');
 						$m = 0;
 						foreach ($field['values'] as $key => $val)
 						{
 							$radio = $tpl->empty_cell('radio',$this->prefix.$name);
 							$radio['label'] = $val;
 							$radio['size'] = $key;
-							$tpl->add_child($input,$radio);
+							etemplate::add_child($input,$radio);
 							unset($radio);
 						}
 						break;
@@ -125,26 +177,32 @@
 						if($field['rows'] <= 1)
 						{
 							list($max,$shown) = explode(',',$field['len']);
-							$input = &$tpl->new_cell($n,'text','',$this->prefix.$name,array(
+							$input =& etemplate::empty_cell('text',$this->prefix.$name,array(
 								'size' => intval($shown > 0 ? $shown : $max).','.intval($max)
 							));
 						}
 						else
 						{
-							$input = &$tpl->new_cell($n,'textarea','',$this->prefix.$name,array(
+							$input =& etemplate::empty_cell('textarea',$this->prefix.$name,array(
 								'size' => $field['rows'].($field['len'] > 0 ? ','.(int)$field['len'] : '')
 							));
 						}
 						break;
 					case 'date':
 					case 'date-time':
-						$input = &$tpl->new_cell($n,$field['type'],'',$this->prefix.$name,array(
+						$input =& etemplate::empty_cell($field['type'],$this->prefix.$name,array(
 							'size' => $field['len'] ? $field['len'] : ($field['type'] == 'date' ? 'Y-m-d' : 'Y-m-d H:i:s'),
+						));
+						break;
+					case 'select-account':
+						list($opts) = explode('=',$field['values'][0]);
+						$input =& etemplate::empty_cell('select-account',$this->prefix.$name,array(
+							'size' => ($field['rows']>1?$field['rows']:lang('None')).','.$opts,
 						));
 						break;
 					case 'link-entry':
 					default :	// link-entry to given app
-						$input = &$tpl->new_cell($n,'link-entry','',$this->prefix.$name,array(
+						$input =& etemplate::empty_cell('link-entry',$this->prefix.$name,array(
 							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
 						));
 				}
@@ -155,30 +213,17 @@
 					$input['help'] = $field['help'];
 					$input['no_lang'] = substr(lang($help),-1) == '*' ? 2 : 0;
 				}
-				$tpl->set_row_attributes($n,0,$row_class,'top');
+				$cell['data'][0]['c'.$n++] = $row_class.',top';
+				etemplate::add_child($cell,$input);
+				unset($input);
+				unset($label);
 			}
-			// create an empty line which (should) take all the remaining height
-			$tpl->new_cell(++$n,'label','','',array(
-				'span' => 'all'
-			));
-			$tpl->set_row_attributes($n,'99%','row');
-
-			// set width of 1. (label) column to 100
-			$tpl->set_column_attributes(0,'100');
-
-			$tpl->set_rows_cols();		// msie (at least 5.5 shows nothing with div overflow=auto)
-			$tpl->size = '100%,100%'.($tpl->html->user_agent != 'msie' ? ',,,,,auto' : '');
-			//echo '<pre style="text-align: left;">'; print_r($tpl); echo "</pre>\n";
-
-			if (count($tpl->data) < 2)
+			if ($type != 'customfields-list')
 			{
-				$cell['type'] = 'label';
-				return True;
+				$cell['data'][0]['A'] = '100';
 			}
-			$cell['size'] = '';	// no separate namespace
-			$cell['type'] = 'template';
-			$cell['name'] = $tpl->name;
-			$cell['obj'] = &$tpl;
+			list($span,$class) = explode(',',$cell['span']);	// msie (at least 5.5) shows nothing with div overflow=auto
+			$cell['size'] = '100%,100%,0,'.$class.','.($type=='customfields-list'?',0':',').($tpl->html->user_agent != 'msie' ? ',auto' : '');
 
 			return True;	// extra Label is ok
 		}

@@ -940,7 +940,7 @@ class uicontacts extends bocontacts
 				{
 					foreach($this->customfields as $name => $data)
 					{
-						$row['customfields'][] = $customfields[$row['id']][$name] ? $customfields[$row['id']][$name] : '&nbsp;';
+						$row['#'.$name] = $customfields[$row['id']][$name];
 					}
 				}
 				if ($this->prefs['home_column'] != 'never' && !$homeaddress)

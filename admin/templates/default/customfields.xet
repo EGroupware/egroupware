@@ -25,7 +25,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.2">
+	<template id="admin.customfields.fields" template="" lang="" group="0" version="1.4.001">
 		<grid>
 			<columns>
 				<column/>
@@ -57,9 +57,7 @@
 					<menulist>
 						<menupopup options="All" id="${row}[type2]" no_lang="1"/>
 					</menulist>
-					<menulist>
-						<menupopup id="{$row}[type]" statustext="Type of customfield" no_lang="1"/>
-					</menulist>
+					<customfields-types id="{$row}[type]" statustext="Type of customfield"/>
 					<textbox multiline="true" rows="2" cols="30" id="${row}[values]" statustext="each value is a line like id[=label]"/>
 					<vbox>
 						<textbox size="5" id="${row}[len]" statustext="max length of the input [, length of the inputfield (optional)]"/>
