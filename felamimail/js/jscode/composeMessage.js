@@ -524,7 +524,7 @@ function fm_compose_reloadAttachments() {
 }
 
 function fm_compose_deleteAttachmentRow(_imageNode, _composeID, _attachmentID) {
-	_imageNode.parentNode.parentNode.parentNode.parentNode.deleteRow(_imageNode.parentNode.parentNode);
+	_imageNode.parentNode.parentNode.parentNode.parentNode.deleteRow(_imageNode.parentNode.parentNode.rowIndex);
 	xajax_doXMLHTTP("felamimail.ajaxfelamimail.deleteAttachment", _composeID, _attachmentID);
 }
 
