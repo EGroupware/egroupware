@@ -32,6 +32,7 @@ class socontacts_sql extends so_sql
 	var $extra_join = ' LEFT JOIN egw_addressbook_extra ON egw_addressbook.contact_id=egw_addressbook_extra.contact_id';
 	var $account_repository = 'sql';
 	var $contact_repository = 'sql';
+	var $grants;
 	
 	/**
 	 * internal name of the id, gets mapped to uid
@@ -309,7 +310,7 @@ class socontacts_sql extends so_sql
 				case 'boolean':
 					// only return the egw_addressbook columns, to not generate dublicates by the left join
 					// and to not return the NULL for contact_{id|owner} of not found custom fields!
-					$only_keys = 'DISTINCT '.$this->table_name.'.'.($only_keys ? 'contact_id AS contact_id' : '*');
+					$only_keys = (strpos($join,$this->extra_table)!==false?'DISTINCT ':'').$this->table_name.'.'.($only_keys ? 'contact_id AS contact_id' : '*');
 					break;
 				case 'string':
 					$only_keys = explode(',',$only_keys);
@@ -408,7 +409,7 @@ class socontacts_sql extends so_sql
 			'contact_owner' => $account_id,
 		),__LINE__,__FILE__);
 	}
-	
+
 	/**
 	 * Get the availible distribution lists for givens users and groups
 	 *
@@ -419,7 +420,7 @@ class socontacts_sql extends so_sql
 	{
 		$user = $GLOBALS['egw_info']['user']['account_id'];
 		$this->db->select($this->lists_table,'*',array('list_owner'=>$uids),__LINE__,__FILE__,
-			false,'ORDER BY list_owner!='.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name');
+			false,'ORDER BY list_owner<>'.(int)$GLOBALS['egw_info']['user']['account_id'].',list_name');
 			
 		$lists = array();
 		while(($row = $this->db->row(true)))
