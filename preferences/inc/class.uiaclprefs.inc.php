@@ -187,7 +187,6 @@
 				'errors'      => '',
 				'title'       => '<br>',
 				'action_url'  => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uiaclprefs.index&acl_app=' . $acl_app),
-				'bg_color'    => $GLOBALS['egw_info']['theme']['th_bg'],
 				'lang_save'   => lang('Save'),
 				'lang_apply'  => lang('Apply'),
 				'lang_cancel' => lang('Cancel'),
@@ -316,7 +315,6 @@
 		{
 			//echo "<p>display_row(,$label,$id,$name,$no_privat_grants,".print_r($memberships,true).")</p>\n";
 			$this->template->set_var('row_class',$tr_class);
-			$this->template->set_var('row_color',$GLOBALS['egw_info']['theme'][$tr_class]);
 			$this->template->set_var('user',$name);
 			$rights = $this->acl->get_rights($id,$GLOBALS['egw_info']['flags']['currentapp']);
 			$is_group = $GLOBALS['egw']->accounts->get_type($id) == 'g';
