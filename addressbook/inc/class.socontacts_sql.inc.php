@@ -335,6 +335,11 @@ class socontacts_sql extends so_sql
 				$filter[] = $this->table_name.'.contact_owner='.(int)$filter['owner'];
 				unset($filter['owner']);
 			}
+			if (isset($criteria['owner']))
+			{
+				$criteria[] = $this->table_name.'.contact_owner='.(int)$criteria['owner'];
+				unset($criteria['owner']);
+			}
 			// postgres requires that expressions in order by appear in the columns of a distinct select
 			if ($this->db->Type != 'mysql' && preg_match("/(\w+<>'')/",$order_by,$matches))
 			{
