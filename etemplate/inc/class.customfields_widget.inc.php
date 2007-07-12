@@ -71,6 +71,8 @@
 
 		function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 		{
+			$type2 = $cell['size'];
+
 			switch($type = $cell['type'])
 			{
 				case 'customfields-types':
@@ -85,7 +87,7 @@
 				case 'customfields-list':
 					foreach(array_reverse($this->customfields) as $name => $field)
 					{
-						if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$value.',') === false) continue;	// not for our content type
+						if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false) continue;	// not for our content type
 						if (isset($value[$this->prefix.$name]) && $value[$this->prefix.$name] !== '') break;
 						$stop_at_field = $name;
 					}
@@ -109,7 +111,7 @@
 				if ($stop_at_field && $name == $stop_at_field) break;	// no further row necessary
 
 				// check if the customfield get's displayed for type $value, we can have multiple comma-separated types now
-				if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$value.',') === false)
+				if (!empty($field['type2']) && strpos(','.$field['type2'].',',','.$type2.',') === false)
 				{
 					continue;	// not for our content type
 				}
