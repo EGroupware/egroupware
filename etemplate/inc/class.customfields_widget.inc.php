@@ -122,7 +122,8 @@
 					$row_class = 'row';
 					etemplate::add_child($cell,$label =& etemplate::empty_cell('label','',array(
 						'label' => $field['label'],
-						'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0
+						'no_lang' => substr(lang($field['label']),-1) == '*' ? 2 : 0,
+						'span' => $field['type'] === 'label' ? '2' : '',
 					)));
 				}
 				switch ((string)$field['type'])
@@ -154,7 +155,6 @@
 						}
 						break;
 					case 'label' :
-						$label['span'] = 'all';
 						$row_class = 'th';
 						break;
 					case 'checkbox' :
@@ -208,16 +208,20 @@
 							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
 						));
 				}
-				if ($readonly) $input['readonly'] = true;
-				
-				if (!empty($field['help']) && $row_class != 'th')
-				{
-					$input['help'] = $field['help'];
-					$input['no_lang'] = substr(lang($help),-1) == '*' ? 2 : 0;
-				}
 				$cell['data'][0]['c'.$n++] = $row_class.',top';
-				etemplate::add_child($cell,$input);
-				unset($input);
+				
+				if (!is_null($input))
+				{
+					if ($readonly) $input['readonly'] = true;
+					
+					if (!empty($field['help']) && $row_class != 'th')
+					{
+						$input['help'] = $field['help'];
+						$input['no_lang'] = substr(lang($help),-1) == '*' ? 2 : 0;
+					}
+					etemplate::add_child($cell,$input);
+					unset($input);
+				}
 				unset($label);
 			}
 			if ($type != 'customfields-list')
