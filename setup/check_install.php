@@ -174,13 +174,14 @@
 			{
 				if ($checks[$name] == $data) continue;	// identical check --> ignore it
 				
-				if ($data['func'] == 'pear_check' || $data['func'] == 'extension_check' && !isset($args['warning']))
+				if ($data['func'] == 'pear_check' || in_array($data['func'],array('extension_check','php_ini_check')) && !isset($data['warning']))
 				{
 					if ($checks[$name]['from'] && !is_array($checks[$name]['from']))
 					{
 						$checks[$name]['from'] = array($checks[$name]['from']);
 					}
-					$checks[$name]['from'][] = $data['from'] ? $data['from'] : $app;
+					if (!isset($data['from'])) $data['from'] = $app;
+					if (!in_array($data['from'],$checks[$name]['from'])) $checks[$name]['from'][] = $data['from'];
 				}
 				else
 				{
@@ -189,6 +190,7 @@
 			}
 			else
 			{
+				if (!isset($data['from'])) $data['from'] = $app;
 				$checks[$name] = $data;
 			}
 			//echo "added check $data[func]($name) for $app"; _debug_array($data);
@@ -326,7 +328,7 @@
 				if (!class_exists($package)) $available = false;
 			}
 		}
-		// is the right version availible
+		// is the right version availible 
 		$available = (@$available || $pear_available && !$package) && (!$min_version || version_compare($min_version,$version_available) <= 0);
 		echo '<div>'.($available ? $passed_icon : $warning_icon).' <span'.($available ? '' : ' class="setup_warning"').'>'.
 			lang('Checking PEAR%1 is installed',($package?'::'.$package:'').($min_version?" ($min_version)":'')).': '.
@@ -364,6 +366,7 @@
 
 	function extension_check($name,$args)
 	{
+		//echo "<p>extension_check($name,".print_r($args,true).")</p>\n";
 		global $passed_icon, $error_icon, $warning_icon, $is_windows;
 
 		if (isset($args['win_only']) && $args['win_only'] && !$is_windows)
@@ -641,13 +644,19 @@
 		}
 		if (!$result)
 		{
-			if (isset($args['warning']))
-			{
-				echo "<div>".$warning_icon.' <span class="setup_warning">'.$msg.'</span><div class="setup_info">'.$args['warning']."</div></div>\n";
-			}
 			if (isset($args['error']))
 			{
 				echo "<div>".$error_icon.' <span class="setup_error">'.$msg.'</span><div class="setup_info">'.$args['error']."</div></div>\n";
+			}
+			elseif (isset($args['warning']))
+			{
+				echo "<div>".$warning_icon.' <span class="setup_warning">'.$msg.'</span><div class="setup_info">'.$args['warning']."</div></div>\n";
+			}
+			elseif (!isset($args['safe_mode']))
+			{
+				echo "<div>".$warning_icon.' <span class="setup_warning">'.$msg.'</span><div class="setup_info">'.
+					lang('%1 is needed by: %2.',$name,is_array($args['from']) ? implode(', ',$args['from']) : $args['from'])
+					."</div></div>\n";
 			}
 			if (isset($args['safe_mode']) && $safe_mode || @$args['change'])
 			{
