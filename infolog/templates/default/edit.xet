@@ -121,7 +121,7 @@
 					<description value="Custom fields"/>
 				</row>
 				<row height="100%">
-					<customfields/>
+					<customfields options="@info_type"/>
 				</row>
 			</rows>
 		</grid>
