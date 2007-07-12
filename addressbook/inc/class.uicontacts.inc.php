@@ -679,18 +679,6 @@ class uicontacts extends bocontacts
 			if (is_array($query['search'])) unset($query['search']);
 			unset($query['advanced_search']);
 		}
-		elseif (is_array($query['search']))	// new advanced search, store it in the session
-		{
-			$query['advanced_search'] = array_intersect_key($query['search'],array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
-			foreach ($query['advanced_search'] as $key => $value) 
-			{
-				if(!$value) unset($query['advanced_search'][$key]);
-			}
-			$query['start'] = 0;
-			$query['search'] = '';
-			// store the advanced search in the session to call it again
-			$GLOBALS['egw']->session->appsession('advanced_search','addressbook',$query['advanced_search']);
-		}
 		elseif(!$query['search'] && $old_state['advanced_search'])	// eg. paging in an advanced search
 		{
 			$query['advanced_search'] = $old_state['advanced_search'];
@@ -1617,9 +1605,20 @@ $readonlys['button[vcard]'] = true;
 		if(!empty($_content)) {
 			$response = new xajaxResponse();
 			
-			$index_nm = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
-			$index_nm['search'] = $_content;
-			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$index_nm);
+			$query = $GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook');
+			
+			$query['advanced_search'] = array_intersect_key($_content,array_flip(array_merge($this->get_contact_columns(),array('operator','meth_select'))));
+			foreach ($query['advanced_search'] as $key => $value) 
+			{
+				if(!$value) unset($query['advanced_search'][$key]);
+			}
+			$query['start'] = 0;
+			$query['search'] = '';
+			// store the index state in the session
+			$GLOBALS['egw']->session->appsession($do_email ? 'email' : 'index','addressbook',$query);
+
+			// store the advanced search in the session to call it again
+			$GLOBALS['egw']->session->appsession('advanced_search','addressbook',$query['advanced_search']);
 			
 			$response->addScript("
 				var link = opener.location.href;
@@ -1628,7 +1627,6 @@ $readonlys['button[vcard]'] = true;
 				xajax_eT_wrapper();
 			");
 			return $response->getXML();
-			
 		}
 		else {
 			
