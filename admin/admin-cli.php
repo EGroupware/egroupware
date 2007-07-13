@@ -6,7 +6,7 @@
  * @link http://www.egroupware.org
  * @package admin
  * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
- * @copyright (c) 2006 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright (c) 2006/7 by Ralf Becker <RalfBecker-AT-outdoor-training.de>
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @version $Id$
  */
@@ -46,14 +46,30 @@ include('../header.inc.php');
 
 switch($action)
 {
+	case '--edit-user':
+		return do_edit_user($arg0s);
+		
 	case '--delete-user':
-		return do_delete_user($arg0s[2],$arg0s[3]);
+		return do_delete_account($arg0s[2],$arg0s[3]);
+		
+	case '--edit-group':
+		return do_edit_group($arg0s);
+		
+	case '--delete-group':
+		return do_delete_account($arg0s[2],0,'g');
+		
+	case '--allow-app':
+	case '--deny-app':
+		return do_account_app($arg0s,$action == '--allow-app');
 		
 	case '--change-account-id':
 		return do_change_account_id($arg0s);
 		
 	case '--check-acl';
 		return do_check_acl();
+		
+	case '--exit-codes':
+		return list_exit_codes();
 
 	default:
 		usage($action);
@@ -62,7 +78,7 @@ switch($action)
 exit(0);
 
 /**
- * callback if the session-check fails, redirects via xajax to login.php
+ * callback to authenticate with the user/pw specified on the commandline
  * 
  * @param array &$account account_info with keys 'login', 'passwd' and optional 'passwd_type'
  * @return boolean/string true if we allow the access and account is set, a sessionid or false otherwise
@@ -77,12 +93,14 @@ function user_pass_from_argv(&$account)
 	//print_r($account);
 	if (!($sessionid = $GLOBALS['egw']->session->create($account)))
 	{
-		echo "Wrong admin-account or -password !!!\n\n";
+		//fail(1,lang("Wrong admin-account or -password !!!"));
+		echo lang("Wrong admin-account or -password !!!")."\n\n";
 		usage('',1);
 	}
 	if (!$GLOBALS['egw_info']['user']['apps']['admin'])	// will be tested by the header too, but whould give html error-message
 	{
-		echo "Permission denied !!!\n\n";
+		//fail(2,lang("Permission denied !!!"));
+		echo lang("Permission denied !!!")."\n\n";
 		usage('',2);
 	}
 	return $sessionid;
@@ -97,17 +115,392 @@ function user_pass_from_argv(&$account)
 function usage($action=null,$ret=0)
 {
 	$cmd = basename($_SERVER['argv'][0]);
-	echo "Usage: $cmd command [additional options]\n\n";
+	echo "Usage: $cmd --command admin-account[@domain],admin-password,options,...\n\n";
 	
+	echo "--edit-user admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{yes(default)|no},anon-user{yes|no(default)},primary-group{Default(default)|...}[,groups,...]\n";
+	echo "	Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!\n";
 	echo "--delete-user admin-account[@domain],admin-password,account-to-delete[,account-to-move-data]\n";
 	echo "	Deletes a user from eGroupWare. It's data can be moved to an other user or it get deleted too.\n";
+	echo "--edit-group admin-account[@domain],admin-password,group[=new-group-name],email[,members,...]\n";
+	echo "	Edit or add a group to eGroupWare. If you specify members, they *replace* the exiting members!\n";
+	echo "--delete-group admin-account[@domain],admin-password,group-to-delete\n";
+	echo "	Deletes a group from eGroupWare.\n";
+	echo "--allow-app admin-account[@domain],admin-password,account,application,...\n";
+	echo "--deny-app admin-account[@domain],admin-password,account,application,...\n";
+	echo "	Give or deny an account (user or group specified by account name or id) run rights for the given applications.\n";
 	echo "--change-account-id admin-account[@domain],admin-password,from1,to1[...,fromN,toN]\n";
 	echo "	Changes one or more account_id's in the database (make a backup before!).\n";
 	echo "--check-acl admin-account[@domain],admin-password\n";
-	echo "	Deletes ACL entries of not longer existing accounts (make a database backup before!).\n";
-	exit;	
+	echo "	Deletes ACL entries of not longer existing accounts (make a database backup before! --> setup-cli.php).\n";
+	echo "--exit-codes admin-account[@domain],admin-password\n";
+	echo "	List all exit codes of the command line interface\n";
+
+	exit($ret);	
 }
 
+/**
+ * Give or deny an account (user or group specified by account name or id) run rights for the given applications.
+ *
+ * @param array $args admin-account[@domain],admin-password,account,application,...
+ * @param boolean $allow true=allow, false=deny
+ * @return int 0 on success
+ */
+function do_account_app($args,$allow)
+{
+	array_shift($args);	// admin-account
+	array_shift($args);	// admin-pw
+	$account = array_shift($args);
+	
+	if ($GLOBALS['egw']->acl->check('account_access',16,'admin'))	// user is explicitly forbidden to edit accounts
+	{
+		fail(2,lang("Permission denied !!!"));
+	}
+	if (!$GLOBALS['egw']->accounts->exists($account) || !is_numeric($id=$account) && !($id = $GLOBALS['egw']->accounts->name2id($account)))
+	{
+		fail(15,lang("Unknown account: %1 !!!",$account));
+	}
+	if (!($apps = _parse_apps($args)))
+	{
+		return false;
+	}
+	foreach($apps as $app)
+	{
+		if ($allow)
+		{
+			$GLOBALS['egw']->acl->add_repository($app,'run',$id,1);
+		}
+		else
+		{
+			$GLOBALS['egw']->acl->delete_repository($app,'run',$id);
+		}
+	}
+	return 0;
+}
+
+/**
+ * Edit or add a group to eGroupWare. If you specify members, they *replace* the exiting member!
+ *                    1:                     2:             3:                     4:     5:
+ * @param array $args admin-account[@domain],admin-password,group[=new-group-name],email[,members,...]
+ */
+function do_edit_group($args)
+{
+	array_shift($args);	// admin-account
+	array_shift($args);	// admin-pw
+	list($account,$new_account_name) = explode('=',array_shift($args));	// account[=new-account-name]
+	
+	$account_exists = true;
+	if (!($data = $GLOBALS['egw']->accounts->read($account)) || $data['account_type'] != 'g')
+	{
+		$account_exists = false;
+		$data = array('account_type' => 'g');
+	}
+	if ($GLOBALS['egw']->acl->check('account_access',$account_exists?16:4,'admin'))	// user is explicitly forbidden to edit or add groups
+	{
+		fail(2,lang("Permission denied !!!"));
+	}
+	if (!$account_exists && $new_account_name)
+	{
+		fail(12,lang("Unknown group to edit: %1 !!!",$account));
+	}
+	if (($email = array_shift($args)))
+	{
+		$data['account_email'] = $email;
+	}
+	if (($data['account_members'] = _parse_users($args)) === false)
+	{
+		return false;
+	}
+	if (!$account_exists && !$account)
+	{
+		fail(13,lang("You have to specify an non-empty group-name!"));
+	}
+	if (!$account_exists || $new_account_name) $data['account_lid'] = $new_account_name ? $new_account_name : $account;
+	
+	if (!$account_exists && !$args)
+	{
+		fail(14,lang("A group needs at least one member!"));
+	}
+	if (!$GLOBALS['egw']->accounts->save($data))
+	{
+		fail(11,lang("Error saving account!"));
+	}
+	$GLOBALS['hook_values'] = $data;
+	if (!$account_exists) $GLOBALS['hook_values']['old_name'] = $account;
+	$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+		'location' => $account_exists ? 'editgroup' : 'addgroup'
+	),False,True);  // called for every app now, not only enabled ones)
+
+	if ($members)
+	{
+		$GLOBALS['egw']->accounts->set_members($data['account_members'],$data['account_id']);
+	}
+	echo lang("Account %1 %2",$account,$account_exists ? lang('updated') : lang("created with id #%1",$data['account_id']))."\n\n";
+	return 0;
+}
+
+/**
+ * Edit or add a user to eGroupWare. If you specify groups, they *replace* the exiting memberships!
+ *                    1:                     2:             3:                         4:         5:        6:       7:    8:                                         9:                                 10:                            11:                                  12
+ * @param array $args admin-account[@domain],admin-password,account[=new-account-name],first-name,last-name,password,email,expires{never(default)|YYYY-MM-DD|already},can-change-pw{true(default)|false},anon-user{true|false(default)},primary-group{Default(default)|...}[,groups,...]
+ */
+function do_edit_user($args)
+{
+	array_shift($args);	// admin-account
+	array_shift($args);	// admin-pw
+	list($account,$new_account_name) = explode('=',array_shift($args));	// account[=new-account-name]
+	
+	$account_exists = true;
+	if (!($data = $GLOBALS['egw']->accounts->read($account)) || $data['account_type'] != 'u')
+	{
+		$account_exists = false;
+		$data = array('account_type' => 'u');
+	}
+	if ($GLOBALS['egw']->acl->check('account_access',$account_exists?16:4,'admin'))	// user is explicitly forbidden to edit or add users
+	{
+		fail(2,lang("Permission denied !!!"));
+	}
+	if (!$account_exists && $new_account_name)
+	{
+		fail(5,lang("Unknown user to edit: %1 !!!",$account));
+	}
+	//echo !$account_exists ? "add account $account:\n" : "edit account $account:\n";
+	foreach(array(
+		'account_lid' => $new_account_name ? $new_account_name : ($account_exists ? $data['account_lid'] : $account),
+		'account_firstname' => !($arg=array_shift($args)) ? null : $arg,
+		'account_lastname' => !($arg=array_shift($args)) ? null : $arg,
+		'account_passwd' => !($arg=array_shift($args)) ? null : $arg,
+		'account_email' => !($arg=array_shift($args)) ? null : $arg,
+		'account_expires' => $expires=_parse_expired(!($expires=array_shift($args)) && !$account_exists ? 'never' : $expires),
+		'account_status' => !$expires ? null : ($expires === -1 || $expires > time() ? 'A' : ''),
+		'changepassword' => !($can_pw=array_shift($args)) && !$account_exists ? 'yes' : ($can_pw ? $can_pw : null),
+		'anonymous' => !($is_anon=array_shift($args)) && !$account_exists ? 'no' : ($is_anon ? $is_anon : null),
+		'account_primary_group' => _parse_groups(!($primary=array_shift($args)) && !$account_exists ? ($primary='Default') : $primary),
+		'account_groups' => _parse_groups(!$args && !$account_exists ? array($primary ? $primary : 'Default') : $args),
+	) as $name => $value)
+	{
+		if ($value === false) return false;	// error in _parse_xyz()
+
+		//echo $name.': '.(is_array($value) ? implode(', ',$value) : $value)."\n";
+		if (!is_null($value)) $data[$name] = $value;
+	}
+	if (!$data['account_lid'] || !$account_exists && !$data['account_lastname'])
+	{
+		fail(9,lang("You have to specify an non-empty account-name and lastname!"));
+	}
+	if (!$account_exists && !$data['account_primary_group'])
+	{
+		fail(10,lang("You have to specify at least a primary group!"));
+	}
+	if ($data['groups'] && !in_array($data['account_primary_group'],$data['groups']) || !$account_exists && !$data['groups'])
+	{
+		$data['groups'][] = $data['account_primary_group'];
+	}
+	if (!$GLOBALS['egw']->accounts->save($data))
+	{
+		fail(11,lang("Error saving account!"));
+	}
+	if ($data['account_groups'])
+	{
+		$GLOBALS['egw']->accounts->set_memberships($data['account_groups'],$data['account_id']);
+	}
+	if ($data['anonymous'])
+	{
+		if ($data['anonymous']{0} != 'n')
+		{
+			$GLOBALS['egw']->acl->add_repository('phpgwapi','anonymous',$data['account_id'],1);
+		}
+		else
+		{
+			$GLOBALS['egw']->acl->delete_repository('phpgwapi','anonymous',$data['account_id']);
+		}
+	}
+	if ($data['changepassword'])
+	{
+		if ($data['changepassword']{0} == 'n')
+		{
+			$GLOBALS['egw']->acl->add_repository('preferences','nopasswordchange',$data['account_id'],1);
+		}
+		else
+		{
+			$GLOBALS['egw']->acl->delete_repository('preferences','nopasswordchange',$data['account_id']);
+		}
+	}
+	if($account_exists && $data['account_passwd'])
+	{
+		$auth =& CreateObject('phpgwapi.auth');
+		$auth->change_password(null, $data['account_passwd'], $data['account_id']);
+		$GLOBALS['hook_values']['account_id'] = $data['account_id'];
+		$GLOBALS['hook_values']['old_passwd'] = null;
+		$GLOBALS['hook_values']['new_passwd'] = $data['account_passwd'];
+
+		$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+			'location' => 'changepassword'
+		),False,True);	// called for every app now, not only enabled ones)
+	}
+	$GLOBALS['hook_values'] = $data;
+	$GLOBALS['egw']->hooks->process($GLOBALS['hook_values']+array(
+		'location' => $account_exists ? 'editaccount' : 'addaccount'
+	),False,True);	// called for every app now, not only enabled ones)
+	
+	echo lang("Account %1 %2",$account,$account_exists ? lang('updated') : lang("created with id #%1",$data['account_id']))."\n\n";
+	return 0;
+}
+
+/**
+ * parse application names, titles or localised names and return array of app-names
+ *
+ * @param array $apps names, titles or localised names
+ * @return array/boolean array of app-names or false if an app is not found
+ */
+function _parse_apps($apps)
+{
+	foreach($apps as $key => $name)
+	{
+		if (!isset($GLOBALS['egw_info']['apps'][$name]))
+		{
+			foreach($GLOBALS['egw_info']['apps'] as $app => $data)	// check against title and localised name
+			{
+				if (!strcasecmp($name,$data['title']) || !strcasecmp($name,lang($app)))
+				{
+					$apps[$key] = $name = $app;
+					break;
+				}
+			}
+		}
+		if (!isset($GLOBALS['egw_info']['apps'][$name]))
+		{
+			fail(8,lang("Application '%1' not found (maybe not installed or misspelled)!",$name));
+			return false;
+		}
+	}
+	return $apps;
+}
+
+/**
+ * parse groups and return the group-id's
+ *
+ * @param string/array $groups group-id's or names
+ * @return string/array/boolean false on error
+ */
+function _parse_groups($groups)
+{
+	if (!$groups) return null;
+	
+	$ids = array();
+	foreach(is_array($groups) ? $groups : array($groups) as $group)
+	{
+		if ($GLOBALS['egw']->accounts->exists($id = is_numeric($group) && $group > 0 ? -$group : $group) != 2 ||
+			(!is_numeric($group) && !($id = $GLOBALS['egw']->accounts->name2id($group,'account_lid','g'))))
+		{
+			fail(8,lang("Unknown group: %1 !!!",$group));
+			return false;
+		}
+		$ids[] = $id;
+	}
+	return is_string($groups) ? $ids[0] : $ids;
+}
+
+/**
+ * parse users and return the user-id's
+ *
+ * @param string/array $users user-id's or names
+ * @return string/array/boolean false on error
+ */
+function _parse_users($users)
+{
+	if (!$users) return null;
+	
+	$ids = array();
+	foreach(is_array($users) ? $users : array($users) as $user)
+	{
+		if ($GLOBALS['egw']->accounts->exists($id = $user) != 1 ||
+			(!is_numeric($group) && !($id = $GLOBALS['egw']->accounts->name2id($user,'account_lid','u'))))
+		{
+			fail(7,lang("Unknown user: %1 !!!",$user));
+			return false;
+		}
+		$ids[] = $id;
+	}
+	return is_string($groups) ? $ids[0] : $ids;
+}
+
+/**
+ * parse the expired string and return the expired date as timestamp
+ *
+ * @param string $str
+ * @return int/boolean false on error
+ */
+function _parse_expired($str)
+{
+	switch($str)
+	{
+		case 'never':
+			return -1;
+		case 'already':
+			return 0;
+		case '':
+			return null;
+	}
+	// YYYY-MM-DD
+	list($y,$m,$d) = explode('-',$str);
+	if (!checkdate((int)$m,(int)$d,(int)$y))
+	{
+		fail(6,lang("Invalid date '%1' use YYYY-MM-DD!",$str));
+		return false;
+	}
+	return mktime(0,0,0,$m,$d,$y);
+}
+
+/**
+ * Delete a given acount from eGW
+ *
+ * @param int/string $account account-name of -id
+ * @param int/string $new_user=0 for uses only: account to move the entries too
+ * @param boolean $type='u' are we called for a user or group
+ * @return int 0 on success, 2-4 otherwise (see source)
+ */
+function do_delete_account($account,$new_user=0,$type='u')
+{
+	//echo "do_delete_account('$account','$new_user',$do_group)\n";
+	if ($GLOBALS['egw']->acl->check('account_access',32,'admin'))	// user is explicitly forbidden to delete users
+	{
+		fail(2,lang("Permission denied !!!"));
+	}
+	if (!is_numeric($account) && !($id = $GLOBALS['egw']->accounts->name2id($lid=$account)) ||
+	     is_numeric($account) && !($lid = $GLOBALS['egw']->accounts->id2name($id=$account)) ||
+	     $GLOBALS['egw']->accounts->get_type($id) != $type)
+	{
+		fail(3,lang("Unknown account to delete: %1 !!!",$account));
+	}
+	if ($new_user && (!is_numeric($new_user) && !($new_uid = $GLOBALS['egw']->accounts->name2id($new_user)) ||
+	                   is_numeric($new_user) && !$GLOBALS['egw']->accounts->id2name($new_uid=$new_user)))
+	{
+		fail(4,lang("Unknown user to move to: %1 !!!",$new_user));
+	}
+	// delete the account
+	$GLOBALS['hook_values'] = array(
+		'account_id'  => $id,
+		'account_lid' => $lid,
+		'account_name'=> $lid,				// pericated name for deletegroup hook
+		'new_owner'   => (int)$new_uid,		// deleteaccount only
+		'location'    => $type == 'u' ? 'deleteaccount' : 'deletegroup',
+	);
+	// first all other apps, then preferences and admin
+	foreach(array_merge(array_diff(array_keys($GLOBALS['egw_info']['apps']),array('preferences','admin')),array('preferences','admin')) as $app)
+	{
+		$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
+	}			
+	if ($type == 'g') $GLOBALS['egw']->accounts->delete($id);	// groups get not deleted via the admin hook, as users
+
+	echo lang("Account '%1' deleted.",$account)."\n\n";
+	return 0;
+}
+
+/**
+ * Deletes ACL entries of not longer existing accounts
+ * 
+ * @return int 0 allways
+ */
 function do_check_acl()
 {
 	$deleted = 0;
@@ -122,53 +515,16 @@ function do_check_acl()
 		$GLOBALS['egw']->db->query("DELETE FROM egw_acl WHERE acl_account NOT IN (".implode(',',$ids).") OR acl_appname='phpgw_group' AND acl_location NOT IN ('".implode("','",$ids)."')",__LINE__,__FILE__);
 		$deleted = $GLOBALS['egw']->db->affected_rows();
 	}
-	echo "\n$deleted ACL records of not (longer) existing accounts deleted.\n\n";
-}
-
-/**
- * Delete a given user from eGW
- *
- * @param int/string $user
- * @param int/string $new_user=0
- * @return int 0 on success, 2-4 otherwise (see source)
- */
-function do_delete_user($user,$new_user=0)
-{
-	//echo "do_delete_user('$user','$new_user')\n";
-	if ($GLOBALS['egw']->acl->check('account_access',32,'admin'))	// user is explicitly forbidden to delete users
-	{
-		echo "Permission denied !!!\n";
-		return 2;
-	}
-	if (!is_numeric($user) && !($uid = $GLOBALS['egw']->accounts->name2id($lid=$user)) ||
-	     is_numeric($user) && !($lid = $GLOBALS['egw']->accounts->id2name($uid=$user)))
-	{
-		echo "Unknown user to delete: $user !!!\n";
-		return 3;
-	}
-	if ($new_user && (!is_numeric($new_user) && !($new_uid = $GLOBALS['egw']->accounts->name2id($new_user)) ||
-	                   is_numeric($new_user) && !$GLOBALS['egw']->accounts->id2name($new_uid=$new_user)))
-	{
-		echo "Unknown user to move to: $new_user !!!\n";
-		return 4;
-	}
-	// delete the suer
-	$GLOBALS['hook_values'] = array(
-		'account_id'  => $uid,
-		'account_lid' => $lid,
-		'new_owner'   => (int)$new_uid,
-		'location'    => 'deleteaccount',
-	);
-	// first all other apps, then preferences and admin
-	foreach(array_merge(array_diff(array_keys($GLOBALS['egw_info']['apps']),array('preferences','admin')),array('preferences','admin')) as $app)
-	{
-		$GLOBALS['egw']->hooks->single($GLOBALS['hook_values'],$app);
-	}
-	echo "Account '$user' deleted.\n";
+	echo lang("%1 ACL records of not (longer) existing accounts deleted.",$deleted)."\n\n";
 	return 0;
 }
 
-
+/**
+ * Changes one or more account_id's in the database (make a backup before!).
+ *
+ * @param array $args admin-account[@domain],admin-password,from1,to1[...,fromN,toN]
+ * @return int 0 on success
+ */
 function do_change_account_id($args)
 {
 	/**
@@ -309,6 +665,9 @@ function do_change_account_id($args)
 			'egw_polls_answers' => false,
 			'egw_polls_votes'   => 'vote_uid',
 		),
+		'gallery' => array(
+			'g2_ExternalIdMap' => array(array('g_externalId',"g_entityType='GalleryUser'")),
+		),
 		// MyDMS	ToDo!!!
 		// VFS2		ToDo!!!
 	);
@@ -320,7 +679,10 @@ function do_change_account_id($args)
 	{
 		$from = (int)$args[$n];
 		$to   = (int)$args[$n+1];
-		if (!$from || !$to) die("\nAccount-id's have to be integers!\n\n");
+		if (!$from || !$to)
+		{
+			fail(16,lang("Account-id's have to be integers!"));
+		}
 		$ids2change[$from] = $to;
 	}
 	$total = 0;
@@ -353,7 +715,8 @@ function do_change_account_id($args)
 			}
 		}
 	}
-	echo "\nTotal of $total id's changed.\n\n";
+	echo lang("Total of %1 id's changed.",$total)."\n\n";
+	return 0;
 }
 
 function _update_account_id($ids2change,$db,$table,$column,$where=null,$type=null)
@@ -416,4 +779,42 @@ function _update_account_id($ids2change,$db,$table,$column,$where=null,$type=nul
 			break;
 	}
 	return $changed;
+}
+
+/**
+ * Exit the script with a numeric exit code and an error-message, does NOT return
+ *
+ * @param int $exit_code
+ * @param string $message
+ */
+function fail($exit_code,$message)
+{
+	echo $message."\n";
+	exit($exit_code);
+}
+
+/**
+ * List all exit codes used by the command line interface
+ *
+ * The list is generated by "greping" this file for calls to the fail() function. 
+ * Calls to fail() have to be in one line, to be recogniced!
+ */
+function list_exit_codes()
+{
+	error_reporting(error_reporting() & ~E_NOTICE);
+
+	$codes = array('Ok');
+	foreach(file(__FILE__) as $n => $line)
+	{
+		if (preg_match('/fail\(([0-9]+),(.*)\);/',$line,$matches))
+		{
+			//echo "Line $n: $matches[1]: $matches[2]\n";
+			@eval('$codes['.$matches[1].'] = '.$matches[2].';');
+		}
+	}
+	ksort($codes,SORT_NUMERIC);
+	foreach($codes as $num => $msg)
+	{
+		echo $num."\t".str_replace("\n","\n\t",$msg)."\n";
+	}
 }
