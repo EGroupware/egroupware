@@ -155,14 +155,17 @@ function do_account_app($args,$allow)
 	{
 		fail(2,lang("Permission denied !!!"));
 	}
-	if (!$GLOBALS['egw']->accounts->exists($account) || !is_numeric($id=$account) && !($id = $GLOBALS['egw']->accounts->name2id($account)))
+	if (!($type = $GLOBALS['egw']->accounts->exists($account)) || !is_numeric($id=$account) && !($id = $GLOBALS['egw']->accounts->name2id($account)))
 	{
 		fail(15,lang("Unknown account: %1 !!!",$account));
 	}
+	if ($type == 2 && $id > 0) $id = -$id;	// groups use negative id's internally, fix it, if user given the wrong sign
+
 	if (!($apps = _parse_apps($args)))
 	{
 		return false;
 	}
+	//echo "account=$account, type=$type, id=$id, apps: ".implode(', ',$apps)."\n";
 	foreach($apps as $app)
 	{
 		if ($allow)
@@ -174,6 +177,7 @@ function do_account_app($args,$allow)
 			$GLOBALS['egw']->acl->delete_repository($app,'run',$id);
 		}
 	}
+	echo lang('Applications run rights updated.')."\n\n";
 	return 0;
 }
 
@@ -192,7 +196,11 @@ function do_edit_group($args)
 	if (!($data = $GLOBALS['egw']->accounts->read($account)) || $data['account_type'] != 'g')
 	{
 		$account_exists = false;
-		$data = array('account_type' => 'g');
+		$data = array(
+			'account_type' => 'g',
+			'account_status' => 'A',	// not used, but so we do the same thing as the web-interface
+			'account_expires' => -1,
+		);
 	}
 	if ($GLOBALS['egw']->acl->check('account_access',$account_exists?16:4,'admin'))	// user is explicitly forbidden to edit or add groups
 	{
@@ -230,7 +238,7 @@ function do_edit_group($args)
 		'location' => $account_exists ? 'editgroup' : 'addgroup'
 	),False,True);  // called for every app now, not only enabled ones)
 
-	if ($members)
+	if ($data['account_members'])
 	{
 		$GLOBALS['egw']->accounts->set_members($data['account_members'],$data['account_id']);
 	}
