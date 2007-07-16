@@ -165,7 +165,7 @@
 						$m = 0;
 						foreach ($field['values'] as $key => $val)
 						{
-							$radio = $tpl->empty_cell('radio',$this->prefix.$name);
+							$radio = etemplate::empty_cell('radio',$this->prefix.$name);
 							$radio['label'] = $val;
 							$radio['size'] = $key;
 							etemplate::add_child($input,$radio);
@@ -229,7 +229,7 @@
 				$cell['data'][0]['A'] = '100';
 			}
 			list($span,$class) = explode(',',$cell['span']);	// msie (at least 5.5) shows nothing with div overflow=auto
-			$cell['size'] = '100%,100%,0,'.$class.','.($type=='customfields-list'?',0':',').($tpl->html->user_agent != 'msie' ? ',auto' : '');
+			$cell['size'] = '100%,100%,0,'.$class.','.($type=='customfields-list'?',0':',').($tmpl->html->user_agent != 'msie' ? ',auto' : '');
 
 			return True;	// extra Label is ok
 		}
