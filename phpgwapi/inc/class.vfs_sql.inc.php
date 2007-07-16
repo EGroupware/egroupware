@@ -1558,7 +1558,7 @@
 			{
 				if ($this->file_actions)
 				{
-					$rr = unlink ($p->real_full_path);
+					$rr = @unlink ($p->real_full_path);
 				}
 				else
 				{
