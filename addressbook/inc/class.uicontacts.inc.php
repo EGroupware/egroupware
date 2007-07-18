@@ -1724,7 +1724,7 @@ $readonlys['button[vcard]'] = true;
 		static $userphone;
 		if (is_null($userphone))
 		{
-			$user = $this->read('account_id:'.$GLOBALS['egw_info']['user']['account_id']);
+			$user = $this->read('account:'.$GLOBALS['egw_info']['user']['account_id']);
 			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
 		}
 		$link = str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
