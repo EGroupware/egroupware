@@ -384,12 +384,8 @@ class country
 	 */
 	function country_code($name)
 	{
-		// search case-insensitive all translations for the english phrase of given country $name
-		// we do that to catch all possible cases of translations
-		if (($name_en = $GLOBALS['egw']->translation->get_message_id($name,'common')))
-		{
-			$name = strtoupper($name_en);
-		}
+		if (!$name) return '';	// nothing to do
+		
 		if (($code = array_search(strtoupper($name),$this->country_array)) !== false)
 		{
 			return $code;
@@ -398,6 +394,21 @@ class country
 		
 		if (($code = array_search(strtoupper($name),$this->countries_translated)) !== false || 
 			($code = array_search($name,$this->countries_translated)) !== false)
+		{
+			return $code;
+		}
+		// search case-insensitive all translations for the english phrase of given country $name
+		// we do that to catch all possible cases of translations
+		static $en_names = array();	// we do some caching to minimize db-accesses
+		if (isset($en_names[$name]))
+		{
+			$name = $en_names[$name];
+		}
+		elseif (($name_en = $GLOBALS['egw']->translation->get_message_id($name,'common')))
+		{
+			$name = $en_names[$name] = strtoupper($name_en);
+		}
+		if (($code = array_search(strtoupper($name),$this->country_array)) !== false)
 		{
 			return $code;
 		}
