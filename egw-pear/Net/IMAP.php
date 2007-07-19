@@ -1203,6 +1203,9 @@ class Net_IMAP extends Net_IMAPProtocol {
         if ( PEAR::isError( $ret ) ) {
             return $ret;
         }
+        if(strtoupper($ret["RESPONSE"]["CODE"]) != "OK"){
+            return new PEAR_Error($ret["RESPONSE"]["CODE"] . ", " . $ret["RESPONSE"]["STR_CODE"]);
+        }
         return true;
     }
 
