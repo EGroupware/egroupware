@@ -10,7 +10,7 @@
 	\**************************************************************************/
 	
 	/* $Id$ */
-
+/*
 	$GLOBALS['egw_info'] = array(
 		'flags' => array(
 			'currentapp'    => 'filemanager',
@@ -24,4 +24,6 @@
 	include('../header.inc.php');
 
 	ExecMethod('filemanager.uifilemanager.index');
+*/
+header('Location: ../index.php?menuaction=filemanager.uifilemanager.index');
 ?>

@@ -8,10 +8,11 @@
 	*  Free Software Foundation; either version 2 of the License, or (at your  *
 	*  option) any later version.                                              *
 	\**************************************************************************/
+	require_once(EGW_INCLUDE_ROOT.'/filemanager/inc/class.sofilemanager.inc.php');
 
 	/* $Id$ */
 
-	class bofilemanager
+	class bofilemanager extends sofilemanager
 	{
 		// used
 
@@ -31,9 +32,32 @@
 		var $matches;//FIXME matches not defined
 
 		var $debug = False;
+		// Timestamps
+		//'vfs_created',  'vfs_modified',
+		var $timestamps=array(
+							 );
+		/**
+		* Offset in secconds between user and server-time,	it need to be add to a server-time to get the user-time 
+		* or substracted from a user-time to get the server-time
+		* 
+		* @var int
+		*/
+		var $tz_offset_s;
+		/**
+		* Current time as timestamp in user-time
+		* 
+		* @var int
+		*/
+		var $now;
 
 		function bofilemanager()
 		{
+			$this->sofilemanager();
+			// discarded because of extension
+			//$this->so =& CreateObject('filemanager.sofilemanager');
+			//$this->so->db_init();
+			$this->db_init();
+
 			$this->vfs =& CreateObject('phpgwapi.vfs');
 
 			error_reporting(4);
@@ -93,6 +117,57 @@
 				'comment' => lang('Comment'),
 				'version' => lang('Version')
 			);
+			if (!is_object($GLOBALS['egw']->datetime))
+			{
+				$GLOBALS['egw']->datetime =& CreateObject('phpgwapi.datetime');
+			}
+			$this->tz_offset_s = $GLOBALS['egw']->datetime->tz_offset;
+			$this->now = time() + $this->tz_offset_s;	// time() is server-time and we need a user-time
+			
+		}
+
+		/**
+		* changes the data from the db-format to your work-format
+		*
+		* reimplemented to adjust the timezone of the timestamps (adding $this->tz_offset_s to get user-time)
+		* Please note, we do NOT call the method of the parent so_sql !!!
+		*
+		* @param array $data if given works on that array and returns result, else works on internal data-array
+		* @return array with changed data
+		*/
+		function db2data($data=null)
+		{
+			if (!is_array($data))
+			{
+				$data = &$this->data;
+			}
+			foreach($this->timestamps as $name)
+			{
+				if (isset($data[$name]) && $data[$name]) $data[$name] += $this->tz_offset_s;
+			}
+			return $data;
+		}
+
+		/**
+		* changes the data from your work-format to the db-format
+		*
+		* reimplemented to adjust the timezone of the timestamps (subtraction $this->tz_offset_s to get server-time)
+		* Please note, we do NOT call the method of the parent so_sql !!!
+		*
+		* @param array $data if given works on that array and returns result, else works on internal data-array
+		* @return array with changed data
+		*/
+		function data2db($data=null)
+		{
+			if ($intern = !is_array($data))
+			{
+				$data = &$this->data;
+			}
+			foreach($this->timestamps as $name)
+			{
+				if (isset($data[$name]) && $data[$name]) $data[$name] -= $this->tz_offset_s;
+			}
+			return $data;
 		}
 
 		###

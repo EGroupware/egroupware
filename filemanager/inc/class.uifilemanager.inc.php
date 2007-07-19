@@ -10,8 +10,9 @@
 	\**************************************************************************/
 
 	/* $Id$ */
+	require_once(EGW_INCLUDE_ROOT.'/filemanager/inc/class.bofilemanager.inc.php');
 
-	class uifilemanager
+	class uifilemanager extends bofilemanager
 	{
 		var $public_functions = array(
 			'index' => True,
@@ -19,13 +20,22 @@
 			'view'  => True,
 			'history' => True,
 			'edit'  => True,
-			'download'=>True
+			'download'=>True,
+			'search_tpl'=>True,
 		);
 
 		//keep
 		var $bo;
-		var $t; //template object
-		var $dispath;
+		var $t; 
+		//template object
+		/**
+		* instantiation of the etemplate as classenvariable
+		*
+		* @var etemplate
+		*/
+        var $tmpl;
+		var $search_options;
+		var $disppath;
 		var $cwd;
 		var $lesspath;
 		var $readable_groups;
@@ -78,20 +88,35 @@
 		var $messages = array();
 		var $show_upload_boxes;
 
+		//var $debug = false;
 		var $debug = false;
 		var $now;
 
 		function uifilemanager()
 		{
+			// discarded becouse of class extension
+			//$this->bo =& CreateObject('filemanager.bofilemanager');
+			$this->bofilemanager();
+
+			//KL begin 200703 searchtemplate
+			// etemplate stuff
+			$this->tmpl =& CreateObject('etemplate.etemplate');
+			$this->html =& $GLOBALS['egw']->html;
+			// this may be needed using etemplates
+			if(!@is_object($GLOBALS['egw']->js))
+			{
+			   $GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+			}
+			//KL end 200703 searchtemplate
+			
 			//			error_reporting(8);
 			$GLOBALS['egw']->browser =& CreateObject('phpgwapi.browser');
 
 			$this->dateformat=$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
 
+			//$this->now = date($this->dateformat);
 			$this->now = date('Y-m-d');
-
-			$this->bo =& CreateObject('filemanager.bofilemanager');
-
+			
 			$this->t = $GLOBALS['egw']->template;
 
 			// here local vars are created from the HTTP vars
@@ -159,12 +184,12 @@
 			}
 
 			// get appl. and user prefs
-			$pref =& CreateObject('phpgwapi.preferences', $this->bo->userinfo['username']);
+			$pref =& CreateObject('phpgwapi.preferences', $this->userinfo['username']);
 			$pref->read_repository();
 			//			$GLOBALS['egw']->hooks->single('add_def_pref', $GLOBALS['appname']);
 			$pref->save_repository(True);
 			$pref_array = $pref->read_repository();
-			$this->prefs = $pref_array[$this->bo->appname]; //FIXME check appname var in _debug_array
+			$this->prefs = $pref_array[$this->appname]; //FIXME check appname var in _debug_array
 
 			//always show name
 
@@ -181,26 +206,26 @@
 			*/
 
 			// check if basedir exist
-			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+			$test=$this->vfs->get_real_info(array('string' => $this->basedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 			if($test['mime_type'] != 'Directory')
 			{
 				die('Base directory does not exist, Ask adminstrator to check the global configuration.');
 			}
 
-			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+			$test=$this->vfs->get_real_info(array('string' => $this->basedir.$this->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 			if($test['mime_type'] != 'Directory')
 			{
-				$this->bo->vfs->override_acl = 1;
+				$this->vfs->override_acl = 1;
 
-				$this->bo->vfs->mkdir(array(
-					'string' => $this->bo->fakebase,
+				$this->vfs->mkdir(array(
+					'string' => $this->fakebase,
 					'relatives' => array(RELATIVE_NONE)
 				));
 
-				$this->bo->vfs->override_acl = 0;
+				$this->vfs->override_acl = 0;
 
 				//test one more time
-				$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+				$test=$this->vfs->get_real_info(array('string' => $this->basedir.$this->fakebase, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 
 				if($test['mime_type']!='Directory')
 				{
@@ -214,21 +239,21 @@
 				}
 			}
 
-//			die($this->bo->homedir);
-			$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+//			die($this->homedir);
+			$test=$this->vfs->get_real_info(array('string' => $this->basedir.$this->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 			if($test['mime_type'] != 'Directory')
 			{
-				$this->bo->vfs->override_acl = 1;
+				$this->vfs->override_acl = 1;
 
-				$this->bo->vfs->mkdir(array(
-					'string' => $this->bo->homedir,
+				$this->vfs->mkdir(array(
+					'string' => $this->homedir,
 					'relatives' => array(RELATIVE_NONE)
 				));
 
-				$this->bo->vfs->override_acl = 0;
+				$this->vfs->override_acl = 0;
 
 				//test one more time
-				$test=$this->bo->vfs->get_real_info(array('string' => $this->bo->basedir.$this->bo->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+				$test=$this->vfs->get_real_info(array('string' => $this->basedir.$this->homedir, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 
 				if($test['mime_type'] != 'Directory')
 				{
@@ -242,10 +267,28 @@
 					// FIXME we just created a fresh home dir so we know there nothing in it so we have to remove all existing content
 				}
 			}
-		}
+			$GLOBALS['uifilemanager'] =& $this;	// make ourself available for ExecMethod of get_rows function
 
+		}
+		
 		function index()
 		{
+			//echo "<p>call index</p>";
+			if ($_GET['action']=='search')
+			{
+				$this->search_tpl();
+			}
+			else
+			{
+				$this->index_2();
+			}
+		}
+		
+		function index_2()
+		{
+			//echo "<p>call index_2</p>";
+			//_debug_array($this->tmpl);
+			$sessiondata = $this->read_sessiondata();
 			if($noheader || $nofooter || ($this->download_x && (count($this->fileman) > 0)))
 			{
 				$noheader = True;
@@ -264,7 +307,6 @@
 					'noappheader'	=> $noappheader,
 					'enable_browser_class'	=> True
 				);
-
 				$GLOBALS['egw']->common->egw_header();
 			}
 
@@ -289,20 +331,20 @@
 
 			if(!$this->path)
 			{
-				$this->path = $this->bo->vfs->pwd();
+				$this->path = $this->vfs->pwd();
 
-				if(!$this->path || $this->bo->vfs->pwd(array('full' => False)) == '')
+				if(!$this->path || $this->vfs->pwd(array('full' => False)) == '')
 				{
-					$this->path = $this->bo->homedir;
+					$this->path = $this->homedir;
 				}
 			}
 
-			$this->bo->vfs->cd(array('string' => False, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
-			$this->bo->vfs->cd(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+			$this->vfs->cd(array('string' => False, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
+			$this->vfs->cd(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE), 'relative' => False));
 
-			$pwd = $this->bo->vfs->pwd();
+			$pwd = $this->vfs->pwd();
 
-			if(!$this->cwd = substr($this->path, strlen($this->bo->homedir) + 1))
+			if(!$this->cwd = substr($this->path, strlen($this->homedir) + 1))
 			{
 				$this->cwd = '/';
 			}
@@ -312,7 +354,7 @@
 			}
 
 			$this->disppath = $this->path;
-
+			$sessiondata['workingdir']="$this->disppath";
 			/* This just prevents // in some cases */
 			if($this->path == '/')
 			{
@@ -327,22 +369,21 @@
 			{
 				$this->lesspath = '/';
 			}
-
+			//echo "<p>#$this->path#</p>";
 			# Get their readable groups to be used throughout the script
 			$groups = array();
 
 			$groups = $GLOBALS['egw']->accounts->get_list('groups');
-
-			$this->readable_groups = array();
+			$this->readable_groups = Array();
 
 			while(list($num, $account) = each($groups))
 			{
-				if($this->bo->vfs->acl_check(array('owner_id' => $account['account_id'],'operation' => EGW_ACL_READ)))
+				if($this->vfs->acl_check(array('owner_id' => $account['account_id'],'operation' => EGW_ACL_READ)))
 				{
 					$this->readable_groups[$account['account_lid']] = Array('account_id' => $account['account_id'], 'account_name' => $account['account_lid']);
 				}
 			}
-
+			$sessiondata['readable_groups']=$this->readable_groups;
 			$this->groups_applications = array();
 
 			while(list($num, $group_array) = each($this->readable_groups))
@@ -352,21 +393,24 @@
 				$applications =& CreateObject('phpgwapi.applications', $group_id);
 				$this->groups_applications[$group_array['account_name']] = $applications->read_account_specific();
 			}
+			$sessiondata['groups_applications']=$this->groups_applications;
 
 			# We determine if they're in their home directory or a group's directory,
 			# and set the VFS working_id appropriately
-			if((preg_match('+^'.$this->bo->fakebase.'\/(.*)(\/|$)+U', $this->path, $matches)) && $matches[1] != $this->bo->userinfo['account_lid']) //FIXME matches not defined
+			if((preg_match('+^'.$this->fakebase.'\/(.*)(\/|$)+U', $this->path, $matches)) && $matches[1] != $this->userinfo['account_lid']) //FIXME matches not defined
 			{
-				$this->bo->vfs->working_id = $GLOBALS['egw']->accounts->name2id($matches[1]);//FIXME matches not defined
+				$this->vfs->working_id = $GLOBALS['egw']->accounts->name2id($matches[1]);//FIXME matches not defined
 			}
 			else
 			{
-				$this->bo->vfs->working_id = $this->bo->userinfo['username'];
+				$this->vfs->working_id = $this->userinfo['username'];
 			}
+			$this->save_sessiondata($sessiondata);
 
-			# FIXME # comment waht happens here
-			if($this->path != $this->bo->homedir && $this->path != $this->bo->fakebase && $this->path != '/' && !$this->bo->vfs->acl_check(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE),'operation' => EGW_ACL_READ)))
+			# FIXME # comment what happens here
+			if($this->path != $this->homedir && $this->path != $this->fakebase && $this->path != '/' && !$this->vfs->acl_check(array('string' => $this->path, 'relatives' => array(RELATIVE_NONE),'operation' => EGW_ACL_READ)))
 			{
+				echo "<p>died for some reasons</p>";
 				$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('You do not have access to %1', $this->path)));
 				$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->homedir, lang('Go to your home directory'));
 
@@ -374,47 +418,47 @@
 				$GLOBALS['egw']->common->egw_exit();
 			}
 
-			$this->bo->userinfo['working_id'] = $this->bo->vfs->working_id;
-			$this->bo->userinfo['working_lid'] = $GLOBALS['egw']->accounts->id2name($this->bo->userinfo['working_id']);
+			$this->userinfo['working_id'] = $this->vfs->working_id;
+			$this->userinfo['working_lid'] = $GLOBALS['egw']->accounts->id2name($this->userinfo['working_id']);
 
 			# If their home directory doesn't exist, we try to create it
 			# Same for group directories
 
 
-		// Moved to constructor
-		/*
-			if(($this->path == $this->homedir)	&& !$this->bo->vfs->file_exists($pim_tmp_arr))
+			// Moved to constructor
+			/*
+			if(($this->path == $this->homedir)	&& !$this->vfs->file_exists($pim_tmp_arr))
 			{
-				$this->bo->vfs->override_acl = 1;
+				$this->vfs->override_acl = 1;
 
-				if(!$this->bo->vfs->mkdir(array(
-					'string' => $this->bo->homedir,
+				if(!$this->vfs->mkdir(array(
+					'string' => $this->homedir,
 					'relatives' => array(RELATIVE_NONE)
 				)))
 				{
-					$p = $this->bo->vfs->path_parts($pim_tmp_arr);
+					$p = $this->vfs->path_parts($pim_tmp_arr);
 
 					$this->messages[]= $GLOBALS['egw']->common->error_list(array(
 						lang('Could not create directory %1',
-						$this->bo->homedir . ' (' . $p->real_full_path . ')'
+						$this->homedir . ' (' . $p->real_full_path . ')'
 					)));
 				}
 
-				$this->bo->vfs->override_acl = 0;
+				$this->vfs->override_acl = 0;
 			}
 			*/
 
 			# Verify path is real
-			if($this->path != $this->bo->homedir && $this->path != '/' && $this->path != $this->bo->fakebase)
+			if($this->path != $this->homedir && $this->path != '/' && $this->path != $this->fakebase)
 			{
-				if(!$this->bo->vfs->file_exists(array(
+				if(!$this->vfs->file_exists(array(
 					'string' => $this->path,
 					'relatives' => array(RELATIVE_NONE)
 				)))
 				{
+					echo "<p>died for some other reasons</p>";
 					$this->messages[] = $GLOBALS['egw']->common->error_list(array(lang('Directory %1 does not exist', $this->path)));
-					$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->bo->homedir, lang('Go to your home directory'));
-
+					$this->html_link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->homedir, lang('Go to your home directory'));
 					$GLOBALS['egw']->common->egw_footer();
 					$GLOBALS['egw']->common->egw_exit();
 				}
@@ -424,14 +468,14 @@
 			srand((double) microtime() * 1000000);
 			if($_GET['update'] || rand(0, 19) == 4)
 			{
-				$this->bo->vfs->update_real(array(
+				$this->vfs->update_real(array(
 					'string' => $this->path,
 					'relatives' => array(RELATIVE_NONE)
 				));
 			}
 
 			# Check available permissions for $this->path, so we can disable unusable operations in user interface
-			if($this->bo->vfs->acl_check(array(
+			if($this->vfs->acl_check(array(
 				'string' => $this->path,
 				'relatives' => array(RELATIVE_NONE),
 				'operation' => EGW_ACL_ADD
@@ -551,11 +595,11 @@
 				###
 				$this->t->set_var('actions',lang('select'));
 
-				reset($this->bo->file_attributes);
+				reset($this->file_attributes);
 
 				if($this->numoffiles>0)
 				{
-					while(list($internal, $displayed) = each($this->bo->file_attributes))
+					while(list($internal, $displayed) = each($this->file_attributes))
 					{
 						if($this->prefs[$internal])
 						{
@@ -639,8 +683,8 @@
 					}
 
 					# Checkboxes
-					//if(!$this->rename_x && !$this->edit_comments_x && $this->path != $this->bo->fakebase && $this->path != '/')
-					if(!$this->rename_x && !$this->edit_comments_x && $this->path != '/')
+					//if(!$this->rename_x && !$this->edit_comments_x && $this->path != $this->fakebase && $this->path != '/')
+					if(!$this->rename_x && !$this->edit_comments_x  && $this->path != '/')
 					{
 						$cbox='<input type="checkbox" name="fileman['.$i.']" value="'.$files['name'].'">';
 						$this->t->set_var('actions',$cbox);
@@ -675,7 +719,7 @@
 						else
 						{
 
-							if($this->prefs['viewonserver'] && isset($this->bo->filesdir) && !$files['link_directory'])
+							if($this->prefs['viewonserver'] && isset($this->filesdir) && !$files['link_directory'])
 							{
 								#FIXME
 								$clickview = $this->filesdir.$pwd.'/'.$files['name'];
@@ -716,10 +760,10 @@
 						//	'relatives'	=> array(RELATIVE_NONE)
 						//;
 						//if($files['mime_type'] != 'Directory') $tmp_arr['checksubdirs'] = false;
-						//$size = $this->bo->vfs->get_size($tmp_arr);
+						//$size = $this->vfs->get_size($tmp_arr);
 						$size = $files['size'];
 
-						$col_data=$this->bo->borkb($size);
+						$col_data=$this->borkb($size);
 
 						$this->t->set_var('col_data',$col_data);
 						$this->t->parse('columns','column',True);
@@ -851,19 +895,19 @@
 			$vars['files_in_this_dir'] = $this->numoffiles;
 
 			$vars['lang_used_space'] = lang('Used space');
-			$vars['used_space'] = $this->bo->borkb($usedspace, NULL, 1);
+			$vars['used_space'] = $this->borkb($usedspace, NULL, 1);
 
-			if($this->path == $this->bo->homedir || $this->path == $this->bo->fakebase)
+			if($this->path == $this->homedir || $this->path == $this->fakebase)
 			{
 				$vars['lang_unused_space'] = lang('Unused space');
-				$vars['unused_space'] = $this->bo->borkb($this->bo->userinfo['hdspace'] - $usedspace, NULL, 1);
+				$vars['unused_space'] = $this->borkb($this->userinfo['hdspace'] - $usedspace, NULL, 1);
 
 				$tmp_arr=array(
 					'string'	=> $this->path,
 					'relatives'	=> array(RELATIVE_NONE)
 				);
 
-				$ls_array = $this->bo->vfs->ls($tmp_arr);
+				$ls_array = $this->vfs->ls($tmp_arr);
 
 				$vars['lang_total_files'] = lang('Total Files');
 				$vars['total_files'] = count($ls_array);
@@ -884,59 +928,59 @@
 			# $fakebase is a special directory.  In that directory, we list the user's
 			# home directory and the directories for the groups they're in
 			$this->numoffiles = 0;
-			if($this->path == $this->bo->fakebase)
+			if($this->path == $this->fakebase)
 			{
 				// FIXME this test can be removed
-				if(!$this->bo->vfs->file_exists(array('string' => $this->bo->homedir, 'relatives' => array(RELATIVE_NONE))))
+				if(!$this->vfs->file_exists(array('string' => $this->homedir, 'relatives' => array(RELATIVE_NONE))))
 				{
-					$this->bo->vfs->mkdir(array('string' => $this->bo->homedir, 'relatives' => array(RELATIVE_NONE)));
+					$this->vfs->mkdir(array('string' => $this->homedir, 'relatives' => array(RELATIVE_NONE)));
 				}
 				reset($this->readable_groups);
 				// create the directorys of the readableGroups if they do not exist
 				while(list($num, $group_array) = each($this->readable_groups))
 				{
 					# If the group doesn't have access to this app, we don't show it, and do not appkly any action here
-					if(!$this->groups_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
+					if(!$this->groups_applications[$group_array['account_name']][$this->appname]['enabled'])
 					{
 						continue;
 					}
 
-					if(!$this->bo->vfs->file_exists(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE))))
+					if(!$this->vfs->file_exists(array('string' => $this->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE))))
 					{
-						$this->bo->vfs->override_acl = 1;
-						$this->bo->vfs->mkdir(array(
-							'string' => $this->bo->fakebase.'/'.$group_array['account_name'],
+						$this->vfs->override_acl = 1;
+						$this->vfs->mkdir(array(
+							'string' => $this->fakebase.'/'.$group_array['account_name'],
 							'relatives' => array(RELATIVE_NONE)
 						));
 						// FIXME we just created a fresh group dir so we know there nothing in it so we have to remove all existing content
-						$this->bo->vfs->override_acl = 0;
-						$this->bo->vfs->set_attributes(array('string' => $this->bo->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'attributes' => array('owner_id' => $group_array['account_id'],'createdby_id' => $group_array['account_id'])));
+						$this->vfs->override_acl = 0;
+						$this->vfs->set_attributes(array('string' => $this->fakebase.'/'.$group_array['account_name'],'relatives'	=> array(RELATIVE_NONE),'attributes' => array('owner_id' => $group_array['account_id'],'createdby_id' => $group_array['account_id'])));
 					}
 				}
 			}
 
             // read the list of the existing directorys/files
-            $ls_array = $this->bo->vfs->ls(array(
+            $ls_array = $this->vfs->ls(array(
                 'string' => $this->path,
                 'relatives' => array(RELATIVE_NONE),
                 'checksubdirs' => false,
                 'nofiles'   => false,
                 'orderby'   => $this->sortby
             ));
-            $heimatverz=explode('/',$this->bo->homedir);
+            $heimatverz=explode('/',$this->homedir);
             // process the list: check if we are allowed to read it, get the real size, and count the files/dirs
             while(list($num, $file_array) = each($ls_array))
             {
-                if($this->path == $this->bo->fakebase)
+                if($this->path == $this->fakebase)
                 {
-					if ($file_array['name'] && (array_key_exists($file_array['name'],$this->readable_groups) || $this->bo->fakebase.'/'.$file_array['name']  == $this->bo->homedir || $file_array['name'] == $heimatverz[2]))
+					if ($file_array['name'] && (array_key_exists($file_array['name'],$this->readable_groups) || $this->fakebase.'/'.$file_array['name']  == $this->homedir || $file_array['name'] == $heimatverz[2]))
 					{
-						if(!$this->groups_applications[$file_array['name']][$this->bo->appname]['enabled'] && $this->bo->fakebase.'/'.$file_array['name']  != $this->bo->homedir && $file_array['name'] != $heimatverz[2])
+						if(!$this->groups_applications[$file_array['name']][$this->appname]['enabled'] && $this->fakebase.'/'.$file_array['name']  != $this->homedir && $file_array['name'] != $heimatverz[2])
 						{
 							continue;
 						}
 					}
-                    if ($file_array['name'] && !array_key_exists($file_array['name'],$this->readable_groups) && !($this->bo->fakebase.'/'.$file_array['name']  == $this->bo->homedir || $file_array['name'] == $heimatverz[2]))
+                    if ($file_array['name'] && !array_key_exists($file_array['name'],$this->readable_groups) && !($this->fakebase.'/'.$file_array['name']  == $this->homedir || $file_array['name'] == $heimatverz[2]))
                     {
                         continue;
                     }
@@ -950,7 +994,7 @@
                         'relatives' => array(RELATIVE_NONE)
                     );
                     if($file_array['mime_type'] != 'Directory') $tmp_arr['checksubdirs'] = false;
-                    $file_array['size']=$this->bo->vfs->get_size($tmp_arr);
+                    $file_array['size']=$this->vfs->get_size($tmp_arr);
                     // KL got the real size
                 }
                 if($this->prefs['owner'])
@@ -1030,6 +1074,7 @@
 
 		function toolbar($type)
 		{
+			//echo "<p> call toolbar </p>";
 			switch($type)
 			{
 				case 'location':
@@ -1043,16 +1088,16 @@
 					<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
 					// go up icon when we're not at the top, dont allow to go outside /home = fakebase
-					if($this->path != '/' && $this->path != $this->bo->fakebase)
+					if($this->path != '/' && $this->path != $this->fakebase)
 					{
 						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->lesspath);
 						$toolbar.=$this->buttonImage($link,'up',lang('go up'));
 					}
 
 					// go home icon when we're not home already
-					if($this->path != $this->bo->homedir)
+					if($this->path != $this->homedir)
 					{
-						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->bo->homedir);
+						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->homedir);
 						$toolbar.=$this->buttonImage($link,'home',lang('go home'));
 					}
 
@@ -1064,13 +1109,14 @@
 					//$toolbar.='<input id="fmInputLocation" type="text" size="20" disabled="disabled" name="location" value="'.$this->disppath.'"/>&nbsp;';
 					$current_option='<option>'.$this->disppath.'</option>';
 					// selectbox for change/move/and copy to
+					
 					$this->dirs_options=$this->all_other_directories_options();
 					$toolbar.='<select name="cdtodir" onChange="document.formfm.changedir.value=\'true\';document.formfm.submit()">'.$current_option.$this->dirs_options.'</select>
 					<input type="hidden" name="changedir" value="false"></td>
 					';
 					$toolbar.=$this->inputImage('goto','goto',lang('Quick jump to'));
 					// upload button
-					if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
+					if($this->path != '/' && $this->path != $this->fakebase && $this->can_add)
 					{
 
 						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
@@ -1090,7 +1136,7 @@
 					<tr>';
 					// selectbox for change/move/and copy to
 					// submit buttons for
-					if($this->path != '/' && $this->path != $this->bo->fakebase)
+					if($this->path != '/' && $this->path != $this->fakebase)
 					{
 						$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 						$toolbar.='
@@ -1120,7 +1166,7 @@
 					}
 					else
 					{
-						if ($this->path = $this->bo->fakebase)
+						if ($this->path = $this->fakebase)
 						{
 							$toolbar.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 							$toolbar.='
@@ -1136,12 +1182,12 @@
 					if(!$this->rename_x && !$this->edit_comments_x)
 					{
 						// copy and move buttons
-						if($this->path != '/' && $this->path != $this->bo->fakebase)
+						if($this->path != '/' && $this->path != $this->fakebase)
 						{
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
 
-							if(!($this->dirs_options)) $this->dirs_options=$this->all_other_directories_options();
+							if (!$this->dirs_options) $this->dirs_options=$this->all_other_directories_options();
 							$toolbar3.='<td><select name="todir">'.$this->dirs_options.'</select></td>';
 
 							$toolbar3.=$this->inputImage('copy_to','copy_to',lang('Copy to'));
@@ -1152,7 +1198,7 @@
 						}
 
 						// create dir and file button
-						if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
+						if($this->path != '/' && $this->path != $this->fakebase && $this->can_add)
 						{
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('phpgwapi','buttonseparator').'" height="27" width="8"></td>';
 							$toolbar3.='<td><img alt="spacer" src="'.$GLOBALS['egw']->common->image('filemanager','spacer').'" height="27" width="1"></td>';
@@ -1175,7 +1221,6 @@
 					break;
 				default:$x='';
 			}
-
 			if($toolbar)
 			{
 				return $toolbar;
@@ -1186,19 +1231,24 @@
 		# Handle File Uploads
 		function fileUpload()
 		{
-			if($this->path != '/' && $this->path != $this->bo->fakebase)
+
+			if($this->path != '/' && $this->path != $this->fakebase)
 			{
 				for($i = 0; $i != $this->show_upload_boxes; $i++)
 				{
-					if($badchar = $this->bo->bad_chars($_FILES['upload_file']['name'][$i], True, True))
+					if($badchar = $this->bad_chars($_FILES['upload_file']['name'][$i], True, True))
 					{
-						$this->messages[]= $GLOBALS['egw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
+						$this->messages[]= $GLOBALS['egw']->common->error_list(array($this->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
 
 						continue;
 					}
-
+					if ($_FILES['upload_file']['tmp_name'][$i]=='')
+					{
+						$this->messages[]= $GLOBALS['egw']->common->error_list(array($this->html_encode(lang('File %1 may be too big. Contact your Systemadministrator for further info', $_FILES['upload_file']['name']), 1)));
+						continue;
+					}
 					# Check to see if the file exists in the database, and get its info at the same time
-					$ls_array = $this->bo->vfs->ls(array(
+					$ls_array = $this->vfs->ls(array(
 						'string'=> $this->path . '/' . $_FILES['upload_file']['name'][$i],
 						'relatives'	=> array(RELATIVE_NONE),
 						'checksubdirs'	=> False,
@@ -1215,7 +1265,7 @@
 							continue;
 						}
 					}
-
+					
 					if($_FILES['upload_file']['size'][$i] > 0)
 					{
 						if($fileinfo['name'] && $fileinfo['deleteable'] != 'N')
@@ -1224,8 +1274,8 @@
 								'string'=> $_FILES['upload_file']['name'][$i],
 								'relatives'	=> array(RELATIVE_ALL),
 								'attributes'	=> array(
-									'owner_id' => $this->bo->userinfo['username'],
-									'modifiedby_id' => $this->bo->userinfo['username'],
+									'owner_id' => $this->userinfo['username'],
+									'modifiedby_id' => $this->userinfo['username'],
 									'modified' => $this->now,
 									'size' => $_FILES['upload_file']['size'][$i],
 									'mime_type' => $_FILES['upload_file']['type'][$i],
@@ -1233,26 +1283,26 @@
 									'comment' => stripslashes($_POST['upload_comment'][$i])
 								)
 							);
-							$this->bo->vfs->set_attributes($tmp_arr);
+							$this->vfs->set_attributes($tmp_arr);
 
 							$tmp_arr=array(
 								'from'	=> $_FILES['upload_file']['tmp_name'][$i],
 								'to'	=> $_FILES['upload_file']['name'][$i],
 								'relatives'	=> array(RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
 							);
-							$this->bo->vfs->cp($tmp_arr);
+							$this->vfs->cp($tmp_arr);
 
 							$this->messages[]=lang('Replaced %1', $this->disppath.'/'.$_FILES['upload_file']['name'][$i]);
 						}
 						else
 						{
-							$this->bo->vfs->cp(array(
+							$this->vfs->cp(array(
 								'from'=> $_FILES['upload_file']['tmp_name'][$i],
 								'to'=> $_FILES['upload_file']['name'][$i],
 								'relatives'	=> array(RELATIVE_NONE|VFS_REAL, RELATIVE_ALL)
 							));
 
-							$this->bo->vfs->set_attributes(array(
+							$this->vfs->set_attributes(array(
 								'string'=> $_FILES['upload_file']['name'][$i],
 								'relatives'	=> array(RELATIVE_ALL),
 								'attributes'=> array(
@@ -1266,12 +1316,12 @@
 					}
 					elseif($_FILES['upload_file']['name'][$i])
 					{
-						$this->bo->vfs->touch(array(
+						$this->vfs->touch(array(
 							'string'=> $_FILES['upload_file']['name'][$i],
 							'relatives'	=> array(RELATIVE_ALL)
 						));
 
-						$this->bo->vfs->set_attributes(array(
+						$this->vfs->set_attributes(array(
 							'string'=> $_FILES['upload_file']['name'][$i],
 							'relatives'	=> array(RELATIVE_ALL),
 							'attributes'=> array(
@@ -1294,13 +1344,13 @@
 		{
 			while(list($file) = each($this->comment_files))
 			{
-				if($badchar = $this->bo->bad_chars($this->comment_files[$file], False, True))
+				if($badchar = $this->bad_chars($this->comment_files[$file], False, True))
 				{
-					$this->messages[]=$GLOBALS['egw']->common->error_list(array($file . $this->bo->html_encode(': ' . lang('Comments cannot contain "%1"', $badchar), 1)));
+					$this->messages[]=$GLOBALS['egw']->common->error_list(array($file . $this->html_encode(': ' . lang('Comments cannot contain "%1"', $badchar), 1)));
 					continue;
 				}
 
-				$this->bo->vfs->set_attributes(array(
+				$this->vfs->set_attributes(array(
 					'string'	=> $file,
 					'relatives'	=> array(RELATIVE_ALL),
 					'attributes'	=> array(
@@ -1320,9 +1370,9 @@
 		{
 			while(list($from, $to) = each($this->renamefiles))
 			{
-				if($badchar = $this->bo->bad_chars($to, True, True))
+				if($badchar = $this->bad_chars($to, True, True))
 				{
-					$this->messages[]=$GLOBALS['egw']->common->error_list(array($this->bo->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
+					$this->messages[]=$GLOBALS['egw']->common->error_list(array($this->html_encode(lang('File names cannot contain "%1"', $badchar), 1)));
 					continue;
 				}
 
@@ -1330,7 +1380,7 @@
 				{
 					$this->messages[]=$GLOBALS['egw']->common->error_list(array(lang("File names cannot contain \\ or /")));
 				}
-				elseif(!$this->bo->vfs->mv(array(
+				elseif(!$this->vfs->mv(array(
 					'from'	=> $from,
 					'to'	=> $to
 				)))
@@ -1359,7 +1409,7 @@
 
 				while(list($num, $file) = each($this->fileman))
 				{
-					if($this->bo->vfs->mv(array(
+					if($this->vfs->mv(array(
 						'from'	=> $file,
 						'to'	=> $this->todir . '/' . $file,
 						'relatives'	=> array(RELATIVE_ALL, RELATIVE_NONE)
@@ -1396,7 +1446,8 @@
 			{
 				while(list($num, $file) = each($this->fileman))
 				{
-					if($this->bo->vfs->cp(array(
+				
+					if($this->vfs->cp(array(
 						'from'	=> $file,
 						'to'	=> $this->todir . '/' . $file,
 						'relatives'	=> array(RELATIVE_ALL, RELATIVE_NONE)
@@ -1424,9 +1475,9 @@
 		{
 			if($this->newdir_x && $this->newfile_or_dir)
 			{
-				if($this->bo->badchar = $this->bo->bad_chars($this->newfile_or_dir, True, True))
+				if($this->badchar = $this->bad_chars($this->newfile_or_dir, True, True))
 				{
-					$this->messages[]= $GLOBALS['egw']->common->error_list(array($this->bo->html_encode(lang('Directory names cannot contain "%1"', $badchar), 1)));
+					$this->messages[]= $GLOBALS['egw']->common->error_list(array($this->html_encode(lang('Directory names cannot contain "%1"', $badchar), 1)));
 				}
 
 				/* TODO is this right or should it be a single $ ? */
@@ -1435,7 +1486,7 @@
 					$this->messages[]= $GLOBALS['egw']->common->error_list(array(lang('Cannot create directory because it begins or ends in a space')));
 				}
 
-				$ls_array = $this->bo->vfs->ls(array(
+				$ls_array = $this->vfs->ls(array(
 					'string'	=> $this->path . '/' . $this->newfile_or_dir,
 					'relatives'	=> array(RELATIVE_NONE),
 					'checksubdirs'	=> False,
@@ -1460,7 +1511,7 @@
 				}
 				else
 				{
-					if($this->bo->vfs->mkdir(array('string' => $this->newfile_or_dir)))
+					if($this->vfs->mkdir(array('string' => $this->newfile_or_dir)))
 					{
 						$this->messages[]=lang('Created directory %1', $this->disppath.'/'.$this->newfile_or_dir);
 					}
@@ -1481,7 +1532,7 @@
 			{
 				foreach($this->fileman as $filename)
 				{
-					if($this->bo->vfs->delete(array('string' => $filename)))
+					if($this->vfs->delete(array('string' => $filename)))
 					{
 						$this->messages[]= lang('Deleted %1', $this->disppath.'/'.$filename).'<br/>';
 					}
@@ -1511,10 +1562,10 @@
 			lesspath: {$this->lesspath}
 			<p>
 			<b>eGroupware debug:</b><br>
-			real getabsolutepath: " . $this->bo->vfs->getabsolutepath(array('target' => False, 'mask' => False, 'fake' => False)) . "<br>
-			fake getabsolutepath: " . $this->bo->vfs->getabsolutepath(array('target' => False)) . "<br>
+			real getabsolutepath: " . $this->vfs->getabsolutepath(array('target' => False, 'mask' => False, 'fake' => False)) . "<br>
+			fake getabsolutepath: " . $this->vfs->getabsolutepath(array('target' => False)) . "<br>
 			appsession: " . $GLOBALS['egw']->session->appsession('vfs','') . "<br>
-			pwd: " . $this->bo->vfs->pwd() . "<br>";
+			pwd: " . $this->vfs->pwd() . "<br>";
 
 			echo '<p></p>';
 			var_dump($this);
@@ -1537,7 +1588,7 @@
 			}
 
 			# Show file upload boxes. Note the last argument to html().  Repeats $this->show_upload_boxes times
-			if($this->path != '/' && $this->path != $this->bo->fakebase && $this->can_add)
+			if($this->path != '/' && $this->path != $this->fakebase && $this->can_add)
 			{
 				$vars['form_action']=$GLOBALS['egw']->link('/index.php','menuaction=filemanager.uifilemanager.index');
 				$vars['path']=$this->path;
@@ -1577,7 +1628,7 @@
 			$this->createfile_var=$this->newfile_or_dir;
 			if($this->createfile_var)
 			{
-				if($badchar = $this->bo->bad_chars($this->createfile_var, True, True))
+				if($badchar = $this->bad_chars($this->createfile_var, True, True))
 				{
 					$this->messages[] = $GLOBALS['egw']->common->error_list(array(
 						lang('File names cannot contain "%1"',$badchar),
@@ -1587,7 +1638,7 @@
 					$this->fileListing();
 				}
 
-				if($this->bo->vfs->file_exists(array(
+				if($this->vfs->file_exists(array(
 					'string'=> $this->createfile_var,
 					'relatives'	=> array(RELATIVE_ALL)
 				)))
@@ -1596,7 +1647,7 @@
 					$this->fileListing();
 				}
 
-				if($this->bo->vfs->touch(array(
+				if($this->vfs->touch(array(
 					'string'	=> $this->createfile_var,
 					'relatives'	=> array(RELATIVE_ALL)
 				)))
@@ -1641,7 +1692,7 @@
 			{
 				$content = $this->edit_file_content;
 				//die( $content);
-				if($this->bo->vfs->write(array(
+				if($this->vfs->write(array(
 					'string'	=> $this->edit_file,
 					'relatives'	=> array(RELATIVE_ALL),
 					'content'	=> $content
@@ -1672,7 +1723,7 @@
 					continue;
 				}
 
-				if($this->fileman[$j] && $this->bo->vfs->file_exists(array(
+				if($this->fileman[$j] && $this->vfs->file_exists(array(
 					'string'	=> $this->fileman[$j],
 					'relatives'	=> array(RELATIVE_ALL)
 				)))
@@ -1683,7 +1734,7 @@
 					}
 					else
 					{
-						$content = $this->bo->vfs->read(array('string' => $this->fileman[$j]));
+						$content = $this->vfs->read(array('string' => $this->fileman[$j]));
 					}
 
 					$vars['form_action'] = $GLOBALS['egw']->link('/index.php','menuaction=filemanager.uifilemanager.index','path='.$this->path);
@@ -1702,10 +1753,10 @@
 
 					$vars['file_content'] = $content;
 
-					$vars['buttonPreview'] = $this->inputImage('edit_preview','edit_preview',lang('Preview %1', $this->bo->html_encode($this->fileman[$j], 1)));
-					$vars['buttonSave'] = $this->inputImage('edit_save','save',lang('Save %1', $this->bo->html_encode($this->fileman[$j], 1)));
-					$vars['buttonDone'] = $this->inputImage('edit_save_done','ok',lang('Save %1, and go back to file listing ', $this->bo->html_encode($this->fileman[$j], 1)));
-					$vars['buttonCancel'] = $this->inputImage('edit_cancel','cancel',lang('Cancel editing %1 without saving', $this->bo->html_encode($this->fileman[$j], 1)));
+					$vars['buttonPreview'] = $this->inputImage('edit_preview','edit_preview',lang('Preview %1', $this->html_encode($this->fileman[$j], 1)));
+					$vars['buttonSave'] = $this->inputImage('edit_save','save',lang('Save %1', $this->html_encode($this->fileman[$j], 1)));
+					$vars['buttonDone'] = $this->inputImage('edit_save_done','ok',lang('Save %1, and go back to file listing ', $this->html_encode($this->fileman[$j], 1)));
+					$vars['buttonCancel'] = $this->inputImage('edit_cancel','cancel',lang('Cancel editing %1 without saving', $this->html_encode($this->fileman[$j], 1)));
 					$this->t->set_var($vars);
 					$this->t->parse('rows','row');
 					$this->t->pparse('out','row');
@@ -1718,7 +1769,7 @@
 		{
 			if($this->file) // FIXME this-file is never defined
 			{
-				$journal_array = $this->bo->vfs->get_journal(array(
+				$journal_array = $this->vfs->get_journal(array(
 					'string'	=> $this->file,//FIXME
 					'relatives'	=> array(RELATIVE_ALL)
 				));
@@ -1745,16 +1796,16 @@
 					{
 						$this->html_table_row_begin();
 						$this->html_table_col_begin();
-						$this->bo->html_text($journal_entry['created'] . '&nbsp;&nbsp;&nbsp;');
+						$this->html_text($journal_entry['created'] . '&nbsp;&nbsp;&nbsp;');
 						$this->html_table_col_end();
 						$this->html_table_col_begin();
-						$this->bo->html_text($journal_entry['version'] . '&nbsp;&nbsp;&nbsp;' );
+						$this->html_text($journal_entry['version'] . '&nbsp;&nbsp;&nbsp;' );
 						$this->html_table_col_end();
 						$this->html_table_col_begin();
-						$this->bo->html_text($GLOBALS['egw']->accounts->id2name($journal_entry['owner_id']) . '&nbsp;&nbsp;&nbsp;');
+						$this->html_text($GLOBALS['egw']->accounts->id2name($journal_entry['owner_id']) . '&nbsp;&nbsp;&nbsp;');
 						$this->html_table_col_end();
 						$this->html_table_col_begin();
-						$this->bo->html_text($journal_entry['comment']);
+						$this->html_text($journal_entry['comment']);
 						$this->html_table_col_end();
 					}
 
@@ -1774,26 +1825,26 @@
 			if($this->file) //FIXME
 			{
 				$mime_type='unknown';
-				$ls_array = $this->bo->vfs->ls(array(
-					'string'	=> $this->path.'/'.$this->file,//FIXME
-					'relatives'	=> array(RELATIVE_ALL),
-					'checksubdirs'	=> False,
-					'nofiles'	=> True
+				$ls_array = $this->vfs->ls(array(
+						'string'        => $this->path.'/'.$this->file,//FIXME
+						'relatives'     => array(RELATIVE_ALL),
+						'checksubdirs'  => False,
+						'nofiles'       => True
 				));
 
 				if($ls_array[0]['mime_type'])
 				{
-					$mime_type = $ls_array[0]['mime_type'];
+						$mime_type = $ls_array[0]['mime_type'];
 				}
-                else
-                {
+                		else
+                		{
 					$parts = explode('.',$this->file);
 					$_ext = array_pop($parts);
 					$mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
-                }
+                		}
 				// check if the prefs are set for viewing unknown extensions as text/plain and
 				// check if the mime_type is unknown, empty or not found (application/octet)
-				// or check if the mimetype contains text, 
+				// or check if the mimetype contains text,
 				// THEN set the mime_type text/plain
 				if(($this->prefs['viewtextplain'] && ($mime_type=='' or $mime_type=='unknown' or $mime_type=='application/octet-stream')) or strpos($mime_type, 'text/')!==false)
 				{
@@ -1806,18 +1857,18 @@
 				// we want to view pdfs and text files within the browser
 				if(in_array($mime_type,$viewable) && !$_GET['download'])
 				{
-					// if you add attachment; to the Content-disposition between disposition and filename
-					// you get a download dialog even for viewable files 
-					header('Content-type: ' . $mime_type);
-					header('Content-disposition: filename="' . $this->file . '"');//FIXME
-					Header("Pragma: public");
+						// if you add attachment; to the Content-disposition between disposition and filename
+						// you get a download dialog even for viewable files
+						header('Content-type: ' . $mime_type);
+						header('Content-disposition: filename="' . $this->file . '"');//FIXME
+						Header("Pragma: public");
 				}
 				else
 				{
 
-					$GLOBALS['egw']->browser->content_header($this->file,$mime_type);//FIXME
+						$GLOBALS['egw']->browser->content_header($this->file,$mime_type);//FIXME
 				}
-				echo $this->bo->vfs->read(array(
+				echo $this->vfs->read(array(
 					'string'	=> $this->path.'/'.$this->file,//FIXME
 					'relatives'	=> array(RELATIVE_NONE)
 				));
@@ -1836,98 +1887,96 @@
 
 				$download_browser =& CreateObject('phpgwapi.browser');
 				$download_browser->content_header($this->fileman[$i]);
-				echo $this->bo->vfs->read(array('string' => $this->fileman[$i]));
+				echo $this->vfs->read(array('string' => $this->fileman[$i]));
 				$GLOBALS['egw']->common->egw_exit();
 			}
 		}
 
 		//give back an array with all directories except current and dirs that are not accessable
-                function all_other_directories_options()
-                {
-                        # First we get the directories in their home directory
-                        $dirs = array();
-                        $dirs[] = array('directory' => $this->bo->fakebase, 'name' => $this->bo->userinfo['account_lid']);
+		function all_other_directories_options()
+		{
+			# First we get the directories in their home directory
+			$dirs = array();
+			$dirs[] = array('directory' => $this->fakebase, 'name' => $this->userinfo['account_lid']);
 
-                        $tmp_arr=array(
-                                'string'        => $this->bo->homedir,
-                                'relatives'     => array(RELATIVE_NONE),
-                                'checksubdirs'  => True,
-                                'mime_type'     => 'Directory'
-                        );
+			$tmp_arr=array(
+				'string'	=> $this->homedir,
+				'relatives'	=> array(RELATIVE_NONE),
+				'checksubdirs'	=> True,
+				'mime_type'	=> 'Directory'
+			);
 
-                        $ls_array = $this->bo->vfs->ls($tmp_arr);
+			$ls_array = $this->vfs->ls($tmp_arr);
 
-                        while(list($num, $dir) = each($ls_array))
-                        {
-                                $dirs[] = $dir;
-                        }
+			while(list($num, $dir) = each($ls_array))
+			{
+				$dirs[] = $dir;
+			}
 
 
-                        # Then we get the directories in their readable groups' home directories
-                        reset($this->readable_groups);
-                        while(list($num, $group_array) = each($this->readable_groups))
-                        {
-                                # Don't list directories for groups that don't have access
-                                if(!$this->groups_applications[$group_array['account_name']][$this->bo->appname]['enabled'])
-                                {
-                                        continue;
-                                }
+			# Then we get the directories in their readable groups' home directories
+			reset($this->readable_groups);
+			while(list($num, $group_array) = each($this->readable_groups))
+			{
+				# Don't list directories for groups that don't have access
+				if(!$this->groups_applications[$group_array['account_name']][$this->appname]['enabled'])
+				{
+					continue;
+				}
 
-                                $dirs[] = array('directory' => $this->bo->fakebase, 'name' => $group_array['account_name']);
+				$dirs[] = array('directory' => $this->fakebase, 'name' => $group_array['account_name']);
 
-                                $tmp_arr=array(
-                                        'string'        => $this->bo->fakebase.'/'.$group_array['account_name'],
-                                        'relatives'     => array(RELATIVE_NONE),
-                                        'checksubdirs'  => True,
-                                        'mime_type'     => 'Directory'
-                                );
+				$tmp_arr=array(
+					'string'	=> $this->fakebase.'/'.$group_array['account_name'],
+					'relatives'	=> array(RELATIVE_NONE),
+					'checksubdirs'	=> True,
+					'mime_type'	=> 'Directory'
+				);
 
-                                $ls_array = $this->bo->vfs->ls($tmp_arr);
-                                while(list($num, $dir) = each($ls_array))
-                                {
-                                        $dirs[] = $dir;
-                                }
-                        }
+				$ls_array = $this->vfs->ls($tmp_arr);
+				while(list($num, $dir) = each($ls_array))
+				{
+					$dirs[] = $dir;
+				}
+			}
 
-                        reset($dirs);
+			reset($dirs);
 			// key for the sorted array
 			$i=0;
+			while(list($num, $dir) = each($dirs))
+			{
+				if(!$dir['directory'])
+				{
+					continue;
+				}
 
-                        while(list($num, $dir) = each($dirs))
-                        {
-                                if(!$dir['directory'])
-                                {
-                                        continue;
-                                }
+				# So we don't display //
+				if($dir['directory'] != '/')
+				{
+					$dir['directory'] .= '/';
+				}
 
-                                # So we don't display //
-                                if($dir['directory'] != '/')
-                                {
-                                        $dir['directory'] .= '/';
-                                }
-
-                                # No point in displaying the current directory, or a directory that doesn't exist
-                                if((($dir['directory'] . $dir['name']) != $this->path) && $this->bo->vfs->file_exists(array('string' => $dir['directory'] . $dir['name'],'relatives' => array(RELATIVE_NONE))))
-                                {
-                                        //FIXME replace the html_form_option function
-                                        //$options .= $this->html_form_option($dir['directory'] . $dir['name'], $dir['directory'] . $dir['name']);
-					// set the content of the sorted array
+				# No point in displaying the current directory, or a directory that doesn't exist
+				if((($dir['directory'] . $dir['name']) != $this->path) && $this->vfs->file_exists(array('string' => $dir['directory'] . $dir['name'],'relatives' => array(RELATIVE_NONE))))
+				{
+					//set the content of the sorted array
 					$i++;
 					$dirs_sorted[$i]=$dir['directory'] . $dir['name'];
-                                }
-                        }
+				}
+			}
 			// sort the directory optionlist
 			natcasesort($dirs_sorted);
-
+			//_debug_array($dirs_sorted);
 			// set the optionlist
 			foreach ($dirs_sorted as $key => $row) {
 					//FIXME replace the html_form_option function
 					//$options .= $this->html_form_option($dir['directory'] . $dir['name'], $dir['directory'] . $dir['name']);
 					$options .= $this->html_form_option($row, $row);
 			}
-
-                        return $options;
-                }
+			// save some information with the session for retrieving it later
+			if ($dirs_sorted) $this->save_sessiondata($dirs_sorted,'dirs_options_array');
+			return $options;
+		}
 
 		/* seek icon for mimetype else return an unknown icon */
 		function mime_icon($mime_type, $size=16)
@@ -1980,7 +2029,7 @@
 			{
 				if($type == 'checkbox')
 				{
-					$value = $this->bo->string_encode($value, 1);
+					$value = $this->string_encode($value, 1);
 				}
 				$text .= 'type="'.$type.'" ';
 			}
@@ -2024,8 +2073,8 @@
 
 		function encode_href($href = NULL, $args = NULL , $extra_args)
 		{
-			$href = $this->bo->string_encode($href, 1);
-			$all_args = $args.'&'.$this->bo->string_encode($extra_args, 1);
+			$href = $this->string_encode($href, 1);
+			$all_args = $args.'&'.$this->string_encode($extra_args, 1);
 
 			$address = $GLOBALS['egw']->link($href, $all_args);
 
@@ -2037,12 +2086,12 @@
 			//	unset($encode);
 			if($encode)
 			{
-				$href = $this->bo->string_encode($href, 1);
-				$all_args = $args.'&'.$this->bo->string_encode($extra_args, 1);
+				$href = $this->string_encode($href, 1);
+				$all_args = $args.'&'.$this->string_encode($extra_args, 1);
 			}
 			else
 			{
-				//				$href = $this->bo->string_encode($href, 1);
+				//				$href = $this->string_encode($href, 1);
 				$all_args = $args.'&'.$extra_args;
 			}
 			###
@@ -2088,7 +2137,7 @@
 				$rstring = '<a href="'.$address.'" '.$target.'>'.$text.'</a>';
 			}
 
-			return($this->bo->eor($rstring, $return));
+			return($this->eor($rstring, $return));
 		}
 
 		function html_table_begin($width = NULL, $border = NULL, $cellspacing = NULL, $cellpadding = NULL, $rules = NULL, $string = '', $return = 0)
@@ -2115,13 +2164,13 @@
 			}
 
 			$rstring = "<table $width $border $cellspacing $cellpadding $rules $string>";
-			return($this->bo->eor($rstring, $return));
+			return($this->eor($rstring, $return));
 		}
 
 		function html_table_end($return = 0)
 		{
 			$rstring = "</table>";
-			return($this->bo->eor($rstring, $return));
+			return($this->eor($rstring, $return));
 		}
 
 		function html_table_row_begin($align = NULL, $halign = NULL, $valign = NULL, $bgcolor = NULL, $string = '', $return = 0)
@@ -2143,13 +2192,13 @@
 				$bgcolor = "bgcolor=$bgcolor";
 			}
 			$rstring = "<tr $align $halign $valign $bgcolor $string>";
-			return($this->bo->eor($rstring, $return));
+			return($this->eor($rstring, $return));
 		}
 
 		function html_table_row_end($return = 0)
 		{
 			$rstring = "</tr>";
-			return($this->bo->eor($rstring, $return));
+			return($this->eor($rstring, $return));
 		}
 
 		function html_table_col_begin($align = NULL, $halign = NULL, $valign = NULL, $rowspan = NULL, $colspan = NULL, $string = '', $return = 0)
@@ -2176,12 +2225,391 @@
 			}
 
 			$rstring = "<td $align $halign $valign $rowspan $colspan $string>";
-			return($this->bo->eor($rstring, $return));
+			return($this->eor($rstring, $return));
 		}
 
 		function html_table_col_end($return = 0)
 		{
 			$rstring = "</td>";
-			return($this->bo->eor($rstring, $return));
+			return($this->eor($rstring, $return));
 		}
+		
+		function search_tpl($content=null)
+		{
+			//echo "<p>search_tpl</p>";
+			//_debug_array($content);
+			$debug=0;
+			$content['message']='';
+			if ($_GET['action']=='search') 
+			{
+				$content['searchcreated']=1;
+				$content['datecreatedfrom']=date("U")-24*60*60;
+				$content['start_search']=lang('start search');
+			}
+			
+			if ($content['start_search'] && strlen($content['start_search'])>0)
+			{
+				$searchactivated=1;
+				$read_onlys['searchstring']=true;
+			}
+			$content['nm']=$this->read_sessiondata('nm');
+			$this->search_options=$content['nm']['search_options'];
+			$content['nm']['search']=$content['searchstring'];
+			$debug=$content['debug'];
+
+			// initialisieren des nextmatch widgets, durch auslesen der sessiondaten
+			// wenn leer, bzw. kein array dann von hand initialisieren
+			$content['nm']=$this->read_sessiondata('nm');
+			$content['message'].= "<p>content may be set</p>";
+			if (!is_array($content['nm']))
+			{
+				$content['message'].= "<p>content is not set</p>";
+				$content['debug']=$debug;
+				$content['nm'] = array(		// I = value set by the app, 0 = value on return / output
+					'get_rows'       =>	'filemanager.uifilemanager.get_rows', // I  method/callback to request the data for the rows eg. 'notes.bo.get_rows'
+					'filter_label'   =>	'', // I  label for filter    (optional)
+					'filter_help'    =>	'', // I  help-msg for filter (optional)
+					'no_filter'      => True, // I  disable the 1. filter
+					'no_filter2'     => True, // I  disable the 2. filter (params are the same as for filter)
+					'no_cat'         => True, // I  disable the cat-selectbox
+					//'template'       =>	, // I  template to use for the rows, if not set via options
+					//'header_left'    =>	,// I  template to show left of the range-value, left-aligned (optional)
+					//'header_right'   =>	,// I  template to show right of the range-value, right-aligned (optional)
+					//'bottom_too'     => True, // I  show the nextmatch-line (arrows, filters, search, ...) again after the rows
+					'never_hide'     => True, // I  never hide the nextmatch-line if less then maxmatch entrie
+					'lettersearch'   => True,// I  show a lettersearch
+					'searchletter'   =>	false,// I0 active letter of the lettersearch or false for [all]
+					'start'          =>	0,// IO position in list
+					//'num_rows'       =>	// IO number of rows to show, defaults to maxmatches from the general prefs
+					//'cat_id'         =>	// IO category, if not 'no_cat' => True
+					//'search'         =>	// IO search pattern
+					'order'          =>	'vfs_created',// IO name of the column to sort after (optional for the sortheaders)
+					'sort'           =>	'DESC',// IO direction of the sort: 'ASC' or 'DESC'
+					'col_filter'     =>	array(),// IO array of column-name value pairs (optional for the filterheaders)
+					//'filter'         =>	// IO filter, if not 'no_filter' => True
+					//'filter_no_lang' => True// I  set no_lang for filter (=dont translate the options)
+					//'filter_onchange'=> 'this.form.submit();'// I onChange action for filter, default: this.form.submit();
+					//'filter2'        =>	// IO filter2, if not 'no_filter2' => True
+					//'filter2_no_lang'=> True// I  set no_lang for filter2 (=dont translate the options)
+					//'filter2_onchange'=> 'this.form.submit();'// I onChange action for filter, default: this.form.submit();
+					//'rows'           =>	//  O content set by callback
+					//'total'          =>	//  O the total number of entries
+					//'sel_options'    =>	//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options
+					'no_columnselection'=>false,
+				);
+			
+			} else {
+				// lesen wenn gesetzt
+				$content['message'].= "<p>content is set</p>";
+				//_debug_print($content);
+			}
+			//echo "<br>";
+			// loeschen wenn gesetzt
+			if (($content['clear_search']&&strlen($content['clear_search'])>0) or $_GET['actioncd']=='clear')
+			{
+				$content['debug']=0;
+				$content['nm']['search_options']=array();
+				unset($content['nm']['search']);
+				$searchactivated=0;
+				$content['checkall']=0;
+				$content['checkonlyfiles']=0;
+				$content['checkonlydirs']=0;
+				$content['searchstring']='';
+				$content['searchcreated']=0;
+				$content['datecreatedto']='';
+				$content['datecreatedfrom']='';
+				$content['searchmodified']=0;
+				$content['datemodifiedto']='';
+				$content['datemodifiedfrom']='';
+				$read_onlys=array();
+				$this->search_options=array();
+			}
+
+	        $sel_options = array(
+	                'vfs_mime_type' => array('directory'=>'directory', ''=>'')
+	        );
+
+			$this->tmpl->read('filemanager.search');
+			// the call of this function switches from enabled to disabled for various fields of the search dialog
+			//enable_disable_SearchFields($searchactivated);
+			//echo "<p>enable_disable_SearchFields</p>";
+			//echo "<p>".$content['datecreatedfrom']."</p>";
+			$switchflag=$searchactivated;
+			$this->tmpl->set_cell_attribute('checkall','disabled',$switchflag);
+			if ($content['checkall']) $this->tmpl->set_cell_attribute('alllabel','label',lang($this->tmpl->get_cell_attribute('alllabel','label')).'(x)');
+			$this->tmpl->set_cell_attribute('checkonlyfiles','disabled',$switchflag);
+			if ($content['checkonlyfiles']) $this->tmpl->set_cell_attribute('filelabel','label',lang($this->tmpl->get_cell_attribute('filelabel','label')).'(x)');
+			$this->tmpl->set_cell_attribute('checkonlydirs','disabled',$switchflag);
+			if ($content['checkonlydirs']) $this->tmpl->set_cell_attribute('dirlabel','label',lang($this->tmpl->get_cell_attribute('dirlabel','label')).'(x)');
+			$this->tmpl->set_cell_attribute('searchstring','disabled',$switchflag);
+			//search created date
+			if ($content['searchcreated'] or $content['datecreatedfrom']!='' or $content['datecreatedto']!='') 
+			{
+				$content['searchcreated']=1;
+				$this->tmpl->set_cell_attribute('createdlabel','label',lang($this->tmpl->get_cell_attribute('createdlabel','label')).'(x)');
+				$read_onlys['datecreatedto']=$switchflag;
+				$read_onlys['datecreatedfrom']=$switchflag;
+				if (($content['datecreatedfrom']=='' && $content['datecreatedto']) or ($content['datecreatedfrom'] && $content['datecreatedto']=='') ) $content['searchcreatedtext']=lang('Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date');
+				if (($content['datecreatedfrom']!='' && $content['datecreatedto']!='' && $content['datecreatedto']<$content['datecreatedfrom']) ) $content['searchcreatedtext']=lang('Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates');
+			}
+			else
+			{
+				$content['searchcreatedtext']='';
+			}
+			$this->tmpl->set_cell_attribute('searchcreated','disabled',$switchflag);
+			//search modified date
+			if ($content['searchmodified'] or $content['datemodifiedfrom']!='' or $content['datemodifiedto']!='') 
+			{
+				$content['searchmodified']=1;
+				$this->tmpl->set_cell_attribute('modifiedlabel','label',lang($this->tmpl->get_cell_attribute('modifiedlabel','label')).'(x)');
+				$read_onlys['datemodifiedto']=$switchflag;
+				$read_onlys['datemodifiedfrom']=$switchflag;
+				if (($content['datemodifiedfrom']=='' && $content['datemodifiedto']) or ($content['datemodifiedfrom'] && $content['datemodifiedto']=='') ) $content['searchmodifiedtext']=lang('Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date');
+				if (($content['datemodifiedfrom']!='' && $content['datemodifiedto']!='' && $content['datemodifiedto']<$content['datemodifiedfrom']) ) $content['searchmodifiedtext']=lang('Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates');
+			}
+			else
+			{
+				$content['searchmodifiedtext']='';
+			}
+			$this->tmpl->set_cell_attribute('searchmodified','disabled',$switchflag);
+			$this->tmpl->set_cell_attribute('debuginfos','disabled',!$debug);
+			
+			//_debug_array($content);
+			//echo "<p>#$debug,$searchactivated#</p>";
+			$this->search_options['checkall']=$content['checkall'];
+			$this->search_options['checkonlyfiles']=$content['checkonlyfiles'];
+			$this->search_options['checkonlydirs']=$content['checkonlydirs'];
+			$this->search_options['searchstring']=$content['searchstring'];
+			$this->search_options['searchcreated']=$content['searchcreated'];
+			$this->search_options['datecreatedto']=$content['datecreatedto'];
+			$this->search_options['datecreatedfrom']=$content['datecreatedfrom'];
+			$this->search_options['searchmodified']=$content['searchmodified'];
+			$this->search_options['datemodifiedto']=$content['datemodifiedto'];
+			$this->search_options['datemodifiedfrom']=$content['datemodifiedfrom'];
+			
+
+			$content['nm']['search_options']=$this->search_options;
+			
+			$content['nm']['search']=$content['searchstring'];
+			$content['nm']['start_search']=$content['start_search'];
+
+			$this->save_sessiondata($content['nm'],'nm');
+			// call and execute thge template
+			$content['message'].= "<p>execute the template</p>";
+			echo $this->tmpl->exec('filemanager.uifilemanager.search_tpl',$content,$sel_options,$read_onlys,array('vfs_file_id'=>$this->data['vfs_file_id']));
+			// the debug info will be displayed at the very end of the page
+			//_debug_array($content);
+				
+		}
+		/**
+		* the call of this function switches from enabled to disabled for various fields of the search dialog
+		*/
+		function enable_disable_SearchFields($switchflag)
+		{
+			//does not work at all. The calling of $this->tmpl returns nothing
+			return;
+			echo "<p>enable_disable_SearchFields</p>";
+			$this->tmpl->set_cell_attribute('checkall','disabled',$switchflag);
+			if ($content['checkall']) $this->tmpl->set_cell_attribute('alllabel','label',lang($this->tmpl->get_cell_attribute('alllabel','label')).'(x)');
+			$this->tmpl->set_cell_attribute('checkonlyfiles','disabled',$switchflag);
+			if ($content['checkonlyfiles']) $this->tmpl->set_cell_attribute('filelabel','label',lang($this->tmpl->get_cell_attribute('filelabel','label')).'(x)');
+			$this->tmpl->set_cell_attribute('checkonlydirs','disabled',$switchflag);
+			if ($content['checkonlydirs']) $this->tmpl->set_cell_attribute('dirlabel','label',lang($this->tmpl->get_cell_attribute('dirlabel','label')).'(x)');
+			$this->tmpl->set_cell_attribute('searchstring','disabled',$switchflag);		
+			//return $template;
+			return true;
+		}
+		/**
+		 * Saves state of the filemanager list in the session
+		 *
+		 * @param array $values
+		 */
+		function save_sessiondata($values,$key='')
+		{
+			if (strlen($key)>0)
+			{
+				$internalbuffer=$this->read_sessiondata();
+				$internalbuffer[$key]=$values;
+				$this->save_sessiondata($internalbuffer);
+			}
+			else
+			{
+				//echo "<p>$for: uifilemanager::save_sessiondata(".print_r($values,True).") called_by='$this->called_by', for='$for'<br />".function_backtrace()."</p>\n";
+				$GLOBALS['egw']->session->appsession(@$this->called_by.'session_data','filemanager',$values);
+			}
+		}
+
+		/**
+		 * reads list-state from the session
+		 *
+		 * @return array
+		 */
+		function read_sessiondata($key='')
+		{
+			$values = $GLOBALS['egw']->session->appsession(@$this->called_by.'session_data','filemanager');
+			if (strlen($key)>0)
+			{
+				return $values[$key];
+			}
+			else
+			{
+				return $values;
+			}
+		}
+		/**
+		 * query rows for the nextmatch widget
+		 *
+		 * @param array $query with keys 'start', 'search', 'order', 'sort', 'col_filter'
+		 *	For other keys like 'filter', 'cat_id' you have to reimplement this method in a derived class.
+		 * @param array &$rows returned rows/competitions
+		 * @param array &$readonlys eg. to disable buttons based on acl, not use here, maybe in a derived class
+		 * @param string $join='' sql to do a join, added as is after the table-name, eg. ", table2 WHERE x=y" or 
+		 *	"LEFT JOIN table2 ON (x=y)", Note: there's no quoting done on $join!
+		 * @param boolean $need_full_no_count=false If true an unlimited query is run to determine the total number of rows, default false
+		 * @return int total number of rows
+		 * optional not used here: $join='',$need_full_no_count=false
+		 */
+		function get_rows(&$query,&$rows,&$readonlys)
+		{
+			//echo "<p>retrieve rows</p>";
+			$startposition=$query['start'];
+			//$this->save_sessiondata($query);
+			$sessiondata = $this->read_sessiondata();
+			//_debug_array($sessiondata['dirs_options_array']);
+			//_debug_array($sessiondata['readable_groups']);
+			//_debug_array($sessiondata['groups_applications']);
+			if (!($this->search_options))
+			{
+				$sessiondata['start']=$startposition;
+				$this->search_options=$sessiondata['nm']['search_options'];
+			}
+			//_debug_array($this->search_options);
+			$additionalwhereclause=", (select vfs_file_id as fileid, concat(concat(vfs_directory,'/'),vfs_name) as fulldir from egw_vfs WHERE vfs_mime_type <> 'journal' and vfs_mime_type <> 'journal-deleted' and vfs_name is not null and vfs_name <>'' and vfs_name<>'home' and vfs_app='filemanager') vfs2 WHERE vfs2.fileid=egw_vfs.vfs_file_id";
+			//search options
+			if ($this->search_options['checkonlyfiles'] && !$this->search_options['checkonlydirs']) 
+			{
+				$additionalwhereclause.=" and vfs_mime_type<>'directory' ";
+			}
+			elseif ($this->search_options['checkonlydirs'] && !$this->search_options['checkonlyfiles']) 
+			{
+				$additionalwhereclause.=" and vfs_mime_type='directory' ";
+			}
+			elseif ($this->search_options['checkonlyfiles'] && $this->search_options['checkonlydirs'])
+			{
+				
+			}
+			// timespecific search options
+			if ($this->search_options['searchcreated'] && $this->search_options['datecreatedfrom'])
+			{
+				$additionalwhereclause.=" and vfs_created >=FROM_UNIXTIME(".$this->search_options['datecreatedfrom'].")";
+			}
+			if ($this->search_options['searchcreated'] && $this->search_options['datecreatedto'])
+			{
+				$additionalwhereclause.=" and vfs_created <=FROM_UNIXTIME(".$this->search_options['datecreatedto'].")";
+			}
+			if ($this->search_options['searchmodified'] && $this->search_options['datemodifiedfrom'])
+			{
+				$additionalwhereclause.=" and vfs_modified >=FROM_UNIXTIME(".$this->search_options['datemodifiedfrom'].")";
+			}
+			if ($this->search_options['searchmodified'] && $this->search_options['datemodifiedto'])
+			{
+				$additionalwhereclause.=" and vfs_modified <=FROM_UNIXTIME(".$this->search_options['datemodifiedto'].")";
+			}
+			// only show contacts if the order-criteria starts with the given letter
+			if ($query['searchletter']!=false)
+			{
+				$additionalwhereclause .= " and ".($query['order']).' '.$GLOBALS['egw']->db->capabilities['case_insensitive_like'].' '.$GLOBALS['egw']->db->quote($query['searchletter'].'%');
+			}
+			else
+			{
+				//echo "<p>reset colfilter?!</p>";
+				$query['searchletter']=false;
+			}
+			
+			// filter for allowed groups
+			$firstleveldirs[]=array();
+			$count_fld=0;
+			$or='';
+			$aclcondition=" ( ";
+			array_push($sessiondata['dirs_options_array'],$sessiondata['workingdir']);
+			foreach ($sessiondata['dirs_options_array'] as $dir)
+			{
+				$splitteddir=explode('/',$dir);
+				$nix=array_shift($splitteddir);
+				$vfsbase=array_shift($splitteddir);
+				$vfs1stleveldir=array_shift($splitteddir);
+				if (!in_array("/$vfsbase/$vfs1stleveldir", $firstleveldirs)) 
+				{
+					$count_fld++;
+					if ($count_fld>1) $or='or';
+					array_push($firstleveldirs,"/$vfsbase/$vfs1stleveldir");
+					$aclcondition.=" $or concat(concat(vfs_directory,'/'),vfs_name) like '/$vfsbase/$vfs1stleveldir%' and vfs_mime_type='directory' ";
+					$aclcondition.=" or vfs_directory like '/$vfsbase/$vfs1stleveldir%' ";
+					//$aclcondition.=" or (vfs_directory='".implode('/',$splitteddir)."' and vfs_name='".$vfsname."')";
+				}
+			}
+			$aclcondition.=")";
+			if ($count_fld>0) $additionalwhereclause .= " and ".$aclcondition;
+			//echo "<p>$aclcondition</p>";
+			
+			// save the nextmatch entrys/settings with the sessiondata
+			if (!$_POST['exec']['clear_search'])
+			{
+				$query['search_options']=$this->search_options;
+			} 
+			else
+			{
+				//echo "<p>retrieve rows, clear search</p>";
+				unset($query['search']);
+				unset($query['start_search']);
+				$switchflag=0;
+				
+			}
+			$this->save_sessiondata($query,'nm');
+			// defaultfilter  we dont want journal, and a whole lot of other stuff excluded, so we use the Join part of get_rows to do that
+			// echo "<p>$additionalwhereclause</p>";
+	    	$rc=parent::get_rows($query,$rows,$readonlys, $additionalwhereclause);
+			//set the applicationheader
+			$GLOBALS['egw_info']['flags']['app_header'] = lang('filemanager');
+			foreach ($rows as $key => $row)
+			{
+				$plink=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$rows[$key]['vfs_directory']);
+				$linktodir='<a href="'.$plink.'">'.$rows[$key]['vfs_directory'].'</a>&nbsp;';
+				if(strtolower($rows[$key]['vfs_mime_type']) == 'directory')
+				{
+					$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$rows[$key]['vfs_directory']."/".$rows[$key]['vfs_name']);
+					$icon=$this->mime_icon($rows[$key]['vfs_mime_type']);
+					$col_data='<a href="'.$link.'">'.$icon.'</a>&nbsp;';
+					$col_data.='<a href="'.$link.'">'.$rows[$key]['vfs_directory']."/".$rows[$key]['vfs_name'].'</a>&nbsp;';
+				}
+				else
+				{
+					if($this->prefs['viewonserver'] && isset($this->filesdir) && !$rows[$key]['vfs_link_directory'])
+					{
+						#FIXME
+						$clickview = $rows[$key]['vfs_directory'].'/'.$rows[$key]['vfs_name'];
+					}
+					else
+					{
+						$icon=$this->mime_icon($rows[$key]['vfs_mime_type']);
+						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.view','file='.$rows[$key]['vfs_name'].'&path='.$rows[$key]['vfs_directory']);
+						$col_data='<a href="'.$link.'" target="'.$this->target.'">'.$icon.'</a>&nbsp;<a href="'.$link.'" target="'.$this->target.'">'.$rows[$key]['vfs_directory']."/".$rows[$key]['vfs_name'].'</a>';
+					}
+				}
+				$rows[$key]['fulldir']=$col_data;
+				$rows[$key]['vfs_directory']=$linktodir;
+			}
+			// add some info to the appheader that the user may be informed about the search-base of its query-result
+			if ($query['searchletter'])
+			{
+				$order = $order;
+				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("%1 starts with '%2'",$order,$query['searchletter']);
+			}
+			if ($query['search'])
+			{
+				$GLOBALS['egw_info']['flags']['app_header'] .= ' - '.lang("Search for '%1'",$query['search']);
+			}
+			return $rc;
+	    }
+		
 	}

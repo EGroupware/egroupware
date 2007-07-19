@@ -26,9 +26,14 @@
 	$menu_title = $GLOBALS['egw_info']['apps'][$appname]['title'] . ' '. lang('Menu');
 	$file = Array(
 		array(
-			'',
+			'Preferences',
 			'text' => 'Filemanager Preferences',
-			'link' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=filemanager')
+			'link' => $GLOBALS['egw']->link('/index.php','menuaction=preferences.uisettings.index&appname=filemanager'),
+		),
+		array(
+			'Search',
+			'text' => 'Search',
+			'link' => $GLOBALS['egw']->link('/index.php',array('menuaction'=>'filemanager.uifilemanager.index', 'action'=>'search')),
 		)
 	);
 	display_sidebox($appname,$menu_title,$file);

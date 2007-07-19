@@ -11,7 +11,7 @@
 .fmButton
 {
 	background-repeat: no-repeat;
-	background-image:url(../images/buttonbackground.png);
+	background-image:url(../default/images/buttonbackground.png);
 	width:28px;
 	height:28px;
 }
