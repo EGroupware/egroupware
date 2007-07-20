@@ -1985,11 +1985,11 @@
 			{
 				$mime_type='unknown';
 			}
+			$mime_type=	strtolower(str_replace	('/','_',$mime_type));
+			list($mime_part) = explode('_',$mime_type);
 
-			$mime_type=	str_replace	('/','_',$mime_type);
-
-			$img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.strtolower($mime_type));
-			if(!$img)
+			if (!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_type)) &&
+				!($img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.$mime_part)))
 			{
 				$img = $GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_unknown');
 			}
