@@ -1979,7 +1979,7 @@
 		}
 
 		/* seek icon for mimetype else return an unknown icon */
-		function mime_icon($mime_type, $size=16)
+		function mime_icon($mime_type, $size=16,$et_image=false)
 		{
 			if(!$mime_type)
 			{
@@ -1988,14 +1988,12 @@
 
 			$mime_type=	str_replace	('/','_',$mime_type);
 
-			$img=$GLOBALS['egw']->common->image('filemanager','mime'.$size.'_'.strtolower($mime_type));
+			$img=$GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_'.strtolower($mime_type));
 			if(!$img)
 			{
-				$img = $GLOBALS['egw']->common->image('filemanager','mime'.$size.'_unknown');
+				$img = $GLOBALS['egw']->common->image('filemanager',$icon='mime'.$size.'_unknown');
 			}
-
-			$icon='<img src="'.$img.' "alt="'.lang($mime_type).'" />';
-			return $icon;
+			return $et_image ? 'filemanager/'.$icon :  '<img src="'.$img.' "alt="'.lang($mime_type).'" />';
 		}
 
 		function buttonImage($link,$img='',$help='')
@@ -2296,6 +2294,7 @@
 					//'total'          =>	//  O the total number of entries
 					//'sel_options'    =>	//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options
 					'no_columnselection'=>false,
+					'default_cols' => '!vfs_file_id,fulldir,mime_type',
 				);
 			
 			} else {
@@ -2573,31 +2572,10 @@
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('filemanager');
 			foreach ($rows as $key => $row)
 			{
-				$plink=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$rows[$key]['vfs_directory']);
-				$linktodir='<a href="'.$plink.'">'.$rows[$key]['vfs_directory'].'</a>&nbsp;';
-				if(strtolower($rows[$key]['vfs_mime_type']) == 'directory')
-				{
-					$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.index','path='.$rows[$key]['vfs_directory']."/".$rows[$key]['vfs_name']);
-					$icon=$this->mime_icon($rows[$key]['vfs_mime_type']);
-					$col_data='<a href="'.$link.'">'.$icon.'</a>&nbsp;';
-					$col_data.='<a href="'.$link.'">'.$rows[$key]['vfs_directory']."/".$rows[$key]['vfs_name'].'</a>&nbsp;';
-				}
-				else
-				{
-					if($this->prefs['viewonserver'] && isset($this->filesdir) && !$rows[$key]['vfs_link_directory'])
-					{
-						#FIXME
-						$clickview = $rows[$key]['vfs_directory'].'/'.$rows[$key]['vfs_name'];
-					}
-					else
-					{
-						$icon=$this->mime_icon($rows[$key]['vfs_mime_type']);
-						$link=$this->encode_href('/index.php','menuaction=filemanager.uifilemanager.view','file='.$rows[$key]['vfs_name'].'&path='.$rows[$key]['vfs_directory']);
-						$col_data='<a href="'.$link.'" target="'.$this->target.'">'.$icon.'</a>&nbsp;<a href="'.$link.'" target="'.$this->target.'">'.$rows[$key]['vfs_directory']."/".$rows[$key]['vfs_name'].'</a>';
-					}
-				}
-				$rows[$key]['fulldir']=$col_data;
-				$rows[$key]['vfs_directory']=$linktodir;
+				$rows[$key]['dir_link']='filemanager.uifilemanager.index&path='.base64_encode($row['vfs_directory']);
+				$rows[$key]['file_link']='filemanager.uifilemanager.index&path='.base64_encode($row['vfs_directory'].'/'.$row['vfs_name']);
+				$rows[$key]['icon'] = $this->mime_icon($row['vfs_mime_type'],16,true);
+				$rows[$key]['file'] = $row['vfs_directory'].'/'.$row['vfs_name'];
 			}
 			// add some info to the appheader that the user may be informed about the search-base of its query-result
 			if ($query['searchletter'])
