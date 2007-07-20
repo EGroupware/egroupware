@@ -2573,7 +2573,14 @@
 			foreach ($rows as $key => $row)
 			{
 				$rows[$key]['dir_link']='filemanager.uifilemanager.index&path='.base64_encode($row['vfs_directory']);
-				$rows[$key]['file_link']='filemanager.uifilemanager.index&path='.base64_encode($row['vfs_directory'].'/'.$row['vfs_name']);
+				if (strtolower($row['vfs_mime_type']) == 'directory')
+				{
+					$rows[$key]['file_link']='filemanager.uifilemanager.index&path='.base64_encode($row['vfs_directory'].'/'.$row['vfs_name']);
+				}
+				else
+				{
+					$rows[$key]['file_link']='filemanager.uifilemanager.view&path='.base64_encode($row['vfs_directory']).'&file='.base64_encode($row['vfs_name']);
+				}
 				$rows[$key]['icon'] = $this->mime_icon($row['vfs_mime_type'],16,true);
 				$rows[$key]['file'] = $row['vfs_directory'].'/'.$row['vfs_name'];
 			}
