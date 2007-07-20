@@ -1827,28 +1827,27 @@
 				$mime_type='unknown';
 				$ls_array = $this->vfs->ls(array(
 						'string'        => $this->path.'/'.$this->file,//FIXME
-						'relatives'     => array(RELATIVE_ALL),
+						'relatives'     => array(RELATIVE_ROOT),
 						'checksubdirs'  => False,
 						'nofiles'       => True
 				));
-
-				if($ls_array[0]['mime_type'])
+				if($ls_array[0]['mime_type'] && $ls_array[0]['mime_type'] != 'application/octet-stream')
 				{
-						$mime_type = $ls_array[0]['mime_type'];
+					$mime_type = $ls_array[0]['mime_type'];
 				}
-                		else
-                		{
+        		else
+        		{
 					$parts = explode('.',$this->file);
 					$_ext = array_pop($parts);
 					$mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
-                		}
+           		}
 				// check if the prefs are set for viewing unknown extensions as text/plain and
 				// check if the mime_type is unknown, empty or not found (application/octet)
 				// or check if the mimetype contains text,
 				// THEN set the mime_type text/plain
-				if(($this->prefs['viewtextplain'] && ($mime_type=='' or $mime_type=='unknown' or $mime_type=='application/octet-stream')) or strpos($mime_type, 'text/')!==false)
+				if(($this->prefs['viewtextplain'] && ($mime_type=='' || $mime_type=='unknown' || $mime_type=='application/octet-stream')) ||
+					strpos($mime_type, 'text/') !== false)
 				{
-				
 					$mime_type = 'text/plain';
 				}
 				
@@ -2572,14 +2571,14 @@
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('filemanager');
 			foreach ($rows as $key => $row)
 			{
-				$rows[$key]['dir_link']='filemanager.uifilemanager.index&path='.base64_encode($row['vfs_directory']);
+				$rows[$key]['dir_link']='filemanager.uifilemanager.index&path='.urlencode(base64_encode($row['vfs_directory']));
 				if (strtolower($row['vfs_mime_type']) == 'directory')
 				{
-					$rows[$key]['file_link']='filemanager.uifilemanager.index&path='.base64_encode($row['vfs_directory'].'/'.$row['vfs_name']);
+					$rows[$key]['file_link']='filemanager.uifilemanager.index&path='.urlencode(base64_encode($row['vfs_directory'].'/'.$row['vfs_name']));
 				}
 				else
 				{
-					$rows[$key]['file_link']='filemanager.uifilemanager.view&path='.base64_encode($row['vfs_directory']).'&file='.base64_encode($row['vfs_name']);
+					$rows[$key]['file_link']='filemanager.uifilemanager.view&path='.urlencode(base64_encode($row['vfs_directory'])).'&file='.urlencode(base64_encode($row['vfs_name']));
 				}
 				$rows[$key]['icon'] = $this->mime_icon($row['vfs_mime_type'],16,true);
 				$rows[$key]['file'] = $row['vfs_directory'].'/'.$row['vfs_name'];
