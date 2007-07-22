@@ -159,18 +159,20 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.3.004">
+	<template id="addressbook.edit.cats" template="" lang="" group="0" version="1.4.001">
 		<grid width="100%" height="258" overflow="auto">
 			<columns>
 				<column/>
 				<column/>
-				<column/>
+				<column disabled="@cat_tab=Tree"/>
+				<column disabled="!@cat_tab=Tree"/>
 			</columns>
 			<rows>
 				<row valign="top">
 					<image src="folder"/>
 					<description value="Categories"/>
-					<listbox type="select-cat" id="cat_id" rows="13" options=",width:99%"/>
+					<listbox type="select-cat" id="cat_id" rows="013" options=",width:99%"/>
+					<tree-cat id="cat_id" options="13,,width:99%"/>
 				</row>
 			</rows>
 		</grid>

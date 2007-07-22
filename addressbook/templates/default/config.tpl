@@ -43,6 +43,7 @@
      <select name="newsettings[cat_tab]">
       <option value="">{lang_No}</option>
       <option value="True"{selected_cat_tab_True}>{lang_Yes}</option>
+      <option value="Tree"{selected_cat_tab_Tree}>{lang_Yes}, {lang_Category_tree}</option>
      </select>
     </td>
    </tr>
