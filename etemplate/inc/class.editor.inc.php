@@ -470,7 +470,7 @@
 				foreach((array)$content['cont'] as $key => $val)
 				{
 					$vals["@$r"] = $key;
-					$vals["A$r"] = is_array($val) ? htmlspecialchars(serialize($val)).'#SeR#' : $val;
+					$vals["A$r"] = is_array($val) ? serialize($val).'#SeR#' : $val;
 					++$r;
 				}
 				$editor->data[$editor->rows]['A']['name'] = 'etemplate.editor.values';
