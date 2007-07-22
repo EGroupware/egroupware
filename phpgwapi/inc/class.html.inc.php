@@ -233,6 +233,11 @@ class html
 			}
 			else
 			{
+				if (isset($data['lable']))
+				{
+					$k = $data['lable'];
+					unset($data['lable']);
+				}
 				$out .= '<optgroup label="'.$this->htmlspecialchars($no_lang || $k == '' ? $k : lang($k))."\">\n";
 
 				foreach($data as $k => $label)
@@ -1074,40 +1079,40 @@ class html
 	* @param string $_selected path of selected folder
 	* @param mixed $_topFolder=false node of topFolder or false for none
 	* @param string $_onNodeSelect='alert' js function to call if node gets selected
-	* @param string $_divId='foldertree' id of the div
+	* @param string $_tree='foldertree' id of the div and name of the variable containing the tree object
 	* @param string $_divClass='' css class of the div
 	* @param string $_leafImage='' default image of a leaf-node, ''=default of foldertree, set it eg. 'folderClosed.gif' to show leafs as folders
-	* @param boolean/string $_onCheckHandler=false string with handler-name to display a checkbox for each folder, or false (default)
+	* @param boolean/string $_onCheckHandler=false string with handler-name to display a checkbox for each folder, or false (default), 'null' switches checkboxes on without an handler!
 	* @param string $delimiter='/' path-delimiter, default /
 	* @param mixed $folderImageDir=null string path to the tree menu images, null uses default path
 	*
 	* @return string the html code, to be added into the template
 	*/
-	function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$_divId='foldertree',$_divClass='',$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null)
+	function tree($_folders,$_selected,$_topFolder=false,$_onNodeSelect="null",$tree='foldertree',$_divClass='',$_leafImage='',$_onCheckHandler=false,$delimiter='/',$folderImageDir=null)
 	{
-	   if(is_null($folderImageDir))
-	   {
-		  $folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
-	   }
+		if(is_null($folderImageDir))
+		{
+			$folderImageDir = $GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/templates/default/images/';
+		}
 
-		$html = $this->div("\n",'id="'.$_divId.'"',$_divClass);
+		$html = $this->div("\n",'id="'.$tree.'"',$_divClass);
 
 		static $tree_initialised=false;
 		if (!$tree_initialised)
 		{
-			$html .= '<link rel="STYLESHEET" type="text/css" href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css">'."\n";
+			$html .= '<link rel="STYLESHEET" type="text/css" href="'.$GLOBALS['egw_info']['server']['webserver_url'].'/phpgwapi/js/dhtmlxtree/css/dhtmlXTree.css" />'."\n";
 			$html .= "<script type='text/javascript' src='{$GLOBALS['egw_info']['server']['webserver_url']}/phpgwapi/js/dhtmlxtree/js/dhtmlXCommon.js'></script>\n";
 			$html .= "<script type='text/javascript' src='{$GLOBALS['egw_info']['server']['webserver_url']}/phpgwapi/js/dhtmlxtree/js/dhtmlXTree.js'></script>\n";
 			$tree_initialised = true;
 		}
 		$html .= "<script type='text/javascript'>\n";
-		$html .= "tree=new dhtmlXTreeObject('$_divId','100%','100%',0);\n";
-		$html .= "tree.setImagePath('$folderImageDir/dhtmlxtree/');\n";
+		$html .= "$tree=new dhtmlXTreeObject('$tree','100%','100%',0);\n";
+		$html .= "$tree.setImagePath('$folderImageDir/dhtmlxtree/');\n";
 
 		if($_onCheckHandler)
 		{
-			$html .= "tree.enableCheckBoxes(1);\n";
-			$html .= "tree.setOnCheckHandler('$_onCheckHandler');\n";
+			$html .= "$tree.enableCheckBoxes(1);\n";
+			$html .= "$tree.setOnCheckHandler('$_onCheckHandler');\n";
 		}
 		
 		$top = 0;
@@ -1127,11 +1132,11 @@ class html
 			{
 				$label = $_topFolder;
 			}	
-			$html .= "\ntree.insertNewItem(0,'$top','".addslashes($label)."',$_onNodeSelect,'$topImage','$topImage','$topImage','CHILD,TOP');\n";
+			$html .= "\n$tree.insertNewItem(0,'$top','".addslashes($label)."',$_onNodeSelect,'$topImage','$topImage','$topImage','CHILD,TOP');\n";
 
 			if (is_array($_topFolder) && isset($_topFolder['title']))
 			{
-				$html .= "tree.setItemText('$top','".addslashes($label)."','".addslashes($_topFolder['title'])."');\n";
+				$html .= "$tree.setItemText('$top','".addslashes($label)."','".addslashes($_topFolder['title'])."');\n";
 			}
 		}
 		// evtl. remove leading delimiter
@@ -1159,25 +1164,37 @@ class html
 			$parentName = implode((array)$folderParts,$delimiter);
 			if(empty($parentName)) $parentName = $top;
 			
-			$entryOptions = 'CHILD,CHECKED';
-			// highlight currently item
-			if ($_selected === $path)
+			$entryOptions = 'CHILD';
+			if ($_onCheckHandler && $_selected)	// check selected items on multi selection
+			{
+				if (!is_array($_selected)) $_selected = explode(',',$_selected);
+				if (in_array($path,$_selected,!is_numeric($path))) $entryOptions .= ',CHECKED';
+				//echo "<p>path=$path, _selected=".print_r($_selected,true).": $entryOptions</p>\n";
+			}
+			// highlight current item
+			elseif ((string)$_selected === (string)$path)
 			{
 				$entryOptions .= ',SELECT';
 			}
-			$html .= "tree.insertNewItem('".addslashes($parentName)."','".addslashes($path)."','".addslashes($label).
+			$html .= "$tree.insertNewItem('".addslashes($parentName)."','".addslashes($path)."','".addslashes($label).
 				"',$_onNodeSelect,$image1,$image2,$image3,'$entryOptions');\n";
 			if (isset($data['title']))
 			{
-				$html .= "tree.setItemText('".addslashes($path)."','".addslashes($label)."','".addslashes($data['title'])."');\n";
-			}
-			if($_displayCheckBox)
-			{
-				$html .= "tree.setCheck('".addslashes($path)."','".(int)$data['checked']."');";
+				$html .= "$tree.setItemText('".addslashes($path)."','".addslashes($label)."','".addslashes($data['title'])."');\n";
 			}
 		}
-		$html .= "tree.closeAllItems(0);\n";
-		$html .= "tree.openItem('".($_selected ? addslashes($_selected) : $top)."');\n";
+		$html .= "$tree.closeAllItems(0);\n";
+		if ($_selected)
+		{
+			foreach(is_array($_selected)?$_selected:array($_selected) as $path)
+			{
+				$html .= "$tree.openItem('".addslashes($path)."');\n";
+			}
+		}
+		else
+		{
+				$html .= "$tree.openItem('$top');\n";
+		}
 		$html .= "</script>\n";
 		
 		return $html;

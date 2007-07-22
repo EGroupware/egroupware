@@ -706,7 +706,7 @@ foreach($sess as $key => $val)
 					}
 					else
 					{
-						$cell = &$cols[$c_key];
+						$cell = $cols[$c_key];
 						list($col_width,$col_disabled) = explode(',',$opts[$col]);
 
 						if (!$cell['height'])	// if not set, cell-height = height of row
@@ -742,7 +742,7 @@ foreach($sess as $key => $val)
 						unset($row_data[$col]);	// omit empty/disabled cells if only one row
 						continue;
 					}
-					if (strlen($cell['onclick']) > 1 && !in_array($cell['type'],array('button','buttononly')))
+					if (strlen($cell['onclick']) > 1)
 					{
 						$onclick = $cell['onclick'];
 						if (strpos($onclick,'$') !== false || $onclick{0} == '@')
@@ -859,7 +859,7 @@ foreach($sess as $key => $val)
 		 * @param string $path path in the widget tree
 		 * @return string the generated HTML
 		*/
-		function show_cell($cell,$content,$readonlys,$cname,$show_c,$show_row,&$span,&$class,$path='')
+		function show_cell(&$cell,$content,$readonlys,$cname,$show_c,$show_row,&$span,&$class,$path='')
 		{
 			if ($this->debug && (is_int($this->debug) && $this->debug >= 3 || $this->debug == $cell['type']))
 			{
@@ -969,7 +969,7 @@ foreach($sess as $key => $val)
 					{
 						$onFocus .= "self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;";
 						$onBlur  .= "self.status=''; return true;";
-						if ($cell['type'] == 'button' || $cell['type'] == 'buttononly' || $cell['type'] == 'file')	// for button additionally when mouse over button
+						if (in_array($cell['type'],array('button','buttononly','file')))	// for button additionally when mouse over button
 						{
 							$options .= " onMouseOver=\"self.status='".addslashes($this->html->htmlspecialchars($help))."'; return true;\"";
 							$options .= " onMouseOut=\"self.status=''; return true;\"";
@@ -1176,6 +1176,7 @@ foreach($sess as $key => $val)
 					{
 						$onclick = $this->js_pseudo_funcs($onclick,$cname);
 					}
+					unset($cell['onclick']);	// otherwise the grid will handle it
 					if ($this->java_script() && ($cell['onchange'] != '' || $img && !$readonly) && !$cell['needed']) // use a link instead of a button
 					{
 						$onclick = ($onclick ? preg_replace('/^return(.*);$/','if (\\1) ',$onclick) : '').
@@ -1321,46 +1322,8 @@ foreach($sess as $key => $val)
 						}
 						$multiple = 0;
 					}
-					if (!empty($cell['sel_options']))
-					{
-						if (!is_array($cell['sel_options']))
-						{
-							$opts = explode(',',$cell['sel_options']);
-							while (list(,$opt) = each($opts))
-							{
-								list($k,$v) = explode('=',$opt);
-								$sels[$k] = $v;
-							}
-						}
-						else
-						{
-							$sels += $cell['sel_options'];
-						}
-					}
-					if (isset($this->sel_options[$name]) && is_array($this->sel_options[$name]))
-					{
-						$sels += $this->sel_options[$name];
-					}
-					else
-					{
-						$name_parts = explode('[',str_replace(']','',$name));
-						if (count($name_parts))
-						{
-							$org_name = $name_parts[count($name_parts)-1];
-							if (isset($this->sel_options[$org_name]) && is_array($this->sel_options[$org_name]))
-							{
-								$sels += $this->sel_options[$org_name];
-							}
-							elseif (isset($this->sel_options[$name_parts[0]]) && is_array($this->sel_options[$name_parts[0]]))
-							{
-								$sels += $this->sel_options[$name_parts[0]];
-							}
-						}
-					}
-					if (isset($content["options-$name"]))
-					{
-						$sels += $content["options-$name"];
-					}
+					$sels += $this->_sel_options($cell,$name,$content);
+
 					if ($multiple && !is_array($value)) $value = explode(',',$value);
 					if ($readonly || $cell['noprint'])
 					{
@@ -1457,7 +1420,8 @@ foreach($sess as $key => $val)
 					if (!$orient) $orient = $type == 'hbox' ? 'horizontal' : ($type == 'box' ? false : 'vertical');
 					for ($n = 1; $n <= (int) $num; ++$n)
 					{
-						$h = $this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
+						$child = $cell[$n];	// first param is a var_param now!
+						$h = $this->show_cell($child,$content,$readonlys,$cname,$show_c,$show_row,$nul,$cl,$path.'/'.$n);
 						if ($h != '' && $h != '&nbsp;' || $keep_empty)
 						{
 							if ($orient != 'horizontal')
@@ -1479,14 +1443,13 @@ foreach($sess as $key => $val)
 							$box_anz++;
 							if ($cell[$n]['align'])
 							{
-								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($cell[$n]['align'],'align');
+								$rows[$box_row]['.'.$box_col] = $this->html->formatOptions($child['align'],'align');
 								$sub_cell_has_align = true;
 							}
-							// can only be set via source at the moment
-							if (strlen($cell[$n]['onclick']) > 1 && !($cell[$n]['type'] == 'button' || $cell[$n]['type'] == 'buttononly'))
+							if (strlen($child['onclick']) > 1)
 							{
-								$rows[$box_row]['.'.$box_col] .= ' onclick="'.$this->js_pseudo_funcs($cell[$n]['onclick'],$cname).'"'.
-									($cell[$n]['id'] ? ' id="'.$cell[$n]['id'].'"' : '');
+								$rows[$box_row]['.'.$box_col] .= ' onclick="'.$this->js_pseudo_funcs($child['onclick'],$cname).'"'.
+									($child['id'] ? ' id="'.$child['id'].'"' : '');
 							}
 							// allow to set further attributes in the tablecell, beside the class
 							if (is_array($cl))
@@ -1563,10 +1526,11 @@ foreach($sess as $key => $val)
 							
 					for ($n = 1; $n <= $cell_options; ++$n)
 					{
-						$html .= $this->html->div($this->show_cell($cell[$n],$content,$readonlys,$cname,$show_c,
+						$child = $cell[$n];	// first param is a var_param now!
+						$html .= $this->html->div($this->show_cell($child,$content,$readonlys,$cname,$show_c,
 							$show_row,$nul,$cl,$path.'/'.$n),$this->html->formatOptions(array(
-							'display: '.($value == $cell[$n]['name'] ? 'inline' : 'none').';',
-							$cell[$n]['name']
+							'display: '.($value == $child['name'] ? 'inline' : 'none').';',
+							$child['name']
 						),'style,id'));
 					}
 					break;
@@ -1669,6 +1633,61 @@ foreach($sess as $key => $val)
 				return $this->html->div($html,' ondblclick="'.$handler.'"','clickWidgetToEdit');
 			}
 			return $html;
+		}
+
+		/**
+		 * Retrive options for selectboxes and similar widgets (eg. the tree)
+		 *
+		 * @param array $cell
+		 * @param string $name
+		 * @param array $content=array();
+		 * @return array
+		 */
+		function _sel_options($cell,$name,$content=array())
+		{
+			$sels = array();
+
+			if (!empty($cell['sel_options']))
+			{
+				if (!is_array($cell['sel_options']))
+				{
+					$opts = explode(',',$cell['sel_options']);
+					while (list(,$opt) = each($opts))
+					{
+						list($k,$v) = explode('=',$opt);
+						$sels[$k] = $v;
+					}
+				}
+				else
+				{
+					$sels += $cell['sel_options'];
+				}
+			}
+			if (isset($this->sel_options[$name]) && is_array($this->sel_options[$name]))
+			{
+				$sels += $this->sel_options[$name];
+			}
+			else
+			{
+				$name_parts = explode('[',str_replace(']','',$name));
+				if (count($name_parts))
+				{
+					$org_name = $name_parts[count($name_parts)-1];
+					if (isset($this->sel_options[$org_name]) && is_array($this->sel_options[$org_name]))
+					{
+						$sels += $this->sel_options[$org_name];
+					}
+					elseif (isset($this->sel_options[$name_parts[0]]) && is_array($this->sel_options[$name_parts[0]]))
+					{
+						$sels += $this->sel_options[$name_parts[0]];
+					}
+				}
+			}
+			if (isset($content["options-$name"]))
+			{
+				$sels += $content["options-$name"];
+			}
+			return $sels;
 		}
 
 		/**
