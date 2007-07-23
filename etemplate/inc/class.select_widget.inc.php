@@ -171,9 +171,20 @@
 					if ($readonly)	// for readonly we dont need to fetch all cat's, nor do we need to indent them by level
 					{
 						$cell['no_lang'] = True;
-						foreach(is_array($value) ? $value : (strpos($value,',') !== false ? explode(',',$value) : array($value)) as $id)
+						if ($value)
 						{
-							if ($id) $cell['sel_options'][$id] = stripslashes($GLOBALS['egw']->categories->id2name($id));
+							if (!is_array($value)) $value = explode(',',$value);
+							foreach($value as $key => $id)
+							{
+								if ($id && ($name = stripslashes($GLOBALS['egw']->categories->id2name($id))) && $name != '--')
+								{
+									$cell['sel_options'][$id] = $name;
+								}
+								else
+								{
+									unset($value[$key]);	// remove not (longer) existing or inaccessible cats
+								}
+							}
 						}
 						break;
 					}
