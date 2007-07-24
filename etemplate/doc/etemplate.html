@@ -419,7 +419,7 @@ and fill the content:</p>
 		}
 		array_unshift($found,false);	<span>// change the array to start with index 1</span>
 		$content = array(
-			'msg' =&gt; lang('%1 matches on search criteria',count($found)),
+			'msg' =&gt; lang('%1 matches on search criteria',count($found)-1),
 			'entry' =&gt; $found,
 		);
 		$this-&gt;tmpl-&gt;read('et_media.show');
