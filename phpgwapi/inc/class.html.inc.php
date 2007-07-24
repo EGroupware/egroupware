@@ -1106,7 +1106,7 @@ class html
 			$tree_initialised = true;
 		}
 		$html .= "<script type='text/javascript'>\n";
-		$html .= "$tree=new dhtmlXTreeObject('$tree','100%','100%',0);\n";
+		$html .= "var $tree = new dhtmlXTreeObject('$tree','100%','100%',0);\n";
 		$html .= "$tree.setImagePath('$folderImageDir/dhtmlxtree/');\n";
 
 		if($_onCheckHandler)
