@@ -1,27 +1,17 @@
 #!/usr/bin/php -q
 <?php
-	/**************************************************************************\
-	* eGroupWare API - Timed Asynchron Services for eGroupWare                 *
-	* Written by Ralf Becker <RalfBecker@outdoor-training.de>                  *
-	* Class for creating cron-job like timed calls of eGroupWare methods       *
-	* -------------------------------------------------------------------------*
-	* This library is part of the eGroupWare API                               *
-	* http://www.egroupware.org/                                               *
-	* ------------------------------------------------------------------------ *
-	* This library is free software; you can redistribute it and/or modify it  *
-	* under the terms of the GNU Lesser General Public License as published by *
-	* the Free Software Foundation; either version 2.1 of the License,         *
-	* or any later version.                                                    *
-	* This library is distributed in the hope that it will be useful, but      *
-	* WITHOUT ANY WARRANTY; without even the implied warranty of               *
-	* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                     *
-	* See the GNU Lesser General Public License for more details.              *
-	* You should have received a copy of the GNU Lesser General Public License *
-	* along with this library; if not, write to the Free Software Foundation,  *
-	* Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA            *
-	\**************************************************************************/
-
-	/* $Id$ */
+/**
+ * API - Timed Asynchron Services for eGroupWare
+ * 
+ * @link http://www.egroupware.org
+ * @author Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * @copyright Ralf Becker <RalfBecker-AT-outdoor-training.de>
+ * 
+ * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
+ * @package api
+ * @access public
+ * @version $Id$ 
+ */
 
 	$_GET['domain'] = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : 'default';
 	$path_to_egroupware = realpath(dirname(__FILE__).'/../..');	//  need to be adapted if this script is moved somewhere else
@@ -68,11 +58,12 @@
 		exit(1);
 	}
 
-	include(PHPGW_API_INC.'/functions.inc.php');
+	include(EGW_API_INC.'/functions.inc.php');
 
 	$num = ExecMethod('phpgwapi.asyncservice.check_run','crontab');
 
-	$msg = date('Y/m/d H:i:s ').$_GET['domain'].': '.($num ? "$num job(s) executed" : 'Nothing to execute')."\n\n";
+	$msg = date('Y/m/d H:i:s ').$_GET['domain'].': '.($num === false ? 'An error occured: can not obtain semaphore!' : 
+		($num ? "$num job(s) executed" : 'Nothing to execute'))."\n\n";
 	// if the following comment got removed, you will get an email from cron for every check performed (*nix only)
 	//echo $msg;
 
@@ -82,4 +73,4 @@
 		fwrite($f,$msg);
 		fclose($f);
 	}
-	$GLOBALS['egw']->common->phpgw_exit();
+	$GLOBALS['egw']->common->egw_exit();
