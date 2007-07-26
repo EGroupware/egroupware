@@ -320,7 +320,7 @@ class asyncservice
 	}
 
 	/**
-	 * checks when the last check_run was run or set the run-semaphore if $semaphore == True 
+	 * checks when the last check_run was run or set the run-semaphore (async_next != 0) if $semaphore == True 
 	 *
 	 * @param boolean $semaphore if False only check, if true try to set/release the semaphore
 	 * @param boolean $release if $semaphore == True, tells if we should set or release the semaphore
@@ -330,13 +330,6 @@ class asyncservice
 	function last_check_run($semaphore=False,$release=False,$run_by='')
 	{
 		//echo "<p>last_check_run(semaphore=".($semaphore?'True':'False').",release=".($release?'True':'False').")</p>\n";
-		if ($semaphore)
-		{
-			$this->db->lock($this->db_table,'write');	// this will block til we get exclusive access to the table
-
-			@set_time_limit(0);		// dont stop for an execution-time-limit
-			ignore_user_abort(True);
-		}
 		if ($exists = $this->read('##last-check-run##'))
 		{
 			list(,$last_run) = each($exists);
@@ -347,26 +340,21 @@ class asyncservice
 		{
 			return $last_run['data'];
 		}
-		elseif (!$release && !$last_run['data']['end'] && $last_run['data']['start'] > time()-600)
-		{
-			// already one instance running (started not more then 10min ago, else we ignore it)
-
-			$this->db->unlock();	// unlock the table again
-
-			//echo "<p>An other instance is running !!!</p>\n";
-			return False;
-		}
-		// no other instance runs ==> we should run
-		//
+		
+		$where = array();
 		if ($release)
 		{
+			$last_run['next'] = 0;
 			$last_run['data']['end'] = time();
 		}
 		else
 		{
+			@set_time_limit(0);		// dont stop for an execution-time-limit
+			ignore_user_abort(True);
+
 			$last_run = array(
 				'id'     => '##last-check-run##',
-				'next'   => 0,
+				'next'   => time(),
 				'times'  => array(),
 				'method' => 'none',
 				'data'   => array(
@@ -375,13 +363,12 @@ class asyncservice
 					'end'   => 0
 				)
 			);
+			// as the async_next column is used as a semaphore we only update it,
+			// if it is 0 (semaphore released) or older then 10min to recover from failed or crashed attempts
+			if ($exists) $where = array('async_next=0 OR async_next<'.time()-600);
 		}
 		//echo "last_run=<pre>"; print_r($last_run); echo "</pre>\n";
-		$this->write($last_run,!!$exits);
-		
-		$this->db->unlock();
-
-		return True;
+		return $this->write($last_run,!!$exits,$where) > 0;
 	}
 
 	/**
@@ -448,7 +435,7 @@ class asyncservice
 		}
 		$this->last_check_run(True,True,$run_by);	// release semaphore
 
-		return $jobs ? count($jobs) : False;
+		return $jobs ? count($jobs) : 0;
 	}
 
 	/**
@@ -502,8 +489,10 @@ class asyncservice
 	 *
 	 * @param array $job db-row as array
 	 * @param boolean $exits if True, we do an update, else we check if update or insert necesary
+	 * @param array $where additional where statemetn to update only if a certain condition is met, used for the semaphore
+	 * @return int affected rows, cat be 0 if an additional where statement is given
 	 */
-	function write($job,$exists = False)
+	function write($job,$exists = False,$where=array())
 	{
 		$data = array(
 			'async_next'      => $job['next'],
@@ -520,6 +509,7 @@ class asyncservice
 		{
 			$this->db->insert($this->db_table,$data,array('async_id' => $job['id']),__LINE__,__FILE__);
 		}
+		return $this->db->affected_rows();
 	}
 
 	/**
