@@ -502,6 +502,7 @@ class accounts extends accounts_backend
 	 */
 	function set_memberships($groups,$account_id)
 	{
+		//echo "<p>accounts::set_memberships(".print_r($groups,true).",$account_id)</p>\n";
 		if (!is_int($account_id) && !is_numeric($account_id))
 		{
 			$account_id = $this->name2id($account_id);
@@ -621,24 +622,6 @@ class accounts extends accounts_backend
 	}
 
 	/**
-	 * Invalidate the cache (or parts of it) after change in $account_id
-	 *
-	 * Atm simplest approach - delete it all ;-)
-	 * 
-	 * @param int $account_id for which account_id should the cache be invalid, default 0 = all
-	 */
-	function cache_invalidate($account_id=0)
-	{
-		//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
-		$GLOBALS['egw_info']['accounts']['cache'] = array();
-		
-		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
-		{
-			$GLOBALS['egw']->invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
-		}
-	}
-	
-	/**
 	 * Add an account for an authenticated user
 	 *
 	 * Expiration date and primary group are read from the system configuration.
@@ -730,6 +713,28 @@ class accounts extends accounts_backend
 	}
 
 	/**
+	 * Invalidate the cache (or parts of it) after change in $account_id
+	 *
+	 * Atm simplest approach - delete it all ;-)
+	 * 
+	 * @param int $account_id for which account_id should the cache be invalid, default 0 = all
+	 */
+	function cache_invalidate($account_id=0)
+	{
+		//echo "<p>accounts::cache_invalidate($account_id)</p>\n";
+		if (is_object($GLOBALS['egw']->accounts))
+		{
+			$GLOBALS['egw']->accounts->cache = array();
+		}
+		if ($this->cache) $this->cache = array();
+
+		if (method_exists($GLOBALS['egw'],'invalidate_session_cache'))	// egw object in setup is limited
+		{
+			$GLOBALS['egw']->invalidate_session_cache();	// invalidates whole egw-enviroment if stored in the session
+		}
+	}
+	
+	/**
 	 * Internal functions not meant to use outside this class!!!
 	 */
 	
@@ -743,22 +748,38 @@ class accounts extends accounts_backend
 	 */
 	function setup_cache()
 	{
-		//echo "<p>accounts::setup_cache() use_session_cache=$this->use_session_cache, cache_setup=".(int)$GLOBALS['egw_info']['flags']['session_cache_setup']."</p>\n";
-		if ($this->use_session_cache &&		// are we supposed to use a session-cache
-			!@$GLOBALS['egw_info']['flags']['session_cache_setup'] &&	// is it already setup
-			// is the account-class ready (startup !)
-			is_object($GLOBALS['egw']->session) && $GLOBALS['egw']->session->account_id)
+		//echo "<p>accounts::setup_cache() use_session_cache=$this->use_session_cache, is_array(this->cache)=".(int)is_array($this->cache)."</p>\n";
+		if (is_array($this->cache)) return;	// cache is already setup
+
+		if ($this->use_session_cache && isset($GLOBALS['egw']->accounts) && !is_array($GLOBALS['egw']->accounts->cache))
 		{
-			// setting up the session-cache
-			$GLOBALS['egw_info']['accounts']['cache'] = $GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi');
-			$GLOBALS['egw_info']['flags']['session_cache_setup'] = True;
-			//echo "accounts::setup_cache() cache=<pre>".print_r($GLOBALS['egw_info']['accounts']['cache'],True)."</pre>\n";
+			//echo "<p>restoring the session-cache for \$GLOBALS['egw']->accounts</p>\n";
+			$GLOBALS['egw']->accounts->cache = $GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi');
 		}
-		if (!isset($this->cache))
+		if (!isset($this->cache) && isset($GLOBALS['egw']->accounts))
 		{
-			$this->cache = &$GLOBALS['egw_info']['accounts']['cache'];
+			$this->cache =&  $GLOBALS['egw']->accounts->cache;
 		}
-		if (!is_array($this->cache)) $this->cache = array();
+		if (!is_array($this->cache))
+		{
+			//echo "<p>initialising this->cache to array()</p>\n";
+			$this->cache = array();
+		}
+	}
+	
+	/**
+	 * Magic function called if the object get's unserialized
+	 * 
+	 * We unset our cache, which is a reference to the cache of the global account object in $GLOBALS['egw']->accounts,
+	 * as it will be no reference after wakeup (causes cache_invalidate to no longer work).
+	 * For the global accounts object the cache get unset too, as the object was stored in a early state of the framework
+	 * initialisation, and it the cache stored in the session by save_session_cache is a lot more up to date.
+	 * 
+	 * @internal 
+	 */
+	function __wakeup()
+	{
+		unset($this->cache);
 	}
 
 	/**
@@ -770,14 +791,10 @@ class accounts extends accounts_backend
 	 */
 	function save_session_cache()
 	{
-		//echo "<p>save_session_cache()".($GLOBALS['egw_info']['flags']['session_cache_setup'] ? 'is setup' : 'is NOT setup')."</p>\n";
-		if (// is somehow not longer set! $this->use_session_cache &&		// are we supposed to use a session-cache
-			$GLOBALS['egw_info']['flags']['session_cache_setup'] &&	// is it already setup
-			// is the account-class ready (startup !)
-			is_object($GLOBALS['egw']->session))
+		if (is_object($GLOBALS['egw']->session) && is_array($GLOBALS['egw']->accounts->cache))
 		{
 			//echo "<p>save_session_cache() saving</p>\n";
-			$GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi',$GLOBALS['egw_info']['accounts']['cache']);
+			$GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi',$GLOBALS['egw']->accounts->cache);		
 		}
 	}
 
