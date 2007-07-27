@@ -751,7 +751,7 @@ class accounts extends accounts_backend
 		//echo "<p>accounts::setup_cache() use_session_cache=$this->use_session_cache, is_array(this->cache)=".(int)is_array($this->cache)."</p>\n";
 		if (is_array($this->cache)) return;	// cache is already setup
 
-		if ($this->use_session_cache && isset($GLOBALS['egw']->accounts) && !is_array($GLOBALS['egw']->accounts->cache))
+		if ($this->use_session_cache && isset($GLOBALS['egw']->accounts) && !is_array($GLOBALS['egw']->accounts->cache) && is_object($GLOBALS['egw']->session))
 		{
 			//echo "<p>restoring the session-cache for \$GLOBALS['egw']->accounts</p>\n";
 			$GLOBALS['egw']->accounts->cache = $GLOBALS['egw']->session->appsession('accounts_cache','phpgwapi');
