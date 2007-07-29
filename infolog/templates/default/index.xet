@@ -5,12 +5,12 @@
 		<description class="headertext bold" value="InfoLog"/>
 		<styles>.bold { font-weight: bold; }</styles>
 	</template>
-	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.2.002">
+	<template id="infolog.index.header_right" template="" lang="" group="0" version="1.4.001">
 		<hbox>
 			<description class="headertext" value="Add:"/>
-			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="task" label="ToDo" id="add[task]" statustext="Add a new ToDo" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=task&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="phone" label="Phonecall" id="add[phone]" statustext="Add a new Phonecall" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=phone&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]}'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+			<button image="note" label="Note" id="add[note]" statustext="Add a new Note" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id=$cont[cat_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 		</hbox>
 	</template>
 	<template id="infolog.index.rows-noheader" template="" lang="" group="0" version="1.3.003">
@@ -20,8 +20,8 @@
 				<column/>
 				<column width="120"/>
 				<column disabled="@no_info_used_time_info_planned_time"/>
-				<column width="8%" disabled="@no_users"/>
-				<column width="12%" disabled="@no_modified"/>
+				<column width="8%" disabled="@no_info_onwer_info_responsible"/>
+				<column width="12%" disabled="@no_info_datemodified"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>
@@ -111,10 +111,11 @@
 			<columns>
 				<column width="2%"/>
 				<column/>
+				<column/>
 				<column width="120"/>
 				<column/>
-				<column width="8%" disabled="@no_users"/>
-				<column width="12%" disabled="@no_modified"/>
+				<column width="8%" disabled="@no_info_owner_info_responsible"/>
+				<column width="12%"/>
 				<column width="3%" disabled="@no_actions"/>
 				<column width="3%" disabled="@no_actions"/>
 			</columns>
@@ -145,6 +146,7 @@
 							</row>
 						</rows>
 					</grid>
+					<nextmatch-header label="Category" id="cat_id"/>
 					<vbox options="0,0">
 						<nextmatch-sortheader label="Startdate" id="info_startdate"/>
 						<nextmatch-sortheader label="Enddate" id="info_enddate"/>
@@ -155,8 +157,8 @@
 						<nextmatch-sortheader id="info_planned_time" class="planned" label="planned"/>
 					</vbox>
 					<vbox options="0,0">
-						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner"/>
-						<nextmatch-accountfilter id="info_responsible" options="Responsible,both" statustext="Select to filter by responsible"/>
+						<nextmatch-accountfilter id="info_owner" options="Owner" statustext="Select to filter by owner" class="user_filter"/>
+						<nextmatch-accountfilter id="info_responsible" options="Responsible,both" statustext="Select to filter by responsible" class="user_filter"/>
 					</vbox>
 					<nextmatch-sortheader label="last changed" id="info_datemodified" options="DESC"/>
 					<description value="Sub" class="noPrint"/>
@@ -178,6 +180,9 @@
 						<description no_lang="1" id="${row}[info_des]" options=",,1"/>
 						<link-string id="${row}[filelinks]"/>
 					</vbox>
+					<menulist>
+						<menupopup type="select-cat" id="${row}[info_cat]" readonly="true"/>
+					</menulist>
 					<vbox options="0,0,1" rows="3" cols="1">
 						<date-time options=",8" id="${row}[info_startdate]" readonly="true" class="fixedHeight"/>
 						<date class="$row_cont[end_class] fixedHeight" id="${row}[info_enddate]" readonly="true"/>
@@ -215,7 +220,7 @@
 			</rows>
 		</grid>
 	</template>
-	<template id="infolog.index" template="" lang="" group="0" version="1.2.001">
+	<template id="infolog.index" template="" lang="" group="0" version="1.4.001">
 		<grid width="100%" border="0" spacing="0" padding="0">
 			<columns>
 				<column width="90%"/>
@@ -241,7 +246,7 @@
 				</row>
 				<row class="noPrint">
 					<hbox span="all">
-						<button label="Add" id="add[note]" statustext="Add a new Entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<button label="Add" id="add[note]" statustext="Add a new Entry" onclick="window.open(egw::link('/index.php','menuaction=infolog.uiinfolog.edit&amp;type=note&amp;action=$cont[action]&amp;action_id=$cont[action_id]&amp;cat_id={$cont[nm][cat_id]}'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 						<button label="Cancel" id="cancel" statustext="Back to main list"/>
 					</hbox>
 				</row>

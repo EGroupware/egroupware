@@ -211,7 +211,7 @@ class uiinfolog
 		if (!$show_links) $show_links = $this->prefs['show_links'];
 
 		if (($show_links != 'none' && $show_links != 'no_describtion' || 
-			 $this->prefs['show_times'] && isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) && 
+			 $this->prefs['show_times'] || isset($GLOBALS['egw_info']['user']['apps']['timesheet'])) && 
 			($links = $this->link->get_links('infolog',$info['info_id'])))
 		{
 			$timesheets = array();
