@@ -2590,7 +2590,12 @@
 						'string'	=> $p->fake_name
 					)
 				);
-
+				if (!$mime_type)
+				{
+                                        $parts = explode('.',$p->fake_name);
+                                        $_ext = array_pop($parts);
+                                        $mime_type = ExecMethod('phpgwapi.mime_magic.ext2mime',$_ext);
+ 				}
 				if($mime_type)
 				{
 					$this->db->update($this->vfs_table,array(

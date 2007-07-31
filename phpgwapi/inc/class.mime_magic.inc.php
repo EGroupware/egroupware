@@ -235,6 +235,7 @@
 		* MIME types.
 		*
 		* Original array taken from http://horde.org
+		* added OpenOffice Extensions by KL@stylite.de
 		*
 		* @author skwashd
 		*
@@ -331,6 +332,11 @@
 				'mxu'	=> 'video/vnd.mpegurl',
 				'nc'	=> 'application/x-netcdf',
 				'oda'	=> 'application/oda',
+				'odb'	=> 'application/vnd.oasis.opendocument.database',
+				'odg'   => 'application/vnd.oasis.opendocument.graphics',
+				'odt'   => 'application/vnd.oasis.opendocument.text',
+				'odp'   => 'application/vnd.oasis.opendocument.presentation',
+				'ods'   => 'application/vnd.oasis.opendocument.spreadsheet',
 				'patch'	=> 'text/diff',
 				'pbm'	=> 'image/x-portable-bitmap',
 				'pdb'	=> 'chemical/x-pdb',
