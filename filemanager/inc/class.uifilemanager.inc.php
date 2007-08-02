@@ -2347,6 +2347,12 @@
 				$this->tmpl->set_cell_attribute('createdlabel','label',lang($this->tmpl->get_cell_attribute('createdlabel','label')).'(x)');
 				$read_onlys['datecreatedto']=$switchflag;
 				$read_onlys['datecreatedfrom']=$switchflag;
+                                // the to-date is to be switched to the end of the day, so between a date and another one includes the to-date of the search
+                                // the used database time function is a timestamp function, and a date converted turns out to be the beginning of the day
+				if ($content['datecreatedto']!='') 
+				{ 
+					$content['datecreatedto']=$content['datecreatedto']+23*60*60+59;
+				}
 				if (($content['datecreatedfrom']=='' && $content['datecreatedto']) or ($content['datecreatedfrom'] && $content['datecreatedto']=='') ) $content['searchcreatedtext']=lang('Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date');
 				if (($content['datecreatedfrom']!='' && $content['datecreatedto']!='' && $content['datecreatedto']<$content['datecreatedfrom']) ) $content['searchcreatedtext']=lang('Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates');
 			}
@@ -2362,6 +2368,12 @@
 				$this->tmpl->set_cell_attribute('modifiedlabel','label',lang($this->tmpl->get_cell_attribute('modifiedlabel','label')).'(x)');
 				$read_onlys['datemodifiedto']=$switchflag;
 				$read_onlys['datemodifiedfrom']=$switchflag;
+				// the to-date is to be switched to the end of the day, so between a date and another one includes the to-date of the search
+				// the used database time function is a timestamp function, and a date converted turns out to be the beginning of the day
+				if ($content['datemodifiedto']!='')
+				{
+					$content['datemodifiedto']=$content['datemodifiedto']+23*60*60+59;
+				}
 				if (($content['datemodifiedfrom']=='' && $content['datemodifiedto']) or ($content['datemodifiedfrom'] && $content['datemodifiedto']=='') ) $content['searchmodifiedtext']=lang('Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date');
 				if (($content['datemodifiedfrom']!='' && $content['datemodifiedto']!='' && $content['datemodifiedto']<$content['datemodifiedfrom']) ) $content['searchmodifiedtext']=lang('Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates');
 			}
@@ -2482,7 +2494,7 @@
 				$this->search_options=$sessiondata['nm']['search_options'];
 			}
 			//_debug_array($this->search_options);
-			$additionalwhereclause=", (select vfs_file_id as fileid, concat(concat(vfs_directory,'/'),vfs_name) as fulldir from egw_vfs WHERE vfs_mime_type <> 'journal' and vfs_mime_type <> 'journal-deleted' and vfs_name is not null and vfs_name <>'' and vfs_name<>'home' and vfs_app='filemanager') vfs2 WHERE vfs2.fileid=egw_vfs.vfs_file_id";
+			$additionalwhereclause=", (select vfs_file_id as fileid, ".$this->db->concat($this->db->concat("vfs_directory","'/'"),"vfs_name")." as fulldir from egw_vfs WHERE vfs_mime_type <> 'journal' and vfs_mime_type <> 'journal-deleted' and vfs_name is not null and vfs_name <>'' and vfs_name<>'home' and vfs_app='filemanager') vfs2 WHERE vfs2.fileid=egw_vfs.vfs_file_id";
 			//search options
 			if ($this->search_options['checkonlyfiles'] && !$this->search_options['checkonlydirs']) 
 			{
@@ -2497,22 +2509,34 @@
 				
 			}
 			// timespecific search options
-			if ($this->search_options['searchcreated'] && $this->search_options['datecreatedfrom'])
+			// search regarding the creation date
+			if ($this->search_options['searchcreated'] && $this->search_options['datecreatedfrom'] && ($this->search_options['datecreatedfrom']<=$this->search_options['datecreatedto'] or !($this->search_options['datecreatedto']) or ($this->search_options['datecreatedto']=='')))
 			{
-				$additionalwhereclause.=" and vfs_created >=FROM_UNIXTIME(".$this->search_options['datecreatedfrom'].")";
+				$additionalwhereclause.=" and vfs_created >=".$this->db->FROM_UNIXTIME($this->search_options['datecreatedfrom']);
 			}
-			if ($this->search_options['searchcreated'] && $this->search_options['datecreatedto'])
+			if ($this->search_options['searchcreated'] && $this->search_options['datecreatedto'] && ($this->search_options['datecreatedfrom']<=$this->search_options['datecreatedto'] or !($this->search_options['datecreatedfrom']) or ($this->search_options['datecreatedfrom']=='')))
 			{
-				$additionalwhereclause.=" and vfs_created <=FROM_UNIXTIME(".$this->search_options['datecreatedto'].")";
+				$additionalwhereclause.=" and vfs_created <=".$this->db->FROM_UNIXTIME($this->search_options['datecreatedto']);
 			}
-			if ($this->search_options['searchmodified'] && $this->search_options['datemodifiedfrom'])
+			if ($this->search_options['searchcreated'] && $this->search_options['datecreatedto'] && $this->search_options['datecreatedfrom'] && ($this->search_options['datecreatedfrom']>$this->search_options['datecreatedto']))
 			{
-				$additionalwhereclause.=" and vfs_modified >=FROM_UNIXTIME(".$this->search_options['datemodifiedfrom'].")";
+				$additionalwhereclause.=" and (vfs_created >=".$this->db->FROM_UNIXTIME($this->search_options['datecreatedfrom']);
+				$additionalwhereclause.=" or vfs_created <=".$this->db->FROM_UNIXTIME($this->search_options['datecreatedto']).")";
 			}
-			if ($this->search_options['searchmodified'] && $this->search_options['datemodifiedto'])
-			{
-				$additionalwhereclause.=" and vfs_modified <=FROM_UNIXTIME(".$this->search_options['datemodifiedto'].")";
-			}
+			// search regarding the modification date
+                        if ($this->search_options['searchmodified'] && $this->search_options['datemodifiedfrom'] && ($this->search_options['datemodifiedfrom']<=$this->search_options['datemodifiedto'] or !($this->search_options['datemodifiedto']) or ($this->search_options['datemodifiedto']=='')))
+                        {
+                                $additionalwhereclause.=" and vfs_modified >=".$this->db->FROM_UNIXTIME($this->search_options['datemodifiedfrom']);
+                        }
+                        if ($this->search_options['searchmodified'] && $this->search_options['datemodifiedto'] && ($this->search_options['datemodifiedfrom']<=$this->search_options['datemodifiedto'] or !($this->search_options['datemodifiedfrom']) or ($this->search_options['datemodifiedfrom']=='')))
+                        {
+                                $additionalwhereclause.=" and vfs_modified <=".$this->db->FROM_UNIXTIME($this->search_options['datemodifiedto']);
+                        }
+                        if ($this->search_options['searchmodified'] && $this->search_options['datemodifiedto'] && $this->search_options['datemodifiedfrom'] && ($this->search_options['datemodifiedfrom']>$this->search_options['datemodifiedto']))
+                        {
+                                $additionalwhereclause.=" and (vfs_modified >=".$this->db->FROM_UNIXTIME($this->search_options['datemodifiedfrom']);
+                                $additionalwhereclause.=" or vfs_modified <=".$this->db->FROM_UNIXTIME($this->search_options['datemodifiedto']).")";
+                        }
 			// only show contacts if the order-criteria starts with the given letter
 			if ($query['searchletter']!=false)
 			{
@@ -2541,7 +2565,7 @@
 					$count_fld++;
 					if ($count_fld>1) $or='or';
 					array_push($firstleveldirs,"/$vfsbase/$vfs1stleveldir");
-					$aclcondition.=" $or concat(concat(vfs_directory,'/'),vfs_name) like '/$vfsbase/$vfs1stleveldir%' and vfs_mime_type='directory' ";
+					$aclcondition.=" $or ".$this->db->concat($this->db->concat("vfs_directory","'/'"),vfs_name)." like '/$vfsbase/$vfs1stleveldir%' and vfs_mime_type='directory' ";
 					$aclcondition.=" or vfs_directory like '/$vfsbase/$vfs1stleveldir%' ";
 					//$aclcondition.=" or (vfs_directory='".implode('/',$splitteddir)."' and vfs_name='".$vfsname."')";
 				}
@@ -2566,7 +2590,7 @@
 			$this->save_sessiondata($query,'nm');
 			// defaultfilter  we dont want journal, and a whole lot of other stuff excluded, so we use the Join part of get_rows to do that
 			// echo "<p>$additionalwhereclause</p>";
-	    	$rc=parent::get_rows($query,$rows,$readonlys, $additionalwhereclause);
+	    		$rc=parent::get_rows($query,$rows,$readonlys, $additionalwhereclause);
 			//set the applicationheader
 			$GLOBALS['egw_info']['flags']['app_header'] = lang('filemanager');
 			foreach ($rows as $key => $row)
