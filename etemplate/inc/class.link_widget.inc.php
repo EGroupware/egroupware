@@ -13,20 +13,23 @@
 	 * eTemplate Extension: several widgets as user-interface for the link-class
 	 *
 	 * All widgets use the link-registry, to "know" which apps use popups (and what size).
+	 * Participating apps need to register a proper "search_link" hook - see eTemplate-reference (LinkWidgets) for info.
 	 * If run in a popup and the app uses no popups, a target will be set, to open a new full decorated window.
 	 *
 	 * The class contains the following widgets:
 	 * - link: Show a link to one linked entry specified by an array with keys app, id and optional title and help-message
 	 * - link-to: Widget to create links to an other entries of link-aware apps
-	 *	If an id was set, this widgets creats the links without further interaction with the calling code.
+	 *	If the variables $data['widget_id']['to_app'] = $app and $data['widget_id']['to_id'] = $entry_id
+	 *      are set, this widget creates the links without further interaction with the calling code.
 	 *	If the entry does not yet exist, the widget returns an array with the new links in the id. After the
-	 *	entry was successful create, bolink::link($app,$new_id,$arr) has to be called to create the links!
-	 * - link-list: Widget to shows the links to an entry in a table with an unlink icon for each link
+	 *	entry was successfuly created, bolink::link($app,$new_id,$arr) has to be called to create the links!
+	 * - link-list: Widget to show the links to an entry in a table with an unlink icon for each link. Needs the same
+	 *	pair of variables as link-to widget and needs to have the same id, as the data is shared with link-to.
 	 * - link-string: comma-separated list of link-titles with a link to its view method, value is like get_links() 
 	 *	or array with keys to_app and to_id (widget calls then get_links itself)
 	 * - link-add:    Add a new entry of the select app, which is already linked to a given entry
 	 * - link-entry:  Allow to select an entry of a selectable or in options specified app
-	 * - link-apps:   Select an app registerd in the link system, options: '' or 'add'
+	 * - link-apps:   Select an app registered in the link system, options: '' or 'add'
 	 *
 	 *<code>
 	 * $content[$name] = array(
@@ -43,7 +46,7 @@
 	 * );
 	 *</code>
 	 *
-	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefor no render-function.
+	 * This widget is independent of the UI as it only uses etemplate-widgets and has therefore no render-function.
 	 *
 	 * @package etemplate
 	 * @subpackage extensions
