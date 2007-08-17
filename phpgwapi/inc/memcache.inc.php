@@ -4,7 +4,10 @@
  *
  * Fixes a problem of the buildin session handler of the memcache pecl extension, 
  * which can NOT work with sessions > 1MB. This handler splits the session-data
- * in 1MB junk, so memcache can handle them.
+ * in 1MB junk, so memcache can handle them. For the first junk we use an identical
+ * key (just the session-id) as the original memcache session handler. For the further 
+ * junks we add -2, -3, ... so other code (eg. the SyncML code from Horde) can
+ * open the session, if it's size is < 1MB.
  *
  * To enable it, you need to set session.save_handler to 'memcache' and 
  * session.save_path to 'tcp://host:port[,tcp://host2:port,...]', 
@@ -44,8 +47,7 @@ function egw_memcache_read($id)
 {
 	global $egw_memcache_obj;
 
-	$id = 'sess-'.$_REQUEST['domain'].'-'.$id;
-	for($data=false,$n=0; ($read = $egw_memcache_obj->get($id.'-'.$n)); ++$n)
+	for($data=false,$n=0; ($read = $egw_memcache_obj->get($id.($n?'-'.$n:''))); ++$n)
 	{
 		$data .= $read;
 	}
@@ -62,10 +64,9 @@ function egw_memcache_write($id, $sess_data)
 	{
 		$lifetime = 600;
 	}
-	$id = 'sess-'.$GLOBALS['egw_info']['user']['domain'].'-'.$id;
 	for($n=$i=0,$len=_bytes($sess_data); $i < $len; $i += MEMCACHED_MAX_JUNK,++$n)
 	{
-		if (!$egw_memcache_obj->set($id.'-'.$n,_cut_bytes($sess_data,$i,MEMCACHED_MAX_JUNK),0,$lifetime)) return false;
+		if (!$egw_memcache_obj->set($id.($n?'-'.$n:''),_cut_bytes($sess_data,$i,MEMCACHED_MAX_JUNK),0,$lifetime)) return false;
 	}
 	return true;
 }
@@ -97,8 +98,7 @@ function egw_memcache_destroy($id)
 {
 	global $egw_memcache_obj;
 	
-	$id = 'sess-'.$_REQUEST['domain'].'-'.$id;
-	for($n=0; $egw_memcache_obj->delete($id.'-'.$n); ++$n) ;
+	for($n=0; $egw_memcache_obj->delete($id.($n?'-'.$n:'')); ++$n) ;
 	
 	return $n > 0;
 }
