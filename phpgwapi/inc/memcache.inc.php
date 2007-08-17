@@ -38,7 +38,7 @@ function egw_memcache_close()
 	return is_object($egw_memcache_obj) ? $egw_memcache_obj->close() : false;
 }
 
-define('MEMCACHED_MAX_JUNK',1024*1024);
+define('MEMCACHED_MAX_JUNK',1024*1023);	// 1024*1024 is too big, maybe some account-info needs to be added
 
 function egw_memcache_read($id)
 {
