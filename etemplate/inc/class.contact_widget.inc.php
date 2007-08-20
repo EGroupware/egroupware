@@ -84,6 +84,10 @@ class contact_widget
 				$GLOBALS['egw']->translation->add_app('addressbook');
 				$this->contacts->contacts();
 				$cell['sel_options'] = $this->contacts->contact_fields;
+				foreach($this->contacts->customfields as $name => $data)
+				{
+					$cell['sel_options']['#'.$name] = $data['label'];
+				}
 				$cell['type'] = 'select';
 				$cell['no_lang'] = 1;
 				break;
@@ -102,14 +106,35 @@ class contact_widget
 					$value = '';
 					break;
 				}
-				$value = $this->contact[$cell['size']];
+				$type = $cell['size'];
+				$value = $this->contact[$type];
 				$cell['size'] = '';
 				$cell['no_lang'] = 1;
 				$cell['readonly'] = true;
 				
-				switch($cell['size'])
+				switch($type)
 				{
 					// ToDo: pseudo types like address-label
+					
+					case 'bday':
+						$cell['type'] = 'date';
+						$cell['size'] = 'Y-m-d';
+						break;
+						
+					case 'owner':
+					case 'modifier':
+					case 'creator':
+						$cell['type'] = 'select-account';
+						break;
+					
+					case 'modified':
+					case 'created':
+						$cell['type'] = 'date-time';
+						break;
+						
+					case 'cat_id':
+						$cell['type'] = 'select-cat';
+						break;
 
 					default:
 						$cell['type'] = 'label';
