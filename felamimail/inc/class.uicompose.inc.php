@@ -87,7 +87,6 @@
 				}
 			}
 
-			$formData['reply_to'] 	= $this->bocompose->stripSlashes($_POST['reply_to']);
 			$formData['subject'] 	= $this->bocompose->stripSlashes($_POST['subject']);
 			$formData['body'] 	= $this->bocompose->stripSlashes($_POST['body']);
 			$formData['priority'] 	= $this->bocompose->stripSlashes($_POST['priority']);
@@ -198,16 +197,16 @@
 			$selectFrom = $GLOBALS['egw']->html->select('identity', $defaultIdentity, $identities, true, "style='width:100%;'");			
 			$this->t->set_var('select_from', $selectFrom);
 
-			// from, to, cc
+			// from, to, cc, replyto
 			$this->t->set_var('img_clear_left', $GLOBALS['egw']->common->image('felamimail','clear_left'));
 			$this->t->set_var('img_fileopen', $GLOBALS['egw']->common->image('phpgwapi','fileopen'));
 			$this->t->set_var('img_mail_send', $GLOBALS['egw']->common->image('felamimail','mail_send'));
 			$this->t->set_var('img_attach_file', $GLOBALS['egw']->common->image('felamimail','attach'));
 			$this->t->set_var('ajax-loader', $GLOBALS['egw']->common->image('felamimail','ajax-loader'));
 			$this->t->set_var('img_fileexport', $GLOBALS['egw']->common->image('felamimail','fileexport'));
-			
+
 			$destinationRows = 0;
-			foreach(array('to','cc','bcc') as $destination) {
+			foreach(array('to','cc','bcc','replyto') as $destination) {
 				foreach((array)$sessionData[$destination] as $key => $value) {
 					$selectDestination = $GLOBALS['egw']->html->select('destination[]', $destination, $this->destinations, false, "style='width: 100%;' onchange='fm_compose_changeInputType(this)'");
 					$this->t->set_var('select_destination', $selectDestination);
@@ -230,9 +229,6 @@
 			$this->t->set_var('address', '');
 			$this->t->parse('destinationRows','destination_row',True);
 
-			$this->t->set_var("cc",@htmlentities($sessionData['cc'],ENT_QUOTES,$this->displayCharset));
-			$this->t->set_var("bcc",@htmlentities($sessionData['bcc'],ENT_QUOTES,$this->displayCharset));
-			$this->t->set_var("reply_to",@htmlentities($sessionData['reply_to'],ENT_QUOTES,$this->displayCharset));
 			$this->t->set_var("subject",@htmlentities($sessionData['subject'],ENT_QUOTES,$this->displayCharset));
 			$this->t->set_var('addressbookImage',$GLOBALS['egw']->common->image('phpgwapi/templates/phpgw_website','users'));
 			$this->t->set_var('infologImage',$GLOBALS['egw']->html->image('felamimail','to_infolog',lang('Save as infolog'),'width="17px" height="17px" valign="middle"' ));

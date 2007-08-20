@@ -657,13 +657,13 @@
 				}
 			}
 			
-			if (!empty($_formData['reply_to'])) {
-				$address_array	= imap_rfc822_parse_adrlist($this->sessionData['reply_to'],'');
-				if(count($address_array)>0) {
-					$emailAddress = $address_array[0]->mailbox."@".$address_array[0]->host;
-					#$emailName = $bofelamimail->encodeHeader($address_array[0]->personal, 'q');
-					#$_mailObject->AddReplyTo($emailAddress, $emailName);
-					$_mailObject->AddReplyTo($emailAddress, $address_array[0]->personal);
+			foreach((array)$_formData['replyto'] as $address) {
+				$address_array  = imap_rfc822_parse_adrlist($address,'');
+				foreach((array)$address_array as $addressObject) {
+					$emailAddress = $addressObject->mailbox. (!empty($addressObject->host) ? '@'.$addressObject->host : '');
+					#$emailName = $bofelamimail->encodeHeader($addressObject->personal, 'q');
+					#$_mailObject->AddBCC($emailAddress, $emailName);
+					$_mailObject->AddReplyto($emailAddress, $addressObject->personal);
 				}
 			}
 			
@@ -756,13 +756,12 @@
 			$mail 		=& CreateObject('phpgwapi.phpmailer');
 			$messageIsDraft	=  false;
 
-			
 			$this->sessionData['identity']	= $_formData['identity'];
 			$this->sessionData['to']	= $_formData['to'];
 			$this->sessionData['cc']	= $_formData['cc'];
 			$this->sessionData['bcc']	= $_formData['bcc'];
 			$this->sessionData['folder']	= $_formData['folder'];
-			$this->sessionData['reply_to']	= trim($_formData['reply_to']);
+			$this->sessionData['replyto']	= $_formData['replyto'];
 			$this->sessionData['subject']	= trim($_formData['subject']);
 			$this->sessionData['body']	= $_formData['body'];
 			$this->sessionData['priority']	= $_formData['priority'];
@@ -770,7 +769,7 @@
 			$this->sessionData['disposition'] = $_formData['disposition'];
 			$this->sessionData['mimeType']	= $_formData['mimeType'];
 			$this->sessionData['to_infolog'] = $_formData['to_infolog'];
-			
+
 			if(empty($this->sessionData['to']) && empty($this->sessionData['cc']) && 
 			   empty($this->sessionData['bcc']) && empty($this->sessionData['folder'])) {
 			   	$messageIsDraft = true;
