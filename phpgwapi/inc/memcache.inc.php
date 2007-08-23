@@ -4,9 +4,9 @@
  *
  * Fixes a problem of the buildin session handler of the memcache pecl extension, 
  * which can NOT work with sessions > 1MB. This handler splits the session-data
- * in 1MB junk, so memcache can handle them. For the first junk we use an identical
+ * in 1MB chunk, so memcache can handle them. For the first chunk we use an identical
  * key (just the session-id) as the original memcache session handler. For the further 
- * junks we add -2, -3, ... so other code (eg. the SyncML code from Horde) can
+ * chunks we add -2, -3, ... so other code (eg. the SyncML code from Horde) can
  * open the session, if it's size is < 1MB.
  *
  * To enable it, you need to set session.save_handler to 'memcache' and 
@@ -91,7 +91,7 @@ function _cut_bytes(&$data,$offset,$len=null)
 	
 	if (is_null($mbstring_func_overload)) _test_mbstring_func_overload();
 	
-	return $mbstring_func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len,'ascii');
+	return $mbstring_func_overload ? mb_substr($data,$offset,$len,'ascii') : substr($data,$offset,$len);
 }
 
 function egw_memcache_destroy($id)
