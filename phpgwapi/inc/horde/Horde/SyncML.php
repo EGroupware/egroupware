@@ -150,6 +150,11 @@ class Horde_SyncML_SyncMLHdr extends Horde_SyncML_ContentHandler {
         // custom session id.
         session_destroy();
 
+		// we need to (re-)load our custom memcache session handler, as session_destroy unloads it somehow
+		if (extension_loaded('memcache') && ini_get('session.save_handler') == 'user')
+		{
+			session_set_save_handler("egw_memcache_open", "egw_memcache_close", "egw_memcache_read", "egw_memcache_write", "egw_memcache_destroy", "egw_memcache_gc");
+		}
         // Reload the Horde SessionHandler if necessary.
         Horde::setupSessionHandler();
 
