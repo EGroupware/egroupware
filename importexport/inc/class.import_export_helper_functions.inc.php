@@ -29,8 +29,9 @@ class import_export_helper_functions {
 	 * If timestring is empty, php strtotime is used.
 	 * @param string $_string time string to convert
 	 * @param string $_format format of time string e.g.: d.m.Y H:i
+	 * @param int $_is_dst is day light saving time? 0 = no, 1 = yes, -1 = system default
 	 */
-	public static function custom_strtotime( $_string, $_format='' ) {
+	public static function custom_strtotime( $_string, $_format='', $_is_dst = -1) {
 		if ( empty( $_format ) ) return strtotime( $_string );
 		$fparams = explode( ',', chunk_split( $_format, 1, ',' ) );
 		$spos = 0;
@@ -53,7 +54,7 @@ class import_export_helper_functions {
 		}
 		
 		print_debug("hour:$hour; min:$min; sec:$sec; mon:$mon; day:$day; year:$year;\n");
-		$timestamp = mktime($hour, $min, $sec, $mon, $day, $year, 0);
+		$timestamp = mktime($hour, $min, $sec, $mon, $day, $year, $_is_dst);
 		
 		// offset given?
 		if ( isset( $offset ) && strlen( $offset == 5 ) ) {
