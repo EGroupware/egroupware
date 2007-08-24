@@ -37,7 +37,7 @@ class accounts_backend
 	/**
 	 * instance of the db class
 	 *
-	 * @var object
+	 * @var egw_db
 	 */
 	var $db;
 	/**
@@ -444,6 +444,10 @@ class accounts_backend
 		if ($account_type)
 		{
 			$where['account_type'] = $account_type;
+		}
+		else
+		{
+			$where[] = 'account_id IS NOT NULL';	// otherwise contacts with eg. the same email hide the accounts!	
 		}
 		$this->db->select($table,$cols,$where,__LINE__,__FILE__);
 		if(!$this->db->next_record()) return false;
