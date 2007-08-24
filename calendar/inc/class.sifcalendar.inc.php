@@ -73,7 +73,7 @@
 		function endElement($_parser, $_tag) {
 			#error_log($_tag .' => '. $this->sifData);
 			if(!empty($this->sifMapping[$_tag])) {
-				$this->event[$this->sifMapping[$_tag]] = $this->sifData;
+				$this->event[$this->sifMapping[$_tag]] = trim($this->sifData);
 			}
 			unset($this->sifData);
 		}
