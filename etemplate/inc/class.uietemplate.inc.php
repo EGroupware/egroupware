@@ -326,6 +326,7 @@
 				'java_script' => $GLOBALS['egw_info']['etemplate']['java_script'],
 				'java_script_from_flags' => $GLOBALS['egw_info']['flags']['java_script'],
 				'java_script_body_tags' => $GLOBALS['egw']->js->body,
+				'java_script_files' => $GLOBALS['egw']->js->files,
 				'include_xajax' => $GLOBALS['egw_info']['flags']['include_xajax'],
 				'dom_enabled' => $GLOBALS['egw_info']['etemplate']['dom_enabled'],
 				'hooked' => $hooked ? $hooked : $GLOBALS['egw_info']['etemplate']['hook_content'],
@@ -487,6 +488,15 @@ foreach($sess as $key => $val)
 						//error_log($GLOBALS['egw']->js->body[$tag]);
 						$GLOBALS['egw']->js->body[$tag] .= $code;
 					}
+				}
+				if (is_array($session_data['java_script_files']))
+				{
+					if( !is_object($GLOBALS['egw']->js))
+					{
+						$GLOBALS['egw']->js =& CreateObject('phpgwapi.javascript');
+					}
+					$GLOBALS['egw']->js->files = !is_array($GLOBALS['egw']->js->files) ? $session_data['java_script_files'] :
+						$this->complete_array_merge($GLOBALS['egw']->js->files,$session_data['java_script_files']);
 				}
 				
 				//echo "<p>process_exec($this->name): <font color=red>loop is set</font>, content=</p>\n"; _debug_array($content);
@@ -1015,8 +1025,9 @@ foreach($sess as $key => $val)
 						);
 					}
 					break;
-				case 'html':	//  size: [link],[link_target],[link_popup_size],[link_title]
-					list($extra_link,$extra_link_target,$extra_link_popup,$extra_link_title) = explode(',',$cell_options);
+				case 'html':	//  size: [link],[link_target],[link_popup_size],[link_title],[activate_links]
+					list($extra_link,$extra_link_target,$extra_link_popup,$extra_link_title,$activate_links) = explode(',',$cell_options);
+					if ($activate_links) $value = $this->html->activate_links($value);
 					$html .= $value;
 					break;
 				case 'int':		// size: [min],[max],[len],[precission/sprint format]
