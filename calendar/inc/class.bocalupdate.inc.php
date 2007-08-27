@@ -439,52 +439,52 @@ class bocalupdate extends bocal
 				$action = lang('Canceled');
 				$msg = 'Canceled';
 				$msgtype = '"calendar";';
-				$method = 'cancel';
+				$method = 'CANCEL';
 				break;
 			case MSG_MODIFIED:
 				$action = lang('Modified');
 				$msg = 'Modified';
 				$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
-				$method = 'request';
+				$method = 'REQUEST';
 				break;
 			case MSG_DISINVITE:
 				$action = lang('Disinvited');
 				$msg = 'Disinvited';
 				$msgtype = '"calendar";';
-				$method = 'cancel';
+				$method = 'CANCEL';
 				break;
 			case MSG_ADDED:
 				$action = lang('Added');
 				$msg = 'Added';
 				$msgtype = '"calendar"; Version="'.$version.'"; Id="'.$new_event['id'].'"';
-				$method = 'request';
+				$method = 'REQUEST';
 				break;
 			case MSG_REJECTED:
 				$action = lang('Rejected');
 				$msg = 'Response';
 				$msgtype = '"calendar";';
-				$method = 'reply';
+				$method = 'REPLY';
 				break;
 			case MSG_TENTATIVE:
 				$action = lang('Tentative');
 				$msg = 'Response';
 				$msgtype = '"calendar";';
-				$method = 'reply';
+				$method = 'REPLY';
 				break;
 			case MSG_ACCEPTED:
 				$action = lang('Accepted');
 				$msg = 'Response';
 				$msgtype = '"calendar";';
-				$method = 'reply';
+				$method = 'REPLY';
 				break;
 			case MSG_ALARM:
 				$action = lang('Alarm');
 				$msg = 'Alarm';
 				$msgtype = '"calendar";';
-				$method = 'publish';	// duno if thats right
+				$method = 'PUBLISH';	// duno if thats right
 				break;
 			default:
-				$method = 'publish';
+				$method = 'PUBLISH';
 		}
 		$notify_msg = $this->cal_prefs['notify'.$msg];
 		if (empty($notify_msg))
@@ -582,7 +582,7 @@ class bocalupdate extends bocal
 
 					case  'ical':
 						$ics = ExecMethod2('calendar.boical.exportVCal',$event['id'],'2.0',$method);
-						if ($method == "request") 
+						if ($method == 'REQUEST') 
 						{
 							$send->AddStringAttachment($ics, "cal.ics", "8bit", "text/calendar; method=$method");
 						}
