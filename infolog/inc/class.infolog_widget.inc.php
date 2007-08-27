@@ -99,7 +99,7 @@ class infolog_widget
 					$value = '';
 					break;
 				}
-				list($type,$compare,$alternatives) = explode(',',$cell['size']);
+				list($type,$compare,$alternatives,$contactfield,$regex,$replace) = explode(',',$cell['size'],6);
 				$value = $this->info[$type];
 				$cell['size'] = '';
 				$cell['no_lang'] = 1;
@@ -109,7 +109,7 @@ class infolog_widget
 				{
 					case '':	// Sum of the alternatives
 						$cell['type'] = 'float';
-						$cell['size'] = ',,,2';
+						$cell['size'] = ',,,%0.2lf';
 						$value = 0.0;
 						foreach(explode(':',$alternatives) as $name)
 						{
@@ -173,6 +173,23 @@ class infolog_widget
 				{
 					$value = $value == $compare ? 'X' : '';
 					$cell['type'] = 'label';
+				}
+				// modify the value with a regular expression
+				if (!empty($regex))
+				{
+					$parts = explode('/',$regex);
+					if (strchr(array_pop($parts),'e') === false)	// dont allow e modifier, which would execute arbitrary php code
+					{
+						$value = preg_replace($regex,$replace,$value);
+					}
+					$cell['type'] = 'label';
+					$cell['size'] = '';
+				}
+				// use a contact widget to render the value, eg. to fetch contact data from an linked infolog
+				if (!empty($contactfield))
+				{
+					$cell['type'] = 'contact-value';
+					$cell['size'] = $contactfield;
 				}
 				break;
 		}
