@@ -10,6 +10,21 @@
    * @note <b> THIS IS STILL EXPERIMENTAL CODE </b> do not use in production.
    * @note this script is supposed to be at:  egw-root/icalsrv.php
    * 
+   * NEW RalfBecker Aug 2007
+   * many modifications to improve the support of (at least) lightning
+   * - changed default uid handling to UID2UID (means keep them unchanged), as the other
+   *   modes created doublicates on client and server, as the client did not understand
+   *   that the server changes his uid's (against the RFC specs).
+   * - ability to delete events (not yet InfoLogs!), by tracking the id's of the GET request 
+   *   of the client and deleting the ones NOT send back to the server in PUT requests
+   * - added etag handling to allow to reject put requests if the calendar is not up to date
+   *   (HTTP_IF header with etag in client PUT requests) and to report unmodified calendars
+   *   to the client (HTTP_IF_NONE_MATCH header with etag gets 304 Not modified response)
+   * - returning 501 Not implemented response, for WebDAV/CalDAV request (eg. PROPFIND), to 
+   *   let the client know we dont support it
+   * - ability to use contacts identified by their mail address as participants (mail addresses
+   *   which are no contacts still get written to the description!)
+   * - support uid for InfoLog (requires InfoLog version >= 1.5)
    * @version 0.9.37-ng-a2 added a todo plan for v0.9.40
    * @date 20060510
    * @since 0.9.37-ng-a1 removed fixed default domain authentication
@@ -133,7 +148,12 @@
 	* the related Egroupware element.
 	* See further in @ref secuidmapping in the icalsrv_resourcehandler documentation.
 	*/
-	$uid_export_mode = UMM_ID2UID;
+	// New RalfBecker Aug 2007
+	// NOT using UID2UID creates doublicates on the iCal client, as it does NOT understand,
+	// that posted events get their uid changed by the server.
+	// I think uid's should be handled as specified in the RFC: the first clients assigns them
+	// AND noone is supposted to change them after that!
+	$uid_export_mode = UMM_UID2UID;
 
 	/** uid  mapping import  configuration switch
 	* @var int
@@ -142,7 +162,9 @@
 	* elements, that are then updated with the ical info.
 	* See further in @ref secuidmapping in the icalsrv_resourcehandler documentation.
 	*/
-	$uid_import_mode = UMM_UID2ID;
+	// New RalfBecker Aug 2007
+	// NOT using UID2UID creates doublicates on the iCal client, see above
+	$uid_import_mode = UMM_UID2UID;
 
 	/** 
 	* @section secisuidmapping Basic Possible settings of UID to ID mapping.
@@ -326,13 +348,13 @@
 
 	// build a virtual calendar with ical facilities from the found vircal
 	// array_storage data
-	$icalvc =& CreateObject('icalsrv.icalvircal');
+	require_once(EGW_INCLUDE_ROOT.'/icalsrv/inc/class.icalvircal.inc.php');
+	$icalvc =& new icalvircal;
 	if(!$icalvc->fromArray($vircal_arstore))
 	{
 		error_log('icalsrv.php: ' . $cnmsg . ' couldnot restore from repository.' );
 		fail_exit($cnmsg . ' internal problem ' , '403');
 	}
-
 	// YES: $icalvc created ok! acces rights needs to be checked though!
 
 	// HACK: ATM basic auth is always needed!! (JVL) ,so we force icalvc into it
@@ -409,11 +431,14 @@
 	$icalvc->reimport_missing_elements = $reimport_missing_elements;
 	$logmsg = "";
 
-	// oke now process the actual import or export to/from icalvc..
-	if($_SERVER['REQUEST_METHOD'] == 'PUT')
+	
+	// NEW RalfBecker Aug 2007
+	// We have to handle the request methods different, specially the WebDAV ones we dont support
+	switch($_SERVER['REQUEST_METHOD'])
 	{
+	case 'PUT':
 		// *** PUT Request so do an Import *************
-
+		
 		if($isdebug)
 		{
 			error_log('icalsrv.php: importing, by user:' .$GLOBALS['egw_info']['user']['account_id']
@@ -435,6 +460,21 @@
 			fail_exit('importing in groupcalendars is not allowed', '403');
 		}
 
+		// NEW RalfBecker Aug 2007
+		// for a PUT we have to check if the currently loaded calendar is still up to date
+		// (not changed eg. by someone else or via the webfrontend).
+		// This is done by comparing the ETAG given as HTTP_IF with the current ETAG (last modification date)
+		// of the calendar --> on failure we return 412 Precondition failed, to not overwrite the modifications 
+		if (isset($_SERVER['HTTP_IF']) && preg_match('/\(\[([0-9]+)\]\)/',$_SERVER['HTTP_IF'],$matches))
+		{
+			$etag = $icalvc->get_etag();
+			//error_log("PUT: current etag=$etag, HTTP_IF=$_SERVER[HTTP_IF]");
+			if ($matches[1] != $etag)
+			{
+				fail_exit('Precondition Failed',412);
+			}
+		}
+	
 		// I0 read the payload
 		$logmsg = 'IMPORTING in '. $importMode . ' mode';
 		$fpput = fopen("php://input", "r");
@@ -469,16 +509,31 @@
 			log_ical($logmsg,"import",$vcalstr);
 		}
 
+		// NEW RalfBecker Aug 2007
+		// we have to send a new etag header, as otherwise the client (at least lightning) has a wrong etag,
+		// if it's not requesting the calendar again via GET
+		header("ETag: ". $icalvc->get_etag());
+
 		// handle response ...
 		$GLOBALS['egw']->common->egw_exit();
-	}
-	else
-	{
-		// *** GET (or POST?) Request so do an export
+	
+	case 'GET':
+		// *** GET Request so do an export
 		$logmsg = 'EXPORTING';
 		// derive a ProductType from our http Agent and set it in icalvc
 		$icalvc->deviceType = icalsrv_resourcehandler::httpUserAgent2deviceType($reqagent);
 
+		// NEW RalfBecker Aug 2007
+		// if an IF_NONE_MATCH is given, check if we need to send a new export, or the current one is still up-to-date
+		if (isset($_SERVER['HTTP_IF_NONE_MATCH']))
+		{
+			$etag = $icalvc->get_etag();
+			error_log("GET: current etag=$etag, HTTP_IF_NONE_MATCH=$_SERVER[HTTP_IF_NONE_MATCH]");
+			if ($_SERVER['HTTP_IF_NONE_MATCH'] == $etag)
+			{
+				fail_exit('Not Modified',304);
+			}
+		}
 		// export the data from the virtual calendar
 		$vcalstr = $icalvc->export_vcal();
 
@@ -493,6 +548,10 @@
 			$logmsg .= "\n exported " . $cnmsg ." : OK ";
 		} 
 		// DONE exporting
+		
+		// NEW RalfBecker Aug 2007
+		// returnung max modification date of events as etag header
+		header("ETag: ". $icalvc->export_etag);
 
 		if($logdir) log_ical($logmsg,"export",$vcalstr);
 		// handle response ...
@@ -503,6 +562,11 @@
 		}
 		echo $vcalstr;
 		$GLOBALS['egw']->common->egw_exit();
+
+	default:
+	case 'PROPFIND':
+		// tell the client we do NOT support full WebDAV/CalDAV
+		fail_exit('Not Implemented',501);
 	}
 
 	// // --- SOME UTILITY FUNCTIONS -------
