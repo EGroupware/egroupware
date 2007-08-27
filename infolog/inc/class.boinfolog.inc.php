@@ -438,10 +438,10 @@ class boinfolog
 	{
 		if (is_array($info_id))
 		{
-			$info_id = (int) (isset($info_id['info_id']) ? $info_id['info_id'] : $info_id[0]);
+			$info_id = isset($info_id['info_id']) ? $info_id['info_id'] : $info_id[0];
 		}
 
-		if ($this->so->read($info_id) === False)
+		if (($data = $this->so->read($info_id)) === False)
 		{
 			if ($this->xmlrpc)
 			{
@@ -449,7 +449,9 @@ class boinfolog
 			}
 			return null;
 		}
-		if (!$this->check_access($info_id,EGW_ACL_READ))	// check behind read, to prevent a double read
+		$info_id = $data['info_id'];	// in case the uid was specified
+
+		if (!$this->check_access($data,EGW_ACL_READ))	// check behind read, to prevent a double read
 		{
 			if ($this->xmlrpc)
 			{
@@ -457,7 +459,6 @@ class boinfolog
 			}
 			return False;
 		}
-		$data = $this->so->data;
 
 		if ($data['info_subject'] == $this->subject_from_des($data['info_des']))
 		{

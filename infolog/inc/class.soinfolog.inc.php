@@ -353,18 +353,17 @@ class soinfolog 				// DB-Layer
 	 *
 	 * some cacheing is done to prevent multiple reads of the same entry
 	 *
-	 * @param $info_id id of log-entry
+	 * @param $info_id id or uid of entry
 	 * @return array/boolean the entry as array or False on error (eg. entry not found)
 	 */
 	function read($info_id)		// did _not_ ensure ACL
 	{
-		$info_id = (int) $info_id;
-		
-		if ($info_id && $info_id == $this->data['info_id'])
+		if ($info_id && ((int)$info_id == $this->data['info_id'] || $info_id == $this->data['info_uid']))
 		{
 			return $this->data;		// return the already read entry
 		}
-		if ($info_id <= 0 || !$this->db->select($this->info_table,'*',array('info_id'=>$info_id),__LINE__,__FILE__) ||
+		if (!$info_id || !$this->db->select($this->info_table,'*',
+			$this->db->expression($this->info_table,array('info_id'=>$info_id),' OR ',array('info_uid'=>$info_id)),__LINE__,__FILE__) ||
 			 !(($this->data = $this->db->row(true))))
 		{
 			$this->init( );
@@ -374,7 +373,7 @@ class soinfolog 				// DB-Layer
 		{
 			$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
 		}
-		$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$info_id),__LINE__,__FILE__);
+		$this->db->select($this->extra_table,'info_extra_name,info_extra_value',array('info_id'=>$this->data['info_id']),__LINE__,__FILE__);
 		while ($this->db->next_record())
 		{
 			$this->data['#'.$this->db->f(0)] = $this->db->f(1);
@@ -527,9 +526,14 @@ class soinfolog 				// DB-Layer
 			if ($check_modified) $where['info_datemodified'] = $check_modified;
 			if (!$this->db->update($this->info_table,$to_write,$where,__LINE__,__FILE__))
 			{
+				//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning false");
 				return false;	// Error
 			}
-			if ($this->db->affected_rows() < 1) return 0;	// someone else updated the modtime or deleted the entry
+			if ($check_modified && $this->db->affected_rows() < 1)
+			{
+				//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning 0 (nothing updated, eg. condition not met)");
+				return 0;	// someone else updated the modtime or deleted the entry
+			}
 		}
 		else
 		{
@@ -537,6 +541,12 @@ class soinfolog 				// DB-Layer
 
 			$this->db->insert($this->info_table,$to_write,false,__LINE__,__FILE__);
 			$info_id = $this->data['info_id'] = $this->db->get_last_insert_id($this->info_table,'info_id');
+			
+			if (!$this->data['info_uid'])		// new entry without uid --> create one based on our info_id and save it
+			{
+				$this->data['info_uid'] = $GLOBALS['egw']->common->generate_uid('infolog',$info_id);
+				$this->db->update($this->info_table,array('info_uid'=>$this->data['info_uid']),array('info_id'=>$info_id),__LINE__,__FILE__);
+			}
 		}
 		//echo "<p>soinfolog.write values= "; _debug_array($values);
 
@@ -557,6 +567,7 @@ class soinfolog 				// DB-Layer
 				),__LINE__,__FILE__);
 		}
 		// echo "<p>soinfolog.write this->data= "; _debug_array($this->data);
+		//error_log("### soinfolog::write(".print_r($to_write,true).") where=".print_r($where,true)." returning id=".$this->data['info_id']);
 
 		return $this->data['info_id'];
 	}

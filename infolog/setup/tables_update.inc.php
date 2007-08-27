@@ -574,3 +574,18 @@
 	{
 		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.4';
 	}
+
+	$test[] = '1.4';
+	function infolog_upgrade1_4()
+	{
+		$GLOBALS['egw_setup']->oProc->AddColumn('egw_infolog','info_uid',array(
+			'type' => 'varchar',
+			'precision' => '255'
+		));
+		$GLOBALS['egw_setup']->db->query("SELECT config_value FROM egw_config WHERE config_app='phpgwapi' AND config_name='install_id'",__LINE__,__FILE__);
+		$install_id = $GLOBALS['egw_setup']->db->next_record() ? $GLOBALS['egw_setup']->db->f(0) : md5(time());
+		$GLOBALS['egw_setup']->db->query('UPDATE egw_infolog SET info_uid='.$GLOBALS['egw_setup']->db->concat("'infolog-'",'info_id',"'-$install_id'"),__LINE__,__FILE__);
+
+		return $GLOBALS['setup_info']['infolog']['currentver'] = '1.5.001';
+	}
+?>
