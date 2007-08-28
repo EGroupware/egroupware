@@ -269,7 +269,8 @@
 				{
 					$dcell['type'] = 'html';
 					$dcell['name'] = 'str';
-					$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],lang($cell['help']));
+					$jscaloptions =  $cell['onchange'] ? ( "onchange='". ( (int)$cell['onchange'] === 1 ? "this.form.submit();'" : $cell['onchange']. "'" ) ) : '' ;
+					$value['str'] = $this->jscal->input($name.'[str]',False,$value['Y'],$value['m'],$value['d'],lang($cell['help']),$jscaloptions);
 					$n = 2;				// no other fields
 					$options &= ~2;		// no set-today button
 				}
