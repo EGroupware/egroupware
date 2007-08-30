@@ -1727,6 +1727,8 @@ $readonlys['button[vcard]'] = true;
 			$user = $this->read('account:'.$GLOBALS['egw_info']['user']['account_id']);
 			$userphone = is_array($user) ? ($user['tel_work'] ? $user['tel_work'] : $user['tel_home']) : false;
 		}
+		$number = str_replace(array(' ','(',')','/','-'),'',$number);	// remove number formatting chars messing up the links
+
 		$link = str_replace(array('%1','%u','%t'),array(urlencode($number),$GLOBALS['egw_info']['user']['account_lid'],$userphone),
 			$this->config['call_link']);
 	}
