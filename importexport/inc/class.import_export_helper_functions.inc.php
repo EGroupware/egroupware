@@ -128,7 +128,7 @@ class import_export_helper_functions {
 		
 		$cat_names = is_array( $_cat_names ) ? $_cat_names : explode( ',', $_cat_names );
 		foreach ( $cat_names as $cat_name ) {
-			
+			if ( $cat_name == '' ) continue;
 			if ( ( $cat_id = $cats->name2id( $cat_name ) ) == 0 ) {
 				$cat_id = $cats->add( array( 
 					'name' => $cat_name, 
@@ -179,10 +179,11 @@ class import_export_helper_functions {
 		
 		$PSep = '||'; // Pattern-Separator, separats the pattern-replacement-pairs in conversion
 		$ASep = '|>'; // Assignment-Separator, separats pattern and replacesment
-		$CPre = '|['; $CPos = ']'; // |[_record-idx] is expanded to the corespondig value
+		$CPre = '|['; $CPos = ']';  // |[_record-idx] is expanded to the corespondig value
 		$TPre = '|T{'; $TPos = '}'; // |{_record-idx} is trimmed
-		$CntlPre = '|TC{';		   // Filter all cntl-chars \x01-\x1f and trim
+		$CntlPre = '|TC{';		    // Filter all cntl-chars \x01-\x1f and trim
 		$CntlnCLPre  = '|TCnCL{';   // Like |C{ but allowes CR and LF
+		$INE = '|INE{';             // Only insert if stuff in ^^ is not empty
 		
 		foreach ( $_conversion as $idx => $conversion_string ) {
 			if ( empty( $conversion_string ) ) continue;
@@ -215,11 +216,11 @@ class import_export_helper_functions {
 						);
 					}
 					
-					$val = preg_replace_callback( "/(cat|account|strtotime)\(([^)]+)\)/i", array( self, 'c2_dispatcher') , $val );
+					$val = preg_replace_callback( "/(cat|account|strtotime)\(([^)]*)\)/i", array( self, 'c2_dispatcher') , $val );
 				}
 			}
 			// clean each field
-			$val = preg_replace_callback("/(\|T\{|\|TC\{|\|TCnCL\{)(.*)\}/", array( self, 'strclean'), $val );
+			$val = preg_replace_callback("/(\|T\{|\|TC\{|\|TCnCL\{|\|INE\{)(.*)\}/", array( self, 'strclean'), $val );
 			
 			$_record[$idx] = $val;
 		}
@@ -252,7 +253,8 @@ class import_export_helper_functions {
 		switch( $_matches[1] ) {
 			case '|T{' : return trim( $_matches[2] );
 			case '|TC{' : return trim( preg_replace( '/[\x01-\x1F]+/', '', $_matches[2] ) );
-			case '|TCnCL{' : return trim( preg_replace( '/[\x01-\x09\x11\x12\x14-\x1F]+/', '', $_matches[2] ) );	
+			case '|TCnCL{' : return trim( preg_replace( '/[\x01-\x09\x11\x12\x14-\x1F]+/', '', $_matches[2] ) );
+			case '|INE{' : return preg_match( '/\^.+\^/', $_matches[2] ) ? $_matches[2] : '';	
 			default:
 				throw new Exception('Error in conversion string! "'. substr( $_matches[1], 0, -1 ). '" is not valid!');
 		}

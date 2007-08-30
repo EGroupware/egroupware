@@ -74,7 +74,7 @@ class export_csv implements iface_export_record
 	 * @param array _options options for specific backends
 	 * @return bool
 	 */
-	public function __construct( $_stream, $_options ) {
+	public function __construct( $_stream, array $_options ) {
 		if (!is_object($GLOBALS['egw']->translation)) {
 			$GLOBALS['egw']->translation = new translation();
 		}
