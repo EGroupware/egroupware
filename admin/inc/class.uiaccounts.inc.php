@@ -588,7 +588,7 @@
 				$errors = $this->bo->add_user($userData);
 				if(is_array($errors))
 				{
-					$this->create_edit_user($userData,$errors);
+					$this->create_edit_user(0,$userData,$errors);
 					$GLOBALS['egw']->common->egw_exit();
 				}
 				$GLOBALS['egw']->redirect($GLOBALS['egw']->link('/index.php','menuaction=admin.uiaccounts.list_users'));
