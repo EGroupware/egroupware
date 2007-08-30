@@ -73,7 +73,7 @@ class import_csv implements iface_import_record { //, Iterator {
 	 * @param string $_resource resource containing data. May be each valid php-stream
 	 * @param array $_options options for the resource array with keys: charset and fieldsep
 	 */
-	public function __construct( $_resource,  $_options ) {
+	public function __construct( $_resource,  array $_options ) {
 		$this->resource = $_resource;
 		$this->csv_fieldsep = $_options['fieldsep'];
 		$this->csv_charset = $_options['charset'];
