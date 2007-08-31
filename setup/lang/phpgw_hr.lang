@@ -236,7 +236,7 @@ mcrypt initialization vector	setup	hr	MCrypt initialization vector
 mcrypt mode (default cbc)	setup	hr	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	hr	Mcrypt Settings (requires mcrypt PHP extension)
 mcrypt version	setup	hr	MCrypt version
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	hr	memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	hr	memory_limit is set to less than %1: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
 minimum account id (e.g. 500 or 100, etc.)	setup	hr	Minimum account id (e.g. 500 or 100, etc.)
 modifications have been completed!	setup	hr	Modifications have been completed!
 modify	setup	hr	Modify

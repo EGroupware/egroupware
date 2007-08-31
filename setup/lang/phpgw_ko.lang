@@ -236,7 +236,7 @@ mcrypt initialization vector	setup	ko	MCrypt 초기화 백터
 mcrypt mode (default cbc)	setup	ko	Mcrypt 방식 (기본 CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ko	Mcrypt 설정 (mcrypt PHP 확장에 필요함)
 mcrypt version	setup	ko	MCrypt 버전
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit 이 16M이하로 설정되어 있습니다: eGroupWare의 특정 응용프로그램은 8M이상 권장할 수도 있습니다, 물론 가씀 실패하는 경우는 예외입니다
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ko	memory_limit 이 %1이하로 설정되어 있습니다: eGroupWare의 특정 응용프로그램은 8M이상 권장할 수도 있습니다, 물론 가씀 실패하는 경우는 예외입니다
 minimum account id (e.g. 500 or 100, etc.)	setup	ko	최소 계정ID (예 500 나 100, 기타.)
 modifications have been completed!	setup	ko	변경이 완료되었습니다!
 modify	setup	ko	변경

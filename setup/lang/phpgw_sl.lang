@@ -328,7 +328,7 @@ mcrypt initialization vector	setup	sl	Mcrypt začetni vektor
 mcrypt mode (default cbc)	setup	sl	Mcrypt način (privzeto CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sl	Mcrypt nastavitve (zahteva mcrypt razširitev PHPja)
 mcrypt version	setup	sl	Različica mcrypt
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sl	Omejitev spomina (memory_limit) je nastavljena na manj kot 16 Mb: nekatere aplikacije v eGW potrebujejo več kot priporočljivih 8 Mb zato se lahko pojavijo občasne napake
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sl	Omejitev spomina (memory_limit) je nastavljena na manj kot 16 Mb: nekatere aplikacije v eGW potrebujejo več kot priporočljivih 8 Mb zato se lahko pojavijo občasne napake
 minimum account id (e.g. 500 or 100, etc.)	setup	sl	Najnižji ID računa (npr. 500 ali 100)
 minute	setup	sl	minuta
 missing or uncomplete mailserver configuration	setup	sl	Manjkajoča ali nepopolna konfiguracija poštnega strežnika

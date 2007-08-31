@@ -3,6 +3,7 @@
 %1 created in %2.	setup	en	%1 created in %2.
 %1 does not exist !!!	setup	en	%1 does not exist !!!
 %1 is %2%3 !!!	setup	en	%1 is %2%3 !!!
+%1 is needed by: %2.	setup	en	%1 is needed by: %2.
 %1, %2 or %3 the configuration file.	setup	en	%1, %2 or %3 the configuration file.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	en	'%1' is not allowed as %2. arguments of option %3 !!!
 (searching accounts and changing passwords)	setup	en	(searching accounts and changing passwords)
@@ -342,7 +343,7 @@ mcrypt initialization vector	setup	en	MCrypt initialization vector
 mcrypt mode (default cbc)	setup	en	Mcrypt mode (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	en	Mcrypt Settings (requires mcrypt PHP extension)
 mcrypt version	setup	en	MCrypt version
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	en	memory_limit is set to less than %1: some applications of eGroupWare need more than the recommend 8M, expect occasional failures
 migration between egroupware account repositories	setup	en	Migration between eGroupWare account repositories
 minimum account id (e.g. 500 or 100, etc.)	setup	en	Minimum account id (e.g. 500 or 100, etc.)
 minute	setup	en	minute
@@ -518,6 +519,7 @@ the first step in installing egroupware is to ensure your environment has the ne
 the following applications need to be upgraded:	setup	en	The following applications need to be upgraded:
 the function %1 is needed from: %2.	setup	en	The function %1 is needed from: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	en	The imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). It's needed to upload photos for contacts.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	en	The ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. It's not needed for a standard SQL installation.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	en	The mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.
 the session extension is needed to use php sessions (db-sessions work without).	setup	en	The session extension is needed to use php sessions (db-sessions work without).
