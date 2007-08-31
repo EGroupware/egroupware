@@ -142,6 +142,10 @@
 			'func' => 'extension_check',
 			'warning' => lang('The session extension is needed to use php sessions (db-sessions work without).')
 		),
+		'ldap' => array(
+			'func' => 'extension_check',
+			'warning' => lang("The ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. It's not needed for a standard SQL installation."),
+		),
 		'.' => array(
 			'func' => 'permission_check',
 			'is_world_writable' => False,
@@ -181,6 +185,7 @@
 						$checks[$name]['from'] = array($checks[$name]['from']);
 					}
 					if (!isset($data['from'])) $data['from'] = $app;
+					if (!isset($checks[$name]['from']) || !is_array($checks[$name]['from'])) $checks[$name]['from'] = array();
 					if (!in_array($data['from'],$checks[$name]['from'])) $checks[$name]['from'][] = $data['from'];
 				}
 				else
