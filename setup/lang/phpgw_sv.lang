@@ -338,7 +338,7 @@ mcrypt initialization vector	setup	sv	MCrypt initialisationsvektor
 mcrypt mode (default cbc)	setup	sv	MCrypt (standard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	sv	MCrypt alternativ (kräver MCrypt PHP utökning)
 mcrypt version	setup	sv	MCrypt version
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sv	memory_limit är satt till mindre än 16MB. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	sv	memory_limit är satt till mindre än %1B. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
 migration between egroupware account repositories	setup	sv	Migrering mellan eGroupWare kontodatabaser
 minimum account id (e.g. 500 or 100, etc.)	setup	sv	Minimum kontoID (dvs 500 eller 100 t ex)
 minute	setup	sv	Minut

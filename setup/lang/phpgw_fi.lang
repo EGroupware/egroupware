@@ -293,7 +293,7 @@ mcrypt initialization vector	setup	fi	MCryptin alustusvektori
 mcrypt mode (default cbc)	setup	fi	Mcrypt-tila (default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	fi	Mcrypt-asetukset (tarvitaan PHP:n mcrypt-laajennus)
 mcrypt version	setup	fi	MCrypt-versio
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fi	memory_limit-asetus on alle 16M: jotkin sovellukset tarvitsevat muistia enemmän kuin PHP:n oletus 8m, voit odottaa ongelmia.
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	fi	memory_limit-asetus on alle %1: jotkin sovellukset tarvitsevat muistia enemmän kuin PHP:n oletus 8m, voit odottaa ongelmia.
 minimum account id (e.g. 500 or 100, etc.)	setup	fi	Käyttäjätunnisteen minimiarvo (esim. 500 tai 100, jne.)
 minute	setup	fi	minuutti
 missing or uncomplete mailserver configuration	setup	fi	Postipalvelimen asetukset puuttuvat tai ovat vajaat

@@ -277,7 +277,7 @@ mcrypt initialization vector	setup	nl	MCrypt initialisatie vector
 mcrypt mode (default cbc)	setup	nl	MCrypt modus (standaard CBC)
 mcrypt settings (requires mcrypt php extension)	setup	nl	MCrypt instellingen (vereist de mcrypt PHP extensie)
 mcrypt version	setup	nl	MCrypt versie
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	nl	memory_limit is ingesteld op minder dan 16M; sommige toepassingen van eGroupWare hebben meer nodig dan de aanbevolen 8M, reken er dus op at er af en toe fouten optreden
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	nl	memory_limit is ingesteld op minder dan %1; sommige toepassingen van eGroupWare hebben meer nodig dan de aanbevolen 8M, reken er dus op at er af en toe fouten optreden
 minimum account id (e.g. 500 or 100, etc.)	setup	nl	Minimum account ID (voorbeeld: 500 of 100, enz.)
 minute	setup	nl	minuut
 modifications have been completed!	setup	nl	Aanpassingen zijn voltooid!

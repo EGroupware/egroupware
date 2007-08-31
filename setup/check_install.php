@@ -83,10 +83,10 @@
 		),
 		'memory_limit' => array(
 			'func' => 'php_ini_check',
-			'value' => '16M',
+			'value' => '24M',
 			'check' => '>=',
-			'error' => lang('memory_limit is set to less than 16M: some applications of eGroupWare need more than the recommend 8M, expect occasional failures'),
-			'change' => 'memory_limit = 16M'
+			'error' => lang('memory_limit is set to less than %1: some applications of eGroupWare need more than the recommend 8M, expect occasional failures','24M'),
+			'change' => 'memory_limit = 24M'
 		),
 		'max_execution_time' => array(
 			'func' => 'php_ini_check',

@@ -248,7 +248,7 @@ mcrypt initialization vector	setup	iw	MCrypt וקטור אתחול של
 mcrypt mode (default cbc)	setup	iw	(CBC ברירת מחדל) MCrypt מצב של
 mcrypt settings (requires mcrypt php extension)	setup	iw	(php של mcrypt מחייב הרחבות) MCrypt הגדרות
 mcrypt version	setup	iw	MCrypt גירסת
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	iw	:מגבלת הזכרון נקבע כפחות מ-16 מ"ב
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	iw	:מגבלת הזכרון נקבע כפחות מ-16 מ"ב
 שזקוקים ליותר מה-8 מ"ב המומלץ, תצפה לבעיות לעתים eGroupWare ישנם יישומים של
 minimum account id (e.g. 500 or 100, etc.)	setup	iw	('זיהוי חשבון מיזערי  (למשל 500 או 100, וכו
 modifications have been completed!	setup	iw	!השינוים הושלמו

@@ -282,7 +282,7 @@ mcrypt initialization vector	setup	ca	Vector d' inicialització Mcrypt
 mcrypt mode (default cbc)	setup	ca	Modus Mcrypt (predeterminat: CBC)
 mcrypt settings (requires mcrypt php extension)	setup	ca	Configuració Mcrypt (necessita la extensió mcrypt de PHP)
 mcrypt version	setup	ca	Versió Mcrypt
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ca	memory_limit te un valor menor de 16M: algunes aplicacions d'eGroupWare necessiten més dels recomanats 8M. Es poden produir petades ocasionals
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	ca	memory_limit te un valor menor de %1: algunes aplicacions d'eGroupWare necessiten més dels recomanats 8M. Es poden produir petades ocasionals
 minimum account id (e.g. 500 or 100, etc.)	setup	ca	Id mínim de compte (ex. 500 o 100, etc)
 minute	setup	ca	minut
 missing or uncomplete mailserver configuration	setup	ca	Configuració del servidor de correu desconeguda o incompleta

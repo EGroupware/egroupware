@@ -268,7 +268,7 @@ mcrypt initialization vector	setup	no	MCrypt initialisasjonsvektor
 mcrypt mode (default cbc)	setup	no	MCrypt-läge (Default CBC)
 mcrypt settings (requires mcrypt php extension)	setup	no	MCryptinställningar (kräver mcrypt PHP extension)
 mcrypt version	setup	no	MCrypt-versjon
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	no	memory_limit är satt till mindre än 16MB. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	no	memory_limit är satt till mindre än %1B. En del applikationer i eGroupWare kräver mer än de rekommenderade 8 MB. Förvänta dig problem emellanåt.
 minimum account id (e.g. 500 or 100, etc.)	setup	no	Minimum kontoID (dvs 500 eller 100 t ex)
 minute	setup	no	Minutt
 modifications have been completed!	setup	no	Förändringarna genomförda

@@ -336,7 +336,7 @@ mcrypt initialization vector	setup	zh-tw	MCrypt 組態依據
 mcrypt mode (default cbc)	setup	zh-tw	Mcrypt 模式 (預設為 CBC)
 mcrypt settings (requires mcrypt php extension)	setup	zh-tw	Mcrypt 設定 (需要 mcrypt 的PHP 擴充)
 mcrypt version	setup	zh-tw	MCrypt 版本
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh-tw	memory_limit(最大可存取記憶體)設定小於16M：eGroupWare有部份應用程式會使用超過預設值8M的記憶體存取，特別是無法預期的錯誤
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	zh-tw	memory_limit(最大可存取記憶體)設定小於%1：eGroupWare有部份應用程式會使用超過預設值8M的記憶體存取，特別是無法預期的錯誤
 migration between egroupware account repositories	setup	zh-tw	轉移 eGroupWare 帳號資料庫
 minimum account id (e.g. 500 or 100, etc.)	setup	zh-tw	使用者帳號編碼最小值﹝如：500 或 100﹞
 minute	setup	zh-tw	分

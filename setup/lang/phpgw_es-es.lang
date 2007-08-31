@@ -344,7 +344,7 @@ mcrypt initialization vector	setup	es-es	Vector de inicialización MCrypt
 mcrypt mode (default cbc)	setup	es-es	Modo de MCrypt (predeterminado CBC)
 mcrypt settings (requires mcrypt php extension)	setup	es-es	Configuración de MCrypt (necesita la extensión PHP mcrypt)
 mcrypt version	setup	es-es	Versión de MCrypt
-memory_limit is set to less than 16m: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	es-es	memory_limit está puesto a menos de 16M. Algunas aplicaciones de eGroupWare necesitan más de los recomendados 8M, así que puede haber fallos ocasionales
+memory_limit is set to less than %1: some applications of egroupware need more than the recommend 8m, expect occasional failures	setup	es-es	memory_limit está puesto a menos de %1. Algunas aplicaciones de eGroupWare necesitan más de los recomendados 8M, así que puede haber fallos ocasionales
 migration between egroupware account repositories	setup	es-es	Migración entre repositorios de cuentas de eGroupWare
 minimum account id (e.g. 500 or 100, etc.)	setup	es-es	Id mínimo para la cuenta (p. ej. 500 ó 100, etc)
 minute	setup	es-es	minuto
