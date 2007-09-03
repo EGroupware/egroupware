@@ -602,8 +602,26 @@
 			}
 
 			if($structure->partID != $_partID) {
-				error_log("bofelamimail::_getSubStructure(". __LINE__ .") partID's don't match");
-				return false;
+				foreach($imapPartIDs as $imapPartID) {
+					if(!empty($tempID)) {
+						$tempID .= '.';
+					}
+					$tempID .= $imapPartID;
+					//print "TEMPID: $tempID<br>";
+					//_debug_array($structure);
+					if($structure->subParts[$tempID]->type == 'MESSAGE' && $structure->subParts[$tempID]->subType == 'RFC822' &&
+					   count($structure->subParts[$tempID]->subParts) == 1 &&
+					   $structure->subParts[$tempID]->subParts[$tempID]->type == 'MULTIPART' &&
+					   ($structure->subParts[$tempID]->subParts[$tempID]->subType == 'MIXED' || $structure->subParts[$tempID]->subParts[$tempID]->subType == 'REPORT')) {
+						$structure = $structure->subParts[$tempID]->subParts[$tempID];
+					} else {
+						$structure = $structure->subParts[$tempID];
+					}
+				}
+				if($structure->partID != $_partID) {
+					error_log("bofelamimail::_getSubStructure(". __LINE__ .") partID's don't match");
+					return false;
+				}
 			}
 			
 			return $structure;
@@ -660,11 +678,11 @@
 		// this function is based on a on "Building A PHP-Based Mail Client"
 		// http://www.devshed.com
 		// fetch a specific attachment from a message
-		function getAttachmentByCID($_uid, $_cid)
+		function getAttachmentByCID($_uid, $_cid, $_part)
 		{
 			$partID = false;
 			
-			$attachments = $this->getMessageAttachments($_uid);
+			$attachments = $this->getMessageAttachments($_uid, $_part);
 			foreach($attachments as $attachment) {
 				if(strpos($attachment['cid'], $_cid) !== false) {
 					$partID = $attachment['partID'];

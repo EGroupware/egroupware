@@ -596,10 +596,11 @@
 		function displayImage()
 		{
 			$cid	= base64_decode($_GET['cid']);
+			$partID = urldecode($_GET['partID']);
 
 			$this->bofelamimail->reopen($this->mailbox);
 
-			$attachment 	= $this->bofelamimail->getAttachmentByCID($this->uid, $cid);
+			$attachment 	= $this->bofelamimail->getAttachmentByCID($this->uid, $cid, $partID);
 
 			$this->bofelamimail->closeConnection();
 			
@@ -1027,7 +1028,7 @@
 					);
 					$imageURL = $GLOBALS['egw']->link('/index.php', $linkData);
 					$newBody = preg_replace("/(\"|\')cid:(.*)(\"|\')/iUe", 
-						"'\"$imageURL&cid='.base64_encode('$2').'\"'", $newBody);
+						"'\"$imageURL&cid='.base64_encode('$2').'&partID='.urlencode($this->partID).'\"'", $newBody);
 
 					// create links for email addresses
 					$linkData = array
