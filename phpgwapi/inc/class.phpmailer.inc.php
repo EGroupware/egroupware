@@ -191,7 +191,7 @@ class PHPMailer
      *  work with the win32 version.
      *  @var int
      */
-    var $Timeout      = 10;
+    var $Timeout      = 30;
 
     /**
      *  Sets SMTP class debugging on or off.
@@ -1468,7 +1468,7 @@ class PHPMailer
         $tz = date("Z");
         $tzs = ($tz < 0) ? "-" : "+";
         $tz = abs($tz);
-        $tz = ($tz/3600)*100 + ($tz%3600)/60;
+        $tz = (int)($tz/3600)*100 + ($tz%3600)/60;
         $result = sprintf("%s %s%04d", date("D, j M Y H:i:s"), $tzs, $tz);
 
         return $result;
