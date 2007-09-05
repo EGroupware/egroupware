@@ -502,7 +502,7 @@ class uicontacts extends bocontacts
 						$fields = $this->business_contact_fields;
 						break;
 					case 'home':
-						$fields = $this-home_contact_fields;
+						$fields = $this->home_contact_fields;
 						break;
 					default:
 						$fields = $this->contact_fields;
