@@ -664,9 +664,9 @@ foreach($sess as $key => $val)
 			{
 				if (!(list($r_key) = each($data)))	// no further row
 				{
-					if (!(($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname) && $idx_cname) ||
-							(substr($cols['A']['type'],1) == 'box' && $this->autorepeat_idx($cols['A'][1],0,$r,$idx,$idx_cname) && $idx_cname) ||
-						($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname) && $idx_cname)) ||
+					if (!(($this->autorepeat_idx($cols['A'],0,$r,$idx,$idx_cname,false,$content) && $idx_cname) ||
+							(substr($cols['A']['type'],1) == 'box' && $this->autorepeat_idx($cols['A'][1],0,$r,$idx,$idx_cname,false,$content) && $idx_cname) ||
+						($this->autorepeat_idx($cols['B'],1,$r,$idx,$idx_cname,false,$content) && $idx_cname)) ||
 						!$this->isset_array($content,$idx_cname))
 					{
 						break;                     	// no auto-row-repeat
@@ -706,7 +706,7 @@ foreach($sess as $key => $val)
 						// otherwise the rows have a differen number of cells and it saved a lot checks
 						if ($c >= $max_cols)
 						{
-							if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True) ||
+							if (!$this->autorepeat_idx($cell,$c,$r,$idx,$idx_cname,True,$content) ||
 								!$this->isset_array($content,$idx))
 							{
 								break;	// no auto-col-repeat
@@ -1015,7 +1015,8 @@ foreach($sess as $key => $val)
 					if ($activate_links) $value = $this->html->activate_links($value);
 					if ($value != '' && $style && strpos($style,'b')!==false) $value = $this->html->bold($value);
 					if ($value != '' && $style && strpos($style,'i')!==false) $value = $this->html->italic($value);
-					$html .= $value;
+					// if the label has a name, use it as id in a span, to allow addressing it via javascript
+					$html .= ($name ? '<span id="'.$name.'">' : '').$value.($name ? '</span>' : '');
 					if ($help)
 					{
 						$class = array(
@@ -1039,6 +1040,7 @@ foreach($sess as $key => $val)
 					}
 					if (($type == 'float' || !is_numeric($pre)) && $value && $pre)
 					{
+						$value = str_replace(array(' ',','),array('','.'),$value);
 						$value = is_numeric($pre) ? round($value,$pre) : sprintf($pre,$value);
 					}
 					$cell_options .= ',,'.($cell['type'] == 'int' ? '/^-?[0-9]*$/' : '/^-?[0-9]*[,.]?[0-9]*$/');
@@ -1280,7 +1282,7 @@ foreach($sess as $key => $val)
 					{
 						echo "<p>show_cell::template(tpl=$this->name,name=$cell[name]): $obj_read, readonly=$readonly</p>\n";
 					}
-					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname) || $cell_options != '')
+					if ($this->autorepeat_idx($cell,$show_c,$show_row,$idx,$idx_cname,false,$content) || $cell_options != '')
 					{
 						if ($span == '' && isset($content[$idx]['span']))
 						{	// this allows a colspan in autorepeated cells like the editor
@@ -1392,7 +1394,7 @@ foreach($sess as $key => $val)
 						}
 					}
 					break;
-				case 'image':	// size: [link],[link_target],[imagemap],[link_popup]
+				case 'image':	// size: [link],[link_target],[imagemap],[link_popup],[id]
 					$image = $value != '' ? $value : $name;
 					list($app,$img) = explode('/',$image,2);
 					if (!$app || !$img || !is_dir(EGW_SERVER_ROOT.'/'.$app) || strpos($img,'/')!==false)
@@ -1402,10 +1404,11 @@ foreach($sess as $key => $val)
 					}
 					if (!$readonly)
 					{
-						list($extra_link,$extra_link_target,$imagemap,$extra_link_popup) = explode(',',$cell['size']);
+						list($extra_link,$extra_link_target,$imagemap,$extra_link_popup,$id) = explode(',',$cell['size']);
 					}
 					$html .= $this->html->image($app,$img,strlen($label) > 1 && !$cell['no_lang'] ? lang($label) : $label,
-						'border="0"'.($imagemap?' usemap="'.$this->html->htmlspecialchars($imagemap).'"':''));
+						'border="0"'.($imagemap?' usemap="'.$this->html->htmlspecialchars($imagemap).'"':'').
+						($id || $value ? ' id="'.($id ? $id : $name).'"' : ''));
 					$extra_label = False;
 					break;
 				case 'file':	// size: size of the filename field
