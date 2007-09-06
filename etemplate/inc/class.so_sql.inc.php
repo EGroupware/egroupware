@@ -422,6 +422,14 @@ class so_sql
 				}
 				$data[$db_col] = (string) $this->data[$col] === '' && $this->empty_on_write == 'NULL' ? null : $this->data[$col];
 			}
+			// allow to add direct sql updates, eg. "etag=etag+1" with int keys
+			if (is_array($keys) && isset($keys[0]))
+			{
+				for($n=0; isset($keys[$n]); ++$n)
+				{
+					$data[] = $keys[$n];
+				}
+			}
 			$keys = '';
 			foreach($this->db_key_cols as $db_col => $col)
 			{
