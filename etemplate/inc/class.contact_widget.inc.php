@@ -90,6 +90,7 @@ class contact_widget
 				}
 				$cell['type'] = 'select';
 				$cell['no_lang'] = 1;
+				$cell['size'] = 'None';
 				break;
 
 			case 'contact-account':
