@@ -194,11 +194,11 @@
 		 * @param boolean $check_col to check for col- or row-autorepeat
 		 * @return boolean true if cell is autorepeat (has index with vars / '$') or false otherwise
 		 */
-		function autorepeat_idx($cell,$c,$r,&$idx,&$idx_cname,$check_col=False)
+		function autorepeat_idx($cell,$c,$r,&$idx,&$idx_cname,$check_col=False,$cont=null)
 		{
 			$org_idx = $idx = $cell[ $cell['type'] == 'template' ? 'size' : 'name' ];
 
-			$idx = $this->expand_name($idx,$c,$r);
+			$idx = $this->expand_name($idx,$c,$r,'','',$cont);
 			if (!($komma = strpos($idx,',')))
 			{
 				$idx_cname = $idx;
@@ -222,7 +222,7 @@
 				else
 				{
 					$Ok = $pat[0] == 'r' && !(substr($pat,0,2) == 'r_' || 
-						substr($pat,0,4) == 'row_' && substr($pat,0,8) != 'row_cont');
+						substr($pat,0,4) == 'row_');
 				}
 			}
 			if ($this->name && $this->name == $this->debug)
