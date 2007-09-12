@@ -353,16 +353,42 @@ class solink
 	function get_3links($app,$target_app,$target_id=null)
 	{
 		$links = array();
-		$this->db->select($this->link_table,'c.*,b.link_app1 AS app3,b.link_id1 AS id3,b.link_id AS link3',
-			'a.link_app1='.$this->db->quote($app).' AND c.link_app2='.$this->db->quote($target_app).
-			(!$target_id ? '' : $this->db->expression($this->link_table,' AND c.',array('link_id2' => $target_id))),
-			__LINE__,__FILE__,false,'',false,0," a
-			JOIN $this->link_table b ON a.link_id2=b.link_id1 AND a.link_app2=b.link_app1
-			JOIN $this->link_table c ON a.link_id1=c.link_id1 AND a.link_app1=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app2 AND c.link_id2=b.link_id2");
-		while (($row = $this->db->row(true,'link_')))
-		{
-			$links[] = $row;
-		}
-		return $links;
+		$table_def = $this->db->get_table_definitions('phpgwapi',$this->link_table);
+		$arrayofselects=array(
+			// retrieve the type of links, where the relation is realized as timesheet->infolog/tracker via infolog->projectmanager to timesheet->projectmanager
+			array('table'=>$this->link_table,
+				'cols'=>'c.*,b.link_app1 AS app3,b.link_id1 AS id3,b.link_id AS link3',
+				'where'=>'a.link_app1='.$this->db->quote($app).' AND c.link_app2='.$this->db->quote($target_app).
+                        		(!$target_id ? '' : $this->db->expression($this->link_table,' AND c.',array('link_id2' => $target_id))),
+                        	'join'=>" a
+                        		JOIN $this->link_table b ON a.link_id2=b.link_id1 AND a.link_app2=b.link_app1
+                       			JOIN $this->link_table c ON a.link_id1=c.link_id1 AND a.link_app1=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app2 AND c.link_id2=b.link_id2",
+				'table_def'=>$table_def
+			),
+			// retrieve the type of links, where the relation is realized as timesheet->infolog/tracker and projectmanager->timesheet
+			array('table'=>$this->link_table,
+				'cols'=>'b.link_id, b.link_app2 as app1, b.link_id2 as id1, b.link_app1 as app2, b.link_id1 as id2, b.link_remark,b.link_lastmod,b.link_owner,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
+                       		'where'=>'a.link_app1='.$this->db->quote($app).' AND b.link_app1='.$this->db->quote($target_app).
+                        		(!$target_id ? '' : $this->db->expression($this->link_table,' AND b.',array('link_id1' => $target_id))),
+                        	'join'=>" a 
+                        		JOIN $this->link_table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
+                        		JOIN egw_links c ON a.link_id2=c.link_id1 AND a.link_app2=c.link_app1 AND a.link_id!=c.link_id AND c.link_app2=b.link_app1 AND c.link_id2=b.link_id1",
+				'table_def'=>$table_def),
+			// retrieve the type of links, where the relation is realized as timesheet->projectmanager and infolog->timesheet
+			array('table'=>$this->link_table,
+				'cols'=>'a.*,c.link_app1 AS app3,c.link_id1 AS id3,c.link_id AS link3',
+                     		'where'=>'a.link_app1='.$this->db->quote($app).' AND a.link_app2='.$this->db->quote($target_app).
+                        		(!$target_id ? '' : $this->db->expression($this->link_table,' AND a.',array('link_id2' => $target_id))),
+                       		'join'=>" a 
+                       			JOIN $this->link_table b ON a.link_id1=b.link_id2 AND a.link_app1=b.link_app2
+                        		JOIN egw_links c ON a.link_id2=c.link_id2 AND a.link_app2=c.link_app2 AND a.link_id!=c.link_id AND c.link_app1=b.link_app1 AND c.link_id1=b.link_id1",
+				'table_def'=>$table_def),
+		);
+		$this->db->union($arrayofselects,__LINE__,__FILE__);
+                while (($row = $this->db->row(true,'link_')))
+                {
+                        $links[] = $row;
+                }
+ 		return $links;
 	}
 }
