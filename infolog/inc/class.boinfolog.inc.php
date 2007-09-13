@@ -883,9 +883,10 @@ class boinfolog
 				$name[] = !empty($address->personal) ? $address->personal : $emailadr;
 		}
 		// shorten long (> $this->max_line_chars) lines of "line" chars (-_+=~) in mails
-		$_message = preg_replace_callback('/[-_+=~]{'.$this->max_line_chars.',}/m',
+		$_message = preg_replace_callback('/[-_+=~\.]{'.$this->max_line_chars.',}/m',
 			create_function('$matches',"return substr(\$matches[0],0,$this->max_line_chars);"),$_message);
 		$type = isset($this->enums['type']['email']) ? 'email' : 'note';
+		$status = isset($this->status['defaults'][$type]) ? $this->status['defaults'][$type] : 'done';
 		$info = array(
 			'info_id' => 0,
 			'info_type' => $type,
@@ -894,9 +895,9 @@ class boinfolog
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => $_date,
-			'info_status' => isset($this->status['defaults'][$type]) ? $this->status['defaults'][$type] : 'done',
+			'info_status' => $status,
 			'info_priority' => 1,
-			'info_percent' => 100,
+			'info_percent' => $status == 'done' ? 100 : 0,
 			'referer' => false,
 			'link_to' => array(
 				'to_app' => 'infolog',
