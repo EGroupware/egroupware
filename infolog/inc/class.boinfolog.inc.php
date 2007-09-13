@@ -125,6 +125,13 @@ class boinfolog
 	 * @var infolog_tracking
 	 */
 	var $tracking;
+	/**
+	 * Maximum number of line characters (-_+=~) allowed in a mail, to not stall the layout.
+	 * Longer lines / biger number of these chars are truncated to that max. number or chars.
+	 *
+	 * @var int
+	 */
+	var $max_line_chars = 40;
 	
 	/**
 	 * Constructor Infolog BO
@@ -875,15 +882,19 @@ class boinfolog
 				trim($address->host));
 				$name[] = !empty($address->personal) ? $address->personal : $emailadr;
 		}
+		// shorten long (> $this->max_line_chars) lines of "line" chars (-_+=~) in mails
+		$_message = preg_replace_callback('/[-_+=~]{'.$this->max_line_chars.',}/m',
+			create_function('$matches',"return substr(\$matches[0],0,$this->max_line_chars);"),$_message);
+		$type = isset($this->enums['type']['email']) ? 'email' : 'note';
 		$info = array(
 			'info_id' => 0,
-			'info_type' => isset($this->enums['type']['email']) ? 'email' : 'note',
+			'info_type' => $type,
 			'info_from' => implode(',',$name),
 			'info_addr' => implode(',',$email),
 			'info_subject' => $_subject,
 			'info_des' => $_message,
 			'info_startdate' => $_date,
-			'info_status' => 'done',
+			'info_status' => isset($this->status['defaults'][$type]) ? $this->status['defaults'][$type] : 'done',
 			'info_priority' => 1,
 			'info_percent' => 100,
 			'referer' => false,
