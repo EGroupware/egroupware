@@ -267,12 +267,12 @@ function set_multiselection(name,values,reset)
 		value = values.indexOf(','+checkbox.value+',') >= 0;
 		if (reset || value) {
 			//alert(checkbox.name+': value='+checkbox.value+', checked='+checkbox.checked+' --> '+value);
-			checkbox.checked = value;
 			if (value && checkbox.parentNode != div_first) {
 				br = checkbox.parentNode.nextSibling;
 				div.insertBefore(div.removeChild(checkbox.parentNode),div_first);
 				div.insertBefore(div.removeChild(br),div_first);
 			}
+			checkbox.checked = value;
 		}
 	}
 }
