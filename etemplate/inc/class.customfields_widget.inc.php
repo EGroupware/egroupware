@@ -47,6 +47,7 @@
 			'date'     => 'Date',
 			'date-time'=> 'Date+Time',
 			'select-account' => 'Select account',
+			'button'   => 'Button',		// button to execute javascript
 			'link-entry' => 'Select entry',		// should be last type, as the individual apps get added behind
 		);
 
@@ -129,7 +130,11 @@
 				switch ((string)$field['type'])
 				{
 					case 'select' :
-						if($this->advanced_search) $field['values'][''] = lang('doesn\'t matter');
+						if (count($field['values']) == 1 && isset($field['values']['@']))
+						{
+							$field['values'] = $this->_get_options_from_file($field['values']['@']);
+						}
+						if($this->advanced_search && $field['rows'] <= 1) $field['values'][''] = lang('doesn\'t matter');
 						foreach($field['values'] as $key => $val)
 						{
 							if (substr($val = lang($val),-1) != '*')
@@ -161,6 +166,10 @@
 						$input =& etemplate::empty_cell('checkbox',$this->prefix.$name);
 						break;
 					case 'radio' :
+						if (count($field['values']) == 1 && isset($field['values']['@']))
+						{
+							$field['values'] = $this->_get_options_from_file($field['values']['@']);
+						}
 						$input =& etemplate::empty_cell('groupbox');
 						$m = 0;
 						foreach ($field['values'] as $key => $val)
@@ -207,6 +216,32 @@
 						$input =& etemplate::empty_cell('link-entry',$this->prefix.$name,array(
 							'size' => $field['type'] == 'link-entry' ? '' : $field['type'],
 						));
+						break;
+					case 'button':	// button(s) to execute javascript (label=onclick) or textinputs (empty label, readonly with neg. length)
+						$input =& etemplate::empty_cell('hbox');
+						foreach($field['values'] as $label => $js)
+						{
+							if (!$label)	// display an readonly input
+							{
+								$widget =& etemplate::empty_cell('text',$this->prefix.$name.$label,array(
+									'size' => $field['len'] ? $field['len'] : 20,
+									'readonly' => $field['len'] < 0,
+									'onchange' => $js,
+								));
+							}
+							else
+							{
+								if ($readonly) continue;	// dont display buttons if we're readonly
+								$widget =& etemplate::empty_cell('buttononly',$this->prefix.$name.$label,array(
+									'label' => $label ? $label : lang('Submit'),
+									'onclick' => $js,
+									'no_lang' => True								
+								));
+							}
+							etemplate::add_child($input,$widget);
+							unset($widget);
+						}
+						break;				
 				}
 				$cell['data'][0]['c'.$n++] = $row_class.',top';
 				
@@ -232,5 +267,38 @@
 			$cell['size'] = '100%,100%,0,'.$class.','.($type=='customfields-list'?',0':',').($tmpl->html->user_agent != 'msie' ? ',auto' : '');
 
 			return True;	// extra Label is ok
+		}
+		
+		/**
+		 * Read the options of a 'select' or 'radio' custom field from a file
+		 * 
+		 * For security reasons that file has to be relative to the eGW root 
+		 * (to not use that feature to explore arbitrary files on the server)
+		 * and it has to be a php file setting one variable called options,
+		 * (to not display it to anonymously by the webserver). 
+		 * The $options var has to be an array with value => label pairs, eg:
+		 * 
+		 * <?php
+		 * $options = array(
+		 * 	'a' => 'Option A',
+		 * 	'b' => 'Option B',
+		 * 	'c' => 'Option C',
+		 * );
+		 *
+		 * @param string $file file name inside the eGW server root, either relative to it or absolute
+		 * @return array in case of an error we return a single option with the message
+		 */
+		function _get_options_from_file($file)
+		{
+			if (!($path = realpath($file{0} == '/' ? $file : EGW_SERVER_ROOT.'/'.$file)) ||	// file does not exist
+				substr($path,0,strlen(EGW_SERVER_ROOT)+1) != EGW_SERVER_ROOT.'/' ||	// we are NOT inside the eGW root
+				basename($path,'.php').'.php' != basename($path) ||	// extension is NOT .php
+				basename($path) == 'header.inc.php')	// dont allow to include our header again
+			{
+				return array(lang("'%1' is no php file in the eGW server root (%2)!".': '.$path,$file,EGW_SERVER_ROOT));
+			}
+			include($path);
+			
+			return $options;
 		}
 	}
