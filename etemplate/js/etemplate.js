@@ -253,3 +253,26 @@ function get_selected(form,suffix) {
 	}
 	return selected;
 }
+
+// set certain comma-separated values in a multiselection (div with checkboxes, used as replacement for a multiselection)
+function set_multiselection(name,values,reset)
+{
+	//alert("set_multiselection('"+name+"','"+values+"',"+reset+")");
+	checkboxes = document.getElementsByName(name);
+	div = document.getElementById(name.substr(0,name.length-2));
+	div_first = div.firstChild;
+	values = ','+values+',';
+	for (var i = 0; i < checkboxes.length; i++)	{
+		checkbox = checkboxes[i];
+		value = values.indexOf(','+checkbox.value+',') >= 0;
+		if (reset || value) {
+			//alert(checkbox.name+': value='+checkbox.value+', checked='+checkbox.checked+' --> '+value);
+			checkbox.checked = value;
+			if (value && checkbox.parentNode != div_first) {
+				br = checkbox.parentNode.nextSibling;
+				div.insertBefore(div.removeChild(checkbox.parentNode),div_first);
+				div.insertBefore(div.removeChild(br),div_first);
+			}
+		}
+	}
+}
