@@ -31,9 +31,10 @@ class contact_widget
 	 * @var string/array $human_name
 	 */
 	var $human_name = array(
-		'contact-value'  => 'Contact',
-		'contact-account'=> 'Account contactdata',
-		'contact-fields' => 'Contact fields',
+		'contact-value'    => 'Contact',
+		'contact-account'  => 'Account contactdata',
+		'contact-template' => 'Account template',
+		'contact-fields'   => 'Contact fields',
 	);
 	/**
 	 * Instance of the contacts class
@@ -78,6 +79,7 @@ class contact_widget
 	 */
 	function pre_process($name,&$value,&$cell,&$readonlys,&$extension_data,&$tmpl)
 	{
+		//echo "<p>contact_widget::pre_process('$name','$value',".print_r($cell,true).",...)</p>\n";
 		switch($cell['type'])
 		{
 			case 'contact-fields':
@@ -94,7 +96,11 @@ class contact_widget
 				break;
 
 			case 'contact-account':
-				$value = 'account:'.$value;
+			case 'contact-template':
+				if (substr($value,0,8) != 'account:')
+				{
+					$value = 'account:'.($cell['name'] != 'account:' ? $value : $GLOBALS['egw_info']['user']['account_id']);
+				}
 				// fall-throught
 			case 'contact-value':
 			default:
@@ -108,8 +114,17 @@ class contact_widget
 					break;
 				}
 				$type = $cell['size'];
-				$value = $this->contact[$type];
 				$cell['size'] = '';
+				
+				if ($cell['type'] == 'contact-template')
+				{
+					$name = $this->contact[$type];
+					$cell['type'] = 'template';
+					if (($prefix = $cell['label'])) $name = strpos($prefix,'%s') !== false ? str_replace('%s',$name,$prefix) : $prefix.$name;
+					$cell['obj'] = new etemplate($name,$tmpl->as_array());
+					return false;
+				}
+				$value = $this->contact[$type];
 				$cell['no_lang'] = 1;
 				$cell['readonly'] = true;
 				
