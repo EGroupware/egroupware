@@ -59,6 +59,7 @@ business phone	addressbook	el	Τηλέφωνο εργασίας
 business state	addressbook	el	Νομός εργασίας
 business street	addressbook	el	Διεύθυνση εργασίας
 business zip code	addressbook	el	Τ.Κ. εργασίας
+calendar fields:	addressbook	el	Πεδία Ημερολογίου:
 calendar uri	addressbook	el	Ημερολόγιο URI
 can be changed via setup >> configuration	admin	el	Μπορεί  να αλλάξει μέσω Setup >> Configuration
 car phone	addressbook	el	Τηλέφωνο αυτοκινήτου
@@ -69,6 +70,7 @@ charset for the csv export	addressbook	el	Κωδικοσελίδα για την CSV εξαγωγή
 charset of file	addressbook	el	Κωδικοσελίδα αρχείου
 check all	addressbook	el	Έλεγχος όλων
 choose an icon for this contact type	admin	el	Επιλέξτε μία εικόνα για αυτόν τον τύπο επαφής
+choose owner of imported data	addressbook	el	Επιλέξτε ιδιοκτήτη των εισαγόμενων δεδομένων
 chosse an etemplate for this contact type	admin	el	Επιλέξτε μία eΤαμπλέτα για αυτόν τον τύπο επαφής
 city	common	el	Πόλη
 company	common	el	Εταιρία
@@ -79,8 +81,10 @@ contact application	admin	el	Αίτηση επαφής
 contact copied	addressbook	el	Επαφή αντιγράφηκε
 contact deleted	addressbook	el	Επαφή διεγράφη
 contact fields to show	addressbook	el	Πεδία επαφών προς προβολή
+contact fields:	addressbook	el	Πεδία επαφών:
 contact id	addressbook	el	Ταυτότητα επαφής
 contact modified by %1 at %2	addressbook	el	Επαφή τροποποιήθηκε από %1 στις %2
+contact not found!	addressbook	el	Δεν βρέθηκε η επαφή!
 contact repository	admin	el	Αποθήκη επαφής
 contact saved	addressbook	el	Επαφή αποθηκεύτηκε
 contact settings	admin	el	Ρυθμίσεις επαφής
@@ -101,6 +105,7 @@ custom	addressbook	el	Προσαρμογή
 custom etemplate for the contactform	addressbook	el	Προσαρμογή eΤαμπλέτας για τη φόρμα επαφών
 custom fields	addressbook	el	Προσαρμοσμένα πεδία
 debug output in browser	addressbook	el	Αποσφαλμάτωση εξαγωγής στο φυλλομετρητή
+default	addressbook	el	προκαθορισμένο
 default address format	addressbook	el	Προκαθορισμένη μορφή διευθύνσεων
 default addressbook for adding contacts	addressbook	el	Προκαθορισμένο βιβλίο διευθύνσεων για προσθήκη επαφών
 default filter	addressbook	el	Προκαθορισμένο φίλτρο
@@ -122,6 +127,7 @@ don't hide empty columns	addressbook	el	Μην αποκρύπτετε κενές στήλες
 download	addressbook	el	Καταβίβαση
 download export file (uncheck to debug output in browser)	addressbook	el	Καταβίβαση αρχείου εξαγωγής (Ξετσεκάρετε για αποσφαλμάτωση εξαγωγής στο φυλλομετρητή)
 download this contact as vcard file	addressbook	el	φορτώστε αυτήν την επαφή ως vCard αρχείο
+duration	addressbook	el	Διάρκεια
 edit custom field	addressbook	el	Επεξεργασία προσαρμοσμένου πεδίου
 edit custom fields	admin	el	Επεξεργασία προσαρμοσμένων πεδίων
 edit extra account-data in the addressbook	admin	el	Επεξεργασία επιπλέον στοιχείων λογαριασμού στο βιβλίο διευθύνσεων
@@ -131,6 +137,7 @@ email & internet	addressbook	el	Email & Internet
 email addresses (comma separated) to send the contact data	addressbook	el	Διευθύνσεις Email (διαχωρισένες με κόμμα) για αποστολή των δεδομένων των επαφών
 empty for all	addressbook	el	Κενό για όλα
 enable an extra private addressbook	addressbook	el	Ενεργοποιήστε ένα έξτρα προσωπικό βιβλίο διευθύνσεων
+end	addressbook	el	Τέλος
 enter the path to the exported file here	addressbook	el	Εισάγετε τη διαδρομή για το αρχείο εξαγωγής εδώ
 error deleting the contact !!!	addressbook	el	Σφάλμα στη διαγραφή της επαφής !!!
 error saving the contact !!!	addressbook	el	Σφάλμα στην αποθήκευση της επαφής !!!
@@ -158,6 +165,7 @@ fieldseparator	addressbook	el	Διαχωριστής πεδίων
 for read only ldap	admin	el	Για ανάγνωση μόνο LDAP
 full name	addressbook	el	Πλήρες όνομα
 general	addressbook	el	Γενικά
+general fields:	addressbook	el	Γενικά πεδία:
 geo	addressbook	el	GEO
 global categories	addressbook	el	Παγκόσμιες κατηγορίες
 grant addressbook access	common	el	Πρόσβαση στο βιβλίο Διευθύνσεων

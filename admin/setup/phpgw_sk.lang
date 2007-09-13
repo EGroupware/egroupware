@@ -125,7 +125,7 @@ deny access to access log	admin	sk	Zaká¾ prístup do prístupových záznamov
 deny access to application registery	admin	sk	Zaká¾ prístup do registrov aplikácie
 deny access to applications	admin	sk	Zaká¾ prístup do aplikácií
 deny access to asynchronous timed services	admin	sk	Zaká¾ prístup do asynchrónnych èasovaných slu¾ieb
-deny access to current sessions	admin	sk	Zaká¾ prístup do aktuálnych sedení
+deny access to current sessions	admin	sk	Zaká¾ prístup do aktuálnych relácií
 deny access to db backup and restore	admin	sk	Zaká¾ prístup k zálohe a obnove databáz
 deny access to error log	admin	sk	Zaká¾ prístup do chybových záznamov
 deny access to global categories	admin	sk	Zaká¾ prístup do globálnych kategórií
@@ -396,8 +396,8 @@ they must be removed before you can continue	admin	sk	Ne¾ bude mo¾né pokraèova»,
 this application is current	admin	sk	Táto aplikácia je aktuálna
 this application requires an upgrade	admin	sk	Táto aplikácia vy¾aduje aktualizáciu
 this category is currently being used by applications as a parent category	admin	sk	Táto kategória je práve pou¾ívaná aplikáciami ako rodièovská.
-timeout for application session data in seconds (default 86400 = 1 day)	admin	sk	Èas vypr¹ania údajov o sedení aplikácie, v sekundách (predvolené: 86400 = 1 deò)
-timeout for sessions in seconds (default 14400 = 4 hours)	admin	sk	Èas vypr¹ania údajov o sedení, v sekundách (predvolené: 14400 = 4 hodiny)
+timeout for application session data in seconds (default 86400 = 1 day)	admin	sk	Èas vypr¹ania údajov o relácii aplikácie, v sekundách (predvolené: 86400 = 1 deò)
+timeout for sessions in seconds (default 14400 = 4 hours)	admin	sk	Èas vypr¹ania údajov o relácii, v sekundách (predvolené: 14400 = 4 hodiny)
 times	admin	sk	Èasy
 top	admin	sk	navrchu
 total records	admin	sk	Záznamov spolu

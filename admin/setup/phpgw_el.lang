@@ -13,7 +13,7 @@ account has been updated	common	el	Ο λογαριασμός έχει ενημερωθεί
 account list	admin	el	Λίστα λογαριασμών
 account permissions	admin	el	Δικαιώματα λογαριασμού
 account preferences	admin	el	Ιδιότητες λογαριασμού
-acl manager	admin	el	Διευθυντής ACL
+acl manager	admin	el	Διαχειριστής ACL
 acl rights	common	el	Δικαιώματα ACL
 action	admin	el	Ενέργια
 activate wysiwyg-editor	admin	el	ενεργοποιήστε WYSIWYG-συντάκτης
@@ -99,7 +99,7 @@ custom fields	admin	el	Σύνηθη πεδία
 data	admin	el	Δεδομένα
 day	admin	el	Ημέρα
 day of week<br>(0-6, 0=sun)	admin	el	Ημέρα της εβδομάδας <br>(0-6, 0=Κυρ)
-db backup and restore	admin	el	DB εφεδρικό και επαναφορά
+db backup and restore	admin	el	DB backup και επαναφορά
 default	admin	el	Προεπιλεγμένος
 default file system space per user	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη
 default file system space per user/group ?	admin	el	Προεπιλεγμένο σύστημα αρχείων ανα χρήστη/ομαδά ?
@@ -212,7 +212,7 @@ group has been added	common	el	Ομάδα προστέθηκε
 group has been deleted	common	el	Ομάδα έχει σβηστεί
 group has been updated	common	el	Ομάδα έχει ενημερωθεί
 group list	admin	el	Λίστα ομάδας
-group manager	admin	el	Διευθυντής ομάδας
+group manager	admin	el	Διαχειριστής ομάδας
 group name	admin	el	Ονομα ομάδας
 hide php information	admin	el	απόκρυψε php πληροφορία
 home directory	admin	el	Αρχικος κατάλογος
@@ -224,7 +224,7 @@ how should email addresses for new users be constructed?	admin	el	Πως θέλετε οι 
 icon	admin	el	Εικόνα
 idle	admin	el	αδρανής
 if no acl records for user or any group the user is a member of	admin	el	αν καμία εγγραφή ACL για χρήστη ή όποιας ομάδας είναι μέλος του
-if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διευθύνετε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής?
+if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	el	Αν χρησημοποιήτε LDAP, θέλετε να διαχειριστείτε τον αρχικό κατάλογο και τα χαρακτηριστικά κέλυφους εισαγωγής?
 in mbyte	admin	el	σε MByte
 inbound	admin	el	εισερχόμενος
 initial	admin	el	Αρχικό
@@ -266,7 +266,7 @@ loginid	admin	el	ID εισόδου
 mail settings	admin	el	Ρυθμίσεις μηνυμάτων
 main email-address	admin	el	Κύρια Διεύθυνση Email
 main screen message	admin	el	Μήνυμα κύριας οθόνης
-manager	admin	el	Διευθυντής
+manager	admin	el	Διαχειριστής
 max length of the input [, length of the inputfield (optional)]	admin	el	μέγιστο μήκος για την εισαγωγή, [μήκος του πεδίου εισαγωγής (κατ'επιλογήν)]
 maximum account id (e.g. 65535 or 1000000)	admin	el	Μέγιστος αριθμός id  λογαριασμών (π.χ. 65535 ή 1000000)
 maximum entries in click path history	admin	el	Μέγιστος αριθμός εισόδων στο click path ιστορικό
@@ -332,7 +332,7 @@ search categories	admin	el	Ψάξιμο κατηγοριών
 search groups	admin	el	Ψάξιμο ομάδων
 search peer servers	admin	el	Ψάξιμο ισότιμων server
 security	admin	el	Ασφάλεια
-select group managers	admin	el	Επιλέξτε Ομαδα Διευθυντών
+select group managers	admin	el	Επιλέξτε Ομαδα Διαχειριστών
 select permissions this group will have	admin	el	Επιλέξτε δικαιώματα που θαέχει αυτή η ομάδα
 select the parent category. if this is a main category select no category	admin	el	Επιλέξτε την μητρική κατηγορία. Αν αυτή είναι μια κύρια κατηγορία επιλέξτε ΟΧΙ ΚΑΤΗΓΟΡΙΑ
 select users for inclusion	admin	el	Επιλέξτε χρήστες για συνυπολογισμό
@@ -392,7 +392,7 @@ the users bellow are still members of group %1	admin	el	οι χρήστες παρακάτω είνα
 there already is a group with this name. userid's can not have the same name as a groupid	admin	el	Υπάρχει ήδη ομάδα με αυτό το όνομα.Η ταυτότητα χρήστη δεν μπορεί να έχει το ίδιο όνομα με αυτο της ταυτότητας μιας ομάδας.
 they must be removed before you can continue	admin	el	Πρέπει να απομακρινθούν πρίν συνεχίσετε
 this application is current	admin	el	Αυτή η εφαρμογή χρησιμοποιήται
-this application requires an upgrade	admin	el	Αυτή η εφαρμογή απαιτεί αναβάθμηση
+this application requires an upgrade	admin	el	Αυτή η εφαρμογή απαιτεί αναβάθμιση
 this category is currently being used by applications as a parent category	admin	el	Αυτή η κατηγορία χρησημοποιήται αυτή τη στιγμή απο εφαρμογές σαν αρχική κατηγορία
 timeout for application session data in seconds (default 86400 = 1 day)	admin	el	Χρονοαναμονή για δεδομένα περιόδου εφαρμογής σε δευτερόλεπτα (προκαθορισμένο 86400 = 1 ημέρα)
 timeout for sessions in seconds (default 14400 = 4 hours)	admin	el	Χρονοαναμονή για περίοδο σε δευτερόλεπτα (προκαθορισμένο 14400 = 4 ώρες)
@@ -403,23 +403,23 @@ trust level	admin	el	Επίπεδο εμπιστοσύνης
 trust relationship	admin	el	Σχέση εμπιστοσύνης
 type '%1' already exists !!!	admin	el	ο τύπος '%1" υπάρχει ήδη !!!
 type of customfield	admin	el	Τύπος συνήθους πεδίου
-under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Στο λειτουργικό σύστημα των windows πρέπει να εγκαταστήσετε %1χειροκίνητα%2 το asyncservice ή να χρησιμοποιείσετε το fallback mode. Fallback σημαίνει ότι οι εργασίες ελέγχονται μόνο μετά από κάθε προβολή σελίδας.
-use cookies to pass sessionid	admin	el	Χρησημοποιηση cookies για να περάσεις την sessionid
+under windows you need to install the asyncservice %1manually%2 or use the fallback mode. fallback means the jobs get only checked after each page-view !!!	admin	el	Στο λειτουργικό σύστημα των windows πρέπει να εγκαταστήσετε %1χειροκίνητα%2 το asyncservice ή να χρησιμοποιήσετε το fallback mode. Fallback σημαίνει ότι οι εργασίες ελέγχονται μόνο μετά από κάθε προβολή σελίδας.
+use cookies to pass sessionid	admin	el	Χρησημοποίηση cookies για να περάσεις την sessionid
 use pure html compliant code (not fully working yet)	admin	el	Χρήση κανονικού συμβατού HTML κώδικα (δέν παίζει σωστά ακόμα)
-use theme	admin	el	Θέμα χρήσης
+use theme	admin	el	Χρησιμοποίηση θέματος
 user accounts	admin	el	Λογαριασμοί χρήστη
 user data	common	el	Δεδομένα χρήστη
 user for smtp-authentication (leave it empty if no auth required)	admin	el	Χρήστης για την SMTP-πιστοποίηση (να μείνει κενό αν δεν χρειάζεται πιστοποίηση)
 user groups	admin	el	Ομάδες χρήστη
 userdata	admin	el	δεδομένα χρήστη
 users choice	admin	el	Επιλογή Χρήστη
-view access log	admin	el	Εμφάνηση καταγραφής πρόσβασης
-view account	admin	el	Εμφάνηση λογαριασμού
-view category	admin	el	Εμφάνηση κατηγορίας
-view error log	admin	el	Εμφάνηση καταγραφής λαθών
-view sessions	admin	el	Εμφάνηση περιόδων
-view this user	admin	el	εμφάνηση αυτού του χρήστη
-view user account	admin	el	Εμφάνηση λογαριασμού χρήστη
+view access log	admin	el	Εμφάνιση καταγραφής πρόσβασης
+view account	admin	el	Εμφάνιση λογαριασμού
+view category	admin	el	Εμφάνιση κατηγορίας
+view error log	admin	el	Εμφάνιση καταγραφής λαθών
+view sessions	admin	el	Εμφάνιση περιόδων
+view this user	admin	el	εμφάνιση αυτού του χρήστη
+view user account	admin	el	Εμφάνιση λογαριασμού χρήστη
 who would you like to transfer all records owned by the deleted user to?	admin	el	Ποιός θα θέλατε να μεταφέρει ΟΛΕΣ της εγγραφές που ανήκουν στον χρήστη που διαγραφηκε?
 would you like egroupware to cache the egw info array ?	admin	el	Θέλετε η eGroupWare να κρύβει τον πίνακα πληροφοριών της egw ?
 would you like egroupware to check for a new version<br>when admins login ?	admin	el	Θέλετε η eGroupWare να ελέγχει για μια νέα έκδωση όταν ο διαχειρηστής κάνει εισαγωγή ?
@@ -438,6 +438,6 @@ you must enter an application name and title.	admin	el	Πρέπει να εισάγετε ένα όν
 you must enter an application name.	admin	el	Πρέπει να εισάγετε ένα όνομα εφαρμογής
 you must enter an application title.	admin	el	Πρέπει να εισάγετε έναν τίτλο εφαρμογής
 you must select a file type	admin	el	Πρέπει να επιλέξετε έναν τύπο αρχείου
-you must select at least one group member.	admin	el	Π΄ρεπει να επιλέξετε τουλάχιστον ένα μέλος ομάδας
+you must select at least one group member.	admin	el	Πρέπει να επιλέξετε τουλάχιστον ένα μέλος ομάδας
 you will need to remove the subcategories before you can delete this category	admin	el	Θα πρέπει να διαγραφούν οι υποκατηγορίες πρίν διαγράψεις αυτή την κατηγορία !
 your session could not be verified.	admin	el	Η περίοδος εργασίας δεν μπόρεσε να επαληθευθεί

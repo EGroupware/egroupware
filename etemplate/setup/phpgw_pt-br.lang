@@ -52,6 +52,7 @@ cant delete a single widget from a grid !!!	etemplate	pt-br	Não é possível remov
 cant delete the only column of a grid !!!	etemplate	pt-br	Não é possível remover a única coluna de uma grade.
 cant delete the only row in a grid !!!	etemplate	pt-br	Não é possível remover a única linha de uma grade.
 category	etemplate	pt-br	Categoria
+category tree	etemplate	pt-br	Árvore de categorias
 cellpadding for the table-tag	etemplate	pt-br	Estofamento da célula para a tabela
 cells	etemplate	pt-br	Células
 cellspacing for the table-tag	etemplate	pt-br	Espaçamento da célula para a tabela
@@ -367,6 +368,7 @@ to start the etemplate editor	etemplate	pt-br	iniciar o editor eModelo
 to start the search	etemplate	pt-br	iniciar a Localizaçãoto start the search
 today	etemplate	pt-br	Hoje
 top	etemplate	pt-br	Topo
+tree	etemplate	pt-br	Árvore
 type	etemplate	pt-br	Tipo
 type of the column	etemplate	pt-br	tipo de coluna
 type of the field (select label if field should be empty)	etemplate	pt-br	tipo de campo (selecione a Etiqueta se o campo estiver vazio)

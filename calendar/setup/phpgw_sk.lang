@@ -11,6 +11,7 @@ actions	calendar	sk	Akcie
 actions...	calendar	sk	Akcie...
 add alarm	calendar	sk	Pridaj pripomienku
 added	calendar	sk	Pridané
+added by synchronisation	calendar	sk	Pridané cez synchronizáciu
 after %1	calendar	sk	A¾ po %1
 after current date	calendar	sk	Po súèasnom dátume
 alarm	calendar	sk	Pripomienka
@@ -52,6 +53,7 @@ copy this event	calendar	sk	Kopírova» udalos»
 countries	calendar	sk	Krajiny
 country	calendar	sk	Krajina
 create an exception for the given date	calendar	sk	Vytvori» výnimku pre zadaný dátum
+create exception	calendar	sk	Vytvori» výnimku
 create new links	calendar	sk	Vytvori» nové odkazy
 csv	calendar	sk	CSV
 csv-fieldname	calendar	sk	Pole v CSV
@@ -105,6 +107,7 @@ event details follow	calendar	sk	Podrobnosti o udalosti:
 event saved	calendar	sk	Udalos» bola ulo¾ená
 event will occupy the whole day	calendar	sk	Udalos» zaberie celý deò
 exception	calendar	sk	Výnimka
+exception created - you can now edit or delete it	calendar	sk	Výnimka bola vytvorená -teraz ju mô¾ete upravi» alebo zmaza»
 exceptions	calendar	sk	Výnimky
 execute a further action for this entry	calendar	sk	Vykona» ïal¹iu akciu pre tento záznam
 existing links	calendar	sk	Existujúce odkazy
@@ -192,7 +195,7 @@ number of records to read (%1)	calendar	sk	Poèet záznamov k naèítaniu (%1)
 observance rule	calendar	sk	Pravidlo zachovania
 occurence	calendar	sk	Výskyt
 old startdate	calendar	sk	Starý dátum zaèiatku
-on %1 %2 %3 your meeting request for %4	calendar	sk	%1 %2 %3 va¹a po¾iadavka na stretnutie pre %4
+on %1 %2 %3 your meeting request for %4	calendar	sk	%1 %2 %3 va¹u po¾iadavku na stretnutie plánované na %4
 on all modification, but responses	calendar	sk	Pri v¹etkých zmenách okrem odpovedí
 on any time change too	calendar	sk	Aj pri akejkoµvek zmene èasu
 on invitation / cancelation only	calendar	sk	Len pri pozvaní / zru¹ení
@@ -317,6 +320,7 @@ you can only set a year or a occurence !!!	calendar	sk	Mô¾ete zada» buï rok aleb
 you do not have permission to read this record!	calendar	sk	Nemáte právo èíta» tento záznam!
 you have a meeting scheduled for %1	calendar	sk	Máte naplánované stretnutie na %1
 you have been disinvited from the meeting at %1	calendar	sk	Va¹e pozvanie na stretnutie o %1 bolo zru¹ené
+you need to select an account, contact or resource first!	calendar	sk	Najprv treba vybra» úèet, kontakt alebo zdroj!
 you need to select an ical file first	calendar	sk	Najprv treba vybra» súbor iCal.
 you need to set either a day or a occurence !!!	calendar	sk	Musíte nastavi» buï deò alebo výskyt!!!
 your meeting scheduled for %1 has been canceled	calendar	sk	Stretnutie, ktoré bolo naplánované na %1, bolo zru¹ené

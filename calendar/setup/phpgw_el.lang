@@ -11,6 +11,8 @@ actions	calendar	el	Ενέργειες
 actions...	calendar	el	Ενέργειες...
 add alarm	calendar	el	Προσθέστε Ειδοποίηση
 added	calendar	el	Προστέθηκε
+added by synchronisation	calendar	el	προστέθηκε από συγχρονισμό
+after %1	calendar	el	Μετά %1
 after current date	calendar	el	Μετά την τωρινή ημερομηνία
 alarm	calendar	el	Ειδοποίηση
 alarm added	calendar	el	Προστέθηκε ειδοποίηση
@@ -28,6 +30,7 @@ are you sure you want to delete this country ?	calendar	el	Εισαι σίγουρος πως θέ
 are you sure you want to delete this holiday ?	calendar	el	Εισαι σίγουρος πως θέλεις να διαγράψεις αυτή την αργία;
 back half a month	calendar	el	Μισό μήνα πίσω
 back one month	calendar	el	Ένα μήνα πίσω
+before %1	calendar	el	Πριν %1
 before current date	calendar	el	Πριν την τωρινή ημερομηνία
 before the event	calendar	el	πριν το γεγονός
 birthday	calendar	el	Γενέθλια
@@ -49,6 +52,7 @@ copy this event	calendar	el	Αντιγράψτε αυτό το γεγονός
 countries	calendar	el	Χώρες
 country	calendar	el	Χώρα
 create an exception for the given date	calendar	el	Δημιουργήστε μια εξαίρεση για τη δοσμένη ημερομηνία
+create exception	calendar	el	Δημιουργία εξαίρεσης
 create new links	calendar	el	Δημιουργήστε νέα links
 csv	calendar	el	CSV
 csv-fieldname	calendar	el	CSV-νομα πεδίου
@@ -102,6 +106,7 @@ event details follow	calendar	el	Ακολουθούν λεπτομέρειες γεγονότων
 event saved	calendar	el	Γεγονός αποθηκεύτηκε
 event will occupy the whole day	calendar	el	Το γεγονός θα απασχολήσει ολόκληρη την ημέρα
 exception	calendar	el	Εξαίρεση
+exception created - you can now edit or delete it	calendar	el	Δημιουργήθηκε εξαίρεση - μπορείτε τώρα να την επεξεργαστείτε ή να τη διαγράψετε
 exceptions	calendar	el	Εξαιρέσεις
 execute a further action for this entry	calendar	el	Εκτελέστε περαιτέρω ενέργεια για αυτήν την καταχώρηση
 existing links	calendar	el	Υπάρχοντες σύνδεσμοι
@@ -113,8 +118,6 @@ filename	calendar	el	Όνομα αρχείου
 filename of the download	calendar	el	Όνομα αρχείου που φορτώνεται
 firstname of person to notify	calendar	el	Ονομα του ατόμου να ειδοποιηθεί
 for	calendar	el	για
-for all future events	calendar	el	Για όλα τα μελλοντικά γεγονότα
-for this event	calendar	el	Για αυτό το γεγονός
 for which views should calendar show distinct lines with a fixed time interval.	calendar	el	Για ποιες εμφανίσεις πρέπει το ημερολόγιο να δείχνει ευδιάκριτες γραμμές με καθορισμένα χρονικά διαστήματα.
 format of event updates	calendar	el	Μορφή απο ενημερωμένα γεγονότα
 forward half a month	calendar	el	Προώθηση μισού μήνα
@@ -258,7 +261,6 @@ startdate and -time of the search	calendar	el	ημερομηνία έναρξης και ώρα της ανα
 startdate of the export	calendar	el	Αρχική ημερομηνία της εξαγωγής
 startrecord	calendar	el	Έναρξη εγγραφής
 status changed	calendar	el	Η κατάσταση άλλαξε
-status recurrence	calendar	el	Κατάσταση επανεμφάνισης
 submit to repository	calendar	el	Υποβολή στην αποθήκη
 sun	calendar	el	Κυρ
 tentative	calendar	el	Δοκιμαστικός

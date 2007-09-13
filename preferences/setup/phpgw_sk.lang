@@ -5,7 +5,7 @@
 a template defines the layout of egroupware and it contains icons for each application.	preferences	sk	©ablóna definuje vzhµad eGroupWare a obsahuje ikony pre jednotlivé aplikácie.
 a theme defines the colors and fonts used by the template.	preferences	sk	Téma urèuje farby a písma pou¾ité ¹ablónou.
 acl grants have been updated	preferences	sk	Práva ACL boli aktualizované
-any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoµvek zoznam v eGroupWare zobrazí tento poèet riadkov na stránku.<br>Priveµa spôsobí spomalenie zobrazovania stránky, primálo zase zú¾i vá¹ rozhµad.
+any listing in egw will show you this number of entries or lines per page.<br>to many slow down the page display, to less will cost you the overview.	preferences	sk	Akýkoµvek zoznam v eGroupWare zobrazí tento poèet riadkov na stránku.<br>Ak dáte priveµa, stránka sa bude zobrazova» pomaly. Ak dáte málo, zú¾i sa Vá¹ rozhµad.
 are you sure you want to delete this category ?	preferences	sk	Skutoène chcete odstráni» túto kategóriu?
 change a user password by passing the old and new passwords.  returns true on success, false on failure.	preferences	sk	Zmeni» pou¾ívateµské heslo zadaním starého a nového hesla. Vráti TRUE v prípade úspechu a FALSE v prípade neúspechu.
 change your password	preferences	sk	Zmeni» va¹e heslo
@@ -20,18 +20,18 @@ default application	preferences	sk	Predvolená aplikácia
 default preferences	preferences	sk	Predvolené nastavenia
 delete categories	preferences	sk	Zmaza» kategórie
 description can not exceed 255 characters in length !	preferences	sk	Då¾ka opisu nesmie prekroèi» 255 znakov!
-do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sk	Chcete èas zobrazova» ako 24 hodín, alebo ako 12 hodín s príponami odp. a dop.
-edit custom fields	preferences	sk	upravi» vlastné polo¾ky
+do you prefer a 24 hour time format, or a 12 hour one with am/pm attached.	preferences	sk	Chcete èas zobrazova» ako 24 hodín, alebo ako 12 hodín s príponami am(dopoludnia) a pm(popoludní).
+edit custom fields	preferences	sk	upravi» vlastné polia
 enter your new password	preferences	sk	Zadajte va¹e heslo
 enter your old password	preferences	sk	Zadajte staré heslo
-error: there was a problem finding the preference file for %1 in %2	preferences	sk	Chyba: Súbor nastavení pre %1 v %2 sa nena¹ial
+error: there was a problem finding the preference file for %1 in %2	preferences	sk	Chyba: Súbor predvolieb pre %1 v %2 sa nena¹ial
 failed to change password.  please contact your administrator.	preferences	sk	Nepodarilo sa zmeni» heslo. Prosím kontaktujte správcu systému.
 forced preferences	preferences	sk	Vynútené nastavenia
 help off	preferences	sk	Skry» Pomocníka
 hours	preferences	sk	hodín
 how do you like to display accounts	preferences	sk	Ako sa majú zobrazova» pou¾ívateµské úèty
 how do you like to select accounts	preferences	sk	Ako sa majú vybera» pou¾ívateµské úèty
-how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sk	O kolik hodin se Va¹a èasová zóna lí¹i od èasu serveru.<br>Ak ste v rovnakej zóne ako server, zvoµte 0, inak zvoµte Vá¹ miestny èas.
+how many hours are you in front or after the timezone of the server.<br>if you are in the same time zone as the server select 0 hours, else select your locale date and time.	preferences	sk	O kolµko hodín sa Va¹a èasová zóna lí¹i od èasu serveru.<br>Ak ste v rovnakej zóne ako server, zvoµte 0, inak zvoµte Vá¹ miestny èas.
 how many icons should be shown in the navbar (top of the page). additional icons go into a kind of pulldown menu, callable by the icon on the far right side of the navbar.	preferences	sk	Koµko ikoniek sa má zobrazova» v navigaènom paneli navrchu stránky. Nadbytoèné ikony sa skryjú do rozbaµovacieho menu na pravej strane navigaèného panelu.
 how should egroupware display dates for you.	preferences	sk	Ako má eGroupWare zobrazova» dátumy.
 icon	preferences	sk	Ikona

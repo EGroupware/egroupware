@@ -4,6 +4,9 @@ back to file manager	filemanager	zh-tw	回到檔案管理員
 cancel editing %1 without saving	filemanager	zh-tw	取消編輯%1，不儲存
 cannot create directory because it begins or ends in a space	filemanager	zh-tw	資料夾名稱包含空白字元，無法建立資料夾
 cannot replace %1 because it is a directory	filemanager	zh-tw	無法置換%1，因為它是一個資料夾
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	zh-tw	選擇的結束日期如果小於開始日期，搜尋結果將會介於這兩個日期間。
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	zh-tw	只選擇一個日期（開始或結束），搜尋結果將會是輸入日期之後/或之前
+clear search	filemanager	zh-tw	清除搜尋
 command sucessfully run	filemanager	zh-tw	指令執行完成
 comment	filemanager	zh-tw	備註
 comments cannot contain "%1"	filemanager	zh-tw	備註不能包含 "%1"
@@ -24,6 +27,7 @@ create folder	filemanager	zh-tw	建立資料夾
 created	filemanager	zh-tw	建立日期
 created %1	filemanager	zh-tw	建立%1
 created %1,%2	filemanager	zh-tw	建立 %1,%2
+created between	filemanager	zh-tw	建立介於
 created by	filemanager	zh-tw	建立者
 created directory %1	filemanager	zh-tw	建立資料夾%1
 date	filemanager	zh-tw	日期
@@ -45,7 +49,9 @@ fake base dir did not exist, egroupware created a new one.	filemanager	zh-tw	初
 file	filemanager	zh-tw	檔案
 file %1 already exists. please edit it or delete it first.	filemanager	zh-tw	檔案 %1已經存在，請先編輯或刪除它。
 file %1 could not be created.	filemanager	zh-tw	檔案 %1 無法建立。
+file %1 may be too big. contact your systemadministrator for further info	filemanager	zh-tw	檔案 %1 也許太大，請聯絡管理員取得更多資訊
 file name	filemanager	zh-tw	檔名
+file names cannot contain  or /	filemanager	zh-tw	檔案名不能包含 \ 或 /
 file names cannot contain "%1"	filemanager	zh-tw	檔案名不能包含 "%1"
 file names cannot contain \ or /	filemanager	zh-tw	檔案名不能包含 \ 或 /
 filemanager	common	zh-tw	檔案管理員
@@ -61,10 +67,12 @@ go to your home directory	filemanager	zh-tw	到主要目錄
 go to:	filemanager	zh-tw	到：
 go up	filemanager	zh-tw	上一層
 home	filemanager	zh-tw	首頁
+id	filemanager	zh-tw	編號
 location	filemanager	zh-tw	位置
 locked	filemanager	zh-tw	被鎖定
 mime type	filemanager	zh-tw	MIME 類型
 modified	filemanager	zh-tw	修改日期
+modified between	filemanager	zh-tw	修改介於
 modified by	filemanager	zh-tw	修改者
 move to	filemanager	zh-tw	搬到
 move to:	filemanager	zh-tw	搬到：
@@ -87,6 +95,7 @@ save %1, and go back to file listing	filemanager	zh-tw	儲存 %1，接著回到�
 save all	filemanager	zh-tw	儲存全部
 save changes	filemanager	zh-tw	儲存異動
 saved %1	filemanager	zh-tw	%1 儲存完成
+searchstring	filemanager	zh-tw	搜尋字串
 show	filemanager	zh-tw	顯示
 show ..	filemanager	zh-tw	顯示 ..
 show .files	filemanager	zh-tw	顯示 .檔案
@@ -94,6 +103,7 @@ show command line (experimental. dangerous.)	filemanager	zh-tw	顯示命令列(�
 show help	filemanager	zh-tw	顯示說明
 size	filemanager	zh-tw	大小
 sort by:	filemanager	zh-tw	排序：
+start search	filemanager	zh-tw	開始搜尋
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	zh-tw	未來的檔案管理，現在請只用來測試，任何的問題歡迎回報
 total files	filemanager	zh-tw	檔案數
 unknown mime-type defaults to text/plain when viewing	filemanager	zh-tw	不明的MIME格式，預設瀏覽格式為純文字

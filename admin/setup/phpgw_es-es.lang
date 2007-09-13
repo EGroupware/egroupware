@@ -89,7 +89,7 @@ change acl rights	admin	es-es	cambiar permisos de ACL
 change config settings	admin	es-es	Cambiar opciones de configuración
 change main screen message	admin	es-es	Cambiar mensaje de la pantalla principal
 check ip address of all sessions	admin	es-es	Comprobar  la IP de todas las sesiones
-check items to <b>%1</b> to %2 for %3	admin	es-es	Comprobar elementos a <b>%1</b> a %2 para %3
+check items to <b>%1</b> to %2 for %3	admin	es-es	Seleccionar los elementos para <b>%1</b> a %2 para %3
 click to select a color	admin	es-es	Pulse para seleccionar un color
 color	admin	es-es	Color
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	es-es	Dominio de la cookie (vacío significa usar el nombre del dominio completo, para el Administrador de sitios web, p. ej. "dominio.com" permite usar la misma cookie para egw.dominio.com y www.dominio.com)

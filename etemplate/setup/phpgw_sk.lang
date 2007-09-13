@@ -1,8 +1,8 @@
-%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sk	%1 (%2 nových) správ napísaných pre aplikáciu '%3' a jazyky '%4'
-%1 etemplates deleted	etemplate	sk	%1 e©ablón odstránených
+%1 (%2 new) messages writen for application '%3' and languages '%4'	etemplate	sk	%1 (%2 nových) správ bolo napísaných pre aplikáciu '%3' a jazyky '%4'
+%1 etemplates deleted	etemplate	sk	%1 e©ablón bolo odstránených
 %1 etemplates for application '%2' dumped to '%3'	etemplate	sk	%1 e©ablón pre aplikáciu '%2' urobilo výpis do '%3'
 %1 etemplates found	etemplate	sk	Na¹lo sa %1 e©ablón.
-%1 matches on search criteria	etemplate	sk	Nájdených %1 zhôd s vyhµadávacím kritériom
+%1 matches on search criteria	etemplate	sk	Nájdených bolo %1 zhôd s vyhµadávacím kritériom
 %1 new etemplates imported for application '%2'	etemplate	sk	Naimportovaných %1 nových e©ablón pre aplikáciu '%2'
 %s disabled	etemplate	sk	%s je vypnuté
 %s needed	etemplate	sk	%s je potrebné
@@ -51,6 +51,7 @@ cant delete a single widget from a grid !!!	etemplate	sk	Nedá sa odstráni» jedno
 cant delete the only column of a grid !!!	etemplate	sk	Nedá sa odstráni» jediný ståpec matice!!!
 cant delete the only row in a grid !!!	etemplate	sk	Nedá sa odstráni» jediný riadok matice!!!
 category	etemplate	sk	Kategória
+category tree	etemplate	sk	Strom kategórie
 cellpadding for the table-tag	etemplate	sk	Odstup okraja bunky od jej obsahu pre tag tabuµky
 cells	etemplate	sk	Bunky
 cellspacing for the table-tag	etemplate	sk	Rozostup medzi bunkami pre tag tabuµky
@@ -218,7 +219,7 @@ middle	etemplate	sk	Stred
 minute	etemplate	sk	Minúta
 minutes	etemplate	sk	Minút
 month	etemplate	sk	Mesiac
-name	etemplate	sk	Názov
+name	etemplate	sk	Meno
 name of other table where column is a key from	etemplate	sk	názov inej tabuµky, kde ståpec je kµúèom z
 name of table to add	etemplate	sk	Názov tabuµky, ktorá sa má prida»
 name of the etemplate, should be in form application.function[.subtemplate]	etemplate	sk	názov e©ablóny, mal by by» vo forme aplikácia.funkcia[pod©ablóna]
@@ -332,7 +333,7 @@ table unchanged, no write necessary !!!	etemplate	sk	Tabuµka sa nezmenila, zápis
 tablename	etemplate	sk	NázovTabuµky
 tabs	etemplate	sk	Tabuµky
 template	etemplate	sk	©ablóna
-template deleted	etemplate	sk	©ablóna vymazaná
+template deleted	etemplate	sk	©ablóna bola odstránené
 template saved	etemplate	sk	©ablóna ulo¾ená
 text	etemplate	sk	Text
 textarea	etemplate	sk	Oblas» textu
@@ -342,6 +343,7 @@ to start the etemplate editor	etemplate	sk	pre spustenie editora e©ablón
 to start the search	etemplate	sk	pre spustenie hµadania
 today	etemplate	sk	Dnes
 top	etemplate	sk	Vrch
+tree	etemplate	sk	Strom
 type	etemplate	sk	Typ
 type of the column	etemplate	sk	typ ståpca
 type of the field (select label if field should be empty)	etemplate	sk	typ poµa (vyberte Menovku ak pole má by» prázdne)

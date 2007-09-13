@@ -210,6 +210,7 @@ one day after	infolog	zh-tw	一天後
 one day in advance	infolog	zh-tw	一天前
 ongoing	infolog	zh-tw	不間斷的
 only for details	infolog	zh-tw	只顯示細節
+only if i get assigned or removed	infolog	zh-tw	只在我被指派或移除時
 only the attachments	infolog	zh-tw	只有附加檔案
 only the links	infolog	zh-tw	只有連結
 open	infolog	zh-tw	開啟
@@ -345,6 +346,7 @@ yes - delete	infolog	zh-tw	確定 - 刪除
 yes - delete including sub-entries	infolog	zh-tw	確定 - 刪除（包含附屬資料）
 yes, noone can purge deleted items	infolog	zh-tw	是，沒有人可以排除刪除的項目
 yes, only admins can purge deleted items	infolog	zh-tw	是，只有管理者可以排除刪除的項目
+yes, with larger fontsize	infolog	zh-tw	是，使用較大的字體
 yes, with purging of deleted items possible	infolog	zh-tw	是，與可能排除的項目
 you can't delete one of the stock types !!!	infolog	zh-tw	您不能刪除股票的種類！
 you have entered an invalid ending date	infolog	zh-tw	您輸入了錯誤的結束日期

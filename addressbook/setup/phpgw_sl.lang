@@ -107,8 +107,10 @@ custom	addressbook	sl	Lasten
 custom etemplate for the contactform	addressbook	sl	eTemplate po meri za obrazec za stike
 custom fields	addressbook	sl	Lastna polja
 debug output in browser	addressbook	sl	Preglej izpis v brskalniku
+default	addressbook	sl	Privzeto
 default address format	addressbook	sl	Privzeta oblika naslovov
 default addressbook for adding contacts	addressbook	sl	Privzeti adresar za dodajanje stikov
+default document to insert contacts	addressbook	sl	Privzeti dokument za vstavljanje stikov
 default filter	addressbook	sl	Privzeti filter
 delete a single entry by passing the id.	addressbook	sl	Izbriši zapis s podano šifro
 delete selected distribution list!	addressbook	sl	Izbriši izbrane distribucijske sezname!
@@ -118,6 +120,7 @@ deleted	addressbook	sl	Zbrisano
 deletes the photo	addressbook	sl	Zbriše sliko
 department	common	sl	Oddelek
 departments	addressbook	sl	Oddelki
+directory with documents to insert contacts	addressbook	sl	Mapa z dokumenti za vstavljanje stikov
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	sl	Prikaži opomnik za rojstne dneve na začetni strani (stran, ki se prikaže, ko vstopite v eGroupWare ali ko kliknete ikono Domov)
 distribution list deleted	addressbook	sl	Distribucijske seznam izbrisan
 distribution lists	addressbook	sl	Distribucijski seznami
@@ -130,6 +133,7 @@ don't hide empty columns	addressbook	sl	Ne skrij praznih stolpcev
 download	addressbook	sl	Prenos
 download export file (uncheck to debug output in browser)	addressbook	sl	Prenos izvožene datoteke (Odznači za izpis v brskalniku)
 download this contact as vcard file	addressbook	sl	Prenesite ta stik kot datoteko vCard
+duration	addressbook	sl	Trajanje
 edit custom field	addressbook	sl	Uredi lastno polje
 edit custom fields	admin	sl	Uredi lastna polja
 edit extra account-data in the addressbook	admin	sl	Uredi dodatne podatke računa v adresarju
@@ -139,6 +143,7 @@ email & internet	addressbook	sl	E-pošta in Splet
 email addresses (comma separated) to send the contact data	addressbook	sl	E-naslovi (ločeni z vejico), na katere pošljem podatke stika
 empty for all	addressbook	sl	Izprazni za vse
 enable an extra private addressbook	addressbook	sl	Omogoči dodatni osebni adresar
+end	addressbook	sl	Konec
 enter the path to the exported file here	addressbook	sl	Vnesite pot do izhodne datoteke
 error deleting the contact !!!	addressbook	sl	Napaka pri brisanju stika!
 error saving the contact !!!	addressbook	sl	Napaka pri shranjevanju stika!
@@ -172,6 +177,7 @@ geo	addressbook	sl	GEO
 global categories	addressbook	sl	Globalne kategorije
 grant addressbook access	common	sl	Dostop do glavnega imenika
 group %1	addressbook	sl	Skupina %1
+h	addressbook	sl	h
 hide accounts from addressbook	addressbook	sl	Skrij uporabniške račune iz adresarja
 hides accounts completly from the adressbook.	addressbook	sl	Skrij uporabniške račune iz adresarja
 home address	addressbook	sl	Domači naslov
@@ -339,6 +345,7 @@ view linked infolog entries	addressbook	sl	Poglej povezane vnose InfoDnevnika
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	sl	OPOZORILO!! LDAP je veljaven samo, če ne uporabljate stikov za skladiščenje računov!
 warning: all contacts found will be deleted!	addressbook	sl	Opozorilo: vsi najdeni stiki bodo zbrisani!
 warning: template "%1" not found, using default template instead.	addressbook	sl	Opozorilo: predloga "%1" ni bila najdena. Ušorabljena bo privzeta predloga.
+weekday	addressbook	sl	Delovnik
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	sl	Kaj naj povezave do adresarja prikaže v drugih aplikacijah. Prazne vrednosti bodo izpuščene. Če spremenite nastavitve, se morate ponovno prijaviti!
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	sl	Katero obliko naslova naj Adresar uporabi za države, za katere ne pozna oblike. Če je oblika naslova znana, ta nastavitev nima vpliva.
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	sl	Kateri adresar naj se izbere pri dodajanju stika IN nimate pravic dodajanja v trenutni adresar.
