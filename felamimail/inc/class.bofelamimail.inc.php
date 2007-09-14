@@ -998,7 +998,7 @@
 					$partHTML = $mimePart;
 				} elseif ($mimePart->type == 'MULTIPART' && $mimePart->subType == 'RELATED' && is_array($mimePart->subParts)) {
 					// in a multipart alternative we treat the multipart/related as html part
-					$partHTML = $mimePart;
+					$partHTML =array($mimePart);
 				}
 			}
 
