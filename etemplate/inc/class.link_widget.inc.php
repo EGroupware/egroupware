@@ -171,9 +171,9 @@
 					return;			
 				}
 				$cell['type'] = 'label';
-				//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size]
+				//  size: [b[old]][i[talic]],[link],[activate_links],[label_for],[link_target],[link_popup_size],[link_title]
 				list($cell['size']) = explode(',',$cell['size']);
-				$cell['size'] .= ','.$link.',,,'.$target.','.$popup;
+				$cell['size'] .= ','.$link.',,,'.$target.','.$popup.','.$value['extra_title'];
 				$value = $value['title'] ? $value['title'] : $this->link->title($value['app'],$value['id']);
 				return true;
 
