@@ -14,7 +14,7 @@
 		</hbox>
 		<styles>.rightPadAdd { width: 30px; }</styles>
 	</template>
-	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.4.002">
+	<template id="addressbook.index.rows" template="" lang="" group="0" version="1.5.001">
 		<grid width="100%">
 			<columns>
 				<column/>
@@ -26,6 +26,7 @@
 				<column/>
 				<column/>
 				<column disabled="@no_customfields"/>
+				<column/>
 				<column/>
 				<column width="90"/>
 			</columns>
@@ -93,6 +94,10 @@
 						</grid>
 					</vbox>
 					<vbox options="0,0">
+						<nextmatch-header label="Last date" id="calendar"/>
+						<nextmatch-header label="Next date" id="calendar"/>
+					</vbox>
+					<vbox options="0,0">
 						<nextmatch-sortheader id="contact_created" label="Created"/>
 						<nextmatch-sortheader id="contact_modified" label="Last modified"/>
 					</vbox>
@@ -146,6 +151,10 @@
 						<description options=",@${row}[email_home_link],,,_blank,$row_cont[email_home_popup]" class="fixedHeight" id="${row}[email_home]" no_lang="1"/>
 					</vbox>
 					<customfields-list rows="1" cols="1" id="$row" class="customfields"/>
+					<vbox options="0,0">
+						<link id="${row}[last_link]"/>
+						<link id="${row}[next_link]"/>
+					</vbox>
 					<vbox options="0,0">
 						<date-time id="${row}[created]" readonly="true" class="noWrap"/>
 						<menulist>

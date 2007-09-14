@@ -831,13 +831,16 @@ class uicontacts extends bocontacts
 			// do we need to read the custom fields, depends on the column is enabled and customfields exist
 			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
 			if ($columselection) $columselection = explode(',',$columselection);
-			if (!$id_only && (!$columselection || in_array('customfields',$columselection)) && $rows && $this->customfields)
+			if (!$id_only && $rows && (
+				($show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->customfields) ||
+				($show_calendar = !$columselection || in_array('calendar',$columselection))))
 			{
 				foreach((array) $rows as $n => $val)
 				{
 					if ($val && (int)$val['id']) $ids[] = $val['id'];
 				}
-				if ($ids) $customfields = $this->read_customfields($ids);
+				if ($ids && $show_custom_fields) $customfields = $this->read_customfields($ids);
+				if ($ids && $show_calendar) $calendar = $this->read_calendar($ids);
 			}
 		}
 		if (!$rows) $rows = array();
@@ -929,6 +932,13 @@ class uicontacts extends bocontacts
 					foreach($this->customfields as $name => $data)
 					{
 						$row['#'.$name] = $customfields[$row['id']][$name];
+					}
+				}
+				if (isset($calendar[$row['id']]))
+				{
+					foreach($calendar[$row['id']] as $name => $data)
+					{
+						$row[$name] = $data;
 					}
 				}
 				if ($this->prefs['home_column'] != 'never' && !$homeaddress)
@@ -1921,6 +1931,73 @@ $readonlys['button[vcard]'] = true;
 			$GLOBALS['egw']->session->appsession('document_actions','addressbook',$actions);
 		}
 		return $actions;
+	}
+	
+	/**
+	 * Read the next and last event of given contacts
+	 *
+	 * @param array $ids contact_id's
+	 * @return array
+	 */
+	function read_calendar($ids)
+	{
+		if (!$GLOBALS['egw_info']['user']['apps']['calendar']) return null;
+		
+		$uids = array();
+		foreach($ids as $id)
+		{
+			$uids[] = 'c'.$id;
+		}
+		include_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
+		$bocal = new bocal;
+		$events = $bocal->search(array(
+			'users' => $uids,
+			'enum_recuring' => true,
+		));
+		if (!$events) return array();
+		
+		//_debug_array($events);
+		$calendars = array();
+		foreach($events as $event)
+		{
+			foreach($event['participants'] as $uid => $status)
+			{
+				if ($uid{0} != 'c' || ($status == 'R' && !$GLOBALS['egw_info']['user']['preferences']['calendar']['show_rejected']))
+				{
+					continue;
+				}
+				$id = (int)substr($uid,1);
+
+				if ($event['start'] < $this->now_su)	// past event --> check for last event
+				{
+					if (!isset($calendars[$id]['last_event']) || $event['start'] > $calendars[$id]['last_event'])
+					{
+						$calendars[$id]['last_event'] = $event['start'];
+						$calendars[$id]['last_link'] = array(
+							'id' => $event['id'],
+							'app' => 'calendar',
+							'title' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']),
+							'extra_title' => $bocal->link_title($event),
+						);
+					}
+				}
+				else	// future event --> check for next event
+				{
+					if (!isset($calendars[$id]['next_event']) || $event['start'] < $calendars[$id]['next_event'])
+					{
+						$calendars[$id]['next_event'] = $event['start'];
+						$calendars[$id]['next_link'] = array(
+							'id' => $event['id'],
+							'app' => 'calendar',
+							'title' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],$event['start']),
+							'extra_title' => $bocal->link_title($event),
+						);
+					}					
+				}
+			}
+		}
+		//_debug_array($calendars);
+		return $calendars;
 	}
 }
 
