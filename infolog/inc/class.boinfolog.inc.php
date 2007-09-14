@@ -284,7 +284,7 @@ class boinfolog
 
 		foreach($this->customfields as $name => $field)
 		{
-			if ((!$type || empty($field['type2']) || $field['type2'] == $type) &&
+			if ((!$type || empty($field['type2']) || in_array($type,explode(',',$field['type2']))) &&
 				(!$links || in_array($field['type'],$link_types)))
 			{
 				return True;
