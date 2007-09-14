@@ -831,16 +831,19 @@ class uicontacts extends bocontacts
 			// do we need to read the custom fields, depends on the column is enabled and customfields exist
 			$columselection = $this->prefs['nextmatch-addressbook.'.($do_email ? 'email' : 'index').'.rows'];
 			if ($columselection) $columselection = explode(',',$columselection);
-			if (!$id_only && $rows && (
-				($show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->customfields) ||
-				($show_calendar = !$columselection || in_array('calendar',$columselection))))
+			if (!$id_only && $rows)
 			{
-				foreach((array) $rows as $n => $val)
+				$show_custom_fields = (!$columselection || in_array('customfields',$columselection)) && $this->customfields;
+				$show_calendar = !$columselection || in_array('calendar',$columselection);
+				if ($show_calendar || $show_custom_fields)
 				{
-					if ($val && (int)$val['id']) $ids[] = $val['id'];
+					foreach($rows as $val)
+					{
+						$ids[] = $val['id'];
+					}
+					if ($show_custom_fields) $customfields = $this->read_customfields($ids);
+					if ($show_calendar) $calendar = $this->read_calendar($ids);
 				}
-				if ($ids && $show_custom_fields) $customfields = $this->read_customfields($ids);
-				if ($ids && $show_calendar) $calendar = $this->read_calendar($ids);
 			}
 		}
 		if (!$rows) $rows = array();
