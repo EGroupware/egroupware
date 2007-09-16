@@ -52,6 +52,7 @@ cant delete a single widget from a grid !!!	etemplate	es-es	¡No se puede borrar 
 cant delete the only column of a grid !!!	etemplate	es-es	¡No se puede borrar la única columna de una rejilla!
 cant delete the only row in a grid !!!	etemplate	es-es	¡No se puede borrar la única fila de una rejilla!
 category	etemplate	es-es	Categoría
+category tree	etemplate	es-es	Arbol de categorías
 cellpadding for the table-tag	etemplate	es-es	Distancia de la etiqueta de la tabla la celda
 cells	etemplate	es-es	Celdas
 cellspacing for the table-tag	etemplate	es-es	Espaciado en la celda para la etiqueta de la tabla
@@ -367,6 +368,7 @@ to start the etemplate editor	etemplate	es-es	para iniciar el editor de plantill
 to start the search	etemplate	es-es	para iniciar la búsqueda
 today	etemplate	es-es	Hoy
 top	etemplate	es-es	Superior
+tree	etemplate	es-es	Arbol
 type	etemplate	es-es	Tipo
 type of the column	etemplate	es-es	tipo de la columna
 type of the field (select label if field should be empty)	etemplate	es-es	tipo del campo (seleccionar la etiqueta si el campo tiene que estar vacío)

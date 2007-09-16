@@ -3,6 +3,7 @@
 %1 created in %2.	setup	es-es	%1 creado en %2.
 %1 does not exist !!!	setup	es-es	¡¡%1 no existe!!
 %1 is %2%3 !!!	setup	es-es	¡¡%1 %2 es %3!!
+%1 is needed by: %2.	setup	es-es	%1 es necesario para: %2
 %1, %2 or %3 the configuration file.	setup	es-es	%1, %2 o %3 el fichero de configuración.
 '%1' is not allowed as %2. arguments of option %3 !!!	setup	es-es	¡¡'%1' no está permitido como %2. argumentos de la opción %3 !!
 (searching accounts and changing passwords)	setup	es-es	(buscando cuentas y cambiando contraseñas)
@@ -520,6 +521,7 @@ the first step in installing egroupware is to ensure your environment has the ne
 the following applications need to be upgraded:	setup	es-es	Las siguientes aplicaciones necesitan una actualización:
 the function %1 is needed from: %2.	setup	es-es	La función %1 se necesita para: %2.
 the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	es-es	La función imagecreatefromjpeg viene con la extensión gd (compilada con soporte jpeg). Se necesita para subir fotos para los contactos.
+the ldap extension is needed, if you use ldap as account or contact storage, authenticate against ldap or active directory. it's not needed for a standard sql installation.	setup	es-es	La extension LDAP es necesaria si usa LDAP como almacenamiento de cuentas o contactos, identificarse en un servidor LDAP o directorio activo. No es necesaria para una instalación SQL estándar.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	La extensión mbstring es necesaria para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	es-es	El valor mbstring.func_overload = 7 es necesario para el soporte total de unicode (utf-8) u otros juegos de caracteres multibyte.
 the session extension is needed to use php sessions (db-sessions work without).	setup	es-es	La extensión de sesión es necesaria para usar sesiones php (las sesiones db funcionan sin ella).

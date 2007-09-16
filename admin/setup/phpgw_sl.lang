@@ -319,7 +319,7 @@ please run setup to become current	admin	sl	Poženite namestitev za posodobitev!
 please select	admin	sl	Izberite
 postfix with ldap	admin	sl	Pripona za LDAP
 preferences	admin	sl	Nastavitve
-primary group	admin	sl	Nsnovna skupina
+primary group	admin	sl	Osnovna skupina
 qmaildotmode	admin	sl	Način qmaildot
 quota settings	admin	sl	Nastavitvev kvot
 quota size in mbyte	admin	sl	Velikost kvote v MB

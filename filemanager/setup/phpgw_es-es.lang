@@ -4,6 +4,9 @@ back to file manager	filemanager	es-es	Volver al Administrador de ficheros
 cancel editing %1 without saving	filemanager	es-es	Cancelar la edición de %1 sin guardar
 cannot create directory because it begins or ends in a space	filemanager	es-es	No se puede crear el directorio porque empieza o acaba con un espacio
 cannot replace %1 because it is a directory	filemanager	es-es	No se puede reemplazar %1 porque es un directorio
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	es-es	Cambiar fechas donde la fecha final es más pequeña que la inicial producirá una búsqueda que devolverá todas las entradas excepto aquéllas entre las dos fechas indicadas
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	es-es	Elegir sólo una fecha (inicio o final) producirá una búsqueda que devolverá todas las entradas posteriores o anteriores a la fecha introducida
+clear search	filemanager	es-es	Limpiar búsqueda
 command sucessfully run	filemanager	es-es	Comando ejecutado correctamente
 comment	filemanager	es-es	Comentario
 comments cannot contain "%1"	filemanager	es-es	Los comentarios no pueden contener "%1"
@@ -24,6 +27,7 @@ create folder	filemanager	es-es	Crear carpeta
 created	filemanager	es-es	Creado
 created %1	filemanager	es-es	Se ha creado %1
 created %1,%2	filemanager	es-es	Se ha creado %1,%2
+created between	filemanager	es-es	creado entre
 created by	filemanager	es-es	Creado por
 created directory %1	filemanager	es-es	Directorio %1 creado
 date	filemanager	es-es	Fecha
@@ -45,6 +49,7 @@ fake base dir did not exist, egroupware created a new one.	filemanager	es-es	El 
 file	filemanager	es-es	Fichero
 file %1 already exists. please edit it or delete it first.	filemanager	es-es	El fichero %1 ya existe. Por favor, edítelo o bórrelo antes.
 file %1 could not be created.	filemanager	es-es	No se pudo crear el fichero %1.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	es-es	El fichero %1 puede ser demasiado grande. Póngase en contacto con el administrador de su sistema para más información.
 file name	filemanager	es-es	Nombre del fichero
 file names cannot contain  or /	filemanager	es-es	Los nombres de fichero no pueden contener \ o /
 file names cannot contain "%1"	filemanager	es-es	Los nombres de fichero no pueden contener "%1"
@@ -62,10 +67,12 @@ go to your home directory	filemanager	es-es	Ir al directorio personal
 go to:	filemanager	es-es	Ir a:
 go up	filemanager	es-es	subir
 home	filemanager	es-es	Inicio
+id	filemanager	es-es	Id
 location	filemanager	es-es	Ubicación
 locked	filemanager	es-es	Bloqueado
 mime type	filemanager	es-es	Tipo MIME
 modified	filemanager	es-es	Modificado
+modified between	filemanager	es-es	Modificado entre
 modified by	filemanager	es-es	Modificado por
 move to	filemanager	es-es	Mover A
 move to:	filemanager	es-es	Mover a:
@@ -88,6 +95,7 @@ save %1, and go back to file listing	filemanager	es-es	Guardar %1, y volver al l
 save all	filemanager	es-es	Guardar todo
 save changes	filemanager	es-es	Guardar cambios
 saved %1	filemanager	es-es	Guardado %1
+searchstring	filemanager	es-es	cadena de búsqueda
 show	filemanager	es-es	Mostrar
 show ..	filemanager	es-es	Mostrar ..
 show .files	filemanager	es-es	Mostrar ficheros ocultos
@@ -95,6 +103,7 @@ show command line (experimental. dangerous.)	filemanager	es-es	Mostrar línea de 
 show help	filemanager	es-es	Mostrar la ayuda
 size	filemanager	es-es	Tamaño
 sort by:	filemanager	es-es	Ordenar por:
+start search	filemanager	es-es	comenzar la búsqueda
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	es-es	El Administrador de archivos futuro, SOLO PARA PRUEBAS. Por favor, informe de los fallos.
 total files	filemanager	es-es	Total ficheros
 unknown mime-type defaults to text/plain when viewing	filemanager	es-es	El tipo MIME desconocido se muestra como text/plain

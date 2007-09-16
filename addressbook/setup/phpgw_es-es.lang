@@ -65,6 +65,7 @@ calendar uri	addressbook	es-es	URI del calendario
 can be changed via setup >> configuration	admin	es-es	Puede modificarse desde Instalación -> Configuración
 car phone	addressbook	es-es	Teléfono del coche
 categories, notes, ...	addressbook	es-es	Categorías, Notas, ...
+category tree	admin	es-es	Arbol de categorías
 cell phone	addressbook	es-es	Teléfono móvil
 change all organisation members	addressbook	es-es	cambiar todos los miembros de la organización
 charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
@@ -109,6 +110,7 @@ custom fields	addressbook	es-es	Campos personalizados
 debug output in browser	addressbook	es-es	Depurar salida en el navegador
 default address format	addressbook	es-es	Formato predeterminado de las drecciones
 default addressbook for adding contacts	addressbook	es-es	Libreta de direcciones predeterminada para añadir contactos
+default document to insert contacts	addressbook	es-es	Documento predeterminado para insertar contactos
 default filter	addressbook	es-es	Filtro predeterminado
 delete a single entry by passing the id.	addressbook	es-es	Borrar una entrada sencilla pasando el id
 delete selected distribution list!	addressbook	es-es	Borrar la lista de distribución seleccionada
@@ -118,6 +120,7 @@ deleted	addressbook	es-es	borrado
 deletes the photo	addressbook	es-es	Borra la foto
 department	common	es-es	Departamento
 departments	addressbook	es-es	departamentos
+directory with documents to insert contacts	addressbook	es-es	Directorio con documentos para insertar contactos
 displays a remider for birthdays on the startpage (page you get when you enter egroupware or click on the homepage icon).	addressbook	es-es	Muestra un recordatorio para los cumpleaños en la página de inicio (la página que se ve al entrar en eGroupWare o pulsar en el icono de inicio).
 distribution list deleted	addressbook	es-es	Lista de distribución borrada
 distribution lists	addressbook	es-es	Listas de distribución
@@ -130,6 +133,7 @@ don't hide empty columns	addressbook	es-es	No ocultar las columnas vacías
 download	addressbook	es-es	Descargar
 download export file (uncheck to debug output in browser)	addressbook	es-es	Descargar fichero exportado (desmarcar para depurar la salida en el navegador)
 download this contact as vcard file	addressbook	es-es	descargar este contacto como fichero vCard
+duration	addressbook	es-es	Duración
 edit custom field	addressbook	es-es	Editar campo personalizado
 edit custom fields	admin	es-es	Editar campos personalizados
 edit extra account-data in the addressbook	admin	es-es	Editar datos adicionales de la cuenta en la libreta de direcciones
@@ -139,6 +143,7 @@ email & internet	addressbook	es-es	Correo electrónico e Internet
 email addresses (comma separated) to send the contact data	addressbook	es-es	Direcciones de correo electrónico (separadas por comas) para enviar los datos del contacto
 empty for all	addressbook	es-es	vacío para todo
 enable an extra private addressbook	addressbook	es-es	Activar una libreta de direcciones privada extra
+end	addressbook	es-es	Fin
 enter the path to the exported file here	addressbook	es-es	Introduzca aquí la ruta a los ficheros exportados
 error deleting the contact !!!	addressbook	es-es	¡Error al borrar el contacto!
 error saving the contact !!!	addressbook	es-es	¡Error al guardar el contacto!
@@ -172,6 +177,7 @@ geo	addressbook	es-es	GEO
 global categories	addressbook	es-es	Categorías globales
 grant addressbook access	common	es-es	Conceder acceso a la libreta de direcciones
 group %1	addressbook	es-es	Grupo %1
+h	addressbook	es-es	h
 hide accounts from addressbook	addressbook	es-es	Ocultar las cuentas de la libreta de direcciones
 hides accounts completly from the adressbook.	addressbook	es-es	Oculta completamente las cuentas de la libreta de direcciones
 home address	addressbook	es-es	Domicilio particular
@@ -205,6 +211,7 @@ insert in document	addressbook	es-es	Insertar en el documento
 insufficent rights to delete this list!	addressbook	es-es	No tiene privilegios suficientes para borrar esta lista
 international	addressbook	es-es	Internacional
 label	addressbook	es-es	Etiqueta
+last date	addressbook	es-es	Última fecha
 last modified	addressbook	es-es	última modificación
 last modified by	addressbook	es-es	última modificación por
 ldap context for contacts	admin	es-es	Contexto LDAP para contactos
@@ -242,6 +249,7 @@ name for the distribution list	addressbook	es-es	Nombre para la lista de distrib
 name of current user, all other contact fields are valid too	addressbook	es-es	Nombre del usuario actual. Todos los demás campos del contacto también son válidos.
 name, address	addressbook	es-es	Nombre, Dirección
 new contact submitted by %1 at %2	addressbook	es-es	Nuevo contacto enviado por %1 en %2
+next date	addressbook	es-es	Fecha siguiente
 no vcard	addressbook	es-es	Sin VCard
 number	addressbook	es-es	Número
 number of records to read (%1)	addressbook	es-es	Número de registros a leer (%1)
@@ -339,6 +347,7 @@ view linked infolog entries	addressbook	es-es	Ver las entradas del Registro que 
 warning!! ldap is valid only if you are not using contacts for accounts storage!	admin	es-es	¡Atención! ¡LDAP es valido sólo si no está usando contactos para almacenar las cuentas!
 warning: all contacts found will be deleted!	addressbook	es-es	ATENCIÓN: ¡Se borrarán todos los contactos encontrados!
 warning: template "%1" not found, using default template instead.	addressbook	es-es	AVISO: No se encontró la plantilla "%1". Se usa la plantilla predeterminada en su lugar.
+weekday	addressbook	es-es	Día semanal
 what should links to the addressbook display in other applications. empty values will be left out. you need to log in anew, if you change this setting!	addressbook	es-es	Qué deben mostrar los enlaces a la libreta de direcciones en otras aplicaciones. Los valores vacíos se ignorarán. Es necesario volver a iniciar la sesión si se cambia esta opción.
 which address format should the addressbook use for countries it does not know the address format. if the address format of a country is known, it uses it independent of this setting.	addressbook	es-es	Qué formato de dirección debe usar la libreta de direcciones para países de los que no conoce el formato de las direcciones. Si se conoce el formato de las direcciones, se usa independientemente de lo indicado en esta opción
 which addressbook should be selected when adding a contact and you have no add rights to the current addressbook.	addressbook	es-es	Qué libreta de direcciones debe seleccionarse al añadir un contacto Y cuando no haya permiso de añadir en la libreta de direcciones actual.
