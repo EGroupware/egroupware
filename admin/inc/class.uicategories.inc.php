@@ -314,6 +314,8 @@
 
 		function edit()
 		{
+			if (!preg_match('/^(#[0-9a-f]+|[a-z]+)?$/i',$_POST['cat_data']['color'])) unset($_POST['cat_data']['color']);
+			if (!preg_match('/^[-_\.a-z0-9]+\.(png|gif|jpe?g)$/i',$_POST['cat_data']['icon'])) unset($_POST['cat_data']['icon']);
 			$new_parent			= (int)$_POST['new_parent'];
 			$cat_parent			= (int)$_POST['cat_parent'];
 			$cat_name			= $_POST['cat_name'];
