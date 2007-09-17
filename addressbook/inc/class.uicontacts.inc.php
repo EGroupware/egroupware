@@ -1949,8 +1949,10 @@ $readonlys['button[vcard]'] = true;
 		$uids = array();
 		foreach($ids as $id)
 		{
-			$uids[] = 'c'.$id;
+			if (is_numeric($id)) $uids[] = 'c'.$id;
 		}
+		if (!$uids) return array();
+
 		include_once(EGW_INCLUDE_ROOT.'/calendar/inc/class.bocal.inc.php');
 		$bocal = new bocal;
 		$events = $bocal->search(array(
