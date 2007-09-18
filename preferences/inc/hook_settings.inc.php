@@ -209,7 +209,7 @@
 			'name'   => 'account_selection',
 			'values' => $account_sels,
 			'help'   => lang('The selectbox shows all available users (can be very slow on big installs with many users). The popup can search users by name or group.').' '.
-				lang('The two last options limit the visibility of other users. There for they should be forced and apply NOT to administrators.'),
+				lang('The two last options limit the visibility of other users. Therefore they should be forced and apply NOT to administrators.'),
 			'run_lang' => false,
 			'xmlrpc' => True,
 			'admin'  => False

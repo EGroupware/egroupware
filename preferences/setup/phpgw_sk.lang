@@ -68,7 +68,7 @@ text only	preferences	sk	Iba text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sk	Predvolená aplikácia sa spustí po prihlásení do eGroupWare alebo kliknutí na ikonku Domovskej stránky.<br>Naraz mô¾ete ma» na hlavnej stránke zobrazených aj viacero aplikácií, ak si tu nevyberiete ¾iadnu. Musíte si to v¹ak ponastavova» v nastaveniach jednotlivých aplikácií.
 the old password is not correct	preferences	sk	Staré heslo bolo zadané chybne
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sk	Výberové menu zobrazí v¹etkých dostupných pou¾ívateµov (mô¾e to veµmi spomaµova», ak ich máte v systéme väè¹ie mno¾stvo). Vyhµadávanie umo¾òuje nájs» pou¾ívateµa podµa mena alebo skupiny.
-the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	sk	Posledné 2 voµby obmedzujú viditeµnos» iných pou¾ívateµov. Preto by mali by» vynucované a NIKDY nie aplikované na správcov.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	sk	Posledné 2 voµby obmedzujú viditeµnos» iných pou¾ívateµov. Preto by mali by» vynucované a NIKDY nie aplikované na správcov.
 the two passwords are not the same	preferences	sk	Heslá sa nezhodujú
 theme (colors/fonts) selection	preferences	sk	Výber témy (farby / písma)
 this server is located in the %1 timezone	preferences	sk	Tento server je v èasovej zóne %1
