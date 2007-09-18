@@ -67,7 +67,7 @@ text only	preferences	fi	Vain teksti
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	fi	Oletus sovellus k‰ynnistyy kun kirjaudut eGroupWareen tai painat etusivu ikonia.<br>Sinulla voi olla enemm‰n kuin yksi sovellus etusivullasi, jollet m‰‰rittele tietty‰ sovellusta t‰h‰n (pit‰‰ s‰‰t‰ asetukset sovelluskohtaisesti).
 the old password is not correct	preferences	fi	Vanha salasana ei ole oikein
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	fi	Valintaruutu n‰ytt‰‰ kaikki k‰ytett‰viss‰ olevat k‰ytt‰j‰t (saattaa hidastaa j‰rjestelm‰‰, jos k‰ytt‰ji‰ on paljon). K‰ytt‰ji‰ ja ryhmi‰ voidaan etsi‰ ponnahdusikkunassa.
-the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	fi	Kaksi viimeist‰ vaihtoehtoa rajoittava n‰kyvyytt‰ k‰ytt‰jille. Niit‰ EI tule asettaa yll‰pit‰jille.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	fi	Kaksi viimeist‰ vaihtoehtoa rajoittava n‰kyvyytt‰ k‰ytt‰jille. Niit‰ EI tule asettaa yll‰pit‰jille.
 the two passwords are not the same	preferences	fi	Salasanat eiv‰t ole samoja
 theme (colors/fonts) selection	preferences	fi	Teeman (v‰rit / fontit) valinta
 this server is located in the %1 timezone	preferences	fi	Palvelin on aikavyˆhykkeell‰ %1

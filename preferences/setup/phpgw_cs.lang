@@ -68,7 +68,7 @@ text only	preferences	cs	Jen text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	cs	Výchozí aplikace bude spu¹tìna kdy¾ se pøihlásíte do eGroupWare nebo kliknete na ikonu hlavní strany.<br>Také mù¾ete na hlavní stranì zobrazit více aplikací, pokud zde ¾ádnou konkrétní nevyberete (lze nakonfigurovat v pøedvolbách ka¾dé aplikace).
 the old password is not correct	preferences	cs	Staré heslo je chybné
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	cs	Rozbalovací nabídka zobrazuje v¹echny dostupné u¾ivatele (mù¾e trvat velmi dlouho na velkých instalacích s mnoha u¾ivateli). Pøekrývací okno mù¾e prohledávat u¾ivatele podle jména nebo skupiny.
-the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	cs	Poslední dvì volby omezují viditelnost ostatních u¾ivatelù. Proto by mìly být vynucené a NIKDY by nemìly být pou¾ity pro správce.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	cs	Poslední dvì volby omezují viditelnost ostatních u¾ivatelù. Proto by mìly být vynucené a NIKDY by nemìly být pou¾ity pro správce.
 the two passwords are not the same	preferences	cs	Zadaná hesla se neshodují
 theme (colors/fonts) selection	preferences	cs	Výbìr tématu (barev/fontù)
 this server is located in the %1 timezone	preferences	cs	Server se nachází v èasové zónì %1

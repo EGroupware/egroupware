@@ -68,7 +68,7 @@ text only	preferences	sv	Endast text
 the default application will be started when you enter egroupware or click on the homepage icon.<br>you can also have more than one application showing up on the homepage, if you don't choose a specific application here (has to be configured in the preferences of each application).	preferences	sv	Standard applikationen kommer att visas vid inloggning och när du klickar på eGroupWare-ikonen överst på sidan.<br>Du kan också visa fler än en applikation på startsidan, om du inte väljer en här.<br>Detta konfigureras under alternativ på respektive applikation.
 the old password is not correct	preferences	sv	Gamla lösenordet är inte rätt
 the selectbox shows all available users (can be very slow on big installs with many users). the popup can search users by name or group.	preferences	sv	Valrutan visar tillgängliga användare (kan vara långsam med många samtidiga användare). I popup fönstret kan man söka användare efter namn eller grupp.
-the two last options limit the visibility of other users. there for they should be forced and apply not to administrators.	common	sv	De sista två valen begränsar synligheten av andra användare. Därför bör de vara tvingande men INTE ges administratörer.
+the two last options limit the visibility of other users. therefore they should be forced and apply not to administrators.	common	sv	De sista två valen begränsar synligheten av andra användare. Därför bör de vara tvingande men INTE ges administratörer.
 the two passwords are not the same	preferences	sv	Lösenorden är inte lika
 theme (colors/fonts) selection	preferences	sv	Tema (färg/font) val
 this server is located in the %1 timezone	preferences	sv	Denna server är placerad i tidzon %1
