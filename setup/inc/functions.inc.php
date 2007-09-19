@@ -83,7 +83,7 @@
 			{
 				$len = strlen($docroot);
 	
-				if ($docroot == substr($dir,0,$len))
+				if ($docroot == substr($dir,0,$len) && $len>0)
 				{
 					$rest = substr($dir,$len);
 	
