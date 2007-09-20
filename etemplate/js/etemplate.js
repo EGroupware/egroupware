@@ -14,6 +14,7 @@ function submitit(form,name)
 	//alert(name+' pressed');
 	form.submit_button.value = name;
 	form.submit();
+	form.submit_button.value = '';
 	return false;
 }
 
