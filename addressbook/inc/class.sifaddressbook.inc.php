@@ -100,7 +100,7 @@ class sifaddressbook extends bocontacts
 
 	function endElement($_parser, $_tag) {
 		if(!empty($this->sifMapping[$_tag])) {
-			$this->contact[$this->sifMapping[$_tag]] = $this->sifData;
+			$this->contact[$this->sifMapping[$_tag]] = trim($this->sifData);
 		}
 		unset($this->sifData);
 	}
