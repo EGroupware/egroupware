@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	es-es	Usted no
 you must enter a password	preferences	es-es	Debe introducir una contraseña
 your current theme is: %1	preferences	es-es	Su actual tema es: %1
 your preferences	preferences	es-es	Sus preferencias
+charset for the csv export	addressbook	es-es	Juego de caracteres para exportar a CSV
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	es-es	Juego de caracteres a usar para exportar a CSV. El predeterminado del sistema es el juego de caracteres de esta instalación de eGroupWare.

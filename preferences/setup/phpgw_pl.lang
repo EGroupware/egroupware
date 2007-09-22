@@ -79,3 +79,5 @@ you do not have permission to set acl's in this mode!	preferences	pl	Nie posiada
 you must enter a password	preferences	pl	Musisz wprowadziæ has³o
 your current theme is: %1	preferences	pl	Twój bie¿±cy temat to: %1
 your preferences	preferences	pl	Twoje ustawienia
+charset for the csv export	addressbook	pl	strona kodowa dla eksportu CSV
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków u¿yæ przy eksporcie do CSV? Zestaw 'systemowy domy¶lny' jest zestawem wybrany w tej instalacji eGroupWare.

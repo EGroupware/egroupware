@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	sk	Nemáte oprá
 you must enter a password	preferences	sk	Musíte zada» heslo
 your current theme is: %1	preferences	sk	Va¹a súèasná farebná téma je: <b>%1</b>
 your preferences	preferences	sk	Va¹e predvoµby
+charset for the csv export	addressbook	sk	Znaková sada pre export CSV
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sk	Ktorú znakovú sadu pou¾íva» pri exporte do CSV. Predvolená je tá, ktorá je pou¾ívaná ako znaková sada v tejto in¹talácii eGroupWare.

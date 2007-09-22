@@ -837,8 +837,11 @@ $content[$id] = array(		<span>// I = value set by the app, 0 = value on return /
 	'sel_options'    =>	<span>//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options</span>
 	'no_columnselection' => <span>// I  turns off the columnselection completly, turned on by default</span>
 	'columnselection-pref' => <span>// I  name of the preference (plus 'nextmatch-' prefix), default = template-name</span>
-	'default_cols'   => <span>// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns</span>
+	'default_cols'   => 	<span>// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns</span>
 	'options-selectcols' => <span>// I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.</span>
+	'return'         =>     <span>// IO allows to return something from the get_rows function if $query is a var-param!</span>
+	'csv_fields'     =>	<span>// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames, 
+					or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)</span>
 );
 
 <span>/*

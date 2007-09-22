@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	sv	Du saknar r
 you must enter a password	preferences	sv	Ange ett lösenord
 your current theme is: %1	preferences	sv	Ditt nuvarande tema är: %1
 your preferences	preferences	sv	Dina inställningar
+charset for the csv export	addressbook	sv	Teckenuppsättning för CSV export
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sv	Vilken teckeuppsättning ska användas vid CSV export? Systemets standard är det som används av eGroupWare.

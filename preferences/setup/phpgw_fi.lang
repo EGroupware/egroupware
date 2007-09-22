@@ -82,3 +82,5 @@ you do not have permission to set acl's in this mode!	preferences	fi	Et voi määr
 you must enter a password	preferences	fi	Anna salasana
 your current theme is: %1	preferences	fi	nykyinen teema on: %1
 your preferences	preferences	fi	Henkilökohtaiset asetukset
+charset for the csv export	addressbook	fi	CSV viennissä käytettävä merkistö
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fi	Mitä merkistökoodausta käytetään CSV viennissä. Järjestelmän oletus on merkistökoodaus joka määriteltiin asennuksen yhteydessä.

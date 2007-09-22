@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	zh-tw	您沒�
 you must enter a password	preferences	zh-tw	您必須輸入密碼
 your current theme is: %1	preferences	zh-tw	您目前的佈景是： %1
 your preferences	preferences	zh-tw	您的偏好設定
+charset for the csv export	addressbook	zh-tw	CSV 檔案匯出編碼
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	zh-tw	CSV 格式檔案希望使用的字元編碼，預設會與安裝一致。

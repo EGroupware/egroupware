@@ -79,3 +79,5 @@ you do not have permission to set acl's in this mode!	preferences	de	Sie haben k
 you must enter a password	preferences	de	Sie müssen ein Passwort angeben
 your current theme is: %1	preferences	de	Ihr aktuelles Farbschema ist: %1
 your preferences	preferences	de	Persönliche Einstellungen
+charset for the csv export	addressbook	de	Zeichensatz für den CSV Export
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	de	Welcher Zeichensatz soll für den CSV Export verwendet werden. Die systemweite Vorgabe ist der Zeichensatz der eGroupWare Installation.

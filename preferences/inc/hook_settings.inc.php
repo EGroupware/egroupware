@@ -239,5 +239,14 @@
 				    'drag and drop, it will be disabled automatically. This feature is experimental at the moment.',
 			'xmlrpc' => False,
 			'admin'  => False
-		)
+		),
+		'csv_charset' => array(
+			'type'   => 'select',
+			'label'  => 'Charset for the CSV export',
+			'name'   => 'csv_charset',
+			'values' => $GLOBALS['egw']->translation->get_installed_charsets()+array('utf-8' => 'utf-8 (Unicode)'),		
+			'help'   => 'Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.',
+			'xmlrpc' => True,
+			'admin'  => false,
+		),
 	);

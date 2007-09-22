@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	pt-br	Você não
 you must enter a password	preferences	pt-br	Você deve digitar uma senha
 your current theme is: %1	preferences	pt-br	Seu tema atual é: %1
 your preferences	preferences	pt-br	Suas preferências
+charset for the csv export	addressbook	pt-br	Códificação de caracteres para a exportação CSV
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pt-br	Que codificação de caracter deverá ser usado para exportação CSV. O padrão é a codificação desta instalação do eGroupWare.
