@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	sl	Nimate dovo
 you must enter a password	preferences	sl	Vpisati morate geslo
 your current theme is: %1	preferences	sl	Vaša trenutna tema je: %1
 your preferences	preferences	sl	Vaše nastavitve
+charset for the csv export	addressbook	sl	Nabor znakov za izvoz CSV
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	sl	Kateri nabor znakov naj se uporabi pri izvozu CSV. Privzeto se uporabi nabor znakov, ki je nastavljen v eGroupWare.

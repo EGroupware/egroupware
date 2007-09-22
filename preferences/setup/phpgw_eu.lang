@@ -78,3 +78,4 @@ you do not have permission to set acl's in this mode!	preferences	eu	Ez daukazu 
 you must enter a password	preferences	eu	Pasahitz bat sartu behar duzu
 your current theme is: %1	preferences	eu	Zure momentuko gaia da: %1
 your preferences	preferences	eu	Zure hobespenak
+charset for the csv export	addressbook	eu	Fitxategiaren karaktere jokoa

@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	nl	U heeft gee
 you must enter a password	preferences	nl	U moet een wachtwoord invoeren
 your current theme is: %1	preferences	nl	uw huidige thema is %1
 your preferences	preferences	nl	Uw voorkeuren
+charset for the csv export	addressbook	nl	Karakterset voor de CSV export
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	nl	Welke karakterset moet gebruikt worden voor de CSV export. De systeem standaard is de karakterset van deze eGroupWare installatie.

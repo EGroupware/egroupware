@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	cs	Nemáte oprá
 you must enter a password	preferences	cs	Musíte zadat heslo
 your current theme is: %1	preferences	cs	Va¹e aktuální téma je: %1
 your preferences	preferences	cs	Va¹e pøedvolby
+charset for the csv export	addressbook	cs	Znaková sada pro export do CSV
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	cs	Ketrá znaková sada má být pou¾ita pro CSV export? Výchozí znakovou sadou je znaková sada pou¾itá pro instalaci eGroupWare.

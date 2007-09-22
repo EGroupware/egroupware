@@ -48,7 +48,13 @@
 	 * 	'rows'           =>		//  O content set by callback
 	 * 	'total'          =>		//  O the total number of entries
 	 * 	'sel_options'    =>		//  O additional or changed sel_options set by the callback and merged into $tmpl->sel_options
+	 * 	'no_columnselection' => // I  turns off the columnselection completly, turned on by default
+	 * 	'columnselection-pref' => // I  name of the preference (plus 'nextmatch-' prefix), default = template-name
+	 * 	'default_cols'   => 	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
+	 * 	'options-selectcols' => // I  array with name/label pairs for the column-selection, this gets autodetected by default. A name => false suppresses a column completly.
 	 *  'return'         =>     // IO allows to return something from the get_rows function if $query is a var-param!
+	 *  'csv_fields'     =>		// I  false=disable csv export, true or unset=enable it with auto-detected fieldnames, 
+	 * or array with name=>label or name=>array('label'=>label,'type'=>type) pairs (type is a eT widget-type)
 	 * );
 	 * @package etemplate
 	 * @subpackage extensions
@@ -197,6 +203,9 @@
 			}
 			// save values in persistent extension_data to be able use it in post_process
 			$extension_data += $value;
+
+			$value['no_csv_export'] = $value['csv_fields'] === false || 
+				$GLOBALS['egw_info']['server']['export_limit'] && !is_numeric($GLOBALS['egw_info']['server']['export_limit']);
 
 			if (!$value['filter_onchange']) $value['filter_onchange'] = 'this.form.submit();';
 			if (!$value['filter2_onchange']) $value['filter2_onchange'] = 'this.form.submit();';
@@ -583,7 +592,7 @@
 						$value[$name] = $value['bottom'][$name];
 					}
 				}
-				$buttons = array('start_search','first','left','right','last');
+				$buttons = array('start_search','first','left','right','last','export');
 				foreach($buttons as $name)
 				{
 					if (isset($value['bottom'][$name]) && $value['bottom'][$name])
@@ -697,6 +706,253 @@
 				$GLOBALS['egw']->preferences->save_repository(false,$pref);
 				$loop = True;
 			}
+			if ($value['export'])
+			{
+				$this->_csv_export($extension_data);
+			}
 			return True;
+		}
+		
+		var $separator = ';';
+		var $charset_out;
+		var $charset;
+		
+		/**
+		 * Export the list as csv file download
+		 *
+		 * @param array $value content of the nextmatch widget
+		 * @param boolean false=error, eg. get_rows callback does not exits, true=nothing to export, otherwise we do NOT return!
+		 */
+		function _csv_export(&$value)
+		{
+			if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+			{
+				$export_limit = $GLOBALS['egw_info']['server']['export_limit'];
+			}
+			list($app,$class,$method) = explode('.',$value['get_rows']);
+			if ($app && $class)
+			{
+				if (is_object($GLOBALS[$class]))	// use existing instance (put there by a previous CreateObject)
+				{
+					$obj =& $GLOBALS[$class];
+				}
+				else
+				{
+					$obj =& CreateObject($app.'.'.$class);
+				}
+			}
+			if (!is_object($obj) || !method_exists($obj,$method))
+			{
+				$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = "nextmatch_widget::pre_process($cell[name]): '$value[get_rows]' is no valid method !!!";
+				return false;
+			}
+			$this->charset = $this->charset_out = $GLOBALS['egw']->translation->charset();
+			if (isset($value['csv_charset']))
+			{
+				$this->charset_out = $value['csv_charset'];
+			}
+			elseif ($GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'])
+			{
+				$this->charset_out = $GLOBALS['egw_info']['user']['preferences']['common']['csv_charset'];
+			}
+			$backup_start = $value['start'];
+			$backup_num_rows = $value['num_rows'];
+
+			$value['start'] = 0;
+			$value['num_rows'] = 500;
+			$value['csv_export'] = true;	// so get_rows method _can_ produce different content or not store state in the session
+			do
+			{
+				if (!($total = $obj->$method($value,$rows,$readonlys=array())))
+				{
+					break;	// nothing to export
+				}
+				if ($export_limit && (!is_numeric($export_limit) || $export_limit < $total))
+				{
+					$GLOBALS['egw_info']['etemplate']['validation_errors'][$name] = lang('You are not allowed to export more then %1 entries!',$export_limit);
+					return false;
+				}
+				if (!isset($value['no_csv_support'])) $value['no_csv_support'] = !is_array($value['csv_fields']);
+
+				//echo "<p>start=$value[start], num_rows=$value[num_rows]: total=$total, count(\$rows)=".count($rows)."</p>\n";
+				if (!$value['start'])	// send the neccessary headers
+				{
+					$fp = $this->_csv_open($rows[0],$value['csv_fields'],$app);
+				}
+				//_debug_array($rows);
+				foreach($rows as $key => $row)
+				{
+					if (!is_numeric($key)) continue;	// not a real rows
+					fwrite($fp,$this->_csv_encode($row,$value['csv_fields'])."\n");
+				}
+				$value['start'] += $value['num_rows'];
+				
+				@set_time_limit(10);	// 10 more seconds
+			}
+			while($total > $value['start']);
+
+			unset($value['csv_export']);
+			$value['start'] = $backup_start;
+			$value['num_rows'] = $backup_num_rows;
+			if ($value['no_csv_support'])	// we need to call the get_rows method in case start&num_rows are stored in the session
+			{
+				$obj->$method($value,$rows,$readonlys=array());
+			}
+			if ($fp)
+			{
+				fclose($fp);
+				$GLOBALS['egw']->common->egw_exit();
+			}
+			return true;
+		}
+		
+		/**
+		 * Opens the csv output (download) and writes the header line
+		 *
+		 * @param array $row0 first row to guess the available fields
+		 * @param array $fields name=>label or name=>array('lable'=>label,'type'=>type) pairs
+		 * @param string $app app-name
+		 * @return FILE
+		 */
+		function _csv_open($row0,&$fields,$app)
+		{
+			if (!is_array($fields) || !count($fields))
+			{
+				$fields = $this->_autodetect_fields($row0,$app);
+			}
+			$browser =& CreateObject('phpgwapi.browser');
+			$browser->content_header('export.csv','text/comma-separated-values');
+			//echo "<pre>";
+			
+			if (($fp = fopen('php://output','w')))
+			{
+				$labels = array();
+				foreach($fields as $field => $label)
+				{
+					if (is_array($label)) $label = $label['label'];
+					$labels[$field] = $label ? $label : $field;
+				}
+				fwrite($fp,$this->_csv_encode($labels,$fields,false)."\n");
+			}
+			return $fp;
+		}
+		
+		/**
+		 * CSV encode a single row, including some basic type conversation
+		 *
+		 * @param array $data
+		 * @param array $fields
+		 * @param boolean $use_type=true
+		 * @return string
+		 */
+		function _csv_encode($data,$fields,$use_type=true)
+		{
+			static $date_format,$time_format;
+			if (is_null($date_format))
+			{
+				$time_format = $date_format = $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'];
+				$time_format .= ' '.($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:ia' : 'H:i');
+			}
+			$out = array();
+			foreach($fields as $field => $label)
+			{
+				$value = (array)$data[$field];
+
+				if ($use_type && is_array($label) && in_array($label['type'],array('select-account','select-cat','date-time','date')))
+				{
+					foreach($value as $key => $val)
+					{
+						switch($label['type'])
+						{
+							case 'select-account':
+								if ($val) $value[$key] = $GLOBALS['egw']->common->grab_owner_name($val);
+								break;
+							case 'select-cat':
+								if ($val)
+								{
+									if (!is_object($GLOBALS['egw']->categories))
+									{
+										$GLOBALS['egw']->categories =& CreateObject('phpgwapi.categories');
+									}
+									$value[$key] = $GLOBALS['egw']->categories->id2name($val);
+								}
+								break;
+							case 'date-time':
+								if ($val) $value[$key] = date($time_format,$val);
+								break;
+							case 'date':
+								if ($val) $value[$key] = date($date_format,$val);
+								break;
+						}
+					}
+				}
+				$value = implode(', ',$value);
+
+				if (strpos($value,$this->separator) !== false || strpos($value,"\n") !== false || strpos($value,"\r") !== false)
+				{
+					$value = '"'.str_replace(array('\\','"'),array('\\\\','\\"'),$value).'"';
+				}
+				$out[] = $value;
+			}
+			$out = implode($this->separator,$out);
+			
+			if ($this->charset_out && $this->charset != $this->charset_out)
+			{
+				$out = $GLOBALS['egw']->translation->convert($out,$this->charset,$this->charset_out);
+			}
+			return $out;
+		}
+		
+		/**
+		 * Try to autodetect the fields from the first data-row and the app-name
+		 *
+		 * @param array $row0 first data-row
+		 * @param string $app
+		 */
+		function _autodetect_fields($row0,$app)
+		{
+			$fields = array_combine(array_keys($row0),array_keys($row0));
+			
+			foreach($fields as $name => $label)
+			{
+				// try to guess field-type from the fieldname
+				if (preg_match('/(modified|created|start|end)/',$name) && strpos($name,'by')===false && 
+					(!$row0[$name] || is_numeric($row0[$name])))	// only use for real timestamps
+				{
+					$fields[$name] = array('label' => $label,'type' => 'date-time');
+				}
+				elseif (preg_match('/(cat_id|category|cat)/',$name))
+				{
+					$fields[$name] = array('label' => $label,'type' => 'select-cat');
+				}
+				elseif (preg_match('/(owner|creator|modifier|assigned|by|coordinator|responsible)/',$name))
+				{
+					$fields[$name] = array('label' => $label,'type' => 'select-account');
+				}
+				elseif(preg_match('/(jpeg|photo)/',$name))
+				{
+					unset($fields[$name]);
+				}
+			}
+			if ($app)
+			{
+				include_once(EGW_API_INC.'/class.config.inc.php');
+				$config =& new config($app);
+				$config->read_repository();
+				
+				$customfields = isset($config->config_data['customfields']) ? $config->config_data['customfields'] : $config->config_data['custom_fields'];
+				if (is_array($customfields))
+				{
+					foreach($customfields as $name => $data)
+					{
+						$fields['#'.$name] = array(
+							'label' => $data['label'],
+							'type'  => $data['type'],
+						);
+					}
+				}
+			}
+			//_debug_array($fields);
+			return $fields;
 		}
 	}

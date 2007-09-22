@@ -320,8 +320,14 @@ class uiinfolog
 		//echo "<p>uiinfolog.get_rows(start=$query[start],search='$query[search]',filter='$query[filter]',cat_id=$query[cat_id],action='$query[action]/$query[action_id]',col_filter=".print_r($query['col_filter'],True).")</p>\n";
 		if (!isset($query['start'])) $query['start'] = 0;
 
-		$this->save_sessiondata($query);
-
+		if (!$query['csv_export'])
+		{
+			$this->save_sessiondata($query);
+		}
+		else
+		{
+			$query['csv_fields'] = $this->csv_export_fields($query['col_filter']['info_type']);
+		}
 		// check if we have a custom, type-specific template
 		unset($query['template']);
 		unset($query['custom_fields']);
@@ -358,11 +364,15 @@ class uiinfolog
 		$readonlys = $rows = array();
 		foreach($ids as $id => $info)
 		{
-			$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
-			if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
-				$query['filter2'] == 'no_describtion')
+			if (!$query['csv_export'])
 			{
-				unset($info['info_des']);
+				$info = $this->get_info($info,$readonlys,$query['action'],$query['action_id'],$query['filter2'],$details);
+
+				if (!$query['filter2'] && $this->prefs['show_links'] == 'no_describtion' ||
+					$query['filter2'] == 'no_describtion')
+				{
+					unset($info['info_des']);
+				}
 			}
 			$rows[] = $info;
 		}
@@ -579,6 +589,7 @@ class uiinfolog
 		$values['action_title'] = $persist['action_title'] = $values['nm']['action_title'] = $action_title;
 		$persist['called_as'] = $called_as;
 		$persist['own_referer'] = $own_referer;
+		$values['nm']['csv_fields'] = true;		// get set in get_rows to not include all custom fields
 
 		$all_stati = array();
 		foreach($this->bo->status as $typ => $stati)
@@ -1465,5 +1476,53 @@ class uiinfolog
 			isset($view_id2) ? $view_id2 : $view_id => $args[$view_id]
 		),True);
 		unset($GLOBALS['egw_info']['etemplate']['hooked']);
-	} 
+	}
+	
+	/**
+	 * Defines the fields for the csv export
+	 *
+	 * @param string $type=null infolog type to include only the matching custom fields if set
+	 * @return array
+	 */
+	function csv_export_fields($type=null)
+	{
+		$fields = array(
+			'info_type'          => lang('Type'),
+			'info_from'          => lang('Contact'),
+			'info_addr'          => lang('Phone/Email'),
+//			'info_link_id'       => lang('primary link'),
+			'info_cat'           => array('label' => lang('Category'),'type' => 'select-cat'),
+			'info_priority'      => lang('Priority'),
+			'info_owner'         => array('label' => lang('Owner'),'type' => 'select-account'),
+			'info_access'        => lang('Access'),
+			'info_status'        => lang('Status'),
+			'info_percent'       => lang('Completed'),
+			'info_datecompleted' => lang('Date completed'),
+			'info_location'      => lang('Location'),
+			'info_startdate'     => lang('Startdate'),
+			'info_enddate'       => lang('Enddate'),
+			'info_responsible'   => array('label' => lang('Responsible'),'type' => 'select-account'),
+			'info_subject'       => lang('Subject'),
+			'info_des'           => lang('Description'),
+			// PM fields
+			'info_planned_time'  => lang('planned time'),
+			'info_used_time'     => lang('used time'),
+			'pl_id'              => lang('pricelist'),
+			'info_price'         => lang('price'),
+		);
+		foreach($this->bo->timestamps as $name)
+		{
+			$fields[$name] = array('label' => $fields[$name],'type' => 'date-time');
+		}
+		foreach($this->bo->customfields as $name => $data)
+		{
+			if ($data['type2'] && $type && $data['type2'] != $type) continue;
+
+			$fields['#'.$name] = array(
+				'label' => $data['label'],
+				'type'  => $data['type'],
+			);
+		}
+		return $fields;
+	}
 }

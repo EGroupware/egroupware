@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	fr	Vous n'avez
 you must enter a password	preferences	fr	Vous devez entrer un mot de passe
 your current theme is: %1	preferences	fr	Votre thème actuel est: %1
 your preferences	preferences	fr	Vos préférences
+charset for the csv export	addressbook	fr	Jeu de caractères pour l'exportation CSV
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	fr	Quel jeu de caractères faut-il utiliser pour l'exportation CSV. Le paramétrage par défaut est celui utilisé lors de l'installation d'eGroupWare.

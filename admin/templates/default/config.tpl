@@ -240,6 +240,10 @@
        </select>
     </td>
    </tr>
+   <tr class="row_on">
+    <td>{lang_How_many_entries_should_non-admins_be_able_to_export_(empty_=_no_limit,_no_=_no_export)}:</td>
+    <td><input name="newsettings[export_limit]" value="{value_export_limit}" size="5"></td>
+   </tr>
 
 <!-- END body -->
 

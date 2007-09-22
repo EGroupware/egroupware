@@ -83,3 +83,5 @@ you do not have permission to set acl's in this mode!	preferences	en	You do not 
 you must enter a password	preferences	en	You must enter a password
 your current theme is: %1	preferences	en	your current theme is: %1
 your preferences	preferences	en	Your Preferences
+charset for the csv export	addressbook	en	Charset for the CSV export
+which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	en	Which charset should be used for the CSV export. The system default is the charset of this eGroupWare installation.
