@@ -243,7 +243,7 @@ class boaddressbook
 					switch($from)
 					{
 						case 'grants[owner]':
-							$data[$to] = $this->bo->grants[$data['owner']];
+							$data[$to] = $this->contacts->grants[$data['owner']];
 							break;
 							
 						case 'private':
@@ -301,7 +301,7 @@ class boaddressbook
 			$data['bday'] = $arr['year'] && $arr['month'] && $arr['mday'] ? sprintf('%04d-%02d-%02d',$arr['year'],$arr['month'],$arr['mday']) : null;
 		}
 		// translate timestamps
-		foreach($this->bo->timestamps as $name)
+		foreach($this->contacts->timestamps as $name)
 		{
 			if(isset($data[$name]))
 			{
