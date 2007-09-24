@@ -25,3 +25,9 @@
 	{
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.001';
 	}
+
+	$test[] = '1.4.002';
+	function phpgwapi_upgrade1_4_002()
+	{
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.5.001';
+	}
