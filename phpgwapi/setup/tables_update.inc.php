@@ -806,3 +806,10 @@
 		// final 1.4 release
 		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.4.001';
 	}
+
+	$test[] = '1.4.001';
+	function phpgwapi_upgrade1_4_001()
+	{
+		// 1.4.002 bugfix/maintainance release
+		return $GLOBALS['setup_info']['phpgwapi']['currentver'] = '1.4.002';
+	}
