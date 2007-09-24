@@ -1,13 +1,15 @@
 %define packagename eGroupWare
 %define egwdirname egroupware
 %define egwversion 1.4
-%define packaging 001
+%define packaging 002
 #%define epoch 1
 %if 0%{?suse_version}
 	%define httpdroot /srv/www/htdocs
 	%define httpdconfd /etc/apache2/conf.d
 	%define source5 egroupware_suse.tar.bz2
 	%define distribution SUSE Linux %{?suse_version}
+	%define php php5
+	%define extra_requires apache2-mod_php5 
 %endif
 %if 0%{?fedora_version}
 	%define httpdroot /var/www/html
@@ -15,13 +17,17 @@
 	%define osversion %{?fedora_version}
 	%define source5 egroupware_fedora.tar.bz2
 	%define distribution Fedora Core %{?fedora_version}
+	%define php php
+	%define extra_requires httpd 
 %endif
 %if 0%{?mandriva_version}
 	%define httpdroot /var/www/html
 	%define httpdconfd /etc/httpd/conf.d
 	%define osversion %{?mandriva_version}
 	%define source5 egroupware_fedora.tar.bz2
-	%define distribution Madriva %{?mandriva_version}
+	%define distribution Mandriva %{?mandriva_version}
+	%define php php
+	%define extra_requires httpd 
 %endif
 
 %define addressbook addressbook
@@ -71,7 +77,7 @@ Source5: %{?source5}
 #Patch0: manageheader.php.patch
 #Patch1: class.uiasyncservice.inc.php.patch
 BuildRoot: /tmp/%{packagename}-buildroot
-Requires: php5 php5-mbstring php5-imap php5-gd apache2-mod_php5 php5-pear cron %{packagename}-egw-pear = %{egwversion}.%{packaging}
+Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} cron %{packagename}-egw-pear = %{egwversion}.%{packaging}
 Provides: egw-core egw-%{addressbook} egw-%{etemplate}
 Conflicts: %{packagename}-core %{packagename}-%{addressbook} %{packagename}-%{bookmarks} %{packagename}-%{calendar} %{packagename}-%{developer_tools} %{packagename}-%{emailadmin} %{packagename}-%{felamimail} %{packagename}-%{filemanager} %{packagename}-%{infolog} %{packagename}-%{manual} %{packagename}-%{mydms} %{packagename}-%{news_admin} %{packagename}-%{phpbrain} %{packagename}-%{polls} %{packagename}-%{projectmanager} %{packagename}-%{registration} %{packagename}-%{resources} %{packagename}-%{sambaadmin} %{packagename}-%{sitemgr} %{packagename}-%{syncml} %{packagename}-%{timesheet} %{packagename}-%{wiki}
                                                                                                                              
@@ -100,7 +106,7 @@ Further contributed applications are avalible in single packages.
 %package core
 Summary: The eGroupWare contrib package
 Group: Web/Database
-Requires: php5 php5-mbstring php5-imap php5-gd php5-pear apache2-mod_php5 cron
+#Requires: %{php} %{php}-mbstring %{php}-imap %{php}-gd %{php}-pear %{extra_requires} cron %{packagename}-egw-pear = %{egwversion}.%{packaging}
 Provides: egw-core
 Conflicts: %{packagename}
 %description core
@@ -155,6 +161,7 @@ They can search the sources for new / added phrases and show you the ones missin
 Version: %{egwversion}.%{packaging}
 Summary: The eGroupWare egw-pear application
 Group: Web/Database
+Requires: %{php}-pear
 #Conflicts: %{packagename}
 AutoReqProv: no
 Requires: egw-core = %{egwversion}.%{packaging}
@@ -695,6 +702,9 @@ ln -s sitemgr/sitemgr-link
 
 
 %changelog
+* Mon Sep 24 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.002
+- eGroupWare 1.4.002 bugfix & maintainace release
+
 * Mon Jun 4 2007 Ralf Becker <RalfBecker@outdoor-training.de> 1.4.001
 - final eGroupWare 1.4 release
 

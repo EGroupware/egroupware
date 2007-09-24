@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash -x
 # This script work for generating rpms without Root rights
 # When you create rmp's with Root rights and you have as example 
 # the follow command rm -rf / in your script you are in trouble :-)
@@ -73,8 +73,6 @@ echo ""											>> $LOGFILE 2>&1
 date                                                        				>> $LOGFILE 2>&1
 cd $ANONCVSDIR
 	
-#[ "$CVSACCOUNT" = 'pserver:anonymous' ] && CVS_RSH="ssh" cvs -d:$CVSACCOUNT@cvs.sourceforge.net:/cvsroot/egroupware login
-
 if [ ! -d egroupware/phpgwapi ]	# new checkout
 then
 	if [ -z "$SVNREVISION" ]; then
@@ -95,7 +93,8 @@ then
 	done
 else											# updating an existing checkout in the build-root
 	echo -n "Updating existing checkout ... "					>> $LOGFILE 2>&1
-	svn update -r HEAD
+	cd egroupware
+	svn update -r HEAD . *
 fi
 
 cd $ANONCVSDIR
@@ -103,42 +102,43 @@ cd $ANONCVSDIR
 echo "done"										>> $LOGFILE 2>&1
 
 echo -n "Change directory rights back ... "						>> $LOGFILE 2>&1
-find . -type d -exec chmod 775 {} \;
+find . -type d -exec chmod 755 {} \;
 find . -type f -exec chmod 644 {} \;
 echo "done"										>> $LOGFILE 2>&1
 
 echo -n "Starting anti virus scan ... "							>> $LOGFILE 2>&1
-#test -x /usr/bin/clamscan && /usr/bin/clamscan --quiet -r $ANONCVSDIR --log=$VIRUSSCAN
+test -x /usr/bin/clamscan && /usr/bin/clamscan --quiet -r $ANONCVSDIR --log=$VIRUSSCAN
 echo "done"										>> $LOGFILE 2>&1
 
 rm -rf $NOSVNDIR/egroupware
 cp -ra $ANONCVSDIR/egroupware $NOSVNDIR
 find $NOSVNDIR -name .svn | xargs rm -rf
 
-cd $ANONCVSDIR
-echo -n "building tar.gz ... "								>> $LOGFILE 2>&1
-tar czf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING-svn.tar.gz $EXCLUDE_CONTRIB egroupware  	2>&1 | tee -a $LOGFILE
-for CONTRIBMODULE in $EXTRAPACKAGES; do
-	tar czf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING-svn.tar.gz egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
-done
-echo "done"										>> $LOGFILE 2>&1
+# building no longer packages with svn dirs
+#cd $ANONCVSDIR
+#echo -n "building tar.gz ... "								>> $LOGFILE 2>&1
+#tar czf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING-svn.tar.gz $EXCLUDE_CONTRIB egroupware  	2>&1 | tee -a $LOGFILE
+#for CONTRIBMODULE in $EXTRAPACKAGES; do
+#	tar czf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING-svn.tar.gz egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
+#done
+#echo "done"										>> $LOGFILE 2>&1
 
-echo -n "building tar.bz2 ... "						     		>> $LOGFILE 2>&1
-tar cjf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING-svn.tar.bz2 $EXCLUDE_CONTRIB egroupware	>> $LOGFILE 2>&1
-for CONTRIBMODULE in $EXTRAPACKAGES; do
-	tar cjf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING-svn.tar.bz2 egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
-done
-echo "done"										>> $LOGFILE 2>&1
+#echo -n "building tar.bz2 ... "						     		>> $LOGFILE 2>&1
+#tar cjf $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING-svn.tar.bz2 $EXCLUDE_CONTRIB egroupware	>> $LOGFILE 2>&1
+#for CONTRIBMODULE in $EXTRAPACKAGES; do
+#	tar cjf $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING-svn.tar.bz2 egroupware/$CONTRIBMODULE 		>> $LOGFILE 2>&1
+#done
+#echo "done"										>> $LOGFILE 2>&1
 
-echo -n "building zip ... "								>> $LOGFILE 2>&1
-find $ONLY_CONTRIB > /tmp/exclude.list
-zip -q -r -9 $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING-svn.zip egroupware -x@/tmp/exclude.list	>> $LOGFILE 2>&1
-for CONTRIBMODULE in $EXTRAPACKAGES; do
-	zip -q -r -9 $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING-svn.zip egroupware/$CONTRIBMODULE 	>> $LOGFILE 2>&1
-done
-echo "done"										>> $LOGFILE 2>&1
+#echo -n "building zip ... "								>> $LOGFILE 2>&1
+#find $ONLY_CONTRIB > /tmp/exclude.list
+#zip -q -r -9 $SRCDIR/$PACKAGENAME-$VERSION.$PACKAGING-svn.zip egroupware -x@/tmp/exclude.list	>> $LOGFILE 2>&1
+#for CONTRIBMODULE in $EXTRAPACKAGES; do
+#	zip -q -r -9 $SRCDIR/$PACKAGENAME-$CONTRIBMODULE-$VERSION.$PACKAGING-svn.zip egroupware/$CONTRIBMODULE 	>> $LOGFILE 2>&1
+#done
+#echo "done"										>> $LOGFILE 2>&1
 
-echo "Building tar.gz, tar.bz and zip archives with svn finnished"				>> $LOGFILE 2>&1
+#echo "Building tar.gz, tar.bz and zip archives with svn finnished"				>> $LOGFILE 2>&1
 
 cd $NOSVNDIR
 echo -n "building tar.gz ... "								>> $LOGFILE 2>&1
@@ -202,7 +202,7 @@ echo "------------------------------------------"              				>> $LOGFILE 2
 
 # cleaner md5sum file, the old one gave me a headache ;-)
 cd $SRCDIR
-for f in eGroupWare-$VERSION.$PACKAGING.*
+for f in eGroupWare*-$VERSION.$PACKAGING.*
 do
 	md5sum $f >> $MD5SUM 2>&1
 done
