@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	es-es	Servidor IMAP Cyrus
 cyrus imap server administration	emailadmin	es-es	Administración del servidor IMAP Cyrus
 default	emailadmin	es-es	predeterminada
 deliver extern	emailadmin	es-es	entrega externa
+do not validate certificate	emailadmin	es-es	No validar el certificado
 do you really want to delete this profile	emailadmin	es-es	¿Realmente desea borrar este perfil?
 domainname	emailadmin	es-es	nombre del dominio
 edit email settings	emailadmin	es-es	editar configuración de la cuenta

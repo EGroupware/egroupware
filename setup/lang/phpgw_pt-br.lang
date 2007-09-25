@@ -109,6 +109,7 @@ check ip address of all sessions	setup	pt-br	Verificar endereço IP de todas sess
 checking extension %1 is loaded or loadable	setup	pt-br	Verificando se a extensão %1 está carregada ou pode ser carregada
 checking file-permissions of %1 for %2 %3: %4	setup	pt-br	Verificando permissões de arquivo de %1 para %2 %3: %4
 checking for gd support...	setup	pt-br	Verificando suporte à biblioteca GD...
+checking function %1 exists	setup	pt-br	Verificando se função %1 existe
 checking if php.ini setting session.save_path='%1' is writable by the webserver	setup	pt-br	Verificando se session.save_path='%1', do arquivo php.ini, é gravável pelo servidor web
 checking pear%1 is installed	setup	pt-br	Verificando se PEAR %1 está instalado
 checking php.ini	setup	pt-br	Verificando php.ini
@@ -269,6 +270,7 @@ host,{imap | pop3 | imaps | pop3s},[domain],[{standard(default)|vmailmgr = add d
 host/ip domain controler	setup	pt-br	Servidor/IP do Controlador de Domínio
 hostname/ip of database server	setup	pt-br	Nome do Servidor / IP da base de dados
 hour (0-24)	setup	pt-br	hora (0-24)
+however the tables are still in the database	setup	pt-br	No entanto, as tabelas permanecem no banco de dados
 however, the application is otherwise installed	setup	pt-br	No entanto, a aplicação está instalada
 however, the application may still work	setup	pt-br	No entanto, a aplicação ainda pode funcionar
 if no acl records for user or any group the user is a member of	setup	pt-br	Caso não exista registro de permissões ou grupo para o usuário ele é membro do
@@ -487,6 +489,7 @@ skip the installation tests (not recommended)	setup	pt-br	Pular os testes de ins
 smtp server hostname or ip address	setup	pt-br	Endereço IP ou nome do servidor SMTP
 smtp server port	setup	pt-br	Porta do servidor SMTP
 some or all of its tables are missing	setup	pt-br	Estão faltando algumas tabelas (ou todas)
+sources deleted/missing	setup	pt-br	Fontes removidas/faltando
 sql encryption type	setup	pt-br	Tipo de criptografia para senhas  SQL(padrão Md5)
 standard (login-name identical to egroupware user-name)	setup	pt-br	padrão (nome de login idêntico ao nome de usuário do eGroupWare)
 standard mailserver settings (used for mail authentication too)	setup	pt-br	Configurações de servidor de e-mail padrão (também usadas para autenticação)
@@ -514,6 +517,8 @@ the db_type in defaults (%1) is not supported on this server. using first suppor
 the file	setup	pt-br	o arquivo
 the first step in installing egroupware is to ensure your environment has the necessary settings to correctly run the application.	setup	pt-br	O primeiro passo ao instalar eGroupWare é assegurar que seu ambiente possui as configurações necessárias para executar corretamente a aplicação.
 the following applications need to be upgraded:	setup	pt-br	As seguintes aplicações precisam ser atualizadas:
+the function %1 is needed from: %2.	setup	pt-br	A função %1 é necessária para: %2
+the imagecreatefromjpeg function is supplied by the gd extension (complied with jpeg support!). it's needed to upload photos for contacts.	setup	pt-br	A função imagecreatefromjpeg é fornecida pela extensão gd (compilada com suporte jpeg!). Ela é necessária para fazer upload de fotos dos contatos.
 the mbstring extension is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	As extensões mbstring são necessárias para suporte unicode (utf-8) completo ou para outros conjuntos de carácteres multibyte.
 the mbstring.func_overload = 7 is needed to fully support unicode (utf-8) or other multibyte-charsets.	setup	pt-br	A opção 'mbstring.func_overload = 7' é necessária para total suporte unicode (utf-8) ou outros caracteres multibyte.
 the session extension is needed to use php sessions (db-sessions work without).	setup	pt-br	A extensão 'session' é necessária para usar sessões php (sessões db funciona sem ela)
@@ -576,6 +581,7 @@ view	setup	pt-br	Visualizar
 virtual mail manager (login-name includes domain)	setup	pt-br	Gerenciador de e-mail virtual (nome de login inclui o domínio)
 warning!	setup	pt-br	Aviso!
 we can proceed	setup	pt-br	Podemos prosseguir
+we could not determine the version of %1, please make sure it is at least %2	setup	pt-br	Não foi possível determinar a versão de %1. Por favor, certifique-se que seja, ao menos, %2.
 we will automatically update your tables/records to %1	setup	pt-br	As tabelas/registros serão automaticamente atualizadas para %1
 we will now run a series of tests, which may take a few minutes.  click the link below to proceed.	setup	pt-br	Nós iremos executar neste momento uma série de testes que poderão levar alguns minutos. Clique noa link abaixo para prosseguir.
 welcome to the egroupware installation	setup	pt-br	Bem-vindo(a) à instalação do eGroupWare
@@ -615,6 +621,7 @@ you need to configure egroupware:	setup	pt-br	Você precisa configurar o eGroupWa
 you need to fix the above errors, before the configuration file header.inc.php can be written!	setup	pt-br	Você precisa corrigir os erros acima antes que o arquivo header.inc.php possa ser gravado!
 you need to save the settings you made here first!	setup	pt-br	Você precisa salvar as configurações que você fez aqui antes!
 you need to select your current charset!	setup	pt-br	Você  precisa selecionar seu conjunto de carácteres atual
+you should either install the sources or uninstall it, to get rid of the tables	setup	pt-br	Você deve instalar as fontes ou desinstalá-las, para se livrar das tabelas
 you should either uninstall and then reinstall it, or attempt manual repairs	setup	pt-br	Você pode tentar desinstalar e então reinstalar ou tentar executar reparos manuais.
 you will not be able to log into egroupware using php sessions: "session could not be verified" !!!	setup	pt-br	Você não poderá logar no eGroupWare usando sessões PHP: "sessão não poderá ser verificada !!"
 you're using an old configuration file format...	setup	pt-br	Você está usando um formato de arquivo de configuração antigo
@@ -629,6 +636,7 @@ your files directory '%1' %2	setup	pt-br	Seu diretório de arquivos '%1' %2
 your header admin password is not set. please set it now!	setup	pt-br	Sua senha de configuração do servidor não está definida. Por favor defina uma agora.
 your header.inc.php needs upgrading.	setup	pt-br	Seu arquivo header.inc.php precisa ser atualizado
 your header.inc.php needs upgrading.<br /><blink><b class="msg">warning!</b></blink><br /><b>make backups!</b>	setup	pt-br	Seu arquivo header.inc.php necessita de atualização <br /><blink><b class="msg">AVISO!</b></blink><br /><b>FAÇA CÓPIAS DE SEGURANÇA!</b>
+your installed version of %1 is %2, required is at least %3, please run:	setup	pt-br	Sua versão instalada de %1 é %2. No mínimo é necessária a versão %3. Por favor, execute:
 your php installation does not have appropriate gd support. you need gd library version 1.8 or newer to see gantt charts in projects.	setup	pt-br	Sua instalação PHP não possui suporte apropriado à biblioteca GD. Você precisa da versão 1.8 ou superior para ver os diagramas de Gantt dos projetos.
 your tables are current	setup	pt-br	Suas tabelas estão atualizadas
 your tables will be dropped and you will lose data	setup	pt-br	Suas tabelas serão removidas e os dados serão perdidos!!

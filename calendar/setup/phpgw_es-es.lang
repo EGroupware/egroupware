@@ -11,6 +11,7 @@ actions	calendar	es-es	Acciones
 actions...	calendar	es-es	Acciones...
 add alarm	calendar	es-es	Añadir alarma
 added	calendar	es-es	Añadido
+added by synchronisation	calendar	es-es	añadido por sincronización
 after %1	calendar	es-es	Después de %1
 after current date	calendar	es-es	Después de la fecha actual
 alarm	calendar	es-es	Alarma
@@ -52,6 +53,7 @@ copy this event	calendar	es-es	Copiar este evento
 countries	calendar	es-es	Paises
 country	calendar	es-es	País
 create an exception for the given date	calendar	es-es	Crear una excepción para la fecha indicada
+create exception	calendar	es-es	Crear excepción
 create new links	calendar	es-es	Crear enlaces nuevos
 csv	calendar	es-es	CSV
 csv-fieldname	calendar	es-es	CSV - Nombre del campo
@@ -105,6 +107,7 @@ event details follow	calendar	es-es	A continuación, los detalles del evento
 event saved	calendar	es-es	Evento guardado
 event will occupy the whole day	calendar	es-es	El evento ocupará todo el día
 exception	calendar	es-es	Excepción
+exception created - you can now edit or delete it	calendar	es-es	Se ha creado la excepción. Ahora puede editarla o borrarla.
 exceptions	calendar	es-es	Excepciones
 execute a further action for this entry	calendar	es-es	Ejecutar una acción más para esta entrada
 existing links	calendar	es-es	Enlaces existentes
@@ -317,6 +320,7 @@ you can only set a year or a occurence !!!	calendar	es-es	Sólo puede poner un añ
 you do not have permission to read this record!	calendar	es-es	¡No tiene permiso para leer este registro!
 you have a meeting scheduled for %1	calendar	es-es	Ud. tiene una reunión programada para %1
 you have been disinvited from the meeting at %1	calendar	es-es	Ha dejado de estar invitado a la reunión de %1
+you need to select an account, contact or resource first!	calendar	es-es	¡Necesita seleccionar antes una cuenta, contacto o recurso!
 you need to select an ical file first	calendar	es-es	Necesita seleccionar antes un fichero iCal
 you need to set either a day or a occurence !!!	calendar	es-es	Debe indicar un día o una ocurrencia
 your meeting scheduled for %1 has been canceled	calendar	es-es	Su reunión programada para %1 ha sido cancelada

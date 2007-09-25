@@ -145,7 +145,7 @@ file into	felamimail	zh-tw	檔案插入
 files	felamimail	zh-tw	檔案
 filter active	felamimail	zh-tw	規則啟用中
 filter name	felamimail	zh-tw	規則名稱
-filter rules	preferences	zh-tw	過濾規則
+filter rules	common	zh-tw	過濾規則
 first name	felamimail	zh-tw	名
 flagged	felamimail	zh-tw	被標示
 flags	felamimail	zh-tw	標示
@@ -266,6 +266,7 @@ no messages found...	felamimail	zh-tw	沒有任何信件...
 no messages were selected.	felamimail	zh-tw	沒有選取任何訊息
 no plain text part found	felamimail	zh-tw	找不到純文字部份
 no previous message	felamimail	zh-tw	沒有上一個
+no recipient address given!	felamimail	zh-tw	沒有輸入收件人信箱！
 no supported imap authentication method could be found.	felamimail	zh-tw	找不到能夠使用的 IMAP 驗證方式。
 no valid emailprofile selected!!	felamimail	zh-tw	沒有選取可以使用的郵件資料！
 none	felamimail	zh-tw	無
@@ -403,7 +404,7 @@ use custom settings	felamimail	zh-tw	使用個人設定
 use regular expressions	felamimail	zh-tw	使用樣式比對
 use smtp auth	admin	zh-tw	使用SMTP認證
 users can define their own emailaccounts	admin	zh-tw	使用者可以自行定義郵件帳號
-vacation notice	preferences	zh-tw	假期提醒
+vacation notice	common	zh-tw	假期提醒
 vacation notice is active	felamimail	zh-tw	假期提醒功能啟用中
 validate certificate	felamimail	zh-tw	驗證
 view full header	felamimail	zh-tw	顯示完整標頭

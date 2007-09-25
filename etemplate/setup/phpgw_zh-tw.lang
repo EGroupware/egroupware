@@ -52,6 +52,7 @@ cant delete a single widget from a grid !!!	etemplate	zh-tw	無法從表格中�
 cant delete the only column of a grid !!!	etemplate	zh-tw	無法從表格中刪除唯一的欄位！
 cant delete the only row in a grid !!!	etemplate	zh-tw	無法從表格中刪除唯一的資料列！
 category	etemplate	zh-tw	類別
+category tree	etemplate	zh-tw	類別樹
 cellpadding for the table-tag	etemplate	zh-tw	表格文字與格線的距離
 cells	etemplate	zh-tw	儲存格
 cellspacing for the table-tag	etemplate	zh-tw	表格欄位與欄位文字的距離
@@ -367,6 +368,7 @@ to start the etemplate editor	etemplate	zh-tw	樣板編輯器
 to start the search	etemplate	zh-tw	搜尋
 today	etemplate	zh-tw	今天
 top	etemplate	zh-tw	頁首
+tree	etemplate	zh-tw	樹
 type	etemplate	zh-tw	種類
 type of the column	etemplate	zh-tw	欄位種類
 type of the field (select label if field should be empty)	etemplate	zh-tw	儲存格種類(如果儲存格必須為空值請選擇標籤)

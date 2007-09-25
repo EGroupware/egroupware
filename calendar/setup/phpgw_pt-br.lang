@@ -11,6 +11,7 @@ actions	calendar	pt-br	Ações
 actions...	calendar	pt-br	Ações...
 add alarm	calendar	pt-br	Adicionar aviso
 added	calendar	pt-br	Adicionado
+added by synchronisation	calendar	pt-br	Adicionado por sincronização
 after %1	calendar	pt-br	Após %1
 after current date	calendar	pt-br	Após data atual
 alarm	calendar	pt-br	Alarme
@@ -52,6 +53,7 @@ copy this event	calendar	pt-br	Copiar este evento
 countries	calendar	pt-br	Países
 country	calendar	pt-br	País
 create an exception for the given date	calendar	pt-br	Criar uma exceção para a data informada
+create exception	calendar	pt-br	Criar exceção
 create new links	calendar	pt-br	Criar novos links
 csv	calendar	pt-br	CSV
 csv-fieldname	calendar	pt-br	CVS-Nome do Campo
@@ -105,6 +107,7 @@ event details follow	calendar	pt-br	Seguem detalhes do evento
 event saved	calendar	pt-br	Evento salvo
 event will occupy the whole day	calendar	pt-br	Evento irá ocupar todo o dia
 exception	calendar	pt-br	Exceção
+exception created - you can now edit or delete it	calendar	pt-br	Exceção criada - você agora pode editá-la ou removê-la
 exceptions	calendar	pt-br	Exceções
 execute a further action for this entry	calendar	pt-br	Executar uma outra ação para este registro
 existing links	calendar	pt-br	Links existentes
@@ -317,6 +320,7 @@ you can only set a year or a occurence !!!	calendar	pt-br	Você pode selecionar o
 you do not have permission to read this record!	calendar	pt-br	Você não possui permissão para ler esse registro!
 you have a meeting scheduled for %1	calendar	pt-br	Você possui um compromisso agendado para %1
 you have been disinvited from the meeting at %1	calendar	pt-br	Você foi desconvidado do evento em %1
+you need to select an account, contact or resource first!	calendar	pt-br	Você precisa selecionar uma conta, contato ou recurso antes!
 you need to select an ical file first	calendar	pt-br	Você precisa selecionar um arquivo iCal primeiro
 you need to set either a day or a occurence !!!	calendar	pt-br	Você deve determinar um dia ou recorrência!!!
 your meeting scheduled for %1 has been canceled	calendar	pt-br	Seu compromisso agendado para %1 foi cancelado

@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	fr	Serveur Cyrus IMAP
 cyrus imap server administration	emailadmin	fr	Administration du serveur Cyrus IMAP
 default	emailadmin	fr	défaut
 deliver extern	emailadmin	fr	Relai de messagerie
+do not validate certificate	emailadmin	fr	ne pas valider le certificat
 do you really want to delete this profile	emailadmin	fr	Voulez-vous vraiment supprimer ce profil?
 domainname	emailadmin	fr	Nom de domaine
 edit email settings	emailadmin	fr	Modifier les paramètres de messagerie
@@ -30,6 +31,7 @@ email settings	common	fr	Paramètres de messagerie
 emailadmin	emailadmin	fr	Administration de la messagerie
 enable cyrus imap server administration	emailadmin	fr	Activer la gestion du serveur Cyrus IMAP
 enable sieve	emailadmin	fr	Activer Sieve
+encrypted connection	emailadmin	fr	connexion chiffrée
 encryption settings	emailadmin	fr	Paramètres de chiffrement
 enter your default mail domain (from: user@domain)	emailadmin	fr	Introduisez votre domaine par défaut (utilisateur@domaine.com)
 error connecting to imap server. %s : %s.	emailadmin	fr	Erreur de connexion avec le serveur IMAP. %s: %s.
@@ -46,6 +48,7 @@ imap server closed the connection.	emailadmin	fr	Le serveur IMAP a interrompu la
 imap server closed the connection. server responded: %s	emailadmin	fr	Le serveur IMAP a interrompu la connexion. Réponse du serveur: %s.
 imap server hostname or ip address	emailadmin	fr	Nom du serveur IMAP ou adresse IP
 imap server logintyp	emailadmin	fr	Type d'authentification IMAP
+imap server name	emailadmin	fr	Nom du serveur IMAP
 imap server port	emailadmin	fr	Port IMAP
 imap/pop3 server name	emailadmin	fr	Nom du serveur IMAP/POP3
 in mbyte	emailadmin	fr	en Mo
@@ -81,6 +84,7 @@ qmaildotmode	emailadmin	fr	qmaildotmode
 qouta size in mbyte	emailadmin	fr	Taille du quota en Mo
 quota settings	emailadmin	fr	Paramètres de quota
 remove	emailadmin	fr	Supprimer
+select type of imap server	emailadmin	fr	Sélectionner le type de serveur IMAP
 select type of imap/pop3 server	emailadmin	fr	Sélectionner le type de serveur IMAP/POP3
 select type of smtp server	emailadmin	fr	Sélectionner le type de serveur SMTP
 server settings	emailadmin	fr	Configuration du serveur
@@ -114,4 +118,5 @@ user can edit forwarding address	emailadmin	fr	L'utilisateur peut modifier l'adr
 username (standard)	emailadmin	fr	nom de l'utilisateur (standard)
 username@domainname (virtual mail manager)	emailadmin	fr	utilisateur@domaine (Virtual MAIL ManaGeR)
 users can define their own emailaccounts	emailadmin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
+users can define their own signatures	emailadmin	fr	les utilisateurs peuvent définir leurs propres signatures
 virtual mail manager	emailadmin	fr	Virtual MAIL ManaGeR

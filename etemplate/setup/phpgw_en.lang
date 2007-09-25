@@ -52,6 +52,7 @@ cant delete a single widget from a grid !!!	etemplate	en	cant delete a single wi
 cant delete the only column of a grid !!!	etemplate	en	cant delete the only column of a grid !!!
 cant delete the only row in a grid !!!	etemplate	en	cant delete the only row in a grid !!!
 category	etemplate	en	Category
+category tree	etemplate	en	Category tree
 cellpadding for the table-tag	etemplate	en	Cellpadding for the table-tag
 cells	etemplate	en	Cells
 cellspacing for the table-tag	etemplate	en	Cellspacing for the table-tag
@@ -367,6 +368,7 @@ to start the etemplate editor	etemplate	en	to start the eTemplate editor
 to start the search	etemplate	en	to start the search
 today	etemplate	en	Today
 top	etemplate	en	Top
+tree	etemplate	en	Tree
 type	etemplate	en	Type
 type of the column	etemplate	en	type of the column
 type of the field (select label if field should be empty)	etemplate	en	type of the field (select Label if field should be empty)

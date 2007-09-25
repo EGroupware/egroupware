@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	sl	Cyrus IMAP strežnik
 cyrus imap server administration	emailadmin	sl	Upravljanje Cyrus IMAP strežnika
 default	emailadmin	sl	Privzeto
 deliver extern	emailadmin	sl	Zunanja dostava
+do not validate certificate	emailadmin	sl	Ne preverjaj certifikata
 do you really want to delete this profile	emailadmin	sl	Ali res želite izbrisati ta profil?
 domainname	emailadmin	sl	Ime domene
 edit email settings	emailadmin	sl	Uredi nastavitve E-pošte
@@ -30,6 +31,7 @@ email settings	common	sl	Nastavitve E-pošte
 emailadmin	emailadmin	sl	EMailAdmin
 enable cyrus imap server administration	emailadmin	sl	Omogoči upravljanje Cyrus IMAP strežnika
 enable sieve	emailadmin	sl	Omogoči Sieve
+encrypted connection	emailadmin	sl	Kodirana povezava
 encryption settings	emailadmin	sl	Nastavitve šifriranja
 enter your default mail domain (from: user@domain)	emailadmin	sl	Vnesite privzeto domeno (oblika: uporabnik@domena)
 error connecting to imap server. %s : %s.	emailadmin	sl	Napaka pri povezavi s strežnikom IMAP. %s: %s.
@@ -44,18 +46,19 @@ imap admin user	admin	sl	Uporabniško ime oskrbnika IMAP-a
 imap c-client version < 2001	emailadmin	sl	IMAP C-klient različica pred 2001
 imap server closed the connection.	emailadmin	sl	Strežnik IMAP je prekinil povezavo.
 imap server closed the connection. server responded: %s	emailadmin	sl	Strežnik IMAP je prekinil povezavo. Odgovor strežnika: %s
-imap server hostname or ip address	emailadmin	sl	Ime ali IP IMAP strežnika
-imap server logintyp	emailadmin	sl	Način prijave na IMAP strežnik
-imap server port	emailadmin	sl	Vrata IMAP strežnika
-imap/pop3 server name	emailadmin	sl	Ime IMAP/POP3 strežnika
+imap server hostname or ip address	emailadmin	sl	Ime ali IP strežnika IMAP
+imap server logintyp	emailadmin	sl	Način prijave strežnik IMAP
+imap server name	emailadmin	sl	Ime strežnika IMAP
+imap server port	emailadmin	sl	Vrata strežnika IMAP
+imap/pop3 server name	emailadmin	sl	Ime strežnika IMAP/POP3
 in mbyte	emailadmin	sl	v MB
 ldap basedn	emailadmin	sl	Osnovni DN LDAP
-ldap server	emailadmin	sl	LDAP strežnik
+ldap server	emailadmin	sl	Strežnik LDAP
 ldap server accounts dn	emailadmin	sl	DN računov LDAP strežnika
 ldap server admin dn	emailadmin	sl	Oskrbnikov DN LDAP strežnika
 ldap server admin password	emailadmin	sl	Geslo oskrbnika LDAP strežnika
 ldap server hostname or ip address	emailadmin	sl	Ime ali IP strežnika LDAP
-ldap settings	emailadmin	sl	LDAP nastavitve
+ldap settings	emailadmin	sl	Nastavitve LDAP
 leave empty for no quota	emailadmin	sl	Pustite prazno za neomejeno
 mail settings	admin	sl	Nastavitve E-pošte
 name of organisation	emailadmin	sl	Ime organizacije
@@ -81,6 +84,7 @@ qmaildotmode	emailadmin	sl	Način za qmaildot
 qouta size in mbyte	emailadmin	sl	Kvota v MB
 quota settings	emailadmin	sl	Nastavitvev kvote
 remove	emailadmin	sl	Odstrani
+select type of imap server	emailadmin	sl	Izberite vrsto strežnika IMAP
 select type of imap/pop3 server	emailadmin	sl	Izberite tip IMAP/POP3 strežnika
 select type of smtp server	emailadmin	sl	Izberite tip SMTP strežnika
 server settings	emailadmin	sl	Nastavitve strežnika
@@ -103,7 +107,7 @@ to use a tls connection, you must be running a version of php 5.1.0 or higher.	e
 unexpected response from server to authenticate command.	emailadmin	sl	Nepričakovan odgovor strežnika na ukaz AUTHENTICATE.
 unexpected response from server to digest-md5 response.	emailadmin	sl	Nepričakovan odgovor strežnika na odgovor Digest-MD5.
 unexpected response from server to login command.	emailadmin	sl	Nepričakovan odgovor strežnika na ukaz LOGIN.
-unknown imap response from the server. server responded: %s	emailadmin	sl	Neznan odgovor IMAP s strai strežnika. Odgovor strežnika: %s
+unknown imap response from the server. server responded: %s	emailadmin	sl	Neznan odgovor IMAP s strani strežnika. Odgovor strežnika: %s
 unsupported action '%1' !!!	emailadmin	sl	Nepodprto dejanje '%1'!
 update current email address:	emailadmin	sl	Posodobi trenutni e-naslov:
 use ldap defaults	emailadmin	sl	Uporabi privzeto za LDAP

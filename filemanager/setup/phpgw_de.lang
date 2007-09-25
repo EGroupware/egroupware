@@ -4,6 +4,9 @@ back to file manager	filemanager	de	Zurück zur Dateiverwaltung
 cancel editing %1 without saving	filemanager	de	Bearbeiten abbrechen %1 ohne zu speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Kann Verzeichnis nicht anlegen, da der Name mit einem Leerzeichen endet
 cannot replace %1 because it is a directory	filemanager	de	Kann %1 nicht ersetzen, da es ein Verzeichnis ist
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	de	Wenn Sie das bis Datum kleiner als das von Datum wählen, finden Sie alle Einträge, ausser denen, deren Datum im Zeitraum der beiden Daten liegt.
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	de	Wenn Sie nur ein Datum (von/bis) wählen, finden Sie alle Einträge deren Bezugsdatum älter, bzw. jünger als das jeweilige angegebene Datum ist
+clear search	filemanager	de	Suchfelder zurücksetzen
 command sucessfully run	filemanager	de	Kommando erfolgreich ausgeführt
 comment	filemanager	de	Kommentar
 comments cannot contain "%1"	filemanager	de	Kommentare dürfen kein "%1" enthalten
@@ -24,6 +27,7 @@ create folder	filemanager	de	Neues Verzeichnis
 created	filemanager	de	Erstellt
 created %1	filemanager	de	%1 erstellt
 created %1,%2	filemanager	de	%1,%2 erstellt
+created between	filemanager	de	erstellt zwischen
 created by	filemanager	de	Erstellt von
 created directory %1	filemanager	de	Verzeichnis %1 erstellt
 date	filemanager	de	Datum
@@ -45,6 +49,7 @@ fake base dir did not exist, egroupware created a new one.	filemanager	de	Dateim
 file	filemanager	de	Datei
 file %1 already exists. please edit it or delete it first.	filemanager	de	Datei %1 existiert bereits. Bitte zuerst bearbeiten oder löschen.
 file %1 could not be created.	filemanager	de	Datei %1 konnte nicht erstellt werden.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	de	Datei %1 ist möglicherweise zu gross. Kontaktieren Sie Ihren Systemadministrator um weitergehende Informationen zu erhalten
 file name	filemanager	de	Dateiname
 file names cannot contain "%1"	filemanager	de	Dateinamen dürfen kein "%1" enthalten
 file names cannot contain \ or /	filemanager	de	Dateinamen dürfen kein \ oder / enthalten
@@ -61,10 +66,12 @@ go to your home directory	filemanager	de	Zu Ihrem Heimverzeichnis wechseln
 go to:	filemanager	de	Gehe zu:
 go up	filemanager	de	einen Ordner nach oben
 home	filemanager	de	Home
+id	filemanager	de	Id
 location	filemanager	de	Pfad
 locked	filemanager	de	Gesperrt
 mime type	filemanager	de	MIME-Typ
 modified	filemanager	de	Verändert
+modified between	filemanager	de	verändert zwischen
 modified by	filemanager	de	Verändert von
 move to	filemanager	de	Verschieben nach
 move to:	filemanager	de	Verschieben nach:
@@ -87,6 +94,7 @@ save %1, and go back to file listing	filemanager	de	%1 speichern und zurück zur 
 save all	filemanager	de	Alles speichern
 save changes	filemanager	de	Änderungen speichern
 saved %1	filemanager	de	%1 gespeichert
+searchstring	filemanager	de	Suchbegriff
 show	filemanager	de	Anzeigen
 show ..	filemanager	de	Anzeigen ...
 show .files	filemanager	de	.Dateien anzeigen
@@ -94,6 +102,7 @@ show command line (experimental. dangerous.)	filemanager	de	Kommando anzeigen (E
 show help	filemanager	de	Hilfe anzeigen
 size	filemanager	de	Größe
 sort by:	filemanager	de	Sortieren nach:
+start search	filemanager	de	Suche starten
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	de	Der neue Dateimanager, jetzt NUR ZUM TESTEN, bitte Fehlermeldungen senden
 total files	filemanager	de	Anzahl Dateien
 unknown mime-type defaults to text/plain when viewing	filemanager	de	Zum Anzeigen von unbekannte MIME-Typen text/plain verwenden

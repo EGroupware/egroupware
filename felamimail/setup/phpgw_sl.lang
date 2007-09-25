@@ -140,12 +140,12 @@ every	felamimail	sl	Vsak
 every %1 days	felamimail	sl	Vsakih %1 dni
 expunge	felamimail	sl	Počisti
 extended	felamimail	sl	Razširjeno
-felamimail	common	sl	FelaMiMail
+felamimail	common	sl	E-pošta
 file into	felamimail	sl	Shrani v
 files	felamimail	sl	Datoteke
 filter active	felamimail	sl	Filter je aktiven
 filter name	felamimail	sl	Ime filtra
-filter rules	felamimail	sl	Pravila filtra
+filter rules	common	sl	Pravila filtra
 first name	felamimail	sl	Ime
 flagged	felamimail	sl	Označen
 flags	felamimail	sl	Zastavice
@@ -224,7 +224,7 @@ location of buttons when composing	felamimail	sl	Položaj gumbov pri pisanju nov
 mail server login type	admin	sl	Način prijave v poštni strežnik
 mail settings	felamimail	sl	Nastavitve mape
 mainmessage	felamimail	sl	Glavno sporočilo
-manage emailaccounts	felamimail	sl	Upravljanje poštnih računov
+manage emailaccounts	preferences	sl	Upravljanje poštnih računov
 manage emailfilter / vacation	preferences	sl	Uredi EMailFilter/ odsotnost
 manage folders	common	sl	Upravljanje map
 manage sieve	common	sl	Upravljanje skript za Sieve
@@ -266,6 +266,7 @@ no messages found...	felamimail	sl	Nobeno sporočilo ni najdeno
 no messages were selected.	felamimail	sl	Nobeno sporočilo ni izbrano
 no plain text part found	felamimail	sl	Ni najdenega čistega besedila
 no previous message	felamimail	sl	Ni predhodnjega sporočila
+no recipient address given!	felamimail	sl	Ni nobenega nsalove prejemnika!
 no supported imap authentication method could be found.	felamimail	sl	Ni podprte metode avtentikacije IMAP.
 no valid emailprofile selected!!	felamimail	sl	Ni veljavnega E-poštnega profila!
 none	felamimail	sl	Prazno
@@ -403,7 +404,7 @@ use custom settings	felamimail	sl	Uporabi lastne nastavitve
 use regular expressions	felamimail	sl	uporabite regularne izraze
 use smtp auth	admin	sl	Uporabi SMTP avtentikacijo
 users can define their own emailaccounts	admin	sl	Uporabniki lahko definirajo lastne E-poštne račune
-vacation notice	felamimail	sl	Obvestilo o odsotnosti
+vacation notice	common	sl	Obvestilo o odsotnosti
 vacation notice is active	felamimail	sl	Obvestilo o odsotnosti je aktivno
 validate certificate	felamimail	sl	Preveri certifikat
 view full header	felamimail	sl	Pokaži celotno glavo

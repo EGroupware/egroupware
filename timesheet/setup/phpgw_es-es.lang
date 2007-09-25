@@ -37,6 +37,7 @@ saves the changes made	timesheet	es-es	Guardar los cambios realizados
 saves this entry and add a new one	timesheet	es-es	Guarda esta entrada y añade una nueva
 select a price	timesheet	es-es	Seleccionar un precio
 select a project	timesheet	es-es	Seleccionar un proyecto
+show a quantity sum (eg. to sum up negative overtime)	admin	es-es	Mostrar una suma de cantidades (p. ej. sumar tiempo extra negativo)
 start	timesheet	es-es	Inicio
 starttime	timesheet	es-es	Hora de inicio
 starttime has to be before endtime !!!	timesheet	es-es	¡La hora de comienzo tiene que ser antes que la hora de fin!

@@ -4,6 +4,9 @@ back to file manager	filemanager	en	Back to file manager
 cancel editing %1 without saving	filemanager	en	Cancel editing %1 without saving
 cannot create directory because it begins or ends in a space	filemanager	en	Cannot create directory because it begins or ends in a space
 cannot replace %1 because it is a directory	filemanager	en	Cannot replace %1 because it is a directory
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	en	Choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	en	Choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date
+clear search	filemanager	en	clear search
 command sucessfully run	filemanager	en	Command sucessfully run
 comment	filemanager	en	Comment
 comments cannot contain "%1"	filemanager	en	Comments cannot contain "%1"
@@ -24,6 +27,7 @@ create folder	filemanager	en	Create Folder
 created	filemanager	en	Created
 created %1	filemanager	en	Created %1
 created %1,%2	filemanager	en	Created %1,%2
+created between	filemanager	en	created between
 created by	filemanager	en	Created by
 created directory %1	filemanager	en	Created directory %1
 date	filemanager	en	Date
@@ -45,6 +49,7 @@ fake base dir did not exist, egroupware created a new one.	filemanager	en	Fake B
 file	filemanager	en	File
 file %1 already exists. please edit it or delete it first.	filemanager	en	File %1 already exists. Please edit it or delete it first.
 file %1 could not be created.	filemanager	en	File %1 could not be created.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	en	File %1 may be too big. Contact your Systemadministrator for further info
 file name	filemanager	en	File Name
 file names cannot contain "%1"	filemanager	en	File names cannot contain "%1"
 file names cannot contain \ or /	filemanager	en	File names cannot contain \ or /
@@ -61,10 +66,12 @@ go to your home directory	filemanager	en	Go to your home directory
 go to:	filemanager	en	Go to:
 go up	filemanager	en	go up
 home	filemanager	en	Home
+id	filemanager	en	Id
 location	filemanager	en	Location
 locked	filemanager	en	Locked
 mime type	filemanager	en	MIME Type
 modified	filemanager	en	Modified
+modified between	filemanager	en	modified between
 modified by	filemanager	en	Modified by
 move to	filemanager	en	Move To
 move to:	filemanager	en	Move to:
@@ -87,6 +94,7 @@ save %1, and go back to file listing	filemanager	en	Save %1, and go back to file
 save all	filemanager	en	Save all
 save changes	filemanager	en	Save changes
 saved %1	filemanager	en	Saved %1
+searchstring	filemanager	en	searchstring
 show	filemanager	en	Show
 show ..	filemanager	en	Show ..
 show .files	filemanager	en	Show .files
@@ -94,6 +102,7 @@ show command line (experimental. dangerous.)	filemanager	en	Show command line (E
 show help	filemanager	en	Show help
 size	filemanager	en	Size
 sort by:	filemanager	en	Sort by:
+start search	filemanager	en	start search
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	en	The future filemanager, now for TESTING PURPOSES ONLY, please send bugreports
 total files	filemanager	en	Total Files
 unknown mime-type defaults to text/plain when viewing	filemanager	en	Unknown MIME-type defaults to text/plain when viewing

@@ -1,5 +1,14 @@
+%1 days in advance	infolog	sk	%1 dní v predstihu
+%1 deleted	infolog	sk	%1 odstránené
+%1 deleted by %2 at %3	infolog	sk	%1 odstránil %2 %3
+%1 modified	infolog	sk	%1 zmenené
+%1 modified by %2 at %3	infolog	sk	%1 zmenil %2 %3
 %1 records imported	infolog	sk	Naimportovaných bolo %1 záznamov
 %1 records read (not yet imported, you may go %2back%3 and uncheck test import)	infolog	sk	Naèítaných bolo %1 záznamov (zatiaµ nenaimportované, mô¾ete ís» %2spä»%3 a odznaèi» Test importu)
+%1 you are responsible for is due at %2	infolog	sk	Ste zodpovední za %1, termín je %2
+%1 you are responsible for is starting at %2	infolog	sk	Ste zodpovední za %1 -zaèína sa %2
+%1 you delegated is due at %2	infolog	sk	Delegovali ste %1, termín je %2
+%1 you delegated is starting at %2	infolog	sk	Delegovali ste %1 -zaèína sa %2
 - subprojects from	infolog	sk	- Podprojekty od (z)
 0%	infolog	sk	0%
 10%	infolog	sk	10%
@@ -36,7 +45,7 @@ apply the changes	infolog	sk	Uplatni» zmeny
 are you shure you want to delete this entry ?	infolog	sk	Naozaj chcete odstráni» tento záznam?
 attach a file	infolog	sk	Prilo¾i» súbor
 attach file	infolog	sk	Prilo¾i» súbor
-attension: no contact with address %1 found.	infolog	sk	Upozornenie: nena¹iel sa ¾iadny kontakt s adresou %1.
+attention: no contact with address %1 found.	infolog	sk	Upozornenie: Kontakt s adresou %1 sa nena¹iel.
 back to main list	infolog	sk	Naspä» na hlavný zoznam
 billed	infolog	sk	Vyúètované
 both	infolog	sk	Obidvoje
@@ -81,12 +90,17 @@ dates, status, access	infolog	sk	Dátum, Stav, Prístup
 days	infolog	sk	dní
 default filter for infolog	infolog	sk	Predvolený filter pre Záznamník
 default status for a new log entry	infolog	sk	Predvolený stav pre nový záznam
+delegated	infolog	sk	delegované
+delegated open	infolog	sk	delegované otvorené
+delegated overdue	infolog	sk	delegované me¹kajúce
+delegated upcomming	infolog	sk	delegované nadchádzajúce
 delegation	infolog	sk	Delegova»
 delete	infolog	sk	Odstráni»
 delete one record by passing its id.	infolog	sk	Odstráni» konkrétny záznam podµa zadaného ID.
 delete the entry	infolog	sk	Odstráni» záznam
 delete this entry	infolog	sk	Odstráni» tento záznam
 delete this entry and all listed sub-entries	infolog	sk	Odstráni» tento záznam a v¹etky zobrazené podzáznamy
+deleted	infolog	sk	Odstránené
 deletes the selected typ	infolog	sk	Odstráni vybraný typ
 deletes this field	infolog	sk	odstráni toto pole
 deletes this status	infolog	sk	odstráni tento stav
@@ -94,6 +108,13 @@ description	infolog	sk	Popis
 determines the order the fields are displayed	infolog	sk	Urèuje poradie, v akom sa polia zobrazujú
 disables a status without deleting it	infolog	sk	Zablokuje stav bez toho, aby sa odstránil
 do you want a confirmation of the responsible on: accepting, finishing the task or both	infolog	sk	Budete vy¾adova» potvrdenie zodpovedného k týmto akciám?: prijatiu, ukonèeniu úlohy alebo obidvom
+do you want a notification, if items get assigned to you or assigned items get updated?	infolog	sk	Chcete dosta» pripomienku, keï sa stanú zmeny v polo¾kách, ktoré sú Vám priradené?
+do you want a notification, if items you are responsible for are about to start?	infolog	sk	Chcete dosta» pripomienku, keï sa zaènú polo¾ky, za ktoré ste zodpovední?
+do you want a notification, if items you are responsible for are due?	infolog	sk	Chcete dosta» pripomienku, keï nastane termín splnenia tých polo¾iek, za ktoré ste zodpovední?
+do you want a notification, if items you created get updated?	infolog	sk	Chcete dosta» pripomienku, keï sa stanú zmeny v polo¾kách, ktoré ste vytvorili?
+do you want a notification, if items you delegated are about to start?	infolog	sk	Chcete dosta» pripomienku, keï sa zaènú polo¾ky, ktoré sú na Vás delegované?
+do you want a notification, if items you delegated are due?	infolog	sk	Chcete dosta» pripomienku, keï nastane termín splnenia tých polo¾iek, ktoré sú na Vás delegované?
+do you want to receive notifications as html-mails or plain text?	infolog	sk	Pripomienky chcete dostáva» ako HTML E-maily alebo èistý text?
 do you want to see custom infolog types in the calendar?	infolog	sk	®eláte si zobrazova» vlastné typy Záznamníka v Kalendári?
 don't show infolog	infolog	sk	NEzobrazova» Záznamník
 done	infolog	sk	Hotovo
@@ -125,6 +146,8 @@ from	infolog	sk	Od
 general	infolog	sk	Hlavné
 group owner for	infolog	sk	Skupinový vlastník pre
 high	infolog	sk	Vysoká
+history logging	infolog	sk	Zaznamenávanie histórie
+history logging and deleting of items	infolog	sk	Zaznamenávanie histórie a odstránených polo¾iek
 id	infolog	sk	ID
 if a type has a group owner, all entries of that type will be owned by the given group and not the user who created it!	infolog	sk	Ak tento typ MÁ skupinového vlastníka, v¹etky záznamy tohto typu bude vlastni» zadaná skupina a NIE pou¾ívateµ, ktorý záznam vytvoril!
 if not set, the line with search and filters is hidden for less entries then "max matches per page" (as defined in your common preferences).	infolog	sk	Ak nie je nastavené, riadok vyhµadávania a filtrov je skrytý pre menej záznamov ne¾ "maximálny poèet záznamov zobrazených na stránke" (ako je definované v be¾ných nastaveniach).
@@ -164,6 +187,8 @@ max length of the input [, length of the inputfield (optional)]	infolog	sk	maxim
 name must not be empty !!!	infolog	sk	Názov nemô¾e by» prázdny!
 name of new type to create	infolog	sk	Názov novovytvoreného typu
 never hide search and filters	infolog	sk	Neschováva» hµadanie a filtre
+new %1	infolog	sk	Nové: %1
+new %1 created by %2 at %3	infolog	sk	Nové: %1, vytvoril %2 %3
 new name	infolog	sk	Nový názov
 new search	infolog	sk	Nové hµadanie
 no - cancel	infolog	sk	Nie - Zru¹i»
@@ -181,8 +206,11 @@ note	infolog	sk	Poznámka
 number of records to read (%1)	infolog	sk	Poèet záznamov, ktoré sa majú naèíta» (%1)
 number of row for a multiline inputfield or line of a multi-select-box	infolog	sk	èíslo riadku pre viacriadkové vstupné pole alebo riadok vo výberovom okne
 offer	infolog	sk	Ponuka
+one day after	infolog	sk	deò po
+one day in advance	infolog	sk	deò v predstihu
 ongoing	infolog	sk	Prebiehajúce
 only for details	infolog	sk	Len pre podrobnosti
+only if i get assigned or removed	infolog	sk	Iba ak mi je to priradené alebo odobraté
 only the attachments	infolog	sk	Iba prílohy
 only the links	infolog	sk	Iba odkazy
 open	infolog	sk	Otvorené
@@ -212,6 +240,13 @@ project settings: price, times	infolog	sk	Nastavenia Projektu: cena, èasy
 re:	infolog	sk	Re:
 read one record by passing its id.	infolog	sk	Naèítaj jednotlivý záznam zadaním id.
 read rights (default)	infolog	sk	Právo na èítanie (predvolené)
+receive notifications about due entries you are responsible for	infolog	sk	Dostáva» pripomienky o záznamoch, ktorým nastáva termín splnenia a ste za ne zodpovední
+receive notifications about due entries you delegated	infolog	sk	Dostáva» pripomienky o záznamoch, ktoré boli delegované na Vás
+receive notifications about items assigned to you	infolog	sk	Dostáva» pripomienky o polo¾kách, ktoré Vám boli priradené
+receive notifications about own items	infolog	sk	Dostáva» pripomienky o vlastných polo¾kách
+receive notifications about starting entries you are responsible for	infolog	sk	Dostáva» pripomienky o zaèínajúcich polo¾kách, za ktoré ste zodpovední
+receive notifications about starting entries you delegated	infolog	sk	Dostáva» pripomienky o zaèínajúcich polo¾kách, ktoré sú na Vás delegované
+receive notifications as html-mails	infolog	sk	Dostáva» pripomienky ako HTML E-maily
 reg. expr. for local ip's<br>eg. ^192.168.1.	infolog	sk	reg. výraz pre lokálne IP adresy<br>napr. ^192\.168\.1\.
 reg. expr. for local ip's<br>eg. ^192\.168\.1\.	infolog	sk	reg. výraz pre lokálne IP adresy<br>napr. ^192\.168\.1\.
 remark	infolog	sk	Poznámka
@@ -223,6 +258,7 @@ responsible upcoming	infolog	sk	Zodpovedný - blí¾iace sa
 responsible user, priority	infolog	sk	Zodpovedný pou¾ívateµ, priorita
 returns a list / search for records.	infolog	sk	Vráti zoznam / hµadanie záznamov.
 rights for the responsible	infolog	sk	Práva pre zodpovednú osobu
+same day	infolog	sk	ten istý deò
 save	infolog	sk	Ulo¾i»
 saves the changes made and leaves	infolog	sk	Ulo¾í vykonané zmeny a odíde
 saves this entry	infolog	sk	Ulo¾í tento záznam
@@ -309,6 +345,10 @@ will-call	infolog	sk	Zavolá
 write (add or update) a record by passing its fields.	infolog	sk	Zapísa» (prida» alebo upravi») záznam pou¾itím príslu¹ných polo¾iek.
 yes - delete	infolog	sk	Áno - Odstráni»
 yes - delete including sub-entries	infolog	sk	Áno - Odstráni» vrátane podzáznamov
+yes, noone can purge deleted items	infolog	sk	Áno, nikto nemô¾e vyèisti» odstránené polo¾ky
+yes, only admins can purge deleted items	infolog	sk	Áno, iba správcovia mô¾u vyèisti» odstránené polo¾ky
+yes, with larger fontsize	infolog	sk	Áno, s väè¹ím písmom
+yes, with purging of deleted items possible	infolog	sk	Áno, s mo¾nos»ou vyèistenia odstránených polo¾iek
 you can't delete one of the stock types !!!	infolog	sk	Nemô¾ete odstráni» východiskový typ!!
 you have entered an invalid ending date	infolog	sk	Zadali ste chybný termín ukonèenia
 you have entered an invalid starting date	infolog	sk	Zadali ste chybný dátum zaèatia

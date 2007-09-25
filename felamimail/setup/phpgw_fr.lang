@@ -38,6 +38,7 @@ bcc	felamimail	fr	Copie cachée
 before headers	felamimail	fr	Avant les entêtes
 between headers and message body	felamimail	fr	Entre les entêtes et le corps du message
 body part	felamimail	fr	Corps du message
+can not send message. no recipient defined!	felamimail	fr	Impossible d'envoyer le message, il n'y a pas de destinataire
 can't connect to inbox!!	felamimail	fr	Impossible de se connecter au serveur!
 cc	felamimail	fr	Copie à
 change folder	felamimail	fr	Changer de dossier
@@ -74,7 +75,8 @@ dark yellow	felamimail	fr	Jaune foncé
 date(newest first)	felamimail	fr	Date (plus récente d'abord)
 date(oldest first)	felamimail	fr	Date (plus ancienne d'abord)
 days	felamimail	fr	jours
-deactivate script	felamimail	fr	Désactiver les scripts
+deactivate script	felamimail	fr	désactiver les scripts
+default	felamimail	fr	défaut
 default signature	felamimail	fr	signature par défaut
 default sorting order	felamimail	fr	Ordre de tri par défaut
 delete all	felamimail	fr	Effacer tous
@@ -145,7 +147,7 @@ file into	felamimail	fr	Fichier dans
 files	felamimail	fr	Fichiers
 filter active	felamimail	fr	Filtre actif
 filter name	felamimail	fr	Nom du filtre
-filter rules	preferences	fr	Règles de filtrage
+filter rules	common	fr	Règles de filtrage
 first name	felamimail	fr	Prénom
 flagged	felamimail	fr	Marqué
 flags	felamimail	fr	Drapeaux
@@ -266,6 +268,8 @@ no messages found...	felamimail	fr	Aucuns messages trouvés...
 no messages were selected.	felamimail	fr	Aucun message n'a été choisi.
 no plain text part found	felamimail	fr	aucune section texte plein trouvée
 no previous message	felamimail	fr	Pas de message précédent
+no recipient address given!	felamimail	fr	Il n'a pas d'adresse de destinataire
+no signature	felamimail	fr	pas de signature
 no supported imap authentication method could be found.	felamimail	fr	Aucune méthode d'authentification IMAP n'a été trouvée.
 no valid emailprofile selected!!	felamimail	fr	Aucun profil de messagerie selectionné!
 none	felamimail	fr	Aucun
@@ -359,6 +363,7 @@ subscribe	felamimail	fr	Souscrire
 subscribed	felamimail	fr	Souscrit
 subscribed successfully!	felamimail	fr	Souscrit avec succès!
 sun	felamimail	fr	Di
+system signature	felamimail	fr	signature systéme
 table of contents	felamimail	fr	Table des contenus
 text only	felamimail	fr	Texte seulement
 the connection to the imap server failed!!	felamimail	fr	La connexion au serveur IMAP a échoué!!
@@ -403,7 +408,7 @@ use custom settings	felamimail	fr	Utiliser les préférences personnelles
 use regular expressions	felamimail	fr	Utiliser des expressions régulières
 use smtp auth	admin	fr	Utiliser l'authentification SMTP
 users can define their own emailaccounts	admin	fr	Les utilisateurs peuvent définir leurs propres comptes de messagerie
-vacation notice	preferences	fr	Notification de vacances
+vacation notice	common	fr	Notification de vacances
 vacation notice is active	felamimail	fr	La notice d'absence est activée
 validate certificate	felamimail	fr	valider le certificat
 view full header	felamimail	fr	Voir l'entête complet

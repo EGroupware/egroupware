@@ -145,7 +145,7 @@ file into	felamimail	pt-br	Arquivar em
 files	felamimail	pt-br	arquivos
 filter active	felamimail	pt-br	filtro ativo
 filter name	felamimail	pt-br	Nome do filtro
-filter rules	preferences	pt-br	Regras de filtros
+filter rules	common	pt-br	Regras de filtros
 first name	felamimail	pt-br	Primeiro nome
 flagged	felamimail	pt-br	sinalizado
 flags	felamimail	pt-br	Sinalizadores
@@ -266,6 +266,7 @@ no messages found...	felamimail	pt-br	Nenhuma mensagem foi encontrada...
 no messages were selected.	felamimail	pt-br	Nenhuma mensagem foi selecionada.
 no plain text part found	felamimail	pt-br	Nehuma parte em texto puro encontrada
 no previous message	felamimail	pt-br	Nenhuma mensagem anterior
+no recipient address given!	felamimail	pt-br	Nenhum endereço informado!
 no supported imap authentication method could be found.	felamimail	pt-br	Nenhum método de autenticação suportado pelo servidor IMAP foi encontrado.
 no valid emailprofile selected!!	felamimail	pt-br	Nenhum perfil de e-mail válido selecionado!!!
 none	felamimail	pt-br	Nenhum
@@ -403,7 +404,7 @@ use custom settings	felamimail	pt-br	Usar configurações personalizadas
 use regular expressions	felamimail	pt-br	Usar expressões regulares
 use smtp auth	admin	pt-br	Usar autenticação SMTP
 users can define their own emailaccounts	admin	pt-br	Usuário pode definir suas próprias contas de correio
-vacation notice	preferences	pt-br	Notícia de ausência
+vacation notice	common	pt-br	Notícia de ausência
 vacation notice is active	felamimail	pt-br	Notícia de ausência está ativa
 validate certificate	felamimail	pt-br	validar certificado
 view full header	felamimail	pt-br	Exibir cabeçalho completo

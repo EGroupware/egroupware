@@ -21,6 +21,7 @@ cyrus imap server	emailadmin	zh-tw	Cyrus IMAP伺服器
 cyrus imap server administration	emailadmin	zh-tw	Cyrus IMAP伺服器管理
 default	emailadmin	zh-tw	預設
 deliver extern	emailadmin	zh-tw	傳送到外部
+do not validate certificate	emailadmin	zh-tw	沒有可用的執照
 do you really want to delete this profile	emailadmin	zh-tw	您確定要刪除這個資料
 domainname	emailadmin	zh-tw	網域名稱
 edit email settings	emailadmin	zh-tw	編輯郵件設定
@@ -30,6 +31,7 @@ email settings	common	zh-tw	郵件設定
 emailadmin	emailadmin	zh-tw	郵件管理
 enable cyrus imap server administration	emailadmin	zh-tw	啟用Cyrus IMAP伺服器管理
 enable sieve	emailadmin	zh-tw	啟用Sieve
+encrypted connection	emailadmin	zh-tw	加密連線
 encryption settings	emailadmin	zh-tw	加密設定
 enter your default mail domain (from: user@domain)	emailadmin	zh-tw	輸入您的預設郵件網域(小老鼠後面所有字：帳號@網域)
 error connecting to imap server. %s : %s.	emailadmin	zh-tw	連線到 IMAP 伺服器時發生錯誤。 %s : %s
@@ -46,6 +48,7 @@ imap server closed the connection.	emailadmin	zh-tw	IMAP伺服器關閉連線
 imap server closed the connection. server responded: %s	emailadmin	zh-tw	IMAP伺服器關閉連線，伺服器回應： %s
 imap server hostname or ip address	emailadmin	zh-tw	IMAP伺服器的主機名稱或是IP位址
 imap server logintyp	emailadmin	zh-tw	IMAP伺服器登入類型
+imap server name	emailadmin	zh-tw	IMAP伺服器名稱
 imap server port	emailadmin	zh-tw	IMAP伺服器連接埠
 imap/pop3 server name	emailadmin	zh-tw	IMAP/POP3伺服器名稱
 in mbyte	emailadmin	zh-tw	以MB顯示
@@ -81,6 +84,7 @@ qmaildotmode	emailadmin	zh-tw	qmaildotmode
 qouta size in mbyte	emailadmin	zh-tw	配額(MB)
 quota settings	emailadmin	zh-tw	配額設定
 remove	emailadmin	zh-tw	移除
+select type of imap server	emailadmin	zh-tw	選擇IMAP伺服器類型
 select type of imap/pop3 server	emailadmin	zh-tw	選擇IMAP/POP3伺服器的格式
 select type of smtp server	emailadmin	zh-tw	選擇SMTP伺服器的格式
 server settings	emailadmin	zh-tw	伺服器設定

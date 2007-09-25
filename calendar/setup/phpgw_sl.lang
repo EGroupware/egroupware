@@ -11,6 +11,7 @@ actions	calendar	sl	Dejanja
 actions...	calendar	sl	Dejanja ...
 add alarm	calendar	sl	Dodaj opomnik
 added	calendar	sl	Dodano
+added by synchronisation	calendar	sl	Dodano s sinhronizacijo
 after %1	calendar	sl	Po %1
 after current date	calendar	sl	Za trenutnim datumom
 alarm	calendar	sl	Opomnik
@@ -52,6 +53,7 @@ copy this event	calendar	sl	Kopiraj ta dogodek
 countries	calendar	sl	Države
 country	calendar	sl	Država
 create an exception for the given date	calendar	sl	Ustvari izjemo za dani datum
+create exception	calendar	sl	Ustvari izjemo
 create new links	calendar	sl	Ustvari nove povezave
 csv	calendar	sl	CSV
 csv-fieldname	calendar	sl	CSV-Ime polja
@@ -105,6 +107,7 @@ event details follow	calendar	sl	Sledijo podrobnosti dogodka
 event saved	calendar	sl	Dogodek shranjen
 event will occupy the whole day	calendar	sl	Dogodek bo trajal cel dan
 exception	calendar	sl	Izjema
+exception created - you can now edit or delete it	calendar	sl	Izjema ustvarjena - zdaj jo lahko urejate ali izbrišete
 exceptions	calendar	sl	Izjeme
 execute a further action for this entry	calendar	sl	Izvede dodatna dejanja za ta vnos
 existing links	calendar	sl	Obstoječe povezave
@@ -244,11 +247,11 @@ select a time	calendar	sl	izberite čas
 select resources	calendar	sl	Izberite sredstva
 select who should get the alarm	calendar	sl	Izberite, kdo naj dodi sporočilo alarma
 selected range	calendar	sl	Izbrani obseg
-set a year only for one-time / non-regular holidays.	calendar	sl	Nastavi leto samo za enkratne / neponavljajoče praznike.
+set a year only for one-time / non-regular holidays.	calendar	sl	Nastavi leto samo za enkratne / ne-ponavljajoče praznike.
 set new events to private	calendar	sl	Novi dogodki naj bodo označeni kot zasebni
 should invitations you rejected still be shown in your calendar ?<br>you can only accept them later (eg. when your scheduling conflict is removed), if they are still shown in your calendar!	calendar	sl	Ali naj bodo povabila, ki ste jih zavrnili, še vedno vidna v koledarju?<br>Kasneje jih lahko le potrdite (npr. ko so dogodki v navzkrižju odstranjeni), če so še vedno v koledarju.
 should new events created as private by default ?	calendar	sl	Ali naj bodo novi dogodki označeni kot zasebni?
-should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sl	Dovolite, da uporabnik, ki ni prijavljen vidi vašo Prost/Zasedeb informacijo? Za dostop do teh informacij lahko tudi določite geslo. Informacija Prost/Zaseden je v iCal obliki in vključuje samo termine, ko ste zasedeni, ne vključuje pa imena doggodkov, opisov in lokacij. URL za dostop do vaših Prost/Zaseden informacij je %1.
+should not loged in persons be able to see your freebusy information? you can set an extra password, different from your normal password, to protect this informations. the freebusy information is in ical format and only include the times when you are busy. it does not include the event-name, description or locations. the url to your freebusy information is %1.	calendar	sl	Dovolite, da uporabnik, ki ni prijavljen vidi vašo Prost/Zaseden informacijo? Za dostop do teh informacij lahko tudi določite geslo. Informacija Prost/Zaseden je v iCal obliki in vključuje samo termine, ko ste zasedeni, ne vključuje pa imena dogodkov, opisov in lokacij. URL za dostop do vaših Prost/Zaseden informacij je %1.
 should the planner display an empty row for users or categories without any appointment.	calendar	sl	Naj načrtovalec prikaže prazno vrstico za uporabnike ali kategorije brez dogodkov?
 should the status of the event-participants (accept, reject, ...) be shown in brakets after each participants name ?	calendar	sl	Ali naj bo status udeležencev dogodka (sprejet, zavrnjen,...) prikazan v oklepajih za imenom udeleženca?
 show default view on main screen	calendar	sl	Prikaži privzeti pogled na glavni strani
@@ -317,6 +320,7 @@ you can only set a year or a occurence !!!	calendar	sl	Nastavite lahko le leto a
 you do not have permission to read this record!	calendar	sl	Nimate dovoljenja brati tega zapisa!
 you have a meeting scheduled for %1	calendar	sl	Imate napovedan sestanek ob %1
 you have been disinvited from the meeting at %1	calendar	sl	Za sestanek %1 ste dobili preklic povabila
+you need to select an account, contact or resource first!	calendar	sl	Najprej morate izbrati račun, stik ali sredstvo!
 you need to select an ical file first	calendar	sl	Najprej morate izbrati datoteko iCal
 you need to set either a day or a occurence !!!	calendar	sl	Nastaviti morate dan ali pojavljanje!
 your meeting scheduled for %1 has been canceled	calendar	sl	Vaš sestanek %1 je odpovedan

@@ -206,10 +206,10 @@ fiji	common	sk	FID®I
 files	common	sk	Súbory
 filter	common	sk	Filter
 finland	common	sk	FÍNSKO
-first name	common	sk	Meno
-first name of the user, eg. "%1"	common	sk	meno pou¾ívateµa, napr. "%1"
+first name	common	sk	Krstné meno
+first name of the user, eg. "%1"	common	sk	krstné meno pou¾ívateµa, napr. "%1"
 first page	common	sk	Prvá strana
-firstname	common	sk	Meno
+firstname	common	sk	Krstné meno
 fixme!	common	sk	OPRAV MA!
 folder already exists.	common	sk	Prieèinok u¾ existuje.
 force selectbox	common	sk	Otvor výberové menu
@@ -544,7 +544,7 @@ time	common	sk	Èas
 time selection:	jscalendar	sk	Výber èasu
 time zone	common	sk	Èasová zóna
 time zone offset	common	sk	Rozdiel èasovej zóny
-title	common	sk	Názov
+title	common	sk	Titulok
 to	common	sk	Komu
 to correct this error for the future you will need to properly set the	common	sk	= Aby sa chyba neobjavovala v budúcnosti, musíte správne nastavi»
 to go back to the msg list, click <a href= %1 >here</a>	common	sk	<a href="%1">Naspä» na zoznam správ</a>

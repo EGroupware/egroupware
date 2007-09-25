@@ -4,6 +4,9 @@ back to file manager	filemanager	sl	Nazaj v upravljalca datotek
 cancel editing %1 without saving	filemanager	sl	Prekini urejanje %1 brez shranjevanja
 cannot create directory because it begins or ends in a space	filemanager	sl	Ne morem ustvariti mape, če se njeno ime začne ali konča s presledkom.
 cannot replace %1 because it is a directory	filemanager	sl	Ne morem nadomestiti %1, ker je mapa.
+choosing dates where to-date is smaller than the from-date, will result in a search returning all entries but thoose between the two entered dates	filemanager	sl	Če pri izbiri datumov izberete datum-do manjši od datum-od, bo iskanje vrnilo vse zadetke razen tistih, ki so v tem obdobju.
+choosing only one date (from/to) will result in a search returning all entries older/younger than the entered date	filemanager	sl	Če izberete samo en datum (od ali do), bo iskanje vrnilo vse zadetke, ki so starejši/novejši od vnesenega datuma.
+clear search	filemanager	sl	Izbriši iskanje
 command sucessfully run	filemanager	sl	Ukaz je bil uspešno izveden.
 comment	filemanager	sl	Komentar
 comments cannot contain "%1"	filemanager	sl	Komentarji ne smejo vsebovati "%1".
@@ -24,6 +27,7 @@ create folder	filemanager	sl	Ustvari mapo
 created	filemanager	sl	Ustvarjeno
 created %1	filemanager	sl	Ustvarjen %1
 created %1,%2	filemanager	sl	Ustvarjen %1,%2
+created between	filemanager	sl	Ustvarjeno med
 created by	filemanager	sl	Ustvaril
 created directory %1	filemanager	sl	Ustvarjena mapa %1
 date	filemanager	sl	Datum
@@ -45,6 +49,7 @@ fake base dir did not exist, egroupware created a new one.	filemanager	sl	Navide
 file	filemanager	sl	Datoteka
 file %1 already exists. please edit it or delete it first.	filemanager	sl	Datoteka %1 že obstaja. Prosim, če uredite obstoječo različico, ali pa jo izbrišete.
 file %1 could not be created.	filemanager	sl	Ne morem ustvariti datoteke %1.
+file %1 may be too big. contact your systemadministrator for further info	filemanager	sl	Datoteka %1 je morda prevelika. Za več informacij kontaktirajte sistemskega administratorja.
 file name	filemanager	sl	Ime datoteke
 file names cannot contain  or /	filemanager	sl	Imena datotek ne smejo vsebovati \ ali /
 file names cannot contain "%1"	filemanager	sl	Imena datotek ne smejo vsebovati "%1"
@@ -62,10 +67,12 @@ go to your home directory	filemanager	sl	Pojdi na domačo mapo
 go to:	filemanager	sl	Pojdi na:
 go up	filemanager	sl	pojdi navzgor
 home	filemanager	sl	Domov
+id	filemanager	sl	Šifra
 location	filemanager	sl	Položaj
 locked	filemanager	sl	Zaklenjen
 mime type	filemanager	sl	MIME tip
 modified	filemanager	sl	Spremenjeno
+modified between	filemanager	sl	Spremenjeno med
 modified by	filemanager	sl	Spremenil
 move to	filemanager	sl	Premakni v
 move to:	filemanager	sl	Premakni v:
@@ -88,6 +95,7 @@ save %1, and go back to file listing	filemanager	sl	Shrani %1 in se vrni na sezn
 save all	filemanager	sl	Shrani vse
 save changes	filemanager	sl	Shrani spremembe
 saved %1	filemanager	sl	Shranjen %1
+searchstring	filemanager	sl	Iskani niz
 show	filemanager	sl	Prikaži
 show ..	filemanager	sl	Prikaži ..
 show .files	filemanager	sl	Prikaži .datoteke
@@ -95,6 +103,7 @@ show command line (experimental. dangerous.)	filemanager	sl	Prikaži ukazno vrst
 show help	filemanager	sl	Prikaži pomoč
 size	filemanager	sl	Velikost
 sort by:	filemanager	sl	Razvrsti po:
+start search	filemanager	sl	Začni iskanje
 the future filemanager, now for testing purposes only, please send bugreports	filemanager	sl	LE ZA TESTIRANJE! Prosimo, sporočite hrošče in pripombe.
 total files	filemanager	sl	Vseh datotek
 unknown mime-type defaults to text/plain when viewing	filemanager	sl	Neznani MIME tip se pri pregledovanju obravnava kot text/plain
